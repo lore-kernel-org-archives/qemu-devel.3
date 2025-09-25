@@ -4,148 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B6BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 07:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50485CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 07:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1gA7-0005VU-1G; Thu, 25 Sep 2025 03:13:07 -0400
+	id 1v1gaL-0002SG-On; Thu, 25 Sep 2025 03:40:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1gA3-0005V7-8y
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:13:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1v1gaD-0002Qn-Ov
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:40:06 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1g9x-0005mP-Ic
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:13:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758784374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fc1fP9hxJyfa8l3pbMeS/C45ZShwb6pO/VkdHzm9Nmw=;
- b=JJwgS4omVLdludOG7EKWFBYAmIsgV08LFHOib63MRWmpMlU7s8Nhv1pUdgf65VmParYhTM
- w1VRHDdcSj+4GQLQXfVl72TnbthcXRJDJSYhDn++B/PsBTOiC+J+xBLCtDG/1wu4KhCbOz
- ct3kYsR6QUKSJ1oXkzh1dCqmhfmq1YQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-mVAijgMvMP6A2hclFkGX0g-1; Thu, 25 Sep 2025 03:12:52 -0400
-X-MC-Unique: mVAijgMvMP6A2hclFkGX0g-1
-X-Mimecast-MFC-AGG-ID: mVAijgMvMP6A2hclFkGX0g_1758784371
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ee10a24246so348767f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 00:12:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758784371; x=1759389171;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fc1fP9hxJyfa8l3pbMeS/C45ZShwb6pO/VkdHzm9Nmw=;
- b=l28batE7E+DIth9lsF4ThxJAGaeL9Fppmwar6WkwwQty5ohs9ub+tmg9qRQgNgEq1W
- trXPp6eZIzUG0xF3iCbRoPa1VstocSL8+q5xKb9prUBDIyUzE2TM6UqIULfaR0frrlK2
- 2wOzTdaJYJqO9r+Dk5HbxWWmPu6F5jhTwfBQvmnxNJKgnl7o1sX2ICmYpZ4CaGZPMbz+
- 5bYEEy53GNznI6cZzF1F1dQYKq2lyjjfUI6nKK5uVfEuwnX8baOXTugFU1Tbxk83PQnQ
- 8Q05bPZZMJBytXiwHrxlQtazfp9NWEcs4ZrJP1jxmsGw6Kr0aeso+sbMZyfEJs1hRawU
- 9Zyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrNYOLQK5+2OCVT/6iRrAv59QNzNSN45IJ9m2KeYN4swhL9nLGKKlwx9egY5SdiHJhtfFpiwQzt8y4@nongnu.org
-X-Gm-Message-State: AOJu0YzuKVOxZ0hQ+wwytcGKaxRIEdeMnXAaCrS+oIS2Lt+Y0EEG0vpE
- PG06XLoFrdfsFTpjkL2QNK8t2EgaPb/LDr5i7IdnGe10AKjYVlGP6ZgMAOzWA61LIA9HT/d9BbC
- oOVBMdXMnnCT0Iosum6sQHQVPaI7XBLDWXRJ3SCXuVXmk/vCpXMkMcmgc
-X-Gm-Gg: ASbGncumu++0YMEMr45c8QlyvMMsW16hbAE3vuKm0TrqdcJmNepu5QBBOzOJCdooxHE
- 3tfgxLHgUGeqORx4+Oii/cLxhXVBwIaeALCJ5PPLdRqOD/djz+5hctWGH9obgVBdR4BHoGt/dwi
- gk+JIG3AP61llsOeZYO6vlsSceUn9W4ZheQj5dGTP/rNtOo6scOgauKE31qk3Gx/wkRUsuNc1Vm
- +42B1d304xcHqsh8xEsLS0l4F1QfX5LCaL/tAvdfl8C/STv2R1M0UrtTLowi6+69RG5DfD6k3t6
- CIxv9YdBF+gf0iUgMgqx9RR5tI9Fi87oNnguIZoodTMDQlje5L5ZSHJZ7wlnbfjhPjKQBNUH8Ke
- hFRg=
-X-Received: by 2002:a05:6000:400e:b0:3e3:5951:95ff with SMTP id
- ffacd0b85a97d-40e4dca7a96mr2076932f8f.62.1758784370987; 
- Thu, 25 Sep 2025 00:12:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHyrQxSUuJOc76HG3aKMGZgcmoOgUz3o5TS2Xb6Ar3eo1+7QnQ+BHvwzFUBulmeoYufZ1L4/Q==
-X-Received: by 2002:a05:6000:400e:b0:3e3:5951:95ff with SMTP id
- ffacd0b85a97d-40e4dca7a96mr2076905f8f.62.1758784370458; 
- Thu, 25 Sep 2025 00:12:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2ab48570sm62158615e9.16.2025.09.25.00.12.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 00:12:49 -0700 (PDT)
-Message-ID: <2ff4eef5-a39d-435e-8423-7cf6b26340fa@redhat.com>
-Date: Thu, 25 Sep 2025 09:12:49 +0200
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1v1gZk-0000Pz-RT
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:39:51 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jcV0YGLawRpBwpErUIy/5xd3ZXQYWAws8MPWe/+Rw/22YQFV4if4ghCTl9pRmzZNac3d7bqOSTaq3fP8pkf9hW764G0YQEOERdzC4nFLfYq7eyMtWovgbu+ca5X2Jnk/5lAFzRW3Z3whjQWYciGIwf1ZHY9l9s7tXACkaxpqI85115OylICEW6fFtqBEdD9ERKWcUUIHwonY0KTLLu6qME2pIRPBEhCvJtSXaAnTieHmS9UigBGjK3wTc82cR/6bx/iXY4E8PaLjjhUqfaGaWypRozb3Mu4NnECvJ8aYoHXcV7cpCDtb10dXDIX/31XDKVH3kWLLoc0jf9kv0RCC8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kXobpMPvSwrGJUMH9XwnXRtp0YG65ZKvP6Wpe8vcmmo=;
+ b=V4hTO6iFV2G8X+TO9EEeKC1DyVeHq5t+2Ve6zAOcoZG+LUG6IKOvmdZ3xwd7t3KLgZqWI6EpAbOJ5idXYo/UXnmV71+EvvX072u9fp+eKySlVTpwgXT3JlOfIDRGldGEa/q/GcrCXRZaEQAVBTz9CL2Gb3U8GfD5yQEZWbFCYFuGf473TbXop+YIqUX29n5UI8wkx+d1ucUA8UsfTlM0iYD5VHqwqm0O+pfkUmWgjePErkg6ChDbk8D/UhKM8QPwdEDcyMeBgRFxZ/66ocrNehs3KFA9TrEHyz40b9k7skIhCexpbnHydJcrN72RwYGSmFohf6BkG0ztlFC8ST3L0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kXobpMPvSwrGJUMH9XwnXRtp0YG65ZKvP6Wpe8vcmmo=;
+ b=cmfRcIpxHHVVjgfXggQJxht7Eip5W/o4ywg6l35fbG/D2rfaViHT1RnDpG7FZ4r26cfONQJwfsh6Odpz8MWnhNrwI8ox9zFWn6d8CbVk1F/3MXQefsqdDhotJjNBP0Wykgh9upMsJy/hX1FH3vjKlJDfTY20kLVy1NfE+iI70I0=
+Received: from SJ0PR03CA0191.namprd03.prod.outlook.com (2603:10b6:a03:2ef::16)
+ by DS7PR12MB9474.namprd12.prod.outlook.com (2603:10b6:8:252::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.21; Thu, 25 Sep
+ 2025 07:39:22 +0000
+Received: from BY1PEPF0001AE1A.namprd04.prod.outlook.com
+ (2603:10b6:a03:2ef:cafe::a5) by SJ0PR03CA0191.outlook.office365.com
+ (2603:10b6:a03:2ef::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.21 via Frontend Transport; Thu,
+ 25 Sep 2025 07:39:22 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BY1PEPF0001AE1A.mail.protection.outlook.com (10.167.242.102) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9160.9 via Frontend Transport; Thu, 25 Sep 2025 07:39:22 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Thu, 25 Sep
+ 2025 00:39:21 -0700
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 25 Sep
+ 2025 02:39:21 -0500
+Received: from [10.65.97.37] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Thu, 25 Sep 2025 00:39:19 -0700
+Message-ID: <d5a087bb-5ed9-4463-9674-7c1748852198@amd.com>
+Date: Thu, 25 Sep 2025 15:39:19 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 6/8] migration: cpr-exec mode
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
- <1758548985-354793-7-git-send-email-steven.sistare@oracle.com>
- <c76d4944-280b-49e1-a324-36429a5513cb@redhat.com>
- <7e7b7fda-b156-4ca7-a2ae-61f8b5c351af@oracle.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <7e7b7fda-b156-4ca7-a2ae-61f8b5c351af@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH] numa: add 'spm' option for special purpose memory
+To: David Hildenbrand <david@redhat.com>, <qemu-devel@nongnu.org>
+CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, Igor Mammedov
+ <imammedo@redhat.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20250924103324.2074819-1-FangSheng.Huang@amd.com>
+ <fa625f3d-6493-4213-b317-23ab1e16ac37@redhat.com>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <fa625f3d-6493-4213-b317-23ab1e16ac37@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE1A:EE_|DS7PR12MB9474:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7e20257d-1da3-4657-4e38-08ddfc06a51f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|82310400026|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UExOcGdoeTBhaFVvVXk4RWdMYjFZRVFZRXh6OE03MzB5VUUyRFhyMTJtSmZZ?=
+ =?utf-8?B?T2NZQzhodmJvdktBcExzQ3NpQmN2MDUvN3YwQXdQSzVKZ1Rjckk2YUtCNWtO?=
+ =?utf-8?B?STBraTRZMTVpTG5RcDNjK2QyWnoyNzVrczJQclhrTGFEU2ZEdXBWbm90SDlO?=
+ =?utf-8?B?S2EzQlpLK2RLd1JPQmdPRVRPTis0WTV3d1dhUFkzbDA1UkxPYjJ2dU5RcHp3?=
+ =?utf-8?B?Yk9PdGVMUHMwYXRnOFlSaVJWNjNiaFVFWHNudkFENnB1WG9iTk9qZDAza3VS?=
+ =?utf-8?B?RUE3QUZSNEdtTnF5MlA1STJJbFRqRFVYZ3ZOMlU1YjdwRG5zcGR2bStmZGo5?=
+ =?utf-8?B?Qmo1ZlRzVlNFWERNSzlabzRMejZmN3lCQWZwTlMyclJiY2V1MmJtZUdoa2ha?=
+ =?utf-8?B?ampyd1FQa0p0QmxrcFZ3TnRCYWpZMm4zb1FUUUJpWUlYL3ptR09VZ1M5Z0lO?=
+ =?utf-8?B?dmUrd043Yks0RjJLTWVQaVM5TzlGQU9VMVFjaE1CZUh2OWZQTTE4OU05Nmhl?=
+ =?utf-8?B?Nlk3bEtTb1pBVUdKTjMrWGFjUWMxZCtMMWVLa090TE12UE5uZFlMUDJsbWI0?=
+ =?utf-8?B?ZVpCa3NzRFd6UkZCYnpheUptWEtOa01pMVl3VVlRdHdkOFFIQWxoQ0ZXaUh2?=
+ =?utf-8?B?cFhiNStualFmcWdleDhyZ1ozK1VxcjZ3dVk2VCtoTHNpdTR2ZE4zemJzZ2h6?=
+ =?utf-8?B?S29xbDVVMGJzNUNYQXBycjA5aEozd1FTUytxYTVUa3FML0xMUFc5aHBqQ3Nz?=
+ =?utf-8?B?VXhuSlc2Wk9CeUkxVTIySjhGWXczb2hXOXhKNUhhVXRPMTRva2lQSzZ2YnBw?=
+ =?utf-8?B?S1Y5eUNDT2N0QnJNUk11ZThyek9mQkRPQzNodE95SzYvRHR4STJlc01ORXJm?=
+ =?utf-8?B?a09NWGFTNDlOa3NIbkQ1VEEvVko4dmJJOWpKcTRjV0FUMlEwUmRVV0t3Sk9l?=
+ =?utf-8?B?eTN2M3FMc0MwRWJtajArejVNVjZZdWorUGltKzU4VE5Xekx3Zzc3U2tkTGFs?=
+ =?utf-8?B?cEs0YlE0VVV5SSszdmVCVjRTaWlVS0JGbjduOHlDUUdGU2ZxTzRGWmdRQVhU?=
+ =?utf-8?B?R3BOSHp0Lzc4cE9NaEcwcFduNmNjV0Rid2VLbEt3MjAxQnpsRmZqOVZhRU9P?=
+ =?utf-8?B?MmtzbHR1Y294cFNka0pWQ3p6dGdjYkRaeDEzWkkxRERSR3ZoOWJRK0cyMElj?=
+ =?utf-8?B?bmViK3BlcWt1bUx2SlB3N1dqc3J6c2EreWp1RXI3S2hCSnVXVmp6eFpuNytL?=
+ =?utf-8?B?bURRR0NkOTZia1FCUVBvUEJzc1A1T2N2U3pWdi8wZlJkekdHSEpmSDV4ajhK?=
+ =?utf-8?B?SCtLYkplTnZaYUk5cHJpRWNiSklvZ1NLOEtvWTV6N09PQmxOa055ZnBBdUli?=
+ =?utf-8?B?VEtpT1N1UldmNGJjbE1Ueit3a1hmOXZURS9neUJVRW8zOWUxbHN6VWsyK1RJ?=
+ =?utf-8?B?KzdreTA3MHorQVhTbnhlZWJFcVBjS2ZobG9Xc2lvdTlndW5iU1NlMnlqMDl4?=
+ =?utf-8?B?dnBGeFFPL1ZadjFtUE82TFJjTTkxTllsU3BVRUdNMytreU5QdmEwN3ZBaFhE?=
+ =?utf-8?B?RVYySGdoOExpd1NQM0lNQ1M2TzBRbll4QXZnaEpLYURweWExQ2dMY2tSelp0?=
+ =?utf-8?B?bFZDaVN0WU9BZVdyVjVnS002d2F4Z042Q1FhR1luVXlsWUdGdTFITnFjNVIr?=
+ =?utf-8?B?UThYZEpXOHhaZXpWVnRFVm1YZHBtUmZWV1FLLysydEVUVnJ6NmNGWFo5RU1u?=
+ =?utf-8?B?U3RjSTh4RklQRFg5MitSMGdRRTZ2T0tCaTE1eGdGQ2hjMFZTMmFtM0g1RFhO?=
+ =?utf-8?B?SzFodlFxNTgvMlJxR1Fpd2RVdDVoaFhYT1ZCWUxKY1Q3ZFhodHpRaHc1Q01H?=
+ =?utf-8?B?NlZIS09pWUhoVHU1UDdteDJEd3p5UDZyU0VUUUhZaEkyYVZlbHNvaFNJaTE1?=
+ =?utf-8?B?bCtabE1QbXczNGRCSlcrMW1uOTBteE9WV0UwTUhiQW84eEdENW9uNFFMODAw?=
+ =?utf-8?B?ZVN2eUJrNE5mb3hsK2s4Qmc1SE9qYUlDL0tPMEZiMXQzcHRubEFrcDFXSEE1?=
+ =?utf-8?B?VjN1LzhoYjNMOE0yNHhxSHROcTJ3QithMWEzTnMycTRIZThZMFg3ZEdqTENk?=
+ =?utf-8?Q?8Zfk=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2025 07:39:22.5438 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7e20257d-1da3-4657-4e38-08ddfc06a51f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF0001AE1A.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB9474
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,399 +164,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 20:16, Steven Sistare wrote:
-> On 9/22/2025 11:28 AM, Cédric Le Goater wrote:
->> On 9/22/25 15:49, Steve Sistare wrote:
->>> Add the cpr-exec migration mode.  Usage:
->>>    qemu-system-$arch -machine aux-ram-share=on ...
->>>    migrate_set_parameter mode cpr-exec
->>>    migrate_set_parameter cpr-exec-command \
->>>      <arg1> <arg2> ... -incoming <uri-1> \
->>>    migrate -d <uri-1>
->>>
->>> The migrate command stops the VM, saves state to uri-1,
->>> directly exec's a new version of QEMU on the same host,
->>> replacing the original process while retaining its PID, and
->>> loads state from uri-1.  Guest RAM is preserved in place,
->>> albeit with new virtual addresses.
->>>
->>> The new QEMU process is started by exec'ing the command
->>> specified by the @cpr-exec-command parameter.  The first word of
->>> the command is the binary, and the remaining words are its
->>> arguments.  The command may be a direct invocation of new QEMU,
->>> or may be a non-QEMU command that exec's the new QEMU binary.
->>>
->>> This mode creates a second migration channel that is not visible
->>> to the user.  At the start of migration, old QEMU saves CPR state
->>> to the second channel, and at the end of migration, it tells the
->>> main loop to call cpr_exec.  New QEMU loads CPR state early, before
->>> objects are created.
->>>
->>> Because old QEMU terminates when new QEMU starts, one cannot
->>> stream data between the two, so uri-1 must be a type,
->>> such as a file, that accepts all data before old QEMU exits.
->>> Otherwise, old QEMU may quietly block writing to the channel.
->>>
->>> Memory-backend objects must have the share=on attribute, but
->>> memory-backend-epc is not supported.  The VM must be started with
->>> the '-machine aux-ram-share=on' option, which allows anonymous
->>> memory to be transferred in place to the new process.  The memfds
->>> are kept open across exec by clearing the close-on-exec flag, their
->>> values are saved in CPR state, and they are mmap'd in new QEMU.
->>>
->>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>> Acked-by: Markus Armbruster <armbru@redhat.com>
->>> ---
->>>   qapi/migration.json       | 25 +++++++++++++-
->>>   include/migration/cpr.h   |  1 +
->>>   migration/cpr-exec.c      | 84 +++++++++++++++++++++++++++++++++++++++++++++++
->>>   migration/cpr.c           | 28 ++++++++++++++--
->>>   migration/migration.c     | 10 +++++-
->>>   migration/ram.c           |  1 +
->>>   migration/vmstate-types.c |  8 +++++
->>>   system/vl.c               |  4 ++-
->>>   migration/trace-events    |  1 +
->>>   9 files changed, 157 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/qapi/migration.json b/qapi/migration.json
->>> index 2be8fa1..be0f3fc 100644
->>> --- a/qapi/migration.json
->>> +++ b/qapi/migration.json
->>> @@ -694,9 +694,32 @@
->>>   #     until you issue the `migrate-incoming` command.
->>>   #
->>>   #     (since 10.0)
->>> +#
->>> +# @cpr-exec: The migrate command stops the VM, saves state to the
->>> +#     migration channel, directly exec's a new version of QEMU on the
->>> +#     same host, replacing the original process while retaining its
->>> +#     PID, and loads state from the channel.  Guest RAM is preserved
->>> +#     in place.  Devices and their pinned pages are also preserved for
->>> +#     VFIO and IOMMUFD.
->>> +#
->>> +#     Old QEMU starts new QEMU by exec'ing the command specified by
->>> +#     the @cpr-exec-command parameter.  The command may be a direct
->>> +#     invocation of new QEMU, or may be a wrapper that exec's the new
->>> +#     QEMU binary.
->>> +#
->>> +#     Because old QEMU terminates when new QEMU starts, one cannot
->>> +#     stream data between the two, so the channel must be a type,
->>> +#     such as a file, that accepts all data before old QEMU exits.
->>> +#     Otherwise, old QEMU may quietly block writing to the channel.
->>> +#
->>> +#     Memory-backend objects must have the share=on attribute, but
->>> +#     memory-backend-epc is not supported.  The VM must be started
->>> +#     with the '-machine aux-ram-share=on' option.
->>> +#
->>> +#     (since 10.2)
->>>   ##
->>>   { 'enum': 'MigMode',
->>> -  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
->>> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
->>>   ##
->>>   # @ZeroPageDetection:
->>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
->>> index b84389f..beed392 100644
->>> --- a/include/migration/cpr.h
->>> +++ b/include/migration/cpr.h
->>> @@ -53,6 +53,7 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
->>>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->>>   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->>> +void cpr_exec_init(void);
->>>   QEMUFile *cpr_exec_output(Error **errp);
->>>   QEMUFile *cpr_exec_input(Error **errp);
->>>   void cpr_exec_persist_state(QEMUFile *f);
->>> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
->>> index 2c32e9c..8cf55a3 100644
->>> --- a/migration/cpr-exec.c
->>> +++ b/migration/cpr-exec.c
->>> @@ -6,15 +6,21 @@
->>>   #include "qemu/osdep.h"
->>>   #include "qemu/cutils.h"
->>> +#include "qemu/error-report.h"
->>>   #include "qemu/memfd.h"
->>>   #include "qapi/error.h"
->>> +#include "qapi/type-helpers.h"
->>>   #include "io/channel-file.h"
->>>   #include "io/channel-socket.h"
->>> +#include "block/block-global-state.h"
->>> +#include "qemu/main-loop.h"
->>>   #include "migration/cpr.h"
->>>   #include "migration/qemu-file.h"
->>> +#include "migration/migration.h"
->>>   #include "migration/misc.h"
->>>   #include "migration/vmstate.h"
->>>   #include "system/runstate.h"
->>> +#include "trace.h"
->>>   #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
->>> @@ -92,3 +98,81 @@ QEMUFile *cpr_exec_input(Error **errp)
->>>       lseek(mfd, 0, SEEK_SET);
->>>       return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
->>>   }
->>> +
->>> +static bool preserve_fd(int fd)
->>> +{
->>> +    qemu_clear_cloexec(fd);
->>> +    return true;
->>> +}
->>> +
->>> +static bool unpreserve_fd(int fd)
->>> +{
->>> +    qemu_set_cloexec(fd);
->>> +    return true;
->>> +}
->>> +
->>> +static void cpr_exec_cb(void *opaque)
->>> +{
->>> +    MigrationState *s = migrate_get_current();
->>> +    char **argv = strv_from_str_list(s->parameters.cpr_exec_command);
->>> +    Error *err = NULL;
->>> +
->>> +    /*
->>> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
->>> +     * earlier because they should not persist across miscellaneous fork and
->>> +     * exec calls that are performed during normal operation.
->>> +     */
->>> +    cpr_walk_fd(preserve_fd);
->>> +
->>> +    trace_cpr_exec();
->>> +    execvp(argv[0], argv);
->>> +
->>> +    /*
->>> +     * exec should only fail if argv[0] is bogus, or has a permissions problem,
->>> +     * or the system is very short on resources.
->>> +     */
->>> +    g_strfreev(argv);
->>> +    cpr_walk_fd(unpreserve_fd);
->>> +
->>> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
->>> +    error_report_err(error_copy(err));
->>> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
->>> +    migrate_set_error(s, err);
->>> +
->>> +    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
->>> +
->>> +    err = NULL;
->>> +    if (!migration_block_activate(&err)) {
->>> +        /* error was already reported */
->>> +        return;
->>> +    }
->>> +
->>> +    if (runstate_is_live(s->vm_old_state)) {
->>> +        vm_start();
->>> +    }
->>> +}
->>> +
->>> +static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
->>> +                             Error **errp)
->>> +{
->>> +    MigrationState *s = migrate_get_current();
->>> +
->>> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
->>> +        QEMUBH *cpr_exec_bh = qemu_bh_new(cpr_exec_cb, NULL);
->>> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
->>> +        qemu_bh_schedule(cpr_exec_bh);
->>> +        qemu_notify_event();
->>> +
->>> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
->>> +        cpr_exec_unpersist_state();
->>> +    }
->>> +    return 0;
->>> +}
->>> +
->>> +void cpr_exec_init(void)
->>> +{
->>> +    static NotifierWithReturn exec_notifier;
->>> +
->>> +    migration_add_notifier_mode(&exec_notifier, cpr_exec_notifier,
->>> +                                MIG_MODE_CPR_EXEC);
->>> +}
->>> diff --git a/migration/cpr.c b/migration/cpr.c
->>> index d3e370e..eea3773 100644
->>> --- a/migration/cpr.c
->>> +++ b/migration/cpr.c
->>> @@ -185,6 +185,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->>>       if (mode == MIG_MODE_CPR_TRANSFER) {
->>>           g_assert(channel);
->>>           f = cpr_transfer_output(channel, errp);
->>> +    } else if (mode == MIG_MODE_CPR_EXEC) {
->>> +        f = cpr_exec_output(errp);
->>>       } else {
->>>           return 0;
->>>       }
->>> @@ -202,6 +204,10 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->>>           return ret;
->>>       }
->>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
->>> +        cpr_exec_persist_state(f);
->>> +    }
->>> +
->>>       /*
->>>        * Close the socket only partially so we can later detect when the other
->>>        * end closes by getting a HUP event.
->>> @@ -213,6 +219,12 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->>>       return 0;
->>>   }
->>> +static bool unpreserve_fd(int fd)
->>> +{
->>> +    qemu_set_cloexec(fd);
->>> +    return true;
->>> +}
->>> +
->>>   int cpr_state_load(MigrationChannel *channel, Error **errp)
->>>   {
->>>       int ret;
->>> @@ -220,7 +232,13 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->>>       QEMUFile *f;
->>>       MigMode mode = 0;
->>> -    if (channel) {
->>> +    if (cpr_exec_has_state()) {
->>> +        mode = MIG_MODE_CPR_EXEC;
->>> +        f = cpr_exec_input(errp);
->>> +        if (channel) {
->>> +            warn_report("ignoring cpr channel for migration mode cpr-exec");
->>
->> migration/cpr.c does not include "qemu/error-report.h"
+
+Hi David,
+
+Thank you for the quick response and for bringing Igor and Jonathan into 
+the discussion!
+
+On 9/25/2025 1:03 AM, David Hildenbrand wrote:
+> On 24.09.25 12:33, fanhuang wrote:
+>> Hi David,
 > 
-> It builds just fine because it is included indirectly, but I will include it
-> directly.
-
-
-The build broke on my tree but I have other patches moving code. It is
-better to be explicit.
-
-
-Thanks,
-
-C.
-
-
+> Hi!
 > 
-> - Steve
->>> +        }
->>> +    } else if (channel) {
->>>           mode = MIG_MODE_CPR_TRANSFER;
->>>           cpr_set_incoming_mode(mode);
->>>           f = cpr_transfer_input(channel, errp);
->>> @@ -232,6 +250,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->>>       }
->>>       trace_cpr_state_load(MigMode_str(mode));
->>> +    cpr_set_incoming_mode(mode);
->>>       v = qemu_get_be32(f);
->>>       if (v != QEMU_CPR_FILE_MAGIC) {
->>> @@ -253,6 +272,11 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->>>           return ret;
->>>       }
->>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
->>> +        /* Set cloexec to prevent fd leaks from fork until the next cpr-exec */
->>> +        cpr_walk_fd(unpreserve_fd);
->>> +    }
->>> +
->>>       /*
->>>        * Let the caller decide when to close the socket (and generate a HUP event
->>>        * for the sending side).
->>> @@ -273,7 +297,7 @@ void cpr_state_close(void)
->>>   bool cpr_incoming_needed(void *opaque)
->>>   {
->>>       MigMode mode = migrate_mode();
->>> -    return mode == MIG_MODE_CPR_TRANSFER;
->>> +    return mode == MIG_MODE_CPR_TRANSFER || mode == MIG_MODE_CPR_EXEC;
->>>   }
->>>   /*
->>> diff --git a/migration/migration.c b/migration/migration.c
->>> index 08a98f7..2515bec 100644
->>> --- a/migration/migration.c
->>> +++ b/migration/migration.c
->>> @@ -333,6 +333,7 @@ void migration_object_init(void)
->>>       ram_mig_init();
->>>       dirty_bitmap_mig_init();
->>> +    cpr_exec_init();
->>>       /* Initialize cpu throttle timers */
->>>       cpu_throttle_init();
->>> @@ -1796,7 +1797,8 @@ bool migrate_mode_is_cpr(MigrationState *s)
->>>   {
->>>       MigMode mode = s->parameters.mode;
->>>       return mode == MIG_MODE_CPR_REBOOT ||
->>> -           mode == MIG_MODE_CPR_TRANSFER;
->>> +           mode == MIG_MODE_CPR_TRANSFER ||
->>> +           mode == MIG_MODE_CPR_EXEC;
->>>   }
->>>   int migrate_init(MigrationState *s, Error **errp)
->>> @@ -2145,6 +2147,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
->>>           return false;
->>>       }
->>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC &&
->>> +        !s->parameters.has_cpr_exec_command) {
->>> +        error_setg(errp, "cpr-exec mode requires setting cpr-exec-command");
->>> +        return false;
->>> +    }
->>> +
->>>       if (migration_is_blocked(errp)) {
->>>           return false;
->>>       }
->>> diff --git a/migration/ram.c b/migration/ram.c
->>> index 7208bc1..6730a41 100644
->>> --- a/migration/ram.c
->>> +++ b/migration/ram.c
->>> @@ -228,6 +228,7 @@ bool migrate_ram_is_ignored(RAMBlock *block)
->>>       MigMode mode = migrate_mode();
->>>       return !qemu_ram_is_migratable(block) ||
->>>              mode == MIG_MODE_CPR_TRANSFER ||
->>> +           mode == MIG_MODE_CPR_EXEC ||
->>>              (migrate_ignore_shared() && qemu_ram_is_shared(block)
->>>                                       && qemu_ram_is_named_file(block));
->>>   }
->>> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
->>> index 741a588..1aa0573 100644
->>> --- a/migration/vmstate-types.c
->>> +++ b/migration/vmstate-types.c
->>> @@ -321,6 +321,10 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
->>>                     const VMStateField *field)
->>>   {
->>>       int32_t *v = pv;
->>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
->>> +        qemu_get_sbe32s(f, v);
->>> +        return 0;
->>> +    }
->>>       *v = qemu_file_get_fd(f);
->>>       return 0;
->>>   }
->>> @@ -329,6 +333,10 @@ static int put_fd(QEMUFile *f, void *pv, size_t size,
->>>                     const VMStateField *field, JSONWriter *vmdesc)
->>>   {
->>>       int32_t *v = pv;
->>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
->>> +        qemu_put_sbe32s(f, v);
->>> +        return 0;
->>> +    }
->>>       return qemu_file_put_fd(f, *v);
->>>   }
->>> diff --git a/system/vl.c b/system/vl.c
->>> index 4c24073..f395d04 100644
->>> --- a/system/vl.c
->>> +++ b/system/vl.c
->>> @@ -3867,6 +3867,8 @@ void qemu_init(int argc, char **argv)
->>>       }
->>>       qemu_init_displays();
->>>       accel_setup_post(current_machine);
->>> -    os_setup_post();
->>> +    if (migrate_mode() != MIG_MODE_CPR_EXEC) {
->>> +        os_setup_post();
->>> +    }
->>>       resume_mux_open();
->>>   }
->>> diff --git a/migration/trace-events b/migration/trace-events
->>> index 706db97..e8edd1f 100644
->>> --- a/migration/trace-events
->>> +++ b/migration/trace-events
->>> @@ -354,6 +354,7 @@ cpr_state_save(const char *mode) "%s mode"
->>>   cpr_state_load(const char *mode) "%s mode"
->>>   cpr_transfer_input(const char *path) "%s"
->>>   cpr_transfer_output(const char *path) "%s"
->>> +cpr_exec(void) ""
->>>   # block-dirty-bitmap.c
->>>   send_bitmap_header_enter(void) ""
+> CCing Igor and Jonathan.
+> 
 >>
+>> I hope this email finds you well. It's been several months since 
+>> Zhigang last discussion about the Special Purpose Memory (SPM) 
+>> implementation in QEMU with you, and I wanted to provide some 
+>> background context before presenting the new patch based on your 
+>> valuable suggestions.
+>>
+>> Previous Discussion Summary
+>> ===========================
+>> Back in December 2024, we had an extensive discussion regarding my 
+>> original patch that added the `hmem` option to `memory-backend-file`. 
+>> During that conversation, you raised several important concerns about 
+>> the design approach:
+>>
+>> Original Approach (December 2024)
+>> ----------------------------------
+>> - Zhigang's patch: Added `hmem=on` option to `memory-backend-file`
+>> - QEMU cmdline example:
+>>    -object memory-backend-file,size=16G,id=m1,mem-path=/dev/ 
+>> dax0.0,prealloc=on,align=1G,hmem=on
+>>    -numa node,nodeid=1,memdev=m1
+>>
+>> Your Concerns and Suggestions
+>> -----------------------------
+>> You correctly identified some issues with the original approach:
+>> - Configuration Safety: Users could create problematic configurations 
+>> like:
+>>     -object memory-backend-file,size=16G,id=unused,mem- 
+>> path=whatever,hmem=on
+>>
+>> - Your Recommendation: You proposed a cleaner approach using NUMA node 
+>> configuration:
+>>     -numa node,nodeid=1,memdev=m1,spm=on
+> 
+> Oh my, I don't remember all the details from that discussion :)
+> 
+> I assume that any memory devices (DIMM/NVDIMM/virtio-mem) we would
+> cold/hotplug to such a NUMA node would not be indicated as spm, correct?
+>
+Yes, that's absolutely correct. The `spm=on` option only affects the boot
+memory that is assigned to the NUMA node through the `memdev=` parameter.
+>>
+>> Project Context
+>> ===============
+>> To refresh your memory on the use case:
+>> - Objective: Pass `EFI_MEMORY_SP` (Special Purpose Memory) type memory 
+>> from host to QEMU virtual machine
+>> - Application: Memory reserved for specific PCI devices (e.g., VFIO- 
+>> PCI devices)
+>> - Guest Behavior: The SPM memory should be recognized by the guest OS 
+>> and claimed by hmem-dax driver
+>>
+>> Complete QEMU Configuration Example:
+>> -object memory-backend-ram,size=8G,id=m0
+>> -object memory-backend-file,size=16G,id=m1,mem-path=/dev/ 
+>> dax0.0,prealloc=on,align=1G
+>> -numa node,nodeid=0,memdev=m0
+>> -numa node,nodeid=1,memdev=m1,spm=on  # <-- New approach based on your 
+>> suggestion
+> 
+> The only alternative I could think of is gluing it to a memory device. 
+> For example,
+> have something like:
+> 
+> -numa node,nodeid=0,memdev=m0 \
+> -numa node,nodeid=1 \
+> -device pc-dimm,id=sp0,memdev=m1,sp=true
+> 
+> But we would not want (and cannot easily) use DIMMs for that purpose.
+> 
+>>
+>> New Patch Implementation
+>> ========================
+>> Following your recommendations, I have completely redesigned the 
+>> implementation:
+>>
+>> Key Changes:
+>> 1. Removed `hmem` option from `memory-backend-file`
+>> 2. Added `spm` (special-purpose) option to NUMA node configuration
+> 
+> That definitely sounds better to me: essentially "spm" would say: the 
+> boot memory assigned to this
+> node (through memdev=) will be indicated as EFI_MEMORY_SP.
+> 
+Thanks, that's exactly how the implementation works. The `spm=on` option
+ensures that when QEMU builds the EFI memory map, the memory region
+corresponding to the specified `memdev` will be marked with the
+EFI_MEMORY_SP attribute.>>
+>> I would appreciate your review of the new patch implementation. The 
+>> design now follows your suggested approach of using NUMA node 
+>> configuration rather than memory backend options, which should resolve 
+>> the safety and scope issues we discussed.
+>> Thank you for your time and valuable guidance on this implementation.
+>>
+>> Please note that I'm located in UTC+8 timezone, so there might be some 
+>> delay in my responses to your emails due to the time difference. I 
+>> appreciate your patience and understanding.
+> 
+> No worries :)
 > 
 
 
