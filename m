@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DA8CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 10:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733CACAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 10:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1isv-0002LN-Nv; Thu, 25 Sep 2025 06:07:33 -0400
+	id 1v1iyX-00056j-UW; Thu, 25 Sep 2025 06:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1ist-0002L7-RX
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:07:31 -0400
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ id 1v1iyS-000542-58
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:13:18 -0400
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1iso-0006LR-Q7
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:07:29 -0400
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-ea5b96d2488so701309276.0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 03:07:18 -0700 (PDT)
+ id 1v1iyF-0007ky-Kz
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:13:11 -0400
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-eb37d80cc16so733889276.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 03:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758794835; x=1759399635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758795179; x=1759399979; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bBW0W4jDecwbVj0eUTGQG8EAOWaAGuY6Z4bEYTphbjE=;
- b=sgQoFF76Ig6/iJmi6Y42mqYfwBTQb7T7EtROT77y50zp4OlMgfpP/OxxPq9iw7L6aV
- hv5zZ2Jq+hR3jefJOs4LjoHTxzkaTWt/2mnWk4EVVCOu72daoraI+j/YfijVnUmXL07Z
- 89b+V6Je1vG85TQLRS5nVdU1rbyM0hHjQWGOYvKaJ78Vu4jrUHnq4hh3gIbqfbj5Lhhr
- pVKmGf7on3XGt/3Yhj410vPr7wydYJZShHfGfLSFXrW0A7H39s6QWPBfMKfwpRkurLh2
- ojPooLkVxJdzFMtuAdYe0CfoOs29Dfb5af5Mu78wPjh7nGFqBKSIzFTA5XaddJ6gZTyX
- 7gNQ==
+ bh=scxhs7La0+AUy9MQxBDmeXWs1KfS5UJfjG4hAf+A2oc=;
+ b=jH0Gul9i//AtoJVr/vFjk9YG3JmG4LdBOlXaHtiC51BU+2LqJOovKxIfHuunsZ2ZYw
+ Z4kwqHcMDlKfHa0Z9875VxyUqD9gJxTkHbIBW1Oqtd/E9uqgaScZn+Lf4mjn99hpNRc8
+ tBEM4N8Ov3PW3y1RM8KHQwnd2dQQ/jKHCF7ybhmPylf14Mw2otmI8ENCBMsDyfIuRdzP
+ ggBL68pRpMpfoVculfkjMC38PU+R4GlWj+34JJH8iO2d/ZP1cRERChJB5DYuzDrFTuGe
+ XjbuWKu14l419N5ciVR1/pNBlRclRsLvxDrsDkCycULVN419AJ5L5IFvvBSQ3vLVDbqB
+ 7zWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758794835; x=1759399635;
+ d=1e100.net; s=20230601; t=1758795179; x=1759399979;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bBW0W4jDecwbVj0eUTGQG8EAOWaAGuY6Z4bEYTphbjE=;
- b=pDeUoda2kjcC6ICyhyZ8IavJKprC29WBw8qSzNfUJTect/1VqyPPeGvtjdWQrmONbY
- 8N7ysPObCjlvpC8jzzKd4DxJbPiVCNE4/rL+9DVaKeWJsUORJs1DgASiB5vlPNx2RtVy
- IeB6Dgv+HH//M2SuoXe84mFH19KDiR2sZPhCy3rndNEtJV5pNQVhHg/UL/DAAY3fkdsV
- 2PsyAAscXGBzuj/opyiHKBgDCUGxgU0IOg5NeLgx0EKiOjvYdS/9sV8gFhTIHZxmdMDP
- bEwiaiTomh3MJNJUNlkGLKEjH98x0eqaX10UZChvknxCHZZ+Zy2wA4t6ZVKJHSIxYFWk
- QRLQ==
-X-Gm-Message-State: AOJu0YzVZ9XN+1c1FNPqAp5TOK1hfajbO0kOqL8eJQOv6cJLnzjZT7s7
- /5WOH0uwagGsBfnr7Hd19LdoBrCWxjFtLNQhsfK9/v1Mb3I9nekVsA1VC+sVOLZ98VNMxeMn6Ug
- mYdykZEwJEtOiFHPgX2CXW2DorDfCbWYh0I3vs6bo9w==
-X-Gm-Gg: ASbGncu8MThG3khQmn+uYXAguzsPG01eEYUgBZr8e521f0HakT1ZdXZCORX4FYKw/+k
- daSyPmu/xlyworhbLQEg6+ZdG28fzzC4ZvYSwNMwOWSoYifPvNcowKUVxBZsEz+6uJ1UGY27iUT
- DecqTESlzLue7eX6qDxXwR4BFeZ1Li5h1mlxunPaDCNMKDN9cG90Lu0Z1IjaXeFzuPZ7bRELrtm
- HayLTAh
-X-Google-Smtp-Source: AGHT+IFmEIHVndkqUmlqxyEo77AFGuF3dE6QM0voeO9Gx+fVKdemN4QXWtZs/5oHGK6lURXw4Huj9EWh/WZB8ZxojTI=
-X-Received: by 2002:a05:6902:2b0f:b0:eae:e225:72cb with SMTP id
- 3f1490d57ef6-eb37fc872aamr2662638276.25.1758794835053; Thu, 25 Sep 2025
- 03:07:15 -0700 (PDT)
+ bh=scxhs7La0+AUy9MQxBDmeXWs1KfS5UJfjG4hAf+A2oc=;
+ b=djv01aWwL+SR5WN0ZIHSOFwyjiqIBi+M3bOMBwuwfJvfId88bIxDt9MJLp/xTKA/Lg
+ qaGfBYPmhjDLvRHWZE49cdfjKJ2NJ9smBNkxjSxzN1R3SkZHhBUAHy0iXGTUnnWw6zUC
+ ilG6bDAMRYOpoRMO/fREbqhTt7DkCeZJrR0ymb8mWFRiriV4kznG1/JLAW9mVdNBgI2W
+ IhM+jY/CHrVE37ZE5vv7N2Kr+GnrlyIymh2Zqo4EEXvddcolWM5b9N0jam9KGnSHuCaG
+ HtrPckvdAQiyXhydC2Js0PM890dyuAT/lD/rlGtScHCT4F7xf+ysg31fH6n6Fp8QRSd8
+ +XWA==
+X-Gm-Message-State: AOJu0YzQPCNch9s3N1xFo1b4D1lHrVnDQ+SEACajFLCzosvrhduvwYV3
+ baaPeYfmS9IkY4SGimJadny1vAi6fNSc8aEC6HLai97N7m3AKnYb5WmFFpPAeHm6fdpBFSOGDjx
+ qzKSzmo0M6V5DmMDpi4EPCjKUt2Qx45UUBFR1kcak0Q==
+X-Gm-Gg: ASbGncteHJYiz0FH7h27G+ONf9NgGNBM59FWuT+9iAzpwYazS2s30NTqsodJnaMB11i
+ 8Ixz16nuwuRiwQRLr/8HRnL0zGjNTYsN1v35Iw4i99NOHd63BifqQP7iBVixO1AYq5QzC/RJW0M
+ eBUX7imIVhSPPai8xYLvpHjPgpP0OiWIIYSO/3asSKOV9iZT44qxXM19yEivfWaZc/46q+s4cUp
+ XPt4Aeh
+X-Google-Smtp-Source: AGHT+IF7GlC4Oi5Chs9PhIKXUcNKQskR9eHl4psSj68xS7gTYogTlhG3CqqxjBNjtnixe2JsBjOHODFhzOqyzxAzq9E=
+X-Received: by 2002:a53:a0ca:0:b0:635:4ecc:fc23 with SMTP id
+ 956f58d0204a3-6361a82e8fdmr1649572d50.43.1758795179120; Thu, 25 Sep 2025
+ 03:12:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250915132910.1252212-1-peter.maydell@linaro.org>
- <db0c9db3-372f-429d-842d-341493204d7a@tls.msk.ru>
-In-Reply-To: <db0c9db3-372f-429d-842d-341493204d7a@tls.msk.ru>
+References: <20250922132217.680404-1-peter.maydell@linaro.org>
+ <5c952898-c129-426f-a68f-42b369ca7aa7@redhat.com>
+In-Reply-To: <5c952898-c129-426f-a68f-42b369ca7aa7@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Sep 2025 11:07:03 +0100
-X-Gm-Features: AS18NWCxWhSm4WGJjUDPBJhNB4R5lVSru6YKJvFsFlwsAd2-Twv3JvrgYCnb_zE
-Message-ID: <CAFEAcA9f+7=pA7ZZQkUsgNSjk-JopT20rMTrWmZy_Jp5=f6bZQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Date: Thu, 25 Sep 2025 11:12:46 +0100
+X-Gm-Features: AS18NWARSgn_3NHsEx-uEfB13pxAYc1aXd8a3G2VO5oucoApAeaRTNdDfJk9oBE
+Message-ID: <CAFEAcA-DYsmigYTd4HVE26xVm3s=KVfqgRzDzzCbqzmPEajs6Q@mail.gmail.com>
+Subject: Re: [PATCH] passt: Declare dependency on gio
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,36 +93,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Sept 2025 at 15:03, Michael Tokarev <mjt@tls.msk.ru> wrote:
+On Tue, 23 Sept 2025 at 13:52, Laurent Vivier <lvivier@redhat.com> wrote:
 >
-> On 15.09.2025 16:29, Peter Maydell wrote:
-> > If the guest feeds invalid data to the UHCI controller, we
-> > can assert:
-> > qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
-> >
-> > (see issue 2548 for the repro case).  This happens because the guest
-> > attempts USB_TOKEN_SETUP to an endpoint other than 0, which is not
-> > valid.  The controller code doesn't catch this guest error, so
-> > instead we hit the assertion in the USB core code.
-> >
-> > Catch the case of SETUP to non-zero endpoint, and treat it as a fatal
-> > error in the TD, in the same way we do for an invalid PID value in
-> > the TD.
-> >
-> > This is the UHCI equivalent of the same bug in OHCI that we fixed in
-> > commit 3c3c233677 ("hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or
-> > OUT").
-> >
-> > This bug has been tracked as CVE-2024-8354.
+> On 22/09/2025 15:22, Peter Maydell wrote:
+> > The passt network backend uses gio; declare this dependency in
+> > meson.build, so we don't try to build it if configured with
+> > --disable-gio or if gio is not present.
 > >
 > > Cc: qemu-stable@nongnu.org
-> > Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2548
+> > Fixes: 854ee02b222 ("net: Add passt network backend")
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3121
 > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   meson.build | 1 +
+> >   1 file changed, 1 insertion(+)
+> >
+> > diff --git a/meson.build b/meson.build
+> > index 6ade30f36ad..c5a56ba5deb 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -1279,6 +1279,7 @@ if not get_option('slirp').auto() or have_system
+> >   endif
+> >
+> >   enable_passt = get_option('passt') \
+> > +  .require(gio.found(), error_message: 'passt requires gio') \
+> >     .require(host_os == 'linux', error_message: 'passt is supported only on Linux') \
+> >     .allowed()
+> >
 >
-> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> I sent the same patch two months ago:
+> https://lists.nongnu.org/archive/html/qemu-devel/2025-07/msg04907.html
 
-Thanks; I'll queue this via target-arm.next unless anybody
-objects to that.
+Sorry, I should have searched the list and saved myself some
+time :-)  I'll pick your patch up via target-arm.next.
 
 -- PMM
 
