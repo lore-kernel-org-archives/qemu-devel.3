@@ -4,112 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFF1CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 20:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B41CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 20:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1sQq-0003pH-Tz; Thu, 25 Sep 2025 16:19:13 -0400
+	id 1v1sRa-0004lQ-OX; Thu, 25 Sep 2025 16:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1v1sQm-0003nT-LM; Thu, 25 Sep 2025 16:19:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1v1sR3-00044W-IX; Thu, 25 Sep 2025 16:19:28 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1v1sQa-0006FT-Kh; Thu, 25 Sep 2025 16:19:07 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PImDjH011568;
- Thu, 25 Sep 2025 20:18:49 GMT
+ id 1v1sQm-0006GX-VG; Thu, 25 Sep 2025 16:19:24 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIm6ps005703;
+ Thu, 25 Sep 2025 20:19:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=xZD0+yS0L5qcJJtfr
- NXA9CFmxbJ6dxB79aBk4VpH3wY=; b=PGv5V9iBf6VIrhwYd4l9sjJ5ukUgAyx+P
- nzHgUlAEmadT+e83XYIAzuMkGOb3o1dDbTnv1UhapusMoCdmU3DRU7lhUNbyX6zr
- n+wGamiTKwUqoYKWHuzJ/L0FzNM3TkZN26F9MWbhQ+OJbPIG2+jYYr09fmO4dQUt
- 0Lnbrs4FYfEkIVB3Ss0b4dIPGpVo91QpxwbnrPzbYISqfXA4oEKEBp/Fz5oVFhkC
- VIg0mgsHlBn8wgYy/QgPPQUNJ+03p9+f0MBD/Ht1sTDHnzBwLBBPaytv03t2LoqZ
- jKr0OdoWHehGhcWB4Lnq8UKtdbrmrOT7b/1sYQi8oLawn4F1q3F0w==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sn4Gkm
+ lHzFMgyAWhSQw+xpB9O2ZB6wwRCJkRZ1DmcIQ=; b=mcynXaNkli8kLZ/3N+35PG
+ XruQOmbxCEMIwIBUVG5GniEftk2M8AtQQv2AP4E+45c7ej8NIq3QabrFD7UNS/tw
+ wdkeC3GaT9jJLs9nlt+dpZFU4yPT55DVCKJfrjC+YrPPj/xXWNsYq6iKU6q+0ITX
+ 8MWs/kqVi6LzTOmQFXqNcN1lOD45LTjhqOTZmFqSZFr6aX8INeThA0lSkrepoSkL
+ Nc6WGWk5VtkXjsOkc6qzdH8LfR0RAUHdy0KBvbV3OZS/R05sWd6tE4qE9lGiznti
+ 0qFOZNfMJ0aTurc+XbL1WM/Hreub2nuzgV86fD/QBm9J1UW1P3i2jNldFdCyidOw
+ ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb48ftn-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb6gfxg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:18:49 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PKInBe011886;
- Thu, 25 Sep 2025 20:18:49 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb48ftj-1
+ Thu, 25 Sep 2025 20:19:01 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PKJ17N007264;
+ Thu, 25 Sep 2025 20:19:01 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb6gfxe-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:18:49 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIIxZq003385;
- Thu, 25 Sep 2025 20:18:47 GMT
+ Thu, 25 Sep 2025 20:19:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIJ4fu014407;
+ Thu, 25 Sep 2025 20:19:00 GMT
 Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49dawkgjqy-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49dawm0jm6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:18:47 +0000
+ Thu, 25 Sep 2025 20:19:00 +0000
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
  by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58PKIkhL30474768
+ 58PKIxX829098732
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Sep 2025 20:18:46 GMT
+ Thu, 25 Sep 2025 20:18:59 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28D0B5805E;
- Thu, 25 Sep 2025 20:18:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 121DC5805C;
+ Thu, 25 Sep 2025 20:18:59 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A12C058051;
- Thu, 25 Sep 2025 20:18:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 955365805A;
+ Thu, 25 Sep 2025 20:18:58 +0000 (GMT)
 Received: from mglenn-KVM.. (unknown [9.10.239.198])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Sep 2025 20:18:45 +0000 (GMT)
+ Thu, 25 Sep 2025 20:18:58 +0000 (GMT)
 From: Glenn Miles <milesg@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
  npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
  rathc@linux.ibm.com, richard.henderson@linaro.org
-Subject: [PATCH v6 2/9] target/ppc: Add IBM PPE42 family of processors
-Date: Thu, 25 Sep 2025 15:17:40 -0500
-Message-ID: <20250925201758.652077-3-milesg@linux.ibm.com>
+Subject: [PATCH v6 8/9] hw/ppc: Add a test machine for the IBM PPE42 CPU
+Date: Thu, 25 Sep 2025 15:17:46 -0500
+Message-ID: <20250925201758.652077-9-milesg@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250925201758.652077-1-milesg@linux.ibm.com>
 References: <20250925201758.652077-1-milesg@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=BbvVE7t2 c=1 sm=1 tr=0 ts=68d5a3a9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=yJojWOMRYYMA:10 a=jRLB2SoPAAAA:8 a=VnNF1IyMAAAA:8 a=CMSrYuGzgbGWQ58TYJUA:9
- a=yloqiLrygL2q3s9aD-8D:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: tMsZHmCPo7ZRDpIbY-0Q5rUnBANUdxVr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX6qQHJlNwBS09
- tjold+3hjjUIsF4tICi9pOwpEQQ+NvIlMJnK2n7kpuN5VaI9uaiVzOIpVEIdPRkKueySHMZp7Vy
- jBpPJsqbeVEq8JlsX8Jv70T3ddxb32l2cXOQpswPinFis7qaFZFp8VKiQEtTxt53o3sGJJMvdkE
- 6rKqJ9zqZAlgyaRL2b95z4FqGWJYGDGRj3+4Phoq4D9qWqyQs0+CqvvYKLa96ABR3dfgXgo4JoM
- pkFu7MbMikDOeQH60O9RKg3CN/UOe0RCU6qX0NTpHXiv6Fx7Pr+t6S/Qg8YGP4Jh/7jFcjfS+pY
- uyz5vgQbC8wYiAS3Im9fgNovMab+o5UmRc0tGS+oSMvT0WK5wJABOiYn9GX5QIREmshZ1gvOkzd
- K8T1wMEb85Ou41IWqMa8wk+iZAX7fA==
-X-Proofpoint-GUID: NZqBV7_paCJS-GyIjtPgUI4X9Gp58Wbr
+X-Authority-Analysis: v=2.4 cv=MfBhep/f c=1 sm=1 tr=0 ts=68d5a3b5 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=69wJf7TsAAAA:8 a=up-X0YpDAAAA:8 a=otBICX0EUfEeupRF_54A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22 a=86FmjZgct7XXK6GGpxvI:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: X8TYBnir8LJKjDlrscEgGA2ag06W3uHU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfXwFGrWYKuIq1l
+ VyL/v5jxoi+z5J6/W2OslSPRvWhNNYrKWLMPLzMI7v8j9hH8tGsId0GzlrDOZ390Nrk17lnKnLK
+ OPJ39RVuxKNtVD4zCFDGO+kY7wGj0FRhHrJiwFEr+HjTqmLmt9F7ZiqZLvXQLNjT/U9L/vC4wC2
+ 11aOiJT0PJy4tm/ih2t0yoBSY9J57mXuZH/7+X6e974V5iMOeEmOrKX2F07pkjzMrLYYDQEKITb
+ hxxA4197FF0d6cIfcScnruPC1Oe8WG+9pnprdoPScN6oY2dpALkND84bWXdB4sHBQO/i0j1sWJI
+ hC6H6189hqW1TrE4QIOrPPUGA/ulR7R5uWysrMTOeJUfFOlcs/PXp7ZU8IDdnQHw075au4TauH/
+ 9mvt2ggjsBBFUSFZjSYWTY4RAUdkig==
+X-Proofpoint-ORIG-GUID: Ab5NmKmI0ClYrhLnPlRNFOT0Beuh5qUQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509250174
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ clxscore=1015 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,445 +127,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds the IBM PPE42 family of 32-bit processors supporting
-the PPE42, PPE42X and PPE42XM processor versions.  These
-processors are used as embedded processors in the IBM
-Power9, Power10 and Power12 processors for various
-tasks.  It is basically a stripped down version of the
-IBM PowerPC 405 processor, with some added instructions
-for handling 64-bit loads and stores.
+Adds a test machine for the IBM PPE42 processor, including a
+DEC, FIT, WDT and 512 KiB of ram.
 
-For more information on the PPE 42 processor please visit:
-
-https://wiki.raptorcs.com/w/images/a/a3/PPE_42X_Core_Users_Manual.pdf
-
-Supports PPE42 SPR's (Including the MSR).
-
-Does not yet support exceptions, new PPE42 instructions and
-does not prevent access to some invalid instructions and
-registers (currently allows access to invalid GPR's and CR
-fields).
+The purpose of this machine is only to provide a generic platform
+for testing instructions of the recently  added PPE42 processor
+model which is used extensively in the IBM Power9, Power10 and
+future Power server processors.
 
 Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
+ MAINTAINERS            |   6 +++
+ hw/ppc/Kconfig         |   5 ++
+ hw/ppc/meson.build     |   2 +
+ hw/ppc/ppe42_machine.c | 102 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 115 insertions(+)
+ create mode 100644 hw/ppc/ppe42_machine.c
 
-Changes from v5:
-  - Added missing POWERPC_FLAG_PPE42 check (Chinmay)
-
- target/ppc/cpu-models.c  |   7 ++
- target/ppc/cpu_init.c    | 207 ++++++++++++++++++++++++++++++++-------
- target/ppc/helper_regs.c |  41 +++++---
- target/ppc/translate.c   |   6 +-
- 4 files changed, 205 insertions(+), 56 deletions(-)
-
-diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-index ea86ea202a..09f73e23a8 100644
---- a/target/ppc/cpu-models.c
-+++ b/target/ppc/cpu-models.c
-@@ -116,6 +116,13 @@
-                 NULL)
-     POWERPC_DEF("x2vp20",        CPU_POWERPC_X2VP20,                 405,
-                 NULL)
-+    /* PPE42 Embedded Controllers                                            */
-+    POWERPC_DEF("PPE42",         CPU_POWERPC_PPE42,                  ppe42,
-+                "Generic PPE 42")
-+    POWERPC_DEF("PPE42X",        CPU_POWERPC_PPE42X,                 ppe42x,
-+                "Generic PPE 42X")
-+    POWERPC_DEF("PPE42XM",       CPU_POWERPC_PPE42XM,                ppe42xm,
-+                "Generic PPE 42XM")
-     /* PowerPC 440 family                                                    */
- #if defined(TODO_USER_ONLY)
-     POWERPC_DEF("440",           CPU_POWERPC_440,                    440GP,
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index db841f1260..c78b255085 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -1653,6 +1653,47 @@ static void register_8xx_sprs(CPUPPCState *env)
-  * ... and more (thermal management, performance counters, ...)
-  */
+diff --git a/MAINTAINERS b/MAINTAINERS
+index bd417e96f7..6907a87588 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1530,6 +1530,12 @@ F: include/hw/pci-host/grackle.h
+ F: pc-bios/qemu_vga.ndrv
+ F: tests/functional/ppc/test_mac.py
  
-+static void register_ppe42_sprs(CPUPPCState *env)
-+{
-+    spr_register(env, SPR_PPE42_EDR, "EDR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    spr_register(env, SPR_PPE42_ISR, "ISR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    spr_register(env, SPR_PPE42_IVPR, "IVPR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, SPR_NOACCESS,
-+                 0xfff80000);
-+    spr_register(env, SPR_PPE42_PIR, "PIR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_pir,
-+                 0x00000000);
-+    spr_register(env, SPR_PPE42_DBCR, "DBCR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_40x_dbcr0,
-+                 0x00000000);
-+    spr_register(env, SPR_PPE42_DACR, "DACR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    /* Timer */
-+    spr_register(env, SPR_DECR, "DECR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_decr, &spr_write_decr,
-+                 0x00000000);
-+    spr_register(env, SPR_PPE42_TSR, "TSR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_booke_tsr,
-+                 0x00000000);
-+    spr_register(env, SPR_BOOKE_TCR, "TCR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_booke_tcr,
-+                 0x00000000);
-+}
++PPE42
++M: Glenn Miles <milesg@linux.ibm.com>
++L: qemu-ppc@nongnu.org
++S: Odd Fixes
++F: hw/ppc/ppe42_machine.c
 +
- /*****************************************************************************/
- /* Exception vectors models                                                  */
- static void init_excp_4xx(CPUPPCState *env)
-@@ -2200,6 +2241,79 @@ POWERPC_FAMILY(405)(ObjectClass *oc, const void *data)
-                  POWERPC_FLAG_DE | POWERPC_FLAG_BUS_CLK;
- }
+ PReP
+ M: Hervé Poussineau <hpoussin@reactos.org>
+ L: qemu-ppc@nongnu.org
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index ced6bbc740..7091d72fd8 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -44,6 +44,11 @@ config POWERNV
+     select SSI_M25P80
+     select PNV_SPI
  
-+static void init_proc_ppe42(CPUPPCState *env)
++config PPC405
++    bool
++    default y
++    depends on PPC
++
+ config PPC440
+     bool
+     default y
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index 9893f8adeb..170b90ae7d 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -57,6 +57,8 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_n1_chiplet.c',
+ ))
+ # PowerPC 4xx boards
++ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
++  'ppe42_machine.c'))
+ ppc_ss.add(when: 'CONFIG_PPC440', if_true: files(
+   'ppc440_bamboo.c',
+   'ppc440_uc.c'))
+diff --git a/hw/ppc/ppe42_machine.c b/hw/ppc/ppe42_machine.c
+new file mode 100644
+index 0000000000..d7c4a01fb5
+--- /dev/null
++++ b/hw/ppc/ppe42_machine.c
+@@ -0,0 +1,102 @@
++/*
++ * Test Machine for the IBM PPE42 processor
++ *
++ * Copyright (c) 2025, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qemu/error-report.h"
++#include "system/address-spaces.h"
++#include "hw/boards.h"
++#include "hw/ppc/ppc.h"
++#include "system/system.h"
++#include "system/reset.h"
++#include "system/kvm.h"
++#include "qapi/error.h"
++
++#define TYPE_PPE42_MACHINE MACHINE_TYPE_NAME("ppe42_machine")
++typedef MachineClass Ppe42MachineClass;
++typedef struct Ppe42MachineState Ppe42MachineState;
++DECLARE_OBJ_CHECKERS(Ppe42MachineState, Ppe42MachineClass,
++                     PPE42_MACHINE, TYPE_PPE42_MACHINE)
++
++struct Ppe42MachineState {
++    MachineState parent_obj;
++
++    PowerPCCPU cpu;
++};
++
++static void main_cpu_reset(void *opaque)
 +{
-+    register_ppe42_sprs(env);
++    PowerPCCPU *cpu = opaque;
 +
-+    env->dcache_line_size = 32;
-+    env->icache_line_size = 32;
-+    /* Allocate hardware IRQ controller */
-+    ppc40x_irq_init(env_archcpu(env));
-+
-+    SET_FIT_PERIOD(8, 12, 16, 20);
-+    SET_WDT_PERIOD(16, 20, 24, 28);
++    cpu_reset(CPU(cpu));
 +}
 +
-+static void ppe42_class_common_init(PowerPCCPUClass *pcc)
++static void ppe42_machine_init(MachineState *machine)
 +{
-+    pcc->init_proc = init_proc_ppe42;
-+    pcc->check_pow = check_pow_nocheck;
-+    pcc->check_attn = check_attn_none;
-+    pcc->insns_flags = PPC_INSNS_BASE |
-+                       PPC_WRTEE |
-+                       PPC_CACHE |
-+                       PPC_CACHE_DCBZ |
-+                       PPC_MEM_SYNC;
-+    pcc->msr_mask = R_MSR_SEM_MASK |
-+                    (1ull << MSR_IS0) |
-+                    R_MSR_SIBRC_MASK |
-+                    (1ull << MSR_LP) |
-+                    (1ull << MSR_WE) |
-+                    (1ull << MSR_IS1) |
-+                    (1ull << MSR_UIE) |
-+                    (1ull << MSR_EE) |
-+                    (1ull << MSR_ME) |
-+                    (1ull << MSR_IS2) |
-+                    (1ull << MSR_IS3) |
-+                    (1ull << MSR_IPE) |
-+                    R_MSR_SIBRCA_MASK;
-+    pcc->mmu_model = POWERPC_MMU_REAL;
-+    pcc->excp_model = POWERPC_EXCP_40x;
-+    pcc->bus_model = PPC_FLAGS_INPUT_PPE42;
-+    pcc->bfd_mach = bfd_mach_ppc_403;
-+    pcc->flags = POWERPC_FLAG_PPE42 | POWERPC_FLAG_BUS_CLK;
-+}
++    Ppe42MachineState *pms = PPE42_MACHINE(machine);
++    PowerPCCPU *cpu = &pms->cpu;
 +
-+POWERPC_FAMILY(ppe42)(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-+
-+    dc->desc = "PPE 42";
-+    pcc->insns_flags2 = PPC2_PPE42;
-+    ppe42_class_common_init(pcc);
-+}
-+
-+POWERPC_FAMILY(ppe42x)(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-+
-+    dc->desc = "PPE 42X";
-+    pcc->insns_flags2 = PPC2_PPE42 | PPC2_PPE42X;
-+    ppe42_class_common_init(pcc);
-+}
-+
-+POWERPC_FAMILY(ppe42xm)(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-+
-+    dc->desc = "PPE 42XM";
-+    pcc->insns_flags2 = PPC2_PPE42 | PPC2_PPE42X | PPC2_PPE42XM;
-+    ppe42_class_common_init(pcc);
-+}
-+
- static void init_proc_440EP(CPUPPCState *env)
- {
-     register_BookE_sprs(env, 0x000000000000FFFFULL);
-@@ -6802,53 +6916,64 @@ static void init_ppc_proc(PowerPCCPU *cpu)
- 
-     /* MSR bits & flags consistency checks */
-     if (env->msr_mask & (1 << 25)) {
--        switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
-+        switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE |
-+                              POWERPC_FLAG_PPE42)) {
-         case POWERPC_FLAG_SPE:
-         case POWERPC_FLAG_VRE:
-+        case POWERPC_FLAG_PPE42:
-             break;
-         default:
-             fprintf(stderr, "PowerPC MSR definition inconsistency\n"
--                    "Should define POWERPC_FLAG_SPE or POWERPC_FLAG_VRE\n");
-+                    "Should define POWERPC_FLAG_SPE or POWERPC_FLAG_VRE\n"
-+                    "or POWERPC_FLAG_PPE42\n");
-             exit(1);
-         }
--    } else if (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
-+    } else if (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE |
-+                             POWERPC_FLAG_PPE42)) {
-         fprintf(stderr, "PowerPC MSR definition inconsistency\n"
--                "Should not define POWERPC_FLAG_SPE nor POWERPC_FLAG_VRE\n");
-+                "Should not define POWERPC_FLAG_SPE nor POWERPC_FLAG_VRE\n"
-+                "nor POWERPC_FLAG_PPE42\n");
-         exit(1);
-     }
-     if (env->msr_mask & (1 << 17)) {
--        switch (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE)) {
-+        switch (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE |
-+                              POWERPC_FLAG_PPE42)) {
-         case POWERPC_FLAG_TGPR:
-         case POWERPC_FLAG_CE:
-+        case POWERPC_FLAG_PPE42:
-             break;
-         default:
-             fprintf(stderr, "PowerPC MSR definition inconsistency\n"
--                    "Should define POWERPC_FLAG_TGPR or POWERPC_FLAG_CE\n");
-+                    "Should define POWERPC_FLAG_TGPR or POWERPC_FLAG_CE\n"
-+                    "or POWERPC_FLAG_PPE42\n");
-             exit(1);
-         }
--    } else if (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE)) {
-+    } else if (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE |
-+                             POWERPC_FLAG_PPE42)) {
-         fprintf(stderr, "PowerPC MSR definition inconsistency\n"
--                "Should not define POWERPC_FLAG_TGPR nor POWERPC_FLAG_CE\n");
-+                "Should not define POWERPC_FLAG_TGPR nor POWERPC_FLAG_CE\n"
-+                "nor POWERPC_FLAG_PPE42\n");
-         exit(1);
-     }
-     if (env->msr_mask & (1 << 10)) {
-         switch (env->flags & (POWERPC_FLAG_SE | POWERPC_FLAG_DWE |
--                              POWERPC_FLAG_UBLE)) {
-+                              POWERPC_FLAG_UBLE | POWERPC_FLAG_PPE42)) {
-         case POWERPC_FLAG_SE:
-         case POWERPC_FLAG_DWE:
-         case POWERPC_FLAG_UBLE:
-+        case POWERPC_FLAG_PPE42:
-             break;
-         default:
-             fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-                     "Should define POWERPC_FLAG_SE or POWERPC_FLAG_DWE or "
--                    "POWERPC_FLAG_UBLE\n");
-+                    "POWERPC_FLAG_UBLE or POWERPC_FLAG_PPE42\n");
-             exit(1);
-         }
-     } else if (env->flags & (POWERPC_FLAG_SE | POWERPC_FLAG_DWE |
--                             POWERPC_FLAG_UBLE)) {
-+                             POWERPC_FLAG_UBLE | POWERPC_FLAG_PPE42)) {
-         fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-                 "Should not define POWERPC_FLAG_SE nor POWERPC_FLAG_DWE nor "
--                "POWERPC_FLAG_UBLE\n");
-+                "POWERPC_FLAG_UBLE nor POWERPC_FLAG_PPE42\n");
-             exit(1);
-     }
-     if (env->msr_mask & (1 << 9)) {
-@@ -6867,18 +6992,23 @@ static void init_ppc_proc(PowerPCCPU *cpu)
-         exit(1);
-     }
-     if (env->msr_mask & (1 << 2)) {
--        switch (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM)) {
-+        switch (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM |
-+                              POWERPC_FLAG_PPE42)) {
-         case POWERPC_FLAG_PX:
-         case POWERPC_FLAG_PMM:
-+        case POWERPC_FLAG_PPE42:
-             break;
-         default:
-             fprintf(stderr, "PowerPC MSR definition inconsistency\n"
--                    "Should define POWERPC_FLAG_PX or POWERPC_FLAG_PMM\n");
-+                    "Should define POWERPC_FLAG_PX or POWERPC_FLAG_PMM\n"
-+                    "or POWERPC_FLAG_PPE42\n");
-             exit(1);
-         }
--    } else if (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM)) {
-+    } else if (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM |
-+                             POWERPC_FLAG_PPE42)) {
-         fprintf(stderr, "PowerPC MSR definition inconsistency\n"
--                "Should not define POWERPC_FLAG_PX nor POWERPC_FLAG_PMM\n");
-+                "Should not define POWERPC_FLAG_PX nor POWERPC_FLAG_PMM\n"
-+                "nor POWERPC_FLAG_PPE42\n");
-         exit(1);
-     }
-     if ((env->flags & POWERPC_FLAG_BUS_CLK) == 0) {
-@@ -7243,39 +7373,40 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
-     }
- 
-     msr = (target_ulong)0;
--    msr |= (target_ulong)MSR_HVB;
--    msr |= (target_ulong)1 << MSR_EP;
-+    if (!(env->flags & POWERPC_FLAG_PPE42)) {
-+        msr |= (target_ulong)MSR_HVB;
-+        msr |= (target_ulong)1 << MSR_EP;
- #if defined(DO_SINGLE_STEP) && 0
--    /* Single step trace mode */
--    msr |= (target_ulong)1 << MSR_SE;
--    msr |= (target_ulong)1 << MSR_BE;
-+        /* Single step trace mode */
-+        msr |= (target_ulong)1 << MSR_SE;
-+        msr |= (target_ulong)1 << MSR_BE;
- #endif
- #if defined(CONFIG_USER_ONLY)
--    msr |= (target_ulong)1 << MSR_FP; /* Allow floating point usage */
--    msr |= (target_ulong)1 << MSR_FE0; /* Allow floating point exceptions */
--    msr |= (target_ulong)1 << MSR_FE1;
--    msr |= (target_ulong)1 << MSR_VR; /* Allow altivec usage */
--    msr |= (target_ulong)1 << MSR_VSX; /* Allow VSX usage */
--    msr |= (target_ulong)1 << MSR_SPE; /* Allow SPE usage */
--    msr |= (target_ulong)1 << MSR_PR;
-+        msr |= (target_ulong)1 << MSR_FP; /* Allow floating point usage */
-+        msr |= (target_ulong)1 << MSR_FE0; /* Allow floating point exceptions */
-+        msr |= (target_ulong)1 << MSR_FE1;
-+        msr |= (target_ulong)1 << MSR_VR; /* Allow altivec usage */
-+        msr |= (target_ulong)1 << MSR_VSX; /* Allow VSX usage */
-+        msr |= (target_ulong)1 << MSR_SPE; /* Allow SPE usage */
-+        msr |= (target_ulong)1 << MSR_PR;
- #if defined(TARGET_PPC64)
--    msr |= (target_ulong)1 << MSR_TM; /* Transactional memory */
-+        msr |= (target_ulong)1 << MSR_TM; /* Transactional memory */
- #endif
- #if !TARGET_BIG_ENDIAN
--    msr |= (target_ulong)1 << MSR_LE; /* Little-endian user mode */
--    if (!((env->msr_mask >> MSR_LE) & 1)) {
--        fprintf(stderr, "Selected CPU does not support little-endian.\n");
--        exit(1);
--    }
-+        msr |= (target_ulong)1 << MSR_LE; /* Little-endian user mode */
-+        if (!((env->msr_mask >> MSR_LE) & 1)) {
-+            fprintf(stderr, "Selected CPU does not support little-endian.\n");
-+            exit(1);
-+        }
- #endif
- #endif
- 
- #if defined(TARGET_PPC64)
--    if (mmu_is_64bit(env->mmu_model)) {
--        msr |= (1ULL << MSR_SF);
--    }
-+        if (mmu_is_64bit(env->mmu_model)) {
-+            msr |= (1ULL << MSR_SF);
-+        }
- #endif
--
++    if (kvm_enabled()) {
++        error_report("machine %s does not support the KVM accelerator",
++                     MACHINE_GET_CLASS(machine)->name);
++        exit(EXIT_FAILURE);
 +    }
-     hreg_store_msr(env, msr, 1);
- 
- #if !defined(CONFIG_USER_ONLY)
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 5f21739749..41b7b939ec 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -308,9 +308,6 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
-         value &= ~(1 << MSR_ME);
-         value |= env->msr & (1 << MSR_ME);
-     }
--    if ((value ^ env->msr) & (R_MSR_IR_MASK | R_MSR_DR_MASK)) {
--        cpu_interrupt_exittb(cs);
--    }
-     if ((env->mmu_model == POWERPC_MMU_BOOKE ||
-          env->mmu_model == POWERPC_MMU_BOOKE206) &&
-         ((value ^ env->msr) & R_MSR_GS_MASK)) {
-@@ -321,8 +318,14 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
-         /* Swap temporary saved registers with GPRs */
-         hreg_swap_gpr_tgpr(env);
-     }
--    if (unlikely((value ^ env->msr) & R_MSR_EP_MASK)) {
--        env->excp_prefix = FIELD_EX64(value, MSR, EP) * 0xFFF00000;
-+    /* PPE42 uses IR, DR and EP MSR bits for other purposes */
-+    if (likely(!(env->flags & POWERPC_FLAG_PPE42))) {
-+        if ((value ^ env->msr) & (R_MSR_IR_MASK | R_MSR_DR_MASK)) {
-+            cpu_interrupt_exittb(cs);
-+        }
-+        if (unlikely((value ^ env->msr) & R_MSR_EP_MASK)) {
-+            env->excp_prefix = FIELD_EX64(value, MSR, EP) * 0xFFF00000;
-+        }
-     }
-     /*
-      * If PR=1 then EE, IR and DR must be 1
-@@ -464,6 +467,23 @@ void register_generic_sprs(PowerPCCPU *cpu)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
++    if (machine->ram_size > 512 * KiB) {
++        error_report("RAM size more than 512 KiB is not supported");
++        exit(1);
++    }
 +
-+    spr_register(env, SPR_PVR, "PVR",
-+                 /* Linux permits userspace to read PVR */
-+#if defined(CONFIG_LINUX_USER)
-+                 &spr_read_generic,
-+#else
-+                 SPR_NOACCESS,
-+#endif
-+                 SPR_NOACCESS,
-+                 &spr_read_generic, SPR_NOACCESS,
-+                 pcc->pvr);
-+
-+    /* PPE42 doesn't support SPRG1-3, SVR or TB regs */
-+    if (env->insns_flags2 & PPC2_PPE42) {
++    /* init CPU */
++    object_initialize_child(OBJECT(pms), "cpu", cpu, machine->cpu_type);
++    if (!qdev_realize(DEVICE(cpu), NULL, &error_fatal)) {
 +        return;
 +    }
 +
-     spr_register(env, SPR_SPRG1, "SPRG1",
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-@@ -477,17 +497,6 @@ void register_generic_sprs(PowerPCCPU *cpu)
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
- 
--    spr_register(env, SPR_PVR, "PVR",
--                 /* Linux permits userspace to read PVR */
--#if defined(CONFIG_LINUX_USER)
--                 &spr_read_generic,
--#else
--                 SPR_NOACCESS,
--#endif
--                 SPR_NOACCESS,
--                 &spr_read_generic, SPR_NOACCESS,
--                 pcc->pvr);
--
-     /* Register SVR if it's defined to anything else than POWERPC_SVR_NONE */
-     if (pcc->svr != POWERPC_SVR_NONE) {
-         if (pcc->svr & POWERPC_SVR_E500) {
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 27f90c3cc5..fc817dab54 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4264,8 +4264,10 @@ static void gen_mtmsr(DisasContext *ctx)
-         /* L=1 form only updates EE and RI */
-         mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
-     } else {
--        /* mtmsr does not alter S, ME, or LE */
--        mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-+        if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
-+            /* mtmsr does not alter S, ME, or LE */
-+            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-+        }
- 
-         /*
-          * XXX: we need to update nip before the store if we enter
++    qemu_register_reset(main_cpu_reset, cpu);
++
++    /* This sets the decrementer timebase */
++    ppc_booke_timers_init(cpu, 37500000, PPC_TIMER_PPE);
++
++    /* RAM */
++    memory_region_add_subregion(get_system_memory(), 0xfff80000, machine->ram);
++}
++
++
++static void ppe42_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    static const char * const valid_cpu_types[] = {
++        POWERPC_CPU_TYPE_NAME("PPE42"),
++        POWERPC_CPU_TYPE_NAME("PPE42X"),
++        POWERPC_CPU_TYPE_NAME("PPE42XM"),
++        NULL,
++    };
++
++    mc->desc = "PPE42 Test Machine";
++    mc->init = ppe42_machine_init;
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("PPE42XM");
++    mc->valid_cpu_types = valid_cpu_types;
++    mc->default_ram_id = "ram";
++    mc->default_ram_size = 512 * KiB;
++}
++
++static const TypeInfo ppe42_machine_info = {
++        .name          = TYPE_PPE42_MACHINE,
++        .parent        = TYPE_MACHINE,
++        .instance_size = sizeof(Ppe42MachineState),
++        .class_init    = ppe42_machine_class_init,
++        .class_size    = sizeof(Ppe42MachineClass),
++};
++
++static void ppe42_machine_register_types(void)
++{
++    type_register_static(&ppe42_machine_info);
++}
++
++type_init(ppe42_machine_register_types);
++
 -- 
 2.43.0
 
