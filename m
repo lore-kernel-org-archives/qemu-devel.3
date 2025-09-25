@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01AFBCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF8ACAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1oYu-0005Z4-Bs; Thu, 25 Sep 2025 12:11:16 -0400
+	id 1v1oZl-00061S-49; Thu, 25 Sep 2025 12:12:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oYp-0005YC-Ks
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:11:14 -0400
-Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oZj-0005wp-73
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:12:07 -0400
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oYg-00010u-VZ
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:11:10 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.217])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cXdx85g5vz6Vnt;
- Thu, 25 Sep 2025 16:10:52 +0000 (UTC)
-Received: from kaod.org (37.59.142.110) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oZa-0000z6-N7
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:12:04 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.179])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cXdwv5p8Kz5yH5;
+ Thu, 25 Sep 2025 16:10:39 +0000 (UTC)
+Received: from kaod.org (37.59.142.108) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Thu, 25 Sep
- 2025 18:10:51 +0200
+ 2025 18:10:38 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0041d220c37-f387-4b7a-9b89-51f65f2aa27a,
+ (GARM-108S002ee3b9c0f-7aba-463d-b711-ea9daab2049b,
  430B70353558F8354C2EE2D8074F991CFFE72556) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <8def4bc8-4075-4e69-9838-5cb41f6610bc@kaod.org>
-Date: Thu, 25 Sep 2025 18:10:50 +0200
+Message-ID: <eae962d6-a7ce-4a8c-a3fb-b3e4df78fa6d@kaod.org>
+Date: Thu, 25 Sep 2025 18:10:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/8] hw/arm/aspeed_ast27x0-fc: Make sub-init functions
- return bool with errp
+Subject: Re: [PATCH v3 5/8] hw/arm/aspeed_ast27x0-fc: Drop dead return checks
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20250925050535.2657256-1-jamin_lin@aspeedtech.com>
- <20250925050535.2657256-7-jamin_lin@aspeedtech.com>
+ <20250925050535.2657256-6-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,33 +86,33 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250925050535.2657256-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250925050535.2657256-6-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.108]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 2ba0f404-5799-40a8-a080-56131e8096bf
-X-Ovh-Tracer-Id: 7605453871737441071
+X-Ovh-Tracer-GUID: f980f828-10df-4ca3-aa9f-fd87b78c07de
+X-Ovh-Tracer-Id: 7601794696159660847
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGXl+jaMsTT9SVjFZMzKB/bvUhDKnp8dzfnzeNykRC4mXxoCLgFg28hf2ud44/v9c2o0Ud0GTsvBVRqlgJaVVr8+sUJZYvGJUqsbwrymrJa0dTEKxV+S2gJDRdhVmHBCfQiKvFYha3AEgKYCUFOCBpkwg3H8xJLro8HnplSMW3sS1Q36ATa8I4ExJsq8DnDJaVHq3GMRBW7mxBl1Pejr49FXXn5WedB75kBjR/XSmrtNcNbjpVE+v/HYpzYnMMpp1C7oPgN0hLo+LeTcxdtO30C8d7ZrgHlr/N8bSbi25jqBaHb0cXE6gUxo2G8q6AE9WCDdX4dgi04+m6sg4pl4oyZXyhYWh6BSxTn0/htM0S6KOhbB93MG/nhmJcUG6inIFl1cf02F2JBh3e052KJvvmliYS8sOo5y+MWGfa5IDunwnLlzgffyLAxCr7t9lo07Qedr74ii/Rp3On6fXsr2loHLLyZcZVoIKj9/sBArIQI/sS+HsvA4n94O6R914iUBjY0hSA1QRbkPKsp4hgAEajg6a6U/M6oI93dYoSPZPaXI3tGfIGr5Dh3t9L0GThqfar/A3bqQJSN/fM1lcTPyfMgn5R8d/t64vfbvHZb4Y8JmYEXPEoE033ltiaZyICsSoj7mOCnWeIbcKZWhQUTNUy5/T9bREh/4QQ9qF687JDXJw
-DKIM-Signature: a=rsa-sha256; bh=DOB6qdi2ZfFuoaYdX6kAG0MXjldLbK3f+O8uCpHSD0Q=; 
+X-VR-SPAMCAUSE: dmFkZTEvr7eMIKrAE5JvXqeExWppLQvGXISBk0tANnxzr/2D0ZgD5Qzte9WfvtdeaVvfjSXUkCO0SEu4GNWttLSG01vrn6Z/udOxjVuDxN9bKJcab5XvJCxhP+/Kn1cByeeTwVcB6LZiWWrFIuP3ZWtaZ8RU3LuHVYwlPYGhg8OGf+/rt8kT6j4VN8egXkodZueoSNaZ8t9PZkXK3/l83Ep+LA/ZwPclTdWsQ/yGPXzuMgNaMVib5EJX63T5u33ND5F0dfz9ksdNzgJAKVpTdlLKHJ8HB3DyJxzU3J6xoW3zeGz1A6cqRhPxhgpwIny6d5deZVYpb2N9y+rwDKgRbGEDAcOYjiwfOSmFX+jltnucjTeV06ei6RNNp4vxDLG277YcQJjufrkZTBxg/eJnKiU+gXgXHi6KWr85Ao1+u6xwBmu55VTSJOL2sQ+IxnxqS4aTrfjXtNTIZ8ORjAxSld5f3SrOQRCQdCKbXoYwYdeQ2Raqz0j1yuhss596KWGfPpWE3E1H4RS1Y9o8OP/pb9idCHvP2N0Wl1TiuGgJ2AFDl5id5z47nUN3UgJm2LxOC2eDxo3FuaGyaJ4EG6Go+pnSsMTpQB4xlidPAqy+sZ7775LZKhi0QzReoqJ6QEcWHyENndeBDzXCEjlgwVDYuPOT+hzwqzFuQwS8XDksqu47KTGaPw
+DKIM-Signature: a=rsa-sha256; bh=cTVicY/o636vATMUl82X7qHXgQbdIly2coGGu6wdCls=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1758816654; v=1;
- b=fqek1M1IraYtfku3hYFeX+YSARzteFLwWWDoyhOAxPl+gbLOcy868b5ucwS/9TlpMEXu1pU8
- 6G0OhmuK5rQ02JA7AGlTJa3gfudd+3jIN5yq8wpHAlHi8q5P0QyRI6fcC3d/x/iDsdYXu8v7aaM
- 62uYhqoXumc7Ql6ePSe6bQiDEiupLDFr+5anvDOC/5PeEgp4NK9+MwKOdXzf4VwKPBZcYKQk7Cr
- yketJvYC5uGVJdchNkFg+BD7enTz7V4UodSBdrX79VzwtXx6Q723qCFgNb3p7Xas9PigYDmvhSd
- JNqBqqZZnDgZ5AkSW1eYcaLaQSSCNMZHGi66rVZKtGlSw==
-Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
- helo=2.mo548.mail-out.ovh.net
+ t=1758816641; v=1;
+ b=iImFMmM6ROZd6anp3N5MPMqtYsVJWIwN6LPtMZrojWZnL6nOdc7xk7GV8hNM5dZeprbgSbPJ
+ brCFGN2iGaNyaZ3hRg3Lk1APkxtZfwRv7MAbqVJ6oxNlwTEYdat56TXeSmo2s2zURLpzaSjZNFO
+ +vt+LLWfGDOehSrFau4cv3bn5gUf9hyuLe84Neum1bSVvqUAEBnKaiLA/cinp5BaDkIr/pwIXtC
+ aLn7yMAoMq6yLFoNNAlpJg4cLe92zby8LYZ/1/GAyle0Qf9cLvW+q6Y0JtzICDLpRosXLpdnlUd
+ ngd00PALLLcApUfjptzFxuD4H+OQwRXY1v52aI4gTzhyw==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -132,12 +131,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/25/25 07:05, Jamin Lin wrote:
-> Refactor ast2700fc_ca35_init(), ast2700fc_ssp_init(), and ast2700fc_tsp_init()
-> to take an Error **errp parameter and return a bool.
-> Each function now reports failure through the error object and returns false.
+> 1. object_property_set_link() can return false only when it fails, and it
+> sets an error when it fails. Since passing &error_abort causes an abort,
+> the function never returns false, and the return statement is effectively
+> dead code.
+> 2. object_property_set_int() is considered as a routine which shouldn't fail.
+> So the common practice in models is to pass &error_abort and ignore the returned value.
+> https://patchwork.kernel.org/project/qemu-devel/patch/20250717034054.1903991-3-jamin_lin@aspeedtech.com/#26540626
+> 
+> No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -148,98 +152,83 @@ C.
 
 
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 34 ++++++++++++++++++++--------------
->   1 file changed, 20 insertions(+), 14 deletions(-)
+>   hw/arm/aspeed_ast27x0-fc.c | 43 +++++++++++++-------------------------
+>   1 file changed, 14 insertions(+), 29 deletions(-)
 > 
 > diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index ebf3784df5..2e16a0340a 100644
+> index 7087be4288..ebf3784df5 100644
 > --- a/hw/arm/aspeed_ast27x0-fc.c
 > +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -56,7 +56,7 @@ struct Ast2700FCState {
->   #define AST2700FC_FMC_MODEL "w25q01jvq"
->   #define AST2700FC_SPI_MODEL "w25q512jv"
->   
-> -static void ast2700fc_ca35_init(MachineState *machine)
-> +static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->   {
->       Ast2700FCState *s = AST2700A1FC(machine);
->       AspeedSoCState *soc;
-> @@ -71,8 +71,8 @@ static void ast2700fc_ca35_init(MachineState *machine)
->       memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
->   
->       if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
-> -                                AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-> -        return;
-> +                                AST2700FC_BMC_RAM_SIZE, errp)) {
-> +        return false;
+> @@ -74,19 +74,12 @@ static void ast2700fc_ca35_init(MachineState *machine)
+>                                   AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+>           return;
 >       }
->       object_property_set_link(OBJECT(&s->ca35), "memory",
->                                OBJECT(&s->ca35_memory), &error_abort);
-> @@ -92,8 +92,8 @@ static void ast2700fc_ca35_init(MachineState *machine)
->       object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
->                               AST2700FC_HW_STRAP2, &error_abort);
+> -    if (!object_property_set_link(OBJECT(&s->ca35), "memory",
+> -                                  OBJECT(&s->ca35_memory),
+> -                                  &error_abort)) {
+> -        return;
+> -    };
+> -    if (!object_property_set_link(OBJECT(&s->ca35), "dram",
+> -                                  OBJECT(&s->ca35_dram), &error_abort)) {
+> -        return;
+> -    }
+> -    if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
+> -                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+> -        return;
+> -    }
+> +    object_property_set_link(OBJECT(&s->ca35), "memory",
+> +                             OBJECT(&s->ca35_memory), &error_abort);
+> +    object_property_set_link(OBJECT(&s->ca35), "dram", OBJECT(&s->ca35_dram),
+> +                             &error_abort);
+> +    object_property_set_int(OBJECT(&s->ca35), "ram-size",
+> +                            AST2700FC_BMC_RAM_SIZE, &error_abort);
+>   
+>       for (int i = 0; i < sc->macs_num; i++) {
+>           if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
+> @@ -94,14 +87,10 @@ static void ast2700fc_ca35_init(MachineState *machine)
+>               break;
+>           }
+>       }
+> -    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
+> -                                 AST2700FC_HW_STRAP1, &error_abort)) {
+> -        return;
+> -    }
+> -    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
+> -                                 AST2700FC_HW_STRAP2, &error_abort)) {
+> -        return;
+> -    }
+> +    object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
+> +                            AST2700FC_HW_STRAP1, &error_abort);
+> +    object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
+> +                            AST2700FC_HW_STRAP2, &error_abort);
 >       aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
-> -    if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
+>       if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
+>           return;
+> @@ -133,10 +122,8 @@ static void ast2700fc_ssp_init(MachineState *machine)
+>                          UINT64_MAX);
+>   
+>       qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
+> -    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
+> -                                  OBJECT(&s->ssp_memory), &error_abort)) {
 > -        return;
-> +    if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {
-> +        return false;
->       }
->   
->       /*
-> @@ -108,9 +108,11 @@ static void ast2700fc_ca35_init(MachineState *machine)
->       ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
->   
->       arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
-> +
-> +    return true;
->   }
->   
-> -static void ast2700fc_ssp_init(MachineState *machine)
-> +static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->   {
->       AspeedSoCState *soc;
->       Ast2700FCState *s = AST2700A1FC(machine);
-> @@ -127,12 +129,14 @@ static void ast2700fc_ssp_init(MachineState *machine)
+> -    }
+> +    object_property_set_link(OBJECT(&s->ssp), "memory",
+> +                             OBJECT(&s->ssp_memory), &error_abort);
 >   
 >       soc = ASPEED_SOC(&s->ssp);
 >       aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
-> -    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
-> -        return;
-> +    if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {
-> +        return false;
->       }
-> +
-> +    return true;
->   }
+> @@ -157,10 +144,8 @@ static void ast2700fc_tsp_init(MachineState *machine)
+>                          UINT64_MAX);
 >   
-> -static void ast2700fc_tsp_init(MachineState *machine)
-> +static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
->   {
->       AspeedSoCState *soc;
->       Ast2700FCState *s = AST2700A1FC(machine);
-> @@ -149,16 +153,18 @@ static void ast2700fc_tsp_init(MachineState *machine)
+>       qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
+> -    if (!object_property_set_link(OBJECT(&s->tsp), "memory",
+> -                                  OBJECT(&s->tsp_memory), &error_abort)) {
+> -        return;
+> -    }
+> +    object_property_set_link(OBJECT(&s->tsp), "memory",
+> +                             OBJECT(&s->tsp_memory), &error_abort);
 >   
 >       soc = ASPEED_SOC(&s->tsp);
 >       aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
-> -    if (!qdev_realize(DEVICE(&s->tsp), NULL, &error_abort)) {
-> -        return;
-> +    if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {
-> +        return false;
->       }
-> +
-> +    return true;
->   }
->   
->   static void ast2700fc_init(MachineState *machine)
->   {
-> -    ast2700fc_ca35_init(machine);
-> -    ast2700fc_ssp_init(machine);
-> -    ast2700fc_tsp_init(machine);
-> +    ast2700fc_ca35_init(machine, &error_abort);
-> +    ast2700fc_ssp_init(machine, &error_abort);
-> +    ast2700fc_tsp_init(machine, &error_abort);
->   }
->   
->   static void ast2700fc_class_init(ObjectClass *oc, const void *data)
 
 
