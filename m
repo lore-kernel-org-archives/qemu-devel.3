@@ -4,101 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2741DCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 00:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B239CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 00:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Zib-0001Y5-FC; Wed, 24 Sep 2025 20:20:17 -0400
+	id 1v1Zlg-0002M3-FI; Wed, 24 Sep 2025 20:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ZiX-0001XQ-5v
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 20:20:13 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Zle-0002LX-BB
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 20:23:26 -0400
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ZiQ-0003Pj-6j
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 20:20:12 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-46e30ef74b0so2022915e9.0
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 17:20:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ZlZ-0004G9-7q
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 20:23:26 -0400
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-3ee64bc6b90so270254f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 17:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758759602; x=1759364402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758759798; x=1759364598; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yBTysEaJeGfbau7ZgvrXVhzczRMD5WRfmbRaLJ4gBhE=;
- b=JMLhtZkeidvP0RMA1AzbB7tgZRWQeduu0ZwBGFnf8J/fFofixfYOsCNWu3BJy3WNHz
- Ge3rvYuMlX3PEePZEflDeCBYYbruTQSTQaOT4kVsj/hQ/qY/ZY4ceMWQjVQIdUBZvjq+
- RrUfjuK9b55wyBTK5AY73DOsL7Dv+am2/mBV3Ttk2gjzrpx0sJouLNzFwZAwoRgZys+W
- 1kj6aOwHYcONTVvX91giCJL3rcbLaMDhV1UsLt1F3nrSdJQZc8UjVo4Ks8DPfeTTBk8i
- xCx3z76v6xYA4kngxoGzG263ZJLytcXj0nxCDg+eiPEmchYrcdXTHOdfIQnoSwxP1DEo
- 6rYg==
+ bh=45od+RfowEozm3KkW0rCtG0TsUXjQjNE9/V2mzgOnFc=;
+ b=RNEAwQ+w3HhqJ1Yj5Qz3mVZvvGIZEc31Xmme1XHjnwW7t7y0lz34rQh8oY7Q3Fls0c
+ suCX6qkEM34NsxMQEYytzV/moFUQv2NoxcfYw+0e9kNxmHKkIbOjr72J5RGQwiGU83pL
+ rbq4J6pwPrCSAdgWBmL2w8YLqUdUR66ReNeUXA7p8ot/W7lLGmEJL4U+BjKWU0GrPYRH
+ foJYmz6QjAIdZefDaeIaJBi3jOfQhslcOvXUjGeYrzTcacyRImVEKldec+qypRCySGiN
+ FHdkL6uC5F3oghtR19thEqIfYxkeEjo8SEsV0oRav673NTc918fkusZjThRzhaR5LuzX
+ bM9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758759602; x=1759364402;
+ d=1e100.net; s=20230601; t=1758759798; x=1759364598;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yBTysEaJeGfbau7ZgvrXVhzczRMD5WRfmbRaLJ4gBhE=;
- b=r8l5GAbf0WeWZe4zzMbwukIJey7AmkiVSP7ciKOqMGDmcQdrwdW/1alvtXtizsE4CO
- W5MoAZAxED5c8xAj71C4b4PDzk/o8uYwRarOnhxrxhmobM1Nc/5jT38f1SNum4pztk7V
- aucNv+oWmK3c7IEzz09DAwS8UlI9PUJWGI++uaXgjb5pkH9nCCFxyHr1z2efjlfdo1+U
- uvAh7+drcxO+ThMHsgoXZAI21ryk3yh8O0BJ9FFVxAu6oKuNF4d7dXAyjZ0ko0fioM9o
- lNZWPK/H0WossgsZyM+5NmU022tzK23yKyrkpXMimeZaCxTMtcq6BtIkNQjBIVxzO0Fq
- AGtA==
-X-Gm-Message-State: AOJu0YwAwqv3sCnU//ezrCd4tk8C1NdO2iPUH56p7DgEUBAjci7vBrP4
- x5k1u6LNWEkn++EcnHbTVIQuNtCgrb7UriLNQs7YCb5R69ExsM35UK102imjTvmy2LU=
-X-Gm-Gg: ASbGncuSGXxAJ9xLedBNKWEamBbFHwvSntcxzr6eNFSjofYfAVYuXlMoU2JTm6YDfbN
- Kze99WTEnNBQkBIZNld1obrXco4yFVsip2QsQG+o2OJ3S7vbaVO8sjCNBrKfTGO/PNoAz1gTAcJ
- cWltIS0pnxDJ7MlZJAKC743+MDLeCWvg5e8V83xJCVabeSF52npbxT9mPRbbMAlZQMhB5qHjEc4
- yGLqPo9dFFJcgZVvmqqT3FKvsGB4DhIJjV6Po0jqpHcLnELVIogNY5HyIY4h8k0yUr3zdMUYoHV
- R4jS2qIBUgVNycc0LRIZxLbM4m/gNrArFFCUTTs71SG0JzfYrDcY9uNsa9G4m1p94Jchdg15Wn4
- Onxu26Cqehn+iQQS/J4xCfE8J8O2M1fJKpX3yyU2txGgtAVnVYFNpIt9elDxyUkrxEg==
-X-Google-Smtp-Source: AGHT+IFpG9FWod2mOuetb+mLamZZcuHLaDWY25b1ZCgR/+Nd0TSNU+iYMojV0leL+1r9SFKmPErzLg==
-X-Received: by 2002:a05:600c:1c8e:b0:46e:1f86:aeba with SMTP id
- 5b1f17b1804b1-46e329f819dmr16198575e9.17.1758759601540; 
- Wed, 24 Sep 2025 17:20:01 -0700 (PDT)
+ bh=45od+RfowEozm3KkW0rCtG0TsUXjQjNE9/V2mzgOnFc=;
+ b=OCKuolK+7yKy3V4vR/2EpW7zcVb6hLsp9yYKTnALlu1InWQ/vO9uUQlGatfJbZS07b
+ bSFA33LuPTuT92xaBNCMAnwW1+6J/dQubZG6yfT1zIzWrPp5YIUVxn0k4wPex0tpPHJ3
+ sV/lLUmuq2Jt6DzojU5tU/sTuOL/XTTFxIdFooCTF/nIlpF/uBVHZ7NhBqDV0KDQ+J08
+ Bh7lU1eqjl9cUdqxaONApzWjlNw+FWVFeCKfnGaofXpDgp+AQyDGdsRLkKIOhPT2ggwz
+ u96t0WGftVDPiU9m8Z/Qa/z8fTBkDr/ZjaKHGL5+tOjnWPsYWZHE2/CEV3HMI1L15Wum
+ FnRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNRAfUTmBZwt+cwmcSd/4nvpV4NOQt0XO0C2NB75pw5ogGtR744Kz/hPIKTFWw51b7YSwdmJ2qlQX/@nongnu.org
+X-Gm-Message-State: AOJu0Yy2r3658mdpaMStrILCw1QhppuACs+Rabq+rp5ES/fu8Mi5+LiT
+ EN5Mf0Q02JKvakNKwFX+tOwgnjkCHjHvwc8Me7DfE1VIdqwRG3/zPOZ4gyJbPjkBfQthS5mgjE3
+ XEtUQk6Gukixy
+X-Gm-Gg: ASbGncuUkSS5WbO3aFJ52U6MXQadCovT2zNtVczLynoZ19ZuREEABCyAfQLrL1wwk2l
+ nMYPjW1XEhvSfL368Ygy8b+AHD+lVd0pY13TQs39i06GOUwYPMeLpAVA/xpsfbbGJfplbJ5rof9
+ mh9RIhA/dkBj+4lZlvHz7KI1LGbbYs0chez0wYZTXPoB0Wp4cnGw3L1P0CFDaH2hEPGEnflRIik
+ ygnjAHWM2i2Jyp+HVznBkoPx9wt4tknQ/KG7xGBw+tFEp18hbCVGaL45DBGxEchwq4C+ESZV82X
+ ySrLJUdSC62URxze4EtJRLiW891kgJJZeC6nmk+BKvXf2AvxejFvWrEedgWQbOpO8H/wsuQcG8q
+ Oc78QW7CS/cz1DhP08NO14B7sYHkGcV7xOWp3ge2hSiqpW7X4V+hgfuVbDPEwM8Xfew==
+X-Google-Smtp-Source: AGHT+IGuNhmSW4zVPTQfQQSeDlHOQOJ18P8jrXstwXXJnmPgG5g4Vmoib7gsvW2diYoljsE8p1+C7Q==
+X-Received: by 2002:a5d:5d07:0:b0:3f1:ee44:8c00 with SMTP id
+ ffacd0b85a97d-40e46514ffamr1462531f8f.10.1758759797929; 
+ Wed, 24 Sep 2025 17:23:17 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e330d1d2fsm5588915e9.3.2025.09.24.17.19.58
+ 5b1f17b1804b1-46e33b9eabbsm9408955e9.3.2025.09.24.17.23.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 17:20:00 -0700 (PDT)
-Message-ID: <a9d3913f-0996-4f5d-9ba7-b0fb464e9d28@linaro.org>
-Date: Thu, 25 Sep 2025 02:19:57 +0200
+ Wed, 24 Sep 2025 17:23:17 -0700 (PDT)
+Message-ID: <fffc64b1-f17b-4c90-831c-b82fe3449484@linaro.org>
+Date: Thu, 25 Sep 2025 02:23:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] docs/system/security: Restrict "virtualization use
- case" to specific machines
+Subject: Re: [PATCH] tcg/optimize: Fix folding of vector bitsel
 Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-References: <20250908125058.220973-1-peter.maydell@linaro.org>
- <aL7xrilR-gyByKEM@redhat.com>
- <CAFEAcA_wt3HwDq=sJ+VuLdx_RFFwB6E9FjrbT1zgNXGGvfQ9YA@mail.gmail.com>
- <B5215A1D-C8F5-44FD-B19B-70D78B7FD4F5@gmail.com>
+To: WANG Rui <wangrui@loongson.cn>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu@hev.cc
+References: <20250919124901.2756538-1-wangrui@loongson.cn>
+ <c0fc38df-9c52-406f-8d8b-f2496b4e410f@linaro.org>
+ <CAHirt9ifqqrzcc3oJ1VAfEhHAP+U4bW=yh+BJJxkgaArKOhG+A@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <B5215A1D-C8F5-44FD-B19B-70D78B7FD4F5@gmail.com>
+In-Reply-To: <CAHirt9ifqqrzcc3oJ1VAfEhHAP+U4bW=yh+BJJxkgaArKOhG+A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,48 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/9/25 20:16, Bernhard Beschow wrote:
-> Am 8. September 2025 15:15:43 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
->> On Mon, 8 Sept 2025 at 16:09, Daniel P. Berrangé <berrange@redhat.com> wrote:
+On 24/9/25 06:29, WANG Rui wrote:
+> On Wed, Sep 24, 2025 at 12:03 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> On 19/9/25 14:49, WANG Rui wrote:
+>>> It looks like a typo.
+>>
+>> Likely from the TCG_TARGET_HAS_andc_vec case.
+>>
+>>> When the false value (C) is the constant -1, the
+>>> correct fold should be: R = B | ~A
 >>>
->>> On Mon, Sep 08, 2025 at 01:50:57PM +0100, Peter Maydell wrote:
-
-[...]
-
->>> Currently 'virtualization use case' is reasonably vague such that we can
->>> bend its scope as we desire, at the time it is questioned in a possible
->>> security report.
+>>> Reproducer (LoongArch64 assembly):
 >>>
->>> Machine types are only one aspect of this. Devices are the other, and
->>> the area where it gets significantly more fuzzy and difficult because
->>> essentially any device can be used with KVM, and where we draw the
->>> line is fairly arbitrary.
+>>>        .text
+>>>        .globl  _start
+>>>    _start:
+>>>        vldi    $vr1, 3073
+>>>        vldi    $vr2, 1023
+>>>        vbitsel.v       $vr0, $vr2, $vr1, $vr2
+>>>        vpickve2gr.d    $a1, $vr0, 1
+>>>        xori    $a0, $a1, 1
+>>>        li.w    $a7, 93
+>>>        syscall 0
+>>>
+>>> Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
+>>> Link: https://github.com/llvm/llvm-project/issues/159610
+>>> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+>>> ---
+>>>    tcg/optimize.c | 3 ++-
+>>>    1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/tcg/optimize.c b/tcg/optimize.c
+>>> index 3638ab9fea..f69702b26e 100644
+>>> --- a/tcg/optimize.c
+>>> +++ b/tcg/optimize.c
+>>> @@ -1568,9 +1568,10 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
+>>>                return fold_and(ctx, op);
+>>>            }
+>>>            if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
+>>> +            TCGArg ta = op->args[2];
+>>>                op->opc = INDEX_op_orc_vec;
+>>>                op->args[2] = op->args[1];
+>>> -            op->args[1] = op->args[3];
+>>> +            op->args[1] = ta;
+>>>                return fold_orc(ctx, op);
+>>>            }
+>>>        }
+>> Looks correct, but I don't understand the swap. Can't we justkeep the
+>> same argument order for an ORC opcode? I'd have done:
 >>
->> I think that being vague like this is a disservice to our users.
->> If I'm a user of QEMU, I'd like to know whether I'm inside the
->> line or outside of it before I put my config into production,
->> not later on when it turns out there was an exploitable bug
->> that wasn't classified as a security issue...
->>
->> Most devices can't in fact be used with KVM, because they're
->> sysbus devices that aren't used in the machines that you can
->> use with KVM. Pluggable devices are rarer (and yes, under
->> our current policy random PCI devices are effectively
->> in-scope).
+>> -- >8 --
+>> @@ -1569,8 +1569,6 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp
+>> *op)
+>>            }
+>>            if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
+>>                op->opc = INDEX_op_orc_vec;
+>> -            op->args[2] = op->args[1];
+>> -            op->args[1] = op->args[3];
+>>                return fold_orc(ctx, op);
+>>            }
 > 
->  From the top of my head: Various USB and I²C devices can be used as well.
+> Bitwise logic can be tricky and easy to get wrong. In general, (a |
+> ~b) != (b | ~a). For example, when a = 0 and b = 1, the results
+> differ.
 
-I suppose USB /is/ regularly used by 'virtualization use case' for input.
+Oh right.
 
-Also I expect I2C to be mandatory on x86/q35 due to the SMBus
-dependency.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Like we list machines here, should we be explicit about devices covered?
-
-> Best regards,
-> Bernhard
 > 
->>
->> thanks
->> -- PMM
+>>        }
+>> ---
+> 
 
