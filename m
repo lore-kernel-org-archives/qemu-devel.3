@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFD2CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 20:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B2FCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 20:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1sR9-00049y-AE; Thu, 25 Sep 2025 16:19:33 -0400
+	id 1v1sRe-0004vO-NH; Thu, 25 Sep 2025 16:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1v1sQp-0003pT-H4; Thu, 25 Sep 2025 16:19:12 -0400
+ id 1v1sR3-00044V-Ii; Thu, 25 Sep 2025 16:19:28 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1v1sQd-0006Fh-Vo; Thu, 25 Sep 2025 16:19:10 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PImNgE006234;
- Thu, 25 Sep 2025 20:18:53 GMT
+ id 1v1sQn-0006GU-SY; Thu, 25 Sep 2025 16:19:25 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PImnLf031457;
+ Thu, 25 Sep 2025 20:19:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9FCc7wBAmkc7vYS4b
- Ig+hKEEzQV3GlWgvAfLxEe9huQ=; b=VazvD9eJLzrUi9vHuvQYimZPWZ5SGkvLL
- wBZKj8umUOD87mdk8KIeA4w54BfHI6PAWKrHMgYYBLtaQ/HrzoRkaceRiCAsQu2v
- L/oVgTHcl2MvkU6ZwB0qct3w9u4JCQlwsRwnwdfds+pdsDtW+0JgzOy0OPAQNg0M
- OBa+QClTrFkfsYWykWizxp1o+3biwTbWlWzbm4RfFsqv8v21/NC5KZcxubbEH1mj
- 6lg8EYf0ZuO9rbV8CqyvD5U1Gj6WzZahKLAKloklnxUQqJW4EgjWDr5AH8DpMs7s
- g65AmsAV88MfbSGelXM9RFKq9x/2cOXUWdOF20XgEr18GgHSsCMzg==
+ :mime-version:references:subject:to; s=pp1; bh=TKN9XZO1rwCovFIC9
+ E21FSTvnRaF4tIDh3jy5DxoEwY=; b=TWs+tBaLkd7Qlo0AbFWq95fQoMs45eaJX
+ emVWYtIDbt1NLdFIJT9B/1BNmibI/U3TP9U8SoOJKY/E2EthGMuq4C+BgI79XOM+
+ IxZTj/bDbILbLxbFYelBNmxg8mql7v/11zETNiDl3NpT+X9/UcXVZZRuDmmoVxuV
+ pRWCou9H/5tyRJvKezu15moJ6MYvNgbFjSQsuSAw0hhqYqphA5Lx2djahfOG2Djs
+ tc2qi5um7eDBc1llFwlaBJnc+dzuAuKcb6nyrfEZGGnJiR+dKTLxcp4rwVpFTn8m
+ HHWJptwB5I3+LgLSvRfxKNQYHtXhDY7X/6hKRoaI5ikjIlcQ7dQaA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb6gfwv-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbbagfga-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:18:52 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PKI1wB005259;
- Thu, 25 Sep 2025 20:18:52 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb6gfwr-1
+ Thu, 25 Sep 2025 20:19:00 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PKIxPG029677;
+ Thu, 25 Sep 2025 20:18:59 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbbagfg4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:18:52 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIJ4fr014407;
- Thu, 25 Sep 2025 20:18:51 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49dawm0jkp-1
+ Thu, 25 Sep 2025 20:18:59 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIIvbr003361;
+ Thu, 25 Sep 2025 20:18:58 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49dawkgjrf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:18:51 +0000
+ Thu, 25 Sep 2025 20:18:58 +0000
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58PKIoPe8652062
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58PKIvIA10027590
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Sep 2025 20:18:50 GMT
+ Thu, 25 Sep 2025 20:18:57 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C3CA5805A;
- Thu, 25 Sep 2025 20:18:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 457575805A;
+ Thu, 25 Sep 2025 20:18:57 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 19F2358051;
- Thu, 25 Sep 2025 20:18:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C029F58051;
+ Thu, 25 Sep 2025 20:18:56 +0000 (GMT)
 Received: from mglenn-KVM.. (unknown [9.10.239.198])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Sep 2025 20:18:50 +0000 (GMT)
+ Thu, 25 Sep 2025 20:18:56 +0000 (GMT)
 From: Glenn Miles <milesg@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
  npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
  rathc@linux.ibm.com, richard.henderson@linaro.org
-Subject: [PATCH v6 4/9] target/ppc: Add IBM PPE42 exception model
-Date: Thu, 25 Sep 2025 15:17:42 -0500
-Message-ID: <20250925201758.652077-5-milesg@linux.ibm.com>
+Subject: [PATCH v6 7/9] hw/ppc: Support for an IBM PPE42 CPU decrementer
+Date: Thu, 25 Sep 2025 15:17:45 -0500
+Message-ID: <20250925201758.652077-8-milesg@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250925201758.652077-1-milesg@linux.ibm.com>
 References: <20250925201758.652077-1-milesg@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=MfBhep/f c=1 sm=1 tr=0 ts=68d5a3ac cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=h1b_CP1ddBs6gX6iP-IA:9
+X-Proofpoint-GUID: BQz3H1wfeTlBjQtfjOm_526WHNS5l3S_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX0wi0GAMLSkgw
+ GhfuZur0cVycKSF/nRc5VX4Jmu86KlQvQ3uQ0ChJtzHpJAGJIm1HKuggacayLBFpWJyhIzg6s9A
+ M3uclQ5ykUR8gW1Mgy5bx4bwDdgV672viLG1mPUZeuh2S9KMBnnIK6Z6LsCvIXvyHnytHfas8nG
+ JNUtHpGEjBfDAAuWufAhBox0abfQVHGC/qTMw7hyA1oQZ/BOPkho4jikNMvxvmC5Xdt6Ofxd2Rq
+ MJe3LxATcBqoIOJW9Js8J+WM/Chj5ZGHDdkiD4DDI/EdSjp/GvKFk5m4L9mKImFZdQPAWFFFRw/
+ QWdmaJ4M2wBP5N9rHS4UTPyANQnOXkvwOrRcJIBzqBB9wJ/WJQSq+64sgW9C086/lpK+V8T6+lM
+ dJmwhMJMPmrbns8vS2Zik+tBs38M1g==
+X-Proofpoint-ORIG-GUID: PyyDyhf0mPkG_1vR1nLtKntEmAvTWaD4
+X-Authority-Analysis: v=2.4 cv=B6W0EetM c=1 sm=1 tr=0 ts=68d5a3b4 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=FSmKNcNrx3yT2pM3_rYA:9
  a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: 8KUYQutOsuCDFLYzxSb9V8EVd07AiIhu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfXwj1uiYjt29SQ
- RyTr+ke28SLKljAW64anhZR74Dz2c64toD6mi5iE4+9NLYNyn2/zMnrXg0G42aYO6cC6JUhyCSt
- IC5KbwVymtYfl9vhRs0F/PzepV8TtybqtSNPcSYnh43ophQOS6GM35md7CHi+nZv9ks1DPGc5df
- VDTF5V2OETivshdcv/xunvn8mZcJ0ppCfSnPZdfRpkH60RgdV5K8bFAi+XzBVk/vGVX+W2r8ieO
- BjhTT2HT78nuXBYQeQgvzlD7uSY/3CDHn9AmK1ibJi8YZMvMTa5alYl1badct/emYm1I7dKZH3m
- KQ8ZcA+vfKZw6aFExb1GqdWOsc9KOflVz2N6KJCVuO/kQaEX5st1wbFXuHRZLJwOHLHVKfe/19G
- 6FWhlFf2SkZZtUbypTt5yE/1iWuC+w==
-X-Proofpoint-ORIG-GUID: TaZ1yPr3nH-rIcE2QcgY4rrUKO31ZSGk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ phishscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
@@ -124,307 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the IBM PPE42 exception model including
-new exception vectors, exception priorities and setting
-of PPE42 SPRs for determining the cause of an exception.
+The IBM PPE42 processors support a 32-bit decrementer
+that can raise an external interrupt when DEC[0]
+transitions from a 0 to a 1 (a non-negative value to a
+negative value).  It also continues decrementing
+even after this condition is met.
+
+The BookE timer is slightly different in that it
+raises an interrupt when the DEC value reaches 0
+and stops decrementing at that point.
+
+Support a PPE42 version of the BookE timer by
+adding a new PPC_TIMER_PPE flag that has the timer
+code look for the transition from a non-negative value
+to a negative value and allows the value to
+continue decrementing.
 
 Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/cpu_init.c        |  39 ++++++++-
- target/ppc/excp_helper.c     | 163 +++++++++++++++++++++++++++++++++++
- target/ppc/tcg-excp_helper.c |  12 +++
- 3 files changed, 213 insertions(+), 1 deletion(-)
+ hw/ppc/ppc_booke.c   | 7 ++++++-
+ include/hw/ppc/ppc.h | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index c78b255085..9e4ea8fd13 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -1720,6 +1720,30 @@ static void init_excp_4xx(CPUPPCState *env)
- #endif
- }
+diff --git a/hw/ppc/ppc_booke.c b/hw/ppc/ppc_booke.c
+index 3872ae2822..13403a56b1 100644
+--- a/hw/ppc/ppc_booke.c
++++ b/hw/ppc/ppc_booke.c
+@@ -352,7 +352,12 @@ void ppc_booke_timers_init(PowerPCCPU *cpu, uint32_t freq, uint32_t flags)
+     booke_timer = g_new0(booke_timer_t, 1);
  
-+static void init_excp_ppe42(CPUPPCState *env)
-+{
-+#if !defined(CONFIG_USER_ONLY)
-+    /* Machine Check vector changed after version 0 */
-+    if (((env->spr[SPR_PVR] & 0xf00000ul) >> 20) == 0) {
-+        env->excp_vectors[POWERPC_EXCP_MCHECK]   = 0x00000000;
+     cpu->env.tb_env = tb_env;
+-    tb_env->flags = flags | PPC_TIMER_BOOKE | PPC_DECR_ZERO_TRIGGERED;
++    if (flags & PPC_TIMER_PPE) {
++        /* PPE's use a modified version of the booke behavior */
++        tb_env->flags = flags | PPC_DECR_UNDERFLOW_TRIGGERED;
 +    } else {
-+        env->excp_vectors[POWERPC_EXCP_MCHECK]   = 0x00000020;
++        tb_env->flags = flags | PPC_TIMER_BOOKE | PPC_DECR_ZERO_TRIGGERED;
 +    }
-+    env->excp_vectors[POWERPC_EXCP_RESET]    = 0x00000040;
-+    env->excp_vectors[POWERPC_EXCP_DSI]      = 0x00000060;
-+    env->excp_vectors[POWERPC_EXCP_ISI]      = 0x00000080;
-+    env->excp_vectors[POWERPC_EXCP_EXTERNAL] = 0x000000A0;
-+    env->excp_vectors[POWERPC_EXCP_ALIGN]    = 0x000000C0;
-+    env->excp_vectors[POWERPC_EXCP_PROGRAM]  = 0x000000E0;
-+    env->excp_vectors[POWERPC_EXCP_DECR]     = 0x00000100;
-+    env->excp_vectors[POWERPC_EXCP_FIT]      = 0x00000120;
-+    env->excp_vectors[POWERPC_EXCP_WDT]      = 0x00000140;
-+    env->ivpr_mask = 0xFFFFFE00UL;
-+    /* Hardware reset vector */
-+    env->hreset_vector = 0x00000040UL;
-+#endif
-+}
-+
- static void init_excp_MPC5xx(CPUPPCState *env)
- {
- #if !defined(CONFIG_USER_ONLY)
-@@ -2245,6 +2269,7 @@ static void init_proc_ppe42(CPUPPCState *env)
- {
-     register_ppe42_sprs(env);
  
-+    init_excp_ppe42(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-     /* Allocate hardware IRQ controller */
-@@ -2278,7 +2303,7 @@ static void ppe42_class_common_init(PowerPCCPUClass *pcc)
-                     (1ull << MSR_IPE) |
-                     R_MSR_SIBRCA_MASK;
-     pcc->mmu_model = POWERPC_MMU_REAL;
--    pcc->excp_model = POWERPC_EXCP_40x;
-+    pcc->excp_model = POWERPC_EXCP_PPE42;
-     pcc->bus_model = PPC_FLAGS_INPUT_PPE42;
-     pcc->bfd_mach = bfd_mach_ppc_403;
-     pcc->flags = POWERPC_FLAG_PPE42 | POWERPC_FLAG_BUS_CLK;
-@@ -7856,6 +7881,18 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-          * they can be read with "p $ivor0", "p $ivor1", etc.
-          */
-         break;
-+    case POWERPC_EXCP_PPE42:
-+        qemu_fprintf(f, "SRR0 " TARGET_FMT_lx " SRR1 " TARGET_FMT_lx "\n",
-+                     env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
-+
-+        qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
-+                     "    ISR " TARGET_FMT_lx "   EDR " TARGET_FMT_lx "\n",
-+                     env->spr[SPR_PPE42_TCR], env->spr[SPR_PPE42_TSR],
-+                     env->spr[SPR_PPE42_ISR], env->spr[SPR_PPE42_EDR]);
-+
-+        qemu_fprintf(f, "  PIR " TARGET_FMT_lx "   IVPR " TARGET_FMT_lx "\n",
-+                     env->spr[SPR_PPE42_PIR], env->spr[SPR_PPE42_IVPR]);
-+        break;
-     case POWERPC_EXCP_40x:
-         qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
-                      "    ESR " TARGET_FMT_lx "   DEAR " TARGET_FMT_lx "\n",
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 1efdc4066e..d8bca19fff 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -949,6 +949,125 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     powerpc_set_excp_state(cpu, vector, new_msr);
- }
+     tb_env->tb_freq    = freq;
+     tb_env->decr_freq  = freq;
+diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
+index 8a14d623f8..cb51d704c6 100644
+--- a/include/hw/ppc/ppc.h
++++ b/include/hw/ppc/ppc.h
+@@ -52,6 +52,7 @@ struct ppc_tb_t {
+ #define PPC_DECR_UNDERFLOW_LEVEL     (1 << 4) /* Decr interrupt active when
+                                                * the most significant bit is 1.
+                                                */
++#define PPC_TIMER_PPE                (1 << 5) /* Enable PPE support */
  
-+static void powerpc_excp_ppe42(PowerPCCPU *cpu, int excp)
-+{
-+    CPUPPCState *env = &cpu->env;
-+    target_ulong msr, new_msr, vector;
-+    target_ulong mcs = PPE42_ISR_MCS_INSTRUCTION;
-+    bool promote_unmaskable;
-+
-+    msr = env->msr;
-+
-+    /*
-+     * New interrupt handler msr preserves SIBRC and ME unless explicitly
-+     * overridden by the exception.  All other MSR bits are zeroed out.
-+     */
-+    new_msr = env->msr & (((target_ulong)1 << MSR_ME) | R_MSR_SIBRC_MASK);
-+
-+    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-+    if (excp == POWERPC_EXCP_HV_EMU) {
-+        excp = POWERPC_EXCP_PROGRAM;
-+    }
-+
-+    /*
-+     * Unmaskable interrupts (Program, ISI, Alignment and DSI) are promoted to
-+     * machine check if MSR_UIE is 0.
-+     */
-+    promote_unmaskable = !(msr & ((target_ulong)1 << MSR_UIE));
-+
-+
-+    switch (excp) {
-+    case POWERPC_EXCP_MCHECK:    /* Machine check exception                  */
-+        break;
-+    case POWERPC_EXCP_DSI:       /* Data storage exception                   */
-+        trace_ppc_excp_dsi(env->spr[SPR_PPE42_ISR], env->spr[SPR_PPE42_EDR]);
-+        if (promote_unmaskable) {
-+            excp = POWERPC_EXCP_MCHECK;
-+            mcs = PPE42_ISR_MCS_DSI;
-+        }
-+        break;
-+    case POWERPC_EXCP_ISI:       /* Instruction storage exception            */
-+        trace_ppc_excp_isi(msr, env->nip);
-+        if (promote_unmaskable) {
-+            excp = POWERPC_EXCP_MCHECK;
-+            mcs = PPE42_ISR_MCS_ISI;
-+        }
-+        break;
-+    case POWERPC_EXCP_EXTERNAL:  /* External input                           */
-+        break;
-+    case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
-+        if (promote_unmaskable) {
-+            excp = POWERPC_EXCP_MCHECK;
-+            mcs = PPE42_ISR_MCS_ALIGNMENT;
-+        }
-+        break;
-+    case POWERPC_EXCP_PROGRAM:   /* Program exception                        */
-+        if (promote_unmaskable) {
-+            excp = POWERPC_EXCP_MCHECK;
-+            mcs = PPE42_ISR_MCS_PROGRAM;
-+        }
-+        switch (env->error_code & ~0xF) {
-+        case POWERPC_EXCP_INVAL:
-+            trace_ppc_excp_inval(env->nip);
-+            env->spr[SPR_PPE42_ISR] &= ~((target_ulong)1 << PPE42_ISR_PTR);
-+            break;
-+        case POWERPC_EXCP_TRAP:
-+            env->spr[SPR_PPE42_ISR] |= ((target_ulong)1 << PPE42_ISR_PTR);
-+            break;
-+        default:
-+            /* Should never occur */
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-+                      env->error_code);
-+            break;
-+        }
-+#ifdef CONFIG_TCG
-+        env->spr[SPR_PPE42_EDR] = ppc_ldl_code(env, env->nip);
-+#endif
-+        break;
-+    case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
-+        break;
-+    case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
-+        trace_ppc_excp_print("FIT");
-+        break;
-+    case POWERPC_EXCP_WDT:       /* Watchdog timer interrupt                 */
-+        trace_ppc_excp_print("WDT");
-+        break;
-+    case POWERPC_EXCP_RESET:     /* System reset exception                   */
-+        /* reset exceptions don't have ME set */
-+        new_msr &= ~((target_ulong)1 << MSR_ME);
-+        break;
-+    default:
-+        cpu_abort(env_cpu(env), "Invalid PPE42 exception %d. Aborting\n",
-+                  excp);
-+        break;
-+    }
-+
-+    env->spr[SPR_SRR0] = env->nip;
-+    env->spr[SPR_SRR1] = msr;
-+
-+    vector = env->excp_vectors[excp];
-+    if (vector == (target_ulong)-1ULL) {
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-+    }
-+    vector |= env->spr[SPR_PPE42_IVPR];
-+
-+    if (excp == POWERPC_EXCP_MCHECK) {
-+        /* Also set the Machine Check Status (MCS) */
-+        env->spr[SPR_PPE42_ISR] &= ~R_PPE42_ISR_MCS_MASK;
-+        env->spr[SPR_PPE42_ISR] |= (mcs & R_PPE42_ISR_MCS_MASK);
-+        env->spr[SPR_PPE42_ISR] &= ~((target_ulong)1 << PPE42_ISR_MFE);
-+
-+        /* Machine checks halt execution if MSR_ME is 0 */
-+        powerpc_mcheck_checkstop(env);
-+
-+        /* machine check exceptions don't have ME set */
-+        new_msr &= ~((target_ulong)1 << MSR_ME);
-+    }
-+
-+    powerpc_set_excp_state(cpu, vector, new_msr);
-+}
-+
- static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-@@ -1589,6 +1708,9 @@ void powerpc_excp(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_POWER11:
-         powerpc_excp_books(cpu, excp);
-         break;
-+    case POWERPC_EXCP_PPE42:
-+        powerpc_excp_ppe42(cpu, excp);
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -1945,6 +2067,43 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
- }
- #endif /* TARGET_PPC64 */
- 
-+static int ppe42_next_unmasked_interrupt(CPUPPCState *env)
-+{
-+    bool async_deliver;
-+
-+    /* External reset */
-+    if (env->pending_interrupts & PPC_INTERRUPT_RESET) {
-+        return PPC_INTERRUPT_RESET;
-+    }
-+    /* Machine check exception */
-+    if (env->pending_interrupts & PPC_INTERRUPT_MCK) {
-+        return PPC_INTERRUPT_MCK;
-+    }
-+
-+    async_deliver = FIELD_EX64(env->msr, MSR, EE);
-+
-+    if (async_deliver != 0) {
-+        /* Watchdog timer */
-+        if (env->pending_interrupts & PPC_INTERRUPT_WDT) {
-+            return PPC_INTERRUPT_WDT;
-+        }
-+        /* External Interrupt */
-+        if (env->pending_interrupts & PPC_INTERRUPT_EXT) {
-+            return PPC_INTERRUPT_EXT;
-+        }
-+        /* Fixed interval timer */
-+        if (env->pending_interrupts & PPC_INTERRUPT_FIT) {
-+            return PPC_INTERRUPT_FIT;
-+        }
-+        /* Decrementer exception */
-+        if (env->pending_interrupts & PPC_INTERRUPT_DECR) {
-+            return PPC_INTERRUPT_DECR;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static int ppc_next_unmasked_interrupt(CPUPPCState *env)
- {
-     uint32_t pending_interrupts = env->pending_interrupts;
-@@ -1970,6 +2129,10 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
-     }
- #endif
- 
-+    if (env->excp_model == POWERPC_EXCP_PPE42) {
-+        return ppe42_next_unmasked_interrupt(env);
-+    }
-+
-     /* External reset */
-     if (pending_interrupts & PPC_INTERRUPT_RESET) {
-         return PPC_INTERRUPT_RESET;
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index f835be5156..edecfb8572 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -229,6 +229,18 @@ void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
-     case POWERPC_MMU_BOOKE206:
-         env->spr[SPR_BOOKE_DEAR] = vaddr;
-         break;
-+    case POWERPC_MMU_REAL:
-+        if (env->flags & POWERPC_FLAG_PPE42) {
-+            env->spr[SPR_PPE42_EDR] = vaddr;
-+            if (access_type == MMU_DATA_STORE) {
-+                env->spr[SPR_PPE42_ISR] |= PPE42_ISR_ST;
-+            } else {
-+                env->spr[SPR_PPE42_ISR] &= ~PPE42_ISR_ST;
-+            }
-+        } else {
-+            env->spr[SPR_DAR] = vaddr;
-+        }
-+        break;
-     default:
-         env->spr[SPR_DAR] = vaddr;
-         break;
+ uint64_t cpu_ppc_get_tb(ppc_tb_t *tb_env, uint64_t vmclk, int64_t tb_offset);
+ void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq);
 -- 
 2.43.0
 
