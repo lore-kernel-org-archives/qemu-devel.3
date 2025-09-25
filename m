@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10285CAC5B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 14:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5798CAC5B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 14:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1mgJ-0002Av-1l; Thu, 25 Sep 2025 10:10:47 -0400
+	id 1v1mxB-0006Ki-PP; Thu, 25 Sep 2025 10:28:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1mgE-00029b-2p
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 10:10:42 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1v1mx5-0006K3-Tq
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 10:28:08 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1mgA-000648-Dr
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 10:10:41 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-71d6014810fso9257947b3.0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 07:10:34 -0700 (PDT)
+ id 1v1mwv-0008RS-SO
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 10:28:07 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-6353f2937f3so689664d50.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 07:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758809432; x=1759414232; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758810471; x=1759415271; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GNCCOulXFWBeqJ1DFKP0YVB2uQ25Uimld+yTpJ41gA4=;
- b=igEPel/29dwEVTWqvEXrCxAgP4pUbVQzJ+cCt5DrbQenP0idORJMVy71JDCxV01KHI
- tQ/2c6gMsW6nRxlD24PkrHlnqs16X6ibLilJHR8jymXWEo5REqFsye9re17OoHFgaYLp
- kQVe0hlyZd0coItkaD+G2sROah6FltdXJim6GaWtV1qxSaBJ1+VQrB+GpC7jX0VZqCAb
- eDBwyAs2rOlSqtFr6REsLJmwcWyJ9kEsS34eo2TN9MAj5yb5O4qCWyG76ZPydUeKvCDK
- WVjhXkNGkbPjbHR67qZkDhDbzm3saWQ/3xV6FuH4Eheb53zA2XfGtPEvpkvfEWyl0The
- jiFw==
+ bh=GewQR7/+Qt/2Fj0Kd/4s+T4SM+9lkrhGhGb1igAvpsc=;
+ b=kL2xXMoQyoJnQuFKWzwYnhUARqWulo8NGW+fzuFIytxDDp6qnvmlVhJmvt9E1VJbum
+ P4CBZFu9F/jG+LfXly0a0bruW6ouhXuuHoeQzloZL1VPrZ4DAK2k623oPg5vFBjq1f20
+ CAe94XKs2W8ijnXprUUXbyAcEE/1MOLzjC90nzK0h53I/knLUG+SdUVy+wJpRXho3ro1
+ 5XPRmif1xdS3e/gcuTqrHuyLh6Q6s4+WIUPo1jj8Pdq1Wmw6CUNWWEQaoJGP7BJdPv6M
+ Xc1O5z5xN5M/xcDAZvr3AN1Gs0SbprnkDv075ZV7HR7Spl9mggp5aOQXSfGjoZDjjRhP
+ +OlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758809432; x=1759414232;
+ d=1e100.net; s=20230601; t=1758810471; x=1759415271;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GNCCOulXFWBeqJ1DFKP0YVB2uQ25Uimld+yTpJ41gA4=;
- b=h8utYHCqed8IQ0Cj7/CTIm/JpAzHm1RnnvUGui7BaVqEE63M2mN1tvOL8btGCS1F08
- TAnL+7rLhC9wOuvhZhrwPMD6TKNG7za3dncj197bWgpb0CPDsKlV1KFuOZad95xW3OnM
- dqgzMilr2oejCHcI7jgSXznhCJiuux15MEyF/kUlf+lSS0ngK0mxti+Di/7Eh14uQwaA
- MLDIVI3AN7OU9qSR027Vg5y+4wKX3+KAh5Ppr+eLBUsbcEpjdEVm8UI5YquwsC7MzTwm
- wlFxLn0hifv2s/3sIJLlhfPcoZ+cVvjQAJxmw1YAcflRLQYn2J73a4v3GAo8Gx64wTgb
- AVOw==
-X-Gm-Message-State: AOJu0YwK4y7EO/vvZD2STn4zZqmiYk9wk+ZLOQFeb+r5GjxB1Bo0rKTA
- pb+864+xDBhOERmL4hyt4TNavdKd3p+hjycEIYx2ccUciVWMK7d2yEVv2J2sJZjyPfnVYnd8H5y
- zYaUeHo4fcfRwcvM7O/AxLUyvebRzFUN9aizBlBjb32UZd5LFnCyb
-X-Gm-Gg: ASbGnctyGbJe9ziKuI5yx/LS8t35Fz4Pyxmo6tNYL1tDB4S8/GvAUlz8jP6NnV5Jrso
- N+V9paepA9ddVO03vp+wWnMoJMeS1sbEeABViPAzQC5evcIZgaiKnjkZUi2oes2Y5hPS/7W72d/
- W04SDu8yyra07ijwqoCjUWxi4bwuns/gmlU70eyLA2D4cbJo56XBP1/bxoY4zzdPHy2tSprjkjt
- lfUSBCH
-X-Google-Smtp-Source: AGHT+IEdzWCZzw7y6R5WWPbBJoqJb947idyItJq30+1hQKKLYf+y6MhNht8W7lQFoSrBjHnS6JY7jTxfNkZuawFpOqU=
-X-Received: by 2002:a05:6902:4202:b0:ea5:b99f:e910 with SMTP id
- 3f1490d57ef6-eb37fc0deeemr3226147276.23.1758809431892; Thu, 25 Sep 2025
- 07:10:31 -0700 (PDT)
+ bh=GewQR7/+Qt/2Fj0Kd/4s+T4SM+9lkrhGhGb1igAvpsc=;
+ b=k7xjShdXvIcFfQHC6U8sIQmw6jxrR+R26meo4tBkHHy1HF6KKiOKu5h40DwGtvH4BU
+ Mr2Gl2B1DSExmCbE0+qzlrLSO8JUYRUZuRk+qL7hT8Nl9ID70cLbOC3euB/siRCyCNVv
+ ezEWONVOiDmnGZCxdyjkVLpuWXYrwp2cv7AUQylCzyMr+vxaDMHL93mYsT+YQUdUj4jN
+ AuwTBEfgbeSbQ7jo7Bs/DKZ/YARLKLRUoBcjQ0j07NkwyJLQ7fonERk8UFTbJcGswuOG
+ q7RX45XeeXMqRI8/80wmM8NfyRZY7jXNUCIPN93W7+vAR9JSxhrWkL+6lzjDry1IdYQe
+ eUxw==
+X-Gm-Message-State: AOJu0Yyrp6AgFuoA6UvitoYdQMYxe9ebQ96xEmYgl1TEg9KTkotLR4/p
+ 8XxBDWu5s+RcB8iCPBzad9zeCzBB/91smTPepT2HfY2HjqAEzLhKhVUsZ+FaKPa5Jthc1M6lxhm
+ /CwfWHL/eMarVG6x/kd//o90jLQSEMqsD8RTXdJGljOIAG8qSmsG8
+X-Gm-Gg: ASbGnctXwfaC0zgHXZjO0hkCdvggQROZjpkUq6IkBAInb2ThuWe39OCRNaDw7Z2ffkw
+ h2A6xv4tE6t4CKdKUU8RK82hUB2Vqmfr3QWzMtR8LX2ahYZqK17cZRALLcPiwlpU8dUXIYyjGRE
+ XlzSGTlbSfiHd0NU7E8HvjoPlyALBNOKZlzZrOQPbjA0JIsSpO7svs//MsH4dqkB4+ZgM8d2Qks
+ 4YegdeS
+X-Google-Smtp-Source: AGHT+IEtDa03kTBNWN1qbKm7H0pK7B1omoYSyf/BEkRo4ogpueQS824cCrcO8iMamw5w3L9NdAynw6zMcLeh7j2kkkw=
+X-Received: by 2002:a05:6902:2b0a:b0:eb0:c05f:7ca7 with SMTP id
+ 3f1490d57ef6-eb37fcc1204mr3390411276.47.1758810470846; Thu, 25 Sep 2025
+ 07:27:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250916142238.664316-1-richard.henderson@linaro.org>
- <20250916142238.664316-34-richard.henderson@linaro.org>
- <CAFEAcA8iTS6gpHwchagCFTOwjU=KKOJrmp+d7m4oMR2_xRfvkQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8iTS6gpHwchagCFTOwjU=KKOJrmp+d7m4oMR2_xRfvkQ@mail.gmail.com>
+ <20250916142238.664316-35-richard.henderson@linaro.org>
+In-Reply-To: <20250916142238.664316-35-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Sep 2025 15:10:20 +0100
-X-Gm-Features: AS18NWAfOEUUmmVdW5aJzZ4Gl5zreQeWjYicctzs9nzhKHdYLzp0QG-OadjYtkw
-Message-ID: <CAFEAcA-RToeeQr9x1yhJJhf1UuxYX1hVopatoUkimeQ11iAMGQ@mail.gmail.com>
-Subject: Re: [PATCH v2 33/36] target/arm: Redirect VHE FOO_EL1 -> FOO_EL2
+Date: Thu, 25 Sep 2025 15:27:39 +0100
+X-Gm-Features: AS18NWDaIYrRPbfP6xx-xqOqU_RFHpattoExbljP6doEicNeqznLXmhTXddF8_k
+Message-ID: <CAFEAcA-PecdR1EgOTubMK3hZ3GY=Javw3Fo4eHnhhjbtXZpyYw@mail.gmail.com>
+Subject: Re: [PATCH v2 34/36] target/arm: Redirect VHE FOO_EL12 to FOO_EL1
  during translation
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,51 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Sept 2025 at 14:54, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Tue, 16 Sept 2025 at 15:23, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> On Tue, 16 Sept 2025 at 15:23, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > ---
-> >  target/arm/cpregs.h            |  6 ++++
-> >  target/arm/gdbstub.c           |  5 ++++
-> >  target/arm/helper.c            | 53 +---------------------------------
-> >  target/arm/tcg/translate-a64.c |  9 ++++++
-> >  4 files changed, 21 insertions(+), 52 deletions(-)
->
-> > -/* Test if system register redirection is to occur in the current state.  */
-> > -static bool redirect_for_e2h(CPUARMState *env)
-> > -{
-> > -    return arm_current_el(env) == 2 && (arm_hcr_el2_eff(env) & HCR_E2H);
-> > -}
->
-> > diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> > index c0fa2137b6..3ef24fb0c3 100644
-> > --- a/target/arm/tcg/translate-a64.c
-> > +++ b/target/arm/tcg/translate-a64.c
-> > @@ -2573,6 +2573,15 @@ static void handle_sys(DisasContext *s, bool isread,
-> >          }
-> >      }
-> >
-> > +    if (ri->vhe_redir_to_el2 && s->current_el == 2 && s->e2h) {
-> > +        /*
-> > +         * This one of the FOO_EL1 registers which redirect to FOO_EL2
-> > +         * from EL2 when HCR_EL2.E2H is set.
-> > +         */
-> > +        key = ri->vhe_redir_to_el2;
-> > +        ri = redirect_cpreg(s, key, isread);
-> > +    }
->
-> I was looking through the details for this one, and noticed that
-> R_PHHPL says the redirects from FOO_EL12 to FOO_EL1 apply
-> when "the PE is executing at EL2 or EL3", so I think our
-> check on "EL == 2" isn't actually correct.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-No, I'm wrong here -- R_PHHPL is for the registers handled in
-patch 34. This codepath is for E2H redirects as listed in
-R_JGGMV, and those do only happen at EL2, not at EL3.
 
+
+> +    } else if (ri->vhe_redir_to_el01 && s->current_el >= 2) {
+> +        /*
+> +         * This is one of the FOO_EL12 registers.
+
+I think we could usefully say FOO_EL12/FOO_EL02 here too.
+
+> +         * With !E2H, they all UNDEF.
+> +         * With E2H, from EL2 or EL3, they redirect to FOO_EL1.
+> +         */
+> +        if (!s->e2h) {
+> +            gen_sysreg_undef(s, isread, op0, op1, op2, crn, crm, rt);
+> +            return;
+> +        }
+> +        key = ri->vhe_redir_to_el01;
+> +        ri = redirect_cpreg(s, key, isread);
+>      }
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
 -- PMM
 
