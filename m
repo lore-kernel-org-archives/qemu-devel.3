@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62CC7CAC5AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D591CAC5B3
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 06:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1fYk-0008Nn-Hb; Thu, 25 Sep 2025 02:34:30 -0400
+	id 1v1fYi-0008GM-Dp; Thu, 25 Sep 2025 02:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1v1fYJ-00081q-Di
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:34:13 -0400
+ id 1v1fXu-0007ut-Gc
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:33:41 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1v1fXi-0000Tm-4E
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:33:39 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1v1fXg-0000Tr-NY
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:33:35 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Dxvr8v4tRo1GsOAA--.29694S3;
- Thu, 25 Sep 2025 14:33:19 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bxnr8w4tRo1msOAA--.29647S3;
+ Thu, 25 Sep 2025 14:33:20 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBxpeQq4tRoj+iuAA--.30453S5;
- Thu, 25 Sep 2025 14:33:19 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxpeQq4tRoj+iuAA--.30453S7;
+ Thu, 25 Sep 2025 14:33:20 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 03/11] hw/loongarch: add misc register support dmsi
-Date: Thu, 25 Sep 2025 14:09:28 +0800
-Message-Id: <20250925060936.898618-4-gaosong@loongson.cn>
+Subject: [PULL 05/11] target/loongarch: add msg interrupt CSR registers
+Date: Thu, 25 Sep 2025 14:09:30 +0800
+Message-Id: <20250925060936.898618-6-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250925060936.898618-1-gaosong@loongson.cn>
 References: <20250925060936.898618-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpeQq4tRoj+iuAA--.30453S5
+X-CM-TRANSID: qMiowJBxpeQq4tRoj+iuAA--.30453S7
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -48,7 +48,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,52 +64,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add feature register and misc register for dmsi feature checking and
-setting
+include CSR_MSGIS0-3, CSR_MSGIR and CSR_MSGIE.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20250916122109.749813-4-gaosong@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20250916122109.749813-6-gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ target/loongarch/cpu-csr.h |  3 +++
+ target/loongarch/cpu.h     | 11 +++++++++++
+ target/loongarch/machine.c | 25 +++++++++++++++++++++++--
+ 3 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 3ef42bafd0..4ec50f6bd9 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -564,6 +564,10 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
-             return MEMTX_OK;
-         }
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index 0834e91f30..4792677086 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -186,6 +186,9 @@ FIELD(CSR_MERRCTL, ISMERR, 0, 1)
  
-+        if (virt_has_dmsi(lvms) && val & BIT(IOCSRM_DMSI_EN)) {
-+            lvms->misc_status |= BIT(IOCSRM_DMSI_EN);
-+        }
+ #define LOONGARCH_CSR_CTAG           0x98 /* TagLo + TagHi */
+ 
++#define LOONGARCH_CSR_MSGIS(N)       (0xa0 + N)
++#define LOONGARCH_CSR_MSGIR               0xa4
 +
-         features = address_space_ldl(&lvms->as_iocsr,
-                                      EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-                                      attrs, NULL);
-@@ -599,6 +603,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-         break;
-     case FEATURE_REG:
-         ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
-+        if (virt_has_dmsi(lvms)) {
-+            ret |= BIT(IOCSRF_DMSI);
-+        }
-         if (kvm_enabled()) {
-             ret |= BIT(IOCSRF_VM);
-         }
-@@ -628,6 +635,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-         if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
-             ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
-         }
-+        if (virt_has_dmsi(lvms) &&
-+            (lvms->misc_status & BIT(IOCSRM_DMSI_EN))) {
-+            ret |= BIT_ULL(IOCSRM_DMSI_EN);
-+        }
-         break;
-     default:
-         g_assert_not_reached();
+ /* Direct map windows CSRs*/
+ #define LOONGARCH_CSR_DMW(N)         (0x180 + N)
+ FIELD(CSR_DMW, PLV0, 0, 1)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 19e00325ca..78210a46d8 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -233,6 +233,13 @@ FIELD(TLB_MISC, ASID, 1, 10)
+ FIELD(TLB_MISC, VPPN, 13, 35)
+ FIELD(TLB_MISC, PS, 48, 6)
+ 
++/*Msg interrupt registers */
++#define N_MSGIS                4
++FIELD(CSR_MSGIS, IS, 0, 63)
++FIELD(CSR_MSGIR, INTNUM, 0, 8)
++FIELD(CSR_MSGIR, ACTIVE, 31, 1)
++FIELD(CSR_MSGIE, PT, 0, 8)
++
+ #define LSX_LEN    (128)
+ #define LASX_LEN   (256)
+ 
+@@ -350,6 +357,10 @@ typedef struct CPUArchState {
+     uint64_t CSR_DBG;
+     uint64_t CSR_DERA;
+     uint64_t CSR_DSAVE;
++    /* Msg interrupt registers */
++    uint64_t CSR_MSGIS[N_MSGIS];
++    uint64_t CSR_MSGIR;
++    uint64_t CSR_MSGIE;
+     struct {
+         uint64_t guest_addr;
+     } stealtime;
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 4e70f5c879..73190fb367 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -45,6 +45,26 @@ static const VMStateDescription vmstate_fpu = {
+     },
+ };
+ 
++static bool msgint_needed(void *opaque)
++{
++    LoongArchCPU *cpu = opaque;
++
++    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
++}
++
++static const VMStateDescription vmstate_msgint = {
++    .name = "cpu/msgint",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = msgint_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, N_MSGIS),
++        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
++        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static const VMStateDescription vmstate_lsxh_reg = {
+     .name = "lsxh_reg",
+     .version_id = 1,
+@@ -168,8 +188,8 @@ static const VMStateDescription vmstate_tlb = {
+ /* LoongArch CPU state */
+ const VMStateDescription vmstate_loongarch_cpu = {
+     .name = "cpu",
+-    .version_id = 3,
+-    .minimum_version_id = 3,
++    .version_id = 4,
++    .minimum_version_id = 4,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
+         VMSTATE_UINTTL(env.pc, LoongArchCPU),
+@@ -245,6 +265,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         &vmstate_tlb,
+ #endif
+         &vmstate_lbt,
++        &vmstate_msgint,
+         NULL
+     }
+ };
 -- 
 2.47.0
 
