@@ -4,114 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7179DCAC5AA
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 09:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9CECCAC5AA
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 09:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1hti-0005NK-4G; Thu, 25 Sep 2025 05:04:18 -0400
+	id 1v1huu-0005mL-T0; Thu, 25 Sep 2025 05:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1htg-0005N4-5r
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:04:16 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ id 1v1hum-0005iu-9w
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:05:25 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1htU-000790-W9
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:04:15 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-63606491e66so267512d50.2
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 02:03:59 -0700 (PDT)
+ id 1v1huZ-0007Yu-Fn
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:05:19 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-ea5c1e394a8so576116276.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 02:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758791037; x=1759395837; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dld1ba+AnsgKXWbWk45Ixi30ieyIRKmfsUvvsafRSDw=;
- b=JgNOfjhmZ8S5KCyPybDVmINegLz6pMSM/eBTsf/yQpMVfdyczCAEqb1QEfBDnwRc1F
- 3V35aPvgeUvkb0y3CVYft8ngE4s9FUjvtQAwQrfBhtN17DDecCIqReghL0TYZbc1Es6j
- NT/hQI0CDeTX3jFm67JOurGX2ikAfvFM1wkN2Gi/pKdeaaGZc94GnNb8utKR0hsERXlv
- crM7K6Dn5AHL/0ku1tjVEL7obfoQhVXVD/ai+LzFhV3H+5Qlq/R16zXRiiV5nmXNgT0g
- Msh9UwEQ/2yqMaeyqLUdwW/TN5tJCuxxOHovYM1j7tjjXnU6Ku4vzEH5qgMc9DKUeblH
- mB3A==
+ d=linaro.org; s=google; t=1758791104; x=1759395904; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h66SD38oB0dkdG6b7wl+RTVHaMu+AZzeyIwTgD60NQY=;
+ b=firjYk+tBxlfNyDD0DjzPImBbSljp8ICB+BEvpTW4lJpDnL1tswjiSLW0NaKGUeWba
+ cEc5R55SJRHPUqOb4tU0leLDuJlJJFOQrelUwGT4hrfcyxho8/1QEgowquK1Lp+ysJwt
+ EIWqhaL43xLQk9rDqZPqh0xwGd+M5IuesmvZdPMqmNSWnnYgJdp0dUC4Js9KNTYSQEDH
+ t7pJvYJB2MZtny3G1X4WUXaUvIMfDcIEOv6qI3Qf9222+qFnwnguYjn+yMeSo+TrTfiV
+ zPU870ob2sAdz19xf2yg7PD8Njf5VEXwdFF0MRrxdXARKOVG3MhnYoKk2dPWK4bvL2Bz
+ hGiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758791037; x=1759395837;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dld1ba+AnsgKXWbWk45Ixi30ieyIRKmfsUvvsafRSDw=;
- b=t5wLBUeY2YqqJk5zSJuPfDloAP5gXxkq9lT+nmZaGpnH2L0WiPB6gnOXpwinq6MtMf
- jzbZitnQrc5kZVLFBckxe+nYFNUs4bTRsPRspA9ntJVv/gW6arEG33ARm0++ERqIOFa6
- O0NnY6jfrV4W9vcZSiJlN611MomJGIFHO1lgSHa+ZRnX+q2cLFMgpKHL6x83StYAnplE
- S6J/h0P10VMSRk8jPAIdzfek4O6NlfoP537OhoYXPV0cuS7JDMAkP+hMMQFGUcDV48Co
- vWO2N6Ue58FdSA5Mg95/F2reiCT7k9QiP2cg5ClvGyYXh8zBogVKfzk1k1s8stZohI2y
- 97vA==
+ d=1e100.net; s=20230601; t=1758791104; x=1759395904;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h66SD38oB0dkdG6b7wl+RTVHaMu+AZzeyIwTgD60NQY=;
+ b=e+juUgiOhIAQrAr5tQNSlbxGrRLXr+znJQw/ghsc96rLXThRH68WZlXLrOStjew+BN
+ zHeU+T0JKn8f5UMmwI76EJQ9MTbqkYPfzy3cq9v2CeQgcqUXQaSVuu2fCrF/e6nfLdlH
+ /+96fVDWXmQuY5pnnix7kt8Hf0wpI8aNVQgNCOPp6FZWhlQWY3jO9cy/li4ONL9Xk55l
+ fdE3YIxMcJB6GMJBxQ7raT/zaPreIpWC2WGVhIqhC34sNmo19PcD6pztEvYV1KJ5y+l0
+ xOmxmffZQpnNlrOyHz3yOmFOHrgqHhT9/gDs8wDtSq0rFWP/wmAH9tByiYhMYN/E4pDC
+ ticg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmshHx3SkFyXmg/+cqUO5GdU2/8J8KRPESkSZb7szzJEpvz7FTDP/N2RRhOzxjKntoZsSlbuHLcBjU@nongnu.org
-X-Gm-Message-State: AOJu0YzT/f85tcc8jfKxvWGYcudtR2svJAhZU83Kr8lk/HTLd2bIUNpm
- aajpQbmdqgbC84HidKkZk2ggho2ESxBWxYavQUShsL2S2EY1xfpzXuwsKD8C8Emr9/4o7PNtwL3
- kLKeHdOPfa6F82ESidayx9YFuoZLFqeU65GL/icHLcQ==
-X-Gm-Gg: ASbGncv54lGOHI+c+KwGaw0XPvxX9dmYQq7u+uNr5iRA6AWTpaY1FV3IE10heRJopbA
- 6cVOXBm06/VVFbhIrROAVxxPtgyIMzgdkVrOY/JCbTvnd5IjvcGa7sIGf/y75Vps1YF2iOOBuG+
- aaEP0bK5cqkabqew6VP3Ylgvnw4XRdMlvmbL6t5fuU4hfEdHoudHsPWv/aZe5r/V9PWVLZOegy+
- yvytqPE
-X-Google-Smtp-Source: AGHT+IFsXzWZE+4zUQOVmvdNOCEHj7f2t08r+lPLOHkxnkmA+HY6VUlD3JYex/uosUNK66D0wqoYsT0oeRI9Id5po7Y=
-X-Received: by 2002:a53:d016:0:b0:632:9d08:e3ec with SMTP id
- 956f58d0204a3-6361a86132cmr1749195d50.25.1758791037315; Thu, 25 Sep 2025
- 02:03:57 -0700 (PDT)
+ AJvYcCVjvakDhfhpCVbe17+XSKkK2WB1+P7HtJae+hN4q/hZTYwrw8uNpreZnIvWcefFkhLufB8QF6xjzddW@nongnu.org
+X-Gm-Message-State: AOJu0Yz7HU9yWwdLRV5LfN7bOMDJV2lTxlHLhsi+Iaar0NqQrl/tCEc2
+ R5SAhyckqJCFkdI18Kp1w9786YWNVlnIX6bIzr+ww1h5ReyZJU1zzPXTE+ydmzWJELLrQcAlUyu
+ w6kF6JgfTwUohQmlxC/Phrjco2n3RVP0dpB8FnXlzvA==
+X-Gm-Gg: ASbGncs4+EDpiqrPfOmupb0ztWIez6pjRALanFTfP+/DVizSUf3a7qSv44OfO8IJrmr
+ gMLxfOK8yg05cRlcSh/Po1z2CDOVMbBMg+PtYn1x9XwsMRSaWwiuR23PaaA/9J4D9Pob1xdCo/o
+ Xz689sRMnuNdxrG3I3THFL15hWRnfGvfv4QovrE4SzSBfIQVsTI4owSgIzfOfX4IKF/iodiBPHS
+ wytcHih
+X-Google-Smtp-Source: AGHT+IHYNUqY1w1yxAZxY4JZ9sPSoi7auwgEpfyi/Lh/lwTLsuTWVD729wWkDDlFVnmqweBQjqjzOqJg5kHjrJkKPaM=
+X-Received: by 2002:a05:6902:6087:b0:e9d:6ab4:92ee with SMTP id
+ 3f1490d57ef6-eb37fbf35b5mr2111313276.3.1758791103951; Thu, 25 Sep 2025
+ 02:05:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-mr-v2-3-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
- <aMHxhTIw2EGRyD4-@x1.local>
- <fe1969e6-bc13-4438-816d-b352926c33a8@rsg.ci.i.u-tokyo.ac.jp>
- <aMNMjetBDJfBiThl@x1.local>
- <4108b4f2-accf-4080-af29-a3f464d862f9@rsg.ci.i.u-tokyo.ac.jp>
- <aNRfHQoBgwBMjK04@x1.local>
-In-Reply-To: <aNRfHQoBgwBMjK04@x1.local>
+References: <20250908125058.220973-1-peter.maydell@linaro.org>
+ <aL7xrilR-gyByKEM@redhat.com>
+ <CAFEAcA_wt3HwDq=sJ+VuLdx_RFFwB6E9FjrbT1zgNXGGvfQ9YA@mail.gmail.com>
+ <B5215A1D-C8F5-44FD-B19B-70D78B7FD4F5@gmail.com>
+In-Reply-To: <B5215A1D-C8F5-44FD-B19B-70D78B7FD4F5@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Sep 2025 10:03:45 +0100
-X-Gm-Features: AS18NWBXqgC9-2Kmdr52HoJSaRceusD4OCyhIWSuLaEKc23hV4JiRu6tTV83fME
-Message-ID: <CAFEAcA8wTsZiihr8-LKucTmeZwPBdnkdA-o3mUgaW1WzrADhOg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] memory: Stop piggybacking on memory region owners
-To: Peter Xu <peterx@redhat.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, David Hildenbrand <david@redhat.com>, 
+Date: Thu, 25 Sep 2025 10:04:52 +0100
+X-Gm-Features: AS18NWCn8mDla7U_Kyce7k8yJErhdL74rOpNdo2vQ92dRbfrJwVI-oZSfIe9xaM
+Message-ID: <CAFEAcA8s2xSYpdJne5eZ-jrFfOcQeRff-wjRe2mqGwzffguCGg@mail.gmail.com>
+Subject: Re: [RFC PATCH] docs/system/security: Restrict "virtualization use
+ case" to specific machines
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- John Snow <jsnow@redhat.com>, 
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, 
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org, 
+ qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,18 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Sept 2025 at 22:14, Peter Xu <peterx@redhat.com> wrote:
-> Side note: when I was trying to test hotplugs with i386/q35, unfortunately
-> I didn't really see when the address space was destroyed, maybe there's a
-> bug somewhere; I put that info into appendix at the end.
+On Wed, 24 Sept 2025 at 19:23, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+>
+>
+> Am 8. September 2025 15:15:43 UTC schrieb Peter Maydell <peter.maydell@li=
+naro.org>:
+> >On Mon, 8 Sept 2025 at 16:09, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
+om> wrote:
+> >>
+> >> On Mon, Sep 08, 2025 at 01:50:57PM +0100, Peter Maydell wrote:
+> >> > Currently our security policy defines a "virtualization use case"
+> >> > where we consider bugs to be security issues, and a
+> >> > "non-virtualization use case" where we do not make any security
+> >> > guarantees and don't consider bugs to be security issues.
+> >> >
+> >> > The rationale for this split is that much code in QEMU is older and
+> >> > was not written with malicious guests in mind, and we don't have the
+> >> > resources to audit, fix and defend it.  So instead we inform users
+> >> > about what the can in practice rely on as a security barrier, and
+> >> > what they can't.
+> >> >
+> >> > We don't currently restrict the "virtualization use case" to any
+> >> > particular set of machine types.  This means that we have effectivel=
+y
+> >> > barred ourselves from adding KVM support to any machine type that we
+> >> > don't want to put into the "bugs are security issues" category, even
+> >> > if it would be useful for users to be able to get better performance
+> >> > with a trusted guest by enabling KVM. This seems an unnecessary
+> >> > restriction, and in practice the set of machine types it makes
+> >> > sense to use for untrusted-guest virtualization is quite small.
+> >> >
+> >> > Specifically, we would like to be able to enable the use of
+> >> > KVM with the imx8 development board machine types, but we don't
+> >> > want to commit ourselves to having to support those SoC models
+> >> > and device models as part of QEMU's security boundary:
+> >> > https://lore.kernel.org/qemu-devel/20250629204851.1778-3-shentey@gma=
+il.com/
+> >> >
+> >> > This patch updates the security policy to explicitly list the
+> >> > machine types we consider to be useful for the "virtualization
+> >> > use case".
+> >> >
+> >> > This is an RFC partly to see if we have consensus that this change
+> >> > makes sense, and partly because I was only able to identify the
+> >> > machine types we want to cover for some of our target architectures.
+> >> > If maintainers for the other architectures could clarify which
+> >> > machine types work with KVM that would be helpful.
+> >>
+> >> The split of "virtualization" vs "non-virtualization" use case
+> >> in the docs was always as rather a crude hack.
+> >>
+> >> "Virtualization uses cases" was more or less a code phrase to
+> >> mean "the subset of QEMU that we traditionally shipped in RHEL"
+> >> as that is approximately what we have reasonable confidence
+> >> about.
+> >>
+> >> Personally I wouldn't assign strict equivalence between "machine
+> >> can use KVM" and  "virtualization use case".
+> >
+> >I agree, but this is effectively what our docs are currently doing,
+> >and what I'm trying to decouple with this patch...
+>
+> Ping
+>
+> Anything left to discuss?
 
-This is https://gitlab.com/qemu-project/qemu/-/issues/2517
 
-I got blocked on that because I ran into a weird "I have some
-memory that needs to be freed by the RCU callback, but only
-after the callback has freed some other RCU stuff". I see
-Paolo made a reply on that bug -- I would need to get back
-to it and reproduce whatever it was I was doing.
+This got derailed by proposals to encode the security
+status of devices etc actually in code.
+
+Personally I would prefer us to just update the documentation
+as a start, rather than blocking this on designing and
+implementing the code-based approach.
 
 -- PMM
 
