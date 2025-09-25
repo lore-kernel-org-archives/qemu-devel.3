@@ -4,62 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D189CAC5B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 15:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2359FCAC5B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 15:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1o1P-0008GT-9g; Thu, 25 Sep 2025 11:36:39 -0400
+	id 1v1o2g-0000CO-3t; Thu, 25 Sep 2025 11:37:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v1o1K-0008FY-LC; Thu, 25 Sep 2025 11:36:34 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v1o18-0003kR-Rt; Thu, 25 Sep 2025 11:36:34 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAnvWBlYdVoGgp6Bw--.5183S2;
- Thu, 25 Sep 2025 23:36:05 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwBXuudhYdVoj_AeAA--.7094S4;
- Thu, 25 Sep 2025 23:36:02 +0800 (CST)
-From: Tao Tang <tangtao1634@phytium.com.cn>
-To: pbonzini@redhat.com,
-	farosas@suse.de,
-	lvivier@redhat.com
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
- philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com,
- Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC 1/2] hw/misc/smmu-testdev: introduce minimal SMMUv3 test device
-Date: Thu, 25 Sep 2025 23:35:49 +0800
-Message-Id: <20250925153550.105915-2-tangtao1634@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250925153550.105915-1-tangtao1634@phytium.com.cn>
-References: <20250925153550.105915-1-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v1o2X-0000Ad-UC
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 11:37:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v1o2M-00046e-1Y
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 11:37:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758814651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=bNQJIITM2tFao0NlH+7Q0exmGeE4I8URHpfL+F6GN7k=;
+ b=QD20lTZlYMLq7kMTiUoWc3iGIfG8ORaTc1JyAYXo/52UErRPaAcF8ANIZySuZrZk5FtMmH
+ CY3lzAjvUFJOwyODycay/v9Ouvjal0lnOcGm1wJgm7gUVS/aO17w8X6d5ZrNFDOCIcam9C
+ iYau3/G7TAU4oJhfGDNkdDN+tqJAAYU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-145-exI5AqUjO-u-JzQgfVB-Pw-1; Thu, 25 Sep 2025 11:37:27 -0400
+X-MC-Unique: exI5AqUjO-u-JzQgfVB-Pw-1
+X-Mimecast-MFC-AGG-ID: exI5AqUjO-u-JzQgfVB-Pw_1758814646
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b353cefb829so86810266b.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 08:37:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758814646; x=1759419446;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bNQJIITM2tFao0NlH+7Q0exmGeE4I8URHpfL+F6GN7k=;
+ b=vpDKtHBSX4X6AMCfw5JwQKFvMW1F6n9POwOn2FZOgE+u4RkMWVR4PVIm0gB5lF8h10
+ ObB5jou1qiLZzz6d31HL2T4nWBo6WNKczMAH15fkhNoMBW8GorcXTHrRHdlEuyt17gse
+ sRFLsZQ6dBJwQ2XQ5C9RmS14t5J9GF9st+gXJdkNDVDcXJsxToQzPsE3hRJ9P8Xwc3vy
+ 01prRUmY3OfV4gCSHlCmC43aozEMtBwCG1iIoaUYCQbDeD0uEpNiCv5NfNfra+9+Fm/e
+ VNzmin9ynLNfrJLFAkPWAu/eHm4unGegcTlvAICGrCOmdIzDcgEsq4ccZmo1MM8u/f4b
+ PB3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7rOePM729lZ0bws3q7qqk8pTUVi6CMrj6GtxxBMauYP7HqPxev2UIkN+1nAabnZnr98+gLjvIQE9r@nongnu.org
+X-Gm-Message-State: AOJu0YwoaIs02v1KxA227X8OHCxkyHvvXsy/nXYVUYFULu9HWf4NFeCq
+ xKShpE1zLPo/5goyue22KUryP/18+j6H6KSxDdcWNhVTMGNy9uvUawV+W89/YOdHzx5LGe4Nuhe
+ YUoH6HD9JPqgGDOPvAT6eguUeDpcpShOXBb/lpTeX1lOrdBXaGOaQBMzf
+X-Gm-Gg: ASbGncufDuodRs7Okhsds85DXonpGEZaiBzz11ary6eSNaGcqrUdwDI3bmYMKOW+2JV
+ W0x0WV/38jc0eTE9BGjFSK4L9bBrhAWQ4VoQ9GFgAN5scW59JSsN5zA8MkpRbLkMJyKB2gMdxN3
+ AOiM5O8s1lLh4szQGhO8TDKPAHt/Kw6m0Vl6iZilPrI6kiCooYK/pdeeg01sWsMaBkq7E4AeWZc
+ 6kz1ZXKeZ8u3Dery3i/iliPOoH2irvBwUpUSVklDDkSnb7AQzk8iCJZWrMFfqBeoMj2r59sOSXR
+ Z+o5XtxhN6YgUddA6T7Nw1O+YDZPQU36GDuAzmz3i7hHNiHevtC60Qx2NbzNHtVGo3314nIQyHw
+ 1kv+2ZkpPT/wPw8JdbyVFvxhO7oIE5ViMwYJdvX5mHg==
+X-Received: by 2002:a17:907:c21:b0:b1d:285c:e0ef with SMTP id
+ a640c23a62f3a-b34bb701b01mr462993566b.26.1758814646139; 
+ Thu, 25 Sep 2025 08:37:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGs6012sb1K0S3n3KVk/XUVgsfoYpCZTEgwSF4OYo3pXkrlocyV2GV/bjOFlrDHsMA90Pxy9w==
+X-Received: by 2002:a17:907:c21:b0:b1d:285c:e0ef with SMTP id
+ a640c23a62f3a-b34bb701b01mr462990266b.26.1758814645667; 
+ Thu, 25 Sep 2025 08:37:25 -0700 (PDT)
+Received: from [192.168.1.84] ([93.56.170.206])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b3544fcdd89sm190852466b.79.2025.09.25.08.37.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Sep 2025 08:37:25 -0700 (PDT)
+Message-ID: <d36504ef-6b5e-4764-aa09-9da6137e4f88@redhat.com>
+Date: Thu, 25 Sep 2025 17:37:24 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel
+ <qemu-devel@nongnu.org>, Tanish Desai <tanishdesai37@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>
+References: <20250919112536.141782-1-pbonzini@redhat.com>
+ <20250919112536.141782-9-pbonzini@redhat.com>
+ <20250923192354.GL509965@fedora>
+ <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
+ <20250924181024.GB6015@fedora>
+ <CABgObfbDphuWOx9r8JEpQCtvGtZM2XYkEd+mBxO4LeqoVPvW6A@mail.gmail.com>
+ <20250925115047.GA22729@fedora>
+ <4d7d946f-db87-43b6-a5f4-4f6cc583df20@redhat.com>
+ <CAJSP0QU-XSrY3NZFoSiFDPLduJw_md0+7YEGr3PZ3UEWGyvEsQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <CAJSP0QU-XSrY3NZFoSiFDPLduJw_md0+7YEGr3PZ3UEWGyvEsQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwBXuudhYdVoj_AeAA--.7094S4
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAEBWjUSMIHkQAAsg
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvAXoWDCry3tFW5Cry5Zw43KFWxWFg_yoWrWr4UJo
- WUuF12k34kWw1xZr48W34xKw47Xry09a9xAa1Fkw4F9a92yF1jkFZ5tw4fX3Zrt3Z5Ka9r
- ur1kX3s7J34kAwn5n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
- J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
- UUUUUUU==
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,1198 +162,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a tiny, test-only DMA source dedicated to exercising the SMMUv3 model.
-The device purposefully avoids a realistic PCIe/platform implementation and
-instead routes DMA requests straight into the SMMU, so that qtests can
-populate STE/CD/PTE with known values and observe translation and data
-movement deterministically, without booting any firmware or guest kernel.
+On 9/25/25 17:09, Stefan Hajnoczi wrote:
+> On Thu, Sep 25, 2025 at 8:40 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+>> No problem---in fact I have now realized that, for systemtap, I have to
+>> ensure that the semaphore is shared between C and Rust!
+> 
+> Is anyone working on the DTrace support? If not, I'll keep it in mind
+> in case I get some time over the next few weeks.
+No, the plan was to use the probe-rs crate, which is almost trivial 
+except that it does not support the shared semaphore.
 
-Motivation
-----------
-Bringing up and regression-testing the SMMU in emulation often depends on a
-large and flaky software stack (enumeration, drivers, PCIe fabric). For the
-class of tests that only need to (1) program translation structures and (2)
-trigger DMA at a precise time, that stack adds noise, slows CI, and makes
-failures harder to attribute to the SMMU itself. A hermetic DMA source
-keeps the surface area small and the results reproducible.
+For the shared semaphore probe-rs needs modifications.  It's also 
+possible to just import its single file with magic asm[1] into QEMU's 
+trace crate and modify it as needed; and contribute the changes upstream 
+later.
 
-What this device is (and is not)
---------------------------------
-* It is a minimal DMA producer solely for SMMU tests.
-* It is NOT a faithful PCIe Endpoint nor a platform device.
-* It is NOT added to any machine by default and remains test-only.
+There is also the usdt crate, which recently grew support for systemtap 
+SDT as well.  It takes a much more complex approach and has many 
+dependencies, as it almost completely reimplements the dtrace compiler. 
+It may be interesting for the future since it is more portable, but for 
+the time being I'd stick with the lower-level probe-rs.
 
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
----
- hw/misc/Kconfig                |    5 +
- hw/misc/meson.build            |    1 +
- hw/misc/smmu-testdev.c         | 1030 ++++++++++++++++++++++++++++++++
- include/hw/misc/smmu-testdev.h |   90 +++
- 4 files changed, 1126 insertions(+)
- create mode 100644 hw/misc/smmu-testdev.c
- create mode 100644 include/hw/misc/smmu-testdev.h
+Paolo
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 4e35657468..c83a0872ef 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -25,6 +25,11 @@ config PCI_TESTDEV
-     default y if TEST_DEVICES
-     depends on PCI
- 
-+config SMMU_TESTDEV
-+    bool
-+    default y if TEST_DEVICES
-+    depends on PCI && ARM_SMMUV3
-+
- config EDU
-     bool
-     default y if TEST_DEVICES
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index b1d8d8e5d2..862a9895c3 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -4,6 +4,7 @@ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
- system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
- system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
-+system_ss.add(when: 'CONFIG_SMMU_TESTDEV', if_true: files('smmu-testdev.c'))
- system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
- system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
- system_ss.add(when: 'CONFIG_LED', if_true: files('led.c'))
-diff --git a/hw/misc/smmu-testdev.c b/hw/misc/smmu-testdev.c
-new file mode 100644
-index 0000000000..4d0b3ada42
---- /dev/null
-+++ b/hw/misc/smmu-testdev.c
-@@ -0,0 +1,1030 @@
-+/*
-+ * A test device for the SMMU
-+ *
-+ * This test device is a minimal SMMU-aware device used to test the SMMU.
-+ *
-+ * Copyright (c) 2025 Phytium Technology
-+ *
-+ * Author:
-+ *  Tao Tang <tangtao1634@phytium.com.cn>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qemu/units.h"
-+#include "system/address-spaces.h"
-+#include "exec/memattrs.h"
-+#include "system/dma.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/arm/smmu-common.h"
-+#include "hw/qdev-properties.h"
-+#include "qom/object.h"
-+#include "hw/misc/smmu-testdev.h"
-+
-+#define TYPE_SMMU_TESTDEV "smmu-testdev"
-+OBJECT_DECLARE_SIMPLE_TYPE(SMMUTestDevState, SMMU_TESTDEV)
-+
-+struct SMMUTestDevState {
-+    PCIDevice parent_obj;
-+    MemoryRegion bar0;
-+    uint32_t attr_ns;     /* Track Non-Secure for now; reserve room for more. */
-+
-+    uint64_t smmu_base;
-+    uint64_t dma_iova;
-+    uint32_t dma_len;
-+    uint32_t dma_dir;
-+    uint32_t dma_result;
-+    bool dma_pending;
-+
-+    /* Future-proof DMA config */
-+    AddressSpace *dma_as;   /* IOMMU-mediated DMA AS for this device */
-+    uint32_t dma_mode;      /* 0=legacy pci_dma, 1=attrs via dma_memory_* */
-+    uint32_t dma_attrs_cfg; /* bit0 secure, bits[2:1] space, bit3 unspecified */
-+
-+    /* Translation build configuration */
-+    uint32_t trans_mode;    /* 0=S1, 1=S2, 2=Nested */
-+    SMMUTestDevSpace s1_space;
-+    SMMUTestDevSpace s2_space;
-+    uint32_t trans_status;  /* 0=ok; non-zero=error */
-+
-+    /* User-configurable BDF (device/function) */
-+    uint32_t cfg_dev;       /* PCI device/slot number (0..31) */
-+    uint32_t cfg_fn;        /* PCI function number (0..7) */
-+
-+    bool debug_log;         /* Enable verbose debug output */
-+};
-+
-+/* BAR0 layout */
-+enum {
-+    REG_ID            = 0x00,
-+    REG_ATTR_NS       = 0x04,
-+    REG_SMMU_BASE_LO  = 0x20,
-+    REG_SMMU_BASE_HI  = 0x24,
-+    REG_DMA_IOVA_LO   = 0x28,
-+    REG_DMA_IOVA_HI   = 0x2C,
-+    REG_DMA_LEN       = 0x30,
-+    REG_DMA_DIR       = 0x34,
-+    REG_DMA_RESULT    = 0x38,
-+    REG_DMA_DOORBELL  = 0x3C,
-+    /* Extended controls for DMA attributes/mode (kept after legacy regs) */
-+    REG_DMA_MODE      = 0x40, /* 0: legacy; 1: attrs path */
-+    REG_DMA_ATTRS     = 0x44, /* [0] secure, [2:1] space, [3] unspecified */
-+    /* Translation config & builder */
-+    REG_TRANS_MODE    = 0x48, /* 0=S1 only, 1=S2 only, 2=Nested */
-+    REG_S1_SPACE      = 0x4C, /* SMMUTestDevSpace for stage-1 path */
-+    REG_S2_SPACE      = 0x50, /* SMMUTestDevSpace for stage-2 path */
-+    REG_TRANS_DBELL   = 0x54, /* bit0=build, bit1=clear status */
-+    REG_TRANS_STATUS  = 0x58, /* 0=ok else error */
-+    REG_TRANS_CLEAR   = 0x5C, /* write-any: clear helper-built CD/STE/PTE */
-+    BAR0_SIZE         = 0x1000,
-+};
-+
-+#define DMA_DIR_DEV2HOST     0u
-+#define DMA_DIR_HOST2DEV     1u
-+#define DMA_RESULT_IDLE      0xffffffffu
-+#define DMA_RESULT_BUSY      0xfffffffeu
-+#define DMA_ERR_BAD_LEN      0xdead0001u
-+#define DMA_ERR_TX_FAIL      0xdead0002u
-+#define DMA_MAX_LEN          (64 * KiB)
-+
-+#define TEST_VTTB 0xe4d0000
-+
-+/*
-+ * Compile-time calculated STE field setting macros
-+ * Field-specific macros with embedded field configuration parameters
-+ */
-+
-+ #define STD_STE_OR_CD_ENTRY_BYTES 64 /* 64 bytes per STE entry */
-+ #define STD_STE_S2T0SZ_VAL 0x14
-+
-+#define STD_STE_SET_VALID(ste, val)  \
-+    ((ste)->word[0] = ((ste)->word[0] & ~(0x1 << 0)) | (((val) & 0x1) << 0))
-+#define STD_STE_SET_CONFIG(ste, val) \
-+    ((ste)->word[0] = ((ste)->word[0] & ~(0x7 << 1)) | (((val) & 0x7) << 1))
-+#define STD_STE_SET_S1FMT(ste, val)  \
-+    ((ste)->word[0] = ((ste)->word[0] & ~(0x3 << 4)) | (((val) & 0x3) << 4))
-+
-+#define STD_STE_SET_CTXPTR(ste, val)                                      \
-+do {                                                                      \
-+    /* Lower address bits (31:6) occupy the upper 26 bits of word[0]. */  \
-+    (ste)->word[0] = ((ste)->word[0] & 0x0000003FU) |                     \
-+                     ((uint32_t)(val) & 0xFFFFFFC0U);                     \
-+                                                                          \
-+    /* Upper address bits (47:32) occupy the low 16 bits of word[1]. */   \
-+    (ste)->word[1] = ((ste)->word[1] & 0xFFFF0000U) |                     \
-+                     ((uint32_t)(((uint64_t)(val)) >> 32) & 0x0000FFFFU); \
-+} while (0)
-+
-+#define STD_STE_SET_S1CDMAX(ste, val)  \
-+    ((ste)->word[1] = ((ste)->word[1] & ~(0x1f << 27)) | (((val) & 0x1f) << 27))
-+#define STD_STE_SET_S1STALLD(ste, val) \
-+    ((ste)->word[2] = ((ste)->word[2] & ~(0x1 << 27)) | (((val) & 0x1) << 27))
-+#define STD_STE_SET_EATS(ste, val)     \
-+    ((ste)->word[2] = ((ste)->word[2] & ~(0x3 << 28)) | (((val) & 0x3) << 28))
-+#define STD_STE_SET_STRW(ste, val)     \
-+    ((ste)->word[2] = ((ste)->word[2] & ~(0x3 << 30)) | (((val) & 0x3) << 30))
-+#define STD_STE_SET_NSCFG(ste, val)    \
-+    ((ste)->word[2] = ((ste)->word[2] & ~(0x3 << 14)) | (((val) & 0x3) << 14))
-+#define STD_STE_SET_S2VMID(ste, val)   \
-+    ((ste)->word[4] = ((ste)->word[4] & ~0xffff) | ((val) & 0xffff))
-+#define STD_STE_SET_S2T0SZ(ste, val)   \
-+    ((ste)->word[5] = ((ste)->word[5] & ~0x3f) | ((val) & 0x3f))
-+#define STD_STE_SET_S2SL0(ste, val)    \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x3 << 6)) | (((val) & 0x3) << 6))
-+#define STD_STE_SET_S2TG(ste, val)     \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x3 << 14)) | (((val) & 0x3) << 14))
-+#define STD_STE_SET_S2PS(ste, val)     \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x7 << 16)) | (((val) & 0x7) << 16))
-+#define STD_STE_SET_S2AA64(ste, val)   \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 19)) | (((val) & 0x1) << 19))
-+#define STD_STE_SET_S2ENDI(ste, val)   \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 20)) | (((val) & 0x1) << 20))
-+#define STD_STE_SET_S2AFFD(ste, val)   \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 21)) | (((val) & 0x1) << 21))
-+#define STD_STE_SET_S2HD(ste, val)     \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 23)) | (((val) & 0x1) << 23))
-+#define STD_STE_SET_S2HA(ste, val)     \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 24)) | (((val) & 0x1) << 24))
-+#define STD_STE_SET_S2S(ste, val)      \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 25)) | (((val) & 0x1) << 25))
-+#define STD_STE_SET_S2R(ste, val)      \
-+    ((ste)->word[5] = ((ste)->word[5] & ~(0x1 << 26)) | (((val) & 0x1) << 26))
-+
-+#define STD_STE_SET_S2TTB(ste, val)                                        \
-+do {                                                                       \
-+    /* Lower address bits (31:4) occupy the upper 28 bits of word[6]. */   \
-+    (ste)->word[6] = ((ste)->word[6] & 0x0000000FU) |                      \
-+                     ((uint32_t)(val) & 0xFFFFFFF0U);                      \
-+                                                                           \
-+    /* Upper address bits (51:32) occupy the low 20 bits of word[7]. */    \
-+    (ste)->word[7] = ((ste)->word[7] & 0xFFF00000U) |                      \
-+                     ((uint32_t)(((uint64_t)(val)) >> 32) &                \
-+                      0x000FFFFFU);                                        \
-+} while (0)
-+
-+#define STE_S2TTB(x)                                                       \
-+    ((extract64((x)->word[7], 0, 16) << 32) |                              \
-+     ((x)->word[6] & 0xfffffff0))
-+
-+/*
-+ * Compile-time calculated CD field setting macros
-+ * Some important CD field setting macros
-+ */
-+#define STD_CD_SET_VALID(cd, val)                                          \
-+    ((cd)->word[0] = ((cd)->word[0] & ~(0x1 << 31)) |                      \
-+                     (((val) & 0x1) << 31))
-+#define STD_CD_SET_TSZ(cd, sel, val)                                       \
-+    ((cd)->word[0] = ((cd)->word[0] &                                      \
-+                      ~(0x3F << ((sel) * 16 + 0))) |                       \
-+                     (((val) & 0x3F) << ((sel) * 16 + 0)))
-+#define STD_CD_SET_TG(cd, sel, val)                                        \
-+    ((cd)->word[0] = ((cd)->word[0] &                                      \
-+                      ~(0x3 << ((sel) * 16 + 6))) |                        \
-+                     (((val) & 0x3) << ((sel) * 16 + 6)))
-+#define STD_CD_SET_EPD(cd, sel, val)                                       \
-+    ((cd)->word[0] = ((cd)->word[0] &                                      \
-+                      ~(0x1 << ((sel) * 16 + 14))) |                       \
-+                     (((val) & 0x1) << ((sel) * 16 + 14)))
-+#define STD_CD_SET_ENDI(cd, val)                                           \
-+    ((cd)->word[0] = ((cd)->word[0] & ~(0x1 << 15)) |                      \
-+                     (((val) & 0x1) << 15))
-+#define STD_CD_SET_IPS(cd, val)                                            \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x7 << 0)) |                       \
-+                     (((val) & 0x7) << 0))
-+#define STD_CD_SET_AFFD(cd, val)                                           \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 3)) |                       \
-+                     (((val) & 0x1) << 3))
-+#define STD_CD_SET_HD(cd, val)                                             \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 10)) |                      \
-+                     (((val) & 0x1) << 10))
-+#define STD_CD_SET_HA(cd, val)                                             \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 11)) |                      \
-+                     (((val) & 0x1) << 11))
-+#define STD_CD_SET_TTB(cd, sel, val) do {                                  \
-+    (cd)->word[(sel) * 2 + 2] = ((cd)->word[(sel) * 2 + 2] & 0x0000000F) | \
-+                                ((val) & 0xFFFFFFF0);                      \
-+    (cd)->word[(sel) * 2 + 3] = ((cd)->word[(sel) * 2 + 3] & 0xFFF80000) | \
-+                                ((((uint64_t)(val)) >> 32) & 0x0007FFFF);  \
-+} while (0)
-+#define STD_CD_SET_HAD(cd, sel, val)                                       \
-+    ((cd)->word[(sel) * 2 + 2] = ((cd)->word[(sel) * 2 + 2] &              \
-+                                  ~(0x1 << 1)) |                           \
-+                                 (((val) & 0x1) << 1))
-+#define STD_CD_SET_TTB0(cd, val)                                           \
-+    ((cd)->word[2] = ((cd)->word[2] & ~0xFFFFFFFC) |                       \
-+                     ((val) & 0xFFFFFFFC))
-+#define STD_CD_SET_TTB1(cd, val)                                           \
-+    ((cd)->word[3] = ((cd)->word[3] & ~0xFFFFFFFC) |                       \
-+                     ((val) & 0xFFFFFFFC))
-+#define STD_CD_SET_MAIR0(cd, val) ((cd)->word[6] = (val))
-+#define STD_CD_SET_MAIR1(cd, val) ((cd)->word[7] = (val))
-+#define STD_CD_SET_TCR_T0SZ(cd, val)                                       \
-+    ((cd)->word[4] = ((cd)->word[4] & ~0x3F) | ((val) & 0x3F))
-+#define STD_CD_SET_ASID(cd, val)                                           \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0xFFFF << 16)) |                   \
-+                     (((val) & 0xFFFF) << 16))
-+#define STD_CD_SET_S(cd, val)                                              \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 12)) |                      \
-+                     (((val) & 0x1) << 12))
-+#define STD_CD_SET_R(cd, val)                                              \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 13)) |                      \
-+                     (((val) & 0x1) << 13))
-+#define STD_CD_SET_A(cd, val)                                              \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 14)) |                      \
-+                     (((val) & 0x1) << 14))
-+#define STD_CD_SET_AARCH64(cd, val)                                        \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x1 << 9)) |                       \
-+                     (((val) & 0x1) << 9))
-+#define STD_CD_SET_TBI(cd, val)                                            \
-+    ((cd)->word[1] = ((cd)->word[1] & ~(0x3 << 6)) |                       \
-+                     (((val) & 0x3) << 6))
-+#define STD_CD_SET_NSCFG0(cd, val)                                         \
-+    ((cd)->word[2] = ((cd)->word[2] & ~(0x1 << 0)) | (((val) & 0x1) << 0))
-+#define STD_CD_SET_NSCFG1(cd, val)                                         \
-+    ((cd)->word[4] = ((cd)->word[4] & ~(0x1 << 0)) | (((val) & 0x1) << 0))
-+
-+/* Minimal test addresses for tables and descriptors */
-+#define STD_STR_TAB_BASE 0x000000000E179000
-+#define STD_STE_GPA   (STD_STR_TAB_BASE + 0x40ULL)
-+#define STD_CD_GPA    (STD_STR_TAB_BASE + 0x80ULL)
-+/* Base S2 page table (explicit addresses from smmuv3-test) */
-+#define STD_L0_ADDR           0x000000000E4D0008ULL
-+#define STD_L1_ADDR           0x000000000E4D1010ULL
-+#define STD_L2_ADDR           0x000000000E4D2018ULL
-+#define STD_L3_ADDR           0x000000000E4D3020ULL
-+#define STD_L0_VAL            0x000000000E4D1003ULL
-+#define STD_L1_VAL            0x000000000E4D2003ULL
-+#define STD_L2_VAL            0x000000000E4D3003ULL
-+#define STD_L3_VAL            0x040000000ECBA7C3ULL
-+#define STD_L3_S1_VAL         0x040000000ECBA743ULL
-+
-+/* Nested-specific additional tables (from smmuv3-test constants) */
-+#define STD_CD_S2_L0_ADDR     0x000000000E4D0000ULL
-+#define STD_CD_S2_L1_ADDR     0x000000000E4D1008ULL
-+#define STD_CD_S2_L2_ADDR     0x000000000E4D2380ULL
-+#define STD_CD_S2_L3_ADDR     0x000000000E4D3BC8ULL
-+#define STD_CD_S2_L3_VAL      0x040000000E179743ULL
-+
-+#define STD_CDTTB_S2_L2_ADDR  0x000000000E4D2390ULL
-+#define STD_CDTTB_S2_L3_ADDR  0x000000000E4D3680ULL
-+#define STD_CDTTB_S2_L3_VAL   0x040000000E4D0743ULL
-+
-+#define STD_S1L0_IN_S2L3_ADDR 0x000000000E4D3688ULL
-+#define STD_S1L0_IN_S2L3_VAL  0x040000000E4D1743ULL
-+#define STD_S1L1_IN_S2L3_ADDR 0x000000000E4D3690ULL
-+#define STD_S1L1_IN_S2L3_VAL  0x040000000E4D2743ULL
-+#define STD_S1L2_IN_S2L3_ADDR 0x000000000E4D3698ULL
-+#define STD_S1L2_IN_S2L3_VAL  0x040000000E4D3743ULL
-+#define STD_S1L3_IN_S2L2_ADDR 0x000000000E4D23B0ULL
-+#define STD_S1L3_IN_S2L2_VAL  0x000000000E4D3003ULL
-+#define STD_S1L3_IN_S2L3_ADDR 0x000000000E4D35D0ULL
-+#define STD_S1L3_IN_S2L3_VAL  0x040000000ECBA7C3ULL
-+
-+typedef enum TransMode {
-+    TM_S1_ONLY = 0,
-+    TM_S2_ONLY = 1,
-+    TM_NESTED  = 2,
-+} TransMode;
-+
-+/* Minimal STE/CD images (bit layout derived from test helpers) */
-+typedef struct {
-+    uint32_t word[8];
-+} STEImg;
-+
-+typedef struct {
-+    uint32_t word[8];
-+} CDImg;
-+
-+/* ---- Debug helpers for printing current translation configuration ---- */
-+static void G_GNUC_PRINTF(2, 3)
-+smmu_testdev_debug(const SMMUTestDevState *s, const char *fmt, ...)
-+{
-+    va_list ap;
-+    g_autofree char *msg = NULL;
-+
-+    if (!s->debug_log) {
-+        return;
-+    }
-+
-+    va_start(ap, fmt);
-+    msg = g_strdup_vprintf(fmt, ap);
-+    va_end(ap);
-+
-+    if (qemu_log_enabled()) {
-+        qemu_log("%s", msg);
-+    } else {
-+        fprintf(stderr, "%s", msg);
-+    }
-+}
-+
-+static const char *std_space_to_str(SMMUTestDevSpace sp)
-+{
-+    if (sp == STD_SPACE_NONSECURE) {
-+        return "Non-Secure";
-+    }
-+    /* Keep string table broad enough for future Secure/Realm/Root support. */
-+    return "Unsupported";
-+}
-+
-+static const char *std_mode_to_str(uint32_t m)
-+{
-+    switch (m & 0x3) {
-+    case 0: return "S1-only";
-+    case 1: return "S2-only";
-+    case 2: return "Nested";
-+    default: return "Unknown";
-+    }
-+}
-+
-+static void std_log_trans_cfg(const SMMUTestDevState *s)
-+{
-+    /* Log format remains generic to ease adding more security spaces later. */
-+    const char *s1 = std_space_to_str(s->s1_space);
-+    const char *s2 = std_space_to_str(s->s2_space);
-+    const char *md = std_mode_to_str(s->trans_mode);
-+    smmu_testdev_debug(s, "[smmu-testdev] trans: mode=%u(%s), S1=%s, S2=%s\n",
-+                       s->trans_mode & 0x3, md, s1, s2);
-+}
-+
-+static bool smmu_testdev_space_supported(SMMUTestDevSpace sp)
-+{
-+    return sp == STD_SPACE_NONSECURE;
-+}
-+
-+static MemTxAttrs mk_attrs_from_space(SMMUTestDevSpace space)
-+{
-+    MemTxAttrs a = {0};
-+    if (!smmu_testdev_space_supported(space)) {
-+        /* Fall back to Non-Secure until more spaces are implemented. */
-+        a.space = STD_SPACE_NONSECURE;
-+    } else {
-+        a.space = space;
-+    }
-+    a.secure = 0;
-+    return a;
-+}
-+
-+static inline AddressSpace *space_to_as(SMMUTestDevSpace sp)
-+{
-+    /* Future work can dispatch Secure/Realm/Root address spaces here. */
-+    (void)sp;
-+    return &address_space_memory;
-+}
-+
-+/* Apply per-space offset for addresses or values that encode addresses. */
-+static inline uint64_t std_apply_space_offs(SMMUTestDevSpace sp, uint64_t x)
-+{
-+    return x + std_space_offset(sp);
-+}
-+
-+/* Direct write helpers (no mirroring) */
-+static void std_write64(SMMUTestDevSpace sp, uint64_t pa, uint64_t val,
-+                       uint32_t *status)
-+{
-+    MemTxAttrs a = mk_attrs_from_space(sp);
-+    AddressSpace *as = space_to_as(sp);
-+    MemTxResult r = address_space_write(as, pa, a, &val, sizeof(val));
-+    if (r != MEMTX_OK && status) {
-+        *status = 0xdead2011u;
-+    }
-+}
-+
-+static void std_write32(SMMUTestDevSpace sp, uint64_t pa, uint32_t val,
-+                       uint32_t *status)
-+{
-+    MemTxAttrs a = mk_attrs_from_space(sp);
-+    AddressSpace *as = space_to_as(sp);
-+    MemTxResult r = address_space_write(as, pa, a, &val, sizeof(val));
-+    if (r != MEMTX_OK && status) {
-+        *status = 0xdead2012u;
-+    }
-+}
-+
-+static void ste_set_valid(STEImg *ste, uint32_t v)
-+{
-+    ste->word[0] = (ste->word[0] & ~0x1u) | (v & 0x1u);
-+}
-+
-+static void ste_set_config(STEImg *ste, uint32_t cfg)
-+{
-+    /* bits[3:1] */
-+    ste->word[0] = (ste->word[0] & ~(0x7u << 1)) | ((cfg & 0x7u) << 1);
-+}
-+
-+static void cd_set_valid(CDImg *cd, uint32_t v)
-+{
-+    cd->word[0] = (cd->word[0] & ~(1u << 31)) | ((v & 0x1u) << 31);
-+}
-+
-+static void cd_set_asid(CDImg *cd, uint32_t asid)
-+{
-+    cd->word[1] = (cd->word[1] & ~(0xFFFFu << 16))
-+                | ((asid & 0xFFFFu) << 16);
-+}
-+
-+static void cd_set_aa64(CDImg *cd, uint32_t v)
-+{
-+    cd->word[1] = (cd->word[1] & ~(1u << 9)) | ((v & 0x1u) << 9);
-+}
-+
-+static void cd_set_ttb0(CDImg *cd, uint64_t ttb)
-+{
-+    /* words[2]/[3] pack TTB0 similar to test helpers */
-+    cd->word[2] = (cd->word[2] & 0x0000000Fu)
-+                | (uint32_t)(ttb & 0xFFFFFFF0u);
-+    cd->word[3] = (cd->word[3] & 0xFFF80000u)
-+                | (uint32_t)((ttb >> 32) & 0x0007FFFFu);
-+}
-+
-+static void smmu_testdev_build_translation(SMMUTestDevState *s)
-+{
-+    smmu_testdev_debug(s, "smmu_testdev_build_translation: mode=%d\n",
-+                       s->trans_mode);
-+    uint32_t st = 0;
-+    SMMUTestDevSpace build_space =
-+        (s->trans_mode == TM_S1_ONLY) ? s->s1_space : s->s2_space;
-+
-+    if (!smmu_testdev_space_supported(build_space) ||
-+        (s->trans_mode != TM_S2_ONLY &&
-+         !smmu_testdev_space_supported(s->s1_space))) {
-+        /* Only the Non-Secure space is supported until more domains land. */
-+        s->trans_status = 0xdead3001u;
-+        return;
-+    }
-+
-+    /*
-+     * Build base page tables (L0..L3) in the chosen space.
-+     * For Non-Secure, place tables at Secure-base + space offset and
-+     * update descriptor values by the same offset to keep internal
-+     * relationships identical across spaces.
-+     */
-+    uint64_t L0_pa = std_apply_space_offs(build_space, STD_L0_ADDR);
-+    uint64_t L1_pa = std_apply_space_offs(build_space, STD_L1_ADDR);
-+    uint64_t L2_pa = std_apply_space_offs(build_space, STD_L2_ADDR);
-+    uint64_t L3_pa = std_apply_space_offs(build_space, STD_L3_ADDR);
-+    uint64_t L0_val = std_apply_space_offs(build_space, STD_L0_VAL);
-+    uint64_t L1_val = std_apply_space_offs(build_space, STD_L1_VAL);
-+    uint64_t L2_val = std_apply_space_offs(build_space, STD_L2_VAL);
-+    uint64_t L3_val = std_apply_space_offs(build_space, STD_L3_VAL);
-+    std_write64(build_space, L0_pa, L0_val, &st);
-+    std_write64(build_space, L1_pa, L1_val, &st);
-+    std_write64(build_space, L2_pa, L2_val, &st);
-+    std_write64(build_space, L3_pa, L3_val, &st);
-+
-+    /* Build STE image */
-+    STEImg ste = {0};
-+    ste_set_valid(&ste, 1);
-+    switch (s->trans_mode) {
-+    case TM_S1_ONLY:
-+        ste_set_config(&ste, 0x5);
-+        break;
-+    case TM_S2_ONLY:
-+        ste_set_config(&ste, 0x6);
-+        break;
-+    case TM_NESTED:
-+    default:
-+        ste_set_config(&ste, 0x7);
-+        break;
-+    }
-+
-+    uint64_t vttb = TEST_VTTB;
-+    STD_STE_SET_VALID(&ste, 1);
-+    STD_STE_SET_S2T0SZ(&ste, STD_STE_S2T0SZ_VAL);
-+    STD_STE_SET_S2SL0(&ste, 0x2);   /* Start level 0*/
-+    STD_STE_SET_S2TG(&ste, 0);      /* 4KB */
-+    STD_STE_SET_S2PS(&ste, 0x5);    /* 48 bits */
-+    STD_STE_SET_S2AA64(&ste, 1);    /* Enable S2AA64 (64-bit address format). */
-+    STD_STE_SET_S2ENDI(&ste, 0);    /* Little Endian */
-+    STD_STE_SET_S2AFFD(&ste, 0);    /* AF Fault Disable */
-+
-+    STD_STE_SET_S2T0SZ(&ste, STD_STE_S2T0SZ_VAL);
-+    STD_STE_SET_S2SL0(&ste, 0x2);   /* Start level */
-+    STD_STE_SET_S2TG(&ste, 0);      /* 4KB */
-+    STD_STE_SET_S2PS(&ste, 0x5);    /* 48 bits ?*/
-+    /* Set Context Pointer (S1ContextPtr) */
-+    STD_STE_SET_CTXPTR(&ste, std_apply_space_offs(build_space, STD_CD_GPA));
-+
-+    STD_STE_SET_S2TTB(&ste, std_apply_space_offs(build_space, vttb));
-+
-+    for (int i = 0; i < 8; i++) {
-+        std_write32(build_space,
-+                    std_apply_space_offs(build_space, STD_STE_GPA) + i * 4,
-+                    ste.word[i], &st);
-+    }
-+
-+    /* Build CD image for S1 path if needed */
-+    if (s->trans_mode != TM_S2_ONLY) {
-+        CDImg cd = {0};
-+        cd_set_asid(&cd, 0x1e20);
-+        cd_set_aa64(&cd, 1);
-+        /*
-+         * CD belongs to S1 path: compute offsets using s1_space so the
-+         * GPA and embedded addresses are consistent with that space.
-+         */
-+        cd_set_ttb0(&cd, std_apply_space_offs(s->s1_space, STD_L1_ADDR));
-+        cd_set_valid(&cd, 1);
-+
-+        STD_CD_SET_ASID(&cd, 0x1e20);     /* ASID */
-+        STD_CD_SET_AARCH64(&cd, 1);       /* AA64 */
-+        STD_CD_SET_VALID(&cd, 1);
-+        STD_CD_SET_A(&cd, 1);
-+        STD_CD_SET_S(&cd, 0);
-+        STD_CD_SET_HD(&cd, 0);
-+        STD_CD_SET_HA(&cd, 0);
-+        STD_CD_SET_IPS(&cd, 0x4);
-+        STD_CD_SET_TBI(&cd, 0x0);
-+        STD_CD_SET_AFFD(&cd, 0x0);
-+        /* Disable TTB0 translation table walk */
-+        STD_CD_SET_EPD(&cd, 0, 0x0);
-+        /* Enable TTB1 translation table walk */
-+        STD_CD_SET_EPD(&cd, 1, 0x1);
-+        STD_CD_SET_TSZ(&cd, 0, 0x10);
-+        STD_CD_SET_TG(&cd, 0, 0x0);
-+        STD_CD_SET_ENDI(&cd, 0x0);
-+        STD_CD_SET_NSCFG0(&cd, 0x0);
-+        STD_CD_SET_NSCFG1(&cd, 0x0);
-+        STD_CD_SET_R(&cd, 0x1);
-+        uint64_t cd_ttb = std_apply_space_offs(build_space, vttb);
-+        smmu_testdev_debug(s, "STD_CD_SET_TTB: 0x%llx\n",
-+                           (unsigned long long)cd_ttb);
-+        STD_CD_SET_TTB(&cd, 0, cd_ttb);
-+
-+        for (int i = 0; i < 8; i++) {
-+            std_write32(s->s1_space,
-+                        std_apply_space_offs(s->s1_space, STD_CD_GPA) + i * 4,
-+                        cd.word[i], &st);
-+        }
-+
-+        L3_val = std_apply_space_offs(build_space, STD_L3_S1_VAL);
-+        std_write64(build_space, L3_pa, L3_val, &st);
-+    }
-+
-+    /* Nested extras: CD S2 tables, CD.TTB S2 tables, shared entries. */
-+    if (s->trans_mode == TM_NESTED) {
-+        /* CD.S2 tables */
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_CD_S2_L0_ADDR),
-+                    std_apply_space_offs(build_space, STD_L0_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_CD_S2_L1_ADDR),
-+                    std_apply_space_offs(build_space, STD_L1_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_CD_S2_L2_ADDR),
-+                    std_apply_space_offs(build_space, STD_L2_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_CD_S2_L3_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_CD_S2_L3_VAL), &st);
-+
-+        /* CD.TTB S2 tables */
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_CDTTB_S2_L2_ADDR),
-+                    std_apply_space_offs(build_space, STD_L2_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_CDTTB_S2_L3_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_CDTTB_S2_L3_VAL), &st);
-+
-+        /* Shared mappings between S1 and S2 page tables */
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_S1L0_IN_S2L3_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_S1L0_IN_S2L3_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_S1L1_IN_S2L3_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_S1L1_IN_S2L3_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_S1L2_IN_S2L3_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_S1L2_IN_S2L3_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_S1L3_IN_S2L2_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_S1L3_IN_S2L2_VAL), &st);
-+        std_write64(build_space,
-+                    std_apply_space_offs(build_space, STD_S1L3_IN_S2L3_ADDR),
-+                    std_apply_space_offs(build_space,
-+                                         STD_S1L3_IN_S2L3_VAL), &st);
-+    }
-+
-+    s->trans_status = st;
-+}
-+
-+static void push_cfgi_cmd(SMMUTestDevState *s,
-+                          SMMUTestDevSpace bank_sp,
-+                          uint32_t type,
-+                          uint32_t sid,
-+                          bool ssec)
-+{
-+    MemTxResult res = 0;
-+    g_assert(smmu_testdev_space_supported(bank_sp));
-+    g_assert(!ssec);
-+    hwaddr bank_off = 0;
-+    uint32_t base_lo = address_space_ldl_le(&address_space_memory,
-+                                            s->smmu_base + bank_off + 0x90,
-+                                            MEMTXATTRS_UNSPECIFIED, &res);
-+    uint32_t base_hi = address_space_ldl_le(&address_space_memory,
-+                                            s->smmu_base + bank_off + 0x94,
-+                                            MEMTXATTRS_UNSPECIFIED, &res);
-+    uint64_t base = ((uint64_t)base_hi << 32) | base_lo;
-+    uint32_t log2size = base & 0x1f;
-+    uint64_t qbase = base & 0xfffffffffffc0ULL;
-+    uint32_t prod = address_space_ldl_le(&address_space_memory,
-+                                         s->smmu_base + bank_off + 0x98,
-+                                         MEMTXATTRS_UNSPECIFIED, &res);
-+    uint32_t index_mask = (1u << log2size) - 1u;
-+    uint32_t slot = prod & index_mask;
-+    uint64_t entry_pa = qbase + (uint64_t)slot * 16u;
-+
-+    uint32_t words[4] = {0};
-+    words[0] = (type & 0xff) | (ssec ? (1u << 10) : 0u);
-+    words[1] = sid;
-+
-+    /* push command to the command queue */
-+    MemTxAttrs a = mk_attrs_from_space(bank_sp);
-+    int ret = address_space_write(space_to_as(bank_sp), entry_pa, a,
-+                                  words, sizeof(words));
-+    smmu_testdev_debug(s, "push_cfgi_cmd ret %d\n", ret);
-+
-+    /* update PROD to trigger command handler */
-+    uint32_t new_prod = (prod + 1) & ((1u << (log2size + 1)) - 1u);
-+    address_space_stl_le(&address_space_memory,
-+                         s->smmu_base + bank_off + 0x98,
-+                         new_prod, MEMTXATTRS_UNSPECIFIED, &res);
-+    smmu_testdev_debug(s, "last res %d\n", res);
-+}
-+
-+/* Clear all the cache to avoid the incorrect cache hit */
-+static void smmu_testdev_clear_caches(SMMUTestDevState *s)
-+{
-+    uint32_t st = 0;
-+    static const SMMUTestDevSpace spaces[] = { STD_SPACE_NONSECURE };
-+
-+    for (size_t idx = 0; idx < ARRAY_SIZE(spaces); idx++) {
-+        SMMUTestDevSpace build_space = spaces[idx];
-+        if (!smmu_testdev_space_supported(build_space)) {
-+            continue;
-+        }
-+        /* Clear L0..L3 entries written by the builder. */
-+        uint64_t L0_pa = std_apply_space_offs(build_space, STD_L0_ADDR);
-+        uint64_t L1_pa = std_apply_space_offs(build_space, STD_L1_ADDR);
-+        uint64_t L2_pa = std_apply_space_offs(build_space, STD_L2_ADDR);
-+        uint64_t L3_pa = std_apply_space_offs(build_space, STD_L3_ADDR);
-+        uint64_t S2_L0_pa = std_apply_space_offs(build_space,
-+                                                 STD_CD_S2_L0_ADDR);
-+        uint64_t S2_L1_pa = std_apply_space_offs(build_space,
-+                                                 STD_CD_S2_L1_ADDR);
-+        uint64_t S2_L2_pa = std_apply_space_offs(build_space,
-+                                                 STD_CD_S2_L2_ADDR);
-+        uint64_t S2_L3_pa = std_apply_space_offs(build_space,
-+                                                 STD_CD_S2_L3_ADDR);
-+
-+        std_write64(build_space, L0_pa, 0ull, &st);
-+        std_write64(build_space, L1_pa, 0ull, &st);
-+        std_write64(build_space, L2_pa, 0ull, &st);
-+        std_write64(build_space, L3_pa, 0ull, &st);
-+        std_write64(build_space, S2_L0_pa, 0ull, &st);
-+        std_write64(build_space, S2_L1_pa, 0ull, &st);
-+        std_write64(build_space, S2_L2_pa, 0ull, &st);
-+        std_write64(build_space, S2_L3_pa, 0ull, &st);
-+
-+        /* Clear STE image where it was placed. */
-+        for (int i = 0; i < 8; i++) {
-+            std_write32(build_space,
-+                        std_apply_space_offs(build_space, STD_STE_GPA) + i * 4,
-+                        0u, &st);
-+        }
-+
-+        /* Clear CD image in S1 space (matches builder placement). */
-+        for (int i = 0; i < 8; i++) {
-+            std_write32(build_space,
-+                        std_apply_space_offs(build_space, STD_CD_GPA) + i * 4,
-+                        0u, &st);
-+        }
-+    }
-+
-+    /* Invalidate configuration cache via CFGI_STE and CFGI_CD commands */
-+    if (s->smmu_base) {
-+        /* Compute this PCI function's StreamID: bus 0, current devfn. */
-+        uint8_t devfn = PCI_DEVICE(&s->parent_obj)->devfn;
-+        uint32_t sid = PCI_BUILD_BDF(0, devfn);
-+
-+        /* Non-secure bank invalidations (SSEC=0). */
-+        push_cfgi_cmd(s, STD_SPACE_NONSECURE, STD_CMD_CFGI_STE, sid, false);
-+        push_cfgi_cmd(s, STD_SPACE_NONSECURE, STD_CMD_CFGI_CD,  sid, false);
-+        push_cfgi_cmd(s, STD_SPACE_NONSECURE, STD_CMD_TLBI_NSNH_ALL,
-+                      sid, false);
-+
-+        /* Add Secure/Realm/Root invalidations here once those domains exist. */
-+    }
-+}
-+
-+static void smmu_testdev_refresh_attrs(SMMUTestDevState *s)
-+{
-+    /* Report the baked-in Non-Secure attributes until more exist. */
-+    s->attr_ns = (STD_SPACE_NONSECURE << 1);
-+}
-+
-+static void smmu_testdev_maybe_run_dma(SMMUTestDevState *s)
-+{
-+    if (!s->dma_pending) {
-+        return;
-+    }
-+    smmu_testdev_debug(s, "smmu_testdev_maybe_run_dma: dma_pending: %d\n",
-+                       s->dma_pending);
-+
-+    s->dma_pending = false;
-+
-+    if (!s->dma_len || s->dma_len > DMA_MAX_LEN) {
-+        s->dma_result = DMA_ERR_BAD_LEN;
-+        return;
-+    }
-+
-+    g_autofree uint8_t *buf = g_malloc(s->dma_len);
-+    MemTxResult res;
-+
-+    if (s->dma_mode == 0) {
-+        if (s->dma_dir == DMA_DIR_HOST2DEV) {
-+            res = pci_dma_read(PCI_DEVICE(&s->parent_obj), s->dma_iova,
-+                               buf, s->dma_len);
-+        } else {
-+            for (uint32_t i = 0; i < s->dma_len; i++) {
-+                buf[i] = 0xA0u + (i & 0x1fu);
-+            }
-+            res = pci_dma_write(PCI_DEVICE(&s->parent_obj), s->dma_iova,
-+                                buf, s->dma_len);
-+        }
-+    } else {
-+        SMMUTestDevSpace dma_space =
-+            (SMMUTestDevSpace)((s->dma_attrs_cfg >> 1) & 0x3);
-+        if (!smmu_testdev_space_supported(dma_space)) {
-+            /* Default to Non-Secure until other spaces are modeled. */
-+            dma_space = STD_SPACE_NONSECURE;
-+        }
-+        MemTxAttrs attrs = {
-+            .secure = 0,
-+            .space = dma_space,
-+            .unspecified = (s->dma_attrs_cfg & (1u << 3)) ? 1 : 0,
-+        };
-+        /*
-+         * If 'unspecified' is set, bypass IOMMU AS and use system memory.
-+         * This helps tests that want deterministic success without full
-+         * IOMMU programming.
-+         */
-+        AddressSpace *as = (s->dma_as && !attrs.unspecified)
-+                               ? s->dma_as
-+                               : &address_space_memory;
-+        if (s->dma_dir == DMA_DIR_HOST2DEV) {
-+            res = dma_memory_read(as, s->dma_iova, buf, s->dma_len, attrs);
-+        } else {
-+            for (uint32_t i = 0; i < s->dma_len; i++) {
-+                buf[i] = 0xA0u + (i & 0x1fu);
-+            }
-+            res = dma_memory_write(as, s->dma_iova, buf, s->dma_len, attrs);
-+        }
-+    }
-+    s->dma_result = (res == MEMTX_OK) ? 0 : DMA_ERR_TX_FAIL;
-+    smmu_testdev_debug(s, "iommu ret %d , dma_result: %d\n",
-+                       res, s->dma_result);
-+}
-+
-+static uint64_t smmu_testdev_mmio_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    SMMUTestDevState *s = opaque;
-+    switch (addr) {
-+    case REG_ID:
-+        /*
-+         * Only reads of REG_ID intentionally trigger the side effects
-+         * (SMMU CR0 write and pending DMA). This lets tests poll
-+         * REG_DMA_RESULT to observe BUSY before consuming the DMA.
-+         */
-+        smmu_testdev_maybe_run_dma(s);
-+        return 0x53544d4du; /* 'STMM' */
-+    case REG_ATTR_NS:
-+        return s->attr_ns;
-+    case REG_SMMU_BASE_LO:
-+        return (uint32_t)(s->smmu_base & 0xffffffffu);
-+    case REG_SMMU_BASE_HI:
-+        return (uint32_t)(s->smmu_base >> 32);
-+    case REG_DMA_IOVA_LO:
-+        return (uint32_t)(s->dma_iova & 0xffffffffu);
-+    case REG_DMA_IOVA_HI:
-+        return (uint32_t)(s->dma_iova >> 32);
-+    case REG_DMA_LEN:
-+        return s->dma_len;
-+    case REG_DMA_DIR:
-+        return s->dma_dir;
-+    case REG_DMA_RESULT:
-+        return s->dma_result;
-+    case REG_DMA_MODE:
-+        return s->dma_mode;
-+    case REG_DMA_ATTRS:
-+        return s->dma_attrs_cfg;
-+    case REG_TRANS_MODE:
-+        return s->trans_mode;
-+    case REG_S1_SPACE:
-+        return s->s1_space;
-+    case REG_S2_SPACE:
-+        return s->s2_space;
-+    case REG_TRANS_STATUS:
-+        return s->trans_status;
-+    default:
-+        return 0;
-+    }
-+}
-+
-+static void smmu_testdev_mmio_write(void *opaque, hwaddr addr, uint64_t val,
-+                                    unsigned size)
-+{
-+    SMMUTestDevState *s = opaque;
-+    uint32_t data = val;
-+
-+    switch (addr) {
-+    case REG_ID:
-+        if (data == 0x1) {
-+            smmu_testdev_refresh_attrs(s);
-+        }
-+        break;
-+    case REG_SMMU_BASE_LO:
-+        s->smmu_base = (s->smmu_base & ~0xffffffffull) | data;
-+        break;
-+    case REG_SMMU_BASE_HI:
-+        s->smmu_base = (s->smmu_base & 0xffffffffull) |
-+                       ((uint64_t)data << 32);
-+        break;
-+    case REG_DMA_IOVA_LO:
-+        s->dma_iova = (s->dma_iova & ~0xffffffffull) | data;
-+        break;
-+    case REG_DMA_IOVA_HI:
-+        s->dma_iova = (s->dma_iova & 0xffffffffull) |
-+                      ((uint64_t)data << 32);
-+        break;
-+    case REG_DMA_LEN:
-+        s->dma_len = data;
-+        break;
-+    case REG_DMA_DIR:
-+        s->dma_dir = data ? DMA_DIR_HOST2DEV : DMA_DIR_DEV2HOST;
-+        break;
-+    case REG_DMA_RESULT:
-+        s->dma_result = data;
-+        break;
-+    case REG_DMA_DOORBELL:
-+        if (data & 0x1) {
-+            s->dma_pending = true;
-+            s->dma_result = DMA_RESULT_BUSY;
-+        } else {
-+            s->dma_pending = false;
-+            s->dma_result = DMA_RESULT_IDLE;
-+        }
-+        break;
-+    case REG_DMA_MODE:
-+        s->dma_mode = data & 0x1;
-+        break;
-+    case REG_DMA_ATTRS:
-+        s->dma_attrs_cfg = data;
-+        break;
-+    case REG_TRANS_MODE:
-+        s->trans_mode = data & 0x3;
-+        std_log_trans_cfg(s);
-+        break;
-+    case REG_S1_SPACE:
-+        s->s1_space = (SMMUTestDevSpace)(data & 0x3);
-+        std_log_trans_cfg(s);
-+        break;
-+    case REG_S2_SPACE:
-+        s->s2_space = (SMMUTestDevSpace)(data & 0x3);
-+        std_log_trans_cfg(s);
-+        break;
-+    case REG_TRANS_DBELL:
-+        if (data & 0x2) {
-+            s->trans_status = 0;
-+        }
-+        if (data & 0x1) {
-+            smmu_testdev_build_translation(s);
-+        }
-+        break;
-+    case REG_TRANS_CLEAR:
-+        /* Clear helper caches so the next iteration rebuilds cleanly. */
-+        smmu_testdev_clear_caches(s);
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps smmu_testdev_mmio_ops = {
-+    .read = smmu_testdev_mmio_read,
-+    .write = smmu_testdev_mmio_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void smmu_testdev_realize(PCIDevice *pdev, Error **errp)
-+{
-+    SMMUTestDevState *s = SMMU_TESTDEV(pdev);
-+
-+    /* Apply user-configurable BDF (default 0:1). */
-+    uint8_t dev = s->cfg_dev & 0x1f;
-+    uint8_t fn  = s->cfg_fn & 0x7;
-+    pdev->devfn = (dev << 3) | fn;
-+
-+    smmu_testdev_refresh_attrs(s);
-+    s->smmu_base = 0;
-+    s->dma_iova = 0;
-+    s->dma_len = 0;
-+    s->dma_dir = DMA_DIR_DEV2HOST;
-+    s->dma_result = DMA_RESULT_IDLE;
-+    s->dma_pending = false;
-+    s->dma_mode = 0;
-+    s->dma_attrs_cfg = 0;
-+    s->dma_as = pci_device_iommu_address_space(pdev);
-+    s->trans_mode = TM_S2_ONLY;
-+    s->s1_space = STD_SPACE_NONSECURE;
-+    s->s2_space = STD_SPACE_NONSECURE;
-+    s->trans_status = 0;
-+
-+    if (s->debug_log) {
-+        smmu_testdev_debug(s, "[smmu-testdev] debug logging enabled\n");
-+    }
-+
-+    memory_region_init_io(&s->bar0, OBJECT(pdev), &smmu_testdev_mmio_ops, s,
-+                          TYPE_SMMU_TESTDEV ".bar0", BAR0_SIZE);
-+    pci_register_bar(pdev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->bar0);
-+}
-+
-+static void smmu_testdev_reset(DeviceState *dev)
-+{
-+    SMMUTestDevState *s = SMMU_TESTDEV(dev);
-+
-+    smmu_testdev_refresh_attrs(s);
-+    s->smmu_base = 0;
-+    s->dma_iova = 0;
-+    s->dma_len = 0;
-+    s->dma_dir = DMA_DIR_DEV2HOST;
-+    s->dma_result = DMA_RESULT_IDLE;
-+    s->dma_pending = false;
-+    s->dma_mode = 0;
-+    s->dma_attrs_cfg = 0;
-+    s->trans_mode = TM_S2_ONLY;
-+    s->s1_space = STD_SPACE_NONSECURE;
-+    s->s2_space = STD_SPACE_NONSECURE;
-+    s->trans_status = 0;
-+    /* Keep cfg_dev/cfg_fn as-is across reset */
-+}
-+
-+static const Property smmu_testdev_properties[] = {
-+    DEFINE_PROP_UINT32("device", SMMUTestDevState, cfg_dev, 0),
-+    DEFINE_PROP_UINT32("function", SMMUTestDevState, cfg_fn, 1),
-+    DEFINE_PROP_BOOL("debug-log", SMMUTestDevState, debug_log, false),
-+};
-+
-+static void smmu_testdev_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
-+
-+    pc->realize = smmu_testdev_realize;
-+    pc->vendor_id = PCI_VENDOR_ID_REDHAT;
-+    pc->device_id = PCI_DEVICE_ID_REDHAT_TEST;
-+    pc->revision = 0;
-+    pc->class_id = PCI_CLASS_OTHERS;
-+    dc->desc = "A test device for the SMMU";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    device_class_set_legacy_reset(dc, smmu_testdev_reset);
-+    device_class_set_props(dc, smmu_testdev_properties);
-+}
-+
-+static void smmu_testdev_instance_init(Object *obj)
-+{
-+    SMMUTestDevState *s = SMMU_TESTDEV(obj);
-+    s->cfg_dev = 0;
-+    s->cfg_fn = 1; /* default StreamID = 1 (slot 0, fn 1) */
-+    s->debug_log = false;
-+}
-+
-+static const TypeInfo smmu_testdev_info = {
-+    .name          = TYPE_SMMU_TESTDEV,
-+    .parent        = TYPE_PCI_DEVICE,
-+    .instance_size = sizeof(SMMUTestDevState),
-+    .instance_init = smmu_testdev_instance_init,
-+    .class_init    = smmu_testdev_class_init,
-+    .interfaces    = (const InterfaceInfo[]) {
-+        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+        { }
-+    },
-+};
-+
-+static void smmu_testdev_register_types(void)
-+{
-+    type_register_static(&smmu_testdev_info);
-+}
-+
-+type_init(smmu_testdev_register_types);
-diff --git a/include/hw/misc/smmu-testdev.h b/include/hw/misc/smmu-testdev.h
-new file mode 100644
-index 0000000000..e29ac630d4
---- /dev/null
-+++ b/include/hw/misc/smmu-testdev.h
-@@ -0,0 +1,90 @@
-+/*
-+ * A test device for the SMMU
-+ *
-+ * This test device is a minimal SMMU-aware device used to test the SMMU.
-+ *
-+ * Copyright (c) 2025 Phytium Technology
-+ *
-+ * Author:
-+ *  Tao Tang <tangtao1634@phytium.com.cn>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MISC_SMMU_TESTDEV_H
-+#define HW_MISC_SMMU_TESTDEV_H
-+
-+#include "qemu/osdep.h"
-+typedef enum SMMUTestDevSpace {
-+    STD_SPACE_SECURE    = 0,
-+    STD_SPACE_NONSECURE = 1,
-+    STD_SPACE_ROOT      = 2,
-+    STD_SPACE_REALM     = 3,
-+} SMMUTestDevSpace;
-+
-+/* Only the Non-Secure space is implemented; leave room for future domains. */
-+#define STD_SUPPORTED_SPACES 1
-+
-+/* BAR0 registers (offsets) */
-+enum {
-+    STD_REG_ID           = 0x00,
-+    STD_REG_ATTR_NS      = 0x04,
-+    STD_REG_SMMU_BASE_LO = 0x20,
-+    STD_REG_SMMU_BASE_HI = 0x24,
-+    STD_REG_DMA_IOVA_LO  = 0x28,
-+    STD_REG_DMA_IOVA_HI  = 0x2C,
-+    STD_REG_DMA_LEN      = 0x30,
-+    STD_REG_DMA_DIR      = 0x34,
-+    STD_REG_DMA_RESULT   = 0x38,
-+    STD_REG_DMA_DBELL    = 0x3C,
-+    /* Extended controls for DMA attributes/mode */
-+    STD_REG_DMA_MODE     = 0x40,
-+    STD_REG_DMA_ATTRS    = 0x44,
-+    /* Translation controls */
-+    STD_REG_TRANS_MODE   = 0x48,
-+    STD_REG_S1_SPACE     = 0x4C,
-+    STD_REG_S2_SPACE     = 0x50,
-+    STD_REG_TRANS_DBELL  = 0x54,
-+    STD_REG_TRANS_STATUS = 0x58,
-+    /* Clear helper-built tables/descriptors (write-any to trigger) */
-+    STD_REG_TRANS_CLEAR  = 0x5C,
-+};
-+
-+/* DMA result/status values shared with tests */
-+#define STD_DMA_RESULT_IDLE 0xffffffffu
-+#define STD_DMA_RESULT_BUSY 0xfffffffeu
-+#define STD_DMA_ERR_BAD_LEN 0xdead0001u
-+#define STD_DMA_ERR_TX_FAIL 0xdead0002u
-+
-+/* DMA attributes layout (for STD_REG_DMA_ATTRS) */
-+#define STD_DMA_ATTR_SECURE        (1u << 0)
-+#define STD_DMA_ATTR_SPACE_SHIFT   1
-+#define STD_DMA_ATTR_SPACE_MASK    (0x3u << STD_DMA_ATTR_SPACE_SHIFT)
-+#define STD_DMA_ATTR_UNSPECIFIED   (1u << 3)
-+
-+/* Device identity value returned by STD_REG_ID */
-+#define STD_ID_VALUE 0x53544d4dU /* 'STMM' */
-+
-+/* Command type */
-+#define STD_CMD_CFGI_STE        0x03
-+#define STD_CMD_CFGI_CD         0x05
-+#define STD_CMD_TLBI_NSNH_ALL   0x30
-+
-+/*
-+ * Address-space base offsets for test tables.
-+ * - Secure uses 0 offset.
-+ * - Non-Secure uses a fixed offset, keeping internal layout identical.
-+ *
-+ * Note: Future spaces (e.g. Realm/Root) are not implemented here.
-+ * When needed, introduce new offsets and reuse the helpers below so
-+ * relative layout stays identical across spaces.
-+ */
-+#define STD_SPACE_OFFS_NS       0x40000000ULL
-+
-+static inline uint64_t std_space_offset(SMMUTestDevSpace sp)
-+{
-+    /* Non-Secure is the only supported space today; return zero for others. */
-+    return (sp == STD_SPACE_NONSECURE) ? STD_SPACE_OFFS_NS : 0;
-+}
-+
-+#endif /* HW_MISC_SMMU_TESTDEV_H */
--- 
-2.34.1
+[1] 
+https://github.com/bonzini/probe-rs/blob/extern-semaphore/src/platform/systemtap.rs
 
 
