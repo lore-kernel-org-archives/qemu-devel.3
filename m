@@ -4,36 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72B30CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 06:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895E9CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 06:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1fYm-0008QV-Tr; Thu, 25 Sep 2025 02:34:33 -0400
+	id 1v1fYm-0008QY-Ta; Thu, 25 Sep 2025 02:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1v1fYV-00083A-VU
+ id 1v1fYX-00083D-Dw
  for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:34:19 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1v1fXh-0000Ti-3n
+ (envelope-from <gaosong@loongson.cn>) id 1v1fXj-0000Tl-AI
  for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:33:40 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxaNEs4tRo0GsOAA--.31368S3;
- Thu, 25 Sep 2025 14:33:16 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxrr8v4tRo02sOAA--.30049S3;
+ Thu, 25 Sep 2025 14:33:19 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBxpeQq4tRoj+iuAA--.30453S2;
- Thu, 25 Sep 2025 14:33:14 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxpeQq4tRoj+iuAA--.30453S4;
+ Thu, 25 Sep 2025 14:33:19 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/11] loongarch-to-apply queue
-Date: Thu, 25 Sep 2025 14:09:25 +0800
-Message-Id: <20250925060936.898618-1-gaosong@loongson.cn>
+Cc: Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 02/11] hw/loongarch: add virt feature dmsi support
+Date: Thu, 25 Sep 2025 14:09:27 +0800
+Message-Id: <20250925060936.898618-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250925060936.898618-1-gaosong@loongson.cn>
+References: <20250925060936.898618-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpeQq4tRoj+iuAA--.30453S2
+X-CM-TRANSID: qMiowJBxpeQq4tRoj+iuAA--.30453S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -61,53 +64,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 95b9e0d2ade5d633fd13ffba96a54e87c65baf39:
+dmsi feature is added in LoongArchVirtMachinState, and it is used
+to check whether virt machine supports the directy Message-Interrupts.
+and by default set dmsi with ON_OFF_AUTO_AUTO.
+LoongArchVirtMachineState adds misc_feature and misc_status for misc
+features and status. and set the default dintc feature bit.
+Msgint feature is added in LoongArchCPU, and it is used to check
+whether th cpu supports the Message-Interrupts and by default set
+mesgint with ON_OFF_AUTO_AUTO.
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-09-24 12:04:18 -0700)
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <20250916122109.749813-3-gaosong@loongson.cn>
+---
+ hw/loongarch/virt.c         | 50 +++++++++++++++++++++++++++++++++++++
+ include/hw/loongarch/virt.h | 14 +++++++++++
+ target/loongarch/cpu.c      | 29 +++++++++++++++++++++
+ target/loongarch/cpu.h      |  1 +
+ 4 files changed, 94 insertions(+)
 
-are available in the Git repository at:
-
-  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20250925
-
-for you to fetch changes up to 74a07cd3234184aaac441c13c2acb160d873becc:
-
-  hw/loongarch: Implement DINTC plug/unplug interfaces (2025-09-25 11:49:02 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20250925
-
-----------------------------------------------------------------
-Song Gao (11):
-      target/loongarch: move some machine define to virt.h
-      hw/loongarch: add virt feature dmsi support
-      hw/loongarch: add misc register support dmsi
-      loongarch: add a direct interrupt controller device
-      target/loongarch: add msg interrupt CSR registers
-      hw/loongarch: DINTC add a MemoryRegion
-      hw/loongarch: Implement dintc realize and unrealize
-      hw/loongarch: Implement dintc set irq
-      target/loongarch: Add CSR_ESTAT.bit15 and CSR_ECFG.bit15 for msg interrupts.
-      target/loongarch:Implement csrrd CSR_MSGIR register
-      hw/loongarch: Implement DINTC plug/unplug interfaces
-
- hw/intc/Kconfig                                    |   3 +
- hw/intc/loongarch_dintc.c                          | 212 +++++++++++++++++++++
- hw/intc/meson.build                                |   1 +
- hw/loongarch/Kconfig                               |   1 +
- hw/loongarch/virt.c                                | 110 ++++++++++-
- include/hw/intc/loongarch_dintc.h                  |  36 ++++
- include/hw/loongarch/virt.h                        |  34 ++++
- include/hw/pci-host/ls7a.h                         |   2 +
- target/loongarch/cpu-csr.h                         |   9 +-
- target/loongarch/cpu.c                             |  29 +++
- target/loongarch/cpu.h                             |  36 ++--
- target/loongarch/csr.c                             |   5 +
- target/loongarch/machine.c                         |  25 ++-
- target/loongarch/tcg/csr_helper.c                  |  21 ++
- target/loongarch/tcg/helper.h                      |   1 +
- .../tcg/insn_trans/trans_privileged.c.inc          |   1 +
- 16 files changed, 499 insertions(+), 27 deletions(-)
- create mode 100644 hw/intc/loongarch_dintc.c
- create mode 100644 include/hw/intc/loongarch_dintc.h
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index bd5cff1f1e..3ef42bafd0 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -48,6 +48,30 @@
+ #include "qemu/error-report.h"
+ #include "kvm/kvm_loongarch.h"
+ 
++static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
++                             void *opaque, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++    OnOffAuto dmsi = lvms->dmsi;
++
++    visit_type_OnOffAuto(v, name, &dmsi, errp);
++
++}
++static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++
++    visit_type_OnOffAuto(v, name, &lvms->dmsi, errp);
++
++    if (lvms->dmsi == ON_OFF_AUTO_OFF) {
++        lvms->misc_feature &= ~BIT(IOCSRF_DMSI);
++        lvms->misc_status &= ~BIT(IOCSRM_DMSI_EN);
++    } else if (lvms->dmsi == ON_OFF_AUTO_ON) {
++        lvms->misc_feature = BIT(IOCSRF_DMSI);
++    }
++}
++
+ static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
+                               void *opaque, Error **errp)
+ {
+@@ -683,6 +707,25 @@ static void fw_cfg_add_memory(MachineState *ms)
+     }
+ }
+ 
++static void virt_check_dmsi(MachineState *machine)
++{
++    LoongArchCPU *cpu;
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
++
++    cpu = LOONGARCH_CPU(first_cpu);
++    if (lvms->dmsi == ON_OFF_AUTO_AUTO) {
++        if (cpu->msgint != ON_OFF_AUTO_OFF) {
++            lvms->misc_feature = BIT(IOCSRF_DMSI);
++        }
++    }
++
++    if (lvms->dmsi == ON_OFF_AUTO_ON && cpu->msgint == ON_OFF_AUTO_OFF) {
++        error_report("Fail to enable dmsi , cpu msgint is off "
++                     "pleass add cpu feature mesgint=on.");
++        exit(EXIT_FAILURE);
++    }
++}
++
+ static void virt_init(MachineState *machine)
+ {
+     const char *cpu_model = machine->cpu_type;
+@@ -717,6 +760,7 @@ static void virt_init(MachineState *machine)
+         }
+         qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
+     }
++    virt_check_dmsi(machine);
+     fw_cfg_add_memory(machine);
+ 
+     /* Node0 memory */
+@@ -847,6 +891,8 @@ static void virt_initfn(Object *obj)
+     if (tcg_enabled()) {
+         lvms->veiointc = ON_OFF_AUTO_OFF;
+     }
++
++    lvms->dmsi = ON_OFF_AUTO_AUTO;
+     lvms->acpi = ON_OFF_AUTO_AUTO;
+     lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+     lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+@@ -1241,6 +1287,10 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "v-eiointc",
+                             "Enable Virt Extend I/O Interrupt Controller.");
++    object_class_property_add(oc, "dmsi", "OnOffAuto",
++        virt_get_dmsi, virt_set_dmsi, NULL, NULL);
++    object_class_property_set_description(oc, "dmsi",
++                            "Enable direct Message-interrupts Controller.");
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+ #ifdef CONFIG_TPM
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 7120b46714..98e9bf0737 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -23,6 +23,7 @@
+ #define IOCSRF_DVFSV1           7
+ #define IOCSRF_GMOD             9
+ #define IOCSRF_VM               11
++#define IOCSRF_DMSI             15
+ 
+ #define VERSION_REG             0x0
+ #define FEATURE_REG             0x8
+@@ -31,6 +32,7 @@
+ #define MISC_FUNC_REG           0x420
+ #define IOCSRM_EXTIOI_EN        48
+ #define IOCSRM_EXTIOI_INT_ENCODE 49
++#define IOCSRM_DMSI_EN          51
+ 
+ #define LOONGARCH_MAX_CPUS      256
+ 
+@@ -69,6 +71,7 @@ struct LoongArchVirtMachineState {
+     Notifier     powerdown_notifier;
+     OnOffAuto    acpi;
+     OnOffAuto    veiointc;
++    OnOffAuto    dmsi;
+     char         *oem_id;
+     char         *oem_table_id;
+     DeviceState  *acpi_ged;
+@@ -84,6 +87,8 @@ struct LoongArchVirtMachineState {
+     DeviceState *extioi;
+     struct memmap_entry *memmap_table;
+     unsigned int memmap_entries;
++    uint64_t misc_feature;
++    uint64_t misc_status;
+ };
+ 
+ #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
+@@ -91,6 +96,15 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
+ void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+ void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+ 
++static inline bool virt_has_dmsi(LoongArchVirtMachineState *lvms)
++{
++    if (!(lvms->misc_feature & BIT(IOCSRF_DMSI))) {
++        return false;
++    }
++
++    return true;
++}
++
+ static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+ {
+     if (lvms->veiointc == ON_OFF_AUTO_OFF) {
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 55ee317bf2..993602fb8c 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -495,6 +495,25 @@ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
+     cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
+ }
+ 
++static bool loongarch_get_msgint(Object *obj, Error **errp)
++{
++    return LOONGARCH_CPU(obj)->msgint != ON_OFF_AUTO_OFF;
++}
++
++static void loongarch_set_msgint(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    cpu->msgint = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++
++    if (kvm_enabled()) {
++        /* kvm feature detection in function kvm_arch_init_vcpu */
++        return;
++    }
++
++     cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, value);
++}
++
+ static void loongarch_cpu_post_init(Object *obj)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+@@ -507,6 +526,8 @@ static void loongarch_cpu_post_init(Object *obj)
+                              loongarch_set_lsx);
+     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
+                              loongarch_set_lasx);
++    object_property_add_bool(obj, "msgint", loongarch_get_msgint,
++                             loongarch_set_msgint);
+     /* lbt is enabled only in kvm mode, not supported in tcg mode */
+     if (kvm_enabled()) {
+         kvm_loongarch_cpu_post_init(cpu);
+@@ -614,6 +635,7 @@ static void loongarch_la464_initfn(Object *obj)
+     env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
+     env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
+ 
++    cpu->msgint = ON_OFF_AUTO_OFF;
+     loongarch_la464_init_csr(obj);
+     loongarch_cpu_post_init(obj);
+ }
+@@ -644,12 +666,19 @@ static void loongarch_la132_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG1, HP, 1);
+     data = FIELD_DP32(data, CPUCFG1, CRC, 1);
+     env->cpucfg[1] = data;
++    cpu->msgint = ON_OFF_AUTO_OFF;
+ }
+ 
+ static void loongarch_max_initfn(Object *obj)
+ {
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+     /* '-cpu max' for TCG: we use cpu la464. */
+     loongarch_la464_initfn(obj);
++
++    if (tcg_enabled()) {
++        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
++        cpu->msgint = ON_OFF_AUTO_AUTO;
++    }
+ }
+ 
+ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 8c35bf120a..19e00325ca 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -392,6 +392,7 @@ struct ArchCPU {
+     OnOffAuto pmu;
+     OnOffAuto lsx;
+     OnOffAuto lasx;
++    OnOffAuto msgint;
+     OnOffAuto kvm_pv_ipi;
+     OnOffAuto kvm_steal_time;
+     int32_t socket_id;  /* socket-id of this CPU */
+-- 
+2.47.0
 
 
