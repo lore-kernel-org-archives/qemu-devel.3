@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE74CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 07:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B6BCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 07:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1g97-0005CQ-MZ; Thu, 25 Sep 2025 03:12:06 -0400
+	id 1v1gA7-0005VU-1G; Thu, 25 Sep 2025 03:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1g92-0005AM-By
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:12:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1gA3-0005V7-8y
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:13:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1g8o-0005jU-P9
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:11:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1g9x-0005mP-Ic
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 03:13:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758784298;
+ s=mimecast20190719; t=1758784374;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QTGm+sHnpgxxDoXuzWr57M8MduTFGcHhiSZqNyZ0JMY=;
- b=epRkCCy0HYeuFDShdd5aiBHOvR2Q7eDG5ufIzPF9vQi3UR52PRXN1wCDrW6bpfZSwPIGy1
- uNCwEbkLd7tSTm63Mlb98YclwAa7Ihi1QtzSb85rfIFfbIO/rmdnAch9agiqRFTWdr0A58
- kFwSJ5rBoalv5bGtRCbBr0hYqKaat7Q=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fc1fP9hxJyfa8l3pbMeS/C45ZShwb6pO/VkdHzm9Nmw=;
+ b=JJwgS4omVLdludOG7EKWFBYAmIsgV08LFHOib63MRWmpMlU7s8Nhv1pUdgf65VmParYhTM
+ w1VRHDdcSj+4GQLQXfVl72TnbthcXRJDJSYhDn++B/PsBTOiC+J+xBLCtDG/1wu4KhCbOz
+ ct3kYsR6QUKSJ1oXkzh1dCqmhfmq1YQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-216-U7Rf6bwJNB2SxMPpsuzuSQ-1; Thu, 25 Sep 2025 03:11:36 -0400
-X-MC-Unique: U7Rf6bwJNB2SxMPpsuzuSQ-1
-X-Mimecast-MFC-AGG-ID: U7Rf6bwJNB2SxMPpsuzuSQ_1758784296
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45b98de0e34so4906375e9.0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 00:11:36 -0700 (PDT)
+ us-mta-228-mVAijgMvMP6A2hclFkGX0g-1; Thu, 25 Sep 2025 03:12:52 -0400
+X-MC-Unique: mVAijgMvMP6A2hclFkGX0g-1
+X-Mimecast-MFC-AGG-ID: mVAijgMvMP6A2hclFkGX0g_1758784371
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3ee10a24246so348767f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 00:12:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758784295; x=1759389095;
+ d=1e100.net; s=20230601; t=1758784371; x=1759389171;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QTGm+sHnpgxxDoXuzWr57M8MduTFGcHhiSZqNyZ0JMY=;
- b=gNUzTan/bL04gS+l8otIrpgzxBQ9WmbYWqcfObuA+MFCiTy+/kY9jvh2BI1dZuhwhi
- WHV/PgkRnIrg0Wa2VOpGkuVhjQdcVQXsRu0I0gS/vZaoWqr9HGYmgjVzMX0rZL0tTbEh
- cK04X/+iY7JRGIWpgA/j22/5CDuBlsgNBF8wYMJ7HWHxs/0iu1c9LUjMDa4W37aXRVb8
- GR9WhTLkxeyZxnIbif1QtLj6nd2K03You+CaUnJr+kAEiUh2thx5GMU94FN/EykDzD2s
- wMRASHBbZX63FCCDwk2AXUdIJKPp1FPOnOUQxOp7Xyf3aI8J20vzpLq+5AhWBVfuXL5T
- NysQ==
+ bh=fc1fP9hxJyfa8l3pbMeS/C45ZShwb6pO/VkdHzm9Nmw=;
+ b=l28batE7E+DIth9lsF4ThxJAGaeL9Fppmwar6WkwwQty5ohs9ub+tmg9qRQgNgEq1W
+ trXPp6eZIzUG0xF3iCbRoPa1VstocSL8+q5xKb9prUBDIyUzE2TM6UqIULfaR0frrlK2
+ 2wOzTdaJYJqO9r+Dk5HbxWWmPu6F5jhTwfBQvmnxNJKgnl7o1sX2ICmYpZ4CaGZPMbz+
+ 5bYEEy53GNznI6cZzF1F1dQYKq2lyjjfUI6nKK5uVfEuwnX8baOXTugFU1Tbxk83PQnQ
+ 8Q05bPZZMJBytXiwHrxlQtazfp9NWEcs4ZrJP1jxmsGw6Kr0aeso+sbMZyfEJs1hRawU
+ 9Zyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/5alUpxsEEo4R/FtL7ihP1dPTnjSeC1wZeHzzTJqn5pODKCm2VS1/E8dgzsfvoF9a8YeKr5b5HvNe@nongnu.org
-X-Gm-Message-State: AOJu0Yy0mpuJnXxpJ5sbLMGBX5FmpQJ9KgHa1BRiFEqODtTfL1z254n+
- Kj/kG1YCAUBey69XVkIAo0TxSXlYeFSgadqPlyQFDzhc1FAi7cghoqRWEGk7l1HFxSlpRthnkIy
- cJ9bmxuvVcM9e5QvIBGSDCjpwsWz+LlilPWqoZyHmZpFKN8mSdseobxUn
-X-Gm-Gg: ASbGnctUITDIaCgCLeOgQOQzxqmhhiWM95UZ7ffg8NGHj+Zr3VePmyhvpPdLBHoktTH
- +iejg+tDyL/05Py4FzgAm24GM/GOk/gi0PS9kKjETl15BsSuqqHpaolEEvGhcTC2iEwfTI1ampQ
- 7OurXfx7j/+pgjTdnQNUYCOWg3HJpi1jNASGt4HYTBd48e6oFqcvcL6EmDMG1rEdoerOeg5aoXU
- etRygQuayD3nJhUjQYDO+Y8p/BVLTa26ZblfNCUMmOpuzOkKakG0KKcZpkESPFQlj0VWJ2BmjJ5
- VWBJa342uqPDmYqqrd9yamSMjIv04U0n/f4XNrV0mYN3qYvG0YAOLSsOgwKwh+RXqm+0HJMAhiS
- q0tw=
-X-Received: by 2002:a05:600c:154a:b0:46e:330a:1762 with SMTP id
- 5b1f17b1804b1-46e330a1a9cmr13442115e9.22.1758784295522; 
- Thu, 25 Sep 2025 00:11:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsQ0nnklQZSZSwbMtrzFheUiTxelIM86Pm3k+kqDIo3GsuBpuaSVcJHPHfHpYgCtldS53F0w==
-X-Received: by 2002:a05:600c:154a:b0:46e:330a:1762 with SMTP id
- 5b1f17b1804b1-46e330a1a9cmr13441815e9.22.1758784294721; 
- Thu, 25 Sep 2025 00:11:34 -0700 (PDT)
+ AJvYcCXrNYOLQK5+2OCVT/6iRrAv59QNzNSN45IJ9m2KeYN4swhL9nLGKKlwx9egY5SdiHJhtfFpiwQzt8y4@nongnu.org
+X-Gm-Message-State: AOJu0YzuKVOxZ0hQ+wwytcGKaxRIEdeMnXAaCrS+oIS2Lt+Y0EEG0vpE
+ PG06XLoFrdfsFTpjkL2QNK8t2EgaPb/LDr5i7IdnGe10AKjYVlGP6ZgMAOzWA61LIA9HT/d9BbC
+ oOVBMdXMnnCT0Iosum6sQHQVPaI7XBLDWXRJ3SCXuVXmk/vCpXMkMcmgc
+X-Gm-Gg: ASbGncumu++0YMEMr45c8QlyvMMsW16hbAE3vuKm0TrqdcJmNepu5QBBOzOJCdooxHE
+ 3tfgxLHgUGeqORx4+Oii/cLxhXVBwIaeALCJ5PPLdRqOD/djz+5hctWGH9obgVBdR4BHoGt/dwi
+ gk+JIG3AP61llsOeZYO6vlsSceUn9W4ZheQj5dGTP/rNtOo6scOgauKE31qk3Gx/wkRUsuNc1Vm
+ +42B1d304xcHqsh8xEsLS0l4F1QfX5LCaL/tAvdfl8C/STv2R1M0UrtTLowi6+69RG5DfD6k3t6
+ CIxv9YdBF+gf0iUgMgqx9RR5tI9Fi87oNnguIZoodTMDQlje5L5ZSHJZ7wlnbfjhPjKQBNUH8Ke
+ hFRg=
+X-Received: by 2002:a05:6000:400e:b0:3e3:5951:95ff with SMTP id
+ ffacd0b85a97d-40e4dca7a96mr2076932f8f.62.1758784370987; 
+ Thu, 25 Sep 2025 00:12:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyrQxSUuJOc76HG3aKMGZgcmoOgUz3o5TS2Xb6Ar3eo1+7QnQ+BHvwzFUBulmeoYufZ1L4/Q==
+X-Received: by 2002:a05:6000:400e:b0:3e3:5951:95ff with SMTP id
+ ffacd0b85a97d-40e4dca7a96mr2076905f8f.62.1758784370458; 
+ Thu, 25 Sep 2025 00:12:50 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2a996da2sm74488115e9.5.2025.09.25.00.11.33
+ 5b1f17b1804b1-46e2ab48570sm62158615e9.16.2025.09.25.00.12.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 00:11:34 -0700 (PDT)
-Message-ID: <6d5b95e4-1d50-4b70-8d40-9031f3735d56@redhat.com>
-Date: Thu, 25 Sep 2025 09:11:33 +0200
+ Thu, 25 Sep 2025 00:12:49 -0700 (PDT)
+Message-ID: <2ff4eef5-a39d-435e-8423-7cf6b26340fa@redhat.com>
+Date: Thu, 25 Sep 2025 09:12:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 5/8] migration: cpr-exec save and load
+Subject: Re: [PATCH V4 6/8] migration: cpr-exec mode
 To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
  Alex Williamson <alex.williamson@redhat.com>
 References: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
- <1758548985-354793-6-git-send-email-steven.sistare@oracle.com>
- <15399e70-fa4b-4792-9881-9dec59f0c832@redhat.com>
- <e8766c16-5f8e-4b3d-8808-42158d28b549@oracle.com>
+ <1758548985-354793-7-git-send-email-steven.sistare@oracle.com>
+ <c76d4944-280b-49e1-a324-36429a5513cb@redhat.com>
+ <7e7b7fda-b156-4ca7-a2ae-61f8b5c351af@oracle.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <e8766c16-5f8e-4b3d-8808-42158d28b549@oracle.com>
+In-Reply-To: <7e7b7fda-b156-4ca7-a2ae-61f8b5c351af@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -144,8 +144,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,33 +162,266 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/24/25 20:16, Steven Sistare wrote:
-> On 9/22/2025 12:00 PM, Cédric Le Goater wrote:
+> On 9/22/2025 11:28 AM, Cédric Le Goater wrote:
 >> On 9/22/25 15:49, Steve Sistare wrote:
->>> To preserve CPR state across exec, create a QEMUFile based on a memfd, and
->>> keep the memfd open across exec.  Save the value of the memfd in an
->>> environment variable so post-exec QEMU can find it.
+>>> Add the cpr-exec migration mode.  Usage:
+>>>    qemu-system-$arch -machine aux-ram-share=on ...
+>>>    migrate_set_parameter mode cpr-exec
+>>>    migrate_set_parameter cpr-exec-command \
+>>>      <arg1> <arg2> ... -incoming <uri-1> \
+>>>    migrate -d <uri-1>
+>>>
+>>> The migrate command stops the VM, saves state to uri-1,
+>>> directly exec's a new version of QEMU on the same host,
+>>> replacing the original process while retaining its PID, and
+>>> loads state from uri-1.  Guest RAM is preserved in place,
+>>> albeit with new virtual addresses.
+>>>
+>>> The new QEMU process is started by exec'ing the command
+>>> specified by the @cpr-exec-command parameter.  The first word of
+>>> the command is the binary, and the remaining words are its
+>>> arguments.  The command may be a direct invocation of new QEMU,
+>>> or may be a non-QEMU command that exec's the new QEMU binary.
+>>>
+>>> This mode creates a second migration channel that is not visible
+>>> to the user.  At the start of migration, old QEMU saves CPR state
+>>> to the second channel, and at the end of migration, it tells the
+>>> main loop to call cpr_exec.  New QEMU loads CPR state early, before
+>>> objects are created.
+>>>
+>>> Because old QEMU terminates when new QEMU starts, one cannot
+>>> stream data between the two, so uri-1 must be a type,
+>>> such as a file, that accepts all data before old QEMU exits.
+>>> Otherwise, old QEMU may quietly block writing to the channel.
+>>>
+>>> Memory-backend objects must have the share=on attribute, but
+>>> memory-backend-epc is not supported.  The VM must be started with
+>>> the '-machine aux-ram-share=on' option, which allows anonymous
+>>> memory to be transferred in place to the new process.  The memfds
+>>> are kept open across exec by clearing the close-on-exec flag, their
+>>> values are saved in CPR state, and they are mmap'd in new QEMU.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>> Acked-by: Markus Armbruster <armbru@redhat.com>
+>>> ---
+>>>   qapi/migration.json       | 25 +++++++++++++-
+>>>   include/migration/cpr.h   |  1 +
+>>>   migration/cpr-exec.c      | 84 +++++++++++++++++++++++++++++++++++++++++++++++
+>>>   migration/cpr.c           | 28 ++++++++++++++--
+>>>   migration/migration.c     | 10 +++++-
+>>>   migration/ram.c           |  1 +
+>>>   migration/vmstate-types.c |  8 +++++
+>>>   system/vl.c               |  4 ++-
+>>>   migration/trace-events    |  1 +
+>>>   9 files changed, 157 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>> index 2be8fa1..be0f3fc 100644
+>>> --- a/qapi/migration.json
+>>> +++ b/qapi/migration.json
+>>> @@ -694,9 +694,32 @@
+>>>   #     until you issue the `migrate-incoming` command.
+>>>   #
+>>>   #     (since 10.0)
+>>> +#
+>>> +# @cpr-exec: The migrate command stops the VM, saves state to the
+>>> +#     migration channel, directly exec's a new version of QEMU on the
+>>> +#     same host, replacing the original process while retaining its
+>>> +#     PID, and loads state from the channel.  Guest RAM is preserved
+>>> +#     in place.  Devices and their pinned pages are also preserved for
+>>> +#     VFIO and IOMMUFD.
+>>> +#
+>>> +#     Old QEMU starts new QEMU by exec'ing the command specified by
+>>> +#     the @cpr-exec-command parameter.  The command may be a direct
+>>> +#     invocation of new QEMU, or may be a wrapper that exec's the new
+>>> +#     QEMU binary.
+>>> +#
+>>> +#     Because old QEMU terminates when new QEMU starts, one cannot
+>>> +#     stream data between the two, so the channel must be a type,
+>>> +#     such as a file, that accepts all data before old QEMU exits.
+>>> +#     Otherwise, old QEMU may quietly block writing to the channel.
+>>> +#
+>>> +#     Memory-backend objects must have the share=on attribute, but
+>>> +#     memory-backend-epc is not supported.  The VM must be started
+>>> +#     with the '-machine aux-ram-share=on' option.
+>>> +#
+>>> +#     (since 10.2)
+>>>   ##
+>>>   { 'enum': 'MigMode',
+>>> -  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
+>>> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
+>>>   ##
+>>>   # @ZeroPageDetection:
+>>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+>>> index b84389f..beed392 100644
+>>> --- a/include/migration/cpr.h
+>>> +++ b/include/migration/cpr.h
+>>> @@ -53,6 +53,7 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
+>>>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+>>>   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+>>> +void cpr_exec_init(void);
+>>>   QEMUFile *cpr_exec_output(Error **errp);
+>>>   QEMUFile *cpr_exec_input(Error **errp);
+>>>   void cpr_exec_persist_state(QEMUFile *f);
+>>> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+>>> index 2c32e9c..8cf55a3 100644
+>>> --- a/migration/cpr-exec.c
+>>> +++ b/migration/cpr-exec.c
+>>> @@ -6,15 +6,21 @@
+>>>   #include "qemu/osdep.h"
+>>>   #include "qemu/cutils.h"
+>>> +#include "qemu/error-report.h"
+>>>   #include "qemu/memfd.h"
+>>>   #include "qapi/error.h"
+>>> +#include "qapi/type-helpers.h"
+>>>   #include "io/channel-file.h"
+>>>   #include "io/channel-socket.h"
+>>> +#include "block/block-global-state.h"
+>>> +#include "qemu/main-loop.h"
+>>>   #include "migration/cpr.h"
+>>>   #include "migration/qemu-file.h"
+>>> +#include "migration/migration.h"
+>>>   #include "migration/misc.h"
+>>>   #include "migration/vmstate.h"
+>>>   #include "system/runstate.h"
+>>> +#include "trace.h"
+>>>   #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
+>>> @@ -92,3 +98,81 @@ QEMUFile *cpr_exec_input(Error **errp)
+>>>       lseek(mfd, 0, SEEK_SET);
+>>>       return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
+>>>   }
+>>> +
+>>> +static bool preserve_fd(int fd)
+>>> +{
+>>> +    qemu_clear_cloexec(fd);
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static bool unpreserve_fd(int fd)
+>>> +{
+>>> +    qemu_set_cloexec(fd);
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static void cpr_exec_cb(void *opaque)
+>>> +{
+>>> +    MigrationState *s = migrate_get_current();
+>>> +    char **argv = strv_from_str_list(s->parameters.cpr_exec_command);
+>>> +    Error *err = NULL;
+>>> +
+>>> +    /*
+>>> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
+>>> +     * earlier because they should not persist across miscellaneous fork and
+>>> +     * exec calls that are performed during normal operation.
+>>> +     */
+>>> +    cpr_walk_fd(preserve_fd);
+>>> +
+>>> +    trace_cpr_exec();
+>>> +    execvp(argv[0], argv);
+>>> +
+>>> +    /*
+>>> +     * exec should only fail if argv[0] is bogus, or has a permissions problem,
+>>> +     * or the system is very short on resources.
+>>> +     */
+>>> +    g_strfreev(argv);
+>>> +    cpr_walk_fd(unpreserve_fd);
+>>> +
+>>> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
+>>> +    error_report_err(error_copy(err));
+>>> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+>>> +    migrate_set_error(s, err);
+>>> +
+>>> +    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+>>> +
+>>> +    err = NULL;
+>>> +    if (!migration_block_activate(&err)) {
+>>> +        /* error was already reported */
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    if (runstate_is_live(s->vm_old_state)) {
+>>> +        vm_start();
+>>> +    }
+>>> +}
+>>> +
+>>> +static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+>>> +                             Error **errp)
+>>> +{
+>>> +    MigrationState *s = migrate_get_current();
+>>> +
+>>> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
+>>> +        QEMUBH *cpr_exec_bh = qemu_bh_new(cpr_exec_cb, NULL);
+>>> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
+>>> +        qemu_bh_schedule(cpr_exec_bh);
+>>> +        qemu_notify_event();
+>>> +
+>>> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
+>>> +        cpr_exec_unpersist_state();
+>>> +    }
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +void cpr_exec_init(void)
+>>> +{
+>>> +    static NotifierWithReturn exec_notifier;
+>>> +
+>>> +    migration_add_notifier_mode(&exec_notifier, cpr_exec_notifier,
+>>> +                                MIG_MODE_CPR_EXEC);
+>>> +}
+>>> diff --git a/migration/cpr.c b/migration/cpr.c
+>>> index d3e370e..eea3773 100644
+>>> --- a/migration/cpr.c
+>>> +++ b/migration/cpr.c
+>>> @@ -185,6 +185,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>>>       if (mode == MIG_MODE_CPR_TRANSFER) {
+>>>           g_assert(channel);
+>>>           f = cpr_transfer_output(channel, errp);
+>>> +    } else if (mode == MIG_MODE_CPR_EXEC) {
+>>> +        f = cpr_exec_output(errp);
+>>>       } else {
+>>>           return 0;
+>>>       }
+>>> @@ -202,6 +204,10 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>>>           return ret;
+>>>       }
+>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+>>> +        cpr_exec_persist_state(f);
+>>> +    }
+>>> +
+>>>       /*
+>>>        * Close the socket only partially so we can later detect when the other
+>>>        * end closes by getting a HUP event.
+>>> @@ -213,6 +219,12 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>>>       return 0;
+>>>   }
+>>> +static bool unpreserve_fd(int fd)
+>>> +{
+>>> +    qemu_set_cloexec(fd);
+>>> +    return true;
+>>> +}
+>>> +
+>>>   int cpr_state_load(MigrationChannel *channel, Error **errp)
+>>>   {
+>>>       int ret;
+>>> @@ -220,7 +232,13 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>>>       QEMUFile *f;
+>>>       MigMode mode = 0;
+>>> -    if (channel) {
+>>> +    if (cpr_exec_has_state()) {
+>>> +        mode = MIG_MODE_CPR_EXEC;
+>>> +        f = cpr_exec_input(errp);
+>>> +        if (channel) {
+>>> +            warn_report("ignoring cpr channel for migration mode cpr-exec");
 >>
->> Couldn't we preserve some memory to hand off to QEMU ? Like firmwares
->> An environment variable is a limited method.
+>> migration/cpr.c does not include "qemu/error-report.h"
 > 
-> There is no upside in making this more complicated.  We only need to
-> pass one tidbit of information -- the file descriptor number of the memfd
-> that contains all other information.
-
-Please adjust the build for windows, memfd is Linux only.
+> It builds just fine because it is included indirectly, but I will include it
+> directly.
 
 
->> Thanks,
->>
->> C.
->>
->> That's a short term hack right ? it's not even documented. 
-> 
-> It is an implementation detail, known only to the matched saving
-> and loading functions inside qemu.  No one else needs to know, so
-> no documentation.
+The build broke on my tree but I have other patches moving code. It is
+better to be explicit.
 
-ok. Fair enough.
 
 Thanks,
 
@@ -197,154 +430,129 @@ C.
 
 > 
 > - Steve
-> 
->> I am sure
->> you something else in mind.
->>
->>> These new functions are called in a subsequent patch.
->>>
->>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>> ---
->>>   include/migration/cpr.h |  5 +++
->>>   migration/cpr-exec.c    | 94 +++++++++++++++++++++++++++++++++++++++++++++++++
->>>   migration/meson.build   |  1 +
->>>   3 files changed, 100 insertions(+)
->>>   create mode 100644 migration/cpr-exec.c
->>>
->>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
->>> index 2b074d7..b84389f 100644
->>> --- a/include/migration/cpr.h
->>> +++ b/include/migration/cpr.h
->>> @@ -53,4 +53,9 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
->>>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->>>   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->>> +QEMUFile *cpr_exec_output(Error **errp);
->>> +QEMUFile *cpr_exec_input(Error **errp);
->>> +void cpr_exec_persist_state(QEMUFile *f);
->>> +bool cpr_exec_has_state(void);
->>> +void cpr_exec_unpersist_state(void);
->>>   #endif
->>> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
->>> new file mode 100644
->>> index 0000000..2c32e9c
->>> --- /dev/null
->>> +++ b/migration/cpr-exec.c
->>> @@ -0,0 +1,94 @@
->>> +/*
->>> + * Copyright (c) 2021-2025 Oracle and/or its affiliates.
->>> + *
->>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>> + */
->>> +
->>> +#include "qemu/osdep.h"
->>> +#include "qemu/cutils.h"
->>> +#include "qemu/memfd.h"
->>> +#include "qapi/error.h"
->>> +#include "io/channel-file.h"
->>> +#include "io/channel-socket.h"
->>> +#include "migration/cpr.h"
->>> +#include "migration/qemu-file.h"
->>> +#include "migration/misc.h"
->>> +#include "migration/vmstate.h"
->>> +#include "system/runstate.h"
->>> +
->>> +#define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
->>> +
->>> +static QEMUFile *qemu_file_new_fd_input(int fd, const char *name)
->>> +{
->>> +    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
->>> +    QIOChannel *ioc = QIO_CHANNEL(fioc);
->>> +    qio_channel_set_name(ioc, name);
->>> +    return qemu_file_new_input(ioc);
->>> +}
->>> +
->>> +static QEMUFile *qemu_file_new_fd_output(int fd, const char *name)
->>> +{
->>> +    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
->>> +    QIOChannel *ioc = QIO_CHANNEL(fioc);
->>> +    qio_channel_set_name(ioc, name);
->>> +    return qemu_file_new_output(ioc);
->>> +}
->>> +
->>> +void cpr_exec_persist_state(QEMUFile *f)
->>> +{
->>> +    QIOChannelFile *fioc = QIO_CHANNEL_FILE(qemu_file_get_ioc(f));
->>> +    int mfd = dup(fioc->fd);
->>> +    char val[16];
->>> +
->>> +    /* Remember mfd in environment for post-exec load */
->>> +    qemu_clear_cloexec(mfd);
->>> +    snprintf(val, sizeof(val), "%d", mfd);
->>> +    g_setenv(CPR_EXEC_STATE_NAME, val, 1);
->>> +}
->>> +
->>> +static int cpr_exec_find_state(void)
->>> +{
->>> +    const char *val = g_getenv(CPR_EXEC_STATE_NAME);
->>> +    int mfd;
->>> +
->>> +    assert(val);
->>> +    g_unsetenv(CPR_EXEC_STATE_NAME);
->>> +    assert(!qemu_strtoi(val, NULL, 10, &mfd));
->>> +    return mfd;
->>> +}
->>> +
->>> +bool cpr_exec_has_state(void)
->>> +{
->>> +    return g_getenv(CPR_EXEC_STATE_NAME) != NULL;
->>> +}
->>> +
->>> +void cpr_exec_unpersist_state(void)
->>> +{
->>> +    int mfd;
->>> +    const char *val = g_getenv(CPR_EXEC_STATE_NAME);
->>> +
->>> +    g_unsetenv(CPR_EXEC_STATE_NAME);
->>> +    assert(val);
->>> +    assert(!qemu_strtoi(val, NULL, 10, &mfd));
->>> +    close(mfd);
->>> +}
->>> +
->>> +QEMUFile *cpr_exec_output(Error **errp)
->>> +{
->>> +    int mfd = memfd_create(CPR_EXEC_STATE_NAME, 0);
->>
->> The build should be adjusted for Linux only.
->>
->> Thanks,
->>
->> C.
->>
->>
->>
->>> +
->>> +    if (mfd < 0) {
->>> +        error_setg_errno(errp, errno, "memfd_create failed");
->>> +        return NULL;
+>>> +        }
+>>> +    } else if (channel) {
+>>>           mode = MIG_MODE_CPR_TRANSFER;
+>>>           cpr_set_incoming_mode(mode);
+>>>           f = cpr_transfer_input(channel, errp);
+>>> @@ -232,6 +250,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>>>       }
+>>>       trace_cpr_state_load(MigMode_str(mode));
+>>> +    cpr_set_incoming_mode(mode);
+>>>       v = qemu_get_be32(f);
+>>>       if (v != QEMU_CPR_FILE_MAGIC) {
+>>> @@ -253,6 +272,11 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>>>           return ret;
+>>>       }
+>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+>>> +        /* Set cloexec to prevent fd leaks from fork until the next cpr-exec */
+>>> +        cpr_walk_fd(unpreserve_fd);
 >>> +    }
 >>> +
->>> +    return qemu_file_new_fd_output(mfd, CPR_EXEC_STATE_NAME);
->>> +}
+>>>       /*
+>>>        * Let the caller decide when to close the socket (and generate a HUP event
+>>>        * for the sending side).
+>>> @@ -273,7 +297,7 @@ void cpr_state_close(void)
+>>>   bool cpr_incoming_needed(void *opaque)
+>>>   {
+>>>       MigMode mode = migrate_mode();
+>>> -    return mode == MIG_MODE_CPR_TRANSFER;
+>>> +    return mode == MIG_MODE_CPR_TRANSFER || mode == MIG_MODE_CPR_EXEC;
+>>>   }
+>>>   /*
+>>> diff --git a/migration/migration.c b/migration/migration.c
+>>> index 08a98f7..2515bec 100644
+>>> --- a/migration/migration.c
+>>> +++ b/migration/migration.c
+>>> @@ -333,6 +333,7 @@ void migration_object_init(void)
+>>>       ram_mig_init();
+>>>       dirty_bitmap_mig_init();
+>>> +    cpr_exec_init();
+>>>       /* Initialize cpu throttle timers */
+>>>       cpu_throttle_init();
+>>> @@ -1796,7 +1797,8 @@ bool migrate_mode_is_cpr(MigrationState *s)
+>>>   {
+>>>       MigMode mode = s->parameters.mode;
+>>>       return mode == MIG_MODE_CPR_REBOOT ||
+>>> -           mode == MIG_MODE_CPR_TRANSFER;
+>>> +           mode == MIG_MODE_CPR_TRANSFER ||
+>>> +           mode == MIG_MODE_CPR_EXEC;
+>>>   }
+>>>   int migrate_init(MigrationState *s, Error **errp)
+>>> @@ -2145,6 +2147,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+>>>           return false;
+>>>       }
+>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC &&
+>>> +        !s->parameters.has_cpr_exec_command) {
+>>> +        error_setg(errp, "cpr-exec mode requires setting cpr-exec-command");
+>>> +        return false;
+>>> +    }
 >>> +
->>> +QEMUFile *cpr_exec_input(Error **errp)
->>> +{
->>> +    int mfd = cpr_exec_find_state();
->>> +
->>> +    lseek(mfd, 0, SEEK_SET);
->>> +    return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
->>> +}
->>> diff --git a/migration/meson.build b/migration/meson.build
->>> index 0f71544..16909d5 100644
->>> --- a/migration/meson.build
->>> +++ b/migration/meson.build
->>> @@ -16,6 +16,7 @@ system_ss.add(files(
->>>     'channel-block.c',
->>>     'cpr.c',
->>>     'cpr-transfer.c',
->>> +  'cpr-exec.c',
->>>     'cpu-throttle.c',
->>>     'dirtyrate.c',
->>>     'exec.c',
+>>>       if (migration_is_blocked(errp)) {
+>>>           return false;
+>>>       }
+>>> diff --git a/migration/ram.c b/migration/ram.c
+>>> index 7208bc1..6730a41 100644
+>>> --- a/migration/ram.c
+>>> +++ b/migration/ram.c
+>>> @@ -228,6 +228,7 @@ bool migrate_ram_is_ignored(RAMBlock *block)
+>>>       MigMode mode = migrate_mode();
+>>>       return !qemu_ram_is_migratable(block) ||
+>>>              mode == MIG_MODE_CPR_TRANSFER ||
+>>> +           mode == MIG_MODE_CPR_EXEC ||
+>>>              (migrate_ignore_shared() && qemu_ram_is_shared(block)
+>>>                                       && qemu_ram_is_named_file(block));
+>>>   }
+>>> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+>>> index 741a588..1aa0573 100644
+>>> --- a/migration/vmstate-types.c
+>>> +++ b/migration/vmstate-types.c
+>>> @@ -321,6 +321,10 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
+>>>                     const VMStateField *field)
+>>>   {
+>>>       int32_t *v = pv;
+>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+>>> +        qemu_get_sbe32s(f, v);
+>>> +        return 0;
+>>> +    }
+>>>       *v = qemu_file_get_fd(f);
+>>>       return 0;
+>>>   }
+>>> @@ -329,6 +333,10 @@ static int put_fd(QEMUFile *f, void *pv, size_t size,
+>>>                     const VMStateField *field, JSONWriter *vmdesc)
+>>>   {
+>>>       int32_t *v = pv;
+>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+>>> +        qemu_put_sbe32s(f, v);
+>>> +        return 0;
+>>> +    }
+>>>       return qemu_file_put_fd(f, *v);
+>>>   }
+>>> diff --git a/system/vl.c b/system/vl.c
+>>> index 4c24073..f395d04 100644
+>>> --- a/system/vl.c
+>>> +++ b/system/vl.c
+>>> @@ -3867,6 +3867,8 @@ void qemu_init(int argc, char **argv)
+>>>       }
+>>>       qemu_init_displays();
+>>>       accel_setup_post(current_machine);
+>>> -    os_setup_post();
+>>> +    if (migrate_mode() != MIG_MODE_CPR_EXEC) {
+>>> +        os_setup_post();
+>>> +    }
+>>>       resume_mux_open();
+>>>   }
+>>> diff --git a/migration/trace-events b/migration/trace-events
+>>> index 706db97..e8edd1f 100644
+>>> --- a/migration/trace-events
+>>> +++ b/migration/trace-events
+>>> @@ -354,6 +354,7 @@ cpr_state_save(const char *mode) "%s mode"
+>>>   cpr_state_load(const char *mode) "%s mode"
+>>>   cpr_transfer_input(const char *path) "%s"
+>>>   cpr_transfer_output(const char *path) "%s"
+>>> +cpr_exec(void) ""
+>>>   # block-dirty-bitmap.c
+>>>   send_bitmap_header_enter(void) ""
 >>
 > 
 
