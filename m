@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F44CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 10:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D013CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 10:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1izC-0005Me-Sw; Thu, 25 Sep 2025 06:14:03 -0400
+	id 1v1j04-0005gj-AQ; Thu, 25 Sep 2025 06:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1iz5-0005JW-RU
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:13:56 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1iyv-0007vy-Vj
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:13:54 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-ea5d1270b56so922196276.1
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 03:13:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758795220; x=1759400020; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lGT1XRd6mFHHrJyh0DIX8x9k5bXs1BvOOEdx1L+eyJs=;
- b=wb3h8cX8/JFzAqqOOphZq9rPWlsl92o2W4VdQBAr9S626SBg+3KGiGy0xVsdpydr5t
- bU1Xc5XX/fw1DiXfEdsTUvpqDAR1JsoLwkqSe4meZH1SAj0mtfRAPSFrLvQavHjqphOg
- wY19n1u0T4yVrqTE05Ju2min4SVG4WqoDnnNr2SRpRZoBGTe1RcvmVHNXIiP5nZ32wZF
- S5zIEpah4nOM7IhMA9DiQWgMKgxIpyhzXCIHK0+cr6eVArmb+JF0oCGbp1iv7B7Y5yxH
- Zdu4iziAAS8BeyCt95NleefzLFjBR7nF536KMf9AZTKeeWRZq8QD9LUhpIlK7GVnfO4e
- 6gXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758795220; x=1759400020;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lGT1XRd6mFHHrJyh0DIX8x9k5bXs1BvOOEdx1L+eyJs=;
- b=GULthuyx+nGZpCecEcSzZUIibXwwkaMJrMar0uUhRd9JoVQCyZLkJMS4wwU8asSEJ6
- By6lQo3LQrl32sm2xOOBTo+Nr8o8Yh52RcMlzGawtb6wScraw4jSe0idZKA5kRxj7C2r
- JllKgL/ztRWzZPoy6fnJt2LT6beNaifXcfbLV9taEg8XtOxzYPSjGpym7GS9WrAp+AhZ
- b9zT5+6KWERMJrav+pR3NARjIIbJkraP84WTuRwrIBhY+KecI4QkOSOPe7jx51ReF+93
- 8ON2G7BjFPX4j9+UpSXKDybHR6BAoxzZ4QGlE4WXMiZhWu24O5jVbo6o9ZAhh5mLZqoh
- Z2Ww==
-X-Gm-Message-State: AOJu0Yx4Hqe1Dg47pJIYihF+p9MWP6nYNW1iqfFbyGnLDcjkjkXjZGDP
- T/zAiKTWcoCAMKPw5vOCDHjeMZXAH1hXdrUqtbC7KMl9BlzDt7F1W7Y7C4UaSbrIUMrrJ1oXtqw
- AyvM+f5YnLReAm6TZHqkjGAeaGLtCv/KVKkAFf/iiwK4mnJ5g0bsE
-X-Gm-Gg: ASbGncv6qFRcvS3A6N+Y8e1E5RUe4MZ0Ciynv95nhcP/n4uMl/hlIYQBQ3dTbwlsOfM
- FccJv7iRYnz4HMn3B44Y3wuKRILH508wB0X4egjjFNdyW/s9mmDjzVB0SCVZqqDKdnRVA3cTxgx
- rYApgQIcTzi5Oi1q5aerH7Zuid/+BCeOrqJLL4zvCB6P3dVAmAVcvDpYSsTlWEFkgllsgYVb0jX
- 4Bwd5o5OrLBwu7zfrU=
-X-Google-Smtp-Source: AGHT+IHSQ0YOlVU9G600Vh5gqbc079fQ49o9WQoXV6QhrCrwzSuRik9fBnsPTq4DjCcDia2P9Kul00CLp1q5welyQl8=
-X-Received: by 2002:a05:6902:2d07:b0:e97:e05:3253 with SMTP id
- 3f1490d57ef6-eb37fbf11ecmr2464174276.17.1758795220186; Thu, 25 Sep 2025
- 03:13:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v1izu-0005dq-JO
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:14:48 -0400
+Received: from mail.avm.de ([2001:bf0:244:244::119])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v1izb-00085r-Sg
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 06:14:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+ t=1758795260; bh=fANAfXLKD2+SC0iK5XRJQtdhnjAJbrsGjEVFuy/UwIA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=T5YrpjTKPoVPNVLiohraOzBqYSGK5qTv3WYBXjwITl1e8JvWxxqZzbvJMGNBLvTDy
+ vounZHfRxjtZYQAeIkAq/UkB+E0414qHFEkU0kuTZgjJIinokZVVUpT1zFq9GUL26P
+ frTmfNA+gFJwPrDg/vl0hXH+8IC+TjIYneQKCIdA=
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.53.4)
+ (envelope-from <c.speich@avm.de>)
+ id 68d515fc-4ed9-7f0000032729-7f000001ac88-1
+ for <multiple-recipients>; Thu, 25 Sep 2025 12:14:20 +0200
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Thu, 25 Sep 2025 12:14:20 +0200 (CEST)
+Received: from l-cspeich ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2025092512141998-10337 ;
+ Thu, 25 Sep 2025 12:14:19 +0200 
+Date: Thu, 25 Sep 2025 12:14:19 +0200
+From: Christian Speich <c.speich@avm.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
+Message-ID: <2zkrmkj5rpx2zaqgsjckorptlw4qwzqx6bnttp46z2uvacnorf@lrfud55fw7ae>
+References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+ <20250919160526-mutt-send-email-mst@kernel.org>
+ <32x5pe3iz6v2vu5imktyxwajk4vdhamhc7yhfmtzuylcvdkunl@wvdfyo23zueh>
+ <20250922065614-mutt-send-email-mst@kernel.org>
+ <4yg4y2miiso6c4c6qtlowji6ak3kid5g66ncen4uljsone67ta@c6s22jbk4ckz>
+ <20250922103658-mutt-send-email-mst@kernel.org>
+ <qvq5owxu7teejoejhoelvauiknbhd5el6qlwj3ud4bi5f7ydya@vsojjbotm44w>
+ <20250925053005-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-References: <20250718133110.1510978-1-lvivier@redhat.com>
-In-Reply-To: <20250718133110.1510978-1-lvivier@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Sep 2025 11:13:29 +0100
-X-Gm-Features: AS18NWDEKgYcfP738Nc4fZvHsGvgVWp2o-WgZKbmhcxM1_pVcfHaxzqyWWM9AQs
-Message-ID: <CAFEAcA9TgPYv3CxP59gXSOnsCqYJ7ZQ07FhikMy-HYkWHfNakg@mail.gmail.com>
-Subject: Re: [PATCH] net/passt: Fix build failure due to missing GIO dependency
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20250925053005-mutt-send-email-mst@kernel.org>
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 25.09.2025 12:14:20,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 25.09.2025 12:14:20, Serialize complete at 25.09.2025 12:14:20
+X-TNEFEvaluated: 1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-purgate-ID: 149429::1758795260-F7E8921E-3A1FAC99/0/0
+X-purgate-type: clean
+X-purgate-size: 7563
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=2001:bf0:244:244::119;
+ envelope-from=c.speich@avm.de; helo=mail.avm.de
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,40 +90,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Jul 2025 at 14:32, Laurent Vivier <lvivier@redhat.com> wrote:
->
-> The passt networking backend uses functions from the GIO library,
-> such as g_subprocess_launcher_new(), to manage its daemon process.
-> So, building with passt enabled requires GIO to be available.
->
-> If we enable passt and disable gio the build fails during linkage with
-> undefined reference errors:
->
->   /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `net_passt_start_daemon':
->   net/passt.c:250: undefined reference to `g_subprocess_launcher_new'
->   /usr/bin/ld: net/passt.c:251: undefined reference to `g_subprocess_launcher_take_fd'
->   /usr/bin/ld: net/passt.c:253: undefined reference to `g_subprocess_launcher_spawnv'
->   /usr/bin/ld: net/passt.c:256: undefined reference to `g_object_unref'
->   /usr/bin/ld: net/passt.c:263: undefined reference to `g_subprocess_wait'
->   /usr/bin/ld: net/passt.c:268: undefined reference to `g_subprocess_get_if_exited'
->   /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `glib_autoptr_clear_GSubprocess':
->   /usr/include/glib-2.0/gio/gio-autocleanups.h:132: undefined reference to `g_object_unref'
->   /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `net_passt_start_daemon':
->   net/passt.c:269: undefined reference to `g_subprocess_get_exit_status'
->
-> Fix this by adding an explicit weson dependency on GIO for the passt
-> option.
-> The existing dependency on linux is kept because passt is only available
-> on this OS.
->
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+On Thu, Sep 25, 2025 at 05:33:12AM -0400, Michael S. Tsirkin wrote:
+> On Thu, Sep 25, 2025 at 09:56:02AM +0200, Christian Speich wrote:
+> > On Mon, Sep 22, 2025 at 10:37:40AM -0400, Michael S. Tsirkin wrote:
+> > > On Mon, Sep 22, 2025 at 01:11:33PM +0200, Christian Speich wrote:
+> > > > On Mon, Sep 22, 2025 at 06:56:31AM -0400, Michael S. Tsirkin wrote:
+> > > > > On Mon, Sep 22, 2025 at 12:40:33PM +0200, Christian Speich wrote:
+> > > > > > On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
+> > > > > > > On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
+> > > > > > > > This removes the change introduced in [1] that prevents the use of
+> > > > > > > > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
+> > > > > > > > 
+> > > > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Christian Speich <c.speich@avm.de>
+> > > > > > > > ---
+> > > > > > > > vhost-user-device and vhost-user-device-pci started out as user
+> > > > > > > > creatable devices. This was changed in [1] when the vhost-user-base was
+> > > > > > > > introduced.
+> > > > > > > > 
+> > > > > > > > The reason given is to prevent user confusion. Searching qemu-discuss or
+> > > > > > > > google for "vhost-user-device" I've seen no confused users.
+> > > > > > > > 
+> > > > > > > > Our use case is to provide wifi emulation using "vhost-user-device-pci",
+> > > > > > > > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
+> > > > > > > > 24.04. With newer QEMU versions we now need to patch, distribute and
+> > > > > > > > maintain our own QEMU packages, which is non-trivial.
+> > > > > > > > 
+> > > > > > > > So I want to propose lifting this restriction to make this feature
+> > > > > > > > usable without a custom QEMU.
+> > > > > > > > 
+> > > > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > > 
+> > > > > > > The confusion is after someone reuses the ID you are claiming without
+> > > > > > > telling anyone and then linux guests will start binding that driver to
+> > > > > > > your device.
+> > > > > > 
+> > > > > > Thanks for clarifciation, In our use-case we use mac80211_hwsim which is
+> > > > > > in linux upstream (with the ID 29). So I think a potential reuse here
+> > > > > > is something that linux upstream already deals with.
+> > > > > 
+> > > > > So just allow that one?
+> > > > 
+> > > > That would solve our problem.
+> > > > 
+> > > > However, I'm finding it somwhat odd to artifically force the user only use
+> > > > QEMU it the "allowed way". I'd much rather see that virtio-user-device is
+> > > > usuable as is (and mac80211_hwsim is not a special case and just works).
+> > > > 
+> > > > Regards,
+> > > > Christian
+> > > 
+> > > We can combine both. Want to try?
+> > 
+> > I'm not sure what both means here?
+> > 
+> > Greetings,
+> > Christian
+> 
+> Both add a generic device with a declaration that
+> it is unsupported and maybe "x-" name prefix, for developers,
+> and a supported mac80211_hwsim device, for users.
 
+Ah, okay, but Alexs mail from 22.9 14:52 states that stubs require a spec:
 
-I've picked this up via target-arm.next, and added some tags:
-Cc: qemu-stable@nongnu.org
-Fixes: 854ee02b222 ("net: Add passt network backend")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3121
+> [...] Adding the stubs is fairly trivial for vhost-user backends that implement
+> the config space but you can't add stubs for things that are currently RFC
+> specs. [...]
 
--- PMM
+So I don't think adding a stub for mac80211_hwsim seems appropiated?
+
+Greetings,
+Christian
+
+> 
+> 
+> > > 
+> > > 
+> > > > > 
+> > > > > > > 
+> > > > > > > 
+> > > > > > > We want people doing this kind of thing to *at a minimum*
+> > > > > > > go ahead and register a device id with the virtio TC,
+> > > > > > > but really to write and publish a spec.
+> > > > > > 
+> > > > > > I understand this desire, I'm not sure how this relates with the ability
+> > > > > > to let a user create a vhost-user-device or not.
+> > > > > > 
+> > > > > > Kind Regards,
+> > > > > > Christian
+> > > > > > 
+> > > > > > > 
+> > > > > > > 
+> > > > > > > > ---
+> > > > > > > >  docs/system/devices/vhost-user.rst | 10 ----------
+> > > > > > > >  hw/virtio/vhost-user-device-pci.c  |  3 ---
+> > > > > > > >  hw/virtio/vhost-user-device.c      |  3 ---
+> > > > > > > >  3 files changed, 16 deletions(-)
+> > > > > > > > 
+> > > > > > > > diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
+> > > > > > > > index 35259d8ec7c666aa0c56497b8261f48d77216ad5..2d130f9767dbb1cbb85cef43c63dc9a8d7b30d4a 100644
+> > > > > > > > --- a/docs/system/devices/vhost-user.rst
+> > > > > > > > +++ b/docs/system/devices/vhost-user.rst
+> > > > > > > > @@ -73,16 +73,6 @@ all the required parameters including:
+> > > > > > > >    - The ``num_vqs`` it needs and their ``vq_size``
+> > > > > > > >    - The ``config_size`` if needed
+> > > > > > > >  
+> > > > > > > > -.. note::
+> > > > > > > > -  To prevent user confusion you cannot currently instantiate
+> > > > > > > > -  vhost-user-device without first patching out::
+> > > > > > > > -
+> > > > > > > > -    /* Reason: stop inexperienced users confusing themselves */
+> > > > > > > > -    dc->user_creatable = false;
+> > > > > > > > -
+> > > > > > > > -  in ``vhost-user-device.c`` and ``vhost-user-device-pci.c`` file and
+> > > > > > > > -  rebuilding.
+> > > > > > > > -
+> > > > > > > >  vhost-user daemon
+> > > > > > > >  =================
+> > > > > > > >  
+> > > > > > > > diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-device-pci.c
+> > > > > > > > index f10bac874e78429c633752a4ce9db28385b3bb07..c76a856c9b9a67d941a93929244216658ff2a156 100644
+> > > > > > > > --- a/hw/virtio/vhost-user-device-pci.c
+> > > > > > > > +++ b/hw/virtio/vhost-user-device-pci.c
+> > > > > > > > @@ -38,9 +38,6 @@ static void vhost_user_device_pci_class_init(ObjectClass *klass,
+> > > > > > > >      VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
+> > > > > > > >      PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
+> > > > > > > >  
+> > > > > > > > -    /* Reason: stop users confusing themselves */
+> > > > > > > > -    dc->user_creatable = false;
+> > > > > > > > -
+> > > > > > > >      k->realize = vhost_user_device_pci_realize;
+> > > > > > > >      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> > > > > > > >      pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
+> > > > > > > > diff --git a/hw/virtio/vhost-user-device.c b/hw/virtio/vhost-user-device.c
+> > > > > > > > index 3939bdf755222a281da8ca22243d7d4f16990a66..1bea496afd0137ba9b42009f6252acf6800528d1 100644
+> > > > > > > > --- a/hw/virtio/vhost-user-device.c
+> > > > > > > > +++ b/hw/virtio/vhost-user-device.c
+> > > > > > > > @@ -41,9 +41,6 @@ static void vud_class_init(ObjectClass *klass, const void *data)
+> > > > > > > >  {
+> > > > > > > >      DeviceClass *dc = DEVICE_CLASS(klass);
+> > > > > > > >  
+> > > > > > > > -    /* Reason: stop inexperienced users confusing themselves */
+> > > > > > > > -    dc->user_creatable = false;
+> > > > > > > > -
+> > > > > > > >      device_class_set_props(dc, vud_properties);
+> > > > > > > >      dc->vmsd = &vud_vmstate;
+> > > > > > > >      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> > > > > > > > 
+> > > > > > > > ---
+> > > > > > > > base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
+> > > > > > > > change-id: 20250919-vhost-user-device-creatable-b7f9b7b5bfb2
+> > > > > > > > 
+> > > > > > > > Best regards,
+> > > > > > > > -- 
+> > > > > > > > Christian Speich <c.speich@avm.de>
+> > > > > > > 
+> > > > > > > 
+> > > > > 
+> > > > > 
+> > > 
+> > > 
+> 
+> 
 
