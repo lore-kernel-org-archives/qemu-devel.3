@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1BECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 01:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A11FCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 01:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1ajP-000607-NW; Wed, 24 Sep 2025 21:25:11 -0400
+	id 1v1atM-0007xg-FI; Wed, 24 Sep 2025 21:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ajM-0005zh-MH
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:25:08 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1atJ-0007wK-Ut
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:35:26 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ajH-0004Gf-Fb
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:25:08 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-46b303f7469so2294205e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 18:24:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1atE-0006yy-AY
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:35:25 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso276898f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 18:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758763496; x=1759368296; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758764114; x=1759368914; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Aie0OLuSIdIpvYDmqaElLgHPkoh6x4WkPhhpalKHHj0=;
- b=NE6TsshZMjTUdlKblUKRJ7ps9QEVZBtJHIH+aNw8BZ+4jmMh+OXWblCHECWFe7Lk3c
- UeClCG8sThRWqjwh3rvfSDGjeNd8sRljixTjLrx+Vu+MDH5MQqgGyDml5+9Pil+eULMI
- gQgGddlgcRL0ZNMIFJLcCnAWG4hYwGR1cYrXcMiHGn0QWUyxfAH48TDFXSfX/avEv7z4
- h+MwW5h+Oww5YHhQR5qfRc4qULzwnkzO7kBFb0nu/gpm98o2ieQj/W0Asx20F5dUgN7/
- 7v6iLiKRU282e/xEmzxnOnT6/09ckaZnLx8Jy8ofz21s1ou53rMTE9BoNcP1V1rVK/MA
- 6tCA==
+ bh=VFhtUcOsJveEodO1UInRzpRG8sK6xpan4ybiG8pPGO4=;
+ b=w+9omjpO/ZnrSdZHzHMBT5zG6RrDD3dQHqW7h/tgGhGLZfKtZZCoK+vQ2XnNH1p3xO
+ IqOr8bBKTWOAV7zGQCuiqiKIhOmt3W3kdLAypLWpgNNVb8LVZ/MOeu7jNjeN7TdXId6v
+ 10j9eFBonhCHR6bYfAneTyPdRMriAMIbgrJyyQXdfyWX4aNw6FCPfOaJDp+6qARRxpag
+ MgKVhI7DW2fKWAEP0leVfvTg5Rw1UoveecGXtA7BI1TO7g92KGoDK+N98zJQt4CMBGof
+ tCxxc89PJqO+QiPzIvhvrUwZL+EfnXl9EEdJDJrHlaZoQuGPTIVpr/FVqCth+VYZIfaJ
+ EsGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758763496; x=1759368296;
+ d=1e100.net; s=20230601; t=1758764114; x=1759368914;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Aie0OLuSIdIpvYDmqaElLgHPkoh6x4WkPhhpalKHHj0=;
- b=WqJBwDckA24MJpFVqlZo0+/0J4x+Bs5xFX1+2h4Zyz6aATa0/VeCt41IewquUwggCY
- uNz20k9OfbqwjaXZPonk3OPBOYIjUhSNiCKTJlwKqeW/7JgQvg0tWqEuPXdHjwUYGhr5
- RFPz3lUkfFfuGfdCBv8/hmH/ljb4CuQLUiGKblpRpqfNps0MEkntERJN7/+goH1vS6qV
- ARqgQxBe7e27V7z3KUgzZsJPmIGtZ2V87aP88Q9IUTRW1HzCJl0byaiQUS/MZ08kC5D8
- N6fOx9m2l7S1Vf8GNI/9guqnTn7tdzfl/ZUJgo4Aug5PpRUp/YKrjAwq0GoXSd/vqhkb
- 44ZQ==
-X-Gm-Message-State: AOJu0Yy7kFJ+kVusTftHdp5E+9F2m0BahH2hogPusPvysZJo9SxSWHQN
- S5nkCI9skIUUnmxpCwv27eHuCvjG3noM922HphxOwOhWr5yV78OvvvktiZ7jqwiqGg/gIZZ6hm5
- nuNXStG+e8w==
-X-Gm-Gg: ASbGncvPcZCcRrIZ+l/YJPS/nsZA7D2eHdKyz4/8hmND7NnggH1tj/B8WCFbENX72bu
- RhDOmjLRonfsy6Oop4T/D1ALkqfFP8X0VC5lW8AjlEpJ13Cc+zzo7XD6T1Aeg+8XaWulJyM47Z5
- tvLMDwN4HyHvG7GiGb/GjRc4t6HzXxgOySxqm67MqCoUt/mFIhkYKmIwIfrMfRxdmv558aR3rHc
- a0GnYiGilVuq0q7NTQmSPp9BDOeyEKTM/MoJRpF8WnS3abX6L1/ZcqlrjN41efo0Rrto50641fz
- rtb10n3LP3H3maSqLxAXcQNZamz45fcjhW0Sqrtf6n+GvmieORXTUGbF6egXZQDJ+ja1vJtGjrL
- Zv9hryNFfUvgs25oKUApNs8+5DuU0NzVfDkB8t4HSGqzTTBxs4JL8T8F4kuSgnZHNYKo+r6aN
-X-Google-Smtp-Source: AGHT+IG5QVDUAsgPwnhVWd/oYNkbgWZ1vbJhMd064VY2WjIPjQk/ZEiAJkRSf0MWW++cEto4BP5YDA==
-X-Received: by 2002:a05:600c:4d18:b0:45d:d505:a1c3 with SMTP id
- 5b1f17b1804b1-46e32a1c5b8mr9038825e9.37.1758763496060; 
- Wed, 24 Sep 2025 18:24:56 -0700 (PDT)
+ bh=VFhtUcOsJveEodO1UInRzpRG8sK6xpan4ybiG8pPGO4=;
+ b=bQnuFXZBIWPmvMfLSFHUpe7STxgd1kkpeFGgVjadoLZt7VQ1cJ3Z6roSSwr0b7DDGG
+ Rd1+AKTCW8PHrPaIZZnT+BKGaky00cbBtckRJwnYHXQ6l2wHpv0v6kcEm5ygIgcFycLk
+ PLSIbk3Q2NMyRpzYRT540hhzYPWK3tUkoqwaqL7iBB2Dyo1ujFHBGRvkaKG1pMsQ/d3b
+ tJ55zK1IUP3+INgFw/20K8eENZnz/eRBVyHIMDw4nZPmD84Y8m5BFwqIKIMzXI9fVpw/
+ tAZ3RBZy5nXjsODbCEgVvwIW/lC1fuw7/ue7FSFQ9ufugDvrpf5CvlxZK1HFj1joCUlE
+ SmGA==
+X-Gm-Message-State: AOJu0YzPub1VbiLne+eLEOOxAuYUF8ve2kbHFwi725EnAqSypoPzaOIb
+ qPhJmIklkMGGR0uhLzfxMYbONe52Q8izV1PWHyf5Wq5o+40VrgVd14XeaQvjH5ZHFqJcp11wiLg
+ E1YczgDS2Vg==
+X-Gm-Gg: ASbGncs8dDhSg6FO8esVNwBVSzSVG5elJWya0mNPm0UHznUOdTjZ25FJpbu4NchWMOA
+ y0K4QJqe8mefR7H7ZhWCuzxOJrFws/OJ957F7s31fiGuHY2T6UUIW2C0ZCJ0YJhSZRkppQXIdtC
+ jJNlr4lY5+1BDVKqE/OcpT68151Mlougm40CWOztbzzsrnFKxkbYEH1r1lrYkk441FPaHvWwcXb
+ Z6r+DXNe3EPu30XpNEJF4+OM5N3NY7LmFq9V0eh/FYEgO15/0ZIso4ycWciKYSYHGdUxT65x3e5
+ ZWqIcB23xMZsznSbGE6N3pVoPqRgITyKXRNT11uo6XmvWi2zmf7ZUFB0xlIjO+NFRPktRxOFsrO
+ azBqyWOGWfBPWDwsbtWo78c96OJDIYoANESxBzahpAxpn8rqjm6u+fglruhk12w+yuZ6aWlhu
+X-Google-Smtp-Source: AGHT+IF85vRYd0XeNRRzrOCWI9iAZAA2pJuXuup2VaKw7r7h+sfdxdwI/yl82f036aOAVAU11JVAUA==
+X-Received: by 2002:a05:6000:40e0:b0:3ec:db87:e88f with SMTP id
+ ffacd0b85a97d-40e49e72912mr1359898f8f.58.1758764114584; 
+ Wed, 24 Sep 2025 18:35:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e33bede39sm10502075e9.18.2025.09.24.18.24.55
+ 5b1f17b1804b1-46e33b9e902sm10576425e9.5.2025.09.24.18.35.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Sep 2025 18:24:55 -0700 (PDT)
+ Wed, 24 Sep 2025 18:35:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] target/m68k: Remove pointless @cpu_halted TCGv
-Date: Thu, 25 Sep 2025 03:24:54 +0200
-Message-ID: <20250925012454.60602-1-philmd@linaro.org>
+Subject: [PATCH] hw/xtensa/xtfpga: Have xtfpga_init() only initialize MMU
+Date: Thu, 25 Sep 2025 03:35:12 +0200
+Message-ID: <20250925013513.67780-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,59 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid registering a TCGv to write the generic CPUState::halted
-field. Access it directly via @env in both STOP / HALT opcodes.
+cpu_reset() should not be used with an unrealized CPU.
+Here we simply want to initialize the MMU, not the CPU,
+so just call reset_mmu().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Based-on: <20250924171308.53036-1-philmd@linaro.org>
----
- target/m68k/translate.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ hw/xtensa/xtfpga.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 0cee54f4900..eb1ba150745 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -44,8 +44,6 @@
- #undef DEFO32
- #undef DEFO64
- 
--static TCGv_i32 cpu_halted;
--
- static char cpu_reg_names[2 * 8 * 3 + 5 * 4];
- static TCGv cpu_dregs[8];
- static TCGv cpu_aregs[8];
-@@ -77,9 +75,6 @@ void m68k_tcg_init(void)
- #undef DEFO32
- #undef DEFO64
- 
--    cpu_halted = tcg_global_mem_new_i32(tcg_env,
--                                        -offsetof(M68kCPU, env) +
--                                        offsetof(CPUState, halted), "HALTED");
-     p = cpu_reg_names;
-     for (i = 0; i < 8; i++) {
-         sprintf(p, "D%d", i);
-@@ -4506,7 +4501,8 @@ DISAS_INSN(halt)
-         gen_exception(s, s->pc, EXCP_SEMIHOSTING);
-         return;
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index 6efffae466b..55de1a7a073 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -268,7 +268,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+         /* Need MMU initialized prior to ELF loading,
+          * so that ELF gets loaded into virtual addresses
+          */
+-        cpu_reset(CPU(cpu));
++        reset_mmu(cenv);
      }
--    tcg_gen_movi_i32(cpu_halted, 1);
-+    tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
-+                   offsetof(CPUState, halted) - offsetof(M68kCPU, env));
-     gen_exception(s, s->pc, EXCP_HLT);
- }
- 
-@@ -4522,7 +4518,8 @@ DISAS_INSN(stop)
-     ext = read_im16(env, s);
- 
-     gen_set_sr_im(s, ext, 0);
--    tcg_gen_movi_i32(cpu_halted, 1);
-+    tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
-+                   offsetof(CPUState, halted) - offsetof(M68kCPU, env));
-     gen_exception(s, s->pc, EXCP_HLT);
- }
- 
+     if (smp_cpus > 1) {
+         extints = xtensa_mx_pic_get_extints(mx_pic);
 -- 
 2.51.0
 
