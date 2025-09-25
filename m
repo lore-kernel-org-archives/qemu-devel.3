@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1524ACAC5A5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2FCCAC5AE
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 02:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1c8z-0001wh-42; Wed, 24 Sep 2025 22:55:41 -0400
+	id 1v1c98-0001yM-Rt; Wed, 24 Sep 2025 22:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1c8w-0001w1-Ni
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:55:38 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1c96-0001y5-0w
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:55:48 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1c8q-0002Ut-JD
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:55:38 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46e29d65728so2464775e9.3
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 19:55:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1c93-0002Xm-KR
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:55:47 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439bc3so178643f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 19:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758768928; x=1759373728; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758768941; x=1759373741; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xMXAhv3XdLrPB0PV3Q+hnkb3wlEo+D3tstmtaGw0sUA=;
- b=bFzsYGAw1Q/x2tctwIgYs7Gwk77D4GxYlTGn07PfLSq1NvWBss8QREd8oWuuFaEUuM
- BYnFcs/rCQ/3Uu4bDTDCuyFX81zQtdFIRQp1w6TI3OvbjSajLsIapap2mNIVybXAEKFl
- xSfp0LdLNL9PRKeWcn1TyGS2CZ95MCEANeor1JKxflr5/+3gKzPQtsUnn3EDDQat2gie
- jXd8otgOUSdOc5s09BFhpql13R0ivMJYFqGMqFlYhHOnWqXQEqjOvLjZDv3/mwRfnWC4
- CNWEGEBrkfovzomz2uqzB0T7Brip63FhwB1hq/fpTJHzo1w56XRa5ds1u8lgZyWRIDlC
- gYPA==
+ bh=dyY/0JMwlhFdHMWPEQckqPFnacgRGiLG+fvLLRk2tvo=;
+ b=ny7dJPgPDGt6nB1aGPok4ozX90UjJ2hi/M3dlhtjT5DE/IHzCyQiJwSDOt+NmSBuba
+ uHdWFBmroqj9rlFLF9rNv1zGMTsn3JLP9w0RJxk/XEutQDQI5O1kM9JzAUzQ9rJolMiw
+ qo+16f+T3VQ0la30URLPbIvNhgIpjkDkXtdJ6Nt6qdkXHt0wlSmP7vFdXntMDcxdiwoV
+ rfvKB93xP2MZGvRycNv4Yo9kDwOw5e4/3PKqThZ/6KBNdPGjJXlrQuQ8bVnfJDSfrlLp
+ QMW/Es0WtHo06Db60FK+6zMGkUvMZrbq5lBh2GVBMgVYmDfF0tyjUNu5TruL9ukCeFqm
+ LaLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758768928; x=1759373728;
+ d=1e100.net; s=20230601; t=1758768941; x=1759373741;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xMXAhv3XdLrPB0PV3Q+hnkb3wlEo+D3tstmtaGw0sUA=;
- b=cCSjOeceMKZrehVmk92spHdyx6TchCRiYE0D0zIbv3N7hF9/ETWIPMQSNFor1rBsjI
- HAdAL3NyMBoMRloABYirGVukW3dn50SUzc69MVO/TMTvpUA7pwapWjFFxIw6eBG5MSeZ
- a1yITjtjF3GKLWihMHGQ4F14vCdjpuriM/MIkc92ZhOaJkGxYGwUo1v3jQVhe3gKkhUI
- 8qZQm0fEIzgU2bpwHnuHJVa7SB2ZxIu+swh99GteaQkmoGe9rK3JqnLQP6q0n4UzEn2u
- 4ArCK7mwzZ1q9S3IIV+DguxPzeqYsO3NdSEeJPscIqp56Dq234hV2FonamA+VijLFRif
- dqLw==
-X-Gm-Message-State: AOJu0YyGT5rp6HjefJWt/btIKjaBYx0qWcM8Eij4tTzmUIHGbduKwqM7
- OX6N0VxECw9K/nQVJS0uUwGq8pxQrsJ3EGD/V/gXT8sVIvAEgBKBHkYy4DiG0SdvZs095oIKVsg
- h7pc7X8SPtw==
-X-Gm-Gg: ASbGnctFK88YoHQaJYJvsmqKhj1VVmNM/1E2VismHINn71rI1OxV7qIQQECuJ359Y5n
- imFPtpCkj/rWVhpQgoDKkhgnZC+bnm9n8wTb4cYI8sRmkmOQVVR/MnyNFjqDqsbmccDfKgW9Wg2
- U7Ktqh0zLRk9Wg5qwHNreXBpOYnd3VkH9yqemj7gxKwN0NeRcJHbAAAoReW5d2VJFvY/68mMAHp
- Ad6mDqeClZyQ7Ac16pB1rEtIi2D4D7KqbhhTJtkoANT1Ut2WOGzbV22+3EHabcYL5XJp99xajR/
- LSVzPXv3jMRb9Uhdi8ibefh2dlBU7Yab9SkML4ZDWSb+dNqH3DV01bDtywy7MhTUfilquoy00lz
- LiPGqkXVi+dlh0BK8/iqih81Q3bZlMbzcn2g/RpX8YvACx113PXH+fiElpbk+jxSvw61t9ExW
-X-Google-Smtp-Source: AGHT+IH5E3wc5wHlQSYSl0mVroUeAkhs1XovCn8+Atd2LZ5Czjlzr3ICvgFp2XHl6kTU62gS8zjStg==
-X-Received: by 2002:a05:600c:698c:b0:46e:1abc:1839 with SMTP id
- 5b1f17b1804b1-46e329ba122mr16536745e9.15.1758768928608; 
- Wed, 24 Sep 2025 19:55:28 -0700 (PDT)
+ bh=dyY/0JMwlhFdHMWPEQckqPFnacgRGiLG+fvLLRk2tvo=;
+ b=YhvDpek6ex7glKx7uNf1KnEQK5ExAGukHuuCvkXk/I1o1GmzqMJ34LTISHL+RUWWo0
+ zwbYbAgOkK/l/QGU5wKyAuMqUiMei6siBU2yi65AI7j04GoLRClVCankocJyLZVY5fS9
+ 277amsdTWe3PPfUL3hmFj4j2u1Yb/lUDG43hTtva6RyL2apM48oLl68DMUZnuQjOLEE0
+ ALXS+Gr+U4qc2eWtBSh+c36Xd8lqUe6ImOUlOEhgvVOIeWhSgMfesBoHTblcpu8avJqy
+ S+BpuMP9A4ZCoKBy/ZsBbtUj2xWb1+Tz9bH5PuTadX6KwH0YAogZHaGWH2jsX749pnPU
+ bl8w==
+X-Gm-Message-State: AOJu0Yyi1kS+dfbAXzIpBZxNxKYn0ryV8RDxNTJLyu/70EEXpEZyrmg5
+ bklN9Ptq8XDBSgaHylI8QVeBA1Ts6z9FweKjpiXTdQ98pgRamhGKwVDdVAXJzw8uHSmk1+nco2e
+ nMLhRcXBVPg==
+X-Gm-Gg: ASbGncuqiLYyNZcKxuHFDfKET69NUyPRkJTFnyHa8b2sQcYWfo3aFnAkFrbEap8fuPU
+ NwyWJxBv8GlxWb2V8pOgj0CQay/LrKF1mRp3fwq6553IsLc/w/6YFrDy6EnRblSAIXkQKl1PNdc
+ VTAxtmKTcjnGOoLzgEK2G2VD6s7nYW10QEZPqzruIIYyhXla0jql0Cr5FmVGwVQiUEX1zc5S+T7
+ 6/2QHKk9ULX5bSXFcw1h/BN8ylh5ocz24iRlI8eMguA/61re+7AoLWO6uVXvU2TOTFozYaPCxgi
+ vxildQqn7oXFamN4vgwa8gO+aB/bTAD91sYwQdB9kKL8A0yB3AVTvldqOBx/Pa6307ZZZRSKWab
+ 9V6QWwGI5xwyOiZYVqhQ1Bcq7ldK1R96UTDSfMk5bbUp1UKrJ9fTzGRiO+d3nW1t3lLLvl1sWJp
+ rq51BXwSs=
+X-Google-Smtp-Source: AGHT+IHtWu06zmRy5/nYPLdqSOFdRIyiwVELk28bvhojUK1W2UNKS10OKZZCuheCHeiGLdWsMgNVig==
+X-Received: by 2002:a05:6000:1861:b0:3ce:f0a5:d594 with SMTP id
+ ffacd0b85a97d-40e458a9804mr1679320f8f.13.1758768940576; 
+ Wed, 24 Sep 2025 19:55:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb72fbb27sm923650f8f.4.2025.09.24.19.55.26
+ ffacd0b85a97d-40fb72fb21esm962957f8f.7.2025.09.24.19.55.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Sep 2025 19:55:27 -0700 (PDT)
+ Wed, 24 Sep 2025 19:55:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -75,18 +76,20 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Peter Maydell <peter.maydell@linaro.org>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-arm@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH 1/4] cpus: Only resume halted CPUs
-Date: Thu, 25 Sep 2025 04:55:16 +0200
-Message-ID: <20250925025520.71805-2-philmd@linaro.org>
+ qemu-arm@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Collingbourne <pcc@google.com>,
+ Roman Bolshakov <r.bolshakov@yadro.com>, Sergio Lopez <slp@redhat.com>
+Subject: [PATCH 3/4] accel/hvf: Make async_safe_run_on_cpu() safe
+Date: Thu, 25 Sep 2025 04:55:18 +0200
+Message-ID: <20250925025520.71805-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250925025520.71805-1-philmd@linaro.org>
 References: <20250925025520.71805-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,28 +112,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid kicking running CPUs, trying to resume them.
+Wrap hv_vcpu_run() calls with cpu_exec_start/end() in order to
+have the main loop perform more exclusive sections while all
+vCPUs are quiescent.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/cpus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Could be related to the dubious thread_kicked access and pselect() in
+hvf_wait_for_ipi() (commit 219c101fa7f "arm/hvf: Add a WFI handler").
 
-diff --git a/system/cpus.c b/system/cpus.c
-index aa7bfcf56e5..6062226d4ac 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -666,7 +666,9 @@ void resume_all_vcpus(void)
+Cc: Peter Collingbourne <pcc@google.com>
+Cc: Alexander Graf <agraf@csgraf.de>
+Cc: Roman Bolshakov <r.bolshakov@yadro.com>
+Cc: Sergio Lopez <slp@redhat.com>
+---
+ target/arm/hvf/hvf.c  | 2 ++
+ target/i386/hvf/hvf.c | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index b77db99079e..377eb4bbc6b 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1927,7 +1927,9 @@ int hvf_vcpu_exec(CPUState *cpu)
+     flush_cpu_state(cpu);
  
-     qemu_clock_enable(QEMU_CLOCK_VIRTUAL, true);
-     CPU_FOREACH(cpu) {
--        cpu_resume(cpu);
-+        if (cpu->halted) {
-+            cpu_resume(cpu);
-+        }
-     }
- }
+     bql_unlock();
++    cpu_exec_start(cpu);
+     r = hv_vcpu_run(cpu->accel->fd);
++    cpu_exec_end(cpu);
+     bql_lock();
+     switch (r) {
+     case HV_SUCCESS:
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 8445cadecec..913ad47f3d8 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -749,8 +749,10 @@ int hvf_vcpu_exec(CPUState *cpu)
+             return EXCP_HLT;
+         }
  
++        cpu_exec_start(cpu);
+         hv_return_t r = hv_vcpu_run_until(cpu->accel->fd, HV_DEADLINE_FOREVER);
+         assert_hvf_ok(r);
++        cpu_exec_end(cpu);
+ 
+         /* handle VMEXIT */
+         uint64_t exit_reason = rvmcs(cpu->accel->fd, VMCS_EXIT_REASON);
 -- 
 2.51.0
 
