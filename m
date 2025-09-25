@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC31CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 13:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC83ACAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 13:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1m6U-0006OS-MY; Thu, 25 Sep 2025 09:33:46 -0400
+	id 1v1m6W-0006PU-OI; Thu, 25 Sep 2025 09:33:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1m6P-0006OA-Co
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 09:33:43 -0400
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1m6S-0006OC-2p
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 09:33:44 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1m5u-0005Jb-BH
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 09:33:41 -0400
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-46e37d10ed2so5445795e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 06:33:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1m6J-0005OD-FN
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 09:33:42 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-3eebc513678so1081392f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 06:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758807183; x=1759411983; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758807202; x=1759412002; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1uFtQ64q//HiZN3VN0trk6QSdLlHvW4V/dT7OyPvJAE=;
- b=mDBc/IZxsRKLY/S6UVWOnm659y3CFhN25s71jWyAfW62NBTwbWk5hU+STveTb50m0z
- aNP9RE5roMfNlyNexA6Piwb/67c4pPBu42F9F2iWFHi6dtoI1SqOKapC4K+Xv6HQRpDk
- CPkpaPngRuCiVMsLBI6U8X3KktK6VgubaR9SWxCSH2r0yWEK8I1YugdvVBZ2gcOhQaP3
- kx+johYLfGylyS8xAf4RrWnSZqf/LCWh7QvTlLLTGvnYtD6Jl/My/6eO0FnEhzqGFuMp
- 7p1RC2RcYa5583tJJ6yZTR/FO3TtG+bHbfWbDUQk83zfrHDQ1BPXLxbFsFDVrzg8Eukd
- Wgag==
+ bh=u4zt9ULoPhuPWIhx06ZPdvKxJoLapLa6JUnFo3oCnp0=;
+ b=j6W7Q7DW139eTqSjgAzBIaHAaDG+qeXrufxlzkXRSHiLXDIk57L2GfCBI/VspNSKQn
+ pGm+HCML7ceMOTKH2FnxymRUN2EA9VJ1mETSmCMOWQ1QDdL/LfyiDIXTDpAPmBkkCLDq
+ uCtAQA1eCsBYDuYSIkL36UBKoFdg6ZebQnPo7/UkT0HzWVLsuN0hQNNzvrCCd2SHkTXJ
+ owcmPEDwnBec2IGU09O91j8KuRXMToJhAcqPwg07jpKBWNHHi5gGssMHj7d/sBgqmty6
+ 24+OYUKEErriYnRvR0pjdqHhaGjWKDbnTJgOw2kbMMFU5EVjYXNl97ynCUmwUfDvyKgr
+ QOGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758807183; x=1759411983;
+ d=1e100.net; s=20230601; t=1758807202; x=1759412002;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1uFtQ64q//HiZN3VN0trk6QSdLlHvW4V/dT7OyPvJAE=;
- b=tcg7EYmvjmVUFcLbWpFPi/LxQXrNpeM+Y2Qt+WrvlBWnZFBiOP1c4V+CgYO9NlQmK2
- mNreyogjdnuGokzugiB36e/1gR13ssAZyVvWbwyDyHdfjeMyWvwfIgYABXdgNtVEsMN3
- nhor7tfa2hRs5L3iK/4CecKhZXiAePhcH507EWDCggfhLY0hY6skUqkYbUjFuTALAWcH
- fxnRvnsp2dB9IQHJ3QFloHT2p+mgjHguDtt1EM042wpJ5TdBQDTf7G3LNGw+8ebjxQpJ
- hAuFQiDk5l1895BDWB1SL1tw+7FaZuWkHPFczob7VNKpHpN6iGPINqfp3eBXyJ5m+Hw9
- 3uIw==
+ bh=u4zt9ULoPhuPWIhx06ZPdvKxJoLapLa6JUnFo3oCnp0=;
+ b=ds93tdy4KkZDyWsR2zAYoyerZCky7O7KGbOicM1OShCXA9rqDXbjFmbVoLDsWcLrD8
+ fOb9nfrIPlNF6DUqi0DcWcB9BAm5lnHs3ISJ+nO9Gk5dA0+O9AwnV9CbrUpKubb/LgJ6
+ QObLDnLIttuNdEAUMtmUDl5O3rgE3ewJ0FLZG+c1PvqPXR6sbvLUAJ4T6QTKig/RezKX
+ eXE7ldhJqosAnV/iHLal0+JOXr9YJItPUAEInWyuufIpjkj2FOiggmrgbKPKCsChC8eb
+ m/ypVi2sE0ELuTBiO1JWUIAseDnxUpEUuiTbG7peyR3m9VQfk7vMc5jN3Iq0R6SV5ysf
+ 7T7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyDqTLBmHYDG4Faso+xOiPkMFelHLoTfh1DdDwPzV30B8WYlLsjVR3kst3HFz/xPq6lEGtXbnO842L@nongnu.org
-X-Gm-Message-State: AOJu0YxxPWuJ9SpURXbFIZK5w4rTNaFrl9hBKC5fgtr12ZcxcA1tGuDU
- eAlQL78ueU52hatyR60Y+fraMX2ayodHAGA21TB3Ys67ehInk2Fd4PofiaGDk2gHBAA=
-X-Gm-Gg: ASbGncvvzWdALngDTJ2ZiACSpL6L1c/hOUVuj18LyWBAF0Bhyvm+8rNH7MIzjIqb1jv
- LcZcYZvXixNJsh8ajp+ojE+OWK6VbEmuHXE8fOOTV83OYE+9OLIqGj8AxIYtRIJHlq6Xie8GgAq
- 2O9fuTSR6yzLjfdfcmd56GDssNXvWI8oMiEPM4SXEnrlH7+LGYZhaSSOvTark3IAzyIsOK65qQo
- HkQawOxzrXKGeSdN3/XMjAllfX9bGtqSFTkXOm+uW9chk2O8bk8jQbXm4d3dAv4Wy2TMVV4r15l
- TV2qKbW+BrcEP/1fgU9qBmM0dldb5b/ucSD8/zssX/i3yOvytx+CRzlzjMjanXRZn3IhRp3tOuo
- IYjp1zC7wxaI+VogrrFXj7bo+qh6m1vKHG20JiyR1oIQg9tsUS21DNhDqCbeYqupWEY/NkpBmL/
- VJ
-X-Google-Smtp-Source: AGHT+IHp0dEewpYwXA0OJHd0ncFojqqPaVR64EaUNaNTy8k3toFMqm1YK+ucb0nAwSwUPsn8ariAyw==
-X-Received: by 2002:a05:600c:4f45:b0:46e:1afb:b131 with SMTP id
- 5b1f17b1804b1-46e329d1bdamr45553315e9.6.1758807182965; 
- Thu, 25 Sep 2025 06:33:02 -0700 (PDT)
+ AJvYcCWZOr0nIRxEF4i86BAQI1hnerk1fOtyDO+Hr8udAGV/SIyuBYPxcNBlw2FaK4OIyum1TlWd0g6XgtC6@nongnu.org
+X-Gm-Message-State: AOJu0Yy3AphFbrjRtwOOYp+DHIfzuiFplNAzPOEKKbldMiYde4pyfcmU
+ e1EeYpcti+KniOvD/taX+ZJxWrKUlrhTjr0NfOw4rFG1eTmvwx4+8wuAHPjv0BTC8vWvKsV9wci
+ brKqkKCssq5on
+X-Gm-Gg: ASbGncuYmJrCEFYtoRcKhzB6pqGbiUtpQP5HbbvujqikM2IZK7qRMcra9P5QRDQNJzw
+ +fvI+HIfh1PTYIgoJShUysH+4i7sNXfibG9wSyS+g7M96BVRsGYbjGBu7ITbBH3YhJVXtRg0Tn8
+ uF47WSq0lbON82SlYBBNv9i9U52O0woCNsF9bJ7iKVmWr/O4jDFj9QL73rebGJodRwYNoctgBs7
+ pzwDK3gKaE2E+sbL5tYyvVIT42Ob4ZN5MV/ojlMHBgul9xt4wEIWGY06gPOKf0h/3wB19oyw1mh
+ YTqsJ+mEp5aBGnDGFTMF9Rhc5KLp+Z+1Hvam7voXTHKevEWL5wKKd/k238ZFWRC1orjBOmwb0DY
+ Kmmg3O8HWNAt9IW0xxXi7dta8rTV8l8xBeIrynz1/DiDoSA0w4M/HCjzVabCdSWbCkg==
+X-Google-Smtp-Source: AGHT+IGA3fOWSAdLj0plsJtkX8TUc2pcLa62zyyl4VD+/TWJRf0OZfJSBOEnyUjE/pKEjUz4rSG7vQ==
+X-Received: by 2002:a5d:5f85:0:b0:3e9:ad34:2b2e with SMTP id
+ ffacd0b85a97d-40e4cb6e211mr3592496f8f.46.1758807202538; 
+ Thu, 25 Sep 2025 06:33:22 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2ab4897bsm76022635e9.17.2025.09.25.06.33.02
+ ffacd0b85a97d-40fb985e080sm3052684f8f.24.2025.09.25.06.33.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 06:33:02 -0700 (PDT)
-Message-ID: <f5655322-fc2b-4577-a802-1ea736e08f4c@linaro.org>
-Date: Thu, 25 Sep 2025 15:33:01 +0200
+ Thu, 25 Sep 2025 06:33:21 -0700 (PDT)
+Message-ID: <bfc949e5-ff2d-499e-9af3-dad7636b9e2a@linaro.org>
+Date: Thu, 25 Sep 2025 15:33:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] esp.c: fix esp_cdb_ready() FIFO wraparound limit
- calculation
+Subject: Re: [PATCH 2/2] qtest/am53c974-test: add additional test for cmdfifo
+ overflow
 Content-Language: en-US
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- fam@euphon.net, farosas@suse.de, lvivier@redhat.com, qemu-devel@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>
+ fam@euphon.net, farosas@suse.de, lvivier@redhat.com, qemu-devel@nongnu.org
 References: <20250925122846.527615-1-mark.cave-ayland@ilande.co.uk>
- <20250925122846.527615-2-mark.cave-ayland@ilande.co.uk>
+ <20250925122846.527615-3-mark.cave-ayland@ilande.co.uk>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250925122846.527615-2-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20250925122846.527615-3-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,54 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/9/25 14:28, Mark Cave-Ayland wrote:
-> The original calculation in commit 3cc70889a3 ("esp.c: prevent cmdfifo overflow
-> in esp_cdb_ready()") subtracted cmdfifo_cdb_offset from fifo8_num_used() to
-
-"substracted"
-
-> calculate the outstanding cmdfifo length, but this is incorrect because
-> fifo8_num_used() can also include wraparound data.
-> 
-> Instead calculate the maximum offset used by scsi_cdb_length() which is just
-> the first byte after cmdfifo_cdb_offset, and then peek the entire content
-> of the cmdfifo. The fifo8_peek_bufptr() result will then return the maximum
-> length of remaining data up to the end of the internal cmdfifo array, which
-> can then be used for the overflow check.
+> Based upon the qtest reproducer posted to Gitlab issue #3082 at
+> https://gitlab.com/qemu-project/qemu/-/issues/3082.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Fixes: 3cc70889a3 ("esp.c: prevent cmdfifo overflow in esp_cdb_ready()")
-
-Buglink: https://issues.oss-fuzz.com/issues/439878564
-
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3082
 > ---
->   hw/scsi/esp.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-> index 1d264c40e5..2809fcdee0 100644
-> --- a/hw/scsi/esp.c
-> +++ b/hw/scsi/esp.c
-> @@ -447,7 +447,9 @@ static void write_response(ESPState *s)
->   
->   static bool esp_cdb_ready(ESPState *s)
->   {
-> -    int len = fifo8_num_used(&s->cmdfifo) - s->cmdfifo_cdb_offset;
-> +    /* scsi_cdb_length() only reads the first byte */
-> +    int limit = s->cmdfifo_cdb_offset + 1;
-> +    int len = fifo8_num_used(&s->cmdfifo);
->       const uint8_t *pbuf;
->       uint32_t n;
->       int cdblen;
-> @@ -457,7 +459,7 @@ static bool esp_cdb_ready(ESPState *s)
->       }
->   
->       pbuf = fifo8_peek_bufptr(&s->cmdfifo, len, &n);
-> -    if (n < len) {
-> +    if (n < limit) {
->           /*
->            * In normal use the cmdfifo should never wrap, but include this check
->            * to prevent a malicious guest from reading past the end of the
+>   tests/qtest/am53c974-test.c | 40 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 40 insertions(+)
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
