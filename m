@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74C5CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:42:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 931FCCAC5B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1p1f-00086S-3l; Thu, 25 Sep 2025 12:40:59 -0400
+	id 1v1p3E-00012h-7a; Thu, 25 Sep 2025 12:42:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1p1d-00085N-A9
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:40:57 -0400
+ id 1v1p33-0000yW-PP
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:42:30 -0400
 Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v1p1V-0006Uq-2H
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:40:57 -0400
+ id 1v1p2u-0006gO-NL
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:42:24 -0400
 Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7501c24a731so11279747b3.3
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 09:40:41 -0700 (PDT)
+ 00721157ae682-71d60528734so11120637b3.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 09:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758818438; x=1759423238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758818532; x=1759423332; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=a1SrA9qW8iJXA9m4RI6rO99YKCYpL7/K1t0xvBg+EYg=;
- b=K/tPgmuLFy76l9JQNPhFForyRP8Sd96MXHMKpA3ttNS0mZ3uW+ylCXjiYIRI7H+fec
- EMYNlDB0/WEgcMert3p3zDkZej2ro7j/DuSc8UaczKo/CCewc75CB6bIjxqhWoQHPidg
- b7wTwSjuYuQLQFATc/oHQ9OJRb6y46Aq8Bi9EGNgWaRN24MywjXRKS3g3xqqSByEaxzR
- Zsvic8Ph5reD08s1+sJsFN/zqj6KPN6Gv0zPVf43kBOF50N1cLs/5oXV5Hkh4+pg6rAN
- v8jLCYYDpXjkklK5XcTfkREf2vaFnMetF7Y6E39rMDhieKASYHUTeneT5DySSU+VaxAX
- 4+Kg==
+ bh=0BsKxJ8F8BEQVgPe0W0T+jLPmwKYlnkZfHox+8F8rik=;
+ b=EvBRHEj0b4ac5TVRWblwVDvL9PM4lawi7pcgtQm/1BxRECkgbg3oP+/WracSMgXdeK
+ ZmGm/+7OGcFSCi1g/znkBdHeBGfsHgZfKp9w6Nm/LjNLeHiGi3pmr3mLu6RGGOlwfI3b
+ seko+oL2kA7skdT1qpzfbLq7u/CIuM9n6coqcKS+b2vXNDU3nO0ZBSDeBE9OxYAtv+y5
+ g2anUugPtRpBC86v6Aed06iPVDmyS8YgmQk1jsboBGfmAj+cxyR6WTRqbKPd2/20TRGj
+ ZIHrg/pW1TE0y3UVSPM/7GBfoQRJWktnuulXIDA07Dti9pnjPCIA6gxdrHmLe4YrczxR
+ f+bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758818438; x=1759423238;
+ d=1e100.net; s=20230601; t=1758818532; x=1759423332;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=a1SrA9qW8iJXA9m4RI6rO99YKCYpL7/K1t0xvBg+EYg=;
- b=Jd8m5qFKHNCMmEm2ClGZdi7CiqtiVDILR3iFHSaugR00/du0bUdPK0RIdgwCPSBkvB
- OO4ai6n3vwg53bnec0HJPQOcKZ0zZRuePR9Pt5WtSIiNAXo4yA+GR8lbo1FEYK+Ogk4H
- yFg1FAVxNSaY6ydeScTBZYku4Hn/16UFYaBvNgrC0Rz2VDupGLKOFOWXVoaT8Glc0dGF
- d7gpd59jb05EmXRop2sM+64eqk3eUsL+xrLn/SA40c6EN4x86pEmuAoACszduy3eR20O
- ogsqj9JrWkgg0vWxLivdX5IH25uT3EWBhF+i7GAJAY+jtK7RVpeVK/FLAG+txKMVDTaR
- KtsQ==
-X-Gm-Message-State: AOJu0YxUeLPXh6VmZrpLIudH1Wclwo6E0ZrMSAivEJGUGwoMWrNlxmWk
- 527/XkB1d/jX8pKq/YjKPgJLdWGkvQoEJRcnR6yJpdtw1OhZDWoTQpZnTzdshqxMXkjNSIr59e+
- EyAGGoJ/HZb/3TK8TI3EYTgRP3Wg40G/JaljDGNzpyA==
-X-Gm-Gg: ASbGncuyGNoxkKznTg8vx6HkGPtioTc6y17GPzWwf4u1U8e9I/2B8adIQMKaCFnox6M
- WasLLer8KkcyhPZc2C8uxBEMeRtAZLzVBPz3pg/5Kk8PAyBz5POFSydxj3AiL7o9KsHQkUyCXi4
- ZzKVfONYmzIlffSp+4G+fYSTNPQyPb/32MemsLlZOsgVl2M2/HD73Z07Qksr/NiDbEtA0tA4UNr
- 6PrRwOp
-X-Google-Smtp-Source: AGHT+IE0EF4qIw6rBhJcAzpsoAbpdzFxHqkMobJTpgmkt9iUdcVfN/APYfvZrWkq8uU6RM5M3ZW123DBfQRvhWaXDD4=
-X-Received: by 2002:a05:6902:6c1c:b0:eb0:7c5d:6a8 with SMTP id
- 3f1490d57ef6-eb37faf44f3mr2977778276.7.1758818438093; Thu, 25 Sep 2025
- 09:40:38 -0700 (PDT)
+ bh=0BsKxJ8F8BEQVgPe0W0T+jLPmwKYlnkZfHox+8F8rik=;
+ b=c/9TYNcyojPgq3JhUuH2WalfsFxdX/Ds3mvvsxepcHiZ55O3XkEqJA4hMc1vcJahN6
+ qI84cAxrlp2TM7sqZmINRhxCPpLz6518VY9wCfOHDk30eYAnsfNL7p0JlR6MbZsDChNc
+ QeAvcHU2qP+mVhZ2lhLfxkbC/1396H2aWKzRbNck7WZIA/L29jWlYL7PYZXj5CoAvMyV
+ ZYQzxmjphvaMpFwNQfU/MMbcrMpMndItk1iTlsh3TUuKozZ5Kt0UCLBuv6GKvCumejGD
+ PC2wwF/0a7p2o0JRxNxq0GHAUxfccRAH052wTMMjhgHs3w+XYxsULwVFT5Q/lJXZO6+O
+ sKFQ==
+X-Gm-Message-State: AOJu0YzCe9jhkDUlDxgUUg47NmqoAFZlDtXRwD5v27tukUK5RMavTybt
+ avqyfmnII3/BcyJBEbWQxByO56A+Wz0w5E4aLOwOAYU5wLEfmnJIob8+0RrrRQZO0Wsw2bCq7iy
+ sOR9mKO9tZLfgeUSvhkNE8Btq0VKPPi3hqzYG9DK4CQ==
+X-Gm-Gg: ASbGncuqa+c2e65Nz0WLtgVkGjP6Q55kuagMOvxcuYwCM7hQJ9nYfGQpGXAIvdZz+go
+ 14Vw3yky+N1YqBDm+K6S2+rcehY/gf184Ehwy/41AGblrH4ePUwZ9jT/bGroLnQjicGUV9p8uji
+ j2Qn7yeT/bWqpgqI/EUrHNoLfTeGbI6ELKXra/RQ3q8MbJ0AB/5trkiAFigRRMt3Mgtpy03OdHw
+ 7bki/6E
+X-Google-Smtp-Source: AGHT+IHSpPoZj4id4c5WN52KR2UB/7TwaYDCn7M1Sw2NOgQp4YFmAzQVHuXKbbaDcB5ZBpJmhEczRhtpOiaMwiweBKw=
+X-Received: by 2002:a05:6902:2089:b0:eae:987a:1e32 with SMTP id
+ 3f1490d57ef6-eb37fbfc092mr4063365276.16.1758818531908; Thu, 25 Sep 2025
+ 09:42:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250909-pcie-root-upstream-v1-0-d85883b2688d@google.com>
- <20250909-pcie-root-upstream-v1-6-d85883b2688d@google.com>
-In-Reply-To: <20250909-pcie-root-upstream-v1-6-d85883b2688d@google.com>
+ <20250909-pcie-root-upstream-v1-4-d85883b2688d@google.com>
+In-Reply-To: <20250909-pcie-root-upstream-v1-4-d85883b2688d@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Sep 2025 17:40:26 +0100
-X-Gm-Features: AS18NWCH_gG1_2GuTQD-5iyF6piN61m1IS2b9sKVaWj15G-s7kMV7UB2Wy0KPyM
-Message-ID: <CAFEAcA_Lp0hv_b726pSZg9CbPZrxEZ1gShOz+kJZuE2x3TG+Mg@mail.gmail.com>
-Subject: Re: [PATCH 6/7] hw/pci-host: rework Nuvoton PCIe windowing and memory
- regions
+Date: Thu, 25 Sep 2025 17:42:00 +0100
+X-Gm-Features: AS18NWBYFPfPWb46_T2as1obl6NS_c4V5RVGA0ExkzXdSqEA871l4qMU8qeRW-o
+Message-ID: <CAFEAcA-cKA1uNAVjETGRjDTLzp5psY5k9nRNjS5Cr2gZ7KY7fQ@mail.gmail.com>
+Subject: Re: [PATCH 4/7] hw/pci-host: add Nuvoton PCIe root port
 To: Yubin Zou <yubinz@google.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
@@ -100,20 +99,29 @@ On Tue, 9 Sept 2025 at 23:11, Yubin Zou <yubinz@google.com> wrote:
 >
 > From: Titus Rwantare <titusr@google.com>
 >
->  This switches to a using a fully sized PCI memory region that's
->  separate from system memory. Accesses to this PCI memory region are
->  gated by the AXI to PCIe windows whose size and offsets are validated.
->
->  - PCIe config space is not necessarily aliased with PCIe mmio space.
->    Ignore translation addresses for config space windows.
->  - Make window configuration register writes order independent.
->
->  Tested with pci-testdev.
+> Signed-off-by: Titus Rwantare <titusr@google.com>
 
-I'm in general not a fan of introducing something in
-one patch and then "reworking" it in a later patch in
-the same series. It's usually easier to understand and
-review if you implement it the right way the first time.
+> --- a/hw/pci-host/npcm_pcierc.c
+> +++ b/hw/pci-host/npcm_pcierc.c
+> @@ -203,6 +203,7 @@ static void npcm_pcierc_write_window(NPCMPCIERCState *s, hwaddr addr,
+>      npcm_pcie_update_window_maps(s);
+>  }
+>
+> +/* read root complex configuration registers */
+>  static uint64_t npcm_pcierc_cfg_read(void *opaque, hwaddr addr, unsigned size)
+>  {
+>      NPCMPCIERCState *s = NPCM_PCIERC(opaque);
+> @@ -248,6 +249,7 @@ static uint64_t npcm_pcierc_cfg_read(void *opaque, hwaddr addr, unsigned size)
+>      return ret;
+>  }
+>
+> +/* write root complex configuration registers */
+>  static void npcm_pcierc_cfg_write(void *opaque, hwaddr addr, uint64_t data,
+>                                    unsigned size)
+>  {
+
+These comments look like they should have been in
+a previous patch where the functions were added.
 
 thanks
 -- PMM
