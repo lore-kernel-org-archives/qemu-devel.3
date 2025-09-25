@@ -4,146 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B935CCAC5B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 15:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF551CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 15:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1oIp-0002HP-8X; Thu, 25 Sep 2025 11:54:39 -0400
+	id 1v1oIr-0002Jo-Lm; Thu, 25 Sep 2025 11:54:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1oIm-00027d-1Y
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 11:54:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1v1oIm-00025l-9a; Thu, 25 Sep 2025 11:54:36 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1oIf-0006Z7-6X
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 11:54:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758815666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Y9Z6fCvKKFF3TjJpcIzjchy317oKmhi0u6bDJyrJEQM=;
- b=fzHmflTMAFcAz30D1+RodhY3BaW97q28Av9InjSNHnz4k5wswqt3FJW7iRKZEtSqgqUIrI
- Vrw3aML2xM9LiqU+LDs9L4rogThwplGre29qFTvP4afSHXCmZNbe/9YCTm3BPdUetxakg0
- eObGU8oj6cVhWhH14NyweLEVdRrk9dI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-j-3xxYrMMzWvpxuTyFQmog-1; Thu, 25 Sep 2025 11:54:23 -0400
-X-MC-Unique: j-3xxYrMMzWvpxuTyFQmog-1
-X-Mimecast-MFC-AGG-ID: j-3xxYrMMzWvpxuTyFQmog_1758815663
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e36f2c502so3635265e9.0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 08:54:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758815662; x=1759420462;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y9Z6fCvKKFF3TjJpcIzjchy317oKmhi0u6bDJyrJEQM=;
- b=Di09EnvBknsvhAALMahlF4EwncV7VftutoOeMbRarDjJVYryW8hadjJMgvbWnM2RnF
- pSGqSf/7a7/Hb591ELmbqKEtzUrFT+7sHSCVJ7o5jfZKyTVUuBRAQIapSkzEyMkaGG8L
- A42cjdzFgAre/lPR6bS3dXeG1Va7fbEyRWkOsmH426lW0pV6KEsllxp4bzNnJ0hLvFSZ
- KQTPxgHHQINc/cqzohe9ZDiS1kt76vGBw7mBxqOZ6ul5sTKSBk2n8dufbAt6h56K5qRh
- w2exmajSVD82Omot+3N9PcBQv0UKxSY9N6YChUx/n5D4PYCp1DmGH59Qi2BXBXt8lGi7
- ifvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBvjFnKTF3zpbVqAkCi/ZyBinN4zZhpu/WKfJUFzjAUcyKVBwjpntV8+TPKQV5gDR7gGANWUgKk6tr@nongnu.org
-X-Gm-Message-State: AOJu0YwKC6b8xDlfJgCZSB5a74MbRGv+cAwF99tZmkmHtqcww4i8Wz2H
- aCy/n5dyZMX3A2mOzueX3PwtU8GiSchdVyq5TxpDzYXqvh6otkiYDMfRyU0xGbRq3jeNMNxR1su
- L9+Dbv5bE0sAY5Cgif99Ml868K5f3VLIsEzSYrdr/Z80FX5IRoqspw93r
-X-Gm-Gg: ASbGncsiKBt/bfYUjf6QjARHxKe3cLg2GKgZ+BQN4XGiY8i1LOklTbuYq6cYLnwcwWJ
- C9BpbWg12Cu26JvJoO7ddpRlEZaHghs7HmYsvUzTCGUy86Wb8Mnrx32ajsKVNfSdBItNwtzy0C0
- TgRVjIvkEhYzSCLHXjrexvfjqcEb4Sq7xaCWCuDpSSmkl255I3mltt3S51RP+CckTYKcoi4irLv
- 0njyKdNNr06uMy/wAfIJSFTBO2SfCTJh6AMr+j3vw0z7D+Wjhk6RJu6tKESRnIqGiKJQADOUJx0
- 6IGm/eatW+dB08WpTDVVp5W78tT1pbffiSymPQ5FaZXB4GMbMd02TYaPO0Ys+cJEALT1sLWZ1VZ
- Hoik=
-X-Received: by 2002:a05:600c:6216:b0:46e:396b:f5ae with SMTP id
- 5b1f17b1804b1-46e396bf90bmr8725195e9.16.1758815662470; 
- Thu, 25 Sep 2025 08:54:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2zu1hqzq8RSOW0ZJYIb8ZZrtF3c8ORmajSzDlOeIZz9tkJxFwNGYDKi+7kBCMMeIrh42njQ==
-X-Received: by 2002:a05:600c:6216:b0:46e:396b:f5ae with SMTP id
- 5b1f17b1804b1-46e396bf90bmr8724805e9.16.1758815661992; 
- Thu, 25 Sep 2025 08:54:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e33baa53dsm38408275e9.6.2025.09.25.08.54.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 08:54:21 -0700 (PDT)
-Message-ID: <a420c311-9569-4f54-a770-95b49583183b@redhat.com>
-Date: Thu, 25 Sep 2025 17:54:20 +0200
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1v1oIb-0006Y3-Og; Thu, 25 Sep 2025 11:54:33 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PAM7JP030761;
+ Thu, 25 Sep 2025 15:54:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Prm6SD
+ WJaUfsS6wMtJZ76Jqs79KAzPcatfVzkDMDZMA=; b=IgX6eoRXVHB3m+4ffIQxTW
+ 0fRXgEPsCjsDoNCrla1QVM8orBhWonauPRFwKzYV8pGOs8EOtvOS+vUfyDJPeOmZ
+ 6dwChA1sBB9AxlDGuHdsk14TfbMP5/WPSIrJ/3d5ezZnqL4q74zBrUBphKJXF2GV
+ xM8XKynSdJ5BITSYwPauAXvw0XWCNUGeSWScsHAFwdrgJjUsP3pimu6ZAnXkhTK0
+ VD8mA0qzQJ8fKtPM/IGDjJ1EuYyhuco3vTgTzo749Z8IQ6sZeDUZ7s0j3iZSG6Zo
+ ikF7xb7bzu35knHQ7zs3qEZ4dLavhImzxThjdaJJw7v7jMgO1jHSwuL3WsqRF2QQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499ky6eue3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 15:54:20 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PFo4Vl030891;
+ Thu, 25 Sep 2025 15:54:20 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499ky6eue1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 15:54:20 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PDoq98013329;
+ Thu, 25 Sep 2025 15:54:18 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49cj34dtvw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 15:54:18 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58PFsHSC24576334
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 25 Sep 2025 15:54:17 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62C8358061;
+ Thu, 25 Sep 2025 15:54:17 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2E4F58059;
+ Thu, 25 Sep 2025 15:54:14 +0000 (GMT)
+Received: from [9.39.29.37] (unknown [9.39.29.37])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 25 Sep 2025 15:54:14 +0000 (GMT)
+Message-ID: <f3430592-0b85-4d77-9b79-089e1e0a2c30@linux.ibm.com>
+Date: Thu, 25 Sep 2025 21:24:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/28] vfio: improve naming conventions
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
- harshpb@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- john.levon@nutanix.com, thanos.makatos@nutanix.com,
- alex.williamson@redhat.com, steven.sistare@oracle.com, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250925113159.1760317-1-mark.caveayland@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250925113159.1760317-1-mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v5 2/9] target/ppc: Add IBM PPE42 family of processors
+To: milesg@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com, thuth@redhat.com, 
+ richard.henderson@linaro.org
+References: <20250918182731.528944-1-milesg@linux.ibm.com>
+ <20250918182731.528944-3-milesg@linux.ibm.com>
+ <2ac7b094-4365-46e6-9f44-50052e1b3827@linux.ibm.com>
+ <a136e0ef3c7d04b7cc4cc1ef370ee046deed6e47.camel@linux.ibm.com>
+ <a168b80b1fc1bb1b9fe9c41209271e644b441bb2.camel@linux.ibm.com>
+ <2e723114-e98c-4912-adc1-495341f2f550@linux.ibm.com>
+ <6498d929eb80aeddc41f8a3c5b3f878f60599b57.camel@linux.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <6498d929eb80aeddc41f8a3c5b3f878f60599b57.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Pgk3VziF9im2okJp_VRF0asuhmGP1oGN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyMCBTYWx0ZWRfX/kmY6WxoZ9kN
+ IUTZITNfGLvPsyqVqwA2lTtOPpu69YuJku8vCawGxwv0XqWtcxpOLDbWTOo9kf4lhydJ5B89aee
+ EpWFo3DakPVh+W6ZMmjSu7LzdEyUCnvCnmQXl13sEOSAuc10z6OO3S+3LPryDlv+duOjtVFRost
+ gSkOXcnycpiWsfH/WKGRueFiFnvFT5jdJXqvd/pDQ7kkpImx4LfKs++D3udYJbuCWduoJB3IuXj
+ 43INHpQJIhmZlwwKyydUT7Jmn79N4cNFV5O/77OINB7c8AxI+MxqmjZiuphr/oJgZSuG7v0eXSz
+ JYcFmki3F4tmkM8SfippcWF/Ngdt7FTed0phjudHnIa3o3+/eI/+Jfsid4PKhJ3QoOjF5Mwaq7f
+ txunSnUZ
+X-Authority-Analysis: v=2.4 cv=XYGJzJ55 c=1 sm=1 tr=0 ts=68d565ac cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10
+ a=joCYEHJbInlGy0rV7qgA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: pyMDilTxENpcgpbM_59UkW35_iOyhiPx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 clxscore=1015 adultscore=0 malwarescore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200020
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,120 +133,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/25 13:31, Mark Cave-Ayland wrote:
-> This series aims to further improve the naming conventions for some
-> QOM-related parts of VFIO so that it is easier to understand the
-> object model.
-> 
-> The first part of the series renames VFIOContainer to VFIOLegacyContainer
-> as the existing name is misleading, particularly in the context of classes
-> that are derived from it. Following on from this the VFIOContainerBase
-> struct is now renamed to VFIOContainer as it represents the parent of
-> other VFIOFOOContainer types.
-> 
-> The next part of the series adds some extra QOM casts that were missed
-> from my last patchset, which then allows us to rename the QOM parent
-> object to parent_obj as per our current coding guidelines.
-> 
-> After this there are some more renames for various QOM/qdev declarations
-> so that the function names correspond with the underlying QOM type
-> name: this makes it easier to locate them within the source tree.
-> 
-> Finally there is also a rename of TYPE_VFIO_PCI_BASE to
-> TYPE_VFIO_PCI_DEVICE since that allows the QOM type (and cast) to match
-> the name of the underlying VFIOPCIDevice struct.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> 
-> (Patches still needing review: 28)
-> 
-> 
-> v2:
-> - Rebase onto master
-> - Add R-B tags from Cedric
-> - Update patches 3 and 4 to also correct the include header guard name
-> - Add patch 28 to correct the include header guard name for vfio-device.h
-> 
-> 
-> Mark Cave-Ayland (28):
->    include/hw/vfio/vfio-container.h: rename VFIOContainer to
->      VFIOLegacyContainer
->    include/hw/vfio/vfio-container-base.h: rename VFIOContainerBase to
->      VFIOContainer
->    include/hw/vfio/vfio-container.h: rename file to
->      vfio-container-legacy.h
->    include/hw/vfio/vfio-container-base.h: rename file to vfio-container.h
->    hw/vfio/container.c: rename file to container-legacy.c
->    hw/vfio/container-base.c: rename file to container.c
->    vfio/iommufd.c: use QOM casts where appropriate
->    vfio/cpr-iommufd.c: use QOM casts where appropriate
->    vfio/vfio-iommufd.h: rename VFIOContainer bcontainer field to
->      parent_obj
->    vfio/spapr.c: use QOM casts where appropriate
->    vfio/spapr.c: rename VFIOContainer bcontainer field to parent_obj
->    vfio/pci.c: rename vfio_instance_init() to vfio_pci_init()
->    vfio/pci.c: rename vfio_instance_finalize() to vfio_pci_finalize()
->    vfio/pci.c: rename vfio_pci_dev_class_init() to vfio_pci_class_init()
->    vfio/pci.c: rename vfio_pci_dev_info to vfio_pci_info
->    hw/vfio/types.h: rename TYPE_VFIO_PCI_BASE to TYPE_VFIO_PCI_DEVICE
->    vfio/pci.c: rename vfio_pci_base_dev_class_init() to
->      vfio_pci_device_class_init()
->    vfio/pci.c: rename vfio_pci_base_dev_info to vfio_pci_device_info
->    vfio/pci.c: rename vfio_pci_dev_properties[] to vfio_pci_properties[]
->    vfio/pci.c: rename vfio_pci_dev_nohotplug_properties[] to
->      vfio_pci_nohotplug_properties[]
->    vfio/pci.c: rename vfio_pci_nohotplug_dev_class_init() to
->      vfio_pci_nohotplug_class_init()
->    vfio/pci.c: rename vfio_pci_nohotplug_dev_info to
->      vfio_pci_nohotplug_info
->    vfio-user/pci.c: rename vfio_user_pci_dev_class_init() to
->      vfio_user_pci_class_init()
->    vfio-user/pci.c: rename vfio_user_pci_dev_properties[] to
->      vfio_user_pci_properties[]
->    vfio-user/pci.c: rename vfio_user_instance_init() to
->      vfio_user_pci_init()
->    vfio-user/pci.c: rename vfio_user_instance_finalize() to
->      vfio_user_pci_finalize()
->    vfio-user/pci.c: rename vfio_user_pci_dev_info to vfio_user_pci_info
->    include/hw/vfio/vfio-device.h: fix include header guard name
-> 
->   hw/vfio-user/container.h                |    4 +-
->   hw/vfio/pci.h                           |    2 +-
->   hw/vfio/types.h                         |    4 +-
->   hw/vfio/vfio-iommufd.h                  |    9 +-
->   hw/vfio/vfio-listener.h                 |    4 +-
->   include/hw/vfio/vfio-container-base.h   |  279 -----
->   include/hw/vfio/vfio-container-legacy.h |   39 +
->   include/hw/vfio/vfio-container.h        |  286 ++++-
->   include/hw/vfio/vfio-cpr.h              |   15 +-
->   include/hw/vfio/vfio-device.h           |   12 +-
->   hw/ppc/spapr_pci_vfio.c                 |   14 +-
->   hw/s390x/s390-pci-vfio.c                |   16 +-
->   hw/vfio-user/container.c                |   18 +-
->   hw/vfio-user/pci.c                      |   35 +-
->   hw/vfio/container-base.c                |  347 ------
->   hw/vfio/container-legacy.c              | 1277 ++++++++++++++++++++++
->   hw/vfio/container.c                     | 1325 ++++-------------------
->   hw/vfio/cpr-iommufd.c                   |    4 +-
->   hw/vfio/cpr-legacy.c                    |   43 +-
->   hw/vfio/device.c                        |    4 +-
->   hw/vfio/iommufd.c                       |   48 +-
->   hw/vfio/listener.c                      |   74 +-
->   hw/vfio/pci.c                           |   68 +-
->   hw/vfio/spapr.c                         |   52 +-
->   hw/vfio/meson.build                     |    2 +-
->   25 files changed, 1991 insertions(+), 1990 deletions(-)
->   delete mode 100644 include/hw/vfio/vfio-container-base.h
->   create mode 100644 include/hw/vfio/vfio-container-legacy.h
->   delete mode 100644 hw/vfio/container-base.c
->   create mode 100644 hw/vfio/container-legacy.c
-> 
-
-Applied to vfio-next.
-
-Thanks,
-
-C.
 
 
+On 9/25/25 20:59, Miles Glenn wrote:
+> On Thu, 2025-09-25 at 10:27 +0530, Harsh Prateek Bora wrote:
+>> Hi Glenn,
+>>
+>> On 9/24/25 20:36, Miles Glenn wrote:
+>>>>>> @@ -6802,53 +6916,63 @@ static void init_ppc_proc(PowerPCCPU *cpu)
+>>>>>>     
+>>>>>>         /* MSR bits & flags consistency checks */
+>>>>>>         if (env->msr_mask & (1 << 25)) {
+>>>>>> -        switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
+>>>>>> +        switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE |
+>>>>>> +                              POWERPC_FLAG_PPE42)) {
+>>>>>>             case POWERPC_FLAG_SPE:
+>>>>>>             case POWERPC_FLAG_VRE:
+>>>>>> +        case POWERPC_FLAG_PPE42:
+>>>>>>                 break;
+>>>>>>             default:
+>>>>>>                 fprintf(stderr, "PowerPC MSR definition inconsistency\n"
+>>>>>> -                    "Should define POWERPC_FLAG_SPE or POWERPC_FLAG_VRE\n");
+>>>>>> +                    "Should define POWERPC_FLAG_SPE or POWERPC_FLAG_VRE\n"
+>>>>>> +                    "or POWERPC_FLAG_PPE42\n");
+>>>>>>                 exit(1);
+>>>>>>             }
+>>>>>>         } else if (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
+>>>>> Hey Glenn,
+>>>>>
+>>>>> Did you miss adding the POWERPC_FLAG_PPE42 flag here  ^  ?
+>>>>>
+>>>>> Thanks,
+>>>>> Chinmay
+>>>> No. All PPE42 processors will have bit 1 << 25 set in env->msr_mask, so
+>>>> it will always fall into the previous condition block and never enter
+>>>> the 2nd check.
+>>>>
+>>>> Glenn
+>>>>
+>>> Ah, sorry, I should have looked closer!  This is supposed to be
+>>> checking that if 1 << 25 is not set that we shouldn't be setting the
+>>> PPE42 flag either.  So, yes, I'll add that in v6.
+>>
+>> While we are at it, can we also replace all hard-coded bit shifts with
+>> appropriate macros which reflect what these shifts are about. There are
+>> few more such checks in the patch. May be audit other patches as well
+>> for such instances.
+>>
+>> regards
+>> Harsh
+>>
+> 
+> Hi Harsh,
+> 
+> Normally I would agree with you, but I think that all of the hard-coded
+> bit shifts in this function (init_ppc_proc) are hard-coded because the
+> MSR bits have multiple meanings depending on the CPU and this function
+> is called on all PPC CPUs.  So, in this context, I think that using the
+> hard-coded bit number is appropriate and this is probably why it has
+> remained as a hard-coded value in this function since 2007.
+
+Oh I see, in that case, let's keep it as-is.
+
+Thanks
+Harsh
+
+> 
+> That being said, if you still feel strongly that these hard-coded
+> values should be replaced with macros, could you provide suggestions on
+> what would be appropriate names in this function?
+> 
+> Thanks,
+> 
+> Glenn
+> 
+> 
+>>> Thanks,
+>>>
+>>> Glenn
+> 
 
