@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0387CAC5AA
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 05:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF95ACAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 05:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1eCX-0000li-4q; Thu, 25 Sep 2025 01:07:29 -0400
+	id 1v1eCl-0000rx-2j; Thu, 25 Sep 2025 01:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1eCV-0000in-A2; Thu, 25 Sep 2025 01:07:27 -0400
+ id 1v1eCi-0000r4-ON; Thu, 25 Sep 2025 01:07:40 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1eCO-00072D-0R; Thu, 25 Sep 2025 01:07:25 -0400
+ id 1v1eCf-00072D-6g; Thu, 25 Sep 2025 01:07:40 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 25 Sep
@@ -30,18 +30,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 4/8] hw/arm/aspeed: Move aspeed_load_vbootrom to common SoC
- code
-Date: Thu, 25 Sep 2025 13:05:30 +0800
-Message-ID: <20250925050535.2657256-5-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v3 6/8] hw/arm/aspeed_ast27x0-fc: Make sub-init functions
+ return bool with errp
+Date: Thu, 25 Sep 2025 13:05:32 +0800
+Message-ID: <20250925050535.2657256-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250925050535.2657256-1-jamin_lin@aspeedtech.com>
 References: <20250925050535.2657256-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,148 +66,105 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the vbootrom loader helper into common SoC code so it can be reused
-by all ASPEED boards, and decouple the API from AspeedMachineState.
-
-Specifically:
-- Move aspeed_load_vbootrom() to hw/arm/aspeed_soc_common.c and
-declare it in include/hw/arm/aspeed_soc.h.
-- Change the helper’s signature to take AspeedSoCState * instead of
-AspeedMachineState *.
-- Update aspeed_machine_init() call sites accordingly.
-
-No functional change.
+Refactor ast2700fc_ca35_init(), ast2700fc_ssp_init(), and ast2700fc_tsp_init()
+to take an Error **errp parameter and return a bool.
+Each function now reports failure through the error object and returns false.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed_soc.h |  4 ++++
- hw/arm/aspeed.c             | 31 +------------------------------
- hw/arm/aspeed_soc_common.c  | 25 +++++++++++++++++++++++++
- 3 files changed, 30 insertions(+), 30 deletions(-)
+ hw/arm/aspeed_ast27x0-fc.c | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index aea210a8e2..ed32efb543 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -43,6 +43,8 @@
- #include "hw/char/serial-mm.h"
- #include "hw/intc/arm_gicv3.h"
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index ebf3784df5..2e16a0340a 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -56,7 +56,7 @@ struct Ast2700FCState {
+ #define AST2700FC_FMC_MODEL "w25q01jvq"
+ #define AST2700FC_SPI_MODEL "w25q512jv"
  
-+#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
-+
- #define ASPEED_SPIS_NUM  3
- #define ASPEED_EHCIS_NUM 4
- #define ASPEED_WDTS_NUM  8
-@@ -316,6 +318,8 @@ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
-                            Error **errp);
- void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
-                              MemoryRegion *boot_rom, uint64_t rom_size);
-+void aspeed_load_vbootrom(AspeedSoCState *soc, const char *bios_name,
-+                          Error **errp);
- 
- static inline int aspeed_uart_index(int uart_dev)
+-static void ast2700fc_ca35_init(MachineState *machine)
++static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
  {
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 429f4c6d77..6046ec0bb2 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -26,9 +26,7 @@
- #include "hw/qdev-properties.h"
- #include "system/block-backend.h"
- #include "system/reset.h"
--#include "hw/loader.h"
- #include "qemu/error-report.h"
--#include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "hw/qdev-clock.h"
- #include "system/system.h"
-@@ -263,33 +261,6 @@ static void aspeed_reset_secondary(ARMCPU *cpu,
-     cpu_set_pc(cs, info->smp_loader_start);
- }
+     Ast2700FCState *s = AST2700A1FC(machine);
+     AspeedSoCState *soc;
+@@ -71,8 +71,8 @@ static void ast2700fc_ca35_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
  
--#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
--
--/*
-- * This function locates the vbootrom image file specified via the command line
-- * using the -bios option. It loads the specified image into the vbootrom
-- * memory region and handles errors if the file cannot be found or loaded.
-- */
--static void aspeed_load_vbootrom(AspeedMachineState *bmc, const char *bios_name,
--                                 Error **errp)
--{
--    g_autofree char *filename = NULL;
--    AspeedSoCState *soc = bmc->soc;
--    int ret;
--
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
--    if (!filename) {
--        error_setg(errp, "Could not find vbootrom image '%s'", bios_name);
+     if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
+-                                AST2700FC_BMC_RAM_SIZE, &error_abort)) {
 -        return;
--    }
--
--    ret = load_image_mr(filename, &soc->vbootrom);
--    if (ret < 0) {
--        error_setg(errp, "Failed to load vbootrom image '%s'", bios_name);
++                                AST2700FC_BMC_RAM_SIZE, errp)) {
++        return false;
+     }
+     object_property_set_link(OBJECT(&s->ca35), "memory",
+                              OBJECT(&s->ca35_memory), &error_abort);
+@@ -92,8 +92,8 @@ static void ast2700fc_ca35_init(MachineState *machine)
+     object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
+                             AST2700FC_HW_STRAP2, &error_abort);
+     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
+-    if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
 -        return;
--    }
--}
--
- static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
-                                bool boot_emmc)
- {
-@@ -451,7 +422,7 @@ static void aspeed_machine_init(MachineState *machine)
- 
-     if (amc->vbootrom) {
-         bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
--        aspeed_load_vbootrom(bmc, bios_name, &error_abort);
-+        aspeed_load_vbootrom(bmc->soc, bios_name, &error_abort);
++    if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {
++        return false;
      }
  
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index 7f104f8de5..bc70e864fb 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -19,6 +19,7 @@
- #include "system/blockdev.h"
- #include "system/block-backend.h"
- #include "hw/loader.h"
-+#include "qemu/datadir.h"
+     /*
+@@ -108,9 +108,11 @@ static void ast2700fc_ca35_init(MachineState *machine)
+     ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
  
- 
- const char *aspeed_soc_cpu_type(AspeedSoCClass *sc)
-@@ -195,6 +196,30 @@ void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
-                           &error_abort);
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
++
++    return true;
  }
  
-+/*
-+ * This function locates the vbootrom image file specified via the command line
-+ * using the -bios option. It loads the specified image into the vbootrom
-+ * memory region and handles errors if the file cannot be found or loaded.
-+ */
-+void aspeed_load_vbootrom(AspeedSoCState *soc, const char *bios_name,
-+                          Error **errp)
-+{
-+    g_autofree char *filename = NULL;
-+    int ret;
-+
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+    if (!filename) {
-+        error_setg(errp, "Could not find vbootrom image '%s'", bios_name);
-+        return;
-+    }
-+
-+    ret = load_image_mr(filename, &soc->vbootrom);
-+    if (ret < 0) {
-+        error_setg(errp, "Failed to load vbootrom image '%s'", bios_name);
-+        return;
-+    }
-+}
-+
- static void aspeed_soc_realize(DeviceState *dev, Error **errp)
+-static void ast2700fc_ssp_init(MachineState *machine)
++static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
  {
-     AspeedSoCState *s = ASPEED_SOC(dev);
+     AspeedSoCState *soc;
+     Ast2700FCState *s = AST2700A1FC(machine);
+@@ -127,12 +129,14 @@ static void ast2700fc_ssp_init(MachineState *machine)
+ 
+     soc = ASPEED_SOC(&s->ssp);
+     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
+-    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
+-        return;
++    if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {
++        return false;
+     }
++
++    return true;
+ }
+ 
+-static void ast2700fc_tsp_init(MachineState *machine)
++static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
+ {
+     AspeedSoCState *soc;
+     Ast2700FCState *s = AST2700A1FC(machine);
+@@ -149,16 +153,18 @@ static void ast2700fc_tsp_init(MachineState *machine)
+ 
+     soc = ASPEED_SOC(&s->tsp);
+     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
+-    if (!qdev_realize(DEVICE(&s->tsp), NULL, &error_abort)) {
+-        return;
++    if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {
++        return false;
+     }
++
++    return true;
+ }
+ 
+ static void ast2700fc_init(MachineState *machine)
+ {
+-    ast2700fc_ca35_init(machine);
+-    ast2700fc_ssp_init(machine);
+-    ast2700fc_tsp_init(machine);
++    ast2700fc_ca35_init(machine, &error_abort);
++    ast2700fc_ssp_init(machine, &error_abort);
++    ast2700fc_tsp_init(machine, &error_abort);
+ }
+ 
+ static void ast2700fc_class_init(ObjectClass *oc, const void *data)
 -- 
 2.43.0
 
