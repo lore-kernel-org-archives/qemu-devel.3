@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF8ACAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2FCCAC5B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1oZl-00061S-49; Thu, 25 Sep 2025 12:12:09 -0400
+	id 1v1oeA-0000nk-Jo; Thu, 25 Sep 2025 12:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oZj-0005wp-73
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:12:07 -0400
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oe8-0000me-36
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:16:40 -0400
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oZa-0000z6-N7
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:12:04 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.179])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cXdwv5p8Kz5yH5;
- Thu, 25 Sep 2025 16:10:39 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1oe0-0002Y4-7Q
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:16:39 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.105])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cXf3S3Pr4z5yHG;
+ Thu, 25 Sep 2025 16:16:20 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Thu, 25 Sep
- 2025 18:10:38 +0200
+ 2025 18:16:19 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-108S002ee3b9c0f-7aba-463d-b711-ea9daab2049b,
+ (GARM-106R006dced479a-670b-4e5c-b0dc-6a4a966de796,
  430B70353558F8354C2EE2D8074F991CFFE72556) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <eae962d6-a7ce-4a8c-a3fb-b3e4df78fa6d@kaod.org>
-Date: Thu, 25 Sep 2025 18:10:37 +0200
+Message-ID: <772876f5-7ba4-49ef-b412-4d892755554f@kaod.org>
+Date: Thu, 25 Sep 2025 18:16:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] hw/arm/aspeed_ast27x0-fc: Drop dead return checks
+Subject: Re: [PATCH v3 7/8] hw/arm/aspeed_ast27x0-fc: Map FMC0 flash contents
+ into CA35 boot ROM
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -41,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20250925050535.2657256-1-jamin_lin@aspeedtech.com>
- <20250925050535.2657256-6-jamin_lin@aspeedtech.com>
+ <20250925050535.2657256-8-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,35 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250925050535.2657256-6-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250925050535.2657256-8-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: f980f828-10df-4ca3-aa9f-fd87b78c07de
-X-Ovh-Tracer-Id: 7601794696159660847
+X-Ovh-Tracer-GUID: d043dc85-0867-4f5c-87da-67c76a65b0f0
+X-Ovh-Tracer-Id: 7697777664966953775
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEvr7eMIKrAE5JvXqeExWppLQvGXISBk0tANnxzr/2D0ZgD5Qzte9WfvtdeaVvfjSXUkCO0SEu4GNWttLSG01vrn6Z/udOxjVuDxN9bKJcab5XvJCxhP+/Kn1cByeeTwVcB6LZiWWrFIuP3ZWtaZ8RU3LuHVYwlPYGhg8OGf+/rt8kT6j4VN8egXkodZueoSNaZ8t9PZkXK3/l83Ep+LA/ZwPclTdWsQ/yGPXzuMgNaMVib5EJX63T5u33ND5F0dfz9ksdNzgJAKVpTdlLKHJ8HB3DyJxzU3J6xoW3zeGz1A6cqRhPxhgpwIny6d5deZVYpb2N9y+rwDKgRbGEDAcOYjiwfOSmFX+jltnucjTeV06ei6RNNp4vxDLG277YcQJjufrkZTBxg/eJnKiU+gXgXHi6KWr85Ao1+u6xwBmu55VTSJOL2sQ+IxnxqS4aTrfjXtNTIZ8ORjAxSld5f3SrOQRCQdCKbXoYwYdeQ2Raqz0j1yuhss596KWGfPpWE3E1H4RS1Y9o8OP/pb9idCHvP2N0Wl1TiuGgJ2AFDl5id5z47nUN3UgJm2LxOC2eDxo3FuaGyaJ4EG6Go+pnSsMTpQB4xlidPAqy+sZ7775LZKhi0QzReoqJ6QEcWHyENndeBDzXCEjlgwVDYuPOT+hzwqzFuQwS8XDksqu47KTGaPw
-DKIM-Signature: a=rsa-sha256; bh=cTVicY/o636vATMUl82X7qHXgQbdIly2coGGu6wdCls=; 
+X-VR-SPAMCAUSE: dmFkZTFjtnS6Iaz6XXEDlRUulXw55x9MHZUTqqnTq+4hmGhU5y6PdGe8YxZaGHCEyMRwA7jtw3JFd5t9CyZHRD0rJD3nuHtfOSCVosgDylm4BTSSdOnVHqEk+RCMIEiFthb7oMJoCj+iaHUYTwtuJb6FKoHG3Y7/rEXlC+r3+CR5tLhe3UgsnkbrqfXpduvrBo0m9es8L+mdWuYctGH+OTPmqNj2XgAeIHbqGhTyIx6+MfR55JQ+tAzko6TU3Ppk2oH3klxRDKdUo7hXW6NVLsi7LVZCsFf6Tft+Ef1Kddk9TP9O0EeQKgUC3d+O27169NxKqVd5FoMrhrPYcr1PPwVarsqmavvonzCGtrBI+PV5bcYiT+5q4CQUA+1oD+gxtOFpqLtMlB4rUsd3GgmaAg8ICagP4L1kX6lU8T5NX9PRpMUcY6GJNmFRw9YeKcdhC+LHadrQalcpZHPTgKzVPVYettGK9sOahkrsitMd18B9z7V2sBXi/ka5Zrg0dvpCm8od2KGl/X5ER2qp/2j+UTFMpPWeToOHQjMmZYED62T6wvgOYd8r4t5L06OY4rHl283fV+9oXdKEFAzEnGJVX26VoPaOaRlRip03T7CP9zwfuHspRvuYwoGSFHRl0AT4gTSg44bwzQc1CGiURhfUZiKsx7wDPRJiWMmxMjaKlDM8M7HZ9Q
+DKIM-Signature: a=rsa-sha256; bh=U0E3UTLofqPcb+34PDMA0FShP6oXZYyQHmxSksCRBGo=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1758816641; v=1;
- b=iImFMmM6ROZd6anp3N5MPMqtYsVJWIwN6LPtMZrojWZnL6nOdc7xk7GV8hNM5dZeprbgSbPJ
- brCFGN2iGaNyaZ3hRg3Lk1APkxtZfwRv7MAbqVJ6oxNlwTEYdat56TXeSmo2s2zURLpzaSjZNFO
- +vt+LLWfGDOehSrFau4cv3bn5gUf9hyuLe84Neum1bSVvqUAEBnKaiLA/cinp5BaDkIr/pwIXtC
- aLn7yMAoMq6yLFoNNAlpJg4cLe92zby8LYZ/1/GAyle0Qf9cLvW+q6Y0JtzICDLpRosXLpdnlUd
- ngd00PALLLcApUfjptzFxuD4H+OQwRXY1v52aI4gTzhyw==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
+ t=1758816980; v=1;
+ b=qrBpkUw3c31NmccXZEUse28d9L4ZnW6yjh9u4WqqF/B/dgo59GJ3tYtifpcrmqrzvzj97yEK
+ BWUlRIwlQPpk+Y+i9ZiewvYCH68x94AY0/ly1iEbpuAnBm7bVG55scRKsWw0hsiWZMVDvuxTrWh
+ +WwZDOs2h+BgqTdkfhGrXL7b4GyzxS5JvddXY23OnX+8IZcHTL022vAmWt817WDrjVp7FTS+a15
+ iyXt+CbhtNOBWvHPkh9QIg1FsKnV4q+nH4kq612Au3LYDWfZSdtGXgRlwpon7Xs4MapnETbINYG
+ BtVVCZhTk3zAOwwZdut0PR80QRmh6BLj9yF2MNemaHfdw==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,18 +131,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Jamin,
+
 On 9/25/25 07:05, Jamin Lin wrote:
-> 1. object_property_set_link() can return false only when it fails, and it
-> sets an error when it fails. Since passing &error_abort causes an abort,
-> the function never returns false, and the return statement is effectively
-> dead code.
-> 2. object_property_set_int() is considered as a routine which shouldn't fail.
-> So the common practice in models is to pass &error_abort and ignore the returned value.
-> https://patchwork.kernel.org/project/qemu-devel/patch/20250717034054.1903991-3-jamin_lin@aspeedtech.com/#26540626
+> This patch introduces a dedicated ca35_boot_rom memory region and
+> copies the FMC0 flash data into it when mmio_exec is disabled.
 > 
-> No functional change.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> The main purpose of this change is to support the upcoming VBOOTROM
+> , which can directly fetch data from FMC0 flash at the SPI boot ROM
+> base address (0x100000000) without requiring any SPI controller
+> drivers.
+
+Could you please rephrase this commit log with the explanations
+provided in :
+
+   https://lore.kernel.org/qemu-devel/SI2PR06MB50417B26704FD2FAD0BB8105FC1FA@SI2PR06MB5041.apcprd06.prod.outlook.com/
+
+(without the vbootrom URLs)
+
+No need to resend. I will update the commit log of this patch.
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -151,84 +159,56 @@ Thanks,
 C.
 
 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 43 +++++++++++++-------------------------
->   1 file changed, 14 insertions(+), 29 deletions(-)
+>   hw/arm/aspeed_ast27x0-fc.c | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 7087be4288..ebf3784df5 100644
+> index 2e16a0340a..57964e336c 100644
 > --- a/hw/arm/aspeed_ast27x0-fc.c
 > +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -74,19 +74,12 @@ static void ast2700fc_ca35_init(MachineState *machine)
->                                   AST2700FC_BMC_RAM_SIZE, &error_abort)) {
->           return;
->       }
-> -    if (!object_property_set_link(OBJECT(&s->ca35), "memory",
-> -                                  OBJECT(&s->ca35_memory),
-> -                                  &error_abort)) {
-> -        return;
-> -    };
-> -    if (!object_property_set_link(OBJECT(&s->ca35), "dram",
-> -                                  OBJECT(&s->ca35_dram), &error_abort)) {
-> -        return;
-> -    }
-> -    if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
-> -                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-> -        return;
-> -    }
-> +    object_property_set_link(OBJECT(&s->ca35), "memory",
-> +                             OBJECT(&s->ca35_memory), &error_abort);
-> +    object_property_set_link(OBJECT(&s->ca35), "dram", OBJECT(&s->ca35_dram),
-> +                             &error_abort);
-> +    object_property_set_int(OBJECT(&s->ca35), "ram-size",
-> +                            AST2700FC_BMC_RAM_SIZE, &error_abort);
+> @@ -35,6 +35,7 @@ struct Ast2700FCState {
 >   
->       for (int i = 0; i < sc->macs_num; i++) {
->           if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
-> @@ -94,14 +87,10 @@ static void ast2700fc_ca35_init(MachineState *machine)
->               break;
->           }
->       }
-> -    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
-> -                                 AST2700FC_HW_STRAP1, &error_abort)) {
-> -        return;
-> -    }
-> -    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
-> -                                 AST2700FC_HW_STRAP2, &error_abort)) {
-> -        return;
-> -    }
-> +    object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
-> +                            AST2700FC_HW_STRAP1, &error_abort);
-> +    object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
-> +                            AST2700FC_HW_STRAP2, &error_abort);
->       aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
->       if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
->           return;
-> @@ -133,10 +122,8 @@ static void ast2700fc_ssp_init(MachineState *machine)
->                          UINT64_MAX);
+>       MemoryRegion ca35_memory;
+>       MemoryRegion ca35_dram;
+> +    MemoryRegion ca35_boot_rom;
+>       MemoryRegion ssp_memory;
+>       MemoryRegion tsp_memory;
 >   
->       qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
-> -    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
-> -                                  OBJECT(&s->ssp_memory), &error_abort)) {
-> -        return;
-> -    }
-> +    object_property_set_link(OBJECT(&s->ssp), "memory",
-> +                             OBJECT(&s->ssp_memory), &error_abort);
+> @@ -44,8 +45,6 @@ struct Ast2700FCState {
+>       Aspeed27x0SoCState ca35;
+>       Aspeed27x0SSPSoCState ssp;
+>       Aspeed27x0TSPSoCState tsp;
+> -
+> -    bool mmio_exec;
+>   };
 >   
->       soc = ASPEED_SOC(&s->ssp);
->       aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
-> @@ -157,10 +144,8 @@ static void ast2700fc_tsp_init(MachineState *machine)
->                          UINT64_MAX);
+>   #define AST2700FC_BMC_RAM_SIZE (1 * GiB)
+> @@ -61,6 +60,9 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>       Ast2700FCState *s = AST2700A1FC(machine);
+>       AspeedSoCState *soc;
+>       AspeedSoCClass *sc;
+> +    BlockBackend *fmc0 = NULL;
+> +    DeviceState *dev = NULL;
+> +    uint64_t rom_size;
 >   
->       qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
-> -    if (!object_property_set_link(OBJECT(&s->tsp), "memory",
-> -                                  OBJECT(&s->tsp_memory), &error_abort)) {
-> -        return;
-> -    }
-> +    object_property_set_link(OBJECT(&s->tsp), "memory",
-> +                             OBJECT(&s->tsp_memory), &error_abort);
+>       object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
+>       soc = ASPEED_SOC(&s->ca35);
+> @@ -107,6 +109,14 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>       ast2700fc_board_info.ram_size = machine->ram_size;
+>       ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
 >   
->       soc = ASPEED_SOC(&s->tsp);
->       aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
+> +    dev = ssi_get_cs(soc->fmc.spi, 0);
+> +    fmc0 = dev ? m25p80_get_blk(dev) : NULL;
+> +
+> +    if (fmc0) {
+> +        rom_size = memory_region_size(&soc->spi_boot);
+> +        aspeed_install_boot_rom(soc, fmc0, &s->ca35_boot_rom, rom_size);
+> +    }
+> +
+>       arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
+>   
+>       return true;
 
 
