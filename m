@@ -4,114 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E78CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECB1CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1pAi-0003vI-0Y; Thu, 25 Sep 2025 12:50:20 -0400
+	id 1v1pHA-0006X8-67; Thu, 25 Sep 2025 12:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1v1pAX-0003rv-EM; Thu, 25 Sep 2025 12:50:09 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v1pH8-0006Wi-NB
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:56:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1v1pAK-0007mD-Ln; Thu, 25 Sep 2025 12:50:09 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PAiN0n016511;
- Thu, 25 Sep 2025 16:49:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vQyYmZ
- zT6vc365PAONBhYsu0j5EVZvanu7PHxkzOcjs=; b=UFLHUVtB0hu7V4odDOQjRq
- NGxv+VBhfAY2MvbQ6hSW/r/moZdRt8O3WLoEr+4+SkJB357r8dJYzqjQ+aQLK0IT
- mXl2dVDDQ+nK155gmohWfmcSmCNPW6kwQ7L7/6LRpt3eySLmecKqPJDmvwRgfL+/
- MaPmBnfz7W12M1xTnuEtUT+NfSFs6GT0GOC8Nio7SYrdwVr6NfvSaTjkdYtVwyRS
- +o8QtH5fio8FLz6ZwdNLbmgV2TzPKzNAWL0ghj7dfINItKk4PdduKeIv2UriNoZW
- caxbyGDYKpsr1QPMFB2dWDCFH+htb1xZ7I0chd0lfKAqKqzOjRILO2yb2ighDiSg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499hpqph4w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 16:49:49 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PGnmnH032110;
- Thu, 25 Sep 2025 16:49:48 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499hpqph4v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 16:49:48 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PFsQDq008331;
- Thu, 25 Sep 2025 16:49:48 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49a6yy74ht-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 16:49:48 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58PGnkDr33030666
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Sep 2025 16:49:46 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8BA035805A;
- Thu, 25 Sep 2025 16:49:46 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 608AE58054;
- Thu, 25 Sep 2025 16:49:43 +0000 (GMT)
-Received: from [9.124.219.9] (unknown [9.124.219.9])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 25 Sep 2025 16:49:43 +0000 (GMT)
-Message-ID: <18f62b28-d4ea-4b7c-8e61-375520b6ecb9@linux.ibm.com>
-Date: Thu, 25 Sep 2025 22:19:40 +0530
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v1pGx-0000PE-GE
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:56:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758819401;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=l9xOjTUmjL6f40nOvXHEu6IEzN2COneWIC+IgsaSJvs=;
+ b=gaMYM/427OvnipkeVMzWCcIh/2EBC/5i23wbF4BzJHgvXaBgw0F1Y6U+jTYE29/QL45dq5
+ O/+QauY2cKrhx1nrk/TGG7xSSZR3vsyswh8tCKmnFC4XkVDN3nWVYj59CEARvdDAejA3Ag
+ HJ9xx96zKSXZqIj9ouMYk0CDAZ9cF5U=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-Rb8HM88cMsCPUC2VTDX3ew-1; Thu, 25 Sep 2025 12:56:39 -0400
+X-MC-Unique: Rb8HM88cMsCPUC2VTDX3ew-1
+X-Mimecast-MFC-AGG-ID: Rb8HM88cMsCPUC2VTDX3ew_1758819398
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-62fce1f3fa8so1020085a12.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 09:56:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758819398; x=1759424198;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=l9xOjTUmjL6f40nOvXHEu6IEzN2COneWIC+IgsaSJvs=;
+ b=H0ADXIZWZ9VBgpHySY9cY4oa3EkH+/ckdEApDdhK+/m8yknDwZ+0ylHNeD7YEdilPL
+ xLU3E4MqStBAaJhpVT4k6CJgnuqBewfiFs8o8/6FbtGKP3BRHew0bn6AkBzaVw7jZNiA
+ JJmajDF/0P0pGkzAyY3dY1TecNebS4hT1v+UKKZwFwcevO33krqFL3yDmdJ/jmN3DaOF
+ D0hoop9utcM42Okf35pL/JjPhrPXH+9kv01qEsZAPWphI6F/4dVpZFChMxBcGx6yT8LS
+ SREyYangp61KLowm9jYfoUlGxMaejiJ2dkiQJCI0Y8MBNLTRbvvkEeu4rC/DMkGdsgIU
+ a6EQ==
+X-Gm-Message-State: AOJu0YyCCbhY7yOih/eCzfAsCn7iwJfIgBXdVTrVfT4H4N+zCNhM5Stc
+ nszP32jQAyTPVXKwrXiICS91ULA8WZDLZC3si6zSnTXyzEG07BtcCakjj6/A9Du60icFTWYHula
+ qRRc0+HmpCY2nUvb4s7kETFYICJw7r1rKq+korXUpIUOs+UIiWOekL2Ss
+X-Gm-Gg: ASbGnct1df9hxonuC42H3YpujrJHJ+jMgABsv1L6ScqPWHZMmJUFy+ib+vnA1p+FIUY
+ zLfs5pND5UWSpvtbx1DTGjDqXK2Yvd6TXvDk9BoaIRblv8fTwP9YVxAyiELwCaOrTqqBJKs1Yi+
+ 3Zkubr+M4dMxhmjZpy1MZW5ckrAkgaOwEkW7emJdNqvPTcV7oo+nz9O223bS9yvBlI1ogDp40qu
+ JheIJhrvzgRXBcVwcPJ4nyCiloRUqaohrhLwx7BJiSezCjTxWgB7YQFa6pRDLwJJsiPTvx4axZ0
+ gRRI6f5QeTBOITGtWD+sasrS/CzgzG5ikkNyDejnqDxfL2V2MZMurdicAmTCNKloJ/KHxgs+Vvt
+ Qy6HdSKXR7ardQ/EPcSjF5cU0WV0/OE+PX2GX5msmIA==
+X-Received: by 2002:a05:6402:42ca:b0:634:b3d1:8f92 with SMTP id
+ 4fb4d7f45d1cf-634b3d19125mr763184a12.0.1758819398060; 
+ Thu, 25 Sep 2025 09:56:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG05CN6qEaAjff9j+oDZxPJVNbtbBsmQrOMPdzbFMLFJBhAal3q4w4i/Vmu9C7HeEPCBeWLQg==
+X-Received: by 2002:a05:6402:42ca:b0:634:b3d1:8f92 with SMTP id
+ 4fb4d7f45d1cf-634b3d19125mr763146a12.0.1758819397504; 
+ Thu, 25 Sep 2025 09:56:37 -0700 (PDT)
+Received: from [192.168.1.84] ([93.56.170.206])
+ by smtp.googlemail.com with ESMTPSA id
+ 4fb4d7f45d1cf-634a364fd05sm1469811a12.13.2025.09.25.09.56.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Sep 2025 09:56:36 -0700 (PDT)
+Message-ID: <272e5d71-0671-4ebb-9ce0-7abde2720a44@redhat.com>
+Date: Thu, 25 Sep 2025 18:56:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/9] target/ppc: Add IBM PPE42 exception model
-To: Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com,
- harshpb@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org
-References: <20250918182731.528944-1-milesg@linux.ibm.com>
- <20250918182731.528944-5-milesg@linux.ibm.com>
+Subject: Re: [PATCH 5/7] rust: qemu-macros: add ToMigrationState derive macro
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, manos.pitsidianakis@linaro.org
+References: <20250920142958.181910-1-pbonzini@redhat.com>
+ <20250920142958.181910-6-pbonzini@redhat.com> <aNU3Cgll0vETC2Az@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20250918182731.528944-5-milesg@linux.ibm.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <aNU3Cgll0vETC2Az@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FrEF/3rq c=1 sm=1 tr=0 ts=68d572ad cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=d5ZefqyIOgouv2tcOSQA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: rhzJUZKCD1qNTZEDuj2ylVGQiRbhpim-
-X-Proofpoint-GUID: SbXAzKW_uEoABOMk_dshjtHqcMOHxHAO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE5MDIyNCBTYWx0ZWRfX8gMFKXwlIUIV
- kwPDJhH8zVvbIcZk5tBkzhfipm0K0olrgbYdbOXtPioHsjOCnegrtapXQpa/w5FM3xkUbMwxr/X
- FDnK1evPsQRjCFGOtnvpO01/QO56miQVMkWz+UbKvB/wIyT7nQq2bpq0kjdCtjgJKh6CTL7uYIA
- xfSRLMpbQRROe+0rodc7ss5hnMVzXbf5Uo1yorceUbYMl1CJIbJlIPlJ87HMX8rFvRar0SyLvRw
- GDggGebDIhsXx1UnvfOYU8RXrN0esWWG2TYYzJdSxPPKQGRbr2pVPo6yquIDrrCVJnarzhT24lB
- gqIf8neD+fdwQ8LKOQ3PI7KH+dL7CAQ5bJVYyS8hL6urZPsv5ziAM+HNG21vD11svboWxOI4tUx
- oGfL/u5k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 impostorscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509190224
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,307 +148,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/25/25 14:35, Zhao Liu wrote:
+>> +/// #[derive(ToMigrationState)]
+>>   /// pub struct DeviceRegs {
+>>   ///     status: u32,
+>>   /// }
+>> +/// # unsafe impl VMState for DeviceRegsMigration {
+>> +/// #     const BASE: VMStateField = ::common::Zeroable::ZERO;
+>> +/// # }
+> 
+> Outdated comment? Looks like the DeviceRegsMigration definition is
+> missing.
 
-On 9/18/25 23:57, Glenn Miles wrote:
-> Add support for the IBM PPE42 exception model including
-> new exception vectors, exception priorities and setting
-> of PPE42 SPRs for determining the cause of an exception.
->
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   target/ppc/cpu_init.c        |  39 ++++++++-
->   target/ppc/excp_helper.c     | 163 +++++++++++++++++++++++++++++++++++
->   target/ppc/tcg-excp_helper.c |  12 +++
->   3 files changed, 213 insertions(+), 1 deletion(-)
->
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index b42673c6b5..097e3b3818 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -1720,6 +1720,30 @@ static void init_excp_4xx(CPUPPCState *env)
->   #endif
->   }
->   
-> +static void init_excp_ppe42(CPUPPCState *env)
-> +{
-> +#if !defined(CONFIG_USER_ONLY)
-> +    /* Machine Check vector changed after version 0 */
-> +    if (((env->spr[SPR_PVR] & 0xf00000ul) >> 20) == 0) {
-> +        env->excp_vectors[POWERPC_EXCP_MCHECK]   = 0x00000000;
-> +    } else {
-> +        env->excp_vectors[POWERPC_EXCP_MCHECK]   = 0x00000020;
-> +    }
-> +    env->excp_vectors[POWERPC_EXCP_RESET]    = 0x00000040;
-> +    env->excp_vectors[POWERPC_EXCP_DSI]      = 0x00000060;
-> +    env->excp_vectors[POWERPC_EXCP_ISI]      = 0x00000080;
-> +    env->excp_vectors[POWERPC_EXCP_EXTERNAL] = 0x000000A0;
-> +    env->excp_vectors[POWERPC_EXCP_ALIGN]    = 0x000000C0;
-> +    env->excp_vectors[POWERPC_EXCP_PROGRAM]  = 0x000000E0;
-> +    env->excp_vectors[POWERPC_EXCP_DECR]     = 0x00000100;
-> +    env->excp_vectors[POWERPC_EXCP_FIT]      = 0x00000120;
-> +    env->excp_vectors[POWERPC_EXCP_WDT]      = 0x00000140;
-> +    env->ivpr_mask = 0xFFFFFE00UL;
-> +    /* Hardware reset vector */
-> +    env->hreset_vector = 0x00000040UL;
-> +#endif
-> +}
-> +
->   static void init_excp_MPC5xx(CPUPPCState *env)
->   {
->   #if !defined(CONFIG_USER_ONLY)
-> @@ -2245,6 +2269,7 @@ static void init_proc_ppe42(CPUPPCState *env)
->   {
->       register_ppe42_sprs(env);
->   
-> +    init_excp_ppe42(env);
->       env->dcache_line_size = 32;
->       env->icache_line_size = 32;
->       /* Allocate hardware IRQ controller */
-> @@ -2278,7 +2303,7 @@ static void ppe42_class_common_init(PowerPCCPUClass *pcc)
->                       (1ull << MSR_IPE) |
->                       R_MSR_SIBRCA_MASK;
->       pcc->mmu_model = POWERPC_MMU_REAL;
-> -    pcc->excp_model = POWERPC_EXCP_40x;
-> +    pcc->excp_model = POWERPC_EXCP_PPE42;
->       pcc->bus_model = PPC_FLAGS_INPUT_PPE42;
->       pcc->bfd_mach = bfd_mach_ppc_403;
->       pcc->flags = POWERPC_FLAG_PPE42 | POWERPC_FLAG_BUS_CLK;
-> @@ -7855,6 +7880,18 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->            * they can be read with "p $ivor0", "p $ivor1", etc.
->            */
->           break;
-> +    case POWERPC_EXCP_PPE42:
-> +        qemu_fprintf(f, "SRR0 " TARGET_FMT_lx " SRR1 " TARGET_FMT_lx "\n",
-> +                     env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
-> +
-> +        qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
-> +                     "    ISR " TARGET_FMT_lx "   EDR " TARGET_FMT_lx "\n",
-> +                     env->spr[SPR_PPE42_TCR], env->spr[SPR_PPE42_TSR],
-> +                     env->spr[SPR_PPE42_ISR], env->spr[SPR_PPE42_EDR]);
-> +
-> +        qemu_fprintf(f, "  PIR " TARGET_FMT_lx "   IVPR " TARGET_FMT_lx "\n",
-> +                     env->spr[SPR_PPE42_PIR], env->spr[SPR_PPE42_IVPR]);
-> +        break;
->       case POWERPC_EXCP_40x:
->           qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
->                        "    ESR " TARGET_FMT_lx "   DEAR " TARGET_FMT_lx "\n",
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 1efdc4066e..d8bca19fff 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -949,6 +949,125 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
->       powerpc_set_excp_state(cpu, vector, new_msr);
->   }
->   
-> +static void powerpc_excp_ppe42(PowerPCCPU *cpu, int excp)
-> +{
-> +    CPUPPCState *env = &cpu->env;
-> +    target_ulong msr, new_msr, vector;
-> +    target_ulong mcs = PPE42_ISR_MCS_INSTRUCTION;
-> +    bool promote_unmaskable;
-> +
-> +    msr = env->msr;
-> +
-> +    /*
-> +     * New interrupt handler msr preserves SIBRC and ME unless explicitly
-> +     * overridden by the exception.  All other MSR bits are zeroed out.
-> +     */
-> +    new_msr = env->msr & (((target_ulong)1 << MSR_ME) | R_MSR_SIBRC_MASK);
-> +
-> +    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-> +    if (excp == POWERPC_EXCP_HV_EMU) {
-> +        excp = POWERPC_EXCP_PROGRAM;
-> +    }
-> +
-> +    /*
-> +     * Unmaskable interrupts (Program, ISI, Alignment and DSI) are promoted to
-> +     * machine check if MSR_UIE is 0.
-> +     */
-> +    promote_unmaskable = !(msr & ((target_ulong)1 << MSR_UIE));
-> +
-> +
-> +    switch (excp) {
-> +    case POWERPC_EXCP_MCHECK:    /* Machine check exception                  */
-> +        break;
-> +    case POWERPC_EXCP_DSI:       /* Data storage exception                   */
-> +        trace_ppc_excp_dsi(env->spr[SPR_PPE42_ISR], env->spr[SPR_PPE42_EDR]);
-> +        if (promote_unmaskable) {
-> +            excp = POWERPC_EXCP_MCHECK;
-> +            mcs = PPE42_ISR_MCS_DSI;
-> +        }
-> +        break;
-> +    case POWERPC_EXCP_ISI:       /* Instruction storage exception            */
-> +        trace_ppc_excp_isi(msr, env->nip);
-> +        if (promote_unmaskable) {
-> +            excp = POWERPC_EXCP_MCHECK;
-> +            mcs = PPE42_ISR_MCS_ISI;
-> +        }
-> +        break;
-> +    case POWERPC_EXCP_EXTERNAL:  /* External input                           */
-> +        break;
-> +    case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
-> +        if (promote_unmaskable) {
-> +            excp = POWERPC_EXCP_MCHECK;
-> +            mcs = PPE42_ISR_MCS_ALIGNMENT;
-> +        }
-> +        break;
-> +    case POWERPC_EXCP_PROGRAM:   /* Program exception                        */
-> +        if (promote_unmaskable) {
-> +            excp = POWERPC_EXCP_MCHECK;
-> +            mcs = PPE42_ISR_MCS_PROGRAM;
-> +        }
-> +        switch (env->error_code & ~0xF) {
-> +        case POWERPC_EXCP_INVAL:
-> +            trace_ppc_excp_inval(env->nip);
-> +            env->spr[SPR_PPE42_ISR] &= ~((target_ulong)1 << PPE42_ISR_PTR);
-> +            break;
-> +        case POWERPC_EXCP_TRAP:
-> +            env->spr[SPR_PPE42_ISR] |= ((target_ulong)1 << PPE42_ISR_PTR);
-> +            break;
-> +        default:
-> +            /* Should never occur */
-> +            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-> +                      env->error_code);
-> +            break;
-> +        }
-> +#ifdef CONFIG_TCG
-> +        env->spr[SPR_PPE42_EDR] = ppc_ldl_code(env, env->nip);
-> +#endif
-> +        break;
-> +    case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
-> +        break;
-> +    case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
-> +        trace_ppc_excp_print("FIT");
-> +        break;
-> +    case POWERPC_EXCP_WDT:       /* Watchdog timer interrupt                 */
-> +        trace_ppc_excp_print("WDT");
-> +        break;
-> +    case POWERPC_EXCP_RESET:     /* System reset exception                   */
-> +        /* reset exceptions don't have ME set */
-> +        new_msr &= ~((target_ulong)1 << MSR_ME);
-> +        break;
-> +    default:
-> +        cpu_abort(env_cpu(env), "Invalid PPE42 exception %d. Aborting\n",
-> +                  excp);
-> +        break;
-> +    }
-> +
-> +    env->spr[SPR_SRR0] = env->nip;
-> +    env->spr[SPR_SRR1] = msr;
-> +
-> +    vector = env->excp_vectors[excp];
-> +    if (vector == (target_ulong)-1ULL) {
-> +        cpu_abort(env_cpu(env),
-> +                  "Raised an exception without defined vector %d\n", excp);
-> +    }
-> +    vector |= env->spr[SPR_PPE42_IVPR];
-> +
-> +    if (excp == POWERPC_EXCP_MCHECK) {
-> +        /* Also set the Machine Check Status (MCS) */
-> +        env->spr[SPR_PPE42_ISR] &= ~R_PPE42_ISR_MCS_MASK;
-> +        env->spr[SPR_PPE42_ISR] |= (mcs & R_PPE42_ISR_MCS_MASK);
-> +        env->spr[SPR_PPE42_ISR] &= ~((target_ulong)1 << PPE42_ISR_MFE);
-> +
-> +        /* Machine checks halt execution if MSR_ME is 0 */
-> +        powerpc_mcheck_checkstop(env);
-> +
-> +        /* machine check exceptions don't have ME set */
-> +        new_msr &= ~((target_ulong)1 << MSR_ME);
-> +    }
-> +
-> +    powerpc_set_excp_state(cpu, vector, new_msr);
-> +}
-> +
->   static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
->   {
->       CPUPPCState *env = &cpu->env;
-> @@ -1589,6 +1708,9 @@ void powerpc_excp(PowerPCCPU *cpu, int excp)
->       case POWERPC_EXCP_POWER11:
->           powerpc_excp_books(cpu, excp);
->           break;
-> +    case POWERPC_EXCP_PPE42:
-> +        powerpc_excp_ppe42(cpu, excp);
-> +        break;
->       default:
->           g_assert_not_reached();
->       }
-> @@ -1945,6 +2067,43 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
->   }
->   #endif /* TARGET_PPC64 */
->   
-> +static int ppe42_next_unmasked_interrupt(CPUPPCState *env)
-> +{
-> +    bool async_deliver;
-> +
-> +    /* External reset */
-> +    if (env->pending_interrupts & PPC_INTERRUPT_RESET) {
-> +        return PPC_INTERRUPT_RESET;
-> +    }
-> +    /* Machine check exception */
-> +    if (env->pending_interrupts & PPC_INTERRUPT_MCK) {
-> +        return PPC_INTERRUPT_MCK;
-> +    }
-> +
-> +    async_deliver = FIELD_EX64(env->msr, MSR, EE);
-> +
-> +    if (async_deliver != 0) {
-> +        /* Watchdog timer */
-> +        if (env->pending_interrupts & PPC_INTERRUPT_WDT) {
-> +            return PPC_INTERRUPT_WDT;
-> +        }
-> +        /* External Interrupt */
-> +        if (env->pending_interrupts & PPC_INTERRUPT_EXT) {
-> +            return PPC_INTERRUPT_EXT;
-> +        }
-> +        /* Fixed interval timer */
-> +        if (env->pending_interrupts & PPC_INTERRUPT_FIT) {
-> +            return PPC_INTERRUPT_FIT;
-> +        }
-> +        /* Decrementer exception */
-> +        if (env->pending_interrupts & PPC_INTERRUPT_DECR) {
-> +            return PPC_INTERRUPT_DECR;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->   static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->   {
->       uint32_t pending_interrupts = env->pending_interrupts;
-> @@ -1970,6 +2129,10 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->       }
->   #endif
->   
-> +    if (env->excp_model == POWERPC_EXCP_PPE42) {
-> +        return ppe42_next_unmasked_interrupt(env);
-> +    }
-> +
->       /* External reset */
->       if (pending_interrupts & PPC_INTERRUPT_RESET) {
->           return PPC_INTERRUPT_RESET;
-> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> index f835be5156..edecfb8572 100644
-> --- a/target/ppc/tcg-excp_helper.c
-> +++ b/target/ppc/tcg-excp_helper.c
-> @@ -229,6 +229,18 @@ void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
->       case POWERPC_MMU_BOOKE206:
->           env->spr[SPR_BOOKE_DEAR] = vaddr;
->           break;
-> +    case POWERPC_MMU_REAL:
-> +        if (env->flags & POWERPC_FLAG_PPE42) {
-> +            env->spr[SPR_PPE42_EDR] = vaddr;
-> +            if (access_type == MMU_DATA_STORE) {
-> +                env->spr[SPR_PPE42_ISR] |= PPE42_ISR_ST;
-> +            } else {
-> +                env->spr[SPR_PPE42_ISR] &= ~PPE42_ISR_ST;
-> +            }
-> +        } else {
-> +            env->spr[SPR_DAR] = vaddr;
-> +        }
-> +        break;
->       default:
->           env->spr[SPR_DAR] = vaddr;
->           break;
+It's defined by the #[derive(ToMigrationState)].
+
+> the below conversion is ugly:>
+> #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT as u8, default = false)]
+> 
+> conversion should happen within the macro parsing process. But unfortunately,
+> try_into() is not const, maybe I could do this for bit property:
+> 
+> diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+> index c459f9bcb42f..e67df57c3712 100644
+> --- a/rust/qemu-macros/src/lib.rs
+> +++ b/rust/qemu-macros/src/lib.rs
+> @@ -275,7 +275,10 @@ macro_rules! str_to_c_str {
+>                   name: ::std::ffi::CStr::as_ptr(#prop_name),
+>                   info: #qdev_prop,
+>                   offset: ::core::mem::offset_of!(#name, #field_name) as isize,
+> -                bitnr: #bitnr,
+> +                bitnr: {
+> +                    const _: () = assert!(#bitnr <= u8::MAX as _, "bit exceeds u8 range");
+> +                    #bitnr as u8
+> +                },
+>                   set_default: #set_default,
+>                   defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
+>                   ..::common::Zeroable::ZERO
+
+Good idea (also testing >= 0 is needed).  "const { assert!(...); }" is 
+even simpler.
+
+>> +/// - `#[migration_state(clone)]` - Clones the field value.
+> 
+> How about emphasizing the use case?
+> 
+> "Clones the field value, especially for the types don't implement `Copy`."
+
+I don't have a use case yet to be honest, but at the same time I want to 
+help potential device authors and remove the need to muck with the macro.
+
+>> +/// Fields without any attributes use `ToMigrationState` recursively; note that
+>> +/// this is a simple copy for types that implement `Copy`.
+>> +///
+>> +/// # Attribute compatibility
+>> +///
+>> +/// - `omit` cannot be used with any other attributes
+>> +/// - only one of `into(Type)`, `try_into(Type)` can be used, but they can be
+>> +///   coupled with `clone`.
+>> +///
+> 
+> ...
+> 
+> The implementation of the entire macro is great.
+
+Thanks. :)  It's indeed pretty easy to follow, and I like procedural 
+macro code that is simple but powerful.
+
+The attrs crate also helps a lot!
+
+>> +#[test]
+>> +fn test_derive_to_migration_state() {
+> 
+> ...
+> 
+>> +        quote! {
+>> +            #[derive(Default)]
+>> +            pub struct CustomMigration {
+>> +                pub shared_data: String,
+>> +                pub converted_field: Cow<'static, str>,
+>> +                pub fallible_field: i8,
+>> +                pub nested_field: <NestedStruct as ToMigrationState>::Migrated,
+>> +                pub simple_field: <u32 as ToMigrationState>::Migrated,
+>> +            }
+> 
+> In the production code, CustomMigration still needs to implement VMState
+> trait, so that String & Cow<'static, str> also need to implement VMState
+> trait. This seems like the thing that we are currently missing.
+
+Or more simply they're not chosen well. :)  For the documentation I will 
+think of better types.
+
+> For test, it's enough to show how the macro works.
+
+Yes, for testing it's a lesser deal.
+
+Paolo
+
 
