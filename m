@@ -4,111 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BC1CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 20:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46944CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 21:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1swD-0003Fo-5U; Thu, 25 Sep 2025 16:51:37 -0400
+	id 1v1t6j-0007Ev-68; Thu, 25 Sep 2025 17:02:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v1sw7-0003ED-22; Thu, 25 Sep 2025 16:51:31 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1t6h-0007EJ-3g
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 17:02:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v1svm-0002jR-Nr; Thu, 25 Sep 2025 16:51:28 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PImmZF018714;
- Thu, 25 Sep 2025 20:50:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=riWYNk
- VHRtCKMwdLhm26Ap0Qpx1VycH+VAO7NqptFfE=; b=Ca2AogiWMtoxzmyIxGNGy4
- CatnjeYM38O7Wl4DkiHZVRdlbUTezlnGhOB5czWPlM9lqNgp/JH4iEv4U4sarmoO
- RHuolN2BdSvM9XR3SBsR90HAMogG62gkPIunOdn3q9jj9YZxz/kNKGMvPWbgzigH
- cei6tF2hz1LDgLX97gbQYoU0ClzF0zK3JVoFrNqqrj694gzliTRuXvQnphYuKtYh
- eIW8cw2084hZQeRM1XuWxvWekLBMBW4YlBZ+fHJ7miimH4jWXL7/4YWcndqgh++H
- fSSOOOCIB91qAVBMwokyNSAp1C2RbXPa2Z4R7Jc0bA2F6JUbCgjo13l/y1DGi5BA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbbd8kdp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:50:57 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIJA2h025794;
- Thu, 25 Sep 2025 20:50:56 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49dawprng6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 20:50:56 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58PKosjl31523578
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Sep 2025 20:50:55 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A375558050;
- Thu, 25 Sep 2025 20:50:54 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F06B258045;
- Thu, 25 Sep 2025 20:50:52 +0000 (GMT)
-Received: from [9.61.254.10] (unknown [9.61.254.10])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Sep 2025 20:50:52 +0000 (GMT)
-Message-ID: <78785962-2f38-47f6-81e3-5f9aa8aaec9c@linux.ibm.com>
-Date: Thu, 25 Sep 2025 13:50:42 -0700
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1t6X-0003nV-56
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 17:02:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758834129;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=dAKBKg/5QHsUvtQ86t/zeFsv1YpgjfsRLA16ekZkz4Q=;
+ b=D0F3vOxCWHrh3PPEP00pvRE7cXW3UVfoaB5UeqX2m8O8cueJ94vST+qCnNcEXUz94Efquv
+ RuYAn+MqGkf7uGRdAwBF6dWoThyIK6nz+StFz6BFmV6qBDJV5a88w1NC7CtjvAHOmUwubT
+ BPXCdcXzojokS9qqaB+t8ScxEQVkmeY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-112-vC2vzdLyO-y6gcpO_1imZw-1; Thu, 25 Sep 2025 17:02:07 -0400
+X-MC-Unique: vC2vzdLyO-y6gcpO_1imZw-1
+X-Mimecast-MFC-AGG-ID: vC2vzdLyO-y6gcpO_1imZw_1758834126
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e2c11b94cso8033315e9.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 14:02:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758834126; x=1759438926;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dAKBKg/5QHsUvtQ86t/zeFsv1YpgjfsRLA16ekZkz4Q=;
+ b=DaFf3Io0ibR0EhKo39v/fLQkfCi2xZhUHuHtKp7ORF+1IFHO7FE3tF3y5Rzz5maq/G
+ XbbbHMA+qXFGIB1SsME2qAphicqs5xEhwagMvPYy1xbn0ZHkstp4UTWo3PTauPEeqbfz
+ yNsIY97SerkxjaHBtvNaTdBVUrIJ/de1gqK981RB6ItdC3rXCP5LBGxa8Vl4S4bxpvIp
+ MNcgNNqhei1tPOFiIJim/N3vACFjg4800tQLKB5PKBM/kjKYUTtrQmzHooCMnUsRAG8Z
+ 0gGZuvldfRb9dDVS4VSUK5NgA6+OcjPlH2le/ORhBEtPBId1MAUGY2zcTpYhdnnkUq8G
+ MKtg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFE/EQTkalmMwFydhhJ8gAJemVWm3Lnc9yAEdb2e/CnD2LzoeNZmQ2jZBVMcPn6PmiRjHwgEgOXVPS@nongnu.org
+X-Gm-Message-State: AOJu0YxwL9iE+NOaOzfoG7s2fLya7BD/j8JFXH0adFs7P7Vlf5g/RC/H
+ S1/1xsfWmDG3caRlErt6NqbB9fC+dqeq2Qa+nmUDGgxha9Bcj68AgnzUydqAZfkCDkV/KN5gzMl
+ t6AVtz69Z6a+q6pePbEsmy3GwhDxhN5KTIklV8Eh5LAgDlxCvLJ2Za49f
+X-Gm-Gg: ASbGnctxkMnpaeCEh6HjAeR9wHLcA+e9jbdsDdxcypTB8lbrkUZ7J2gM2EsdEzRbGnU
+ aXmStpO6Wii4dgkRCUFfjYcUEP2z8KyLjKqIEY2i6IUacxTigTkLYS+mPdmIdcR8CRnu3LB2RQr
+ iuJrDXLeNHb4VrlxSSGeCf12O5gNAZVo3COx9Y1LiM0pVRg/v9dprzRULMC0UFgk0lk9d0ScUUK
+ I4qDIDZkzLJXjT9lHj4eW+ADHCJlQEOWAtlBSDlWXCeY5FRkMiH0qRifpZCSIDXz88bVsYJJR4/
+ j3aA5bKc9iHDTUVbgubVFKUqavXXjrlIslZjJf6yrRsEEYV8vkOIpbPg0xqsXlSSVt/GNshC7pC
+ xOHo=
+X-Received: by 2002:a05:600c:154c:b0:45d:f88f:9304 with SMTP id
+ 5b1f17b1804b1-46e32aee352mr56424785e9.30.1758834126122; 
+ Thu, 25 Sep 2025 14:02:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFB00wpyz4NL3PPOpD6ueb1uxnEmQZg5cYl+WmLqRUGowDQ/30GoZ8/oRYXSmvMAqJrVC2I3Q==
+X-Received: by 2002:a05:600c:154c:b0:45d:f88f:9304 with SMTP id
+ 5b1f17b1804b1-46e32aee352mr56424485e9.30.1758834125688; 
+ Thu, 25 Sep 2025 14:02:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e32b4d71csm26105415e9.0.2025.09.25.14.02.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Sep 2025 14:02:05 -0700 (PDT)
+Message-ID: <9bfc50c6-1bb2-4e94-bf8b-98ae2a33540f@redhat.com>
+Date: Thu, 25 Sep 2025 23:02:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/28] s390x/diag: Introduce DIAG 508 for secure IPL
- operations
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-11-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250917232131.495848-11-zycai@linux.ibm.com>
+Subject: Re: [PATCH v10 3/8] ppc/pnv: Add PnvChipClass handler to get
+ reference to interrupt controller
+To: Aditya Gupta <adityag@linux.ibm.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Mike Kowal <kowal@linux.ibm.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Ganesh Goudar <ganeshgr@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250925173049.891406-1-adityag@linux.ibm.com>
+ <20250925173049.891406-4-adityag@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250925173049.891406-4-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=F/Jat6hN c=1 sm=1 tr=0 ts=68d5ab31 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=c14hHzUaRZDl8Y9BHVwA:9
- a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX3jCb1vTHMsyV
- rWdVZsu5OpUBMluaHVp/CSp6CbY1iJEuZX2dG6Xxxw05qM/lEtBU4/6f+cmSJEWw3RxYuAtdTgW
- /OCAZJByraa35YsMm2Q5DJkGzXmm2gqiCGoT6Fqim0ubODFH6meBS01aJZCwjKKlWr1zPWM9L71
- e4yWWNubav1EtU1RWrFlhv8f42YfgnsI2E3VqKYtIVFTvT5MWNeVk3cDp2qDtHVkhh33kVelLwy
- /uJ32ABEPJqypkDFeZrhj7oBECekqBbfwIRx+EaeVsvOOy9nQv15DGvBzxIhyDuZQ7lSqFAt6X2
- xVzHrVduiL2LocdIdduKqIKsOrDxPoknLulp6elz3dur1nBcjTihLHMieTFhcOSZOQtXu3q2ATu
- 6xqfmFecJgsrVRvYiukNra3BL1BN0w==
-X-Proofpoint-GUID: Kfkc7hMnlQ113h2E5_Vmc5YaPdKlWkkr
-X-Proofpoint-ORIG-GUID: Kfkc7hMnlQ113h2E5_Vmc5YaPdKlWkkr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,187 +162,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+On 9/25/25 19:30, Aditya Gupta wrote:
+> Existing code in XIVE2 assumes the chip to be a Power10 Chip.
+> Instead add a handler to get reference to the interrupt controller (XIVE)
+> for a given Power Chip.
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 
-On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
-> From: Collin Walling <walling@linux.ibm.com>
->
-> In order to support secure IPL (aka secure boot) for the s390-ccw BIOS,
-> a new s390 DIAGNOSE instruction is introduced to leverage QEMU for
-> handling operations such as signature verification and certificate
-> retrieval.
->
-> Currently, only subcode 0 is supported with this patch, which is used to
-> query a bitmap of which subcodes are supported.
->
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->   docs/specs/s390x-secure-ipl.rst | 18 ++++++++++++++++++
->   include/hw/s390x/ipl/diag508.h  | 15 +++++++++++++++
->   target/s390x/diag.c             | 27 +++++++++++++++++++++++++++
->   target/s390x/kvm/kvm.c          | 14 ++++++++++++++
->   target/s390x/s390x-internal.h   |  2 ++
->   target/s390x/tcg/misc_helper.c  |  7 +++++++
->   6 files changed, 83 insertions(+)
->   create mode 100644 include/hw/s390x/ipl/diag508.h
->
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index e28f0b40d7..0919425e9a 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -48,3 +48,21 @@ Subcode 2 - store verification certificates
->       storage specified in the VCB input length field.
+>   hw/intc/pnv_xive2.c       |  4 ++--
+>   hw/ppc/pnv.c              | 12 ++++++++++++
+>   include/hw/ppc/pnv_chip.h |  1 +
+>   3 files changed, 15 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index e019cad5c14c..0663baab544c 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+>       int i;
 >   
->       VCE contains various information of a VC from the CS.
-> +
-> +
-> +Secure IPL Data Structures, Facilities, and Functions
-> +=====================================================
-> +
-> +DIAGNOSE function code 'X'508' - KVM IPL extensions
-> +---------------------------------------------------
-> +
-> +DIAGNOSE 'X'508' is reserved for KVM guest use in order to facilitate
-> +communication of additional IPL operations that cannot be handled by userspace,
-> +such as signature verification for secure IPL.
-> +
-> +If the function code specifies 0x508, KVM IPL extension functions are performed.
-> +These functions are meant to provide extended functionality for s390 guest boot
-> +that requires assistance from QEMU.
-> +
-> +Subcode 0 - query installed subcodes
-> +    Returns a 64-bit mask indicating which subcodes are supported.
-> diff --git a/include/hw/s390x/ipl/diag508.h b/include/hw/s390x/ipl/diag508.h
-> new file mode 100644
-> index 0000000000..6281ad8299
-> --- /dev/null
-> +++ b/include/hw/s390x/ipl/diag508.h
-> @@ -0,0 +1,15 @@
-> +/*
-> + * S/390 DIAGNOSE 508 definitions and structures
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Collin Walling <walling@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef S390X_DIAG508_H
-> +#define S390X_DIAG508_H
-> +
-> +#define DIAG_508_SUBC_QUERY_SUBC    0x0000
-> +
-> +#endif
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index d5f6c54df3..ee64257dbc 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -20,6 +20,7 @@
->   #include "hw/s390x/cert-store.h"
->   #include "hw/s390x/ipl.h"
->   #include "hw/s390x/ipl/diag320.h"
-> +#include "hw/s390x/ipl/diag508.h"
->   #include "hw/s390x/s390-virtio-ccw.h"
->   #include "system/kvm.h"
->   #include "kvm/kvm_s390x.h"
-> @@ -600,3 +601,29 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->           break;
->       }
->   }
-> +
-> +void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
-> +{
-> +    uint64_t subcode = env->regs[r3];
-> +    int rc;
-> +
-> +    if (env->psw.mask & PSW_MASK_PSTATE) {
-> +        s390_program_interrupt(env, PGM_PRIVILEGED, ra);
-> +        return;
-> +    }
-> +
-> +    if ((subcode & ~0x0ffffULL) || (r1 & 1)) {
-> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +        return;
-> +    }
-> +
-> +    switch (subcode) {
-> +    case DIAG_508_SUBC_QUERY_SUBC:
-> +        rc = 0;
-> +        break;
-> +    default:
-> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +        return;
-> +    }
-> +    env->regs[r1 + 1] = rc;
-> +}
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index 5510fc2fc5..ae6cd3d506 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -101,6 +101,7 @@
->   #define DIAG_CERT_STORE                 0x320
->   #define DIAG_KVM_HYPERCALL              0x500
->   #define DIAG_KVM_BREAKPOINT             0x501
-> +#define DIAG_SECURE_IPL                 0x508
+>       for (i = 0; i < pnv->num_chips; i++) {
+> -        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+> -        PnvXive2 *xive = &chip10->xive;
+> +        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
+> +        PnvXive2 *xive = PNV_XIVE2(k->intc_get(pnv->chips[i]));
 >   
->   #define ICPT_INSTRUCTION                0x04
->   #define ICPT_PROGRAM                    0x08
-> @@ -1571,6 +1572,16 @@ static void kvm_handle_diag_320(S390CPU *cpu, struct kvm_run *run)
->       handle_diag_320(&cpu->env, r1, r3, RA_IGNORED);
+>           /*
+>            * Is this the XIVE matching the forwarded VSD address is for this
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 423954ba7e0c..a4fdf59207fa 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1486,6 +1486,16 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+>       xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
 >   }
 >   
-> +static void kvm_handle_diag_508(S390CPU *cpu, struct kvm_run *run)
+> +static void *pnv_chip_power10_intc_get(PnvChip *chip)
 > +{
-> +    uint64_t r1, r3;
-> +
-> +    r1 = (run->s390_sieic.ipa & 0x00f0) >> 4;
-> +    r3 = run->s390_sieic.ipa & 0x000f;
-> +
-> +    handle_diag_508(&cpu->env, r1, r3, RA_IGNORED);
+> +    return &PNV10_CHIP(chip)->xive;
 > +}
 > +
->   #define DIAG_KVM_CODE_MASK 0x000000000000ffff
->   
->   static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
-> @@ -1604,6 +1615,9 @@ static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
->       case DIAG_CERT_STORE:
->           kvm_handle_diag_320(cpu, run);
->           break;
-> +    case DIAG_SECURE_IPL:
-> +        kvm_handle_diag_508(cpu, run);
-> +        break;
->       default:
->           trace_kvm_insn_diag(func_code);
->           kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
-> diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-> index ecff2d07a1..7cca8a67de 100644
-> --- a/target/s390x/s390x-internal.h
-> +++ b/target/s390x/s390x-internal.h
-> @@ -393,6 +393,8 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
->                        uintptr_t ra);
->   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3,
->                        uintptr_t ra);
-> +void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3,
-> +                     uintptr_t ra);
->   
->   
->   /* translate.c */
-> diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-> index 412c34ed93..ddbf495118 100644
-> --- a/target/s390x/tcg/misc_helper.c
-> +++ b/target/s390x/tcg/misc_helper.c
-> @@ -149,6 +149,13 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
->           bql_unlock();
->           r = 0;
->           break;
-> +    case 0x508:
-> +        /* secure ipl operations */
-> +        bql_lock();
-> +        handle_diag_508(env, r1, r3, GETPC());
-> +        bql_unlock();
-> +        r = 0;
-> +        break;
->       default:
->           r = -1;
->           break;
+> +static void *pnv_chip_power11_intc_get(PnvChip *chip)
+> +{
+> +    return &PNV11_CHIP(chip)->xive;
+> +}
+> +
+>   /*
+>    * Allowed core identifiers on a POWER8 Processor Chip :
+>    *
+> @@ -2680,6 +2690,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, const void *data)
+>       k->intc_reset = pnv_chip_power10_intc_reset;
+>       k->intc_destroy = pnv_chip_power10_intc_destroy;
+>       k->intc_print_info = pnv_chip_power10_intc_print_info;
+> +    k->intc_get = pnv_chip_power10_intc_get;
+>       k->isa_create = pnv_chip_power10_isa_create;
+>       k->dt_populate = pnv_chip_power10_dt_populate;
+>       k->pic_print_info = pnv_chip_power10_pic_print_info;
+> @@ -2709,6 +2720,7 @@ static void pnv_chip_power11_class_init(ObjectClass *klass, const void *data)
+>       k->chip_cfam_id = 0x220da04980000000ull; /* P11 DD2.0 (with NX) */
+>       k->cores_mask = POWER11_CORE_MASK;
+>       k->get_pir_tir = pnv_get_pir_tir_p10;
+> +    k->intc_get = pnv_chip_power11_intc_get;
+>       k->isa_create = pnv_chip_power11_isa_create;
+>       k->dt_populate = pnv_chip_power11_dt_populate;
+>       k->pic_print_info = pnv_chip_power11_pic_print_info;
+> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> index 6bd930f8b439..a5b8c49680d3 100644
+> --- a/include/hw/ppc/pnv_chip.h
+> +++ b/include/hw/ppc/pnv_chip.h
+> @@ -170,6 +170,7 @@ struct PnvChipClass {
+>       void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+>       void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+>       void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
+> +    void* (*intc_get)(PnvChip *chip);
+>       ISABus *(*isa_create)(PnvChip *chip, Error **errp);
+>       void (*dt_populate)(PnvChip *chip, void *fdt);
+>       void (*pic_print_info)(PnvChip *chip, GString *buf);
+
 
