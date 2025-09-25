@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3EFCAC5BA
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 19:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFE3CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 19:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1rnB-0001CQ-Co; Thu, 25 Sep 2025 15:38:13 -0400
+	id 1v1rpJ-0001kl-6K; Thu, 25 Sep 2025 15:40:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1rn5-0001BA-MK
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:38:08 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1v1rpC-0001jn-MH
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:40:19 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1rmX-00008U-Ke
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:38:07 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b4f9d61e7deso961511a12.2
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 12:37:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1v1rp3-0000KY-7f
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:40:18 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-57d97bac755so1821e87.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 12:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758829042; x=1759433842; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HULEyZtS4ItKgHtWPhB+ESbu716ykjcHwHjBc2//t7I=;
- b=DhzUcdYT9sbXzkTGG8FTZyrUavX5zq7Q2/MIzAtUc1fkB5X57amsYVL5+UtL8joRI3
- rBm7WcTxiI4tbEVwuw6PNjgCzevHi1kbZidlVSuec9gH/yUBayPygjY1WtYZtyj3pyis
- esL7O+imObor4fdf+yxyfgywNCWnSB20KzPgU2y0C4Z/bov/+EsiQdpeP++Lb9oWCQ8V
- YGIplWgOQvaaPLpXGgMbKBXfcLXDwzc93TRrReqiJ5PkDPw6kKrOC/ZpM1/Slq7GfIDw
- OY6uJBqifNyKTDTa0Fye6znjdPep/nf9uNPfwz/+E+VMHR+KX7Vvm41FGKZHUyLxdSYH
- pSgw==
+ d=google.com; s=20230601; t=1758829202; x=1759434002; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dGRCvzXb0/08Yj1vz/AcgP+Yf86OKXwxAO5W/B0eQ08=;
+ b=YHYBgJ3jNvKc2BID5QIjp5J+FBTv5JcCOX/CtZNLsAV+yCUFIf2RqkKsauP7zdNxAw
+ Tri/ITc4N6vNZu8ZCtZqCzh4DXWI+eOKM5mtAtK+W0mizvbrLCuCwJmlDfu+xvBNg04t
+ rB1aqkjtWpW97c5hY/SPPJQCTtkHWqOyi7IhkN9HWurO27u481RrqnaL0gzt2X0z3Yc8
+ 0vveLKmp3wE/VAvGVPBtC9G8ur9JctpvS8Z4588HoZKHRDf11KLrmdJD/SZ3CgTDoT1U
+ RvHzXELR5pY+aBwN4ZF8CS7FAr/z0ipb+mFTPT4eYeR+t2tnITHVxCYNKPClbKAQuH/k
+ VUYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758829042; x=1759433842;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HULEyZtS4ItKgHtWPhB+ESbu716ykjcHwHjBc2//t7I=;
- b=PgBIAuSqzbbbnfpS65/wXWhHxyXJQu6vXsgxG0kk5vMVL+Esv2COat7VtsI8nZvYOk
- HVDtnXPbFMLPYWJCjv4++gkLSDOIQL9xXhD2w0XDPOxBuBmttRE47mxkV7whygD5EOr6
- cqps27iJuWSw6fa6lQ4jpxZGc4JQYuf6lPuaN+opsvIECEWXrOgSuNyevXXQwm2HXNgM
- 9HHJ1dStem+nXGz2Cen8WkrgC3oMiQMh9UIyqzcGS4GJYki3kK4ZkpESIKZ4blEh9ocj
- yVUZk8mEyW0TOy1jgy/6ToFUIl+FV6ia1/AUzaU6g9BDi0wymqr/I6V8ECzl5qdAWdCl
- F86g==
+ d=1e100.net; s=20230601; t=1758829202; x=1759434002;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dGRCvzXb0/08Yj1vz/AcgP+Yf86OKXwxAO5W/B0eQ08=;
+ b=A+q4ufTzIobS6vVpxoqZU8eYw/VCVYoxQ+ifynpMNRbFbJ6dAhMb7frp69XP3IYWYT
+ VTacXxrcyjhS7UMOVRkL3MAUpkTT3l/LeDFjcsxnyFfKpD3Lw7QZmpHlh4fQebLrdsXq
+ AqMFCExTMPdJ+eS0buBuitvJwDVn4EUwJB1ryfw7sCIj+e3/Oqs69Te5JCoHAPFcQICh
+ qJnvI4aqVM5zRnyOYzgCmsjsnAEhG2qGRGmSTCzWkJZc+cBPrudn9zGsVZ49KjGe1cyk
+ PdDdsxbFS1v5yRNGP2GfWVxoAMjvUNHZtonrYdHtKvGwesEZBS58aGB705m3o+Fe/bzS
+ 9ygA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHcc4yzwfwqf/8U/uEpqnJgOC6fwPL99o9imOIaRGzmV6wvlnGceCp27Y2sAZ3zk/AA3fEmV8HJhKE@nongnu.org
-X-Gm-Message-State: AOJu0YxCcJbieRGC7N8UYu4qP48ZRHhVXpAaIu/CpvXhUmZfak4eYey/
- CZi26nr8bn0lMEhF8ElYLSFEma38cZLM/9RnpREpEvpaIcb7ytEM/d5LBEewCQXru2A=
-X-Gm-Gg: ASbGnctnNKdkMdWiQV+n0x6fhLYfPdbVoAXQHPFem4kUO26NyDExCawu1x12VHqs1+c
- eUF5yAsitsXF65+Tud/D5iKEZ1KFcSYZcwTq4uo/G9wXAg6FjXyhxUvugo8g907vAowbihXyHAP
- btkq2Giy8o+/d0CvQGsU8PDV5v4l2WSyzI7viMRw3lpj47Zp3+EB1z9M3n+2Ypimu6gZR5Ppefv
- hT6LwhlsmffUbv6g6ARq5F16EgljB+V6vVNsUqQ5bHRHKjsDeVawwLqd4uMXoqzJ7uQnKFHd8Ef
- ATOw7b8uuhCEmtPxU1vjdMpp/8+yB42SB58faQuUJ1uFV3PQIPY2tztYN1Jqu0bWC9CvKmGt1Fg
- OODwqU8198sFzF+vhjelkZj7RIatD5Ha2RtFN
-X-Google-Smtp-Source: AGHT+IE0Qy8YZBvfehJfCfvkFaFpTNkNrmm0HRgKu5Segg+I4VPD/LA805Q1VnXrquNA5ufsEggyKA==
-X-Received: by 2002:a17:903:32c3:b0:27c:3a0f:f066 with SMTP id
- d9443c01a7336-27ed49d0a47mr44209515ad.22.1758829042197; 
- Thu, 25 Sep 2025 12:37:22 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27ed6ad1d45sm32219585ad.141.2025.09.25.12.37.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 12:37:21 -0700 (PDT)
-Message-ID: <497d094d-08ce-4af8-8421-be470eab69ff@linaro.org>
-Date: Thu, 25 Sep 2025 12:37:20 -0700
+ AJvYcCWwkafeXCzMTIT18lGnLqxmbI1TcrjmtqYuqjncH2kPFuHJIRplt1tgPnRNZT/HHGGsoIn2SuIadV1H@nongnu.org
+X-Gm-Message-State: AOJu0YwYvB3AX9Qtp1mdjzeKTh9r9M8kZJ0Y7O/hDYnkkP0BMg3+dEAw
+ 8uAUmz1NbIR3goVH1dhThgXuocDTdIDr/jt4XUgZoH0jM9kx4JzKDncBvXXdCwWu4lVZalzMQpa
+ Tr9lDNfILNb6rco124XSunyGZfp7IA5lv6u8py1nL
+X-Gm-Gg: ASbGncsH/uq8/TFBgDLmTVD7obEeo76RrVIeiZWe70V0B4sd1IOZrl79UhxpDppx94K
+ OmYJK7OTcLTglcfQ7Kxkb2Uwk/rJqmvd+ZxJQWH3uq6LyOByx9mRt5F9j5+91VjLBOEYkXRIYjU
+ zBhK5xJilI1ze/434OcydcGsrDIEgWsEaMAs4FqfqX+ldT8kDJrxs0ZSrYFieGDZ5kAr1bMOcq0
+ Twv27R7GRRdQABMEz43BJXIM5hSbTUf8bie1DXfYXW/WaisiBhtShg=
+X-Google-Smtp-Source: AGHT+IE8l6NG34xbqF5CoVR1uSrYYQ8TEk334Mt1K59wnyIGsnSF2GXHC8JydYw3c7o8d1JYNgORVMbOa6ZQjIQkR5E=
+X-Received: by 2002:ac2:5399:0:b0:579:fbe5:4467 with SMTP id
+ 2adb3069b0e04-5843504f532mr66429e87.4.1758829201925; Thu, 25 Sep 2025
+ 12:40:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/23] monitor: refactor error_vprintf()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20250925094441.1651372-1-berrange@redhat.com>
- <20250925094441.1651372-13-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250925094441.1651372-13-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20250909-pcie-root-upstream-v1-0-d85883b2688d@google.com>
+ <20250909-pcie-root-upstream-v1-2-d85883b2688d@google.com>
+ <CAFEAcA8QAj54xxTfk087=8dERGiM28Bz2mw9eVtMd6qNOd7aYw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8QAj54xxTfk087=8dERGiM28Bz2mw9eVtMd6qNOd7aYw@mail.gmail.com>
+From: Titus Rwantare <titusr@google.com>
+Date: Thu, 25 Sep 2025 12:39:24 -0700
+X-Gm-Features: AS18NWBTtowT4M59ZFcVd2Lw5bbNT0R3_Fheh61VDmq6C-fwUa9w9RvuAL0bYaE
+Message-ID: <CAMvPwGo-PpapVgYG9RRdtzEOzFzgn1++f-uTHyyDHzfjyNTPfg@mail.gmail.com>
+Subject: Re: [PATCH 2/7] hw/pci-host: add basic Nuvoton PCIe window support
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Yubin Zou <yubinz@google.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=titusr@google.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -96
+X-Spam_score: -9.7
+X-Spam_bar: ---------
+X-Spam_report: (-9.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +96,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/25 02:44, Daniel P. Berrangé wrote:
-> The monitor_vprintf() code will return -1 if either the monitor
-> is NULL, or the monitor is QMP. The error_vprintf() code can
-> take advantage of this to avoid having to duplicate the same
-> checks, and instead simply look at the return value.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   monitor/monitor.c | 16 +++++++++-------
->   1 file changed, 9 insertions(+), 7 deletions(-)
+On Thu, 25 Sept 2025 at 09:38, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Tue, 9 Sept 2025 at 23:11, Yubin Zou <yubinz@google.com> wrote:
+> >
+> > From: Titus Rwantare <titusr@google.com>
+> >
+> > Adds the windowing registers without address translation
+> >
+> > Signed-off-by: Titus Rwantare <titusr@google.com>
+> > ---
+> >  hw/pci-host/npcm_pcierc.c         | 223 +++++++++++++++++++++++++++++++++++++-
+> >  include/hw/pci-host/npcm_pcierc.h |  77 ++++++++++++-
+> >  2 files changed, 297 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/hw/pci-host/npcm_pcierc.c b/hw/pci-host/npcm_pcierc.c
+> > index 3afe92e264f6ce4312e94f05b5e908840008df64..bffdec71acaba6562856b3bdd8aec07c3c153323 100644
+> > --- a/hw/pci-host/npcm_pcierc.c
+> > +++ b/hw/pci-host/npcm_pcierc.c
+> > @@ -16,6 +16,193 @@
+> >  #include "qom/object.h"
+> >  #include "trace.h"
+> >
+> > +/* Map enabled windows to a memory subregion */
+> > +static void npcm_pcierc_map_enabled(NPCMPCIERCState *s, NPCMPCIEWindow *w)
+> > +{
+> > +    MemoryRegion *system = get_system_memory();
+>
+> > +    /* TODO: set subregion to target translation address */
+> > +    /* add subregion starting at the window source address */
+> > +    if (!memory_region_is_mapped(&w->mem)) {
+> > +        memory_region_init(&w->mem, OBJECT(s), name, size);
+> > +        memory_region_add_subregion(system, bar, &w->mem);
+> > +    }
+>
+> This looks weird. Generally devices should not map themselves
+> into the system address space, although some of our older
+> pci-host devices do for historical reasons. Should we
+> be modelling this some other way?
+>
+> thanks
+> -- PMM
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I can update this. What devices are doing it the new way?
 
-
-r~
-
-> 
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 03dbe5d131..c00f4aac5a 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -268,17 +268,19 @@ void monitor_printc(Monitor *mon, int c)
->       monitor_printf(mon, "'");
->   }
->   
-> -/*
-> - * Print to current monitor if we have one, else to stderr.
-> - */
->   int error_vprintf(const char *fmt, va_list ap)
->   {
->       Monitor *cur_mon = monitor_cur();
-> -
-> -    if (cur_mon && !monitor_cur_is_qmp()) {
-> -        return monitor_vprintf(cur_mon, fmt, ap);
-> +    /*
-> +     * This will return -1 if 'cur_mon' is NULL, or is QMP.
-> +     * IOW this will only print if in HMP, otherwise we
-> +     * fallback to stderr for QMP / no-monitor scenarios.
-> +     */
-> +    int ret = monitor_vprintf(cur_mon, fmt, ap);
-> +    if (ret == -1) {
-> +        ret = vfprintf(stderr, fmt, ap);
->       }
-> -    return vfprintf(stderr, fmt, ap);
-> +    return ret;
->   }
->   
->   static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-
+-Titus
 
