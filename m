@@ -4,60 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499D4CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD6ACAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 16:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1oox-00076f-RG; Thu, 25 Sep 2025 12:27:53 -0400
+	id 1v1ozu-0006tT-9m; Thu, 25 Sep 2025 12:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v1oo6-0006Rp-7p; Thu, 25 Sep 2025 12:27:00 -0400
-Received: from zg8tmtu5ljy1ljeznc42.icoremail.net ([159.65.134.6])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v1onm-0004kv-AY; Thu, 25 Sep 2025 12:26:56 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDHzrYzbdVoawo6CQ--.511S2;
- Fri, 26 Sep 2025 00:26:27 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDHLestbdVoW_MeAA--.7120S7;
- Fri, 26 Sep 2025 00:26:23 +0800 (CST)
-From: Tao Tang <tangtao1634@phytium.com.cn>
-To: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
- philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com,
- Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [PATCH v2 04/14] refactor: Move ARMSecuritySpace to a common header
-Date: Fri, 26 Sep 2025 00:26:08 +0800
-Message-Id: <20250925162618.191242-5-tangtao1634@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
-References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v1ozd-0006q9-0W
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:38:55 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v1ozY-0006BZ-Ag
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 12:38:52 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6089a139396so102920d50.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 09:38:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758818322; x=1759423122; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dIB4ikkGPpd/LQWWihg21QzJdZhbbIkOBvpKAKdXc98=;
+ b=lWBXaPWgmk57nTLvlpVfwC9LvCSSAk1KzDMlbaflMgnJNFNE43b1SZ0/PgAytL9LLg
+ Y8RBQVHI7aO6RYfjAFtfSWXzW7iJF0yVhaw+ankKMdzMKNl+KoOtnkofwgKGu2D5WWnj
+ qWzenf47Qt/T0XJwxxnYl9TyyxEceEdAUIXeQDAfiu7YdxCqeMuZ2+lOdnMiaCccjnHo
+ ukNQADaz5kljy/bPXk1RY5BKFUi/W1W5uxybN2O0ZJzku5D1Mphp/fXNACXw/y/bcXzi
+ MmTwMxtvm1y7hv3E+FgfkcXLAYLeL/TKA036ZjYEYpQprpesAPeWFt1W3+mk9MdUqFMl
+ vLfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758818322; x=1759423122;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dIB4ikkGPpd/LQWWihg21QzJdZhbbIkOBvpKAKdXc98=;
+ b=QjTS7M1h/6TFMNQ+mapLTc2cORMOjYV2AYdn/y5PX90SaJi7irTT4x76SUwkRr8Enq
+ 0Wd6z5REyUmIFwVJcYHx2GbH6xn0EANnPOFny0Qnd4nNb+9QxfgYNds35c4/C+uWZGVK
+ hYv0nuVM7WA4jKPLCgm0mD2qMbVuS4RQ1LIS76jhZsHxsOXpKipupr8pV8aSpaO2fMBo
+ VePtaSoOcoo8kr28yh5mkrYU1/AElqk98gKOyg6QxEEos1+cgv1GG+wmpOooA/mQQuZ7
+ 8wHrGWs0i3jarGq4u+ZncCCrHqlRo2GBr0c0klRbA3Q3hr0BjLkVSPM1S1vf4kCEx9cS
+ g2rA==
+X-Gm-Message-State: AOJu0Yw2vNYBbwce9zai2CJ+a9SxJeGErflGVCbOr2WzlMaatuJdD/oj
+ VVg9ejGbGlESSmPtFo0RlU4iSl4LHMVTTusgxD8rSipQvYMEBXGLhB0BMBkjJbu8ARDypzaP2rZ
+ d8HqsivTwwH3hTyR+iEtL8maTsv1umCaW9D6ZghHHwg==
+X-Gm-Gg: ASbGncv8ptlXUVE2CY48qABm8HP1uIdLLFSOZJpIpLBw5QiZ88/5LziO/cNNoC43iPb
+ V1QZDnOw/asXkirHvNnmJOZAg59H0u43R1kERfAAptyWBanXbIy5fo3eAHFeHkEP7GdLDFgD0gh
+ hS7MQ9+4Z4fv9d2NYcjuqA0PYfi4PWHoa9KnP8Uq3nf3huS4dAQnCTdO2vWySOdaqcCi1NfAYDo
+ zT2T0xg
+X-Google-Smtp-Source: AGHT+IFvTkTQ7g2XXsPfqxMZh2BUR/Ijb0GBbNjExY374J5YpX9/KNJjxAdomatUm6sJnR82sDBkjjEx2oFY60eWpC0=
+X-Received: by 2002:a05:690e:1699:b0:636:cc3:af35 with SMTP id
+ 956f58d0204a3-6361d696f45mr2309384d50.22.1758818321797; Thu, 25 Sep 2025
+ 09:38:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDHLestbdVoW_MeAA--.7120S7
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAEBWjUSMIHtQAAsE
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxXF45CF1xJr1fJF4kJryDAwb_yoWrur15pF
- 4Yyas3Gw48Gay3Gas3ZFsrWF1rK395WF47KFyxWr4kXFnrur18Cr4vyF1Yka45GrWYv3WF
- vr17Zw4rKF1kXrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=159.65.134.6;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtu5ljy1ljeznc42.icoremail.net
-X-Spam_score_int: 41
-X-Spam_score: 4.1
-X-Spam_bar: ++++
-X-Spam_report: (4.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_PBL=3.335, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+References: <20250909-pcie-root-upstream-v1-0-d85883b2688d@google.com>
+ <20250909-pcie-root-upstream-v1-2-d85883b2688d@google.com>
+In-Reply-To: <20250909-pcie-root-upstream-v1-2-d85883b2688d@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Sep 2025 17:38:30 +0100
+X-Gm-Features: AS18NWBzDo_cx4HsJw0UkXHFUOYxAteuB0B_pGGIqMgdEUEUYVa6CJ-jLQzyZ4g
+Message-ID: <CAFEAcA8QAj54xxTfk087=8dERGiM28Bz2mw9eVtMd6qNOd7aYw@mail.gmail.com>
+Subject: Re: [PATCH 2/7] hw/pci-host: add basic Nuvoton PCIe window support
+To: Yubin Zou <yubinz@google.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ qemu-arm@nongnu.org, Titus Rwantare <titusr@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,139 +95,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ARMSecuritySpace enum and its related helpers were defined in the
-target-specific header target/arm/cpu.h. This prevented common,
-target-agnostic code like the SMMU model from using these definitions
-without triggering "cpu.h included from common code" errors.
+On Tue, 9 Sept 2025 at 23:11, Yubin Zou <yubinz@google.com> wrote:
+>
+> From: Titus Rwantare <titusr@google.com>
+>
+> Adds the windowing registers without address translation
+>
+> Signed-off-by: Titus Rwantare <titusr@google.com>
+> ---
+>  hw/pci-host/npcm_pcierc.c         | 223 +++++++++++++++++++++++++++++++++++++-
+>  include/hw/pci-host/npcm_pcierc.h |  77 ++++++++++++-
+>  2 files changed, 297 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/pci-host/npcm_pcierc.c b/hw/pci-host/npcm_pcierc.c
+> index 3afe92e264f6ce4312e94f05b5e908840008df64..bffdec71acaba6562856b3bdd8aec07c3c153323 100644
+> --- a/hw/pci-host/npcm_pcierc.c
+> +++ b/hw/pci-host/npcm_pcierc.c
+> @@ -16,6 +16,193 @@
+>  #include "qom/object.h"
+>  #include "trace.h"
+>
+> +/* Map enabled windows to a memory subregion */
+> +static void npcm_pcierc_map_enabled(NPCMPCIERCState *s, NPCMPCIEWindow *w)
+> +{
+> +    MemoryRegion *system = get_system_memory();
 
-To resolve this, this commit introduces a new, lightweight header,
-include/hw/arm/arm-security.h, which is safe for inclusion by common
-code.
+> +    /* TODO: set subregion to target translation address */
+> +    /* add subregion starting at the window source address */
+> +    if (!memory_region_is_mapped(&w->mem)) {
+> +        memory_region_init(&w->mem, OBJECT(s), name, size);
+> +        memory_region_add_subregion(system, bar, &w->mem);
+> +    }
 
-The following changes were made:
+This looks weird. Generally devices should not map themselves
+into the system address space, although some of our older
+pci-host devices do for historical reasons. Should we
+be modelling this some other way?
 
-- The ARMSecuritySpace enum and the arm_space_is_secure() and
-arm_secure_to_space() helpers have been moved from target/arm/cpu.h
-to the new hw/arm/arm-security.h header.
-
-- Headers for common devices like the SMMU (smmu-common.h) have been
-updated to include the new lightweight header instead of cpu.h.
-
-This refactoring decouples the security state definitions from the core
-CPU implementation, allowing common hardware models to correctly handle
-security states without pulling in heavyweight, target-specific headers.
-
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
----
- include/hw/arm/arm-security.h | 54 +++++++++++++++++++++++++++++++++++
- target/arm/cpu.h              | 25 +---------------
- 2 files changed, 55 insertions(+), 24 deletions(-)
- create mode 100644 include/hw/arm/arm-security.h
-
-diff --git a/include/hw/arm/arm-security.h b/include/hw/arm/arm-security.h
-new file mode 100644
-index 0000000000..9664c0f95e
---- /dev/null
-+++ b/include/hw/arm/arm-security.h
-@@ -0,0 +1,54 @@
-+/*
-+ * ARM security space helpers
-+ *
-+ * Provide ARMSecuritySpace and helpers for code that is not tied to CPU.
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef HW_ARM_ARM_SECURITY_H
-+#define HW_ARM_ARM_SECURITY_H
-+
-+#include <stdbool.h>
-+
-+/*
-+ * ARM v9 security states.
-+ * The ordering of the enumeration corresponds to the low 2 bits
-+ * of the GPI value, and (except for Root) the concat of NSE:NS.
-+ */
-+
-+ typedef enum ARMSecuritySpace {
-+    ARMSS_Secure     = 0,
-+    ARMSS_NonSecure  = 1,
-+    ARMSS_Root       = 2,
-+    ARMSS_Realm      = 3,
-+} ARMSecuritySpace;
-+
-+/* Return true if @space is secure, in the pre-v9 sense. */
-+static inline bool arm_space_is_secure(ARMSecuritySpace space)
-+{
-+    return space == ARMSS_Secure || space == ARMSS_Root;
-+}
-+
-+/* Return the ARMSecuritySpace for @secure, assuming !RME or EL[0-2]. */
-+static inline ARMSecuritySpace arm_secure_to_space(bool secure)
-+{
-+    return secure ? ARMSS_Secure : ARMSS_NonSecure;
-+}
-+
-+#endif /* HW_ARM_ARM_SECURITY_H */
-+
-+
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 1c0deb723d..2ff9343d0b 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -31,6 +31,7 @@
- #include "exec/page-protection.h"
- #include "qapi/qapi-types-common.h"
- #include "target/arm/multiprocessing.h"
-+#include "hw/arm/arm-security.h"
- #include "target/arm/gtimer.h"
- #include "target/arm/cpu-sysregs.h"
- 
-@@ -2477,30 +2478,6 @@ static inline int arm_feature(CPUARMState *env, int feature)
- 
- void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp);
- 
--/*
-- * ARM v9 security states.
-- * The ordering of the enumeration corresponds to the low 2 bits
-- * of the GPI value, and (except for Root) the concat of NSE:NS.
-- */
--
--typedef enum ARMSecuritySpace {
--    ARMSS_Secure     = 0,
--    ARMSS_NonSecure  = 1,
--    ARMSS_Root       = 2,
--    ARMSS_Realm      = 3,
--} ARMSecuritySpace;
--
--/* Return true if @space is secure, in the pre-v9 sense. */
--static inline bool arm_space_is_secure(ARMSecuritySpace space)
--{
--    return space == ARMSS_Secure || space == ARMSS_Root;
--}
--
--/* Return the ARMSecuritySpace for @secure, assuming !RME or EL[0-2]. */
--static inline ARMSecuritySpace arm_secure_to_space(bool secure)
--{
--    return secure ? ARMSS_Secure : ARMSS_NonSecure;
--}
- 
- #if !defined(CONFIG_USER_ONLY)
- /**
--- 
-2.34.1
-
+thanks
+-- PMM
 
