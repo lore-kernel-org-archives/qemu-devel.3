@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA56CAC5BA
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 19:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3EFCAC5BA
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 19:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1rVm-00045P-Bl; Thu, 25 Sep 2025 15:20:15 -0400
+	id 1v1rnB-0001CQ-Co; Thu, 25 Sep 2025 15:38:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1rVj-00042Y-7l
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:20:12 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1v1rn5-0001BA-MK
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:38:08 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1rVV-0005gl-Ib
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:20:08 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-77f605f22easo1252459b3a.2
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 12:19:55 -0700 (PDT)
+ id 1v1rmX-00008U-Ke
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 15:38:07 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b4f9d61e7deso961511a12.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 12:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758827993; x=1759432793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758829042; x=1759433842; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=s8YRoxuHX85uA3mGLtSauCk7RP3VWwFPGCJP4JBrhls=;
- b=erDYmA/522LJ8pLlx3nzVk8qNAg8QD/01mmxRxaJVQ17oadkERpJ8G+cho+sQG/Zs5
- a2erZgh6juh01By59ftBoK3ya7+g0TeElwODPflMP10hWzMdQzWcU3aeDS1nEV2KB0HP
- r7SBpHH9UQL+wBS1j96xXPWg7eIe7ZQr9NYR/l4kV5XWM0aStu8lKySCsgtROfvdiQtb
- BxN16omvYYxJa9ksweyRmU1eu0jz9rrdDdm79GA3qRkc3RQ7q41euPKyi/JDwbFhPgyW
- XPlq3cGwJn4NNeQsA3RRPtCy5IRce3HjLSFmxoD2qOxzLUB2D8mmQ2r6LX9BtUx3zY2J
- pcgQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HULEyZtS4ItKgHtWPhB+ESbu716ykjcHwHjBc2//t7I=;
+ b=DhzUcdYT9sbXzkTGG8FTZyrUavX5zq7Q2/MIzAtUc1fkB5X57amsYVL5+UtL8joRI3
+ rBm7WcTxiI4tbEVwuw6PNjgCzevHi1kbZidlVSuec9gH/yUBayPygjY1WtYZtyj3pyis
+ esL7O+imObor4fdf+yxyfgywNCWnSB20KzPgU2y0C4Z/bov/+EsiQdpeP++Lb9oWCQ8V
+ YGIplWgOQvaaPLpXGgMbKBXfcLXDwzc93TRrReqiJ5PkDPw6kKrOC/ZpM1/Slq7GfIDw
+ OY6uJBqifNyKTDTa0Fye6znjdPep/nf9uNPfwz/+E+VMHR+KX7Vvm41FGKZHUyLxdSYH
+ pSgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758827993; x=1759432793;
+ d=1e100.net; s=20230601; t=1758829042; x=1759433842;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s8YRoxuHX85uA3mGLtSauCk7RP3VWwFPGCJP4JBrhls=;
- b=dHuVSNd209fY9GpjDCEKjuBycWy5kZjm49x/25O9j++BtShGwOANcVJoS6uBfFw30k
- KmBbB6k3vWVboEyqLJAqiWCu8rvf44ej87fpdgEa6iXOP42JhmYByinietOQjK5O/g4v
- WHyogM0qRY4avBJApoSkZO1B91QSdqfg04SDnIzU/GIxxMsGd7B5EVcBJpDZNH/wyeVI
- 1WZBQKQ7MQJSe3ulPn5sLpZlqf/jsoB7dXQHIkyvA3MWazebSnGyOmsbD3K+AkZvj8O8
- tEFJ8p46zHSF3cDNkLt/CymKS0ic6J9sbztrWu2rrkwl3bmbMuBXf/DwWJ1EcQsffMk2
- ea3g==
+ bh=HULEyZtS4ItKgHtWPhB+ESbu716ykjcHwHjBc2//t7I=;
+ b=PgBIAuSqzbbbnfpS65/wXWhHxyXJQu6vXsgxG0kk5vMVL+Esv2COat7VtsI8nZvYOk
+ HVDtnXPbFMLPYWJCjv4++gkLSDOIQL9xXhD2w0XDPOxBuBmttRE47mxkV7whygD5EOr6
+ cqps27iJuWSw6fa6lQ4jpxZGc4JQYuf6lPuaN+opsvIECEWXrOgSuNyevXXQwm2HXNgM
+ 9HHJ1dStem+nXGz2Cen8WkrgC3oMiQMh9UIyqzcGS4GJYki3kK4ZkpESIKZ4blEh9ocj
+ yVUZk8mEyW0TOy1jgy/6ToFUIl+FV6ia1/AUzaU6g9BDi0wymqr/I6V8ECzl5qdAWdCl
+ F86g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHFaWtAWiWWFdR3+FaU0pBYV4USBDItpu9kDKSeKUxLALZo6iQXDZbjhBPSlDjPKDfNIbhKdg/GN0I@nongnu.org
-X-Gm-Message-State: AOJu0YxRDrWXpn6b6zwF9suvvRMaBEhTVB3TQh6qeIbhrsrSsmZoF8FQ
- H2WfGbfSsu9xg6Phom1CeRQiMbRln40Mqerm2r3Jhj9Xmp43axnwLM2ND3Xz8GgHQ8YV8UUYzZO
- 51U4c
-X-Gm-Gg: ASbGnct1dFQ6gzf1yNfU21XifGYhh9dNfEJQaUmyUUyrcjahdp5EC+tVdueoK8QL3hR
- sqEJxYka4T+QsFG53KuIsE5xch9iA0W/yDdKR3RP12Wo8NOJp/JERf7qn9M56ztItX03zhQa0Pb
- rrmyR93heutD8VQBAc4W6zgDaN7G/o0f72ggcsArYJY7TolhlrQi1driVfImv3beO2n48RnvAeK
- vpWJhXBSOFEXUnUi1xWa3kn2CdqRn1p0iZNB0SgfgFyYVUmTO8gzFkyMdDqP5BZ3DkpZf8vIvuy
- aG3KYk3uWLM3APLM6ni0zC5LYpJvo2LQmzElK0fjkUZJZUMuWaSJaZwOjvRpugdDCeNDFXs8k+2
- MX/KAqe4yRRx7LzdMqIioj7bLoLD5EdRIjAEJ
-X-Google-Smtp-Source: AGHT+IE1OJCqkcN45FybII8oBIGuWAJjjwqHJmaFX9bdLgeewJVLY/9WVylsS21389QF1tN5FYyVFQ==
-X-Received: by 2002:a05:6a20:7349:b0:2cb:5f15:ebf3 with SMTP id
- adf61e73a8af0-2e7d0daec75mr6195548637.44.1758827993217; 
- Thu, 25 Sep 2025 12:19:53 -0700 (PDT)
+ AJvYcCXHcc4yzwfwqf/8U/uEpqnJgOC6fwPL99o9imOIaRGzmV6wvlnGceCp27Y2sAZ3zk/AA3fEmV8HJhKE@nongnu.org
+X-Gm-Message-State: AOJu0YxCcJbieRGC7N8UYu4qP48ZRHhVXpAaIu/CpvXhUmZfak4eYey/
+ CZi26nr8bn0lMEhF8ElYLSFEma38cZLM/9RnpREpEvpaIcb7ytEM/d5LBEewCQXru2A=
+X-Gm-Gg: ASbGnctnNKdkMdWiQV+n0x6fhLYfPdbVoAXQHPFem4kUO26NyDExCawu1x12VHqs1+c
+ eUF5yAsitsXF65+Tud/D5iKEZ1KFcSYZcwTq4uo/G9wXAg6FjXyhxUvugo8g907vAowbihXyHAP
+ btkq2Giy8o+/d0CvQGsU8PDV5v4l2WSyzI7viMRw3lpj47Zp3+EB1z9M3n+2Ypimu6gZR5Ppefv
+ hT6LwhlsmffUbv6g6ARq5F16EgljB+V6vVNsUqQ5bHRHKjsDeVawwLqd4uMXoqzJ7uQnKFHd8Ef
+ ATOw7b8uuhCEmtPxU1vjdMpp/8+yB42SB58faQuUJ1uFV3PQIPY2tztYN1Jqu0bWC9CvKmGt1Fg
+ OODwqU8198sFzF+vhjelkZj7RIatD5Ha2RtFN
+X-Google-Smtp-Source: AGHT+IE0Qy8YZBvfehJfCfvkFaFpTNkNrmm0HRgKu5Segg+I4VPD/LA805Q1VnXrquNA5ufsEggyKA==
+X-Received: by 2002:a17:903:32c3:b0:27c:3a0f:f066 with SMTP id
+ d9443c01a7336-27ed49d0a47mr44209515ad.22.1758829042197; 
+ Thu, 25 Sep 2025 12:37:22 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78102c06981sm2543040b3a.72.2025.09.25.12.19.52
+ d9443c01a7336-27ed6ad1d45sm32219585ad.141.2025.09.25.12.37.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 12:19:52 -0700 (PDT)
-Message-ID: <922f7912-7255-4a36-a5f7-669dffc964e8@linaro.org>
-Date: Thu, 25 Sep 2025 12:19:45 -0700
+ Thu, 25 Sep 2025 12:37:21 -0700 (PDT)
+Message-ID: <497d094d-08ce-4af8-8421-be470eab69ff@linaro.org>
+Date: Thu, 25 Sep 2025 12:37:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Replace magic GIC values by proper definitions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH v4 12/23] monitor: refactor error_vprintf()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250925032151.73250-1-philmd@linaro.org>
+References: <20250925094441.1651372-1-berrange@redhat.com>
+ <20250925094441.1651372-13-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250925032151.73250-1-philmd@linaro.org>
+In-Reply-To: <20250925094441.1651372-13-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 20:21, Philippe Mathieu-Daudé wrote:
-> Prefer the FIELD_DP64() macro and self-describing GIC
-> definitions over magic values.
+On 9/25/25 02:44, Daniel P. Berrangé wrote:
+> The monitor_vprintf() code will return -1 if either the monitor
+> is NULL, or the monitor is QMP. The error_vprintf() code can
+> take advantage of this to avoid having to duplicate the same
+> checks, and instead simply look at the return value.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   target/arm/helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index c44294711f8..da8aa7b9d08 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -5184,7 +5184,7 @@ static uint64_t id_pfr1_read(CPUARMState *env, const ARMCPRegInfo *ri)
->       uint64_t pfr1 = GET_IDREG(&cpu->isar, ID_PFR1);
->   
->       if (env->gicv3state) {
-> -        pfr1 |= 1 << 28;
-> +        pfr1 = FIELD_DP64(pfr1, ID_PFR1, GIC, 1);
->       }
->       return pfr1;
->   }
-> @@ -5195,7 +5195,7 @@ static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
->       uint64_t pfr0 = GET_IDREG(&cpu->isar, ID_AA64PFR0);
->   
->       if (env->gicv3state) {
-> -        pfr0 |= 1 << 24;
-> +        pfr0 = FIELD_DP64(pfr0, ID_AA64PFR0, GIC, 1);
->       }
->       return pfr0;
->   }
+>   monitor/monitor.c | 16 +++++++++-------
+>   1 file changed, 9 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+
 r~
+
+> 
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 03dbe5d131..c00f4aac5a 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -268,17 +268,19 @@ void monitor_printc(Monitor *mon, int c)
+>       monitor_printf(mon, "'");
+>   }
+>   
+> -/*
+> - * Print to current monitor if we have one, else to stderr.
+> - */
+>   int error_vprintf(const char *fmt, va_list ap)
+>   {
+>       Monitor *cur_mon = monitor_cur();
+> -
+> -    if (cur_mon && !monitor_cur_is_qmp()) {
+> -        return monitor_vprintf(cur_mon, fmt, ap);
+> +    /*
+> +     * This will return -1 if 'cur_mon' is NULL, or is QMP.
+> +     * IOW this will only print if in HMP, otherwise we
+> +     * fallback to stderr for QMP / no-monitor scenarios.
+> +     */
+> +    int ret = monitor_vprintf(cur_mon, fmt, ap);
+> +    if (ret == -1) {
+> +        ret = vfprintf(stderr, fmt, ap);
+>       }
+> -    return vfprintf(stderr, fmt, ap);
+> +    return ret;
+>   }
+>   
+>   static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+
 
