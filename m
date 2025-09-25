@@ -4,178 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B21BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 02:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCBECAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 02:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1bmh-0004ml-Om; Wed, 24 Sep 2025 22:32:39 -0400
+	id 1v1bnJ-0004ub-6Q; Wed, 24 Sep 2025 22:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1bmf-0004mD-9M; Wed, 24 Sep 2025 22:32:37 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1bnG-0004u5-Qh
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:33:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1bmb-0004cj-SS; Wed, 24 Sep 2025 22:32:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LIdB4gJULuxFHH7H0tTUFN38cogA6+kb2v0WFQbKopv8spgiFeqisWPGGuHvtd5yR23O5W/2+N0P2rUf8oh+SEvRYJN1C/wEF+ivA/Fy5rx4IfBu2yVqwhUdDWzR0Swyk4a/+Vd697IVP/TW8kh+4buuPcoXJyDavRuO+GU7yv0bi3Gni7iLvQGssxad/VNJDEf2120+MRFwAMgr/wB0k68EBza+3yOhYDuBGjWIyRk9/Uv/K7TOjiIHb9Gr08LWFBLOZCmQi5JLneCMGk7s7XGIdoWH1YOoKTZjxoyKtGPNQEqmujFzhFWTIonVqp38/POUE8bZdgfme9ZgxrqMXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=B3XDE5YBd+2uXy6OfpVFI5r9f5CAjAmw6GQbZPIwrRc=;
- b=fjWKd2LhK6+RP6Cx4TeqhIwaZgqemBd1WO0tk+GlcV8MazdD1bjcLhLKul5cZJaZcnobNlQgozbFlv1Kl+6P4VlPLpTcfr2YPhzxHIYcLo+/ufEcaSxwfIx6lsjSW11ZUQerdaBOvTIZVaA6w/JOw30zy+9/AisQSlUnHmSzBhnKVOFkQW/I+c7mfmXqsm+IreNon/j0cMHdKo7P8aMqn+bJGKnHa4j9eftjDN3vtHjVudhNxRey8tP2NpLfGUgzfrJWnd9kJlPM+DseM/nyuzRsXfKenOxY/8UB9So7KuGcJaH6EarZhBQ6wZ8zG9sMf+dk7fYD1eaZk+yM8Z4snQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B3XDE5YBd+2uXy6OfpVFI5r9f5CAjAmw6GQbZPIwrRc=;
- b=a4WgLHTCxuFJdpUotBvKwUgPMupPMMkDjUDqcbOOYVPDEH2tUC4rGxupOMMR1qqnB7Jg+DUGuycoGKgJGgBYzR9ibbGTEdW3nNbnivZ4KIpRObwrilWcoMSt9RNZtFMAfqOVTsS+i2JK/Rw+wmhL8szv5g2rprkzcg02eLWyv9xYp73DN69oiHU6Q9YihmgTN1iCyhHCeJKcLh5Ud4IMx/vwq/yE6G/MD93/Dyu+KCMy1Lc0zsNTKJlOetV9zZqChnnbLsoqv2UXx3x60L9iWnr0hfm6TfFxUlaFbaGKgD/1e0CSZSkNbUDeZxC0tXQx1Ea/nXTpsJdueKVBmhHCCQ==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- SEYPR06MB6335.apcprd06.prod.outlook.com (2603:1096:101:13c::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.20; Thu, 25 Sep 2025 02:32:18 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%3]) with mapi id 15.20.9115.018; Thu, 25 Sep 2025
- 02:32:18 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [SPAM] [PATCH v1 08/21] hw/arm/ast27x0: Add SCU alias for SSP and
- ensure correct device realization order
-Thread-Topic: [SPAM] [PATCH v1 08/21] hw/arm/ast27x0: Add SCU alias for SSP
- and ensure correct device realization order
-Thread-Index: AQHb9sykX4ZS+8HKlE6CthFW598H6LR/1CqAgCED8pCAADYQAIABNKFggABYMgCAAQBmEA==
-Date: Thu, 25 Sep 2025 02:32:18 +0000
-Message-ID: <SI2PR06MB50413935D3232A7618C71605FC1FA@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
- <20250717034054.1903991-9-jamin_lin@aspeedtech.com>
- <a06379d8-ec0f-4842-87d9-5cecdb1dfd86@kaod.org>
- <SI2PR06MB5041DB54104CB51250E5E110FC1DA@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <5003d6ba-bf7e-4bdc-9c22-7360024536cf@redhat.com>
- <SI2PR06MB504175E8604D90397E631042FC1CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <078f252f-774b-47f8-bf94-6b1de8e70359@redhat.com>
-In-Reply-To: <078f252f-774b-47f8-bf94-6b1de8e70359@redhat.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SEYPR06MB6335:EE_
-x-ms-office365-filtering-correlation-id: 22e1c765-c214-4cdf-a835-08ddfbdbbf59
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|38070700021|217643003; 
-x-microsoft-antispam-message-info: =?utf-8?B?OHhTVkkyM2Nja2Y2VzJ5N0dvdmlzSDVvY0FNUm9jdXNaOUZUVUhTUEFxUGRC?=
- =?utf-8?B?c2FVcEZFZTJRUmZPR0lPeVEreCtuSzBkWmp1VjEyL0tkNzZEUzJwRXJEeWla?=
- =?utf-8?B?d0ZpeVVvVHZ6RnlRcE0wbGFJc1Erd3pGcUROOXlzQ2lzZHh4WHVKVVRzR0lK?=
- =?utf-8?B?NGF3V0lJT2xDTFg3NjVxdFFwMWU1TzZsUXozVUFQUWNiYmRvUkIzVkZvMlMx?=
- =?utf-8?B?TE5ickw4TEZNMzNNeEhybkczUklTbnViMjBaYVBWRXFjRDFmWnBvN1A5ZS9h?=
- =?utf-8?B?UnlLM2hUeFcxdWJ3eTRGdzhKSG9TT3FyZDlmM3hlb2VXcUhWLzVxUDRWakl3?=
- =?utf-8?B?UHpJcXA0MFppSytCdVNaM1hYYW5RMEdLRk5HR2FMdkRtd3k3ZVRXcGk3YXpi?=
- =?utf-8?B?VjEzLzhUK3dXM242V2xRN0ZkTGQ4Q0IyNGZCdTZmQ092a1hTMVlUTzJMVU1z?=
- =?utf-8?B?UWRxSUtoRXFIeTRxMjZCemdmYkFPVXBLbW1BRFA2MjFjVmphaW1xdi9JMjJW?=
- =?utf-8?B?TTJFbTR5ZnBEazdEdVFQY3dmMTNKaVVFd3BLdTlHZmdpZTJKbEVYci9UeFJO?=
- =?utf-8?B?bHk1UGNUSDYrd045Z2M4bDB4RHZWbjEyU01oRGVGZk1VbXFwYjBJVWs0Q20y?=
- =?utf-8?B?RW5UTHd3Yk5rWmZBWTduNFhOWTNiUGFZYlZ1NVJDL0ZUSm1uS3JFblNhdTN2?=
- =?utf-8?B?YzNwWGNrY3RKT0JjSWNLUS83M0JWQ3VQeXRUQURPL254NUlqTVU5aVNNcnow?=
- =?utf-8?B?UmsxaXEwaDRTYXhNWGtmTmE4QmZEWCtxNHpWcDdZaVdYOW9mUWs0MmZJWkUr?=
- =?utf-8?B?RC85ZUNma05VdDhRY0FYYWxlQWVLb0hNQjVucW05NXZlbXFaYkdFOEpuMFVk?=
- =?utf-8?B?Tmxrc0pLblVlMmtwLzNkbG8wVmdLRS9HSmZRQ0FydVJ1U1ZuMnZQbitITkdB?=
- =?utf-8?B?MDc5Z3JxOFZ0bUVQNkMzaXB1Z3ZnNUY5eTQxSnQ3ZzFudFNhZDZlcE1Fc0Rz?=
- =?utf-8?B?Uy9yNWZHazNpV2xDVXloZnAwUmtSaFNHUnZZa01NRFM5aFBlUlJ5dWwxbXY3?=
- =?utf-8?B?cng3L0JSb0lSdzlnWTV3M2Y0Y0lpa2x6RkR0NkovTFF0UXcyRnh6KzJmK1lM?=
- =?utf-8?B?UitJeld2M0M5M0piclNlOU1hakdNRG5Ub1N2b1FCeVZ3cERDK1NML3Y0dDFJ?=
- =?utf-8?B?dUxPVjc1OFlTRSt0NUhkOVpJS2UzOWV1MDhYQXU3d3VpOUpObjkwZXRkV3ZC?=
- =?utf-8?B?Q0JnWkd0QmVuNWIyQjdkaEFUYjVka3htWDkwYWxFZTluVjZUSVh3OU56dWt4?=
- =?utf-8?B?RUZWNlExZUVrNFliejA2ZU42Q2dEMkJWa3lKUko4dTlMN0VSVzIremZtcTRx?=
- =?utf-8?B?OU9sNGNnd29Ddld1dEVXRzN4YUlmOGJvL240WDgzenNSakhmWjVQY0I1eUo2?=
- =?utf-8?B?ZG1XUkZSM08vWW8wMlJkOWhFVEZuSlJOdVorNUlFS1Y4QkJkMHhjRVRLdVVJ?=
- =?utf-8?B?YXBXUkZGWWZEUVV5L0lhTm5hWVMrN3ByVHl0dEJscUU4NlBLcCtlMHhLU0lw?=
- =?utf-8?B?ZFQ1TVZCYUhiaUFFSnNuSXZjdGFHREQrWXZUYkNaVFpHQUxGQitRK2VPWmRr?=
- =?utf-8?B?OFBQQTllcktXcUtKb1Y1amdIS0x2OHhxdUxYZ0YzMkdYSk45YVczM1NCTkR1?=
- =?utf-8?B?bnZNWXRBUmFuYTlmQWZwQ0lMcHozUUFpMjVxQ3RTTWlJYUlIYzM2YlV4VEJi?=
- =?utf-8?B?NldlOVFJSVJ2RGwwSk1kOTlZQW5vQ0JCUjhxdDVBbTZML2FvaHF2Z1djemw1?=
- =?utf-8?B?aXFYNHBBUy9CQWwvb3ZTK0VEUnMwYktDRDFNdVM4ckdVQXZkb2NYT2RWNFdy?=
- =?utf-8?B?bVRXY3RFVmtYWTNWT3ZubGdzc3RTN3hCNzluVERBaytlbHN5U3BTN2lCWTli?=
- =?utf-8?B?a09UUDNLSGdXYm1oeHdCY0xSemUxM094a01BWmFjZ1duSFJHZVJiNld5VFVn?=
- =?utf-8?B?NVBFM3BNdXVKQXVLRExmRm56Ti9VNkFxSFpPWlZNTHhDTWtWY3AvdWt0elZl?=
- =?utf-8?B?UjBGanVlTXJSMXh0blRuR2FaMzdQR1RNZ2hRQT09?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(217643003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MGdQRCtIdUt5ZWNFQnNNaWpKeGZvaGxmOE9UN3o3aVRyVDgvKzBHZVM2QlV2?=
- =?utf-8?B?Nk9oQ0wwOFUzY2Q2RnNpa2dkRC9LczVjbHJaWStsRlA0UVFEV0ZQZnk5NDZQ?=
- =?utf-8?B?Q0EyNms3RHRGSkJaZlVLMG1TMmdjTG8xUXBVZTAyVm9yRlBLMzluOTVTUG9o?=
- =?utf-8?B?WUQ3aXNiYkFXUy9OYllmaGd4UUI2UlVQRXZxZ2NBUnQ2UHU5Y3Axc0ZCNjY2?=
- =?utf-8?B?all2Y3p4azNGNmF2Q2VrMDd0RUgrRkFGREpxN25WS2dCTlZpeFp6NkdWcTBa?=
- =?utf-8?B?SGpKNWthSFAybjVCMG1nMFpmalRMdzB0d2Y4anlkK2JhWTl4ODlFczJseUI4?=
- =?utf-8?B?ODRFdnNxTGlrRUJUdjYvV2EzQnBQNmplYjlqaVFkOFZ2Q25WdXBrRCtvMnpL?=
- =?utf-8?B?TnJ5aVNPR0NVKy9MUEtkNUkzdWJQeHdVOHJDN2tRRFdvNmN1ZkdZZitNc3pI?=
- =?utf-8?B?NGhMUVlHMXhscXFqcDJ6RkVYWE9VNnhzTWxVT1JuOVhSbk5DQU9FRmFPN3Q4?=
- =?utf-8?B?cWtaeUNneFczbzBRMFNkREpmZExDdStGSmwvZkRRZ3NSMG54RVFrc09aKzBP?=
- =?utf-8?B?d2lPRExCL1RYWW81UnQxWkxHclRCK2c1dlQwSnlDZXZ0anU3WEVnZHYvVzJH?=
- =?utf-8?B?MWNEc2hUQmR5YjNyNzU5YlVicFhGc1RFeEphS0FFcSttWm01SlVvY0ppNFJP?=
- =?utf-8?B?dXZNd21sbFFad0dZck4wZEpWZEwzajdpZjgxZXdjV1Z4UmlkWGdzT2xzK2xH?=
- =?utf-8?B?UG5wWU0vRU9HV2FsRHpZYlF3RElKKzk0ajcyWk9zVzk4bzhOYVBBYmNwMDRw?=
- =?utf-8?B?OU92dXhOczRPSW82R3h4cWhtWmc0L2ZMWncwVHIxWkMySGlZcnZZdzAvU0lC?=
- =?utf-8?B?am1aWGswZW85S2lDOVd2OUxBMTVpYjRVZktPek8vUkUzTWxsVzNxeXhYOVlP?=
- =?utf-8?B?VVA5MGVDODBlanl5UkVLVGhNY2U5ZE52elYzQldCVyt3TEVsYmdTZ2cxRkJ5?=
- =?utf-8?B?R0E4dXdpODRtZm5abVltQU5NRklXRGQwWk9XQmpDVVJpbjhBUnk2MmlWekEr?=
- =?utf-8?B?dFlNYjg1aDBiZjFSQkRnWDJJQ01DV01WdGhVOGtaVzhlc0tvaUd4em9GNTFw?=
- =?utf-8?B?RzhCdk01Yk5LYnkrNDVhTTZVTmxtTFJQY2x6Ni9wVWZxZnJmaXMrb28yOHg5?=
- =?utf-8?B?R3pYM2g0OXY4SjQ2UnVrOS8zS2FmeXhmbm1IUUs3dVFaMFM4WUFHL1BSS2hJ?=
- =?utf-8?B?Z0lkL1lzMUNJS3BxdjBVcWtyK21nSFAvekJBaWRMVS9uLzNzaWRST1VjVk5l?=
- =?utf-8?B?dStEdDlkcHBrNElFL2ZSbWpETGpnZU04cE9zLzNTRk9ob3JlNHlwRzVwVWdu?=
- =?utf-8?B?ZDhQRjRNUWoyWm9BMytLLzBKUzNETUdlaWY5dE9RcG1yTkNBTzhHc2plQkdz?=
- =?utf-8?B?Sm8rZ1pQMkltbmlTYkg1eVJxR05WdFZ6dUVJUFV2YVlqTHhLbGc1ekhEcloy?=
- =?utf-8?B?bnA5Wmd1anFBYVRGd2cxY1R6VkJlSmxWb1hvekMwc1VMeFRPelo5b1FKUCtv?=
- =?utf-8?B?L2hIN3l0Q1h4YjhtQ0VQTmUvdTBpeUhFZzNBNmhTRjZuNTBxOERFbExvK3U4?=
- =?utf-8?B?YXR6dkdLclBRK0lpSWVBTlQ2Qzh6aFFaTTRuTDE4dU9BSCtVUUhBY2NkeUtF?=
- =?utf-8?B?T2RkTU9IQ09nWDhYRTFJNTl6M1V1SWhYTlVCNndUWDV5UGxrSEdmS1AycS9J?=
- =?utf-8?B?OUQzMFEwN1ZjL3JSdEQrUWlaT0ZFZGVpTWZSTUZsZXc1a2lDZm53SzgwaUNU?=
- =?utf-8?B?MWJzbzdJUE5UTkdGZnNGSVBRbW8ydXJXY2ZTVU9IWWRCa3JhUGE2Mndxc2FT?=
- =?utf-8?B?S2F1TlhzYXdpV2ZiMG1TNEJaYnArL1ZGa3BzQ1l4OGRvV0kxTVFvSXNhWDNZ?=
- =?utf-8?B?clhOR1VyTVBtTjErRHhRdjVrcFNGMzVWYkVVY1ZDM2RmcTNueEN0ZXBja0ww?=
- =?utf-8?B?MTgreXlsRFFPZjNVVGt4aS9VMzZveHNGT2lqMlVPZXpwZmROblFlaDNxZkJ4?=
- =?utf-8?B?YkNERHFQV3NncTBoVUZTQVNUMTZLS0c3SVVwNlQySndOTWNQK1ZPQjVuNnIv?=
- =?utf-8?Q?zOodLubDmuC/sDuTu7D9/ku4I?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1bnB-0004ks-N2
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:33:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758767581;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zzgIT4hPvBn/lb4DCuRqRNmiLOgGm3QCQ7nB8xkJh6M=;
+ b=EnvQmnJDg+ZapCqQJP/gkEEnoWnU2ANBhe1zavKioP/mz8fDa6CLW66YwYIbQRSr8pSTc2
+ 0Ki9FJeWYgYTbssSJOauwrM0A8W00TJH0ZOf0c8gFGqbiyHyUC0AwrWfNA3pbv7RiR/efQ
+ yQTwSQVdMr0nfyWH3HebAe/QnqHoRbc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-5ByV9RdbO_-nJEzO0JHanA-1; Wed,
+ 24 Sep 2025 22:33:00 -0400
+X-MC-Unique: 5ByV9RdbO_-nJEzO0JHanA-1
+X-Mimecast-MFC-AGG-ID: 5ByV9RdbO_-nJEzO0JHanA_1758767579
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5EADD19560A0
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 02:32:59 +0000 (UTC)
+Received: from localhost.localdomain.com (unknown [10.72.116.48])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C03481800452; Thu, 25 Sep 2025 02:32:56 +0000 (UTC)
+From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>
+Subject: [PATCH v4] net/tap-linux.c: avoid abort when setting invalid fd
+Date: Thu, 25 Sep 2025 10:32:35 +0800
+Message-ID: <20250925023235.1899458-1-hzuo@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 22e1c765-c214-4cdf-a835-08ddfbdbbf59
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Sep 2025 02:32:18.2729 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4K1uYd/J8r6lwNGysAsVivJpg4ZuI6hTbg8rhmnXE1wKOnWJVNN/4d6hlT8ZyrrdnyTKMLAVUecgJDvxeqKawqBNuRBh8LOuFDQvXBk7Ztk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6335
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hzuo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,30 +80,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYw0KDQo+IFN1YmplY3Q6IFJlOiBbU1BBTV0gW1BBVENIIHYxIDA4LzIxXSBody9h
-cm0vYXN0Mjd4MDogQWRkIFNDVSBhbGlhcyBmb3IgU1NQDQo+IGFuZCBlbnN1cmUgY29ycmVjdCBk
-ZXZpY2UgcmVhbGl6YXRpb24gb3JkZXINCj4gDQo+IEhlbGxvIEphbWluLA0KPiANCj4gDQo+ID4+
-PiAzLiBNaWdyYXRlIGFsbCBBU1BFRUQgY29wcm9jZXNzb3JzIChlLmcuIFNTUC9UU1ApIHRvIGEg
-Y29tbW9uDQo+ID4+IEFzcGVlZENvcHJvY2Vzc29yU3RhdGUuDQo+ID4+DQo+ID4+IElzICdBc3Bl
-ZWRDb3Byb2Nlc3NvclN0YXRlJyBhIG5ldyBtb2RlbCBzdHJ1Y3R1cmUgbWluaW1pemluZyB0aGUN
-Cj4gPj4gbnVtYmVyIG9mIHN1YiBjb250cm9sbGVycyA/IGlmIHNvLCBsb29rcyBnb29kLiBDb3Vs
-ZCBiZSBtZXJnZWQgZmFpcmx5IHF1aWNrbHkuDQo+ID4+DQo+ID4NCj4gPiBZZXMsIEkgYW0gcGxh
-bm5pbmcgdG8gdXNlIHRoZSBuZXcgQXNwZWVkQ29wcm9jZXNzb3JTdGF0ZSBpbnN0ZWFkIG9mDQo+
-IEFzcGVlZFNvQ1N0YXRlIGZvciBTU1AgYW5kIFRTUC4NCj4gPiBzdHJ1Y3QgQXNwZWVkMjd4MFNT
-UFNvQ1N0YXRlIHsNCj4gPiAgICAgIEFzcGVlZFNvQ1N0YXRlIHBhcmVudDsgIC0tLS0tLS0+IENo
-YW5nZSB0byBBc3BlZWRDb3Byb2Nlc3NvclN0YXRlDQo+ID4gICAgICBBc3BlZWRJTlRDU3RhdGUg
-aW50Y1syXTsNCj4gPiAgICAgIFVuaW1wbGVtZW50ZWREZXZpY2VTdGF0ZSBpcGNbMl07DQo+ID4g
-ICAgICBVbmltcGxlbWVudGVkRGV2aWNlU3RhdGUgc2N1aW87DQo+ID4NCj4gPiAgICAgIEFSTXY3
-TVN0YXRlIGFybXY3bTsNCj4gPiB9Ow0KPiA+DQo+ID4gc3RydWN0IEFzcGVlZDI3eDBUU1BTb0NT
-dGF0ZSB7DQo+ID4gICAgICBBc3BlZWRTb0NTdGF0ZSBwYXJlbnQ7ICAtLS0tLS0tPiBDaGFuZ2Ug
-dG8gQXNwZWVkQ29wcm9jZXNzb3JTdGF0ZQ0KPiA+ICAgICAgQXNwZWVkSU5UQ1N0YXRlIGludGNb
-Ml07DQo+ID4gICAgICBVbmltcGxlbWVudGVkRGV2aWNlU3RhdGUgaXBjWzJdOw0KPiA+ICAgICAg
-VW5pbXBsZW1lbnRlZERldmljZVN0YXRlIHNjdWlvOw0KPiA+DQo+ID4gICAgICBBUk12N01TdGF0
-ZSBhcm12N207DQo+ID4gfTsNCj4gPiBUaGlzIGNoYW5nZSBjb25zb2xpZGF0ZXMgU1NQIGFuZCBU
-U1AgdW5kZXIgYSBjb21tb24gY29wcm9jZXNzb3IgbW9kZWwsDQo+ID4gcmVkdWNpbmcgZHVwbGlj
-YXRpb24gYW5kIGFsaWduaW5nIHRoZW0gd2l0aCB0aGUgbmV3DQo+IEFzcGVlZENvcHJvY2Vzc29y
-U3RhdGUgYWJzdHJhY3Rpb24uDQo+IA0KPiBBc3BlZWQyN3gwVFNQU29DU3RhdGUgYW5kIEFzcGVl
-ZDI3eDBTU1BTb0NTdGF0ZSBsb29rIHNpbWlsYXIuIENvdWxkIHRoZXkNCj4gYmUgbWVyZ2VkID8N
-Cj4gDQpUaGFua3MgZm9yIHlvdXIgc3VnZ2VzdGlvbi4NCldpbGwgdHJ5IGl0Lg0KSmFtaW4NCj4g
-VGhhbmtzLA0KPiANCj4gQy4NCg0K
+When QEMU creates a tap device automatically and the tap device is
+manually removed from the host while the guest is running, the tap
+device file descriptor becomes invalid. Later, when the guest executes
+shutdown, the tap_fd_set_vnet_hdr_len() function may be called and
+abort QEMU with a core dump when attempting to use the invalid fd.
+
+This patch removes many abort() calls in this file. If the fd is found
+to be in a bad state (e.g., EBADFD or ENODEV), the related function
+will print an error message.
+
+The expected behavior for this negative test case is that QEMU should
+report an error but continue running rather than aborting.
+
+Testing:
+- Start QEMU with automatically created tap device
+- Manually remove the tap device on the host
+- Execute shutdown in the guest
+- Verify QEMU reports an error but does not abort
+
+(gdb) bt full
+#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+        tid = <optimized out>
+        ret = 0
+        pd = <optimized out>
+        old_mask = {__val = {10}}
+        ret = <optimized out>
+#1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
+#2  0x00007f1710b15f56 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+        ret = <optimized out>
+#3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
+        save_stage = 1
+        act = {__sigaction_handler = {sa_handler = 0x20, sa_sigaction = 0x20}, sa_mask = {__val = {16929458408262392576, 18446744073709550848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943, 139737042670528, 18446744073709550328, 77, 139705603579344, 18446744073709551615, 139737041472378, 139705595179568, 16929458408262392576, 94049679794864}}, sa_flags = 281695456, sa_restorer = 0xa}
+#4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=<optimized out>, len=10) at ../net/tap-linux.c:204
+#5  tap_set_vnet_hdr_len (nc=<optimized out>, len=10) at ../net/tap.c:269
+        s = <optimized out>
+#6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=0x2956, len=10588) at ../net/net.c:573
+#7  virtio_net_set_mrg_rx_bufs (n=0x5589a72cfa10, mergeable_rx_bufs=<optimized out>, version_1=<error reading variable: Incompatible types on DWARF stack>, hash_report=<optimized out>) at ../hw/net/virtio-net.c:664
+        i = 0
+        nc = 0x5589a730ab28
+#8  virtio_net_set_features (vdev=0x5589a72cfa10, features=0) at ../hw/net/virtio-net.c:897
+        n = 0x5589a72cfa10
+        err = 0x0
+        i = 0
+#9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=0x5589a72cfa10, val=0) at ../hw/virtio/virtio.c:3079
+        k = <optimized out>
+        bad = <optimized out>
+#10 virtio_reset (opaque=0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
+        vdev = 0x5589a72cfa10
+        k = 0x5589a5c162b0
+        i = 0
+#11 0x000055899a630d2b in virtio_bus_reset (bus=0x5589a72cf990) at ../hw/virtio/virtio-bus.c:109
+        vdev = <optimized out>
+#12 virtio_pci_reset (qdev=0x5589a72c7470) at ../hw/virtio/virtio-pci.c:2311
+        proxy = 0x5589a72c7470
+        i = 0
+        bus = 0x5589a72cf990
+#13 0x000055899a686ded in memory_region_write_accessor (mr=<optimized out>, addr=<optimized out>, value=<optimized out>, size=<optimized out>, shift=<optimized out>, mask=<optimized out>, attrs=...) at ../system/memory.c:490
+        tmp = <optimized out>
+#14 0x000055899a686cbc in access_with_adjusted_size (addr=20, value=0x7f0fbedfde00, size=1, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x55899a686d30 <memory_region_write_accessor>, mr=0x5589a72c8040, attrs=...) at ../system/memory.c:566
+        print_once_ = false
+        access_mask = 255
+        access_size = 1
+        i = 0
+        r = 0
+        reentrancy_guard_applied = <optimized out>
+#15 0x000055899a686ac5 in memory_region_dispatch_write (mr=<optimized out>, addr=20, data=<optimized out>, op=<optimized out>, attrs=...) at ../system/memory.c:1545
+        size = <optimized out>
+#16 0x000055899a69f7da in flatview_write_continue_step (attrs=..., buf=0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, len=<optimized out>, mr_addr=20, l=0x7f0fbedfde28, mr=0x5589a72c8040) at ../system/physmem.c:2972
+        val = 6
+        result = 0
+        release_lock = <optimized out>
+#17 0x000055899a697c15 in flatview_write_continue (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., ptr=0x7f1711da6028, len=1, mr_addr=6, l=1, mr=0x0) at ../system/physmem.c:3002
+        result = 0
+        buf = 0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>
+#18 flatview_write (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3033
+--Type <RET> for more, q to quit, c to continue without paging--
+        l = <optimized out>
+        mr_addr = 6
+        mr = 0x0
+#19 0x000055899a697a91 in address_space_write (as=0x55899bceeba0 <address_space_memory>, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3153
+        _rcu_read_auto = 0x1
+        result = 0
+        fv = 0x2956
+#20 0x000055899a91159b in address_space_rw (addr=10588, attrs=..., buf=0x7f1711da6028, len=0, as=<optimized out>, is_write=<optimized out>) at ../system/physmem.c:3163
+#21 kvm_cpu_exec (cpu=0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
+        attrs = {secure = 0, space = 0, user = 0, memory = 0, debug = 0, requester_id = 0, pid = 0, address_type = 0, unspecified = false, _reserved1 = 0 '\000', _reserved2 = 0}
+        run = 0x7f1711da6000
+        ret = <optimized out>
+        run_ret = <optimized out>
+#22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=0x5589a5d68b40) at ../accel/kvm/kvm-accel-ops.c:51
+        r = <optimized out>
+        cpu = <optimized out>
+#23 0x000055899aba817a in qemu_thread_start (args=0x5589a5d72580) at ../util/qemu-thread-posix.c:393
+        __clframe = {__cancel_routine = <optimized out>, __cancel_arg = 0x0, __do_it = 1, __cancel_type = <optimized out>}
+        qemu_thread_args = 0x5589a5d72580
+        start_routine = 0x55899a918850 <kvm_vcpu_thread_fn>
+        arg = 0x5589a5d68b40
+        r = 0x0
+#24 0x00007f1710b6a128 in start_thread (arg=<optimized out>) at pthread_create.c:448
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {32, 8894544057743421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908, -8844535456800460908}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:100
+
+Fixes: 0caed25cd171c611781589b5402161d27d57229c ("virtio: Call set_features during reset")
+
+Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
+---
+ net/tap-linux.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index e832810665..24e63a0b54 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -206,15 +206,16 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
+     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
+         fprintf(stderr, "TUNSETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
+                 strerror(errno));
+-        abort();
+     }
+ }
+ 
+ int tap_fd_set_vnet_le(int fd, int is_le)
+ {
+     int arg = is_le ? 1 : 0;
++    int ret;
+ 
+-    if (!ioctl(fd, TUNSETVNETLE, &arg)) {
++    ret = ioctl(fd, TUNSETVNETLE, &arg);
++    if (!ret) {
+         return 0;
+     }
+ 
+@@ -224,14 +225,16 @@ int tap_fd_set_vnet_le(int fd, int is_le)
+     }
+ 
+     error_report("TUNSETVNETLE ioctl() failed: %s.", strerror(errno));
+-    abort();
++    return ret;
+ }
+ 
+ int tap_fd_set_vnet_be(int fd, int is_be)
+ {
+     int arg = is_be ? 1 : 0;
++    int ret;
+ 
+-    if (!ioctl(fd, TUNSETVNETBE, &arg)) {
++    ret = ioctl(fd, TUNSETVNETBE, &arg);
++    if (!ret) {
+         return 0;
+     }
+ 
+@@ -241,7 +244,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     }
+ 
+     error_report("TUNSETVNETBE ioctl() failed: %s.", strerror(errno));
+-    abort();
++    return ret;
+ }
+ 
+ void tap_fd_set_offload(int fd, int csum, int tso4,
+-- 
+2.47.3
+
 
