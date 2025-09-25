@@ -4,71 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5614DCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 11:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9EFCAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 11:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1kVB-0001lO-KR; Thu, 25 Sep 2025 07:51:09 -0400
+	id 1v1kZ4-0003rx-2C; Thu, 25 Sep 2025 07:55:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v1kV9-0001kB-EX
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 07:51:07 -0400
+ (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
+ id 1v1kZ0-0003r0-Uj
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 07:55:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v1kV3-0002wQ-Vc
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 07:51:06 -0400
+ (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
+ id 1v1kYw-000394-Cc
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 07:55:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758801054;
+ s=mimecast20190719; t=1758801292;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=loDgZfObUa1D8DOjgaKpXrKxqNyOW4vu/eGuHA8XyGc=;
- b=IZoFsIXlbuqwq32pOTWgimnM3MUXmt115XsU6OZr3c9LetG48rtYZE4KgbpKzQkF+a9Q2T
- KH4nnk41RiUjN8JvE5pQT5WIZEjACUJjYfOThOgYXBqjB5W6VOJ9jTpPp933ZUnwMItN+T
- FcqlXqVpRf+byqe/Sci46mAAVENZr1s=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=IfF8v2dNTFOqrTPvgZqHOlsT7cc3pahG+YaTOEetdF8=;
+ b=MGefiqzOHWSVCMcGbqamzwPPrNTKouxqL/mxoCABu4mYO7Ek29r3gvpq/oDtnWDPHlXe+N
+ T37/yJ6BynE5c0OkHhDCDhEYi8qH6kDronwq1SiYoZjKQb5UB98aIy6kJkGSboAuGjVmyh
+ /Op9k/cKb0HmNmRMxibSejwvIfnPTHM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-VwfgZHqlP9qE3WIOS-FdfA-1; Thu,
- 25 Sep 2025 07:50:51 -0400
-X-MC-Unique: VwfgZHqlP9qE3WIOS-FdfA-1
-X-Mimecast-MFC-AGG-ID: VwfgZHqlP9qE3WIOS-FdfA_1758801050
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-V3Q4FSTQO3iyRa9uahOBaA-1; Thu,
+ 25 Sep 2025 07:54:44 -0400
+X-MC-Unique: V3Q4FSTQO3iyRa9uahOBaA-1
+X-Mimecast-MFC-AGG-ID: V3Q4FSTQO3iyRa9uahOBaA_1758801283
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8918219560B2; Thu, 25 Sep 2025 11:50:49 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.58])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E8B2C19560AB; Thu, 25 Sep 2025 11:50:48 +0000 (UTC)
-Date: Thu, 25 Sep 2025 07:50:47 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Tanish Desai <tanishdesai37@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
-Message-ID: <20250925115047.GA22729@fedora>
-References: <20250919112536.141782-1-pbonzini@redhat.com>
- <20250919112536.141782-9-pbonzini@redhat.com>
- <20250923192354.GL509965@fedora>
- <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
- <20250924181024.GB6015@fedora>
- <CABgObfbDphuWOx9r8JEpQCtvGtZM2XYkEd+mBxO4LeqoVPvW6A@mail.gmail.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82832180034C; Thu, 25 Sep 2025 11:54:43 +0000 (UTC)
+Received: from orkuz (unknown [10.43.3.115])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5D4B01956095; Thu, 25 Sep 2025 11:54:42 +0000 (UTC)
+Date: Thu, 25 Sep 2025 13:54:40 +0200
+From: =?utf-8?B?SmnFmcOt?= Denemark <jdenemar@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 4/4] migration: Introduce POSTCOPY_DEVICE state
+Message-ID: <aNUtgHsiQwR12jPs@orkuz.int.mamuti.net>
+References: <20250915115918.3520735-1-jmarcin@redhat.com>
+ <20250915115918.3520735-5-jmarcin@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="2ZzLMx0wZTbEd4or"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABgObfbDphuWOx9r8JEpQCtvGtZM2XYkEd+mBxO4LeqoVPvW6A@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20250915115918.3520735-5-jmarcin@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jdenemar@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -93,50 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Sep 15, 2025 at 13:59:15 +0200, Juraj Marcin wrote:
+> From: Juraj Marcin <jmarcin@redhat.com>
+> 
+> Currently, when postcopy starts, the source VM starts switchover and
+> sends a package containing the state of all non-postcopiable devices.
+> When the destination loads this package, the switchover is complete and
+> the destination VM starts. However, if the device state load fails or
+> the destination side crashes, the source side is already in
+> POSTCOPY_ACTIVE state and cannot be recovered, even when it has the most
+> up-to-date machine state as the destination has not yet started.
+> 
+> This patch introduces a new POSTCOPY_DEVICE state which is active
+> while the destination machine is loading the device state, is not yet
+> running, and the source side can be resumed in case of a migration
+> failure.
+> 
+> To transition from POSTCOPY_DEVICE to POSTCOPY_ACTIVE, the source
+> side uses a PONG message that is a response to a PING message processed
+> just before the POSTCOPY_RUN command that starts the destination VM.
+> Thus, this change does not require any changes on the destination side
+> and is effective even with older destination versions.
 
---2ZzLMx0wZTbEd4or
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks, this will help libvirt as we think that the migration can be
+safely aborted unless we successfully called "cont" and thus we just
+kill QEMU on the destination. But since QEMU on the source already
+entered postcopy-active, we can't cancel the migration and the result is
+a paused VM with no way of recovering it.
 
-On Wed, Sep 24, 2025 at 09:58:04PM +0200, Paolo Bonzini wrote:
-> On Wed, Sep 24, 2025, 20:10 Stefan Hajnoczi <stefanha@redhat.com> wrote:
->=20
-> > > fn trace_event_state_is_enabled(dstate: u16) -> bool {
-> > >      unsafe { trace_events_enabled_count } !=3D 0 && dstate !=3D 0
-> > > }
-> >
-> > The generated code is missing DTrace's SDT semaphore (see
-> > generate_h_backend_dstate() in scripts/tracetool/backend/dtrace.py). The
-> > conditional must be taken when a tool like SystemTap or GDB sets the SDT
-> > semaphore. Right now it will not be taken because the conditional only
-> > looks at _ ## id ## _DSTATE and not the SDT semaphore.
-> >
->=20
-> This is private code to trace-*.rs, for use within the tracepoint functio=
-ns
-> only; it's not a public "is the tracepoint active" API. The public side in
-> C does look at the semaphore.
+This series will make the situation better as the source will stay in
+postcopy-device until the destination successfully loads device data.
+There's still room for some enhancement though. Depending on how fast
+this loading is libvirt may issue cont before device data is loaded (the
+destination is already in postcopy-active at this point), which always
+succeeds as it only marks the domain to be autostarted, but the actual
+start may fail later. When discussing this with Juraj we agreed on
+introducing the new postcopy-device state on the destination as well to
+make sure libvirt will only call cont once device data was successfully
+loaded so that we always get a proper result when running cont. But it
+may still fail when locking disks fails (not sure if this is the only
+way cont may fail). In this case we cannot cancel the migration on the
+source as it is already in postcopy-active and we can't recover
+migration either as the CPUs are not running on the destination. Ideally
+we'd have a way of canceling the migration in postocpy-active if we are
+sure CPUs were not started yet. Alternatively a possibility to recover
+migration would work as well.
 
-You're right, the code is fine just with the function renamed.
-
-Stefan
-
---2ZzLMx0wZTbEd4or
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjVLJcACgkQnKSrs4Gr
-c8hTzwgAnzuRmWP2uTysNqyrc6SI23wwwLvser1sVxSaRSSL/ptHTgSaWzEXD5T0
-tSnof/GZYRScMTYtZDf/9dEgkvs/DWTCb2rBmZoNHuiTid/ibv8KTVz2lUTFFpvo
-3s5QKwBNsJedQ4sD2TuaT1UBlzH1Qmbys+2VFQBMVVEiMunvWD4390n/G58VQtCu
-J3pN0sTui4AQVpzh+v9YdrUmZMAu/5VRMNr+itPDrbJkHsW/ynvj9i2dZ2DAUzpo
-GiIOtgfjbC7m6chn4bzBKUA1kiW8wUQTNxippAU3Glvo2aLEWSOOnWgdVyp0fd1f
-4EX3EPMLcNHZQBUt2oJQgh9UqlGGVA==
-=KtO8
------END PGP SIGNATURE-----
-
---2ZzLMx0wZTbEd4or--
+Jirka
 
 
