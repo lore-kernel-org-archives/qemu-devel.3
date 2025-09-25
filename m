@@ -4,71 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B613ECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 01:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1BECAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 01:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1aXe-0002Ob-7m; Wed, 24 Sep 2025 21:13:02 -0400
+	id 1v1ajP-000607-NW; Wed, 24 Sep 2025 21:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1v1aXa-0002NM-Q5
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:12:58 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1v1aXW-00018W-EO
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:12:58 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxidEOl9Ro91kOAA--.30867S3;
- Thu, 25 Sep 2025 09:12:46 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJAxfcEMl9RoQ_etAA--.40131S3;
- Thu, 25 Sep 2025 09:12:46 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: Replace VMSTATE_UINTTL() ->
- VMSTATE_UINT64()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250925004327.58764-1-philmd@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <25928966-6229-b0d8-ba62-cf9ebf93a101@loongson.cn>
-Date: Thu, 25 Sep 2025 09:12:43 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ajM-0005zh-MH
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:25:08 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1ajH-0004Gf-Fb
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 21:25:08 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-46b303f7469so2294205e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 18:24:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758763496; x=1759368296; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Aie0OLuSIdIpvYDmqaElLgHPkoh6x4WkPhhpalKHHj0=;
+ b=NE6TsshZMjTUdlKblUKRJ7ps9QEVZBtJHIH+aNw8BZ+4jmMh+OXWblCHECWFe7Lk3c
+ UeClCG8sThRWqjwh3rvfSDGjeNd8sRljixTjLrx+Vu+MDH5MQqgGyDml5+9Pil+eULMI
+ gQgGddlgcRL0ZNMIFJLcCnAWG4hYwGR1cYrXcMiHGn0QWUyxfAH48TDFXSfX/avEv7z4
+ h+MwW5h+Oww5YHhQR5qfRc4qULzwnkzO7kBFb0nu/gpm98o2ieQj/W0Asx20F5dUgN7/
+ 7v6iLiKRU282e/xEmzxnOnT6/09ckaZnLx8Jy8ofz21s1ou53rMTE9BoNcP1V1rVK/MA
+ 6tCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758763496; x=1759368296;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Aie0OLuSIdIpvYDmqaElLgHPkoh6x4WkPhhpalKHHj0=;
+ b=WqJBwDckA24MJpFVqlZo0+/0J4x+Bs5xFX1+2h4Zyz6aATa0/VeCt41IewquUwggCY
+ uNz20k9OfbqwjaXZPonk3OPBOYIjUhSNiCKTJlwKqeW/7JgQvg0tWqEuPXdHjwUYGhr5
+ RFPz3lUkfFfuGfdCBv8/hmH/ljb4CuQLUiGKblpRpqfNps0MEkntERJN7/+goH1vS6qV
+ ARqgQxBe7e27V7z3KUgzZsJPmIGtZ2V87aP88Q9IUTRW1HzCJl0byaiQUS/MZ08kC5D8
+ N6fOx9m2l7S1Vf8GNI/9guqnTn7tdzfl/ZUJgo4Aug5PpRUp/YKrjAwq0GoXSd/vqhkb
+ 44ZQ==
+X-Gm-Message-State: AOJu0Yy7kFJ+kVusTftHdp5E+9F2m0BahH2hogPusPvysZJo9SxSWHQN
+ S5nkCI9skIUUnmxpCwv27eHuCvjG3noM922HphxOwOhWr5yV78OvvvktiZ7jqwiqGg/gIZZ6hm5
+ nuNXStG+e8w==
+X-Gm-Gg: ASbGncvPcZCcRrIZ+l/YJPS/nsZA7D2eHdKyz4/8hmND7NnggH1tj/B8WCFbENX72bu
+ RhDOmjLRonfsy6Oop4T/D1ALkqfFP8X0VC5lW8AjlEpJ13Cc+zzo7XD6T1Aeg+8XaWulJyM47Z5
+ tvLMDwN4HyHvG7GiGb/GjRc4t6HzXxgOySxqm67MqCoUt/mFIhkYKmIwIfrMfRxdmv558aR3rHc
+ a0GnYiGilVuq0q7NTQmSPp9BDOeyEKTM/MoJRpF8WnS3abX6L1/ZcqlrjN41efo0Rrto50641fz
+ rtb10n3LP3H3maSqLxAXcQNZamz45fcjhW0Sqrtf6n+GvmieORXTUGbF6egXZQDJ+ja1vJtGjrL
+ Zv9hryNFfUvgs25oKUApNs8+5DuU0NzVfDkB8t4HSGqzTTBxs4JL8T8F4kuSgnZHNYKo+r6aN
+X-Google-Smtp-Source: AGHT+IG5QVDUAsgPwnhVWd/oYNkbgWZ1vbJhMd064VY2WjIPjQk/ZEiAJkRSf0MWW++cEto4BP5YDA==
+X-Received: by 2002:a05:600c:4d18:b0:45d:d505:a1c3 with SMTP id
+ 5b1f17b1804b1-46e32a1c5b8mr9038825e9.37.1758763496060; 
+ Wed, 24 Sep 2025 18:24:56 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e33bede39sm10502075e9.18.2025.09.24.18.24.55
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 24 Sep 2025 18:24:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/m68k: Remove pointless @cpu_halted TCGv
+Date: Thu, 25 Sep 2025 03:24:54 +0200
+Message-ID: <20250925012454.60602-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-In-Reply-To: <20250925004327.58764-1-philmd@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJAxfcEMl9RoQ_etAA--.40131S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7urW3GrW8Xr4DWF47Zw48Zrc_yoW8GFWkpw
- nxZF1IgFW7CrWrZa18Was5WFsxWFsrWF429a1Skr1kCa1DJr47ury8t3sFg3WfAa4Igry0
- vF4Fy34UXa1DZ3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.055,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,39 +97,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/9/25 上午8:43, Philippe Mathieu-Daudé 写道:
-> All LoongArchCPU::pc and LoongArchCPU::gpr[] fields are of
-> uint64_t type. Use the appropriate VMSTATE_UINT64() macro.
->
-> There is no functional change (the migration stream is not
-> modified), because the LoongArch targets are only built as 64-bit:
->
->    $ git grep TARGET_LONG_BITS configs/targets/loongarch64*
->    configs/targets/loongarch64-linux-user.mak:7:TARGET_LONG_BITS=64
->    configs/targets/loongarch64-softmmu.mak:7:TARGET_LONG_BITS=64
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/loongarch/machine.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Avoid registering a TCGv to write the generic CPUState::halted
+field. Access it directly via @env in both STOP / HALT opcodes.
 
-Thanks.
-Song Gao
-> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-> index 4e70f5c8798..bead853efe8 100644
-> --- a/target/loongarch/machine.c
-> +++ b/target/loongarch/machine.c
-> @@ -171,8 +171,8 @@ const VMStateDescription vmstate_loongarch_cpu = {
->       .version_id = 3,
->       .minimum_version_id = 3,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
-> -        VMSTATE_UINTTL(env.pc, LoongArchCPU),
-> +        VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
-> +        VMSTATE_UINT64(env.pc, LoongArchCPU),
->   
->           /* Remaining CSRs */
->           VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20250924171308.53036-1-philmd@linaro.org>
+---
+ target/m68k/translate.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 0cee54f4900..eb1ba150745 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -44,8 +44,6 @@
+ #undef DEFO32
+ #undef DEFO64
+ 
+-static TCGv_i32 cpu_halted;
+-
+ static char cpu_reg_names[2 * 8 * 3 + 5 * 4];
+ static TCGv cpu_dregs[8];
+ static TCGv cpu_aregs[8];
+@@ -77,9 +75,6 @@ void m68k_tcg_init(void)
+ #undef DEFO32
+ #undef DEFO64
+ 
+-    cpu_halted = tcg_global_mem_new_i32(tcg_env,
+-                                        -offsetof(M68kCPU, env) +
+-                                        offsetof(CPUState, halted), "HALTED");
+     p = cpu_reg_names;
+     for (i = 0; i < 8; i++) {
+         sprintf(p, "D%d", i);
+@@ -4506,7 +4501,8 @@ DISAS_INSN(halt)
+         gen_exception(s, s->pc, EXCP_SEMIHOSTING);
+         return;
+     }
+-    tcg_gen_movi_i32(cpu_halted, 1);
++    tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
++                   offsetof(CPUState, halted) - offsetof(M68kCPU, env));
+     gen_exception(s, s->pc, EXCP_HLT);
+ }
+ 
+@@ -4522,7 +4518,8 @@ DISAS_INSN(stop)
+     ext = read_im16(env, s);
+ 
+     gen_set_sr_im(s, ext, 0);
+-    tcg_gen_movi_i32(cpu_halted, 1);
++    tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
++                   offsetof(CPUState, halted) - offsetof(M68kCPU, env));
+     gen_exception(s, s->pc, EXCP_HLT);
+ }
+ 
+-- 
+2.51.0
 
 
