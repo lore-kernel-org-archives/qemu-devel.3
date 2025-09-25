@@ -4,94 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDBDCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 17:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C130CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 17:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1pak-0005E8-KE; Thu, 25 Sep 2025 13:17:14 -0400
+	id 1v1poQ-0001kU-7b; Thu, 25 Sep 2025 13:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1v1paf-0005DB-Qs
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 13:17:11 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1v1paO-0003Xa-30
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 13:17:08 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-62f0702ef0dso4900674a12.1
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 10:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758820607; x=1759425407; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vAaS5TX8VmNJa+7WYXzUYE4r47PEDNHyj/0OXr1WJeo=;
- b=KxSUU6tAamIIExTUjoDJJ1fKbhqlVhNmd9JdD/4BlCtIZir0/WOu43XOYx1tplLo1+
- cxJUPOCAtrLTnS7bWx5EwHx6Zg2QD6rv/BnKH2seuVJa50N1npVgm1lS5gErnyzaXSZX
- huwY31LfKTJ5eBzK71Vln4lL0OpYQwkwL1H+mMaBJ/tDFsO1wdgYLQuYBXUgttgDWJcF
- 9S7Am4GrQqMIHfz+t2nsmJsaGiq0JSkXY2NetTFCwVCEgnL+NiZX+mRrM9Se9ekatagW
- 3BC2A42nwq+4yHMV86HMdDz8+nwje0EehenBeN9bViQS44oIe2aaBNYLIYwLzBhsB40B
- 7qeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758820607; x=1759425407;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vAaS5TX8VmNJa+7WYXzUYE4r47PEDNHyj/0OXr1WJeo=;
- b=EQsyzRSnd80W7GftmY82T46J9UmOuSl/46l6zP6RhUh+iuwYscXVmVZbCTvkbhr267
- RXRTJlRL3sihxiCaVDkKG1pRM2SKOzz8CgmEIn52gHyEK+O8eEqeh9Gkq7hsYj5TLVXS
- NorgNuDs9q7PefdVJnz6O59eALuko5vxGdDqy/USM26TahBZoJxcFb02tnU03qUXpTn0
- CzQZi75cZb0qoJaQYi+uxZ3Ovwp2IsA2PzZPEEmgPPLBb/fbN9Qr+TVMEImOagEZ+uvs
- FJAjahdz6PWkOsOG2PRGghhdO16LAkwxkKoCd57Bx/yUZa00u5TAnCHBKxY0dddObFnt
- YelA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWa14xWYu/Vb3dMpfWwQNnN7znS2fRMSQgRoD2URVzDFghEhSBfTZszklPn5Igw0AoCFo9rgcMQcXCV@nongnu.org
-X-Gm-Message-State: AOJu0Yz74iiy/k9dTvGaPXHdeImjr5p+tVpA+1Fjc/NIlrb/qiVI3u84
- 1mMWopmr1aWw+RVqf2fcFkQUF2gBmBv1KqHZe/yMIig0jI5/yS/UJHmoy+tWK3Ba6VEpeo2NczE
- bVWyeZavSFz8gMunBCis/TTQSNmqZ8gQ=
-X-Gm-Gg: ASbGncsiNZlL8b+cUrYbLg/XtQITxouWSN+a1cXKMhucgx/S5x4yQv18imD36AnPqaJ
- N3lLxsPiNCMhR6sclqP3yEz7Mcet8mM3wKx8PKhxXTwE3M6vJ+ZvhT6gc2qBz09QcanxAyTA1xG
- Mm0d/0nM+OijgEL5lukrwzkNh+AB+YK8pmrm5d1ZtrcMJyv/Hh/qWPcj0ZM8qJK6LrMGOfVDv2k
- giyHcvuLDHTSl3Z
-X-Google-Smtp-Source: AGHT+IEPrMOZdOefJYZ4+rQASRmQ2w8G5mCEtmbqt6ZjJnVQveuvzYPOSShUjkKhIDcU+amHoew0YmEFRY+4y6fiNK0=
-X-Received: by 2002:a17:907:1c16:b0:b31:cad1:b43d with SMTP id
- a640c23a62f3a-b354eb13deamr340143166b.32.1758820607177; Thu, 25 Sep 2025
- 10:16:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v1poK-0001jk-WB; Thu, 25 Sep 2025 13:31:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v1poA-00069i-UK; Thu, 25 Sep 2025 13:31:16 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PAQwFj007389;
+ Thu, 25 Sep 2025 17:30:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=VsVL4pObjC/Xnc91HoR/e0tV8WsA
+ 98RiueCGsMA5pSk=; b=Yg68EQZpg2aNmZ5GLgVjf690YhecQZsz7j8QPFay8kdq
+ ULj3auJZ1sfvitoeER3vdk+fDr3uwCKzFDI++9g1g6wA+VfMnutqbtd0VNVB2h/T
+ TkUpJIahdetcYp0VxoHroH66TDR/pvQvGEtv/WC2pfh7uKfGnyEC39kYSTLd1Z3E
+ X3vtALemxNR2wwpHLNBnL5nqTAmAf+o1lHO+gwl/ZRn0JyKFXS1R+E7GeHuSzq6t
+ Y2LQyI8opq1tcNeSSvJpwPxq8Tymieu3ADUAKkc4NX/ofc0+0vGO2sAd3SF6696T
+ 7nhxDqdZdtMx2GTOSuEaq42P+Q71DZGHivxuHXd5vQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499n0jy6ur-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 17:30:59 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PHS7av021722;
+ Thu, 25 Sep 2025 17:30:58 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499n0jy6uj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 17:30:58 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PHSrxO030336;
+ Thu, 25 Sep 2025 17:30:57 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49a9a1exxs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 17:30:57 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58PHUsxO44695946
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 25 Sep 2025 17:30:54 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 181B320040;
+ Thu, 25 Sep 2025 17:30:54 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 344192004B;
+ Thu, 25 Sep 2025 17:30:51 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.124.220.124])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 25 Sep 2025 17:30:51 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ Mike Kowal <kowal@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
+ Ganesh Goudar <ganeshgr@linux.ibm.com>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Subject: [PATCH v10 0/8] Power11 support for QEMU [PowerNV]
+Date: Thu, 25 Sep 2025 23:00:41 +0530
+Message-ID: <20250925173049.891406-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20250919112536.141782-1-pbonzini@redhat.com>
- <20250919112536.141782-9-pbonzini@redhat.com>
- <20250923192354.GL509965@fedora>
- <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
- <20250924181024.GB6015@fedora>
- <CABgObfbDphuWOx9r8JEpQCtvGtZM2XYkEd+mBxO4LeqoVPvW6A@mail.gmail.com>
- <20250925115047.GA22729@fedora>
- <4d7d946f-db87-43b6-a5f4-4f6cc583df20@redhat.com>
- <CAJSP0QU-XSrY3NZFoSiFDPLduJw_md0+7YEGr3PZ3UEWGyvEsQ@mail.gmail.com>
- <d36504ef-6b5e-4764-aa09-9da6137e4f88@redhat.com>
-In-Reply-To: <d36504ef-6b5e-4764-aa09-9da6137e4f88@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 25 Sep 2025 13:16:35 -0400
-X-Gm-Features: AS18NWBowPov_H1rbLjFCrbnE6R0eSP0hi9Glius73Rj00XNtgzD3-zIGB4W9CQ
-Message-ID: <CAJSP0QXAAX8wUxmm8W4JgixsnQf2TgBM=OzvqoSrijNFNjhusQ@mail.gmail.com>
-Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Tanish Desai <tanishdesai37@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAzMyBTYWx0ZWRfX81st1+RPaXXh
+ AXlnkjvaOKXTYTmyczEZmT+E8u1gn93ZIa01biEH+Qoc8I3zyWbbBPURG5vHC+ULmgd042cJcLe
+ mA+YrMpIhNXdtOB+QU2fOLKA9JzMTotHsWsof5gfl3j7xZnxv44vSs1SVIaLZfv6gc3FUKRD5l2
+ tYJMjYNie7bB4ZyYQOTHWFrJjSz/Pr5+DVcYF8awOsxeSZt8vSEXbEjQJ42kaPXbz7RB4JuxTTP
+ BsjSZ9q+CBTH+jcCQx8Wgd8idOYjXq9hjhJvIbiYZapmEx6CndhoVQ5nljixlS/icvC4daoKbnX
+ fRwQByv5i0f17ffufZwWqoU2/Ntbcrc+wd8sIv7VsmlUfH6eSi9g5WvXeUzQuPDxjsknoWFpST3
+ 5WiEQSGk
+X-Authority-Analysis: v=2.4 cv=TOlFS0la c=1 sm=1 tr=0 ts=68d57c53 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=D-MH1O1gfgBD2lvPr1gA:9
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-ORIG-GUID: Sz8zJxOMAcp4YkqMyvpCHoeatOsn4kFv
+X-Proofpoint-GUID: pi9NLMNsDDc3MtPxej7Pa2yaCwN1aOwt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509200033
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,42 +130,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 25, 2025 at 11:37=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->
-> On 9/25/25 17:09, Stefan Hajnoczi wrote:
-> > On Thu, Sep 25, 2025 at 8:40=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.=
-com> wrote:
-> >> No problem---in fact I have now realized that, for systemtap, I have t=
-o
-> >> ensure that the semaphore is shared between C and Rust!
-> >
-> > Is anyone working on the DTrace support? If not, I'll keep it in mind
-> > in case I get some time over the next few weeks.
-> No, the plan was to use the probe-rs crate, which is almost trivial
-> except that it does not support the shared semaphore.
->
-> For the shared semaphore probe-rs needs modifications.  It's also
-> possible to just import its single file with magic asm[1] into QEMU's
-> trace crate and modify it as needed; and contribute the changes upstream
-> later.
->
-> There is also the usdt crate, which recently grew support for systemtap
-> SDT as well.  It takes a much more complex approach and has many
-> dependencies, as it almost completely reimplements the dtrace compiler.
-> It may be interesting for the future since it is more portable, but for
-> the time being I'd stick with the lower-level probe-rs.
+Overview
+============
 
-Okay, thanks for the link to your semaphore changes. I should be able
-to play with it at the end of next week.
+Add support for Power11 powernv machine type.
 
-Stefan
+As Power11 core is same as Power10, hence much of the code has been reused
+from Power10.
 
->
-> Paolo
->
-> [1]
-> https://github.com/bonzini/probe-rs/blob/extern-semaphore/src/platform/sy=
-stemtap.rs
->
+Power11 PSeries already added in QEMU in:
+  commit 273db89bcaf4 ("ppc/pseries: Add Power11 cpu type")
+
+Git Tree for Testing
+====================
+
+QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-powernv-v10
+
+The patches apply cleanly on below commit:
+  95b9e0d2ade5 ("Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging")
+
+Tests ran:
+* `make check`
+* '-M powernv' / '-M powernv10' / '-M powernv11'
+* '-smp' option tested
+* 'e1000e' device
+* tested changing irq affinities to remote chips for xive functionality
+* compile test with --without-default-devices
+
+skiboot with Power11 support: https://github.com/open-power/skiboot, since
+commit 785a5e3
+
+Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+
+Changelog
+=========
+v10:
+  + [PATCH 1/8]: Do same change for Power11 as done for Power10 in commit 46d03b,
+    as changes required for successful build with --without-default-devices
+  + [PATCH 3/8]: Added new patch to remove assuming chip as Power10 in xive2
+  + rebase to upstream
+
+v9 (https://lore.kernel.org/qemu-devel/20250808115929.1073910-1-adityag@linux.ibm.com/):
+  + [PATCH 1/7]: apply hunks from commit cf0eb929e59cb, and commit
+    24c8fa968a6d8, for changes that were done for Power10, as those changes
+    make sense for Power11 also
+  + [PATCH 3/7]: fixed build breakage identified with QEMU CI, due to changes
+    in upstream function pointer types
+
+v8 (https://lore.kernel.org/qemu-devel/20250608182842.2717225-1-adityag@linux.ibm.com/):
+  + rebase to upstream
+  + propose myself as a powernv reviewer
+
+v7 (https://lore.kernel.org/qemu-devel/20250327200738.1524401-1-adityag@linux.ibm.com/):
+  + use Power10 models of homer, sbe, occ, psi, lpc. As they are same.
+  + switch powernv tests to use buildroot images instead of op-build images
+  + add functional test for powernv11
+  - remove dynamic sysbus device for PHBs, so no more dynamic number of
+  PHBs in Power11 as it became complex to handle it and not much used
+
+v6 (https://lore.kernel.org/qemu-devel/20250325112319.927190-1-adityag@linux.ibm.com/):
+  + make Pnv11Chip's parent as PnvChip, instead of Pnv10Chip
+  + rebase on upstream/master
+
+v5 (https://lore.kernel.org/qemu-devel/57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org/):
+  + add chiptod
+  + add instance_init for P11 to use P11 models
+  + move patch introducing Pnv11Chip to the last
+  + update skiboot.lid to skiboot's upstream/master
+
+v4:
+  + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+  - no change in other patches
+
+v3:
+  + patch #1: version power11 as power11_v2.0
+  + patch #2: split target hw/pseries code into patch #2
+  + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+  + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+  + patch #6-#11: no change
+  - remove commit to make Power11 as default
+
+v2:
+  + split powernv patch into homer,lpc,occ,psi,sbe
+  + reduce code duplication by reusing power10 code
+  + make power11 as default
+  + rebase on qemu upstream/master
+  + add more information in commit descriptions
+  + update docs
+  + update skiboot.lid
+
+
+Aditya Gupta (8):
+  ppc/pnv: Introduce Pnv11Chip
+  ppc/pnv: Introduce Power11 PowerNV machine
+  ppc/pnv: Add PnvChipClass handler to get reference to interrupt
+    controller
+  ppc/pnv: Add XIVE2 controller to Power11
+  ppc/pnv: Add PHB5 PCIe Host bridge to Power11
+  ppc/pnv: Add ChipTOD model for Power11
+  tests/powernv: Switch to buildroot images instead of op-build
+  tests/powernv: Add PowerNV test for Power11
+
+ docs/system/ppc/powernv.rst            |   9 +-
+ hw/intc/pnv_xive2.c                    |   4 +-
+ hw/ppc/pnv.c                           | 560 +++++++++++++++++++++++++
+ hw/ppc/pnv_chiptod.c                   |  59 +++
+ hw/ppc/pnv_core.c                      |  17 +
+ include/hw/ppc/pnv.h                   |  38 ++
+ include/hw/ppc/pnv_chip.h              |   8 +
+ include/hw/ppc/pnv_chiptod.h           |   2 +
+ include/hw/ppc/pnv_xscom.h             |  49 +++
+ tests/functional/ppc64/test_powernv.py |  34 +-
+ 10 files changed, 760 insertions(+), 20 deletions(-)
+
+-- 
+2.50.1
+
 
