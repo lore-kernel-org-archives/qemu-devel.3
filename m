@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCCFCAC5AA
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 05:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB233CAC5B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 06:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1eDA-0001Dd-5k; Thu, 25 Sep 2025 01:08:08 -0400
+	id 1v1fYf-00086V-BE; Thu, 25 Sep 2025 02:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1eD8-0001B9-15; Thu, 25 Sep 2025 01:08:06 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1eD3-00072D-I7; Thu, 25 Sep 2025 01:08:05 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 25 Sep
- 2025 13:05:38 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 25 Sep 2025 13:05:38 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 8/8] hw/arm/aspeed_ast27x0-fc: Add VBOOTROM support
-Date: Thu, 25 Sep 2025 13:05:34 +0800
-Message-ID: <20250925050535.2657256-9-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250925050535.2657256-1-jamin_lin@aspeedtech.com>
-References: <20250925050535.2657256-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1v1fXu-0007us-Ef
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:33:41 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1v1fXh-0000Tx-KA
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 02:33:35 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxP9Mw4tRo2GsOAA--.30298S3;
+ Thu, 25 Sep 2025 14:33:20 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJBxpeQq4tRoj+iuAA--.30453S9;
+ Thu, 25 Sep 2025 14:33:20 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 07/11] hw/loongarch: Implement dintc realize and unrealize
+Date: Thu, 25 Sep 2025 14:09:32 +0800
+Message-Id: <20250925060936.898618-8-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250925060936.898618-1-gaosong@loongson.cn>
+References: <20250925060936.898618-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-CM-TRANSID: qMiowJBxpeQq4tRoj+iuAA--.30453S9
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,44 +61,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduces support for loading a vbootrom image into the dedicated vbootrom
-memory region in the AST2700 Full Core machine.
+Implement th DINTC realize and unrealize.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <20250916122109.749813-8-gaosong@loongson.cn>
 ---
- hw/arm/aspeed_ast27x0-fc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/intc/loongarch_dintc.c | 23 ++++++++++++++++++++++-
+ target/loongarch/cpu.h    |  3 ++-
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 57964e336c..d7f0f3325d 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -60,6 +60,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     Ast2700FCState *s = AST2700A1FC(machine);
-     AspeedSoCState *soc;
-     AspeedSoCClass *sc;
-+    const char *bios_name = NULL;
-     BlockBackend *fmc0 = NULL;
-     DeviceState *dev = NULL;
-     uint64_t rom_size;
-@@ -117,6 +118,10 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-         aspeed_install_boot_rom(soc, fmc0, &s->ca35_boot_rom, rom_size);
+diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
+index 7173a6aa29..598c666ec6 100644
+--- a/hw/intc/loongarch_dintc.c
++++ b/hw/intc/loongarch_dintc.c
+@@ -38,7 +38,12 @@ static const MemoryRegionOps loongarch_dintc_ops = {
+ 
+ static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
+ {
++    LoongArchDINTCState *s = LOONGARCH_DINTC(dev);
+     LoongArchDINTCClass *lac = LOONGARCH_DINTC_GET_CLASS(dev);
++    MachineState *machine = MACHINE(qdev_get_machine());
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
++    const CPUArchIdList  *id_list;
++    int i;
+ 
+     Error *local_err = NULL;
+     lac->parent_realize(dev, &local_err);
+@@ -47,12 +52,28 @@ static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
+         return;
      }
  
-+    /* VBOOTROM */
-+    bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-+    aspeed_load_vbootrom(soc, bios_name, errp);
++    assert(mc->possible_cpu_arch_ids);
++    id_list = mc->possible_cpu_arch_ids(machine);
++    s->num_cpu = id_list->len;
++    s->cpu = g_new(DINTCCore, s->num_cpu);
++    if (s->cpu == NULL) {
++        error_setg(errp, "Memory allocation for DINTCCore fail");
++        return;
++    }
 +
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
++    for (i = 0; i < s->num_cpu; i++) {
++        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
++        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
++        qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
++    }
++
+     return;
+ }
  
-     return true;
+ static void loongarch_dintc_unrealize(DeviceState *dev)
+ {
+-    return;
++    LoongArchDINTCState *s = LOONGARCH_DINTC(dev);
++    g_free(s->cpu);
+ }
+ 
+ static void loongarch_dintc_init(Object *obj)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 78210a46d8..b8e3b46c3a 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -217,9 +217,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
+ extern const char * const regnames[32];
+ extern const char * const fregnames[32];
+ 
+-#define N_IRQS      13
++#define N_IRQS      15
+ #define IRQ_TIMER   11
+ #define IRQ_IPI     12
++#define INT_DMSI    14
+ 
+ #define LOONGARCH_STLB         2048 /* 2048 STLB */
+ #define LOONGARCH_MTLB         64   /* 64 MTLB */
 -- 
-2.43.0
+2.47.0
 
 
