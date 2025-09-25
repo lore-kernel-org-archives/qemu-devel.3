@@ -4,67 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCBECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 02:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1524ACAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 02:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1bnJ-0004ub-6Q; Wed, 24 Sep 2025 22:33:18 -0400
+	id 1v1c8z-0001wh-42; Wed, 24 Sep 2025 22:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1bnG-0004u5-Qh
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:33:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1bnB-0004ks-N2
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:33:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758767581;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=zzgIT4hPvBn/lb4DCuRqRNmiLOgGm3QCQ7nB8xkJh6M=;
- b=EnvQmnJDg+ZapCqQJP/gkEEnoWnU2ANBhe1zavKioP/mz8fDa6CLW66YwYIbQRSr8pSTc2
- 0Ki9FJeWYgYTbssSJOauwrM0A8W00TJH0ZOf0c8gFGqbiyHyUC0AwrWfNA3pbv7RiR/efQ
- yQTwSQVdMr0nfyWH3HebAe/QnqHoRbc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-5ByV9RdbO_-nJEzO0JHanA-1; Wed,
- 24 Sep 2025 22:33:00 -0400
-X-MC-Unique: 5ByV9RdbO_-nJEzO0JHanA-1
-X-Mimecast-MFC-AGG-ID: 5ByV9RdbO_-nJEzO0JHanA_1758767579
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5EADD19560A0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 02:32:59 +0000 (UTC)
-Received: from localhost.localdomain.com (unknown [10.72.116.48])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C03481800452; Thu, 25 Sep 2025 02:32:56 +0000 (UTC)
-From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1c8w-0001w1-Ni
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:55:38 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1c8q-0002Ut-JD
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 22:55:38 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e29d65728so2464775e9.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 19:55:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758768928; x=1759373728; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xMXAhv3XdLrPB0PV3Q+hnkb3wlEo+D3tstmtaGw0sUA=;
+ b=bFzsYGAw1Q/x2tctwIgYs7Gwk77D4GxYlTGn07PfLSq1NvWBss8QREd8oWuuFaEUuM
+ BYnFcs/rCQ/3Uu4bDTDCuyFX81zQtdFIRQp1w6TI3OvbjSajLsIapap2mNIVybXAEKFl
+ xSfp0LdLNL9PRKeWcn1TyGS2CZ95MCEANeor1JKxflr5/+3gKzPQtsUnn3EDDQat2gie
+ jXd8otgOUSdOc5s09BFhpql13R0ivMJYFqGMqFlYhHOnWqXQEqjOvLjZDv3/mwRfnWC4
+ CNWEGEBrkfovzomz2uqzB0T7Brip63FhwB1hq/fpTJHzo1w56XRa5ds1u8lgZyWRIDlC
+ gYPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758768928; x=1759373728;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xMXAhv3XdLrPB0PV3Q+hnkb3wlEo+D3tstmtaGw0sUA=;
+ b=cCSjOeceMKZrehVmk92spHdyx6TchCRiYE0D0zIbv3N7hF9/ETWIPMQSNFor1rBsjI
+ HAdAL3NyMBoMRloABYirGVukW3dn50SUzc69MVO/TMTvpUA7pwapWjFFxIw6eBG5MSeZ
+ a1yITjtjF3GKLWihMHGQ4F14vCdjpuriM/MIkc92ZhOaJkGxYGwUo1v3jQVhe3gKkhUI
+ 8qZQm0fEIzgU2bpwHnuHJVa7SB2ZxIu+swh99GteaQkmoGe9rK3JqnLQP6q0n4UzEn2u
+ 4ArCK7mwzZ1q9S3IIV+DguxPzeqYsO3NdSEeJPscIqp56Dq234hV2FonamA+VijLFRif
+ dqLw==
+X-Gm-Message-State: AOJu0YyGT5rp6HjefJWt/btIKjaBYx0qWcM8Eij4tTzmUIHGbduKwqM7
+ OX6N0VxECw9K/nQVJS0uUwGq8pxQrsJ3EGD/V/gXT8sVIvAEgBKBHkYy4DiG0SdvZs095oIKVsg
+ h7pc7X8SPtw==
+X-Gm-Gg: ASbGnctFK88YoHQaJYJvsmqKhj1VVmNM/1E2VismHINn71rI1OxV7qIQQECuJ359Y5n
+ imFPtpCkj/rWVhpQgoDKkhgnZC+bnm9n8wTb4cYI8sRmkmOQVVR/MnyNFjqDqsbmccDfKgW9Wg2
+ U7Ktqh0zLRk9Wg5qwHNreXBpOYnd3VkH9yqemj7gxKwN0NeRcJHbAAAoReW5d2VJFvY/68mMAHp
+ Ad6mDqeClZyQ7Ac16pB1rEtIi2D4D7KqbhhTJtkoANT1Ut2WOGzbV22+3EHabcYL5XJp99xajR/
+ LSVzPXv3jMRb9Uhdi8ibefh2dlBU7Yab9SkML4ZDWSb+dNqH3DV01bDtywy7MhTUfilquoy00lz
+ LiPGqkXVi+dlh0BK8/iqih81Q3bZlMbzcn2g/RpX8YvACx113PXH+fiElpbk+jxSvw61t9ExW
+X-Google-Smtp-Source: AGHT+IH5E3wc5wHlQSYSl0mVroUeAkhs1XovCn8+Atd2LZ5Czjlzr3ICvgFp2XHl6kTU62gS8zjStg==
+X-Received: by 2002:a05:600c:698c:b0:46e:1abc:1839 with SMTP id
+ 5b1f17b1804b1-46e329ba122mr16536745e9.15.1758768928608; 
+ Wed, 24 Sep 2025 19:55:28 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fb72fbb27sm923650f8f.4.2025.09.24.19.55.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 24 Sep 2025 19:55:27 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>,
- Michael Tsirkin <mst@redhat.com>
-Subject: [PATCH v4] net/tap-linux.c: avoid abort when setting invalid fd
-Date: Thu, 25 Sep 2025 10:32:35 +0800
-Message-ID: <20250925023235.1899458-1-hzuo@redhat.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
+ Cameron Esfahani <dirty@apple.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH 1/4] cpus: Only resume halted CPUs
+Date: Thu, 25 Sep 2025 04:55:16 +0200
+Message-ID: <20250925025520.71805-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250925025520.71805-1-philmd@linaro.org>
+References: <20250925025520.71805-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hzuo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,171 +109,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU creates a tap device automatically and the tap device is
-manually removed from the host while the guest is running, the tap
-device file descriptor becomes invalid. Later, when the guest executes
-shutdown, the tap_fd_set_vnet_hdr_len() function may be called and
-abort QEMU with a core dump when attempting to use the invalid fd.
+Avoid kicking running CPUs, trying to resume them.
 
-This patch removes many abort() calls in this file. If the fd is found
-to be in a bad state (e.g., EBADFD or ENODEV), the related function
-will print an error message.
-
-The expected behavior for this negative test case is that QEMU should
-report an error but continue running rather than aborting.
-
-Testing:
-- Start QEMU with automatically created tap device
-- Manually remove the tap device on the host
-- Execute shutdown in the guest
-- Verify QEMU reports an error but does not abort
-
-(gdb) bt full
-#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-        tid = <optimized out>
-        ret = 0
-        pd = <optimized out>
-        old_mask = {__val = {10}}
-        ret = <optimized out>
-#1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
-#2  0x00007f1710b15f56 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-        ret = <optimized out>
-#3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
-        save_stage = 1
-        act = {__sigaction_handler = {sa_handler = 0x20, sa_sigaction = 0x20}, sa_mask = {__val = {16929458408262392576, 18446744073709550848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943, 139737042670528, 18446744073709550328, 77, 139705603579344, 18446744073709551615, 139737041472378, 139705595179568, 16929458408262392576, 94049679794864}}, sa_flags = 281695456, sa_restorer = 0xa}
-#4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=<optimized out>, len=10) at ../net/tap-linux.c:204
-#5  tap_set_vnet_hdr_len (nc=<optimized out>, len=10) at ../net/tap.c:269
-        s = <optimized out>
-#6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=0x2956, len=10588) at ../net/net.c:573
-#7  virtio_net_set_mrg_rx_bufs (n=0x5589a72cfa10, mergeable_rx_bufs=<optimized out>, version_1=<error reading variable: Incompatible types on DWARF stack>, hash_report=<optimized out>) at ../hw/net/virtio-net.c:664
-        i = 0
-        nc = 0x5589a730ab28
-#8  virtio_net_set_features (vdev=0x5589a72cfa10, features=0) at ../hw/net/virtio-net.c:897
-        n = 0x5589a72cfa10
-        err = 0x0
-        i = 0
-#9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=0x5589a72cfa10, val=0) at ../hw/virtio/virtio.c:3079
-        k = <optimized out>
-        bad = <optimized out>
-#10 virtio_reset (opaque=0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
-        vdev = 0x5589a72cfa10
-        k = 0x5589a5c162b0
-        i = 0
-#11 0x000055899a630d2b in virtio_bus_reset (bus=0x5589a72cf990) at ../hw/virtio/virtio-bus.c:109
-        vdev = <optimized out>
-#12 virtio_pci_reset (qdev=0x5589a72c7470) at ../hw/virtio/virtio-pci.c:2311
-        proxy = 0x5589a72c7470
-        i = 0
-        bus = 0x5589a72cf990
-#13 0x000055899a686ded in memory_region_write_accessor (mr=<optimized out>, addr=<optimized out>, value=<optimized out>, size=<optimized out>, shift=<optimized out>, mask=<optimized out>, attrs=...) at ../system/memory.c:490
-        tmp = <optimized out>
-#14 0x000055899a686cbc in access_with_adjusted_size (addr=20, value=0x7f0fbedfde00, size=1, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x55899a686d30 <memory_region_write_accessor>, mr=0x5589a72c8040, attrs=...) at ../system/memory.c:566
-        print_once_ = false
-        access_mask = 255
-        access_size = 1
-        i = 0
-        r = 0
-        reentrancy_guard_applied = <optimized out>
-#15 0x000055899a686ac5 in memory_region_dispatch_write (mr=<optimized out>, addr=20, data=<optimized out>, op=<optimized out>, attrs=...) at ../system/memory.c:1545
-        size = <optimized out>
-#16 0x000055899a69f7da in flatview_write_continue_step (attrs=..., buf=0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, len=<optimized out>, mr_addr=20, l=0x7f0fbedfde28, mr=0x5589a72c8040) at ../system/physmem.c:2972
-        val = 6
-        result = 0
-        release_lock = <optimized out>
-#17 0x000055899a697c15 in flatview_write_continue (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., ptr=0x7f1711da6028, len=1, mr_addr=6, l=1, mr=0x0) at ../system/physmem.c:3002
-        result = 0
-        buf = 0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>
-#18 flatview_write (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3033
---Type <RET> for more, q to quit, c to continue without paging--
-        l = <optimized out>
-        mr_addr = 6
-        mr = 0x0
-#19 0x000055899a697a91 in address_space_write (as=0x55899bceeba0 <address_space_memory>, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3153
-        _rcu_read_auto = 0x1
-        result = 0
-        fv = 0x2956
-#20 0x000055899a91159b in address_space_rw (addr=10588, attrs=..., buf=0x7f1711da6028, len=0, as=<optimized out>, is_write=<optimized out>) at ../system/physmem.c:3163
-#21 kvm_cpu_exec (cpu=0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
-        attrs = {secure = 0, space = 0, user = 0, memory = 0, debug = 0, requester_id = 0, pid = 0, address_type = 0, unspecified = false, _reserved1 = 0 '\000', _reserved2 = 0}
-        run = 0x7f1711da6000
-        ret = <optimized out>
-        run_ret = <optimized out>
-#22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=0x5589a5d68b40) at ../accel/kvm/kvm-accel-ops.c:51
-        r = <optimized out>
-        cpu = <optimized out>
-#23 0x000055899aba817a in qemu_thread_start (args=0x5589a5d72580) at ../util/qemu-thread-posix.c:393
-        __clframe = {__cancel_routine = <optimized out>, __cancel_arg = 0x0, __do_it = 1, __cancel_type = <optimized out>}
-        qemu_thread_args = 0x5589a5d72580
-        start_routine = 0x55899a918850 <kvm_vcpu_thread_fn>
-        arg = 0x5589a5d68b40
-        r = 0x0
-#24 0x00007f1710b6a128 in start_thread (arg=<optimized out>) at pthread_create.c:448
-        ret = <optimized out>
-        pd = <optimized out>
-        out = <optimized out>
-        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {32, 8894544057743421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908, -8844535456800460908}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
-        not_first_call = <optimized out>
-#25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:100
-
-Fixes: 0caed25cd171c611781589b5402161d27d57229c ("virtio: Call set_features during reset")
-
-Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- net/tap-linux.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ system/cpus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index e832810665..24e63a0b54 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -206,15 +206,16 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
-     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
-         fprintf(stderr, "TUNSETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
-                 strerror(errno));
--        abort();
+diff --git a/system/cpus.c b/system/cpus.c
+index aa7bfcf56e5..6062226d4ac 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -666,7 +666,9 @@ void resume_all_vcpus(void)
+ 
+     qemu_clock_enable(QEMU_CLOCK_VIRTUAL, true);
+     CPU_FOREACH(cpu) {
+-        cpu_resume(cpu);
++        if (cpu->halted) {
++            cpu_resume(cpu);
++        }
      }
  }
  
- int tap_fd_set_vnet_le(int fd, int is_le)
- {
-     int arg = is_le ? 1 : 0;
-+    int ret;
- 
--    if (!ioctl(fd, TUNSETVNETLE, &arg)) {
-+    ret = ioctl(fd, TUNSETVNETLE, &arg);
-+    if (!ret) {
-         return 0;
-     }
- 
-@@ -224,14 +225,16 @@ int tap_fd_set_vnet_le(int fd, int is_le)
-     }
- 
-     error_report("TUNSETVNETLE ioctl() failed: %s.", strerror(errno));
--    abort();
-+    return ret;
- }
- 
- int tap_fd_set_vnet_be(int fd, int is_be)
- {
-     int arg = is_be ? 1 : 0;
-+    int ret;
- 
--    if (!ioctl(fd, TUNSETVNETBE, &arg)) {
-+    ret = ioctl(fd, TUNSETVNETBE, &arg);
-+    if (!ret) {
-         return 0;
-     }
- 
-@@ -241,7 +244,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
-     }
- 
-     error_report("TUNSETVNETBE ioctl() failed: %s.", strerror(errno));
--    abort();
-+    return ret;
- }
- 
- void tap_fd_set_offload(int fd, int csum, int tso4,
 -- 
-2.47.3
+2.51.0
 
 
