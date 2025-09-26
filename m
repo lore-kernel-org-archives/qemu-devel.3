@@ -4,60 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB3FCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03944CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v29qs-0002iT-LD; Fri, 26 Sep 2025 10:55:14 -0400
+	id 1v29qe-0002f7-Qw; Fri, 26 Sep 2025 10:55:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v29qn-0002i9-H3; Fri, 26 Sep 2025 10:55:09 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v29qh-0006eK-Ry; Fri, 26 Sep 2025 10:55:09 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAnLdUxqdZonWVGCQ--.88S2;
- Fri, 26 Sep 2025 22:54:41 +0800 (CST)
-Received: from [192.168.31.224] (unknown [113.246.118.76])
- by mail (Coremail) with SMTP id AQAAfwA3mucjqdZopmsjAA--.13130S2;
- Fri, 26 Sep 2025 22:54:38 +0800 (CST)
-Message-ID: <ce02db47-f9b2-4e48-afe5-3d29a5172f7e@phytium.com.cn>
-Date: Fri, 26 Sep 2025 22:54:24 +0800
+ (Exim 4.90_1) (envelope-from <lifei.shirley@bytedance.com>)
+ id 1v29qX-0002da-MK
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:54:55 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lifei.shirley@bytedance.com>)
+ id 1v29qN-0006Xl-2L
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:54:53 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b556284db11so2208460a12.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:54:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1758898450; x=1759503250; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=fQ3d5ngg1DfO7r8b2XH43YDUg6JuZOy/Y/EgRNcVGic=;
+ b=Fnc8hxYORnlPoepOPJXNxTb5LpqkZN88E+1HbLkojFdPnP2phuAbnbU9LXb9koGvr0
+ HxWOErMdYwoVDD1kWH4X0IWdC5J2hIh9xLmRc9p/26NRrLR2y0peG1B/WUTRyf7JdNyq
+ 8zt7Nd22EMHcyjfIwFGc4TdsqfJOlO/L2LK5gXiRCmTQHtGk75zWPAE0P7BD6lz94FgF
+ 6QawAMKgLi637xdW/r4hrlfPOyL0+DBLalR3FcpBFutTIEQ5xLzNj+5pteD3/HIteXOE
+ JbF7uPAg2jtB9ie5qLdcmQwKJk1PxcDfw4YZTGiUSDvsNGNYCtZZFXEtp8HDQE23d9UT
+ ZpnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758898450; x=1759503250;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fQ3d5ngg1DfO7r8b2XH43YDUg6JuZOy/Y/EgRNcVGic=;
+ b=GSodDbWH08ud2BoCP681/KZoENmuUXmODrqmO+j/eHlS4XC6WuJ0iDnSx22dirZjHW
+ FJAOUiVyyfLmmUEyTpdfg0ryjIg8FzUCMNoSb1gQIdeczPaFCTMOCOsjAaFNB7Cc7UbO
+ ytULlORddFUlf6/YPn4oi2bFQZJo40T/pI7IP4PAF+P7fkdzrIol+QDIPyQs2L+9VC94
+ WdDWa1gshb9JKnYOXIQq1XJOcKtsQz+DgtnZK2UtpKjC6cjCi1GVAVydTqfYS+117T4A
+ JCZHNxLGFtGMIDdOha0NCqaOUbRBlZe8wf3edJfxpnyB8wrshBXSwaaxAJirG4WdkfgB
+ dO2A==
+X-Gm-Message-State: AOJu0YwzUkpA7xa1vup99RS5bRvydXyX+b61S8kryx71ShXOulbCq0xY
+ s1i5TrJRuR1PctfRAZOByonW354JcbH7tWhbkBY/hdjGqpG9dHCTGffSpPId2yIWrgQ=
+X-Gm-Gg: ASbGncuTcLcC4zUNu+N0etnkM1DAWh9owqgmGjNMrf01Osj0wGTmGIEqUbiQxmmk1Gv
+ vrFm6P34Tpjfh4rc5KY3wqXCweJW0SoUgrZ7aZKUai0kC0Ee54m3EiwfyuglNKktrCPes8MWpJP
+ +rsEoMrC5Ul+kkrTF3CI6CmFGgBWpJELhV0VpB0b5rbHPz3ITN2ueinOBihjgCMcdiKTA4G3sOa
+ pE1RfJb0SUR6pGKyGDm37F9m8NV0kLyDLSl5IPdvU5Bfdy79IWPcdm2k9CCGiXRoS1F87IX7DWM
+ riBAZapFiQ2oRMVM742ezeLi4On2kv+dYc4DSInGjeZy9/UPFEOnuDHJGUmJzDML6WcIEutVOqA
+ M1CgK59pJ1YvSX06VqVFbfEgy6mM8qpDOl5qvh78xqtgQ+AkOI4S7rHhY0w==
+X-Google-Smtp-Source: AGHT+IEM5gfpTFeny4JGgiwPmQJtjR802N61GuO0pjn187ffL/azsDT3fsFt/ZGKNuDaQhw0bWZGdw==
+X-Received: by 2002:a17:903:1a2b:b0:24c:ea17:e322 with SMTP id
+ d9443c01a7336-27ed49df28dmr87377845ad.3.1758898450221; 
+ Fri, 26 Sep 2025 07:54:10 -0700 (PDT)
+Received: from [10.254.228.139] ([139.177.225.234])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-27ed69bc295sm56361985ad.123.2025.09.26.07.54.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Sep 2025 07:54:09 -0700 (PDT)
+Message-ID: <5db494c6-c8dd-4073-bea0-5a62fce170e9@bytedance.com>
+Date: Fri, 26 Sep 2025 22:54:05 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/14] hw/arm/smmuv3: Add initial support for Secure
- State
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
- philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com
-References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
- <e439e75e-6d1c-4209-aa41-f3e9d5051462@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <e439e75e-6d1c-4209-aa41-f3e9d5051462@redhat.com>
+From: Fei Li <lifei.shirley@bytedance.com>
+Subject: Re: [PATCH] KVM: x86: Restrict writeback of SMI VCPU state
+To: pbonzini@redhat.com, mtosatti@redhat.com, seanjc@google.com,
+ kvm@vger.kernel.org, Jan Kiszka <jan.kiszka@siemens.com>
+Cc: qemu-devel@nongnu.org
+References: <20250909063327.14263-1-lifei.shirley@bytedance.com>
+Content-Language: en-US
+In-Reply-To: <20250909063327.14263-1-lifei.shirley@bytedance.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwA3mucjqdZopmsjAA--.13130S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAFBWjVmkcGXQADs5
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3JryUCrWrAF47tFWxtFWrXwb_yoW7ArWrpa
- yrKan0gr4DGF4fZryIqr4xuayrtFZ5Ja4UJrsrGry3Gwn8uF93tr4IyF1YkFykKr1kCFyI
- 9ryIvw4kur1jvrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=lifei.shirley@bytedance.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,149 +103,110 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2025/9/26 20:24, Eric Auger wrote:
-> Hi,
->
-> On 9/25/25 6:26 PM, Tao Tang wrote:
->> Hi all,
->>
->> This is the second version of the patch series to introduce initial
->> support for Secure SMMUv3 emulation in QEMU.
->>
->> This version has been significantly restructured based on the excellent
->> feedback received on the RFC.
->>
->> This version addresses the major points raised during the RFC review.
->> Nearly all issues identified in v1 have been resolved. The most
->> significant changes include:
->>
->>    - The entire series has been refactored to use a "banked register"
->>    architecture. This new design serves as a solid base for all secure
->>    functionality and significantly reduces code duplication.
->>
->>    - The large refactoring patch from v1 has been split into smaller, more
->>    focused commits (e.g., STE parsing, page table handling, and TLB
->>    management) to make the review process easier.
->>
->>    - Support for the complex SEL2 feature (Secure Stage 2) has been
->>    deferred to a future series to reduce the scope of this RFC.
->>
->>    - The mechanism for propagating the security context now correctly uses
->>    the ARMSecuritySpace attribute from the incoming transaction. This
->>    ensures the SMMU's handling of security is aligned with the rest of the
->>    QEMU ARM architecture.
->>
->>
->> The series now begins with two preparatory patches that fix pre-existing
->> bugs in the SMMUv3 model. The first of these, which corrects the CR0
->> reserved mask, has already been reviewed by Eric.
->>
->>    - hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0 register
->>    - hw/arm/smmuv3: Correct SMMUEN field name in CR0
->>
->> The subsequent patches implement the Secure SMMUv3 feature, refactored
->> to address the feedback from the v1 RFC.
-> could you shared a branch? It does not seem to apply on master.
->
-> Thanks
->
-> Eric
+Dear maintainers,
 
+Could you please help to review the patch [PATCH] KVM: x86: Restrict 
+writeback of SMI VCPU state? This fixes a race condition causing VM hang 
+when frequently running `info registers -a` via HMP during VM startup. 
+The issue occurs because unrestricted SMI state writeback conflicts with 
+vCPU initialization sequences.
 
-Hi Eric,
+It would be very appreciated for us to know if this patch properly
+resolve the race condition, and if validated, we would like to apply it 
+to our production environment. Let me know if further details are needed. :)
 
-Thanks for the feedback. I've rebased the patch series onto the latest 
-master and pushed it to a branch as you requested.
+Best regards, and thanks again!
+Fei
 
-Interestingly, the rebase completed cleanly without any conflicts on my 
-end, so I'm not sure what the initial issue might have been. In any 
-case, this branch should be up-to-date.
-
-
-You can find the updated branch here for review:
-
-- [v1-rebased] 
-https://github.com/hnusdr/qemu/tree/secure-smmu-v1-community-newer
-
-
-For historical reference, the original branch is here.
-
-- 
-[v1-original]  https://github.com/hnusdr/qemu/tree/secure-smmu-v1-community
-
-
-Thanks,
-
-Tao
-
-
->>
->> Changes from v1 RFC:
->>
->>    - The entire feature implementation has been refactored to use a "banked
->>    register" approach. This significantly reduces code duplication.
->>
->>    - Support for the SEL2 feature (Secure Stage 2) has been deferred. As
->>    Mostafa pointed out, a correct implementation is complex and depends on
->>    FEAT_TTST. This will be addressed in a separate, future patch series.
->>    As a result, this series now supports the following flows:
->>
->>      - Non-secure Stage 1, Stage 2, and nested translations.
->>
->>      - Secure Stage 1-only translations.
->>
->>      - Nested translations (Secure Stage 1 + Non-secure Stage 2), with a
->>    fault generated if a Secure Stage 2 translation is required.
->>
->>    - Writability checks for various registers (both secure and non-secure)
->>    have been hardened to ensure that enable bits are correctly checked.
->>
->> The series has been successfully validated with several test setups:
->>
->>    - An environment using OP-TEE, Hafnium, and a custom platform
->>    device as V1 series described.
->>
->>    - A new, self-contained test device (smmu-testdev) built upon the
->>    QTest framework, which will be submitted as a separate series as
->>    discussed here:
->>      https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg05365.html
->>
->>    - The existing non-secure functionality was regression-tested using
->>    PCIe passthrough to a KVM guest running inside a TCG guest.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->>
->> Tao Tang (14):
->>    hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0 register
->>    hw/arm/smmuv3: Correct SMMUEN field name in CR0
->>    hw/arm/smmuv3: Introduce secure registers and commands
->>    refactor: Move ARMSecuritySpace to a common header
->>    hw/arm/smmuv3: Introduce banked registers for SMMUv3 state
->>    hw/arm/smmuv3: Add separate address space for secure SMMU accesses
->>    hw/arm/smmuv3: Make Configuration Cache security-state aware
->>    hw/arm/smmuv3: Add security-state handling for page table walks
->>    hw/arm/smmuv3: Add secure TLB entry management
->>    hw/arm/smmuv3: Add banked support for queues and error handling
->>    hw/arm/smmuv3: Harden security checks in MMIO handlers
->>    hw/arm/smmuv3: Use iommu_index to represent the security context
->>    hw/arm/smmuv3: Add property to enable Secure SMMU support
->>    hw/arm/smmuv3: Optional Secure bank migration via subsections
->>
->>   hw/arm/smmu-common.c          |  151 ++++-
->>   hw/arm/smmu-internal.h        |    7 +
->>   hw/arm/smmuv3-internal.h      |  114 +++-
->>   hw/arm/smmuv3.c               | 1130 +++++++++++++++++++++++++--------
->>   hw/arm/trace-events           |    9 +-
->>   hw/arm/virt.c                 |    5 +
->>   include/hw/arm/arm-security.h |   54 ++
->>   include/hw/arm/smmu-common.h  |   60 +-
->>   include/hw/arm/smmuv3.h       |   35 +-
->>   target/arm/cpu.h              |   25 +-
->>   10 files changed, 1257 insertions(+), 333 deletions(-)
->>   create mode 100644 include/hw/arm/arm-security.h
->>
->> --
->> 2.34.1
->>
+On 9/9/25 2:33 PM, Fei Li wrote:
+> Recently, we meet a SMI race bug triggered by one monitor tool in our
+> production environment. This monitor executes 'info registers -a' hmp
+> at a fixed frequency, even during VM startup process, which makes
+> some AP stay in KVM_MP_STATE_UNINITIALIZED forever, thus VM hangs.
+> 
+> The complete calling processes for the SMI race are as follows:
+> 
+> //thread1                      //thread2               //thread3
+> `info registers -a` hmp [1]    AP(vcpu1) thread [2]    BSP(vcpu0) send INIT/SIPI [3]
+> 
+>                                 [2]
+>                                 KVM: KVM_RUN and then
+>                                      schedule() in kvm_vcpu_block() loop
+> 
+> [1]
+> for each cpu: cpu_synchronize_state
+> if !qemu_thread_is_self()
+> 1. insert to cpu->work_list, and handle asynchronously
+> 2. then kick the AP(vcpu1) by sending SIG_IPI/SIGUSR1 signal
+> 
+>                                 [2]
+>                                 KVM: checks signal_pending, breaks loop and returns -EINTR
+>                                 Qemu: break kvm_cpu_exec loop, run
+>                                       1. qemu_wait_io_event()
+>                                       => process_queued_cpu_work => cpu->work_list.func()
+>                                          e.i. do_kvm_cpu_synchronize_state() callback
+>                                          => kvm_arch_get_registers
+>                                             => kvm_get_mp_state /* KVM: get_mpstate also calls
+>                                                kvm_apic_accept_events() to handle INIT and SIPI */
+>                                       => cpu->vcpu_dirty = true;
+>                                       // end of qemu_wait_io_event
+> 
+>                                                         [3]
+>                                                         SeaBIOS: BSP enters non-root mode and runs reset_vector() in SeaBIOS.
+>                                                                  send INIT and then SIPI by writing APIC_ICR during smp_scan
+>                                                         KVM: BSP(vcpu0) exits, then => handle_apic_write
+>                                                              => kvm_lapic_reg_write => kvm_apic_send_ipi to all APs
+>                                                              => for each AP: __apic_accept_irq, e.g. for AP(vcpu1)
+>                                                              ==> case APIC_DM_INIT: apic->pending_events = (1UL << KVM_APIC_INIT)
+>                                                                  (not kick the AP yet)
+>                                                              ==> case APIC_DM_STARTUP: set_bit(KVM_APIC_SIPI, &apic->pending_events)
+>                                                                  (not kick the AP yet)
+> 
+>                                 [2]
+>                                 Qemu continue:
+>                                      2. kvm_cpu_exec()
+>                                      => if (cpu->vcpu_dirty):
+>                                         => kvm_arch_put_registers
+>                                            => kvm_put_vcpu_events
+>                                 KVM: kvm_vcpu_ioctl_x86_set_vcpu_events
+>                                      => clear_bit(KVM_APIC_INIT, &vcpu->arch.apic->pending_events);
+>                                         e.i. pending_events changes from 11b to 10b
+>                                        // end of kvm_vcpu_ioctl_x86_set_vcpu_events
+>                                 Qemu: => after put_registers, cpu->vcpu_dirty = false;
+>                                       => kvm_vcpu_ioctl(cpu, KVM_RUN, 0)
+>                                 KVM: KVM_RUN
+>                                      => schedule() in kvm_vcpu_block() until Qemu's next SIG_IPI/SIGUSR1 signal
+>                                      /* But AP(vcpu1)'s mp_state will never change from KVM_MP_STATE_UNINITIALIZED
+>                                        to KVM_MP_STATE_INIT_RECEIVED, even then to KVM_MP_STATE_RUNNABLE without
+>                                        handling INIT inside kvm_apic_accept_events(), considering BSP will never
+>                                        send INIT/SIPI again during smp_scan. Then AP(vcpu1) will never enter
+>                                        non-root mode */
+> 
+>                                                         [3]
+>                                                         SeaBIOS: waits CountCPUs == expected_cpus_count and loops forever
+>                                                                  e.i. the AP(vcpu1) stays: EIP=0000fff0 && CS =f000 ffff0000
+>                                                                  and BSP(vcpu0) appears 100% utilized as it is in a while loop.
+> 
+> To fix this, avoid clobbering SMI when not putting "reset" state, just
+> like NMI abd SIPI does.
+> 
+> Signed-off-by: Fei Li <lifei.shirley@bytedance.com>
+> ---
+>   target/i386/kvm/kvm.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 369626f8c8..598661799a 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -5056,7 +5056,7 @@ static int kvm_put_vcpu_events(X86CPU *cpu, int level)
+>   
+>       events.sipi_vector = env->sipi_vector;
+>   
+> -    if (has_msr_smbase) {
+> +    if (has_msr_smbase && level >= KVM_PUT_RESET_STATE) {
+>           events.flags |= KVM_VCPUEVENT_VALID_SMM;
+>           events.smi.smm = !!(env->hflags & HF_SMM_MASK);
+>           events.smi.smm_inside_nmi = !!(env->hflags2 & HF2_SMM_INSIDE_NMI_MASK);
 
 
