@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B83CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E237CAC5B8
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23Xp-0006y1-6F; Fri, 26 Sep 2025 04:11:09 -0400
+	id 1v23Yh-0007PR-Js; Fri, 26 Sep 2025 04:12:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23Xm-0006x5-Eb; Fri, 26 Sep 2025 04:11:07 -0400
+ id 1v23YW-0007Mz-SD; Fri, 26 Sep 2025 04:11:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23Xg-00008z-NL; Fri, 26 Sep 2025 04:11:05 -0400
+ id 1v23YT-0000N0-8l; Fri, 26 Sep 2025 04:11:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CE001157D4A;
- Fri, 26 Sep 2025 11:10:30 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E2AA9290C2E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 79AE7157D52;
  Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D2B7290C36;
+ Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zero Tang <zero.tangptr@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 02/60] i386/tcg/svm: fix incorrect canonicalization
-Date: Fri, 26 Sep 2025 11:09:30 +0300
-Message-ID: <20250926081031.2214971-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Yan Vugenfirer <yvugenfi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 10/60] qga/installer: Remove QGA VSS if QGA
+ installation failed
+Date: Fri, 26 Sep 2025 11:09:38 +0300
+Message-ID: <20250926081031.2214971-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -59,38 +60,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zero Tang <zero.tangptr@gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-For all 32-bit systems and 64-bit Windows systems, "long" is 4 bytes long.
-Due to using "long" for a linear address, svm_canonicalization would
-set all high bits to 1 when (assuming 48-bit linear address) the segment
-base is bigger than 0x7FFF.
+When QGA Installer failed to install QGA service but install
+QGA VSS provider, provider should be removed before installer
+exits. Otherwise QGA VSS will has broken infomation and
+prevent QGA installation in next run.
 
-This fixes booting guests under TCG when the guest IDT and GDT bases are
-above 0x7FFF, thereby resulting in incorrect bases. When an interrupt
-arrives, it would trigger a #PF exception; the #PF would trigger again,
-resulting in a #DF exception; the #PF would trigger for the third time,
-resulting in triple-fault, and eventually causes a shutdown VM-Exit to
-the hypervisor right after guest boot.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Zero Tang <zero.tangptr@gmail.com>
-(cherry picked from commit c12cbaa007c9da97a11e74119ea3aed9fcc3ac4c)
+Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250825143155.160913-1-kkostiuk@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit 85ff0e956bf26a93c92e4dca8f6257613269a0cf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
-index b27049b9ed..dea039b87a 100644
---- a/target/i386/tcg/system/svm_helper.c
-+++ b/target/i386/tcg/system/svm_helper.c
-@@ -49,7 +49,7 @@ static void svm_save_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
- static inline void svm_canonicalization(CPUX86State *env, target_ulong *seg_base)
- {
-     uint16_t shift_amt = 64 - cpu_x86_virtual_addr_width(env);
--    *seg_base = ((((long) *seg_base) << shift_amt) >> shift_amt);
-+    *seg_base = (((int64_t) *seg_base) << shift_amt) >> shift_amt;
- }
+diff --git a/qga/installer/qemu-ga.wxs b/qga/installer/qemu-ga.wxs
+index df572adb4a..32b8308728 100644
+--- a/qga/installer/qemu-ga.wxs
++++ b/qga/installer/qemu-ga.wxs
+@@ -151,6 +151,14 @@
+               Return="check"
+               >
+     </CustomAction>
++    <CustomAction Id="UnRegisterCom_Rollback"
++              ExeCommand='"[qemu_ga_directory]qga-vss.dll",DLLCOMUnregister'
++              Execute="rollback"
++              Property="rundll"
++              Impersonate="no"
++              Return="check"
++              >
++    </CustomAction>
+     <?endif?>
  
- static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
+     <Feature Id="QEMUFeature" Title="QEMU Guest Agent" Level="1">
+@@ -174,8 +182,19 @@
+ 
+     <InstallExecuteSequence>
+       <?ifdef var.InstallVss?>
+-      <Custom Action="UnRegisterCom" After="StopServices">Installed</Custom>
+-      <Custom Action="RegisterCom" After="InstallServices">NOT REMOVE</Custom>
++        <!-- Use explicit Sequence number to provide an absolute position in the sequence-->
++        <!-- This is needed to set "UnRegisterCom_Rollback" before "RegisterCom" and after "InstallFiles"-->
++        <!-- but, Wix detect this double condition incorrectly -->
++
++        <!-- UnRegisterCom_Rollback (for install rollback): at 5849, right before RegisterCom (5850)-->
++        <!-- Runs only if the installation fails and rolls back-->
++        <Custom Action="UnRegisterCom_Rollback" Sequence="5849">NOT REMOVE</Custom>
++
++        <!-- RegisterCom (for install): at 5850, right after InstallFiles (5849) (old: After="InstallServices")-->
++        <Custom Action="RegisterCom" Sequence="5850">NOT REMOVE</Custom>
++
++        <!-- UnRegisterCom (for uninstall): at 1901, right after StopServices (1900) (old: After="StopServices")-->
++        <Custom Action="UnRegisterCom" Sequence="1901">Installed</Custom>
+       <?endif?>
+     </InstallExecuteSequence>
+   </Product>
 -- 
 2.47.3
 
