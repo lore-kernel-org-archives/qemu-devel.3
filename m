@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785F3CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE7DCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2882-00039H-4A; Fri, 26 Sep 2025 09:04:50 -0400
+	id 1v28E1-0006Wz-BO; Fri, 26 Sep 2025 09:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v2869-0001dF-GP
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:02:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v28Dz-0006WI-ET
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:10:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v285y-0001Bb-I7
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:02:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v28Du-00031x-Lw
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:10:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758891748;
+ s=mimecast20190719; t=1758892246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nbZvIc5LKcLtvFIwDbeACPUWfhCRHxyPKp9hV4ev1v4=;
- b=ceOMavsFIk4KOn52lVNle2lTVwpcNxylQWR+qauWzHBne1vM0X1iLSrhHarMebVi38Ndyu
- AdHDCi7OlnglLhMWxl3wuSPZRA67aHecqC/ZkpfNWFnp2ofZqKPbLBX3qLJd1ME5hj+B7P
- O7CJyVRIQF06pYXPqfhvf3c7o63O8UA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ju5qsI4f2mIwBOaEFaGzRPuA+18bVAwOySNET4AGR7Y=;
+ b=DyPWtzkx5OYQ5XEa7WdaLgu/z66//at9LbPTBExBUsuTaXAC/mxL8MTcI0ZD9dnGfYnpY7
+ GHZge/kwtmsl+kBtgXqimPgHejJ6mr7eaC2bW5BDHJqqc48XkiQWaCcbVMR/hcSwVTnjpS
+ xse7YuXu44SoWqs/P15f4T3vFmdJfaU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-v7eloZaHNwemv3TWBJ17Jw-1; Fri, 26 Sep 2025 09:02:25 -0400
-X-MC-Unique: v7eloZaHNwemv3TWBJ17Jw-1
-X-Mimecast-MFC-AGG-ID: v7eloZaHNwemv3TWBJ17Jw_1758891744
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3ee1317b132so1671292f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 06:02:25 -0700 (PDT)
+ us-mta-628-7-_Q_B_UN7m6TDMLOMgXHQ-1; Fri, 26 Sep 2025 09:10:44 -0400
+X-MC-Unique: 7-_Q_B_UN7m6TDMLOMgXHQ-1
+X-Mimecast-MFC-AGG-ID: 7-_Q_B_UN7m6TDMLOMgXHQ_1758892243
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e39567579so6600205e9.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 06:10:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758891744; x=1759496544;
+ d=1e100.net; s=20230601; t=1758892243; x=1759497043;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nbZvIc5LKcLtvFIwDbeACPUWfhCRHxyPKp9hV4ev1v4=;
- b=hHhZGdZvuJtdMKS0jvdO9BHXO4XK1eX/UmbsJX45oH63haNTQkpWHTkZ+eIAzEBYY6
- O2t8PPLSc/fuygOQ43q0c5kKJrsB+AUR3VdueGRWfPMp+mj/7K/IQPVf6s8HbIBv4fH2
- u4REM4KCsrD23lY83kMG7jt0+RDgajukmlN3qxNRRKYDDQc2zwla9Fj0mtFOLgVx/O8q
- NGbOYy36ZHKKcjL0jeiWVImBthf4SpVayzV84PsamCvpgzXFzSw2Hn3TrWJv5XvwX+Hq
- zQhyUp3XnlgCcOAqZ+ajpqSjw8DAcCTl91FZxL8p+lmg8miLHPK2AKei0z/1aR6Y5oqp
- IRZA==
+ bh=Ju5qsI4f2mIwBOaEFaGzRPuA+18bVAwOySNET4AGR7Y=;
+ b=xRBbylWHE7OoFJVecSpxCHCCS9jP3+OjsLq/Vf1Pes8xdZmSlkVNX11aDxzfqB6VZK
+ tJqyOMq57fQPMTZB3I3tGs/t6onGb2obCX2m8E8Wp5msqA/RHOfe2ALsLds7Yb380b29
+ eAVrrYPWQgoQpDvM5R+31pnUZU8j/QwY40LTLC4sZHiXQ3kUMCRBpAfOuc8yevb4M+44
+ aVL35uEmK+VDx7yhq2HecRdGTGXCxZNFnb6+yhitGRJC05kTxHpnxYAmi/V1S9sXsJVr
+ ZtYvqPvy797bZ1aTbhgRtc6CunrzaZBLsSeVo65gcYMxP8hD2IGVCTJp2UzmdfBBDz1l
+ Z/9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtJbqPPEalk9l7ocSxZlc4T0VZapjJo9C0DFsP0G0JGTjJ+CEmecGZF265zxtbleNT22gEjZaLWvFP@nongnu.org
-X-Gm-Message-State: AOJu0YzJvcoSGML9hdlaBpfrTolI9UY6lYZreVdx636htwc3OHr/GATp
- qvg5JW7u5Jczxe2fhfssITLqvpWzyGnEoFqyaeEgsFj/xaOhWAfk5qTdDTtKTFzHUmD1Pv4OnTJ
- uXamCwBBXQ7rZnRJfZgb2dHWHmWDeHRHUQnp1em9pG6x1gHRJbNX4EEpM
-X-Gm-Gg: ASbGncuQqN5AZRE1FVZ/AwixfufM/4ikbdXYmuBADD8iTu0xkFQD0mhTAqJ4sqI7vVd
- mQWGVWekbxRiFz5ghThcvv4LC4x3pfiwoy5EQ5yDVMb4p/qkd5hLWULSYF+1PsgvNQtbrOjw6Yu
- OoYRA62F1t0Ng/alBnGQdvXrUMlrWIw8/cNbJJIr4kbhmvYY5cSaj2zPgzuROFoOeF0S/qjhhJk
- +l5n6PPEt974EjSv2UUXywNyRzqcmyNS/3bnr7iLkJPh6bd5cECd6TgVOa326yvw++UX6TVJjHC
- 13p3YeCS9yez21RpT3fiisgiIup9a+TPv5iEsouQarBc1H8q5PKINUBlclGpi/JiZaSyAsSEZcx
- +Utn97A==
-X-Received: by 2002:a05:6000:40c9:b0:3ee:1521:95fc with SMTP id
- ffacd0b85a97d-40e4745e16emr7354172f8f.14.1758891744291; 
- Fri, 26 Sep 2025 06:02:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH539vk3K+rstVY9cN4MFahA0hlS3Vh4zxhSjOWxtkMM60CFmvnLGpZyls92exbZCYH4AahTg==
-X-Received: by 2002:a05:6000:40c9:b0:3ee:1521:95fc with SMTP id
- ffacd0b85a97d-40e4745e16emr7354132f8f.14.1758891743875; 
- Fri, 26 Sep 2025 06:02:23 -0700 (PDT)
+ AJvYcCUXC09bXRlF7Q2+fRU7wFcn8Mysi7cxaYxcUyP6qUTiQIDcSjYs888JsWU48/1Lq7kJHSkrovpoLQFY@nongnu.org
+X-Gm-Message-State: AOJu0YzwivdXIYxy3kSYaljFRcBXsNeuqmDxVOlLTohAkwLDAfLIX2I3
+ v+RmCbkEh5kcrtC788mTMbOVKNA6p5ae5Wjd1fXlv1pgz6a19YR6DG+QPK+A828rsssUpLSnNSs
+ hp1cV1liupr7bhrrieWBw6+jIlsPg6RdsiVE4dmkYReyV/D1LgQ+Ienwq
+X-Gm-Gg: ASbGncs0OIBRbHnrxbuvMW89bkyqNi4H5yeM2j0VH5oFryRuBj5roF2rjM2C4T0YDvT
+ 9Edw5TxI7qTsYv2J5kU6RrDGgd+Jk8xGT/YwOVgv3Po7cqybKOEpJ9jLv0jha0auglHXmAhrd5w
+ hdL+9wsKbFIRKgk8m5wLdkRulK5kDQwWKzOvkBHME1R78YDvTqXJVUKbZcKjYcGwCokaD5xUzgR
+ 9ar3YSvHIM1LvT+iNhKaTnNX+DSQgWNvQOV73IsSi6W7Y3+0uWtGd/od1A/VmF6YgYo9EoE3iIv
+ MqKyY9cTWXR3vD4oe9oG0gycDG82SGQwHzdTU104n2rDEWWtzSuP6+LzPQA2cfFl5UZp19Ym60/
+ VO7fsOg==
+X-Received: by 2002:a05:600c:4683:b0:45d:e28c:875a with SMTP id
+ 5b1f17b1804b1-46e32a16bafmr79452725e9.31.1758892243279; 
+ Fri, 26 Sep 2025 06:10:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+nJ5B3CS2yFUSysgmxWtpIwN8F2PdDew9JgHs42OYukMqqHx+6WMM3fXlO1R+TP39sw0ylg==
+X-Received: by 2002:a05:600c:4683:b0:45d:e28c:875a with SMTP id
+ 5b1f17b1804b1-46e32a16bafmr79452085e9.31.1758892242686; 
+ Fri, 26 Sep 2025 06:10:42 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
  [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc5602eccsm7302185f8f.40.2025.09.26.06.02.22
+ 5b1f17b1804b1-46e2ab31bdesm115117555e9.11.2025.09.26.06.10.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Sep 2025 06:02:23 -0700 (PDT)
-Message-ID: <569e0dd6-a578-4b31-9740-799566880311@redhat.com>
-Date: Fri, 26 Sep 2025 15:02:21 +0200
+ Fri, 26 Sep 2025 06:10:42 -0700 (PDT)
+Message-ID: <5cedde08-278d-4803-b071-a7a5151f9b2f@redhat.com>
+Date: Fri, 26 Sep 2025 15:10:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 18/28] pc-bios/s390-ccw: Rework zipl_load_segment
- function
+Subject: Re: [PATCH v6 19/28] pc-bios/s390-ccw: Add signature verification for
+ secure IPL in audit mode
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -86,7 +86,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-19-zycai@linux.ibm.com>
+ <20250917232131.495848-20-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,19 +131,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250917232131.495848-19-zycai@linux.ibm.com>
+In-Reply-To: <20250917232131.495848-20-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,19 +160,108 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Make the address variable a parameter of zipl_load_segment and return
-> segment length.
+> Enable secure IPL in audit mode, which performs signature verification,
+> but any error does not terminate the boot process. Only warnings will be
+> logged to the console instead.
 > 
-> Modify this function to allow the caller to specify a memory address
-> where segment data should be loaded into.
+> Add a comp_len variable to store the length of a segment in
+> zipl_load_segment. comp_len variable is necessary to store the
+> calculated segment length and is used during signature verification.
+> Return the length on success, or a negative return code on failure.
 > 
-> seg_len variable is necessary to store the calculated segment length and
-> is used during signature verification. Return the length on success, or
-> a negative return code on failure.
+> Secure IPL in audit mode requires at least one certificate provided in
+> the key store along with necessary facilities (Secure IPL Facility,
+> Certificate Store Facility and secure IPL extension support).
+> 
+> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
+> virtio-blk/virtio-scsi devices.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
+>   docs/system/s390x/secure-ipl.rst |  36 +++
+>   pc-bios/s390-ccw/Makefile        |   3 +-
+>   pc-bios/s390-ccw/bootmap.c       |  39 +++-
+>   pc-bios/s390-ccw/bootmap.h       |  11 +
+>   pc-bios/s390-ccw/main.c          |   9 +
+>   pc-bios/s390-ccw/s390-ccw.h      |  15 ++
+>   pc-bios/s390-ccw/sclp.c          |  44 ++++
+>   pc-bios/s390-ccw/sclp.h          |   6 +
+>   pc-bios/s390-ccw/secure-ipl.c    | 371 +++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/secure-ipl.h    |  99 +++++++++
+>   10 files changed, 630 insertions(+), 3 deletions(-)
+>   create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+>   create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+> 
+> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+> index 92c1bb2153..701594b9de 100644
+> --- a/docs/system/s390x/secure-ipl.rst
+> +++ b/docs/system/s390x/secure-ipl.rst
+> @@ -19,3 +19,39 @@ Note: certificate files must have a .pem extension.
+>       qemu-system-s390x -machine s390-ccw-virtio, \
+>                                  boot-certs.0.path=/.../qemu/certs, \
+>                                  boot-certs.1.path=/another/path/cert.pem ...
+> +
+> +
+> +IPL Modes
+> +=========
+> +
+> +The concept of IPL Modes are introduced to differentiate between the IPL configurations.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This is not a commit description, but documentation that persists, so "are 
+introduced" sounds wrong here.
+
+Maybe rather something like:
+
+Multiple IPL modes are available to differentiate between the various IPL 
+configurations.
+
+?
+
+> +These modes are mutually exclusive and enabled based on the ``boot-certs`` option on the
+> +QEMU command line.
+> +
+> +Normal Mode
+> +-----------
+> +
+> +The absence of certificates will attempt to IPL a guest without secure IPL operations.
+> +No checks are performed, and no warnings/errors are reported. This is the default mode.
+> +
+> +Configuration:
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio ...
+> +
+> +Audit Mode
+> +----------
+> +
+> +With *only* the presence of certificates in the store, it is assumed that secure
+> +boot operations should be performed with errors reported as warnings. As such,
+> +the secure IPL operations will be performed, and any errors that stem from these
+> +operations will report a warning via the SCLP console.
+
+"errors ... will report a warning" sounds weird. maybe rather: "errors ... 
+will result in a warning" ?
+
+...
+> diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+> index 95943441d3..90fd530256 100644
+> --- a/pc-bios/s390-ccw/bootmap.h
+> +++ b/pc-bios/s390-ccw/bootmap.h
+> @@ -88,9 +88,18 @@ typedef struct BootMapTable {
+>       BootMapPointer entry[];
+>   } __attribute__ ((packed)) BootMapTable;
+>   
+> +#define DER_SIGNATURE_FORMAT 1
+> +
+> +typedef struct SignatureInformation {
+> +    uint8_t format;
+> +    uint8_t reserved[3];
+> +    uint32_t sig_len;
+> +} __attribute__((packed)) SignatureInformation;
+
+Everything is naturally aligned, no need to use packed here.
+
+  Thomas
 
 
