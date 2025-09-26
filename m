@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28BFACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 18:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CDDCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 19:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2DRD-0004VC-Pv; Fri, 26 Sep 2025 14:44:59 -0400
+	id 1v2E6J-0006gH-Um; Fri, 26 Sep 2025 15:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v2DR3-0004Sf-26; Fri, 26 Sep 2025 14:44:52 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v2E6H-0006eb-Ly
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 15:27:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v2DQr-0004Ex-QD; Fri, 26 Sep 2025 14:44:45 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QGPkGt028993;
- Fri, 26 Sep 2025 18:44:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ScHnOx
- 9JQXctBK1q4LFO7n1IrA2JhOZ45/YRNj0QswA=; b=H7cJHFE96f7LTa7/jfH2pd
- Z6RrvFn55orduiqsYZU3zDha3GE/baP/Vqn7RGWHEYm9A4I3VOatwV3agCIdYh2B
- IyrJIfv0dZ2I882gOcbanuJSXPp0yhhxhOKk3lzy5xJxXyWV3eEcnqcgidKdd4AD
- VDsmUv3X3wbtfcoszGstK1Wkd8EWfJ+7AmX52YmFs4Hr8p07us7uJEy2Jr5CUsQn
- AR7Fve9PzEED32+bOJTioqREvGt4xxXbI3dF/5iHhGRjSvkd4DxvwBaw2kgQ2YkY
- UVRVmGafQrBqfaKTAm8W0zMTfUgAbwXRGSij3E2DK/HR/JPOpQIqXGGrSWTeKjnA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbbbpnwa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Sep 2025 18:44:26 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58QHSAf5014323;
- Fri, 26 Sep 2025 18:44:25 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49dawm5prj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Sep 2025 18:44:25 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58QIiOcd33554746
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Sep 2025 18:44:24 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B59CE58054;
- Fri, 26 Sep 2025 18:44:24 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0090F5804E;
- Fri, 26 Sep 2025 18:44:24 +0000 (GMT)
-Received: from [9.61.249.51] (unknown [9.61.249.51])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Sep 2025 18:44:23 +0000 (GMT)
-Message-ID: <b7dd06f1-f00a-45b0-b43a-dc8d25ec1e46@linux.ibm.com>
-Date: Fri, 26 Sep 2025 11:44:11 -0700
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v2E65-0005cJ-Qt
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 15:27:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758914825;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AMWQz4ONWoJUcBgefp/qHyt71eDdSre4DeSV1Lx0ZF8=;
+ b=jVXmGcoB/QhUlAHmzZMMQkICccE674UKUZWnpy7k5OCw4oBHlnMI/5ZU7E5YOdMbZ+7XNS
+ BqLpq/qr1B9S13nia+vNuW6/apUsKMbLCIs7ZuU/H2QOmx9N+TPqL/8uhoFBv/RFcFHPj/
+ d/qUWkjxk5Y3qQaEF5xpWwIc52bOxKo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-564-vBM_1j4RP-i8c3Gl-Cre8g-1; Fri, 26 Sep 2025 15:27:01 -0400
+X-MC-Unique: vBM_1j4RP-i8c3Gl-Cre8g-1
+X-Mimecast-MFC-AGG-ID: vBM_1j4RP-i8c3Gl-Cre8g_1758914820
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3ece0cb7c9cso1930673f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 12:27:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758914820; x=1759519620;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AMWQz4ONWoJUcBgefp/qHyt71eDdSre4DeSV1Lx0ZF8=;
+ b=u3rDnDbP1qy/M0qJH3FnigP0YHSHqCkcZb6zIJCzNzAAoUBuQ7AHZLphBKt2wKpR59
+ 2Tz197QVFdOwfezHt1Q6DFMbzFE4p3HFsOX86XfolswcAl464tlNO0NyuF6SgFLGrSqy
+ O4Ojgs22MLKdwj4WeOZcTyOk3v6g9Wnj0fRBFDrUr1mj+cLqGt8ZB+jr+WOjhvekZp8r
+ uImP56Z0gfwkG46yA9Ip1/e6nHXFl+86aBItMBP0CsVt5BigLuWaQYC38p0LvJlNWgsp
+ fSF9MFWluIsGsJBvvb8ykRtsVU94HpGYZDtkWOZW0FqSoSo4Vit1AyKeIaAaziGvu0Ht
+ ORyw==
+X-Gm-Message-State: AOJu0YwrrDTDbV97A1EufJnwRZcDeapN42I3ChFzm94mnRlzTuo8m4yN
+ etR8SQr00DXNafLjb/AE6ZoD4iSKL9zweLjwB/LiNjzoyT1F+IzwT/nDtOMY+glqOv3BI5M0y/V
+ JJWkqE6f21T6mg47kNPzztOkuUMtUU27pMj7O/7YVgK9TGq3qzVZowNh6/70MDX6XLuWKvbe6Sj
+ UtYOcoGfpj46nPvpN26ekKZGphN6+5tX8=
+X-Gm-Gg: ASbGncsFhkL8epJ4vKo/EISPCUnPsaHwNRf6UVEWdGYLmf3qRmSnED9j7BKlHZte1lA
+ Ze6pqrZAjno1+eY4gH1ynfxirKgzvsjkeIat3vB6zETNSl6dp61BI+0n9c4yiyZXMrU4LV8tFmL
+ 3FrgOva4bElNPKS9dmNSEV37D4JVtYA4gYj1PokbAA1dMohSJsLTgO9c0rkF2wYTONHyOmO0Cu8
+ GWYqZa60uJLZeN+yoOkbNNHZAE=
+X-Received: by 2002:a05:6000:2507:b0:407:7a7:1ca0 with SMTP id
+ ffacd0b85a97d-40e4773cb94mr8181317f8f.14.1758914820362; 
+ Fri, 26 Sep 2025 12:27:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/0vy8EhVkAmQT1YcfGJImsQifRGjSXR9Q/qbHCzkwSjUCfti47PzAlb5Jc/i9eDFHyaGD+O6Accj3g9VFU/o=
+X-Received: by 2002:a05:6000:2507:b0:407:7a7:1ca0 with SMTP id
+ ffacd0b85a97d-40e4773cb94mr8181306f8f.14.1758914819980; Fri, 26 Sep 2025
+ 12:26:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] vfio/pci: Add an error handler callback
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, mjrosato@linux.ibm.com,
- thuth@redhat.com, alex.williamson@redhat.com
-References: <20250925174852.1302-1-alifm@linux.ibm.com>
- <20250925174852.1302-3-alifm@linux.ibm.com> <87qzvtstd7.fsf@pond.sub.org>
- <1b384231-fe7a-4f13-a30e-2c8c1b9f1563@redhat.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <1b384231-fe7a-4f13-a30e-2c8c1b9f1563@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: cHXOYWPbEYsPOQ51HmzymE6tqCpX2Vd4
-X-Authority-Analysis: v=2.4 cv=LakxKzfi c=1 sm=1 tr=0 ts=68d6df0a cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=eIN5sIIRehRY17YpvvgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: cHXOYWPbEYsPOQ51HmzymE6tqCpX2Vd4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX1WLqCkss6tDC
- 3iOaWM0qRxmxr0Wz9c21dfjLn+HS9t+c7ecJssSbjLqG1ogXUvEUAkUesuwsKLdoCvRMszIkpUk
- i+6wiRSjUYCGOA/pJgNNsflCqQzDiTcf4oi5jyW3wxknUkU8ZNonDGI7LpAPA3Sz281GueB+68b
- qr3xBWyrgJMrddveAeZv3wNQCGbk/gjmgbJ/r8DiofHUSMWlXvxeHTh8nNjC5NhV7jHLmJHDcVd
- aU6g7EEBbqD3FXSSSFhrGK+5gaVaI8wrzgUaj/lvxqafVge9/pb1QHjf2ISJetoyOhatWkBhJIf
- FDY+WFIHZ6+fYOen4Zm502+R7K5IBxe5dhD+LNwoBKuQ+36MBScxM0+xo8wEjWkgoEQSkw0wYho
- J1Doy9BIOopUhDJRf1mu8EvJZUhTvw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-26_06,2025-09-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0 clxscore=1015
- impostorscore=0 priorityscore=1501 malwarescore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250925075630.352720-1-pbonzini@redhat.com>
+ <CAFEAcA_6nf6zAK9=VZE9kCXUvYcZhxAgPUN=0gxtun7ip6b7ig@mail.gmail.com>
+In-Reply-To: <CAFEAcA_6nf6zAK9=VZE9kCXUvYcZhxAgPUN=0gxtun7ip6b7ig@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 26 Sep 2025 21:26:47 +0200
+X-Gm-Features: AS18NWBpZZrxxBJ83-QZLJZAD67f2Vhu28W8FnEj4MqKdagOCPrEjs6t_o_-XJc
+Message-ID: <CABgObfYauCBr7YVUvGURRy0qGS8NaeLn=r23WFuq2hhzgWmJng@mail.gmail.com>
+Subject: Re: [PATCH] docs/code-provenance: add an exception for non-creative
+ AI changes
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, "Hajnoczi,
+ Stefan" <stefanha@redhat.com>, 
+ "P. Berrange, Daniel" <berrange@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000000917a9063fb9450b"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,104 +107,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000000917a9063fb9450b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/26/2025 12:40 AM, Cédric Le Goater wrote:
-> On 9/26/25 06:57, Markus Armbruster wrote:
->> Farhan Ali <alifm@linux.ibm.com> writes:
->>
->>> Provide a vfio error handling callback, that can be used by devices to
->>> handle PCI errors for passthrough devices.
->>>
->>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->>> ---
->>>   hw/vfio/pci.c | 8 ++++++++
->>>   hw/vfio/pci.h | 1 +
->>>   2 files changed, 9 insertions(+)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index bc0b4c4d56..b02a974954 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -3063,11 +3063,19 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
->>>   static void vfio_err_notifier_handler(void *opaque)
->>>   {
->>>       VFIOPCIDevice *vdev = opaque;
->>> +    Error *err = NULL;
->>>         if (!event_notifier_test_and_clear(&vdev->err_notifier)) {
->>>           return;
->>>       }
->>>   +    if (vdev->err_handler) {
->>> +        if (vdev->err_handler(vdev, &err)) {
->>> +            return;
->>> +        }
->>> +        error_report_err(err);
->>> +    }
->>
->> This is unusual.
->
-> and the compiler complains :
->
-> ../hw/vfio/pci.c: In function ‘vfio_err_notifier_handler’:
-> ../hw/vfio/pci.c:3076:9: error: dangling pointer to ‘err’ may be used 
-> [-Werror=dangling-pointer=]
->  3076 |         error_report_err(err);
->       |         ^~~~~~~~~~~~~~~~~~~~~
-> ../hw/vfio/pci.c:3066:12: note: ‘err’ declared here
->  3066 |     Error *err = NULL;
->       |            ^~~
-> cc1: all warnings being treated as errors
->
->
-> C.
+On Fri, Sep 26, 2025, 16:39 Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Compiling on s390x didn't cause this compiler error, but indeed 
-compiling on x86 it did.
+> I figure I'll state my personal opinion on this one. This isn't
+> intended to be any kind of 'veto' on the question: I don't
+> feel that strongly about it (and I don't think I ought to
+> have a personal veto in any case).
+>
+> I'm not enthusiastic. The current policy is essentially
+> "the legal risks are unclear and the project isn't willing
+> to accept them". That's a straightforward rule to follow
+> that doesn't require either the contributor or the reviewer
+> or the project to make a possibly difficult judgement call on
+> what counts as not in fact risky. As soon as we start adding
+> exceptions then either we the project are making those
+> judgement calls, or else we're pushing them on contributors
+> or reviewers. I prefer the simple "'no' until the legal
+> picture becomes less murky" rule we have currently.
+>
 
-Thanks
-Farhan
+In principle I agree. I am not enthusiastic either. There are however two
+problems in the current policy.
+
+First, the policy is based on a honor code; in some cases the use of AI can
+be easily spotted, but in general it's anything but trivial especially in
+capable hands where, for example, code is generated by AI but commit
+messages are not. As such, the policy cannot prevent inclusion of AI
+generated code, it only tells you who is to blame.
+
+Second, for this specific kind of change it is, pretty much, impossible to
+tell whether it's generated with AI or by a specialized tool or by hand. If
+you provide a way for people to be honest about their tool usage, and allow
+it at least in some cases, there's a nonzero chance they will be; if you
+just tell them a hard no, and lying by omission has more than plausible
+deniability, there's a relatively high chance that they will just stay
+silent on the matter while still using the tool.
+
+In other words, as much as I would also like a simple policy, I expect
+fewer undiscovered violations with the exception in place=E2=80=94even beyo=
+nd what
+the exception allows. And given the stated goal of using proposals and
+actual usage to inform future policy, this approach could serve that goal
+better than plain prohibition.
+
+That said, I am okay with having no exception if that's the consensus.
+
+Thanks,
+
+Paolo
 
 
+> -- PMM
 >
 >
->>
->> Functions taking an Error ** argument usually do so to report errors.
->> The rules spelled out in qapi/error.h apply.  In particular:
->>
->>   * - On success, the function should not touch *errp.  On failure, it
->>   *   should set a new error, e.g. with error_setg(errp, ...), or
->>   *   propagate an existing one, e.g. with error_propagate(errp, ...).
->>   *
->>   * - Whenever practical, also return a value that indicates success /
->>   *   failure.  This can make the error checking more concise, and can
->>   *   avoid useless error object creation and destruction.  Note that
->>   *   we still have many functions returning void.  We recommend
->>   *   • bool-valued functions return true on success / false on failure,
->>
->> If ->err_handler() behaved that way, it @err would be null after it
->> returns false.  We'd call error_report_err(NULL), and crash.
->>
->> Functions with unusual behavior need a contract: a comment spelling out
->> their behavior.
->>
->> What is the intended behavior of the err_handler() callback?
->>
->>> +
->>>       /*
->>>        * TBD. Retrieve the error details and decide what action
->>>        * needs to be taken. One of the actions could be to pass
->>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->>> index e0aef82a89..faadce487c 100644
->>> --- a/hw/vfio/pci.h
->>> +++ b/hw/vfio/pci.h
->>> @@ -146,6 +146,7 @@ struct VFIOPCIDevice {
->>>       EventNotifier err_notifier;
->>>       EventNotifier req_notifier;
->>>       int (*resetfn)(struct VFIOPCIDevice *);
->>> +    bool (*err_handler)(struct VFIOPCIDevice *, Error **);
->>>       uint32_t vendor_id;
->>>       uint32_t device_id;
->>>       uint32_t sub_vendor_id;
->>
->
->
+
+--0000000000000917a9063fb9450b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 26, 2025, 16:39 Pete=
+r Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@lin=
+aro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">I figure I&#39;ll state my personal opinion on this one. This isn&#3=
+9;t<br>
+intended to be any kind of &#39;veto&#39; on the question: I don&#39;t<br>
+feel that strongly about it (and I don&#39;t think I ought to<br>
+have a personal veto in any case).<br>
+<br>
+I&#39;m not enthusiastic. The current policy is essentially<br>
+&quot;the legal risks are unclear and the project isn&#39;t willing<br>
+to accept them&quot;. That&#39;s a straightforward rule to follow<br>
+that doesn&#39;t require either the contributor or the reviewer<br>
+or the project to make a possibly difficult judgement call on<br>
+what counts as not in fact risky. As soon as we start adding<br>
+exceptions then either we the project are making those<br>
+judgement calls, or else we&#39;re pushing them on contributors<br>
+or reviewers. I prefer the simple &quot;&#39;no&#39; until the legal<br>
+picture becomes less murky&quot; rule we have currently.<br></blockquote></=
+div></div><div dir=3D"auto"><br></div><div dir=3D"auto">In principle I agre=
+e. I am not enthusiastic either. There are however two problems in the curr=
+ent policy.</div><div dir=3D"auto"><br></div><div dir=3D"auto">First, the p=
+olicy is based on a honor code; in some cases the use of AI can be easily s=
+potted, but in general it&#39;s anything but trivial especially in capable =
+hands where, for example, code is generated by AI but commit messages are n=
+ot. As such, the policy cannot prevent inclusion of AI generated code, it o=
+nly tells you who is to blame.</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Second, for this specific kind of change it is, pretty much, impossi=
+ble to tell whether it&#39;s generated with AI or by a specialized tool or =
+by hand. If you provide a way for people to be honest about their tool usag=
+e, and allow it at least in some cases, there&#39;s a nonzero chance they w=
+ill be; if you just tell them a hard no, and lying by omission has more tha=
+n plausible deniability, there&#39;s a relatively high chance that they wil=
+l just stay silent on the matter while still using the tool.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">In other words, as much as I would al=
+so like a simple policy, I expect fewer undiscovered violations with the ex=
+ception in place=E2=80=94even beyond what the exception allows. And given t=
+he stated goal of using proposals and actual usage to inform future policy,=
+ this approach could serve that goal better than plain prohibition.</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">That said, I am okay with havin=
+g no exception if that&#39;s the consensus.</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">Thanks,</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"=
+gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+-- PMM<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000000917a9063fb9450b--
+
 
