@@ -4,112 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DD63CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 22:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB97CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 00:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1u3m-0007oJ-Lc; Thu, 25 Sep 2025 18:03:30 -0400
+	id 1v1vvP-0006rO-VQ; Thu, 25 Sep 2025 20:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v1u3Y-0007kd-4O; Thu, 25 Sep 2025 18:03:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v1u3O-0003bj-Hy; Thu, 25 Sep 2025 18:03:15 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PImj6Q018668;
- Thu, 25 Sep 2025 22:02:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DnoP0w
- cPXAzhk0WsUk8S6+Muxy0kU3eei9D/vuEQZuc=; b=nCRwXRvuehnfSqh2OKztGD
- +SXfgDbqPtGLJLiKJQ+5lvZ9fiPvuyHdqUuwHNzfvyxAB/KeAuPD64aVdQlgEZ0b
- Qh6s9Y7fHNUeOunMYlUOTrt33HVhtMw2rK+17eYv2M1cjJmI4MUqWrjLXKhkSIzb
- mhgyDQiYZk6gPEu1IRlaPmephJBBC17zZ74v01b6/Ej6mz/HbUcQZih86q5F+Kz4
- FmpreJy6tW3KnX/0pcakkaUPgey3Baq30NUa7OYYypq2yonGC5+lUfKXMU1U2zL9
- nyNNurjMbutstVRnPwYhlp09Y8gZbg3fbAQ2yaPKbtbbzsDFyypQOZ1cRnuJPjWQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbbd8wk6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 22:02:57 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PLeEfr030039;
- Thu, 25 Sep 2025 22:02:56 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49dawm8y9r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Sep 2025 22:02:56 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58PM2ths31981900
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Sep 2025 22:02:55 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEB7B58050;
- Thu, 25 Sep 2025 22:02:54 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5046558054;
- Thu, 25 Sep 2025 22:02:53 +0000 (GMT)
-Received: from [9.61.254.10] (unknown [9.61.254.10])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Sep 2025 22:02:53 +0000 (GMT)
-Message-ID: <0153da3a-c725-4c85-82a0-d7d62bddceab@linux.ibm.com>
-Date: Thu, 25 Sep 2025 15:02:42 -0700
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v1vvM-0006q6-1z
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 20:02:57 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v1vvF-0004F1-4D
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 20:02:55 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-780292fcf62so1274804b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 17:02:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758844959; x=1759449759; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dX34KFoiiTp61asmLbfrnTCpD5CdzFUQjNeyyD0cNgo=;
+ b=tn+syQj7i6AQwE7XZ5EMY/Pve1AUYyQxkNP9w3cP04dOc3WO+ryIynFHtsp/QYjSKg
+ bjv7p+V0dzy6uXNN/TecVO49TEZK3KB+TJcAEiY0691DSSLP+I8zKVKYUBfLgjglhkmH
+ q9AWuD+J3/faGXxYt5RKVRPfOUrhP9Y6Ef0omghbaQzsn/HV/AIC+Ue0uiSrz25WZn1/
+ eWwg7ZoNNOgdWYbweUodmIdpz7Egnv5vD6C2F91CCGTMc6LC3HkcH9CbGeDpRAO+JuQz
+ qjv/rFGg2iw9gGw+od5kS31k9bEsX2wue3i/y2Sn40wZMFSUEZN73XdL43SLZngU2IR1
+ JghA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758844959; x=1759449759;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dX34KFoiiTp61asmLbfrnTCpD5CdzFUQjNeyyD0cNgo=;
+ b=Y0vwbZ1UzLDzkOkelJ+GUyHAju9HCZ1mSbmObav3vqiUoD9zaGL1+jBPyp4mK1OENm
+ fI30jh5RNKJ+1QJjnEjzm0o3wcjj6TACgKgjye0Ak6UnrW6D1+hRF2I+PuzRv2IOoQFn
+ JkIvZI6iFoGl7h4cSgXpjPWX5IVGD7y2GXycRZh8IB8356RX7+pQV6Ua33UPnEdhHIXg
+ WS/j2+PKUVz3gf6o82FMbsFrYEiObcJ6x2z5FkdCuQIeR3dsT4zqvoQEus/J0IAn/gpA
+ vgnS1GGDsrukRVv0dOYwKy6oI1OWGld3OK9ytD0g6/tt3gPUOAt48XsKGJaTWsD4TDRW
+ lj3w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxil2ZY8lJiSoQVER0aSpWKdda6+If8LvmyRpRD4MdhwxZEPV5j4ZTgssSqZ+xOJqeYALrGVdB4k2l@nongnu.org
+X-Gm-Message-State: AOJu0Yy5f2bTDGPvEC1tW7Wv2PaTmIn4NJtlhzrFHtjD02PjufXb3u1o
+ vrUeGKec6o0OhfKcv8/Z11NXkv/IgrYSFsu5F5gN12D3kFMynR0r6GgNiYDCrgWl8fo=
+X-Gm-Gg: ASbGnctoijHp1sL/SDVV6iH6Zb7ti6gBG8G58Xp4i8UEYtuYTcvQCfjbT4WZwoUAnd+
+ FM8AVx31udM59GVE4LsIAadZEAIWlVkKOisrJIH4eayD37ezvTEgLnO7ZlbKcMlMkCBDOIBmfYR
+ 17NyqgmwOJsQt9hGzDDroSd56ZmcmdH/q+OqVYje/PoZ4F+zu8b5DpPNb4crF9ANxss3LQWfwe/
+ h8thJ7gs0zUoHjCM/O82ZaLDFc8iqI6WseFRUQJrZsKlCboHGkCOzAAWdkMD2K2NItzXZloCg5p
+ yZYVjeBEtoAZdhI0FjMMSUwYhNIrR0vEFtiSQe15F/u3OGOOaz2+rumbPnpaTZY7jfVlWh2rM8L
+ /1+bbdpKuqvtByBbp6r5Mq3wPXfPkDMIb/35Z3PFpRDE6MOU=
+X-Google-Smtp-Source: AGHT+IFgtGZjQowmJ0g0CWV7OJfHjy4gTJZt+K9oPfLX+/uNiNHHwUGthlbVs5OSFnw5ryjLchbRlg==
+X-Received: by 2002:a05:6a00:2e18:b0:774:1fd4:1007 with SMTP id
+ d2e1a72fcca58-780fcec0a5bmr4109880b3a.23.1758844958995; 
+ Thu, 25 Sep 2025 17:02:38 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-78102c2b76esm2884652b3a.102.2025.09.25.17.02.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Sep 2025 17:02:38 -0700 (PDT)
+Message-ID: <a27a8ca5-ad86-44a5-8849-e28e1e3271c0@linaro.org>
+Date: Thu, 25 Sep 2025 17:02:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/28] pc-bios/s390-ccw: Introduce IPL Information
- Report Block (IIRB)
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-14-zycai@linux.ibm.com>
+Subject: Re: [PATCH v4 09/23] util: introduce some API docs for logging APIs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20250925094441.1651372-1-berrange@redhat.com>
+ <20250925094441.1651372-10-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250917232131.495848-14-zycai@linux.ibm.com>
+In-Reply-To: <20250925094441.1651372-10-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=F/Jat6hN c=1 sm=1 tr=0 ts=68d5bc11 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=Jok5gbZ5FRWlxEaBzpcA:9
- a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX6hdF3elifoHW
- siaMyR7/EIZsppFLUtpr+DPmkghVtSiK85rG1DFCfFPEUKCxQZD0JSaWCiO5KoPg9hrvIL8KgIX
- wnI5dHewRgZZPDSvD2EM7c0hWGndEq99UU+uV+gIwBrITTmYZTkZIb647lLcFYubllcwm4C2F/F
- HqN+AttDLzpt9ggKoSJW8pRu/6SSVNQ0I+qi++E9ecmzpgj6cyGPF054cTwq46JW22nEiTXoHkb
- iiSUgzdAJFT7GNcNZpN1HFiRN668V9Ei2z+tw5pwVzZE5CNHfoBngIwflVajMVgBKc1s00u31GK
- g3zhXsQp06SZbwJhQnmiaHAFk17mVBFVNmyJcAtDCldrSSCCoSA3SDZd2bdlgnf+eQfFPFCB1XK
- uEZwIRZJoU5wYaA5xSy1ZfFl/IXZ0A==
-X-Proofpoint-GUID: BIqs2h6JazE1rL20bPEkTrEVxZN45Q8v
-X-Proofpoint-ORIG-GUID: BIqs2h6JazE1rL20bPEkTrEVxZN45Q8v
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-25_02,2025-09-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,119 +104,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/25/25 02:44, Daniel P. Berrangé wrote:
+> This addresses two key gotchas with the logging APIs:
+> 
+>   * Safely outputting a single line of text using
+>     multiple qemu_log() calls requires use of the
+>     qemu_log_trylock/unlock functions to avoid
+>     interleaving between threads
+> 
+>   * Directly outputting to the FILE object returned
+>     by qemu_log_trylock() must be discouraged because
+>     it prevents the inclusion of configured log message
+>     prefixes.
 
-On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
-> The IPL information report block (IIRB) contains information used
-> to locate IPL records and to report the results of signature verification
-> of one or more secure components of the load device.
->
-> IIRB is stored immediately following the IPL Parameter Block. Results on
-> component verification in any case (failure or success) are stored.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+I disagree with this point.
+
+> 
+> Reported-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   docs/specs/s390x-secure-ipl.rst | 14 ++++++++
->   pc-bios/s390-ccw/iplb.h         | 62 +++++++++++++++++++++++++++++++++
->   2 files changed, 76 insertions(+)
->
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index eec368d17b..760a066084 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -71,3 +71,17 @@ Subcode 1 - perform signature verification
->       Perform signature-verification on a signed component, using certificates
->       from the certificate store and leveraging qcrypto libraries to perform
->       this operation.
-> +
-> +
-> +IPL Information Report Block
-> +----------------------------
-> +
-> +The IPL Parameter Block (IPLPB), utilized for IPL operation, is extended with an
-> +IPL Information Report Block (IIRB), which contains the results from secure IPL
-> +operations such as:
-> +
-> +* component data
-> +* verification results
-> +* certificate data
-> +
-> +The guest kernel will inspect the IIRB and build the keyring.
-> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-> index 08f259ff31..bdbc733e16 100644
-> --- a/pc-bios/s390-ccw/iplb.h
-> +++ b/pc-bios/s390-ccw/iplb.h
-> @@ -23,6 +23,68 @@ extern QemuIplParameters qipl;
->   extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
->   extern bool have_iplb;
+>   include/qemu/log-for-trace.h | 35 ++++++++++++++++++++++++++++++++++-
+>   include/qemu/log.h           | 26 ++++++++++++++++++++++++++
+>   rust/util/src/log.rs         |  7 +++++++
+>   3 files changed, 67 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
+> index d47c9cd446..4e05b2e26f 100644
+> --- a/include/qemu/log-for-trace.h
+> +++ b/include/qemu/log-for-trace.h
+> @@ -29,7 +29,40 @@ static inline bool qemu_loglevel_mask(int mask)
+>       return (qemu_loglevel & mask) != 0;
+>   }
 >   
-> +struct IplInfoReportBlockHeader {
-> +    uint32_t len;
-> +    uint8_t  iirb_flags;
-> +    uint8_t  reserved1[2];
-> +    uint8_t  version;
-> +    uint8_t  reserved2[8];
-> +} __attribute__ ((packed));
-> +typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
-> +
-> +struct IplInfoBlockHeader {
-> +    uint32_t len;
-> +    uint8_t  ibt;
-> +    uint8_t  reserved1[3];
-> +    uint8_t  reserved2[8];
-> +} __attribute__ ((packed));
-> +typedef struct IplInfoBlockHeader IplInfoBlockHeader;
-> +
-> +enum IplIbt {
-> +    IPL_IBT_CERTIFICATES = 1,
-> +    IPL_IBT_COMPONENTS = 2,
-> +};
-> +
-> +struct IplSignatureCertificateEntry {
-> +    uint64_t addr;
-> +    uint64_t len;
-> +} __attribute__ ((packed));
-> +typedef struct IplSignatureCertificateEntry IplSignatureCertificateEntry;
-> +
-> +struct IplSignatureCertificateList {
-> +    IplInfoBlockHeader            ipl_info_header;
-> +    IplSignatureCertificateEntry  cert_entries[MAX_CERTIFICATES];
-> +} __attribute__ ((packed));
-> +typedef struct IplSignatureCertificateList IplSignatureCertificateList;
-> +
-> +#define S390_IPL_COMPONENT_FLAG_SC  0x80
-> +#define S390_IPL_COMPONENT_FLAG_CSV 0x40
-> +
-> +struct IplDeviceComponentEntry {
-> +    uint64_t addr;
-> +    uint64_t len;
-> +    uint8_t  flags;
-> +    uint8_t  reserved1[5];
-> +    uint16_t cert_index;
-> +    uint8_t  reserved2[8];
-> +} __attribute__ ((packed));
-> +typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
-> +
-> +struct IplDeviceComponentList {
-> +    IplInfoBlockHeader       ipl_info_header;
-> +    IplDeviceComponentEntry  device_entries[MAX_CERTIFICATES];
-> +} __attribute__ ((packed));
-> +typedef struct IplDeviceComponentList IplDeviceComponentList;
-> +
-> +#define COMP_LIST_MAX   sizeof(IplDeviceComponentList)
-> +#define CERT_LIST_MAX   sizeof(IplSignatureCertificateList)
-> +
-> +struct IplInfoReportBlock {
-> +    IplInfoReportBlockHeader     hdr;
-> +    uint8_t                      info_blks[COMP_LIST_MAX + CERT_LIST_MAX];
-> +} __attribute__ ((packed));
-> +typedef struct IplInfoReportBlock IplInfoReportBlock;
-> +
->   #define S390_IPL_TYPE_FCP 0x00
->   #define S390_IPL_TYPE_CCW 0x02
->   #define S390_IPL_TYPE_QEMU_SCSI 0xff
+> -/* main logging function */
+> +/**
+> + * qemu_log: report a log message
+> + * @fmt: the format string for the message
+> + * @...: the format string arguments
+> + *
+> + * This will emit a log message to the current output stream.
+> + *
+> + * The @fmt string should normally represent a complete line
+> + * of text, ending with a newline character.
+> + *
+> + * If intending to call this function multiple times to
+> + * incrementally construct a line of text, locking must
+> + * be used to ensure that output from different threads
+> + * is not interleaved.
+> + *
+> + * This is achieved by calling qemu_log_trylock() before
+> + * starting the log line; calling qemu_log() multiple
+> + * times with the last call having a newline at the end
+> + * of @fmt; finishing with a call to qemu_log_unlock().
+> + *
+> + * The FILE object returned by qemu_log_trylock() does
+> + * not need to be used for outputting text directly,
+> + * it is merely used to associate the lock.
+> + *
+> + *    FILE *f = qemu_log_trylock()
+> + *
+> + *    qemu_log("Something");
+> + *    qemu_log("Something");
+> + *    qemu_log("Something");
+> + *    qemu_log("The end\n");
+> + *
+> + *    qemu_log_unlock(f);
+> + *
 
-We should avoid packing the structure and just add QEMU_BUILD_BUG_MSG. 
-Overall the patch LGTM. Thanks Farhan
+And I really don't like documenting this as the "right way".
+
+I believe that qemu_log *should* be used only for single-line output, all in one piece. 
+Larger blocks *should* always use qemu_log_trylock and fprintf.  The compiler has 
+optimizations transforming fprintf to fputs and fputc as appropriate.
+
+If we can manage to transform all existing usage of multiple qemu_log, then we can remove 
+the '\n' detection added in patch 8.
+
+As far as adding the new prefixes... perhaps we should have something like
+
+FILE *qemu_log_trylock_and_context(bool suppress_context)
+{
+     FILE *f = qemu_log_trylock();
+     if (f && !suppress_context) {
+         qmessage_context_print(f);
+     }
+     return f;
+}
+
+where qemu_log would do
+
+     f = qemu_log_trylock_and_context(incomplete);
 
 
+r~
 
