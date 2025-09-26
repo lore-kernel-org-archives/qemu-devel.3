@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D58CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 06:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48557CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 06:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v21x5-00037R-Vs; Fri, 26 Sep 2025 02:29:09 -0400
+	id 1v21wo-00036h-8W; Fri, 26 Sep 2025 02:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v21x4-00037J-Ax
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 02:29:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v21wl-00035z-Q0
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 02:28:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v21x1-0000PY-A8
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 02:29:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v21we-0000O0-5W
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 02:28:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758868138;
+ s=mimecast20190719; t=1758868111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lpQpAIJosCOed9258DodS2zvga0mExJzCeEg8bte1VI=;
- b=aOqQH0Ua5xxowD5Oulmnr3GTukP4d6QkpFwyUmwrBiCCP66uHfd7zgqxM7IhxmDz0vP/yr
- Ng5yHgIQyqmAPxk1FbM3gSRmWLkInd/iVbYInMcZdxsgqSpciabjOOBjInVsz1IrpePmXm
- 3N/l/V0tg5rvjY16hTwkfMsDf4PFrXg=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7VzwTe1sTuf4hwGkSRrHfnFvnKxJ0O1MG/dYzXhFWqY=;
+ b=JUyiUgJDP5rgfchdIENEviaDvGksQB41/yHUjWBMyca77aQhLUWdd3q9HGs5+OMdBJWE0A
+ 4yM7aIz7Amv9llg936gmfY0qNhkX1HRZy6PhklqjTXbF9NxpkVAJAixgArqULhe7sT6el2
+ M4MWVflABYLsazS9jPUToVoCVj83GRk=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-C2hQ0JUEPH6d9YCiF3DJqA-1; Fri, 26 Sep 2025 02:28:56 -0400
-X-MC-Unique: C2hQ0JUEPH6d9YCiF3DJqA-1
-X-Mimecast-MFC-AGG-ID: C2hQ0JUEPH6d9YCiF3DJqA_1758868135
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-62f9731a4f9so1603526a12.1
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 23:28:56 -0700 (PDT)
+ us-mta-380-gMlK4Ky3NkuPW-r0bP_06Q-1; Fri, 26 Sep 2025 02:28:30 -0400
+X-MC-Unique: gMlK4Ky3NkuPW-r0bP_06Q-1
+X-Mimecast-MFC-AGG-ID: gMlK4Ky3NkuPW-r0bP_06Q_1758868109
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b3347f0b205so198325166b.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 23:28:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758868135; x=1759472935;
+ d=1e100.net; s=20230601; t=1758868109; x=1759472909;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lpQpAIJosCOed9258DodS2zvga0mExJzCeEg8bte1VI=;
- b=B46zccb582uKGUKA+K+8CvJeWzXwWyuym6KFa4eZjWvzpOOhc2xZin2lnFIrQZRs6M
- 23BMZ5OdjbH6P1Aih+i+fa1vrVWqyWAMeaoO7kjYJPq5dpD5hnFeuKLVGrb3ixlZ/AKO
- WdM/VbRoE2j0c/9uOHdsIPfj71zbscxIj9qEnODYkofJs7vGdinIwUa0W7LpE3UwLEfn
- VwxQYYQrBzfjpr4gDb9GsyIvXRAr3rKX/ZYtxyM4aY9pC1dq0oITsxPL6gfco7Ocu5YF
- 2Pet9Xot3pnS8/fY4PNLGceAHHwRaErAb5MTiKzCm0P2JU2/vSeCKRgS/2F/4gK1c/Jh
- jpkQ==
+ bh=7VzwTe1sTuf4hwGkSRrHfnFvnKxJ0O1MG/dYzXhFWqY=;
+ b=NDYIZ7Yeu0V5GKfqTlV6UxfgkGgTmHvGg/zdvHPXyYQkazMvum6b7pw0hpLw26FxGj
+ I0iTcxAkCI3MVtGwq9S1eWhQNfS8bzGNCn9NiwImYA6mfc61kV2P86gqds8v5TDscJQn
+ kWYwv+ej1ott1Og2/kTog6ensa88X/9F+BQ9oznixv9CmQulPpBPutinrKBBR/dFi0/f
+ NDMvkDYJdQASQcafw8Id+cRCiMn0/BCqkX40YKKXZb2+S+5dVYbruvDgqywnfAG+WaDF
+ t0dM5VGJa67lLTZXbyQffsQtCy0hg/K/327bnu0Wg3+0oiNG5lpITIyQ8lEMQySFg4f8
+ yb3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSyoLT37jVlve1sP+wsEzHV1T21J2unaIVed1cnBVe5KQ2aGqoQ5+HxtXYQme70v4GUfCqorbYIa2B@nongnu.org
-X-Gm-Message-State: AOJu0YzSNZ/PGKRFn9zvyLwvbpPzdzGYvWMH4HNVuvdl7R1+W4ldC962
- G5WaYrPxgh6YLjV8L1h7oxfRv+MqBLRPCGPgX5vOxe+2IWagj8ixkdq6OlXK/T7v6rG9cP6HLAN
- mrCce4pRatZGrkS44FuaxRkX5nQ+ThdadGoMozcZjWxr2pNST3lFVJJ7h
-X-Gm-Gg: ASbGncuely+zDToOj/2nY4kbNcxWExAHIowqYzfMPGx/2ro+iW9izqagrRLBNcnSEDZ
- 8ZyZcSPHAFRRRjqMR6XTdwrsTIsjr48EQrnm6/RczivG+dSODVxeD0x4fsJh6JIGv40HrYJNMhH
- RYzfWuoyrbP3Z5/a/17Jgwekwy7TnmjmTtx614PUjeKloGpTj7LtcZQG4zUKak5fYpS0ypMt/mK
- cHpoqIEMPB2rbbyeBr5nlfTfVWRzGbrq4hi7UWwV2ljJa2xo5SeaDBX9QhKgjSyCVZKyTC6lK+U
- GtzL8I8CJZu18WixA/C0AZYpF1Sk6oqP8C2pSmJKM6RMIodPNSo0eCxpbZapnFQG9pQ9jJjT36S
- JbkfXNw==
-X-Received: by 2002:aa7:d497:0:b0:62c:75bf:6501 with SMTP id
- 4fb4d7f45d1cf-6349fa2fef3mr3741753a12.15.1758868135096; 
- Thu, 25 Sep 2025 23:28:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhgwiaoxBsPv62eQfLoFJ8YatDsnSBmqsOBVupRttOobdqbChYJ/uMhzoKUcmKPiT5XpkKAQ==
-X-Received: by 2002:aa7:d497:0:b0:62c:75bf:6501 with SMTP id
- 4fb4d7f45d1cf-6349fa2fef3mr3741725a12.15.1758868134269; 
- Thu, 25 Sep 2025 23:28:54 -0700 (PDT)
+ AJvYcCXX1mVSd88OfLsgvEIGmzbjpfpb0oN8nfx9Y3guTaudPc68zl19l0HRQZJTG2aK0CPCthIEOLhxS5l6@nongnu.org
+X-Gm-Message-State: AOJu0YxIJ+EJW9nD7W++mqmUzncTsQsLUjzuo+H9XykG1LoJ/hL4+sq6
+ jGtNvZ6xgL29Tx6XOe4Qo1X4VRzzAU5KBcrrzM42c84HP9xgQ9SNfkasMZrhoqkvVz4IYbrjbX9
+ QDEsPbzyCmgoaSbEkAABlNifKs79raCaEwHBrrVSn09AFR0/YLw3I9H8U
+X-Gm-Gg: ASbGncsx9c/h6l+BK7Mj7ZFUkRtf5nNiMIk5DmlacYOrSOg+lmnbL5RZnfXbO+Tj2Gj
+ ADQdx1AFX/i2LYRTvM7eXP3eSXsjv9k2fELfSUlhHWs72M4wiQgrGEGStJTZmu7sN8JQPJEM4n2
+ 0s48CA97Lf14h80B9gNczKwYEtzJsHbU/FjaXDXn/NKH+m25aRMvtw9w3XsaKusybN+1QjLFFUS
+ 7lGjz+npxJal8At4KkL+oBTA2MZlh3BYkzTut0CGZZqi9q9pnODR5SCbE1Xop3pIlia8hY+y492
+ BBDmXyFseTrE5Th0O9FU6wyIonWtZ9EivMgSL+74gxedH9AkPTdooWfRKe0hZKPQmElJ6/3WVAG
+ 0+7aUyw==
+X-Received: by 2002:a17:907:6d0b:b0:b03:d5ca:b14 with SMTP id
+ a640c23a62f3a-b34beba9670mr629608566b.61.1758868108672; 
+ Thu, 25 Sep 2025 23:28:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERu8xzf4c7X9ik7l3rfczx+GfLuqpk1yPzMmcpBiAswlYABqEQANeerGEoiJgyELGiid0x/w==
+X-Received: by 2002:a17:907:6d0b:b0:b03:d5ca:b14 with SMTP id
+ a640c23a62f3a-b34beba9670mr629605766b.61.1758868108246; 
+ Thu, 25 Sep 2025 23:28:28 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
  [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-634a3af4c7csm2352860a12.35.2025.09.25.23.28.53
+ a640c23a62f3a-b35446f7488sm320718766b.71.2025.09.25.23.28.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 23:28:53 -0700 (PDT)
-Message-ID: <6610a755-c215-471f-a357-a7a0a8d365da@redhat.com>
-Date: Fri, 26 Sep 2025 08:28:51 +0200
+ Thu, 25 Sep 2025 23:28:27 -0700 (PDT)
+Message-ID: <825b38e7-dca5-44c5-b73b-ae2ac740ccb6@redhat.com>
+Date: Fri, 26 Sep 2025 08:28:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/9] python: Install pygdbmi in meson's venv
+Subject: Re: [PATCH v4 1/9] tests/functional: Re-activate the check-venv target
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  alex.bennee@linaro.org, berrange@redhat.com
 Cc: qemu-arm@nongnu.org, manos.pitsidianakis@linaro.org,
  peter.maydell@linaro.org
 References: <20250926051542.104432-1-gustavo.romero@linaro.org>
- <20250926051542.104432-3-gustavo.romero@linaro.org>
+ <20250926051542.104432-2-gustavo.romero@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,17 +128,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250926051542.104432-3-gustavo.romero@linaro.org>
+In-Reply-To: <20250926051542.104432-2-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -157,24 +157,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/09/2025 07.15, Gustavo Romero wrote:
-> The upcoming changes in the reverse_debugging functional test to remove
-> Avocado as a dependency will require pygdbmi for interacting with GDB,
-> so install it in meson's venv (located in the build dir's pyvenv/).
+> Add check-venv target as a dependency for the functional tests. This
+> causes Python modules listed in pythondeps.toml, under the testdeps
+> group, to be installed when 'make check-functional' is executed to
+> prepare and run the functional tests.
 > 
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Suggested-by: Thomas Huth <thuth@redhat.com>
 > ---
->   pythondeps.toml | 1 +
->   1 file changed, 1 insertion(+)
+>   tests/Makefile.include | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index 16fb2a989c..98e99e7900 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -33,3 +33,4 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
+> diff --git a/tests/Makefile.include b/tests/Makefile.include
+> index 3538c0c740..d012a9b25d 100644
+> --- a/tests/Makefile.include
+> +++ b/tests/Makefile.include
+> @@ -109,7 +109,7 @@ $(FUNCTIONAL_TARGETS):
+>   	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
 >   
->   [testdeps]
->   qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
-> +pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
+>   .PHONY: check-functional
+> -check-functional:
+> +check-functional: check-venv
+>   	@$(NINJA) precache-functional
+>   	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
