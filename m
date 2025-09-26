@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B78CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECEACAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27tj-00037d-Qc; Fri, 26 Sep 2025 08:50:04 -0400
+	id 1v27wD-0006SN-4y; Fri, 26 Sep 2025 08:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27tJ-0002ZY-6E; Fri, 26 Sep 2025 08:49:37 -0400
+ id 1v27vN-0005qB-Sg; Fri, 26 Sep 2025 08:51:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27t7-0007Dq-Kl; Fri, 26 Sep 2025 08:49:36 -0400
+ id 1v27vH-0007mg-Ln; Fri, 26 Sep 2025 08:51:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E7CEF157F5F;
- Fri, 26 Sep 2025 15:45:41 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 55630290F1D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B87B157F6B;
  Fri, 26 Sep 2025 15:45:43 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8990A290F29;
+ Fri, 26 Sep 2025 15:45:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 23/38] multiboot: Fix the split lock
-Date: Fri, 26 Sep 2025 15:45:23 +0300
-Message-ID: <20250926124540.2221746-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 35/38] .gitlab-ci.d/buildtest.yml: Unset
+ CI_COMMIT_DESCRIPTION for htags
+Date: Fri, 26 Sep 2025 15:45:35 +0300
+Message-ID: <20250926124540.2221746-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
@@ -61,90 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-While running the kvm-unit-tests on Intel platforms with "split lock
-disable" feature, every test triggers a kernel warning of
+In commit 52a21689cd829 we added a workaround for a bug in older
+versions of htags where they fail with a weird error message if the
+environment is too large.  However, we missed one variable which
+gitlab CI can set to the body of the commit message:
+CI_COMMIT_DESCRIPTION.
 
-  x86/split lock detection: #AC: qemu-system-x86_64/373232 took a split_lock trap at address: 0x1e3
+Add this to the variables we unset when running htags, so that
+the 'pages' job doesn't fail if the most recent commit happens
+to have a very large commit message.
 
-Hack KVM by exiting to QEMU on split lock #AC, we get
-
-KVM: exception 17 exit (error code 0x0)
-EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
-ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
-EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
-ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
-CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
-SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
-DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
-FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
-GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
-LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
-TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
-GDT=     000c02b4 00000027
-IDT=     00000000 000003ff
-CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
-DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
-DR6=00000000ffff0ff0 DR7=0000000000000400
-EFER=0000000000000000
-Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 ba 10 05 66
-
-And it matches with what disassembled from multiboo_dma.bin:
-
- #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
-
-  1d1:   08 00                   or     %al,(%eax)
-  1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
-  1d8:   06                      push   %es
-  1d9:   00 66 b8                add    %ah,-0x48(%esi)
-  1dc:   01 00                   add    %eax,(%eax)
-  1de:   00 00                   add    %al,(%eax)
-  1e0:   0f 22 c0                mov    %eax,%cr0
-> 1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
-  1e7:   00 00                   add    %al,(%eax)
-  1e9:   b8 10 00 00 00          mov    $0x10,%eax
-  1ee:   8e d0                   mov    %eax,%ss
-  1f0:   8e d8                   mov    %eax,%ds
-  1f2:   8e c0                   mov    %eax,%es
-  1f4:   8e e0                   mov    %eax,%fs
-  1f6:   8e e8                   mov    %eax,%gs
-  1f8:   66 b8 08 00             mov    $0x8,%ax
-  1fc:   66 ba 10 05             mov    $0x510,%dx
-
-We can see that the instruction at 0x1e3 is a far jmp through the GDT.
-However, the GDT is not 8 byte aligned, the base is 0xc02b4.
-
-Intel processors follow the LOCK semantics to set the accessed flag of the
-segment descriptor when loading a segment descriptor. If the the segment
-descriptor crosses two cache line, it causes split lock.
-
-Fix it by aligning the GDT on 8 bytes, so that segment descriptor cannot
-span two cache lines.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250808035027.2194673-1-xiaoyao.li@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4c8f69b94839f72314c69902312068d0b9b05a34)
+Cc: qemu-stable@nongnu.org
+Fixes: 52a21689cd8 (".gitlab-ci.d/buildtest.yml: Work around htags bug when environment is large")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250916163030.1467893-1-peter.maydell@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit fd34f56fe886250bdd64f9c222c1cb4c07a594ad)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/multiboot_dma.bin b/pc-bios/multiboot_dma.bin
-index c0e2c3102a..e6d0c97093 100644
-Binary files a/pc-bios/multiboot_dma.bin and b/pc-bios/multiboot_dma.bin differ
-diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
-index 181a4b03a3..c95e35c9cb 100644
---- a/pc-bios/optionrom/multiboot.S
-+++ b/pc-bios/optionrom/multiboot.S
-@@ -208,7 +208,7 @@ ljmp2:
- prot_jump:	.long prot_mode
- 		.short 8
- 
--.align 4, 0
-+.align 8, 0
- gdt:
- 	/* 0x00 */
- .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 00f4bfcd9f..e22d407dbf 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -751,7 +751,7 @@ pages:
+     - make gtags
+     # We unset variables to work around a bug in some htags versions
+     # which causes it to fail when the environment is large
+-    - CI_COMMIT_MESSAGE= CI_COMMIT_TAG_MESSAGE= htags
++    - CI_COMMIT_MESSAGE= CI_COMMIT_TAG_MESSAGE= CI_COMMIT_DESCRIPTION= htags
+         -anT --tree-view=filetree -m qemu_init
+         -t "Welcome to the QEMU sourcecode"
+     - mv HTML public/src
 -- 
 2.47.3
 
