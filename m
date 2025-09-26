@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE50CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 09:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B01CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 09:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v24pL-0002zD-Ok; Fri, 26 Sep 2025 05:33:21 -0400
+	id 1v24sm-0004J1-VV; Fri, 26 Sep 2025 05:36:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v24pG-0002yv-Ke
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:33:14 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v24sk-0004IE-QV
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:36:50 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v24p9-0008Kb-Nw
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:33:14 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46e34bd8eb2so18247155e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 02:33:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v24se-0000fZ-Se
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:36:50 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-46e317bc647so13102065e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 02:36:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758879180; x=1759483980; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1758879396; x=1759484196; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XXJjlwJIO2SkGlw/DG6TsBIs0wt3U5ffGWZ/kSJUQdE=;
- b=M8BpylL8pe40yy5oEjFyPmHQGPkGqQEoIalSZWQUA/OXlZ5BSwKR2hu0UvTggAEW9z
- fsnOAu8Icxh1xaXOXda6onGC6dESXw5cPd8dwRLN8gFyV16MeKWBNk8Gk45EipMIlhbe
- z2c1z3jBBWCyg/uzG3OiBo5ugRbNOFdv5TkBPgcWyEkGJCgwz5/fFMxEwtz2+/mmirLQ
- gGaC/mVChDbWNA6MLEqi8WvPGOMwk2ZUCy4iFCT/kDHf7WUFqvQhJKbdWJc4VxsWLwC2
- xCnmSSPHLOYGvYDdcokoeDAMGOkRmZIeqaYkR9iVILMpgj15jc821soqZkyGDEoAHGz4
- cUEw==
+ bh=oDCkZA3CxUlrhPQSkzdra4tpfiRwGAcRRDGRKyO1qr8=;
+ b=FcJQ2NhrWd65WdQN/6Qcs3PfJkPSBU0XkGucz4GECyjYL881pxOi5GKB5yRdohCJLU
+ aF9aSfZwOri0/GVovyMgl13qU8DA9JVv3iAHM4tdBy9c0CW6KlzVv0riQHOYhApglO5+
+ 0CRSm2nH2/5S4ifr3BSPd6bFozsUWuF92me9EBe3/B2Sjrv587kO+nk4OPbEPpRs/I7I
+ qhMmSgHHtZXjfUzJCudG6U5QMgyZM0JFHiDXIyCOJNXk/DdyOe3IGF7tBuc3sYhPOZ2F
+ Ow4C959r3qybnLVIbZdKdhz8UnLODy4pugp9a5Z0Xvu0genl8ARPgchWwVdIvxC6o2Wq
+ F+4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758879180; x=1759483980;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1758879396; x=1759484196;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XXJjlwJIO2SkGlw/DG6TsBIs0wt3U5ffGWZ/kSJUQdE=;
- b=foQ8aB5LKrPDPXmUTRSRRlzaW8FFj36zTF+TZC0GAPBRmwEmP1EAZQUhnYHlgwn44K
- rxhgAlnH/RkrnDCoaCZDMK4E7Tirkojy3QsTjZfiEKSB9zl3Zbwe5RiMuiBi4szftXhq
- dUMuyUdKwPjjNElENUCk4uwh7rVSlfyGjhXsX/3Nw8Ozrvcu+uI2tk6hA5xQZHKpo+Tx
- 8Dpi74n9L7Sf9eWUTg0Q7XPP7pvXMxnmXAS4OHzuONK1vIj21MI145E297gbtAMYnEWK
- DFP4h0LsTGlnthR7JB6buFnn2izoHGGH/H9WGswyucP4j8ZBDfTC7LTTErDOyd0XlFWb
- QVdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4Uts1mrJ2L1oc2T2VhqKKFqHn+9Vfsu9UCXxRu0n613YppfXzN9uulByF664Nmp8nHYrnUoVoNDef@nongnu.org
-X-Gm-Message-State: AOJu0YwmXszOhDJM7+apnC3hSyVKSgsoeQZriz8uqP+aAgn0MDkNFM6g
- HxunohT9uneCwz5JieeaCLV789Hi+jYnd1TVLsH2LtO0/jSnldDliS4fW7f/8LsCb5o=
-X-Gm-Gg: ASbGncvEoA2x16GfkHibaL98xPTNkqviXUTuFFelQBZlOXFApNyuuoyLiSpF36jcnhi
- qwp976OjzHAU/V22tirfChPUh9Ngep+cURTgdfWm4vqG6rdQsiHqNJmANUivxpU9CIuzsx2H4rt
- amcq/IzwcGhIAh2wtCt03uCMCV8J8sB/OaFatIUF0i4LCKGFOkpnhAGXKg7SUcvA3ClcVxRG08O
- bcxN61d5V2OaLXqh5P5GBBhVkQDZ4n1rmpYwGEoQIr9DMDAxtr16xAtVMH9JHoU/BiXrLNBgo1F
- i4LjMyieVpEEM5HY1zvmpjroFUUoRImZluPJ+IG72WIMhNC2mK1SnoPGa6zgY4gg/JOuPBoR7QY
- bASiwp+gbvY8QUJjLF1MUDjcNMXKzcopmhfyKWiBFhKw0Cqdi+VA0CTYrn69H9ycBJdGyH+gUXG
- ae
-X-Google-Smtp-Source: AGHT+IFWwLTGAxMBG/54brmlYi/DJ22wC2K7ObAbatPmfcIpd5SoEQsbAZXaBG8j1RxV9Ga87xNlPA==
-X-Received: by 2002:a05:600c:4f07:b0:45c:d817:2a6a with SMTP id
- 5b1f17b1804b1-46e329aa91dmr68161205e9.9.1758879179774; 
- Fri, 26 Sep 2025 02:32:59 -0700 (PDT)
+ bh=oDCkZA3CxUlrhPQSkzdra4tpfiRwGAcRRDGRKyO1qr8=;
+ b=kA/0yMS8V2prwD5oe+vWi9WwbrFf9IIXUgmGNJ5AC/2LVp+0LMrIKx3IMXbJo0HgfY
+ NSe28oJsP8Acx4/rVPNcu4U1/edSN70zS78sVB8FUC+rWwFyJh0NpJGlpZXiwz/NBRPg
+ ZMfSumF2mlNYPXrqVlqajCMXYntv2OEFae9BTOfcrHr5W5tPSr3YfY0Lg8hDHwjeJq5B
+ GwEsK/XObT+BQ3R9V+aaKeCF27IspNxlpywpIinh8Ew2VLgdCPwJ+LUweU+L2XTuTOct
+ HXurptVVUMLH/GfmP8vPt2TqaSJOJHc9uXFarqCCw7olb2sngyBQXYc/Cw3lO/NLstCO
+ /i3g==
+X-Gm-Message-State: AOJu0Yzg8mF0FJ7jZHC5ZB/xU4aImpV1o3j2XNImLuuW0pZtObqTUIce
+ MPVIZF1HFcz6yeRTTBb9wJlD/kZ6vX/l5K4QiMTPpl7b2xHitqKqEKbEP5cCsrSqW54=
+X-Gm-Gg: ASbGncuQc0pPWRwOKzXLFyu3vRwd6LNS1BchRLLRgrRYOl6WXw4CtUc5POatbcjJJ5R
+ 1Vsm1xWeF1idEtVXEH4U0nSfKGEo2TlQMLPGWDsf30nvmnZO0fVZMWZy1add+ZQv3/o+snxeaXX
+ /qUTc5rn4UTxvcm1LPNCwQbefNEDsOsUtTG5P9IplMOyCOjRpvMbBpSBHhdHbm7/DoEzkgPBXdG
+ SlFLqHp/yXSUx9UbWNXKOh76ejJ1CP8OFEA1xNr6vbIWxWt0Z92tKbt72MGwIhsdRMrKaxRvech
+ cx2JC587wKAXBzh/n6vs7VLqYaOhJKIbcdSrqgefPJSTXKq1b1xuDwqYlCTNM92y7rIa95G6o9P
+ F2veelMrg9Wk7DmyjNxNmzEslWBunqewAM9F+H+CpNGI9TJ4xUZrxIn1NSljmUDasvQ==
+X-Google-Smtp-Source: AGHT+IFrXdOCI2ftbLqqam+UO/JYWqcD3owoWaL8WztAmV/sHJ0YTE/8c8qzooqlfTTV1fWJCsUoUg==
+X-Received: by 2002:a05:600c:3551:b0:46d:a04:50c6 with SMTP id
+ 5b1f17b1804b1-46e32a10ef4mr70132235e9.30.1758879395896; 
+ Fri, 26 Sep 2025 02:36:35 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e33b6da3dsm34641535e9.0.2025.09.26.02.32.58
+ 5b1f17b1804b1-46e33105e0bsm35439175e9.5.2025.09.26.02.36.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Sep 2025 02:32:59 -0700 (PDT)
-Message-ID: <269cec44-b851-4b2e-a1f0-ae3a24cd97cf@linaro.org>
-Date: Fri, 26 Sep 2025 11:32:58 +0200
+ Fri, 26 Sep 2025 02:36:35 -0700 (PDT)
+Message-ID: <edb2826b-f513-44d3-a028-e1278a3dd524@linaro.org>
+Date: Fri, 26 Sep 2025 11:36:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/9] tests/functional: Adapt reverse_debugging to run
- w/o Avocado
-To: Thomas Huth <thuth@redhat.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, qemu-devel@nongnu.org, alex.bennee@linaro.org,
- berrange@redhat.com
-Cc: qemu-arm@nongnu.org, manos.pitsidianakis@linaro.org,
- peter.maydell@linaro.org
-References: <20250926051542.104432-1-gustavo.romero@linaro.org>
- <f94da379-eee1-4375-95e6-7349c3c188ee@linaro.org>
- <1d096685-ada0-4c8a-b16a-ed8a5df7b90d@redhat.com>
+Subject: Re: [PATCH 7.2.x] use fedora:37 for python container instead of
+ :latest
 Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
+References: <20250926073120.2212284-1-mjt@tls.msk.ru>
+ <aNZN6bON0bckydql@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1d096685-ada0-4c8a-b16a-ed8a5df7b90d@redhat.com>
+In-Reply-To: <aNZN6bON0bckydql@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,41 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/9/25 11:14, Thomas Huth wrote:
-> On 26/09/2025 08.49, Philippe Mathieu-Daudé wrote:
->> Hi Gustavo,
+On 26/9/25 10:25, Daniel P. Berrangé wrote:
+> On Fri, Sep 26, 2025 at 10:31:19AM +0300, Michael Tokarev wrote:
+>> More recent fedora does not have our minimum python versions
+>> anymore.  Stick with the most common fedora version used in
+>> 7.2.x in other places, which is 37.  This way, python tests
+>> works again.
+
+Valid change, so:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 >>
->> On 26/9/25 07:15, Gustavo Romero wrote:
->>> tests/functional: Adapt reverse_debugging to run w/o Avocado
->>>
->>> The goal of this series is to remove Avocado as a dependency for running
->>> the reverse_debugging functional test.
+>> This is a 7.2-specific change, not aimed for the master branch.
+
+Why? We already learnt using 'latest' tag in docker image is a pain
+to maintain, and hinder reproducibility. Personally I'd rather this
+patch in our /master branch.
+
 >>
->>
->>> Daniel P. Berrangé (2):
->>>    tests/functional: replace avocado process with subprocess
->>>    tests/functional: drop datadrainer class in reverse debugging
->>>
->>> Gustavo Romero (7):
->>>    tests/functional: Re-activate the check-venv target
->>>    python: Install pygdbmi in meson's venv
->>>    tests/functional: Provide GDB to the functional tests
->>>    tests/functional: Add GDB class
->>>    tests/functional: Add decorator to skip test on missing env vars
->>>    tests/functional: Adapt reverse_debugging to run w/o Avocado
->>>    tests/functional: Adapt arches to reverse_debugging w/o Avocado
->>
->> Out of curiosity, do you plan to post the final patch removing Avocado
->> use / dependency?
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   tests/docker/dockerfiles/python.docker | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Which other uses of Avocado are you thinking about? AFAIK, this test 
-> here is the last one that used Avocado.
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> 
+> With regards,
+> Daniel
 
-Maybe I was not clear. After these tests conversion, I don't see any
-more use of avocado, so we can remove its dependency on QEMU, right?
-Basically, in a final patch I'd remove anything related to:
-
-   python/setup.cfg:37:    avocado-framework >= 90.0
-   python/tests/minreqs.txt:35:avocado-framework==90.0
 
 
