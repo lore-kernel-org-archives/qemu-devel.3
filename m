@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9206FCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 05:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A43B9CAC5BA
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 05:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v20p0-0004nn-Tt; Fri, 26 Sep 2025 01:16:44 -0400
+	id 1v20p8-0004sD-7Z; Fri, 26 Sep 2025 01:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v20ou-0004lM-5U
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:16:37 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1v20p1-0004oB-56
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:16:45 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v20oi-00060O-2g
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:16:35 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-27d69771e3eso15166115ad.3
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 22:16:19 -0700 (PDT)
+ id 1v20op-00061Q-Pw
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:16:42 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-27eed7bdfeeso6914925ad.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 22:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758863777; x=1759468577; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758863786; x=1759468586; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UmMZ8OavtJPqXFVQhgzCSfktwxUsbE5ixRVmorJ3R6E=;
- b=JVJsKNYs+rb99/2j+xBjBX+BIyrdsm1S//8gaXce3axo6pFjAkarkRHTMKufnecNWH
- 4yjIq/HwMYpMdIR0Mtf4aLIKWvb2se2JaQqkYtfHwoPGeoc4kfx/xqfpErVtKaSYlHbM
- QQlkEbdLP/cl2lqGE/5Uty8GFJQxo7B2uVgefifECehbcPP0xAez5iKBxjDCHEmV1YmH
- VBhYloqHM67FjY1/JpBu0J55kybXRFLdoxbokFSovgfVOQf6GzyCR625SU7loE/DWOAg
- I15KP7n4NX63hzJbbJUYvOTr/c++DMaQZzzBdSJ4PVY77tyztruSLwW16v9MqcoAZy0+
- A/uA==
+ bh=tqvAjhF9PeBnkzh7otQwLKhrmJazNmoc6H8q1BcmrGw=;
+ b=epBtE1i+Lp+TTTgh2haWFmw146XpCUImdLq742wFplHj68xW/CLyDYVOADAafmTO/9
+ uriE+oMmYZwcqNdTdRrW1+bbwgkW2JWm6YTKyNxVBvhGCnrC/A75N2jTS4mYgWXBdj3o
+ OvSKY5iPITrVF/RYWVQAAte00mPMV4OMlAsZFTt3+WQtor6PDW//e3v0gTm9ud2Eo5JX
+ ItjdeJbmTM4v0Glp2K3d0pAENQOkHhGAdeFLqEXXtLxCG/7ujfrwr+T0BALuU+NzHkY1
+ BBvLO/k1fhFUGr9SNosRQKBaVqtMCEW2Eb5KsYk0aWkNXtuuSj7eqH3hVy6y+duDMRxt
+ ohqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758863777; x=1759468577;
+ d=1e100.net; s=20230601; t=1758863786; x=1759468586;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UmMZ8OavtJPqXFVQhgzCSfktwxUsbE5ixRVmorJ3R6E=;
- b=a2q6iFPBcImoSZG1O2bAml1uZwxHwSPy5BTxrsyaKS9loyhXZr5XZ28vmSXS9f3xnG
- 6ojj5Zrq68a03fs3KsnSDzTbmETdZM1vvfWNXVB9J2cDbqTn8Q9cmpLgEs6LapTjTdMx
- hh1YjJSIlw1TLZ/ro15SjSSOzcSP86/hzXPY++lMpJVKIZ/RMV/zLJu/idbwOuWMKs8Y
- tl5flTAOZ65kLPn1J2iq72grbZzb53Ke7uG3DQ/1quuFqIu0TXVpIzToaOD8oqAu70EJ
- unGoJ6078fQJ5jJvGFRLGJ3qXudhame1TvX1SSLKKW8I6cd2TAOxdxldV/XqcL1Ew5SD
- N1oQ==
-X-Gm-Message-State: AOJu0YxxLgZeNHQ9TEYaDFQ2/Z5YEsjLkf5QBIf1TRyyJ0iP1/Obxvpi
- hiCu9LK3WGhGnCRJGbM3c3IfZXHO+uacJLJYPUI6MwFUGp7ZBUOKE1kwv35gLXUmJ5rrpeVOHVu
- djBRJ
-X-Gm-Gg: ASbGncu59SMN0DhMRQmAlFMfVQWNquXvTPoX1PYef2ERB/Mf0M50SnvbjPsZsstxEL/
- +0pWeK0QWGJDrtS5CuwNImLlZDSdkKWAl6JwqBmJ6zx6KuoN+UG3QIIY+txBiZoYerGqTzgyFmE
- sHC/Oxsm2e8iXdQmBsWC5DtzO4ciTCNx23HymSjDeF6gYM7gkxx9BwO2n6XOC/5q/55wjJEbTUI
- py8tNRxq0t3tWmE/4mWekbnTkW+JxUCFqHKS9j47Y/XDIDu7EWAcOyMGTL5CBxx+1YoX5hYdhrJ
- ER2miuVnD9N+DAupOLfh8rQ2KnHEIzlaA5JLIOD7VsclkO4ADAQiGFr4qKZzI02SxHtFFyzYJdZ
- 6aJPE0p4pZNkHjt5cZoEonnnNUOc/63pV7qA0jWoCOIPCheBx35fX2vXcGA==
-X-Google-Smtp-Source: AGHT+IGz4CBWZEb5vkf9iuGypfPBXgcL/HApohmU/5SkQ2nu/NBWVYVaPmgYZwfxo/lXEN08sDH5tg==
-X-Received: by 2002:a17:902:d60d:b0:269:8edf:67f8 with SMTP id
- d9443c01a7336-27ed4ab6084mr65626315ad.52.1758863777412; 
- Thu, 25 Sep 2025 22:16:17 -0700 (PDT)
+ bh=tqvAjhF9PeBnkzh7otQwLKhrmJazNmoc6H8q1BcmrGw=;
+ b=ayZk/ptZ0+C2FIZHZW9+MD9fMmL4I9vvRuCE3clOrqkWPzuWzdFEGgzWi5mFKCC6yC
+ ECt3j/xYsgKsI0c8LJMEh5DAwPgnFB+9R0Q/0NRjn2XeXRhDn8gw3zjStDWoRDYZTzaA
+ jQtpKWXGykq6CcWb0/EQXG2esRRkWGfbhUsoyv1iOLNcUCzAuN8TWuXCH9fc1qoCdBKp
+ 4Qg8WeCCF0Q21EQ5qBdm6wFVRtqHVlGdq2ag7Qk2rH9fQvlKI6LmJ2rODfd2bvPtenf3
+ tcm7+qLygxpblSfTCEQ/LDJNnHeb2/hND3td4PYxgc27BLcrA+n2VShx+dzMjor6GX6h
+ GueQ==
+X-Gm-Message-State: AOJu0Yyn17q60U69o0QGZOCTZvo/Z9e5+OwbwlKGO/HmKhuhk3+qXGTE
+ Y+aplncA2JrVb6Dkc7NXy5p0oGjiRttGGB9JGuG8akaPODsXVzwbUT1mdXARo2KUveURp1Q2Omn
+ GGGgy
+X-Gm-Gg: ASbGncv9xVEtAovM6skOZ7RjbfrBii+fUTC1ntNxaUGOECaN/LqWdg1kE03OiR/RiqE
+ Ooo3gLnbRInl6ARYZcv30ZfALfN3LHZQgH16hQIiF/Z++Og7Lsljik/Fa5UNySUwB4aRO6DYwPT
+ 6Cyp8E9L9AWqR4dhgjFqquj5B7LZg5bYx2t5rjBmQe+IWzrQZTJioEGGtJOhkc1+uT00dToXIQ4
+ ZncRw0oPHYw11Ao2SLxVTH+qOcAxjpavm5jKErgMhvRt9MKs1lM7Dg53YbcZx+BX8qZwjygwQJO
+ CRiSpTiQ4J32ybXe/NKXMVnG2JcuxXk/QRRpbI5rlmXD7xj7N3liOcqGoY0zfCmAd05YKTNse0L
+ Gn8MkqElf027/f8PzKAMB9KnE8xiZLteZjLbvjLLItoAooHAJR56jhSPGMkp0ZwOtLAz1
+X-Google-Smtp-Source: AGHT+IHYIWi5gcV0fp9+TeSsY77WtkC+hvKT/qc8RXgBb+kfZWgiPvxz6FshJdgCPkH6cON97RS6HA==
+X-Received: by 2002:a17:902:e745:b0:272:d27d:48de with SMTP id
+ d9443c01a7336-27ed6e05744mr64600655ad.18.1758863785704; 
+ Thu, 25 Sep 2025 22:16:25 -0700 (PDT)
 Received: from gromero0.. (189-47-45-49.dsl.telesp.net.br. [189.47.45.49])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27ed672a51fsm42160085ad.63.2025.09.25.22.16.15
+ d9443c01a7336-27ed672a51fsm42160085ad.63.2025.09.25.22.16.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Sep 2025 22:16:17 -0700 (PDT)
+ Thu, 25 Sep 2025 22:16:25 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
  berrange@redhat.com
 Cc: qemu-arm@nongnu.org, gustavo.romero@linaro.org,
  manos.pitsidianakis@linaro.org, peter.maydell@linaro.org
-Subject: [PATCH v4 4/9] tests/functional: Add GDB class
-Date: Fri, 26 Sep 2025 05:15:37 +0000
-Message-Id: <20250926051542.104432-5-gustavo.romero@linaro.org>
+Subject: [PATCH v4 7/9] tests/functional: Add decorator to skip test on
+ missing env vars
+Date: Fri, 26 Sep 2025 05:15:40 +0000
+Message-Id: <20250926051542.104432-8-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250926051542.104432-1-gustavo.romero@linaro.org>
 References: <20250926051542.104432-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,117 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GDB class, which provides methods to run and capture GDB command
-output. The GDB class is a wrapper around the pygdbmi module and
-interacts with GDB via GDB's machine interface (MI).
+Add a decorator to skip tests on missing env variable(s). Multiple
+variable names can be provided and if one or more of them are not set in
+the test environment the test is skipped and the missing vars are
+printed out.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/functional/qemu_test/__init__.py |  1 +
- tests/functional/qemu_test/gdb.py      | 85 ++++++++++++++++++++++++++
- 2 files changed, 86 insertions(+)
- create mode 100644 tests/functional/qemu_test/gdb.py
+ tests/functional/qemu_test/__init__.py   |  3 ++-
+ tests/functional/qemu_test/decorators.py | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 6e666a059f..60d19891bf 100644
+index 60d19891bf..320193591b 100644
 --- a/tests/functional/qemu_test/__init__.py
 +++ b/tests/functional/qemu_test/__init__.py
-@@ -18,3 +18,4 @@
-     skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest
+@@ -15,7 +15,8 @@
+ from .linuxkernel import LinuxKernelTest
+ from .decorators import skipIfMissingCommands, skipIfNotMachine, \
+     skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
+-    skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest
++    skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest, \
++    skipIfMissingEnv
  from .archive import archive_extract
  from .uncompress import uncompress
-+from .gdb import GDB
-diff --git a/tests/functional/qemu_test/gdb.py b/tests/functional/qemu_test/gdb.py
-new file mode 100644
-index 0000000000..15eb5eca18
---- /dev/null
-+++ b/tests/functional/qemu_test/gdb.py
-@@ -0,0 +1,85 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# A simple interface module built around pygdbmi for handling GDB commands.
-+#
-+# Copyright (c) 2025 Linaro Limited
-+#
-+# Author:
-+#  Gustavo Romero <gustavo.romero@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
+ from .gdb import GDB
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index c0d1567b14..b239295804 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -11,6 +11,24 @@
+ from .cmd import which
+ 
+ '''
++Decorator to skip execution of a test if the provided
++environment variables are not set.
++Example:
 +
-+import re
-+from pygdbmi.gdbcontroller import GdbController
++  @skipIfMissingEnv("QEMU_ENV_VAR0", "QEMU_ENV_VAR1")
++'''
++def skipIfMissingEnv(*vars_):
++    missing_vars = []
++    for var in vars_:
++        if os.getenv(var) == None:
++            missing_vars.append(var)
 +
++    has_vars = True if len(missing_vars) == 0 else False
 +
-+class GDB:
-+    """Provides methods to run and capture GDB command output."""
++    return skipUnless(has_vars, f"Missing env var(s): {', '.join(missing_vars)}")
 +
++'''
 +
-+    def __init__(self, gdb_path, echo=True, suffix='# ', prompt="$ "):
-+        gdb_cmd = [gdb_path, "-q", "--interpreter=mi2"]
-+        self.gdbmi = GdbController(gdb_cmd)
-+        self.echo = echo
-+        self.suffix = suffix
-+        self.prompt = prompt
-+        self.response = None
-+        self.cmd_output = None
-+
-+
-+    def get_payload(self, response, kind):
-+        output = []
-+        for o in response:
-+            # Unpack payloads of the same type.
-+            _type, _, payload, *_ = o.values()
-+            if _type == kind:
-+                output += [payload]
-+
-+        # Some output lines do not end with \n but begin with it,
-+        # so remove the leading \n and merge them with the next line
-+        # that ends with \n.
-+        lines = [line.lstrip('\n') for line in output]
-+        lines = "".join(lines)
-+        lines = lines.splitlines(keepends=True)
-+
-+        return lines
-+
-+
-+    def cli(self, cmd, timeout=4.0):
-+        self.response = self.gdbmi.write(cmd, timeout_sec=timeout)
-+        self.cmd_output = self.get_payload(self.response, "console")
-+        if self.echo:
-+            print(self.suffix + self.prompt + cmd)
-+
-+            if len(self.cmd_output) > 0:
-+                cmd_output = self.suffix.join(self.cmd_output)
-+                print(self.suffix + cmd_output, end="")
-+
-+        return self
-+
-+
-+    def get_addr(self):
-+        address_pattern = r"0x[0-9A-Fa-f]+"
-+        cmd_output = "".join(self.cmd_output) # Concat output lines.
-+
-+        match = re.search(address_pattern, cmd_output)
-+
-+        return int(match[0], 16) if match else None
-+
-+
-+    def get_log(self):
-+        r = self.get_payload(self.response, kind="log")
-+        r = "".join(r)
-+
-+        return r
-+
-+
-+    def get_console(self):
-+        r = "".join(self.cmd_output)
-+
-+        return r
-+
-+
-+    def exit(self):
-+        self.gdbmi.exit()
+ Decorator to skip execution of a test if the list
+ of command binaries is not available in $PATH.
+ Example:
 -- 
 2.34.1
 
