@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD7BFCAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D84CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23Q2-0004On-SX; Fri, 26 Sep 2025 04:03:07 -0400
+	id 1v23Ts-0005vJ-0t; Fri, 26 Sep 2025 04:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1v23Px-0004NO-Po
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 04:03:02 -0400
+ id 1v23To-0005ua-7T
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 04:07:00 -0400
 Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1v23Pl-0007IX-61
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 04:03:00 -0400
+ id 1v23Tf-0007tE-Qe
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 04:06:59 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 53A1544B3E
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:56:08 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id A796244B92
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 08:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1758873368;
- bh=6zTyMfjMKlks6HDnoQPhRx2AKjLyKpwyQ1ypCGd4XlE=;
+ s=20210803; t=1758874007;
+ bh=Ucwrar04Y0ZXNZqoEUo3zP2bnFslAWvGLrLYRKpgkaM=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=Es0X2UwDM+LMstNur3wQMPTBd8DBLiait/LmGXfa8YbzSufdvjlopsH1vdA8XjUC3
- BdRLvqzSn7TKvJQFunIpNHJd6vMoSqhgt4hnc9puePdTv7Db1hqcZ1tShBuHVQS9ZS
- OJu68JVlCpjNlZIL5InitlGxUt2Wok0IFK+URzBfEhdNLZ+sZewsk6cQjSAfL6G6Fr
- JbnscpMm3YiDGne0Z8ALh+CVXyz8fGjIZEA+nf7MfsWGTizp2WF1lWZW1+JCDrIkqs
- osbMEeXUPyzc1CkZk4Li/NiUQQDGuyy5HW+3vhYUU467hnJwi5tamGvulE9UNEd2YA
- 50JcnEuVQU1iA==
+ b=QUByArTJ23JEj4lUNjS6/i1Xr0AZXwp3RDABWuJePlSlywnSTQ+ezUHLqNEbVwr42
+ 2A9yb1Gq2YzU44I4gkPCg6BLrkpqieqdo5Rx+Ggamc+FT4lWyFSOywRrjhKHp+lHU1
+ 9MMcyiKfMzFcCNKF2v4xb6pLPzxoz1P+GFZ3ieYnRuofTCBLLBPNZLULtEybSK72cN
+ EH/KPvsd3RGGrHSY/cfGWdbQEJY+opp59xbAGnwkQ8fGBbhzVhZbl8PMLR32ivApII
+ j3VYs0gEnE2ksO70RaOiSmUuSnpGYxLWORd/JrbungWMZC7dgc9+IY0y/z5+LLqmC0
+ RYVgKzCs29Gew==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 46ACF7F5C1
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:56:08 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 9D2857F681
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 08:06:47 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 26 Sep 2025 07:47:08 -0000
-From: Heinrich Schuchardt <2123828@bugs.launchpad.net>
+Date: Fri, 26 Sep 2025 07:58:27 -0000
+From: Simon Chopin <2123828@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=Unknown; importance=Unknown;
@@ -62,10 +62,11 @@ X-Launchpad-Bug-Private: no
 X-Launchpad-Bug-Security-Vulnerability: no
 X-Launchpad-Bug-Commenters: schopin slyon xypron
 X-Launchpad-Bug-Reporter: =?utf-8?q?Lukas_M=C3=A4rdian_=28slyon=29?=
-X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Simon Chopin (schopin)
 References: <175793222278.1250191.6568998309826575823.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <175887282972.3832771.1380958799483108788.launchpad@juju-98d295-prod-launchpad-3>
-Subject: [Bug 2123828] Re: unsupported version 256 of Verdef record when
+ <175887225390.1051970.5933404872021365596.malone@juju-98d295-prod-launchpad-7>
+Message-Id: <CAOOWow3qjiV6s=3YJRVvZHUArdWc4zQ-CDx2WMS0ghzT4WsVZQ@mail.gmail.com>
+Subject: RE: [Bug 2123828] Re: unsupported version 256 of Verdef record when
  running qemu-riscv64 on s390x
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
@@ -73,7 +74,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="6b7d10538685bbcfe8b2a2ba6e15514ae715297b";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: bf6f8c987897dfb4122b667135665f51216e9b57
+X-Launchpad-Hash: 3b51910bec44362fe4ae9a0d7f78471a0b49cbcc
 Received-SPF: pass client-ip=185.125.188.251;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
@@ -82,7 +83,7 @@ X-Spam_bar: ----
 X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,9 +99,9 @@ Reply-To: Bug 2123828 <2123828@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-** Changed in: qemu (Ubuntu)
-     Assignee: Heinrich Schuchardt (xypron) =3D> Valentin Haudiquet (vhaudi=
-quet)
+Hey Heinrich, thanks for all that work, nice find!
+
+I'll go ahead and mark this as Invalid for glibc. Vindicated \o/
 
 --=20
 You received this bug notification because you are a member of qemu-
