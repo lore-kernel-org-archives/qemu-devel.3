@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B21CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA3F6CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23b1-0002Z4-A4; Fri, 26 Sep 2025 04:14:27 -0400
+	id 1v23Yz-0007Xj-73; Fri, 26 Sep 2025 04:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23af-0001jw-Hf; Fri, 26 Sep 2025 04:14:07 -0400
+ id 1v23Yt-0007Wq-QK; Fri, 26 Sep 2025 04:12:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23aY-0000wS-QK; Fri, 26 Sep 2025 04:14:04 -0400
+ id 1v23Yf-0000Qc-Oy; Fri, 26 Sep 2025 04:12:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E84B1157D63;
- Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 99F5F157D54;
+ Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F1A88290C47;
- Fri, 26 Sep 2025 11:10:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB9F6290C38;
+ Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Levon <john.levon@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 27/60] hw/vfio-user: add x-pci-class-code
-Date: Fri, 26 Sep 2025 11:09:55 +0300
-Message-ID: <20250926081031.2214971-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "minglei.liu" <minglei.liu@smartx.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 12/60] qga: Fix truncated output handling in
+ guest-exec status reporting
+Date: Fri, 26 Sep 2025 11:09:40 +0300
+Message-ID: <20250926081031.2214971-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -61,32 +62,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+From: "minglei.liu" <minglei.liu@smartx.com>
 
-This new option was not added to vfio_user_pci_dev_properties, which
-caused an incorrect class code for vfio-user devices.
-
-Fixes: a59d06305fff ("vfio/pci: Introduce x-pci-class-code option")
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250827190810.1645340-1-john.levon@nutanix.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 1b50621881241ac5bc75ae7f8aa4c278ada8a668)
+Signed-off-by: minglei.liu <minglei.liu@smartx.com>
+Fixes: a1853dca743
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250711021714.91258-1-minglei.liu@smartx.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit 28c5d27dd4dc4100a96ff4c9e5871dd23c6b02ec)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index be71c77729..dfaa89498d 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -406,6 +406,8 @@ static const Property vfio_user_pci_dev_properties[] = {
-                        sub_vendor_id, PCI_ANY_ID),
-     DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
-                        sub_device_id, PCI_ANY_ID),
-+    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
-+                       class_code, PCI_ANY_ID),
-     DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
-     DEFINE_PROP_UINT32("x-msg-timeout", VFIOUserPCIDevice, wait_time, 5000),
-     DEFINE_PROP_BOOL("x-no-posted-writes", VFIOUserPCIDevice, no_post, false),
+diff --git a/qga/commands.c b/qga/commands.c
+index 5a5fad31f8..5f20af25d3 100644
+--- a/qga/commands.c
++++ b/qga/commands.c
+@@ -205,13 +205,15 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
+ #endif
+         if (gei->out.length > 0) {
+             ges->out_data = g_base64_encode(gei->out.data, gei->out.length);
+-            ges->has_out_truncated = gei->out.truncated;
++            ges->has_out_truncated = true;
++            ges->out_truncated = gei->out.truncated;
+         }
+         g_free(gei->out.data);
+ 
+         if (gei->err.length > 0) {
+             ges->err_data = g_base64_encode(gei->err.data, gei->err.length);
+-            ges->has_err_truncated = gei->err.truncated;
++            ges->has_err_truncated = true;
++            ges->err_truncated = gei->err.truncated;
+         }
+         g_free(gei->err.data);
+ 
 -- 
 2.47.3
 
