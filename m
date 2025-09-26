@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DBACAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378EDCAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v28Q3-0006Nj-3X; Fri, 26 Sep 2025 09:23:27 -0400
+	id 1v28j5-0000TU-RL; Fri, 26 Sep 2025 09:43:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v28Q1-0006MY-MW
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:23:25 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v28Pq-0004w9-Fu
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:23:25 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-46e3af7889fso7001255e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 06:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758892985; x=1759497785; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jAz0JTk4vVsduSfTi2oHWjqlddYgsu0yU35539b5ArY=;
- b=nD1eflIVxqJxgPv4Su8NFreSR91U+7HOLY9Cgm8Or7wTynXLCbndwadokbOoTEOi0I
- Atf6+ya3fZSRpWzkjmy3+ZfHnFGKwdzrWQn39qJmEwD0VadK5WMSVZCuBzNjxrHtdQkJ
- V0SJoY8qEGTEIkucZbXu1DSnrbTLg9ofgcDDt1bjC6lULJu7kLUOJfvTsCBmDlqBc5pv
- FMSHhzijOgMKA7H+UQgxC/6AdJBboAciBQcNtb8/VGayXOCOHBgrdKywmOgRtdWY3R3O
- KX1UC7ltFdSas9Zb/VvfwyIZHSdcfBJ8iUmjIXTev8xKern9ZqLVl+kwdf/2Me0R1tWK
- gh3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758892985; x=1759497785;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jAz0JTk4vVsduSfTi2oHWjqlddYgsu0yU35539b5ArY=;
- b=oErNP6bPvsiUkUX9REU/C3tXBx53iHpEGPvj8+jFIWM14FcG5LkUXslXW5iAXbyWxT
- sYzWXYFUq1l4E1Mf0CgElOtmqrVwnfEnt91hgnevL0oy1oLed5SwapyWqIp0cTtHHS4E
- f216VZWEw8qZG4vBA8vA/Xuc08BXn5CUIS/Kav4PBxJllWYngUUdiqaII/NtoIYYeIB+
- EbqDlX2UPSjgWkfY+Pih57Hgbc/EtMHaR3isxErDTDQvO8ivfTm2rEYWzNAOeHxHn9Jl
- IIqqolDsUS1KQ1zTbhJpgIvOKdizL4nPkpLy6g1xFsMA7EZUDxiEBVot484FVVuUGZRE
- xklA==
-X-Gm-Message-State: AOJu0YyRHLen9pxcAvn4IdsjkoUZqgVsATia2ZWi7hhOxWbPSqn/+qiq
- kGYdLmgA1n/vzy9FoO7E/vtMf/sCI+aTkuo46cbw95hQLrLpoa/72wZSl1FtARAgSmxLwH9obJt
- uM9IOFDk=
-X-Gm-Gg: ASbGncuFOcrtRWCygc42ugXaJmmWaIJwCmQDwmTVuiSF+TTXPBVgk2xVPu9ZC6VtHfg
- nrzWUBoxXmrsnKtIrdDF7QVXfhIfwG1MMUYS/Ad+cD0xoEGwoZXqT5urz27+vWpF6C5pRBmPq07
- D9bP2TAJThgCkrmk5S8jDbz9XLZA5kDAVOYtqDjnQgETXyyy1AAW7qyBH+qgZk/10HOKd6Hr3Ry
- UDvWnLnGM8V2a2dGjxGN0pyG480iTK0O524jIyhTll4J90u6eeLwAuaTDpYk9AtuV/6c9KgnxVi
- WRMQuelwwbq23q+BLGGWEsfqdHgBOc2nczShCiFhpeeE6EW/61ox7ui14aU1Wa45yPmt64T8GR3
- goOlHgdq4IlELYvtfE7J8r1Q=
-X-Google-Smtp-Source: AGHT+IHMg0pP8IcWQv+sJp0KMHZ/zOVH6kiu3X6NqcrUHR2mvPPSG2oJErDS7jgG1U4D18bBlhA8jA==
-X-Received: by 2002:a05:600c:4ec6:b0:46c:adf8:c845 with SMTP id
- 5b1f17b1804b1-46e329c1768mr86328835e9.16.1758892985547; 
- Fri, 26 Sep 2025 06:23:05 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e32c10823sm37200545e9.3.2025.09.26.06.23.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 06:23:00 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 864AE5F92F;
- Fri, 26 Sep 2025 14:17:46 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 19/24] contrib/plugins/uftrace: implement tracing
-Date: Fri, 26 Sep 2025 14:17:38 +0100
-Message-ID: <20250926131744.432185-20-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20250926131744.432185-1-alex.bennee@linaro.org>
-References: <20250926131744.432185-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1v28j4-0000TA-0c; Fri, 26 Sep 2025 09:43:06 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1v28iu-00006x-AI; Fri, 26 Sep 2025 09:43:05 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QCD4dR017856;
+ Fri, 26 Sep 2025 13:42:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=9VE+lC
+ Ga0lAwjHZ0qNJGu5WKtFIJjhIEPMqeEobemU0=; b=nqIrm8/zLYI6nm3DbowLPF
+ P0bYV27ketKNZZiAYQodLFDlSzuJRv/0smQj8tvraAjgXPu7IzSPSbnicoY0MT7B
+ t+273ax/FOHl6Kvjs+3s87VVTT8yH6EUHeEhG7fD8crfZeisanhOGfQCTurh1R8k
+ IYIzn+gqbami3U48oTgXwWHhxe3wMTjdf5rwSXKaWB+mRy/iA2wiTkgpOn+Wgc+u
+ oRgwfx8Mll7+C/6/lsTfCYOjR2ufo0XE6JvK9/ERFwB9bsbA0b3yhoIcmT2q7uod
+ gNL/hKoYde8Df61Ddpl2WmSEB+8NuXAejXDemN4F/ByX08SNUVy5DXVvA8E5WqNg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbbdcvg5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Sep 2025 13:42:43 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58QAEctc006453;
+ Fri, 26 Sep 2025 13:42:42 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49dawpm9ds-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Sep 2025 13:42:42 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58QDgfB75112430
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Sep 2025 13:42:41 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E6E5758053;
+ Fri, 26 Sep 2025 13:42:40 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 50F565805D;
+ Fri, 26 Sep 2025 13:42:39 +0000 (GMT)
+Received: from [9.61.146.226] (unknown [9.61.146.226])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 26 Sep 2025 13:42:39 +0000 (GMT)
+Message-ID: <903ffd83-5e8d-408f-93a7-618f7707a764@linux.ibm.com>
+Date: Fri, 26 Sep 2025 09:42:38 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 09/28] s390x/diag: Implement DIAG 320 subcode 2
+To: Farhan Ali <alifm@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-10-zycai@linux.ibm.com>
+ <b7f5433e-cf42-4e33-a37a-90fa61fe3d0d@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <b7f5433e-cf42-4e33-a37a-90fa61fe3d0d@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=F/Jat6hN c=1 sm=1 tr=0 ts=68d69853 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=chwZwmviXmat9X5PeQMA:9
+ a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX4Iz5HkY3aHNX
+ 7rj37+9fx1YYI14M563Rsh8dlWVcQh9YuL8lH4DQ+BOjOcfb+b63BMcy4+UfZmObvih7l7lT8gC
+ cgKhHdHvW64QYg8syrHFNIe1p1PsJ8WQ+x44Waef7lmTvQby+nCUPMolfj6ju7h3/ifM99sP/jb
+ 4Dc6ELzt+6K9V1syksA8sk7bP9OTDCaSkxGsV1/0vTQdvYtB73jSzEEPPFy1ccmU2zTBU+8FjYb
+ dpYpUo1jYgNkyakgkfCo3k5WyVZmS1tvZFm/YjVxZK3NOUAVQO+ppiYr4vPOiLYV4nqDoyyFI6O
+ 9hJdBSEoHiIxa8eMorZQ+OGiBoPNFOLNHVMzE5Y7Xyt7HSWKAXd64TWOtt5q3eDi4SsfDmUDqK9
+ FVR0LIxIbuu1rM7zic+NbRXxxUguxA==
+X-Proofpoint-GUID: yiu8MgN3v3MLdg86bfo1_Ke00w5lggD9
+X-Proofpoint-ORIG-GUID: yiu8MgN3v3MLdg86bfo1_Ke00w5lggD9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-26_04,2025-09-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,276 +125,512 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 9/24/25 5:53 PM, Farhan Ali wrote:
+> 
+> On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
+>> DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
+>> certificate store. Only X509 certificates in DER format and SHA-256 hash
+>> type are recognized.
+>>
+>> The subcode value is denoted by setting the second-left-most bit
+>> of an 8-byte field.
+>>
+>> The Verification Certificate Block (VCB) contains the output data
+>> when the operation completes successfully. It includes a common
+>> header followed by zero or more Verification Certificate Entries (VCEs),
+>> depending on the VCB input length and the VC range (from the first VC
+>> index to the last VC index) in the certificate store.
+>>
+>> Each VCE contains information about a certificate retrieved from
+>> the S390IPLCertificateStore, such as the certificate name, key type,
+>> key ID length, hash length, and the raw certificate data.
+>> The key ID and hash are extracted from the raw certificate by the crypto API.
+>>
+>> Note: SHA2-256 VC hash type is required for retrieving the hash
+>> (fingerprint) of the certificate.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>   docs/specs/s390x-secure-ipl.rst |  13 ++
+>>   include/hw/s390x/ipl/diag320.h  |  49 +++++
+>>   target/s390x/diag.c             | 312 +++++++++++++++++++++++++++++++-
+>>   3 files changed, 373 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+>> index 4217f19c84..e28f0b40d7 100644
+>> --- a/docs/specs/s390x-secure-ipl.rst
+>> +++ b/docs/specs/s390x-secure-ipl.rst
+>> @@ -35,3 +35,16 @@ Subcode 1 - query verification certificate storage information
+>>   
+>>       The output is returned in the verification-certificate-storage-size block (VCSSB).
+>>       A VCSSB length of 4 indicates that no certificates are available in the CS.
+>> +
+>> +Subcode 2 - store verification certificates
+>> +    Provides VCs that are in the certificate store.
+>> +
+>> +    The output is provided in a VCB, which includes a common header followed by zero
+>> +    or more verification-certificate entries (VCEs).
+>> +
+>> +    The first-VC index and last-VC index fields of VCB specify the range of VCs
+>> +    to be stored by subcode 2. Stored count and remained count fields specify the
+>> +    number of VCs stored and could not be stored in the VCB due to insufficient
+>> +    storage specified in the VCB input length field.
+>> +
+>> +    VCE contains various information of a VC from the CS.
+>> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+>> index 6e4779c699..2af14b9f01 100644
+>> --- a/include/hw/s390x/ipl/diag320.h
+>> +++ b/include/hw/s390x/ipl/diag320.h
+>> @@ -12,19 +12,30 @@
+>>   
+>>   #define DIAG_320_SUBC_QUERY_ISM     0
+>>   #define DIAG_320_SUBC_QUERY_VCSI    1
+>> +#define DIAG_320_SUBC_STORE_VC      2
+>>   
+>>   #define DIAG_320_RC_OK              0x0001
+>>   #define DIAG_320_RC_NOT_SUPPORTED   0x0102
+>>   #define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+>> +#define DIAG_320_RC_INVAL_VCB_LEN   0x0204
+>> +#define DIAG_320_RC_BAD_RANGE       0x0302
+>>   
+>>   #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
+>>   #define DIAG_320_ISM_QUERY_VCSI     0x40000000
+>> +#define DIAG_320_ISM_STORE_VC       0x20000000
+>>   
+>>   #define VCSSB_NO_VC     4
+>>   #define VCSSB_MIN_LEN   128
+>>   #define VCE_HEADER_LEN  128
+>> +#define VCE_INVALID_LEN 72
+>>   #define VCB_HEADER_LEN  64
+>>   
+>> +#define DIAG_320_VCE_FLAGS_VALID                0x80
+>> +#define DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING    0
+>> +#define DIAG_320_VCE_KEYTYPE_ECDSA_P521         1
+>> +#define DIAG_320_VCE_FORMAT_X509_DER            1
+>> +#define DIAG_320_VCE_HASHTYPE_SHA2_256          1
+>> +
+>>   struct VCStorageSizeBlock {
+>>       uint32_t length;
+>>       uint8_t reserved0[3];
+>> @@ -39,4 +50,42 @@ struct VCStorageSizeBlock {
+>>   };
+>>   typedef struct VCStorageSizeBlock VCStorageSizeBlock;
+>>   
+>> +struct VCBlock {
+>> +    uint32_t in_len;
+>> +    uint32_t reserved0;
+>> +    uint16_t first_vc_index;
+>> +    uint16_t last_vc_index;
+>> +    uint32_t reserved1[5];
+>> +    uint32_t out_len;
+>> +    uint8_t reserved2[3];
+>> +    uint8_t version;
+>> +    uint16_t stored_ct;
+>> +    uint16_t remain_ct;
+>> +    uint32_t reserved3[5];
+>> +    uint8_t vce_buf[];
+>> +};
+>> +typedef struct VCBlock VCBlock;
+>> +
+>> +struct VCEntry {
+>> +    uint32_t len;
+>> +    uint8_t flags;
+>> +    uint8_t key_type;
+>> +    uint16_t cert_idx;
+>> +    uint32_t name[16];
+>> +    uint8_t format;
+>> +    uint8_t reserved0;
+>> +    uint16_t keyid_len;
+>> +    uint8_t reserved1;
+>> +    uint8_t hash_type;
+>> +    uint16_t hash_len;
+>> +    uint32_t reserved2;
+>> +    uint32_t cert_len;
+>> +    uint32_t reserved3[2];
+>> +    uint16_t hash_offset;
+>> +    uint16_t cert_offset;
+>> +    uint32_t reserved4[7];
+>> +    uint8_t cert_buf[];
+>> +};
+>> +typedef struct VCEntry VCEntry;
+>> +
+>>   #endif
+>> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+>> index 4e6de483b8..d5f6c54df3 100644
+>> --- a/target/s390x/diag.c
+>> +++ b/target/s390x/diag.c
+>> @@ -17,6 +17,7 @@
+>>   #include "s390x-internal.h"
+>>   #include "hw/watchdog/wdt_diag288.h"
+>>   #include "system/cpus.h"
+>> +#include "hw/s390x/cert-store.h"
+>>   #include "hw/s390x/ipl.h"
+>>   #include "hw/s390x/ipl/diag320.h"
+>>   #include "hw/s390x/s390-virtio-ccw.h"
+>> @@ -24,6 +25,7 @@
+>>   #include "kvm/kvm_s390x.h"
+>>   #include "target/s390x/kvm/pv.h"
+>>   #include "qemu/error-report.h"
+>> +#include "crypto/x509-utils.h"
+>>   
+>>   
+>>   int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3)
+>> @@ -225,8 +227,308 @@ static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
+>>       return DIAG_320_RC_OK;
+>>   }
+>>   
+>> +static bool is_cert_valid(S390IPLCertificate cert)
+>> +{
+>> +    int rc;
+>> +    Error *err = NULL;
+>> +
+>> +    rc = qcrypto_x509_check_cert_times(cert.raw, cert.size, &err);
+>> +    if (rc != 0) {
+>> +        error_report_err(err);
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +static void handle_key_id(VCEntry *vce, S390IPLCertificate cert)
+>> +{
+>> +    int rc;
+>> +    g_autofree unsigned char *key_id_data = NULL;
+>> +    size_t key_id_len;
+>> +    Error *err = NULL;
+>> +
+>> +    key_id_len = CERT_KEY_ID_LEN;
+>> +    /* key id and key id len */
+>> +    rc = qcrypto_x509_get_cert_key_id(cert.raw, cert.size,
+>> +                                      QCRYPTO_HASH_ALGO_SHA256,
+>> +                                      &key_id_data, &key_id_len, &err);
+>> +    if (rc < 0) {
+>> +        error_report_err(err);
+>> +        return;
+>> +    }
+>> +    vce->keyid_len = cpu_to_be16(key_id_len);
+>> +
+>> +    memcpy(vce->cert_buf, key_id_data, key_id_len);
+>> +}
+>> +
+>> +static int handle_hash(VCEntry *vce, S390IPLCertificate cert, uint16_t keyid_field_len)
+>> +{
+>> +    int rc;
+>> +    uint16_t hash_offset;
+>> +    g_autofree void *hash_data = NULL;
+>> +    size_t hash_len;
+>> +    Error *err = NULL;
+>> +
+>> +    hash_len = CERT_HASH_LEN;
+>> +    /* hash and hash len */
+>> +    hash_data = g_malloc0(hash_len);
+>> +    rc = qcrypto_get_x509_cert_fingerprint(cert.raw, cert.size,
+>> +                                           QCRYPTO_HASH_ALGO_SHA256,
+>> +                                           hash_data, &hash_len, &err);
+>> +    if (rc < 0) {
+>> +        error_report_err(err);
+>> +        return -1;
+>> +    }
+>> +    vce->hash_len = cpu_to_be16(hash_len);
+>> +
+>> +    /* hash type */
+>> +    vce->hash_type = DIAG_320_VCE_HASHTYPE_SHA2_256;
+>> +
+>> +    hash_offset = VCE_HEADER_LEN + keyid_field_len;
+>> +    vce->hash_offset = cpu_to_be16(hash_offset);
+>> +
+>> +    memcpy((uint8_t *)vce + hash_offset, hash_data, hash_len);
+> 
+> Do we need any check here to make sure we are not going out of the 
+> bounds of vce buffer?
+> 
+> 
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int handle_cert(VCEntry *vce, S390IPLCertificate cert, uint16_t hash_field_len)
+>> +{
+>> +    int rc;
+>> +    uint16_t cert_offset;
+>> +    g_autofree uint8_t *cert_der = NULL;
+>> +    Error *err = NULL;
+>> +
+>> +    /* certificate in DER format */
+>> +    rc = qcrypto_x509_convert_cert_der(cert.raw, cert.size,
+>> +                                       &cert_der, &cert.der_size, &err);
+>> +    if (rc < 0) {
+>> +        error_report_err(err);
+>> +        return -1;
+>> +    }
+>> +    vce->format = DIAG_320_VCE_FORMAT_X509_DER;
+>> +    vce->cert_len = cpu_to_be32(cert.der_size);
+>> +    cert_offset = be16_to_cpu(vce->hash_offset) + hash_field_len;
+>> +    vce->cert_offset = cpu_to_be16(cert_offset);
+>> +
+>> +    memcpy((uint8_t *)vce + cert_offset, cert_der, cert.der_size);
+> 
+> Similar to above, do we need any check here to make sure we are not 
+> going out of the bounds of vce buffer?
+> 
+> 
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int get_key_type(S390IPLCertificate cert)
+>> +{
+>> +    int algo;
+>> +    int rc;
+>> +    Error *err = NULL;
+>> +
+>> +    /* public key algorithm */
+>> +    algo = qcrypto_x509_get_pk_algorithm(cert.raw, cert.size, &err);
+>> +    if (algo < 0) {
+>> +        error_report_err(err);
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (algo == QCRYPTO_PK_ALGO_ECDSA) {
+>> +        rc = qcrypto_x509_is_ecc_curve_p521(cert.raw, cert.size, &err);
+>> +        if (rc == -1) {
+>> +            error_report_err(err);
+>> +            return -1;
+>> +        }
+>> +
+>> +        return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
+>> +                           DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+>> +    }
+>> +
+>> +    return DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+>> +}
+>> +
+>> +static int build_vce_header(VCEntry *vce, S390IPLCertificate cert, int idx)
+>> +{
+>> +    int key_type;
+>> +
+>> +    vce->len = cpu_to_be32(VCE_HEADER_LEN);
+>> +    vce->cert_idx = cpu_to_be16(idx + 1);
+>> +    strncpy((char *)vce->name, (char *)cert.vc_name, VC_NAME_LEN_BYTES);
+>> +
+>> +    key_type = get_key_type(cert);
+>> +    if (key_type == -1) {
+>> +        return -1;
+>> +    }
+>> +    vce->key_type = key_type;
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int build_vce_data(VCEntry *vce, S390IPLCertificate cert)
+>> +{
+>> +    uint16_t keyid_field_len;
+>> +    uint16_t hash_field_len;
+>> +    uint32_t cert_field_len;
+>> +    int rc;
+>> +
+>> +    handle_key_id(vce, cert);
+>> +    /* vce key id field length - can be 0 if failed to retrieve */
+>> +    keyid_field_len = ROUND_UP(be16_to_cpu(vce->keyid_len), 4);
+>> +
+>> +    rc = handle_hash(vce, cert, keyid_field_len);
+>> +    if (rc) {
+>> +        return -1;
+>> +    }
+>> +    hash_field_len = ROUND_UP(be16_to_cpu(vce->hash_len), 4);
+>> +
+>> +    rc = handle_cert(vce, cert, hash_field_len);
+>> +    if (rc || !is_cert_valid(cert)) {
+>> +        return -1;
+>> +    }
+>> +    /* vce certificate field length */
+>> +    cert_field_len = ROUND_UP(be32_to_cpu(vce->cert_len), 4);
+>> +
+>> +    /* The certificate is valid and VCE contains the certificate */
+>> +    vce->flags |= DIAG_320_VCE_FLAGS_VALID;
+>> +
+>> +    /* Update vce length to reflect the acutal size used by vce */
+>> +    vce->len += cpu_to_be32(keyid_field_len + hash_field_len + cert_field_len);
+> 
+> Should we validate the final vce->len calculated is <= vce_len?
+> 
+> 
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static VCEntry *diag_320_build_vce(S390IPLCertificate cert, uint32_t vce_len, int idx)
+>> +{
+>> +    g_autofree VCEntry *vce = NULL;
+>> +    int rc;
+>> +
+>> +    /*
+>> +     * Construct VCE
+>> +     * Allocate enough memory for all certificate data (key id, hash and certificate).
+>> +     * Unused area following the VCE field contains zeros.
+>> +     */
+>> +    vce = g_malloc0(vce_len);
+>> +    rc = build_vce_header(vce, cert, idx);
+>> +    if (rc) {
+>> +        vce->len = cpu_to_be32(VCE_INVALID_LEN);
+>> +        goto out;
+>> +    }
+>> +    vce->len = cpu_to_be32(VCE_HEADER_LEN);
+> 
+> This is redundant as we already set vce->len to VCE_HEADER_LEN on 
+> successful call to build_vce_header. I think rather vce->len should be 
+> set to vce_len to make bounds checking easier in the helper functions.
+> 
 
-We implement tracing, following uftrace format.
-Trace is flushed every 32 MB, so file operations don't impact
-performance at runtime.
+Thanks for the feedback and for spotting the redundant code.
 
-A different trace is generated per cpu, and we ensure they have a unique
-name, based on vcpu_index, while keeping room for privilege level coming
-in next commit.
+I'll add bounds checking in the next version.
 
-Uftrace format is not officially documented, but it can be found here:
-https://github.com/namhyung/uftrace/blob/v0.18/libmcount/record.c#L909
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20250902075042.223990-5-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250922093711.2768983-21-alex.bennee@linaro.org>
-
-diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index bb775916270..b9dcd531987 100644
---- a/contrib/plugins/uftrace.c
-+++ b/contrib/plugins/uftrace.c
-@@ -12,6 +12,15 @@
- #include <qemu-plugin.h>
- #include <glib.h>
- #include <stdio.h>
-+#include <sys/stat.h>
-+#include <sys/time.h>
-+#include <time.h>
-+#include <unistd.h>
-+
-+#define MiB     (INT64_C(1) << 20)
-+#define NANOSECONDS_PER_SECOND 1000000000LL
-+#define TRACE_FLUSH_SIZE (32 * MiB)
-+#define TRACE_ID_SCALE 100
- 
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- 
-@@ -24,6 +33,13 @@ typedef struct {
-     uint64_t frame_pointer;
- } CallstackEntry;
- 
-+typedef struct {
-+    GArray *t;
-+    GString *path;
-+    GString *name;
-+    uint32_t id;
-+} Trace;
-+
- typedef struct Cpu Cpu;
- 
- typedef struct {
-@@ -34,6 +50,7 @@ typedef struct {
- } CpuOps;
- 
- typedef struct Cpu {
-+    Trace *trace;
-     Callstack *cs;
-     GByteArray *buf;
-     CpuOps ops;
-@@ -44,9 +61,41 @@ typedef struct {
-     struct qemu_plugin_register *reg_fp;
- } Aarch64Cpu;
- 
-+typedef struct {
-+    uint64_t timestamp;
-+    uint64_t data;
-+} UftraceEntry;
-+
-+typedef enum {
-+    UFTRACE_ENTRY,
-+    UFTRACE_EXIT,
-+    UFTRACE_LOST,
-+    UFTRACE_EVENT,
-+} UftraceRecordType;
-+
- static struct qemu_plugin_scoreboard *score;
- static CpuOps arch_ops;
- 
-+static uint64_t gettime_ns(void)
-+{
-+#ifdef _WIN32
-+    /*
-+     * On Windows, timespec_get is available only with UCRT, but not with
-+     * MinGW64 environment. Simplify by using only gettimeofday on this
-+     * platform. This may result in a precision loss.
-+     */
-+    struct timeval tv;
-+    gettimeofday(&tv, NULL);
-+    uint64_t now_ns = tv.tv_sec * NANOSECONDS_PER_SECOND + tv.tv_usec * 1000;
-+#else
-+    /* We need nanosecond precision for short lived functions. */
-+    struct timespec ts;
-+    timespec_get(&ts, TIME_UTC);
-+    uint64_t now_ns = ts.tv_sec * NANOSECONDS_PER_SECOND + ts.tv_nsec;
-+#endif
-+    return now_ns;
-+}
-+
- static Callstack *callstack_new(void)
- {
-     Callstack *cs = g_new0(Callstack, 1);
-@@ -112,6 +161,86 @@ static CallstackEntry callstack_pop(Callstack *cs)
-     return e;
- }
- 
-+static Trace *trace_new(uint32_t id, GString *name)
-+{
-+    Trace *t = g_new0(Trace, 1);
-+    t->t = g_array_new(false, false, sizeof(UftraceEntry));
-+    t->path = g_string_new(NULL);
-+    g_string_append_printf(t->path, "./uftrace.data/%"PRIu32".dat", id);
-+    t->name = g_string_new(name->str);
-+    t->id = id;
-+    return t;
-+}
-+
-+static void trace_free(Trace *t)
-+{
-+    g_assert(t->t->len == 0);
-+    g_array_free(t->t, true);
-+    t->t = NULL;
-+    g_string_free(t->path, true);
-+    t->path = NULL;
-+    g_string_free(t->name, true);
-+    t->name = NULL;
-+    g_free(t);
-+}
-+
-+static void trace_flush(Trace *t, bool append)
-+{
-+    int create_dir = g_mkdir_with_parents("./uftrace.data",
-+                                          S_IRWXU | S_IRWXG | S_IRWXO);
-+    g_assert(create_dir == 0);
-+    FILE *dat = fopen(t->path->str, append ? "a" : "w");
-+    g_assert(dat);
-+    GArray *data = t->t;
-+    if (data->len) {
-+        size_t wrote = fwrite(data->data, sizeof(UftraceEntry), data->len, dat);
-+        g_assert(wrote == data->len);
-+    }
-+    fclose(dat);
-+    g_array_set_size(data, 0);
-+}
-+
-+static void trace_add_entry(Trace *t, uint64_t timestamp, uint64_t pc,
-+                            size_t depth, UftraceRecordType type)
-+{
-+    /* https://github.com/namhyung/uftrace/blob/v0.18/libmcount/record.c#L909 */
-+    const uint64_t record_magic = 0x5;
-+    uint64_t data = type | (record_magic << 3);
-+    data += depth << 6;
-+    data += pc << 16;
-+    UftraceEntry e = {.timestamp = timestamp, .data = data};
-+    g_array_append_val(t->t, e);
-+    if (t->t->len * sizeof(UftraceEntry) > TRACE_FLUSH_SIZE) {
-+        trace_flush(t, true);
-+    }
-+}
-+
-+static void trace_enter_function(Trace *t, uint64_t timestamp,
-+                                 uint64_t pc, size_t depth)
-+{
-+    trace_add_entry(t, timestamp, pc, depth, UFTRACE_ENTRY);
-+}
-+
-+static void trace_exit_function(Trace *t, uint64_t timestamp,
-+                                uint64_t pc, size_t depth)
-+{
-+    trace_add_entry(t, timestamp, pc, depth, UFTRACE_EXIT);
-+}
-+
-+static void trace_enter_stack(Trace *t, Callstack *cs, uint64_t timestamp)
-+{
-+    for (size_t depth = 1; depth <= callstack_depth(cs); ++depth) {
-+        trace_enter_function(t, timestamp, callstack_at(cs, depth)->pc, depth);
-+    }
-+}
-+
-+static void trace_exit_stack(Trace *t, Callstack *cs, uint64_t timestamp)
-+{
-+    for (size_t depth = callstack_depth(cs); depth > 0; --depth) {
-+        trace_exit_function(t, timestamp, callstack_at(cs, depth)->pc, depth);
-+    }
-+}
-+
- static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
- {
-     GByteArray *buf = cpu->buf;
-@@ -223,7 +352,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
- {
-     uint64_t pc = (uintptr_t) udata;
-     Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
-+    uint64_t timestamp = gettime_ns();
-     Callstack *cs = cpu->cs;
-+    Trace *t = cpu->trace;
- 
-     uint64_t fp = cpu->ops.get_frame_pointer(cpu);
-     if (!fp && callstack_empty(cs)) {
-@@ -232,6 +363,7 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-          * long as a proper call does not happen.
-          */
-         callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
-+        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-         return;
-     }
- 
-@@ -244,7 +376,8 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-     CallstackEntry caller = callstack_caller(cs);
-     if (fp == caller.frame_pointer) {
-         /* return */
--        callstack_pop(cs);
-+        CallstackEntry e = callstack_pop(cs);
-+        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
-         return;
-     }
- 
-@@ -252,12 +385,16 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-     if (caller_fp == top.frame_pointer) {
-         /* call */
-         callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
-+        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-         return;
-     }
- 
-     /* discontinuity, exit current stack and unwind new one */
-+    trace_exit_stack(t, cs, timestamp);
-     callstack_clear(cs);
-+
-     cpu_unwind_stack(cpu, fp, pc);
-+    trace_enter_stack(t, cs, timestamp);
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -297,6 +434,16 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-     cpu->ops.init(cpu);
-     cpu->buf = g_byte_array_new();
- 
-+    g_assert(vcpu_index < UINT32_MAX / TRACE_ID_SCALE);
-+    /* trace_id is: cpu_number * TRACE_ID_SCALE */
-+    uint32_t trace_id = (vcpu_index + 1) * TRACE_ID_SCALE;
-+
-+    g_autoptr(GString) trace_name = g_string_new(NULL);
-+    g_string_append_printf(trace_name, "cpu%u", vcpu_index);
-+    cpu->trace = trace_new(trace_id, trace_name);
-+    /* create/truncate trace file */
-+    trace_flush(cpu->trace, false);
-+
-     cpu->cs = callstack_new();
- }
- 
-@@ -305,6 +452,7 @@ static void vcpu_end(unsigned int vcpu_index)
-     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
-     g_byte_array_free(cpu->buf, true);
- 
-+    trace_free(cpu->trace);
-     callstack_free(cpu->cs);
-     memset(cpu, 0, sizeof(Cpu));
- }
-@@ -312,6 +460,8 @@ static void vcpu_end(unsigned int vcpu_index)
- static void at_exit(qemu_plugin_id_t id, void *data)
- {
-     for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-+        Cpu *cpu = qemu_plugin_scoreboard_find(score, i);
-+        trace_flush(cpu->trace, true);
-         vcpu_end(i);
-     }
- 
--- 
-2.47.3
+>> +
+>> +    rc = build_vce_data(vce, cert);
+>> +    if (rc) {
+>> +        vce->len = cpu_to_be32(VCE_INVALID_LEN);
+>> +    }
+>> +
+>> +out:
+>> +    return g_steal_pointer(&vce);
+>> +}
+>> +
+>> +static int handle_diag320_store_vc(S390CPU *cpu, uint64_t addr, uint64_t r1, uintptr_t ra,
+>> +                                   S390IPLCertificateStore *qcs)
+>> +{
+>> +    g_autofree VCBlock *vcb = NULL;
+>> +    size_t vce_offset;
+>> +    size_t remaining_space;
+>> +    uint32_t vce_len;
+>> +    uint16_t first_vc_index;
+>> +    uint16_t last_vc_index;
+>> +    uint32_t in_len;
+>> +
+>> +    vcb = g_new0(VCBlock, 1);
+>> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb, sizeof(*vcb))) {
+>> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +        return -1;
+>> +    }
+>> +
+>> +    in_len = be32_to_cpu(vcb->in_len);
+>> +    first_vc_index = be16_to_cpu(vcb->first_vc_index);
+>> +    last_vc_index = be16_to_cpu(vcb->last_vc_index);
+>> +
+>> +    if (in_len % TARGET_PAGE_SIZE != 0) {
+>> +        return DIAG_320_RC_INVAL_VCB_LEN;
+>> +    }
+>> +
+>> +    if (first_vc_index > last_vc_index) {
+>> +        return DIAG_320_RC_BAD_RANGE;
+>> +    }
+>> +
+>> +    vcb->out_len = VCB_HEADER_LEN;
+>> +
+>> +    if (first_vc_index == 0) {
+>> +        /*
+>> +         * Zero is a valid index for the first and last VC index.
+>> +         * Zero index results in the VCB header and zero certificates returned.
+>> +         */
+>> +        if (last_vc_index == 0) {
+>> +            goto out;
+>> +        }
+>> +
+>> +        /* DIAG320 certificate store remains a one origin for cert entries */
+>> +        vcb->first_vc_index = 1;
+>> +        first_vc_index = 1;
+>> +    }
+>> +
+>> +    vce_offset = VCB_HEADER_LEN;
+>> +    remaining_space = in_len - VCB_HEADER_LEN;
+>> +
+>> +    for (int i = first_vc_index - 1; i < last_vc_index && i < qcs->count; i++) {
+>> +        VCEntry *vce;
+>> +        S390IPLCertificate cert = qcs->certs[i];
+>> +        /*
+>> +         * Each VCE is word aligned.
+>> +         * Each variable length field within the VCE is also word aligned.
+>> +         */
+>> +        vce_len = VCE_HEADER_LEN +
+>> +                  ROUND_UP(CERT_KEY_ID_LEN, 4) +
+>> +                  ROUND_UP(CERT_HASH_LEN, 4) +
+>> +                  ROUND_UP(cert.der_size, 4);
+>> +
+>> +        /*
+>> +         * If there is no more space to store the cert,
+>> +         * set the remaining verification cert count and
+>> +         * break early.
+>> +         */
+>> +        if (remaining_space < vce_len) {
+>> +            vcb->remain_ct = cpu_to_be16(last_vc_index - i);
+>> +            break;
+>> +        }
+>> +
+>> +        vce = diag_320_build_vce(cert, vce_len, i);
+>> +
+>> +        /* Write VCE */
+>> +        if (s390_cpu_virt_mem_write(cpu, addr + vce_offset, r1,
+>> +                                    vce, be32_to_cpu(vce->len))) {
+>> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +            g_free(vce);
+>> +            return -1;
+>> +        }
+>> +
+>> +        vce_offset += be32_to_cpu(vce->len);
+>> +        vcb->out_len += be32_to_cpu(vce->len);
+>> +        remaining_space -= be32_to_cpu(vce->len);
+>> +        vcb->stored_ct++;
+>> +
+>> +        g_free(vce);
+>> +    }
+>> +    vcb->stored_ct = cpu_to_be16(vcb->stored_ct);
+>> +
+>> +out:
+>> +    vcb->out_len = cpu_to_be32(vcb->out_len);
+>> +    /*
+>> +     * Write VCB header
+>> +     * All VCEs have been populated with the latest information
+>> +     * and write VCB header last.
+>> +     */
+>> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb, VCB_HEADER_LEN)) {
+>> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +        return -1;
+>> +    }
+>> +
+>> +    return DIAG_320_RC_OK;
+>> +}
+>> +
+>>   QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_MIN_LEN,
+>>                      "size of VCStorageSizeBlock is wrong");
+>> +QEMU_BUILD_BUG_MSG(sizeof(VCBlock) != VCB_HEADER_LEN, "size of VCBlock is wrong");
+>> +QEMU_BUILD_BUG_MSG(sizeof(VCEntry) != VCE_HEADER_LEN, "size of VCEntry is wrong");
+>>   
+>>   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>>   {
+>> @@ -259,7 +561,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>>            * for now.
+>>            */
+>>           uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
+>> -                                         DIAG_320_ISM_QUERY_VCSI);
+>> +                                         DIAG_320_ISM_QUERY_VCSI |
+>> +                                         DIAG_320_ISM_STORE_VC);
+>>   
+>>           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+>>               s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> @@ -285,6 +588,13 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>>           }
+>>           env->regs[r1 + 1] = rc;
+>>           break;
+>> +    case DIAG_320_SUBC_STORE_VC:
+>> +        rc = handle_diag320_store_vc(cpu, addr, r1, ra, qcs);
+>> +        if (rc == -1) {
+>> +            return;
+>> +        }
+>> +        env->regs[r1 + 1] = rc;
+>> +        break;
+>>       default:
+>>           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+>>           break;
 
 
