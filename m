@@ -4,48 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326FCCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 04:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCF3CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 04:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1zsQ-0007PW-H1; Fri, 26 Sep 2025 00:16:10 -0400
+	id 1v20OU-0006Ef-SV; Fri, 26 Sep 2025 00:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhaoxin04@baidu.com>)
- id 1v1zsH-0007Oz-0D
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 00:16:05 -0400
-Received: from mx24.baidu.com ([111.206.215.185] helo=baidu.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v20OS-0006EF-Dd
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 00:49:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhaoxin04@baidu.com>)
- id 1v1zs0-0005bq-CI
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 00:16:00 -0400
-To: qemu-devel <qemu-devel@nongnu.org>
-CC: "Michael S . Tsirkin" <mst@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>, Miao Kezhan
- <miaokezhan@baidu.com>, Li Zhaoxin <lizhaoxin04@baidu.com>
-Subject: Re: [PATCH] vdpa-dev: add get_vhost() callback for vhost-vdpa device
-Date: Fri, 26 Sep 2025 12:15:15 +0800
-Message-ID: <20250926041515.36123-1-lizhaoxin04@baidu.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <lh5yr3s3xej3mejfkoz5q6m5jf62b6ox2mvaspu5t3niuhv3qx@gdwzsqquroei>
-References: <lh5yr3s3xej3mejfkoz5q6m5jf62b6ox2mvaspu5t3niuhv3qx@gdwzsqquroei>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v20OJ-0001RH-4m
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 00:49:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758862132;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1MvyDWQGXlJS9Ycm9tC9PpbnVI0Qh3rhecS0NAX+nes=;
+ b=V4RJyv4VHW0+FUZq5RUVV7PfOuGh/NxcuiiVTkyOoX1JSuZ9RnlgcrV84XEu0DwnCn7BP4
+ 54rkRjYvzyxO7MXuYDxJvWdgizJm1z+fixRhKPYzKSZyvP3MGnoxtTnYXlbnb6qFII7qfI
+ WSaktKA7mrMW44QLxj+xEjN4VTg7QO4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-oWSBxTZbNqCTo_T3xO4WnQ-1; Fri,
+ 26 Sep 2025 00:48:48 -0400
+X-MC-Unique: oWSBxTZbNqCTo_T3xO4WnQ-1
+X-Mimecast-MFC-AGG-ID: oWSBxTZbNqCTo_T3xO4WnQ_1758862128
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D7A0018004D8; Fri, 26 Sep 2025 04:48:47 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6329C1800579; Fri, 26 Sep 2025 04:48:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 600D921E6A27; Fri, 26 Sep 2025 06:48:44 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org,  alex.williamson@redhat.com,  clg@redhat.com,
+ eric.auger@redhat.com,  steven.sistare@oracle.com
+Subject: Re: [PATCH 5/5] accel/kvm: Fix SIGSEGV when execute "query-balloon"
+ after CPR transfer
+In-Reply-To: <20250926022540.1884023-1-zhenzhong.duan@intel.com> (Zhenzhong
+ Duan's message of "Thu, 25 Sep 2025 22:25:40 -0400")
+References: <20250926022540.1884023-1-zhenzhong.duan@intel.com>
+Date: Fri, 26 Sep 2025 06:48:44 +0200
+Message-ID: <87v7l5stsj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.127.73.8]
-X-ClientProxiedBy: bjhj-exc12.internal.baidu.com (172.31.3.22) To
- bjhj-exc18.internal.baidu.com (172.31.4.16)
-X-FEAS-Client-IP: 172.31.4.16
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=111.206.215.185;
- envelope-from=lizhaoxin04@baidu.com; helo=baidu.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,74 +83,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Li Zhaoxin <lizhaoxin04@baidu.com>
-From:  Li Zhaoxin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Sep 2025 04:08:24 -0700, Stefano Garzarella wrote:
->On Tue, Sep 23, 2025 at 09:51:10PM +0800, Li Zhaoxin wrote:
->>Commit c255488d67 "virtio: add vhost support for virtio devices"
->>added the get_vhost() function, but it did not include vhost-vdpa devices.
->>Now we add it.
+Zhenzhong Duan <zhenzhong.duan@intel.com> writes:
+
+> After CPR transfer, source QEMU close kvm fd and free kvm_state,
+> "query-balloon" will check kvm_state->sync_mmu and trigger NULL
+> pointer reference.
 >
->Again, could you please explain what problem you had and how this patch 
->solves it?
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  accel/kvm/kvm-all.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->This information must always be included in a commit message, so please 
->pay attention to this.
->
->Thanks,
->Stefano
->
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 9060599cd7..a3e2d11763 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3479,7 +3479,7 @@ int kvm_device_access(int fd, int group, uint64_t attr,
+>  
+>  bool kvm_has_sync_mmu(void)
+>  {
+> -    return kvm_state->sync_mmu;
+> +    return kvm_state && kvm_state->sync_mmu;
+>  }
+>  
+>  int kvm_has_vcpu_events(void)
 
-OK, I've got it.
-When I use the vdpa device and query the status of the vdpa device with
-the x-query-virtio-status qmp command, since vdpa does not implement vhost_get,
-it will cause qemu to crash. 
+This dereference could signify there's a general assumption *kvm_state
+is valid, i.e. there might be more dereferences hiding in the code.
 
-Therefore, in order to obtain the status of the virtio device under vhost-vdpa,
-we need to add a vhost_get implement for the vdpa device.
+Have you checked?
 
-Later, I will send Patch v2 that includes the complete commit information.
+Is freeing @kvm_state after CPR transfer useful?
 
-Thanks,
-Li Zhaoxin
-
->>
->>Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
->>Signed-off-by: Miao Kezhan <miaokezhan@baidu.com>
->>Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
->>---
->> hw/virtio/vdpa-dev.c | 7 +++++++
->> 1 file changed, 7 insertions(+)
->>
->>diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->>index d1da40afc8..4a7b970976 100644
->>--- a/hw/virtio/vdpa-dev.c
->>+++ b/hw/virtio/vdpa-dev.c
->>@@ -338,6 +338,12 @@ static int vhost_vdpa_device_set_status(VirtIODevice *vdev, uint8_t status)
->>     return 0;
->> }
->>
->>+static struct vhost_dev *vhost_vdpa_device_get_vhost(VirtIODevice *vdev)
->>+{
->>+    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
->>+    return &s->dev;
->>+}
->>+
->> static const Property vhost_vdpa_device_properties[] = {
->>     DEFINE_PROP_STRING("vhostdev", VhostVdpaDevice, vhostdev),
->>     DEFINE_PROP_UINT16("queue-size", VhostVdpaDevice, queue_size, 0),
->>@@ -369,6 +375,7 @@ static void vhost_vdpa_device_class_init(ObjectClass *klass, const void *data)
->>     vdc->set_config = vhost_vdpa_device_set_config;
->>     vdc->get_features = vhost_vdpa_device_get_features;
->>     vdc->set_status = vhost_vdpa_device_set_status;
->>+    vdc->get_vhost = vhost_vdpa_device_get_vhost;
->> }
->>
->> static void vhost_vdpa_device_instance_init(Object *obj)
->>-- 
->>2.34.1
->>
 
