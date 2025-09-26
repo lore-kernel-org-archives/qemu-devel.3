@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B01CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 09:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9989CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 09:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v24sm-0004J1-VV; Fri, 26 Sep 2025 05:36:54 -0400
+	id 1v24vg-0005aR-20; Fri, 26 Sep 2025 05:39:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v24sk-0004IE-QV
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:36:50 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v24se-0000fZ-Se
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:36:50 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-46e317bc647so13102065e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 02:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758879396; x=1759484196; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oDCkZA3CxUlrhPQSkzdra4tpfiRwGAcRRDGRKyO1qr8=;
- b=FcJQ2NhrWd65WdQN/6Qcs3PfJkPSBU0XkGucz4GECyjYL881pxOi5GKB5yRdohCJLU
- aF9aSfZwOri0/GVovyMgl13qU8DA9JVv3iAHM4tdBy9c0CW6KlzVv0riQHOYhApglO5+
- 0CRSm2nH2/5S4ifr3BSPd6bFozsUWuF92me9EBe3/B2Sjrv587kO+nk4OPbEPpRs/I7I
- qhMmSgHHtZXjfUzJCudG6U5QMgyZM0JFHiDXIyCOJNXk/DdyOe3IGF7tBuc3sYhPOZ2F
- Ow4C959r3qybnLVIbZdKdhz8UnLODy4pugp9a5Z0Xvu0genl8ARPgchWwVdIvxC6o2Wq
- F+4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758879396; x=1759484196;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oDCkZA3CxUlrhPQSkzdra4tpfiRwGAcRRDGRKyO1qr8=;
- b=kA/0yMS8V2prwD5oe+vWi9WwbrFf9IIXUgmGNJ5AC/2LVp+0LMrIKx3IMXbJo0HgfY
- NSe28oJsP8Acx4/rVPNcu4U1/edSN70zS78sVB8FUC+rWwFyJh0NpJGlpZXiwz/NBRPg
- ZMfSumF2mlNYPXrqVlqajCMXYntv2OEFae9BTOfcrHr5W5tPSr3YfY0Lg8hDHwjeJq5B
- GwEsK/XObT+BQ3R9V+aaKeCF27IspNxlpywpIinh8Ew2VLgdCPwJ+LUweU+L2XTuTOct
- HXurptVVUMLH/GfmP8vPt2TqaSJOJHc9uXFarqCCw7olb2sngyBQXYc/Cw3lO/NLstCO
- /i3g==
-X-Gm-Message-State: AOJu0Yzg8mF0FJ7jZHC5ZB/xU4aImpV1o3j2XNImLuuW0pZtObqTUIce
- MPVIZF1HFcz6yeRTTBb9wJlD/kZ6vX/l5K4QiMTPpl7b2xHitqKqEKbEP5cCsrSqW54=
-X-Gm-Gg: ASbGncuQc0pPWRwOKzXLFyu3vRwd6LNS1BchRLLRgrRYOl6WXw4CtUc5POatbcjJJ5R
- 1Vsm1xWeF1idEtVXEH4U0nSfKGEo2TlQMLPGWDsf30nvmnZO0fVZMWZy1add+ZQv3/o+snxeaXX
- /qUTc5rn4UTxvcm1LPNCwQbefNEDsOsUtTG5P9IplMOyCOjRpvMbBpSBHhdHbm7/DoEzkgPBXdG
- SlFLqHp/yXSUx9UbWNXKOh76ejJ1CP8OFEA1xNr6vbIWxWt0Z92tKbt72MGwIhsdRMrKaxRvech
- cx2JC587wKAXBzh/n6vs7VLqYaOhJKIbcdSrqgefPJSTXKq1b1xuDwqYlCTNM92y7rIa95G6o9P
- F2veelMrg9Wk7DmyjNxNmzEslWBunqewAM9F+H+CpNGI9TJ4xUZrxIn1NSljmUDasvQ==
-X-Google-Smtp-Source: AGHT+IFrXdOCI2ftbLqqam+UO/JYWqcD3owoWaL8WztAmV/sHJ0YTE/8c8qzooqlfTTV1fWJCsUoUg==
-X-Received: by 2002:a05:600c:3551:b0:46d:a04:50c6 with SMTP id
- 5b1f17b1804b1-46e32a10ef4mr70132235e9.30.1758879395896; 
- Fri, 26 Sep 2025 02:36:35 -0700 (PDT)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e33105e0bsm35439175e9.5.2025.09.26.02.36.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Sep 2025 02:36:35 -0700 (PDT)
-Message-ID: <edb2826b-f513-44d3-a028-e1278a3dd524@linaro.org>
-Date: Fri, 26 Sep 2025 11:36:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v24vc-0005Zo-6L
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:39:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v24vS-00012N-TC
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 05:39:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758879566;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mxd1YN9l6mHM8Zb+iZg60Z62cmnpA42byJZsk0C8qcs=;
+ b=J2fU8rErn33RnPkMmsugFGEM1jsw4lsT0Z0obZVbljsdCutC8etuhaCypBGomNCKOQwsfk
+ 1I6WDNr1qW9IvB3d2rInXX7jVTIInbmbOfRP/lSe0LWaf5lN3BQ8QQPgm+f1GRTKzVO8jS
+ BPwQLsOiHtFKuJRrpz5A3RHTnj0dNNc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-nZhsWrAJPpi11n5rlrvzaQ-1; Fri,
+ 26 Sep 2025 05:39:24 -0400
+X-MC-Unique: nZhsWrAJPpi11n5rlrvzaQ-1
+X-Mimecast-MFC-AGG-ID: nZhsWrAJPpi11n5rlrvzaQ_1758879563
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D8BD180048E; Fri, 26 Sep 2025 09:39:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.175])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE5C019560A2; Fri, 26 Sep 2025 09:39:17 +0000 (UTC)
+Date: Fri, 26 Sep 2025 10:39:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
 Subject: Re: [PATCH 7.2.x] use fedora:37 for python container instead of
  :latest
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
+Message-ID: <aNZfQvXWo55KiUYh@redhat.com>
 References: <20250926073120.2212284-1-mjt@tls.msk.ru>
  <aNZN6bON0bckydql@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aNZN6bON0bckydql@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <edb2826b-f513-44d3-a028-e1278a3dd524@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <edb2826b-f513-44d3-a028-e1278a3dd524@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,38 +88,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/9/25 10:25, Daniel P. Berrangé wrote:
-> On Fri, Sep 26, 2025 at 10:31:19AM +0300, Michael Tokarev wrote:
->> More recent fedora does not have our minimum python versions
->> anymore.  Stick with the most common fedora version used in
->> 7.2.x in other places, which is 37.  This way, python tests
->> works again.
-
-Valid change, so:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->>
->> This is a 7.2-specific change, not aimed for the master branch.
-
-Why? We already learnt using 'latest' tag in docker image is a pain
-to maintain, and hinder reproducibility. Personally I'd rather this
-patch in our /master branch.
-
->>
->> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->> ---
->>   tests/docker/dockerfiles/python.docker | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
+On Fri, Sep 26, 2025 at 11:36:34AM +0200, Philippe Mathieu-Daudé wrote:
+> On 26/9/25 10:25, Daniel P. Berrangé wrote:
+> > On Fri, Sep 26, 2025 at 10:31:19AM +0300, Michael Tokarev wrote:
+> > > More recent fedora does not have our minimum python versions
+> > > anymore.  Stick with the most common fedora version used in
+> > > 7.2.x in other places, which is 37.  This way, python tests
+> > > works again.
 > 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Valid change, so:
 > 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> With regards,
-> Daniel
+> > > 
+> > > This is a 7.2-specific change, not aimed for the master branch.
+> 
+> Why? We already learnt using 'latest' tag in docker image is a pain
+> to maintain, and hinder reproducibility. Personally I'd rather this
+> patch in our /master branch.
 
+Yes, we should change master too, but master will want something
+much newer than Fedora 37, so this change for old stable is still
+desirable as-is, as a newer Fedora won't be suitable for old
+stable.
+
+> > > Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> > > ---
+> > >   tests/docker/dockerfiles/python.docker | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
