@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226BDCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F650CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23cw-0006Sw-8H; Fri, 26 Sep 2025 04:16:26 -0400
+	id 1v23cS-00056v-Mb; Fri, 26 Sep 2025 04:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23cr-0006GN-Jf; Fri, 26 Sep 2025 04:16:22 -0400
+ id 1v23bk-00044m-P8; Fri, 26 Sep 2025 04:15:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23ck-0001j5-BQ; Fri, 26 Sep 2025 04:16:19 -0400
+ id 1v23be-0001Er-Is; Fri, 26 Sep 2025 04:15:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35DBB157D72;
- Fri, 26 Sep 2025 11:10:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 80CC9157D6A;
+ Fri, 26 Sep 2025 11:10:33 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 47009290C56;
- Fri, 26 Sep 2025 11:10:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 945B3290C4E;
+ Fri, 26 Sep 2025 11:10:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 42/60] hw/usb/network: Remove hardcoded 0x40 prefix in
- STRING_ETHADDR response
-Date: Fri, 26 Sep 2025 11:10:10 +0300
-Message-ID: <20250926081031.2214971-42-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 34/60] python: backport 'Remove deprecated
+ get_event_loop calls'
+Date: Fri, 26 Sep 2025 11:10:02 +0300
+Message-ID: <20250926081031.2214971-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -47,7 +46,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,57 +62,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stéphane Graber <stgraber@stgraber.org>
+From: John Snow <jsnow@redhat.com>
 
-USB NICs have a "40:" prefix hardcoded for all MAC addresses when we
-return the guest the MAC address if it queries the STRING_ETHADDR USB
-string property.  This doesn't match what we use for the
-OID_802_3_PERMANENT_ADDRESS or OID_802_3_CURRENT_ADDRESS OIDs for
-NDIS, or the MAC address we actually use in the QEMU networking code
-to send/receive packets for this device, or the NIC info string we
-print for users.  In all those other places we directly use
-s->conf.macaddr.a, which is the full thing the user asks for.
+This method was deprecated in 3.12 because it ordinarily should not be
+used from coroutines; if there is not a currently running event loop,
+this automatically creates a new event loop - which is usually not what
+you want from code that would ever run in the bottom half.
 
-This overrides user-provided configuration and leads to an inconsistent
-experience.
+In our case, we do want this behavior in two places:
 
-I couldn't find any documented reason (comment or git commits) for
-this behavior.  It seems like everyone is just expecting the MAC
-address to be fully passed through to the guest, but it isn't.
+(1) The synchronous shim, for convenience: this allows fully sync
+programs to use QEMUMonitorProtocol() without needing to set up an event
+loop beforehand. This is intentional to fully box in the async
+complexities into the legacy sync shim.
 
-This may have been a debugging hack that accidentally made it through
-to the accepted patch: it has been in the code since it was originally
-added back in 2008.
+(2) The qmp_tui shell; instead of relying on asyncio.run to create and
+run an asyncio program, we need to be able to pass the current asyncio
+loop to urwid setup functions. For convenience, again, we create one if
+one is not present to simplify the creation of the TUI appliance.
 
-This is also particularly problematic as the "40:" prefix isn't a
-reserved prefix for MAC addresses (IEEE OUI).  There are a number of
-valid allocations out there which use this prefix, meaning that QEMU
-may be causing MAC address conflicts.
+The remaining user of get_event_loop() was in fact one of the erroneous
+users that should not have been using this function: if there's no
+running event loop inside of a coroutine, you're in big trouble :)
 
-Cc: qemu-stable@nongnu.org
-Fixes: 6c9f886ceae5b ("Add CDC-Ethernet usb NIC (original patch from Thomas Sailer)"
-Signed-off-by: Stéphane Graber <stgraber@stgraber.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2951
+Signed-off-by: John Snow <jsnow@redhat.com>
+cherry picked from commit python-qemu-qmp@aa1ff9907603a3033296027e1bd021133df86ef1
+Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[PMM: beef up commit message based on mailing list discussion]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit aaf042299acf83919862c7d7dd5fc36acf4e0671)
+(cherry picked from commit 5d99044d09db0fa8c2b3294e301927118f9effc9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-network.c b/hw/usb/dev-network.c
-index 81cc09dcac..1df2454181 100644
---- a/hw/usb/dev-network.c
-+++ b/hw/usb/dev-network.c
-@@ -1383,7 +1383,7 @@ static void usb_net_realize(USBDevice *dev, Error **errp)
-     qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
-     snprintf(s->usbstring_mac, sizeof(s->usbstring_mac),
-              "%02x%02x%02x%02x%02x%02x",
--             0x40,
-+             s->conf.macaddr.a[0],
-              s->conf.macaddr.a[1],
-              s->conf.macaddr.a[2],
-              s->conf.macaddr.a[3],
+diff --git a/python/qemu/qmp/legacy.py b/python/qemu/qmp/legacy.py
+index c8d0a29b56..735d42971e 100644
+--- a/python/qemu/qmp/legacy.py
++++ b/python/qemu/qmp/legacy.py
+@@ -86,7 +86,14 @@ def __init__(self,
+                 "server argument should be False when passing a socket")
+ 
+         self._qmp = QMPClient(nickname)
+-        self._aloop = asyncio.get_event_loop()
++
++        try:
++            self._aloop = asyncio.get_running_loop()
++        except RuntimeError:
++            # No running loop; since this is a sync shim likely to be
++            # used in fully sync programs, create one if neccessary.
++            self._aloop = asyncio.get_event_loop_policy().get_event_loop()
++
+         self._address = address
+         self._timeout: Optional[float] = None
+ 
+diff --git a/python/qemu/qmp/qmp_tui.py b/python/qemu/qmp/qmp_tui.py
+index 53ea6c59a7..12bdc17c99 100644
+--- a/python/qemu/qmp/qmp_tui.py
++++ b/python/qemu/qmp/qmp_tui.py
+@@ -388,7 +388,12 @@ def run(self, debug: bool = False) -> None:
+         screen = urwid.raw_display.Screen()
+         screen.set_terminal_properties(256)
+ 
+-        self.aloop = asyncio.get_event_loop()
++        try:
++            self.aloop = asyncio.get_running_loop()
++        except RuntimeError:
++            # No running asyncio event loop. Create one if necessary.
++            self.aloop = asyncio.get_event_loop_policy().get_event_loop()
++
+         self.aloop.set_debug(debug)
+ 
+         # Gracefully handle SIGTERM and SIGINT signals
+diff --git a/python/tests/protocol.py b/python/tests/protocol.py
+index c254c77b17..e565802516 100644
+--- a/python/tests/protocol.py
++++ b/python/tests/protocol.py
+@@ -227,7 +227,7 @@ def async_test(async_test_method):
+         Decorator; adds SetUp and TearDown to async tests.
+         """
+         async def _wrapper(self, *args, **kwargs):
+-            loop = asyncio.get_event_loop()
++            loop = asyncio.get_running_loop()
+             loop.set_debug(True)
+ 
+             await self._asyncSetUp()
 -- 
 2.47.3
 
