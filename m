@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A92CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 15:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE4CCAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 15:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2Acj-0008Px-T2; Fri, 26 Sep 2025 11:44:42 -0400
+	id 1v2Adb-00014y-Ek; Fri, 26 Sep 2025 11:45:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v2Ach-0008LS-LH
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 11:44:39 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v2AdK-0000xN-7X
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 11:45:25 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v2AcY-0001NK-L7
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 11:44:39 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45b4d89217aso14663325e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 08:44:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v2Ad9-0001RK-Fy
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 11:45:17 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-269af38418aso28781455ad.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 08:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758901465; x=1759506265; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ehHu+AJJTLVFFlN8btUv+fyxSIRKavcO80KOfGhNBM8=;
- b=ZJS+XzyTfw8vkt+0iBBD3Tuy2p8mcDHdsUI+SXAe3SV3xXmtvTIk4zN+l11gXqkh+u
- 4+gnKtw3Zox5GIumYYui1LFTWuuQRox1OR36SCCxyCvn/YIkBUsLbIxuwhAcyCyuqbBi
- fo7k2KqmB5qgn12vH86vlKSFJfFW2PKOZmZHdzYWXOCYjc52jCDR4cj0BK1pL8JiQy3B
- 7ebc5knYzwbBFiMOIjTrodDg/RVOz1f9tf1az8tYfXFw519jQBPRkQCIb6to+yJPpJfH
- p6QxCVYMbBCD6cVhrT6LrySUXqoBEnReKxQUlwPjRLUtr9YImjwUfNCMny5LoHv9HTCB
- 2aig==
+ d=linaro.org; s=google; t=1758901502; x=1759506302; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+OniWzEPZLQcMk8WWvuZXUUv8R6h2tJYgLB8aY9W/24=;
+ b=F1vtJLX0dmGJtKEfk4H6SM9ozczieIcpkjiRYKgAdPRwDpGgi+uidJfG3G0OuI2229
+ Dgln5p1zTUdvV327/Acse0ciwcxHe1dJ47Xjh/uDXgJIZF58PWSmt/1HjfLLDQtlEW77
+ px0+sbXzhZWb4MWWuDXNlGrYfRGWMccKOREs9izEX4nrhZ8c+qj9mEwBv3zAYBTfREjM
+ xlUivKQcoqvlEyWOHQJS7f1e0DWIa3i0MSSSHkclkaehRdHi1AeElmLKk1r+m7vG1GjR
+ 8FjM6tMaXdro0fG3rHzHwAFsQInkdsmI9vA4tIHQqNoRm6RH4JZlqLnwe07qKpr/YtnH
+ O29w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758901465; x=1759506265;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ehHu+AJJTLVFFlN8btUv+fyxSIRKavcO80KOfGhNBM8=;
- b=xPAkhOpP45KMFxmaVLtkzkdmnkmCqRLGZmTon4NjXnKQykF5ANG8/1NBPtlwUzjOGQ
- 3XlVkJXbrV9OrXrZT8zZMZWiiTqxqadm3Cor/vfekEtRrRhcdM6qQIwHPpMSjy282LfQ
- 5iTWVTopepnTxG4Dq4+nQgAPDGSFHskcqw8btLvVXew0j0yWF5IpTbNUoOIM0OPrxDR7
- aRlKW6nbsC3bJ+BpZwtBtv2XS3T1b+BRLp6tKo85Bhap9D9aZ2lehB7whkEk+VRkMI8f
- KvLgXB7sYa4TVw/9s6fq2FkcGsEcPB126ewWEgsDf+xSrH4Eg0CUk740QxyE6azcSZ7a
- rtlA==
-X-Gm-Message-State: AOJu0YxfVhS4e5jHmgY4nifEqJpAP28hJQdqP94WpcZ59PpUsar/oIBF
- EO9cSOsvEkFbj4KPmJ3GUdQWoIqqjQP0veeWy9YGXEianD1nK9Y1V/wUk9tJsMAfVlI=
-X-Gm-Gg: ASbGncuRv8TUFT0XWZPrUsnzVWtju9fB0f3esM+8Q2nqhbzehrs+R87jEWwnCEz47JK
- V2CoOp3aL48nbgKzvXvQ/+eF4wOpIiJx1WoIwfpkXwxDjM1A5ecKJG8z76BbGubP84P+QdX77b6
- TBWcxe6GexrGdZKZq9R+qyCFYAeX1OELupYbjzNmPlU2MXMptMf7HpFMjyiD+8s33doWddsKd1H
- mfDwuHaqdRbxMMumNuEfYJGGfD3rcOaKSrWHaFStErFbqnxR66gdRJeJ4e2s3YXb9T+M+ydecfQ
- rtNGi64IXwAwwUguZ8UFV53icKG3ELr1egU6gPvHiumgZlf76rS0cBYT8rVZ2L5rEYaAq9+JAhZ
- /+ah/DC5KZVNIOH4NmdW8mXo=
-X-Google-Smtp-Source: AGHT+IFGA/N+MueinqqXZw6SEs+nJRHS5EmfJAq5SV4IVic6KTR9UJEfB+3l0GImVmNYcyoEfy2YcQ==
-X-Received: by 2002:a05:600c:a086:b0:45f:28dc:60ea with SMTP id
- 5b1f17b1804b1-46e329b63a8mr88103535e9.15.1758901465316; 
- Fri, 26 Sep 2025 08:44:25 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e3bffe67asm34859785e9.5.2025.09.26.08.44.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 08:44:24 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B1DBA5F7C3;
- Fri, 26 Sep 2025 16:44:21 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Kyle Evans
- <kevans@freebsd.org>,  Yonggang Luo <luoyonggang@gmail.com>,  Li-Wen Hsu
- <lwhsu@freebsd.org>,  Thomas Huth <thuth@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Warner Losh <imp@bsdimp.com>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Ed Maste <emaste@freebsd.org>,  devel@lists.libvirt.org,
- qemu-rust@nongnu.org,  Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: Re: [PATCH v2 05/27] scripts/archive-source: use a bash array
-In-Reply-To: <20250924120426.2158655-6-marcandre.lureau@redhat.com> (marcandre
- lureau's message of "Wed, 24 Sep 2025 16:04:02 +0400")
-References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
- <20250924120426.2158655-6-marcandre.lureau@redhat.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Fri, 26 Sep 2025 16:44:21 +0100
-Message-ID: <877bxli5gq.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1758901502; x=1759506302;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+OniWzEPZLQcMk8WWvuZXUUv8R6h2tJYgLB8aY9W/24=;
+ b=no+28lDsJpOAUkMv8PNt9lgV4GD4y2iXQGcsH8Vs2u707Gl7k4SHjFwfuGkVCFtym8
+ oNRt4ad6rL382a/wJEFftQzwO93yPqzuK4gKDDlXXmHyX1sadDdtYnvUTKeb22cLIheO
+ r8RI3GasJU78J6CL6BSqA3ag5yWQDifaziL+igsaORdqwaF64AA3hTf1pzm5mYdHvZpG
+ 9NPap7yKmty9tUotjcWyy1WiZJeVtiIuNPUXnNqQuCnNVUx8mKIZHmjkS2+fV6daKSQq
+ yqrXhrlD52ZBtlAJr5v7FiqMDxmQ4mlQvDTkNQ9VABfnjwCFBsVX78Pq+lunjIIdTdBp
+ TQMg==
+X-Gm-Message-State: AOJu0YzhCeLwlNmWv3sGfoqOlALGjOvJ/Opk0Ub8Xy4xUK3LckMGfain
+ mDAnY54gYupYb9pjKnBaqfeVinUVve+rhXNdHHmZI5nhlKvlRzVEsLWlkWb0EuLx2Pc=
+X-Gm-Gg: ASbGncvRlGEAviyUWqU2RcR+0nZQO1iPcf3ZGb1cTKdYyzH7p9H/uhPsj2vMZtH/5GB
+ XvgmseF1mMAmfwfvW7xNPfVodIjnLfoUlgCG9Z1DjY81/aCR5drLDyjzeMPkmlOnmGFUr9jT1DF
+ /KQD+2UjZ1sXBvh6qGuIhfnBx2cfG2jSTlhCmzEfegfu8SMeILvVGLPZUeT6w3dQuCLoP7gk811
+ 2YTWYdxIASQBDFB5KdDZYcj1SVTYSNDpwm6viCBxpcui84nE6ZQbKzsqrFP9EDrUq1CvLOh0cZo
+ D7lwmtWCKMOCkZurm64L8G5179M33PeidIA/j1o+9NZk7mgTc3Q9KUus4zT33hc2+4wIq5RKkLD
+ UKms1kzE47ak5IV+38e7iPXgTmU/VCvfAqqvePtXsPfLPUVe2uT8L5nDy+ekU3Bb/aV9XkkiO+8
+ 0=
+X-Google-Smtp-Source: AGHT+IGnhx9VjoQv0k78/oxmY9szp699xHYmnO5YSj6YA3NOA+bf39BBA+S8V+S7O0SSsYP7ahaSOQ==
+X-Received: by 2002:a17:903:2b05:b0:274:746c:b09 with SMTP id
+ d9443c01a7336-27ed4a89201mr80274315ad.55.1758901502278; 
+ Fri, 26 Sep 2025 08:45:02 -0700 (PDT)
+Received: from [192.168.0.102] (189-47-45-49.dsl.telesp.net.br. [189.47.45.49])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-27ed68821a0sm57248505ad.85.2025.09.26.08.45.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Sep 2025 08:45:01 -0700 (PDT)
+Message-ID: <80c73d95-e8c0-4cb7-bf11-1c1e2f749c00@linaro.org>
+Date: Fri, 26 Sep 2025 12:44:58 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/9] tests/functional: Re-activate the check-venv target
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, qemu-arm@nongnu.org,
+ manos.pitsidianakis@linaro.org, peter.maydell@linaro.org
+References: <20250926051542.104432-1-gustavo.romero@linaro.org>
+ <20250926051542.104432-2-gustavo.romero@linaro.org>
+ <5aefdfa3-4b8b-4512-a6a4-1a1684352d0f@redhat.com>
+ <aNZQwnBW76LPUgeE@redhat.com>
+ <1015000c-3f92-429f-84d2-bf496b5776d7@redhat.com>
+ <aNZTx0Sxfo8QJMj_@redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <aNZTx0Sxfo8QJMj_@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,15 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+Hi Daniel,
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 9/26/25 05:50, Daniel P. Berrangé wrote:
+> On Fri, Sep 26, 2025 at 10:42:22AM +0200, Thomas Huth wrote:
+>> On 26/09/2025 10.37, Daniel P. Berrangé wrote:
+>>> On Fri, Sep 26, 2025 at 10:34:01AM +0200, Thomas Huth wrote:
+>>>> On 26/09/2025 07.15, Gustavo Romero wrote:
+>>>>> Add check-venv target as a dependency for the functional tests. This
+>>>>> causes Python modules listed in pythondeps.toml, under the testdeps
+>>>>> group, to be installed when 'make check-functional' is executed to
+>>>>> prepare and run the functional tests.
+>>>>>
+>>>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>>>> Suggested-by: Thomas Huth <thuth@redhat.com>
+>>>>> ---
+>>>>>     tests/Makefile.include | 2 +-
+>>>>>     1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/tests/Makefile.include b/tests/Makefile.include
+>>>>> index 3538c0c740..d012a9b25d 100644
+>>>>> --- a/tests/Makefile.include
+>>>>> +++ b/tests/Makefile.include
+>>>>> @@ -109,7 +109,7 @@ $(FUNCTIONAL_TARGETS):
+>>>>>     	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
+>>>>>     .PHONY: check-functional
+>>>>> -check-functional:
+>>>>> +check-functional: check-venv
+>>>>
+>>>> I just noticed that there's still a problem: If you run "make
+>>>> check-functional-aarch64" immediately after configuring + compiling QEMU in
+>>>> a fresh folder for the first time, the functional tests fail with:
+>>>>
+>>>> ModuleNotFoundError: No module named 'pygdbmi'
+>>>>
+>>>> We either need to add dependencies to the check-functional-<arch> targets,
+>>>> too, or we have to make sure that tests still get properly skipped in the
+>>>> case that pygdbmi has not been installed into the venv yet.
+>>>
+>>> We already have a decorator for skipping tests when modules are missing,
+>>> so we should add usage of that.
+>>
+>> Ack ... and the "from .gdb import GDB" in qemu_test/__init__.py likely also
+>> has to go away, to avoid that each and every test tries to pull in the gdb
+>> code.
+> 
+> Or alternatively the gdb module can move the gdbmi import so that it is
+> only referenced in method scope, so it becomes relevant only when
+> executed.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I can´t follow what you meant here. Do mind expanding on it a bit?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+Cheers,
+Gustavo
 
