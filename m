@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7763CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0277ECAC5B8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v29AB-0000vh-Ha; Fri, 26 Sep 2025 10:11:07 -0400
+	id 1v29Rl-0000BS-2c; Fri, 26 Sep 2025 10:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v299O-000086-He
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:18 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v298c-0005lb-Is
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:16 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3f0ae439b56so1406145f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758895762; x=1759500562; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LZ/QhKuHG+ZNPC1QPIsb+KXLj/+hTqbEnRD9dR1HMkI=;
- b=aZeXF5SV+opWBq6MCCtjZpUyG1SpnhCAcgMVuijJg2bjxgHuE0ejhjFkNq9LVjKOfx
- D9c1MpeyP+fxxJDcDLq8QtYq0cVNZWqTKSKmoaDwjuwAVNRD90qcsaJmC0p07fPf5Kvk
- LXRwSdksj2f3eiE4igrIHj7/PPsHEuL8liKaNZ6+pligc0ArPhZNQM0qIw9zFwWNDqCm
- V+gfdIReVDjuTCt/3CvIbk326qddZKRzUHWnjpugzQNfuvXJffuN/am01+EeBwjIo1nK
- DRVgCO3tL5PNvCGjjjOml90FypvF91V1lvS3REFbUWiIB+6ZmMX2zz4xWOg1bFC80qAb
- hF/w==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1v29RO-0008Qe-0E
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:29:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1v29RA-0001NI-JT
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:28:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758896916;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bPKXcXjAPYCfX35UEQNZMVseemAwd0ULz9h/hHPOhy4=;
+ b=Gvoitbe9sixATN66rsISKytkVNCGn7N3nfkpeJsQAdkXNUgkRrtX3jHUsw2ZM2iTth4VDZ
+ S3PsQC1VsghFHT2Y0N1rp35N+ehj6M49BOqLS5Wnz9rE8b3O1SAO5iZaqW/c0SFfwg535k
+ KiNpRyGibEIYlMPFzgmaYeh/kJ9DTfQ=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-567-5oA9YZbbPXaIvudrr9BYJA-1; Fri, 26 Sep 2025 10:28:32 -0400
+X-MC-Unique: 5oA9YZbbPXaIvudrr9BYJA-1
+X-Mimecast-MFC-AGG-ID: 5oA9YZbbPXaIvudrr9BYJA_1758896912
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-374bc37f3b0so10313fac.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:28:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758895762; x=1759500562;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LZ/QhKuHG+ZNPC1QPIsb+KXLj/+hTqbEnRD9dR1HMkI=;
- b=aoxVspS9V2uOnYG4vEMNfvecZLGUD6z2VG8PhL9ozZQmuk3SHbpO36s8Cjv2SGA/Hz
- BufHVuyIPNViwqKNj9msQDehY2zoy7LKHiEmKjaYbo4AnmfUE49L1b/MWgmL2WOLavN2
- 8chEmrJWqsMV0eSsPbYU7mI7Q5xmoEgAAe+TW1yt6H5JnleXauvX2sK1w0VEaeMqCmxR
- qNtWxHdUTDX5S07e8MidTEztw89A7WCEE/YY7DXE1eutKraZ/P8p4BffmeuRKPRvmgUQ
- rn5VBBJQ6lMCoktY0v72hjAjZHl4Z0nURurubMILyCv4JqV6dmaDsyfoJV2t0mDFKt08
- YadQ==
-X-Gm-Message-State: AOJu0YzT1q+U2YfvM3AvgtVaY0SKS1FFmJZE3XS9fPBzt2XPG983MGJ9
- AQvyNyV31UyEBJ/1jmLiuE8AFnyn/6nn95LWg+HkZdbHSDMccaajvnXzEX2UoRpxnjMJmSm+Sa0
- YPurp
-X-Gm-Gg: ASbGncs626cR1yIlsB+e1HzpuInYIqJeFXut47xNeIX/ceZApydkFRHxzzxleiOuObu
- dzQ3kK012QXFT+Y7byULQTXKqVifnTwUbvqego5OW//wFnEKHVskhxUdll83JZ+7wxa3Y8M2QdI
- SfOWTHih3ByeiwtWpDhqOzCIr76UimrRoPEMJYG7yPonAOCnTEXUYXliSoniFaIfWdySbFa2fDM
- AUqcbP5UhOMuoSfN/3uCeiGBTLYFavZjiGggFbmzAtBM7kRN1qafh5KuugjyvVIIUQhxU2gr/jq
- Fa8uBaaO43BGSQIZnLtFx9sp5eW3gFRb0FhGxnHOZhrKGbiWU77VPR7cYKzIUB624cgvsHDyYY1
- eIOYT9c43chGUKD9EuWET5f77PQ2B
-X-Google-Smtp-Source: AGHT+IHQLjvYQ2qG9B926kfpvWyEye1IHQUC89Xvx+/wROWOrVwm9RVc99Ryz0GHyOh+JlUQKAdelg==
-X-Received: by 2002:a05:6000:2c05:b0:3fb:6f9d:2704 with SMTP id
- ffacd0b85a97d-40e46ad02e6mr6741729f8f.28.1758895761838; 
- Fri, 26 Sep 2025 07:09:21 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.09.21
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1758896911; x=1759501711;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bPKXcXjAPYCfX35UEQNZMVseemAwd0ULz9h/hHPOhy4=;
+ b=hpdYL6mJHgYkaa7CCk0Ih9P2yztOnCyIvE3Y+OWBBxBPmavEK0DTD+rs3Q9K7FqnVL
+ H7PcipVsX1+Zx8Th0sl7Eftu6hDQH0lBk+3XLohXxwDS4ARCU9OQFRU1vJgH2PAAmSeJ
+ UX8l8n3zKWg2UwA/dhIcgn/R1iZn7hrGBQ3dPm18sGGqlxSTEziqG1mWXLEtT5y3n5cn
+ RTjK5nWNT+6Rocm31V9ypkxw/mQABPsxxWYOqbyDKTYmolB/klB8y4xl6aTPmLybNhgc
+ GCLtjxg0akVnLe+jA41SgDXuZIMlvNu3RbKcPCgMazN9QBU3za3r2bOyDjuXxm3ERPlf
+ O1bQ==
+X-Gm-Message-State: AOJu0YzjoReoNLw3kgQjeZwp7B6aeSoI9DBrtz9gSDvugo27XLazkuoA
+ hBOJkHtixt5Mn2F3A2BvA/5gkkEARQyu6JsJLSAncuD7ZC1H3rvDWLTIdxQFN931ZGsp1wMKpAt
+ r3/tu2jkNRplnbTnk6VBeTyk+uhOt0oNoKoBq4gWlBSX65cEjiW5hU82r43ji8Jqr
+X-Gm-Gg: ASbGncsN/OIi7f2bgIUY4YtNzkezUGN06Yo2pWCzTiavXf1I8RCWi82kSSJ6DRzZyGi
+ XYQbsJWVN8oqEf/l763BkEL/W2xHZuJ5pUlk4xtHtLAo5knGVI7qonuRF9X9Ndxf5v8byBmP4BU
+ f1GXK6hZNB0zT8dRs8CgCKj1NzxusNTOJkOxhinxFYiuzWYCPeQWmUVz4+3mP+wdEjkfjkn1P/F
+ 9Ftl2uAGGHQGBBKxI9FMByJX9FYM/bw8ggrBorAqGUaE/nSTIgBUJKMOrXNjKNF94lJNwlQmlaL
+ XlOpeKeYwXsQXgLEXvSmTxzMr4/nEO7lItAqvnBHpZg=
+X-Received: by 2002:a05:6871:7417:b0:332:dfb2:2341 with SMTP id
+ 586e51a60fabf-35eeb6d70f0mr1659045fac.6.1758896910805; 
+ Fri, 26 Sep 2025 07:28:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHK4JEZ2qYEKNypXvN+LNOkazYjGSJLJr4tk9f1f5cRU8u/0GMyh2yX+9DqAYJTOPaeZezjrw==
+X-Received: by 2002:a05:6871:7417:b0:332:dfb2:2341 with SMTP id
+ 586e51a60fabf-35eeb6d70f0mr1659035fac.6.1758896910313; 
+ Fri, 26 Sep 2025 07:28:30 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-363a3d46f3fsm1451115fac.9.2025.09.26.07.28.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 07:09:21 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 35/44] target/arm: Redirect VHE FOO_EL1 -> FOO_EL2 during
- translation
-Date: Fri, 26 Sep 2025 15:08:35 +0100
-Message-ID: <20250926140844.1493020-36-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
-References: <20250926140844.1493020-1-peter.maydell@linaro.org>
+ Fri, 26 Sep 2025 07:28:29 -0700 (PDT)
+Date: Fri, 26 Sep 2025 08:28:26 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH] vfio: Remove workaround for kernel DMA unmap overflow bug
+Message-ID: <20250926082826.5be6fa67.alex.williamson@redhat.com>
+In-Reply-To: <20250926085423.375547-1-clg@redhat.com>
+References: <20250926085423.375547-1-clg@redhat.com>
+Organization: Red Hat
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,145 +108,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Fri, 26 Sep 2025 10:54:23 +0200
+C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpregs.h            |  6 ++++
- target/arm/gdbstub.c           |  5 ++++
- target/arm/helper.c            | 53 +---------------------------------
- target/arm/tcg/translate-a64.c |  9 ++++++
- 4 files changed, 21 insertions(+), 52 deletions(-)
+> A kernel bug was introduced in Linux v4.15 via commit 71a7d3d78e3c
+> ("vfio/type1: Check for address space wrap-around on unmap"), which
+> added a test for address space wrap-around in the vfio DMA unmap path.
+> Unfortunately, due to an integer overflow, the kernel would
+> incorrectly detect an unmap of the last page in the 64-bit address
+> space as a wrap-around, causing the unmap to fail with -EINVAL.
+>=20
+> A QEMU workaround was introduced in commit 567d7d3e6be5 ("vfio/common:
+> Work around kernel overflow bug in DMA unmap") to retry the unmap,
+> excluding the final page of the range.
+>=20
+> The kernel bug was then fixed in Linux v5.0 via commit 58fec830fc19
+> ("vfio/type1: Fix dma_unmap wrap-around check"). Since the oldest
+> supported LTS kernel is now v5.4, kernels affected by this bug are
+> considered deprecated, and the workaround is no longer necessary.
+>=20
+> This change reverts 567d7d3e6be5, removing the workaround.
+>=20
+> Link: https://bugzilla.redhat.com/show_bug.cgi?id=3D1662291
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>  hw/vfio/container-legacy.c | 20 +-------------------
+>  hw/vfio/trace-events       |  1 -
+>  2 files changed, 1 insertion(+), 20 deletions(-)
+>=20
+> diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+> index c0f87f774a00805cab4a8f3b3386ddd99c3d9111..25a15ea8674c159b7e624425c=
+52953240b8c1179 100644
+> --- a/hw/vfio/container-legacy.c
+> +++ b/hw/vfio/container-legacy.c
+> @@ -147,25 +147,7 @@ static int vfio_legacy_dma_unmap_one(const VFIOConta=
+iner *bcontainer,
+>          need_dirty_sync =3D true;
+>      }
+> =20
+> -    while (ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, &unmap)) {
+> -        /*
+> -         * The type1 backend has an off-by-one bug in the kernel (71a7d3=
+d78e3c
+> -         * v4.15) where an overflow in its wrap-around check prevents us=
+ from
+> -         * unmapping the last page of the address space.  Test for the e=
+rror
+> -         * condition and re-try the unmap excluding the last page.  The
+> -         * expectation is that we've never mapped the last page anyway a=
+nd this
+> -         * unmap request comes via vIOMMU support which also makes it un=
+likely
+> -         * that this page is used.  This bug was introduced well after t=
+ype1 v2
+> -         * support was introduced, so we shouldn't need to test for v1. =
+ A fix
+> -         * is queued for kernel v5.0 so this workaround can be removed o=
+nce
+> -         * affected kernels are sufficiently deprecated.
+> -         */
+> -        if (errno =3D=3D EINVAL && unmap.size && !(unmap.iova + unmap.si=
+ze) &&
+> -            container->iommu_type =3D=3D VFIO_TYPE1v2_IOMMU) {
+> -            trace_vfio_legacy_dma_unmap_overflow_workaround();
+> -            unmap.size -=3D 1ULL << ctz64(bcontainer->pgsizes);
+> -            continue;
+> -        }
+> +    if (ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, &unmap)) {
+>          return -errno;
+>      }
+> =20
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index e3d571f8c845dad85de5738f8ca768bdfc336252..7496e1b64b5de0168974a251e=
+ab698399a6a1d54 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -112,7 +112,6 @@ vfio_container_disconnect(int fd) "close container->f=
+d=3D%d"
+>  vfio_group_put(int fd) "close group->fd=3D%d"
+>  vfio_device_get(const char * name, unsigned int flags, unsigned int num_=
+regions, unsigned int num_irqs) "Device %s flags: %u, regions: %u, irqs: %u"
+>  vfio_device_put(int fd) "close vdev->fd=3D%d"
+> -vfio_legacy_dma_unmap_overflow_workaround(void) ""
+> =20
+>  # region.c
+>  vfio_region_write(const char *name, int index, uint64_t addr, uint64_t d=
+ata, unsigned size) " (%s:region%d+0x%"PRIx64", 0x%"PRIx64 ", %d)"
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 08fc42ea571..eac0cb9ebf1 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -936,6 +936,12 @@ struct ARMCPRegInfo {
-      */
-     uint32_t nv2_redirect_offset;
- 
-+    /*
-+     * With VHE, with E2H, at EL2, access to this EL0/EL1 reg redirects
-+     * to the EL2 reg with the specified key.
-+     */
-+    uint32_t vhe_redir_to_el2;
-+
-     /* This is used only by VHE. */
-     void *opaque;
-     /*
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 4e2ac49b6a9..87d40d4366b 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -249,6 +249,11 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
-     if (ri) {
-         switch (cpreg_field_type(ri)) {
-         case MO_64:
-+            if (ri->vhe_redir_to_el2 &&
-+                (arm_hcr_el2_eff(env) & HCR_E2H) &&
-+                arm_current_el(env) == 2) {
-+                ri = get_arm_cp_reginfo(cpu->cp_regs, ri->vhe_redir_to_el2);
-+            }
-             return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env, ri));
-         case MO_32:
-             return gdb_get_reg32(buf, (uint32_t)read_raw_cp_reg(env, ri));
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 18066b0c5dc..87a32e363e9 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4417,47 +4417,6 @@ static CPAccessResult access_el1nvvct(CPUARMState *env, const ARMCPRegInfo *ri,
-     return e2h_access(env, ri, isread);
- }
- 
--/* Test if system register redirection is to occur in the current state.  */
--static bool redirect_for_e2h(CPUARMState *env)
--{
--    return arm_current_el(env) == 2 && (arm_hcr_el2_eff(env) & HCR_E2H);
--}
--
--static uint64_t el2_e2h_read(CPUARMState *env, const ARMCPRegInfo *ri)
--{
--    CPReadFn *readfn;
--
--    if (redirect_for_e2h(env)) {
--        /* Switch to the saved EL2 version of the register.  */
--        ri = ri->opaque;
--        readfn = ri->readfn;
--    } else {
--        readfn = ri->orig_readfn;
--    }
--    if (readfn == NULL) {
--        readfn = raw_read;
--    }
--    return readfn(env, ri);
--}
--
--static void el2_e2h_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                          uint64_t value)
--{
--    CPWriteFn *writefn;
--
--    if (redirect_for_e2h(env)) {
--        /* Switch to the saved EL2 version of the register.  */
--        ri = ri->opaque;
--        writefn = ri->writefn;
--    } else {
--        writefn = ri->orig_writefn;
--    }
--    if (writefn == NULL) {
--        writefn = raw_write;
--    }
--    writefn(env, ri, value);
--}
--
- static uint64_t el2_e2h_e12_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
-     /* Pass the EL1 register accessor its ri, not the EL12 alias ri */
-@@ -4632,17 +4591,7 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
-                                  (gpointer)(uintptr_t)a->new_key, new_reg);
-         g_assert(ok);
- 
--        src_reg->opaque = dst_reg;
--        src_reg->orig_readfn = src_reg->readfn ?: raw_read;
--        src_reg->orig_writefn = src_reg->writefn ?: raw_write;
--        if (!src_reg->raw_readfn) {
--            src_reg->raw_readfn = raw_read;
--        }
--        if (!src_reg->raw_writefn) {
--            src_reg->raw_writefn = raw_write;
--        }
--        src_reg->readfn = el2_e2h_read;
--        src_reg->writefn = el2_e2h_write;
-+        src_reg->vhe_redir_to_el2 = a->dst_key;
-     }
- }
- #endif
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index c0fa2137b63..3ef24fb0c3d 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2573,6 +2573,15 @@ static void handle_sys(DisasContext *s, bool isread,
-         }
-     }
- 
-+    if (ri->vhe_redir_to_el2 && s->current_el == 2 && s->e2h) {
-+        /*
-+         * This one of the FOO_EL1 registers which redirect to FOO_EL2
-+         * from EL2 when HCR_EL2.E2H is set.
-+         */
-+        key = ri->vhe_redir_to_el2;
-+        ri = redirect_cpreg(s, key, isread);
-+    }
-+
-     if (ri->accessfn || (ri->fgt && s->fgt_active)) {
-         /* Emit code to perform further access permissions checks at
-          * runtime; this may result in an exception.
--- 
-2.43.0
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 
 
