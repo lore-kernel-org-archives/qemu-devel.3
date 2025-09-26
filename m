@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E790CAC5BC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D0B2CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27tN-0002do-Gt; Fri, 26 Sep 2025 08:49:41 -0400
+	id 1v27tt-0003pS-5A; Fri, 26 Sep 2025 08:50:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27t5-0002Of-Lb; Fri, 26 Sep 2025 08:49:27 -0400
+ id 1v27tL-0002ca-BH; Fri, 26 Sep 2025 08:49:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27sw-0007AO-EU; Fri, 26 Sep 2025 08:49:19 -0400
+ id 1v27t9-0007DL-Ii; Fri, 26 Sep 2025 08:49:38 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B8DEA157F5D;
+ by isrv.corpit.ru (Postfix) with ESMTP id D2C4A157F5E;
  Fri, 26 Sep 2025 15:45:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 23872290F1B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3BD44290F1C;
  Fri, 26 Sep 2025 15:45:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
  Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 21/38] i386/cpu: Enable SMM cpu address space under KVM
-Date: Fri, 26 Sep 2025 15:45:21 +0300
-Message-ID: <20250926124540.2221746-21-mjt@tls.msk.ru>
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 22/38] target/i386: Define enum X86ASIdx for x86's
+ address spaces
+Date: Fri, 26 Sep 2025 15:45:22 +0300
+Message-ID: <20250926124540.2221746-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,102 +66,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Kirill Martynov reported assertation in cpu_asidx_from_attrs() being hit
-when x86_cpu_dump_state() is called to dump the CPU state[*]. It happens
-when the CPU is in SMM and KVM emulation failure due to misbehaving
-guest.
+Define X86ASIdx as enum, like ARM's ARMASIdx, so that it's clear index 0
+is for memory and index 1 is for SMM.
 
-The root cause is that QEMU i386 never enables the SMM address space for
-cpu since KVM SMM support has been added.
-
-Enable the SMM cpu address space under KVM when the SMM is enabled for
-the x86machine.
-
-[*] https://lore.kernel.org/qemu-devel/20250523154431.506993-1-stdcalllevi@yandex-team.ru/
-
-Reported-by: Kirill Martynov <stdcalllevi@yandex-team.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Kirill Martynov <stdcalllevi@yandex-team.ru>
+Tested-By: Kirill Martynov <stdcalllevi@yandex-team.ru>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250730095253.1833411-2-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250730095253.1833411-3-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 0516f4b70264b9710a25718d21bd35ef463c875e)
+(cherry picked from commit 591f817d819f5511fd9001dc863a326d23088811)
+(Mjt: pick this change for completness with the previous one)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 32f5895b80..82d453ddde 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -763,9 +763,6 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-         cpu->as = as;
-     }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 76f24446a5..d5484f04d0 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2517,6 +2517,11 @@ bool cpu_has_x2apic_feature(CPUX86State *env);
+ void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
+ void cpu_sync_avx_hflag(CPUX86State *env);
  
--    /* KVM cannot currently support multiple address spaces. */
--    assert(asidx == 0 || !kvm_enabled());
--
-     if (!cpu->cpu_ases) {
-         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-         cpu->cpu_ases_count = cpu->num_ases;
-@@ -788,8 +785,6 @@ void cpu_address_space_destroy(CPUState *cpu, int asidx)
- 
-     assert(cpu->cpu_ases);
-     assert(asidx >= 0 && asidx < cpu->num_ases);
--    /* KVM cannot currently support multiple address spaces. */
--    assert(asidx == 0 || !kvm_enabled());
- 
-     cpuas = &cpu->cpu_ases[asidx];
-     if (tcg_enabled()) {
++typedef enum X86ASIdx {
++    X86ASIdx_MEM = 0,
++    X86ASIdx_SMM = 1,
++} X86ASIdx;
++
+ #ifndef CONFIG_USER_ONLY
+ static inline int x86_asidx_from_attrs(CPUState *cs, MemTxAttrs attrs)
+ {
 diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 6269fa8045..80ae347508 100644
+index 80ae347508..e462cbe62c 100644
 --- a/target/i386/kvm/kvm-cpu.c
 +++ b/target/i386/kvm/kvm-cpu.c
-@@ -13,6 +13,7 @@
- #include "qapi/error.h"
- #include "system/system.h"
- #include "hw/boards.h"
-+#include "hw/i386/x86.h"
+@@ -98,7 +98,7 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+      * initialized at register_smram_listener() after machine init done.
+      */
+     cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
+-    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
++    cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
  
- #include "kvm_i386.h"
- #include "accel/accel-cpu-target.h"
-@@ -90,6 +91,15 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-         kvm_set_guest_phys_bits(cs);
-     }
- 
-+    /*
-+     * When SMM is enabled, there is 2 address spaces. Otherwise only 1.
-+     *
-+     * Only initialize address space 0 here, the second one for SMM is
-+     * initialized at register_smram_listener() after machine init done.
-+     */
-+    cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
-+    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
-+
      return true;
  }
- 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 141694f803..589f879beb 100644
+index 589f879beb..70d6095be9 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -2678,6 +2678,7 @@ static MemoryRegion smram_as_mem;
+@@ -2702,10 +2702,10 @@ static void register_smram_listener(Notifier *n, void *unused)
  
- static void register_smram_listener(Notifier *n, void *unused)
- {
-+    CPUState *cpu;
-     MemoryRegion *smram =
-         (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
- 
-@@ -2702,6 +2703,10 @@ static void register_smram_listener(Notifier *n, void *unused)
      address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
      kvm_memory_listener_register(kvm_state, &smram_listener,
-                                  &smram_address_space, 1, "kvm-smram");
-+
-+    CPU_FOREACH(cpu) {
-+        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
-+    }
+-                                 &smram_address_space, 1, "kvm-smram");
++                                 &smram_address_space, X86ASIdx_SMM, "kvm-smram");
+ 
+     CPU_FOREACH(cpu) {
+-        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
++        cpu_address_space_init(cpu, X86ASIdx_SMM, "cpu-smm", &smram_as_root);
+     }
  }
  
- static void *kvm_msr_energy_thread(void *data)
+diff --git a/target/i386/tcg/system/tcg-cpu.c b/target/i386/tcg/system/tcg-cpu.c
+index 13a3507863..8276c32c7b 100644
+--- a/target/i386/tcg/system/tcg-cpu.c
++++ b/target/i386/tcg/system/tcg-cpu.c
+@@ -73,8 +73,8 @@ bool tcg_cpu_realizefn(CPUState *cs, Error **errp)
+     memory_region_set_enabled(cpu->cpu_as_mem, true);
+ 
+     cs->num_ases = 2;
+-    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
+-    cpu_address_space_init(cs, 1, "cpu-smm", cpu->cpu_as_root);
++    cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
++    cpu_address_space_init(cs, X86ASIdx_SMM, "cpu-smm", cpu->cpu_as_root);
+ 
+     /* ... SMRAM with higher priority, linked from /machine/smram.  */
+     cpu->machine_done.notify = tcg_cpu_machine_done;
 -- 
 2.47.3
 
