@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08649CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A44CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2996-0008Ki-42; Fri, 26 Sep 2025 10:10:00 -0400
+	id 1v298I-00079K-Mm; Fri, 26 Sep 2025 10:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v298u-0007wI-Rb
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:49 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1v298F-00078a-Kd
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:07 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v298T-0005jR-RS
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:47 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3ef166e625aso1770652f8f.2
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:17 -0700 (PDT)
+ id 1v2986-0005d0-2t
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:05 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3ee64bc6b85so2062968f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758895754; x=1759500554; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758895730; x=1759500530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wtX0TyylDSZF8Gayrztuz/qgyELXa0qSpMe0+Lgit+Q=;
- b=jjB2AdPveyzrEfTYxaacAWgaxnhsv+iaIJyO8RGKqUZUcMXovIfFiZTZfl6C1jbmDL
- Ypj3uF6DtSdAHrr4MbBbPWwjzNIUxgk1y6tulHiQ/GjhaR8x30w4qTT9yZM9g6U/grQA
- 07l+ponUH+sZDUYJ9QGNfG+XTqrF+sn4MupzpvVNpXGAyFe/VJnNBGwoQwVeh3WN1fs4
- gsPbGGp8Q8LXASh60Duyx22mUuHtjClW2shD5uW+blqY4NW5xs1LimO3BV9k5N1W/7nI
- uD6vDXezNUM+LDeKMx4OMlopCnM9sT0zyxuQSwpbkWPCwhT355Qfu8mNWeIR7Uy1uuvf
- Xcyg==
+ :reply-to; bh=eDFX7y4atdN+lmLu8Si4CvEkIGbpJPZtNB7piylWeSY=;
+ b=ObcBZ9yUjUlKhEzGjNNdlUlF6BHlfkOjQsCA97VPMybnBOeH5P+pI46y8UIamfMrV7
+ vjLZy+T6H2sQLVj6qiFtFdivPge5X7SYPSMvfBLnYG44Y676R7C9IL+9ejk7hntL5FXm
+ 4M1SPLSZRawJhpPEleHl02ym51FUZck+GpEOXnmoVxJr4LCcdOA0warUe6XQO+Sj6Pdf
+ Fu/WMdCv57TDtsO+prU28XpO1tFwxro/RqQWJCPp7v1ROCAxqlZmRBHsg1Gl+epCx4em
+ 2AUfcfNz8qtrOg+zwhEnsrZUCETAHrkfjMfQB1vtqQWnHqPX0w7qaMOGfzp6tW1Vc0wp
+ nSsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758895754; x=1759500554;
+ d=1e100.net; s=20230601; t=1758895730; x=1759500530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wtX0TyylDSZF8Gayrztuz/qgyELXa0qSpMe0+Lgit+Q=;
- b=MLv4P3g4kVIRUY6D0LY46J+UScDLzPhZVtyPpkRpV/BU55g52x2s3rZUHZ4hmZEAOS
- HPECasdGPd/bX3s9WvjsTYp/N2UZzeIfLgycXYv9suZdrH2+TLmFz7Pu0AXfeslDW3cc
- 7LIh92cxfzn1E0tokCqnC9NKjf5Q6Sc4pEUfnqvxHSdd3xl3m1Y3juLGqAWAjez/1E6t
- N2GawJQTQ0QFCjfm9v3QU5+siRDzkhoR+F8cj4jjeg5kLs5RUFPSytMjcxq+RVB+hvO5
- J3e3IgcH+W2Lp7jxuRTcr7/2tQE2giix+YZOyMo1wrvEHVEMMe3I+OyU34JSQ0DMtxKw
- uiYA==
-X-Gm-Message-State: AOJu0YwU+lnWW3hmkkvRkJhiTc96lOGDLXkhzYF+sUP7MUihCOJkSxAC
- eM9V4jY4PL2AUK/U2gQqcoyCEau1OHdfKhGBcT5p8d6pBHJGaXYol/3PxbXsJWxQJQHmRm4gz0l
- imEai
-X-Gm-Gg: ASbGncu2SNhhtZAgBSF6zNAiWlifZ8GX2BKgxVVyO8WG8mvInONvvpdDGpeT6qqFQBY
- 0tTKtolFGWBNzbRGV8wkCnk6PdDMJ4SSRTf2H8TUIaUwR/haMbORXq8GL83jEU1V5RUNProE/ta
- WcE5vYgJmLRUoMmid0InPIamFG1nLgZ3tAqIfaqWyRl19XxYx/qXWJ8he1sDWZ1HeRdzmG5prr1
- IFfV8+3xCD+FiqHHGWhrspyiMo3wkQSZ28Ot0BZxkQgo3zW0XBz6mfEirvRctM/J4E0hOpChNLw
- +I8O2k6E9W4iRO/EynRGkn8A5xSNZ9iN3Lf7Bvj6g7kpAQmuenFAjQJaADnM8Wzr/kIUiic3jyV
- nuOuFiGjDIyX2tnuLnJa4UO1nP6HGj1yH2ni21xqa8RyLljeMLQ==
-X-Google-Smtp-Source: AGHT+IGKdQdtXaClxo7tvoM9uGuGg4N/A6bNlIJ1VZ4PbSilBxzallNsiTSQtKqai4ts21k4u2uwPw==
-X-Received: by 2002:a05:6000:1886:b0:3ee:13ba:e140 with SMTP id
- ffacd0b85a97d-40e4a8f9a93mr6266693f8f.21.1758895754318; 
- Fri, 26 Sep 2025 07:09:14 -0700 (PDT)
+ bh=eDFX7y4atdN+lmLu8Si4CvEkIGbpJPZtNB7piylWeSY=;
+ b=geZf7ZZ0mLA1g/cBNSoqlePghgx7iYZRgbeAzLjKnrhoL48ZnBOXUMu5NpmCgCE+f5
+ XVaTimLLnglETaNYUxjpu0fn/1cp1jyUOfVQ21ShW4Fr/bvao5yWtGhH1pjs2GSyRlH5
+ yVQMBT5weWXHgu3A/GvWw4JnHQc2Q43DviFJWFd2BnMYZQTMsQdT4z1DCAHcYXa8eT62
+ 2Ur2Av64+gafxgL+Z20xPWQr0aeg9RDTuCj1S5NGIGxFaTYHj0CM0VtQKjpjejal13TN
+ B6s3Y6p4xkrneqHAOH4T7xphmmuH+Ufbf58hqQkOo0D5RBDSsPnX4/pMNS0wcaIyjoZl
+ UPFQ==
+X-Gm-Message-State: AOJu0YxZK5OEWLklZYBe6XU1KVdTkY2HELzHmYrGbtwsJLU31jMH7lWW
+ HPqWXzQU6fsOiCVwwST54NcrLvOxUC2xS1O+AKHNPZvsJEFvk2J4mAYyJf9y0odEjipgpYF0STd
+ /pLqc
+X-Gm-Gg: ASbGncubogUeVg0xZJ2i9S5XV4yL9mOL9FsxoO7kOe0uS/77AhqLhpkO77Aw7ca4f1y
+ Gh3oarsMGpLHRzDKg+AUOkScbTBKPp9T3JKIQwKfFLlICqaX78e9rkwg+XjDxP8WP3Fq6H/cLhB
+ mAFiv8oahiidCQix649N7ExSm6PEznLZDEKSHMmmvVj9N0Xn+tITMOKcEmqbJgqqBmST0FMeHjj
+ 6yNn8lF28sTzOFhFdhrsQm0k3fMMQtUPTtjjHNIyeSHK6soNb7GcWYTIBbKr3BN+pFs5b/gw1VB
+ 23vwptHrI+lMY/RFusRIq43CcO7KxTvlEE8paaTgTFX12VTL3t1GI8WttaQCBLZkKOokEiHUl9+
+ IgsDRvRFNLzlSIaKRcMh+Ucxy5Lu9xQIK3l6lBPg=
+X-Google-Smtp-Source: AGHT+IFlTbUdJ8ApgOD2m0UMPYCRAh/iL3YXXivP5feAPaZuKn2mHgpek8ysUQKXtZFRIGzKyLAOKA==
+X-Received: by 2002:a05:6000:26ce:b0:3ee:141a:ede5 with SMTP id
+ ffacd0b85a97d-40e4a42f3aemr6923075f8f.57.1758895729897; 
+ Fri, 26 Sep 2025 07:08:49 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.09.13
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 07:09:13 -0700 (PDT)
+ Fri, 26 Sep 2025 07:08:49 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/44] target/arm: Split out alloc_cpreg
-Date: Fri, 26 Sep 2025 15:08:27 +0100
-Message-ID: <20250926140844.1493020-28-peter.maydell@linaro.org>
+Subject: [PULL 03/44] target/arm: Introduce KVMID_AA64_SYS_REG64
+Date: Fri, 26 Sep 2025 15:08:03 +0100
+Message-ID: <20250926140844.1493020-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
 References: <20250926140844.1493020-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,70 +102,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Include provision for a name suffix.
+Allow us to create kvm ids directly, rather than going
+through ENCODE_AA64_CP_REG + cpreg_to_kvm_id.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ target/arm/kvm-consts.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 8a8fa8c40e9..e36598e273b 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -7362,6 +7362,28 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
+index c44d23dbe79..fdb305eea1a 100644
+--- a/target/arm/kvm-consts.h
++++ b/target/arm/kvm-consts.h
+@@ -180,4 +180,15 @@ MISMATCH_CHECK(CP_REG_ARM64_SYSREG_OP2_SHIFT, KVM_REG_ARM64_SYSREG_OP2_SHIFT);
+ 
+ #undef MISMATCH_CHECK
+ 
++#define KVMID_AA64_SYS_REG_(op0, op1, crn, crm, op2)    \
++    (CP_REG_AA64_MASK | CP_REG_ARM64_SYSREG |           \
++     ((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
++     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
++     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
++     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
++     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
++
++#define KVMID_AA64_SYS_REG64(op0, op1, crn, crm, op2)   \
++    (KVMID_AA64_SYS_REG_(op0, op1, crn, crm, op2) | CP_REG_SIZE_U64)
++
  #endif
- }
- 
-+/*
-+ * Copy a ARMCPRegInfo structure, allocating it along with the name
-+ * and an optional suffix to the name.
-+ */
-+static ARMCPRegInfo *alloc_cpreg(const ARMCPRegInfo *in,
-+                                 const char *name, const char *suffix)
-+{
-+    size_t name_len = strlen(name);
-+    size_t suff_len = suffix ? strlen(suffix) : 0;
-+    ARMCPRegInfo *out = g_malloc(sizeof(*in) + name_len + suff_len + 1);
-+    char *p = (char *)(out + 1);
-+
-+    *out = *in;
-+    out->name = p;
-+
-+    memcpy(p, name, name_len + 1);
-+    if (suffix) {
-+        memcpy(p + name_len, suffix, suff_len + 1);
-+    }
-+    return out;
-+}
-+
- /*
-  * Private utility function for define_one_arm_cp_reg():
-  * add a single reginfo struct to the hash table.
-@@ -7374,7 +7396,6 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-     CPUARMState *env = &cpu->env;
-     ARMCPRegInfo *r2;
-     bool ns = secstate & ARM_CP_SECSTATE_NS;
--    size_t name_len;
- 
-     /* Overriding of an existing definition must be explicitly requested. */
-     if (!(r->type & ARM_CP_OVERRIDE)) {
-@@ -7384,11 +7405,7 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-         }
-     }
- 
--    /* Combine cpreg and name into one allocation. */
--    name_len = strlen(name) + 1;
--    r2 = g_malloc(sizeof(*r2) + name_len);
--    *r2 = *r;
--    r2->name = memcpy(r2 + 1, name, name_len);
-+    r2 = alloc_cpreg(r, name, NULL);
- 
-     /*
-      * Update fields to match the instantiation, overwiting wildcards
 -- 
 2.43.0
 
