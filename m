@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 894E4CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE47CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23dR-0006u7-SR; Fri, 26 Sep 2025 04:16:57 -0400
+	id 1v23YR-0007ID-73; Fri, 26 Sep 2025 04:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23dL-0006oa-1S; Fri, 26 Sep 2025 04:16:52 -0400
+ id 1v23YO-0007HL-Lc; Fri, 26 Sep 2025 04:11:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23dC-0001og-Qv; Fri, 26 Sep 2025 04:16:49 -0400
+ id 1v23YG-0000Jp-NR; Fri, 26 Sep 2025 04:11:43 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FFBA157D74;
- Fri, 26 Sep 2025 11:10:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A97E157D51;
+ Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E9C4290C58;
- Fri, 26 Sep 2025 11:10:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E386290C35;
+ Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 44/60] target/i386: Define enum X86ASIdx for x86's
- address spaces
-Date: Fri, 26 Sep 2025 11:10:12 +0300
-Message-ID: <20250926081031.2214971-44-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 09/60] hw/arm/stm32f205_soc: Don't leak TYPE_OR_IRQ
+ objects
+Date: Fri, 26 Sep 2025 11:09:37 +0300
+Message-ID: <20250926081031.2214971-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -48,7 +46,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,82 +62,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Define X86ASIdx as enum, like ARM's ARMASIdx, so that it's clear index 0
-is for memory and index 1 is for SMM.
+In stm32f250_soc_initfn() we mostly use the standard pattern
+for child objects of calling object_initialize_child(). However
+for s->adc_irqs we call object_new() and then later qdev_realize(),
+and we never unref the object on deinit. This causes a leak,
+detected by ASAN on the device-introspect-test:
 
+Indirect leak of 10 byte(s) in 1 object(s) allocated from:
+    #0 0x5b9fc4789de3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (BuildId: 267a2619a026ed91c78a07b1eb2ef15381538efe)
+    #1 0x740de3f28b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x740de3f3e4d8 in g_strdup (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x784d8) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #3 0x5b9fc70159e1 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
+    #4 0x5b9fc70159e1 in object_property_try_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1276:18
+    #5 0x5b9fc7015f94 in object_property_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1294:12
+    #6 0x5b9fc701b900 in object_add_link_prop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:2021:10
+    #7 0x5b9fc701b3fc in object_property_add_link /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:2037:12
+    #8 0x5b9fc4c299fb in qdev_init_gpio_out_named /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/gpio.c:90:9
+    #9 0x5b9fc4c29b26 in qdev_init_gpio_out /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/gpio.c:101:5
+    #10 0x5b9fc4c0f77a in or_irq_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/or-irq.c:70:5
+    #11 0x5b9fc70257e1 in object_init_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:428:9
+    #12 0x5b9fc700cd4b in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:570:5
+    #13 0x5b9fc700e66d in object_new_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:774:5
+    #14 0x5b9fc700e750 in object_new /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:789:12
+    #15 0x5b9fc68b2162 in stm32f205_soc_initfn /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/stm32f205_soc.c:69:26
+
+Switch to using object_initialize_child() like all our
+other child objects for this SoC object.
+
+Cc: qemu-stable@nongnu.org
+Fixes: b63041c8f6b ("STM32F205: Connect the ADC devices")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-By: Kirill Martynov <stdcalllevi@yandex-team.ru>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250730095253.1833411-3-xiaoyao.li@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 591f817d819f5511fd9001dc863a326d23088811)
-(Mjt: pick this change for completness with the previous one)
+Message-id: 20250821154229.2417453-1-peter.maydell@linaro.org
+(cherry picked from commit 2e27650bddd35477d994a795a3b1cb57c8ed5c76)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index f977fc49a7..e0be7a7406 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2574,6 +2574,11 @@ static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
- void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
- void cpu_sync_avx_hflag(CPUX86State *env);
- 
-+typedef enum X86ASIdx {
-+    X86ASIdx_MEM = 0,
-+    X86ASIdx_SMM = 1,
-+} X86ASIdx;
-+
- #ifndef CONFIG_USER_ONLY
- static inline int x86_asidx_from_attrs(CPUState *cs, MemTxAttrs attrs)
- {
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 1dc1ba9b48..9c25b55839 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -99,7 +99,7 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-      * initialized at register_smram_listener() after machine init done.
-      */
-     cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
--    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
-+    cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
- 
-     return true;
- }
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 47fb5c673c..5621200be0 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2728,10 +2728,10 @@ static void register_smram_listener(Notifier *n, void *unused)
- 
-     address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
-     kvm_memory_listener_register(kvm_state, &smram_listener,
--                                 &smram_address_space, 1, "kvm-smram");
-+                                 &smram_address_space, X86ASIdx_SMM, "kvm-smram");
- 
-     CPU_FOREACH(cpu) {
--        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
-+        cpu_address_space_init(cpu, X86ASIdx_SMM, "cpu-smm", &smram_as_root);
+diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
+index 229af7fb10..e3c7203c6e 100644
+--- a/hw/arm/stm32f205_soc.c
++++ b/hw/arm/stm32f205_soc.c
+@@ -66,7 +66,7 @@ static void stm32f205_soc_initfn(Object *obj)
+                                 TYPE_STM32F2XX_TIMER);
      }
- }
  
-diff --git a/target/i386/tcg/system/tcg-cpu.c b/target/i386/tcg/system/tcg-cpu.c
-index 0538a4fd51..7255862c24 100644
---- a/target/i386/tcg/system/tcg-cpu.c
-+++ b/target/i386/tcg/system/tcg-cpu.c
-@@ -74,8 +74,8 @@ bool tcg_cpu_realizefn(CPUState *cs, Error **errp)
-     memory_region_set_enabled(cpu->cpu_as_mem, true);
+-    s->adc_irqs = OR_IRQ(object_new(TYPE_OR_IRQ));
++    object_initialize_child(obj, "adc-irq-orgate", &s->adc_irqs, TYPE_OR_IRQ);
  
-     cs->num_ases = 2;
--    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
--    cpu_address_space_init(cs, 1, "cpu-smm", cpu->cpu_as_root);
-+    cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
-+    cpu_address_space_init(cs, X86ASIdx_SMM, "cpu-smm", cpu->cpu_as_root);
+     for (i = 0; i < STM_NUM_ADCS; i++) {
+         object_initialize_child(obj, "adc[*]", &s->adc[i], TYPE_STM32F2XX_ADC);
+@@ -171,12 +171,12 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+     }
  
-     /* ... SMRAM with higher priority, linked from /machine/smram.  */
-     cpu->machine_done.notify = tcg_cpu_machine_done;
+     /* ADC 1 to 3 */
+-    object_property_set_int(OBJECT(s->adc_irqs), "num-lines", STM_NUM_ADCS,
++    object_property_set_int(OBJECT(&s->adc_irqs), "num-lines", STM_NUM_ADCS,
+                             &error_abort);
+-    if (!qdev_realize(DEVICE(s->adc_irqs), NULL, errp)) {
++    if (!qdev_realize(DEVICE(&s->adc_irqs), NULL, errp)) {
+         return;
+     }
+-    qdev_connect_gpio_out(DEVICE(s->adc_irqs), 0,
++    qdev_connect_gpio_out(DEVICE(&s->adc_irqs), 0,
+                           qdev_get_gpio_in(armv7m, ADC_IRQ));
+ 
+     for (i = 0; i < STM_NUM_ADCS; i++) {
+@@ -187,7 +187,7 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+         busdev = SYS_BUS_DEVICE(dev);
+         sysbus_mmio_map(busdev, 0, adc_addr[i]);
+         sysbus_connect_irq(busdev, 0,
+-                           qdev_get_gpio_in(DEVICE(s->adc_irqs), i));
++                           qdev_get_gpio_in(DEVICE(&s->adc_irqs), i));
+     }
+ 
+     /* SPI 1 and 2 */
+diff --git a/include/hw/arm/stm32f205_soc.h b/include/hw/arm/stm32f205_soc.h
+index 4f4c8bbebc..46eda3403a 100644
+--- a/include/hw/arm/stm32f205_soc.h
++++ b/include/hw/arm/stm32f205_soc.h
+@@ -59,7 +59,7 @@ struct STM32F205State {
+     STM32F2XXADCState adc[STM_NUM_ADCS];
+     STM32F2XXSPIState spi[STM_NUM_SPIS];
+ 
+-    OrIRQState *adc_irqs;
++    OrIRQState adc_irqs;
+ 
+     MemoryRegion sram;
+     MemoryRegion flash;
 -- 
 2.47.3
 
