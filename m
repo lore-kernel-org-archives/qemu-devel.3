@@ -4,81 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C5DCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 17:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2927CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 17:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2CZW-0007CN-Do; Fri, 26 Sep 2025 13:49:34 -0400
+	id 1v2CeJ-0000qL-Qz; Fri, 26 Sep 2025 13:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2CZC-00079s-FN
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 13:49:15 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2CZ3-0000z5-KQ
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 13:49:09 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-636d5cefab2so1726423d50.2
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 10:48:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758908931; x=1759513731; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7XQue5BQLoCllFYIVbu41xYDeAfrEoM9/FkoM+tryxw=;
- b=cYrQlTiVk44mhACsHR1V8mQnuwHFQIavUNtZ5brl2WdX85UdGLrJU6qu3VWpwa6b0E
- 1vKJFi0/PwMGKNrCaIEZkA4Ey4px6dUmTrgj54DAs4UIDd4v857w7PczvOTsXGByfwbL
- qKXXQmGq7KGB6XrlM/Kb6ZwDln+pa7C8NkvyMQIrA3kgeBb+Vc2Rh9BOvEis2IRUdylK
- qL62+UgYwAsk3ik0/KZGzm4JMyfcNImBJJW9PU4ndRrbXdfkIwiYAja6p1Y0jUpqHu2q
- t/xsVeHV3n5TM2dhIbEhy5WMlr25x7ZbWHJWi9kdIYFvRshQoztNuw+y5buEGRkgxWHp
- ahKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758908931; x=1759513731;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7XQue5BQLoCllFYIVbu41xYDeAfrEoM9/FkoM+tryxw=;
- b=EnFTN7C9Au5YQhakPvGZfWyuf3ic0TxybQKDadEZj/hKA/rZbldzHvBZVZPdvF8Qtt
- gsTHWHbh7wVA3K8NXt6TWJ9C5XKYZroFHZ+BFFGvA2IUt5K4WCQ3ND1r+QknntYdl0/s
- auvxVJEJEM4GnBaiDNL/DBTT3KpKtNp96XwkGdx3rfEixmEW/ivzvNAFsIwIT1Rz01rh
- o3DbJEgr3QrVuGNYfCYrszrH6ridoBOUT0IxWJdxr0aAAsVxkdyzRZyvekF/95gBJNm0
- Wy0exdlg9XBMwXiwVkP4ZCSfD6KarjaevNC3ZHNJTT1E1QE5FeQQ0lzXt+hTz4xdATp1
- oufw==
-X-Gm-Message-State: AOJu0Yx61FnAgx/o3eVNVFrlV2lqk7+lp0jGnqPETzp1TnovenFbndKi
- yNeT1a5bMiGeaIjjQjH+KIZRQUvyHX7iXve47CCWjQzpy51KezxL3L8EDjyNzBY9MEpoTPmJyYz
- PU4EsvWskfk959r0SY5adQNsUhICqsounCNkPcTN71A==
-X-Gm-Gg: ASbGncuQ8Z+qPi4jrtYKFFTpXtxF6r4zDlHW2Rf1VkbzNYVfOtYghZ1lE5sMp6qNV4L
- RHjqNtTw1nMw/1xjvcJIpfpEVdImhRk+FQPzTx7OavRkdvsT5WKxEYulUCVJAliXLGytejgpblu
- 11lDxiPFVoV0jp9aFf8XQf5we6J30sPs/s6ew9jgUYGy/jqwmOwx/K9dt1diqmxfWT7G/JuGLI7
- DnAD6NsYVDD4r+Knhg=
-X-Google-Smtp-Source: AGHT+IGw9+L3N7DMyI9WhKaVC48g89VFRxgGRowOAVZwR9i3Oio6PQKdgWkN44ZBHSXttDA8YoLXFzL2sykHUaXkcNg=
-X-Received: by 2002:a05:690e:2442:b0:628:2e16:6566 with SMTP id
- 956f58d0204a3-6361a5ef399mr6249185d50.0.1758908931510; Fri, 26 Sep 2025
- 10:48:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1v2CeH-0000pi-LE; Fri, 26 Sep 2025 13:54:25 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1v2CeA-00023x-50; Fri, 26 Sep 2025 13:54:22 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QFFPf0005140;
+ Fri, 26 Sep 2025 17:54:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=F9LYBP
+ /VflRRas7t9x0D9L2z/whxbLS4mwzjRhekbkg=; b=j0EfoWwRxroAM3AFaxQWR8
+ EK9z9edTvgaXIsKYHGhy9bCUyTOvmlyo3QZ4nMZFy9B1OlbZ77YZGUInObVcIWT5
+ MJmvot5WUvnNLtUYJ20VWVmLHoI8RZK8bZLn4g+lG/u/eJT/tDIK/fqgqaJd2vo0
+ eklvgjPaHZ0jVEb28dT5YkofEFjMySg3I0JxxJCSp2KcnbL7AHY8O+buiFXcSu3d
+ 0bntmHEEQf+RLefh5+7dc3i2rlTsm3w9ms1wzsBWPK5QF5u5E6em9IbcEvUfdKWP
+ h31C4Ai+VEPJstW6v0R4QavQWI2imv0SFq6JoJKC3pXM4q7Pk2cwTioIjRbho40g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49dbb6pavh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Sep 2025 17:54:07 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58QHPbcu014297;
+ Fri, 26 Sep 2025 17:54:06 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49dawm5e4x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Sep 2025 17:54:06 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58QHs5Ep49807638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Sep 2025 17:54:06 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D257E58054;
+ Fri, 26 Sep 2025 17:54:05 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0E1965803F;
+ Fri, 26 Sep 2025 17:54:05 +0000 (GMT)
+Received: from [9.61.249.51] (unknown [9.61.249.51])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 26 Sep 2025 17:54:04 +0000 (GMT)
+Message-ID: <90de0c70-9309-4fd0-a5d7-3bd9e7088a0e@linux.ibm.com>
+Date: Fri, 26 Sep 2025 10:53:52 -0700
 MIME-Version: 1.0
-References: <20250913080943.11710-1-pbonzini@redhat.com>
- <20250913080943.11710-55-pbonzini@redhat.com>
-In-Reply-To: <20250913080943.11710-55-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 26 Sep 2025 18:48:40 +0100
-X-Gm-Features: AS18NWDkZX_-lGYqaWaFMCJJHgRii1ulOK9d-dLiwojBN1NH8HHOYL1oDDSnGQc
-Message-ID: <CAFEAcA_3kkZ+a5rTZGmK8W5K6J7qpYD31HkvjBnxWr-fGT2h_A@mail.gmail.com>
-Subject: Re: [PULL 54/61] i386/cpu: Enable SMM cpu address space under KVM
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>, 
- Kirill Martynov <stdcalllevi@yandex-team.ru>, Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/5] vfio/pci: Add an error handler callback
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, mjrosato@linux.ibm.com,
+ thuth@redhat.com, alex.williamson@redhat.com, clg@redhat.com
+References: <20250925174852.1302-1-alifm@linux.ibm.com>
+ <20250925174852.1302-3-alifm@linux.ibm.com> <87qzvtstd7.fsf@pond.sub.org>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <87qzvtstd7.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=MfBhep/f c=1 sm=1 tr=0 ts=68d6d33f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=5v1K1Rb0MuaBW23iG4QA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: 9C569_T8PF_qMPkjbpa5Bnut3PfazkhJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3NCBTYWx0ZWRfX5FjNgyLgpozw
+ e8ByHNh1DPwATSu1id/z/AXVl51mHnKUUVON1Ht5ONHtAUlVGEBYAMTq7tm41IZswSVW8gEIxou
+ zbY/9SjT1u3f+eIm+RYZlmSP7JpleUptGPWOlDJk5WINBSEaK7FTafkmXJrO7L7UDtV4y19oVMH
+ t8j6YvEujMtzjiIueqkWzjnMKR9HD37FXI/yO5Wxf+nWH3h5dzrufa1BDD4CHqW3l2JaqG/GsHi
+ KibUZXOYTi5Whafbz3nmI5WnrfXQ5YgbwhHRIM140P+HZuFnhjdcN9tSixavyybuV8R5TU4dIpI
+ SiSEGiwlDd4t8+rsE8N+WhQk9Z+5xNnMyL1C/NVv7HMb4SfaEIcpPfIYiMNFtWvxl0KwwY1m0e+
+ fb2IwgQWdQVoyR2NVbWbLkBa4fBMxA==
+X-Proofpoint-ORIG-GUID: 9C569_T8PF_qMPkjbpa5Bnut3PfazkhJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-26_06,2025-09-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250174
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,97 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 13 Sept 2025 at 09:25, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
->
-> Kirill Martynov reported assertation in cpu_asidx_from_attrs() being hit
-> when x86_cpu_dump_state() is called to dump the CPU state[*]. It happens
-> when the CPU is in SMM and KVM emulation failure due to misbehaving
-> guest.
->
-> The root cause is that QEMU i386 never enables the SMM address space for
-> cpu since KVM SMM support has been added.
->
-> Enable the SMM cpu address space under KVM when the SMM is enabled for
-> the x86machine.
->
-> [*] https://lore.kernel.org/qemu-devel/20250523154431.506993-1-stdcalllevi@yandex-team.ru/
 
-Hi; I just noticed that this change seems to not account
-for x86 CPU hotplug...
-
-> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-> index 89a79536594..1dc1ba9b486 100644
-> --- a/target/i386/kvm/kvm-cpu.c
-> +++ b/target/i386/kvm/kvm-cpu.c
-> @@ -13,6 +13,7 @@
->  #include "qapi/error.h"
->  #include "system/system.h"
->  #include "hw/boards.h"
-> +#include "hw/i386/x86.h"
+On 9/25/2025 9:57 PM, Markus Armbruster wrote:
+> Farhan Ali <alifm@linux.ibm.com> writes:
 >
->  #include "kvm_i386.h"
->  #include "accel/accel-cpu-target.h"
-> @@ -91,6 +92,15 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
->          kvm_set_guest_phys_bits(cs);
->      }
+>> Provide a vfio error handling callback, that can be used by devices to
+>> handle PCI errors for passthrough devices.
+>>
+>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+>> ---
+>>   hw/vfio/pci.c | 8 ++++++++
+>>   hw/vfio/pci.h | 1 +
+>>   2 files changed, 9 insertions(+)
+>>
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index bc0b4c4d56..b02a974954 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -3063,11 +3063,19 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
+>>   static void vfio_err_notifier_handler(void *opaque)
+>>   {
+>>       VFIOPCIDevice *vdev = opaque;
+>> +    Error *err = NULL;
+>>   
+>>       if (!event_notifier_test_and_clear(&vdev->err_notifier)) {
+>>           return;
+>>       }
+>>   
+>> +    if (vdev->err_handler) {
+>> +        if (vdev->err_handler(vdev, &err)) {
+>> +            return;
+>> +        }
+>> +        error_report_err(err);
+>> +    }
+> This is unusual.
 >
-> +    /*
-> +     * When SMM is enabled, there is 2 address spaces. Otherwise only 1.
-> +     *
-> +     * Only initialize address space 0 here, the second one for SMM is
-> +     * initialized at register_smram_listener() after machine init done.
-> +     */
-> +    cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
-> +    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
-
-In the KVM CPU realizefn we call cpu_address_space_init()
-for AS 0. This happens both for the CPUs that exist with
-QEMU starts up and also for any hotplugged CPU.
-
-> +
->      return true;
->  }
+> Functions taking an Error ** argument usually do so to report errors.
+> The rules spelled out in qapi/error.h apply.  In particular:
 >
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 34e74f24470..d191d7177f1 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -2704,6 +2704,7 @@ static MemoryRegion smram_as_mem;
+>   * - On success, the function should not touch *errp.  On failure, it
+>   *   should set a new error, e.g. with error_setg(errp, ...), or
+>   *   propagate an existing one, e.g. with error_propagate(errp, ...).
+>   *
+>   * - Whenever practical, also return a value that indicates success /
+>   *   failure.  This can make the error checking more concise, and can
+>   *   avoid useless error object creation and destruction.  Note that
+>   *   we still have many functions returning void.  We recommend
+>   *   • bool-valued functions return true on success / false on failure,
 >
->  static void register_smram_listener(Notifier *n, void *unused)
->  {
-> +    CPUState *cpu;
->      MemoryRegion *smram =
->          (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
+> If ->err_handler() behaved that way, it @err would be null after it
+> returns false.  We'd call error_report_err(NULL), and crash.
 >
-> @@ -2728,6 +2729,10 @@ static void register_smram_listener(Notifier *n, void *unused)
->      address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
->      kvm_memory_listener_register(kvm_state, &smram_listener,
->                                   &smram_address_space, 1, "kvm-smram");
-> +
-> +    CPU_FOREACH(cpu) {
-> +        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
-> +    }
->  }
+> Functions with unusual behavior need a contract: a comment spelling out
+> their behavior.
+>
+> What is the intended behavior of the err_handler() callback?
 
-However, this code is in a machine_init_done notifier, so it
-runs only once when QEMU starts up. So the CPUs initially
-present on QEMU startup get their AS 1 initialized, but
-any CPU hot-plugged later on while QEMU is running will
-not ever call cpu_address_space_init() for AS 1.
+Hi Markus,
 
-I saw this with some work-in-progress patches I have that
-try to free the AddressSpaces of the CPU (which crash
-because the hot-plugged CPU claims to have 2 ASes but
-the second one is NULL). You can probably also get a
-crash for a variation of the reported crash that this
-commit is trying to fix, if the CPU that we try to
-x86_cpu_dump_state() for is a hot-plugged one in SMM state.
+Thanks for reviewing! The intended behavior for err_handler() is to set 
+errp and report the error on false/failure. With the above code, I also 
+intended fall through to vm_stop() when err_handler() fails.
 
-Where should we be initing the AS for hot-plugged CPUs?
+I think I misunderstood the errp error handling, it seems like the 
+correct way to do what I intended would be
 
-thanks
--- PMM
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index b02a974954..630de46c90 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3070,10 +3070,11 @@ static void vfio_err_notifier_handler(void *opaque)
+      }
+
+      if (vdev->err_handler) {
+-        if (vdev->err_handler(vdev, &err)) {
++        if (!vdev->err_handler(vdev, &err)) {
++            error_report_err(err);
++        } else {
+              return;
+          }
+-        error_report_err(err);
+      }
+
+Please correct me if I missed anything.
+
+Thanks
+Farhan
+
+>
+>> +
+>>       /*
+>>        * TBD. Retrieve the error details and decide what action
+>>        * needs to be taken. One of the actions could be to pass
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index e0aef82a89..faadce487c 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -146,6 +146,7 @@ struct VFIOPCIDevice {
+>>       EventNotifier err_notifier;
+>>       EventNotifier req_notifier;
+>>       int (*resetfn)(struct VFIOPCIDevice *);
+>> +    bool (*err_handler)(struct VFIOPCIDevice *, Error **);
+>>       uint32_t vendor_id;
+>>       uint32_t device_id;
+>>       uint32_t sub_vendor_id;
+>
 
