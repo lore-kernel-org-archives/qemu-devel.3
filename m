@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6386CCAC5BC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD764CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v298Z-0007Sj-A5; Fri, 26 Sep 2025 10:09:28 -0400
+	id 1v294D-000880-7v; Fri, 26 Sep 2025 10:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v298N-0007CL-TC
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:16 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2989-0005dk-KQ
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:15 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3f44000626bso1453133f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:08:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758895733; x=1759500533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=b4EBqWxQdk+JIDg5eMqs4H05RLmTftPiIh75XqyWcMU=;
- b=Rwzht6fNHWRWli12emK++aJ/m7qkc9dUfD/mk3lC2Q5Q9ruRqXfA9qwggYOCC6Ic2e
- asPWOqo7D9tlbIn+6exhh4o0S9fu1BF0Q1TKR2H8v1F/6hspngcwfJbYsSSaxdUE0lax
- 08xmPjIa/Ui7ddv1zAEK2CKBwnQ7Wr8FOu3aIKg3wBBlCmOd3qdNGPoJwd89UJwUwbDs
- CBultIJ1CLtoxtvfFzu8xxhfSmHHnXKJ4TW5iVCToCQ7gOkR0iKkFQT4+Jhgbj7g8EAG
- tygDIf5WCWU7eHVnohA1J5bjIRH+KS/C5LlijupWS7HR9Rh18bylq+Hg4xN6AMJioe1O
- mgzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758895733; x=1759500533;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b4EBqWxQdk+JIDg5eMqs4H05RLmTftPiIh75XqyWcMU=;
- b=gXN8j5/d+qHAfrnCjkK5CIEPF+S3/yNB0FAqnNazxSNAcUE0pRmWelrXrEbceGhBeh
- lhKldifbdK+Jj25HQ6A9686YZQOmw1MgpnPvy1GMrDmRVbRBqmgyFbegKcF2tdmhma/h
- s8cuJONj+nO6knVTSx4KWsCpfgDNrDPAkbihe8HrPtmMgLNwfSgld0afYpAtQRo3UGjq
- 4Hl/lD5TM6jBEpcSF0B6zIgaXF0LS7cPofnHbETjIgnwc4hg0blxFathMb6uEJs4RI6o
- yEwbE+kOKOCIJdJDlYxQ1DnuUs3+0gI7YBz0migBXs3LoIUoXanMvZErVLffpL50vqBP
- uSwA==
-X-Gm-Message-State: AOJu0YwRSIEQV2yD/KTg0BPBxif3AsibcB6pmzadC5tOVxfEWvXkMiuV
- SoJM8tiW21a1p9Z9hdOY02pl6DZM38dqzLMXUvTmz3WtrZY2SFP1WhGxkySsgHhM3hPrBGrHO6V
- V9Rk/
-X-Gm-Gg: ASbGncu47kEPY9HoFNShlSsirLaVZTsmZ+IWkPYRpHcBBGljTm5GCytmFbXDhP+i2jz
- 8TE1bXj8PRHxg0pxogBSTYNFB6luPaKk7GhEybSfbQ1nM6b0d64gjIuUlMBtfi4lZNJmziEVeaA
- XkAcpL9GCg+kf9KvATpXmcqsnnrVf0n9diULVD6rlW8q5NyH55qEm+9srmfQIv9rsUOaa3t0GyL
- oelYAjQn/l/FYKnaYpSAf8kEcy32Za4TnqcDr2NliqmKgRbV79nG5LaraxmqxtpNfGz35lq5mrl
- meCkGcAmf3yCbFgMB6QWUbuwLVwZaF8Jjc29DVnz551nn9d2NGXYfDsC3iZYABUEDGi+XEFwM1r
- l8ceuRdeWF/QcrLqWGaJ9WVL899VZufNqgP0F1PuF0wsd13W6Lg==
-X-Google-Smtp-Source: AGHT+IHoK98wOuuSNCne7tjZAd1n4EFCzVhedIQdTB6gWDw//cqswXhnj9UTvokdtqZAajL2kXvZ+w==
-X-Received: by 2002:a05:6000:2410:b0:405:ed47:b22b with SMTP id
- ffacd0b85a97d-40e42502e37mr7975350f8f.10.1758895733420; 
- Fri, 26 Sep 2025 07:08:53 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.52
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 07:08:52 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v2946-0007g7-44
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:04:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v293x-0004y6-9N
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:04:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758895472;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AdEZfBJzVpy7Ad5MzBbnijgJmMQ8cW6ZTpvVSOCIqvU=;
+ b=FkaZA8o0moqqc5idqD/EQut27kpuVrfE3vVZE2WvlwSyEw6aQAPSL8eH9edSaDC7ApKLmy
+ oHryeAWFRoRPYjlqPcCbjPZAbZbtNHJeIDEAw10DU9LmtGySdZrKqJ2J0IVVPp6vMs1tWN
+ lfQ9Ssp9mJg6WvbaPUfEqe/YXeb400s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-82-ezbyWXSDPZez-YOS7vp0aA-1; Fri,
+ 26 Sep 2025 10:04:30 -0400
+X-MC-Unique: ezbyWXSDPZez-YOS7vp0aA-1
+X-Mimecast-MFC-AGG-ID: ezbyWXSDPZez-YOS7vp0aA_1758895469
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BE621800577; Fri, 26 Sep 2025 14:04:29 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.175])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5A1C51956095; Fri, 26 Sep 2025 14:04:26 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/44] target/arm/hvf: Reorder DEF_SYSREG arguments
-Date: Fri, 26 Sep 2025 15:08:06 +0100
-Message-ID: <20250926140844.1493020-7-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
-References: <20250926140844.1493020-1-peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 30/32] hw: define most common PCI types as secure
+Date: Fri, 26 Sep 2025 15:01:41 +0100
+Message-ID: <20250926140144.1998694-31-berrange@redhat.com>
+In-Reply-To: <20250926140144.1998694-1-berrange@redhat.com>
+References: <20250926140144.1998694-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,304 +89,355 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Everything except for the simba pci-bridge is relevant to use in
+a virtualization use case, so must be considered secure.
 
-The order of the parameters in the Arm ARM is
-
-  op0, op1, crn, crm, op2
-
-Reorder the arguments of DEF_SYSREG to match.
-Mechanical change to sysreg.c.inc using
-
-  sed 's/\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\)/\1,\4,\5,\2,\3/'
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- target/arm/hvf/hvf.c        |   2 +-
- target/arm/hvf/sysreg.c.inc | 224 ++++++++++++++++++------------------
- 2 files changed, 113 insertions(+), 113 deletions(-)
+ hw/pci-bridge/cxl_downstream.c      | 1 +
+ hw/pci-bridge/cxl_root_port.c       | 1 +
+ hw/pci-bridge/cxl_upstream.c        | 1 +
+ hw/pci-bridge/gen_pcie_root_port.c  | 1 +
+ hw/pci-bridge/i82801b11.c           | 1 +
+ hw/pci-bridge/ioh3420.c             | 1 +
+ hw/pci-bridge/pci_bridge_dev.c      | 2 ++
+ hw/pci-bridge/pci_expander_bridge.c | 8 ++++++++
+ hw/pci-bridge/pcie_pci_bridge.c     | 1 +
+ hw/pci-bridge/pcie_root_port.c      | 1 +
+ hw/pci-bridge/simba.c               | 1 +
+ hw/pci-bridge/xio3130_downstream.c  | 1 +
+ hw/pci-bridge/xio3130_upstream.c    | 1 +
+ hw/pci/pci.c                        | 7 +++++++
+ hw/pci/pci_bridge.c                 | 1 +
+ hw/pci/pci_host.c                   | 1 +
+ hw/pci/pcie_host.c                  | 1 +
+ hw/pci/pcie_port.c                  | 1 +
+ 18 files changed, 32 insertions(+)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 9f8e3083b4f..f68924ba1f3 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -403,7 +403,7 @@ struct hvf_sreg_match {
-     uint32_t cp_idx;
+diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+index 1065245a8b..23f6ece002 100644
+--- a/hw/pci-bridge/cxl_downstream.c
++++ b/hw/pci-bridge/cxl_downstream.c
+@@ -241,6 +241,7 @@ static const TypeInfo cxl_dsp_info = {
+     .instance_size = sizeof(CXLDownstreamPort),
+     .parent = TYPE_PCIE_SLOT,
+     .class_init = cxl_dsp_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { INTERFACE_CXL_DEVICE },
+diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+index e6a4035d26..83b34330bc 100644
+--- a/hw/pci-bridge/cxl_root_port.c
++++ b/hw/pci-bridge/cxl_root_port.c
+@@ -294,6 +294,7 @@ static const TypeInfo cxl_root_port_info = {
+     .parent = TYPE_PCIE_ROOT_PORT,
+     .instance_size = sizeof(CXLRootPort),
+     .class_init = cxl_root_port_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CXL_DEVICE },
+         { }
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index 208e0c6172..eba6fe2482 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -394,6 +394,7 @@ static const TypeInfo cxl_usp_info = {
+     .parent = TYPE_PCIE_PORT,
+     .instance_size = sizeof(CXLUpstreamPort),
+     .class_init = cxl_upstream_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { INTERFACE_CXL_DEVICE },
+diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+index d9078e783b..d9e1ce8d90 100644
+--- a/hw/pci-bridge/gen_pcie_root_port.c
++++ b/hw/pci-bridge/gen_pcie_root_port.c
+@@ -173,6 +173,7 @@ static const TypeInfo gen_rp_dev_info = {
+     .parent        = TYPE_PCIE_ROOT_PORT,
+     .instance_size = sizeof(GenPCIERootPort),
+     .class_init    = gen_rp_dev_class_init,
++    .secure        = true,
  };
  
--#define DEF_SYSREG(HVF_ID, crn, crm, op0, op1, op2) \
-+#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2) \
-     { HVF_ID, HVF_SYSREG(crn, crm, op0, op1, op2) },
+  static void gen_rp_register_types(void)
+diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
+index 1d73c14c1f..f702b20bcd 100644
+--- a/hw/pci-bridge/i82801b11.c
++++ b/hw/pci-bridge/i82801b11.c
+@@ -107,6 +107,7 @@ static const TypeInfo i82801b11_bridge_info = {
+     .parent        = TYPE_PCI_BRIDGE,
+     .instance_size = sizeof(I82801b11Bridge),
+     .class_init    = i82801b11_bridge_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+diff --git a/hw/pci-bridge/ioh3420.c b/hw/pci-bridge/ioh3420.c
+index bba640f495..2c4882c4cf 100644
+--- a/hw/pci-bridge/ioh3420.c
++++ b/hw/pci-bridge/ioh3420.c
+@@ -120,6 +120,7 @@ static const TypeInfo ioh3420_info = {
+     .name          = "ioh3420",
+     .parent        = TYPE_PCIE_ROOT_PORT,
+     .class_init    = ioh3420_class_init,
++    .secure        = true,
+ };
  
- static struct hvf_sreg_match hvf_sreg_match[] = {
-diff --git a/target/arm/hvf/sysreg.c.inc b/target/arm/hvf/sysreg.c.inc
-index 222698f1d19..f2276d534e6 100644
---- a/target/arm/hvf/sysreg.c.inc
-+++ b/target/arm/hvf/sysreg.c.inc
-@@ -1,146 +1,146 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
+ static void ioh3420_register_types(void)
+diff --git a/hw/pci-bridge/pci_bridge_dev.c b/hw/pci-bridge/pci_bridge_dev.c
+index b328e50ab3..04af66cc35 100644
+--- a/hw/pci-bridge/pci_bridge_dev.c
++++ b/hw/pci-bridge/pci_bridge_dev.c
+@@ -268,6 +268,7 @@ static const TypeInfo pci_bridge_dev_info = {
+     .instance_size     = sizeof(PCIBridgeDev),
+     .class_init        = pci_bridge_dev_class_init,
+     .instance_finalize = pci_bridge_dev_instance_finalize,
++    .secure            = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+@@ -294,6 +295,7 @@ static const TypeInfo pci_bridge_dev_seat_info = {
+     .parent            = TYPE_PCI_BRIDGE_DEV,
+     .instance_size     = sizeof(PCIBridgeDev),
+     .class_init        = pci_bridge_dev_seat_class_init,
++    .secure            = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_DBGBVR0_EL1, 0, 0, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR0_EL1, 0, 0, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR0_EL1, 0, 0, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR0_EL1, 0, 0, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR0_EL1, 2, 0, 0, 0, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR0_EL1, 2, 0, 0, 0, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR0_EL1, 2, 0, 0, 0, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR0_EL1, 2, 0, 0, 0, 7)
+ static void pci_bridge_dev_register(void)
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 1bcceddbc4..4a85f62be0 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -109,6 +109,7 @@ static const TypeInfo pxb_bus_info = {
+     .parent        = TYPE_PCI_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_DBGBVR1_EL1, 0, 1, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR1_EL1, 0, 1, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR1_EL1, 0, 1, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR1_EL1, 0, 1, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR1_EL1, 2, 0, 0, 1, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR1_EL1, 2, 0, 0, 1, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR1_EL1, 2, 0, 0, 1, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR1_EL1, 2, 0, 0, 1, 7)
+ static const TypeInfo pxb_pcie_bus_info = {
+@@ -116,6 +117,7 @@ static const TypeInfo pxb_pcie_bus_info = {
+     .parent        = TYPE_PCIE_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_DBGBVR2_EL1, 0, 2, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR2_EL1, 0, 2, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR2_EL1, 0, 2, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR2_EL1, 0, 2, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR2_EL1, 2, 0, 0, 2, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR2_EL1, 2, 0, 0, 2, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR2_EL1, 2, 0, 0, 2, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR2_EL1, 2, 0, 0, 2, 7)
+ static const TypeInfo pxb_cxl_bus_info = {
+@@ -123,6 +125,7 @@ static const TypeInfo pxb_cxl_bus_info = {
+     .parent        = TYPE_CXL_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_DBGBVR3_EL1, 0, 3, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR3_EL1, 0, 3, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR3_EL1, 0, 3, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR3_EL1, 0, 3, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR3_EL1, 2, 0, 0, 3, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR3_EL1, 2, 0, 0, 3, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR3_EL1, 2, 0, 0, 3, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR3_EL1, 2, 0, 0, 3, 7)
+ static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
+@@ -185,6 +188,7 @@ static const TypeInfo pxb_host_info = {
+     .name          = TYPE_PXB_HOST,
+     .parent        = TYPE_PCI_HOST_BRIDGE,
+     .class_init    = pxb_host_class_init,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_DBGBVR4_EL1, 0, 4, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR4_EL1, 0, 4, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR4_EL1, 0, 4, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR4_EL1, 0, 4, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR4_EL1, 2, 0, 0, 4, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR4_EL1, 2, 0, 0, 4, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR4_EL1, 2, 0, 0, 4, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR4_EL1, 2, 0, 0, 4, 7)
+ static void pxb_cxl_realize(DeviceState *dev, Error **errp)
+@@ -244,6 +248,7 @@ static const TypeInfo cxl_host_info = {
+     .parent        = TYPE_PCI_HOST_BRIDGE,
+     .instance_size = sizeof(CXLHost),
+     .class_init    = pxb_cxl_host_class_init,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_DBGBVR5_EL1, 0, 5, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR5_EL1, 0, 5, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR5_EL1, 0, 5, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR5_EL1, 0, 5, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR5_EL1, 2, 0, 0, 5, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR5_EL1, 2, 0, 0, 5, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR5_EL1, 2, 0, 0, 5, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR5_EL1, 2, 0, 0, 5, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR6_EL1, 0, 6, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR6_EL1, 0, 6, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR6_EL1, 0, 6, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR6_EL1, 0, 6, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR6_EL1, 2, 0, 0, 6, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR6_EL1, 2, 0, 0, 6, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR6_EL1, 2, 0, 0, 6, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR6_EL1, 2, 0, 0, 6, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR7_EL1, 0, 7, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR7_EL1, 0, 7, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR7_EL1, 0, 7, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR7_EL1, 0, 7, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR7_EL1, 2, 0, 0, 7, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR7_EL1, 2, 0, 0, 7, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR7_EL1, 2, 0, 0, 7, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR7_EL1, 2, 0, 0, 7, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR8_EL1, 0, 8, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR8_EL1, 0, 8, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR8_EL1, 0, 8, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR8_EL1, 0, 8, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR8_EL1, 2, 0, 0, 8, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR8_EL1, 2, 0, 0, 8, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR8_EL1, 2, 0, 0, 8, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR8_EL1, 2, 0, 0, 8, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR9_EL1, 0, 9, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR9_EL1, 0, 9, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR9_EL1, 0, 9, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR9_EL1, 0, 9, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR9_EL1, 2, 0, 0, 9, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR9_EL1, 2, 0, 0, 9, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR9_EL1, 2, 0, 0, 9, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR9_EL1, 2, 0, 0, 9, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR10_EL1, 0, 10, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR10_EL1, 0, 10, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR10_EL1, 0, 10, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR10_EL1, 0, 10, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR10_EL1, 2, 0, 0, 10, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR10_EL1, 2, 0, 0, 10, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR10_EL1, 2, 0, 0, 10, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR10_EL1, 2, 0, 0, 10, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR11_EL1, 0, 11, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR11_EL1, 0, 11, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR11_EL1, 0, 11, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR11_EL1, 0, 11, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR11_EL1, 2, 0, 0, 11, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR11_EL1, 2, 0, 0, 11, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR11_EL1, 2, 0, 0, 11, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR11_EL1, 2, 0, 0, 11, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR12_EL1, 0, 12, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR12_EL1, 0, 12, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR12_EL1, 0, 12, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR12_EL1, 0, 12, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR12_EL1, 2, 0, 0, 12, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR12_EL1, 2, 0, 0, 12, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR12_EL1, 2, 0, 0, 12, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR12_EL1, 2, 0, 0, 12, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR13_EL1, 0, 13, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR13_EL1, 0, 13, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR13_EL1, 0, 13, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR13_EL1, 0, 13, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR13_EL1, 2, 0, 0, 13, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR13_EL1, 2, 0, 0, 13, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR13_EL1, 2, 0, 0, 13, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR13_EL1, 2, 0, 0, 13, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR14_EL1, 0, 14, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR14_EL1, 0, 14, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR14_EL1, 0, 14, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR14_EL1, 0, 14, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR14_EL1, 2, 0, 0, 14, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR14_EL1, 2, 0, 0, 14, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR14_EL1, 2, 0, 0, 14, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR14_EL1, 2, 0, 0, 14, 7)
- 
--DEF_SYSREG(HV_SYS_REG_DBGBVR15_EL1, 0, 15, 2, 0, 4)
--DEF_SYSREG(HV_SYS_REG_DBGBCR15_EL1, 0, 15, 2, 0, 5)
--DEF_SYSREG(HV_SYS_REG_DBGWVR15_EL1, 0, 15, 2, 0, 6)
--DEF_SYSREG(HV_SYS_REG_DBGWCR15_EL1, 0, 15, 2, 0, 7)
-+DEF_SYSREG(HV_SYS_REG_DBGBVR15_EL1, 2, 0, 0, 15, 4)
-+DEF_SYSREG(HV_SYS_REG_DBGBCR15_EL1, 2, 0, 0, 15, 5)
-+DEF_SYSREG(HV_SYS_REG_DBGWVR15_EL1, 2, 0, 0, 15, 6)
-+DEF_SYSREG(HV_SYS_REG_DBGWCR15_EL1, 2, 0, 0, 15, 7)
- 
- #ifdef SYNC_NO_RAW_REGS
  /*
-  * The registers below are manually synced on init because they are
-  * marked as NO_RAW. We still list them to make number space sync easier.
-  */
--DEF_SYSREG(HV_SYS_REG_MDCCINT_EL1, 0, 2, 2, 0, 0)
--DEF_SYSREG(HV_SYS_REG_MIDR_EL1, 0, 0, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_MPIDR_EL1, 0, 0, 3, 0, 5)
--DEF_SYSREG(HV_SYS_REG_ID_AA64PFR0_EL1, 0, 4, 3, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_MDCCINT_EL1, 2, 0, 0, 2, 0)
-+DEF_SYSREG(HV_SYS_REG_MIDR_EL1, 3, 0, 0, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_MPIDR_EL1, 3, 0, 0, 0, 5)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
- #endif
+@@ -448,6 +453,7 @@ static const TypeInfo pxb_dev_info = {
+     .parent        = TYPE_PCI_DEVICE,
+     .instance_size = sizeof(PXBDev),
+     .class_init    = pxb_dev_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+@@ -485,6 +491,7 @@ static const TypeInfo pxb_pcie_dev_info = {
+     .parent        = TYPE_PXB_DEV,
+     .instance_size = sizeof(PXBPCIEDev),
+     .class_init    = pxb_pcie_dev_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+@@ -535,6 +542,7 @@ static const TypeInfo pxb_cxl_dev_info = {
+     .parent        = TYPE_PXB_PCIE_DEV,
+     .instance_size = sizeof(PXBCXLDev),
+     .class_init    = pxb_cxl_dev_class_init,
++    .secure        = true,
+     .interfaces =
+         (const InterfaceInfo[]){
+             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
+index fce292a519..620eb12a64 100644
+--- a/hw/pci-bridge/pcie_pci_bridge.c
++++ b/hw/pci-bridge/pcie_pci_bridge.c
+@@ -162,6 +162,7 @@ static const TypeInfo pcie_pci_bridge_info = {
+         .parent = TYPE_PCI_BRIDGE,
+         .instance_size = sizeof(PCIEPCIBridge),
+         .class_init = pcie_pci_bridge_class_init,
++        .secure = true,
+         .interfaces = (const InterfaceInfo[]) {
+             { TYPE_HOTPLUG_HANDLER },
+             { INTERFACE_PCIE_DEVICE },
+diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+index 22c2fdb71e..c87fb91e5c 100644
+--- a/hw/pci-bridge/pcie_root_port.c
++++ b/hw/pci-bridge/pcie_root_port.c
+@@ -187,6 +187,7 @@ static const TypeInfo rp_info = {
+     .instance_post_init = rp_instance_post_init,
+     .class_init    = rp_class_init,
+     .abstract      = true,
++    .secure        = true,
+     .class_size = sizeof(PCIERootPortClass),
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+diff --git a/hw/pci-bridge/simba.c b/hw/pci-bridge/simba.c
+index bbae594e11..3dbb5bd9c9 100644
+--- a/hw/pci-bridge/simba.c
++++ b/hw/pci-bridge/simba.c
+@@ -87,6 +87,7 @@ static const TypeInfo simba_pci_bridge_info = {
+     .parent        = TYPE_PCI_BRIDGE,
+     .class_init    = simba_pci_bridge_class_init,
+     .instance_size = sizeof(SimbaPCIBridge),
++    .secure        = false,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+index dc7d1aa7d7..eb217dc7d9 100644
+--- a/hw/pci-bridge/xio3130_downstream.c
++++ b/hw/pci-bridge/xio3130_downstream.c
+@@ -175,6 +175,7 @@ static const TypeInfo xio3130_downstream_info = {
+     .name          = TYPE_XIO3130_DOWNSTREAM,
+     .parent        = TYPE_PCIE_SLOT,
+     .class_init    = xio3130_downstream_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { }
+diff --git a/hw/pci-bridge/xio3130_upstream.c b/hw/pci-bridge/xio3130_upstream.c
+index 40057b749b..9d58105f8b 100644
+--- a/hw/pci-bridge/xio3130_upstream.c
++++ b/hw/pci-bridge/xio3130_upstream.c
+@@ -144,6 +144,7 @@ static const TypeInfo xio3130_upstream_info = {
+     .name          = "x3130-upstream",
+     .parent        = TYPE_PCIE_PORT,
+     .class_init    = xio3130_upstream_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { }
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index c3df9d6656..6ab03074b9 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -289,6 +289,7 @@ static const TypeInfo pci_bus_info = {
+     .instance_size = sizeof(PCIBus),
+     .class_size = sizeof(PCIBusClass),
+     .class_init = pci_bus_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_FW_CFG_DATA_GENERATOR_INTERFACE },
+         { }
+@@ -298,16 +299,19 @@ static const TypeInfo pci_bus_info = {
+ static const TypeInfo cxl_interface_info = {
+     .name          = INTERFACE_CXL_DEVICE,
+     .parent        = TYPE_INTERFACE,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_ID_AA64PFR1_EL1, 0, 4, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_ID_AA64DFR0_EL1, 0, 5, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_ID_AA64DFR1_EL1, 0, 5, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR0_EL1, 0, 6, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR1_EL1, 0, 6, 3, 0, 1)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+ static const TypeInfo pcie_interface_info = {
+     .name          = INTERFACE_PCIE_DEVICE,
+     .parent        = TYPE_INTERFACE,
++    .secure        = true,
+ };
  
- #ifdef SYNC_NO_MMFR0
- /* We keep the hardware MMFR0 around. HW limits are there anyway */
--DEF_SYSREG(HV_SYS_REG_ID_AA64MMFR0_EL1, 0, 7, 3, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
- #endif
+ static const TypeInfo conventional_pci_interface_info = {
+     .name          = INTERFACE_CONVENTIONAL_PCI_DEVICE,
+     .parent        = TYPE_INTERFACE,
++    .secure        = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_ID_AA64MMFR1_EL1, 0, 7, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_ID_AA64MMFR2_EL1, 0, 7, 3, 0, 2)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
- /* Add ID_AA64MMFR3_EL1 here when HVF supports it */
+ static void pcie_bus_class_init(ObjectClass *klass, const void *data)
+@@ -321,12 +325,14 @@ static const TypeInfo pcie_bus_info = {
+     .name = TYPE_PCIE_BUS,
+     .parent = TYPE_PCI_BUS,
+     .class_init = pcie_bus_class_init,
++    .secure = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_MDSCR_EL1, 0, 2, 2, 0, 2)
--DEF_SYSREG(HV_SYS_REG_SCTLR_EL1, 1, 0, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_CPACR_EL1, 1, 0, 3, 0, 2)
--DEF_SYSREG(HV_SYS_REG_TTBR0_EL1, 2, 0, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_TTBR1_EL1, 2, 0, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_TCR_EL1, 2, 0, 3, 0, 2)
-+DEF_SYSREG(HV_SYS_REG_MDSCR_EL1, 2, 0, 0, 2, 2)
-+DEF_SYSREG(HV_SYS_REG_SCTLR_EL1, 3, 0, 1, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_CPACR_EL1, 3, 0, 1, 0, 2)
-+DEF_SYSREG(HV_SYS_REG_TTBR0_EL1, 3, 0, 2, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_TTBR1_EL1, 3, 0, 2, 0, 1)
-+DEF_SYSREG(HV_SYS_REG_TCR_EL1, 3, 0, 2, 0, 2)
+ static const TypeInfo cxl_bus_info = {
+     .name       = TYPE_CXL_BUS,
+     .parent     = TYPE_PCIE_BUS,
+     .class_init = pcie_bus_class_init,
++    .secure     = true,
+ };
  
--DEF_SYSREG(HV_SYS_REG_APIAKEYLO_EL1, 2, 1, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_APIAKEYHI_EL1, 2, 1, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_APIBKEYLO_EL1, 2, 1, 3, 0, 2)
--DEF_SYSREG(HV_SYS_REG_APIBKEYHI_EL1, 2, 1, 3, 0, 3)
--DEF_SYSREG(HV_SYS_REG_APDAKEYLO_EL1, 2, 2, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_APDAKEYHI_EL1, 2, 2, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_APDBKEYLO_EL1, 2, 2, 3, 0, 2)
--DEF_SYSREG(HV_SYS_REG_APDBKEYHI_EL1, 2, 2, 3, 0, 3)
--DEF_SYSREG(HV_SYS_REG_APGAKEYLO_EL1, 2, 3, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_APGAKEYHI_EL1, 2, 3, 3, 0, 1)
-+DEF_SYSREG(HV_SYS_REG_APIAKEYLO_EL1, 3, 0, 2, 1, 0)
-+DEF_SYSREG(HV_SYS_REG_APIAKEYHI_EL1, 3, 0, 2, 1, 1)
-+DEF_SYSREG(HV_SYS_REG_APIBKEYLO_EL1, 3, 0, 2, 1, 2)
-+DEF_SYSREG(HV_SYS_REG_APIBKEYHI_EL1, 3, 0, 2, 1, 3)
-+DEF_SYSREG(HV_SYS_REG_APDAKEYLO_EL1, 3, 0, 2, 2, 0)
-+DEF_SYSREG(HV_SYS_REG_APDAKEYHI_EL1, 3, 0, 2, 2, 1)
-+DEF_SYSREG(HV_SYS_REG_APDBKEYLO_EL1, 3, 0, 2, 2, 2)
-+DEF_SYSREG(HV_SYS_REG_APDBKEYHI_EL1, 3, 0, 2, 2, 3)
-+DEF_SYSREG(HV_SYS_REG_APGAKEYLO_EL1, 3, 0, 2, 3, 0)
-+DEF_SYSREG(HV_SYS_REG_APGAKEYHI_EL1, 3, 0, 2, 3, 1)
+ static void pci_update_mappings(PCIDevice *d);
+@@ -3336,6 +3342,7 @@ static const TypeInfo pci_device_type_info = {
+     .parent = TYPE_DEVICE,
+     .instance_size = sizeof(PCIDevice),
+     .abstract = true,
++    .secure = true,
+     .class_size = sizeof(PCIDeviceClass),
+     .class_init = pci_device_class_init,
+     .class_base_init = pci_device_class_base_init,
+diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c
+index 76255c4cd8..703160a338 100644
+--- a/hw/pci/pci_bridge.c
++++ b/hw/pci/pci_bridge.c
+@@ -497,6 +497,7 @@ static const TypeInfo pci_bridge_type_info = {
+     .instance_size = sizeof(PCIBridge),
+     .class_init = pci_bridge_class_init,
+     .abstract = true,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_ACPI_DEV_AML_IF },
+         { },
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index 7179d99178..b3bbba3799 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -251,6 +251,7 @@ static const TypeInfo pci_host_type_info = {
+     .name = TYPE_PCI_HOST_BRIDGE,
+     .parent = TYPE_SYS_BUS_DEVICE,
+     .abstract = true,
++    .secure = true,
+     .class_size = sizeof(PCIHostBridgeClass),
+     .instance_size = sizeof(PCIHostState),
+     .class_init = pci_host_class_init,
+diff --git a/hw/pci/pcie_host.c b/hw/pci/pcie_host.c
+index 3717e1a086..3cf0769d2a 100644
+--- a/hw/pci/pcie_host.c
++++ b/hw/pci/pcie_host.c
+@@ -124,6 +124,7 @@ static const TypeInfo pcie_host_type_info = {
+     .name = TYPE_PCIE_HOST_BRIDGE,
+     .parent = TYPE_PCI_HOST_BRIDGE,
+     .abstract = true,
++    .secure = true,
+     .instance_size = sizeof(PCIExpressHost),
+     .instance_init = pcie_host_init,
+ };
+diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
+index f3841a2656..abc1dbd470 100644
+--- a/hw/pci/pcie_port.c
++++ b/hw/pci/pcie_port.c
+@@ -200,6 +200,7 @@ static const TypeInfo pcie_port_type_info = {
+     .parent = TYPE_PCI_BRIDGE,
+     .instance_size = sizeof(PCIEPort),
+     .abstract = true,
++    .secure = true,
+     .class_init = pcie_port_class_init,
+ };
  
--DEF_SYSREG(HV_SYS_REG_SPSR_EL1, 4, 0, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_ELR_EL1, 4, 0, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_SP_EL0, 4, 1, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_AFSR0_EL1, 5, 1, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_AFSR1_EL1, 5, 1, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_ESR_EL1, 5, 2, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_FAR_EL1, 6, 0, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_PAR_EL1, 7, 4, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_MAIR_EL1, 10, 2, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_AMAIR_EL1, 10, 3, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_VBAR_EL1, 12, 0, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_CONTEXTIDR_EL1, 13, 0, 3, 0, 1)
--DEF_SYSREG(HV_SYS_REG_TPIDR_EL1, 13, 0, 3, 0, 4)
--DEF_SYSREG(HV_SYS_REG_CNTKCTL_EL1, 14, 1, 3, 0, 0)
--DEF_SYSREG(HV_SYS_REG_CSSELR_EL1, 0, 0, 3, 2, 0)
--DEF_SYSREG(HV_SYS_REG_TPIDR_EL0, 13, 0, 3, 3, 2)
--DEF_SYSREG(HV_SYS_REG_TPIDRRO_EL0, 13, 0, 3, 3, 3)
--DEF_SYSREG(HV_SYS_REG_CNTV_CTL_EL0, 14, 3, 3, 3, 1)
--DEF_SYSREG(HV_SYS_REG_CNTV_CVAL_EL0, 14, 3, 3, 3, 2)
--DEF_SYSREG(HV_SYS_REG_SP_EL1, 4, 1, 3, 4, 0)
-+DEF_SYSREG(HV_SYS_REG_SPSR_EL1, 3, 0, 4, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_ELR_EL1, 3, 0, 4, 0, 1)
-+DEF_SYSREG(HV_SYS_REG_SP_EL0, 3, 0, 4, 1, 0)
-+DEF_SYSREG(HV_SYS_REG_AFSR0_EL1, 3, 0, 5, 1, 0)
-+DEF_SYSREG(HV_SYS_REG_AFSR1_EL1, 3, 0, 5, 1, 1)
-+DEF_SYSREG(HV_SYS_REG_ESR_EL1, 3, 0, 5, 2, 0)
-+DEF_SYSREG(HV_SYS_REG_FAR_EL1, 3, 0, 6, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_PAR_EL1, 3, 0, 7, 4, 0)
-+DEF_SYSREG(HV_SYS_REG_MAIR_EL1, 3, 0, 10, 2, 0)
-+DEF_SYSREG(HV_SYS_REG_AMAIR_EL1, 3, 0, 10, 3, 0)
-+DEF_SYSREG(HV_SYS_REG_VBAR_EL1, 3, 0, 12, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_CONTEXTIDR_EL1, 3, 0, 13, 0, 1)
-+DEF_SYSREG(HV_SYS_REG_TPIDR_EL1, 3, 0, 13, 0, 4)
-+DEF_SYSREG(HV_SYS_REG_CNTKCTL_EL1, 3, 0, 14, 1, 0)
-+DEF_SYSREG(HV_SYS_REG_CSSELR_EL1, 3, 2, 0, 0, 0)
-+DEF_SYSREG(HV_SYS_REG_TPIDR_EL0, 3, 3, 13, 0, 2)
-+DEF_SYSREG(HV_SYS_REG_TPIDRRO_EL0, 3, 3, 13, 0, 3)
-+DEF_SYSREG(HV_SYS_REG_CNTV_CTL_EL0, 3, 3, 14, 3, 1)
-+DEF_SYSREG(HV_SYS_REG_CNTV_CVAL_EL0, 3, 3, 14, 3, 2)
-+DEF_SYSREG(HV_SYS_REG_SP_EL1, 3, 4, 4, 1, 0)
 -- 
-2.43.0
+2.50.1
 
 
