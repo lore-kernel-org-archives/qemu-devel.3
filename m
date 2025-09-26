@@ -4,104 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19DFCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE9ECAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27VK-0007nP-4m; Fri, 26 Sep 2025 08:24:50 -0400
+	id 1v27Wf-0008Gj-S5; Fri, 26 Sep 2025 08:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v27VG-0007mw-E5
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 08:24:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v27WW-0008Ei-Um
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 08:26:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v27V8-0001Af-10
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 08:24:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v27WO-0001mJ-Pw
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 08:26:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758889467;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1758889552;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XTT04tnhX0vjT598cFOtE9iEhlek+7246XVCj25YhEg=;
- b=eiKIYq93SQHwTu+c+w0MRv+FE9tnsbfAxCJxmwqye/NiWCPTW8MozIOxKoriNtq0Yf40+A
- NV8MmNeOFAhoyXEe4Kb4950v1B8iiU9PAECPMj7m5ujH3ZHvUus9VMSSpCyFlwXzuPhpZe
- +BFl08angi7e9AQswrMHoymXfkmUCLc=
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=G5JU/92u4s3yiJRWpFY+A/rsCW2wno6nr50WCmGPNdM=;
+ b=MfK5CRt+RI2brJOqmKih8ruh4iC/D55+ZOkDz5h81eD4oMK5YWpNUhJs3BiCdMQfYSGmvM
+ 3AetZ0UxFNpTj57yV3q1PCAXPlX+2ERBChAbBxTvPha9q73Hbys7PgtOayihhbZ2vdt+9F
+ ICXvxtJCd7r3WTvBu4ed98W5X4U3PNs=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-BpFSuYrnMfKG4aIRHmp_OQ-1; Fri, 26 Sep 2025 08:24:26 -0400
-X-MC-Unique: BpFSuYrnMfKG4aIRHmp_OQ-1
-X-Mimecast-MFC-AGG-ID: BpFSuYrnMfKG4aIRHmp_OQ_1758889465
+ us-mta-690-LcCQU1RiO8yw1PpvrKOKZQ-1; Fri, 26 Sep 2025 08:25:50 -0400
+X-MC-Unique: LcCQU1RiO8yw1PpvrKOKZQ-1
+X-Mimecast-MFC-AGG-ID: LcCQU1RiO8yw1PpvrKOKZQ_1758889550
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3f3787688b0so1065998f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 05:24:25 -0700 (PDT)
+ ffacd0b85a97d-3ece14b9231so1367123f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 05:25:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758889465; x=1759494265;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1758889549; x=1759494349;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XTT04tnhX0vjT598cFOtE9iEhlek+7246XVCj25YhEg=;
- b=bUGurvFwoRcz3CNWqBdDIA9l0n9K5UBpRAjUCBT1fdD7oOwwzGrJUPf1nPpDVRaYEL
- CZGf4SBMA5Ff9A1YNDifJV4FgFGcWPjbRxhCE8PcNzKjqAp4dRs3cdCeEML+nF+1+ulW
- wVsCgrfRy/wiXud6gmbKxkEk5Zx58wdI8/AiGLMR2+nEfO8c+s9mZZnyHIcG4bS4cqvy
- BhpLhbeikCfquC1i7NBLN39Xe0sCdSxGxKCJTCFnhZSJIWUpAA5LoFX1s1g9WHxbYcNW
- 5uiavyj5A3svdFzlnuk4Pjnx+l/DzHkGuiKHEoqRr3y2JAbiy2vvbRzDC7z08bXqgQqX
- yrCA==
-X-Gm-Message-State: AOJu0YyXUmbfpy42P3YcT9PEk2pNzWKPwByQIqDGkWSMwSE8LlqKd/Ht
- joMhpSPYsSSw+hrN7FsNO1aPHcJysQxwajh6F8d11olKS7i5/ZTFn/rH65ZdHczesEThICk3XjB
- EsVuoi3ZvnheQ/Qt0H5SlxwGhFPFkea65QKNvY717IfILlgjMC9C1mT8g
-X-Gm-Gg: ASbGncu3+wug3+e7CzURTHMwZg4Se/nFR0oo6SdvxaR6up+FyBPCxIkz29BMDYXZwQa
- 7KZzDaJmCmhXW3YvgN5oEhdzS7Ufuvp1x+eC7bcTXGGlsXwYLtdlvW5d4gUF8QuY2ZZsSDtyk7W
- oEAAiXocPOCvvnmXmqjw24zU3QxZFfVRM+YV8vS+BQV3ufTsfhPA0EZwRwQ6PFU8zJETOZEfrRn
- MAwooeLHZsxZREwQw9uOILpPWMDqFQsf22VwoD/KgmK9s5TTJdB+WL4Wd60S4z5068AIw+OMZ79
- sZ8drpj4i1KaFwNRSjk8FPZ427wlFxb0F5uEfzj49fm3urdFtrg+Sm1yEnH5e4GdSb7XZvzH+Jg
- OubPzqpOmUBA=
-X-Received: by 2002:a05:6000:240c:b0:3fe:efa8:7f1d with SMTP id
- ffacd0b85a97d-40e469db7admr6048929f8f.7.1758889464685; 
- Fri, 26 Sep 2025 05:24:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEe97aTIX9xiJFvwXhKzSfem2JxbxEMWf9GpBriS5zYnxucPIhCHPBbq98jBD9+3gIzk53OgA==
-X-Received: by 2002:a05:6000:240c:b0:3fe:efa8:7f1d with SMTP id
- ffacd0b85a97d-40e469db7admr6048906f8f.7.1758889464239; 
- Fri, 26 Sep 2025 05:24:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=G5JU/92u4s3yiJRWpFY+A/rsCW2wno6nr50WCmGPNdM=;
+ b=uWsplKquF9OQ4ZbgVXR2PWFQuUk4JC1CZqcknZyJizrdlR692axcBl477V5vkob6Ld
+ Cir1t7TPlsnBZLSepol9EJsaQAWozh7aAe5u+dYm4DehF9IlP21YYoAsx7bQmoXgHsy2
+ Zwy4gSLefEriMjaeug54Ilnk4mkukE1bvqnmscL14YJUCniB3BkT7qLmnK8b8nd75STW
+ ybC4GQW0UE4SK48Ntx6+BdjYq5Yoa8c0K7rOwSbpm/rTNC0De1cCPqfRUaqMvLGacP6z
+ WLFOlvyka2yla22yF5PJRrBxLNIYo/ET+Y/BhwpyqGtvKcC2uIJ16Atn1rCJDYA67asB
+ BaxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDj/BZMw1AsyTWmXG7BWwmCY3wf+YLOMYwV/A/JVRupyZm7nNyGnnUFaotm8RnwbZ4ZlIIxJw1er4o@nongnu.org
+X-Gm-Message-State: AOJu0Yz26oNHj6Z8dl9AgnTz6Rh1H708GHdWdqyawxnZXXF7ASaUvHY4
+ 5EG6UXqeUFmtOyXkOY8bwvbPgTQ1kD2g1lz+ZAMW6c/e3AtGQc0Xsvwa+ZAXmjJf368WdpinHAC
+ 4lZdjqNIJ6dZbPwqO/b9qDmbvzkXYS/5mv4puIwZ+uWANYbO5//FUQUX7
+X-Gm-Gg: ASbGncs34GRt04P2wmOW5p2MTr0Cz0INe1BdKsgB7Isy3wHooz3rzn8p2sMFRxLV1At
+ +9GHzdR5ZeaziZxRbdHOakFGNMlHCTPvH9AwvHr03UNNAGwFrtqEb4Paa6J/2geNjwr2xMQGImO
+ D8Imo8I0Tgle58H7Vy3fz1mvbUus7Ec6f9zIC1ZcQ7vC3Qx3ATvH9kE/mhvheeob2+LjvcE3PRg
+ Pp09eHxOQXoPmGiMJQrcUIkjXx4+n2tCWy1r+AvM4nuPKLH4vh0VzRwI3lH80cn1NA6CL3R7JAs
+ B+w7IXsZOfHi9ej2SQMFPCk3HHsi3edlroBeH4Zx8aTaalhJN6Gk/4cHMskRviPFiDlIqOPmC4K
+ Th9M=
+X-Received: by 2002:a05:6000:2284:b0:3ec:b384:322b with SMTP id
+ ffacd0b85a97d-40e4ff19bebmr6661632f8f.46.1758889549500; 
+ Fri, 26 Sep 2025 05:25:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3nH81jKLVyJvoVqF1Yx9WA8UYqiv8SKCAR0oqTJIZziAYRNwXBW0tFOh8bzuLNWBit6OlQg==
+X-Received: by 2002:a05:6000:2284:b0:3ec:b384:322b with SMTP id
+ ffacd0b85a97d-40e4ff19bebmr6661591f8f.46.1758889549049; 
+ Fri, 26 Sep 2025 05:25:49 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc86c5958sm6863235f8f.57.2025.09.26.05.24.23
+ ffacd0b85a97d-40fc82f2ff6sm6823136f8f.56.2025.09.26.05.25.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Sep 2025 05:24:23 -0700 (PDT)
-Message-ID: <e439e75e-6d1c-4209-aa41-f3e9d5051462@redhat.com>
-Date: Fri, 26 Sep 2025 14:24:22 +0200
+ Fri, 26 Sep 2025 05:25:48 -0700 (PDT)
+Message-ID: <076fb297-2c05-404c-b2e1-15f4587b03d3@redhat.com>
+Date: Fri, 26 Sep 2025 14:25:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/14] hw/arm/smmuv3: Add initial support for Secure
- State
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
- philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com
-References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH v6 19/22] vfio: Add a new element bypass_ro in
+ VFIOContainerBase
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
+ <20250918085803.796942-20-zhenzhong.duan@intel.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250918085803.796942-20-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,125 +158,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 9/18/25 10:57, Zhenzhong Duan wrote:
+> When bypass_ro is true, readonly memory section is bypassed from mapping
+> in the container.
+> 
+> This is a preparing patch to workaround Intel ERRATA_772415, see changelog
+> in next patch for details about the errata.
+> 
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-On 9/25/25 6:26 PM, Tao Tang wrote:
-> Hi all,
->
-> This is the second version of the patch series to introduce initial
-> support for Secure SMMUv3 emulation in QEMU.
->
-> This version has been significantly restructured based on the excellent
-> feedback received on the RFC.
->
-> This version addresses the major points raised during the RFC review.
-> Nearly all issues identified in v1 have been resolved. The most
-> significant changes include:
->
->   - The entire series has been refactored to use a "banked register"
->   architecture. This new design serves as a solid base for all secure
->   functionality and significantly reduces code duplication.
->
->   - The large refactoring patch from v1 has been split into smaller, more
->   focused commits (e.g., STE parsing, page table handling, and TLB
->   management) to make the review process easier.
->
->   - Support for the complex SEL2 feature (Secure Stage 2) has been
->   deferred to a future series to reduce the scope of this RFC.
->
->   - The mechanism for propagating the security context now correctly uses
->   the ARMSecuritySpace attribute from the incoming transaction. This
->   ensures the SMMU's handling of security is aligned with the rest of the
->   QEMU ARM architecture.
->
->
-> The series now begins with two preparatory patches that fix pre-existing
-> bugs in the SMMUv3 model. The first of these, which corrects the CR0
-> reserved mask, has already been reviewed by Eric.
->
->   - hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0 register
->   - hw/arm/smmuv3: Correct SMMUEN field name in CR0
->
-> The subsequent patches implement the Secure SMMUv3 feature, refactored
-> to address the feedback from the v1 RFC.
 
-could you shared a branch? It does not seem to apply on master.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Thanks
+Thanks,
 
-Eric
->
->
-> Changes from v1 RFC:
->
->   - The entire feature implementation has been refactored to use a "banked
->   register" approach. This significantly reduces code duplication.
->
->   - Support for the SEL2 feature (Secure Stage 2) has been deferred. As
->   Mostafa pointed out, a correct implementation is complex and depends on
->   FEAT_TTST. This will be addressed in a separate, future patch series.
->   As a result, this series now supports the following flows:
->
->     - Non-secure Stage 1, Stage 2, and nested translations.
->
->     - Secure Stage 1-only translations.
->
->     - Nested translations (Secure Stage 1 + Non-secure Stage 2), with a
->   fault generated if a Secure Stage 2 translation is required.
->
->   - Writability checks for various registers (both secure and non-secure)
->   have been hardened to ensure that enable bits are correctly checked.
->
-> The series has been successfully validated with several test setups:
->
->   - An environment using OP-TEE, Hafnium, and a custom platform
->   device as V1 series described.
->
->   - A new, self-contained test device (smmu-testdev) built upon the
->   QTest framework, which will be submitted as a separate series as
->   discussed here:
->     https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg05365.html
->
->   - The existing non-secure functionality was regression-tested using
->   PCIe passthrough to a KVM guest running inside a TCG guest.
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->
-> Tao Tang (14):
->   hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0 register
->   hw/arm/smmuv3: Correct SMMUEN field name in CR0
->   hw/arm/smmuv3: Introduce secure registers and commands
->   refactor: Move ARMSecuritySpace to a common header
->   hw/arm/smmuv3: Introduce banked registers for SMMUv3 state
->   hw/arm/smmuv3: Add separate address space for secure SMMU accesses
->   hw/arm/smmuv3: Make Configuration Cache security-state aware
->   hw/arm/smmuv3: Add security-state handling for page table walks
->   hw/arm/smmuv3: Add secure TLB entry management
->   hw/arm/smmuv3: Add banked support for queues and error handling
->   hw/arm/smmuv3: Harden security checks in MMIO handlers
->   hw/arm/smmuv3: Use iommu_index to represent the security context
->   hw/arm/smmuv3: Add property to enable Secure SMMU support
->   hw/arm/smmuv3: Optional Secure bank migration via subsections
->
->  hw/arm/smmu-common.c          |  151 ++++-
->  hw/arm/smmu-internal.h        |    7 +
->  hw/arm/smmuv3-internal.h      |  114 +++-
->  hw/arm/smmuv3.c               | 1130 +++++++++++++++++++++++++--------
->  hw/arm/trace-events           |    9 +-
->  hw/arm/virt.c                 |    5 +
->  include/hw/arm/arm-security.h |   54 ++
->  include/hw/arm/smmu-common.h  |   60 +-
->  include/hw/arm/smmuv3.h       |   35 +-
->  target/arm/cpu.h              |   25 +-
->  10 files changed, 1257 insertions(+), 333 deletions(-)
->  create mode 100644 include/hw/arm/arm-security.h
->
-> --
-> 2.34.1
->
+C.
+
+
+> ---
+>   include/hw/vfio/vfio-container-base.h |  1 +
+>   hw/vfio/listener.c                    | 21 ++++++++++++++-------
+>   2 files changed, 15 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index acbd48a18a..2b9fec217a 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -52,6 +52,7 @@ struct VFIOContainerBase {
+>       QLIST_HEAD(, VFIODevice) device_list;
+>       GList *iova_ranges;
+>       NotifierWithReturn cpr_reboot_notifier;
+> +    bool bypass_ro;
+>   };
+>   
+>   #define TYPE_VFIO_IOMMU "vfio-iommu"
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index e093833165..581ebfda36 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -76,8 +76,13 @@ static bool vfio_log_sync_needed(const VFIOContainerBase *bcontainer)
+>       return true;
+>   }
+>   
+> -static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+> +static bool vfio_listener_skipped_section(MemoryRegionSection *section,
+> +                                          bool bypass_ro)
+>   {
+> +    if (bypass_ro && section->readonly) {
+> +        return true;
+> +    }
+> +
+>       return (!memory_region_is_ram(section->mr) &&
+>               !memory_region_is_iommu(section->mr)) ||
+>              memory_region_is_protected(section->mr) ||
+> @@ -368,9 +373,9 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
+>   }
+>   
+>   static bool vfio_listener_valid_section(MemoryRegionSection *section,
+> -                                        const char *name)
+> +                                        bool bypass_ro, const char *name)
+>   {
+> -    if (vfio_listener_skipped_section(section)) {
+> +    if (vfio_listener_skipped_section(section, bypass_ro)) {
+>           trace_vfio_listener_region_skip(name,
+>                   section->offset_within_address_space,
+>                   section->offset_within_address_space +
+> @@ -497,7 +502,8 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
+>       int ret;
+>       Error *err = NULL;
+>   
+> -    if (!vfio_listener_valid_section(section, "region_add")) {
+> +    if (!vfio_listener_valid_section(section, bcontainer->bypass_ro,
+> +                                     "region_add")) {
+>           return;
+>       }
+>   
+> @@ -663,7 +669,8 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>       int ret;
+>       bool try_unmap = true;
+>   
+> -    if (!vfio_listener_valid_section(section, "region_del")) {
+> +    if (!vfio_listener_valid_section(section, bcontainer->bypass_ro,
+> +                                     "region_del")) {
+>           return;
+>       }
+>   
+> @@ -820,7 +827,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+>           container_of(listener, VFIODirtyRangesListener, listener);
+>       hwaddr iova, end;
+>   
+> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
+> +    if (!vfio_listener_valid_section(section, false, "tracking_update") ||
+>           !vfio_get_section_iova_range(dirty->bcontainer, section,
+>                                        &iova, &end, NULL)) {
+>           return;
+> @@ -1214,7 +1221,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+>       int ret;
+>       Error *local_err = NULL;
+>   
+> -    if (vfio_listener_skipped_section(section)) {
+> +    if (vfio_listener_skipped_section(section, false)) {
+>           return;
+>       }
+>   
 
 
