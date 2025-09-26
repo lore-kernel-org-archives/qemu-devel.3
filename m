@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993ABCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326D6CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27ql-0008EP-Nd; Fri, 26 Sep 2025 08:46:59 -0400
+	id 1v27q5-00086j-NB; Fri, 26 Sep 2025 08:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27qh-0008Dc-LP; Fri, 26 Sep 2025 08:46:55 -0400
+ id 1v27pr-00081P-O1; Fri, 26 Sep 2025 08:46:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27qZ-0006kV-N1; Fri, 26 Sep 2025 08:46:54 -0400
+ id 1v27ph-0006Ya-JJ; Fri, 26 Sep 2025 08:46:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4132C157F4E;
- Fri, 26 Sep 2025 15:45:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C396E157F49;
+ Fri, 26 Sep 2025 15:45:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A5627290F0C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D5A9290F07;
  Fri, 26 Sep 2025 15:45:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 06/38] python: backport 'Use @asynciocontextmanager'
-Date: Fri, 26 Sep 2025 15:45:06 +0300
-Message-ID: <20250926124540.2221746-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, WANG Rui <wangrui@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 01/38] target/loongarch: Add CRC feature flag and use
+ it to gate CRC instructions
+Date: Fri, 26 Sep 2025 15:45:01 +0300
+Message-ID: <20250926124540.2221746-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
@@ -45,7 +47,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,107 +63,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: WANG Rui <wangrui@loongson.cn>
 
-This removes a non-idiomatic use of a "coroutine callback" in favor of
-something a bit more standardized.
+This patch replaces the obsolete IOCSR_BRD bit with CRC in cpucfg1[25],
+in both LA464 and LA132 CPU initialization functions. The corresponding
+field macro in `cpu.h` is updated to reflect this change.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-cherry picked from commit python-qemu-qmp@commit 97f7ffa3be17a50544b52767d14b6fd478c07b9e
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 0408b8d7a086486f5c1887798be744b2d73bcda9)
+Additionally, the availability macro `avail_CRC()` is introduced in
+`translate.h` to check the CRC feature flag.
+
+All CRC-related instruction translations are updated to be gated by
+the new CRC feature flag instead of hardcoded CPU features.
+
+This ensures correctness and configurability when enabling CRC
+instructions based on hardware capabilities.
+
+Signed-off-by: WANG Rui <wangrui@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250418082103.447780-2-wangrui@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit 256df51e727235b3d5e937ca2784c45663c00f59)
+(Mjt: pick this one up for 10.0.x so subsequent changes applies cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
-index 4aff0ea423..56e6dfa5a7 100644
---- a/python/qemu/qmp/protocol.py
-+++ b/python/qemu/qmp/protocol.py
-@@ -15,6 +15,7 @@
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index ea1665e270..fc439d0090 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -431,7 +431,7 @@ static void loongarch_la464_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG1, EP, 1);
+     data = FIELD_DP32(data, CPUCFG1, RPLV, 1);
+     data = FIELD_DP32(data, CPUCFG1, HP, 1);
+-    data = FIELD_DP32(data, CPUCFG1, IOCSR_BRD, 1);
++    data = FIELD_DP32(data, CPUCFG1, CRC, 1);
+     env->cpucfg[1] = data;
  
- import asyncio
- from asyncio import StreamReader, StreamWriter
-+from contextlib import asynccontextmanager
- from enum import Enum
- from functools import wraps
- import logging
-@@ -22,6 +23,7 @@
- from ssl import SSLContext
- from typing import (
-     Any,
-+    AsyncGenerator,
-     Awaitable,
-     Callable,
-     Generic,
-@@ -318,9 +320,8 @@ async def start_server(self, address: SocketAddrT,
-             This exception will wrap a more concrete one. In most cases,
-             the wrapped exception will be `OSError`.
-         """
--        await self._session_guard(
--            self._do_start_server(address, ssl),
--            'Failed to establish connection')
-+        async with self._session_guard('Failed to establish connection'):
-+            await self._do_start_server(address, ssl)
-         assert self.runstate == Runstate.CONNECTING
+     data = 0;
+@@ -530,7 +530,7 @@ static void loongarch_la132_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG1, EP, 0);
+     data = FIELD_DP32(data, CPUCFG1, RPLV, 0);
+     data = FIELD_DP32(data, CPUCFG1, HP, 1);
+-    data = FIELD_DP32(data, CPUCFG1, IOCSR_BRD, 1);
++    data = FIELD_DP32(data, CPUCFG1, CRC, 1);
+     env->cpucfg[1] = data;
+ }
  
-     @upper_half
-@@ -343,12 +344,10 @@ async def accept(self) -> None:
-         """
-         if self._accepted is None:
-             raise QMPError("Cannot call accept() before start_server().")
--        await self._session_guard(
--            self._do_accept(),
--            'Failed to establish connection')
--        await self._session_guard(
--            self._establish_session(),
--            'Failed to establish session')
-+        async with self._session_guard('Failed to establish connection'):
-+            await self._do_accept()
-+        async with self._session_guard('Failed to establish session'):
-+            await self._establish_session()
-         assert self.runstate == Runstate.RUNNING
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 254e4fbdcd..ab76a0b451 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -129,7 +129,7 @@ FIELD(CPUCFG1, RI, 21, 1)
+ FIELD(CPUCFG1, EP, 22, 1)
+ FIELD(CPUCFG1, RPLV, 23, 1)
+ FIELD(CPUCFG1, HP, 24, 1)
+-FIELD(CPUCFG1, IOCSR_BRD, 25, 1)
++FIELD(CPUCFG1, CRC, 25, 1)
+ FIELD(CPUCFG1, MSG_INT, 26, 1)
  
-     @upper_half
-@@ -373,12 +372,10 @@ async def connect(self, address: Union[SocketAddrT, socket.socket],
-             protocol-level failure occurs while establishing a new
-             session, the wrapped error may also be an `QMPError`.
-         """
--        await self._session_guard(
--            self._do_connect(address, ssl),
--            'Failed to establish connection')
--        await self._session_guard(
--            self._establish_session(),
--            'Failed to establish session')
-+        async with self._session_guard('Failed to establish connection'):
-+            await self._do_connect(address, ssl)
-+        async with self._session_guard('Failed to establish session'):
-+            await self._establish_session()
-         assert self.runstate == Runstate.RUNNING
+ /* cpucfg[1].arch */
+diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+index cfa361fecf..eda3d6e561 100644
+--- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+@@ -97,11 +97,11 @@ static bool gen_crc(DisasContext *ctx, arg_rrr *a,
+     return true;
+ }
  
-     @upper_half
-@@ -399,7 +396,8 @@ async def disconnect(self) -> None:
-     # Section: Session machinery
-     # --------------------------
+-TRANS(crc_w_b_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
+-TRANS(crc_w_h_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
+-TRANS(crc_w_w_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
+-TRANS(crc_w_d_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
+-TRANS(crcc_w_b_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
+-TRANS(crcc_w_h_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
+-TRANS(crcc_w_w_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
+-TRANS(crcc_w_d_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
++TRANS(crc_w_b_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
++TRANS(crc_w_h_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
++TRANS(crc_w_w_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
++TRANS(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
++TRANS(crcc_w_b_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
++TRANS(crcc_w_h_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
++TRANS(crcc_w_w_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
++TRANS(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
+diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+index 195f53573a..018dc5eb17 100644
+--- a/target/loongarch/translate.h
++++ b/target/loongarch/translate.h
+@@ -25,6 +25,7 @@
+ #define avail_LSX(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
+ #define avail_LASX(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, LASX))
+ #define avail_IOCSR(C) (FIELD_EX32((C)->cpucfg1, CPUCFG1, IOCSR))
++#define avail_CRC(C)   (FIELD_EX32((C)->cpucfg1, CPUCFG1, CRC))
  
--    async def _session_guard(self, coro: Awaitable[None], emsg: str) -> None:
-+    @asynccontextmanager
-+    async def _session_guard(self, emsg: str) -> AsyncGenerator[None, None]:
-         """
-         Async guard function used to roll back to `IDLE` on any error.
- 
-@@ -416,10 +414,9 @@ async def _session_guard(self, coro: Awaitable[None], emsg: str) -> None:
-         :raise ConnectError:
-             When any other error is encountered in the guarded block.
-         """
--        # Note: After Python 3.6 support is removed, this should be an
--        # @asynccontextmanager instead of accepting a callback.
-         try:
--            await coro
-+            # Caller's code runs here.
-+            yield
-         except BaseException as err:
-             self.logger.error("%s: %s", emsg, exception_summary(err))
-             self.logger.debug("%s:\n%s\n", emsg, pretty_traceback())
+ /*
+  * If an operation is being performed on less than TARGET_LONG_BITS,
 -- 
 2.47.3
 
