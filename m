@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0853BCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54B2CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v293g-0006vi-Dq; Fri, 26 Sep 2025 10:04:24 -0400
+	id 1v29AC-0000xE-6q; Fri, 26 Sep 2025 10:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v293c-0006sz-TX
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:04:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v293P-0004sv-AZ
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:04:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758895442;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IaduB1l9EVSWfjwC3wQO3lTWrvM0XkEeEU8nymRvCOk=;
- b=HMZDEFxcIPnPY8J3LUHSdq16BIogTZFN+dqBXbGRFa38P5AexQsi561xGZQqgahQVh8GY8
- qRf1wGJ3Wa4i6ut5Rbs/QyAq5miQtc83uG8dIXenhSS31lwmH3sOetDhu6qmC9DxdpNGSy
- vKEoMOexJrP5Ka/qfjvT6FOcWAzdFCs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-ZWl2oFHiO1abbyBF9vcApg-1; Fri,
- 26 Sep 2025 10:03:58 -0400
-X-MC-Unique: ZWl2oFHiO1abbyBF9vcApg-1
-X-Mimecast-MFC-AGG-ID: ZWl2oFHiO1abbyBF9vcApg_1758895437
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99220195E916; Fri, 26 Sep 2025 14:03:57 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.175])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8228D195419F; Fri, 26 Sep 2025 14:03:54 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v299O-0000Bn-Jh
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:18 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v298d-0005mr-1Y
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:16 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3ee12332f3dso1839734f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758895766; x=1759500566; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=e6CNBDVRbhEagCdpp+s+XfPoXED4J+gbWqZ29Lsly9k=;
+ b=sqIeUCpzbCTGsvKCc6RtUyUdbVQ8L4M2yjrRUZWS8cgynHfFrpT5rjHShathmMAjpH
+ oRLVpYv8XMmHUqxI5/+tKUNijpPlPfZfnZ7NYHyhoT6ch3Y22iyPYhCSe9JOAdFtiN4U
+ djG2XOhkBWpdXSftMMbyeU2s/XbVZuJlSk70cEs3sRqE1pg2keBN+lZIgoIYjE4KYWpJ
+ ocSFrnWDgdShsMq3swTcUqonuQNmSOGfUIOH5oyOsl8tdKOt+OMdEVfYAbaDcV/h0sAW
+ ihBTEpqGhufK8B/iNu+fq3eMEcF9uDQNaZrJi3aUI18v7T1In8gdi1/7kcXZBwsM/ZCZ
+ Xq0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758895766; x=1759500566;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e6CNBDVRbhEagCdpp+s+XfPoXED4J+gbWqZ29Lsly9k=;
+ b=g70grYJ59Wrc9sgW79YWVUVIM4kKL1FC8p8gxtePHc9PlJ/UMGE/lIJlL0dPjJxqa7
+ OMAE91hSS7VolRBZ7hqJuCvfzMZVV6WCZfiag2h18/zKJXyl4TsO9VVhyFaoG4XZ7Bjw
+ d+sNlaJrF/vMrGZc0hUUtkUfZiFMm450eCqeVKKbDZr0h19+UBNlyEIV/4S+caBi8OQd
+ T3l9kWHYWc2GhOibsdI+Wv/PsNiUg6UgNZAa0Ti4cYvSjop3eydkidNJpBA7dkCMWNcv
+ 4U1eHiwh6vXmR+WNtkKh9TEPoxYllkk9jFxDZyOF9JRVLRnsb/Wkfwwq4wdQ3FDCacqh
+ c+fQ==
+X-Gm-Message-State: AOJu0YzJ6dTAPvN++5xPRlvzUDCLUaGipWLsZtOI5dhr1OQavgpCQWe6
+ iwGA5cDzMKe4JmdX1CGP6H6Qbh89acrYxLRf1V3A2/RvnVNx2jmAlDlIzYl5S3ZpG/NNjwf8bx7
+ 6W4B1
+X-Gm-Gg: ASbGnctmCsS2kkYk3epLfY3OEVIZTIApzhcW5Q+8pPP8A+vtZ4A27oKLTN57sAByy1c
+ JHiciGnsP/QBe47X4rIvPULStD0aGhNmf20o7aCdkbfh1VT/Q/PP9cMcVEfcBoifBALGuNmhv3t
+ I68XNIJ+PUQt2W3IPflCl0tuVyD6JEyfolU5p5oiOYi5SJ7tovZUffMFCvmARxDk65V+HlxPs3m
+ 2mynVs/ahqds5OScWt49N3jo/k64kyI+xHmBG06/ZK8xkUYFG7vO4M6hOKnZGbDcV+xMDg4Tj4x
+ X2u+1UXRAwAiv3/HbKgmfdvPesQKY+1qdxwUxPdlNt7UMQhboMkWJfCac6ZIioQjMsWsvPi/XaD
+ FfweF374VFabwtzEx8wK6nkar2cV4
+X-Google-Smtp-Source: AGHT+IFxZL5yP8oEeQlzXtaf+LzMg4BR2ZQIg0We5fDFt9ihOhoXfYDN9RZvxLiE7+aKnJz58q0sRQ==
+X-Received: by 2002:a05:6000:2002:b0:3ea:f4a1:f063 with SMTP id
+ ffacd0b85a97d-40e4dabef59mr7224131f8f.55.1758895766097; 
+ Fri, 26 Sep 2025 07:09:26 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.09.24
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Sep 2025 07:09:25 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 22/32] hw/vfio: mark all VFIO object classes as secure
-Date: Fri, 26 Sep 2025 15:01:33 +0100
-Message-ID: <20250926140144.1998694-23-berrange@redhat.com>
-In-Reply-To: <20250926140144.1998694-1-berrange@redhat.com>
-References: <20250926140144.1998694-1-berrange@redhat.com>
+Subject: [PULL 39/44] target/arm: Replace magic GIC values by proper
+ definitions
+Date: Fri, 26 Sep 2025 15:08:39 +0100
+Message-ID: <20250926140844.1493020-40-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
+References: <20250926140844.1493020-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,132 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VFIO subsystem is about securely passing host PCI devices
-to a guest, so all the classes should be presumed to be offering
-a security boundary.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Prefer the FIELD_DP64() macro and self-describing GIC
+definitions over magic values.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/vfio/ap.c        | 1 +
- hw/vfio/ccw.c       | 1 +
- hw/vfio/container.c | 2 ++
- hw/vfio/igd.c       | 1 +
- hw/vfio/iommufd.c   | 2 ++
- hw/vfio/pci.c       | 3 +++
- hw/vfio/spapr.c     | 1 +
- 7 files changed, 11 insertions(+)
+ target/arm/helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 7719f24579..811866876c 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -361,6 +361,7 @@ static const TypeInfo vfio_ap_info = {
-     .instance_size = sizeof(VFIOAPDevice),
-     .instance_init = vfio_ap_instance_init,
-     .class_init = vfio_ap_class_init,
-+    .secure = true,
- };
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c5a8ef50493..a18d920ac18 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5007,7 +5007,7 @@ static uint64_t id_pfr1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     uint64_t pfr1 = GET_IDREG(&cpu->isar, ID_PFR1);
  
- static void vfio_ap_type_init(void)
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 9560b8d851..bddeb5dffd 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -729,6 +729,7 @@ static const TypeInfo vfio_ccw_info = {
-     .instance_size = sizeof(VFIOCCWDevice),
-     .instance_init = vfio_ccw_instance_init,
-     .class_init = vfio_ccw_class_init,
-+    .secure = true,
- };
- 
- static void register_vfio_ccw_type(void)
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 030c6d3f89..a4d89cadcc 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1265,10 +1265,12 @@ static const TypeInfo types[] = {
-         .instance_init = vfio_iommu_legacy_instance_init,
-         .instance_size = sizeof(VFIOContainer),
-         .class_init = vfio_iommu_legacy_class_init,
-+        .secure = true,
-     }, {
-         .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
-         .parent = TYPE_HOST_IOMMU_DEVICE,
-         .class_init = hiod_legacy_vfio_class_init,
-+        .secure = true,
+     if (env->gicv3state) {
+-        pfr1 |= 1 << 28;
++        pfr1 = FIELD_DP64(pfr1, ID_PFR1, GIC, 1);
      }
- };
+     return pfr1;
+ }
+@@ -5018,7 +5018,7 @@ static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     uint64_t pfr0 = GET_IDREG(&cpu->isar, ID_AA64PFR0);
  
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 4bfa2e0fcd..53d7dea87e 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -312,6 +312,7 @@ static const TypeInfo vfio_pci_igd_lpc_bridge_info = {
-     .name = "vfio-pci-igd-lpc-bridge",
-     .parent = TYPE_PCI_DEVICE,
-     .class_init = vfio_pci_igd_lpc_bridge_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 8c27222f75..2d6168a90e 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -958,10 +958,12 @@ static const TypeInfo types[] = {
-         .parent = TYPE_VFIO_IOMMU,
-         .instance_size = sizeof(VFIOIOMMUFDContainer),
-         .class_init = vfio_iommu_iommufd_class_init,
-+        .secure = true,
-     }, {
-         .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
-         .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
-         .class_init = hiod_iommufd_vfio_class_init,
-+        .secure = true,
+     if (env->gicv3state) {
+-        pfr0 |= 1 << 24;
++        pfr0 = FIELD_DP64(pfr0, ID_AA64PFR0, GIC, 1);
      }
- };
- 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index bc0b4c4d56..f98384da93 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3673,6 +3673,7 @@ static const TypeInfo vfio_pci_base_dev_info = {
-     .parent = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(VFIOPCIDevice),
-     .abstract = true,
-+    .secure = true,
-     .class_init = vfio_pci_base_dev_class_init,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-@@ -3918,6 +3919,7 @@ static const TypeInfo vfio_pci_dev_info = {
-     .class_init = vfio_pci_dev_class_init,
-     .instance_init = vfio_instance_init,
-     .instance_finalize = vfio_instance_finalize,
-+    .secure = true,
- };
- 
- static const Property vfio_pci_dev_nohotplug_properties[] = {
-@@ -3954,6 +3956,7 @@ static const TypeInfo vfio_pci_nohotplug_dev_info = {
-     .parent = TYPE_VFIO_PCI,
-     .instance_size = sizeof(VFIOPCIDevice),
-     .class_init = vfio_pci_nohotplug_dev_class_init,
-+    .secure = true,
- };
- 
- static void register_vfio_pci_dev_type(void)
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index c41e4588d6..a926faa0aa 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -571,6 +571,7 @@ static const TypeInfo types[] = {
-         .parent = TYPE_VFIO_IOMMU_LEGACY,
-         .instance_size = sizeof(VFIOSpaprContainer),
-         .class_init = vfio_iommu_spapr_class_init,
-+        .secure = true,
-     },
- };
- 
+     return pfr0;
+ }
 -- 
-2.50.1
+2.43.0
 
 
