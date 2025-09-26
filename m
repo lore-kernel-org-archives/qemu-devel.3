@@ -4,33 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB324CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70543CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27sg-000236-VP; Fri, 26 Sep 2025 08:49:00 -0400
+	id 1v27tt-0003pU-LS; Fri, 26 Sep 2025 08:50:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27sf-00021x-E0; Fri, 26 Sep 2025 08:48:57 -0400
+ id 1v27tb-00036D-09; Fri, 26 Sep 2025 08:49:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27sZ-00076K-Rl; Fri, 26 Sep 2025 08:48:56 -0400
+ id 1v27tV-0007Hg-MR; Fri, 26 Sep 2025 08:49:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 69581157F5A;
- Fri, 26 Sep 2025 15:45:41 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CF21F290F18;
+ by isrv.corpit.ru (Postfix) with ESMTP id 34526157F61;
  Fri, 26 Sep 2025 15:45:42 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C37F290F1F;
+ Fri, 26 Sep 2025 15:45:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 18/38] ci: run RISC-V cross jobs by default
-Date: Fri, 26 Sep 2025 15:45:18 +0300
-Message-ID: <20250926124540.2221746-18-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 25/38] target/sparc: Allow TRANS macro with no extra
+ arguments
+Date: Fri, 26 Sep 2025 15:45:25 +0300
+Message-ID: <20250926124540.2221746-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
@@ -59,57 +61,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The riscv64-debian-cross container is based on Trixie rather than sid
-these days, so it is pretty much as stable as the others.  Enable it
-by default.
+Use ## to drop the preceding comma if __VA_ARGS__ is empty.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit eb8f7292e1315be0e36000a847b77153dcf460ef)
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit b7cd0a1821adf9906c5edb248394bb2a95482656)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 34c0e729ad..e45ea17cf1 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -67,11 +67,8 @@ ppc64el-debian-cross-container:
- riscv64-debian-cross-container:
-   extends: .container_job_template
-   stage: containers
--  # as we are currently based on 'sid/unstable' we may break so...
--  allow_failure: true
-   variables:
-     NAME: debian-riscv64-cross
--    QEMU_JOB_OPTIONAL: 1
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index bfe63649db..ddc4154ee3 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -2488,7 +2488,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
  
- s390x-debian-cross-container:
-   extends: .container_job_template
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index 7ae0f966f1..3f76c901ba 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -118,12 +118,8 @@ cross-ppc64el-kvm-only:
-     IMAGE: debian-ppc64el-cross
-     EXTRA_CONFIGURE_OPTS: --disable-tcg --without-default-devices
+ #define TRANS(NAME, AVAIL, FUNC, ...) \
+     static bool trans_##NAME(DisasContext *dc, arg_##NAME *a) \
+-    { return avail_##AVAIL(dc) && FUNC(dc, __VA_ARGS__); }
++    { return avail_##AVAIL(dc) && FUNC(dc, ## __VA_ARGS__); }
  
--# The riscv64 cross-builds currently use a 'sid' container to get
--# compilers and libraries. Until something more stable is found we
--# allow_failure so as not to block CI.
- cross-riscv64-system:
-   extends: .cross_system_build_job
--  allow_failure: true
-   needs:
-     job: riscv64-debian-cross-container
-   variables:
-@@ -131,7 +127,6 @@ cross-riscv64-system:
- 
- cross-riscv64-user:
-   extends: .cross_user_build_job
--  allow_failure: true
-   needs:
-     job: riscv64-debian-cross-container
-   variables:
+ #define avail_ALL(C)      true
+ #ifdef TARGET_SPARC64
 -- 
 2.47.3
 
