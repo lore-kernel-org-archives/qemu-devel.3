@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DF8CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBFACAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23eR-0007pw-Gm; Fri, 26 Sep 2025 04:17:59 -0400
+	id 1v23bR-0003Xd-Kf; Fri, 26 Sep 2025 04:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23eM-0007mb-Uh; Fri, 26 Sep 2025 04:17:55 -0400
+ id 1v23bL-0003JV-Gy; Fri, 26 Sep 2025 04:14:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23eD-00021D-M3; Fri, 26 Sep 2025 04:17:53 -0400
+ id 1v23b7-00015Q-EV; Fri, 26 Sep 2025 04:14:44 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB0F0157D79;
- Fri, 26 Sep 2025 11:10:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 31F54157D66;
+ Fri, 26 Sep 2025 11:10:33 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DDD35290C5D;
- Fri, 26 Sep 2025 11:10:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 44769290C4A;
+ Fri, 26 Sep 2025 11:10:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 49/60] target/sparc: Loosen decode of RDY for v7
-Date: Fri, 26 Sep 2025 11:10:17 +0300
-Message-ID: <20250926081031.2214971-49-mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 30/60] python: backport 'drop Python3.6 workarounds'
+Date: Fri, 26 Sep 2025 11:09:58 +0300
+Message-ID: <20250926081031.2214971-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,73 +61,283 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: John Snow <jsnow@redhat.com>
 
-Bits [18:0] are not decoded with v7, and for v8 unused values
-of rs1 simply produce undefined results.
+Now that the minimum version is 3.7, drop some of the 3.6-specific hacks
+we've been carrying. A single remaining compatibility hack concerning
+3.6's lack of @asynccontextmanager is addressed in the following commit.
 
-Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-(cherry picked from commit 49d669ccf33a772e3baf3fe4ebb996dc015f46c1)
+Signed-off-by: John Snow <jsnow@redhat.com>
+cherry picked from commit python-qemu-qmp@3e8e34e594cfc6b707e6f67959166acde4b421b8
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit f9d2e0a3bd7ba2a693a892881f91cf53fa90cc71)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 1b1b85e9c2..74848996ae 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -91,6 +91,7 @@ CALL    01 i:s30
-     STBAR_v9        10 00000 101000 01111 0 0000000000000
-     MEMBAR          10 00000 101000 01111 1 000000 cmask:3 mmask:4
+diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
+index a4ffdfad51..4aff0ea423 100644
+--- a/python/qemu/qmp/protocol.py
++++ b/python/qemu/qmp/protocol.py
+@@ -36,13 +36,10 @@
+ from .error import QMPError
+ from .util import (
+     bottom_half,
+-    create_task,
+     exception_summary,
+     flush,
+-    is_closing,
+     pretty_traceback,
+     upper_half,
+-    wait_closed,
+ )
  
-+    RDY_v9          10 rd:5  101000 00000 0 0000000000000
-     RDCCR           10 rd:5  101000 00010 0 0000000000000
-     RDASI           10 rd:5  101000 00011 0 0000000000000
-     RDTICK          10 rd:5  101000 00100 0 0000000000000
-@@ -118,8 +119,15 @@ CALL    01 i:s30
-   # This confirms that bit 13 is ignored, as 0x8143c000 is STBAR.
-   STBAR_v8          10 ----- 101000 01111 - -------------
  
--  # Before v8, all rs1 accepted; otherwise rs1==0.
--  RDY               10 rd:5  101000 rs1:5 0 0000000000000
-+  # For v7, bits [18:0] are ignored.
-+  # For v8, bits [18:14], aka rs1, are repurposed and rs1 = 0 is RDY,
-+  # and other values are RDASR.  However, the v8 manual explicitly
-+  # says that rs1 in 1..14 yield undefined results and do not cause
-+  # an illegal instruction trap, and rs1 in 16..31 are available for
-+  # implementation specific usage.
-+  # Implement not causing an illegal instruction trap for v8 by
-+  # continuing to interpret unused values per v7, i.e. as RDY.
-+  RDY_v7            10 rd:5  101000 ----- - -------------
- }
+@@ -663,8 +660,8 @@ async def _establish_session(self) -> None:
+         reader_coro = self._bh_loop_forever(self._bh_recv_message, 'Reader')
+         writer_coro = self._bh_loop_forever(self._bh_send_message, 'Writer')
  
- {
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index ece393fffc..cfdd9c1ce4 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -2863,18 +2863,8 @@ static TCGv do_rdy(DisasContext *dc, TCGv dst)
-     return cpu_y;
- }
+-        self._reader_task = create_task(reader_coro)
+-        self._writer_task = create_task(writer_coro)
++        self._reader_task = asyncio.create_task(reader_coro)
++        self._writer_task = asyncio.create_task(writer_coro)
  
--static bool trans_RDY(DisasContext *dc, arg_RDY *a)
--{
--    /*
--     * TODO: Need a feature bit for sparcv8.  In the meantime, treat all
--     * 32-bit cpus like sparcv7, which ignores the rs1 field.
--     * This matches after all other ASR, so Leon3 Asr17 is handled first.
--     */
--    if (avail_64(dc) && a->rs1 != 0) {
--        return false;
--    }
--    return do_rd_special(dc, true, a->rd, do_rdy);
--}
-+TRANS(RDY_v7, 32, do_rd_special, true, a->rd, do_rdy)
-+TRANS(RDY_v9, 64, do_rd_special, true, a->rd, do_rdy)
+         self._bh_tasks = asyncio.gather(
+             self._reader_task,
+@@ -689,7 +686,7 @@ def _schedule_disconnect(self) -> None:
+         if not self._dc_task:
+             self._set_state(Runstate.DISCONNECTING)
+             self.logger.debug("Scheduling disconnect.")
+-            self._dc_task = create_task(self._bh_disconnect())
++            self._dc_task = asyncio.create_task(self._bh_disconnect())
  
- static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
- {
+     @upper_half
+     async def _wait_disconnect(self) -> None:
+@@ -825,13 +822,13 @@ async def _bh_close_stream(self, error_pathway: bool = False) -> None:
+         if not self._writer:
+             return
+ 
+-        if not is_closing(self._writer):
++        if not self._writer.is_closing():
+             self.logger.debug("Closing StreamWriter.")
+             self._writer.close()
+ 
+         self.logger.debug("Waiting for StreamWriter to close ...")
+         try:
+-            await wait_closed(self._writer)
++            await self._writer.wait_closed()
+         except Exception:  # pylint: disable=broad-except
+             # It's hard to tell if the Stream is already closed or
+             # not. Even if one of the tasks has failed, it may have
+diff --git a/python/qemu/qmp/qmp_tui.py b/python/qemu/qmp/qmp_tui.py
+index 2d9ebbd20b..562be008d5 100644
+--- a/python/qemu/qmp/qmp_tui.py
++++ b/python/qemu/qmp/qmp_tui.py
+@@ -40,7 +40,7 @@
+ from .message import DeserializationError, Message, UnexpectedTypeError
+ from .protocol import ConnectError, Runstate
+ from .qmp_client import ExecInterruptedError, QMPClient
+-from .util import create_task, pretty_traceback
++from .util import pretty_traceback
+ 
+ 
+ # The name of the signal that is used to update the history list
+@@ -225,7 +225,7 @@ def cb_send_to_server(self, raw_msg: str) -> None:
+         """
+         try:
+             msg = Message(bytes(raw_msg, encoding='utf-8'))
+-            create_task(self._send_to_server(msg))
++            asyncio.create_task(self._send_to_server(msg))
+         except (DeserializationError, UnexpectedTypeError) as err:
+             raw_msg = format_json(raw_msg)
+             logging.info('Invalid message: %s', err.error_message)
+@@ -246,7 +246,7 @@ def kill_app(self) -> None:
+         Initiates killing of app. A bridge between asynchronous and synchronous
+         code.
+         """
+-        create_task(self._kill_app())
++        asyncio.create_task(self._kill_app())
+ 
+     async def _kill_app(self) -> None:
+         """
+@@ -393,7 +393,7 @@ def run(self, debug: bool = False) -> None:
+                                    handle_mouse=True,
+                                    event_loop=event_loop)
+ 
+-        create_task(self.manage_connection(), self.aloop)
++        self.aloop.create_task(self.manage_connection())
+         try:
+             main_loop.run()
+         except Exception as err:
+diff --git a/python/qemu/qmp/util.py b/python/qemu/qmp/util.py
+index ca6225e9cd..0b3e781373 100644
+--- a/python/qemu/qmp/util.py
++++ b/python/qemu/qmp/util.py
+@@ -1,25 +1,15 @@
+ """
+ Miscellaneous Utilities
+ 
+-This module provides asyncio utilities and compatibility wrappers for
+-Python 3.6 to provide some features that otherwise become available in
+-Python 3.7+.
+-
+-Various logging and debugging utilities are also provided, such as
+-`exception_summary()` and `pretty_traceback()`, used primarily for
+-adding information into the logging stream.
++This module provides asyncio and various logging and debugging
++utilities, such as `exception_summary()` and `pretty_traceback()`, used
++primarily for adding information into the logging stream.
+ """
+ 
+ import asyncio
+ import sys
+ import traceback
+-from typing import (
+-    Any,
+-    Coroutine,
+-    Optional,
+-    TypeVar,
+-    cast,
+-)
++from typing import TypeVar, cast
+ 
+ 
+ T = TypeVar('T')
+@@ -79,95 +69,6 @@ def bottom_half(func: T) -> T:
+     return func
+ 
+ 
+-# -------------------------------
+-# Section: Compatibility Wrappers
+-# -------------------------------
+-
+-
+-def create_task(coro: Coroutine[Any, Any, T],
+-                loop: Optional[asyncio.AbstractEventLoop] = None
+-                ) -> 'asyncio.Future[T]':
+-    """
+-    Python 3.6-compatible `asyncio.create_task` wrapper.
+-
+-    :param coro: The coroutine to execute in a task.
+-    :param loop: Optionally, the loop to create the task in.
+-
+-    :return: An `asyncio.Future` object.
+-    """
+-    if sys.version_info >= (3, 7):
+-        if loop is not None:
+-            return loop.create_task(coro)
+-        return asyncio.create_task(coro)  # pylint: disable=no-member
+-
+-    # Python 3.6:
+-    return asyncio.ensure_future(coro, loop=loop)
+-
+-
+-def is_closing(writer: asyncio.StreamWriter) -> bool:
+-    """
+-    Python 3.6-compatible `asyncio.StreamWriter.is_closing` wrapper.
+-
+-    :param writer: The `asyncio.StreamWriter` object.
+-    :return: `True` if the writer is closing, or closed.
+-    """
+-    if sys.version_info >= (3, 7):
+-        return writer.is_closing()
+-
+-    # Python 3.6:
+-    transport = writer.transport
+-    assert isinstance(transport, asyncio.WriteTransport)
+-    return transport.is_closing()
+-
+-
+-async def wait_closed(writer: asyncio.StreamWriter) -> None:
+-    """
+-    Python 3.6-compatible `asyncio.StreamWriter.wait_closed` wrapper.
+-
+-    :param writer: The `asyncio.StreamWriter` to wait on.
+-    """
+-    if sys.version_info >= (3, 7):
+-        await writer.wait_closed()
+-        return
+-
+-    # Python 3.6
+-    transport = writer.transport
+-    assert isinstance(transport, asyncio.WriteTransport)
+-
+-    while not transport.is_closing():
+-        await asyncio.sleep(0)
+-
+-    # This is an ugly workaround, but it's the best I can come up with.
+-    sock = transport.get_extra_info('socket')
+-
+-    if sock is None:
+-        # Our transport doesn't have a socket? ...
+-        # Nothing we can reasonably do.
+-        return
+-
+-    while sock.fileno() != -1:
+-        await asyncio.sleep(0)
+-
+-
+-def asyncio_run(coro: Coroutine[Any, Any, T], *, debug: bool = False) -> T:
+-    """
+-    Python 3.6-compatible `asyncio.run` wrapper.
+-
+-    :param coro: A coroutine to execute now.
+-    :return: The return value from the coroutine.
+-    """
+-    if sys.version_info >= (3, 7):
+-        return asyncio.run(coro, debug=debug)
+-
+-    # Python 3.6
+-    loop = asyncio.get_event_loop()
+-    loop.set_debug(debug)
+-    ret = loop.run_until_complete(coro)
+-    loop.close()
+-
+-    return ret
+-
+-
+ # ----------------------------
+ # Section: Logging & Debugging
+ # ----------------------------
+diff --git a/python/tests/protocol.py b/python/tests/protocol.py
+index 56c4d441f9..c254c77b17 100644
+--- a/python/tests/protocol.py
++++ b/python/tests/protocol.py
+@@ -8,7 +8,6 @@
+ 
+ from qemu.qmp import ConnectError, Runstate
+ from qemu.qmp.protocol import AsyncProtocol, StateError
+-from qemu.qmp.util import asyncio_run, create_task
+ 
+ 
+ class NullProtocol(AsyncProtocol[None]):
+@@ -124,7 +123,7 @@ async def _runner():
+             if allow_cancellation:
+                 return
+             raise
+-    return create_task(_runner())
++    return asyncio.create_task(_runner())
+ 
+ 
+ @contextmanager
+@@ -271,7 +270,7 @@ async def _watcher():
+                     msg=f"Expected state '{state.name}'",
+                 )
+ 
+-        self.runstate_watcher = create_task(_watcher())
++        self.runstate_watcher = asyncio.create_task(_watcher())
+         # Kick the loop and force the task to block on the event.
+         await asyncio.sleep(0)
+ 
+@@ -589,7 +588,8 @@ async def _asyncTearDown(self):
+     async def testSmoke(self):
+         with TemporaryDirectory(suffix='.qmp') as tmpdir:
+             sock = os.path.join(tmpdir, type(self.proto).__name__ + ".sock")
+-            server_task = create_task(self.server.start_server_and_accept(sock))
++            server_task = asyncio.create_task(
++                self.server.start_server_and_accept(sock))
+ 
+             # give the server a chance to start listening [...]
+             await asyncio.sleep(0)
 -- 
 2.47.3
 
