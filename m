@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7EFCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19414CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v29QS-0006uw-VM; Fri, 26 Sep 2025 10:27:57 -0400
+	id 1v29A7-0000p0-91; Fri, 26 Sep 2025 10:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v29QH-0006fX-IM
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:27:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v29Q6-0001Cs-3Y
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:27:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758896844;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6pQyUvrNrjrzeRj1keQqStCGHL4xYhMqsTwLiQdU2JI=;
- b=Yerq8DzD0iW+n9jYvh/5QOyR7/ItQsH1LMRW0GIw2YvrvJqjWxEAO489R3RzTXvOBbqa85
- Nhk2Mz/zuuOzIPngvm0NrlJSFdI48gtBGxeWgqKKEbK3fBXe6+x5wwOS+o2FV51udDUlLh
- va/z5I8QDkSS0gIW0e2XOqSvu12nP3Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-aCG73W28MQ-qK1knm81xtQ-1; Fri,
- 26 Sep 2025 10:27:20 -0400
-X-MC-Unique: aCG73W28MQ-qK1knm81xtQ-1
-X-Mimecast-MFC-AGG-ID: aCG73W28MQ-qK1knm81xtQ_1758896839
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4716A180057B; Fri, 26 Sep 2025 14:27:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.175])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2527619560A2; Fri, 26 Sep 2025 14:27:17 +0000 (UTC)
-Date: Fri, 26 Sep 2025 15:27:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 16/23] util: fix interleaving of error & trace output
-Message-ID: <aNaiwglxvaX6Pz-4@redhat.com>
-References: <20250925094441.1651372-1-berrange@redhat.com>
- <20250925094441.1651372-17-berrange@redhat.com>
- <960eb1ad-7b12-45ea-ab40-1fb1d0d82914@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v299N-00006i-A1
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:17 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v298Y-0005ki-Mf
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:02 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3ece0e4c5faso2050774f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758895757; x=1759500557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=+TKuT+/hIikpcraTr+q4FAKa4j7Yp774WfscMXmqb7w=;
+ b=cPxEttfe9Yg0/EX3wT1Iz7Ho3y6YJOz5dyCx7ym0OCr+HF3qpCoXNde3sEf0txu4iS
+ QxQmEkvX76AYpLk4ydMMvuGAND/7v2pQDs52jfe+JcbjdkQbXmS2O5PuT+vadZPKwnhX
+ QK4AslXG0VL18MPF5t1OtANDgDNF8nEeUjPZNYMZqy9dhdx7GABXWTMNQwKlp/HEg65+
+ y7bI5h3aD52dgM9ehHXno0FGk0sMI2bXwuZGfhmUmtd9DkoyRf7YyFana/jQVnMVZO5V
+ jBFipTLyq8WDaYtwoLHavV+numUTt3RkVXcAUAXbaq7j9p+uRJ+/Up37bBiDGWUqPLIE
+ nfcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758895757; x=1759500557;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+TKuT+/hIikpcraTr+q4FAKa4j7Yp774WfscMXmqb7w=;
+ b=K2aDUEsihvJ07xOUuYEQE8ktG27tMTkK0OHrZGf59M8KbMfGmOlEaPqF08HA4vP6Uo
+ +cQwgU9Q7NXUobPDbvtPSzUv4QEmIIJC+LKBR/ahCL1sr8pVPp7aBkOz6/sK9xByT63F
+ xgY0h85PAvFdBMYms1wYzGVmnUxVV/s/dHkVTeMX+OJRdWmVry++zwrdDXSMmLkL5reR
+ fqKdcvcc0XG01nkT5SKVo5+5A8mJs6rH0gtzRo7RwnC0/s3KVNny4V46AGmoMl0pUMUA
+ BzCdA5Y1VlJW2EVjzbMfmDlTblBDayzyYWXhlDIvhA/elHn1wM/eV1+Ep9+MK7P0XEYj
+ CPyQ==
+X-Gm-Message-State: AOJu0Ywe2yLyZhsdhGVy/wNKY5DuCg6n250QYkiFve9U3RdkSHx7t4sZ
+ Eky8+Zn1siewoAPWKi4p1g1R6Ykjugf3dLlJpp8HsZZ506hxklnNyBOFwe1SpCtgCuvkUR0N5HX
+ m9CGm
+X-Gm-Gg: ASbGncukRs4YKSys8L0mLH9EWUnDd2ukg/442Bk5Bja7JfLDGkX+XGlRLo+0HMITdnz
+ DJqQLc59yjYFiRMIHOZiCfLjlCbQBsJYMQBiyho4OxojqsFhBs+u6mvuviDjGlOouS/PumsIS3N
+ PFZTI6F3ykelKvL6/eauxOQip/NuzgBmvIX+sPIlzSOdg9oarF+SeA4g44Ut05R621ifCekF1hL
+ NBGsU85e+debLa0xAB1weFpwR1VvoZUNZo2sWixWTYV15JgpTpGncXLMjEtu4ncyTg45JTrpvtk
+ zqGGeukHqFfGtGn5bq1eL+8872LWC+c9TojbjfxxW363t4h6ffoOXvj92hH9OZnhCU8uC1qOAfB
+ f7BmmsRzTr6+82qRaHmD8TeymRNHdgsG6Ndyvva2ddDLRxQ6j+A==
+X-Google-Smtp-Source: AGHT+IG2prdz1XZ9eGTDiIzjqcNPqZtzxR1a6lghZb8RmLUFF/BaQgC0oKbzs7MLxKQs4HWuS8Vpcg==
+X-Received: by 2002:a05:6000:2dc5:b0:3e9:a1cb:ea93 with SMTP id
+ ffacd0b85a97d-40e43b08e26mr6436522f8f.21.1758895757124; 
+ Fri, 26 Sep 2025 07:09:17 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.09.16
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Sep 2025 07:09:16 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 30/44] target/arm: Move alias setting for wildcards
+Date: Fri, 26 Sep 2025 15:08:30 +0100
+Message-ID: <20250926140844.1493020-31-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
+References: <20250926140844.1493020-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <960eb1ad-7b12-45ea-ab40-1fb1d0d82914@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,44 +97,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 25, 2025 at 12:54:13PM -0700, Richard Henderson wrote:
-> On 9/25/25 02:44, Daniel P. Berrangé wrote:
-> > +    if (monitor_cur_is_hmp()) {
-> > +        cur = monitor_cur();
-> > +    }
-> 
-> Didn't your last patch set return Montor* from monitor_cur_is_hmp?
-> Because this takes the locks in monitor_cur() twice.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Yes, however, the intent of both this & the previous version is to
-optimize the scenario where the monitor is NULL or QMP. If we take
-an extra lock in the HMP case that's acceptable and doesn't cause
-ill effets.
+Move this test from add_cpreg_to_hashtable to
+define_one_arm_cp_reg_with_opaque, where we can also
+simplify it based on the loop variables.
 
-> 
-> > +    if (message_with_timestamp && !cur) {
-> >          timestr = real_time_iso8601();
-> > -        error_printf("%s ", timestr);
-> > +        error_printf_mon(NULL, "%s ", timestr);
-> 
-> Passing NULL to error_printf_mon is fprintf to stderr.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[PMM: adjusted placement of comma in a comment]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/helper.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-True, I could have rewritten this to just fprintf. It goes away
-later in the series when its all moved into the new qcontext API
-call, which is given stderr directly. I guess making it clear it
-is stderr at this point in the series, gives reassurance that the
-later qcontext conversion hasn't changed the output target.
-
-
-With regards,
-Daniel
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index a199320f140..274b7b5808e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7448,20 +7448,12 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, ARMCPRegInfo *r,
+     }
+ 
+     /*
+-     * By convention, for wildcarded registers only the first
+-     * entry is used for migration; the others are marked as
+-     * ALIAS so we don't try to transfer the register
+-     * multiple times. Special registers (ie NOP/WFI) are
+-     * never migratable and not even raw-accessible.
++     * Special registers (ie NOP/WFI) are never migratable and
++     * are not even raw-accessible.
+      */
+     if (r->type & ARM_CP_SPECIAL_MASK) {
+         r->type |= ARM_CP_NO_RAW;
+     }
+-    if (((r->crm == CP_ANY) && crm != 0) ||
+-        ((r->opc1 == CP_ANY) && opc1 != 0) ||
+-        ((r->opc2 == CP_ANY) && opc2 != 0)) {
+-        r->type |= ARM_CP_ALIAS | ARM_CP_NO_GDB;
+-    }
+ 
+     /*
+      * Update fields to match the instantiation, overwiting wildcards
+@@ -7765,6 +7757,16 @@ void define_one_arm_cp_reg(ARMCPU *cpu, const ARMCPRegInfo *r)
+                 ARMCPRegInfo *r2 = alloc_cpreg(r, NULL);
+                 ARMCPRegInfo *r3;
+ 
++                /*
++                 * By convention, for wildcarded registers only the first
++                 * entry is used for migration; the others are marked as
++                 * ALIAS so we don't try to transfer the register
++                 * multiple times.
++                 */
++                if (crm != crmmin || opc1 != opc1min || opc2 != opc2min) {
++                    r2->type |= ARM_CP_ALIAS | ARM_CP_NO_GDB;
++                }
++
+                 switch (r->state) {
+                 case ARM_CP_STATE_AA32:
+                     add_cpreg_to_hashtable_aa32(cpu, r2, cp, crm, opc1, opc2);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
