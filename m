@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFE6CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 11:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E35BCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 11:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v26BZ-0007II-8S; Fri, 26 Sep 2025 07:00:22 -0400
+	id 1v26BX-0007H7-6R; Fri, 26 Sep 2025 07:00:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v26BS-0007Dp-2b
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 07:00:15 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v26BP-0007Ck-I7
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 07:00:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v26B9-0007Ro-Pz
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 07:00:13 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v26B5-0007Rl-3l
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 07:00:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1758884375;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=K/gtmZh0zr1s60tL23O40RB0ztD5L1nJW5OpDcx0GCc=;
- b=MwiDcFaJi9Ln/65evOVUIT1Gmrc2chNmeIZ5LgiqM5oOGGkJXOR6yNA+mb23XQ7vK+xIvz
- 7vuYdLjOR2MxJtCXy42yPx+iWRwbUzJcaiC/2nHkrfH+yq7w7icr2DaPy6kG+fVu/kB40Q
- tUYnjq18DbScKT1xwurmgT/hO0MdevY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=oEwHc6uI4cPIYskqOSNik2lG7GKUuyULeM0TuwwPqSg=;
+ b=YF3ZgfGJSTIPEaWYfBBqXC9KnhVqlcDIrJegIIgw4319pzfgF3u2MMp4uEgYMG5syYPlSR
+ y5a73aCq1+zbp3WALpnSKzvSqq57t6kGbT57r0Yq/PR36Tn6mb65jgJSFoNBMJGNpSQLcK
+ 88N3E6+RVubrnxVxsFvaBAC1G1e+4AQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-PiKwRgdjMy-tGzv3BpK6Tw-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-DWPeK33dOMiuf6KZQ07u8w-1; Fri,
  26 Sep 2025 06:59:34 -0400
-X-MC-Unique: PiKwRgdjMy-tGzv3BpK6Tw-1
-X-Mimecast-MFC-AGG-ID: PiKwRgdjMy-tGzv3BpK6Tw_1758884373
+X-MC-Unique: DWPeK33dOMiuf6KZQ07u8w-1
+X-Mimecast-MFC-AGG-ID: DWPeK33dOMiuf6KZQ07u8w_1758884373
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 261E2180057A; Fri, 26 Sep 2025 10:59:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 254AC180048E; Fri, 26 Sep 2025 10:59:33 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.43])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76B70180035E; Fri, 26 Sep 2025 10:59:32 +0000 (UTC)
+ id 79F611800579; Fri, 26 Sep 2025 10:59:32 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 221D9180060B; Fri, 26 Sep 2025 12:59:27 +0200 (CEST)
+ id 3FF8C1800615; Fri, 26 Sep 2025 12:59:27 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 2/4] igvm: add support for igvm memory map parameter in
+Subject: [PATCH v2 3/4] igvm: add support for initial register state load in
  native mode
-Date: Fri, 26 Sep 2025 12:59:24 +0200
-Message-ID: <20250926105926.121890-3-kraxel@redhat.com>
+Date: Fri, 26 Sep 2025 12:59:25 +0200
+Message-ID: <20250926105926.121890-4-kraxel@redhat.com>
 In-Reply-To: <20250926105926.121890-1-kraxel@redhat.com>
 References: <20250926105926.121890-1-kraxel@redhat.com>
 MIME-Version: 1.0
@@ -69,8 +69,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,211 +85,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and wire up qigvm_x86_get_mem_map_entry function which converts the
-e820 table into an igvm memory map parameter.  This makes igvm files for
-the native (non-confidential) platform with memory map parameter work.
+Add IgvmNativeVpContextX64 struct holding the register state (see igvm
+spec), and the qigvm_x86_load_context() function to load the register
+state.
+
+Wire up using two new functions: qigvm_x86_set_vp_context() is called
+from igvm file handling code and stores the boot processor context.
+qigvm_x86_bsp_reset() is called from i386 target cpu reset code and
+loads the context into the cpu registers.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/system/igvm.h   |  5 +++++
- backends/igvm.c         | 24 +++++++++++++++++----
- stubs/igvm.c            | 21 +++++++++++++++++++
- target/i386/igvm.c      | 46 +++++++++++++++++++++++++++++++++++++++++
- stubs/meson.build       |  1 +
- target/i386/meson.build |  3 +++
- 6 files changed, 96 insertions(+), 4 deletions(-)
- create mode 100644 stubs/igvm.c
- create mode 100644 target/i386/igvm.c
+ include/system/igvm.h |   2 +
+ target/i386/cpu.h     |   3 +
+ backends/igvm.c       |  30 +++++-----
+ stubs/igvm.c          |   5 ++
+ target/i386/cpu.c     |   4 ++
+ target/i386/igvm.c    | 133 ++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 162 insertions(+), 15 deletions(-)
 
 diff --git a/include/system/igvm.h b/include/system/igvm.h
-index a4abab043a1f..3f72a40b8897 100644
+index 3f72a40b8897..48ce20604259 100644
 --- a/include/system/igvm.h
 +++ b/include/system/igvm.h
-@@ -19,4 +19,9 @@
- int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
-                       bool onlyVpContext, Error **errp);
+@@ -23,5 +23,7 @@ int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
+ int qigvm_x86_get_mem_map_entry(int index,
+                                 ConfidentialGuestMemoryMapEntry *entry,
+                                 Error **errp);
++int qigvm_x86_set_vp_context(void *data, int index,
++                             Error **errp);
  
-+/* x86 native */
-+int qigvm_x86_get_mem_map_entry(int index,
-+                                ConfidentialGuestMemoryMapEntry *entry,
-+                                Error **errp);
-+
  #endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e0be7a740685..5de0b3bd1553 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2845,6 +2845,9 @@ void x86_cpu_dump_local_apic_state(CPUState *cs, int flags);
+ 
+ #endif
+ 
++/* igvm.c */
++void qigvm_x86_bsp_reset(CPUX86State *env);
++
+ /* cpu.c */
+ bool cpu_is_bsp(X86CPU *cpu);
+ 
 diff --git a/backends/igvm.c b/backends/igvm.c
-index 723d45b755a0..40b60f8cb48f 100644
+index 40b60f8cb48f..47600c361db4 100644
 --- a/backends/igvm.c
 +++ b/backends/igvm.c
-@@ -12,6 +12,7 @@
- #include "qemu/osdep.h"
+@@ -438,18 +438,6 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+         return 0;
+     }
  
- #include "qapi/error.h"
-+#include "qemu/target-info.h"
- #include "system/igvm.h"
- #include "system/memory.h"
- #include "system/address-spaces.h"
-@@ -20,6 +21,12 @@
- #include <igvm/igvm.h>
- #include <igvm/igvm_defs.h>
- 
-+/* temporary stopgap until this lands in target-info.h */
-+static bool target_x86_64(void)
-+{
-+    return strcmp(target_name(), "x86_64") == 0;
-+}
-+
- typedef struct QIgvmParameterData {
-     QTAILQ_ENTRY(QIgvmParameterData) next;
-     uint8_t *data;
-@@ -543,6 +550,8 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-                                       Error **errp)
- {
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-+                             Error **errp) = NULL;
-     QIgvmParameterData *param_entry;
-     int max_entry_count;
-     int entry = 0;
-@@ -550,7 +559,15 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     ConfidentialGuestMemoryMapEntry cgmm_entry;
-     int retval = 0;
- 
+-    /*
+-     * A confidential guest support object must be provided for setting
+-     * a VP context.
+-     */
 -    if (!ctx->cgs) {
-+    if (ctx->cgs && ctx->cgsc->get_mem_map_entry) {
-+        get_mem_map_entry = ctx->cgsc->get_mem_map_entry;
-+    }
-+
-+    if (!get_mem_map_entry && target_x86_64()) {
-+        get_mem_map_entry = qigvm_x86_get_mem_map_entry;
-+    }
-+
-+    if (!get_mem_map_entry) {
-         error_setg(errp,
-                    "IGVM file contains a memory map but this is not supported "
-                    "by the current system.");
-@@ -565,7 +582,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-                 param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
-             mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
+-        error_setg(
+-            errp,
+-            "A VP context is present in the IGVM file but is not supported "
+-            "by the current system.");
+-        return -1;
+-    }
+-
+     data_handle = igvm_get_header_data(ctx->file, IGVM_HEADER_SECTION_DIRECTIVE,
+                                        ctx->current_header_index);
+     if (data_handle < 0) {
+@@ -459,9 +447,21 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+     }
  
--            retval = ctx->cgsc->get_mem_map_entry(entry, &cgmm_entry, errp);
-+            retval = get_mem_map_entry(entry, &cgmm_entry, errp);
-             while (retval == 0) {
-                 if (entry > max_entry_count) {
-                     error_setg(
-@@ -598,8 +615,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-                         IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
-                     break;
-                 }
--                retval =
--                    ctx->cgsc->get_mem_map_entry(++entry, &cgmm_entry, errp);
-+                retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
-             }
-             if (retval < 0) {
-                 return retval;
+     data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
+-    result = ctx->cgsc->set_guest_state(
+-        vp_context->gpa, data, igvm_get_buffer_size(ctx->file, data_handle),
+-        CGS_PAGE_TYPE_VMSA, vp_context->vp_index, errp);
++
++    if (ctx->cgs) {
++        result = ctx->cgsc->set_guest_state(
++            vp_context->gpa, data, igvm_get_buffer_size(ctx->file, data_handle),
++            CGS_PAGE_TYPE_VMSA, vp_context->vp_index, errp);
++    } else if (target_x86_64()) {
++        result = qigvm_x86_set_vp_context(data, vp_context->vp_index, errp);
++    } else {
++        error_setg(
++            errp,
++            "A VP context is present in the IGVM file but is not supported "
++            "by the current system.");
++        result = -1;
++    }
++
+     igvm_free_buffer(ctx->file, data_handle);
+     if (result < 0) {
+         return result;
 diff --git a/stubs/igvm.c b/stubs/igvm.c
-new file mode 100644
-index 000000000000..c32058eb2a6e
---- /dev/null
+index c32058eb2a6e..17cd1e903e35 100644
+--- a/stubs/igvm.c
 +++ b/stubs/igvm.c
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU IGVM, stubs
-+ *
-+ * Copyright (C) 2026 Red Hat
-+ *
-+ * Authors:
-+ *  Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+@@ -19,3 +19,8 @@ int qigvm_x86_get_mem_map_entry(int index,
+ {
+     return -1;
+ }
 +
-+#include "qemu/osdep.h"
-+
-+#include "system/igvm.h"
-+
-+int qigvm_x86_get_mem_map_entry(int index,
-+                                ConfidentialGuestMemoryMapEntry *entry,
-+                                Error **errp)
++int qigvm_x86_set_vp_context(void *data, int index, Error **errp)
 +{
 +    return -1;
 +}
-diff --git a/target/i386/igvm.c b/target/i386/igvm.c
-new file mode 100644
-index 000000000000..2ed6cd052c79
---- /dev/null
-+++ b/target/i386/igvm.c
-@@ -0,0 +1,46 @@
-+/*
-+ * QEMU IGVM, support for native x86 guests
-+ *
-+ * Copyright (C) 2026 Red Hat
-+ *
-+ * Authors:
-+ *  Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "hw/i386/e820_memory_layout.h"
-+#include "system/igvm.h"
-+
-+/*
-+ * convert e820 table into igvm memory map
-+ */
-+int qigvm_x86_get_mem_map_entry(int index,
-+                                ConfidentialGuestMemoryMapEntry *entry,
-+                                Error **errp)
-+{
-+    struct e820_entry *table;
-+    int num_entries;
-+
-+    num_entries = e820_get_table(&table);
-+    if ((index < 0) || (index >= num_entries)) {
-+        return 1;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 6d85149e6e1b..f38651e0c8cf 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8730,6 +8730,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+ 
+     cs->halted = !cpu_is_bsp(cpu);
+ 
++    if (cpu_is_bsp(cpu)) {
++        qigvm_x86_bsp_reset(env);
 +    }
-+    entry->gpa = table[index].address;
-+    entry->size = table[index].length;
-+    switch (table[index].type) {
-+    case E820_RAM:
-+        entry->type = CGS_MEM_RAM;
-+        break;
-+    case E820_RESERVED:
-+        entry->type = CGS_MEM_RESERVED;
-+        break;
-+    default:
-+        /* should not happen */
-+        error_setg(errp, "unknown e820 type");
++
+     if (kvm_enabled()) {
+         kvm_arch_reset_vcpu(cpu);
+     }
+diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+index 2ed6cd052c79..0921ec830508 100644
+--- a/target/i386/igvm.c
++++ b/target/i386/igvm.c
+@@ -11,9 +11,114 @@
+ 
+ #include "qemu/osdep.h"
+ 
++#include "cpu.h"
+ #include "hw/i386/e820_memory_layout.h"
+ #include "system/igvm.h"
+ 
++struct IgvmNativeVpContextX64 {
++    uint64_t rax;
++    uint64_t rcx;
++    uint64_t rdx;
++    uint64_t rbx;
++    uint64_t rsp;
++    uint64_t rbp;
++    uint64_t rsi;
++    uint64_t rdi;
++    uint64_t r8;
++    uint64_t r9;
++    uint64_t r10;
++    uint64_t r11;
++    uint64_t r12;
++    uint64_t r13;
++    uint64_t r14;
++    uint64_t r15;
++    uint64_t rip;
++    uint64_t rflags;
++    uint64_t idtr_base;
++    uint16_t idtr_limit;
++    uint16_t reserved[2];
++    uint16_t gdtr_limit;
++    uint64_t gdtr_base;
++
++    uint16_t code_selector;
++    uint16_t code_attributes;
++    uint32_t code_base;
++    uint32_t code_limit;
++
++    uint16_t data_selector;
++    uint16_t data_attributes;
++    uint32_t data_base;
++    uint32_t data_limit;
++
++    uint64_t gs_base;
++    uint64_t cr0;
++    uint64_t cr3;
++    uint64_t cr4;
++    uint64_t efer;
++};
++
++#define FLAGS_TO_SEGCACHE(flags)                \
++    (((unsigned int)flags) << 8)
++
++static void qigvm_x86_load_context(struct IgvmNativeVpContextX64 *context, CPUX86State *env)
++{
++    cpu_load_efer(env, context->efer);
++    cpu_x86_update_cr4(env, context->cr4);
++    cpu_x86_update_cr0(env, context->cr0);
++    cpu_x86_update_cr3(env, context->cr3);
++
++    cpu_x86_load_seg_cache(
++        env, R_CS, context->code_selector,
++        context->code_base, context->code_limit,
++        FLAGS_TO_SEGCACHE(context->code_attributes));
++    cpu_x86_load_seg_cache(
++        env, R_DS, context->data_selector,
++        context->data_base, context->data_limit,
++        FLAGS_TO_SEGCACHE(context->data_attributes));
++    cpu_x86_load_seg_cache(
++        env, R_ES, context->data_selector,
++        context->data_base, context->data_limit,
++        FLAGS_TO_SEGCACHE(context->data_attributes));
++    cpu_x86_load_seg_cache(
++        env, R_FS, context->data_selector,
++        context->data_base, context->data_limit,
++        FLAGS_TO_SEGCACHE(context->data_attributes));
++    cpu_x86_load_seg_cache(
++        env, R_GS, context->data_selector,
++        context->data_base, context->data_limit,
++        FLAGS_TO_SEGCACHE(context->data_attributes));
++    cpu_x86_load_seg_cache(
++        env, R_SS, context->data_selector,
++        context->data_base, context->data_limit,
++        FLAGS_TO_SEGCACHE(context->data_attributes));
++
++    env->gdt.base = context->gdtr_base;
++    env->gdt.limit = context->gdtr_limit;
++    env->idt.base = context->idtr_base;
++    env->idt.limit = context->idtr_limit;
++
++    env->regs[R_EAX] = context->rax;
++    env->regs[R_ECX] = context->rcx;
++    env->regs[R_EDX] = context->rdx;
++    env->regs[R_EBX] = context->rbx;
++    env->regs[R_ESP] = context->rsp;
++    env->regs[R_EBP] = context->rbp;
++    env->regs[R_ESI] = context->rsi;
++    env->regs[R_EDI] = context->rdi;
++#ifdef TARGET_X86_64
++    env->regs[R_R8] = context->r8;
++    env->regs[R_R9] = context->r9;
++    env->regs[R_R10] = context->r10;
++    env->regs[R_R11] = context->r11;
++    env->regs[R_R12] = context->r12;
++    env->regs[R_R13] = context->r13;
++    env->regs[R_R14] = context->r14;
++    env->regs[R_R15] = context->r15;
++#endif
++    env->eip = context->rip;
++    env->eflags = context->rflags;
++}
++
+ /*
+  * convert e820 table into igvm memory map
+  */
+@@ -44,3 +149,31 @@ int qigvm_x86_get_mem_map_entry(int index,
+     }
+     return 0;
+ }
++
++/*
++ * set initial cpu context
++ */
++static struct IgvmNativeVpContextX64 *bsp_context;
++
++int qigvm_x86_set_vp_context(void *data, int index, Error **errp)
++{
++    if (index != 0) {
++        error_setg(errp, "context can be set for BSP only");
 +        return -1;
 +    }
++
++    if (bsp_context == NULL) {
++        bsp_context = g_new0(struct IgvmNativeVpContextX64, 1);
++    }
++    memcpy(bsp_context, data, sizeof(struct IgvmNativeVpContextX64));
 +    return 0;
 +}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index cef046e6854d..b362b2472373 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -73,6 +73,7 @@ if have_system
-   stub_ss.add(files('dump.c'))
-   stub_ss.add(files('cmos.c'))
-   stub_ss.add(files('fw_cfg.c'))
-+  stub_ss.add(files('igvm.c'))
-   stub_ss.add(files('target-get-monitor-def.c'))
-   stub_ss.add(files('target-monitor-defs.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 092af34e2d85..da2d5d80792b 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -25,6 +25,9 @@ i386_system_ss.add(files(
- ))
- i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'),
-                                        if_false: files('sev-system-stub.c'))
-+if igvm.found()
-+  i386_system_ss.add(files('igvm.c'))
-+endif
- 
- i386_user_ss = ss.source_set()
- 
++
++void qigvm_x86_bsp_reset(CPUX86State *env)
++{
++    if (bsp_context == NULL) {
++        return;
++    }
++
++    qigvm_x86_load_context(bsp_context, env);
++}
 -- 
 2.51.0
 
