@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E80CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B83CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23YF-0007DV-1e; Fri, 26 Sep 2025 04:11:35 -0400
+	id 1v23Xp-0006y1-6F; Fri, 26 Sep 2025 04:11:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23YB-0007CM-Ih; Fri, 26 Sep 2025 04:11:32 -0400
+ id 1v23Xm-0006x5-Eb; Fri, 26 Sep 2025 04:11:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23Y2-0000Gr-J3; Fri, 26 Sep 2025 04:11:30 -0400
+ id 1v23Xg-00008z-NL; Fri, 26 Sep 2025 04:11:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FA1D157D4E;
- Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CE001157D4A;
+ Fri, 26 Sep 2025 11:10:30 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 40529290C32;
- Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E2AA9290C2E;
+ Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Smail AIDER <smail.aider@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 06/60] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-Date: Fri, 26 Sep 2025 11:09:34 +0300
-Message-ID: <20250926081031.2214971-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zero Tang <zero.tangptr@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 02/60] i386/tcg/svm: fix incorrect canonicalization
+Date: Fri, 26 Sep 2025 11:09:30 +0300
+Message-ID: <20250926081031.2214971-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -60,96 +59,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Smail AIDER <smail.aider@huawei.com>
+From: Zero Tang <zero.tangptr@gmail.com>
 
-Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
-Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
-accesses to the PMCR register to EL2.
+For all 32-bit systems and 64-bit Windows systems, "long" is 4 bytes long.
+Due to using "long" for a linear address, svm_canonicalization would
+set all high bits to 1 when (assuming 48-bit linear address) the segment
+base is bigger than 0x7FFF.
+
+This fixes booting guests under TCG when the guest IDT and GDT bases are
+above 0x7FFF, thereby resulting in incorrect bases. When an interrupt
+arrives, it would trigger a #PF exception; the #PF would trigger again,
+resulting in a #DF exception; the #PF would trigger for the third time,
+resulting in triple-fault, and eventually causes a shutdown VM-Exit to
+the hypervisor right after guest boot.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Smail AIDER <smail.aider@huawei.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250811112143.1577055-2-smail.aider@huawei.com
-Message-Id: <20250722131925.2119169-1-smail.aider@huawei.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 186db6a73bc5c01026bb9f4f4a59e442c0156841)
+Signed-off-by: Zero Tang <zero.tangptr@gmail.com>
+(cherry picked from commit c12cbaa007c9da97a11e74119ea3aed9fcc3ac4c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/cpregs-pmu.c b/target/arm/cpregs-pmu.c
-index 9c4431c18b..31c01eddc8 100644
---- a/target/arm/cpregs-pmu.c
-+++ b/target/arm/cpregs-pmu.c
-@@ -228,22 +228,27 @@ static bool event_supported(uint16_t number)
-     return supported_event_map[number] != UNSUPPORTED_EVENT;
- }
- 
--static CPAccessResult pmreg_access(CPUARMState *env, const ARMCPRegInfo *ri,
--                                   bool isread)
-+static CPAccessResult do_pmreg_access(CPUARMState *env, bool is_pmcr)
+diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
+index b27049b9ed..dea039b87a 100644
+--- a/target/i386/tcg/system/svm_helper.c
++++ b/target/i386/tcg/system/svm_helper.c
+@@ -49,7 +49,7 @@ static void svm_save_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
+ static inline void svm_canonicalization(CPUX86State *env, target_ulong *seg_base)
  {
-     /*
-      * Performance monitor registers user accessibility is controlled
--     * by PMUSERENR. MDCR_EL2.TPM and MDCR_EL3.TPM allow configurable
-+     * by PMUSERENR. MDCR_EL2.TPM/TPMCR and MDCR_EL3.TPM allow configurable
-      * trapping to EL2 or EL3 for other accesses.
-      */
-     int el = arm_current_el(env);
--    uint64_t mdcr_el2 = arm_mdcr_el2_eff(env);
- 
-     if (el == 0 && !(env->cp15.c9_pmuserenr & 1)) {
-         return CP_ACCESS_TRAP_EL1;
-     }
--    if (el < 2 && (mdcr_el2 & MDCR_TPM)) {
--        return CP_ACCESS_TRAP_EL2;
-+    if (el < 2) {
-+        uint64_t mdcr_el2 = arm_mdcr_el2_eff(env);
-+
-+        if (mdcr_el2 & MDCR_TPM) {
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+        if (is_pmcr && (mdcr_el2 & MDCR_TPMCR)) {
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-     }
-     if (el < 3 && (env->cp15.mdcr_el3 & MDCR_TPM)) {
-         return CP_ACCESS_TRAP_EL3;
-@@ -252,6 +257,19 @@ static CPAccessResult pmreg_access(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
+     uint16_t shift_amt = 64 - cpu_x86_virtual_addr_width(env);
+-    *seg_base = ((((long) *seg_base) << shift_amt) >> shift_amt);
++    *seg_base = (((int64_t) *seg_base) << shift_amt) >> shift_amt;
  }
  
-+static CPAccessResult pmreg_access(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                   bool isread)
-+{
-+    return do_pmreg_access(env, false);
-+}
-+
-+static CPAccessResult pmreg_access_pmcr(CPUARMState *env,
-+                                        const ARMCPRegInfo *ri,
-+                                        bool isread)
-+{
-+    return do_pmreg_access(env, true);
-+}
-+
- static CPAccessResult pmreg_access_xevcntr(CPUARMState *env,
-                                            const ARMCPRegInfo *ri,
-                                            bool isread)
-@@ -1187,14 +1205,14 @@ void define_pm_cpregs(ARMCPU *cpu)
-             .fgt = FGT_PMCR_EL0,
-             .type = ARM_CP_IO | ARM_CP_ALIAS,
-             .fieldoffset = offsetoflow32(CPUARMState, cp15.c9_pmcr),
--            .accessfn = pmreg_access,
-+            .accessfn = pmreg_access_pmcr,
-             .readfn = pmcr_read, .raw_readfn = raw_read,
-             .writefn = pmcr_write, .raw_writefn = raw_write,
-         };
-         const ARMCPRegInfo pmcr64 = {
-             .name = "PMCR_EL0", .state = ARM_CP_STATE_AA64,
-             .opc0 = 3, .opc1 = 3, .crn = 9, .crm = 12, .opc2 = 0,
--            .access = PL0_RW, .accessfn = pmreg_access,
-+            .access = PL0_RW, .accessfn = pmreg_access_pmcr,
-             .fgt = FGT_PMCR_EL0,
-             .type = ARM_CP_IO,
-             .fieldoffset = offsetof(CPUARMState, cp15.c9_pmcr),
+ static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
 -- 
 2.47.3
 
