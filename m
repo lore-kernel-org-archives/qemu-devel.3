@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686DFCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA95FCAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v299t-0000jr-Q1; Fri, 26 Sep 2025 10:10:49 -0400
+	id 1v2990-00087O-FG; Fri, 26 Sep 2025 10:09:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v299Z-0000Ih-No
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:30 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1v298W-0007NU-KV
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:25 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v298f-0005nH-Lq
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:21 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3b9edf4cf6cso2254996f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:30 -0700 (PDT)
+ id 1v298E-0005fh-D7
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:24 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46cf7bbfda8so12136035e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758895767; x=1759500567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758895740; x=1759500540; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=71SPKxC6TrHmGazKirT7T3wwRBAuIbbjNemK5xYBRvE=;
- b=R506isnkVKQCkcpnMEvhQ4S+5Uz2Qre1azpmxekKIPEt5+ceEYoWsikOeIKaxAa4F9
- tbCn0c/KAUxhAIcDjL8hZ4jP29kgLV8hKO7VAghMrG4XH03Wbocu9T6AMkZhyPFVROWP
- eWXCRe+R0fL369tQQQiq1WmfcmODHHgAZAIp7dI29pNS0kjx6Br1qclSfCLoaKAGZiXe
- sq065h2R01uC9J2Xn9qmVSwHjXZxMKCUNZWyNYPVzXrtLMjmGcvrpc0vK4yttHeS3/GP
- CZ6VtJ4/TDQ3Yt6cWLfFO3Np8pxR+q2sBreQAulQ7XpdDWpPMINzdifMAbnrOQ8ldWBm
- L/uA==
+ :reply-to; bh=Q3RNZ4P3Tq3zjqcHANGsM138DWjS8vi9+XNzo2XY8fw=;
+ b=n7zU10VQNlHtoILDgw07275e0A52IdeTHOGWa6qSn4lxvscvYLIz1ZX7K1Offt1KBY
+ yWZgoxRYq3LLm3jHlm7VI4zU5ehQ4/yTmQfKeh+LrmnOcNZ6Hqo/sBekfZfXfbOoHoTm
+ sB/LzB8oRbkDxNYPm18PGTsyI3EyuS418DDhmzkJLR/olL6YBoCae2QrlNsGEa5i8Yds
+ AKKA/fL8xPIdjM6MRCvfOr9dpokrEvdZ7VCmCgUxcoI62gB+IA1NVU/AjDRIbOKsOYCk
+ pMN3/p1GWeZZ+Wcskh0/vBfefbJhM6snFTLlflMjpG35RBk/gldIrTJ6ZGb4bTQQ20Ws
+ UZdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758895767; x=1759500567;
+ d=1e100.net; s=20230601; t=1758895740; x=1759500540;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=71SPKxC6TrHmGazKirT7T3wwRBAuIbbjNemK5xYBRvE=;
- b=vT89RSaVPiqGn3SO5vINzcbjsQpjCurAVe0T6W4Pbr/XVhiZ8VCIU8dCD0stCyyTnW
- zawRPoMxIRtAD3NcoIJWCqRVKzXgK+Kch523oyiEHYUIZ+Sp6BjhIdwgFjo0w1cnsdcH
- BS5If0NEKc/EpU3bxicd/XVtC7eaFQQHnc3NB3YeNpYDh0JGjeBJ9XnZavR0R759YxRd
- Cv8g5gb+ZxVcivDu4k/+HORDLHa7U8BqmttwFFY3rCv0SFrqC3rWuw577kfWvvA3NpWb
- vSTmtz+Y4ALMH151X4h2CT4+lyvYlJarX2KkngDjDDxLK9Gydc4SSZFvKtm9o7Ink8PT
- ppIA==
-X-Gm-Message-State: AOJu0YxdcEiZrplF1iMVaeLrdC6xiRjJlCse4acpRMMxcLleCwJT+eDV
- GFC/UNX8Q0xktN1pQar3mGfC9f84VgZn+wM9XnQkBF8y73YtcW35A58By6K3K5pDYyd+iqYbw9g
- 93i/H
-X-Gm-Gg: ASbGnctvr0skKiq0TUKct18+Fn4yFptz4G6FgH3Lt5J1tGzhZh98zgYa1stvr0mAo5m
- 0TVn7S1imY4WkAFtbpBBHDz5t4Yjwa5e6uRmHQwWfK9EaGiZjybREFY2Qt/pHgZLAgb7PkRr3Kv
- rs9uB9Ybo32h0TBmM78ainlmZDbrwXAsUBWFZU7cYMezpJNEF9kdDEBcscRz0Ax+N6FCtTeHZdG
- K/O9B3JVu7uknLPcakA9KTI5Cw1HNZ/SKJs8GB6CGku3MeF2hmmFZ01YNF8P0aHoU2g6AQrQWNO
- haWZeTACpWFI2fFPzQMZOvdmfg5kVAH0qV3MDgRPeBpjNgJD0FQsJnMhVY0gGxglDVwmhAv3DKV
- B2z4voFEdTMNIUGLOx+muISX9NG/t
-X-Google-Smtp-Source: AGHT+IH0GPA4leIYJ4GAHnBWiOgP3uXcszdD9znqzIx+Pa9PtWHDB0lnho3sjW4pd0zjPrN4wlKMVg==
-X-Received: by 2002:a05:6000:400b:b0:3f4:84d0:401a with SMTP id
- ffacd0b85a97d-40e46514cb5mr6071138f8f.4.1758895767011; 
- Fri, 26 Sep 2025 07:09:27 -0700 (PDT)
+ bh=Q3RNZ4P3Tq3zjqcHANGsM138DWjS8vi9+XNzo2XY8fw=;
+ b=hI7YxXc4cPk4OMl4SVybqtfFsxBhBW1rTL+rfHeNSUg+OaM/XvW5JrMVhB4QbsnMYI
+ 3QBmDFzsyvvkEwLEt2h6OcL7EezVcqGjpWVvTUK6YmONc9NSmjALHUbpBr7L7B3ln60O
+ AhhsX2xRKGYO/9LZXcdgmzvQnYp+xts16Vy5VUe3eILOa3RIuqSjlMG4zsBqXDqioDXN
+ cFeczCAQ3CmTGKjADlm+uE1mPG6Q/W3whdThJuLGWP115UmE2s0uKkw3wwTGRDsPrGKR
+ MEAjdFxaaievYyhEV0o61UjT4+nXnY6Kj+xB8spOykwv7Uc1/XtRTE5lUtg73ODBCklS
+ viSQ==
+X-Gm-Message-State: AOJu0YxiT4ON+lQwgcHRFgJBMrAQzhtWNSm3QW1p1PGQ9Xlgh2BvNCW/
+ vuXeqzwuIvdG+ix5/AFoeI2ve8sZfHuSB6y2tkzWhwKBkLzDqncXlFdh3H+/2+8kTo2kV/kkb6K
+ Oc/8o
+X-Gm-Gg: ASbGncuoptICyEEfKJ/W5SGfzM8kIM4Yg64XHQS39ygMXmeZLhPMi8NyDuGNFhDEnkf
+ 0UWyQvL4HRP5igSXsousriP7ueHsJhZReTCL41GM2NeZ9dE+vYjzkmOTPrxlsKo0hdj93pTn+1H
+ lmgRn9fDGlZSFvcnNl/ruLRa1ShI8UP3NTM/pZVuCISdewL7CRfLkIGkrV4SOKFtvyjvn3ijrzw
+ M3qP/Iy+ftsZp/VzSZYxcwz4v4mZVmwLRvgQ9TyCmoR9Tk8g0hq+C0ijjhVGnIfgHF5Imzg8hWh
+ TUXey6zsSlrG/KOzNS4eNFbE6IW7ui4FCXu/sp6vZ96b5JDHAYmPxJCavi+kON1RMAjvoIof+Hm
+ 9HwPYSzm5yuaVsL+OJ2OdhLErk3zB0RPFzOUB3GU=
+X-Google-Smtp-Source: AGHT+IFRcgRb8fY8Vo9zR2iQtE7cg1FfM5Ytvevipl4wSITKKtlU/yZh03r+Lj25NQim8D4JrLxFuw==
+X-Received: by 2002:a05:600c:4816:b0:46e:3287:57d6 with SMTP id
+ 5b1f17b1804b1-46e32a0bd2amr44971485e9.27.1758895740090; 
+ Fri, 26 Sep 2025 07:09:00 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.09.26
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 07:09:26 -0700 (PDT)
+ Fri, 26 Sep 2025 07:08:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/44] target/arm: Convert power control DPRINTF() uses to
- trace events
-Date: Fri, 26 Sep 2025 15:08:40 +0100
-Message-ID: <20250926140844.1493020-41-peter.maydell@linaro.org>
+Subject: [PULL 13/44] target/arm: Rename all ARMCPRegInfo from opaque to ri
+Date: Fri, 26 Sep 2025 15:08:13 +0100
+Message-ID: <20250926140844.1493020-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
 References: <20250926140844.1493020-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,100 +100,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+These pointers are no opaque, they have a specific type.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/arm-powerctl.c | 26 ++++++++------------------
- target/arm/trace-events   |  6 ++++++
- 2 files changed, 14 insertions(+), 18 deletions(-)
+ target/arm/cpregs.h | 10 +++++-----
+ target/arm/helper.c |  6 +++---
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
-index 20c70c7d6bb..a788376d1d3 100644
---- a/target/arm/arm-powerctl.c
-+++ b/target/arm/arm-powerctl.c
-@@ -17,24 +17,12 @@
- #include "qemu/main-loop.h"
- #include "system/tcg.h"
- #include "target/arm/multiprocessing.h"
--
--#ifndef DEBUG_ARM_POWERCTL
--#define DEBUG_ARM_POWERCTL 0
--#endif
--
--#define DPRINTF(fmt, args...) \
--    do { \
--        if (DEBUG_ARM_POWERCTL) { \
--            fprintf(stderr, "[ARM]%s: " fmt , __func__, ##args); \
--        } \
--    } while (0)
-+#include "trace.h"
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 2a4826f5c4f..8f3e728d8ed 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -866,15 +866,15 @@ typedef struct ARMCPRegInfo ARMCPRegInfo;
+  * Access functions for coprocessor registers. These cannot fail and
+  * may not raise exceptions.
+  */
+-typedef uint64_t CPReadFn(CPUARMState *env, const ARMCPRegInfo *opaque);
+-typedef void CPWriteFn(CPUARMState *env, const ARMCPRegInfo *opaque,
++typedef uint64_t CPReadFn(CPUARMState *env, const ARMCPRegInfo *ri);
++typedef void CPWriteFn(CPUARMState *env, const ARMCPRegInfo *ri,
+                        uint64_t value);
+ /* Access permission check functions for coprocessor registers. */
+ typedef CPAccessResult CPAccessFn(CPUARMState *env,
+-                                  const ARMCPRegInfo *opaque,
++                                  const ARMCPRegInfo *ri,
+                                   bool isread);
+ /* Hook function for register reset */
+-typedef void CPResetFn(CPUARMState *env, const ARMCPRegInfo *opaque);
++typedef void CPResetFn(CPUARMState *env, const ARMCPRegInfo *ri);
  
- CPUState *arm_get_cpu_by_id(uint64_t id)
+ #define CP_ANY 0xff
+ 
+@@ -1100,7 +1100,7 @@ void raw_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value);
+  * CPResetFn that does nothing, for use if no reset is required even
+  * if fieldoffset is non zero.
+  */
+-void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *opaque);
++void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *ri);
+ 
+ /*
+  * Return true if this reginfo struct's field in the cpu state struct
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 009f8d6fa1c..7b23e7e5889 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1073,7 +1073,7 @@ static const ARMCPRegInfo v6k_cp_reginfo[] = {
+       .resetvalue = 0 },
+ };
+ 
+-static void arm_gt_cntfrq_reset(CPUARMState *env, const ARMCPRegInfo *opaque)
++static void arm_gt_cntfrq_reset(CPUARMState *env, const ARMCPRegInfo *ri)
  {
-     CPUState *cpu;
+     ARMCPU *cpu = env_archcpu(env);
  
--    DPRINTF("cpu %" PRId64 "\n", id);
--
-     CPU_FOREACH(cpu) {
-         ARMCPU *armcpu = ARM_CPU(cpu);
+@@ -5382,7 +5382,7 @@ static const ARMCPRegInfo rndr_reginfo[] = {
+       .access = PL0_R, .readfn = rndr_readfn },
+ };
  
-@@ -102,9 +90,9 @@ int arm_set_cpu_on(uint64_t cpuid, uint64_t entry, uint64_t context_id,
+-static void dccvap_writefn(CPUARMState *env, const ARMCPRegInfo *opaque,
++static void dccvap_writefn(CPUARMState *env, const ARMCPRegInfo *ri,
+                           uint64_t value)
+ {
+ #ifdef CONFIG_TCG
+@@ -7829,7 +7829,7 @@ uint64_t arm_cp_read_zero(CPUARMState *env, const ARMCPRegInfo *ri)
+     return 0;
+ }
  
-     assert(bql_locked());
- 
--    DPRINTF("cpu %" PRId64 " (EL %d, %s) @ 0x%" PRIx64 " with R0 = 0x%" PRIx64
--            "\n", cpuid, target_el, target_aa64 ? "aarch64" : "aarch32", entry,
--            context_id);
-+    trace_arm_powerctl_set_cpu_on(cpuid, target_el,
-+                                  target_aa64 ? "aarch64" : "aarch32",
-+                                  entry, context_id);
- 
-     /* requested EL level need to be in the 1 to 3 range */
-     assert((target_el > 0) && (target_el < 4));
-@@ -208,6 +196,8 @@ int arm_set_cpu_on_and_reset(uint64_t cpuid)
- 
-     assert(bql_locked());
- 
-+    trace_arm_powerctl_set_cpu_on_and_reset(cpuid);
-+
-     /* Retrieve the cpu we are powering up */
-     target_cpu_state = arm_get_cpu_by_id(cpuid);
-     if (!target_cpu_state) {
-@@ -261,7 +251,7 @@ int arm_set_cpu_off(uint64_t cpuid)
- 
-     assert(bql_locked());
- 
--    DPRINTF("cpu %" PRId64 "\n", cpuid);
-+    trace_arm_powerctl_set_cpu_off(cpuid);
- 
-     /* change to the cpu we are powering up */
-     target_cpu_state = arm_get_cpu_by_id(cpuid);
-@@ -297,7 +287,7 @@ int arm_reset_cpu(uint64_t cpuid)
- 
-     assert(bql_locked());
- 
--    DPRINTF("cpu %" PRId64 "\n", cpuid);
-+    trace_arm_powerctl_set_cpu_off(cpuid);
- 
-     /* change to the cpu we are resetting */
-     target_cpu_state = arm_get_cpu_by_id(cpuid);
-diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 4438dce7bec..252c05a9ebe 100644
---- a/target/arm/trace-events
-+++ b/target/arm/trace-events
-@@ -13,3 +13,9 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
- 
- # kvm.c
- kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
-+
-+# arm-powerctl.c
-+arm_powerctl_set_cpu_on(uint64_t mp_aff, unsigned target_el, const char *mode, uint64_t entry, uint64_t context_id) "cpu %" PRIu64 " (EL %u, %s) @ 0x%" PRIx64 " with R0 = 0x%" PRIx64
-+arm_powerctl_set_cpu_on_and_reset(uint64_t mp_aff) "cpu %" PRIu64
-+arm_powerctl_set_cpu_off(uint64_t mp_aff) "cpu %" PRIu64
-+arm_powerctl_reset_cpu(uint64_t mp_aff) "cpu %" PRIu64
+-void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *opaque)
++void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     /* Helper coprocessor reset function for do-nothing-on-reset registers */
+ }
 -- 
 2.43.0
 
