@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB97CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 00:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CAA7CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 00:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1vvP-0006rO-VQ; Thu, 25 Sep 2025 20:03:00 -0400
+	id 1v1w44-0002FP-HF; Thu, 25 Sep 2025 20:11:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1vvM-0006q6-1z
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 20:02:57 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1v1w42-0002Ez-RD
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 20:11:54 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1vvF-0004F1-4D
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 20:02:55 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-780292fcf62so1274804b3a.0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 17:02:43 -0700 (PDT)
+ id 1v1w3s-0005E6-HQ
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 20:11:54 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-77f605f22easo1444889b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 17:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758844959; x=1759449759; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dX34KFoiiTp61asmLbfrnTCpD5CdzFUQjNeyyD0cNgo=;
- b=tn+syQj7i6AQwE7XZ5EMY/Pve1AUYyQxkNP9w3cP04dOc3WO+ryIynFHtsp/QYjSKg
- bjv7p+V0dzy6uXNN/TecVO49TEZK3KB+TJcAEiY0691DSSLP+I8zKVKYUBfLgjglhkmH
- q9AWuD+J3/faGXxYt5RKVRPfOUrhP9Y6Ef0omghbaQzsn/HV/AIC+Ue0uiSrz25WZn1/
- eWwg7ZoNNOgdWYbweUodmIdpz7Egnv5vD6C2F91CCGTMc6LC3HkcH9CbGeDpRAO+JuQz
- qjv/rFGg2iw9gGw+od5kS31k9bEsX2wue3i/y2Sn40wZMFSUEZN73XdL43SLZngU2IR1
- JghA==
+ d=linaro.org; s=google; t=1758845498; x=1759450298; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tB5C290k7yyIo4Y/P1tVjReN0Xb1fSsY20ynZPbwsQ4=;
+ b=pXpLe2Cku21sw+ltMRJoAa0OB9N+0Xh1N8kALfkuXYH+9lCLTybd+SUwWuNqKd3mGz
+ tanN22EFW8rp6MaZIaJqTocWH8DsngXfbJ87BHn/ODZyDT8Ijpd3NosbeR0AnAU/PVii
+ KUGdBiWRMysjepnMAVSVcBdiFE4BfyAbp5pOoPuHpVTIBay2mJl3MQ5DOMjGUSUKv+er
+ +WsBpQyiOJgdG25DOwZjjjk/+n5HKijkd9fQ31kDaTEKW+eLT2DXGRi70pK9HCZcY/bx
+ 2i36StAB7R+v89gd9gdXoUu60vozu94TL4thiMOFa4GAbzhePWTt8rCDv8r8UDg0bGYM
+ umzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758844959; x=1759449759;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dX34KFoiiTp61asmLbfrnTCpD5CdzFUQjNeyyD0cNgo=;
- b=Y0vwbZ1UzLDzkOkelJ+GUyHAju9HCZ1mSbmObav3vqiUoD9zaGL1+jBPyp4mK1OENm
- fI30jh5RNKJ+1QJjnEjzm0o3wcjj6TACgKgjye0Ak6UnrW6D1+hRF2I+PuzRv2IOoQFn
- JkIvZI6iFoGl7h4cSgXpjPWX5IVGD7y2GXycRZh8IB8356RX7+pQV6Ua33UPnEdhHIXg
- WS/j2+PKUVz3gf6o82FMbsFrYEiObcJ6x2z5FkdCuQIeR3dsT4zqvoQEus/J0IAn/gpA
- vgnS1GGDsrukRVv0dOYwKy6oI1OWGld3OK9ytD0g6/tt3gPUOAt48XsKGJaTWsD4TDRW
- lj3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxil2ZY8lJiSoQVER0aSpWKdda6+If8LvmyRpRD4MdhwxZEPV5j4ZTgssSqZ+xOJqeYALrGVdB4k2l@nongnu.org
-X-Gm-Message-State: AOJu0Yy5f2bTDGPvEC1tW7Wv2PaTmIn4NJtlhzrFHtjD02PjufXb3u1o
- vrUeGKec6o0OhfKcv8/Z11NXkv/IgrYSFsu5F5gN12D3kFMynR0r6GgNiYDCrgWl8fo=
-X-Gm-Gg: ASbGnctoijHp1sL/SDVV6iH6Zb7ti6gBG8G58Xp4i8UEYtuYTcvQCfjbT4WZwoUAnd+
- FM8AVx31udM59GVE4LsIAadZEAIWlVkKOisrJIH4eayD37ezvTEgLnO7ZlbKcMlMkCBDOIBmfYR
- 17NyqgmwOJsQt9hGzDDroSd56ZmcmdH/q+OqVYje/PoZ4F+zu8b5DpPNb4crF9ANxss3LQWfwe/
- h8thJ7gs0zUoHjCM/O82ZaLDFc8iqI6WseFRUQJrZsKlCboHGkCOzAAWdkMD2K2NItzXZloCg5p
- yZYVjeBEtoAZdhI0FjMMSUwYhNIrR0vEFtiSQe15F/u3OGOOaz2+rumbPnpaTZY7jfVlWh2rM8L
- /1+bbdpKuqvtByBbp6r5Mq3wPXfPkDMIb/35Z3PFpRDE6MOU=
-X-Google-Smtp-Source: AGHT+IFgtGZjQowmJ0g0CWV7OJfHjy4gTJZt+K9oPfLX+/uNiNHHwUGthlbVs5OSFnw5ryjLchbRlg==
-X-Received: by 2002:a05:6a00:2e18:b0:774:1fd4:1007 with SMTP id
- d2e1a72fcca58-780fcec0a5bmr4109880b3a.23.1758844958995; 
- Thu, 25 Sep 2025 17:02:38 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78102c2b76esm2884652b3a.102.2025.09.25.17.02.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Sep 2025 17:02:38 -0700 (PDT)
-Message-ID: <a27a8ca5-ad86-44a5-8849-e28e1e3271c0@linaro.org>
-Date: Thu, 25 Sep 2025 17:02:37 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/23] util: introduce some API docs for logging APIs
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20250925094441.1651372-1-berrange@redhat.com>
- <20250925094441.1651372-10-berrange@redhat.com>
+ d=1e100.net; s=20230601; t=1758845498; x=1759450298;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tB5C290k7yyIo4Y/P1tVjReN0Xb1fSsY20ynZPbwsQ4=;
+ b=YjMgmy7XTSYq7FKO2NOr9n7iGuP+NE32nrGg+j2fLBmvQCRguIb/JVaPR6T2JtCcHl
+ n0N+5hlYblUMJ8HFKrq2P/F5GetzJx10hDacD1dTxp+YLiKmFJ+ak7IzmiOYY6mKQ6cu
+ R6QU8+DmIJULp3oFKMN+v9AwtnSvcCnkx+9G4bfqJU8BS7Jrd/Y9TPkpmJjMVMlZlWjV
+ QJHJjsBjN8/sZH2MqAFtSENd3ql3pr9uKrHDyPAv1O+1Cg+iA+mQdLeRYCg4Fv9hsxzJ
+ c1z5RERD/jI3hLCZWvbir9pyJ0+UN4KXXrbFPLv81MkAv8SJVT95qkTeDNXZlxvbWWGZ
+ /U1g==
+X-Gm-Message-State: AOJu0YwFpAGnYjOw4DMa5uy8LHNkxFjW/bE31JAHc4J6duWzYS+9KsqH
+ yr8Tx5iWsYpfq/Ca7HmHDHCNO5A6V06gI9sSIf/zkjNHrRPKbqhrI4Zs2S+IJLHnUPdyjtzRreO
+ /ENJ6
+X-Gm-Gg: ASbGnct9HvjnLNRRItJGWiCq0Mcj0mB5Cjj12G0GQhdKRl43DxNJPqU12qSVJAYY9oz
+ NYHX4hLZbV8Yrctj1nw9zarkhhhir34xWAOtmcH6lfCjL5VG1Hy1GSRaneum576J4hVNizZaySE
+ LcKa3RSGMXRQ3VgmXLgKJ63mlc3XPvKi2DPwvrJoqRrP6G4lCjHClCEq+A12dNIs5b2IkH79OxQ
+ dOOpGgZ1K+p9cEuny0tFZ/9tRr/1SayWKriDcAIssVVAfQiVxCJ+SQPzN4to4gDlmujwlRthkHf
+ JU+2Y2ehqjowYyEMFXJdFIdvAjpHY7u9pHeE5qTnuxjRqR5Y+kum7k4Nf96K/DCfMn6JbhPwS1I
+ 432OGcr+NujSw7PPdux6BWVLRpE6E
+X-Google-Smtp-Source: AGHT+IEMYClNsId25RIMqYL8dJaLmsFxmQBLvKlBiMXFDkOm4UDw7pNfploGjEQPtrmngoR+krHppA==
+X-Received: by 2002:a17:902:ef03:b0:27e:e55f:c6c3 with SMTP id
+ d9443c01a7336-27ee55fc7d3mr27117595ad.55.1758845497878; 
+ Thu, 25 Sep 2025 17:11:37 -0700 (PDT)
+Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-27ed6ac37efsm35829425ad.137.2025.09.25.17.11.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Sep 2025 17:11:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250925094441.1651372-10-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 03/10] target/arm: Enable FEAT_RME_GPC2 bits in gpccr_write
+Date: Thu, 25 Sep 2025 17:11:27 -0700
+Message-ID: <20250926001134.295547-4-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250926001134.295547-1-richard.henderson@linaro.org>
+References: <20250926001134.295547-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,97 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/25 02:44, Daniel P. Berrangé wrote:
-> This addresses two key gotchas with the logging APIs:
-> 
->   * Safely outputting a single line of text using
->     multiple qemu_log() calls requires use of the
->     qemu_log_trylock/unlock functions to avoid
->     interleaving between threads
-> 
->   * Directly outputting to the FILE object returned
->     by qemu_log_trylock() must be discouraged because
->     it prevents the inclusion of configured log message
->     prefixes.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/helper.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-I disagree with this point.
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c44294711f..bfc40c505e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5109,6 +5109,11 @@ static void gpccr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         R_GPCCR_ORGN_MASK | R_GPCCR_SH_MASK | R_GPCCR_PGS_MASK |
+         R_GPCCR_GPC_MASK | R_GPCCR_GPCP_MASK;
+ 
++    if (cpu_isar_feature(aa64_rme_gpc2, env_archcpu(env))) {
++        rw_mask |= R_GPCCR_APPSAA_MASK | R_GPCCR_NSO_MASK |
++                   R_GPCCR_SPAD_MASK | R_GPCCR_NSPAD_MASK | R_GPCCR_RLPAD_MASK;
++    }
++
+     env->cp15.gpccr_el3 = (value & rw_mask) | (env->cp15.gpccr_el3 & ~rw_mask);
+ }
+ 
+-- 
+2.43.0
 
-> 
-> Reported-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   include/qemu/log-for-trace.h | 35 ++++++++++++++++++++++++++++++++++-
->   include/qemu/log.h           | 26 ++++++++++++++++++++++++++
->   rust/util/src/log.rs         |  7 +++++++
->   3 files changed, 67 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
-> index d47c9cd446..4e05b2e26f 100644
-> --- a/include/qemu/log-for-trace.h
-> +++ b/include/qemu/log-for-trace.h
-> @@ -29,7 +29,40 @@ static inline bool qemu_loglevel_mask(int mask)
->       return (qemu_loglevel & mask) != 0;
->   }
->   
-> -/* main logging function */
-> +/**
-> + * qemu_log: report a log message
-> + * @fmt: the format string for the message
-> + * @...: the format string arguments
-> + *
-> + * This will emit a log message to the current output stream.
-> + *
-> + * The @fmt string should normally represent a complete line
-> + * of text, ending with a newline character.
-> + *
-> + * If intending to call this function multiple times to
-> + * incrementally construct a line of text, locking must
-> + * be used to ensure that output from different threads
-> + * is not interleaved.
-> + *
-> + * This is achieved by calling qemu_log_trylock() before
-> + * starting the log line; calling qemu_log() multiple
-> + * times with the last call having a newline at the end
-> + * of @fmt; finishing with a call to qemu_log_unlock().
-> + *
-> + * The FILE object returned by qemu_log_trylock() does
-> + * not need to be used for outputting text directly,
-> + * it is merely used to associate the lock.
-> + *
-> + *    FILE *f = qemu_log_trylock()
-> + *
-> + *    qemu_log("Something");
-> + *    qemu_log("Something");
-> + *    qemu_log("Something");
-> + *    qemu_log("The end\n");
-> + *
-> + *    qemu_log_unlock(f);
-> + *
-
-And I really don't like documenting this as the "right way".
-
-I believe that qemu_log *should* be used only for single-line output, all in one piece. 
-Larger blocks *should* always use qemu_log_trylock and fprintf.  The compiler has 
-optimizations transforming fprintf to fputs and fputc as appropriate.
-
-If we can manage to transform all existing usage of multiple qemu_log, then we can remove 
-the '\n' detection added in patch 8.
-
-As far as adding the new prefixes... perhaps we should have something like
-
-FILE *qemu_log_trylock_and_context(bool suppress_context)
-{
-     FILE *f = qemu_log_trylock();
-     if (f && !suppress_context) {
-         qmessage_context_print(f);
-     }
-     return f;
-}
-
-where qemu_log would do
-
-     f = qemu_log_trylock_and_context(incomplete);
-
-
-r~
 
