@@ -4,222 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2830CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129D3CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v28LY-0008CI-Au; Fri, 26 Sep 2025 09:18:48 -0400
+	id 1v28Lj-0008Fi-La; Fri, 26 Sep 2025 09:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v28LV-0008BU-Bd
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:18:45 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v28Kw-00044h-HJ
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:18:45 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QDHBsY028202;
- Fri, 26 Sep 2025 13:18:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=p69cq2Y5ZMINJD0qtiFp5zuaFis7FLEGRV7yroDELE4=; b=
- G2UviHyKma49EFEHG3Rrri65JUbYz3u6dzvx0fRgNwKoezU/C0zF42+xWlHNj1uf
- HxaIeULkCsJNXKW/a6nPYOB2gR+nnxJJLoDNxMrhSzttSi47TPrR0MhFuq5vgAK8
- gBlmlcp2iCRh4e4Dua9QHVM3WQiGKw6LfaYBqoIBlhUEjIHBHkdG3soPG6Mw4ZIj
- /ELzj5Pfl1uR19/1Ef1SA3u0qjAv3BRM9iRJzSQ0MoR4Nc85dLI0ZsDcTjGfP3Yg
- O7Uh0F+EuRvHZ+VDy3pdXvp7UDMybszK0Mmnn3FSBTxwefIj7L5pqwWLBtdTgbrj
- NR90Y6IKgAjYT2DDe4LvUg==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49dud2r0tj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Sep 2025 13:18:01 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58QCDnYB010253; Fri, 26 Sep 2025 13:18:00 GMT
-Received: from sa9pr02cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11013023.outbound.protection.outlook.com
- [40.93.196.23])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 49dawkyp2f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Sep 2025 13:18:00 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TMSG4UPpDk5sAMi0ZFfpUIOKu/iH2WhPT3BWtsnyysM4dXCQJj4g3QEcmaOqnfDPGS6+gi7iOlUaUEtHch/Zu0fhVNbWQ4fzBkvJ0BzA21eSGvLaHe52DxMcYClMQwQHiCb0q6tdt2rhopGP4XEyr3i5LiGMbXC2/L811SMM4pWS8xT6PukMIoybgeDCXsDD2XtQhufIXBfptDn6DzbMzEG5Vwyi/snzBr/yTo9RIe5seyfQOdUZZ6ULt5LNTL/QsqmGNoWWV6/1c9IDOGGkjmQwJeS4AhR3cQT33UtWGLXPOAd16GozE7rPx0DEDBjD84YObste9X4qu51tQG988A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p69cq2Y5ZMINJD0qtiFp5zuaFis7FLEGRV7yroDELE4=;
- b=DnyQvjNVrjaZJ1su7QsXHTtPLfKY3+xSJjt+nbEyLHDK4JUi6B1MAZnWN/XQkQedWXTxw6jF4ojOctpbZ7eoUDKGHZmFlA8qH3IpDnL9+PRpcMFK9+oJwkce48sW9UE4G68FfHgHWk0b2f0y9mu4vV+y3Yu5QcFRPOpIgM7fv2pTnix3quEt5gnHUoaOruQyprqgaeHflaGw+agAt3jdn7zPko8nJrfVgiqWk79dIrIcvXPdlgug9zvD1Jz7exLpFtwNhDZoHePYYOtLdBomdCKtvc1h0kLEOpdL256Y+bVP55Dag+RmlcNdbvrRa0GgXw4w4zfG4DMcALIbYyYYwg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v28Le-0008EX-3m
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:18:54 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v28L1-00045L-8l
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 09:18:52 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3ece1102998so1582251f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 06:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=p69cq2Y5ZMINJD0qtiFp5zuaFis7FLEGRV7yroDELE4=;
- b=JPE3z/v7QlmLmG6szFWjXlpux6POb6Oozy930Um2Ua+DVw90Imv35Ph3NByTUv3kMcKHtWnnVpRH587K48s1irDr87QDLsTPUNIrNuqbE7cyKGPIYPcNi1mk/yZiC0IU0yCMenZwDDm9uAcZL1hDXufRIey2rh5Wxp5DxxoJmrQ=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by IA1PR10MB6898.namprd10.prod.outlook.com (2603:10b6:208:422::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.13; Fri, 26 Sep
- 2025 13:17:57 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.9160.011; Fri, 26 Sep 2025
- 13:17:57 +0000
-Message-ID: <72aeaf62-cc9e-4ee1-a72f-145334b1aebb@oracle.com>
-Date: Fri, 26 Sep 2025 09:17:52 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] accel/kvm: Fix SIGSEGV when execute "query-balloon"
- after CPR transfer
-To: Markus Armbruster <armbru@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
- eric.auger@redhat.com
-References: <20250926022540.1884023-1-zhenzhong.duan@intel.com>
- <87v7l5stsj.fsf@pond.sub.org>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <87v7l5stsj.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR05CA0088.namprd05.prod.outlook.com
- (2603:10b6:a03:e0::29) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ d=linaro.org; s=google; t=1758892686; x=1759497486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KdzNx30rUo3Pw9DUxxGobILss0kFa1i4zUf9JaHJaqw=;
+ b=DrzcbKBDEX/NNzPbzlxM/5JjymvgHxBESDNYnnKYTalTJuITUwmeC1+S+R8nemCmp3
+ x9Ep6maMbMfsBMeEeXv8rOY5lNWfN4UJ44eMy35rwK4F5So2jJEVNT7d9UWEBd+t3BYt
+ PTNH7NO4Qc4smf1EWjF86f2HffHmHWZeI0ZB2eD9ex+rv0DnYLWJZZGMmRjVvOqMUlBB
+ T3vf/yS29Zur5DakErWk62FmQMQXn+liLbWaWryC1PpsSdKnlplg1llYQslFdiO+mmXw
+ rCK7yrKDhi7PRCWuGUbT2q13WJPORaqxdDVPKwaPw53KVYjGSdJvcA8JU2ImxYavps9s
+ LVFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758892686; x=1759497486;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KdzNx30rUo3Pw9DUxxGobILss0kFa1i4zUf9JaHJaqw=;
+ b=P1s3xNV1mLLHsexNvLlcUAlFqXNiN/Xh3A3PfUF6E97D+xlIaxUJQm6GIWf3nUhYE2
+ x+GgC0rXwveNk/1VD9oreObutH5dEAoGCrOjDlzJHXjM5spO5EoJsun4hVoJcwX6Qz1j
+ cnDNob/dzuHvX+LO6d4WlgArM8gd6blUU1P3dmKWjl7/ytP+6yH66rwtfUJLdF7M2wig
+ 36y+jfU9/NNhv7R1z6s9MwJWbVaFVKTmDiP4Awuj5u0NU7rkUXvEKCcWVUSaWGL+lQPX
+ rAEMKfTKTgn1w6GekbpibFjekeosoE0zBp8zb6ckj0dpz/c6zk/oDBCe6RFIUSb53LQg
+ J/Kw==
+X-Gm-Message-State: AOJu0YyADNH+AEQEzYZQ4jaTYJTJ8aK+NBzbQuDrjj32wN3g7Xq5Rh+A
+ V7NpF5/OBkxSt6A/K2rfqh0KiTT8owE2b+yZ/277LrNyuZ1tgE3l0xC+ObrBJXf2LF1TUCW2zp6
+ A4idBOrA=
+X-Gm-Gg: ASbGncuP0Nceoy1vZJsPhzWuM1wolBjxSgT2ymci8VlqyCmrrVKS68IvAO7uJEf2wzR
+ n5oyqKUvAIq8nt9U/JCSxvKRRf3xIweubvRPE7Q7OP9GKHodOhI+qaVFSqp0+vDcDAB8ZjSStHD
+ WUDHlpw+NPcNn3+ZAiJrmV0dcYrt09gdd+et9VTxUNNDOcYvJaTfy3zSnB5Z4F1DyV89uxI43vg
+ Ckg7wqR3WKLLl5q1mdwMB/WDl9387HtGUZJxSNSL0U8Rdmsmn5iTU4wlyWA6pbXXz18Zy1ngKkI
+ ewh7y3pjewxfTcCGMk8odyF8m/YXdpDmX6mheCSSwRbdlYW1dHIUDov3amdnUgkIOlln4t82YXF
+ o0fOm130VU0IZ2NMjP93c/+ELzGZm4UPdXQ==
+X-Google-Smtp-Source: AGHT+IH7oqdsryD8xwGboUcdNnv5j+wI5Mk5w0CXJErw1t6lnah7Q6qXmWYuRRTFb9uwJiIISoaYbw==
+X-Received: by 2002:a05:6000:2507:b0:3ec:d740:a71b with SMTP id
+ ffacd0b85a97d-40e47ee096cmr6529209f8f.31.1758892685744; 
+ Fri, 26 Sep 2025 06:18:05 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fc5602dfdsm6967723f8f.33.2025.09.26.06.17.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Sep 2025 06:17:57 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9D8105F7C3;
+ Fri, 26 Sep 2025 14:17:46 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 20/24] contrib/plugins/uftrace: implement privilege level
+ tracing
+Date: Fri, 26 Sep 2025 14:17:39 +0100
+Message-ID: <20250926131744.432185-21-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20250926131744.432185-1-alex.bennee@linaro.org>
+References: <20250926131744.432185-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|IA1PR10MB6898:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5d8901a6-b419-4f7b-8d01-08ddfcff1c10
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?R2FwR2tUYmZYZmQ2S055SW9jdTZITGhBajFjSDEvTExPZjBxQmx2OUhzYWVL?=
- =?utf-8?B?QnRkd2V1QTlpaW5seVRlT242V2R6M1U1VitXU0RtZWxMUU1hQVN2bVFQclk3?=
- =?utf-8?B?ZSs1RUZRUmZEd1psQ0pCV2EzSzkyOEw5MFV0MElZRjBjQWhhQzAxZGdWUHpk?=
- =?utf-8?B?c0FaYlBvcEdFekgxYWRDUktGaVA5b0RhL2krY3FWRHNIZ2lrOWp2V2VHZVp2?=
- =?utf-8?B?d2d2R1NHQVFkZ0cyYmdpTWg5cFRvTlZjVkpINml0SlE5akhZTFRERFB0M3M4?=
- =?utf-8?B?M3JLOFNpQ2lvY05pV3ZpZ3Q2ek52b292VXJyY2ZWcjRqTnh3QjFHS0ZmNEdw?=
- =?utf-8?B?eDhBdk9EQ25Hc2RpeERuKzFXaHBPVExoMGMveW9hRFpiNlY4WUdVZWprWWZ2?=
- =?utf-8?B?QWpNWWV6Z3AvZ0owbjBhMkpOVFdaUklTem1OVjFFdnhidkQveDk2WTQ5ZU80?=
- =?utf-8?B?MDJrZjVxTjVUczJJVVMzTjFtNHVRWFE1QVJJa1FIQmdVR3B4TVkzbGxJK0VI?=
- =?utf-8?B?bm11NkFmQmEzTTNYcmJZR2VTVzIzN1RueU9WVENoMHBHUTlka2N4V3hwS21o?=
- =?utf-8?B?dmJZRmJtY2tzUWt3ME8vdmlzbDNxZGNzUHk4dC9FTkVNMWJITmdjYmRKUjhs?=
- =?utf-8?B?U2ZhdEgvWjFlNmJQcXVWbisvZEg1VUFTLzc0RkNWRDVCZ1MxU2tiYUIyQ0tS?=
- =?utf-8?B?akFsWWdOZjdIRG1kSjc5L0JZRWIyQlFTbVdGMG5pNFBKb0F3TGtTQ0dGTnNx?=
- =?utf-8?B?RzNvbDh6U0JraWVyNXNRU05ZNnlLUkVNWWxnZitTSFdFZndEd2V1WmxBaGVP?=
- =?utf-8?B?ZFJQOGo2dGc1djdLL01QM1h1MWhHOTJqcVg3QTRXeUduU2p6L3Z0UVJmRk9H?=
- =?utf-8?B?eDhRcmQxRjFVMy9HajZwcEgwa0RpbFB1TkdPOGFVVmFGWlhUT2VkY25RY2lG?=
- =?utf-8?B?ZVJNSG1JZEM2NUQ0SG9JNlBRN3liS0NlRzFadS84WVFwcWx2YWFKMW5Kakd4?=
- =?utf-8?B?cDZ2NnhMSWR6bXIzS3lWTTd6ZnJZYm9iQWxJMkRjaTZjb0VpRWF0QXNCZ3Vx?=
- =?utf-8?B?THg3K1gxOUR3bGdMVHNEOEwzaDVYekVFUDFtbCtOM01EanM2QWlQTE16T3Bm?=
- =?utf-8?B?WEhwcFdXMy8wc1RTSWpnWmREay84UWFBSE8rZ1lpZVQ4cG5Rbms3cVB5UWtu?=
- =?utf-8?B?WU5ONmZaVXdJb0wreDNOV0xQQmxkelpOODlMbUlJSThVdStmL3M0akc3TEFh?=
- =?utf-8?B?T1NTMDErTGNNY0Yzdkc3TC9KV1gyZnpJZ2QrcHFyN3VrcW1aNzJQOTlZRDBj?=
- =?utf-8?B?aTM4WmNIbmkrKzVMOEZrWDZ5enlPTEdtbEd4UXpPdUNBTElBQm5HTXp5N2Z0?=
- =?utf-8?B?ZzJCTkFUZXJTTlRqUUtzQmtXLzdML295bSt6dkwwYW9VZWlqRG42YXhlaks5?=
- =?utf-8?B?U3lQNEY3MVlmYldOWTNtMGJQdXNxWWQ4ODRDQVNkd1VTYUdzNnBVYW5NdmQ3?=
- =?utf-8?B?cjRRaVUxbHlzT012T0NpTkhERDRtVTVuVUJsRE5VYndtRGttNnNmSGQvTElR?=
- =?utf-8?B?VTZicE54MWZuRWI1dEo1RlpJUkx0K3FrL21IbW1YQlczWUhiaGVtR2dKUlkv?=
- =?utf-8?B?dVdYSlM1WXJ4Q1Uyb2U2VTEyRWt4TVpzazMwQlJyMzdvWE82WlFESzlFOEJq?=
- =?utf-8?B?eHdPR1h5dnYxK0JhZFkydXR4K3dlb1dDZW1FWVo1TnBBTkRVMVQyWW1LMXpo?=
- =?utf-8?B?d2RNSG9iUjBsSm05OGFDSjUzVmc0ZkEzbHNiZHdvN05vTHpzSkZGcTU3SXZV?=
- =?utf-8?B?YTE4VTEwWmxCalFYU0U1Z1dLWGg4Ym15RVZoeWpFdWtlSDIySFZnMmMwZEEz?=
- =?utf-8?B?TG5zTUVBc24vYy81YnhPR09WSEhuTnordVZzQVZyOGJPdXdXRjd3UmlYcTVv?=
- =?utf-8?Q?ox33vhIj0EY=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RnZWZjB0RmxMM200N2tXWlBHOWVwWHhzSU11bW85cE1lZEJDWkdST2MycGw3?=
- =?utf-8?B?TmkraFN6YkMxcFNYVjd5cnVLWmJuQlBKY1MvS011Y0dIQkhSV3FqTFJwTUdh?=
- =?utf-8?B?TldadkxrQU9TeWFWdkNabW1FRm5URERiK2M4TGRzKzBQT3l2bVFMbS9qUFlk?=
- =?utf-8?B?dkJBSUt3L24xNXhYcWlCcVRvdHBaTlo1L0tuell2WDRQSVlJckZmdDRqVGZp?=
- =?utf-8?B?Z1hZQjV4R3pLQmFTeEpBazQ0MDRpYTIyK2VCSHF6cFMzNnB5eEtUMnNVcnlX?=
- =?utf-8?B?SGRVTlY2YXoxN0c1c01Ub0tvQy9oc0pwVDFHTGZ3VDV0SVdjWFRaYWxLZ3FU?=
- =?utf-8?B?cElrSUlFWXFZNWpiM0c1VXFWR3NwNEZ5MHNRTi8xblNnTUNWWGdYVzlBanhj?=
- =?utf-8?B?SG1RTUhneFlTY01Nd1pjN09EZ2dhMG9vcS8zdlNMbWRwMkEvMTE2cHUyL3RH?=
- =?utf-8?B?RHo3d2prQUMxc2xHY2VlR0NqWU8xMUk1TGdLRkR1WXhVQUR3L0tPREEyK3Mz?=
- =?utf-8?B?TzRmcW13OEh5VkFyUUhENkdKT1ZPK09CNGFwZzhRVjBFcmJ3eGxFYW5iWmRN?=
- =?utf-8?B?WVYybmRWWDZHZ2wrbXdveFJDTnJUV3czdnB0dWxOSW0zM1V0anE2Q3hwY1gx?=
- =?utf-8?B?THh0eUs2LzBoMmRFbmt5YVIvbGpWd3hUMXBrMWxIVzN4dEJ0NENaaFh5SUFJ?=
- =?utf-8?B?TWhFdzFNMDNZd09acTllWmRYUGNjS25VNTU4aU5yNUZYZ3BRdVUyRlllS3dn?=
- =?utf-8?B?NHZIcFlacmlWdTV6bEdvTVM3bHkrOUlTUnlwbjJBWjdKNmpJRG5ab20zRDVK?=
- =?utf-8?B?SFNBbnBnQVlWVitiYVVVaTU2bEhDOW05anVuMk84RldpQmFGSTV0NUViYThy?=
- =?utf-8?B?TFpVZ0JGcmJicy9HRnB1SHc2dFdOUGpqUXdYTVE1L3Fuckc4T2NWTXpvTVR2?=
- =?utf-8?B?VStjamI2czBJNWhTNWVjcHRZYUpOWFZSa25RMTJVK1gxK1NHMEFEcjZHU2Rw?=
- =?utf-8?B?anhMc0RXb1NQUGRTbFU0MEtiWjB1ZXZZc1prR1ZMSUFERkJ2NjU1NTJja2Zs?=
- =?utf-8?B?QzgvT2JqMVl1K2dkYlVYTktvQ1ljM1gwTStEQ2JrbGNzelpjayt6MjFUL2o1?=
- =?utf-8?B?OVl4Yk1wTG50cHdqTWh6a2I5ZDFKY3FEM0hsL2Z6ajkzZmNhb0NMTnlDK1BO?=
- =?utf-8?B?NGg2bDYrL2FjSXJiWkVJcDFkTUlDNzR2aVVjaVpCRzNWenpCNjEvWm9XSjhL?=
- =?utf-8?B?MHgvS3ZoeWVtWEgxSHV1V0duYjFIbUVFZ20wQ3hMT0tQNHAwakF2RXkrQlZ3?=
- =?utf-8?B?cmxLWkxPR1VGR1p2TUNIUWQrZDU2OXN1TWdxaDR4dVQvWUlSVzhTOWgrZTdI?=
- =?utf-8?B?a05RK1UvNVNmMGpVZkJYczJTWHcwSWpLaE9Ea0dmOGdYdllwTDc2cXlVNlk3?=
- =?utf-8?B?WEo5QWFBclBzQ2UvM0pma0wwZkpGZXc2UWRwUkxlb0M2UGh4T2w5bDlpeVdq?=
- =?utf-8?B?Q2d4RGVRTHlnSGEyMFlycWJPZytuOHptSXdBVmZiN0RUaWRkdE9xcGd3V3E4?=
- =?utf-8?B?Y1YwdjlNdTNsTE9qWmQvbEpmSHNXV1ROV0RMS0lUUUlWR1h1aGw4MWV5MVRB?=
- =?utf-8?B?Y0hnYnBhd1NFOG9icXBNb1JpN2RadjBCZW1PZ0E4MlNreHcrbUpaYzYrcWQ4?=
- =?utf-8?B?aDcwQ3FWNm85MnJpamlOdkxtNm1tZUtQRTRBVWpIaUlPQ3ovTmhENHY2ckpH?=
- =?utf-8?B?ZktPYjNBQyt2OGdXTU84eWZhZEtQbmFUa1ZxUENMbmhuUlAzQjgzSXVnVTA3?=
- =?utf-8?B?cG9MYnNDd052NlJxcElsd3dGNU9XQ1JQdDJ0cEtuMDBaQlBOQm5pN2xPOU1k?=
- =?utf-8?B?c1RBaGZrRGp4a296c3p3azRMTkxMczA0OGJqSzNQdUE0VnNiNjFoNU5sUFZ2?=
- =?utf-8?B?dG1nQ0JCVWNMV3kwR3l4d0h0T2NLRzAya2g2NUo1U0pmYmpRU0NNTlNDb1c2?=
- =?utf-8?B?WmNoT0NKL0k5dHlxVnB2eEtnVFJrYnd6SGI4WVRTeC8yRGVReldOQUozY1FP?=
- =?utf-8?B?ajFjcnAxenNaajFNb2QzR0cvdUtZWnR3VFJrN0t2UW5RK3Z1c0JvNjlZaWRU?=
- =?utf-8?B?WmJtdGcwUkxTQzVnckpuc0lJcU5QeFdwdVI5aDk2VEJDT1hUYlV4eHhtS2Fq?=
- =?utf-8?B?dFE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: gEx409QSxLhXaU+wfQtZ3ZSooYgxl9ujjiz88ZQ2sGxhr8szDwPdDvPfJRR9eTAmrQhfrP1DWCLDNmS2s6WVsQbV5hMCeiU8zFtszdkFf7cE4HXr3H/nmh8Gvnt0cuqTh+TjbZnwC9W+TKZhoD4w6s37hO5dcpZ9naGdVr6UkK7XKDF7VZdhAeS70KsNk38hJ8Ua0DJ1Guba7dFrzzru14lV/JghMGOXemNI/3EwiR/xl2ihPxGbEM32FohGsl0Yk0w4gPLBnxYFshsg0P0WFvdoXR5XyNKmOopyZ5msEIIwtS2Y6do9Ja5oYmKUfcKnZ1+I6KIr7YHsxi8Wk74y/OphpHccS2s2/8q6bya6Q8VXqa/DxloHEJvRSuStzNeMCabFvahD/lGhTG3uGKZGdRrAVr9H1ZOL+QCK4t24i7619l+4l6GJfN2FmcB4Zczdsb1jVQ4vm/9usLkUubGLuW2MwFtlTG9CsJy6TCrdqbnEmiizbYIg6mmK/XQeqGvwspsysMz3Wyi4vlAoy3T2LuF8pY7E3d23jiN+VfBut0Er07RfM3zIJbR99HHE44DDiuD9jdpPZALHKAZ/txnHHVKRXpIc0vZ6DQpVO6RjtJo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5d8901a6-b419-4f7b-8d01-08ddfcff1c10
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2025 13:17:57.6425 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d3NWvM61OvjPKbmL+blTJMqFt83s+nkXGtLsAg0I0YC0zuCh2XhpTsJmXKqWFCr0YoIJjJzI9WgM9e+woZhlfj6JJy91KVW0+39g4Xlywxk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB6898
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-26_04,2025-09-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- suspectscore=0
- malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=999 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2509150000 definitions=main-2509260122
-X-Authority-Analysis: v=2.4 cv=M+9A6iws c=1 sm=1 tr=0 ts=68d69289 b=1 cx=c_pps
- a=qoll8+KPOyaMroiJ2sR5sw==:117
- a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=QyXUC8HyAAAA:8 a=i2Y-thalyPeD3TXGFfoA:9
- a=QEXdDO2ut3YA:10 cc=ntf awl=host:12090
-X-Proofpoint-GUID: GLmKf64Np55LpWyeYAn9UqExbTJfsBAU
-X-Proofpoint-ORIG-GUID: GLmKf64Np55LpWyeYAn9UqExbTJfsBAU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI2MDEyMCBTYWx0ZWRfXzn5xw8LnxLAL
- 6JIdFkPdpOt/l3MyKoyp8zeIVFK4yyEvWUewAQKtQz9euMJdWQX4KGaZeRG2z+MqYXj0BFhX4hm
- u3Vyp0uPGIlPe7nTKePjfpIS7gjDt7+eFrI5KBT8Wb4tpckLHya/6OcQBLIxqi8ZsmQ71tTVsEr
- lgX0WDuT4n4zYc6lqp3QV7/UpZN0UFqFhSjp87976Qf/pICyJultP8a+7chbvdD6xTJSa/CGMQa
- hd8vakw8lEqYCPGee8Boe02bXnk41HWnI55kj3+8EHYD2cXIpLe+0bE8q0FnaCXKXE2qIyRU2de
- di4dJgQXBIM0orUgTZxBS/C0TJM/p9WcmaY10gKK4w+MbAghwfsgz3/JIqb+aJ9x6vLkDGeP3Gw
- qrvL/dGYO43ucEKC4u0zjvCGsHfFX+CD9gQKzeSH8kUXOnyBPQc=
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -235,46 +108,315 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/26/2025 12:48 AM, Markus Armbruster wrote:
-> Zhenzhong Duan <zhenzhong.duan@intel.com> writes:
-> 
->> After CPR transfer, source QEMU close kvm fd and free kvm_state,
->> "query-balloon" will check kvm_state->sync_mmu and trigger NULL
->> pointer reference.
->>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->> ---
->>   accel/kvm/kvm-all.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index 9060599cd7..a3e2d11763 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -3479,7 +3479,7 @@ int kvm_device_access(int fd, int group, uint64_t attr,
->>   
->>   bool kvm_has_sync_mmu(void)
->>   {
->> -    return kvm_state->sync_mmu;
->> +    return kvm_state && kvm_state->sync_mmu;
->>   }
->>   
->>   int kvm_has_vcpu_events(void)
-> 
-> This dereference could signify there's a general assumption *kvm_state
-> is valid, i.e. there might be more dereferences hiding in the code.
-> 
-> Have you checked?
-> 
-> Is freeing @kvm_state after CPR transfer useful?
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-There are other references to kvm_state which are checked by earlier cpr patches.
-The risk/consequence of missing something is low, because this only occurs on source
-QEMU after the target is live.
+We add new option trace-privilege-level=bool, which will create a
+separate trace for each privilege level.
+This allows to follow changes of privilege during execution.
 
-The KVM instance is closed to release KVM page table references and speed execv
-during cpr-exec mode.
+We implement aarch64 operations to track current privilege level
+accordingly.
 
-- Steve
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20250902075042.223990-6-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20250922093711.2768983-22-alex.bennee@linaro.org>
+
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index b9dcd531987..10abad0673c 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -46,19 +46,40 @@ typedef struct {
+     void (*init)(Cpu *cpu);
+     void (*end)(Cpu *cpu);
+     uint64_t (*get_frame_pointer)(Cpu *cpu);
++    uint8_t (*get_privilege_level)(Cpu *cpu);
++    uint8_t (*num_privilege_levels)(void);
++    const char *(*get_privilege_level_name)(uint8_t pl);
+     bool (*does_insn_modify_frame_pointer)(const char *disas);
+ } CpuOps;
+ 
+ typedef struct Cpu {
+     Trace *trace;
+     Callstack *cs;
++    uint8_t privilege_level;
++    GArray *traces; /* Trace *traces [] */
+     GByteArray *buf;
+     CpuOps ops;
+     void *arch;
+ } Cpu;
+ 
++typedef enum {
++    AARCH64_EL0_SECURE,
++    AARCH64_EL0_NONSECURE,
++    AARCH64_EL0_REALM,
++    AARCH64_EL1_SECURE,
++    AARCH64_EL1_NONSECURE,
++    AARCH64_EL1_REALM,
++    AARCH64_EL2_SECURE,
++    AARCH64_EL2_NONSECURE,
++    AARCH64_EL2_REALM,
++    AARCH64_EL3,
++    AARCH64_PRIVILEGE_LEVEL_MAX,
++} Aarch64PrivilegeLevel;
++
+ typedef struct {
+     struct qemu_plugin_register *reg_fp;
++    struct qemu_plugin_register *reg_cpsr;
++    struct qemu_plugin_register *reg_scr_el3;
+ } Aarch64Cpu;
+ 
+ typedef struct {
+@@ -74,6 +95,7 @@ typedef enum {
+ } UftraceRecordType;
+ 
+ static struct qemu_plugin_scoreboard *score;
++static bool trace_privilege_level;
+ static CpuOps arch_ops;
+ 
+ static uint64_t gettime_ns(void)
+@@ -251,6 +273,16 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+     return *((uint64_t *) buf->data);
+ }
+ 
++static uint32_t cpu_read_register32(Cpu *cpu, struct qemu_plugin_register *reg)
++{
++    GByteArray *buf = cpu->buf;
++    g_byte_array_set_size(buf, 0);
++    size_t sz = qemu_plugin_read_register(reg, buf);
++    g_assert(sz == 4);
++    g_assert(buf->len == 4);
++    return *((uint32_t *) buf->data);
++}
++
+ static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
+ {
+     g_assert(addr);
+@@ -308,6 +340,68 @@ static struct qemu_plugin_register *plugin_find_register(const char *name)
+     return NULL;
+ }
+ 
++static uint8_t aarch64_num_privilege_levels(void)
++{
++    return AARCH64_PRIVILEGE_LEVEL_MAX;
++}
++
++static const char *aarch64_get_privilege_level_name(uint8_t pl)
++{
++    switch (pl) {
++    case AARCH64_EL0_SECURE: return "S-EL0";
++    case AARCH64_EL0_NONSECURE: return "NS-EL0";
++    case AARCH64_EL0_REALM: return "R-EL0";
++    case AARCH64_EL1_SECURE: return "S-EL1";
++    case AARCH64_EL1_NONSECURE: return "NS-EL1";
++    case AARCH64_EL1_REALM: return "R-EL1";
++    case AARCH64_EL2_SECURE: return "S-EL2";
++    case AARCH64_EL2_NONSECURE: return "NS-EL2";
++    case AARCH64_EL2_REALM: return "R-EL2";
++    case AARCH64_EL3: return "EL3";
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint8_t aarch64_get_privilege_level(Cpu *cpu_)
++{
++    Aarch64Cpu *cpu = cpu_->arch;
++    /*
++     * QEMU gdbstub does not provide access to CurrentEL,
++     * so we use CPSR instead.
++     */
++    uint8_t el = cpu_read_register32(cpu_, cpu->reg_cpsr) >> 2 & 0b11;
++
++    if (el == 3) {
++        return AARCH64_EL3;
++    }
++
++    uint8_t ss = AARCH64_EL0_SECURE;
++    if (!cpu->reg_scr_el3) {
++        ss = AARCH64_EL0_NONSECURE;
++    }
++    uint64_t scr_el3 = cpu_read_register64(cpu_, cpu->reg_scr_el3);
++    uint64_t ns = (scr_el3 >> 0) & 0b1;
++    uint64_t nse = (scr_el3 >> 62) & 0b1;
++    switch (nse << 1 | ns) {
++    case 0b00:
++        ss = AARCH64_EL0_SECURE;
++        break;
++    case 0b01:
++        ss = AARCH64_EL0_NONSECURE;
++        break;
++    case 0b11:
++        ss = AARCH64_EL0_REALM;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    const uint8_t num_ss = 3;
++    Aarch64PrivilegeLevel pl = el * num_ss + ss;
++    return pl;
++}
++
+ static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
+ {
+     Aarch64Cpu *cpu = cpu_->arch;
+@@ -324,6 +418,10 @@ static void aarch64_init(Cpu *cpu_)
+                         "available. Please use an AArch64 cpu (or -cpu max).\n");
+         g_abort();
+     }
++    cpu->reg_cpsr = plugin_find_register("cpsr");
++    g_assert(cpu->reg_cpsr);
++    cpu->reg_scr_el3 = plugin_find_register("SCR_EL3");
++    /* scr_el3 is optional */
+ }
+ 
+ static void aarch64_end(Cpu *cpu)
+@@ -345,9 +443,34 @@ static CpuOps aarch64_ops = {
+     .init = aarch64_init,
+     .end = aarch64_end,
+     .get_frame_pointer = aarch64_get_frame_pointer,
++    .get_privilege_level = aarch64_get_privilege_level,
++    .num_privilege_levels = aarch64_num_privilege_levels,
++    .get_privilege_level_name = aarch64_get_privilege_level_name,
+     .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
+ };
+ 
++static void track_privilege_change(unsigned int cpu_index, void *udata)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
++    uint8_t new_pl = cpu->ops.get_privilege_level(cpu);
++
++    if (new_pl == cpu->privilege_level) {
++        return;
++    }
++
++    uint64_t pc = (uintptr_t) udata;
++    uint64_t timestamp = gettime_ns();
++
++    trace_exit_stack(cpu->trace, cpu->cs, timestamp);
++    callstack_clear(cpu->cs);
++
++    cpu->privilege_level = new_pl;
++    cpu->trace = g_array_index(cpu->traces, Trace*, new_pl);
++
++    cpu_unwind_stack(cpu, cpu->ops.get_frame_pointer(cpu), pc);
++    trace_enter_stack(cpu->trace, cpu->cs, timestamp);
++}
++
+ static void track_callstack(unsigned int cpu_index, void *udata)
+ {
+     uint64_t pc = (uintptr_t) udata;
+@@ -400,6 +523,13 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ {
+     size_t n_insns = qemu_plugin_tb_n_insns(tb);
++    uintptr_t tb_pc = qemu_plugin_tb_vaddr(tb);
++
++    if (trace_privilege_level) {
++        qemu_plugin_register_vcpu_tb_exec_cb(tb, track_privilege_change,
++                                             QEMU_PLUGIN_CB_R_REGS,
++                                             (void *) tb_pc);
++    }
+ 
+     /*
+      * Callbacks and inline instrumentation are inserted before an instruction.
+@@ -433,18 +563,36 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+ 
+     cpu->ops.init(cpu);
+     cpu->buf = g_byte_array_new();
++    cpu->traces = g_array_new(0, 0, sizeof(Trace *));
+ 
+     g_assert(vcpu_index < UINT32_MAX / TRACE_ID_SCALE);
+-    /* trace_id is: cpu_number * TRACE_ID_SCALE */
++    g_assert(cpu->ops.num_privilege_levels() < TRACE_ID_SCALE);
++    /* trace_id is: cpu_number * TRACE_ID_SCALE + privilege_level */
+     uint32_t trace_id = (vcpu_index + 1) * TRACE_ID_SCALE;
+ 
+-    g_autoptr(GString) trace_name = g_string_new(NULL);
+-    g_string_append_printf(trace_name, "cpu%u", vcpu_index);
+-    cpu->trace = trace_new(trace_id, trace_name);
+-    /* create/truncate trace file */
+-    trace_flush(cpu->trace, false);
++    if (trace_privilege_level) {
++        for (uint8_t pl = 0; pl < cpu->ops.num_privilege_levels(); ++pl) {
++            g_autoptr(GString) trace_name = g_string_new(NULL);
++            g_string_append_printf(trace_name, "cpu%u %s", vcpu_index,
++                                   cpu->ops.get_privilege_level_name(pl));
++            Trace *t = trace_new(trace_id + pl, trace_name);
++            g_array_append_val(cpu->traces, t);
++        }
++    } else {
++        g_autoptr(GString) trace_name = g_string_new(NULL);
++        g_string_append_printf(trace_name, "cpu%u", vcpu_index);
++        Trace *t = trace_new(trace_id, trace_name);
++        g_array_append_val(cpu->traces, t);
++    }
++
++    for (size_t i = 0; i < cpu->traces->len; ++i) {
++        /* create/truncate trace files */
++        Trace *t = g_array_index(cpu->traces, Trace*, i);
++        trace_flush(t, false);
++    }
+ 
+     cpu->cs = callstack_new();
++    cpu->trace = g_array_index(cpu->traces, Trace*, cpu->privilege_level);
+ }
+ 
+ static void vcpu_end(unsigned int vcpu_index)
+@@ -452,7 +600,12 @@ static void vcpu_end(unsigned int vcpu_index)
+     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+     g_byte_array_free(cpu->buf, true);
+ 
+-    trace_free(cpu->trace);
++    for (size_t i = 0; i < cpu->traces->len; ++i) {
++        Trace *t = g_array_index(cpu->traces, Trace*, i);
++        trace_free(t);
++    }
++
++    g_array_free(cpu->traces, true);
+     callstack_free(cpu->cs);
+     memset(cpu, 0, sizeof(Cpu));
+ }
+@@ -461,7 +614,13 @@ static void at_exit(qemu_plugin_id_t id, void *data)
+ {
+     for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
+         Cpu *cpu = qemu_plugin_scoreboard_find(score, i);
+-        trace_flush(cpu->trace, true);
++        for (size_t j = 0; j < cpu->traces->len; ++j) {
++            Trace *t = g_array_index(cpu->traces, Trace*, j);
++            trace_flush(t, true);
++        }
++    }
++
++    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
+         vcpu_end(i);
+     }
+ 
+@@ -472,6 +631,21 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                            const qemu_info_t *info,
+                                            int argc, char **argv)
+ {
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "trace-privilege-level") == 0) {
++            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
++                                        &trace_privilege_level)) {
++                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
++                return -1;
++            }
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
++
+     if (!strcmp(info->target_name, "aarch64")) {
+         arch_ops = aarch64_ops;
+     } else {
+-- 
+2.47.3
 
 
