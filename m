@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B53CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6E1CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:13:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23Y2-00077U-7b; Fri, 26 Sep 2025 04:11:22 -0400
+	id 1v23Z4-0007dB-EW; Fri, 26 Sep 2025 04:12:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23Xy-00075v-Te; Fri, 26 Sep 2025 04:11:18 -0400
+ id 1v23Yu-0007Wr-UZ; Fri, 26 Sep 2025 04:12:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23Xs-0000DF-JY; Fri, 26 Sep 2025 04:11:18 -0400
+ id 1v23Yd-0000RD-Bo; Fri, 26 Sep 2025 04:12:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C7C1157D4D;
+ by isrv.corpit.ru (Postfix) with ESMTP id B29B9157D55;
  Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2D1E4290C31;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BC8C9290C39;
  Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Steve Sistare <steven.sistare@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 05/60] hw/intc/arm_gicv3_kvm: preserve pending
- interrupts during cpr
-Date: Fri, 26 Sep 2025 11:09:33 +0300
-Message-ID: <20250926081031.2214971-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 13/60] i386/kvm/vmsr_energy: Plug memory leak on
+ failure to connect socket
+Date: Fri, 26 Sep 2025 11:09:41 +0300
+Message-ID: <20250926081031.2214971-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -45,7 +44,8 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,91 +61,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Markus Armbruster <armbru@redhat.com>
 
-Close a race condition that causes cpr-transfer to lose VFIO
-interrupts on ARM.
+vmsr_open_socket() leaks the Error set by
+qio_channel_socket_connect_sync().  Plug the leak by not creating the
+Error.
 
-CPR stops VCPUs but does not disable VFIO interrupts, which may continue
-to arrive throughout the transition to new QEMU.
-
-CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
-future interrupts to the producer eventfd, where they are preserved.
-Old QEMU then destroys the old KVM instance.  However, interrupts may
-already be pending in KVM state.  To preserve them, call ioctl
-KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
-they will be picked up when the new KVM+VCPU instance is created.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-id: 1754936384-278328-1-git-send-email-steven.sistare@oracle.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 376cdd7e9c94f1e03b2c58e068e8ebfe78b49514)
+Fixes: 0418f90809ae (Add support for RAPL MSRs in KVM/Qemu)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250723133257.1497640-2-armbru@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+(cherry picked from commit b2e4534a2c9ce3d20ba44d855f1e2b71cc53c3a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 6166283cd1..0cd14d78a7 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -31,6 +31,7 @@
- #include "gicv3_internal.h"
- #include "vgic_common.h"
- #include "migration/blocker.h"
-+#include "migration/misc.h"
- #include "qom/object.h"
- #include "target/arm/cpregs.h"
+diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
+index 58ce3df53a..890322ae37 100644
+--- a/target/i386/kvm/vmsr_energy.c
++++ b/target/i386/kvm/vmsr_energy.c
+@@ -57,13 +57,9 @@ QIOChannelSocket *vmsr_open_socket(const char *path)
+     };
  
-@@ -776,6 +777,17 @@ static void vm_change_state_handler(void *opaque, bool running,
-     }
- }
+     QIOChannelSocket *sioc = qio_channel_socket_new();
+-    Error *local_err = NULL;
  
-+static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
-+                                  MigrationEvent *e, Error **errp)
-+{
-+    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-+        GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
-+        return kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
-+                                 KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
-+                                 NULL, true, errp);
-+    }
-+    return 0;
-+}
- 
- static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
- {
-@@ -917,6 +929,9 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
-     if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
-                               KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES)) {
-         qemu_add_vm_change_state_handler(vm_change_state_handler, s);
-+        migration_add_notifier_mode(&s->cpr_notifier,
-+                                    kvm_arm_gicv3_notifier,
-+                                    MIG_MODE_CPR_TRANSFER);
-     }
- }
- 
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index c18503869f..572d971d22 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -27,6 +27,7 @@
- #include "hw/sysbus.h"
- #include "hw/intc/arm_gic_common.h"
- #include "qom/object.h"
-+#include "qemu/notify.h"
- 
- /*
-  * Maximum number of possible interrupts, determined by the GIC architecture.
-@@ -271,6 +272,8 @@ struct GICv3State {
-     GICv3CPUState *cpu;
-     /* List of all ITSes connected to this GIC */
-     GPtrArray *itslist;
-+
-+    NotifierWithReturn cpr_notifier;
- };
- 
- #define GICV3_BITMAP_ACCESSORS(BMP)                                     \
+     qio_channel_set_name(QIO_CHANNEL(sioc), "vmsr-helper");
+-    qio_channel_socket_connect_sync(sioc,
+-                                    &saddr,
+-                                    &local_err);
+-    if (local_err) {
++    if (qio_channel_socket_connect_sync(sioc, &saddr, NULL) < 0) {
+         /* Close socket. */
+         qio_channel_close(QIO_CHANNEL(sioc), NULL);
+         object_unref(OBJECT(sioc));
 -- 
 2.47.3
 
