@@ -4,42 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491B0CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B63CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23ZS-0000Eu-99; Fri, 26 Sep 2025 04:12:50 -0400
+	id 1v23Yu-0007Tm-42; Fri, 26 Sep 2025 04:12:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23ZO-0008T9-7h; Fri, 26 Sep 2025 04:12:46 -0400
+ id 1v23YY-0007Nf-Ni; Fri, 26 Sep 2025 04:11:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23ZE-0000ct-5I; Fri, 26 Sep 2025 04:12:44 -0400
+ id 1v23YT-0000N1-52; Fri, 26 Sep 2025 04:11:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E5FE0157D58;
+ by isrv.corpit.ru (Postfix) with ESMTP id 88A8F157D53;
  Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 007AA290C3C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9C771290C37;
  Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 16/60] e1000e: Prevent crash from legacy interrupt
- firing after MSI-X enable
-Date: Fri, 26 Sep 2025 11:09:44 +0300
-Message-ID: <20250926081031.2214971-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Yan Vugenfirer <yvugenfi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 11/60] qga-vss: Write hex value of error in log
+Date: Fri, 26 Sep 2025 11:09:39 +0300
+Message-ID: <20250926081031.2214971-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -48,7 +43,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,54 +59,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-A race condition between guest driver actions and QEMU timers can lead
-to an assertion failure when the guest switches the e1000e from legacy
-interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
-RDTR) is active, but the guest enables MSI-X before the timer fires,
-the pending interrupt cause can trigger an assert in
-e1000e_intmgr_collect_delayed_causes().
+QGA-VSS writes error using error_setg_win32_internal,
+which call g_win32_error_message.
 
-This patch removes the assertion and executes the code that clears the
-pending legacy causes. This change is safe and introduces no unintended
-behavioral side effects, as it only alters a state that previously led
-to termination.
+g_win32_error_message - translate a Win32 error code
+(as returned by GetLastError()) into the corresponding message.
 
-- when core->delayed_causes == 0 the function was already a no-op and
-  remains so.
+In the same time, we call error_setg_win32_internal with
+error codes from different Windows componets like VSS or
+Performance monitor that provides different codes and
+can't be converted with g_win32_error_message. In this
+case, the empty suffix will be returned so error will be
+masked.
 
-- when core->delayed_causes != 0 the function would previously
-  crash due to the assertion failure. The patch now defines a safe
-  outcome by clearing the cause and returning. Since behavior after
-  the assertion never existed, this simply corrects the crash.
+This commit directly add hex value of error code.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20250807110806.409065-1-lvivier@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 8e4649cac9bcddc050d2df07908075e9e69bccc7)
+Reproduce:
+ - Run QGA command: {"execute": "guest-fsfreeze-freeze-list", "arguments": {"mountpoints": ["D:"]}}
+
+QGA error example:
+ - before changes:
+  {"error": {"class": "GenericError", "desc": "failed to add D: to snapshot set: "}}
+ - after changes:
+  {"error": {"class": "GenericError", "desc": "failed to add D: to snapshot set: Windows error 0x8004230e: "}}
+
+Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250825135311.138330-1-kkostiuk@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit edf3780a7dad4658ab7b72ea37e310a2be9b16d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 2413858790..06657bb3ac 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -341,11 +341,6 @@ e1000e_intmgr_collect_delayed_causes(E1000ECore *core)
- {
-     uint32_t res;
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 4401d55e3a..644514fb95 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -28,8 +28,9 @@
  
--    if (msix_enabled(core->owner)) {
--        assert(core->delayed_causes == 0);
--        return 0;
--    }
--
-     res = core->delayed_causes;
-     core->delayed_causes = 0;
- 
+ #define err_set(e, err, fmt, ...) {                                         \
+     (e)->error_setg_win32_wrapper((e)->errp, __FILE__, __LINE__, __func__,  \
+-                                   err, fmt, ## __VA_ARGS__);               \
+-    qga_debug(fmt, ## __VA_ARGS__);                                         \
++                                   err, fmt ": Windows error 0x%lx",        \
++                                   ## __VA_ARGS__, err);                    \
++    qga_debug(fmt ": Windows error 0x%lx", ## __VA_ARGS__, err);            \
+ }
+ /* Bad idea, works only when (e)->errp != NULL: */
+ #define err_is_set(e) ((e)->errp && *(e)->errp)
 -- 
 2.47.3
 
