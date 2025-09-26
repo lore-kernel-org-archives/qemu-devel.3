@@ -4,59 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE03CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 21:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79963CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 21:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2GKc-00059U-KH; Fri, 26 Sep 2025 17:50:22 -0400
+	id 1v2GKK-0004rO-0U; Fri, 26 Sep 2025 17:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r@drigo.nl>) id 1v2GBC-0003i7-S7
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 17:40:39 -0400
-Received: from smtp-8faa.mail.infomaniak.ch ([83.166.143.170])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r@drigo.nl>) id 1v2GB8-0007Qz-Ay
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 17:40:38 -0400
-Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch
- [10.4.36.107])
- by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4cYPBv3CLxzr51;
- Fri, 26 Sep 2025 23:40:23 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=drigo.nl;
- s=20241108; t=1758922823;
- bh=7IV/AlQ6dG50VFCe013oWT0CSZOoc8or7+uh87mPlQE=;
- h=From:To:Cc:Subject:Date:From;
- b=VIFtNJUyH1ShI93RnThj+lpDf0F/1+MQRwUJnZ1FWrKpfiGku3GjI+HjZB5m4YY2k
- NbyeUVl+r12p34bAcMEnliTbheRFDZi1t23i90nUOKzbCKZunH/9Gy4nfEcHuM1+gI
- /0jIcjqfCMHMIiar2LvFWhPSGKV9NDEkYQZzGedXytD76xpc4yeV6izD2gSGGvXnmU
- m2rlZD+FiSuZctuGImqlDvxEHeGVPH7y90FIlcizOfZIodXJBWHK3fWQ0TNLcxPVzJ
- Tx0/hAHWp/aWAQs2ThLSZVty6Bh6mJD3HMxwzhJzd8Qw0kTbVMdk+EuRTNGAkcPf+Z
- A2MDM5CQUczig==
-Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA
- id 4cYPBt5DqKzQbj; Fri, 26 Sep 2025 23:40:22 +0200 (CEST)
-From: Rodrigo Dias Correa <r@drigo.nl>
-To: michael.roth@amd.com,
-	kkostiuk@redhat.com
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] qga: Support guest shutdown of BusyBox-based systems
-Date: Fri, 26 Sep 2025 23:40:11 +0200
-Message-ID: <20250926214015.120338-1-r@drigo.nl>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <lixiaoyan@google.com>)
+ id 1v2GKE-0004pN-V7
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 17:49:59 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lixiaoyan@google.com>)
+ id 1v2GK6-0000yf-Rr
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 17:49:58 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-62fa84c6916so3439a12.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 14:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1758923387; x=1759528187; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TyQtqxcwVuUILv14pGNYKUXF2U0siZAi7IEnH+SlLmk=;
+ b=Q+YNoEeWmepMpiUQvFChHLuiXv3XFUxfJQ+zFf6uWOBwM36wR3b9k8uhaLr0EHCKmg
+ kdDxEMlszFEvbXq5PaI95YwhJs7XsgZ2SiJMWdob1gAslMrpKFmiBlbNiEoVee2TgXEO
+ SYs038p7fOOAhW49GgzkfO3XX8Elnw3SqVdG4ebe8H9MN5botBq1Kw4NwSSQ+GAZXOi+
+ En4zXFgBHdDXY9SdR0VQQw5m5ZjNlcBUm1jrrswoUfKpQCj3XreeFPLJFPk0LomqE6J7
+ bmSULw5hD3qNI1zHpiZzmtvhoSZPfu7diggbVrbNVQIgbIPP5AvtIZlHEnpsXjx+SkdX
+ Jo/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758923387; x=1759528187;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TyQtqxcwVuUILv14pGNYKUXF2U0siZAi7IEnH+SlLmk=;
+ b=oeGSLVRDAEydUey0DK9/YWQZCdoxyPof/9OCDteQtl8/RrmRWneskmyqZvWQNxZIid
+ O3pSGRnlqpFqs09ul4VM2yXxTt9YjX0yloH3irD3/qvP3BEgzEmufwis8iNg01/aI2iP
+ iWq6XRmfu80+ARIcywnJtBLWsZ3td17tW/uIbdjxe3Jr/311aW7MVEvm7DSVOhP9DZ6A
+ XxwYAEQiz+8luEjKT/+qFXEeA/HI2crGaa4PZoRt9gegv5DcNzCSEby2dZDrHVW/wNZL
+ aDZkTDLOww5iOCkwNGl/N+33k+joEE8zUsO2s02pBhkR9jm2XARxgdygHdQmkmw2jMi7
+ W0kQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+Pb5MTUZk/egmlDSvP5OutO7OXyZo6b0mfKGlwQejWfn3izMUzyuWmna0WMdBWU4/Uvvu72ChiQjq@nongnu.org
+X-Gm-Message-State: AOJu0YwCTO5gDWn3fhAZrqN5YU8+AN67EfByAWZxBE0lo2YqI7MHal5Y
+ G8bFahXaKI//BxZpQJhhv7g3Fxp0kkJJ8e4wUP2xN2lJd5DxxQPuAW0JnZfnjrw24gl81QJELD1
+ PzYActDH9xZ/boE8SRwa6p5fMH5awO28WcRbWG9gC
+X-Gm-Gg: ASbGncukoQ8YDo9ZlPuYf0ZuAlkBfTdAuzUTPfwk3v4qTqJk7cKL/3o8jH0PbDWABAP
+ Np1sMPRKciV7TkJTbjX4HwmOjomFtvl4l0Y7+lIIAzGodSIlhteH61u036gcQbYeJvjLZiYZCrT
+ 3eGFmweZ8gfTzQRuRIVl8DKuldzJ+yEJoJzSnnvnhJfiRn3F3QOft98Jmfz9jtPD/5R5J5gNrq6
+ vWuukzbPZPUx9+wzafCkQbVqoxgl4u9GR/uFA3a2g0zz4ZufBK49hxWTw==
+X-Google-Smtp-Source: AGHT+IHNvYqnZb/806e7ueHZNChuMAzJ57MSZTJYUZctgIk39qYmLQSOWYn6DpHWD4iGUD/2zpn9iW6CLlhO3O6jwzU=
+X-Received: by 2002:a50:99c4:0:b0:634:90bb:185e with SMTP id
+ 4fb4d7f45d1cf-634cd728159mr45877a12.5.1758923386456; Fri, 26 Sep 2025
+ 14:49:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Infomaniak-Routing: alpha
-Received-SPF: pass client-ip=83.166.143.170; envelope-from=r@drigo.nl;
- helo=smtp-8faa.mail.infomaniak.ch
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250925005832.3708492-1-lixiaoyan@google.com>
+ <20250925005832.3708492-6-lixiaoyan@google.com>
+ <132cc9e6-bab2-47d7-bfe3-c08ac5fc6816@linaro.org>
+In-Reply-To: <132cc9e6-bab2-47d7-bfe3-c08ac5fc6816@linaro.org>
+From: Coco Li <lixiaoyan@google.com>
+Date: Fri, 26 Sep 2025 14:49:34 -0700
+X-Gm-Features: AS18NWAYj3T_1ktEWi6X6TuQzG5Nb6gxoatkOPHTXnWG_UeQgkA_tTaUB747YD8
+Message-ID: <CADjXwji7AHfRAUiSNxcxU-T7i7rnwDdddyyeC4tWxMf-cYqHww@mail.gmail.com>
+Subject: Re: [PATCH v1 5/5] hw/gpio/npcm8xx: Implement npcm sgpio device input
+ pin logic
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: peter.maydell@linaro.org, clg@kaod.org, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ flwu@google.com, andrew@codeconstruct.com.au, Hao Wu <wuhaotsh@google.com>
+Content-Type: multipart/alternative; boundary="000000000000a3c224063fbb4399"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=lixiaoyan@google.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -165
+X-Spam_score: -16.6
+X-Spam_bar: ----------------
+X-Spam_report: (-16.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 26 Sep 2025 17:50:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,84 +102,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On POSIX systems, the QEMU Guest Agent uses /sbin/shutdown to implement
-the command guest-shutdown. Systems based on BusyBox, such as Alpine
-Linux, don't have /sbin/shutdown. They have instead three separate
-commands: poweroff, reboot, and halt.
+--000000000000a3c224063fbb4399
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Change the QEMU Guest Agent to, depending on the mode argument, use
-/sbin/{poweroff,halt,reboot} when they exist, falling back to
-/sbin/shutdown when they don't.
+Good call, I can put it in the next version.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2589
+On Wed, Sep 24, 2025 at 6:11=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
 
-Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
----
- qga/commands-posix.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+> On 25/9/25 02:58, Coco Li wrote:
+> > Signed-off-by: Coco Li <lixiaoyan@google.com>
+> > Reviewed-by: Hao Wu <wuhaotsh@google.com>
+> > ---
+> >   hw/gpio/npcm8xx_sgpio.c          | 134 ++++++++++++++++++++---
+> >   include/hw/gpio/npcm8xx_sgpio.h  |   4 +-
+> >   tests/qtest/npcm8xx_sgpio-test.c | 180 ++++++++++++++++++++++++++----=
+-
+> >   3 files changed, 274 insertions(+), 44 deletions(-)
+> >
+> > diff --git a/hw/gpio/npcm8xx_sgpio.c b/hw/gpio/npcm8xx_sgpio.c
+>
+>
+> > +static uint8_t get_even_bits(uint16_t n)
+> > +{
+> > +    n &=3D 0x5555;
+> > +
+> > +    n =3D (n | (n >> 1)) & 0x3333;
+> > +    n =3D (n | (n >> 2)) & 0x0F0F;
+> > +    n =3D (n | (n >> 4)) & 0x00FF;
+> > +
+> > +    return (uint8_t)n;
+> > +}
+> > +
+> > +static uint8_t get_odd_bits(uint16_t n)
+> > +{
+> > +    return get_even_bits(n >> 1);
+> > +}
+>
+> Candidates for "include/qemu/bitops.h"?
+>
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 5070f27..c705985 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -213,9 +213,20 @@ out:
-     return retcode;
- }
- 
-+static bool file_exists(const char *path)
-+{
-+    struct stat st;
-+    return stat(path, &st) == 0 && (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode));
-+}
-+
-+#define POWEROFF_CMD_PATH "/sbin/poweroff"
-+#define HALT_CMD_PATH "/sbin/halt"
-+#define REBOOT_CMD_PATH "/sbin/reboot"
-+
- void qmp_guest_shutdown(const char *mode, Error **errp)
- {
-     const char *shutdown_flag;
-+    const char *shutdown_cmd = NULL;
-     Error *local_err = NULL;
- 
- #ifdef CONFIG_SOLARIS
-@@ -234,10 +245,19 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
- 
-     slog("guest-shutdown called, mode: %s", mode);
-     if (!mode || strcmp(mode, "powerdown") == 0) {
-+        if (file_exists(POWEROFF_CMD_PATH)) {
-+            shutdown_cmd = POWEROFF_CMD_PATH;
-+        }
-         shutdown_flag = powerdown_flag;
-     } else if (strcmp(mode, "halt") == 0) {
-+        if (file_exists(HALT_CMD_PATH)) {
-+            shutdown_cmd = HALT_CMD_PATH;
-+        }
-         shutdown_flag = halt_flag;
-     } else if (strcmp(mode, "reboot") == 0) {
-+        if (file_exists(REBOOT_CMD_PATH)) {
-+            shutdown_cmd = REBOOT_CMD_PATH;
-+        }
-         shutdown_flag = reboot_flag;
-     } else {
-         error_setg(errp,
-@@ -255,6 +275,15 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
- #endif
-                           "hypervisor initiated shutdown", (char *) NULL};
- 
-+    /*
-+     * If the specific command exists (poweroff, halt or reboot), use it instead
-+     * of /sbin/shutdown.
-+     */
-+    if (shutdown_cmd != NULL) {
-+        argv[0] = shutdown_cmd;
-+        argv[1] = NULL;
-+    }
-+
-     ga_run_command(argv, NULL, "shutdown", &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
--- 
-2.47.3
+--000000000000a3c224063fbb4399
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Good call, I can put it in the next version.</div><br><div=
+ class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmai=
+l_attr">On Wed, Sep 24, 2025 at 6:11=E2=80=AFPM Philippe Mathieu-Daud=C3=A9=
+ &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<=
+br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 25/9/25 02:58=
+, Coco Li wrote:<br>
+&gt; Signed-off-by: Coco Li &lt;<a href=3D"mailto:lixiaoyan@google.com" tar=
+get=3D"_blank">lixiaoyan@google.com</a>&gt;<br>
+&gt; Reviewed-by: Hao Wu &lt;<a href=3D"mailto:wuhaotsh@google.com" target=
+=3D"_blank">wuhaotsh@google.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0hw/gpio/npcm8xx_sgpio.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+| 134 ++++++++++++++++++++---<br>
+&gt;=C2=A0 =C2=A0include/hw/gpio/npcm8xx_sgpio.h=C2=A0 |=C2=A0 =C2=A04 +-<b=
+r>
+&gt;=C2=A0 =C2=A0tests/qtest/npcm8xx_sgpio-test.c | 180 +++++++++++++++++++=
++++++++-----<br>
+&gt;=C2=A0 =C2=A03 files changed, 274 insertions(+), 44 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/hw/gpio/npcm8xx_sgpio.c b/hw/gpio/npcm8xx_sgpio.c<br>
+<br>
+<br>
+&gt; +static uint8_t get_even_bits(uint16_t n)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 n &amp;=3D 0x5555;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 n =3D (n | (n &gt;&gt; 1)) &amp; 0x3333;<br>
+&gt; +=C2=A0 =C2=A0 n =3D (n | (n &gt;&gt; 2)) &amp; 0x0F0F;<br>
+&gt; +=C2=A0 =C2=A0 n =3D (n | (n &gt;&gt; 4)) &amp; 0x00FF;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return (uint8_t)n;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static uint8_t get_odd_bits(uint16_t n)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 return get_even_bits(n &gt;&gt; 1);<br>
+&gt; +}<br>
+<br>
+Candidates for &quot;include/qemu/bitops.h&quot;?<br>
+</blockquote></div>
+
+--000000000000a3c224063fbb4399--
 
