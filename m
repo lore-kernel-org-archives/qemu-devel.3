@@ -4,145 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D75CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9786CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 12:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27v8-0005dX-Hg; Fri, 26 Sep 2025 08:51:30 -0400
+	id 1v27ur-0005RV-Nd; Fri, 26 Sep 2025 08:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v27v6-0005dE-Ta
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 08:51:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v27un-0005QA-RT; Fri, 26 Sep 2025 08:51:09 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v27uv-0007jS-0y
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 08:51:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758891068;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UZwPR8KjezRG8M2r0uya15bF5b7eCBWA8imat/ch2H8=;
- b=YTU/6IL2pl8pIWYx6/0YaOE6QSZfV7PmyK6uB6q6GTKU6Jl9gyXmzoisNQJKzyzMRKhc2v
- iBLkfsQ0Kuj0TtJtzG/an0ooYwHFeIifkeGd+DHYaS/ZYrL0qYSTqy73UM4XNB8q2+rH77
- aVfe7Rfz54PpLkfAUzRJqkDpYzDfDoc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-l03SlJ3KMuqIstU4sqKkIA-1; Fri, 26 Sep 2025 08:51:06 -0400
-X-MC-Unique: l03SlJ3KMuqIstU4sqKkIA-1
-X-Mimecast-MFC-AGG-ID: l03SlJ3KMuqIstU4sqKkIA_1758891066
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e3dcb36a1so5050735e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 05:51:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758891065; x=1759495865;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UZwPR8KjezRG8M2r0uya15bF5b7eCBWA8imat/ch2H8=;
- b=TfJsMJ7qsTrkAq1L/4tmbkclV70SvRq9s4IYLDOiJj/owBUeW2Re6qJ6yEFw81jcOD
- u+RxCamwBt9mij2wePjXWfsO3wah2NPVeNUBC0gVmbC00BaXcBB7LnPT2dLo0hCQzMkc
- hmzrjr+z2f6ELKDuUEI13nDeaYe8I3QhWLOMwRZExGanmUVuhHoJ3rYxnx88osiVmhh2
- 2ibvPooV1s+97mTAPXCa6oMQoa+JLFMAjz94Uq1fZYu9Qj+Qalumbuu4KRgMKeogrVsM
- J8JMTHicfdNpr0N3/fhNxlsTcuWWjfSvBl4N7SbPp3EmJU/oGCbkEgTkq7ENlZiBzPxX
- vJhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhuXQYmhLuygSNT/sxkakqGKmfN1xRyAAtUcly1zJdr5EUpFHqv94EMitxTJRr3pG+4rIrij2a0m+B@nongnu.org
-X-Gm-Message-State: AOJu0Yxd5Nich5db6zc8CHcZyJs/obYyLn+o6RMni7VoqsWWbGDpgvwo
- xL0taGpTb/O2BP8gvKzxHHEXxCFBuGlKWHZ3fhFriUtTgbUOee+TyYWXRHrPBqPekfrqOwvNEPt
- WRd9fC3HPfDscxXtwfpF4WAf6thNWJznOlvCs22698NP0IynBevXsRqJV
-X-Gm-Gg: ASbGncsmPcSOGNkhegS6c5cCvG3Gc1L1FSMjRXiNcODm8NW/7jleM8tPV6r5Ubg26Xq
- EH+/Y772YwlpcFDIvqJM1r/7tQWeSxlBcbraYYjCiTNU3kJzIX1Z0OImlsGVQTvThx/+eIBKRnt
- VNqXrC95lp0Ocj0+qhxi8MyQhCa6vGaAfMagZCbAJq+aVkSdLjdlNG/p41IZ49Ys7OMYKFBeeT8
- QpgFXLvy2dh/FN4cTe8AGkCdj5x6QI8LjS8woUvdvHd3i+AhtkguUnO0re6Nw66p8YQWWHTjPzU
- nJQc2YiNF3jq9PbuGdRXkL64mPF/RW3N2skUQwokV6RkG8f7lvtd6O0DVHThxfvN3QD4KWkZ/9m
- /GdxAFg==
-X-Received: by 2002:a05:600c:5486:b0:46e:27fb:17ff with SMTP id
- 5b1f17b1804b1-46e329d47e4mr60798965e9.2.1758891065487; 
- Fri, 26 Sep 2025 05:51:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpd3yu5PaCQyaRutYhYSmDCnqcnbDz6f6go242komNFGl/zvyANmgTg/b2xdWdG7sNB97ntw==
-X-Received: by 2002:a05:600c:5486:b0:46e:27fb:17ff with SMTP id
- 5b1f17b1804b1-46e329d47e4mr60798585e9.2.1758891065002; 
- Fri, 26 Sep 2025 05:51:05 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
- [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2ab838b6sm115182885e9.24.2025.09.26.05.51.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Sep 2025 05:51:04 -0700 (PDT)
-Message-ID: <a651058e-5559-4996-a281-f51b8d8887d6@redhat.com>
-Date: Fri, 26 Sep 2025 14:51:03 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v27ue-0007hd-Vq; Fri, 26 Sep 2025 08:51:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id DD3A4157F68;
+ Fri, 26 Sep 2025 15:45:42 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 49807290F26;
+ Fri, 26 Sep 2025 15:45:44 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 32/38] hw/pci-host/dino: Don't call
+ pci_register_root_bus() in init
+Date: Fri, 26 Sep 2025 15:45:32 +0300
+Message-ID: <20250926124540.2221746-32-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
+References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 17/28] pc-bios/s390-ccw: Refactor zipl_run()
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-18-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250917232131.495848-18-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,94 +63,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Refactor to enhance readability before enabling secure IPL in later
-> patches.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/bootmap.c | 49 ++++++++++++++++++++++++--------------
->   1 file changed, 31 insertions(+), 18 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 0f8baa0198..ff0fa78cf0 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -674,6 +674,35 @@ static int zipl_load_segment(ComponentEntry *entry)
->       return 0;
->   }
->   
-> +static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-> +{
-> +    ComponentEntry *entry = *entry_ptr;
-> +
-> +    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
-> +           entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-> +
-> +        /* Secure boot is off, so we skip signature entries */
-> +        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-> +            entry++;
-> +            continue;
-> +        }
-> +
-> +        if (zipl_load_segment(entry)) {
-> +            return -1;
-> +        }
-> +
-> +        entry++;
-> +
-> +        if ((uint8_t *)&entry[1] > tmp_sec + MAX_SECTOR_SIZE) {
-> +            puts("Wrong entry value");
-> +            return -EINVAL;
-> +        }
-> +    }
-> +
-> +    *entry_ptr = entry;
-> +    return 0;
-> +}
-> +
->   /* Run a zipl program */
->   static int zipl_run(ScsiBlockPtr *pte)
->   {
-> @@ -700,25 +729,9 @@ static int zipl_run(ScsiBlockPtr *pte)
->   
->       /* Load image(s) into RAM */
->       entry = (ComponentEntry *)(&header[1]);
-> -    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
-> -           entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-> -
-> -        /* We don't support secure boot yet, so we skip signature entries */
-> -        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-> -            entry++;
-> -            continue;
-> -        }
->   
-> -        if (zipl_load_segment(entry)) {
-> -            return -1;
-> -        }
-> -
-> -        entry++;
-> -
-> -        if ((uint8_t *)(&entry[1]) > (tmp_sec + MAX_SECTOR_SIZE)) {
-> -            puts("Wrong entry value");
-> -            return -EINVAL;
+From: Peter Maydell <peter.maydell@linaro.org>
 
-So in this case the code returned -EINVAL ...
+In the dino PCI host bridge device, we call pci_register_root_bus()
+in the device's instance_init. This is a problem for two reasons
+ * the PCI bridge is then available to the rest of the simulation
+   (e.g. via pci_qdev_find_device()), even though it hasn't
+   yet been realized
+ * we do not attempt to unregister in an instance_deinit,
+   which means that if you go through an instance_init -> deinit
+   lifecycle the freed memory for the host-bridge device is
+   left on the pci_host_bridges list
 
-> -        }
-> +    if (zipl_run_normal(&entry, tmp_sec)) {
-> +        return -1;
+ASAN reports the resulting use-after-free:
 
-... but now it's always returning -1.
+==1771223==ERROR: AddressSanitizer: heap-use-after-free on address 0x527000018f80 at pc 0x5b4b9d3369b5 bp 0x7ffd01929980 sp 0x7ffd01929978
+WRITE of size 8 at 0x527000018f80 thread T0
+    #0 0x5b4b9d3369b4 in pci_host_bus_register /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:608:5
+    #1 0x5b4b9d321566 in pci_root_bus_internal_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:677:5
+    #2 0x5b4b9d3215e0 in pci_root_bus_new /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:706:5
+    #3 0x5b4b9d321fe5 in pci_register_root_bus /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:751:11
+    #4 0x5b4b9d390521 in dino_pcihost_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci-host/dino.c:473:16
 
-It likely does not make much difference in this case here, but it's 
-certainly better style to preserve the error value.
+0x527000018f80 is located 1664 bytes inside of 12384-byte region [0x527000018900,0x52700001b960)
+freed by thread T0 here:
+    #0 0x5b4b9cab185a in free (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/qemu-system-hppa+0x17ad85a) (BuildId: ca496bb2e4fc750ebd289b448bad8d99c0ecd140)
+    #1 0x5b4b9e3ee723 in object_finalize /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:734:9
+    #2 0x5b4b9e3e69db in object_unref /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:1232:9
+    #3 0x5b4b9ea6173c in qmp_device_list_properties /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/qom-qmp-cmds.c:237:5
+    #4 0x5b4b9ec4e0f3 in qmp_marshal_device_list_properties /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/qapi/qapi-commands-qdev.c:65:14
 
-  Thomas
+previously allocated by thread T0 here:
+    #0 0x5b4b9cab1af3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/qemu-system-hppa+0x17adaf3) (BuildId: ca496bb2e4fc750ebd289b448bad8d99c0ecd140)
+    #1 0x799d8270eb09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x5b4b9e3e75fc in object_new_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:767:15
+    #3 0x5b4b9e3e7409 in object_new_with_class /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:782:12
+    #4 0x5b4b9ea609a5 in qmp_device_list_properties /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/qom-qmp-cmds.c:206:11
 
+where we allocated one instance of the dino device, put it on the
+list, freed it, and then trying to allocate a second instance touches
+the freed memory on the pci_host_bridges list.
 
->       }
->   
->       if (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
+Fix this by deferring all the setup of memory regions and registering
+the PCI bridge to the device's realize method.  This brings it into
+line with almost all other PCI host bridges, which call
+pci_register_root_bus() in realize.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3118
+Fixes: 63901b6cc4d8b4 ("dino: move PCI bus initialisation to dino_pcihost_init()")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250918114259.1802337-2-peter.maydell@linaro.org>
+(cherry picked from commit e4a1b308b27cd77338b8f05d3a31e6b38eb717c7)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/pci-host/dino.c b/hw/pci-host/dino.c
+index 58fdbf7bc9..36e3791424 100644
+--- a/hw/pci-host/dino.c
++++ b/hw/pci-host/dino.c
+@@ -413,43 +413,7 @@ static void dino_pcihost_reset(DeviceState *dev)
+ static void dino_pcihost_realize(DeviceState *dev, Error **errp)
+ {
+     DinoState *s = DINO_PCI_HOST_BRIDGE(dev);
+-
+-    /* Set up PCI view of memory: Bus master address space.  */
+-    memory_region_init(&s->bm, OBJECT(s), "bm-dino", 4 * GiB);
+-    memory_region_init_alias(&s->bm_ram_alias, OBJECT(s),
+-                             "bm-system", s->memory_as, 0,
+-                             0xf0000000 + DINO_MEM_CHUNK_SIZE);
+-    memory_region_init_alias(&s->bm_pci_alias, OBJECT(s),
+-                             "bm-pci", &s->pci_mem,
+-                             0xf0000000 + DINO_MEM_CHUNK_SIZE,
+-                             30 * DINO_MEM_CHUNK_SIZE);
+-    memory_region_init_alias(&s->bm_cpu_alias, OBJECT(s),
+-                             "bm-cpu", s->memory_as, 0xfff00000,
+-                             0xfffff);
+-    memory_region_add_subregion(&s->bm, 0,
+-                                &s->bm_ram_alias);
+-    memory_region_add_subregion(&s->bm,
+-                                0xf0000000 + DINO_MEM_CHUNK_SIZE,
+-                                &s->bm_pci_alias);
+-    memory_region_add_subregion(&s->bm, 0xfff00000,
+-                                &s->bm_cpu_alias);
+-
+-    address_space_init(&s->bm_as, &s->bm, "pci-bm");
+-}
+-
+-static void dino_pcihost_unrealize(DeviceState *dev)
+-{
+-    DinoState *s = DINO_PCI_HOST_BRIDGE(dev);
+-
+-    address_space_destroy(&s->bm_as);
+-}
+-
+-static void dino_pcihost_init(Object *obj)
+-{
+-    DinoState *s = DINO_PCI_HOST_BRIDGE(obj);
+-    PCIHostState *phb = PCI_HOST_BRIDGE(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    int i;
++    PCIHostState *phb = PCI_HOST_BRIDGE(dev);
+ 
+     /* Dino PCI access from main memory.  */
+     memory_region_init_io(&s->this_mem, OBJECT(s), &dino_chip_ops,
+@@ -476,7 +440,7 @@ static void dino_pcihost_init(Object *obj)
+                                      PCI_DEVFN(0, 0), 32, TYPE_PCI_BUS);
+ 
+     /* Set up windows into PCI bus memory.  */
+-    for (i = 1; i < 31; i++) {
++    for (int i = 1; i < 31; i++) {
+         uint32_t addr = 0xf0000000 + i * DINO_MEM_CHUNK_SIZE;
+         char *name = g_strdup_printf("PCI Outbound Window %d", i);
+         memory_region_init_alias(&s->pci_mem_alias[i], OBJECT(s),
+@@ -487,9 +451,38 @@ static void dino_pcihost_init(Object *obj)
+ 
+     pci_setup_iommu(phb->bus, &dino_iommu_ops, s);
+ 
+-    sysbus_init_mmio(sbd, &s->this_mem);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->this_mem);
+ 
+-    qdev_init_gpio_in(DEVICE(obj), dino_set_irq, DINO_IRQS);
++    qdev_init_gpio_in(dev, dino_set_irq, DINO_IRQS);
++
++    /* Set up PCI view of memory: Bus master address space.  */
++    memory_region_init(&s->bm, OBJECT(s), "bm-dino", 4 * GiB);
++    memory_region_init_alias(&s->bm_ram_alias, OBJECT(s),
++                             "bm-system", s->memory_as, 0,
++                             0xf0000000 + DINO_MEM_CHUNK_SIZE);
++    memory_region_init_alias(&s->bm_pci_alias, OBJECT(s),
++                             "bm-pci", &s->pci_mem,
++                             0xf0000000 + DINO_MEM_CHUNK_SIZE,
++                             30 * DINO_MEM_CHUNK_SIZE);
++    memory_region_init_alias(&s->bm_cpu_alias, OBJECT(s),
++                             "bm-cpu", s->memory_as, 0xfff00000,
++                             0xfffff);
++    memory_region_add_subregion(&s->bm, 0,
++                                &s->bm_ram_alias);
++    memory_region_add_subregion(&s->bm,
++                                0xf0000000 + DINO_MEM_CHUNK_SIZE,
++                                &s->bm_pci_alias);
++    memory_region_add_subregion(&s->bm, 0xfff00000,
++                                &s->bm_cpu_alias);
++
++    address_space_init(&s->bm_as, &s->bm, "pci-bm");
++}
++
++static void dino_pcihost_unrealize(DeviceState *dev)
++{
++    DinoState *s = DINO_PCI_HOST_BRIDGE(dev);
++
++    address_space_destroy(&s->bm_as);
+ }
+ 
+ static const Property dino_pcihost_properties[] = {
+@@ -511,7 +504,6 @@ static void dino_pcihost_class_init(ObjectClass *klass, void *data)
+ static const TypeInfo dino_pcihost_info = {
+     .name          = TYPE_DINO_PCI_HOST_BRIDGE,
+     .parent        = TYPE_PCI_HOST_BRIDGE,
+-    .instance_init = dino_pcihost_init,
+     .instance_size = sizeof(DinoState),
+     .class_init    = dino_pcihost_class_init,
+ };
+-- 
+2.47.3
 
 
