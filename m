@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9EECAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA31CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23Xj-0006we-MW; Fri, 26 Sep 2025 04:11:03 -0400
+	id 1v23cP-0004ml-6K; Fri, 26 Sep 2025 04:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23Xa-0006tx-6F; Fri, 26 Sep 2025 04:10:54 -0400
+ id 1v23c2-0004Vl-AK; Fri, 26 Sep 2025 04:15:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23XP-0008WH-Fd; Fri, 26 Sep 2025 04:10:52 -0400
+ id 1v23bu-0001T9-Aa; Fri, 26 Sep 2025 04:15:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BED3F157D49;
- Fri, 26 Sep 2025 11:10:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9F38F157D6C;
+ Fri, 26 Sep 2025 11:10:33 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CD521290C2D;
- Fri, 26 Sep 2025 11:10:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B45DE290C50;
+ Fri, 26 Sep 2025 11:10:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 01/60] python: mkvenv: fix messages printed by mkvenv
-Date: Fri, 26 Sep 2025 11:09:29 +0300
-Message-ID: <20250926081031.2214971-1-mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 36/60] iotests: drop compat for old version context
+ manager
+Date: Fri, 26 Sep 2025 11:10:04 +0300
+Message-ID: <20250926081031.2214971-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
@@ -63,46 +62,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The new Matcher class does not have a __str__ implementation, and therefore
-it prints the debugging representation of the internal object:
+Our minimum python is now 3.9, so back compat with prior
+python versions is no longer required.
 
-  $ ../configure --enable-rust && make qemu-system-arm --enable-download
-  python determined to be '/usr/bin/python3'
-  python version: Python 3.13.6
-  mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-  mkvenv: checking for LegacyMatcher('meson>=1.5.0')
-  mkvenv: checking for LegacyMatcher('pycotap>=1.1.0')
-
-Add the method to print the nicer
-
-  mkvenv: checking for meson>=1.5.0
-  mkvenv: checking for pycotap>=1.1.0
-
-Cc: qemu-stable@nongnu.org
-Cc: John Snow <jsnow@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit ab85146ac4c6527d6d975afbd3157488cb42147f)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 82c7cb93c750196f513a1b11cb85e0328bad444f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index f102527c4d..9aed266df1 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -184,6 +184,10 @@ def match(self, version_str: str) -> bool:
-             )
-         )
+diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
+index 6326e46b7b..29caaa8a34 100644
+--- a/tests/qemu-iotests/testenv.py
++++ b/tests/qemu-iotests/testenv.py
+@@ -22,15 +22,12 @@
+ from pathlib import Path
+ import shutil
+ import collections
++import contextlib
+ import random
+ import subprocess
+ import glob
+ from typing import List, Dict, Any, Optional
  
-+    def __str__(self) -> str:
-+        """String representation delegated to the backend."""
-+        return str(self._m)
-+
-     def __repr__(self) -> str:
-         """Stable debug representation delegated to the backend."""
-         return repr(self._m)
+-if sys.version_info >= (3, 9):
+-    from contextlib import AbstractContextManager as ContextManager
+-else:
+-    from typing import ContextManager
+ 
+ DEF_GDB_OPTIONS = 'localhost:12345'
+ 
+@@ -58,7 +55,7 @@ def get_default_machine(qemu_prog: str) -> str:
+     return default_machine
+ 
+ 
+-class TestEnv(ContextManager['TestEnv']):
++class TestEnv(contextlib.AbstractContextManager['TestEnv']):
+     """
+     Manage system environment for running tests
+ 
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index 2e236c8fa3..14cc8492f9 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -30,11 +30,6 @@
+ from typing import List, Optional, Any, Sequence, Dict
+ from testenv import TestEnv
+ 
+-if sys.version_info >= (3, 9):
+-    from contextlib import AbstractContextManager as ContextManager
+-else:
+-    from typing import ContextManager
+-
+ 
+ def silent_unlink(path: Path) -> None:
+     try:
+@@ -57,7 +52,7 @@ def file_diff(file1: str, file2: str) -> List[str]:
+         return res
+ 
+ 
+-class LastElapsedTime(ContextManager['LastElapsedTime']):
++class LastElapsedTime(contextlib.AbstractContextManager['LastElapsedTime']):
+     """ Cache for elapsed time for tests, to show it during new test run
+ 
+     It is safe to use get() at any time.  To use update(), you must either
+@@ -112,7 +107,7 @@ def __init__(self, status: str, description: str = '',
+         self.interrupted = interrupted
+ 
+ 
+-class TestRunner(ContextManager['TestRunner']):
++class TestRunner(contextlib.AbstractContextManager['TestRunner']):
+     shared_self = None
+ 
+     @staticmethod
 -- 
 2.47.3
 
