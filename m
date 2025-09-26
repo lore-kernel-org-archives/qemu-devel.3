@@ -4,90 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CECCAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 05:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B89CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 05:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v20p7-0004rA-7o; Fri, 26 Sep 2025 01:16:49 -0400
+	id 1v2166-0008Ai-CN; Fri, 26 Sep 2025 01:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v20oz-0004nN-Aj
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:16:42 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v20ot-000626-1t
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:16:41 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b54a74f9150so1585472a12.0
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 22:16:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758863791; x=1759468591; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OqHlEJ+jUmeTVk3QBFsrihdSuV3s/WcYtgmO87+cyMw=;
- b=n9njWQtGQ+uSw4E0iyv4/l9oWsbKzwPlxBpmqybh1kHI3g+H35lwUfOqsKPMxyJjRE
- QWTJg+e7qzWhwKAQD5TQE70hV7s0iEtQf8+s4jD14Ag8bgZY6Y+0K81a/lU6ZKwSUcBp
- rmlrUsFJk9yAC2vV4H4UkApILs+fu+xs81HtLmohVLTX4MlaH0Ea95Dnxszxs+9u2V/C
- pvrAO+a7iDLcA8YICuOJji9mYGupDyH9CqJhUum+n+1kAHF/RLDtxgrpT1zCkKf/TOva
- OC2wihivIg0Z5PnD/ELgJruGKvxeomF4Uw5a7ZdIcip0JU1ZgAq+6PN5lShIbBYP0BXs
- BNDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758863791; x=1759468591;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OqHlEJ+jUmeTVk3QBFsrihdSuV3s/WcYtgmO87+cyMw=;
- b=C26QiB2sul8DmWxrlPsLFuJ9uh9xLmtohUCOkusW3mxSGnvrplZiCNu6et4X6LOtJ3
- diwM+0mz+wuKkCrEBHJttNEP/wwQsVGywyqXsfGcGPHUbVSJPFJYxGX/kxMVeM71X9nk
- 6qMqlfoUAwZ/VUQDHsib35jk0W0ois5sLkwDJn9oRergvQXTv0DAQehC6cLcrqkoxpbH
- l9iXgUviR9agJahzOmFa7XYhkGjTe/w/VQl2wEbDXvsVdO0kx4+To/G5cGtXPzPDDzr4
- 2YKTg3+z3YRYAdOP2WbMTVkOGh4ZVFv/pomY3lIhnAn9EvEHTNu0pq+6Vld0OJyxwS0C
- F0sA==
-X-Gm-Message-State: AOJu0YxCMg3phRBLqUNyECeIJsqx5gDuQFyiWIgd5AywRDm4t3dq5VLg
- bAErzNOgbOBBtvvLLyS/0YENsVoVNKyY9bHpeOMXhwbhn6Sxop6/lOYSqyCLJz6rVroA8fQPlWL
- fJWQC
-X-Gm-Gg: ASbGncvwvxAyx8SjEa7UaDydfgidaCHCt6nGc+CHM+6lveyzq9Z1ybsGJQirJAQ47ea
- YiHAlFFHu4M5S46B98HGQbwSmTnLEnWesKzxrWmNhcMMlJ0Vu4Ut3e9/ooh4jdryHA0cKQLkI83
- lbXX4kq41lM3HcWtaX6TsJyoh9/T8Eo6FnbpqhnnJKm6/oXsj1sXwVZPypgHY3hr25lAsly/tPG
- ezbmuZn769L97bZ4BHrcK2z7j/0x8FMfvpMROWAaFPwjj7R1Wev+sWQT9+L+oHhZls63E4fDAYX
- NDmm+YIEDqUULttfg8HnBvQi2GHyg8ZA1wbE7Rzl+SV2znZh7iHhP1/N4mCmKuGrDBiU1BqeiEm
- cVOtQ21BIzV1xEmHlB5JNKBpad4mOEl+B7hKUAoPgji0DG09aBaqwzi8JuaANfmXUltce
-X-Google-Smtp-Source: AGHT+IGzmVsc84Fl2ldR80zJxrie/O1D/yXSLfFIG+5awoeIvIti2ck03SfIC8nF38q4kiUfgvJdrg==
-X-Received: by 2002:a17:902:da89:b0:267:f7bc:673c with SMTP id
- d9443c01a7336-27ed4ab0972mr60172605ad.44.1758863791110; 
- Thu, 25 Sep 2025 22:16:31 -0700 (PDT)
-Received: from gromero0.. (189-47-45-49.dsl.telesp.net.br. [189.47.45.49])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27ed672a51fsm42160085ad.63.2025.09.25.22.16.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Sep 2025 22:16:30 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
- berrange@redhat.com
-Cc: qemu-arm@nongnu.org, gustavo.romero@linaro.org,
- manos.pitsidianakis@linaro.org, peter.maydell@linaro.org
-Subject: [PATCH v4 9/9] tests/functional: Adapt arches to reverse_debugging
- w/o Avocado
-Date: Fri, 26 Sep 2025 05:15:42 +0000
-Message-Id: <20250926051542.104432-10-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250926051542.104432-1-gustavo.romero@linaro.org>
-References: <20250926051542.104432-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v2164-0008AS-Vs
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:34:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v215y-0000ht-Hx
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:34:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758864846;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tL4fHJ+R8bfe4F8GBAcs9mBmKIyYR2X1iEIuqGWnuco=;
+ b=Z3NN26YoD7i0t3KBDx8e4UyZDx5GXQURPSBX9Mb8KVNxEughdM5ZUTg8LhWcTRXM7rYTxl
+ EVwOVgnqLpMZg2FKkt8GZJYqdMpaA3Dt47yyiAcfyRJbYPR900LM0B1ITYqgoxkLgn4TBU
+ 9W+U1Oy4s2goUDXwmcWjBqAfpmROZyI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-yTSlVWAhMNSxQSPO4ICLYA-1; Fri,
+ 26 Sep 2025 01:34:03 -0400
+X-MC-Unique: yTSlVWAhMNSxQSPO4ICLYA-1
+X-Mimecast-MFC-AGG-ID: yTSlVWAhMNSxQSPO4ICLYA_1758864843
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 09BDF19560AE
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 05:34:03 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.226.26])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0E3931800579; Fri, 26 Sep 2025 05:34:00 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 00/29] vfio queue
+Date: Fri, 26 Sep 2025 07:33:29 +0200
+Message-ID: <20250926053358.308198-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,138 +81,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-reverse_debugging no longer depends on Avocado, so remove the import
-checks for Avocado, the per-arch endianness tweaks, and the per-arch
-register settings. All of these are now handled in the ReverseDebugging
-class, automatically.
+The following changes since commit 95b9e0d2ade5d633fd13ffba96a54e87c65baf39:
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- tests/functional/aarch64/test_reverse_debug.py |  9 ++++-----
- tests/functional/ppc64/test_reverse_debug.py   | 11 ++++-------
- tests/functional/x86_64/test_reverse_debug.py  | 13 ++++---------
- 3 files changed, 12 insertions(+), 21 deletions(-)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-09-24 12:04:18 -0700)
 
-diff --git a/tests/functional/aarch64/test_reverse_debug.py b/tests/functional/aarch64/test_reverse_debug.py
-index 8bc91ccfde..36985a4a1d 100755
---- a/tests/functional/aarch64/test_reverse_debug.py
-+++ b/tests/functional/aarch64/test_reverse_debug.py
-@@ -2,25 +2,24 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
--# Reverse debugging test
-+# Reverse debugging test for aarch64
- #
- # Copyright (c) 2020 ISP RAS
-+# Copyright (c) 2025 Linaro Limited
- #
- # Author:
- #  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-+#  Gustavo Romero <gustavo.romero@linaro.org> (Run without Avocado)
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test import Asset, skipIfMissingImports, skipFlakyTest
-+from qemu_test import Asset, skipFlakyTest
- from reverse_debugging import ReverseDebugging
- 
- 
--@skipIfMissingImports('avocado.utils')
- class ReverseDebugging_AArch64(ReverseDebugging):
- 
--    REG_PC = 32
--
-     ASSET_KERNEL = Asset(
-         ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-diff --git a/tests/functional/ppc64/test_reverse_debug.py b/tests/functional/ppc64/test_reverse_debug.py
-index 5931adef5a..b32a186a9a 100755
---- a/tests/functional/ppc64/test_reverse_debug.py
-+++ b/tests/functional/ppc64/test_reverse_debug.py
-@@ -2,38 +2,35 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
--# Reverse debugging test
-+# Reverse debugging test for ppc64
- #
- # Copyright (c) 2020 ISP RAS
-+# Copyright (c) 2025 Linaro Limited
- #
- # Author:
- #  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-+#  Gustavo Romero <gustavo.romero@linaro.org> (Run without Avocado)
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test import skipIfMissingImports, skipFlakyTest
-+from qemu_test import skipFlakyTest
- from reverse_debugging import ReverseDebugging
- 
- 
--@skipIfMissingImports('avocado.utils')
- class ReverseDebugging_ppc64(ReverseDebugging):
- 
--    REG_PC = 0x40
--
-     @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
-     def test_ppc64_pseries(self):
-         self.set_machine('pseries')
-         # SLOF branches back to its entry point, which causes this test
-         # to take the 'hit a breakpoint again' path. That's not a problem,
-         # just slightly different than the other machines.
--        self.endian_is_le = False
-         self.reverse_debugging()
- 
-     @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
-     def test_ppc64_powernv(self):
-         self.set_machine('powernv')
--        self.endian_is_le = False
-         self.reverse_debugging()
- 
- 
-diff --git a/tests/functional/x86_64/test_reverse_debug.py b/tests/functional/x86_64/test_reverse_debug.py
-index d713e91e14..63d08bbada 100755
---- a/tests/functional/x86_64/test_reverse_debug.py
-+++ b/tests/functional/x86_64/test_reverse_debug.py
-@@ -2,29 +2,24 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
--# Reverse debugging test
-+# Reverse debugging test for x86_64
- #
- # Copyright (c) 2020 ISP RAS
-+# Copyright (c) 2025 Linaro Limited
- #
- # Author:
- #  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-+#  Gustavo Romero <gustavo.romero@linaro.org> (Run without Avocado)
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test import skipIfMissingImports, skipFlakyTest
-+from qemu_test import skipFlakyTest
- from reverse_debugging import ReverseDebugging
- 
- 
--@skipIfMissingImports('avocado.utils')
- class ReverseDebugging_X86_64(ReverseDebugging):
- 
--    REG_PC = 0x10
--    REG_CS = 0x12
--    def get_pc(self, g):
--        return self.get_reg_le(g, self.REG_PC) \
--            + self.get_reg_le(g, self.REG_CS) * 0x10
--
-     @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2922")
-     def test_x86_64_pc(self):
-         self.set_machine('pc')
--- 
-2.34.1
+are available in the Git repository at:
+
+  https://github.com/legoater/qemu/ tags/pull-vfio-20250926
+
+for you to fetch changes up to 7c773b4267ae10820ed5e3ec6b15219b39dbcebd:
+
+  include/hw/vfio/vfio-device.h: fix include header guard name (2025-09-25 17:55:20 +0200)
+
+----------------------------------------------------------------
+vfio queue:
+
+* New vfio-user functional test
+* Improved naming conventions
+
+----------------------------------------------------------------
+Mark Cave-Ayland (29):
+      tests/functional: add a vfio-user smoke test
+      include/hw/vfio/vfio-container.h: rename VFIOContainer to VFIOLegacyContainer
+      include/hw/vfio/vfio-container-base.h: rename VFIOContainerBase to VFIOContainer
+      include/hw/vfio/vfio-container.h: rename file to vfio-container-legacy.h
+      include/hw/vfio/vfio-container-base.h: rename file to vfio-container.h
+      hw/vfio/container.c: rename file to container-legacy.c
+      hw/vfio/container-base.c: rename file to container.c
+      vfio/iommufd.c: use QOM casts where appropriate
+      vfio/cpr-iommufd.c: use QOM casts where appropriate
+      vfio/vfio-iommufd.h: rename VFIOContainer bcontainer field to parent_obj
+      vfio/spapr.c: use QOM casts where appropriate
+      vfio/spapr.c: rename VFIOContainer bcontainer field to parent_obj
+      vfio/pci.c: rename vfio_instance_init() to vfio_pci_init()
+      vfio/pci.c: rename vfio_instance_finalize() to vfio_pci_finalize()
+      vfio/pci.c: rename vfio_pci_dev_class_init() to vfio_pci_class_init()
+      vfio/pci.c: rename vfio_pci_dev_info to vfio_pci_info
+      hw/vfio/types.h: rename TYPE_VFIO_PCI_BASE to TYPE_VFIO_PCI_DEVICE
+      vfio/pci.c: rename vfio_pci_base_dev_class_init() to vfio_pci_device_class_init()
+      vfio/pci.c: rename vfio_pci_base_dev_info to vfio_pci_device_info
+      vfio/pci.c: rename vfio_pci_dev_properties[] to vfio_pci_properties[]
+      vfio/pci.c: rename vfio_pci_dev_nohotplug_properties[] to vfio_pci_nohotplug_properties[]
+      vfio/pci.c: rename vfio_pci_nohotplug_dev_class_init() to vfio_pci_nohotplug_class_init()
+      vfio/pci.c: rename vfio_pci_nohotplug_dev_info to vfio_pci_nohotplug_info
+      vfio-user/pci.c: rename vfio_user_pci_dev_class_init() to vfio_user_pci_class_init()
+      vfio-user/pci.c: rename vfio_user_pci_dev_properties[] to vfio_user_pci_properties[]
+      vfio-user/pci.c: rename vfio_user_instance_init() to vfio_user_pci_init()
+      vfio-user/pci.c: rename vfio_user_instance_finalize() to vfio_user_pci_finalize()
+      vfio-user/pci.c: rename vfio_user_pci_dev_info to vfio_user_pci_info
+      include/hw/vfio/vfio-device.h: fix include header guard name
+
+ MAINTAINERS                                      |    1 +
+ hw/vfio-user/container.h                         |    4 +-
+ hw/vfio/pci.h                                    |    2 +-
+ hw/vfio/types.h                                  |    4 +-
+ hw/vfio/vfio-iommufd.h                           |    9 +-
+ hw/vfio/vfio-listener.h                          |    4 +-
+ include/hw/vfio/vfio-container-base.h            |  279 -----
+ include/hw/vfio/vfio-container-legacy.h          |   39 +
+ include/hw/vfio/vfio-container.h                 |  286 ++++-
+ include/hw/vfio/vfio-cpr.h                       |   15 +-
+ include/hw/vfio/vfio-device.h                    |   12 +-
+ hw/ppc/spapr_pci_vfio.c                          |   14 +-
+ hw/s390x/s390-pci-vfio.c                         |   16 +-
+ hw/vfio-user/container.c                         |   18 +-
+ hw/vfio-user/pci.c                               |   35 +-
+ hw/vfio/container-base.c                         |  347 ------
+ hw/vfio/container-legacy.c                       | 1277 +++++++++++++++++++++
+ hw/vfio/container.c                              | 1325 ++++------------------
+ hw/vfio/cpr-iommufd.c                            |    4 +-
+ hw/vfio/cpr-legacy.c                             |   43 +-
+ hw/vfio/device.c                                 |    4 +-
+ hw/vfio/iommufd.c                                |   48 +-
+ hw/vfio/listener.c                               |   74 +-
+ hw/vfio/pci.c                                    |   68 +-
+ hw/vfio/spapr.c                                  |   52 +-
+ hw/vfio/meson.build                              |    2 +-
+ tests/functional/x86_64/meson.build              |    1 +
+ tests/functional/x86_64/test_vfio_user_client.py |  201 ++++
+ 28 files changed, 2194 insertions(+), 1990 deletions(-)
+ delete mode 100644 include/hw/vfio/vfio-container-base.h
+ create mode 100644 include/hw/vfio/vfio-container-legacy.h
+ delete mode 100644 hw/vfio/container-base.c
+ create mode 100644 hw/vfio/container-legacy.c
+ create mode 100755 tests/functional/x86_64/test_vfio_user_client.py
 
 
