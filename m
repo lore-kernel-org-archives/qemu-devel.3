@@ -4,72 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2713CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 05:43:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E436CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 06:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v216x-00009b-RP; Fri, 26 Sep 2025 01:35:15 -0400
+	id 1v21iv-00067Y-7O; Fri, 26 Sep 2025 02:14:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v216k-0008Qo-En
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:35:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v216d-0000uZ-Pi
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 01:35:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758864890;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KVN0k2RrPLWXXDfFdGf1vq4Z+Id+iJdU/HgYiYWPMDw=;
- b=dRVskXYAlXVk9HTGh2joxRCOcBu7RSZToXWRWX5b/eJOIjfae2D1LtwC9ilHWI+yvSkAbY
- /qqcIMhGdoKM+8HTh5NbYuebYgRBoBwzjPL3Kxqd3QBSy4R+GDBBNHmp2kJr+rAC1NURq4
- 3Ke7B6+YaePEDTqEyv7reOTuKEIc+Sk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-kZ1t7ufYPiaZpMad8-Mz9g-1; Fri,
- 26 Sep 2025 01:34:48 -0400
-X-MC-Unique: kZ1t7ufYPiaZpMad8-Mz9g-1
-X-Mimecast-MFC-AGG-ID: kZ1t7ufYPiaZpMad8-Mz9g_1758864887
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A408B1800290; Fri, 26 Sep 2025 05:34:47 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.226.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B58691800452; Fri, 26 Sep 2025 05:34:45 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 17/29] hw/vfio/types.h: rename TYPE_VFIO_PCI_BASE to
- TYPE_VFIO_PCI_DEVICE
-Date: Fri, 26 Sep 2025 07:33:46 +0200
-Message-ID: <20250926053358.308198-18-clg@redhat.com>
-In-Reply-To: <20250926053358.308198-1-clg@redhat.com>
-References: <20250926053358.308198-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v21is-00066v-KA
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 02:14:26 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v21ih-0006UZ-UR
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 02:14:25 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-46e37d10ed2so14152015e9.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 23:14:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758867249; x=1759472049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yDJTbOrwHvQqZhukxd9VCTKtPzB3Dkw/D/4a3mZK6Fw=;
+ b=WW59yZN4QoQvc6DcqwZGq8gz/rek9Pm+wuT78jKGsM1lWR5FfJ3M7KsX0t/ncr5dPB
+ ePyH31yEQxW3kCA7No628uFOn/H35BX/+OvFlakdlWj+0QKltqpQoJG2u6103GilFfj+
+ s52tDezP3zT4t+SF2walgH0jlEoF5U+kMdP8pa/cDpRzEKnZj/PaMSSQeII/Cf0wSoJv
+ QqqtdxVsAcR5oP23XJJcvkOBM6EgmdOZSOyosFCcc+LaHMYRbBM4MNAdzygthPW1Bqzk
+ VGsSsLcgLU925t/OfW+PGWBcf3eqjMm0iWvPG64dVNlxAgtrZUPxgDm4XvKQllBRXxf8
+ Foyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758867249; x=1759472049;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yDJTbOrwHvQqZhukxd9VCTKtPzB3Dkw/D/4a3mZK6Fw=;
+ b=YFl0KseaYaJHOjGScxcp1Ii++QWfMwN/bPyvylCPevwOe1HBmfD/oxwDYP72TM7DCW
+ pW1Zsb4xOLfUoYti/S4c243bikg7nODtPfxqnomLNxvMJu2cGhCdYHRLS5/OpMMPP2DU
+ 4Fk+Va/KK5pqDxlvZlPhJAigFAbVoBxVLjfDW541ZU6A9RNf1Fq7zQlj3Yp2R6mXrEPo
+ LNtzIhKVp2ilSaCP0rfFtyXlTJ+iQ4xPND24iBr6epYeAn7K3ZCwKwjq3EfXFLXJKltL
+ YqDZDpRgFTGoqxtvODHBbHJCIpWqj8ZaPwc3nH6VdVMuEw1Uv1HDeMg8uEraW9HSHnwZ
+ PvQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLehGYCRHDay67psbgdXdWSCiyQIwTIMavSfk0iJzrp4nPzU/AR5ml1sRUpshd58+ykWHUkdYv0XdZ@nongnu.org
+X-Gm-Message-State: AOJu0YyvV5ATgbUwzwl9H7nVk+Qm94svWz6TqLb1hfmo/6NoetTd3MBN
+ HpLm2xaRYz6ALHXKPKVdT2bTq7BdYan74d4v0L1UTaUacYUKvFUSxAWt9PaJY/VviGI=
+X-Gm-Gg: ASbGncuzbQS50VUM8qBkgmjZaIoBdBqGNa+/PSzjTzJbhQi8rAYXP3Fw+1AzmZAhBKJ
+ fSSMLEeq3GSmbjsdKoWj2+V6G1bUguiMi9ccXDW20qkjgQI50EAgVsbje9XRf5Ew/KE8XXbtSjO
+ XBXll+HsNxBDXQrkXSfy7RdLDEN/zjlQtLeCxVcHHR1XwnauW3GoYBEbKKTgwIui9GKJa0zMofk
+ 1y+hyv/8HZwTHyxv3mF8PInAdgOwLAfTX20fk84Pb1ksEjkOBfMaZotSc5ZhfH7YnnAH9izd5u/
+ q9HoA/5CcdWB6QQMzg2l88hfGIgZ3sTqk43q8HNpb51qnyW9WbGYWmKEIEnTDxeNXZzxizHa0I1
+ Mxx3ytP3ardfpmiua/FpxI3DjobrIjZluBCZFCROoxHgGGsubqZ2t7DUkqj6AW9nTdA==
+X-Google-Smtp-Source: AGHT+IF550NXqK1/R/OjiqxmKrxlyay0BjveFareF25YTuVFxlifwaXX04yT+nySli2CvdlI3Kjl/g==
+X-Received: by 2002:a05:600c:3b8e:b0:45f:2cf9:c236 with SMTP id
+ 5b1f17b1804b1-46e329d4744mr71031135e9.4.1758867249275; 
+ Thu, 25 Sep 2025 23:14:09 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fb9d26ef7sm5865395f8f.26.2025.09.25.23.14.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Sep 2025 23:14:08 -0700 (PDT)
+Message-ID: <98d7c011-93e2-4c49-aebd-8591b5dc734c@linaro.org>
+Date: Fri, 26 Sep 2025 08:14:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/14] hw/intc: Allow gaps in hartids for aclint and
+ aplic
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
+References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
+ <20250717093833.402237-2-djordje.todorovic@htecgroup.com>
+ <5f0fb254-fa9c-4e29-a848-6e9b3bc8274d@linaro.org>
+ <046d60ed-aa62-4357-a812-721de3412573@htecgroup.com>
+ <ca5816d3-a0e7-4460-aead-8f0dbcb4bc92@linaro.org>
+ <4d1e75d9-13b1-4fb8-b1f9-4917dbfb2415@htecgroup.com>
+ <0a27b044-e7c2-4621-a2ad-e028d5ef31ec@linaro.org>
+ <0c8036d4-9599-4249-bb20-76e35b970477@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0c8036d4-9599-4249-bb20-76e35b970477@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,325 +113,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+On 24/9/25 10:00, Djordje Todorovic wrote:
+> 
+> On 22. 9. 25. 08:52, Philippe Mathieu-Daudé wrote:
+>> CAUTION: This email originated from outside of the organization. Do
+>> not click links or open attachments unless you recognize the sender
+>> and know the content is safe.
+>>
+>>
+>> On 3/9/25 14:35, Djordje Todorovic wrote:
+>>>
+>>> On 1. 9. 25. 13:05, Philippe Mathieu-Daudé wrote:
+>>>> CAUTION: This email originated from outside of the organization. Do
+>>>> not click links or open attachments unless you recognize the sender
+>>>> and know the content is safe.
+>>>>
+>>>>
+>>>> On 1/9/25 10:17, Djordje Todorovic wrote:
+>>>>> On 8. 8. 25. 17:52, Philippe Mathieu-Daudé wrote:
+>>>>>
+>>>>>> CAUTION: This email originated from outside of the organization. Do
+>>>>>> not click links or open attachments unless you recognize the sender
+>>>>>> and know the content is safe.
+>>>>>>
+>>>>>>
+>>>>>> On 17/7/25 11:38, Djordje Todorovic wrote:
+>>>>>>> This is needed for riscv based CPUs by MIPS since those may have
+>>>>>>> sparse hart-ID layouts. ACLINT and APLIC still assume a dense
+>>>>>>> range, and if a hart is missing, this causes NULL derefs.
+>>>>>>>
+>>>>>>> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+>>>>>>> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+>>>>>>> ---
+>>>>>>>      hw/intc/riscv_aclint.c | 21 +++++++++++++++++++--
+>>>>>>>      hw/intc/riscv_aplic.c  | 11 ++++++++---
+>>>>>>>      2 files changed, 27 insertions(+), 5 deletions(-)
 
-This brings the QOM type name in line with the underlying VFIOPCIDevice structure.
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250925113159.1760317-17-mark.caveayland@nutanix.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/pci.h            |  2 +-
- hw/vfio/types.h          |  4 ++--
- hw/s390x/s390-pci-vfio.c | 14 +++++++-------
- hw/vfio-user/pci.c       | 13 +++++++------
- hw/vfio/device.c         |  2 +-
- hw/vfio/pci.c            | 28 ++++++++++++++--------------
- 6 files changed, 32 insertions(+), 31 deletions(-)
+>>> +    CPU_FOREACH(cpu) {
+>>> +      if (cpu == NULL)
+>>> +        abort();
+>>
+>> Why do you end having a NULL vcpu in the global cpus_queue?
+>> (this is the 'elsewhere problem').
+>>
+> Well, it is true, for our case, we would never get into vcpu == NULL case.
+> 
+> 
+> After several attempts to come up with a better solution for this, I think
+> 
+> we are back to the existing one. I will try to elaborate why.
+> 
+> The sparse hart-ID layout in this case is not a programming mistake but
+> 
+> an intentional hardware design characteristic of the P8700. The P8700
+> 
+> RISC-V implementation has a sparse hart-ID layout where not all hart IDs
+> 
+> in a range are populated. This is explicitly supported by the RISC-V APLIC
+> 
+> specification. The current ACLINT/APLIC implementation assumes a dense
+> 
+> range of hart IDs (from hartid_base to hartid_base + num_harts - 1).
+> 
+> For the P8700 board:
+> 
+>     - We iterate through the theoretical hart ID range for a cluster
+> 
+>     - Some hart IDs legitimately don't have corresponding CPUs (sparse
+> layout)
+> 
+>     - We need to skip these without failing
+> 
+> The CPU_FOREACH approach doesn't work here because:
+> 
+>     - The cpu==NULL will never happen
+> 
+>     - It iterates over all CPUs system-wide, not just those in the current
+> 
+>       cluster
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index e0aef82a8931c78a5504411a912acddda1fd6549..0f78cf9cdbf18924f8e3f9e43c475a41e0ccd928 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -120,7 +120,7 @@ typedef struct VFIOMSIXInfo {
-     MemoryRegion *pba_region;
- } VFIOMSIXInfo;
- 
--OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
-+OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_DEVICE)
- 
- struct VFIOPCIDevice {
-     PCIDevice parent_obj;
-diff --git a/hw/vfio/types.h b/hw/vfio/types.h
-index c19334ff25ae2f5221f08ed863553ce7f8e3be98..5482d908088af7240e00c4e0cfe2e68e842c2520 100644
---- a/hw/vfio/types.h
-+++ b/hw/vfio/types.h
-@@ -9,11 +9,11 @@
- #define HW_VFIO_VFIO_TYPES_H
- 
- /*
-- * TYPE_VFIO_PCI_BASE is an abstract type used to share code
-+ * TYPE_VFIO_PCI_DEVICE is an abstract type used to share code
-  * between VFIO implementations that use a kernel driver
-  * with those that use user sockets.
-  */
--#define TYPE_VFIO_PCI_BASE "vfio-pci-base"
-+#define TYPE_VFIO_PCI_DEVICE "vfio-pci-device"
- 
- #define TYPE_VFIO_PCI "vfio-pci"
- /* TYPE_VFIO_PCI shares struct VFIOPCIDevice. */
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 7760780aff7ae18034d8cbbb77c4d41ea95a6be5..9e31029d7acbe1f735a5c6b0c937c923e5c00061 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -62,7 +62,7 @@ S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
- {
-     S390PCIDMACount *cnt;
-     uint32_t avail;
--    VFIOPCIDevice *vpdev = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vpdev = VFIO_PCI_DEVICE(pbdev->pdev);
-     int id;
- 
-     assert(vpdev);
-@@ -108,7 +108,7 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_base *cap;
--    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_DEVICE(pbdev->pdev);
-     uint64_t vfio_size;
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_BASE);
-@@ -162,7 +162,7 @@ static bool get_host_fh(S390PCIBusDevice *pbdev, struct vfio_device_info *info,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_base *cap;
--    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_DEVICE(pbdev->pdev);
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_BASE);
- 
-@@ -185,7 +185,7 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
-     struct vfio_device_info_cap_zpci_group *cap;
-     S390pciState *s = s390_get_phb();
-     ClpRspQueryPciGrp *resgrp;
--    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_DEVICE(pbdev->pdev);
-     uint8_t start_gid = pbdev->zpci_fn.pfgid;
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_GROUP);
-@@ -264,7 +264,7 @@ static void s390_pci_read_util(S390PCIBusDevice *pbdev,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_util *cap;
--    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_DEVICE(pbdev->pdev);
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_UTIL);
- 
-@@ -291,7 +291,7 @@ static void s390_pci_read_pfip(S390PCIBusDevice *pbdev,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_pfip *cap;
--    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_DEVICE(pbdev->pdev);
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_PFIP);
- 
-@@ -314,7 +314,7 @@ static void s390_pci_read_pfip(S390PCIBusDevice *pbdev,
- 
- static struct vfio_device_info *get_device_info(S390PCIBusDevice *pbdev)
- {
--    VFIOPCIDevice *vfio_pci = VFIO_PCI_BASE(pbdev->pdev);
-+    VFIOPCIDevice *vfio_pci = VFIO_PCI_DEVICE(pbdev->pdev);
- 
-     return vfio_get_device_info(vfio_pci->vbasedev.fd);
- }
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index e2c309784fec5feca635eb0f314f02eabb2dbf1f..efceae69dee09c6e0f695cf08519c3644178f763 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -234,9 +234,10 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
- {
-     ERRP_GUARD();
-     VFIOUserPCIDevice *udev = VFIO_USER_PCI(pdev);
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     const char *sock_name;
-+
-     AddressSpace *as;
-     SocketAddress addr;
-     VFIOUserProxy *proxy;
-@@ -346,7 +347,7 @@ error:
- static void vfio_user_instance_init(Object *obj)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(obj);
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     device_add_bootindex_property(obj, &vdev->bootindex,
-@@ -371,7 +372,7 @@ static void vfio_user_instance_init(Object *obj)
- 
- static void vfio_user_instance_finalize(Object *obj)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     if (vdev->msix != NULL) {
-@@ -387,7 +388,7 @@ static void vfio_user_instance_finalize(Object *obj)
- 
- static void vfio_user_pci_reset(DeviceState *dev)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(dev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     vfio_pci_pre_reset(vdev);
-@@ -421,7 +422,7 @@ static void vfio_user_pci_set_socket(Object *obj, Visitor *v, const char *name,
-     VFIOUserPCIDevice *udev = VFIO_USER_PCI(obj);
-     bool success;
- 
--    if (VFIO_PCI_BASE(udev)->vbasedev.proxy) {
-+    if (VFIO_PCI_DEVICE(udev)->vbasedev.proxy) {
-         error_setg(errp, "Proxy is connected");
-         return;
-     }
-@@ -464,7 +465,7 @@ static void vfio_user_pci_dev_class_init(ObjectClass *klass, const void *data)
- 
- static const TypeInfo vfio_user_pci_dev_info = {
-     .name = TYPE_VFIO_USER_PCI,
--    .parent = TYPE_VFIO_PCI_BASE,
-+    .parent = TYPE_VFIO_PCI_DEVICE,
-     .instance_size = sizeof(VFIOUserPCIDevice),
-     .class_init = vfio_user_pci_dev_class_init,
-     .instance_init = vfio_user_instance_init,
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 963cefc053d0959a173c7789801916dcacce552b..64f87503894791850b059b225762fd45d85ee16c 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -423,7 +423,7 @@ bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
- VFIODevice *vfio_get_vfio_device(Object *obj)
- {
-     if (object_dynamic_cast(obj, TYPE_VFIO_PCI)) {
--        return &VFIO_PCI_BASE(obj)->vbasedev;
-+        return &VFIO_PCI_DEVICE(obj)->vbasedev;
-     } else {
-         return NULL;
-     }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 479def72c5823da110cfb282bc838e8ad897efad..aa9d3e0354946451a526539bc2909a97175a633c 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -305,7 +305,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
- 
- static void vfio_intx_routing_notifier(PCIDevice *pdev)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     PCIINTxRoute route;
- 
-     if (vdev->interrupt != VFIO_INT_INTx) {
-@@ -660,7 +660,7 @@ void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr)
- static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-                                    MSIMessage *msg, IOHandler *handler)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIOMSIVector *vector;
-     int ret;
-     bool resizing = !!(vdev->nr_vectors < nr + 1);
-@@ -755,7 +755,7 @@ static int vfio_msix_vector_use(PCIDevice *pdev,
- 
- static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
- 
-     trace_vfio_msix_vector_release(vdev->vbasedev.name, nr);
-@@ -1346,7 +1346,7 @@ static const MemoryRegionOps vfio_vga_ops = {
-  */
- static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIORegion *region = &vdev->bars[bar].region;
-     MemoryRegion *mmap_mr, *region_mr, *base_mr;
-     PCIIORegion *r;
-@@ -1392,7 +1392,7 @@ static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
-  */
- uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     uint32_t emu_bits = 0, emu_val = 0, phys_val = 0, val;
- 
-@@ -1426,7 +1426,7 @@ uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
- void vfio_pci_write_config(PCIDevice *pdev,
-                            uint32_t addr, uint32_t val, int len)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     uint32_t val_le = cpu_to_le32(val);
-     int ret;
-@@ -3392,7 +3392,7 @@ bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
- static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
- {
-     ERRP_GUARD();
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     int i;
-     char uuid[UUID_STR_LEN];
-@@ -3552,14 +3552,14 @@ error:
- 
- static void vfio_pci_finalize(Object *obj)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
- 
-     vfio_pci_put_device(vdev);
- }
- 
- static void vfio_exitfn(PCIDevice *pdev)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     vfio_unregister_req_notifier(vdev);
-@@ -3583,7 +3583,7 @@ static void vfio_exitfn(PCIDevice *pdev)
- 
- static void vfio_pci_reset(DeviceState *dev)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(dev);
- 
-     /* Do not reset the device during qemu_system_reset prior to cpr load */
-     if (cpr_is_incoming()) {
-@@ -3628,7 +3628,7 @@ post_reset:
- static void vfio_pci_init(Object *obj)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(obj);
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     device_add_bootindex_property(obj, &vdev->bootindex,
-@@ -3669,7 +3669,7 @@ static void vfio_pci_base_dev_class_init(ObjectClass *klass, const void *data)
- }
- 
- static const TypeInfo vfio_pci_base_dev_info = {
--    .name = TYPE_VFIO_PCI_BASE,
-+    .name = TYPE_VFIO_PCI_DEVICE,
-     .parent = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(VFIOPCIDevice),
-     .abstract = true,
-@@ -3758,7 +3758,7 @@ static const Property vfio_pci_dev_properties[] = {
- #ifdef CONFIG_IOMMUFD
- static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-     vfio_device_set_fd(&vdev->vbasedev, str, errp);
- }
- #endif
-@@ -3914,7 +3914,7 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
- 
- static const TypeInfo vfio_pci_info = {
-     .name = TYPE_VFIO_PCI,
--    .parent = TYPE_VFIO_PCI_BASE,
-+    .parent = TYPE_VFIO_PCI_DEVICE,
-     .class_init = vfio_pci_class_init,
-     .instance_init = vfio_pci_init,
-     .instance_finalize = vfio_pci_finalize,
--- 
-2.51.0
+Correct, we simply need to iterate over the CPUs in the cluster, which
+IFAICT this device model doesn't use (TYPE_CPU_CLUSTER).
 
 
