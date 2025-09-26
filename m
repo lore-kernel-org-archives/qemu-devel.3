@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC8DCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FCECAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v292Y-0006Op-G3; Fri, 26 Sep 2025 10:03:15 -0400
+	id 1v298C-00077V-5O; Fri, 26 Sep 2025 10:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v292W-0006Oc-Vc
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:03:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v292P-0004j9-CP
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:03:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758895382;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7X4SWOuaRnjqI3c2+gQUnYmt1B06XZVz+IyxcK6V2i0=;
- b=GtE1sVNbkRAa/+MuC0MXkLb+S1XXOgCz0zwoJc0kvVGeA0bplgFumrxZgLWGBEOXIvmCFV
- vfcn/NIlgutyGIWQumeapYj0H1YEjUrTcIpY/x9SCC7LQxlzLbfPExHBu3/Hz5zjxCvT5/
- 17Cgex+XzyhjIhrkGiKsLfODZo8NzIY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-Ynb7ThTtPBGkJZLqQxTOcw-1; Fri,
- 26 Sep 2025 10:02:58 -0400
-X-MC-Unique: Ynb7ThTtPBGkJZLqQxTOcw-1
-X-Mimecast-MFC-AGG-ID: Ynb7ThTtPBGkJZLqQxTOcw_1758895377
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 311D718005B0; Fri, 26 Sep 2025 14:02:50 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.175])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C8D0E1953957; Fri, 26 Sep 2025 14:02:41 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v2989-00075Z-Dk
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:01 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v2983-0005cX-D4
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:01 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3fa528f127fso1672298f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:08:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758895726; x=1759500526; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/dMwIyh1iNIO97lphlkJ/89s8F24iW7pVMUpbZbQCCc=;
+ b=xNjFzjXdW6Rj22XUmQvnOpI+mIBhcd39kHIrYkybb93XtXfkriOPG4RyLAnrdEU1DA
+ z6tRiJTzQvKtSHSz45z6ZFZI74JJDkZOG//gdO00MLuzE+fM5yr4ukXQp3UQPS0V2qit
+ q8wzKm/KRLda9O77+5rRJA8E+lL92llbJ+EoEfu/PMuK5Zz1ygZjgLRArEvj7H4CDZ9a
+ Lv4evVVeZpW/O2DvKa5dfefIG1/c046Z2KkOfQNy9cNTpX/EyuxxPNXUO1/ehrnJYXBh
+ L85VWXZLL8Js45x9kS6BYLalgLhqRX/DlY5eThu+DQFjZQcyjlRdurEMZcs/aw3HvMmh
+ iP6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758895726; x=1759500526;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/dMwIyh1iNIO97lphlkJ/89s8F24iW7pVMUpbZbQCCc=;
+ b=cGifMMOWqt38FOnwyVF61g1kgiOa4mjh9xu1Xftl8G/Rn0RfwOpcJ5Fhxs4RYLwSn5
+ dpKYaNU073RpE/01Im1i9HYPPRFwUwKw2qIWHSfzgGDP9DKK3GuFrVvpf+pOyrwD43k5
+ goiZ/myUFmxmvHI+5XW3+O0p4U5nor3UF00jzuY1qJ76OUzr3NGeuEmNSbWJpako6G3D
+ 2fSyrEn5pmVy7wU6gapM4IMTpqtbjRRy/hEGIhkEht1VRkkzgzdE9RpOl/n4fBg6B3j0
+ 5fsB8nKlm2p3+E1ERgmvjonUUTz2v80eHvGfyxDAt4ajuYuXdfiZHDMt2SCuRJFGLMih
+ 5Nlw==
+X-Gm-Message-State: AOJu0YxJAQyOkmnQA/ULuyYbN0lB964fm7XcltAfFNPhG6tTv55Nhh6a
+ LPGzIoxA7t715q8RbYcyU9ewImgqATGFn0AnFR3YPs6FTcaHeNHiVnsw96QodlwaPz1az+Xnd9T
+ MdeWQ
+X-Gm-Gg: ASbGncvZ2jpUxq3BPjTp1H9fIZB8uNU1z9Xhbdbib5e63eomfqqX5aGOHeI5NF8Di1y
+ UDeyXJUXWSYu9LOizM7E/BA9oW3srN7k1eBZlufNGUtGu/xPUbcLM2/Fh9x9gwgnA5CJolL1R9X
+ nm0uXQt/r6ZcLfqt0CaGHhdcFi5lrxXsQTcNUfz+BK9HYrj/kcF0IuAMQKSM2sBhFfuO4+nruJU
+ PSs/1eqiYZ/Yc+X/gNcJWk7Kwpzc0WGej3No4IeAhSIVc9E9uaXYhE0Vvh7aZxnB8qgvnpzjuJ9
+ vUbIly1glJAiA5bKWr7FPZJd/b//wm1Vq+aR4ZXI3ZiqksyZ/Xwsy1N7zJTrMLKZwtKDq4Bu7Cx
+ X1iwnQRxJl7uq6VFFotLSx0Ies2gBm6ilkfHpLoc=
+X-Google-Smtp-Source: AGHT+IFqbUrd7f14j83l2UZUgtPi566lW0ve2euI2ru8yGy0wjpTzt54xPQiqK98wyg64oD2OhUtEA==
+X-Received: by 2002:a05:6000:220b:b0:3ea:6680:8fb9 with SMTP id
+ ffacd0b85a97d-40f5f60d329mr6749086f8f.3.1758895726300; 
+ Fri, 26 Sep 2025 07:08:46 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.45
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Sep 2025 07:08:45 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 11/32] qom: report & filter on security status in
- qom-list-types
-Date: Fri, 26 Sep 2025 15:01:22 +0100
-Message-ID: <20250926140144.1998694-12-berrange@redhat.com>
-In-Reply-To: <20250926140144.1998694-1-berrange@redhat.com>
-References: <20250926140144.1998694-1-berrange@redhat.com>
+Subject: [PULL 00/44] target-arm queue
+Date: Fri, 26 Sep 2025 15:08:00 +0100
+Message-ID: <20250926140844.1493020-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,123 +97,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds:
+Hi; here's an arm pullreq...
 
- * a new boolean 'secure' field to the type info returned by
-   qom-list-types, which will be set if the type provides a
-   security boundary
+thanks
+-- PMM
 
- * a new boolean 'secure' parameter to the arguments of
-   qom-list-types, which can be used to filter types based
-   on their security status
+The following changes since commit 95b9e0d2ade5d633fd13ffba96a54e87c65baf39:
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qapi/qom.json      | 10 ++++++++--
- qom/qom-qmp-cmds.c | 30 ++++++++++++++++++++++++------
- 2 files changed, 32 insertions(+), 8 deletions(-)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-09-24 12:04:18 -0700)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 830cb2ffe7..3e5e7e6f6f 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -210,12 +210,15 @@
- # @abstract: the type is abstract and can't be directly instantiated.
- #     Omitted if false.  (since 2.10)
- #
-+# @secure: the type provides a security boundary.
-+#     Omitted if false.  (since 10.2)
-+#
- # @parent: Name of parent type, if any (since 2.10)
- #
- # Since: 1.1
- ##
- { 'struct': 'ObjectTypeInfo',
--  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str' } }
-+  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str', '*secure': 'bool' } }
- 
- ##
- # @qom-list-types:
-@@ -227,12 +230,15 @@
- #
- # @abstract: if true, include abstract types in the results
- #
-+# @secure: if set, filter to only include types with matching security status
-+#     (since 10.2)
-+#
- # Returns: a list of types, or an empty list if no results are found
- #
- # Since: 1.1
- ##
- { 'command': 'qom-list-types',
--  'data': { '*implements': 'str', '*abstract': 'bool' },
-+  'data': { '*implements': 'str', '*abstract': 'bool', '*secure': 'bool' },
-   'returns': [ 'ObjectTypeInfo' ],
-   'allow-preconfig': true }
- 
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index 57f1898cf6..9e221bb332 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -151,33 +151,51 @@ QObject *qmp_qom_get(const char *path, const char *property, Error **errp)
-     return object_property_get_qobject(obj, property, errp);
- }
- 
--static void qom_list_types_tramp(ObjectClass *klass, void *data)
-+typedef struct {
-+    ObjectTypeInfoList *list;
-+    bool has_secure;
-+    bool secure;
-+} ObjectTypeInfoData;
-+
-+static void qom_list_types_tramp(ObjectClass *klass, void *opaque)
- {
--    ObjectTypeInfoList **pret = data;
-+    ObjectTypeInfoData *data = opaque;
-     ObjectTypeInfo *info;
-     ObjectClass *parent = object_class_get_parent(klass);
- 
-+    if (data->has_secure &&
-+        data->secure != object_class_is_secure(klass)) {
-+        return;
-+    }
-+
-     info = g_malloc0(sizeof(*info));
-     info->name = g_strdup(object_class_get_name(klass));
-     info->has_abstract = info->abstract = object_class_is_abstract(klass);
-+    info->has_secure = info->secure = object_class_is_secure(klass);
-     if (parent) {
-         info->parent = g_strdup(object_class_get_name(parent));
-     }
- 
--    QAPI_LIST_PREPEND(*pret, info);
-+    QAPI_LIST_PREPEND(data->list, info);
- }
- 
- ObjectTypeInfoList *qmp_qom_list_types(const char *implements,
-                                        bool has_abstract,
-                                        bool abstract,
-+                                       bool has_secure,
-+                                       bool secure,
-                                        Error **errp)
- {
--    ObjectTypeInfoList *ret = NULL;
-+    ObjectTypeInfoData data = {
-+        .list = NULL,
-+        .has_secure = has_secure,
-+        .secure = secure,
-+    };
- 
-     module_load_qom_all();
--    object_class_foreach(qom_list_types_tramp, implements, abstract, &ret);
-+    object_class_foreach(qom_list_types_tramp, implements, abstract, &data);
- 
--    return ret;
-+    return data.list;
- }
- 
- ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
--- 
-2.50.1
+are available in the Git repository at:
 
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250926
+
+for you to fetch changes up to b71e2b281a23aca474e128a8487efb07e29f4019:
+
+  target/arm: Implement ID_AA64PFR2_EL1 (2025-09-26 13:43:33 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * reimplement VHE alias register handling
+ * replace magic GIC values by proper definitions
+ * convert power control DPRINTF() uses to trace events
+ * better reset related tracepoints
+ * implement ID_AA64PFR2_EL1
+ * hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
+ * net/passt: Fix build failure due to missing GIO dependency
+
+----------------------------------------------------------------
+Laurent Vivier (1):
+      net/passt: Fix build failure due to missing GIO dependency
+
+Peter Maydell (3):
+      hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
+      target/arm: Move ID register field defs to cpu-features.h
+      target/arm: Implement ID_AA64PFR2_EL1
+
+Philippe Mathieu-Daudé (4):
+      target/arm: Replace magic GIC values by proper definitions
+      target/arm: Convert power control DPRINTF() uses to trace events
+      target/arm: Trace emulated firmware reset call
+      target/arm: Trace vCPU reset call
+
+Richard Henderson (36):
+      target/arm: Introduce KVMID_AA64_SYS_REG64
+      target/arm: Move compare_u64 to helper.c
+      target/arm/hvf: Split out sysreg.c.inc
+      target/arm/hvf: Reorder DEF_SYSREG arguments
+      target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
+      target/arm/hvf: Remove hvf_sreg_match.key
+      target/arm/hvf: Replace hvf_sreg_match with hvf_sreg_list
+      target/arm/hvf: Sort the cpreg_indexes array
+      target/arm/hvf: Use raw_read, raw_write to access
+      target/arm: Use raw_write in cp_reg_reset
+      target/arm: Rename all ARMCPRegInfo from opaque to ri
+      target/arm: Drop define_one_arm_cp_reg_with_opaque
+      target/arm: Restrict the scope of CPREG_FIELD32, CPREG_FIELD64
+      target/arm: Replace cpreg_field_is_64bit with cpreg_field_type
+      target/arm: Add CP_REG_AA32_64BIT_{SHIFT,MASK}
+      target/arm: Rename CP_REG_AA32_NS_{SHIFT,MASK}
+      target/arm: Convert init_cpreg_list to g_hash_table_foreach
+      target/arm: Remove cp argument to ENCODE_AA64_CP_REG
+      target/arm: Reorder ENCODE_AA64_CP_REG arguments
+      target/arm: Split out add_cpreg_to_hashtable_aa{32, 64}
+      target/arm: Improve asserts in define_one_arm_cp_reg
+      target/arm: Move cp processing to define_one_arm_cp_reg
+      target/arm: Move cpreg elimination to define_one_arm_cp_reg
+      target/arm: Add key parameter to add_cpreg_to_hashtable
+      target/arm: Split out alloc_cpreg
+      target/arm: Hoist the allocation of ARMCPRegInfo
+      target/arm: Remove name argument to alloc_cpreg
+      target/arm: Move alias setting for wildcards
+      target/arm: Move writeback of CP_ANY fields
+      target/arm: Move endianness fixup for 32-bit registers
+      target/arm: Rename TBFLAG_A64_NV2_MEM_E20 with *_E2H
+      target/arm: Split out redirect_cpreg
+      target/arm: Redirect VHE FOO_EL1 -> FOO_EL2 during translation
+      target/arm: Redirect VHE FOO_EL12 to FOO_EL1 during translation
+      target/arm: Rename some cpreg to their aarch64 names
+      target/arm: Remove define_arm_vh_e2h_redirects_aliases
+
+ meson.build                    |   1 +
+ linux-user/arm/target_proc.h   |   2 +
+ target/arm/cpregs.h            | 111 ++---
+ target/arm/cpu-features.h      | 415 ++++++++++++++++++
+ target/arm/cpu.h               | 413 +-----------------
+ target/arm/internals.h         |   3 +
+ target/arm/kvm-consts.h        |  14 +-
+ target/arm/tcg/translate.h     |   2 +
+ target/arm/cpu-sysregs.h.inc   |   1 +
+ hw/intc/arm_gicv3_cpuif.c      |  10 +-
+ hw/usb/hcd-uhci.c              |  10 +-
+ target/arm/arm-powerctl.c      |  26 +-
+ target/arm/cpu.c               |  16 +-
+ target/arm/gdbstub.c           |  14 +-
+ target/arm/helper.c            | 933 +++++++++++++++++++----------------------
+ target/arm/hvf/hvf.c           | 240 +++--------
+ target/arm/kvm.c               |  12 +-
+ target/arm/tcg/hflags.c        |   8 +-
+ target/arm/tcg/translate-a64.c |  47 ++-
+ target/arm/hvf/sysreg.c.inc    | 147 +++++++
+ target/arm/trace-events        |  10 +
+ 21 files changed, 1199 insertions(+), 1236 deletions(-)
+ create mode 100644 target/arm/hvf/sysreg.c.inc
 
