@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36679CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D46CCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27so-00027e-Jm; Fri, 26 Sep 2025 08:49:06 -0400
+	id 1v27ro-0008Ui-1H; Fri, 26 Sep 2025 08:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27sm-00025z-92; Fri, 26 Sep 2025 08:49:04 -0400
+ id 1v27rW-0008U5-Jl; Fri, 26 Sep 2025 08:47:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27sZ-00076X-RR; Fri, 26 Sep 2025 08:49:02 -0400
+ id 1v27rI-0006tY-T4; Fri, 26 Sep 2025 08:47:46 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8986D157F5B;
- Fri, 26 Sep 2025 15:45:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AF807157F53;
+ Fri, 26 Sep 2025 15:45:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DF991290F19;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 20663290F11;
  Fri, 26 Sep 2025 15:45:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 19/38] rust: hpet: fix new warning
-Date: Fri, 26 Sep 2025 15:45:19 +0300
-Message-ID: <20250926124540.2221746-19-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 11/38] iotests: drop compat for old version context
+ manager
+Date: Fri, 26 Sep 2025 15:45:11 +0300
+Message-ID: <20250926124540.2221746-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,31 +62,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Nightly rustc complains that HPETAddrDecode has a lifetime but it is not
-clearly noted that it comes from &self.  Apply the compiler's suggestion
-to shut it up.
+Our minimum python is now 3.9, so back compat with prior
+python versions is no longer required.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6b3fad084fc4e13901e252fe6c2a2c46ecea999b)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 82c7cb93c750196f513a1b11cb85e0328bad444f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 3ae3ec25f1..0bb31283ad 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -765,7 +765,7 @@ fn reset_hold(&self, _type: ResetType) {
-         self.rtc_irq_level.set(0);
-     }
+diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
+index 6326e46b7b..29caaa8a34 100644
+--- a/tests/qemu-iotests/testenv.py
++++ b/tests/qemu-iotests/testenv.py
+@@ -22,15 +22,12 @@
+ from pathlib import Path
+ import shutil
+ import collections
++import contextlib
+ import random
+ import subprocess
+ import glob
+ from typing import List, Dict, Any, Optional
  
--    fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode {
-+    fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode<'_> {
-         let shift = ((addr & 4) * 8) as u32;
-         let len = std::cmp::min(size * 8, 64 - shift);
+-if sys.version_info >= (3, 9):
+-    from contextlib import AbstractContextManager as ContextManager
+-else:
+-    from typing import ContextManager
  
+ DEF_GDB_OPTIONS = 'localhost:12345'
+ 
+@@ -58,7 +55,7 @@ def get_default_machine(qemu_prog: str) -> str:
+     return default_machine
+ 
+ 
+-class TestEnv(ContextManager['TestEnv']):
++class TestEnv(contextlib.AbstractContextManager['TestEnv']):
+     """
+     Manage system environment for running tests
+ 
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index 2e236c8fa3..14cc8492f9 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -30,11 +30,6 @@
+ from typing import List, Optional, Any, Sequence, Dict
+ from testenv import TestEnv
+ 
+-if sys.version_info >= (3, 9):
+-    from contextlib import AbstractContextManager as ContextManager
+-else:
+-    from typing import ContextManager
+-
+ 
+ def silent_unlink(path: Path) -> None:
+     try:
+@@ -57,7 +52,7 @@ def file_diff(file1: str, file2: str) -> List[str]:
+         return res
+ 
+ 
+-class LastElapsedTime(ContextManager['LastElapsedTime']):
++class LastElapsedTime(contextlib.AbstractContextManager['LastElapsedTime']):
+     """ Cache for elapsed time for tests, to show it during new test run
+ 
+     It is safe to use get() at any time.  To use update(), you must either
+@@ -112,7 +107,7 @@ def __init__(self, status: str, description: str = '',
+         self.interrupted = interrupted
+ 
+ 
+-class TestRunner(ContextManager['TestRunner']):
++class TestRunner(contextlib.AbstractContextManager['TestRunner']):
+     shared_self = None
+ 
+     @staticmethod
 -- 
 2.47.3
 
