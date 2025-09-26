@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC3DCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6614FCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 13:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v27qQ-0008As-HO; Fri, 26 Sep 2025 08:46:38 -0400
+	id 1v27tx-00047c-5X; Fri, 26 Sep 2025 08:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27qK-0008A3-0Z; Fri, 26 Sep 2025 08:46:35 -0400
+ id 1v27ts-0003px-SM; Fri, 26 Sep 2025 08:50:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v27q3-0006bq-SL; Fri, 26 Sep 2025 08:46:26 -0400
+ id 1v27tf-0007KU-RU; Fri, 26 Sep 2025 08:50:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D9D0B157F4A;
- Fri, 26 Sep 2025 15:45:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 50FF6157F62;
+ Fri, 26 Sep 2025 15:45:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 47663290F08;
- Fri, 26 Sep 2025 15:45:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB5E2290F20;
+ Fri, 26 Sep 2025 15:45:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, WANG Rui <wangrui@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 02/38] target/loongarch: Guard 64-bit-only insn
- translation with TRANS64 macro
-Date: Fri, 26 Sep 2025 15:45:02 +0300
-Message-ID: <20250926124540.2221746-2-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 26/38] target/sparc: Loosen decode of STBAR for v8
+Date: Fri, 26 Sep 2025 15:45:26 +0300
+Message-ID: <20250926124540.2221746-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20250926154509@cover.tls.msk.ru>
@@ -44,8 +43,8 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,222 +60,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: WANG Rui <wangrui@loongson.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This patch replaces uses of the generic TRANS macro with TRANS64 for
-instructions that are only valid when 64-bit support is available.
+Solaris 8 appears to have a bug whereby it executes v9 MEMBAR
+instructions when booting a freshly installed image. According
+to the SPARC v8 architecture manual, whilst bits 13 and bits 12-0
+of the "Read State Register Instructions" are notionally zero,
+they are marked as unused (i.e. ignored).
 
-This improves correctness and avoids potential assertion failures or
-undefined behavior during translation on 32-bit-only configurations.
-
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit 96e7448c1f820c56caea8447c01f5227b0c95c79)
+Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3097
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+(cherry picked from commit b6cdd6c6050567c02a3b3cd428f85bb79d7455aa)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index 3d70d75941..77eeedbc42 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -74,38 +74,38 @@ TRANS(sc_w, ALL, gen_sc, MO_TESL)
- TRANS(ll_d, 64, gen_ll, MO_TEUQ)
- TRANS(sc_d, 64, gen_sc, MO_TEUQ)
- TRANS(amswap_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
--TRANS(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
-+TRANS64(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
- TRANS(amadd_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
--TRANS(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
-+TRANS64(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
- TRANS(amand_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
--TRANS(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
-+TRANS64(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
- TRANS(amor_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
--TRANS(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
-+TRANS64(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
- TRANS(amxor_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
--TRANS(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
-+TRANS64(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
- TRANS(ammax_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
--TRANS(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
-+TRANS64(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
- TRANS(ammin_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
--TRANS(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
-+TRANS64(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
- TRANS(ammax_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
--TRANS(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
-+TRANS64(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
- TRANS(ammin_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
--TRANS(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
-+TRANS64(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
- TRANS(amswap_db_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
--TRANS(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
-+TRANS64(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
- TRANS(amadd_db_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
--TRANS(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
-+TRANS64(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
- TRANS(amand_db_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
--TRANS(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
-+TRANS64(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
- TRANS(amor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
--TRANS(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
-+TRANS64(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
- TRANS(amxor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
--TRANS(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
-+TRANS64(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
- TRANS(ammax_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
--TRANS(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
-+TRANS64(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
- TRANS(ammin_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
--TRANS(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
-+TRANS64(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
- TRANS(ammax_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
--TRANS(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
-+TRANS64(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
- TRANS(ammin_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
--TRANS(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
-+TRANS64(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
-diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-index eda3d6e561..298a80cff5 100644
---- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-@@ -69,6 +69,10 @@ static bool trans_rdtimeh_w(DisasContext *ctx, arg_rdtimeh_w *a)
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index 9e39d23273..1b1b85e9c2 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -88,7 +88,7 @@ CALL    01 i:s30
  
- static bool trans_rdtime_d(DisasContext *ctx, arg_rdtime_d *a)
  {
-+    if (!avail_64(ctx)) {
-+        return false;
-+    }
+   [
+-    STBAR           10 00000 101000 01111 0 0000000000000
++    STBAR_v9        10 00000 101000 01111 0 0000000000000
+     MEMBAR          10 00000 101000 01111 1 000000 cmask:3 mmask:4
+ 
+     RDCCR           10 rd:5  101000 00010 0 0000000000000
+@@ -107,6 +107,17 @@ CALL    01 i:s30
+     RDSTICK_CMPR    10 rd:5  101000 11001 0 0000000000000
+     RDSTRAND_STATUS 10 rd:5  101000 11010 0 0000000000000
+   ]
 +
-     return gen_rdtime(ctx, a, 0, 0);
++  # The v8 manual, section B.30 STBAR instruction, says
++  # bits [12:0] are ignored, but bit 13 must be 0.
++  # However, section B.28 Read State Register Instruction has a
++  # comment that RDASR with rs1 = 15, rd = 0 is STBAR.  Here,
++  # bit 13 is also ignored and rd != 0 is merely reserved.
++  #
++  # Solaris 8 executes v9 MEMBAR instruction 0x8143e008 during boot.
++  # This confirms that bit 13 is ignored, as 0x8143c000 is STBAR.
++  STBAR_v8          10 ----- 101000 01111 - -------------
++
+   # Before v8, all rs1 accepted; otherwise rs1==0.
+   RDY               10 rd:5  101000 rs1:5 0 0000000000000
+ }
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index ddc4154ee3..53183dc609 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -2824,12 +2824,15 @@ static bool trans_Tcc_i_v9(DisasContext *dc, arg_Tcc_i_v9 *a)
+     return do_tcc(dc, a->cond, a->cc, a->rs1, true, a->i);
  }
  
-@@ -100,8 +104,8 @@ static bool gen_crc(DisasContext *ctx, arg_rrr *a,
- TRANS(crc_w_b_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
- TRANS(crc_w_h_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
- TRANS(crc_w_w_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
--TRANS(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
-+TRANS64(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
- TRANS(crcc_w_b_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
- TRANS(crcc_w_h_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
- TRANS(crcc_w_w_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
--TRANS(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
-+TRANS64(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
-diff --git a/target/loongarch/tcg/insn_trans/trans_farith.c.inc b/target/loongarch/tcg/insn_trans/trans_farith.c.inc
-index f4a0dea727..ff6cf3448e 100644
---- a/target/loongarch/tcg/insn_trans/trans_farith.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_farith.c.inc
-@@ -183,16 +183,16 @@ TRANS(fmaxa_s, FP_SP, gen_fff, gen_helper_fmaxa_s)
- TRANS(fmaxa_d, FP_DP, gen_fff, gen_helper_fmaxa_d)
- TRANS(fmina_s, FP_SP, gen_fff, gen_helper_fmina_s)
- TRANS(fmina_d, FP_DP, gen_fff, gen_helper_fmina_d)
--TRANS(fscaleb_s, FP_SP, gen_fff, gen_helper_fscaleb_s)
--TRANS(fscaleb_d, FP_DP, gen_fff, gen_helper_fscaleb_d)
-+TRANS64(fscaleb_s, FP_SP, gen_fff, gen_helper_fscaleb_s)
-+TRANS64(fscaleb_d, FP_DP, gen_fff, gen_helper_fscaleb_d)
- TRANS(fsqrt_s, FP_SP, gen_ff, gen_helper_fsqrt_s)
- TRANS(fsqrt_d, FP_DP, gen_ff, gen_helper_fsqrt_d)
- TRANS(frecip_s, FP_SP, gen_ff, gen_helper_frecip_s)
- TRANS(frecip_d, FP_DP, gen_ff, gen_helper_frecip_d)
- TRANS(frsqrt_s, FP_SP, gen_ff, gen_helper_frsqrt_s)
- TRANS(frsqrt_d, FP_DP, gen_ff, gen_helper_frsqrt_d)
--TRANS(flogb_s, FP_SP, gen_ff, gen_helper_flogb_s)
--TRANS(flogb_d, FP_DP, gen_ff, gen_helper_flogb_d)
-+TRANS64(flogb_s, FP_SP, gen_ff, gen_helper_flogb_s)
-+TRANS64(flogb_d, FP_DP, gen_ff, gen_helper_flogb_d)
- TRANS(fclass_s, FP_SP, gen_ff, gen_helper_fclass_s)
- TRANS(fclass_d, FP_DP, gen_ff, gen_helper_fclass_d)
- TRANS(fmadd_s, FP_SP, gen_muladd, gen_helper_fmuladd_s, 0)
-diff --git a/target/loongarch/tcg/insn_trans/trans_fcnv.c.inc b/target/loongarch/tcg/insn_trans/trans_fcnv.c.inc
-index 833c059d6d..ca1d76a366 100644
---- a/target/loongarch/tcg/insn_trans/trans_fcnv.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_fcnv.c.inc
-@@ -29,5 +29,5 @@ TRANS(ffint_s_w, FP_SP, gen_ff, gen_helper_ffint_s_w)
- TRANS(ffint_s_l, FP_SP, gen_ff, gen_helper_ffint_s_l)
- TRANS(ffint_d_w, FP_DP, gen_ff, gen_helper_ffint_d_w)
- TRANS(ffint_d_l, FP_DP, gen_ff, gen_helper_ffint_d_l)
--TRANS(frint_s, FP_SP, gen_ff, gen_helper_frint_s)
--TRANS(frint_d, FP_DP, gen_ff, gen_helper_frint_d)
-+TRANS64(frint_s, FP_SP, gen_ff, gen_helper_frint_s)
-+TRANS64(frint_d, FP_DP, gen_ff, gen_helper_frint_d)
-diff --git a/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc b/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
-index 13452bc7e5..79da4718a5 100644
---- a/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
-@@ -148,11 +148,11 @@ TRANS(fldx_s, FP_SP, gen_floadx, MO_TEUL)
- TRANS(fldx_d, FP_DP, gen_floadx, MO_TEUQ)
- TRANS(fstx_s, FP_SP, gen_fstorex, MO_TEUL)
- TRANS(fstx_d, FP_DP, gen_fstorex, MO_TEUQ)
--TRANS(fldgt_s, FP_SP, gen_fload_gt, MO_TEUL)
--TRANS(fldgt_d, FP_DP, gen_fload_gt, MO_TEUQ)
--TRANS(fldle_s, FP_SP, gen_fload_le, MO_TEUL)
--TRANS(fldle_d, FP_DP, gen_fload_le, MO_TEUQ)
--TRANS(fstgt_s, FP_SP, gen_fstore_gt, MO_TEUL)
--TRANS(fstgt_d, FP_DP, gen_fstore_gt, MO_TEUQ)
--TRANS(fstle_s, FP_SP, gen_fstore_le, MO_TEUL)
--TRANS(fstle_d, FP_DP, gen_fstore_le, MO_TEUQ)
-+TRANS64(fldgt_s, FP_SP, gen_fload_gt, MO_TEUL)
-+TRANS64(fldgt_d, FP_DP, gen_fload_gt, MO_TEUQ)
-+TRANS64(fldle_s, FP_SP, gen_fload_le, MO_TEUL)
-+TRANS64(fldle_d, FP_DP, gen_fload_le, MO_TEUQ)
-+TRANS64(fstgt_s, FP_SP, gen_fstore_gt, MO_TEUL)
-+TRANS64(fstgt_d, FP_DP, gen_fstore_gt, MO_TEUQ)
-+TRANS64(fstle_s, FP_SP, gen_fstore_le, MO_TEUL)
-+TRANS64(fstle_d, FP_DP, gen_fstore_le, MO_TEUQ)
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index ecbfe23b63..34cfab8879 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -233,11 +233,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
- TRANS(iocsrrd_b, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_b)
- TRANS(iocsrrd_h, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_h)
- TRANS(iocsrrd_w, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_w)
--TRANS(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
-+TRANS64(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
- TRANS(iocsrwr_b, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_b)
- TRANS(iocsrwr_h, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_h)
- TRANS(iocsrwr_w, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_w)
--TRANS(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
-+TRANS64(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
- 
- static void check_mmu_idx(DisasContext *ctx)
+-static bool trans_STBAR(DisasContext *dc, arg_STBAR *a)
++static bool do_stbar(DisasContext *dc)
  {
-diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-index 377307785a..136c4c8455 100644
---- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-@@ -78,7 +78,7 @@ TRANS(sra_w, ALL, gen_rrr, EXT_SIGN, EXT_NONE, EXT_SIGN, gen_sra_w)
- TRANS(sll_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sll_d)
- TRANS(srl_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_srl_d)
- TRANS(sra_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sra_d)
--TRANS(rotr_w, 64, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
-+TRANS(rotr_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
- TRANS(rotr_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_rotr_d)
- TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
- TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
-@@ -86,5 +86,5 @@ TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN, tcg_gen_shri_tl)
- TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
- TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
- TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
--TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
-+TRANS(rotri_w, ALL, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
- TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
-diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-index 018dc5eb17..bbe015ba57 100644
---- a/target/loongarch/translate.h
-+++ b/target/loongarch/translate.h
-@@ -14,6 +14,10 @@
-     static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-     { return avail_##AVAIL(ctx) && FUNC(ctx, a, __VA_ARGS__); }
+     tcg_gen_mb(TCG_MO_ST_ST | TCG_BAR_SC);
+     return advance_pc(dc);
+ }
  
-+#define TRANS64(NAME, AVAIL, FUNC, ...) \
-+    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-+    { return avail_64(ctx) && avail_##AVAIL(ctx) && FUNC(ctx, a, __VA_ARGS__); }
++TRANS(STBAR_v8, 32, do_stbar)
++TRANS(STBAR_v9, 64, do_stbar)
 +
- #define avail_ALL(C)   true
- #define avail_64(C)    (FIELD_EX32((C)->cpucfg1, CPUCFG1, ARCH) == \
-                         CPUCFG1_ARCH_LA64)
+ static bool trans_MEMBAR(DisasContext *dc, arg_MEMBAR *a)
+ {
+     if (avail_32(dc)) {
 -- 
 2.47.3
 
