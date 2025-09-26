@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD21CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7763CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v298B-00075X-0Y; Fri, 26 Sep 2025 10:09:03 -0400
+	id 1v29AB-0000vh-Ha; Fri, 26 Sep 2025 10:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2987-000759-NB
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:08:59 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1v299O-000086-He
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:18 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2983-0005cm-Di
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:08:58 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46de78b595dso11289375e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:08:49 -0700 (PDT)
+ id 1v298c-0005lb-Is
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:10:16 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439b56so1406145f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758895727; x=1759500527; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758895762; x=1759500562; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=O0aztZbkfa2XWgDl+0nqPzT+Opjm3fDCBodAYyqxJuM=;
- b=h6/cnikYDVk/HouLB0M7A31FUOr5JmwWw0HMf6LWixfcKLSHanPo9LJ7VEGOVqPJWk
- dNqicBlBlo07rDDlrkELzTNsfVf0Mxka2q3DAXZdzfiYYQtpg684DtL3nP/Q3XwJndHs
- 5T/rzkneh4B6CLKhkhz67MlydePd+4LK69nW5E1PIuvXiy+lAOKrgelVGWq2u7T5WwnP
- iMDZu6lLwADuOkH5AfJrXFGis6L5wDuHLvQsPIqsIov7UgoHJn2U3cHIwAMtJZgAOIxQ
- jsJ8y05ru/je7sLrLUTsEpt/QghYNfpDYcYUdCYZgpRzE4ZDslb+X2DLQrhPCJ9euvA4
- bi6A==
+ :reply-to; bh=LZ/QhKuHG+ZNPC1QPIsb+KXLj/+hTqbEnRD9dR1HMkI=;
+ b=aZeXF5SV+opWBq6MCCtjZpUyG1SpnhCAcgMVuijJg2bjxgHuE0ejhjFkNq9LVjKOfx
+ D9c1MpeyP+fxxJDcDLq8QtYq0cVNZWqTKSKmoaDwjuwAVNRD90qcsaJmC0p07fPf5Kvk
+ LXRwSdksj2f3eiE4igrIHj7/PPsHEuL8liKaNZ6+pligc0ArPhZNQM0qIw9zFwWNDqCm
+ V+gfdIReVDjuTCt/3CvIbk326qddZKRzUHWnjpugzQNfuvXJffuN/am01+EeBwjIo1nK
+ DRVgCO3tL5PNvCGjjjOml90FypvF91V1lvS3REFbUWiIB+6ZmMX2zz4xWOg1bFC80qAb
+ hF/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758895727; x=1759500527;
+ d=1e100.net; s=20230601; t=1758895762; x=1759500562;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O0aztZbkfa2XWgDl+0nqPzT+Opjm3fDCBodAYyqxJuM=;
- b=N6nt484eKUWc8hrXhlF+l79MPWrfkPfva2zXJceO0SD58c1bnr/Hb8E4bp+u0+JdNh
- wp4HJfLBsASKyUN4OwFynJuOoCcEzSZb8VegVJIy2z7qg6XWYQBIrBB7Bitay5Mi2D22
- GVofE3H67OFWR0vVXuJ7NBY2ZEqd39DQtf6R1C9U5/vMfg1kkVwVMXlpz9lYNxeJaJYm
- NDgpqlpVug9mgLxFG+tdMZRg/DBTo3oz9eRi5UCnMANYOZ51rMG5zZca202B7jpUwRAH
- ejwjwFO6gFSNDxqPEKgmIm/QD/8O9rcEfir3oZGFxghXXhZPYuHkZUKnmVVpRq2wTS3r
- vcBQ==
-X-Gm-Message-State: AOJu0YxMzhIWiOqWfIUNlrsRqfsAuqOwVcgE37xRb0cJ/PcaGNLN/deK
- 97br4ovIM9EjLO03w0KZcqC9HivckrlKgGKmNmCDx0k0uno5sMQbnyUyI5kJfYPI+5/7GqhfWh7
- K1JHx
-X-Gm-Gg: ASbGncukGS8CEyrVoYAvS7QHWx/r5KKmYwbj+XA4ku7mpZheqQqAX51AkkBXzCLUpL/
- M5BYc6MJmw9DyoZtrLwUpq4ZSAJXbBiKNh29KNA0p4xxUnxtbyO4n6GyiyNih7SE37VmFrFnvQY
- GF+vRCTwLRigSy2P9sawzgVuaSg0RtLzPvyDd0GzEVL7THipQxiJ6mTxFt1cR3YUl5Q+DpIaHFZ
- FDgBVS8SLEAKhpE1BGBfmrT+tQtRi+TKzsbMXB2jfL6RGu8nSzPClCvVbg9sDexPv9wC5hAI97H
- PCekEZLP5RAMyT4wkxJMkLShQKu/gCq3aMSvLtsHRBy41OOnSbvVbvkZ0BrXBXfNuo8hM9oKGYK
- o6zcUGJ701pPrBxSr60uKS1wXkcmY
-X-Google-Smtp-Source: AGHT+IHKSXMU5p1TR23tcydVkuuHAEnSkW6JQbS94rsxPN0KsST6Xewp0WR5dCjBXoWaDDF0mrM9Hw==
-X-Received: by 2002:a05:600c:1508:b0:458:c094:8ba5 with SMTP id
- 5b1f17b1804b1-46e329b62bcmr51689685e9.12.1758895727402; 
- Fri, 26 Sep 2025 07:08:47 -0700 (PDT)
+ bh=LZ/QhKuHG+ZNPC1QPIsb+KXLj/+hTqbEnRD9dR1HMkI=;
+ b=aoxVspS9V2uOnYG4vEMNfvecZLGUD6z2VG8PhL9ozZQmuk3SHbpO36s8Cjv2SGA/Hz
+ BufHVuyIPNViwqKNj9msQDehY2zoy7LKHiEmKjaYbo4AnmfUE49L1b/MWgmL2WOLavN2
+ 8chEmrJWqsMV0eSsPbYU7mI7Q5xmoEgAAe+TW1yt6H5JnleXauvX2sK1w0VEaeMqCmxR
+ qNtWxHdUTDX5S07e8MidTEztw89A7WCEE/YY7DXE1eutKraZ/P8p4BffmeuRKPRvmgUQ
+ rn5VBBJQ6lMCoktY0v72hjAjZHl4Z0nURurubMILyCv4JqV6dmaDsyfoJV2t0mDFKt08
+ YadQ==
+X-Gm-Message-State: AOJu0YzT1q+U2YfvM3AvgtVaY0SKS1FFmJZE3XS9fPBzt2XPG983MGJ9
+ AQvyNyV31UyEBJ/1jmLiuE8AFnyn/6nn95LWg+HkZdbHSDMccaajvnXzEX2UoRpxnjMJmSm+Sa0
+ YPurp
+X-Gm-Gg: ASbGncs626cR1yIlsB+e1HzpuInYIqJeFXut47xNeIX/ceZApydkFRHxzzxleiOuObu
+ dzQ3kK012QXFT+Y7byULQTXKqVifnTwUbvqego5OW//wFnEKHVskhxUdll83JZ+7wxa3Y8M2QdI
+ SfOWTHih3ByeiwtWpDhqOzCIr76UimrRoPEMJYG7yPonAOCnTEXUYXliSoniFaIfWdySbFa2fDM
+ AUqcbP5UhOMuoSfN/3uCeiGBTLYFavZjiGggFbmzAtBM7kRN1qafh5KuugjyvVIIUQhxU2gr/jq
+ Fa8uBaaO43BGSQIZnLtFx9sp5eW3gFRb0FhGxnHOZhrKGbiWU77VPR7cYKzIUB624cgvsHDyYY1
+ eIOYT9c43chGUKD9EuWET5f77PQ2B
+X-Google-Smtp-Source: AGHT+IHQLjvYQ2qG9B926kfpvWyEye1IHQUC89Xvx+/wROWOrVwm9RVc99Ryz0GHyOh+JlUQKAdelg==
+X-Received: by 2002:a05:6000:2c05:b0:3fb:6f9d:2704 with SMTP id
+ ffacd0b85a97d-40e46ad02e6mr6741729f8f.28.1758895761838; 
+ Fri, 26 Sep 2025 07:09:21 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.46
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.09.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 07:08:46 -0700 (PDT)
+ Fri, 26 Sep 2025 07:09:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/44] hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
-Date: Fri, 26 Sep 2025 15:08:01 +0100
-Message-ID: <20250926140844.1493020-2-peter.maydell@linaro.org>
+Subject: [PULL 35/44] target/arm: Redirect VHE FOO_EL1 -> FOO_EL2 during
+ translation
+Date: Fri, 26 Sep 2025 15:08:35 +0100
+Message-ID: <20250926140844.1493020-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
 References: <20250926140844.1493020-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,70 +101,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the guest feeds invalid data to the UHCI controller, we
-can assert:
-qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-(see issue 2548 for the repro case).  This happens because the guest
-attempts USB_TOKEN_SETUP to an endpoint other than 0, which is not
-valid.  The controller code doesn't catch this guest error, so
-instead we hit the assertion in the USB core code.
-
-Catch the case of SETUP to non-zero endpoint, and treat it as a fatal
-error in the TD, in the same way we do for an invalid PID value in
-the TD.
-
-This is the UHCI equivalent of the same bug in OHCI that we fixed in
-commit 3c3c233677 ("hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or
-OUT").
-
-This bug has been tracked as CVE-2024-8354.
-
-Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2548
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/usb/hcd-uhci.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ target/arm/cpregs.h            |  6 ++++
+ target/arm/gdbstub.c           |  5 ++++
+ target/arm/helper.c            | 53 +---------------------------------
+ target/arm/tcg/translate-a64.c |  9 ++++++
+ 4 files changed, 21 insertions(+), 52 deletions(-)
 
-diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
-index 4822c704f69..e207d0587a1 100644
---- a/hw/usb/hcd-uhci.c
-+++ b/hw/usb/hcd-uhci.c
-@@ -735,6 +735,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
-     bool spd;
-     bool queuing = (q != NULL);
-     uint8_t pid = td->token & 0xff;
-+    uint8_t ep_id = (td->token >> 15) & 0xf;
-     UHCIAsync *async;
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 08fc42ea571..eac0cb9ebf1 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -936,6 +936,12 @@ struct ARMCPRegInfo {
+      */
+     uint32_t nv2_redirect_offset;
  
-     async = uhci_async_find_td(s, td_addr);
-@@ -778,9 +779,14 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
++    /*
++     * With VHE, with E2H, at EL2, access to this EL0/EL1 reg redirects
++     * to the EL2 reg with the specified key.
++     */
++    uint32_t vhe_redir_to_el2;
++
+     /* This is used only by VHE. */
+     void *opaque;
+     /*
+diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+index 4e2ac49b6a9..87d40d4366b 100644
+--- a/target/arm/gdbstub.c
++++ b/target/arm/gdbstub.c
+@@ -249,6 +249,11 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
+     if (ri) {
+         switch (cpreg_field_type(ri)) {
+         case MO_64:
++            if (ri->vhe_redir_to_el2 &&
++                (arm_hcr_el2_eff(env) & HCR_E2H) &&
++                arm_current_el(env) == 2) {
++                ri = get_arm_cp_reginfo(cpu->cp_regs, ri->vhe_redir_to_el2);
++            }
+             return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env, ri));
+         case MO_32:
+             return gdb_get_reg32(buf, (uint32_t)read_raw_cp_reg(env, ri));
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 18066b0c5dc..87a32e363e9 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4417,47 +4417,6 @@ static CPAccessResult access_el1nvvct(CPUARMState *env, const ARMCPRegInfo *ri,
+     return e2h_access(env, ri, isread);
+ }
  
-     switch (pid) {
-     case USB_TOKEN_OUT:
--    case USB_TOKEN_SETUP:
-     case USB_TOKEN_IN:
-         break;
-+    case USB_TOKEN_SETUP:
-+        /* SETUP is only valid to endpoint 0 */
-+        if (ep_id == 0) {
-+            break;
-+        }
-+        /* fallthrough */
-     default:
-         /* invalid pid : frame interrupted */
-         s->status |= UHCI_STS_HCPERR;
-@@ -829,7 +835,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
-             return uhci_handle_td_error(s, td, td_addr, USB_RET_NODEV,
-                                         int_mask);
-         }
--        ep = usb_ep_get(dev, pid, (td->token >> 15) & 0xf);
-+        ep = usb_ep_get(dev, pid, ep_id);
-         q = uhci_queue_new(s, qh_addr, td, ep);
+-/* Test if system register redirection is to occur in the current state.  */
+-static bool redirect_for_e2h(CPUARMState *env)
+-{
+-    return arm_current_el(env) == 2 && (arm_hcr_el2_eff(env) & HCR_E2H);
+-}
+-
+-static uint64_t el2_e2h_read(CPUARMState *env, const ARMCPRegInfo *ri)
+-{
+-    CPReadFn *readfn;
+-
+-    if (redirect_for_e2h(env)) {
+-        /* Switch to the saved EL2 version of the register.  */
+-        ri = ri->opaque;
+-        readfn = ri->readfn;
+-    } else {
+-        readfn = ri->orig_readfn;
+-    }
+-    if (readfn == NULL) {
+-        readfn = raw_read;
+-    }
+-    return readfn(env, ri);
+-}
+-
+-static void el2_e2h_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                          uint64_t value)
+-{
+-    CPWriteFn *writefn;
+-
+-    if (redirect_for_e2h(env)) {
+-        /* Switch to the saved EL2 version of the register.  */
+-        ri = ri->opaque;
+-        writefn = ri->writefn;
+-    } else {
+-        writefn = ri->orig_writefn;
+-    }
+-    if (writefn == NULL) {
+-        writefn = raw_write;
+-    }
+-    writefn(env, ri, value);
+-}
+-
+ static uint64_t el2_e2h_e12_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     /* Pass the EL1 register accessor its ri, not the EL12 alias ri */
+@@ -4632,17 +4591,7 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
+                                  (gpointer)(uintptr_t)a->new_key, new_reg);
+         g_assert(ok);
+ 
+-        src_reg->opaque = dst_reg;
+-        src_reg->orig_readfn = src_reg->readfn ?: raw_read;
+-        src_reg->orig_writefn = src_reg->writefn ?: raw_write;
+-        if (!src_reg->raw_readfn) {
+-            src_reg->raw_readfn = raw_read;
+-        }
+-        if (!src_reg->raw_writefn) {
+-            src_reg->raw_writefn = raw_write;
+-        }
+-        src_reg->readfn = el2_e2h_read;
+-        src_reg->writefn = el2_e2h_write;
++        src_reg->vhe_redir_to_el2 = a->dst_key;
      }
-     async = uhci_async_alloc(q, td_addr);
+ }
+ #endif
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index c0fa2137b63..3ef24fb0c3d 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2573,6 +2573,15 @@ static void handle_sys(DisasContext *s, bool isread,
+         }
+     }
+ 
++    if (ri->vhe_redir_to_el2 && s->current_el == 2 && s->e2h) {
++        /*
++         * This one of the FOO_EL1 registers which redirect to FOO_EL2
++         * from EL2 when HCR_EL2.E2H is set.
++         */
++        key = ri->vhe_redir_to_el2;
++        ri = redirect_cpreg(s, key, isread);
++    }
++
+     if (ri->accessfn || (ri->fgt && s->fgt_active)) {
+         /* Emit code to perform further access permissions checks at
+          * runtime; this may result in an exception.
 -- 
 2.43.0
 
