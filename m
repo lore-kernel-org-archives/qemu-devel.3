@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F46CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 10:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B07CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 10:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v25M9-0008Ib-AX; Fri, 26 Sep 2025 06:07:13 -0400
+	id 1v25Rr-0001Ci-1W; Fri, 26 Sep 2025 06:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v25M5-0008I1-DC
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 06:07:10 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1v25Ro-0001CP-PU
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 06:13:04 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v25Lv-00063O-1x
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 06:07:09 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-6352ba3c35cso1182778d50.3
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 03:06:56 -0700 (PDT)
+ id 1v25Rc-0006xQ-Gk
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 06:13:04 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-6348447d5easo884722d50.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 03:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758881214; x=1759486014; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758881565; x=1759486365; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iySpOkGs+Ete6W2p6L3KdbLpNC+/AbFkwUJlm2GV+vc=;
- b=x/y+CtQ8/xn85LRsHm5bz7KzTLDIa1bshGSPpUnZEDU/2WY5nQYM54qKrXK5qzyDpV
- X8vN3dQgjSV2vDbmhwJ5mataCdkERzgU6G3UxziU4TuBSveELjWUIWX+A+2bXeiiQ/GV
- mG5Se9XhIcBcZvRgT8WEJKcoSk/pO5GluuGHEXj9JZPWHU/kA5FCxRKYNgB/MFu6RYCy
- bx4n42w5srQc31RcNyQW2zYvXVGg7fONa4orFMI7E/Mm19gxHgsnxoFp/dVeS65hZqMS
- IroH+B7wYkDKdcZIxI9ua46ceeoVZYXMqadL4s0eNg8iy2C58WiKu0PfR5xxjVn/9fYx
- luVg==
+ bh=hoFBKgbJ+XVP3XKXZRH1nEVA2pr0ymC2siLpdG68qoE=;
+ b=UA/J6YC5AeEDCUCHkoCji6lW+XEnROEeUh5CgCGN9PF29q8VvVCQiMjQKyuUf/55Vj
+ MqL1pUqNsQQQSBbkXXaA7/h4EVxwVL//88SkvcrWQAYmNP6qssnFrx2JI9gPE3g9bBpw
+ t0ilcE4zn+jL2zBYX1iaVAcp3MKC03xB+/iJk9Q4cAbA7uOisArvUIlRbMcPvkU/N/Oc
+ j6vwdGT1+5lLVxvuuX3Du8VkxmamCMNkgpyb0itIM9jDA9qybte64uv3wsPE7Rc9uz7z
+ ctE4rrWb6t5PszvSg5UowXlb0XcjtO5Yxnp4a9WkBAh/f81+7Uw5hx9FQ4gwkivoyhZS
+ hPjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758881214; x=1759486014;
+ d=1e100.net; s=20230601; t=1758881565; x=1759486365;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iySpOkGs+Ete6W2p6L3KdbLpNC+/AbFkwUJlm2GV+vc=;
- b=Z6k2jF1voyGG/PJzDdTTslYST9eFDbtSR082rN5JrDhhNTAwIrI06GuG5SJRSAQwiq
- BH0Hqv9ymDOumXcJckxyMjG+LYlX7DxMDycEWSGjYRd75wPu0A1bbS0rnX1N07MZmoWy
- wmfxgTNAFjMqbB9XL9ZJt+o2M9WYgciSt4hqMaI8U7IUlMPJSkPjYoLK0BjI0VjEtKLq
- Yp1JbpS7CB5C9jdzlO+38fKK7qcMv9HB9pxJ8DhQcgZP7ftK7ycMkwbwZ2YLrpkaCSSA
- b84owtpEQpNzkmzDPT+vf0SBwAyp3fIvPdqWRQ/pNnLBtVdYnFYHFljUh3OOGFTbG07k
- x+Gg==
-X-Gm-Message-State: AOJu0Yw84g6xdRL0kbbLfcgBxICeHR01xEqGF6DVKvVpxn2VfKiZtiG8
- q+WI52LvHLUC/udC9BCQXT9i8G37iSTyPgXq7y7SOdA3y/fSKCR8vsWPtGdRRbEr5DL8gudy4Ta
- H2dmittiEh0//nzctgqQP+QnzmzowP0p7ivoglkmmEQ==
-X-Gm-Gg: ASbGncu/4WhczCBTcw/F56Vze5PvnwlUlNe2GN/lV6FMU1zTf8BGa/MUFSzVrGUAxc/
- vFAFOMdkUV/tW7MqaQl52rNOXj5vLjGVRTka4eXA6a/7DQB6sLgmdbhcvJPJ8BAcoI/ZyrEiyzx
- Cz3N986nHNtnzcIrhv3qEqE9YPbt1BM4ef/Wf7lyIIA7/sG0sBna0yeW5OB24wQceO6VN5OIsYh
- nBogieC
-X-Google-Smtp-Source: AGHT+IH3aM7e2BoehfpDtgmDWSbVVS+bpHD9Y6xJi8R6LWGNA/M4FQuDLo2O/u3BUIYCO7d6x3T3qzGVUL3dlE//9og=
-X-Received: by 2002:a53:ed42:0:b0:636:1c2a:28a with SMTP id
- 956f58d0204a3-6361c2a1459mr4930234d50.16.1758881214450; Fri, 26 Sep 2025
- 03:06:54 -0700 (PDT)
+ bh=hoFBKgbJ+XVP3XKXZRH1nEVA2pr0ymC2siLpdG68qoE=;
+ b=iGMVZ28+o12MF1wAma1cXuvAdD6PTHy+Ovg7yNGs0d13HIHncwyIru4r7FLkwvUZwy
+ V0UlO4QO9f76Y7YHpV6N0ZjAeUvOh41RaHk+X9740WBo4/gyrl8p/FiIR/z4MR22hSYh
+ BNQoengZUxpr6LLYvTVvaFJmA/15YhyVUInOHDsEfIQG3m8JGI7Mb0R541WoHs40TsYX
+ 9h1v3qmvRBCRFjWInGJQmbhGT3yplNffH9V4zg3rHNlAgprp3Sc+GJpCPYPXLfpdeJIM
+ GtO+v97fZ1EZ1RPhw5gwYFwUsq77giUH1S6VbXBa4dJFRRV9qg6HX4x1129MtMntSBbA
+ rE1g==
+X-Gm-Message-State: AOJu0YyL8fAU055px8zSBh4qdpUVc4X/+oRkIzxw6bdLo/X9QlvxmLHo
+ Dh905zUQI7rMlCoSpAnFVVQmK4ZcATu1EXc2i5yI5970DyBsdQdqiwtKPnThxQbohRUG0sZ2snS
+ N7fFUcRz9rGKXffPk65a8DhEt+hrkk2DP7YN7t8ywkg==
+X-Gm-Gg: ASbGncuWlIg6g+5+ubxGW/aiBv5NThiwmWY8ikqDavxx7OfwHVyqhnqrNR4S66r5KyO
+ 10qUdGc/V+1HeLEl6IXA/sroUC2kJ0t0MiX8zSF7w9JQnc4U2im+C5wbKP1f0+P5cBlXqOF6sQm
+ 1Eo2MHTIRX5Qz7V/EEl3tcON+FoJWKXBJt609F42tpvdWSlw5W8qYxHu6NGQcJEjnVBecpLZWjx
+ EpburDMFSXi0lLdGAM=
+X-Google-Smtp-Source: AGHT+IE3Oa3gm3D0K46ujbkGyIVyMYwfgNclcgYKI6d/nolnzIRJtmlar+H9bkq/OGXTVfl22+PtNvOFUvWWAPGCbnc=
+X-Received: by 2002:a05:690e:d51:b0:636:1a27:6aee with SMTP id
+ 956f58d0204a3-6361a7fc7fbmr5398072d50.31.1758881565625; Fri, 26 Sep 2025
+ 03:12:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250925032151.73250-1-philmd@linaro.org>
-In-Reply-To: <20250925032151.73250-1-philmd@linaro.org>
+References: <20250924163255.51145-1-philmd@linaro.org>
+In-Reply-To: <20250924163255.51145-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 26 Sep 2025 11:06:43 +0100
-X-Gm-Features: AS18NWBa7bWD4CcOT00xsI1wHzg32K7bhAUF6eMq2SMOgz2DcU9Aoz1pIxzFQcs
-Message-ID: <CAFEAcA9m+=M3Ds4oTSmWrreGxgu+cL2k_nvsbPj9f7Lc5bT+aw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Replace magic GIC values by proper definitions
+Date: Fri, 26 Sep 2025 11:12:33 +0100
+X-Gm-Features: AS18NWDnV_3qKBVqG8sm1MM-W0W1PFCjyriI1itFY8Jl689sbt3V89XGlY3K4D0
+Message-ID: <CAFEAcA_zZ3g+QfuzWf1pa3wph4O512jCZXMtQzyo6QfSXtCYqQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] target/arm: Few tracing improvements around
+ power/reset
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,15 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Sept 2025 at 04:21, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
+On Wed, 24 Sept 2025 at 17:32, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
 rg> wrote:
 >
-> Prefer the FIELD_DP64() macro and self-describing GIC
-> definitions over magic values.
+> Few patches adding trace events to power/reset methods
+> which have been helpful when debugging nested guest
+> behavior under HVF.
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-
+> Philippe Mathieu-Daud=C3=A9 (3):
+>   target/arm: Convert power control DPRINTF() uses to trace events
+>   target/arm: Trace emulated firmware reset call
+>   target/arm: Trace vCPU reset call
+>
 
 
 
