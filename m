@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0160ACAC5AC
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A24CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 08:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v23aP-0001HT-RO; Fri, 26 Sep 2025 04:13:50 -0400
+	id 1v23gK-0002FS-9v; Fri, 26 Sep 2025 04:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23aG-00018D-An; Fri, 26 Sep 2025 04:13:41 -0400
+ id 1v23fr-0001sy-0u; Fri, 26 Sep 2025 04:19:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v23a9-0000sE-NK; Fri, 26 Sep 2025 04:13:39 -0400
+ id 1v23fd-0002FC-5K; Fri, 26 Sep 2025 04:19:19 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A65D5157D60;
- Fri, 26 Sep 2025 11:10:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 87B15157D82;
+ Fri, 26 Sep 2025 11:10:35 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA0CB290C44;
- Fri, 26 Sep 2025 11:10:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 90B10290C66;
+ Fri, 26 Sep 2025 11:10:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-stable@qemu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [Stable-10.1.1 24/60] block/curl: fix curl internal handles handling
-Date: Fri, 26 Sep 2025 11:09:52 +0300
-Message-ID: <20250926081031.2214971-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 58/60] tests: Fix "make check-functional" for targets
+ without thorough tests
+Date: Fri, 26 Sep 2025 11:10:26 +0300
+Message-ID: <20250926081031.2214971-58-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20250926101857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,55 +60,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
-According to the documentation, this callback is called not just with
-application-created sockets but also with internal curl sockets, - and
-for such sockets, user data pointer is not set by the application, so
-the result qemu crashing.
+From: Thomas Huth <thuth@redhat.com>
 
-Pass BDRVCURLState directly to the callback function as user pointer,
-instead of relying on CURLINFO_PRIVATE.
+If QEMU gets configured for a single target that does not have
+any thorough functional tests, "make check-functional" currently
+fails with the error message "No rule to make target 'check-func'".
+This happens because "check-func" only gets defined for thorough
+tests (quick ones get added to "check-func-quick" instead).
+The same problem can happen with the quick tests for targets that
+do not have any functional test at all. To fix it, simply make sure
+that the targets are always available in the Makefile.
 
-This problem started happening with update of libcurl from 8.9 to 8.10 --
-apparently with this change curl started using private handles more.
-
-(CURLINFO_PRIVATE is used in one more place, in curl_multi_check_completion() -
-it might need a similar fix too)
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
-Cc: qemu-stable@qemu.org
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 606978500c3d18fb89a49844f253097b17f757de)
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/3119
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250918125154.126072-1-thuth@redhat.com>
+(cherry picked from commit 4f1ebc7712a7db61155080164f2169320d033559)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index 5467678024..00b949ea45 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -162,13 +162,9 @@ static int curl_timer_cb(CURLM *multi, long timeout_ms, void *opaque)
- static int curl_sock_cb(CURL *curl, curl_socket_t fd, int action,
-                         void *userp, void *sp)
- {
--    BDRVCURLState *s;
--    CURLState *state = NULL;
-+    BDRVCURLState *s = userp;
-     CURLSocket *socket;
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 23fb722d42..9a3d137283 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -112,6 +112,9 @@ check-functional:
+ 	@$(NINJA) precache-functional
+ 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
  
--    curl_easy_getinfo(curl, CURLINFO_PRIVATE, (char **)&state);
--    s = state->s;
--
-     socket = g_hash_table_lookup(s->sockets, GINT_TO_POINTER(fd));
-     if (!socket) {
-         socket = g_new0(CURLSocket, 1);
-@@ -605,6 +601,7 @@ static void curl_attach_aio_context(BlockDriverState *bs,
-     assert(!s->multi);
-     s->multi = curl_multi_init();
-     s->aio_context = new_context;
-+    curl_multi_setopt(s->multi, CURLMOPT_SOCKETDATA, s);
-     curl_multi_setopt(s->multi, CURLMOPT_SOCKETFUNCTION, curl_sock_cb);
-     curl_multi_setopt(s->multi, CURLMOPT_TIMERDATA, s);
-     curl_multi_setopt(s->multi, CURLMOPT_TIMERFUNCTION, curl_timer_cb);
++.PHONY: check-func check-func-quick
++check-func check-func-quick:
++
+ # Consolidated targets
+ 
+ .PHONY: check check-clean
 -- 
 2.47.3
 
