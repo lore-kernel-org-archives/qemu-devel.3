@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FCECAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010ECCAC5AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 14:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v298C-00077V-5O; Fri, 26 Sep 2025 10:09:04 -0400
+	id 1v298S-0007FC-5g; Fri, 26 Sep 2025 10:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2989-00075Z-Dk
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:01 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1v298G-00078Z-Jf
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:09 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v2983-0005cX-D4
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:01 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3fa528f127fso1672298f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:08:50 -0700 (PDT)
+ id 1v2987-0005dv-Ui
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 10:09:06 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439bc3so1027015f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 07:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758895726; x=1759500526; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=/dMwIyh1iNIO97lphlkJ/89s8F24iW7pVMUpbZbQCCc=;
- b=xNjFzjXdW6Rj22XUmQvnOpI+mIBhcd39kHIrYkybb93XtXfkriOPG4RyLAnrdEU1DA
- z6tRiJTzQvKtSHSz45z6ZFZI74JJDkZOG//gdO00MLuzE+fM5yr4ukXQp3UQPS0V2qit
- q8wzKm/KRLda9O77+5rRJA8E+lL92llbJ+EoEfu/PMuK5Zz1ygZjgLRArEvj7H4CDZ9a
- Lv4evVVeZpW/O2DvKa5dfefIG1/c046Z2KkOfQNy9cNTpX/EyuxxPNXUO1/ehrnJYXBh
- L85VWXZLL8Js45x9kS6BYLalgLhqRX/DlY5eThu+DQFjZQcyjlRdurEMZcs/aw3HvMmh
- iP6g==
+ d=linaro.org; s=google; t=1758895734; x=1759500534; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=XeUKkMJnd9x6RuIEqbezgHWnfk6CHPapq1x+ZqRbw18=;
+ b=PTDmU8lbmJ5ZAbhP2OeoAK2K5ZFBaKGwy7PtmuucPKagJ9GGvZL1O9gThHh8TZMUSQ
+ tIwmReYjyj8qDPlmBpTXnEZKAzSdzLlPlPSgt2AaCYKIhEvTdLQI51O75Y31QE+oD2bx
+ 8EY/3rQAavQHlcPD3HgW+j0I5Dk9dxEf0Sa13JsHgt7uxRVYBQGOVPSkYKaPEO9/8Gnp
+ bwLEr7lRXDNTRnpqDki3UCDtQEEmt5j6jbcH/NxfCRvTiC77SWC+CmUtOh8w552KQ0rT
+ +LCe8ssdlOiPraLWXbRWKBpueESjXPfGMs8mXWXDqyJ/ws9geITfs6xqR5ulzzGvjQh4
+ xFBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758895726; x=1759500526;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/dMwIyh1iNIO97lphlkJ/89s8F24iW7pVMUpbZbQCCc=;
- b=cGifMMOWqt38FOnwyVF61g1kgiOa4mjh9xu1Xftl8G/Rn0RfwOpcJ5Fhxs4RYLwSn5
- dpKYaNU073RpE/01Im1i9HYPPRFwUwKw2qIWHSfzgGDP9DKK3GuFrVvpf+pOyrwD43k5
- goiZ/myUFmxmvHI+5XW3+O0p4U5nor3UF00jzuY1qJ76OUzr3NGeuEmNSbWJpako6G3D
- 2fSyrEn5pmVy7wU6gapM4IMTpqtbjRRy/hEGIhkEht1VRkkzgzdE9RpOl/n4fBg6B3j0
- 5fsB8nKlm2p3+E1ERgmvjonUUTz2v80eHvGfyxDAt4ajuYuXdfiZHDMt2SCuRJFGLMih
- 5Nlw==
-X-Gm-Message-State: AOJu0YxJAQyOkmnQA/ULuyYbN0lB964fm7XcltAfFNPhG6tTv55Nhh6a
- LPGzIoxA7t715q8RbYcyU9ewImgqATGFn0AnFR3YPs6FTcaHeNHiVnsw96QodlwaPz1az+Xnd9T
- MdeWQ
-X-Gm-Gg: ASbGncvZ2jpUxq3BPjTp1H9fIZB8uNU1z9Xhbdbib5e63eomfqqX5aGOHeI5NF8Di1y
- UDeyXJUXWSYu9LOizM7E/BA9oW3srN7k1eBZlufNGUtGu/xPUbcLM2/Fh9x9gwgnA5CJolL1R9X
- nm0uXQt/r6ZcLfqt0CaGHhdcFi5lrxXsQTcNUfz+BK9HYrj/kcF0IuAMQKSM2sBhFfuO4+nruJU
- PSs/1eqiYZ/Yc+X/gNcJWk7Kwpzc0WGej3No4IeAhSIVc9E9uaXYhE0Vvh7aZxnB8qgvnpzjuJ9
- vUbIly1glJAiA5bKWr7FPZJd/b//wm1Vq+aR4ZXI3ZiqksyZ/Xwsy1N7zJTrMLKZwtKDq4Bu7Cx
- X1iwnQRxJl7uq6VFFotLSx0Ies2gBm6ilkfHpLoc=
-X-Google-Smtp-Source: AGHT+IFqbUrd7f14j83l2UZUgtPi566lW0ve2euI2ru8yGy0wjpTzt54xPQiqK98wyg64oD2OhUtEA==
-X-Received: by 2002:a05:6000:220b:b0:3ea:6680:8fb9 with SMTP id
- ffacd0b85a97d-40f5f60d329mr6749086f8f.3.1758895726300; 
- Fri, 26 Sep 2025 07:08:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758895734; x=1759500534;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XeUKkMJnd9x6RuIEqbezgHWnfk6CHPapq1x+ZqRbw18=;
+ b=ApBdLEiPfRR8IYxonDch2R8MFhc9YQubL9FiwpkWMzM4HE0YHx1ZIw4fq2/8idgBU3
+ B4gM/ZZzzCLSsRFuYJ2R1E/Yvht/yqlKN4Ujsgq4NXYRWbI/PT/VruRc9TIe5zcjeRE4
+ WLtARRkD1/RfBIqZ6+sZeIWB2AM7JSXns514KFjz+6uaqah5LRAKn73C3+0jr3rddA3l
+ K9MIgm4gnnVsKf1K/OuT+dOoMMbWPQk4FM0/cHxXDaZLX01hy/PBfw+dZe2FiO0drpJ/
+ y3kvPtXGw7Q4D6ZmIzDnhlvi2VR5Apok1KwdqL6NFp6kgPy0+7gED6wVfTzDsslqy4eb
+ FVFw==
+X-Gm-Message-State: AOJu0YyOzaokYfVW0FlPItP2K3CJh8qABQCvVwJhElkF+vjM4M8oHRoE
+ XxGz1pPKnDo+ycfFla39rQpLGziN3QS7W11hO/FelPbTayRG/8yNT3dh+rLf6FYMwWkrjAvaL5J
+ T4WTQ
+X-Gm-Gg: ASbGncsjIPqbu/e4Dy4N8nenSqEGPjfx+ZFXcX7iDNVlAi2bIftxY43QrtgET1S9Nbg
+ JQDOp7LwKqyw+mfOteQ2pcGO6KtR4PM/5YsFT3sbaZfUu62BZ89J+HOeEcIazetZh9o3mUgeeMc
+ o37RH5CLNNfddZg8n3ammhyPLvWEED+kMEO2wjVhQ8ejtUS8O0urtMN7Ap8T3Y33jP4u9bzSinM
+ P+KmovYtWleyV0QcIUICOjGrybukYILky8szKs7KfX4uRZEgxUgJHxwk7jutiSZ9UAX5D1QB8BT
+ l6FHAjl4HpM+W36sKqEpHvyye9rbwEOxMdViakTklIwRwsysJoR/tTXxx8IX7vFvgdtBSiiLYc/
+ 5D0Ax5x9X0Bqo29OxJVxVLfb7+qIl
+X-Google-Smtp-Source: AGHT+IGF+DW7G9VqR5kXo3kmCyj0Wu4QklrJxmwsdpbD8Xwp0R4zHZK0m0xDG0F4pU5oX1uKwPRvxQ==
+X-Received: by 2002:a05:6000:2c10:b0:3d9:7021:fff0 with SMTP id
+ ffacd0b85a97d-40e4adce713mr6517541f8f.37.1758895734395; 
+ Fri, 26 Sep 2025 07:08:54 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.45
+ ffacd0b85a97d-410f2007372sm6338315f8f.16.2025.09.26.07.08.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Sep 2025 07:08:45 -0700 (PDT)
+ Fri, 26 Sep 2025 07:08:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/44] target-arm queue
-Date: Fri, 26 Sep 2025 15:08:00 +0100
-Message-ID: <20250926140844.1493020-1-peter.maydell@linaro.org>
+Subject: [PULL 07/44] target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
+Date: Fri, 26 Sep 2025 15:08:07 +0100
+Message-ID: <20250926140844.1493020-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250926140844.1493020-1-peter.maydell@linaro.org>
+References: <20250926140844.1493020-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,107 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq...
+From: Richard Henderson <richard.henderson@linaro.org>
 
-thanks
--- PMM
+Conversion between KVM system registers ids and the HVF system
+register ids is trivial.
 
-The following changes since commit 95b9e0d2ade5d633fd13ffba96a54e87c65baf39:
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/hvf/hvf.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-09-24 12:04:18 -0700)
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index f68924ba1f3..7515e59c56d 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -403,6 +403,26 @@ struct hvf_sreg_match {
+     uint32_t cp_idx;
+ };
+ 
++/*
++ * QEMU uses KVM system register ids in the migration format.
++ * Conveniently, HVF uses the same encoding of the op* and cr* parameters
++ * within the low 16 bits of the ids.  Thus conversion between the
++ * formats is trivial.
++ */
++
++#define KVMID_TO_HVF(KVM)  ((KVM) & 0xffff)
++#define HVF_TO_KVMID(HVF)  \
++    (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
++
++/* Verify this at compile-time. */
++
++#define DEF_SYSREG(HVF_ID, ...) \
++  QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
++
++#include "sysreg.c.inc"
++
++#undef DEF_SYSREG
++
+ #define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2) \
+     { HVF_ID, HVF_SYSREG(crn, crm, op0, op1, op2) },
+ 
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250926
-
-for you to fetch changes up to b71e2b281a23aca474e128a8487efb07e29f4019:
-
-  target/arm: Implement ID_AA64PFR2_EL1 (2025-09-26 13:43:33 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * reimplement VHE alias register handling
- * replace magic GIC values by proper definitions
- * convert power control DPRINTF() uses to trace events
- * better reset related tracepoints
- * implement ID_AA64PFR2_EL1
- * hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
- * net/passt: Fix build failure due to missing GIO dependency
-
-----------------------------------------------------------------
-Laurent Vivier (1):
-      net/passt: Fix build failure due to missing GIO dependency
-
-Peter Maydell (3):
-      hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
-      target/arm: Move ID register field defs to cpu-features.h
-      target/arm: Implement ID_AA64PFR2_EL1
-
-Philippe Mathieu-Daudé (4):
-      target/arm: Replace magic GIC values by proper definitions
-      target/arm: Convert power control DPRINTF() uses to trace events
-      target/arm: Trace emulated firmware reset call
-      target/arm: Trace vCPU reset call
-
-Richard Henderson (36):
-      target/arm: Introduce KVMID_AA64_SYS_REG64
-      target/arm: Move compare_u64 to helper.c
-      target/arm/hvf: Split out sysreg.c.inc
-      target/arm/hvf: Reorder DEF_SYSREG arguments
-      target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
-      target/arm/hvf: Remove hvf_sreg_match.key
-      target/arm/hvf: Replace hvf_sreg_match with hvf_sreg_list
-      target/arm/hvf: Sort the cpreg_indexes array
-      target/arm/hvf: Use raw_read, raw_write to access
-      target/arm: Use raw_write in cp_reg_reset
-      target/arm: Rename all ARMCPRegInfo from opaque to ri
-      target/arm: Drop define_one_arm_cp_reg_with_opaque
-      target/arm: Restrict the scope of CPREG_FIELD32, CPREG_FIELD64
-      target/arm: Replace cpreg_field_is_64bit with cpreg_field_type
-      target/arm: Add CP_REG_AA32_64BIT_{SHIFT,MASK}
-      target/arm: Rename CP_REG_AA32_NS_{SHIFT,MASK}
-      target/arm: Convert init_cpreg_list to g_hash_table_foreach
-      target/arm: Remove cp argument to ENCODE_AA64_CP_REG
-      target/arm: Reorder ENCODE_AA64_CP_REG arguments
-      target/arm: Split out add_cpreg_to_hashtable_aa{32, 64}
-      target/arm: Improve asserts in define_one_arm_cp_reg
-      target/arm: Move cp processing to define_one_arm_cp_reg
-      target/arm: Move cpreg elimination to define_one_arm_cp_reg
-      target/arm: Add key parameter to add_cpreg_to_hashtable
-      target/arm: Split out alloc_cpreg
-      target/arm: Hoist the allocation of ARMCPRegInfo
-      target/arm: Remove name argument to alloc_cpreg
-      target/arm: Move alias setting for wildcards
-      target/arm: Move writeback of CP_ANY fields
-      target/arm: Move endianness fixup for 32-bit registers
-      target/arm: Rename TBFLAG_A64_NV2_MEM_E20 with *_E2H
-      target/arm: Split out redirect_cpreg
-      target/arm: Redirect VHE FOO_EL1 -> FOO_EL2 during translation
-      target/arm: Redirect VHE FOO_EL12 to FOO_EL1 during translation
-      target/arm: Rename some cpreg to their aarch64 names
-      target/arm: Remove define_arm_vh_e2h_redirects_aliases
-
- meson.build                    |   1 +
- linux-user/arm/target_proc.h   |   2 +
- target/arm/cpregs.h            | 111 ++---
- target/arm/cpu-features.h      | 415 ++++++++++++++++++
- target/arm/cpu.h               | 413 +-----------------
- target/arm/internals.h         |   3 +
- target/arm/kvm-consts.h        |  14 +-
- target/arm/tcg/translate.h     |   2 +
- target/arm/cpu-sysregs.h.inc   |   1 +
- hw/intc/arm_gicv3_cpuif.c      |  10 +-
- hw/usb/hcd-uhci.c              |  10 +-
- target/arm/arm-powerctl.c      |  26 +-
- target/arm/cpu.c               |  16 +-
- target/arm/gdbstub.c           |  14 +-
- target/arm/helper.c            | 933 +++++++++++++++++++----------------------
- target/arm/hvf/hvf.c           | 240 +++--------
- target/arm/kvm.c               |  12 +-
- target/arm/tcg/hflags.c        |   8 +-
- target/arm/tcg/translate-a64.c |  47 ++-
- target/arm/hvf/sysreg.c.inc    | 147 +++++++
- target/arm/trace-events        |  10 +
- 21 files changed, 1199 insertions(+), 1236 deletions(-)
- create mode 100644 target/arm/hvf/sysreg.c.inc
 
