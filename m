@@ -4,84 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD7CCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 07:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D557ACAC5AC
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 07:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v235F-0007F5-6D; Fri, 26 Sep 2025 03:41:38 -0400
+	id 1v238P-00086P-NM; Fri, 26 Sep 2025 03:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v2350-0007AQ-RE
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 03:41:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v238J-00083U-0b
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 03:44:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v234k-00046x-LY
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 03:41:21 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v2389-0004PC-5m
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 03:44:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758872459;
+ s=mimecast20190719; t=1758872667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bgmZk+js2Vz9yDQNJ1UGlADwu+5l6n7+W7KW+NXmkeY=;
- b=F5MwyAygkd3l4uusDMH/WNJqc+Krj4oVk0oHzIbDRCWbAbNonIZfRGn3kSmZa0elJfJ86H
- 8tTCEl7XsLZQq1kDfJ4OF+6Vm9Bj1uDXdSFiZjsuv/VlTJIRkMxuZr0OxbTw/eBj6ttgC2
- ULM+1FSlAHRuVJZNTksNz3pQ6pxKVqc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AI7sUTUKoL7AYrFNlqLqmbps8zGiAH4x6BVDovmGhOc=;
+ b=V9jG5dZ5Tib8dvPyrt+U2OQFYhU8BJEjyg8qVRdJsyyAO5xEFR4cv/zlm+Fs00cUjK9Lp6
+ mMT45DzuFxvTBxkwRhIOlTfKRNn5PdeA7tElw5B3nTuiiS3sSqtgW8xaWKb/rYlDhNXCQQ
+ bE413Z4aLx3h3L3VuAjVBFUpnCNXpR4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-X9EIxhSdOoOxU_dDfNKCag-1; Fri, 26 Sep 2025 03:40:57 -0400
-X-MC-Unique: X9EIxhSdOoOxU_dDfNKCag-1
-X-Mimecast-MFC-AGG-ID: X9EIxhSdOoOxU_dDfNKCag_1758872456
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3efe4fcc9ccso982093f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 00:40:57 -0700 (PDT)
+ us-mta-596-1XBsSgStNoy6qoVS_raRcA-1; Fri, 26 Sep 2025 03:44:25 -0400
+X-MC-Unique: 1XBsSgStNoy6qoVS_raRcA-1
+X-Mimecast-MFC-AGG-ID: 1XBsSgStNoy6qoVS_raRcA_1758872664
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e31191379so11987985e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 00:44:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758872456; x=1759477256;
+ d=1e100.net; s=20230601; t=1758872664; x=1759477464;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bgmZk+js2Vz9yDQNJ1UGlADwu+5l6n7+W7KW+NXmkeY=;
- b=H0xxoTHCnX5cFBzhPcsReVLbj/lpkVKNanc2rcAXl9FSG+l+0GMEcUQX61IFNNGlfw
- lbx+dXFl1y9EjQvBnPnvWbDd23wXEywWoB7iCEVmuZZkD1vMeky0QdzymocbUy/VXNQQ
- VNjQ/FjmDlXqXvAoEPjj6LejRJe+qm67boGnIoI2bqe8TANEBxk4LLJg7WbkpVM7Iz9v
- KrUF6A4DyJJclq8OIYBa4gW1l+H9T5hDeyQ5L4ACFfIYSquXGjGf77mC/KGPkcT+7WA+
- /Z+D5t4TDCqUSjcP3HLBGQtPEu52g78pZLODU4L7dm3v5t1LhrQCg0XKRePaRVsysEFa
- nrQw==
-X-Gm-Message-State: AOJu0Yz+M7xsTlYh6Z+HNvGYUKhRBwWbU5NISCI/SBtNPl7ZC2YrR//B
- W0Z5mSHxyLN4Zx0iNbdKp3MY1+ali730Kvls88zRx2zhTSCDCQe4x2a79xJ3MpTY9UlpQh/bqXB
- pKyba8N/6lk+WqKk1ndGoxnmQpDSDOX5Yy5Z89n9Ph7xjX7CuYeogHTVJ
-X-Gm-Gg: ASbGnctcf59lTHU2IAWjeLU3spyafpvOzQoEW8FgIJC4ZiK/DR7gy8tu0FbN5xphpBl
- Y4FvmHVntv2fL4gSpMRrduIe/LB5Sg3qYFKEdBPZuPCjnnY+CPnq1LUMUtdyJnj5emGYNvpF46r
- Rxz68HjqLr3ncZfzo8RZ9+zEdX/cevSjJtiZL2m+lObakP68T2dCBdsdcSUy+UfFbtXsLZYF/E+
- MTmrcs8oGHNz8LY6M+WinTwURynufjhUjE3GV7eJkUkrjxGsSZCsP0Hz52LDWWSq/9KWgvu9lH2
- cvdWBP4/C76/pf1qMenrHCky4LGv3dsYa8nJe8ZPFERX1jcyocBV6CDxwtaAZwAySlQlwcIQHKA
- 8YRA=
-X-Received: by 2002:a05:6000:2381:b0:3ee:1461:166c with SMTP id
- ffacd0b85a97d-40e497c34b8mr5988717f8f.5.1758872455892; 
- Fri, 26 Sep 2025 00:40:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5gJ42YcMP4Zpmno8L2e6wUWpvsx/K+yCNJaRVal7iPTX/8euNegS4TBpfysmlkn801FN20w==
-X-Received: by 2002:a05:6000:2381:b0:3ee:1461:166c with SMTP id
- ffacd0b85a97d-40e497c34b8mr5988698f8f.5.1758872455474; 
- Fri, 26 Sep 2025 00:40:55 -0700 (PDT)
+ bh=AI7sUTUKoL7AYrFNlqLqmbps8zGiAH4x6BVDovmGhOc=;
+ b=lxciNi+ddFnpFsPrnNoctmHsGi1DPFZBgENIsSY38cDilEikGjtHA59+LsEaLDjsOy
+ mZl8h7RswyGLRhbnZSRuCZkW6w7NTqYFl+Tu3mQhzazV1BtBIP0ihq4ip1ynAzy5mrka
+ oFCKoXSCJS6hVzv7H+o98Tauz+9j93MrmkkBEfr5d8qIUcHtN6yRP+aGR148apIfQiW6
+ n6ghMqulIsj3SAFOvES2P66Sg5c+C26aDMdbZWKblJDbwYoC0zeVePJrip0kie/l5qL9
+ MpwxZQUCjaCc7tXwhtgqOei6pt4zerO+kWbG1r8ZIhbLuXxV7/XT1ux1fDiUuqn/+l02
+ GSbA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXmkgkBaFLn5qrTYj7703H14JPnbF60p9Jwfxi/RD87FR8Gy3Li8gyverwnjH9VKfl11Elq5duISN52@nongnu.org
+X-Gm-Message-State: AOJu0YyiDGDVoEXGWXVljmlb06c4HZdot9/lNYLPM9VFbGIXG8q+vOgQ
+ eI4NFtHsOREKDAzXuG/qugz+3k/3avScMhbs2UMNgtz+EgwURYx3RtXKEHPMqdqG09YivX3dqyx
+ SpssW6PnWqM36VQ5OQWpi85yJYfQXNGoSQTSmiEOl8qHYt7YQqK1Gb4RB
+X-Gm-Gg: ASbGncucGwUjndSJNYzMqloVUlLs7VNKLE3JvZgFyuG9pwbK8xWVeH643bACUMevyx7
+ LLiGw+DMDkuh+s2Nlnyu1Mn828NCobTy6Ig5MtelYS18TOA3L4QNYt9EYyuc8esbPNddbc94ML+
+ aa8jeY7FEstWvIM9NLurRYSBHT1U94bveXOoVSD2ROGadrWo5GTmpjIRuQItnukMTlAGy9qNPGr
+ F7eV26AasyfEWOZyql5ocbrDbdTKAne6bLOkaqmhiQh37h0FIB97MliKnw+AkCmwzBUKHMeuMqj
+ wNz50OcjEl4yGyjfsSm56Zd94K/Jf2rnXOGDobdjdITqS9cKakHrY3gDdiT/OP6EJm6Ia7JNxV7
+ D/pY=
+X-Received: by 2002:a05:600c:4f56:b0:46e:2c37:7474 with SMTP id
+ 5b1f17b1804b1-46e32a032dcmr75074965e9.31.1758872664246; 
+ Fri, 26 Sep 2025 00:44:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFajnTc2tbRwH57O/k8NRRvV5Zcc/S8J2wU5L6Q+LKIw7v1sR259zv3kF7ZnHD5RAOFC+9zbA==
+X-Received: by 2002:a05:600c:4f56:b0:46e:2c37:7474 with SMTP id
+ 5b1f17b1804b1-46e32a032dcmr75074715e9.31.1758872663867; 
+ Fri, 26 Sep 2025 00:44:23 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc5603365sm6124045f8f.37.2025.09.26.00.40.54
+ 5b1f17b1804b1-46e330db1a6sm33227425e9.3.2025.09.26.00.44.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Sep 2025 00:40:55 -0700 (PDT)
-Message-ID: <1b384231-fe7a-4f13-a30e-2c8c1b9f1563@redhat.com>
-Date: Fri, 26 Sep 2025 09:40:54 +0200
+ Fri, 26 Sep 2025 00:44:23 -0700 (PDT)
+Message-ID: <dd378cbb-4876-496f-a079-1b8f1cecba79@redhat.com>
+Date: Fri, 26 Sep 2025 09:44:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] vfio/pci: Add an error handler callback
-To: Markus Armbruster <armbru@redhat.com>, Farhan Ali <alifm@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, mjrosato@linux.ibm.com,
- thuth@redhat.com, alex.williamson@redhat.com
-References: <20250925174852.1302-1-alifm@linux.ibm.com>
- <20250925174852.1302-3-alifm@linux.ibm.com> <87qzvtstd7.fsf@pond.sub.org>
+Subject: Re: [SPAM] [PATCH v1 08/21] hw/arm/ast27x0: Add SCU alias for SSP and
+ ensure correct device realization order
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
+ <20250717034054.1903991-9-jamin_lin@aspeedtech.com>
+ <a06379d8-ec0f-4842-87d9-5cecdb1dfd86@kaod.org>
+ <SI2PR06MB5041DB54104CB51250E5E110FC1DA@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <5003d6ba-bf7e-4bdc-9c22-7360024536cf@redhat.com>
+ <SI2PR06MB504175E8604D90397E631042FC1CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <078f252f-774b-47f8-bf94-6b1de8e70359@redhat.com>
+ <SI2PR06MB50413935D3232A7618C71605FC1FA@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <SEYPR06MB5037311A981103C166149A94FC1EA@SEYPR06MB5037.apcprd06.prod.outlook.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,20 +141,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <87qzvtstd7.fsf@pond.sub.org>
+In-Reply-To: <SEYPR06MB5037311A981103C166149A94FC1EA@SEYPR06MB5037.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,94 +169,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/26/25 06:57, Markus Armbruster wrote:
-> Farhan Ali <alifm@linux.ibm.com> writes:
+Hello Jamin,
+
+On 9/26/25 05:13, Jamin Lin wrote:
+> Hi Cédric
 > 
->> Provide a vfio error handling callback, that can be used by devices to
->> handle PCI errors for passthrough devices.
->>
->> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->> ---
->>   hw/vfio/pci.c | 8 ++++++++
->>   hw/vfio/pci.h | 1 +
->>   2 files changed, 9 insertions(+)
->>
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index bc0b4c4d56..b02a974954 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -3063,11 +3063,19 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
->>   static void vfio_err_notifier_handler(void *opaque)
->>   {
->>       VFIOPCIDevice *vdev = opaque;
->> +    Error *err = NULL;
->>   
->>       if (!event_notifier_test_and_clear(&vdev->err_notifier)) {
->>           return;
->>       }
->>   
->> +    if (vdev->err_handler) {
->> +        if (vdev->err_handler(vdev, &err)) {
->> +            return;
->> +        }
->> +        error_report_err(err);
->> +    }
+>>>>>> 3. Migrate all ASPEED coprocessors (e.g. SSP/TSP) to a common
+>>>>> AspeedCoprocessorState.
+>>>>>
+>>>>> Is 'AspeedCoprocessorState' a new model structure minimizing the
+>>>>> number of sub controllers ? if so, looks good. Could be merged fairly
+>> quickly.
+>>>>>
+>>>>
+>>>> Yes, I am planning to use the new AspeedCoprocessorState instead of
+>>> AspeedSoCState for SSP and TSP.
+>>>> struct Aspeed27x0SSPSoCState {
+>>>>       AspeedSoCState parent;  -------> Change to AspeedCoprocessorState
+>>>>       AspeedINTCState intc[2];
+>>>>       UnimplementedDeviceState ipc[2];
+>>>>       UnimplementedDeviceState scuio;
+>>>>
+>>>>       ARMv7MState armv7m;
+>>>> };
+>>>>
+>>>> struct Aspeed27x0TSPSoCState {
+>>>>       AspeedSoCState parent;  -------> Change to AspeedCoprocessorState
+>>>>       AspeedINTCState intc[2];
+>>>>       UnimplementedDeviceState ipc[2];
+>>>>       UnimplementedDeviceState scuio;
+>>>>
+>>>>       ARMv7MState armv7m;
+>>>> };
+>>>> This change consolidates SSP and TSP under a common coprocessor
+>>>> model, reducing duplication and aligning them with the new
+>>> AspeedCoprocessorState abstraction.
+>>>
+>>> Aspeed27x0TSPSoCState and Aspeed27x0SSPSoCState look similar. Could
+>>> they be merged ?
+>>>
+>> Thanks for your suggestion.
+>> Will try it.
+>> Jamin
+>>> Thanks,
 > 
-> This is unusual.
+> I am considering making the following APIs common so that both the Coprocessor and SoC can use them.
+> 
+> The Coprocessor state is AspeedCoprocessor
+> The general SoC state is AspeedSoC
 
-and the compiler complains :
+Yes. If you need a base class to maintain common routines, you could
+introduce a parent too.
 
-../hw/vfio/pci.c: In function ‘vfio_err_notifier_handler’:
-../hw/vfio/pci.c:3076:9: error: dangling pointer to ‘err’ may be used [-Werror=dangling-pointer=]
-  3076 |         error_report_err(err);
-       |         ^~~~~~~~~~~~~~~~~~~~~
-../hw/vfio/pci.c:3066:12: note: ‘err’ declared here
-  3066 |     Error *err = NULL;
-       |            ^~~
-cc1: all warnings being treated as errors
+For rest, please send patches. I rather discuss on a proposal than on
+an unrelated email.
 
+Thanks,
 
 C.
 
-
-> 
-> Functions taking an Error ** argument usually do so to report errors.
-> The rules spelled out in qapi/error.h apply.  In particular:
-> 
->   * - On success, the function should not touch *errp.  On failure, it
->   *   should set a new error, e.g. with error_setg(errp, ...), or
->   *   propagate an existing one, e.g. with error_propagate(errp, ...).
->   *
->   * - Whenever practical, also return a value that indicates success /
->   *   failure.  This can make the error checking more concise, and can
->   *   avoid useless error object creation and destruction.  Note that
->   *   we still have many functions returning void.  We recommend
->   *   • bool-valued functions return true on success / false on failure,
-> 
-> If ->err_handler() behaved that way, it @err would be null after it
-> returns false.  We'd call error_report_err(NULL), and crash.
-> 
-> Functions with unusual behavior need a contract: a comment spelling out
-> their behavior.
-> 
-> What is the intended behavior of the err_handler() callback?
-> 
->> +
->>       /*
->>        * TBD. Retrieve the error details and decide what action
->>        * needs to be taken. One of the actions could be to pass
->> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->> index e0aef82a89..faadce487c 100644
->> --- a/hw/vfio/pci.h
->> +++ b/hw/vfio/pci.h
->> @@ -146,6 +146,7 @@ struct VFIOPCIDevice {
->>       EventNotifier err_notifier;
->>       EventNotifier req_notifier;
->>       int (*resetfn)(struct VFIOPCIDevice *);
->> +    bool (*err_handler)(struct VFIOPCIDevice *, Error **);
->>       uint32_t vendor_id;
->>       uint32_t device_id;
->>       uint32_t sub_vendor_id;
-> 
 
 
