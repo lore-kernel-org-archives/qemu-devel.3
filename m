@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E693ECAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 13:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0FCCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 14:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2VRb-0006ZS-SG; Sat, 27 Sep 2025 09:58:36 -0400
+	id 1v2VTe-0007ad-H6; Sat, 27 Sep 2025 10:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2VRY-0006Yc-Aj; Sat, 27 Sep 2025 09:58:32 -0400
+ id 1v2VTR-0007YG-RB; Sat, 27 Sep 2025 10:00:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2VRQ-0002aT-Kw; Sat, 27 Sep 2025 09:58:31 -0400
+ id 1v2VTG-0003Bw-CA; Sat, 27 Sep 2025 10:00:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5A4F61585E7;
- Sat, 27 Sep 2025 16:58:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F3681585EC;
+ Sat, 27 Sep 2025 17:00:01 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36F032916B1;
- Sat, 27 Sep 2025 16:58:12 +0300 (MSK)
-Message-ID: <118e759d-026b-46d4-8b13-5eddb3e971f7@tls.msk.ru>
-Date: Sat, 27 Sep 2025 16:58:11 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3641F2916B6;
+ Sat, 27 Sep 2025 17:00:04 +0300 (MSK)
+Message-ID: <72efb886-3709-447f-b3f9-5581c1811b62@tls.msk.ru>
+Date: Sat, 27 Sep 2025 17:00:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pcie_sriov: make pcie_sriov_pf_exit() safe on non-SR-IOV
- devices
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Qing Wang
- <qinwang@redhat.com>, qemu-stable@nongnu.org
-References: <20250924155153.579495-1-stefanha@redhat.com>
- <20250924175146.GA6015@fedora>
+Subject: Re: [PATCH] target/riscv: use riscv_csrr in riscv_csr_read
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ stove <stove@rivosinc.com>, qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250827203617.79947-1-stove@rivosinc.com>
+ <dccc6ea0-d173-4a55-8c69-9313e2accbff@ventanamicro.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -82,7 +82,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250924175146.GA6015@fedora>
+In-Reply-To: <dccc6ea0-d173-4a55-8c69-9313e2accbff@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -108,41 +108,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.09.2025 20:51, Stefan Hajnoczi wrote:
-> On Wed, Sep 24, 2025 at 11:51:53AM -0400, Stefan Hajnoczi wrote:
->> Commit 3f9cfaa92c96 ("virtio-pci: Implement SR-IOV PF") added an
->> unconditional call from virtio_pci_exit() to pcie_sriov_pf_exit().
->>
->> pcie_sriov_pf_exit() reads from the SR-IOV Capability in Configuration
->> Space:
->>
->>    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
->>    ...
->>    unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
->>                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>
->> This results in undefined behavior when dev->exp.sriov_cap is 0 because
->> this is not an SR-IOV device. For example, unparent_vfs() segfaults when
->> total_vfs happens to be non-zero.
->>
->> Fix this by returning early from pcie_sriov_pf_exit() when
->> dev->exp.sriov_cap is 0 because this is not an SR-IOV device.
->>
->> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Cc: Michael S. Tsirkin <mst@redhat.com>
->> Reported-by: Qing Wang <qinwang@redhat.com>
->> Buglink: https://issues.redhat.com/browse/RHEL-116443
->> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
->> ---
->>   hw/pci/pcie_sriov.c | 6 +++++-
->>   1 file changed, 5 insertions(+), 1 deletion(-)
+On 28.08.2025 12:37, Daniel Henrique Barboza wrote:
+> Cc: qemu-stable
 > 
-> CCing qemu-stable
+> On 8/27/25 5:36 PM, stove wrote:
+>> Commit 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/CSRRC
+>> writes a read-only CSR") changed the behavior of riscv_csrrw, which
+>> would formerly be treated as read-only if the write mask were set to 0.
+>>
+>> Fixes an exception being raised when accessing read-only vector CSRs
+>> like vtype.
+>>
+>> Fixes: 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/ 
+>> CSRRC writes a read-only CSR")
 
-Ping?  Can we apply this to the master branch, so I can pick it
-up for the stable series?
+Ping?  Can we apply this to the master branch, so I can pick it up for
+the stable series?
 
 Thanks,
 
 /mjt
+
 
