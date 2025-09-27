@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D262FCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A2CCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2QsC-0004hx-1S; Sat, 27 Sep 2025 05:05:44 -0400
+	id 1v2Qrh-0004Qf-Cj; Sat, 27 Sep 2025 05:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qs7-0004ex-Pi; Sat, 27 Sep 2025 05:05:40 -0400
+ id 1v2Qrf-0004QJ-Nt; Sat, 27 Sep 2025 05:05:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qs2-0007CL-CS; Sat, 27 Sep 2025 05:05:39 -0400
+ id 1v2Qrd-00077m-A8; Sat, 27 Sep 2025 05:05:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 54D90158565;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0E109158561;
  Sat, 27 Sep 2025 12:03:03 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36024291582;
- Sat, 27 Sep 2025 12:03:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E010D29157E;
+ Sat, 27 Sep 2025 12:03:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 16/16] tests/tcg/multiarch: Add tb-link test
-Date: Sat, 27 Sep 2025 12:03:00 +0300
-Message-ID: <20250927090304.2901324-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 12/16] python/qmp/legacy: make QEMUMonitorProtocol
+ accept a socket
+Date: Sat, 27 Sep 2025 12:02:56 +0300
+Message-ID: <20250927090304.2901324-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,99 +63,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit e13e1195db8af18e149065a59351ea85215645bb)
-(Mjt: resolve context conflict in tests/tcg/multiarch/Makefile.target)
+Teach QEMUMonitorProtocol to accept an exisiting socket.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20230111080101.969151-3-marcandre.lureau@redhat.com
+Signed-off-by: John Snow <jsnow@redhat.com>
+(cherry picked from commit 603a3bad4b9a95b524dc8d6a41b1be4d5c5cacdf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 5f0fee1aad..2fdec1f05f 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -39,6 +39,8 @@ signals: LDFLAGS+=-lrt -lpthread
- munmap-pthread: CFLAGS+=-pthread
- munmap-pthread: LDFLAGS+=-pthread
+diff --git a/python/qemu/qmp/legacy.py b/python/qemu/qmp/legacy.py
+index 1951754455..8b09ee7dbb 100644
+--- a/python/qemu/qmp/legacy.py
++++ b/python/qemu/qmp/legacy.py
+@@ -22,6 +22,7 @@
+ #
  
-+tb-link: LDFLAGS+=-lpthread
-+
- # We define the runner for test-mmap after the individual
- # architectures have defined their supported pages sizes. If no
- # additional page sizes are defined we only run the default test.
-diff --git a/tests/tcg/multiarch/tb-link.c b/tests/tcg/multiarch/tb-link.c
-new file mode 100644
-index 0000000000..4e40306fa1
---- /dev/null
-+++ b/tests/tcg/multiarch/tb-link.c
-@@ -0,0 +1,67 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Verify that a single TB spin-loop is properly invalidated,
-+ * releasing the thread from the spin-loop.
-+ */
-+
-+#include <assert.h>
-+#include <sys/mman.h>
-+#include <pthread.h>
-+#include <stdint.h>
-+#include <stdbool.h>
-+#include <unistd.h>
-+#include <sched.h>
-+
-+
-+#ifdef __x86_64__
-+#define READY   0x000047c6      /* movb $0,0(%rdi) */
-+#define LOOP    0xfceb9090      /* 1: nop*2; jmp 1b */
-+#define RETURN  0x909090c3      /* ret; nop*3 */
-+#define NOP     0x90909090      /* nop*4 */
-+#elif defined(__aarch64__)
-+#define READY   0x3900001f      /* strb wzr,[x0] */
-+#define LOOP    0x14000000      /* b . */
-+#define RETURN  0xd65f03c0      /* ret */
-+#define NOP     0xd503201f      /* nop */
-+#elif defined(__riscv)
-+#define READY   0x00050023      /* sb zero, (a0) */
-+#define LOOP    0x0000006f      /* jal zero, #0 */
-+#define RETURN  0x00008067      /* jalr zero, ra, 0 */
-+#define NOP     0x00000013      /* nop */
-+#endif
-+
-+
-+int main()
-+{
-+#ifdef READY
-+    int tmp;
-+    pthread_t thread_id;
-+    bool hold = true;
-+    uint32_t *buf;
-+
-+    buf = mmap(NULL, 3 * sizeof(uint32_t),
-+               PROT_READ | PROT_WRITE | PROT_EXEC,
-+               MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    assert(buf != MAP_FAILED);
-+
-+    buf[0] = READY;
-+    buf[1] = LOOP;
-+    buf[2] = RETURN;
-+
-+    alarm(2);
-+
-+    tmp = pthread_create(&thread_id, NULL, (void *(*)(void *))buf, &hold);
-+    assert(tmp == 0);
-+
-+    while (hold) {
-+        sched_yield();
-+    }
-+
-+    buf[1] = NOP;
-+    __builtin___clear_cache(&buf[1], &buf[2]);
-+
-+    tmp = pthread_join(thread_id, NULL);
-+    assert(tmp == 0);
-+#endif
-+    return 0;
-+}
+ import asyncio
++import socket
+ from types import TracebackType
+ from typing import (
+     Any,
+@@ -69,22 +70,32 @@ class QEMUMonitorProtocol:
+ 
+     :param address:  QEMU address, can be either a unix socket path (string)
+                      or a tuple in the form ( address, port ) for a TCP
+-                     connection
++                     connection or None
++    :param sock:     a socket or None
+     :param server:   Act as the socket server. (See 'accept')
+     :param nickname: Optional nickname used for logging.
+     """
+ 
+-    def __init__(self, address: SocketAddrT,
++    def __init__(self,
++                 address: Optional[SocketAddrT] = None,
++                 sock: Optional[socket.socket] = None,
+                  server: bool = False,
+                  nickname: Optional[str] = None):
+ 
++        assert address or sock
+         self._qmp = QMPClient(nickname)
+         self._aloop = asyncio.get_event_loop()
+         self._address = address
++        self._sock = sock
+         self._timeout: Optional[float] = None
+ 
+         if server:
+-            self._sync(self._qmp.start_server(self._address))
++            if sock:
++                assert self._sock is not None
++                self._sync(self._qmp.open_with_socket(self._sock))
++            else:
++                assert self._address is not None
++                self._sync(self._qmp.start_server(self._address))
+ 
+     _T = TypeVar('_T')
+ 
+@@ -139,6 +150,7 @@ def connect(self, negotiate: bool = True) -> Optional[QMPMessage]:
+         :return: QMP greeting dict, or None if negotiate is false
+         :raise ConnectError: on connection errors
+         """
++        assert self._address is not None
+         self._qmp.await_greeting = negotiate
+         self._qmp.negotiate = negotiate
+ 
 -- 
 2.47.3
 
