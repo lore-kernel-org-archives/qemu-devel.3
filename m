@@ -4,41 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C46CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D6ECAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2Qs8-0004cQ-DT; Sat, 27 Sep 2025 05:05:41 -0400
+	id 1v2Qsq-0005h4-Vs; Sat, 27 Sep 2025 05:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qrx-0004VP-4o; Sat, 27 Sep 2025 05:05:32 -0400
+ id 1v2Qse-0005JU-UT; Sat, 27 Sep 2025 05:06:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qrk-0007AB-Py; Sat, 27 Sep 2025 05:05:27 -0400
+ id 1v2QsQ-0007Gx-5P; Sat, 27 Sep 2025 05:06:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 207EA158562;
- Sat, 27 Sep 2025 12:03:03 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F22D229157F;
- Sat, 27 Sep 2025 12:03:05 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 13/16] python/qemu/machine: use socketpair() for QMP
- by default
-Date: Sat, 27 Sep 2025 12:02:57 +0300
-Message-ID: <20250927090304.2901324-13-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
-References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
+ by isrv.corpit.ru (Postfix) with ESMTP id 1EE4E15856D;
+ Sat, 27 Sep 2025 12:05:52 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 02B7F291587;
+ Sat, 27 Sep 2025 12:05:54 +0300 (MSK)
+Message-ID: <2eff69a9-d7ae-4f97-85d5-d657b7793f79@tls.msk.ru>
+Date: Sat, 27 Sep 2025 12:05:54 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Stable-7.2.21 00/16] Patch Round-up for stable 7.2.21, freeze on
+ 2025-10-06
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,86 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 27.09.2025 12:02, Michael Tokarev wrote:
+> The following patches are queued for QEMU stable v7.2.21:
+> 
+>    https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+> 
+> Patch freeze is 2025-10-06, and the release is planned for 2025-10-08:
+> 
+>    https://wiki.qemu.org/Planning/7.2
 
-When no monitor address is given, establish the QMP communication through
-a socketpair() (API is also supported on Windows since Python 3.5)
+There aren't many fixes (so far) for 7.2.x, - the bulk of changes
+are various testsuite tweaks.  However, this change:
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20230111080101.969151-4-marcandre.lureau@redhat.com
-[Resolved conflicts, fixed typing error. --js]
-Signed-off-by: John Snow <jsnow@redhat.com>
-(cherry picked from commit bd4c0ef409140bd1be393407c04005ac077d4574)
-(Mjt: this fixes quite a few qemu iotests which was probably racing somewhere)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+02 a11d1847d5ef Alex Bennée:
+    .gitmodules: move u-boot mirrors to qemu-project-mirrors
 
-diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
-index 5df210c810..b6cb366584 100644
---- a/python/qemu/machine/machine.py
-+++ b/python/qemu/machine/machine.py
-@@ -158,17 +158,13 @@ def __init__(self,
-         self._qmp_timer = qmp_timer
- 
-         self._name = name or f"{id(self):x}"
-+        self._sock_pair: Optional[Tuple[socket.socket, socket.socket]] = None
-         self._temp_dir: Optional[str] = None
-         self._base_temp_dir = base_temp_dir
-         self._sock_dir = sock_dir
-         self._log_dir = log_dir
- 
--        if monitor_address is not None:
--            self._monitor_address = monitor_address
--        else:
--            self._monitor_address = os.path.join(
--                self.sock_dir, f"{self._name}.qmp"
--            )
-+        self._monitor_address = monitor_address
- 
-         self._console_log_path = console_log
-         if self._console_log_path:
-@@ -303,7 +299,11 @@ def _base_args(self) -> List[str]:
-         args = ['-display', 'none', '-vga', 'none']
- 
-         if self._qmp_set:
--            if isinstance(self._monitor_address, tuple):
-+            if self._sock_pair:
-+                fd = self._sock_pair[0].fileno()
-+                os.set_inheritable(fd, True)
-+                moncdev = f"socket,id=mon,fd={fd}"
-+            elif isinstance(self._monitor_address, tuple):
-                 moncdev = "socket,id=mon,host={},port={}".format(
-                     *self._monitor_address
-                 )
-@@ -337,10 +337,17 @@ def _pre_launch(self) -> None:
-             self._remove_files.append(self._console_address)
- 
-         if self._qmp_set:
-+            monitor_address = None
-+            sock = None
-+            if self._monitor_address is None:
-+                self._sock_pair = socket.socketpair()
-+                sock = self._sock_pair[1]
-             if isinstance(self._monitor_address, str):
-                 self._remove_files.append(self._monitor_address)
-+                monitor_address = self._monitor_address
-             self._qmp_connection = QEMUMonitorProtocol(
--                self._monitor_address,
-+                address=monitor_address,
-+                sock=sock,
-                 server=True,
-                 nickname=self._name
-             )
-@@ -360,6 +367,8 @@ def _pre_launch(self) -> None:
-         ))
- 
-     def _post_launch(self) -> None:
-+        if self._sock_pair:
-+            self._sock_pair[0].close()
-         if self._qmp_connection:
-             self._qmp.accept(self._qmp_timer)
- 
--- 
-2.47.3
+is needed for 7.2.x to build from git.
 
+Thanks,
+
+/mjt
 
