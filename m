@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85866CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 08:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0C1CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 08:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2QXc-0006jD-KF; Sat, 27 Sep 2025 04:44:28 -0400
+	id 1v2QbY-0007p8-93; Sat, 27 Sep 2025 04:48:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2QXa-0006iu-JM; Sat, 27 Sep 2025 04:44:26 -0400
+ id 1v2QbW-0007oh-Ua; Sat, 27 Sep 2025 04:48:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2QXR-0003fU-Sg; Sat, 27 Sep 2025 04:44:26 -0400
+ id 1v2QbK-00045V-Vy; Sat, 27 Sep 2025 04:48:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3F514158546;
- Sat, 27 Sep 2025 11:43:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A28F15854A;
+ Sat, 27 Sep 2025 11:48:11 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0EB4A291560;
- Sat, 27 Sep 2025 11:44:01 +0300 (MSK)
-Message-ID: <e0dee54b-7e58-4028-b639-1cc5a41720fe@tls.msk.ru>
-Date: Sat, 27 Sep 2025 11:44:00 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id BE6C3291565;
+ Sat, 27 Sep 2025 11:48:13 +0300 (MSK)
+Message-ID: <fcf01a1c-3503-4397-a41b-d453ca2b7df9@tls.msk.ru>
+Date: Sat, 27 Sep 2025 11:48:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/spice: Fix abort on SPICE client connect
-To: Mohamed Akram <mohd.akram@outlook.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-References: <A759ECC2-6B53-4B3E-A005-7D06BA403FCB@outlook.com>
+Subject: Re: [PATCH] docs/devel: Correct uefi-vars-x64 device name
+To: Peter Maydell <peter.maydell@linaro.org>, nanliu <nanliu@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com,
+ "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+References: <20250922065714.93081-1-nanliu@redhat.com>
+ <CAFEAcA8pLFu6eOK5N+E97qo5PCp3OW3BRfYNSEL7=YQS6+eh2g@mail.gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -78,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <A759ECC2-6B53-4B3E-A005-7D06BA403FCB@outlook.com>
+In-Reply-To: <CAFEAcA8pLFu6eOK5N+E97qo5PCp3OW3BRfYNSEL7=YQS6+eh2g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -87,8 +88,8 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,16 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.09.2025 23:55, Mohamed Akram wrote:
-> The BQL is already locked by the main loop, so avoid locking again
-> unless needed to not trigger an assertion failure.
-> 
-> Signed-off-by: Mohamed Akram <mohd.akram@outlook.com>
+On 23.09.2025 14:57, Peter Maydell wrote:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3070
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> We could probably also correct the bit of the text in this file
+> that currently reads "depend on SMM emulation on x64" to either
+> say "x86" or "x86_64".
 
-And applied to the trivial-pathes tree.  Thank you!
+This one will be a bit more than trivial :)  I for one don't know
+if this is related to any x86 or to x86_64 only.
+
+I'm applying the suggested correction to the trivial-patches tree.
+
+Thanks,
 
 /mjt
 
