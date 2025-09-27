@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BC7CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Sep 2025 21:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54FDCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 00:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2GJg-0004ht-GS; Fri, 26 Sep 2025 17:49:24 -0400
+	id 1v2Ihd-0006gC-4w; Fri, 26 Sep 2025 20:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixiaoyan@google.com>)
- id 1v2GJc-0004hO-VY
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 17:49:21 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1v2IhX-0006fp-KD
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 20:22:13 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lixiaoyan@google.com>)
- id 1v2GJQ-0000rY-2f
- for qemu-devel@nongnu.org; Fri, 26 Sep 2025 17:49:20 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-62fa84c6916so3432a12.0
- for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 14:49:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1v2IhF-0006Qo-1U
+ for qemu-devel@nongnu.org; Fri, 26 Sep 2025 20:22:11 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-77d94c6562fso3108933b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Sep 2025 17:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1758923340; x=1759528140; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0YOQH1ol7r7OQB7qdsyqB7C9IdyT80BjoHAoKtgCFPc=;
- b=hbGZnylt85JfVSfXIJcAQ3IB2lVUjTCx/nfka6LgFfKQYHJ5X26Ovo+5Q8mrFZguv/
- imR/Zgifa28B3Kq5DouXUd5dBeJM/n45kXrp2sXIkoC6+Ne4xBYsQ21/5QlnbX2cNXkP
- ynm2TByCDPjepXV9sSJy51Uwa9tsbrgy8sREe1vXnJcnZHINvftmFsXne6FX5IgC/UDN
- g088KPYh7AW9aXrvbv5zAlt2MDVu+rYWuy58XPR/NT97qooU6GRbgXlRUf2SWjJgMTiH
- DmWli/3zOlqoaa02ZeBZif72GKO8jWpFYUQLd9U7Zq/V2PwjVy8lgpuCsAunhMYswZ69
- h/IQ==
+ d=gmail.com; s=20230601; t=1758932503; x=1759537303; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tQTR/LW73pcGQZucVeSjNBBl318LBz6n0O2J7WibIuY=;
+ b=F2pcF9MRJ6R0bd+pynE+VUxIYLqE/y9ckcPB8y2XQVLTB4LE14BjRskWfSMhVGFmM+
+ gkgrTtFHX6evp9ZlEd4qWjyLyMA3VDQG3blqYh9lfB+KIJGLyCBvbpD6jQe7I4V95V6t
+ XU6eP5m+LLkimLvy2TpuGBzv1U97nyn5cwbDhKd/pzauS8GtGtRQCY6xtsUDggCCDJ4D
+ yZ5glENbT/t7+48zIgFrh2gnRbYDxeBPTsU4EtGH1DDrEHZaNCBjnKSMQ5GhanoMTjA9
+ wfZLw6VCHIQnM89m2eOStbWsHaTvZPEUoBDBu2vCv2+wRVus+s4vyPs8HDm1opSISTmV
+ m2fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758923340; x=1759528140;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1758932503; x=1759537303;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0YOQH1ol7r7OQB7qdsyqB7C9IdyT80BjoHAoKtgCFPc=;
- b=gUoOrXfvpX3+T4236d1xPoTZfrMQLjZrvYPMFzeU705QfPpSp6Q79BUfk2nFvpQUtp
- 6LD6YM8ziCNF0560kWROIX4keyNyJ8Y6sbp6usaV2zpGDOJDB/0p+wE3xdYW2iCn7t3+
- PHdk7ejv546TEEJBCqn68RkjMx4LDtVFAs5aVsEnNjpnk6r6naCKuGKgerTZ4LDU7UcK
- Elt0UXILGHXzNYOkJQyGqiB08fAZCkH4NobyOy3VwoHxT+w/RQfF3m5vrCEjNVeO4TiH
- JemE3lSyTCVimJJNJJ1nUfmMeINS4orHLHYeIniK+fftMbe/XOzSVGbYCoNRJTtm/r8R
- tUKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAr+sS3r7Q9/44/ii/EGnG39Bro6hwV3Cx3YNHzE/vsQOif5iEO1Zy/5wzzHdnGPa5/Nq5Nd63hepH@nongnu.org
-X-Gm-Message-State: AOJu0YwCH/x8U2IlLFsw81xxnlRvuPZwe6ojOdKZjyIwd2hjtfh0kYeQ
- dbAtdVlkKP/ws8V8AvCoGP7Q+KQXTAdzZ46rwQmcSNKF5l3ARpNbkDUJUii69g7jKqG8dP1Y5vv
- nYzgg+fz2Nos76i3VNht4vY2perBjIKH2zVBG5/rN
-X-Gm-Gg: ASbGncs7q88Y5NT/L9p/doDYxiDhE8p/r87UN8mKGJMdceQCKl6b+3EktoKg0h+shvK
- PHGwjjhy7zrw0G8yDVMqrzoGhtFI0N8bFJiQUwBfQdKlpRZLcBgk8hfOMcvwV9E5lxQD69VCk3H
- NMHWcdYU3GiEprzdVb/LoCFECgyVgSGju6SE9RcTNmrfXSL8RS/gb/ZhkVapdPkrt7L6hFnBFe7
- Ktp7eiWBq+5uCDrj0OlnoDcdVr7yNWmljaKMl62kCKD16pa0s3dMohDDw==
-X-Google-Smtp-Source: AGHT+IEmPPcZtaPtymcprODMivqiTM9vnUx8lUpfKoyXip8yeVhDMEVVcOvfXAApjNh0+usP9pC7JOoaCESrsULmnD0=
-X-Received: by 2002:a05:6402:6d5:b0:633:2321:a07b with SMTP id
- 4fb4d7f45d1cf-634b60424c7mr125037a12.0.1758923339716; Fri, 26 Sep 2025
- 14:48:59 -0700 (PDT)
+ bh=tQTR/LW73pcGQZucVeSjNBBl318LBz6n0O2J7WibIuY=;
+ b=DJoSfV5x/L1TPBl1+uHMJwfR7BvD9yHLmCamV+Irx4xg78ByPochwbRr30Qc8uMmP8
+ IrH5YIpHUxllNueD3bkkyUUSdtS7SjKwRSUIbrkOVQ3RcjA//buW03YM9F5lGdLhDcvN
+ Wxl3vehLbsx1SvGXMcEUkmmK55vVkdSUjmt8hEX9+Tte2xEBguKAX172Pe/W2+H+F+2u
+ p7ZQeOxsItm53IlurbyoVWB2UEY5hFzvGXCW9sGfJSD3pXVGBdqR7nX4KvpfaIKLt2cZ
+ 5i50I4pC1VIrrPC37TZjvBe+fQQ6P0idsviYONh44jX+kpCBlXCPwZiboqAPzivFaZ7m
+ e/dQ==
+X-Gm-Message-State: AOJu0YwbKBaRNx5q7bmdCHyxLNqZbYRrTh7664eSVqi2sACyWsNmmxPZ
+ 6gjH9Ft7LWmwbjTHlY5E5AK88a7NiYj3QvwzcvYKeYYIOsP9b/yF3klBZXjXAQ==
+X-Gm-Gg: ASbGncslQ8Fps1FQA2NQbtTQNFwuxeB/Y9DD7l9YJk/+efLp+pcBY4/dGszx7JLn+/s
+ us1ljJ5ajbUQPt3VXu5kbJ/1PLCFHaAizksFKxUGhkcZVyD+ER05aVgbsVaaE7/uYrJ7xVglkgW
+ zbCX6VCGA42T0T/Vlz8scIlNC36Bmj4SEtIV/i532DXZdnZmHqwgLfX5XkGao2kF5qn551mZIW5
+ TR69xfkdy59vtvKPafCWIc3J7OpTJaoDl8WiDObpebnJE8gg8b96NFT9/iw1JqtVYwpoGH1N0mn
+ iRs/WjluZZgb8EAQ8qEN28e1RqziLMaLlOaI+nOA5yCanLhzJu/0nWxvASeblZuaHftTqs2xnA1
+ C7yEKWeWjf2EQSsBNqxydTzSLJAgwwx2rZf0cxKzsOX9EP8DorrMEag==
+X-Google-Smtp-Source: AGHT+IGxmhCV2WruVI+XO8VL9LJ3RKewJCIuMAwgl7jSu9H1qilIOZb32R7DmoucZ7lRJaQj+xypGg==
+X-Received: by 2002:a05:6a00:acd:b0:77f:50df:df36 with SMTP id
+ d2e1a72fcca58-780fcec5cedmr10386545b3a.18.1758932502876; 
+ Fri, 26 Sep 2025 17:21:42 -0700 (PDT)
+Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7810238ca29sm5350489b3a.6.2025.09.26.17.21.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Sep 2025 17:21:42 -0700 (PDT)
+From: anisa.su887@gmail.com
+To: qemu-devel@nongnu.org
+Cc: Jonathan.Cameron@huawei.com, dave@stgolabs.net, linux-cxl@vger.kernel.org,
+ Anisa Su <anisa.su@samsung.com>
+Subject: [QEMU PATCH 0/1] CXL: Enable FMAPI Add for MHSLDs
+Date: Sat, 27 Sep 2025 00:18:06 +0000
+Message-ID: <20250927002125.860668-1-anisa.su887@gmail.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <20250925005832.3708492-1-lixiaoyan@google.com>
- <20250925005832.3708492-4-lixiaoyan@google.com>
- <1a755fbf-e6d6-4f80-b35d-29fcb3f587d3@linaro.org>
-In-Reply-To: <1a755fbf-e6d6-4f80-b35d-29fcb3f587d3@linaro.org>
-From: Coco Li <lixiaoyan@google.com>
-Date: Fri, 26 Sep 2025 14:48:47 -0700
-X-Gm-Features: AS18NWD4a8yEo_18Lu7kQUn4ii3v8Jr1mHfOE9Jx1wSs8zAxrXE_lWkPvTU_BJU
-Message-ID: <CADjXwji8M6RsmPtf6Duw+8WcesZD3qSZ9_cR-oiX+dzJ_w7Z9g@mail.gmail.com>
-Subject: Re: [PATCH v1 3/5] hw/arm/npcm8xx.c: Add all IRQ ENUMs
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: peter.maydell@linaro.org, clg@kaod.org, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, flwu@google.com, andrew@codeconstruct.com.au, 
- Hao Wu <wuhaotsh@google.com>
-Content-Type: multipart/alternative; boundary="000000000000da5000063fbb40f3"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=lixiaoyan@google.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -165
-X-Spam_score: -16.6
-X-Spam_bar: ----------------
-X-Spam_report: (-16.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,274 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000da5000063fbb40f3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Anisa Su <anisa.su@samsung.com>
 
-Hi Phil,
+This patch adds support for FMAPI Initiate Add command (5604h) for MHSLDs. It
+is based on the following branch:
+https://gitlab.com/jic23/qemu/-/tree/cxl-2025-07-03
 
-Thanks for the review!
-It looks like IRQ mapping enums on other boards also generally do not have
-line breaks, is it ok if I keep it like this for consistency sake?
+This code was tested by starting 2 VMs, host_1, which initializes the MHSLD, and
+host_2, with the following topologies, then sending the FMAPI command from both
+hosts.
 
-Best,
-Coco
+host_1 = "-device usb-ehci,id=ehci \
+     -object memory-backend-file,id=cxl-mem1,mem-path=/tmp/t3_cxl1.raw,size=4G \
+     -object memory-backend-file,id=cxl-lsa1,mem-path=/tmp/t3_lsa1.raw,size=1M \
+     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+     -device cxl-mhsld,bus=cxl_rp_port0,num-dc-regions=2,volatile-dc-memdev=cxl-mem1,id=cxl-mhd0,sn=99,mhd-head=0,mhd-state_file=mhd_metadata,mhd-init=true \
+     -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=cxl-mhd0\
+     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k"
 
-On Wed, Sep 24, 2025 at 6:08=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
+host_2 = "-device usb-ehci,id=ehci \
+     -object memory-backend-file,id=cxl-mem1,mem-path=/tmp/t3_cxl1.raw,size=4G \
+     -object memory-backend-file,id=cxl-lsa1,mem-path=/tmp/t3_lsa1.raw,size=1M \
+     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+     -device cxl-mhsld,bus=cxl_rp_port0,num-dc-regions=2,volatile-dc-memdev=cxl-mem1,id=cxl-mhd0,sn=99,mhd-head=1,mhd-state_file=mhd_metadata,mhd-init=false \
+     -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=cxl-mhd0\
+     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k"
 
-> Hi,
->
-> On 25/9/25 02:58, Coco Li wrote:
-> > In the process of implementing serial gpio and adding the corresponding
-> > ENUMs, also complete the list for npcm8xx.
-> >
-> > Signed-off-by: Coco Li <lixiaoyan@google.com>
-> > Reviewed-by: Hao Wu <wuhaotsh@google.com>
-> > ---
-> >   hw/arm/npcm8xx.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
-> >   1 file changed, 42 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-> > index a276fea698..10887d07fa 100644
-> > --- a/hw/arm/npcm8xx.c
-> > +++ b/hw/arm/npcm8xx.c
-> > @@ -92,8 +92,14 @@ enum NPCM8xxInterrupt {
-> >       NPCM8XX_GMAC2_IRQ,
-> >       NPCM8XX_GMAC3_IRQ,
-> >       NPCM8XX_GMAC4_IRQ,
-> > -    NPCM8XX_MMC_IRQ             =3D 26,
-> > +    NPCM8XX_ESPI_IRQ,
-> > +    NPCM8XX_SIOX0_IRQ,
-> > +    NPCM8XX_SIOX1_IRQ,
-> > +    NPCM8XX_MC_IRQ              =3D 25,
-> > +    NPCM8XX_MMC_IRQ,
-> >       NPCM8XX_PSPI_IRQ            =3D 28,
-> > +    NPCM8XX_VDMA_IRQ,
-> > +    NPCM8XX_MCTP_IRQ,
-> >       NPCM8XX_TIMER0_IRQ          =3D 32,   /* Timer Module 0 */
-> >       NPCM8XX_TIMER1_IRQ,
-> >       NPCM8XX_TIMER2_IRQ,
-> > @@ -116,6 +122,14 @@ enum NPCM8xxInterrupt {
-> >       NPCM8XX_OHCI1_IRQ,
-> >       NPCM8XX_EHCI2_IRQ,
-> >       NPCM8XX_OHCI2_IRQ,
-> > +    NPCM8XX_SPI1_IRQ            =3D 82,
-> > +    NPCM8XX_RNG_IRQ             =3D 84,
-> > +    NPCM8XX_SPI0_IRQ            =3D 85,
-> > +    NPCM8XX_SPI3_IRQ            =3D 87,
-> > +    NPCM8XX_GDMA0_IRQ           =3D 88,
-> > +    NPCM8XX_GDMA1_IRQ,
-> > +    NPCM8XX_GDMA2_IRQ,
-> > +    NPCM8XX_OTP_IRQ             =3D 92,
-> >       NPCM8XX_PWM0_IRQ            =3D 93,   /* PWM module 0 */
-> >       NPCM8XX_PWM1_IRQ,                   /* PWM module 1 */
-> >       NPCM8XX_MFT0_IRQ            =3D 96,   /* MFT module 0 */
-> > @@ -128,6 +142,11 @@ enum NPCM8xxInterrupt {
-> >       NPCM8XX_MFT7_IRQ,                   /* MFT module 7 */
-> >       NPCM8XX_PCI_MBOX1_IRQ       =3D 105,
-> >       NPCM8XX_PCI_MBOX2_IRQ,
-> > +    NPCM8XX_GPIO231_IRQ         =3D 108,
-> > +    NPCM8XX_GPIO233_IRQ,
-> > +    NPCM8XX_GPIO234_IRQ,
-> > +    NPCM8XX_GPIO93_IRQ,
-> > +    NPCM8XX_GPIO94_IRQ,
-> >       NPCM8XX_GPIO0_IRQ           =3D 116,
-> >       NPCM8XX_GPIO1_IRQ,
-> >       NPCM8XX_GPIO2_IRQ,
-> > @@ -163,6 +182,12 @@ enum NPCM8xxInterrupt {
-> >       NPCM8XX_SMBUS24_IRQ,
-> >       NPCM8XX_SMBUS25_IRQ,
-> >       NPCM8XX_SMBUS26_IRQ,
-> > +    NPCM8XX_FLM0_IRQ            =3D 160,
-> > +    NPCM8XX_FLM1_IRQ,
-> > +    NPCM8XX_FLM2_IRQ,
-> > +    NPCM8XX_FLM3_IRQ,
->
-> Minor style comment, maybe worth adding a new line when the
-> following enum is not contiguous.
->
-> Regards,
->
-> Phil.
->
-> > +    NPCM8XX_JMT1_IRQ            =3D 188,
-> > +    NPCM8XX_JMT2_IRQ,
-> >       NPCM8XX_UART0_IRQ           =3D 192,
-> >       NPCM8XX_UART1_IRQ,
-> >       NPCM8XX_UART2_IRQ,
-> > @@ -170,6 +195,22 @@ enum NPCM8xxInterrupt {
-> >       NPCM8XX_UART4_IRQ,
-> >       NPCM8XX_UART5_IRQ,
-> >       NPCM8XX_UART6_IRQ,
-> > +    NPCM8XX_I3C0_IRQ            =3D 224,
-> > +    NPCM8XX_I3C1_IRQ,
-> > +    NPCM8XX_I3C2_IRQ,
-> > +    NPCM8XX_I3C3_IRQ,
-> > +    NPCM8XX_I3C4_IRQ,
-> > +    NPCM8XX_I3C5_IRQ,
-> > +    NPCM8XX_A35INTERR_IRQ       =3D 240,
-> > +    NPCM8XX_A35EXTERR_IRQ,
-> > +    NPCM8XX_PMU0_IRQ,
-> > +    NPCM8XX_PMU1_IRQ,
-> > +    NPCM8XX_PMU2_IRQ,
-> > +    NPCM8XX_PMU3_IRQ,
-> > +    NPCM8XX_CTI0_IRQ,
-> > +    NPCM8XX_CTI1_IRQ,
-> > +    NPCM8XX_CTI2_IRQ,
-> > +    NPCM8XX_CTI3_IRQ,
-> >   };
-> >
-> >   /* Total number of GIC interrupts, including internal Cortex-A35
-> interrupts. */
->
->
+libcxlmi is cloned on both hosts and used to send the FMAPI add/release commands
+from both host_1 and host_2 and the expected behavior is verified by printing
+the response payload from the Get DC Region Lists command (5603h).
+The following interactive program from libcxlmi is
+used to do so: https://github.com/computexpresslink/libcxlmi/blob/main/examples/fmapi-mctp.c
 
---000000000000da5000063fbb40f3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Question:
+Currently, the input payload to FMAPI Init Add contains an array of CXLDCExtentRaw
+elements. The mshld_reserve_extents() function expects a pointer of type
+CxlDynamicCapacityExtentList, so a loop is introduced to convert CXLDCExtentRaw[]
+to CxlDynamicCapacityExtentList.
 
-<div dir=3D"ltr">Hi Phil,<div><br></div><div>Thanks for the review!=C2=A0</=
-div><div>It looks like IRQ mapping enums on other boards also generally do =
-not have line breaks, is it ok if I keep it like this for consistency sake?=
-</div><div><br></div><div>Best,</div><div>Coco</div></div><br><div class=3D=
-"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">O=
-n Wed, Sep 24, 2025 at 6:08=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a h=
-ref=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">Hi,<br>
-<br>
-On 25/9/25 02:58, Coco Li wrote:<br>
-&gt; In the process of implementing serial gpio and adding the correspondin=
-g<br>
-&gt; ENUMs, also complete the list for npcm8xx.<br>
-&gt; <br>
-&gt; Signed-off-by: Coco Li &lt;<a href=3D"mailto:lixiaoyan@google.com" tar=
-get=3D"_blank">lixiaoyan@google.com</a>&gt;<br>
-&gt; Reviewed-by: Hao Wu &lt;<a href=3D"mailto:wuhaotsh@google.com" target=
-=3D"_blank">wuhaotsh@google.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0hw/arm/npcm8xx.c | 43 ++++++++++++++++++++++++++++++++++++=
-++++++-<br>
-&gt;=C2=A0 =C2=A01 file changed, 42 insertions(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c<br>
-&gt; index a276fea698..10887d07fa 100644<br>
-&gt; --- a/hw/arm/npcm8xx.c<br>
-&gt; +++ b/hw/arm/npcm8xx.c<br>
-&gt; @@ -92,8 +92,14 @@ enum NPCM8xxInterrupt {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_GMAC2_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_GMAC3_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_GMAC4_IRQ,<br>
-&gt; -=C2=A0 =C2=A0 NPCM8XX_MMC_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0=3D 26,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_ESPI_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_SIOX0_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_SIOX1_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_MC_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =3D 25,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_MMC_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_PSPI_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =3D 28,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_VDMA_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_MCTP_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_TIMER0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =3D 32,=C2=A0 =C2=A0/* Timer Module 0 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_TIMER1_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_TIMER2_IRQ,<br>
-&gt; @@ -116,6 +122,14 @@ enum NPCM8xxInterrupt {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_OHCI1_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_EHCI2_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_OHCI2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_SPI1_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =3D 82,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_RNG_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0=3D 84,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_SPI0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =3D 85,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_SPI3_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =3D 87,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GDMA0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0=3D 88,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GDMA1_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GDMA2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_OTP_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0=3D 92,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_PWM0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =3D 93,=C2=A0 =C2=A0/* PWM module 0 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_PWM1_IRQ,=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* PWM module 1 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_MFT0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =3D 96,=C2=A0 =C2=A0/* MFT module 0 */<br>
-&gt; @@ -128,6 +142,11 @@ enum NPCM8xxInterrupt {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_MFT7_IRQ,=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* MFT module 7 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_PCI_MBOX1_IRQ=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0=3D 105,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_PCI_MBOX2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GPIO231_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-=3D 108,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GPIO233_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GPIO234_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GPIO93_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_GPIO94_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_GPIO0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0=3D 116,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_GPIO1_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_GPIO2_IRQ,<br>
-&gt; @@ -163,6 +182,12 @@ enum NPCM8xxInterrupt {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_SMBUS24_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_SMBUS25_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_SMBUS26_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_FLM0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =3D 160,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_FLM1_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_FLM2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_FLM3_IRQ,<br>
-<br>
-Minor style comment, maybe worth adding a new line when the<br>
-following enum is not contiguous.<br>
-<br>
-Regards,<br>
-<br>
-Phil.<br>
-<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_JMT1_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =3D 188,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_JMT2_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_UART0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0=3D 192,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_UART1_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_UART2_IRQ,<br>
-&gt; @@ -170,6 +195,22 @@ enum NPCM8xxInterrupt {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_UART4_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_UART5_IRQ,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0NPCM8XX_UART6_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_I3C0_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =3D 224,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_I3C1_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_I3C2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_I3C3_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_I3C4_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_I3C5_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_A35INTERR_IRQ=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D 240=
-,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_A35EXTERR_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_PMU0_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_PMU1_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_PMU2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_PMU3_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_CTI0_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_CTI1_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_CTI2_IRQ,<br>
-&gt; +=C2=A0 =C2=A0 NPCM8XX_CTI3_IRQ,<br>
-&gt;=C2=A0 =C2=A0};<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0/* Total number of GIC interrupts, including internal Cort=
-ex-A35 interrupts. */<br>
-<br>
-</blockquote></div>
+I am wondering why the typedefs for extents/extent list in qapi-types-cxl.h
+are separate from the typedefs in cxl_device.h? Is there a nice way to avoid
+introducing a loop here just to convert types here?
 
---000000000000da5000063fbb40f3--
+Anisa Su (1):
+  hw/cxl/cxl-mailbox-utils: Enable FMAPI Initiate Add for MHSLD
+
+ hw/cxl/cxl-mailbox-utils.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+-- 
+2.51.0
+
 
