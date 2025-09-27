@@ -4,42 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C28CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D262FCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2Qqh-00044o-Dj; Sat, 27 Sep 2025 05:04:11 -0400
+	id 1v2QsC-0004hx-1S; Sat, 27 Sep 2025 05:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2QqX-00042n-Bk; Sat, 27 Sep 2025 05:04:02 -0400
+ id 1v2Qs7-0004ex-Pi; Sat, 27 Sep 2025 05:05:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2QqN-0006pz-Iy; Sat, 27 Sep 2025 05:04:01 -0400
+ id 1v2Qs2-0007CL-CS; Sat, 27 Sep 2025 05:05:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2E9AA158557;
- Sat, 27 Sep 2025 12:03:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 54D90158565;
+ Sat, 27 Sep 2025 12:03:03 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0B02B291574;
- Sat, 27 Sep 2025 12:03:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36024291582;
+ Sat, 27 Sep 2025 12:03:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 02/16] .gitmodules: move u-boot mirrors to
- qemu-project-mirrors
-Date: Sat, 27 Sep 2025 12:02:46 +0300
-Message-ID: <20250927090304.2901324-2-mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 16/16] tests/tcg/multiarch: Add tb-link test
+Date: Sat, 27 Sep 2025 12:03:00 +0300
+Message-ID: <20250927090304.2901324-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -47,8 +42,8 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,46 +59,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-To continue our GitLab Open Source Program license we need to pass an
-automated license check for all repos under qemu-project. While U-Boot
-is clearly GPLv2 rather than fight with the automated validation
-script just move the mirror across to a separate project.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250908141911.2546063-1-alex.bennee@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit a11d1847d5ef8a7db58e6d4e44f36fec708f0981)
-(Mjt: adjust context for 7.2.x)
+(cherry picked from commit e13e1195db8af18e149065a59351ea85215645bb)
+(Mjt: resolve context conflict in tests/tcg/multiarch/Makefile.target)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitmodules b/.gitmodules
-index 24cffa87d4..570d895aa1 100644
---- a/.gitmodules
-+++ b/.gitmodules
-@@ -21,7 +21,7 @@
- 	url = https://gitlab.com/qemu-project/dtc.git
- [submodule "roms/u-boot"]
- 	path = roms/u-boot
--	url = https://gitlab.com/qemu-project/u-boot.git
-+	url = https://gitlab.com/qemu-project-mirrors/u-boot.git
- [submodule "roms/skiboot"]
- 	path = roms/skiboot
- 	url = https://gitlab.com/qemu-project/skiboot.git
-@@ -36,7 +36,7 @@
- 	url = https://gitlab.com/qemu-project/seabios-hppa.git
- [submodule "roms/u-boot-sam460ex"]
- 	path = roms/u-boot-sam460ex
--	url = https://gitlab.com/qemu-project/u-boot-sam460ex.git
-+	url = https://gitlab.com/qemu-project-mirrors/u-boot-sam460ex.git
- [submodule "tests/fp/berkeley-testfloat-3"]
- 	path = tests/fp/berkeley-testfloat-3
- 	url = https://gitlab.com/qemu-project/berkeley-testfloat-3.git
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 5f0fee1aad..2fdec1f05f 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -39,6 +39,8 @@ signals: LDFLAGS+=-lrt -lpthread
+ munmap-pthread: CFLAGS+=-pthread
+ munmap-pthread: LDFLAGS+=-pthread
+ 
++tb-link: LDFLAGS+=-lpthread
++
+ # We define the runner for test-mmap after the individual
+ # architectures have defined their supported pages sizes. If no
+ # additional page sizes are defined we only run the default test.
+diff --git a/tests/tcg/multiarch/tb-link.c b/tests/tcg/multiarch/tb-link.c
+new file mode 100644
+index 0000000000..4e40306fa1
+--- /dev/null
++++ b/tests/tcg/multiarch/tb-link.c
+@@ -0,0 +1,67 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Verify that a single TB spin-loop is properly invalidated,
++ * releasing the thread from the spin-loop.
++ */
++
++#include <assert.h>
++#include <sys/mman.h>
++#include <pthread.h>
++#include <stdint.h>
++#include <stdbool.h>
++#include <unistd.h>
++#include <sched.h>
++
++
++#ifdef __x86_64__
++#define READY   0x000047c6      /* movb $0,0(%rdi) */
++#define LOOP    0xfceb9090      /* 1: nop*2; jmp 1b */
++#define RETURN  0x909090c3      /* ret; nop*3 */
++#define NOP     0x90909090      /* nop*4 */
++#elif defined(__aarch64__)
++#define READY   0x3900001f      /* strb wzr,[x0] */
++#define LOOP    0x14000000      /* b . */
++#define RETURN  0xd65f03c0      /* ret */
++#define NOP     0xd503201f      /* nop */
++#elif defined(__riscv)
++#define READY   0x00050023      /* sb zero, (a0) */
++#define LOOP    0x0000006f      /* jal zero, #0 */
++#define RETURN  0x00008067      /* jalr zero, ra, 0 */
++#define NOP     0x00000013      /* nop */
++#endif
++
++
++int main()
++{
++#ifdef READY
++    int tmp;
++    pthread_t thread_id;
++    bool hold = true;
++    uint32_t *buf;
++
++    buf = mmap(NULL, 3 * sizeof(uint32_t),
++               PROT_READ | PROT_WRITE | PROT_EXEC,
++               MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    assert(buf != MAP_FAILED);
++
++    buf[0] = READY;
++    buf[1] = LOOP;
++    buf[2] = RETURN;
++
++    alarm(2);
++
++    tmp = pthread_create(&thread_id, NULL, (void *(*)(void *))buf, &hold);
++    assert(tmp == 0);
++
++    while (hold) {
++        sched_yield();
++    }
++
++    buf[1] = NOP;
++    __builtin___clear_cache(&buf[1], &buf[2]);
++
++    tmp = pthread_join(thread_id, NULL);
++    assert(tmp == 0);
++#endif
++    return 0;
++}
 -- 
 2.47.3
 
