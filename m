@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6188DCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A269ACAC5B9
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2Qqv-00046Z-73; Sat, 27 Sep 2025 05:04:25 -0400
+	id 1v2QrV-0004Jz-QI; Sat, 27 Sep 2025 05:05:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qqu-00046L-8e; Sat, 27 Sep 2025 05:04:24 -0400
+ id 1v2QrU-0004IL-8X; Sat, 27 Sep 2025 05:05:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qqp-0006t5-3s; Sat, 27 Sep 2025 05:04:24 -0400
+ id 1v2QrJ-0006vx-5P; Sat, 27 Sep 2025 05:04:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 868FD15855B;
+ by isrv.corpit.ru (Postfix) with ESMTP id C8E2315855E;
  Sat, 27 Sep 2025 12:03:02 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5C24A291578;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9E6D529157B;
  Sat, 27 Sep 2025 12:03:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 06/16] tests/qtest: Do not run lsi53c895a test if
- device is not present
-Date: Sat, 27 Sep 2025 12:02:50 +0300
-Message-ID: <20250927090304.2901324-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [Stable-7.2.21 09/16] use fedora:37 for python container instead of
+ :latest
+Date: Sat, 27 Sep 2025 12:02:53 +0300
+Message-ID: <20250927090304.2901324-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,36 +62,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+More recent fedora does not have our minimum python versions
+anymore.  Stick with the most common fedora version used in
+7.2.x in other places, which is 37.  This way, python tests
+works again.
 
-The tests are built once for all the targets, so as long as one QEMU
-binary is built with CONFIG_LSI_SCSI_PCI=y, this test will
-run. However some binaries might not include the device. So check this
-again in runtime.
+This is a 7.2-specific change, not aimed for the master branch.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-Id: <20230208194700.11035-3-farosas@suse.de>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit dee66bc9691a0d5e8337c24b5cf303f46293df76)
-(Mjt: pick this trivial focused fix up for 7.2.x so that subsequent change(s) in this area apply cleanly)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/fuzz-lsi53c895a-test.c b/tests/qtest/fuzz-lsi53c895a-test.c
-index 9b007def26..8afbfdd274 100644
---- a/tests/qtest/fuzz-lsi53c895a-test.c
-+++ b/tests/qtest/fuzz-lsi53c895a-test.c
-@@ -142,6 +142,10 @@ static void test_lsi_do_dma_empty_queue(void)
+diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dockerfiles/python.docker
+index 175c10a34e..8cc5d3567e 100644
+--- a/tests/docker/dockerfiles/python.docker
++++ b/tests/docker/dockerfiles/python.docker
+@@ -1,6 +1,6 @@
+ # Python library testing environment
  
- int main(int argc, char **argv)
- {
-+    if (!qtest_has_device("lsi53c895a")) {
-+        return 0;
-+    }
-+
-     g_test_init(&argc, &argv, NULL);
+-FROM fedora:latest
++FROM fedora:37
+ MAINTAINER John Snow <jsnow@redhat.com>
  
-     qtest_add_func("fuzz/lsi53c895a/lsi_do_dma_empty_queue",
+ # Please keep this list sorted alphabetically
 -- 
 2.47.3
 
