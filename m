@@ -4,39 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0FCCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 14:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D917CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 14:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2VTe-0007ad-H6; Sat, 27 Sep 2025 10:00:42 -0400
+	id 1v2VUQ-0007rs-Tj; Sat, 27 Sep 2025 10:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2VTR-0007YG-RB; Sat, 27 Sep 2025 10:00:29 -0400
+ id 1v2VUN-0007rD-DY; Sat, 27 Sep 2025 10:01:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2VTG-0003Bw-CA; Sat, 27 Sep 2025 10:00:29 -0400
+ id 1v2VUE-0003OB-QV; Sat, 27 Sep 2025 10:01:25 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F3681585EC;
- Sat, 27 Sep 2025 17:00:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 836671585EF;
+ Sat, 27 Sep 2025 17:01:09 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3641F2916B6;
- Sat, 27 Sep 2025 17:00:04 +0300 (MSK)
-Message-ID: <72efb886-3709-447f-b3f9-5581c1811b62@tls.msk.ru>
-Date: Sat, 27 Sep 2025 17:00:03 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 83B402916B7;
+ Sat, 27 Sep 2025 17:01:12 +0300 (MSK)
+Message-ID: <f030f57c-fc09-476d-a767-75857f7d864f@tls.msk.ru>
+Date: Sat, 27 Sep 2025 17:01:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: use riscv_csrr in riscv_csr_read
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- stove <stove@rivosinc.com>, qemu-devel@nongnu.org
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250827203617.79947-1-stove@rivosinc.com>
- <dccc6ea0-d173-4a55-8c69-9313e2accbff@ventanamicro.com>
+Subject: Re: [PATCH] migration: Fix state transition in postcopy_start() error
+ handling
+To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ qemu-stable@nongnu.org
+References: <20250826115145.871272-1-jmarcin@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -82,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <dccc6ea0-d173-4a55-8c69-9313e2accbff@ventanamicro.com>
+In-Reply-To: <20250826115145.871272-1-jmarcin@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -108,19 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.08.2025 12:37, Daniel Henrique Barboza wrote:
-> Cc: qemu-stable
+On 26.08.2025 14:51, Juraj Marcin wrote:
+> From: Juraj Marcin <jmarcin@redhat.com>
 > 
-> On 8/27/25 5:36 PM, stove wrote:
->> Commit 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/CSRRC
->> writes a read-only CSR") changed the behavior of riscv_csrrw, which
->> would formerly be treated as read-only if the write mask were set to 0.
->>
->> Fixes an exception being raised when accessing read-only vector CSRs
->> like vtype.
->>
->> Fixes: 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/ 
->> CSRRC writes a read-only CSR")
+> Commit 48814111366b ("migration: Always set DEVICE state") introduced
+> DEVICE state to postcopy, which moved the actual state transition that
+> leads to POSTCOPY_ACTIVE.
+> 
+> However, the error handling part of the postcopy_start() function still
+> expects the state POSTCOPY_ACTIVE, but depending on where an error
+> happens, now the state can be either ACTIVE, DEVICE or CANCELLING, but
+> never POSTCOPY_ACTIVE, as this transition now happens just before a
+> successful return from the function.
+> 
+> Instead, accept any state except CANCELLING when transitioning to FAILED
+> state.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 48814111366b ("migration: Always set DEVICE state")
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> 
+> ---
+> In the RFC[1] where this patch was discussed, there was also a
+> suggestion for a helper function migrate_set_failure() that would check
+> if the state is not CANCELLING and then set migration error and FAILED
+> state. I discussed the implementation with Peter, and we came to a
+> conclusion that instead of patching such clean-up on top of the current
+> error handling code, it might be more useful to do a larger refactor and
+> clean-up of all error handling in the migration code.
+> 
+> Such clean-up should reduce the number of places where we need to
+> explicitly transition to a FAILED state (ideally to one, or only a
+> couple of places), and instead only set an appropriate migration error
+> using migrate_set_error(). Additionally, it would also refactor
+> inappropriate uses of QEMUFile errors where the error is not really an
+> error of the underlying channel and migrate_set_error() should be used
+> instead.
+> 
+> [1]: https://lore.kernel.org/all/20250807114922.1013286-3-jmarcin@redhat.com/
 
 Ping?  Can we apply this to the master branch, so I can pick it up for
 the stable series?
@@ -128,5 +150,4 @@ the stable series?
 Thanks,
 
 /mjt
-
 
