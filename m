@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE90CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E63D7CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2Qs8-0004eU-E0; Sat, 27 Sep 2025 05:05:41 -0400
+	id 1v2QrI-0004EQ-4H; Sat, 27 Sep 2025 05:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qry-0004VU-CO; Sat, 27 Sep 2025 05:05:32 -0400
+ id 1v2QrD-0004Be-Al; Sat, 27 Sep 2025 05:04:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qro-0007Am-7C; Sat, 27 Sep 2025 05:05:29 -0400
+ id 1v2Qr1-0006vB-HB; Sat, 27 Sep 2025 05:04:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 33D74158563;
- Sat, 27 Sep 2025 12:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AE9BF15855D;
+ Sat, 27 Sep 2025 12:03:02 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1150B291580;
- Sat, 27 Sep 2025 12:03:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8DC1E29157A;
+ Sat, 27 Sep 2025 12:03:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 14/16] multiboot: Fix the split lock
-Date: Sat, 27 Sep 2025 12:02:58 +0300
-Message-ID: <20250927090304.2901324-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 08/16] hw/usb/network: Remove hardcoded 0x40 prefix in
+ STRING_ETHADDR response
+Date: Sat, 27 Sep 2025 12:02:52 +0300
+Message-ID: <20250927090304.2901324-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
@@ -61,90 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Stéphane Graber <stgraber@stgraber.org>
 
-While running the kvm-unit-tests on Intel platforms with "split lock
-disable" feature, every test triggers a kernel warning of
+USB NICs have a "40:" prefix hardcoded for all MAC addresses when we
+return the guest the MAC address if it queries the STRING_ETHADDR USB
+string property.  This doesn't match what we use for the
+OID_802_3_PERMANENT_ADDRESS or OID_802_3_CURRENT_ADDRESS OIDs for
+NDIS, or the MAC address we actually use in the QEMU networking code
+to send/receive packets for this device, or the NIC info string we
+print for users.  In all those other places we directly use
+s->conf.macaddr.a, which is the full thing the user asks for.
 
-  x86/split lock detection: #AC: qemu-system-x86_64/373232 took a split_lock trap at address: 0x1e3
+This overrides user-provided configuration and leads to an inconsistent
+experience.
 
-Hack KVM by exiting to QEMU on split lock #AC, we get
+I couldn't find any documented reason (comment or git commits) for
+this behavior.  It seems like everyone is just expecting the MAC
+address to be fully passed through to the guest, but it isn't.
 
-KVM: exception 17 exit (error code 0x0)
-EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
-ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
-EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
-ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
-CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
-SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
-DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
-FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
-GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
-LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
-TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
-GDT=     000c02b4 00000027
-IDT=     00000000 000003ff
-CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
-DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
-DR6=00000000ffff0ff0 DR7=0000000000000400
-EFER=0000000000000000
-Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 ba 10 05 66
+This may have been a debugging hack that accidentally made it through
+to the accepted patch: it has been in the code since it was originally
+added back in 2008.
 
-And it matches with what disassembled from multiboo_dma.bin:
+This is also particularly problematic as the "40:" prefix isn't a
+reserved prefix for MAC addresses (IEEE OUI).  There are a number of
+valid allocations out there which use this prefix, meaning that QEMU
+may be causing MAC address conflicts.
 
- #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
-
-  1d1:   08 00                   or     %al,(%eax)
-  1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
-  1d8:   06                      push   %es
-  1d9:   00 66 b8                add    %ah,-0x48(%esi)
-  1dc:   01 00                   add    %eax,(%eax)
-  1de:   00 00                   add    %al,(%eax)
-  1e0:   0f 22 c0                mov    %eax,%cr0
-> 1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
-  1e7:   00 00                   add    %al,(%eax)
-  1e9:   b8 10 00 00 00          mov    $0x10,%eax
-  1ee:   8e d0                   mov    %eax,%ss
-  1f0:   8e d8                   mov    %eax,%ds
-  1f2:   8e c0                   mov    %eax,%es
-  1f4:   8e e0                   mov    %eax,%fs
-  1f6:   8e e8                   mov    %eax,%gs
-  1f8:   66 b8 08 00             mov    $0x8,%ax
-  1fc:   66 ba 10 05             mov    $0x510,%dx
-
-We can see that the instruction at 0x1e3 is a far jmp through the GDT.
-However, the GDT is not 8 byte aligned, the base is 0xc02b4.
-
-Intel processors follow the LOCK semantics to set the accessed flag of the
-segment descriptor when loading a segment descriptor. If the the segment
-descriptor crosses two cache line, it causes split lock.
-
-Fix it by aligning the GDT on 8 bytes, so that segment descriptor cannot
-span two cache lines.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250808035027.2194673-1-xiaoyao.li@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4c8f69b94839f72314c69902312068d0b9b05a34)
+Cc: qemu-stable@nongnu.org
+Fixes: 6c9f886ceae5b ("Add CDC-Ethernet usb NIC (original patch from Thomas Sailer)"
+Signed-off-by: Stéphane Graber <stgraber@stgraber.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2951
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[PMM: beef up commit message based on mailing list discussion]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit aaf042299acf83919862c7d7dd5fc36acf4e0671)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/multiboot_dma.bin b/pc-bios/multiboot_dma.bin
-index c0e2c3102a..e6d0c97093 100644
-Binary files a/pc-bios/multiboot_dma.bin and b/pc-bios/multiboot_dma.bin differ
-diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
-index 181a4b03a3..c95e35c9cb 100644
---- a/pc-bios/optionrom/multiboot.S
-+++ b/pc-bios/optionrom/multiboot.S
-@@ -208,7 +208,7 @@ ljmp2:
- prot_jump:	.long prot_mode
- 		.short 8
- 
--.align 4, 0
-+.align 8, 0
- gdt:
- 	/* 0x00 */
- .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+diff --git a/hw/usb/dev-network.c b/hw/usb/dev-network.c
+index 2c33e36cad..1b6004c902 100644
+--- a/hw/usb/dev-network.c
++++ b/hw/usb/dev-network.c
+@@ -1391,7 +1391,7 @@ static void usb_net_realize(USBDevice *dev, Error **errp)
+     qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
+     snprintf(s->usbstring_mac, sizeof(s->usbstring_mac),
+              "%02x%02x%02x%02x%02x%02x",
+-             0x40,
++             s->conf.macaddr.a[0],
+              s->conf.macaddr.a[1],
+              s->conf.macaddr.a[2],
+              s->conf.macaddr.a[3],
 -- 
 2.47.3
 
