@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE1ECAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AFA3CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Sep 2025 09:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2QsL-0004yN-TC; Sat, 27 Sep 2025 05:05:56 -0400
+	id 1v2Qra-0004Mw-VC; Sat, 27 Sep 2025 05:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2QsC-0004jz-F7; Sat, 27 Sep 2025 05:05:45 -0400
+ id 1v2QrZ-0004Kz-EQ; Sat, 27 Sep 2025 05:05:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v2Qs2-0007Bz-65; Sat, 27 Sep 2025 05:05:43 -0400
+ id 1v2QrJ-0006w2-J3; Sat, 27 Sep 2025 05:05:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4633A158564;
- Sat, 27 Sep 2025 12:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DD86415855F;
+ Sat, 27 Sep 2025 12:03:02 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 23F5A291581;
- Sat, 27 Sep 2025 12:03:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9B3529157C;
+ Sat, 27 Sep 2025 12:03:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?=E6=9D=8E=E5=A8=81=E5=A8=81?= <liweiwei@kubuds.cn>,
- Anton Johansson <anjo@rev.ng>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 15/16] accel/tcg: Properly unlink a TB linked to itself
-Date: Sat, 27 Sep 2025 12:02:59 +0300
-Message-ID: <20250927090304.2901324-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Delevoryas <peter@pjd.dev>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 10/16] python/machine: Fix AF_UNIX path too long on
+ macOS
+Date: Sat, 27 Sep 2025 12:02:54 +0300
+Message-ID: <20250927090304.2901324-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
 References: <qemu-stable-7.2.21-20250927105809@cover.tls.msk.ru>
@@ -61,39 +63,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Peter Delevoryas <peter@pjd.dev>
 
-When we remove dest from orig's links, we lose the link
-that we rely on later to reset links.  This can lead to
-failure to release from spinlock with self-modifying code.
+On macOS, private $TMPDIR's are the default. These $TMPDIR's are
+generated from a user's unix UID and UUID [1], which can create a
+relatively long path:
 
-Cc: qemu-stable@nongnu.org
-Reported-by: 李威威 <liweiwei@kubuds.cn>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Tested-by: Anton Johansson <anjo@rev.ng>
-(cherry picked from commit 03fe6659803f83690b8587d01f8ee56bb4be4b90)
+    /var/folders/d7/rz20f6hd709c1ty8f6_6y_z40000gn/T/
+
+QEMU's avocado tests create a temporary directory prefixed by
+"avo_qemu_sock_", and create QMP sockets within _that_ as well.
+The QMP socket is unnecessarily long, because a temporary directory
+is created for every QEMUMachine object.
+
+    /avo_qemu_sock_uh3w_dgc/qemu-37331-10bacf110-monitor.sock
+
+The path limit for unix sockets on macOS is 104: [2]
+
+    /*
+     * [XSI] Definitions for UNIX IPC domain.
+     */
+    struct  sockaddr_un {
+        unsigned char   sun_len;        /* sockaddr len including null */
+        sa_family_t     sun_family;     /* [XSI] AF_UNIX */
+        char            sun_path[104];  /* [XSI] path name (gag) */
+    };
+
+This results in avocado tests failing on macOS because the QMP unix
+socket can't be created, because the path is too long:
+
+    ERROR| Failed to establish connection: OSError: AF_UNIX path too long
+
+This change resolves by reducing the size of the socket directory prefix
+and the suffix on the QMP and console socket names.
+
+The result is paths like this:
+
+    pdel@pdel-mbp:/var/folders/d7/rz20f6hd709c1ty8f6_6y_z40000gn/T
+    $ tree qemu*
+    qemu_df4evjeq
+    qemu_jbxel3gy
+    qemu_ml9s_gg7
+    qemu_oc7h7f3u
+    qemu_oqb1yf97
+    ├── 10a004050.con
+    └── 10a004050.qmp
+
+[1] https://apple.stackexchange.com/questions/353832/why-is-mac-osx-temp-directory-in-weird-path
+[2] /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/un.h
+
+Signed-off-by: Peter Delevoryas <peter@pjd.dev>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20230110082930.42129-2-peter@pjd.dev
+Signed-off-by: John Snow <jsnow@redhat.com>
+(cherry picked from commit f9922937d173f50fe59fd1b20fadc445fb6b2564)
+(Mjt: pick this simple fix for 7.2.x so subsequent changes applies cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 9d9f651c78..077265172e 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -186,6 +186,14 @@ static inline void tb_remove_from_jmp_list(TranslationBlock *orig, int n_orig)
-      * We first acquired the lock, and since the destination pointer matches,
-      * we know for sure that @orig is in the jmp list.
-      */
-+    if (dest == orig) {
-+        /*
-+         * In the case of a TB that links to itself, removing the entry
-+         * from the list means that it won't be present later during
-+         * tb_jmp_unlink -- unlink now.
-+         */
-+        tb_reset_jump(orig, n_orig);
-+    }
-     pprev = &dest->jmp_list_head;
-     TB_FOR_EACH_JMP(dest, tb, n) {
-         if (tb == orig && n == n_orig) {
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 37191f433b..5df210c810 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -157,7 +157,7 @@ def __init__(self,
+         self._wrapper = wrapper
+         self._qmp_timer = qmp_timer
+ 
+-        self._name = name or f"qemu-{os.getpid()}-{id(self):02x}"
++        self._name = name or f"{id(self):x}"
+         self._temp_dir: Optional[str] = None
+         self._base_temp_dir = base_temp_dir
+         self._sock_dir = sock_dir
+@@ -167,7 +167,7 @@ def __init__(self,
+             self._monitor_address = monitor_address
+         else:
+             self._monitor_address = os.path.join(
+-                self.sock_dir, f"{self._name}-monitor.sock"
++                self.sock_dir, f"{self._name}.qmp"
+             )
+ 
+         self._console_log_path = console_log
+@@ -192,7 +192,7 @@ def __init__(self,
+         self._console_set = False
+         self._console_device_type: Optional[str] = None
+         self._console_address = os.path.join(
+-            self.sock_dir, f"{self._name}-console.sock"
++            self.sock_dir, f"{self._name}.con"
+         )
+         self._console_socket: Optional[socket.socket] = None
+         self._remove_files: List[str] = []
+diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
+index 910f3ba1ea..25a546842f 100644
+--- a/tests/avocado/avocado_qemu/__init__.py
++++ b/tests/avocado/avocado_qemu/__init__.py
+@@ -306,7 +306,7 @@ def require_netdev(self, netdevname):
+             self.cancel('no support for user networking')
+ 
+     def _new_vm(self, name, *args):
+-        self._sd = tempfile.TemporaryDirectory(prefix="avo_qemu_sock_")
++        self._sd = tempfile.TemporaryDirectory(prefix="qemu_")
+         vm = QEMUMachine(self.qemu_bin, base_temp_dir=self.workdir,
+                          sock_dir=self._sd.name, log_dir=self.logdir)
+         self.log.debug('QEMUMachine "%s" created', name)
 -- 
 2.47.3
 
