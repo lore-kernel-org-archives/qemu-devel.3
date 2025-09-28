@@ -4,61 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28EF6CAC5BC
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 02:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D86CCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 03:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2hPv-0003mr-FO; Sat, 27 Sep 2025 22:45:40 -0400
+	id 1v2huy-0001SJ-EB; Sat, 27 Sep 2025 23:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1v2hPs-0003lx-GZ; Sat, 27 Sep 2025 22:45:36 -0400
-Received: from [218.76.62.146] (helo=ultrarisc.com)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1v2huv-0001SB-Hh
+ for qemu-devel@nongnu.org; Sat, 27 Sep 2025 23:17:41 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <xb@ultrarisc.com>)
- id 1v2hPj-00049j-UK; Sat, 27 Sep 2025 22:45:36 -0400
-Received: from xb$ultrarisc.com ( [192.168.100.1] ) by
- ajax-webmail-localhost.localdomain (Coremail) ; Sun, 28 Sep 2025 10:46:13
- +0800 (GMT+08:00)
-X-Originating-IP: [192.168.100.1]
-Date: Sun, 28 Sep 2025 10:46:13 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?6LCi5rOi?= <xb@ultrarisc.com>
-To: "Michael Tokarev" <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, ajones@ventanamicro.com, qemu-riscv@nongnu.org,
- pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com,
- rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com
-Subject: =?UTF-8?Q?Re:_Re:_[PATCH_v8_for_v10.0.0_0/2]_t?=
- =?UTF-8?Q?arget/riscv=EF=BC=9AFix_riscv64_kvm_migration?=
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
- 20240625(a75f206e) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-8cc425bc-7df6-4523-bb46-a48cc1a964e6-ultrarisc.com
-In-Reply-To: <4103cde2-2e4a-4622-98a8-38a2a46723d7@tls.msk.ru>
-References: <20250912085535.1649347-1-xb@ultrarisc.com>
- <4103cde2-2e4a-4622-98a8-38a2a46723d7@tls.msk.ru>
-Content-Transfer-Encoding: base64
-X-CM-CTRLDATA: /1QfhmZvb3Rlcl90eHQ9OTA0Ojg0MA==
-Content-Type: text/plain; charset=UTF-8
+ (envelope-from <maobibo@loongson.cn>) id 1v2huo-00013h-VL
+ for qemu-devel@nongnu.org; Sat, 27 Sep 2025 23:17:40 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxE9C7qNho5bwPAA--.32584S3;
+ Sun, 28 Sep 2025 11:17:15 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxM+S2qNhoEpy4AA--.59187S3;
+ Sun, 28 Sep 2025 11:17:15 +0800 (CST)
+Subject: Re: [PATCH 1/3] bios-tables-test-allowed-diff.h: Allow LoongArch
+ DSDT.*
+To: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, WANG Xuerui <git@xen0n.name>,
+ qemu-devel@nongnu.org
+References: <20250923143542.2391576-1-chenhuacai@kernel.org>
+ <20250923143542.2391576-2-chenhuacai@kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <f9df92f2-bff0-e6a6-2105-ad246bd0765b@loongson.cn>
+Date: Sun, 28 Sep 2025 11:15:01 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Message-ID: <4f79395a.1352.1998e36b165.Coremail.xb@ultrarisc.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: AQAAfwBXxM51odhoLYwxAA--.2414W
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQATB2jYkfQADwABsO
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW7Jw
- CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
- daVFxhVjvjDU=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
-Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
- helo=ultrarisc.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9,
+In-Reply-To: <20250923143542.2391576-2-chenhuacai@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxM+S2qNhoEpy4AA--.59187S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoWrtFWfGF1Utw47Ar17WF1xWFX_yoW3KFgEgF
+ 12qas7JF17Aa1vyrW8Ga95Ary5u3WxA3W8Zr1YqFn3ua1xJ3s8tF95X3ZYvF9rWrn8Gr47
+ tw4kCrW2kFy5AosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.503,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,42 +84,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTWljaGFlbO+8jAoKd2UgYXJlIHBsYW5uZWQgdG8gaGF2ZSBhIHJlZ3VsYXIgUlZJIHNpZy1o
-eXBlcnZpc29yIG1lZXRpbmcgb24gdGhlIDMwdGgsIAp3aXRoIFJhZGltIGFuZCBBbmRyZXcuIEEg
-Y29uY2x1c2l2ZSBlbWFpbCB3aWxsIGJlIHNlbnQgc2hvcnRseSBhZnRlci4gClRoYW5rcyBmb3Ig
-dGhlIHJlbWluZGVyLiAKClJlZ2FyZHPvvIwKWGllIEJvCgoKPiAtLS0tLeWOn+Wni+mCruS7ti0t
-LS0tCj4g5Y+R5Lu25Lq6OiAiTWljaGFlbCBUb2thcmV2IiA8bWp0QHRscy5tc2sucnU+Cj4g5Y+R
-6YCB5pe26Ze0OjIwMjUtMDktMjcgMjE6NTc6MDYgKOaYn+acn+WFrSkKPiDmlLbku7bkuro6ICJY
-aWUgQm8iIDx4YkB1bHRyYXJpc2MuY29tPiwgcWVtdS1kZXZlbEBub25nbnUub3JnCj4g5oqE6YCB
-OiBham9uZXNAdmVudGFuYW1pY3JvLmNvbSwgcWVtdS1yaXNjdkBub25nbnUub3JnLCBwYm9uemlu
-aUByZWRoYXQuY29tLCBhbnVwQGJyYWluZmF1bHQub3JnLCBhbGlzdGFpci5mcmFuY2lzQHdkYy5j
-b20sIHJrcmNtYXJAdmVudGFuYW1pY3JvLmNvbSwgcGFsbWVyQGRhYmJlbHQuY29tLCB4aWFteUB1
-bHRyYXJpc2MuY29tCj4g5Li76aKYOiBSZTogW1BBVENIIHY4IGZvciB2MTAuMC4wIDAvMl0gdGFy
-Z2V0L3Jpc2N277yaRml4IHJpc2N2NjQga3ZtIG1pZ3JhdGlvbgo+IAo+IE9uIDEyLjA5LjIwMjUg
-MTE6NTUsIFhpZSBCbyB3cm90ZToKPiA+IFRoaXMgc2VyaWVzKHY4KSByZXBsYWNlcyB0aGUgZWFy
-bGllciBzZXJpZXMgcGF0Y2giW1BBVENIIHY3IGZvciB2MTAuMC4wIDAvMl0KPiA+IHRhcmdldC9y
-aXNjdjogRml4IHJpc2N2NjQga3ZtIG1pZ3JhdGlvbiIuCj4gCj4gUGluZz8gIENhbiB3ZSBhcHBs
-eSB0aGlzIHRvIHRoZSBtYXN0ZXIgYnJhbmNoLCBzbyBJIGNhbiBwaWNrIGl0IHVwCj4gZm9yIHRo
-ZSBzdGFibGUgc2VyaWVzPwo+IAo+IFRoYW5rcywKPiAKPiAvbWp0Cg0KDQpfX19fX19fX19fX19f
-X19fX19fX19fd3d3LnVsdHJhcmlzYy5jb20NCumHjeimgeaPkOekuu+8muacrOmCruS7tuWMheaL
-rOmZhOS7tueahOWGheWuueaYr+WPl+azleW+i+S/neaKpOeahOS/neWvhuS/oeaBr++8jOWmguae
-nOaCqOS4jeaYr+aMh+WumuaUtuS7tuS6uu+8jOivt+eri+WNs+WwhuacrOmCruS7tuWIoOmZpO+8
-jOazleW+i+emgeatouS7u+S9lemdnuazleeahOaKq+mcsuOAgeWkjeWItuOAgeS8oOaSreaIluS7
-peS7u+S9leaWueW8j+S9v+eUqOacrOmCruS7tuOAguacrOmCruS7tuS4reWMheWQq+eahOaEj+in
-geOAgeW7uuiuruaYr+WfuuS6juaIluWPl+WIsOaIkeaWueihqOi+vuWSjOWumuS5ieeahOadoeas
-vuWPiuadoeS7tueahOmZkOWumu+8jOWmguaXoOaIkeaWueeahOato+W8j+S5pumdoua+hOa4heaI
-luaOiOadg++8jOS4jeWPr+iiq+WNleeLrOS9nOS4uuS7u+S9leaDheW9ouS4i+eahOivgeaNruaI
-luS+neaNruOAguaEn+iwouaCqOeahOeQhuino+S4jumFjeWQiOOAgueJiOadg+aJgOacieOAgklN
-UE9SVEFOVCBOT1RJQ0U6IFRoaXMgZW1haWwsIGluY2x1ZGluZyBpdHMgYXR0YWNobWVudCBpZiBh
-bnksIGlzIGNvbmZpZGVudGlhbC4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVu
-dCwgcGxlYXNlIGRlbGV0ZSBpdCBmcm9tIHlvdXIgY29tcHV0ZXIgaW1tZWRpYXRlbHkuIEFueSBk
-aXNjbG9zdXJlLCBjb3B5aW5nLCBvciBkaXN0cmlidXRpb24gb2YgdGhpcyBtZXNzYWdlLCBvciB0
-YWtpbmcgb2YgYW55IGFjdGlvbiBiYXNlZCBvbiBpdCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiAg
-QW55IG9waW5pb25zIGFuZCBzdWdnZXN0aW9ucyBjb250YWluZWQgaW4gdGhpcyBlbWFpbCBhcmUg
-c3ViamVjdCB0byB0aGUgdGVybXMgYW5kIGNvbmRpdGlvbnMgZXhwcmVzc2VkIGFuZCBkZWZpbmVk
-IGJ5IHVzIGFuZCBzaG91bGQgbm90IGJlIHJlbGllZCB1cG9uIHVuY29uZGl0aW9uYWxseSB1bmRl
-ciBhbnkgY2lyY3Vtc3RhbmNlcyB1bmxlc3MgdGhleSBhcmUgY29uZmlybWVkIGluIG9mZmljaWFs
-IHdyaXR0ZW4gY2xhcmlmaWNhdGlvbiBvciBhdXRob3JpemF0aW9uIGZyb20gdXMuICBUaGFuayB5
-b3UgZm9yIHlvdXIgdW5kZXJzdGFuZGluZyBhbmQgY29vcGVyYXRpb24uQWxsIHJpZ2h0cyByZXNl
-cnZlZC4=
+Reviewed-by: <maobibo@loongson.cn>
+
+On 2025/9/23 下午10:35, Huacai Chen wrote:
+> Signed-off-by: Huacai Chen <chenhuacai@kernel.org>
+> ---
+>   tests/qtest/bios-tables-test-allowed-diff.h | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..2ed837faee 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,5 @@
+>   /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/loongarch64/virt/DSDT",
+> +"tests/data/acpi/loongarch64/virt/DSDT.memhp",
+> +"tests/data/acpi/loongarch64/virt/DSDT.numamem",
+> +"tests/data/acpi/loongarch64/virt/DSDT.topology",
+> 
+
 
