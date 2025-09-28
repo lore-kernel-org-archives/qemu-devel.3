@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA79CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C43CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2x3H-0002kF-HX; Sun, 28 Sep 2025 15:27:19 -0400
+	id 1v2x3B-0002hv-Ns; Sun, 28 Sep 2025 15:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x32-0002ZS-As
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:05 -0400
+ id 1v2x37-0002d7-1F
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:09 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x2s-00040d-SY
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:02 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SBfm7Z010265;
- Sun, 28 Sep 2025 19:26:49 GMT
+ id 1v2x2z-00043b-L3
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:07 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58S9kdvh001262
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 19:26:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qwiygN
- TMDfzXKKEgYzoWPLnj+ARbMzSIH0EfCwnriNg=; b=qfr/ICEV8ej8eLojGNlOup
- CWSdg7dnj/Lz/GxHMNR5L+3hQkA2UFhrJ9pZnPcFwLRR95mFQwTUhFxwndeXaXdD
- sJzRvw+bdohvKaAgmoCNBl+xXbywXU8DZuQnGk/TlEkfFmvg+qRZ17Ak7Ut+Qk0l
- vdN2RzLP0UOmeijwXkTDboLIE/YDJHPoP2L/vKYYpLaC1ufksAHLIfl24W7AkXLY
- hPMhRpU09Ns+NtU+IySmMGXfqSuWoxbMjTVoPTYUA4mha6oScTU7YI37DV8f4Jbl
- IukRC2r7Feb7THm2OurphI55WbJfv2vhdsFJAxxq0WuMYVH0AhNzIYXpv3xcm+Tg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bh6q6x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:26:49 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SEaqxk024121;
- Sun, 28 Sep 2025 19:26:48 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49evy0thk9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:26:48 +0000
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=lwjPqrlF/w9p2p3on
+ 4FsRc5lA4ANhgT44ZxaWNt2+b0=; b=ZbPx0AWf0oC6Q4IKXZDNKURJkDLDhLoii
+ ppBdrMXCiFsWKh0dZwGicNoOAjh3OQocBIRGGBnWG3tXQN+V+eYJhGn7U0AOV+vB
+ /f91tD/mf6EsgHEn+qPsNb4Yhbvk07l/1aw6ukGaczEXEy4gfBk8+6jX1idOsISc
+ QO5bJblypuNsx3an0feI9I4WBkeO+UO5NGelRXDmmm+rSAuRfpT1IwXGvBeooCBr
+ wPUwNEfKqLZBnJrbDIbDnb0EvwHbPvZadCu3hURGllgvO31t7HCTEYMZrAtsKBcb
+ lRHw7COtu0dNgJQzgdb58YhDyUR4NAORByBvhTKIgLDLJg5XKkcTw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e5bqevdr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 19:26:58 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SHPLCt003599
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 19:26:58 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49etmxk008-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 19:26:57 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58SJQiMF31130066
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58SJQsNK47972708
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 28 Sep 2025 19:26:44 GMT
+ Sun, 28 Sep 2025 19:26:54 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 909EE2004B;
- Sun, 28 Sep 2025 19:26:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0F75020049;
+ Sun, 28 Sep 2025 19:26:54 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A4BD20040;
- Sun, 28 Sep 2025 19:26:43 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0B2DC20040;
+ Sun, 28 Sep 2025 19:26:53 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.39.17.115]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 28 Sep 2025 19:26:43 +0000 (GMT)
+ Sun, 28 Sep 2025 19:26:52 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: [PULL 05/27] ppc/pnv: Add PHB5 PCIe Host bridge to Power11
-Date: Mon, 29 Sep 2025 00:56:07 +0530
-Message-ID: <20250928192629.139822-6-harshpb@linux.ibm.com>
+Cc: Glenn Miles <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PULL 11/27] target/ppc: IBM PPE42 exception flags and regs
+Date: Mon, 29 Sep 2025 00:56:13 +0530
+Message-ID: <20250928192629.139822-12-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250928192629.139822-1-harshpb@linux.ibm.com>
 References: <20250928192629.139822-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68d98bf9 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=460_-ORYMF3lY5BZaOYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI2MDIxNCBTYWx0ZWRfX5XRnm5NAWhPo
+ Yr6M7/vKaDWcAe9rlLcUmZEWRO5zsqtGIFSrtmPDJfncuJ0eqImXrc6NlO3Vn3B2UuMFbxw6pYc
+ JSIXNpxllCUcWwAe7h4V+uQUd0ndeUltMI+JS6iJWqMrbR83aeLXeTFGQmsduq4kgR+FuA2TDii
+ v4JcrntfjUAWGA5mwaJxuu9mqPyodxSCIlaM8OzqxN9VeAzfTe8SnF5EVmJc7wX0RJsA/9JCTe7
+ Kepa+agkqBhBrGqd6gj6CUtoX3aQjK4cHhsyp5eDBSO9W1TsBQnrcGUKykpKUJmjiHbouDrbE5f
+ eYyy+DSDEejzaOM20HfbgDi496Zz/VAb0zzKEjyZWZAdtitt14gpRq1ytx26XBuZYEHMzwm4Tpy
+ 8Uij4M6UfAAwC/HtLCwl6VHWMl2VrQ==
+X-Proofpoint-GUID: qNOOgmB9cV95nSEqOz_hR_O79AjObnqI
+X-Authority-Analysis: v=2.4 cv=LLZrgZW9 c=1 sm=1 tr=0 ts=68d98c02 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=kP3OWSx2Bt75d2xkwRIA:9 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
  a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX/W55OXznrajI
- fhYHrJV2RYiG6iPsZ1WT87SxYBtecoa0aM03CgV2soA5WXuDmK1zAPxq4jg97nolIPe58xn1Ta3
- 5OZ++tOAp11lmAP1wp1Vn/JhYIzefTj9nS6rh2zt1Fd3YdlZ01pMfDKJN2VdevWXI/QEuHDXgWd
- N+w32SlgSbqnvvK0qxVx666qaxRq/ytsBjBLd1iyDb6OYbktgOSNc6uXl5oskt3YSKh2xipIKlD
- OQ3JOVyTz/Tju2CC2bpO/6VsyNzdC7bpdttT15XLb3bxTydXbBue86ACXI9EOTxJ+IrM4mS9wiA
- xSYfxkinuaUnFYu2WlumtoiwHOt2bJ9G0aFMTKtJz51Dda22VPvKLgxVAiuoDcElU6xOVuWEyTu
- utP5SIvHbG62pGg7hxDzqYgtGnWG8A==
-X-Proofpoint-GUID: Zu4pAz7b8fR832ZY-jcDogpDv94C24nb
-X-Proofpoint-ORIG-GUID: Zu4pAz7b8fR832ZY-jcDogpDv94C24nb
+X-Proofpoint-ORIG-GUID: qNOOgmB9cV95nSEqOz_hR_O79AjObnqI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-28_08,2025-09-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
+ spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 phishscore=0 lowpriorityscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509260214
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -106,8 +101,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,133 +118,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Glenn Miles <milesg@linux.ibm.com>
 
-Power11 also uses PHB5, same as Power10.
+Introduces flags and register definitions needed
+for the IBM PPE42 exception model.
 
-Add Power11 PHBs with similar code as the corresponding Power10 implementation.
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250925173049.891406-6-adityag@linux.ibm.com
-Message-ID: <20250925173049.891406-6-adityag@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250925201758.652077-4-milesg@linux.ibm.com
+Message-ID: <20250925201758.652077-4-milesg@linux.ibm.com>
 ---
- hw/ppc/pnv.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ target/ppc/cpu.h | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 8097d3c09a..2b4df6076c 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -978,6 +978,8 @@ static void pnv_chip_power11_pic_print_info(PnvChip *chip, GString *buf)
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 8e13ce41a9..787020f6f9 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -220,6 +220,8 @@ typedef enum powerpc_excp_t {
+     POWERPC_EXCP_POWER10,
+     /* POWER11 exception model           */
+     POWERPC_EXCP_POWER11,
++    /* PPE42 exception model            */
++    POWERPC_EXCP_PPE42,
+ } powerpc_excp_t;
  
-     pnv_xive2_pic_print_info(&chip11->xive, buf);
-     pnv_psi_pic_print_info(&chip11->psi, buf);
-+    object_child_foreach_recursive(OBJECT(chip),
-+                         pnv_chip_power9_pic_print_info_child, buf);
- }
+ /*****************************************************************************/
+@@ -760,6 +762,31 @@ FIELD(MSR, SIBRCA, MSR_SIBRCA7, 8)
+ #define ESR_VLEMI PPC_BIT(58) /* VLE operation                          */
+ #define ESR_MIF   PPC_BIT(62) /* Misaligned instruction (VLE)           */
  
- /* Always give the first 1GB to chip 0 else we won't boot */
-@@ -2473,6 +2475,7 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
- 
- static void pnv_chip_power11_instance_init(Object *obj)
- {
-+    PnvChip *chip = PNV_CHIP(obj);
-     Pnv11Chip *chip11 = PNV11_CHIP(obj);
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
-     int i;
-@@ -2495,6 +2498,13 @@ static void pnv_chip_power11_instance_init(Object *obj)
-     object_initialize_child(obj, "n1-chiplet", &chip11->n1_chiplet,
-                             TYPE_PNV_N1_CHIPLET);
- 
-+    chip->num_pecs = pcc->num_pecs;
++/* PPE42 Interrupt Status Register bits */
++#define PPE42_ISR_SRSMS0  PPC_BIT_NR(48) /* Sys Reset State Machine State 0   */
++#define PPE42_ISR_SRSMS1  PPC_BIT_NR(49) /* Sys Reset State Machine State 1   */
++#define PPE42_ISR_SRSMS2  PPC_BIT_NR(50) /* Sys Reset State Machine State 2   */
++#define PPE42_ISR_SRSMS3  PPC_BIT_NR(51) /* Sys Reset State Machine State 3   */
++#define PPE42_ISR_EP      PPC_BIT_NR(53) /* MSR[EE] Maskable Event Pending    */
++#define PPE42_ISR_PTR     PPC_BIT_NR(56) /* Program Interrupt from trap       */
++#define PPE42_ISR_ST      PPC_BIT_NR(57) /* Data Interrupt caused by store    */
++#define PPE42_ISR_MFE     PPC_BIT_NR(60) /* Multiple Fault Error              */
++#define PPE42_ISR_MCS0    PPC_BIT_NR(61) /* Machine Check Status bit0         */
++#define PPE42_ISR_MCS1    PPC_BIT_NR(62) /* Machine Check Status bit1         */
++#define PPE42_ISR_MCS2    PPC_BIT_NR(63) /* Machine Check Status bit2         */
++FIELD(PPE42_ISR, SRSMS, PPE42_ISR_SRSMS3, 4)
++FIELD(PPE42_ISR, MCS, PPE42_ISR_MCS2, 3)
 +
-+    for (i = 0; i < chip->num_pecs; i++) {
-+        object_initialize_child(obj, "pec[*]", &chip11->pecs[i],
-+                                TYPE_PNV_PHB5_PEC);
-+    }
++/* PPE42 Machine Check Status field values */
++#define PPE42_ISR_MCS_INSTRUCTION             0
++#define PPE42_ISR_MCS_DATA_LOAD               1
++#define PPE42_ISR_MCS_DATA_PRECISE_STORE      2
++#define PPE42_ISR_MCS_DATA_IMPRECISE_STORE    3
++#define PPE42_ISR_MCS_PROGRAM                 4
++#define PPE42_ISR_MCS_ISI                     5
++#define PPE42_ISR_MCS_ALIGNMENT               6
++#define PPE42_ISR_MCS_DSI                     7
 +
-     for (i = 0; i < pcc->i2c_num_engines; i++) {
-         object_initialize_child(obj, "i2c[*]", &chip11->i2c[i], TYPE_PNV_I2C);
-     }
-@@ -2527,6 +2537,38 @@ static void pnv_chip_power11_quad_realize(Pnv11Chip *chip11, Error **errp)
-     }
- }
- 
-+static void pnv_chip_power11_phb_realize(PnvChip *chip, Error **errp)
-+{
-+    Pnv11Chip *chip11 = PNV11_CHIP(chip);
-+    int i;
-+
-+    for (i = 0; i < chip->num_pecs; i++) {
-+        PnvPhb4PecState *pec = &chip11->pecs[i];
-+        PnvPhb4PecClass *pecc = PNV_PHB4_PEC_GET_CLASS(pec);
-+        uint32_t pec_cplt_base;
-+        uint32_t pec_nest_base;
-+        uint32_t pec_pci_base;
-+
-+        object_property_set_int(OBJECT(pec), "index", i, &error_fatal);
-+        object_property_set_int(OBJECT(pec), "chip-id", chip->chip_id,
-+                                &error_fatal);
-+        object_property_set_link(OBJECT(pec), "chip", OBJECT(chip),
-+                                 &error_fatal);
-+        if (!qdev_realize(DEVICE(pec), NULL, errp)) {
-+            return;
-+        }
-+
-+        pec_cplt_base = pecc->xscom_cplt_base(pec);
-+        pec_nest_base = pecc->xscom_nest_base(pec);
-+        pec_pci_base = pecc->xscom_pci_base(pec);
-+
-+        pnv_xscom_add_subregion(chip, pec_cplt_base,
-+                 &pec->nest_pervasive.xscom_ctrl_regs_mr);
-+        pnv_xscom_add_subregion(chip, pec_nest_base, &pec->nest_regs_mr);
-+        pnv_xscom_add_subregion(chip, pec_pci_base, &pec->pci_regs_mr);
-+    }
-+}
-+
- static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
- {
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(dev);
-@@ -2664,7 +2706,12 @@ static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
-     pnv_xscom_add_subregion(chip, PNV11_XSCOM_N1_PB_SCOM_ES_BASE,
-                            &chip11->n1_chiplet.xscom_pb_es_mr);
- 
--    /* WIP: PHB added in future patch */
-+    /* PHBs */
-+    pnv_chip_power11_phb_realize(chip, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
- 
-     /*
-      * I2C
-@@ -2799,6 +2846,7 @@ static void pnv_chip_power11_class_init(ObjectClass *klass, const void *data)
-     k->xscom_core_base = pnv_chip_power11_xscom_core_base;
-     k->xscom_pcba = pnv_chip_power11_xscom_pcba;
-     dc->desc = "PowerNV Chip Power11";
-+    k->num_pecs = PNV10_CHIP_MAX_PEC;
-     k->i2c_num_engines = PNV10_CHIP_MAX_I2C;
-     k->i2c_ports_per_engine = i2c_ports_per_engine;
- 
-@@ -3365,6 +3413,13 @@ static void pnv_machine_power11_class_init(ObjectClass *oc, const void *data)
-     XiveFabricClass *xfc = XIVE_FABRIC_CLASS(oc);
-     static const char compat[] = "qemu,powernv11\0ibm,powernv";
- 
-+    static GlobalProperty phb_compat[] = {
-+        { TYPE_PNV_PHB, "version", "5" },
-+        { TYPE_PNV_PHB_ROOT_PORT, "version", "5" },
-+    };
-+
-+    compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
-+
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-     pmc->max_smt_threads = 4;
+ /* Transaction EXception And Summary Register bits                           */
+ #define TEXASR_FAILURE_PERSISTENT                (63 - 7)
+ #define TEXASR_DISALLOWED                        (63 - 8)
 -- 
 2.43.5
 
