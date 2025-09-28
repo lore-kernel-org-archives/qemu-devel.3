@@ -4,71 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D86CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 03:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C33ECAC5B5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 04:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2huy-0001SJ-EB; Sat, 27 Sep 2025 23:17:45 -0400
+	id 1v2jJ3-0004Wc-Fx; Sun, 28 Sep 2025 00:46:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v2huv-0001SB-Hh
- for qemu-devel@nongnu.org; Sat, 27 Sep 2025 23:17:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v2jIz-0004WI-Di; Sun, 28 Sep 2025 00:46:38 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1v2huo-00013h-VL
- for qemu-devel@nongnu.org; Sat, 27 Sep 2025 23:17:40 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxE9C7qNho5bwPAA--.32584S3;
- Sun, 28 Sep 2025 11:17:15 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxM+S2qNhoEpy4AA--.59187S3;
- Sun, 28 Sep 2025 11:17:15 +0800 (CST)
-Subject: Re: [PATCH 1/3] bios-tables-test-allowed-diff.h: Allow LoongArch
- DSDT.*
-To: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, WANG Xuerui <git@xen0n.name>,
- qemu-devel@nongnu.org
-References: <20250923143542.2391576-1-chenhuacai@kernel.org>
- <20250923143542.2391576-2-chenhuacai@kernel.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <f9df92f2-bff0-e6a6-2105-ad246bd0765b@loongson.cn>
-Date: Sun, 28 Sep 2025 11:15:01 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v2jIn-0001pw-HS; Sun, 28 Sep 2025 00:46:37 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwD3D22Ovdhot3lTCQ--.674S2;
+ Sun, 28 Sep 2025 12:46:06 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwBXu+iMvdhoJgYqAA--.21722S2;
+ Sun, 28 Sep 2025 12:46:04 +0800 (CST)
+Message-ID: <9ca98192-e5a4-44d7-a539-c577bf88d7e1@phytium.com.cn>
+Date: Sun, 28 Sep 2025 12:46:04 +0800
 MIME-Version: 1.0
-In-Reply-To: <20250923143542.2391576-2-chenhuacai@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/14] hw/arm/smmuv3: Introduce secure registers and
+ commands
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250925162618.191242-4-tangtao1634@phytium.com.cn>
+ <7161c00c-c519-4e90-9dca-99bcf7518d40@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <7161c00c-c519-4e90-9dca-99bcf7518d40@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxM+S2qNhoEpy4AA--.59187S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrtFWfGF1Utw47Ar17WF1xWFX_yoW3KFgEgF
- 12qas7JF17Aa1vyrW8Ga95Ary5u3WxA3W8Zr1YqFn3ua1xJ3s8tF95X3ZYvF9rWrn8Gr47
- tw4kCrW2kFy5AosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.503,
+X-CM-TRANSID: AQAAfwBXu+iMvdhoJgYqAA--.21722S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAHBWjYPT4BqwAAsa
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxWr4rJF45CF4DtrW5trW5Jrb_yoW7JFWfpr
+ 40yF4rC3ykJF4xWw1xKa15Ar13Kr4kAFW7CrnrKry2va4UurySyFy8tFy5GFWkWF9YyF4U
+ JFnrZ34fu3yayrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,24 +78,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: <maobibo@loongson.cn>
+Hi Eric,
 
-On 2025/9/23 下午10:35, Huacai Chen wrote:
-> Signed-off-by: Huacai Chen <chenhuacai@kernel.org>
-> ---
->   tests/qtest/bios-tables-test-allowed-diff.h | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8b..2ed837faee 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,5 @@
->   /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/loongarch64/virt/DSDT",
-> +"tests/data/acpi/loongarch64/virt/DSDT.memhp",
-> +"tests/data/acpi/loongarch64/virt/DSDT.numamem",
-> +"tests/data/acpi/loongarch64/virt/DSDT.topology",
-> 
+On 2025/9/27 18:29, Eric Auger wrote:
+> Hi Tao,
+>
+> On 9/25/25 6:26 PM, Tao Tang wrote:
+>> The Arm SMMUv3 architecture defines a set of registers and commands for
+>> managing secure transactions and context.
+>>
+>> This patch introduces the definitions for these secure registers and
+>> commands within the SMMUv3 device model internal header.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmuv3-internal.h | 72 +++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 71 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+>> index 71a3c0c02c..3820157eaa 100644
+>> --- a/hw/arm/smmuv3-internal.h
+>> +++ b/hw/arm/smmuv3-internal.h
+>> @@ -38,7 +38,7 @@ typedef enum SMMUTranslationClass {
+>>       SMMU_CLASS_IN,
+>>   } SMMUTranslationClass;
+>>   
+>> -/* MMIO Registers */
+>> +/* MMIO Registers. The offsets are shared by Non-secure/Realm/Root states. */
+> s/The offsets are shared/Shared ?
+
+
+Thanks for your review. I'll modify it in the next version:
+
+-/* MMIO Registers */
++/* MMIO Registers. Shared by Non-secure/Realm/Root states. */
+
+
+>>   
+>>   REG32(IDR0,                0x0)
+>>       FIELD(IDR0, S2P,         0 , 1)
+>> @@ -121,6 +121,7 @@ REG32(CR0,                 0x20)
+>>       FIELD(CR0, CMDQEN,        3, 1)
+>>   
+>>   #define SMMU_CR0_RESERVED 0xFFFFFA20
+>> +#define SMMU_S_CR0_RESERVED 0xFFFFFC12
+>>   
+>>   
+>>   REG32(CR0ACK,              0x24)
+>> @@ -180,6 +181,75 @@ REG32(EVENTQ_IRQ_CFG2,     0xbc)
+>>   
+>>   #define A_IDREGS           0xfd0
+>>   
+>> +/* Secure registers. The offsets are begin with SMMU_SECURE_BASE_OFFSET */
+> Start of secure-only registers? At least it deserves some reworking.
+
+
+Agreed. "Start of secure-only registers" is much clearer. And 
+SMMU_SECURE_REG_START may be much better?  I'll update the comment in v3.
+
+/* Start of secure-only registers */
+#define SMMU_SECURE_REG_START 0x8000
+
+
+>> +#define SMMU_SECURE_BASE_OFFSET  0x8000
+>> +
+>> +REG32(S_IDR0,               0x8000)
+>> +REG32(S_IDR1,               0x8004)
+>> +    FIELD(S_IDR1, S_SIDSIZE,          0 , 6)
+>> +    FIELD(S_IDR1, SEL2,               29, 1)
+>> +    FIELD(S_IDR1, SECURE_IMPL,        31, 1)
+>> +
+>> +REG32(S_IDR2,               0x8008)
+>> +REG32(S_IDR3,               0x800c)
+>> +REG32(S_IDR4,               0x8010)
+>> +
+>> +REG32(S_CR0,                0x8020)
+>> +    FIELD(S_CR0, SMMUEN,      0, 1)
+>> +    FIELD(S_CR0, EVENTQEN,    2, 1)
+>> +    FIELD(S_CR0, CMDQEN,      3, 1)
+>> +
+>> +REG32(S_CR0ACK,             0x8024)
+>> +REG32(S_CR1,                0x8028)
+>> +REG32(S_CR2,                0x802c)
+>> +
+>> +REG32(S_INIT,               0x803c)
+>> +    FIELD(S_INIT, INV_ALL,    0, 1)
+>> +/* Alias for the S_INIT offset to match in the dispatcher switch */
+> what is the S_INIT_ALIAS purpose? At this stage of the reading I don't
+> understand above comment. This it does not match any actual reg, I would
+> move this defintion in the patch that actually uses it.
+
+
+My initial idea was to use this alias to handle banked registers. Since 
+secure/realm/root registers share the same lower address offset 
+with non-secure, this alias allowed me to use a single case for all in 
+the MMIO dispatcher.
+
+However, I agree with you that this approach is not clear and could be 
+confusing. In the v3 patch, I will remove the alias in patch #03 and use 
+case (A_S_INIT & 0xfff) directly in patch #09, which is much more 
+straightforward.
+
+     uint32_t reg_offset = offset & 0xfff;
+     switch (reg_offset) {
+
+     case (A_S_INIT & 0xfff):
+
+         ......
+
+     }
+
+
+Thanks,
+
+Tao
+
+
+>> +#define A_S_INIT_ALIAS         0x3c
+>> +
+>> +REG32(S_GBPA,               0x8044)
+>> +    FIELD(S_GBPA, ABORT,     20, 1)
+>> +    FIELD(S_GBPA, UPDATE,    31, 1)
+>> +
+>> +REG32(S_IRQ_CTRL,           0x8050)
+>> +    FIELD(S_IRQ_CTRL, GERROR_IRQEN,    0, 1)
+>> +    FIELD(S_IRQ_CTRL, EVENTQ_IRQEN,    2, 1)
+>> +
+>> +REG32(S_IRQ_CTRLACK,        0x8054)
+>> +
+>> +REG32(S_GERROR,             0x8060)
+>> +    FIELD(S_GERROR, CMDQ_ERR,          0, 1)
+>> +
+>> +#define SMMU_GERROR_IRQ_CFG0_RESERVED   0x00FFFFFFFFFFFFFC
+>> +#define SMMU_GERROR_IRQ_CFG2_RESERVED   0x000000000000003F
+>> +
+>> +#define SMMU_STRTAB_BASE_RESERVED       0x40FFFFFFFFFFFFC0
+>> +#define SMMU_QUEUE_BASE_RESERVED        0x40FFFFFFFFFFFFFF
+>> +#define SMMU_EVENTQ_IRQ_CFG0_RESERVED   0x00FFFFFFFFFFFFFC
+>> +
+>> +REG32(S_GERRORN,            0x8064)
+>> +REG64(S_GERROR_IRQ_CFG0,    0x8068)
+>> +REG32(S_GERROR_IRQ_CFG1,    0x8070)
+>> +REG32(S_GERROR_IRQ_CFG2,    0x8074)
+>> +REG64(S_STRTAB_BASE,        0x8080)
+>> +REG32(S_STRTAB_BASE_CFG,    0x8088)
+>> +    FIELD(S_STRTAB_BASE_CFG, LOG2SIZE, 0, 6)
+>> +    FIELD(S_STRTAB_BASE_CFG, SPLIT,    6, 5)
+>> +    FIELD(S_STRTAB_BASE_CFG, FMT,     16, 2)
+>> +
+>> +REG64(S_CMDQ_BASE,          0x8090)
+>> +REG32(S_CMDQ_PROD,          0x8098)
+>> +REG32(S_CMDQ_CONS,          0x809c)
+>> +    FIELD(S_CMDQ_CONS, ERR,           24, 7)
+>> +
+>> +REG64(S_EVENTQ_BASE,        0x80a0)
+>> +REG32(S_EVENTQ_PROD,        0x80a8)
+>> +REG32(S_EVENTQ_CONS,        0x80ac)
+>> +REG64(S_EVENTQ_IRQ_CFG0,    0x80b0)
+>> +REG32(S_EVENTQ_IRQ_CFG1,    0x80b8)
+>> +REG32(S_EVENTQ_IRQ_CFG2,    0x80bc)
+>> +
+>>   static inline int smmu_enabled(SMMUv3State *s)
+>>   {
+>>       return FIELD_EX32(s->cr[0], CR0, SMMUEN);
+> Besides other definitions look good to me
+>
+> Thanks
+>
+> Eric
 
 
