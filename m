@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83121CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 16:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1725CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 16:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2uJy-00036y-9H; Sun, 28 Sep 2025 12:32:22 -0400
+	id 1v2uK3-000383-CL; Sun, 28 Sep 2025 12:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v2uJv-00036R-7z
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 12:32:19 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1v2uK1-00037f-IH
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 12:32:26 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v2uJg-0005xv-Ot
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 12:32:18 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b5241e51764so3325026a12.1
- for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 09:32:01 -0700 (PDT)
+ id 1v2uJl-0005yR-Br
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 12:32:24 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-27eceb38eb1so45226525ad.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 09:32:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759077117; x=1759681917; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Neh7GfVM9qJWWa+J7OFEGXWEDAG0La+CUSrpvduPHh8=;
- b=LKIGq75R118M9XH7FqyGFKiqqihMYfHWw5lr4zar9w5Rz4dZdIlnF3BbFKCj/AVcwU
- ZJ5rS9RW7LHIwlGGgWm73AvHUOLLemHG+z7yX1DpqEeOXhTe5flzFbkgF9iAvy5Fw6f8
- m2iIy6t4YyK2WFsS1Jz9EV6U7qiCbLImjb2Pc14I1rv+xzkwyFvkRnemDrjTJCzg+V2m
- juV7a8NnTMQXMYp+Dc74/urfJo/lJ7B/FNRO2MpKpZ6lhhtlrhSBU+ztzuueXa9zjPZP
- hUaPvMV/t7cCAVn6BQt6Jeg4YcflmqwMgWt8UMh80Sw6+YRBLmhNJTkMfucXhGmFVP2d
- bImw==
+ d=linaro.org; s=google; t=1759077120; x=1759681920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=cAY2ArchBWaMGfIbT8UhS815gAC6ZiBScneQAdyyaew=;
+ b=zWXQ8anG0mjAYgRN/IhcQWwIFQ0dsr9A3KhXlPI3jVZ1lsHf4cEb2JMzUmntmS7mUX
+ 0AWSTFmS4fhL9Ox90o4PDmjG7wimn9V2GJ4kzA5CP2nSTLC7kut80isTkn758uwx1DWA
+ EmWEM1ZjgZnPwXsLYhgyMob+i7SggSyQwpjYu2MGNfRqmIuk9AnBPicNMvgKJtDlh8fe
+ k/sq8sUryzB7iVKEB5r3ZZMTbtWSsqWhjRyqO1MHP541hehMiQEKXxv5i40B6eL5wh8V
+ z9VRgWK5h7GgI6KpvRa0q0h+efF1cN9BsofYoILfj10+YO/YgnUf+m0ilYkhio26xyJZ
+ CslA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759077117; x=1759681917;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Neh7GfVM9qJWWa+J7OFEGXWEDAG0La+CUSrpvduPHh8=;
- b=udEaCR8mnr/wSs1mvbVhGRX3yR8YaOfU7dOJ4VUK9/5kQihKjBb04GbBfRG9gAUn0K
- JpiYj5kYCYoM6vtkc0XzJ0xINN0EN6pi1+AU5fSbcxeUsVRP7zamr6zTCkwuU3gz0eCV
- kRA2LKxXXJud+6q+sMmMTjBzTTH/ef0a0YxBjg9POXgEXCiVOKRXyc3olaxdv4dCCIaC
- 9DlkWwWlDAhyf9e/1MiFoVulaMlQEsd64EQD+THriu5Fw+arBPK3LiyVK9/VPzcyx0HV
- +QKTYsssVAf2SqAUwUARmF7g8/cxa1VDL2jY/r4CBgp5AGqIL7DKxzJp/g9fCq8MG3yX
- yA+A==
-X-Gm-Message-State: AOJu0YyWZsmrYelXrXHGrITajEGEfri50mK23SWtPn8pIMRc06pH93UA
- kqfQkL/5OHCgDUQXDwA7jrv60PFHQNIiksRXL3ovEwzFvFWIR5ds25ZsEngxJ5Wv5C/mydukQZf
- RUARVdQA=
-X-Gm-Gg: ASbGnctltd0cFW9j4eCf/FhJRlmaIHjv54HoFIJrWLapNxmePH0c6UMfzL20y8o02Wl
- 5LQHvhJBOq+zWqS8xK6J9DrT4Sv/ALzrQebGff7OTM3oYiJxv6XL4lXoNX4X5lwS0thxf0R+Sxl
- er3nWeuNA7Z0m4+5h3i/3ktJoNRPkhIAjEA0wqzWliVM4KWXWMM20+FuSi6N5Q5Pxuwy08UsDnw
- aG0PzsNqxFvCYLpb0WtjGRMh+amIVwe07YfH/+FQu/e9l6qKO14eFx/Fy2KM31MpRCma5XV0096
- nUgreDYvBV9UdglbhPypRLWswuECnIvu1wamqwZEoTT/6KnhtAPfkokFdB4afT7HK/4+qwQEPvR
- F5cyjAjXFVmxNDLDfBW+NfF8WO05DJVu7HpB+jI8=
-X-Google-Smtp-Source: AGHT+IHUXtpAWKsK6AQgkPIUD1C/5Mwz9h1QXBs9JEiwsKTMjOhtMHiQfxw8gp5qxgGTuCbXEgpZOw==
-X-Received: by 2002:a17:903:4b07:b0:286:d3c5:4d15 with SMTP id
- d9443c01a7336-286d3c5548amr26900965ad.36.1759077116719; 
- Sun, 28 Sep 2025 09:31:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759077120; x=1759681920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cAY2ArchBWaMGfIbT8UhS815gAC6ZiBScneQAdyyaew=;
+ b=HVIuTQokGgl4Rno0/vqD/n9EmYzzNEH/75IFCK2RxO/YG2eQw7+w7LHbpXFhdh2vL/
+ QWhE8X2IfymaKH6dCGJn96PPlCsJ/c8VQwpDvmKPpUrY87/xkbZakJU3ZJE7OReg5fCx
+ KuUOfOF6azCnyYMMHUBwv5mW8KFsJWZHj60/D2Ow8rb3Q4P4wcQ06SUTTY7TdA6uKtfn
+ XCrjwph3OAiPXtMlKki9GxlxJIKyj7qRjjC3juRaAUMo3K2kkUSCKYZ4tj/f1TjbWjUk
+ pZ6+8j4XCt+lqekIBBkYmrFbOwt97ByHycvuZELz6Zk6I1WAETTk0bMoqJ/zXSuIz1Ux
+ mFOQ==
+X-Gm-Message-State: AOJu0Yx3fCE3jkwyKFOIaRF9RkxABO5li5pLHw9zd/lURcU1WKWLMGIm
+ seNstO37ZJvf1qw5xSJKavzm3lW7vvudcPQz2S0EMvt0p1R2JgzU54I0yue5fOmINdPi86AnrAc
+ 6KQFTbV8=
+X-Gm-Gg: ASbGncvfhnmqPjWTle9GeNmLjsXK/cobm1iLR+31Cevgl55j2XH+fdYb3Vv09OFiugo
+ 3Hlk5sz6oYC3d1KuaMC/vwUsLrewvuaAMmVHkOLnYYjJ1RwU86Hb/h5mvrLf+SB/+8P1sFQ8zxq
+ tC0/0R2rLSnXzKWsb/yxnGg4pBtrud1TFf4pMXIm5JwYdlzqOBUEG3vyG8LAXsZJzjMk2/v56bk
+ tuWvX7mDruGx37UBWSosu6dxTBKdgIWxtCMIjIhuknlnMfuGvSflqi/ISXWnLaMcy10Ns77itXm
+ hZ1TGV8qzdJWa6Nh9ullX/8N3TYOteEwFlvqsJiOD5deoucfC4qFy0x9WA+ULX7v34HIFuZklcG
+ 4UTj7rK+/TdCVeaFvo7cZIuUYy+DM
+X-Google-Smtp-Source: AGHT+IEE5mozXDqAViE7IhpBsaVkoYCovfCCSV79N+qbASh5UTEOsdUIivhEsArUFLsF04U+NIHLZQ==
+X-Received: by 2002:a17:903:2c0d:b0:250:5ff5:3f4b with SMTP id
+ d9443c01a7336-27ed4a3e0afmr171125435ad.15.1759077120099; 
+ Sun, 28 Sep 2025 09:32:00 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27ed6996963sm107236335ad.104.2025.09.28.09.31.56
+ d9443c01a7336-27ed6996963sm107236335ad.104.2025.09.28.09.31.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 28 Sep 2025 09:31:56 -0700 (PDT)
+ Sun, 28 Sep 2025 09:31:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/5] tcg: Delay lowering unsupported deposit/extract2
-Date: Sun, 28 Sep 2025 09:31:50 -0700
-Message-ID: <20250928163155.1472914-1-richard.henderson@linaro.org>
+Subject: [PATCH 5/5] tcg: Expand extract2_i64 with extract2_i32 on 32-bit host
+Date: Sun, 28 Sep 2025 09:31:55 -0700
+Message-ID: <20250928163155.1472914-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250928163155.1472914-1-richard.henderson@linaro.org>
+References: <20250928163155.1472914-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -94,33 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviving a 2 year old set of patches:
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/tcg-op.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-The opcodes that we generate early do not fold away nicely when operands
-of deposit or extract2 turn out to be constants, especially zero.  
-
-This isn't particularly rare either, as various target ISAs implement
-constant shifts with extract2 and their zero register.   Or the compiler
-expands x = y | mask with x = deposit(y, -1, pos, len);
-
-Delay lowering of these unsupported operations until optimize, when
-we have performed constant propagation.
-
-
-r~
-
-
-Richard Henderson (5):
-  tcg: Simplify extract2 usage in tcg_gen_shifti_i64
-  tcg/optimize: Lower unsupported deposit during optimize
-  tcg/optimize: Lower unsupported extract2 during optimize
-  tcg: Expand missing rotri with extract2
-  tcg: Expand extract2_i64 with extract2_i32 on 32-bit host
-
- tcg/optimize.c | 257 +++++++++++++++++++++++++++++++++++-----
- tcg/tcg-op.c   | 311 +++++++++++++++++++------------------------------
- 2 files changed, 352 insertions(+), 216 deletions(-)
-
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 3e10a3ad16..6c697905e2 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -2721,10 +2721,23 @@ void tcg_gen_extract2_i64(TCGv_i64 ret, TCGv_i64 al, TCGv_i64 ah,
+     } else if (TCG_TARGET_REG_BITS == 64) {
+         tcg_gen_op4i_i64(INDEX_op_extract2, ret, al, ah, ofs);
+     } else {
+-        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
+-        tcg_gen_shri_i64(t0, al, ofs);
+-        tcg_gen_deposit_i64(ret, t0, ah, 64 - ofs, ofs);
+-        tcg_temp_free_i64(t0);
++        TCGv_i32 rl = tcg_temp_ebb_new_i32();
++        TCGv_i32 rh = TCGV_HIGH(ret);
++        TCGv_i32 t0, t1, t2;
++
++        if (ofs & 32) {
++            t0 = TCGV_HIGH(al);
++            t1 = TCGV_LOW(ah);
++            t2 = TCGV_HIGH(ah);
++        } else {
++            t0 = TCGV_LOW(al);
++            t1 = TCGV_HIGH(al);
++            t2 = TCGV_LOW(ah);
++        }
++        tcg_gen_extract2_i32(rl, t0, t1, ofs & 31);
++        tcg_gen_extract2_i32(rh, t1, t2, ofs & 31);
++        tcg_gen_mov_i32(TCGV_LOW(ret), rl);
++        tcg_temp_free_i32(rl);
+     }
+ }
+ 
 -- 
 2.43.0
 
