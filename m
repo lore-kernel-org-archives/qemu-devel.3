@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF7AECAC5B5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B65CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2x3w-0003GR-Q4; Sun, 28 Sep 2025 15:28:00 -0400
+	id 1v2x2y-0002WC-AL; Sun, 28 Sep 2025 15:27:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x3q-0003D3-Rq
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:54 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1v2x2v-0002VT-5W
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:26:57 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x3d-0004Aj-D8
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:53 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SBo5cY023585;
- Sun, 28 Sep 2025 19:27:19 GMT
+ id 1v2x2q-00040N-JO
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:26:56 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SEWFjg006136;
+ Sun, 28 Sep 2025 19:26:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wgrzQ0
- a/ju9r+p/+/4fsJxtVO5oUWWkREon+PHjox58=; b=SgkrC4w/VmzdvtYtxsGM6q
- As5fCThrDNnxdX5agUiffYkO5/0vLbycRG2oy+WjX49bPjGdt5eH5vUcQWxiK64y
- F9qNOjj+ePD36llrWoVV+Up1ayxOCpwqg9JW4CLY1tK1cv5UbaMAy5S5WRbEzZKA
- MmPlxT16RnomqspE3Bg+Pn11OeyxpnDAfBxOpQe4RKftwCbkwzi0DcOvJeE4Wm9r
- nrOemI/R7dotu99iEPeOrs1tv4oc4jvltYi+kfyltuQc7Q+NAC7FB/4OlsCV3fXg
- pazNJrEy61LUsKtrXsCmEUxwqegyPfEFdgmwDPZ+x65nZwavpDlCIN+Wx41TTXPg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=f/+2Vu
+ kBI1+kGSd66twMAuaWxOtrnuHSm7c9PykWzfo=; b=p76Bsk2kNhKmre4BaitLzh
+ XwhZ7PgXtX/lQaU96/cT9I4xs2F3SrYBQGW2Ne6OnMtw26zeYereRe9Zz8rb9a0U
+ BbGn2RJgCDxru2bH/960Ad7S09yXXXcXdRrCSUetnKp6GgHjeqLJDkn4nBtDEgpL
+ UYclWYNuWKXDPk5tVGa6GxeTAlJnRRfwYbgMbUmAFDe5HCNR6Z3KzTDqdhp0vv5q
+ ls3xPfdEchKISbEVqH/zsQ5mHmmgqameGz+0NC6VHLOL2QSahe+wLiw9ExCTmDcm
+ FI+4HhpmrFGDM1RWGTlA3IWuLfNNnQR2lqiBAzaZEVd5atRtWfEQJEzK8B0b3tZg
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bh6qcx-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7e6xp9r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:27:19 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SH7oKV020074;
- Sun, 28 Sep 2025 19:27:18 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49et8ru1e7-1
+ Sun, 28 Sep 2025 19:26:48 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SITUtp007328;
+ Sun, 28 Sep 2025 19:26:47 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49eurjjs67-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:27:18 +0000
+ Sun, 28 Sep 2025 19:26:46 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58SJRFRT53018950
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58SJQhX742860892
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 28 Sep 2025 19:27:15 GMT
+ Sun, 28 Sep 2025 19:26:43 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0636620049;
- Sun, 28 Sep 2025 19:27:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id EF54B2004B;
+ Sun, 28 Sep 2025 19:26:42 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9171820040;
- Sun, 28 Sep 2025 19:27:13 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BAB8D20040;
+ Sun, 28 Sep 2025 19:26:41 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.39.17.115]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 28 Sep 2025 19:27:13 +0000 (GMT)
+ Sun, 28 Sep 2025 19:26:41 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Aditya Gupta <adityag@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>
-Subject: [PULL 25/27] target/ppc: Introduce macro for deprecating PowerPC CPUs
-Date: Mon, 29 Sep 2025 00:56:27 +0530
-Message-ID: <20250928192629.139822-26-harshpb@linux.ibm.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PULL 04/27] ppc/pnv: Add XIVE2 controller to Power11
+Date: Mon, 29 Sep 2025 00:56:06 +0530
+Message-ID: <20250928192629.139822-5-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250928192629.139822-1-harshpb@linux.ibm.com>
 References: <20250928192629.139822-1-harshpb@linux.ibm.com>
@@ -76,32 +75,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68d98c17 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: ria5f7brv3temKLQy5Hr4rT-DADTbBRT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyMCBTYWx0ZWRfX+mHeOEDPJoS8
+ IXYNTQztGPAGuYjyiCA+oEZJwfOjMOsZ7e/Kly7IW+hNCqGhtp5X/AetP/x+X/cmfNUGrl+W01F
+ a9nrucK8S5iZjq5vqOKOMQhkwlIsmEVsibYTMqzw6MTF/1X9sLXxPfMwjP+hkcsyFDkfp/0dxAW
+ mRXAfo5paG6tymThxDTH5CBfghzwK+7+r6Hk2YUeVz9WFXH9EEkHyV0oGTpYh8UBOqIBOg24QZQ
+ TjyHNHKPNzNOdzJNJDDJRLWUMB0PhOaEKvRUkLcvzJ5awmBTeR3rk8DsJMg1lKQVc8srpISJY49
+ kxUvrWAB9RAnRIA1q5IsRbymsMLLsaRwTsoFNo/WUZT3xjmdyBmmg4j/YhzvN8vxAlWepMbun/G
+ quSxGvcuQcXNVoB6QS30INhkfu/NQQ==
+X-Proofpoint-GUID: ria5f7brv3temKLQy5Hr4rT-DADTbBRT
+X-Authority-Analysis: v=2.4 cv=Jvj8bc4C c=1 sm=1 tr=0 ts=68d98bf8 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=KKAkSRfTAAAA:8 a=M8LiBw34HdRStUW-rpwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
- a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=8N52dl9xa8onnFexw1kA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
  a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX8sh2GhSjIS2T
- Yvepj/GInqqByLDro/GTYy7AGSja/YrWphUZRC5hsntC0KDYmcckyDJHPPBcxLsk9PQikhR/+g7
- IHGFqVgTJYY0XvSAl3fwNp6GJ6zab9nlZ+a1agIyxgjCdTycl43yblouBV0X5m0/y1WhvAIYLMa
- zXxg3+xiGnZqjac/1SzCNL8dQzGaIHqjR5NtOXki/LDe7ERQ9wicZPTG8+SKozyCadu+kLrLBx1
- EDxYjo4FW/wak0NnFiLIymxi8s9MFvRkmy52hlRGvVMUUGRcTVuY+UmMuFYJI/qZIDU4igXTUiD
- aTJJwPGYa3bUy0knhJVV+/cwEWzHforYP2XNXLyy/Lxua8q7EPC4bLrTrAde0jxyRLRwAXTNR80
- Tbsj2Aw7qq483FS05TVn0kfrUXAHrA==
-X-Proofpoint-GUID: rTkfoue605SVfd0w91J4EYPeYpq_-rpl
-X-Proofpoint-ORIG-GUID: rTkfoue605SVfd0w91J4EYPeYpq_-rpl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-28_08,2025-09-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2509270020
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -127,110 +126,238 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aditya Gupta <adityag@linux.ibm.com>
 
-QEMU has a way to deprecate CPUs by setting the 'deprecation_note' in
-CPUClass.
+Add a XIVE2 controller to Power11 chip and machine.
+The controller has the same logic as Power10.
 
-Currently PowerPC CPUs don't use this deprecation process.
-
-Introduce 'POWERPC_DEPRECATED_CPU' macro to deprecate particular PowerPC
-CPUs in future.
-
-With the change, QEMU will print a warning like below when the
-deprecated CPU/Chips are used (example output if power8nvl is deprecated):
-
-    $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
-    qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
-    ...
-
-Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
---cpu ?' (example output if power8nvl is deprecated):
-
-    $ ./build/qemu-system-ppc64 --cpu help
-      ...
-      power8e          (alias for power8e_v2.1)
-      power8nvl_v1.0   PVR 004c0100 (deprecated)
-      power8nvl        (alias for power8nvl_v1.0)
-      power8_v2.0      PVR 004d0200
-      ...
-
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250607110412.2342511-2-adityag@linux.ibm.com
-Message-ID: <20250607110412.2342511-2-adityag@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250925173049.891406-5-adityag@linux.ibm.com
+Message-ID: <20250925173049.891406-5-adityag@linux.ibm.com>
 ---
- target/ppc/cpu-models.c | 12 +++++++++++-
- target/ppc/cpu_init.c   |  7 ++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ include/hw/ppc/pnv.h |  18 +++++++
+ hw/ppc/pnv.c         | 121 ++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 138 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-index 09f73e23a8..334b1d2ff3 100644
---- a/target/ppc/cpu-models.c
-+++ b/target/ppc/cpu-models.c
-@@ -32,17 +32,20 @@
- /* PowerPC CPU definitions                                                 */
- #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
-     glue(glue(glue(glue(pvr, _), svr), _), type)
--#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-+#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _deprecation_note) \
-     static void                                                             \
-     glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
-     (ObjectClass *oc, const void *data)                                     \
-     {                                                                       \
-         DeviceClass *dc = DEVICE_CLASS(oc);                                 \
-+        CPUClass *cc    = CPU_CLASS(oc);                                    \
-         PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
-                                                                             \
-         pcc->pvr          = _pvr;                                           \
-         pcc->svr          = _svr;                                           \
-         dc->desc          = _desc;                                          \
-+                                                                            \
-+        cc->deprecation_note = _deprecation_note;                           \
-     }                                                                       \
-                                                                             \
-     static const TypeInfo                                                   \
-@@ -63,6 +66,13 @@
-     type_init(                                                              \
-         glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index f0002627bc..cbdddfc73c 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -270,6 +270,24 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+ #define PNV11_PSIHB_SIZE            PNV10_PSIHB_SIZE
+ #define PNV11_PSIHB_BASE(chip)      PNV10_PSIHB_BASE(chip)
  
-+#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-+    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, NULL)
++#define PNV11_XIVE2_IC_SIZE         PNV10_XIVE2_IC_SIZE
++#define PNV11_XIVE2_IC_BASE(chip)   PNV10_XIVE2_IC_BASE(chip)
 +
-+#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc, _deprecation_note)\
-+    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type,       \
-+            _deprecation_note)
++#define PNV11_XIVE2_TM_SIZE         PNV10_XIVE2_TM_SIZE
++#define PNV11_XIVE2_TM_BASE(chip)   PNV10_XIVE2_TM_BASE(chip)
 +
- #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
-     POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
++#define PNV11_XIVE2_NVC_SIZE        PNV10_XIVE2_NVC_SIZE
++#define PNV11_XIVE2_NVC_BASE(chip)  PNV10_XIVE2_NVC_BASE(chip)
++
++#define PNV11_XIVE2_NVPG_SIZE       PNV10_XIVE2_NVPG_SIZE
++#define PNV11_XIVE2_NVPG_BASE(chip) PNV10_XIVE2_NVPG_BASE(chip)
++
++#define PNV11_XIVE2_ESB_SIZE        PNV10_XIVE2_ESB_SIZE
++#define PNV11_XIVE2_ESB_BASE(chip)  PNV10_XIVE2_ESB_BASE(chip)
++
++#define PNV11_XIVE2_END_SIZE        PNV10_XIVE2_END_SIZE
++#define PNV11_XIVE2_END_BASE(chip)  PNV10_XIVE2_END_BASE(chip)
++
+ #define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
  
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 9e4ea8fd13..3aa3aefc13 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7298,6 +7298,7 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+ #endif /* PPC_PNV_H */
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index a4fdf59207..8097d3c09a 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -976,6 +976,7 @@ static void pnv_chip_power11_pic_print_info(PnvChip *chip, GString *buf)
  {
-     ObjectClass *oc = data;
-     PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-+    CPUClass *cc = CPU_CLASS(oc);
-     DeviceClass *family = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
-     const char *typename = object_class_get_name(oc);
-     char *name;
-@@ -7308,7 +7309,11 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+     Pnv11Chip *chip11 = PNV11_CHIP(chip);
+ 
++    pnv_xive2_pic_print_info(&chip11->xive, buf);
+     pnv_psi_pic_print_info(&chip11->psi, buf);
+ }
+ 
+@@ -1491,6 +1492,50 @@ static void *pnv_chip_power10_intc_get(PnvChip *chip)
+     return &PNV10_CHIP(chip)->xive;
+ }
+ 
++static void pnv_chip_power11_intc_create(PnvChip *chip, PowerPCCPU *cpu,
++                                        Error **errp)
++{
++    Pnv11Chip *chip11 = PNV11_CHIP(chip);
++    Error *local_err = NULL;
++    Object *obj;
++    PnvCPUState *pnv_cpu = pnv_cpu_state(cpu);
++
++    /*
++     * The core creates its interrupt presenter but the XIVE2 interrupt
++     * controller object is initialized afterwards. Hopefully, it's
++     * only used at runtime.
++     */
++    obj = xive_tctx_create(OBJECT(cpu), XIVE_PRESENTER(&chip11->xive),
++                           &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    pnv_cpu->intc = obj;
++}
++
++static void pnv_chip_power11_intc_reset(PnvChip *chip, PowerPCCPU *cpu)
++{
++    PnvCPUState *pnv_cpu = pnv_cpu_state(cpu);
++
++    xive_tctx_reset(XIVE_TCTX(pnv_cpu->intc));
++}
++
++static void pnv_chip_power11_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
++{
++    PnvCPUState *pnv_cpu = pnv_cpu_state(cpu);
++
++    xive_tctx_destroy(XIVE_TCTX(pnv_cpu->intc));
++    pnv_cpu->intc = NULL;
++}
++
++static void pnv_chip_power11_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
++                                             GString *buf)
++{
++    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
++}
++
+ static void *pnv_chip_power11_intc_get(PnvChip *chip)
+ {
+     return &PNV11_CHIP(chip)->xive;
+@@ -2443,6 +2488,10 @@ static void pnv_chip_power11_instance_init(Object *obj)
+     object_initialize_child(obj, "occ",  &chip11->occ, TYPE_PNV10_OCC);
+     object_initialize_child(obj, "sbe",  &chip11->sbe, TYPE_PNV10_SBE);
+     object_initialize_child(obj, "homer", &chip11->homer, TYPE_PNV10_HOMER);
++
++    object_initialize_child(obj, "xive", &chip11->xive, TYPE_PNV_XIVE2);
++    object_property_add_alias(obj, "xive-fabric", OBJECT(&chip11->xive),
++                              "xive-fabric");
+     object_initialize_child(obj, "n1-chiplet", &chip11->n1_chiplet,
+                             TYPE_PNV_N1_CHIPLET);
+ 
+@@ -2518,7 +2567,26 @@ static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
+         return;
      }
  
-     name = cpu_model_from_type(typename);
--    qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
-+    if (cc->deprecation_note) {
-+        qemu_printf("  %-16s PVR %08x (deprecated)\n", name, pcc->pvr);
-+    } else {
-+        qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
+-    /* WIP: XIVE added in future patch */
++    /* XIVE2 interrupt controller */
++    object_property_set_int(OBJECT(&chip11->xive), "ic-bar",
++                            PNV11_XIVE2_IC_BASE(chip), &error_fatal);
++    object_property_set_int(OBJECT(&chip11->xive), "esb-bar",
++                            PNV11_XIVE2_ESB_BASE(chip), &error_fatal);
++    object_property_set_int(OBJECT(&chip11->xive), "end-bar",
++                            PNV11_XIVE2_END_BASE(chip), &error_fatal);
++    object_property_set_int(OBJECT(&chip11->xive), "nvpg-bar",
++                            PNV11_XIVE2_NVPG_BASE(chip), &error_fatal);
++    object_property_set_int(OBJECT(&chip11->xive), "nvc-bar",
++                            PNV11_XIVE2_NVC_BASE(chip), &error_fatal);
++    object_property_set_int(OBJECT(&chip11->xive), "tm-bar",
++                            PNV11_XIVE2_TM_BASE(chip), &error_fatal);
++    object_property_set_link(OBJECT(&chip11->xive), "chip", OBJECT(chip),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&chip11->xive), errp)) {
++        return;
 +    }
-     for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
-         PowerPCCPUAlias *alias = &ppc_cpu_aliases[i];
-         ObjectClass *alias_oc = ppc_cpu_class_by_name(alias->model);
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_XIVE2_BASE,
++                            &chip11->xive.xscom_regs);
+ 
+     /* Processor Service Interface (PSI) Host Bridge */
+     object_property_set_int(OBJECT(&chip11->psi), "bar",
+@@ -2720,6 +2788,10 @@ static void pnv_chip_power11_class_init(ObjectClass *klass, const void *data)
+     k->chip_cfam_id = 0x220da04980000000ull; /* P11 DD2.0 (with NX) */
+     k->cores_mask = POWER11_CORE_MASK;
+     k->get_pir_tir = pnv_get_pir_tir_p10;
++    k->intc_create = pnv_chip_power11_intc_create;
++    k->intc_reset = pnv_chip_power11_intc_reset;
++    k->intc_destroy = pnv_chip_power11_intc_destroy;
++    k->intc_print_info = pnv_chip_power11_intc_print_info;
+     k->intc_get = pnv_chip_power11_intc_get;
+     k->isa_create = pnv_chip_power11_isa_create;
+     k->dt_populate = pnv_chip_power11_dt_populate;
+@@ -3073,6 +3145,45 @@ static int pnv10_xive_broadcast(XiveFabric *xfb,
+     return 0;
+ }
+ 
++static bool pnv11_xive_match_nvt(XiveFabric *xfb, uint8_t format,
++                                 uint8_t nvt_blk, uint32_t nvt_idx,
++                                 bool crowd, bool cam_ignore, uint8_t priority,
++                                 uint32_t logic_serv,
++                                 XiveTCTXMatch *match)
++{
++    PnvMachineState *pnv = PNV_MACHINE(xfb);
++    int i;
++
++    for (i = 0; i < pnv->num_chips; i++) {
++        Pnv11Chip *chip11 = PNV11_CHIP(pnv->chips[i]);
++        XivePresenter *xptr = XIVE_PRESENTER(&chip11->xive);
++        XivePresenterClass *xpc = XIVE_PRESENTER_GET_CLASS(xptr);
++
++        xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, crowd,
++                       cam_ignore, priority, logic_serv, match);
++    }
++
++    return !!match->count;
++}
++
++static int pnv11_xive_broadcast(XiveFabric *xfb,
++                                uint8_t nvt_blk, uint32_t nvt_idx,
++                                bool crowd, bool cam_ignore,
++                                uint8_t priority)
++{
++    PnvMachineState *pnv = PNV_MACHINE(xfb);
++    int i;
++
++    for (i = 0; i < pnv->num_chips; i++) {
++        Pnv11Chip *chip11 = PNV11_CHIP(pnv->chips[i]);
++        XivePresenter *xptr = XIVE_PRESENTER(&chip11->xive);
++        XivePresenterClass *xpc = XIVE_PRESENTER_GET_CLASS(xptr);
++
++        xpc->broadcast(xptr, nvt_blk, nvt_idx, crowd, cam_ignore, priority);
++    }
++    return 0;
++}
++
+ static bool pnv_machine_get_big_core(Object *obj, Error **errp)
+ {
+     PnvMachineState *pnv = PNV_MACHINE(obj);
+@@ -3251,6 +3362,7 @@ static void pnv_machine_power11_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+     PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
++    XiveFabricClass *xfc = XIVE_FABRIC_CLASS(oc);
+     static const char compat[] = "qemu,powernv11\0ibm,powernv";
+ 
+     pmc->compat = compat;
+@@ -3260,6 +3372,9 @@ static void pnv_machine_power11_class_init(ObjectClass *oc, const void *data)
+     pmc->quirk_tb_big_core = true;
+     pmc->dt_power_mgt = pnv_dt_power_mgt;
+ 
++    xfc->match_nvt = pnv11_xive_match_nvt;
++    xfc->broadcast = pnv11_xive_broadcast;
++
+     mc->desc = "IBM PowerNV (Non-Virtualized) Power11";
+     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11_v2.0");
+ 
+@@ -3393,6 +3508,10 @@ static const TypeInfo types[] = {
+         .name          = MACHINE_TYPE_NAME("powernv11"),
+         .parent        = TYPE_PNV_MACHINE,
+         .class_init    = pnv_machine_power11_class_init,
++        .interfaces = (InterfaceInfo[]) {
++            { TYPE_XIVE_FABRIC },
++            { },
++        },
+     },
+     {
+         .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
 -- 
 2.43.5
 
