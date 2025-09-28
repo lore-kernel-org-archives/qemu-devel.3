@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60467CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 08:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB9DCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 08:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2nBu-0006QP-4Q; Sun, 28 Sep 2025 04:55:34 -0400
+	id 1v2nC5-0006SE-QG; Sun, 28 Sep 2025 04:55:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v2nBr-0006QE-Qy
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:55:31 -0400
+ id 1v2nC3-0006RN-1z
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:55:43 -0400
 Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v2nBk-00044H-05
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:55:31 -0400
+ id 1v2nBo-00044v-4v
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:55:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1759049724; x=1790585724;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=QBEUFXYHYtpWj/I3pwOjDT9zSZPzhvDVrZ4P+o54GbE=;
- b=W8gEUjWOAuHyMhI3osMt53tAd86rdgBtVPl/+cyX/yiNbJKbw0T4GdH2
- /ejcAzVwALzcu6Z7CxEEgXfyF3khEQHH3oFIxdvoU/rwKjJwJhHtC4rhA
- eS1+4SG+S1kLJPrQQ/maG0dBAX4imiTRJ2S32bqQJNeQNlLkXURL25hP2
- tfITTcQfRcc9Fb9xLh6v6DswyMUbuKfjN5xc5t+CFhx42f+zbrhJNxfDk
- GAJN+Ejvi9JHARbiUFQORMYr6AP/UPqKTHfw3YU0mzrXtiNPAqOChiZ57
- 0GQ+vPommwFQGRFjqtx6AeeYshpgmiws2Qu8ErR+Jn2ieZAkLr6Onbmrf g==;
-X-CSE-ConnectionGUID: SIqoWjotTDmj1SEo9PHWBQ==
-X-CSE-MsgGUID: nhKSQT8NQQiQm9Ww1/aVAQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11566"; a="65167425"
-X-IronPort-AV: E=Sophos;i="6.18,299,1751266800"; d="scan'208";a="65167425"
+ t=1759049728; x=1790585728;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=UIx34YIzlFINwWTFJwGZ4PbgVaTVtQLZb+iSo6vAuUY=;
+ b=jmjJ+4NdiCnYhvHkB2beNFA8vl3h3JbRm/4l9RmqiHLgMRCc0pWbneJW
+ IXHu74F+Wl33PAugAK1/6CflInHZyxptZ3QIwCwAM0AVEjeoUXWWzUJFM
+ m2NDx170In2m7g/5/CX5yg6C7TLwZlaV9heAneiT6nZLWcNDQ3eaNdJGg
+ CaTAcn7Sk5Q0d5L9G3fR/TNzQVHOX8asYh9++9Bq2YLzNVqv1kREntPJD
+ pskUk/rsSLlsnWymDL3+FMCKyZcovAjlvIY6+U7uz9kyHGqZo7iGoJNVV
+ wT36uRwQOL6UfbFeXsUYAJn+94df9HuQreLzznCffXhJITRcVsPkYj4TC A==;
+X-CSE-ConnectionGUID: vuQHoRlMRv2/kUXX3cm5BA==
+X-CSE-MsgGUID: ULeKB+42Syaq41mh7L2hiA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11566"; a="65167428"
+X-IronPort-AV: E=Sophos;i="6.18,299,1751266800"; d="scan'208";a="65167428"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Sep 2025 01:55:17 -0700
-X-CSE-ConnectionGUID: J4Nxw6bkQHGRHARt126Pug==
-X-CSE-MsgGUID: uDoB4QxtTzO25XdEebZE3w==
+ 28 Sep 2025 01:55:18 -0700
+X-CSE-ConnectionGUID: p4czyY+1S12c4QaXq/DZNA==
+X-CSE-MsgGUID: nV8iaFQMSkqZGeyH+Vducw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,299,1751266800"; d="scan'208";a="177810793"
+X-IronPort-AV: E=Sophos;i="6.18,299,1751266800"; d="scan'208";a="177810798"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Sep 2025 01:55:15 -0700
+ 28 Sep 2025 01:55:17 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- steven.sistare@oracle.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 0/6] VFIO: cpr-transfer fixes
-Date: Sun, 28 Sep 2025 04:54:26 -0400
-Message-ID: <20250928085432.40107-1-zhenzhong.duan@intel.com>
+ steven.sistare@oracle.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PATCH v2 1/6] vfio/container: Remap only populated parts in a section
+Date: Sun, 28 Sep 2025 04:54:27 -0400
+Message-ID: <20250928085432.40107-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250928085432.40107-1-zhenzhong.duan@intel.com>
+References: <20250928085432.40107-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.12;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,49 +83,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+If there are multiple containers and unmap-all fails for some of them, we
+need to remap vaddr for the other containers for which unmap-all succeeded.
+When ram discard is enabled, we should only remap populated parts in a
+section instead of the whole section.
 
-Patch1: fixed an error restore path when virtio-mem is configured.
-Patch2: fixed assert failure on error restore path, this issue happens
-no matter if virtio-mem is configured.
-Some trick is played to trigger the error path,
-see https://github.com/yiliu1765/qemu/commit/494d19e7f7242dbc47d7f236937cde0c396a4a7c
-
-Patch3-4: issue only happens with two or more VFIO devices, no issue
-if only one VFIO device.
-
-Patch5: fix a bug that impact "query-balloon" execution
-
-Patch6: SIGSEGV if I send "query-balloon" to source qmp monitor,
-I'm not quite sure if it's deserved to be fixed, as guest has been
-migrated to destination, it's not a big issue for source qemu to
-SIGSEGV?
-
-Thanks
-Zhenzhong
-
-Changelog:
-v2:
-- minor polishment to commit log (Steve)
-- keep kvm_state so "query-balloon" could work after CPR-transfer (Markus)
-- add a fix which is found during "query-balloon" execution
-- rebased to master
-
-Zhenzhong Duan (6):
-  vfio/container: Remap only populated parts in a section
-  vfio/cpr-legacy: drop an erroneous assert
-  vfio/iommufd: Set cpr.ioas_id on source side for CPR transfer
-  vfio/iommufd: Restore vbasedev's reference to hwpt after CPR transfer
-  accel/kvm: Fix an erroneous check on coalesced_mmio_ring
-  accel/kvm: Fix SIGSEGV when execute "query-balloon" after CPR transfer
-
+Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Steven Sistare <steven.sistare@oracle.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+---
  include/hw/vfio/vfio-cpr.h |  2 +-
- accel/kvm/kvm-all.c        | 14 ++++++--------
- hw/vfio/cpr-legacy.c       | 22 +++++++++++++++-------
- hw/vfio/iommufd.c          |  8 ++++----
+ hw/vfio/cpr-legacy.c       | 20 +++++++++++++++-----
  hw/vfio/listener.c         |  4 ++--
- 5 files changed, 28 insertions(+), 22 deletions(-)
+ 3 files changed, 18 insertions(+), 8 deletions(-)
 
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index 26ee0c4fe1..56fa226f35 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -68,7 +68,7 @@ bool vfio_cpr_container_match(struct VFIOLegacyContainer *container,
+ void vfio_cpr_giommu_remap(struct VFIOContainer *bcontainer,
+                            MemoryRegionSection *section);
+ 
+-bool vfio_cpr_ram_discard_register_listener(
++bool vfio_cpr_ram_discard_replay_populated(
+     struct VFIOContainer *bcontainer, MemoryRegionSection *section);
+ 
+ void vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index bbf7a0d35f..9a37e8c604 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -227,22 +227,32 @@ void vfio_cpr_giommu_remap(VFIOContainer *bcontainer,
+     memory_region_iommu_replay(giommu->iommu_mr, &giommu->n);
+ }
+ 
++static int vfio_cpr_rdm_remap(MemoryRegionSection *section, void *opaque)
++{
++    RamDiscardListener *rdl = opaque;
++
++    return rdl->notify_populate(rdl, section);
++}
++
+ /*
+  * In old QEMU, VFIO_DMA_UNMAP_FLAG_VADDR may fail on some mapping after
+  * succeeding for others, so the latter have lost their vaddr.  Call this
+- * to restore vaddr for a section with a RamDiscardManager.
++ * to restore vaddr for populated parts in a section with a RamDiscardManager.
+  *
+- * The ram discard listener already exists.  Call its populate function
++ * The ram discard listener already exists.  Call its replay_populated function
+  * directly, which calls vfio_legacy_cpr_dma_map.
+  */
+-bool vfio_cpr_ram_discard_register_listener(VFIOContainer *bcontainer,
+-                                            MemoryRegionSection *section)
++bool vfio_cpr_ram_discard_replay_populated(VFIOContainer *bcontainer,
++                                           MemoryRegionSection *section)
+ {
++    RamDiscardManager *rdm = memory_region_get_ram_discard_manager(section->mr);
+     VFIORamDiscardListener *vrdl =
+         vfio_find_ram_discard_listener(bcontainer, section);
+ 
+     g_assert(vrdl);
+-    return vrdl->listener.notify_populate(&vrdl->listener, section) == 0;
++    return ram_discard_manager_replay_populated(rdm, section,
++                                                vfio_cpr_rdm_remap,
++                                                &vrdl->listener) == 0;
+ }
+ 
+ int vfio_cpr_group_get_device_fd(int d, const char *name)
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 3b6f17f0c3..04c64874fa 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -577,8 +577,8 @@ void vfio_container_region_add(VFIOContainer *bcontainer,
+             if (!vfio_ram_discard_register_listener(bcontainer, section, &err)) {
+                 goto fail;
+             }
+-        } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
+-                                                           section)) {
++        } else if (!vfio_cpr_ram_discard_replay_populated(bcontainer,
++                                                          section)) {
+             error_setg(&err,
+                        "vfio_cpr_ram_discard_register_listener for %s failed",
+                        memory_region_name(section->mr));
 -- 
 2.47.1
 
