@@ -4,107 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBD1CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC53CAC5BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2x3Y-00031o-2p; Sun, 28 Sep 2025 15:27:36 -0400
+	id 1v2x3D-0002iR-Lh; Sun, 28 Sep 2025 15:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x3V-000301-7Q
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1v2x39-0002g1-Ox
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x3K-000487-Hl
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:32 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SHoSve024019;
- Sun, 28 Sep 2025 19:27:15 GMT
+ id 1v2x2u-00041N-S2
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:11 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SChOe0021061;
+ Sun, 28 Sep 2025 19:26:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=6rxJghI/Ay80Y/ymC
- YTnBc6UkYhodyjmT/QkBmZUX0A=; b=J4e/gl+tIT1pB8Z/K2M1+I5RvM9FtL5tc
- IHKLykcBLJRCFAR6N2GKBue0Ogqom0MWpBd6EPwDZCVtXh9nYRoSsa9pKm9FB9Z2
- 2bJ22LDnRtTT2iVE7oHExFPe/WhjetkuJhBz+xSw2IBfD0u/zH4xkvHArmqfE3J4
- Xyt1Nsp6aPrKVhi7hHRFOBC+ZSLWQWGIol6s20MZF1pHV99X/h4SVi5rWD9u/t7t
- NtYeB4y4MJ/0qSoefiAkqhdcrudKvtGsxHJLA//yUJ1Il0jgt9Zj2Jv5PTsRWFnO
- wJuBUkeSKx873oUoH/Ukcgf73VsB3Zu7OL8ZLyscMAIGI2vJ5XVlg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7ktxq29-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7bYgwx
+ rNH5Z80T4OAb1N/zsRTJZa/9qjcjLUZjjAgII=; b=J6m9t4UZn1uLPmqN0RMUWf
+ De2fV1ZjDZGA/CPOtMWQ0BL/G0oWWnIc2i693FYQKydV8bZywAM4eeE998Fg/PN7
+ KVCmpHqpXc+D6hQeEqrLxRRDOLiTdes4E5bC046d8HsMrTocRNQ+iJ+6tNqvM7Ex
+ FhAFfOvBgrikjWa3sgRXw5nkt/WGIoONd4el0bZtxsqlpHmA/uqWvn+JHQ+JrC+E
+ lQpUIta8K2a+nqAjFudCdP8CzFPhdMFHZ+JGN5ld69soppsxy/CstqzN48XlKD6V
+ gSsxGTLnE4Uri1FlBUzQC2mXKcF/n09jxBsLx/cm6bHjz1rhULM47fc3adf/lGdw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bh6q7b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:27:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SGtIIJ020064;
- Sun, 28 Sep 2025 19:27:14 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49et8ru1dq-1
+ Sun, 28 Sep 2025 19:26:50 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SEwKdx024151;
+ Sun, 28 Sep 2025 19:26:49 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49evy0thks-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:27:13 +0000
+ Sun, 28 Sep 2025 19:26:49 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58SJRAnE52429300
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58SJQkYg35848558
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 28 Sep 2025 19:27:10 GMT
+ Sun, 28 Sep 2025 19:26:46 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 60BF12004D;
- Sun, 28 Sep 2025 19:27:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3067920049;
+ Sun, 28 Sep 2025 19:26:46 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 59CF120040;
- Sun, 28 Sep 2025 19:27:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id F1A6220040;
+ Sun, 28 Sep 2025 19:26:44 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.39.17.115]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 28 Sep 2025 19:27:09 +0000 (GMT)
+ Sun, 28 Sep 2025 19:26:44 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 22/27] target/ppc: Move floating-point compare instructions to
- decodetree.
-Date: Mon, 29 Sep 2025 00:56:24 +0530
-Message-ID: <20250928192629.139822-23-harshpb@linux.ibm.com>
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PULL 06/27] ppc/pnv: Add ChipTOD model for Power11
+Date: Mon, 29 Sep 2025 00:56:08 +0530
+Message-ID: <20250928192629.139822-7-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250928192629.139822-1-harshpb@linux.ibm.com>
 References: <20250928192629.139822-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=T7WBjvKQ c=1 sm=1 tr=0 ts=68d98c12 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=KKAkSRfTAAAA:8 a=TaHRx3OIgkk5F58xYbkA:9 a=cvBusfyB2V15izCimMoJ:22
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: 0_vgopz5PowhAXJn8ue3dEUBETYKIrRd
-X-Proofpoint-ORIG-GUID: 0_vgopz5PowhAXJn8ue3dEUBETYKIrRd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfX3okEpdNZe248
- 6GVdCcJdyETdD4N8Sjx049XQH8c5F0HburGlw90cbPLBMUjNRKZg4Z9eiq4P3mfIYNLNQ9MlHGX
- g+A+bOkPxp3hjtDGLHI+ACWrF5DwHHdh89Ggr7cmy0RCbnXiJmvM5o62BulVnfqAhuqwihHxcJ+
- HXqW3+P7gAzl/HLFQCa+b16wy7dvStYDs+QVL3RJO3xXpYTwLjSBoJ34c6BJmK7qMYMi1BGbJCQ
- M3hpmrSV4enGa+y3aGz1/eZfTKGTBimBjLUL2Yvm3TeRLu3OO4dHPPABDweLr1iNtA6apWddQR5
- dkCPu4Q/10YaVzCZ8Kp2S+d1h4qPW6dKcWv6iuOQkWsE4nTQJ/pDwbCz4rQ4wtpzvWSuEk1b2A+
- hjctTEhRKoba+jfQtWwDa0sC8hckgQ==
+X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68d98bfa cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=eKxLocFOgOs3f5weUJ0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX9MtlhZ2tN8Q0
+ x8pgUC4FxbdRQHPYkFJTdhbYn5Mb48mYrWQKAYQDPqpgxUq2LuKQ/s1E9w7GVxOujRgX53gJR2K
+ bcEpaLl1s7Mhh2em1hhzNTMdEndVrr2ZFO0oCv4t2fh+ovsv/9aLwZljrbdhUvC1neL4bj5Q10g
+ ZJBIc4nFMsXhakvQAqwPbH3wAQC5b+U+PmrPTALBrFgMk4fnFoBkP4KbPpQxNzmLpPWlb6c8iqK
+ 0Gn48mlUquyfQmyWuaqrGX8sUbjb5UJgAcSaFpdL4vUjsgwhcFOtYcdbi403fHy0OS3EwWtDoaA
+ iHPBnkYG5wKnecp6r1NOmd2VH4V3JuRoDJdEf9SBxJEuW8rSgWfqKOFxfP0KGkWrP1w2+W5TsFl
+ nisV0iAMVvwAEHh71nskx9ImqerUiA==
+X-Proofpoint-GUID: Bl0jHkvuS9VAtjcOII8t7BH12tj-D3EJ
+X-Proofpoint-ORIG-GUID: Bl0jHkvuS9VAtjcOII8t7BH12tj-D3EJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-28_08,2025-09-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 spamscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
+ impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,159 +123,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-Move below instructions to decodetree specification :
+Introduce Power11 ChipTod. The code has been copied from Power10 ChipTod
+code as the Power11 core is same as Power10 core.
 
-	fcmp{u, o}		: X-form
-
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the '-d
-in_asm,op' flag.
-
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250619095840.369351-3-rathc@linux.ibm.com
-Message-ID: <20250619095840.369351-3-rathc@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250925173049.891406-7-adityag@linux.ibm.com
+Message-ID: <20250925173049.891406-7-adityag@linux.ibm.com>
 ---
- target/ppc/helper.h                |  4 +--
- target/ppc/insn32.decode           |  5 ++++
- target/ppc/fpu_helper.c            |  4 +--
- target/ppc/translate/fp-impl.c.inc | 45 +++++++++---------------------
- target/ppc/translate/fp-ops.c.inc  |  2 --
- 5 files changed, 22 insertions(+), 38 deletions(-)
+ include/hw/ppc/pnv_chiptod.h |  2 ++
+ hw/ppc/pnv.c                 | 15 +++++++++
+ hw/ppc/pnv_chiptod.c         | 59 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 96000f4f0d..e99c8c824b 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -94,8 +94,8 @@ DEF_HELPER_2(fpscr_setbit, void, env, i32)
- DEF_HELPER_FLAGS_1(todouble, TCG_CALL_NO_RWG_SE, i64, i32)
- DEF_HELPER_FLAGS_1(tosingle, TCG_CALL_NO_RWG_SE, i32, i64)
+diff --git a/include/hw/ppc/pnv_chiptod.h b/include/hw/ppc/pnv_chiptod.h
+index fde569bcbf..466b06560a 100644
+--- a/include/hw/ppc/pnv_chiptod.h
++++ b/include/hw/ppc/pnv_chiptod.h
+@@ -17,6 +17,8 @@ OBJECT_DECLARE_TYPE(PnvChipTOD, PnvChipTODClass, PNV_CHIPTOD)
+ DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV9_CHIPTOD, TYPE_PNV9_CHIPTOD)
+ #define TYPE_PNV10_CHIPTOD TYPE_PNV_CHIPTOD "-POWER10"
+ DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV10_CHIPTOD, TYPE_PNV10_CHIPTOD)
++#define TYPE_PNV11_CHIPTOD TYPE_PNV_CHIPTOD "-POWER11"
++DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV11_CHIPTOD, TYPE_PNV11_CHIPTOD)
  
--DEF_HELPER_4(fcmpo, void, env, i64, i64, i32)
--DEF_HELPER_4(fcmpu, void, env, i64, i64, i32)
-+DEF_HELPER_4(FCMPO, void, env, i64, i64, i32)
-+DEF_HELPER_4(FCMPU, void, env, i64, i64, i32)
+ enum tod_state {
+     tod_error = 0,
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 2b4df6076c..f0469cdb8b 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2495,6 +2495,8 @@ static void pnv_chip_power11_instance_init(Object *obj)
+     object_initialize_child(obj, "xive", &chip11->xive, TYPE_PNV_XIVE2);
+     object_property_add_alias(obj, "xive-fabric", OBJECT(&chip11->xive),
+                               "xive-fabric");
++    object_initialize_child(obj, "chiptod", &chip11->chiptod,
++                            TYPE_PNV11_CHIPTOD);
+     object_initialize_child(obj, "n1-chiplet", &chip11->n1_chiplet,
+                             TYPE_PNV_N1_CHIPLET);
  
- DEF_HELPER_2(FCTIW, i64, env, i64)
- DEF_HELPER_2(FCTIWU, i64, env, i64)
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 0c7472d929..d446ec534d 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -592,6 +592,11 @@ FCFIDS          111011 ..... ----- ..... 1101001110 .   @X_tb_rc
- FCFIDU          111111 ..... ----- ..... 1111001110 .   @X_tb_rc
- FCFIDUS         111011 ..... ----- ..... 1111001110 .   @X_tb_rc
+@@ -2653,6 +2655,19 @@ static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
+     chip->dt_isa_nodename = g_strdup_printf("/lpcm-opb@%" PRIx64 "/lpc@0",
+                                             (uint64_t) PNV11_LPCM_BASE(chip));
  
-+### Floating-Point Compare Instructions
++    /* ChipTOD */
++    object_property_set_bool(OBJECT(&chip11->chiptod), "primary",
++                             chip->chip_id == 0, &error_abort);
++    object_property_set_bool(OBJECT(&chip11->chiptod), "secondary",
++                             chip->chip_id == 1, &error_abort);
++    object_property_set_link(OBJECT(&chip11->chiptod), "chip", OBJECT(chip),
++                             &error_abort);
++    if (!qdev_realize(DEVICE(&chip11->chiptod), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_CHIPTOD_BASE,
++                            &chip11->chiptod.xscom_regs);
 +
-+FCMPU           111111 ... -- ..... ..... 0000000000 -  @X_bf
-+FCMPO           111111 ... -- ..... ..... 0000100000 -  @X_bf
-+
- ### Floating-Point Select Instruction
- 
- FSEL            111111 ..... ..... ..... ..... 10111 .  @A
-diff --git a/target/ppc/fpu_helper.c b/target/ppc/fpu_helper.c
-index 503cbd98ad..850aca6ed1 100644
---- a/target/ppc/fpu_helper.c
-+++ b/target/ppc/fpu_helper.c
-@@ -871,7 +871,7 @@ uint32_t helper_FTSQRT(uint64_t frb)
-     return 0x8 | (fg_flag ? 4 : 0) | (fe_flag ? 2 : 0);
- }
- 
--void helper_fcmpu(CPUPPCState *env, uint64_t arg1, uint64_t arg2,
-+void helper_FCMPU(CPUPPCState *env, uint64_t arg1, uint64_t arg2,
-                   uint32_t crfD)
- {
-     CPU_DoubleU farg1, farg2;
-@@ -902,7 +902,7 @@ void helper_fcmpu(CPUPPCState *env, uint64_t arg1, uint64_t arg2,
+     /* HOMER (must be created before OCC) */
+     object_property_set_link(OBJECT(&chip11->homer), "chip", OBJECT(chip),
+                              &error_abort);
+diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+index b9e9c7ba3d..f887a18cde 100644
+--- a/hw/ppc/pnv_chiptod.c
++++ b/hw/ppc/pnv_chiptod.c
+@@ -210,6 +210,22 @@ static void chiptod_power10_broadcast_ttype(PnvChipTOD *sender,
      }
  }
  
--void helper_fcmpo(CPUPPCState *env, uint64_t arg1, uint64_t arg2,
-+void helper_FCMPO(CPUPPCState *env, uint64_t arg1, uint64_t arg2,
-                   uint32_t crfD)
++static void chiptod_power11_broadcast_ttype(PnvChipTOD *sender,
++                                            uint32_t trigger)
++{
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    int i;
++
++    for (i = 0; i < pnv->num_chips; i++) {
++        Pnv11Chip *chip11 = PNV11_CHIP(pnv->chips[i]);
++        PnvChipTOD *chiptod = &chip11->chiptod;
++
++        if (chiptod != sender) {
++            chiptod_receive_ttype(chiptod, trigger);
++        }
++    }
++}
++
+ static PnvCore *pnv_chip_get_core_by_xscom_base(PnvChip *chip,
+                                                 uint32_t xscom_base)
  {
-     CPU_DoubleU farg1, farg2;
-diff --git a/target/ppc/translate/fp-impl.c.inc b/target/ppc/translate/fp-impl.c.inc
-index f296cfcdb0..4e18d350c0 100644
---- a/target/ppc/translate/fp-impl.c.inc
-+++ b/target/ppc/translate/fp-impl.c.inc
-@@ -257,46 +257,27 @@ static bool trans_FTSQRT(DisasContext *ctx, arg_X_bf_b *a)
+@@ -283,6 +299,12 @@ static PnvCore *chiptod_power10_tx_ttype_target(PnvChipTOD *chiptod,
+     }
  }
  
- /***                         Floating-Point compare                        ***/
--
--/* fcmpo */
--static void gen_fcmpo(DisasContext *ctx)
-+static bool do_helper_cmp(DisasContext *ctx, arg_X_bf *a,
-+                          void (*helper)(TCGv_env, TCGv_i64, TCGv_i64,
-+                                         TCGv_i32))
++static PnvCore *chiptod_power11_tx_ttype_target(PnvChipTOD *chiptod,
++                                               uint64_t val)
++{
++    return chiptod_power10_tx_ttype_target(chiptod, val);
++}
++
+ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+                                     uint64_t val, unsigned size)
  {
-     TCGv_i32 crf;
--    TCGv_i64 t0;
--    TCGv_i64 t1;
--    if (unlikely(!ctx->fpu_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_FPU);
--        return;
--    }
-+    TCGv_i64 t0, t1;
-+    REQUIRE_INSNS_FLAGS(ctx, FLOAT);
-+    REQUIRE_FPU(ctx);
-     t0 = tcg_temp_new_i64();
-     t1 = tcg_temp_new_i64();
-     gen_reset_fpstatus();
--    crf = tcg_constant_i32(crfD(ctx->opcode));
--    get_fpr(t0, rA(ctx->opcode));
--    get_fpr(t1, rB(ctx->opcode));
--    gen_helper_fcmpo(tcg_env, t0, t1, crf);
-+    crf = tcg_constant_i32(a->bf);
-+    get_fpr(t0, a->ra);
-+    get_fpr(t1, a->rb);
-+    helper(tcg_env, t0, t1, crf);
-     gen_helper_float_check_status(tcg_env);
-+    return true;
+@@ -520,6 +542,42 @@ static const TypeInfo pnv_chiptod_power10_type_info = {
+     }
+ };
+ 
++static int pnv_chiptod_power11_dt_xscom(PnvXScomInterface *dev, void *fdt,
++                             int xscom_offset)
++{
++    const char compat[] = "ibm,power-chiptod\0ibm,power11-chiptod";
++
++    return pnv_chiptod_dt_xscom(dev, fdt, xscom_offset, compat, sizeof(compat));
++}
++
++static void pnv_chiptod_power11_class_init(ObjectClass *klass, const void *data)
++{
++    PnvChipTODClass *pctc = PNV_CHIPTOD_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PnvXScomInterfaceClass *xdc = PNV_XSCOM_INTERFACE_CLASS(klass);
++
++    dc->desc = "PowerNV ChipTOD Controller (Power11)";
++    device_class_set_props(dc, pnv_chiptod_properties);
++
++    xdc->dt_xscom = pnv_chiptod_power11_dt_xscom;
++
++    pctc->broadcast_ttype = chiptod_power11_broadcast_ttype;
++    pctc->tx_ttype_target = chiptod_power11_tx_ttype_target;
++
++    pctc->xscom_size = PNV_XSCOM_CHIPTOD_SIZE;
++}
++
++static const TypeInfo pnv_chiptod_power11_type_info = {
++    .name          = TYPE_PNV11_CHIPTOD,
++    .parent        = TYPE_PNV_CHIPTOD,
++    .instance_size = sizeof(PnvChipTOD),
++    .class_init    = pnv_chiptod_power11_class_init,
++    .interfaces    = (const InterfaceInfo[]) {
++        { TYPE_PNV_XSCOM_INTERFACE },
++        { }
++    }
++};
++
+ static void pnv_chiptod_reset(void *dev)
+ {
+     PnvChipTOD *chiptod = PNV_CHIPTOD(dev);
+@@ -579,6 +637,7 @@ static void pnv_chiptod_register_types(void)
+     type_register_static(&pnv_chiptod_type_info);
+     type_register_static(&pnv_chiptod_power9_type_info);
+     type_register_static(&pnv_chiptod_power10_type_info);
++    type_register_static(&pnv_chiptod_power11_type_info);
  }
  
--/* fcmpu */
--static void gen_fcmpu(DisasContext *ctx)
--{
--    TCGv_i32 crf;
--    TCGv_i64 t0;
--    TCGv_i64 t1;
--    if (unlikely(!ctx->fpu_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_FPU);
--        return;
--    }
--    t0 = tcg_temp_new_i64();
--    t1 = tcg_temp_new_i64();
--    gen_reset_fpstatus();
--    crf = tcg_constant_i32(crfD(ctx->opcode));
--    get_fpr(t0, rA(ctx->opcode));
--    get_fpr(t1, rB(ctx->opcode));
--    gen_helper_fcmpu(tcg_env, t0, t1, crf);
--    gen_helper_float_check_status(tcg_env);
--}
-+TRANS(FCMPU, do_helper_cmp, gen_helper_FCMPU);
-+TRANS(FCMPO, do_helper_cmp, gen_helper_FCMPO);
- 
- /***                         Floating-point move                           ***/
- /* fabs */
-diff --git a/target/ppc/translate/fp-ops.c.inc b/target/ppc/translate/fp-ops.c.inc
-index acb8ac32da..502453da35 100644
---- a/target/ppc/translate/fp-ops.c.inc
-+++ b/target/ppc/translate/fp-ops.c.inc
-@@ -10,8 +10,6 @@ GEN_STXF(stfiw, st32fiw, 0x17, 0x1E, PPC_FLOAT_STFIWX)
- GEN_HANDLER_E(stfdepx, 0x1F, 0x1F, 0x16, 0x00000001, PPC_NONE, PPC2_BOOKE206),
- GEN_HANDLER_E(stfdpx, 0x1F, 0x17, 0x1C, 0x00200001, PPC_NONE, PPC2_ISA205),
- 
--GEN_HANDLER(fcmpo, 0x3F, 0x00, 0x01, 0x00600001, PPC_FLOAT),
--GEN_HANDLER(fcmpu, 0x3F, 0x00, 0x00, 0x00600001, PPC_FLOAT),
- GEN_HANDLER(fabs, 0x3F, 0x08, 0x08, 0x001F0000, PPC_FLOAT),
- GEN_HANDLER(fmr, 0x3F, 0x08, 0x02, 0x001F0000, PPC_FLOAT),
- GEN_HANDLER(fnabs, 0x3F, 0x08, 0x04, 0x001F0000, PPC_FLOAT),
+ type_init(pnv_chiptod_register_types);
 -- 
 2.43.5
 
