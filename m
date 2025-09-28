@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31385CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 09:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF92CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 09:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2o11-0001gp-Vp; Sun, 28 Sep 2025 05:48:24 -0400
+	id 1v2o0v-0001eM-Hq; Sun, 28 Sep 2025 05:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1v2o0z-0001fu-QL
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 05:48:21 -0400
+ id 1v2o0r-0001db-6i
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 05:48:13 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1v2o0i-0006R9-Hd
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 05:48:20 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1v2o0h-0006UV-Qp
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 05:48:12 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxLvBLBNlogc4PAA--.33133S3;
- Sun, 28 Sep 2025 17:47:55 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx+tFNBNlohs4PAA--.33749S3;
+ Sun, 28 Sep 2025 17:47:57 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDx_8NCBNloMpa5AA--.63673S7;
- Sun, 28 Sep 2025 17:47:55 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDx_8NCBNloMpa5AA--.63673S12;
+ Sun, 28 Sep 2025 17:47:56 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 05/11] target/loongarch: add msg interrupt CSR registers
-Date: Sun, 28 Sep 2025 17:24:02 +0800
-Message-Id: <20250928092408.948035-6-gaosong@loongson.cn>
+Subject: [PULL v2 10/11] target/loongarch:Implement csrrd CSR_MSGIR register
+Date: Sun, 28 Sep 2025 17:24:07 +0800
+Message-Id: <20250928092408.948035-11-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250928092408.948035-1-gaosong@loongson.cn>
 References: <20250928092408.948035-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDx_8NCBNloMpa5AA--.63673S7
+X-CM-TRANSID: qMiowJDx_8NCBNloMpa5AA--.63673S12
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,110 +64,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-include CSR_MSGIS0-3, CSR_MSGIR and CSR_MSGIE.
+implement the read-clear feature for CSR_MSGIR register.
 
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20250916122109.749813-6-gaosong@loongson.cn>
+Message-ID: <20250916122109.749813-11-gaosong@loongson.cn>
 ---
- target/loongarch/cpu-csr.h |  3 +++
- target/loongarch/cpu.h     | 11 +++++++++++
- target/loongarch/machine.c | 25 +++++++++++++++++++++++--
- 3 files changed, 37 insertions(+), 2 deletions(-)
+ target/loongarch/csr.c                        |  5 +++++
+ target/loongarch/tcg/csr_helper.c             | 21 +++++++++++++++++++
+ target/loongarch/tcg/helper.h                 |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+ 4 files changed, 28 insertions(+)
 
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index 0834e91f30..4792677086 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -186,6 +186,9 @@ FIELD(CSR_MERRCTL, ISMERR, 0, 1)
- 
- #define LOONGARCH_CSR_CTAG           0x98 /* TagLo + TagHi */
- 
-+#define LOONGARCH_CSR_MSGIS(N)       (0xa0 + N)
-+#define LOONGARCH_CSR_MSGIR               0xa4
-+
- /* Direct map windows CSRs*/
- #define LOONGARCH_CSR_DMW(N)         (0x180 + N)
- FIELD(CSR_DMW, PLV0, 0, 1)
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 19e00325ca..78210a46d8 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -233,6 +233,13 @@ FIELD(TLB_MISC, ASID, 1, 10)
- FIELD(TLB_MISC, VPPN, 13, 35)
- FIELD(TLB_MISC, PS, 48, 6)
- 
-+/*Msg interrupt registers */
-+#define N_MSGIS                4
-+FIELD(CSR_MSGIS, IS, 0, 63)
-+FIELD(CSR_MSGIR, INTNUM, 0, 8)
-+FIELD(CSR_MSGIR, ACTIVE, 31, 1)
-+FIELD(CSR_MSGIE, PT, 0, 8)
-+
- #define LSX_LEN    (128)
- #define LASX_LEN   (256)
- 
-@@ -350,6 +357,10 @@ typedef struct CPUArchState {
-     uint64_t CSR_DBG;
-     uint64_t CSR_DERA;
-     uint64_t CSR_DSAVE;
-+    /* Msg interrupt registers */
-+    uint64_t CSR_MSGIS[N_MSGIS];
-+    uint64_t CSR_MSGIR;
-+    uint64_t CSR_MSGIE;
-     struct {
-         uint64_t guest_addr;
-     } stealtime;
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 4e70f5c879..73190fb367 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -45,6 +45,26 @@ static const VMStateDescription vmstate_fpu = {
-     },
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 7ea0a30450..f973780bba 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -97,6 +97,11 @@ static CSRInfo csr_info[] = {
+     CSR_OFF(DBG),
+     CSR_OFF(DERA),
+     CSR_OFF(DSAVE),
++    CSR_OFF_ARRAY(MSGIS, 0),
++    CSR_OFF_ARRAY(MSGIS, 1),
++    CSR_OFF_ARRAY(MSGIS, 2),
++    CSR_OFF_ARRAY(MSGIS, 3),
++    CSR_OFF(MSGIR),
  };
  
-+static bool msgint_needed(void *opaque)
+ CSRInfo *get_csr(unsigned int csr_num)
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 0d99e2c92b..7bfe6c6c0c 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -73,6 +73,27 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+     return cpu_loongarch_get_constant_timer_ticks(cpu);
+ }
+ 
++target_ulong helper_csrrd_msgir(CPULoongArchState *env)
 +{
-+    LoongArchCPU *cpu = opaque;
++    int irq, new;
 +
-+    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
++    irq = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++    if (irq < 256) {
++        clear_bit(irq, (unsigned long *)env->CSR_MSGIS);
++        new = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++        if (new < 256) {
++            return irq;
++        }
++
++        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++    } else {
++        /* bit 31 set 1 for no invalid irq */
++        irq = BIT(31);
++    }
++
++    return irq;
 +}
 +
-+static const VMStateDescription vmstate_msgint = {
-+    .name = "cpu/msgint",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = msgint_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, N_MSGIS),
-+        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
-+        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static const VMStateDescription vmstate_lsxh_reg = {
-     .name = "lsxh_reg",
-     .version_id = 1,
-@@ -168,8 +188,8 @@ static const VMStateDescription vmstate_tlb = {
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
-         VMSTATE_UINTTL(env.pc, LoongArchCPU),
-@@ -245,6 +265,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         &vmstate_tlb,
- #endif
-         &vmstate_lbt,
-+        &vmstate_msgint,
-         NULL
-     }
- };
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ {
+     int64_t old_v = env->CSR_ESTAT;
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 1d5cb0198c..db57dbfc16 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_1(csrrd_msgir, i64, env)
+ DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 34cfab8879..a407ab51b7 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -83,6 +83,7 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
++    SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
+ }
+ #undef SET_CSR_FUNC
+ 
 -- 
 2.47.0
 
