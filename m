@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD05CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 08:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86ABCAC5BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 08:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2n4h-0007St-Ha; Sun, 28 Sep 2025 04:48:07 -0400
+	id 1v2n4p-0007Ys-C2; Sun, 28 Sep 2025 04:48:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v2n4N-0007KO-13
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:47:47 -0400
+ id 1v2n4V-0007MY-0y
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:47:56 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1v2n4G-00026z-Vh
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:47:46 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1v2n4J-00027q-SN
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 04:47:54 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Cx778n9thoQ8sPAA--.31660S3;
- Sun, 28 Sep 2025 16:47:35 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx_tIp9thoUcsPAA--.33191S3;
+ Sun, 28 Sep 2025 16:47:37 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxC8Eg9tho32y5AA--.23975S5;
- Sun, 28 Sep 2025 16:47:35 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxC8Eg9tho32y5AA--.23975S13;
+ Sun, 28 Sep 2025 16:47:37 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 03/13] target/loongarch: Reduce TLB flush with helper_tlbwr
-Date: Sun, 28 Sep 2025 16:47:18 +0800
-Message-Id: <20250928084728.1972177-4-maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>
+Subject: [PULL 11/13] target/loongarch: Invalid tlb entry in invalidate_tlb()
+Date: Sun, 28 Sep 2025 16:47:26 +0800
+Message-Id: <20250928084728.1972177-12-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250928084728.1972177-1-maobibo@loongson.cn>
 References: <20250928084728.1972177-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxC8Eg9tho32y5AA--.23975S5
+X-CM-TRANSID: qMiowJBxC8Eg9tho32y5AA--.23975S13
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,68 +64,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With function helper_tlbwr(), specified LoongArch TLB entry will be
-updated. There are two PTE pages in one TLB entry called even/odd
-pages. Supposing even/odd page is normal/none state, when odd page
-is added, TLB entry is changed as normal/normal state and even page
-keeps unchanged.
-
-In this situation, it is not necessary to flush QEMU TLB since even
-page keep unchanged and odd page is newly changed. Here check whether
-PTE page is the same or not, TLB flush can be skipped if both are the
-same or newly added.
+Invalid tlb entry in function invalidate_tlb(), and its usage is
+simple and easy to use.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/tcg/tlb_helper.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 25dbbd0d77..88dba9eb3e 100644
+index 7a85d9ca55..b777f68f71 100644
 --- a/target/loongarch/tcg/tlb_helper.c
 +++ b/target/loongarch/tcg/tlb_helper.c
-@@ -302,16 +302,35 @@ void helper_tlbrd(CPULoongArchState *env)
- void helper_tlbwr(CPULoongArchState *env)
- {
-     int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-+    LoongArchTLB *old, new = {};
-+    bool skip_inv = false;
-+    uint8_t tlb_v0, tlb_v1;
- 
--    invalidate_tlb(env, index);
--
-+    old = env->tlb + index;
-     if (FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, NE)) {
--        env->tlb[index].tlb_misc = FIELD_DP64(env->tlb[index].tlb_misc,
--                                              TLB_MISC, E, 0);
-+        invalidate_tlb(env, index);
-+        old->tlb_misc = FIELD_DP64(old->tlb_misc, TLB_MISC, E, 0);
+@@ -123,6 +123,7 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
          return;
      }
  
--    fill_tlb_entry(env, env->tlb + index);
-+    fill_tlb_entry(env, &new);
-+    /* Check whether ASID/VPPN is the same */
-+    if (old->tlb_misc == new.tlb_misc) {
-+        /* Check whether both even/odd pages is the same or invalid */
-+        tlb_v0 = FIELD_EX64(old->tlb_entry0, TLBENTRY, V);
-+        tlb_v1 = FIELD_EX64(old->tlb_entry1, TLBENTRY, V);
-+        if ((!tlb_v0 || new.tlb_entry0 == old->tlb_entry0) &&
-+            (!tlb_v1 || new.tlb_entry1 == old->tlb_entry1)) {
-+            skip_inv = true;
-+        }
-+    }
-+
-+    /* flush tlb before updating the entry */
-+    if (!skip_inv) {
-+        invalidate_tlb(env, index);
-+    }
-+
-+    *old = new;
- }
++    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+     tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     pagesize = MAKE_64BIT_MASK(tlb_ps, 1);
+     mask = MAKE_64BIT_MASK(0, tlb_ps + 1);
+@@ -338,7 +339,6 @@ void helper_tlbwr(CPULoongArchState *env)
+     old = env->tlb + index;
+     if (FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, NE)) {
+         invalidate_tlb(env, index);
+-        old->tlb_misc = FIELD_DP64(old->tlb_misc, TLB_MISC, E, 0);
+         return;
+     }
  
- void helper_tlbfill(CPULoongArchState *env)
 -- 
 2.43.5
 
