@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19654CAC5BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4999CCAC5B5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 19:38:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v2x3N-0002qX-0g; Sun, 28 Sep 2025 15:27:26 -0400
+	id 1v2x3u-0003Ds-Fq; Sun, 28 Sep 2025 15:27:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x3D-0002iV-CM
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:15 -0400
+ id 1v2x3o-0003CD-4t
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:52 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v2x32-00044a-W2
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:15 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58S4x4tK003960;
- Sun, 28 Sep 2025 19:26:52 GMT
+ id 1v2x3f-0004An-Co
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 15:27:51 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SAReCk002106;
+ Sun, 28 Sep 2025 19:27:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Atd48o
- s/OPIaVZSipUgaR79fnSsWhLKytoLIwnVGGnI=; b=NDtbKBC0HT67f1dlJ6r0UG
- U21tG2YhaaKMCdT50NT+Qs+P7lT+JeWW7Ul4pVgPdHVaDVkaIyt1xXLawI9EK68o
- b/VwLRThjs1DxfuMckBLf6BeGkHyHzt12i685TmZ2Ak06cE6on5KA/UbepDH+jrf
- /UoXDabloM3BqPRPXg093BK2FpOR2kNRUwXfNMYtzfUEwX+oCFu9Ik7VAzx92GoX
- +gf2F6itFKTAyzVF64mbjmNhsCjwKFTCoZXSSV/KvjszpI+VxtKNgcA4HWqH0nwa
- 2bF4yIEaBrbuuU5elHMgy0rn4D/3snJtD+ht3V20Cy6kH7W2d9sPU7aTDi+j+pbw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bh6q80-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=4FQQfICHexy3Xs1Ec
+ DEvC7A7h1vMSSJuH9TIGR1HYQE=; b=G1ArHBmyQdZmWx8XAGdB53ZjYluBEvQb5
+ 9cV2sfWzoQ3nhmgsMGPbNjBqlKGsHWJ/unvro6EaQ9nD//KRkKRV9OjTCg/vxrKb
+ FvSCZH88NftfZIP/AaDAn6UxEvrmeNPI+cDs1O2D9vG5KvoeZCSZg/DtwPKzCE62
+ t1mFWYukQquHaFA0pEbQeFI+9rLaOYSlhZ1De5H1gDWRPfATKsSwswwuO4hoRN31
+ ANq1qEmt8mtIwGB7+pO28h4RYmcrlyaQpUCXRfUZOYvDGnt/BOQcjo/CdPkl740a
+ iG+GVeLdrcmm0bSa1fMO+gkmdyrUKmJRrjMHNuirUFEqjLaIC/XzQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7jw6ewk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:26:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SHPLCn003599;
- Sun, 28 Sep 2025 19:26:51 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49etmxjyxf-1
+ Sun, 28 Sep 2025 19:27:22 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58SGtlVG020508;
+ Sun, 28 Sep 2025 19:27:22 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49et8ru1er-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Sep 2025 19:26:51 +0000
+ Sun, 28 Sep 2025 19:27:21 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58SJQm8Q34865676
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58SJRIT140042964
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 28 Sep 2025 19:26:48 GMT
+ Sun, 28 Sep 2025 19:27:18 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F3A1920049;
- Sun, 28 Sep 2025 19:26:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6744020049;
+ Sun, 28 Sep 2025 19:27:18 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9137220040;
- Sun, 28 Sep 2025 19:26:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 61DB420040;
+ Sun, 28 Sep 2025 19:27:17 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.39.17.115]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 28 Sep 2025 19:26:46 +0000 (GMT)
+ Sun, 28 Sep 2025 19:27:17 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: [PULL 07/27] tests/powernv: Switch to buildroot images instead of
- op-build
-Date: Mon, 29 Sep 2025 00:56:09 +0530
-Message-ID: <20250928192629.139822-8-harshpb@linux.ibm.com>
+Cc: Denis Sergeev <zeff@altlinux.org>, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PULL 27/27] target/ppc: use MAKE_64BIT_MASK for mcrfs exception
+ clear mask
+Date: Mon, 29 Sep 2025 00:56:29 +0530
+Message-ID: <20250928192629.139822-28-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250928192629.139822-1-harshpb@linux.ibm.com>
 References: <20250928192629.139822-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68d98bfc cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=NEAV23lmAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=vTr9H3xdAAAA:8 a=aow-egSQAAAA:8
- a=20KFwNOVAAAA:8 a=d7QG3KQTCe1-xXpN3u8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX0Q2uw4gGs/w+
- 468gm1aeinQuqOEHjZiIM4owQJHb70AKwNhJZkR5He2B5Z0digqXODyUUY2eqhBgBQR1GUBTeRU
- qgZmk130oj4/29Q2yZNwjlJmaJ2zRLisL4oeeSEZAtgQY1pvbXcRRkjZJcYFx9nqbR6gqA4A5HF
- Gm4n/o5zMbh4qCoNSTu7fWVslQNUHjaQDlvxHnmz4uM8NpGUrmR5rizQ8IY/z3RkzsAcgbGUsES
- mPjSSs9y/NnEYEgP1ACpOm9pMbqZRsB3eTmS12ymRLL5Xmehe1rpuJW3337Jq62oPpWUV+8t8jS
- HMYPuakOPAXnALEU1EErdIxSSeKMkukws1vMAUf3gISCnfJIJNi8HkY/oakyCjL5x1Gay+wme5u
- M+ruqkjlkim/UENuial3Z2ZR/TESyA==
-X-Proofpoint-GUID: uNRt0dXBaIeBIxgC_Qy9dNWgrXpoYCHq
-X-Proofpoint-ORIG-GUID: uNRt0dXBaIeBIxgC_Qy9dNWgrXpoYCHq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfX2M2cwtVqg4K1
+ 6UU2Lw2wS09Usw01MfWS7BovHem5Sn1wyw3enKJxAfnCoApIL7io0YGKM78eFlKY19HWQP6eMRZ
+ 0wDzyCEfFDWfk7MHno6UDamnQaSup8cxvvypOv8sR1vDqamo/gx44tCOhxcTNeMTppIfjXwWomw
+ 4I9S60UrtVgcPq6RNQ+KReCOXrYyJnPXBkBueyWcGLb0hF3GaiTIU/0BrORW7dQuhbBTg2HgS1L
+ e/TZkLA+23jEnZ6by8U3Yy3d4+G1m9zufaD5/NVqlscVHmsJw105SXBQb0QN4WnJ2434NpKDonk
+ OA/KmYf2TXnw/3RZlQrJK2hkqq+r5oF2Bo5gWwoZ+SW76LJVlJ5RGyezaYvwlI0kKHFhSDprmKI
+ cbYRi/veOAUUEss6hMFDEp2G6iQSlA==
+X-Proofpoint-ORIG-GUID: o8LchynQTjY-ThAygKLMi04clTo9H7Jj
+X-Proofpoint-GUID: o8LchynQTjY-ThAygKLMi04clTo9H7Jj
+X-Authority-Analysis: v=2.4 cv=GdUaXAXL c=1 sm=1 tr=0 ts=68d98c1a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8 a=bH78PYQqAAAA:8
+ a=HH5vDtPzAAAA:8 a=VnNF1IyMAAAA:8 a=BguI0s01zjOQbXWBZ6YA:9
+ a=TrXR8j8ql9YpJ1_1srv2:22 a=QM_-zKB-Ew0MsOlNKMB5:22 a=oH34dK2VZjykjzsv8OSz:22
+ a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-28_08,2025-09-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
+ suspectscore=0 clxscore=1011 phishscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -110,7 +104,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,94 +120,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Denis Sergeev <zeff@altlinux.org>
 
-As op-build images haven't been updated from long time (and may not get
-updated in future), use buildroot images provided by cedric [1].
+In gen_mcrfs() the FPSCR nibble mask is computed as:
+      `~((0xF << shift) & FP_EX_CLEAR_BITS)`
 
-Use existing nvme device being used in the test to mount the initrd.
+Here, 0xF is of type int, so the left shift is performed in
+32-bit signed arithmetic. For bfa=0 we get shift=28,
+and (0xF << 28) = 0xF0000000, which is not representable as a 32-bit
+signed int. Static analyzers flag this as a potential integer
+overflow.
 
-Also replace the check for "zImage loaded message" to skiboot's message
-when it starts the kernel: "Starting kernel at", since we are no longer
-using zImage from op-build
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This is required for newer processor tests such as Power11, as the
-op-build kernel image is old and doesn't support Power11.
-
-Power11 test has been added in a later patch.
-
-[1]: https://github.com/legoater/qemu-ppc-boot/tree/main/buildroot/qemu_ppc64le_powernv8-2025.02
-
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Denis Sergeev <zeff@altlinux.org>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250925173049.891406-8-adityag@linux.ibm.com
-Message-ID: <20250925173049.891406-8-adityag@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250915080118.29898-1-zeff@altlinux.org
+Message-ID: <20250915080118.29898-1-zeff@altlinux.org>
 ---
- tests/functional/ppc64/test_powernv.py | 30 ++++++++++++++------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ target/ppc/translate/fp-impl.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
-index 685e2178ed..2b4db1cf99 100755
---- a/tests/functional/ppc64/test_powernv.py
-+++ b/tests/functional/ppc64/test_powernv.py
-@@ -18,9 +18,14 @@ class powernvMachine(LinuxKernelTest):
-     good_message = 'VFS: Cannot open root device'
- 
-     ASSET_KERNEL = Asset(
--        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
--         'releases/29/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
--        '383c2f5c23bc0d9d32680c3924d3fd7ee25cc5ef97091ac1aa5e1d853422fc5f')
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-+         'buildroot/qemu_ppc64le_powernv8-2025.02/vmlinux'),
-+        '6fd29aff9ad4362511ea5d0acbb510667c7031928e97d64ec15bbc5daf4b8151')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-+         'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
-+        'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
- 
-     def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
-         self.require_accelerator("tcg")
-@@ -78,27 +83,24 @@ def test_linux_big_boot(self):
-         wait_for_console_pattern(self, console_pattern, self.panic_message)
-         wait_for_console_pattern(self, self.good_message, self.panic_message)
- 
--
--    ASSET_EPAPR_KERNEL = Asset(
--        ('https://github.com/open-power/op-build/releases/download/v2.7/'
--         'zImage.epapr'),
--        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
--
-     def do_test_ppc64_powernv(self, proc):
-         self.require_accelerator("tcg")
--        kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_path,
--                         '-append', 'console=tty0 console=hvc0',
-+                         '-drive',
-+                         f'file={initrd_path},format=raw,if=none,id=drive0,readonly=on',
-+                         '-append', 'root=/dev/nvme0n1 console=tty0 console=hvc0',
-                          '-device', 'pcie-pci-bridge,id=bridge1,bus=pcie.1,addr=0x0',
--                         '-device', 'nvme,bus=pcie.2,addr=0x0,serial=1234',
-+                         '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234',
-                          '-device', 'e1000e,bus=bridge1,addr=0x3',
-                          '-device', 'nec-usb-xhci,bus=bridge1,addr=0x2')
-         self.vm.launch()
- 
-         self.wait_for_console_pattern("CPU: " + proc + " generation processor")
--        self.wait_for_console_pattern("zImage starting: loaded")
--        self.wait_for_console_pattern("Run /init as init process")
-+        self.wait_for_console_pattern("INIT: Starting kernel at ")
-+        self.wait_for_console_pattern("Run /sbin/init as init process")
-         # Device detection output driven by udev probing is sometimes cut off
-         # from console output, suspect S14silence-console init script.
- 
+diff --git a/target/ppc/translate/fp-impl.c.inc b/target/ppc/translate/fp-impl.c.inc
+index 28dda15040..464fb1d90f 100644
+--- a/target/ppc/translate/fp-impl.c.inc
++++ b/target/ppc/translate/fp-impl.c.inc
+@@ -396,7 +396,7 @@ static void gen_mcrfs(DisasContext *ctx)
+     tcg_gen_extu_tl_i64(tnew_fpscr, cpu_fpscr);
+     /* Only the exception bits (including FX) should be cleared if read */
+     tcg_gen_andi_i64(tnew_fpscr, tnew_fpscr,
+-                     ~((0xF << shift) & FP_EX_CLEAR_BITS));
++                     ~(MAKE_64BIT_MASK(shift, 4) & FP_EX_CLEAR_BITS));
+     /* FEX and VX need to be updated, so don't set fpscr directly */
+     tmask = tcg_constant_i32(1 << nibble);
+     gen_helper_store_fpscr(tcg_env, tnew_fpscr, tmask);
 -- 
 2.43.5
 
