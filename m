@@ -4,94 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE64CAC5BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD33CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:24:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Ed2-0001r8-2X; Mon, 29 Sep 2025 10:13:24 -0400
+	id 1v3Elp-0004nI-0c; Mon, 29 Sep 2025 10:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v3Ecz-0001ne-0e
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:13:21 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v3Ecj-0001pE-Qq
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:13:19 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-71d71bcac45so46446527b3.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:12:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1759155172; x=1759759972; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zsWI9+DScXGvZxdizSkdGVr0zurWhmz0t30Av3fwv00=;
- b=gUFhqMg1RKw0mTAil9Hr+T9oszg4ZeVrsnyMPpkYqX9zylutnmuOA31UmWm8J1K1Eb
- r1NLAUhCVoUghjfvzRIiRgUSaY/QOEQqs2ZWvG0pyl2Rq2HL/I6O/ai80zA2dpa9BQBy
- SPvWboX64/b+4Orc7LqXF3yQCuQB/WbRaS0g/lHSjEobTXngyDu4AFIDhh/jm8qGCtdO
- WAYg7v8OzDQZqUcWyV+Du4A2b563dnDJw5GLx2ry8wD7YtwUCTUJL91TJkbiMFOC0UXP
- wy2jXWoU6c1kBzHHg0RDgNGkPTF+VSJcdcZxZ8b5lMv8DM73Kaya7eMCdwKRUTq8JW56
- mJIQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3Elj-0004mW-DV
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:22:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3ElY-0003cl-8x
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:22:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759155722;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mIOCVbN/anAbQoFyfAnEryt0rUrMQ2P8i5xZiKMGJRs=;
+ b=Gveeldwi/8Lh8W3M1ARyRXlY8W5XunJHhhTIBj4siG/ICZHGQ1UtqhGoiEeIM4H6o+txrD
+ YYlp94l4q+5YhlUaKd2MibqDpUGDOYra5XgsaZsn/VY49QkyDHhRJVtNb19GWI9DgD+oIq
+ 3IG1B1R1b3S8OzVMRvQ1t1k6h7Dce6Y=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122-uF1BtpgpNzCYRdX2Nb4hOg-1; Mon, 29 Sep 2025 10:22:00 -0400
+X-MC-Unique: uF1BtpgpNzCYRdX2Nb4hOg-1
+X-Mimecast-MFC-AGG-ID: uF1BtpgpNzCYRdX2Nb4hOg_1759155719
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3f924ae2a89so3996130f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:22:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759155172; x=1759759972;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zsWI9+DScXGvZxdizSkdGVr0zurWhmz0t30Av3fwv00=;
- b=maWVkaeDGMMH9gSxmGapvnCiNIaoM3oFqgJe5DHI9et5xZjUfAoEPVTd/n2PvK8Wup
- vuJHii538LOEUxbQdajp9Dxk9h9oGWfdDInrG1VeVX+y7EHrQGpz/TuJpqkT9p+gg83T
- Q8u3DtLlaw6Wy6t1Bog+imIUcN/n8HBuSbCBOP0ziITWBVg8kZZRE49YtMTfT+Du7w/J
- gE9fKamiShXQ11th/+r20F6eKksOQrBteThFf0FsXPRdN+tMYS5yiVH/5OrD99s8EPyg
- dZ29wQim22Pz2JN+a1Ql2tCI94crOmjX85dik9DKS6ZgSFSdGVlICJaKoBkKz5GSzSgk
- hCuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/v1/QX9vErchnjIkqjr26v3OtkdxRjlrCNWhehvwvDki8wx8qCwoxA6uAYEnaC4fwpDveo8+FihPC@nongnu.org
-X-Gm-Message-State: AOJu0YxtKh8dHjXhO576iPCZI5Qlw4bSA8bsT/176HuDXhJDc8OBROTR
- 4qAORZr1ezwAxF8GUBXdppEo0MZ2889jYXJDdUmTl4dJoQiG5j8m85rpaWWBNQml3SU=
-X-Gm-Gg: ASbGncvLVfUY7HUO0JlzeQMjiFxh6dPJS5E389d1Jre3ALc6vCknOvqkdSy3pHJwsL5
- iceu/1jKAe3CFuLpF60RwAy+GJJTn8jWPPAsVZhudulKIfrrqiMqdEaZYykiW+/TRRKQz8NeQjB
- TRNvs1T0aQA00ZgjiXdf89PU4wgG4RU4e0m/qqWF9sNKnzgvwwpoVruQ4ERjjhcDH+XJsxzfVBR
- R2Z/VhRqtbm7zHaSnkxQWYHDJsQqDVJWtc7gff5hRbnoBckZaG23Z1C3xlzGgtmbOZM4GrFLtjh
- cOvfUsufIFdxYc9Ai7kOXWz/Ot6LavuvVmsPCMiKfcPU7ctZ0qOc8yuYp3Voz8vUfb7SxU1/eHW
- cydYcAgmq92u9D8evStU6mfC9HsgtNE+tcjk1cS7Lp0WxMo5f
-X-Google-Smtp-Source: AGHT+IHmqfoOVU/XwOqOa7Wpxr1CaT4wN1RLV97KFKLPrXbXDdXF7WJvb0o+xAHi20DAqL/vMstZxg==
-X-Received: by 2002:a05:690c:9c0d:b0:734:81fb:8ba0 with SMTP id
- 00721157ae682-763fb38cd62mr204764887b3.19.1759155172243; 
- Mon, 29 Sep 2025 07:12:52 -0700 (PDT)
-Received: from [192.168.68.110] ([152.234.123.171])
+ d=1e100.net; s=20230601; t=1759155719; x=1759760519;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mIOCVbN/anAbQoFyfAnEryt0rUrMQ2P8i5xZiKMGJRs=;
+ b=pDtNPy+gS6YZkTk3YovfyCjNzlJarYWPdlucAjPYekpLfMMvRbrsUXFdhqLFuBrrxA
+ UCQFX/delKE/a7ovEupRKwDHXyXhqj4+0lPRaSHVaAMjXGHbO5YH3QQB/P4TTLg45pWn
+ IDzFshEGaNfwzieOn6CKG60m+NQ3HhJvWDekLzfiR7Rz2uiaUROaEpWyppO/882y/cD2
+ KFlwNFlOOZmIAn6g+sOTKDq88vWchPoYFdYU9vVxc/900kEM7Pb3uaqWWQztK9tUm6eZ
+ Kftkw+HC5b0y3x3ikt2bN5unnJ7rKoUhd+Z/NZhoWptYPXYzE7RPsBcyWKXTOJDPjp6F
+ +cvg==
+X-Gm-Message-State: AOJu0YyTNhU84jSMngQ4RPNKLM1Bb5N2CnTOwJdd9U3ShVk8ONTzn5lj
+ hPyavT6rSN2CJBAMvsuN9RvCWjgHZNvtaKF9CCNl82+yEtPuupl7ObI4YiUhkHjOvQKPMpml65M
+ UQrU0ykOhEiw2AIRkk6/a03xVPQ8WCrK88bwMDH0GRXPZI1pxPo5qVMhG
+X-Gm-Gg: ASbGncvsxgbMEX8X/jYcJFMQPF6o+DfW7o3oUmxc09qaasa+AurtMeDFPztP4f7TGzZ
+ P8iwKsNTih5b8QUYnoP/GnCghhTyKfID5A4dpOEA8WkcrC6eUw/fpk1idTfiwAwaELSB8onEEa9
+ M+M0mcxALjH6kEt+kCcoHq2rljGuOdEOK6Stim24NmoOXB2OkPn1RqiBROzwOM0ZeuIsU5r8rju
+ oTpRtjemY327/hX+c7nkmzBHfKBGQU5/7fNFIwk+Fn1mZgEoLSLwm203gbAUBPw+x0TiUQOUWeX
+ rcodqJX4ewX4F+2qz3h9YaQfYUz0mhptjSb5AxOYt4fcMGgP7GiFKAcH7vAyKsA9qlhmhjct33c
+ nZ07wje6UbbI=
+X-Received: by 2002:a05:6000:2504:b0:3fa:944b:9bc3 with SMTP id
+ ffacd0b85a97d-40e4dabf402mr16271948f8f.62.1759155718918; 
+ Mon, 29 Sep 2025 07:21:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJ2hNllX2uu2BW9xPWd/vuJU9wjY54Csq9QvRSLxbO8gB8ak0jCQLVBNpo1QOVsHnvkRR9eA==
+X-Received: by 2002:a05:6000:2504:b0:3fa:944b:9bc3 with SMTP id
+ ffacd0b85a97d-40e4dabf402mr16271916f8f.62.1759155718301; 
+ Mon, 29 Sep 2025 07:21:58 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-77e5cccdb8fsm1727597b3.29.2025.09.29.07.12.50
+ ffacd0b85a97d-40fc72b0aeesm18942945f8f.49.2025.09.29.07.21.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 07:12:51 -0700 (PDT)
-Message-ID: <7df234bd-9443-4b90-8376-365f1967981f@ventanamicro.com>
-Date: Mon, 29 Sep 2025 11:12:47 -0300
+ Mon, 29 Sep 2025 07:21:57 -0700 (PDT)
+Message-ID: <a9fe0e74-652d-48b7-89b1-73f28d1c63a4@redhat.com>
+Date: Mon, 29 Sep 2025 16:21:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix endianness swap on compressed
- instructions
-To: Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-trivial@nongnu.org,
- zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, alistair.francis@wdc.com,
- palmer@dabbelt.com, vhaudiquet <vhaudiquet343@hotmail.fr>
-References: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v2 08/14] hw/arm/smmuv3: Add security-state handling for
+ page table walks
 Content-Language: en-US
-In-Reply-To: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
+ philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250925162618.191242-9-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250925162618.191242-9-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,55 +115,286 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Tao,
 
-
-On 9/29/25 8:55 AM, Valentin Haudiquet wrote:
-> From: vhaudiquet <vhaudiquet343@hotmail.fr>
-> 
-> Three instructions were not using the endianness swap flag, which resulted in a bug on big-endian architectures.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3131
-> Buglink: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2123828
-> 
-> Signed-off-by: Valentin Haudiquet <valentin.haudiquet@canonical.com>
+On 9/25/25 6:26 PM, Tao Tang wrote:
+> This patch introduces the necessary logic to handle security states
+> during the page table translation process.
+>
+> Support for the NS (Non-secure) attribute bit is added to the parsing of
+> various translation structures, including CD and PTEs. This allows the
+> SMMU model to correctly determine the security properties of memory
+> during a translation.
+>
+> With this change, a new translation stage is added:
+>
+> - Secure Stage 1 translation
+>
+> Note that this commit does not include support for Secure Stage 2
+> translation, which will be addressed in the future.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
+>  hw/arm/smmu-common.c         | 55 ++++++++++++++++++++++++++++++++----
+>  hw/arm/smmu-internal.h       |  7 +++++
+>  hw/arm/smmuv3-internal.h     |  2 ++
+>  hw/arm/smmuv3.c              |  2 ++
+>  hw/arm/trace-events          |  2 +-
+>  include/hw/arm/smmu-common.h |  4 +++
+>  6 files changed, 66 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index bc13b00f1d..f563cba023 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -398,20 +398,25 @@ void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
+>   * @base_addr[@index]
+Wile we add some new params it may be relevant to add some new doc
+comments above
+>   */
+>  static int get_pte(dma_addr_t baseaddr, uint32_t index, uint64_t *pte,
+> -                   SMMUPTWEventInfo *info)
+> +                   SMMUPTWEventInfo *info, SMMUTransCfg *cfg, int walk_ns)
+I see a cfg param is added while not used.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+why walk_ns is an int while it seems to match a SecureIndex type? while
+not directly passing the sec_sid?
+>  {
+>      int ret;
+>      dma_addr_t addr = baseaddr + index * sizeof(*pte);
+> +    /* Only support Secure PA Space as RME isn't implemented yet */
+> +    MemTxAttrs attrs =
+> +        smmu_get_txattrs(walk_ns ? SMMU_SEC_IDX_NS : SMMU_SEC_IDX_S);
+> +    AddressSpace *as =
+> +        smmu_get_address_space(walk_ns ? SMMU_SEC_IDX_NS : SMMU_SEC_IDX_S);
+>  
+>      /* TODO: guarantee 64-bit single-copy atomicity */
+> -    ret = ldq_le_dma(&address_space_memory, addr, pte, MEMTXATTRS_UNSPECIFIED);
+> +    ret = ldq_le_dma(as, addr, pte, attrs);
+>  
+>      if (ret != MEMTX_OK) {
+>          info->type = SMMU_PTW_ERR_WALK_EABT;
+>          info->addr = addr;
+>          return -EINVAL;
+>      }
+> -    trace_smmu_get_pte(baseaddr, index, addr, *pte);
+> +    trace_smmu_get_pte(baseaddr, index, addr, *pte, walk_ns);
+>      return 0;
+>  }
+>  
+> @@ -542,6 +547,8 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>  
+>      baseaddr = extract64(tt->ttb, 0, cfg->oas);
+>      baseaddr &= ~indexmask;
+> +    int nscfg = tt->nscfg;
+> +    bool forced_ns = false;  /* Track if NSTable=1 forced NS mode */
+>  
+>      while (level < VMSA_LEVELS) {
+>          uint64_t subpage_size = 1ULL << level_shift(level, granule_sz);
+> @@ -551,7 +558,9 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>          dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
+>          uint8_t ap;
+>  
+> -        if (get_pte(baseaddr, offset, &pte, info)) {
+> +        /* Use NS if forced by previous NSTable=1 or current nscfg */
+> +        int current_ns = forced_ns || nscfg;
+> +        if (get_pte(baseaddr, offset, &pte, info, cfg, current_ns)) {
+>                  goto error;
+>          }
+>          trace_smmu_ptw_level(stage, level, iova, subpage_size,
+> @@ -576,6 +585,26 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>                      goto error;
+>                  }
+>              }
+> +
+> +            /*
+> +             * Hierarchical control of Secure/Non-secure accesses:
+> +             * If NSTable=1 from Secure space, force all subsequent lookups to
+> +             * Non-secure space and ignore future NSTable according to
+> +             * (IHI 0070G.b) 13.4.1 Stage 1 page permissions and
+> +             * (DDI 0487H.a)D8.4.2 Control of Secure or Non-secure memory access
+> +             */
+> +            if (!forced_ns) {
+> +                int new_nstable = PTE_NSTABLE(pte);
+> +                if (!current_ns && new_nstable) {
+> +                    /* First transition from Secure to Non-secure */
+> +                    forced_ns = true;
+> +                    nscfg = 1;
+> +                } else if (!forced_ns) {
+> +                    /* Still in original mode, update nscfg normally */
+> +                    nscfg = new_nstable;
+> +                }
+> +                /* If forced_ns is already true, ignore NSTable bit */
+> +            }
+>              level++;
+>              continue;
+>          } else if (is_page_pte(pte, level)) {
+> @@ -618,6 +647,8 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>              goto error;
+>          }
+>  
+> +        tlbe->sec_idx = PTE_NS(pte) ? SMMU_SEC_IDX_NS : SMMU_SEC_IDX_S;
+> +        tlbe->entry.target_as = smmu_get_address_space(tlbe->sec_idx);
+>          tlbe->entry.translated_addr = gpa;
+>          tlbe->entry.iova = iova & ~mask;
+>          tlbe->entry.addr_mask = mask;
+> @@ -687,7 +718,8 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+>          dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
+>          uint8_t s2ap;
+>  
+> -        if (get_pte(baseaddr, offset, &pte, info)) {
+> +        /* Use NS as Secure Stage 2 is not implemented (SMMU_S_IDR1.SEL2 == 0)*/
+> +        if (get_pte(baseaddr, offset, &pte, info, cfg, 1)) {
+>                  goto error;
+>          }
+>          trace_smmu_ptw_level(stage, level, ipa, subpage_size,
+> @@ -740,6 +772,8 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+>              goto error_ipa;
+>          }
+>  
+> +        tlbe->sec_idx = SMMU_SEC_IDX_NS;
+> +        tlbe->entry.target_as = &address_space_memory;
+>          tlbe->entry.translated_addr = gpa;
+>          tlbe->entry.iova = ipa & ~mask;
+>          tlbe->entry.addr_mask = mask;
+> @@ -824,6 +858,17 @@ int smmu_ptw(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t iova,
+>          return ret;
+>      }
+>  
+> +    if (!cfg->sel2 && tlbe->sec_idx > SMMU_SEC_IDX_NS) {
+> +        /*
+> +         * Nested translation with Secure IPA output is not supported if
+> +         * Secure Stage 2 is not implemented.
+> +         */
+> +        info->type = SMMU_PTW_ERR_TRANSLATION;
+> +        info->stage = SMMU_STAGE_1;
+> +        tlbe->entry.perm = IOMMU_NONE;
+> +        return -EINVAL;
+> +    }
+> +
+>      ipa = CACHED_ENTRY_TO_ADDR(tlbe, iova);
+>      ret = smmu_ptw_64_s2(cfg, ipa, perm, &tlbe_s2, info);
+>      if (ret) {
+> diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
+> index d143d296f3..cb3a6eb8d1 100644
+> --- a/hw/arm/smmu-internal.h
+> +++ b/hw/arm/smmu-internal.h
+> @@ -58,6 +58,10 @@
+>      ((level == 3) &&                                                    \
+>       ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
+>  
+> +/* Non-secure bit */
+> +#define PTE_NS(pte) \
+> +    (extract64(pte, 5, 1))
+> +
+I have not read that code for a while. Might be worth to create
+differentiated sections for the different kinds of descriptors
+For instance NS belongs to block & page descriptor while NSTable belongs
+to a table descriptor.
+>  /* access permissions */
+>  
+>  #define PTE_AP(pte) \
+> @@ -66,6 +70,9 @@
+>  #define PTE_APTABLE(pte) \
+>      (extract64(pte, 61, 2))
+>  
+> +#define PTE_NSTABLE(pte) \
+> +    (extract64(pte, 63, 1))
+> +
+>  #define PTE_AF(pte) \
+>      (extract64(pte, 10, 1))
+>  /*
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index cf17c405de..af2936cf16 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -704,6 +704,8 @@ static inline int oas2bits(int oas_field)
+>  #define CD_R(x)          extract32((x)->word[1], 13, 1)
+>  #define CD_A(x)          extract32((x)->word[1], 14, 1)
+>  #define CD_AARCH64(x)    extract32((x)->word[1], 9 , 1)
+> +#define CD_NSCFG0(x)     extract32((x)->word[2], 0, 1)
+> +#define CD_NSCFG1(x)     extract32((x)->word[4], 0, 1)
+>  
+>  /**
+>   * tg2granule - Decodes the CD translation granule size field according
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index eba709ae2b..2f8494c346 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -832,6 +832,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+>              tt->ttb = CACHED_ENTRY_TO_ADDR(entry, tt->ttb);
+>          }
+>  
+> +        tt->nscfg = i ? CD_NSCFG1(cd) : CD_NSCFG0(cd);
+>          tt->had = CD_HAD(cd, i);
+>          trace_smmuv3_decode_cd_tt(i, tt->tsz, tt->ttb, tt->granule_sz, tt->had);
+>      }
+> @@ -929,6 +930,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
+>          cfg->sec_idx = sec_idx;
+>          cfg->txattrs = smmu_get_txattrs(sec_idx);
+>          cfg->as = smmu_get_address_space(sec_idx);
+> +        cfg->sel2 = s->bank[SMMU_SEC_IDX_S].idr[1];
+S_IDR1 contains other feilds than SEL2 such as S_SIDSIZE?
 
->   target/riscv/insn_trans/trans_rvzce.c.inc | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
-> index c77c2b927b..dd15af0f54 100644
-> --- a/target/riscv/insn_trans/trans_rvzce.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-> @@ -88,13 +88,13 @@ static bool trans_c_lbu(DisasContext *ctx, arg_c_lbu *a)
->   static bool trans_c_lhu(DisasContext *ctx, arg_c_lhu *a)
->   {
->       REQUIRE_ZCB(ctx);
-> -    return gen_load(ctx, a, MO_UW);
-> +    return gen_load(ctx, a, MO_TEUW);
->   }
->   
->   static bool trans_c_lh(DisasContext *ctx, arg_c_lh *a)
->   {
->       REQUIRE_ZCB(ctx);
-> -    return gen_load(ctx, a, MO_SW);
-> +    return gen_load(ctx, a, MO_TESW);
->   }
->   
->   static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
-> @@ -106,7 +106,7 @@ static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
->   static bool trans_c_sh(DisasContext *ctx, arg_c_sh *a)
->   {
->       REQUIRE_ZCB(ctx);
-> -    return gen_store(ctx, a, MO_UW);
-> +    return gen_store(ctx, a, MO_TEUW);
->   }
->   
->   #define X_S0    8
+Can't you split that patch again into 2 patches:
+one related to the config data extraction and another one related to
+page table walk according to the config settings?
+
+
+>  
+>          if (!smmuv3_decode_config(&sdev->iommu, cfg, event)) {
+>              SMMUConfigKey *persistent_key = g_new(SMMUConfigKey, 1);
+> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> index 80cb4d6b04..f99de78655 100644
+> --- a/hw/arm/trace-events
+> +++ b/hw/arm/trace-events
+> @@ -16,7 +16,7 @@ smmu_ptw_level(int stage, int level, uint64_t iova, size_t subpage_size, uint64_
+>  smmu_ptw_invalid_pte(int stage, int level, uint64_t baseaddr, uint64_t pteaddr, uint32_t offset, uint64_t pte) "stage=%d level=%d base@=0x%"PRIx64" pte@=0x%"PRIx64" offset=%d pte=0x%"PRIx64
+>  smmu_ptw_page_pte(int stage, int level,  uint64_t iova, uint64_t baseaddr, uint64_t pteaddr, uint64_t pte, uint64_t address) "stage=%d level=%d iova=0x%"PRIx64" base@=0x%"PRIx64" pte@=0x%"PRIx64" pte=0x%"PRIx64" page address = 0x%"PRIx64
+>  smmu_ptw_block_pte(int stage, int level, uint64_t baseaddr, uint64_t pteaddr, uint64_t pte, uint64_t iova, uint64_t gpa, int bsize_mb) "stage=%d level=%d base@=0x%"PRIx64" pte@=0x%"PRIx64" pte=0x%"PRIx64" iova=0x%"PRIx64" block address = 0x%"PRIx64" block size = %d MiB"
+> -smmu_get_pte(uint64_t baseaddr, int index, uint64_t pteaddr, uint64_t pte) "baseaddr=0x%"PRIx64" index=0x%x, pteaddr=0x%"PRIx64", pte=0x%"PRIx64
+> +smmu_get_pte(uint64_t baseaddr, int index, uint64_t pteaddr, uint64_t pte, bool ns_walk) "baseaddr=0x%"PRIx64" index=0x%x, pteaddr=0x%"PRIx64", pte=0x%"PRIx64" ns_walk=%d"
+>  smmu_iotlb_inv_all(void) "IOTLB invalidate all"
+>  smmu_iotlb_inv_asid_vmid(int asid, int vmid) "IOTLB invalidate asid=%d vmid=%d"
+>  smmu_iotlb_inv_vmid(int vmid) "IOTLB invalidate vmid=%d"
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index ed21db7728..c27aec8bd4 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -109,6 +109,7 @@ typedef struct SMMUTransTableInfo {
+>      uint8_t tsz;               /* input range, ie. 2^(64 -tsz)*/
+>      uint8_t granule_sz;        /* granule page shift */
+>      bool had;                  /* hierarchical attribute disable */
+> +    bool nscfg;                /* Non-secure attribute of Starting-level TT */
+>  } SMMUTransTableInfo;
+>  
+>  typedef struct SMMUTLBEntry {
+> @@ -116,6 +117,7 @@ typedef struct SMMUTLBEntry {
+>      uint8_t level;
+>      uint8_t granule;
+>      IOMMUAccessFlags parent_perm;
+> +    SMMUSecurityIndex sec_idx;
+>  } SMMUTLBEntry;
+>  
+>  /* Stage-2 configuration. */
+> @@ -156,6 +158,8 @@ typedef struct SMMUTransCfg {
+>      SMMUSecurityIndex sec_idx; /* cached security index */
+>      MemTxAttrs txattrs;        /* cached transaction attributes */
+>      AddressSpace *as;          /* cached address space */
+> +    bool current_walk_ns;      /* cached if the current walk is non-secure */
+this does not seem to be used?
+> +    bool sel2;
+would require a comment to remind the reader what sel2 is.
+>  } SMMUTransCfg;
+>  
+>  typedef struct SMMUDevice {
+
+Thanks
+
+Eric
 
 
