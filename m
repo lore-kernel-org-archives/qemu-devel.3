@@ -4,94 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C343CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A02CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3FQR-0000SR-Ev; Mon, 29 Sep 2025 11:04:28 -0400
+	id 1v3FTr-0001yJ-GI; Mon, 29 Sep 2025 11:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3FQK-0000RE-DT
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:04:21 -0400
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3FQG-0001ky-OF
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:04:19 -0400
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-3f44000626bso2953666f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:04:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759158254; x=1759763054; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8NtLNsGR2EIOOgIQ2USV2HKfWfiaq6p6LauMRb0fbVw=;
- b=HJQkl4kCaGlzsitxXvInkyXO1MQTMVyExQBi/NxXCU7bsLsvf/ub0hWVd/N4+o7wBy
- Y44bGoHGp65YuWJYzBTuGpAbzjXV4bbNJouf1fejySPkIpmalEEt0dnJAYR+G0e2vjsi
- mPN3y/0y5SCmfaNNBAGtyKGYndz/LEHl8HD1czmCquQN8X+j2heionEP/J/mfkDcvoYh
- DRdxEwaRvCSo36gJPemXQMN01esF3RfjYerycQN+Xfo4QfEBWdVBcFG7d0tFzzDgMGI2
- AtlXKGiKAQ4uW1WSZLN3aTflc4/1ZYZoDADxh5i+TLRHBXBk9cFb8Wlw3+1bQ9d7RW47
- /iPw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3FTY-0001sk-Jg
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:07:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3FTL-0003BV-SR
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:07:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759158442;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yt/S0UfrAT0shqYs2aJlLKJGz3cb2F5q57gPG20eUqA=;
+ b=cvIqLAkFDSBfTGjLMl9Ja+orjHNWHdFphkoDkEiZuwc9oPGC8PciAdoXJ72Ofy5HoD7Z/V
+ 8POqCUi766mDXm8ly4uspjZbrlbrTYqiNDqoeV+tEU1sb4LvQu1bwewv/Gc+lJUiipaepi
+ Kf9ZEVIXjnE62Fh/s0Nx91rcoDXOI3c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-453-4V98FlM5OxSfJh7SUQU7ow-1; Mon, 29 Sep 2025 11:07:20 -0400
+X-MC-Unique: 4V98FlM5OxSfJh7SUQU7ow-1
+X-Mimecast-MFC-AGG-ID: 4V98FlM5OxSfJh7SUQU7ow_1759158439
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e44b9779eso14073525e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:07:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759158254; x=1759763054;
+ d=1e100.net; s=20230601; t=1759158439; x=1759763239;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8NtLNsGR2EIOOgIQ2USV2HKfWfiaq6p6LauMRb0fbVw=;
- b=pv11jcbx2EjEofrc1eyn8awRcagCXr/012djui2AQDy7LR4qMEvizB7gsH22BXXbuC
- hrDvpSLBDzKSU7h6s+I/WghkXFBkt3U7xyJ3EOW6cvH+/ZE3j25Bp0KtCoY+tjgQV3EC
- KHkYOwsy/jy71uqSHQ9KnR3nlR5PLamAQXILla3jARFpmFGxaKnxRBUOXSgmuXZQfNcO
- VbPVCcbTZGgjZntGEvy3eV53Af847PyHuauQ0vWDsYrPUGzPTCGA3B6kHnH0Kj6XTfhL
- 1u9cvfKkgQi85+q91gAGL8xWLsDSy0cMBJktPw3MnrSmR6W3KYkcWPApTMbtddSA4KR+
- VvHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULpEcScFb5qhrBZE3otSNRqpjH5vWm0A+AUsFczBmfGledqeNgRUKDgMimbHfYDEMN3nxVh64n86xI@nongnu.org
-X-Gm-Message-State: AOJu0Yz/ZPO4eCFNHfqxrmchYy3bCpGmhPID0wPCIcoJczcDBUdc+RTk
- d+wpDN7F8HFIxkpV91KTRqK8IRwLlviUNvh50bPLIcNfcwXPFxLGAeV8InBwN1wCD44=
-X-Gm-Gg: ASbGncvHFt7pXPKUOXVdwhetOjnjN8jyfQn7/YMFJdIu36ufn4qXXbWCqcce1qwyEAb
- TyBjbo3tPiOypIUx1Gi0UVdjUOgUW3CXfs9ewxkGa1WBCrUhrwmOYRyOJKzf2yaI3G6d6iFLycx
- oYs/8pDembkjeKqhYSUqbO4qIewjW0Q6XHU1Sws6nwodBw7rAaqYVOCZpKtNQ8lO3LAgscILGd0
- I/xOXehO3m8WWwpy8+2YdOqXBvrcIuatC7SUtjlxvNT5C7rY9HZ0Oh9nqhBHpmO0AZ+xxNwb1r5
- XhS43y3wTYyrLYTzQ2DEBnailim147+AneG3mmHmRfVjJQECVhXOlqciNIcq182aWYR9cgkZawg
- Z4u8Wirhh7f8NFLq1GMv/avq92mKXMcBeaULPVzbXeCdL1r7SLYQBHSU5QSlmL9Zml5rid0HDwE
- nt
-X-Google-Smtp-Source: AGHT+IF0R6K1RSZSnsJqrrIO2Ba96HMi8TRtskmj4Ea93wpJf4i6zgCRoLhFCJJVwWPGupqlyTpiIg==
-X-Received: by 2002:a05:6000:2382:b0:3e8:f67:894a with SMTP id
- ffacd0b85a97d-40e42502e84mr17244175f8f.5.1759158254125; 
- Mon, 29 Sep 2025 08:04:14 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc749b8f9sm18317570f8f.50.2025.09.29.08.04.12
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yt/S0UfrAT0shqYs2aJlLKJGz3cb2F5q57gPG20eUqA=;
+ b=GfgpYKWMh7Ipdsg3YJGIJZsNkkpUEHtBzkV/SQWs0ihf1caszISGLegSMg7lHLrDND
+ fCy7AvPQcgDUSxqH+wYezV/zs1Hzl2QuQy2Thhta/AcNewNS6U5zoZIVauL+ZKDdh9OQ
+ Scp8RA7rudtJwiJiu9uMuWAwgZeu01tEPJLmLtkyJ3TG3tUnQEisSj6gBRqL6fz4GiH1
+ /HHUWRfGVk8j+P872sFV1Yl/el7RdXLxaq1ZqUF7jhy1h/YNhOmnpGKfbEnFe5Kijd84
+ UIB3ZNfyMp2wUaI9z40mr573quOqd+ajDJu/3lo8Mv3Pwi+dTrhzujdPSIZpNmppnDQ9
+ iuTg==
+X-Gm-Message-State: AOJu0YxwnquScqsjpSxCn1UEpXMhs0gf6+l2FXBlWClyEeH9/62SGtwd
+ Ux9EPl6RSNmMqnb+3S58wdP6aIW5JZpZREMcFlAtBUBxsSvTczuJmfONVQinevnsS9hSry/E8yg
+ yuiucNLO6Q/xnDp2PqHmSlME4iKxWt1ZF+g/s6O9W5zoGyF0I10jk58+/
+X-Gm-Gg: ASbGncv2TziYqaxKeMqX79uYdkZSlnFU2wmQfJ89sDC0zFQtH4B3GKweZwytGWB7+Im
+ ea2hKqpUmaCNioJPc+L/cx7SgD4Lb0XmANV7rOjSoF2TyCgTQ/s+P/AlgCGTrzp3TzADTLGKE1b
+ nExGTx0fkzfLJ8+5HeugcP/ZpEm1lF3d38QwdyOOrwK3Sp6qffvC55slUTVIPv6AxXu500h5ejT
+ R7LAATzyxi4El0awQ7fsqOhrEn8wZK9/YdRYK5pwbGB5ywgt0dTZ3kj9tHNzk/J2bjsFpBP90FP
+ vTVsYJSANKuFiFN0MGGoOy+COBwSKJ3MddNViuS10PxwQjvEvcDjN/qdSQvhKJ+vZnoXMWwX7UI
+ w19HW3yL8fq4=
+X-Received: by 2002:a05:600c:8286:b0:46e:456e:ada5 with SMTP id
+ 5b1f17b1804b1-46e456eaecbmr75798595e9.28.1759158438562; 
+ Mon, 29 Sep 2025 08:07:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3EJAioSCR+/lwpBVm0IS0nfZo4Z1xpVpCUKZiQOopnhQI5PzyaLLOYdvWPOpXXyqB+fp51A==
+X-Received: by 2002:a05:600c:8286:b0:46e:456e:ada5 with SMTP id
+ 5b1f17b1804b1-46e456eaecbmr75798285e9.28.1759158438029; 
+ Mon, 29 Sep 2025 08:07:18 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e32bd164fsm94991835e9.1.2025.09.29.08.07.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 08:04:13 -0700 (PDT)
-Message-ID: <80d350a1-a926-41b9-9cd8-93652680484c@linaro.org>
-Date: Mon, 29 Sep 2025 17:04:12 +0200
+ Mon, 29 Sep 2025 08:07:17 -0700 (PDT)
+Message-ID: <1409de09-6790-454d-a644-362467a07959@redhat.com>
+Date: Mon, 29 Sep 2025 17:07:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] physmem: Destroy all CPU AddressSpaces on unrealize
+Subject: Re: [PATCH v2 10/14] hw/arm/smmuv3: Add banked support for queues and
+ error handling
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-References: <20250929144228.1994037-1-peter.maydell@linaro.org>
- <20250929144228.1994037-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250929144228.1994037-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
+ philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250925162618.191242-11-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250925162618.191242-11-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,102 +115,617 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/9/25 16:42, Peter Maydell wrote:
-> When we unrealize a CPU object (which happens on vCPU hot-unplug), we
-> should destroy all the AddressSpace objects we created via calls to
-> cpu_address_space_init() when the CPU was realized.
-> 
-> Commit 24bec42f3d6eae added a function to do this for a specific
-> AddressSpace, but did not add any places where the function was
-> called.
-> 
-> Since we always want to destroy all the AddressSpaces on unrealize,
-> regardless of the target architecture, we don't need to try to keep
-> track of how many are still undestroyed, or make the target
-> architecture code manually call a destroy function for each AS it
-> created.  Instead we can adjust the function to always completely
-> destroy the whole cpu->ases array, and arrange for it to be called
-> during CPU unrealize as part of the common code.
-> 
-> Without this fix, AddressSanitizer will report a leak like this
-> from a run where we hot-plugged and then hot-unplugged an x86 KVM
-> vCPU:
-> 
-> Direct leak of 416 byte(s) in 1 object(s) allocated from:
->      #0 0x5b638565053d in calloc (/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/qemu-system-x86_64+0x1ee153d) (BuildId: c1cd6022b195142106e1bffeca23498c2b752bca)
->      #1 0x7c28083f77b1 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x637b1) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
->      #2 0x5b6386999c7c in cpu_address_space_init /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../system/physmem.c:797:25
->      #3 0x5b638727f049 in kvm_cpu_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../target/i386/kvm/kvm-cpu.c:102:5
->      #4 0x5b6385745f40 in accel_cpu_common_realize /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../accel/accel-common.c:101:13
->      #5 0x5b638568fe3c in cpu_exec_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/cpu-common.c:232:10
->      #6 0x5b63874a2cd5 in x86_cpu_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../target/i386/cpu.c:9321:5
->      #7 0x5b6387a0469a in device_set_realized /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/qdev.c:494:13
->      #8 0x5b6387a27d9e in property_set_bool /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:2375:5
->      #9 0x5b6387a2090b in object_property_set /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:1450:5
->      #10 0x5b6387a35b05 in object_property_set_qobject /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/qom-qobject.c:28:10
->      #11 0x5b6387a21739 in object_property_set_bool /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:1520:15
->      #12 0x5b63879fe510 in qdev_realize /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/qdev.c:276:12
-> 
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2517
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+
+On 9/25/25 6:26 PM, Tao Tang wrote:
+> This commit extends the banked register model to the Command Queue
+> (CMDQ), Event Queue (EVTQ), and global error handling logic.
+>
+> By leveraging the banked structure, the SMMUv3 model now supports
+> separate, parallel queues and error status registers for the Secure and
+> Non-secure states. This is essential for correctly modeling the
+> parallel programming interfaces defined by the SMMUv3 architecture.
+>
+> Additionally, this patch hardens the MMIO implementation by adding
+> several checks that were incomplete in the previous version.
+> For instance, writes to the Command Queue registers are now correctly
+> gated by the IDR1.QUEUES_PRESET bit, ensuring compliance with the
+> architectural rules for pre-configured queues.
+
+This must be split as well.  This is really hard to review as is. Try to
+isolate the different functional changes.
+1) addition of sec_idx to queue_read/write_eventq + modification of
+queue_write_read can be moved in a separate patch
+2) smmu_cmdq_base_writable, smmu_eventq_irq_cfg_writable,
+smmu_gerror_irq_cfg_writable can go in a separate patch
+3) MMIO hardening can go in a separate patch too
+../..
+
+Thanks
+
+Eric
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   include/exec/cpu-common.h          | 10 ++++-----
->   include/hw/core/cpu.h              |  1 -
->   hw/core/cpu-common.c               |  1 +
->   stubs/cpu-destroy-address-spaces.c | 15 +++++++++++++
->   system/physmem.c                   | 34 ++++++++++++++----------------
->   stubs/meson.build                  |  1 +
->   6 files changed, 38 insertions(+), 24 deletions(-)
->   create mode 100644 stubs/cpu-destroy-address-spaces.c
-
-
-> -void cpu_address_space_destroy(CPUState *cpu, int asidx)
-> +void cpu_destroy_address_spaces(CPUState *cpu)
->   {
->       CPUAddressSpace *cpuas;
-> +    int asidx;
->   
->       assert(cpu->cpu_ases);
-> -    assert(asidx >= 0 && asidx < cpu->num_ases);
->   
-> -    cpuas = &cpu->cpu_ases[asidx];
-> -    if (tcg_enabled()) {
-> -        memory_listener_unregister(&cpuas->tcg_as_listener);
-> +    /* convenience alias just points to some cpu_ases[n] */
-> +    cpu->as = NULL;
+>  hw/arm/smmuv3-internal.h |   2 +
+>  hw/arm/smmuv3.c          | 374 +++++++++++++++++++++++++++++++++------
+>  2 files changed, 323 insertions(+), 53 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index af2936cf16..6bff504219 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -517,6 +517,8 @@ typedef struct SMMUEventInfo {
+>      uint32_t sid;
+>      bool recorded;
+>      bool inval_ste_allowed;
+> +    AddressSpace *as;
+> +    MemTxAttrs txattrs;
+>      SMMUSecurityIndex sec_idx;
+>      union {
+>          struct {
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 3835b9e79f..53c7eff0e3 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -106,14 +106,15 @@ static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn,
+>      trace_smmuv3_write_gerrorn(toggled & pending, s->bank[sec_idx].gerrorn);
+>  }
+>  
+> -static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd)
+> +static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd,
+> +                                     SMMUSecurityIndex sec_idx)
+>  {
+>      dma_addr_t addr = Q_CONS_ENTRY(q);
+>      MemTxResult ret;
+>      int i;
+>  
+> -    ret = dma_memory_read(&address_space_memory, addr, cmd, sizeof(Cmd),
+> -                          MEMTXATTRS_UNSPECIFIED);
+> +    ret = dma_memory_read(smmu_get_address_space(sec_idx), addr, cmd,
+> +                          sizeof(Cmd), smmu_get_txattrs(sec_idx));
+>      if (ret != MEMTX_OK) {
+>          return ret;
+>      }
+> @@ -123,7 +124,8 @@ static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd)
+>      return ret;
+>  }
+>  
+> -static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
+> +static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in,
+> +                               SMMUSecurityIndex sec_idx)
+>  {
+>      dma_addr_t addr = Q_PROD_ENTRY(q);
+>      MemTxResult ret;
+> @@ -133,8 +135,8 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
+>      for (i = 0; i < ARRAY_SIZE(evt.word); i++) {
+>          cpu_to_le32s(&evt.word[i]);
+>      }
+> -    ret = dma_memory_write(&address_space_memory, addr, &evt, sizeof(Evt),
+> -                           MEMTXATTRS_UNSPECIFIED);
+> +    ret = dma_memory_write(smmu_get_address_space(sec_idx), addr, &evt,
+> +                           sizeof(Evt), smmu_get_txattrs(sec_idx));
+>      if (ret != MEMTX_OK) {
+>          return ret;
+>      }
+> @@ -157,7 +159,7 @@ static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt,
+>          return MEMTX_ERROR;
+>      }
+>  
+> -    r = queue_write(q, evt);
+> +    r = queue_write(q, evt, sec_idx);
+>      if (r != MEMTX_OK) {
+>          return r;
+>      }
+> @@ -1025,6 +1027,8 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+>           */
+>          class = ptw_info.is_ipa_descriptor ? SMMU_CLASS_TT : class;
+>          event->sec_idx = cfg->sec_idx;
+> +        event->txattrs = cfg->txattrs;
+> +        event->sec_idx = cfg->sec_idx;
+>          switch (ptw_info.type) {
+>          case SMMU_PTW_ERR_WALK_EABT:
+>              event->type = SMMU_EVT_F_WALK_EABT;
+> @@ -1376,6 +1380,110 @@ static bool smmu_strtab_base_writable(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>      return smmuv3_is_smmu_enabled(s, sec_idx);
+>  }
+>  
+> +static inline int smmuv3_get_cr0_cmdqen(SMMUv3State *s,
+> +                                        SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].cr[0], CR0, CMDQEN);
+> +}
 > +
-> +    for (asidx = 0; asidx < cpu->num_ases; asidx++) {
-> +        cpuas = &cpu->cpu_ases[asidx];
-> +        if (!cpuas->as) {
-> +            /* This index was never initialized; no deinit needed */
-> +            continue;
+> +static inline int smmuv3_get_cr0ack_cmdqen(SMMUv3State *s,
+> +                                           SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].cr0ack, CR0, CMDQEN);
+> +}
+> +
+> +static inline int smmuv3_get_cr0_eventqen(SMMUv3State *s,
+> +                                          SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].cr[0], CR0, EVENTQEN);
+> +}
+> +
+> +static inline int smmuv3_get_cr0ack_eventqen(SMMUv3State *s,
+> +                                             SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].cr0ack, CR0, EVENTQEN);
+> +}
+> +
+> +/* Check if MSI is supported */
+> +static inline bool smmu_msi_supported(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].idr[0], IDR0, MSI);
+> +}
+> +
+> +/* Check if secure GERROR_IRQ_CFGx registers are writable */
+> +static inline bool smmu_gerror_irq_cfg_writable(SMMUv3State *s,
+> +                                                SMMUSecurityIndex sec_idx)
+> +{
+> +    if (!smmu_msi_supported(s, SMMU_SEC_IDX_NS)) {
+> +        return false;
+> +    }
+> +
+> +    bool ctrl_en = FIELD_EX32(s->bank[sec_idx].irq_ctrl,
+> +                              IRQ_CTRL, GERROR_IRQEN);
+> +
+> +    return !ctrl_en;
+> +}
+> +
+> +/* Check if CMDQEN is disabled */
+> +static bool smmu_cmdqen_disabled(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+> +{
+> +    int cr0_cmdqen = smmuv3_get_cr0_cmdqen(s, sec_idx);
+> +    int cr0ack_cmdqen = smmuv3_get_cr0ack_cmdqen(s, sec_idx);
+> +    return (cr0_cmdqen == 0 && cr0ack_cmdqen == 0);
+> +}
+> +
+> +/* Check if CMDQ_BASE register is writable */
+> +static bool smmu_cmdq_base_writable(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+> +{
+> +    /* Check TABLES_PRESET - use NS bank as it's the global setting */
+> +    if (FIELD_EX32(s->bank[SMMU_SEC_IDX_NS].idr[1], IDR1, QUEUES_PRESET)) {
+> +        return false;
+> +    }
+> +
+> +    return smmu_cmdqen_disabled(s, sec_idx);
+> +}
+> +
+> +/* Check if EVENTQEN is disabled */
+> +static bool smmu_eventqen_disabled(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+> +{
+> +    int cr0_eventqen = smmuv3_get_cr0_eventqen(s, sec_idx);
+> +    int cr0ack_eventqen = smmuv3_get_cr0ack_eventqen(s, sec_idx);
+> +    return (cr0_eventqen == 0 && cr0ack_eventqen == 0);
+> +}
+> +
+> +static bool smmu_idr1_queue_preset(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].idr[1], IDR1, QUEUES_PRESET);
+> +}
+> +
+> +/* Check if EVENTQ_BASE register is writable */
+> +static bool smmu_eventq_base_writable(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+> +{
+> +    /* Check TABLES_PRESET - use NS bank as it's the global setting */
+> +    if (smmu_idr1_queue_preset(s, SMMU_SEC_IDX_NS)) {
+> +        return false;
+> +    }
+> +
+> +    return smmu_eventqen_disabled(s, sec_idx);
+> +}
+> +
+> +static bool smmu_irq_ctl_evtq_irqen_disabled(SMMUv3State *s,
+> +                                             SMMUSecurityIndex sec_idx)
+> +{
+> +    return FIELD_EX32(s->bank[sec_idx].irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+> +}
+> +
+> +/* Check if EVENTQ_IRQ_CFGx is writable */
+> +static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s,
+> +                                         SMMUSecurityIndex sec_idx)
+> +{
+> +    if (smmu_msi_supported(s, sec_idx)) {
+> +        return false;
+> +    }
+> +
+> +    return smmu_irq_ctl_evtq_irqen_disabled(s, sec_idx);
+> +}
+> +
+>  static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>  {
+>      SMMUState *bs = ARM_SMMU(s);
+> @@ -1405,7 +1513,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>              break;
+>          }
+>  
+> -        if (queue_read(q, &cmd) != MEMTX_OK) {
+> +        if (queue_read(q, &cmd, sec_idx) != MEMTX_OK) {
+>              cmd_error = SMMU_CERROR_ABT;
+>              break;
+>          }
+> @@ -1430,8 +1538,11 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>              SMMUDevice *sdev = smmu_find_sdev(bs, sid);
+>  
+>              if (CMD_SSEC(&cmd)) {
+> -                cmd_error = SMMU_CERROR_ILL;
+> -                break;
+> +                if (sec_idx != SMMU_SEC_IDX_S) {
+> +                    /* Secure Stream with Non-Secure command */
+> +                    cmd_error = SMMU_CERROR_ILL;
+> +                    break;
+> +                }
+>              }
+>  
+>              if (!sdev) {
+> @@ -1450,8 +1561,10 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>              SMMUSIDRange sid_range;
+>  
+>              if (CMD_SSEC(&cmd)) {
+> -                cmd_error = SMMU_CERROR_ILL;
+> -                break;
+> +                if (sec_idx != SMMU_SEC_IDX_S) {
+> +                    cmd_error = SMMU_CERROR_ILL;
+> +                    break;
+> +                }
+>              }
+>  
+>              mask = (1ULL << (range + 1)) - 1;
+> @@ -1469,8 +1582,10 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>              SMMUDevice *sdev = smmu_find_sdev(bs, sid);
+>  
+>              if (CMD_SSEC(&cmd)) {
+> -                cmd_error = SMMU_CERROR_ILL;
+> -                break;
+> +                if (sec_idx != SMMU_SEC_IDX_S) {
+> +                    cmd_error = SMMU_CERROR_ILL;
+> +                    break;
+> +                }
+>              }
+>  
+>              if (!sdev) {
+> @@ -1624,6 +1739,13 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>          s->bank[reg_sec_idx].strtab_base = data & SMMU_STRTAB_BASE_RESERVED;
+>          return MEMTX_OK;
+>      case A_CMDQ_BASE:
+> +        if (!smmu_cmdq_base_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "CMDQ_BASE write ignored: register is RO\n");
+> +            return MEMTX_OK;
 > +        }
-> +        if (tcg_enabled()) {
-> +            memory_listener_unregister(&cpuas->tcg_as_listener);
+> +
+> +        data &= SMMU_QUEUE_BASE_RESERVED;
+>          s->bank[reg_sec_idx].cmdq.base = data;
+>          s->bank[reg_sec_idx].cmdq.log2size = extract64(
+>              s->bank[reg_sec_idx].cmdq.base, 0, 5);
+> @@ -1632,6 +1754,13 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>          }
+>          return MEMTX_OK;
+>      case A_EVENTQ_BASE:
+> +        if (!smmu_eventq_base_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_BASE write ignored: register is RO\n");
+> +            return MEMTX_OK;
 > +        }
-> +        g_clear_pointer(&cpuas->as, address_space_destroy_free);
->       }
->   
-> -    address_space_destroy(cpuas->as);
-> -    g_free_rcu(cpuas->as, rcu);
-> -
-> -    if (asidx == 0) {
-> -        /* reset the convenience alias for address space 0 */
-> -        cpu->as = NULL;
-> -    }
-> -
-> -    if (--cpu->cpu_ases_count == 0) {
-> -        g_free(cpu->cpu_ases);
-> -        cpu->cpu_ases = NULL;
-> -    }
-> +    g_clear_pointer(&cpu->cpu_ases, g_free);
->   }
+> +
+> +        data &= SMMU_QUEUE_BASE_RESERVED;
+>          s->bank[reg_sec_idx].eventq.base = data;
+>          s->bank[reg_sec_idx].eventq.log2size = extract64(
+>              s->bank[reg_sec_idx].eventq.base, 0, 5);
+> @@ -1640,8 +1769,25 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>          }
+>          return MEMTX_OK;
+>      case A_EVENTQ_IRQ_CFG0:
+> +        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_IRQ_CFG0 write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        data &= SMMU_EVENTQ_IRQ_CFG0_RESERVED;
+>          s->bank[reg_sec_idx].eventq_irq_cfg0 = data;
+>          return MEMTX_OK;
+> +    case A_GERROR_IRQ_CFG0:
+> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_idx)) {
+> +            /* SMMU_(*_)_IRQ_CTRL.GERROR_IRQEN == 1: IGNORED this write */
+> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 write ignored: "
+> +                         "register is RO when IRQ enabled\n");
+> +            return MEMTX_OK;
+> +        }
+> +        s->bank[reg_sec_idx].gerror_irq_cfg0 =
+> +            data & SMMU_GERROR_IRQ_CFG0_RESERVED;
+> +        return MEMTX_OK;
+>      default:
+>          qemu_log_mask(LOG_UNIMP,
+>                        "%s Unexpected 64-bit access to 0x%"PRIx64" (WI)\n",
+> @@ -1666,7 +1812,15 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          s->bank[reg_sec_idx].cr[1] = data;
+>          return MEMTX_OK;
+>      case A_CR2:
+> -        s->bank[reg_sec_idx].cr[2] = data;
+> +        if (smmuv3_is_smmu_enabled(s, reg_sec_idx)) {
+> +            /* Allow write: SMMUEN is 0 in both CR0 and CR0ACK */
+> +            s->bank[reg_sec_idx].cr[2] = data;
+> +        } else {
+> +            /* CONSTRAINED UNPREDICTABLE behavior: Ignore this write */
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "CR2 write ignored: register is read-only when "
+> +                          "CR0.SMMUEN or CR0ACK.SMMUEN is set\n");
+> +        }
+>          return MEMTX_OK;
+>      case A_IRQ_CTRL:
+>          s->bank[reg_sec_idx].irq_ctrl = data;
+> @@ -1680,14 +1834,28 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          smmuv3_cmdq_consume(s, reg_sec_idx);
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG0: /* 64b */
+> -        s->bank[reg_sec_idx].gerror_irq_cfg0 =
+> -            deposit64(s->bank[reg_sec_idx].gerror_irq_cfg0, 0, 32, data);
+> -        return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG0 + 4:
+> -        s->bank[reg_sec_idx].gerror_irq_cfg0 =
+> -            deposit64(s->bank[reg_sec_idx].gerror_irq_cfg0, 32, 32, data);
+> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 write ignored: "
+> +                          "register is RO when IRQ enabled\n");
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        data &= SMMU_GERROR_IRQ_CFG0_RESERVED;
+> +        if (reg_offset == A_GERROR_IRQ_CFG0) {
+> +            s->bank[reg_sec_idx].gerror_irq_cfg0 = deposit64(
+> +                s->bank[reg_sec_idx].gerror_irq_cfg0, 0, 32, data);
+> +        } else {
+> +            s->bank[reg_sec_idx].gerror_irq_cfg0 = deposit64(
+> +                s->bank[reg_sec_idx].gerror_irq_cfg0, 32, 32, data);
+> +        }
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG1:
+> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG1 write ignored: "
+> +                          "register is RO when IRQ enabled\n");
+> +            return MEMTX_OK;
+> +        }
+>          s->bank[reg_sec_idx].gerror_irq_cfg1 = data;
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG2:
+> @@ -1735,60 +1903,106 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          }
+>          return MEMTX_OK;
+>      case A_CMDQ_BASE: /* 64b */
+> -        s->bank[reg_sec_idx].cmdq.base =
+> -            deposit64(s->bank[reg_sec_idx].cmdq.base, 0, 32, data);
+> -        s->bank[reg_sec_idx].cmdq.log2size =
+> -            extract64(s->bank[reg_sec_idx].cmdq.base, 0, 5);
+> -        if (s->bank[reg_sec_idx].cmdq.log2size > SMMU_CMDQS) {
+> -            s->bank[reg_sec_idx].cmdq.log2size = SMMU_CMDQS;
+> -        }
+> -        return MEMTX_OK;
+>      case A_CMDQ_BASE + 4: /* 64b */
+> -        s->bank[reg_sec_idx].cmdq.base =
+> -            deposit64(s->bank[reg_sec_idx].cmdq.base, 32, 32, data);
+> -        return MEMTX_OK;
+> +        if (!smmu_cmdq_base_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "CMDQ_BASE write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        data &= SMMU_QUEUE_BASE_RESERVED;
+> +        if (reg_offset == A_CMDQ_BASE) {
+> +            s->bank[reg_sec_idx].cmdq.base = deposit64(
+> +                s->bank[reg_sec_idx].cmdq.base, 0, 32, data);
+> +
+> +            s->bank[reg_sec_idx].cmdq.log2size = extract64(
+> +                s->bank[reg_sec_idx].cmdq.base, 0, 5);
+> +            if (s->bank[reg_sec_idx].cmdq.log2size > SMMU_CMDQS) {
+> +                s->bank[reg_sec_idx].cmdq.log2size = SMMU_CMDQS;
+> +            }
+> +        } else {
+> +            s->bank[reg_sec_idx].cmdq.base = deposit64(
+> +                s->bank[reg_sec_idx].cmdq.base, 32, 32, data);
+> +        }
+> +
+>          return MEMTX_OK;
+>      case A_CMDQ_PROD:
+>          s->bank[reg_sec_idx].cmdq.prod = data;
+>          smmuv3_cmdq_consume(s, reg_sec_idx);
+>          return MEMTX_OK;
+>      case A_CMDQ_CONS:
+> +        if (!smmu_cmdqen_disabled(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "CMDQ_CONS write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+>          s->bank[reg_sec_idx].cmdq.cons = data;
+>          return MEMTX_OK;
+>      case A_EVENTQ_BASE: /* 64b */
+> -        s->bank[reg_sec_idx].eventq.base =
+> -            deposit64(s->bank[reg_sec_idx].eventq.base, 0, 32, data);
+> -        s->bank[reg_sec_idx].eventq.log2size =
+> -            extract64(s->bank[reg_sec_idx].eventq.base, 0, 5);
+> -        if (s->bank[reg_sec_idx].eventq.log2size > SMMU_EVENTQS) {
+> -            s->bank[reg_sec_idx].eventq.log2size = SMMU_EVENTQS;
+> -        }
+> -        s->bank[reg_sec_idx].eventq.cons = data;
+> -        return MEMTX_OK;
+>      case A_EVENTQ_BASE + 4:
+> -        s->bank[reg_sec_idx].eventq.base =
+> -            deposit64(s->bank[reg_sec_idx].eventq.base, 32, 32, data);
+> -        return MEMTX_OK;
+> +        if (!smmu_eventq_base_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_BASE write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        data &= SMMU_QUEUE_BASE_RESERVED;
+> +        if (reg_offset == A_EVENTQ_BASE) {
+> +            s->bank[reg_sec_idx].eventq.base = deposit64(
+> +                s->bank[reg_sec_idx].eventq.base, 0, 32, data);
+> +
+> +            s->bank[reg_sec_idx].eventq.log2size = extract64(
+> +                s->bank[reg_sec_idx].eventq.base, 0, 5);
+> +            if (s->bank[reg_sec_idx].eventq.log2size > SMMU_EVENTQS) {
+> +                s->bank[reg_sec_idx].eventq.log2size = SMMU_EVENTQS;
+> +            }
+> +        } else {
+> +            s->bank[reg_sec_idx].eventq.base = deposit64(
+> +                s->bank[reg_sec_idx].eventq.base, 32, 32, data);
+> +        }
+>          return MEMTX_OK;
+>      case A_EVENTQ_PROD:
+> +        if (!smmu_eventqen_disabled(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_PROD write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+>          s->bank[reg_sec_idx].eventq.prod = data;
+>          return MEMTX_OK;
+>      case A_EVENTQ_CONS:
+>          s->bank[reg_sec_idx].eventq.cons = data;
+>          return MEMTX_OK;
+>      case A_EVENTQ_IRQ_CFG0: /* 64b */
+> -        s->bank[reg_sec_idx].eventq_irq_cfg0 =
+> -            deposit64(s->bank[reg_sec_idx].eventq_irq_cfg0, 0, 32, data);
+> -        return MEMTX_OK;
+>      case A_EVENTQ_IRQ_CFG0 + 4:
+> -        s->bank[reg_sec_idx].eventq_irq_cfg0 =
+> -            deposit64(s->bank[reg_sec_idx].eventq_irq_cfg0, 32, 32, data);
+> -        return MEMTX_OK;
+> +        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_IRQ_CFG0 write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        data &= SMMU_EVENTQ_IRQ_CFG0_RESERVED;
+> +        if (reg_offset == A_EVENTQ_IRQ_CFG0) {
+> +            s->bank[reg_sec_idx].eventq_irq_cfg0 = deposit64(
+> +                s->bank[reg_sec_idx].eventq_irq_cfg0, 0, 32, data);
+> +        } else {
+> +            s->bank[reg_sec_idx].eventq_irq_cfg0 = deposit64(
+> +                s->bank[reg_sec_idx].eventq_irq_cfg0, 32, 32, data);
+> +        }
+>          return MEMTX_OK;
+>      case A_EVENTQ_IRQ_CFG1:
+> +        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_IRQ_CFG1 write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+>          s->bank[reg_sec_idx].eventq_irq_cfg1 = data;
+>          return MEMTX_OK;
+>      case A_EVENTQ_IRQ_CFG2:
+> +        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_idx)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "EVENTQ_IRQ_CFG2 write ignored: register is RO\n");
+> +            return MEMTX_OK;
+> +        }
+>          s->bank[reg_sec_idx].eventq_irq_cfg2 = data;
+>          return MEMTX_OK;
+>      case A_S_INIT_ALIAS:
+> @@ -1848,6 +2062,11 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
+>      uint32_t reg_offset = offset & 0xfff;
+>      switch (reg_offset) {
+>      case A_GERROR_IRQ_CFG0:
+> +        /* SMMU_(*_)GERROR_IRQ_CFG0 BOTH check SMMU_IDR0.MSI */
+> +        if (!smmu_msi_supported(s, SMMU_SEC_IDX_NS)) {
+> +            *data = 0; /* RES0 */
+> +            return MEMTX_OK;
+> +        }
+>          *data = s->bank[reg_sec_idx].gerror_irq_cfg0;
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE:
+> @@ -1859,6 +2078,13 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
+>      case A_EVENTQ_BASE:
+>          *data = s->bank[reg_sec_idx].eventq.base;
+>          return MEMTX_OK;
+> +    case A_EVENTQ_IRQ_CFG0:
+> +        /* MSI support is depends on the register's security domain */
+> +        if (!smmu_msi_supported(s, reg_sec_idx)) {
+> +            *data = 0;
+> +            return MEMTX_OK;
+> +        }
+> +
+>          *data = s->bank[reg_sec_idx].eventq_irq_cfg0;
+>          return MEMTX_OK;
+>      default:
+> @@ -1917,16 +2143,31 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+>          *data = s->bank[reg_sec_idx].gerrorn;
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG0: /* 64b */
+> -        *data = extract64(s->bank[reg_sec_idx].gerror_irq_cfg0, 0, 32);
+> -        return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG0 + 4:
+> -        *data = extract64(s->bank[reg_sec_idx].gerror_irq_cfg0, 32, 32);
+> -        return MEMTX_OK;
+> +        /* SMMU_(*_)GERROR_IRQ_CFG0 BOTH check SMMU_IDR0.MSI */
+> +        if (!smmu_msi_supported(s, SMMU_SEC_IDX_NS)) {
+> +            *data = 0; /* RES0 */
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        if (reg_offset == A_GERROR_IRQ_CFG0) {
+> +            *data = extract64(s->bank[reg_sec_idx].gerror_irq_cfg0, 0, 32);
+> +        } else {
+> +            *data = extract64(s->bank[reg_sec_idx].gerror_irq_cfg0, 32, 32);
+> +        }
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG1:
+> +        if (!smmu_msi_supported(s, SMMU_SEC_IDX_NS)) {
+> +            *data = 0; /* RES0 */
+> +            return MEMTX_OK;
+> +        }
+>          *data = s->bank[reg_sec_idx].gerror_irq_cfg1;
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG2:
+> +        if (!smmu_msi_supported(s, SMMU_SEC_IDX_NS)) {
+> +            *data = 0; /* RES0 */
+> +            return MEMTX_OK;
+> +        }
+>          *data = s->bank[reg_sec_idx].gerror_irq_cfg2;
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE: /* 64b */
+> @@ -1962,6 +2203,33 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+>      case A_EVENTQ_CONS:
+>          *data = s->bank[reg_sec_idx].eventq.cons;
+>          return MEMTX_OK;
+> +    case A_EVENTQ_IRQ_CFG0:
+> +    case A_EVENTQ_IRQ_CFG0 + 4:
+> +        if (!smmu_msi_supported(s, reg_sec_idx)) {
+> +            *data = 0;
+> +            return MEMTX_OK;
+> +        }
+> +
+> +        if (reg_offset == A_EVENTQ_IRQ_CFG0) {
+> +            *data = extract64(s->bank[reg_sec_idx].eventq_irq_cfg0, 0, 32);
+> +        } else {
+> +            *data = extract64(s->bank[reg_sec_idx].eventq_irq_cfg0, 32, 32);
+> +        }
+> +        return MEMTX_OK;
+> +    case A_EVENTQ_IRQ_CFG1:
+> +        if (!smmu_msi_supported(s, reg_sec_idx)) {
+> +            *data = 0;
+> +            return MEMTX_OK;
+> +        }
+> +        *data = s->bank[reg_sec_idx].eventq_irq_cfg1;
+> +        return MEMTX_OK;
+> +    case A_EVENTQ_IRQ_CFG2:
+> +        if (!smmu_msi_supported(s, reg_sec_idx)) {
+> +            *data = 0;
+> +            return MEMTX_OK;
+> +        }
+> +        *data = s->bank[reg_sec_idx].eventq_irq_cfg2;
+> +        return MEMTX_OK;
+>      case A_S_INIT_ALIAS:
+>          *data = 0;
+>          return MEMTX_OK;
 
-Good, this API respects Richard's suggestion on previous attempt:
-https://lore.kernel.org/qemu-devel/594b2550-9a73-684f-6e54-29401dc6cd7a@linaro.org/
 
