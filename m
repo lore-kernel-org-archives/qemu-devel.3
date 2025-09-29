@@ -4,68 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0A1CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BDBCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3G9j-0001Yh-0n; Mon, 29 Sep 2025 11:51:15 -0400
+	id 1v3G9h-0001Wu-Ol; Mon, 29 Sep 2025 11:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v3G9d-0001Ky-33; Mon, 29 Sep 2025 11:51:09 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v3G9I-00015X-ID
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:50:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v3G9U-0000iA-KQ; Mon, 29 Sep 2025 11:51:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1759161061; x=1790697061;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=9W74zEoqyUET7A2cUfqGOGYlA5GRpaX5PAiAbi7NmyE=;
- b=CNY8OEWxzizStz5tPxpT67FZIxRgdqtpj6cjiEOLGmzqhk4xRBeYZkVD
- PDWkkikCyKq6ccGVJJso6ofBF1kPiiwfh/eGK4yJ0iE6ajG7YwjkIC0sU
- xEjNSqCvqJPQrZyiZcmYn2P31SAJY50TLltrBGqSt37YrtynhyoP24c4r
- +mtIpwTiVdq7P/IrR8dt6chPsymTeceGWqTo/7GhyysagqPKZraUzQfHY
- 4Y9Oe2z1e1mKzC5etd4i28CrpOJmWB9P/EXyOFgf1fWVwiquQ1U+ec7r/
- I0STrAEZB9QwRgEdJ/tCqv2o3t0eHuAOWhWOgQtVZhdqlnaEdY2xAHixC A==;
-X-CSE-ConnectionGUID: gvtRRVT6Qu2KnCSLyFjhnA==
-X-CSE-MsgGUID: QitGmT2vSnKfvbmusFs9GQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11568"; a="78829376"
-X-IronPort-AV: E=Sophos;i="6.18,301,1751266800"; d="scan'208";a="78829376"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Sep 2025 08:50:51 -0700
-X-CSE-ConnectionGUID: hYRn1zx3TVWyDaW6ZgrGgg==
-X-CSE-MsgGUID: kOgdylrIQpGeb0HdBDrxxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,301,1751266800"; d="scan'208";a="177519499"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 29 Sep 2025 08:50:49 -0700
-Date: Tue, 30 Sep 2025 00:12:48 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, manos.pitsidianakis@linaro.org
-Subject: Re: [PATCH 6/7] rust: migration: implement ToMigrationState for Timer
-Message-ID: <aNqwACkjytK3+QQ4@intel.com>
-References: <20250920142958.181910-1-pbonzini@redhat.com>
- <20250920142958.181910-7-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v3G8v-0000dK-AM
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:50:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759161023;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u+cJ9QO2Q0sAQJS568/ENx7YFMeKJSiogImV/H5vK6k=;
+ b=IBaX8HgpOGVx5c7dcVhnSazysb5veWEapJWQtoth+t/KzrHVh3Al8VeZSEvD3VGkZvHZsB
+ zMwP9FffnNGwgrUEYOUZ0gq1qpErvZOVPVssDyjTI/et5ZebultmL029VPP8Vr7IiGz3QW
+ N8CfmHOPYIqG9EZF3cEVQ4xSDHEApyc=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-7jFlPzs8Osmw7D12VGwXZA-1; Mon, 29 Sep 2025 11:50:21 -0400
+X-MC-Unique: 7jFlPzs8Osmw7D12VGwXZA-1
+X-Mimecast-MFC-AGG-ID: 7jFlPzs8Osmw7D12VGwXZA_1759161020
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b36f970e2abso361595566b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:50:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759161019; x=1759765819;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u+cJ9QO2Q0sAQJS568/ENx7YFMeKJSiogImV/H5vK6k=;
+ b=saGEP/izm721wHTwONVpILVzDrg41CIGDJDZy6biJmFxvxidnAuDZ1BbDtu/lwjMjB
+ T2i8oV1cU9GkwCUb1h45hcLaY8kqqjeAA2owLi5KZd+XPIcQOGl5Y9bjeQu8sWTkiJJI
+ FC9iFjJkBfvnWZP/x0wjPrV6LKcUbmtVOqjRHLZNXDangqSmc8NVpzYBC6Szbsvs/Rvq
+ b71xyxP2FXeaCVZH0145LQnldWMI5jYqWbQzIlN5SlyUW+gGJAFgON6Q+4t/ebCkkF7+
+ QJL5nAACx/texRJOOhFAwJqeiLCO+hGW2Za14feHEjFbdwJlSZHdLfHwT5UruWAq7GI+
+ nMSQ==
+X-Gm-Message-State: AOJu0YwwF7ED6D5L1gMtoMm0pR567BpGkKKSwjG/Qw1p74/eDpnE9E3J
+ XHIGCyttn4N1pTdW2l/SPCSVhbQkAVRdrkG/GJAz8Sjz+RqO82ai6STG6eR6GwikHKrpKO68mBx
+ owo/OQvBJ0o8LdKXGcItK6ZvvIG+Up2QHdtMS4vlsC0S80p78qkdgLNHZFqd9LNTRcnoop6IQOj
+ 2xX58AeMUMwFQxyfnzuH32y5MxysYE+TQeHddYCNjy
+X-Gm-Gg: ASbGnctfUIXa2rTp49ExFQ1e6nBRJNOkRr2d5qvLV4nbrg31r25YpSe/Adx00AEQXDT
+ 8yO3teWJl+SntVweA4ifUp4lyyy9TlZ11NIjGgwYuSc7LPkdHsK3RFApHWzj5+pMGBxAjRaSYou
+ eDsTGJUpGx+j3Pxvhlln7DVCc8rbS0DZ6TcTQiB3kIiMnvKBxdgrLAl9gAZVHGxF+0Yvu1LRyfY
+ qquHVVbv8gHiygNDaOVZQdzQalEP5KhOTXGyz71DKwdbo/YY/HHP864AyjnYZLIS1RklIbqN/Ul
+ R+Tgztjs4HoJfd+v1UH8elnH5BR6y86huLKE1oh/ib3Xx0vq2FzDfe2piH9JljAqkRfxDl+NX3A
+ kCdic9ki0d9e+ANH+DO7VRJn2XCeNNEd9Aaek6LnvhKDDhg==
+X-Received: by 2002:a17:907:3e93:b0:b40:448d:cdb0 with SMTP id
+ a640c23a62f3a-b40448df75dmr250786666b.41.1759161019584; 
+ Mon, 29 Sep 2025 08:50:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsI8J36HzZ2hqMoZwqMNJrQRn4zL3+0oxOL7d8wPOdjwUDpKC0BmrdPUFkKf7RKZnQe8Ul1A==
+X-Received: by 2002:a17:907:3e93:b0:b40:448d:cdb0 with SMTP id
+ a640c23a62f3a-b40448df75dmr250783366b.41.1759161019124; 
+ Mon, 29 Sep 2025 08:50:19 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.127.188])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b35446f758csm953275566b.53.2025.09.29.08.50.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Sep 2025 08:50:17 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Tanish Desai <tanishdesai37@gmail.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-rust@nongnu.org
+Subject: [PATCH 15/16] tracetool/ftrace: add Rust support
+Date: Mon, 29 Sep 2025 17:49:37 +0200
+Message-ID: <20250929154938.594389-16-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250929154938.594389-1-pbonzini@redhat.com>
+References: <20250929154938.594389-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250920142958.181910-7-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,85 +114,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 20, 2025 at 04:29:57PM +0200, Paolo Bonzini wrote:
-> Date: Sat, 20 Sep 2025 16:29:57 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 6/7] rust: migration: implement ToMigrationState for Timer
-> X-Mailer: git-send-email 2.51.0
-> 
-> Timer is a complex struct, allow adding it to a struct that
-> uses #[derive(ToMigrationState)]; similar to vmstate_timer, only
-> the expiration time has to be preserved.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/migration/src/migratable.rs | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
-> 
-> diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
-> index fa25317eea8..c4ad4f73d5c 100644
-> --- a/rust/migration/src/migratable.rs
-> +++ b/rust/migration/src/migratable.rs
-> @@ -202,6 +202,37 @@ fn restore_migrated_state(
->      ) -> Result<(), InvalidError>;
->  }
->  
-> +impl ToMigrationState for util::timer::Timer {
-> +    type Migrated = i64;
+From: Tanish Desai <tanishdesai37@gmail.com>
 
-This converts a Timer to i64, then we don't need vmstate_info_timer
-anymore. Good idea.
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ scripts/tracetool/backend/ftrace.py |  8 +++++-
+ tests/tracetool/ftrace.rs           | 40 +++++++++++++++++++++++++++++
+ tests/tracetool/tracetool-test.py   |  2 +-
+ 3 files changed, 48 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tracetool/ftrace.rs
 
-> +    fn snapshot_migration_state(&self, target: &mut i64) -> Result<(), InvalidError> {
-> +        // SAFETY: as_ptr() is unsafe to ensure that the caller reasons about
-> +        // the pinning of the data inside the Opaque<>.  Here all we do is
-> +        // access a field.
-> +        *target = unsafe { &*self.as_ptr() }.expire_time;
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index 7ddd5d11a66..e03698a2edf 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -12,7 +12,7 @@
+ __email__      = "stefanha@redhat.com"
+ 
+ 
+-from tracetool import out
++from tracetool import out, expand_format_string
+ 
+ 
+ PUBLIC = True
+@@ -43,3 +43,9 @@ def generate_h(event, group):
+ def generate_h_backend_dstate(event, group):
+     out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+         event_id="TRACE_" + event.name.upper())
++
++def generate_rs(event, group):
++    out('        let format_string = c"%(fmt)s";',
++        '        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, %(args)s);}',
++        fmt=expand_format_string(event.fmt),
++        args=event.args.rust_call_varargs())
+diff --git a/tests/tracetool/ftrace.rs b/tests/tracetool/ftrace.rs
+new file mode 100644
+index 00000000000..07b9259cf29
+--- /dev/null
++++ b/tests/tracetool/ftrace.rs
+@@ -0,0 +1,40 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// This file is @generated by tracetool, do not edit.
++
++#[allow(unused_imports)]
++use std::ffi::c_char;
++#[allow(unused_imports)]
++use util::bindings;
++
++#[inline(always)]
++fn trace_event_state_is_enabled(dstate: u16) -> bool {
++    (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
++}
++
++extern "C" {
++    static mut trace_events_enabled_count: u32;
++}
++extern "C" {
++    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_blah(_context: *mut (), _filename: &std::ffi::CStr)
++{
++    if trace_event_state_is_enabled(unsafe { _TRACE_TEST_BLAH_DSTATE}) {
++        let format_string = c"Blah context=%p filename=%s";
++        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context /* as *mut () */, _filename.as_ptr());}
++    }
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_wibble(_context: *mut (), _value: std::ffi::c_int)
++{
++    if trace_event_state_is_enabled(unsafe { _TRACE_TEST_WIBBLE_DSTATE}) {
++        let format_string = c"Wibble context=%p value=%d";
++        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context /* as *mut () */, _value /* as std::ffi::c_int */);}
++    }
++}
+diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
+index f58f3b795e7..3341fb18f90 100755
+--- a/tests/tracetool/tracetool-test.py
++++ b/tests/tracetool/tracetool-test.py
+@@ -14,7 +14,7 @@ def get_formats(backend):
+         "c",
+         "h",
+     ]
+-    if backend in {"log", "simple"}:
++    if backend in {"ftrace", "log", "simple"}:
+         formats += ["rs"]
+     if backend == "dtrace":
+         formats += [
+-- 
+2.51.0
 
-C side checks timer_pending(), which ensures when the timer is
-inactive, it always saves u64::MAX.
-
-But now we save the expire_time directly in Rust. I think this would be
-possible to break the migration from Rust timer to C timer, because at
-C side, timer_get() checks whether expire_time is -1 and we can't ensure
-expire_time won't store -2 (or other unusual negative values).
-
-So maybe it's better to follow C side behavior to return u64::MAX for
-non-pending case?
-
-> +        Ok(())
-> +    }
-> +
-> +    fn restore_migrated_state_mut(
-> +        &mut self,
-> +        source: Self::Migrated,
-> +        version_id: u8,
-> +    ) -> Result<(), InvalidError> {
-> +        self.restore_migrated_state(source, version_id)
-> +    }
-> +}
-> +
-> +impl ToMigrationStateShared for util::timer::Timer {
-> +    fn restore_migrated_state(&self, source: i64, _version_id: u8) -> Result<(), InvalidError> {
-> +        if source >= 0 {
-
-This can work for the migration cases of C->Rust and Rust->Rust.
-
-Thanks,
-Zhao
-
-> +            self.modify(source as u64);
-> +        } else {
-> +            self.delete();
-> +        }
-> +        Ok(())
-> +    }
-> +}
-> +
->  impl<T: ToMigrationStateShared, const N: usize> ToMigrationStateShared for [T; N]
->  where
->      [T::Migrated; N]: Default,
-> -- 
-> 2.51.0
-> 
 
