@@ -4,146 +4,220 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CAE3CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 13:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22243CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 13:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3E8X-0003br-9O; Mon, 29 Sep 2025 09:41:53 -0400
+	id 1v3EM6-000233-Bo; Mon, 29 Sep 2025 09:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1v3E7G-0002l1-Uj; Mon, 29 Sep 2025 09:40:37 -0400
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v3ELu-000201-S1
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 09:55:43 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1v3E6u-0003NU-UA; Mon, 29 Sep 2025 09:40:30 -0400
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v3ELU-0007d9-2J
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 09:55:41 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58TDOPCW026110;
+ Mon, 29 Sep 2025 13:55:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=cHf9KDk1Fno5U+YCc6dCFFHsCA13pGQedkVdSCURS68=; b=
+ FXCjv/2x0Vqh4kaLew641diEme8Cy40LEjOgLVo28s1PVKs4Jkx1pivTt19tReN6
+ 0ZQfYiCMUohDlkf0x5cHN3n00/M2X2NWIn6fS5dNXdBFfSDGi31KvEttpvopCjs/
+ /MGgOXsVQvU+CPVAQkqxNNfbUgEmRvkSnAVYIEpYFVkD3Hgi64jLXmWD1MKzD0mk
+ ha2BC/Dy7Rq/mjFxWWTcSUn0U4O+upB5+8UreOjPTA8QL0FAdBNYNfSMt0/XAnmJ
+ G57hQJSo3Ua91Apay/GNtc2cMQKgsf9O6GSmIRrQrWxxJoOIot+pVff9YZ9p2g7H
+ uiuvdFxGn6rjkE5puVgRzA==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49ftye82hr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Sep 2025 13:55:01 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 58TD0FVD002102; Mon, 29 Sep 2025 13:55:00 GMT
+Received: from sj2pr03cu001.outbound.protection.outlook.com
+ (mail-westusazon11012011.outbound.protection.outlook.com [52.101.43.11])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 49e6cd0bta-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Sep 2025 13:55:00 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Lu8XnFiDX9zVLPY8UFZos4G6owSFNIHw7bV42lZZ4Ms+SJSj2DI0zViVcem2lwNIE6L5zMUt9taP1zDZerjOD9ppeVzSiXTJUSrHXGiKn3lHu+HV05jRKpocRlaFEhjJRvR6QUju3MDL62COkyeny0PaAIJQCV1oKUq6KHtPfoedutxTFjnXVgY8rLmkT0YDZ+Va9uRJZM2pk54Li3osm56F6I+6grAtQeYZ9ONCBDz32VOCev+/gQWW5FJg0GgiXH/7dWoRRF4tAV5KPNu8PjnpN/VQFlDUi/yayCDNE1oR/wuK/j39fLWzHes2blSLuiyxg6y7NQqOUkCQij/91g==
+ b=GX+bIBqhMSdulydo1AcoaAXZ/0L93clTrixxxmE+TghmChyqwC3JejOrpk7OpeJrFTYdKYH+kBS6AIRIEPBDvKnIpp8dTnWyWNrSKhDCMJUe1bOFUg38C3AOsjk/LvKGUyajWVqtRsvLk1oxK4fL9nTi8A2LLzy5ruCd4KoRiqIRSh9IIVfbWGd7ohMo47RCUhYb3zZIK5p8KNoyyxDzTXF/etTAAqVz/GvqXLxNXjwjGoDYNwksJiXDfI9L3dqWR8WsG/nned+03bptUPd8eseqVEiZiREzBG1i0TAHEQbxrWfTV2/TRYcmn+zpOpxmz+IlveO/0BbaKCCliG99qg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u0jO6FH0QxeuFpOn0WMMp5VCAryvh1uzMdOQWEvJ+YA=;
- b=Jaj+AT8vY1HDOzZ6Ph8rJ9xzAGgwwzOvRANLb3MqBKOA4ZfltR0mh6XFQeEpgFXk9mU0XMDxxmESmHb96xmnMzkmZE4JZPjS2kRhewCsBAQrxR0cUgfpLttvTtvknd7+gS1P8N0PaXnGXbsFpc9/TEJjZYBv1MHVwTAs9r47Y5a0z/8DteC8ogGTCANrCRc+Wj0/zyvTxI0UzBuWkgAqO8ASifsaHUDKNgjdFuj2r5wh6D1oqUV0DBPrk1WNv9lwxPgKokaLXGUgnJIheopLfBbwKOyGK6Sa6yUYMaPhv3eddwvBnSjm64lT51Rh5sI1w+f30ULncxtjorzI90lffA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ bh=cHf9KDk1Fno5U+YCc6dCFFHsCA13pGQedkVdSCURS68=;
+ b=bdlGTQNFjQbQ7ziBo1usQoEAik7QwPc6tC/gaGD3NE7dtVFQwAmCMWqp3j+nFdIa97NqpQxsClZWzFxRbvEYq9uBqBy/PRs9jCRaF0bVDtylRa2kvY07SwOWIErqLomYV36OV4gYiHp8HNaae4ScCQ1B+PtYzCpIk9O786gt7ThTa6tlLZ/6SPeURPkcFe3jjgCWnWng/pyOtovBfAj2yVDMhwCcTimGiAnoPreM5rT1ytqYGRjqevwyc2u1eczT09Q/bovQa4TAXQvdjw7Kxlyf097l16zByJn9nvW80G5dVLhzqlbrirkHvYhKp0bIIch9+TS0LD/fl2Q9v9YVEA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=u0jO6FH0QxeuFpOn0WMMp5VCAryvh1uzMdOQWEvJ+YA=;
- b=CjhYE34hte518Rz/WBwy6z9KLyp30ltDq9ByMlkkmpfVGWfeILHLVQqUs2Z8UzVxxg1Gj0pwHoE8esdqw4ROwyPNJ2B34HBHHI67BfJB11HItbnBiJeWf7ub3S9tbZAkDk13+tEJFlKw7idJzFOrUN/J1FNRlSk5oyd8xGO8KwIdHRl4MFP3bb6F6UZ7pfkgA7BERSC7lMhy5dTYYWgVIWBkJBOG5ak/f+PI523oCw0ywPe/BLAl/zfBQPps/l+/BoMzlIKSSQ43JEe6ao+Pw4J8wlriHfMtA3Jp4Rs0xJK2/KR7A8RN//NT90gtt459EuTM2gHBWjEllQypZtpUXA==
-Received: from CH0PR03CA0438.namprd03.prod.outlook.com (2603:10b6:610:10e::14)
- by BL1PR12MB5779.namprd12.prod.outlook.com (2603:10b6:208:392::9)
+ bh=cHf9KDk1Fno5U+YCc6dCFFHsCA13pGQedkVdSCURS68=;
+ b=pbfuoOQhVS8mOmnmevsVf9JGKzVa39lt83mpDnMGDaeX1zpnQ8x5zA8l31jPA6JWLsE6SfF1bG18fjMu1ukU+i9gcGE3DLIjSwkL/6ZJLOB9PZyFHFCF+cN5XELWrte4M5bHhqaCdzEezhazJzflUXKbKlCOiT1WxgaauBOR5Fc=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by IA3PR10MB8465.namprd10.prod.outlook.com (2603:10b6:208:581::10)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.9; Mon, 29 Sep
- 2025 13:39:57 +0000
-Received: from CH1PEPF0000AD81.namprd04.prod.outlook.com
- (2603:10b6:610:10e:cafe::47) by CH0PR03CA0438.outlook.office365.com
- (2603:10b6:610:10e::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.17 via Frontend Transport; Mon,
- 29 Sep 2025 13:39:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CH1PEPF0000AD81.mail.protection.outlook.com (10.167.244.89) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9160.9 via Frontend Transport; Mon, 29 Sep 2025 13:39:56 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 29 Sep
- 2025 06:39:41 -0700
-Received: from NV-2Y5XW94.nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Sep
- 2025 06:39:37 -0700
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
-Subject: [PATCH v4 09/27] hw/arm/smmuv3-accel: Support nested STE
- install/uninstall support
-Date: Mon, 29 Sep 2025 14:36:25 +0100
-Message-ID: <20250929133643.38961-10-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250929133643.38961-1-skolothumtho@nvidia.com>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.19; Mon, 29 Sep
+ 2025 13:54:55 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.9160.015; Mon, 29 Sep 2025
+ 13:54:55 +0000
+Message-ID: <1ba0dbca-08b2-4f80-ba12-01884a25ef0d@oracle.com>
+Date: Mon, 29 Sep 2025 09:54:52 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+ "query-balloon" after CPR transfer
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250928085432.40107-1-zhenzhong.duan@intel.com>
+ <20250928085432.40107-7-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <20250928085432.40107-7-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH7P222CA0006.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:33a::26) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.230.35]
-X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD81:EE_|BL1PR12MB5779:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7c0e27dd-e7b7-4bae-c620-08ddff5dadb9
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|IA3PR10MB8465:EE_
+X-MS-Office365-Filtering-Correlation-Id: 19f1a997-5c57-46f2-ed31-08ddff5fc551
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700013|7416014|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rN62uIb/9Ejvv8Z7tA8ourZLeI5pGpuRjZHu0eFS3fTAJVD7eZvOTWXHW6gN?=
- =?us-ascii?Q?+HwHozqBf7+xocOl1hkQ2Q5Ys9Nf93KgSOzh8D4OURcOMvQh8xseBIl5UUff?=
- =?us-ascii?Q?hEqnvYN9ngzifRoObxetrMD/ocHthw4xV3ycukCsFK6fvdBWnv3dvc4hFcDN?=
- =?us-ascii?Q?TiaRAnR+90DaXiaFAm7JhyDQD7/xzPNvSPmABarixcgkP30NSBGCTEivtU6Q?=
- =?us-ascii?Q?plppn37MWssqz72WPI7a0RRpM/Ib/3GiztVP/nJi2ALrnOZ9Kr6RIgSLwsin?=
- =?us-ascii?Q?YZlSsNwIKbyazdNJTu203so5FmfBH4KfBGzVaxrDTMG5biuf5Vn5H5coVO/z?=
- =?us-ascii?Q?aNzA529gQMdcAAYIYvuA6mecd7fTcJRkY6r8lIZuiTFxIvpqpK5m+ZuIveq5?=
- =?us-ascii?Q?kYDIrz8m/Qol0+YOA83j082C/yvkbEgIFKWzrQYMUscrM1ZXln6oQI28EEW9?=
- =?us-ascii?Q?jEglSt7xEdQmAOhSQzNQDuLIk2tYT7u6HLliQrufZp0s7OwAmMhVZeCaKqjR?=
- =?us-ascii?Q?MVlS3xbY9RC5AMyX5h7+1Vxbm9Sp9oxGP9YuQkBSvcExcUv73ncmisaQydMT?=
- =?us-ascii?Q?TuLahC/fn39LgWM2tbq+brVoEUV6MS3i3Xu29/r6FY2pfA74AQoFW0dOK4iY?=
- =?us-ascii?Q?62rPsrfkBnnezje5KsIWsKBwbYa6yzAE9Hw1/AFG71jRI9xDlg248jViA5Wt?=
- =?us-ascii?Q?EZygXqX1rFlhB9U9MQlT5bYBe6DnBMn4qxI9i8K0TiTCHArPHUcInMFLYcIv?=
- =?us-ascii?Q?W612vBli5zepZtzqfi/5cZyL+MmUNLadP+IuK/Jl06A/U5qcMGmDT7uJzWAu?=
- =?us-ascii?Q?L/9a6JA5kJieyUp7okoyc+TfYXk5VoT97xsQqlPNkerN1qJIUXt2ikKyEcTN?=
- =?us-ascii?Q?4PxW4kT4Krw8fKhpAwC3aJccXlw+ohf7dbr4rQCAWZIbCLKYlypf5+KIGPwj?=
- =?us-ascii?Q?txspdAV3/ufaW9PFUx2tUndKt8iby6dys4UHT/R9NXMEx3ZbSG5namkOhrpw?=
- =?us-ascii?Q?hodqr2rEjFCWsxQYDWjEYzO2CJMmkGf1BTzkHF6vNhQMFiNSpVsGDJOWu9T2?=
- =?us-ascii?Q?uqemWg6N0zzR5BIk12q4pNnfu++gYq1E1p0mGNTcZNq3OZQzKorXH1iihcOi?=
- =?us-ascii?Q?cdDHMixgrLGNnIVpQNyVGRASAyDDrAEKBf/h63uzyzqhnAHiBlIHMJkhhy9z?=
- =?us-ascii?Q?RgynPyvsRX+dQszzzMNukgX4o1Rl16wztHRzbUxfiEdPDKUFwxSTqXgqyqOa?=
- =?us-ascii?Q?aZG7zTpl0e34Bch3Q7Qxl6pCspvkWOyAEwD6zCtKAWg1Xy14XRlWbydS9+V9?=
- =?us-ascii?Q?9okcvQPzIBBbosIydgBAWU1cWAbJCR17kXexh5hos0YeiijhWOdAt/o5vy3q?=
- =?us-ascii?Q?V3t0YwmO3Urkl/d08dGKb0XjPjGyUjW0j4UoeILW5B95VL/J6YlaXYnuaoAE?=
- =?us-ascii?Q?E9kMnZNASdYgBdhv3i14vFoO2z2eFH7y49xanQbnCnp/eUwEYG/cNb1rcQm3?=
- =?us-ascii?Q?xK+r5pMscPL06RCdiV+wr772ypu9s8TRb4m73t7Q2MQUXYugMXqSF9mfdD03?=
- =?us-ascii?Q?VYDorBHT7MQrUVXDskc=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700013)(7416014)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 13:39:56.6497 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7c0e27dd-e7b7-4bae-c620-08ddff5dadb9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD81.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5779
-Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
- envelope-from=skolothumtho@nvidia.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?T2dtVkxqTVhRR0lsOXBLSFhyaDVFNjdaclhHMXVLSU5MVC9rTlFyeWp6L1FD?=
+ =?utf-8?B?U3dmZGJyWlErb2ovcGl2aFBFVmVSdVkxVEdSeHpPeWwwZlRLZjg2Mjd6b0NK?=
+ =?utf-8?B?ZGFlTUx6VGxXaFJiUm9UazNpcU8xL1UzRXZLUmdwcm9RZ2tBYXU1YnVZRnRQ?=
+ =?utf-8?B?UVJ4c3d0ek4rcjQybDI4QVZuVWswdnVHc29RS1oxN3JMdHJYMzFXWDhOSXVn?=
+ =?utf-8?B?a1lJdk95cm9aQldRQW5tWXMzSDRwWmIwNTJlQm9XWGl5a1I4RmJJWk5QL3dk?=
+ =?utf-8?B?MVRFRFYrTktwNWpaeGxiVEtlRCt4TWdnMlcvbkFlUUJRMEMrZnNSV2FzdWpn?=
+ =?utf-8?B?aUwreDVsdW95d0NHd0Q1eGRld3NFamFYZlg2NnhFc2VsSGpwQWVwbDZLYWEw?=
+ =?utf-8?B?elVJMWVZSmhxcmd3UU5kUHlJc0o0L2J1blpweVpxVmpucHpIaWFraGp4QklN?=
+ =?utf-8?B?WHEwQWJBWWpkaG5ZamNVa3Bpc3hpaG9XbnRGR0dCQXBxd1F1T0lSRHFnVzB0?=
+ =?utf-8?B?NEtXSUtvbnM5YS9JK1pkeEQvSGZJenpYL2JlTU0vRjNQKzB1S0lrb1dMOUwr?=
+ =?utf-8?B?MmFBUVJ5OVkyL2hPQUZ6L1JNYVhIc2wrS3FVMXFQSnFtbm9rZkg4VUNpb1BD?=
+ =?utf-8?B?V09HbGpnK1VCdzBSSlEwVVNZbXkwWHZtZ040OUl6d056WnVYVWd5c1pmcTgr?=
+ =?utf-8?B?b0JDd05McnlkL3dMcUlRTEpZbTFCaEhwOGVJUDNOZmhpb2tYUGkyR24xL25n?=
+ =?utf-8?B?YkFiNkFUVWU4cFJuWGdFZkQxNWpwSW8wVTFZTnZwU0NCbldCalc5dlBYMzY4?=
+ =?utf-8?B?TU1Ec0daWUs5UCtRbTYvRnRDSlhRYk9LNVF4S2d2SjltTmFvcTk1em54NnhE?=
+ =?utf-8?B?aks2bldLTTBIdTMrSU9MY0RpUmxBc3l4aU1CYmwvYk9CM3U2RWloeElmU2hU?=
+ =?utf-8?B?ZnRxeE9ZUks3ZTVLWnBFdVFKSGlyS0VPenoxTG1MM1JwbzhqT2V3K3F2eC9l?=
+ =?utf-8?B?ZlBaVU93RkFTZGFVbHhmMW96RWlvd0lveU4xSS9KWlRaUUcvS0pwV0JkM1lF?=
+ =?utf-8?B?dVN3RHovTmtucWV6ZHUxeFk4eWQzWW1uKzJBcjNZaEFnNnhUbzZFNVZydFVo?=
+ =?utf-8?B?elBwMWI3TGErR1dLR0Y5aVJabStDckxNcVZFanBjdFRtck03WCtIaG1yYVZt?=
+ =?utf-8?B?RXJRbzVSNDc1eUthaDNSTnd0WWJHRDdXTlI4ajNBLytSUWV4NTJzT2lKY2Nu?=
+ =?utf-8?B?Q0RoL0p4S0RndFd1b2F5UGxTZTVCd0lVN1FROGpUNXJ1N3lFUDN2S1FtbXB5?=
+ =?utf-8?B?L2M1ZkdENjB2TTFhQmczN3VXWmdBcEdNWTJLU2FsZk11UGJFSGRPQVE5eDM2?=
+ =?utf-8?B?cFVKUk5acmdOZjYvK1FoTHFGRnRkbjNXMnJQSVhvTzNwQ0xNeEswQ3QvU0RN?=
+ =?utf-8?B?S3JGb01JN2RXQkFXWkR4ZkphNjVoZ0h1MjA3dWNKNTh2dERoV1BzaGppVE1j?=
+ =?utf-8?B?M3ZjSlVZWGg2QWJKR1NyNmYrcDBLZ0Y0OVE2T3hBUy9nT3htM2ZBOUhxYTZT?=
+ =?utf-8?B?MnYxUUxjUnY5a3Buc2VTRHJFOXd1dmxvTUZTVEtvS3dTUjM2c2hJcWVxUHR0?=
+ =?utf-8?B?V1FPRXlwcGYvNkNMZkFTL0g2enJNeXlQeENRYVRnemc3d1NKN1BkMFRLTXdG?=
+ =?utf-8?B?UXhVK3hXMUhLQzVhRWdOZDJENjV0VktsSE8yWXhqTWpKRFZTQkh3Vm9KQS9S?=
+ =?utf-8?B?clBwV0VnV0JCU3RzT3U5LzNSdGY5dmNUN3hyYnFHbzR0ZGFTV1E5TnB6WWtn?=
+ =?utf-8?B?ejRQM1QvbElUZlFpdHJ6S1pUZ0FHNmlSSloxdU9sbXk0ZzExWmxwZnpzYmVz?=
+ =?utf-8?B?cnNiWjRDaFNxMVE2VzB6MU1GTFdwU3RYM0d3QjRYK2RlVjdQWHJ1YS81dmZ5?=
+ =?utf-8?Q?MryJ0gHeNbP8lxQKSXa8TBNN9PL4/70N?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7053199007); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UzBReHdhWjlaZGY1SitNZGVqUHZBR1pTWnlwZ3NSbWVzMGxJZGFaam45RlF1?=
+ =?utf-8?B?bTh6UFViemtmbFNQSDJBY2NOdmw3d2hEU3ZES0FjdmJxb1V2WVdJc0ZNa2p5?=
+ =?utf-8?B?amJOdHIyY3N0MzYwRW5EekFtbTVIVS9TQVQ2ZWtrTmJTN2diZlFncUZ5VnZV?=
+ =?utf-8?B?Uyt5c2FjM0pvNjg3RzhKd1FqS2kwWURiNWU5cjEzL214aXR1dW9iYnNoYzRG?=
+ =?utf-8?B?YmQyQnB5eGZ6TGt5RmRHZCtBRFVkYkxzV1oyREtva1hWWVRvdUM1UndKa0d0?=
+ =?utf-8?B?NWFZZTVxVXBMTE5BMVA0YmMwSTdDQlh0clUzTUtUbnh2eTZIL1FGSFBIZWw4?=
+ =?utf-8?B?dWNLblNzZ3hBTnd6Nm5XQS9QQndaaCtuckNpUFN5MnBhcUJESnRtbmJJR21w?=
+ =?utf-8?B?SEtWZVV0UWRHVksrc1drQ0Y0VFlpOTFXRXlqVmdjNWtFUWhFN0JQUU9BQ3BZ?=
+ =?utf-8?B?QW01Q3gyTzJmL2ZvcFNsZURvNVNsVzEwalVvcXNQU2tYRTRZM0pXMmw4SHVq?=
+ =?utf-8?B?d0t1dCtGSFEzT2JrUDJLSEpuSVhraDBIQTZ6NmNOWjAyaWUwWGhqNmtZOVZI?=
+ =?utf-8?B?czhadkJoUzRRNzJuMWhjY3BhN1hUN24zU3REazA4WGJKb083K2FRRFdsdDVX?=
+ =?utf-8?B?TzRhRWwyblF5Z1NhYTZhM1MzMlFwdkcyZUlQTlJpSlp2TlBET1h1YTFRZGxP?=
+ =?utf-8?B?ZzduN1ovN3Zwb1VpVE8vMWxVNU9MdDBRUFZDM3V2cDY4YlI5NHF1bXAyU1Ey?=
+ =?utf-8?B?Q1RLaFB2V05FTW1MNW1mRk9FVmN4RXpoNk1lbk0xWmVqSXpyS3NKRkZIalE4?=
+ =?utf-8?B?a09WVFRuU3JNZmxUb0xpVk53K01qUmd1anNpcS9IU3pJMis0ZW9CamVoeThy?=
+ =?utf-8?B?bXhpQXJKcFROcDJ0VmJmQ0xndHJoejBFOWtRVkVzbnE0T0crSGtGS0NGN1pB?=
+ =?utf-8?B?SEVMUXRqOGFHdDNmdVhhY1dBRCtaNXU3LzNmem1yMmlIQTYwblRwK2U4aWgx?=
+ =?utf-8?B?QnhIeWdrUzZ1UWppQmM5SDlvdDdlYTFyN2NoYkkyQk9kRlJ4UGQ3cSswc0V5?=
+ =?utf-8?B?QUJ2dndyLzhSenRVdGcwTFdhMHgrSi9Va3V6LzhDSUJCZXozWGIyeGU0WlRZ?=
+ =?utf-8?B?eXhzajhvY2wyVmNLNEY4UERRdE9tcGxTNzVYeUE0NG14MjVhVHpzUTgzaUd2?=
+ =?utf-8?B?bENya2Ztb0dIYldLRkFuaS9WRUU0bXAxdHhPY1N2bENkalFCc3BqWG0xS1kz?=
+ =?utf-8?B?YjB6TGhPSWxaNGl6ZmhyQ1p4YkZLSUJ4bkdKOEErTCswRGpxQitGNWc5SS8v?=
+ =?utf-8?B?RElqMUZLZjFmK291UXNNSXVCQVRHRSs0c1RhbFUrTmZkT1UrdG9rSXVDRmFS?=
+ =?utf-8?B?MEtKK3BVZU1oa2RnOUg4MkFoZUtuYld4QVRYMTJhMi9ldVpuVVVSS3RtRHl6?=
+ =?utf-8?B?TkFOQ2IySG1tazB3NE1qTVB2UldMZTA1TVlNUmgxbEVTeUJQbmEvOG5teGhj?=
+ =?utf-8?B?L0tTVlRsTFF4dktvaGlNakt6R0dZcEwyZi9zUkhENHVQMG5kLzIwcUtXT1Vp?=
+ =?utf-8?B?aXJJVVpUNXBUNTVhZWRRTVk0TDRaNTlNWTlKVC9GNkI1VVB4Z0ZKV1MyZ1pG?=
+ =?utf-8?B?YTlaWDFHazBsQ2VtblZ0aXdpc3kwSVNUSWlLbTkrMnNZZk12NEdQRW5DR1l4?=
+ =?utf-8?B?TzRkUDhUeFJjK0NFS3ZwKzh0Qnc0bkFTYTB0K1cvMzFZeUkzVVR6L1dLeE5N?=
+ =?utf-8?B?ZUpRK0RYK25HTUlMNmFnRERvTjExTkhPWmtIN0xVMmRzWFIvdEF3cW5rWVpV?=
+ =?utf-8?B?TjhQRGh2V0RuMjkvbFNKRVNnUDIzU2VrNDQvQ1VFUDM5c2ZUTGhFblZJeHVL?=
+ =?utf-8?B?Zkc3YXFyV0hCa2tlQjdKdUEybUJ2VDNoUklZbWIwbEtwQ0tWT1Z3OGN4bTJG?=
+ =?utf-8?B?RkRKd0tQZ05nZ2RCK1hwdG5aOG5pS09veVZ1RUhaZ2d1R2oyWDViRHhESTVI?=
+ =?utf-8?B?VVcvSVpIUFJ1LzJuaDV0RWYvZERRMUxWb05nRGNkazlkM0UrTU0vU2J1NGZD?=
+ =?utf-8?B?K3N5RmMzYzRiVUdwY045U2NOeDRjMGxNaE5ZdWJLMms5aU54WTZGOHppRVdF?=
+ =?utf-8?B?U0lWZmdVdklCcDhibEdFbXkzZ1pic2VMdjh5cEpuUHZoVFpMekJXa2EyY2pr?=
+ =?utf-8?B?M1E9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: OU6i+fPi9Oxdjc9udL3LCZADVvgnAXEb0dKNrCEVQCGBLGyjsP0Ju/382uURTWQuiRoVjlgEyXOQmehbtUS06dJaG4svRem/p6hg3dVHZaAfB8qJszr4qJtndMFKWhek8ChLb9Xf+lpHRIBN5MXHOgBs5G84YvrWkKPzsQ6rRmCh3AMNjiXimP5tG28efZQp7lq09dAEMSiAWsF1uEB4ZCXAWLznF6PIhzNO89by1cpZAF65CV2iECTo2qkKr/1sjYtYX4Yes21HgNdhoE0IOfu1M8vmcSYGnuSuj+LMaKp75sjzEsdKRUDKjFR5WL8SYZ42D1uxUM2QKnjh3hArKW0ZREgOtH4dFbBhakILIznpnXvk1Tr/GNVCWIMK9LFSATXEXFlVFyyOwz2YzmKN91nZPF+bbxkFbWVCGAAB7anvYgyfQU5QxK5O6ohUK7eh4Yk5hTXarcg/ZY6eKQmEX0Mpwl13KDIDL/hdrmRPeAJGSBg5GRldy1ZAD1MEXPEsaEhI6vp9ffKALcm8OQydTeW7RsIONQ+CnPLF+Puf5vz+5tW1vQcCX3MHytnXXtLbF5MbEjN7REArHTRDRETCiRJf6OSAaa/2COk5TvBo92U=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19f1a997-5c57-46f2-ed31-08ddff5fc551
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 13:54:55.6144 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lHL8p28qBXc/SSLovJi5xMCE9tI7vtgDCfu2ObysKWmY9SUd5gLBwEcgvJKpJ+E79WjN7f+dXMBZyubb7CY57fZz1bm8siqHHQaSCMWZbQ8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR10MB8465
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-29_05,2025-09-29_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxlogscore=999
+ phishscore=0 mlxscore=0 suspectscore=0 adultscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2509150000 definitions=main-2509290130
+X-Proofpoint-GUID: OvNyYOsKPH_3qgQ5FeBodaCELwfQFHxT
+X-Proofpoint-ORIG-GUID: OvNyYOsKPH_3qgQ5FeBodaCELwfQFHxT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI5MDEyOCBTYWx0ZWRfX3rRZRqtvzYTk
+ FK3qYCiKD4MCkapRd+kCs71KSVfCXGLp4UY1H+LKxHJwS9yIHi0RiskIne9ix73hFE1ojNv4gYR
+ g+gOsWyNPEpbAUJu+bZJh9/l/Qwe428/zyny/kLqwR6Tw0PNC56FpNdeVzY4ckWeRSCmRGZDPdM
+ zjidLfFwwP4/WhC5NPZnS3caOqLfXGxJGIRP6AGccaqXppdfB1cgNbn3rkKUB9DgKHEc1nD4/Pb
+ +Ra6LTW5Gp9rmu7rGvu3WgMUrSBf6hH8my8xzTIEZP1X/Q9NXCY+w4jz3g5xi66ZEp+3SE8kcbZ
+ yhilirIG5gnwZeVoMzA+Fb47SJiruIAG4EKniZP6cFf7OJEebmByB9wMTPktXhMgwDXjYJSwkwW
+ 9jKTjO5WIML5KWi2pm/r1MzFR1Xo7IW4xtUFKwer8aUcoZsXYRw=
+X-Authority-Analysis: v=2.4 cv=BYbVE7t2 c=1 sm=1 tr=0 ts=68da8fb5 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117
+ a=zPCbziy225d3KhSqZt3L1A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8
+ a=tIAIElnxm74-U9QCJHoA:9 a=QEXdDO2ut3YA:10 cc=ntf awl=host:12089
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,343 +233,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+On 9/28/2025 4:54 AM, Zhenzhong Duan wrote:
+> After CPR transfer, source QEMU closes kvm fd and sets kvm_state to NULL,
+> "query-balloon" will check kvm_state->sync_mmu and trigger NULL pointer
+> reference.
+> 
+> We don't need to NULL kvm_state as all states in kvm_state aren't released
+> actually. Just closing kvm fd is enough so we could still query states
+> through "query_*" qmp command.
 
-Allocates a s1 HWPT for the Guest s1 stage and attaches that to the
-pass-through vfio device. This will be invoked when Guest issues
-SMMU_CMD_CFGI_STE/STE_RANGE.
+IMO this does not make sense.  Much of the state in kvm_state was derived
+from ioctl's on the descriptors, and closing them invalidates it.  Asking
+historical questions about what used to be makes no sense.
 
-While at it, we are also exporting both smmu_find_ste() and
-smmuv3_flush_config() from smmuv3.c for use here.
+Clearing kvm_state and setting kvm_allowed=false would be a safer fix.
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- hw/arm/smmuv3-accel.c    | 164 +++++++++++++++++++++++++++++++++++++++
- hw/arm/smmuv3-accel.h    |  22 ++++++
- hw/arm/smmuv3-internal.h |   3 +
- hw/arm/smmuv3.c          |  18 ++++-
- hw/arm/trace-events      |   1 +
- 5 files changed, 205 insertions(+), 3 deletions(-)
+- Steve
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 81fa738f6f..5c3825cecd 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -17,10 +17,174 @@
- #include "hw/vfio/pci.h"
- 
- #include "smmuv3-accel.h"
-+#include "smmuv3-internal.h"
- 
- #define SMMU_STE_VALID      (1ULL << 0)
- #define SMMU_STE_CFG_BYPASS (1ULL << 3)
- 
-+#define STE0_V       MAKE_64BIT_MASK(0, 1)
-+#define STE0_CONFIG  MAKE_64BIT_MASK(1, 3)
-+#define STE0_S1FMT   MAKE_64BIT_MASK(4, 2)
-+#define STE0_CTXPTR  MAKE_64BIT_MASK(6, 50)
-+#define STE0_S1CDMAX MAKE_64BIT_MASK(59, 5)
-+#define STE0_MASK    (STE0_S1CDMAX | STE0_CTXPTR | STE0_S1FMT | STE0_CONFIG | \
-+                      STE0_V)
-+
-+#define STE1_S1DSS    MAKE_64BIT_MASK(0, 2)
-+#define STE1_S1CIR    MAKE_64BIT_MASK(2, 2)
-+#define STE1_S1COR    MAKE_64BIT_MASK(4, 2)
-+#define STE1_S1CSH    MAKE_64BIT_MASK(6, 2)
-+#define STE1_S1STALLD MAKE_64BIT_MASK(27, 1)
-+#define STE1_ETS      MAKE_64BIT_MASK(28, 2)
-+#define STE1_MASK     (STE1_ETS | STE1_S1STALLD | STE1_S1CSH | STE1_S1COR | \
-+                       STE1_S1CIR | STE1_S1DSS)
-+
-+static bool
-+smmuv3_accel_dev_uninstall_nested_ste(SMMUv3AccelDevice *accel_dev, bool abort,
-+                                      Error **errp)
-+{
-+    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-+    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
-+    uint32_t hwpt_id;
-+
-+    if (!s1_hwpt || !accel_dev->viommu) {
-+        return true;
-+    }
-+
-+    if (abort) {
-+        hwpt_id = accel_dev->viommu->abort_hwpt_id;
-+    } else {
-+        hwpt_id = accel_dev->viommu->bypass_hwpt_id;
-+    }
-+
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
-+        return false;
-+    }
-+
-+    iommufd_backend_free_id(s1_hwpt->iommufd, s1_hwpt->hwpt_id);
-+    accel_dev->s1_hwpt = NULL;
-+    g_free(s1_hwpt);
-+    return true;
-+}
-+
-+static bool
-+smmuv3_accel_dev_install_nested_ste(SMMUv3AccelDevice *accel_dev,
-+                                    uint32_t data_type, uint32_t data_len,
-+                                    void *data, Error **errp)
-+{
-+    SMMUViommu *viommu = accel_dev->viommu;
-+    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
-+    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-+    uint32_t flags = 0;
-+
-+    if (!idev || !viommu) {
-+        error_setg(errp, "Device 0x%x has no associated IOMMU dev or vIOMMU",
-+                   smmu_get_sid(&accel_dev->sdev));
-+        return false;
-+    }
-+
-+    if (s1_hwpt) {
-+        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev, true, errp)) {
-+            return false;
-+        }
-+    }
-+
-+    s1_hwpt = g_new0(SMMUS1Hwpt, 1);
-+    s1_hwpt->iommufd = idev->iommufd;
-+    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-+                                    viommu->core.viommu_id, flags, data_type,
-+                                    data_len, data, &s1_hwpt->hwpt_id, errp)) {
-+        return false;
-+    }
-+
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, s1_hwpt->hwpt_id, errp)) {
-+        iommufd_backend_free_id(idev->iommufd, s1_hwpt->hwpt_id);
-+        return false;
-+    }
-+    accel_dev->s1_hwpt = s1_hwpt;
-+    return true;
-+}
-+
-+bool
-+smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-+                                Error **errp)
-+{
-+    SMMUv3AccelDevice *accel_dev;
-+    SMMUEventInfo event = {.type = SMMU_EVT_NONE, .sid = sid,
-+                           .inval_ste_allowed = true};
-+    struct iommu_hwpt_arm_smmuv3 nested_data = {};
-+    uint64_t ste_0, ste_1;
-+    uint32_t config;
-+    STE ste;
-+    int ret;
-+
-+    if (!s->accel) {
-+        return true;
-+    }
-+
-+    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-+    if (!accel_dev->viommu) {
-+        return true;
-+    }
-+
-+    ret = smmu_find_ste(sdev->smmu, sid, &ste, &event);
-+    if (ret) {
-+        error_setg(errp, "Failed to find STE for Device 0x%x", sid);
-+        return true;
-+    }
-+
-+    config = STE_CONFIG(&ste);
-+    if (!STE_VALID(&ste) || !STE_CFG_S1_ENABLED(config)) {
-+        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev,
-+                                                   STE_CFG_ABORT(config),
-+                                                   errp)) {
-+            return false;
-+        }
-+        smmuv3_flush_config(sdev);
-+        return true;
-+    }
-+
-+    ste_0 = (uint64_t)ste.word[0] | (uint64_t)ste.word[1] << 32;
-+    ste_1 = (uint64_t)ste.word[2] | (uint64_t)ste.word[3] << 32;
-+    nested_data.ste[0] = cpu_to_le64(ste_0 & STE0_MASK);
-+    nested_data.ste[1] = cpu_to_le64(ste_1 & STE1_MASK);
-+
-+    if (!smmuv3_accel_dev_install_nested_ste(accel_dev,
-+                                             IOMMU_HWPT_DATA_ARM_SMMUV3,
-+                                             sizeof(nested_data),
-+                                             &nested_data, errp)) {
-+        error_setg(errp, "Unable to install nested STE=%16LX:%16LX, sid=0x%x,"
-+                   "ret=%d", nested_data.ste[1], nested_data.ste[0], sid, ret);
-+        return false;
-+    }
-+    trace_smmuv3_accel_install_nested_ste(sid, nested_data.ste[1],
-+                                          nested_data.ste[0]);
-+    return true;
-+}
-+
-+bool smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
-+                                           Error **errp)
-+{
-+    SMMUv3AccelState *s_accel = s->s_accel;
-+    SMMUv3AccelDevice *accel_dev;
-+
-+    if (!s_accel || !s_accel->viommu) {
-+        return true;
-+    }
-+
-+    QLIST_FOREACH(accel_dev, &s_accel->viommu->device_list, next) {
-+        uint32_t sid = smmu_get_sid(&accel_dev->sdev);
-+
-+        if (sid >= range->start && sid <= range->end) {
-+            if (!smmuv3_accel_install_nested_ste(s, &accel_dev->sdev,
-+                                                 sid, errp)) {
-+                return false;
-+            }
-+        }
-+    }
-+    return true;
-+}
-+
- static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
-                                                PCIBus *bus, int devfn)
- {
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index 3c8506d1e6..f631443b09 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -22,9 +22,15 @@ typedef struct SMMUViommu {
-     QLIST_HEAD(, SMMUv3AccelDevice) device_list;
- } SMMUViommu;
- 
-+typedef struct SMMUS1Hwpt {
-+    IOMMUFDBackend *iommufd;
-+    uint32_t hwpt_id;
-+} SMMUS1Hwpt;
-+
- typedef struct SMMUv3AccelDevice {
-     SMMUDevice  sdev;
-     HostIOMMUDeviceIOMMUFD *idev;
-+    SMMUS1Hwpt *s1_hwpt;
-     SMMUViommu *viommu;
-     QLIST_ENTRY(SMMUv3AccelDevice) next;
- } SMMUv3AccelDevice;
-@@ -35,10 +41,26 @@ typedef struct SMMUv3AccelState {
- 
- #ifdef CONFIG_ARM_SMMUV3_ACCEL
- void smmuv3_accel_init(SMMUv3State *s);
-+bool smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-+                                     Error **errp);
-+bool smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
-+                                           Error **errp);
- #else
- static inline void smmuv3_accel_init(SMMUv3State *s)
- {
- }
-+static inline bool
-+smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-+                                Error **errp)
-+{
-+    return true;
-+}
-+static inline bool
-+smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
-+                                      Error **errp)
-+{
-+    return true;
-+}
- #endif
- 
- #endif /* HW_ARM_SMMUV3_ACCEL_H */
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index b6b7399347..b0dfa9465c 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -547,6 +547,9 @@ typedef struct CD {
-     uint32_t word[16];
- } CD;
- 
-+int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event);
-+void smmuv3_flush_config(SMMUDevice *sdev);
-+
- /* STE fields */
- 
- #define STE_VALID(x)   extract32((x)->word[0], 0, 1)
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index ef991cb7d8..1fd8aaa0c7 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -630,8 +630,7 @@ bad_ste:
-  * Supports linear and 2-level stream table
-  * Return 0 on success, -EINVAL otherwise
-  */
--static int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
--                         SMMUEventInfo *event)
-+int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
- {
-     dma_addr_t addr, strtab_base;
-     uint32_t log2size;
-@@ -900,7 +899,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
-     return cfg;
- }
- 
--static void smmuv3_flush_config(SMMUDevice *sdev)
-+void smmuv3_flush_config(SMMUDevice *sdev)
- {
-     SMMUv3State *s = sdev->smmu;
-     SMMUState *bc = &s->smmu_state;
-@@ -1330,6 +1329,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-         {
-             uint32_t sid = CMD_SID(&cmd);
-             SMMUDevice *sdev = smmu_find_sdev(bs, sid);
-+            Error *local_err = NULL;
- 
-             if (CMD_SSEC(&cmd)) {
-                 cmd_error = SMMU_CERROR_ILL;
-@@ -1341,6 +1341,11 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-             }
- 
-             trace_smmuv3_cmdq_cfgi_ste(sid);
-+            if (!smmuv3_accel_install_nested_ste(s, sdev, sid, &local_err)) {
-+                error_report_err(local_err);
-+                cmd_error = SMMU_CERROR_ILL;
-+                break;
-+            }
-             smmuv3_flush_config(sdev);
- 
-             break;
-@@ -1350,6 +1355,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-             uint32_t sid = CMD_SID(&cmd), mask;
-             uint8_t range = CMD_STE_RANGE(&cmd);
-             SMMUSIDRange sid_range;
-+            Error *local_err = NULL;
- 
-             if (CMD_SSEC(&cmd)) {
-                 cmd_error = SMMU_CERROR_ILL;
-@@ -1361,6 +1367,12 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-             sid_range.end = sid_range.start + mask;
- 
-             trace_smmuv3_cmdq_cfgi_ste_range(sid_range.start, sid_range.end);
-+            if (!smmuv3_accel_install_nested_ste_range(s, &sid_range,
-+                                                       &local_err)) {
-+                error_report_err(local_err);
-+                cmd_error = SMMU_CERROR_ILL;
-+                break;
-+            }
-             smmu_configs_inv_sid_range(bs, sid_range);
-             break;
-         }
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 86370d448a..3b1e9bf083 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -69,6 +69,7 @@ smmu_reset_exit(void) ""
- #smmuv3-accel.c
- smmuv3_accel_set_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
- smmuv3_accel_unset_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
-+smmuv3_accel_install_nested_ste(uint32_t sid, uint64_t ste_1, uint64_t ste_0) "sid=%d ste=%"PRIx64":%"PRIx64
- 
- # strongarm.c
- strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
--- 
-2.43.0
+> Opportunistically drop an unnecessary check in kvm_close().
+> 
+> Fixes: 7ed0919119b0 ("migration: close kvm after cpr")
+> Suggested-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   accel/kvm/kvm-all.c | 11 ++++-------
+>   1 file changed, 4 insertions(+), 7 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 23fd491441..b4c717290d 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -639,13 +639,10 @@ void kvm_close(void)
+>           cpu->kvm_vcpu_stats_fd = -1;
+>       }
+>   
+> -    if (kvm_state && kvm_state->fd != -1) {
+> -        close(kvm_state->vmfd);
+> -        kvm_state->vmfd = -1;
+> -        close(kvm_state->fd);
+> -        kvm_state->fd = -1;
+> -    }
+> -    kvm_state = NULL;
+> +    close(kvm_state->vmfd);
+> +    kvm_state->vmfd = -1;
+> +    close(kvm_state->fd);
+> +    kvm_state->fd = -1;
+>   }
+>   
+>   /*
 
 
