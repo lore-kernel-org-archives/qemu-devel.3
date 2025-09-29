@@ -4,53 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67854CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1767CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H7S-0002ou-59; Mon, 29 Sep 2025 12:52:58 -0400
+	id 1v3H7X-0002pk-K9; Mon, 29 Sep 2025 12:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7J-0002mE-FO
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7J-0002mD-F0
  for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7E-0002jK-Ia
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7E-0002ja-Il
  for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759164758;
+ s=mimecast20190719; t=1759164762;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=d/iGbdmlBZNiyz9t8R0hAS7z1l94a0lmE+dkEeEMxjs=;
- b=I7gp3Qo954RAT0obL2F5QxKmo9FqnTXIp+ARUPZa6Lg5qQmA60Rm1t59Q1wADGrwwYyOlC
- ACmdKLaDPhiV/RhG7NdCbD45YU/ob9ZqxUS8jV49DYgztQvHvmRuaj8QZomUdDPPW0MIZj
- vWw0ENNtSowLI9BRQ7VKYFcLNLuHUW4=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YwnCMRnzfS6ydXr/4LdmYO6fYAQiLlu8Z8EF//WiayE=;
+ b=Pn+YOIRNNgOPvtYUbfAN1ekkZXAkrI6gqmO5PTyNFQnu2rIPcFKXYfGeU5f81Eg6YZJSCO
+ H6v12TncwgOXg79eDAoiKY+UXP6zZWjX3YikSNZ1avbdltc1KaXP4Ozam97V2F07gF4RAp
+ CmgltaB1thonuQYEiSrEG8qCuzm+1kA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-LLjkQu-xNMK1IRMXc0v77Q-1; Mon,
- 29 Sep 2025 12:52:35 -0400
-X-MC-Unique: LLjkQu-xNMK1IRMXc0v77Q-1
-X-Mimecast-MFC-AGG-ID: LLjkQu-xNMK1IRMXc0v77Q_1759164754
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-5iJUJmXMMPS3_HMFmRB2Uw-1; Mon,
+ 29 Sep 2025 12:52:37 -0400
+X-MC-Unique: 5iJUJmXMMPS3_HMFmRB2Uw-1
+X-Mimecast-MFC-AGG-ID: 5iJUJmXMMPS3_HMFmRB2Uw_1759164756
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12ACC180047F; Mon, 29 Sep 2025 16:52:34 +0000 (UTC)
+ id 6366B1800357; Mon, 29 Sep 2025 16:52:36 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.27])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 911AF1800452; Mon, 29 Sep 2025 16:52:32 +0000 (UTC)
+ id BFAB81800446; Mon, 29 Sep 2025 16:52:34 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 00/32] aspeed queue
-Date: Mon, 29 Sep 2025 18:51:58 +0200
-Message-ID: <20250929165230.797471-1-clg@redhat.com>
+Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 01/32] hw/nvram/aspeed_otp: Add ASPEED OTP memory device model
+Date: Mon, 29 Sep 2025 18:51:59 +0200
+Message-ID: <20250929165230.797471-2-clg@redhat.com>
+In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
+References: <20250929165230.797471-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,101 +84,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4975b64efb5aa4248cbc3760312bbe08d6e71638:
+From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-  Merge tag 'pull-loongarch-20250928' of https://github.com/bibo-mao/qemu into staging (2025-09-28 09:01:35 -0700)
+Introduce a QEMU device model for ASPEED's One-Time Programmable (OTP)
+memory.
 
-are available in the Git repository at:
+This model simulates a word-addressable OTP region used for secure
+fuse storage. The OTP memory can operate with an internal memory
+buffer.
 
-  https://github.com/legoater/qemu/ tags/pull-aspeed-20250929
+The OTP model provides a memory-like interface through a dedicated
+AddressSpace, allowing other device models (e.g., SBC) to issue
+transactions as if accessing a memory-mapped region.
 
-for you to fetch changes up to 9ec30a07483640ecb8417fce3dfa9273f7a036c9:
-
-  hw/arm/aspeed_ast27x0-fc: Make sub-init functions return bool with errp (2025-09-29 18:00:20 +0200)
-
-----------------------------------------------------------------
-aspeed queue:
-
-* Introduce a new ASPEED OTP memory device model integrated with the
-  Secure Boot Controller. It includes a new block device backend
-  ('drive' property), is enabled for AST2600 SoCs and AST1030 SoCs.
-  Functional tests are included
-* Changed "ast2700-evb" alias to point to the "ast2700a1-evb" machine
-* Introduce support for Aspeed PCIe host controller, including models
-  for the PCIe Root Complex, Root Port, and PHY. Enabled for the
-  AST2600 and AST2700 SoCs, and functional tests are included
-* Refactor Boot ROM support to improve code reuse across the different
-  Aspeed machine. This is in preparation of vbootrom support in the
-  ast2700fc machine
-* Improved Error Handling in the AST27x0-fc machine init functions
-
-----------------------------------------------------------------
-Jamin Lin (20):
-      hw/arm/aspeed Move ast2700-evb alias to ast2700a1-evb
-      hw/pci/pci_ids: Add PCI vendor ID for ASPEED
-      hw/pci-host/aspeed: Add AST2600 PCIe PHY model
-      hw/pci-host/aspeed: Add AST2600 PCIe config space and host bridge
-      hw/pci-host/aspeed: Add AST2600 PCIe Root Device support
-      hw/pci-host/aspeed: Add AST2600 PCIe Root Port and make address configurable
-      hw/pci-host/aspeed: Add MSI support and per-RC IOMMU address space
-      hw/arm/aspeed: Wire up PCIe devices in SoC model
-      hw/arm/aspeed_ast2600: Add PCIe RC support (RC_H only)
-      hw/pci-host/aspeed: Add AST2700 PCIe PHY
-      hw/pci-host/aspeed: Add AST2700 PCIe config with dedicated H2X blocks
-      hw/pci-host/aspeed: Disable Root Device and place Root Port at 00:00.0 to AST2700
-      hw/arm/aspeed_ast27x0: Introduce 3 PCIe RCs for AST2700
-      tests/functional/arm/test_aspeed_ast2600: Add PCIe and network test
-      hw/arm/aspeed: Move aspeed_board_init_flashes() to common SoC code
-      hw/arm/aspeed: Move write_boot_rom to common SoC code
-      hw/arm/aspeed: Move aspeed_install_boot_rom to common SoC code
-      hw/arm/aspeed: Move aspeed_load_vbootrom to common SoC code
-      hw/arm/aspeed_ast27x0-fc: Drop dead return checks
-      hw/arm/aspeed_ast27x0-fc: Make sub-init functions return bool with errp
-
-Kane-Chen-AS (12):
-      hw/nvram/aspeed_otp: Add ASPEED OTP memory device model
-      hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC
-      hw/arm: Integrate ASPEED OTP memory support into AST2600 SoCs
-      hw/nvram/aspeed_otp: Add 'drive' property to support block backend
-      hw/nvram/aspeed_otp: Add OTP programming semantics and tracing
-      hw/arm: Integrate ASPEED OTP memory support into AST1030 SoCs
-      hw/misc/aspeed_sbc: Add CAMP2 support for OTP data reads
-      hw/misc/aspeed_sbc: Handle OTP write command for voltage mode registers
-      docs/system/arm/aspeed: Document OTP memory options
-      tests/functional/arm: Add helper to generate OTP images
-      tests/functional/arm: Add AST1030 boot test with generated OTP image
-      tests/functional/arm: Add AST2600 boot test with generated OTP image
-
- docs/system/arm/aspeed.rst                      |   31 +
- include/hw/arm/aspeed_soc.h                     |   23 +
- include/hw/misc/aspeed_sbc.h                    |    6 +
- include/hw/nvram/aspeed_otp.h                   |   33 +
- include/hw/pci-host/aspeed_pcie.h               |  137 +++
- include/hw/pci/pci_ids.h                        |    2 +
- hw/arm/aspeed.c                                 |  107 +--
- hw/arm/aspeed_ast10x0.c                         |    2 +-
- hw/arm/aspeed_ast2600.c                         |   76 +-
- hw/arm/aspeed_ast27x0-fc.c                      |   77 +-
- hw/arm/aspeed_ast27x0.c                         |   74 ++
- hw/arm/aspeed_soc_common.c                      |   96 +++
- hw/misc/aspeed_sbc.c                            |  197 +++++
- hw/nvram/aspeed_otp.c                           |  190 +++++
- hw/pci-host/aspeed_pcie.c                       | 1015 +++++++++++++++++++++++
- hw/arm/Kconfig                                  |    3 +
- hw/misc/trace-events                            |    6 +
- hw/nvram/meson.build                            |    4 +
- hw/nvram/trace-events                           |    5 +
- hw/pci-host/Kconfig                             |    4 +
- hw/pci-host/meson.build                         |    1 +
- hw/pci-host/trace-events                        |   11 +
- tests/functional/aarch64/test_aspeed_ast2700.py |    4 +-
- tests/functional/arm/test_aspeed_ast1030.py     |   24 +-
- tests/functional/arm/test_aspeed_ast2600.py     |   36 +
- tests/functional/aspeed.py                      |    8 +
- 26 files changed, 2019 insertions(+), 153 deletions(-)
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250812094011.2617526-2-kane_chen@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/nvram/aspeed_otp.h | 33 ++++++++++++
+ hw/nvram/aspeed_otp.c         | 99 +++++++++++++++++++++++++++++++++++
+ hw/nvram/meson.build          |  4 ++
+ 3 files changed, 136 insertions(+)
  create mode 100644 include/hw/nvram/aspeed_otp.h
- create mode 100644 include/hw/pci-host/aspeed_pcie.h
  create mode 100644 hw/nvram/aspeed_otp.c
- create mode 100644 hw/pci-host/aspeed_pcie.c
+
+diff --git a/include/hw/nvram/aspeed_otp.h b/include/hw/nvram/aspeed_otp.h
+new file mode 100644
+index 000000000000..375235386079
+--- /dev/null
++++ b/include/hw/nvram/aspeed_otp.h
+@@ -0,0 +1,33 @@
++/*
++ *  ASPEED OTP (One-Time Programmable) memory
++ *
++ *  Copyright (C) 2025 Aspeed
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef ASPEED_OTP_H
++#define ASPEED_OTP_H
++
++#include "system/memory.h"
++#include "hw/block/block.h"
++#include "system/address-spaces.h"
++
++#define TYPE_ASPEED_OTP "aspeed-otp"
++OBJECT_DECLARE_SIMPLE_TYPE(AspeedOTPState, ASPEED_OTP)
++
++typedef struct AspeedOTPState {
++    DeviceState parent_obj;
++
++    BlockBackend *blk;
++
++    uint64_t size;
++
++    AddressSpace as;
++
++    MemoryRegion mmio;
++
++    uint8_t *storage;
++} AspeedOTPState;
++
++#endif /* ASPEED_OTP_H */
+diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
+new file mode 100644
+index 000000000000..e5b7ca96767c
+--- /dev/null
++++ b/hw/nvram/aspeed_otp.c
+@@ -0,0 +1,99 @@
++/*
++ *  ASPEED OTP (One-Time Programmable) memory
++ *
++ *  Copyright (C) 2025 Aspeed
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "system/block-backend.h"
++#include "hw/qdev-properties.h"
++#include "hw/nvram/aspeed_otp.h"
++
++static uint64_t aspeed_otp_read(void *opaque, hwaddr offset, unsigned size)
++{
++    AspeedOTPState *s = opaque;
++    uint64_t val = 0;
++
++    memcpy(&val, s->storage + offset, size);
++
++    return val;
++}
++
++static void aspeed_otp_write(void *opaque, hwaddr otp_addr,
++                                uint64_t val, unsigned size)
++{
++    AspeedOTPState *s = opaque;
++
++    memcpy(s->storage + otp_addr, &val, size);
++}
++
++static bool aspeed_otp_init_storage(AspeedOTPState *s, Error **errp)
++{
++    uint32_t *p;
++    int i, num;
++
++        num = s->size / sizeof(uint32_t);
++        p = (uint32_t *)s->storage;
++        for (i = 0; i < num; i++) {
++            p[i] = (i % 2 == 0) ? 0x00000000 : 0xFFFFFFFF;
++        }
++
++    return true;
++}
++
++static const MemoryRegionOps aspeed_otp_ops = {
++    .read = aspeed_otp_read,
++    .write = aspeed_otp_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 4,
++};
++
++static void aspeed_otp_realize(DeviceState *dev, Error **errp)
++{
++    AspeedOTPState *s = ASPEED_OTP(dev);
++
++    if (s->size == 0) {
++        error_setg(errp, "aspeed.otp: 'size' property must be set");
++        return;
++    }
++
++    s->storage = blk_blockalign(s->blk, s->size);
++
++    if (!aspeed_otp_init_storage(s, errp)) {
++        return;
++    }
++
++    memory_region_init_io(&s->mmio, OBJECT(dev), &aspeed_otp_ops,
++                          s, "aspeed.otp", s->size);
++    address_space_init(&s->as, &s->mmio, NULL);
++}
++
++static const Property aspeed_otp_properties[] = {
++    DEFINE_PROP_UINT64("size", AspeedOTPState, size, 0),
++};
++
++static void aspeed_otp_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    dc->realize = aspeed_otp_realize;
++    device_class_set_props(dc, aspeed_otp_properties);
++}
++
++static const TypeInfo aspeed_otp_info = {
++    .name          = TYPE_ASPEED_OTP,
++    .parent        = TYPE_DEVICE,
++    .instance_size = sizeof(AspeedOTPState),
++    .class_init    = aspeed_otp_class_init,
++};
++
++static void aspeed_otp_register_types(void)
++{
++    type_register_static(&aspeed_otp_info);
++}
++
++type_init(aspeed_otp_register_types)
+diff --git a/hw/nvram/meson.build b/hw/nvram/meson.build
+index 10f3639db6ae..b66f23605b77 100644
+--- a/hw/nvram/meson.build
++++ b/hw/nvram/meson.build
+@@ -19,3 +19,7 @@ system_ss.add(when: 'CONFIG_XLNX_BBRAM', if_true: files('xlnx-bbram.c'))
+ 
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_nvram.c'))
+ specific_ss.add(when: 'CONFIG_ACPI', if_true: files('fw_cfg-acpi.c'))
++
++system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
++  'aspeed_otp.c',
++  ))
+\ No newline at end of file
+-- 
+2.51.0
 
 
