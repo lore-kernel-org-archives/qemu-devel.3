@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35541CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 11:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC805CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 12:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3CVO-0002gD-5k; Mon, 29 Sep 2025 07:57:22 -0400
+	id 1v3Cx0-0001sa-4s; Mon, 29 Sep 2025 08:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3CVM-0002fy-EX
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 07:57:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Cwv-0001sC-Sp
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 08:25:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3CVB-0000oO-B3
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 07:57:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Cwc-0008Af-2c
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 08:25:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759147022;
+ s=mimecast20190719; t=1759148723;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
- bh=C+t+c9qIy47c8aoCdV90GMm/S1vYBqkuLA+eHlKTol0=;
- b=YJNgQl8ZRoRduq6AO9bh5lJ0xeybvepL0FB3AjIuOYaPGWw1McY7zg2meAa5cuLaMNRUAU
- weZvUF7m5fTcsVvIDuZLIsfn0XStegMI7NdVPimIXLD7/j2wDTN6HjnEEVSl3RxkVw8Zvm
- Wsg0O+/YWBxLQbjKerI+DG6bZ3oksbY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=W+M5c9ydxrmi3CYb7NAhEqKIop8yDuu2vLscC2dvW+0=;
+ b=MDE06x0ysj/KybLHFlftfjeISaBhX45EUbcrIyIdrwPopqrnfaHjBNUA6MC2dyz9zgJwBv
+ 7vMaI6l1dohO1iJkO0KAe1XuG1+sVUcZcrRX23WjbFVpgO5WT1eWIfGJEmB9Vh6Vc5X25C
+ OX5dk/735DQF4dVHuxgy5M8kXtHyygk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81-Q5SpF3CVMLyim90AsV4AbQ-1; Mon, 29 Sep 2025 07:57:00 -0400
-X-MC-Unique: Q5SpF3CVMLyim90AsV4AbQ-1
-X-Mimecast-MFC-AGG-ID: Q5SpF3CVMLyim90AsV4AbQ_1759147020
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e35baddc1so28939795e9.2
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 04:57:00 -0700 (PDT)
+ us-mta-628-2guoDZ3qMNqEkUe4USEezQ-1; Mon, 29 Sep 2025 08:25:21 -0400
+X-MC-Unique: 2guoDZ3qMNqEkUe4USEezQ-1
+X-Mimecast-MFC-AGG-ID: 2guoDZ3qMNqEkUe4USEezQ_1759148721
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e3e177893so29355945e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 05:25:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759147019; x=1759751819;
- h=content-transfer-encoding:autocrypt:subject:cc:to:content-language
- :from:user-agent:mime-version:date:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C+t+c9qIy47c8aoCdV90GMm/S1vYBqkuLA+eHlKTol0=;
- b=sh0qSWDox7FLUw5SFljFG+0ZejTUSRhTjjBx7JB9Yc/mB9mjr+OBvZ31PPdl6n8/AX
- RbzTR5iVvrKKR11aTeCMvMEMNrHP/ynVg+SF3wPl7IoZbG/92ZUARlMDbCJkzgk0libz
- P9XgCdmCSn72bmFLf4XWOFLEDIpea4S9eCNwThD0/sPRY3rJFUh1GErtQaRguzd8xXCS
- HMnrtPh71bH3M7ZQnw4wj+snFlSdLrWy/MNBGVpTY2BRorp8c4VKtcenycnv1KXqOmDL
- nM4WJTCRKH9jzdrlwh+U0TgqH7vcI0mMAjuXhPsABZojrmY+Tv5mgtJHqMnwB5uu8BKw
- 8VjA==
-X-Gm-Message-State: AOJu0YzDrItG57WxJUn1sn4FczxWj2zYVzh1N7hn01PWlpZ7gVzR/8xL
- cp1gtdPNM5I7CJm9NQ2VaSIX9tOnTkDuvcN559hcAyRj7a7i1INZ/ZM2tF2qGq2JnhF/HA6bPL7
- pLMkZs9Ey+vAWxr+T2hGXGB+/hQjxr0Z4qq4t6Nhi6ilWTNRoF0fuPYb0kXU6bj8C
-X-Gm-Gg: ASbGnctIxvJHchgQSQGCLwQyZv6u9ZncazB3sERPZz7UCrfv0rkU+6Vl/w+QcQwGl1I
- PJQxOn+2W7InYurDU8s1zpB/OJoOaI/wRaMsjtz2LkFj3HOI842WF+8rsTYEhMCaWDt22koB/ak
- 2MvWZ+rQn5y13iMuAEwb4n5zdcnBgeAKSeH8gufFlBMvKox047OhlgYwVLbnMyJ+X6G5strRXvK
- qp75UZkbex5OsQA8c7xtn5LDIpcDQAPMj/xA2oruKCfPegHXt6mb9WZXQV8gL8zwS74MkPhpI58
- WH6l0JEVC6jJMQqMFTKcwJRUaPWnppzt8Kd+fyuIlMGl8//dypN4HZCGxNlnx7TmSpSBNSJ+rm/
- ckF7wkA==
-X-Received: by 2002:a05:600c:8b16:b0:468:7f92:5a80 with SMTP id
- 5b1f17b1804b1-46e329fbd2bmr122580795e9.27.1759147019548; 
- Mon, 29 Sep 2025 04:56:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvSIwurcb1ZUCrdgpbavpn6woKwuRaulLiix/uOp/bosyAZB7O28ytq6Xq+Qm1yWCpgJ0N4g==
-X-Received: by 2002:a05:600c:8b16:b0:468:7f92:5a80 with SMTP id
- 5b1f17b1804b1-46e329fbd2bmr122580555e9.27.1759147018988; 
- Mon, 29 Sep 2025 04:56:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759148720; x=1759753520;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=W+M5c9ydxrmi3CYb7NAhEqKIop8yDuu2vLscC2dvW+0=;
+ b=rGL+okB/1kHnHOIEEQWdbmCMTH62M6Bv0W3RnxnfMDTfTYO0LfCZDV692BoQx2B2aq
+ Te3sY8iegVRL9nWTCGOhunfXQntWW2tVC6S569cCEBE3NT1R5PDnBsdy9Dpe3KRswqRV
+ aaRIph7OpSv615YforKvSzmiy544EHkZRqiP4/wzoS4ZkeqfyLpX4TRJ1dsfIbVKNvdJ
+ ucLVTpnsvHw8/mQ6MVjhg26nokNiEn+f9f/70ZLQaOOFBXi3EpeoawSBHo++6KEDbi9y
+ 3iso8K6Klfx+hFMEITr9B7AMDbDAcdLcD6LW9mKrw25jR0mFHCuTL1XvH4+xigUKAPyt
+ ZE9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/+A+SshJf2gswFX2MVwWUL3VWWfOOYibEMTj7BvAB6OxYC7NtoRXBk2eHCIJppPM9zlLb82cysqYI@nongnu.org
+X-Gm-Message-State: AOJu0YzrQwW2/Ydf8MGJI3GVxRVAVuA6XvOuX+HbKaab1O0hj4ub87Q8
+ bvEfs6sN+bNLc1cdttyqJblU+TWX1CxV1vGN+u5SXSV9vOsMlpzqUgtYtsP4J4uWsfnhCLvU3Li
+ qmURyN0Ri5eT8mkdhSM3kq+diOg1oQ7w4gm1BPOpdw6M2CieeG1eOOLfB
+X-Gm-Gg: ASbGncs3Q3McXcj7CWasD644nkvJZWZLmduw4FFeIMTUj7wej2KUGoTuin9tIcU1OAD
+ ftmXKemkkQ9aHQwjqKb6JMhN/UI2wjQTn7KUfehntMrAWKTSJz2onac21Kt9G8ajOex6E/RIKwX
+ ZK5+ZGNqtwScDXNG9Di/CnKa1RpgSUUoXAo0HED1svlaCOAXNbVmYWlh62qVmYsk8zkWFmVzFoj
+ XED+5pxPjlO9N9nXfH8e5mPqcZFUro/vxr+0BnYoQuQ4s2jGquviWJDg9Y21IJocsQSQkJy6ZH0
+ v4YPjO90CtyFpyRY9odSXA+Q0hadWIfWgTEEthkr1zl/IsdSUP5Zi5t4cTSVkFjSXBwqPFHAxaJ
+ j9hJDqA==
+X-Received: by 2002:a05:600c:258:b0:46e:1fb7:a1b3 with SMTP id
+ 5b1f17b1804b1-46e329fb7eamr136631685e9.23.1759148720583; 
+ Mon, 29 Sep 2025 05:25:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExBrP61tBlAPXOnITrUreoFMUVP+Pu+ztqEcnUnRAcD6INfbo8pCMGvQcIqOe0suyS4zDIBg==
+X-Received: by 2002:a05:600c:258:b0:46e:1fb7:a1b3 with SMTP id
+ 5b1f17b1804b1-46e329fb7eamr136631315e9.23.1759148720110; 
+ Mon, 29 Sep 2025 05:25:20 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
  [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc72b0aeesm18429280f8f.49.2025.09.29.04.56.58
+ 5b1f17b1804b1-46e336f10f5sm87545305e9.11.2025.09.29.05.25.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 04:56:58 -0700 (PDT)
-Message-ID: <a637a6be-ac18-4cf2-ae31-392de0676ab3@redhat.com>
-Date: Mon, 29 Sep 2025 13:56:57 +0200
+ Mon, 29 Sep 2025 05:25:19 -0700 (PDT)
+Message-ID: <ff8c93b0-5e6e-4335-9b47-c5b82ae246a0@redhat.com>
+Date: Mon, 29 Sep 2025 14:25:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 20/28] s390x: Guest support for Secure-IPL Code Loading
+ Attributes Facility (SCLAF)
+To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-21-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-To: Qemu-block <qemu-block@nongnu.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Subject: Two iotests failing with -qcow
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -120,17 +131,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20250917232131.495848-21-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,162 +160,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/09/2025 01.21, Zhuoying Cai wrote:
+> The secure-IPL-code-loading-attributes facility (SCLAF)
+> provides additional security during secure IPL.
+> 
+> Availability of SCLAF is determined by byte 136 bit 3 of the
+> SCLP Read Info block.
+> 
+> This feature is available starting with the gen16 CPU model.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Collin Walling <walling@linux.ibm.com>
+> ---
+>   docs/specs/s390x-secure-ipl.rst     | 25 +++++++++++++++++++++++++
+>   target/s390x/cpu_features.c         |  2 ++
+>   target/s390x/cpu_features_def.h.inc |  1 +
+>   target/s390x/cpu_models.c           |  3 +++
+>   target/s390x/gen-features.c         |  2 ++
+>   target/s390x/kvm/kvm.c              |  1 +
+>   6 files changed, 34 insertions(+)
+> 
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 760a066084..a19b976e25 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -85,3 +85,28 @@ operations such as:
+>   * certificate data
+>   
+>   The guest kernel will inspect the IIRB and build the keyring.
+> +
+> +
+> +Secure Code Loading Attributes Facility
+> +---------------------------------
+> +
+> +The Secure Code Loading Attributes Facility (SCLAF) enhances system security during the
+> +IPL by enforcing additional verification rules.
 
-  Hi,
+Please wrap your text so that it fits into 80 columns.
+(Not sure why checkpatch.pl is not warning here...?)
 
-FYI, two iotests are currently failing when running "./check -qcow" :
+> +When SCLAF is available, its behavior depends on the IPL mode. It introduces verification
+> +of both signed and unsigned components to help ensure that only authorized code is loaded
+> +during the IPL process. Any errors detected by SCLAF are reported in the IIRB.
+>
+> +Unsigned components are restricted to load addresses at or above absolute storage address
+> +``0x2000``.
+> +
+> +Signed components must include a Secure Code Loading Attribute Block (SCLAB), which is
+> +appended at the very end of the component. The SCLAB defines security attributes for
+> +handling the signed code. Specifically, it may:
+> +
+> +* Provide direction on how to process the rest of the component.
+> +
+> +* Provide further validation of information on where to load the signed binary code
+> +  from the load device.
+> +
+> +* Specify where to start the execution of the loaded OS code.
 
-301                             fail       [13:27:50] [13:27:52]   1.8s 
-            output mismatch (see 
-/tmp/qemu-qcow1/tests/qemu-iotests/scratch/qcow-file-301/301.out.bad)
---- /tmp/qemu/tests/qemu-iotests/301.out
-+++ /tmp/qemu-qcow1/tests/qemu-iotests/scratch/qcow-file-301/301.out.bad
-@@ -3,6 +3,7 @@
-  == qcow backed by qcow ==
-  Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=33554432
-  qemu-img: TEST_DIR/t.IMGFMT: Backing file specified without backing format
-+Detected format of IMGFMT.
-  Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=33554432 
-backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
-  image: TEST_DIR/t.IMGFMT
-  file format: IMGFMT
-@@ -31,6 +32,7 @@
+Do you maybe want to mention any tool from s390-tools that helps with this 
+task (assuming that there is one)? (or should that rather not be part of the 
+specs here?)
 
-  == qcow backed by raw ==
-  qemu-img: TEST_DIR/t.IMGFMT: Backing file specified without backing format
-+Detected format of raw.
-  Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=33554432 
-backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=raw
-  image: TEST_DIR/t.IMGFMT
-  file format: IMGFMT
+...
+> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+> index bd2060ab93..c3e0c6ceff 100644
+> --- a/target/s390x/gen-features.c
+> +++ b/target/s390x/gen-features.c
+> @@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
+>       S390_FEAT_UV_FEAT_AP_INTR,
+>       S390_FEAT_CERT_STORE,
+>       S390_FEAT_SIPL,
+> +    S390_FEAT_SCLAF,
+>   };
+ >
+>   static uint16_t full_GEN17_GA1[] = {
+> @@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
+>       S390_FEAT_EXTENDED_LENGTH_SCCB,
+>       S390_FEAT_CERT_STORE,
+>       S390_FEAT_SIPL,
+> +    S390_FEAT_SCLAF,
+>   };
 
-and:
-
-graph-changes-while-io          fail       [13:28:05] [13:28:42]   37.4s 
-            failed, exit status 1
---- /tmp/qemu/tests/qemu-iotests/tests/graph-changes-while-io.out
-+++ 
-/tmp/qemu-qcow1/tests/qemu-iotests/scratch/qcow-file-graph-changes-while-io/graph-changes-while-io.out.bad
-@@ -1,5 +1,107 @@
--...
-+..qemu-storage-daemon: Could not update backing file link: Operation not 
-supported
-+EE
-+======================================================================
-+ERROR: test_remove_lower_snapshot_while_io 
-(__main__.TestGraphChangesWhileIO.test_remove_lower_snapshot_while_io)
-+----------------------------------------------------------------------
-+Traceback (most recent call last):
-+  File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
-+    return await fut
-+           ^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/events.py", line 591, in get
-+    return await self._queue.get()
-+           ^^^^^^^^^^^^^^^^^^^^^^^
-+  File "/usr/lib64/python3.13/asyncio/queues.py", line 186, in get
-+    await getter
-+asyncio.exceptions.CancelledError
-+
-+The above exception was the direct cause of the following exception:
-+
-+Traceback (most recent call last):
-+  File "/tmp/qemu/tests/qemu-iotests/tests/graph-changes-while-io", line 
-183, in test_remove_lower_snapshot_while_io
-+    self._wait_for_blockjob('concluded')
-+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-+  File "/tmp/qemu/tests/qemu-iotests/tests/graph-changes-while-io", line 
-66, in _wait_for_blockjob
-+    for event in self.qsd.get_qmp().get_events(wait=10.0):
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/legacy.py", line 279, in get_events
-+    event = self.pull_event(wait)
-+  File "/tmp/qemu/python/qemu/qmp/legacy.py", line 254, in pull_event
-+    self._sync(
-+    ~~~~~~~~~~^
-+        self._qmp.events.get(),
-+        ^^^^^^^^^^^^^^^^^^^^^^^
-+        timeout
-+        ^^^^^^^
-+    )
-+    ^
-+  File "/tmp/qemu/python/qemu/qmp/legacy.py", line 106, in _sync
-+    return self._aloop.run_until_complete(
-+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-+        asyncio.wait_for(future, timeout=timeout)
-+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+    )
-+    ^
-+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 725, in 
-run_until_complete
-+    return future.result()
-+           ~~~~~~~~~~~~~^^
-+  File "/usr/lib64/python3.13/asyncio/tasks.py", line 506, in wait_for
-+    async with timeouts.timeout(timeout):
-+               ~~~~~~~~~~~~~~~~^^^^^^^^^
-+  File "/usr/lib64/python3.13/asyncio/timeouts.py", line 116, in __aexit__
-+    raise TimeoutError from exc_val
-+TimeoutError
-+
-+======================================================================
-+ERROR: test_remove_lower_snapshot_while_io 
-(__main__.TestGraphChangesWhileIO.test_remove_lower_snapshot_while_io)
-+----------------------------------------------------------------------
-+Traceback (most recent call last):
-+  File "/tmp/qemu/tests/qemu-iotests/tests/graph-changes-while-io", line 
-60, in tearDown
-+    self.qsd.stop()
-+    ~~~~~~~~~~~~~^^
-+  File "/tmp/qemu/tests/qemu-iotests/iotests.py", line 480, in stop
-+    self._qmp.close()
-+    ~~~~~~~~~~~~~~~^^
-+  File "/tmp/qemu/python/qemu/qmp/legacy.py", line 288, in close
-+    self._sync(
-+    ~~~~~~~~~~^
-+        self._qmp.disconnect()
-+        ^^^^^^^^^^^^^^^^^^^^^^
-+    )
-+    ^
-+  File "/tmp/qemu/python/qemu/qmp/legacy.py", line 106, in _sync
-+    return self._aloop.run_until_complete(
-+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-+        asyncio.wait_for(future, timeout=timeout)
-+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+    )
-+    ^
-+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 725, in 
-run_until_complete
-+    return future.result()
-+           ~~~~~~~~~~~~~^^
-+  File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
-+    return await fut
-+           ^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/protocol.py", line 443, in disconnect
-+    await self._wait_disconnect()
-+  File "/tmp/qemu/python/qemu/qmp/protocol.py", line 763, in _wait_disconnect
-+    await all_defined_tasks  # Raise Exceptions from the bottom half.
-+    ^^^^^^^^^^^^^^^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/protocol.py", line 914, in _bh_loop_forever
-+    await async_fn()
-+  File "/tmp/qemu/python/qemu/qmp/protocol.py", line 952, in _bh_recv_message
-+    msg = await self._recv()
-+          ^^^^^^^^^^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/protocol.py", line 1053, in _recv
-+    message = await self._do_recv()
-+              ^^^^^^^^^^^^^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/qmp_client.py", line 459, in _do_recv
-+    msg_bytes = await self._readline()
-+                ^^^^^^^^^^^^^^^^^^^^^^
-+  File "/tmp/qemu/python/qemu/qmp/protocol.py", line 1021, in _readline
-+    raise EOFError
-+EOFError
-+
-  ----------------------------------------------------------------------
-  Ran 3 tests
-
--OK
-+FAILED (errors=2)
-
-Should these tests maybe just be marked as non-working with qcow1 ?
+In the cover letter you wrote "All actions must be performed on a KVM guest" 
+... so does this feature depend on KVM or not? If you cannot use the feature 
+with TCG, I think you should not add this to the "qemu_MAX" CPU model?
 
   Thomas
 
