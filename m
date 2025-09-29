@@ -4,52 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D189CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 08:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5511BCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 08:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v38rA-0004sD-SC; Mon, 29 Sep 2025 04:03:38 -0400
+	id 1v38rY-0004yo-GE; Mon, 29 Sep 2025 04:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1v38pm-0004dl-RQ
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:02:13 -0400
-Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v38rR-0004xF-21
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:03:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1v38pS-0002ci-NE
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:02:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1759132885; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=35YsRLIzqfWT6Rz5F7DY1fnB12isAT2RdCstv+znKAk=;
- b=KRHsfbANFApeFVcyYZitXQrHbTg9d8qqR8RKyWGwjTQU0OSEgiaS5i6jqc4bVSsygJ+iAy37m1EbofkqLDrhoQIIUYui7X5itUBt3wI7ENpIMOXz8+MNHmnXzBsSBTe+vTPEuk6CptrVjUeV86rvbQAQsTfC61h9q60jeAB0zTo=
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0Wp0tOIt_1759132876 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 29 Sep 2025 16:01:24 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de
-Subject: [PATCH] migration: Use QAPI_CLONE() instead of duplicating it inline
-Date: Mon, 29 Sep 2025 16:01:15 +0800
-Message-Id: <20250929080115.98072-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v38rG-00038q-Vz
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:03:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759133013;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fwBSLuC7VJSNEkCWiqH+5rxz7quWZ501g3zvELQnNM0=;
+ b=RMOR3CO3Bs0J3xXNvMPWWXQxV7QgzEIqBCH2m8pohXeX+Jo6W5ldj3unp0oVIxH4M69tGs
+ GAl6fl8Z4Dgn6QzV1Jz0Th0L4iW/77jNPjBSexk6ZW0BZjd48VWrjnpW2H0BP71tn61MtM
+ F/IuD8Jtx9qpX2Sm4fYs0588pd3DAgI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-37-ZZEpC6a1NNmQcLRYITzQ2w-1; Mon,
+ 29 Sep 2025 04:03:29 -0400
+X-MC-Unique: ZZEpC6a1NNmQcLRYITzQ2w-1
+X-Mimecast-MFC-AGG-ID: ZZEpC6a1NNmQcLRYITzQ2w_1759133008
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B64721800447; Mon, 29 Sep 2025 08:03:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A875330001A4; Mon, 29 Sep 2025 08:03:25 +0000 (UTC)
+Date: Mon, 29 Sep 2025 09:03:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, qemu-arm@nongnu.org,
+ manos.pitsidianakis@linaro.org, peter.maydell@linaro.org
+Subject: Re: [PATCH v4 3/9] tests/functional: Provide GDB to the functional
+ tests
+Message-ID: <aNo9JmdYGm0XxU-g@redhat.com>
+References: <20250926051542.104432-1-gustavo.romero@linaro.org>
+ <20250926051542.104432-4-gustavo.romero@linaro.org>
+ <a9118adc-f9ac-4df0-8e60-4407945a5908@redhat.com>
+ <bd906237-c0fb-4921-a017-a591bc95f31f@linaro.org>
+ <599cd42e-0619-4556-ae70-b2d360e6405a@linaro.org>
+ <acad2462-9c7a-43e9-a40c-6c3d625684c8@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=guobin@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+In-Reply-To: <acad2462-9c7a-43e9-a40c-6c3d625684c8@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.539,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,116 +92,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's better to use QAPI_CLONE() in qmp_query_migrate_parameters so that
-the code is cleaner.
+On Mon, Sep 29, 2025 at 08:34:03AM +0200, Thomas Huth wrote:
+> On 26/09/2025 20.15, Gustavo Romero wrote:
+> > Hi Thomas,
+> > 
+> > On 9/26/25 15:08, Gustavo Romero wrote:
+> > > Hi Thomas,
+> > > 
+> > > On 9/26/25 07:03, Thomas Huth wrote:
+> > > > On 26/09/2025 07.15, Gustavo Romero wrote:
+> > > > > The probe of GDB is done in 'configure' and the full path is passed to
+> > > > > meson.build via the -Dgdb=option.
+> > > > > 
+> > > > > Because a single functional test can cover different arches, such as
+> > > > > aarch64, ppc64, and x86_64, only a GDB that supports all the arches in
+> > > > > the target list is passed to Meson for use in the functional tests. To
+> > > > > handle this check, a new shell function, is_target_arch_in_arch_list, is
+> > > > > introduced in 'configure'.
+> > > > > 
+> > > > > Meson then can pass the location of GDB to the test via an environment
+> > > > > variable: QEMU_TEST_GDB.
+> > > > > 
+> > > > > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> > > > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > > > ---
+> > > > >   configure                     | 21 +++++++++++++++++++++
+> > > > >   meson_options.txt             |  2 ++
+> > > > >   scripts/meson-buildoptions.sh |  2 ++
+> > > > >   tests/functional/meson.build  |  6 ++++++
+> > > > >   4 files changed, 31 insertions(+)
+> > > > > 
+> > > > > diff --git a/configure b/configure
+> > > > > index 0f7eb95586..20e05d233f 100755
+> > > > > --- a/configure
+> > > > > +++ b/configure
+> > > > > @@ -1142,12 +1142,31 @@ fi
+> > > > >   #########################################
+> > > > >   # gdb test
+> > > > > +# Check if all target arches are in a provided list of arches.
+> > > > > +is_target_arch_in_arch_list() {
+> > > > > +    arch_list=$1
+> > > > > +    for target in $target_list; do
+> > > > > +        arch=${target%%-*}
+> > > > > +        if test "${arch_list#*$arch}" = "$arch_list"; then
+> > > > > +            # Target arch not in arch list
+> > > > > +            return 1
+> > > > > +        fi
+> > > > > +    done
+> > > > > +    return 0
+> > > > > +}
+> > > > > +
+> > > > >   if test -n "$gdb_bin"; then
+> > > > >       gdb_version_string=$($gdb_bin --version | head -n 1)
+> > > > >       # Extract last field in the version string
+> > > > >       gdb_version=${gdb_version_string##* }
+> > > > >       if version_ge $gdb_version 9.1; then
+> > > > >           gdb_arches=$($python
+> > > > > "$source_path/scripts/probe-gdb- support.py" $gdb_bin)
+> > > > > +
+> > > > > +    if is_target_arch_in_arch_list "$gdb_arches"; then
+> > > > 
+> > > > No TABs, please!
+> > > > 
+> > > > > +            gdb_multiarch="yes"
+> > > > > +        else
+> > > > > +            gdb_multiarch=""
+> > > > > +    fi
+> > > > 
+> > > > This unfortunately does not work with the GDB from Fedora - it
+> > > > only supports "arch64_be arm riscv64 riscv32 ppc i386 s390x
+> > > > ppc64 aarch64 ppc64le x86_64", but if you configured a target
+> > > > like "alpha-softmmu", this breaks.
+> > > 
+> > > argh! ok
+> > > 
+> > > 
+> > > > (BTW, does the gdb-multiarch from Debian/Ubuntu really also
+> > > > support exotic QEMU targets like tricore?)
+> > > 
+> > > No, I've checked GDB upstream and I can't see any trace of tricore.
+> > > And I just saw that Alex left a comment in scripts/probe-gdb-support.py
+> > > saying "# no tricore in upstream gdb", so nope, it seems that it still holds.
+> > > 
+> > > 
+> > > > I think it would be better to drop this hunk, and rather check
+> > > > in the spot where we use GDB if the required target is really
+> > > > there (i.e. in the functional test that uses it).
+> > > 
+> > > OK. I'm also not a big fan of doing it in bash. How do you suggest
+> > > to do it? Directly in the code, via a skipIf decorator, or something else?
+> > 
+> > $gdb_arches, obtained using scripts/probe-gdb-support.py in configure,
+> > could be passed to meson and meson sets it in the test env, as we're
+> > doing for $gdb_bin and QEMU_TEST_GDB env var. wdyt?
+> 
+> That might be a possibility, though it's getting a little bit clunky if you
+> want to run the test manually, without the meson test runner.
+> 
+> Maybe it would be nicer to just start gdb in the test and catch the error
+> (and skip the test in that case) in the python test code if it fails to set
+> the target architecture there?
 
-No functional changes intended.
+If you run 'set architecture' with no arguments, it'll return a long list
+of supported targets we can match on.
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- migration/options.c | 70 ++-------------------------------------------
- 1 file changed, 3 insertions(+), 67 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 4e923a2e07..347d762b03 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -892,81 +892,16 @@ AnnounceParameters *migrate_announce_params(void)
- 
- MigrationParameters *qmp_query_migrate_parameters(Error **errp)
- {
--    MigrationParameters *params;
-     MigrationState *s = migrate_get_current();
- 
--    /* TODO use QAPI_CLONE() instead of duplicating it inline */
--    params = g_malloc0(sizeof(*params));
--    params->has_throttle_trigger_threshold = true;
--    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
--    params->has_cpu_throttle_initial = true;
--    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
--    params->has_cpu_throttle_increment = true;
--    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
--    params->has_cpu_throttle_tailslow = true;
--    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
--    params->tls_creds = g_strdup(s->parameters.tls_creds);
--    params->tls_hostname = g_strdup(s->parameters.tls_hostname);
--    params->tls_authz = g_strdup(s->parameters.tls_authz ?
--                                 s->parameters.tls_authz : "");
--    params->has_max_bandwidth = true;
--    params->max_bandwidth = s->parameters.max_bandwidth;
--    params->has_avail_switchover_bandwidth = true;
--    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
--    params->has_downtime_limit = true;
--    params->downtime_limit = s->parameters.downtime_limit;
--    params->has_x_checkpoint_delay = true;
--    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
--    params->has_multifd_channels = true;
--    params->multifd_channels = s->parameters.multifd_channels;
--    params->has_multifd_compression = true;
--    params->multifd_compression = s->parameters.multifd_compression;
--    params->has_multifd_zlib_level = true;
--    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
--    params->has_multifd_qatzip_level = true;
--    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
--    params->has_multifd_zstd_level = true;
--    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
--    params->has_xbzrle_cache_size = true;
--    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
--    params->has_max_postcopy_bandwidth = true;
--    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
--    params->has_max_cpu_throttle = true;
--    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
--    params->has_announce_initial = true;
--    params->announce_initial = s->parameters.announce_initial;
--    params->has_announce_max = true;
--    params->announce_max = s->parameters.announce_max;
--    params->has_announce_rounds = true;
--    params->announce_rounds = s->parameters.announce_rounds;
--    params->has_announce_step = true;
--    params->announce_step = s->parameters.announce_step;
--
--    if (s->parameters.has_block_bitmap_mapping) {
--        params->has_block_bitmap_mapping = true;
--        params->block_bitmap_mapping =
--            QAPI_CLONE(BitmapMigrationNodeAliasList,
--                       s->parameters.block_bitmap_mapping);
--    }
--
--    params->has_x_vcpu_dirty_limit_period = true;
--    params->x_vcpu_dirty_limit_period = s->parameters.x_vcpu_dirty_limit_period;
--    params->has_vcpu_dirty_limit = true;
--    params->vcpu_dirty_limit = s->parameters.vcpu_dirty_limit;
--    params->has_mode = true;
--    params->mode = s->parameters.mode;
--    params->has_zero_page_detection = true;
--    params->zero_page_detection = s->parameters.zero_page_detection;
--    params->has_direct_io = true;
--    params->direct_io = s->parameters.direct_io;
--
--    return params;
-+    return QAPI_CLONE(MigrationParameters, &s->parameters);
- }
- 
- void migrate_params_init(MigrationParameters *params)
- {
-     params->tls_hostname = g_strdup("");
-     params->tls_creds = g_strdup("");
-+    params->tls_authz = g_strdup("");
- 
-     /* Set has_* up only for parameter checks */
-     params->has_throttle_trigger_threshold = true;
-@@ -974,6 +909,7 @@ void migrate_params_init(MigrationParameters *params)
-     params->has_cpu_throttle_increment = true;
-     params->has_cpu_throttle_tailslow = true;
-     params->has_max_bandwidth = true;
-+    params->has_avail_switchover_bandwidth = true;
-     params->has_downtime_limit = true;
-     params->has_x_checkpoint_delay = true;
-     params->has_multifd_channels = true;
+With regards,
+Daniel
 -- 
-2.39.5
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
