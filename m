@@ -4,82 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A175CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0988CCAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3F5r-0004ip-HG; Mon, 29 Sep 2025 10:43:13 -0400
+	id 1v3F6w-0005Py-M4; Mon, 29 Sep 2025 10:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v3F5i-0004eI-Ep
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:43:03 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1v3F6n-0005Og-VL
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:44:12 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v3F5N-0001kA-6d
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:42:58 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e384dfde0so48655855e9.2
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:42:34 -0700 (PDT)
+ id 1v3F6f-0002A3-Is
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:44:09 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-71d5fe46572so64427647b3.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:43:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759156951; x=1759761751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hAzyKK2avmxJErsVwK5KjZxJGok1xSdKxfjGTCv72nQ=;
- b=tP6Z1wRV5alFbhh/Ok7wfOFir6CtMjcZ9t0QwdyqE7RC5wEBBkjEyrmDu8SJV9tmuL
- ilzbLeEZG/fBPuXwdxdxZBFEYiv9zltg/GvFhLr3zknW0JHF0Ftz/1rVMzREVm34DeSL
- kXR1T2c4CiQvVd8+jS+k5cSmo0CRqFI/goLto88il5ttv0+hQmpZZ3HDvAyEq3hZIG4F
- GlxFZQi1wwmr595ZVypKjIernL9Nd5FYEs4iuql9yBEdbtJZDC//9Tk3e3amf8JUcBdr
- AJQgtLRqse9hTuPsPBa3OyaSdGWS4vr4re0tjloKHwOzfOVkRQV9Ke+S+EKn3F8moNXm
- 6ayw==
+ d=linaro.org; s=google; t=1759157029; x=1759761829; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=T2r0TdizdduB9sJCG8TJu6Twt1PSisV8cqib/uyB1ig=;
+ b=cz2bnIDmfigJxKCLeFn/SoLionyBh/O/fnweUbgBl2ue/ImTOSb1PSkuaDywS2hL/m
+ JMCz4sNpkbOk9OVe2Edsm4xoRvsi+wdqkDUYQnz5wbEPpaJbnttYheQb/KpQb0ZOFmVi
+ /wNS4rSVy6JyDH1z8FyfYFGH09E3n2rixSpOFGBKA7dLEo3iOlrYizlhvwKPWFAikPeL
+ YlBPCvK4l0koAW+Kp7SGhKZXRFTXvY73OFGhxIjlh54aQDc+363gir+vT726S6dj5t4F
+ NDsQROcAoUyHExY6kUQQrFUgvbbBafzYVYg4DGqUMdW+wrZusFT+BOp91e/gnHdB0lR7
+ IeVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759156951; x=1759761751;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1759157029; x=1759761829;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hAzyKK2avmxJErsVwK5KjZxJGok1xSdKxfjGTCv72nQ=;
- b=vy8K3wUL1BGK6aiVonY87YNwsceSAE1Rfnha+Ep03ha/kZ3kalaid0kizGrh5Xwg6d
- AtUCapsBRz4fuuTierbmTVPTvPSAUxy3D4P6uQAG3RwgDl/lsDWcDC+tRwqaF/vp5Tgk
- WNVBE0RZRZytymMhRnKFhuCUbb23oBoPjoN3R/SgHuLIX2A3Iru5XNbrK0MjweTUwquP
- tlFxkw0j5c7pVoX5nlYHOY7euG5y+c+CH2Q91aA6dbnI8bH/OMSKkBx0csKhGLNOeCdV
- viZE0H10bKiTW6Bc+tG1qQ7oQQtgTLIkyYbhworOdbOja4bXWzfj796WFRQ37e7ym8+o
- X0hw==
-X-Gm-Message-State: AOJu0YxQn4hOcrnTF9cic8L9gcF9ZQYDTCE6sh7d+aJgL8/DeRtH0YSd
- bHbXEw4p/6VALKeV4Yj9P+SD0Dyss70jV6cclL2mjIXc+XHy3KfOGW7F1nMl8UTg4TO1xXy8xWF
- kYkKx
-X-Gm-Gg: ASbGncvhEIZD3SIPwxkJAEErOzjzBDdqKedF6lF00CcX5DB2AkJX2cvjJKKAEKZzljo
- zmup3e7KwTvdu9X4p1rGAJYm2a2phMCYRF8DCeRpurGIkKg2yZ2kaGlpsbISAl7qyc5y8MT4diX
- E2YW5ps20xTHDObcmsnv2nbNtWK5EiKj6abWABk1tzrK+s8OMeGo0l3Lr1l+OJB3gEtgR9R3vHI
- SoE/L1S1zViDIjVz89bx7vkxR/j/uOpaD151s/Q/3jGgL/1o3HZ0xT2mIX1SKTslC70u+KYyB+e
- GbMeYebGkYqn37Zb1f/KB4rcucTzxQP81XzUewUBZrKkt3J5SNBPFQU0fOYgbnHBPTIjPY3V0rz
- d+s6+xJFbRaSv61zc8ETh3UDOls+uLcaeGjHDqnY=
-X-Google-Smtp-Source: AGHT+IEn9+EqLhqnXDgCbSR5/hiXJpJAcqtGfpglMlne8UfNbOwx7tEb+VcqcXOcBB1I7LGULvPM2A==
-X-Received: by 2002:a05:600c:3145:b0:46c:d6ed:2311 with SMTP id
- 5b1f17b1804b1-46e329f9d06mr136195605e9.19.1759156951104; 
- Mon, 29 Sep 2025 07:42:31 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e56f64849sm15893885e9.11.2025.09.29.07.42.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 07:42:30 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH 0/3] system: Don't leak CPU AddressSpaces
-Date: Mon, 29 Sep 2025 15:42:25 +0100
-Message-ID: <20250929144228.1994037-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=T2r0TdizdduB9sJCG8TJu6Twt1PSisV8cqib/uyB1ig=;
+ b=fdPk+UlZfUcmgU3b20dfe+L3h7hVub4ZK24pLT71FjUjwRxBo78m1ZFvFjIacK0xsj
+ aK6TrkW4/LTonlTxcJYvNVzt8jGkVGX3dqEzHZOnw5xvrIvjJfLLQsgkqIPo9ZfJYztX
+ fWZd8RuemFK6DdBkHMgeWQ6OXbUO5VYh9wuixB5mTUaDK3hKi/q9iIY1RhmmuJHBzz65
+ e41p3ewEcN3Fx8WiQFwC4kyC98qbiv5yOoUDyedpq7YOxuqVD+tDmmdQNacCyhL9OBvj
+ bjdA5cuLx0Y9DeTXvefAMGLEgtaj16SE5tYd0wI87Vh2o2LF69EVqkMqI5MbxESf6Tq5
+ w98A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOMyuz8CyEyvbPD602EjITtunwjKj/Z0RZanzFznzVgX+dU219jcTxoCsiQ9SmLDex1NFPPFX0X5pZ@nongnu.org
+X-Gm-Message-State: AOJu0YwTonwM4IYGwl/1wIc/4GctT40kbbLqtPHg+4oAegNJ4U4yxZUp
+ By8mD6cVeEuGP3qoOnNvwLj6LGXduItLN2gK1l+NNAiIYapluTz+lMOgqkJ+CcDGGgauqfHtKvx
+ aKQRBr8sDqnu1jBgKFyeyT7rdELrxQgLw5LV2xSHUFA==
+X-Gm-Gg: ASbGnctafFURKH62wCm2tNiXyKR9TjSGawBAUzhdQuVlpimNS9JjCP8k8CZED5oh3KQ
+ o3JledVpga6lDxivJNh30SbppJe8UGuzOiUjLUnnUasf6L+8oSbepmE2HJmz9B+pf7FszgIvy9N
+ Ah1ybfs9XSvJSxkdA1aj5lwUd+321hOxn/GgaKCOtk360tIn+FuJQt6nAj7A+GipRWj6pc7E/S1
+ cTPeVXkqavL2/d0uPc=
+X-Google-Smtp-Source: AGHT+IHJFrLUjQtJfpVqcJ0wc3OCvD5p70oQcDKJR21euyIFj4C6MWG8LnK274bcr/AWoPPFBCtjrrAox2zN+lLFKPw=
+X-Received: by 2002:a05:690e:287:b0:635:4ed0:571e with SMTP id
+ 956f58d0204a3-63b59af8420mr664929d50.22.1759157028998; Mon, 29 Sep 2025
+ 07:43:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+References: <aMHxhTIw2EGRyD4-@x1.local>
+ <fe1969e6-bc13-4438-816d-b352926c33a8@rsg.ci.i.u-tokyo.ac.jp>
+ <aMNMjetBDJfBiThl@x1.local>
+ <4108b4f2-accf-4080-af29-a3f464d862f9@rsg.ci.i.u-tokyo.ac.jp>
+ <aNRfHQoBgwBMjK04@x1.local>
+ <CAFEAcA8wTsZiihr8-LKucTmeZwPBdnkdA-o3mUgaW1WzrADhOg@mail.gmail.com>
+ <aNWgnBV-9p6UnsYT@x1.local>
+ <CAFEAcA8qdWtdX0Xc0WAuT9eZsXbudV2g2=Da8pK6tEfytdMbpw@mail.gmail.com>
+ <aNauXSMiP0LUWQ5J@x1.local>
+ <CAFEAcA--K0=EJNNvj98i=ewGY=tN3u4S0+fNb9kJpYynzjHEhw@mail.gmail.com>
+ <aNqZrEagWEQ-up-Y@x1.local>
+In-Reply-To: <aNqZrEagWEQ-up-Y@x1.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 29 Sep 2025 15:43:37 +0100
+X-Gm-Features: AS18NWD8Dv-uv8x5PQVqYiwqES4wdrheCMnk1Z_rdHc7r_M121cGK4esseeJKGY
+Message-ID: <CAFEAcA-5BFKJZv964OgR-oatEMUTdEd-z0cggkOyB0HC4HkDmQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] memory: Stop piggybacking on memory region owners
+To: Peter Xu <peterx@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, David Hildenbrand <david@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, 
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,48 +131,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a vCPU is created, it typically calls cpu_address_space_init()
-one or more times to set up its address spaces. We don't currently
-do anything to destroy these address spaces, which means that we
-will leak them on a vcpu hot-plug -> hot-unplug cycle.
+On Mon, 29 Sept 2025 at 15:37, Peter Xu <peterx@redhat.com> wrote:
+> On Mon, Sep 29, 2025 at 01:45:05PM +0100, Peter Maydell wrote:
+> > I figured out what my problem was here: like the existing
+> > cpu_address_space_destroy(), it wants to first destroy the AS
+> > and then free the memory the AS is using. So it does the
+> > obvious thing:
+> >     address_space_destroy(cpuas->as);
+> >     g_free_rcu(cpuas->as, rcu);
+> >
+> > This doesn't work, because address_space_destroy() sets
+> > up an RCU callback using the 'rcu' node in the AddressSpace
+> > struct. But then g_free_rcu() tries to do exactly the same
+> > thing and overwrites the info in the 'rcu' node: so we never
+> > call the do_address_space_destroy() hook.
+> >
+> > (1) Is there some way we can make this "tried to use the RCU
+> > node twice" assert?
+>
+> Good point.  Maybe we should assert node->func==NULL in call_rcu1().
+>
+> >
+> > (2) I think the simplest fix here is something like the
+> > patch you propose that does the "destroy + free" in one
+> > RCU callback.
+>
+> Yes, I agree.
+>
+> Note that Akihiko has another series to QOMify Address space.  This problem
+> should be relevant there too. Currently I believe it's similarly broken in
+> his series, but I think maybe we should fix this first on x86/arm hotplugs.
 
-This patchset fixes the leak by replacing the current
-cpu_address_space_destroy() (which has an awkward API, includes
-a bug, and is never called from anywhere) with a new
-cpu_destroy_address_spaces() which cleans up all the ASes a CPU
-has and is called from generic unrealize code.
+Yep; I've just sent out a patchset that tries to do that.
 
-Patch 1 is just a comment improvement to clarify that
-address_space_destroy() defers most of its work to RCU and you
-can't free the memory for the AS struct itself until it's done.
-
-Patch 2 is from Peter Xu; we need to be able to do "destroy and
-free an AS" via RCU, and at the moment you can't do that.
-
-Patch 3 is the bugfix proper.
-
-thanks
 -- PMM
-
-Peter Maydell (2):
-  include/system/memory.h: Clarify address_space_destroy() behaviour
-  physmem: Destroy all CPU AddressSpaces on unrealize
-
-Peter Xu (1):
-  memory: New AS helper to serialize destroy+free
-
- include/exec/cpu-common.h          | 10 ++++-----
- include/hw/core/cpu.h              |  1 -
- include/system/memory.h            | 24 ++++++++++++++++++---
- hw/core/cpu-common.c               |  1 +
- stubs/cpu-destroy-address-spaces.c | 15 +++++++++++++
- system/memory.c                    | 20 +++++++++++++++++-
- system/physmem.c                   | 34 ++++++++++++++----------------
- stubs/meson.build                  |  1 +
- 8 files changed, 78 insertions(+), 28 deletions(-)
- create mode 100644 stubs/cpu-destroy-address-spaces.c
-
--- 
-2.43.0
-
 
