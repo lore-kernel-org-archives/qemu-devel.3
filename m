@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3A5CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2652ECAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3IMC-0007QS-IA; Mon, 29 Sep 2025 14:12:16 -0400
+	id 1v3IWv-000250-Iy; Mon, 29 Sep 2025 14:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IM9-0007ND-6T
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:12:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IWt-00024i-RP
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:23:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IM4-0002JT-PE
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:12:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IWq-0006va-Dj
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:23:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759169526;
+ s=mimecast20190719; t=1759170193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gMP7BAnFkoI8mG/XmzIpouF2oHLVVwSgQHPsigTfPKE=;
- b=VkKKs/kg8eUPE5/5Lq5tjDn57JVlht8Fl2y9YKQoL/Me6jiNWFdTboXOSW/Enypob2ptQ0
- 00reIDpgxZDcEvSatsiVG6qEaJGHYOUhyd1X1PH1QF+UOFIgveLnoMy5wkae2aGoEv8kl3
- t+xwLtrn/OeTi+OxpLr1JQNrnuNcoIo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=isniez58tICAWAM//og85xxUF+gF1pReEz5Vm6VpDXA=;
+ b=AbJl/3pu76LkngLBt6AYvnV0glawS3BRq3AAGmBHSHPfRan+Ec+8efXOr7bGJ881o84vRJ
+ i4QP1Y6akr4wA1XYiJxXv9KpKVxuIaJCb6gWs9ENmQ3LTkN29r9/fi1FKp5E9YLLuBxZyj
+ bNuUDL2ikch4fZMRQYC8VVWSSCTDCxo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-365-YpO_VgM0Mb232GD1Jnlx9g-1; Mon, 29 Sep 2025 14:12:03 -0400
-X-MC-Unique: YpO_VgM0Mb232GD1Jnlx9g-1
-X-Mimecast-MFC-AGG-ID: YpO_VgM0Mb232GD1Jnlx9g_1759169522
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ee13baf21dso3964128f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 11:12:03 -0700 (PDT)
+ us-mta-544-U3xyk-mpPAKtwHzYG9kPNw-1; Mon, 29 Sep 2025 14:23:10 -0400
+X-MC-Unique: U3xyk-mpPAKtwHzYG9kPNw-1
+X-Mimecast-MFC-AGG-ID: U3xyk-mpPAKtwHzYG9kPNw_1759170189
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e2c11b94cso35801085e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 11:23:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759169522; x=1759774322;
+ d=1e100.net; s=20230601; t=1759170189; x=1759774989;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gMP7BAnFkoI8mG/XmzIpouF2oHLVVwSgQHPsigTfPKE=;
- b=JhGi3TblJqXTLnD+6TyUN4ogZ+Ev25MZMWoNDIqkxQTsZmoDl25SeEuDEKEjCKIOHa
- IOPv4tOxNQCQKZsyw6Vqa6YEVuwoZfbhDYlj5tf1qO9ZMTy3rOJ6kmXOBruHrNkgb7DZ
- UqH6Aq5FLJpBTof+sJydCCTdQk1JQQliFau35tYk8yu9Lq+Sw/YQYbZekMgst7TNM8Nc
- XSBKvrlWAepK4mM6WWfbT4nNCEC0bn2QiH/n1ORchyikgd3YJhOFxZcJzPmJZxbzu2zl
- 3hjnU2gb0xT/pqIDNjflg8OyzaBRamEbIq5inSaoIdES9LnjWx9AK/oEg7vQHAelurys
- v7ag==
+ bh=isniez58tICAWAM//og85xxUF+gF1pReEz5Vm6VpDXA=;
+ b=t/64u+SSbOP/DG//YIxfk4Cqe79gqkuSI6hYeznxCxfe7+2SXQHGNnTOr5Pf92PAqM
+ BUkHqoYcKXEoO/dJX29cWJF1FOF6DSx84f3OqNM/p/Z/rHciw6rujNrCq88MOegKXh+V
+ aWekoHgeVT3gtsk4sIR4yH5lJd/fpcSdFRKtiJqgHMqGCjuwImR4iUxL9h40XvZjwws/
+ 1KPeKw1vUX58ax9cmPP5s08NS3AbTkFl7eF4ylX2Kr7HYtAS/bhcE4XplJLnicG/VUiz
+ o+eXgStPqtK3kfn0FP+hIh24cI6hRERCJ/hUXcDrKXGxnwdxyH6mTe03it0SvsGhKQ2k
+ gVCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWaJtOJrrTyBk+cBtStqJMpBZLBzZv4z67bEH5WnLBWG1l3Gf3kOTYU3g+b81z1ttk6YiWKTwTZQ3t0@nongnu.org
-X-Gm-Message-State: AOJu0YzJ+KJXxlF23rMyaTD2TB1b3qesLJtUkRdCpW++CP/f0u7GwoBE
- G75n/sP6b85tKcLGdQMsgR4g355H0AsLww5rMSB9bYDbDPLJuJAdVIGlF2qMI6q/4w63RRO2Vss
- uScw69pw47A1tCKXO/V/CYwElAmq+HID31/hjmRNA2ChLZ/F2kCC5IIeUmw/GOWKmzJI=
-X-Gm-Gg: ASbGncurhY7GevVqRL7TUFSJMDhxL7WJkILLsPhjbjaMGvMl5m345yOSKBNkyFo4pdB
- Aj9j9Qmt5xS/+eMZq9ueG58VPH5xEUDOYUHyxvaXQEIL572vG3uT39B8mnNDFALG+pPmTreXxGf
- XXtgodTAO7up3rc0l5OKySfxxLj1s+C3rR4cVmdv4Fax0xTNfBc/nV2W3fZ+i1Vwn6tQu5TWJU9
- L1FWBTBhqpGScsRaRg5/oyPgtk8FROXV5LDuWDA/Sb+VZYyn5njlcVIlMW+N+bmSti41aLEPyrR
- /DFFGHBxVL6PauVKKJUakINULuWptk0nOyYlGYzzZCew1gV3rq+u56EOHpADxGXjlUAygGmWqoG
- 1jZGf1w==
-X-Received: by 2002:a05:6000:2dc9:b0:3ec:ce37:3a6a with SMTP id
- ffacd0b85a97d-40e4458ce65mr16443388f8f.22.1759169522113; 
- Mon, 29 Sep 2025 11:12:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOmbhabFvv55MMSWJY4L+MJmUNWCQe5vQGwaySROSz20imA3ilAxM8ZrH92YJGxNHFBONDXA==
-X-Received: by 2002:a05:6000:2dc9:b0:3ec:ce37:3a6a with SMTP id
- ffacd0b85a97d-40e4458ce65mr16443370f8f.22.1759169521668; 
- Mon, 29 Sep 2025 11:12:01 -0700 (PDT)
+ AJvYcCU/Zs0/TBO463yGo+zno+97z5LoaDGu/QhVz/YEw9A3aQ6WvcpzkCENPRSRAhJdAsjhtd2GsJJIQJeZ@nongnu.org
+X-Gm-Message-State: AOJu0YyI9YMmSOsRmBSN3SDzrRCcqHV0iJvf8JyByq6IJHAEqqHdO9bW
+ +BF3Us0LLsU9PFx8JjllSFiR7MH9fSrzPoifbCnPaokLmd5+cz21wu+NR4hwf60BoHmgB16EDuJ
+ bnuHd+6PZgV/qCKGz7gJaH1DVkPdaSsRPbL9wTssziFSHSOo4pyUt6YPB
+X-Gm-Gg: ASbGnctkVInQxJ/Tg/2GkdVth3g7edM8m/qnZxUn6Dz4NWItvQG9/uLD/KmemMKaUiN
+ dyJLn4SGIca39a20cj5ol3GMSBsbFtzYln1gPAiwNxy1TRELyCj5vdzfAYNnPEWnsTSM1HoxN3C
+ HuVeKYnckHSkNEnLyU9oBCUBJF1TD6WMcON7kYV3WLeY69ESBKErxdiRU0d6mmRrXajTKTNQ5u1
+ mysQ9p35UsO2IaQPKr+Vqzb1dHHv14xveXVazJd4KzzUV1Az4DXpyS8/qLKMtKTEDW+nnilvSXs
+ wU42S+wSKk6ODNVVtkMUo/Rs/6eH/4/5hmKBHW2B3WAeRGtMniQEliHrojNDwWB9Dvdh28x79Jn
+ KCVnzrQ==
+X-Received: by 2002:a05:600c:8010:b0:46e:39ef:be77 with SMTP id
+ 5b1f17b1804b1-46e39efc18emr124038615e9.14.1759170189366; 
+ Mon, 29 Sep 2025 11:23:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEEEReXGIG5UQodVFd7bUq4Rmwqkuk2XeJQm/pEtCuXmuSDtlw6xpTJf6p7D1bCgIwQ8XrJ9w==
+X-Received: by 2002:a05:600c:8010:b0:46e:39ef:be77 with SMTP id
+ 5b1f17b1804b1-46e39efc18emr124038265e9.14.1759170188573; 
+ Mon, 29 Sep 2025 11:23:08 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
  [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e56f3dcacsm24309635e9.2.2025.09.29.11.11.59
+ ffacd0b85a97d-40fb72fb71esm19298583f8f.1.2025.09.29.11.23.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 11:12:01 -0700 (PDT)
-Message-ID: <554a136e-bd74-4f06-b9f9-b198422487b9@redhat.com>
-Date: Mon, 29 Sep 2025 20:11:59 +0200
+ Mon, 29 Sep 2025 11:23:08 -0700 (PDT)
+Message-ID: <8691a892-ebd0-44b5-83cd-64c32d4f804c@redhat.com>
+Date: Mon, 29 Sep 2025 20:23:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 25/28] pc-bios/s390-ccw: Handle secure boot with
- multiple boot devices
+Subject: Re: [PATCH v6 28/28] docs/system/s390x: Add secure IPL documentation
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -86,7 +85,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-26-zycai@linux.ibm.com>
+ <20250917232131.495848-29-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,17 +130,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250917232131.495848-26-zycai@linux.ibm.com>
+In-Reply-To: <20250917232131.495848-29-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -160,171 +159,93 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 01.21, Zhuoying Cai wrote:
-> The current approach to enable secure boot relies on providing
-> secure-boot and boot-certs parameters of s390-ccw-virtio machine
-> type option, which apply to all boot devices.
+> Add documentation for secure IPL
 > 
-> With the possibility of multiple boot devices, secure boot expects all
-> provided devices to be supported and eligible (e.g.,
-> virtio-blk/virtio-scsi using the SCSI scheme).
-> 
-> If multiple boot devices are provided and include an unsupported (e.g.,
-> ECKD, VFIO) or a non-eligible (e.g., Net) device, the boot process will
-> terminate with an error logged to the console.
-> 
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/bootmap.c  | 31 ++++++++-------
->   pc-bios/s390-ccw/main.c     | 75 ++++++++++++++++++++++++++++++++++---
->   pc-bios/s390-ccw/s390-ccw.h |  1 +
->   3 files changed, 88 insertions(+), 19 deletions(-)
+>   docs/system/s390x/secure-ipl.rst | 96 ++++++++++++++++++++++++++++++++
+>   1 file changed, 96 insertions(+)
 > 
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 3ab89b91fb..8297f22c3c 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -1136,25 +1136,35 @@ ZiplBootMode zipl_mode(uint8_t hdr_flags)
->       return ZIPL_BOOT_MODE_NORMAL;
->   }
+> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+> index 579b7b4993..110dea9fdd 100644
+> --- a/docs/system/s390x/secure-ipl.rst
+> +++ b/docs/system/s390x/secure-ipl.rst
+> @@ -1,5 +1,21 @@
+>   .. SPDX-License-Identifier: GPL-2.0-or-later
 >   
-> +int zipl_check_scsi_mbr_magic(void)
-> +{
-> +    ScsiMbr *mbr = (void *)sec;
+> +s390 Secure IPL
+> +===============
 > +
-> +    /* Grab the MBR */
-> +    memset(sec, FREE_SPACE_FILLER, sizeof(sec));
-> +    if (virtio_read(0, mbr)) {
-> +        puts("Cannot read block 0");
-> +        return -EIO;
-> +    }
+> +Secure IPL, also known as secure boot, enables s390-ccw virtual machines to
+> +verify the integrity of guest kernels.
 > +
-> +    if (!magic_match(mbr->magic, ZIPL_MAGIC)) {
-> +        return -1;
-> +    }
+> +For technical details of this feature, see ``docs/specs/s390x-secure-ipl.rst``.
 > +
-> +    return 0;
-> +}
+> +This document explains how to use secure IPL with s390x in QEMU. It covers
+> +new command line options for providing certificates and enabling secure IPL,
+> +the different IPL modes (Normal, Audit, and Secure), and system requirements.
 > +
->   void zipl_load(void)
->   {
->       VDev *vdev = virtio_get_device();
+> +A quickstart guide is provided to demonstrate how to generate certificates,
+> +sign images, and start a guest in Secure Mode.
+> +
+> +
+>   Secure IPL Command Line Options
+>   ===============================
 >   
->       if (vdev->is_cdrom) {
-> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -            panic("Secure boot from ISO image is not supported!");
-> -        }
->           ipl_iso_el_torito();
->           puts("Failed to IPL this ISO image!");
->           return;
->       }
->   
->       if (virtio_get_device_type() == VIRTIO_ID_NET) {
-> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -            panic("Virtio net boot device does not support secure boot!");
-> -        }
->           netmain();
->           puts("Failed to IPL from this network!");
->           return;
-> @@ -1165,11 +1175,6 @@ void zipl_load(void)
->           return;
->       }
->   
-> -    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -        boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -        panic("ECKD boot device does not support secure boot!");
-> -    }
-> -
->       switch (virtio_get_device_type()) {
->       case VIRTIO_ID_BLOCK:
->           zipl_load_vblk();
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index c5b425209a..228b52a37e 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -271,8 +271,43 @@ static int virtio_setup(void)
->       return ret;
->   }
->   
-> -static void ipl_boot_device(void)
-> +static void validate_secure_boot_device(void)
-> +{
-> +    switch (cutype) {
-> +    case CU_TYPE_DASD_3990:
-> +    case CU_TYPE_DASD_2107:
-> +        panic("Passthrough (vfio) device does not support secure boot!");
-> +        break;
-> +    case CU_TYPE_VIRTIO:
-> +        if (virtio_setup() == 0) {
-> +            VDev *vdev = virtio_get_device();
+> @@ -83,3 +99,83 @@ Configuration:
+>                                  secure-boot=on, \
+>                                  boot-certs.0.path=/.../qemu/certs, \
+>                                  boot-certs.1.path=/another/path/cert.pem ...
 > +
-> +            if (vdev->is_cdrom) {
-> +                panic("Secure boot from ISO image is not supported!");
-> +            }
 > +
-> +            if (virtio_get_device_type() == VIRTIO_ID_NET) {
-> +                panic("Virtio net boot device does not support secure boot!");
-> +            }
+> +Constraints
+> +===========
 > +
-> +            if (zipl_check_scsi_mbr_magic()) {
-> +                panic("ECKD boot device does not support secure boot!");
-> +            }
-> +        }
-> +        break;
-> +    default:
-> +        panic("Secure boot from unexpected device type is not supported!");
-> +    }
+> +The following constraints apply when attempting to secure IPL an s390 guest:
 > +
-> +    printf("SCSI boot device supports secure boot.\n");
-> +}
+> +- z16 CPU model
+> +- certificates must be in X.509 PEM format
+> +- only support for SCSI scheme of virtio-blk/virtio-scsi devices
+> +- a boot device must be specified
+> +- any unsupported devices (e.g., ECKD and VFIO) or non-eligible devices (e.g.,
+> +  Net) will cause the entire boot process terminating early with an error
+> +  logged to the console.
 > +
-> +static void check_secure_boot_support(void)
->   {
-> +    bool have_iplb_copy;
-> +    IplParameterBlock *iplb_copy;
-> +    QemuIplParameters *qipl_copy;
 > +
->       if (boot_mode == ZIPL_BOOT_MODE_UNSPECIFIED) {
->           boot_mode = zipl_mode(iplb->hdr_flags);
->       }
-> @@ -281,14 +316,40 @@ static void ipl_boot_device(void)
->           panic("Need at least one certificate for secure boot!");
->       }
->   
-> +    if (boot_mode == ZIPL_BOOT_MODE_NORMAL) {
-> +        return;
-> +    }
+> +Secure IPL Quickstart
+> +=====================
 > +
-> +    /*
-> +     * Store copies of have_iplb, iplb and qipl.
-> +     * They will be updated in load_next_iplb().
-> +     */
-> +    have_iplb_copy = have_iplb;
-> +    iplb_copy = malloc(sizeof(IplParameterBlock));
-> +    qipl_copy = malloc(sizeof(QemuIplParameters));
+> +Build QEMU with gnutls enabled
+> +-------------------------------
+> +
+> +.. code-block:: shell
+> +
+> +    ./configure … --enable-gnutls
+> +
+> +Generate certificate (e.g. via certtool)
+> +----------------------------------------
+> +
+> +A private key is required before generating a certificate. This key must be kept secure
+> +and confidential.
 
-While IplParameterBlock is huge (4k), a malloc is justified for that. But 
-QemuIplParameters is just a bunch of bytes (28 if I counted correctly), so I 
-think it would be nicer to use a stack variable for that instead.
+Please try to keep line length below 80 columns. Longer lines are ok if it 
+makes code more readable (or maybe necessary, as in "code-block" sections 
+later in this patch), but that's not the case here. See also "Line width" in 
+docs/devel/style.rst.
 
-  Thomas
+> +Use an RSA private key for signing.
+> +
+> +.. code-block:: shell
+> +
+> +    certtool --generate-privkey > key.pem
+> +
+> +A self-signed certificate requires the organization name. Use the ``cert.info`` template
+> +to pre-fill values and avoid interactive prompts from certtool.
 
-> +    memcpy(qipl_copy, &qipl, sizeof(QemuIplParameters));
-> +    memcpy(iplb_copy, iplb, sizeof(IplParameterBlock));
-> +
-> +    while (have_iplb_copy) {
-> +        if (have_iplb_copy && find_boot_device()) {
-> +            validate_secure_boot_device();
-> +        }
-> +        have_iplb_copy = load_next_iplb();
-> +    }
-> +
-> +    memcpy(&qipl, qipl_copy, sizeof(QemuIplParameters));
-> +    memcpy(iplb, iplb_copy, sizeof(IplParameterBlock));
-> +
-> +    free(qipl_copy);
-> +    free(iplb_copy);
-> +}
+dito.
+
+  Thanks,
+   Thomas
 
 
