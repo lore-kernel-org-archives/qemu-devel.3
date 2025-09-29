@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C5CCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA0ACAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Ghj-0002EC-4K; Mon, 29 Sep 2025 12:26:23 -0400
+	id 1v3GwM-0006k5-9d; Mon, 29 Sep 2025 12:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3GhY-00023x-Ap; Mon, 29 Sep 2025 12:26:13 -0400
+ id 1v3GwJ-0006jr-OQ; Mon, 29 Sep 2025 12:41:27 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3GhR-0008Ow-OO; Mon, 29 Sep 2025 12:26:11 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cb6144y3Kz6M4NR;
- Tue, 30 Sep 2025 00:22:48 +0800 (CST)
+ id 1v3GwB-0000IJ-7e; Mon, 29 Sep 2025 12:41:27 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cb6Lh1XS2z6M4P9;
+ Tue, 30 Sep 2025 00:38:04 +0800 (CST)
 Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 4704A1402F6;
- Tue, 30 Sep 2025 00:25:54 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id CA0771402CB;
+ Tue, 30 Sep 2025 00:41:09 +0800 (CST)
 Received: from localhost (10.47.79.72) by dubpeml100005.china.huawei.com
  (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 29 Sep
- 2025 17:25:53 +0100
-Date: Mon, 29 Sep 2025 17:25:49 +0100
+ 2025 17:41:08 +0100
+Date: Mon, 29 Sep 2025 17:41:05 +0100
 To: Shameer Kolothum <skolothumtho@nvidia.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
@@ -36,18 +36,18 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
  <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
  <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 08/27] hw/arm/smmuv3-accel: Add
- set/unset_iommu_device callback
-Message-ID: <20250929172549.00005811@huawei.com>
-In-Reply-To: <20250929133643.38961-9-skolothumtho@nvidia.com>
+Subject: Re: [PATCH v4 09/27] hw/arm/smmuv3-accel: Support nested STE
+ install/uninstall support
+Message-ID: <20250929174105.00001a40@huawei.com>
+In-Reply-To: <20250929133643.38961-10-skolothumtho@nvidia.com>
 References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-9-skolothumtho@nvidia.com>
+ <20250929133643.38961-10-skolothumtho@nvidia.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.47.79.72]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
  dubpeml100005.china.huawei.com (7.214.146.113)
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
 Received-SPF: pass client-ip=185.176.79.56;
@@ -77,89 +77,29 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Sep 2025 14:36:24 +0100
+On Mon, 29 Sep 2025 14:36:25 +0100
 Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
 > From: Nicolin Chen <nicolinc@nvidia.com>
->=20
-> Implement a set_iommu_device callback:
->  -If found an existing viommu reuse that.
->  -Else,
->     Allocate a vIOMMU with the nested parent S2 hwpt allocated by VFIO.
->     Though, iommufd=E2=80=99s vIOMMU model supports nested translation by
->     encapsulating a S2 nesting parent HWPT, devices cannot attach to this
->     parent HWPT directly. So two proxy nested HWPTs (bypass and abort) are
->     allocated to handle device attachments.
->  -And add the dev to viommu device list
->=20
-> Also add an unset_iommu_device to unwind/cleanup above.
->=20
+> 
+> Allocates a s1 HWPT for the Guest s1 stage and attaches that to the
+
+S1
+
+> pass-through vfio device. This will be invoked when Guest issues
+> SMMU_CMD_CFGI_STE/STE_RANGE.
+> 
+> While at it, we are also exporting both smmu_find_ste() and
+> smmuv3_flush_config() from smmuv3.c for use here.
+> 
 > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Triviality follows.
+Whilst I'm getting a bit out of my comfort zone for review
+and don't have time to dig into the details / specs. Code is in a good state
+so
+
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
-
-
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 70da16960f..3c8506d1e6 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -10,12 +10,29 @@
->  #define HW_ARM_SMMUV3_ACCEL_H
-> =20
->  #include "hw/arm/smmu-common.h"
-> +#include "system/iommufd.h"
-> +#include <linux/iommufd.h>
->  #include CONFIG_DEVICES
-> =20
-> +typedef struct SMMUViommu {
-> +    IOMMUFDBackend *iommufd;
-> +    IOMMUFDViommu core;
-> +    uint32_t bypass_hwpt_id;
-> +    uint32_t abort_hwpt_id;
-> +    QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-
-Does that need a forwards def of SMMUv3AccelDevice ?
-
-> +} SMMUViommu;
-> +
->  typedef struct SMMUv3AccelDevice {
->      SMMUDevice  sdev;
-
-I didn't comment on this earlier as thought there would be something added =
-tht
-aligned with the above, but seems not.  So why the double space?
-
-> +    HostIOMMUDeviceIOMMUFD *idev;
-> +    SMMUViommu *viommu;
-> +    QLIST_ENTRY(SMMUv3AccelDevice) next;
->  } SMMUv3AccelDevice;
-> =20
-> +typedef struct SMMUv3AccelState {
-> +    SMMUViommu *viommu;
-> +} SMMUv3AccelState;
-
->  strongarm_uart_update_parameters(const char *label, int speed, char pari=
-ty, int data_bits, int stop_bits) "%s speed=3D%d parity=3D%c data=3D%d stop=
-=3D%d"
->  strongarm_ssp_read_underrun(void) "SSP rx underrun"
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index bb7076286b..5f3e9089a7 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -66,6 +66,7 @@ struct SMMUv3State {
-> =20
->      /* SMMU has HW accelerator support for nested S1 + s2 */
->      bool accel;
-> +    struct SMMUv3AccelState  *s_accel;
-
-Seems like a bonus space before *
-
->  };
-> =20
->  typedef enum {
 
 
