@@ -4,63 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0773CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B89CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H8y-00052o-DP; Mon, 29 Sep 2025 12:54:32 -0400
+	id 1v3HAm-0000Ya-LH; Mon, 29 Sep 2025 12:56:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7n-0002zE-85
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:21 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v3HAV-0000C6-1n
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:56:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7h-0002p9-Nm
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:18 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v3HAQ-0003at-CX
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:56:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759164789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1759164958;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+xi5F6KF8GyxeS7mYUTxV+iGNYMKX1C20F0Em/zfNME=;
- b=MakJCvBaKBvc02nAL8r2hxeHWhK8MIePkjRTjZva3YzfjZn4cVFA7JAkEkzdzUJMNo59bi
- nTo8al3XaSw/br0ysSujaOZDW9VA1P+HnqDkxq3Tm6N7qKpOrhYVZsLF86H8RlChhi+Gui
- XlLRkiBu1PUYD3nz1J238MdgLT8poEY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=heYTRHS2SbH7q6OYEFsVEoaYnBvmxAG63VXARphQakI=;
+ b=RSgiGhhUO9g0r9Ss61iKtXaHIBIgCFDGD3rwYJcYWe7r6brde3DfzTuoDIcupMeYG4bWRe
+ FZ3RYHrF1tmp1nW6kOdL6lQfzJmJFpeJWcN0ApxazjB6WiLej3aOTzNAJQRnIcM2gL4ho7
+ 675liN+SP8+mIuZ9Xg4V1PNiSwOqxm4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-ys3Ok9W2PraE1D5fAXwOmQ-1; Mon,
- 29 Sep 2025 12:53:07 -0400
-X-MC-Unique: ys3Ok9W2PraE1D5fAXwOmQ-1
-X-Mimecast-MFC-AGG-ID: ys3Ok9W2PraE1D5fAXwOmQ_1759164786
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-w1n8LBMMNrqzDGmWvXdEIw-1; Mon,
+ 29 Sep 2025 12:55:56 -0400
+X-MC-Unique: w1n8LBMMNrqzDGmWvXdEIw-1
+X-Mimecast-MFC-AGG-ID: w1n8LBMMNrqzDGmWvXdEIw_1759164955
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 340DD180057B; Mon, 29 Sep 2025 16:53:06 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9138A180047F; Mon, 29 Sep 2025 16:53:04 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/32] tests/functional/arm: Add AST2600 boot test with
- generated OTP image
-Date: Mon, 29 Sep 2025 18:52:11 +0200
-Message-ID: <20250929165230.797471-14-clg@redhat.com>
-In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
-References: <20250929165230.797471-1-clg@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A100619560BD; Mon, 29 Sep 2025 16:55:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 139B7180047F; Mon, 29 Sep 2025 16:55:53 +0000 (UTC)
+Date: Mon, 29 Sep 2025 17:55:50 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH for-10.1 0/2] migration: actually make gnutls workaround
+ functional
+Message-ID: <aNq6Fu0-nb1XMRxk@redhat.com>
+References: <20250801170212.54409-1-berrange@redhat.com>
+ <aNqsnaBkQe8i_MLK@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <aNqsnaBkQe8i_MLK@x1.local>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -82,50 +87,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+On Mon, Sep 29, 2025 at 11:58:21AM -0400, Peter Xu wrote:
+> On Fri, Aug 01, 2025 at 06:02:10PM +0100, Daniel P. Berrangé wrote:
+> > This is a followup to previously merged patches that claimed to
+> > workaround the gnutls bug impacting migration, but in fact were
+> > essentially non-functional. Juraj Marcin pointed this out, and
+> > this new patch tweaks the workaround to make it actually do
+> > something useful.
+> > 
+> > Daniel P. Berrangé (2):
+> >   migration: simplify error reporting after channel read
+> >   migration: fix workaround for gnutls thread safety
+> > 
+> >  crypto/tlssession.c   | 16 ----------------
+> >  migration/qemu-file.c | 22 +++++++++++++++++-----
+> >  2 files changed, 17 insertions(+), 21 deletions(-)
+> 
+> Dan, is there a planned repost on this one?
 
-Add a functional test that boots an AST2600 machine with a generated
-OTP image. The test verifies that OTP contents are read during early
-boot and that the system reaches the expected console prompt.
+It is on my todo list, but I don't have a firm ETA yet.
 
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250917035917.4141723-4-kane_chen@aspeedtech.com
-[ clg: checkpath fixes ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- tests/functional/arm/test_aspeed_ast2600.py | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/tests/functional/arm/test_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600.py
-index 129695ca4ec7..62949b0b4fe9 100755
---- a/tests/functional/arm/test_aspeed_ast2600.py
-+++ b/tests/functional/arm/test_aspeed_ast2600.py
-@@ -136,5 +136,20 @@ def test_arm_ast2600_evb_sdk(self):
-         exec_command_and_wait_for_pattern(self,
-              '/sbin/hwclock -f /dev/rtc1', year)
- 
-+    def test_arm_ast2600_otp_blockdev_device(self):
-+        self.vm.set_machine("ast2600-evb")
-+
-+        image_path = self.archive_extract(self.ASSET_SDK_V907_AST2600)
-+        otp_img = self.generate_otpmem_image()
-+
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
-+            "-global", "aspeed-otp.drive=otp",
-+        )
-+        self.do_test_arm_aspeed_sdk_start(
-+            self.scratch_file("ast2600-default", "image-bmc"))
-+        self.wait_for_console_pattern("ast2600-default login:")
-+
- if __name__ == '__main__':
-     AspeedTest.main()
+With regards,
+Daniel
 -- 
-2.51.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
