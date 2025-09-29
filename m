@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2967ECAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 23:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178ACCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 23:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3MvW-00038w-2r; Mon, 29 Sep 2025 19:05:02 -0400
+	id 1v3NjJ-000529-Ca; Mon, 29 Sep 2025 19:56:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v3MvU-00038e-IX
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 19:05:00 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v3MvI-0007SS-K3
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 19:05:00 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2681660d604so49817825ad.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 16:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759187085; x=1759791885; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7daLdMryoE4ld1REFUXqk6x+ffDGPqF5mj3J0+GRjCw=;
- b=H6xb43WnVrg6QtFuaz5Sk3uH9pfH8PzR7ncreWpa0arwcudTwqvOsNv+hSEW4JOyBE
- cDKyOBuBwbFw5ACdeV2QDg6+IV23SO1MzslfI4yVt2EyBKcm8Wc1yhndTMKvFUfy/kUJ
- ktz/NhANc1wS+HBlDyijHXviUU4nhk1LpimITrCgfFLNuejRGB1woOc+mhHjuLcM62KJ
- nTAuVBidT1Xt0BMgcTBxcqk0ecMtDg4K1OzKt+1PI8rNxGQhnVXDDLh/d9KehICDiwst
- bd4XMmNdD6Y8o9JbRexCsunbicLBko4z9fvYm+cI/o0QiyklgSpD+Z+QvsEVqMLeIPq/
- gnFQ==
+ (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
+ id 1v3NjI-00051c-G4
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 19:56:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
+ id 1v3NjA-00082r-5V
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 19:56:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759190176;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nsdqgWsgOWAFUBvQ3bR49EO/Yc+EpJMv8F9acZTCgM0=;
+ b=CulZJThBZ1PgtEIFkJ1Az246n7WHlubcgIsn3JIi+svyhbGlKi1VXPxN2AksoE1j9V/o/9
+ uZoaVpXQtIbUt/L19ja4OK/k13ozaDPviPgPs/je0TvR/Oki6B/tC8uO/E3omuchMA6MC+
+ B6jz5hjvyjb4wAnmUY+4cP8UhSwqaxw=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-ZXiDPXQSPuupjRKnL8c91Q-1; Mon, 29 Sep 2025 19:54:53 -0400
+X-MC-Unique: ZXiDPXQSPuupjRKnL8c91Q-1
+X-Mimecast-MFC-AGG-ID: ZXiDPXQSPuupjRKnL8c91Q_1759190093
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-859b89cd3f2so1184270585a.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 16:54:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759187085; x=1759791885;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7daLdMryoE4ld1REFUXqk6x+ffDGPqF5mj3J0+GRjCw=;
- b=Lk3ilBqU0Fx/uYvNWvbHj+oaNqBedbeULEvTq0HqnxqBehTbEJ6KgWyjVob7oHWfqe
- xOuvqcCDgiphTX6LlJB9JZFGJ5JlD5higq2Du0YjLIoVDsmPHqym3Wurb+w6Tv9CfuW/
- 1B5xkVA3yV+LpSp6PWg82MmNNPGZxze38aJiD62RByvKBKZp8QVXRX3Q/ZAEuRlpyF9V
- APy1jtw1dziHfdfMB7mjyaw2HZZOp+eyGGQDLzyGOe2UlRkSRco24h9drBuuDlXr3oXE
- ChRX/3dLwTxtMYjXG5nwgHmfMx6bIbAqOO2+bCxVWJpokliymNsQuc+3+k0YXEFxeaM7
- q1pA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+em1Bf0fU0yISNUf5e5ag6gClA2Z/Oi3U9DN+74Wt0seL8NUhCxg77cFLG++lLyJemGHBudNaQiSl@nongnu.org
-X-Gm-Message-State: AOJu0Yyc2LZXfhZYDBDEghUcI18lzd5P8kDlzyREG2lTVDcmoDITufD4
- faNApV0AHJnqJ9KJdaLWfi3oRrFZyiCdQD2lqliawIxev/COBUjZdgDKswrtrgS30jw=
-X-Gm-Gg: ASbGncuOIG4yXBR25eUkhZ8KaiKQVrVbu38aJ6X49A5V2CvG8sB4EsOXrv+oMqYSq/a
- 64uF9E2qkSbrXljviPezarH2mWa/Jgz30W4rEXC6pNjSkWWC7U7/Lt30rBco9gP0we2tyDCGm0m
- OsPDtLnkKoMBiK+AE9mF48vzYRa27TtCBpwmgQZUEE7DApS8VDqGSba7mV7hr4As5FzYWPbvA6J
- diVx2gFz2xupofYGzEfTIdFYFUz11EYHHaouh/+erWxBaiU51VANjWR4GMXUxw80ANayRrgG4Ki
- EyCu7lXw5ejeXKCIPrSX8Mvmxk2f+f3Tm5LeeBcIUw6MpxqnDjfd/Yot7TF5AgX8lqn3fr/J/F5
- iKavZUNbfZO7IFTw9jj0wvKYKYa2cv0qOM6llW4ESdD6K3QnX/heM4tKO
-X-Google-Smtp-Source: AGHT+IHGWG6/x7LvSAYvBMAK4dtuhHiiWP6EHwBkrUQrFuhIwqpmxtwpKNvltP6tEOSdCUrBF9Tyrg==
-X-Received: by 2002:a17:902:e74b:b0:24c:caab:dfd2 with SMTP id
- d9443c01a7336-27ed4a7aef4mr206903985ad.61.1759187084733; 
- Mon, 29 Sep 2025 16:04:44 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1759190093; x=1759794893;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nsdqgWsgOWAFUBvQ3bR49EO/Yc+EpJMv8F9acZTCgM0=;
+ b=CM8taIfpYqtIzvDkxaZrubsUgdswbUeQPa84QvwVAheMvyX8lKxeYONYznEIzvyOLp
+ 7pEDgXhI5c3DT+SL8ONo0FWMl989JOErdxZXlG9wNru8lcIp+pbfSE2yht/Aj0JRXIWM
+ u/7T82ZajldWM9WIYuIdv1Rl9+a3oYCAgldhdiRh+oC8XluqfXDLIK6xvDvm/cOxHL7n
+ eXCyYiSilTa6I3NPR9DZrkFzCLn90fHgGtxqgjdh76jC/D1yRt9Do8FPuojtI/AaUTcg
+ +qo2oTV7gkdFjHxwyIO8BdfvcHjuY3RFZfQtbm8FadchqxhvI1i7u6RockPx8Rb2EW69
+ 9lZw==
+X-Gm-Message-State: AOJu0YzAaSR/hXQTadYBVRVctSv74eaxeprChJeOQKF2BOTj+pQzbRl+
+ +41LwP3CKa1OTFI+/B5m/ysyfoCjJTZQ0TRsmVZcq/Mlukk18gvRO23cp6lYYuNnopYmlSaxjLu
+ BR/JJUjEzFeurfACCOcODUowNUAwMVGxl+aB2iJaAg9anGpEpgkdymnlB0XGqliwi0i7mmtoyLk
+ xw1DTPI8YXkgZFHO4NIcKpwX+aSZ1PUdBIVdesHGFOLg==
+X-Gm-Gg: ASbGncvRSFdT3XErIugSyv9R4yFpmWY90gP/0J21Onm9GL6oY/BcXHoEHUAW87oRlRl
+ AuL1Kl7B/ZUntVZehhiF93ERRNxbIFssn7GH6HUmoJ/s9qrXeXrKsP9xL2iEM9vTO2x3PDBFtDi
+ w/uaMzk6QWCcm21W2nqMEu5HegGTUZ4bf0jmGrj73c+kHieweyYR8rxzVqFSVkR3RfCuz2cnuZq
+ mVwiQuPVOG2WOIn9K2njNb3Ung3TfSd9x0cw1WB2zrXA0QnjtknIUAJEbmdjnbola1B4SG2LPSA
+ vzOgerSPEV1uwKKWN1vazweEpwcVoktwiwxRzqoCAjjV4kzVknLjbFV7+5NU57P8yRk10w==
+X-Received: by 2002:a05:620a:298f:b0:858:f75a:c922 with SMTP id
+ af79cd13be357-85adf5d27cbmr2643621185a.6.1759190093080; 
+ Mon, 29 Sep 2025 16:54:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGguOZg5gCRZ6Hj6TooLH68Rd7o/f3PrbedUQkwS7wBAipA3y22SNEWeF141jCYs7TbZz8kFA==
+X-Received: by 2002:a05:620a:298f:b0:858:f75a:c922 with SMTP id
+ af79cd13be357-85adf5d27cbmr2643618985a.6.1759190092641; 
+ Mon, 29 Sep 2025 16:54:52 -0700 (PDT)
+Received: from csomani-thinkpadp1gen7.rmtusca.csb ([47.153.136.179])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27eec33b775sm112611275ad.12.2025.09.29.16.04.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 16:04:44 -0700 (PDT)
-Message-ID: <ec38fc6c-cf7f-4919-9bbf-f13c04c6c7ac@linaro.org>
-Date: Mon, 29 Sep 2025 16:04:43 -0700
+ af79cd13be357-85c28a8a7e0sm935159385a.22.2025.09.29.16.54.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Sep 2025 16:54:52 -0700 (PDT)
+From: Chandan <csomani@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Chandan <csomani@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH] block: enable stats-intervals for virtio-blk devs with
+ -blockdev
+Date: Mon, 29 Sep 2025 16:52:42 -0700
+Message-ID: <20250929235244.686567-1-csomani@redhat.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] target/arm: Fix GPT fault type for address outside
- PPS
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250926001134.295547-1-richard.henderson@linaro.org>
- <20250926001134.295547-9-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250926001134.295547-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=csomani@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,14 +110,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/25 5:11 PM, Richard Henderson wrote:
-> The GPT address size fault is for the table itself.  The physical
-> address being checked gets Granule protection fault at Level 0 (R_JFFHB).
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/ptw.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This patch allows the stats-intervals.* flag to be used with
+-blockdev. Stats collection is initialized for virtio-blk devices
+at their time of creation. However, it is limited to just virtio-blk
+devices for now.
+
+Signed-off-by: Chandan <csomani@redhat.com>
+---
+ block.c                          | 50 ++++++++++++++++++++++++++++++++
+ hw/block/virtio-blk.c            |  6 ++++
+ include/block/block_int-common.h |  4 +++
+ qapi/block-core.json             |  6 +++-
+ 4 files changed, 65 insertions(+), 1 deletion(-)
+
+diff --git a/block.c b/block.c
+index 8848e9a7ed..e455d04e97 100644
+--- a/block.c
++++ b/block.c
+@@ -38,7 +38,9 @@
+ #include "qapi/error.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qjson.h"
++#include "qobject/qlist.h"
+ #include "qobject/qnull.h"
++#include "qobject/qnum.h"
+ #include "qobject/qstring.h"
+ #include "qapi/qobject-output-visitor.h"
+ #include "qapi/qapi-visit-block-core.h"
+@@ -3956,6 +3958,35 @@ out:
+     return bs_snapshot;
+ }
+ 
++static bool bdrv_parse_stats_intervals(BlockDriverState *bs, QList *intervals,
++                                  Error **errp)
++{
++    unsigned i = 0;
++    const QListEntry *entry;
++    bs->num_stats_intervals = qlist_size(intervals);
++
++    if (bs->num_stats_intervals > 0) {
++        bs->stats_intervals = g_new(uint64_t, bs->num_stats_intervals);
++    }
++
++    for (entry = qlist_first(intervals); entry; entry = qlist_next(entry)) {
++        if (qobject_type(entry->value) == QTYPE_QNUM) {
++            uint64_t length = qnum_get_int(qobject_to(QNum, entry->value));
++
++            if (length > 0 && length <= UINT_MAX) {
++                bs->stats_intervals[i++] = length;
++            } else {
++                error_setg(errp, "Invalid interval length: %" PRId64, length);
++                return false;
++            }
++        } else {
++            error_setg(errp, "The specification of stats-intervals is invalid");
++            return false;
++        }
++    }
++    return true;
++}
++
+ /*
+  * Opens a disk image (raw, qcow2, vmdk, ...)
+  *
+@@ -3987,6 +4018,8 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
+     Error *local_err = NULL;
+     QDict *snapshot_options = NULL;
+     int snapshot_flags = 0;
++    QDict *interval_dict = NULL;
++    QList *interval_list = NULL;
+ 
+     assert(!child_class || !flags);
+     assert(!child_class == !parent);
+@@ -4205,6 +4238,19 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
+         g_free(child_key_dot);
+     }
+ 
++    qdict_extract_subqdict(options, &interval_dict, "stats-intervals.");
++    qdict_array_split(interval_dict, &interval_list);
++
++    if (qdict_size(interval_dict) != 0) {
++        error_setg(errp, "Invalid option stats-intervals.%s",
++                   qdict_first(interval_dict)->key);
++        goto close_and_fail;
++    }
++
++    if (!bdrv_parse_stats_intervals(bs, interval_list, errp)) {
++        goto close_and_fail;
++    }
++
+     /* Check if any unknown options were used */
+     if (qdict_size(options) != 0) {
+         const QDictEntry *entry = qdict_first(options);
+@@ -4261,6 +4307,8 @@ close_and_fail:
+     bdrv_unref(bs);
+     qobject_unref(snapshot_options);
+     qobject_unref(options);
++    qobject_unref(interval_dict);
++    qobject_unref(interval_list);
+     error_propagate(errp, local_err);
+     return NULL;
+ }
+@@ -5190,6 +5238,8 @@ static void GRAPH_UNLOCKED bdrv_close(BlockDriverState *bs)
+     bs->full_open_options = NULL;
+     g_free(bs->block_status_cache);
+     bs->block_status_cache = NULL;
++    g_free(bs->stats_intervals);
++    bs->stats_intervals = NULL;
+ 
+     bdrv_release_named_dirty_bitmaps(bs);
+     assert(QLIST_EMPTY(&bs->dirty_bitmaps));
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 9bab2716c1..b730c67940 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -1814,6 +1814,12 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+                          conf->conf.lcyls,
+                          conf->conf.lheads,
+                          conf->conf.lsecs);
++
++    if (bs->stats_intervals) {
++        for (i = 0; i < bs->num_stats_intervals; i++) {
++            block_acct_add_interval(blk_get_stats(s->blk), bs->stats_intervals[i]);
++        }
++    }
+ }
+ 
+ static void virtio_blk_device_unrealize(DeviceState *dev)
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 034c0634c8..1b4b7c636d 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -1277,6 +1277,10 @@ struct BlockDriverState {
+ 
+     /* array of write pointers' location of each zone in the zoned device. */
+     BlockZoneWps *wps;
++
++    /* Array of intervals for collecting IO stats */
++    uint64_t *stats_intervals;
++    unsigned int num_stats_intervals;
+ };
+ 
+ struct BlockBackendRootState {
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index dc6eb4ae23..dbb53296b1 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -4771,6 +4771,9 @@
+ # @force-share: force share all permission on added nodes.  Requires
+ #     read-only=true.  (Since 2.10)
+ #
++# @stats-intervals: #optional list of intervals for collecting I/O
++#                   statistics, in seconds (default: none)
++#
+ # Since: 2.9
+ ##
+ { 'union': 'BlockdevOptions',
+@@ -4782,7 +4785,8 @@
+             '*read-only': 'bool',
+             '*auto-read-only': 'bool',
+             '*force-share': 'bool',
+-            '*detect-zeroes': 'BlockdevDetectZeroesOptions' },
++            '*detect-zeroes': 'BlockdevDetectZeroesOptions',
++            '*stats-intervals': ['int'] },
+   'discriminator': 'driver',
+   'data': {
+       'blkdebug':   'BlockdevOptionsBlkdebug',
+-- 
+2.51.0
 
 
