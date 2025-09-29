@@ -4,96 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00369CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 10:40:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23719CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 10:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3BHe-0000ab-Bf; Mon, 29 Sep 2025 06:39:06 -0400
+	id 1v3BI4-0000nS-Qp; Mon, 29 Sep 2025 06:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3BHa-0000XB-IE
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 06:39:02 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3BHT-00043n-Fw
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 06:39:01 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3f42b54d1b9so4369937f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 03:38:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759142325; x=1759747125; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GkQfNdF8/1YXaWqYo9IuawZRMCWQcQ2zbgerS62scVQ=;
- b=Xc91OhTqm3PP1uJLbx3z0fI6iSwapL2kYT4DPUXsQm7LTeekbTuBRzpeOJ8y8JO2Jy
- oqHeAmC8qMBRZzxlkv8pJw/+dqUgEl126jHuCFJ5w4TutWhLDmWc9HocnoFZ9nOuqy27
- iXrOTMb+AcOL2B9IwW05kY6GQoLQyskd+7zIPWmNXr5j0weR8p5vYJyCc+z59bl/79qP
- 5QgGRMMGoo6lZt5F0H5NTtUXUQZ7sGrUALQIsa0luxft7bFafIwCJgW8tjwSZP7045DX
- 1NC3RRS9EilJsenVQj1GsyTetBbwS6xriroDp6RBAdwwVRxL0N5RFxKgXCNAR5MwJPRV
- lTdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759142325; x=1759747125;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GkQfNdF8/1YXaWqYo9IuawZRMCWQcQ2zbgerS62scVQ=;
- b=K6rEmanYd+txzMkh4Qs99n4DhtbwJ91CFBE/HGj5d4jq+dPQEGcpQiAh8timmd0e3J
- JhM9A5Y78nUG+Z5mbmula2v5rBkw5FV6+p09mv/uCyRaAC1xftvVuFbOSsITOd5b/Xat
- yU4ERd8Xg6R+jU4dP8gqt1RfEeqMWU66cEmfeyEacIdaKPAp9gQVWTZCY5jizdjc1Fcc
- u7xlqRJ2A0mrCTioUFeeJQ8pZ8ea3ds81+BaNdHCCn9fi/MiR1xD+L6YY5p1cYyNxDqQ
- OQJ6Wyggdbrz71tBgmodi8Ehy+d2yhlLMoACVza1jHHMGUYHr78hDBGrYnHQn3Z2decM
- rxbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzXkt4aWAHkaLvvxdMGWRAe4+qO/bIhBfpENIcWsKSDcJAEzaQ6clh5MKgbtOBQwuP9UlQQPURQWg0@nongnu.org
-X-Gm-Message-State: AOJu0YytJ8sUqstsbex4e3KCVJgtOQ4tpxuvUlgxd3YQ/faMiPuystLD
- JAGOj+HWzFnZdnkSOTwyL4BKvSH+08SSnyxxEYynBgxZcTCtSrqld18wWT2RXef1D0Q=
-X-Gm-Gg: ASbGncsxsljj2F5RZUWNNCuzHIh8+dhT4uBCumvXjwVjpmCuSLXNJmiE2YR8gfV6ztE
- /9SqsdQ1xrMz6K3BSjV7bQZUOnT74fN2ZBQ9vfy6lY/QdbTtdW/BCs3u0cMiWiHrlxFjYd305MW
- N321aMsxMww/L1c02vYJrbNi84I2E6jKh1791DekbkWeigPZZyVvu4DfchnYcOa3GJ0eUlDD+fV
- fkNN2CS69WtiV9jQVTT6BIhSnT5TOrDE14MWktPuKKsUnNtte9Gwn6L5dlwxI4b1kfc84wqwS+I
- ifkO/70HSbK/LM+Nnojf5gbqyLwcTNQz1QYidi2iwOeALGqpP4k9yK+xIdejLfPvat1j2kvLT0q
- RW8um4LWGxqcHIdHJC1v4pjvz+0nI01QElYw24Vt4Tqu+K1HsetmQGZA5hkNQQnrUHuC8xdzdPJ
- ye
-X-Google-Smtp-Source: AGHT+IE4mtKkv7JaKO93A0mFA/dVWpaP/FCqlB/M9qgTmi/cJAXBlzpzk5irWWm2ugiklkZBqKdQ+A==
-X-Received: by 2002:a05:6000:400b:b0:3e8:9e32:38f8 with SMTP id
- ffacd0b85a97d-40e44498167mr16297596f8f.14.1759142325453; 
- Mon, 29 Sep 2025 03:38:45 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4151d0ae6f9sm13268199f8f.51.2025.09.29.03.38.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 03:38:45 -0700 (PDT)
-Message-ID: <83f7009f-1464-475c-9694-0af3a4fea4ba@linaro.org>
-Date: Mon, 29 Sep 2025 12:38:44 +0200
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v3BHy-0000gx-LO; Mon, 29 Sep 2025 06:39:26 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v3BHo-000472-Gd; Mon, 29 Sep 2025 06:39:26 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCHj8+_YdpoyaBgCQ--.4S2;
+ Mon, 29 Sep 2025 18:38:55 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwCH7Om7Ydpofb0uAA--.1126S2;
+ Mon, 29 Sep 2025 18:38:51 +0800 (CST)
+Message-ID: <b98f1981-3866-46c7-833a-e4790415b3cc@phytium.com.cn>
+Date: Mon, 29 Sep 2025 18:38:50 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 46/47] hw/arm/xlnx-versal-virt: add the
- xlnx-versal2-virt machine
-Content-Language: en-US
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-References: <20250926070806.292065-1-luc.michel@amd.com>
- <20250926070806.292065-47-luc.michel@amd.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250926070806.292065-47-luc.michel@amd.com>
+Subject: Re: [PATCH v2 07/14] hw/arm/smmuv3: Make Configuration Cache
+ security-state aware
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250925162618.191242-8-tangtao1634@phytium.com.cn>
+ <4b90afba-d708-4628-a087-c16829ee0512@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <4b90afba-d708-4628-a087-c16829ee0512@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAfwCH7Om7Ydpofb0uAA--.1126S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAIBWjZjscLhAAAs7
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7trWDtw15Cw4UKr4xKr48Zwb_yoW8Zr48pF
+ WFqa1jyws7WF13Xrn7Jr48KF1xu395Xr4fJrZ8Gr1v9F1DZryUtrWS9345CaykJrZxZF42
+ q3y0gFy5Gwn8AFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,21 +78,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/9/25 09:08, Luc Michel wrote:
-> Add the Versal Gen 2 Virtual development machine embedding a
-> versal2 SoC. This machine follows the same principle than the
-> xlnx-versal-virt machine. It creates its own DTB and feeds it to the
-> software payload. This way only implemented devices are exposed to the
-> guest and the user does not need to provide a DTB.
-> 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-> Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
->   docs/system/arm/xlnx-versal-virt.rst | 49 ++++++++++++++++++++++++----
->   hw/arm/xlnx-versal-virt.c            | 37 +++++++++++++++++++--
->   2 files changed, 76 insertions(+), 10 deletions(-)
+Hi Eric,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 2025/9/29 17:55, Eric Auger wrote:
+>
+> On 9/25/25 6:26 PM, Tao Tang wrote:
+>> This patch adapts the Configuration Cache (STE/CD caches) to support
+>> multiple security states.
+>>
+>> The cache key, previously just the SMMUDevice, is now a composite key
+>> of the SMMUDevice and the security index (sec_idx). This allows for
+>> separate cache entries for the same device when operating in different
+>> security states, preventing aliasing between secure and non-secure
+>> configurations.
+>>
+>> The configuration cache invalidation functions have been refactored to
+>> correctly handle multiple security states, ensuring that invalidation
+>> commands operate on the appropriate cache entries.
+>>
+>> Finally, checks have been added to the stream table's MMIO read/write
+>> logic to verify if the stream table is writable. This ensures that the
+>> Configuration Cache management is compliant with the architecture.
+> I think this patch shall be split too. I would suggest
+>
+> - In a preliminary patch, add txattrs and as new members in SMMUTransCfg
+> + the related changes (smmu_get_ste, smmu_get_cd, smmu_find_ste.
+> smmuv3_translate. Add their init in smmuv3_get_config while leaving the
+> current key as is.
+> - In a second patch, manage the new config key
+> - then there are a bunch of changes which does not relate to
+> configuration cache: smmu_writell, smmu_writel and
+> smmu_strtab_base_writable. I think this can go in a separate patch.
+>
+> What do you think?
+>
+> Eric
+>
+
+
+Thank you for the detailed feedback and for taking the time to suggest a 
+clear path forward.
+
+You are absolutely right. I see now that this patch indeed mixes several 
+distinct logical changes especially the mix of smmu_write/read and 
+configuration cache maybe confused, and your suggestion to split it is 
+the correct approach. It will certainly make the changes much easier to 
+review and less error-prone.
+
+I will do this in v3 series.
+
+Thanks,
+Tao
+
 
 
