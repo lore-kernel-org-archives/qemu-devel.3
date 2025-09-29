@@ -4,95 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F18CCA468
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0A1CAC5B0
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3GAx-0002QS-5G; Mon, 29 Sep 2025 11:52:31 -0400
+	id 1v3G9j-0001Yh-0n; Mon, 29 Sep 2025 11:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3GAl-0002MR-TV
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:52:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v3G9d-0001Ky-33; Mon, 29 Sep 2025 11:51:09 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3GAY-0000yW-Sg
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:52:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759161120;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gTXZMTGAUEkDo5lYCzCpAvfXp4kS4tozqmLHAVtTI6E=;
- b=PmimwovFcl9+Evy+TtiiifdrpYjE0K9lagtRp+W2GoUDFUZv08s31Uox/hedc6exKqxQ2t
- w0cBKFmpek4iRGzF7dOieu3VacIr3wZi0Dy7IG72ki4gW3bo/7QNZhRme2c39BzzQNv3tQ
- xP0O7JgqC93vFZoEFH4JebNRu9jrg3o=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-292-6lPfB9ntN12bxABL-Ux-OQ-1; Mon, 29 Sep 2025 11:51:59 -0400
-X-MC-Unique: 6lPfB9ntN12bxABL-Ux-OQ-1
-X-Mimecast-MFC-AGG-ID: 6lPfB9ntN12bxABL-Ux-OQ_1759161119
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4e0fcbf8eb0so36244891cf.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:51:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759161119; x=1759765919;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gTXZMTGAUEkDo5lYCzCpAvfXp4kS4tozqmLHAVtTI6E=;
- b=VD0dG2/VWzP/TciJq8qDj4PbLce4W49ukbsuL5Gbv1CvKdRb/b2+N9jvhLiJ32m4Ss
- AuP+So+XtoOJs+kwdhVDm3fEBTGzRxBtzvjkkXoviAz07MB1Vu43c4cjk9MUBIDXO/R5
- IeggFKCgWHiPbgnhAKAKUtJ8c5Id0HRSQZHqVQEYy5SJocCpYemWM3biczriiR62fWyW
- 4pto87XGbxeytPw71anraqSJ8+JGMW8KGC/fQ82wIidz8XRTfCe2nLcER0VHjC6LzIBz
- ckNTErnkSCThzcDcCHKfvnAUJCKECyqsUpi+7MKbh1iVktA7vkVbeaY+EQwsAQv7Ez4+
- dodg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUE6FQfAIvGs6d2v+Gdswo/fcCh8odymtPLWqGVpxtxiPB5DdWkiNN1olTfUQab/+sOk+UVnKA7zY2c@nongnu.org
-X-Gm-Message-State: AOJu0Yw3fZV0AsjOsElNDmGpKhXKfip8YeCfTDkbNPjnX5F8n4u2da6P
- xYS42z9cBm9KNFs/EJMWPk4J2ggW6xmmpqyt1wRIfL/kLOmz/YCrgYEQE5oZ/T0S4YOB/mmMgpq
- jTllXkIKVjFfgqJQkWMkLuFAjKc3BhZMViVF8sJr343gLr6Q4NI4zNtUn
-X-Gm-Gg: ASbGncuSjRcG9F6UJRMCvGaiiaN3QVzNh9JZ0Xlo+Mpxp8QKyJuFbBAT+S519hl+cUV
- CD/JVMCdhf3REDYJBL4NG/FvN2tQW6QBzlpbUdoV4ncPpG+chyukExQJtldCTn5aXnFCfQWWchO
- 5QPhAvQpdK5YZ7e/VSXR+32Pb8Q2YmkdCIGFcZ4/7p6z9SGfI7zevKReNFRBm18M83Hf0/ba8lK
- e0E2CYKYYMVLEdsrzXRE5yzshsl1K24P3kO+iEts1DVniO97/s37Lq9hz/FPQ8o/wHlCqYdQiSL
- YRxb2gJxGveHKh4Vhx5egZOGhNPth+5e
-X-Received: by 2002:ac8:7f96:0:b0:4ce:6ded:dba4 with SMTP id
- d75a77b69052e-4da47fec20emr273526031cf.19.1759161118915; 
- Mon, 29 Sep 2025 08:51:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIXOJdGkIDa3DxCJMz3w8dv5fZEgPOfBhMU8weZmnKlQfVQnAWmdKUk/mJ4+1TQxi4StP+FA==
-X-Received: by 2002:ac8:7f96:0:b0:4ce:6ded:dba4 with SMTP id
- d75a77b69052e-4da47fec20emr273525421cf.19.1759161118231; 
- Mon, 29 Sep 2025 08:51:58 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4db09f19709sm80615881cf.7.2025.09.29.08.51.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 08:51:57 -0700 (PDT)
-Date: Mon, 29 Sep 2025 11:51:56 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <yanfei.xu@bytedance.com>
-Cc: mst@redhat.com, pbonzini@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org, shenyicong.1023@bytedance.com,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Subject: Re: [PATCH] migration: ensure APIC is loaded prior to VFIO PCI devices
-Message-ID: <aNqrHBMKRp-9Qhw0@x1.local>
-References: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v3G9U-0000iA-KQ; Mon, 29 Sep 2025 11:51:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1759161061; x=1790697061;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=9W74zEoqyUET7A2cUfqGOGYlA5GRpaX5PAiAbi7NmyE=;
+ b=CNY8OEWxzizStz5tPxpT67FZIxRgdqtpj6cjiEOLGmzqhk4xRBeYZkVD
+ PDWkkikCyKq6ccGVJJso6ofBF1kPiiwfh/eGK4yJ0iE6ajG7YwjkIC0sU
+ xEjNSqCvqJPQrZyiZcmYn2P31SAJY50TLltrBGqSt37YrtynhyoP24c4r
+ +mtIpwTiVdq7P/IrR8dt6chPsymTeceGWqTo/7GhyysagqPKZraUzQfHY
+ 4Y9Oe2z1e1mKzC5etd4i28CrpOJmWB9P/EXyOFgf1fWVwiquQ1U+ec7r/
+ I0STrAEZB9QwRgEdJ/tCqv2o3t0eHuAOWhWOgQtVZhdqlnaEdY2xAHixC A==;
+X-CSE-ConnectionGUID: gvtRRVT6Qu2KnCSLyFjhnA==
+X-CSE-MsgGUID: QitGmT2vSnKfvbmusFs9GQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11568"; a="78829376"
+X-IronPort-AV: E=Sophos;i="6.18,301,1751266800"; d="scan'208";a="78829376"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Sep 2025 08:50:51 -0700
+X-CSE-ConnectionGUID: hYRn1zx3TVWyDaW6ZgrGgg==
+X-CSE-MsgGUID: kOgdylrIQpGeb0HdBDrxxw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,301,1751266800"; d="scan'208";a="177519499"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 29 Sep 2025 08:50:49 -0700
+Date: Tue, 30 Sep 2025 00:12:48 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, manos.pitsidianakis@linaro.org
+Subject: Re: [PATCH 6/7] rust: migration: implement ToMigrationState for Timer
+Message-ID: <aNqwACkjytK3+QQ4@intel.com>
+References: <20250920142958.181910-1-pbonzini@redhat.com>
+ <20250920142958.181910-7-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+In-Reply-To: <20250920142958.181910-7-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,65 +81,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 18, 2025 at 09:11:27PM +0800, Yanfei Xu wrote:
-> The load procedure of VFIO PCI devices involves setting up IRT
-> for each VFIO PCI devices. This requires determining whether an
-> interrupt is single-destination interrupt to decide between
-> Posted Interrupt(PI) or remapping mode for the IRTE. However,
-> determining this may require accessing the VM's APIC registers.
+On Sat, Sep 20, 2025 at 04:29:57PM +0200, Paolo Bonzini wrote:
+> Date: Sat, 20 Sep 2025 16:29:57 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 6/7] rust: migration: implement ToMigrationState for Timer
+> X-Mailer: git-send-email 2.51.0
 > 
-> For example:
-> ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs)
->   ...
->     kvm_arch_irq_bypass_add_producer
->       kvm_x86_call(pi_update_irte)
->         vmx_pi_update_irte
->           kvm_intr_is_single_vcpu
+> Timer is a complex struct, allow adding it to a struct that
+> uses #[derive(ToMigrationState)]; similar to vmstate_timer, only
+> the expiration time has to be preserved.
 > 
-> If the LAPIC has not been loaded yet, interrupts will use remapping
-> mode. To prevent the fallback of interrupt mode, keep APIC is always
-> loaded prior to VFIO PCI devices.
-> 
-> Signed-off-by: Yicong Shen <shenyicong.1023@bytedance.com>
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/intc/apic_common.c       | 1 +
->  include/migration/vmstate.h | 1 +
->  2 files changed, 2 insertions(+)
+>  rust/migration/src/migratable.rs | 31 +++++++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
 > 
-> diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-> index 37a7a7019d..394fe02013 100644
-> --- a/hw/intc/apic_common.c
-> +++ b/hw/intc/apic_common.c
-> @@ -379,6 +379,7 @@ static const VMStateDescription vmstate_apic_common = {
->      .pre_load = apic_pre_load,
->      .pre_save = apic_dispatch_pre_save,
->      .post_load = apic_dispatch_post_load,
-> +    .priority = MIG_PRI_APIC,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINT32(apicbase, APICCommonState),
->          VMSTATE_UINT8(id, APICCommonState),
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 1ff7bd9ac4..22e988c5db 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -163,6 +163,7 @@ typedef enum {
->      MIG_PRI_IOMMU,              /* Must happen before PCI devices */
->      MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
->      MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-> +    MIG_PRI_APIC,               /* Must happen before PCI devices */
->      MIG_PRI_GICV3_ITS,          /* Must happen before PCI devices */
->      MIG_PRI_GICV3,              /* Must happen before the ITS */
->      MIG_PRI_MAX,
+> diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
+> index fa25317eea8..c4ad4f73d5c 100644
+> --- a/rust/migration/src/migratable.rs
+> +++ b/rust/migration/src/migratable.rs
+> @@ -202,6 +202,37 @@ fn restore_migrated_state(
+>      ) -> Result<(), InvalidError>;
+>  }
+>  
+> +impl ToMigrationState for util::timer::Timer {
+> +    type Migrated = i64;
+
+This converts a Timer to i64, then we don't need vmstate_info_timer
+anymore. Good idea.
+
+> +    fn snapshot_migration_state(&self, target: &mut i64) -> Result<(), InvalidError> {
+> +        // SAFETY: as_ptr() is unsafe to ensure that the caller reasons about
+> +        // the pinning of the data inside the Opaque<>.  Here all we do is
+> +        // access a field.
+> +        *target = unsafe { &*self.as_ptr() }.expire_time;
+
+C side checks timer_pending(), which ensures when the timer is
+inactive, it always saves u64::MAX.
+
+But now we save the expire_time directly in Rust. I think this would be
+possible to break the migration from Rust timer to C timer, because at
+C side, timer_get() checks whether expire_time is -1 and we can't ensure
+expire_time won't store -2 (or other unusual negative values).
+
+So maybe it's better to follow C side behavior to return u64::MAX for
+non-pending case?
+
+> +        Ok(())
+> +    }
+> +
+> +    fn restore_migrated_state_mut(
+> +        &mut self,
+> +        source: Self::Migrated,
+> +        version_id: u8,
+> +    ) -> Result<(), InvalidError> {
+> +        self.restore_migrated_state(source, version_id)
+> +    }
+> +}
+> +
+> +impl ToMigrationStateShared for util::timer::Timer {
+> +    fn restore_migrated_state(&self, source: i64, _version_id: u8) -> Result<(), InvalidError> {
+> +        if source >= 0 {
+
+This can work for the migration cases of C->Rust and Rust->Rust.
+
+Thanks,
+Zhao
+
+> +            self.modify(source as u64);
+> +        } else {
+> +            self.delete();
+> +        }
+> +        Ok(())
+> +    }
+> +}
+> +
+>  impl<T: ToMigrationStateShared, const N: usize> ToMigrationStateShared for [T; N]
+>  where
+>      [T::Migrated; N]: Default,
 > -- 
-> 2.20.1
+> 2.51.0
 > 
-
-+Cedric, +Alex
-
-queued.
-
--- 
-Peter Xu
-
 
