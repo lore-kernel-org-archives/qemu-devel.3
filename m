@@ -4,46 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B43ACAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 08:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0D0CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 08:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3912-0007kY-T0; Mon, 29 Sep 2025 04:13:49 -0400
+	id 1v399Z-0002ts-5J; Mon, 29 Sep 2025 04:22:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v390x-0007i6-UP
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:13:44 -0400
-Received: from mail.avm.de ([212.42.244.120])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v390G-0006LC-P2
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:13:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
- t=1759133565; bh=ZJN1T+3uy6JDx5c7fVjlES928ciKyRlESGuOs6DJgCI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=ukuBd18VtQUc6cRkYO+qAUpWYM+OdiIF6lf1C2KeENDEwJQ63dDW81cEJWnFi6blD
- O+pilO5RJ2kvfAI8ISLs15UAI/QuKyfUMD9B1IBd/DDOeQ9agpb1Vg0F3+50DuQMFD
- PoJjaaY7WcIHE/qXdXp/s5PD2la/RQ2N29zvj/DY=
-Received: from [172.16.0.1] (helo=mail.avm.de)
- by mail.avm.de with ESMTP (eXpurgate 4.53.4)
- (envelope-from <c.speich@avm.de>)
- id 68da3f7d-047a-7f0000032729-7f000001a6e6-1
- for <multiple-recipients>; Mon, 29 Sep 2025 10:12:45 +0200
-Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
- by mail.avm.de (Postfix) with ESMTP;
- Mon, 29 Sep 2025 10:12:45 +0200 (CEST)
-Received: from l-cspeich ([172.17.89.139])
- by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2025092910124650-4787 ;
- Mon, 29 Sep 2025 10:12:46 +0200 
-Date: Mon, 29 Sep 2025 10:12:44 +0200
-From: Christian Speich <c.speich@avm.de>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v399W-0002td-6a
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:22:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v399K-00025R-TY
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:22:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759134131;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wkAQ0RKJrynmuJ601+y//rptvPHMBZcQ46wHgEkLnI8=;
+ b=QAPSushtBma5tIDfbFqBqjevGLPKSZIAzv4YlaGWLaV9XeNWIFMhxzf6GAji6/SWhWfPsU
+ EMICqoyX2bbPc8HoNlCsjznC+MxRXgkh+zrH95b8hDJsLIJ84AjaKw27mk6lQP1VqTJdNu
+ XU2WANO3fkLY/tsxDcHFO9JIWCNdQDI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-FfPJKC9cOWqQEX8xRzgGaQ-1; Mon,
+ 29 Sep 2025 04:22:09 -0400
+X-MC-Unique: FfPJKC9cOWqQEX8xRzgGaQ-1
+X-Mimecast-MFC-AGG-ID: FfPJKC9cOWqQEX8xRzgGaQ_1759134128
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F075219560AE; Mon, 29 Sep 2025 08:22:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF00119560A2; Mon, 29 Sep 2025 08:22:05 +0000 (UTC)
+Date: Mon, 29 Sep 2025 09:22:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?=
- <berrange@redhat.com>, qemu-devel@nongnu.org, Stefano Garzarella
- <sgarzare@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org,
+ Stefano Garzarella <sgarzare@redhat.com>
 Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
-Message-ID: <ytavi42a5zivn7ki6jc3zbnjmleq7tngdpaeqmnnfbjumat33b@533ax5vgapyg>
+Message-ID: <aNpBqlRmdOac7U99@redhat.com>
 References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
  <20250919160526-mutt-send-email-mst@kernel.org>
  <aNE0Bp0hsA31sLCJ@redhat.com>
@@ -54,32 +66,22 @@ References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
  <20250922093013-mutt-send-email-mst@kernel.org>
  <87y0q6mscw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <87y0q6mscw.fsf@draig.linaro.org>
-X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
- 2025) at 29.09.2025 10:12:46,
- Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 29.09.2025 10:12:46, Serialize complete at 29.09.2025 10:12:46
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-purgate-ID: 149429::1759133565-48FDF9E6-C402950F/0/0
-X-purgate-type: clean
-X-purgate-size: 4952
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for
- further information)
-X-purgate: clean
-Received-SPF: pass client-ip=212.42.244.120; envelope-from=c.speich@avm.de;
- helo=mail.avm.de
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.539,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y0q6mscw.fsf@draig.linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.539,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,17 +94,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 22, 2025 at 04:14:55PM +0100, Alex Bennée wrote:
+On Mon, Sep 22, 2025 at 04:14:55PM +0100, Alex BennÃ©e wrote:
 > "Michael S. Tsirkin" <mst@redhat.com> writes:
 > 
 > > On Mon, Sep 22, 2025 at 03:26:23PM +0200, Christian Speich wrote:
 > >> On Mon, Sep 22, 2025 at 09:08:47AM -0400, Michael S. Tsirkin wrote:
-> >> > On Mon, Sep 22, 2025 at 01:49:55PM +0100, Daniel P. Berrangé wrote:
+> >> > On Mon, Sep 22, 2025 at 01:49:55PM +0100, Daniel P. BerrangÃ© wrote:
 > >> > > On Mon, Sep 22, 2025 at 08:15:20AM -0400, Michael S. Tsirkin wrote:
-> >> > > > On Mon, Sep 22, 2025 at 12:33:26PM +0100, Daniel P. Berrangé wrote:
+> >> > > > On Mon, Sep 22, 2025 at 12:33:26PM +0100, Daniel P. BerrangÃ© wrote:
 > >> > > > > On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
 > >> > > > > > On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
 > >> > > > > > > This removes the change introduced in [1] that prevents the use of
@@ -173,9 +176,6 @@ On Mon, Sep 22, 2025 at 04:14:55PM +0100, Alex Bennée wrote:
 > >> and the additional host tooling for mac80211_hwsim support but QEMU
 > >> I'm just using as an user.
 > >> 
-> >> Greetings,
-> >> Christian
-> >
 > > Are you ok with building qemu with an extra config flag?
 > 
 > In my patch I gated the feature on:
@@ -184,32 +184,19 @@ On Mon, Sep 22, 2025 at 04:14:55PM +0100, Alex Bennée wrote:
 > 
 > so it's easy to patch out of the default config.
 
-Do you want to move forward with your patch? Or should I update this one with a config
-flag and an x- prefix?(which then should look a lot like yours anyway)
+FWIW, we have multiple other test devices that we don't gate behind KConfig
+build flags - hyperv-testdev, pc-testdev, pci-testdev & edu.  IMHO the
+vhost user device is more compelling to have enabled by default as it can
+actually be used todo something useful.
 
-Greetings,
-Christian
+IMHO the rationale for disabling it is more fitting to downstreams like
+RHEL.
 
-> 
-> >
-> >
-> >
-> >> > 
-> >> > 
-> >> > I know Red Hat will disable it anyway - we support what we ship.
-> >> > 
-> >> > 
-> >> > > With regards,
-> >> > > Daniel
-> >> > > -- 
-> >> > > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> >> > > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> >> > > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-> >> > 
-> >> > 
-> 
-> -- 
-> Alex Bennée
-> Virtualisation Tech Lead @ Linaro
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
