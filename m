@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29E9CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1EE2CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3G8x-0000ve-6F; Mon, 29 Sep 2025 11:50:28 -0400
+	id 1v3G9f-0001Qu-0X; Mon, 29 Sep 2025 11:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3G8d-0000mC-Uq
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:50:12 -0400
+ id 1v3G8s-0000qT-L3
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:50:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3G8P-0000KL-4a
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:50:06 -0400
+ id 1v3G8b-0000M7-VL
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:50:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759160990;
+ s=mimecast20190719; t=1759161001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BPzxrddqtL0TItlI5LLtoSQbI5T1+Lsx8CSDc/Du130=;
- b=hCdBHFNEWyLG7WQZ34XaR60YortL1P5j0MpMoQGdIbBZBbva0Qzuo54rNcK9NxXdpp0fcx
- aBAoX7BoY4I6WCV0iZ+By+9ybQ3hXeUZ121dmdAnf7ILV2Y6XsrvW1iA0hoWHrsv/06Qeh
- k7R9tTAlbM1btbmhlpg/RQ64iH4IW7I=
+ bh=XE480yyfhzYbFzSjQEPQSJUuYLlL1XqwbZWj8rCIyyA=;
+ b=W/ExqNW9rpwr7xFMgWlw/pZsd4RqPMbqUTskTr25Nw+gMTMPlv4WX1uFe16z0KmlLegG3j
+ HO/hmNP0v+IezxNZe9jBnRSsFhOyvjODgxTgfJiKJNWzB7KdKflB4GyaOpjcO5df9FbAIN
+ 4M/wKFB7GXmJia/XkB63dkz2VwUlREo=
 Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
  [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-gJEM3_k7NMmgKflsDV5PYQ-1; Mon, 29 Sep 2025 11:49:48 -0400
-X-MC-Unique: gJEM3_k7NMmgKflsDV5PYQ-1
-X-Mimecast-MFC-AGG-ID: gJEM3_k7NMmgKflsDV5PYQ_1759160987
+ us-mta-536-xZSvEbDnMSyd-5895AJw-Q-1; Mon, 29 Sep 2025 11:49:59 -0400
+X-MC-Unique: xZSvEbDnMSyd-5895AJw-Q-1
+X-Mimecast-MFC-AGG-ID: xZSvEbDnMSyd-5895AJw-Q_1759160998
 Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-634bff4ccc6so3805188a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:49:47 -0700 (PDT)
+ 4fb4d7f45d1cf-634700fe857so6483801a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:49:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759160986; x=1759765786;
+ d=1e100.net; s=20230601; t=1759160998; x=1759765798;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BPzxrddqtL0TItlI5LLtoSQbI5T1+Lsx8CSDc/Du130=;
- b=N8Md/c/LStfGtaVPEnfGK1ffdQAl2qo1PvxX7cFWwnErhRnUSn5xJjiCACpWMxTe6N
- 0jpePAEh25fW3IWViwJq2ttAjaXq/xV3Aez/VOTWRJA+2PEGtUXxXMcyWggVu85yo7aZ
- P+1iyGEgBYGhiSfo+Crdi27t/ihfHZ6WUHXfMcaIUI+z8hN+dhFcbj0YyGxQaOqya1ta
- z3HY+ne3FLMzvYZjohG6QWZSquFaoD/6zmontIjXCXAnjSVG/GdOSHLqc/9hkvdKWJM2
- VaAT3oXQCULCTSvo62aMle8Aw/8xcWm8SPIXm6fqH59XSh3TBCzL8lmYxATAhcZ6tmXD
- VMoA==
-X-Gm-Message-State: AOJu0Yz833i+6iKYQK3f9XJvh7RYJblhAuj7hzZtzc1uef5M5pp7jOVf
- lvv6PoqtACHScN2FOqX7L4BGminAz1Hd+D/ejdpB/bFbra8b1ld9iSM1iAjw3dX2KwIZT1qjdDQ
- YZRIi4aVN148Y6vQGuWgP+Qp6eCA69JTqUXrwINpKkW6aV7e7hDZDmu2j54u9ocnaFmDfj3fZHK
- zuYN7CelArb7RGqww5E5s5kfQRWqVtrmpQ4UdxZNRE
-X-Gm-Gg: ASbGncuJGrINZgZMJ8PJb5cNHmL8/rhEfGgUjmAu8MNvU/uAAsgYIdXYZoSoDqkvI6i
- DdCdR19L2ymv8pUJXFqtPZjjA4huFYE5Y2jSYYVo834zUVH4dB4n9wgRJEo+pwq9wPgOrwVPNXH
- u1G5Wgi+toTLf27uEH7q7hhPPMFu4JWsd1AnL4Abts8iyB/hL8LIsTzWN6m5XzS4uOF2qEQ/bKo
- aLDO/3jyDNrWAet35Dqsnm3XtDpXgQ/veps1xztPc2gsfd1NjbVL2MFtA/NnYiRUacvUmoktr9i
- d3fHVjy8zElI1n5Tu3KeVr85ZT2vfNxU9k+piYy8MKpCogWU/srju4PtyZZhUjaDfXZIwy+XfnV
- xVhGiDZ38+inLq3paeDjpjepyfbmhEQmGFZNJ/jND6yFGGQ==
-X-Received: by 2002:a17:907:6093:b0:ae1:a6a0:f2fe with SMTP id
- a640c23a62f3a-b34bad28537mr1913857966b.36.1759160985558; 
- Mon, 29 Sep 2025 08:49:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG21EHXJbWMybWv0lsGwuZFID3E8aCqbDC3DKgYJf6kzYsdtFqtEWU8jK5Bb3ncnCzjZgj+nw==
-X-Received: by 2002:a17:907:6093:b0:ae1:a6a0:f2fe with SMTP id
- a640c23a62f3a-b34bad28537mr1913855166b.36.1759160985043; 
- Mon, 29 Sep 2025 08:49:45 -0700 (PDT)
+ bh=XE480yyfhzYbFzSjQEPQSJUuYLlL1XqwbZWj8rCIyyA=;
+ b=M2oZWqM5oLxVXV03WRD6X31kFhSoxbGIQ55vlkUx8Gbw7OSgdZZXefMsENGIe4R3Ij
+ xyTyh3RAnXGf5v3rhm9JZNW/4tvj8XOPYgJbHv+fuC1PsGRWAacAFCvXL/9wCw7Nkop3
+ wslI0yGQxIoROz+CJih3q0JxZ+bdUtPjfGWNZMJRuEums3w1eYZGSQO9LYbSzsjyKvWA
+ U2GHXrLI9RbWkIlVe/wOH5tl1cCrwkxd7P1lhn9O7wNmGj1TT+0Z82EDwZ2uB0KzSIf1
+ zjSPW/FQZTeGBLBW+I0dFEUS5qHG+emHO2T2EREEOcgWmMsWGefydJIqfHRKr6es3Rsu
+ fpWw==
+X-Gm-Message-State: AOJu0Yw4t7/Z9TOQ0tsGV1lK1jf+6hn/duH25mcljicV04+O6QQGvW/7
+ 8bUNP2IbO79fmpF176BWHRY8FhROp13yh7/4PQTRgyG/6T45OuZPauzfOCaIzzR5KRMt9hDtq4a
+ qG00+vcB4Z35E8vZFD9cu8971YLs37OnqqmGWL18LajiGUEy/Cx+FnoyrBPPnP3n58tvix/cH2W
+ kDYZq+KTCSATxEcjTjZNabTTyhpJJ7+yWM2IsqAcaZ
+X-Gm-Gg: ASbGncuodqlYsSMhS5rRdEo/E+n5C8ryGm3sTDNopV/JdSxEtI5W6p337izMQhsxYI8
+ KbPPSgjWXzqejWTXnHZeEhB0wUsBOCEUBfnchK5rxZDiVe6Tn8c6vSixY9TkAHZ5mb9ng7S876P
+ 0U575s2lYcg4EE0UjhMFlMjgAuNGxH1LWdPhSELEyhp3IK+Qe2S8jt6P+mlc7zophrX6GV1a4O1
+ VKxYB1rTNkpofMKe24dZ1GoUgJD9rZ8u6fmnPHm3qqN+yNdkKu/ngBdPKBtyXmM9M+Acnq++URQ
+ 3Wlx1BGgTaf1YpzTNZuWPOVpjWVIlyuY35Ma2MCvss5SVLrDNPBzPtWViCdvQzNJQyOymwoptqJ
+ /5If6Lo7cdG7C8cWI5UsWNkm5EH5pUrNY9Vg+EeX6jd6A/g==
+X-Received: by 2002:a17:907:72cf:b0:b3f:1120:82a5 with SMTP id
+ a640c23a62f3a-b413a7e70d9mr106822266b.20.1759160997517; 
+ Mon, 29 Sep 2025 08:49:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG39NgJaEGvGG8aqTB4Gzd3IeTq2Z4iKh6aPJuTq1virL/sLNIB/BE9XZK3/aJG78p7jKX5ew==
+X-Received: by 2002:a17:907:72cf:b0:b3f:1120:82a5 with SMTP id
+ a640c23a62f3a-b413a7e70d9mr106818266b.20.1759160996550; 
+ Mon, 29 Sep 2025 08:49:56 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b3545a983ffsm953498566b.94.2025.09.29.08.49.43
+ a640c23a62f3a-b35446f7681sm949061266b.58.2025.09.29.08.49.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 08:49:44 -0700 (PDT)
+ Mon, 29 Sep 2025 08:49:54 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Tanish Desai <tanishdesai37@gmail.com>,
@@ -81,9 +81,9 @@ Cc: Tanish Desai <tanishdesai37@gmail.com>,
  Mads Ynddal <mads@ynddal.dk>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-rust@nongnu.org
-Subject: [PATCH 02/16] tracetool: remove dead code
-Date: Mon, 29 Sep 2025 17:49:24 +0200
-Message-ID: <20250929154938.594389-3-pbonzini@redhat.com>
+Subject: [PATCH 06/16] tracetool: add CHECK_TRACE_EVENT_GET_STATE
+Date: Mon, 29 Sep 2025 17:49:28 +0200
+Message-ID: <20250929154938.594389-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250929154938.594389-1-pbonzini@redhat.com>
 References: <20250929154938.594389-1-pbonzini@redhat.com>
@@ -96,7 +96,7 @@ X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -114,195 +114,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove a bunch of dead code from tracetool.
+From: Tanish Desai <tanishdesai37@gmail.com>
 
-In particular, there are no tcg-exec events anymore and the sub-event
-functionality was only used for it.
+Add a new attribute CHECK_TRACE_EVENT_GET_STATE to the backends.
+When present and True, the code generated by the generate function
+is wrapped in a conditional that checks whether the event is enabled;
+this removes the need for repeating the same conditional in multiple
+backends.
 
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/tracetool/__init__.py                | 45 +++-----------------
- scripts/tracetool/format/h.py                |  5 ---
- scripts/tracetool/format/log_stap.py         |  2 -
- scripts/tracetool/format/simpletrace_stap.py |  2 -
- 4 files changed, 6 insertions(+), 48 deletions(-)
+ scripts/tracetool/backend/__init__.py | 39 ++++++++++++++++++---------
+ scripts/tracetool/format/h.py         | 11 +++++---
+ 2 files changed, 35 insertions(+), 15 deletions(-)
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 1d5238a0843..4ef1dc1fca3 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -15,7 +15,6 @@
- import os
- import re
- import sys
--import weakref
- from pathlib import PurePath
+diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
+index bf91e443e99..9109a783c72 100644
+--- a/scripts/tracetool/backend/__init__.py
++++ b/scripts/tracetool/backend/__init__.py
+@@ -19,11 +19,15 @@
+ Backend attributes
+ ------------------
  
- import tracetool.backend
-@@ -122,10 +121,6 @@ def __init__(self, args):
-             else:
-                 self._args.append(arg)
+-========= ====================================================================
+-Attribute Description
+-========= ====================================================================
+-PUBLIC    If exists and is set to 'True', the backend is considered "public".
+-========= ====================================================================
++=========================== ====================================================
++Attribute                   Description
++=========================== ====================================================
++PUBLIC                      If exists and is set to 'True', the backend is
++                            considered "public".
++CHECK_TRACE_EVENT_GET_STATE If exists and is set to 'True', the backend-specific
++                            code inside the tracepoint is emitted within an
++                            ``if trace_event_get_state()`` conditional.
++=========================== ====================================================
  
--    def copy(self):
--        """Create a new copy."""
--        return Arguments(list(self._args))
--
-     @staticmethod
-     def build(arg_str):
-         """Build and Arguments instance from an argument string.
-@@ -222,13 +217,12 @@ class Event(object):
-                       r"(?P<name>\w+)"
-                       r"\((?P<args>[^)]*)\)"
-                       r"\s*"
--                      r"(?:(?:(?P<fmt_trans>\".+),)?\s*(?P<fmt>\".+))?"
-+                      r"(?P<fmt>\".+)?"
-                       r"\s*")
  
-     _VALID_PROPS = set(["disable"])
+ Backend functions
+@@ -101,22 +105,33 @@ class Wrapper:
+     def __init__(self, backends, format):
+         self._backends = [backend.replace("-", "_") for backend in backends]
+         self._format = format.replace("-", "_")
++        self.check_trace_event_get_state = False
+         for backend in self._backends:
+             assert exists(backend)
+         assert tracetool.format.exists(self._format)
++        for backend in self.backend_modules():
++            check_trace_event_get_state = getattr(backend, "CHECK_TRACE_EVENT_GET_STATE", False)
++            self.check_trace_event_get_state = self.check_trace_event_get_state or check_trace_event_get_state
  
--    def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
--                 event_trans=None, event_exec=None):
-+    def __init__(self, name, props, fmt, args, lineno, filename):
-         """
-         Parameters
-         ----------
-@@ -236,20 +230,14 @@ def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
-             Event name.
-         props : list of str
-             Property names.
--        fmt : str, list of str
--            Event printing format string(s).
-+        fmt : str
-+            Event printing format string.
-         args : Arguments
-             Event arguments.
-         lineno : int
-             The line number in the input file.
-         filename : str
-             The path to the input file.
--        orig : Event or None
--            Original Event before transformation/generation.
--        event_trans : Event or None
--            Generated translation-time event ("tcg" property).
--        event_exec : Event or None
--            Generated execution-time event ("tcg" property).
+-    def _run_function(self, name, *args, **kwargs):
++    def backend_modules(self):
+         for backend in self._backends:
+-            func = tracetool.try_import("tracetool.backend." + backend,
+-                                        name % self._format, None)[1]
+-            if func is not None:
+-                func(*args, **kwargs)
++             module = tracetool.try_import("tracetool.backend." + backend)[1]
++             if module is not None:
++                 yield module
++
++    def _run_function(self, name, *args, check_trace_event_get_state=None, **kwargs):
++        for backend in self.backend_modules():
++            func = getattr(backend, name % self._format, None)
++            if func is not None and \
++                (check_trace_event_get_state is None or
++                 check_trace_event_get_state == getattr(backend, 'CHECK_TRACE_EVENT_GET_STATE', False)):
++                    func(*args, **kwargs)
  
-         """
-         self.name = name
-@@ -258,29 +246,16 @@ def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
-         self.args = args
-         self.lineno = int(lineno)
-         self.filename = str(filename)
--        self.event_trans = event_trans
--        self.event_exec = event_exec
+     def generate_begin(self, events, group):
+         self._run_function("generate_%s_begin", events, group)
  
-         if len(args) > 10:
-             raise ValueError("Event '%s' has more than maximum permitted "
-                              "argument count" % name)
+-    def generate(self, event, group):
+-        self._run_function("generate_%s", event, group)
++    def generate(self, event, group, check_trace_event_get_state=None):
++        self._run_function("generate_%s", event, group, check_trace_event_get_state=check_trace_event_get_state)
  
--        if orig is None:
--            self.original = weakref.ref(self)
--        else:
--            self.original = orig
--
-         unknown_props = set(self.properties) - self._VALID_PROPS
-         if len(unknown_props) > 0:
-             raise ValueError("Unknown properties: %s"
-                              % ", ".join(unknown_props))
--        assert isinstance(self.fmt, str) or len(self.fmt) == 2
- 
--    def copy(self):
--        """Create a new copy."""
--        return Event(self.name, list(self.properties), self.fmt,
--                     self.args.copy(), self.lineno, self.filename,
--                     self, self.event_trans, self.event_exec)
- 
-     @staticmethod
-     def build(line_str, lineno, filename):
-@@ -302,8 +277,7 @@ def build(line_str, lineno, filename):
-         name = groups["name"]
-         props = groups["props"].split()
-         fmt = groups["fmt"]
--        fmt_trans = groups["fmt_trans"]
--        if fmt.find("%m") != -1 or fmt_trans.find("%m") != -1:
-+        if fmt.find("%m") != -1:
-             raise ValueError("Event format '%m' is forbidden, pass the error "
-                              "as an explicit trace argument")
-         if fmt.endswith(r'\n"'):
-@@ -312,29 +286,22 @@ def build(line_str, lineno, filename):
-         if '\\n' in fmt:
-             raise ValueError("Event format must not use new line character")
- 
--        if len(fmt_trans) > 0:
--            fmt = [fmt_trans, fmt]
-         args = Arguments.build(groups["args"])
- 
-         return Event(name, props, fmt, args, lineno, posix_relpath(filename))
- 
-     def __repr__(self):
-         """Evaluable string representation for this object."""
--        if isinstance(self.fmt, str):
--            fmt = self.fmt
--        else:
--            fmt = "%s, %s" % (self.fmt[0], self.fmt[1])
-         return "Event('%s %s(%s) %s')" % (" ".join(self.properties),
-                                           self.name,
-                                           self.args,
--                                          fmt)
-+                                          self.fmt)
-     # Star matching on PRI is dangerous as one might have multiple
-     # arguments with that format, hence the non-greedy version of it.
-     _FMT = re.compile(r"(%[\d\.]*\w+|%.*?PRI\S+)")
- 
-     def formats(self):
-         """List conversion specifiers in the argument print format string."""
--        assert not isinstance(self.fmt, list)
-         return self._FMT.findall(self.fmt)
- 
-     QEMU_TRACE               = "trace_%(name)s"
+     def generate_backend_dstate(self, event, group):
+         self._run_function("generate_%s_backend_dstate", event, group)
 diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index b42a8268a81..bd9e0ca7f23 100644
+index be7f32e67b9..dd58713a158 100644
 --- a/scripts/tracetool/format/h.py
 +++ b/scripts/tracetool/format/h.py
-@@ -40,11 +40,6 @@ def generate(events, backend, group):
-             enabled = 0
-         else:
-             enabled = 1
--        if "tcg-exec" in e.properties:
--            # a single define for the two "sub-events"
--            out('#define TRACE_%(name)s_ENABLED %(enabled)d',
--                name=e.original.name.upper(),
--                enabled=enabled)
-         out('#define TRACE_%s_ENABLED %d' % (e.name.upper(), enabled))
+@@ -55,7 +55,6 @@ def generate(events, backend, group):
  
-     backend.generate_begin(events, group)
-diff --git a/scripts/tracetool/format/log_stap.py b/scripts/tracetool/format/log_stap.py
-index 710d62bffe4..5b1bbe907ff 100644
---- a/scripts/tracetool/format/log_stap.py
-+++ b/scripts/tracetool/format/log_stap.py
-@@ -18,8 +18,6 @@
- from tracetool.backend.simple import is_string
- from tracetool.format.stap import stap_escape
+         out('    false)')
  
--def global_var_name(name):
--    return probeprefix().replace(".", "_") + "_" + name
+-        # tracer without checks
+         out('',
+             'static inline void %(api)s(%(args)s)',
+             '{',
+@@ -63,11 +62,17 @@ def generate(events, backend, group):
+             args=e.args)
  
- STATE_SKIP = 0
- STATE_LITERAL = 1
-diff --git a/scripts/tracetool/format/simpletrace_stap.py b/scripts/tracetool/format/simpletrace_stap.py
-index 72971133bf0..ac39a492d96 100644
---- a/scripts/tracetool/format/simpletrace_stap.py
-+++ b/scripts/tracetool/format/simpletrace_stap.py
-@@ -17,8 +17,6 @@
- from tracetool.backend.simple import is_string
- from tracetool.format.stap import stap_escape
+         if "disable" not in e.properties:
+-            backend.generate(e, group)
++            backend.generate(e, group, check_trace_event_get_state=False)
  
--def global_var_name(name):
--    return probeprefix().replace(".", "_") + "_" + name
++            if backend.check_trace_event_get_state:
++                event_id = 'TRACE_' + e.name.upper()
++                cond = "trace_event_get_state(%s)" % event_id
++                out('    if (%(cond)s) {',
++                        cond=cond)
++                backend.generate(e, group, check_trace_event_get_state=True)
++                out('    }')
+         out('}')
  
- def generate(events, backend, group):
-     out('/* This file is autogenerated by tracetool, do not edit. */',
+-
+     backend.generate_end(events, group)
+ 
+     out('#endif /* TRACE_%s_GENERATED_TRACERS_H */' % group.upper())
 -- 
 2.51.0
 
