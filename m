@@ -4,61 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07570CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55C7CCA468
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H3j-0000Nx-4S; Mon, 29 Sep 2025 12:49:07 -0400
+	id 1v3H5I-00013o-JK; Mon, 29 Sep 2025 12:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3H3f-0000NF-2N; Mon, 29 Sep 2025 12:49:03 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3H3W-0001Uf-AE; Mon, 29 Sep 2025 12:48:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cb6Zn5bXdz6L5FB;
- Tue, 30 Sep 2025 00:48:33 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 2B4BD1402E9;
- Tue, 30 Sep 2025 00:48:45 +0800 (CST)
-Received: from localhost (10.47.79.72) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 29 Sep
- 2025 17:48:44 +0100
-Date: Mon, 29 Sep 2025 17:48:42 +0100
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 11/27] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
-Message-ID: <20250929174842.0000091b@huawei.com>
-In-Reply-To: <20250929133643.38961-12-skolothumtho@nvidia.com>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-12-skolothumtho@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3H5F-00012q-Rr
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:50:41 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3H58-0002Bp-Vg
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:50:41 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3324fdfd54cso5118240a91.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 09:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759164629; x=1759769429; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TU5gSdmkNyV9pB/57smTckuZZ42nVLK7jGUclAwjB1Q=;
+ b=n1lBwt4iW00rMQylY1niRNPwKgfaaLvqJeMkWlGVzMsqLPqgiztncnlRuMAbIAp1S5
+ h5j3m/2iolJaM6sy/CVgA9jDUJrDzhYqI1Dz1mY1b2SEtGq4uf7+BrGQHWDfYwjg1ccq
+ jA5cju5C45id9uBMNf+A3oCaiDCNv3x3iBLkJtRk2RU/D9uRR4fITJf2sdFSQHOlh58T
+ 8JTH0Zw9RFjEFmWYe40MDsNlxsji04AlrxgF8G3dt1Ct11sslzYDvllXemdvDRdDp7B7
+ 8ts8tTmpcBNd23oVPshPQvcCLjWBS0E5bUJCOdTs6XhQscjmbfD3MjkEB++LkBwjAbuM
+ cH5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759164629; x=1759769429;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TU5gSdmkNyV9pB/57smTckuZZ42nVLK7jGUclAwjB1Q=;
+ b=q2YaCwA9yAMsAeARjQZQKzWHCqF4pcjWT+Oj2rV402BYduoRaWKbUGQfBPuJpDCQzr
+ 9r8+hvbS+d8xCUio2fkP286hZo1B00TgfNTBUgKPsGzBzwz/gifYhOr94I3nIxQ/PH/r
+ cn8ycG2Tnq62XiWgfjwh+9emSk5OhL6b0BM6vxdv9lVh0+ssRBUZflm7gzCS1X7Eacf2
+ IAqxFqb5tLIRnzauHnz8Rgl5LnD8ThuBw3gkHy2P3nLDN3ikP00gCFMcpCBY3iDW1Myn
+ fBHBVK4I68ymtv6pyyXj/XAcOIJqu4LNLZfHQFdZC1qURbr/8bHMEkMciifcZD8W+FCh
+ sAEA==
+X-Gm-Message-State: AOJu0YyqSfkBvD11eECNJNDOl7GXZyeKhHR9K6UNbNbsCJsIW8eMlBWv
+ 0ZYqyIveUiIqpSKmJBzpcwr9BSha2axXP/d4O60hm6LdAbsSVdEpYeBqFM2Wyi+aBA039lhJdS9
+ 5MHrP1oo=
+X-Gm-Gg: ASbGncv81epmJ4LUQgmI/7a003T9+bDVkzmQ4zaNOdTbpz6ZXRqZPxM23+Z8mm+2vef
+ qy+dfcHmsYBO7KGBkQE2OMxSuXLqM8BkysmiJSX+N1uZd8PuEQmxATldjyhNGtts6++sz/9aJmi
+ B/1FVdAoLH7ww4EuCCo97tE7oesmjRffOqaPK9xJbW7OfFPhjZ2HavMwPDAVee5RzF06aW5RUaC
+ FCbaodycducsLEXax1eoC2zaxjqX/tFKluemhJKdjFHwVDmEaV4s3Ucje9lzJ/F5eYEhAZH/ITj
+ qz6JT99kdp1SiVkd1/pVLMEEW7K5ZJmwZY1t8tu5iCzHsJIth9fyvNrNlyDU0Vu20x3SQ3PPKS5
+ J8tFsBoodHhUy6dkQ7YvmHXmIf0asLZEAJct9pDtKmHZ+/CGDHQEJnpu5iTDhM2QInVk7M90AaQ
+ ==
+X-Google-Smtp-Source: AGHT+IEsHFN6ymq2Ee7PKSMoGiS/8oXTQOf7sxlIXCuKOvu8DpeM/cpDfOIu0iOUsuslFSF8gaE+Cg==
+X-Received: by 2002:a17:90b:1d06:b0:336:bfce:3b48 with SMTP id
+ 98e67ed59e1d1-336bfce3befmr7107365a91.9.1759164629114; 
+ Mon, 29 Sep 2025 09:50:29 -0700 (PDT)
+Received: from [192.168.176.6] (51-148-40-14.dsl.zen.co.uk. [51.148.40.14])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3383863e7c6sm1810232a91.0.2025.09.29.09.50.27
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Sep 2025 09:50:28 -0700 (PDT)
+Message-ID: <e0bcabd4-b342-4a52-9e87-a903724b069b@linaro.org>
+Date: Mon, 29 Sep 2025 09:50:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/27] ppc-for-20250928 queue
+To: qemu-devel@nongnu.org
+References: <20250928192629.139822-1-harshpb@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250928192629.139822-1-harshpb@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.79.72]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,92 +100,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Sep 2025 14:36:27 +0100
-Shameer Kolothum <skolothumtho@nvidia.com> wrote:
-
-> On ARM, when a device is behind an IOMMU, its MSI doorbell address is
-> subject to translation by the IOMMU. This behavior affects vfio-pci
-> passthrough devices assigned to guests using an accelerated SMMUv3.
+On 9/28/25 12:26, Harsh Prateek Bora wrote:
+> The following changes since commit d6dfd8d40cebebc3378d379cd28879e0345fbf91:
 > 
-> In this setup, we configure the host SMMUv3 in nested mode, where
-> VFIO sets up the Stage-2 (S2) mappings for guest RAM, while the guest
-> controls Stage-1 (S1). To allow VFIO to correctly configure S2 mappings,
-> we currently return the system address space via the get_address_space()
-> callback for vfio-pci devices.
+>    Merge tag 'pull-target-arm-20250926' ofhttps://gitlab.com/pm215/qemu into staging (2025-09-26 13:27:01 -0700)
 > 
-> However, QEMU/KVM also uses this same callback path when resolving the
-> address space for MSI doorbells:
+> are available in the Git repository at:
 > 
-> kvm_irqchip_add_msi_route()
->   kvm_arch_fixup_msi_route()
->     pci_device_iommu_address_space()
->      get_address_space()
+>    https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-20250928-20250929
 > 
-> This will cause the device to be configured with wrong MSI doorbell
-> address if it return the system address space.
+> for you to fetch changes up to 6c51df580d2a64b4e1ef7bdbffeb3615ffe25d43:
 > 
-> Introduce an optional get_msi_address_space() callback and use that in
-> the above path if available. This will enable IOMMU implementations to
-> make use of this if  required.
-
-Extra space before required.
-
+>    target/ppc: use MAKE_64BIT_MASK for mcrfs exception clear mask (2025-09-28 23:50:36 +0530)
 > 
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-one comment inline. Either way
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
-> ---
->  hw/pci/pci.c         | 19 +++++++++++++++++++
->  include/hw/pci/pci.h | 16 ++++++++++++++++
->  target/arm/kvm.c     |  2 +-
->  3 files changed, 36 insertions(+), 1 deletion(-)
+> ----------------------------------------------------------------
+> ppc queue for 20250928
 > 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 1315ef13ea..6f9e1616dd 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2964,6 +2964,25 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
->      return &address_space_memory;
->  }
->  
-> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev)
-> +{
-> +    PCIBus *bus;
-> +    PCIBus *iommu_bus;
-> +    int devfn;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-> +    if (iommu_bus) {
-> +        if (iommu_bus->iommu_ops->get_msi_address_space) {
-> +            return iommu_bus->iommu_ops->get_msi_address_space(bus,
-> +                                 iommu_bus->iommu_opaque, devfn);
-> +        } else {
-Not important so up to you.
-
-I see the 'else' as unnecessary here both because you returned above and
-because it's kind of the natural default - i.e. what we did before the
-new callback.
+> * Support for PowerNV11 and PPE42 CPU/Machines.
+> * Deprecation of Power8E and Power8NVL
+> * Decodetree patches for some floating-point instructions
+> * Minor bug fixes, improvements in ppc/spapr/xive/xics.
+> 
+> Qemu CI:https://gitlab.com/harshpb/qemu/-/pipelines/2068351418
 
 
-> +            return iommu_bus->iommu_ops->get_address_space(bus,
-> +                                 iommu_bus->iommu_opaque, devfn);
-> +        }
-> +    }
-> +    return &address_space_memory;
-> +}
-> +
->  int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
->                                    IOMMUNotify fn, void *opaque)
->  {
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-
+r~
 
