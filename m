@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B03CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0745FCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3GYI-0006UR-Ul; Mon, 29 Sep 2025 12:16:40 -0400
+	id 1v3GZb-0007XH-PV; Mon, 29 Sep 2025 12:18:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1v3GXu-0006K2-H9
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:16:15 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1v3GZP-0007SD-2v
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:17:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1v3GXn-0005yG-00
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:16:12 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1v3GZF-0006HP-NP
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:17:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759162551;
+ s=mimecast20190719; t=1759162654;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pWXe0SqFOzCgzeHZv7VtcKVn224jjbTZLErGx/pkMYA=;
- b=ZeENdfpZ/9foDxe0eYYpLbGWJD4X27gKSach2v0XUnxxLUhiaFTc0jDDg/yvi1icnZwanW
- 0HcqqaIry+2zyYlIWuRVsD6btNLMvqfugEazQDMiVJbNG7xoF2YFGIFfAWCIxmYQD02FWG
- mPaj2N2WhJhKUmPEyt0TzACEdSICUXg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PCfGswOFgs9Byjd7wuVfj2ZWeDuI/UIDerUmDw7J8UM=;
+ b=iTf9NkDEYwe6gvZQGUXaiXBCBRZ7t7hSZ47sXrkObkmeOiX34ob7nWnd7fqS3PaefYz61r
+ k6c73bw/Gg/QkeyowhaAeET1T8JFtt2WuL+pa9YvFljF2LOK6me7n1BNAkgSK4VqApN7L+
+ WQowlOXQOZwEuQTsSra8OwMZSQEtZyw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-pSvHRr92OHeTtVYZdUQY2w-1; Mon, 29 Sep 2025 12:15:49 -0400
-X-MC-Unique: pSvHRr92OHeTtVYZdUQY2w-1
-X-Mimecast-MFC-AGG-ID: pSvHRr92OHeTtVYZdUQY2w_1759162549
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f384f10762so3266870f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 09:15:49 -0700 (PDT)
+ us-mta-55-GAzZhqJYOz6K6Sg4WLwY8A-1; Mon, 29 Sep 2025 12:17:32 -0400
+X-MC-Unique: GAzZhqJYOz6K6Sg4WLwY8A-1
+X-Mimecast-MFC-AGG-ID: GAzZhqJYOz6K6Sg4WLwY8A_1759162652
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e2c11b94cso29631275e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 09:17:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759162549; x=1759767349;
+ d=1e100.net; s=20230601; t=1759162652; x=1759767452;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pWXe0SqFOzCgzeHZv7VtcKVn224jjbTZLErGx/pkMYA=;
- b=kBL+Msu7rkGVphmQZ7ZjF9/DEALn1PSF3zSuwzv8cC87ejAi0A/NoNvFz012bYGZkK
- WhjTyp+rBMaMrUAemaXa0SV6yR8f+//t/PP/J+3DyBuHAhvbK1pvy+Tf8goHVcZBXzu3
- PYb/O0gJ2SsDi8cKDeKhCqztZQNZnXOlMs3B60TmUQzufwg+GHiHWD8rnxKCL88ze2oG
- sAHE6D9xmDkusBoMpGF7Fnsv3DE6AjiBf99KMeMy7UdH8AosVdoGTiZJxOEHPIjCdvCf
- /4TCBjaEh4jHNmifFxP5IVcAeJ7SBy21epUL9oXJ0vcnPiKGryl0EqplXr81aeCrYinJ
- hR4g==
+ bh=PCfGswOFgs9Byjd7wuVfj2ZWeDuI/UIDerUmDw7J8UM=;
+ b=qr1sMgkVZsRezxxU1VovN2dC74xmJCMA371WlyNRaDlJlTnRtuSgVRwe9U4+tAZMde
+ sAgpOreBYw/KTbWPqIglkRBCkUox+Zu5SA7Jx217CQ8VcV7NbfxbufB8fSaqQpFgCSMC
+ e9gGQEdDF2I9pYH/FZS0I4/DRgyG+AuTntimuVD/c7SHdhip/uAX1vdfFMieizXRLL9I
+ 7anNFGVVTr5qEwHg8fQAfw9nIW5S1QxCE8PLccAgkSdkrJOan/cOscY7LBAfbohUgCxA
+ z6uyTznbhoveNxzXuxirRMkVswtmZpJjPP9Ju2jbqkC/fvHqWwTsmScZ2OO86ZwrP0vN
+ G6Tg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXsxJOsE2Qvx7+FbItwqGPNKlzSbd5aJcAGxuadElpKqEJUori6Ys/0Iz24an7Q7LpFL4zgKw7NFCD@nongnu.org
-X-Gm-Message-State: AOJu0YxV9MtvRuXnPH+XlTNRQ/D7v8bA+SFZwOWKl0sLonIX4bR9/IHO
- OybelDH4TBhZV57MOaA7zZPNT+LhZ+CA7/P73QJYAxqrz8q8be8voxmazANqycbdiy3oaj7gn9B
- 4HYi6UcochRGJXvY5d1iu7d3Yy5S9nwCkadWnOXsbEuvajIuPZggqqu5o
-X-Gm-Gg: ASbGncv80njXme0dJElZjlGHzqNYRQQDKS1Uw8DPxEQvFkMDsFg6Gm9vHWglIDNXTP+
- Y55ayjlgQxmpWmjht5bBd3tFI2OgLy94vTS8BhtZry2hNcr+Mo8xLUDp8bgEI5+Ts3zesfgLS6V
- LMiff8N8WQi1hPja9zIQSAloos9wI1J8TeL2W7C+Ek4d31kGvGTG1L6pDDftIP09d0tYVqcgXm4
- mGhtQpaV+xbxemajcHfhlaqpiSLUofCk7kQaR8F3WL31EG+MuYm4SqPnJZsYtw7COG+PJlKKVNN
- YbM0/iv54sY53WXeR0Gz3ul5zbCFyl2Tob16nj7i4HX+b6eEbpZjxIqjMSV/CJUPN06c+2Rmw/x
- MhyM=
-X-Received: by 2002:a05:6000:2302:b0:3e5:47a9:1c7f with SMTP id
- ffacd0b85a97d-40e4bf00e3emr13950766f8f.47.1759162548762; 
- Mon, 29 Sep 2025 09:15:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHciTUncA/uRwGsN4stLKzMB9AIII6s3oCYtjhGUfWFylY+0PVErLvXdkyff9rZUBBfWQJ7vQ==
-X-Received: by 2002:a05:6000:2302:b0:3e5:47a9:1c7f with SMTP id
- ffacd0b85a97d-40e4bf00e3emr13950749f8f.47.1759162548328; 
- Mon, 29 Sep 2025 09:15:48 -0700 (PDT)
+ AJvYcCUvhroGg32quQxCFoSxVGjeI6srB5DOmZU1F7OaMq4ZEsuLA7Tj9SRLpV3j0yHhuUayL2jGwWRmVl9T@nongnu.org
+X-Gm-Message-State: AOJu0YzfWifX6+q99gWnMKBMg/FMeVtx08at9ARoVpgRoW++UL7qSZjh
+ ho37TjvM4Br8Ecsz6YS0LBtrcYiveSY+lg0CnnAisUjrWu9ncMwoRVnSxCUCDrb8FY5nBhbjuij
+ n3Vj8jCY2ZF5PVpDPpbohGdBb2aYABdEMN2qvlMjtwX+QsEPHTCcMBINt
+X-Gm-Gg: ASbGncvtgzekssow9U8gLJs8pBmzCHx8Uptz4iIoU+9JuCQ6vYls55t8vHSKS/3wnoJ
+ mY3hpa7btoDthj41LEL3Fo74QpKCVmaKMcOPS1l2AkJ2HafREHE+Swvq0irgAfGDOTlynLjEmA1
+ 7wHw4KO9SBdZOJZIWJOdJ/502h1MXO9HtrheJaIQgD44Ezoq+yi+lf5tlEVb9yw7hUFSCDxvLHS
+ gbaGvubxuta+oFPXDdw9VpgGg/zsdEM0tgEwvjO+Y0OgFDS6F4SkgPodnbPTzyktGFglgNAs40a
+ NZJ6JT14/FN7DeF0ciR6pBMqiqM71/gf/ygMJwLDi+bhMLefNfQolX9VTIR2ybOLpWppunR6swg
+ Pbh0=
+X-Received: by 2002:a05:600c:3f12:b0:46e:41e6:28c7 with SMTP id
+ 5b1f17b1804b1-46e41e6293fmr151486995e9.8.1759162651717; 
+ Mon, 29 Sep 2025 09:17:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE4q/u+inchio2ypb7klzNldPL10d2VdmIgK6LglOsBlLxZNpC7sQFFpyDZvpFjB9br+XLgzA==
+X-Received: by 2002:a05:600c:3f12:b0:46e:41e6:28c7 with SMTP id
+ 5b1f17b1804b1-46e41e6293fmr151486675e9.8.1759162651230; 
+ Mon, 29 Sep 2025 09:17:31 -0700 (PDT)
 Received: from ?IPV6:2a01:599:901:4a65:f2e2:845:f3d2:404d?
  ([2a01:599:901:4a65:f2e2:845:f3d2:404d])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e56f77956sm19410365e9.20.2025.09.29.09.15.46
+ 5b1f17b1804b1-46e56f658ffsm18778625e9.14.2025.09.29.09.17.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 09:15:47 -0700 (PDT)
-Message-ID: <b07cd69a-6ac9-4d68-ba1a-989780f01716@redhat.com>
-Date: Mon, 29 Sep 2025 18:15:45 +0200
+ Mon, 29 Sep 2025 09:17:30 -0700 (PDT)
+Message-ID: <f248001b-8ebf-4bc1-b97e-cddb908cbe35@redhat.com>
+Date: Mon, 29 Sep 2025 18:17:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] memory: New AS helper to serialize destroy+free
+Subject: Re: [PATCH 3/3] physmem: Destroy all CPU AddressSpaces on unrealize
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -86,7 +86,7 @@ Cc: qemu-stable@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
 References: <20250929144228.1994037-1-peter.maydell@linaro.org>
- <20250929144228.1994037-3-peter.maydell@linaro.org>
+ <20250929144228.1994037-4-peter.maydell@linaro.org>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20250929144228.1994037-3-peter.maydell@linaro.org>
+In-Reply-To: <20250929144228.1994037-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -143,10 +143,9 @@ X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,31 +162,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29.09.25 16:42, Peter Maydell wrote:
-> From: Peter Xu <peterx@redhat.com>
+> When we unrealize a CPU object (which happens on vCPU hot-unplug), we
+> should destroy all the AddressSpace objects we created via calls to
+> cpu_address_space_init() when the CPU was realized.
 > 
-> If an AddressSpace has been created in its own allocated
-> memory, cleaning it up requires first destroying the AS
-> and then freeing the memory. Doing this doesn't work:
+> Commit 24bec42f3d6eae added a function to do this for a specific
+> AddressSpace, but did not add any places where the function was
+> called.
 > 
->      address_space_destroy(as);
->      g_free_rcu(as, rcu);
+> Since we always want to destroy all the AddressSpaces on unrealize,
+> regardless of the target architecture, we don't need to try to keep
+> track of how many are still undestroyed, or make the target
+> architecture code manually call a destroy function for each AS it
+> created.  Instead we can adjust the function to always completely
+> destroy the whole cpu->ases array, and arrange for it to be called
+> during CPU unrealize as part of the common code.
 > 
-> because both address_space_destroy() and g_free_rcu()
-> try to use the same 'rcu' node in the AddressSpace struct
-> and the address_space_destroy hook gets overwritten.
+> Without this fix, AddressSanitizer will report a leak like this
+> from a run where we hot-plugged and then hot-unplugged an x86 KVM
+> vCPU:
 > 
-> Provide a new address_space_destroy_free() function which
-> will destroy the AS and then free the memory it uses, all
-> in one RCU callback.
+> Direct leak of 416 byte(s) in 1 object(s) allocated from:
+>      #0 0x5b638565053d in calloc (/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/qemu-system-x86_64+0x1ee153d) (BuildId: c1cd6022b195142106e1bffeca23498c2b752bca)
+>      #1 0x7c28083f77b1 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x637b1) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+>      #2 0x5b6386999c7c in cpu_address_space_init /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../system/physmem.c:797:25
+>      #3 0x5b638727f049 in kvm_cpu_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../target/i386/kvm/kvm-cpu.c:102:5
+>      #4 0x5b6385745f40 in accel_cpu_common_realize /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../accel/accel-common.c:101:13
+>      #5 0x5b638568fe3c in cpu_exec_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/cpu-common.c:232:10
+>      #6 0x5b63874a2cd5 in x86_cpu_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../target/i386/cpu.c:9321:5
+>      #7 0x5b6387a0469a in device_set_realized /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/qdev.c:494:13
+>      #8 0x5b6387a27d9e in property_set_bool /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:2375:5
+>      #9 0x5b6387a2090b in object_property_set /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:1450:5
+>      #10 0x5b6387a35b05 in object_property_set_qobject /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/qom-qobject.c:28:10
+>      #11 0x5b6387a21739 in object_property_set_bool /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:1520:15
+>      #12 0x5b63879fe510 in qdev_realize /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/qdev.c:276:12
 > 
-> (CC to stable because the next commit needs this function.)
 > 
 > Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> [PMM: Expanded commit message with motivation, tweaked comment]
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2517
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
+
+Complicated stuff, but LGTM
 
 Reviewed-by: David Hildenbrand <david@redhat.com>
 
