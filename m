@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2936CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 07:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17640CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 07:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v38fy-0000nh-MZ; Mon, 29 Sep 2025 03:52:03 -0400
+	id 1v38jG-0002bW-0H; Mon, 29 Sep 2025 03:55:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v38fs-0000mx-Ba
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 03:51:57 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v38fd-0008Nz-MY
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 03:51:53 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46e4473d7f6so15460225e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 00:51:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759132290; x=1759737090; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=byL6+IWWE+maBPLd/ApthsbRatCtLzLcVRyQGwiLiGM=;
- b=fPCPuSZZlXBfdumGXqYMCoLWOxIQM24gMTPg8RTCuOh4/uYkVfW5g6KPe4/lm6jb/A
- Q1WGn7PBkEzBCdsmOnusmN+XVqAOHk32YrrpmITOnKgMuaq1CSco/Wdwjy+m7uUnbcgj
- 7a0y/KNyZs5kSVk/RLV2qIp250CZDXHSJ22zmDNcFyoQuJ+cPyKmaAU6kXNM6uuy+rb3
- SvoX2iya/0TPlGUrsymtcgzpmpMdfQtu74Tf2CunSXCZCiXm9BRuJk/brsif2giXM5PB
- 2RV6lhnKoJwt8uvS8LjAANtdkiIEbDhu1KX3GG7eqR9ghOm+ApuFixT4K5MFjjF9Pw5k
- zSZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759132290; x=1759737090;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=byL6+IWWE+maBPLd/ApthsbRatCtLzLcVRyQGwiLiGM=;
- b=K/3bjBcDDuxZ4+cOVCuSdoA43lHFt24ZXS+NIcyi8G/DCzwE11peP5p0RZPzdwCzQK
- l3UnYSedeD9QOb0208fF/LXIIMfpzqodOR4sd823jjNgDNoXGFsoOdzLZPoyYzhZUTtW
- ZZQudzg/Wq7nJLmqPvcJP2ennnTfXtFUP2Tbd33UMsiPFc7qBVhZTYN1A2V7RX2eqmO2
- MHTZ/ypCgR88hOtF0K9Z7P27e62qHSccyFJtIB36UY4OK8bZch7C8U2bbdVJ83PjGEo3
- kBwVLymgng15KN/UQTdB7qYvwYpFdIGWT+w/6yg4kGEzySR7khQlpwopV7jnY5HwPEic
- R58Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWB7wkVmnG2Yq7gfbvShKNnVSD92QRZ0rKNC22Myw+j7gN1s+eRXmN4EpilyyR61TcfFuoc/0hVbJa+@nongnu.org
-X-Gm-Message-State: AOJu0Yz7ohZpghWUKAyQOUWW39eHs3n95UyrhXdQn8sjzCEDCu7x0Trr
- yJyuQiyQT4xQFycqtYrzIOxD6jhC3xdEcSP1wlIlwakY27rT3dmC0osAqgfO2DuMU54=
-X-Gm-Gg: ASbGncs+TS7M/fmcAFoH1d1zR2ot0oIECq6nsAuUShuhqLQHVGwoBatlF0dPq4UV1gv
- 3+ztsQyXwKL+uqY+e/3FJSc1S53tIma0N0TZVjGfNNYuGdwtIUAv9ptZVghUNoTAqLm36MtrroH
- GtY6NKe+UaxZxMfMUuy/9XilCVXeiPpoXmADvaGSkxrdEEl8lQq2M476VrCTKo7rGlcPHC4jhnq
- D0d5RARMFifsf605vbVp7giUPW2XOoGAoFzmmyLVhm5XiJssThtLb+UEGc9rstopPg5ZnBS1yYC
- 6zrg+SzRokstN5t5U+/vb6zjy62AKmx+Ayz78t9+KDsH4bI56eBbwWuk6j7A2+2uV68eJdLM9Ou
- 6hb/eT6Lkim9zQst1g0dtHw0uidD84B41inZKgLgSnO0ivsps3Ddf+C4IxMqOgJgS6DatQn001t
- 57
-X-Google-Smtp-Source: AGHT+IGUp8TPfS1jLLsIH4WzUrM41eCu4M7L+HGWPJnJfrQ8HVAJRXDZrBXpxvybUsTigQb+QPssxA==
-X-Received: by 2002:a05:6000:2601:b0:3ee:15bb:72c8 with SMTP id
- ffacd0b85a97d-40e4886e045mr14343864f8f.36.1759132289750; 
- Mon, 29 Sep 2025 00:51:29 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc82f2ff6sm16989762f8f.56.2025.09.29.00.51.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 00:51:29 -0700 (PDT)
-Message-ID: <8099d09f-029d-4562-b035-7b832ac27ccc@linaro.org>
-Date: Mon, 29 Sep 2025 09:51:28 +0200
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v38jB-0002bD-KQ
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 03:55:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v38ix-0000bX-QZ
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 03:55:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759132497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NGEDkSWCVsZRgU5HjSTd1kzJlNXgZiZXVeNLhXwEtC8=;
+ b=Fmn2CauMo8CDUEYVOgpdNbXhQDK6zI2JmQuc+T6QBc3+VbaZrfI+qxwzrAFnwlmHePMEGA
+ NnMw4lPRH92bgnDbPID42MkXxDnZPoCRU5sLZFJCkxaGv06YLm5+dz41ke/GPJcbQEwfhE
+ s7z3wAADh/HN3WmGbPKPBtVDqMB5RXQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-mxSvSRywOGy61lLJClJPyA-1; Mon,
+ 29 Sep 2025 03:54:53 -0400
+X-MC-Unique: mxSvSRywOGy61lLJClJPyA-1
+X-Mimecast-MFC-AGG-ID: mxSvSRywOGy61lLJClJPyA_1759132492
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0AE16180035C; Mon, 29 Sep 2025 07:54:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.153])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF6FC30001A4; Mon, 29 Sep 2025 07:54:48 +0000 (UTC)
+Date: Mon, 29 Sep 2025 09:54:45 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH 3/3] docs/code-provenance: AI exceptions are in addition
+ to DCO
+Message-ID: <aNo7RaEOKJ5GFjNQ@redhat.com>
+References: <20250922154843.60233-1-pbonzini@redhat.com>
+ <20250922154843.60233-4-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/ppc: Have gen_pause() actually pause vCPUs
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>, qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, Nicholas Piggin
- <npiggin@gmail.com>, bharata.rao@gmail.com,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-References: <20250924173028.53658-1-philmd@linaro.org>
- <20250924173028.53658-3-philmd@linaro.org>
- <4b0138bc76c60385de71c26eb55a4aecd8d1786d.camel@kernel.crashing.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4b0138bc76c60385de71c26eb55a4aecd8d1786d.camel@kernel.crashing.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250922154843.60233-4-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.539,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,31 +88,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/9/25 06:28, Benjamin Herrenschmidt wrote:
-> On Wed, 2025-09-24 at 19:30 +0200, Philippe Mathieu-Daudé wrote:
->> gen_pause() sets CPUState::halted = 0, effectively unhalting
->> (a.k.a. "running") the cpu. Correct by setting the '1' value
->> to really halt the cpu.
-> 
-> What will resume it though ? The smt_low() case isn't meant to *halt*
-> the CPUs permanently. smt_*() levels are about SMT thread priorities.
-> Using a "pause" that just gets out of TCG (and back in), is a way to
-> "yield" to another thread, thus enabling more forward progress when a
+Am 22.09.2025 um 17:48 hat Paolo Bonzini geschrieben:
+> Using phrasing from https://openinfra.org/legal/ai-policy (with just
+> "commit" replaced by "submission", because we do not submit changes
+> as commits but rather emails), clarify that the contributor remains
+> responsible for its copyright or license status.
 
-What you describe can be achieved with a helper doing:
+I feel here the commit message is clearer than...
 
-   cs->exception_index = EXCP_YIELD;
-   cpu_loop_exit(cs);
+> [This is not my preferred phrasing.  I would prefer something lighter
+> like "the "Signed-off-by" label in the contribution gives the author
+> responsibility".  But for the sake of not reinventing the wheel I am
+> keeping the exact words from the OpenInfra policy.]
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  docs/devel/code-provenance.rst | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> index 103e0a97d76..41062f29639 100644
+> --- a/docs/devel/code-provenance.rst
+> +++ b/docs/devel/code-provenance.rst
+> @@ -341,3 +341,9 @@ or more general revisions. This can be done by contacting the qemu-devel
+>  mailing list with details of a proposed tool, model, usage scenario, etc.
+>  that is beneficial to QEMU, while still mitigating the legal risks to the
+>  project.  After discussion, any exception will be listed below.
+> +
+> +Exceptions do not remove the need for authors to comply with all other
+> +requirements for contribution.  In particular, the "Signed-off-by"
+> +label in a patch submissions is a statement that the author takes
+> +responsibility for the entire contents of the patch, including any
+> parts +that were generated or assisted by AI tools or other tools.
 
-Is that what you wanted?
+...the actually committed text. We should probably mention "copyright or
+license status" explicitly here in some way instead of just a more
+generic "responsibility for the entire contents" without referring to
+copyright.
 
-> thread is spinning on an smt_low() loop. This happens in firmware and
-> in some spinlock cases.
-> 
-> This isn't about stopping until some external event resumes it.
-> 
-> Cheers,
-> Ben.
-> 
+Maybe something like "...responsibility for the entire contents of the
+patch and in particular its copyright or license status, ..."
+
+Kevin
 
 
