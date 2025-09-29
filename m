@@ -4,137 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78FDCAC5BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667FDCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3EVs-00086G-8U; Mon, 29 Sep 2025 10:06:00 -0400
+	id 1v3Ed6-0001qr-4u; Mon, 29 Sep 2025 10:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3EVp-000859-36
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:05:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3Ecz-0001nd-09
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:13:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3EVd-0000c0-DG
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:05:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3Ech-0001pL-S5
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:13:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759154740;
+ s=mimecast20190719; t=1759155175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5dCEZpNGR+H76wMUwGKnZsHjseRbjO9wi4U4HClvEaQ=;
- b=eylOComodpozrie8im+MpFokabqrUdrbBrssD2EdGpfNh9OcnSkDX0Ss0Xz6xhE8Ncv9cZ
- 61HL3TozXIO26OjhR79cLmlHmABFuOGBVH7njvuGrcKq18mvh+BIWKia1Qm2x/IwKrmszK
- EbdLQCHF02eLauQsuP1UamMVe6eC7qQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=YRMYBAz0w2K++gOqHDMuqw0dt1wYRTk29PkTuNYgvkY=;
+ b=NjTpf9RAJfOalHlQI6FCwK/9vVAcuSmePOl/mQ6rBD/d1Aak5GLuz6MytyR90Ew19uswYk
+ Q+kbHYDqoO1DBWaWbUWY2FBf4EbAe+1o2AxpdwKVjmz43h93TQK7xPU9vKHpKLfCfa0/TU
+ haGDmdLd6Mt9qC5UUuNUrPztWuQ0kwc=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-yUSAC6I6MiiOwgA7fIh7eA-1; Mon, 29 Sep 2025 10:05:36 -0400
-X-MC-Unique: yUSAC6I6MiiOwgA7fIh7eA-1
-X-Mimecast-MFC-AGG-ID: yUSAC6I6MiiOwgA7fIh7eA_1759154735
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e4335fa87so15271595e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:05:36 -0700 (PDT)
+ us-mta-576-oETJViAzPUuvDLpo4kwUxw-1; Mon, 29 Sep 2025 10:12:53 -0400
+X-MC-Unique: oETJViAzPUuvDLpo4kwUxw-1
+X-Mimecast-MFC-AGG-ID: oETJViAzPUuvDLpo4kwUxw_1759155173
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-7fa235e330dso104017646d6.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:12:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759154735; x=1759759535;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5dCEZpNGR+H76wMUwGKnZsHjseRbjO9wi4U4HClvEaQ=;
- b=Yh/NaB0scjPbMFzXMIoUWCzh4wmfQeqP2q3o56pVX95X3KwPBhp+mJm0IMwk3/NA6K
- /I2fhhW4sf7lWkEtN64Tnl8iGvBOkcLYrlQTN6H+DT6s2JHuYkQb4APLyBtOxTEl1xmM
- mNVN5iJhLH2d2OqoIyQAqbeRMGWI+BI4MDKe6VNdelkheMYjkzfkIaBFpQ+aHkcMpB8N
- qRv9CGl/yUimZp+PI+JWT8aa0UOVHoiZrgd4fAqzbmjXGOtkMvQJSILg8XR3oGyKWGpu
- 6LPc++K2StbnTpLUYR1IXwX/1xOvEJWuVl/j65SsM6+SlqcL5EGOXIeDyXdXmGhSu2ZX
- Cr3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbHJoAzsCGsku43WD6cD6fSQYQxLlsqCG8mkrLTE7EDsKq0llltuOamzmcOl+gRWnXuZAxjNaDTWOs@nongnu.org
-X-Gm-Message-State: AOJu0YwO5jvzxX1Bm4DtsoI+PhXniB/DwRhx/OU5hjA5OScb8ew09QQn
- 4arnlvpIM0KSTWX+L0MtOi4GQdg3DzqaeOP5k1ne39L7a2o1abGCL0WAIopYFR8XK06eJOTYPOh
- tP66vNmQV60TwEk/Iz3s8dfFQ1vNx+ybsT22BOc/2T0qaFb3HeoxmGNnj
-X-Gm-Gg: ASbGnctY5jFrQ5wNtsGNv1fMNNk7B0aD2KaY9HBfNUqbC7Pc2N71BvmcL2KEDZs+k9I
- LCzZxWuYBzoeU3pnS9P2YPkjU/HXD+oheE2UcK5Jb8tkw4i1lyLBuMr4ZBfGBQg630qZ/WIWlht
- XjSlsebc7uDhN7SV5+z6L9g5RRkDg15+VogOdWBg7tfYc7VPcX86dRkvfb/187yYSNsLEGjz2KM
- mwMhWjEkEM0/V2d1nTF1LwOedhuHdU+U8TZPQ/ReGEkwQcKATCkuw5jZ58eEKkHWXUP8hqvx/t1
- GJZLQxSL9Wy8Vl3SBo9NNhEtaf03d+g9AVEGJ6disB+lSBGnEAjGEvOBswUD5W8iS+k6QKUAnnG
- k8uJvBg==
-X-Received: by 2002:a05:600c:818c:b0:46e:3d41:6001 with SMTP id
- 5b1f17b1804b1-46e3d416194mr102014825e9.34.1759154734958; 
- Mon, 29 Sep 2025 07:05:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUqc6scxhJbBr4AeeGTY9EoH1Xzks5jOlyToVh0p3ZQARq+Z5jQiRkLa4Wir0XzlWb2ZinrA==
-X-Received: by 2002:a05:600c:818c:b0:46e:3d41:6001 with SMTP id
- 5b1f17b1804b1-46e3d416194mr102014455e9.34.1759154734537; 
- Mon, 29 Sep 2025 07:05:34 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
- [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc88b0779sm18248409f8f.58.2025.09.29.07.05.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 07:05:33 -0700 (PDT)
-Message-ID: <feac12c4-3e60-4f30-bdff-1f2decf3b27d@redhat.com>
-Date: Mon, 29 Sep 2025 16:05:32 +0200
+ d=1e100.net; s=20230601; t=1759155173; x=1759759973;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YRMYBAz0w2K++gOqHDMuqw0dt1wYRTk29PkTuNYgvkY=;
+ b=pCTMslzrP06CQ7CgW+wdthTOUO9QlTBRZBGjyOZHVgSVI/w0lf0xAxVRb5QxTu1Spn
+ bQ6FL97IG67OlncsCVBeeJkiG+dZ4LptKzKLbBS8fhjPk+3FWJMp090+sytPUGijmq1u
+ 5YDdhDdPEtW47DT4o2mxe4RT8YzQ3cKQjisSoy3POyCytZpE0XsISdu8738yHZRmD91z
+ /KSwXF2SHdsLjxsxNQB75vcX0ehcRYHFTmaeaypweMUV8vZwTg8xNdBJWEOExlRPgoMp
+ KS25+ufK9zbR8h+KKkX0AdQMUkbIsPV/fX23qPO7tU7yV0L+i34GTSKQmuoP0ey1sPZJ
+ BbXA==
+X-Gm-Message-State: AOJu0YwBUX2sID4v+FyIXf8HXzXK8GBgvrlzywxLaFRnJdSPm4lorjvm
+ sCQ5pOdRZOCCD0J6C68uIRz5eahb7WoPto1+UQ+EhBZN/5W9caPZYsDRUxszexAMb+Ehtqx1Anu
+ 5vzFTMGbYsQPmu3x9cVRWwRUa1zeqfN6HyisihBZ6tdqEJsO9//XbBQUheAg/kaTc
+X-Gm-Gg: ASbGncu/k4B11xK1o3SojfIlUHpe8jtdWL1Kk1rVmyUqsjecYwPj7WvaFCuXiqSg4OZ
+ j1BMU3HlbrPDFqIwHB7KrHy1PBr99taS1Yf14brQiENhSUWEIZd8lo23bMydbHxwPxvXrQGBuwg
+ tAILQQbhwgYLrMBU17+wJhA9+uLZG2x3SR2BglsaQYgDEIsymGxlRe639nYc7ELeLuCJm6rXnpC
+ H1R4KPFYhdqzWsGancxqAhHV/lHEELZz02ux1340DWWKXrYrPUQifDNCAF4MjUSx1tRUbiQI/+B
+ aq4z0ZpUAcaucjGSSN2Mz3VruZe664lm
+X-Received: by 2002:a05:6214:248a:b0:78f:48ef:d8c with SMTP id
+ 6a1803df08f44-8699ab1097amr9405376d6.22.1759155173072; 
+ Mon, 29 Sep 2025 07:12:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZcaIxrq7JVxqa1t59uy0o/KZz/Szhiep6PGBc8SKt3FIOnbfG3vv/ZEw4CCToQqsmeAwR/Q==
+X-Received: by 2002:a05:6214:248a:b0:78f:48ef:d8c with SMTP id
+ 6a1803df08f44-8699ab1097amr9404716d6.22.1759155172349; 
+ Mon, 29 Sep 2025 07:12:52 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8013c0951b5sm74938896d6.19.2025.09.29.07.12.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Sep 2025 07:12:51 -0700 (PDT)
+Date: Mon, 29 Sep 2025 10:12:50 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH] migration: HMP: Adjust the order of output fields
+Message-ID: <aNqT4mJWxdYJt4Wc@x1.local>
+References: <20250929021213.28369-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 22/28] Add secure-boot to s390-ccw-virtio machine type
- option
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-23-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250917232131.495848-23-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250929021213.28369-1-guobin@linux.alibaba.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -143,7 +87,8 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,31 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Add secure-boot as a parameter of s390-ccw-virtio machine type option.
+On Mon, Sep 29, 2025 at 10:12:13AM +0800, Bin Guo wrote:
+> Adjust the positions of 'tls-authz' and 'max-postcopy-bandwidth' in
+> the fields output by the 'info migrate_parameters' command so that
+> related fields are next to each other.
 > 
-> The `secure-boot=on|off` parameter is implemented to enable secure IPL.
+> For clarity only, no functional changes.
 > 
-> By default, secure-boot is set to false if not specified in
-> the command line.
+> Sample output after this commit:
+> (qemu) info migrate_parameters
+> ...
+> max-cpu-throttle: 99
+> tls-creds: ''
+> tls-hostname: ''
+> tls-authz: ''
+> max-bandwidth: 134217728 bytes/second
+> avail-switchover-bandwidth: 0 bytes/second
+> max-postcopy-bandwidth: 0 bytes/second
+
+This can be moved even above "avail-switchover-bandwidth", IMHO.
+
+With that, feel free to take:
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+> downtime-limit: 300 ms
+> ...
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 > ---
-...
-> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-> index 334b67ef05..1dba5ab37e 100644
-> --- a/include/hw/s390x/s390-virtio-ccw.h
-> +++ b/include/hw/s390x/s390-virtio-ccw.h
-> @@ -33,6 +33,7 @@ struct S390CcwMachineState {
->       uint64_t memory_limit;
->       uint64_t max_pagesize;
->       BootCertificateList *boot_certs;
-> +    bool secure_boot;
+>  migration/migration-hmp-cmds.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
+> 
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 0fc21f0647..814221b260 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -353,6 +353,10 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>          monitor_printf(mon, "%s: '%s'\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
+>              params->tls_hostname);
+> +        assert(params->tls_authz);
+> +        monitor_printf(mon, "%s: '%s'\n",
+> +            MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+> +            params->tls_authz);
+>          assert(params->has_max_bandwidth);
+>          monitor_printf(mon, "%s: %" PRIu64 " bytes/second\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
+> @@ -361,6 +365,10 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>          monitor_printf(mon, "%s: %" PRIu64 " bytes/second\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_AVAIL_SWITCHOVER_BANDWIDTH),
+>              params->avail_switchover_bandwidth);
+> +        assert(params->has_max_postcopy_bandwidth);
+> +        monitor_printf(mon, "%s: %" PRIu64 " bytes/second\n",
+> +            MigrationParameter_str(MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH),
+> +            params->max_postcopy_bandwidth);
+>          assert(params->has_downtime_limit);
+>          monitor_printf(mon, "%s: %" PRIu64 " ms\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_DOWNTIME_LIMIT),
+> @@ -383,12 +391,6 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>          monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_XBZRLE_CACHE_SIZE),
+>              params->xbzrle_cache_size);
+> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+> -            MigrationParameter_str(MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH),
+> -            params->max_postcopy_bandwidth);
+> -        monitor_printf(mon, "%s: '%s'\n",
+> -            MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+> -            params->tls_authz);
+>  
+>          if (params->has_block_bitmap_mapping) {
+>              const BitmapMigrationNodeAliasList *bmnal;
+> -- 
+> 2.39.5
+> 
+> 
 
-Could you please move it next to the other "bool" variables in this struct?
-(to avoid additional padding)
-
-  Thanks,
-   Thomas
+-- 
+Peter Xu
 
 
