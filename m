@@ -4,94 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37283CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD79CCA470
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3GGz-0003kt-1O; Mon, 29 Sep 2025 11:58:47 -0400
+	id 1v3GLc-0006Rg-8h; Mon, 29 Sep 2025 12:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3GGm-0003cm-Ix
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:58:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3GGi-0002QO-3G
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:58:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759161506;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HVBwHdyMoSuqADJCUP/Sjz/GPAPj0aKz0ieGI8fQacY=;
- b=DruOA8K5nvwGIfb1jbR3GuSeo9/kf8/gHuz1xEoycIu6sywgJ1dT7LOauJ56BtZE9BvbVB
- H2MRhYh+rkN28pQ0pAmRh1kOuF8tzxkMYn1JToWeWnNJ1clUUwEnuW79NJLn5G25qRpT8v
- leLeZ3DTChq1d1t0iEru67XTxQ6/EiU=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-f8fReCDcPWqemvRzRCSUiQ-1; Mon, 29 Sep 2025 11:58:24 -0400
-X-MC-Unique: f8fReCDcPWqemvRzRCSUiQ-1
-X-Mimecast-MFC-AGG-ID: f8fReCDcPWqemvRzRCSUiQ_1759161504
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-85a0492b5feso1502473285a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:58:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759161504; x=1759766304;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HVBwHdyMoSuqADJCUP/Sjz/GPAPj0aKz0ieGI8fQacY=;
- b=fT1PEao+hgPdA21hxKUOrqc6JUSCaPOs87Aip0maTZmDHPIror+cbmz3wptgNYHPzV
- A+GikBwscUVOVl4ARaZkV5Pegh785Mx2MIYvd1psHlfI2KMe24skZ3AHiiG330UrBd5q
- ac5OYUm8rqbzT9f7V4a6Y3Que6Y+VlU+JzBKv0h9VDG9Gl6N2h9lz8u4t/ORhiUc9yXg
- zGZ8oFrKBkbJ4OIznUTVDFXqLqRkP3E21bO6WjzUbC82z+76qMQXHhowlUUAopXc0RDm
- lEHrH+D7JPiB0G8ghgbfo5GHa+Off57wpzWf36C205dpVxhz8o8gCTEJPK6FRPWZGkac
- Awbg==
-X-Gm-Message-State: AOJu0YwVN1jSMnHuhdKTwJTW1FnGBJqmndNx4KMTHUKyI9MtC6cRUcuu
- H9DBmn2q9qbcVBmOlmMVjIbwO0iPX2FgEHxl/2QNTrZj9uEe5E3u42bijA6J/wNHIEQwZ7yHxIs
- 75PhCI4dyKtiwXnYFw8IFfyCmLmFG+LXA38jiAK49f1yWN4okNa5WGU6v
-X-Gm-Gg: ASbGnctK9/qNKej1UTUDxE9RHqTGbDBayDMoRYTmZPIo/ldkp3R/Ma0MN8AI0IMXiko
- cYzNGltRcEx9+hdu3uuNLWCBY/uBFhXlmHrWP4nREnOyxOf4g7mpBv0tseaYbaspCFtLd8B7bxe
- R8yvXrbw/JoFLOnP4vowJEJA+Z6RkDltfPsjBp+Jpi9AgNtCwIOQSyUFio77TeM9BEcpKfq1+0x
- HrPVi6srFJngTjSshBIvP32OMxBzIm9v303pGGkCXMM8asl2Uq2BSRvVgFMCx5si62d/gxtI18J
- jckXX527OFSGViZ4cILU2dYONQzBEljg
-X-Received: by 2002:a05:6214:2a8d:b0:78f:1312:2d94 with SMTP id
- 6a1803df08f44-7fc4066ec7dmr255365266d6.56.1759161503642; 
- Mon, 29 Sep 2025 08:58:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8X87U/CO2zsunwAypdrtx1xbVRVTh/ZFoJjAalFB3fZQJXTfWx9GAJOv/hHNG5jVThk2cHg==
-X-Received: by 2002:a05:6214:2a8d:b0:78f:1312:2d94 with SMTP id
- 6a1803df08f44-7fc4066ec7dmr255365036d6.56.1759161503210; 
- Mon, 29 Sep 2025 08:58:23 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-80135b54636sm78407866d6.6.2025.09.29.08.58.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 08:58:22 -0700 (PDT)
-Date: Mon, 29 Sep 2025 11:58:21 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH for-10.1 0/2] migration: actually make gnutls workaround
- functional
-Message-ID: <aNqsnaBkQe8i_MLK@x1.local>
-References: <20250801170212.54409-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v3GLM-00068y-Vv; Mon, 29 Sep 2025 12:03:20 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v3GLG-0003PJ-2g; Mon, 29 Sep 2025 12:03:14 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBXRVywrdpoWgsAAA--.93S2;
+ Tue, 30 Sep 2025 00:02:56 +0800 (CST)
+Received: from [192.168.31.222] (unknown [113.246.232.83])
+ by mail (Coremail) with SMTP id AQAAfwCnDeuprdpoFI4vAA--.40173S2;
+ Tue, 30 Sep 2025 00:02:51 +0800 (CST)
+Message-ID: <36dc34ba-2673-4529-9af7-4f83b4478cbf@phytium.com.cn>
+Date: Tue, 30 Sep 2025 00:02:49 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/14] hw/arm/smmuv3: Use iommu_index to represent the
+ security context
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250926030831.1067440-1-tangtao1634@phytium.com.cn>
+ <39446b6c-d7dd-4aeb-a2ee-96db03997e4a@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <39446b6c-d7dd-4aeb-a2ee-96db03997e4a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250801170212.54409-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: AQAAfwCnDeuprdpoFI4vAA--.40173S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAIBWjZjscNoQAAsY
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXr1UAr48JF4DAw4kXw4fXwb_yoWrAF4DpF
+ 48GFZxKa1fJFy3Ar1fJa1UZF4a93ykKry7ZFZxK3Z5CF1DZrn7JryvkFyYgryDurWUCw42
+ va109FW3WF1qyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,26 +78,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 01, 2025 at 06:02:10PM +0100, Daniel P. Berrangé wrote:
-> This is a followup to previously merged patches that claimed to
-> workaround the gnutls bug impacting migration, but in fact were
-> essentially non-functional. Juraj Marcin pointed this out, and
-> this new patch tweaks the workaround to make it actually do
-> something useful.
-> 
-> Daniel P. Berrangé (2):
->   migration: simplify error reporting after channel read
->   migration: fix workaround for gnutls thread safety
-> 
->  crypto/tlssession.c   | 16 ----------------
->  migration/qemu-file.c | 22 +++++++++++++++++-----
->  2 files changed, 17 insertions(+), 21 deletions(-)
+Hi Eric,
 
-Dan, is there a planned repost on this one?
+On 2025/9/29 23:33, Eric Auger wrote:
+>
+> On 9/26/25 5:08 AM, Tao Tang wrote:
+>> Resending patches 12–14/14 that were missing due to a send issue. Sorry
+>> for the noise.
+>>
+>> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to select
+>> the programming interface. To support future extensions like RME, which
+>> defines four security states (Non-secure, Secure, Realm, and Root), the
+>> QEMU model must cleanly separate these contexts for all operations.
+>>
+>> This commit leverages the generic iommu_index to represent this
+>> security context. The core IOMMU layer now uses the SMMU's .attrs_to_index
+>> callback to map a transaction's ARMSecuritySpace attribute to the
+>> corresponding iommu_index.
+>>
+>> This index is then passed down to smmuv3_translate and used throughout
+>> the model to select the correct register bank and processing logic. This
+>> makes the iommu_index the clear QEMU equivalent of the architectural
+>> SEC_SID, cleanly separating the contexts for all subsequent lookups.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmuv3.c | 37 ++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 36 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index eec36d5fd2..c92cc0f06a 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -1099,6 +1099,38 @@ static void smmuv3_fixup_event(SMMUEventInfo *event, hwaddr iova)
+>>       }
+>>   }
+>>
+>> +static SMMUSecurityIndex smmuv3_attrs_to_security_index(MemTxAttrs attrs)
+>> +{
+>> +    switch (attrs.space) {
+>> +    case ARMSS_Secure:
+>> +        return SMMU_SEC_IDX_S;
+>> +    case ARMSS_NonSecure:
+>> +    default:
+>> +        return SMMU_SEC_IDX_NS;
+>> +    }
+>> +}
+>> +
+>> +/*
+>> + * ARM SMMU IOMMU index mapping (implements SEC_SID from ARM SMMU):
+>> + * iommu_idx = 0: Non-secure transactions
+>> + * iommu_idx = 1: Secure transactions
+>> + *
+>> + * The iommu_idx parameter effectively implements the SEC_SID
+>> + * (Security Stream ID) attribute from the ARM SMMU architecture
+>> + * specification, which allows the SMMU to differentiate between
+>> + * secure and non-secure transactions at the hardware level.
+>> + */
+>> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
+>> +{
+>> +    return smmuv3_attrs_to_security_index(attrs);
+>> +}
+>> +
+>> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
+>> +{
+>> +    /* Support 2 IOMMU indexes for now: NS/S */
+>> +    return SMMU_SEC_IDX_NUM;
+>> +}
+>> +
+>>   /* Entry point to SMMU, does everything. */
+>>   static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>>                                         IOMMUAccessFlags flag, int iommu_idx)
+>> @@ -1111,7 +1143,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>>                              .inval_ste_allowed = false};
+>>       SMMUTranslationStatus status;
+>>       SMMUTransCfg *cfg = NULL;
+>> -    SMMUSecurityIndex sec_idx = SMMU_SEC_IDX_NS;
+>> +    SMMUSecurityIndex sec_idx = iommu_idx;
+>>       IOMMUTLBEntry entry = {
+>>           .target_as = &address_space_memory,
+>>           .iova = addr,
+>> @@ -1155,6 +1187,7 @@ epilogue:
+>>           entry.perm = cached_entry->entry.perm;
+>>           entry.translated_addr = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
+>>           entry.addr_mask = cached_entry->entry.addr_mask;
+>> +        entry.target_as = cached_entry->entry.target_as;
+> this change looks unrelated to the commit desc.
+>
+> Eric
 
-Thanks!
 
--- 
-Peter Xu
+You are absolutely right. That line of code is clearly part of the IOTLB 
+cache logic and doesn't belong in this commit.
+
+I will move this change to the relevant IOTLB cache commit in the next 
+version of the series.
+
+Thanks for catching that.
+
+Best,
+Tao
+
+>>           trace_smmuv3_translate_success(mr->parent_obj.name, sid, addr,
+>>                                          entry.translated_addr, entry.perm,
+>>                                          cfg->stage);
+>> @@ -2534,6 +2567,8 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+>>
+>>       imrc->translate = smmuv3_translate;
+>>       imrc->notify_flag_changed = smmuv3_notify_flag_changed;
+>> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
+>> +    imrc->num_indexes = smmuv3_num_indexes;
+>>   }
+>>
+>>   static const TypeInfo smmuv3_type_info = {
+>> --
+>> 2.34.1
+>>
 
 
