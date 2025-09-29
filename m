@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0CECAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF13CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H9H-0006GC-Px; Mon, 29 Sep 2025 12:54:51 -0400
+	id 1v3H9D-00062S-0D; Mon, 29 Sep 2025 12:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7t-00032R-7M
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:26 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H8L-0003fb-Ph
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7k-0002q0-IA
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:23 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H8G-0002wh-NY
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759164793;
+ s=mimecast20190719; t=1759164824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oDOIgBzZ8TjNKnVSJQWMRdksQuCdUEEIWoi7a0tldLc=;
- b=iCTE3IfEX+/K8TgCn4tuoODt/1v1RaLEaCneW5/x02R3blwqEPYtTGYiyEGCWCVcFMDud0
- qwYlpoKLJpdlJQgN7/WJmUlNK1AJ4XRmloRiStolpMeYz8WLgEvkZ4Lo7B1OQokPrlZY+Y
- KGhC9Q1MnPpvJGCBt2RQV9n/qE1BUIg=
+ bh=m90kDUDYuYve6SmDo6FTwBW7e6HCMcYMDXVtfLWwzpY=;
+ b=Fn9Qq3WFs8aELfgbEIZSQRBzgCE9IXI/pR3Azgbl3Vx5V5F9ZnGPyQfciU+ETFVS8qaD0H
+ Kyms11qrpn95lPTLFp2KCJdUEhG7qFVBBYABUF0xWuWmqpc3PdB+C2gQYsaeaJmhCy2G3L
+ 8JINrbfXRG7pkqH3LgaI+qCvscuVq3o=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-qi7tNyVLPQOvMMuY4CRQag-1; Mon,
- 29 Sep 2025 12:53:11 -0400
-X-MC-Unique: qi7tNyVLPQOvMMuY4CRQag-1
-X-Mimecast-MFC-AGG-ID: qi7tNyVLPQOvMMuY4CRQag_1759164790
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-b-FetW65OnWnr1dg7C4OJg-1; Mon,
+ 29 Sep 2025 12:53:42 -0400
+X-MC-Unique: b-FetW65OnWnr1dg7C4OJg-1
+X-Mimecast-MFC-AGG-ID: b-FetW65OnWnr1dg7C4OJg_1759164821
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A27841956089; Mon, 29 Sep 2025 16:53:10 +0000 (UTC)
+ id 5B8CD195609E; Mon, 29 Sep 2025 16:53:41 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.27])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A5BA1800446; Mon, 29 Sep 2025 16:53:08 +0000 (UTC)
+ id 9F2711800446; Mon, 29 Sep 2025 16:53:39 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 15/32] hw/pci-host/aspeed: Add AST2600 PCIe PHY model
-Date: Mon, 29 Sep 2025 18:52:13 +0200
-Message-ID: <20250929165230.797471-16-clg@redhat.com>
+Subject: [PULL 29/32] hw/arm/aspeed: Move aspeed_install_boot_rom to common
+ SoC code
+Date: Mon, 29 Sep 2025 18:52:27 +0200
+Message-ID: <20250929165230.797471-30-clg@redhat.com>
 In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
 References: <20250929165230.797471-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -68,7 +69,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,341 +87,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This patch introduces an initial ASPEED PCIe PHY/host controller model to
-support the AST2600 SoC. It provides a simple register block with MMIO
-read/write callbacks, integration into the build system, and trace events
-for debugging.
+Move the boot ROM install helper into common SoC code so it can be reused
+by all ASPEED boards, and decouple the API from AspeedMachineState.
 
-Key changes:
+Specifically:
+ - Move aspeed_install_boot_rom() to hw/arm/aspeed_soc_common.c and
+   declare it in include/hw/arm/aspeed_soc.h.
+ - Change the helper’s signature to take AspeedSoCState * and a
+   MemoryRegion * provided by the caller, instead of AspeedMachineState *.
+ - Update aspeed_machine_init() call sites accordingly.
 
-1. PCIe PHY MMIO read/write callbacks
-   Implemented aspeed_pcie_phy_read() and aspeed_pcie_phy_write() to
-   handle 32-bit register accesses.
-
-2. Build system and Kconfig integration
-   Added CONFIG_PCI_EXPRESS_ASPEED in hw/pci-host/Kconfig and meson
-   rules.
-   Updated ASPEED_SOC in hw/arm/Kconfig to imply PCI_DEVICES and select
-   PCI_EXPRESS_ASPEED.
-
-3. Trace events for debug
-   New tracepoints aspeed_pcie_phy_read and aspeed_pcie_phy_write allow
-   monitoring MMIO accesses.
-
-4. Register space and defaults (AST2600 reference)
-   Expose a 0x100 register space, as documented in the AST2600 datasheet.
-   On reset, set default values:
-   PEHR_ID: Vendor ID = ASPEED, Device ID = 0x1150
-   PEHR_CLASS_CODE = 0x06040006
-   PEHR_DATALINK = 0xD7040022
-   PEHR_LINK: bit[5] set to 1 to indicate link up.
-
-This provides a skeleton device for the AST2600 platform. It enables
-firmware to detect the PCIe link as up by default and allows future
-extension.
-
-This commit is the starting point of the series to introduce ASPEED PCIe
-Root Complex (RC) support. Based on previous work from Cédric Le Goater,
-the following commits in this series extend and refine the implementation:
-
-- Add a PCIe Root Port so that devices can be attached without requiring an
-extra bridge.
-- Restrict the Root Port device instantiation to the AST2600 platform.
-- Integrate aspeed_cfg_translate_write() to support both AST2600 and AST2700.
-- Add MSI support and a preliminary RC IOMMU address space.
-- Fix issues with MSI interrupt clearing.
-- Extend support to the AST2700 SoC.
-- Drop the AST2600 RC_L support.
-- Introduce PCIe RC functional tests covering both AST2600 and AST2700.
+No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250919093017.338309-3-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20250925050535.2657256-4-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/pci-host/aspeed_pcie.h |  42 ++++++++
- hw/pci-host/aspeed_pcie.c         | 157 ++++++++++++++++++++++++++++++
- hw/arm/Kconfig                    |   3 +
- hw/pci-host/Kconfig               |   4 +
- hw/pci-host/meson.build           |   1 +
- hw/pci-host/trace-events          |   4 +
- 6 files changed, 211 insertions(+)
- create mode 100644 include/hw/pci-host/aspeed_pcie.h
- create mode 100644 hw/pci-host/aspeed_pcie.c
+ include/hw/arm/aspeed_soc.h |  2 ++
+ hw/arm/aspeed.c             | 23 +++--------------------
+ hw/arm/aspeed_soc_common.c  | 17 +++++++++++++++++
+ 3 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
-new file mode 100644
-index 000000000000..d9fb829048a0
---- /dev/null
-+++ b/include/hw/pci-host/aspeed_pcie.h
-@@ -0,0 +1,42 @@
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 5567bdcb699f..aea210a8e2ec 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -314,6 +314,8 @@ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+                                unsigned int count, int unit0);
+ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
+                            Error **errp);
++void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
++                             MemoryRegion *boot_rom, uint64_t rom_size);
+ 
+ static inline int aspeed_uart_index(int uart_dev)
+ {
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 4d0d93583659..429f4c6d7781 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -263,24 +263,6 @@ static void aspeed_reset_secondary(ARMCPU *cpu,
+     cpu_set_pc(cs, info->smp_loader_start);
+ }
+ 
+-/*
+- * Create a ROM and copy the flash contents at the expected address
+- * (0x0). Boots faster than execute-in-place.
+- */
+-static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+-                                    uint64_t rom_size)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
+-
+-    memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
+-                           &error_abort);
+-    memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+-                                        &bmc->boot_rom, 1);
+-    aspeed_write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT], rom_size,
+-                          &error_abort);
+-}
+-
+ #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+ 
+ /*
+@@ -460,9 +442,10 @@ static void aspeed_machine_init(MachineState *machine)
+ 
+         if (fmc0 && !boot_emmc) {
+             uint64_t rom_size = memory_region_size(&bmc->soc->spi_boot);
+-            aspeed_install_boot_rom(bmc, fmc0, rom_size);
++            aspeed_install_boot_rom(bmc->soc, fmc0, &bmc->boot_rom, rom_size);
+         } else if (emmc0) {
+-            aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
++            aspeed_install_boot_rom(bmc->soc, blk_by_legacy_dinfo(emmc0),
++                                    &bmc->boot_rom, 64 * KiB);
+         }
+     }
+ 
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index d0a400725f24..7f104f8de517 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -178,6 +178,23 @@ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
+     rom_add_blob_fixed("aspeed.boot_rom", storage, rom_size, addr);
+ }
+ 
 +/*
-+ * ASPEED PCIe Host Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ * Copyright (c) 2022 Cédric Le Goater <clg@kaod.org>
-+ *
-+ * Authors:
-+ *   Cédric Le Goater <clg@kaod.org>
-+ *   Jamin Lin <jamin_lin@aspeedtech.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Based on previous work from Cédric Le Goater.
-+ * Modifications extend support for the ASPEED AST2600 and AST2700 platforms.
++ * Create a ROM and copy the flash contents at the expected address
++ * (0x0). Boots faster than execute-in-place.
 + */
-+
-+#ifndef ASPEED_PCIE_H
-+#define ASPEED_PCIE_H
-+
-+#include "hw/sysbus.h"
-+#include "hw/pci/pci_bridge.h"
-+#include "hw/pci/pcie_host.h"
-+#include "qom/object.h"
-+
-+#define TYPE_ASPEED_PCIE_PHY "aspeed.pcie-phy"
-+OBJECT_DECLARE_TYPE(AspeedPCIEPhyState, AspeedPCIEPhyClass, ASPEED_PCIE_PHY);
-+
-+struct AspeedPCIEPhyState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    uint32_t *regs;
-+    uint32_t id;
-+};
-+
-+struct AspeedPCIEPhyClass {
-+    SysBusDeviceClass parent_class;
-+
-+    uint64_t nr_regs;
-+};
-+
-+#endif /* ASPEED_PCIE_H */
-diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-new file mode 100644
-index 000000000000..4c74520052a4
---- /dev/null
-+++ b/hw/pci-host/aspeed_pcie.c
-@@ -0,0 +1,157 @@
-+/*
-+ * ASPEED PCIe Host Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ * Copyright (c) 2022 Cédric Le Goater <clg@kaod.org>
-+ *
-+ * Authors:
-+ *   Cédric Le Goater <clg@kaod.org>
-+ *   Jamin Lin <jamin_lin@aspeedtech.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Based on previous work from Cédric Le Goater.
-+ * Modifications extend support for the ASPEED AST2600 and AST2700 platforms.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/registerfields.h"
-+#include "hw/irq.h"
-+#include "hw/pci/pci_host.h"
-+#include "hw/pci-host/aspeed_pcie.h"
-+#include "hw/pci/msi.h"
-+#include "trace.h"
-+
-+/*
-+ * PCIe PHY
-+ *
-+ * PCIe Host Controller (PCIEH)
-+ */
-+
-+/* AST2600 */
-+REG32(PEHR_ID,     0x00)
-+    FIELD(PEHR_ID, DEV, 16, 16)
-+REG32(PEHR_CLASS_CODE,  0x04)
-+REG32(PEHR_DATALINK,    0x10)
-+REG32(PEHR_PROTECT,     0x7C)
-+    FIELD(PEHR_PROTECT, LOCK, 0, 8)
-+REG32(PEHR_LINK,        0xC0)
-+    FIELD(PEHR_LINK, STS, 5, 1)
-+
-+#define ASPEED_PCIE_PHY_UNLOCK  0xA8
-+
-+static uint64_t aspeed_pcie_phy_read(void *opaque, hwaddr addr,
-+                                     unsigned int size)
++void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
++                             MemoryRegion *boot_rom, uint64_t rom_size)
 +{
-+    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(opaque);
-+    uint32_t reg = addr >> 2;
-+    uint32_t value = 0;
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
 +
-+    value = s->regs[reg];
-+
-+    trace_aspeed_pcie_phy_read(s->id, addr, value);
-+
-+    return value;
++    memory_region_init_rom(boot_rom, NULL, "aspeed.boot_rom", rom_size,
++                           &error_abort);
++    memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
++                                        boot_rom, 1);
++    aspeed_write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT], rom_size,
++                          &error_abort);
 +}
 +
-+static void aspeed_pcie_phy_write(void *opaque, hwaddr addr, uint64_t data,
-+                                  unsigned int size)
-+{
-+    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(opaque);
-+    uint32_t reg = addr >> 2;
-+
-+    trace_aspeed_pcie_phy_write(s->id, addr, data);
-+
-+    switch (reg) {
-+    case R_PEHR_PROTECT:
-+        data &= R_PEHR_PROTECT_LOCK_MASK;
-+        s->regs[reg] = !!(data == ASPEED_PCIE_PHY_UNLOCK);
-+        break;
-+    default:
-+        s->regs[reg] = data;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_pcie_phy_ops = {
-+    .read = aspeed_pcie_phy_read,
-+    .write = aspeed_pcie_phy_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void aspeed_pcie_phy_reset(DeviceState *dev)
-+{
-+    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(dev);
-+    AspeedPCIEPhyClass *apc = ASPEED_PCIE_PHY_GET_CLASS(s);
-+
-+    memset(s->regs, 0, apc->nr_regs << 2);
-+
-+    s->regs[R_PEHR_ID] =
-+        (0x1150 << R_PEHR_ID_DEV_SHIFT) | PCI_VENDOR_ID_ASPEED;
-+    s->regs[R_PEHR_CLASS_CODE] = 0x06040006;
-+    s->regs[R_PEHR_DATALINK] = 0xD7040022;
-+    s->regs[R_PEHR_LINK] = R_PEHR_LINK_STS_MASK;
-+}
-+
-+static void aspeed_pcie_phy_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(dev);
-+    AspeedPCIEPhyClass *apc = ASPEED_PCIE_PHY_GET_CLASS(s);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    g_autofree char *name = NULL;
-+
-+    s->regs = g_new(uint32_t, apc->nr_regs);
-+    name = g_strdup_printf(TYPE_ASPEED_PCIE_PHY ".regs.%d", s->id);
-+    memory_region_init_io(&s->mmio, OBJECT(s), &aspeed_pcie_phy_ops, s, name,
-+                          apc->nr_regs << 2);
-+    sysbus_init_mmio(sbd, &s->mmio);
-+}
-+
-+static void aspeed_pcie_phy_unrealize(DeviceState *dev)
-+{
-+    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(dev);
-+
-+    g_free(s->regs);
-+    s->regs = NULL;
-+}
-+
-+static const Property aspeed_pcie_phy_props[] = {
-+    DEFINE_PROP_UINT32("id", AspeedPCIEPhyState, id, 0),
-+};
-+
-+static void aspeed_pcie_phy_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedPCIEPhyClass *apc = ASPEED_PCIE_PHY_CLASS(klass);
-+
-+    dc->desc = "ASPEED PCIe Phy";
-+    dc->realize = aspeed_pcie_phy_realize;
-+    dc->unrealize = aspeed_pcie_phy_unrealize;
-+    device_class_set_legacy_reset(dc, aspeed_pcie_phy_reset);
-+    device_class_set_props(dc, aspeed_pcie_phy_props);
-+
-+    apc->nr_regs = 0x100 >> 2;
-+}
-+
-+static const TypeInfo aspeed_pcie_phy_info = {
-+    .name       = TYPE_ASPEED_PCIE_PHY,
-+    .parent     = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedPCIEPhyState),
-+    .class_init = aspeed_pcie_phy_class_init,
-+    .class_size = sizeof(AspeedPCIEPhyClass),
-+};
-+
-+static void aspeed_pcie_register_types(void)
-+{
-+    type_register_static(&aspeed_pcie_phy_info);
-+}
-+
-+type_init(aspeed_pcie_register_types);
-+
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 3baa6c6c7477..b44b85f43612 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -541,6 +541,7 @@ config ASPEED_SOC
-     bool
-     default y
-     depends on TCG && ARM
-+    imply PCI_DEVICES
-     select DS1338
-     select FTGMAC100
-     select I2C
-@@ -561,6 +562,8 @@ config ASPEED_SOC
-     select MAX31785
-     select FSI_APB2OPB_ASPEED
-     select AT24C
-+    select PCI_EXPRESS
-+    select PCI_EXPRESS_ASPEED
- 
- config MPS2
-     bool
-diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
-index 9824fa188d6b..8cbb8304a3ff 100644
---- a/hw/pci-host/Kconfig
-+++ b/hw/pci-host/Kconfig
-@@ -46,6 +46,10 @@ config PCI_I440FX
-     select PCI
-     select PAM
- 
-+config PCI_EXPRESS_ASPEED
-+    bool
-+    select PCI_EXPRESS
-+
- config PCI_EXPRESS_Q35
-     bool
-     select PCI_EXPRESS
-diff --git a/hw/pci-host/meson.build b/hw/pci-host/meson.build
-index 937a0f72acf9..86b754d0b0d9 100644
---- a/hw/pci-host/meson.build
-+++ b/hw/pci-host/meson.build
-@@ -2,6 +2,7 @@ pci_ss = ss.source_set()
- pci_ss.add(when: 'CONFIG_PAM', if_true: files('pam.c'))
- pci_ss.add(when: 'CONFIG_PCI_BONITO', if_true: files('bonito.c'))
- pci_ss.add(when: 'CONFIG_GT64120', if_true: files('gt64120.c'))
-+pci_ss.add(when: 'CONFIG_PCI_EXPRESS_ASPEED', if_true: files('aspeed_pcie.c'))
- pci_ss.add(when: 'CONFIG_PCI_EXPRESS_DESIGNWARE', if_true: files('designware.c'))
- pci_ss.add(when: 'CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', if_true: files('gpex.c'))
- pci_ss.add(when: ['CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', 'CONFIG_ACPI'], if_true: files('gpex-acpi.c'))
-diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
-index 0a816b9aa129..3438516756db 100644
---- a/hw/pci-host/trace-events
-+++ b/hw/pci-host/trace-events
-@@ -1,5 +1,9 @@
- # See docs/devel/tracing.rst for syntax documentation.
- 
-+# aspeed_pcie.c
-+aspeed_pcie_phy_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
-+aspeed_pcie_phy_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
-+
- # bonito.c
- bonito_spciconf_small_access(uint64_t addr, unsigned size) "PCI config address is smaller then 32-bit, addr: 0x%"PRIx64", size: %u"
- 
+ static void aspeed_soc_realize(DeviceState *dev, Error **errp)
+ {
+     AspeedSoCState *s = ASPEED_SOC(dev);
 -- 
 2.51.0
 
