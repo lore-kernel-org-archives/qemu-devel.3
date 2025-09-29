@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF59CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 19:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BB8CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 19:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Jcf-0007Gu-KK; Mon, 29 Sep 2025 15:33:23 -0400
+	id 1v3Jfr-00085r-Ny; Mon, 29 Sep 2025 15:36:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v3JcX-0007GZ-Dg; Mon, 29 Sep 2025 15:33:13 -0400
+ id 1v3Jfo-00085c-DY; Mon, 29 Sep 2025 15:36:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v3JcQ-0005N4-0Y; Mon, 29 Sep 2025 15:33:12 -0400
+ id 1v3Jfj-0006HM-GA; Mon, 29 Sep 2025 15:36:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E8FB3158F2B;
- Mon, 29 Sep 2025 22:32:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 87616158F30;
+ Mon, 29 Sep 2025 22:36:18 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 74EB5292FCD;
- Mon, 29 Sep 2025 22:32:46 +0300 (MSK)
-Message-ID: <7f2acdb2-040d-4056-bcfc-8264ca000cd0@tls.msk.ru>
-Date: Mon, 29 Sep 2025 22:32:45 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 48224292FD3;
+ Mon, 29 Sep 2025 22:36:24 +0300 (MSK)
+Message-ID: <415738f9-4601-40fe-9bb9-4b9ba106da76@tls.msk.ru>
+Date: Mon, 29 Sep 2025 22:36:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 18/27] hw/intc/xics: Add missing call to register
- vmstate_icp_server
+Subject: Re: [PULL 19/27] ppc/spapr: init lrdr-capapcity phys with ram size if
+ maxmem not provided
 To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Fabian Vogt <fvogt@suse.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Gautam Menghani <gautam@linux.ibm.com>, qemu-stable <qemu-stable@nongnu.org>
+Cc: Gaurav Batra <gbatra@us.ibm.com>, David Christensen <drc@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ qemu-stable <qemu-stable@nongnu.org>
 References: <20250928192629.139822-1-harshpb@linux.ibm.com>
- <20250928192629.139822-19-harshpb@linux.ibm.com>
+ <20250928192629.139822-20-harshpb@linux.ibm.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,9 +81,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250928192629.139822-19-harshpb@linux.ibm.com>
+In-Reply-To: <20250928192629.139822-20-harshpb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -91,7 +91,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,46 +108,64 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/28/25 22:26, Harsh Prateek Bora wrote:
-> From: Fabian Vogt <fvogt@suse.de>
+> lrdr-capacity contains phys field which communicates the maximum address
+> in bytes and therefore, the most memory that can be allocated to this
+> partition. This is usually populated when maxmem is provided alongwith
+> memory size on qemu command line. However since maxmem is an optional
+> param, this leads to bits being set to 0 in absence of maxmem param.
+> Fix this by initializing the respective bits as per total mem size in
+> such case.
 > 
-> An obsolete wrapper function with a workaround was removed entirely,
-> without restoring the call it wrapped.
-> 
-> Without this, the guest is stuck after savevm/loadvm.
-> 
-> Fixes: 24ee9229fe31 ("ppc/spapr: remove deprecated machine pseries-2.9")
-> Signed-off-by: Fabian Vogt <fvogt@suse.de>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Link: https://lore.kernel.org/qemu-devel/6187781.lOV4Wx5bFT@fvogt-thinkpad
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+> Reported-by: Gaurav Batra <gbatra@us.ibm.com>
+> Tested-by: David Christensen <drc@linux.ibm.com>
 > Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Link: https://lore.kernel.org/r/20250819223905.2247-2-farosas@suse.de
-> Message-ID: <20250819223905.2247-2-farosas@suse.de>
+> Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> Link: https://lore.kernel.org/r/20250506042903.76250-1-harshpb@linux.ibm.com
+> Message-ID: <20250506042903.76250-1-harshpb@linux.ibm.com>
 
-I'm picking this up for both 10.1.x and 10.0.x stable qemu series.
-Please let me know if I understood the previous discussion in a wrong
-way and it should only be picked up for 10.1.x, but not for 10.0.x.
+This feels like a qemu-stable matherial (for 10.0 & 10.1 series).
+Please let me know if it isn't.
 
 Thanks,
 
 /mjt
 
->   hw/intc/xics.c | 2 ++
->   1 file changed, 2 insertions(+)
+> ---
+>   hw/ppc/spapr.c | 11 +++++++----
+>   1 file changed, 7 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/intc/xics.c b/hw/intc/xics.c
-> index d9a199e883..200710eb6c 100644
-> --- a/hw/intc/xics.c
-> +++ b/hw/intc/xics.c
-> @@ -335,6 +335,8 @@ static void icp_realize(DeviceState *dev, Error **errp)
->               return;
->           }
->       }
-> +
-> +    vmstate_register(NULL, icp->cs->cpu_index, &vmstate_icp_server, icp);
->   }
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index eb22333404..82fb23beaa 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -907,6 +907,7 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+>       int rtas;
+>       GString *hypertas = g_string_sized_new(256);
+>       GString *qemu_hypertas = g_string_sized_new(256);
+> +    uint64_t max_device_addr = 0;
+>       uint32_t lrdr_capacity[] = {
+>           0,
+>           0,
+> @@ -917,13 +918,15 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
 >   
->   static void icp_unrealize(DeviceState *dev)
+>       /* Do we have device memory? */
+>       if (MACHINE(spapr)->device_memory) {
+> -        uint64_t max_device_addr = MACHINE(spapr)->device_memory->base +
+> +        max_device_addr = MACHINE(spapr)->device_memory->base +
+>               memory_region_size(&MACHINE(spapr)->device_memory->mr);
+> -
+> -        lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
+> -        lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
+> +    } else if (ms->ram_size == ms->maxram_size) {
+> +        max_device_addr = ms->ram_size;
+>       }
+>   
+> +    lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
+> +    lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
+> +
+>       _FDT(rtas = fdt_add_subnode(fdt, 0, "rtas"));
+>   
+>       /* hypertas */
+
 
 
