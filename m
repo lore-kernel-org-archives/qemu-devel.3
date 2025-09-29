@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7E0CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 01:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13B7CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 01:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v32vu-0001EO-It; Sun, 28 Sep 2025 21:44:06 -0400
+	id 1v330Y-0002Bn-KN; Sun, 28 Sep 2025 21:48:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v32vq-0001E6-N4
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 21:44:03 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1v330X-0002Bd-7a
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 21:48:53 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v32vd-0007KF-Hf
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 21:44:01 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b3b3a6f4dd4so227372566b.0
- for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 18:43:48 -0700 (PDT)
+ id 1v330M-0000Jt-8v
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 21:48:51 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-afcb7322da8so795591266b.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 18:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759110225; x=1759715025; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759110515; x=1759715315; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oC2CFS1PAHIvuqzX5fQskVTJaszXMlhixWQ7HJegC2s=;
- b=HTyc3SyiFO8GIGvW+3l/9HSeuwa7Ti0XZODyz1Ke5QsQAGcKZ0kWBhgQD4+bxa5KBO
- rAc/k+OzPxTPbLNbUacqbF0hC2rrAUuAXFZhxn+81nGCkGk0SK3sTAYaogJi9myLdvz8
- 33QdCeilnv1CLTQdnW5HpNlmU5DUgql00YB1eO9OZljYb5xgVnJvmd9vykawJ7KyHyav
- xlCUDOxEQDWtQ6hYBtkg0LP9P6nfysEWu8DP42XB8c3Vc9tz491EUpjkJjxJBBOPXQ8T
- BwcL6vLyT4zoVnrDq/6lMISdsxI+YRs15Vy1G8Qv40HptEulcsNet6YKi5uderBGg+aa
- 3DQw==
+ bh=/ooEfhCxXgV0dD6pArfFh87L+8XTqLsd12HTfn0ojuY=;
+ b=ZLs0zlFrANOvbMAR6zYOy/i+oxLC+q02x9A31uVmacKwgmV9GZX96B5plge3W1WeBy
+ coI6KnwWbv5zSl6JMQkwtcykX49eOTrnnKIol3BxIr5POCSNnEEvxsLIkGaDuDYZF1W7
+ NONWP/+BjgxcdGvidDRwmSLEfLjO970eG3aUXa+ei6/aEKWf5FVJcQOYES3vzY6MunvE
+ P8y5nDXZTvjkgPtWbtuznNhEFSQ8sfZuLB0nk6BN6eFE3lp9GiPdvZd1q6v7T1TYnsBx
+ U8gfCJsQs0zbyqgwVwX9XJ3gJxxVsNhysQhcwQUQDRTrUYpWXT9arSrDCovjAzWx3SpI
+ UM6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759110225; x=1759715025;
+ d=1e100.net; s=20230601; t=1759110515; x=1759715315;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oC2CFS1PAHIvuqzX5fQskVTJaszXMlhixWQ7HJegC2s=;
- b=LQKqUDBV5+qJ5DJfdGxBZjR9+kgwfkCx+7y8CADAvD56Qe1m++f5764g8k5Sy7rQuV
- j7TRQDqtoUNfGuLT9bq1RTAXS3MkZfnjAVXf1sirkb2dI9sYygdY1VXYQ1zqqW5m5pBn
- K7YqV5k0Ecp9lkdCyPgUC3KX91UI/lVgQ2MbfhP+2ED7nNAn4yt7lmjc+00GvWGI6YFR
- OXovLehLHXIotXbBOIvH/PV83MOi79BcYvH5qpOIRHOaWiEn4U+KwiDlNZEkfSFHBB/B
- SKFsSplwlg1cFQfvzzOzkKyeUc2QQNhmxIr647mlPbkhzu5TD0w8GrytQUv1R9J6n0ex
- EMdw==
-X-Gm-Message-State: AOJu0YwIIuVFCK3FjNa0vTgFeK9oyoCB8KU74wnP4mS7GLqLZZnUYUIs
- /PClNk4D6hWN9n2IUwoY5DF18Yl+KK0ZQkt9IRr0h4eMPmCCCHM/f47znez29ECy75jEEdTB73P
- Jd+xGFOmcs/Y0AVKCh7+i9wN6TJinNP4=
-X-Gm-Gg: ASbGncsdZiHqeHrWWN6pvvnY7ef2azLbV45eR9xudz4xbZ9fU4W5lC1JENP7T+B1XAh
- rCLNE22hv6LKBp0pXv3dLlsllOUQRsqZVKIjHY9FYGYOf+ZWRx/PyhrJIkhko8zJXBzLy6qmnBk
- J2yHqxAQWgODj8rb6tSmuquY+pzle/FlZ59azsPuC8jWdMFRRehx3YtqUIrrVtWODuCURPnwkCh
- xCKJUi4JkzUEFuskq3O9RyxU3eU8NRmmSU6joWhPWfuo1kP
-X-Google-Smtp-Source: AGHT+IHD3ZoMWNv4S67RDyhhv3bKehBgEmxMmx7xh3cmCGY7KwNmsH+9khpmHvrP2dvSD6x/hOj+h9IosPsN29/qKhc=
-X-Received: by 2002:a17:907:d106:b0:b04:5a74:b675 with SMTP id
- a640c23a62f3a-b34b79c7b7amr1475707066b.9.1759110224955; Sun, 28 Sep 2025
- 18:43:44 -0700 (PDT)
+ bh=/ooEfhCxXgV0dD6pArfFh87L+8XTqLsd12HTfn0ojuY=;
+ b=L/Ctsntl4pIDwbQj0XojXkUcwP8tN5bdlKcfDgv/xg6gF4877g88VzOMAxqK21wEPV
+ V4S88T1+AQLMnaNzddz4rc1uLbLHrQeP/Lv9/qbgfyRf/G7y84kZ3rrItmxcte94lGSI
+ oh62EJ2NroHUKyG27/SBpRxYvTY9GVC7JkrL2CkLOUYhnsgveWgQ2YykRChFRFOgklO5
+ P1YXGXNYD1v4IKrBPMPLfgrtn572rJZkPKs+wOiftbifE7v0PbKKMGgyVnauHOuwzADR
+ cAADzamEtd8w1X5pFRNPms6/qxJ1mfU8G2edRE8cgStdu9Ck0oasg1IVwwXuSzFTY7Q1
+ MItg==
+X-Gm-Message-State: AOJu0YzoxOsILhM0H51Fzk/6Xo/QcvWZAqoaDtVQTF26QRiRHcglLKpk
+ 2KBBSHTeL3QIHxRT33hgcCROBsMHkGqAl0W9YHu5roV389LtrAbJ3SOLqhQRgayVJzhrb4i2ZRa
+ NR2z42fs/HDrEF5NCR78+vrlIi5QPA0M=
+X-Gm-Gg: ASbGncsgGXarj7iha367praGB6yRiQaXaXVf0pZjGmKOLdWzI6YeFjJ3MHcbghC4mau
+ AEElZW2vaEzuPoxlKlK9MYqTWXS1VWmnX1XAbQrBFql5vkWDHLs7bHBDkSOw3byRw/StwpYSpRa
+ wHaasBbFC5H7nSrqwEe/z7VN0cx30JHeDMuoXeuxaI2TFYNDSh6Q9CDbRiF/xtQRgd7IbcJk9C0
+ t8i45eLOwh09VAfEcZc/slYp72cUFY3SQDf7vLkUiQf/Mnt
+X-Google-Smtp-Source: AGHT+IEtmMyPSpRuLF0q/8CS3S5potyVgAxymogrhBLEmTiUQ5/iH9bgUyuMM2gmGEXLRmOTyuBWSndts2ZzNRXjgkM=
+X-Received: by 2002:a17:907:9805:b0:b33:a2ef:c7 with SMTP id
+ a640c23a62f3a-b34beba93f8mr1674930966b.55.1759110515185; Sun, 28 Sep 2025
+ 18:48:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250915070811.3422578-1-xb@ultrarisc.com>
-In-Reply-To: <20250915070811.3422578-1-xb@ultrarisc.com>
+ <20250915070811.3422578-2-xb@ultrarisc.com>
+In-Reply-To: <20250915070811.3422578-2-xb@ultrarisc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Sep 2025 11:43:18 +1000
-X-Gm-Features: AS18NWD6xed5-YEjLXuhR9X8f75I1vdI2Aut5H7EzxQmrzpRqvD9mMGJx__RUv0
-Message-ID: <CAKmqyKOnJcFbZCCfssQYpBS5VwPZJ3_28TxLvkMWD8nukFD6uw@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v9_0=2F2=5D_target=2Friscv=EF=BC=9AFix_riscv64_kvm_mi?=
- =?UTF-8?Q?gration?=
+Date: Mon, 29 Sep 2025 11:48:08 +1000
+X-Gm-Features: AS18NWDMhbRXlp4v_lxZgzQJhgqYmLlE6qOHGFDZi2JvWuuuXoWfbXpYI-773Mg
+Message-ID: <CAKmqyKMMo0XfaEsTYqpsV8UfXkhM5YHZsCdptFVR5pSYM1KRxQ@mail.gmail.com>
+Subject: Re: [PATCH v9 1/2] Set KVM initial privilege mode and mp_state
 To: Xie Bo <xb@ultrarisc.com>
 Cc: qemu-devel@nongnu.org, ajones@ventanamicro.com, qemu-riscv@nongnu.org, 
  pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com, 
  rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,35 +100,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, Sep 15, 2025 at 5:08=E2=80=AFPM Xie Bo <xb@ultrarisc.com> wrote:
 >
-> This is v9 of the series. Compared to v8, the patches are now based on
-> the 'riscv-to-apply.next' branch from Alistair's repository:
+> For KVM mode, the privilege mode should not include M-mode, and the
+> initial value should be set to S-mode. Additionally, a following patch
+> adds the implementation of putting the vCPU privilege mode to KVM.
+> When the vCPU runs for the first time, QEMU will first put the privilege
+> state to KVM. If the initial value is set to M-mode, KVM will encounter
+> an error.
 >
-> https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+> In addition, this patch introduces the 'mp_state' field to RISC-V
+> vCPUs, following the convention used by KVM on x86. The 'mp_state'
+> reflects the multiprocessor state of a vCPU, and is used to control
+> whether the vCPU is runnable by KVM. Randomly select one CPU as the
+> boot CPU. Since each CPU executes the riscv_cpu_reset_hold() function
+> and CPU0 executes first, only CPU0 randomly selects the boot CPU.
 >
-> Changes since v8:
-> - Rebased the series onto [alistair/riscv-to-apply.next]
-> - Removed the previous 'Reviewed-by' tags due to the rebase
->   * The changes are purely mechanical; no code logic was altered *
-> - Added 'Cc: qemu-stable@nongnu.org'
->
-> Xie Bo (2):
->   Set KVM initial privilege mode and mp_state
->   Fix VM resume after QEMU+KVM migration
+> Signed-off-by: Xie Bo <xb@ultrarisc.com>
+> ---
+>  target/riscv/cpu.c | 17 ++++++++++++++++-
+>  target/riscv/cpu.h |  2 ++
+>  2 files changed, 18 insertions(+), 1 deletion(-)
 
-Thanks!
+This fails to build with the following error, it seems an include is missin=
+g
 
-Applied to riscv-to-apply.next
+../target/riscv/cpu.c: In function =E2=80=98riscv_cpu_reset_hold=E2=80=99:
+../target/riscv/cpu.c:711:25: error: =E2=80=98KVM_MP_STATE_RUNNABLE=E2=80=
+=99
+undeclared (first use in this function)
+ 711 |         env->mp_state =3D KVM_MP_STATE_RUNNABLE;
+     |                         ^~~~~~~~~~~~~~~~~~~~~
+../target/riscv/cpu.c:711:25: note: each undeclared identifier is
+reported only once for each function it appears in
+../target/riscv/cpu.c:713:25: error: =E2=80=98KVM_MP_STATE_STOPPED=E2=80=99=
+ undeclared
+(first use in this function); did you mean =E2=80=98S390_CPU_STATE_STOPPED=
+=E2=80=99?
+ 713 |         env->mp_state =3D KVM_MP_STATE_STOPPED;
+     |                         ^~~~~~~~~~~~~~~~~~~~
+     |                         S390_CPU_STATE_STO
 
 Alistair
 
 >
->  target/riscv/cpu.c           | 17 +++++++++-
->  target/riscv/cpu.h           |  2 ++
->  target/riscv/kvm/kvm-cpu.c   | 60 ++++++++++++++++++++++++++++--------
->  target/riscv/kvm/kvm_riscv.h |  3 +-
->  target/riscv/machine.c       |  5 +--
->  5 files changed, 70 insertions(+), 17 deletions(-)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index d055ddf462..55892a2fc7 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -37,6 +37,7 @@
+>  #include "kvm/kvm_riscv.h"
+>  #include "tcg/tcg-cpu.h"
+>  #include "tcg/tcg.h"
+> +#include "hw/boards.h"
 >
+>  /* RISC-V CPU definitions */
+>  static const char riscv_single_letter_exts[] =3D "IEMAFDQCBPVH";
+> @@ -685,18 +686,32 @@ static void riscv_cpu_reset_hold(Object *obj, Reset=
+Type type)
+>  #ifndef CONFIG_USER_ONLY
+>      uint8_t iprio;
+>      int i, irq, rdzero;
+> +    static int boot_cpu_index;
+>  #endif
+>      CPUState *cs =3D CPU(obj);
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+>      RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(obj);
+>      CPURISCVState *env =3D &cpu->env;
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+>
+>      if (mcc->parent_phases.hold) {
+>          mcc->parent_phases.hold(obj, type);
+>      }
+>  #ifndef CONFIG_USER_ONLY
+>      env->misa_mxl =3D mcc->def->misa_mxl_max;
+> -    env->priv =3D PRV_M;
+> +    if (kvm_enabled()) {
+> +        env->priv =3D PRV_S;
+> +    } else {
+> +        env->priv =3D PRV_M;
+> +    }
+> +    if (cs->cpu_index =3D=3D 0) {
+> +        boot_cpu_index =3D g_random_int_range(0, ms->smp.cpus);
+> +    }
+> +    if (cs->cpu_index =3D=3D boot_cpu_index) {
+> +        env->mp_state =3D KVM_MP_STATE_RUNNABLE;
+> +    } else {
+> +        env->mp_state =3D KVM_MP_STATE_STOPPED;
+> +    }
+>      env->mstatus &=3D ~(MSTATUS_MIE | MSTATUS_MPRV);
+>      if (env->misa_mxl > MXL_RV32) {
+>          /*
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 738e68fa6e..7ea4859de7 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -269,6 +269,8 @@ struct CPUArchState {
+>  #endif
+>
+>      target_ulong priv;
+> +    /* Current multiprocessor state of this vCPU. */
+> +    uint32_t mp_state;
+>      /* CSRs for execution environment configuration */
+>      uint64_t menvcfg;
+>      target_ulong senvcfg;
 > --
 > 2.43.0
 >
