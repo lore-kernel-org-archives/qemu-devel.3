@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89289CCA468
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9C9CCA468
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H82-00034q-BO; Mon, 29 Sep 2025 12:53:38 -0400
+	id 1v3H8A-0003IE-Hz; Mon, 29 Sep 2025 12:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7N-0002mi-6K
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:54 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7R-0002pB-MB
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7J-0002kS-CS
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7N-0002lP-QX
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759164767;
+ s=mimecast20190719; t=1759164772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zGOPKUvzREVbn3Nks9cXLEp+B1flJ5MFlVu6CrPwR74=;
- b=IS2JH1iKA98lyokYOLxWEYytkpaCs5F3mucqMvPePjQeM8WTdtLjr8sdK5aDA8memxFuxL
- Ye5xiaCOM42/LmRvvqP/Ij0Yknqvz+2aFrnFpv7fOy+fk02JQSMz7/iO7RXI8xFbEQ7bNf
- H8pEzJiCPiPM1w3rhL3m7QoGQjNOoAk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ZhN+iR+ZF390fWQx/ABQD5ZU0M8Wt8Fgfqh6Toezzfg=;
+ b=NbmoygWIgNnM8Z6K+iYlkOTuftoB50CsGihZM939Sy+YVIFN35SMqpA+wQzwYipc2GAL1X
+ 8K+L6RRn/dtwIei/3tbdi4cpgqs8pwWLHo8VpbtMFlIrGfQBm6tNvyN4TU8fMym5DzztZM
+ flHeMlpzun/BP/5Zgn/of1lE26XiQF0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-W8kIXFRoP8mDXIftlRswuw-1; Mon,
- 29 Sep 2025 12:52:43 -0400
-X-MC-Unique: W8kIXFRoP8mDXIftlRswuw-1
-X-Mimecast-MFC-AGG-ID: W8kIXFRoP8mDXIftlRswuw_1759164762
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-3lzaumJ_PMaAlBusMqgq1A-1; Mon,
+ 29 Sep 2025 12:52:49 -0400
+X-MC-Unique: 3lzaumJ_PMaAlBusMqgq1A-1
+X-Mimecast-MFC-AGG-ID: 3lzaumJ_PMaAlBusMqgq1A_1759164768
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E9D219560B5; Mon, 29 Sep 2025 16:52:42 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 125A518005BE; Mon, 29 Sep 2025 16:52:46 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.27])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AC210180141C; Mon, 29 Sep 2025 16:52:39 +0000 (UTC)
+ id DDC081800577; Mon, 29 Sep 2025 16:52:42 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 03/32] hw/arm: Integrate ASPEED OTP memory support into AST2600
- SoCs
-Date: Mon, 29 Sep 2025 18:52:01 +0200
-Message-ID: <20250929165230.797471-4-clg@redhat.com>
+Subject: [PULL 04/32] hw/nvram/aspeed_otp: Add 'drive' property to support
+ block backend
+Date: Mon, 29 Sep 2025 18:52:02 +0200
+Message-ID: <20250929165230.797471-5-clg@redhat.com>
 In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
 References: <20250929165230.797471-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,46 +87,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-The has_otp attribute is enabled in the SBC subclasses for AST2600 to
-control the presence of OTP support per SoC type.
+This patch introduces a 'drive' property to the Aspeed OTP device,
+allowing it to be backed by a block device. Users can now preload
+OTP data via QEMU CLI using a block backend.
+
+Example usage:
+  ./qemu-system-arm \
+    -blockdev driver=file,filename=otpmem.img,node-name=otp \
+    -global aspeed-otp.drive=otp \
+    ...
+
+If the drive is provided, its content will be loaded as the initial OTP
+state. Otherwise, an internal memory buffer will be used.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250812094011.2617526-4-kane_chen@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20250812094011.2617526-5-kane_chen@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast2600.c | 2 +-
- hw/misc/aspeed_sbc.c    | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ hw/nvram/aspeed_otp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index d12707f0abee..59ffd41a4ab0 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -261,7 +261,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
- 
-     object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);
- 
--    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
-+    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST2600_SBC);
- 
-     object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "video", &s->video, TYPE_UNIMPLEMENTED_DEVICE);
-diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-index 46a038337c31..b56a8b767815 100644
---- a/hw/misc/aspeed_sbc.c
-+++ b/hw/misc/aspeed_sbc.c
-@@ -273,8 +273,10 @@ static const TypeInfo aspeed_sbc_info = {
- static void aspeed_ast2600_sbc_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
+index e5b7ca96767c..abb37318231b 100644
+--- a/hw/nvram/aspeed_otp.c
++++ b/hw/nvram/aspeed_otp.c
+@@ -35,13 +35,25 @@ static bool aspeed_otp_init_storage(AspeedOTPState *s, Error **errp)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedSBCClass *sc = ASPEED_SBC_CLASS(klass);
+     uint32_t *p;
+     int i, num;
++    uint64_t perm;
  
-     dc->desc = "AST2600 Secure Boot Controller";
-+    sc->has_otp = true;
++    if (s->blk) {
++        perm = BLK_PERM_CONSISTENT_READ |
++               (blk_supports_write_perm(s->blk) ? BLK_PERM_WRITE : 0);
++        if (blk_set_perm(s->blk, perm, BLK_PERM_ALL, errp) < 0) {
++            return false;
++        }
++        if (blk_pread(s->blk, 0, s->size, s->storage, 0) < 0) {
++            error_setg(errp, "Failed to read the initial flash content");
++            return false;
++        }
++    } else {
+         num = s->size / sizeof(uint32_t);
+         p = (uint32_t *)s->storage;
+         for (i = 0; i < num; i++) {
+             p[i] = (i % 2 == 0) ? 0x00000000 : 0xFFFFFFFF;
+         }
+-
++    }
+     return true;
  }
  
- static const TypeInfo aspeed_ast2600_sbc_info = {
+@@ -75,6 +87,7 @@ static void aspeed_otp_realize(DeviceState *dev, Error **errp)
+ 
+ static const Property aspeed_otp_properties[] = {
+     DEFINE_PROP_UINT64("size", AspeedOTPState, size, 0),
++    DEFINE_PROP_DRIVE("drive", AspeedOTPState, blk),
+ };
+ 
+ static void aspeed_otp_class_init(ObjectClass *klass, const void *data)
 -- 
 2.51.0
 
