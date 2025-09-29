@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A02CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E818CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3FTr-0001yJ-GI; Mon, 29 Sep 2025 11:07:59 -0400
+	id 1v3FVz-0003Pg-Um; Mon, 29 Sep 2025 11:10:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3FTY-0001sk-Jg
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:07:44 -0400
+ id 1v3FVu-0003Lq-Qk
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:10:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3FTL-0003BV-SR
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:07:39 -0400
+ id 1v3FVj-0004M5-VC
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:10:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759158442;
+ s=mimecast20190719; t=1759158591;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yt/S0UfrAT0shqYs2aJlLKJGz3cb2F5q57gPG20eUqA=;
- b=cvIqLAkFDSBfTGjLMl9Ja+orjHNWHdFphkoDkEiZuwc9oPGC8PciAdoXJ72Ofy5HoD7Z/V
- 8POqCUi766mDXm8ly4uspjZbrlbrTYqiNDqoeV+tEU1sb4LvQu1bwewv/Gc+lJUiipaepi
- Kf9ZEVIXjnE62Fh/s0Nx91rcoDXOI3c=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vCKJ4m0gejdJ3tWfc5ZGfQai9EEgJtRi0H8ae/b3BLc=;
+ b=KJYnkgXMxji5RDq/Ov1940bNztRIyLy0uGzKYOW5Y4rNs1mTbS/rhYbWswv4xrbfpEPcbf
+ dZB25c3bf3sUV/uZKnW2Rk5w6pAdC/JbRIbZ79q1VtAqI7sVCl7ugnuOKlB+68Rvz+BuC3
+ ZOViURLJKz/+iu4Zu8zHvfRh0cCh3BA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-4V98FlM5OxSfJh7SUQU7ow-1; Mon, 29 Sep 2025 11:07:20 -0400
-X-MC-Unique: 4V98FlM5OxSfJh7SUQU7ow-1
-X-Mimecast-MFC-AGG-ID: 4V98FlM5OxSfJh7SUQU7ow_1759158439
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e44b9779eso14073525e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:07:19 -0700 (PDT)
+ us-mta-623-9dHaCZRCOAKPk7QpGNbp_g-1; Mon, 29 Sep 2025 11:09:50 -0400
+X-MC-Unique: 9dHaCZRCOAKPk7QpGNbp_g-1
+X-Mimecast-MFC-AGG-ID: 9dHaCZRCOAKPk7QpGNbp_g_1759158589
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3f42b54d159so3717076f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:09:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759158439; x=1759763239;
+ d=1e100.net; s=20230601; t=1759158589; x=1759763389;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yt/S0UfrAT0shqYs2aJlLKJGz3cb2F5q57gPG20eUqA=;
- b=GfgpYKWMh7Ipdsg3YJGIJZsNkkpUEHtBzkV/SQWs0ihf1caszISGLegSMg7lHLrDND
- fCy7AvPQcgDUSxqH+wYezV/zs1Hzl2QuQy2Thhta/AcNewNS6U5zoZIVauL+ZKDdh9OQ
- Scp8RA7rudtJwiJiu9uMuWAwgZeu01tEPJLmLtkyJ3TG3tUnQEisSj6gBRqL6fz4GiH1
- /HHUWRfGVk8j+P872sFV1Yl/el7RdXLxaq1ZqUF7jhy1h/YNhOmnpGKfbEnFe5Kijd84
- UIB3ZNfyMp2wUaI9z40mr573quOqd+ajDJu/3lo8Mv3Pwi+dTrhzujdPSIZpNmppnDQ9
- iuTg==
-X-Gm-Message-State: AOJu0YxwnquScqsjpSxCn1UEpXMhs0gf6+l2FXBlWClyEeH9/62SGtwd
- Ux9EPl6RSNmMqnb+3S58wdP6aIW5JZpZREMcFlAtBUBxsSvTczuJmfONVQinevnsS9hSry/E8yg
- yuiucNLO6Q/xnDp2PqHmSlME4iKxWt1ZF+g/s6O9W5zoGyF0I10jk58+/
-X-Gm-Gg: ASbGncv2TziYqaxKeMqX79uYdkZSlnFU2wmQfJ89sDC0zFQtH4B3GKweZwytGWB7+Im
- ea2hKqpUmaCNioJPc+L/cx7SgD4Lb0XmANV7rOjSoF2TyCgTQ/s+P/AlgCGTrzp3TzADTLGKE1b
- nExGTx0fkzfLJ8+5HeugcP/ZpEm1lF3d38QwdyOOrwK3Sp6qffvC55slUTVIPv6AxXu500h5ejT
- R7LAATzyxi4El0awQ7fsqOhrEn8wZK9/YdRYK5pwbGB5ywgt0dTZ3kj9tHNzk/J2bjsFpBP90FP
- vTVsYJSANKuFiFN0MGGoOy+COBwSKJ3MddNViuS10PxwQjvEvcDjN/qdSQvhKJ+vZnoXMWwX7UI
- w19HW3yL8fq4=
-X-Received: by 2002:a05:600c:8286:b0:46e:456e:ada5 with SMTP id
- 5b1f17b1804b1-46e456eaecbmr75798595e9.28.1759158438562; 
- Mon, 29 Sep 2025 08:07:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3EJAioSCR+/lwpBVm0IS0nfZo4Z1xpVpCUKZiQOopnhQI5PzyaLLOYdvWPOpXXyqB+fp51A==
-X-Received: by 2002:a05:600c:8286:b0:46e:456e:ada5 with SMTP id
- 5b1f17b1804b1-46e456eaecbmr75798285e9.28.1759158438029; 
- Mon, 29 Sep 2025 08:07:18 -0700 (PDT)
+ bh=vCKJ4m0gejdJ3tWfc5ZGfQai9EEgJtRi0H8ae/b3BLc=;
+ b=lgr1XDMhK7DrsdIeU1mh9ZIqcWoOfZ3JSvkpzuwvwaxBU1cBhWYx8nqsS58xl5dJkC
+ j5EYUGjTQn+TA4p7Vt+SPXF0gi3/N+6fT4CIq0OEQL4wmKu3upGgrcjpnZ61SpTjioQ2
+ jZV38eAP5/wgAoVsZcoAHUXGSYVNBAlL9w1AOBZuZ8DjqcF88Bb71vL/PpGgkXviekDO
+ GxGVWOSTQhjTMv1PmyujnCC+NI9UBT0ssGNkDn3VHmOPN8iQ+viTwedESSjRwJWwcK+5
+ 5eaHkNQ/GvgQe2GmjGC5SBq8iQlK4foplyMDu+6PxOUZlMUSAsqRSsuzQrylyvO3u0hy
+ CCYA==
+X-Gm-Message-State: AOJu0YzQEmWwJgM5SLgyO6SOSQLG4hr0HgHjsWdzYvB1RMfU4qAQIfWE
+ vac6Np3P7H8aJIV3CXPPXwmgykRLhFBxLspoRSMLfhtC8/X9moZfv98pOkLk1bIvalpJTeurbKd
+ 2R06C75aZ/veYbSz1UvSshSI4f45yYCY6QqPQ7kzt9ANFwL/NLwEYR+G5
+X-Gm-Gg: ASbGnct9bt295lehXv4pDAGJr6CeL4xGp7iSPuClyPM4wM7kNd3Tb7nnBy6Cmf0Kb+b
+ UoPrzejX7BA1VW+M6WNNyt6YNzMfDlH4Lhsg33EhwGeHrsVUxG6HNLi6VJL1iq0HHeGefGofkzM
+ yrs1HWJmNM+X5rJcnFNxhHwn8xJT6GP7dYuj3kgAk+NvK5YRifjziZhZ5223VtIInVGmHGBszG7
+ Y3Ut2mo5KguHSMdzMYcFRmfTklcRkJAqwRAuyT12ASBOnLT6Z/NL73Q+h8G9m2FSiJEKppsvXka
+ elK+PEsxUjqeizEUZIpM/qv7FJ9mP42IWKEGuKSmp7osObGV1z4d40KEL/gNYCneIUVbwS4FuqB
+ fooNsZjq+Dpc=
+X-Received: by 2002:a05:6000:2c06:b0:3ee:1125:fb6d with SMTP id
+ ffacd0b85a97d-40e468e7375mr11618404f8f.9.1759158588701; 
+ Mon, 29 Sep 2025 08:09:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyTXY7o5M4oaUUD5MZqA1Wt0V59toXT7qLgJoUoADWLehre8ERnwF2gGXVAozH6viUNoWxBw==
+X-Received: by 2002:a05:6000:2c06:b0:3ee:1125:fb6d with SMTP id
+ ffacd0b85a97d-40e468e7375mr11618381f8f.9.1759158588150; 
+ Mon, 29 Sep 2025 08:09:48 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e32bd164fsm94991835e9.1.2025.09.29.08.07.16
+ 5b1f17b1804b1-46e2ab48b40sm227904615e9.19.2025.09.29.08.09.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 08:07:17 -0700 (PDT)
-Message-ID: <1409de09-6790-454d-a644-362467a07959@redhat.com>
-Date: Mon, 29 Sep 2025 17:07:15 +0200
+ Mon, 29 Sep 2025 08:09:47 -0700 (PDT)
+Message-ID: <8affa333-aeae-48a9-be78-7e4ade938344@redhat.com>
+Date: Mon, 29 Sep 2025 17:09:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 10/14] hw/arm/smmuv3: Add banked support for queues and
@@ -92,7 +92,7 @@ References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
 From: Eric Auger <eric.auger@redhat.com>
 In-Reply-To: <20250925162618.191242-11-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -102,7 +102,8 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,17 +136,8 @@ On 9/25/25 6:26 PM, Tao Tang wrote:
 > For instance, writes to the Command Queue registers are now correctly
 > gated by the IDR1.QUEUES_PRESET bit, ensuring compliance with the
 > architectural rules for pre-configured queues.
-
-This must be split as well.  This is really hard to review as is. Try to
-isolate the different functional changes.
-1) addition of sec_idx to queue_read/write_eventq + modification of
-queue_write_read can be moved in a separate patch
-2) smmu_cmdq_base_writable, smmu_eventq_irq_cfg_writable,
-smmu_gerror_irq_cfg_writable can go in a separate patch
-3) MMIO hardening can go in a separate patch too
-../..
-
-Thanks
+if this is a fix for the current code, you can put in a preample patch
+with Fixes tag.
 
 Eric
 >
