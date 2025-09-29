@@ -4,143 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2652ECAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22ED7CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3IWv-000250-Iy; Mon, 29 Sep 2025 14:23:21 -0400
+	id 1v3IcL-0003Q4-Vf; Mon, 29 Sep 2025 14:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IWt-00024i-RP
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:23:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v3IcH-0003Pn-IP
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:28:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IWq-0006va-Dj
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:23:19 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v3IcA-0001CB-Bm
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:28:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759170193;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=isniez58tICAWAM//og85xxUF+gF1pReEz5Vm6VpDXA=;
- b=AbJl/3pu76LkngLBt6AYvnV0glawS3BRq3AAGmBHSHPfRan+Ec+8efXOr7bGJ881o84vRJ
- i4QP1Y6akr4wA1XYiJxXv9KpKVxuIaJCb6gWs9ENmQ3LTkN29r9/fi1FKp5E9YLLuBxZyj
- bNuUDL2ikch4fZMRQYC8VVWSSCTDCxo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-U3xyk-mpPAKtwHzYG9kPNw-1; Mon, 29 Sep 2025 14:23:10 -0400
-X-MC-Unique: U3xyk-mpPAKtwHzYG9kPNw-1
-X-Mimecast-MFC-AGG-ID: U3xyk-mpPAKtwHzYG9kPNw_1759170189
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e2c11b94cso35801085e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 11:23:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759170189; x=1759774989;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=isniez58tICAWAM//og85xxUF+gF1pReEz5Vm6VpDXA=;
- b=t/64u+SSbOP/DG//YIxfk4Cqe79gqkuSI6hYeznxCxfe7+2SXQHGNnTOr5Pf92PAqM
- BUkHqoYcKXEoO/dJX29cWJF1FOF6DSx84f3OqNM/p/Z/rHciw6rujNrCq88MOegKXh+V
- aWekoHgeVT3gtsk4sIR4yH5lJd/fpcSdFRKtiJqgHMqGCjuwImR4iUxL9h40XvZjwws/
- 1KPeKw1vUX58ax9cmPP5s08NS3AbTkFl7eF4ylX2Kr7HYtAS/bhcE4XplJLnicG/VUiz
- o+eXgStPqtK3kfn0FP+hIh24cI6hRERCJ/hUXcDrKXGxnwdxyH6mTe03it0SvsGhKQ2k
- gVCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/Zs0/TBO463yGo+zno+97z5LoaDGu/QhVz/YEw9A3aQ6WvcpzkCENPRSRAhJdAsjhtd2GsJJIQJeZ@nongnu.org
-X-Gm-Message-State: AOJu0YyI9YMmSOsRmBSN3SDzrRCcqHV0iJvf8JyByq6IJHAEqqHdO9bW
- +BF3Us0LLsU9PFx8JjllSFiR7MH9fSrzPoifbCnPaokLmd5+cz21wu+NR4hwf60BoHmgB16EDuJ
- bnuHd+6PZgV/qCKGz7gJaH1DVkPdaSsRPbL9wTssziFSHSOo4pyUt6YPB
-X-Gm-Gg: ASbGnctkVInQxJ/Tg/2GkdVth3g7edM8m/qnZxUn6Dz4NWItvQG9/uLD/KmemMKaUiN
- dyJLn4SGIca39a20cj5ol3GMSBsbFtzYln1gPAiwNxy1TRELyCj5vdzfAYNnPEWnsTSM1HoxN3C
- HuVeKYnckHSkNEnLyU9oBCUBJF1TD6WMcON7kYV3WLeY69ESBKErxdiRU0d6mmRrXajTKTNQ5u1
- mysQ9p35UsO2IaQPKr+Vqzb1dHHv14xveXVazJd4KzzUV1Az4DXpyS8/qLKMtKTEDW+nnilvSXs
- wU42S+wSKk6ODNVVtkMUo/Rs/6eH/4/5hmKBHW2B3WAeRGtMniQEliHrojNDwWB9Dvdh28x79Jn
- KCVnzrQ==
-X-Received: by 2002:a05:600c:8010:b0:46e:39ef:be77 with SMTP id
- 5b1f17b1804b1-46e39efc18emr124038615e9.14.1759170189366; 
- Mon, 29 Sep 2025 11:23:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEEReXGIG5UQodVFd7bUq4Rmwqkuk2XeJQm/pEtCuXmuSDtlw6xpTJf6p7D1bCgIwQ8XrJ9w==
-X-Received: by 2002:a05:600c:8010:b0:46e:39ef:be77 with SMTP id
- 5b1f17b1804b1-46e39efc18emr124038265e9.14.1759170188573; 
- Mon, 29 Sep 2025 11:23:08 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
- [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb72fb71esm19298583f8f.1.2025.09.29.11.23.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 11:23:08 -0700 (PDT)
-Message-ID: <8691a892-ebd0-44b5-83cd-64c32d4f804c@redhat.com>
-Date: Mon, 29 Sep 2025 20:23:06 +0200
+ s=mimecast20190719; t=1759170521;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=R7naFlgNm5V9aYQfbw7FhGYN9Ym4gtd5a42eYqzm/30=;
+ b=K83vohc1XTcHF1Unbl6+lMI03iC/fJkw22kNldlkEcuiWeaUvvgwfob9sUaYc8O55YmaIF
+ LH5oXx52o6qaMolL5nMTiehqVXuwD1QGBzllxNy8izP56HpJSicgFLeNP+h4PhpyHIWRPs
+ ze4pDdR8gNgvxK+zTLxqw/GlBzoAJQM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-52Vi_Bp2NbiUFfAf5Psr3Q-1; Mon,
+ 29 Sep 2025 14:28:38 -0400
+X-MC-Unique: 52Vi_Bp2NbiUFfAf5Psr3Q-1
+X-Mimecast-MFC-AGG-ID: 52Vi_Bp2NbiUFfAf5Psr3Q_1759170516
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9FF081800451; Mon, 29 Sep 2025 18:28:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 227C1195608E; Mon, 29 Sep 2025 18:28:33 +0000 (UTC)
+Date: Mon, 29 Sep 2025 19:28:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, stefanha@redhat.com,
+ alex.bennee@linaro.org
+Subject: Re: [PATCH] docs/code-provenance: add an exception for non-creative
+ AI changes
+Message-ID: <aNrPzuOI_izZvPVx@redhat.com>
+References: <20250925075630.352720-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 28/28] docs/system/s390x: Add secure IPL documentation
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-29-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250917232131.495848-29-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250925075630.352720-1-pbonzini@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,97 +83,161 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Add documentation for secure IPL
+On Thu, Sep 25, 2025 at 09:56:30AM +0200, Paolo Bonzini wrote:
+> AI tools can be used as a natural language refactoring engine for simple
+> tasks such as modifying all callers of a given function or all accesses
+> to a variable.  These tasks are interesting for an exception because:
 > 
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> * it is credible for a contributor to claim DCO compliance.  If the
+> contributor can reasonably make the same change with different tools or
+> with just an editor, which tool is used (including an LLM) should have
+> no bearing on compliance. This also applies to less simple tasks such
+> as adding Python type annotations.
+
+When I read refactoring, I consider
+
+  * No functional change
+  * The change is a logical transformation of text
+
+The creative act is defining the rule for what the transformation will
+do. The resulting patch is a derivative work of the existing code,
+along with the rules for the transformation.
+
+In traditional cases, the rules are an awk prompt, or a semantic
+patch (coccinelle), but in this case, the rules are the AI agent
+prompt
+
+The AI training material will guide the tool on how to interpret
+your natural language rules, but overall it looks implausible to
+claim the resulting patch would be a derivative work of any
+training material.
+
+The only exception seems to be if some QEMU fork had made exactly
+the same refactoring already, which seems unlikely in general,
+when we disregard malicious contributors.
+
+
+Type annotations gets more complex to rationalize, because that is
+about writing net new functional code. As an analogy though, if
+there was a clean room dev team, whom were fed the commit message,
+their output would likely be identical. The defining characteristic
+is the lack of plausible (&correct) alternative approaches. All
+tools, whether AI or not, should converge on the same result.
+
+It again looks implausible to suggest the resulting patch could
+be a derivative work of any particular agent training material,
+unless some QEMU fork had made exactly the same functional change
+already. This feels unlikely.
+
+TL:DR: even in today's world where the laundering of training
+material licenses, vs AI output licenses is murky, there is
+likely sufficient confidence in these particular scenarios to
+claim the training material imposes negligible risk to QEMU.
+
+> * they are relatively easy to test and review, and can provide noticeable
+> time savings;
+> 
+> * this kind of change is easily separated from more complex non-AI-generated
+> ones, which we encourage people to do anyway.  It is therefore natural
+> to highlight them as AI-generated.
+> 
+> Make an exception for patches that have "limited creative content" - that
+> is, mechanical transformations where the creativity lies in deciding what
+> to change rather than in how to implement the change.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   docs/system/s390x/secure-ipl.rst | 96 ++++++++++++++++++++++++++++++++
->   1 file changed, 96 insertions(+)
+>  docs/devel/code-provenance.rst | 27 +++++++++++++++++++++++----
+>  1 file changed, 23 insertions(+), 4 deletions(-)
 > 
-> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
-> index 579b7b4993..110dea9fdd 100644
-> --- a/docs/system/s390x/secure-ipl.rst
-> +++ b/docs/system/s390x/secure-ipl.rst
-> @@ -1,5 +1,21 @@
->   .. SPDX-License-Identifier: GPL-2.0-or-later
->   
-> +s390 Secure IPL
-> +===============
-> +
-> +Secure IPL, also known as secure boot, enables s390-ccw virtual machines to
-> +verify the integrity of guest kernels.
-> +
-> +For technical details of this feature, see ``docs/specs/s390x-secure-ipl.rst``.
-> +
-> +This document explains how to use secure IPL with s390x in QEMU. It covers
-> +new command line options for providing certificates and enabling secure IPL,
-> +the different IPL modes (Normal, Audit, and Secure), and system requirements.
-> +
-> +A quickstart guide is provided to demonstrate how to generate certificates,
-> +sign images, and start a guest in Secure Mode.
-> +
-> +
->   Secure IPL Command Line Options
->   ===============================
->   
-> @@ -83,3 +99,83 @@ Configuration:
->                                  secure-boot=on, \
->                                  boot-certs.0.path=/.../qemu/certs, \
->                                  boot-certs.1.path=/another/path/cert.pem ...
-> +
-> +
-> +Constraints
-> +===========
-> +
-> +The following constraints apply when attempting to secure IPL an s390 guest:
-> +
-> +- z16 CPU model
-> +- certificates must be in X.509 PEM format
-> +- only support for SCSI scheme of virtio-blk/virtio-scsi devices
-> +- a boot device must be specified
-> +- any unsupported devices (e.g., ECKD and VFIO) or non-eligible devices (e.g.,
-> +  Net) will cause the entire boot process terminating early with an error
-> +  logged to the console.
-> +
-> +
-> +Secure IPL Quickstart
-> +=====================
-> +
-> +Build QEMU with gnutls enabled
-> +-------------------------------
-> +
-> +.. code-block:: shell
-> +
-> +    ./configure … --enable-gnutls
-> +
-> +Generate certificate (e.g. via certtool)
-> +----------------------------------------
-> +
-> +A private key is required before generating a certificate. This key must be kept secure
-> +and confidential.
+> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> index 8cdc56f6649..d6e86636964 100644
+> --- a/docs/devel/code-provenance.rst
+> +++ b/docs/devel/code-provenance.rst
+> @@ -290,9 +290,11 @@ Use of AI-generated content
+>  
+>  TL;DR:
+>  
+> -  **Current QEMU project policy is to DECLINE any contributions which are
+> +  **The general QEMU project policy is to DECLINE any contributions which are
+>    believed to include or derive from AI generated content. This includes
+> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
+> +  ChatGPT, Claude, Copilot, Llama and similar tools.** The following exceptions
+> +  are acceptable:
+> +  * **Limited creative content** (e.g., mechanical transformations)
 
-Please try to keep line length below 80 columns. Longer lines are ok if it 
-makes code more readable (or maybe necessary, as in "code-block" sections 
-later in this patch), but that's not the case here. See also "Line width" in 
-docs/devel/style.rst.
+Ought to link to the detailed description further down.
 
-> +Use an RSA private key for signing.
+>  
+>    **This policy does not apply to other uses of AI, such as researching APIs
+>    or algorithms, static analysis, or debugging, provided their output is not
+> @@ -323,8 +325,9 @@ content generators commonly available today is unclear.  The QEMU project is
+>  not willing or able to accept the legal risks of non-compliance.
+>  
+>  The QEMU project thus requires that contributors refrain from using AI content
+> -generators on patches intended to be submitted to the project, and will
+> -decline any contribution if use of AI is either known or suspected.
+> +generators on patches intended to be submitted to the project, with exceptions
+> +outlined below.  If use of AI is known or suspected to go beyond the exceptions,
+> +QEMU will decline a contribution.
+>  
+>  Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
+>  ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
+> @@ -347,3 +350,19 @@ requirements for contribution.  In particular, the "Signed-off-by"
+>  label in a patch submission is a statement that the author takes
+>  responsibility for the entire contents of the patch, including any parts
+>  that were generated or assisted by AI tools or other tools.
 > +
-> +.. code-block:: shell
+> +The following exceptions are currently in place:
 > +
-> +    certtool --generate-privkey > key.pem
-> +
-> +A self-signed certificate requires the organization name. Use the ``cert.info`` template
-> +to pre-fill values and avoid interactive prompts from certtool.
+> +**Limited creative content**
+> +  Mechanical transformations where there is reasonably only one way to
+> +  implement the change.  Any tool, as well as a manual change, would
+> +  produce substantially the same modifications to the code.  Examples
+> +  include adjustments to data structures, mechanical API migrations,
+> +  or applying non-functional changes uniformly across a codebase.
 
-dito.
+I can rationalize in my mind what I would be willing to accept under
+this description, but at the same time this is (intentionally) fairly
+fuzzy and open to interpretation.
 
-  Thanks,
-   Thomas
+
+
+> +It is highly encouraged to provide background information such as the
+> +prompts that were used, and to not mix AI- and human-written code in the
+> +same commit, as much as possible.
+
+It would be nice to require full separation, but if an AI gets you
+95% of the way there, and the remaining 5% is just stupid typos/
+mistakes, it is better for a human to just fix it immediately, than
+to continue re-prompting the agent to try again and hoping you win.
+
+> +Maintainers should ask for a second opinion and avoid applying the
+> +exception to their own patch submissions.
+
+Could it be simpler as:
+
+ Sign off is mandatory from a maintainer whom is not the author.
+
+Or where you implying that we need SoB from two maintainers ?
+
+In theory non-author S-o-B is best practice already, but analyzing
+git shows we have about 10% of our commits with no independent
+S-o-B at all. Often such commits are precisely the NFC refactorings,
+or the simple mechanical additions.
+
+So perhaps going from zero-or-one independent SoBs, to at least
+one SoB is sufficiently strong ?
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
