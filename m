@@ -4,101 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76B9ECAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 22:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5FBCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 22:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3MF4-0007fw-OE; Mon, 29 Sep 2025 18:21:11 -0400
+	id 1v3MJK-0000NQ-PR; Mon, 29 Sep 2025 18:25:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v3MF1-0007fI-Pa
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 18:21:07 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v3MEu-00028x-DT
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 18:21:06 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-77c1814ca1dso4096327b3a.2
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 15:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759184453; x=1759789253; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IUCiUliMax4cyCxq3lhy/C1UElmsAMDKsIa9C583Qs4=;
- b=MHhv3XnaPsBkhSDQYiFgDd2afsUUVxX5BazWMhC1gq+iNfivmG2sNXo/r5FGP//0uV
- VgAOXRVkgRaDKz/RsiNTkcaEkFc/vN8rLo3pc73PzBJFUmE3eevE5g07IlmxrtviCE9g
- IyTltN+BqLLIZnvzs8Ukjcnd3yA8kEMwDKVdFzPUMNhEfBszKBOXddKroRY+lxpGN2Nk
- LwuEYh0ujXvmdetiLoWistY+ELk8kJw00DOtZOMvSNX4Ini6vJGA91NokWS+vzJ2WfDk
- +eaA33wnJS98yqEWnee79fp+cu3YcHYt+FxytoyV3rqQMXS97l0+M+JfJ8rm0+RTeBnN
- cpjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759184453; x=1759789253;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IUCiUliMax4cyCxq3lhy/C1UElmsAMDKsIa9C583Qs4=;
- b=XZYx5FIRqyeRb8eTvfH2tmAIvOTBN7gUagdvhdBRFcSz9cY/vHMA/bMygrND8I8Z2M
- wmZI5dhzFx1IGbxVSzkN82/7oynrQHf58sDQoKILm8lHKQWxFnI0w4sMPWSqUOlsfVtE
- tHrxjqVwA/vEKdQWc0/K7WmUJrcEILt+UZQCw2+MYJUGde6tGRizdfEwYEA1al4jGV5E
- GOE9q59JjFOC8DOCnu5eFTbwy7S0oaSIxUpuvj+lM6sz/YAOlFqJ5iDX1q1EfGgr7g5p
- KlIAvFoCeFIh/EFP5dmT6ds/EJmomGRqxNkh0sbpAP0Fg5u/2o9feLKH6a2lvRxzStT+
- IC/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWUQlrfjbw1oy2F02TnJXiEanDBQg9UQteBXlepXptjB3JLma4V1w0G+Qye+DG6exM4LjeNseNq2Ox1@nongnu.org
-X-Gm-Message-State: AOJu0YwpacQMjfHPt29jPKgB4FIQLIu2Kg1/jLO6BdG059gaxEfh0SI/
- scaOZhEl8gYp7Wsq9ZYgPLtdCmsdZxtXHlfDSXEaObljhNvINZiVhZoyBy+1SV80WvU=
-X-Gm-Gg: ASbGncuWX4LisbqL14553FC+Ej+ev2ZRhSG8bhnK/8vgBW66SiUQ4f1G6Edu2XaEA+q
- +DQB6DPvaYsMMIDE+1vh+Etu9VOiFNxWyAXoW9ps/wiPMGlFpcvu1UqKLpF3ArNW33AGcFbqaZo
- 4VynrsHvJLWznn5UhCVkIBI7LCjDQvvZI57/Fat4r09Ix6mSduoIYtQaCohkoF31MeupbDqSSmN
- cJcrDCt5mUEZZ6+qo7Mcp8U3N1HXhNTlWEJm++U3g/YjZtIQNQKRibHufzBQjtnwPBCFtzILJ+H
- TEFjABo0tFGncKwy/ZleityDxTZyF4f/PZYFNlXYKY3xUkJ93pPbH7eip6Fh2poYdMIY1/IHisK
- VI7BtjM/1QFZ50z6nfvJwbVah6+slIQrmqvKFi87AWJ8v1g==
-X-Google-Smtp-Source: AGHT+IHkes0ktozQy1e76FB+touSVp81KcH62U5D+oAw+gymzgMLaix8ce3S8YEAJqncy8CpmAAitQ==
-X-Received: by 2002:a17:90b:1b4a:b0:330:72fb:ac13 with SMTP id
- 98e67ed59e1d1-3342a22cc80mr18293339a91.5.1759184453451; 
- Mon, 29 Sep 2025 15:20:53 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-338387256cdsm2333136a91.20.2025.09.29.15.20.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 15:20:53 -0700 (PDT)
-Message-ID: <ba60c570-fff0-4ab8-b3bc-d191663d2912@linaro.org>
-Date: Mon, 29 Sep 2025 15:20:51 -0700
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v3MJD-0000Mn-9b; Mon, 29 Sep 2025 18:25:28 -0400
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v3MJ3-0002h0-AU; Mon, 29 Sep 2025 18:25:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qEYF5Nmf08KWLwmf+8EyF8xn8gsw9EZNJBBMtoiGNxAdQ7DBv50LemSMvKoCvWrf8U/1mvqA0D6lOj/M8QKN+0XSrutHpvGQjza253xLAzX7Ze16NScGp4BZKeaLZeT10gu4tzPuFRMm6Ma1MM1geqhQEMocYP1SR0+itaA8CaGx02eTcsm2+FQiaOzUw+bD54vq7lrdIufSDO+3CfzklgWCeMp1DWe+LK1R2bKVXYuCpKOWfIqL7fAx/B2YeSZ3eGhV2S6LbDd4ZS6G/AwIocf2Hk+sUgAt8R+D+mCgVcLhEPniByfOV6SQAh8Tw27SkbTZ0wnhEJ60C0p20gZ6fQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fYKdn+VTltX02wcXIAGkqGRSB68+myPRFtGvl/cK4X0=;
+ b=efX1BULC+GqQ0Dj+p2P8WzUkCMm2E2ZvmVru7QQX+qs9d2UPtTYyHnyJGHzlVJH4lr+7hUO3gLImUPKj//jd7pZ+kRDlTbRXTYL1wadHSgOQqNNq8Zr+7VrMP2ktpj2WNuTtaZQk92rMgyYMi145I8NkFG16WAPD0H1bUoF895fIaVkEvBUs3CVo0yPb54fhSLzXcTEh4bzaVTQf09ea1WiPQQ3cBNudfZ8ceA37WxSEVUiWjn4Io7L0+aW0/ZzEuPuRTTubt92TkLPnQWgIxPmcRyv6E+wypMkI+tXSecnEZQf7CHH2+squx/JDk12H8cV61DJEnXhy//PciwjWQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fYKdn+VTltX02wcXIAGkqGRSB68+myPRFtGvl/cK4X0=;
+ b=czbao7T0oRktjuey6S72+T852aDKwwkUTAiEtczg2e21UX0RWDrMPhDFng1LjvPPmjPGVoSUqqpKXecC2SJefdmiMe0wI3EdnNhlHCckXS0IRNfy0YQSNcYpFYp8egvRzzY4CUKOqDb99s3py0rbgBh8izH9jy+uDtT1hLr8Bl31E4DhsPPvf8kk8rAKpLoyX6ZvZZF1Lbp2w89ZERWAc3K6yEdk0swIbzJ+cfixXmEfvYXprlx5NglUIUyUrkyhY2ZjApmCV0Rn7h2FK+VweBWy7Vhpr9J42r6OcP3myEvE6oJF3FeYRYvi+cRjzIjolPO9Ni2mKkoyqyIUpz+T2Q==
+Received: from BY5PR03CA0028.namprd03.prod.outlook.com (2603:10b6:a03:1e0::38)
+ by CH2PR12MB4134.namprd12.prod.outlook.com (2603:10b6:610:a7::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.17; Mon, 29 Sep
+ 2025 22:25:05 +0000
+Received: from MWH0EPF000971E5.namprd02.prod.outlook.com
+ (2603:10b6:a03:1e0:cafe::8a) by BY5PR03CA0028.outlook.office365.com
+ (2603:10b6:a03:1e0::38) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.17 via Frontend Transport; Mon,
+ 29 Sep 2025 22:25:04 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ MWH0EPF000971E5.mail.protection.outlook.com (10.167.243.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9137.12 via Frontend Transport; Mon, 29 Sep 2025 22:25:04 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 29 Sep
+ 2025 15:24:52 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 29 Sep 2025 15:24:52 -0700
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.126.190.180)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 29 Sep 2025 15:24:51 -0700
+Date: Mon, 29 Sep 2025 15:24:50 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 05/27] hw/arm/smmuv3-accel: Introduce smmuv3 accel
+ device
+Message-ID: <aNsHMr1tf2aRFkvQ@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-6-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/35] wasm: Add Wasm TCG backend based on wasm64
-Content-Language: en-US
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <cover.1756724464.git.ktokunaga.mail@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <cover.1756724464.git.ktokunaga.mail@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250929133643.38961-6-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000971E5:EE_|CH2PR12MB4134:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3be7a9a0-231f-4fab-df32-08ddffa709ec
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|1800799024|36860700013|7416014|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OWEzMFNJN2x4YWdvWW1TQitabnZMZ1oydWE4WkVuVXNMNVF5RFQyOXFLTWFT?=
+ =?utf-8?B?TVdhVHNCV2ticG01WkRFcXhlM3B5RUtjYkZJRWdCd0NSTTVORGlTam1TTlNh?=
+ =?utf-8?B?VUdWWmVpQkdabVFUVG8wQ3RSUXNla1lYZERDbktQNURzcXUyNFozQTBqS0ZG?=
+ =?utf-8?B?SFdsbk1wbUxYbG1hOHRnaFVpSkZUeVJ2dkNWMVZrOWZWN3hZNGY5c3hWOXpK?=
+ =?utf-8?B?UHQ1aVVaL0RtdE1CaC9vbERCd20rcWJmT1V6bG5BYWdNOXRsOFJVWFBIbURt?=
+ =?utf-8?B?MGpBRGlmbWpQM2pEY2lsRWluNlUrd3AxR0NTOTU3dTcvUnFoWWV5cjVXWlFB?=
+ =?utf-8?B?ejNaN3Q3YVU5NXFrYmJQdTF2MUpXeGR4dEo5M2NqK3g4RzU1M2JxR3ZTRGJS?=
+ =?utf-8?B?eDVwN3FSYWpNQTl1TGVGK3VXcGZXZHdIQWJ5SmYzeFV2b3BBSURxSnpxVnFG?=
+ =?utf-8?B?NDNRYXB5TGViQnFzaVVYblJWZlFBMkt2dWtCT0V5L1U2eThMWi9IREx1R1Fn?=
+ =?utf-8?B?MXN1SVl6SThGS0pOaThzRkRkWFVSWlZsanUySmxJYi9HODBNRDVpQVhma2ty?=
+ =?utf-8?B?VHFWQmFuRXUrWDU0NStsZ3ljRXB2TWR1akNEcGZYNlU1bGRDM2xaUmtPaEFi?=
+ =?utf-8?B?d1pZbWExcHAwWm0wakorZG02d0NYSi9iblc4V0ZsV3hsN29FRi8rVUVvdmZ2?=
+ =?utf-8?B?ZUgwM1BydlRZZk51cXltM3J5WldKZWxrQ0tNZm5Qc1BTbVFPaUJwVkFmQzYy?=
+ =?utf-8?B?OXJPbkxKQWVIVWJUdTF6K1JzYkpQS0hlVDBsVW90d2dmRHZiYW5UVXBPN0Mv?=
+ =?utf-8?B?TmpGNUJwdDNpOWRiMGxETlRWZ1ZoT2lLVkZlMHNUVkxsSVhESm5WanRmcWtj?=
+ =?utf-8?B?L21JK01nMnFvaVlyQkwvSFRlaStTOVBLM1pMR0NGbW1MWDIzblhlSEoyU0sz?=
+ =?utf-8?B?L29EZXlwbmZFRnBmcVlYM1ZBZmdSR01JY1FMdDQ4a3FOaThwdXhSY29VRDMv?=
+ =?utf-8?B?Z1J4aHh5MVZzZGJtdjRmekJKVW5Gd0hqY1V2WHJYT05jMFBITXowbGY0ZU43?=
+ =?utf-8?B?WDF2WFpSSUxYSUNWeW56eEs2ckNwdVdERlhpbWdCcTN3bUpiM25tR2JkNllD?=
+ =?utf-8?B?ZlZXYlIxc1dFd3pGdHZjdnc2U1cyZWdjNjR4Q3lRUW80ekwrUFZ4VWxpUnd3?=
+ =?utf-8?B?YThrWStJWmZyWms1MWMyb0xQd2Z6UkR6T2h1Z1RLa3RwWnVBS0V6UlhTcmsz?=
+ =?utf-8?B?NU94WGF1T0NINHBSeFpER21sOHU1bVRFTWIrTWFlSlQ3SDBYeG5rNlR3SThG?=
+ =?utf-8?B?WTVPcEhWcytJTXB1NEVsTUhTdU45SmNMOWhGU3YvSEJ1WXd0aFFaM1JRMEts?=
+ =?utf-8?B?bWdTNjQraDRteWZibXRuaGRkNDJpQldPSHVkajFPRWhaUFNna01OVm9RUEVQ?=
+ =?utf-8?B?WldpZkdySzRJQjRBWXcrbUdFYmpuRUdTaGg4VmduZjFCcHJwSXpPUlJPWmkv?=
+ =?utf-8?B?ejJTOEVWMk52dU9nZlZWaWIxRXFkdlpVRFUzVHBLRU5BQmpZbXkzOU1zcFNE?=
+ =?utf-8?B?ckFrbExwczlhYzN3SGcrbUtJb3JSeEhkMXd4aXlnMFV2UzJ2Y2xaVjA1elg1?=
+ =?utf-8?B?R0NLZmcwdkdZY2wvc0lvOEdTR2EzeUJGbmpwSUErRjR2R1R0QXQyWnJQLzZm?=
+ =?utf-8?B?R3Urc2kycEdvUStHL2FiNS82NkEyL2hyeisyNlhTbUl5eHRmREdHc2ZmdmRa?=
+ =?utf-8?B?OUxxT3lHaDVhTG0wakliZi84RE1TZmo0VVBSMmVKaHRjbHBMWEM5UGpCdFpW?=
+ =?utf-8?B?ZHBNM1NCamZLM2g5dGVxNlYweU92aWN5MGdMMFRNM29GWm1iTEdtTXUxbW1D?=
+ =?utf-8?B?d3ZtalBzRU41Qk1VSTNwZ3BmdzdRcHBXcEhnNzZNUVFVMm03S0x0WUNSQzdQ?=
+ =?utf-8?B?THhvemFiZ1U5Ry9NMkUyQVdaNGZ3M1J3anVYNUJwcXo3d05aZGdOTTQwdVNa?=
+ =?utf-8?B?ck5SRldjUUd0KzlhK2xxREdzSXY5V3Boc08za3BBMk9BTWV2QmFyZVphbkxT?=
+ =?utf-8?B?R2pxWHh0QlVQbjV5aTJ5TFJiMGk3SVBRR3ExUkNZV0ZqamRVMmx4K2paa2xS?=
+ =?utf-8?Q?u0OQ=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(36860700013)(7416014)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 22:25:04.6716 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3be7a9a0-231f-4fab-df32-08ddffa709ec
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000971E5.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4134
+Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+ envelope-from=nicolinc@nvidia.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,281 +170,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kohei,
+On Mon, Sep 29, 2025 at 02:36:21PM +0100, Shameer Kolothum wrote:
+> Because we now include CONFIG_DEVICES in the header to
+> check for ARM_SMMUV3_ACCEL, the meson file entry for smmuv3.c needs to
+> be changed as well.
 
-On 9/1/25 4:44 AM, Kohei Tokunaga wrote:
-> V3:
-> - Fixed init_wasm_js to correctly cast pointers to Numbers when passing the
->    arguments to the getInt32 and setInt32 methods.
-> - Lowered the the maximum number of instances (MAX_INSTANCES) to avoid the
->    out of memory error in recent versions of FireFox.
-> 
-> V2:
-> 
-> - Reorganized commits to implement the backend incrementally from a clean
->    state.
-> - Removed the andc, orc, eqv, nand and nor operations to rely on default
->    expansion.
-> - Removed the bswap operations to use default expansion.
-> - Removed the extract and deposit oprations to use default expansion.
-> - Updated the sextract to emit only when the corresponding Wasm instruction
->    is available
-> - Removed the not operation to rely on default expansion.
-> - Fixed the neg implementation to "ret = 0 - arg"
-> - Added Wasm implementation of the mb operation using the atomic.fence
->    instruction.
-> 
-> Note:
-> The first four commits are temporarily imported from a separated patch
-> series which enables 64bit guests using wasm64 [2]. These commits are under
-> review in that series and are included here only to allow subsequent patches
-> to build. Please ignore them when reviewing this series.
-> 
-> V1:
-> 
-> This patch series adds a TCG backend for WebAssembly. Unlike eariler
-> attempts [1], it is implemented using Emscripten's wasm64 target to support
-> 64bit guests.
-> 
-> The first four commits are temporarily imported from a separated patch
-> series which enables 64bit guests using wasm64 [2]. These commits are under
-> review in that series and are included here only to allow subsequent patches
-> to build. Please ignore them when reviewing this series.
-> 
-> # New TCG Backend for Browsers
-> 
-> A new TCG backend translates IR instructions into Wasm instructions and runs
-> them using the browser's WebAssembly APIs (WebAssembly.Module and
-> WebAssembly.instantiate). To minimize compilation overhead and avoid hitting
-> the browser's limitation of the number of instances, this backend integrates
-> a forked TCI. TBs run on TCI by default, with frequently executed TBs
-> compiled into WebAssembly.
-> 
-> # 64bit guests support by wasm64
-> 
-> Support for 64bit guests is being reviewed in a separated patch series [2],
-> which enables QEMU to use 64bit pointers by compiling with the --cpu=wasm64
-> flag. The Wasm TCG backend is based on this feature and also requires
-> --cpu=wasm64.
-> 
-> QEMU compiled with --cpu=wasm64 runs on wasm64-capable engines. To support
-> engines which don't support wasm64 (e.g. Safari), the Wasm backend can use
-> the compatibility flag "--enable-wasm64-32bit-address-limit" also introduced
-> in [2]. This flag enables 64bit pointers in the C code while Emscripten
-> lowers the output binary to wasm32 and limits the maximum memory size to
-> 4GB. As a result, the Wasm backend can run on wasm32 engiens while
-> supporting 64bit guests.
-> 
-> Note: The flag was originally named --wasm64-32bit-address-limit but this
-> patch series moved it from the configure script into meson_options.txt. To
-> follow Meson's naming conventions, it was renamed to
-> --enable-wasm64-32bit-address-limit.
-> 
-> # Overview of build process
-> 
-> To compile QEMU with Emscripten, the following dependencies are required.
-> The emsdk-wasm-cross.docker environment includes all necessary components
-> and can be used as the build environment:
-> 
-> - Emscripten SDK (emsdk) v4.0.10
-> - Libraries cross-compiled with Emscripten (please see also
->    emsdk-wasm-cross.docker for build steps)
->    - GLib v2.84.0
->    - zlib v1.3.1
->    - libffi v3.5.2
->    - Pixman v0.44.2
-> 
-> The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
-> pointer support.
-> 
-> emconfigure ./configure --cpu=wasm64 \
->                          --static --disable-tools \
->                          --target-list=x86_64-softmmu
-> emmake make -j$(nproc)
-> 
-> If the output needs to run on wasm32 engines, use
-> "--enable-wasm64-32bit-address-limit" flag.
-> 
-> emconfigure ./configure --cpu=wasm64 --enable-wasm64-32bit-address-limit \
->                          --static --disable-tools \
->                          --target-list=x86_64-softmmu
-> emmake make -j$(nproc)
-> 
-> Either of the above commands generates the following files:
-> 
-> - qemu-system-x86_64.js
-> - qemu-system-x86_64.wasm
-> 
-> Guest images can be packaged using Emscripten's file_packager.py tool.
-> For example, if the images are stored in a directory named "pack", the
-> following command packages them, allowing QEMU to access them through
-> Emscripten's virtual filesystem:
-> 
-> /path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
-> 
-> This process generates the following files:
-> 
-> - qemu-system-x86_64.data
-> - load.js
-> 
-> Emscripten allows passing arguments to the QEMU command via the Module
-> object in JavaScript:
-> 
-> Module['arguments'] = [
->      '-nographic', '-m', '512M',
->      '-L', 'pack/',
->      '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
->      '-kernel', 'pack/bzImage',
->      '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
-> ];
-> 
-> The sample repository [3] (tcgdev64 branch) provides a complete setup,
-> including an HTML file that implements a terminal UI.
-> 
-> [1] https://patchew.org/QEMU/cover.1747744132.git.ktokunaga.mail@gmail.com/
-> [2] https://patchew.org/QEMU/cover.1754534225.git.ktokunaga.mail@gmail.com/
-> [3] https://github.com/ktock/qemu-wasm-sample/tree/tcgdev64
-> 
-> Kohei Tokunaga (35):
->    meson: Add wasm64 support to the --cpu flag
->    configure: Enable to propagate -sMEMORY64 flag to Emscripten
->    dockerfiles: Add support for wasm64 to the wasm Dockerfile
->    .gitlab-ci.d: Add build tests for wasm64
->    tcg/wasm: Add tcg-target.h and tcg-target-reg-bits.h
->    tcg/wasm: Add register-related definitions
->    tcg/wasm: Add constraint definitions
->    tcg/wasm: Add relocation callbacks
->    tcg/wasm: Add and/or/xor instructions
->    tcg/wasm: Add add/sub/mul instructions
->    tcg/wasm: Add shl/shr/sar instructions
->    tcg/wasm: Add setcond/negsetcond/movcond instructions
->    tcg/wasm: Add sextract instruction
->    tcg/wasm: Add load and store instructions
->    tcg/wasm: Add mov/movi instructions
->    tcg/wasm: Add ext instructions
->    tcg/wasm: Add div/rem instructions
->    tcg/wasm: Add neg/ctpop instructions
->    tcg/wasm: Add rot/clz/ctz instructions
->    tcg/wasm: Add br/brcond instructions
->    tcg/wasm: Add exit_tb/goto_tb/goto_ptr instructions
->    tcg/wasm: Add call instruction
->    tcg/wasm: Add qemu_ld/qemu_st instructions
->    tcg/wasm: Add mb instruction
->    tcg/wasm: Mark unimplemented instructions
->    tcg/wasm: Add initialization of fundamental registers
->    tcg/wasm: Write wasm binary to TB
->    tcg/wasm: Implement instantiation of Wasm binary
->    tcg/wasm: Allow switching coroutine from a helper
->    tcg/wasm: Enable instantiation of TBs executed many times
->    tcg/wasm: Enable TLB lookup
->    tcg/wasm: Add tcg_target_init function
->    meson.build: enable to build Wasm backend
->    meson.build: Propagate optimization flag for linking on Emscripten
->    .gitlab-ci.d: build wasm backend in CI
-> 
->   .gitlab-ci.d/buildtest.yml                    |   26 +-
->   .gitlab-ci.d/container-cross.yml              |   20 +-
->   .gitlab-ci.d/container-template.yml           |    4 +-
->   MAINTAINERS                                   |    9 +-
->   configure                                     |   14 +-
->   include/accel/tcg/getpc.h                     |    2 +-
->   include/tcg/helper-info.h                     |    4 +-
->   include/tcg/tcg.h                             |    2 +-
->   meson.build                                   |   16 +-
->   meson_options.txt                             |    3 +
->   scripts/meson-buildoptions.sh                 |    5 +
->   tcg/aarch64/tcg-target.c.inc                  |   11 +
->   tcg/arm/tcg-target.c.inc                      |   11 +
->   tcg/i386/tcg-target.c.inc                     |   11 +
->   tcg/loongarch64/tcg-target.c.inc              |   11 +
->   tcg/meson.build                               |    5 +
->   tcg/mips/tcg-target.c.inc                     |   11 +
->   tcg/ppc/tcg-target.c.inc                      |   11 +
->   tcg/region.c                                  |   10 +-
->   tcg/riscv/tcg-target.c.inc                    |   11 +
->   tcg/s390x/tcg-target.c.inc                    |   11 +
->   tcg/sparc64/tcg-target.c.inc                  |   11 +
->   tcg/tcg.c                                     |   21 +-
->   tcg/tci/tcg-target.c.inc                      |   11 +
->   tcg/wasm.c                                    |  855 +++++
->   tcg/wasm.h                                    |  117 +
->   tcg/wasm/tcg-target-con-set.h                 |   19 +
->   tcg/wasm/tcg-target-con-str.h                 |   14 +
->   tcg/wasm/tcg-target-has.h                     |   14 +
->   tcg/wasm/tcg-target-mo.h                      |   20 +
->   tcg/wasm/tcg-target-opc.h.inc                 |   18 +
->   tcg/wasm/tcg-target-reg-bits.h                |   11 +
->   tcg/wasm/tcg-target.c.inc                     | 2843 +++++++++++++++++
->   tcg/wasm/tcg-target.h                         |   61 +
->   ...2-cross.docker => emsdk-wasm-cross.docker} |   29 +-
->   35 files changed, 4218 insertions(+), 34 deletions(-)
->   create mode 100644 tcg/wasm.c
->   create mode 100644 tcg/wasm.h
->   create mode 100644 tcg/wasm/tcg-target-con-set.h
->   create mode 100644 tcg/wasm/tcg-target-con-str.h
->   create mode 100644 tcg/wasm/tcg-target-has.h
->   create mode 100644 tcg/wasm/tcg-target-mo.h
->   create mode 100644 tcg/wasm/tcg-target-opc.h.inc
->   create mode 100644 tcg/wasm/tcg-target-reg-bits.h
->   create mode 100644 tcg/wasm/tcg-target.c.inc
->   create mode 100644 tcg/wasm/tcg-target.h
->   rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
-> 
+The reasoning isn't very clear. Let's make a note here that only
+arm_ss via hw_arch can include CONFIG_DEVICES.
 
-I tried to build this series to test it, but unfortunately, I have some 
-errors:
+> The “accel” property isn’t user visible yet, it will be introduced in
 
-$ podman build -t wasm - --build-arg TARGET_CPU=wasm64 \
-   --build-arg WASM64_MEMORY64=1 \
-   < ./tests/docker/dockerfiles/emsdk-wasm-cross.docker
-$ podman run -it --rm -w $(pwd) -v $(pwd):$(pwd) wasm bash
-$ emconfigure ./configure --cpu=wasm64 \
-   --static --disable-tools --target-list=x86_64-softmmu
-$ emmake make -j$(nproc)
+Let's use standard " and '.
 
-* /builddeps/target/include/ffi.h:430:6: error: 'FFI_NATIVE_RAW_API' is 
-not defined, evaluates to 0 [-Werror,-Wundef]
-* various "format specifies type 'long long' but the argument has type 
-'long' [-Werror,-Wformat]"
-
-Is it working fine on your side? If yes, what am I missing?
-
-Note: To build with podman, I needed those changes (that you can 
-probably integrate as they are compatible with docker also):
---- a/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-+++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-@@ -10,7 +10,7 @@ ARG MESON_VERSION=1.5.0
-  ARG TARGET_CPU=wasm32
-  ARG WASM64_MEMORY64=0
-
--FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
-+FROM docker.io/emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
-  ARG TARGET_CPU
-  ARG MESON_VERSION
-  ENV TARGET=/builddeps/target
-@@ -130,8 +130,8 @@ RUN mkdir -p /glib
-  RUN curl -Lks 
-https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz 
-| \
-      tar xJC /glib --strip-components=1
-
--COPY --link --from=zlib-dev /builddeps/ /builddeps/
--COPY --link --from=libffi-dev /builddeps/ /builddeps/
-+COPY --from=zlib-dev /builddeps/ /builddeps/
-+COPY --from=libffi-dev /builddeps/ /builddeps/
-
-  WORKDIR /glib
-  RUN <<EOF
-@@ -156,5 +156,5 @@ RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" 
-./_build/config.h
-  RUN meson install -C _build
-
-  FROM build-base
--COPY --link --from=glib-dev /builddeps/ /builddeps/
--COPY --link --from=pixman-dev /builddeps/ /builddeps/
-+COPY --from=glib-dev /builddeps/ /builddeps/
-+COPY --from=pixman-dev /builddeps/ /builddeps/
-
-Regards,
-Pierrick
+Thanks
+Nicolin
 
