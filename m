@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1094CCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 17:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E03A9CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 17:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H8a-0003uL-7N; Mon, 29 Sep 2025 12:54:08 -0400
+	id 1v3H9V-00074P-Sw; Mon, 29 Sep 2025 12:55:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7f-0002uu-GF
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H8S-0003p0-8V
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:54:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7X-0002nV-Md
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:10 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H8L-0002xe-92
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759164782;
+ s=mimecast20190719; t=1759164830;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LtZkkfn48BVSq6kvoBsfQMoqoIUkdv0Eh2+9wImb+4E=;
- b=eIePFgbZm9brY6oMtroeB7NQh0moZQ3JrOurCpsYqwxT2vD5RKPGYDigHFjpQ1e+vSgSbu
- Brdy+q7McmKHT2+w3BZvRlY91eNTJtD4BGxkcNmsz8kAi0I/jLvJ4wA/S+/BA/0lpS5xVf
- 5LPTfqJsDKgeV+ubscvW4IeDSkQceUM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=IFV8yzChiwwaTru2ixwd6NCKrifkFsnekzGPSSMFVv8=;
+ b=a4cuMyHwAXyOq83ElFzT7RgzHnSsjLNHOs2KYX6MPkdHvfEmBZacOcmdGeaJmpWQB9e0JH
+ OL1oHIvK8cHHeRYzOxf7BL/dFHJcP6HvyNF2/tTZXQacckDEuMOsmd2eDDZx1AOYTAHD4s
+ VLSk5S7WRh8nP5aGgtX7he3gvWzSScA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-414rMYyNPcOmS6PkunwGXw-1; Mon,
- 29 Sep 2025 12:53:00 -0400
-X-MC-Unique: 414rMYyNPcOmS6PkunwGXw-1
-X-Mimecast-MFC-AGG-ID: 414rMYyNPcOmS6PkunwGXw_1759164779
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-2aAQz_MFMHqnGivpEkWmkA-1; Mon,
+ 29 Sep 2025 12:53:46 -0400
+X-MC-Unique: 2aAQz_MFMHqnGivpEkWmkA-1
+X-Mimecast-MFC-AGG-ID: 2aAQz_MFMHqnGivpEkWmkA_1759164825
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B77151956087; Mon, 29 Sep 2025 16:52:59 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0D9E19560B5; Mon, 29 Sep 2025 16:53:45 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.27])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1FE201800452; Mon, 29 Sep 2025 16:52:57 +0000 (UTC)
+ id 277211800452; Mon, 29 Sep 2025 16:53:43 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/32] hw/arm/aspeed Move ast2700-evb alias to ast2700a1-evb
-Date: Mon, 29 Sep 2025 18:52:08 +0200
-Message-ID: <20250929165230.797471-11-clg@redhat.com>
+Subject: [PULL 31/32] hw/arm/aspeed_ast27x0-fc: Drop dead return checks
+Date: Mon, 29 Sep 2025 18:52:29 +0200
+Message-ID: <20250929165230.797471-32-clg@redhat.com>
 In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
 References: <20250929165230.797471-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,55 +86,99 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This patch moves the "ast2700-evb" alias from the A0 to A1.
-The A0 machine remains available via its explicit name
-("ast2700a0-evb"), while functional tests are updated to
-target A0 by name instead of relying on the generic alias.
+1. object_property_set_link() can return false only when it fails, and it
+sets an error when it fails. Since passing &error_abort causes an abort,
+the function never returns false, and the return statement is effectively
+dead code.
+2. object_property_set_int() is considered as a routine which shouldn't fail.
+So the common practice in models is to pass &error_abort and ignore the returned value.
+https://patchwork.kernel.org/project/qemu-devel/patch/20250717034054.1903991-3-jamin_lin@aspeedtech.com/#26540626
+
+No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250902062550.3797040-1-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20250925050535.2657256-6-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                                 | 2 +-
- tests/functional/aarch64/test_aspeed_ast2700.py | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/arm/aspeed_ast27x0-fc.c | 43 +++++++++++++-------------------------
+ 1 file changed, 14 insertions(+), 29 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index c31bbe770138..d21b21965aa6 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1995,7 +1995,6 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc,
-     MachineClass *mc = MACHINE_CLASS(oc);
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 7087be4288bb..ebf3784df588 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -74,19 +74,12 @@ static void ast2700fc_ca35_init(MachineState *machine)
+                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+         return;
+     }
+-    if (!object_property_set_link(OBJECT(&s->ca35), "memory",
+-                                  OBJECT(&s->ca35_memory),
+-                                  &error_abort)) {
+-        return;
+-    };
+-    if (!object_property_set_link(OBJECT(&s->ca35), "dram",
+-                                  OBJECT(&s->ca35_dram), &error_abort)) {
+-        return;
+-    }
+-    if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
+-                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+-        return;
+-    }
++    object_property_set_link(OBJECT(&s->ca35), "memory",
++                             OBJECT(&s->ca35_memory), &error_abort);
++    object_property_set_link(OBJECT(&s->ca35), "dram", OBJECT(&s->ca35_dram),
++                             &error_abort);
++    object_property_set_int(OBJECT(&s->ca35), "ram-size",
++                            AST2700FC_BMC_RAM_SIZE, &error_abort);
  
--    mc->alias = "ast2700-evb";
-     mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
-     amc->soc_name  = "ast2700-a0";
-     amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-@@ -2018,6 +2017,7 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
-     MachineClass *mc = MACHINE_CLASS(oc);
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+     for (int i = 0; i < sc->macs_num; i++) {
+         if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
+@@ -94,14 +87,10 @@ static void ast2700fc_ca35_init(MachineState *machine)
+             break;
+         }
+     }
+-    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
+-                                 AST2700FC_HW_STRAP1, &error_abort)) {
+-        return;
+-    }
+-    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
+-                                 AST2700FC_HW_STRAP2, &error_abort)) {
+-        return;
+-    }
++    object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
++                            AST2700FC_HW_STRAP1, &error_abort);
++    object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
++                            AST2700FC_HW_STRAP2, &error_abort);
+     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
+     if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
+         return;
+@@ -133,10 +122,8 @@ static void ast2700fc_ssp_init(MachineState *machine)
+                        UINT64_MAX);
  
-+    mc->alias = "ast2700-evb";
-     mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
-     amc->soc_name  = "ast2700-a1";
-     amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-index 8a08bc46888e..a3db26729499 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-@@ -115,8 +115,8 @@ def start_ast2700_test_vbootrom(self, name):
-         self.do_test_aarch64_aspeed_sdk_start(
-                 self.scratch_file(name, 'image-bmc'))
+     qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
+-    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
+-                                  OBJECT(&s->ssp_memory), &error_abort)) {
+-        return;
+-    }
++    object_property_set_link(OBJECT(&s->ssp), "memory",
++                             OBJECT(&s->ssp_memory), &error_abort);
  
--    def test_aarch64_ast2700_evb_sdk_v09_06(self):
--        self.set_machine('ast2700-evb')
-+    def test_aarch64_ast2700a0_evb_sdk_v09_06(self):
-+        self.set_machine('ast2700a0-evb')
+     soc = ASPEED_SOC(&s->ssp);
+     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
+@@ -157,10 +144,8 @@ static void ast2700fc_tsp_init(MachineState *machine)
+                        UINT64_MAX);
  
-         self.archive_extract(self.ASSET_SDK_V906_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
+     qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
+-    if (!object_property_set_link(OBJECT(&s->tsp), "memory",
+-                                  OBJECT(&s->tsp_memory), &error_abort)) {
+-        return;
+-    }
++    object_property_set_link(OBJECT(&s->tsp), "memory",
++                             OBJECT(&s->tsp_memory), &error_abort);
+ 
+     soc = ASPEED_SOC(&s->tsp);
+     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
 -- 
 2.51.0
 
