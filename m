@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D257ECAC5B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0411CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3F2e-0002ax-MJ; Mon, 29 Sep 2025 10:39:52 -0400
+	id 1v3F4O-0003qd-VW; Mon, 29 Sep 2025 10:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3F2a-0002Z2-TK
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:39:49 -0400
-Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3F4M-0003hY-Jg
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:41:38 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3F2R-0000gj-BJ
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:39:47 -0400
-Received: by mail-wr1-x443.google.com with SMTP id
- ffacd0b85a97d-3f0ae439b56so2871602f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:39:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3F45-0001OT-Mw
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:41:36 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3306d93e562so5016949a91.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759156773; x=1759761573; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1759156872; x=1759761672; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+ojY3RPIpKc+brp1NfCJujNzb4NUxsEjheEtU1uTV/c=;
- b=t0akCGmRQ65j0hMtiQT1yc2nvTxve5Bx6i3PWTwtiVnxhJZx7pZgkK6i73S4/io1SS
- B8pyCGOYYdKd3EMfANX/dQmC536C84SpAWH28qxTgTO59/eb6T1KMDG4XXWiiuQOgk1P
- bUTcGxWbLwUgfi3kgkUnqaeOdnESTs1BIUZsRVQRu9EVPwf/SvXdxfHHgo+zNWQt3jfS
- LeBd6XcS2CiO+j9ee6eo9EtVaDK/WOLiUGKn1/fVLKlyk7CqcqMmAJKCoc3G46vu6fGk
- SCiBMR6URQtvTQWMP8wDjt9C8kM12DMgVuQIyFv7/v7Z0CZKV0FkpnsGtXS9MBE8LjrJ
- PNPg==
+ bh=MkzCGJhxmBl7pB+ADBh0H9ogb846oJxdcaEE8Qh58OA=;
+ b=W2w7tfWXMHuF3azQwR0H8tP4awGwW5xh5AkikSG4A0HnL4bTC3J0c9ekWrSAB/Ruwl
+ gvG572N6KlNnz6uODbIqc2BRD3sgqKeM8UShzKdKp4Vwr6Y++GqnLZ+YmNyf8cpn2tqZ
+ OLj3RfkzVMqMBIzFRbnuI4dvXRWu0u5ufptUWfhOLHoveMOJ+TNYhmzyJBxpRKY34hEF
+ 4deTgkQvYgjOa97/Z0OXYWRW5KcQBsfthJBgJpzaII0SmtoFyFuwyHrllDgZ4Y8nWWYu
+ Xvxdp/SHxz/cTmNoKvVYs6bmTsS137g1ctQkK/QWUorG6cbEHt2e87HMliMhVNSMjxX6
+ Ak2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759156773; x=1759761573;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1759156872; x=1759761672;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+ojY3RPIpKc+brp1NfCJujNzb4NUxsEjheEtU1uTV/c=;
- b=qG3uUlPHKqUZKnlQ9zaEQWwOvaDcfbyVygsppb0hlFJ1pXyAwqpMj2+vGP46UgIORE
- n//KYOGuBBzmjTqg4MyjQochEbGeXIOl3/IW5LwiADhuJ38vL07eyKBWXV1spGttJGT0
- WrPITM2IvqUIfRqEy9y1QWgX3pbGxdeUcDGTtoBb+bY7IqQwIqRmzA3WRLSPUuz31oUh
- /M9BHX4V8VAhFgVbACrW2mRJMoR31TZAyEe37B4iHDfjOr8VLlnSNnswsY2r7uiiuePW
- ok4Eqx6/6RK51yYLB2yd8p4uLt76NLWdWCqs8XsB+WL4B9l665o/J+GzOcHzRDyvmkHq
- RsVQ==
+ bh=MkzCGJhxmBl7pB+ADBh0H9ogb846oJxdcaEE8Qh58OA=;
+ b=ZZuhUgYM1pZUuYG+0JDwY4MDMxTFbUZ2T7ZXNOVG1hWoH0EWKiidXdCQm99Fij5m+/
+ ewahK8yxRV4Y32VFjJ8y7INuQtzgcgtE+yTwtPNrYZsLkaQMiIcHB8aSaQiW5Wq+D+m1
+ RGZL/ai88t8cZ9ieO3qe1aB4maR7GF+WNsvG3KKmOFKRqIIJ3f6sNA/5MByfo1oC4akk
+ zti9bGTr3fy20CBg9FHT+1E4S2fcgcfyQyJvBpAPMquNa2ApVYdTX/aAmbOm2JQo8kdi
+ D8RBAJ24wrQLjyi3Qvvq8k1/9quuk+b2DxYZRN9pX746y7SVVdLwOEzQ2dGDaeNpnJty
+ pqow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVi6oxEm8FwgRukkAu1pzA1KqDD1KzLHfrBqvb25qEGMnmjl/FPBxSUKddcb1XFoVM9f9bJv56ExBrP@nongnu.org
-X-Gm-Message-State: AOJu0YwiDQ8LlLqrdmvyEf6jDENZr4Fd5dT7mfpqz4ERCqcjOc12yryC
- BD1sdnp5K3k4vzl++QQ1uNZq8su56ok2E/yz+xdy6KV4YA0HoEsBt1t+KeevNsN/fSM=
-X-Gm-Gg: ASbGncufHVtcIomtG7DjX+ZexbFKBEonG75Oi2OnO/cZ9f8dGOlZzWnJV7p9m/6Y4nD
- dr//gZt0newke78IyojczRxtcyuVfXF3tACmvXHyMU5qf5thtmOfrVRf939B0fYwevWEUPAxCDu
- 6kLj/KhAtB3M4AW2zFGaqNkNm/+BA2eQGJEKreZyfQVg4SFnL1MKUaulJ8fxbca23Tx/WGzP2sx
- V7X2JjW3chDb3vdIysoBWTCzATd2UimLopbbRgp/G4PiKLLR2NsUqSgBSjqLQFfu6C/Ksroawe9
- d25Mb0ant04c0/tPpXTGTVBVRUwu+eyHOTIqFtyfPQbdv9CwE+8r93BnHbuDoK8Xo4FDJt9Dfe9
- lNGfvAq0AgS5+IpCJzzLZESP9fC3N4z3B92biTna9pS1QB/CNaSQbBlabB2M2MhN6sQ==
-X-Google-Smtp-Source: AGHT+IGNFdnVUYfXaFSOqjAFP/McPaBQd/VqKvXhICaPTi1MQzoONPVWCs3hrqv2+xLXKabYKTmo1w==
-X-Received: by 2002:a05:6000:1ac7:b0:3ec:dd2f:eeb8 with SMTP id
- ffacd0b85a97d-40e4c2d2da2mr14783878f8f.62.1759156773235; 
- Mon, 29 Sep 2025 07:39:33 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc6cf3835sm18721492f8f.46.2025.09.29.07.39.32
+ AJvYcCWGGfATnLWkZ1qGxC+uNIGq+w3cpfxynHvMaIhVFfkMLWNpBX8Jf13c5fZ5LQOvfC1VTupcv7X8V4s3@nongnu.org
+X-Gm-Message-State: AOJu0YyImk8tCcMYFjTUx7RGuOVZFgFJ566c8Y1R6z1Dyn0x2BY7BFBd
+ 48rIjFuxtygiLkAkSjh6E8tWhb/PbTFEd76a4wdGqfb7cNTFdlSl1Ycj5genKpfG4M8=
+X-Gm-Gg: ASbGncuju3xLrMHK2IhBpwGMRiQd03hTd7aLPX23Lhag+aZPFkvu+6YD8Pyx5QFHEVT
+ 8j8eWGB/iuyCYjXUWVBybZIhBNMv/uurfB9tJUC1lZYmwNYqNWFX2DhQa5O/la91fquFRxeFX3y
+ 0EHZj9zG9yFiM2ziW0Rj1EZ8JLOs0QR096heprafQATpNy/8ySS+x+7w3Ex++34vh34YJMSRkoC
+ 8PVPDqKVVDIt5K98UQ7QjXUYN9q6DFW52GGrQsVOreqq2PdYEFwhnIQMIVERLJbTIb8xpibg1Cm
+ BWiygLWjx6OUul2k6YHMYssSldJUj8EV7P2HPJV0RdOeS4GGw9jFZ1NAtZkmNTt46qDAkudpqHm
+ RLcPomccpe8I/pja5SHExFfFEi07Gr+hmoT+45SAR5yse6zjUGSF21rgE5A==
+X-Google-Smtp-Source: AGHT+IHPy3QvNuZjOj6YBc+0r5YGXTW69E4S91z1ivN0tb6fevgW3Q5wqiYPN2nAFuNMgcVURiqjBA==
+X-Received: by 2002:a17:90b:5627:b0:330:793a:4240 with SMTP id
+ 98e67ed59e1d1-3342a2c5d9cmr15797380a91.31.1759156872409; 
+ Mon, 29 Sep 2025 07:41:12 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3341bd90332sm17219996a91.1.2025.09.29.07.41.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 07:39:32 -0700 (PDT)
-Message-ID: <b726ecb9-b93c-43ce-9bef-7e18451885a4@linaro.org>
-Date: Mon, 29 Sep 2025 16:39:32 +0200
+ Mon, 29 Sep 2025 07:41:12 -0700 (PDT)
+Message-ID: <3fb026bf-3b33-4cfa-a20f-8e1d442e7902@linaro.org>
+Date: Mon, 29 Sep 2025 07:41:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] .gitpublish: use origin/master as default base
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH] target/riscv: Fix endianness swap on compressed
+ instructions
+To: Valentin Haudiquet <valentin.haudiquet@canonical.com>,
  qemu-devel@nongnu.org
-Cc: stefanha@redhat.com
-References: <20250929134348.1589790-1-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250929134348.1589790-1-alex.bennee@linaro.org>
+Cc: qemu-riscv@nongnu.org, qemu-trivial@nongnu.org,
+ zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
+ liwei1518@gmail.com, alistair.francis@wdc.com, palmer@dabbelt.com,
+ vhaudiquet <vhaudiquet343@hotmail.fr>
+References: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::443;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,80 +107,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/9/25 15:43, Alex Bennée wrote:
-> This is very much the result of my recent fat finger but I think it's
-> safer to assume that origin/master points to a recent commit (or at
-> least a commit a given branch is based on) than master.
+On 9/29/25 04:55, Valentin Haudiquet wrote:
+> From: vhaudiquet <vhaudiquet343@hotmail.fr>
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Three instructions were not using the endianness swap flag, which resulted in a bug on big-endian architectures.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3131
+> Buglink: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2123828
+> 
+> Signed-off-by: Valentin Haudiquet <valentin.haudiquet@canonical.com>
 > ---
->   .gitpublish | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+>   target/riscv/insn_trans/trans_rvzce.c.inc | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+
+Cc: qemu-stable@nongnu.org
+Fixes: e0a3054f18e ("target/riscv: add support for Zcb extension")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
+
 > 
-> diff --git a/.gitpublish b/.gitpublish
-> index a13f8c7c0ec..a3adb21ffa1 100644
-> --- a/.gitpublish
-> +++ b/.gitpublish
-> @@ -4,48 +4,48 @@
->   # See https://github.com/stefanha/git-publish for more information
->   #
->   [gitpublishprofile "default"]
-> -base = master
-> +base = origin/master
-
-Any key to specify the remote? (not everybody have mainstream tracked
-as origin).
-
->   to = qemu-devel@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+> diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
+> index c77c2b927b..dd15af0f54 100644
+> --- a/target/riscv/insn_trans/trans_rvzce.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
+> @@ -88,13 +88,13 @@ static bool trans_c_lbu(DisasContext *ctx, arg_c_lbu *a)
+>   static bool trans_c_lhu(DisasContext *ctx, arg_c_lhu *a)
+>   {
+>       REQUIRE_ZCB(ctx);
+> -    return gen_load(ctx, a, MO_UW);
+> +    return gen_load(ctx, a, MO_TEUW);
+>   }
 >   
->   [gitpublishprofile "rfc"]
-> -base = master
-> +base = origin/master
->   prefix = RFC PATCH
->   to = qemu-devel@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   static bool trans_c_lh(DisasContext *ctx, arg_c_lh *a)
+>   {
+>       REQUIRE_ZCB(ctx);
+> -    return gen_load(ctx, a, MO_SW);
+> +    return gen_load(ctx, a, MO_TESW);
+>   }
 >   
->   [gitpublishprofile "stable"]
-> -base = master
-> +base = origin/master
->   to = qemu-devel@nongnu.org
->   cc = qemu-stable@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
+> @@ -106,7 +106,7 @@ static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
+>   static bool trans_c_sh(DisasContext *ctx, arg_c_sh *a)
+>   {
+>       REQUIRE_ZCB(ctx);
+> -    return gen_store(ctx, a, MO_UW);
+> +    return gen_store(ctx, a, MO_TEUW);
+>   }
 >   
->   [gitpublishprofile "trivial"]
-> -base = master
-> +base = origin/master
->   to = qemu-devel@nongnu.org
->   cc = qemu-trivial@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
->   
->   [gitpublishprofile "block"]
-> -base = master
-> +base = origin/master
->   to = qemu-devel@nongnu.org
->   cc = qemu-block@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
->   
->   [gitpublishprofile "arm"]
-> -base = master
-> +base = origin/master
->   to = qemu-devel@nongnu.org
->   cc = qemu-arm@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
->   
->   [gitpublishprofile "s390"]
-> -base = master
-> +base = origin/master
->   to = qemu-devel@nongnu.org
->   cc = qemu-s390@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
->   
->   [gitpublishprofile "ppc"]
-> -base = master
-> +base = origin/master
->   to = qemu-devel@nongnu.org
->   cc = qemu-ppc@nongnu.org
->   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   #define X_S0    8
 
 
