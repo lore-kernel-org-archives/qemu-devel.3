@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296C4CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07570CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Gxf-0006u6-7P; Mon, 29 Sep 2025 12:42:51 -0400
+	id 1v3H3j-0000Nx-4S; Mon, 29 Sep 2025 12:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3Gxd-0006ts-1m; Mon, 29 Sep 2025 12:42:49 -0400
+ id 1v3H3f-0000NF-2N; Mon, 29 Sep 2025 12:49:03 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3Gxb-0000hC-0q; Mon, 29 Sep 2025 12:42:48 -0400
+ id 1v3H3W-0001Uf-AE; Mon, 29 Sep 2025 12:48:57 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cb6NP08jhz6M4Yl;
- Tue, 30 Sep 2025 00:39:33 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cb6Zn5bXdz6L5FB;
+ Tue, 30 Sep 2025 00:48:33 +0800 (CST)
 Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 9A3911402CB;
- Tue, 30 Sep 2025 00:42:38 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 2B4BD1402E9;
+ Tue, 30 Sep 2025 00:48:45 +0800 (CST)
 Received: from localhost (10.47.79.72) by dubpeml100005.china.huawei.com
  (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 29 Sep
- 2025 17:42:37 +0100
-Date: Mon, 29 Sep 2025 17:42:35 +0100
+ 2025 17:48:44 +0100
+Date: Mon, 29 Sep 2025 17:48:42 +0100
 To: Shameer Kolothum <skolothumtho@nvidia.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
@@ -36,12 +36,12 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
  <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
  <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 10/27] hw/arm/smmuv3-accel: Allocate a vDEVICE object
- for device
-Message-ID: <20250929174235.00000cef@huawei.com>
-In-Reply-To: <20250929133643.38961-11-skolothumtho@nvidia.com>
+Subject: Re: [PATCH v4 11/27] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Message-ID: <20250929174842.0000091b@huawei.com>
+In-Reply-To: <20250929133643.38961-12-skolothumtho@nvidia.com>
 References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-11-skolothumtho@nvidia.com>
+ <20250929133643.38961-12-skolothumtho@nvidia.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -77,21 +77,87 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Sep 2025 14:36:26 +0100
+On Mon, 29 Sep 2025 14:36:27 +0100
 Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
+> On ARM, when a device is behind an IOMMU, its MSI doorbell address is
+> subject to translation by the IOMMU. This behavior affects vfio-pci
+> passthrough devices assigned to guests using an accelerated SMMUv3.
 > 
-> Allocate and associate a vDEVICE object for the Guest device with the
-> vIOMMU. This will help the host kernel to make a virtual SID --> physical
-> SID mapping. Since we pass the raw invalidation commands(eg: CMD_CFGI_CD)
-> from Guest directly to host kernel, this provides a way to retrieve the
-> correct physical SID.
+> In this setup, we configure the host SMMUv3 in nested mode, where
+> VFIO sets up the Stage-2 (S2) mappings for guest RAM, while the guest
+> controls Stage-1 (S1). To allow VFIO to correctly configure S2 mappings,
+> we currently return the system address space via the get_address_space()
+> callback for vfio-pci devices.
 > 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> However, QEMU/KVM also uses this same callback path when resolving the
+> address space for MSI doorbells:
+> 
+> kvm_irqchip_add_msi_route()
+>   kvm_arch_fixup_msi_route()
+>     pci_device_iommu_address_space()
+>      get_address_space()
+> 
+> This will cause the device to be configured with wrong MSI doorbell
+> address if it return the system address space.
+> 
+> Introduce an optional get_msi_address_space() callback and use that in
+> the above path if available. This will enable IOMMU implementations to
+> make use of this if  required.
+
+Extra space before required.
+
+> 
+> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+one comment inline. Either way
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
+> ---
+>  hw/pci/pci.c         | 19 +++++++++++++++++++
+>  include/hw/pci/pci.h | 16 ++++++++++++++++
+>  target/arm/kvm.c     |  2 +-
+>  3 files changed, 36 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 1315ef13ea..6f9e1616dd 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2964,6 +2964,25 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+>      return &address_space_memory;
+>  }
+>  
+> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev)
+> +{
+> +    PCIBus *bus;
+> +    PCIBus *iommu_bus;
+> +    int devfn;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+> +    if (iommu_bus) {
+> +        if (iommu_bus->iommu_ops->get_msi_address_space) {
+> +            return iommu_bus->iommu_ops->get_msi_address_space(bus,
+> +                                 iommu_bus->iommu_opaque, devfn);
+> +        } else {
+Not important so up to you.
+
+I see the 'else' as unnecessary here both because you returned above and
+because it's kind of the natural default - i.e. what we did before the
+new callback.
+
+
+> +            return iommu_bus->iommu_ops->get_address_space(bus,
+> +                                 iommu_bus->iommu_opaque, devfn);
+> +        }
+> +    }
+> +    return &address_space_memory;
+> +}
+> +
+>  int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
+>                                    IOMMUNotify fn, void *opaque)
+>  {
+
 
 
