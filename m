@@ -4,94 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966B9CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3A5CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3IIt-0005ti-R5; Mon, 29 Sep 2025 14:08:52 -0400
+	id 1v3IMC-0007QS-IA; Mon, 29 Sep 2025 14:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v3IIs-0005tM-9H
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:08:50 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v3IIp-0001DD-Sy
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:08:50 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-414f48bd5a7so3164491f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 11:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759169324; x=1759774124; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Sa/is+6Xat5RR1GzShQnNksnpgfay0FQYp0bODEPB78=;
- b=Ch/4yukwrjJ45Dz6sN+a73FYTqAg2OiS3w9MJgpzSs3RR4ymzpvKUecht500s1Zzl9
- 7WYpGZuwi5+8mmLvDK5TvSRQcgMZFr2nVwlhUddxELvNHGt5nxzTwO4dRoZj5zHD5ZAZ
- 0aRJq+K2ZzSBV/1PFM1xGnf28TFg+utVLDLOzhjsZg7xRHvuhjHESQ8jCMF1g5sLgBFH
- kykA3+sywTxlZB3Df+fqe6Uud+mu2qQeDiPZ4ann44Z/hL98q8SAOI7G0pAK0uBBR7vK
- rAMH3lrnW8OSXYF2vTwpmvv7V9rhGOO1VMbVvQ3ivZ419QLUR+kskySe4YwSIWKDwxPp
- 68iA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IM9-0007ND-6T
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:12:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3IM4-0002JT-PE
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:12:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759169526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=gMP7BAnFkoI8mG/XmzIpouF2oHLVVwSgQHPsigTfPKE=;
+ b=VkKKs/kg8eUPE5/5Lq5tjDn57JVlht8Fl2y9YKQoL/Me6jiNWFdTboXOSW/Enypob2ptQ0
+ 00reIDpgxZDcEvSatsiVG6qEaJGHYOUhyd1X1PH1QF+UOFIgveLnoMy5wkae2aGoEv8kl3
+ t+xwLtrn/OeTi+OxpLr1JQNrnuNcoIo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-365-YpO_VgM0Mb232GD1Jnlx9g-1; Mon, 29 Sep 2025 14:12:03 -0400
+X-MC-Unique: YpO_VgM0Mb232GD1Jnlx9g-1
+X-Mimecast-MFC-AGG-ID: YpO_VgM0Mb232GD1Jnlx9g_1759169522
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3ee13baf21dso3964128f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 11:12:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759169324; x=1759774124;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Sa/is+6Xat5RR1GzShQnNksnpgfay0FQYp0bODEPB78=;
- b=PfG+MMSRM0g/h8GALgtsTErk85x6Bl7ga6NF/eOJcMg5PWdUZv/6aRp5vn8Orfic5L
- rGZTjpDYmBDXGHZ0Ef1WM75Oujmdh6TXw8N3cPXj1V0WGchYbK8nAVJTjuM3nvvnbsMP
- geSANNmt7UjrmEBHPGpZrsv+7LRmJRhx+MkJv+86BhaLPG0AaCbgIlvbYuRmyz0nh5m2
- rjY+5YKuljZcpXSb+MIb2oiUUKLBg7QbzE11AHdOM4NE258benH85juGp9C01brsrcjo
- sBIs0uwihHkJEHE403rz3V+YglfdQb5cI0Xu/Em98IMgMF1SNJhE6TeiIYV/AoQYo5tW
- /IZw==
+ d=1e100.net; s=20230601; t=1759169522; x=1759774322;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gMP7BAnFkoI8mG/XmzIpouF2oHLVVwSgQHPsigTfPKE=;
+ b=JhGi3TblJqXTLnD+6TyUN4ogZ+Ev25MZMWoNDIqkxQTsZmoDl25SeEuDEKEjCKIOHa
+ IOPv4tOxNQCQKZsyw6Vqa6YEVuwoZfbhDYlj5tf1qO9ZMTy3rOJ6kmXOBruHrNkgb7DZ
+ UqH6Aq5FLJpBTof+sJydCCTdQk1JQQliFau35tYk8yu9Lq+Sw/YQYbZekMgst7TNM8Nc
+ XSBKvrlWAepK4mM6WWfbT4nNCEC0bn2QiH/n1ORchyikgd3YJhOFxZcJzPmJZxbzu2zl
+ 3hjnU2gb0xT/pqIDNjflg8OyzaBRamEbIq5inSaoIdES9LnjWx9AK/oEg7vQHAelurys
+ v7ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOyBDCDH2CdVMZeCDDDLgSOP/EA26GezP+1pt5hVGqNAcQbdYNwpfF4kTIfFesF+QPSGqCsV1sSHmL@nongnu.org
-X-Gm-Message-State: AOJu0YzRHkf1QX8oO3by+d6l3G3v4OKVRL5rdWOYXOwwvlGf07BQPGaA
- gIrAzDXCbKSwBtTnbpFgi+gXzMHjSYTmxQ00urWAdRbwKTJGu82zIVCL5ELfBG9hbUg=
-X-Gm-Gg: ASbGncsKRR3MOjaVs3b06+gYApNdhg6Sk1/fqxLRSPHqxF1H4zfWAZb0vDFH1UDZ8XP
- riSGuQSODVoK8v1ADFZ4KcT73p+pTcCjyZ0f/e3/iFLoadZSuMIqJYyLsZhxtZYgQA1IuVN+pMI
- Owe9Qc1ocRfaNa/bj6M2Ry5kU97Si0BTX843csqJsO6/pxwoM7iFMQApeAU3YtTr/tyQ+AjOD+F
- epLAzw0tfJznxbTtKRsmhkcJZQePX9nnoe96+JGloePA5chBd4hUYoih1eAcJmfGRkH+P54rjF8
- rKtFjbPU4xALPoX5gdKpunP/xTw0xnUo/Rdbd3vuRakyQ2Ipa/dPnM/hhTrXGjKKJQc8yiDitCS
- HvlsCh5sOEFEszb82WHenof4JNRkklZWHNw==
-X-Google-Smtp-Source: AGHT+IFAxtUjiIk7vr20gQ6yIbeAV+T0Rh02llDqnwwkppPPARBCp39aKCZQ/1jHRmaYFYXiQdBang==
-X-Received: by 2002:a05:6000:26c9:b0:3e4:e4e:343c with SMTP id
- ffacd0b85a97d-40e47ee1947mr15166498f8f.31.1759169323782; 
- Mon, 29 Sep 2025 11:08:43 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb72fb017sm19201532f8f.3.2025.09.29.11.08.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 11:08:42 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EF1FA5F83A;
- Mon, 29 Sep 2025 19:08:41 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Tom Rini <trini@konsulko.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- u-boot@lists.denx.de, qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH] link principle license to COPYING
-In-Reply-To: <20250929165042.GJ6093@bill-the-cat> (Tom Rini's message of "Mon, 
- 29 Sep 2025 10:50:42 -0600")
-References: <20250929155142.1647606-1-alex.bennee@linaro.org>
- <20250929165042.GJ6093@bill-the-cat>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Mon, 29 Sep 2025 19:08:41 +0100
-Message-ID: <87tt0ljfme.fsf@draig.linaro.org>
+ AJvYcCWaJtOJrrTyBk+cBtStqJMpBZLBzZv4z67bEH5WnLBWG1l3Gf3kOTYU3g+b81z1ttk6YiWKTwTZQ3t0@nongnu.org
+X-Gm-Message-State: AOJu0YzJ+KJXxlF23rMyaTD2TB1b3qesLJtUkRdCpW++CP/f0u7GwoBE
+ G75n/sP6b85tKcLGdQMsgR4g355H0AsLww5rMSB9bYDbDPLJuJAdVIGlF2qMI6q/4w63RRO2Vss
+ uScw69pw47A1tCKXO/V/CYwElAmq+HID31/hjmRNA2ChLZ/F2kCC5IIeUmw/GOWKmzJI=
+X-Gm-Gg: ASbGncurhY7GevVqRL7TUFSJMDhxL7WJkILLsPhjbjaMGvMl5m345yOSKBNkyFo4pdB
+ Aj9j9Qmt5xS/+eMZq9ueG58VPH5xEUDOYUHyxvaXQEIL572vG3uT39B8mnNDFALG+pPmTreXxGf
+ XXtgodTAO7up3rc0l5OKySfxxLj1s+C3rR4cVmdv4Fax0xTNfBc/nV2W3fZ+i1Vwn6tQu5TWJU9
+ L1FWBTBhqpGScsRaRg5/oyPgtk8FROXV5LDuWDA/Sb+VZYyn5njlcVIlMW+N+bmSti41aLEPyrR
+ /DFFGHBxVL6PauVKKJUakINULuWptk0nOyYlGYzzZCew1gV3rq+u56EOHpADxGXjlUAygGmWqoG
+ 1jZGf1w==
+X-Received: by 2002:a05:6000:2dc9:b0:3ec:ce37:3a6a with SMTP id
+ ffacd0b85a97d-40e4458ce65mr16443388f8f.22.1759169522113; 
+ Mon, 29 Sep 2025 11:12:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEOmbhabFvv55MMSWJY4L+MJmUNWCQe5vQGwaySROSz20imA3ilAxM8ZrH92YJGxNHFBONDXA==
+X-Received: by 2002:a05:6000:2dc9:b0:3ec:ce37:3a6a with SMTP id
+ ffacd0b85a97d-40e4458ce65mr16443370f8f.22.1759169521668; 
+ Mon, 29 Sep 2025 11:12:01 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
+ [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e56f3dcacsm24309635e9.2.2025.09.29.11.11.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Sep 2025 11:12:01 -0700 (PDT)
+Message-ID: <554a136e-bd74-4f06-b9f9-b198422487b9@redhat.com>
+Date: Mon, 29 Sep 2025 20:11:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 25/28] pc-bios/s390-ccw: Handle secure boot with
+ multiple boot devices
+To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-26-zycai@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250917232131.495848-26-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,42 +159,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tom Rini <trini@konsulko.com> writes:
+On 18/09/2025 01.21, Zhuoying Cai wrote:
+> The current approach to enable secure boot relies on providing
+> secure-boot and boot-certs parameters of s390-ccw-virtio machine
+> type option, which apply to all boot devices.
+> 
+> With the possibility of multiple boot devices, secure boot expects all
+> provided devices to be supported and eligible (e.g.,
+> virtio-blk/virtio-scsi using the SCSI scheme).
+> 
+> If multiple boot devices are provided and include an unsupported (e.g.,
+> ECKD, VFIO) or a non-eligible (e.g., Net) device, the boot process will
+> terminate with an error logged to the console.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/bootmap.c  | 31 ++++++++-------
+>   pc-bios/s390-ccw/main.c     | 75 ++++++++++++++++++++++++++++++++++---
+>   pc-bios/s390-ccw/s390-ccw.h |  1 +
+>   3 files changed, 88 insertions(+), 19 deletions(-)
+> 
+> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+> index 3ab89b91fb..8297f22c3c 100644
+> --- a/pc-bios/s390-ccw/bootmap.c
+> +++ b/pc-bios/s390-ccw/bootmap.c
+> @@ -1136,25 +1136,35 @@ ZiplBootMode zipl_mode(uint8_t hdr_flags)
+>       return ZIPL_BOOT_MODE_NORMAL;
+>   }
+>   
+> +int zipl_check_scsi_mbr_magic(void)
+> +{
+> +    ScsiMbr *mbr = (void *)sec;
+> +
+> +    /* Grab the MBR */
+> +    memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+> +    if (virtio_read(0, mbr)) {
+> +        puts("Cannot read block 0");
+> +        return -EIO;
+> +    }
+> +
+> +    if (!magic_match(mbr->magic, ZIPL_MAGIC)) {
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>   void zipl_load(void)
+>   {
+>       VDev *vdev = virtio_get_device();
+>   
+>       if (vdev->is_cdrom) {
+> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
+> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
+> -            panic("Secure boot from ISO image is not supported!");
+> -        }
+>           ipl_iso_el_torito();
+>           puts("Failed to IPL this ISO image!");
+>           return;
+>       }
+>   
+>       if (virtio_get_device_type() == VIRTIO_ID_NET) {
+> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
+> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
+> -            panic("Virtio net boot device does not support secure boot!");
+> -        }
+>           netmain();
+>           puts("Failed to IPL from this network!");
+>           return;
+> @@ -1165,11 +1175,6 @@ void zipl_load(void)
+>           return;
+>       }
+>   
+> -    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
+> -        boot_mode == ZIPL_BOOT_MODE_SECURE) {
+> -        panic("ECKD boot device does not support secure boot!");
+> -    }
+> -
+>       switch (virtio_get_device_type()) {
+>       case VIRTIO_ID_BLOCK:
+>           zipl_load_vblk();
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index c5b425209a..228b52a37e 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -271,8 +271,43 @@ static int virtio_setup(void)
+>       return ret;
+>   }
+>   
+> -static void ipl_boot_device(void)
+> +static void validate_secure_boot_device(void)
+> +{
+> +    switch (cutype) {
+> +    case CU_TYPE_DASD_3990:
+> +    case CU_TYPE_DASD_2107:
+> +        panic("Passthrough (vfio) device does not support secure boot!");
+> +        break;
+> +    case CU_TYPE_VIRTIO:
+> +        if (virtio_setup() == 0) {
+> +            VDev *vdev = virtio_get_device();
+> +
+> +            if (vdev->is_cdrom) {
+> +                panic("Secure boot from ISO image is not supported!");
+> +            }
+> +
+> +            if (virtio_get_device_type() == VIRTIO_ID_NET) {
+> +                panic("Virtio net boot device does not support secure boot!");
+> +            }
+> +
+> +            if (zipl_check_scsi_mbr_magic()) {
+> +                panic("ECKD boot device does not support secure boot!");
+> +            }
+> +        }
+> +        break;
+> +    default:
+> +        panic("Secure boot from unexpected device type is not supported!");
+> +    }
+> +
+> +    printf("SCSI boot device supports secure boot.\n");
+> +}
+> +
+> +static void check_secure_boot_support(void)
+>   {
+> +    bool have_iplb_copy;
+> +    IplParameterBlock *iplb_copy;
+> +    QemuIplParameters *qipl_copy;
+> +
+>       if (boot_mode == ZIPL_BOOT_MODE_UNSPECIFIED) {
+>           boot_mode = zipl_mode(iplb->hdr_flags);
+>       }
+> @@ -281,14 +316,40 @@ static void ipl_boot_device(void)
+>           panic("Need at least one certificate for secure boot!");
+>       }
+>   
+> +    if (boot_mode == ZIPL_BOOT_MODE_NORMAL) {
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * Store copies of have_iplb, iplb and qipl.
+> +     * They will be updated in load_next_iplb().
+> +     */
+> +    have_iplb_copy = have_iplb;
+> +    iplb_copy = malloc(sizeof(IplParameterBlock));
+> +    qipl_copy = malloc(sizeof(QemuIplParameters));
 
-> On Mon, Sep 29, 2025 at 04:51:42PM +0100, Alex Benn=C3=A9e wrote:
->
->> Some license scanners are particularly dumb and when combined with
->> automatic license scanning for FLOSS accreditation on forges cause
->> problems on renewal. As GPL 2.0 applies to the core code link the main
->> licence text to COPYING to keep everything happy.
->>=20
->> This caused issues for the QEMU project recently as we mirror (two!)
->> copies of u-boot in our project.
->>=20
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> Since Daniel Berrang=C3=A9 posted a similar patch 3 days ago, I assume the
-> gitlab license renewal is coming up quickly.
+While IplParameterBlock is huge (4k), a malloc is justified for that. But 
+QemuIplParameters is just a bunch of bytes (28 if I counted correctly), so I 
+think it would be nicer to use a stack variable for that instead.
 
-We fixed it by temporally moving the repo to another project (although
-it seems that is not a true mirror as mirroing needs the full paid
-GitLab). However it broke a bunch of down-streams tracking earlier
-branches.
+  Thomas
 
->
-> In principal, I'm fine with this and will apply a patch shortly.
->
-> In practice, we've always had to get a human involved at Gitlab to get
-> our license renewed as we're clearly within the required terms, it's
-> just that we've also got some further reading people should do.
+> +    memcpy(qipl_copy, &qipl, sizeof(QemuIplParameters));
+> +    memcpy(iplb_copy, iplb, sizeof(IplParameterBlock));
+> +
+> +    while (have_iplb_copy) {
+> +        if (have_iplb_copy && find_boot_device()) {
+> +            validate_secure_boot_device();
+> +        }
+> +        have_iplb_copy = load_next_iplb();
+> +    }
+> +
+> +    memcpy(&qipl, qipl_copy, sizeof(QemuIplParameters));
+> +    memcpy(iplb, iplb_copy, sizeof(IplParameterBlock));
+> +
+> +    free(qipl_copy);
+> +    free(iplb_copy);
+> +}
 
-The GitLab process is a click though automated one now. However I did
-check GitLab identifies the right license with the patch:
-
-  https://gitlab.com/stsquad/u-boot/
-
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
