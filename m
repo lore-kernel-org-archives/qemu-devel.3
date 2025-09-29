@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2F5CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 19:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0516FCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 19:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3JEP-0007Ug-V1; Mon, 29 Sep 2025 15:08:17 -0400
+	id 1v3JEP-0007UQ-Ut; Mon, 29 Sep 2025 15:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3JEN-0007UI-6M
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 15:08:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3JEM-0007U3-EP
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 15:08:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3JEH-0004ta-VE
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 15:08:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3JEI-0004tb-EQ
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 15:08:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1759172887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=IFHaJxFspsNlQilRqQeh502WQ94P873aByB9B6dMPnw=;
- b=UAx4QG1pri7NF/uwJnJhxIT4+e5KlXh6lgN8SEZd3RNHB18VIHu7lOt8MfVLeHyjhSCWHr
- JK4lKjjBsLv03puhX5xv1OBKmZp+VZF8l2MaS8nH/22zH9Znud6Lo28+YKSbxfEzpmZBX2
- tcp/Fvbhcmzzu9BnvdPdzy50+PA3x3Y=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=V6i0nVanfDujpYn//cEXKWgfyzyv69/ASXLJkx8rKto=;
+ b=QROChcx+fzImJMReQNHUqK+KRRyQeV5XBQPt0Dcx9C102KkXbZN7+CrisG8tieMbW6BC/q
+ khXk64WwmfpqvnBH0Ak1eTuw4y2Ii69CisB2OwJ8y+Xgkl8aa5rAY0OC/4s70vtiCWGKOR
+ qNno5c6Gzh/WuDFJ5d2ZZRlwNM4WofM=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-171-hPmm51lfNF2QzBm3_69xpQ-1; Mon, 29 Sep 2025 15:08:04 -0400
-X-MC-Unique: hPmm51lfNF2QzBm3_69xpQ-1
-X-Mimecast-MFC-AGG-ID: hPmm51lfNF2QzBm3_69xpQ_1759172884
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-7946137e7c2so142813056d6.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 12:08:04 -0700 (PDT)
+ us-mta-341-0gdmSRkRMSWCYlefMJkh6A-1; Mon, 29 Sep 2025 15:08:06 -0400
+X-MC-Unique: 0gdmSRkRMSWCYlefMJkh6A-1
+X-Mimecast-MFC-AGG-ID: 0gdmSRkRMSWCYlefMJkh6A_1759172885
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-797ab35807eso125967646d6.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 12:08:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759172884; x=1759777684;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IFHaJxFspsNlQilRqQeh502WQ94P873aByB9B6dMPnw=;
- b=mK8o+LtWTtxHIk5bEyjRNRUG7FRh6hLMpVqt6z1Otkz4pw+qo2hY5jCVBgXJ1yqbF5
- Ko8aBClUsQcWFXLui5ozPMQ2pLrqC7LRmJ4JoPnEkctMcC46Pw75AQWFvwiCogdLC/yf
- 0DQDZjROwiGfKO3sC3bccE1CARunMUVOobkwKXuZzR+hlCciyJIGoaYxAdKNvb5kD3Uy
- RX/OgC9L3K+lIYBaxzWJpgPoS3V4lZdOUzSP0q8/gKF+QULQ2JSGDphHPkAenaIFA1kM
- DLv7ocdJOaK8KYNLFu00yOxDNOYJxrWNt90KuhwSbc2I+U3jvzSPgBBhlQv8QUcpLtuN
- IKGw==
-X-Gm-Message-State: AOJu0YyDA+z91RDU0pCaf72rjBB3BZr2tBmRVA2JGSXczc3c+4zXAyzA
- cdIAiS55hAqrnWHzedBH00fYcn+XW+Ue90jwmawjmCbsTK+itbDADvAy+WlEx1gUlXO78nPJLR4
- cJJJ61Le9WE1RBz+6/GizTPxjjWBKQdUa4SdZh+/49PdpFdTndvZC11QlchwhDfVxPr8u7otTh0
- Sre3BuqPJ+Kv6I/mgrJaRmD5rU2nTGhz3CkJRZ/g==
-X-Gm-Gg: ASbGnctlkbFsYx/jTS2Al+isGDgXMZbxLuiYT+++qDAPH1DfsJoZ5HFxGiNejUA0SDY
- c5RfrcrbOe7ujEXVgMkQJnz6FlcxwC7EBox2r0tDai/yIjgZnqPo3saQ3NCpQAtoaSnJ6MbQ1O4
- oTIxEJaFdkAbK+JRSBnHaxXSZ/mynXsAUtDdm1NFOZAjgEUj1rXfzU70Wg9f6VX+YBYAI6wX0pE
- OEo3H9rCCxoGL0ZPoOnv4FLuLJLgMD1rJHB20oop2LJFcMaZvCbZKxLvsObwo0mpUcWcIz2SMfw
- 4Qrvxz2TGTNdp13t3DY4o7Mwme8BER8h
-X-Received: by 2002:a05:6214:4d03:b0:7a0:9c00:8575 with SMTP id
- 6a1803df08f44-7fc3b6df584mr187656196d6.41.1759172883522; 
- Mon, 29 Sep 2025 12:08:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/TZTVuQ6PaGUKEybDA7K7y8eKiY8dB4+YzWeKC4ak46bKhNcm1KS+uZx+rNT/8X4iwIBwMA==
-X-Received: by 2002:a05:6214:4d03:b0:7a0:9c00:8575 with SMTP id
- 6a1803df08f44-7fc3b6df584mr187655676d6.41.1759172882937; 
- Mon, 29 Sep 2025 12:08:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759172885; x=1759777685;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V6i0nVanfDujpYn//cEXKWgfyzyv69/ASXLJkx8rKto=;
+ b=UCStf1LmfU4YDlCbfbcDeHh6nL8mgBVhbnBeHufoTOQpg8dYb3m9BJXUY+SpUWWl4u
+ XPv8cofA1EutkDRLw3+TEExoF6IxXaUr9gC882OnFM5N0MJZ/pZcO3GKGS1CUnFUAof1
+ Gg9mdsVhAVfQ4JgjcwutlbrpbuivYfB77Z/vnBS+BXNqIFWORH2gRPz1tB8fa4G6/vmE
+ 3S+/If8MYZWqOcb7zfXKPvFR6OEKbFNdPHoDsi2kBXZOzyOVChWfXtkeOyVKW8WQIhe+
+ NMdeWW5iEtwe68nUJnJPxlE5McSCKu96AcK6K4YefysC54/40Utmv/MWDKeswZYVaf6n
+ 4u+Q==
+X-Gm-Message-State: AOJu0YytCTmT4pFacIncepAssvZo+DY9J0oYECt+tj1iPdt7kNrxMwDo
+ mZEVry87Ap+dE7Jx9TR8XZjEAfhIv6MIGRn7XWT8lMPFWyRDC2WwycoJtaFXsBPN2jDAcUXvXD4
+ TpU1pZ/iN8bz8rGWMZ7TIL+slq0CKF8CKh49iVzXMD+nsIV5kz2yUcZc4Vsd3mC1SblpwDz9KT/
+ 7o2M6mTMhNpvl7VbrMIym+jLzGZw9QgHtrX1MvtA==
+X-Gm-Gg: ASbGnctlxVdL8J/iD6XT3yk+90WKNi0hZmqfqDUlSvwSjl252bxV4yMP8L+P2OuUAJB
+ VzT/v88MY1q5iP+vD1xqr3T0tBGhGtVhmzQYTEcq0OXheHnJ1oCMaIFAfgJ8m4xOOxoPJotddT8
+ gOxiWfLl6ClC8zBfRhBx5hD4uC6/RykuXR8XDWc+rUzMyD0nXmDnyomgPA7CZZNnDOlfaZw15nk
+ KEAi27JRsdYKODa079JsppfZej65DLhkYtXyoJeqXh1rIJguXs8zuJIXHVXSoGwm07Tb7apMcIC
+ 7kAD250XCX6maNXT8RnjF04Rl0Olq/oF
+X-Received: by 2002:a05:6214:d62:b0:80a:71ea:38df with SMTP id
+ 6a1803df08f44-80a71ea39b5mr208194666d6.43.1759172884853; 
+ Mon, 29 Sep 2025 12:08:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHE+64ikqAdcPFOFM810wShTDGO76ItxX0fewMNqlUu8SMb2QmHTD5iEbFZ53s6ShZPj9CQfg==
+X-Received: by 2002:a05:6214:d62:b0:80a:71ea:38df with SMTP id
+ 6a1803df08f44-80a71ea39b5mr208194076d6.43.1759172884218; 
+ Mon, 29 Sep 2025 12:08:04 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-80142f5d6d1sm79626296d6.33.2025.09.29.12.08.02
+ 6a1803df08f44-80142f5d6d1sm79626296d6.33.2025.09.29.12.08.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 12:08:02 -0700 (PDT)
+ Mon, 29 Sep 2025 12:08:03 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <rth@twiddle.net>, "Emilio G . Cota" <cota@braap.org>,
  peterx@redhat.com
-Subject: [PATCH 0/3] rcu: Detect accidental reuse of rcu head
-Date: Mon, 29 Sep 2025 15:07:58 -0400
-Message-ID: <20250929190801.931989-1-peterx@redhat.com>
+Subject: [PATCH 1/3] qht: Zero-initialize qht_map
+Date: Mon, 29 Sep 2025 15:07:59 -0400
+Message-ID: <20250929190801.931989-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250929190801.931989-1-peterx@redhat.com>
+References: <20250929190801.931989-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -106,25 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an idea suggested by Peter Maydell:
+QEMU almost always do this across the tree except QHT.  This prepares for
+rcu to track double free.
 
-https://lore.kernel.org/all/CAFEAcA--K0=EJNNvj98i=ewGY=tN3u4S0+fNb9kJpYynzjHEhw@mail.gmail.com/
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ util/qht.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-After this small series applied, we should be able to assert on misuse of
-accidental (wrong) re-use on a rcu head.
-
-Please review, thanks.
-
-Peter Xu (3):
-  qht: Zero-initialize qht_map
-  tests/test-rcu-*: Zero-initialize allocated elements
-  rcu: Avoid double rcu frees
-
- tests/unit/test-rcu-list.c | 4 ++--
- util/qht.c                 | 2 +-
- util/rcu.c                 | 2 ++
- 3 files changed, 5 insertions(+), 3 deletions(-)
-
+diff --git a/util/qht.c b/util/qht.c
+index 208c2f4b32..872d9f9cec 100644
+--- a/util/qht.c
++++ b/util/qht.c
+@@ -441,7 +441,7 @@ static struct qht_map *qht_map_create(size_t n_buckets)
+     struct qht_map *map;
+     size_t i;
+ 
+-    map = g_malloc(sizeof(*map));
++    map = g_malloc0(sizeof(*map));
+     map->n_buckets = n_buckets;
+ 
+     map->n_added_buckets = 0;
 -- 
 2.50.1
 
