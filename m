@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0EACAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A175CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3F62-0004mw-CQ; Mon, 29 Sep 2025 10:43:22 -0400
+	id 1v3F5r-0004ip-HG; Mon, 29 Sep 2025 10:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linux_oss@crudebyte.com>)
- id 1v3DbR-0004KH-5p
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 09:07:41 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linux_oss@crudebyte.com>)
- id 1v3DbI-0002ME-5z
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 09:07:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=U6p5OzRV8NVMjy5kzKrrKHfil5LPBKG7T0tsPVsqnzI=; b=UVEYZsJ0K538ZWZ1EieZNxfF9H
- p+8GxHeSHMULkws3bfrOst6rZyz24n7Bsvxd1g0QjwcQK4d9pHRxi/DcwrPmmIuMfD2Zi0mDoerQl
- zH3AcfJbwSwiC1lTYEo5vwaPMduW1hwwPpeuzOlPxCdwYbtkUzOvlak6prs/hWO/UsBSToUyVX3hx
- qFLivs3RCU77K/x3J7wqJYAqAAJQmN9zuSVm7RvEdlbGF9ie3EF3S8/fKGUXJ3cVuXNM2OxuMMBX9
- bzLjSfeUKIhlGubBYvtJRf0x7t/k0IeQPJGWBtvrbb20jHJCLv9qaLVMNuT5gD/WFQbPeGGMvbYGL
- dz2q7R7oo2aDRtjWaG2NBpJMw6EwGlyLPcf9tcH25wRdmSgUkEZ8oGLko38a+cnP7QtaG9g2sbduA
- Wl/dMvFvfkmKk9lcMJrDdT7ZuTZTEt0z6g08CuAeO2iOXw2SKDhLNSImw/d2PmyXhULgmvn82BAF1
- OnqtL0B8MJ0JEorALvE3QasTNEdA+ScfVGEGt2xw4GuSN7UNUN70guHROG/dMfXbhGZ7I+SCSr9ai
- 812H/aXsDoOQhXpOLVVKpKhqSs1IxYwXJwps85bQFCJ9AlUiGmUU2owkl8P2iB3zBfu8Om4bKmNt8
- ZoLVN8UxciL1w24c6DNUhQw20CnUvQg3toB4BlYB0=;
-From: Christian Schoenebeck <linux_oss@crudebyte.com>
-To: =?ISO-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>,
- Dominique Martinet <asmadeus@codewreck.org>, qemu-devel@nongnu.org,
- Greg Kurz <groug@kaod.org>
-Cc: Eric Van Hensbergen <ericvh@kernel.org>,
- Latchesar Ionkov <lucho@ionkov.net>, v9fs@lists.linux.dev,
- =?ISO-8859-1?Q?G=FCnther?= Noack <gnoack@google.com>,
- linux-security-module@vger.kernel.org, Jan Kara <jack@suse.cz>,
- Amir Goldstein <amir73il@gmail.com>, Matthew Bobrowski <repnop@google.com>,
- Al Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>,
- linux-fsdevel@vger.kernel.org, qemu-devel@nongnu.org,
- Tingmao Wang <m@maowtm.org>
-Subject: Re: [PATCH v2 0/7] fs/9p: Reuse inode based on path (in addition to
- qid)
-Date: Mon, 29 Sep 2025 15:06:59 +0200
-Message-ID: <3061192.c3ltI2prpg@silver>
-In-Reply-To: <f1228978-dac0-4d1a-a820-5ac9562675d0@maowtm.org>
-References: <aMih5XYYrpP559de@codewreck.org>
- <20250917.Eip1ahj6neij@digikod.net>
- <f1228978-dac0-4d1a-a820-5ac9562675d0@maowtm.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v3F5i-0004eI-Ep
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:43:03 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v3F5N-0001kA-6d
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:42:58 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-46e384dfde0so48655855e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759156951; x=1759761751; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hAzyKK2avmxJErsVwK5KjZxJGok1xSdKxfjGTCv72nQ=;
+ b=tP6Z1wRV5alFbhh/Ok7wfOFir6CtMjcZ9t0QwdyqE7RC5wEBBkjEyrmDu8SJV9tmuL
+ ilzbLeEZG/fBPuXwdxdxZBFEYiv9zltg/GvFhLr3zknW0JHF0Ftz/1rVMzREVm34DeSL
+ kXR1T2c4CiQvVd8+jS+k5cSmo0CRqFI/goLto88il5ttv0+hQmpZZ3HDvAyEq3hZIG4F
+ GlxFZQi1wwmr595ZVypKjIernL9Nd5FYEs4iuql9yBEdbtJZDC//9Tk3e3amf8JUcBdr
+ AJQgtLRqse9hTuPsPBa3OyaSdGWS4vr4re0tjloKHwOzfOVkRQV9Ke+S+EKn3F8moNXm
+ 6ayw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759156951; x=1759761751;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hAzyKK2avmxJErsVwK5KjZxJGok1xSdKxfjGTCv72nQ=;
+ b=vy8K3wUL1BGK6aiVonY87YNwsceSAE1Rfnha+Ep03ha/kZ3kalaid0kizGrh5Xwg6d
+ AtUCapsBRz4fuuTierbmTVPTvPSAUxy3D4P6uQAG3RwgDl/lsDWcDC+tRwqaF/vp5Tgk
+ WNVBE0RZRZytymMhRnKFhuCUbb23oBoPjoN3R/SgHuLIX2A3Iru5XNbrK0MjweTUwquP
+ tlFxkw0j5c7pVoX5nlYHOY7euG5y+c+CH2Q91aA6dbnI8bH/OMSKkBx0csKhGLNOeCdV
+ viZE0H10bKiTW6Bc+tG1qQ7oQQtgTLIkyYbhworOdbOja4bXWzfj796WFRQ37e7ym8+o
+ X0hw==
+X-Gm-Message-State: AOJu0YxQn4hOcrnTF9cic8L9gcF9ZQYDTCE6sh7d+aJgL8/DeRtH0YSd
+ bHbXEw4p/6VALKeV4Yj9P+SD0Dyss70jV6cclL2mjIXc+XHy3KfOGW7F1nMl8UTg4TO1xXy8xWF
+ kYkKx
+X-Gm-Gg: ASbGncvhEIZD3SIPwxkJAEErOzjzBDdqKedF6lF00CcX5DB2AkJX2cvjJKKAEKZzljo
+ zmup3e7KwTvdu9X4p1rGAJYm2a2phMCYRF8DCeRpurGIkKg2yZ2kaGlpsbISAl7qyc5y8MT4diX
+ E2YW5ps20xTHDObcmsnv2nbNtWK5EiKj6abWABk1tzrK+s8OMeGo0l3Lr1l+OJB3gEtgR9R3vHI
+ SoE/L1S1zViDIjVz89bx7vkxR/j/uOpaD151s/Q/3jGgL/1o3HZ0xT2mIX1SKTslC70u+KYyB+e
+ GbMeYebGkYqn37Zb1f/KB4rcucTzxQP81XzUewUBZrKkt3J5SNBPFQU0fOYgbnHBPTIjPY3V0rz
+ d+s6+xJFbRaSv61zc8ETh3UDOls+uLcaeGjHDqnY=
+X-Google-Smtp-Source: AGHT+IEn9+EqLhqnXDgCbSR5/hiXJpJAcqtGfpglMlne8UfNbOwx7tEb+VcqcXOcBB1I7LGULvPM2A==
+X-Received: by 2002:a05:600c:3145:b0:46c:d6ed:2311 with SMTP id
+ 5b1f17b1804b1-46e329f9d06mr136195605e9.19.1759156951104; 
+ Mon, 29 Sep 2025 07:42:31 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e56f64849sm15893885e9.11.2025.09.29.07.42.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Sep 2025 07:42:30 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PATCH 0/3] system: Don't leak CPU AddressSpaces
+Date: Mon, 29 Sep 2025 15:42:25 +0100
+Message-ID: <20250929144228.1994037-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=linux_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 29 Sep 2025 10:43:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,78 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sunday, September 21, 2025 6:24:49 PM CEST Tingmao Wang wrote:
-> On 9/17/25 16:00, Micka=EBl Sala=FCn wrote:
-[...]
+When a vCPU is created, it typically calls cpu_address_space_init()
+one or more times to set up its address spaces. We don't currently
+do anything to destroy these address spaces, which means that we
+will leak them on a vcpu hot-plug -> hot-unplug cycle.
 
-Hi Greg,
+This patchset fixes the leak by replacing the current
+cpu_address_space_destroy() (which has an awkward API, includes
+a bug, and is never called from anywhere) with a new
+cpu_destroy_address_spaces() which cleans up all the ASes a CPU
+has and is called from generic unrealize code.
 
-I'd appreciate comments from your side as well, as you are much on longer on
-the QEMU 9p front than me.
+Patch 1 is just a comment improvement to clarify that
+address_space_destroy() defers most of its work to RCU and you
+can't free the memory for the AS struct itself until it's done.
 
-I know you won't have the time to read up on the entire thread so I try to
-summarize: basically this is yet another user-after-unlink issue, this time=
- on
-directories instead of files.
+Patch 2 is from Peter Xu; we need to be able to do "destroy and
+free an AS" via RCU, and at the moment you can't do that.
 
-> So I did some quick debugging and realized that I had a wrong
-> understanding of how fids relates to opened files on the host, under QEMU.
-> It turns out that in QEMU's 9p server implementation, a fid does not
-> actually correspond to any opened file descriptors - it merely represents
-> a (string-based) path that QEMU stores internally.  It only opens the
-> actual file if the client actually does an T(l)open, which is in fact
-> separate from acquiring the fid with T(l)walk.  The reason why renaming
-> file/dirs from the client doesn't break those fids is because QEMU will
-> actually fix those paths when a rename request is processed - c.f.
-> v9fs_fix_fid_paths [1].
+Patch 3 is the bugfix proper.
 
-Correct, that's based on what the 9p protocols define: a FID does not exact=
-ly
-translate to what a file handle is on a local system. Even after acquiring a
-new FID by sending a Twalk request, subsequently client would still need to
-send a Topen for server to actually open that file/directory.
+thanks
+-- PMM
 
-And yes, QEMU's 9p server "fixes" the path string of a FID if it was moved
-upon client request. If the move happened on host side, outside of server's
-knowledge, then this won't happen ATM and hence it would break your use
-case.
+Peter Maydell (2):
+  include/system/memory.h: Clarify address_space_destroy() behaviour
+  physmem: Destroy all CPU AddressSpaces on unrealize
 
-> It turns out that even if a guest process opens the file with O_PATH, that
-> file descriptor does not cause an actual Topen, and therefore QEMU does
-> not open the file on the host, and later on reopening that fd with another
-> mode (via e.g. open("/proc/self/fd/...", O_RDONLY)) will fail if the file
-> has moved on the host without QEMU's knowledge.  Also, openat will fail if
-> provided with a dir fd that "points" to a moved directory, regardless of
-> whether the fd is opened with O_PATH or not, since path walk in QEMU is
-> completely string-based and does not actually issue openat on the host fs
-> [2].
+Peter Xu (1):
+  memory: New AS helper to serialize destroy+free
 
-I don't think the problem here is the string based walk per se, but rather
-that the string based walk always starts from the export root:
+ include/exec/cpu-common.h          | 10 ++++-----
+ include/hw/core/cpu.h              |  1 -
+ include/system/memory.h            | 24 ++++++++++++++++++---
+ hw/core/cpu-common.c               |  1 +
+ stubs/cpu-destroy-address-spaces.c | 15 +++++++++++++
+ system/memory.c                    | 20 +++++++++++++++++-
+ system/physmem.c                   | 34 ++++++++++++++----------------
+ stubs/meson.build                  |  1 +
+ 8 files changed, 78 insertions(+), 28 deletions(-)
+ create mode 100644 stubs/cpu-destroy-address-spaces.c
 
-https://github.com/qemu/qemu/blob/4975b64efb5aa4248cbc3760312bbe08d6e71638/=
-hw/9pfs/9p-local.c#L64
-
-I guess that's something that could be changed in QEMU such that the walk
-starts from FID's fs point, as the code already uses openat() to walk relat=
-ive
-to a file descriptor (for security reasons actually), Greg?
-
-That alone would still not fix your use case though: things being moved on
-host side. For this to work, it would require to already have a fd open on
-host for the FID. This could be done by server for each FID as you suggeste=
-d,
-or it could be done by client by opening the FID.
-
-Also keep in mind: once the open file descriptor limit on host is exhausted,
-QEMU is forced to close older open file desciptors to keep the QEMU process
-alive. So this might still break what you are trying to achieve there.
-
-Having said that, I wonder whether it'd be simpler for server to track for
-file tree changes (inotify API) and fix the pathes accordingly for host
-side changes as well?
-
-/Christian
-
+-- 
+2.43.0
 
 
