@@ -4,130 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B51CAC5BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D257ECAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 14:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3F0u-00027h-8n; Mon, 29 Sep 2025 10:38:04 -0400
+	id 1v3F2e-0002ax-MJ; Mon, 29 Sep 2025 10:39:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3F0q-000271-Lz
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:38:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3F0e-0008Qo-HW
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:37:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759156659;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=a8gD0i1Fk+fPeHePBG0bepSlaIiDsJf/xQ2vt97Bzzk=;
- b=fe6/9f56E5A1a3R3ogpzD4YfVpPu9HlWjV0cPLCFsHF8YoOz2S8GqcnlHegsaKRxjYGSEa
- oSHgvHhN4fDEXWAvVBJcOidQEL+8ifRsA+6JAXdQQACVDDmzWpxPKHWiQ3DaDO8BIK6F7b
- Du9qT2R2CBeHwJdBGKg84P00Mc6feb0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-504-T2g7RKzdNBuwV4tsNmFUsA-1; Mon, 29 Sep 2025 10:37:38 -0400
-X-MC-Unique: T2g7RKzdNBuwV4tsNmFUsA-1
-X-Mimecast-MFC-AGG-ID: T2g7RKzdNBuwV4tsNmFUsA_1759156658
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-78e5b6f1296so84425626d6.2
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:37:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3F2a-0002Z2-TK
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:39:49 -0400
+Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3F2R-0000gj-BJ
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 10:39:47 -0400
+Received: by mail-wr1-x443.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439b56so2871602f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 07:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759156773; x=1759761573; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+ojY3RPIpKc+brp1NfCJujNzb4NUxsEjheEtU1uTV/c=;
+ b=t0akCGmRQ65j0hMtiQT1yc2nvTxve5Bx6i3PWTwtiVnxhJZx7pZgkK6i73S4/io1SS
+ B8pyCGOYYdKd3EMfANX/dQmC536C84SpAWH28qxTgTO59/eb6T1KMDG4XXWiiuQOgk1P
+ bUTcGxWbLwUgfi3kgkUnqaeOdnESTs1BIUZsRVQRu9EVPwf/SvXdxfHHgo+zNWQt3jfS
+ LeBd6XcS2CiO+j9ee6eo9EtVaDK/WOLiUGKn1/fVLKlyk7CqcqMmAJKCoc3G46vu6fGk
+ SCiBMR6URQtvTQWMP8wDjt9C8kM12DMgVuQIyFv7/v7Z0CZKV0FkpnsGtXS9MBE8LjrJ
+ PNPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759156658; x=1759761458;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a8gD0i1Fk+fPeHePBG0bepSlaIiDsJf/xQ2vt97Bzzk=;
- b=j+SlcD0k4j7Dlzry1LYBDv37xrqYE4ZjRmfs2vFPFpvmdP6ia4bVA0k9DuyYXZftKK
- WqyxQdyyCX6mEkmdiBNky/YBjo25fBztjg2+hy7z5uco0zfCEc+DyaxJAyOdcZodagox
- Z3c8R073aWTEg+nF2lRsntLT87sdOUCMgPb0vXWTpIimhI8JHbhgDKKm0n2CTOPpckSC
- NVH49fyzmx2lKxh7Jz6apMDp2UVY0gEwB4jMhGvAqfK062x0vUpzKeHlO35omy9ufzDd
- uVBd2fM3MvLLpjuHkSyai7tJpu35dyAjssI+K/nTYcoc6VHhEOcwmGClGOIb05kER7pY
- G6lg==
+ d=1e100.net; s=20230601; t=1759156773; x=1759761573;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+ojY3RPIpKc+brp1NfCJujNzb4NUxsEjheEtU1uTV/c=;
+ b=qG3uUlPHKqUZKnlQ9zaEQWwOvaDcfbyVygsppb0hlFJ1pXyAwqpMj2+vGP46UgIORE
+ n//KYOGuBBzmjTqg4MyjQochEbGeXIOl3/IW5LwiADhuJ38vL07eyKBWXV1spGttJGT0
+ WrPITM2IvqUIfRqEy9y1QWgX3pbGxdeUcDGTtoBb+bY7IqQwIqRmzA3WRLSPUuz31oUh
+ /M9BHX4V8VAhFgVbACrW2mRJMoR31TZAyEe37B4iHDfjOr8VLlnSNnswsY2r7uiiuePW
+ ok4Eqx6/6RK51yYLB2yd8p4uLt76NLWdWCqs8XsB+WL4B9l665o/J+GzOcHzRDyvmkHq
+ RsVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0Q7ismPSLkHeDhwhlBiaDV5c/5kzqDJiGj8SV2RU7Uniz4h+K/6R6zB0f4ziW6kFjqWjROp22nwn+@nongnu.org
-X-Gm-Message-State: AOJu0YyFowhY5dCJi9JlhePqgiC6B+Gufv/nWIZkoIQD2pqMp3Y2vAtb
- C4b8sj4w3N+cpgg4a1jFvtj7fkO77ljBrkMhwtKNTf/nk24PVOj/QNEkmwNMcOQd6lhPdUA0a7X
- Q/CfxMBL1FWem1g1nC62UsyCn3hAf+QFhJX7JDID7ZOAjGk6+kgRD5zlr
-X-Gm-Gg: ASbGnctK1LftbT01BA7TorLCzS118/IenzHqhEe7Ehh9XP/6m5Xw4eXBLC/VkijUBXy
- IjfOExSE2x9rgXrQalfKmSLCpLt8QkhsLmTfCqx90ltSs+EjZPfI3C8LJB/aj1a/Ehg5+wjx4dN
- vLUz13q9FFDU0IQrEE7L7xBZFtpcQ8bGihWb2D9TfLW0tCSjyK4SoWvLOMjRLeZL8nX28cf+XxF
- /2NrfIE+LR+tpiVMaGvp3YB7yyNxYysIv3ns/EdM+1UZSOUdNcwdZB9I5ur6lasKHT8RXQm+xkc
- aXqj4imJvs00Nf2NeJaHpZDxO7/gMwb+
-X-Received: by 2002:ad4:594c:0:b0:785:c20b:f602 with SMTP id
- 6a1803df08f44-7fc4515b7f1mr227612686d6.61.1759156657571; 
- Mon, 29 Sep 2025 07:37:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEh5AwldQG7h3lDp1rao1YTszKy98M3ZiyEHYnc3TUgJws8RB3MU+/Oe1qxHX5YhmL7kQP7Nw==
-X-Received: by 2002:ad4:594c:0:b0:785:c20b:f602 with SMTP id
- 6a1803df08f44-7fc4515b7f1mr227611766d6.61.1759156656842; 
- Mon, 29 Sep 2025 07:37:36 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-80135b5462asm76059506d6.13.2025.09.29.07.37.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 07:37:35 -0700 (PDT)
-Date: Mon, 29 Sep 2025 10:37:32 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v2 3/3] memory: Stop piggybacking on memory region owners
-Message-ID: <aNqZrEagWEQ-up-Y@x1.local>
-References: <aMHxhTIw2EGRyD4-@x1.local>
- <fe1969e6-bc13-4438-816d-b352926c33a8@rsg.ci.i.u-tokyo.ac.jp>
- <aMNMjetBDJfBiThl@x1.local>
- <4108b4f2-accf-4080-af29-a3f464d862f9@rsg.ci.i.u-tokyo.ac.jp>
- <aNRfHQoBgwBMjK04@x1.local>
- <CAFEAcA8wTsZiihr8-LKucTmeZwPBdnkdA-o3mUgaW1WzrADhOg@mail.gmail.com>
- <aNWgnBV-9p6UnsYT@x1.local>
- <CAFEAcA8qdWtdX0Xc0WAuT9eZsXbudV2g2=Da8pK6tEfytdMbpw@mail.gmail.com>
- <aNauXSMiP0LUWQ5J@x1.local>
- <CAFEAcA--K0=EJNNvj98i=ewGY=tN3u4S0+fNb9kJpYynzjHEhw@mail.gmail.com>
+ AJvYcCVi6oxEm8FwgRukkAu1pzA1KqDD1KzLHfrBqvb25qEGMnmjl/FPBxSUKddcb1XFoVM9f9bJv56ExBrP@nongnu.org
+X-Gm-Message-State: AOJu0YwiDQ8LlLqrdmvyEf6jDENZr4Fd5dT7mfpqz4ERCqcjOc12yryC
+ BD1sdnp5K3k4vzl++QQ1uNZq8su56ok2E/yz+xdy6KV4YA0HoEsBt1t+KeevNsN/fSM=
+X-Gm-Gg: ASbGncufHVtcIomtG7DjX+ZexbFKBEonG75Oi2OnO/cZ9f8dGOlZzWnJV7p9m/6Y4nD
+ dr//gZt0newke78IyojczRxtcyuVfXF3tACmvXHyMU5qf5thtmOfrVRf939B0fYwevWEUPAxCDu
+ 6kLj/KhAtB3M4AW2zFGaqNkNm/+BA2eQGJEKreZyfQVg4SFnL1MKUaulJ8fxbca23Tx/WGzP2sx
+ V7X2JjW3chDb3vdIysoBWTCzATd2UimLopbbRgp/G4PiKLLR2NsUqSgBSjqLQFfu6C/Ksroawe9
+ d25Mb0ant04c0/tPpXTGTVBVRUwu+eyHOTIqFtyfPQbdv9CwE+8r93BnHbuDoK8Xo4FDJt9Dfe9
+ lNGfvAq0AgS5+IpCJzzLZESP9fC3N4z3B92biTna9pS1QB/CNaSQbBlabB2M2MhN6sQ==
+X-Google-Smtp-Source: AGHT+IGNFdnVUYfXaFSOqjAFP/McPaBQd/VqKvXhICaPTi1MQzoONPVWCs3hrqv2+xLXKabYKTmo1w==
+X-Received: by 2002:a05:6000:1ac7:b0:3ec:dd2f:eeb8 with SMTP id
+ ffacd0b85a97d-40e4c2d2da2mr14783878f8f.62.1759156773235; 
+ Mon, 29 Sep 2025 07:39:33 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fc6cf3835sm18721492f8f.46.2025.09.29.07.39.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Sep 2025 07:39:32 -0700 (PDT)
+Message-ID: <b726ecb9-b93c-43ce-9bef-7e18451885a4@linaro.org>
+Date: Mon, 29 Sep 2025 16:39:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA--K0=EJNNvj98i=ewGY=tN3u4S0+fNb9kJpYynzjHEhw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] .gitpublish: use origin/master as default base
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: stefanha@redhat.com
+References: <20250929134348.1589790-1-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250929134348.1589790-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::443;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,83 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 29, 2025 at 01:45:05PM +0100, Peter Maydell wrote:
-> On Fri, 26 Sept 2025 at 16:16, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Fri, Sep 26, 2025 at 10:09:29AM +0100, Peter Maydell wrote:
-> > > On Thu, 25 Sept 2025 at 21:06, Peter Xu <peterx@redhat.com> wrote:
-> > > >
-> > > > On Thu, Sep 25, 2025 at 10:03:45AM +0100, Peter Maydell wrote:
-> > > > > On Wed, 24 Sept 2025 at 22:14, Peter Xu <peterx@redhat.com> wrote:
-> > > > > > Side note: when I was trying to test hotplugs with i386/q35, unfortunately
-> > > > > > I didn't really see when the address space was destroyed, maybe there's a
-> > > > > > bug somewhere; I put that info into appendix at the end.
-> > > > >
-> > > > > This is https://gitlab.com/qemu-project/qemu/-/issues/2517
-> > > > >
-> > > > > I got blocked on that because I ran into a weird "I have some
-> > > > > memory that needs to be freed by the RCU callback, but only
-> > > > > after the callback has freed some other RCU stuff". I see
-> > > > > Paolo made a reply on that bug -- I would need to get back
-> > > > > to it and reproduce whatever it was I was doing.
-> > > >
-> > > > Thanks for the link, right that looks exactly like what I hit.
-> > > >
-> > > > I am curious if FIFO is guaranteed for RCU in general, or it is an impl
-> > > > detail only specific to QEMU.
-> > > >
-> > > > The other thing is I feel like it should be OK to reorder callbacks, if all
-> > > > the call_rcu() users can make sure the rcu-freed object is completely
-> > > > detached from the rest world, e.g. resetting all relevant pointers to NULL.
-> > > > With that, it seems the order won't matter too, because nobody will be able
-> > > > to reference the internal object anyway, so the two objects (after reseting
-> > > > all referers to NULL pointer of the inner object) are completely standalone.
-> > >
-> > > The specific ordering problem for cpu_address_space is that
-> > > there's a g_new allocated array of memory which contains
-> > > the AddressSpace objects (not pointers to them). The ASes need
-> > > to be RCU-deallocated first so they can clean up their internal
-> > > data structures; only once that has happened can we free the
-> > > memory that holds the AddressSpace structs themselves.
-> >
-> > If it's about cpu_address_space_destroy(), then IIUC it can also be done by
-> > providing a destroy_free() function so that instead of trying to serialize
-> > two rcu callbacks, we could easily serialize the operations in one
-> > callback.  One sample patch attached to avoid relying on order of rcu
-> > enqueue.
+On 29/9/25 15:43, Alex Bennée wrote:
+> This is very much the result of my recent fat finger but I think it's
+> safer to assume that origin/master points to a recent commit (or at
+> least a commit a given branch is based on) than master.
 > 
-> I figured out what my problem was here: like the existing
-> cpu_address_space_destroy(), it wants to first destroy the AS
-> and then free the memory the AS is using. So it does the
-> obvious thing:
->     address_space_destroy(cpuas->as);
->     g_free_rcu(cpuas->as, rcu);
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   .gitpublish | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
-> This doesn't work, because address_space_destroy() sets
-> up an RCU callback using the 'rcu' node in the AddressSpace
-> struct. But then g_free_rcu() tries to do exactly the same
-> thing and overwrites the info in the 'rcu' node: so we never
-> call the do_address_space_destroy() hook.
-> 
-> (1) Is there some way we can make this "tried to use the RCU
-> node twice" assert?
+> diff --git a/.gitpublish b/.gitpublish
+> index a13f8c7c0ec..a3adb21ffa1 100644
+> --- a/.gitpublish
+> +++ b/.gitpublish
+> @@ -4,48 +4,48 @@
+>   # See https://github.com/stefanha/git-publish for more information
+>   #
+>   [gitpublishprofile "default"]
+> -base = master
+> +base = origin/master
 
-Good point.  Maybe we should assert node->func==NULL in call_rcu1().
+Any key to specify the remote? (not everybody have mainstream tracked
+as origin).
 
-> 
-> (2) I think the simplest fix here is something like the
-> patch you propose that does the "destroy + free" in one
-> RCU callback.
-
-Yes, I agree.
-
-Note that Akihiko has another series to QOMify Address space.  This problem
-should be relevant there too. Currently I believe it's similarly broken in
-his series, but I think maybe we should fix this first on x86/arm hotplugs.
-
-Thanks,
-
--- 
-Peter Xu
+>   to = qemu-devel@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "rfc"]
+> -base = master
+> +base = origin/master
+>   prefix = RFC PATCH
+>   to = qemu-devel@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "stable"]
+> -base = master
+> +base = origin/master
+>   to = qemu-devel@nongnu.org
+>   cc = qemu-stable@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "trivial"]
+> -base = master
+> +base = origin/master
+>   to = qemu-devel@nongnu.org
+>   cc = qemu-trivial@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "block"]
+> -base = master
+> +base = origin/master
+>   to = qemu-devel@nongnu.org
+>   cc = qemu-block@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "arm"]
+> -base = master
+> +base = origin/master
+>   to = qemu-devel@nongnu.org
+>   cc = qemu-arm@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "s390"]
+> -base = master
+> +base = origin/master
+>   to = qemu-devel@nongnu.org
+>   cc = qemu-s390@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+>   
+>   [gitpublishprofile "ppc"]
+> -base = master
+> +base = origin/master
+>   to = qemu-devel@nongnu.org
+>   cc = qemu-ppc@nongnu.org
+>   cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
 
 
