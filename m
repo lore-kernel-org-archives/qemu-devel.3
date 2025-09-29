@@ -4,73 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22ED7CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76CCECAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3IcL-0003Q4-Vf; Mon, 29 Sep 2025 14:28:58 -0400
+	id 1v3Idb-0003le-8o; Mon, 29 Sep 2025 14:30:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v3IcH-0003Pn-IP
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:28:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1v3IdY-0003kz-Bi; Mon, 29 Sep 2025 14:30:12 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v3IcA-0001CB-Bm
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:28:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759170521;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=R7naFlgNm5V9aYQfbw7FhGYN9Ym4gtd5a42eYqzm/30=;
- b=K83vohc1XTcHF1Unbl6+lMI03iC/fJkw22kNldlkEcuiWeaUvvgwfob9sUaYc8O55YmaIF
- LH5oXx52o6qaMolL5nMTiehqVXuwD1QGBzllxNy8izP56HpJSicgFLeNP+h4PhpyHIWRPs
- ze4pDdR8gNgvxK+zTLxqw/GlBzoAJQM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-52Vi_Bp2NbiUFfAf5Psr3Q-1; Mon,
- 29 Sep 2025 14:28:38 -0400
-X-MC-Unique: 52Vi_Bp2NbiUFfAf5Psr3Q-1
-X-Mimecast-MFC-AGG-ID: 52Vi_Bp2NbiUFfAf5Psr3Q_1759170516
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FF081800451; Mon, 29 Sep 2025 18:28:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 227C1195608E; Mon, 29 Sep 2025 18:28:33 +0000 (UTC)
-Date: Mon, 29 Sep 2025 19:28:30 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, stefanha@redhat.com,
- alex.bennee@linaro.org
-Subject: Re: [PATCH] docs/code-provenance: add an exception for non-creative
- AI changes
-Message-ID: <aNrPzuOI_izZvPVx@redhat.com>
-References: <20250925075630.352720-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1v3IdR-0001uW-PO; Mon, 29 Sep 2025 14:30:11 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58TAnE3G021623;
+ Mon, 29 Sep 2025 18:29:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=i7lCCT
+ yKP4ZelI1TzSOaAYEMe9U7gVHasN9AZColyNo=; b=UfUHd8kvUeD553IPlkuX/N
+ mH6fh8bgE8vYG5Jn0TqF//yPKTLcduRE3wOgpXm77mTeM5JfAcLRy0jreiH/CoYo
+ WbBT0KCtKL5fVl7SDbhIvjxQpYrGSHxQAfhTKkcxFNoU17WPQj1UwjT8xJ1Oxqfj
+ IY+NgdxFWGVB9fZL1FaBZxP3+QbRc3Bl1ylYTrPk0+nbWTPEPUWGXl6GRnTjU0Fq
+ 43p+rOUtogqkTc1AEyMOVMneciNsOTSYkFrldPAz8Fqy1L6kQF4aN2XwCYAnFTu1
+ J6XD0b45p2LWd8pZY2knXlnnKpeNCZON1UjlW1GPLSreUeggypqUhKyOI9BkSO6g
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7jwbry0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Sep 2025 18:29:59 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58THHE3C001540;
+ Mon, 29 Sep 2025 18:29:58 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49evfhy966-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Sep 2025 18:29:58 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58TITuF826608326
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Sep 2025 18:29:56 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C5F9D5803F;
+ Mon, 29 Sep 2025 18:29:56 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4962958055;
+ Mon, 29 Sep 2025 18:29:55 +0000 (GMT)
+Received: from [9.67.68.243] (unknown [9.67.68.243])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Sep 2025 18:29:55 +0000 (GMT)
+Message-ID: <b093c8f4-e701-4c26-9185-e3d2add92bd7@linux.ibm.com>
+Date: Mon, 29 Sep 2025 14:29:54 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250925075630.352720-1-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/28] Add boot-certs to s390-ccw-virtio machine type
+ option
+To: Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, alifm@linux.ibm.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-2-zycai@linux.ibm.com> <87ldmcz1so.fsf@pond.sub.org>
+ <aMvE7Phd7sLvgj-J@redhat.com>
+ <9db0e68d-b54f-49d2-b598-f8e2f69e853b@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <9db0e68d-b54f-49d2-b598-f8e2f69e853b@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfX4vQYWR1gLTqE
+ KoWZ9IDyjAaQq+wZwtcC5G0gMcuViqmF0i5NqPA8X8bVTUxXy+Gxw1aHZ5OceMldeypiCiHK1Wl
+ pZm/RLOpaMlcw2EiVVnPqMm65YGtsLl23nbb0f0YJmiUnbNmXdGf1/TbbiIcGGAHdP2qtia6ZM+
+ qzNhigHV4AlWtbtUgp3foCMyEVeoQsHTeUpQeE2OHPWWBpKo6iggj4Mko05QLc+4D6wZrR5geWe
+ zsLa4fABlYqAiRxFlkcmmYdRKHJzC1N3T6rrvqvO5H0CT/h/xzCqWRHYbL9JWIYmfopc48EMIV6
+ sIbbB/Dbq7D+7UIBssE7TA0B27vtjn+6I52PBCkCzylql1/5ogpi/iRB0O5KR0MKNtw8gqGS1zp
+ BJW2KlvsnfKI2d0IA7BqbLs2NZ6RkA==
+X-Proofpoint-ORIG-GUID: Xab4p2EJ5gwvk1s30wdlpXI78bp4dGob
+X-Proofpoint-GUID: Xab4p2EJ5gwvk1s30wdlpXI78bp4dGob
+X-Authority-Analysis: v=2.4 cv=GdUaXAXL c=1 sm=1 tr=0 ts=68dad027 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=SqMvC5kiAAAA:8 a=WpnzsXt2pHkWeAtI-ekA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=3GzNa28zmJEA:10
+ a=_o8VnCo6Hb5Oqlm6Mk7M:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-29_06,2025-09-29_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,161 +126,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 25, 2025 at 09:56:30AM +0200, Paolo Bonzini wrote:
-> AI tools can be used as a natural language refactoring engine for simple
-> tasks such as modifying all callers of a given function or all accesses
-> to a variable.  These tasks are interesting for an exception because:
+On 9/22/25 19:48, Zhuoying Cai wrote:
+> On 9/18/25 4:38 AM, Daniel P. Berrangé wrote:
+
+[...]
+
 > 
-> * it is credible for a contributor to claim DCO compliance.  If the
-> contributor can reasonably make the same change with different tools or
-> with just an editor, which tool is used (including an LLM) should have
-> no bearing on compliance. This also applies to less simple tasks such
-> as adding Python type annotations.
-
-When I read refactoring, I consider
-
-  * No functional change
-  * The change is a logical transformation of text
-
-The creative act is defining the rule for what the transformation will
-do. The resulting patch is a derivative work of the existing code,
-along with the rules for the transformation.
-
-In traditional cases, the rules are an awk prompt, or a semantic
-patch (coccinelle), but in this case, the rules are the AI agent
-prompt
-
-The AI training material will guide the tool on how to interpret
-your natural language rules, but overall it looks implausible to
-claim the resulting patch would be a derivative work of any
-training material.
-
-The only exception seems to be if some QEMU fork had made exactly
-the same refactoring already, which seems unlikely in general,
-when we disregard malicious contributors.
-
-
-Type annotations gets more complex to rationalize, because that is
-about writing net new functional code. As an analogy though, if
-there was a clean room dev team, whom were fed the commit message,
-their output would likely be identical. The defining characteristic
-is the lack of plausible (&correct) alternative approaches. All
-tools, whether AI or not, should converge on the same result.
-
-It again looks implausible to suggest the resulting patch could
-be a derivative work of any particular agent training material,
-unless some QEMU fork had made exactly the same functional change
-already. This feels unlikely.
-
-TL:DR: even in today's world where the laundering of training
-material licenses, vs AI output licenses is murky, there is
-likely sufficient confidence in these particular scenarios to
-claim the training material imposes negligible risk to QEMU.
-
-> * they are relatively easy to test and review, and can provide noticeable
-> time savings;
+> Thank you for the comments.
 > 
-> * this kind of change is easily separated from more complex non-AI-generated
-> ones, which we encourage people to do anyway.  It is therefore natural
-> to highlight them as AI-generated.
+> Since Secure IPL on s390x is supported in QEMU, I would like to begin
+> drafting the corresponding Libvirt interface and seek feedback before
+> proceeding with the implementation.
 > 
-> Make an exception for patches that have "limited creative content" - that
-> is, mechanical transformations where the creativity lies in deciding what
-> to change rather than in how to implement the change.
+> While Libvirt already provides a secure boot interface
+> (https://libvirt.org/kbase/secureboot.html), it appears to be primarily
+> intended for x86 systems, where secure boot is configured using the
+> <firmware>, <loader>, and <nvram> tags.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  docs/devel/code-provenance.rst | 27 +++++++++++++++++++++++----
->  1 file changed, 23 insertions(+), 4 deletions(-)
+> 	<os firmware='efi'>
+>       	    <firmware>
+> 		<feature enabled='yes' name='enrolled-keys'/>
+> 		<feature enabled='yes' name='secure-boot'/>
+> 	    </firmware>
+> 	    <loader secure='yes' type='pflash'>...</loader>
+> 	    <nvram template='...'>...</nvram>
+> 	</os>
 > 
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-> index 8cdc56f6649..d6e86636964 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -290,9 +290,11 @@ Use of AI-generated content
->  
->  TL;DR:
->  
-> -  **Current QEMU project policy is to DECLINE any contributions which are
-> +  **The general QEMU project policy is to DECLINE any contributions which are
->    believed to include or derive from AI generated content. This includes
-> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
-> +  ChatGPT, Claude, Copilot, Llama and similar tools.** The following exceptions
-> +  are acceptable:
-> +  * **Limited creative content** (e.g., mechanical transformations)
+> For s390x, some of these existing tags may be reused, but additional
+> elements will be needed.
+> 
+> Below is my initial proposal for the secure boot interface in Libvirt:
+> 
+>  	<!-- New s390-ccw-bios firmware value -->
+> 	<os firmware='s390-ccw-bios'>
+> 	    <type arch='s390x' machine='s390-ccw-virtio-9.2'>hvm</type>
+> 	    <firmware>
+>                 <!-- To enable secure boot -->
+> 		<feature enabled='yes' name='secure-boot'/>
+> 	    </firmware>
+>             <!-- To provide boot certificates for secure boot -->
+> 	    <boot-certs path='/path/to/cert.pem' />
+>             <boot-certs path='/path/to/cert-dir' />
+> 	    <boot dev='hd'/>
+> 	</os>
+> 
+> I would be greatly appreciate any suggestions or feedback on this
+> proposal, and I am open to refining the design to better align with
+> existing Libvirt structures.
+> 
+> Best regards,
+> Joy
+> 
 
-Ought to link to the detailed description further down.
+You should post an RFC to the libvirt list -- no code needed.  I suggest
+posting what you wrote above while also giving an example of the QEMU
+commandline.  Lastly, give a short background of what you've been
+working on and provide a link to these patches for a more detail.
 
->  
->    **This policy does not apply to other uses of AI, such as researching APIs
->    or algorithms, static analysis, or debugging, provided their output is not
-> @@ -323,8 +325,9 @@ content generators commonly available today is unclear.  The QEMU project is
->  not willing or able to accept the legal risks of non-compliance.
->  
->  The QEMU project thus requires that contributors refrain from using AI content
-> -generators on patches intended to be submitted to the project, and will
-> -decline any contribution if use of AI is either known or suspected.
-> +generators on patches intended to be submitted to the project, with exceptions
-> +outlined below.  If use of AI is known or suspected to go beyond the exceptions,
-> +QEMU will decline a contribution.
->  
->  Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
->  ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
-> @@ -347,3 +350,19 @@ requirements for contribution.  In particular, the "Signed-off-by"
->  label in a patch submission is a statement that the author takes
->  responsibility for the entire contents of the patch, including any parts
->  that were generated or assisted by AI tools or other tools.
-> +
-> +The following exceptions are currently in place:
-> +
-> +**Limited creative content**
-> +  Mechanical transformations where there is reasonably only one way to
-> +  implement the change.  Any tool, as well as a manual change, would
-> +  produce substantially the same modifications to the code.  Examples
-> +  include adjustments to data structures, mechanical API migrations,
-> +  or applying non-functional changes uniformly across a codebase.
+CC those who have been involved in review as well as Boris, please.  Thanks!
 
-I can rationalize in my mind what I would be willing to accept under
-this description, but at the same time this is (intentionally) fairly
-fuzzy and open to interpretation.
+[...]
 
-
-
-> +It is highly encouraged to provide background information such as the
-> +prompts that were used, and to not mix AI- and human-written code in the
-> +same commit, as much as possible.
-
-It would be nice to require full separation, but if an AI gets you
-95% of the way there, and the remaining 5% is just stupid typos/
-mistakes, it is better for a human to just fix it immediately, than
-to continue re-prompting the agent to try again and hoping you win.
-
-> +Maintainers should ask for a second opinion and avoid applying the
-> +exception to their own patch submissions.
-
-Could it be simpler as:
-
- Sign off is mandatory from a maintainer whom is not the author.
-
-Or where you implying that we need SoB from two maintainers ?
-
-In theory non-author S-o-B is best practice already, but analyzing
-git shows we have about 10% of our commits with no independent
-S-o-B at all. Often such commits are precisely the NFC refactorings,
-or the simple mechanical additions.
-
-So perhaps going from zero-or-one independent SoBs, to at least
-one SoB is sufficiently strong ?
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Regards,
+  Collin
 
