@@ -4,113 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A7DCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 21:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ABEFCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 21:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3LJd-00065L-2U; Mon, 29 Sep 2025 17:21:49 -0400
+	id 1v3Loq-0004JI-5r; Mon, 29 Sep 2025 17:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v3LJW-00064Z-6J; Mon, 29 Sep 2025 17:21:42 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v3Lon-0004J2-I4; Mon, 29 Sep 2025 17:54:01 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v3LJT-0007Na-7n; Mon, 29 Sep 2025 17:21:41 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58TE4ZEu006384;
- Mon, 29 Sep 2025 21:21:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DGVlbe
- autYPWxG4C817ApVoY9QFSpIhX2SS4eWjY7Go=; b=Uy0RgGV0kET2PqH7Pbp+hG
- eKr8m78g5kKKHLieHYd55lZHhLIlWYf+kDIJTtpS4SQhlKEBEG3M2fdLBhPvVliB
- MXPxfYQrvObAwTO5FVHFm7n4LJ65cJ2O+P05V/0ZzktOl2yCX6+ED3059tk6sfBS
- Box7y9LLN90EcOz29XYhkNTah1efc3bKmo0rAWXclH6bXzus19eSuwtKMdtwItdm
- 2qbqRgei7PuqjzPdeMh8OM7/l9tLnkZKcFHOzZIQDzkJvD4H0fO4Ys8MPJjrQsGf
- 5DcQ339KhaCDdkLN+M0pj0161eip/nEG4t2UGDegrwJyUWtMIXE9UHeFEOL1LSbQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7e74wd9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Sep 2025 21:21:33 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58TKUUP5026746;
- Mon, 29 Sep 2025 21:21:32 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49eu8mr3sc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Sep 2025 21:21:32 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58TLLUML22610570
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Sep 2025 21:21:31 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A97825805D;
- Mon, 29 Sep 2025 21:21:30 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87C1B58055;
- Mon, 29 Sep 2025 21:21:29 +0000 (GMT)
-Received: from [9.61.244.142] (unknown [9.61.244.142])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 29 Sep 2025 21:21:29 +0000 (GMT)
-Message-ID: <6dd011fc-1ea3-4d43-9aa7-6e1fc5d57bbd@linux.ibm.com>
-Date: Mon, 29 Sep 2025 14:21:16 -0700
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v3Loi-00033Z-4J; Mon, 29 Sep 2025 17:54:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W5i+VqWbxjae6B+pR/VvxP8oAWXoClgqFiWs4LkJ+Uuhz+geuJVNJR7Cz+EWAZIUmSmz4nm2BHqFHICp6RADYPFWAx8hG4BPY+iUWiVkUhwabh0YcNikuxDASpASESn8X4LEuo4Y9xMVIBsDn1Y/h8Vj1nXSh6oXxiuPX8970ZTWQQJsIhUEJhDVu1e2AM7dTPJvrQa0KiwYAIBbR/B4cCYCgLaRlxTJtWTpUwjvoaj+dp4mwQJUEjlc1CzKV5wpnIZvUf0VI5QckmFqT/oimPJSWTKP+7rEKUYyuJ9dBvAjcEe4I+KJSpVeVTcpe+KG75KUaZ9j4LQ0IzloqDdCdw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1Clv/9u+5YNB68pMxyZwvHidhVmCEiHixRTJmxBBa2Q=;
+ b=xAz/ffcIx7uy/HbiICXIxwdg3YWRmoDg6EYeKaUcj4Dlvn7Mb98ELSTVgAAyCtEeuC5FgryxycoJE0zGmRgGkKOFxZP7kShwPVb6ml7ua9m7Tt6a3SIAUYhPybNipkobbHTMN7KYx5WjPQmcUSZBriufP/EKJ/i8l5m2T+ZNVJKEoXSQksEe3V0knxg7JStugXCNZtKeEUujJz167bagwarDShbqSshbQEGAoZIdYiLSrO+uOLGg+Q9KU4TtrmgGGdcI7a/elBrPlzB9723o6A6Q61C76E8eU2s9NMktZBE/CFia5IFWnfCd4GT8fkVAZ/5MvYeLey3Dy58mBXNpzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1Clv/9u+5YNB68pMxyZwvHidhVmCEiHixRTJmxBBa2Q=;
+ b=t1msZidPuAEhDc2ComI3EArVGKukiOL1N3fNN3AQQ8qXCZQVInIvNa6i0NPQLNqkgivwvOCm5VrFvUmJMYhr7qrU4AwNaRLR1yZFz9T4sJi+7+QNO+zGlmG+g9g8RWAur8ji5y/ldDuX1sFp8aj9QoP8Nopi/cJa5pO35sFVTMn9LCCWyq/sfL2w9MemhfmbWE6E6y5s/hSP/3V0QR/6bvo5/FepMFaJl8YenfB0WzNNZi6ieQ5Qhw5E3Cow5gpQZyR6VYSfhSspkZSUn11L6zwcxiRehC7yR6prj+NKMW8k5iF4rafvI4s13pudNdTIXbyi+ICDA1VDBf/yDRv+Mw==
+Received: from BL1PR13CA0190.namprd13.prod.outlook.com (2603:10b6:208:2be::15)
+ by PH7PR12MB6489.namprd12.prod.outlook.com (2603:10b6:510:1f7::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.13; Mon, 29 Sep
+ 2025 21:53:45 +0000
+Received: from BL6PEPF0001AB76.namprd02.prod.outlook.com
+ (2603:10b6:208:2be:cafe::41) by BL1PR13CA0190.outlook.office365.com
+ (2603:10b6:208:2be::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9182.13 via Frontend Transport; Mon,
+ 29 Sep 2025 21:53:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BL6PEPF0001AB76.mail.protection.outlook.com (10.167.242.169) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9160.9 via Frontend Transport; Mon, 29 Sep 2025 21:53:45 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.34; Mon, 29 Sep
+ 2025 14:53:28 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Sep
+ 2025 14:53:27 -0700
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 29 Sep 2025 14:53:26 -0700
+Date: Mon, 29 Sep 2025 14:53:25 -0700
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 04/27] hw/arm/smmu-common:Make iommu ops part of
+ SMMUState
+Message-ID: <aNr/1fxA8pqGs7B0@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-5-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 15/28] hw/s390x/ipl: Add IPIB flags to IPL Parameter
- Block
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-16-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250917232131.495848-16-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ArS4BWEuSAYnFP3ZA0wDIxqJrvSNtqrH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyMCBTYWx0ZWRfXxilha1FX+iHu
- 7fqXAYBpTnAbq1cKa37z5yIZcj62luaLSh7i+Zfct8YapaX8TPQXl3z/QgBLFvRyMjznEZTtCFZ
- kDsFQCLrSaLQmu5gugFg9r9uuskx5egT3p/ynJiBUdm+6u/rJ51jqUsB4RHGwnAhlK44IC9iCew
- xHGPnIfiL+g5pO6UsaMPQPSl29FV7E4RG7MmcNzMXFuiaAvj/QOd7E4sWUfGwjWZ04C9u0bxIVK
- OhQrw1VFYG3bb8Uvtury9lu5XOrHThG6BYpFF75MenLJVJ3koWbxNhD6PXfinWEouwGGtLjREHS
- SYnjQOX/oTh0FjN26jVCVywAQNWMjHrm8eGx0KyY17viS4LeYWzIqRGnkMnIKaM7Pr+f3GlfNhn
- c1COaj2KTirVkG8iC6ZIImK+ZXpXNg==
-X-Proofpoint-GUID: ArS4BWEuSAYnFP3ZA0wDIxqJrvSNtqrH
-X-Authority-Analysis: v=2.4 cv=Jvj8bc4C c=1 sm=1 tr=0 ts=68daf85d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=C9IQg14i1mWWDr6A2ooA:9
- a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-29_06,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015 spamscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509270020
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250929133643.38961-5-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB76:EE_|PH7PR12MB6489:EE_
+X-MS-Office365-Filtering-Correlation-Id: b1782880-f1cd-43fe-85e4-08ddffa2a9a5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|7416014|376014|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?50QJOE16V0L2n+sitSrNKjMw0IYu1lU1eQtVdkIJFQnLFXnIcCmhgpO+9Z?=
+ =?iso-8859-1?Q?3VW5gPesoXl3ch8jsSN/K6bjuUqGFFsALdzYknSjHUq9MTBzRmeqDkUfDm?=
+ =?iso-8859-1?Q?rbPiktaIr+Ssa3z4WOep4sIhGwk4JuE8szGJZOOCeAdDXcCOrk3f7tt5Hw?=
+ =?iso-8859-1?Q?F7wBZDkUdRmwgv+fxA5o+Cp3XBEW+cSqTpGxrJvGhLNOxUYKfIAGxYHJEi?=
+ =?iso-8859-1?Q?RU9f3AptCZJ8LISdAeUVb70u/apcmjiFmxsqJMzMZwloHkgrAs7rtPoJll?=
+ =?iso-8859-1?Q?oOtAzDeLIwvSzkity5su7DgEgaW9rhPbdwRN5H4KAkB1gT9UMUtyAenvni?=
+ =?iso-8859-1?Q?fcNxKPI24JlFLpsj+kYf/UJWi1htxqaKn7uoj/Cuzk1LoiM4/BRCgndNGk?=
+ =?iso-8859-1?Q?ztQ76nEAu1iFf4DnFsYi8Un5G0PmNUOBJw+2nMpWVvSl4LCEglX7o5IKnm?=
+ =?iso-8859-1?Q?MrLjlcEiQ0/FNbkOvyGMN4slW1lef+QW6rsm0pwZMG/ThjO1X9Rin2dgh3?=
+ =?iso-8859-1?Q?oiC9fUubcyhIr9f/UoWnXMCk5v6hOei91s22ziC8dkdM0nuDV9sn1YskU9?=
+ =?iso-8859-1?Q?i4LOXnLC+JTfb+bhQfTkYOJpy/pfz1jb4dJi3DVTb1NU1RQDTYfJaDNElE?=
+ =?iso-8859-1?Q?Oc3GfJYBivSQ7KEQytP6yA3GU4a+r/PAV91kE0CMAqaVeHtstF7Thffgqk?=
+ =?iso-8859-1?Q?h8dM1Jgs8pvTUX/6+jcDldFI9/2xuCzyvyVagekqN+V6dxwJAc9/bIrsXO?=
+ =?iso-8859-1?Q?9z/WWaAxFgr0BgV/Nu035VhcCBo3KARgqCWjRKsPOPjHGsPqYGV7KueUr1?=
+ =?iso-8859-1?Q?BPyLDIAsnGxW1oEx52Gu1EmXARzxIMgyhNEq+TlS05QZvF3kzQTn5mVPf9?=
+ =?iso-8859-1?Q?+GGJismzoGOjoPj334VUvlVXmOCTAzIX+1P3WcLBzVThhF6blaCe2Quegp?=
+ =?iso-8859-1?Q?iI90OqFah1KwkWdttUOes/U9EW6DjKk8MEpA87wXJJGod+V6CkdZUheRLF?=
+ =?iso-8859-1?Q?NVAmj6VVMc1/RwXhFdVfdmcqxgwORKw2zS4HuiCrnh9QcbEm0uflzl9JYJ?=
+ =?iso-8859-1?Q?d6Nj6nqe10yK6SKtb2HLHEpyauYuM1t32PO2O/9biqkkXGEHSsM3Xn3MgG?=
+ =?iso-8859-1?Q?KB8Ymknv36gqQj876l4cuG3T5G7TvqQiExqV3iqOXzMkzYYI3XA21k7M0g?=
+ =?iso-8859-1?Q?wjrSNjXBwx7TvzTNrFH6X4aVl9dbIsb1yDQFNeSUhIb64EF5KNtgykVlLI?=
+ =?iso-8859-1?Q?Zm9JixjJh5a1YZTX3MLAb/6J6iKK5h5i+MpZSricS7IFyCmOciWIwqxCZ3?=
+ =?iso-8859-1?Q?EAenCARVT+AstDmESxq53RF6idI3APcchLUV5aLkOJdT1bh7UDZIGWLDZ7?=
+ =?iso-8859-1?Q?ahm102DFUk7sfpsVsBI4fOnWu8bTcueMuEaI5j7L5j7QfzCBTqOKfpopu1?=
+ =?iso-8859-1?Q?t9Gc1PS3/xsPi6gVNT+39wq9baqsVPzhRHWB49pWONVd5PCDDkK/ZQEMYI?=
+ =?iso-8859-1?Q?tB/SU44smLBqGMZf5k2bFg6QeVAIAnmsoX0ZlBlpy63IwjkZYF3sW7jxD+?=
+ =?iso-8859-1?Q?Iz2bXUdEezxw3a0V5grw9Nhqc5jwsXEZK0Pst2v5YBui0naNxi0s4G+rQR?=
+ =?iso-8859-1?Q?DuNySdIRkD9ck=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(7416014)(376014)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 21:53:45.0634 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b1782880-f1cd-43fe-85e4-08ddffa2a9a5
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB76.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6489
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, KHOP_HELO_FCRDNS=0.4, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,63 +158,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
+From:  Nicolin Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Sep 29, 2025 at 02:36:20PM +0100, Shameer Kolothum wrote:
+> And set to the current default smmu_ops. No functional change intended.
+> This will allow SMMUv3 accel implementation to set a different iommu ops
+> later.
+> 
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
-> Add IPIB flags to IPL Parameter Block to determine if IPL needs to
-> perform securely and if IPL Information Report Block (IIRB) exists.
->
-> Move DIAG308 flags to a separated header file and add flags for secure IPL.
->
-> Secure boot in audit mode will perform if certificate(s) exist in the
-> key store. IIRB will exist and results of verification will be stored in
-> IIRB.
->
-> To ensure proper alignment of the IIRB and prevent overlap, set
-> iplb->len to the maximum length of the IPLB, allowing alignment
-> constraints to be determined based on its size.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c                 | 17 +++++++++++++++++
->   hw/s390x/ipl.h                 | 18 +-----------------
->   include/hw/s390x/ipl/diag308.h | 34 ++++++++++++++++++++++++++++++++++
->   include/hw/s390x/ipl/qipl.h    |  5 ++++-
->   4 files changed, 56 insertions(+), 18 deletions(-)
->   create mode 100644 include/hw/s390x/ipl/diag308.h
->
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 917166ba31..c1360905c4 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -494,6 +494,23 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->           s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
->           iplb->flags |= DIAG308_FLAGS_LP_VALID;
->   
-> +        /*
-> +         * Secure boot in audit mode will perform
-> +         * if certificate(s) exist in the key store.
-> +         *
-> +         * IPL Information Report Block (IIRB) will exist
-> +         * for secure boot in audit mode.
-> +         *
-> +         * Results of secure boot will be stored in IIRB.
-> +         */
-> +        if (s390_has_certificate()) {
-> +            iplb->hdr_flags |= DIAG308_IPIB_FLAGS_IPLIR;
-> +        }
-> +
-> +        if (iplb->hdr_flags & DIAG308_IPIB_FLAGS_IPLIR) {
-> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
-> +        }
-> +
-
-Can we move the setting of iplb->len to if block that checks for 
-certificates? I am not if we really need the if block as we only set the 
-hdr_flags to DIAG308_IPIB_FLAGS_IPLIR only when we have certificates?
-
-Thanks Farhan
-
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
