@@ -4,146 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2250CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 13:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20324CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 13:41:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Dy0-0000CA-Gu; Mon, 29 Sep 2025 09:31:02 -0400
+	id 1v3E6i-0002Td-Ht; Mon, 29 Sep 2025 09:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Dxw-0000BV-1w
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 09:30:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1v3E6b-0002RR-Qz; Mon, 29 Sep 2025 09:39:55 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Dxj-0000YR-Rh
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 09:30:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759152627;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=B3VqoqtRVvSRBtsjz80NI7VbQOTlekqwcEaT7aog+ps=;
- b=MdADUt2x5PkdQvpeayMWCEplzS4H6uvTkp2747IHS1ml+mq/1nDDXafhQ8JHjPe69pZah/
- 8N2GpLiPhbLvSwl9M3o4nhdJDtpgO8dTQ/G0N4LDCOe6LCUfJUbBuVjXKW7j/zl7Q1qzJX
- detxcXNEWIF6sYaf6+7Bs9boSPW5gWQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-jxt0rijoM8-cvRjpXIskqQ-1; Mon, 29 Sep 2025 09:30:24 -0400
-X-MC-Unique: jxt0rijoM8-cvRjpXIskqQ-1
-X-Mimecast-MFC-AGG-ID: jxt0rijoM8-cvRjpXIskqQ_1759152623
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-40cfb98eddbso2344985f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 06:30:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759152623; x=1759757423;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B3VqoqtRVvSRBtsjz80NI7VbQOTlekqwcEaT7aog+ps=;
- b=NLhka2KdDr+1CIxQi0drdswKMN/m2NQ+FZbXZe/VqdhQsqfJlCh0wRV4ufbWCEauG8
- IJSRh/uPQLhQezA1ccyM8wo2HhKE5HYiuPoWZ1t9IJI1S5c4NA7fcE7PQGGJfBgxrqHx
- D6wk9BBiH2WflRcDfZovgRoYFRMfBlcAreiOHgp1QbEk0ifZEE2qFxl9r/MEzT4tDaln
- rfZKUM/UEH0ATGz7WbZUtGCRj8FfwiDaeMCoRplif/crWnTetEu4vlgEKjS5tubcOTlD
- pwktWyp4PBGkb8V084RukDHGTDGWClivfJNKOZOV9EdUM4wB5xBz3qMwHhJ2cfOB+zog
- LBVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUbBDEkT0GSOLuA6KK5Hx7GUkvDkzRz8bXa2Ekcy0LOWEmKyOlMjimVNL+opZ62wjcbNaFMljBbrGn3@nongnu.org
-X-Gm-Message-State: AOJu0YxvqYTmZeXiwdkA3VNopI9s5Hj3uRGY7N1nFaBacQJ50uTGfB7A
- CUVtqg58srxxJ8p8PZ8B4qF/uLRYpo0muFbYmIZ3/3hOLmaYoIctDDT38azWUhuyX0sSwjVE8Kr
- A/JNuMr+UEKp0dNjwDgKcCzzQV78e81p85wfqQqkfTCOyEOovFuOJ/3zf
-X-Gm-Gg: ASbGncsIUtpujyZvoXn7iTbrESDucvlwdxSHUKng9Ru2Ke/48iE5OwW4pNCxUQuv7ot
- e4c+JkOnFTDaqz+LfuEUzk1vEtyFoLKMfDkq9SUsaiSwEp3i6kLydLutstlS2i2XzBAySLphz1B
- S2Hz2FCEqupAhVh7oagozHF2Zg/an5tS3esGG2gr88kGO4t9E+N5H9yOoIkyLs/9zv3E2eo4HyQ
- 67GitWFfayRfyA7wO5pp866K+5RK4F9FK7tD1Fj5A9K4lObH6wmQBmQ9O2gkhpb+Lktqey4QVQd
- xVltNZzq+zjnfdyY3Q1hs9g1NCGb3uokmuzmLI0LG9wawzqJROpzsDLLQuvg6XHmPOqg17lZdt1
- dJVGJLw==
-X-Received: by 2002:a05:6000:2301:b0:3e9:54d1:e708 with SMTP id
- ffacd0b85a97d-424119ce8e9mr559443f8f.20.1759152623371; 
- Mon, 29 Sep 2025 06:30:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETzU8hV29f1UVPhK4fyktO1v3OCVMdBBLCDwWoZSQ9Gbzjd3dQh2GDWkCB3zLrXNbTQnAfag==
-X-Received: by 2002:a05:6000:2301:b0:3e9:54d1:e708 with SMTP id
- ffacd0b85a97d-424119ce8e9mr559392f8f.20.1759152622779; 
- Mon, 29 Sep 2025 06:30:22 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-212.pools.arcor-ip.net.
- [47.64.114.212]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc6921f4esm18347839f8f.44.2025.09.29.06.30.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 06:30:22 -0700 (PDT)
-Message-ID: <e5faaffd-fb58-4002-817f-ff9e787e8272@redhat.com>
-Date: Mon, 29 Sep 2025 15:30:20 +0200
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1v3E6G-000398-I8; Mon, 29 Sep 2025 09:39:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z8EXH4UGgeotAVr2en0RzPEzvzIfgAmM3UL1V7KSACZt2fidU1PhvQcqHPZtvYsi88iRO8PD72wKGdLoWDhrHCEh6zHR7gpXVfBgNrJ70E+J9wfwToqQqu+j9qh6rsKc8LcHJYi2BTULLXAzQSG+SuXYr++ymWNKW0T12ZetsgRHAacMdcCxM9vO/GhAGqsQU1CqjeovmVOTMbrLGyMl/Ed6t/wAJWJhgStO7c+OvCkx7lMYrBCj2yvGCxnRB6382EPtp8E3hM7hGTlVZ1Gp0hvbng9he4/QdQBZ/FHMa2ezzjGLrIPMhfedSEYJ2oC8IkFeSd8aRwbA2ghFoaqSmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LxG6JabGVs+OjcVBIDuOhfHlN97W0+LzO4qTbDa/kWc=;
+ b=v0Vz408Vxgu6r9cAwW1d5948CL+bVNCpAFiWiJL0YO0YGirmB5W3uGfjPnNq1wJxQLTSQaMeY33ppxSqcVNh0FZ0Hu5uXVOABkZc/Qo+kBikczVlx53i0mWKjYgmlSjqxunOBUlt4309ioQtzzQldlik4kFf6PQNWfBUy9+FG/0layRw9mBOVIYIsvbQnTA+yv9IjdTwTI8X/gKMj2Wgbon80y26mf5B0niPToOPtYLyR2vomiN/twnUUUkNlh1brdvLPkIuuEyv9OgLr8IvY8kWfswGZfOB19iyDQSBLafAdjSLxCEDGd9Gt0lPP1MMqTg36DZzB3jYY5Xy3PPXLw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LxG6JabGVs+OjcVBIDuOhfHlN97W0+LzO4qTbDa/kWc=;
+ b=Uv4Ah8QpUynwHDvtkyddnD4DHMr3hE2B0YFpEP70QQQD6MHH/No2AUPuhwsVkH2FDJDGGFiAXfopeh+2Tsyn4L4/RPsMKYZwfxzm/s4ZdsWC99khEH1/SbcpY9GDmZZDxGUWl7iJiHO1TATBNPRrSPcCXIy8Jd/W6iva5e+LhvwpL/CTx+nhVt3gGDYJhvmLU6DM93eZpq5mPZtVybVp199supDchToPiHIDYDLw/hcRdeseMGuNb6JniauaOi9P2IOJhjew0PENNUklCiiyhN3/MiZR00GjiyDMXMgvEMMUvr1xcF4kBL7Neg46DdPtH37aVHSSFHwgQFiRt1pXNA==
+Received: from CH2PR14CA0033.namprd14.prod.outlook.com (2603:10b6:610:56::13)
+ by DM3PR12MB9288.namprd12.prod.outlook.com (2603:10b6:0:4a::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.17; Mon, 29 Sep
+ 2025 13:39:19 +0000
+Received: from CH2PEPF0000009D.namprd02.prod.outlook.com
+ (2603:10b6:610:56:cafe::f2) by CH2PR14CA0033.outlook.office365.com
+ (2603:10b6:610:56::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.17 via Frontend Transport; Mon,
+ 29 Sep 2025 13:39:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH2PEPF0000009D.mail.protection.outlook.com (10.167.244.25) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9160.9 via Frontend Transport; Mon, 29 Sep 2025 13:39:18 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.34; Mon, 29 Sep
+ 2025 06:39:04 -0700
+Received: from NV-2Y5XW94.nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Sep
+ 2025 06:39:00 -0700
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
+ <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
+Subject: [PATCH v4 02/27] backends/iommufd: Introduce iommufd_vdev_alloc
+Date: Mon, 29 Sep 2025 14:36:18 +0100
+Message-ID: <20250929133643.38961-3-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250929133643.38961-1-skolothumtho@nvidia.com>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 21/28] pc-bios/s390-ccw: Add additional security checks
- for secure boot
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, borntraeger@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-22-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250917232131.495848-22-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.126.230.35]
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000009D:EE_|DM3PR12MB9288:EE_
+X-MS-Office365-Filtering-Correlation-Id: 800a16bc-8215-4508-0632-08ddff5d9742
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?oJCgKsAYRKYMhqMUncPenyCh5qGktc23U6dn1BvZXD25tvoe2JBdRRwXq10p?=
+ =?us-ascii?Q?hnE+mMJvJu2Od5/qQPoGhVSASviq1jAL2Ekh5xuMDlYD90uCWnnFQm746Nbr?=
+ =?us-ascii?Q?dqY1nPLJ1kUtbrLeXU5oDy3R4GQkO1BUd57aCb5XzYzYiPl9KugJWTUMeYGd?=
+ =?us-ascii?Q?jX0K/agqPWsGyxSNxs+5Q/QRTLheS+tXSzWNiQUHia+kD5VacIHEkmVIAGxH?=
+ =?us-ascii?Q?bvC2FoHomasmvGsqdCwMeHdKkzyZT11tn3rWg7tG72SoP5/tvsPFfvRNsBNF?=
+ =?us-ascii?Q?8uZ5MmPOGX0RQRtpBgqiJW11LNF467zJirB0myBnUepEN5aboXFs5Y+4iTSq?=
+ =?us-ascii?Q?4x4PBjkCo3uYqbuZiULM5EWbsCKzTQwHO2MCong3jnidLNYZd8KFeGl0bSNF?=
+ =?us-ascii?Q?NNEn2y9yyYzzJwxCL8FYnTT0Y7Px6xRcKEMUvB/TO1Nh+ZYL5y46CrYV1qg3?=
+ =?us-ascii?Q?TkP7HWlhTaA3NhqEiPM7eXzfWsVgnoOyvehRT9it4c/aUHRvArLYmp3GN85c?=
+ =?us-ascii?Q?ZRERqSbR86y7PHmh5RQQPZbm67H8ndmWEQV39K8d1OMJxgNVPaZSxQPQsbXi?=
+ =?us-ascii?Q?Su+mhCrXuS29Yfd2vq2CF4JcnTYM4fQbqfySlXFqRCzVbXILzV4sjDs2SFyV?=
+ =?us-ascii?Q?2u096H+R+Xf9VGNAWQwElu5UvrnLr2WUOX0m/9FPXXbbff4ZHkbRlrMjuu4Y?=
+ =?us-ascii?Q?YzqGHyWrjTGjrt4/0n/hQodFSEciW//f0xZwmZsLMvJmUmiQ64FoWl6D/doU?=
+ =?us-ascii?Q?OUTr6w2/ehr68/3auCcOcEZA7H1WqP+WR+pek9ghNJMsLdfLd0C10Iw3H7Vo?=
+ =?us-ascii?Q?mnUcQN3s59a/tLI8X74+7oJs+TmFKGhwDQLvC+AICuk+1q8TKlMuwSkcOQ0k?=
+ =?us-ascii?Q?ZFNHsWvtDfH6+FKhx/Yo4bVNMkR45oi24tUFyKe4BIyNdr1sP8heP8evYiiG?=
+ =?us-ascii?Q?seUB05egxQqXyd4Pij48rCbEY58ZHn11qH+fyO0MYgfynOUSg3zFVAtCVGF0?=
+ =?us-ascii?Q?9rKoeu1dx/hSWrOnh1kA2HxZcQ0suxjpShv+37n+hyTr+FUrjCgngrVexTmf?=
+ =?us-ascii?Q?UvIflMYRVTvpM/HnbND014aPk18mbmJhvLL+lBQ9H7WuYGtaans0p/lMxVfb?=
+ =?us-ascii?Q?GRC9TjOp0Ss8D9gx5xoDAoejHVOaB8Mu5blXhOeT5Vye2WM7SrsvBZ24phOr?=
+ =?us-ascii?Q?R1e61xzkg7EeScp5o2fbrr+bgRmVL+bJPcxUW5b4HDgY73gI/csd6IVE6r69?=
+ =?us-ascii?Q?+IzTMK8q2hDTPdNTURgH2EqNFhMYPZlqhpC+NNg/7sBoO9mX2hYfMs2M7PzH?=
+ =?us-ascii?Q?nfqPW0IH4Dq7NVc2SuQO1EHYB4sEv6FPKoSLqbpiTI0yvDulDzf3ODgSXOZU?=
+ =?us-ascii?Q?FgYTnc/HbFcZnaDlecNqT8J8AO98mjQwOco7YiIcRcrPIt//JjWee7QXQeXV?=
+ =?us-ascii?Q?EPC3+sFmPwPVB7ceSQT9dNT0000lgR7KtYajNWZSQlckfTCr1x6E7zR0RlQx?=
+ =?us-ascii?Q?8A2PXs0gFKSogHq4FhH6MC4ugpOC+q6Uem+c8Xrquvb/oZTpnT0/D+ulYu8k?=
+ =?us-ascii?Q?PCTRUofnrjeWYxl4iew=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 13:39:18.9736 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 800a16bc-8215-4508-0632-08ddff5d9742
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009D.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9288
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,374 +157,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Add additional checks to ensure that components do not overlap with
-> signed components when loaded into memory.
-> 
-> Add additional checks to ensure the load addresses of unsigned components
-> are greater than or equal to 0x2000.
-> 
-> When the secure IPL code loading attributes facility (SCLAF) is installed,
-> all signed components must contain a secure code loading attributes block
-> (SCLAB).
-> 
-> The SCLAB provides further validation of information on where to load the
-> signed binary code from the load device, and where to start the execution
-> of the loaded OS code.
-> 
-> When SCLAF is installed, its content must be evaluated during secure IPL.
-> However, a missing SCLAB will not be reported in audit mode. The SCALB
-> checking will be skipped in this case.
-> 
-> Add IPL Information Error Indicators (IIEI) and Component Error
-> Indicators (CEI) for IPL Information Report Block (IIRB).
-> 
-> When SCLAF is installed, additional secure boot checks are performed
-> during zipl and store results of verification into IIRB.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
-...
-> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-> index 8eab19cb09..cd798c1198 100644
-> --- a/pc-bios/s390-ccw/secure-ipl.c
-> +++ b/pc-bios/s390-ccw/secure-ipl.c
-> @@ -202,6 +202,12 @@ static bool secure_ipl_supported(void)
->           return false;
->       }
->   
-> +    if (!sclp_is_sclaf_on()) {
-> +        puts("Secure IPL Code Loading Attributes Facility is not supported by" \
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-No need for the backslash here.
+Add a helper to allocate an iommufd device's virtual device (in the user
+space) per a viommu instance.
 
-> +             " the hypervisor!");
-> +        return false;
-> +    }
-> +
->       return true;
->   }
->   
-> @@ -214,6 +220,393 @@ static void init_lists(IplDeviceComponentList *comps, IplSignatureCertificateLis
->       certs->ipl_info_header.len = sizeof(certs->ipl_info_header);
->   }
->   
-> +static bool is_comp_overlap(SecureIplCompAddrRange *comp_addr_range, int addr_range_index,
+While at it, introduce a struct IOMMUFDVdev for later use by vendor
+IOMMU implementations.
 
-I'd suggest to move the second parameter to a separate line, to keep the 
-line length below 80 columns.
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ backends/iommufd.c       | 27 +++++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ include/system/iommufd.h | 12 ++++++++++++
+ 3 files changed, 40 insertions(+)
 
-> +                            uint64_t start_addr, uint64_t end_addr)
-> +{
-> +    /* neither a signed nor an unsigned component can overlap with a signed component */
-> +    for (int i = 0; i < addr_range_index; i++) {
-> +        if ((comp_addr_range[i].start_addr <= end_addr &&
-> +            start_addr <= comp_addr_range[i].end_addr) &&
-> +            comp_addr_range[i].is_signed) {
-> +            return true;
-> +       }
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +static void comp_addr_range_add(SecureIplCompAddrRange *comp_addr_range,
-> +                                int addr_range_index, bool is_signed,
-> +                                uint64_t start_addr, uint64_t end_addr)
-> +{
-> +    if (addr_range_index > MAX_CERTIFICATES - 1) {
-
-That error goes completely unnoticed. Should there be a log / warning here?
-
-> +        return;
-> +    }
-> +
-> +    comp_addr_range[addr_range_index].is_signed = is_signed;
-> +    comp_addr_range[addr_range_index].start_addr = start_addr;
-> +    comp_addr_range[addr_range_index].end_addr = end_addr;
-> +}
-> +
-> +static void check_unsigned_addr(uint64_t load_addr, IplDeviceComponentList *comps,
-> +                                int comp_index)
-> +{
-> +    uint32_t flag;
-> +    const char *msg;
-> +    bool valid;
-> +
-> +    valid = validate_unsigned_addr(load_addr);
-> +    if (!valid) {
-> +        flag = S390_IPL_COMPONENT_CEI_INVALID_UNSIGNED_ADDR;
-> +        msg = "Load address is less than 0x2000";
-> +        set_cei_with_log(comps, comp_index, flag, msg);
-
-I'd maybe rather pass the string directly as parameter, without the detour 
-through the "msg" variable.
-
-> +    }
-> +}
-> +
-> +static void addr_overlap_check(SecureIplCompAddrRange *comp_addr_range,
-> +                               int *addr_range_index,
-> +                               uint64_t start_addr, uint64_t end_addr, bool is_signed)
-> +{
-> +    bool overlap;
-> +
-> +    overlap = is_comp_overlap(comp_addr_range, *addr_range_index,
-> +                              start_addr, end_addr);
-> +    if (!overlap) {
-> +        comp_addr_range_add(comp_addr_range, *addr_range_index, is_signed,
-> +                            start_addr, end_addr);
-> +        *addr_range_index += 1;
-> +    } else {
-> +        zipl_secure_handle("Component addresses overlap");
-> +    }
-> +}
-> +
-> +static bool check_sclab_presence(uint8_t *sclab_magic,
-> +                                 IplDeviceComponentList *comps, int comp_index)
-> +{
-> +    if (!validate_sclab_magic(sclab_magic)) {
-> +        comps->device_entries[comp_index].cei |= S390_IPL_COMPONENT_CEI_INVALID_SCLAB;
-> +
-> +        /* a missing SCLAB will not be reported in audit mode */
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static void check_sclab_length(uint16_t sclab_len,
-> +                               IplDeviceComponentList *comps, int comp_index)
-> +{
-> +    const char *msg;
-> +    uint32_t flag;
-> +    bool valid;
-> +
-> +    valid = validate_sclab_length(sclab_len);
-> +    if (!valid) {
-> +        flag = S390_IPL_COMPONENT_CEI_INVALID_SCLAB_LEN |
-> +               S390_IPL_COMPONENT_CEI_INVALID_SCLAB;
-> +        msg = "Invalid SCLAB length";
-> +        set_cei_with_log(comps, comp_index, flag, msg);
-
-Again, pass string directly, without msg variable?
-
-> +    }
-> +}
-> +
-> +static void check_sclab_format(uint8_t sclab_format,
-> +                               IplDeviceComponentList *comps, int comp_index)
-> +{
-> +    const char *msg;
-> +    uint32_t flag;
-> +    bool valid;
-> +
-> +    valid = validate_sclab_format(sclab_format);
-> +    if (!valid) {
-> +        flag = S390_IPL_COMPONENT_CEI_INVALID_SCLAB_FORMAT;
-> +        msg = "Format-0 SCLAB is not being use";
-> +        set_cei_with_log(comps, comp_index, flag, msg);
-
-dito
-
-> +    }
-> +}
-> +
-> +static void check_sclab_opsw(SecureCodeLoadingAttributesBlock *sclab,
-> +                             SecureIplSclabInfo *sclab_info,
-> +                             IplDeviceComponentList *comps, int comp_index)
-> +{
-> +    const char *msg;
-> +    uint32_t flag;
-> +    bool is_opsw_set;
-> +    bool valid;
-> +
-> +    is_opsw_set = is_sclab_flag_set(sclab->flags, S390_SECURE_IPL_SCLAB_FLAG_OPSW);
-> +    if (!is_opsw_set) {
-> +        valid = validate_sclab_opsw_zero(sclab->load_psw);
-> +        if (!valid) {
-> +            flag = S390_IPL_COMPONENT_CEI_SCLAB_LOAD_PSW_NOT_ZERO;
-> +            msg = "Load PSW is not zero when Override PSW bit is zero";
-> +            set_cei_with_log(comps, comp_index, flag, msg);
-> +        }
-> +    } else {
-> +        /* OPSW = 1 indicating global SCLAB */
-> +        valid = validate_sclab_opsw_one(sclab->flags);
-> +        if (!valid) {
-> +            flag = S390_IPL_COMPONENT_CEI_SCLAB_OLA_NOT_ONE;
-> +            msg = "Override Load Address bit is not set to one in the global SCLAB";
-> +            set_cei_with_log(comps, comp_index, flag, msg);
-
-Is it ok here to continue with the code below, even if it was not valid? Or 
-should there be a return statement here?
-
-> +        }
-> +
-> +        sclab_info->global_count += 1;
-> +        if (sclab_info->global_count == 1) {
-> +            sclab_info->load_psw = sclab->load_psw;
-> +            sclab_info->flags = sclab->flags;
-> +        }
-> +    }
-> +}
-> +
-> +static void check_sclab_ola(SecureCodeLoadingAttributesBlock *sclab,
-> +                            uint64_t load_addr, IplDeviceComponentList *comps,
-> +                            int comp_index)
-> +{
-> +    const char *msg;
-> +    uint32_t flag;
-> +    bool is_ola_set;
-> +    bool valid;
-> +
-> +    is_ola_set = is_sclab_flag_set(sclab->flags, S390_SECURE_IPL_SCLAB_FLAG_OLA);
-> +    if (!is_ola_set) {
-> +        valid = validate_sclab_ola_zero(sclab->load_addr);
-> +        if (!(valid)) {
-
-No need for the inner braces here.
-
-> +            flag = S390_IPL_COMPONENT_CEI_SCLAB_LOAD_ADDR_NOT_ZERO;
-> +            msg = "Load Address is not zero when Override Load Address bit is zero";
-> +            set_cei_with_log(comps, comp_index, flag, msg);
-> +        }
-> +
-> +    } else {
-> +        valid = validate_sclab_ola_one(sclab->load_addr, load_addr);
-> +        if (!valid) {
-> +            flag = S390_IPL_COMPONENT_CEI_UNMATCHED_SCLAB_LOAD_ADDR;
-> +            msg = "Load Address does not match with component load address";
-> +            set_cei_with_log(comps, comp_index, flag, msg);
-> +        }
-> +    }
-> +}
-> +
-> +static void check_sclab_nuc(uint16_t sclab_flags, IplDeviceComponentList *comps,
-> +                            int comp_index)
-> +{
-> +    const char *msg;
-> +    uint32_t flag;
-> +    bool is_nuc_set;
-> +    bool is_global_sclab;
-> +
-> +    is_nuc_set = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_NUC);
-> +    is_global_sclab = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_OPSW);
-> +    if (is_nuc_set && !is_global_sclab) {
-> +        flag = S390_IPL_COMPONENT_CEI_NUC_NOT_IN_GLOBAL_SCLA;
-> +        msg = "No Unsigned Components bit is set, but not in the global SCLAB";
-> +        set_cei_with_log(comps, comp_index, flag, msg);
-> +    }
-> +}
-> +
-> +static void check_sclab_sc(uint16_t sclab_flags, IplDeviceComponentList *comps,
-> +                           int comp_index)
-> +{
-> +    const char *msg;
-> +    uint32_t flag;
-> +    bool is_sc_set;
-> +    bool is_global_sclab;
-> +
-> +    is_sc_set = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_SC);
-> +    is_global_sclab = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_OPSW);
-> +    if (is_sc_set && !is_global_sclab) {
-> +        flag = S390_IPL_COMPONENT_CEI_SC_NOT_IN_GLOBAL_SCLAB;
-> +        msg = "Single Component bit is set, but not in the global SCLAB";
-> +        set_cei_with_log(comps, comp_index, flag, msg);
-> +    }
-> +}
-> +
-> +static bool is_psw_valid(uint64_t psw, SecureIplCompAddrRange *comp_addr_range,
-> +                         int range_index)
-> +{
-> +    uint32_t addr = psw & 0x3FFFFFFF;
-
-Shouldn't that be 0x7fffffff instead?
-
-> +    /* PSW points within a signed binary code component */
-> +    for (int i = 0; i < range_index; i++) {
-> +        if (comp_addr_range[i].is_signed &&
-> +            addr >= comp_addr_range[i].start_addr &&
-> +            addr <= comp_addr_range[i].end_addr) {
-
-is it still OK if the address points to the end_addr? Or should that be 
-end_addr - 2 instead (since an opcode has at least two bytes)?
-
-> +            return true;
-> +       }
-> +    }
-> +
-> +    return false;
-> +}
-...
->   
-> +static inline bool is_sclab_flag_set(uint16_t sclab_flags, uint16_t flag)
-> +{
-> +    return (sclab_flags & flag) != 0;
-> +}
-> +
-> +static inline bool validate_unsigned_addr(uint64_t comp_load_addr)
-> +{
-> +    /* usigned load address must be greater than or equal to 0x2000 */
-> +    return comp_load_addr >= 0x2000;
-> +}
-> +
-> +static inline bool validate_sclab_magic(uint8_t *sclab_magic)
-> +{
-> +    /* identifies the presence of SCLAB */
-> +    return magic_match(sclab_magic, ZIPL_MAGIC);
-> +}
-> +
-> +static inline bool validate_sclab_length(uint16_t sclab_len)
-> +{
-> +    /* minimum SCLAB length is 32 bytes */
-> +    return sclab_len >= 32;
-> +}
-> +
-> +static inline bool validate_sclab_format(uint8_t sclab_format)
-> +{
-> +    /* SCLAB format must set to zero, indicating a format-0 SCLAB being used */
-> +    return sclab_format == 0;
-> +}
-> +
-> +static inline bool validate_sclab_ola_zero(uint64_t sclab_load_addr)
-> +{
-> +    /* Load address field in SCLAB must contain zeros */
-> +    return sclab_load_addr == 0;
-> +}
-> +
-> +static inline bool validate_sclab_ola_one(uint64_t sclab_load_addr,
-> +                                          uint64_t comp_load_addr)
-> +{
-> +   /* Load address field must match storage address of the component */
-> +   return sclab_load_addr == comp_load_addr;
-> +}
-> +
-> +static inline bool validate_sclab_opsw_zero(uint64_t sclab_load_psw)
-> +{
-> +    /* Load PSW field in SCLAB must contain zeros */
-> +    return sclab_load_psw == 0;
-> +}
->
-> +static inline bool validate_sclab_opsw_one(uint16_t sclab_flags)
-> +{
-> +   /* OLA must set to one */
-> +   return is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_OLA);
-> +}
-> +
-> +static inline bool validate_lpsw(uint64_t sclab_load_psw, uint64_t comp_load_psw)
-> +{
-> +    /* compare load PSW with the PSW specified in component */
-> +    return sclab_load_psw == comp_load_psw;
-> +}
-
-Most of these inline functions just compare something with 0 or other values 
-here, and you only use them in one spot of the code ... So you need 5 lines 
-of code for something that could be done in two lines of code at the calling 
-sites instead, i.e. this looks like unnecessary code to me. Please inline 
-the comparisons (together with the comment that you've got here) in the 
-calling sites to get rid of this code bloat.
-
-  Thanks,
-   Thomas
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 7b2e5ace2d..d3029d4658 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -472,6 +472,33 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+     return true;
+ }
+ 
++bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
++                                uint32_t viommu_id, uint64_t virt_id,
++                                uint32_t *out_vdev_id, Error **errp)
++{
++    int ret;
++    struct iommu_vdevice_alloc alloc_vdev = {
++        .size = sizeof(alloc_vdev),
++        .viommu_id = viommu_id,
++        .dev_id = dev_id,
++        .virt_id = virt_id,
++    };
++
++    ret = ioctl(be->fd, IOMMU_VDEVICE_ALLOC, &alloc_vdev);
++
++    trace_iommufd_backend_alloc_vdev(be->fd, dev_id, viommu_id, virt_id,
++                                     alloc_vdev.out_vdevice_id, ret);
++
++    if (ret) {
++        error_setg_errno(errp, errno, "IOMMU_VDEVICE_ALLOC failed");
++        return false;
++    }
++
++    g_assert(out_vdev_id);
++    *out_vdev_id = alloc_vdev.out_vdevice_id;
++    return true;
++}
++
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+                                            uint32_t hwpt_id, Error **errp)
+ {
+diff --git a/backends/trace-events b/backends/trace-events
+index 01c2d9bde9..8408dc8701 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -22,3 +22,4 @@ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) "
+ iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u viommu_id=%u (%d)"
++iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index dfe1dc2850..e852193f35 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -48,6 +48,14 @@ typedef struct IOMMUFDViommu {
+     uint32_t viommu_id;  /* virtual IOMMU ID of allocated object */
+ } IOMMUFDViommu;
+ 
++/*
++ * Virtual device object for a physical device bind to a vIOMMU.
++ */
++typedef struct IOMMUFDVdev {
++    uint32_t vdev_id; /*  Virtual device ID */
++    uint32_t dev_id;  /*  Physical device ID */
++} IOMMUFDVdev;
++
+ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
+ void iommufd_backend_disconnect(IOMMUFDBackend *be);
+ 
+@@ -73,6 +81,10 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
+                                   uint32_t *out_hwpt, Error **errp);
+ 
++bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
++                                uint32_t viommu_id, uint64_t virt_id,
++                                uint32_t *out_vdev_id, Error **errp);
++
+ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                         bool start, Error **errp);
+ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+-- 
+2.43.0
 
 
