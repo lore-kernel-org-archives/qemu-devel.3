@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61917CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89289CCA468
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 16:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3H8C-0003L7-5u; Mon, 29 Sep 2025 12:53:45 -0400
+	id 1v3H82-00034q-BO; Mon, 29 Sep 2025 12:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7j-0002xR-Ml
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7N-0002mi-6K
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7b-0002oA-Hz
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:53:15 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3H7J-0002kS-CS
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 12:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759164784;
+ s=mimecast20190719; t=1759164767;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T1R5iczYcLsnghwI8KTOzD56srMPGxgDsxqdZ5tXnbY=;
- b=U505LOaGqsAoTcTWWM+8YPbQNv/JWSEeB3S30a0C6NedzxBUVhE8Vez347P6IfFCy6L8HT
- O3PdnhCz3TBzb08+qc0yzDbw7jKpFTVRztD9FqY6ZoYFpZEPLQS+xSOsuDVEaZOR0Aw81K
- ZgyR/h+8H0dAwls535d0tsJmznVx990=
+ bh=zGOPKUvzREVbn3Nks9cXLEp+B1flJ5MFlVu6CrPwR74=;
+ b=IS2JH1iKA98lyokYOLxWEYytkpaCs5F3mucqMvPePjQeM8WTdtLjr8sdK5aDA8memxFuxL
+ Ye5xiaCOM42/LmRvvqP/Ij0Yknqvz+2aFrnFpv7fOy+fk02JQSMz7/iO7RXI8xFbEQ7bNf
+ H8pEzJiCPiPM1w3rhL3m7QoGQjNOoAk=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-y366OSjqNmGwuFX1yj7pdQ-1; Mon,
- 29 Sep 2025 12:53:02 -0400
-X-MC-Unique: y366OSjqNmGwuFX1yj7pdQ-1
-X-Mimecast-MFC-AGG-ID: y366OSjqNmGwuFX1yj7pdQ_1759164782
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-W8kIXFRoP8mDXIftlRswuw-1; Mon,
+ 29 Sep 2025 12:52:43 -0400
+X-MC-Unique: W8kIXFRoP8mDXIftlRswuw-1
+X-Mimecast-MFC-AGG-ID: W8kIXFRoP8mDXIftlRswuw_1759164762
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E435A1956087; Mon, 29 Sep 2025 16:53:01 +0000 (UTC)
+ id 5E9D219560B5; Mon, 29 Sep 2025 16:52:42 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.27])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 41C7B1800446; Mon, 29 Sep 2025 16:53:00 +0000 (UTC)
+ id AC210180141C; Mon, 29 Sep 2025 16:52:39 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 11/32] tests/functional/arm: Add helper to generate OTP images
-Date: Mon, 29 Sep 2025 18:52:09 +0200
-Message-ID: <20250929165230.797471-12-clg@redhat.com>
+Subject: [PULL 03/32] hw/arm: Integrate ASPEED OTP memory support into AST2600
+ SoCs
+Date: Mon, 29 Sep 2025 18:52:01 +0200
+Message-ID: <20250929165230.797471-4-clg@redhat.com>
 In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
 References: <20250929165230.797471-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -68,7 +69,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,34 +87,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Add a small helper that generates OTP images at test time. This lets
-multiple test cases create default OTP contents without shipping prebuilt
-fixtures and keeps the tests self-contained.
+The has_otp attribute is enabled in the SBC subclasses for AST2600 to
+control the presence of OTP support per SoC type.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250917035917.4141723-2-kane_chen@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20250812094011.2617526-4-kane_chen@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/aspeed.py | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/arm/aspeed_ast2600.c | 2 +-
+ hw/misc/aspeed_sbc.c    | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-index b131703c5283..47e84e035bd0 100644
---- a/tests/functional/aspeed.py
-+++ b/tests/functional/aspeed.py
-@@ -61,3 +61,11 @@ def do_test_arm_aspeed_sdk_start(self, image):
-         self.wait_for_console_pattern('U-Boot 2019.04')
-         self.wait_for_console_pattern('## Loading kernel from FIT Image')
-         self.wait_for_console_pattern('Starting kernel ...')
-+
-+    def generate_otpmem_image(self):
-+        path = self.scratch_file("otpmem.img")
-+        pattern = b'\x00\x00\x00\x00\xff\xff\xff\xff' * (16 * 1024 // 8)
-+        with open(path, "wb") as f:
-+            f.write(pattern)
-+        return path
-+
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index d12707f0abee..59ffd41a4ab0 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -261,7 +261,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
+ 
+     object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);
+ 
+-    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
++    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST2600_SBC);
+ 
+     object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "video", &s->video, TYPE_UNIMPLEMENTED_DEVICE);
+diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+index 46a038337c31..b56a8b767815 100644
+--- a/hw/misc/aspeed_sbc.c
++++ b/hw/misc/aspeed_sbc.c
+@@ -273,8 +273,10 @@ static const TypeInfo aspeed_sbc_info = {
+ static void aspeed_ast2600_sbc_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSBCClass *sc = ASPEED_SBC_CLASS(klass);
+ 
+     dc->desc = "AST2600 Secure Boot Controller";
++    sc->has_otp = true;
+ }
+ 
+ static const TypeInfo aspeed_ast2600_sbc_info = {
 -- 
 2.51.0
 
