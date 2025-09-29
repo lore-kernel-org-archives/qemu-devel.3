@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F00BDCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F3BCCA468
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 15:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Fpk-0003yb-I8; Mon, 29 Sep 2025 11:30:36 -0400
+	id 1v3Fpl-0003z8-Ec; Mon, 29 Sep 2025 11:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3FpJ-0003tq-1w
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:30:12 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3FpY-0003wC-A1
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:30:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3FpB-0001h4-4V
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:30:07 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3FpQ-0001xf-I7
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 11:30:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759159797;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1759159812;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VNiv9ZgbthKEdix6/c00x5jnVy/OuDbqGH2b6KKB+Nw=;
- b=JQyqfhF7G6akx7Mw19P1hTrjR2gWdZY+aon3oYHKRZp0dp/49zsL7u+5MCWELvHhiANky0
- lxEFsO2GsLuoRu3UsVeQDrhQsxilkWDqYRDElefGZlrPFR30Ad5jcJKD3u2TxOqsNZX3H8
- tiSZjX19y6l9MYn3AuPneW1ltUlsxnU=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UB7JHQLLdi7g2pfKQNYDfNibZIRZaJg5g/DLFvF6qsY=;
+ b=iwLazRTKIfIpAca9WoBKJPRGStRtzJYOoJn2q9xw4ZXB/WDaWqoE4cEFJN7eUeA/NW+tP9
+ /QmFFebHO2RdedoEXbMw3JZfwKtd/dzl4cwKLHtLNXy43oe/Jn15+c7BqYiARl1RH4paVQ
+ JGZAyoDsEPwW+tKtWkZ3MkpUagdhxU8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-l38J-PJ2PHGbtDic-XwJlg-1; Mon, 29 Sep 2025 11:29:56 -0400
-X-MC-Unique: l38J-PJ2PHGbtDic-XwJlg-1
-X-Mimecast-MFC-AGG-ID: l38J-PJ2PHGbtDic-XwJlg_1759159795
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8635d475527so787447285a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:29:56 -0700 (PDT)
+ us-mta-85-coEaJJ8xMxeKJzi2x2PyvQ-1; Mon, 29 Sep 2025 11:30:11 -0400
+X-MC-Unique: coEaJJ8xMxeKJzi2x2PyvQ-1
+X-Mimecast-MFC-AGG-ID: coEaJJ8xMxeKJzi2x2PyvQ_1759159810
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ee130237e1so2135197f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 08:30:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759159795; x=1759764595;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VNiv9ZgbthKEdix6/c00x5jnVy/OuDbqGH2b6KKB+Nw=;
- b=DbvcZcQ3BjOBvN/gaiNrYpRMCU4RgbfWiG5dH6dMITizjAHsklHe8/Yzh9MpewMjdI
- iP9lRprOtMCt4hTv+wkiNkMi77ToJyCirYsJnNWpsly9/ONeDI1pK1+keKweZ55N//KW
- JteQTJ8D2/50/LPv3w9jJ4WTYwQEgzUTMl+AIYthiUHmfsXTDGG+ZFaAGdoDU+mPYuyV
- in7U2jOgAClQR/4dBl6AqPuMb8u4SmnkJytlMkzZvgZmF+rBBGU/bsTk56EyQHnKFkAA
- JYJyiNqUTycEOO3tuzv8ATY3DY1rQU45hPDZzwNL7HA91acl847b0LeU4Dnfvo+IY894
- 4mHA==
-X-Gm-Message-State: AOJu0YxdsbrDujbmBb8PhM8m4N41dWsfNr/aJhiTeJceP80R+aBkaCK2
- cmVSZC+0vy4VckU0fFWEgZPyzTn2XT4IP4t2UsbPffmSj7H2pdOsU1wb3P+C5iD/oWXEUp254BN
- a3M1kjuaYQjXS4P/H4pK7VUWQ3v5QQ+Xp6G627yVAxuVqfRcfNevPn3dW
-X-Gm-Gg: ASbGncv6JTSCUH9OcgsEGKnTLHEbnPCrMnAEKmZpYxHoIpqXG8sE8UMvKWuaTTH77Ls
- OFqlav0MhlnXG2plcLbsDqvgiQvFXIlFBrRilm6GebrRmB7rPDnrb1jEgPNYUcxlEWsApKw21ot
- RdN0lptGZWj9hziJsJ6q0B+zv9d/we0CeoS+TL2O08O3F/p5K5PULnyMtiPD02hvTXlzAqxqXwz
- wPLFuZSUJhoA1W4hi4+ZHp6cGHoMPoRIyUAvKA0zgjMCtd17njbmlMYYjESce3+noTpuwttlMJt
- pIWWGXjaVwo45q4HnS1pduN4ARPfafPz
-X-Received: by 2002:a05:620a:29d2:b0:813:41c3:e888 with SMTP id
- af79cd13be357-85ae061bc62mr2360267485a.32.1759159795388; 
- Mon, 29 Sep 2025 08:29:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbAe4zWRo71M9xTdPvmZjG9Q5tYTwjlZwIBBPgQaz5N/WHJeAUDR09HMlv72vnecVUd60QjA==
-X-Received: by 2002:a05:620a:29d2:b0:813:41c3:e888 with SMTP id
- af79cd13be357-85ae061bc62mr2360261785a.32.1759159794738; 
- Mon, 29 Sep 2025 08:29:54 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-862e20312f8sm612232485a.42.2025.09.29.08.29.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 08:29:54 -0700 (PDT)
-Date: Mon, 29 Sep 2025 11:29:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH] migration: HMP: Adjust the order of output fields
-Message-ID: <aNql8ZfkTAg5gJde@x1.local>
-References: <20250929021213.28369-1-guobin@linux.alibaba.com>
- <aNqT4mJWxdYJt4Wc@x1.local>
+ d=1e100.net; s=20230601; t=1759159810; x=1759764610;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UB7JHQLLdi7g2pfKQNYDfNibZIRZaJg5g/DLFvF6qsY=;
+ b=T6UhmveS6ukOlvczh/hpKNfUNWue9Ly8gvMzvT23StzIOfCerMChKi9vJl87xSdG/M
+ ZmhslAzf6mvCH3IS91dp7ddlsLsRO3rodjVoN0QFi+73JZQEfS4m3tQLBoRIAeVcTc7s
+ 55oqHahjc5DFoHgjq1h3ptMGpQ9HZCiUBuqAYCueGFkKOWPZ85L18mcWD+p8o3KTs54l
+ j9+vPablkstA4lGlFV+N1+Fv1Avgtsj6cwtfAoxtwlRQq/jcC3FZ0zkfW0OcoAoQAPuL
+ JkiQzr+ELXlvBhSDVbXr2A5b7UIyqyUwEaASVpBtwlt8RUBnqQOQTEaugxlHLrBbjbjc
+ SPZg==
+X-Gm-Message-State: AOJu0YxxrPKUAD5AooTHUmYiv39kPb2MII9Te+q5AQinKVWDK2KeTJvZ
+ 1j/kwF30PDsLmelFCaUVu3kFVmxyLc2ObBkFx+LvRlEMxN2orNMy/W7a272yzxw1KguU1NYCvDK
+ L3v0nzo/ZekJQ0TUZuhoVqNrpJkMDwt/oX51mYWcmPf9VJsZ6QZFLWQhT
+X-Gm-Gg: ASbGncsCFQsJltEAnuezM0eyfeF3G+MZUhpBbCdjqomYfpx52mHn+2QXY7k5U/qrdJT
+ X7IUxqwQp5nMUoICSMqWNEaTzKo54gi8GdJUDSEM5mKHIRtWcGUV6DiE53We1XYET5Uo3xfKmga
+ BGSFUlrWa7aYHncICrcJED8lcq9slG+jG3ZHIrIefGe5ikWIgaZNSc7qfy2NDFm4kX3KH0RbDD4
+ dF6Vrh5lmbTJIR80L9d3Wg8XtGhhrRplQdzJqKZXp7kb6sZLX6UjmYE/GB9yG0HYFxkxd6oNFFJ
+ 4n6FSviSnSYCRbznPNCCyDUXQXaGR8+BDlmQkISNFsiYuEB08eWyGuussfmKKcBjMKrmmNAlM8A
+ zE752O5jb8RY=
+X-Received: by 2002:a5d:64c9:0:b0:3e7:4fda:fe0c with SMTP id
+ ffacd0b85a97d-40e436423ffmr17371091f8f.15.1759159809787; 
+ Mon, 29 Sep 2025 08:30:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHP2TAXCqlUxsO67974YXOyqxH04DE5y4Q+Sez1wZtb8/7Y+Kc1kProKh+kAjWIKaMf48dsCA==
+X-Received: by 2002:a5d:64c9:0:b0:3e7:4fda:fe0c with SMTP id
+ ffacd0b85a97d-40e436423ffmr17371056f8f.15.1759159809377; 
+ Mon, 29 Sep 2025 08:30:09 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fc5602efdsm19465189f8f.34.2025.09.29.08.30.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Sep 2025 08:30:08 -0700 (PDT)
+Message-ID: <81c98959-45dc-4cbc-836f-a34fdf160801@redhat.com>
+Date: Mon, 29 Sep 2025 17:30:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aNqT4mJWxdYJt4Wc@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/14] hw/arm/smmuv3: Harden security checks in MMIO
+ handlers
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>, pierrick.bouvier@linaro.org,
+ philmd@linaro.org, jean-philippe@linaro.org, smostafa@google.com
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250925162618.191242-12-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250925162618.191242-12-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
@@ -88,7 +102,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,35 +115,127 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 29, 2025 at 10:12:50AM -0400, Peter Xu wrote:
-> On Mon, Sep 29, 2025 at 10:12:13AM +0800, Bin Guo wrote:
-> > Adjust the positions of 'tls-authz' and 'max-postcopy-bandwidth' in
-> > the fields output by the 'info migrate_parameters' command so that
-> > related fields are next to each other.
-> > 
-> > For clarity only, no functional changes.
-> > 
-> > Sample output after this commit:
-> > (qemu) info migrate_parameters
-> > ...
-> > max-cpu-throttle: 99
-> > tls-creds: ''
-> > tls-hostname: ''
-> > tls-authz: ''
-> > max-bandwidth: 134217728 bytes/second
-> > avail-switchover-bandwidth: 0 bytes/second
-> > max-postcopy-bandwidth: 0 bytes/second
-> 
-> This can be moved even above "avail-switchover-bandwidth", IMHO.
+Hi Tao,
 
-I queued it with this change, please shoot if there's objections.
+On 9/25/25 6:26 PM, Tao Tang wrote:
+> This patch hardens the security validation within the main MMIO
+> dispatcher functions (smmu_read_mmio and smmu_write_mmio).
+>
+> First, accesses to the secure register space are now correctly gated by
+> whether the SECURE_IMPL feature is enabled in the model. This prevents
+> guest software from accessing the secure programming interface when it is
+> disabled, though some registers are exempt from this check as per the
+> architecture.
+>
+> Second, the check for the input stream's security is made more robust.
+> It now validates not only the legacy MemTxAttrs.secure bit, but also
+> the .space field. This brings the SMMU's handling of security spaces
+> into full alignment with the PE.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> ---
+>  hw/arm/smmuv3.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 58 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 53c7eff0e3..eec36d5fd2 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1484,6 +1484,12 @@ static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s,
+>      return smmu_irq_ctl_evtq_irqen_disabled(s, sec_idx);
+>  }
+>  
+> +/* Check if the SMMU hardware itself implements secure state features */
+> +static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
+> +{
+> +    return FIELD_EX32(s->bank[SMMU_SEC_IDX_S].idr[1], S_IDR1, SECURE_IMPL);
+> +}
+> +
+>  static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>  {
+>      SMMUState *bs = ARM_SMMU(s);
+> @@ -1723,6 +1729,43 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecurityIndex sec_idx)
+>      return 0;
+>  }
+>  
+> +static bool is_secure_impl_exempt_reg(hwaddr offset)
+Worth a comment: some secure registers can be accessed even if secure HW
+is not implemented. Returns true if this is the case or something alike.
+> +{
+> +    switch (offset) {
+> +    case A_S_EVENTQ_IRQ_CFG0:
+> +    case A_S_EVENTQ_IRQ_CFG1:
+> +    case A_S_EVENTQ_IRQ_CFG2:
+> +        return true;
+> +    default:
+> +        return false;
+> +    }
+> +}
+> +
+> +/* Helper function for Secure register access validation */
+> +static bool smmu_check_secure_access(SMMUv3State *s, MemTxAttrs attrs,
+> +                                     hwaddr offset, bool is_read)
+> +{   /* Check if the access is secure */
+> +    if (!(attrs.space == ARMSS_Secure || attrs.space == ARMSS_Root ||
+First occurence of ARMSS_Root in hw dir? Is it needed?
+> +          attrs.secure == 1)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "%s: Non-secure %s attempt at offset 0x%" PRIx64 " (%s)\n",
+> +            __func__, is_read ? "read" : "write", offset,
+> +            is_read ? "RAZ" : "WI");
+> +        return false;
+> +    }
+> +
+> +    /* Check if the secure state is implemented. Some registers are exempted */
+> +    /* from this check. */
+> +    if (!is_secure_impl_exempt_reg(offset) && !smmu_hw_secure_implemented(s)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "%s: Secure %s attempt at offset 0x%" PRIx64 ". But Secure state "
+> +            "is not implemented (RES0)\n",
+> +            __func__, is_read ? "read" : "write", offset);
+> +        return false;
+> +    }
+> +    return true;
+> +}
+> +
+>  static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>                                 uint64_t data, MemTxAttrs attrs,
+>                                 SMMUSecurityIndex reg_sec_idx)
+> @@ -2038,6 +2081,13 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
+>      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
+>      offset &= ~0x10000;
+>      SMMUSecurityIndex reg_sec_idx = SMMU_SEC_IDX_NS;
+> +    if (offset >= SMMU_SECURE_BASE_OFFSET) {
+> +        if (!smmu_check_secure_access(s, attrs, offset, false)) {
+> +            trace_smmuv3_write_mmio(offset, data, size, MEMTX_OK);
+> +            return MEMTX_OK;
+> +        }
+> +        reg_sec_idx = SMMU_SEC_IDX_S;
+> +    }
+>  
+>      switch (size) {
+>      case 8:
+> @@ -2252,6 +2302,14 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
+>      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
+>      offset &= ~0x10000;
+>      SMMUSecurityIndex reg_sec_idx = SMMU_SEC_IDX_NS;
+> +    if (offset >= SMMU_SECURE_BASE_OFFSET) {
+> +        if (!smmu_check_secure_access(s, attrs, offset, true)) {
+> +            *data = 0;
+> +            trace_smmuv3_read_mmio(offset, *data, size, MEMTX_OK);
+> +            return MEMTX_OK;
+> +        }
+> +        reg_sec_idx = SMMU_SEC_IDX_S;
+> +    }
+>  
+>      switch (size) {
+>      case 8:
+Thanks
 
-Thanks,
-
--- 
-Peter Xu
+Eric
 
 
