@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F925CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Sep 2025 23:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB43CAC5B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 00:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v30wS-0003AL-DL; Sun, 28 Sep 2025 19:36:32 -0400
+	id 1v31dJ-0001e6-KJ; Sun, 28 Sep 2025 20:20:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v30wO-000349-0g
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 19:36:28 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1v31dH-0001dc-Mh
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 20:20:47 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v30w6-0006iC-89
- for qemu-devel@nongnu.org; Sun, 28 Sep 2025 19:36:26 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-63163a6556bso9017167a12.1
- for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 16:36:09 -0700 (PDT)
+ id 1v31dA-00031O-Th
+ for qemu-devel@nongnu.org; Sun, 28 Sep 2025 20:20:47 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b3d50882cc2so154106466b.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Sep 2025 17:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759102565; x=1759707365; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759105237; x=1759710037; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HD2+rEol+zuesGa48FK5nOsi28dpTeYz0uRTWXah58A=;
- b=J8jgtEMdwJbFpyOsL/4tClnR3/G+oYKk7sGtuabTJMa/y5FzfJD6pPjvgaD2mVPx4p
- jpiQwwhD4CMTUJ2umuEQsdEXnKGnMRt9fm04Q0rnfmPrmdVEv6WcuKDiDvbDKFoDN6dZ
- 99M9Z1ZwMPwKanoBphaXrhjdKt4Hu42COmXRPVuzdtmsYNPnoRxcry4BNTYJDutR+XFA
- DfZw+OQB7DjKxKafYiUNQrlph52LV/hvmazK8j0vGmSMXDoxf8Xep9rrP0Pmu3SDiG6O
- EkvCstaaNsuOu0ZKRqwTN+J1L/8q0LiGKzXD2Uch6T2cP0WhndwoC2lR0vO3dCLJptOi
- dQTA==
+ bh=u36zxouZKT+rHwUvXLtxFiV+fOYrC+5s9xLgLQvKDNU=;
+ b=BTgCrfte4GjM+0GUeqdmiobo4RS3tqZeVYJJzhgOQtxYsTAdcp0f/6+UH+LH+qx1q9
+ 2FtQs5nq2wpLTZKbFp5NQ5q8Cx05tSUIotptTv3uQXTkOi3JH0qhgh+SETp59Gyk9i5t
+ 478pZ5Zj+k+00h3lUQ339Y3DQ0K/FRKK5gTzmu51nPfXiTWSxyErFDj0tXjaAsBdvyok
+ o0gm3Ktw3pZMR1nqgTLwwp3gffyrmDIFdOiv6eVSOVltqEgtSLCa0hdfaIf78fRLTiUE
+ 2V93lKBOtATqYoelVui6FOv3VZIkX9lhLlqFm4wPbg8lu6mviBwDj+PwAgg83U2g3FW+
+ +nqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759102565; x=1759707365;
+ d=1e100.net; s=20230601; t=1759105237; x=1759710037;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HD2+rEol+zuesGa48FK5nOsi28dpTeYz0uRTWXah58A=;
- b=kOLOF4mLqJCqfJiamy2oSIwMS9n4WXHaegi3+enUiyep2Kkcu3gXIGfJf48Es2D314
- M2ltvEJ5rNmsafKaWcRHUaejPuFAsrfn+n3Mn0uyr7J/YouVLMkroXAkmlB59XxBChIX
- o1mc4da6H8TeW+zA/kifj3CECkS55lnmK7NcsykSIxcaS1L5Lk7w0gZsd4usyeFh4DmC
- EUz4emHR7Y2gDXMllsl886ttt0sb16iIs+TOOhVQdk+uYAlW/G9CAVRMyixWGBogbYIK
- KL1tpH9EVR9Uejf02R1IncurLO2bjkwWGPG77zsUOAwixCgxTVUZUSqXwfckA7Oq3+dI
- 4dDw==
-X-Gm-Message-State: AOJu0YyCcuR58VkwAD/HYmQcIhTQDSYtmrpkDxPg4GwYFrb6Pa3TS+Is
- nlhWy6EmMBZ0jvqbyyszWCdLVOFagO8l1VhxjKuOzH37NcOlnUjKxnH0dPDOsq8rK4ELc6TR1e0
- qIbVZsqLlUH/OoVoMTEnPPFhXhO0wh7M=
-X-Gm-Gg: ASbGncuw8LoUaJvBpIYdfG4WT9W8aq9TN22pLIxvb1uyGyCk4Mazq6t/Uen+9l7uTay
- OBqcIhAcN50CsVYoI4+ReuinOatTjDkGZY4gv9HU0yguzwzCS6NrqLJW0wog/ev9NzZgoLddr24
- sVZrfrMFZyUfKqVuDVk5qwl8hvWV0r7bIqdY9BXdobRV+CvtyGT4J/uobAQiQFYRXrfdDXX7tba
- R57HKyNi402d1kN53ktojj0abPeW7MjJBzAPg==
-X-Google-Smtp-Source: AGHT+IG8UmC1JtVGPuq3Q8HeKWf6Y11YOD0ghCL4E9Q2pPwtej86heMuMRvNkad3LwexQgQ79wF50vyjYW+7LQAZcmc=
-X-Received: by 2002:a17:906:f586:b0:b3d:d6be:4cbe with SMTP id
- a640c23a62f3a-b3dd6be501fmr327735266b.18.1759102565288; Sun, 28 Sep 2025
- 16:36:05 -0700 (PDT)
+ bh=u36zxouZKT+rHwUvXLtxFiV+fOYrC+5s9xLgLQvKDNU=;
+ b=dUqL6tob3QbcwlhasiZdlv/AWBIUovoL8E5eVIJnArjJ2DoicUB4ULuDw/lU0aPeo/
+ Kp+swh2yj05nvNX5YEdd0x/OIT0Toc/K/G+U+uhvShD5ewUwyQoGx4BsSxYoubg1vTEm
+ tvfeVGgsP78R10ARuHKIEwJeRZpwwEo83khdpJ/a0UFuZBma0QmvCDrsGuG7nRFiXznL
+ DuK68725GvbsS0DEB+uWlM1WednsXNZy7qAhXo3X2w9KCcyI8Y/3FcLXgeZ1ezR0BLxf
+ Qa/9qc8T8hKI9yBNSPeQZUGreSxrU3Rgtgf+XeN6m6Fdh0d2pvxVAFmTQOFp/WkYKeFc
+ b/lQ==
+X-Gm-Message-State: AOJu0YxRxnHLIbprsFkDA4bLFN2qn+FcYoOLq2IgESRWK7efvvkm6wz3
+ 4gZgG6qRDCNXNx2SD1TYVcclkoU84dZ4pni+GhATeh0hbdR0Xmw0HYTh8YyWdSFDrQX/6J+bM76
+ vkyQUNDtpzYfa1ecLOblO2UHXoBoaB1Q=
+X-Gm-Gg: ASbGnctAevmJI+OqCVIfWe14IKG+DRxUfFwTaE5179EeKtFKaxrxcs0HTgIr5iNwRdz
+ t1GNdSL6yq37zOhqfxSfmAZNvzn8k4iWT0bC1XuJRVYgmVQgW04uEHohcJDrqU6RdZtUidGJjdj
+ KaXAYWq7ZaF8hT3sFdr7cHEXFiBz0A3+Fd8RvCRy8LGjOVlUi0ROX0NRR4+rfzb5ob9/3J3BtAC
+ yw5It+vfYloDM7FUO/0vTvQj6g/G38AnKVwTw==
+X-Google-Smtp-Source: AGHT+IF5JsXIRdn5q/Q95uFMvYmK5ZI2fCAM3RL8mcARwSVK8G3Xqv6a/MuzN5DOr1PaLkojvMQy6ICMcYCyaIi+am0=
+X-Received: by 2002:a17:906:7304:b0:b3a:b22e:dd35 with SMTP id
+ a640c23a62f3a-b3ab22ee9c8mr619460266b.2.1759105237048; Sun, 28 Sep 2025
+ 17:20:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250917114450.175892-1-luc.michel@amd.com>
- <20250917114450.175892-5-luc.michel@amd.com>
-In-Reply-To: <20250917114450.175892-5-luc.michel@amd.com>
+References: <20250924164515.51782-1-philmd@linaro.org>
+In-Reply-To: <20250924164515.51782-1-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Sep 2025 09:35:38 +1000
-X-Gm-Features: AS18NWCd7M3pY-ULQbN3tNzSPRcE3-9A3kwkHeA_qnAcH8LlwzizUQDKmAdm8SQ
-Message-ID: <CAKmqyKMY3p=5RzeYRjF_twtE6p2yeahJPBoqcFW4ZHsVaRYZYg@mail.gmail.com>
-Subject: Re: [PATCH 4/7] hw/core/register: remove the `register_finalize_block'
- function
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>, 
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alistair Francis <alistair@alistair23.me>
+Date: Mon, 29 Sep 2025 10:19:00 +1000
+X-Gm-Features: AS18NWBmSLYCbkH9z66atXdtZyhAPWoEbevCkJpJewrJ19mE2X0lp1-JaynxcDY
+Message-ID: <CAKmqyKNxjvBt=Ft5pFtNySvg5NnS1yAruExwQK=BMpvNqB4F4Q@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv/kvm: Use riscv_cpu_is_32bit() when handling
+ SBI_DBCN reg
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,73 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 9:50=E2=80=AFPM Luc Michel <luc.michel@amd.com> wro=
-te:
+On Thu, Sep 25, 2025 at 2:47=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> This function is now unused. Drop it.
+> Use the existing riscv_cpu_is_32bit() helper to check for 32-bit CPU.
 >
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  include/hw/register.h | 14 --------------
->  hw/core/register.c    |  4 ----
->  2 files changed, 18 deletions(-)
+>  target/riscv/kvm/kvm-cpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/include/hw/register.h b/include/hw/register.h
-> index 65c82600e06..7b0f4c8b7a6 100644
-> --- a/include/hw/register.h
-> +++ b/include/hw/register.h
-> @@ -207,20 +207,6 @@ RegisterInfoArray *register_init_block64(DeviceState=
- *owner,
->                                           uint64_t *data,
->                                           const MemoryRegionOps *ops,
->                                           bool debug_enabled,
->                                           uint64_t memory_size);
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 5c19062c19b..187c2c9501e 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1588,7 +1588,7 @@ static void kvm_riscv_handle_sbi_dbcn(CPUState *cs,=
+ struct kvm_run *run)
+>           * Handle the case where a 32 bit CPU is running in a
+>           * 64 bit addressing env.
+>           */
+> -        if (riscv_cpu_mxl(&cpu->env) =3D=3D MXL_RV32) {
+> +        if (riscv_cpu_is_32bit(cpu)) {
+>              addr |=3D (uint64_t)run->riscv_sbi.args[2] << 32;
+>          }
 >
-> -/**
-> - * This function should be called to cleanup the registers that were ini=
-tialized
-> - * when calling register_init_block32(). This function should only be ca=
-lled
-> - * from the device's instance_finalize function.
-> - *
-> - * Any memory operations that the device performed that require cleanup =
-(such
-> - * as creating subregions) need to be called before calling this functio=
-n.
-> - *
-> - * @r_array: A structure containing all of the registers, as returned by
-> - *           register_init_block32()
-> - */
-> -
-> -void register_finalize_block(RegisterInfoArray *r_array);
-> -
->  #endif
-> diff --git a/hw/core/register.c b/hw/core/register.c
-> index 4d1cce02a55..6cfcfcd2b14 100644
-> --- a/hw/core/register.c
-> +++ b/hw/core/register.c
-> @@ -321,14 +321,10 @@ static void register_array_finalize(Object *obj)
->
->      object_unparent(OBJECT(&r_array->mem));
->      g_free(r_array->r);
->  }
->
-> -void register_finalize_block(RegisterInfoArray *r_array)
-> -{
-> -}
-> -
->  static const TypeInfo register_array_info =3D {
->      .name  =3D TYPE_REGISTER_ARRAY,
->      .parent =3D TYPE_OBJECT,
->      .instance_size =3D sizeof(RegisterInfoArray),
->      .instance_finalize =3D register_array_finalize,
 > --
-> 2.50.1
+> 2.51.0
 >
 >
 
