@@ -4,116 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76CCECAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD5CCAC5B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 18:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Idb-0003le-8o; Mon, 29 Sep 2025 14:30:15 -0400
+	id 1v3IgP-0004yN-FE; Mon, 29 Sep 2025 14:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1v3IdY-0003kz-Bi; Mon, 29 Sep 2025 14:30:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1v3IdR-0001uW-PO; Mon, 29 Sep 2025 14:30:11 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58TAnE3G021623;
- Mon, 29 Sep 2025 18:29:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=i7lCCT
- yKP4ZelI1TzSOaAYEMe9U7gVHasN9AZColyNo=; b=UfUHd8kvUeD553IPlkuX/N
- mH6fh8bgE8vYG5Jn0TqF//yPKTLcduRE3wOgpXm77mTeM5JfAcLRy0jreiH/CoYo
- WbBT0KCtKL5fVl7SDbhIvjxQpYrGSHxQAfhTKkcxFNoU17WPQj1UwjT8xJ1Oxqfj
- IY+NgdxFWGVB9fZL1FaBZxP3+QbRc3Bl1ylYTrPk0+nbWTPEPUWGXl6GRnTjU0Fq
- 43p+rOUtogqkTc1AEyMOVMneciNsOTSYkFrldPAz8Fqy1L6kQF4aN2XwCYAnFTu1
- J6XD0b45p2LWd8pZY2knXlnnKpeNCZON1UjlW1GPLSreUeggypqUhKyOI9BkSO6g
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7jwbry0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Sep 2025 18:29:59 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58THHE3C001540;
- Mon, 29 Sep 2025 18:29:58 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49evfhy966-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Sep 2025 18:29:58 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58TITuF826608326
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Sep 2025 18:29:56 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C5F9D5803F;
- Mon, 29 Sep 2025 18:29:56 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4962958055;
- Mon, 29 Sep 2025 18:29:55 +0000 (GMT)
-Received: from [9.67.68.243] (unknown [9.67.68.243])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Sep 2025 18:29:55 +0000 (GMT)
-Message-ID: <b093c8f4-e701-4c26-9185-e3d2add92bd7@linux.ibm.com>
-Date: Mon, 29 Sep 2025 14:29:54 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3IgM-0004xx-Q7
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:33:06 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3IgH-0002zH-GZ
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 14:33:05 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-46e3a50bc0fso32868785e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 11:32:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759170777; x=1759775577; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gjcLUmOUJAsFuFPIcikgqMGc8qGXLm4Hg2dBmXJH0DU=;
+ b=FSFOIUs/3am6NfFrqS+1iDFuzuUVIT4L1spupPB/LtLpyI97t8cW+5CHeZzAV/Z1rG
+ jbNXb2KjddbJQrfhtZA7aDTC7sUqErxmG1IxWK1/45HWS683/Z0HFjqxTgvK7WTovgQm
+ 2Io37SIpU25nKCuV2JyzDSRMhNQ0zXQ+4b7RZfryDdDA+iQ6/oo479wb5DixHjOMu+HM
+ 9jQA8eSjP7B6IiDn0JCH1wzrnXoNU5nouS+pr3/9NbBGkCQJMeerY7hhR5PSUDW5KzV7
+ FTRCkB90Mm9Umj9Bw+6Ud6etQ65u/7a0qs1pSYEDGv8PqAslks8zb+0f8DQ8HYLz6KmF
+ RwoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759170777; x=1759775577;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gjcLUmOUJAsFuFPIcikgqMGc8qGXLm4Hg2dBmXJH0DU=;
+ b=KmY2FyJZtPkUxGSGnCOL1z+8iKFy4riwHt8YktEyQAJY/gMyfh2I7WCPBCqD6Ncf7R
+ JyJbR0ltztG6VLDiK1SNlA6JNr6vnaBZ79bu2sdMjFkDOH/Aos7wPJafG1Se9Oa8+hMS
+ Bwsmiccc0keuCNZMlA6ovN2fuNDNAG19Vm0jyMAsKOp4ksw8aop9MsAHOD5dpX5KjgZ8
+ vaXPKZjuyNhBcje5NjYhywzB8SvzQRRXeB4xA0GICzIAocEaXX2dRmtKbfJ2tEIEThJ7
+ 3S9YHiiLDc51f5bmb67ipvIC7x37B7wXtIbw9cFEkrcbmQLR6CXpTur0MLb+epqRy2xT
+ gEJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbHETholWbBnUQd8ZmxXNrmqWhcZ7AdFLfQc9+wu9Jk20ebkAhln+PGdhhSsq9XekWue/eq1UmhwVH@nongnu.org
+X-Gm-Message-State: AOJu0Yz1UctKqKOQLku9QR0A7G01f1MElgeH+MYiSX7CTx0o3XS+cDCq
+ yULV4t/Dmjwx+eirZmelGSmrQO8D9ZKRRwGXxu7KXBWek/FiSlxABTVvu4JcHEqgdnM=
+X-Gm-Gg: ASbGncvZb3o0pmtMzvArliT+hpCakq9MY21mMtKPfC6PHxnzPufcImnRAbA9DzOxtSt
+ /SlewJS1mtlpp+DVu6rt0ADMTJETAC8IQJ1A0148tSIY9c/QJFlS/ITbh1ADtXz3+tAFCThPobs
+ UHBHN93o7zIJC/XHsnpTWB5LpIADpPNRioDHUvaPMZZnRySyxg4YTCvZIaz9qDXsvV72KTtsWXH
+ je1oDcpVR/DZSd7XHoF1YGl3CW2Znl9Xvtv8FvCZ6kBJXHraCzM1LFqhq2tw82RmvHBt0DogNwh
+ fwmRiWzc9noX8K9y6I3ZJvOmDnoMI4EY5D4buZRe6497ghZZdYIMzyT1NpwOyA1fpkeFR/11AbU
+ JOgfjnzn3U20r6OpG3XjzovsNWemldAC2R8lr7niHWXFL1aJM6U9gDTUsWOsfFTVj8hUIEtBN
+X-Google-Smtp-Source: AGHT+IGPwe4k1nSiLo3Q7fXg2P2eLKRZ1aglm2SdrtFWVXuSkGkjq+3L8RzYMElaCZp3EfcaDxFBpg==
+X-Received: by 2002:a05:600c:350b:b0:46e:36fa:6b40 with SMTP id
+ 5b1f17b1804b1-46e36fa6c4emr125120035e9.24.1759170777268; 
+ Mon, 29 Sep 2025 11:32:57 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e56f76b21sm21984265e9.19.2025.09.29.11.32.55
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 29 Sep 2025 11:32:56 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-devel@nongnu.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, kvm@vger.kernel.org,
+ Eric Farman <farman@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
+ xen-devel@lists.xenproject.org, Paul Durrant <paul@xen.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Anthony PERARD <anthony@xenproject.org>, qemu-s390x@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: [PATCH 00/15] system/physmem: Remove cpu_physical_memory _is_io() and
+ _rw()
+Date: Mon, 29 Sep 2025 20:32:39 +0200
+Message-ID: <20250929183254.85478-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/28] Add boot-certs to s390-ccw-virtio machine type
- option
-To: Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-2-zycai@linux.ibm.com> <87ldmcz1so.fsf@pond.sub.org>
- <aMvE7Phd7sLvgj-J@redhat.com>
- <9db0e68d-b54f-49d2-b598-f8e2f69e853b@linux.ibm.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <9db0e68d-b54f-49d2-b598-f8e2f69e853b@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfX4vQYWR1gLTqE
- KoWZ9IDyjAaQq+wZwtcC5G0gMcuViqmF0i5NqPA8X8bVTUxXy+Gxw1aHZ5OceMldeypiCiHK1Wl
- pZm/RLOpaMlcw2EiVVnPqMm65YGtsLl23nbb0f0YJmiUnbNmXdGf1/TbbiIcGGAHdP2qtia6ZM+
- qzNhigHV4AlWtbtUgp3foCMyEVeoQsHTeUpQeE2OHPWWBpKo6iggj4Mko05QLc+4D6wZrR5geWe
- zsLa4fABlYqAiRxFlkcmmYdRKHJzC1N3T6rrvqvO5H0CT/h/xzCqWRHYbL9JWIYmfopc48EMIV6
- sIbbB/Dbq7D+7UIBssE7TA0B27vtjn+6I52PBCkCzylql1/5ogpi/iRB0O5KR0MKNtw8gqGS1zp
- BJW2KlvsnfKI2d0IA7BqbLs2NZ6RkA==
-X-Proofpoint-ORIG-GUID: Xab4p2EJ5gwvk1s30wdlpXI78bp4dGob
-X-Proofpoint-GUID: Xab4p2EJ5gwvk1s30wdlpXI78bp4dGob
-X-Authority-Analysis: v=2.4 cv=GdUaXAXL c=1 sm=1 tr=0 ts=68dad027 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=SqMvC5kiAAAA:8 a=WpnzsXt2pHkWeAtI-ekA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=3GzNa28zmJEA:10
- a=_o8VnCo6Hb5Oqlm6Mk7M:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-29_06,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,68 +115,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/25 19:48, Zhuoying Cai wrote:
-> On 9/18/25 4:38 AM, Daniel P. Berrangé wrote:
+The cpu_physical_memory API is legacy (see commit b7ecba0f6f6):
 
-[...]
+  ``cpu_physical_memory_*``
+  ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-> 
-> Thank you for the comments.
-> 
-> Since Secure IPL on s390x is supported in QEMU, I would like to begin
-> drafting the corresponding Libvirt interface and seek feedback before
-> proceeding with the implementation.
-> 
-> While Libvirt already provides a secure boot interface
-> (https://libvirt.org/kbase/secureboot.html), it appears to be primarily
-> intended for x86 systems, where secure boot is configured using the
-> <firmware>, <loader>, and <nvram> tags.
-> 
-> 	<os firmware='efi'>
->       	    <firmware>
-> 		<feature enabled='yes' name='enrolled-keys'/>
-> 		<feature enabled='yes' name='secure-boot'/>
-> 	    </firmware>
-> 	    <loader secure='yes' type='pflash'>...</loader>
-> 	    <nvram template='...'>...</nvram>
-> 	</os>
-> 
-> For s390x, some of these existing tags may be reused, but additional
-> elements will be needed.
-> 
-> Below is my initial proposal for the secure boot interface in Libvirt:
-> 
->  	<!-- New s390-ccw-bios firmware value -->
-> 	<os firmware='s390-ccw-bios'>
-> 	    <type arch='s390x' machine='s390-ccw-virtio-9.2'>hvm</type>
-> 	    <firmware>
->                 <!-- To enable secure boot -->
-> 		<feature enabled='yes' name='secure-boot'/>
-> 	    </firmware>
->             <!-- To provide boot certificates for secure boot -->
-> 	    <boot-certs path='/path/to/cert.pem' />
->             <boot-certs path='/path/to/cert-dir' />
-> 	    <boot dev='hd'/>
-> 	</os>
-> 
-> I would be greatly appreciate any suggestions or feedback on this
-> proposal, and I am open to refining the design to better align with
-> existing Libvirt structures.
-> 
-> Best regards,
-> Joy
-> 
+  These are convenience functions which are identical to
+  ``address_space_*`` but operate specifically on the system address space,
+  always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes and
+  ignore whether the memory transaction succeeded or failed.
+  For new code they are better avoided:
+  ...
 
-You should post an RFC to the libvirt list -- no code needed.  I suggest
-posting what you wrote above while also giving an example of the QEMU
-commandline.  Lastly, give a short background of what you've been
-working on and provide a link to these patches for a more detail.
+This series removes:
+  - cpu_physical_memory_is_io()
+  - cpu_physical_memory_rw()
+and start converting some
+  - cpu_physical_memory_map()
+  - cpu_physical_memory_unmap()
+calls.
 
-CC those who have been involved in review as well as Boris, please.  Thanks!
+Based-on: <20250922192940.2908002-1-richard.henderson@linaro.org>
+          "system/memory: Split address_space_write_rom_internal"
 
-[...]
+Philippe Mathieu-Daudé (15):
+  docs/devel/loads-stores: Stop mentioning
+    cpu_physical_memory_write_rom()
+  system/memory: Factor address_space_memory_is_io() out
+  target/i386/arch_memory_mapping: Use address_space_memory_is_io()
+  hw/s390x/sclp: Use address_space_memory_is_io() in sclp_service_call()
+  system/physmem: Remove cpu_physical_memory_is_io()
+  system/physmem: Pass address space argument to
+    cpu_flush_icache_range()
+  target/s390x/mmu: Replace [cpu_physical_memory -> address_space]_rw()
+  target/i386/whpx: Replace legacy cpu_physical_memory_rw() call
+  target/i386/kvm: Replace legacy cpu_physical_memory_rw() call
+  target/i386/nvmm: Inline cpu_physical_memory_rw() in nvmm_mem_callback
+  hw/xen/hvm: Inline cpu_physical_memory_rw() in rw_phys_req_item()
+  system/physmem: Un-inline cpu_physical_memory_read/write()
+  system/physmem: Inline cpu_physical_memory_rw() and remove it
+  hw/virtio/vhost: Replace legacy cpu_physical_memory_*map() calls
+  hw/virtio/virtio: Replace legacy cpu_physical_memory_map() call
+
+ docs/devel/loads-stores.rst            |  6 ++--
+ scripts/coccinelle/exec_rw_const.cocci | 22 --------------
+ include/exec/cpu-common.h              | 18 ++---------
+ include/system/memory.h                | 12 ++++++++
+ hw/core/loader.c                       |  2 +-
+ hw/s390x/sclp.c                        | 14 ++++++---
+ hw/virtio/vhost.c                      |  6 ++--
+ hw/virtio/virtio.c                     | 10 +++---
+ hw/xen/xen-hvm-common.c                |  8 +++--
+ system/physmem.c                       | 42 ++++++++++++++------------
+ target/i386/arch_memory_mapping.c      | 10 +++---
+ target/i386/kvm/xen-emu.c              |  4 ++-
+ target/i386/nvmm/nvmm-all.c            |  5 ++-
+ target/i386/whpx/whpx-all.c            |  7 +++--
+ target/s390x/mmu_helper.c              |  6 ++--
+ 15 files changed, 84 insertions(+), 88 deletions(-)
 
 -- 
-Regards,
-  Collin
+2.51.0
+
 
