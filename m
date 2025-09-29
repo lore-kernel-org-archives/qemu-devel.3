@@ -4,91 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4B0CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 08:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20587CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 08:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v39cy-00087r-TW; Mon, 29 Sep 2025 04:53:01 -0400
+	id 1v39er-0000hn-2K; Mon, 29 Sep 2025 04:54:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1v39ct-00085K-Gh
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:52:56 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1v39ci-0001AE-Sh
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:52:55 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-32e715cbad3so5199283a91.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 01:52:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759135957; x=1759740757; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lafyTkYT1Ex9v+/Ov2/t60VCq/hVRywmsYuicIahjLI=;
- b=AwhIIdBaHUqHC6rEhjRb0LkyH6NUpihHvBdCyK6ApOWSGXhT3jQfY6lrY5n0DIk5oo
- Ij96SsLsaRRSAMUb1YqExh+2ODEU4mEbtsujSTUeowWGccT1vSMrWLpOsETOVKWxWzqY
- 9+odKlBGUbCXkrIyZ21IEIUxuReNwFwvAgYUOQfjTNjL9nVSg/CDr137xcBIQsRBVIph
- FeXEzfxLRsXy7SiNIAiQ8xOgvPsXhRwVlH6SXLMcEt/b7vDqRZzieAOxuWhwPw8kC7rk
- nM1zPtrtN9OpTYy8ZyYUGrXlNjpqzXxDeRyVgEOxPngjmQ064d1v/q+Naii1aG8PXEW3
- LUfw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v39ek-0000bF-AC
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:54:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v39eS-0001Yo-Ec
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 04:54:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759136067;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FvuMMIh36T7bEzJy9lL6n0zyQNEqJT4rXRP+Yb82gMw=;
+ b=g02Ow3azlkZaeayLeX+aJpQit1bjmy/Ek6uzUQf3Yn08VEyZmnPsD0bQeYV80N3p4qMxX+
+ lIeZ/IlYj/Y8nq/YwFVXQunQ9V2gzAocTPtQYvH0Nd7x0EzsxYd9ZbeaoQAdAmQZLDF9Tn
+ r7/qwhdBYSrGIwDTHak05p/cqxtKM1Y=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-564-t_pOdSqSMseihSOaRKyEPg-1; Mon, 29 Sep 2025 04:54:25 -0400
+X-MC-Unique: t_pOdSqSMseihSOaRKyEPg-1
+X-Mimecast-MFC-AGG-ID: t_pOdSqSMseihSOaRKyEPg_1759136064
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3f7b5c27d41so2290546f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 01:54:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759135957; x=1759740757;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1759136064; x=1759740864;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lafyTkYT1Ex9v+/Ov2/t60VCq/hVRywmsYuicIahjLI=;
- b=djn66w7f8uCfdKr1LatSTV/39sHnQu4o1Hgx86AIt42ynWpjQe1fz++Q2qXS0G1bha
- 0VpKbZdJy9psd16f0nxr2pOWClicfIzNWfWIUj04Sw9/8fJnyU0yxY1q/gkOlp1+cjIc
- y/4N6n2aMQqTOIOaoUGtrN5JGdztQHt7Gsv0hJ4nDuosV08enKEvaC6WptVHjifowOPs
- SDVPnE6wLs9uxr+iop2+rzRHaZVJ6f9GiTtFj3gVk6eH1DKFBQOkiZdayxcs6DqgNeXf
- MdLjavQXzs4bbWhI5mZzsiavSEmKLHf3iyVUPrbtg7aul54yejodiloDTsEBT+Odcea4
- coJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyUDrtR1Bg+CIgBhI/9PTMgbwYrnoPDDALbkF0UtzMC+VbD2GKWx4tyfOIEl9oSIodR/eP71DnlrgZ@nongnu.org
-X-Gm-Message-State: AOJu0Yy1MGZKF14bH6PcLjDEqCreoKUAPrfcOoJ8YaKWbAp9aL8Nn3Wr
- E73VXYH6evNRXG8s5ENAI5hf2d4q3NT7h3yauCwwkWvjbwDwJwyQFSddjGHodyWrFKJ/TeC5ir1
- xrn/VN88B1EtcTZuFQbRzxp0tFrilWxk=
-X-Gm-Gg: ASbGncuTEagpem6YPJh60OdUlL/HAfwqN6UeZvuCwSEV0viTuwUfCn1KVTb57AgNX97
- Gv/9UMewes1CAWxcFIDbLraByr5Ebu6VUiNMIwDSy04wvmfOlwj3n/mpx0mUDBzOOMGhZy/Y7y+
- P8z6wn0cVi/XBFjps9NBU19iNNLRb52LW2o1IenOAJez0Jqr6sYjqYfnlNG2zAdmg2eS+PhwUH8
- XPD/o/l9X9nbQCPmVR/5wEGS2P91TwkWhqKJsjMu86fBMSn
-X-Google-Smtp-Source: AGHT+IFkH+L4hE8LeLLWqYd01Zs54AFlNhodlCJYMweIL//Z3HDNqEDpsa8zTPyQRH14KZrJKif2WgP98Ke2simc2LE=
-X-Received: by 2002:a17:90b:1a8f:b0:32b:c5a9:7be9 with SMTP id
- 98e67ed59e1d1-3342a2c6a0bmr14756810a91.25.1759135957314; Mon, 29 Sep 2025
- 01:52:37 -0700 (PDT)
+ bh=FvuMMIh36T7bEzJy9lL6n0zyQNEqJT4rXRP+Yb82gMw=;
+ b=aSQ5aLeQmxxS+DUo7YGn0qG16qnzlhSgzrB1+S2mcY04/0RA+y3sP58hnXFmvJBErr
+ U/Wh6hMrUi8LwDf15By8g0vBTcAkVpvJ2leLDjs1D6Nf3T9FsiSeU/PBr6cAhHZYKBi7
+ xZEk6VgtYP825sTv1fLrw/+z5USVqhdwZjly2ca3aLPOuakdpAayFmdC/mTezFhfjTIA
+ 7iuO61RFkYa7APf4OBH/AANi1XWiLyEetNvREoUijn5e0b6UmyG2ooTcc8QrMsW3uwG1
+ VbygRyWz/0gA8fI5Ewe44R4S6AGLwLvZu3qrWJuN39aIpZEidXMGGuv2mwfzWKuYpMnR
+ Jn9g==
+X-Gm-Message-State: AOJu0YzVPyV4t1crnQBVIDIoRrnJHM91C5IPErw1w4ZkiyNchZhQzhmz
+ hQ1kpFuSZSWhQRfNoNs/pCl7kfMsvUbkWiPxZsV6Fy3jv+bzqmnchJChTYtOv3LliZk1m+qB3mn
+ U6aPL/fNQnh1K1OJjBE4hPlsBZlU3gdaT2qxAPzRzJNSxjumCNSWKy8zd2zSTeTQM
+X-Gm-Gg: ASbGncvTSUJISGOmnYFftqVUjc+3coliAukfYtFBOGQLAQfxjHNLNOSwub6xwRESs+D
+ 0h4Ljer0P90Qj1Dsicyymg9V66xZykH+vREagMw9zWdXfP4AIGINmfwhv1YLN0BDBYjkNV10qLl
+ 5Lbd+YwntQwswCgncKYSl2GtFIhsbG1rKNQ/KeLCPMRoyDyBNjqxWTGJMbB0U8qsMg10LijCgy+
+ 0i6CD5r/oNBIWBum9k8v9ZZCWe9wWcJvhWOW5cwhIMlwctTISZr0+0FJ+xQb43leoUppRrACvax
+ tvmXzJEkVX9mwYLGtQJpyNUt9S0aQnwRtrDH1ztX2HCFJhke+wk7LhJF028jKqUoub5tawaXaff
+ 7Rf5QdydjNi4=
+X-Received: by 2002:a05:6000:40c8:b0:3ec:db88:bf1 with SMTP id
+ ffacd0b85a97d-418005f50dfmr6507931f8f.12.1759136063792; 
+ Mon, 29 Sep 2025 01:54:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAGRvZYpbjm87rfeEdUBoudfHp6cVVWo00yxaK8XmEUz+ARXg+T2j7VJ/6/1Zs7yL5MH5pxg==
+X-Received: by 2002:a05:6000:40c8:b0:3ec:db88:bf1 with SMTP id
+ ffacd0b85a97d-418005f50dfmr6507904f8f.12.1759136063293; 
+ Mon, 29 Sep 2025 01:54:23 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e56f77956sm3853495e9.20.2025.09.29.01.54.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Sep 2025 01:54:22 -0700 (PDT)
+Message-ID: <aaee9930-69c5-4ed1-8bc0-7ad20e084440@redhat.com>
+Date: Mon, 29 Sep 2025 10:54:21 +0200
 MIME-Version: 1.0
-References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
- <20250924120426.2158655-28-marcandre.lureau@redhat.com>
-In-Reply-To: <20250924120426.2158655-28-marcandre.lureau@redhat.com>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Mon, 29 Sep 2025 17:52:25 +0900
-X-Gm-Features: AS18NWD1-qwZmnd1dinzPXohwgLqCxRefqg_5VIJeSlNYmT6-h2wzUvtSpicHxQ
-Message-ID: <CAEDrbUbOWp24F_wO88Tb9ZCM8Q+jXEK_1BzwGMwC3MG=3TzgAA@mail.gmail.com>
-Subject: Re: [PATCH v2 27/27] WIP: enable rust for wasm/emscripten
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>, 
- Yonggang Luo <luoyonggang@gmail.com>, Li-Wen Hsu <lwhsu@freebsd.org>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Warner Losh <imp@bsdimp.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Ed Maste <emaste@freebsd.org>,
- devel@lists.libvirt.org, 
- qemu-rust@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000d8efe4063fecc195"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/14] hw/arm/smmuv3: Add separate address space for
+ secure SMMU accesses
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250925162618.191242-7-tangtao1634@phytium.com.cn>
+ <9ea1fc2a-8280-4a31-92b9-4870bf2bf940@redhat.com>
+ <fcf54e8a-d4c6-49ea-b31a-35e2f5df1222@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <fcf54e8a-d4c6-49ea-b31a-35e2f5df1222@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.539,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,85 +120,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d8efe4063fecc195
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Marc-Andr=C3=A9,
 
-Thank you for working on this patch.
+On 9/29/25 10:33 AM, Tao Tang wrote:
+> Hi Eric,
+>
+> On 2025/9/29 15:44, Eric Auger wrote:
+>> Hi Tao,
+>>
+>> On 9/25/25 6:26 PM, Tao Tang wrote:
+>>> According to the Arm architecture, SMMU-originated memory accesses,
+>>> such as fetching commands or writing events for a secure stream, must
+>>> target the Secure Physical Address (PA) space. The existing model sends
+>>> all DMA to the global address_space_memory.
+>>>
+>>> This patch introduces the infrastructure to differentiate between
+>>> secure
+>>> and non-secure memory accesses. A weak global symbol,
+>>> arm_secure_address_space, is added, which can be provided by the
+>>> machine model to represent the Secure PA space.
+>>>
+>>> A new helper, smmu_get_address_space(), selects the target address
+>>> space based on the is_secure context. All internal DMA calls
+>>> (dma_memory_read/write) are updated to use this helper. Additionally,
+>>> the attrs.secure bit is set on transactions targeting the secure
+>>> address space.
+>> The last sentence does not seem to be implemented in that patch?
+>
+>
+> You are right to point this out, and my apologies for the confusion.
+> As I was preparing the series, the patches were intertwined, and I
+> didn't manage their boundaries clearly. This led me to mistakenly
+> describe a feature in this commit message that is only implemented in
+> a subsequent patch #07.
+>
+> I'm very sorry for the confusion and the unnecessary time this has
+> cost you. In all future community interactions, I will pay special
+> attention to ensuring each patch and its description are atomic and
+> self-contained to reduce the review burden for everyone. Thank you for
+> your guidance on this.
 
-> wasm-ld: error: unable to find library -llibqemuutil.a
+No problem. Your commit messages are pretty well written and we all do
+such kind of oversights - at least I do ;-) -
 
-This issue looks similar to the one in "[PATCH v2 24/27] WIP: cirrus/macos:
-enable Rust" so I tried the upcoming meson change[1] mentioned in that
-patch for the wasm build. By also applying a patch for disabling the
-"verbatim" modifier for the Emscripten build[2], I was able to avoid the
-error.
+Eric
+>
+>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>> ---
+>>>   hw/arm/smmu-common.c         |  8 ++++++++
+>>>   hw/arm/virt.c                |  5 +++++
+>>>   include/hw/arm/smmu-common.h | 20 ++++++++++++++++++++
+>>>   3 files changed, 33 insertions(+)
+>>>
+>>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+>>> index 62a7612184..24db448683 100644
+>>> --- a/hw/arm/smmu-common.c
+>>> +++ b/hw/arm/smmu-common.c
+>>> @@ -30,6 +30,14 @@
+>>>   #include "hw/arm/smmu-common.h"
+>>>   #include "smmu-internal.h"
+>>>   +/* Global state for secure address space availability */
+>>> +bool arm_secure_as_available;
+>>> +
+>>> +void smmu_enable_secure_address_space(void)
+>>> +{
+>>> +    arm_secure_as_available = true;
+>>> +}
+>>> +
+>>>   /* IOTLB Management */
+>>>     static guint smmu_iotlb_key_hash(gconstpointer v)
+>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>> index 02209fadcf..805d9aadb7 100644
+>>> --- a/hw/arm/virt.c
+>>> +++ b/hw/arm/virt.c
+>>> @@ -92,6 +92,8 @@
+>>>   #include "hw/cxl/cxl_host.h"
+>>>   #include "qemu/guest-random.h"
+>>>   +AddressSpace arm_secure_address_space;
+>>> +
+>>>   static GlobalProperty arm_virt_compat[] = {
+>>>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+>>>   };
+>>> @@ -2243,6 +2245,9 @@ static void machvirt_init(MachineState *machine)
+>>>           memory_region_init(secure_sysmem, OBJECT(machine),
+>>> "secure-memory",
+>>>                              UINT64_MAX);
+>>>           memory_region_add_subregion_overlap(secure_sysmem, 0,
+>>> sysmem, -1);
+>>> +        address_space_init(&arm_secure_address_space, secure_sysmem,
+>>> +                           "secure-memory-space");
+>>> +        smmu_enable_secure_address_space();
+>>>       }
+>>>         firmware_loaded = virt_firmware_init(vms, sysmem,
+>>> diff --git a/include/hw/arm/smmu-common.h
+>>> b/include/hw/arm/smmu-common.h
+>>> index 3df82b83eb..cd61c5e126 100644
+>>> --- a/include/hw/arm/smmu-common.h
+>>> +++ b/include/hw/arm/smmu-common.h
+>>> @@ -53,6 +53,26 @@ typedef enum SMMUSecurityIndex {
+>>>       SMMU_SEC_IDX_NUM,
+>>>   } SMMUSecurityIndex;
+>>>   +extern AddressSpace __attribute__((weak)) arm_secure_address_space;
+>>> +extern bool arm_secure_as_available;
+>>> +void smmu_enable_secure_address_space(void);
+>>> +
+>>> +static inline AddressSpace
+>>> *smmu_get_address_space(SMMUSecurityIndex sec_sid)
+>>> +{
+>>> +    switch (sec_sid) {
+>>> +    case SMMU_SEC_IDX_S:
+>>> +    {
+>>> +        if (arm_secure_as_available) {
+>>> +            return &arm_secure_address_space;
+>>> +        }
+>> don't you want to return NULL or at least emit an error in case
+>> !arm_secure_as_available. When adding Realm support this will avoid to
+>> return NS AS.
+>
+>
+> That's a great point. Silently falling back to the non-secure address
+> space is indeed dangerous. I will update the logic to return NULL and
+> emit an error if the secure address space is requested but not available.
+>
+>>> +    }
+>>> +    QEMU_FALLTHROUGH;
+>>> +    case SMMU_SEC_IDX_NS:
+>>> +    default:
+>> Maybe return an error here in case of other value than NS
+>
+> Also I will change the default case to handle unexpected values by
+> returning NULL, which will make the code safer for future extensions
+> like Realm.  Then a check for the NULL return value at the call sites
+> of smmu_get_address_space will be applied to handle the error
+> appropriately in v3 series.
+>
+>
+> Thanks again for your helpful feedback.
+>
+>
+> Best,
+>
+> Tao
+>
+>
+>>> +        return &address_space_memory;
+>>> +    }
+>>> +}
+>>> +
+>>>   /*
+>>>    * Page table walk error types
+>>>    */
+>> Thanks
+>>
+>> Eric
+>
 
-However the test build still fails with the following error[3] which I'm
-currently investigating. It seems that meson invokes rustc with duplicated
-linker flags (e.g. I saw three "-lstatic:-bundle=3Dglib-2.0" flags in a sin=
-gle
-rustc invocation) and rustc doesn't seem capable of handling them.
-
-> error: overriding linking modifiers from command line is not supported
-
-Aside from the test build, I also tried building the qemu binary. The build
-succeeded after rebuilding the Rust standard library as suggested in the
-documentation[4]. If you're interested, I've stored the patch to [5].
-
-[1] https://github.com/mesonbuild/meson/pull/15024
-[2]
-https://github.com/ktock/meson/commit/afd0366d1fafe0cee2915d4b60bc2b523e3c1=
-c02
-[3] https://gitlab.com/ktock/qemu/-/jobs/11529682431#L3287
-[4]
-https://github.com/rust-lang/rust/blob/5b9007bfc358817cf066ee27c6b440440727=
-d3a7/src/doc/rustc/src/platform-support/wasm32-unknown-emscripten.md#emscri=
-pten-abi-compatibility
-[5] https://gitlab.com/ktock/qemu/-/commits/test-rust-emscripten-c
-
-Regards,
-Kohei
-
---000000000000d8efe4063fecc195
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0Marc-Andr=C3=A9,</div><div dir=3D=
-"ltr"><br></div><div dir=3D"ltr">Thank you for working on this patch.</div>=
-<br>&gt; wasm-ld: error: unable to find library -llibqemuutil.a<br><br>This=
- issue looks similar to the one in &quot;[PATCH v2 24/27] WIP: cirrus/macos=
-:<br>enable Rust&quot; so I tried the upcoming meson change[1] mentioned in=
- that<br>patch for the wasm build. By also applying a patch for disabling t=
-he<br>&quot;verbatim&quot; modifier for the Emscripten build[2], I was able=
- to avoid the<br>error.<br><br>However the test build still fails with the =
-following error[3] which I&#39;m<br>currently investigating. It seems that =
-meson invokes rustc with duplicated<br>linker flags (e.g. I saw three &quot=
-;-lstatic:-bundle=3Dglib-2.0&quot; flags in a single<br>rustc invocation) a=
-nd rustc doesn&#39;t seem capable of handling them.<br><br>&gt; error: over=
-riding linking modifiers from command line is not supported<br><br>Aside fr=
-om the test build, I also tried building the qemu binary. The build<br>succ=
-eeded after rebuilding the Rust standard library as suggested in the<br>doc=
-umentation[4]. If you&#39;re interested, I&#39;ve stored the patch to [5].<=
-br><br>[1] <a href=3D"https://github.com/mesonbuild/meson/pull/15024">https=
-://github.com/mesonbuild/meson/pull/15024</a><br>[2] <a href=3D"https://git=
-hub.com/ktock/meson/commit/afd0366d1fafe0cee2915d4b60bc2b523e3c1c02">https:=
-//github.com/ktock/meson/commit/afd0366d1fafe0cee2915d4b60bc2b523e3c1c02</a=
-><br>[3] <a href=3D"https://gitlab.com/ktock/qemu/-/jobs/11529682431#L3287"=
->https://gitlab.com/ktock/qemu/-/jobs/11529682431#L3287</a><br>[4] <a href=
-=3D"https://github.com/rust-lang/rust/blob/5b9007bfc358817cf066ee27c6b44044=
-0727d3a7/src/doc/rustc/src/platform-support/wasm32-unknown-emscripten.md#em=
-scripten-abi-compatibility">https://github.com/rust-lang/rust/blob/5b9007bf=
-c358817cf066ee27c6b440440727d3a7/src/doc/rustc/src/platform-support/wasm32-=
-unknown-emscripten.md#emscripten-abi-compatibility</a><br>[5] <a href=3D"ht=
-tps://gitlab.com/ktock/qemu/-/commits/test-rust-emscripten-c">https://gitla=
-b.com/ktock/qemu/-/commits/test-rust-emscripten-c</a><br><br>Regards,<br>Ko=
-hei<br><br></div>
-
---000000000000d8efe4063fecc195--
 
