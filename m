@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E9DCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF97CCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3ay3-0005yL-4Y; Tue, 30 Sep 2025 10:04:35 -0400
+	id 1v3b3r-0007yE-Hy; Tue, 30 Sep 2025 10:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1v3axx-0005xa-0y
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:04:29 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3b3p-0007xn-9h
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:10:33 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1v3axr-0005QE-1K
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:04:28 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-b554bb615dcso4669250a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 07:04:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3b3k-0007cc-8X
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:10:32 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-27c369f8986so58013045ad.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 07:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759241055; x=1759845855; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g/rou46H96aHACzgtbm881R4dP4L4UsBowYdEdDp1KU=;
- b=MGZWV/gPYQ/OepZ269z2SG96SMjL/t9dF+NupYiXvtJIXtPXQKX2c6QiFRYGhlzg3d
- yih1SEynSEVNVjKa2F9Uwjy4WL7yOFwUlXs+xyIuBdwaymtCr4UYkohl3pDAdwb2BuwJ
- BmmnEAWGU9Y0x8VwQOKzYDrQHyTMJdFJwYhT/CUSH+Ndlt/HyYAOUBfV8J8mSnQGlR0S
- LFidAxEB3CVbEIuWnJxzIpo2jYPR3fIGVIXK2hQvULfZRjy60LcYqAZpcA9bPjqBcAmh
- LaI8tMHEdr3kxHIWZD4SzgUwBsrsv2bNbjeOVqkHEUVwwJX4+F9vYFLH3dL9iNGBuWzp
- e0vQ==
+ d=linaro.org; s=google; t=1759241424; x=1759846224; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bETngk8oWz+y/33qWB/HDZmhP+JNmoYsAVGClEUh47w=;
+ b=voqhVb+lsItXJzYRkNVz+L4/IGEdeVwgCDk0e68ZKCccxYx8T5dUxuY0AKG/qzmlqa
+ 24IJ5N/ZxYym5B5uIgw0cZ/J8DtgC76hi9Ntu9/jG8A8fcYqm/f8ywttMawP5qu8k4A8
+ YDqHt1iKezldZv66CTc2ApMZ9VrvZKEhfRTVcFPn+z3cr9AdA5NpshOE6EhEMkflPoUm
+ nJ0wTd6p8WgLRdYmKZnwXtC8EuKtiLNl/VhRHPabys/EH7329kY7DdwzxAXbePP9E7zu
+ YUr2SryBuTgAPmdnu4InmBsh9NdVM4+DLWohUXmpmtZsGJRfMDBlb154NCFDdw/agLmF
+ EvLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759241055; x=1759845855;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ d=1e100.net; s=20230601; t=1759241424; x=1759846224;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g/rou46H96aHACzgtbm881R4dP4L4UsBowYdEdDp1KU=;
- b=lJEYedRtopUb1RNZcP2+OdVk/VRdiW0/o3ySwmid5fEOIuHKLL3M+fBvJEQzelXl0B
- xAlbCgcB2m8Sm8/AcJ5HGiWwL1hgOItQvx8GZYe5B7YEro0WgfCdufN/F0z5rLf7pWrI
- TfC7NujFiYk0YtlR7jkDi74MZq2lw1iushWppvFacSvvaXVZKSVJie7H8RBqRVs8apd3
- X3insviEqLhd/pWroYcCebSnXmnomt1cO2s98VnHJorN+iNuyq+Feu6LPb0s7rb86ALj
- qEog0EilkqcePMXL4ayPVcm7MxTZVSndDMHpbRvdEYsynPdukP+nDwcPCrY6dEB/zS0z
- ut+A==
+ bh=bETngk8oWz+y/33qWB/HDZmhP+JNmoYsAVGClEUh47w=;
+ b=h4bghvM8vwHIx7H1pp6CzG+oSwHW0d6evwK1NVMEUKc2wNVtHcFtn7unqsYvJ7c1Hy
+ 4lwYOL3zk33b8WxYmkjHTW1RUtvmzulYp4zpvgu9JwoMkw3jPbToEoHsdri75aA2+gnb
+ o1M7PxDtzrLrP8cAb6hIwhTYZ0kqWWPCi4TStA6OH2AgbwXpGL8y1rpkdB8u5j9DSumm
+ 4TUkHfSGR5Sq5Xh3Ze+TAL0L5WfiIXwigSaA7iEpmtXwelOMy3cxeeUqIeMjrsE2koZa
+ jE0KZZYXajHUPXqH6UsvgwJUYs6XNRlwXo05TbIlo4U8jRPFmcRVsZ4nZ8ThqfBcv2mE
+ YFnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuGTEOERffPJXZcP6P4gWgv+b0WZv10YK1Td/hq7A9rYRIILmvIHtZNODbDUgy9/UUtAaWJKerm1qi@nongnu.org
-X-Gm-Message-State: AOJu0YxY8CS0aOC37SmPS/wwEccg/8yssHtKjxZC+VL5tR3FjGg7i26o
- c5NX5icSpg3T4RRCqkKd3u35lqHf2tSxoEa2nRVVc/aL22LOGpM03ZomRxyyuOQJ2t7odDeBfOy
- GwY7Hny1XGig6f3LbbxFKkRn/h7YAu6KuUnQK
-X-Gm-Gg: ASbGncvydOihxjBcFUAU0TtKCc0dCpHJoi+EDtAqgC+lSFyF9S/9EWipn1ald0Ebb5R
- YJK+cn0RHPSTH7Nj+B313RZC0ntIbx6/HdGyCD7exDDQcMfgpV9sGKY1tJkuKPawKlyPENEM7MO
- 9/mSbOWn5EQXydvVyKjfxClmft6PX4nANCoL412XRU0wxXSt99qYUgf+vGUpJtGR/6nIO4XWEOE
- XsP/i2zDYQL6O1As0LI879JzRPevYvfx+sVNHfwhQ==
-X-Google-Smtp-Source: AGHT+IGYj8z19n6+l2+EpCMq/1kc+QQRza60lue3ajnUABirJYGJcOi4HBY5Hb3L40l2XF9vRm3fewh6389+6xuQgZE=
-X-Received: by 2002:a17:902:f64d:b0:259:5284:f87b with SMTP id
- d9443c01a7336-27ed49d0965mr220965905ad.16.1759241055335; Tue, 30 Sep 2025
- 07:04:15 -0700 (PDT)
+ AJvYcCW1mW1W84hCEc6sn1/zgP3+VatoC65L5XdvJu598CXx0GKBc2ZiAViOcfR2XydVk7AJUJtYkIH3TO+t@nongnu.org
+X-Gm-Message-State: AOJu0YyjhGx7uJB49oOhCTmdWe8XloRqFAIl5Vf2RwOj2AqiMhJm1zOS
+ cYe9UqVY97+IGqU4s63yH9ZZHvSuDIIoEAE+Dh4LbafjjyM0fMOdH3FtNYvcuqSZ5W4=
+X-Gm-Gg: ASbGncvm/weoF7CK1YM2ps+45oa3VIUxhpBTUUDkcFxJ/Ya4c+02AYoMTAoR3P4mTwP
+ kZRuQecHu5xRTXAINEjbKno/1pmFSMMlz/OOptlUJXO4moQdpZ1MfI0OF4inun3KLu8UoDFlP8L
+ lmfddKGiBAXcFCDhe9RNGLlNg8VlNHC+5EHD/Z7Zc2iswBrim1WAehB2D36q6njA3H/OGbETI/2
+ lAsZ8lDYAgWJ6J/ea9VyGijCTF0I8cv9+DvQpCfGUDxHgWwNzPRas8unCTg0KV3IiwEDPMc6WtZ
+ 5x6pOKVIcEryHejldqE2e+roD/gGYd13XNTJx00aYbALkTJD4EA9NqOiMexDZpp+JZEoJaZNu2/
+ n6ibmHP30lc8lzsAo+G1D4NOM/YRNgmKTdcoarvvL+MVOZII8uuFtiB7YCJ5uSAU09Xwsmis=
+X-Google-Smtp-Source: AGHT+IErJx1XZ6G4XHiiKMynK/kRIYq5365OOuUPI+qdl/lVAT6zeq0u4gvFtRJ8Mg3qECuI1WNOZQ==
+X-Received: by 2002:a17:902:ef03:b0:27e:ef12:6e94 with SMTP id
+ d9443c01a7336-27eef126f60mr169096575ad.55.1759241423797; 
+ Tue, 30 Sep 2025 07:10:23 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-27ed6725bbesm161575605ad.60.2025.09.30.07.10.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Sep 2025 07:10:23 -0700 (PDT)
+Message-ID: <7ea1d69b-cb73-4a9e-ad5e-e821740632fd@linaro.org>
+Date: Tue, 30 Sep 2025 07:10:21 -0700
 MIME-Version: 1.0
-References: <CAEDrbUb+MGXU6k7ZHL4ik-VK8hoS8KVQwmCe6cHNjHis-YySUg@mail.gmail.com>
- <82256b42-f625-4a42-ba8f-00b99bf84d2e@linaro.org>
-In-Reply-To: <82256b42-f625-4a42-ba8f-00b99bf84d2e@linaro.org>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Tue, 30 Sep 2025 23:04:03 +0900
-X-Gm-Features: AS18NWAvu7yIKnUvb6LSlQi3vTCZlnLEYLtBv18i8yaq7PMldgLPL2FOB6Yp-Cc
-Message-ID: <CAEDrbUaAxkh5AX0G2pYn8xQBfLXxWQq1g19hmNFaA1AnROLi8Q@mail.gmail.com>
-Subject: Re: Reqeust for a QEMU Wiki account
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000002d7ac40640053a2a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/32] aspeed queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250929165230.797471-1-clg@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,20 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002d7ac40640053a2a
-Content-Type: text/plain; charset="UTF-8"
+On 9/29/25 09:51, Cédric Le Goater wrote:
+> The following changes since commit 4975b64efb5aa4248cbc3760312bbe08d6e71638:
+> 
+>    Merge tag 'pull-loongarch-20250928' ofhttps://github.com/bibo-mao/qemu into staging (2025-09-28 09:01:35 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/legoater/qemu/ tags/pull-aspeed-20250929
+> 
+> for you to fetch changes up to 9ec30a07483640ecb8417fce3dfa9273f7a036c9:
+> 
+>    hw/arm/aspeed_ast27x0-fc: Make sub-init functions return bool with errp (2025-09-29 18:00:20 +0200)
+> 
+> ----------------------------------------------------------------
+> aspeed queue:
+> 
+> * Introduce a new ASPEED OTP memory device model integrated with the
+>    Secure Boot Controller. It includes a new block device backend
+>    ('drive' property), is enabled for AST2600 SoCs and AST1030 SoCs.
+>    Functional tests are included
+> * Changed "ast2700-evb" alias to point to the "ast2700a1-evb" machine
+> * Introduce support for Aspeed PCIe host controller, including models
+>    for the PCIe Root Complex, Root Port, and PHY. Enabled for the
+>    AST2600 and AST2700 SoCs, and functional tests are included
+> * Refactor Boot ROM support to improve code reuse across the different
+>    Aspeed machine. This is in preparation of vbootrom support in the
+>    ast2700fc machine
+> * Improved Error Handling in the AST27x0-fc machine init functions
 
-Hi Philippe,
 
-Thank you for creating the account.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-Regards,
-Kohei
-
---0000000000002d7ac40640053a2a
-Content-Type: text/html; charset="UTF-8"
-
-<div dir="ltr"><div dir="ltr">Hi Philippe,<br><br>Thank you for creating the account.<br><br>Regards,<br>Kohei</div></div>
-
---0000000000002d7ac40640053a2a--
+r~
 
