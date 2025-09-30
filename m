@@ -4,96 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9E5CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 12:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B0BCCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 12:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Zab-0002G4-TQ; Tue, 30 Sep 2025 08:36:17 -0400
+	id 1v3Zgl-0005jw-B9; Tue, 30 Sep 2025 08:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3ZaS-0002Fe-Ke
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:36:13 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v3Zgk-0005iy-1v
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:42:38 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3ZaI-0007iH-1i
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:36:08 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e42deffa8so50320155e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 05:35:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v3ZgY-0001Jr-NP
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:42:37 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3ee1381b835so4928373f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 05:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759235751; x=1759840551; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1759236141; x=1759840941; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oXb58rYrjxPuyublF8i/PNw1E8UtKBUjINjyx90boZk=;
- b=UYgec2bUorsGM4utvtQ70vhFacgVL0R+aFuZ7wReMdHjKmzFns9V2qpq0yu58hsnlJ
- AlUe5ZtT+2KnPSQOE2pFGV2HzSVvLU/xcmQ9eDFYegjIHiuk1oIauWI4FBMoMlWoEXy7
- m3r4e5+MCO/0YoECJAKYvxNtVsWYlUWSYPGkFoTTKbfFCxWgxDP46P/di+UHZjajiUfB
- ZgkSuTp3QR6e3+bBw7pHNq7m5enCr0jNVWy9XGr9t6UFe3LluoOz3HeZvHt8cBGryM5h
- zD5NPoyv4aFbdwjCBba27Ff+q1yVefe7d7q7vYoubQkKCg8tUF+LCoBHMuOFiL7ZIlo3
- mXyw==
+ bh=5D9Jn6L1grQE83K2A+0hDVtEfN8YBwR9togP5K5ulA8=;
+ b=uyLo2+zovyfEBxfMKWLT8istmXs3sqi/tdjt9sOtrVd2FAe1lBEr/Q7V+4+w0ly0iv
+ 9m1aPxRa6iye9ALJmvX3juSY4FtLslbc/bP2kgYZIsh8HCkkhzB+lgF2GWYzrhKDEVVm
+ z13PjVVFzBoaV64dR6Y49bBbwWct9j7fe8drapmm9DcY2Rv4ZVJwSYtZygY+JvSqaGia
+ ERVCwrRnkSbx0FTQYX7KX9V9QDzzjmhpM0nbqmXodRIe3suT65WFH8t+O0ncNTDI0RRZ
+ q6JR0bqfZJ8pMg0ApiF33VN69dd6NzHEcWORpnPoQkBBC6J5cwGDXWv4jgh5xcT9JBcB
+ jdLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759235751; x=1759840551;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oXb58rYrjxPuyublF8i/PNw1E8UtKBUjINjyx90boZk=;
- b=srnjRrWaI2YeHdvjI/UDMnWrjSSVBB9dMXRKJUiTthW02Fa77tzVl+j1vwZostorVe
- 0pfoGULg1bAy1oenTdZomfLqwqo22Vnpc6nix3s7wBrvMyXzusLUZxTuTuWD0RiKgMgQ
- LuRjgED6wcagR1LVDz6CSP8aYEMafzLX9uaQrrnFYjhDI6iUk35zmIyW9mSbnEuSXl9L
- sGt2rREh31OmMkhUqRFbBj4C8bk8WUqPDsKUgb6S4/6pawXhbFNXdx+nF+SLFVLrbLRr
- F8+A70o3aDPCc7UH1vVOtsKB125Hj5ncpq5c9NFkfkV1jVMX/8bh9mhGuAkV4BBFTyMH
- 4tLg==
-X-Gm-Message-State: AOJu0YxLIpSPcA6tFjOmYm598hcRbyFqS1vRpYJ3mjQcln81+Y34JoI0
- JCcyjVpr28IKm4TRIBbDOUoOODmo9KZO8YpU/m6wkEaTi55/ZWIIs4BeGvprU96wDO6ljUk6dA5
- Ngl3nexrbDQ==
-X-Gm-Gg: ASbGncuWOmUzmCsJZ/w3U4VestJvsILvLr0DSoFfduKuC5CKw8lh/GbbVwsLg9DH0gd
- Oh8xmR7ZJPwV0q3mWTh+aJ/5YLOaFSp0sC1CD/I5M5etYH+coR1nV6Dsk5l5YzjdsqrRL1YH8kL
- WEhhP5cG56ZvwSpe6KPm0xysEFBBU8k8YJLdv4LTlhDEbXv+7vmvceY9HPWvFatCv3pmX/w+sX8
- Uwy2NFqD7F5r2USn747P14RTyLUCItZWuperJF99pH/xWkF5HKlKybRh1aG5eh+lNNey6sSU5G6
- 7sYI+qhFlj1FR0uRGlVtuR+6bhnwYZTnnBWhaWt0ZM5yoDfE1vcWe+O7vQ/B0Hh3vLaJEZqGP/6
- DwW98+e5V3oIXNxtIhnEIHkQWAoGvHIJKVekRVsNDOiadJ6V5iWlU5EazEio0OV05hZASCL4/2R
- z9WwzYIGCZ40O1Ou5Te20PztojyNZZ/j9ViiGmBqmKiw==
-X-Google-Smtp-Source: AGHT+IGy+sT71JHpBA2kNf2+XMSiLP33E+5QA+bybmolxzdqy2+CWOqIpgm8WYrp0ocmtTKTGmRD7w==
-X-Received: by 2002:a05:600c:1ca8:b0:46e:4580:c6c5 with SMTP id
- 5b1f17b1804b1-46e4580c7a4mr118528875e9.35.1759235750814; 
- Tue, 30 Sep 2025 05:35:50 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc5603356sm22972284f8f.30.2025.09.30.05.35.49
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Sep 2025 05:35:50 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- John Levon <john.levon@nutanix.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Auger <eric.auger@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 4/4] hw/vfio: Use uint64_t for IOVA mapping size in
- vfio_container_dma_*map
-Date: Tue, 30 Sep 2025 14:35:28 +0200
-Message-ID: <20250930123528.42878-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250930123528.42878-1-philmd@linaro.org>
-References: <20250930123528.42878-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1759236141; x=1759840941;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5D9Jn6L1grQE83K2A+0hDVtEfN8YBwR9togP5K5ulA8=;
+ b=O5tiQh2poJJsQIphrV5xIw8zwLeTfWCqnbyidVOi285vo4jgVtNCkweIfOmWdhvcXr
+ xToY564UX5nVFCTb9ZafgdDspWXCtMAkQcXpbvS60aHr6IFkORtMjKi9EhkjaGELxUZu
+ tFB4FDBstFXS7F8k6TokS2n+EJ2RYOAYnqpfkmkKNWuYPRlTYlJlOFQhHITNON9tPx62
+ nBHCEdN9eIwaNqEbDOqijSFjJKsZN1DNbpiEaku7shjQ3nRxlqoRvgJB6Gmo0F8YB5ni
+ VbYd0474QaFbsfuMsbAnd7CJC44nceYt+wUw/idc8p8BQQEObpu9p6mNcq4mLB4eTwhA
+ Os5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWvfxWFbTL5+8UIvGAd1I77tUzkVlcN0Q6gNRdEYIEFcXcTkB7jDfLJuQTAjY5mmreLOzhmc3YqNOY@nongnu.org
+X-Gm-Message-State: AOJu0YyxCN0qGgpgAducf59Msr4yeOBKw6ZqVZIPgPStiHCUbI7QAzZX
+ Vy3EfVT2lV72A0UApBLTaPFe39mCkzqDipjGLggPyYY7OWaXdePllJa0QzjZO23yO+4=
+X-Gm-Gg: ASbGncvmJRHxSD6Ce0Hzn8fNxn6sanTgmud+kXxt4R0HSck7qjWXuJi5vQmpfueng5c
+ 0iX42LA6xzGW9zDeZQvF+BiUD5xcStlbrF/ndaLo4viYvLanUFDtnqwmW5ZLhtfcXZZ0dTAcp/f
+ OkhamAwiuTly/aptV1tvn23wYqxpCdDmKdroAZE/mmXX2pv7CceQxkZI4PSJVHqvtBUZYw/zXoz
+ 0OQen6xZISbLbbDw/7Gp2fMfAMJYxfnpFadPyLXts3T054TU9Ro0zRe5ND3d8npFJJoxVrjDLT9
+ kJa27G3BABq0HcttPu02vJzD0yhYpvGAIwfwqmG28qFlEdRMBmXjuhu0zQ2XdvlGwcGXI609z6K
+ 0QZLB7n67ChMX5VjN+InL2cnixkxRrppDTHQFopnKGh0MK5M=
+X-Google-Smtp-Source: AGHT+IFHcN4ezLbEkK5407oHpU24l8zam7ye53Km4dDRhBn9Yd9IqiwC8wx2wjt69FWL/0BbOSY6lg==
+X-Received: by 2002:a5d:5888:0:b0:3ea:e0fd:28ea with SMTP id
+ ffacd0b85a97d-40e4bb2f5b7mr19471800f8f.39.1759236140954; 
+ Tue, 30 Sep 2025 05:42:20 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fb9c32734sm23029452f8f.25.2025.09.30.05.42.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Sep 2025 05:42:20 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 746975F847;
+ Tue, 30 Sep 2025 13:42:19 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  "Henderson, Richard"
+ <richard.henderson@linaro.org>,  qemu-devel@nongnu.org,  Kyle Evans
+ <kevans@freebsd.org>,  Yonggang Luo <luoyonggang@gmail.com>,  Li-Wen Hsu
+ <lwhsu@freebsd.org>,  Thomas Huth <thuth@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Warner Losh <imp@bsdimp.com>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Ed Maste <emaste@freebsd.org>,  devel@lists.libvirt.org,
+ qemu-rust@nongnu.org,  Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: Re: [PATCH v2 00/27] CI/build-sys fixes to enable Rust more widely
+In-Reply-To: <CAMxuvawY5PSwM0VNmbCmP7Z2t68D=z77W94Ab0SJfrm5_bRwKg@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Tue, 30 Sep 2025
+ 16:05:02 +0400")
+References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
+ <87y0pzg6gt.fsf@draig.linaro.org>
+ <CAMxuvawY5PSwM0VNmbCmP7Z2t68D=z77W94Ab0SJfrm5_bRwKg@mail.gmail.com>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Tue, 30 Sep 2025 13:42:19 +0100
+Message-ID: <871pnojems.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,213 +117,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'ram_addr_t' type is described as:
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-  a QEMU internal address space that maps guest RAM physical
-  addresses into an intermediate address space that can map
-  to host virtual address spaces.
+> On Sat, Sep 27, 2025 at 9:18=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>
+>  marcandre.lureau@redhat.com writes:
+>
+>  > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>  >
+>  > Hi,
+>  >
+>  > This patch series fixes a number of issues with the build system and C=
+I and
+>  > enable Rust for many of our jobs, getting us closer to enable Rust by =
+default.
+>  >
+>  > emscripten is difficult to enable, help welcome.
+>
+>  Also I think:
+>
+>    https://gitlab.com/stsquad/qemu/-/pipelines/2065603411
+>
+> Current ack/r-b series pass: https://gitlab.com/marcandre.lureau/qemu/-/p=
+ipelines/2071701923
+>
+> I  guess I should end a PR.
+>
+>  And the:
+>    debian-armhf-cross=20=20
+>
+>  debian-mipsel-cross
+>    debian-mips64el-cross
+>
+>    debian-ppc64el-cross
+>    debian-riscv64-cross
+>
+>  cross builds fail.=20
+>
+> Fixed with the --rust-target-triple patch sent earlier
+>=20=20
+>    debian-i686-cross
+>
+> This one fails with:
+>  ../src/meson.build:3394:4: ERROR: Problem encountered: No accelerator
+> available for target x86_64-softmmu
 
-This doesn't represent well an IOVA mapping size. Simply use
-the uint64_t type.
+Ahh - because TCG on 32 bit no longer allows 64 bit guests we cannot
+find an accelerator. I'll fix that up in my current testing/next series
+by updating DEF_TARGETS
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-container.h | 10 +++++-----
- include/hw/vfio/vfio-cpr.h       |  2 +-
- hw/vfio-user/container.c         |  4 ++--
- hw/vfio/container-legacy.c       |  8 ++++----
- hw/vfio/container.c              |  4 ++--
- hw/vfio/cpr-legacy.c             |  2 +-
- hw/vfio/iommufd.c                |  6 +++---
- 7 files changed, 18 insertions(+), 18 deletions(-)
+>
+> Paolo, any idea?
+>
+>  >
+>  > v2:
+>  > - add a rust-to-clang-target-test.sh configure script
+>  > - drop "RFC: configure: use the same machine as the host triple"
+>  > - replace "tests: move mips to debian-legacy-test-cross" with "RFC: bu=
+ild-sys: deprecate mips host"
+>  > - start tackling emscripten
+>  > - fix mis-placed submodule update
+>  > - other minor changes, commit message tweaks, bz links
+>  > - add r-b tags
+>  >
+>  > Marc-Andr=C3=A9 Lureau (27):
+>  >   build-sys: require -lrt when no shm_open() in std libs
+>  >   gitlab-ci: fix 'needs' property type must be array
+>  >   scripts/archive-source: speed up downloading subprojects
+>  >   scripts/archive-source: silence subprojects downloads
+>  >   scripts/archive-source: use a bash array
+>  >   configure: fix rust meson configuration
+>  >   configure: set the bindgen cross target
+>  >   tests/docker/common: print errors to stderr
+>  >   tests/docker: use fully qualified image name for emsdk
+>  >   tests/docker/common: print meson log on configure failure
+>  >   build-sys: cfi_debug and safe_stack are not compatible
+>  >   lcitool: update, switch to f41
+>  >   lcitool/qemu: include libclang-rt for TSAN
+>  >   lcitool/alpine: workaround bindgen issue
+>  >   tests/lcitool: add missing rust-std dep
+>  >   tests/lcitool: update to debian13
+>  >   tests/docker: add ENABLE_RUST environment
+>  >   tests/lcitool: enable rust & refresh
+>  >   configure: set the meson executable suffix/ext
+>  >   tests/freebsd: enable Rust
+>  >   meson: rust-bindgen limit allowlist-file to srcdir/include
+>  >   RFC: tests/docker: add rust to debian-legacy-test-cross
+>  >   WIP: gitlab-ci: enable rust for msys2-64bit
+>  >   WIP: cirrus/macos: enable Rust
+>  >   RFC: build-sys: deprecate mips host
+>  >   build-sys: pass -fvisibility=3Ddefault for wasm bindgen
+>  >   WIP: enable rust for wasm/emscripten
+>  >
+>  >  docs/about/build-platforms.rst                |  2 -
+>  >  docs/about/deprecated.rst                     |  9 +--
+>  >  configure                                     | 27 +++++++-
+>  >  meson.build                                   | 34 +++++++---
+>  >  .gitlab-ci.d/buildtest-template.yml           |  2 +-
+>  >  .gitlab-ci.d/buildtest.yml                    | 66 +++++++++----------
+>  >  .gitlab-ci.d/cirrus.yml                       |  4 +-
+>  >  .gitlab-ci.d/crossbuilds.yml                  | 46 ++++++-------
+>  >  .gitlab-ci.d/static_checks.yml                |  6 +-
+>  >  .gitlab-ci.d/windows.yml                      |  8 ++-
+>  >  rust/bql/meson.build                          |  1 +
+>  >  rust/chardev/meson.build                      |  1 +
+>  >  rust/hw/char/pl011/meson.build                |  1 +
+>  >  rust/hw/core/meson.build                      |  1 +
+>  >  rust/migration/meson.build                    |  3 +-
+>  >  rust/qom/meson.build                          |  1 +
+>  >  rust/system/meson.build                       |  1 +
+>  >  rust/util/meson.build                         |  1 +
+>  >  scripts/archive-source.sh                     | 33 +++++++---
+>  >  .../ci/setup/ubuntu/ubuntu-2204-aarch64.yaml  |  5 +-
+>  >  .../ci/setup/ubuntu/ubuntu-2204-s390x.yaml    |  5 +-
+>  >  scripts/rust-to-clang-target-test.sh          | 43 ++++++++++++
+>  >  scripts/rust-to-clang-target.sh               | 62 +++++++++++++++++
+>  >  tests/docker/common.rc                        | 11 +++-
+>  >  tests/docker/dockerfiles/alpine.docker        |  6 +-
+>  >  tests/docker/dockerfiles/centos9.docker       |  4 ++
+>  >  .../dockerfiles/debian-amd64-cross.docker     | 18 +++--
+>  >  .../dockerfiles/debian-arm64-cross.docker     | 18 +++--
+>  >  .../dockerfiles/debian-armhf-cross.docker     | 21 +++---
+>  >  .../dockerfiles/debian-i686-cross.docker      | 20 ++++--
+>  >  .../debian-legacy-test-cross.docker           |  9 ++-
+>  >  .../dockerfiles/debian-mips64el-cross.docker  |  9 ++-
+>  >  .../dockerfiles/debian-mipsel-cross.docker    |  9 ++-
+>  >  .../dockerfiles/debian-ppc64el-cross.docker   | 18 +++--
+>  >  .../dockerfiles/debian-riscv64-cross.docker   | 10 ++-
+>  >  .../dockerfiles/debian-s390x-cross.docker     | 18 +++--
+>  >  tests/docker/dockerfiles/debian.docker        | 18 +++--
+>  >  .../dockerfiles/emsdk-wasm32-cross.docker     | 29 +++++++-
+>  >  .../dockerfiles/fedora-rust-nightly.docker    | 18 +++--
+>  >  .../dockerfiles/fedora-win64-cross.docker     | 15 +++--
+>  >  tests/docker/dockerfiles/fedora.docker        | 18 +++--
+>  >  tests/docker/dockerfiles/opensuse-leap.docker |  7 +-
+>  >  tests/docker/dockerfiles/ubuntu2204.docker    |  7 +-
+>  >  tests/docker/test-wasm                        | 12 ++++
+>  >  tests/lcitool/libvirt-ci                      |  2 +-
+>  >  tests/lcitool/projects/qemu.yml               |  3 +-
+>  >  tests/lcitool/refresh                         | 48 +++++++++-----
+>  >  tests/vm/freebsd                              |  4 +-
+>  >  48 files changed, 531 insertions(+), 183 deletions(-)
+>  >  create mode 100755 scripts/rust-to-clang-target-test.sh
+>  >  create mode 100644 scripts/rust-to-clang-target.sh
+>  >  create mode 100755 tests/docker/test-wasm
+>
+>  --=20
+>  Alex Benn=C3=A9e
+>  Virtualisation Tech Lead @ Linaro
 
-diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
-index 093c360f0ee..c4b58d664b7 100644
---- a/include/hw/vfio/vfio-container.h
-+++ b/include/hw/vfio/vfio-container.h
-@@ -81,10 +81,10 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
-                                VFIOContainer *bcontainer);
- 
- int vfio_container_dma_map(VFIOContainer *bcontainer,
--                           hwaddr iova, ram_addr_t size,
-+                           hwaddr iova, uint64_t size,
-                            void *vaddr, bool readonly, MemoryRegion *mr);
- int vfio_container_dma_unmap(VFIOContainer *bcontainer,
--                             hwaddr iova, ram_addr_t size,
-+                             hwaddr iova, uint64_t size,
-                              IOMMUTLBEntry *iotlb, bool unmap_all);
- bool vfio_container_add_section_window(VFIOContainer *bcontainer,
-                                        MemoryRegionSection *section,
-@@ -167,7 +167,7 @@ struct VFIOIOMMUClass {
-      * Returns 0 to indicate success and -errno otherwise.
-      */
-     int (*dma_map)(const VFIOContainer *bcontainer,
--                   hwaddr iova, ram_addr_t size,
-+                   hwaddr iova, uint64_t size,
-                    void *vaddr, bool readonly, MemoryRegion *mr);
-     /**
-      * @dma_map_file
-@@ -182,7 +182,7 @@ struct VFIOIOMMUClass {
-      * @readonly: map read only if true
-      */
-     int (*dma_map_file)(const VFIOContainer *bcontainer,
--                        hwaddr iova, ram_addr_t size,
-+                        hwaddr iova, uint64_t size,
-                         int fd, unsigned long start, bool readonly);
-     /**
-      * @dma_unmap
-@@ -198,7 +198,7 @@ struct VFIOIOMMUClass {
-      * Returns 0 to indicate success and -errno otherwise.
-      */
-     int (*dma_unmap)(const VFIOContainer *bcontainer,
--                     hwaddr iova, ram_addr_t size,
-+                     hwaddr iova, uint64_t size,
-                      IOMMUTLBEntry *iotlb, bool unmap_all);
- 
- 
-diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-index 26ee0c4fe15..81f4e24e229 100644
---- a/include/hw/vfio/vfio-cpr.h
-+++ b/include/hw/vfio/vfio-cpr.h
-@@ -21,7 +21,7 @@ struct VFIOIOMMUFDContainer;
- struct IOMMUFDBackend;
- 
- typedef int (*dma_map_fn)(const struct VFIOContainer *bcontainer,
--                          hwaddr iova, ram_addr_t size, void *vaddr,
-+                          hwaddr iova, uint64_t size, void *vaddr,
-                           bool readonly, MemoryRegion *mr);
- 
- typedef struct VFIOContainerCPR {
-diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-index 411eb7b28b7..e45192fef65 100644
---- a/hw/vfio-user/container.c
-+++ b/hw/vfio-user/container.c
-@@ -39,7 +39,7 @@ static void vfio_user_listener_commit(VFIOContainer *bcontainer)
- }
- 
- static int vfio_user_dma_unmap(const VFIOContainer *bcontainer,
--                               hwaddr iova, ram_addr_t size,
-+                               hwaddr iova, uint64_t size,
-                                IOMMUTLBEntry *iotlb, bool unmap_all)
- {
-     VFIOUserContainer *container = VFIO_IOMMU_USER(bcontainer);
-@@ -81,7 +81,7 @@ static int vfio_user_dma_unmap(const VFIOContainer *bcontainer,
- }
- 
- static int vfio_user_dma_map(const VFIOContainer *bcontainer, hwaddr iova,
--                             ram_addr_t size, void *vaddr, bool readonly,
-+                             uint64_t size, void *vaddr, bool readonly,
-                              MemoryRegion *mrp)
- {
-     VFIOUserContainer *container = VFIO_IOMMU_USER(bcontainer);
-diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-index c0f87f774a0..3a710d8265c 100644
---- a/hw/vfio/container-legacy.c
-+++ b/hw/vfio/container-legacy.c
-@@ -69,7 +69,7 @@ static int vfio_ram_block_discard_disable(VFIOLegacyContainer *container,
- }
- 
- static int vfio_dma_unmap_bitmap(const VFIOLegacyContainer *container,
--                                 hwaddr iova, ram_addr_t size,
-+                                 hwaddr iova, uint64_t size,
-                                  IOMMUTLBEntry *iotlb)
- {
-     const VFIOContainer *bcontainer = VFIO_IOMMU(container);
-@@ -122,7 +122,7 @@ unmap_exit:
- }
- 
- static int vfio_legacy_dma_unmap_one(const VFIOContainer *bcontainer,
--                                     hwaddr iova, ram_addr_t size,
-+                                     hwaddr iova, uint64_t size,
-                                      IOMMUTLBEntry *iotlb)
- {
-     const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
-@@ -185,7 +185,7 @@ static int vfio_legacy_dma_unmap_one(const VFIOContainer *bcontainer,
-  * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
-  */
- static int vfio_legacy_dma_unmap(const VFIOContainer *bcontainer,
--                                 hwaddr iova, ram_addr_t size,
-+                                 hwaddr iova, uint64_t size,
-                                  IOMMUTLBEntry *iotlb, bool unmap_all)
- {
-     int ret;
-@@ -210,7 +210,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainer *bcontainer,
- }
- 
- static int vfio_legacy_dma_map(const VFIOContainer *bcontainer, hwaddr iova,
--                               ram_addr_t size, void *vaddr, bool readonly,
-+                               uint64_t size, void *vaddr, bool readonly,
-                                MemoryRegion *mr)
- {
-     const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 9d694393714..41de3439246 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -74,7 +74,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
- }
- 
- int vfio_container_dma_map(VFIOContainer *bcontainer,
--                           hwaddr iova, ram_addr_t size,
-+                           hwaddr iova, uint64_t size,
-                            void *vaddr, bool readonly, MemoryRegion *mr)
- {
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-@@ -93,7 +93,7 @@ int vfio_container_dma_map(VFIOContainer *bcontainer,
- }
- 
- int vfio_container_dma_unmap(VFIOContainer *bcontainer,
--                             hwaddr iova, ram_addr_t size,
-+                             hwaddr iova, uint64_t size,
-                              IOMMUTLBEntry *iotlb, bool unmap_all)
- {
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index bbf7a0d35f0..3a1d126556e 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -39,7 +39,7 @@ static bool vfio_dma_unmap_vaddr_all(VFIOLegacyContainer *container,
-  * The incoming state is cleared thereafter.
-  */
- static int vfio_legacy_cpr_dma_map(const VFIOContainer *bcontainer,
--                                   hwaddr iova, ram_addr_t size, void *vaddr,
-+                                   hwaddr iova, uint64_t size, void *vaddr,
-                                    bool readonly, MemoryRegion *mr)
- {
-     const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index f0ffe235919..68470d552ec 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -35,7 +35,7 @@
-             TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
- 
- static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
--                            ram_addr_t size, void *vaddr, bool readonly,
-+                            uint64_t size, void *vaddr, bool readonly,
-                             MemoryRegion *mr)
- {
-     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-@@ -46,7 +46,7 @@ static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
- }
- 
- static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
--                                 hwaddr iova, ram_addr_t size,
-+                                 hwaddr iova, uint64_t size,
-                                  int fd, unsigned long start, bool readonly)
- {
-     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-@@ -57,7 +57,7 @@ static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
- }
- 
- static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
--                              hwaddr iova, ram_addr_t size,
-+                              hwaddr iova, uint64_t size,
-                               IOMMUTLBEntry *iotlb, bool unmap_all)
- {
-     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
--- 
-2.51.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
