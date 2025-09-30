@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C3ACAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D125CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3cT2-0001i6-3z; Tue, 30 Sep 2025 11:40:45 -0400
+	id 1v3cSU-0000sX-Ez; Tue, 30 Sep 2025 11:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cSU-0000zG-2C
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:40:07 -0400
+ id 1v3cRu-0000de-8I
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cSJ-0004g8-G2
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:40:03 -0400
+ id 1v3cRo-0004Ux-Lf
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759246789;
+ s=mimecast20190719; t=1759246759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=byhNcqkmmzcg69xtJwhrKp8zvTNbZRsTRdq2ZQACTJw=;
- b=BFo6nD08PFotONrq3oOSiTldFFltelTMgysWW0lDxt2QsZzJQpDPOgu30uq48lk4x0saeT
- 7pTuOd7tqsOoixrFVbHWavD7++i0tBrQKfg9TrhyKHacNFzytDnjm8MroBmhjqqUaqUtR0
- N1Jq0CC0djfEeOXjxGML4P+XzdvQSrQ=
+ bh=JKRfyVCniHnc67u4rqaEMASdTNTnB4OZywat2G4Qduc=;
+ b=gqMX2B+/ticvstgQVKS/bWrBZCU3ec8MwSTTlYu5GfvFX1n5kgE8vvpfuTmHyJr5RY1R6/
+ J/PX5/q8zXG7DQLCxF0qzGZuZjTY6aq+qOUgJrnZfE+xjIQeiGNOkH84vVsqjhskIRyt6o
+ hCFKSNAdf6xn3q5Tv4440mKYkf9r0g4=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-4M12VrQVO8axlMPAkzm8uw-1; Tue,
- 30 Sep 2025 11:39:45 -0400
-X-MC-Unique: 4M12VrQVO8axlMPAkzm8uw-1
-X-Mimecast-MFC-AGG-ID: 4M12VrQVO8axlMPAkzm8uw_1759246783
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-7xb6scpkMkGycKCiCB1uFw-1; Tue,
+ 30 Sep 2025 11:39:16 -0400
+X-MC-Unique: 7xb6scpkMkGycKCiCB1uFw-1
+X-Mimecast-MFC-AGG-ID: 7xb6scpkMkGycKCiCB1uFw_1759246754
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A624E19774F1; Tue, 30 Sep 2025 15:39:43 +0000 (UTC)
+ id 51FD51977309; Tue, 30 Sep 2025 15:39:14 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.7])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81BDB195608E; Tue, 30 Sep 2025 15:39:42 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BE2B619560B8; Tue, 30 Sep 2025 15:39:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -62,15 +62,15 @@ Cc: devel@lists.libvirt.org,
  Li-Wen Hsu <lwhsu@freebsd.org>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>, Ed Maste <emaste@freebsd.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 19/23] configure: set the meson executable suffix/ext
-Date: Tue, 30 Sep 2025 19:37:40 +0400
-Message-ID: <20250930153746.573875-20-marcandre.lureau@redhat.com>
+Subject: [PULL 14/23] lcitool/alpine: workaround bindgen issue
+Date: Tue, 30 Sep 2025 19:37:35 +0400
+Message-ID: <20250930153746.573875-15-marcandre.lureau@redhat.com>
 In-Reply-To: <20250930153746.573875-1-marcandre.lureau@redhat.com>
 References: <20250930153746.573875-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -99,41 +99,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The 'rustfmt' target runs meson: it needs the correct path with
-extension on Windows.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250924120426.2158655-20-marcandre.lureau@redhat.com>
+Message-ID: <20250924120426.2158655-15-marcandre.lureau@redhat.com>
 ---
- configure | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ tests/docker/dockerfiles/alpine.docker | 2 ++
+ tests/lcitool/refresh                  | 8 +++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/configure b/configure
-index bf964947b8..78445cbb4b 100755
---- a/configure
-+++ b/configure
-@@ -1000,7 +1000,19 @@ $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
- # We ignore PATH completely here: we want to use the venv's Meson
- # *exclusively*.
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index bd1ef5505d..b50fbc3dba 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -131,6 +131,8 @@ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+ ENV PYTHON "/usr/bin/python3"
++# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463
++RUN apk add clang19-libclang
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index f49eb638f8..6f98a91277 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -97,6 +97,11 @@ def generate_yaml(os, target, arch, trailer=None):
+     generate(filename, cmd, trailer)
  
--meson="$(cd pyvenv/bin; pwd)/meson"
-+# for msys2
-+get_pwd() {
-+    if pwd -W >/dev/null 2>&1; then
-+        pwd -W
-+    else
-+        pwd
-+    fi
-+}
+ 
++alpine_extras = [
++    "# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463\n",
++    "RUN apk add clang19-libclang\n",
++]
 +
-+meson="$(cd pyvenv/bin; get_pwd)/meson"
-+if [ -f "$meson$EXESUF" ]; then
-+  meson="$meson$EXESUF"
-+fi
- 
- # Conditionally ensure Sphinx is installed.
- 
+ # Netmap still needs to be manually built as it is yet to be packaged
+ # into a distro. We also add cscope and gtags which are used in the CI
+ # test
+@@ -167,7 +172,8 @@ try:
+     #
+     # Standard native builds
+     #
+-    generate_dockerfile("alpine", "alpine-321")
++    generate_dockerfile("alpine", "alpine-321",
++                        trailer="".join(alpine_extras))
+     generate_dockerfile("centos9", "centos-stream-9")
+     generate_dockerfile("debian", "debian-12",
+                         trailer="".join(debian12_extras))
 -- 
 2.51.0
 
