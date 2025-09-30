@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A73CCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09142CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Vda-0000BG-Gz; Tue, 30 Sep 2025 04:23:07 -0400
+	id 1v3VeF-0000dM-EL; Tue, 30 Sep 2025 04:23:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VdG-0008W4-Aw
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:46 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vdx-0000Nf-RX
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:35 -0400
 Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VcY-0000rQ-Eh
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:44 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vd1-000138-6n
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:11 -0400
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46e2e6a708fso36248825e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:21:59 -0700 (PDT)
+ 5b1f17b1804b1-46e384dfde0so57979025e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759220516; x=1759825316; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759220544; x=1759825344; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TmN6KZRBDFIwLcWnEVDqbz1WHRvv8u+lRYP5Aq5aiQ8=;
- b=v8vbPBimOxWLy3b2sbV/F1sAM4U68VnGoPgiKV6kBKYScQHeywj9YBXCaJdsnFdyNi
- SgzlZKXqfnW4GylpIfcQA4jyGnMrFYjrjEAzVgMClNSFjqVcRuFaqJbunKfccIDEFOQc
- 2FPrIoKYw7CbT96cVT3o4rZ4UNEVV/WWZpLUhsEG/X5PpmD6/LksjLN8REoGou5oK+a/
- uHeW7zJgU2KahX0g0yl+KNhXs3RKsdMj223NMKpRGmEJgnFMDLdMtaXPZQcvsga+RGTb
- ZSLMztG57IUd/e32G3cbn1F0DpNB2O/4q0nu9VJOl3kBkLlWXLc4++FaEJp+RHaeUShb
- es+w==
+ bh=DbEYNZgIU6LqvkF49qge8kIj2C3i6K2S813tsyxbWwg=;
+ b=S9B/JSOT6cQ0bUUtvtegSZls5Elu4+Y3uDHtJypldq/v2AtHDO5BB5dzQ1Dv8WeBG2
+ GonIzetgG5kiI41qpVfl7oEzJ7uYi48LNTy1wWDdJhzzhkerEeje0ra6PmJoXZfgiTVC
+ LL6xfiQEVdJh5yfRN5mlHeS9svYB/4VGRh/MXdW79RMFQwArqMTkvhngNMxkBWDWVgxU
+ qbLz99YebYsgI8ItEsFM4Q5lgafi6M56cQUV0Hx2w4ckuBeBenBP8B2sWAGPfPuAOOL6
+ fFxfX80b3wi14aVDoO227Hd86q1Z25LudgH8asgok9z0FwO1FRxjYxlkW5HjPBr++sPv
+ mcrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759220516; x=1759825316;
+ d=1e100.net; s=20230601; t=1759220544; x=1759825344;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TmN6KZRBDFIwLcWnEVDqbz1WHRvv8u+lRYP5Aq5aiQ8=;
- b=hgI99hp5TWDyBotk50qP5vO0lsg30kjNX8FRsqex6IKTzcHfzYe8dQWtcB1ENxo3xC
- KaAr3LvCewFzfdL0fOcfOKK8iY8FDjDJOOd6hZurI+kEaMj2/y97/xpmCGdlucdOl1zd
- VjpHHZ+9dIWw11Xdr71N5JPfTpxC0k2dLVYVGOq6foxoWA3Be8nUm6pMqA9tHfBumhRF
- darRv6oVzbFUO5W9xqZq4esxgC6cEiEqGXK/3zpmsabitmoQyOX4g0b7yNCvcmJRhcLY
- 3JDX0sTMhJo/IClR9JcLFBszL2ssdPsjwR8BUprHjORsMi0yU+l/rxzYQltCMrwcz28c
- wK7g==
-X-Gm-Message-State: AOJu0YySH+DBIr4fA/7EK51uLM78iAxUPCJbG/u9GLIoiYB+pureHngI
- zXaPkaUZc5pRJjbm4XYzxPIGoBNnkDXba+07iFkyIY1JCC+PeGcuojAvLgpID5zmMa7KlCvJGA0
- cWJad3+Oh/A==
-X-Gm-Gg: ASbGncsBWK/lzQohIUEtxVqe4r2RYG+7GU5HuhDqsgWb0reT92Qjm6KzwiSzzLh226Z
- sosTNOYenIBkyov1m73pzfF+8g3NJ//T5TqxLwdwrZolY/xksMtuzj69pDu32/1U4CGfzPGGoD2
- bRBXImGf0Fpq8PMnaae2zotme/mj95bFrbnDUq6nBnuT+8D3xq2ChLqy0jkXXYvHVksUC3MbihZ
- pldkzS3N6+kXk4Pu/nkJQzvx11+jybZQRH1zpcE+lA8Fw3Hd3vKAanFmgHjdijDcq2w/vYT+3YJ
- 3KizCLpJV7ImQfjhW/eXgI6U2WkAgLnUISOcqIzn/qaHZ/fwosElNJmld6aBTUT1ozAGRPi8QOV
- ne9amKGFCcFij/Fx+U4LHYq22tXfojaSjnCCWCJFzMWDS/JM+HxnUxdxAKhK+nxWPhyK/e9J1Ti
- ERbjCRVDc/W3btTpgLFs7s3DRCnwoqRDU=
-X-Google-Smtp-Source: AGHT+IFRoVQqdg8pFriDfOKg6AJHeYajBA5OHZoOOnjeKEw77YQUzMpfQKsIByPubJl8mIXC2txRhQ==
-X-Received: by 2002:a05:600c:8b16:b0:468:7f92:5a80 with SMTP id
- 5b1f17b1804b1-46e329fbd2bmr146354195e9.27.1759220516099; 
- Tue, 30 Sep 2025 01:21:56 -0700 (PDT)
+ bh=DbEYNZgIU6LqvkF49qge8kIj2C3i6K2S813tsyxbWwg=;
+ b=TwtwwspyvCWigo8ex+12IWdXIOzryppQbLQUVV0G7hUVpBk8L+7c5HXUDbwSOlRHKJ
+ QBqvT09ssFcNezS9uhuW0Ukoain7nxJZsov6jflpOXS3nw7Zo6LNp9AJWwRZuon70bgy
+ bO1buQtQ1DTTSIBRZ5oGj+hGzMUJlUGzIdLT89gR5MnW6gLn40CpWC6/QHOKJldjw75Q
+ e+Uyy1cccc0JfhOuScTZrJf/zHeIoOXWfkJneQxcekmAIBMrSM+tmnz7341jYIFKNB+1
+ dcGpf+G7DS515H4UrF8I00a+PwVg5GR2+AU20sLWO4mXq0OKvZRHHw8jJ9/767yyjMg1
+ OwLA==
+X-Gm-Message-State: AOJu0YwhINuDVDqsUKazj35ltUYEYRHH78kppzRnLB6G2FuIyKoPyOHT
+ 6gDLkHIaIryVK9chBqX+QsPXdOLGV5b+31hYg3wp4nrTDyOiuNyjUa8JJ/KuFNMw9FIOcFc8AT2
+ L1f85XpO3Pw==
+X-Gm-Gg: ASbGnctA/2imjOwbPx+iJxSOBB4nPIqygTYX25kzn87gcW2iccDbkzlQS/SlAn7+U/D
+ 85YCj/BFYkLRdtFOhwhuS5h8TvuQAS1QacLCW0aQxvoeATZ5HWOvMdABX/5kJ8UGR+xIB1Z3V/T
+ udB4cmbywk8nyMVsQbF9aKuI/s/VGB+PNcPlq7fv2AFLhBu9f79NEOhfELAEn9T/nVJ8O2L+u2G
+ 3aZh+b4zIFtuiHAVArS0trDaYFVJh+cbwIk6vaQPzgf38krW1I4rGPB7bB/cSQy/iY+WhI4sdMC
+ Pu5QiM+CIp6HJNWdtNnOqmjIRzAIW04fl+sPd/O94mPEwQIGhX5OdqgLeh4S/WUf4t2jAa4gWbR
+ uWipm64jE3xXfuUIZ9BUT973G81TeZMj2Kbx5SV5UPqRdykwo60RjLmBJl1pQlhysc/QiBNMdGE
+ 3VG6+dRyHCxCRb73HZkkMBltp6kgE5Kbg=
+X-Google-Smtp-Source: AGHT+IHMDbDhZ1qtfUqSvwy3OGcigy6OI6LXsB/syBvCuQ6w6sDdxi+R3qorHEXGNas+XOrL9i5DRg==
+X-Received: by 2002:a05:600c:4fca:b0:46e:4ac4:b7b8 with SMTP id
+ 5b1f17b1804b1-46e4ac4ba51mr119307915e9.25.1759220543603; 
+ Tue, 30 Sep 2025 01:22:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e56f65290sm44620345e9.13.2025.09.30.01.21.54
+ 5b1f17b1804b1-46e2ab31e97sm259738545e9.14.2025.09.30.01.22.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Sep 2025 01:21:55 -0700 (PDT)
+ Tue, 30 Sep 2025 01:22:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
@@ -85,10 +85,10 @@ Cc: Marcelo Tosatti <mtosatti@redhat.com>,
  Anthony PERARD <anthony@xenproject.org>,
  Jason Herne <jjherne@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v3 05/18] hw/s390x/sclp: Use address_space_memory_is_io() in
- sclp_service_call()
-Date: Tue, 30 Sep 2025 10:21:12 +0200
-Message-ID: <20250930082126.28618-6-philmd@linaro.org>
+Subject: [PATCH v3 10/18] target/i386/whpx: Replace legacy
+ cpu_physical_memory_rw() call
+Date: Tue, 30 Sep 2025 10:21:17 +0200
+Message-ID: <20250930082126.28618-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930082126.28618-1-philmd@linaro.org>
 References: <20250930082126.28618-1-philmd@linaro.org>
@@ -119,50 +119,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When cpu_address_space_init() isn't called during vCPU creation,
-its single address space is the global &address_space_memory.
-
-As s390x boards don't call cpu_address_space_init(),
-cpu_get_address_space(CPU(cpu), 0) returns &address_space_memory.
-
-We can then replace cpu_physical_memory_is_io() by the semantically
-equivalent address_space_memory_is_io() call.
+Get the vCPU address space and convert the legacy
+cpu_physical_memory_rw() by address_space_rw().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/sclp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/i386/whpx/whpx-all.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 9718564fa42..f507b36cd91 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -16,6 +16,7 @@
- #include "qemu/units.h"
- #include "qapi/error.h"
- #include "hw/boards.h"
-+#include "system/memory.h"
- #include "hw/s390x/sclp.h"
- #include "hw/s390x/event-facility.h"
- #include "hw/s390x/s390-pci-bus.h"
-@@ -301,6 +302,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     CPUS390XState *env = &cpu->env;
-     SCLPDevice *sclp = get_sclp_device();
-     SCLPDeviceClass *sclp_c = SCLP_GET_CLASS(sclp);
-+    AddressSpace *as = cpu_get_address_space(CPU(cpu), 0);
-     SCCBHeader header;
-     g_autofree SCCB *work_sccb = NULL;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 2a85168ed51..82ba177c4a5 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -788,8 +788,11 @@ static HRESULT CALLBACK whpx_emu_mmio_callback(
+     void *ctx,
+     WHV_EMULATOR_MEMORY_ACCESS_INFO *ma)
+ {
+-    cpu_physical_memory_rw(ma->GpaAddress, ma->Data, ma->AccessSize,
+-                           ma->Direction);
++    CPUState *cpu = (CPUState *)ctx;
++    AddressSpace *as = cpu_addressspace(cs, MEMTXATTRS_UNSPECIFIED);
++
++    address_space_rw(as, ma->GpaAddress, MEMTXATTRS_UNSPECIFIED,
++                     ma->Data, ma->AccessSize, ma->Direction);
+     return S_OK;
+ }
  
-@@ -308,7 +310,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     if (env->psw.mask & PSW_MASK_PSTATE) {
-         return -PGM_PRIVILEGED;
-     }
--    if (cpu_physical_memory_is_io(sccb)) {
-+    if (address_space_is_io(as, sccb)) {
-         return -PGM_ADDRESSING;
-     }
-     if ((sccb & ~0x1fffUL) == 0 || (sccb & ~0x1fffUL) == env->psa
 -- 
 2.51.0
 
