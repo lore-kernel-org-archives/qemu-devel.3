@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0262BCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 12:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1202CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 12:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3ZlU-000857-Uk; Tue, 30 Sep 2025 08:47:32 -0400
+	id 1v3ZlM-00081X-Bx; Tue, 30 Sep 2025 08:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3ZlP-000839-3S
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:47:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3ZlJ-00080G-2d
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:47:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3Zl8-0002Ms-Um
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:47:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3Zl8-0002MX-CR
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 08:47:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1759236426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hhp3A0Ok0hueUzTv/YAOZ+wnHKN/iRf5eq99+sRzYn0=;
- b=KpHuHIQx1z3qZ+WkCRo+h9B6k32RotbSH0BFizn+ylyHwWMbN9vT23b0WFkV4ozACoGVlQ
- NbaZaoEZ08cGwp7LwnItHSb3bE3kUtZfxbGAejZufZqPeu2ANJuZqwJ7o0MZAhkDyAIOFz
- CnXxcIwqkIPtb3xyYjk1Lv6TJVhvIxE=
+ bh=O6s1dKWKvKLSY89j0CwAEhdQCKqhWKw+Iv4QPbejN4A=;
+ b=ciGFN5480W4NFqapBgevCzCtJFntgNuzZFmBexsr5ETJHoARqMdnfvREpJyzKInUUn3L+q
+ HpdYtJ8Zo3EVQLtforHWmoKbSDYY7ZRADPmARusBcf1wDgwYxy9ZbzYNDU1jLM71O9EAL/
+ OMqVOqOxwEiQuWWf97Bh6oS7jVyem6s=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-i1dk9aN4MBStT86iFSa5Jw-1; Tue,
- 30 Sep 2025 08:47:00 -0400
-X-MC-Unique: i1dk9aN4MBStT86iFSa5Jw-1
-X-Mimecast-MFC-AGG-ID: i1dk9aN4MBStT86iFSa5Jw_1759236419
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-WVGxOrmlONWZjQ1Z3m9aYg-1; Tue,
+ 30 Sep 2025 08:47:02 -0400
+X-MC-Unique: WVGxOrmlONWZjQ1Z3m9aYg-1
+X-Mimecast-MFC-AGG-ID: WVGxOrmlONWZjQ1Z3m9aYg_1759236422
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CBB7197764F; Tue, 30 Sep 2025 12:46:59 +0000 (UTC)
+ id 58AB31977502; Tue, 30 Sep 2025 12:47:01 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D55C1944DD7; Tue, 30 Sep 2025 12:46:57 +0000 (UTC)
+ id D660F1955F1A; Tue, 30 Sep 2025 12:47:00 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 65C5521E6925; Tue, 30 Sep 2025 14:46:53 +0200 (CEST)
+ id 8B1E721E66AB; Tue, 30 Sep 2025 14:46:53 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 02/13] tcg: Fix error reporting on mprotect() failure in
- tcg_region_init()
-Date: Tue, 30 Sep 2025 14:46:42 +0200
-Message-ID: <20250930124653.321609-3-armbru@redhat.com>
+Subject: [PULL 11/13] ui/dbus: Consistent handling of texture mutex failure
+Date: Tue, 30 Sep 2025 14:46:51 +0200
+Message-ID: <20250930124653.321609-12-armbru@redhat.com>
 In-Reply-To: <20250930124653.321609-1-armbru@redhat.com>
 References: <20250930124653.321609-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -87,60 +86,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tcg_region_init() calls one of qemu_mprotect_rwx(),
-qemu_mprotect_rw(), and mprotect(), then reports failure with
-error_setg_errno(&error_fatal, errno, ...).
+We report d3d_texture2d_acquire0() and d3d_texture2d_release0()
+failure as error, except in dbus_update_gl_cb(), where we report it as
+warning.  Report it as error there as well.
 
-The use of &error_fatal is undesirable.  qapi/error.h advises:
-
- * Please don't error_setg(&error_fatal, ...), use error_report() and
- * exit(), because that's more obvious.
-
-The use of errno is wrong.  qemu_mprotect_rwx() and qemu_mprotect_rw()
-wrap around qemu_mprotect__osdep().  qemu_mprotect__osdep() calls
-mprotect() on POSIX, VirtualProtect() on Windows, and reports failure
-with error_report().  VirtualProtect() doesn't set errno.  mprotect()
-does, but error_report() may clobber it.
-
-Fix tcg_region_init() to report errors only when it calls mprotect(),
-and rely on qemu_mprotect_rwx()'s and qemu_mprotect_rw()'s error
-reporting otherwise.  Use error_report(), not error_setg().
-
-Fixes: 22c6a9938f75 (tcg: Merge buffer protection and guard page protection)
-Fixes: 6bc144237a85 (tcg: Use Error with alloc_code_gen_buffer)
-Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250923091000.3180122-3-armbru@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20250923091000.3180122-12-armbru@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- tcg/region.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ ui/dbus-listener.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 7ea0b37a84..2181267e48 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -832,13 +832,16 @@ void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads)
-             } else {
- #ifdef CONFIG_POSIX
-                 rc = mprotect(start, end - start, need_prot);
-+                if (rc) {
-+                    error_report("mprotect of jit buffer: %s",
-+                                 strerror(errno));
-+                }
- #else
-                 g_assert_not_reached();
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 09d7a319b1..b82e7c7115 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -214,26 +214,31 @@ static void dbus_update_gl_cb(GObject *source_object,
+                               GAsyncResult *res,
+                               gpointer user_data)
+ {
+-    g_autoptr(GError) err = NULL;
++    g_autoptr(GError) gerr = NULL;
++#ifdef WIN32
++    Error **err = NULL;
++#endif
+     DBusDisplayListener *ddl = user_data;
+     bool success;
+ 
+ #ifdef CONFIG_GBM
+     success = qemu_dbus_display1_listener_call_update_dmabuf_finish(
+-        ddl->proxy, res, &err);
++        ddl->proxy, res, &gerr);
+     if (!success) {
+-        error_report("Failed to call update: %s", err->message);
++        error_report("Failed to call update: %s", gerr->message);
+     }
  #endif
-             }
-             if (rc) {
--                error_setg_errno(&error_fatal, errno,
--                                 "mprotect of jit buffer");
-+                exit(1);
-             }
-         }
-         if (have_prot != 0) {
+ 
+ #ifdef WIN32
+     success = qemu_dbus_display1_listener_win32_d3d11_call_update_texture2d_finish(
+-        ddl->d3d11_proxy, res, &err);
++        ddl->d3d11_proxy, res, &gerr);
+     if (!success) {
+-        error_report("Failed to call update: %s", err->message);
++        error_report("Failed to call update: %s", gerr->message);
+     }
+ 
+-    d3d_texture2d_acquire0(ddl->d3d_texture, &error_warn);
++    if (!d3d_texture2d_acquire0(ddl->d3d_texture, &err)) {
++        error_report_err(err);
++    }
+ #endif
+ 
+     graphic_hw_gl_block(ddl->dcl.con, false);
 -- 
 2.49.0
 
