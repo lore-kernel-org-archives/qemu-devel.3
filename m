@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5107DCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37026CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Rmj-0003nh-FH; Tue, 30 Sep 2025 00:16:18 -0400
+	id 1v3RmW-00033x-6M; Tue, 30 Sep 2025 00:16:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v3Rmc-0003KC-B9; Tue, 30 Sep 2025 00:16:10 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v3RmR-0001Wx-Oh; Tue, 30 Sep 2025 00:16:09 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58TLHQ6n015274;
- Tue, 30 Sep 2025 04:15:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=8Eoore
- pFHPChJfE/9lr9XXlaQsKVarCtgW9UlgihWck=; b=HY3G30cHSJJtAE4HTu8obQ
- 742BVYI2UbndU2Y7QV7Bqsapg5LlEPxqosGu5xFBDsGoHOVQE2XltzMZCPcAp3Ea
- BNfcOFEjzybH/qYzP7M55jrZxaJjPUvXdL9nYzD2seq9+8GVAXz16amEjxZg99KN
- 7i6laYUsjlH/PGaCUmKwXlW4i8+p0X8qjV08mvdS9VBfaskMptI6ell0Gl7zfPTN
- qN7DSRuXDXw7sB0JCA9sSfNX+TlmAKwPkDPNV68aqtCxqkZD7J0SxFgmg9lG3YJs
- 8Spz1zqPgqrRVJFHqkfDTmYW68zEmUGNk/rxQISSyPs4SW0uuDrhHBE8OB7tSjUA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7ku6d5x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Sep 2025 04:15:44 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58TNvrp0020074;
- Tue, 30 Sep 2025 04:15:43 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49et8s1pcx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Sep 2025 04:15:43 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58U4FVIQ14156536
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Sep 2025 04:15:31 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 75F5558052;
- Tue, 30 Sep 2025 04:15:42 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9664458045;
- Tue, 30 Sep 2025 04:15:39 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Sep 2025 04:15:39 +0000 (GMT)
-Message-ID: <b41baece-09d5-4d22-8117-01a6a32099fb@linux.ibm.com>
-Date: Tue, 30 Sep 2025 09:45:36 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Rlq-0002i9-4X
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:15:24 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Rld-0001Ny-Il
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:15:16 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-46b303f755aso48262065e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:15:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759205705; x=1759810505; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MBpejQiq0e/vydo49FSQoIaJ0P/BjZpeA7dR40L/9NI=;
+ b=ND+t5mfOKbBUx5QNwj57vGsZHD7gZP531fYr+92tiA1t6wy4/bUEiBoQE26VCgll//
+ Iq0BIDqu+cNSGqutyFIf+O6CvC5oMtCBihqG4vh4CeiE+MIXQ2GOPOFaLHc6C4nd2VWU
+ hV4KAIIHsv8R69IRXnPlAjQzfWTY7rBrt+YhLuYO4SpNszTvmm2FlL+V9w0Rju8qn71l
+ 5jMtZoNiAvxqets7EJFDfMxJ8TVYWOe9U3p/fuayZfcZQPD1cVClwo4GM+arXRLONEN4
+ 15jTPdnlxTLtPh0DFmG3u1WajjkT4ZY/0ZudUDJfYC8Jk+UTkcuV9AANRdj0OPlB15L9
+ EoJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759205705; x=1759810505;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MBpejQiq0e/vydo49FSQoIaJ0P/BjZpeA7dR40L/9NI=;
+ b=If6FpHwtM5h7Sys13tfwMVGSC14ioKfepnXMbtxOqJ23W7Ggb0j7AZeOzn1N3ZZBzv
+ ZuyEOcnBvw/FSrO/0ymQAxukiiVg8PGyR10FcWc+zQmTmRYIyjAGD88Fycwj5hPvFvz7
+ RU7PapFMQ8b4FpXFbKgMVjmR3npVChY5dNSQiVyyiGiAogdPGJBJbAspT96Q87SlUPWc
+ GjEm8PZMbRIVFWq+3Oy20vzkUmNgqN2JU+bix9umnjU2kOhQuEeYZQq6A4brfVAKDiLh
+ 3A7Agliw7KyOBarY7FVOvv8DVJTsYxwLbIy5ca0YXsKIzVwB559tcqjg0vtXxYP7L3kx
+ 2tsw==
+X-Gm-Message-State: AOJu0Yz5Rva6/fLwsxYF39Hw+RNNCs0br0SShyov9JOMrOOBSUugS+Ip
+ VeEAfxaaxnMw6fpaxM94gNR1XXXvT6jamlB/fQCbiOouqgCBmScIchPSiRnfIfF/F6lYMZRya8o
+ gYzANRPSwoQ==
+X-Gm-Gg: ASbGnctQJfL//I8GAUTqtlZTqxnu3yhmANzl+O2c9ZJwQxoaX6006OXP34lmX8MvyR8
+ sRClAKj+WYq+3UGCinGOT/0xyWV/N3zmEW4/Klk9RqWnAMQXRQCSZxrwAsuRRbNVr+K8xbEWguF
+ OLwv/cJ8Zs3hVxOpYkQnVvL0jq5krAmCGGeWiFDRn9JYMZ2Qnmhp0/Zh/LfYyHmME8JAbzCcivP
+ we7jt7UlFKrXQsGJjZFNXue+jl+8u5AbsjMlF/zpF5q9OyrCzsDxzYSAKRuEShMC1/c7kavnaRd
+ tAwlivkM793zeuZMdixlmOYgfm04jNEJcoVFGbPEy+U2NW9fdJcHqBPe7tVHbBgIE8uLKjbbFQj
+ 0nb/3A2S7khUvsbFbB5l9/fI+OjS2f3yF9zdwRBfaj1rXj6ZJRpF/IqJTOvaqxO/RU3jRdiuzfV
+ RIblDREd6gPEiIojuxSGkBIHFoP627hew=
+X-Google-Smtp-Source: AGHT+IGgqJ0JuJ77y43D9HwYeERomJh5OkTJMDKGyPclR/IBy8JcemLZxj5L2abT5KLJLVAD5Z41ZA==
+X-Received: by 2002:a05:6000:2385:b0:3da:d015:bf84 with SMTP id
+ ffacd0b85a97d-40e481be8a9mr20254181f8f.25.1759205704783; 
+ Mon, 29 Sep 2025 21:15:04 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-410f2007372sm20002659f8f.16.2025.09.29.21.15.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 29 Sep 2025 21:15:03 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, xen-devel@lists.xenproject.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ Eric Farman <farman@linux.ibm.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Zhao Liu <zhao1.liu@intel.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PATCH v2 16/17] hw/virtio/vhost: Replace legacy
+ cpu_physical_memory_*map() calls
+Date: Tue, 30 Sep 2025 06:13:24 +0200
+Message-ID: <20250930041326.6448-17-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250930041326.6448-1-philmd@linaro.org>
+References: <20250930041326.6448-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 18/27] hw/intc/xics: Add missing call to register
- vmstate_icp_server
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Fabian Vogt <fvogt@suse.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Gautam Menghani <gautam@linux.ibm.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250928192629.139822-1-harshpb@linux.ibm.com>
- <20250928192629.139822-19-harshpb@linux.ibm.com>
- <7f2acdb2-040d-4056-bcfc-8264ca000cd0@tls.msk.ru>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <7f2acdb2-040d-4056-bcfc-8264ca000cd0@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=T7WBjvKQ c=1 sm=1 tr=0 ts=68db5970 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=f7IdgyKtn90A:10 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=jaIMoFHOYy8bIhQyePYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22
- a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
-X-Proofpoint-GUID: 9AEODzAnQY1P3mh-j8dXDMzSmecFo5FT
-X-Proofpoint-ORIG-GUID: 9AEODzAnQY1P3mh-j8dXDMzSmecFo5FT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfX8iumtXt9XjHx
- BHGvQ+dyeVLagJ9uAWSn3Z+GI8Vc1ufgLOuDNFLR9LWOQQUgs2I0bnoHuGKcJHDVOBACXC0Gvvz
- T/0yyTjMwUewKT26inno6RB1v/5C3LZY4tuXsHQPN1HSchST0gIToYA0eaTrFuamNDC8GB0f2wQ
- qL9hKd4Lcr1VSNSojhvpydJnMsZCqgkhzNkJQTu8ZFzrSKU1Ra2ugo9vgwZak513Uhm6vjuFBpA
- 7khop8fEwbX8o/NEYo0KVH3nSYUciVadZRy8yzAzb8+Ce9MwjoXrZMm4pLs5SBd3URmzY+rVag+
- qysI3DBhtXvV092QMPrifnHazRjTcexkjD4Ws2wp36EbKlgjsnfITVeNMek+47SpgYalOtORuXr
- QrSmd7xuU39ZaK9uJAYsYbqg/yqBEg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-29_08,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1011 spamscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,58 +118,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+Use VirtIODevice::dma_as address space to convert the legacy
+cpu_physical_memory_[un]map() calls to address_space_[un]map().
 
-On 9/30/25 01:02, Michael Tokarev wrote:
-> On 9/28/25 22:26, Harsh Prateek Bora wrote:
->> From: Fabian Vogt <fvogt@suse.de>
->>
->> An obsolete wrapper function with a workaround was removed entirely,
->> without restoring the call it wrapped.
->>
->> Without this, the guest is stuck after savevm/loadvm.
->>
->> Fixes: 24ee9229fe31 ("ppc/spapr: remove deprecated machine pseries-2.9")
->> Signed-off-by: Fabian Vogt <fvogt@suse.de>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Link: 
->> https://lore.kernel.org/qemu-devel/6187781.lOV4Wx5bFT@fvogt-thinkpad
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Link: https://lore.kernel.org/r/20250819223905.2247-2-farosas@suse.de
->> Message-ID: <20250819223905.2247-2-farosas@suse.de>
-> 
-> I'm picking this up for both 10.1.x and 10.0.x stable qemu series.
-> Please let me know if I understood the previous discussion in a wrong
-> way and it should only be picked up for 10.1.x, but not for 10.0.x.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/virtio/vhost.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-It's applicable for all releases where the commit specified in Fixes: 
-(24ee9229fe31) is present.
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 6557c58d12a..890d2bac585 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -27,6 +27,7 @@
+ #include "migration/blocker.h"
+ #include "migration/qemu-file-types.h"
+ #include "system/dma.h"
++#include "system/memory.h"
+ #include "trace.h"
+ 
+ /* enabled until disconnected backend stabilizes */
+@@ -455,7 +456,8 @@ static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
+                               hwaddr *plen, bool is_write)
+ {
+     if (!vhost_dev_has_iommu(dev)) {
+-        return cpu_physical_memory_map(addr, plen, is_write);
++        return address_space_map(vdev->dma_as, addr, plen, is_write,
++                                 MEMTXATTRS_UNSPECIFIED);
+     } else {
+         return (void *)(uintptr_t)addr;
+     }
+@@ -466,7 +468,7 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void *buffer,
+                                hwaddr access_len)
+ {
+     if (!vhost_dev_has_iommu(dev)) {
+-        cpu_physical_memory_unmap(buffer, len, is_write, access_len);
++        address_space_unmap(vdev->dma_as, buffer, len, is_write, access_len);
+     }
+ }
+ 
+-- 
+2.51.0
 
-Thanks
-Harsh
-> 
-> Thanks,
-> 
-> /mjt
-> 
->>   hw/intc/xics.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/hw/intc/xics.c b/hw/intc/xics.c
->> index d9a199e883..200710eb6c 100644
->> --- a/hw/intc/xics.c
->> +++ b/hw/intc/xics.c
->> @@ -335,6 +335,8 @@ static void icp_realize(DeviceState *dev, Error 
->> **errp)
->>               return;
->>           }
->>       }
->> +
->> +    vmstate_register(NULL, icp->cs->cpu_index, &vmstate_icp_server, 
->> icp);
->>   }
->>   static void icp_unrealize(DeviceState *dev)
-> 
 
