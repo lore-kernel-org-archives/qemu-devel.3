@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6870CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F082CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3STp-0003QK-LS; Tue, 30 Sep 2025 01:00:49 -0400
+	id 1v3SW4-0004Sn-U2; Tue, 30 Sep 2025 01:03:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3STg-0003Pc-Md
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:00:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SW2-0004SF-VU
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:03:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3STU-0004a1-Os
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:00:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SVu-0004qa-3h
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:03:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759208420;
+ s=mimecast20190719; t=1759208573;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3xiFBQZdSxrBR3BZG3caEthJ8AMJq39BtL8Q95119s8=;
- b=SBHh2B1ehjS1OsE30nl6CgD3k6znH4lD99OSLoKnvcnIf9e9c1WAJOKrdSIyCWxt5DlAC4
- FHObzVciICIGkrhnu278WtHBGjTshpuyFloJQFT1BvO0bD/Q5PKawlizcYcLxKF0puBNuX
- wJ/j3yeSn2EagKkoORldU9/IuLIw8wU=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bL+RjxGqhOdRGXNtIbLqiRsKj/Y3K4D3P43i5DVXnfw=;
+ b=AQXMQfpq1Zl5N4RYltApZW3u303kJCD1/VkTpgsnrj6lWjsmZ5+i+nn3RYxLepKO8DPvzJ
+ 4p1d77uUfoO7yhrwIMHXujgHD6INXjrkWZXKD31hL77eaB1VpNZDBEy0O8jE/q5MM6x97b
+ dsfHC41DeBRhRQ1/M21XkazW9jULsbQ=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-FCeRRTI4PzGvv1DwtXPfVg-1; Tue, 30 Sep 2025 01:00:17 -0400
-X-MC-Unique: FCeRRTI4PzGvv1DwtXPfVg-1
-X-Mimecast-MFC-AGG-ID: FCeRRTI4PzGvv1DwtXPfVg_1759208417
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-61d31626b01so5072096a12.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:00:17 -0700 (PDT)
+ us-mta-638-hZjfwq3nMpayGPlAn31_6A-1; Tue, 30 Sep 2025 01:02:51 -0400
+X-MC-Unique: hZjfwq3nMpayGPlAn31_6A-1
+X-Mimecast-MFC-AGG-ID: hZjfwq3nMpayGPlAn31_6A_1759208570
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b07c2924d53so486267766b.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:02:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759208416; x=1759813216;
+ d=1e100.net; s=20230601; t=1759208570; x=1759813370;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3xiFBQZdSxrBR3BZG3caEthJ8AMJq39BtL8Q95119s8=;
- b=ST8rfIal88r2NskMXpg2bEi7VD2dtefAws9L8Ci6lT8BKwJF2dQvciexxlZcb3dCoc
- BYzkd3GRIwBoRRDMRpS/NqimOG55qqS8NFWs+Gn9rjq/sW2yeN9Z0Hy/FkZotcDJLaT1
- SFZtqBT02r7YGkjhrA4LKiV0gjtZaXnFRCJfy59dYws4mHLEzVMe5dHXVwZZ2sM6r75/
- 7QkhFvmGHla4+puRyvnxlJrssVf7NotpBkkGBcJ24DjTu7/933g9ovSc0m+kItSJ2fJf
- jt6cmpCm1DC8FaMbYVItVcOY0abCOuzmqVmYHUt8u0Xoy3s5ubvSibTlHYUGSmdm8ceS
- +L6A==
+ bh=bL+RjxGqhOdRGXNtIbLqiRsKj/Y3K4D3P43i5DVXnfw=;
+ b=qPALVjFRCmNe+JDkEJ3wOEOtg1z+fodCvXkoOM/KysN/4dQW+++CEKfXVzbDC32rNF
+ hC1FKaXFIGkMelzW/U/0k/+660jETqlDsTMIspRjTEG2m+6uEuTtAGbnd93t2vPtyBlk
+ s/ncYmKoNgDv5So5vEFvOd27tbTlqxZXuMjk0SyN9OHMWselZ824YBnTTA/dVOGtFyiS
+ JEqRQZfp1rP3suR7P2YEmC0B9+zcVB+jYKpscTKvIuPpWt4f6PHwDzFfDeTa69J/6w41
+ ebOxHFY/RBRfBxNxtRfAKY9RXRin3jXmjW3cQ8SuZbzGHH52gjBlwiPL7wOBFrZjixVF
+ 5tnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHOIKkYrwep2BnVFgwKZTynpwMEq40Rjdo91VRorKGa/4KPkXo8WvqlUPm6FDzOlswFyg/6Ag8sukB@nongnu.org
-X-Gm-Message-State: AOJu0YwYospVhPKrvb/V2QTdLAkgCTF4NYSZtqtDfEQIDNX6nj2WZbyb
- YS3Ds8OQ9vbvQlBzmtEQDa52FK1eUgh2wtzXy+d69qHgvVLA6hJvTTqnWLgZgGaeqrACEJ8EfeP
- Fe3c51OKCOAE681Epui4qhmQ8IJFEdYUNavNsIw6K/CT5a3VjpWQG3GagMgFgLkXf2oc=
-X-Gm-Gg: ASbGncu/OmAsXrOZXfikm/snQp2/WUjrVWJWrf0xQwnch79V8tzZKbfn6/jo5L7P8bf
- AZuXMbbXRpDMzGjI63Os7CI5a0r6fA7ERjFY1w7e+ycJvJ6d0rukRTYyFAghxFaNsss7Fy/pVsF
- mRgD1DHVbem3VX5Gpo9l0U28uAIKHhzSFjISTHbZ4nk+pLO9hIYYiaXme9/WWIH3RHN0f2FdZlc
- wbM9yCKdaLOz5HvRl5gmBxkpdOwwwVjqMq3XarjCnmwajhIkwWz6rWduQN+T5wKv8zuORMc+XdS
- uXv9sDfOXAaD5YGzOGdTuV4RM+ntqlObjvqErAQ2r1j+txfS/89ln0W4VUo9Ohi6MByzsQR0D6D
- KyzJ2X0IenA==
-X-Received: by 2002:a17:907:3da6:b0:b3e:f987:d6a8 with SMTP id
- a640c23a62f3a-b3ef987d997mr637745266b.44.1759208416639; 
- Mon, 29 Sep 2025 22:00:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHa8KgJhbAbV0RRCkwD4pI/pD3HkfND1iGeihF86L8+aCZePSj+3WOJ+3YXP8Jeay5jFXCoTA==
-X-Received: by 2002:a17:907:3da6:b0:b3e:f987:d6a8 with SMTP id
- a640c23a62f3a-b3ef987d997mr637742166b.44.1759208416253; 
- Mon, 29 Sep 2025 22:00:16 -0700 (PDT)
+ AJvYcCU7ILZ87jIR+JTYN1KG1ySI/t0H5bF7pjou3RgtCu/q/FmyTkRioAnpKT2WxMBRbVfTrm41J0+XcpDX@nongnu.org
+X-Gm-Message-State: AOJu0YzRtu9SC2qojAdpkZf0tQweQ56QNV+6led3V9r16WvCu3us7iDt
+ Hemc5LEuKls+seYzLnVR0CGmO/Dv7xzfucmQktVqEqqb7g2JgNLvKj4WsdPmuOYRtonuRXKgXX9
+ nlVRoRnS2eWFWdeOb22EAEjatCWU+7cW4VqRlyv0a/11YGPLI9wdCdwLL
+X-Gm-Gg: ASbGncuplc7jv+xY0iGt9UZecRxeqfF6IfA5bx/rtFbZ484gA37Scanl3KzBt15BLSL
+ qrIGQt5cwv8cBQ//KRazTyWBfOZLJS22e9oMJlV33RReZSELIL+I28CsPEFqjD6d2HEAO7i5H01
+ 74nwq+TWlUK9KQ+4m/uZ2h99WYUdo8bdEjLfOVAowu0PKu8spR+GmmKKwIIBMNkKtQwBGcb/Ywa
+ 0CJss3FNVRGRDps9IEymXzTc2tgI0HDTTaOtOA/5gQeWxfen1Y2p2fTpHSt0kawvVvMVCPtJoWT
+ 1tgc/Bl7kqem8+yoBC0nCwAedG/cGdpKOpuVuc3ue7F6MRjepk5E0swU67/HkjKYFPIyWenXXqs
+ K/MfutJdtuA==
+X-Received: by 2002:a17:906:f5a0:b0:b41:a571:21b0 with SMTP id
+ a640c23a62f3a-b41a5712270mr236496966b.39.1759208570366; 
+ Mon, 29 Sep 2025 22:02:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxIe1/gUAycFtpVQcR4b+NsqR4Pre+MyQnotThndZ321+xPzQyp6FkW4vxaOLRMNcnkRphAA==
+X-Received: by 2002:a17:906:f5a0:b0:b41:a571:21b0 with SMTP id
+ a640c23a62f3a-b41a5712270mr236492866b.39.1759208569870; 
+ Mon, 29 Sep 2025 22:02:49 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b3d277598bdsm449199366b.3.2025.09.29.22.00.14
+ a640c23a62f3a-b353efb88ebsm1061296766b.32.2025.09.29.22.02.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 22:00:15 -0700 (PDT)
-Message-ID: <6c7d7a37-c7e1-44af-839f-7d6d01fc843f@redhat.com>
-Date: Tue, 30 Sep 2025 07:00:13 +0200
+ Mon, 29 Sep 2025 22:02:49 -0700 (PDT)
+Message-ID: <193cd8a8-2c4c-4c2c-af22-622b74c332ee@redhat.com>
+Date: Tue, 30 Sep 2025 07:02:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/17] system/memory: Factor address_space_is_io() out
+Subject: Re: [PATCH v2 14/17] system/physmem: Un-inline
+ cpu_physical_memory_read/write()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 Cc: Jason Herne <jjherne@linux.ibm.com>,
@@ -96,7 +97,7 @@ Cc: Jason Herne <jjherne@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  David Hildenbrand <david@redhat.com>
 References: <20250930041326.6448-1-philmd@linaro.org>
- <20250930041326.6448-4-philmd@linaro.org>
+ <20250930041326.6448-15-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -141,17 +142,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250930041326.6448-4-philmd@linaro.org>
+In-Reply-To: <20250930041326.6448-15-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -170,11 +171,61 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/09/2025 06.13, Philippe Mathieu-Daudé wrote:
-> Factor address_space_is_io() out of cpu_physical_memory_is_io().
-> 
+> Un-inline cpu_physical_memory_read() and cpu_physical_memory_write().
+
+What's the reasoning for this patch?
+
+  Thomas
+
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>   include/exec/cpu-common.h | 12 ++----------
+>   system/physmem.c          | 10 ++++++++++
+>   2 files changed, 12 insertions(+), 10 deletions(-)
+> 
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index 6c7d84aacb4..6e8cb530f6e 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -133,16 +133,8 @@ void cpu_address_space_destroy(CPUState *cpu, int asidx);
+>   
+>   void cpu_physical_memory_rw(hwaddr addr, void *buf,
+>                               hwaddr len, bool is_write);
+> -static inline void cpu_physical_memory_read(hwaddr addr,
+> -                                            void *buf, hwaddr len)
+> -{
+> -    cpu_physical_memory_rw(addr, buf, len, false);
+> -}
+> -static inline void cpu_physical_memory_write(hwaddr addr,
+> -                                             const void *buf, hwaddr len)
+> -{
+> -    cpu_physical_memory_rw(addr, (void *)buf, len, true);
+> -}
+> +void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len);
+> +void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len);
+>   void *cpu_physical_memory_map(hwaddr addr,
+>                                 hwaddr *plen,
+>                                 bool is_write);
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 70b02675b93..6d6bc449376 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -3188,6 +3188,16 @@ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+>                        buf, len, is_write);
+>   }
+>   
+> +void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len)
+> +{
+> +    cpu_physical_memory_rw(addr, buf, len, false);
+> +}
+> +
+> +void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
+> +{
+> +    cpu_physical_memory_rw(addr, (void *)buf, len, true);
+> +}
+> +
+>   /* used for ROM loading : can write in RAM and ROM */
+>   MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+>                                       MemTxAttrs attrs,
 
 
