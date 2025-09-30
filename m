@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD06ACAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9DF6CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:26:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3VeX-00017p-NM; Tue, 30 Sep 2025 04:24:05 -0400
+	id 1v3VeQ-0000rP-Df; Tue, 30 Sep 2025 04:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VeP-0000rD-Mw
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:58 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vdx-0000Na-AF
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:36 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vdw-0001KS-9M
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:57 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e33b260b9so9309405e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:23:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VdP-0001Bt-Oj
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:28 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439b56so3303236f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759220587; x=1759825387; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759220571; x=1759825371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+R20KfaeepivX48ztS5Qk+Utu4Wf2nP4nwxC8R0e4a4=;
- b=IcOF1Rksu59wCMGsQtXrXlv4DfZ3ADC3f5+lfaal01RYwA+drmix7wot0u8aknJIW+
- 3Z9tujov//vnQge+q1DlNv4ICQX5ByBIUAHRTPx+lE0F2quoWR30Im42HvF5haCoc2Jh
- c39bGf3PQFsrAMxj0uRQbi5edRHXFZrFaBN4Xn68HKUKnCJFTj539xdGE33AycZsL+gZ
- FR5qnsFOKomjRk341o3M9rPe0vzlINs5JITOFrNfBvSpGfHeDbvXS37yqlo45pYib5OX
- 1WH+DU0FoMy7fWbpCid9+eFRdGZxJ/9H6zcuBBb9vvH7WzCvuAzkWJpAikIi5zi5+HHw
- 8MUA==
+ bh=v5u2B/lBOO+ZT0vBm0zXHtehU3SXYck4J+kjqZup+Gg=;
+ b=u57byfSkLMVOt38DgYkaSESuWDEVizx3oTgW+QilSbFLoqSrMOdC4cC/n16CmOzM/c
+ Z5UZRhqfUSgjGDrApDnjs+FYmykeYq3EbZmH9Bywf3LnZpawHn8cUHi+qRWuIc6BewAY
+ RZ4MjoO4SnJ5SgsQ46TtQG061JycLoGz2ViQmwdOZ5GUY7ikJ0RG6G8cgb8KAVjR3r9O
+ qAMRev7yLlVLsKcx/Lb9FyQdbFs9W7CKL2JiYztBU21QS5fraSuPmBnNg3HTBDxkBfN8
+ 5JWMIkF7JJ0OwRirgqeME5mqTN7dqrVVxt8fo/gZTB7/YUXSoUm2jnIg0987ccaI8cKy
+ wjng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759220587; x=1759825387;
+ d=1e100.net; s=20230601; t=1759220571; x=1759825371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+R20KfaeepivX48ztS5Qk+Utu4Wf2nP4nwxC8R0e4a4=;
- b=pVdRDKv5hI7Zvs7uMcMnOfEGucDg6mhcFCZqRGcycE0CPMHRvvhrE4f6L+Glcd259+
- QmKnxc7ertS+VWy6s8W6quhgCwTnEMjXcGD5sMm9BdgXBwr9eunNcIepPmD69wavvgu9
- pljkhcbYntEvKBlESnWu5GO/1q0r8qPkPra1zP7V5CiiwD3HcRs8RPlb8d5/3KKbRT7X
- 4pmrg0mnrP436+KjbgoJ+RAfXo1fAf00OfZJemgFPTX9txFzkuLqs4GusHldLrMaDyUM
- 4M72X+HegpRBEi5oekPpkx5sGi0smHUXDcP0dm9ywu0uYTJnj5qEUD4XdNPDt6BTBkkz
- wZ/A==
-X-Gm-Message-State: AOJu0YwmtdhyfwH4YTQY4BKbGIRiofd/PPg2rdHSTHC0VE9TlWRQ26WZ
- GiKGg8GjNemca6MtCWhjnkb7uVMAR/hYUYYWPbiA92lszFL0Ci61iS8N29mI9sEk6Zj4AGf7cwI
- /r3uKevSx8A==
-X-Gm-Gg: ASbGnctcFZZBEnGeIgmL5s9m9c7jLJgk2Rjbl3zmVUGkjcPFRWd/ZOenHaSvAzTE+U5
- kUe5Fn6VJCozcFAjnxakoUUEyo7I0wnB4khoXN947wD26boQEkrMSG3NbWjOR5asn6YHD4kcYqt
- 1IF3TDgLpxHA7ZCeuW8i6oO9+K6tmu0CtjRlzVa3QKIC9JRCpKaVcToWERY/mNeAq0IEhFd8DX9
- 6Jsp6gsHgIoVzSlo7kUJfBqPx71Byw6aEVhRjS0KkdJa78dE58z3rtCZgrgpxgY5/FAeq64zibb
- aKeVJiuruLw5wu/7MSXCkicIYE0HNaSZLNU81roOJP0UZcDJSDWrX8zBNtqWMHjewSXsEkQ8Jy+
- qyk/qseWtinxwhuyglTrwsdvi8j0ctY4QeIghiP002t2dmqpBjEcKer7wtgfuo6BFLbH6de/w2x
- ll7f8BI2ka8AS414hO9mTkwNj/jVH5UNY=
-X-Google-Smtp-Source: AGHT+IGvdNJkPsXhO7mhTBAmSS24HJr1NcQFoKlHMGEeSQcfQp9VTD/G8Mg1Kg5Mqclxy+K9+gFIZw==
-X-Received: by 2002:a05:600c:4e8c:b0:46e:477a:16cc with SMTP id
- 5b1f17b1804b1-46e477a1b4emr94534015e9.24.1759220587242; 
- Tue, 30 Sep 2025 01:23:07 -0700 (PDT)
+ bh=v5u2B/lBOO+ZT0vBm0zXHtehU3SXYck4J+kjqZup+Gg=;
+ b=TMzd+jqjzBz3ONCRRQw5mtwCO5+QHZ/+7W96mXG3tBjehAdoxL5zPzABWCg3zmMvEP
+ 8CqCSVY455wk0lsOiTko1UOh1S1LKfUWB/NcO1InNGhfM+mMkhH66Nlb0mrnGtmoKVI+
+ nnnAs4bswNGx+MPNUYfkUW3BaJJoLg/vMFZcIw1NdzhHPe3tGrtm0gJPBD3Ka6Kmw2cI
+ L0jbk2LOUHHHeZX5+QAx4FKj2Hn7Q/uGEHpF4XhjCn3sHbmP52auYpYoMOPxeum0o0bq
+ rTtzQx6v9TQLxQjOg8Y/73SHzNEepP7Kfftl5CDtsfli3ZEoD7J8g7ofTslmmu/tDzM4
+ IcNQ==
+X-Gm-Message-State: AOJu0YxsEJoL25tIabHHUM4yo9fJRFecl5duBBoFIt4XTJiKg4xio8a5
+ 0E9LtLi+z40HqLA1H4jjen6kAAs0MLqIb3zUBJmdm8IwYddRCEVhSlgKNhD6wpXhppUjaFxxuAZ
+ dAxLtkDO46w==
+X-Gm-Gg: ASbGnctAnfnK+rZ1wtbLNGAaP9F3R07TW3ZYBaqFl6nRaDBbm/Df4NRIUqCUAyDZa5j
+ tTfL1bJM8sb4/RKKRZDeQef+qnkAWt6/JaI5nse9ci1SuzlRz/VN2KKpCGILjnvopppw0F71XJ4
+ XpD4eNdtYYVTB+CbmZO8XPjcpEkmExdREO2USMOdKCZh2guszfTYIVmZP4afWPCww5R9t9KrYiU
+ eN90a1QfOR+51mdyEgLU6RMv9wI92MCIDYlZGJ8gvhSYSebPurc51zZ23I7NSYAa6oglZfe7Usz
+ VrZllRUnf8xINjCKdtu5oUwYHd8AGsngnbNiEbQaLxkqYjGBqm1DCpGfHMe03yvvAsXJjZtr5ZN
+ vx7GOa9KL/8GaUjm69Fc4rWNPoXCZ0sSohD9EdU7BjZUmWq6atMY3n7/+eS81lraNvyBO8MidzT
+ GUxE7aNpWbqZZ74IzPUQgv
+X-Google-Smtp-Source: AGHT+IF27z6BNMVinFPf1IUIruLrE/uTdfyqnRZ7rQ19Ax6aGtKGHkRUD8xTP4t1vKCXsfORDSUoIQ==
+X-Received: by 2002:a05:6000:2507:b0:403:e61e:82e6 with SMTP id
+ ffacd0b85a97d-40e4b1a07admr17394709f8f.46.1759220571045; 
+ Tue, 30 Sep 2025 01:22:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc82f2965sm21484653f8f.55.2025.09.30.01.23.05
+ ffacd0b85a97d-41855fc661esm13882477f8f.45.2025.09.30.01.22.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Sep 2025 01:23:06 -0700 (PDT)
+ Tue, 30 Sep 2025 01:22:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
@@ -85,25 +85,24 @@ Cc: Marcelo Tosatti <mtosatti@redhat.com>,
  Anthony PERARD <anthony@xenproject.org>,
  Jason Herne <jjherne@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v3 18/18] hw/virtio/virtio: Replace legacy
- cpu_physical_memory_map() call
-Date: Tue, 30 Sep 2025 10:21:25 +0200
-Message-ID: <20250930082126.28618-19-philmd@linaro.org>
+Subject: [PATCH v3 15/18] system/physmem: Avoid cpu_physical_memory_rw when
+ is_write is constant
+Date: Tue, 30 Sep 2025 10:21:22 +0200
+Message-ID: <20250930082126.28618-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930082126.28618-1-philmd@linaro.org>
 References: <20250930082126.28618-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,64 +118,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Propagate VirtIODevice::dma_as to virtqueue_undo_map_desc()
-in order to replace the legacy cpu_physical_memory_unmap()
-call by address_space_unmap().
+Following the mechanical changes of commit adeefe01671 ("Avoid
+cpu_physical_memory_rw() with a constant is_write argument"),
+replace:
+
+ - cpu_physical_memory_rw(, is_write=false) -> address_space_read()
+ - cpu_physical_memory_rw(, is_write=true)  -> address_space_write()
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/virtio/virtio.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ scripts/coccinelle/exec_rw_const.cocci | 12 ------------
+ system/physmem.c                       |  6 ++++--
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9a81ad912e0..1ed3aa6abab 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -31,6 +31,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/virtio/virtio-access.h"
- #include "system/dma.h"
-+#include "system/memory.h"
- #include "system/runstate.h"
- #include "virtio-qmp.h"
+diff --git a/scripts/coccinelle/exec_rw_const.cocci b/scripts/coccinelle/exec_rw_const.cocci
+index 1a202969519..35ab79e6d74 100644
+--- a/scripts/coccinelle/exec_rw_const.cocci
++++ b/scripts/coccinelle/exec_rw_const.cocci
+@@ -62,18 +62,6 @@ symbol true, false;
+ + address_space_write(E1, E2, E3, E4, E5)
+ )
  
-@@ -1622,7 +1623,8 @@ out:
-  * virtqueue_unmap_sg() can't be used).  Assumes buffers weren't written to
-  * yet.
-  */
--static void virtqueue_undo_map_desc(unsigned int out_num, unsigned int in_num,
-+static void virtqueue_undo_map_desc(AddressSpace *as,
-+                                    unsigned int out_num, unsigned int in_num,
-                                     struct iovec *iov)
+-// Avoid uses of cpu_physical_memory_rw() with a constant is_write argument.
+-@@
+-expression E1, E2, E3;
+-@@
+-(
+-- cpu_physical_memory_rw(E1, E2, E3, false)
+-+ cpu_physical_memory_read(E1, E2, E3)
+-|
+-- cpu_physical_memory_rw(E1, E2, E3, true)
+-+ cpu_physical_memory_write(E1, E2, E3)
+-)
+-
+ // Remove useless cast
+ @@
+ expression E1, E2, E3, E4, E5, E6;
+diff --git a/system/physmem.c b/system/physmem.c
+index 033285fe812..51abc4cae96 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3191,12 +3191,14 @@ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+ 
+ void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len)
  {
-     unsigned int i;
-@@ -1630,7 +1632,7 @@ static void virtqueue_undo_map_desc(unsigned int out_num, unsigned int in_num,
-     for (i = 0; i < out_num + in_num; i++) {
-         int is_write = i >= out_num;
- 
--        cpu_physical_memory_unmap(iov->iov_base, iov->iov_len, is_write, 0);
-+        address_space_unmap(as, iov->iov_base, iov->iov_len, is_write, 0);
-         iov++;
-     }
- }
-@@ -1832,7 +1834,7 @@ done:
-     return elem;
- 
- err_undo_map:
--    virtqueue_undo_map_desc(out_num, in_num, iov);
-+    virtqueue_undo_map_desc(vdev->dma_as, out_num, in_num, iov);
-     goto done;
+-    cpu_physical_memory_rw(addr, buf, len, false);
++    address_space_read(&address_space_memory, addr,
++                       MEMTXATTRS_UNSPECIFIED, buf, len);
  }
  
-@@ -1982,7 +1984,7 @@ done:
-     return elem;
- 
- err_undo_map:
--    virtqueue_undo_map_desc(out_num, in_num, iov);
-+    virtqueue_undo_map_desc(vdev->dma_as, out_num, in_num, iov);
-     goto done;
+ void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
+ {
+-    cpu_physical_memory_rw(addr, (void *)buf, len, true);
++    address_space_write(&address_space_memory, addr,
++                        MEMTXATTRS_UNSPECIFIED, buf, len);
  }
  
+ /* used for ROM loading : can write in RAM and ROM */
 -- 
 2.51.0
 
