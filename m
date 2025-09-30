@@ -4,96 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E112BCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 07:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE34CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 07:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3UoU-0002pt-IR; Tue, 30 Sep 2025 03:30:18 -0400
+	id 1v3UqM-0003gJ-LT; Tue, 30 Sep 2025 03:32:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3UoS-0002pc-3n
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:30:16 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3UoJ-0000Qb-Ie
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:30:15 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46e3ea0445fso21468115e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 00:30:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759217401; x=1759822201; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Liroi9WcUhGYQAmYmNDdi1IoVOl5PKEVAA6F6iTtODM=;
- b=D/ic15nIJGmf3Scgqoc+WGSwZeOcphj8LRZS0/HT90yRjpuLMDlVDp34BuVy9YbUo3
- qh+AG62oZjjEpNRDt1gISEWsLsu7KIdzwMmG3LIWKl3eALown5k+MD2RI8+ghwGYaiS5
- pVfgRCoS2CRQcR0r04ZLChFTdyylG2z2sIPsHNI94C7ZC55cjK8bxqhZRqoffDvhm3Cd
- JWvtpcqj67TA2smgLdTm90PBWy1TlOsmQ2xVVAZWiA1npasIJQs6umoB43zZuXhUFYmz
- QPA9D8dvXMFHWsipX8NqVgc//UK8W55cS3qC+TnHd4AEvbhPFjLMoRSp+aQHFkqyvXH+
- Pkew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759217402; x=1759822202;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Liroi9WcUhGYQAmYmNDdi1IoVOl5PKEVAA6F6iTtODM=;
- b=NTG2x6J/rRu/HlLmH1FKBAqU1YnggNNMoHyG9i471RhVUce3dhr8d52WencH1Ca4sw
- M2JQwose3gRxu4N7LDhy7gq60cJ/HZmHghVN5ShRI2w4hOSvWXuuFKvvWoQsBMmb9s1Z
- OPBHm/Cr7BKfAZqNN/kdaGWmzkSfOYGlzek8t6FFO2+ZPMAzr/8fEodqqIuNGSsGTvsE
- TDviu5pMXHGAIi/cxx7d6+rpHs+ZS1Reh+M1n/+sQNVY2+PQ1gD7AMdEBoIFA5uMkmK1
- HELiHl8C2A3354S0VbtkcYryipdv2ad+yzzqc/NGCwF+5bA6riIVgqgxGm5TRAvb2e5e
- wZ/g==
-X-Gm-Message-State: AOJu0Yx0iR7YS7kDI3MzIaqsS0ufkDb163PP5LM3LQUJuoSeHmcxdjSQ
- Ng5z8uHvIsjEvHjIgDum+3fJx+UIQA1jpUO+HafTga+RaXQsDSXw4G06jQK1tMiBiuo=
-X-Gm-Gg: ASbGncsuahL/i6OtguxFKzRg5hXvDAc8BSdebSDExOed/vFOHo1Ytrrt67T+Uc7iLFm
- PLZUZhi0jsWKVacaqLjbG3xCmoiXyKOxzE8YtTZGb3qJeYC9hphiB/BRzNUAgR97e18MY1H5zou
- VfriMGvJlKfQ9lSNmtkIE+cRUG1sKsOyORW2HvAk4JAmWPxKDiafj2Oi5Ny0hie1GpA8FvM0lu6
- dp3rXYG8PFilpycSeMDahm/FjnmH+UJLtodgLsVIFFa0k3PFpsmPAR8UJ3ZoY6hShy1XC7SX+21
- wv7ArGgY9J44U6w7zg/51HKneCjkyEcPo/PSiIwPyvVAF8zXznVskxz5SZC2vj3q+u7dEF9quOJ
- RB9+WnNu2SkwMOkXYFp3BawKW4BHztvvhcFZQ4xM+AK59LumnyTySZrOJJwHgNiPsweQ9bDZCsI
- UvHgjDNymp+pDdZbJUwijYES7m
-X-Google-Smtp-Source: AGHT+IGtXfL0Jmx58YY2GQD+3/N7UII2j2tkr2qjbfMg8pgv1A6WoRS0WqglI5zD67fQhazgeaOExQ==
-X-Received: by 2002:a5d:5d07:0:b0:3e5:190b:b04e with SMTP id
- ffacd0b85a97d-40e4ece6421mr14598458f8f.37.1759217401589; 
- Tue, 30 Sep 2025 00:30:01 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc82f2ff6sm21331401f8f.56.2025.09.30.00.30.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 00:30:01 -0700 (PDT)
-Message-ID: <0f3b1559-1ce2-4201-bd29-3ac131f557cc@linaro.org>
-Date: Tue, 30 Sep 2025 09:30:00 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v3UqJ-0003fg-IG; Tue, 30 Sep 2025 03:32:12 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v3UqF-0000wo-HB; Tue, 30 Sep 2025 03:32:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1759217527; x=1790753527;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=tyL90xQ/psWNfhHyJbOAxWbUINQafqkHOjy+g6gz1hQ=;
+ b=PxHRojvfNDyae+PmuauT77PTLw8wRXndC7UmYpYHYhSUeI0sMOtNQiUl
+ ZtcDonxiG6oPrg+26xaN2ns5lR0BgONiiCjDXo/b8KBiGcUnE6HdQXGFU
+ H/ZnFlnBnzf/jqxMNYQhshXdkbcUzFk9Sqy3r4xgF/wk3zHJ72WbHSuxe
+ yJgFlWMf7wZtVlSl2Wfj26R8TsOEssVnAemlvOaiTWCw6MondTXI2xELf
+ ccl4eZcKkJk5WD5YkXdhBAznSv3sCmku6EPEW3x6UdOCjfJGyUZKep2jE
+ OYUF6yqLIt1ZazH287yZxb7uaL92H06uNJ1wS/wq0JUxcjuNE9nfK/5vu g==;
+X-CSE-ConnectionGUID: zgcBYmQHQISCA4eaU+036A==
+X-CSE-MsgGUID: GQGxbOBwSmqcKkzSgK3suQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="61380988"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="61380988"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Sep 2025 00:31:58 -0700
+X-CSE-ConnectionGUID: /VdAs/3MQgauh9/d1mRJrA==
+X-CSE-MsgGUID: eDPr56yCTW6fy8hSeaDruA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,303,1751266800"; d="scan'208";a="177579608"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa006.jf.intel.com with ESMTP; 30 Sep 2025 00:31:57 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] subprojects: Update .gitignore for syn
+Date: Tue, 30 Sep 2025 15:53:51 +0800
+Message-Id: <20250930075351.1853721-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 38/47] hw/arm/xlnx-versal: add the target field in IRQ
- descriptor
-Content-Language: en-US
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-References: <20250926070806.292065-1-luc.michel@amd.com>
- <20250926070806.292065-39-luc.michel@amd.com>
- <70156c9c-5559-496d-8753-99f1ba5f68d1@linaro.org>
- <aNt6vez--_Len36t@XFR-LUMICHEL-L2.amd.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aNt6vez--_Len36t@XFR-LUMICHEL-L2.amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,56 +78,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/9/25 08:37, Luc Michel wrote:
-> Hi Phil,
-> 
-> On 12:34 Mon 29 Sep     , Philippe Mathieu-Daudé wrote:
->> On 26/9/25 09:07, Luc Michel wrote:
->>> Add the target field in the IRQ descriptor. This allows to target an IRQ
->>> to another IRQ controller than the GIC(s). Other supported targets are
->>> the PMC PPU1 CPU interrupt controller and the EAM (Error management)
->>> device. Those two devices are currently not implemented so IRQs
->>> targeting those will be left unconnected. This is in preparation for
->>> versal2.
->>>
->>> Signed-off-by: Luc Michel <luc.michel@amd.com>
->>> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
->>> Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
->>> ---
->>>    hw/arm/xlnx-versal.c | 41 +++++++++++++++++++++++++++++++++++++++--
->>>    1 file changed, 39 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
->>> index 3d960ed2636..64744401182 100644
->>> --- a/hw/arm/xlnx-versal.c
->>> +++ b/hw/arm/xlnx-versal.c
->>> @@ -50,18 +50,30 @@
->>>    #include "hw/cpu/cluster.h"
->>>    #include "hw/arm/bsa.h"
->>>
->>>    /*
->>>     * IRQ descriptor to catch the following cases:
->>> + *   - An IRQ can either connect to the GICs, to the PPU1 intc, or the the EAM
->>>     *   - Multiple devices can connect to the same IRQ. They are OR'ed together.
->>>     */
->>>    FIELD(VERSAL_IRQ, IRQ, 0, 16)
->>> +FIELD(VERSAL_IRQ, TARGET, 16, 2)
->>>    FIELD(VERSAL_IRQ, ORED, 18, 1)
->>>    FIELD(VERSAL_IRQ, OR_IDX, 19, 4) /* input index on the IRQ OR gate */
->>>
->>> +typedef enum VersalIrqTarget {
->>> +    IRQ_TARGET_GIC,
->>> +    IRQ_TARGET_PPU1,
->>> +    IRQ_TARGET_EAM,
->>
->> Maybe declare IRQ_TARGET_RSVD here,
-> 
-> I'm not convinced. In the future we may need more targets, even more
-> than 4. In this case we will increase the TARGET field size, probably we
-> will then have even more reserved fields. I feel the way it's done here
-> is simple enough to catch all the buggy cases thanks to the default case
-> in the switch below.
+The commit a530a8d4ac39 missed to update syn version, this is because
+the code base of its v2 patch has fixed syn version, so that the fix for
+syn were lost during the rebase from v1 to v2.
 
-Fine then!
+To rectify this mistake, update the syn version.
+
+Fixes: a530a8d4ac39 ("subprojects: Update .gitignore for proc-macro2 and syn")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ subprojects/.gitignore | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index 58a29f012044..136e30cd99ad 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -19,7 +19,7 @@
+ /proc-macro-error-attr-1.0.4
+ /proc-macro2-1.0.95
+ /quote-1.0.36
+-/syn-2.0.66
++/syn-2.0.104
+ /unicode-ident-1.0.12
+ 
+ # Workaround for Meson v1.9.0 https://github.com/mesonbuild/meson/issues/14948
+-- 
+2.34.1
 
 
