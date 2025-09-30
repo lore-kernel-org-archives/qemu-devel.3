@@ -4,77 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A191BCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A73CCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Vdc-0000ET-4c; Tue, 30 Sep 2025 04:23:08 -0400
+	id 1v3Vda-0000BG-Gz; Tue, 30 Sep 2025 04:23:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3VdG-0008W9-I0
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3VcU-0000oc-VP
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VdG-0008W4-Aw
  for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759220511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fOgK8Rj4RLSl64NdTyDOu6qpfuXmT4oW+TX2rEPOAHg=;
- b=jTUrmWrRdcQ45e+FLSuGE0OwKlXnofQiRhVyC3GtqqTulgGN3GBOKgeitDZqdpm3sxsOdl
- gwPKjsxkZk1aIwmSG+NhIj4naET26E9qsSkh20HfW9B4m50cXTpdaa3mGqnF6D74HP99cs
- 16xHhAoFOZbYxVFJdSdt9v8Jvo4VvkM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-AuvH5StMP5CK-EiyK6UNKg-1; Tue,
- 30 Sep 2025 04:21:47 -0400
-X-MC-Unique: AuvH5StMP5CK-EiyK6UNKg-1
-X-Mimecast-MFC-AGG-ID: AuvH5StMP5CK-EiyK6UNKg_1759220506
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28E2A19560AB; Tue, 30 Sep 2025 08:21:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE20419560B4; Tue, 30 Sep 2025 08:21:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5990F21E6A27; Tue, 30 Sep 2025 10:21:42 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  odaki@rsg.ci.i.u-tokyo.ac.jp,
- marcandre.lureau@redhat.com,  berrange@redhat.com,
- richard.henderson@linaro.org,  Jagannathan Raman <jag.raman@oracle.com>
-Subject: Re: [PATCH v3 05/13] hw/remote/vfio-user: Clean up error reporting
-In-Reply-To: <77f8b8ba-911e-4965-bb10-2c0cc31a0d3d@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 30 Sep 2025 11:02:38 +0300")
-References: <20250923091000.3180122-1-armbru@redhat.com>
- <20250923091000.3180122-6-armbru@redhat.com>
- <1a10e0d3-17fc-4ec9-aa4c-cdfed13988e6@yandex-team.ru>
- <878qi1so4j.fsf@pond.sub.org>
- <77f8b8ba-911e-4965-bb10-2c0cc31a0d3d@yandex-team.ru>
-Date: Tue, 30 Sep 2025 10:21:42 +0200
-Message-ID: <87a52cz6y1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VcY-0000rQ-Eh
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:44 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-46e2e6a708fso36248825e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759220516; x=1759825316; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TmN6KZRBDFIwLcWnEVDqbz1WHRvv8u+lRYP5Aq5aiQ8=;
+ b=v8vbPBimOxWLy3b2sbV/F1sAM4U68VnGoPgiKV6kBKYScQHeywj9YBXCaJdsnFdyNi
+ SgzlZKXqfnW4GylpIfcQA4jyGnMrFYjrjEAzVgMClNSFjqVcRuFaqJbunKfccIDEFOQc
+ 2FPrIoKYw7CbT96cVT3o4rZ4UNEVV/WWZpLUhsEG/X5PpmD6/LksjLN8REoGou5oK+a/
+ uHeW7zJgU2KahX0g0yl+KNhXs3RKsdMj223NMKpRGmEJgnFMDLdMtaXPZQcvsga+RGTb
+ ZSLMztG57IUd/e32G3cbn1F0DpNB2O/4q0nu9VJOl3kBkLlWXLc4++FaEJp+RHaeUShb
+ es+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759220516; x=1759825316;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TmN6KZRBDFIwLcWnEVDqbz1WHRvv8u+lRYP5Aq5aiQ8=;
+ b=hgI99hp5TWDyBotk50qP5vO0lsg30kjNX8FRsqex6IKTzcHfzYe8dQWtcB1ENxo3xC
+ KaAr3LvCewFzfdL0fOcfOKK8iY8FDjDJOOd6hZurI+kEaMj2/y97/xpmCGdlucdOl1zd
+ VjpHHZ+9dIWw11Xdr71N5JPfTpxC0k2dLVYVGOq6foxoWA3Be8nUm6pMqA9tHfBumhRF
+ darRv6oVzbFUO5W9xqZq4esxgC6cEiEqGXK/3zpmsabitmoQyOX4g0b7yNCvcmJRhcLY
+ 3JDX0sTMhJo/IClR9JcLFBszL2ssdPsjwR8BUprHjORsMi0yU+l/rxzYQltCMrwcz28c
+ wK7g==
+X-Gm-Message-State: AOJu0YySH+DBIr4fA/7EK51uLM78iAxUPCJbG/u9GLIoiYB+pureHngI
+ zXaPkaUZc5pRJjbm4XYzxPIGoBNnkDXba+07iFkyIY1JCC+PeGcuojAvLgpID5zmMa7KlCvJGA0
+ cWJad3+Oh/A==
+X-Gm-Gg: ASbGncsBWK/lzQohIUEtxVqe4r2RYG+7GU5HuhDqsgWb0reT92Qjm6KzwiSzzLh226Z
+ sosTNOYenIBkyov1m73pzfF+8g3NJ//T5TqxLwdwrZolY/xksMtuzj69pDu32/1U4CGfzPGGoD2
+ bRBXImGf0Fpq8PMnaae2zotme/mj95bFrbnDUq6nBnuT+8D3xq2ChLqy0jkXXYvHVksUC3MbihZ
+ pldkzS3N6+kXk4Pu/nkJQzvx11+jybZQRH1zpcE+lA8Fw3Hd3vKAanFmgHjdijDcq2w/vYT+3YJ
+ 3KizCLpJV7ImQfjhW/eXgI6U2WkAgLnUISOcqIzn/qaHZ/fwosElNJmld6aBTUT1ozAGRPi8QOV
+ ne9amKGFCcFij/Fx+U4LHYq22tXfojaSjnCCWCJFzMWDS/JM+HxnUxdxAKhK+nxWPhyK/e9J1Ti
+ ERbjCRVDc/W3btTpgLFs7s3DRCnwoqRDU=
+X-Google-Smtp-Source: AGHT+IFRoVQqdg8pFriDfOKg6AJHeYajBA5OHZoOOnjeKEw77YQUzMpfQKsIByPubJl8mIXC2txRhQ==
+X-Received: by 2002:a05:600c:8b16:b0:468:7f92:5a80 with SMTP id
+ 5b1f17b1804b1-46e329fbd2bmr146354195e9.27.1759220516099; 
+ Tue, 30 Sep 2025 01:21:56 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e56f65290sm44620345e9.13.2025.09.30.01.21.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 30 Sep 2025 01:21:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Reinoud Zandijk <reinoud@netbsd.org>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, David Hildenbrand <david@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, kvm@vger.kernel.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org, Stefano Garzarella <sgarzare@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Jason Herne <jjherne@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH v3 05/18] hw/s390x/sclp: Use address_space_memory_is_io() in
+ sclp_service_call()
+Date: Tue, 30 Sep 2025 10:21:12 +0200
+Message-ID: <20250930082126.28618-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250930082126.28618-1-philmd@linaro.org>
+References: <20250930082126.28618-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,131 +119,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+When cpu_address_space_init() isn't called during vCPU creation,
+its single address space is the global &address_space_memory.
 
-> On 26.09.25 09:51, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->>> On 23.09.25 12:09, Markus Armbruster wrote:
->>>> VFU_OBJECT_ERROR() reports the error with error_setg(&error_abort,
->>>> ...) when auto-shutdown is enabled, else with error_report().
->>>>
->>>> Issues:
->>>>
->>>> 1. The error is serious enough to warrant aborting the process when
->>>> auto-shutdown is enabled, yet harmless enough to permit carrying on
->>>> when it's disabled.  This makes no sense to me.
->>>>
->>>> 2. Like assert(), &error_abort is strictly for programming errors.  Is
->>>> this one?
->>>
->>> Brief look at the code make me think that, no it isn't.
->> So the use of &error_abort is wrong.
->> 
->>>>   Or should we exit(1) instead?
->>>>
->>>> 3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
->>>> assert()."
->>>>
->>>> This patch addresses just 3.
->>>>
->>>> Cc: Jagannathan Raman <jag.raman@oracle.com>
->>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->>>> ---
->>>>    hw/remote/vfio-user-obj.c | 9 +++------
->>>>    1 file changed, 3 insertions(+), 6 deletions(-)
->>>> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
->>>> index ea6165ebdc..eb96982a3a 100644
->>>> --- a/hw/remote/vfio-user-obj.c
->>>> +++ b/hw/remote/vfio-user-obj.c
->>>> @@ -75,12 +75,9 @@ OBJECT_DECLARE_TYPE(VfuObject, VfuObjectClass, VFU_OBJECT)
->>>>     */
->>>>    #define VFU_OBJECT_ERROR(o, fmt, ...)                                     \
->>>>        {                                                                     \
->>>> -        if (vfu_object_auto_shutdown()) {                                 \
->>>> -            error_setg(&error_abort, (fmt), ## __VA_ARGS__);              \
->>>> -        } else {                                                          \
->>>> -            error_report((fmt), ## __VA_ARGS__);                          \
->>>> -        }                                                                 \
->>>> -    }                                                                     \
->>>> +        error_report((fmt), ## __VA_ARGS__);                              \
->>>> +        assert(!vfu_object_auto_shutdown());                              \
->>>
->>> Probably, it's only my feeling, but for me, assert() is really strictly bound
->>> to programming errors, more than abort(). Using abort() for errors which are
->>> not programming, but we can't handle them looks less confusing, i.e.
->>>
->>> if (vfu_object_auto_shutdown()) {
->>>      abort();
->>> }
->>
->> assert(COND) is if (COND) abort() plus a message meant to help
->> developers.  Both are for programming errors.  If it isn't something
->> that needs debugging, why dump core?
->>
->> But this particular error condition is *not* a programming error.  So
->>          assert(!vfu_object_auto_shutdown());
->>
->> and
->>
->>          if (vfu_object_auto_shutdown()) {
->>              abort();
->>          }
->>
->> are both equally wrong.  However, the latter makes it easier to add a
->> FIXME comment:
->>
->>          if (vfu_object_auto_shutdown()) {
->>              /*
->>               * FIXME This looks inappropriate.  The error is serious
->>               * enough programming error to warrant aborting the process
->>               * when auto-shutdown is enabled, yet harmless enough to
->>               * permit carrying on when it's disabled.  Makes no sense.
->>               */
->>              abort();
->>          }
->> 
->
-> Looks more readable, yes.
+As s390x boards don't call cpu_address_space_init(),
+cpu_get_address_space(CPU(cpu), 0) returns &address_space_memory.
 
-Sold!
+We can then replace cpu_physical_memory_is_io() by the semantically
+equivalent address_space_memory_is_io() call.
 
->> The commit message would then need a tweak.  Perhaps
->>
->>    Issues:
->>
->>    1. The error is serious enough to warrant killing the process when
->>    auto-shutdown is enabled, yet harmless enough to permit carrying on
->>    when it's disabled.  This makes no sense to me.
->>
->>    2. Like assert(), &error_abort is strictly for programming errors.  Is
->>    this one?  Vladimir Sementsov-Ogievskiy tells me it's not.
->
-> :)) I'm not an expert in vfio-user at all. But yes, I said it:)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/sclp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-I'll soften it to "believes it's not."
-
->>    3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
->>    assert()."
->>
->>    This patch addresses just 3.  It adds a FIXME comment for the other
->>    two.
->>
->> Thoughts?
->
-> Looks good.
-
-Thanks again!
-
->> 
->>> Not really matter. Anyway:
->>>
->>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Thanks!
->> 
->>>> +    }
->>>>      struct VfuObjectClass {
->>>>        ObjectClass parent_class;
->> 
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 9718564fa42..f507b36cd91 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -16,6 +16,7 @@
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "hw/boards.h"
++#include "system/memory.h"
+ #include "hw/s390x/sclp.h"
+ #include "hw/s390x/event-facility.h"
+ #include "hw/s390x/s390-pci-bus.h"
+@@ -301,6 +302,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     CPUS390XState *env = &cpu->env;
+     SCLPDevice *sclp = get_sclp_device();
+     SCLPDeviceClass *sclp_c = SCLP_GET_CLASS(sclp);
++    AddressSpace *as = cpu_get_address_space(CPU(cpu), 0);
+     SCCBHeader header;
+     g_autofree SCCB *work_sccb = NULL;
+ 
+@@ -308,7 +310,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+         return -PGM_PRIVILEGED;
+     }
+-    if (cpu_physical_memory_is_io(sccb)) {
++    if (address_space_is_io(as, sccb)) {
+         return -PGM_ADDRESSING;
+     }
+     if ((sccb & ~0x1fffUL) == 0 || (sccb & ~0x1fffUL) == env->psa
+-- 
+2.51.0
 
 
