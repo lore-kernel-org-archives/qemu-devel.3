@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F28CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D5ACAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3RRA-0000za-HM; Mon, 29 Sep 2025 23:54:00 -0400
+	id 1v3RQy-0000ur-Je; Mon, 29 Sep 2025 23:53:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v3RR6-0000xx-7m
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:53:57 -0400
+ id 1v3RQw-0000uS-Cn
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:53:46 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1v3RQw-0001s5-1V
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:53:55 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1v3RQq-0001pc-Vt
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:53:45 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Dxvr9BVNto2msQAA--.33114S3;
- Tue, 30 Sep 2025 11:53:37 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxHvA+VNtoumsQAA--.34595S3;
+ Tue, 30 Sep 2025 11:53:34 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxC8E8VNtoak+_AA--.40492S13;
- Tue, 30 Sep 2025 11:53:37 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxC8E8VNtoak+_AA--.40492S3;
+ Tue, 30 Sep 2025 11:53:33 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 11/13] target/loongarch: Add basic hardware PTW support
-Date: Tue, 30 Sep 2025 11:53:30 +0800
-Message-Id: <20250930035332.2609520-12-maobibo@loongson.cn>
+Subject: [PATCH v4 01/13] target/loongarch: Use auto method with PTW feature
+Date: Tue, 30 Sep 2025 11:53:20 +0800
+Message-Id: <20250930035332.2609520-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250930035332.2609520-1-maobibo@loongson.cn>
 References: <20250930035332.2609520-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxC8E8VNtoak+_AA--.40492S13
+X-CM-TRANSID: qMiowJBxC8E8VNtoak+_AA--.40492S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,122 +66,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-However with hardware PTW supported, hardware will search page table
-with TLB miss. Also if there is no TLB miss however bit Present is not set,
-hardware PTW will happen also. Because there is odd/even page in one TLB
-entry on LoongArch system, for example in the first time odd TLB entry is
-valid and even TLB entry is 0. When software accesses with address within
-even page, there is no TLB miss only that TLB entry is 0. In this
-condition, hardwre PTW will happen also.
+PTW is short for page table walker, it is hardware page table walker
+function. With PTW supported, hardware MMU will parse page table
+table and update TLB entries automatically.
+
+This patch adds type OnOffAuto for PTW feature setting.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu-mmu.h        |  2 ++
- target/loongarch/cpu_helper.c     | 17 ++++++++++++++---
- target/loongarch/tcg/tlb_helper.c | 26 ++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 3 deletions(-)
+ target/loongarch/cpu.c | 25 +++++++++++++++++++++++++
+ target/loongarch/cpu.h |  2 ++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index c3e869234a..4c227d4ef3 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -67,6 +67,8 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
- TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
-                             MMUAccessType access_type, int mmu_idx,
-                             int is_debug);
-+TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-+                     int access_type, int mmu_idx, int debug);
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                                uint64_t *dir_width, target_ulong level);
- hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index e2d66f4c86..3fd0f574b4 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -107,11 +107,11 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
-     return TLBRET_MATCH;
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 993602fb8c..c71e879791 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -514,6 +514,24 @@ static void loongarch_set_msgint(Object *obj, bool value, Error **errp)
+      cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, value);
  }
  
--static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
--                            int access_type, int mmu_idx, int debug)
-+TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-+                     int access_type, int mmu_idx, int debug)
- {
-     CPUState *cs = env_cpu(env);
--    target_ulong index, phys;
-+    target_ulong index = 0, phys = 0;
-     uint64_t dir_base, dir_width;
-     uint64_t base;
-     int level;
-@@ -139,6 +139,8 @@ static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-         if (level) {
-             if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-                 /* base is a huge pte */
-+                index = 0;
-+                dir_base -= 1;
-                 break;
-             } else {
-                 /* Discard high bits with page directory table */
-@@ -156,6 +158,15 @@ static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-             base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
-             base = FIELD_DP64(base, TLBENTRY, G, 1);
-         }
-+
-+        context->pte_buddy[index] = base;
-+        context->pte_buddy[1 - index] = base + BIT_ULL(dir_base);
-+        base += (BIT_ULL(dir_base) & address);
-+    } else if (cpu_has_ptw(env)) {
-+        index &= 1;
-+        context->pte_buddy[index] = base;
-+        context->pte_buddy[1 - index] = ldq_phys(cs->as,
-+                                            phys + 8 * (1 - 2 * index));
-     }
- 
-     context->ps = dir_base;
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index e5ed46bfd6..f3596a5154 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -591,6 +591,20 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
-     }
- }
- 
-+static void ptw_update_tlb(CPULoongArchState *env, MMUContext *context)
++static bool loongarch_get_ptw(Object *obj, Error **errp)
 +{
-+    int index;
-+    bool match;
-+
-+    match = loongarch_tlb_search(env, context->addr, &index);
-+    if (!match) {
-+        index = get_tlb_random_index(env, context->addr, context->ps);
-+    }
-+
-+    invalidate_tlb(env, index);
-+    fill_tlb_entry(env, env->tlb + index, context);
++    return LOONGARCH_CPU(obj)->ptw != ON_OFF_AUTO_OFF;
 +}
 +
- bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                             MMUAccessType access_type, int mmu_idx,
-                             bool probe, uintptr_t retaddr)
-@@ -604,6 +618,18 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     /* Data access */
-     context.addr = address;
-     ret = get_physical_address(env, &context, access_type, mmu_idx, 0);
-+    if (ret != TLBRET_MATCH && cpu_has_ptw(env)) {
-+        /* Take HW PTW if TLB missed or bit P is zero */
-+        if (ret == TLBRET_NOMATCH || ret == TLBRET_INVALID) {
-+            ret = loongarch_ptw(env, &context, access_type, mmu_idx, 0);
-+            if (ret == TLBRET_MATCH) {
-+                ptw_update_tlb(env, &context);
-+            }
-+        } else {
-+            invalidate_tlb(env, context.tlb_index);
-+        }
++static void loongarch_set_ptw(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    if (kvm_enabled()) {
++        /* PTW feature is only support in TCG mode now */
++        return;
 +    }
 +
-     if (ret == TLBRET_MATCH) {
-         physical = context.physical;
-         prot = context.prot;
++    cpu->ptw = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++    cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, value);
++}
++
+ static void loongarch_cpu_post_init(Object *obj)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+@@ -528,7 +546,10 @@ static void loongarch_cpu_post_init(Object *obj)
+                              loongarch_set_lasx);
+     object_property_add_bool(obj, "msgint", loongarch_get_msgint,
+                              loongarch_set_msgint);
++    object_property_add_bool(obj, "ptw", loongarch_get_ptw,
++                             loongarch_set_ptw);
+     /* lbt is enabled only in kvm mode, not supported in tcg mode */
++
+     if (kvm_enabled()) {
+         kvm_loongarch_cpu_post_init(cpu);
+     }
+@@ -636,6 +657,7 @@ static void loongarch_la464_initfn(Object *obj)
+     env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
+ 
+     cpu->msgint = ON_OFF_AUTO_OFF;
++    cpu->ptw = ON_OFF_AUTO_OFF;
+     loongarch_la464_init_csr(obj);
+     loongarch_cpu_post_init(obj);
+ }
+@@ -667,6 +689,7 @@ static void loongarch_la132_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG1, CRC, 1);
+     env->cpucfg[1] = data;
+     cpu->msgint = ON_OFF_AUTO_OFF;
++    cpu->ptw = ON_OFF_AUTO_OFF;
+ }
+ 
+ static void loongarch_max_initfn(Object *obj)
+@@ -678,6 +701,8 @@ static void loongarch_max_initfn(Object *obj)
+     if (tcg_enabled()) {
+         cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
+         cpu->msgint = ON_OFF_AUTO_AUTO;
++        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, 1);
++        cpu->ptw = ON_OFF_AUTO_AUTO;
+     }
+ }
+ 
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index b8e3b46c3a..b1d6799222 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -137,6 +137,7 @@ FIELD(CPUCFG2, LBT_MIPS, 20, 1)
+ FIELD(CPUCFG2, LBT_ALL, 18, 3)
+ FIELD(CPUCFG2, LSPW, 21, 1)
+ FIELD(CPUCFG2, LAM, 22, 1)
++FIELD(CPUCFG2, HPTW, 24, 1)
+ 
+ /* cpucfg[3] bits */
+ FIELD(CPUCFG3, CCDMA, 0, 1)
+@@ -402,6 +403,7 @@ struct ArchCPU {
+     uint32_t  phy_id;
+     OnOffAuto lbt;
+     OnOffAuto pmu;
++    OnOffAuto ptw;
+     OnOffAuto lsx;
+     OnOffAuto lasx;
+     OnOffAuto msgint;
 -- 
 2.39.3
 
