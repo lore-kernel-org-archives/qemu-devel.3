@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D7CCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94294CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3SDd-0006qF-9o; Tue, 30 Sep 2025 00:44:05 -0400
+	id 1v3SHA-0008BW-18; Tue, 30 Sep 2025 00:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SDc-0006pe-CF
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:44:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SH8-0008Aq-Hi
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:47:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SDU-0001BO-60
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:44:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SGy-00021q-Vv
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:47:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759207432;
+ s=mimecast20190719; t=1759207647;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IFA/ZKajMt+npZXBOLV5WlPV0wIgh0I4dBfqL+bGAaY=;
- b=Dchm/pMJaqnJfudJ5z9a3yfQ+0k4Q8kB77SxO3kgzzeaGZh+2Klc0vGxkLTiALom/q1t+a
- ZI45uOzOEPjbGN3FVUiXFURt8XAKgj8ikDA/tnDhNB5AkheSg8LnqeY8b8g4cjn/t/0MXV
- gKIO9v0+y2dnvPcgNr21pdTiWZdHSs4=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F0CpCpGLryTSVfViexSV8x0K3iUnfmatiqDW29KVp44=;
+ b=B+dmeqDVZfLVohaoB/jqLijCCWiw4HkHhE7BG5TXe+3BWt6OJWPaVIVq4I321lmejbNJZG
+ OGAEg3OgMXQMMwDRsVc1L0mfila1EZFw5ZYbeShSU9eXMaFWWcK/cfAqNdN9BXJNIrCHBy
+ M1AMn4al1iHsV9Sj/bxNpXudGbdE0Xk=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-691-uXr3jNS_NUGOhjIbTVE7Gw-1; Tue, 30 Sep 2025 00:43:50 -0400
-X-MC-Unique: uXr3jNS_NUGOhjIbTVE7Gw-1
-X-Mimecast-MFC-AGG-ID: uXr3jNS_NUGOhjIbTVE7Gw_1759207429
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b36f970e2abso422524066b.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:43:50 -0700 (PDT)
+ us-mta-627-2uGMqJAQMTa9xZgtTXWiZA-1; Tue, 30 Sep 2025 00:47:24 -0400
+X-MC-Unique: 2uGMqJAQMTa9xZgtTXWiZA-1
+X-Mimecast-MFC-AGG-ID: 2uGMqJAQMTa9xZgtTXWiZA_1759207643
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-afcb72a8816so520907866b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:47:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759207429; x=1759812229;
+ d=1e100.net; s=20230601; t=1759207643; x=1759812443;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=IFA/ZKajMt+npZXBOLV5WlPV0wIgh0I4dBfqL+bGAaY=;
- b=wYHhTYMw76huzlzWK7OYDGwYnFDDdRZsVgqfDGTYUw4Ys7gEt06CE8YwA4D2gjrfFI
- t/MiwxHOA8M4jwa3nLTzliKXZqZWLmS+U7tDtWCMM7TYTdm+RwOloSCkAEvTPUsI1Sgf
- 6BDzB79gb4p59ah9r6VHUgc+MjHuEkzKLr9bPNHeYo7XMiw3tIAB9kLY6Z369TznRbQN
- FhnXlDPKsczNtsLQQZerbN+XVnRbGnMvnBOoZHeqPxqVgg+0+P7qyYFlX9MRkQ8o7SsW
- X2xOVTRSFhKYYIBlb017xpVALY/nt5t2s9+8f7eFDoY9XPC0bPQbq1W3Tkkxb75sm8l6
- NhOA==
+ bh=F0CpCpGLryTSVfViexSV8x0K3iUnfmatiqDW29KVp44=;
+ b=tGdawf7qTpRq0GIDkvp2F3XtqL1m+c89t91J+hnbvzw5p5UhFZlz/6MD1N6gaDyFhB
+ g+QoSblJsrznQymiKC5Sa2pygmPJFphDSWDIZz1u+cAOrbNS+3ZMCpkwVgoNwx9aCT7P
+ Cd8oMloZ8mPyclYZ8T+//wbcF7QsJxryI1Qq+cwIZ8gHdDe9Q7c90FM3CifKUZF8feBk
+ 1HwsasEPSkoMwskZyis1TOoLGQ9qvfsEOPY2P0YnzoeA2XGbQ4bTQE2f52Fq/B8BICUE
+ f+ls4HTs37vEbp2TV19l/53BdQiWvDfLkQiMhZqeqi0tTA++W3XemMNP2hO2EsVYqmcd
+ z0ZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQGruKKCYR1JLX2On5V/meg/fQjinqJSkwlphvTcfm+PnF4Z5644cIXsl6ThhTRmsPRHsWPaR8ynx3@nongnu.org
-X-Gm-Message-State: AOJu0YxAdFZSWMFQ//yHR4/SMO/5FrtFqi/6VVRFra5gynVPQj9gS4Kq
- uk7gaBRvGnl23TYgIlkcQpl5YI6079CIPlbO03AXd6ZmyEhdVKgkwkkl+2f1tdU5bojuVFRd7T/
- psI4RD/jHyi563lMtMUvH6aO1ExSZ5IZtwqA85qQ6YDf5nFH93gZfeXu2
-X-Gm-Gg: ASbGncs7coGeJiw+LyEPJtjU47Tu9EmFZMx6RxodDCjrOwiC+0Xx3lwzHrxDLWfvyUG
- LwgPndkz5Yh1G+TZ5ohGGFMZPVr2gsOlR1jJYbRCpQrOfGGxbt854DMJM63qIwHaPEd8LvCPYLa
- zMhnMWbTlwuG2PikSHF4Bb5UzKGFfkN7Id0SvuoGGKjLy5RKJK/FqESRwAPaGU4P0htk9629o5m
- sLSFQkhV/W+doKIYawuL9cdFEHCcW55QE0csniD6ReN0Ex8rwLNdwxPnSFC6pKRUny4/PR49n/m
- 4Q7iMe+Ih4CZF8lW6z1l0ooF5S2SeC3oR32AG3H0d7BVqSj+6V1iWJBxEWjnI6+3CuwrHC//cva
- V3dZHtLpETw==
-X-Received: by 2002:a17:906:b0b:b0:b3b:8158:48d4 with SMTP id
- a640c23a62f3a-b3b8176d599mr705918366b.13.1759207429321; 
- Mon, 29 Sep 2025 21:43:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEEN+aLuKNT3JrbnL9wHpSrGyIpOBnWD9C8+mIEIuRXFAWmiOmVNhLUOh/8RrbMdmxUy1frA==
-X-Received: by 2002:a17:906:b0b:b0:b3b:8158:48d4 with SMTP id
- a640c23a62f3a-b3b8176d599mr705914066b.13.1759207428915; 
- Mon, 29 Sep 2025 21:43:48 -0700 (PDT)
+ AJvYcCU7ztc7uwKzq8IfOEJGQO8OfhAikOjRra7LVZc2IYf22ZOEowr36sC7Trkmb3N8EZG9+uLsL4Y48tHE@nongnu.org
+X-Gm-Message-State: AOJu0Yzoc3POGLA965+ljSE1QC9uk51cED8Kld76EatxvwF/ZyhPWMaA
+ fEXgMk0Zlf+w4jqaauEVbIjUOTMuiNlSpFJWI220l4WYb654b+v8bKg/5xkaCHFo3U86AMNtcvb
+ D+8/SUF2zxnl+rObvtrNeDwCB2bxYVkzTPyYDxk8Y93wfw7BtKsdcPhEy
+X-Gm-Gg: ASbGncuCCwdiJXDydkRhOXq9yqHiYJHq3EtMv2UB+nA0tuxaucOyGeVs5AuZjj0mtJj
+ oSxUsoj1fD110UpQgQlsyODnJBvJYXxsI40ZKf8J9uBBtj4Wz2umUvJ9A0ipDla6nGyB2cu60XW
+ YgNUjH7USp4bRW3m+Z+4C7ciZxES64r0060tGzofV9eV6Kp2YyGzHr0TZPtOr4aE955Ur0kD86D
+ 4mS2A/x6T4Es1UmyLr2egc+6Stoe2ehfmovlhp9Xe8bNM8VB9ElV3qJqnb5MWndu/H2eK6A6pqv
+ r0xDpRNWC78BFG/u79t+f8UcJTf66d1HNDZSm3pZUBDFO4rBL/VIO+ltSfGdLzi/Q4VYwUW3AX5
+ F6OKXgZgAYA==
+X-Received: by 2002:a17:907:6e90:b0:b04:2a50:3c1b with SMTP id
+ a640c23a62f3a-b34bc9720fcmr2205354266b.53.1759207643440; 
+ Mon, 29 Sep 2025 21:47:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrEv+SaLvycPTTXjkfI3gAv2L4ih/JXeTcfurbaylseRmIiY1ztu3a3eE7D6ASNch/ayHT8g==
+X-Received: by 2002:a17:907:6e90:b0:b04:2a50:3c1b with SMTP id
+ a640c23a62f3a-b34bc9720fcmr2205350566b.53.1759207643038; 
+ Mon, 29 Sep 2025 21:47:23 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-634a36521c2sm9027477a12.20.2025.09.29.21.43.46
+ a640c23a62f3a-b40f9d0a652sm192717466b.33.2025.09.29.21.47.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 21:43:48 -0700 (PDT)
-Message-ID: <7e8d3fcf-3ec3-4209-8f7f-93c210690f73@redhat.com>
-Date: Tue, 30 Sep 2025 06:43:45 +0200
+ Mon, 29 Sep 2025 21:47:22 -0700 (PDT)
+Message-ID: <64065767-95b1-4dcf-b02e-e2f1d2033c8d@redhat.com>
+Date: Tue, 30 Sep 2025 06:47:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/17] hw/s390x/sclp: Use address_space_memory_is_io()
- in sclp_service_call()
+Subject: Re: [PATCH v2 08/17] hw/s390x/sclp: Replace [cpu_physical_memory ->
+ address_space]_r/w()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 Cc: Jason Herne <jjherne@linux.ibm.com>,
@@ -97,7 +97,7 @@ Cc: Jason Herne <jjherne@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  David Hildenbrand <david@redhat.com>
 References: <20250930041326.6448-1-philmd@linaro.org>
- <20250930041326.6448-6-philmd@linaro.org>
+ <20250930041326.6448-9-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,7 +142,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250930041326.6448-6-philmd@linaro.org>
+In-Reply-To: <20250930041326.6448-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -153,8 +153,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,14 +171,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/09/2025 06.13, Philippe Mathieu-Daudé wrote:
-> When cpu_address_space_init() isn't called during vCPU creation,
-> its single address space is the global &address_space_memory.
-> 
-> As s390x boards don't call cpu_address_space_init(),
-> cpu_get_address_space(CPU(cpu), 0) returns &address_space_memory.
-> 
-> We can then replace cpu_physical_memory_is_io() by the semantically
-> equivalent address_space_memory_is_io() call.
+> cpu_physical_memory_read() and cpu_physical_memory_write() are
+> legacy (see commit b7ecba0f6f6), replace by address_space_read()
+> and address_space_write().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
