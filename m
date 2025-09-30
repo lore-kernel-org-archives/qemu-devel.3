@@ -4,118 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4F3CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2D1CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3RqQ-0003Km-Gt; Tue, 30 Sep 2025 00:20:08 -0400
+	id 1v3S0f-00049C-5x; Tue, 30 Sep 2025 00:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1v3RqA-0003Ag-Jb
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:19:52 -0400
+ id 1v3S0X-00048I-8r
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:30:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1v3Rq2-0002Lj-KI
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:19:50 -0400
+ id 1v3S0M-00058T-T5
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:30:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759205980;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/BHqQEys25VDInV4tMhybM5zLRTf2PUynoguPJtWYxY=;
- b=bh0ar34ODK9Ru671v6AC9cVtSrvCUWVYSSiQP58FGvX/TaQIFORHsoW7i9adSFpIczTBAM
- 3/bT1L1a/9BpgKKdzi0/IOQuqlIz+iwReqQ1VvklwMyM54dx9+wvtBz4fin1vd5tPKrdh4
- VPxlOQHQBWRZPzhbhwnZvP8f6axDsME=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1759206619;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=+LqonD0/HCiXJZZoK2MbnvXOiV77+i2qyKMAxOY8H1s=;
+ b=WpY1l/ObY8uTUAxK8z+pwlnOtrmOYKfmWjM7n1Y/L0Ls1oqoA9i44gfS7gUZ4tOc4AGV3f
+ jne64vk33kRlG2pRNcZ/MRiqRbTs3Hi036u62McSTUV+vQRdiIB/757fFptlNo5c/WrmkG
+ iPuEsrWwx+q2iN3kkT6vTWBfMKUe/Hs=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-4-Ol7KSbNfWY7I0f6Ej19Q-1; Tue, 30 Sep 2025 00:19:35 -0400
-X-MC-Unique: 4-Ol7KSbNfWY7I0f6Ej19Q-1
-X-Mimecast-MFC-AGG-ID: 4-Ol7KSbNfWY7I0f6Ej19Q_1759205975
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-33826e101ecso1779268a91.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:19:35 -0700 (PDT)
+ us-mta-643-ypfHe23zN2i5N7MDbcAiqw-1; Tue, 30 Sep 2025 00:30:14 -0400
+X-MC-Unique: ypfHe23zN2i5N7MDbcAiqw-1
+X-Mimecast-MFC-AGG-ID: ypfHe23zN2i5N7MDbcAiqw_1759206613
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-28c58e009d1so24548015ad.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:30:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759205975; x=1759810775;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1759206613; x=1759811413;
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/BHqQEys25VDInV4tMhybM5zLRTf2PUynoguPJtWYxY=;
- b=P5R0Ze+QIveR44Km6BCRnpa4naFnrm6nrCkiF5HLKbxDgjtBMyrh6b2fdvlr8wo1Hg
- mCZTt9ZPiWLY+zTWpyULjOEx8VwMtzXP2pfGZH7hKICOiqWl7ApJqp1gTYX35LmlyiER
- mQE1kOV/ldgZCKeYsM6feDBnuVJq1r3KufwEZ6Hv5MsuolOkTPaOB8fAsD9sZlkcYC3s
- Ln7lTMO/JhpyypZ+VCMgwfUwLaNwXBQPU0sqwGqWxdw7srgIbMht3foqUPtLKvC3+FBt
- LgpH2AnQoTPhC/bt5wrpeZkyz4mYlCt7EVp04YI00M9RP7uWkF4NOjwaLg3PPc3oIUgs
- oPfQ==
-X-Gm-Message-State: AOJu0YyIGYS94btPCZeXudFWK5R84YDWUReQ/QqNTy52NwcGrlphhHgG
- /ABVjfqZtF6mc4BzIB+GxCLKGKP7U+ZPPVw0Rcm8E9mUSFWQ/MGFcu/Bm3lmolsjFvNZamLoGUd
- VXyXRn2CUOx3M8B/RlkmdtpeDv6gDQFQcDEAMzCgiL8lDjP80P6qnlhYM
-X-Gm-Gg: ASbGncsuU810Sg5haOjjZx9bxLkg1LAeJWHPLUx49aCE9BNBqMx1Dl/T2IptTQLGCA8
- dnewjG8h24veNQkHQx+i8QUuIw+1HGrwamT5+nnTJCIu+1xhkDC+epJcoO/Lpa4h+Wmob/fvZ0Y
- f9NQOwAfx4CWzYOXBx6yl1GyWvCqePLWnJkCVDmRqoRPprgA87yhkGhXkgj7ONQJprkzjo/wKpb
- 6T8Xi15pn4Mm8rqbsuonIHb7uVUUEREsDH8qZKtj5WC2fqfk30+NwT82gl15rVIF4KzmHS982BO
- Kw1vmkG5za/vSCtYcQAjNK+fWDk9S+osozDleykBThyqdLl1BZkweQaSKQ==
-X-Received: by 2002:a17:90b:1c91:b0:32e:7ff6:6dbd with SMTP id
- 98e67ed59e1d1-3383ab1c984mr3496662a91.0.1759205974569; 
- Mon, 29 Sep 2025 21:19:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXzWjh8kDSfRbxRfoZ8if5oeGKLB+2WXfzJD5pmOX4dsz9fTSVxA8skyWa/XTLmNA1bKeJzQ==
-X-Received: by 2002:a17:90b:1c91:b0:32e:7ff6:6dbd with SMTP id
- 98e67ed59e1d1-3383ab1c984mr3496535a91.0.1759205973793; 
- Mon, 29 Sep 2025 21:19:33 -0700 (PDT)
+ bh=+LqonD0/HCiXJZZoK2MbnvXOiV77+i2qyKMAxOY8H1s=;
+ b=uWL2obze8RyJ4iKNYa1R4dhp2N15HW5HdKfKE/vRftUiCUvV2j2p6XInvoMxiF0SmU
+ z74PA1/LHoLG38cm4P+56R0jJjO2qhMpDlqn06LzQfiWMBX+6hwZN5kpogNSktKBg6ji
+ t/qzVMIbfyL/eYMr4n68ioi8OzGupKED8kgCT+nsBAyb9wE6QYaNncVb0m6aFnYaAgOS
+ AvZICxmlvApehwzIBtnKcy+vdUR09GYUg5/1b1w5tadQsEOreG6a9qv1bfpDCMn0bmFK
+ Va3n4/IUsnXql4XEZnwLCcDxJcjrfHf/PqXPvgAq02bAIR7jpVSViw9Az4VgQaE4FD/3
+ wJWw==
+X-Gm-Message-State: AOJu0YyB/Fn+BchR4/vazysfz1nwE8RjsmZnIGc2huO10EWOYQIZfNdj
+ KeS/6i/cWq5Qqrikv/9q9T+X6Ox0hi/b059zxz5FOqQQYlzu8m2RT1P5974anWVIxG20vQc0cDM
+ GqmSM5mpRr+fDXWpQKBhXUjM7d0ApzLfSyUX6UDcQ7dfecnnrtH0quGLV
+X-Gm-Gg: ASbGnctl7usEJOtOWNP+5M/m0isXOdaEm2ZR4p7VvfEBr9vVV96JtND6DrnVYs+LXMJ
+ OvXSVQ+SdOVhA9a3fManklN0tj7rWiJWDQqwAcma3T1WVisPwf36WOwMYFqfNTmlOQi/8EPhiWs
+ IuJJ/GjKrKkjxkas1jt5yclSq/43DkPxIjbNc08muMB+fJ7REkpMWLqLfQc6K3KjW4zBhF49/EM
+ EUWt3I+8nz+lHxu0fcOjr9NLMLXjZt9bQfdol+T5O0gwC9Sh5hZGd6W5JWBlkCrtP3VrXauojUZ
+ VZVlJLm3/4TAoq8I2MXaYdCvQPXZHJ2VWpIMPTHePiSFL/Akknm03xYjVQ==
+X-Received: by 2002:a17:903:1987:b0:262:cd8c:bfa8 with SMTP id
+ d9443c01a7336-27ed4a30d0amr201454985ad.34.1759206613478; 
+ Mon, 29 Sep 2025 21:30:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IETph3GxRYCkEA5q0TWxFeBpKgDD3bfp0ZO3Qs4HitCeSiE81rRNd9iKRLyxPJv/KD46yZfVQ==
+X-Received: by 2002:a17:903:1987:b0:262:cd8c:bfa8 with SMTP id
+ d9443c01a7336-27ed4a30d0amr201454595ad.34.1759206613053; 
+ Mon, 29 Sep 2025 21:30:13 -0700 (PDT)
 Received: from armenon-kvm.bengluru.csb ([49.36.108.92])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b57c55a339dsm12534158a12.40.2025.09.29.21.19.24
+ d9443c01a7336-27ed6ab74fasm143945025ad.132.2025.09.29.21.30.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 21:19:33 -0700 (PDT)
+ Mon, 29 Sep 2025 21:30:12 -0700 (PDT)
+Date: Tue, 30 Sep 2025 09:59:59 +0530
 From: Arun Menon <armenon@redhat.com>
-Date: Tue, 30 Sep 2025 09:48:15 +0530
-Subject: [PATCH v15 06/26] migration: push Error **errp into
- loadvm_handle_cmd_packaged()
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: Re: [PATCH v14 25/27] migration: Rename post_save() to
+ cleanup_save() and make it void
+Message-ID: <aNtcxyvGLYVRhbuk@armenon-kvm.bengluru.csb>
+References: <20250918-propagate_tpm_error-v14-0-36f11a6fb9d3@redhat.com>
+ <20250918-propagate_tpm_error-v14-25-36f11a6fb9d3@redhat.com>
+ <aNrVBYf4FP82ZTha@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250930-propagate_tpm_error-v15-6-84afd3af1e47@redhat.com>
-References: <20250930-propagate_tpm_error-v15-0-84afd3af1e47@redhat.com>
-In-Reply-To: <20250930-propagate_tpm_error-v15-0-84afd3af1e47@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Arun Menon <armenon@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2872; i=armenon@redhat.com;
- h=from:subject:message-id; bh=InVVNoEy2g1zpO8kJPGk7ZyyaFhdbz8TWnnxAHWCl+M=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8btKAGOyNi4jK7AWxO0189LbD131vnj1J0iO56taX+2L
- XzGprXNHaUsDGJcDLJiiiwNXwNkmwIKIyJtX16HmcPKBDKEgYtTACaiwMbIsEYrqF2L6fKz33PD
- WBMbQnOKLlx6aLXI6EbVE5VTZ6U5xBgZ7hxkyNUs55pmfvnxZHv3khnsic8fMjRwZDK1ZX56O2E
- pNwA=
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aNrVBYf4FP82ZTha@x1.local>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -125,7 +115,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,82 +128,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an incremental step in converting vmstate loading
-code to report error via Error objects instead of directly
-printing it to console/monitor.
-It is ensured that loadvm_handle_cmd_packaged() must report an error
-in errp, in case of failure.
+Hi Peter,
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Arun Menon <armenon@redhat.com>
----
- migration/savevm.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+On Mon, Sep 29, 2025 at 02:50:45PM -0400, Peter Xu wrote:
+> On Thu, Sep 18, 2025 at 08:53:42PM +0530, Arun Menon wrote:
+> > The post_save() function call is responsible for cleaning up resources
+> > after the device state has been saved.
+> > Currently it is infallible, and does not return an error.
+> > 
+> > It is called regardless of whether there is a preceding error from
+> > save or subsection save. That is, save and post_save() together are
+> > considered to be an atomic logical operation.
+> > 
+> > It should not be confused as a counterpart of the post_load() function
+> > because post_load() does some sanity checks and returns an error if it
+> > fails. This commit, therefore, renames post_save() to cleanup_save()
+> > and makes it a void function.
+> > 
+> > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > Signed-off-by: Arun Menon <armenon@redhat.com>
+> 
+> I'll need to drop this one patch because it breaks Rust.  Please feel free
+> to send it separately or just leave post_save() as-is for now.
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index d1ed2e1cde54913d7fcc4b6808d08cd5b3a17745..5e54651652e9562939e61cf488c809a369824edb 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2405,7 +2405,7 @@ static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
-  * Returns: Negative values on error
-  *
-  */
--static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-+static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis, Error **errp)
- {
-     int ret;
-     size_t length;
-@@ -2415,7 +2415,7 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-     trace_loadvm_handle_cmd_packaged(length);
- 
-     if (length > MAX_VM_CMD_PACKAGED_SIZE) {
--        error_report("Unreasonably large packaged state: %zu", length);
-+        error_setg(errp, "Unreasonably large packaged state: %zu", length);
-         return -1;
-     }
- 
-@@ -2426,8 +2426,8 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-                           length);
-     if (ret != length) {
-         object_unref(OBJECT(bioc));
--        error_report("CMD_PACKAGED: Buffer receive fail ret=%d length=%zu",
--                     ret, length);
-+        error_setg(errp, "CMD_PACKAGED: Buffer receive fail ret=%d length=%zu",
-+                   ret, length);
-         return (ret < 0) ? ret : -EAGAIN;
-     }
-     bioc->usage += length;
-@@ -2457,6 +2457,9 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-     } while (1);
- 
-     ret = qemu_loadvm_state_main(packf, mis);
-+    if (ret < 0) {
-+        error_setg(errp, "VM state load failed: %d", ret);
-+    }
-     trace_loadvm_handle_cmd_packaged_main(ret);
-     qemu_fclose(packf);
-     object_unref(OBJECT(bioc));
-@@ -2620,11 +2623,7 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
-         break;
- 
-     case MIG_CMD_PACKAGED:
--        ret = loadvm_handle_cmd_packaged(mis);
--        if (ret < 0) {
--            error_setg(errp, "Failed to load device state command: %d", ret);
--        }
--        return ret;
-+        return loadvm_handle_cmd_packaged(mis, errp);
- 
-     case MIG_CMD_POSTCOPY_ADVISE:
-         ret = loadvm_postcopy_handle_advise(mis, len);
+Thank you for the review. I see it now.
+I used the --enable-rust flag to change my configuration.
+I have removed the patch and resent the series (v15)
 
--- 
-2.51.0
+> 
+> PS: IMHO post_save() is still a good name to me, pairing well with
+> pre_save() and all *_load*() functions too.  Dropping the retval should
+> already imply it cannot fail with/without a name change (and also because
+> modules can do more than "cleanups" in post_save()..).
+
+Yes, for now I have kept things as is because we do not essentially need
+to do something to the existing post_save() call; the dropping of return value can
+be looked into in a future patch. Thank you.
+
+> 
+> -- 
+> Peter Xu
+> 
+
+Regards,
+Arun Menon
 
 
