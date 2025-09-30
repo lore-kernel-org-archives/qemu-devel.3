@@ -4,117 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2360CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A191BCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3VcU-0008LY-N7; Tue, 30 Sep 2025 04:21:58 -0400
+	id 1v3Vdc-0000ET-4c; Tue, 30 Sep 2025 04:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1v3VcQ-0008Ks-DZ; Tue, 30 Sep 2025 04:21:56 -0400
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3VdG-0008W9-I0
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1v3Vbs-0000ZU-Fn; Tue, 30 Sep 2025 04:21:54 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.179])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cbWGv70cNz5xGp;
- Tue, 30 Sep 2025 08:21:11 +0000 (UTC)
-Received: from kaod.org (37.59.142.110) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Tue, 30 Sep
- 2025 10:21:11 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0042842693f-52d8-497d-bfb5-f13445a95ff8,
- 012DEA80DA8F652C9231DB37D1304F33C12A2C6A) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3c61d5e6-e571-40a1-a770-7e9d2f53a189@kaod.org>
-Date: Tue, 30 Sep 2025 10:21:10 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3VcU-0000oc-VP
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759220511;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fOgK8Rj4RLSl64NdTyDOu6qpfuXmT4oW+TX2rEPOAHg=;
+ b=jTUrmWrRdcQ45e+FLSuGE0OwKlXnofQiRhVyC3GtqqTulgGN3GBOKgeitDZqdpm3sxsOdl
+ gwPKjsxkZk1aIwmSG+NhIj4naET26E9qsSkh20HfW9B4m50cXTpdaa3mGqnF6D74HP99cs
+ 16xHhAoFOZbYxVFJdSdt9v8Jvo4VvkM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-AuvH5StMP5CK-EiyK6UNKg-1; Tue,
+ 30 Sep 2025 04:21:47 -0400
+X-MC-Unique: AuvH5StMP5CK-EiyK6UNKg-1
+X-Mimecast-MFC-AGG-ID: AuvH5StMP5CK-EiyK6UNKg_1759220506
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28E2A19560AB; Tue, 30 Sep 2025 08:21:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE20419560B4; Tue, 30 Sep 2025 08:21:44 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5990F21E6A27; Tue, 30 Sep 2025 10:21:42 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org,  odaki@rsg.ci.i.u-tokyo.ac.jp,
+ marcandre.lureau@redhat.com,  berrange@redhat.com,
+ richard.henderson@linaro.org,  Jagannathan Raman <jag.raman@oracle.com>
+Subject: Re: [PATCH v3 05/13] hw/remote/vfio-user: Clean up error reporting
+In-Reply-To: <77f8b8ba-911e-4965-bb10-2c0cc31a0d3d@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Tue, 30 Sep 2025 11:02:38 +0300")
+References: <20250923091000.3180122-1-armbru@redhat.com>
+ <20250923091000.3180122-6-armbru@redhat.com>
+ <1a10e0d3-17fc-4ec9-aa4c-cdfed13988e6@yandex-team.ru>
+ <878qi1so4j.fsf@pond.sub.org>
+ <77f8b8ba-911e-4965-bb10-2c0cc31a0d3d@yandex-team.ru>
+Date: Tue, 30 Sep 2025 10:21:42 +0200
+Message-ID: <87a52cz6y1.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] aspeed: Add support for the g220a-bmc board
-To: Lei Yu <yulei.sh@bytedance.com>
-CC: Joel Stanley <joel@jms.id.au>, <f4bug@amsat.org>, Andrew Jeffery
- <andrew@aj.id.au>, Peter Maydell <peter.maydell@linaro.org>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-References: <20201025131435.144-1-wangzhiqiang.bj@bytedance.com>
- <20201025131435.144-2-wangzhiqiang.bj@bytedance.com>
- <a3e42923-d81a-40c2-8b17-28d6264d5518@kaod.org>
- <CAGm54UE3D_gd8=iDMkF+nPUqZN5-Mhp-46HONi3Ok6oEkdyDwA@mail.gmail.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <CAGm54UE3D_gd8=iDMkF+nPUqZN5-Mhp-46HONi3Ok6oEkdyDwA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 74f355fb-5371-4ae2-81ff-81e41641aa00
-X-Ovh-Tracer-Id: 10589933051308575593
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEb+59aVXm+xTCRNPDkeC5Vc4pHTbJSw1UdlBSUppB/wjFsgHAvJLzfZHr102KY08rYr6e2fF2YjJhHkrw+vkKpWHKqyDA3ptpXY0ZvJ7131zNM2BYfHO/ZYjKDi8D+ILA6EBa7rCmmSxpLSPqNoimjf9l3ceU0HO7Be5THbXsSmgNF6x1Ic/+S6K/btntpnZiS7Z5os8OPKD8v6e2/WCkITUXSiGYEC+EiJwPg/jeQp/M+XjtQKt1xfMLoPutdrGbiVpmugG6MLDJaFU1zlG36OT8uWlp4u+G6MORI6wMlbn26/qcvwSGFb9BKTYlpfP+qzZOhm7U5oAlyi926JyhyWCbZ2n2UiySF5ieZWasPh8G9aWqBP+xrz0ELUw6gxYN140aaDne+4U/ffielFrleyJ0YwGplU1x9PN5oAKqZkGI8FowXDO1HrW36+6URWIgK6yRVjzRAnBkTHmbhF77W95XdGd4As+qFeLKTlTKK+xcGk86y6IIxF2A7EEW0r9OjAn1GIgqv+qsDmQxz5OVrbQvKacscR4NUrGSIppYomMqi95JzxQstHQq91zy+sfDy0tj3yV4oJgyKfinTWm8NeRdxwTMdXZ0c+JvJvP++8Joh7IRIz+dZkO2EiYhDDUQUXJBTVG6urkO9ixIpvHQrkBpx+rjVJ5eoeGh+IROShQ
-DKIM-Signature: a=rsa-sha256; bh=igPEfX3D64iFbnFeJT/tMDQY7qNPi6idlwWif8oBoSE=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1759220473; v=1;
- b=PD22tFcjYrll6p3SEsPxhDOxlJ/70rWhqt8TeQlwmDJ6RiGX3t0ZzWTPviRxniEdbtOMHJdS
- OKeUgOThCCeu7m/mr31RTrAg7I8fF2LAvfX9eoGiLMnkGenj63ez6eL+s2jKmh8UCmgwQJbi5yO
- ZZ1OFPWj1/jCV7TGo6MFabYNrArpggsuA6kvIE2MDtqc8EVJGLd0Z17U4sAPnVUACNS9lSa4It2
- DbSlR3QGo4KCN9pDdYzt5xbhRf4W7J7jZwajwKhnHCvKT5iWkTWy4dLrez3EQEnfREsngtYjx9e
- 4+fnZW2FeO5CdjCdwloVnftYqSGNvE5XLgzykAz7tKTtA==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,51 +90,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-On 9/30/25 10:13, Lei Yu wrote:
-> On Tue, Sep 30, 2025 at 1:57 PM Cédric Le Goater <clg@kaod.org> wrote:
->>
->> On 10/25/20 14:14, John Wang wrote:
->>> G220A is a 2 socket x86 motherboard supported by OpenBMC.
->>> Strapping configuration was obtained from hardware.
+> On 26.09.25 09:51, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> On 23.09.25 12:09, Markus Armbruster wrote:
+>>>> VFU_OBJECT_ERROR() reports the error with error_setg(&error_abort,
+>>>> ...) when auto-shutdown is enabled, else with error_report().
+>>>>
+>>>> Issues:
+>>>>
+>>>> 1. The error is serious enough to warrant aborting the process when
+>>>> auto-shutdown is enabled, yet harmless enough to permit carrying on
+>>>> when it's disabled.  This makes no sense to me.
+>>>>
+>>>> 2. Like assert(), &error_abort is strictly for programming errors.  Is
+>>>> this one?
 >>>
->>> Signed-off-by: John Wang <wangzhiqiang.bj@bytedance.com>
->>> Reviewed-by: Cédric Le Goater <clg@kaod.org>
->>> Reviewed-by: Joel Stanley <joel@jms.id.au>
+>>> Brief look at the code make me think that, no it isn't.
+>> So the use of &error_abort is wrong.
+>> 
+>>>>   Or should we exit(1) instead?
+>>>>
+>>>> 3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
+>>>> assert()."
+>>>>
+>>>> This patch addresses just 3.
+>>>>
+>>>> Cc: Jagannathan Raman <jag.raman@oracle.com>
+>>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>>> ---
+>>>>    hw/remote/vfio-user-obj.c | 9 +++------
+>>>>    1 file changed, 3 insertions(+), 6 deletions(-)
+>>>> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+>>>> index ea6165ebdc..eb96982a3a 100644
+>>>> --- a/hw/remote/vfio-user-obj.c
+>>>> +++ b/hw/remote/vfio-user-obj.c
+>>>> @@ -75,12 +75,9 @@ OBJECT_DECLARE_TYPE(VfuObject, VfuObjectClass, VFU_OBJECT)
+>>>>     */
+>>>>    #define VFU_OBJECT_ERROR(o, fmt, ...)                                     \
+>>>>        {                                                                     \
+>>>> -        if (vfu_object_auto_shutdown()) {                                 \
+>>>> -            error_setg(&error_abort, (fmt), ## __VA_ARGS__);              \
+>>>> -        } else {                                                          \
+>>>> -            error_report((fmt), ## __VA_ARGS__);                          \
+>>>> -        }                                                                 \
+>>>> -    }                                                                     \
+>>>> +        error_report((fmt), ## __VA_ARGS__);                              \
+>>>> +        assert(!vfu_object_auto_shutdown());                              \
+>>>
+>>> Probably, it's only my feeling, but for me, assert() is really strictly bound
+>>> to programming errors, more than abort(). Using abort() for errors which are
+>>> not programming, but we can't handle them looks less confusing, i.e.
+>>>
+>>> if (vfu_object_auto_shutdown()) {
+>>>      abort();
+>>> }
 >>
->> Hello John
+>> assert(COND) is if (COND) abort() plus a message meant to help
+>> developers.  Both are for programming errors.  If it isn't something
+>> that needs debugging, why dump core?
 >>
->> Would it be possible to contribute a functional test for this
->> machine ?
+>> But this particular error condition is *not* a programming error.  So
+>>          assert(!vfu_object_auto_shutdown());
 >>
->> Since this machine contributes little to the Aspeed models,
->> its value lies in the firmware it can run to exercise the
->> models. Without functional tests, I plan to schedule the
->> removal in the QEMU 10.2 cycle.
+>> and
 >>
-> 
-> This model is used in the QEMU CI for g220a in our internal CI.
+>>          if (vfu_object_auto_shutdown()) {
+>>              abort();
+>>          }
+>>
+>> are both equally wrong.  However, the latter makes it easier to add a
+>> FIXME comment:
+>>
+>>          if (vfu_object_auto_shutdown()) {
+>>              /*
+>>               * FIXME This looks inappropriate.  The error is serious
+>>               * enough programming error to warrant aborting the process
+>>               * when auto-shutdown is enabled, yet harmless enough to
+>>               * permit carrying on when it's disabled.  Makes no sense.
+>>               */
+>>              abort();
+>>          }
+>> 
+>
+> Looks more readable, yes.
 
-Good to know !
+Sold!
 
-> May I ask what exactly are expected to do "to contribute a functional test"?
+>> The commit message would then need a tweak.  Perhaps
+>>
+>>    Issues:
+>>
+>>    1. The error is serious enough to warrant killing the process when
+>>    auto-shutdown is enabled, yet harmless enough to permit carrying on
+>>    when it's disabled.  This makes no sense to me.
+>>
+>>    2. Like assert(), &error_abort is strictly for programming errors.  Is
+>>    this one?  Vladimir Sementsov-Ogievskiy tells me it's not.
+>
+> :)) I'm not an expert in vfio-user at all. But yes, I said it:)
 
-It's a small python test downloading a FW image and booting
-the machine, possibly also testing that expected services are
-up and running, network, I2C devices, etc. This last part is
-optional.
+I'll soften it to "believes it's not."
 
-See the test_aspeed_*.py files under :
+>>    3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
+>>    assert()."
+>>
+>>    This patch addresses just 3.  It adds a FIXME comment for the other
+>>    two.
+>>
+>> Thoughts?
+>
+> Looks good.
 
-   https://gitlab.com/qemu-project/qemu/-/tree/master/tests/functional/arm?ref_type=heads
+Thanks again!
 
-test_aspeed_bletchley.py is minimum
-test_aspeed_ast2600.py is complex
-
-Thanks,
-
-C.
-
+>> 
+>>> Not really matter. Anyway:
+>>>
+>>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Thanks!
+>> 
+>>>> +    }
+>>>>      struct VfuObjectClass {
+>>>>        ObjectClass parent_class;
+>> 
 
 
