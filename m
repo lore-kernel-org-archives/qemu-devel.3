@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F082CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE70CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3SW4-0004Sn-U2; Tue, 30 Sep 2025 01:03:09 -0400
+	id 1v3Sh5-0007Li-Gs; Tue, 30 Sep 2025 01:14:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SW2-0004SF-VU
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:03:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Sh1-0007JY-Oi
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:14:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SVu-0004qa-3h
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:03:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Sgr-0007Cc-Ss
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:14:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759208573;
+ s=mimecast20190719; t=1759209250;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bL+RjxGqhOdRGXNtIbLqiRsKj/Y3K4D3P43i5DVXnfw=;
- b=AQXMQfpq1Zl5N4RYltApZW3u303kJCD1/VkTpgsnrj6lWjsmZ5+i+nn3RYxLepKO8DPvzJ
- 4p1d77uUfoO7yhrwIMHXujgHD6INXjrkWZXKD31hL77eaB1VpNZDBEy0O8jE/q5MM6x97b
- dsfHC41DeBRhRQ1/M21XkazW9jULsbQ=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rfYRaBbqDNHQ6F8NacsRRD2axBTWz2moGbHA2rCe8hU=;
+ b=Fm87X0NZM+zuIJMwShVbg7S9vScJ9gBsotv2k9X/5+JW93YWjm2q1wdeueij7+N8x5CQUh
+ 5nC2Vo0nNi4WhX4mTrJsSVXi7aQk4KK01K5DjeaMSSqdrg/YpkOwaBEFdWo34MaQUhVYaw
+ UyEkIfbCgQVQs3iC8Kmmj0/mn6zAe8Q=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-hZjfwq3nMpayGPlAn31_6A-1; Tue, 30 Sep 2025 01:02:51 -0400
-X-MC-Unique: hZjfwq3nMpayGPlAn31_6A-1
-X-Mimecast-MFC-AGG-ID: hZjfwq3nMpayGPlAn31_6A_1759208570
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b07c2924d53so486267766b.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:02:51 -0700 (PDT)
+ us-mta-527-x9x5VzoBMPeRKgvw5Cz0ZA-1; Tue, 30 Sep 2025 01:14:09 -0400
+X-MC-Unique: x9x5VzoBMPeRKgvw5Cz0ZA-1
+X-Mimecast-MFC-AGG-ID: x9x5VzoBMPeRKgvw5Cz0ZA_1759209248
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b448c864d45so18995266b.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:14:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759208570; x=1759813370;
+ d=1e100.net; s=20230601; t=1759209248; x=1759814048;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bL+RjxGqhOdRGXNtIbLqiRsKj/Y3K4D3P43i5DVXnfw=;
- b=qPALVjFRCmNe+JDkEJ3wOEOtg1z+fodCvXkoOM/KysN/4dQW+++CEKfXVzbDC32rNF
- hC1FKaXFIGkMelzW/U/0k/+660jETqlDsTMIspRjTEG2m+6uEuTtAGbnd93t2vPtyBlk
- s/ncYmKoNgDv5So5vEFvOd27tbTlqxZXuMjk0SyN9OHMWselZ824YBnTTA/dVOGtFyiS
- JEqRQZfp1rP3suR7P2YEmC0B9+zcVB+jYKpscTKvIuPpWt4f6PHwDzFfDeTa69J/6w41
- ebOxHFY/RBRfBxNxtRfAKY9RXRin3jXmjW3cQ8SuZbzGHH52gjBlwiPL7wOBFrZjixVF
- 5tnw==
+ bh=rfYRaBbqDNHQ6F8NacsRRD2axBTWz2moGbHA2rCe8hU=;
+ b=tS7gINFelRqoL1pSX7cAUAJwDUfWA72Ie2bRC3R3S0/QYSidkUEAddPUEwlr67Iikd
+ ZvoLeJXXehkH+/jDcNFTYfzdOHuDal0E60dvN0NzdXXKVezPr42BgfH75nRKIAjCc3FD
+ X6+UvC911YwIYdP+Ylg9C3fI7EFCCps9URK8VzWaStvwF4BFaMgOnsu8iqvHueXWCZeV
+ UKyqTHixoDQGC2yS8tLd23bG246UR1Ckh9faCJ9ay6UbbxLh+88ZW8wSMHP4hCPrSrsE
+ NFXlIyi7t7GKIfzBpJ1qOELoejOwEdK3gzWMIc2uaO6THornG6bw09rt0xRTocv9b4Mg
+ OhTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU7ILZ87jIR+JTYN1KG1ySI/t0H5bF7pjou3RgtCu/q/FmyTkRioAnpKT2WxMBRbVfTrm41J0+XcpDX@nongnu.org
-X-Gm-Message-State: AOJu0YzRtu9SC2qojAdpkZf0tQweQ56QNV+6led3V9r16WvCu3us7iDt
- Hemc5LEuKls+seYzLnVR0CGmO/Dv7xzfucmQktVqEqqb7g2JgNLvKj4WsdPmuOYRtonuRXKgXX9
- nlVRoRnS2eWFWdeOb22EAEjatCWU+7cW4VqRlyv0a/11YGPLI9wdCdwLL
-X-Gm-Gg: ASbGncuplc7jv+xY0iGt9UZecRxeqfF6IfA5bx/rtFbZ484gA37Scanl3KzBt15BLSL
- qrIGQt5cwv8cBQ//KRazTyWBfOZLJS22e9oMJlV33RReZSELIL+I28CsPEFqjD6d2HEAO7i5H01
- 74nwq+TWlUK9KQ+4m/uZ2h99WYUdo8bdEjLfOVAowu0PKu8spR+GmmKKwIIBMNkKtQwBGcb/Ywa
- 0CJss3FNVRGRDps9IEymXzTc2tgI0HDTTaOtOA/5gQeWxfen1Y2p2fTpHSt0kawvVvMVCPtJoWT
- 1tgc/Bl7kqem8+yoBC0nCwAedG/cGdpKOpuVuc3ue7F6MRjepk5E0swU67/HkjKYFPIyWenXXqs
- K/MfutJdtuA==
-X-Received: by 2002:a17:906:f5a0:b0:b41:a571:21b0 with SMTP id
- a640c23a62f3a-b41a5712270mr236496966b.39.1759208570366; 
- Mon, 29 Sep 2025 22:02:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxIe1/gUAycFtpVQcR4b+NsqR4Pre+MyQnotThndZ321+xPzQyp6FkW4vxaOLRMNcnkRphAA==
-X-Received: by 2002:a17:906:f5a0:b0:b41:a571:21b0 with SMTP id
- a640c23a62f3a-b41a5712270mr236492866b.39.1759208569870; 
- Mon, 29 Sep 2025 22:02:49 -0700 (PDT)
+ AJvYcCVXjhafzOayIHbCnmu2aJy+MIn1MfVjh+DAuLK9S8tL5zrEwZtvaQxA9Hul55R8mpQ60ix5MUwF2kKg@nongnu.org
+X-Gm-Message-State: AOJu0Yw1Yt2uMQ0N6qpL7TYZWNipyDwewcRZaBbdBZUissAz2XRh/GOi
+ hWXDxiou43gNQoM5UqXrwIK49S3hMCmslFo9M+NOEPxhA2/wsyAGT3NW5Mq64B1WjrQ8yPTN3gX
+ kga5tfhuo/NIyFcoAIbgk2whfjvINSsnGkaz6QREeLEvOXqcqCUf4TwR3
+X-Gm-Gg: ASbGncunF2/OiWRybScNn2bgWcwEi9CVUamLheHg45eo817xGW+ySv/6UVLUS81sSLI
+ /eVQ0b/yEgYdpum2bC8AjmH5yGYhSam4/SgQ0SXeLU1MbrxxkZCWLhLozWDEESNmN7/Ue3/wrrA
+ pTzec8mAnXu3d2uAUTrWreJz5G4vKQLZwQnzbUxfMzql0V0pdsrfN4LnXrgeQswxOfWJ97mMKBt
+ hmyb2p7y563gDT494tB/JzowuQD9e+vy90y0eFVeZ3Vun6HW+0pEOyhC3mIKKibc3GhZdKzz2W6
+ 9rAZORvrluqPNQ5sDYjtTWc0+gtImH086a/8POoMXuNT2qjsOimuqGC5qWRTQ7l/cRVgRkW2eX3
+ bxOm0MNTDZg==
+X-Received: by 2002:a17:906:7312:b0:b41:4e72:30a0 with SMTP id
+ a640c23a62f3a-b414e7242e3mr323514366b.56.1759209247823; 
+ Mon, 29 Sep 2025 22:14:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFc+XaDzPUt/AGNCGqtSirrDdGPuml/3dR+xFW9Vk8kdHq0KBMGN7NxdXnzLaK6dYxJdrrkw==
+X-Received: by 2002:a17:906:7312:b0:b41:4e72:30a0 with SMTP id
+ a640c23a62f3a-b414e7242e3mr323511866b.56.1759209247409; 
+ Mon, 29 Sep 2025 22:14:07 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b353efb88ebsm1061296766b.32.2025.09.29.22.02.48
+ a640c23a62f3a-b3b9d55a5bcsm568718066b.70.2025.09.29.22.14.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 22:02:49 -0700 (PDT)
-Message-ID: <193cd8a8-2c4c-4c2c-af22-622b74c332ee@redhat.com>
-Date: Tue, 30 Sep 2025 07:02:47 +0200
+ Mon, 29 Sep 2025 22:14:06 -0700 (PDT)
+Message-ID: <8496255a-6070-4f20-8885-481d6cf539a2@redhat.com>
+Date: Tue, 30 Sep 2025 07:14:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/17] system/physmem: Un-inline
- cpu_physical_memory_read/write()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Cc: Jason Herne <jjherne@linux.ibm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Stefano Garzarella <sgarzare@redhat.com>, xen-devel@lists.xenproject.org,
- Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- Eric Farman <farman@linux.ibm.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Reinoud Zandijk <reinoud@netbsd.org>, Zhao Liu <zhao1.liu@intel.com>,
- David Woodhouse <dwmw2@infradead.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- qemu-s390x@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-References: <20250930041326.6448-1-philmd@linaro.org>
- <20250930041326.6448-15-philmd@linaro.org>
+Subject: Re: [PATCH v6 21/28] pc-bios/s390-ccw: Add additional security checks
+ for secure boot
+To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
+ david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, borntraeger@linux.ibm.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ alifm@linux.ibm.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-22-zycai@linux.ibm.com>
+ <e5faaffd-fb58-4002-817f-ff9e787e8272@redhat.com>
+ <ddad9154-ae72-43b3-8d20-3ef4c0a43c46@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,18 +133,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250930041326.6448-15-philmd@linaro.org>
+In-Reply-To: <ddad9154-ae72-43b3-8d20-3ef4c0a43c46@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -170,62 +160,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/09/2025 06.13, Philippe Mathieu-Daudé wrote:
-> Un-inline cpu_physical_memory_read() and cpu_physical_memory_write().
+On 29/09/2025 22.43, Zhuoying Cai wrote:
+> Thank you for all the feedback! I'll address the comments in the next
+> version.
+> 
+> On 9/29/25 9:30 AM, Thomas Huth wrote:
+>> On 18/09/2025 01.21, Zhuoying Cai wrote:
+...
+>>> +    /* PSW points within a signed binary code component */
+>>> +    for (int i = 0; i < range_index; i++) {
+>>> +        if (comp_addr_range[i].is_signed &&
+>>> +            addr >= comp_addr_range[i].start_addr &&
+>>> +            addr <= comp_addr_range[i].end_addr) {
+>>
+>> is it still OK if the address points to the end_addr? Or should that be
+>> end_addr - 2 instead (since an opcode has at least two bytes)?
+>>
+> 
+> Using end_addr - 2 seems correct, since it accounts for the minimum
+> instruction length.
+> 
+> Just to clarify: using end_addr - 2 should ensure that at least a 2-byte
+> instruction fits. Should longer instructions (e.g., 4 and 6 bytes) be a
+> concern in this context?
 
-What's the reasoning for this patch?
+No clue ... but I guess it should be fine if the instruction at least starts 
+in the signed area?
 
   Thomas
-
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/cpu-common.h | 12 ++----------
->   system/physmem.c          | 10 ++++++++++
->   2 files changed, 12 insertions(+), 10 deletions(-)
-> 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 6c7d84aacb4..6e8cb530f6e 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -133,16 +133,8 @@ void cpu_address_space_destroy(CPUState *cpu, int asidx);
->   
->   void cpu_physical_memory_rw(hwaddr addr, void *buf,
->                               hwaddr len, bool is_write);
-> -static inline void cpu_physical_memory_read(hwaddr addr,
-> -                                            void *buf, hwaddr len)
-> -{
-> -    cpu_physical_memory_rw(addr, buf, len, false);
-> -}
-> -static inline void cpu_physical_memory_write(hwaddr addr,
-> -                                             const void *buf, hwaddr len)
-> -{
-> -    cpu_physical_memory_rw(addr, (void *)buf, len, true);
-> -}
-> +void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len);
-> +void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len);
->   void *cpu_physical_memory_map(hwaddr addr,
->                                 hwaddr *plen,
->                                 bool is_write);
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 70b02675b93..6d6bc449376 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3188,6 +3188,16 @@ void cpu_physical_memory_rw(hwaddr addr, void *buf,
->                        buf, len, is_write);
->   }
->   
-> +void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len)
-> +{
-> +    cpu_physical_memory_rw(addr, buf, len, false);
-> +}
-> +
-> +void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
-> +{
-> +    cpu_physical_memory_rw(addr, (void *)buf, len, true);
-> +}
-> +
->   /* used for ROM loading : can write in RAM and ROM */
->   MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
->                                       MemTxAttrs attrs,
 
 
