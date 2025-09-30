@@ -4,148 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B296CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0211CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 09:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3W7g-0005cy-J7; Tue, 30 Sep 2025 04:54:12 -0400
+	id 1v3WIG-0007xS-6g; Tue, 30 Sep 2025 05:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3W7b-0005c4-N6
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:54:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3WIC-0007xJ-Mq
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:05:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3W7U-0001XU-7G
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:54:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3WI7-0004W2-Lb
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:05:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759222435;
+ s=mimecast20190719; t=1759223091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1GqYgM7CAgNyjfpIdoAiTscsLcf68CMiXtkq38Rsmz8=;
- b=NTqTR9NZgLoeJzy/6kBANUNQZyj0OmSKzdwz6K3nZEY0opYn8y92QZpuCdhaHQI9oP8UAV
- Q4ybjLOundLjbllfVHMJM4adQwsComRfPcxxuvdINLoIo12CgqTdiuuX8P/5/qRlzt4m/L
- Y0t1MsqfQnyfnUZi1cB+2qXITMsgxvo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-XsJODUtwNJWvCH0QAdEm3Q-1; Tue, 30 Sep 2025 04:53:53 -0400
-X-MC-Unique: XsJODUtwNJWvCH0QAdEm3Q-1
-X-Mimecast-MFC-AGG-ID: XsJODUtwNJWvCH0QAdEm3Q_1759222433
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e3ed6540fso20487535e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:53:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759222433; x=1759827233;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1GqYgM7CAgNyjfpIdoAiTscsLcf68CMiXtkq38Rsmz8=;
- b=pAfaVqpEKdDcvQqYjW5U9bRF2x1KHznhKCTmBiXpg9CPNFCkUPtCCPir+Wyrt5oX0T
- PSFYxK7oHMSiprXyLEto+8XJM7Od0oeJCNp8LAnLItKr81az8wcF8aNoHL6gxIn5Af71
- 9pCsIJodVw8Jsn9Zy7o0vkJrCr8TDX/weoTLu5FNF2Yclw6bMHSAVBVx6Q4gxzTinKia
- /PUOqMTw6nj+f1AgYyWmy0qfGMqzB0l6rLU6GkqNQrQ8jK7KuWS4R508mq4bS5ZaoR6S
- wpSobfpiPzzOWiHOpXtdRTIay9s51rSLnUerZS18Svpew2PyQV2ItXQWLVza3qK2Gx5M
- 3HfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWjGcsRjjC3iD3gVGdRiS54m5aEKwmiSjv+FvUQj761Y/3UWafjvFSSVFRwwRkkrhW98XBZEcX4wQkL@nongnu.org
-X-Gm-Message-State: AOJu0YwxOaPbPA70y3dUFqn4SYJ19NqufJHnRpPKVvaG7PvnudgbhyuQ
- QKdopBsEBrhnt2JiKBUiAgp6nwowLVBCRV7Y4ZRTTjVp0RK2XrHxLFUzMG7N896cOaNV3ukUA8C
- AqdtX9FqVpmoVfLGeqFaXSDzhTDPrh7bQ6QMqjTW1DYqasLa098vxqGeF
-X-Gm-Gg: ASbGncswlyA86cbEB+3PXJKoXv7/XFbzfPm3dd1Q1FEzdWyB8A7RKG+iYkYkhR2TqYJ
- xwROjUkl6SGBmLKx58ChP3kYolkBdRihUreHjvdAgtnlTdG+wyUuVjBjqatf89jlYMKk3g7C6cs
- qbFi6J+46W0YIV4fzzArdZ3oy2MoKHolYq4wk+TQc0uYM9Z/iKJt2fZ0vU0sqskeTPAaqRlrLsO
- NdaIWO7rIYj2arq4C1nmR+ZU6x8Z2xya7N/hDihzEj77jLbCJj+X4OMz7xgxi+pi9y7945VP6/g
- JH5799roYI4yaqgXMYryEQTJzANFnmD5qf3WVNd/DuBvYzU3J9piNhoz3H/8KVeNXDss5Y3RYav
- C1fzIH84o
-X-Received: by 2002:a05:600c:8883:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-46e59bdf966mr18910235e9.11.1759222432749; 
- Tue, 30 Sep 2025 01:53:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhv4y2W2a2JxfIA08f2TzXCscU8tWyoy+QbPrnds+RWtOTu9nWBXmuRRZNkJFrtrO49pxDSg==
-X-Received: by 2002:a05:600c:8883:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-46e59bdf966mr18910025e9.11.1759222432380; 
- Tue, 30 Sep 2025 01:53:52 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e56f3dc27sm53757855e9.5.2025.09.30.01.53.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 01:53:51 -0700 (PDT)
-Message-ID: <e23cb913-5f53-461e-adc4-f68a8358428b@redhat.com>
-Date: Tue, 30 Sep 2025 10:53:51 +0200
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=K7OcregwWwev1spFlVX+pUwSh3UzPm2H6Gin4pIfkVk=;
+ b=InLlccJ2/hgbR3xLI22r6PDoLgEBkw08Yg/n/s8nr4qpMbi6TgtBl66pOHUrz3oi/2PvJE
+ sfvtK7thaz65rtHn3DFbNDO5Nf5QUvLy5fB600t/5g260a9ifBvgveFDFB0j0CoIMF9Hmg
+ 3FLh3RTH8xDT4wVXeZ8g3z8KK2VWeGg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-D6qYKMxyPCyBMjklBnIzwQ-1; Tue,
+ 30 Sep 2025 05:04:49 -0400
+X-MC-Unique: D6qYKMxyPCyBMjklBnIzwQ-1
+X-Mimecast-MFC-AGG-ID: D6qYKMxyPCyBMjklBnIzwQ_1759223088
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AAA618002D6; Tue, 30 Sep 2025 09:04:48 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.89])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 282001956095; Tue, 30 Sep 2025 09:04:45 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>,
+	qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH] tests/qtest: Add missing checks for the availability of
+ machines
+Date: Tue, 30 Sep 2025 11:04:44 +0200
+Message-ID: <20250930090444.234431-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/vfio: Use uint64_t for IOVA mapping size in
- vfio_container_dma_*map
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Thanos Makatos <thanos.makatos@nutanix.com>, 
- John Levon <john.levon@nutanix.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20250929160807.73626-1-philmd@linaro.org>
- <20250929160807.73626-4-philmd@linaro.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250929160807.73626-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,71 +81,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/29/25 18:08, Philippe Mathieu-Daudé wrote:
-> The 'ram_addr_t' type is described as:
-> 
->    a QEMU internal address space that maps guest RAM physical
->    addresses into an intermediate address space that can map
->    to host virtual address spaces.
-> 
-> This doesn't represent well an IOVA mapping size. Simply use
-> the uint64_t type.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/vfio/vfio-container.h | 10 +++++-----
->   hw/vfio-user/container.c         |  4 ++--
->   hw/vfio/container-legacy.c       |  8 ++++----
->   hw/vfio/container.c              |  5 ++---
->   hw/vfio/iommufd.c                |  6 +++---
->   5 files changed, 16 insertions(+), 17 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
-> index 093c360f0ee..c4b58d664b7 100644
-> --- a/include/hw/vfio/vfio-container.h
-> +++ b/include/hw/vfio/vfio-container.h
-> @@ -81,10 +81,10 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
->                                  VFIOContainer *bcontainer);
->   
->   int vfio_container_dma_map(VFIOContainer *bcontainer,
-> -                           hwaddr iova, ram_addr_t size,
-> +                           hwaddr iova, uint64_t size,
->                              void *vaddr, bool readonly, MemoryRegion *mr);
->   int vfio_container_dma_unmap(VFIOContainer *bcontainer,
-> -                             hwaddr iova, ram_addr_t size,
-> +                             hwaddr iova, uint64_t size,
->                                IOMMUTLBEntry *iotlb, bool unmap_all);
->   bool vfio_container_add_section_window(VFIOContainer *bcontainer,
->                                          MemoryRegionSection *section,
-> @@ -167,7 +167,7 @@ struct VFIOIOMMUClass {
->        * Returns 0 to indicate success and -errno otherwise.
->        */
->       int (*dma_map)(const VFIOContainer *bcontainer,
-> -                   hwaddr iova, ram_addr_t size,
-> +                   hwaddr iova, uint64_t size,
->                      void *vaddr, bool readonly, MemoryRegion *mr);
->       /**
->        * @dma_map_file
-> @@ -182,7 +182,7 @@ struct VFIOIOMMUClass {
->        * @readonly: map read only if true
->        */
->       int (*dma_map_file)(const VFIOContainer *bcontainer,
-> -                        hwaddr iova, ram_addr_t size,
-> +                        hwaddr iova, uint64_t size,
->                           int fd, unsigned long start, bool readonly);
+From: Thomas Huth <thuth@redhat.com>
 
+When QEMU has been compiled with "--without-default-devices", the
+machines might not be available in the binary. Let's properly check
+for the machines before running the tests to avoid that they are
+failing in this case.
 
-Don't forget to change :
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qtest/bios-tables-test.c | 2 +-
+ tests/qtest/cpu-plug-test.c    | 2 +-
+ tests/qtest/riscv-csr-test.c   | 4 +++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-typedef int (*dma_map_fn)(const struct VFIOContainer *bcontainer,
-                           hwaddr iova, ram_addr_t size, void *vaddr,
-                           bool readonly, MemoryRegion *mr);
-
-in /include/hw/vfio/vfio-cpr.h.
-
-
-Thanks,
-
-C.
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 4fa8ac5096a..6b892ef23e1 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2864,7 +2864,7 @@ int main(int argc, char *argv[])
+                            test_acpi_riscv64_virt_tcg_acpi_spcr);
+         }
+     } else if (strcmp(arch, "loongarch64") == 0) {
+-        if (has_tcg) {
++        if (has_tcg && qtest_has_machine("virt")) {
+             qtest_add_func("acpi/virt", test_acpi_loongarch64_virt);
+             qtest_add_func("acpi/virt/topology",
+                            test_acpi_loongarch64_virt_topology);
+diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+index 44d704680b1..0aa4ccc5b61 100644
+--- a/tests/qtest/cpu-plug-test.c
++++ b/tests/qtest/cpu-plug-test.c
+@@ -190,7 +190,7 @@ int main(int argc, char **argv)
+         qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
+     } else if (g_str_equal(arch, "s390x")) {
+         qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
+-    } else if (g_str_equal(arch, "loongarch64")) {
++    } else if (g_str_equal(arch, "loongarch64") && qtest_has_machine("virt")) {
+         add_loongarch_test_case("virt");
+     }
+ 
+diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
+index ff5c29e6c6f..bb1b0ffed30 100644
+--- a/tests/qtest/riscv-csr-test.c
++++ b/tests/qtest/riscv-csr-test.c
+@@ -50,7 +50,9 @@ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+ 
+-    qtest_add_func("/cpu/csr", run_test_csr);
++    if (qtest_has_machine("virt")) {
++        qtest_add_func("/cpu/csr", run_test_csr);
++    }
+ 
+     return g_test_run();
+ }
+-- 
+2.51.0
 
 
