@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50D2ACAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 00:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE70CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 00:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3O4p-0001na-3F; Mon, 29 Sep 2025 20:18:43 -0400
+	id 1v3O4i-0001m0-KM; Mon, 29 Sep 2025 20:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3O4m-0001mz-Vr
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 20:18:41 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1v3O4d-0001l1-Qd
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 20:18:33 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3O4b-0004hC-J3
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 20:18:39 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7833765433cso3138459b3a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 17:18:25 -0700 (PDT)
+ id 1v3O4Q-0004bj-DK
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 20:18:29 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-33255011eafso5234353a91.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 17:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759191502; x=1759796302; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759191482; x=1759796282; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=l+kw+U1dLkjGpWApy8j0jNKtvldUJFrrDP6f0QfDaOA=;
- b=gh9Yzu8TpH27aZH5kxPo1uSbc0pAVrFt7Nm+NN6aUbXMtcMP/U+2CFDcP2gnjVg+Fr
- eGuE0qOT2v2MEcBCuGji6ppWQF9X8D8oT6lsjrCoYLyxgxTbXdERKtSlgQeGZIngpkIg
- WR4gZ9Nb5vS9pjLncvW8xrbuseLVD+aTSG0Uzyfn+KgnMfxxkAJRe0MSzFwmqMXy9GNU
- JcCqaau3yifGaDoxbXqpcnL+S/9/r7clJHcyQu5kJeuoXwweLVL+i/W8BS8miqZlsOlg
- 2usfHbgbh83L34amY15S4EPGwwoMCGL9ed88D+hgOF60YRWXd4ganlqYhOGYnf0nsf7f
- 7C+w==
+ bh=BV12f1wc/JC+jgi/ad9+u1M3M3aNUHbg78El2ib84jk=;
+ b=GzaXGwNGej7YxXZcNZV2TeSqxs1N6n6uv96JztFG3dYh8//MIYaosuf8Rn3w51VCf2
+ NpfOiTmAC/FI688n7euQ6BL7KRv9OW5dZNQdkGIY5SO0/lU5K2/vvh98xyBa73mboiNB
+ 3FmkALmv7e/tA583km1zamsIjt2YudtkZWH1tlaUA/WzX7H7DX9Etrgpc3OXZmoNRK7V
+ QTIewUX1BENvIAG6QXp4jv45nfggpDZy5KreXWnY16XTUZXInXCbeXkOrI7EFTmcHvN4
+ Vkyat+2/lu1OocWfJtMRS3C05vqRGGKsYdXGBey0ScPAPQc+Nw/PY14Lu6KSZPtQj5U+
+ Bmiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759191502; x=1759796302;
+ d=1e100.net; s=20230601; t=1759191482; x=1759796282;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l+kw+U1dLkjGpWApy8j0jNKtvldUJFrrDP6f0QfDaOA=;
- b=CluHZeC0HBvzSp1aIzdOQ1D/RJvIvcwPFqKEk9+RWOJblDYwvxqMz2Cl1BPndZN6Hn
- jb1/HrmbDL6NifaORfej86TV47GN46yrRVaffNzx15XjXoh0YbL+9dFGC4ZjnD4J5pQc
- 4LRZlXMe7CGcihdHabEUYFZGc6eccdYclp+wRwcu4xsmWt24Xom0VUfSKCkF5A+t3FI0
- jQd8K/JJNNezDVhmM28T2S4HklxGtzL7PWG/2tS+i8foE3jeUHkMglilt7fR+81cRF65
- ADmtF3X5qn/5SCSP/4mayItTBRK4onOlCRCyESNH0ViI5VG4x4jygxcviuoAGCcyzY3H
- KV4A==
+ bh=BV12f1wc/JC+jgi/ad9+u1M3M3aNUHbg78El2ib84jk=;
+ b=U16NWkmIdw48Jm/34W56wpZdBeBWAVYp13pN+WmMfySGzdg7hh5C/eQwlbustJVOrp
+ SLp/LLbAJltBlq8ojaB7L+c8jZY8IrXfaGgfyA83qcFLh1ucfuI7X9+b8rDvSNT1UTwI
+ o4P6weGqHCoyn4tzQg3bCha7vRaClX8i6Ei1hgufplmcVr08lKdZSTHITKVoYuf2kjpF
+ cczMW8cyhhB6QqQsy0knHwcwHkXVOvXVaf+jIuuoCkq4FA20YwaCScEH1rIAjEkkkb/G
+ kHlr2XNrVJm88d3UFANUM7FOCV3aMGANnZEr2c158uPoUhhrKTFmzKYuBO8RuFiBjjXe
+ d0jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFIUX84f2di7cto6Z4NB12P9iTx20+XA8csfhULyj83VuL81cj/YNwd840WO98nvwVqdc9TNCy/51Q@nongnu.org
-X-Gm-Message-State: AOJu0YyyioMWEk/ykH1C93F09niTFSDrwEbqnDnoL3+2aI2eKeXv11EC
- 0KpDY3hmjPssmeVUuCAKECVrsOofmYlkggxFI/HLi3j7RJMhUKm5MNBMTjCGXjoIFhQ=
-X-Gm-Gg: ASbGnctoXlv2pei6h3lgmLOqrrPvNCjg5ZxZMiHtj8G9csrSnqvgaFCaaF058acWagb
- l4wnQJsJKl730xXdeHzVovuE3zvFcmcVlXMJftLpg+Cwl/eLIkRrQ7WOTbTD3sbWuO/xfWxbe3e
- iQgeG4MYDEe0ZH9yd/wikT5iIikhtT3T/Dp/y3vRNBIcMDRW173nkomT9mQ5uxLUgjzLd9T9nS4
- d3t6INexYataNahJmL4a/k+5n5o2bAP7Z85097U9DiAdFRvsnGJEk9q/9xcb4ghlPrQpSSrkqxX
- PBFBB6viDKrGFa9uWfSW2xNbxLuKlbfC1Hndvgfgu23vxG0IDXDzdT/ODXk1v27mIONVC6U0CbG
- Xb85XdXRacfJbi3LpWq3iTrPmFIMA/R8kffQyEs5VmIv8DWDEpCdiZ15sDqfkdMQ=
-X-Google-Smtp-Source: AGHT+IG2uc/JWrceIWUg3XMESdyhBVvleYABZPtcqoylHNmk+WvGlnksU+gMMDrcYvP/d8q+2nBrcw==
-X-Received: by 2002:a05:6a21:6da3:b0:2b5:9c2:c593 with SMTP id
- adf61e73a8af0-2e7c4412524mr23804605637.5.1759191502186; 
- Mon, 29 Sep 2025 17:18:22 -0700 (PDT)
+ AJvYcCVV27Lzq5inmOelZ3+jxZNgt9OFQKV+3mX7TMf7nCydkRvBsIJ/Gb5IVGWR3UvHDnQWdg0C3Rq1KbxU@nongnu.org
+X-Gm-Message-State: AOJu0Yzr2f5nHDNEJzVmSQntNLBCUycDSWgCjmCNoeG0cRkovy5trarR
+ jpnRJ0/VDkuup9mN7Vbr/4dJ93F4m2aPUGxFcmHBfiajzlMfuqKEVYnv0B32wNj+NoU=
+X-Gm-Gg: ASbGncsItDlOoanuQrEEQ5enYz8La3IVdJ4goFyXh3893Wugk7m7i8YCU/Ynw/j2C77
+ 9ELVnBOZVLK46hEIFkTmkukEpM3WSHojF5yOO9cO47cRgv6DVVx8XdNUcJOBKNbrmRMSNieMCdl
+ Gc/zhQaBlaG9zmHByXGjIGanUupReqHyRZ8tlbhd+tO006lbZSbR+dg8jaezE41pKeUc6fXra0R
+ Yr3bTbC9LCAFGeVRT0nd5Vf2Q09BRpt1sWznqXz2t2AYyYWYEMQLjKujg/gpHd1pdUAymTKUQ6b
+ 4iuKR/EysWOwoC9/56braAGDZXu1A5DPZLr60ndSTL5XtAtHa1sKsCxryHMJ1JMwMM/W9GhTlVp
+ 5yqyK1GlPc8Edofn38aqDPOGAJUV2tilhZzXCQZbWLgMAcqGZou8lbVTycaIEZe9Eo88IIa+t/g
+ ==
+X-Google-Smtp-Source: AGHT+IGjna9mH6a198HGm2dUVHJTxu/3FpLiFD78Hm/Doem7bFdQ+WDPfOZkkmjrPsr7ZVZkd25Yvg==
+X-Received: by 2002:a17:90a:e710:b0:32e:ae12:9d32 with SMTP id
+ 98e67ed59e1d1-3342a22beffmr18396337a91.11.1759191482455; 
+ Mon, 29 Sep 2025 17:18:02 -0700 (PDT)
 Received: from [192.168.176.6] (51-148-40-14.dsl.zen.co.uk. [51.148.40.14])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b57c557493asm12237213a12.25.2025.09.29.17.18.20
+ 98e67ed59e1d1-3356179a2acsm10416625a91.8.2025.09.29.17.18.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 17:18:21 -0700 (PDT)
-Message-ID: <a513793e-87a0-45fa-9a9b-d33b756c0557@linaro.org>
-Date: Mon, 29 Sep 2025 17:18:17 -0700
+ Mon, 29 Sep 2025 17:18:02 -0700 (PDT)
+Message-ID: <35e27208-6e6d-4d0f-b563-ae86057387b2@linaro.org>
+Date: Mon, 29 Sep 2025 17:17:57 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/15] docs/devel/loads-stores: Stop mentioning
- cpu_physical_memory_write_rom()
+Subject: Re: [PATCH 02/15] system/memory: Factor address_space_memory_is_io()
+ out
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20250929183254.85478-1-philmd@linaro.org>
- <20250929183254.85478-2-philmd@linaro.org>
+ <20250929183254.85478-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250929183254.85478-2-philmd@linaro.org>
+In-Reply-To: <20250929183254.85478-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,29 +106,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/29/25 11:32, Philippe Mathieu-Daudé wrote:
-> Update the documentation after commit 3c8133f9737 ("Rename
-> cpu_physical_memory_write_rom() to address_space_write_rom()").
+> Factor address_space_memory_is_io() out of cpu_physical_memory_is_io()
+> passing the address space and range length as argument.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   docs/devel/loads-stores.rst | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/system/memory.h | 10 ++++++++++
+>   system/physmem.c        | 21 ++++++++++++---------
+>   2 files changed, 22 insertions(+), 9 deletions(-)
 > 
-> diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
-> index 9471bac8599..f9b565da57a 100644
-> --- a/docs/devel/loads-stores.rst
-> +++ b/docs/devel/loads-stores.rst
-> @@ -474,7 +474,7 @@ This function is intended for use by the GDB stub and similar code.
->   It takes a virtual address, converts it to a physical address via
->   an MMU lookup using the current settings of the specified CPU,
->   and then performs the access (using ``address_space_rw`` for
-> -reads or ``cpu_physical_memory_write_rom`` for writes).
-> +reads or ``address_space_write_rom`` for writes).
->   This means that if the access is a write to a ROM then this
->   function will modify the contents (whereas a normal guest CPU access
->   would ignore the write attempt).
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index aa85fc27a10..6cfa22d7a80 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -3029,6 +3029,16 @@ static inline MemoryRegion *address_space_translate(AddressSpace *as,
+>   bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
+>                                   bool is_write, MemTxAttrs attrs);
+>   
+> +/**
+> + * address_space_memory_is_io: check whether an address space range is
+> + *                             I/O memory.
+> + *
+> + * @as: #AddressSpace to be accessed
+> + * @addr: address within that address space
+> + * @len: length of the area to be checked
+> + */
+> +bool address_space_memory_is_io(AddressSpace *as, hwaddr addr, hwaddr len);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I don't think 'len' makes sense.
+What are you doing if [addr, addr+len) crosses MemoryRegions?
+
+
+> +bool address_space_memory_is_io(AddressSpace *as, hwaddr addr, hwaddr len)
+> +{
+> +    MemoryRegion*mr;
+
+Missing space.
+
+> +
+> +    RCU_READ_LOCK_GUARD();
+> +    mr = address_space_translate(as, addr, &addr, &len, false,
+> +                                 MEMTXATTRS_UNSPECIFIED);
+
+Just pass NULL as the plen parameter.
+
 
 r~
 
