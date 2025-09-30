@@ -4,102 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B5FCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2360CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Vco-0008Qt-8D; Tue, 30 Sep 2025 04:22:18 -0400
+	id 1v3VcU-0008LY-N7; Tue, 30 Sep 2025 04:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vcj-0008P9-Qi
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:13 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vc5-0000dg-Da
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:12 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-46e3af7889fso31676255e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759220489; x=1759825289; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YvhoIhSsQDGRzJiqmuuLIQQZhU1t8TAbJtfU17YXnRc=;
- b=JlRSNR0guw4lmGtN1CvXhf80Y7hI9HnOujWtwiN/2Gh0EzY5tnRssnAq7zTbHfILNE
- LFQWh1TTnTd6u0gArQVgAfR5hA9JM3wvdtC7Va6xEeBxN0ZnUn3LnSCw885HlKvbj/Zz
- 1J9UIDu9XWO6epOfIWrlhTUOBFkgMh7t9aaw5cbSlEdxsmWr69qDHEp1xWu+RkVBy0DL
- k9Upj+3L8yt3XEA2OAod7W/hPyguY3DjBgPKZ0McE8dl154I6pPiDkrY/qcgnuWQBhbW
- lwzt3GZMqyo6AyKM/kExL6e0r/wEqztMUuSEBt440qEFjYQZNSYmLICuv8qogSiNko7+
- h5ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759220489; x=1759825289;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YvhoIhSsQDGRzJiqmuuLIQQZhU1t8TAbJtfU17YXnRc=;
- b=VUeT8Dd8lNeaAG7QHSCujDBU4ti3lLCbUYu2ESw/aknfZqiPw5ewG27Z19dHi7ONYp
- 8TbyKivSpaDfytphC+XFCgjh+cuL4Oc8zMfOcVcPLLej/1aBBiRn0XgPmFL7jNKFJASg
- sCdzAf41eLPpjxRHp9XViKnkdvg0z/cnmdPS/yc9xs6LF7S3RFHwSCPmRj/XDYuFunCb
- HBB+WH0YNxU2/zYpOH7Dctb1J2nbf5+aveIFPIXsXT1JCXkFwNamZbTv60HH1MU/yALa
- EAliRZCMD2lAzTjhFEq7S1YBprgYwB/dCGCv6QOzKyQIPdpm/N9Gyyb8xfUc7Ev8qcD5
- YlrQ==
-X-Gm-Message-State: AOJu0YzXtYyzeiAHB+jMt3Dm3G04inn1dQbFrixLWzJ2QjMhgn093eKd
- +nzxu/h/9c/UxBiXQjt5jB/kHSHVzQ8GdlMbKJTcmZoqW3JQDzTJHkNSDGjXvcyHz3N03e1rA1b
- OiW4YBmoy+w==
-X-Gm-Gg: ASbGncu1jJQEPTzJdexg4b+98PMzOa1aRdzcIQJdv4qjZpLuVqnqGXkxJw4Svki6IiK
- lBuxcIMl00IDY/9Xdp99Uy4WBvIgUZyenrdD3+KjQPnJQpFglFwDBSeSyK5Cf4MlkCFMQSEYWWW
- ACLPLYWBwkzcoeWZt6HJApw6FVN5nCzt8QNGdO97Ii8NwedbexI4BrW7CNWh1ymCYUMxRPlltA7
- J1f6HQIN713eL1bO56gS33zI1eWPfAAMxysEto3tCSu18rcL7yzmdlM9fHX55h9lV4+B3A9GS8E
- 0N14Wn2MjdPht9jnG4vX4fkp1GhQ69uvCZmKZwHU7BiMKedroWzT62fGzmtxfOpJShY8+23+Ut/
- 84JJmWRDgnCXMtJQ3lSlSFMG0lGknF0hzr24W/dj390QFQG2ELi8os1O/RrcBZXwhzUUdIAbdAX
- g5l7S8+UnHilzOUKr7FQyG
-X-Google-Smtp-Source: AGHT+IH0LOZYhQvlCCwRE6HguOW9UpuwkFMjTOLA/D/C2ktVUpzuFK1TrAy7o+BecbtxQsJYTDH8eA==
-X-Received: by 2002:a05:600c:8209:b0:46e:376a:c9db with SMTP id
- 5b1f17b1804b1-46e376acfbbmr166369605e9.26.1759220489083; 
- Tue, 30 Sep 2025 01:21:29 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2ab31f1dsm257244235e9.13.2025.09.30.01.21.27
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Sep 2025 01:21:28 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Reinoud Zandijk <reinoud@netbsd.org>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, David Hildenbrand <david@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, kvm@vger.kernel.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Stefano Garzarella <sgarzare@redhat.com>,
- David Woodhouse <dwmw2@infradead.org>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
- Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Anthony PERARD <anthony@xenproject.org>,
- Jason Herne <jjherne@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v3 00/18] system/physmem: Remove cpu_physical_memory _is_io()
- and _rw()
-Date: Tue, 30 Sep 2025 10:21:07 +0200
-Message-ID: <20250930082126.28618-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v3VcQ-0008Ks-DZ; Tue, 30 Sep 2025 04:21:56 -0400
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v3Vbs-0000ZU-Fn; Tue, 30 Sep 2025 04:21:54 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.179])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cbWGv70cNz5xGp;
+ Tue, 30 Sep 2025 08:21:11 +0000 (UTC)
+Received: from kaod.org (37.59.142.110) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Tue, 30 Sep
+ 2025 10:21:11 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-110S0042842693f-52d8-497d-bfb5-f13445a95ff8,
+ 012DEA80DA8F652C9231DB37D1304F33C12A2C6A) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <3c61d5e6-e571-40a1-a770-7e9d2f53a189@kaod.org>
+Date: Tue, 30 Sep 2025 10:21:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] aspeed: Add support for the g220a-bmc board
+To: Lei Yu <yulei.sh@bytedance.com>
+CC: Joel Stanley <joel@jms.id.au>, <f4bug@amsat.org>, Andrew Jeffery
+ <andrew@aj.id.au>, Peter Maydell <peter.maydell@linaro.org>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+References: <20201025131435.144-1-wangzhiqiang.bj@bytedance.com>
+ <20201025131435.144-2-wangzhiqiang.bj@bytedance.com>
+ <a3e42923-d81a-40c2-8b17-28d6264d5518@kaod.org>
+ <CAGm54UE3D_gd8=iDMkF+nPUqZN5-Mhp-46HONi3Ok6oEkdyDwA@mail.gmail.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <CAGm54UE3D_gd8=iDMkF+nPUqZN5-Mhp-46HONi3Ok6oEkdyDwA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Originating-IP: [37.59.142.110]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 74f355fb-5371-4ae2-81ff-81e41641aa00
+X-Ovh-Tracer-Id: 10589933051308575593
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEb+59aVXm+xTCRNPDkeC5Vc4pHTbJSw1UdlBSUppB/wjFsgHAvJLzfZHr102KY08rYr6e2fF2YjJhHkrw+vkKpWHKqyDA3ptpXY0ZvJ7131zNM2BYfHO/ZYjKDi8D+ILA6EBa7rCmmSxpLSPqNoimjf9l3ceU0HO7Be5THbXsSmgNF6x1Ic/+S6K/btntpnZiS7Z5os8OPKD8v6e2/WCkITUXSiGYEC+EiJwPg/jeQp/M+XjtQKt1xfMLoPutdrGbiVpmugG6MLDJaFU1zlG36OT8uWlp4u+G6MORI6wMlbn26/qcvwSGFb9BKTYlpfP+qzZOhm7U5oAlyi926JyhyWCbZ2n2UiySF5ieZWasPh8G9aWqBP+xrz0ELUw6gxYN140aaDne+4U/ffielFrleyJ0YwGplU1x9PN5oAKqZkGI8FowXDO1HrW36+6URWIgK6yRVjzRAnBkTHmbhF77W95XdGd4As+qFeLKTlTKK+xcGk86y6IIxF2A7EEW0r9OjAn1GIgqv+qsDmQxz5OVrbQvKacscR4NUrGSIppYomMqi95JzxQstHQq91zy+sfDy0tj3yV4oJgyKfinTWm8NeRdxwTMdXZ0c+JvJvP++8Joh7IRIz+dZkO2EiYhDDUQUXJBTVG6urkO9ixIpvHQrkBpx+rjVJ5eoeGh+IROShQ
+DKIM-Signature: a=rsa-sha256; bh=igPEfX3D64iFbnFeJT/tMDQY7qNPi6idlwWif8oBoSE=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1759220473; v=1;
+ b=PD22tFcjYrll6p3SEsPxhDOxlJ/70rWhqt8TeQlwmDJ6RiGX3t0ZzWTPviRxniEdbtOMHJdS
+ OKeUgOThCCeu7m/mr31RTrAg7I8fF2LAvfX9eoGiLMnkGenj63ez6eL+s2jKmh8UCmgwQJbi5yO
+ ZZ1OFPWj1/jCV7TGo6MFabYNrArpggsuA6kvIE2MDtqc8EVJGLd0Z17U4sAPnVUACNS9lSa4It2
+ DbSlR3QGo4KCN9pDdYzt5xbhRf4W7J7jZwajwKhnHCvKT5iWkTWy4dLrez3EQEnfREsngtYjx9e
+ 4+fnZW2FeO5CdjCdwloVnftYqSGNvE5XLgzykAz7tKTtA==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,77 +130,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Removed extra 'len' arg in address_space_is_io (rth)
-Since v2:
-- Fixed vhost change
-- Better describe cpu_physical_memory_rw() removal (thuth)
+Hello,
 
----
+On 9/30/25 10:13, Lei Yu wrote:
+> On Tue, Sep 30, 2025 at 1:57 PM Cédric Le Goater <clg@kaod.org> wrote:
+>>
+>> On 10/25/20 14:14, John Wang wrote:
+>>> G220A is a 2 socket x86 motherboard supported by OpenBMC.
+>>> Strapping configuration was obtained from hardware.
+>>>
+>>> Signed-off-by: John Wang <wangzhiqiang.bj@bytedance.com>
+>>> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+>>> Reviewed-by: Joel Stanley <joel@jms.id.au>
+>>
+>> Hello John
+>>
+>> Would it be possible to contribute a functional test for this
+>> machine ?
+>>
+>> Since this machine contributes little to the Aspeed models,
+>> its value lies in the firmware it can run to exercise the
+>> models. Without functional tests, I plan to schedule the
+>> removal in the QEMU 10.2 cycle.
+>>
+> 
+> This model is used in the QEMU CI for g220a in our internal CI.
 
-The cpu_physical_memory API is legacy (see commit b7ecba0f6f6):
+Good to know !
 
-  ``cpu_physical_memory_*``
-  ~~~~~~~~~~~~~~~~~~~~~~~~~
+> May I ask what exactly are expected to do "to contribute a functional test"?
 
-  These are convenience functions which are identical to
-  ``address_space_*`` but operate specifically on the system address space,
-  always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes and
-  ignore whether the memory transaction succeeded or failed.
-  For new code they are better avoided:
-  ...
+It's a small python test downloading a FW image and booting
+the machine, possibly also testing that expected services are
+up and running, network, I2C devices, etc. This last part is
+optional.
 
-This series removes:
-  - cpu_physical_memory_is_io()
-  - cpu_physical_memory_rw()
-and start converting some
-  - cpu_physical_memory_map()
-  - cpu_physical_memory_unmap()
-calls.
+See the test_aspeed_*.py files under :
 
-Based-on: <20250922192940.2908002-1-richard.henderson@linaro.org>
-          "system/memory: Split address_space_write_rom_internal"
+   https://gitlab.com/qemu-project/qemu/-/tree/master/tests/functional/arm?ref_type=heads
 
-Philippe Mathieu-Daudé (18):
-  docs/devel/loads-stores: Stop mentioning
-    cpu_physical_memory_write_rom()
-  system/memory: Better describe @plen argument of flatview_translate()
-  system/memory: Factor address_space_is_io() out
-  target/i386/arch_memory_mapping: Use address_space_memory_is_io()
-  hw/s390x/sclp: Use address_space_memory_is_io() in sclp_service_call()
-  system/physmem: Remove cpu_physical_memory_is_io()
-  system/physmem: Pass address space argument to
-    cpu_flush_icache_range()
-  hw/s390x/sclp: Replace [cpu_physical_memory -> address_space]_r/w()
-  target/s390x/mmu: Replace [cpu_physical_memory -> address_space]_rw()
-  target/i386/whpx: Replace legacy cpu_physical_memory_rw() call
-  target/i386/kvm: Replace legacy cpu_physical_memory_rw() call
-  target/i386/nvmm: Inline cpu_physical_memory_rw() in nvmm_mem_callback
-  hw/xen/hvm: Inline cpu_physical_memory_rw() in rw_phys_req_item()
-  system/physmem: Un-inline cpu_physical_memory_read/write()
-  system/physmem: Avoid cpu_physical_memory_rw when is_write is constant
-  system/physmem: Remove legacy cpu_physical_memory_rw()
-  hw/virtio/vhost: Replace legacy cpu_physical_memory_*map() calls
-  hw/virtio/virtio: Replace legacy cpu_physical_memory_map() call
+test_aspeed_bletchley.py is minimum
+test_aspeed_ast2600.py is complex
 
- docs/devel/loads-stores.rst            |  6 +--
- scripts/coccinelle/exec_rw_const.cocci | 22 -----------
- include/exec/cpu-common.h              | 18 +--------
- include/system/memory.h                | 16 +++++++-
- hw/core/loader.c                       |  2 +-
- hw/s390x/sclp.c                        | 14 ++++---
- hw/virtio/vhost.c                      |  7 +++-
- hw/virtio/virtio.c                     | 10 +++--
- hw/xen/xen-hvm-common.c                |  8 ++--
- system/physmem.c                       | 51 ++++++++++++++------------
- target/i386/arch_memory_mapping.c      | 10 ++---
- target/i386/kvm/xen-emu.c              |  4 +-
- target/i386/nvmm/nvmm-all.c            |  5 ++-
- target/i386/whpx/whpx-all.c            |  7 +++-
- target/s390x/mmu_helper.c              |  6 ++-
- 15 files changed, 92 insertions(+), 94 deletions(-)
+Thanks,
 
--- 
-2.51.0
+C.
+
 
 
