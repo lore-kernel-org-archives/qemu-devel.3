@@ -4,90 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF97CCA468
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F6CCCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3b3r-0007yE-Hy; Tue, 30 Sep 2025 10:10:35 -0400
+	id 1v3bDD-00020F-FY; Tue, 30 Sep 2025 10:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3b3p-0007xn-9h
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:10:33 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3b3k-0007cc-8X
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:10:32 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-27c369f8986so58013045ad.3
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 07:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759241424; x=1759846224; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bETngk8oWz+y/33qWB/HDZmhP+JNmoYsAVGClEUh47w=;
- b=voqhVb+lsItXJzYRkNVz+L4/IGEdeVwgCDk0e68ZKCccxYx8T5dUxuY0AKG/qzmlqa
- 24IJ5N/ZxYym5B5uIgw0cZ/J8DtgC76hi9Ntu9/jG8A8fcYqm/f8ywttMawP5qu8k4A8
- YDqHt1iKezldZv66CTc2ApMZ9VrvZKEhfRTVcFPn+z3cr9AdA5NpshOE6EhEMkflPoUm
- nJ0wTd6p8WgLRdYmKZnwXtC8EuKtiLNl/VhRHPabys/EH7329kY7DdwzxAXbePP9E7zu
- YUr2SryBuTgAPmdnu4InmBsh9NdVM4+DLWohUXmpmtZsGJRfMDBlb154NCFDdw/agLmF
- EvLQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3bD8-0001ze-TQ
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:20:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v3bD0-0001yA-JO
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:20:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759241996;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4cVk2FzvtR31+Hr0YatdRXJl9Hy+P2D9jYEJhmSQB6Y=;
+ b=ewiXdwFQTiKmsiT+Dbm43Xz+PMq0sLje4hK4sS+CQiL0yKOd5QLhPBpaXhuUt2x7tSkMFs
+ FKbeAZBPAMVoE1vFF6Cp092JqGM0mEkriJqKlR+1MJydSoS3yHXmhXg6mk13OfrBDBNcbg
+ 4okAhN/13OC1CvQNWrRqcl7o/QTtEjc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-342-hK9q1PBnPz2eVintkBpRoQ-1; Tue, 30 Sep 2025 10:19:55 -0400
+X-MC-Unique: hK9q1PBnPz2eVintkBpRoQ-1
+X-Mimecast-MFC-AGG-ID: hK9q1PBnPz2eVintkBpRoQ_1759241994
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e4fa584e7so14824685e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 07:19:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759241424; x=1759846224;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bETngk8oWz+y/33qWB/HDZmhP+JNmoYsAVGClEUh47w=;
- b=h4bghvM8vwHIx7H1pp6CzG+oSwHW0d6evwK1NVMEUKc2wNVtHcFtn7unqsYvJ7c1Hy
- 4lwYOL3zk33b8WxYmkjHTW1RUtvmzulYp4zpvgu9JwoMkw3jPbToEoHsdri75aA2+gnb
- o1M7PxDtzrLrP8cAb6hIwhTYZ0kqWWPCi4TStA6OH2AgbwXpGL8y1rpkdB8u5j9DSumm
- 4TUkHfSGR5Sq5Xh3Ze+TAL0L5WfiIXwigSaA7iEpmtXwelOMy3cxeeUqIeMjrsE2koZa
- jE0KZZYXajHUPXqH6UsvgwJUYs6XNRlwXo05TbIlo4U8jRPFmcRVsZ4nZ8ThqfBcv2mE
- YFnw==
+ d=1e100.net; s=20230601; t=1759241994; x=1759846794;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4cVk2FzvtR31+Hr0YatdRXJl9Hy+P2D9jYEJhmSQB6Y=;
+ b=Qg6EDMMWW3vl3kZ/w0dCQ6rw8U60lLzxbrT8kGmUeReDMRFnnnXe17bqNU8nAdzNzA
+ Ax601dAiuR2fLw4tEiqtlhNwvl5tOijjMSKLYlSxWIrqCgPOvjude+AA5Y39APTxYeUd
+ BERwNZJfYKE6i3GsjvcNHnMQtr+cAv9McNZEm8l4EUAw7+eHlTgFI/JMtCvlp0jCem3C
+ zWw/BGWnth8iX8F6yePjQjes5gRl2Agyjde08LXxQHZpGUuiwfKvCkAoMX4EGU39ptfb
+ yBJPsTmER9h/A9MhzktAqqXtSBw0pIJsgX1GEH/R96XoyyAV6BWNxGGvJaUVN1ydadiP
+ 9eIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1mW1W84hCEc6sn1/zgP3+VatoC65L5XdvJu598CXx0GKBc2ZiAViOcfR2XydVk7AJUJtYkIH3TO+t@nongnu.org
-X-Gm-Message-State: AOJu0YyjhGx7uJB49oOhCTmdWe8XloRqFAIl5Vf2RwOj2AqiMhJm1zOS
- cYe9UqVY97+IGqU4s63yH9ZZHvSuDIIoEAE+Dh4LbafjjyM0fMOdH3FtNYvcuqSZ5W4=
-X-Gm-Gg: ASbGncvm/weoF7CK1YM2ps+45oa3VIUxhpBTUUDkcFxJ/Ya4c+02AYoMTAoR3P4mTwP
- kZRuQecHu5xRTXAINEjbKno/1pmFSMMlz/OOptlUJXO4moQdpZ1MfI0OF4inun3KLu8UoDFlP8L
- lmfddKGiBAXcFCDhe9RNGLlNg8VlNHC+5EHD/Z7Zc2iswBrim1WAehB2D36q6njA3H/OGbETI/2
- lAsZ8lDYAgWJ6J/ea9VyGijCTF0I8cv9+DvQpCfGUDxHgWwNzPRas8unCTg0KV3IiwEDPMc6WtZ
- 5x6pOKVIcEryHejldqE2e+roD/gGYd13XNTJx00aYbALkTJD4EA9NqOiMexDZpp+JZEoJaZNu2/
- n6ibmHP30lc8lzsAo+G1D4NOM/YRNgmKTdcoarvvL+MVOZII8uuFtiB7YCJ5uSAU09Xwsmis=
-X-Google-Smtp-Source: AGHT+IErJx1XZ6G4XHiiKMynK/kRIYq5365OOuUPI+qdl/lVAT6zeq0u4gvFtRJ8Mg3qECuI1WNOZQ==
-X-Received: by 2002:a17:902:ef03:b0:27e:ef12:6e94 with SMTP id
- d9443c01a7336-27eef126f60mr169096575ad.55.1759241423797; 
- Tue, 30 Sep 2025 07:10:23 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
+ AJvYcCVtX+mDSoTxS8BLtsTuFJLhl0WRsII8VLyWfgqLJ3l6gDkUIUia3tm9Oc5pJFj5LqyM4wnsVnXWyE9g@nongnu.org
+X-Gm-Message-State: AOJu0YyRo5saiJdkMpyS7LgH3UeXHiQoclXwR6Kv+WXrbUp1E9GC3BWo
+ DRcDZ2UWdi4AQzeneaD4/JqasvQ97YSAlKfVvWKKqzzXqRGx/ti2cSTS2hiL1mhH6MYDYY1gf5b
+ QToRVLP86PnKbgkAq6j0W8MwolMATTzODwg5o92zclwkH/jR803fbPmHP
+X-Gm-Gg: ASbGncvPGtjRj892BKbLwz7C3T5ni8aFSkKCWn9GP9mWpyvq6861trjh/tCzPfO/0M5
+ 1lV6Ot3oX+sOWgtCDMWjkT/ko8ukclGNJDmfEbBMDf+CQYMbydQI0ag5nyK5J18HWJX7IxFtlfB
+ k5ReWMaMSVcpYLWPTM5BlvukLsfVY5RUNH+WwbbidfMYjWHmSaI+2/Q1H5+z7Yu/N7dh70T97HZ
+ WTuBvBpqU28Ua5DC9lTPIcc/yMb0ALyvzsn0CI8JrWQyHSFhQPff+J0VfeCKvzPUrky4KKxFdFe
+ juCWDlu4TZwddJbS9EVvVDFCi1b+C3OAJjbLx9P+8S/58o3TXUVV6Rqxp3WqBYiEGyW1hAkIVWe
+ 0lL1zc+RcfcDJQmB1
+X-Received: by 2002:a05:600c:348a:b0:46e:3dc3:b645 with SMTP id
+ 5b1f17b1804b1-46e61260525mr541085e9.3.1759241993791; 
+ Tue, 30 Sep 2025 07:19:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHeg5gQEr81g1Z/iCBrZPa27X83BsM9k7jgWvRorHsWzPhJLv6S7maNq7wSmEgGBHfLMShPvA==
+X-Received: by 2002:a05:600c:348a:b0:46e:3dc3:b645 with SMTP id
+ 5b1f17b1804b1-46e61260525mr540925e9.3.1759241993403; 
+ Tue, 30 Sep 2025 07:19:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27ed6725bbesm161575605ad.60.2025.09.30.07.10.23
+ 5b1f17b1804b1-46e56f77cbfsm62442955e9.18.2025.09.30.07.19.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 07:10:23 -0700 (PDT)
-Message-ID: <7ea1d69b-cb73-4a9e-ad5e-e821740632fd@linaro.org>
-Date: Tue, 30 Sep 2025 07:10:21 -0700
+ Tue, 30 Sep 2025 07:19:52 -0700 (PDT)
+Message-ID: <64b489b6-f544-436a-ad25-f85c2a891fce@redhat.com>
+Date: Tue, 30 Sep 2025 16:19:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/32] aspeed queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250929165230.797471-1-clg@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v6 08/22] vfio/iommufd: Force creating nesting parent HWPT
 Content-Language: en-US
-In-Reply-To: <20250929165230.797471-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
+ <20250918085803.796942-9-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250918085803.796942-9-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,40 +117,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/29/25 09:51, Cédric Le Goater wrote:
-> The following changes since commit 4975b64efb5aa4248cbc3760312bbe08d6e71638:
-> 
->    Merge tag 'pull-loongarch-20250928' ofhttps://github.com/bibo-mao/qemu into staging (2025-09-28 09:01:35 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/legoater/qemu/ tags/pull-aspeed-20250929
-> 
-> for you to fetch changes up to 9ec30a07483640ecb8417fce3dfa9273f7a036c9:
-> 
->    hw/arm/aspeed_ast27x0-fc: Make sub-init functions return bool with errp (2025-09-29 18:00:20 +0200)
-> 
-> ----------------------------------------------------------------
-> aspeed queue:
-> 
-> * Introduce a new ASPEED OTP memory device model integrated with the
->    Secure Boot Controller. It includes a new block device backend
->    ('drive' property), is enabled for AST2600 SoCs and AST1030 SoCs.
->    Functional tests are included
-> * Changed "ast2700-evb" alias to point to the "ast2700a1-evb" machine
-> * Introduce support for Aspeed PCIe host controller, including models
->    for the PCIe Root Complex, Root Port, and PHY. Enabled for the
->    AST2600 and AST2700 SoCs, and functional tests are included
-> * Refactor Boot ROM support to improve code reuse across the different
->    Aspeed machine. This is in preparation of vbootrom support in the
->    ast2700fc machine
-> * Improved Error Handling in the AST27x0-fc machine init functions
 
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+On 9/18/25 10:57 AM, Zhenzhong Duan wrote:
+> Call pci_device_get_viommu_flags() to get if vIOMMU supports
+> VIOMMU_FLAG_WANT_NESTING_PARENT.
+>
+> If yes, create a nesting parent HWPT and add it to the container's hwpt_list,
+> letting this parent HWPT cover the entire second stage mappings (GPA=>HPA).
+>
+> This allows a VFIO passthrough device to directly attach to this default HWPT
+> and then to use the system address space and its listener.
+>
+> Introduce a vfio_device_get_viommu_flags_want_nesting() helper to facilitate
+> this implementation.
+>
+> It is safe to do so because a vIOMMU will be able to fail in set_iommu_device()
+> call, if something else related to the VFIO device or vIOMMU isn't compatible.
+>
+> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-r~
+Eric
+> ---
+>  include/hw/vfio/vfio-device.h |  2 ++
+>  hw/vfio/device.c              | 12 ++++++++++++
+>  hw/vfio/iommufd.c             |  9 +++++++++
+>  3 files changed, 23 insertions(+)
+>
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index e7e6243e2d..a964091135 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -257,6 +257,8 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+>  
+>  void vfio_device_unprepare(VFIODevice *vbasedev);
+>  
+> +bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
+> +
+>  int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+>                                  struct vfio_region_info **info);
+>  int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 08f12ac31f..620cc78b77 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -23,6 +23,7 @@
+>  
+>  #include "hw/vfio/vfio-device.h"
+>  #include "hw/vfio/pci.h"
+> +#include "hw/iommu.h"
+>  #include "hw/hw.h"
+>  #include "trace.h"
+>  #include "qapi/error.h"
+> @@ -504,6 +505,17 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
+>      vbasedev->bcontainer = NULL;
+>  }
+>  
+> +bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
+> +{
+> +    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
+> +
+> +    if (vdev) {
+> +        return !!(pci_device_get_viommu_flags(&vdev->parent_obj) &
+> +                  VIOMMU_FLAG_WANT_NESTING_PARENT);
+> +    }
+> +    return false;
+> +}
+> +
+>  /*
+>   * Traditional ioctl() based io
+>   */
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 8c27222f75..f1684a39b7 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -379,6 +379,15 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>          flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>      }
+>  
+> +    /*
+> +     * If vIOMMU requests VFIO's cooperation to create nesting parent HWPT,
+> +     * force to create it so that it could be reused by vIOMMU to create
+> +     * nested HWPT.
+> +     */
+> +    if (vfio_device_get_viommu_flags_want_nesting(vbasedev)) {
+> +        flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
+> +    }
+> +
+>      if (cpr_is_incoming()) {
+>          hwpt_id = vbasedev->cpr.hwpt_id;
+>          goto skip_alloc;
+
 
