@@ -4,59 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40551CAC5BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8DA0CCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3c8X-0001kR-86; Tue, 30 Sep 2025 11:19:29 -0400
+	id 1v3c9n-0002Ef-59; Tue, 30 Sep 2025 11:20:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3c8T-0001ju-5d
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:19:25 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v3c8J-0003sH-Lb
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:19:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cbhXq6V7Pz6K5Wg;
- Tue, 30 Sep 2025 23:18:51 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 471E31402ED;
- Tue, 30 Sep 2025 23:19:06 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 30 Sep
- 2025 16:19:05 +0100
-Date: Tue, 30 Sep 2025 16:19:03 +0100
-To: Davidlohr Bueso <dave@stgolabs.net>
-CC: <ira.weiny@intel.com>, <lucerop@amd.com>, <a.manzanares@samsung.com>,
- <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <armbru@redhat.com>,
- <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 1/5] hw/pcie: Support enabling flit mode
-Message-ID: <20250930161903.00006583@huawei.com>
-In-Reply-To: <20250930032153.1127773-2-dave@stgolabs.net>
-References: <20250930032153.1127773-1-dave@stgolabs.net>
- <20250930032153.1127773-2-dave@stgolabs.net>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3c9l-0002BY-3n
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:20:45 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3c9g-0004NV-V1
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:20:43 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-77f343231fcso3466985b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 08:20:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759245636; x=1759850436; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0ppPNwT6bMZwtRl7KbmTBy9YWyzVFg6tkexd8wfvB4g=;
+ b=yBYrXcsb5GNiPmw4j/5laAA97FEYTScLUlltaoBc/lZHz8Y6MKyJ/L4wFH2+7kCAzr
+ g0r3uj4FLgZkgaa5mUJ1Ubx1mspazMzfaiXnGaxhu9fqS++2Ol+3aYKzlssjyLq7JCig
+ RYC9AdR4C+2t8Y5GzV+vLUwp4Ig/xHNHy0pCXZWUWeIzqbVA/SX0WPhKJrsh1uNCHlpi
+ PXr2C2awR/p7EpunEMNeQHvXrerS1DY0UyC1KjQHJmpzX0Hv6FanC9TuK3M5SxJyXW2v
+ SIVwU+ji7wz5+9DvjHyz9UieHYExPYydNizDmoXLkixkPtDKQaThTMfj8o0Bt7p6R7rw
+ BzgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759245636; x=1759850436;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0ppPNwT6bMZwtRl7KbmTBy9YWyzVFg6tkexd8wfvB4g=;
+ b=tdHirIsO7Je9LjbNereNKm/+CRVgHl8P8fkXeHYPiST3ijVo45Pfv6COLEHIl3jg1q
+ zvtHfoJ2eruolwsLNEAZQq/dIeuZCSP7C7eFXa920tGO1n9jO8L/a6PQLF0vsgmnMAU8
+ 9HqWmyAqLC3EvhbUxrP3U/XXexjhQ7PjKMCGtx23nBSuzpdrcAxhun3WjXrPVqIl/0jr
+ 4r0JEDFYRHHNFqlIExs7c+7wLXUZtpk6m1wqszmyDSgqkOn1CIwXV/GYOO3l0Z2mj5Zt
+ tK+3yIlfnHH2yJJL0jqj0iO+UPB8vj8iTMXVXWC3R/lyhNxypw236nwgft+SX7OgYj3+
+ bKNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMw8+OXAk5qxc6YI7ETLYNWpOj30CaLDELndV1dRwcEnQDLZBGtnbB884T6vK/TbuK/mu+OBQ7y1ix@nongnu.org
+X-Gm-Message-State: AOJu0YyYu5NQDtkiW1kVxbxFL1ArgJxNuLrh7jybwUXhWDSYIDzWFCdp
+ 1lVyIsCFCyEHRoAcpz1lTBaIMHBfZbMIw1tdFzelfmbpFV00+4F1E8lIGyv/htqcLoA2Mn0ArAu
+ b4PdM+7qjBA==
+X-Gm-Gg: ASbGncvpRxRJBusdUJdXVtV3tEsKjHJapjrRT3zmFYPi8ia1ydNvq5u1Py7MmeRuz5l
+ EVafxqG/xYzZ3qQKP0VCq1aHcrOFpaRS8i6X8jY07Q+4zdlFl4cfNWZieHQwOxy57H9UrVO31r8
+ Btnx/cVAP5Ng2rB/JZlrSI87T8QQ5pXMgWcHjfMYlfVpc2LmOZKZR/Myj77F8RZtrSY07/rwCx3
+ X07q8y4sLX0oznyPT+XBANXy1L+5i0eHJBI3Z9fr7Sav0t+5NRZ/oeqX5lIqK0xQxFbQIdnf1Is
+ wccAFwDhXwtTBEoi/HXvUGjma7S0tXGuF/HAseNHi51cAQvgKHJMkFr8VgTI6OyP/OGsq8kmSUO
+ fmX6IeOufOk9UOkjVw4EXkWux/HXNx0n7yh/0MBT0DGW4b3sCICX7clRrQWg979R0Tx/QFPY=
+X-Google-Smtp-Source: AGHT+IEOXMKMLGbNRkMYx+oW7hNJ/pUiVgqMQyscec7f/9HKt7DK9lXueK1EY7X7RFDfwIj/4JAqkA==
+X-Received: by 2002:a17:902:b690:b0:27e:f1d1:74e0 with SMTP id
+ d9443c01a7336-28e7f2a37dcmr1333425ad.17.1759245636211; 
+ Tue, 30 Sep 2025 08:20:36 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b57c53cb975sm14288276a12.18.2025.09.30.08.20.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Sep 2025 08:20:35 -0700 (PDT)
+Message-ID: <e58f6ff2-df5c-45b4-8a0f-de74c1edb7e1@linaro.org>
+Date: Tue, 30 Sep 2025 08:20:34 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/18] system/memory: Better describe @plen argument of
+ flatview_translate()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20250930082126.28618-1-philmd@linaro.org>
+ <20250930082126.28618-3-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250930082126.28618-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,131 +103,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Sep 2025 20:21:49 -0700
-Davidlohr Bueso <dave@stgolabs.net> wrote:
-
-> PCIe Flit Mode, introduced with the PCIe 6.0 specification, is a
-> fundamental change in how data is transmitted over the bus to
-> improve transfer rates. It shifts from variable-sized Transaction
-> Layer Packets (TLPs) to fixed 256-byte Flow Control Units (FLITs).
+On 9/30/25 01:21, Philippe Mathieu-Daudé wrote:
+> flatview_translate()'s @plen argument is output-only and can be NULL.
 > 
-> As with the link speed and width training, have ad-hoc property for
-> setting the flit mode and allow CXL components to make use of it.
+> When Xen is enabled, only update @plen_out when non-NULL.
 > 
-> For the CXL root port and dsp cases, always report flit mode but
-> the actual value after 'training' will depend on the downstream
-> device configuration.
-> 
-> Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Hi Davidlohr,
-
-A few comments inline. Main one is that I think we need the CAP to still
-say we support 68B flits on the CXL devices and just mess with the
-status.
-
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/mem/cxl_type3.c                        |  9 ++++++---
->  hw/pci-bridge/cxl_downstream.c            | 11 +++++++----
->  hw/pci-bridge/cxl_root_port.c             | 11 +++++++----
->  hw/pci-bridge/cxl_upstream.c              | 19 +++++++++++--------
->  hw/pci-bridge/gen_pcie_root_port.c        |  1 +
->  hw/pci/pcie.c                             | 23 +++++++++++++++++++----
->  include/hw/cxl/cxl_device.h               |  1 +
->  include/hw/pci-bridge/cxl_upstream_port.h |  1 +
->  include/hw/pci/pcie.h                     |  2 +-
->  include/hw/pci/pcie_port.h                |  1 +
->  10 files changed, 55 insertions(+), 24 deletions(-)
+>   include/system/memory.h | 5 +++--
+>   system/physmem.c        | 9 +++++----
+>   2 files changed, 8 insertions(+), 6 deletions(-)
 > 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index c4658e0955d5..891b75618892 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -533,9 +533,10 @@ static void build_dvsecs(CXLType3Dev *ct3d)
->                                 GPF_DEVICE_DVSEC_REVID, dvsec);
->  
->      dvsec = (uint8_t *)&(CXLDVSECPortFlexBus){
-> -        .cap                     = 0x26, /* 68B, IO, Mem, non-MLD */
-> +                                   /* 68B (maybe), IO, Mem, non-MLD */
-> +        .cap                     = ct3d->flitmode ? 0x6 : 0x26,
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index aa85fc27a10..3e5bf3ef05e 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -2992,13 +2992,14 @@ IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
+>    * @addr: address within that address space
+>    * @xlat: pointer to address within the returned memory region section's
+>    * #MemoryRegion.
+> - * @len: pointer to length
+> + * @plen_out: pointer to valid read/write length of the translated address.
+> + *            It can be @NULL when we don't care about it.
+>    * @is_write: indicates the transfer direction
+>    * @attrs: memory attributes
+>    */
+>   MemoryRegion *flatview_translate(FlatView *fv,
+>                                    hwaddr addr, hwaddr *xlat,
+> -                                 hwaddr *len, bool is_write,
+> +                                 hwaddr *plen_out, bool is_write,
+>                                    MemTxAttrs attrs);
 
-Do we need this capability bit change?  The bit says the device is capable of doing it,
-not that we currently are.   I think from a spec point of view we aren't allowed to
-not support this.  Applies int the various other places as well.
+Renaming to plen_out is misleading, because it is used as an input as well:
 
+> -        *plen = MIN(page, *plen);
+> +        *plen_out = MIN(page, *plen_out);
 
->          .ctrl                    = 0x02, /* IO always enabled */
-> -        .status                  = 0x26, /* same as capabilities */
-> +        .status                  = ct3d->flitmode ? 0x6 : 0x26, /* same */
-
-This is correct but if we do leave teh cap alone we probably need to note
-that flitmode means we aren't in the old 68B flit mode.
-
->          .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
->      };
->      cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
-> @@ -1501,7 +1502,8 @@ void ct3d_reset(DeviceState *dev)
->      uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
->      uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
->  
-> -    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed);
-> +    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
-> +                              ct3d->flitmode);
->      cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
->      cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
->  
-> @@ -1540,6 +1542,7 @@ static const Property ct3_props[] = {
->                                  speed, PCIE_LINK_SPEED_32),
->      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLType3Dev,
->                                  width, PCIE_LINK_WIDTH_16),
-> +    DEFINE_PROP_BOOL("x-256b-flit", CXLType3Dev, flitmode, false),
->      DEFINE_PROP_UINT16("chmu-port", CXLType3Dev, cxl_dstate.chmu[0].port, 0),
->  };
->  
-> diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-> index 6aa8586f0161..f8d64263ac08 100644
-> --- a/hw/pci-bridge/cxl_downstream.c
-> +++ b/hw/pci-bridge/cxl_downstream.c
-
->  static void gen_rp_dev_class_init(ObjectClass *klass, const void *data)
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index eaeb68894e6e..cc8e7c3cbf3f 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-
-> @@ -1106,6 +1111,8 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
->      if (!target || !target->exp.exp_cap) {
->          lnksta = lnkcap;
->      } else {
-> +        uint16_t lnksta2;
-> +
->          lnksta = target->config_read(target,
->                                       target->exp.exp_cap + PCI_EXP_LNKSTA,
->                                       sizeof(lnksta));
-> @@ -1119,6 +1126,14 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
->              lnksta &= ~PCI_EXP_LNKSTA_CLS;
->              lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
->          }
-> +
-> +        lnksta2 = target->config_read(target,
-> +                                      target->exp.exp_cap + PCI_EXP_LNKSTA2,
-> +                                      sizeof(lnksta2));
-> +        pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA2,
-> +                                     PCI_EXP_LNKSTA2_FLIT);
-> +        pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA2, lnksta2 &
-> +                                   PCI_EXP_LNKSTA2_FLIT);
-
-Odd linewrap. Kind of makes some sense for the linksta one I guess you based this
-on but here, we can fit the whole parameter on one line.
+right here.  If non-null, the input should be the access length of the caller.
 
 
->      }
->  
->      if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
-
+r~
 
