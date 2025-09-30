@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C621DCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B0B5CCA46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3VeG-0000hF-UA; Tue, 30 Sep 2025 04:23:52 -0400
+	id 1v3Vdu-0000Ku-Uv; Tue, 30 Sep 2025 04:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Vdw-0000NU-S7
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:35 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VdG-0008W6-DD
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:47 -0400
 Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VdK-00019M-Qc
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:23:26 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VcU-0000oV-0j
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:22:44 -0400
 Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-421851bcb25so959312f8f.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:22:48 -0700 (PDT)
+ ffacd0b85a97d-3f99ac9acc4so679601f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759220565; x=1759825365; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759220511; x=1759825311; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LWuKL8TfgkuOIExpLDHpPzfjXl06+qaviUFlhAaNsvY=;
- b=V8rsKghz50z50vBCT1LEQU+km7CKxX83Fh+XGmFw0m6A8RY68XuyaumIOyIrWfYucj
- PjxHKzl4y3eM67kIaBeWuYdVbyjx/dOcpHNlJwHRowxbgwzX0qLluJLBGTP7mG33SwzQ
- 5YPPpAiKaWyb86ZUyda/U3+DtRphUHYYXLGkqkXi2uymHBM/bKlLcu83cqJsNsHR5lhw
- 64gzxZpGu6AljCRLj5XPYvOLNYKM4N+t5qCgznYP6Q7guqOSoSKke425oreYcs9dEhDR
- 7cqabZM/Cl81ZF+T2F0Kq1ULMzDn5gG+JHVN+JpktH+adxcmkIMK3bF6cqUcuU8Pwm7F
- vy0Q==
+ bh=jPaFfZE+Vm6W3t7QC31lKwf41cuqTfJ0BWTKMrsHvkU=;
+ b=ZsMUAj/chNZ3fVrr0juJJrJkbmyf/VeLeILmds2WrC7ZhfxBiIW0fp2yZ95jtUPJw+
+ rsCdLXyepjAXjyBtcS6x5AiQq9MjAUvasdTrSgUq51bUcpuLmL2veXWECB0zw8KeaK3V
+ bqMaj6W86n6jrxS9cpAzHrv47rEFNLzdnfgDUq8eP8xrEZhnVpiXNwpEHH5d3XXN2bdS
+ tPCqAvX3yUUG7fBQcxF349HpPM47NMnGVh0NlOeXvlyJGaBetSELOKBqrdOZqJP3MWib
+ GaBtqC5KZ5vgqd+hqfSVg9LdTcUt40FPYqJfmJzL6JMjmQg83ln8knJORYOnTETKA5O+
+ xcpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759220565; x=1759825365;
+ d=1e100.net; s=20230601; t=1759220511; x=1759825311;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LWuKL8TfgkuOIExpLDHpPzfjXl06+qaviUFlhAaNsvY=;
- b=ZfgOEmprhK5WmKxfIeV/dzBMLYXnPSaaA9aDKQidCd1obAZuRM5Gxkt4qPVwswlKK+
- bf//W5bhbQE0x8BaR7tDOYvV2JgC6/bUOJVP0rUGZA+jO4uLKxzmMKhACGWe7rgM3idp
- MraIfOCFxVOfnR+ljl03WcinMPWHJ3vsugn7S8zr1SiWlANHePP/RtjNQEecDJdxcWxF
- 3ZMrrCVit2gFs5jyolDVm+YIqjmcVIHxhojLUsAzf92pUslsU4NDV4//QlYwkjvyL3vc
- +eIR2NfPLYth9i3TpmoefltjduHRl0FD4npSoeo5+XgycP9jdeu68K8dOmfV0A9+RlvN
- ytHg==
-X-Gm-Message-State: AOJu0YxZpmzkWJ4Qo7RSxChKAxQuVaVHmGLbg+kebrESYBsfZXWNjSb6
- HANK1nVrjdajshfVzOPtsiL9LH5kCQXIVj+2pVFe/kpHv94I1QmL7fzRgX7tAinjG1tG+5PXvci
- 2EqZYTJjnPQ==
-X-Gm-Gg: ASbGncsGCBVeL6iSniUvDCF+tgXaveV6hUEjquWf7aWcrzS9rQ5o6Y5xAxgU0qf1LK0
- Nh58eUqta3cm9ptgWPJeM/XbELQET63pX5BiXivHlJwHY1acqjVRpmFgVxfJU0NtyFtIbwfIQkl
- ZfP7w4KGrt7uHsDVr5LN9GMTLZn4asKu/DiAmDjvXnQgK4+mAICPcnTxl+kRuGtmyQrrDOK4uI6
- GN6IwzIaL0PwMJdL+YNGhIRBje/p38kSpyfE/SAfSJvQMKgo/br4iXebjYcOvVAVs6naS12lKCR
- tcY42BWZuCyky/z0+CTOMPhX59UpQKt8MWsfz64kHnRqK1OE33StPHCus/sEgVdw/QwmalpDtl8
- qdKfT1ZGTsqHeIzic5X3YXGqK2kaDv3nDis3XSJva+Nm2joc9GHkjW1RywgixC3+ElTmnBiZT8T
- rAX9R7b55oV/4tOv3AZ7Dn
-X-Google-Smtp-Source: AGHT+IHE0WytwIozDLwCH/1E/tGTnOI9D8efEv7Y9aQk+zHE6qo+2lNsAzNshhN1K4J4d9d9Usou1Q==
-X-Received: by 2002:a05:6000:240c:b0:3dc:1473:18bd with SMTP id
- ffacd0b85a97d-40e497c348dmr17529188f8f.3.1759220565490; 
- Tue, 30 Sep 2025 01:22:45 -0700 (PDT)
+ bh=jPaFfZE+Vm6W3t7QC31lKwf41cuqTfJ0BWTKMrsHvkU=;
+ b=dmwMhk6Zi42ogE39fu2FytRAE42t3g6npJAEb3jR+QOkdFl4ifSfotAVR6f+AW7Mqe
+ tzuImpbLo52c3eHBzWrpsfwFQqe2JyvnMRMP2S6ipjWck3Hv9iZanrHvHRNXoUd+2Kmy
+ 9+E7QPskY6gacDnHc0uyX+Lm+igfYPph3ZDUrM1JdotGAwqlPOefIaPZUaV0JCRLRXfb
+ PKBYjCs4MekrujfrvIWhKavspMspvK3yQZw7QBLV0fNra8ViTD+uhz6iMLFcQl7YgLc5
+ g+/TtTiJa4s4ghMHR7ZcKI6EZ0DNG1EMC3543pJkRTdSoRS0l8SiqtLlZvKF9/doVX8T
+ KRjg==
+X-Gm-Message-State: AOJu0Yz/4MMWdzkf9S48Xd8dcJfT5E6uE+PFzzKDhNZXTjOAIPxz/wR6
+ gu828U9y2/5KE1YA8znINr4MJnOoWqWzGpD4JqV8U3Rl6LwKOLeXwyIrKGPHWL8BgnQPeWWCFrI
+ fcM01Z+WqUg==
+X-Gm-Gg: ASbGncv8aERfYQBbTVPdIW+2LUTaGWVQ9isEXgffO6X1XX99QMvODpXZwSPk3g7XYjQ
+ 9UOx52OkDXgMPYP2dFOeGK6JIZ6g4yHrynMtJ2uPnnRhVnHTqdGwnF0kkhaJ4ggplglpwmPA5Gs
+ JZjXE/PMebB7HhpxLBjG/xv7tufruwZ15EJE8oK+quaM9FLnpa/crSKVUst66Q7n7W7rNfDR7Af
+ McQj13m7mrLdSZ1RbJXlWKvhq9+7oairSwMinpVA2Yk5cdvI4PNJFD3hcdFDOe6ZNgun8pIEHD8
+ +B2H3lP7nsVrhMaXHODPGGKin5ztPtWfaj+4xNtRdqMPU2nFyYwQotgN8xTuDSTtHIf+y6uom4M
+ cVGp5rco1Ry3XoqIbnirCvvCATJ1F1bEqqPO0ERTSAefzG/07zVbhiyRjxz66vdn/ww5hrghlby
+ mKYmlf6PAOpJn43JhI42Vz
+X-Google-Smtp-Source: AGHT+IEB8eNGO8ibaj4OUUkCL1Gk/lot4nZRiwg5YPnw3XMPBC9mULq1peqy0gUd0OsdrauuTBslPQ==
+X-Received: by 2002:a05:6000:2511:b0:3d8:3eca:a978 with SMTP id
+ ffacd0b85a97d-40e44682229mr16305754f8f.21.1759220510700; 
+ Tue, 30 Sep 2025 01:21:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc7e2bf35sm21817486f8f.53.2025.09.30.01.22.44
+ ffacd0b85a97d-40fc5602f15sm21609359f8f.39.2025.09.30.01.21.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Sep 2025 01:22:45 -0700 (PDT)
+ Tue, 30 Sep 2025 01:21:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
@@ -85,10 +85,10 @@ Cc: Marcelo Tosatti <mtosatti@redhat.com>,
  Anthony PERARD <anthony@xenproject.org>,
  Jason Herne <jjherne@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v3 14/18] system/physmem: Un-inline
- cpu_physical_memory_read/write()
-Date: Tue, 30 Sep 2025 10:21:21 +0200
-Message-ID: <20250930082126.28618-15-philmd@linaro.org>
+Subject: [PATCH v3 04/18] target/i386/arch_memory_mapping: Use
+ address_space_memory_is_io()
+Date: Tue, 30 Sep 2025 10:21:11 +0200
+Message-ID: <20250930082126.28618-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930082126.28618-1-philmd@linaro.org>
 References: <20250930082126.28618-1-philmd@linaro.org>
@@ -97,13 +97,12 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::431;
  envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,61 +118,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to remove cpu_physical_memory_rw() in a pair of commits,
-and due to a cyclic dependency between "exec/cpu-common.h" and
-"system/memory.h", un-inline cpu_physical_memory_read() and
-cpu_physical_memory_write() as a prerequired step.
+Since all functions have an address space argument, it is
+trivial to replace cpu_physical_memory_is_io() by
+address_space_memory_is_io().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-common.h | 12 ++----------
- system/physmem.c          | 10 ++++++++++
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ target/i386/arch_memory_mapping.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 6c7d84aacb4..6e8cb530f6e 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -133,16 +133,8 @@ void cpu_address_space_destroy(CPUState *cpu, int asidx);
+diff --git a/target/i386/arch_memory_mapping.c b/target/i386/arch_memory_mapping.c
+index a2398c21732..560f4689abc 100644
+--- a/target/i386/arch_memory_mapping.c
++++ b/target/i386/arch_memory_mapping.c
+@@ -35,7 +35,7 @@ static void walk_pte(MemoryMappingList *list, AddressSpace *as,
+         }
  
- void cpu_physical_memory_rw(hwaddr addr, void *buf,
-                             hwaddr len, bool is_write);
--static inline void cpu_physical_memory_read(hwaddr addr,
--                                            void *buf, hwaddr len)
--{
--    cpu_physical_memory_rw(addr, buf, len, false);
--}
--static inline void cpu_physical_memory_write(hwaddr addr,
--                                             const void *buf, hwaddr len)
--{
--    cpu_physical_memory_rw(addr, (void *)buf, len, true);
--}
-+void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len);
-+void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len);
- void *cpu_physical_memory_map(hwaddr addr,
-                               hwaddr *plen,
-                               bool is_write);
-diff --git a/system/physmem.c b/system/physmem.c
-index e0c2962251a..033285fe812 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3189,6 +3189,16 @@ void cpu_physical_memory_rw(hwaddr addr, void *buf,
-                      buf, len, is_write);
- }
+         start_paddr = (pte & ~0xfff) & ~(0x1ULL << 63);
+-        if (cpu_physical_memory_is_io(start_paddr)) {
++        if (address_space_is_io(as, start_paddr)) {
+             /* I/O region */
+             continue;
+         }
+@@ -65,7 +65,7 @@ static void walk_pte2(MemoryMappingList *list, AddressSpace *as,
+         }
  
-+void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len)
-+{
-+    cpu_physical_memory_rw(addr, buf, len, false);
-+}
-+
-+void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
-+{
-+    cpu_physical_memory_rw(addr, (void *)buf, len, true);
-+}
-+
- /* used for ROM loading : can write in RAM and ROM */
- MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
-                                     MemTxAttrs attrs,
+         start_paddr = pte & ~0xfff;
+-        if (cpu_physical_memory_is_io(start_paddr)) {
++        if (address_space_is_io(as, start_paddr)) {
+             /* I/O region */
+             continue;
+         }
+@@ -100,7 +100,7 @@ static void walk_pde(MemoryMappingList *list, AddressSpace *as,
+         if (pde & PG_PSE_MASK) {
+             /* 2 MB page */
+             start_paddr = (pde & ~0x1fffff) & ~(0x1ULL << 63);
+-            if (cpu_physical_memory_is_io(start_paddr)) {
++            if (address_space_is_io(as, start_paddr)) {
+                 /* I/O region */
+                 continue;
+             }
+@@ -142,7 +142,7 @@ static void walk_pde2(MemoryMappingList *list, AddressSpace *as,
+              */
+             high_paddr = ((hwaddr)(pde & 0x1fe000) << 19);
+             start_paddr = (pde & ~0x3fffff) | high_paddr;
+-            if (cpu_physical_memory_is_io(start_paddr)) {
++            if (address_space_is_io(as, start_paddr)) {
+                 /* I/O region */
+                 continue;
+             }
+@@ -203,7 +203,7 @@ static void walk_pdpe(MemoryMappingList *list, AddressSpace *as,
+         if (pdpe & PG_PSE_MASK) {
+             /* 1 GB page */
+             start_paddr = (pdpe & ~0x3fffffff) & ~(0x1ULL << 63);
+-            if (cpu_physical_memory_is_io(start_paddr)) {
++            if (address_space_is_io(as, start_paddr)) {
+                 /* I/O region */
+                 continue;
+             }
 -- 
 2.51.0
 
