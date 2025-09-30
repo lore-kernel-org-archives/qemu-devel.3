@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B78CCA468
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC58CCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3a4h-0004AT-CS; Tue, 30 Sep 2025 09:07:23 -0400
+	id 1v3a5u-0004Tn-Jw; Tue, 30 Sep 2025 09:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3a4a-000496-ME
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:07:16 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3a5n-0004R4-Hk
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:08:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3a4Q-00012Y-C1
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:07:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3a5b-0001S2-MH
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:08:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759237620;
+ s=mimecast20190719; t=1759237695;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yrAo9+573TZW78eTC4r1U37P+0bWUA1nEfKQlH2YVeA=;
- b=W9ji7sNl/CJkhKSd6LaSUY07Vuk3Gf39XmvTjSdUJRiQljzp8bHWwHhMVpCkU3Kxy6K4qG
- wGTK+01MocdlRFQjd4leL8zDvoO2XZg7noi2hjjOlMsZTgRQzLTRpEDLnHNUm2CGs2Tpha
- 3efeET7xEJYFepu3HW1xSQ4qSo/wjkc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=q3DYhintTZNpucWNVkLjGSpk4kr3rdPsCtp6+rnXoYk=;
+ b=LnZ374uvvdRiyOWbj9dXULJfYYSGn/Ax78ZV8BNogCek9j4uw708a5VuWD2rhOgN/E/wIe
+ 9XYB7/fSO7gwJ7QVOGX+VYgl9XG4y9cVduLl5PnYzMgw7y35zbKflCEIFG9TALmT/F+ZyE
+ T+rWA30YxleFkhynvzKl7ycOvaVnOb8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-324-pEs7YMGSNWK028i0qvLWsA-1; Tue, 30 Sep 2025 09:06:58 -0400
-X-MC-Unique: pEs7YMGSNWK028i0qvLWsA-1
-X-Mimecast-MFC-AGG-ID: pEs7YMGSNWK028i0qvLWsA_1759237617
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3eff3936180so2251341f8f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 06:06:58 -0700 (PDT)
+ us-mta-184-aEkYGQ9jOjyu3IEtjQdWbA-1; Tue, 30 Sep 2025 09:08:14 -0400
+X-MC-Unique: aEkYGQ9jOjyu3IEtjQdWbA-1
+X-Mimecast-MFC-AGG-ID: aEkYGQ9jOjyu3IEtjQdWbA_1759237693
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e3af78819so22021585e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 06:08:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759237617; x=1759842417;
+ d=1e100.net; s=20230601; t=1759237693; x=1759842493;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yrAo9+573TZW78eTC4r1U37P+0bWUA1nEfKQlH2YVeA=;
- b=jO2pJA+Dk1Xfgkxl3CcK31dI7BWdVUJgIqbHKqLp+N5QlAVErPJtxPxPUfqNcW3CfO
- dsSLYME6WGe4FKxm+yqSaOCqDHtW3fhpkP1/N397ysstebYSkLik85DikY/iNqEkDbim
- VAGm/5MswyxG8KBpJKD54TEye0l+LqiX0iyQSAo0KOEsYTyVc+ZYoNCUVy795vsNn7Uo
- JRBqjD+BkMqQAOLjvsRlmRF1wJBXTgxDbsAfWizPIJhsDOFi7VMPyvRU/wRyBYyHWtN1
- PbHjJ0NDwvOeXuy8lxD+QAAjmG/kqUINvgsimTaW93SXXAlmBi+9y2PkUPtfv4RfWzwg
- JPDw==
+ bh=q3DYhintTZNpucWNVkLjGSpk4kr3rdPsCtp6+rnXoYk=;
+ b=BfDGIiP+izn3G8cf+ouq9qyKmHI9nezp0MI1++zWOXreLFY/mPUOAUkmSjCSH5vKwK
+ FoqxMEYgrHk9eWV5oU4tt3aLMX1ZLWU1u8huso8ICLLsL27qtff2bkpYm4bvMn8xGnqW
+ sM15jNJ815FNJR3GsL7yBNZL+J6u6iaturvvoX6iLXulOfsfXgmjBw8qtCWSxLHtTONP
+ kUsrrT6FvG+BFln0CVa/ADenAsd/dp305eIZz9uezIokpLJft17BorzY3gRLeioqJpRE
+ 2JSx5yCWuJjLDgEuysJfzm8L2FHeA4tdGZKN87Oy4ost5MwZYzArHpX3WmrIBngVxXTT
+ Lu6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNGB2nP+AmzHF+XJfsIEzd5slVr864QNsrKgkkPg/f3Dfl/vrC4ATukxI9/oThJ/8rjKHK3upSA81n@nongnu.org
-X-Gm-Message-State: AOJu0YzlgWIchPNL3hF2A9E0C5zZY1eROSJq/AD4eYnozWBwfteGeCVC
- isbJuM8ONKVKCkOqv5DVH0RPqrSteHaH+5xI3F84gSPfdyNnezVOVptUbFOtUEgts5JD2oyAeqc
- +o+PZs+cZovHix1Tle3GF1b0JQxFKFq2/k9XvNGYjULIcf8azYFjPQdTl
-X-Gm-Gg: ASbGnctvwZsZKnyByYxBZ/cHLCqF1hIV/t/YoLU06sW8s528p3IoHzHxbv+dgzh2v67
- J7j7aV4qyi6p94oFaajAd8UNeeug/IYY9WKLun798an5z6cJ9VaK28t9PU/GfbyLpg+AES7HE05
- SAQzyTeu+L5/mePizMEMo89Y0RZj20OJKykhhIGMgZtgsDLd2TvsLrJacDG3GyDBX5QG0rgooad
- mL8Lho+R0i86D34oMFgf/DpEAT1Tl0ag+Itd+pmOl+AA3GdbD15w7PdsqadvVJhTkZQ3py4KL6e
- OlGbs7IL+148XtDHo842t54sqDcoqZXALmS+5YNqMtFAkRXZktHFkmLYHOC9328BX2Zkk05bGyN
- yvZhLnfBkfw==
-X-Received: by 2002:a05:6000:220c:b0:3fa:5925:4b11 with SMTP id
- ffacd0b85a97d-40e4cb6ebe0mr18884214f8f.42.1759237617124; 
- Tue, 30 Sep 2025 06:06:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHd0q8SVYWfUckKczrn5GnQdZ2jRwOfpRP2DfzVc9jqNihzuvyDtcFgsVRknfbyHqbUopgO/w==
-X-Received: by 2002:a05:6000:220c:b0:3fa:5925:4b11 with SMTP id
- ffacd0b85a97d-40e4cb6ebe0mr18884186f8f.42.1759237616749; 
- Tue, 30 Sep 2025 06:06:56 -0700 (PDT)
+ AJvYcCWAvs4aCH6ELceiip7RcFmQ81KPHCd4xBNbZ9PhzN/uCX9znLedS4r8R/yenY3QBLlEuvyXGAdPrMR1@nongnu.org
+X-Gm-Message-State: AOJu0YyWWvzZ9g5up4XPB4pXRq/hPGJw/lZ5NzHi/S27xjEwBda73xVO
+ a9hHLBI9MzvXhf3XSK6db0tsfGU9zC3tZ6cO6xLqeO2+ffe42CmDXf897AU90UFZL48S5OPovvl
+ /5TYeZ4WJIJ3xqlMUqMo7Ua8pZmfIflZsmHog/5KEMkYt9Ld+M7Tsx52y
+X-Gm-Gg: ASbGncueutpfjDIKjJpRUr436Uv9+NcCdXAMcDZq5e5d08R5wQ+SLjc6/zTn9TIaXvP
+ R8D/jPUIUmZcqvB3x7gt7wEb1UljfofuBPIPQ/fpuG09kv9o1r/ZyoWkBT7DjsRVZz4C3GqeNLj
+ ea50g0BsY4Ztv903k/hFnH3EGljCv3CYtS98tK5yOU5/eqpyF8NokHnSWvN9uIsYLIXZuSaMiiJ
+ HoJMo7+L5LfCz1yEnZNajIOXHH08V7iFl9sXQIWcp9f/68nkZCXSdmVSiopeY5S9Ahx8Jc4amzx
+ jY4CAB//nZOEqSQFKZwMMUuqI5mInqec8PLvrTtPaqkCzLe8Tx6GBE02now0BdWrHjeeFh7Cn/c
+ rbUlP0V3jyw==
+X-Received: by 2002:a05:600c:4743:b0:459:d451:3364 with SMTP id
+ 5b1f17b1804b1-46e329eb11cmr194310715e9.24.1759237692687; 
+ Tue, 30 Sep 2025 06:08:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPVTYUAYdWHZCvd4QkvKhtCryTq4VNChEhFNpWMACfqBoTJqU5QhveONeYaa4yH6jYycwbww==
+X-Received: by 2002:a05:600c:4743:b0:459:d451:3364 with SMTP id
+ 5b1f17b1804b1-46e329eb11cmr194310305e9.24.1759237692250; 
+ Tue, 30 Sep 2025 06:08:12 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc88b0779sm22398588f8f.58.2025.09.30.06.06.55
+ ffacd0b85a97d-40fc5602dfdsm22471371f8f.33.2025.09.30.06.08.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 06:06:56 -0700 (PDT)
-Message-ID: <96f845b4-4821-4aa4-9548-fdbf3d6980bf@redhat.com>
-Date: Tue, 30 Sep 2025 15:06:54 +0200
+ Tue, 30 Sep 2025 06:08:11 -0700 (PDT)
+Message-ID: <a12dc871-0b50-4719-b9c6-9fcdbd3ebef5@redhat.com>
+Date: Tue, 30 Sep 2025 15:08:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 20/28] s390x: Guest support for Secure-IPL Code Loading
- Attributes Facility (SCLAF)
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v6 05/28] s390x/diag: Introduce DIAG 320 for Certificate
+ Store Facility
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -87,8 +86,8 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-21-zycai@linux.ibm.com>
- <ff8c93b0-5e6e-4335-9b47-c5b82ae246a0@redhat.com>
+ <20250917232131.495848-6-zycai@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -132,19 +131,20 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ff8c93b0-5e6e-4335-9b47-c5b82ae246a0@redhat.com>
+In-Reply-To: <20250917232131.495848-6-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,36 +160,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/09/2025 14.25, Thomas Huth wrote:
-> On 18/09/2025 01.21, Zhuoying Cai wrote:
-> ...
->> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
->> index bd2060ab93..c3e0c6ceff 100644
->> --- a/target/s390x/gen-features.c
->> +++ b/target/s390x/gen-features.c
->> @@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
->>       S390_FEAT_UV_FEAT_AP_INTR,
->>       S390_FEAT_CERT_STORE,
->>       S390_FEAT_SIPL,
->> +    S390_FEAT_SCLAF,
->>   };
->  >
->>   static uint16_t full_GEN17_GA1[] = {
->> @@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
->>       S390_FEAT_EXTENDED_LENGTH_SCCB,
->>       S390_FEAT_CERT_STORE,
->>       S390_FEAT_SIPL,
->> +    S390_FEAT_SCLAF,
->>   };
+On 18/09/2025 01.21, Zhuoying Cai wrote:
+> DIAGNOSE 320 is introduced to support Certificate Store (CS)
+> Facility, which includes operations such as query certificate
+> storage information and provide certificates in the certificate
+> store.
 > 
-> In the cover letter you wrote "All actions must be performed on a KVM 
-> guest" ... so does this feature depend on KVM or not? If you cannot use the 
-> feature with TCG, I think you should not add this to the "qemu_MAX" CPU model?
+> Currently, only subcode 0 is supported with this patch, which is
+> used to query the Installed Subcodes Mask (ISM).
+> 
+> This subcode is only supported when the CS facility is enabled.
+> 
+> Availability of CS facility is determined by byte 134 bit 5 of the
+> SCLP Read Info block. Byte 134's facilities cannot be represented
+> without the availability of the extended-length-SCCB, so add it as
+> a check for consistency.
+> 
+> Note: secure IPL is not available for Secure Execution (SE) guests,
+> as their images are already integrity protected, and an additional
+> protection of the kernel by secure IPL is not necessary.
+> 
+> This feature is available starting with the gen16 CPU model.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Collin Walling <walling@linux.ibm.com>
+> ---
+>   docs/specs/s390x-secure-ipl.rst     | 12 ++++++++
+>   include/hw/s390x/ipl/diag320.h      | 20 +++++++++++++
+>   target/s390x/cpu_features.c         |  1 +
+>   target/s390x/cpu_features_def.h.inc |  1 +
+>   target/s390x/cpu_models.c           |  2 ++
+>   target/s390x/diag.c                 | 44 +++++++++++++++++++++++++++++
+>   target/s390x/gen-features.c         |  3 ++
+>   target/s390x/kvm/kvm.c              | 16 +++++++++++
+>   target/s390x/s390x-internal.h       |  2 ++
+>   target/s390x/tcg/misc_helper.c      |  7 +++++
+>   10 files changed, 108 insertions(+)
+>   create mode 100644 include/hw/s390x/ipl/diag320.h
+> 
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 9b1de5c604..30ddc81c2b 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -13,3 +13,15 @@ will keep track of the number of certificates, their respective size,
+>   and a summation of the sizes.
+>   
+>   Note: A maximum of 64 certificates are allowed to be stored in the certificate store.
+> +
+> +DIAGNOSE function code 'X'320' - Certificate Store Facility
+> +-----------------------------------------------------------
+> +
+> +DIAGNOSE 'X'320' is used to provide support for userspace to directly
+> +query the s390 certificate store. Userspace may be the s390-ccw BIOS or
+> +the guest kernel.
+> +
+> +Subcode 0 - query installed subcodes
+> +    Returns a 256-bit installed subcodes mask (ISM) stored in the installed
+> +    subcodes block (ISB). This mask indicates which sucodes are currently
 
-Ok, after reading through a bunch of patches now, it seems like this feature 
-also works with TCG, right? So the modification to qemu_MAX should stay, 
-never mind me previous comment here, I was just confused by the term "KVM 
-guest" in the cover letter.
+s/sucodes/subcodes/
+
+Apart from that, the patch looks fine to me.
 
   Thomas
 
