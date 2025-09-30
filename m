@@ -4,84 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58ABCCCA468
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B78CCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3a0H-0001Qr-Iq; Tue, 30 Sep 2025 09:02:49 -0400
+	id 1v3a4h-0004AT-CS; Tue, 30 Sep 2025 09:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <grant@cylo.net>) id 1v3XoC-0000wN-Aa
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 06:42:12 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <grant@cylo.net>) id 1v3Xo7-0006xz-5t
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 06:42:11 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b3e9d633b78so502585066b.1
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 03:42:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cylo-net.20230601.gappssmtp.com; s=20230601; t=1759228921; x=1759833721;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZqZIwaLgasBz1CYhQ+UOQds+kBwM3T7vsmkVK76hqPk=;
- b=bBfyqeDUlPu7DISy+YpA5nZ9R+C9LUvBbB0enIi3UoENPL2/wMvPsm6YRDu4W/9UwL
- up1Q/AoqI0X5Igw8EGoC0KSPHgbIoRDmx4bR2dtxkfkjPVPshoBvLoV3uDTzCqPPUSSA
- OxS8xFRQTdfaG+dHSx/10R32l8qfM9+a2o/52bBwcRbqRwNieoUtd7Q6HI3cHzomxSRI
- X9njMmMBpzZstz/IU+yLN2x8jMVIbyl8F46J3+Q2m6+Ik3ywRZ0srvaK7jjuaTHA1ly3
- YAPwJZkA+HzN6/1R8lPd/h17KcgntRRBiNsyEv951K4GyIJs5V6XaOaTQz9rzT8Lkh+u
- caVA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3a4a-000496-ME
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:07:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3a4Q-00012Y-C1
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:07:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759237620;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=yrAo9+573TZW78eTC4r1U37P+0bWUA1nEfKQlH2YVeA=;
+ b=W9ji7sNl/CJkhKSd6LaSUY07Vuk3Gf39XmvTjSdUJRiQljzp8bHWwHhMVpCkU3Kxy6K4qG
+ wGTK+01MocdlRFQjd4leL8zDvoO2XZg7noi2hjjOlMsZTgRQzLTRpEDLnHNUm2CGs2Tpha
+ 3efeET7xEJYFepu3HW1xSQ4qSo/wjkc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-324-pEs7YMGSNWK028i0qvLWsA-1; Tue, 30 Sep 2025 09:06:58 -0400
+X-MC-Unique: pEs7YMGSNWK028i0qvLWsA-1
+X-Mimecast-MFC-AGG-ID: pEs7YMGSNWK028i0qvLWsA_1759237617
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3eff3936180so2251341f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 06:06:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759228921; x=1759833721;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZqZIwaLgasBz1CYhQ+UOQds+kBwM3T7vsmkVK76hqPk=;
- b=r2CT+ji7cnosoPRxYT+OLxy+GmYPxz7TZZIrJOwZSBDLlmCayuV0N674w2O6l3stAZ
- /nESCnorlVeoL2afZLu84ANtVnIThAAvwUBqlc+ruVmh+ifbE+PdLh3AaqWoBO+cnSo7
- IhBk/v9XKFdyMglVnKCTNqkT+EL+o5A2webwnyrfghjLzjseCUhMXOWdCiUIGwlfbxip
- kBZmmqkgg8sBwXuP9zjh1XsY/eBPXSvjzEgdMSSju3XJx7xtfGVEBFKPRouc9uv69/la
- A5CIEz5hU6B9NfhC2uU51leTQNiF8h0Xq7J6Y+yd75sHlpG+y4EZNlTYRNawR/+7ASGr
- n6EQ==
-X-Gm-Message-State: AOJu0Yx2uX5yWgqdjXk7i240f/Eblaj7c8k9OPjotCJlWjTe1lNB8+Zi
- 52nYM9eg7mJDMae0mRv3mFpvpcM7tCEQjeN8hPJUteP2GAKdQFhwVvUTj79Tlo4wefsGnCu92PP
- FnVFf+vZXW6ScOzFb3NLmv1uecpYchXb89Gzc2nqw
-X-Gm-Gg: ASbGncteT8w7QTnxspdxfTBGxxc4+Xq9IhJNRlPldIOmvuFFmcp2Gaenm5zDHHignvO
- YNov3SEJY/g0YVzeN9NDLEc6PFrwKPPUzw57ZiNEN9aYojrdPwlLkJY+LYel5H8w/WgA+M4GdKo
- RTcFQv+nHpjJS8kcqAgy2it9wrc4hRtNerNLkbJ+Dl+8oS1yz5RBPxvrcOhVyX9FYL/aEO7+YCp
- +cuO8ud66eyaFI8Wpo81QtW4TY=
-X-Google-Smtp-Source: AGHT+IEbomGev6qnZhCSxfoZdULg5VmLlItArsSqN9plr25P/x2MPC1EOJlJ4jCf07bZfB2xzTY7ojPbUuyRdTKJKrI=
-X-Received: by 2002:a17:906:29d8:b0:b40:7305:b942 with SMTP id
- a640c23a62f3a-b413b5aa29amr302593666b.25.1759228921192; Tue, 30 Sep 2025
- 03:42:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759237617; x=1759842417;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yrAo9+573TZW78eTC4r1U37P+0bWUA1nEfKQlH2YVeA=;
+ b=jO2pJA+Dk1Xfgkxl3CcK31dI7BWdVUJgIqbHKqLp+N5QlAVErPJtxPxPUfqNcW3CfO
+ dsSLYME6WGe4FKxm+yqSaOCqDHtW3fhpkP1/N397ysstebYSkLik85DikY/iNqEkDbim
+ VAGm/5MswyxG8KBpJKD54TEye0l+LqiX0iyQSAo0KOEsYTyVc+ZYoNCUVy795vsNn7Uo
+ JRBqjD+BkMqQAOLjvsRlmRF1wJBXTgxDbsAfWizPIJhsDOFi7VMPyvRU/wRyBYyHWtN1
+ PbHjJ0NDwvOeXuy8lxD+QAAjmG/kqUINvgsimTaW93SXXAlmBi+9y2PkUPtfv4RfWzwg
+ JPDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNGB2nP+AmzHF+XJfsIEzd5slVr864QNsrKgkkPg/f3Dfl/vrC4ATukxI9/oThJ/8rjKHK3upSA81n@nongnu.org
+X-Gm-Message-State: AOJu0YzlgWIchPNL3hF2A9E0C5zZY1eROSJq/AD4eYnozWBwfteGeCVC
+ isbJuM8ONKVKCkOqv5DVH0RPqrSteHaH+5xI3F84gSPfdyNnezVOVptUbFOtUEgts5JD2oyAeqc
+ +o+PZs+cZovHix1Tle3GF1b0JQxFKFq2/k9XvNGYjULIcf8azYFjPQdTl
+X-Gm-Gg: ASbGnctvwZsZKnyByYxBZ/cHLCqF1hIV/t/YoLU06sW8s528p3IoHzHxbv+dgzh2v67
+ J7j7aV4qyi6p94oFaajAd8UNeeug/IYY9WKLun798an5z6cJ9VaK28t9PU/GfbyLpg+AES7HE05
+ SAQzyTeu+L5/mePizMEMo89Y0RZj20OJKykhhIGMgZtgsDLd2TvsLrJacDG3GyDBX5QG0rgooad
+ mL8Lho+R0i86D34oMFgf/DpEAT1Tl0ag+Itd+pmOl+AA3GdbD15w7PdsqadvVJhTkZQ3py4KL6e
+ OlGbs7IL+148XtDHo842t54sqDcoqZXALmS+5YNqMtFAkRXZktHFkmLYHOC9328BX2Zkk05bGyN
+ yvZhLnfBkfw==
+X-Received: by 2002:a05:6000:220c:b0:3fa:5925:4b11 with SMTP id
+ ffacd0b85a97d-40e4cb6ebe0mr18884214f8f.42.1759237617124; 
+ Tue, 30 Sep 2025 06:06:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHd0q8SVYWfUckKczrn5GnQdZ2jRwOfpRP2DfzVc9jqNihzuvyDtcFgsVRknfbyHqbUopgO/w==
+X-Received: by 2002:a05:6000:220c:b0:3fa:5925:4b11 with SMTP id
+ ffacd0b85a97d-40e4cb6ebe0mr18884186f8f.42.1759237616749; 
+ Tue, 30 Sep 2025 06:06:56 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
+ [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fc88b0779sm22398588f8f.58.2025.09.30.06.06.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Sep 2025 06:06:56 -0700 (PDT)
+Message-ID: <96f845b4-4821-4aa4-9548-fdbf3d6980bf@redhat.com>
+Date: Tue, 30 Sep 2025 15:06:54 +0200
 MIME-Version: 1.0
-References: <CANdvy3dH9bBdopj_KUqaLD0Viq7uKn0jPObjqz6H7XvMgRnPrw@mail.gmail.com>
- <CAJ+F1CJwGZ-+dder5+icmuqSvtQ=fjce1zfrGKamYuYxVxOX9w@mail.gmail.com>
-In-Reply-To: <CAJ+F1CJwGZ-+dder5+icmuqSvtQ=fjce1zfrGKamYuYxVxOX9w@mail.gmail.com>
-From: "Grant Millar | Cylo" <rid@cylo.io>
-Date: Tue, 30 Sep 2025 11:41:50 +0100
-X-Gm-Features: AS18NWBkKuzAAfWq5Y8gNyj3jWGFhBBCSuLjYtjZOihxFQ7pXPF5fbBY2POIduo
-Message-ID: <CANdvy3c3bCN1km-oa3TY1it1H5qvNXMeM2zY18K1fM9gC5DPRA@mail.gmail.com>
-Subject: Re: [PATCH] ui/vnc: Fix NULL pointer dereference in
- vnc_disconnect_start
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=grant@cylo.net; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 20/28] s390x: Guest support for Secure-IPL Code Loading
+ Attributes Facility (SCLAF)
+From: Thomas Huth <thuth@redhat.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-21-zycai@linux.ibm.com>
+ <ff8c93b0-5e6e-4335-9b47-c5b82ae246a0@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <ff8c93b0-5e6e-4335-9b47-c5b82ae246a0@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Sep 2025 09:02:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,104 +160,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sure, no problem. This is on 10.0.3 (Debian 1:10.0.3+ds-0+deb13u1).
+On 29/09/2025 14.25, Thomas Huth wrote:
+> On 18/09/2025 01.21, Zhuoying Cai wrote:
+> ...
+>> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+>> index bd2060ab93..c3e0c6ceff 100644
+>> --- a/target/s390x/gen-features.c
+>> +++ b/target/s390x/gen-features.c
+>> @@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
+>>       S390_FEAT_UV_FEAT_AP_INTR,
+>>       S390_FEAT_CERT_STORE,
+>>       S390_FEAT_SIPL,
+>> +    S390_FEAT_SCLAF,
+>>   };
+>  >
+>>   static uint16_t full_GEN17_GA1[] = {
+>> @@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
+>>       S390_FEAT_EXTENDED_LENGTH_SCCB,
+>>       S390_FEAT_CERT_STORE,
+>>       S390_FEAT_SIPL,
+>> +    S390_FEAT_SCLAF,
+>>   };
+> 
+> In the cover letter you wrote "All actions must be performed on a KVM 
+> guest" ... so does this feature depend on KVM or not? If you cannot use the 
+> feature with TCG, I think you should not add this to the "qemu_MAX" CPU model?
 
-Sometimes I have to run the reproducer a few times for the race
-condition to occur.
+Ok, after reading through a bunch of patches now, it seems like this feature 
+also works with TCG, right? So the modification to qemu_MAX should stay, 
+never mind me previous comment here, I was just confused by the term "KVM 
+guest" in the cover letter.
 
-#0  object_get_class (obj=3Dobj@entry=3D0x0) at qom/object.c:1043
-#1  0x0000556a3b671655 in QIO_CHANNEL_GET_CLASS (obj=3D0x0) at
-./include/io/channel.h:29
-#2  qio_channel_close (ioc=3D0x0, errp=3D0x0) at io/channel.c:380
-#3  0x0000556a3b2036d9 in vnc_disconnect_start (vs=3D0x556a463d96a0) at
-ui/vnc.c:1310
-#4  0x0000556a3b2063d5 in vnc_disconnect_start (vs=3D0x556a463d96a0) at
-ui/vnc.c:1398
-#5  0x0000556a3b21b096 in vncws_handshake_done (task=3D<optimized out>,
-user_data=3D0x556a463d96a0) at ui/vnc-ws.c:105
-#6  0x0000556a3b673f54 in qio_task_complete (task=3D0x556a469a7fc0) at
-io/task.c:197
-#7  0x0000556a3b670a50 in qio_channel_websock_handshake_io
-(ioc=3D0x556a45ec60e0, condition=3D<optimized out>,
-user_data=3D0x556a469a7fc0) at io/channel-websock.c:588
-#8  0x00007f4f6dca9385 in ??? () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
-#9  0x00007f4f6dcabc78 in g_main_context_dispatch () at
-/lib/x86_64-linux-gnu/libglib-2.0.so.0
-#10 0x0000556a3b8015b8 in glib_pollfds_poll () at util/main-loop.c:287
-#11 os_host_main_loop_wait (timeout=3D0) at util/main-loop.c:310
-#12 main_loop_wait (nonblocking=3Dnonblocking@entry=3D0) at util/main-loop.=
-c:589
-#13 0x0000556a3b44b360 in qemu_main_loop () at system/runstate.c:835
-#14 0x0000556a3b746cb0 in qemu_default_main (opaque=3Dopaque@entry=3D0x0)
-at system/main.c:50
-#15 0x0000556a3b1b4319 in main (argc=3D<optimized out>, argv=3D<optimized
-out>) at system/main.c:80
+  Thomas
 
-On Tue, 30 Sept 2025 at 11:38, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
->
-> Hi
->
-> On Tue, Sep 30, 2025 at 1:59=E2=80=AFPM Grant Millar | Cylo <rid@cylo.io>=
- wrote:
-> >
-> > From 0d1c4ac000a66ef22b4a0cd0c4bedd840192096a Mon Sep 17 00:00:00 2001
-> > From: Rid <rid@cylo.io>
-> > Date: Tue, 30 Sep 2025 10:23:58 +0100
-> > Subject: [PATCH] ui/vnc: Fix NULL pointer dereference in vnc_disconnect=
-_start
-> >
-> > When a WebSocket connection fails during the handshake, vs->ioc can be
-> > NULL when vnc_disconnect_start() is called, leading to a segmentation
-> > fault when qio_channel_close() tries to dereference it.
-> >
-> > This can be reproduced by sending incomplete HTTP requests to the
-> > WebSocket port:
-> >
-> >   for i in {1..100}; do
-> >     (echo -n "GET / HTTP/1.1" && sleep 0.05) | nc -w 1 <IP> <PORT> &
-> >   done
-> >
->
-> I tried to reproduce without success.
->
-> Could you provide a backtrace?
->
-> > Add a NULL check before calling qio_channel_close() to prevent the cras=
-h.
-> >
-> > Signed-off-by: Rid <rid@cylo.io>
->
-> Your mail is not properly formatted. git am fails.
-> https://www.qemu.org/docs/master/devel/submitting-a-patch.html
->
->
-> thanks
->
-> > ---
-> >  ui/vnc.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/ui/vnc.c b/ui/vnc.c
-> > index 77c823bf2e..1669ed1b80 100644
-> > --- a/ui/vnc.c
-> > +++ b/ui/vnc.c
-> > @@ -1301,7 +1301,9 @@ static void vnc_disconnect_start(VncState *vs)
-> >          g_source_remove(vs->ioc_tag);
-> >          vs->ioc_tag =3D 0;
-> >      }
-> > -    qio_channel_close(vs->ioc, NULL);
-> > +    if (vs->ioc) {
-> > +        qio_channel_close(vs->ioc, NULL);
-> > +    }
-> >      vs->disconnecting =3D TRUE;
-> >  }
-> >
-> > --
-> > 2.39.5
-> >
->
->
-> --
-> Marc-Andr=C3=A9 Lureau
+
 
