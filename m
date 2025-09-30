@@ -4,97 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178ACCAC5B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Sep 2025 23:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE99CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 00:15:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3NjJ-000529-Ca; Mon, 29 Sep 2025 19:56:29 -0400
+	id 1v3NzQ-0007kv-0b; Mon, 29 Sep 2025 20:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
- id 1v3NjI-00051c-G4
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 19:56:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v3Ny3-0006sg-Cs; Mon, 29 Sep 2025 20:11:45 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
- id 1v3NjA-00082r-5V
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 19:56:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759190176;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=nsdqgWsgOWAFUBvQ3bR49EO/Yc+EpJMv8F9acZTCgM0=;
- b=CulZJThBZ1PgtEIFkJ1Az246n7WHlubcgIsn3JIi+svyhbGlKi1VXPxN2AksoE1j9V/o/9
- uZoaVpXQtIbUt/L19ja4OK/k13ozaDPviPgPs/je0TvR/Oki6B/tC8uO/E3omuchMA6MC+
- B6jz5hjvyjb4wAnmUY+4cP8UhSwqaxw=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-ZXiDPXQSPuupjRKnL8c91Q-1; Mon, 29 Sep 2025 19:54:53 -0400
-X-MC-Unique: ZXiDPXQSPuupjRKnL8c91Q-1
-X-Mimecast-MFC-AGG-ID: ZXiDPXQSPuupjRKnL8c91Q_1759190093
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-859b89cd3f2so1184270585a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 16:54:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759190093; x=1759794893;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nsdqgWsgOWAFUBvQ3bR49EO/Yc+EpJMv8F9acZTCgM0=;
- b=CM8taIfpYqtIzvDkxaZrubsUgdswbUeQPa84QvwVAheMvyX8lKxeYONYznEIzvyOLp
- 7pEDgXhI5c3DT+SL8ONo0FWMl989JOErdxZXlG9wNru8lcIp+pbfSE2yht/Aj0JRXIWM
- u/7T82ZajldWM9WIYuIdv1Rl9+a3oYCAgldhdiRh+oC8XluqfXDLIK6xvDvm/cOxHL7n
- eXCyYiSilTa6I3NPR9DZrkFzCLn90fHgGtxqgjdh76jC/D1yRt9Do8FPuojtI/AaUTcg
- +qo2oTV7gkdFjHxwyIO8BdfvcHjuY3RFZfQtbm8FadchqxhvI1i7u6RockPx8Rb2EW69
- 9lZw==
-X-Gm-Message-State: AOJu0YzAaSR/hXQTadYBVRVctSv74eaxeprChJeOQKF2BOTj+pQzbRl+
- +41LwP3CKa1OTFI+/B5m/ysyfoCjJTZQ0TRsmVZcq/Mlukk18gvRO23cp6lYYuNnopYmlSaxjLu
- BR/JJUjEzFeurfACCOcODUowNUAwMVGxl+aB2iJaAg9anGpEpgkdymnlB0XGqliwi0i7mmtoyLk
- xw1DTPI8YXkgZFHO4NIcKpwX+aSZ1PUdBIVdesHGFOLg==
-X-Gm-Gg: ASbGncvRSFdT3XErIugSyv9R4yFpmWY90gP/0J21Onm9GL6oY/BcXHoEHUAW87oRlRl
- AuL1Kl7B/ZUntVZehhiF93ERRNxbIFssn7GH6HUmoJ/s9qrXeXrKsP9xL2iEM9vTO2x3PDBFtDi
- w/uaMzk6QWCcm21W2nqMEu5HegGTUZ4bf0jmGrj73c+kHieweyYR8rxzVqFSVkR3RfCuz2cnuZq
- mVwiQuPVOG2WOIn9K2njNb3Ung3TfSd9x0cw1WB2zrXA0QnjtknIUAJEbmdjnbola1B4SG2LPSA
- vzOgerSPEV1uwKKWN1vazweEpwcVoktwiwxRzqoCAjjV4kzVknLjbFV7+5NU57P8yRk10w==
-X-Received: by 2002:a05:620a:298f:b0:858:f75a:c922 with SMTP id
- af79cd13be357-85adf5d27cbmr2643621185a.6.1759190093080; 
- Mon, 29 Sep 2025 16:54:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGguOZg5gCRZ6Hj6TooLH68Rd7o/f3PrbedUQkwS7wBAipA3y22SNEWeF141jCYs7TbZz8kFA==
-X-Received: by 2002:a05:620a:298f:b0:858:f75a:c922 with SMTP id
- af79cd13be357-85adf5d27cbmr2643618985a.6.1759190092641; 
- Mon, 29 Sep 2025 16:54:52 -0700 (PDT)
-Received: from csomani-thinkpadp1gen7.rmtusca.csb ([47.153.136.179])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-85c28a8a7e0sm935159385a.22.2025.09.29.16.54.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Sep 2025 16:54:52 -0700 (PDT)
-From: Chandan <csomani@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Chandan <csomani@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH] block: enable stats-intervals for virtio-blk devs with
- -blockdev
-Date: Mon, 29 Sep 2025 16:52:42 -0700
-Message-ID: <20250929235244.686567-1-csomani@redhat.com>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v3Nxu-0002QL-Vj; Mon, 29 Sep 2025 20:11:41 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EY6M7nZOFwS/MOGOpXqmmZqU4V3SuF1Z+2YZaWqi1tW8kyl53LWIgcZF5buvfa3vGhcYGpCnnTGNv5N48Q1UDmyW/I2OuHGl0NXninxrHA6dJWegzRbdZ6V/jse0sCIMuj0s7RL842TOfE3HoDxyrjdOH7ouvjXZxsWpRMHU7VYk1Dgk4rAUsMZmmy3cJNqXIp9j5aoVr2AFi5yKrR/5Ivdyf6KkubPp87JGQkoNXwx3iYxJeChXzKQqorQxVgvurQ02pM/igeWh331ekfmTLQRZpQFt7H07ySREgjlKi4vP3STZ9Zq+MyN6bOtcYO+JJpKTTcL6m6ctyM2ya5GHWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iwuEdRbLarqLunaMKFTXZg8HZ2CXPwmBkPElBi4E04g=;
+ b=nJEDq4y8GS/UhIuyxGFDIAqrGs6WTvgta8x9HtYiiHyc87odu2oGTLOIGYeA8yVtl+FFFmExz6yNG2TfiLAVIBo27w/wJoeiar1C69yhoHNo6LqYh1c+c1IXn/gfRmdjE4xTUzBHXPnprNC79faZOUM+jgiVWR45newPjNpMroPwmI4J9Q9vyl4JO3GOJCUetnfcn8/i1v1FgcVijsuM1ZJiD5g4zHB4hyVmcJ8fWknXsateWyQHpuVVg7STOyxi732k6TBSpV3qF6QW5vUvV3aIrIJi7gxAJTzdh1ViL/ZNVYwQd1ArrCDwNNxKE4YC1eaI/APoSsIviwHbhQwcjA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iwuEdRbLarqLunaMKFTXZg8HZ2CXPwmBkPElBi4E04g=;
+ b=isPDHi/gtHaCY6LgwIfruC3wrGUAW9WIW4Nl0kdt5HBw4ylkFhtkMAGtlr4ALwkGZxSj4NQRDzYbF2DMHU541l2ldHjuax/F/Up59dgpzestyTXnvlwCqK6jmB6Jsezrsv3j5VouzDGhSWvP1y4299LwS5sjElKD1aVGM98xvIKYOHH9aHRF0xWGiUKIcnfPywoQ9vFdHxTkdcq8WyC0zmpFLpcxuC9TTkUstSjUlK2biRD6GXlJ5tHRCNvljAuujjvYk0myv30OYvpPJc3VJ+if9cImAKsRU5Y7cUY2zt/nOyTqtb55ZCoukCczuU6jlgST503G4oAEMd0N8LIMDw==
+Received: from CH0PR03CA0423.namprd03.prod.outlook.com (2603:10b6:610:10e::6)
+ by SJ2PR12MB9138.namprd12.prod.outlook.com (2603:10b6:a03:565::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.17; Tue, 30 Sep
+ 2025 00:11:22 +0000
+Received: from CH1PEPF0000A34B.namprd04.prod.outlook.com
+ (2603:10b6:610:10e:cafe::99) by CH0PR03CA0423.outlook.office365.com
+ (2603:10b6:610:10e::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.16 via Frontend Transport; Tue,
+ 30 Sep 2025 00:11:21 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CH1PEPF0000A34B.mail.protection.outlook.com (10.167.244.10) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9160.9 via Frontend Transport; Tue, 30 Sep 2025 00:11:21 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 29 Sep
+ 2025 17:11:11 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 29 Sep 2025 17:11:11 -0700
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.126.190.180)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 29 Sep 2025 17:11:10 -0700
+Date: Mon, 29 Sep 2025 17:11:09 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Message-ID: <aNsgHV/Ebqx0WZXf@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-7-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=csomani@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250929133643.38961-7-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000A34B:EE_|SJ2PR12MB9138:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa898674-a166-49fe-56e5-08ddffb5e2eb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?GrsddmqSNKOI2BWpCA8Ow6L/201J0GQzrSPWs/iR0BNCXc6Q2lwSP42dX5uJ?=
+ =?us-ascii?Q?MhQxq1OFMFQ0NYrCer6s8nWrafaJ4XXFDaqKASm2Con7zluhdq8rs5xSFtpj?=
+ =?us-ascii?Q?6MR0+jPwkcGfigLETB6wWqa65rvT4gHTpqrKE5YFVB1p6aegF97YgTFG7avw?=
+ =?us-ascii?Q?EcBO67wCCrXMidC+R0NJJ7aaVjeuAGC4ZTDBcqbg/vXwl3Bgl9Ea+p1N3f6f?=
+ =?us-ascii?Q?66xx4u7sCNHLI8ofHJ+G+tWj2rl5QunyPQ+nGkuD9shnZIoQ5OJRndOVvkLU?=
+ =?us-ascii?Q?4W+TCyzPdMtLykzK/je8O9irlOyXhTk2XjllmHExWYFNT+1u+UPh/OyqytpZ?=
+ =?us-ascii?Q?nkzNvaXIhnyc4aqa/ZgAjgFNsYKQRUz5M64wWhQMUKT7tqVYQGFv/wixSjeC?=
+ =?us-ascii?Q?TTyJF1ZMM8EIm/5IjTHqUUfaSfq5ITMiLp8VnWq3useiqeZi2eUahiRJz+T0?=
+ =?us-ascii?Q?ogfmW/0JePSCAGJsNi98e63hUH/bgOsNj7Cn/b6SP15eFNADhBDC+AD5ZqaE?=
+ =?us-ascii?Q?SOqP1QUCT7pb6bwoygjpQpfbxJSkGZ5UTpwvxGXA9mL0BqFZYvELPeR11Sa7?=
+ =?us-ascii?Q?3aQVvOZDC47TmeZMWI/hlwhHMqckd/TvFbwD6kyS+7TgVGv9OIFxN3bdcBzc?=
+ =?us-ascii?Q?UB8ycsp4P84zJEchhjDRQ/7NsdqLQM+xy2LEmaiOxgGIxYzdfN4JLuZ/yMZy?=
+ =?us-ascii?Q?oZxHb/GFnTvo+pKQ6y9DXeWbRguLQebV5X6pzWOeq9TKmpUbn5PLuTZ103DI?=
+ =?us-ascii?Q?atQ5Fufplruv766VUWzP7zgZ0jT8lm0/pE7KprHGdtxSz6kIy7OXrnNqYANb?=
+ =?us-ascii?Q?JvmLU9nQCkfj1ihcAxD4g32yiie/yWPJagVr4sE4RHFCr735GKI+XYt7fVyh?=
+ =?us-ascii?Q?41a05CLQ5ihvh5QeBXhvRq0LRHxbVa8qIHkR2SjiCUBIbxUUxFrLKnVIdZTM?=
+ =?us-ascii?Q?ZOo327nLKbAHSl/6afkwZglWDjcAkrG/WQxqilFs8tsf3c0IzkHCbHkR98NR?=
+ =?us-ascii?Q?8RJAL95Zhb+5PSJ85zxSYr1lOEf8mW5ueA1YpQ+HyL+/QkWUOqpE0Y/+ZkZ3?=
+ =?us-ascii?Q?cJKhfhufitX4bSUMWQxM7qml9bTiehx1si9DpTIWrm6AstzsB/Ji5D6KjiMm?=
+ =?us-ascii?Q?h2iusiPYHJXCkw0L1l/61l3SJpc3iOkJ6Dp47OdN3NOh9Q0gzZuBiorp6lSw?=
+ =?us-ascii?Q?tXfeGdINiVs/tDMNYi7vTLcwe8gdEaxTs32vflElG87WPywq38VuiIUb1o9N?=
+ =?us-ascii?Q?89kg3YzAMdt10tjvF3mS5BUYq9B+duOrF1JNQ2s5BwXGK6DjOIYxlIqw+33J?=
+ =?us-ascii?Q?jn4n6apCVl2ird3EQrcpGk+Ggwx3mqKq8wFtD5T1XXvMat08QBlyp74wCxIv?=
+ =?us-ascii?Q?cqusBlYdDy5+jjBBOZVCeK5r85tAkFSTVsJ3vvBlZEXShBe49Isw26uM4eMk?=
+ =?us-ascii?Q?/G1DsMNOYXvvciTs8de2O9YdLUEWKRb+pyRG+rOaVfLGyUhetnwqAxHJ9/LG?=
+ =?us-ascii?Q?r2TAiRUAuirXKUidWPjxbJkPra9o4YJnJxL6dAFNHdy9+DkmEFfE7G/2tiy3?=
+ =?us-ascii?Q?drL4BFJ2UXRh6AVCtDk=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2025 00:11:21.6301 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa898674-a166-49fe-56e5-08ddffb5e2eb
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000A34B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9138
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,173 +160,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch allows the stats-intervals.* flag to be used with
--blockdev. Stats collection is initialized for virtio-blk devices
-at their time of creation. However, it is limited to just virtio-blk
-devices for now.
+On Mon, Sep 29, 2025 at 02:36:22PM +0100, Shameer Kolothum wrote:
+> Accelerated SMMUv3 is only useful when the device can take advantage of
+> the host's SMMUv3 in nested mode. To keep things simple and correct, we
+> only allow this feature for vfio-pci endpoint devices that use the iommufd
+> backend. We also allow non-endpoint emulated devices like PCI bridges and
+> root ports, so that users can plug in these vfio-pci devices. We can only
+> enforce this if devices are cold plugged. For hotplug cases, give appropriate
+> warnings.
+> 
+> Another reason for this limit is to avoid problems with IOTLB
+> invalidations. Some commands (e.g., CMD_TLBI_NH_ASID) lack an associated
+> SID, making it difficult to trace the originating device. If we allowed
+> emulated endpoint devices, QEMU would have to invalidate both its own
+> software IOTLB and the host's hardware IOTLB, which could slow things
+> down.
+> 
+> Since vfio-pci devices in nested mode rely on the host SMMUv3's nested
+> translation (S1+S2), their get_address_space() callback must return the
+> system address space so that VFIO core can setup correct S2 mappings
+> for guest RAM.
+> 
+> So in short:
+>  - vfio-pci devices(with iommufd as backend) return the system address
+>    space.
+>  - bridges and root ports return the IOMMU address space.
+> 
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Signed-off-by: Chandan <csomani@redhat.com>
----
- block.c                          | 50 ++++++++++++++++++++++++++++++++
- hw/block/virtio-blk.c            |  6 ++++
- include/block/block_int-common.h |  4 +++
- qapi/block-core.json             |  6 +++-
- 4 files changed, 65 insertions(+), 1 deletion(-)
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
-diff --git a/block.c b/block.c
-index 8848e9a7ed..e455d04e97 100644
---- a/block.c
-+++ b/block.c
-@@ -38,7 +38,9 @@
- #include "qapi/error.h"
- #include "qobject/qdict.h"
- #include "qobject/qjson.h"
-+#include "qobject/qlist.h"
- #include "qobject/qnull.h"
-+#include "qobject/qnum.h"
- #include "qobject/qstring.h"
- #include "qapi/qobject-output-visitor.h"
- #include "qapi/qapi-visit-block-core.h"
-@@ -3956,6 +3958,35 @@ out:
-     return bs_snapshot;
- }
- 
-+static bool bdrv_parse_stats_intervals(BlockDriverState *bs, QList *intervals,
-+                                  Error **errp)
-+{
-+    unsigned i = 0;
-+    const QListEntry *entry;
-+    bs->num_stats_intervals = qlist_size(intervals);
-+
-+    if (bs->num_stats_intervals > 0) {
-+        bs->stats_intervals = g_new(uint64_t, bs->num_stats_intervals);
-+    }
-+
-+    for (entry = qlist_first(intervals); entry; entry = qlist_next(entry)) {
-+        if (qobject_type(entry->value) == QTYPE_QNUM) {
-+            uint64_t length = qnum_get_int(qobject_to(QNum, entry->value));
-+
-+            if (length > 0 && length <= UINT_MAX) {
-+                bs->stats_intervals[i++] = length;
-+            } else {
-+                error_setg(errp, "Invalid interval length: %" PRId64, length);
-+                return false;
-+            }
-+        } else {
-+            error_setg(errp, "The specification of stats-intervals is invalid");
-+            return false;
-+        }
-+    }
-+    return true;
-+}
-+
- /*
-  * Opens a disk image (raw, qcow2, vmdk, ...)
-  *
-@@ -3987,6 +4018,8 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
-     Error *local_err = NULL;
-     QDict *snapshot_options = NULL;
-     int snapshot_flags = 0;
-+    QDict *interval_dict = NULL;
-+    QList *interval_list = NULL;
- 
-     assert(!child_class || !flags);
-     assert(!child_class == !parent);
-@@ -4205,6 +4238,19 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
-         g_free(child_key_dot);
-     }
- 
-+    qdict_extract_subqdict(options, &interval_dict, "stats-intervals.");
-+    qdict_array_split(interval_dict, &interval_list);
-+
-+    if (qdict_size(interval_dict) != 0) {
-+        error_setg(errp, "Invalid option stats-intervals.%s",
-+                   qdict_first(interval_dict)->key);
-+        goto close_and_fail;
-+    }
-+
-+    if (!bdrv_parse_stats_intervals(bs, interval_list, errp)) {
-+        goto close_and_fail;
-+    }
-+
-     /* Check if any unknown options were used */
-     if (qdict_size(options) != 0) {
-         const QDictEntry *entry = qdict_first(options);
-@@ -4261,6 +4307,8 @@ close_and_fail:
-     bdrv_unref(bs);
-     qobject_unref(snapshot_options);
-     qobject_unref(options);
-+    qobject_unref(interval_dict);
-+    qobject_unref(interval_list);
-     error_propagate(errp, local_err);
-     return NULL;
- }
-@@ -5190,6 +5238,8 @@ static void GRAPH_UNLOCKED bdrv_close(BlockDriverState *bs)
-     bs->full_open_options = NULL;
-     g_free(bs->block_status_cache);
-     bs->block_status_cache = NULL;
-+    g_free(bs->stats_intervals);
-+    bs->stats_intervals = NULL;
- 
-     bdrv_release_named_dirty_bitmaps(bs);
-     assert(QLIST_EMPTY(&bs->dirty_bitmaps));
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9bab2716c1..b730c67940 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1814,6 +1814,12 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
-                          conf->conf.lcyls,
-                          conf->conf.lheads,
-                          conf->conf.lsecs);
-+
-+    if (bs->stats_intervals) {
-+        for (i = 0; i < bs->num_stats_intervals; i++) {
-+            block_acct_add_interval(blk_get_stats(s->blk), bs->stats_intervals[i]);
-+        }
-+    }
- }
- 
- static void virtio_blk_device_unrealize(DeviceState *dev)
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 034c0634c8..1b4b7c636d 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -1277,6 +1277,10 @@ struct BlockDriverState {
- 
-     /* array of write pointers' location of each zone in the zoned device. */
-     BlockZoneWps *wps;
-+
-+    /* Array of intervals for collecting IO stats */
-+    uint64_t *stats_intervals;
-+    unsigned int num_stats_intervals;
- };
- 
- struct BlockBackendRootState {
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index dc6eb4ae23..dbb53296b1 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4771,6 +4771,9 @@
- # @force-share: force share all permission on added nodes.  Requires
- #     read-only=true.  (Since 2.10)
- #
-+# @stats-intervals: #optional list of intervals for collecting I/O
-+#                   statistics, in seconds (default: none)
-+#
- # Since: 2.9
- ##
- { 'union': 'BlockdevOptions',
-@@ -4782,7 +4785,8 @@
-             '*read-only': 'bool',
-             '*auto-read-only': 'bool',
-             '*force-share': 'bool',
--            '*detect-zeroes': 'BlockdevDetectZeroesOptions' },
-+            '*detect-zeroes': 'BlockdevDetectZeroesOptions',
-+            '*stats-intervals': ['int'] },
-   'discriminator': 'driver',
-   'data': {
-       'blkdebug':   'BlockdevOptionsBlkdebug',
--- 
-2.51.0
+With some nits:
 
+> +    /*
+> +     * We return the system address for vfio-pci devices(with iommufd as
+> +     * backend) so that the VFIO core can set up Stage-2 (S2) mappings for
+> +     * guest RAM. This is needed because, in the accelerated SMMUv3 case,
+> +     * the host SMMUv3 runs in nested (S1 + S2)  mode where the guest
+> +     * manages its own S1 page tables while the host manages S2.
+> +     *
+> +     * We are using the global &address_space_memory here, as this will ensure
+> +     * same system address space pointer for all devices behind the accelerated
+> +     * SMMUv3s in a VM. That way VFIO/iommufd can reuse a single IOAS ID in
+> +     * iommufd_cdev_attach(), allowing the Stage-2 page tables to be shared
+> +     * within the VM instead of duplicating them for every SMMUv3 instance.
+> +     */
+> +    if (vfio_pci) {
+> +        return &address_space_memory;
+
+How about:
+
+    /*
+     * In the accelerated case, a vfio-pci device passed through via the iommufd
+     * backend must stay in the system address space, as it is always translated
+     * by its physical SMMU (using a stage-2-only STE or a nested STE), in which
+     * case the stage-2 nesting parent page table is allocated by the vfio core,
+     * backing up the system address space.
+     *
+     * So, return the system address space via the global address_space_memory.
+     * The shared address_space_memory also allows devices under different vSMMU
+     * instances in a VM to reuse a single nesting parent HWPT in the vfio core.
+     */
+?
+
+And I think this would be clearer by having get_viommu_flags() in
+this patch.
+
+> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> index 1bcceddbc4..a8eb2d2426 100644
+> --- a/hw/pci-bridge/pci_expander_bridge.c
+> +++ b/hw/pci-bridge/pci_expander_bridge.c
+> @@ -48,7 +48,6 @@ struct PXBBus {
+>      char bus_path[8];
+>  };
+>  
+> -#define TYPE_PXB_PCIE_DEV "pxb-pcie"
+>  OBJECT_DECLARE_SIMPLE_TYPE(PXBPCIEDev, PXB_PCIE_DEV)
+>  
+>  static GList *pxb_dev_list;
+> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+> index a055fd8d32..b61360b900 100644
+> --- a/include/hw/pci/pci_bridge.h
+> +++ b/include/hw/pci/pci_bridge.h
+> @@ -106,6 +106,7 @@ typedef struct PXBPCIEDev {
+>  
+>  #define TYPE_PXB_PCIE_BUS "pxb-pcie-bus"
+>  #define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
+> +#define TYPE_PXB_PCIE_DEV "pxb-pcie"
+>  #define TYPE_PXB_DEV "pxb"
+>  OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
+
+Maybe this can be a patch itself.
+
+Nicolin
 
