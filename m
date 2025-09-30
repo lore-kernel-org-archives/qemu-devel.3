@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A72CCA468
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD26ECAC5BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3boF-0004Ww-Ux; Tue, 30 Sep 2025 10:58:32 -0400
+	id 1v3bpS-0004p6-6n; Tue, 30 Sep 2025 10:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3bo9-0004W5-PY
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:58:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v3bpQ-0004oh-QV
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:59:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3bo2-0004WS-3P
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:58:25 -0400
+ id 1v3bpK-0004pa-A1
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:59:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759244290;
+ s=mimecast20190719; t=1759244376;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FZs0h6AYVzq9vcCTOk5dqb/669DE7XtOFxnqYTO6g4Y=;
- b=GQjDGv2CIxQbShKomw1hXLNeI5IGpA+4S0X3axe9gjfiip0WzxfA8V4samrnaeOXHC8i3N
- UbxUyrnIl4TCgSIuKi+yuZrjOs9cD8MYoNRAAWmm9kCBS9fEVa242ALE/CSGp9eyl7a/Dz
- KYvCVlbGa0pb14tQ2ZDb40+sc/e9rEQ=
+ bh=COvh3/RdYN3KGRtb7nDzXlzK/XoTNPRrpmHpM5JkCDs=;
+ b=FnXYCBscoAzd4N4849SarDGlQI+YNZcwwCHfiqaBTjPo8iai5ZQrkEIWwrttucbIqO4Cdk
+ l7ZdFlBWotTIqHrC5WvMgztzs96mRgZ6TTTGcJSEeh7jYCvWMIDvKcecgdUMrotAOtIlH7
+ 1Rad+ooz8PCXeQW87PNJ+29UFFO8UfE=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-365-xIm0qQ79NI-dW7yWv4oYHA-1; Tue, 30 Sep 2025 10:58:08 -0400
-X-MC-Unique: xIm0qQ79NI-dW7yWv4oYHA-1
-X-Mimecast-MFC-AGG-ID: xIm0qQ79NI-dW7yWv4oYHA_1759244288
+ us-mta-138-JDX-PDTXMPSy28SzaQDOnQ-1; Tue, 30 Sep 2025 10:59:28 -0400
+X-MC-Unique: JDX-PDTXMPSy28SzaQDOnQ-1
+X-Mimecast-MFC-AGG-ID: JDX-PDTXMPSy28SzaQDOnQ_1759244367
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b3cb0f2b217so365446866b.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 07:58:08 -0700 (PDT)
+ a640c23a62f3a-b07c2924d53so535224466b.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 07:59:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759244287; x=1759849087;
+ d=1e100.net; s=20230601; t=1759244366; x=1759849166;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FZs0h6AYVzq9vcCTOk5dqb/669DE7XtOFxnqYTO6g4Y=;
- b=juzXVrL5qgsprMjuddStAaVgH/sVD2/7d2YNk3QM1jYoSpsrOHtNeicJwnmt+zKf2s
- JJjMAzuxMXT8pdSHGn7tTLr6iXD3xUWQyQrQikShkXg8eftIFD15qhYqf0Y4yJSzyhZh
- sOoMBqhHnS2OOwo77f0oDAg13APlKvVAiq8tSfkpuedgbiYu75r/h3AKZmc2iGRDb8gx
- jLYoOm3LY461JLCgqkYdkikA9u45pMauvgHyhAKO50tBjBvdxPwDHt4YkTMwK6QIJjmd
- 4kNlvf/CpB7QFG0UfKxIJr1/xRONsSFZF64Q/UvPPfB+MIuQU5VKMN74ZTB78GLYXCP9
- yG6Q==
+ bh=COvh3/RdYN3KGRtb7nDzXlzK/XoTNPRrpmHpM5JkCDs=;
+ b=Ssf8eJKSCWJcQz/yI5f4CnztDqjD5RuEw8xB3zAR+EKVQLMqs1HYR3y6q437kKQlxT
+ BDHe3b5UJ0mqcLdMtNL8OKKTEx3f/o64SRLi9W7GmwM1OtnfY2zpGJ7GTtepNJ9W2W5z
+ 8hUZybiF37i2HhIPCzBqoUM1su3G12dcEDuLHYRu1SMs6JJqp5au5h528K+hzyUhThwv
+ xJrwLwCSy7cl6t873mpr6p0bUzeIMglXgC9eDbmTR8uNLL4wKK2HqNjBl9fT/Q2O9bfN
+ Ye2ROu3J2HBq/K28Nt08vKMOIhi8MMrtudXDYEsq+fOLL+6l4ndbVuKUtBH3AruQ3RBQ
+ 1vPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGFJI0CmA480fB4twxpttc14m7Zq+Cmjh02N+qwbcguN2g5/JpDPVHabfrxurR7PiBY4GSkrmKbkvd@nongnu.org
-X-Gm-Message-State: AOJu0Yx+znY+K329eoVEK+pE/FlxeK9t5ehoHechYNG0H+nZYIe6SA0+
- y/upFS8+zHB1WgZmI6vwf7SHcLLLhz3a79lyGHcQZBdf4rlspODq3d1XHUbISszGZ7BaLRieX8z
- dSg2RzrBBadXMFcI6yPJbkI2r3Oa8sWaCWD6aGHqPCa99qyx3lArSAoXR
-X-Gm-Gg: ASbGncvPOBlpYgEvn9dBm/bLLQN98eN/HRBwbpOZM6AV5rtCV+I4TD5+whQVXNIXWea
- Kdz3r6WNQrsM1nIzhiqT1StWI11395JJPVEuu3MIR6m/b5OVZ5dHBSrQdmpgO6OId2cvEeBK5vf
- izr7BSzHGgYXAkw01deVob0FCcM7d7gTgOzq6OUbtcW46wSnEqqnkOf7DXcysUWtcXra0ad0Rlx
- UALlXOm5EmMjZSZWrs9xKItIMYFFC4eIn30QxFDw4hoq0+c/i7ZkxZ9oAllkDqlLUR/77GVDulL
- IYiC6RJEHEvP2W83h/zh/zV2kaoQIespKRGD7QjxZgKXd5DcYns6Vz+1Es/ABrEyYUtehL8+L7a
- ea656O32kQSdv8UmuOJWEQKAmBvtp2Oy+CI3QRSOuSYoPMkU/zuA=
-X-Received: by 2002:a17:907:702:b0:b04:7107:9758 with SMTP id
- a640c23a62f3a-b34baf43b3amr2210653866b.43.1759244287510; 
- Tue, 30 Sep 2025 07:58:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUGMIpnIK44bbWU7+aXndC+moPoC+0yLIifvUBARDStwQ2sbA17FTE0A5aMsenHTTiCZBueg==
-X-Received: by 2002:a17:907:702:b0:b04:7107:9758 with SMTP id
- a640c23a62f3a-b34baf43b3amr2210650066b.43.1759244287083; 
- Tue, 30 Sep 2025 07:58:07 -0700 (PDT)
+ AJvYcCWLUxopF/Sj8ZnNMHX7M/FxovcEPq63rD0dt2zhCIqBbfZ7Ij9Mt0pLxv4eeONK3BagxLdRyuDCDKpi@nongnu.org
+X-Gm-Message-State: AOJu0Yzg/gyo3Ut4Hpu307BTEHA+eiRvW9LOfd30QxxJNhZ0s0aIsIS5
+ myUeY0UKeCO5g2qZhWPXb5+Tm3U7NvcHVF4iTUe+3Aq1qxAf0Lx0auq2Ua1fNNKlgsOErIHQRDs
+ kTYjCvNgKIW42w7M6S4OaGirhKk2KCw8ZCtLCV6oYEGa/sBhEGxRUzq+Scwnzz1sr
+X-Gm-Gg: ASbGncsCBTMeeg8cbm54ySqpbOPGFHMkS4whZqWTOaF7rhkObGx+QgHxHpqrar+3odj
+ wIYVmhGILyuF2SEfCdC+/hgo1nXa6oGAOeC6sMCaCCKJ5eEZoiNJ7Kg1CiMgHKu8Q4wJKh6Oe9b
+ i5Tzevu+Rd9DvZaPxcQ/eJmzWjWZI/GhXbh7rk/pXNvn7WwT9ydlaMv0m8XV0dPD4nIkqx5HGKm
+ 84i3wRLm1tMPIPGh/LIJWUt1V7DDNH5VYM9LUiMXUH2XptDrJwJei9vmXJRZNzs/eedD7TCVrGk
+ Ia2Colas0pqpL+5j2jWXuvFChK3rIT6UofdEcB+xs23eotmOecOiHe6IJJxquXg1g0mlf/53qln
+ +9QKqfMWL212SE13n0aDEaz41WCfS2aQFtlznPZ9U7F61/nFCuw0=
+X-Received: by 2002:a17:907:980b:b0:b40:6e13:1a7f with SMTP id
+ a640c23a62f3a-b406e131b70mr727494166b.27.1759244366638; 
+ Tue, 30 Sep 2025 07:59:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqH8Crt4pdWyr7i0JDz7DfER45AYlRhv0SX7Znh3FS/u+oMO2t3sMY5/1brsJTaGh6men2yw==
+X-Received: by 2002:a17:907:980b:b0:b40:6e13:1a7f with SMTP id
+ a640c23a62f3a-b406e131b70mr727490266b.27.1759244366167; 
+ Tue, 30 Sep 2025 07:59:26 -0700 (PDT)
 Received: from [192.168.10.81] ([176.206.127.188])
  by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b3bc5761d3dsm647453966b.19.2025.09.30.07.58.05
+ a640c23a62f3a-b40d70daf36sm296673166b.81.2025.09.30.07.59.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 07:58:06 -0700 (PDT)
-Message-ID: <48454dc0-7047-4208-9a60-d25dad5aff35@redhat.com>
-Date: Tue, 30 Sep 2025 16:58:04 +0200
+ Tue, 30 Sep 2025 07:59:25 -0700 (PDT)
+Message-ID: <bc7c8163-4c6d-4690-a0f1-4e00b35a5ec0@redhat.com>
+Date: Tue, 30 Sep 2025 16:59:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 07/27] configure: set the bindgen cross target
@@ -132,15 +132,15 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
 In-Reply-To: <20250924120426.2158655-8-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -159,6 +159,90 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/24/25 14:04, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Implement a bash version of rust-bindgen rust_to_clang_target() to
+> convert from rust target to clang target.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+
+> ---
+>   configure                            |  7 ++++
+>   scripts/rust-to-clang-target-test.sh | 43 +++++++++++++++++++
+>   scripts/rust-to-clang-target.sh      | 62 ++++++++++++++++++++++++++++
+>   3 files changed, 112 insertions(+)
+>   create mode 100755 scripts/rust-to-clang-target-test.sh
+>   create mode 100644 scripts/rust-to-clang-target.sh
+> 
+> diff --git a/configure b/configure
+> index 66613f3f4c..bf964947b8 100755
+> --- a/configure
+> +++ b/configure
+> @@ -1878,6 +1878,13 @@ if test "$skip_meson" = no; then
+>         eval "c=\$devices_${a}"
+>         echo "${a}-softmmu = '$c'" >> $cross
+>     done
+> +  if test "$rust" != disabled; then
+> +      if test "$cross_compile" = "yes"; then
+> +          . "$source_path/scripts/rust-to-clang-target.sh"
+> +          clang_target=$(rust_to_clang_target "$rust_target_triple")
+> +          echo "bindgen_clang_arguments = [$(meson_quote --target="$clang_target")]" >> $cross
+> +      fi
+> +  fi
+>   
+>     echo "[built-in options]" >> $cross
+>     echo "c_args = [$(meson_quote $CFLAGS $EXTRA_CFLAGS)]" >> $cross
+> diff --git a/scripts/rust-to-clang-target-test.sh b/scripts/rust-to-clang-target-test.sh
+> new file mode 100755
+> index 0000000000..ff6f8fcdc5
+> --- /dev/null
+> +++ b/scripts/rust-to-clang-target-test.sh
+> @@ -0,0 +1,43 @@
+> +#!/usr/bin/env sh
+> +#
+> +# Copyright (C) 2025 Red Hat, Inc.
+> +#
+> +# Based on rust_to_clang_target() tests from rust-bindgen.
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +scripts_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+> +. "$scripts_dir/rust-to-clang-target.sh"
+> +
+> +test_case() {
+> +    input="$1"
+> +    expected="$2"
+> +    result=$(rust_to_clang_target "$input")
+> +
+> +    if [ "$result" = "$expected" ]; then
+> +        echo " OK: '$input' -> '$result'"
+> +    else
+> +        echo " FAILED: '$input'"
+> +        echo "  Expected: '$expected'"
+> +        echo "  Got:      '$result'"
+> +        exit 1
+> +    fi
+> +}
+> +
+> +echo "Running tests..."
+> +
+> +test_case "aarch64-apple-ios" "arm64-apple-ios"
+> +test_case "riscv64gc-unknown-linux-gnu" "riscv64-unknown-linux-gnu"
+> +test_case "riscv64imac-unknown-none-elf" "riscv64-unknown-none-elf"
+> +test_case "riscv32imc-unknown-none-elf" "riscv32-unknown-none-elf"
+> +test_case "riscv32imac-unknown-none-elf" "riscv32-unknown-none-elf"
+> +test_case "riscv32imafc-unknown-none-elf" "riscv32-unknown-none-elf"
+> +test_case "riscv32i-unknown-none-elf" "riscv32-unknown-none-elf"
+> +test_case "riscv32imc-esp-espidf" "riscv32-esp-elf"
+> +test_case "xtensa-esp32-espidf" "xtensa-esp32-elf"
+> +test_case "aarch64-apple-ios-sim" "arm64-apple-ios-simulator"
+> +test_case "aarch64-apple-tvos-sim" "arm64-apple-tvos-simulator"
+> +test_case "aarch64-apple-watchos-sim" "arm64-apple-watchos-simulator"
+> +
+> +echo ""
+> +echo "All tests passed!"
 > diff --git a/scripts/rust-to-clang-target.sh b/scripts/rust-to-clang-target.sh
 > new file mode 100644
 > index 0000000000..5451807888
@@ -166,15 +250,6 @@ On 9/24/25 14:04, marcandre.lureau@redhat.com wrote:
 > +++ b/scripts/rust-to-clang-target.sh
 > @@ -0,0 +1,62 @@
 > +#!/usr/bin/env sh
-
-No shebang is needed, since the file is sourced into the configure script.
-
-Otherwise,
-
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Paolo
-
 > +#
 > +# Copyright (C) 2025 Red Hat, Inc.
 > +#
