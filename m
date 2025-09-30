@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA2E1CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E15C6CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Qbh-0005lo-GN; Mon, 29 Sep 2025 23:00:49 -0400
+	id 1v3Qx1-00025I-Td; Mon, 29 Sep 2025 23:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Qbe-0005lc-Ht
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:00:46 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3QbW-0003SW-Gl
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:00:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e29d65728so36359975e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 20:00:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759201233; x=1759806033; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=b/hv/3GrGGdBrjqDhkGziv/l9BjnzqX5+ubPW41cLL4=;
- b=QhWlrpXm9HQ0kaZEPr7dpKrCWlFk2AJPmgtmFGc4/5YPKGIGy1VqWckDxvS69wTPO1
- MBNt4rBB6ZT52kaZxJbf0GZZsAhlnraNGCgVt5h9ZGVY5p3Z+P+fi2tf/Dp5Fqq1/XFn
- 5hbGHc7RDtYte4E8G1jCPTury4pvmg1hd3TL5x/9y+F4RgOLxRnzVOWs7K9i3BH07Y7b
- DNcuoTRdhtG2HeRe4qwLxtR6E6Nt9/6CuF+B5hpEiozV6joq4OHUpEhfMzXtNiw4yH3b
- 9dV38iuKJFwGyzBsNDZBQIaKP6L4hgVArds/MFo9cJ9DZMS3EHGCbKuUSWleqQ3gmnnF
- bIiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759201233; x=1759806033;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b/hv/3GrGGdBrjqDhkGziv/l9BjnzqX5+ubPW41cLL4=;
- b=H00ZvMZmyzIDwqDnQ/CwwxM573OdHW6+4jyShDOBBAu+57aAy6KhSxyAll1gU2kriq
- p3z6kTTdnSy2OHJxMASG+qYXrlaPJfN8oX7XdANh6Ik5xy8tCbDT0E8Dd6s9ZvL8rfjm
- 7qFRxtsdctGWZfrXGZs9sndO26+QcGYvkvXtpQlBOrUao4DxTDQgsUgUZNw0GLnr4IsC
- uErmzL6+glm3Olz26MdXfEsWcFoETdvDAsFsZGfhcVx4+25QuErS4OVmuNrz6spzeCPG
- 0326G1L1oZ18mTRiThythrJ1cu/9Ii3H53Bim3HhmiwvRTgwkEmFum3tcAPDWVtGre5e
- +P1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBIJq5qpH7UscJdZnfwAM+kVfmje/+tvJMqw+VNKPEgdoA/cJuVdX+1OjjMhNQh5AQ5sWZXFdX6kb8@nongnu.org
-X-Gm-Message-State: AOJu0Yw2mlMrhQUH6iCpaXD5f77Sv7RotNUpabrKhaOW9OnByQ75Wu16
- BO0P2eGmCjahod9EXq3FmSOUNzb6p0TwH9SrKnyRKnTyFfcY27hAsbvdidtqBDdVH/A=
-X-Gm-Gg: ASbGncvV+z6rWZRbT9o7297VzVVE4dLpM4rLaEt9SO3UPSxNptp2x5hD5OHDK6d1e0s
- kieDz02FsgJ8gQSd7Jc1Dn4+Ar/eHcgmqMzmVkExmV7ovItZf5hlDnj+Haj5IYr3i0GpYqb+cD+
- VytfwxrSoZDrnmFGPay9qwe3yTN866xBC1ZG26HOuws7qwQX5nnyujRbU5eJ8BOQcs0mTXXyWQM
- nYTEJf1XQ+e7jcA010yMjRFEiIcKnijSsAB3rqZ/UsT3xIikSLtI/d1QEfOXdzwQsiybY2fYujQ
- uf9vYztusplUz+ZjX28wCZGFATBfv55qdABwW6YcprILQBysDJhZMuecGegOLllDzhFy+e/o5tT
- pAQrDQm8wpeT2gi5j2OmW/bf1Up9DydwK4D3FDF6QzUFnLaheLB96bEcbTKqPg3H1PQU4qOu4SG
- k1Xy0RFlYyuP4g5MtU1acY7xQw70YkZCapAWY=
-X-Google-Smtp-Source: AGHT+IGEelNP/lg9tXtwopHMKswVUBJM2tw/p4SUuvPY4kDW9PJ0vOqJ9DW93DzQbJqPzd8B+ECvcA==
-X-Received: by 2002:a05:6000:22c2:b0:3e7:ff32:1ab with SMTP id
- ffacd0b85a97d-40e4b294f33mr13948290f8f.50.1759201233432; 
- Mon, 29 Sep 2025 20:00:33 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc72b0aeesm21094452f8f.49.2025.09.29.20.00.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 20:00:32 -0700 (PDT)
-Message-ID: <a7c48a36-8a7b-41b3-bd3c-3cd56b1c1a26@linaro.org>
-Date: Tue, 30 Sep 2025 05:00:30 +0200
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1v3Qwy-00024g-I9
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:22:48 -0400
+Received: from fly.ash.relay.mailchannels.net ([23.83.222.61])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1v3Qws-00027v-S1
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:22:46 -0400
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 28651421FC3;
+ Tue, 30 Sep 2025 03:22:33 +0000 (UTC)
+Received: from pdx1-sub0-mail-a315.dreamhost.com
+ (100-111-81-75.trex-nlb.outbound.svc.cluster.local [100.111.81.75])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id B91F742251A;
+ Tue, 30 Sep 2025 03:22:32 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1759202552; a=rsa-sha256;
+ cv=none;
+ b=u4wNwauwjghOq98QsLvNW33A1qBxKHf8lgpNptbUE1Xxpx4V+9cNR4br8loyvL5UXN3BL5
+ 0xtRTMmFM6ljKhqDBC28dJBs36H0u2VlU5KvXqk3A5EzYIOzXa6vLJtZ4jhWJTLjHENp7j
+ dObOtmlP+Cv5Esk7l6nYynJDQAhb2Nh1odiziE+5SzYcg1pSWlcspsOlQKyjrw5uFfOurz
+ jfrNhviXDrw1ZC+Hi0YsDGFIKuvn+Rx13HHeJLFOzTsvZo7qiMzdVcNInaFoRHHdjszqgk
+ fGKTlxFmF2nxVddMv95cx6WCjxVUgpxadhnyy+Zg12PP2CdOkP2qlKIbPOG4SQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1759202552;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:dkim-signature;
+ bh=4HKJL5h1ARnqVldpjrYAQKbNdJpIoNaPV8mz4ta3ep8=;
+ b=MEL9ba2pVPDKNdXVTENJSek2fbBCGQlLuNfOyqulYifzYi90eeST3I4MYlLVg0aUSj2qUa
+ y3Em9ikEZvZ6VODgiRlEufgo1Q1SDisqfkFvP/eywU7Ai+eaIC7RpZLHbk5Zz1r+emzbvv
+ ZdZSgzlED8mU9AVMUAk21X6yiafXS60Z8bWn4IWWACtkWmZXuNc+1CIp0xMp8WkOU7hBEk
+ McTpzB0cEoWa/sZ72res6zqwA0rtO/8yaAqibS/06rPAaRfEntzKl23SS9v9x1pp0pGurK
+ nidaNog+uWb/2uN07UTYTejYRtqS9uZ+pHzeqhVlW0cidwrjLnzL9HU054p1Cg==
+ARC-Authentication-Results: i=1; rspamd-867694b6c6-kkwjg;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Eight-Ruddy: 0b037e9f5b2ff185_1759202553029_2640901499
+X-MC-Loop-Signature: 1759202553029:3492559014
+X-MC-Ingress-Time: 1759202553029
+Received: from pdx1-sub0-mail-a315.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.111.81.75 (trex/7.1.3); Tue, 30 Sep 2025 03:22:33 +0000
+Received: from offworld.lan (syn-076-167-199-067.res.spectrum.com
+ [76.167.199.67])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dave@stgolabs.net)
+ by pdx1-sub0-mail-a315.dreamhost.com (Postfix) with ESMTPSA id 4cbNfJ0CXlzR4; 
+ Mon, 29 Sep 2025 20:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+ s=dreamhost; t=1759202552;
+ bh=4HKJL5h1ARnqVldpjrYAQKbNdJpIoNaPV8mz4ta3ep8=;
+ h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
+ b=kwJgGbM5MNibHxtXtt7p6ZAZeoHbXFdfUuB8jaW2BAdUwu3e41HrrIIr2B7wVS0Vx
+ VQyGgfmdu8SWpSiM3ADjqU29tbdQUVUG+z3NhvuOeYG2dmlySBrdvvYSsfi2WplsYi
+ mlHazcw6iRY5ysG2XNjDuMO1g+aDsUbfATjJYNlmYOt/VEvul+oMGHifTwVtpDSOpE
+ mm94JBIlJK70Nga4gyQMXbSenoRtyinxfYTng9BBxTzcSVVeRS6zkZ+/kGim+pu1DH
+ l6djMlbsNKQjUr/isaWXWbUF7JZrdOX3e8/qaEB+lrDF4uRm7OJm46bHjw1AWuC284
+ mdcA5cYuQ7RVg==
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: jonathan.cameron@huawei.com
+Cc: ira.weiny@intel.com, lucerop@amd.com, a.manzanares@samsung.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, armbru@redhat.com,
+ linux-cxl@vger.kernel.org, qemu-devel@nongnu.org, dave@stgolabs.net
+Subject: [PATCH v3 -qemu 0/5] hw/cxl: Support Back-Invalidate
+Date: Mon, 29 Sep 2025 20:21:48 -0700
+Message-Id: <20250930032153.1127773-1-dave@stgolabs.net>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/ppc: Have gen_pause() actually pause vCPUs
-Content-Language: en-US
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>, qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, Nicholas Piggin
- <npiggin@gmail.com>, bharata.rao@gmail.com,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
- Aaron Larson <alarson@ddci.com>
-References: <20250924173028.53658-1-philmd@linaro.org>
- <20250924173028.53658-3-philmd@linaro.org>
- <4b0138bc76c60385de71c26eb55a4aecd8d1786d.camel@kernel.crashing.org>
- <8099d09f-029d-4562-b035-7b832ac27ccc@linaro.org>
- <5923fc8c7ac36d8bcae7a416cfd072c18c8698ec.camel@kernel.crashing.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5923fc8c7ac36d8bcae7a416cfd072c18c8698ec.camel@kernel.crashing.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=23.83.222.61; envelope-from=dave@stgolabs.net;
+ helo=fly.ash.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,43 +111,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Cc'ing Aaron for commit 9e196938aa1 "target-ppc: gen_pause for
-instructions: yield, mdoio, mdoom, miso")
+Hello,
 
-On 30/9/25 00:59, Benjamin Herrenschmidt wrote:
-> On Mon, 2025-09-29 at 09:51 +0200, Philippe Mathieu-Daudé wrote:
->>> What will resume it though ? The smt_low() case isn't meant to
->>> *halt*
->>> the CPUs permanently. smt_*() levels are about SMT thread
->>> priorities.
->>> Using a "pause" that just gets out of TCG (and back in), is a way
->>> to
->>> "yield" to another thread, thus enabling more forward progress when
->>> a
->>
->> What you describe can be achieved with a helper doing:
->>
->>     cs->exception_index = EXCP_YIELD;
->>     cpu_loop_exit(cs);
->>
->> Is that what you wanted?
-> 
-> I suppose so... this was many years ago and I don't have much context
-> anymore, so I don't know why I didn't do it that way back then.
+The following allows support for component basic back invalidation discovery
+and config, by exposing the BI routing table and decoder registers. Instead
+of going the type2[0] route, this series proposes adding support for type3
+hdm-db, which allows a more direct way of supporting BI in qemu.
 
-I *think* Nick implemented something similar for sPAPR in commit
-e8ce0e40ee9 ("spapr: Implement H_CONFER"):
+Changes from v2 (https://lore.kernel.org/linux-cxl/20250811033405.332295-1-dave@stgolabs.net/):
+  o Renamed 256b-flit to x-256b-flit (mst)
+  o Added a brief description of flit mode in patch 1 changelog (Markus)
+  o Added missing hdm-db parameter which went missing in v2.
+  o Replaced the new CXL3_TYPE3_DEVICE with passing 'bi' params. (Jonathan)
+  o Fixed writemask bits in patch 4. (Jonathan)
+  o Misc cleanups in patch 4. (Jonathan)
+  o New patch 5 to remove register special_ops read() cb. (Jonathan)
 
-     /*
-      * The targeted confer does not do anything special beyond yielding
-      * the current vCPU, but even this should be better than nothing.
-      * At least for single-threaded tcg, it gives the target a chance to
-      * run before we run again. Multi-threaded tcg does not really do
-      * anything with EXCP_YIELD yet.
-      */
+Changes from v1 (https://lore.kernel.org/qemu-devel/20250806055708.196851-1-dave@stgolabs.net/):
+  o Further lnk training in patch 1. (Jonathan)
+  o Flit parameter changed to bool in patch 1. (Jonathan)
+  o Do not set 68B in component Flexbus Port when in flitmode in patch 1.
+  o Doc build fixlet in patch 3.
+  o Pass the exact type3 type in cxl_component_create_dvsec() - unused, but better
+    for keeping track, in patch 4.
+  o Change doc example to volatile device in patch 4.
 
-     cs->exception_index = EXCP_YIELD;
-     cpu_exit(cs);
+Changes from rfc (https://lore.kernel.org/qemu-devel/20250729165441.1898150-1-dave@stgolabs.net/):
+  o Added 256b-flit parameter, per Jonathan.
+  o Added window restrictions changes.
+  o Dropped rfc tag.
 
-Nick, would that make sense to implement smt_low?
+Patch 1 introduces the flit mode parameter.
+Patch 2 is lifted from Ira's series with some small (but non-trivial) changes.
+Patch 3 updates the cfmw restrictions option.
+Patch 4 adds BI decoder/rt register support to enable type3 HDM-DB.
+Patch 5 is a small cleanup.
+
+Testing wise, this has passed relevant kernel side BI register IO flows for
+BI-ID setup and deallocation.
+
+The next step for this would be to add UIO support to qemu.
+
+Applies against branch 'origin/cxl-2025-07-03' from Jonathan's repository.
+
+Thanks!
+
+Davidlohr Bueso (4):
+  hw/pcie: Support enabling flit mode
+  hw/cxl: Allow BI by default in Window restrictions
+  hw/cxl: Support type3 HDM-DB
+  hw/cxl: Remove register special_ops->read()
+
+Ira Weiny (1):
+  hw/cxl: Refactor component register initialization
+
+ docs/system/devices/cxl.rst               |  23 +++
+ hw/cxl/cxl-component-utils.c              | 214 ++++++++++++++++------
+ hw/cxl/cxl-host.c                         |   2 +-
+ hw/mem/cxl_type3.c                        |  18 +-
+ hw/pci-bridge/cxl_downstream.c            |  13 +-
+ hw/pci-bridge/cxl_root_port.c             |  14 +-
+ hw/pci-bridge/cxl_upstream.c              |  21 ++-
+ hw/pci-bridge/gen_pcie_root_port.c        |   1 +
+ hw/pci-bridge/pci_expander_bridge.c       |   2 +-
+ hw/pci/pcie.c                             |  23 ++-
+ include/hw/cxl/cxl_component.h            |  87 +++++++--
+ include/hw/cxl/cxl_device.h               |   4 +
+ include/hw/pci-bridge/cxl_upstream_port.h |   1 +
+ include/hw/pci/pcie.h                     |   2 +-
+ include/hw/pci/pcie_port.h                |   1 +
+ qapi/machine.json                         |   3 +-
+ qemu-options.hx                           |   4 +-
+ 17 files changed, 329 insertions(+), 104 deletions(-)
+
+--
+2.39.5
+
 
