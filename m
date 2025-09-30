@@ -4,146 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59075CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660EECAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Ski-0000fn-Vi; Tue, 30 Sep 2025 01:18:17 -0400
+	id 1v3TGx-0006dJ-MG; Tue, 30 Sep 2025 01:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Ske-0000fM-3S
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:18:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TGt-0006d4-Ub
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:51:31 -0400
+Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SkT-0008IX-HX
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:18:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759209478;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iJqbxLGZBRbCdI1fp8Wxe0FpNDpA/eSstK1MYNC/cEM=;
- b=E76z3/bStZQhRHS5+0INiEpdVFBOu80z85uBZEeImRoM5wzMrv/epMAKI/8qikTN7NxwN4
- 4CQNlggBoLRALTK6zMfLm+vkCXHHOxt+5sp4j0lS2eXMaOQ7hL9cleWxeyjrYTDkMHpaw8
- 1wPckSIn1pdwYX8Xyygio2v1YJ0Xib0=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-FQTyQpZKP_mQyxX6zsgs7A-1; Tue, 30 Sep 2025 01:17:56 -0400
-X-MC-Unique: FQTyQpZKP_mQyxX6zsgs7A-1
-X-Mimecast-MFC-AGG-ID: FQTyQpZKP_mQyxX6zsgs7A_1759209476
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-636260bcc31so2527862a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:17:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759209476; x=1759814276;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iJqbxLGZBRbCdI1fp8Wxe0FpNDpA/eSstK1MYNC/cEM=;
- b=WMnWgoLldasyBmTuf3l6PKPFtLeRnssKBiCqQiphLUDYnUIgVKQcs+olfFzElqsZIn
- bHDFX0nHTPT6dqSba9icv7Ubq7qFcuDlYISN18bLtTw0w1EL4raaGb3o+ijfRVq344QZ
- z3u25YXWS8sco4Rj0thmkr04oUqrWv4ok1li2ac7AArNv4PhKwWD9eHZibpwsc4MvwOH
- SBaRK9nMgllauxw71LLh0L40qOj+fu6GmfuyemC5vPyRwu9/GcjWMAdxcpvovS+ZO5Fk
- bMOOoJAGzoQytHfL4hudb0e00p9GnMyH3cnniXZfNwa0XoeopxqS924FytxDT0eMkCGp
- CcnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIWsKoBeKZTa+qEFU+0COmaL6y701Ghi+9lwEIiLV5vjOcjF2bd1bBY800braSgagAP9LmFi38goYB@nongnu.org
-X-Gm-Message-State: AOJu0YwvjF98d3ntoDv7QnUll8C/oVVxWQoVhZt12jVC/nhP5belWur7
- y8ys8O2stpXJyuxPMPvC6fb1lsyDiiAs5kk07j0/cSMju7mx6xn+78wMRfwNMqO/DuymPEptIB8
- 4qEPELwah0MbQYy9lWv0jUxthjVrRrkM/ZRV0uOHdZlIUQZzKaaiYrhKi
-X-Gm-Gg: ASbGncvSFLrSt5O1zmGV50FeeyIgyFfB8QYNBIjK5xWqNWa510Nwt5j4BsdoOacfH/o
- BC2L7z9ISlbs8dV3SxudvZJpEWNdXfDbkP185R2A+hG8W9a0RSSwTr42IjwubqtJmnVjFJe8o5f
- YHcuiOAenyh4AkvsBSdEELpomT9k0IO8ZQDjzqIJv/nDoCldEYFEldmsUjjl4VKHWfnk3kkAuq2
- Qpqml+A6mrW++nv/EIkcH3srQ2XuuKoGFdq09CBbRnIEPp2E5fHdqiGtwz7IpawFB0SiYP4omuV
- eO4jmDoiURmecMc3uAejtxmmwueJPxfPPWL+qN0qf4sQRcqDIHIhauJ5VY+gs/xg7TkBLFUx1et
- 1ThDsn1msUw==
-X-Received: by 2002:a05:6402:50c7:b0:62f:9731:a1c6 with SMTP id
- 4fb4d7f45d1cf-6349fa73ddcmr16749809a12.21.1759209475648; 
- Mon, 29 Sep 2025 22:17:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEi7qy8AylS4ZYYZEIvYs0+dEtIn2Z48rzfXoS45/r1i/R2wezJa6kDRndbNzkhCIJTHuXZOA==
-X-Received: by 2002:a05:6402:50c7:b0:62f:9731:a1c6 with SMTP id
- 4fb4d7f45d1cf-6349fa73ddcmr16749783a12.21.1759209475247; 
- Mon, 29 Sep 2025 22:17:55 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
- [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-634c4b96ff6sm6611079a12.46.2025.09.29.22.17.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 22:17:54 -0700 (PDT)
-Message-ID: <2171c08e-0224-4309-8657-ed9d2e8036aa@redhat.com>
-Date: Tue, 30 Sep 2025 07:17:53 +0200
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TGp-0003LV-In
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:51:31 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.85])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cbRxx1gcHz5xkl;
+ Tue, 30 Sep 2025 05:51:17 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Tue, 30 Sep
+ 2025 07:51:16 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-96R001abb24051-7f39-41f6-b498-32577c69948a,
+ 012DEA80DA8F652C9231DB37D1304F33C12A2C6A) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <0165086d-3ab4-4986-84ff-452984d16153@kaod.org>
+Date: Tue, 30 Sep 2025 07:51:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 14/28] pc-bios/s390-ccw: Define memory for IPLB and
- convert IPLB to pointers
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-15-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250917232131.495848-15-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Subject: Re: [PATCH v3] aspeed: Add support for the sonorapass-bmc board
+To: Patrick Williams <patrick@stwcx.xyz>
+CC: Peter Maydell <peter.maydell@linaro.org>, Andrew Jeffery
+ <andrew@aj.id.au>, Amithash Prasad <amithash@fb.com>, "open list:All patches
+ CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, Vijay Khemka <vijaykhemka@fb.com>, Joel Stanley
+ <joel@jms.id.au>, Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>, Peter
+ Delevoryas <pdel@fb.com>
+References: <20200506173035.2154053-1-patrick@stwcx.xyz>
+ <20200506183219.2166987-1-patrick@stwcx.xyz>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20200506183219.2166987-1-patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.96]
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: c77987f1-7f25-433f-b2ec-df6345588912
+X-Ovh-Tracer-Id: 8058347112511343538
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGVz4ws4F7kIHG9MG+GSpUno1zsDoUS41ln38iS9OOUK0TwMl20OepYaG8Ru3AwdG0ROEc/8Wy0p8HXR0/DTgC7pqIg7h6JDG9U7LDWtyUH4MMp2Rv8onrHOJ7UV7T4yDeM7TmyOOFAdpYEH+IEQ1B8SvQX7mzxchU3FIwCFNtlt6UKaKLf0Czum4rD58O/Bl/QqQpz67Ljsk+3BaNw3vDTgI+WeE1O+6+Sgn03SkZaLenOAbyp8YkHQt+N8RdJYOegD6uvRgZVYm4zYkx0oWCPOw0bfOxd+bzLPm5KPkdCnF1UGu0Krd6jLUmUpqBiEf1k+gbHHazvPeqUIrPEpu6RBp0Y+0VkH5rL3LLj10BGauCGpXenVrzSfrs7C8xYi9uW0+rES/julOqcGuzIJHC9ZMukJcPQbP/9eb6KHIPiExhbPENo6rE0irWuCaWponxUBxL5Th3Kya1MqXlaaIP4WIHiVKDXcTf+plkFtQBLdLtLKJJcMO4kIBzL0tcPDxg4PqquYZZHPosM27YvgxrV6zMlFtrA6BUpe3aPz2I5dNXa4JIVSQ2NZ8vA9l3zXkgIDI/mxROR+RuZFGneSQFyfV74Jvz96o1VbpKbFhlpbKn1MTN+rBCcraiEP3Jd6vbSPUB/cmHbhT1ZC35TmYbt8t5vcuyHi07DAsSj/RbHDg
+DKIM-Signature: a=rsa-sha256; bh=yDUqoOiiy7Hj28q6Be/E3953fSQB5+FS8wBOX/T2QYM=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1759211478; v=1;
+ b=VjVt/50QEq2RiaSmOE5Tpp2DnwXa/YYvYsSrhk9/vVapWdqWxq6DaaL16s1TsJky7ZSRRyl3
+ 72I9QL3YboY/uSaYpgn3oylC3kkiuQf1LcpG/mTcApONcS08Zbphv59osv7pfLwGyp9KjmX/YkQ
+ xqmXIt7wtuq4zRFRpVBJ3ItHZq/jZjUEoaJGKNg0ISNafbEyAcUbtuj9OL77Xgl9k0zuWlyxvzG
+ ghQr9DMWucHMKF491ZSv4FV9rFpR8NPZP+A9uOuVaKeqmozo1q8Dkgzrw1kcPEg9CGJ38xUJIHl
+ perFA4W9pg42oEcl5N44vdVuemp56Hgr43xBSauXeA0Ow==
+Received-SPF: pass client-ip=188.165.42.229; envelope-from=clg@kaod.org;
+ helo=4.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,192 +131,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Define a memory space for both IPL Parameter Block (IPLB) and
-> IPL Information Report Block (IIRB) since IIRB is stored immediately
-> following IPLB.
+Hello Patrick
+
+On 5/6/20 20:32, Patrick Williams wrote:
+> Sonora Pass is a 2 socket x86 motherboard designed by Facebook
+> and supported by OpenBMC.  Strapping configuration was obtained
+> from hardware and i2c configuration is based on dts found at:
 > 
-> Convert IPLB to pointer and it points to the start of the defined memory space.
-> IIRB points to the end of IPLB.
+> https://github.com/facebook/openbmc-linux/blob/1633c87b8ba7c162095787c988979b748ba65dc8/arch/arm/boot/dts/aspeed-bmc-facebook-sonorapass.dts
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Booted a test image of http://github.com/facebook/openbmc to login
+> prompt.
+> 
+> Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
+> Reviewed-by: Amithash Prasad <amithash@fb.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
 > ---
->   pc-bios/s390-ccw/iplb.h     | 12 ++++++++++--
->   pc-bios/s390-ccw/jump2ipl.c |  6 +++---
->   pc-bios/s390-ccw/main.c     | 34 +++++++++++++++++++---------------
->   pc-bios/s390-ccw/netmain.c  |  8 ++++----
->   4 files changed, 36 insertions(+), 24 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-> index bdbc733e16..11302e004d 100644
-> --- a/pc-bios/s390-ccw/iplb.h
-> +++ b/pc-bios/s390-ccw/iplb.h
-> @@ -20,7 +20,7 @@
->   #include <string.h>
+>   hw/arm/aspeed.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 77 insertions(+)
+
+
+Would it be possible to contribute a functional test for this
+machine ?
+
+The request applies to these Facebook machines :
+
+   sonorapass-bmc
+   yosemitev2-bmc
+   tiogapass-bmc
+   fuji-bmc
+   fby35-bmc
+
+Since these machines contribute little to the Aspeed models,
+their value lies in the firmware they can run to exercise the
+models. Without functional tests, I plan to schedule their
+removal in the QEMU 10.2 cycle.
+
+The fby35-bmc value is in its multisoc nature. We now have the
+ast2700fc available as its replacement
+
+Thanks,
+
+C.
+
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 6f4d7075c4..74c46681e8 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -74,6 +74,21 @@ struct AspeedBoardState {
+>           SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
+>           SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
 >   
->   extern QemuIplParameters qipl;
-> -extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
-> +extern IplParameterBlock *iplb;
->   extern bool have_iplb;
->   
->   struct IplInfoReportBlockHeader {
-> @@ -85,6 +85,14 @@ struct IplInfoReportBlock {
->   } __attribute__ ((packed));
->   typedef struct IplInfoReportBlock IplInfoReportBlock;
->   
-> +struct IplBlocks {
-> +    IplParameterBlock   iplb;
-> +    IplInfoReportBlock  iirb;
-> +} __attribute__ ((packed));
-> +typedef struct IplBlocks IplBlocks;
+> +/* Sonorapass hardware value: 0xF100D216 */
+> +#define SONORAPASS_BMC_HW_STRAP1 (                                      \
+> +        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
+> +        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
+> +        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
+> +        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
+> +        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+> +        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+> +        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
+> +        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
+> +        SCU_HW_STRAP_VGA_BIOS_ROM |                                     \
+> +        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+> +        SCU_AST2500_HW_STRAP_RESERVED1)
 > +
-> +extern IplBlocks ipl_data __attribute__((__aligned__(PAGE_SIZE)));
-
-I think it makes more sense to specify the attribute in the .c file instead 
-of using it here in the header.
-
-  Thomas
-
-
->   #define S390_IPL_TYPE_FCP 0x00
->   #define S390_IPL_TYPE_CCW 0x02
->   #define S390_IPL_TYPE_QEMU_SCSI 0xff
-> @@ -127,7 +135,7 @@ static inline bool load_next_iplb(void)
->   
->       qipl.index++;
->       next_iplb = (IplParameterBlock *) qipl.next_iplb;
-> -    memcpy(&iplb, next_iplb, sizeof(IplParameterBlock));
-> +    memcpy(iplb, next_iplb, sizeof(IplParameterBlock));
->   
->       qipl.chain_len--;
->       qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
-> diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
-> index 86321d0f46..fa2ca5cbe1 100644
-> --- a/pc-bios/s390-ccw/jump2ipl.c
-> +++ b/pc-bios/s390-ccw/jump2ipl.c
-> @@ -43,11 +43,11 @@ int jump_to_IPL_code(uint64_t address)
->        * The IPLB for QEMU SCSI type devices must be rebuilt during re-ipl. The
->        * iplb.devno is set to the boot position of the target SCSI device.
->        */
-> -    if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
-> -        iplb.devno = qipl.index;
-> +    if (iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
-> +        iplb->devno = qipl.index;
->       }
->   
-> -    if (have_iplb && !set_iplb(&iplb)) {
-> +    if (have_iplb && !set_iplb(iplb)) {
->           panic("Failed to set IPLB");
->       }
->   
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 76bf743900..c9328f1c51 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -22,7 +22,9 @@
->   static SubChannelId blk_schid = { .one = 1 };
->   static char loadparm_str[LOADPARM_LEN + 1];
->   QemuIplParameters qipl;
-> -IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
-> +/* Ensure that IPLB and IIRB are page aligned and sequential in memory */
-> +IplBlocks ipl_data;
-> +IplParameterBlock *iplb;
->   bool have_iplb;
->   static uint16_t cutype;
->   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
-> @@ -51,7 +53,7 @@ void write_subsystem_identification(void)
->   void write_iplb_location(void)
->   {
->       if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() != VIRTIO_ID_NET) {
-> -        lowcore->ptr_iplb = ptr2u32(&iplb);
-> +        lowcore->ptr_iplb = ptr2u32(iplb);
->       }
+>   /* Swift hardware value: 0xF11AD206 */
+>   #define SWIFT_BMC_HW_STRAP1 (                                           \
+>           AST2500_HW_STRAP1_DEFAULTS |                                    \
+> @@ -434,6 +449,49 @@ static void swift_bmc_i2c_init(AspeedBoardState *bmc)
+>       i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 12), "tmp105", 0x4a);
 >   }
 >   
-> @@ -162,7 +164,7 @@ static void menu_setup(void)
->           return;
->       }
->   
-> -    switch (iplb.pbt) {
-> +    switch (iplb->pbt) {
->       case S390_IPL_TYPE_CCW:
->       case S390_IPL_TYPE_QEMU_SCSI:
->           menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
-> @@ -191,8 +193,8 @@ static void boot_setup(void)
->   {
->       char lpmsg[] = "LOADPARM=[________]\n";
->   
-> -    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
-> -        ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
-> +    if (have_iplb && memcmp(iplb->loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
-> +        ebcdic_to_ascii((char *) iplb->loadparm, loadparm_str, LOADPARM_LEN);
->       } else {
->           sclp_get_loadparm_ascii(loadparm_str);
->       }
-> @@ -216,21 +218,21 @@ static bool find_boot_device(void)
->       VDev *vdev = virtio_get_device();
->       bool found = false;
->   
-> -    switch (iplb.pbt) {
-> +    switch (iplb->pbt) {
->       case S390_IPL_TYPE_CCW:
->           vdev->scsi_device_selected = false;
-> -        debug_print_int("device no. ", iplb.ccw.devno);
-> -        blk_schid.ssid = iplb.ccw.ssid & 0x3;
-> +        debug_print_int("device no. ", iplb->ccw.devno);
-> +        blk_schid.ssid = iplb->ccw.ssid & 0x3;
->           debug_print_int("ssid ", blk_schid.ssid);
-> -        found = find_subch(iplb.ccw.devno);
-> +        found = find_subch(iplb->ccw.devno);
->           break;
->       case S390_IPL_TYPE_QEMU_SCSI:
->           vdev->scsi_device_selected = true;
-> -        vdev->selected_scsi_device.channel = iplb.scsi.channel;
-> -        vdev->selected_scsi_device.target = iplb.scsi.target;
-> -        vdev->selected_scsi_device.lun = iplb.scsi.lun;
-> -        blk_schid.ssid = iplb.scsi.ssid & 0x3;
-> -        found = find_subch(iplb.scsi.devno);
-> +        vdev->selected_scsi_device.channel = iplb->scsi.channel;
-> +        vdev->selected_scsi_device.target = iplb->scsi.target;
-> +        vdev->selected_scsi_device.lun = iplb->scsi.lun;
-> +        blk_schid.ssid = iplb->scsi.ssid & 0x3;
-> +        found = find_subch(iplb->scsi.devno);
->           break;
->       default:
->           puts("Unsupported IPLB");
-> @@ -311,10 +313,12 @@ static void probe_boot_device(void)
->   
->   void main(void)
->   {
-> +    iplb = &ipl_data.iplb;
+> +static void sonorapass_bmc_i2c_init(AspeedBoardState *bmc)
+> +{
+> +    AspeedSoCState *soc = &bmc->soc;
 > +
->       copy_qipl();
->       sclp_setup();
->       css_setup();
-> -    have_iplb = store_iplb(&iplb);
-> +    have_iplb = store_iplb(iplb);
->       if (!have_iplb) {
->           boot_setup();
->           probe_boot_device();
-> diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-> index a9521dff41..457fbc3095 100644
-> --- a/pc-bios/s390-ccw/netmain.c
-> +++ b/pc-bios/s390-ccw/netmain.c
-> @@ -528,11 +528,11 @@ static bool virtio_setup(void)
->        */
->       enable_mss_facility();
+> +    /* bus 2 : */
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 2), "tmp105", 0x48);
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 2), "tmp105", 0x49);
+> +    /* bus 2 : pca9546 @ 0x73 */
+> +
+> +    /* bus 3 : pca9548 @ 0x70 */
+> +
+> +    /* bus 4 : */
+> +    uint8_t *eeprom4_54 = g_malloc0(8 * 1024);
+> +    smbus_eeprom_init_one(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 4), 0x54,
+> +                          eeprom4_54);
+> +    /* PCA9539 @ 0x76, but PCA9552 is compatible */
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 4), "pca9552", 0x76);
+> +    /* PCA9539 @ 0x77, but PCA9552 is compatible */
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 4), "pca9552", 0x77);
+> +
+> +    /* bus 6 : */
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 6), "tmp105", 0x48);
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 6), "tmp105", 0x49);
+> +    /* bus 6 : pca9546 @ 0x73 */
+> +
+> +    /* bus 8 : */
+> +    uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
+> +    smbus_eeprom_init_one(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 8), 0x56,
+> +                          eeprom8_56);
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 8), "pca9552", 0x60);
+> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 8), "pca9552", 0x61);
+> +    /* bus 8 : adc128d818 @ 0x1d */
+> +    /* bus 8 : adc128d818 @ 0x1f */
+> +
+> +    /* bus 13 : pca9548 @ 0x71
+> +     *      - channel 3:
+> +     *          - tmm421 @ 0x4c
+> +     *          - tmp421 @ 0x4e
+> +     *          - tmp421 @ 0x4f
+> +     */
+> +
+> +}
+> +
+>   static void witherspoon_bmc_i2c_init(AspeedBoardState *bmc)
+>   {
+>       AspeedSoCState *soc = &bmc->soc;
+> @@ -552,6 +610,21 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc, void *data)
+>       mc->default_ram_size       = 512 * MiB;
+>   };
 >   
-> -    if (have_iplb || store_iplb(&iplb)) {
-> -        IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
-> -        dev_no = iplb.ccw.devno;
-> +    if (have_iplb || store_iplb(iplb)) {
-> +        IPL_assert(iplb->pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
-> +        dev_no = iplb->ccw.devno;
->           debug_print_int("device no. ", dev_no);
-> -        net_schid.ssid = iplb.ccw.ssid & 0x3;
-> +        net_schid.ssid = iplb->ccw.ssid & 0x3;
->           debug_print_int("ssid ", net_schid.ssid);
->           found = find_net_dev(&schib, dev_no);
->       } else {
+> +static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> +
+> +    mc->desc       = "OCP SonoraPass BMC (ARM1176)";
+> +    amc->soc_name  = "ast2500-a1";
+> +    amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
+> +    amc->fmc_model = "mx66l1g45g";
+> +    amc->spi_model = "mx66l1g45g";
+> +    amc->num_cs    = 2;
+> +    amc->i2c_init  = sonorapass_bmc_i2c_init;
+> +    mc->default_ram_size       = 512 * MiB;
+> +};
+> +
+>   static void aspeed_machine_swift_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -631,6 +704,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("swift-bmc"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_swift_class_init,
+> +    }, {
+> +        .name          = MACHINE_TYPE_NAME("sonorapass-bmc"),
+> +        .parent        = TYPE_ASPEED_MACHINE,
+> +        .class_init    = aspeed_machine_sonorapass_class_init,
+>       }, {
+>           .name          = MACHINE_TYPE_NAME("witherspoon-bmc"),
+>           .parent        = TYPE_ASPEED_MACHINE,
 
 
