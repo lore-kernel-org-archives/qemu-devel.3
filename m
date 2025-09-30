@@ -4,117 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FADCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEC0CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3aq0-0003FF-ES; Tue, 30 Sep 2025 09:56:17 -0400
+	id 1v3awG-0005Na-8c; Tue, 30 Sep 2025 10:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3apw-0003EF-AZ
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:56:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
+ id 1v3a7H-0005SM-V9; Tue, 30 Sep 2025 09:10:05 -0400
+Received: from [115.124.30.118] (helo=out30-118.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3apr-0002Yt-Hk
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:56:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759240560;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/suQ7wbS6Ffsygh1vK7bTksgy2Vsmyzot6Os1pFbPNs=;
- b=f0XPz2hB8kxEM3tWyJmNYe5bHloutm0sghVhPWYKG5GIwTmT7sQ/e1gwzBt2KPDClvueQJ
- Qxk3Fo4tsA7WfWcyQiYdhP4PAqvaJUkGxl4lFwWQRIAGmq2DQJQ7UxkWYS0kKmi1T2AEAm
- nenuUWhFyOZb5WY4AMZSIdHSc9PYAhc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-i1aiV-olOoS3cB1t7sP24Q-1; Tue, 30 Sep 2025 09:55:59 -0400
-X-MC-Unique: i1aiV-olOoS3cB1t7sP24Q-1
-X-Mimecast-MFC-AGG-ID: i1aiV-olOoS3cB1t7sP24Q_1759240558
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e3dcb36a1so32706385e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 06:55:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759240558; x=1759845358;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/suQ7wbS6Ffsygh1vK7bTksgy2Vsmyzot6Os1pFbPNs=;
- b=Y9UbiwtMdG4FVCSNWiGqpsI6WNsI1h5RZ+a+ImRHiiPKsDiJt2sF31JSDqXR9THyt6
- GjebklgiJEGcudf36o9RbeglgNO2/qc+J/UaDTc9WvyKaHOZzGEoewWFeYpykqBLB39G
- km3t5Cfp7Kzxj1D/el6q9xsGXysCi3jAxXTtPtVZ3iUGs3HgtFhjp2w90Wa77/41ktdH
- p9ZJAVPE+RXsQssFY3SLWViw4zLX9h165UtUDeNEirQ05/Q9AKnKr/xvrrCIG6coY67x
- JvvuccGLy5pytHGvi7yE/flN1LaFS/YXT8CZjIVAWXTOxgH3eMBjh23NR/477/xPWo3s
- v7yQ==
-X-Gm-Message-State: AOJu0YwLxFtaXnrhJKywsymxRfGwxA6SnM/szY/Xbf3G5ytuNlXgtRj2
- BRv2g1+Zhcix7qYOHTdarxJb9u2GdbzuSQYrnmbOnoEYt+Kx+A6s2lw6ZePjmwl0ZDmsiiJl4vR
- R/+IzhreYS6pfFUHoWBeNL/XlUfGL37UZ2iM1vkRV7Jm7D/oqNQTxuSEj
-X-Gm-Gg: ASbGncvijzx6+ntyhQycCnWicIMre7rzK5oUXtTr/dUJYTfE8IZUjg38mraD0Dt+NaU
- nSZ8ftpBPxS3KcoqkE4a6kL7yUygR0UybdQyoadJwb7xXE7AMLcsiRgCVpM91Czsjo0GS0qySN1
- iHf3wiYCfFaV9fEvJj67XgXnj35wtL9tpEoYPE073g9KjmCLzrmZdq3jUUH8lsD0v9JkrJRJz/f
- EixRMvK0dAp2MzHNkYR5q4AMYgolL5W8rpUy8FRNlGCKHBHknpsUwAw6pE58MZifdtMk0dqXkCd
- T+URyClecaCH8Bb3f7JINcqtEf+iHNCFKUj6QQNkyvqkcPWfT6C8Xy9sHT1DxLOUdC7aah0PN3m
- xOS0Pa/ToaUlY6X8Y
-X-Received: by 2002:a05:600c:468a:b0:46e:4705:4958 with SMTP id
- 5b1f17b1804b1-46e47054a6fmr110203095e9.30.1759240557877; 
- Tue, 30 Sep 2025 06:55:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETNjhu13lLoZ/apuZyCmHApeXKSf7cZEOT6xkq8Xex1smU7PeKXF7lsI/VJ7CVyge/ik37TA==
-X-Received: by 2002:a05:600c:468a:b0:46e:4705:4958 with SMTP id
- 5b1f17b1804b1-46e47054a6fmr110202875e9.30.1759240557409; 
- Tue, 30 Sep 2025 06:55:57 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc560338csm23487123f8f.41.2025.09.30.06.55.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 06:55:56 -0700 (PDT)
-Message-ID: <bdd7f08b-b577-438d-aa23-aecd41fe1712@redhat.com>
-Date: Tue, 30 Sep 2025 15:55:55 +0200
+ (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
+ id 1v3a7B-0001nR-95; Tue, 30 Sep 2025 09:10:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1759237771; h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type;
+ bh=BywjRjbTi2+324yl5WcDORCYjq+NxPQ5bGc+JBMtF64=;
+ b=I4MSGY/LX4mbKaTVfaAVgOqGUYQMdUeRwmdWOaOzfhSn0Je934fD2Lu9eOtsFhnGb2NXmGfDUqUUgGhddW0lLnuCe5ESVGJiZ+7sZj3zu3+caXDxWUiWhwd64FhDOKdlkqtq5m98fhFe6O47rFD7rVp5lq/xFLD80MeoU0iu7Iw=
+Received: from localhost.localdomain(mailfrom:fangyu.yu@linux.alibaba.com
+ fp:SMTPD_---0WpBU8QX_1759237447 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 30 Sep 2025 21:04:09 +0800
+From: fangyu.yu@linux.alibaba.com
+To: guoren@kernel.org
+Cc: alistair.francis@wdc.com, liujingqi@lanxincomputing.com,
+ liwei1518@gmail.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-stable@nongnu.org, seb@rivosinc.com, tjeznach@rivosinc.com,
+ zhiwei_liu@linux.alibaba.com,
+ =?UTF-8?q?Fangyu=20Yu=C2=A0?= <fangyu.yu@linux.alibaba.com>
+Subject: Re: [PATCH V3] hw/riscv/riscv-iommu: Fixup PDT Nested Walk 
+Date: Tue, 30 Sep 2025 21:04:03 +0800
+Message-Id: <20250930130403.13349-1-fangyu.yu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20250913041233.972870-1-guoren@kernel.org>
+References: <20250913041233.972870-1-guoren@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 05/22] hw/pci: Introduce pci_device_get_viommu_flags()
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- Nicolin Chen <nicolinc@nvidia.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
- <20250918085803.796942-6-zhenzhong.duan@intel.com>
- <aNLrOIbBxZy00cS4@Asurada-Nvidia>
- <IA3PR11MB9136AE59AECA079CB61C4165921CA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <aNOqH3u3vNFRukew@Asurada-Nvidia>
- <IA3PR11MB9136110BBC15C20546401288921EA@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <IA3PR11MB9136110BBC15C20546401288921EA@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.118 (deferred)
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=fangyu.yu@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 30 Sep 2025 10:02:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -126,69 +68,207 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/26/25 4:54 AM, Duan, Zhenzhong wrote:
+>From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
 >
->> -----Original Message-----
->> From: Nicolin Chen <nicolinc@nvidia.com>
->> Subject: Re: [PATCH v6 05/22] hw/pci: Introduce
->> pci_device_get_viommu_flags()
->>
->> On Wed, Sep 24, 2025 at 07:05:42AM +0000, Duan, Zhenzhong wrote:
->>>> From: Nicolin Chen <nicolinc@nvidia.com>
->>>> Subject: Re: [PATCH v6 05/22] hw/pci: Introduce
->>>>> get_viommu_flags() is designed to return 64bit bitmap of purely
->> vIOMMU
->>>>> flags which are only determined by user's configuration, no host
->>>>> capabilities involved. Reasons are:
->>>>>
->>>>> 1. host may has heterogeneous IOMMUs, each with different capabilities
->>>>> 2. this is migration friendly, return value is consistent between source
->>>>>    and target.
->>>>> 3. host IOMMU capabilities are passed to vIOMMU through
->>>> set_iommu_device()
->>>>>    interface which have to be after attach_device(), when
->>>> get_viommu_flags()
->>>>>    is called in attach_device(), there is no way for vIOMMU to get host
->>>>>    IOMMU capabilities yet, so only pure vIOMMU flags can be
->> returned.
->>>> "no way" sounds too strong..
->>>>
->>>> There is an iommufd_backend_get_device_info() call there. So, we
->>>> could have passed the host IOMMU capabilities to a vIOMMU. Just,
->>>> we chose not to (assuming for migration reason?).
->>> What about 'it's hard for vIOMMU to get host IOMMU...'?
->> vfio-iommufd core code gets all the host IOMMU caps via the vfio
->> device but chooses to not forward to vIOMMU. So, it's neither "no
->> way" nor "hard" :)
-> Yes, that needs to introduce another callback to forward the caps early,
-> unnecessarily complex.
+>Current implementation is wrong when iohgatp != bare. The RISC-V
+>IOMMU specification has defined that the PDT is based on GPA, not
+>SPA. So this patch fixes the problem, making PDT walk correctly
+>when the G-stage table walk is enabled.
 >
->> To be honest, I don't feel this very related to be the reason 3
->> to justify for the new op/API. 1 and 2 are quite okay?
->>
->> Having said that, it's probably good to add as a side note:
->>
->> "
->> Note that this op will be invoked at the attach_device() stage, at which
->> point host IOMMU capabilities are not yet forwarded to the vIOMMU through
->> the set_iommu_device() callback that will be after the attach_device().
->>
->> See the below sequence:
->> "
-> OK, will drop 3 and add the side note.
+>Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+>Cc: qemu-stable@nongnu.org
+>Cc: Sebastien Boeuf <seb@rivosinc.com>
+>Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
+>Reviewed-by: Weiwei Li <liwei1518@gmail.com>
+>Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+>Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+>---
+>Changes in V3:
+> - Fixup inner non-leaf walking for 4KB-align.
+> - Add two Reviewed-by tags.
+>
+>Changes in V2:
+> - Remove nested param to make patch clearer.
+>---
+> hw/riscv/riscv-iommu.c | 141 ++++++++++++++++++++++++++++++++++++++++-
+> 1 file changed, 139 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+>index 96a7fbdefcf3..ddb5236f55d1 100644
+>--- a/hw/riscv/riscv-iommu.c
+>+++ b/hw/riscv/riscv-iommu.c
+>@@ -866,6 +866,143 @@ static bool riscv_iommu_validate_process_ctx(RISCVIOMMUState *s,
+>     return true;
+> }
+> 
+>+/**
+>+ * pdt_memory_read: PDT wrapper of dma_memory_read.
+>+ *
+>+ * @s: IOMMU Device State
+>+ * @ctx: Device Translation Context with devid and pasid set
+>+ * @addr: address within that address space
+>+ * @buf: buffer with the data transferred
+>+ * @len: length of the data transferred
+>+ * @attrs: memory transaction attributes
+>+ */
+>+static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
+>+                                   RISCVIOMMUContext *ctx,
+>+                                   dma_addr_t addr,
+>+                                   void *buf, dma_addr_t len,
+>+                                   MemTxAttrs attrs)
+>+{
+>+    uint64_t gatp_mode, pte;
+>+    struct {
+>+        unsigned char step;
+>+        unsigned char levels;
+>+        unsigned char ptidxbits;
+>+        unsigned char ptesize;
+>+    } sc;
+>+    MemTxResult ret;
+>+    dma_addr_t base = addr;
+>+
+>+    /* G stages translation mode */
+>+    gatp_mode = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+>+    if (gatp_mode == RISCV_IOMMU_DC_IOHGATP_MODE_BARE)
+>+        goto out;
+>+
+>+    /* G stages translation tables root pointer */
+>+    base = PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
+>+
+>+    /* Start at step 0 */
+>+    sc.step = 0;
+>+
+>+    if (s->fctl & RISCV_IOMMU_FCTL_GXL) {
+>+        /* 32bit mode for GXL == 1 */
+>+        switch (gatp_mode) {
+>+        case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:
+>+            if (!(s->cap & RISCV_IOMMU_CAP_SV32X4)) {
+>+                return MEMTX_ACCESS_ERROR;
+>+            }
+>+            sc.levels    = 2;
+>+            sc.ptidxbits = 10;
+>+            sc.ptesize   = 4;
+>+            break;
+>+        default:
+>+            return MEMTX_ACCESS_ERROR;
+>+        }
+>+    } else {
+>+        /* 64bit mode for GXL == 0 */
+>+        switch (gatp_mode) {
+>+        case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:
+>+            if (!(s->cap & RISCV_IOMMU_CAP_SV39X4)) {
+>+                return MEMTX_ACCESS_ERROR;
+>+            }
+>+            sc.levels    = 3;
+>+            sc.ptidxbits = 9;
+>+            sc.ptesize   = 8;
+>+            break;
+>+        case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:
+>+            if (!(s->cap & RISCV_IOMMU_CAP_SV48X4)) {
+>+                return MEMTX_ACCESS_ERROR;
+>+            }
+>+            sc.levels    = 4;
+>+            sc.ptidxbits = 9;
+>+            sc.ptesize   = 8;
+>+            break;
+>+        case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:
+>+            if (!(s->cap & RISCV_IOMMU_CAP_SV57X4)) {
+>+                return MEMTX_ACCESS_ERROR;
+>+            }
+>+            sc.levels    = 5;
+>+            sc.ptidxbits = 9;
+>+            sc.ptesize   = 8;
+>+            break;
+>+        default:
+>+            return MEMTX_ACCESS_ERROR;
+>+        }
+>+    }
+>+
+>+    do {
+>+        const unsigned va_bits = (sc.step ? 0 : 2) + sc.ptidxbits;
+>+        const unsigned va_skip = TARGET_PAGE_BITS + sc.ptidxbits *
+>+                                 (sc.levels - 1 - sc.step);
+>+        const unsigned idx = (addr >> va_skip) & ((1 << va_bits) - 1);
+>+        const dma_addr_t pte_addr = base + idx * sc.ptesize;
+>+
+>+        /* Address range check before first level lookup */
+>+        if (!sc.step) {
+>+            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
+>+            if ((addr & va_mask) != addr) {
+>+                return MEMTX_ACCESS_ERROR;
+>+            }
+>+        }
+>+
+>+        /* Read page table entry */
+>+        if (sc.ptesize == 4) {
+>+            uint32_t pte32 = 0;
+>+            ret = ldl_le_dma(s->target_as, pte_addr, &pte32, attrs);
+>+            pte = pte32;
+>+        } else {
+>+            ret = ldq_le_dma(s->target_as, pte_addr, &pte, attrs);
+>+        }
+>+        if (ret != MEMTX_OK)
+>+            return ret;
+>+
+>+        sc.step++;
+>+        hwaddr ppn = pte >> PTE_PPN_SHIFT;
+>+
+>+        if (!(pte & PTE_V)) {
+>+            return MEMTX_ACCESS_ERROR; /* Invalid PTE */
+>+        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+>+            base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+>+        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
+>+            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W */
+>+        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == (PTE_W | PTE_X)) {
+>+            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W + PTE_X */
+>+        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
+>+            return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
+>+        } else {
+>+            /* Leaf PTE, translation completed. */
+>+            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+>+            break;
+>+        }
+>+
+>+        if (sc.step == sc.levels) {
+>+            return MEMTX_ACCESS_ERROR; /* Can't find leaf PTE */
+>+        }
+>+    } while (1);
+>+
+>+out:
+>+    return dma_memory_read(s->target_as, base, buf, len, attrs);
+>+}
+>+
+> /*
+>  * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
+>  *
+>@@ -1038,7 +1175,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+>          */
+>         const int split = depth * 9 + 8;
+>         addr |= ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
+>-        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+>+        if (pdt_memory_read(s, ctx, addr, &de, sizeof(de),
+>                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+>             return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+>         }
+>@@ -1053,7 +1190,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+> 
+>     /* Leaf entry in PDT */
+>     addr |= (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
+>-    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
+>+    if (pdt_memory_read(s, ctx, addr, &dc.ta, sizeof(uint64_t) * 2,
+>                         MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+>         return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+>     }
+>-- 
+>2.40.1
 
-With Nicolin's suggestions:
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Eric
->
-> Thanks
-> Zhenzhong
->
+Enabled PDT in the VM and test this patch works correctly.
 
+Tested-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+
+Thanks,
+Fangyu
 
