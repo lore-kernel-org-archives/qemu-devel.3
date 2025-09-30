@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91697CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 21:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A05CBCCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 21:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3hax-0008P7-3b; Tue, 30 Sep 2025 17:09:11 -0400
+	id 1v3hcI-0001Ll-K3; Tue, 30 Sep 2025 17:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3hav-0008Ok-55
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 17:09:09 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1v3hcF-0001Jw-KW
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 17:10:31 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3hao-0005oQ-0h
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 17:09:08 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-b5f2c1a7e5eso223002a12.0
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 14:08:58 -0700 (PDT)
+ id 1v3hc8-0006UM-Ff
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 17:10:29 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-33274fcf5c1so6201110a91.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 14:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759266536; x=1759871336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759266612; x=1759871412; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dupJ9A4DuMF3aFxqi/gHC3Wglwb4IRL8r8frM7em9o0=;
- b=sEdMaemC8RfPN/HOGKK2/RGnTicu2F/e+1JfaPWES3LbRrGBABY102km9Dd6/HN547
- +6BUsJvp2Vnz8Oln4IFobK6kfToGe2UtJUljDDf/o1q5A19QlI79mzjxXTNtkQmtgh0/
- +PybxJiP//n5cstheAZMTJOS7U8vRU4Ofc8ysJIt3L7TdrxG+JkdvpKdkkqtHqtwmeWS
- qdDXMsqGPt7YNxJisJ4YubAu69umoA7kOe4L0IKjMzqw/MlV/Dq3rw/YB8+xdVailgYT
- 5B9Fz7JOreOQ6Ijs9Q4vY7ZUCpwY/Ij/WC8CkuXS9qIcABstDd3Xy95aUe3vsjlVUr1I
- ZGmg==
+ bh=Ki4hjHXvWIGTemztjFIekOjMlPQpfsqVdh70e1IeqS0=;
+ b=oaCcbmw0ddV2V+F3QsJRtqOHyfvbizMRIZ/Bn5aiZvBshr0whz2SNwvQ1B8H2owEgv
+ cvsxxaFQNd7abOgxnIrjGNuiK9DWgry6L8kC1cGfWKNOPDX00q9GpNFvL9eXX4Pilqby
+ I5EcHjSeU0mdhtrX4pNMl9IlGm4AKqU/GhR7gHRGdVykHzxBjxK8LNElAqccibXAqBcD
+ 6cxjUy+mM/GnJuXtG+hur0sAxVTXw1wK6cSAunELdBCz0xHfdGoi0FINYRRD4WMnOFg9
+ 5m4AfKFsPWr6NU+LXDO+ACtoGGj1P6wmL0LGpTunhnLVG2Bj4NL3sVf0Cer9bQGprMhV
+ PbWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759266536; x=1759871336;
+ d=1e100.net; s=20230601; t=1759266612; x=1759871412;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dupJ9A4DuMF3aFxqi/gHC3Wglwb4IRL8r8frM7em9o0=;
- b=K4MajUe5iB9IbxQe5KQu6P5L59ezhbaTmPu6PZVeOvvVGmcXskrJKg6vALGSTG2KwR
- 0qFbREBonMO7bc+01sbYKLeK3U6pDibPbLVvDCl6geGpalFtcspic5fEi4UTnCVmcGNM
- 6FjS7KDUuiNtUplKAG7sDPaD+ZhL0T0RefrB/0+0eJXWkDusdsxJHrVfuUnIVLNzvQYS
- e+Klj0sG4Jsaf4vA8q4Zzt0cVRhs7H7+PIEsuOCJcdRD0B+IhN2F/c0WCzgMpS04ZK+S
- 3PPaJ5rx50IxDgZNhp7Qp4XFK08IjUi02uX+CKxJAQqqT6lL0ZPYLNJ/HOcshjDdGKAv
- CsLA==
+ bh=Ki4hjHXvWIGTemztjFIekOjMlPQpfsqVdh70e1IeqS0=;
+ b=A/lYsN70IQ9/pECex15K7PcJ9E/hno6iU6kE+ZmnfIclxzTZ8Vp34qCSBGRkKuZmVS
+ gwG4cLF0iDFZRcynnAu/Pz7xSqUdpbn9qv8OD2G2xVjFoxjiPChmcUqdVnvJyBUH4R7Y
+ Vk7lQyz1wtKKgqqpdcFTu6JjfPasTMkxf+gk4wcrbElF1489zkGUba9ivdSHD9Kati6F
+ 1cLv6SwkXqwIMkzo/o9aZzGFaicU9sYGZvgTspSoq2pUZxFJ7XBM4IRPY5URmeHdXF1U
+ Y+bYUHR6Nfmaa4xuR2ITkAgRO+4ZbJnkzxK39loO/OXecuQT+K3IDLy8T5YgMJE4x+f9
+ ezwA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXxD95uecp8rc0Ku9aRuLcQwDjlVhkJmO8gnXZUodvnkk4eB3kYRsyYPbAu3fbii6rkFNAyPEugGR6K@nongnu.org
-X-Gm-Message-State: AOJu0YwKAkvUzb4VCJ5GpHXyn4cOZ8r9QIhr7iYD/8kjhGoSizOnGbsl
- QNKqPwv6peWlc1Blll+wAjddISCAV8UKIR5QtvBRFNbV2OIEY9A+TyTS5mFgm4f5eOW5Co6rm5r
- JKeRcU1RXLw==
-X-Gm-Gg: ASbGncvD1UNMXPZXnCJa6QrOqWZR1nVO4bqKC0lmulCyG9Zg8VsQnB6d6svWaehXXBm
- f9Vm+KhFbvMovqJYH+fREarC6ngCDMXiyXeI5Pyr9UAWMFWMzB5A+wkSu+RnGH3f+8+Slq4C6d7
- ma0VatdAtABC4PjpGe8E8QGbCGK320a9B1aEuiaUjZpcTy9WldGJZyJTjjQgZJsrAC0bjnzapdn
- rBViy9E4q2JoammM+BRfOAyC//0ITwPJSzkno8inK2M8ge+ssUlhcmPl/DT8pntDNP2pq10zWAw
- gS2uDaRH9zGffxGhvpadO4yeAO7IwFSYVZaPFRtPic7uezN4Xi3HhyRtFPIJ80DZ6iC75VqQ13p
- 4gUxVLhjHbQ85CTf9RXTqjusJ01mUpOZ3NMp5Gu8B7qQI/8wQJe942Vm4GFHR4OzzPAVFAAc=
-X-Google-Smtp-Source: AGHT+IG51tHbuy44b9HQr/DL+91vIxhTlBYX+etjglRMONVRDeqVCtdNKn9onaEhLPboKjMaDlx5/Q==
-X-Received: by 2002:a17:90b:3ece:b0:32e:3830:65e1 with SMTP id
- 98e67ed59e1d1-339a6f846a2mr929678a91.33.1759266535886; 
- Tue, 30 Sep 2025 14:08:55 -0700 (PDT)
+ AJvYcCVv1AJTEePw8kFw6dUfaLp7jTH9ZA+/HRmL36npAd3jfnFFCHf2++tzmgJlLpRUjJI8HxBf//odTxvC@nongnu.org
+X-Gm-Message-State: AOJu0YwAjHCxeB0h7/HyLMiCu7pX/qg75tlcIqMyXlsZaJcZPl7IuQqA
+ 6DZI5KOWgmnwnzYGHjV+kq/TiRbL04o3YyiDxj76BLxXnxtEomXUTF2KeiHcx3cE9Y8=
+X-Gm-Gg: ASbGncvhWVrtI8xkQv1VQnjS8QH/8jd9p18hpW0MjqEj+8ZmO8TWunO5jk/WRfUKDXm
+ Wa2ULDC7G5ECv877295mW94m8zj7fXzhEosDk7lyF2ij9iAoHhiwpACF98z5rHRl5oDsegMOkxI
+ 1x67YR/h1du6kKE+gkw0l3R0COY0mNNycJJq+It0Geg0I+3ClGYOS0qZdQUXwJyU5a3Bt42RIJW
+ 2OTLaDKkp9+7NbzoWlGWlsi3jPUVwOJfMK8Pt+1rxOxRsVVlqT+CcOyorEQHyybtvIxv511XXHj
+ raFzcuPM7CUnxAuoQqhM0vvqzM5Z/sWq9YI6i1x5sRsREze1A9VZ1eqJkdZI2uJ0h3zdggOPTjI
+ XCmPi8fl6HWlM7ZAtmhY8YeeSIwt004z4ASAL6m6BQy0trV0DcxVUfifvQg+r
+X-Google-Smtp-Source: AGHT+IHdMcmajy+W2XeSQ8eHSfCcOIDq4F1qs8/V5sFWQBsDArTnGhnKDjaub67v2yfHtQGIa7N+Bw==
+X-Received: by 2002:a17:90b:4f47:b0:32e:5b07:15dd with SMTP id
+ 98e67ed59e1d1-339a6e80007mr954840a91.1.1759266612009; 
+ Tue, 30 Sep 2025 14:10:12 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a6ebd987sm495129a91.7.2025.09.30.14.08.55
+ 98e67ed59e1d1-339a6ee9c3bsm496318a91.15.2025.09.30.14.10.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 14:08:55 -0700 (PDT)
-Message-ID: <ed91dad4-c002-4162-95ec-6309428a5910@linaro.org>
-Date: Tue, 30 Sep 2025 14:08:54 -0700
+ Tue, 30 Sep 2025 14:10:11 -0700 (PDT)
+Message-ID: <fa0b24ea-0f44-48a9-9833-749a15d34c9e@linaro.org>
+Date: Tue, 30 Sep 2025 14:10:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/18] hw/virtio/vhost: Replace legacy
- cpu_physical_memory_*map() calls
+Subject: Re: [PATCH v3 18/18] hw/virtio/virtio: Replace legacy
+ cpu_physical_memory_map() call
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 References: <20250930082126.28618-1-philmd@linaro.org>
- <20250930082126.28618-18-philmd@linaro.org>
+ <20250930082126.28618-19-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250930082126.28618-18-philmd@linaro.org>
+In-Reply-To: <20250930082126.28618-19-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,16 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/30/25 01:21, Philippe Mathieu-Daudé wrote:
-> Use VirtIODevice::dma_as address space to convert the legacy
-> cpu_physical_memory_[un]map() calls to address_space_[un]map().
+> Propagate VirtIODevice::dma_as to virtqueue_undo_map_desc()
+> in order to replace the legacy cpu_physical_memory_unmap()
+> call by address_space_unmap().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/virtio/vhost.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>   hw/virtio/virtio.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
