@@ -4,88 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94484CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 16:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC3ECCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 16:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3cr0-0001Yc-6M; Tue, 30 Sep 2025 12:05:26 -0400
+	id 1v3cts-0002ow-3L; Tue, 30 Sep 2025 12:08:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3cqq-0001V6-SY
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 12:05:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3ctl-0002o6-St
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 12:08:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3cqg-0006Ln-QZ
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 12:05:16 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3cth-0007SH-2m
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 12:08:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759248300;
+ s=mimecast20190719; t=1759248489;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZlhTY39ZFTvy+ACcQNOPkDtgjlTGiPLtUMGkljH0ZYI=;
- b=gPpBM9mTqRoFS+gxZw5USZes6dABUa2UaNzoShNvf8uQiYwN81w2WhFuasQUjpUDZzeA7Q
- yZXoQe/ok7nyz0cJwT4T6bPv/aCETP05RGY7n6U0njb/9tiVLvbOMI0J9vLgLZHAOtxvuS
- BFc+a+VxRHeyTqlC4xnxqx7EKY+Qxb8=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YxI4v0S54bGaDlWElyQOvn9DJw//p8KK1Vc6ksGL5l8=;
+ b=VRnaWLJiwd1yLTdIEBrPXHyW0k7ln/4dSY3rAql5tK44MRCw+oH1cQIxR4cAKj/Z24Y/aD
+ 8H02Tlxei1CjFnkcWuTUgu3Ak/Rj773k/lF2V0sH2EN5R6dxfJhC12YAKfGPurGG7ES3ff
+ nAr2lESoFuK5pv4fU8bNL215V3errTs=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-Tdsl3r4HNRWLQCUg92FRbw-1; Tue, 30 Sep 2025 12:04:58 -0400
-X-MC-Unique: Tdsl3r4HNRWLQCUg92FRbw-1
-X-Mimecast-MFC-AGG-ID: Tdsl3r4HNRWLQCUg92FRbw_1759248297
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-78f3a8ee4d8so111259216d6.1
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 09:04:57 -0700 (PDT)
+ us-mta-387-J6hBuhvINyW7tTosz_7E2g-1; Tue, 30 Sep 2025 12:08:07 -0400
+X-MC-Unique: J6hBuhvINyW7tTosz_7E2g-1
+X-Mimecast-MFC-AGG-ID: J6hBuhvINyW7tTosz_7E2g_1759248486
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4e1015c48c8so505021cf.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 09:08:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759248297; x=1759853097;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZlhTY39ZFTvy+ACcQNOPkDtgjlTGiPLtUMGkljH0ZYI=;
- b=tlGH6PaenBYxxLnrjd6embv3bagpb73BfSrZWcUS7ZYTgUviqNyD1qvj74Nf0MJGnE
- Wu3kXRPgbZSfl/gdlCk6mjYbwM9hqvNGZIbI4EcHXm9JvznH1kfxzMft1/OdHJtPU4dK
- RJGSojoFKQ/ZHvnsxKpho/Dgf04kN8AUuklLFmLpf8DWP0p5EIorW1g6iZZBJowNdnsN
- EwrCYX/FhPJpErP7Qhu1yR3WQnn4bMsl3ct3NqXBoMdnGiHWIaZYclhxALixgGn1zn+I
- Xvu2rw7h+YUhPmQip9Ap9v2d4nnTbg46KM2rYhYfRKo/Tu21LADDsAZ9jvtCLsCNFBQP
- cOXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVcoSN86Ud8y/9kU16Kn1DbC7pqlosdiUzAxqCDLUzKZxnCVpt8tNyo2tVT1xbKbJ889QrEycRCp3t@nongnu.org
-X-Gm-Message-State: AOJu0YyGJcTuLWBTpkdwcDlO/c/rkcojdMRFsr7XNKZmNAtnfCKUoMp6
- pDD4ImTeI2ji8uGrJK1hE6CCg2f2OeasJmlhH3/ncGpAt/Fy51A3z2ghpp6hbrcWIAzCRquQa3K
- +wvmOTiPS+t/mpo4CN6K9pIUthU2JC1FgLA1sS0dLXR5DWkWFbfZ6y6wL
-X-Gm-Gg: ASbGncv40P9YgBiZPfNXlw/hU2V52dWZhgVIPfjlQnaiyS0MAUsLyEe8uZyO+ewbg4E
- K7jdG3py/FwGBfTsI05tBKo+kMkUrsQ2lbMry8JRFpgTtNjcxQeh6L72l1cBdhKD3hZt0WxG5Fy
- PfrqV/Kv4ppnpCCcFwc2+fomk+zzvqQ43SEWrw416WgD3W7aL3d4vvRSyvvIphOUdoYZSCPMEkB
- w6qH8jC0njlDFKbAf/6tNPI0YNJy7XwEBwSpETbGzIebgRQZRaTnHUxRWY69CfKvtWQoHpZuGaa
- XxkVlgExXI9Ac7QfQbzjWhFD2mJm2fzV60XcHg==
-X-Received: by 2002:ad4:5dce:0:b0:805:7dfb:2bd7 with SMTP id
- 6a1803df08f44-873a9a79943mr5024576d6.63.1759248296898; 
- Tue, 30 Sep 2025 09:04:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJq95r/jNZdnkI+w3oh1CI5XEhmleBCIeuuI2YJlreeQD7aA9XZa4slQC+583OruvEbZxPMA==
-X-Received: by 2002:ad4:5dce:0:b0:805:7dfb:2bd7 with SMTP id
- 6a1803df08f44-873a9a79943mr5023546d6.63.1759248295962; 
- Tue, 30 Sep 2025 09:04:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759248486; x=1759853286;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YxI4v0S54bGaDlWElyQOvn9DJw//p8KK1Vc6ksGL5l8=;
+ b=s2aXvoS1UBoWa9HAOzr4ravK1+eKxbfxpceUs2p51z61muUhtW/3CrFFtyk/rGwfGg
+ StNeAzbYS6hMnBVNbG3u10/cDNbLo0fTsv+dn+l7AYlEBwShkaIqm/ABHIlpZsUd2GMh
+ y20a/uWW4XX5E7KAMnl/mVH7+6y8FrT1hgZtDxNL6PTKIGNJP+EsyzMkXxakQJOBLY1x
+ 3d7ZpB0v07SLh0p0UKuaox/PaCdUUjyeRh3TJy9zsRdoDvqeaSNPNL6440PPYNappKrs
+ Q6B8NNF6Mp1WMuVPuOPpmxEtMc68sqfvEWEnaKA8p30peCTsNx6qqTtthEk/vC7yO4sC
+ mTUg==
+X-Gm-Message-State: AOJu0YyuWd8rws1rxAdYZAOpQM3Xo6KD7zN5CuHHs5jhqy2kuQ2RZ2Op
+ rz7WR8B0ibYUSEYhDUhhyTbVPXIW2sUSJGX+BBJsVsQedztMJXOouBesPP+ty7f+1SmzxkagU47
+ kIuTuCUwKYRKyq2TrRSmLLKMwZrZnaKHDyEQArQG4SAopKyxdYwVZUTLO
+X-Gm-Gg: ASbGncteLf2qAHQCUCswyXDIESPWbMrGs1buhApQYhORg7KxPbSI0hVzU3DHW32XQ12
+ pzSlQurO/3lYW7OKUDDrO1KTo4FkAuPimfXXuMwLpVuN80CwAO0MELUeozPcQGLZFJ4RWms78SQ
+ y+kd2DdSvrrP9L0gUQNc44t/FfWefGYDdI76tT10JDNABLRa+gB9PMbuGNzmmE76q6+rPdVzRqZ
+ BnGozXN5LBcGVzzVK70gMgMYaZXj6ipgXOmklPOorfIU8/vkRn8uXN5w4OUix8lnIjNvpGv66oH
+ r+LC4fLfDrX9njVUEVI8WRarDeQcmY9NEFVAKQ==
+X-Received: by 2002:ac8:5a54:0:b0:4d1:c31e:1cc8 with SMTP id
+ d75a77b69052e-4e4062fc56emr6141151cf.22.1759248485760; 
+ Tue, 30 Sep 2025 09:08:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8P3iFCd8fq4YjdI8dNQ3QDSGh35v348iten2iebzSOxID+4CduLfDNANsP+qBfQsovSz2vg==
+X-Received: by 2002:ac8:5a54:0:b0:4d1:c31e:1cc8 with SMTP id
+ d75a77b69052e-4e4062fc56emr6140461cf.22.1759248484997; 
+ Tue, 30 Sep 2025 09:08:04 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-80166781d27sm98929496d6.45.2025.09.30.09.04.54
+ d75a77b69052e-4db11ae8d47sm99072571cf.44.2025.09.30.09.08.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Sep 2025 09:04:55 -0700 (PDT)
-Date: Tue, 30 Sep 2025 12:04:53 -0400
+ Tue, 30 Sep 2025 09:08:04 -0700 (PDT)
+Date: Tue, 30 Sep 2025 12:08:02 -0400
 From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Yanfei Xu <yanfei.xu@bytedance.com>, mst@redhat.com,
- pbonzini@redhat.com, farosas@suse.de, qemu-devel@nongnu.org,
- shenyicong.1023@bytedance.com, Alex Williamson <alex.williamson@redhat.com>
-Subject: Re: [PATCH] migration: ensure APIC is loaded prior to VFIO PCI devices
-Message-ID: <aNv_pQylwDRPJusi@x1.local>
-References: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
- <aNqrHBMKRp-9Qhw0@x1.local>
- <3553e934-f05e-4cab-bf1b-17c149dcfb59@redhat.com>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: Re: [PATCH v14 25/27] migration: Rename post_save() to
+ cleanup_save() and make it void
+Message-ID: <aNwAYqCPfDaYOqv8@x1.local>
+References: <20250918-propagate_tpm_error-v14-0-36f11a6fb9d3@redhat.com>
+ <20250918-propagate_tpm_error-v14-25-36f11a6fb9d3@redhat.com>
+ <aNrVBYf4FP82ZTha@x1.local>
+ <aNtcxyvGLYVRhbuk@armenon-kvm.bengluru.csb>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3553e934-f05e-4cab-bf1b-17c149dcfb59@redhat.com>
+In-Reply-To: <aNtcxyvGLYVRhbuk@armenon-kvm.bengluru.csb>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -95,7 +113,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,76 +129,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 30, 2025 at 10:27:34AM +0200, Cédric Le Goater wrote:
-> On 9/29/25 17:51, Peter Xu wrote:
-> > On Mon, Aug 18, 2025 at 09:11:27PM +0800, Yanfei Xu wrote:
-> > > The load procedure of VFIO PCI devices involves setting up IRT
-> > > for each VFIO PCI devices. This requires determining whether an
-> > > interrupt is single-destination interrupt to decide between
-> > > Posted Interrupt(PI) or remapping mode for the IRTE. However,
-> > > determining this may require accessing the VM's APIC registers.
-> > > 
-> > > For example:
-> > > ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs)
-> > >    ...
-> > >      kvm_arch_irq_bypass_add_producer
-> > >        kvm_x86_call(pi_update_irte)
-> > >          vmx_pi_update_irte
-> > >            kvm_intr_is_single_vcpu
-> > > 
-> > > If the LAPIC has not been loaded yet, interrupts will use remapping
-> > > mode. To prevent the fallback of interrupt mode, keep APIC is always
-> > > loaded prior to VFIO PCI devices.
-> > > 
-> > > Signed-off-by: Yicong Shen <shenyicong.1023@bytedance.com>
-> > > Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-> > > ---
-> > >   hw/intc/apic_common.c       | 1 +
-> > >   include/migration/vmstate.h | 1 +
-> > >   2 files changed, 2 insertions(+)
-> > > 
-> > > diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-> > > index 37a7a7019d..394fe02013 100644
-> > > --- a/hw/intc/apic_common.c
-> > > +++ b/hw/intc/apic_common.c
-> > > @@ -379,6 +379,7 @@ static const VMStateDescription vmstate_apic_common = {
-> > >       .pre_load = apic_pre_load,
-> > >       .pre_save = apic_dispatch_pre_save,
-> > >       .post_load = apic_dispatch_post_load,
-> > > +    .priority = MIG_PRI_APIC,
-> > >       .fields = (const VMStateField[]) {
-> > >           VMSTATE_UINT32(apicbase, APICCommonState),
-> > >           VMSTATE_UINT8(id, APICCommonState),
-> > > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> > > index 1ff7bd9ac4..22e988c5db 100644
-> > > --- a/include/migration/vmstate.h
-> > > +++ b/include/migration/vmstate.h
-> > > @@ -163,6 +163,7 @@ typedef enum {
-> > >       MIG_PRI_IOMMU,              /* Must happen before PCI devices */
-> > >       MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
-> > >       MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-> > > +    MIG_PRI_APIC,               /* Must happen before PCI devices */
-> > >       MIG_PRI_GICV3_ITS,          /* Must happen before PCI devices */
-> > >       MIG_PRI_GICV3,              /* Must happen before the ITS */
-> > >       MIG_PRI_MAX,
-> > > -- 
-> > > 2.20.1
-> > > 
-> > 
-> > +Cedric, +Alex
-> > 
-> > queued.
-> > 
-> 
-> Perhaps we could group the interrupt controller priorities
-> under a common MIG_PRI_INTC ? PPC is very much the same,
-> although we managed to order restore from the machine load
-> handler IIRC.
-> 
-> Anyhow, LGTM.
+On Tue, Sep 30, 2025 at 09:59:59AM +0530, Arun Menon wrote:
+> Thank you for the review. I see it now.
+> I used the --enable-rust flag to change my configuration.
+> I have removed the patch and resent the series (v15)
 
-Agreed. That, when introduced, can also take ARM's into account (that may
-need a MIG_PRI_INTC_HIGH for ITS).
+Next time feel free to avoid the repost. I've managed the rebase which is
+trivial.  I'll explicitly ask for a repost if help needed.
 
 Thanks,
 
