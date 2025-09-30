@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D43DCCA468
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 11:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A2ACCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 11:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Ydq-0005Xr-94; Tue, 30 Sep 2025 07:35:34 -0400
+	id 1v3YhA-0006Zh-T3; Tue, 30 Sep 2025 07:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3Ydn-0005XN-VI
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 07:35:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3Yh8-0006ZY-RX
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 07:38:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3Ydj-0001cp-8C
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 07:35:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3Yh2-0003NB-F9
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 07:38:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759232123;
+ s=mimecast20190719; t=1759232323;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Hciy+sB5BlacXRAoUmUWRR8EjJFbqJ0JnHCK9HENXw0=;
- b=UJ0r5iniP5mtzuzNzAeHJtczurjlUl9utHnWToZjBLV8VnHBeZ8UFalyisXS6XgEY8l7Mo
- zYRd2bAaCKNa9Z3GgQyo34GpCUm8hz4awknyiSi34LVFoXndxF/Zl7DWxu1iw/WCHElHGW
- pyWCC1k1JxZPd2yC11bm8TkI4tNEMfw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s9TN9TZeQjktmd6QWuTV4gF6Ocin9z3f2O7pXCiqRtI=;
+ b=PdVb61gfjsjOWHpzWGjxcxA8yom/lZKivsXvKeOSDldw/Op/Uvl/MapoB5CHFMfXk67WUs
+ yuzOpjsxs5LEyaE5pYIoi0v1VnoxEiBvsR+JXQrVWTRO9P3mu6OLP9/0brbpnk1Q7N56Vd
+ JiByxFX9UO6UwCKtmxRBDomXoE3FnSs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-kYLEYcBKMq-4gpfq-8pPJQ-1; Tue, 30 Sep 2025 07:35:20 -0400
-X-MC-Unique: kYLEYcBKMq-4gpfq-8pPJQ-1
-X-Mimecast-MFC-AGG-ID: kYLEYcBKMq-4gpfq-8pPJQ_1759232119
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e4d34ff05so13021475e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 04:35:20 -0700 (PDT)
+ us-mta-39-q519jA4aOOuocveaySIHrw-1; Tue, 30 Sep 2025 07:38:42 -0400
+X-MC-Unique: q519jA4aOOuocveaySIHrw-1
+X-Mimecast-MFC-AGG-ID: q519jA4aOOuocveaySIHrw_1759232321
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e4943d713so17948965e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 04:38:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759232119; x=1759836919;
+ d=1e100.net; s=20230601; t=1759232321; x=1759837121;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Hciy+sB5BlacXRAoUmUWRR8EjJFbqJ0JnHCK9HENXw0=;
- b=PAL7I2o2BlJJDkaN0S5PuSgAaP8aEz2UYCIB3jBAYVJittZN4ERffyCGvFGNi002fS
- 4gP/eDVatH/9HS9ZFCWqE56txW2yiq95jZP4BXl5LYoNWiJ0BEep7Sng5AX8TDhed1sD
- orOxHCXeAkKodF3IlRGRLiMzaW4YjNHqZToyez/NS9Pjs0sgi5VwL0cM72NO7X5AgtZd
- wpBbI0LIj2OAJ3RAqjwlvPJCOwMEx9dXEYMkFCIIa45wApzmlNTz2iA6/oKEbG/rBNNu
- NOOvvAe7x3+il5KBEkNekF2VQry6RdAIS7TSShtL8q0wk3vBXx7GKm4cbK5eQwABqQhz
- fx4g==
+ bh=s9TN9TZeQjktmd6QWuTV4gF6Ocin9z3f2O7pXCiqRtI=;
+ b=ZNChhofrtsgXB9h06wCR+hQmZ1cS0dmyE+R+G0DF5HsMq1MBb7vI3FnEl7fS4zNB8a
+ U7TZ5Vsv2DRHdChybqCteEyqwUY0/JqaDSmuy0JptLCaXFawfDaQOMnly49YOmQQN4fi
+ AD5nZw5zBAZc4gr5fBsygGhMEpnxu2lsiFgtQIjZoEqQHEhIHR9jDx4C7OyLMBevSvdu
+ FtJm367inNJ7y8CI7jjAdTSewcNWtQ7ggClqqOhjYzGht1rkPfhB5z9ZyUjo8NStatmh
+ VqEVuHyT3ivrOYJkRRvRnylhrFaHrF+UNg7hl5zLxw/aea09B2PGemtVFo3YnHQEY8FC
+ uOXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVre3zKmMx5NF7Og5aNNtE/CL78z8IeRU1uxpJCP0cm//OPbswzLs2C4r7twOG+NcbVaKDsfJwavF35@nongnu.org
-X-Gm-Message-State: AOJu0Yx21GGDUJ+9jedfWUSBi795toJ+momQLd/gW/cOtmR7k2fBeKu4
- o5Ak1ksi0AgxrKjaHV1LoWVMx1IaLRxzpr1gxoIsPx2LVmu+t5Y/AaAi2JwXziLUdawK7ied3t/
- ZvXeMXdS+qOGpbncrGhacxtld7nRMycia2N/O6bEyy3uxC6ENoLBSgyTV
-X-Gm-Gg: ASbGncta5bD/NbjHpP+m/FoJ3BUpE9J4MEetqn0aa+li92XLYobWb11NX0CgLNfEgbH
- 7aWTjukAfkgJMfdCEwaJ46IiGuAGVpsxjqi1B7GGBSNiuEWAMnZiizmsTBpF/cYvbDHjcPSB5rl
- uT8QKqG/HxilA13KjTopWrcoMuLQX4FzP9w5ibl87k4tKpQfAHAkbG0BpWO8uqoKYuavthBPUHr
- JtaGv5FLZxBYAs7O5WXBqtl9fbcGWfNSN5J3nU4mHjfa13yPIjmfRuzy0k6BaTUKLaln4inddKU
- mNpVtceEKfB/z0g/no0zqCQMStnhTPRDyZ7NTqJ2kUJhwcI3p8XyRJq14dEKw9++dKGwIJO+tZ+
- vzBJ3iZu1
-X-Received: by 2002:a05:600c:4689:b0:46e:32f5:2d4b with SMTP id
- 5b1f17b1804b1-46e32f52ec4mr183794805e9.37.1759232119220; 
- Tue, 30 Sep 2025 04:35:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcTmd6tX0EJm8/+6R9r0BsvBpf3vxf8WmS0gY076rTigfyPeavfSQwXcXp3lyDph9qSO4b6A==
-X-Received: by 2002:a05:600c:4689:b0:46e:32f5:2d4b with SMTP id
- 5b1f17b1804b1-46e32f52ec4mr183794445e9.37.1759232118522; 
- Tue, 30 Sep 2025 04:35:18 -0700 (PDT)
+ AJvYcCWeBfa8vzpQuXl0S3Mc8Z8kDrAOVJw8nl2myjX13eAx+AewjeoViUpsvw1rG4cZqLmpy4wR4ok3Ivfu@nongnu.org
+X-Gm-Message-State: AOJu0Yzelwz4wrwtO6zFLATfhZ/BQbuZRsalDjkinnwolV7d2eL0SC2o
+ /YStKvEoFKCe/ZfjrFeZH5wfAXFdC6BlVbSUTFESB2xR8kIkx4RzxReY3o3XXkyRVR5oE4mZkmQ
+ twSCk1TtO5VkpzTIHRt83p6GLRufBRCS6SceL+RARlyBELbEKMQEOHT9g7jRaKATw
+X-Gm-Gg: ASbGncvADHYr6qVnishhvhAscR/xoTu1BpQx2dwMralh2+o8JHvZyLALVEL/waarRyo
+ zFAO15JmrxXzUF/uZ6DemAmDPJ3DA/zmAju7zeTIq8F+ItYZ35BixcoYpEC/PRW69D4p7vFcg72
+ ezIrEU1MB74GbyPsRT+3/6kthQhOMOQQR4RkLfpduHN60KRNBbinljvcTGRpf3YgmdM5XFkRkCA
+ wm2bpHvfYz+k4OuNXa1dnlXAqTjAAVM2vBin9gFabNm5Ml46lRQx2OmIPBKvIBRA6zaUiaWk435
+ 0TrEK3W8fCZImpS1vMdaj2qew9X0nVh8yBjUhfY0/J4RYc62NEfNUvk1wjTG9jwG0BF4g3+wIGm
+ ZGgPEAURi
+X-Received: by 2002:a05:600c:4748:b0:46e:43fa:2dd7 with SMTP id
+ 5b1f17b1804b1-46e43fa2e79mr110760035e9.24.1759232320683; 
+ Tue, 30 Sep 2025 04:38:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdY6KwQFQLlozfTW5uZlxtzZgRMZAc+14zrffISPJx0UY+E063oljvtfEvVg5B50QMio9SwA==
+X-Received: by 2002:a05:600c:4748:b0:46e:43fa:2dd7 with SMTP id
+ 5b1f17b1804b1-46e43fa2e79mr110759765e9.24.1759232320237; 
+ Tue, 30 Sep 2025 04:38:40 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e5873f2efsm49305565e9.4.2025.09.30.04.35.17
+ 5b1f17b1804b1-46e2a7c8531sm266630785e9.0.2025.09.30.04.38.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 04:35:18 -0700 (PDT)
-Message-ID: <d3e02afb-a7ec-4ae2-a5a5-74cf11ad4e05@redhat.com>
-Date: Tue, 30 Sep 2025 13:35:17 +0200
+ Tue, 30 Sep 2025 04:38:39 -0700 (PDT)
+Message-ID: <30ac36dd-8a08-41f0-8189-6b555aea38e7@redhat.com>
+Date: Tue, 30 Sep 2025 13:38:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] system/iommufd: Use uint64_t type for IOVA mapping
- size
+Subject: Re: [PATCH v2 2/3] hw/vfio: Avoid ram_addr_t in
+ vfio_container_query_dirty_bitmap()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -88,7 +88,7 @@ Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  <eric.auger@redhat.com>, Alex Williamson <alex.williamson@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, John Levon <john.levon@nutanix.com>
 References: <20250930091456.34524-1-philmd@linaro.org>
- <20250930091456.34524-2-philmd@linaro.org>
+ <20250930091456.34524-3-philmd@linaro.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -134,19 +134,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250930091456.34524-2-philmd@linaro.org>
+In-Reply-To: <20250930091456.34524-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,11 +169,96 @@ On 9/30/25 11:14, Philippe Mathieu-Daudé wrote:
 >    addresses into an intermediate address space that can map
 >    to host virtual address spaces.
 > 
-> This doesn't represent well an IOVA mapping size. Simply use
-> the uint64_t type.
+> vfio_container_query_dirty_bitmap() doesn't expect such QEMU
+> intermediate address, but a guest physical addresses. Use the
+> appropriate 'hwaddr' type, rename as @translated_addr for
+> clarity.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/vfio/vfio-container.h |  3 ++-
+>   hw/vfio/container.c              | 11 ++++++-----
+>   hw/vfio/listener.c               | 12 ++++++------
+>   3 files changed, 14 insertions(+), 12 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+> index b8fb2b8b5d7..093c360f0ee 100644
+> --- a/include/hw/vfio/vfio-container.h
+> +++ b/include/hw/vfio/vfio-container.h
+> @@ -98,7 +98,8 @@ bool vfio_container_dirty_tracking_is_started(
+>   bool vfio_container_devices_dirty_tracking_is_supported(
+>       const VFIOContainer *bcontainer);
+>   int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+> -    uint64_t iova, uint64_t size, ram_addr_t ram_addr, Error **errp);
+> +                                      uint64_t iova, uint64_t size,
+> +                                      hwaddr translated_addr, Error **errp);
+>   
+>   GList *vfio_container_get_iova_ranges(const VFIOContainer *bcontainer);
+>   
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 250b20f4245..9d694393714 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -246,7 +246,7 @@ static int vfio_container_devices_query_dirty_bitmap(
+>   
+>   int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+>                                         uint64_t iova, uint64_t size,
+> -                                      ram_addr_t ram_addr, Error **errp)
+> +                                      hwaddr translated_addr, Error **errp)
+>   {
+>       bool all_device_dirty_tracking =
+>           vfio_container_devices_dirty_tracking_is_supported(bcontainer);
+> @@ -255,7 +255,7 @@ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+>       int ret;
+>   
+>       if (!bcontainer->dirty_pages_supported && !all_device_dirty_tracking) {
+> -        cpu_physical_memory_set_dirty_range(ram_addr, size,
+> +        cpu_physical_memory_set_dirty_range(translated_addr, size,
+>                                               tcg_enabled() ? DIRTY_CLIENTS_ALL :
+>                                               DIRTY_CLIENTS_NOCODE);
+>           return 0;
+> @@ -280,11 +280,12 @@ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+>           goto out;
+>       }
+>   
+> -    dirty_pages = cpu_physical_memory_set_dirty_lebitmap(vbmap.bitmap, ram_addr,
+> +    dirty_pages = cpu_physical_memory_set_dirty_lebitmap(vbmap.bitmap,
+> +                                                         translated_addr,
+>                                                            vbmap.pages);
+>   
+> -    trace_vfio_container_query_dirty_bitmap(iova, size, vbmap.size, ram_addr,
+> -                                            dirty_pages);
+> +    trace_vfio_container_query_dirty_bitmap(iova, size, vbmap.size,
+> +                                            translated_addr, dirty_pages);
+>   out:
+>       g_free(vbmap.bitmap);
+>   
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 3b6f17f0c3a..4e2565905e0 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -1059,7 +1059,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       VFIOGuestIOMMU *giommu = gdn->giommu;
+>       VFIOContainer *bcontainer = giommu->bcontainer;
+>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+> -    ram_addr_t translated_addr;
+> +    hwaddr translated_addr;
+>       Error *local_err = NULL;
+>       int ret = -EINVAL;
+>       MemoryRegion *mr;
+> @@ -1108,7 +1108,7 @@ static int vfio_ram_discard_query_dirty_bitmap(MemoryRegionSection *section,
+>   {
+>       const hwaddr size = int128_get64(section->size);
+>       const hwaddr iova = section->offset_within_address_space;
+> -    const ram_addr_t ram_addr = memory_region_get_ram_addr(section->mr) +
+> +    const hwaddr addr = memory_region_get_ram_addr(section->mr) +
+>                                   section->offset_within_region;
 
+While we're at it, could I ask, for consistency with other callers
+of vfio_container_query_dirty_bitmap(), that you rename 'addr' to
+'translated_addr' here and below as well ?
+
+Feel free to ignore.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -182,61 +267,40 @@ Thanks,
 C.
 
 
-> ---
->   include/system/iommufd.h | 6 +++---
->   backends/iommufd.c       | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-> index c9c72ffc450..a659f36a20f 100644
-> --- a/include/system/iommufd.h
-> +++ b/include/system/iommufd.h
-> @@ -45,12 +45,12 @@ bool iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
->                                   Error **errp);
->   void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id);
->   int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-> -                                 hwaddr iova, ram_addr_t size, int fd,
-> +                                 hwaddr iova, uint64_t size, int fd,
->                                    unsigned long start, bool readonly);
->   int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
-> -                            ram_addr_t size, void *vaddr, bool readonly);
-> +                            uint64_t size, void *vaddr, bool readonly);
->   int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-> -                              hwaddr iova, ram_addr_t size);
-> +                              hwaddr iova, uint64_t size);
->   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
->                                        uint32_t *type, void *data, uint32_t len,
->                                        uint64_t *caps, Error **errp);
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 2a33c7ab0bc..fdfb7c9d671 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -197,7 +197,7 @@ void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id)
+>       VFIORamDiscardListener *vrdl = opaque;
+>       Error *local_err = NULL;
+> @@ -1118,7 +1118,7 @@ static int vfio_ram_discard_query_dirty_bitmap(MemoryRegionSection *section,
+>        * Sync the whole mapped region (spanning multiple individual mappings)
+>        * in one go.
+>        */
+> -    ret = vfio_container_query_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr,
+> +    ret = vfio_container_query_dirty_bitmap(vrdl->bcontainer, iova, size, addr,
+>                                   &local_err);
+>       if (ret) {
+>           error_report_err(local_err);
+> @@ -1183,7 +1183,7 @@ static int vfio_sync_iommu_dirty_bitmap(VFIOContainer *bcontainer,
+>   static int vfio_sync_dirty_bitmap(VFIOContainer *bcontainer,
+>                                     MemoryRegionSection *section, Error **errp)
+>   {
+> -    ram_addr_t ram_addr;
+> +    hwaddr addr;
+>   
+>       if (memory_region_is_iommu(section->mr)) {
+>           return vfio_sync_iommu_dirty_bitmap(bcontainer, section);
+> @@ -1198,12 +1198,12 @@ static int vfio_sync_dirty_bitmap(VFIOContainer *bcontainer,
+>           return ret;
+>       }
+>   
+> -    ram_addr = memory_region_get_ram_addr(section->mr) +
+> +    addr = memory_region_get_ram_addr(section->mr) +
+>                  section->offset_within_region;
+>   
+>       return vfio_container_query_dirty_bitmap(bcontainer,
+>                      REAL_HOST_PAGE_ALIGN(section->offset_within_address_space),
+> -                                 int128_get64(section->size), ram_addr, errp);
+> +                                 int128_get64(section->size), addr, errp);
 >   }
 >   
->   int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
-> -                            ram_addr_t size, void *vaddr, bool readonly)
-> +                            uint64_t size, void *vaddr, bool readonly)
->   {
->       int ret, fd = be->fd;
->       struct iommu_ioas_map map = {
-> @@ -230,7 +230,7 @@ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
->   }
->   
->   int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-> -                                 hwaddr iova, ram_addr_t size,
-> +                                 hwaddr iova, uint64_t size,
->                                    int mfd, unsigned long start, bool readonly)
->   {
->       int ret, fd = be->fd;
-> @@ -268,7 +268,7 @@ int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
->   }
->   
->   int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-> -                              hwaddr iova, ram_addr_t size)
-> +                              hwaddr iova, uint64_t size)
->   {
->       int ret, fd = be->fd;
->       struct iommu_ioas_unmap unmap = {
+>   static void vfio_listener_log_sync(MemoryListener *listener,
 
 
