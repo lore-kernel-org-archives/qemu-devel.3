@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D7CCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B387CAC5BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3VUp-0004M1-9A; Tue, 30 Sep 2025 04:14:03 -0400
+	id 1v3VVB-0004Oo-Ju; Tue, 30 Sep 2025 04:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3VUl-0004Lk-Pq
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:13:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3VUb-0006Ma-FQ
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:13:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759220024;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MUGTE5rn8OH7WzCv0pQMUqfKpK2mvNYSfvFTXktcL0Q=;
- b=DkVrKZNvO1sAtKfqAsXicdkV+zkWawcR+ERCECLVPKfGt/n7sPlHzJLJA//6XZBWFDG7zM
- WCm0w2QlFU7XVRSCmGa9kNx5kncF4xx2s/77XC1a6OGNQPYFytVZuz4pPBHL5Nxc+8/W34
- X+AJRgIlJhObysWGGp7s7v2thhmLVq4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-_27IA7g8NA-PT7fLOrj7zQ-1; Tue,
- 30 Sep 2025 04:13:40 -0400
-X-MC-Unique: _27IA7g8NA-PT7fLOrj7zQ-1
-X-Mimecast-MFC-AGG-ID: _27IA7g8NA-PT7fLOrj7zQ_1759220016
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 86E4519560B3; Tue, 30 Sep 2025 08:13:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBD9E18004D8; Tue, 30 Sep 2025 08:13:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BB61C21E6A27; Tue, 30 Sep 2025 10:13:27 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Alessandro Di
- Federico <ale@rev.ng>,  Alistair Francis <alistair.francis@wdc.com>,  Anton
- Johansson <anjo@rev.ng>,  Brian Cain <bcain@quicinc.com>,  "Daniel P.
- Berrange" <berrange@redhat.com>,  Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org, demiobenour@gmail.com,  dhedde@kalrayinc.com,  Eric Blake
- <eblake@redhat.com>,  eblot@rivosinc.com,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Eduardo Habkost <eduardo@habkost.net>,  Elena
- Ufimtseva <elena.ufimtseva@oracle.com>,  Auger Eric
- <eric.auger@redhat.com>,  felipe@nutanix.com,  Alyssa Ross <hi@alyssa.is>,
- iggy@theiggy.com,  Warner Losh <imp@bsdimp.com>,  Jan Kiszka
- <jan.kiszka@web.de>,  Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com,  Jim Shu <jim.shu@sifive.com>,  Joao Martins
- <joao.m.martins@oracle.com>,  Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>,  Luc Michel <luc@lmichel.fr>,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  Max Chou
- <max.chou@sifive.com>,  Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com,  "Ho, Nelson" <nelson.ho@windriver.com>,  Paul Walmsley
- <paul.walmsley@sifive.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  QEMU Developers
- <qemu-devel@nongnu.org>,  Roberto Campesato <rbc@meta.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>,  Bernhard Beschow
- <shentey@gmail.com>,  Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth
- <thuth@redhat.com>,  wei.w.wang@intel.com,  z.huo@139.com,  LIU Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  zwu.kernel@gmail.com
-Subject: Re: KVM/QEMU community call 30/09/2025 agenda items?
-In-Reply-To: <7cd53af2-b443-4c42-99cf-07dbaaa97f3b@redhat.com> (Paolo
- Bonzini's message of "Mon, 29 Sep 2025 18:52:25 +0200")
-References: <87y0pxl826.fsf@draig.linaro.org>
- <7cd53af2-b443-4c42-99cf-07dbaaa97f3b@redhat.com>
-Date: Tue, 30 Sep 2025 10:13:27 +0200
-Message-ID: <87ms6cz7bs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <yulei.sh@bytedance.com>)
+ id 1v3VV6-0004Oe-RI
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:14:20 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yulei.sh@bytedance.com>)
+ id 1v3VV1-0006Sx-1P
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:14:20 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b457d93c155so46957866b.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:14:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1759220041; x=1759824841; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8OVpJ830iM6QqjjzYl0WBFh2yWz47yyJL0owxoLoIsY=;
+ b=BFxTASY6IREduqcTsQROd7o/PHz1FYwd2eBfBVtm1sR35mqN5v3j9IxfAv6mI0Y0H5
+ oKliu229Lb/GkSFygRoFelspJQ3RnLf/GsFgY5SPsThcS0OVZ+OJiJg1QIevpLtBEzA6
+ acEBSLTGl0SaQWVZYEQXHnq7FJ3/LkKk2ac19C9afW0+0fjqagq8wA0y1gXg3tfsxOda
+ aQOSvtJGq3+haXk99CtiviliWJAQXJ+u0QaXk/TXejlLp/5lHgd/eEB0sVNfkDyAtoMD
+ sDPWPCa4NoJK4tfBylj9XJSA3iL+LmKUvH6S5UdzK8LgZy3nKpfgE/afslczLQKtDaDy
+ nBsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759220041; x=1759824841;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8OVpJ830iM6QqjjzYl0WBFh2yWz47yyJL0owxoLoIsY=;
+ b=TBFn1cEKDacJRHQxFd6N2WgMtqHtDVREqN9eCVsiyj1rEXMaX0tLXEAlQo+K3rtcqR
+ ZYEDAftnsefOqYZzciialofYoCS4YgFq831XMikr8VyBrBDaBhWOPodZhiI4TgYYWIkD
+ 1ICAF27PqxXh0i6V9OBZID9FIuI++kRsAz2pJJDOmiH6njuOBK2EaybDeGHHd3GREMwl
+ XRoIhVAmEVtiOnRKj3JF5rxrCU5DrDZumizrTcz5KhPINU51ryBQslE2XOw0DMMXFjTH
+ tZZ1OXD1ZY0WkCVfjy2XQPvFw8r2cffQmlrMI8CisLwyTlfzor/zgvTSn1/XMeyPG+TV
+ 2vtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOLNeB6IgU0xUKylludoki3Fy8PXXQbOvg6LmK5kCtH8TiVX9ZP/pIU8aejrxPPohwyIRXGPbVUAAr@nongnu.org
+X-Gm-Message-State: AOJu0Yz+YjkHpwpkcsqU8gdv1CqENk6qCdAY9IHxHyJIxl8Yarc9jAeR
+ rOfV+3pdb5+oLlLoQ0PiZYixCGY6hZqgc1qtAbXygwwwbcpGZNSpp5jGED4xkzf7tnU46PXfbD0
+ nVNqsg68QHKAkmUQhVUoQ2CA+mCFIuJxK3esZII7x1g==
+X-Gm-Gg: ASbGnct5uyu0rnBeNltgX3yJfLAPJsnfDp1MIl7PfcvqlFjyjtz/w6fI/4hu1mfLITY
+ xIXEzjzAhvPIMTXv30d8YWjDW486vIdxFpTivpx2wKT+KLCLh96FfrRYdR0DSP7+Nju/UiYBwh3
+ o69DYdgDh9S6eHn3u2dtrjVHu9gg8IlapZXBiiME/MUDQQcLKNiXpED680Ml8qkYWpMP78Ux00N
+ bndRAB60QS5Fkfl4tn3/uuSUN2ibAcJuv6jW94N9IpxghPrt/mpDYkcIvk=
+X-Google-Smtp-Source: AGHT+IHK1eVcqX3fLHHYRxoDjS8p+xVxIY4uV4oTiUjZ314HWX1tuNL3SvEyPFEzfs4NjHBfGC+UUtVVFh1qPQwxUJA=
+X-Received: by 2002:a17:907:94c5:b0:b3f:ccac:af3c with SMTP id
+ a640c23a62f3a-b3fccbbf75fmr642169266b.40.1759220040822; Tue, 30 Sep 2025
+ 01:14:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20201025131435.144-1-wangzhiqiang.bj@bytedance.com>
+ <20201025131435.144-2-wangzhiqiang.bj@bytedance.com>
+ <a3e42923-d81a-40c2-8b17-28d6264d5518@kaod.org>
+In-Reply-To: <a3e42923-d81a-40c2-8b17-28d6264d5518@kaod.org>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Tue, 30 Sep 2025 16:13:49 +0800
+X-Gm-Features: AS18NWAKeUitGwNLCNzoKnxT7qZISA9IjG28OYsQomG5mXZuRq-_RtWmBOL4-TA
+Message-ID: <CAGm54UE3D_gd8=iDMkF+nPUqZN5-Mhp-46HONi3Ok6oEkdyDwA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] aspeed: Add support for the g220a-bmc board
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: Joel Stanley <joel@jms.id.au>, f4bug@amsat.org,
+ Andrew Jeffery <andrew@aj.id.au>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=yulei.sh@bytedance.com; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,13 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Tue, Sep 30, 2025 at 1:57=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.org=
+> wrote:
+>
+> On 10/25/20 14:14, John Wang wrote:
+> > G220A is a 2 socket x86 motherboard supported by OpenBMC.
+> > Strapping configuration was obtained from hardware.
+> >
+> > Signed-off-by: John Wang <wangzhiqiang.bj@bytedance.com>
+> > Reviewed-by: C=C3=A9dric Le Goater <clg@kaod.org>
+> > Reviewed-by: Joel Stanley <joel@jms.id.au>
+>
+> Hello John
+>
+> Would it be possible to contribute a functional test for this
+> machine ?
+>
+> Since this machine contributes little to the Aspeed models,
+> its value lies in the firmware it can run to exercise the
+> models. Without functional tests, I plan to schedule the
+> removal in the QEMU 10.2 cycle.
+>
 
-> If anybody wants to talk AI (or rather, thinks we should---I cannot imagine anyone *wanting* that), we can do that.
+This model is used in the QEMU CI for g220a in our internal CI.
+May I ask what exactly are expected to do "to contribute a functional test"=
+?
 
-You're offering to make my dentist appointment this morning *not* the
-least enjoyable part of my day?
-
-;)
-
+>
+> Thanks,
+>
+> C.
 
