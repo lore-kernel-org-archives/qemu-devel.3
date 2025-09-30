@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE70CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59075CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Sh5-0007Li-Gs; Tue, 30 Sep 2025 01:14:33 -0400
+	id 1v3Ski-0000fn-Vi; Tue, 30 Sep 2025 01:18:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Sh1-0007JY-Oi
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:14:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Ske-0000fM-3S
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:18:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Sgr-0007Cc-Ss
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:14:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SkT-0008IX-HX
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:18:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759209250;
+ s=mimecast20190719; t=1759209478;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rfYRaBbqDNHQ6F8NacsRRD2axBTWz2moGbHA2rCe8hU=;
- b=Fm87X0NZM+zuIJMwShVbg7S9vScJ9gBsotv2k9X/5+JW93YWjm2q1wdeueij7+N8x5CQUh
- 5nC2Vo0nNi4WhX4mTrJsSVXi7aQk4KK01K5DjeaMSSqdrg/YpkOwaBEFdWo34MaQUhVYaw
- UyEkIfbCgQVQs3iC8Kmmj0/mn6zAe8Q=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iJqbxLGZBRbCdI1fp8Wxe0FpNDpA/eSstK1MYNC/cEM=;
+ b=E76z3/bStZQhRHS5+0INiEpdVFBOu80z85uBZEeImRoM5wzMrv/epMAKI/8qikTN7NxwN4
+ 4CQNlggBoLRALTK6zMfLm+vkCXHHOxt+5sp4j0lS2eXMaOQ7hL9cleWxeyjrYTDkMHpaw8
+ 1wPckSIn1pdwYX8Xyygio2v1YJ0Xib0=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-x9x5VzoBMPeRKgvw5Cz0ZA-1; Tue, 30 Sep 2025 01:14:09 -0400
-X-MC-Unique: x9x5VzoBMPeRKgvw5Cz0ZA-1
-X-Mimecast-MFC-AGG-ID: x9x5VzoBMPeRKgvw5Cz0ZA_1759209248
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b448c864d45so18995266b.2
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:14:08 -0700 (PDT)
+ us-mta-693-FQTyQpZKP_mQyxX6zsgs7A-1; Tue, 30 Sep 2025 01:17:56 -0400
+X-MC-Unique: FQTyQpZKP_mQyxX6zsgs7A-1
+X-Mimecast-MFC-AGG-ID: FQTyQpZKP_mQyxX6zsgs7A_1759209476
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-636260bcc31so2527862a12.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 22:17:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759209248; x=1759814048;
+ d=1e100.net; s=20230601; t=1759209476; x=1759814276;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rfYRaBbqDNHQ6F8NacsRRD2axBTWz2moGbHA2rCe8hU=;
- b=tS7gINFelRqoL1pSX7cAUAJwDUfWA72Ie2bRC3R3S0/QYSidkUEAddPUEwlr67Iikd
- ZvoLeJXXehkH+/jDcNFTYfzdOHuDal0E60dvN0NzdXXKVezPr42BgfH75nRKIAjCc3FD
- X6+UvC911YwIYdP+Ylg9C3fI7EFCCps9URK8VzWaStvwF4BFaMgOnsu8iqvHueXWCZeV
- UKyqTHixoDQGC2yS8tLd23bG246UR1Ckh9faCJ9ay6UbbxLh+88ZW8wSMHP4hCPrSrsE
- NFXlIyi7t7GKIfzBpJ1qOELoejOwEdK3gzWMIc2uaO6THornG6bw09rt0xRTocv9b4Mg
- OhTw==
+ bh=iJqbxLGZBRbCdI1fp8Wxe0FpNDpA/eSstK1MYNC/cEM=;
+ b=WMnWgoLldasyBmTuf3l6PKPFtLeRnssKBiCqQiphLUDYnUIgVKQcs+olfFzElqsZIn
+ bHDFX0nHTPT6dqSba9icv7Ubq7qFcuDlYISN18bLtTw0w1EL4raaGb3o+ijfRVq344QZ
+ z3u25YXWS8sco4Rj0thmkr04oUqrWv4ok1li2ac7AArNv4PhKwWD9eHZibpwsc4MvwOH
+ SBaRK9nMgllauxw71LLh0L40qOj+fu6GmfuyemC5vPyRwu9/GcjWMAdxcpvovS+ZO5Fk
+ bMOOoJAGzoQytHfL4hudb0e00p9GnMyH3cnniXZfNwa0XoeopxqS924FytxDT0eMkCGp
+ CcnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXjhafzOayIHbCnmu2aJy+MIn1MfVjh+DAuLK9S8tL5zrEwZtvaQxA9Hul55R8mpQ60ix5MUwF2kKg@nongnu.org
-X-Gm-Message-State: AOJu0Yw1Yt2uMQ0N6qpL7TYZWNipyDwewcRZaBbdBZUissAz2XRh/GOi
- hWXDxiou43gNQoM5UqXrwIK49S3hMCmslFo9M+NOEPxhA2/wsyAGT3NW5Mq64B1WjrQ8yPTN3gX
- kga5tfhuo/NIyFcoAIbgk2whfjvINSsnGkaz6QREeLEvOXqcqCUf4TwR3
-X-Gm-Gg: ASbGncunF2/OiWRybScNn2bgWcwEi9CVUamLheHg45eo817xGW+ySv/6UVLUS81sSLI
- /eVQ0b/yEgYdpum2bC8AjmH5yGYhSam4/SgQ0SXeLU1MbrxxkZCWLhLozWDEESNmN7/Ue3/wrrA
- pTzec8mAnXu3d2uAUTrWreJz5G4vKQLZwQnzbUxfMzql0V0pdsrfN4LnXrgeQswxOfWJ97mMKBt
- hmyb2p7y563gDT494tB/JzowuQD9e+vy90y0eFVeZ3Vun6HW+0pEOyhC3mIKKibc3GhZdKzz2W6
- 9rAZORvrluqPNQ5sDYjtTWc0+gtImH086a/8POoMXuNT2qjsOimuqGC5qWRTQ7l/cRVgRkW2eX3
- bxOm0MNTDZg==
-X-Received: by 2002:a17:906:7312:b0:b41:4e72:30a0 with SMTP id
- a640c23a62f3a-b414e7242e3mr323514366b.56.1759209247823; 
- Mon, 29 Sep 2025 22:14:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFc+XaDzPUt/AGNCGqtSirrDdGPuml/3dR+xFW9Vk8kdHq0KBMGN7NxdXnzLaK6dYxJdrrkw==
-X-Received: by 2002:a17:906:7312:b0:b41:4e72:30a0 with SMTP id
- a640c23a62f3a-b414e7242e3mr323511866b.56.1759209247409; 
- Mon, 29 Sep 2025 22:14:07 -0700 (PDT)
+ AJvYcCUIWsKoBeKZTa+qEFU+0COmaL6y701Ghi+9lwEIiLV5vjOcjF2bd1bBY800braSgagAP9LmFi38goYB@nongnu.org
+X-Gm-Message-State: AOJu0YwvjF98d3ntoDv7QnUll8C/oVVxWQoVhZt12jVC/nhP5belWur7
+ y8ys8O2stpXJyuxPMPvC6fb1lsyDiiAs5kk07j0/cSMju7mx6xn+78wMRfwNMqO/DuymPEptIB8
+ 4qEPELwah0MbQYy9lWv0jUxthjVrRrkM/ZRV0uOHdZlIUQZzKaaiYrhKi
+X-Gm-Gg: ASbGncvSFLrSt5O1zmGV50FeeyIgyFfB8QYNBIjK5xWqNWa510Nwt5j4BsdoOacfH/o
+ BC2L7z9ISlbs8dV3SxudvZJpEWNdXfDbkP185R2A+hG8W9a0RSSwTr42IjwubqtJmnVjFJe8o5f
+ YHcuiOAenyh4AkvsBSdEELpomT9k0IO8ZQDjzqIJv/nDoCldEYFEldmsUjjl4VKHWfnk3kkAuq2
+ Qpqml+A6mrW++nv/EIkcH3srQ2XuuKoGFdq09CBbRnIEPp2E5fHdqiGtwz7IpawFB0SiYP4omuV
+ eO4jmDoiURmecMc3uAejtxmmwueJPxfPPWL+qN0qf4sQRcqDIHIhauJ5VY+gs/xg7TkBLFUx1et
+ 1ThDsn1msUw==
+X-Received: by 2002:a05:6402:50c7:b0:62f:9731:a1c6 with SMTP id
+ 4fb4d7f45d1cf-6349fa73ddcmr16749809a12.21.1759209475648; 
+ Mon, 29 Sep 2025 22:17:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEi7qy8AylS4ZYYZEIvYs0+dEtIn2Z48rzfXoS45/r1i/R2wezJa6kDRndbNzkhCIJTHuXZOA==
+X-Received: by 2002:a05:6402:50c7:b0:62f:9731:a1c6 with SMTP id
+ 4fb4d7f45d1cf-6349fa73ddcmr16749783a12.21.1759209475247; 
+ Mon, 29 Sep 2025 22:17:55 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b3b9d55a5bcsm568718066b.70.2025.09.29.22.14.06
+ 4fb4d7f45d1cf-634c4b96ff6sm6611079a12.46.2025.09.29.22.17.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 22:14:06 -0700 (PDT)
-Message-ID: <8496255a-6070-4f20-8885-481d6cf539a2@redhat.com>
-Date: Tue, 30 Sep 2025 07:14:05 +0200
+ Mon, 29 Sep 2025 22:17:54 -0700 (PDT)
+Message-ID: <2171c08e-0224-4309-8657-ed9d2e8036aa@redhat.com>
+Date: Tue, 30 Sep 2025 07:17:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 21/28] pc-bios/s390-ccw: Add additional security checks
- for secure boot
+Subject: Re: [PATCH v6 14/28] pc-bios/s390-ccw: Define memory for IPLB and
+ convert IPLB to pointers
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, borntraeger@linux.ibm.com
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- alifm@linux.ibm.com
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-22-zycai@linux.ibm.com>
- <e5faaffd-fb58-4002-817f-ff9e787e8272@redhat.com>
- <ddad9154-ae72-43b3-8d20-3ef4c0a43c46@linux.ibm.com>
+ <20250917232131.495848-15-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -133,17 +131,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ddad9154-ae72-43b3-8d20-3ef4c0a43c46@linux.ibm.com>
+In-Reply-To: <20250917232131.495848-15-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,33 +159,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/09/2025 22.43, Zhuoying Cai wrote:
-> Thank you for all the feedback! I'll address the comments in the next
-> version.
+On 18/09/2025 01.21, Zhuoying Cai wrote:
+> Define a memory space for both IPL Parameter Block (IPLB) and
+> IPL Information Report Block (IIRB) since IIRB is stored immediately
+> following IPLB.
 > 
-> On 9/29/25 9:30 AM, Thomas Huth wrote:
->> On 18/09/2025 01.21, Zhuoying Cai wrote:
-...
->>> +    /* PSW points within a signed binary code component */
->>> +    for (int i = 0; i < range_index; i++) {
->>> +        if (comp_addr_range[i].is_signed &&
->>> +            addr >= comp_addr_range[i].start_addr &&
->>> +            addr <= comp_addr_range[i].end_addr) {
->>
->> is it still OK if the address points to the end_addr? Or should that be
->> end_addr - 2 instead (since an opcode has at least two bytes)?
->>
+> Convert IPLB to pointer and it points to the start of the defined memory space.
+> IIRB points to the end of IPLB.
 > 
-> Using end_addr - 2 seems correct, since it accounts for the minimum
-> instruction length.
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/iplb.h     | 12 ++++++++++--
+>   pc-bios/s390-ccw/jump2ipl.c |  6 +++---
+>   pc-bios/s390-ccw/main.c     | 34 +++++++++++++++++++---------------
+>   pc-bios/s390-ccw/netmain.c  |  8 ++++----
+>   4 files changed, 36 insertions(+), 24 deletions(-)
 > 
-> Just to clarify: using end_addr - 2 should ensure that at least a 2-byte
-> instruction fits. Should longer instructions (e.g., 4 and 6 bytes) be a
-> concern in this context?
+> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
+> index bdbc733e16..11302e004d 100644
+> --- a/pc-bios/s390-ccw/iplb.h
+> +++ b/pc-bios/s390-ccw/iplb.h
+> @@ -20,7 +20,7 @@
+>   #include <string.h>
+>   
+>   extern QemuIplParameters qipl;
+> -extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+> +extern IplParameterBlock *iplb;
+>   extern bool have_iplb;
+>   
+>   struct IplInfoReportBlockHeader {
+> @@ -85,6 +85,14 @@ struct IplInfoReportBlock {
+>   } __attribute__ ((packed));
+>   typedef struct IplInfoReportBlock IplInfoReportBlock;
+>   
+> +struct IplBlocks {
+> +    IplParameterBlock   iplb;
+> +    IplInfoReportBlock  iirb;
+> +} __attribute__ ((packed));
+> +typedef struct IplBlocks IplBlocks;
+> +
+> +extern IplBlocks ipl_data __attribute__((__aligned__(PAGE_SIZE)));
 
-No clue ... but I guess it should be fine if the instruction at least starts 
-in the signed area?
+I think it makes more sense to specify the attribute in the .c file instead 
+of using it here in the header.
 
   Thomas
+
+
+>   #define S390_IPL_TYPE_FCP 0x00
+>   #define S390_IPL_TYPE_CCW 0x02
+>   #define S390_IPL_TYPE_QEMU_SCSI 0xff
+> @@ -127,7 +135,7 @@ static inline bool load_next_iplb(void)
+>   
+>       qipl.index++;
+>       next_iplb = (IplParameterBlock *) qipl.next_iplb;
+> -    memcpy(&iplb, next_iplb, sizeof(IplParameterBlock));
+> +    memcpy(iplb, next_iplb, sizeof(IplParameterBlock));
+>   
+>       qipl.chain_len--;
+>       qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
+> diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+> index 86321d0f46..fa2ca5cbe1 100644
+> --- a/pc-bios/s390-ccw/jump2ipl.c
+> +++ b/pc-bios/s390-ccw/jump2ipl.c
+> @@ -43,11 +43,11 @@ int jump_to_IPL_code(uint64_t address)
+>        * The IPLB for QEMU SCSI type devices must be rebuilt during re-ipl. The
+>        * iplb.devno is set to the boot position of the target SCSI device.
+>        */
+> -    if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
+> -        iplb.devno = qipl.index;
+> +    if (iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
+> +        iplb->devno = qipl.index;
+>       }
+>   
+> -    if (have_iplb && !set_iplb(&iplb)) {
+> +    if (have_iplb && !set_iplb(iplb)) {
+>           panic("Failed to set IPLB");
+>       }
+>   
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index 76bf743900..c9328f1c51 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -22,7 +22,9 @@
+>   static SubChannelId blk_schid = { .one = 1 };
+>   static char loadparm_str[LOADPARM_LEN + 1];
+>   QemuIplParameters qipl;
+> -IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+> +/* Ensure that IPLB and IIRB are page aligned and sequential in memory */
+> +IplBlocks ipl_data;
+> +IplParameterBlock *iplb;
+>   bool have_iplb;
+>   static uint16_t cutype;
+>   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+> @@ -51,7 +53,7 @@ void write_subsystem_identification(void)
+>   void write_iplb_location(void)
+>   {
+>       if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() != VIRTIO_ID_NET) {
+> -        lowcore->ptr_iplb = ptr2u32(&iplb);
+> +        lowcore->ptr_iplb = ptr2u32(iplb);
+>       }
+>   }
+>   
+> @@ -162,7 +164,7 @@ static void menu_setup(void)
+>           return;
+>       }
+>   
+> -    switch (iplb.pbt) {
+> +    switch (iplb->pbt) {
+>       case S390_IPL_TYPE_CCW:
+>       case S390_IPL_TYPE_QEMU_SCSI:
+>           menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
+> @@ -191,8 +193,8 @@ static void boot_setup(void)
+>   {
+>       char lpmsg[] = "LOADPARM=[________]\n";
+>   
+> -    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+> -        ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
+> +    if (have_iplb && memcmp(iplb->loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+> +        ebcdic_to_ascii((char *) iplb->loadparm, loadparm_str, LOADPARM_LEN);
+>       } else {
+>           sclp_get_loadparm_ascii(loadparm_str);
+>       }
+> @@ -216,21 +218,21 @@ static bool find_boot_device(void)
+>       VDev *vdev = virtio_get_device();
+>       bool found = false;
+>   
+> -    switch (iplb.pbt) {
+> +    switch (iplb->pbt) {
+>       case S390_IPL_TYPE_CCW:
+>           vdev->scsi_device_selected = false;
+> -        debug_print_int("device no. ", iplb.ccw.devno);
+> -        blk_schid.ssid = iplb.ccw.ssid & 0x3;
+> +        debug_print_int("device no. ", iplb->ccw.devno);
+> +        blk_schid.ssid = iplb->ccw.ssid & 0x3;
+>           debug_print_int("ssid ", blk_schid.ssid);
+> -        found = find_subch(iplb.ccw.devno);
+> +        found = find_subch(iplb->ccw.devno);
+>           break;
+>       case S390_IPL_TYPE_QEMU_SCSI:
+>           vdev->scsi_device_selected = true;
+> -        vdev->selected_scsi_device.channel = iplb.scsi.channel;
+> -        vdev->selected_scsi_device.target = iplb.scsi.target;
+> -        vdev->selected_scsi_device.lun = iplb.scsi.lun;
+> -        blk_schid.ssid = iplb.scsi.ssid & 0x3;
+> -        found = find_subch(iplb.scsi.devno);
+> +        vdev->selected_scsi_device.channel = iplb->scsi.channel;
+> +        vdev->selected_scsi_device.target = iplb->scsi.target;
+> +        vdev->selected_scsi_device.lun = iplb->scsi.lun;
+> +        blk_schid.ssid = iplb->scsi.ssid & 0x3;
+> +        found = find_subch(iplb->scsi.devno);
+>           break;
+>       default:
+>           puts("Unsupported IPLB");
+> @@ -311,10 +313,12 @@ static void probe_boot_device(void)
+>   
+>   void main(void)
+>   {
+> +    iplb = &ipl_data.iplb;
+> +
+>       copy_qipl();
+>       sclp_setup();
+>       css_setup();
+> -    have_iplb = store_iplb(&iplb);
+> +    have_iplb = store_iplb(iplb);
+>       if (!have_iplb) {
+>           boot_setup();
+>           probe_boot_device();
+> diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+> index a9521dff41..457fbc3095 100644
+> --- a/pc-bios/s390-ccw/netmain.c
+> +++ b/pc-bios/s390-ccw/netmain.c
+> @@ -528,11 +528,11 @@ static bool virtio_setup(void)
+>        */
+>       enable_mss_facility();
+>   
+> -    if (have_iplb || store_iplb(&iplb)) {
+> -        IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+> -        dev_no = iplb.ccw.devno;
+> +    if (have_iplb || store_iplb(iplb)) {
+> +        IPL_assert(iplb->pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+> +        dev_no = iplb->ccw.devno;
+>           debug_print_int("device no. ", dev_no);
+> -        net_schid.ssid = iplb.ccw.ssid & 0x3;
+> +        net_schid.ssid = iplb->ccw.ssid & 0x3;
+>           debug_print_int("ssid ", net_schid.ssid);
+>           found = find_net_dev(&schib, dev_no);
+>       } else {
 
 
