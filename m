@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C29CCA472
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 09:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11478CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 09:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3WoO-0004sb-W7; Tue, 30 Sep 2025 05:38:21 -0400
+	id 1v3WtF-0006zV-9g; Tue, 30 Sep 2025 05:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3WoL-0004pi-6o
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:38:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3WtD-0006z1-BD
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:43:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3WoE-0001yW-Jd
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:38:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3Wt9-0002uT-80
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:43:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759225088;
+ s=mimecast20190719; t=1759225388;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2L7MHvNODAsCYdS53CbvoFRY7jALUq7mp1TL2zIN9X0=;
- b=ZAojtVPwu4/TgUIZm7Z1B9RFuzHrDezAHXVHBo3e1rVlY9xFTMPGDuCalrl6VVaopIf+Z2
- wCxeMl1GPOwnouP4eBNPJnFuX37zSmMfL7Kg+yymJKc29xNe6KqvI4ViU6RqWU99pUmtYc
- R/UL3Ye2VQQcKdR3P1sr4ZLSeEnjR00=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nCu/5gybyIX1fQM2Drvp2/KFXjl8gHsSBAvBJoRF3UY=;
+ b=T63nFD1ENCnSog1F0MOhYPmVUPgvFrRpM3ySRHq/MbdipG5O13o097TysgE4TCK/dDirbE
+ ioHr5mDmsxpATai2c/jpagr1aBHHbn0Tp1r6XF+Fg85BRkJlRxgiAbtl59NgWLgp4ZhyQb
+ ILEIj1EcfWtEdMqkDRVzwls5YxLFfa8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-VFx_P-ZCMXGAe9VZgp-2yg-1; Tue, 30 Sep 2025 05:38:06 -0400
-X-MC-Unique: VFx_P-ZCMXGAe9VZgp-2yg-1
-X-Mimecast-MFC-AGG-ID: VFx_P-ZCMXGAe9VZgp-2yg_1759225085
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-40cfb98eddbso2705965f8f.0
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 02:38:06 -0700 (PDT)
+ us-mta-623-yUncf6iQPom649-wLIwzSA-1; Tue, 30 Sep 2025 05:43:05 -0400
+X-MC-Unique: yUncf6iQPom649-wLIwzSA-1
+X-Mimecast-MFC-AGG-ID: yUncf6iQPom649-wLIwzSA_1759225385
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e31191379so36089265e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 02:43:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759225085; x=1759829885;
+ d=1e100.net; s=20230601; t=1759225384; x=1759830184;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2L7MHvNODAsCYdS53CbvoFRY7jALUq7mp1TL2zIN9X0=;
- b=Yv5sU+sw2SeqLg6zwn0rJ9TohDoyTh5WNAVdyknOcmM49r0Ql2Itnr36BOHwe8OB7/
- aAjOvhnch5o1ivXKfh0df8ZZc68dQniSeJ2mtqHEenOPrLIuo6C069j/u5WG28YwWQfa
- UhhC9+dddz4H1ec96qZoftGXkuEgalIbzYxsEDs/KPfRitvPdawb9cuzRBdAf0f9ivsg
- o0aVzqUMbdUYxUGEJiyK2vx65nJbPh68QU3yYaX6JvZnEE62VC6ntjyxKIF89trUAelo
- uQPLlRPxW6LSgcK73uloy3ji7yK+GS30JJP4VwHsdugnvIRVQJmR5yU9YoOj6K9kxtRg
- WzBQ==
+ bh=nCu/5gybyIX1fQM2Drvp2/KFXjl8gHsSBAvBJoRF3UY=;
+ b=lNDYPhxAGXZ6kKb4utk0+D/JqCsCxWhDKLcH8cvAK8vvEoPtof1GpK6KDy76gdVSbC
+ bIvYXGlUFCLvaESDOaLETqhrFdMhFTHvc8X7GjqJq7HIb6DN2BxUAs3rnqkJHYbHJWR1
+ 83fEEcdKjuqTeqFgIFmBNcGTg3p093SaRNA56GOMiy0RqGhjbiOEjiscJdLoZq70DKPx
+ w8WLdl1Q6UejiRgeZ719xvHDeEVoidlkh33034fB4oXLDtw+IK+8Kc8k/5Mn8BDxPe27
+ zi+fDeV+BgFS/Rg2wHkS7FuXjvKyNZR/jxZI0PGFvsnIeNee58MM7OVvr85Bv1dosLa6
+ zzqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVE5yNfNw2jeXdtqTNHo+PfHdJWnkDEtubUuBCqpxlWgL9UivpovOYZmtO8Jg4oP63NwPsrqICXMere@nongnu.org
-X-Gm-Message-State: AOJu0YxBuoLPhYdAMnL5/mfUPLw52Epd8FY7vl+V4FFMDHWJBHptxC+w
- Xe0AriSk2ePLivxOA1LLoySJpH+DLjheSadkWey7bO0O1kpgQVxFtRbQ7aCANoAxU6TM3HTTkY3
- 2Skp3lJCjkuhyfZyo0SlgBNgYm9OPGmUxEjQfPe5Qx9+y19FrvMZ4ueHh
-X-Gm-Gg: ASbGncvf5c7koIWMNwKR8bY/ztSPabnKL7HHCd0IekgXTbUdDXLVSKlDBdRfqLcG0Fz
- ydCRmQTa5v2a/BrcfpUTSWX0kigi5Gnw6ETkg3KMbXQWlvg3VF7sJrcIkHIskh4x5/Ii5t/DtiJ
- kjZmnjmt8o/nuSJOMnu2yf238Lu7No/V7GJNiZPxo3wiSqvrYm5hPzwrmTarrVksZaWbXfW+aHx
- SN58kCQUFIDKGNRahBTf+reu5YfGdWrW7xQrAtKEqu2zU9d+27H7dl4ZsL8H1OhzVqU4hfUBfuO
- LAVLnpXhB1TS+b3z1UejfcQJdJ0d5nZ4TZg+tAI4LQIaLP5s7EH5GgX/L3qfJGY0EzQFOJ81zTw
- 8I5lH3LVCbA==
-X-Received: by 2002:a5d:5d12:0:b0:3ea:71c4:8e27 with SMTP id
- ffacd0b85a97d-424119d24demr3007061f8f.22.1759225085132; 
- Tue, 30 Sep 2025 02:38:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHedJn2W76nl7bpVvn9bPUDW4r8mbN0K5/LQO2ilrPmtVeCLLWEQoonpzzZluPVI2i8ECt66A==
-X-Received: by 2002:a5d:5d12:0:b0:3ea:71c4:8e27 with SMTP id
- ffacd0b85a97d-424119d24demr3007035f8f.22.1759225084702; 
- Tue, 30 Sep 2025 02:38:04 -0700 (PDT)
+ AJvYcCXNmG9ZKcvcKx9MJTI0M4ljv0Mw9aov3w6iQe0G7ImzbkMTlA2KP+B4DIyDLyvwldZYTTyTTGJKquVU@nongnu.org
+X-Gm-Message-State: AOJu0Yyp4lCGHn5IzVqgdJdg/S1vgFYD+B4B7gnwDNkPNH2Kq7A4Dn0t
+ wtbfKdSIhyozIt4gz3VupCVhUmVe5THWkKQwCU/tXCF//m1ormGPq0yHRsALrULvtFw8f4jsyWb
+ WsPE0o+ewfmlr5RGaR/Od8b+V+nzF4EJ2HVCkIye0Tj5PaWSShOSYXf/R
+X-Gm-Gg: ASbGncupvhfOC2/VX2xryPORyHL7wI4Jsj5r3453ao2dqR+fCFVjARhRRy52ypvlxRU
+ LbqhvjYi5oDycK63dUBiEjsFig3p+IB5H+QI5rC7pISBJNdQbmkeUvRu0Re322BxFafEbWNrqE1
+ IQU1iZ7tNBHrvOoDdLJ6bLtTSkDdvQvllyZwApkH9+rZLsyDs6SptWhGRpGvAWu2h9W/VhNTqVC
+ X4R0VrTgWqWRRFh2mTbhDRMJkI43rv0EPkVTToe++1ltfRIY+a0He8R9zcJC445j6FgF6JplZvH
+ pVtl1dS6dxot49H/2E/5YokUdpoSVeAoK4SBvtcGE5b/HVlu+l7CwuPXdPIKlHN/tWWfGP8T9Tu
+ qtyHS7HF4kg==
+X-Received: by 2002:a05:600c:4e4a:b0:46e:4b79:551 with SMTP id
+ 5b1f17b1804b1-46e4b7906ecmr115705125e9.31.1759225384623; 
+ Tue, 30 Sep 2025 02:43:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5uuR1xa/hBfsW+KrHe4MZhAtyBxwUCd7aXDBc8Z/1xF/VBDg9idicFHZFkb9W2GR9JL34Bw==
+X-Received: by 2002:a05:600c:4e4a:b0:46e:4b79:551 with SMTP id
+ 5b1f17b1804b1-46e4b7906ecmr115704555e9.31.1759225384096; 
+ Tue, 30 Sep 2025 02:43:04 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc560338csm22499280f8f.41.2025.09.30.02.38.03
+ 5b1f17b1804b1-46e2ab4897bsm260491395e9.17.2025.09.30.02.43.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 02:38:04 -0700 (PDT)
-Message-ID: <32cf7da4-9eb3-4320-941e-5de12bca8ff7@redhat.com>
-Date: Tue, 30 Sep 2025 11:38:02 +0200
+ Tue, 30 Sep 2025 02:43:03 -0700 (PDT)
+Message-ID: <d8659ca0-ea69-4288-922e-a237e7fec8fa@redhat.com>
+Date: Tue, 30 Sep 2025 11:43:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/28] crypto/x509-utils: Refactor with GNUTLS fallback
+Subject: Re: [PATCH v6 03/28] crypto/x509-utils: Add helper functions for
+ certificate store
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -85,7 +86,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-3-zycai@linux.ibm.com>
+ <20250917232131.495848-4-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,17 +131,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250917232131.495848-3-zycai@linux.ibm.com>
+In-Reply-To: <20250917232131.495848-4-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -159,68 +160,119 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 01.21, Zhuoying Cai wrote:
-> Always compile x509-utils.c and add a fallback when GNUTLS is
-> unavailable.
-
-Maybe add some rationale to the description, like "we are going to need 
-these functions in the s390x code even if GNUTLS is not available" or so?
-
-  Thomas
-
+> Introduce new helper functions for x509 certificate, which will be used
+> by the certificate store:
+> 
+> qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+> 
+> These functions provide support for certificate format conversion.
+> 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   crypto/meson.build  |  5 +----
->   crypto/x509-utils.c | 16 ++++++++++++++++
->   2 files changed, 17 insertions(+), 4 deletions(-)
+>   crypto/x509-utils.c         | 50 +++++++++++++++++++++++++++++++++++++
+>   include/crypto/x509-utils.h | 20 +++++++++++++++
+>   2 files changed, 70 insertions(+)
 > 
-> diff --git a/crypto/meson.build b/crypto/meson.build
-> index 735635de1f..0614bfa914 100644
-> --- a/crypto/meson.build
-> +++ b/crypto/meson.build
-> @@ -22,12 +22,9 @@ crypto_ss.add(files(
->     'tlscredsx509.c',
->     'tlssession.c',
->     'rsakey.c',
-> +  'x509-utils.c',
->   ))
->   
-> -if gnutls.found()
-> -  crypto_ss.add(files('x509-utils.c'))
-> -endif
-> -
->   if nettle.found()
->     crypto_ss.add(nettle, files('hash-nettle.c', 'hmac-nettle.c', 'pbkdf-nettle.c'))
->     if hogweed.found()
 > diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-> index 39bb6d4d8c..6176a88653 100644
+> index 6176a88653..5d43b0ec96 100644
 > --- a/crypto/x509-utils.c
 > +++ b/crypto/x509-utils.c
-> @@ -11,6 +11,8 @@
->   #include "qemu/osdep.h"
->   #include "qapi/error.h"
->   #include "crypto/x509-utils.h"
-> +
-> +#ifdef CONFIG_GNUTLS
->   #include <gnutls/gnutls.h>
->   #include <gnutls/crypto.h>
->   #include <gnutls/x509.h>
-> @@ -78,3 +80,17 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->       gnutls_x509_crt_deinit(crt);
+> @@ -81,6 +81,47 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
 >       return ret;
 >   }
-> +
-> +#else /* ! CONFIG_GNUTLS */
-> +
-> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-> +                                      QCryptoHashAlgo hash,
-> +                                      uint8_t *result,
-> +                                      size_t *resultlen,
-> +                                      Error **errp)
+>   
+> +int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+> +                                  uint8_t **result, size_t *resultlen,
+> +                                  Error **errp)
 > +{
-> +    error_setg(errp, "GNUTLS is required to get fingerprint");
+> +    int ret = -1;
+> +    int rc;
+> +    gnutls_x509_crt_t crt;
+> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +    gnutls_datum_t datum_der = {.data = NULL, .size = 0};
+> +
+> +    rc = gnutls_x509_crt_init(&crt);
+> +    if (rc < 0) {
+> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
+> +        return ret;
+> +    }
+> +
+> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
+> +    if (rc != 0) {
+> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    rc = gnutls_x509_crt_export2(crt, GNUTLS_X509_FMT_DER, &datum_der);
+> +    if (rc != 0) {
+> +        error_setg(errp, "Failed to convert certificate to DER format: %s",
+> +                   gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    *result = g_new0(uint8_t, datum_der.size);
+> +    *resultlen = datum_der.size;
+> +    memcpy(*result, datum_der.data, datum_der.size);
+> +
+> +    ret = 0;
+> +
+> +cleanup:
+> +    gnutls_x509_crt_deinit(crt);
+> +    gnutls_free(datum_der.data);
+> +    return ret;
+> +}
+> +
+>   #else /* ! CONFIG_GNUTLS */
+>   
+>   int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+> @@ -93,4 +134,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>       return -1;
+>   }
+>   
+> +int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+> +                                  uint8_t **result,
+> +                                  size_t *resultlen,
+> +                                  Error **errp)
+> +{
+> +    error_setg(errp, "GNUTLS is required to export X.509 certificate");
 > +    return -1;
 > +}
 > +
-> +#endif /* ! CONFIG_GNUTLS */
+>   #endif /* ! CONFIG_GNUTLS */
+> diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+> index 1e99661a71..4239e3e55a 100644
+> --- a/include/crypto/x509-utils.h
+> +++ b/include/crypto/x509-utils.h
+> @@ -19,4 +19,24 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>                                         size_t *resultlen,
+>                                         Error **errp);
+>   
+> +/**
+> + * qcrypto_x509_convert_cert_der
+> + * @cert: pointer to the raw certificate data in PEM format
+> + * @size: size of the certificate
+> + * @result: output location for the allocated buffer for the certificate in DER format
+> +            (the function allocates memory which must be freed by the caller)
+
+Please try to fit the comments into the 80 columns boundary.
+
+  Thanks,
+   Thomas
+
+> + * @resultlen: pointer to the size of the buffer
+> +               (will be updated with the actual size of the DER-encoded certificate)
+> + * @errp: error pointer
+> + *
+> + * Convert the given @cert from PEM to DER format.
+> + *
+> + * Returns: 0 on success,
+> + *         -1 on error.
+> + */
+> +int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+> +                                  uint8_t **result,
+> +                                  size_t *resultlen,
+> +                                  Error **errp);
+> +
+>   #endif
 
 
