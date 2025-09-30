@@ -4,89 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2510CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 07:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E07CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 07:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3UgL-0000QP-Ui; Tue, 30 Sep 2025 03:21:54 -0400
+	id 1v3UiM-00014b-1D; Tue, 30 Sep 2025 03:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1v3UgI-0000PK-V1
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:21:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1v3UgB-0005TQ-U4
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:21:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759216898;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AD9dpKMBG627AfVhXFMzkbtZ8FVc1kWYKYGJ3Vrt7L4=;
- b=N0Udig7X/hovV9tY/M1g5vs5r5SG8YG0udQaw0McTFX6ClrSaiid61Q0ZvmfmtiwL1pjkN
- PcaCTPuPWWPIUk3RZsFC2Bm8DUrcD+y4+Q8dUjV2JO2YaDeUZx0P2P1fZrFxJPfRtbeELE
- 8rcew/9WHOR6SoCebhPQocW+bt5A8H0=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-ajekJHImMF-NUtTOhPSmfw-1; Tue, 30 Sep 2025 03:21:36 -0400
-X-MC-Unique: ajekJHImMF-NUtTOhPSmfw-1
-X-Mimecast-MFC-AGG-ID: ajekJHImMF-NUtTOhPSmfw_1759216895
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-32df881dce2so5906685a91.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 00:21:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3UiJ-00014D-9X
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:23:55 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3UiA-0006WT-WA
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:23:55 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-46e34bd8eb2so9166135e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 00:23:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759217022; x=1759821822; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=itVX7tgCqZhn3DDR7jTxWGvfg+OOdlBPano0M6bAsBg=;
+ b=SgX0PKnv8kJheO6sIWw7AYv6GEynIKCY2koHsOBFRS8CR9zuembj34GwOE1aT7Ml0D
+ QGVvS48fpqP3eZZ8AVCSpWUEX5ynJoiQbCMThXUkGiSyThj0PuI8SXK+V2KuKUISWgSK
+ p/SxqVmvmVzzQSXmS5KhUoftIxt5sZNEAoPGbrkBPnQKBBSTE0MBvvhnlEs6GM1VLAy2
+ 7XV7DPYioKMoxUwXXti7+nVS+xqD5mNrwKqrfEiLDWsItR74HCpLBTUVr8OdsAHgm0cS
+ qztCXH/XstA39dgqgw5lhe62+nhpWH0OVBIKYCyzC7oA5pWj3nsue3U0NJyblhw/2ixD
+ qTPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759216895; x=1759821695;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AD9dpKMBG627AfVhXFMzkbtZ8FVc1kWYKYGJ3Vrt7L4=;
- b=eyhkZuQ0sstEuSG4otyj5wyz5H3SP+z6SNNTGKxj1ggi5sMTHhP9++aZv6vIUJbhvA
- 5yxmmqwo7BOljeh97bCpuMo7vurEMi4ni+2pVPss1D5yPbFqKtYwh4pmlcrT4PtPrtIy
- BFYWV18tNlzVWdldZsllgzKHde7bQlknRcY5PKXDv43huA6MVaZ8sMt4YsGVAPTq+XxG
- FyXdYo4FU9PAtBsKgsbVv03bedk5J7dIcIvm849W0l44udffnT8HmLJRkV4zeM/MB8hG
- 8PZoSzlAmE+LKbJCGZQZYttZtjUjZzeyUvLEx+aDDiakyqfV41HGNYe8h/tZO7+ghF4l
- hvfg==
-X-Gm-Message-State: AOJu0YwvjAC/GFgtCCwvHsMtpM0pPvbgfJTcTqNesdNCcxsp9QMiWo9S
- g++jFyn0OMm50i/5/A5QdyPTfdoJY/pD4A3NO/i8EHnXwZqGDi0k+SOuE32HQKlnY3hsVdQ0nZD
- IDUNA2eNGwEXq4NH/+0vqWjIZ+wDKXwEwf0+nCiBLrgqu9C7yChseBEQc/5VTajZIkAboVYnYBl
- rsL5QQVykg37c0EPLunmUsIkNPP6q25I8=
-X-Gm-Gg: ASbGnctj1sLQfU2GQ+P7Bfv9EMEEIquHwY1EC/PRahY1SaBHgwYznhUYmYM2xVWudEC
- dHIiIjDy8yhkkG0MeriflO+1wu/dYg8v4lxqYCPM4x1BbzdAIzYmoQDWdXoguDCdMDR/ZAozZUA
- 9gwPApBpTsD04VbOKi6kc0kyfoSM/NILWuOMkgIejGxNfLaOQrWFyvT85UF2g=
-X-Received: by 2002:a17:90b:1647:b0:330:7a32:3290 with SMTP id
- 98e67ed59e1d1-3342a3471ccmr22758504a91.37.1759216895426; 
- Tue, 30 Sep 2025 00:21:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQfSQZj3ar8v38+tKLzJDKivHUqgRzCRYqMwpzJlnjxqGZBojdkauY5QpqVIbaqGoc4tsEYxNEbJK747Wb61s=
-X-Received: by 2002:a17:90b:1647:b0:330:7a32:3290 with SMTP id
- 98e67ed59e1d1-3342a3471ccmr22758484a91.37.1759216894917; Tue, 30 Sep 2025
- 00:21:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759217022; x=1759821822;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=itVX7tgCqZhn3DDR7jTxWGvfg+OOdlBPano0M6bAsBg=;
+ b=epv3wbynWCKyWgGVY6Q4LDpzYpOdiy1XDOS5T8p5wflEwQB2xEDndnt+5vdafVowNX
+ XhzFsQiGNaBsGe6sR8cKbwtN9junmyFOHYodbJjnGF9zA+kBFp70bPw97C7uPX3HXR2t
+ /yIexGl6Iu26j9NddJzedrA2UBUg2aagDRjEy0YfHajD0iPVhvnfSNX7GFs9ovwjhIun
+ wxScIQiHwynv7ORoF9NZv+eUv3XTSalRmri5xPydjUPivEzs70ChBI2IAhgyBnjSTd1t
+ 1YfghHHJ/XnObwPx3HtI3Hq6iupb5yhwEbZUDottiPWXkADzj/lCE8+ykGgq1tH+vGDM
+ sDyA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCViNbhc5/SwZ3k3gP3JEK7zTwEJr1qZ4V6DM68cyyaOu7z6aV0HjXnl8beeP1Zte7lJ53PLAdgrDTGT@nongnu.org
+X-Gm-Message-State: AOJu0YwUtdCsPl0K+yQ6hE1FM7/M2R8+K00PLUahxdDTkBFMYmYeubyX
+ cbN60+4nYa+owFlQtUlgfocHMhYdcVbcnd7F/mGuwUJkwLmdmYXtdti2sdhAOl4YjSY=
+X-Gm-Gg: ASbGncuXYjqHJgWzVe2UHC6RX3IDKiFna37wsGsLqXmbMnPzmUqa6idkUN+kEx30E2R
+ WZh06DZlv4Jxc2CATjGgyDaIdId8CMvF0E43Hiucsz3VOP4W+OrRp6QSe/SV04pAM3veGqVnkYi
+ Ot0UXikcP39T49fNIUiyf48ZmDZdaoTT1fDXbXZX5oH9x3GK8w1MHExEpVvmYP1dBiLWc4MWP37
+ d4kK5E0LRxVqRsUqa5YtufRVrlBhNEFZSgMMFPAVvFiFn59Wm2TT9M33bsWbfnjgVGl75+lHeto
+ lm4g1Ti+b5jeu2fHU5Hjou9lnediVplK2IR+B6/WmjlNe2Ouxkpip1CPg5LQuCNxj0TbolAxUwK
+ e2/iyxKttvtRZjTF5Lgoe2OmUDDeF8WOtVjFEZN8OFx4Mwd7ZMqGyv3Wwf8Hzao9p4eerjRwbJy
+ 12tXNkTNFWeYZcyQ==
+X-Google-Smtp-Source: AGHT+IHvY4Ey9R8Ex4kFK/h9CrX/gZMo0TkG92UrmsqICbzAXLN4hHP/QkaUH3LOu+37Fvfb480y1w==
+X-Received: by 2002:a05:600c:4e4a:b0:46e:4b79:551 with SMTP id
+ 5b1f17b1804b1-46e4b7906ecmr109670425e9.31.1759217021708; 
+ Tue, 30 Sep 2025 00:23:41 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e56f3dbcfsm44146575e9.3.2025.09.30.00.23.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Sep 2025 00:23:41 -0700 (PDT)
+Message-ID: <61c31076-5330-426a-9c28-b2400bec44f6@linaro.org>
+Date: Tue, 30 Sep 2025 09:23:39 +0200
 MIME-Version: 1.0
-References: <20250930071419.117592-1-thuth@redhat.com>
-In-Reply-To: <20250930071419.117592-1-thuth@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 30 Sep 2025 11:21:23 +0400
-X-Gm-Features: AS18NWDVszFkr7CjcqTPdkxOvT8_wNmAXVJV4zeYxTN3mktGGhjCpwhmts7ahAk
-Message-ID: <CAMxuvax4qzyDQcKf6Fan_hJTggwa4fcMjaQH6Qhz=NWxvbwp4A@mail.gmail.com>
-Subject: Re: [PATCH] ui/icons/qemu.svg: Add metadata information (author,
- license) to the logo
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000001ae188063fff9a84"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/17] system/physmem: Un-inline
+ cpu_physical_memory_read/write()
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Jason Herne <jjherne@linux.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, xen-devel@lists.xenproject.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ Eric Farman <farman@linux.ibm.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Zhao Liu <zhao1.liu@intel.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ qemu-s390x@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+References: <20250930041326.6448-1-philmd@linaro.org>
+ <20250930041326.6448-15-philmd@linaro.org>
+ <193cd8a8-2c4c-4c2c-af22-622b74c332ee@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <193cd8a8-2c4c-4c2c-af22-622b74c332ee@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,160 +120,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001ae188063fff9a84
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 30/9/25 07:02, Thomas Huth wrote:
+> On 30/09/2025 06.13, Philippe Mathieu-Daudé wrote:
+>> Un-inline cpu_physical_memory_read() and cpu_physical_memory_write().
+> 
+> What's the reasoning for this patch?
 
-Hi
+Remove cpu_physical_memory_rw() in the next patch without having
+to inline the address_space_read/address_space_write() calls in
+"exec/cpu-common.h".
 
-On Tue, Sep 30, 2025 at 11:14=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
-te:
+Maybe better squashing both together?
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> We've got two versions of the QEMU logo in the repository, one with
-> the whole word "QEMU" (pc-bios/qemu_logo.svg) and one that only contains
-> the letter "Q" (ui/icons/qemu.svg). While qemu_logo.svg contains the
-> proper metadata with license and author information, this is missing
-> from the ui/icons/qemu.svg file. Copy the meta data there so that
-> people have a chance to know the license of the file if they only
-> look at the qemu.svg file.
->
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3139
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
->
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
-> ---
->  ui/icons/qemu.svg | 21 ++++++++++++++++++++-
->  1 file changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg
-> index 24ca23a1e95..f2500de3391 100644
-> --- a/ui/icons/qemu.svg
-> +++ b/ui/icons/qemu.svg
-> @@ -918,7 +918,26 @@
->          <dc:format>image/svg+xml</dc:format>
->          <dc:type
->             rdf:resource=3D"http://purl.org/dc/dcmitype/StillImage" />
-> -        <dc:title />
-> +        <dc:title>Kew the Angry Emu</dc:title>
-> +        <dc:creator>
-> +          <cc:Agent>
-> +            <dc:title>Beno=C3=AEt Canet</dc:title>
-> +          </cc:Agent>
-> +        </dc:creator>
-> +        <dc:rights>
-> +          <cc:Agent>
-> +            <dc:title>CC BY 3.0</dc:title>
-> +          </cc:Agent>
-> +        </dc:rights>
-> +        <dc:publisher>
-> +          <cc:Agent>
-> +            <dc:title>QEMU Community</dc:title>
-> +          </cc:Agent>
-> +        </dc:publisher>
-> +        <dc:date>2012-02-15</dc:date>
-> +        <cc:license
-> +           rdf:resource=3D"http://creativecommons.org/licenses/by/3.0/" =
-/>
-> +        <dc:source>
-> https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865.html
-> </dc:source>
->        </cc:Work>
->      </rdf:RDF>
->    </metadata>
-> --
-> 2.51.0
->
->
-
---0000000000001ae188063fff9a84
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 30, 2=
-025 at 11:14=E2=80=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com"=
->thuth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">From: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" =
-target=3D"_blank">thuth@redhat.com</a>&gt;<br>
-<br>
-We&#39;ve got two versions of the QEMU logo in the repository, one with<br>
-the whole word &quot;QEMU&quot; (pc-bios/qemu_logo.svg) and one that only c=
-ontains<br>
-the letter &quot;Q&quot; (ui/icons/qemu.svg). While qemu_logo.svg contains =
-the<br>
-proper metadata with license and author information, this is missing<br>
-from the ui/icons/qemu.svg file. Copy the meta data there so that<br>
-people have a chance to know the license of the file if they only<br>
-look at the qemu.svg file.<br>
-<br>
-Closes: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3139" rel=
-=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/is=
-sues/3139</a><br>
-Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=
-=3D"_blank">thuth@redhat.com</a>&gt;<br></blockquote><div><br></div><div>Re=
-viewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
-dhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=A0</div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0ui/icons/qemu.svg | 21 ++++++++++++++++++++-<br>
-=C2=A01 file changed, 20 insertions(+), 1 deletion(-)<br>
-<br>
-diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg<br>
-index 24ca23a1e95..f2500de3391 100644<br>
---- a/ui/icons/qemu.svg<br>
-+++ b/ui/icons/qemu.svg<br>
-@@ -918,7 +918,26 @@<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;dc:format&gt;image/svg+xml&lt;/dc:for=
-mat&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;dc:type<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rdf:resource=3D&quot;<a href=3D"h=
-ttp://purl.org/dc/dcmitype/StillImage" rel=3D"noreferrer" target=3D"_blank"=
->http://purl.org/dc/dcmitype/StillImage</a>&quot; /&gt;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title /&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;Kew the Angry Emu&lt;/dc:title=
-&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:creator&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:Agent&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;Beno=C3=AEt Cane=
-t&lt;/dc:title&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/cc:Agent&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/dc:creator&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:rights&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:Agent&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;CC BY 3.0&lt;/dc=
-:title&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/cc:Agent&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/dc:rights&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:publisher&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:Agent&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;QEMU Community&l=
-t;/dc:title&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/cc:Agent&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/dc:publisher&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:date&gt;2012-02-15&lt;/dc:date&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:license<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rdf:resource=3D&quot;<a href=3D"h=
-ttp://creativecommons.org/licenses/by/3.0/" rel=3D"noreferrer" target=3D"_b=
-lank">http://creativecommons.org/licenses/by/3.0/</a>&quot; /&gt;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:source&gt;<a href=3D"https://lists.gnu.=
-org/archive/html/qemu-devel/2012-02/msg02865.html" rel=3D"noreferrer" targe=
-t=3D"_blank">https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865=
-.html</a>&lt;/dc:source&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;/cc:Work&gt;<br>
-=C2=A0 =C2=A0 =C2=A0&lt;/rdf:RDF&gt;<br>
-=C2=A0 =C2=A0&lt;/metadata&gt;<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
-
---0000000000001ae188063fff9a84--
+> 
+>   Thomas
+> 
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/exec/cpu-common.h | 12 ++----------
+>>   system/physmem.c          | 10 ++++++++++
+>>   2 files changed, 12 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+>> index 6c7d84aacb4..6e8cb530f6e 100644
+>> --- a/include/exec/cpu-common.h
+>> +++ b/include/exec/cpu-common.h
+>> @@ -133,16 +133,8 @@ void cpu_address_space_destroy(CPUState *cpu, int 
+>> asidx);
+>>   void cpu_physical_memory_rw(hwaddr addr, void *buf,
+>>                               hwaddr len, bool is_write);
+>> -static inline void cpu_physical_memory_read(hwaddr addr,
+>> -                                            void *buf, hwaddr len)
+>> -{
+>> -    cpu_physical_memory_rw(addr, buf, len, false);
+>> -}
+>> -static inline void cpu_physical_memory_write(hwaddr addr,
+>> -                                             const void *buf, hwaddr 
+>> len)
+>> -{
+>> -    cpu_physical_memory_rw(addr, (void *)buf, len, true);
+>> -}
+>> +void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len);
+>> +void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr 
+>> len);
+>>   void *cpu_physical_memory_map(hwaddr addr,
+>>                                 hwaddr *plen,
+>>                                 bool is_write);
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index 70b02675b93..6d6bc449376 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -3188,6 +3188,16 @@ void cpu_physical_memory_rw(hwaddr addr, void 
+>> *buf,
+>>                        buf, len, is_write);
+>>   }
+>> +void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len)
+>> +{
+>> +    cpu_physical_memory_rw(addr, buf, len, false);
+>> +}
+>> +
+>> +void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
+>> +{
+>> +    cpu_physical_memory_rw(addr, (void *)buf, len, true);
+>> +}
+>> +
+>>   /* used for ROM loading : can write in RAM and ROM */
+>>   MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+>>                                       MemTxAttrs attrs,
+> 
 
 
