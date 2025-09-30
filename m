@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A7CCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 02:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA2E1CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3Pj0-0004e7-Fm; Mon, 29 Sep 2025 22:04:18 -0400
+	id 1v3Qbh-0005lo-GN; Mon, 29 Sep 2025 23:00:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Piv-0004de-Mx
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 22:04:14 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Qbe-0005lc-Ht
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:00:46 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3Pim-0005yo-7S
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 22:04:12 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46e4f2696bdso28337445e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 19:03:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3QbW-0003SW-Gl
+ for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:00:46 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46e29d65728so36359975e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 20:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759197833; x=1759802633; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1759201233; x=1759806033; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hWTbNIEKHo87HKqvMVExJQRzq5yll43k7IaOlhCDeNQ=;
- b=QaBiAcTQTSflDT9tV/sUeCtjGFzXO4cSiy/wQUWC/rX3eJ473iAFZIxBiVTjeNmCIk
- jWwqhuqX0Ifhz+thAC9mbR+/OjXZO1pyCdxvIzo8AI80uzWyAo41SybrvXHMYRevN6F0
- yZub5WnY1Vk+E5rgrwvV9FsA3H171VK9ZflWRKWyHVmQr49rApcKghX9aUla5f+SbgFN
- g7sDdR/veGP1y8jgT4nfNN1oGS22c+i+oFnJqqVr0Av6znoKppeSrQKUZMA2JukwKQ5Z
- HciKcQsUpGCwl8+yVQOGClixPswsd4YILkVuWJ9rv9PDIpzzupqjQ9MjPlE0N4GXC9aF
- 2ADQ==
+ bh=b/hv/3GrGGdBrjqDhkGziv/l9BjnzqX5+ubPW41cLL4=;
+ b=QhWlrpXm9HQ0kaZEPr7dpKrCWlFk2AJPmgtmFGc4/5YPKGIGy1VqWckDxvS69wTPO1
+ MBNt4rBB6ZT52kaZxJbf0GZZsAhlnraNGCgVt5h9ZGVY5p3Z+P+fi2tf/Dp5Fqq1/XFn
+ 5hbGHc7RDtYte4E8G1jCPTury4pvmg1hd3TL5x/9y+F4RgOLxRnzVOWs7K9i3BH07Y7b
+ DNcuoTRdhtG2HeRe4qwLxtR6E6Nt9/6CuF+B5hpEiozV6joq4OHUpEhfMzXtNiw4yH3b
+ 9dV38iuKJFwGyzBsNDZBQIaKP6L4hgVArds/MFo9cJ9DZMS3EHGCbKuUSWleqQ3gmnnF
+ bIiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759197833; x=1759802633;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1759201233; x=1759806033;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hWTbNIEKHo87HKqvMVExJQRzq5yll43k7IaOlhCDeNQ=;
- b=V8jeseURtaY9FNMlNSIjbRBoemdFStroSOO5fK2J5gbZCsmvZBevUIBRQfaHYRM6MZ
- go7WHLG1Gjod5dUD7ehthwA1bA8ggpu1PvL7UeiFz9K+bci5vZblkvXZfF7z520QJrU2
- 87ld+4+Q8NAZvR1cNgfe3PuNmTPZXlG3l2AB9n7qR32/m2kwLpSgRqbX6AmxHHvNgryE
- 4LPYGlCREmg9aaT2099bfZohV3VMtJf2mqwH85nsPMcSllIbiiFETnAgK33eFrvyGI6S
- EyWjK5bDpWyxgwIj72v99iwO7w9NgZoHXloLIO4Tlx1xSHRa3fkzR1QK0D98FdgWRUsR
- HhWA==
+ bh=b/hv/3GrGGdBrjqDhkGziv/l9BjnzqX5+ubPW41cLL4=;
+ b=H00ZvMZmyzIDwqDnQ/CwwxM573OdHW6+4jyShDOBBAu+57aAy6KhSxyAll1gU2kriq
+ p3z6kTTdnSy2OHJxMASG+qYXrlaPJfN8oX7XdANh6Ik5xy8tCbDT0E8Dd6s9ZvL8rfjm
+ 7qFRxtsdctGWZfrXGZs9sndO26+QcGYvkvXtpQlBOrUao4DxTDQgsUgUZNw0GLnr4IsC
+ uErmzL6+glm3Olz26MdXfEsWcFoETdvDAsFsZGfhcVx4+25QuErS4OVmuNrz6spzeCPG
+ 0326G1L1oZ18mTRiThythrJ1cu/9Ii3H53Bim3HhmiwvRTgwkEmFum3tcAPDWVtGre5e
+ +P1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnwlnNdw2ImtXUPYYcbSmcEWc0FiheMy5vO4IL+C+9LUPYYoiAk/fRgKfphtTv4mizHrPjeQMEtjLq@nongnu.org
-X-Gm-Message-State: AOJu0YxcOFz8JmE7xRrvKaQrsGXL0nJSg6rWAs6lgt0+mVCVcz/SeXQH
- fNV7VRTmrvz9o08lZm2arjsLShgiEcGzskxCs15qVnfDu0QUuQEfAko9lBHk1k5Fu6g=
-X-Gm-Gg: ASbGncvOpfh6ykc7UzsyCpba5C7C9CIi9gZcxM7KdHdwOHZZOEVUZXBs3UW2oqt+9BG
- lYLY4NaocIgs/IccA0hnPsU6GcCloC/rEr6oWXxvk5Q7j7sRGHj0olP7cARZUMc1jYywTW9B71O
- x9Pg0XXsCQiNpzztZIY3V5QTW0KClI7bFSbzgzFVp92p6RnlVuUe5u49agmVyocRMAQ3jH2vwT0
- i4/r/3mIkMh2/DKRXGEs3rtow8D8zRH0BK3a2tcppQnpPmIa66r+pmVaxiur9vK/6QeqYbckeNB
- TL+QEbz3MeDlv2lXnAQn3ggK7vgq2JhED6HMxdKfu1hAd5q6JYW1ESuEfGH7GvqqSYUr9s4ybdc
- 0Ws/nWN9lRTIX0gwwCrSh0zG87irPPfdHlAu59BhWOqTJzfjGqv7+dZJP5vXlRRYKsdUukGyG8x
- iAaD62cQQ+VqHe5pobgEi1aV17
-X-Google-Smtp-Source: AGHT+IECFDwLPnpMeVb9SforN7Yim+2uSjxE1rj9coWLF3OuDaB0rnlESTlQ2911dfKWYyUgs181VA==
-X-Received: by 2002:a05:600c:4213:b0:45b:8adf:cf2b with SMTP id
- 5b1f17b1804b1-46e32a30f5dmr100757145e9.21.1759197833498; 
- Mon, 29 Sep 2025 19:03:53 -0700 (PDT)
+ AJvYcCUBIJq5qpH7UscJdZnfwAM+kVfmje/+tvJMqw+VNKPEgdoA/cJuVdX+1OjjMhNQh5AQ5sWZXFdX6kb8@nongnu.org
+X-Gm-Message-State: AOJu0Yw2mlMrhQUH6iCpaXD5f77Sv7RotNUpabrKhaOW9OnByQ75Wu16
+ BO0P2eGmCjahod9EXq3FmSOUNzb6p0TwH9SrKnyRKnTyFfcY27hAsbvdidtqBDdVH/A=
+X-Gm-Gg: ASbGncvV+z6rWZRbT9o7297VzVVE4dLpM4rLaEt9SO3UPSxNptp2x5hD5OHDK6d1e0s
+ kieDz02FsgJ8gQSd7Jc1Dn4+Ar/eHcgmqMzmVkExmV7ovItZf5hlDnj+Haj5IYr3i0GpYqb+cD+
+ VytfwxrSoZDrnmFGPay9qwe3yTN866xBC1ZG26HOuws7qwQX5nnyujRbU5eJ8BOQcs0mTXXyWQM
+ nYTEJf1XQ+e7jcA010yMjRFEiIcKnijSsAB3rqZ/UsT3xIikSLtI/d1QEfOXdzwQsiybY2fYujQ
+ uf9vYztusplUz+ZjX28wCZGFATBfv55qdABwW6YcprILQBysDJhZMuecGegOLllDzhFy+e/o5tT
+ pAQrDQm8wpeT2gi5j2OmW/bf1Up9DydwK4D3FDF6QzUFnLaheLB96bEcbTKqPg3H1PQU4qOu4SG
+ k1Xy0RFlYyuP4g5MtU1acY7xQw70YkZCapAWY=
+X-Google-Smtp-Source: AGHT+IGEelNP/lg9tXtwopHMKswVUBJM2tw/p4SUuvPY4kDW9PJ0vOqJ9DW93DzQbJqPzd8B+ECvcA==
+X-Received: by 2002:a05:6000:22c2:b0:3e7:ff32:1ab with SMTP id
+ ffacd0b85a97d-40e4b294f33mr13948290f8f.50.1759201233432; 
+ Mon, 29 Sep 2025 20:00:33 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e46de67e1sm114958975e9.6.2025.09.29.19.03.51
+ ffacd0b85a97d-40fc72b0aeesm21094452f8f.49.2025.09.29.20.00.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 19:03:53 -0700 (PDT)
-Message-ID: <6c899106-ca29-4165-8769-2376f5eb5b07@linaro.org>
-Date: Tue, 30 Sep 2025 04:03:51 +0200
+ Mon, 29 Sep 2025 20:00:32 -0700 (PDT)
+Message-ID: <a7c48a36-8a7b-41b3-bd3c-3cd56b1c1a26@linaro.org>
+Date: Tue, 30 Sep 2025 05:00:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/34] single-binary: Make riscv cpu.h target
- independent
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com
-References: <20250924072124.6493-1-anjo@rev.ng>
- <427722cf-c91c-4c2f-b5a0-8d127c3dddea@linaro.org>
+Subject: Re: [PATCH 2/3] target/ppc: Have gen_pause() actually pause vCPUs
 Content-Language: en-US
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>, qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>, Nicholas Piggin
+ <npiggin@gmail.com>, bharata.rao@gmail.com,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Aaron Larson <alarson@ddci.com>
+References: <20250924173028.53658-1-philmd@linaro.org>
+ <20250924173028.53658-3-philmd@linaro.org>
+ <4b0138bc76c60385de71c26eb55a4aecd8d1786d.camel@kernel.crashing.org>
+ <8099d09f-029d-4562-b035-7b832ac27ccc@linaro.org>
+ <5923fc8c7ac36d8bcae7a416cfd072c18c8698ec.camel@kernel.crashing.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <427722cf-c91c-4c2f-b5a0-8d127c3dddea@linaro.org>
+In-Reply-To: <5923fc8c7ac36d8bcae7a416cfd072c18c8698ec.camel@kernel.crashing.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,44 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/9/25 00:44, Pierrick Bouvier wrote:
+(Cc'ing Aaron for commit 9e196938aa1 "target-ppc: gen_pause for
+instructions: yield, mdoio, mdoom, miso")
 
-> On 9/24/25 12:20 AM, Anton Johansson wrote:
-
->> Quick question to correct my understanding. AFAICT riscv64-softmmu is a
->> superset of riscv32-softmmu which handles 32-, 64, and 128-bit ISAs, so
->> concerning single-binary do we for the time being only need to support
->> riscv64-softmmu?
-
-You are correct in that they are all part of the same architecture,
-the register bits accessed being a mode of a CPU.
-
-IMO The "superset" view comes from QEMU historical development, and
-I suspect a generic riscv-softmmu could be sufficient here.
-
-
-> Overall, most of the changes you do are correct, widening types, and 
-> combining low/high part in single 64 bits integer. For this last part, 
-> I'll let Riscv maintainers decide if they agree with the approach.
+On 30/9/25 00:59, Benjamin Herrenschmidt wrote:
+> On Mon, 2025-09-29 at 09:51 +0200, Philippe Mathieu-Daudé wrote:
+>>> What will resume it though ? The smt_low() case isn't meant to
+>>> *halt*
+>>> the CPUs permanently. smt_*() levels are about SMT thread
+>>> priorities.
+>>> Using a "pause" that just gets out of TCG (and back in), is a way
+>>> to
+>>> "yield" to another thread, thus enabling more forward progress when
+>>> a
+>>
+>> What you describe can be achieved with a helper doing:
+>>
+>>     cs->exception_index = EXCP_YIELD;
+>>     cpu_loop_exit(cs);
+>>
+>> Is that what you wanted?
 > 
-> However, the main issue is that changing size impacts migration 
-> (VMSTATE_UINT.*), which would suddenly create a breaking change when 
-> importing 32 bits machines.
-> 
-> We have two ways to deal with it:
-> 1. call it a day and make a breaking change.
-> On Arm side, we were lucky to not have cpu structure defined with any 
-> target type, so the problem was not found yet. But we observed that 
-> other architectures would need a solution.
-> If Riscv maintainers are ok for a breaking change, this is the easiest/ 
-> fastest solution.
-> 
-> 2. introduce a backward compatibility change, to selectively import size 
-> if we import from a past QEMU version. In this case, we would keep the 
-> VMSTATE_UINTTL but adapt it to do the right thing when restoring, either 
-> writing 32 or 64 bits.
-> I didn't dive deep enough in migration restore code to see if it's 
-> easily doable, or not.
-IMHO we should really avoid (2). The only problematic architectures (wrt
-migration) are PPC and X86.
+> I suppose so... this was many years ago and I don't have much context
+> anymore, so I don't know why I didn't do it that way back then.
+
+I *think* Nick implemented something similar for sPAPR in commit
+e8ce0e40ee9 ("spapr: Implement H_CONFER"):
+
+     /*
+      * The targeted confer does not do anything special beyond yielding
+      * the current vCPU, but even this should be better than nothing.
+      * At least for single-threaded tcg, it gives the target a chance to
+      * run before we run again. Multi-threaded tcg does not really do
+      * anything with EXCP_YIELD yet.
+      */
+
+     cs->exception_index = EXCP_YIELD;
+     cpu_exit(cs);
+
+Nick, would that make sense to implement smt_low?
 
