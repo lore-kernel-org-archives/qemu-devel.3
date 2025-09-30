@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808D7CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5671CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3VJo-0006fh-81; Tue, 30 Sep 2025 04:02:40 -0400
+	id 1v3VKZ-0007Ew-Pc; Tue, 30 Sep 2025 04:03:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VI6-0005T2-WB
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:00:57 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3VHr-0000re-16
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:00:52 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3fa528f127fso4359798f8f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:00:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759219233; x=1759824033; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qQCDKdcXs3mVaLepnz+ss4TJuz/AP/r/Ob1RAeTW8yM=;
- b=SHR0ywMmbxCar+o2oEEBE2Yk4P6095Mq+SBUYWeMxwnM7rsodOCSYKb09UjaKM3Jwa
- /3FsY3zYLjMjzz193IqDqZT2/QU28py4Bco8SbLXPqVBhmggrBkeHxBv25X5rwS/OSZb
- cU4TmPDeRQ3OC53HjH7L1/fvfSAbiSEspHpG5v5xhtIY0JT1xUVgjJogULHMnDbgFmic
- Q1tWLessOAENjm+o6AvsU4mDp3rNDUY3NviFj+DjGUjCzD433lPkfXVQcfpt7VHHvut1
- ng9fktP3Ryu4f0IK8IKOUzFOlrS1bHt5jcEBwkrjHdhTqZQ9dv+oojlmYY0Z2QHn+mXo
- Iscw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759219233; x=1759824033;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qQCDKdcXs3mVaLepnz+ss4TJuz/AP/r/Ob1RAeTW8yM=;
- b=XRAnQE/4dZXaJJhxxuT9QYKiRY3xUz95gkAgcqXTaSBj790u+x79VX1h1jJhCtcQYB
- ZTB+ZdxRKepPr1gwYCY5XoIU54vURuCBXFfr2+mosCaAszku90zImMb7hrOKhgTohQhY
- ZDy7slixcVfwq3/ZGAJBUZe3cDhmDCnu6JtCFteOuaBmdj8dR6Scu5u9GMWnaX10DTlI
- vH7gpt1Zg2ysLAlvkJa8i+Vc4Z5ZwKgbDEswb6sv/5rbFd8SZyHbQWmPL6euFwhdyKRK
- hODfTyMhqCU3GAdHTau7ykjygMcNM1kS703ar30g7bZACV9vu6+QlhJmf6L/YVvxv9kc
- W2EQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtcdGiuCsl9XYvNNtZ9tFuubx1na7QYC7vRQdCJxVPVfFmzdDPxFWPj1AJrqy3io4R6AgTfGuIxBYA@nongnu.org
-X-Gm-Message-State: AOJu0YzOL9dYhVdHhgLdTTsh4Ga0sSJvtRwP30texIebhi+YXKdEDNc7
- WkbBJ+uJC82CdGzdA4bBAw7ip15BjAi9TIyBaxOcfZa/LjpGxLxhq+GHZBzAlpk2aHs=
-X-Gm-Gg: ASbGncuI0wHxk0/FRQepkhwLzzGVGnYe+OPGCSqjEFiraw6t/1GjsvHGxK0Im/xxWCh
- T1fup3uOQjHvt8AOuJ29ZzmtdIqwJQYSsVNtjkqGwzyUC/exyMLay8VWMb/E1vg2CcDAXgc50zW
- OcorUYuPMDPTTBxEiDRZPxpvGsdZZn9h4m6sqYTok82qDtr0/WXFh2tZR+Q7i19dQ8pE+k1R0+N
- sotU6ZvrPE73zczaerYJaGQ1uRMjAsEKJST4OGN/nKHp7YwuckJj7hMYfKi+ldoQ39c/1uF2W1O
- cym18mCTuxCK3BwaAsp5gLW/6fhehtqxfkd8FAzHI43J0jGh/4MPGGsHZRptX3wFtGV9ay4VJj2
- ABYa8kqtABa0Vr7lDIEE/EJEl3jocEMByB7apIXyt21Mu6g4p+aAr/Pxvsn5Oh3e+DTsVIO4XFO
- Y4VHtu3Gm41cG4quNQlHZKDwGKD9bbWuwUiDo=
-X-Google-Smtp-Source: AGHT+IFoppn58DEl50aWpaOnqx/cEm3HRbP67s70C/Ucry1yukNCbcikDdo8azKuJ8QMPZm29sNPqQ==
-X-Received: by 2002:a5d:588a:0:b0:3df:22a3:d240 with SMTP id
- ffacd0b85a97d-4240f26169cmr2998754f8f.4.1759219231360; 
- Tue, 30 Sep 2025 01:00:31 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb74e46bcsm21680470f8f.8.2025.09.30.01.00.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 01:00:30 -0700 (PDT)
-Message-ID: <94426ef4-cbb6-4d3f-b0b0-e876e020110e@linaro.org>
-Date: Tue, 30 Sep 2025 10:00:30 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v3VK8-0006uA-LI
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:03:00 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v3VK1-0001hy-I6
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:03:00 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 21758C016F;
+ Tue, 30 Sep 2025 11:02:41 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:560::1:13] (unknown
+ [2a02:6bf:8080:560::1:13])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id c2Zopg2GrKo0-9QqxuLPY; Tue, 30 Sep 2025 11:02:40 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1759219360;
+ bh=hID6LZgZRX7RGkl8kA+zYNHkEI2QaaQsb9NpUg3IEDI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=0HdUI6c0sWxDrXIvNZFnqAKDtB0YF8D295ZrbJ5edSUtTJf2lzDojxBOeu1zPZiBx
+ SFDhRRPT4H91fJE/B8DOOXZQjvB0KTrGYOlz1INSqe53FzZV+u0BNiYrPcOR16DjBB
+ E2eZXnhmidMhtquIqKI5NIwdFTnFcCKjX+6svhHk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <77f8b8ba-911e-4965-bb10-2c0cc31a0d3d@yandex-team.ru>
+Date: Tue, 30 Sep 2025 11:02:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] subprojects: Update .gitignore for syn
+Subject: Re: [PATCH v3 05/13] hw/remote/vfio-user: Clean up error reporting
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ marcandre.lureau@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, Jagannathan Raman <jag.raman@oracle.com>
+References: <20250923091000.3180122-1-armbru@redhat.com>
+ <20250923091000.3180122-6-armbru@redhat.com>
+ <1a10e0d3-17fc-4ec9-aa4c-cdfed13988e6@yandex-team.ru>
+ <878qi1so4j.fsf@pond.sub.org>
 Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-References: <20250930075351.1853721-1-zhao1.liu@intel.com>
- <675a6965-7c32-4b4d-8d27-88acac0c440d@linaro.org>
- <aNuSUHztLSchfd0o@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aNuSUHztLSchfd0o@intel.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <878qi1so4j.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,41 +81,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/9/25 10:18, Zhao Liu wrote:
-> On Tue, Sep 30, 2025 at 09:50:24AM +0200, Philippe Mathieu-Daudé wrote:
->> Date: Tue, 30 Sep 2025 09:50:24 +0200
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: Re: [PATCH] subprojects: Update .gitignore for syn
->>
->> On 30/9/25 09:53, Zhao Liu wrote:
->>> The commit a530a8d4ac39 missed to update syn version, this is because
->>> the code base of its v2 patch has fixed syn version, so that the fix for
->>> syn were lost during the rebase from v1 to v2.
->>>
->>> To rectify this mistake, update the syn version.
->>>
->>> Fixes: a530a8d4ac39 ("subprojects: Update .gitignore for proc-macro2 and syn")
->>
->> IIUC the subprojects is in commit 9a6d6ae8afb, so:
->>
->> Fixes: 9a6d6ae8afb ("subprojects: update proc-macro2 and syn")
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 26.09.25 09:51, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> It's because the subject of a530a8d4ac39 mentioned to fix syn but it
-> actually didn't :-).
+>> On 23.09.25 12:09, Markus Armbruster wrote:
+>>> VFU_OBJECT_ERROR() reports the error with error_setg(&error_abort,
+>>> ...) when auto-shutdown is enabled, else with error_report().
+>>>
+>>> Issues:
+>>>
+>>> 1. The error is serious enough to warrant aborting the process when
+>>> auto-shutdown is enabled, yet harmless enough to permit carrying on
+>>> when it's disabled.  This makes no sense to me.
+>>>
+>>> 2. Like assert(), &error_abort is strictly for programming errors.  Is
+>>> this one?
+>>
+>> Brief look at the code make me think that, no it isn't.
+> 
+> So the use of &error_abort is wrong.
+> 
+>>>   Or should we exit(1) instead?
+>>>
+>>> 3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
+>>> assert()."
+>>>
+>>> This patch addresses just 3.
+>>>
+>>> Cc: Jagannathan Raman <jag.raman@oracle.com>
+>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>> ---
+>>>    hw/remote/vfio-user-obj.c | 9 +++------
+>>>    1 file changed, 3 insertions(+), 6 deletions(-)
+>>> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+>>> index ea6165ebdc..eb96982a3a 100644
+>>> --- a/hw/remote/vfio-user-obj.c
+>>> +++ b/hw/remote/vfio-user-obj.c
+>>> @@ -75,12 +75,9 @@ OBJECT_DECLARE_TYPE(VfuObject, VfuObjectClass, VFU_OBJECT)
+>>>     */
+>>>    #define VFU_OBJECT_ERROR(o, fmt, ...)                                     \
+>>>        {                                                                     \
+>>> -        if (vfu_object_auto_shutdown()) {                                 \
+>>> -            error_setg(&error_abort, (fmt), ## __VA_ARGS__);              \
+>>> -        } else {                                                          \
+>>> -            error_report((fmt), ## __VA_ARGS__);                          \
+>>> -        }                                                                 \
+>>> -    }                                                                     \
+>>> +        error_report((fmt), ## __VA_ARGS__);                              \
+>>> +        assert(!vfu_object_auto_shutdown());                              \
+>>
+>> Probably, it's only my feeling, but for me, assert() is really strictly bound
+>> to programming errors, more than abort(). Using abort() for errors which are
+>> not programming, but we can't handle them looks less confusing, i.e.
+>>
+>> if (vfu_object_auto_shutdown()) {
+>>      abort();
+>> }
+> 
+> assert(COND) is if (COND) abort() plus a message meant to help
+> developers.  Both are for programming errors.  If it isn't something
+> that needs debugging, why dump core?
+> 
+> But this particular error condition is *not* a programming error.  So
+> 
+>          assert(!vfu_object_auto_shutdown());
+> 
+> and
+> 
+>          if (vfu_object_auto_shutdown()) {
+>              abort();
+>          }
+> 
+> are both equally wrong.  However, the latter makes it easier to add a
+> FIXME comment:
+> 
+>          if (vfu_object_auto_shutdown()) {
+>              /*
+>               * FIXME This looks inappropriate.  The error is serious
+>               * enough programming error to warrant aborting the process
+>               * when auto-shutdown is enabled, yet harmless enough to
+>               * permit carrying on when it's disabled.  Makes no sense.
+>               */
+>              abort();
+>          }
+> 
 
-Commit a530a8d4ac39 mentions "update", not "fix".
+Looks more readable, yes.
 
-The 'Fixes:' tag is helpful for downstream forks, to cherry-pick
-relevant commits.
+> The commit message would then need a tweak.  Perhaps
+> 
+>    Issues:
+> 
+>    1. The error is serious enough to warrant killing the process when
+>    auto-shutdown is enabled, yet harmless enough to permit carrying on
+>    when it's disabled.  This makes no sense to me.
+> 
+>    2. Like assert(), &error_abort is strictly for programming errors.  Is
+>    this one?  Vladimir Sementsov-Ogievskiy tells me it's not.
+
+:)) I'm not an expert in vfio-user at all. But yes, I said it:)
 
 > 
-> Fixes tag for 9a6d6ae8afb is also fine for me.
+>    3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
+>    assert()."
+> 
+>    This patch addresses just 3.  It adds a FIXME comment for the other
+>    two.
+> 
+> Thoughts?
+
+Looks good.
+
+> 
+>> Not really matter. Anyway:
+>>
+>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > 
 > Thanks!
 > 
-> -Zhao
+>>> +    }
+>>>      struct VfuObjectClass {
+>>>        ObjectClass parent_class;
 > 
 
+
+-- 
+Best regards,
+Vladimir
 
