@@ -4,84 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8459BCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94484CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 16:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3cTc-0002B3-In; Tue, 30 Sep 2025 11:41:18 -0400
+	id 1v3cr0-0001Yc-6M; Tue, 30 Sep 2025 12:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cSN-0000rW-7y
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:40:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3cqq-0001V6-SY
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 12:05:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cS8-0004ew-G8
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:58 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3cqg-0006Ln-QZ
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 12:05:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759246783;
+ s=mimecast20190719; t=1759248300;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dWeJNnTcKJt8+bbcTR5TOqXCZkjS97cTS+EkmonSu64=;
- b=Uq9sPxW00ROdGvS7KVanM+2javwCxX0RXvktIT5R7SQedGfnUOWMFosZM4xoFHfx0VHTy3
- +2H/49XU9Mplj3CzTpM+dXuz2ZtvzLdZWDiEl1EPwwQfnBmEv2XbuVkJ961NTYQyKcIOyU
- CMyi8aBv1A22W99ewF226fUBc3IS1CM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-m-dXnmNaNIWvj_5FBmMljw-1; Tue,
- 30 Sep 2025 11:39:39 -0400
-X-MC-Unique: m-dXnmNaNIWvj_5FBmMljw-1
-X-Mimecast-MFC-AGG-ID: m-dXnmNaNIWvj_5FBmMljw_1759246778
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 250FD195609F; Tue, 30 Sep 2025 15:39:38 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.7])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C27F9195608E; Tue, 30 Sep 2025 15:39:36 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: devel@lists.libvirt.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-rust@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- Kyle Evans <kevans@freebsd.org>, Ed Maste <emaste@freebsd.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 18/23] tests/lcitool: enable rust & refresh
-Date: Tue, 30 Sep 2025 19:37:39 +0400
-Message-ID: <20250930153746.573875-19-marcandre.lureau@redhat.com>
-In-Reply-To: <20250930153746.573875-1-marcandre.lureau@redhat.com>
-References: <20250930153746.573875-1-marcandre.lureau@redhat.com>
+ bh=ZlhTY39ZFTvy+ACcQNOPkDtgjlTGiPLtUMGkljH0ZYI=;
+ b=gPpBM9mTqRoFS+gxZw5USZes6dABUa2UaNzoShNvf8uQiYwN81w2WhFuasQUjpUDZzeA7Q
+ yZXoQe/ok7nyz0cJwT4T6bPv/aCETP05RGY7n6U0njb/9tiVLvbOMI0J9vLgLZHAOtxvuS
+ BFc+a+VxRHeyTqlC4xnxqx7EKY+Qxb8=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-45-Tdsl3r4HNRWLQCUg92FRbw-1; Tue, 30 Sep 2025 12:04:58 -0400
+X-MC-Unique: Tdsl3r4HNRWLQCUg92FRbw-1
+X-Mimecast-MFC-AGG-ID: Tdsl3r4HNRWLQCUg92FRbw_1759248297
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-78f3a8ee4d8so111259216d6.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 09:04:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759248297; x=1759853097;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZlhTY39ZFTvy+ACcQNOPkDtgjlTGiPLtUMGkljH0ZYI=;
+ b=tlGH6PaenBYxxLnrjd6embv3bagpb73BfSrZWcUS7ZYTgUviqNyD1qvj74Nf0MJGnE
+ Wu3kXRPgbZSfl/gdlCk6mjYbwM9hqvNGZIbI4EcHXm9JvznH1kfxzMft1/OdHJtPU4dK
+ RJGSojoFKQ/ZHvnsxKpho/Dgf04kN8AUuklLFmLpf8DWP0p5EIorW1g6iZZBJowNdnsN
+ EwrCYX/FhPJpErP7Qhu1yR3WQnn4bMsl3ct3NqXBoMdnGiHWIaZYclhxALixgGn1zn+I
+ Xvu2rw7h+YUhPmQip9Ap9v2d4nnTbg46KM2rYhYfRKo/Tu21LADDsAZ9jvtCLsCNFBQP
+ cOXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVcoSN86Ud8y/9kU16Kn1DbC7pqlosdiUzAxqCDLUzKZxnCVpt8tNyo2tVT1xbKbJ889QrEycRCp3t@nongnu.org
+X-Gm-Message-State: AOJu0YyGJcTuLWBTpkdwcDlO/c/rkcojdMRFsr7XNKZmNAtnfCKUoMp6
+ pDD4ImTeI2ji8uGrJK1hE6CCg2f2OeasJmlhH3/ncGpAt/Fy51A3z2ghpp6hbrcWIAzCRquQa3K
+ +wvmOTiPS+t/mpo4CN6K9pIUthU2JC1FgLA1sS0dLXR5DWkWFbfZ6y6wL
+X-Gm-Gg: ASbGncv40P9YgBiZPfNXlw/hU2V52dWZhgVIPfjlQnaiyS0MAUsLyEe8uZyO+ewbg4E
+ K7jdG3py/FwGBfTsI05tBKo+kMkUrsQ2lbMry8JRFpgTtNjcxQeh6L72l1cBdhKD3hZt0WxG5Fy
+ PfrqV/Kv4ppnpCCcFwc2+fomk+zzvqQ43SEWrw416WgD3W7aL3d4vvRSyvvIphOUdoYZSCPMEkB
+ w6qH8jC0njlDFKbAf/6tNPI0YNJy7XwEBwSpETbGzIebgRQZRaTnHUxRWY69CfKvtWQoHpZuGaa
+ XxkVlgExXI9Ac7QfQbzjWhFD2mJm2fzV60XcHg==
+X-Received: by 2002:ad4:5dce:0:b0:805:7dfb:2bd7 with SMTP id
+ 6a1803df08f44-873a9a79943mr5024576d6.63.1759248296898; 
+ Tue, 30 Sep 2025 09:04:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJq95r/jNZdnkI+w3oh1CI5XEhmleBCIeuuI2YJlreeQD7aA9XZa4slQC+583OruvEbZxPMA==
+X-Received: by 2002:ad4:5dce:0:b0:805:7dfb:2bd7 with SMTP id
+ 6a1803df08f44-873a9a79943mr5023546d6.63.1759248295962; 
+ Tue, 30 Sep 2025 09:04:55 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-80166781d27sm98929496d6.45.2025.09.30.09.04.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Sep 2025 09:04:55 -0700 (PDT)
+Date: Tue, 30 Sep 2025 12:04:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Yanfei Xu <yanfei.xu@bytedance.com>, mst@redhat.com,
+ pbonzini@redhat.com, farosas@suse.de, qemu-devel@nongnu.org,
+ shenyicong.1023@bytedance.com, Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH] migration: ensure APIC is loaded prior to VFIO PCI devices
+Message-ID: <aNv_pQylwDRPJusi@x1.local>
+References: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
+ <aNqrHBMKRp-9Qhw0@x1.local>
+ <3553e934-f05e-4cab-bf1b-17c149dcfb59@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+In-Reply-To: <3553e934-f05e-4cab-bf1b-17c149dcfb59@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,230 +111,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Tue, Sep 30, 2025 at 10:27:34AM +0200, Cédric Le Goater wrote:
+> On 9/29/25 17:51, Peter Xu wrote:
+> > On Mon, Aug 18, 2025 at 09:11:27PM +0800, Yanfei Xu wrote:
+> > > The load procedure of VFIO PCI devices involves setting up IRT
+> > > for each VFIO PCI devices. This requires determining whether an
+> > > interrupt is single-destination interrupt to decide between
+> > > Posted Interrupt(PI) or remapping mode for the IRTE. However,
+> > > determining this may require accessing the VM's APIC registers.
+> > > 
+> > > For example:
+> > > ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs)
+> > >    ...
+> > >      kvm_arch_irq_bypass_add_producer
+> > >        kvm_x86_call(pi_update_irte)
+> > >          vmx_pi_update_irte
+> > >            kvm_intr_is_single_vcpu
+> > > 
+> > > If the LAPIC has not been loaded yet, interrupts will use remapping
+> > > mode. To prevent the fallback of interrupt mode, keep APIC is always
+> > > loaded prior to VFIO PCI devices.
+> > > 
+> > > Signed-off-by: Yicong Shen <shenyicong.1023@bytedance.com>
+> > > Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+> > > ---
+> > >   hw/intc/apic_common.c       | 1 +
+> > >   include/migration/vmstate.h | 1 +
+> > >   2 files changed, 2 insertions(+)
+> > > 
+> > > diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+> > > index 37a7a7019d..394fe02013 100644
+> > > --- a/hw/intc/apic_common.c
+> > > +++ b/hw/intc/apic_common.c
+> > > @@ -379,6 +379,7 @@ static const VMStateDescription vmstate_apic_common = {
+> > >       .pre_load = apic_pre_load,
+> > >       .pre_save = apic_dispatch_pre_save,
+> > >       .post_load = apic_dispatch_post_load,
+> > > +    .priority = MIG_PRI_APIC,
+> > >       .fields = (const VMStateField[]) {
+> > >           VMSTATE_UINT32(apicbase, APICCommonState),
+> > >           VMSTATE_UINT8(id, APICCommonState),
+> > > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> > > index 1ff7bd9ac4..22e988c5db 100644
+> > > --- a/include/migration/vmstate.h
+> > > +++ b/include/migration/vmstate.h
+> > > @@ -163,6 +163,7 @@ typedef enum {
+> > >       MIG_PRI_IOMMU,              /* Must happen before PCI devices */
+> > >       MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
+> > >       MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
+> > > +    MIG_PRI_APIC,               /* Must happen before PCI devices */
+> > >       MIG_PRI_GICV3_ITS,          /* Must happen before PCI devices */
+> > >       MIG_PRI_GICV3,              /* Must happen before the ITS */
+> > >       MIG_PRI_MAX,
+> > > -- 
+> > > 2.20.1
+> > > 
+> > 
+> > +Cedric, +Alex
+> > 
+> > queued.
+> > 
+> 
+> Perhaps we could group the interrupt controller priorities
+> under a common MIG_PRI_INTC ? PPC is very much the same,
+> although we managed to order restore from the machine load
+> handler IIRC.
+> 
+> Anyhow, LGTM.
 
-Enable Rust on various distro images: alpine, centos, debian, fedora,
-opensuse.
+Agreed. That, when introduced, can also take ARM's into account (that may
+need a MIG_PRI_INTC_HIGH for ITS).
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250924120426.2158655-19-marcandre.lureau@redhat.com>
----
- tests/docker/dockerfiles/alpine.docker             |  2 ++
- tests/docker/dockerfiles/centos9.docker            |  2 ++
- tests/docker/dockerfiles/debian-amd64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-arm64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-armhf-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-i686-cross.docker  |  2 ++
- .../dockerfiles/debian-mips64el-cross.docker       |  2 ++
- .../docker/dockerfiles/debian-mipsel-cross.docker  |  2 ++
- .../docker/dockerfiles/debian-ppc64el-cross.docker |  2 ++
- .../docker/dockerfiles/debian-riscv64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-s390x-cross.docker |  2 ++
- tests/docker/dockerfiles/debian.docker             |  2 ++
- .../docker/dockerfiles/fedora-rust-nightly.docker  |  2 ++
- tests/docker/dockerfiles/fedora.docker             |  2 ++
- tests/docker/dockerfiles/opensuse-leap.docker      |  2 ++
- tests/lcitool/refresh                              | 14 +++++++++++---
- 16 files changed, 41 insertions(+), 3 deletions(-)
+Thanks,
 
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index b50fbc3dba..52adf9ccbb 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -138,3 +138,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
-index e7fc688ee9..0674d77826 100644
---- a/tests/docker/dockerfiles/centos9.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -142,3 +142,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 08621879dd..7f4674400d 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -188,3 +188,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index 725cccbee1..c7cd54ee5c 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -187,3 +187,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index 50f7e0e986..627d41c6de 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -184,3 +184,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index f53b77cb62..4e8b3a8293 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -184,3 +184,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index cca04a4594..6e88777f76 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -183,3 +183,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 59c6f92248..5f4e3fa963 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -183,3 +183,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 09de265c26..dfa690616d 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -186,3 +186,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-index e6c463eff7..09b2953f32 100644
---- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-@@ -189,3 +189,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index d7b2ca99ce..09a78c15ba 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -185,3 +185,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 2696cf2167..8dd893be4b 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -175,3 +175,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index 167246f0f5..7d31c9f406 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -185,3 +185,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 56a1ad8a18..891a740fcb 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -162,3 +162,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index d71dbc30c7..75e1747780 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -148,3 +148,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 5c62cdde4a..645959318a 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -63,7 +63,8 @@ add_user_mapping = [
-     "  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi\n"
- ]
- 
--def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None):
-+def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
-+                        enable_rust=True):
-     filename = Path(src_dir, "tests", "docker", "dockerfiles", host + ".docker")
-     cmd = lcitool_cmd + ["dockerfile"]
-     if cross is not None:
-@@ -75,6 +76,8 @@ def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None):
-     else:
-         trailer = "\n".join(add_user_mapping)
- 
-+    if enable_rust:
-+        trailer += "\nENV ENABLE_RUST 1\n"
-     generate(filename, cmd, trailer)
- 
- 
-@@ -180,7 +183,9 @@ try:
-     generate_dockerfile("fedora", "fedora-41")
-     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
-     generate_dockerfile("ubuntu2204", "ubuntu-2204",
--                        trailer="".join(ubuntu2204_rust_extras))
-+                        trailer="".join(ubuntu2204_rust_extras),
-+                        # https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318
-+                        enable_rust=False)
- 
-     #
-     # Non-fatal Rust-enabled build
-@@ -248,7 +253,10 @@ try:
-                         project='qemu,qemu-win-installer',
-                         cross="mingw64",
-                         trailer=cross_build("x86_64-w64-mingw32-",
--                                            "x86_64-softmmu"))
-+                                            "x86_64-softmmu"),
-+                        # linking with rust is buggy:
-+                        # https://github.com/mesonbuild/meson/pull/14991
-+                        enable_rust=False)
- 
-     #
-     # Cirrus packages lists for GitLab
 -- 
-2.51.0
+Peter Xu
 
 
