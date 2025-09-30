@@ -4,96 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21900CCA468
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FADCCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 13:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3ak2-0000qj-Op; Tue, 30 Sep 2025 09:50:06 -0400
+	id 1v3aq0-0003FF-ES; Tue, 30 Sep 2025 09:56:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3aju-0000pn-Hn
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:50:00 -0400
+ id 1v3apw-0003EF-AZ
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:56:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3ajj-0008MK-1z
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:49:57 -0400
+ id 1v3apr-0002Yt-Hk
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 09:56:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759240180;
+ s=mimecast20190719; t=1759240560;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sWc8P7DYpSikMfLq60zr971/uUvChGkBGqHzLDZZv2w=;
- b=ZYxnMjyjE/cRNrIaivtwi76pihePFsIKEAUVtzseirPT/c7EmsV/S7fI+PiIEOpp0wa+fW
- 22oDlrNTcHULPm3ix5URNWc7iza8S3uFL2gJ6ycjfhOmLqYj8yVYM/UVPx/MlLPDH8uj0u
- fUK8WfdW8jAi9NF8zc1AvcmkKGez+CQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/suQ7wbS6Ffsygh1vK7bTksgy2Vsmyzot6Os1pFbPNs=;
+ b=f0XPz2hB8kxEM3tWyJmNYe5bHloutm0sghVhPWYKG5GIwTmT7sQ/e1gwzBt2KPDClvueQJ
+ Qxk3Fo4tsA7WfWcyQiYdhP4PAqvaJUkGxl4lFwWQRIAGmq2DQJQ7UxkWYS0kKmi1T2AEAm
+ nenuUWhFyOZb5WY4AMZSIdHSc9PYAhc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-eLM295YLMCSv9Rv0H5oxaw-1; Tue, 30 Sep 2025 09:49:38 -0400
-X-MC-Unique: eLM295YLMCSv9Rv0H5oxaw-1
-X-Mimecast-MFC-AGG-ID: eLM295YLMCSv9Rv0H5oxaw_1759240177
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ecdb10a612so5440774f8f.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 06:49:38 -0700 (PDT)
+ us-mta-256-i1aiV-olOoS3cB1t7sP24Q-1; Tue, 30 Sep 2025 09:55:59 -0400
+X-MC-Unique: i1aiV-olOoS3cB1t7sP24Q-1
+X-Mimecast-MFC-AGG-ID: i1aiV-olOoS3cB1t7sP24Q_1759240558
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e3dcb36a1so32706385e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 06:55:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759240177; x=1759844977;
+ d=1e100.net; s=20230601; t=1759240558; x=1759845358;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sWc8P7DYpSikMfLq60zr971/uUvChGkBGqHzLDZZv2w=;
- b=TjewCSrAqFnnrEVwW1sDWYFgVg30HuW6bjLTBZ7WGH9dKCfgXDX2BiTGFPg49YcxL8
- yWi03rmyzYN8spOWALMmO0mtOQLo32EyBrAb+7kjfcV7NwBx3OqjPVYz9t+s5YreAdqi
- 1VjeSxfK/dVhSaqkpMyT6a/RbUgJ0RORotuhk81LBcF0qH13O3wkWEdBm3vKz54EHIBL
- mIlkdOSMoLkxA5ZkcoQ7s1BWGZqJd6OFIUgnCZw9Hu407sPqgHzLIVnoXTNoGkF1MyVD
- OMQ69LyC+Fn6p8DQPwCi/aGumZuHpW937O/MS+8lRracUT1mFhWU4C7dzxDUAL1Q6CCN
- K0fw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPnr/pwVMAbvebquwjBxuMqqHEjp76jiV3mIO6h6i/4NEdD+Ihrg75rUdVKExUs13f7duEeqKZVmQP@nongnu.org
-X-Gm-Message-State: AOJu0YzU9tAA1k5/szuUgpM0C6gae0JM5HGo3zHIR56MKI2m6K8o142E
- K1Tsp8DRoyi+D437BzxQojDuwm3NfhSToxyYLJtIWPeYmMEci7t+P6ZQDvK7wzTbrSKtNnivXLk
- Q6ewDYEpnGwlPaZDB3EszyZojdUAkjdFyUl1B40Xs2RxCB79/eueaBA07
-X-Gm-Gg: ASbGnctmk9kF5aXzXQUs3dLhHt7UF8HwB5314DOfGLQ0W1lm+7ZGs+APS0n8vw7pbrS
- RJc18OBNaQiNtAbd7JyxS1T4XDnbQD9SDJnheMt3F7C4DEJMu0fENKvQr4iLo3mn0eiwNuaIhXy
- xfqljbWn8E78tspE9pgl7eV+Xyl0LhdpyrVZLoMEW7kFmBBRfrA7lpAxXmRg8YC08iGSlV3+nEi
- 2FM1Mulr3kTbeSIFX1K5dgl1izM0V82AfXYhHd1eWjS3qX4JH32glPL/M1wr0rlMoVrGcAlppKl
- qjhpohTptgLEFVJC2AcL8a8xkXvcumviFKOc/VFLZX6LdvI7v1dvWZ5GIAxoEVT+p6Rv69/+F6I
- 0dhhD81JPyUaVXZmb
-X-Received: by 2002:a05:6000:2486:b0:3ed:e1d8:bd73 with SMTP id
- ffacd0b85a97d-40e4d9c9330mr18987572f8f.57.1759240177189; 
- Tue, 30 Sep 2025 06:49:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZi03UOfq7P95x5xyFez15azoVZcySi1JL4yELsU9yrS9dPELBKtIAeWol6UKpbgCkl5m7Zg==
-X-Received: by 2002:a05:6000:2486:b0:3ed:e1d8:bd73 with SMTP id
- ffacd0b85a97d-40e4d9c9330mr18987542f8f.57.1759240176698; 
- Tue, 30 Sep 2025 06:49:36 -0700 (PDT)
+ bh=/suQ7wbS6Ffsygh1vK7bTksgy2Vsmyzot6Os1pFbPNs=;
+ b=Y9UbiwtMdG4FVCSNWiGqpsI6WNsI1h5RZ+a+ImRHiiPKsDiJt2sF31JSDqXR9THyt6
+ GjebklgiJEGcudf36o9RbeglgNO2/qc+J/UaDTc9WvyKaHOZzGEoewWFeYpykqBLB39G
+ km3t5Cfp7Kzxj1D/el6q9xsGXysCi3jAxXTtPtVZ3iUGs3HgtFhjp2w90Wa77/41ktdH
+ p9ZJAVPE+RXsQssFY3SLWViw4zLX9h165UtUDeNEirQ05/Q9AKnKr/xvrrCIG6coY67x
+ JvvuccGLy5pytHGvi7yE/flN1LaFS/YXT8CZjIVAWXTOxgH3eMBjh23NR/477/xPWo3s
+ v7yQ==
+X-Gm-Message-State: AOJu0YwLxFtaXnrhJKywsymxRfGwxA6SnM/szY/Xbf3G5ytuNlXgtRj2
+ BRv2g1+Zhcix7qYOHTdarxJb9u2GdbzuSQYrnmbOnoEYt+Kx+A6s2lw6ZePjmwl0ZDmsiiJl4vR
+ R/+IzhreYS6pfFUHoWBeNL/XlUfGL37UZ2iM1vkRV7Jm7D/oqNQTxuSEj
+X-Gm-Gg: ASbGncvijzx6+ntyhQycCnWicIMre7rzK5oUXtTr/dUJYTfE8IZUjg38mraD0Dt+NaU
+ nSZ8ftpBPxS3KcoqkE4a6kL7yUygR0UybdQyoadJwb7xXE7AMLcsiRgCVpM91Czsjo0GS0qySN1
+ iHf3wiYCfFaV9fEvJj67XgXnj35wtL9tpEoYPE073g9KjmCLzrmZdq3jUUH8lsD0v9JkrJRJz/f
+ EixRMvK0dAp2MzHNkYR5q4AMYgolL5W8rpUy8FRNlGCKHBHknpsUwAw6pE58MZifdtMk0dqXkCd
+ T+URyClecaCH8Bb3f7JINcqtEf+iHNCFKUj6QQNkyvqkcPWfT6C8Xy9sHT1DxLOUdC7aah0PN3m
+ xOS0Pa/ToaUlY6X8Y
+X-Received: by 2002:a05:600c:468a:b0:46e:4705:4958 with SMTP id
+ 5b1f17b1804b1-46e47054a6fmr110203095e9.30.1759240557877; 
+ Tue, 30 Sep 2025 06:55:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IETNjhu13lLoZ/apuZyCmHApeXKSf7cZEOT6xkq8Xex1smU7PeKXF7lsI/VJ7CVyge/ik37TA==
+X-Received: by 2002:a05:600c:468a:b0:46e:4705:4958 with SMTP id
+ 5b1f17b1804b1-46e47054a6fmr110202875e9.30.1759240557409; 
+ Tue, 30 Sep 2025 06:55:57 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e56f53b8asm55995445e9.10.2025.09.30.06.49.35
+ ffacd0b85a97d-40fc560338csm23487123f8f.41.2025.09.30.06.55.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 06:49:36 -0700 (PDT)
-Message-ID: <2a12ee15-6314-4c03-ae2b-fb0e0809c924@redhat.com>
-Date: Tue, 30 Sep 2025 15:49:35 +0200
+ Tue, 30 Sep 2025 06:55:56 -0700 (PDT)
+Message-ID: <bdd7f08b-b577-438d-aa23-aecd41fe1712@redhat.com>
+Date: Tue, 30 Sep 2025 15:55:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/22] intel_iommu: Delete RPS capability related
- supporting code
+Subject: Re: [PATCH v6 05/22] hw/pci: Introduce pci_device_get_viommu_flags()
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
 References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
- <20250918085803.796942-3-zhenzhong.duan@intel.com>
+ <20250918085803.796942-6-zhenzhong.duan@intel.com>
+ <aNLrOIbBxZy00cS4@Asurada-Nvidia>
+ <IA3PR11MB9136AE59AECA079CB61C4165921CA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <aNOqH3u3vNFRukew@Asurada-Nvidia>
+ <IA3PR11MB9136110BBC15C20546401288921EA@IA3PR11MB9136.namprd11.prod.outlook.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250918085803.796942-3-zhenzhong.duan@intel.com>
+In-Reply-To: <IA3PR11MB9136110BBC15C20546401288921EA@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124;
@@ -105,7 +113,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,204 +130,65 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
 
-On 9/18/25 10:57 AM, Zhenzhong Duan wrote:
-> RID-PASID Support(RPS) is not set in vIOMMU ECAP register, the supporting
-> code is there but never take effect.
-takes
->
-> Meanwhile, according to VTD spec section 3.4.3:
-> "Implementations not supporting RID_PASID capability (ECAP_REG.RPS is 0b),
-> use a PASID value of 0 to perform address translation for requests without
-> PASID."
->
-> We should delete the supporting code which fetches RID_PASID field from
-> scalable context entry and use 0 as RID_PASID directly, because RID_PASID
-> field is ignored if no RPS support according to spec.
->
-> This simplify the code and doesn't bring any penalty.
-simplifies
->
-> Opportunistically, s/rid2pasid/rid_pasid and s/RID2PASID/RID_PASID as
-> VTD spec uses RID_PASID terminology.
->
-> Suggested-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/i386/intel_iommu_internal.h |  1 -
->  hw/i386/intel_iommu.c          | 49 +++++++++++++---------------------
->  2 files changed, 19 insertions(+), 31 deletions(-)
->
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index 360e937989..6abe76556a 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -547,7 +547,6 @@ typedef struct VTDRootEntry VTDRootEntry;
->  #define VTD_CTX_ENTRY_LEGACY_SIZE     16
->  #define VTD_CTX_ENTRY_SCALABLE_SIZE   32
->  
-> -#define VTD_SM_CONTEXT_ENTRY_RID2PASID_MASK 0xfffff
->  #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
->  #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
->  
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 71b70b795d..b976b251bc 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -41,8 +41,7 @@
->  #include "trace.h"
->  
->  /* context entry operations */
-> -#define VTD_CE_GET_RID2PASID(ce) \
-> -    ((ce)->val[1] & VTD_SM_CONTEXT_ENTRY_RID2PASID_MASK)
-> +#define RID_PASID    0
-I would call that RID_PASID_0 to make it more explicit in the code
-or even it is a PASID to PASID_0 would do the job too.
->  #define VTD_CE_GET_PASID_DIR_TABLE(ce) \
->      ((ce)->val[0] & VTD_PASID_DIR_BASE_ADDR_MASK)
->  
-> @@ -951,7 +950,7 @@ static int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
->      int ret = 0;
->  
->      if (pasid == PCI_NO_PASID) {
-> -        pasid = VTD_CE_GET_RID2PASID(ce);
-> +        pasid = RID_PASID;
->      }
->      pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
->      ret = vtd_get_pe_from_pasid_table(s, pasid_dir_base, pasid, pe);
-> @@ -970,7 +969,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
->      VTDPASIDEntry pe;
->  
->      if (pasid == PCI_NO_PASID) {
-> -        pasid = VTD_CE_GET_RID2PASID(ce);
-> +        pasid = RID_PASID;
->      }
->      pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
->  
-> @@ -1510,15 +1509,14 @@ static inline int vtd_context_entry_rsvd_bits_check(IntelIOMMUState *s,
->      return 0;
->  }
->  
-> -static int vtd_ce_rid2pasid_check(IntelIOMMUState *s,
-> +static int vtd_ce_rid_pasid_check(IntelIOMMUState *s,
->                                    VTDContextEntry *ce)
->  {
->      VTDPASIDEntry pe;
->  
->      /*
->       * Make sure in Scalable Mode, a present context entry
-> -     * has valid rid2pasid setting, which includes valid
-> -     * rid2pasid field and corresponding pasid entry setting
-> +     * has valid pasid entry setting at RID_PASID(0).
-s/at RID_PASID(0) /for PASID_0?
->       */
->      return vtd_ce_get_pasid_entry(s, ce, &pe, PCI_NO_PASID);
->  }
-> @@ -1581,12 +1579,11 @@ static int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
->          }
->      } else {
->          /*
-> -         * Check if the programming of context-entry.rid2pasid
-> -         * and corresponding pasid setting is valid, and thus
-> -         * avoids to check pasid entry fetching result in future
-> -         * helper function calling.
-> +         * Check if the programming of pasid setting at RID_PASID(0)
-of pasid 0?
-> +         * is valid, and thus avoids to check pasid entry fetching
-> +         * result in future helper function calling.
->           */
-> -        ret_fr = vtd_ce_rid2pasid_check(s, ce);
-> +        ret_fr = vtd_ce_rid_pasid_check(s, ce);
->          if (ret_fr) {
->              return ret_fr;
->          }
-> @@ -2097,7 +2094,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->      bool reads = true;
->      bool writes = true;
->      uint8_t access_flags, pgtt;
-> -    bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
-> +    bool rid_pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
-I am not keen of the rid_pasid name. It does not tell what is the
-semantic of the variable. rid_pasid is an actual field in the CE.
-does that check whether we face a request without pasid in scalable
-mode. If so I would call that request_wo_pasid_sm or somethink alike
->      VTDIOTLBEntry *iotlb_entry;
->      uint64_t xlat, size;
->  
-> @@ -2111,8 +2108,8 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->  
->      cc_entry = &vtd_as->context_cache_entry;
->  
-> -    /* Try to fetch pte from IOTLB, we don't need RID2PASID logic */
-> -    if (!rid2pasid) {
-> +    /* Try to fetch pte from IOTLB, we don't need RID_PASID(0) logic */
-It is unclear what the "RID_PASID(0) logic" is. All the more so we now
-just have to set the pasid to PASID_0.
-> +    if (!rid_pasid) {
->          iotlb_entry = vtd_lookup_iotlb(s, source_id, pasid, addr);
->          if (iotlb_entry) {
->              trace_vtd_iotlb_page_hit(source_id, addr, iotlb_entry->pte,
-> @@ -2160,8 +2157,8 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->          cc_entry->context_cache_gen = s->context_cache_gen;
->      }
->  
-> -    if (rid2pasid) {
-> -        pasid = VTD_CE_GET_RID2PASID(&ce);
-> +    if (rid_pasid) {
-> +        pasid = RID_PASID;
->      }
->  
->      /*
-> @@ -2189,8 +2186,8 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->          return true;
->      }
->  
-> -    /* Try to fetch pte from IOTLB for RID2PASID slow path */
-> -    if (rid2pasid) {
-> +    /* Try to fetch pte from IOTLB for RID_PASID(0) slow path */
-PASID_0?
-> +    if (rid_pasid) {
->          iotlb_entry = vtd_lookup_iotlb(s, source_id, pasid, addr);
->          if (iotlb_entry) {
->              trace_vtd_iotlb_page_hit(source_id, addr, iotlb_entry->pte,
-> @@ -2464,20 +2461,14 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
->          ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
->                                         vtd_as->devfn, &ce);
->          if (!ret && domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
-> -            uint32_t rid2pasid = PCI_NO_PASID;
-> -
-> -            if (s->root_scalable) {
-> -                rid2pasid = VTD_CE_GET_RID2PASID(&ce);
-> -            }
-> -
->              /*
->               * In legacy mode, vtd_as->pasid == pasid is always true.
->               * In scalable mode, for vtd address space backing a PCI
->               * device without pasid, needs to compare pasid with
-> -             * rid2pasid of this device.
-> +             * RID_PASID(0) of this device.
->               */
->              if (!(vtd_as->pasid == pasid ||
-> -                  (vtd_as->pasid == PCI_NO_PASID && pasid == rid2pasid))) {
-> +                  (vtd_as->pasid == PCI_NO_PASID && pasid == RID_PASID))) {
-would strongly suggest using PASID_0 instead
->                  continue;
->              }
->  
-> @@ -2976,9 +2967,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
->          if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
->                                        vtd_as->devfn, &ce) &&
->              domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
-> -            uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
-> -
-> -            if ((vtd_as->pasid != PCI_NO_PASID || pasid != rid2pasid) &&
-> +            if ((vtd_as->pasid != PCI_NO_PASID || pasid != RID_PASID) &&
->                  vtd_as->pasid != pasid) {
->                  continue;
->              }
-Thanks
 
+On 9/26/25 4:54 AM, Duan, Zhenzhong wrote:
+>
+>> -----Original Message-----
+>> From: Nicolin Chen <nicolinc@nvidia.com>
+>> Subject: Re: [PATCH v6 05/22] hw/pci: Introduce
+>> pci_device_get_viommu_flags()
+>>
+>> On Wed, Sep 24, 2025 at 07:05:42AM +0000, Duan, Zhenzhong wrote:
+>>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>> Subject: Re: [PATCH v6 05/22] hw/pci: Introduce
+>>>>> get_viommu_flags() is designed to return 64bit bitmap of purely
+>> vIOMMU
+>>>>> flags which are only determined by user's configuration, no host
+>>>>> capabilities involved. Reasons are:
+>>>>>
+>>>>> 1. host may has heterogeneous IOMMUs, each with different capabilities
+>>>>> 2. this is migration friendly, return value is consistent between source
+>>>>>    and target.
+>>>>> 3. host IOMMU capabilities are passed to vIOMMU through
+>>>> set_iommu_device()
+>>>>>    interface which have to be after attach_device(), when
+>>>> get_viommu_flags()
+>>>>>    is called in attach_device(), there is no way for vIOMMU to get host
+>>>>>    IOMMU capabilities yet, so only pure vIOMMU flags can be
+>> returned.
+>>>> "no way" sounds too strong..
+>>>>
+>>>> There is an iommufd_backend_get_device_info() call there. So, we
+>>>> could have passed the host IOMMU capabilities to a vIOMMU. Just,
+>>>> we chose not to (assuming for migration reason?).
+>>> What about 'it's hard for vIOMMU to get host IOMMU...'?
+>> vfio-iommufd core code gets all the host IOMMU caps via the vfio
+>> device but chooses to not forward to vIOMMU. So, it's neither "no
+>> way" nor "hard" :)
+> Yes, that needs to introduce another callback to forward the caps early,
+> unnecessarily complex.
+>
+>> To be honest, I don't feel this very related to be the reason 3
+>> to justify for the new op/API. 1 and 2 are quite okay?
+>>
+>> Having said that, it's probably good to add as a side note:
+>>
+>> "
+>> Note that this op will be invoked at the attach_device() stage, at which
+>> point host IOMMU capabilities are not yet forwarded to the vIOMMU through
+>> the set_iommu_device() callback that will be after the attach_device().
+>>
+>> See the below sequence:
+>> "
+> OK, will drop 3 and add the side note.
+
+With Nicolin's suggestions:
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Eric
+>
+> Thanks
+> Zhenzhong
+>
 
 
