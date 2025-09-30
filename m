@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94294CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DED8CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 04:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3SHA-0008BW-18; Tue, 30 Sep 2025 00:47:45 -0400
+	id 1v3SLQ-0001Rs-CK; Tue, 30 Sep 2025 00:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SH8-0008Aq-Hi
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:47:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SLO-0001Rf-C5
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:52:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SGy-00021q-Vv
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:47:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3SLI-0002W3-95
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 00:52:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759207647;
+ s=mimecast20190719; t=1759207915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=F0CpCpGLryTSVfViexSV8x0K3iUnfmatiqDW29KVp44=;
- b=B+dmeqDVZfLVohaoB/jqLijCCWiw4HkHhE7BG5TXe+3BWt6OJWPaVIVq4I321lmejbNJZG
- OGAEg3OgMXQMMwDRsVc1L0mfila1EZFw5ZYbeShSU9eXMaFWWcK/cfAqNdN9BXJNIrCHBy
- M1AMn4al1iHsV9Sj/bxNpXudGbdE0Xk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+Ec7IP8RaNea+ekLtnS8GreYVm0zDgRXajLAUnWqjpM=;
+ b=HvI5QBVf76HJ1BpWd8ZequXJ6GsyFJPe5o+uwug6hqe34w4szoUnFNPp8nbUN1NfRkKxv9
+ myWXoSAGWOUkGfSHk2m+bbdpvaXI+dUogV0dhN7PN3z98Fk+soN6BtUZYhlSHy4QI9Heif
+ ynTtICx5tVxDTZ9wW3qzUMgsj+05I/c=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-2uGMqJAQMTa9xZgtTXWiZA-1; Tue, 30 Sep 2025 00:47:24 -0400
-X-MC-Unique: 2uGMqJAQMTa9xZgtTXWiZA-1
-X-Mimecast-MFC-AGG-ID: 2uGMqJAQMTa9xZgtTXWiZA_1759207643
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-afcb72a8816so520907866b.0
- for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:47:24 -0700 (PDT)
+ us-mta-5-zbJpRQdDM1ebixuKqH8nYw-1; Tue, 30 Sep 2025 00:51:51 -0400
+X-MC-Unique: zbJpRQdDM1ebixuKqH8nYw-1
+X-Mimecast-MFC-AGG-ID: zbJpRQdDM1ebixuKqH8nYw_1759207910
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-634a73b5966so3801027a12.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Sep 2025 21:51:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759207643; x=1759812443;
+ d=1e100.net; s=20230601; t=1759207910; x=1759812710;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=F0CpCpGLryTSVfViexSV8x0K3iUnfmatiqDW29KVp44=;
- b=tGdawf7qTpRq0GIDkvp2F3XtqL1m+c89t91J+hnbvzw5p5UhFZlz/6MD1N6gaDyFhB
- g+QoSblJsrznQymiKC5Sa2pygmPJFphDSWDIZz1u+cAOrbNS+3ZMCpkwVgoNwx9aCT7P
- Cd8oMloZ8mPyclYZ8T+//wbcF7QsJxryI1Qq+cwIZ8gHdDe9Q7c90FM3CifKUZF8feBk
- 1HwsasEPSkoMwskZyis1TOoLGQ9qvfsEOPY2P0YnzoeA2XGbQ4bTQE2f52Fq/B8BICUE
- f+ls4HTs37vEbp2TV19l/53BdQiWvDfLkQiMhZqeqi0tTA++W3XemMNP2hO2EsVYqmcd
- z0ZQ==
+ bh=+Ec7IP8RaNea+ekLtnS8GreYVm0zDgRXajLAUnWqjpM=;
+ b=Nxt4/c+rooq2GXhHA8s2Jw3KovXXZ8HlzknAkK68SjYuvpdK6AcIsHCOF7cuOXjV4M
+ 4ukaYFOWKWK2relv1s8O+nqAwo/YNVqSD7hxYKRD+xDXs3WSBzEzLRqPCai+ZUH0IU2v
+ F3gcjug1Qd+HsjxRQATo5ZLPtUmta8oux0VqIDCbmMmn/p2WTt277lXWg8z5HIXG3EWL
+ 8BHvfAyyIvokJP73cL4VeND7gRkJ6x/0P9bRhoIz44km8sbLwjj6zTIBcRu0LfckBa7D
+ PVQDjULi8uefKFQ520X3j3FPypmxgmxY61V8gS3qcrw3vDeEUSxjY+4L7AsXBloIZJD8
+ N7/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU7ztc7uwKzq8IfOEJGQO8OfhAikOjRra7LVZc2IYf22ZOEowr36sC7Trkmb3N8EZG9+uLsL4Y48tHE@nongnu.org
-X-Gm-Message-State: AOJu0Yzoc3POGLA965+ljSE1QC9uk51cED8Kld76EatxvwF/ZyhPWMaA
- fEXgMk0Zlf+w4jqaauEVbIjUOTMuiNlSpFJWI220l4WYb654b+v8bKg/5xkaCHFo3U86AMNtcvb
- D+8/SUF2zxnl+rObvtrNeDwCB2bxYVkzTPyYDxk8Y93wfw7BtKsdcPhEy
-X-Gm-Gg: ASbGncuCCwdiJXDydkRhOXq9yqHiYJHq3EtMv2UB+nA0tuxaucOyGeVs5AuZjj0mtJj
- oSxUsoj1fD110UpQgQlsyODnJBvJYXxsI40ZKf8J9uBBtj4Wz2umUvJ9A0ipDla6nGyB2cu60XW
- YgNUjH7USp4bRW3m+Z+4C7ciZxES64r0060tGzofV9eV6Kp2YyGzHr0TZPtOr4aE955Ur0kD86D
- 4mS2A/x6T4Es1UmyLr2egc+6Stoe2ehfmovlhp9Xe8bNM8VB9ElV3qJqnb5MWndu/H2eK6A6pqv
- r0xDpRNWC78BFG/u79t+f8UcJTf66d1HNDZSm3pZUBDFO4rBL/VIO+ltSfGdLzi/Q4VYwUW3AX5
- F6OKXgZgAYA==
-X-Received: by 2002:a17:907:6e90:b0:b04:2a50:3c1b with SMTP id
- a640c23a62f3a-b34bc9720fcmr2205354266b.53.1759207643440; 
- Mon, 29 Sep 2025 21:47:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrEv+SaLvycPTTXjkfI3gAv2L4ih/JXeTcfurbaylseRmIiY1ztu3a3eE7D6ASNch/ayHT8g==
-X-Received: by 2002:a17:907:6e90:b0:b04:2a50:3c1b with SMTP id
- a640c23a62f3a-b34bc9720fcmr2205350566b.53.1759207643038; 
- Mon, 29 Sep 2025 21:47:23 -0700 (PDT)
+ AJvYcCXOotjmQr5baspKwKeSbIGAxnXbU6Z54eWKxPvhzGd/jM031pHQ/V571JicdRnev5bfT4wyhHNMqPeN@nongnu.org
+X-Gm-Message-State: AOJu0YwSeaK5+1Poj/+x7i+0fEDbukBCzri5XPQFMNQxN1csf0fCOYfP
+ zDaQeyvupUmeoD0qL/Yl94+ubVWpoEyCp3yDBpO6Hn1LCB9Ajb5EbE2Nu+bOejAlQo5/0NRQKfP
+ ga6WkMxKpHiVv2W9AV3OOzTsVlQI3GvZtFp/FauqNg6dHxXIs0AGafmUy
+X-Gm-Gg: ASbGnctdepGK10Hb8pcp5qyuR3qONA7XVnCRZqpCtVDqHnMoLTjTtpC3aneQLcIwyIx
+ BeteFvsc4kNhrYQMm1tVBsA24L2Ec/9SwGOOJ3sVtvOB7dYxoSZnnhqKkcvl0TCgtn8/JOvYqlV
+ fUQL6efmFOBjCcWGd/jzDcUH10awaXE/Mk3nSAUpufpUVHq5B0Y0sLt5D6DDbjxeBwwYcSnTzSM
+ /i+ctUPr3UmBEkcLqbUTYqUIv72PU9tpUAneFq1iuaLatKvx70QCVp8m+ccjfSpNhhDM+DTz55v
+ iPL9pWjBTwyFCTT/3I+Qh5Sa2RsI11pALRfvXn+NExzO93W5fHbOq7EBqqtevF/ccHG1Vb2IgLi
+ C86SvMTdYsA==
+X-Received: by 2002:a05:6402:26d3:b0:634:bff3:25d8 with SMTP id
+ 4fb4d7f45d1cf-634bff32630mr11890001a12.30.1759207909966; 
+ Mon, 29 Sep 2025 21:51:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiKyEPXuUeN9dycrzKBPNvTY+be/FSVas+XL6RlQgrJhdSMc3jVU2nKqcyK2u2Vo+ShPjxzw==
+X-Received: by 2002:a05:6402:26d3:b0:634:bff3:25d8 with SMTP id
+ 4fb4d7f45d1cf-634bff32630mr11889951a12.30.1759207909548; 
+ Mon, 29 Sep 2025 21:51:49 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b40f9d0a652sm192717466b.33.2025.09.29.21.47.21
+ 4fb4d7f45d1cf-634a3b02ccbsm8861868a12.45.2025.09.29.21.51.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Sep 2025 21:47:22 -0700 (PDT)
-Message-ID: <64065767-95b1-4dcf-b02e-e2f1d2033c8d@redhat.com>
-Date: Tue, 30 Sep 2025 06:47:20 +0200
+ Mon, 29 Sep 2025 21:51:48 -0700 (PDT)
+Message-ID: <22ff756a-51a2-43f4-8fe1-05f17ff4a371@redhat.com>
+Date: Tue, 30 Sep 2025 06:51:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/17] hw/s390x/sclp: Replace [cpu_physical_memory ->
- address_space]_r/w()
+Subject: Re: [PATCH v2 02/17] system/memory: Better describe @plen argument of
+ flatview_translate()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 Cc: Jason Herne <jjherne@linux.ibm.com>,
@@ -97,7 +97,7 @@ Cc: Jason Herne <jjherne@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  David Hildenbrand <david@redhat.com>
 References: <20250930041326.6448-1-philmd@linaro.org>
- <20250930041326.6448-9-philmd@linaro.org>
+ <20250930041326.6448-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,7 +142,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250930041326.6448-9-philmd@linaro.org>
+In-Reply-To: <20250930041326.6448-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -153,8 +153,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,13 +171,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/09/2025 06.13, Philippe Mathieu-Daudé wrote:
-> cpu_physical_memory_read() and cpu_physical_memory_write() are
-> legacy (see commit b7ecba0f6f6), replace by address_space_read()
-> and address_space_write().
+> flatview_translate()'s @plen argument is output-only and can be NULL.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
+>   include/system/memory.h | 5 +++--
+>   system/physmem.c        | 6 +++---
+>   2 files changed, 6 insertions(+), 5 deletions(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index aa85fc27a10..3e5bf3ef05e 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -2992,13 +2992,14 @@ IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
+>    * @addr: address within that address space
+>    * @xlat: pointer to address within the returned memory region section's
+>    * #MemoryRegion.
+> - * @len: pointer to length
+> + * @plen_out: pointer to valid read/write length of the translated address.
+> + *            It can be @NULL when we don't care about it.
+>    * @is_write: indicates the transfer direction
+>    * @attrs: memory attributes
+>    */
+>   MemoryRegion *flatview_translate(FlatView *fv,
+>                                    hwaddr addr, hwaddr *xlat,
+> -                                 hwaddr *len, bool is_write,
+> +                                 hwaddr *plen_out, bool is_write,
+>                                    MemTxAttrs attrs);
+>   
+>   static inline MemoryRegion *address_space_translate(AddressSpace *as,
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 8a8be3a80e2..2d1697fce4c 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -566,7 +566,7 @@ iotlb_fail:
+>   
+>   /* Called from RCU critical section */
+>   MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
+> -                                 hwaddr *plen, bool is_write,
+> +                                 hwaddr *plen_out, bool is_write,
+>                                    MemTxAttrs attrs)
+>   {
+>       MemoryRegion *mr;
+> @@ -574,13 +574,13 @@ MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
+>       AddressSpace *as = NULL;
+>   
+>       /* This can be MMIO, so setup MMIO bit. */
+> -    section = flatview_do_translate(fv, addr, xlat, plen, NULL,
+> +    section = flatview_do_translate(fv, addr, xlat, plen_out, NULL,
+>                                       is_write, true, &as, attrs);
+>       mr = section.mr;
+>   
+>       if (xen_enabled() && memory_access_is_direct(mr, is_write, attrs)) {
+>           hwaddr page = ((addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE) - addr;
+> -        *plen = MIN(page, *plen);
+> +        *plen_out = MIN(page, *plen_out);
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+There is no check for a NULL pointer here, so plen_out must *not* be NULL?
+Or did I miss something?
+
+  Thomas
+
+
+>       }
+>   
+>       return mr;
 
 
