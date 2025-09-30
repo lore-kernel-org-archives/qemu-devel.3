@@ -4,91 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D2ACCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 09:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B69A6CCA468
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 09:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3X71-00038u-V6; Tue, 30 Sep 2025 05:57:36 -0400
+	id 1v3X7C-0003Dk-Nv; Tue, 30 Sep 2025 05:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsntk18@gmail.com>) id 1v3Wmx-0004VO-Lk
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:36:52 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vsntk18@gmail.com>) id 1v3Wmp-0001h2-6D
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 05:36:51 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-afcb7a16441so931548666b.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 02:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759224998; x=1759829798; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IYB4a6nRiUdsdyEnHHCpEQNpTkh6ei0Uct+Ltx+xwnc=;
- b=PfjgVU4N4pKvjUxqzWvu0BTfh4blW4LnKgnu7NqMKmoqhtKyMa7N6odRu/jelihuUj
- Io6ISWU5UACerICwwqcUD+ktyvj8lM6w3WTbilCL7AgDL3mGezDNPuGOhUuDkRCruzB9
- ZeEZxaWt8RXAr+UM0zEPCitPwRW6OZjJ5eaGFo4N9ykKeVynK5R9ajjwdJOafsOqsJpo
- MkTsrSspuPq8wzLo7cyTn7X8KFlCCiwbPlu0d4wZ6Hhb5O/fiSBrcfK/NjsPw01exh7b
- ObdmGODDPT0+jWhy6MHFEP2QNSl78OfHrC9QVjFANb2Lr2j5L3Tqfbqxj6If+Cbu+ctD
- 5JQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759224998; x=1759829798;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IYB4a6nRiUdsdyEnHHCpEQNpTkh6ei0Uct+Ltx+xwnc=;
- b=NCFa+vrJRB72rrbuJQ3NdeAQOyKMGJAy7TXIXhXZUudUU5bFoAgV9MnQ7TBrhEMIc8
- xLsHmkh55ZG4UdMs9kfmb8z2SNIvdrz9eLhWm9TcMe5S+EzBwDl/gQLA+0z6VjH3YGVl
- gU9iVS2mam/CDTKUb5VlsrFDnn3TwMqNYl1dT8CVtJejjNQsDgRcTPzHWsd0qACrXE05
- E+f1ez85zTI7SQ6c1drsxD1dkin5eOexClZfjVb9GMq43XyckGN5VLJJjwolUruKLEhO
- jQJ4ISyyEk0+MWB1tK1KBTdkUhWhRJgm0eZa7BPqNQl1sc4XHtllrmPEys+4b+hXNPwo
- 6UrQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgAHRVAIW0OelEl6GwsECnkRx2DoeWs0OAQ1mkC+3aS/cOooUCFF/bN1B7UNHhAGElUVQkde/vHTzu@nongnu.org
-X-Gm-Message-State: AOJu0YyPbnHYIvX7B2yJ6GtXzIUSpFwwDvJjVJ+4BNBk+0H006Dv14ke
- +krerh3q8FvtAqG6veygC4vjna9Mk+v19XadKWj4ReCWuQI7zHaD+BaB
-X-Gm-Gg: ASbGncscmSXEpCklyp2TnIrgJJm0Xgzi9l0UpmrF4Tc+DBbYkjhErv+fZ4+v72o3pIk
- 9pr6X2n/ZUNPsqOHyD859e+AMMziP0moIU76S++yvp0jA/EcYc54wcGT7dXh4qSmMO4Y4SE6HKt
- FlX5RhXU6yac3uwACavbt21/UDieO/bU8mIAXcII/3fSRK/G9c3KenT/dWlU0bOr2lH0Txh98Ks
- nHYXt1kjOIE1t/Rkaw5rNn1LLgWQ0VHCM6SwzaFDNF25M3rJh+qUpTjCYThXYilDdHgZB5awRAu
- e6KqQAsjHOLH1QQG+UllG29I5y6t3yKFq/IGr7bw26FqYzDD3ZEl1dcHC3GWRrLsbJxpe/asfNM
- GbS6MYXzJSSpO5yQ5/HD1E5LS4e3yZ2ZZ7Bstd7vnuy5VDC+HgjQ=
-X-Google-Smtp-Source: AGHT+IG9L1Lwzem4vZVswo7Wt2wPXR8eh6T4QT19VLRvUzxkOmvOJpB2RVM0jSjCXqXcBVWECOs8QQ==
-X-Received: by 2002:a17:907:6e8c:b0:b3f:c562:faf7 with SMTP id
- a640c23a62f3a-b3fc562fe27mr644277466b.55.1759224998338; 
- Tue, 30 Sep 2025 02:36:38 -0700 (PDT)
-Received: from vasant-suse.suse.org ([81.95.8.245])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b3f57c9c2a9sm349178766b.71.2025.09.30.02.36.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Sep 2025 02:36:37 -0700 (PDT)
-From: vsntk18@gmail.com
-To: sarunkod@amd.com
-Cc: Suravee.Suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, mst@redhat.com,
- pbonzini@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, vasant.hegde@amd.com
-Subject: Re: [PATCH v3 1/6] hw/i386/amd_iommu: Fix MMIO register write tracing
-Date: Tue, 30 Sep 2025 11:36:36 +0200
-Message-Id: <20250930093636.11796-1-vsntk18@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250801060507.3382-2-sarunkod@amd.com>
-References: <20250801060507.3382-2-sarunkod@amd.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=vsntk18@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
+ id 1v3WzA-00016p-DN; Tue, 30 Sep 2025 05:49:28 -0400
+Received: from mxct.zte.com.cn ([183.62.165.209])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
+ id 1v3Wyz-0005Gg-Vf; Tue, 30 Sep 2025 05:49:28 -0400
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4cbYD92zqkz4xNtD;
+ Tue, 30 Sep 2025 17:48:57 +0800 (CST)
+Received: from szxlzmapp02.zte.com.cn ([10.5.231.79])
+ by mse-fl2.zte.com.cn with SMTP id 58U9ml0l059640;
+ Tue, 30 Sep 2025 17:48:47 +0800 (+08)
+ (envelope-from wang.yechao255@zte.com.cn)
+Received: from mapi (szxlzmapp02[null]) by mapi (Zmail) with MAPI id mid12;
+ Tue, 30 Sep 2025 17:48:49 +0800 (CST)
+Date: Tue, 30 Sep 2025 17:48:49 +0800 (CST)
+X-Zmail-TransId: 2b0468dba7817bb-0a1c6
+X-Mailer: Zmail v1.0
+Message-ID: <20250930174849833XG1Q1ETbNvg66WU2UVBTV@zte.com.cn>
+Mime-Version: 1.0
+From: <wang.yechao255@zte.com.cn>
+To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
+ <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>
+Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: =?UTF-8?B?W1BBVENIXSB0YXJnZXQvcmlzY3Y6IEZsdXNoIHRoZSBUTEIgZW50cnkgZm9yIHRoZSBzcGVjaWZpZWQgYWRkcmVzcw==?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 58U9ml0l059640
+X-TLS: YES
+X-SPF-DOMAIN: zte.com.cn
+X-ENVELOPE-SENDER: wang.yechao255@zte.com.cn
+X-SPF: None
+X-SOURCE-IP: 10.5.228.133 unknown Tue, 30 Sep 2025 17:48:57 +0800
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 68DBA789.000/4cbYD92zqkz4xNtD
+Received-SPF: pass client-ip=183.62.165.209;
+ envelope-from=wang.yechao255@zte.com.cn; helo=mxct.zte.com.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Sep 2025 05:57:28 -0400
+X-Mailman-Approved-At: Tue, 30 Sep 2025 05:57:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,34 +76,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->-static void amdvi_mmio_trace(hwaddr addr, unsigned size)
->+static inline uint8_t amdvi_mmio_get_index(hwaddr addr)
-> {
->     uint8_t index = (addr & ~0x2000) / 8;
->
->    if ((addr & 0x2000)) {
->         /* high table */
->         index = index >= AMDVI_MMIO_REGS_HIGH ? AMDVI_MMIO_REGS_HIGH : index;
->-        trace_amdvi_mmio_read(amdvi_mmio_high[index], addr, size, addr & ~0x07);
->     } else {
->         index = index >= AMDVI_MMIO_REGS_LOW ? AMDVI_MMIO_REGS_LOW : index;
->-        trace_amdvi_mmio_read(amdvi_mmio_low[index], addr, size, addr & ~0x07);
->     }
->+
->+    return index;
->+}
->+
->+static void amdvi_mmio_trace_read(hwaddr addr, unsigned size)
->+{
->+    uint8_t index = amdvi_mmio_get_index(addr);
->+    trace_amdvi_mmio_read(amdvi_mmio_low[index], addr, size, addr & ~0x07);
->+}
->+
->+static void amdvi_mmio_trace_write(hwaddr addr, unsigned size, uint64_t val)
->+{
->+    uint8_t index = amdvi_mmio_get_index(addr);
->+    trace_amdvi_mmio_write(amdvi_mmio_low[index], addr, size, val,
+From: yechao-w <wang.yechao255@zte.com.cn>
 
-Shouldn't you be picking between amdvi_mmio_low and amdvi_mmio_high in the
-above 2 fuctions depending on the addr value?
+When the guest executes sfence/svinval with an address parameter,
+invalidating only the specific TLB entry for that address rather
+than the entire TLB enhances TCG performance.
+
+Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>
+---
+ target/riscv/helper.h                          | 2 +-
+ target/riscv/insn_trans/trans_privileged.c.inc | 4 +++-
+ target/riscv/insn_trans/trans_svinval.c.inc    | 4 +++-
+ target/riscv/op_helper.c                       | 8 ++++++--
+ 4 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index f712b1c368..de3757fa75 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -135,7 +135,7 @@ DEF_HELPER_1(mnret, tl, env)
+ DEF_HELPER_1(ctr_clear, void, env)
+ DEF_HELPER_1(wfi, void, env)
+ DEF_HELPER_1(wrs_nto, void, env)
+-DEF_HELPER_1(tlb_flush, void, env)
++DEF_HELPER_2(tlb_flush, void, env, tl)
+ DEF_HELPER_1(tlb_flush_all, void, env)
+ DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
+ /* Native Debug */
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..b6865f51b2 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -154,8 +154,10 @@ static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
+ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+ {
+ #ifndef CONFIG_USER_ONLY
++    TCGv addr = get_gpr(ctx, a->rs1, EXT_NONE);
++
+     decode_save_opc(ctx, 0);
+-    gen_helper_tlb_flush(tcg_env);
++    gen_helper_tlb_flush(tcg_env, addr);
+     return true;
+ #endif
+     return false;
+diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
+index a06c3b214f..1b1b932ac6 100644
+--- a/target/riscv/insn_trans/trans_svinval.c.inc
++++ b/target/riscv/insn_trans/trans_svinval.c.inc
+@@ -24,12 +24,14 @@
+
+ static bool trans_sinval_vma(DisasContext *ctx, arg_sinval_vma *a)
+ {
++    TCGv addr = get_gpr(ctx, a->rs1, EXT_NONE);
++
+     REQUIRE_SVINVAL(ctx);
+     /* Do the same as sfence.vma currently */
+     REQUIRE_EXT(ctx, RVS);
+ #ifndef CONFIG_USER_ONLY
+     decode_save_opc(ctx, 0);
+-    gen_helper_tlb_flush(tcg_env);
++    gen_helper_tlb_flush(tcg_env, addr);
+     return true;
+ #endif
+     return false;
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 110292e84d..0fe5fcb3ac 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -555,7 +555,7 @@ void helper_wrs_nto(CPURISCVState *env)
+     }
+ }
+
+-void helper_tlb_flush(CPURISCVState *env)
++void helper_tlb_flush(CPURISCVState *env, target_ulong addr)
+ {
+     CPUState *cs = env_cpu(env);
+     if (!env->virt_enabled &&
+@@ -566,7 +566,11 @@ void helper_tlb_flush(CPURISCVState *env)
+                (env->priv == PRV_U || get_field(env->hstatus, HSTATUS_VTVM))) {
+         riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
+     } else {
+-        tlb_flush(cs);
++        if (addr) {
++            tlb_flush_page(cs, addr);
++        } else {
++            tlb_flush(cs);
++        }
+     }
+ }
+
+-- 
+2.27.0
 
