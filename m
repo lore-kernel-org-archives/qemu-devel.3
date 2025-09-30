@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE89CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 07:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2510CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 07:22:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3UdR-0007l8-NY; Tue, 30 Sep 2025 03:18:55 -0400
+	id 1v3UgL-0000QP-Ui; Tue, 30 Sep 2025 03:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1v3UdF-0007iO-Ja; Tue, 30 Sep 2025 03:18:45 -0400
-Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1v3UgI-0000PK-V1
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:21:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1v3Ud8-0004I3-Rs; Tue, 30 Sep 2025 03:18:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
- Message-ID:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=kIuqZxp4Yh/C52yVukBIvOlMaFaQOLAprRWAbW01j3w=; b=BJ9Jlsn45MrEBamHZwxJcErl1B
- x9zjoeCwvwolXgmy7z4SS37LrXipQoH1OAESZE3Q5ljqjw4ryGP9vCevISMnX4wTinr0MX/wgxM6L
- 5VQ1hdItnerV5oW7SSc+OEe7wm7xRsxIqfVnw7TEus6NWyGMZCvYePngW4PxNK7UKukj6cC9gXdWc
- ehiuoLr1Gn1l04fRsXckMIfSQrA4mSUghrfj1SsPt4MwsKWGnDutQLLpGNtiOTTTvUHkNA5yHOIsT
- wenJF+XblRAsgbYfibFef53Ww+F+dU494kxvtc3SRDgaOdFqe0eOfOq66uN9mstPT1xEdBtx3AcKC
- Z14Q1KsA==;
-Received: from [63.135.74.212] (helo=[192.168.1.249])
- by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1v3Uct-004jqh-3Z; Tue, 30 Sep 2025 08:18:19 +0100
-Message-ID: <6be4bfa5-006c-40c1-b1d6-37eece96fca1@codethink.co.uk>
-Date: Tue, 30 Sep 2025 08:18:14 +0100
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1v3UgB-0005TQ-U4
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 03:21:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759216898;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AD9dpKMBG627AfVhXFMzkbtZ8FVc1kWYKYGJ3Vrt7L4=;
+ b=N0Udig7X/hovV9tY/M1g5vs5r5SG8YG0udQaw0McTFX6ClrSaiid61Q0ZvmfmtiwL1pjkN
+ PcaCTPuPWWPIUk3RZsFC2Bm8DUrcD+y4+Q8dUjV2JO2YaDeUZx0P2P1fZrFxJPfRtbeELE
+ 8rcew/9WHOR6SoCebhPQocW+bt5A8H0=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-ajekJHImMF-NUtTOhPSmfw-1; Tue, 30 Sep 2025 03:21:36 -0400
+X-MC-Unique: ajekJHImMF-NUtTOhPSmfw-1
+X-Mimecast-MFC-AGG-ID: ajekJHImMF-NUtTOhPSmfw_1759216895
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-32df881dce2so5906685a91.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 00:21:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759216895; x=1759821695;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AD9dpKMBG627AfVhXFMzkbtZ8FVc1kWYKYGJ3Vrt7L4=;
+ b=eyhkZuQ0sstEuSG4otyj5wyz5H3SP+z6SNNTGKxj1ggi5sMTHhP9++aZv6vIUJbhvA
+ 5yxmmqwo7BOljeh97bCpuMo7vurEMi4ni+2pVPss1D5yPbFqKtYwh4pmlcrT4PtPrtIy
+ BFYWV18tNlzVWdldZsllgzKHde7bQlknRcY5PKXDv43huA6MVaZ8sMt4YsGVAPTq+XxG
+ FyXdYo4FU9PAtBsKgsbVv03bedk5J7dIcIvm849W0l44udffnT8HmLJRkV4zeM/MB8hG
+ 8PZoSzlAmE+LKbJCGZQZYttZtjUjZzeyUvLEx+aDDiakyqfV41HGNYe8h/tZO7+ghF4l
+ hvfg==
+X-Gm-Message-State: AOJu0YwvjAC/GFgtCCwvHsMtpM0pPvbgfJTcTqNesdNCcxsp9QMiWo9S
+ g++jFyn0OMm50i/5/A5QdyPTfdoJY/pD4A3NO/i8EHnXwZqGDi0k+SOuE32HQKlnY3hsVdQ0nZD
+ IDUNA2eNGwEXq4NH/+0vqWjIZ+wDKXwEwf0+nCiBLrgqu9C7yChseBEQc/5VTajZIkAboVYnYBl
+ rsL5QQVykg37c0EPLunmUsIkNPP6q25I8=
+X-Gm-Gg: ASbGnctj1sLQfU2GQ+P7Bfv9EMEEIquHwY1EC/PRahY1SaBHgwYznhUYmYM2xVWudEC
+ dHIiIjDy8yhkkG0MeriflO+1wu/dYg8v4lxqYCPM4x1BbzdAIzYmoQDWdXoguDCdMDR/ZAozZUA
+ 9gwPApBpTsD04VbOKi6kc0kyfoSM/NILWuOMkgIejGxNfLaOQrWFyvT85UF2g=
+X-Received: by 2002:a17:90b:1647:b0:330:7a32:3290 with SMTP id
+ 98e67ed59e1d1-3342a3471ccmr22758504a91.37.1759216895426; 
+ Tue, 30 Sep 2025 00:21:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQfSQZj3ar8v38+tKLzJDKivHUqgRzCRYqMwpzJlnjxqGZBojdkauY5QpqVIbaqGoc4tsEYxNEbJK747Wb61s=
+X-Received: by 2002:a17:90b:1647:b0:330:7a32:3290 with SMTP id
+ 98e67ed59e1d1-3342a3471ccmr22758484a91.37.1759216894917; Tue, 30 Sep 2025
+ 00:21:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix endianness swap on compressed
- instructions
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-riscv@nongnu.org, qemu-trivial@nongnu.org,
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- liwei1518@gmail.com, alistair.francis@wdc.com, palmer@dabbelt.com,
- vhaudiquet <vhaudiquet343@hotmail.fr>, anjo@rev.ng,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
- <cc5b1d2c-90cb-4276-a192-fd0ce9e926e8@linaro.org>
- <95dbbcf4-41fa-481b-9e23-96ed51f66264@canonical.com>
-Content-Language: en-GB
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-Organization: Codethink Limited.
-In-Reply-To: <95dbbcf4-41fa-481b-9e23-96ed51f66264@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.40.203.114;
- envelope-from=ben.dooks@codethink.co.uk; helo=imap4.hz.codethink.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250930071419.117592-1-thuth@redhat.com>
+In-Reply-To: <20250930071419.117592-1-thuth@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 30 Sep 2025 11:21:23 +0400
+X-Gm-Features: AS18NWDVszFkr7CjcqTPdkxOvT8_wNmAXVJV4zeYxTN3mktGGhjCpwhmts7ahAk
+Message-ID: <CAMxuvax4qzyDQcKf6Fan_hJTggwa4fcMjaQH6Qhz=NWxvbwp4A@mail.gmail.com>
+Subject: Re: [PATCH] ui/icons/qemu.svg: Add metadata information (author,
+ license) to the logo
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000001ae188063fff9a84"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,118 +102,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/09/2025 07:59, Heinrich Schuchardt wrote:
-> On 9/29/25 16:37, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->>
->> On 29/9/25 13:55, Valentin Haudiquet wrote:
->>> From: vhaudiquet <vhaudiquet343@hotmail.fr>
->>>
->>> Three instructions were not using the endianness swap flag, which 
->>> resulted in a bug on big-endian architectures.
->>
->> I suppose you mean "big-endian host architectures".
->> If so, please clarify.
-> 
-> Hello Phil,
-> 
-> Ubuntu is providing QEMU to emulate RISC-V both on little-endian hosts 
-> like X86 and ARM as well as on big-endian hosts like the IBM S/390.
-> 
-> The Unprivileged RISC-V ISA Specification has this sentence:
-> 
-> "The base ISA has been defined to have a little-endian memory system, 
-> with big-endian or bi-endian as non-standard variants."
-> 
-> According to the Privileged RISC-V ISA Specification the mstatus and 
-> mstatush register may be used to set the endianness at runtime.
-> 
-> "The MBE, SBE, and UBE bits in mstatus and mstatush are WARL fields that 
-> control the endianness of memory accesses other than instruction 
-> fetches. Instruction fetches are always little-endian."
-> 
-> Currently RISC-V work focuses on little-endian targets but there is 
-> active community work to enable big-endian Linux for RISC-V.
-> 
-> Therefore a solution is required that considers both the host and the 
-> target endianness.
-> 
->>
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3131
->>> Buglink: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2123828
->>>
->>> Signed-off-by: Valentin Haudiquet <valentin.haudiquet@canonical.com>
->>> ---
->>>   target/riscv/insn_trans/trans_rvzce.c.inc | 6 +++---
->>>   1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/ 
->>> riscv/ insn_trans/trans_rvzce.c.inc
->>> index c77c2b927b..dd15af0f54 100644
->>> --- a/target/riscv/insn_trans/trans_rvzce.c.inc
->>> +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
->>> @@ -88,13 +88,13 @@ static bool trans_c_lbu(DisasContext *ctx, 
->>> arg_c_lbu *a)
->>>   static bool trans_c_lhu(DisasContext *ctx, arg_c_lhu *a)
->>>   {
->>>       REQUIRE_ZCB(ctx);
->>> -    return gen_load(ctx, a, MO_UW);
->>> +    return gen_load(ctx, a, MO_TEUW);
->> NAck.
->> Please do not use MO_TE* anymore. Use explicit endianness.
->>
->> So far all our RISC-V targets are little-endian:
->>
->>    $ git grep TARGET_BIG_ENDIAN configs/targets/riscv*
->>    $
->>
->> If you are not worried about RISCV core running in BE mode
->> (as we currently don't check MSTATUS_[USM]BE bits), your change
->> should be:
->>
->>   -    return gen_load(ctx, a, MO_UW);
->>   +    return gen_load(ctx, a, MO_UW | MO_LE);
-> 
-> I saw your patches to remove MO_TE from little-endian only targets like 
-> i386 but RISC-V is different.
-> 
-> We should foresee that in future RISC-V targets run in either little- 
-> endian or big-endian mode and implement our code accordingly.
-> 
-> When big-endian RISC-V comes upon QEMU, we should avoid duplicating the 
-> target code but reuse what we have.
-> 
-> MO_UW | MO_LE looks wrong in this context.
-> 
-> We should stay consistent with
-> 
-> target/riscv/insn_trans/trans_rvi.c.inc
-> target/riscv/insn_trans/trans_rvzfh.c.inc
-> target/riscv/insn_trans/trans_xthead.c.inc
-> 
-> which currently use MO_TEUW.
-> 
-> For the time being, I would suggest to stick to MO_TE* to maintain the 
-> information in which code locations we need to consider the target 
-> endianness.
-> 
-> Targets that can switch endianness at runtime (e.g. MIPS) use an 
-> architecture specific implemenation of mo_endian(ctx). When implementing 
-> big-endian RISC-V support in future, we can use the MO_TE occurrences as 
-> indicator where to use mo_endian() instead.
-> 
-> With these considerations in mind the current patch looks good to me.
-> 
-> Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+--0000000000001ae188063fff9a84
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-You've reminded me that we still haven't managed to get movement on
-the big-endian runtime patches.
+Hi
 
--- 
-Ben Dooks				http://www.codethink.co.uk/
-Senior Engineer				Codethink - Providing Genius
+On Tue, Sep 30, 2025 at 11:14=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
+te:
 
-https://www.codethink.co.uk/privacy.html
+> From: Thomas Huth <thuth@redhat.com>
+>
+> We've got two versions of the QEMU logo in the repository, one with
+> the whole word "QEMU" (pc-bios/qemu_logo.svg) and one that only contains
+> the letter "Q" (ui/icons/qemu.svg). While qemu_logo.svg contains the
+> proper metadata with license and author information, this is missing
+> from the ui/icons/qemu.svg file. Copy the meta data there so that
+> people have a chance to know the license of the file if they only
+> look at the qemu.svg file.
+>
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3139
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+
+> ---
+>  ui/icons/qemu.svg | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
+>
+> diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg
+> index 24ca23a1e95..f2500de3391 100644
+> --- a/ui/icons/qemu.svg
+> +++ b/ui/icons/qemu.svg
+> @@ -918,7 +918,26 @@
+>          <dc:format>image/svg+xml</dc:format>
+>          <dc:type
+>             rdf:resource=3D"http://purl.org/dc/dcmitype/StillImage" />
+> -        <dc:title />
+> +        <dc:title>Kew the Angry Emu</dc:title>
+> +        <dc:creator>
+> +          <cc:Agent>
+> +            <dc:title>Beno=C3=AEt Canet</dc:title>
+> +          </cc:Agent>
+> +        </dc:creator>
+> +        <dc:rights>
+> +          <cc:Agent>
+> +            <dc:title>CC BY 3.0</dc:title>
+> +          </cc:Agent>
+> +        </dc:rights>
+> +        <dc:publisher>
+> +          <cc:Agent>
+> +            <dc:title>QEMU Community</dc:title>
+> +          </cc:Agent>
+> +        </dc:publisher>
+> +        <dc:date>2012-02-15</dc:date>
+> +        <cc:license
+> +           rdf:resource=3D"http://creativecommons.org/licenses/by/3.0/" =
+/>
+> +        <dc:source>
+> https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865.html
+> </dc:source>
+>        </cc:Work>
+>      </rdf:RDF>
+>    </metadata>
+> --
+> 2.51.0
+>
+>
+
+--0000000000001ae188063fff9a84
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 30, 2=
+025 at 11:14=E2=80=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com"=
+>thuth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">From: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" =
+target=3D"_blank">thuth@redhat.com</a>&gt;<br>
+<br>
+We&#39;ve got two versions of the QEMU logo in the repository, one with<br>
+the whole word &quot;QEMU&quot; (pc-bios/qemu_logo.svg) and one that only c=
+ontains<br>
+the letter &quot;Q&quot; (ui/icons/qemu.svg). While qemu_logo.svg contains =
+the<br>
+proper metadata with license and author information, this is missing<br>
+from the ui/icons/qemu.svg file. Copy the meta data there so that<br>
+people have a chance to know the license of the file if they only<br>
+look at the qemu.svg file.<br>
+<br>
+Closes: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3139" rel=
+=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/is=
+sues/3139</a><br>
+Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=
+=3D"_blank">thuth@redhat.com</a>&gt;<br></blockquote><div><br></div><div>Re=
+viewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
+dhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=A0</div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">
+---<br>
+=C2=A0ui/icons/qemu.svg | 21 ++++++++++++++++++++-<br>
+=C2=A01 file changed, 20 insertions(+), 1 deletion(-)<br>
+<br>
+diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg<br>
+index 24ca23a1e95..f2500de3391 100644<br>
+--- a/ui/icons/qemu.svg<br>
++++ b/ui/icons/qemu.svg<br>
+@@ -918,7 +918,26 @@<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;dc:format&gt;image/svg+xml&lt;/dc:for=
+mat&gt;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;dc:type<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rdf:resource=3D&quot;<a href=3D"h=
+ttp://purl.org/dc/dcmitype/StillImage" rel=3D"noreferrer" target=3D"_blank"=
+>http://purl.org/dc/dcmitype/StillImage</a>&quot; /&gt;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title /&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;Kew the Angry Emu&lt;/dc:title=
+&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:creator&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:Agent&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;Beno=C3=AEt Cane=
+t&lt;/dc:title&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/cc:Agent&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/dc:creator&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:rights&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:Agent&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;CC BY 3.0&lt;/dc=
+:title&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/cc:Agent&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/dc:rights&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:publisher&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:Agent&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:title&gt;QEMU Community&l=
+t;/dc:title&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/cc:Agent&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/dc:publisher&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:date&gt;2012-02-15&lt;/dc:date&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;cc:license<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rdf:resource=3D&quot;<a href=3D"h=
+ttp://creativecommons.org/licenses/by/3.0/" rel=3D"noreferrer" target=3D"_b=
+lank">http://creativecommons.org/licenses/by/3.0/</a>&quot; /&gt;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;dc:source&gt;<a href=3D"https://lists.gnu.=
+org/archive/html/qemu-devel/2012-02/msg02865.html" rel=3D"noreferrer" targe=
+t=3D"_blank">https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865=
+.html</a>&lt;/dc:source&gt;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;/cc:Work&gt;<br>
+=C2=A0 =C2=A0 =C2=A0&lt;/rdf:RDF&gt;<br>
+=C2=A0 =C2=A0&lt;/metadata&gt;<br>
+-- <br>
+2.51.0<br>
+<br>
+</blockquote></div></div>
+
+--0000000000001ae188063fff9a84--
+
 
