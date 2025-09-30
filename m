@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C767CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C3AACCA476
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3cRb-0008R0-M1; Tue, 30 Sep 2025 11:39:11 -0400
+	id 1v3cR6-0008CC-47; Tue, 30 Sep 2025 11:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cRa-0008Pb-76
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:10 -0400
+ id 1v3cR4-0008Bk-8u
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:38:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cRT-0004PD-2x
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:08 -0400
+ id 1v3cR1-0004Fw-R5
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:38:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759246741;
+ s=mimecast20190719; t=1759246713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NnHoGa6GbN0hh9V/MSQpqRR2eK1qQRWWptgarG6ZgMw=;
- b=Dzth3oEkN9sQiNDyMVYwMIPX4mhV3xcOOpyuJ8umVSMDlRzUrXGNj1yN6noA1q3fct/ldV
- F/5h0tCdVLjjg5CNnowtzPvr3LqOJZECgkemNHq1YLJsJ9/CTkjBHoP1FkoswH5iCAc53l
- 4pu9j/aRz/NXEJ0BlK11dmlU+0cDDZ0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=W1NyfX4soRju/8fy+ZFeLE43fMSLPTeXbpc4OZtvOpw=;
+ b=i0IESHcCWbodyiuFpxrjp0lLJgDVLMH93pxXsCptrcSGLpn0rtswR8bUvPcG6ndfrND37t
+ 13CL1ToygjE6G8FI/AqfnyuUISuu/Pclcf0i+6jE6iPXtzrJHi64B13vm3drsd8SKfrIWD
+ 7uvpa8Gd8EirMrIVDOVsVFFPoDgMoRk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-0mShz1HXMbGg74Wd-0PJvg-1; Tue,
- 30 Sep 2025 11:38:58 -0400
-X-MC-Unique: 0mShz1HXMbGg74Wd-0PJvg-1
-X-Mimecast-MFC-AGG-ID: 0mShz1HXMbGg74Wd-0PJvg_1759246736
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-_Zu199rOM7K800cE0k2PDg-1; Tue,
+ 30 Sep 2025 11:38:30 -0400
+X-MC-Unique: _Zu199rOM7K800cE0k2PDg-1
+X-Mimecast-MFC-AGG-ID: _Zu199rOM7K800cE0k2PDg_1759246708
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76AB419560A5; Tue, 30 Sep 2025 15:38:56 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3589E18002D0; Tue, 30 Sep 2025 15:38:28 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6779B30002C5; Tue, 30 Sep 2025 15:38:54 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BD3271956095; Tue, 30 Sep 2025 15:38:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -62,15 +62,15 @@ Cc: devel@lists.libvirt.org,
  Li-Wen Hsu <lwhsu@freebsd.org>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>, Ed Maste <emaste@freebsd.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 11/23] build-sys: cfi_debug and safe_stack are not compatible
-Date: Tue, 30 Sep 2025 19:37:32 +0400
-Message-ID: <20250930153746.573875-12-marcandre.lureau@redhat.com>
+Subject: [PULL 06/23] configure: fix rust meson configuration
+Date: Tue, 30 Sep 2025 19:37:27 +0400
+Message-ID: <20250930153746.573875-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20250930153746.573875-1-marcandre.lureau@redhat.com>
 References: <20250930153746.573875-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -99,71 +99,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-It fails to link on fedora >= 41:
-/usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memcpy':
-(.text.__sanitizer_internal_memcpy+0x0): multiple definition of `__sanitizer_internal_memcpy'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memcpy+0x0): first defined here
-/usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memmove':
-(.text.__sanitizer_internal_memmove+0x0): multiple definition of `__sanitizer_internal_memmove'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memmove+0x0): first defined here
-/usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memset':
-(.text.__sanitizer_internal_memset+0x0): multiple definition of `__sanitizer_internal_memset'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memset+0x0): first defined here
-
-cfi_debug seems to pull ubsan which has conflicting symbols with safe_stack.
-
-See also: https://bugzilla.redhat.com/show_bug.cgi?id=2397265
+It was incorrectly set on the [host_machine] and caused error:
+File "/tmp/qemu-test/build/pyvenv/lib/python3.11/site-packages/mesonbuild/envconfig.py", line 281, in from_literal
+    assert all(isinstance(v, str) for v in raw.values()), 'for mypy'
+AssertionError: for mypy
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250924120426.2158655-12-marcandre.lureau@redhat.com>
+Message-ID: <20250924120426.2158655-7-marcandre.lureau@redhat.com>
 ---
- meson.build                | 3 +++
- .gitlab-ci.d/buildtest.yml | 6 +++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index c08e2df6bb..14e626aa1e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -681,6 +681,9 @@ if get_option('cfi')
-     error('-fsanitize-cfi-icall-generalize-pointers is not supported by the compiler')
-   endif
-   if get_option('cfi_debug')
-+    if get_option('safe_stack')
-+      error('cfi_debug is not compatible with safe_stack')
-+    endif
-     if cc.compiles('int main () { return 0; }',
-                    name: '-fno-sanitize-trap=cfi-icall',
-                    args: ['-flto', '-fsanitize=cfi-icall',
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 3be36e5499..0502094b9a 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -479,7 +479,7 @@ build-cfi-aarch64:
-     LD_JOBS: 1
-     AR: llvm-ar
-     IMAGE: fedora
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi --enable-cfi-debug
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi
-       --enable-safe-stack --disable-slirp
-     TARGETS: aarch64-softmmu
-     MAKE_CHECK_ARGS: check-build
-@@ -517,7 +517,7 @@ build-cfi-ppc64-s390x:
-     LD_JOBS: 1
-     AR: llvm-ar
-     IMAGE: fedora
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi --enable-cfi-debug
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi
-       --enable-safe-stack --disable-slirp
-     TARGETS: ppc64-softmmu s390x-softmmu
-     MAKE_CHECK_ARGS: check-build
-@@ -555,7 +555,7 @@ build-cfi-x86_64:
-     LD_JOBS: 1
-     AR: llvm-ar
-     IMAGE: fedora
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi --enable-cfi-debug
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi
-       --enable-safe-stack --disable-slirp
-     TARGETS: x86_64-softmmu
-     MAKE_CHECK_ARGS: check-build
+diff --git a/configure b/configure
+index 0f7eb95586..66613f3f4c 100755
+--- a/configure
++++ b/configure
+@@ -1958,7 +1958,7 @@ if test "$skip_meson" = no; then
+     echo "[binaries]" >> $native
+     echo "c = [$(meson_quote $host_cc)]" >> $native
+     if test "$rust" != disabled; then
+-      echo "rust = [$(meson_quote $rustc)]" >> $cross
++      echo "rust = [$(meson_quote $rustc)]" >> $native
+     fi
+     mv $native config-meson.native
+     meson_option_add --native-file
 -- 
 2.51.0
 
