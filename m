@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D125CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52231CCA471
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 15:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3cSU-0000sX-Ez; Tue, 30 Sep 2025 11:40:06 -0400
+	id 1v3cRI-0008GW-Rh; Tue, 30 Sep 2025 11:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cRu-0000de-8I
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:31 -0400
+ id 1v3cRG-0008FO-7O
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:38:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v3cRo-0004Ux-Lf
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:39:28 -0400
+ id 1v3cRD-0004IY-SB
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 11:38:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759246759;
+ s=mimecast20190719; t=1759246725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JKRfyVCniHnc67u4rqaEMASdTNTnB4OZywat2G4Qduc=;
- b=gqMX2B+/ticvstgQVKS/bWrBZCU3ec8MwSTTlYu5GfvFX1n5kgE8vvpfuTmHyJr5RY1R6/
- J/PX5/q8zXG7DQLCxF0qzGZuZjTY6aq+qOUgJrnZfE+xjIQeiGNOkH84vVsqjhskIRyt6o
- hCFKSNAdf6xn3q5Tv4440mKYkf9r0g4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=sQYPqfUXsjz7W9/xKJSSjQiLNj41jOUSF6BbGeXrJ2A=;
+ b=EL+lokBDSzUJ+MEB+a8Kl1oY0eVYaQkmgQ1HDHJWdbYOAm58wFXIOeFGpPv3blehCxqM8M
+ hq6d1tEMbhSfxUlsaI9gX4GKsxFKVfHIRf7ye29HeM7tFoNaGV/t/iR3gKSDxKgtxvZwAU
+ wkkcou7OMzQPf6WnFDkIrxukiWniFbY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-7xb6scpkMkGycKCiCB1uFw-1; Tue,
- 30 Sep 2025 11:39:16 -0400
-X-MC-Unique: 7xb6scpkMkGycKCiCB1uFw-1
-X-Mimecast-MFC-AGG-ID: 7xb6scpkMkGycKCiCB1uFw_1759246754
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-h3U8YTGENYiSWlqIghwP9w-1; Tue,
+ 30 Sep 2025 11:38:41 -0400
+X-MC-Unique: h3U8YTGENYiSWlqIghwP9w-1
+X-Mimecast-MFC-AGG-ID: h3U8YTGENYiSWlqIghwP9w_1759246719
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51FD51977309; Tue, 30 Sep 2025 15:39:14 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2DD81956055; Tue, 30 Sep 2025 15:38:39 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.7])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BE2B619560B8; Tue, 30 Sep 2025 15:39:12 +0000 (UTC)
+ id 5A92F19560B4; Tue, 30 Sep 2025 15:38:37 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -62,9 +62,9 @@ Cc: devel@lists.libvirt.org,
  Li-Wen Hsu <lwhsu@freebsd.org>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>, Ed Maste <emaste@freebsd.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 14/23] lcitool/alpine: workaround bindgen issue
-Date: Tue, 30 Sep 2025 19:37:35 +0400
-Message-ID: <20250930153746.573875-15-marcandre.lureau@redhat.com>
+Subject: [PULL 08/23] tests/docker/common: print errors to stderr
+Date: Tue, 30 Sep 2025 19:37:29 +0400
+Message-ID: <20250930153746.573875-9-marcandre.lureau@redhat.com>
 In-Reply-To: <20250930153746.573875-1-marcandre.lureau@redhat.com>
 References: <20250930153746.573875-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -81,7 +81,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,51 +101,33 @@ From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250924120426.2158655-15-marcandre.lureau@redhat.com>
+Message-ID: <20250924120426.2158655-9-marcandre.lureau@redhat.com>
 ---
- tests/docker/dockerfiles/alpine.docker | 2 ++
- tests/lcitool/refresh                  | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ tests/docker/common.rc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index bd1ef5505d..b50fbc3dba 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -131,6 +131,8 @@ ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
- ENV NINJA "/usr/bin/ninja"
- ENV PYTHON "/usr/bin/python3"
-+# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463
-+RUN apk add clang19-libclang
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index f49eb638f8..6f98a91277 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -97,6 +97,11 @@ def generate_yaml(os, target, arch, trailer=None):
-     generate(filename, cmd, trailer)
+diff --git a/tests/docker/common.rc b/tests/docker/common.rc
+index a611e6adf9..2ed2365a61 100755
+--- a/tests/docker/common.rc
++++ b/tests/docker/common.rc
+@@ -50,7 +50,7 @@ configure_qemu()
+     echo "Configure options:"
+     echo $config_opts
+     $QEMU_SRC/configure $config_opts || \
+-        { cat config.log && test_fail "Failed to run 'configure'"; }
++        { cat config.log >&2 && test_fail "Failed to run 'configure'"; }
+ }
  
+ build_qemu()
+@@ -73,7 +73,7 @@ check_qemu()
  
-+alpine_extras = [
-+    "# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463\n",
-+    "RUN apk add clang19-libclang\n",
-+]
-+
- # Netmap still needs to be manually built as it is yet to be packaged
- # into a distro. We also add cscope and gtags which are used in the CI
- # test
-@@ -167,7 +172,8 @@ try:
-     #
-     # Standard native builds
-     #
--    generate_dockerfile("alpine", "alpine-321")
-+    generate_dockerfile("alpine", "alpine-321",
-+                        trailer="".join(alpine_extras))
-     generate_dockerfile("centos9", "centos-stream-9")
-     generate_dockerfile("debian", "debian-12",
-                         trailer="".join(debian12_extras))
+ test_fail()
+ {
+-    echo "$@"
++    echo "$@" >&2
+     exit 1
+ }
+ 
 -- 
 2.51.0
 
