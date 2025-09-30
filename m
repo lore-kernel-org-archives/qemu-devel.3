@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5E1CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B296CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 08:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3W2V-0003sV-N3; Tue, 30 Sep 2025 04:48:52 -0400
+	id 1v3W7g-0005cy-J7; Tue, 30 Sep 2025 04:54:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3W2L-0003lY-L9
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:48:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3W7b-0005c4-N6
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:54:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3W2C-0008T8-MO
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:48:41 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3W7U-0001XU-7G
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 04:54:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759222106;
+ s=mimecast20190719; t=1759222435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dMEjfZYlFnmyBhBcv4/tSuDAC/cU9xbNMYdte8M2eHI=;
- b=ZQi9g+cnI0wrzPm5NjM+rmrntJ3bXgTCqGDIO+NUm7YMHpaOPgyH735YTO7JXfRjKw54Nz
- KOt1pwwHGZ9C73Tlg9hR6ve8mH9xT/KGA5ysWhedc5OziSnov2mbCyb1jbDSVOF5l817Pb
- d4z4c7p9N+LiXheNLzG+yQT4TnQvtbk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1GqYgM7CAgNyjfpIdoAiTscsLcf68CMiXtkq38Rsmz8=;
+ b=NTqTR9NZgLoeJzy/6kBANUNQZyj0OmSKzdwz6K3nZEY0opYn8y92QZpuCdhaHQI9oP8UAV
+ Q4ybjLOundLjbllfVHMJM4adQwsComRfPcxxuvdINLoIo12CgqTdiuuX8P/5/qRlzt4m/L
+ Y0t1MsqfQnyfnUZi1cB+2qXITMsgxvo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-Mksc3cTyN7uXzxD4d-eXhQ-1; Tue, 30 Sep 2025 04:48:25 -0400
-X-MC-Unique: Mksc3cTyN7uXzxD4d-eXhQ-1
-X-Mimecast-MFC-AGG-ID: Mksc3cTyN7uXzxD4d-eXhQ_1759222104
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e4fa584e7so12895715e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:48:24 -0700 (PDT)
+ us-mta-561-XsJODUtwNJWvCH0QAdEm3Q-1; Tue, 30 Sep 2025 04:53:53 -0400
+X-MC-Unique: XsJODUtwNJWvCH0QAdEm3Q-1
+X-Mimecast-MFC-AGG-ID: XsJODUtwNJWvCH0QAdEm3Q_1759222433
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e3ed6540fso20487535e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 01:53:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759222104; x=1759826904;
+ d=1e100.net; s=20230601; t=1759222433; x=1759827233;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dMEjfZYlFnmyBhBcv4/tSuDAC/cU9xbNMYdte8M2eHI=;
- b=CtHGlV4/f1BV6+RMwTGM2TgbG/+IE8Wv/xXjSJnAdKr8clAf6+txMk+7eDnyT3a8Uc
- QLx6OAiaJYFOichIoKyxu1lcjKLu7DJ+7Mk1+yypXXOTbuKoX2oJ7otsk3IpYlhuXhEv
- YfPebNTTrKRkAqgW814BjvTbShnZIoAjFOePD0ui3RH/qFxSnl9tcthBOVpGruk+kJ0p
- M+7+v1xyLSH9jQguC1b4UVW+Ny80k++L+2YFwG14Vc+/WBILewMJlBxo8jCXgrIvM0Xc
- F4JtdJsf7meNyypRhah1szU7+HUdfvitz43VIZO3YAWtnUr6WmVF8cuwrQ/ln9NEaMzE
- CNrg==
+ bh=1GqYgM7CAgNyjfpIdoAiTscsLcf68CMiXtkq38Rsmz8=;
+ b=pAfaVqpEKdDcvQqYjW5U9bRF2x1KHznhKCTmBiXpg9CPNFCkUPtCCPir+Wyrt5oX0T
+ PSFYxK7oHMSiprXyLEto+8XJM7Od0oeJCNp8LAnLItKr81az8wcF8aNoHL6gxIn5Af71
+ 9pCsIJodVw8Jsn9Zy7o0vkJrCr8TDX/weoTLu5FNF2Yclw6bMHSAVBVx6Q4gxzTinKia
+ /PUOqMTw6nj+f1AgYyWmy0qfGMqzB0l6rLU6GkqNQrQ8jK7KuWS4R508mq4bS5ZaoR6S
+ wpSobfpiPzzOWiHOpXtdRTIay9s51rSLnUerZS18Svpew2PyQV2ItXQWLVza3qK2Gx5M
+ 3HfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXl5UYyYFxR+/knq4EQM9bSPvUQzEFbX/Av2RVo+QVp7aUP1uDDUau60sTY7r4kQzceoA+ryG8nGUoi@nongnu.org
-X-Gm-Message-State: AOJu0YyrCxbuT/FktUG0G4WCO9feqeJh9EmXiLYsl7ObkX8padImbrXT
- 0p7lm2tZdKbAW+NymtPIVQ4V8qbiHOzntqq9dzkcWSrWWIwQO0uuuQhyY4OBO6e6C0WzVNftfQv
- B1aZCbwpWrB3rWC18eD7iG/9idGKo7NZomf/cnFSwxkreEr7+D3BUJJcq
-X-Gm-Gg: ASbGnctxLNlUwocUjsC0dvEHApEsU+Vo4lQKer0BIxaCdh/M67pLE9qn6V2y0FdwLNM
- PeA2BdRI03IQBXc3cxsciVD5gxaPee3vH8488RocVkaak+2ZWuefIg054zKt0y+5Q4yLgj5idm3
- T5h9ClosoOWTAocnoFfRo0hvjdDY22nsa+7tc+B0R9uJ/Ixr8gqhexMzLaLOdC9QW15lBz3072c
- +z2Qrmrznk0/jzZIwH7r6a6UZapUhF7M/oFFQjEq2lo/ytNFYJ/vKQq77OydolTeKuXRfsxUPCr
- umN62P+NiYNIjYKHQwwNCdWgW+5GfsrbUAVEnHRdwb4mCS5qXQEsvi9yUknYhw9MTo0k/w9RD7b
- OhWjNxUWv
-X-Received: by 2002:a05:600c:6306:b0:45d:d88b:cca with SMTP id
- 5b1f17b1804b1-46e329ab373mr174532685e9.1.1759222103701; 
- Tue, 30 Sep 2025 01:48:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGADYG5y+BdAycmkf9IBOk8N/dhdhv5tflqj4qv7TE3Ft7Yc40RdHwry1JqRn3HDEJyZMZ1hg==
-X-Received: by 2002:a05:600c:6306:b0:45d:d88b:cca with SMTP id
- 5b1f17b1804b1-46e329ab373mr174532405e9.1.1759222103215; 
- Tue, 30 Sep 2025 01:48:23 -0700 (PDT)
+ AJvYcCWjGcsRjjC3iD3gVGdRiS54m5aEKwmiSjv+FvUQj761Y/3UWafjvFSSVFRwwRkkrhW98XBZEcX4wQkL@nongnu.org
+X-Gm-Message-State: AOJu0YwxOaPbPA70y3dUFqn4SYJ19NqufJHnRpPKVvaG7PvnudgbhyuQ
+ QKdopBsEBrhnt2JiKBUiAgp6nwowLVBCRV7Y4ZRTTjVp0RK2XrHxLFUzMG7N896cOaNV3ukUA8C
+ AqdtX9FqVpmoVfLGeqFaXSDzhTDPrh7bQ6QMqjTW1DYqasLa098vxqGeF
+X-Gm-Gg: ASbGncswlyA86cbEB+3PXJKoXv7/XFbzfPm3dd1Q1FEzdWyB8A7RKG+iYkYkhR2TqYJ
+ xwROjUkl6SGBmLKx58ChP3kYolkBdRihUreHjvdAgtnlTdG+wyUuVjBjqatf89jlYMKk3g7C6cs
+ qbFi6J+46W0YIV4fzzArdZ3oy2MoKHolYq4wk+TQc0uYM9Z/iKJt2fZ0vU0sqskeTPAaqRlrLsO
+ NdaIWO7rIYj2arq4C1nmR+ZU6x8Z2xya7N/hDihzEj77jLbCJj+X4OMz7xgxi+pi9y7945VP6/g
+ JH5799roYI4yaqgXMYryEQTJzANFnmD5qf3WVNd/DuBvYzU3J9piNhoz3H/8KVeNXDss5Y3RYav
+ C1fzIH84o
+X-Received: by 2002:a05:600c:8883:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-46e59bdf966mr18910235e9.11.1759222432749; 
+ Tue, 30 Sep 2025 01:53:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhv4y2W2a2JxfIA08f2TzXCscU8tWyoy+QbPrnds+RWtOTu9nWBXmuRRZNkJFrtrO49pxDSg==
+X-Received: by 2002:a05:600c:8883:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-46e59bdf966mr18910025e9.11.1759222432380; 
+ Tue, 30 Sep 2025 01:53:52 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc560338csm22293639f8f.41.2025.09.30.01.48.22
+ 5b1f17b1804b1-46e56f3dc27sm53757855e9.5.2025.09.30.01.53.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 01:48:22 -0700 (PDT)
-Message-ID: <75040958-036d-4364-bff0-730bac8a01f2@redhat.com>
-Date: Tue, 30 Sep 2025 10:48:22 +0200
+ Tue, 30 Sep 2025 01:53:51 -0700 (PDT)
+Message-ID: <e23cb913-5f53-461e-adc4-f68a8358428b@redhat.com>
+Date: Tue, 30 Sep 2025 10:53:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 3/3] hw/vfio: Use uint64_t for IOVA mapping size in
@@ -136,16 +136,16 @@ Autocrypt: addr=clg@redhat.com; keydata=
 In-Reply-To: <20250929160807.73626-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.513,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -213,146 +213,19 @@ On 9/29/25 18:08, Philippe Mathieu-Daudé wrote:
 > -                        hwaddr iova, ram_addr_t size,
 > +                        hwaddr iova, uint64_t size,
 >                           int fd, unsigned long start, bool readonly);
->       /**
->        * @dma_unmap
-> @@ -198,7 +198,7 @@ struct VFIOIOMMUClass {
->        * Returns 0 to indicate success and -errno otherwise.
->        */
->       int (*dma_unmap)(const VFIOContainer *bcontainer,
-> -                     hwaddr iova, ram_addr_t size,
-> +                     hwaddr iova, uint64_t size,
->                        IOMMUTLBEntry *iotlb, bool unmap_all);
->   
->   
-> diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-> index 411eb7b28b7..e45192fef65 100644
-> --- a/hw/vfio-user/container.c
-> +++ b/hw/vfio-user/container.c
-> @@ -39,7 +39,7 @@ static void vfio_user_listener_commit(VFIOContainer *bcontainer)
->   }
->   
->   static int vfio_user_dma_unmap(const VFIOContainer *bcontainer,
-> -                               hwaddr iova, ram_addr_t size,
-> +                               hwaddr iova, uint64_t size,
->                                  IOMMUTLBEntry *iotlb, bool unmap_all)
->   {
->       VFIOUserContainer *container = VFIO_IOMMU_USER(bcontainer);
-> @@ -81,7 +81,7 @@ static int vfio_user_dma_unmap(const VFIOContainer *bcontainer,
->   }
->   
->   static int vfio_user_dma_map(const VFIOContainer *bcontainer, hwaddr iova,
-> -                             ram_addr_t size, void *vaddr, bool readonly,
-> +                             uint64_t size, void *vaddr, bool readonly,
->                                MemoryRegion *mrp)
->   {
->       VFIOUserContainer *container = VFIO_IOMMU_USER(bcontainer);
-> diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-> index c0f87f774a0..3a710d8265c 100644
-> --- a/hw/vfio/container-legacy.c
-> +++ b/hw/vfio/container-legacy.c
-> @@ -69,7 +69,7 @@ static int vfio_ram_block_discard_disable(VFIOLegacyContainer *container,
->   }
->   
->   static int vfio_dma_unmap_bitmap(const VFIOLegacyContainer *container,
-> -                                 hwaddr iova, ram_addr_t size,
-> +                                 hwaddr iova, uint64_t size,
->                                    IOMMUTLBEntry *iotlb)
->   {
->       const VFIOContainer *bcontainer = VFIO_IOMMU(container);
-> @@ -122,7 +122,7 @@ unmap_exit:
->   }
->   
->   static int vfio_legacy_dma_unmap_one(const VFIOContainer *bcontainer,
-> -                                     hwaddr iova, ram_addr_t size,
-> +                                     hwaddr iova, uint64_t size,
->                                        IOMMUTLBEntry *iotlb)
->   {
->       const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
-> @@ -185,7 +185,7 @@ static int vfio_legacy_dma_unmap_one(const VFIOContainer *bcontainer,
->    * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
->    */
->   static int vfio_legacy_dma_unmap(const VFIOContainer *bcontainer,
-> -                                 hwaddr iova, ram_addr_t size,
-> +                                 hwaddr iova, uint64_t size,
->                                    IOMMUTLBEntry *iotlb, bool unmap_all)
->   {
->       int ret;
-> @@ -210,7 +210,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainer *bcontainer,
->   }
->   
->   static int vfio_legacy_dma_map(const VFIOContainer *bcontainer, hwaddr iova,
-> -                               ram_addr_t size, void *vaddr, bool readonly,
-> +                               uint64_t size, void *vaddr, bool readonly,
->                                  MemoryRegion *mr)
->   {
->       const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 9d694393714..b5af3ac174c 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -15,7 +15,6 @@
->   
->   #include "qemu/osdep.h"
->   #include "system/tcg.h"
-> -#include "system/ram_addr.h"
 
-This is required for cpu_physical_memory_set_dirty_range()
+
+Don't forget to change :
+
+typedef int (*dma_map_fn)(const struct VFIOContainer *bcontainer,
+                           hwaddr iova, ram_addr_t size, void *vaddr,
+                           bool readonly, MemoryRegion *mr);
+
+in /include/hw/vfio/vfio-cpr.h.
+
+
+Thanks,
 
 C.
-
-
-
->   #include "qapi/error.h"
->   #include "qemu/error-report.h"
->   #include "hw/vfio/vfio-container.h"
-> @@ -74,7 +73,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
->   }
->   
->   int vfio_container_dma_map(VFIOContainer *bcontainer,
-> -                           hwaddr iova, ram_addr_t size,
-> +                           hwaddr iova, uint64_t size,
->                              void *vaddr, bool readonly, MemoryRegion *mr)
->   {
->       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> @@ -93,7 +92,7 @@ int vfio_container_dma_map(VFIOContainer *bcontainer,
->   }
->   
->   int vfio_container_dma_unmap(VFIOContainer *bcontainer,
-> -                             hwaddr iova, ram_addr_t size,
-> +                             hwaddr iova, uint64_t size,
->                                IOMMUTLBEntry *iotlb, bool unmap_all)
->   {
->       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index f0ffe235919..68470d552ec 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -35,7 +35,7 @@
->               TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
->   
->   static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
-> -                            ram_addr_t size, void *vaddr, bool readonly,
-> +                            uint64_t size, void *vaddr, bool readonly,
->                               MemoryRegion *mr)
->   {
->       const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-> @@ -46,7 +46,7 @@ static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
->   }
->   
->   static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
-> -                                 hwaddr iova, ram_addr_t size,
-> +                                 hwaddr iova, uint64_t size,
->                                    int fd, unsigned long start, bool readonly)
->   {
->       const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-> @@ -57,7 +57,7 @@ static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
->   }
->   
->   static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
-> -                              hwaddr iova, ram_addr_t size,
-> +                              hwaddr iova, uint64_t size,
->                                 IOMMUTLBEntry *iotlb, bool unmap_all)
->   {
->       const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
 
 
