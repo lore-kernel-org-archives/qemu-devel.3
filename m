@@ -4,100 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A482CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE1DACAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 03:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3QxE-0002Cj-HZ; Mon, 29 Sep 2025 23:23:05 -0400
+	id 1v3RA9-0007Pi-3p; Mon, 29 Sep 2025 23:36:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1v3Qx4-00026r-IK
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:22:54 -0400
-Received: from iguana.tulip.relay.mailchannels.net ([23.83.218.253])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1v3Qwt-00028C-U7
- for qemu-devel@nongnu.org; Mon, 29 Sep 2025 23:22:54 -0400
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 182597402BA;
- Tue, 30 Sep 2025 03:22:37 +0000 (UTC)
-Received: from pdx1-sub0-mail-a315.dreamhost.com
- (100-111-81-207.trex-nlb.outbound.svc.cluster.local [100.111.81.207])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id B1262740EAA;
- Tue, 30 Sep 2025 03:22:36 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1759202556; a=rsa-sha256;
- cv=none;
- b=E7hDx0vGgmiqhFsI5gSArmieBCgEvhcWlzDzi0Dttj8LF7YFMp0PCNFWfxZnbq/IaloDWR
- ZOJ0UcLlzqgt2esnL47P5xdE1UH1z38X4pkU1AAOpQrgYqXLocTwcLYESLqyv+OmshXfDI
- FON/IvUN74dcvijiClsMygDEgDFqjUfMIaSgVCF/BQYiua9Ye6OX7p6HPBcTwpV424Rxf1
- UcDIVBwVO/J3utsTg2Opbrsjfj6/pM33qi0psHvBNLk721h5y+Nh+JA77pG0aq7tovDvGO
- hAo2D9WFP4DxkRMA7vNNACjZcCOim9xad+5OATZAz7GOd4IdZ+QnBI1KZFAUuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1759202556;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=JN0+GXZnlRcIr53jJwwDjRJANTOrAhEiLSRgFnV4B/8=;
- b=Q8Iw+3ZGZgxQUkgpthDVGsJzap79UJAUoRcFFgv3XPdhD5Dmibn0VcU1QEcQPI0TeaLa1a
- DJVdJy8orJZ6L6isZW8O/fS9aDLvtxHE8Yn8spmepSDh/++5oHPGlmSKdBEDHXjV2YPS2+
- UC9wwbcTV5iVTFPYix5wnohH5vd+CES2WKqUl3Ytd9ktSoDBJo9w0FE8F8KRhc2FNv7HGT
- juEJeipsNFhkbxxz6ApOwP+BIjJeIKuHlc9n9LXzMhn/rJmZWeNZe6VstYA2AHNYwBvihv
- x1+m1rYNvDUNb/QrmE85HG46nHVaRHYY9A3sM7xLBg5iGaq5o90A1r9lJbqksA==
-ARC-Authentication-Results: i=1; rspamd-867694b6c6-mmmr6;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Madly-Oafish: 2be22a7027bed86c_1759202556998_3643016461
-X-MC-Loop-Signature: 1759202556998:2878416865
-X-MC-Ingress-Time: 1759202556997
-Received: from pdx1-sub0-mail-a315.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.111.81.207 (trex/7.1.3); Tue, 30 Sep 2025 03:22:36 +0000
-Received: from offworld.lan (syn-076-167-199-067.res.spectrum.com
- [76.167.199.67])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a315.dreamhost.com (Postfix) with ESMTPSA id 4cbNfM5pBNzGS; 
- Mon, 29 Sep 2025 20:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1759202556;
- bh=STfZcHxoRXw28XWRwgLmWXwMCu5bClVaJbQlLpEDfx8=;
- h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
- b=njfYoZsXSTmZOzCItbosjsJ0VRbF4ToJfSjL0nlxpa1mDSEr21rxMwBiEeObNlnL5
- LqbGrCOYcxIpnQiqYYpFxy19aIcbBUmgE0P/M+8h5ze17mW+E2KHdGPDJz2mRa3vhM
- Vt7oLSctonGT0th5nHO845JpMcjJUYDIHfUinXHlvgdn0dG2KOJbomRG7j6C7p/V+V
- V9ufzGYTKp/QustxhpR0lhowLRLO2I1xX+xN5ckAylJl7CILBtsuoODjQy/AXzrxTi
- BZuzTZWgHOxIxm91JvyPdSUlf4XQxLy6q9dkOjB4Q91OVxLk4tglSDlorzmO0AZXOs
- FtTVbCObNAY0w==
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: jonathan.cameron@huawei.com
-Cc: ira.weiny@intel.com, lucerop@amd.com, a.manzanares@samsung.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com, armbru@redhat.com,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org, dave@stgolabs.net,
- Jonathan.Cameron@huawei.com
-Subject: [PATCH 5/5] hw/cxl: Remove register special_ops->read()
-Date: Mon, 29 Sep 2025 20:21:53 -0700
-Message-Id: <20250930032153.1127773-6-dave@stgolabs.net>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250930032153.1127773-1-dave@stgolabs.net>
-References: <20250930032153.1127773-1-dave@stgolabs.net>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v3RA3-0007PU-Dn; Mon, 29 Sep 2025 23:36:19 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1v3R9t-0005NP-6m; Mon, 29 Sep 2025 23:36:19 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAH6CQXUNtoNIwBAA--.2512S2;
+ Tue, 30 Sep 2025 11:35:51 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwCX+ucVUNto05gyAA--.33171S2;
+ Tue, 30 Sep 2025 11:35:50 +0800 (CST)
+Message-ID: <cd36296e-7ef2-4fee-8205-f82e50014927@phytium.com.cn>
+Date: Tue, 30 Sep 2025 11:35:47 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.218.253; envelope-from=dave@stgolabs.net;
- helo=iguana.tulip.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/14] hw/arm/smmuv3: Optional Secure bank migration
+ via subsections
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+ <20250926033013.1099304-1-tangtao1634@phytium.com.cn>
+ <00a61c3b-c233-4d40-938b-6d06342e22cf@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <00a61c3b-c233-4d40-938b-6d06342e22cf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAfwCX+ucVUNto05gyAA--.33171S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAIBWjZjscNtAAFsI
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxWFyxJF4UAr17CFy5JF4DXFb_yoWrJF17pr
+ s5Ga15KF4kGF17Jr1av3W8uF1Yq3yrtF43trsrGFWFyan0yFyIqr1qyF4FgFn5ur40ya1a
+ vF1I9an7ur4jyrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,30 +78,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-... this is unused, unlike its write counterpart.
+Hi Eric,
 
-Suggested-by: <Jonathan.Cameron@huawei.com>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
----
- hw/cxl/cxl-component-utils.c | 4 ----
- 1 file changed, 4 deletions(-)
+On 2025/9/29 23:47, Eric Auger wrote:
+> Hi Tao,
+>
+> On 9/26/25 5:30 AM, Tao Tang wrote:
+>> My apologies, resending patches 13-14/14 to fix a threading mistake from
+>> my previous attempt.
+>>
+>> Introduce a generic vmstate_smmuv3_bank that serializes a single SMMUv3
+>> bank (registers and queues). Add a 'smmuv3/bank_s' subsection guarded by
+>> secure_impl and a new 'migrate-secure-bank' property; when enabled, the S
+>> bank is migrated. Add a 'smmuv3/gbpa_secure' subsection which is only sent
+>> when GBPA differs from its reset value.
+>>
+>> This keeps the existing migration stream unchanged by default and remains
+>> backward compatible: older QEMUs can ignore unknown subsections, and with
+>> 'migrate-secure-bank' defaulting to off, the stream is identical to before.
+>>
+>> This also prepares for future RME extensions (Realm/Root) by reusing the
+>> bank subsection pattern.
+>>
+>> Usage:
+>>    -global arm-smmuv3,secure-impl=on,migrate-secure-bank=on
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmuv3.c         | 70 +++++++++++++++++++++++++++++++++++++++++
+>>   include/hw/arm/smmuv3.h |  1 +
+>>   2 files changed, 71 insertions(+)
+>>
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 80fbc25cf5..2a1e80d179 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -2450,6 +2450,53 @@ static const VMStateDescription vmstate_smmuv3_queue = {
+>>       },
+>>   };
+>>
+>> +static const VMStateDescription vmstate_smmuv3_bank = {
+> I would name this vmstate_smmuv3_secure_bank
 
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 2098e9999a88..47a8d905f5b7 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -69,10 +69,6 @@ static uint64_t cxl_cache_mem_read_reg(void *opaque, hwaddr offset,
- 
-     switch (size) {
-     case 4:
--        if (cregs->special_ops && cregs->special_ops->read) {
--            return cregs->special_ops->read(cxl_cstate, offset, 4);
--        }
--
-         QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
- 
-         if (offset == A_CXL_BI_RT_STATUS ||
--- 
-2.39.5
+
+Thank you for the excellent feedback on the migration implementation. 
+Your points are spot on.
+
+
+My original thought for using the generic vmstate_smmuv3_bank was to 
+potentially reuse it for future Realm state migration. However, I agree 
+with you that naming it vmstate_smmuv3_secure_bank for now is a better 
+choice for clarity and precision. I will make that change.
+
+
+>> +
+>> +static bool smmuv3_secure_bank_needed(void *opaque)
+>> +{
+>> +    SMMUv3State *s = opaque;
+>> +
+>> +    return s->secure_impl && s->migrate_secure_bank;
+> why is it needed to check s->migrate_secure_bank?
+>>
+>> +static bool smmuv3_gbpa_secure_needed(void *opaque)
+>> +{
+>> +    SMMUv3State *s = opaque;
+>> +
+>> +    return s->secure_impl && s->migrate_secure_bank &&
+> same
+>> @@ -2521,6 +2589,8 @@ static const Property smmuv3_properties[] = {
+>>        * Defaults to false (0)
+>>        */
+>>       DEFINE_PROP_BOOL("secure-impl", SMMUv3State, secure_impl, false),
+>> +    DEFINE_PROP_BOOL("migrate-secure-bank", SMMUv3State,
+>> +                     migrate_secure_bank, false),
+> I don't get why you need another migrate_secure_bank prop. You need to
+> migrate the subsection if secure_impl is implemented, don't you?
+
+
+You are absolutely right. My intention with the migrate_secure_bank 
+property was likely to maintain as much flexibility as possible.
+
+However, I completely agree with your logic now. Forcing the migration 
+of the secure state whenever secure-impl is enabled is the only correct 
+approach to prevent inconsistent states and ensure robustness. I will 
+remove the migrate_secure_bank property and tie the migration directly 
+to secure-impl.
+
+Thanks for helping me correct this design flaw.
+
+Best,
+Tao
+
+
+>>   };
+>>
+>>   static void smmuv3_instance_init(Object *obj)
+>> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+>> index 572f15251e..5ffb609fa2 100644
+>> --- a/include/hw/arm/smmuv3.h
+>> +++ b/include/hw/arm/smmuv3.h
+>> @@ -71,6 +71,7 @@ struct SMMUv3State {
+>>       QemuMutex mutex;
+>>       char *stage;
+>>       bool secure_impl;
+>> +    bool migrate_secure_bank;
+>>   };
+>>
+>>   typedef enum {
+>> --
+>> 2.34.1
+>>
+> Eric
 
 
