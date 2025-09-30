@@ -4,224 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E65FCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 18:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220DFCCA472
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 18:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3f7C-0005d1-NX; Tue, 30 Sep 2025 14:30:19 -0400
+	id 1v3fJC-00078e-P9; Tue, 30 Sep 2025 14:42:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v3f6z-0005Zo-Vn
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 14:30:06 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1v3fJ5-00077N-OC; Tue, 30 Sep 2025 14:42:35 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v3f6t-0003yW-4M
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 14:30:03 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58UIJfhC021515;
- Tue, 30 Sep 2025 18:29:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1v3fJ0-0000Py-Hv; Tue, 30 Sep 2025 14:42:35 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58UEoZhO013138;
+ Tue, 30 Sep 2025 18:42:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=3My6AjDYcTlLdrdkZtnsO9j2b22TL0hMwhp37HxfqNQ=; b=
- N/rkopwmK8hXD/PxElv7NyzAqRTNHRUb21OfBLrCFftnLb9QEtpdI+AW4CZ/ZaZN
- 80IXUA994JQG7c7hRVgIpX0ineMYvBR5GvtBiIzLkXfxhRQFSuOrnakeunTywOxX
- TWmUVLvBRwzuqyQaGZ1HY4I8LfNIimIBWRWZ8fZy916WwzRyfzcHREfDfoBDmHfK
- TfWu5eyKUzIbuTjKEoovtyJNpkG+hjruXMSpEBgFL1ptbQ/taQ4Y52WdU2VPspWa
- zezjXP4wtpkke+2dWhxwFFpDxs4XjJXhG+FclekXsYice+wb9kFBjqH7b9dW9R0L
- ZYO2ut0YGNMGTJbJg59lxA==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49gmcq00ms-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Sep 2025 18:29:54 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58UHdBRJ027173; Tue, 30 Sep 2025 18:29:54 GMT
-Received: from bl2pr02cu003.outbound.protection.outlook.com
- (mail-eastusazon11011026.outbound.protection.outlook.com [52.101.52.26])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 49e6c87kwg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Sep 2025 18:29:54 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=X12K4zCfJ7mFGj3DKlvHD5dnn7Bz4s+XlwS70YntJlv5fodaQq/usq9kj7sAWJLWIOkoWoQr9tiX9Upyt5TwinS6vo7NEgQnzzEf/mPObCOPB/hFh8e81fBy1UC6EajfUKRD6+41ZufEtcmL+M6BjC9b+Icepr+tH8F0jKuXEO63O1aDFPvpCMH32h1hgFM7Cti01J4F/xj4o5JGK4YEWasGaviOdn/6yq/yw6+vK3Y1Z4L6x+8/GKdTF3I9dhLyqWvGKnG3I3Ytv/hpApJrYGpecnWCFUZB4MlUJSqpPowOn+Q/N6V0nXD6jmmN/9u6ygGWDeE+phddW6ezskhblQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3My6AjDYcTlLdrdkZtnsO9j2b22TL0hMwhp37HxfqNQ=;
- b=cVxIGkOBJQOSXqXwkgNsE6rtHIJuiroO70my98QoRELE/TWz+j1dk7CQmTal/Llv+5Yf4Yz0mMJ6hvcIov5O0E6eczIABWy2ASJGG/eUyif8d8FbSAnMPQfGlgLbi6ES51+DjnwMZNtapqCOMKh9VYe0SCV6mhZGJ7Xcb5+jZrXAWiBNH59/Xpcpt5XWjw6iioNnwQjgEpsme8wAeBfbrqhrtqntgcYI6O+WT1rUG1Gs4S1qoRaodXYKVG1gFPMQRs1A2LcHOhHi5vzpPENjU4r73KCdTOCDG1Winw/VRmpe1RYyS3TJYdEBariJItqKqlFPP0u7Poaercd+aRfPBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3My6AjDYcTlLdrdkZtnsO9j2b22TL0hMwhp37HxfqNQ=;
- b=G7KqxHYHPrJjXtM4YrLMfrl6uD8bj0eS8fkXXQG39dqsoLjs9y5qRmVASmHRIQzIFqk7paLPqnKlkeC3GsNPj4lfHZPQavqQX2VQpI1p+3RZUp3h8Cjo3sExUIS8FK9ur13v4OCcq7cKhQ8qrqQug8xJiKRNCqcqS7ODL8/gItk=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SN4PR10MB5607.namprd10.prod.outlook.com (2603:10b6:806:20a::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.17; Tue, 30 Sep
- 2025 18:29:48 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.9160.015; Tue, 30 Sep 2025
- 18:29:41 +0000
-Message-ID: <71126cc7-934a-4a68-a3c8-a8aa4f113151@oracle.com>
-Date: Tue, 30 Sep 2025 14:29:37 -0400
+ :message-id:mime-version:references:subject:to; s=pp1; bh=LjChqV
+ JxsAPC2NbPKXdzoE6NJVJPe8iKvZm5MnNJZgQ=; b=dwKJ0frWZ5NrsSwrQ7byFc
+ l4+2r+Ej7Itwhl2NfxDHwx0eXuLKUw/VAMYttcxAxN1BVvwKDyExxygIDsCiNPTH
+ 5YxiHJ7AqY+FOYxtr/fen0hCKaD1Mt/00iXrToBY9lmOkNNJmHwzN8YDo3IL1Mdf
+ KjoVWwVWiJvx55qiCv8ddtaOzPDKEG/tymBbt2PxzkwdCXQXqSVKQVyRSEII6WZx
+ o2mjEe9R2pzKvq0K0AQy8rrqQJTVUvXFyM3IwaTPNqXIL4ueBiaXLq1X6e5pH8Kb
+ QEIzikFT8VrVcWYy2uMZybhifOL+7aN4l8zunpQsuTlW8eimm9QQ4lPuyrSH4Vfw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7n7tuq9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Sep 2025 18:42:22 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58UGYp7E026795;
+ Tue, 30 Sep 2025 18:42:21 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49eu8mw08j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Sep 2025 18:42:21 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58UIgJGx21758482
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Sep 2025 18:42:19 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5904358057;
+ Tue, 30 Sep 2025 18:42:19 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2265458063;
+ Tue, 30 Sep 2025 18:42:18 +0000 (GMT)
+Received: from [9.61.249.240] (unknown [9.61.249.240])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Sep 2025 18:42:18 +0000 (GMT)
+Message-ID: <23e3c4f3-7e8c-4d00-8dee-91bf15261cfb@linux.ibm.com>
+Date: Tue, 30 Sep 2025 11:42:17 -0700
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 6/8] migration: cpr-exec mode
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Cedric Le Goater <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
- <1758548985-354793-7-git-send-email-steven.sistare@oracle.com>
- <aNwHz39FkYIq7DgX@x1.local> <56116ed1-a299-48b6-b6af-af36ddc9a16b@oracle.com>
- <aNwfakXJCoptr1p8@x1.local>
+From: Farhan Ali <alifm@linux.ibm.com>
+Subject: Re: [PATCH v6 19/28] pc-bios/s390-ccw: Add signature verification for
+ secure IPL in audit mode
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-20-zycai@linux.ibm.com>
 Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <aNwfakXJCoptr1p8@x1.local>
+In-Reply-To: <20250917232131.495848-20-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH0P220CA0017.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:d3::24) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SN4PR10MB5607:EE_
-X-MS-Office365-Filtering-Correlation-Id: c7e15675-a421-41bc-2a3d-08de004f5234
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OGhFM2h3dEh0VXBjSVNNczdGamV0bDNidVlYV2s2QjNZWk5JeHN1MlFrZGZW?=
- =?utf-8?B?WWI0aVFRZnptOVVBeUtIaWp0a1VQV3RqQ0JBOHl3Q2pQYXdNcUZXenFDZXdK?=
- =?utf-8?B?ak1OWlU5a3hGRTdsRkY3eDF4RVZmcVd2YnA1Q0FuY0FRQmpGUlpiLzVJMkdH?=
- =?utf-8?B?eDV1cjliWG8yMGllQnNRamlyNmVCVjhDbkFlN09yNXRtOU9OVWFZNkZkcC80?=
- =?utf-8?B?VFQxdFpGa0xLOHBrZWpQYXJXd0NDMGxiUzZ3a2lEREQvOHh2THprQ05qZjhR?=
- =?utf-8?B?dzRSbjBrWHlmbzFzT3N5Y3dDcVhIZVF4WVZzaVROcUk0SnRvWDN6MEZULy9L?=
- =?utf-8?B?RmQwMlZWYnhoVEVQMldrclNBbkVMTTNvdWxFaGNYTVlOTTBJakNrS0grdGxC?=
- =?utf-8?B?MkJKMXdzUmtQY0FsNEFmWExrV1VaK2hZN2QvZzlINnRvaGFGbnh0V3pFSmxy?=
- =?utf-8?B?QmV5bVhWRUkvaHlGdlNnTitVaE9UNDU0QzE5RWpvdHVDdkRmejVPS2hNcGpi?=
- =?utf-8?B?Q2dlUDdUVDVLU2pqUFJubHlOMmhoREcyN0E5RW9WdmNnUEc5RVBCSWFsMUNU?=
- =?utf-8?B?cmp3dUljaFpkQmpJbXkzQ296MnZzaEdPMHpWZ0IxZHZrZ2VrbHJVMEQ2QzBW?=
- =?utf-8?B?T0Rzc0pZUVoxNVhYck1NTVpKa2VxVGFzZGFXR0lEQW80d1hWTXJSUm5lZnBP?=
- =?utf-8?B?Q2hUUmJrdlVzbUZvYmxDdkpKRDBSK2s0em1BY0g5eWtpZ3MvSUszbExJLzZ5?=
- =?utf-8?B?MEMwN0RJZVR0bjNueFR6R25DUTRyL0pxNlhLRC9MS0c5eGVXSUllTVd0NzRL?=
- =?utf-8?B?aml4VXlaUUx1WXNVUkpWMFdrMG5MSVhCSnF4b1REdk1Pd3RKYWtZOEJOZjM2?=
- =?utf-8?B?aklzWmlyOEk0U3R0eWJrNklMcVpUamx3SVlJS2hMVTJIcFVwUGkvQktjUEo4?=
- =?utf-8?B?KytqZHJXdmlnZG5DRFYyNEQwY0pjOGVmb0ZDcXhja3Z4RFIzRkZIcFBLMldD?=
- =?utf-8?B?UDRoOHBDa1g5RlQwMDR5YXFqOG1hQjd6VFZmUzVyaWNHbHhRVTFHTnpoU2My?=
- =?utf-8?B?cnA4cEVPQVlNdFd0OTBOSGZocGlvUExxSWU2M2g4dVZEZmsxUjFBSjdUdzNL?=
- =?utf-8?B?ekRaYUhBSStROW44eXBaTy9jWVZlZURickIzbEx3VjJmSEZ1SmFmaCtOaHJY?=
- =?utf-8?B?SGppbm1IWTRkdlFVbElEWXQ0UGxmQ3NvaG1lMThXTGNrTnllN20rb2djQkRs?=
- =?utf-8?B?TUdwWStpWmlyNkFuVzFOdHkrNXdtblZRV0FiRU1DQXdzWG9yZndwZ09LNlNN?=
- =?utf-8?B?TUdOK1FXaFhiS2FheDZhVklWV1oyaHY4RGl6aGNqTHRTcXJtSU5aMTBWTjNP?=
- =?utf-8?B?eGVCVTlYQndYOFhmUmhvSzhqZHY0d2k0Z3lFb25uTDRxcVJRSDFLVXVIRmNv?=
- =?utf-8?B?bUNEOWwyK1d4WG9mdlQ2SkhJcXkwTjdtUDA3MkptVXhjTlRGaHNad2JpMklj?=
- =?utf-8?B?eXg2UjFpK1dQTWlBWGcyMGdSWWU4UU5RZHF4aU81QU01Mm9wTCtQTDZMRkdJ?=
- =?utf-8?B?YmNoUDNydlRqNys0SVF3dW5VVkRJaUZoWE0rdmEwU05sd21kRFRvWXBUOVlO?=
- =?utf-8?B?Z3hMOG5PZkc4cXVNV2xkVWo1ZHkwQTVVZTNoVHBiMVFNR3lySUE5b2JqNlQ4?=
- =?utf-8?B?aXdoYi92NWh1ald5Z28xMEttU2gwd3RGaGZXc21SNFBWdWhOVHowaWFhSUFO?=
- =?utf-8?B?RnlWS05GWjJmcmd2eU5jbVJoWHBnMGt4WWUwZmhzS3drQlNpZkprVDBHTGhR?=
- =?utf-8?B?cEJndHpQbFN1Q09sQk1uaHFKOWwxN0FhTEhqY0t0VGZhSWwvV1h0b05LbUdB?=
- =?utf-8?B?Y2JUM1M1M1B2a3FWQmoxK1NUYzFxQW5nRk9yZisxWTBpTTNUcm5FbTk1Y3E2?=
- =?utf-8?B?SXhDQjRTYUtQQnhkeDg1NjFhRHlqcHhuQmN6bm92Q0RGZTZJL1ptQm4yZWRP?=
- =?utf-8?B?b3BQaHVmZGR3PT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TFVBZDNYbjhaOTZyQWJIYzdDRkZlUWRJbXJwaGxqYTAxbzFIM1FMSllVb1k1?=
- =?utf-8?B?YitYYVFPU0tkUjY4dkVtQ2h5bU1WamV6ZlBSMmZGSmw2dEFVSkJ5QWRab3h3?=
- =?utf-8?B?ODE2WkdDdlVDTkxFc09JL2xzRVVpRTNMcXB3UzFwbG02Z0xWbHJxNEJRTGZG?=
- =?utf-8?B?ZFR6bnAyb3R4UnAxcnhTRlhtb2ZvN1FnVkhqV0c1cXV5WWtGcmRlK0srU1ZL?=
- =?utf-8?B?ZDdsRjQ5QkU2S0UzUTNmWEg3VnFTcmFNanRQZUhxejFpa0doa3U1clptQzFK?=
- =?utf-8?B?N2R5S3h4NGh3VWJRYkdmdy8reStCSHBPNEwzTURUR1I4M0U3RjBMUHFzNzFr?=
- =?utf-8?B?Yy9JOHZhMCtqKzBYZFJ2S0JMTCtTSkJUeXNKbWJQTVhaWmM0dkhseXlIditC?=
- =?utf-8?B?OTlreFJybm9TQ3BiaUFqenVvcXRSWDV5Slloekl4QWI0cmpHQlI4aXVSQUg4?=
- =?utf-8?B?c2YwT2c5dUQrVlRoVU9UcXltMjZlRUFrNElEbW1wN1RuekhLYmpDMW9vcFA2?=
- =?utf-8?B?SWFwdjNPS2crOU1ITDBuYUVrRk1NL0szanQzVFpFR2hVZ3RIM1JhTmFoK29m?=
- =?utf-8?B?MWhQZnp6b3dRUStLWHNNVGl5ODdlMi9xZHJxVmg5K09zWkttRTNEYk5xMVJL?=
- =?utf-8?B?S3FNaFAvK2NxcnNId0lDRjdaNnB1SlREOWZVK0c5MlhNcEx0T3VuWGM4YUht?=
- =?utf-8?B?bXArZVFXL0FYN3pUTENRUWo2d2Uva0QwQ0gzQjR0WnZNYkNDL3JKNW1ndmJR?=
- =?utf-8?B?U0hPSlpJVDNIMEFPYUcvdVhaaklHVmhUMExsN1hsc2pZREszTzdVTTBaTjV3?=
- =?utf-8?B?SndrY3dxVENyQzRTa20vWElnT0gyakx4WHpiaFVkc0QrZ3BxVXlyMDd2WkJk?=
- =?utf-8?B?MmZGSS8xdk15QmlDdUZaYzVOejdPeitxWUwveWlkdVQ5eDkvdlVmMXQ1V0pp?=
- =?utf-8?B?RFcySUZOVmZ4UG4wOEljTGJiRnUyY3FtNTV5Y0pUdTJWNVFXNHZ5UmhqV3dG?=
- =?utf-8?B?UndKdXpBTFI2Nk1SQlQxK2orODVTWm5nVTdxdXhzaWVPa1dmQWh1ckcvSW1X?=
- =?utf-8?B?eHBYTEplbWF3clg4YjFUZjkwL2lHMDVTdDJ3aVU2MnNlVTFaOVV3bnVZcFpI?=
- =?utf-8?B?QzBXbExrTFh1Qy8ydm80aTNFSzBDZkVhdTU0RkZEVHhUVXBtazdhTlI5RUlS?=
- =?utf-8?B?L3RZcFZ1bXdwNkVGa0Facnc4a2doNURwR3RpL1dtOHhKa1JhM2dEU1J4Z24z?=
- =?utf-8?B?VGsrQllZL2JIRTlwaWorckp4ZzR3ejZRcUo0c01ERkxxMjdEUkxaS1Zob0V0?=
- =?utf-8?B?SjZnN2tnUUVXTnptMW5BTnQvY09mNTZtQ2t5Ti9QSm9RcWN3bEZNV0kzY3dO?=
- =?utf-8?B?eHVnMmtBN3ZqTnBwalFLTEZMYmNOU2xkeHRDT1gxQlltajc1bEFRMGoxOW5H?=
- =?utf-8?B?NU1raHgwYk5lRWttdC80MmIzQkpST2ZXazNLMEpTZXZHSWlzSjNyemVzVFpv?=
- =?utf-8?B?eUpURHA1akZtd3J6QTBzc3pWbk1VWFFQem04R1FvemVHVmJCZWFhOFdEV21t?=
- =?utf-8?B?akRSeXcrNVJtQWlZQ1k4K0xCS0VKQnVScE8xWmh5VTNXaWphaUwzVlJ3NnQ0?=
- =?utf-8?B?Zk14TkJGWUFIek1FeWQxUTFpQkt6Z2xOdjJHd1IxMlZsTGFyL29xQTh5RjZS?=
- =?utf-8?B?aHBDNGd6clcvRnArTVg5YlF0Z3RoNVRCNHVneFdZZGdFaXpNcTV3R2haTFBU?=
- =?utf-8?B?dS9EK1RseEtDS2JQbDJuNzNucFhrZkF4QVdyWnlEZzZhaU9IZENnNW9QMGJl?=
- =?utf-8?B?bklkK1V2ekQyaFR1MFM3akxwNnI2S3NhYktxTmV0OCthVUcwNUF5ZzdHaEFH?=
- =?utf-8?B?U3FReFRENEUwdTZZNzN3N0xNbUp2UEJKaHR2UHZBRjRTMzFpZzNJdlpqMURv?=
- =?utf-8?B?aU5wNjhLck5VYndvdSs2c1NSZE5uVTZKK1luekhrTk1BN3pLeC9aTFVpV0lN?=
- =?utf-8?B?OUlEaHFnSlhQRVd2ODFQMHVnZFg1bCt1WkRJWjRTTmtFNU96VmdYa1d2am5B?=
- =?utf-8?B?ZDhhWjA2bVI4L0xuYjN4RlloV1NjbzE5V0JIVmZwYThUS2swa3lpVXBqU1Zh?=
- =?utf-8?B?aW1IZUZ0NjBOS3pxemRVUDE1MUg3ZnlNeGQvNVdkc0MvZEI4RnZVWjRUSEdk?=
- =?utf-8?B?akE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: cP/QcPPHoCZSAnkt0MCX6/6kUyGcdPpb2iuNvq1kPWnM6R55KNB4cfwUhhVNJYsXkrt9nxCVHuanMUVOuPHPSvjgErcNSxG0em4tkjvFMIEjB2m4s3eXGYG2yFWWex3UIepm/DW9x/tEzUwW/6cTx0pZoE7eRRikpRzWruaT2M6+eLGbMrJlVKB3SRBlJ9AiokDFjcgCH8+n6bNylbFy8nDYPqWD73s2MKFAmoHVHHT0mUXVmhG6ucrgHVWN02y+OXeM0LAs/nX26M7zqrr7Vx/I71fl7eOZzEv3AWg9AhvSghY+OxVhbm7i7bg9LNIYDO/i6so+LjMOtdqmERWtPBFZEn2P9iV3D5EZ1nck4bjzIqMu13TODJ7Y3eI7oQ0h6W7sZr7d0Ptkzdnzv19QbzSX8ZsYm5RFKeqQVNCD/X8Dq5YIyzN1wz4E93s4q8RYDUnh8EHhtPf9rqngvfoSu9tYFuQmXc0YFiDKJ97DOYIlXiy8L62oEFP6zMmUlB3Mq9WbAH1JebYZgYWbaQntmIu/pVXFswnplZ/awfkbCuTb/cYw9xXvOv8+yzYvp7+WHBTV+0Kp4VuwlEFDJIsWqkYbIvZqKiRWKhgIkrXj9/A=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c7e15675-a421-41bc-2a3d-08de004f5234
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2025 18:29:41.6903 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lKUnd6NG4uhCBg4qEeylg3faE8QTXw0kq6ryGFT+kHee6osXhFzJOsK5TvgSqH9WU3ug/c5AVqNKB8bE9KNfkDSpn1G2Algp53sA13pGZms=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR10MB5607
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 6l8md-S71vK8MX0I7K1CPvGXUa3Y9W37
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfXwgaiHgDC9Dmv
+ yJOtHpiqnJgLz8kUQrF3UQht9cvgJrywPaEytzqZ2PvelivRT9h6nS0zF54/dxFCniMb4iZHhSc
+ zQYLfCq2Fwmngx+upTjqpNFoe55ZSVIddiUbmgPZMJ2fUBiag98e4HHZjZqlcKHaD0l2UbdGLZv
+ Dr42xA4FpZyc/vKQM+dP2gHrGiGHr/pmY5BwJ1UrSxtURo5hnIW2b2/DndYWVwJfbFHxnsAanKa
+ py7sAUdmGdApSwnX1bgGns26l9udq6e+Iyf+RC2XV6hlOvsDwziB+KMbpcMvr2Z+xiqaiQzD9dc
+ AZ35OGWPnj29W0caakUgRdvWGvG7gZyWWiUNV94S89/b9I8OSOzBkKxC+w/kXbmHt+QKCVf5yAc
+ 8vJt0hWzSvD3vVxF/F2JO4XmypSUYA==
+X-Proofpoint-GUID: 6l8md-S71vK8MX0I7K1CPvGXUa3Y9W37
+X-Authority-Analysis: v=2.4 cv=T7qBjvKQ c=1 sm=1 tr=0 ts=68dc248e cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=Ci5L55bYPq4H7eS33mkA:9
+ a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-30_03,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0
- malwarescore=0 adultscore=0 phishscore=0 spamscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2509150000 definitions=main-2509300167
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTMwMDE2NiBTYWx0ZWRfXxDXzqPJdJdsg
- B4gwqrNhwnesJfC+FXvgGXeLyNdYZCPe3LaShXrkjNBtemUxefvTUMu6iYBi8ndqBZFbDbw7Ah5
- TA2wTROx9snVMNsr2Jqh+dFUzRW/erA39BL+4AA7L3cFaTeiYE6Qf38Lq7XyekRvRXeP5VHH/II
- tOTjkKpFDEhGN6l5Oam1zpXX35FavyourCVS8InFwz1AdAnRWIpzfYnRl+xd8FF5EnmwWIT5EBX
- 0TbN8aWTNlLDu9xNU6fueSKsKTDjWnfREoc+BPOKtw5m/jt607HYlHwkS/DaIiyWcV+gKDsbSzt
- pTCwQ1PqMHteZyjCbSFoKP2RLGv9oaN7XLbufaaG6izewhXB8wW0iMLYqBYEup9s3HKTAn1gbNP
- XEY8DxeQXlP40+MedvXfp5wLtGy1eg==
-X-Proofpoint-ORIG-GUID: pG2P7Zf0w67FT8OFdYN4If6R5i3RZO1m
-X-Authority-Analysis: v=2.4 cv=c7amgB9l c=1 sm=1 tr=0 ts=68dc21a2 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=yPCof4ZbAAAA:8 a=Z8hVs31sApu95MUa1EcA:9 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: pG2P7Zf0w67FT8OFdYN4If6R5i3RZO1m
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -239,295 +125,866 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/2025 2:20 PM, Peter Xu wrote:
-> On Tue, Sep 30, 2025 at 01:18:34PM -0400, Steven Sistare wrote:
->> On 9/30/2025 12:39 PM, Peter Xu wrote:
->>> On Mon, Sep 22, 2025 at 06:49:43AM -0700, Steve Sistare wrote:
->>>> Add the cpr-exec migration mode.  Usage:
->>>>     qemu-system-$arch -machine aux-ram-share=on ...
->>>>     migrate_set_parameter mode cpr-exec
->>>>     migrate_set_parameter cpr-exec-command \
->>>>       <arg1> <arg2> ... -incoming <uri-1> \
->>>>     migrate -d <uri-1>
->>>>
->>>> The migrate command stops the VM, saves state to uri-1,
->>>> directly exec's a new version of QEMU on the same host,
->>>> replacing the original process while retaining its PID, and
->>>> loads state from uri-1.  Guest RAM is preserved in place,
->>>> albeit with new virtual addresses.
->>>>
->>>> The new QEMU process is started by exec'ing the command
->>>> specified by the @cpr-exec-command parameter.  The first word of
->>>> the command is the binary, and the remaining words are its
->>>> arguments.  The command may be a direct invocation of new QEMU,
->>>> or may be a non-QEMU command that exec's the new QEMU binary.
->>>>
->>>> This mode creates a second migration channel that is not visible
->>>> to the user.  At the start of migration, old QEMU saves CPR state
->>>> to the second channel, and at the end of migration, it tells the
->>>> main loop to call cpr_exec.  New QEMU loads CPR state early, before
->>>> objects are created.
->>>>
->>>> Because old QEMU terminates when new QEMU starts, one cannot
->>>> stream data between the two, so uri-1 must be a type,
->>>> such as a file, that accepts all data before old QEMU exits.
->>>> Otherwise, old QEMU may quietly block writing to the channel.
->>>>
->>>> Memory-backend objects must have the share=on attribute, but
->>>> memory-backend-epc is not supported.  The VM must be started with
->>>> the '-machine aux-ram-share=on' option, which allows anonymous
->>>> memory to be transferred in place to the new process.  The memfds
->>>> are kept open across exec by clearing the close-on-exec flag, their
->>>> values are saved in CPR state, and they are mmap'd in new QEMU.
->>>>
->>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>> Acked-by: Markus Armbruster <armbru@redhat.com>
->>>> ---
->>>>    qapi/migration.json       | 25 +++++++++++++-
->>>>    include/migration/cpr.h   |  1 +
->>>>    migration/cpr-exec.c      | 84 +++++++++++++++++++++++++++++++++++++++++++++++
->>>>    migration/cpr.c           | 28 ++++++++++++++--
->>>>    migration/migration.c     | 10 +++++-
->>>>    migration/ram.c           |  1 +
->>>>    migration/vmstate-types.c |  8 +++++
->>>>    system/vl.c               |  4 ++-
->>>>    migration/trace-events    |  1 +
->>>>    9 files changed, 157 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>> index 2be8fa1..be0f3fc 100644
->>>> --- a/qapi/migration.json
->>>> +++ b/qapi/migration.json
->>>> @@ -694,9 +694,32 @@
->>>>    #     until you issue the `migrate-incoming` command.
->>>>    #
->>>>    #     (since 10.0)
->>>> +#
->>>> +# @cpr-exec: The migrate command stops the VM, saves state to the
->>>> +#     migration channel, directly exec's a new version of QEMU on the
->>>> +#     same host, replacing the original process while retaining its
->>>> +#     PID, and loads state from the channel.  Guest RAM is preserved
->>>> +#     in place.  Devices and their pinned pages are also preserved for
->>>> +#     VFIO and IOMMUFD.
->>>> +#
->>>> +#     Old QEMU starts new QEMU by exec'ing the command specified by
->>>> +#     the @cpr-exec-command parameter.  The command may be a direct
->>>> +#     invocation of new QEMU, or may be a wrapper that exec's the new
->>>> +#     QEMU binary.
->>>> +#
->>>> +#     Because old QEMU terminates when new QEMU starts, one cannot
->>>> +#     stream data between the two, so the channel must be a type,
->>>> +#     such as a file, that accepts all data before old QEMU exits.
->>>> +#     Otherwise, old QEMU may quietly block writing to the channel.
->>>> +#
->>>> +#     Memory-backend objects must have the share=on attribute, but
->>>> +#     memory-backend-epc is not supported.  The VM must be started
->>>> +#     with the '-machine aux-ram-share=on' option.
->>>> +#
->>>> +#     (since 10.2)
->>>>    ##
->>>>    { 'enum': 'MigMode',
->>>> -  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
->>>> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
->>>>    ##
->>>>    # @ZeroPageDetection:
->>>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
->>>> index b84389f..beed392 100644
->>>> --- a/include/migration/cpr.h
->>>> +++ b/include/migration/cpr.h
->>>> @@ -53,6 +53,7 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
->>>>    QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->>>>    QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->>>> +void cpr_exec_init(void);
->>>>    QEMUFile *cpr_exec_output(Error **errp);
->>>>    QEMUFile *cpr_exec_input(Error **errp);
->>>>    void cpr_exec_persist_state(QEMUFile *f);
->>>> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
->>>> index 2c32e9c..8cf55a3 100644
->>>> --- a/migration/cpr-exec.c
->>>> +++ b/migration/cpr-exec.c
->>>> @@ -6,15 +6,21 @@
->>>>    #include "qemu/osdep.h"
->>>>    #include "qemu/cutils.h"
->>>> +#include "qemu/error-report.h"
->>>>    #include "qemu/memfd.h"
->>>>    #include "qapi/error.h"
->>>> +#include "qapi/type-helpers.h"
->>>>    #include "io/channel-file.h"
->>>>    #include "io/channel-socket.h"
->>>> +#include "block/block-global-state.h"
->>>> +#include "qemu/main-loop.h"
->>>>    #include "migration/cpr.h"
->>>>    #include "migration/qemu-file.h"
->>>> +#include "migration/migration.h"
->>>>    #include "migration/misc.h"
->>>>    #include "migration/vmstate.h"
->>>>    #include "system/runstate.h"
->>>> +#include "trace.h"
->>>>    #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
->>>> @@ -92,3 +98,81 @@ QEMUFile *cpr_exec_input(Error **errp)
->>>>        lseek(mfd, 0, SEEK_SET);
->>>>        return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
->>>>    }
->>>> +
->>>> +static bool preserve_fd(int fd)
->>>> +{
->>>> +    qemu_clear_cloexec(fd);
->>>> +    return true;
->>>> +}
->>>> +
->>>> +static bool unpreserve_fd(int fd)
->>>> +{
->>>> +    qemu_set_cloexec(fd);
->>>> +    return true;
->>>> +}
->>>> +
->>>> +static void cpr_exec_cb(void *opaque)
->>>> +{
->>>> +    MigrationState *s = migrate_get_current();
->>>> +    char **argv = strv_from_str_list(s->parameters.cpr_exec_command);
->>>> +    Error *err = NULL;
->>>> +
->>>> +    /*
->>>> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
->>>> +     * earlier because they should not persist across miscellaneous fork and
->>>> +     * exec calls that are performed during normal operation.
->>>> +     */
->>>> +    cpr_walk_fd(preserve_fd);
->>>> +
->>>> +    trace_cpr_exec();
->>>> +    execvp(argv[0], argv);
->>>> +
->>>> +    /*
->>>> +     * exec should only fail if argv[0] is bogus, or has a permissions problem,
->>>> +     * or the system is very short on resources.
->>>> +     */
->>>> +    g_strfreev(argv);
->>>> +    cpr_walk_fd(unpreserve_fd);
->>>> +
->>>> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
->>>> +    error_report_err(error_copy(err));
->>>> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
->>>
->>> I believe this is the only place we can have the state machine from
->>> COMPLETED->FAILED.  It's pretty hacky.  Maybe add a quick comment?
->>
->> OK.
->>>> +    migrate_set_error(s, err);
->>>> +
->>>> +    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
->>>> +
->>>> +    err = NULL;
->>>> +    if (!migration_block_activate(&err)) {
->>>> +        /* error was already reported */
->>>> +        return;
->>>> +    }
->>>> +
->>>> +    if (runstate_is_live(s->vm_old_state)) {
->>>> +        vm_start();
->>>> +    }
->>>
->>> We have rollback logic in migration_iteration_finish().  Make a small
->>> helper and reuse the code?
->> Hmm.  There is some overlap, but also subtle differences.  For so littlecode, it does not feel worth any risk of regression (or worth the time to
->> test and verify all conditions).
-> 
-> We have a fix not yet landed but should likely land soon one way or
-> another:
-> 
-> https://lore.kernel.org/all/20250915115918.3520735-2-jmarcin@redhat.com/
-> 
-> That should close one gap.
-> 
-> There's definitely reasons on sharing code, e.g. when we fix the path we
-> fix all users, not one.  We also don't make mistake in one path but not in
-> the other.  One solid example is, I feel like err is leaked above..
-> 
-> I'm fine if you prefer landing this first, but I'll still suggest a cleanup
-> on top after above patch lands.
 
-OK, let's do that.
+On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
+> Enable secure IPL in audit mode, which performs signature verification,
+> but any error does not terminate the boot process. Only warnings will be
+> logged to the console instead.
+>
+> Add a comp_len variable to store the length of a segment in
+> zipl_load_segment. comp_len variable is necessary to store the
+> calculated segment length and is used during signature verification.
+> Return the length on success, or a negative return code on failure.
+>
+> Secure IPL in audit mode requires at least one certificate provided in
+> the key store along with necessary facilities (Secure IPL Facility,
+> Certificate Store Facility and secure IPL extension support).
+>
+> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
+> virtio-blk/virtio-scsi devices.
+>
+> Signed-off-by: Zhuoying Cai<zycai@linux.ibm.com>
+> ---
+>   docs/system/s390x/secure-ipl.rst |  36 +++
+>   pc-bios/s390-ccw/Makefile        |   3 +-
+>   pc-bios/s390-ccw/bootmap.c       |  39 +++-
+>   pc-bios/s390-ccw/bootmap.h       |  11 +
+>   pc-bios/s390-ccw/main.c          |   9 +
+>   pc-bios/s390-ccw/s390-ccw.h      |  15 ++
+>   pc-bios/s390-ccw/sclp.c          |  44 ++++
+>   pc-bios/s390-ccw/sclp.h          |   6 +
+>   pc-bios/s390-ccw/secure-ipl.c    | 371 +++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/secure-ipl.h    |  99 +++++++++
+>   10 files changed, 630 insertions(+), 3 deletions(-)
+>   create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+>   create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+>
+> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+> index 92c1bb2153..701594b9de 100644
+> --- a/docs/system/s390x/secure-ipl.rst
+> +++ b/docs/system/s390x/secure-ipl.rst
+> @@ -19,3 +19,39 @@ Note: certificate files must have a .pem extension.
+>       qemu-system-s390x -machine s390-ccw-virtio, \
+>                                  boot-certs.0.path=/.../qemu/certs, \
+>                                  boot-certs.1.path=/another/path/cert.pem ...
+> +
+> +
+> +IPL Modes
+> +=========
+> +
+> +The concept of IPL Modes are introduced to differentiate between the IPL configurations.
+> +These modes are mutually exclusive and enabled based on the ``boot-certs`` option on the
+> +QEMU command line.
+> +
+> +Normal Mode
+> +-----------
+> +
+> +The absence of certificates will attempt to IPL a guest without secure IPL operations.
+> +No checks are performed, and no warnings/errors are reported. This is the default mode.
+> +
+> +Configuration:
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio ...
+> +
+> +Audit Mode
+> +----------
+> +
+> +With *only* the presence of certificates in the store, it is assumed that secure
+> +boot operations should be performed with errors reported as warnings. As such,
+> +the secure IPL operations will be performed, and any errors that stem from these
+> +operations will report a warning via the SCLP console.
+> +
+> +Configuration:
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio, \
+> +                               boot-certs.0.path=/.../qemu/certs, \
+> +                               boot-certs.1.path=/another/path/cert.pem ...
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index a0f24c94a8..603761a857 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -34,7 +34,8 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>   .PHONY : all clean build-all distclean
+>   
+>   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+> -	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o
+> +	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+> +	  secure-ipl.o
+>   
+>   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>   
+> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+> index 4f54c643ff..3922e7cdde 100644
+> --- a/pc-bios/s390-ccw/bootmap.c
+> +++ b/pc-bios/s390-ccw/bootmap.c
+> @@ -15,6 +15,7 @@
+>   #include "bootmap.h"
+>   #include "virtio.h"
+>   #include "bswap.h"
+> +#include "secure-ipl.h" #ifdef DEBUG /* #define DEBUG_FALLBACK */ @@ -617,7 +618,7 @@ static 
+> int ipl_eckd(void) * Returns: length of the segment on sucess, * 
+> negative value on error. */ -static int 
+> zipl_load_segment(ComponentEntry *entry, uint64_t address) +int 
+> zipl_load_segment(ComponentEntry *entry, uint64_t address) { const int 
+> max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr)); ScsiBlockPtr 
+> *bprs = (void *)sec; @@ -735,7 +736,19 @@ static int 
+> zipl_run(ScsiBlockPtr *pte) /* Load image(s) into RAM */ entry = 
+> (ComponentEntry *)(&header[1]); - if (zipl_run_normal(&entry, 
+> tmp_sec)) { + switch (boot_mode) { + case ZIPL_BOOT_MODE_SECURE_AUDIT: 
+> + if (zipl_run_secure(&entry, tmp_sec)) { + return -1; + } + break; + 
+> case ZIPL_BOOT_MODE_NORMAL: + if (zipl_run_normal(&entry, tmp_sec)) { 
+> + return -1; + } + break; + default: + puts("Unknown boot mode");
+>           return -1;
+>       }
+>   
+> @@ -1101,17 +1114,35 @@ static int zipl_load_vscsi(void)
+>    * IPL starts here
+>    */
+>   
+> +ZiplBootMode zipl_mode(uint8_t hdr_flags)
+> +{
+> +    bool sipl_set = hdr_flags & DIAG308_IPIB_FLAGS_SIPL;
+> +    bool iplir_set = hdr_flags & DIAG308_IPIB_FLAGS_IPLIR;
+> +
+> +    if (!sipl_set && iplir_set) {
+> +        return ZIPL_BOOT_MODE_SECURE_AUDIT;
+> +    }
+> +
+> +    return ZIPL_BOOT_MODE_NORMAL;
+> +}
+> +
+>   void zipl_load(void)
+>   {
+>       VDev *vdev = virtio_get_device();
+>   
+>       if (vdev->is_cdrom) {
+> +        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
+> +            panic("Secure boot from ISO image is not supported!");
+> +        }
+>           ipl_iso_el_torito();
+>           puts("Failed to IPL this ISO image!");
+>           return;
+>       }
+>   
+>       if (virtio_get_device_type() == VIRTIO_ID_NET) {
+> +        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
+> +            panic("Virtio net boot device does not support secure boot!");
+> +        }
+>           netmain();
+>           puts("Failed to IPL from this network!");
+>           return;
+> @@ -1122,6 +1153,10 @@ void zipl_load(void)
+>           return;
+>       }
+>   
+> +    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
+> +        panic("ECKD boot device does not support secure boot!");
+> +    }
+> +
+>       switch (virtio_get_device_type()) {
+>       case VIRTIO_ID_BLOCK:
+>           zipl_load_vblk();
+> diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+> index 95943441d3..90fd530256 100644
+> --- a/pc-bios/s390-ccw/bootmap.h
+> +++ b/pc-bios/s390-ccw/bootmap.h
+> @@ -88,9 +88,18 @@ typedef struct BootMapTable {
+>       BootMapPointer entry[];
+>   } __attribute__ ((packed)) BootMapTable;
+>   
+> +#define DER_SIGNATURE_FORMAT 1
+> +
+> +typedef struct SignatureInformation {
+> +    uint8_t format;
+> +    uint8_t reserved[3];
+> +    uint32_t sig_len;
+> +} __attribute__((packed)) SignatureInformation;
+> +
+>   typedef union ComponentEntryData {
+>       uint64_t load_psw;
+>       uint64_t load_addr;
+> +    SignatureInformation sig_info;
+>   } ComponentEntryData;
+>   
+>   typedef struct ComponentEntry {
+> @@ -113,6 +122,8 @@ typedef struct ScsiMbr {
+>       ScsiBlockPtr pt;   /* block pointer to program table */
+>   } __attribute__ ((packed)) ScsiMbr;
+>   
+> +int zipl_load_segment(ComponentEntry *entry, uint64_t address);
+> +
+>   #define ZIPL_MAGIC              "zIPL"
+>   #define ZIPL_MAGIC_EBCDIC       "\xa9\xc9\xd7\xd3"
+>   #define IPL1_MAGIC "\xc9\xd7\xd3\xf1" /* == "IPL1" in EBCDIC */
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index c9328f1c51..668660e64d 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -28,6 +28,7 @@ IplParameterBlock *iplb;
+>   bool have_iplb;
+>   static uint16_t cutype;
+>   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+> +ZiplBootMode boot_mode;
+>   
+>   #define LOADPARM_PROMPT "PROMPT  "
+>   #define LOADPARM_EMPTY  "        "
+> @@ -272,9 +273,17 @@ static int virtio_setup(void)
+>   
+>   static void ipl_boot_device(void)
+>   {
+> +    if (boot_mode == ZIPL_BOOT_MODE_UNSPECIFIED) {
+> +        boot_mode = zipl_mode(iplb->hdr_flags);
+> +    }
+> +
+>       switch (cutype) {
+>       case CU_TYPE_DASD_3990:
+>       case CU_TYPE_DASD_2107:
+> +        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
+> +            panic("Passthrough (vfio) device does not support secure boot!");
 
->>>> +}
->>>> +
->>>> +static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
->>>> +                             Error **errp)
->>>> +{
->>>> +    MigrationState *s = migrate_get_current();
->>>> +
->>>> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
->>>> +        QEMUBH *cpr_exec_bh = qemu_bh_new(cpr_exec_cb, NULL);
->>>> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
->>>> +        qemu_bh_schedule(cpr_exec_bh);
->>>> +        qemu_notify_event();
->>>> +
->>>
->>> Newline can be dropped.
->> OK.
->>
->>>> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
->>>> +        cpr_exec_unpersist_state();
->>>> +    }
->>>> +    return 0;
->>>> +}
->>>> +
->>>> +void cpr_exec_init(void)
->>>> +{
->>>> +    static NotifierWithReturn exec_notifier;
->>>> +
->>>> +    migration_add_notifier_mode(&exec_notifier, cpr_exec_notifier,
->>>> +                                MIG_MODE_CPR_EXEC);
->>>> +}
->>>> diff --git a/migration/cpr.c b/migration/cpr.c
->>>> index d3e370e..eea3773 100644
->>>> --- a/migration/cpr.c
->>>> +++ b/migration/cpr.c
->>>> @@ -185,6 +185,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->>>>        if (mode == MIG_MODE_CPR_TRANSFER) {
->>>>            g_assert(channel);
->>>>            f = cpr_transfer_output(channel, errp);
->>>> +    } else if (mode == MIG_MODE_CPR_EXEC) {
->>>> +        f = cpr_exec_output(errp);
->>>>        } else {
->>>>            return 0;
->>>>        }
->>>> @@ -202,6 +204,10 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->>>>            return ret;
->>>>        }
->>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
->>>> +        cpr_exec_persist_state(f);
->>>> +    }
->>>> +
->>>>        /*
->>>>         * Close the socket only partially so we can later detect when the other
->>>>         * end closes by getting a HUP event.
->>>> @@ -213,6 +219,12 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->>>>        return 0;
->>>>    }
->>>> +static bool unpreserve_fd(int fd)
->>>> +{
->>>> +    qemu_set_cloexec(fd);
->>>> +    return true;
->>>> +}
->>>
->>> Is this function defined twice?
->>
->> Yes, since it is tiny.  I judged that defining this small helper twice, near each
->> of its call sites, was better for the reader.
-> 
-> I still think we should avoid doing that.
-> 
-> Btw, I even think this helper should be removed on both places because
-> they're almost only used for a cpr_walk_fd() context, so instead looks like
-> we need cpr_unpreserve_fds(), which does:
-> 
->          cpr_walk_fd(unpreserve_fd);
-> 
-> Then it can be defined in cpr.c once and export it in cpr.h.  Would that be
-> better?
+Nit: We could be more specific here and mention "Passthrough (vfio) CCW 
+device...". I know we don't support any other vfio device for booting 
+today but just makes it clear what kind of passthrough device we are 
+dealing with.
 
-OK, I'll do that.
 
-- Steve
+> +        }
+> +
+>           dasd_ipl(blk_schid, cutype);
+>           break;
+>       case CU_TYPE_VIRTIO:
+> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+> index b1dc35cded..c2ba40d067 100644
+> --- a/pc-bios/s390-ccw/s390-ccw.h
+> +++ b/pc-bios/s390-ccw/s390-ccw.h
+> @@ -39,6 +39,9 @@ typedef unsigned long long u64;
+>   #define MIN_NON_ZERO(a, b) ((a) == 0 ? (b) : \
+>                               ((b) == 0 ? (a) : (MIN(a, b))))
+>   #endif
+> +#ifndef ROUND_UP
+> +#define ROUND_UP(n, d) (((n) + (d) - 1) & -(0 ? (n) : (d)))
+> +#endif
+>   
+>   #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+>   
+> @@ -64,6 +67,8 @@ void sclp_print(const char *string);
+>   void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
+>   void sclp_setup(void);
+>   void sclp_get_loadparm_ascii(char *loadparm);
+> +bool sclp_is_diag320_on(void);
+> +bool sclp_is_sipl_on(void);
+>   int sclp_read(char *str, size_t count);
+>   
+>   /* virtio.c */
+> @@ -76,6 +81,16 @@ int virtio_read(unsigned long sector, void *load_addr);
+>   /* bootmap.c */
+>   void zipl_load(void);
+>   
+> +typedef enum ZiplBootMode {
+> +    ZIPL_BOOT_MODE_UNSPECIFIED = 0,
+> +    ZIPL_BOOT_MODE_NORMAL = 1,
+> +    ZIPL_BOOT_MODE_SECURE_AUDIT = 2,
+> +} ZiplBootMode;
+> +
+> +extern ZiplBootMode boot_mode;
+> +
+> +ZiplBootMode zipl_mode(uint8_t hdr_flags);
+> +
+>   /* jump2ipl.c */
+>   void write_reset_psw(uint64_t psw);
+>   int jump_to_IPL_code(uint64_t address);
+> diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
+> index 4a07de018d..0b03c3164f 100644
+> --- a/pc-bios/s390-ccw/sclp.c
+> +++ b/pc-bios/s390-ccw/sclp.c
+> @@ -113,6 +113,50 @@ void sclp_get_loadparm_ascii(char *loadparm)
+>       }
+>   }
+>   
+> +static void sclp_get_fac134(uint8_t *fac134)
+> +{
+> +
+> +    ReadInfo *sccb = (void *)_sccb;
+> +
+> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
+> +    sccb->h.length = SCCB_SIZE;
+> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
+> +        *fac134 = sccb->fac134;
+> +    }
+> +}
+> +
+> +bool sclp_is_diag320_on(void)
+> +{
+> +    uint8_t fac134 = 0;
+> +
+> +    sclp_get_fac134(&fac134);
+> +    return fac134 & SCCB_FAC134_DIAG320_BIT;
+> +}
+> +
+> +/*
+> + * Get fac_ipl (byte 136 and byte 137 of the SCLP Read Info block)
+> + * for IPL device facilities.
+> + */
+> +static void sclp_get_fac_ipl(uint16_t *fac_ipl)
+> +{
+> +
+> +    ReadInfo *sccb = (void *)_sccb;
+> +
+> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
+> +    sccb->h.length = SCCB_SIZE;
+> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
+> +        *fac_ipl = sccb->fac_ipl;
+> +    }
+> +}
+> +
+> +bool sclp_is_sipl_on(void)
+> +{
+> +    uint16_t fac_ipl = 0;
+> +
+> +    sclp_get_fac_ipl(&fac_ipl);
+> +    return fac_ipl & SCCB_FAC_IPL_SIPL_BIT;
+> +}
+> +
+>   int sclp_read(char *str, size_t count)
+>   {
+>       ReadEventData *sccb = (void *)_sccb;
+> diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
+> index 64b53cad29..cf147f4634 100644
+> --- a/pc-bios/s390-ccw/sclp.h
+> +++ b/pc-bios/s390-ccw/sclp.h
+> @@ -50,6 +50,8 @@ typedef struct SCCBHeader {
+>   } __attribute__((packed)) SCCBHeader;
+>   
+>   #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
+> +#define SCCB_FAC134_DIAG320_BIT 0x4
+> +#define SCCB_FAC_IPL_SIPL_BIT 0x4000
+>   
+>   typedef struct ReadInfo {
+>       SCCBHeader h;
+> @@ -57,6 +59,10 @@ typedef struct ReadInfo {
+>       uint8_t rnsize;
+>       uint8_t reserved[13];
+>       uint8_t loadparm[LOADPARM_LEN];
+> +    uint8_t reserved1[102];
+> +    uint8_t fac134;
+> +    uint8_t reserved2;
+> +    uint16_t fac_ipl;
+>   } __attribute__((packed)) ReadInfo;
+>   
+>   typedef struct SCCB {
+> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+> new file mode 100644
+> index 0000000000..8eab19cb09
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/secure-ipl.c
+> @@ -0,0 +1,371 @@
+> +/*
+> + * S/390 Secure IPL
+> + *
+> + * Functions to support IPL in secure boot mode (DIAG 320, DIAG 508,
+> + * signature verification, and certificate handling).
+> + *
+> + * For secure IPL overview: docs/system/s390x/secure-ipl.rst
+> + * For secure IPL technical: docs/specs/s390x-secure-ipl.rst
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Zhuoying Cai<zycai@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <stdlib.h>
+> +#include <string.h>
+> +#include <stdio.h>
+> +#include "bootmap.h"
+> +#include "s390-ccw.h"
+> +#include "secure-ipl.h"
+> +
+> +uint8_t vcssb_data[VCSSB_MIN_LEN] __attribute__((__aligned__(PAGE_SIZE)));
+> +
+> +VCStorageSizeBlock *zipl_secure_get_vcssb(void)
+> +{
+> +    VCStorageSizeBlock *vcssb;
+> +    int rc;
+> +
+> +    if (!(sclp_is_diag320_on() && is_cert_store_facility_supported())) {
 
+Should we fail if either diag320 or certificate store is not available? 
+Might make the check simpler
+
+
+> +        puts("Certificate Store Facility is not supported by the hypervisor!");
+> +        return NULL;
+> +    }
+> +
+> +    vcssb = (VCStorageSizeBlock *)vcssb_data;
+> +    /* avoid retrieving vcssb multiple times */
+> +    if (vcssb->length >= VCSSB_MIN_LEN) {
+> +        return vcssb;
+> +    }
+> +
+> +    vcssb->length = VCSSB_MIN_LEN;
+> +    rc = diag320(vcssb, DIAG_320_SUBC_QUERY_VCSI);
+> +    if (rc != DIAG_320_RC_OK) {
+> +        return NULL;
+> +    }
+> +
+> +    return vcssb;
+> +}
+> +
+> +static uint32_t get_certs_length(void)
+> +{
+> +    VCStorageSizeBlock *vcssb;
+> +    uint32_t len;
+> +
+> +    vcssb = zipl_secure_get_vcssb();
+> +    if (vcssb == NULL) {
+> +        return 0;
+> +    }
+> +
+> +    len = vcssb->total_vcb_len - VCB_HEADER_LEN - vcssb->total_vc_ct * VCE_HEADER_LEN;
+> +
+> +    return len;
+> +}
+> +
+> +static uint32_t request_certificate(uint8_t *cert, uint8_t index)
+> +{
+> +    VCStorageSizeBlock *vcssb;
+> +    VCBlock *vcb;
+> +    VCEntry *vce;
+> +    uint64_t rc = 0;
+> +    uint32_t cert_len = 0;
+> +
+> +    /* Get Verification Certificate Storage Size block with DIAG320 subcode 1 */
+> +    vcssb = zipl_secure_get_vcssb();
+> +    if (vcssb == NULL) {
+> +        return 0;
+> +    }
+> +
+> +    /*
+> +     * Request single entry
+> +     * Fill input fields of single-entry VCB
+> +     */
+> +    vcb = malloc(MAX_SECTOR_SIZE * 4);
+
+Why are we using MAX_SECTOR _SIZE? Shouldn't we use max_single_vcb_len 
+to allocate the memory for vcb?
+
+> +    vcb->in_len = ROUND_UP(vcssb->max_single_vcb_len, PAGE_SIZE);
+> +    vcb->first_vc_index = index + 1;
+> +    vcb->last_vc_index = index + 1;
+> +
+> +    rc = diag320(vcb, DIAG_320_SUBC_STORE_VC);
+> +    if (rc == DIAG_320_RC_OK) {
+
+Nit: We could just check if rc != DIAG_320_RC_OK and goto out. This way 
+we avoid a bigger if block.
+
+
+> +        if (vcb->out_len == VCB_HEADER_LEN) {
+> +            puts("No certificate entry");
+> +            goto out;
+> +        }
+> +        if (vcb->remain_ct != 0) {
+> +            puts("Not enough memory to store all requested certificates");
+> +            goto out;
+> +        }
+> +
+> +        vce = (VCEntry *)vcb->vce_buf;
+> +        if (!is_vce_cert_valid(vce->flags, vce->len)) {
+> +            puts("Invalid certificate");
+> +            goto out;
+> +        }
+> +
+> +        cert_len = vce->cert_len;
+> +        memcpy(cert, (uint8_t *)vce + vce->cert_offset, vce->cert_len);
+> +    }
+> +
+> +out:
+> +    free(vcb);
+> +    return cert_len;
+> +}
+> +
+> +static void cert_list_add(IplSignatureCertificateList *certs, int cert_index,
+> +                          uint8_t *cert, uint64_t cert_len)
+> +{
+> +    if (cert_index > MAX_CERTIFICATES - 1) {
+> +        printf("Warning: Ignoring cert entry [%d] because it's over %d entires\n",
+> +                cert_index + 1, MAX_CERTIFICATES);
+> +        return;
+> +    }
+> +
+> +    certs->cert_entries[cert_index].addr = (uint64_t)cert;
+> +    certs->cert_entries[cert_index].len = cert_len;
+> +    certs->ipl_info_header.len += sizeof(certs->cert_entries[cert_index]);
+> +}
+> +
+> +static void comp_list_add(IplDeviceComponentList *comps, int comp_index,
+> +                          int cert_index, uint64_t comp_addr,
+> +                          uint64_t comp_len, uint8_t flags)
+> +{
+> +    if (comp_index > MAX_CERTIFICATES - 1) {
+> +        printf("Warning: Ignoring comp entry [%d] because it's over %d entires\n",
+> +                comp_index + 1, MAX_CERTIFICATES);
+> +        return;
+> +    }
+> +
+> +    comps->device_entries[comp_index].addr = comp_addr;
+> +    comps->device_entries[comp_index].len = comp_len;
+> +    comps->device_entries[comp_index].flags = flags;
+> +    comps->device_entries[comp_index].cert_index = cert_index;
+> +    comps->ipl_info_header.len += sizeof(comps->device_entries[comp_index]);
+> +}
+> +
+> +static int update_iirb(IplDeviceComponentList *comps, IplSignatureCertificateList *certs)
+> +{
+> +    IplInfoReportBlock *iirb;
+> +    IplDeviceComponentList *iirb_comps;
+> +    IplSignatureCertificateList *iirb_certs;
+> +    uint32_t iirb_hdr_len;
+> +    uint32_t comps_len;
+> +    uint32_t certs_len;
+> +
+> +    if (iplb->len % 8 != 0) {
+> +        panic("IPL parameter block length field value is not multiple of 8 bytes");
+> +    }
+> +
+> +    iirb_hdr_len = sizeof(IplInfoReportBlockHeader);
+> +    comps_len = comps->ipl_info_header.len;
+> +    certs_len = certs->ipl_info_header.len;
+> +    if ((comps_len + certs_len + iirb_hdr_len) > sizeof(IplInfoReportBlock)) {
+> +        puts("Not enough space to hold all components and certificates in IIRB");
+> +        return -1;
+> +    }
+> +
+> +    /* IIRB immediately follows IPLB */
+> +    iirb = &ipl_data.iirb;
+> +    iirb->hdr.len = iirb_hdr_len;
+> +
+> +    /* Copy IPL device component list after IIRB Header */
+> +    iirb_comps = (IplDeviceComponentList *) iirb->info_blks;
+> +    memcpy(iirb_comps, comps, comps_len);
+> +
+> +    /* Update IIRB length */
+> +    iirb->hdr.len += comps_len;
+> +
+> +    /* Copy IPL sig cert list after IPL device component list */
+> +    iirb_certs = (IplSignatureCertificateList *) (iirb->info_blks +
+> +                                                  iirb_comps->ipl_info_header.len);
+> +    memcpy(iirb_certs, certs, certs_len);
+> +
+> +    /* Update IIRB length */
+> +    iirb->hdr.len += certs_len;
+> +
+> +    return 0;
+> +}
+> +
+> +static bool secure_ipl_supported(void)
+> +{
+> +    if (!sclp_is_sipl_on()) {
+> +        puts("Secure IPL Facility is not supported by the hypervisor!");
+> +        return false;
+> +    }
+> +
+> +    if (!is_secure_ipl_extension_supported()) {
+> +        puts("Secure IPL extensions are not supported by the hypervisor!");
+> +        return false;
+> +    }
+> +
+> +    if (!(sclp_is_diag320_on() && is_cert_store_facility_supported())) {
+> +        puts("Certificate Store Facility is not supported by the hypervisor!");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static void init_lists(IplDeviceComponentList *comps, IplSignatureCertificateList *certs)
+> +{
+> +    comps->ipl_info_header.ibt = IPL_IBT_COMPONENTS;
+> +    comps->ipl_info_header.len = sizeof(comps->ipl_info_header);
+> +
+> +    certs->ipl_info_header.ibt = IPL_IBT_CERTIFICATES;
+> +    certs->ipl_info_header.len = sizeof(certs->ipl_info_header);
+> +}
+> +
+> +static uint32_t zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
+> +{
+> +    uint32_t sig_len;
+> +
+> +    if (zipl_load_segment(entry, sig_sec) < 0) {
+> +        return -1;
+> +    }
+> +
+> +    if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
+> +        puts("Signature is not in DER format");
+> +        return -1;
+> +    }
+> +    sig_len = entry->compdat.sig_info.sig_len;
+> +
+> +    return sig_len;
+> +}
+> +
+> +static int handle_certificate(int *cert_table, uint8_t **cert,
+> +                             uint64_t cert_len, uint8_t cert_idx,
+> +                             IplSignatureCertificateList *certs, int cert_index)
+> +{
+> +    bool unused;
+> +
+> +    unused = cert_table[cert_idx] == -1;
+> +    if (unused) {
+> +        if (request_certificate(*cert, cert_idx)) {
+> +            cert_list_add(certs, cert_index, *cert, cert_len);
+> +            cert_table[cert_idx] = cert_index;
+> +            *cert += cert_len;
+
+It's hard to understand why we increment *cert in this function by just 
+looking at the function. But this function is called in the loop in 
+zipl_run_secure, could we move this entire function in zipl_run_secure?
+
+
+> +        } else {
+> +            puts("Could not get certificate");
+> +            return -1;
+> +        }
+> +
+> +        /* increment cert_index for the next cert entry */
+> +        return ++cert_index;
+> +    }
+> +
+> +    return cert_index;
+> +}
+> +
+> +int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+> +{
+> +    IplDeviceComponentList comps;
+> +    IplSignatureCertificateList certs;
+> +    ComponentEntry *entry = *entry_ptr;
+> +    uint8_t *cert = NULL;
+> +    uint64_t *sig = NULL;
+> +    int cert_index = 0;
+> +    int comp_index = 0;
+> +    uint64_t comp_addr;
+> +    int comp_len;
+> +    uint32_t sig_len = 0;
+> +    uint64_t cert_len = -1;
+> +    uint8_t cert_idx = -1;
+
+Why do we have 2 variables (cert_idx, cert_index) that are named 
+similar? Can we rename cert_index to cert_table_idx?
+
+
+> +    bool verified;
+> +    uint32_t certs_len;
+> +    /*
+> +     * Store indices of cert entry that have already used for signature verification
+> +     * to prevent allocating the same certificate multiple times.
+> +     * cert_table index: index of certificate from qemu cert store used for verification
+> +     * cert_table value: index of cert entry in cert list that contains the certificate
+> +     */
+> +    int cert_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1};
+> +    int signed_count = 0;
+> +
+> +    if (!secure_ipl_supported()) {
+> +        return -1;
+> +    }
+> +
+> +    init_lists(&comps, &certs);
+> +    certs_len = get_certs_length();
+> +    cert = malloc(certs_len);
+> +    sig = malloc(MAX_SECTOR_SIZE);
+> +
+> +    while (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
+> +        switch (entry->component_type) {
+> +        case ZIPL_COMP_ENTRY_SIGNATURE:
+> +            if (sig_len) {
+> +                goto out;
+> +            }
+> +
+> +            sig_len = zipl_load_signature(entry, (uint64_t)sig);
+> +            if (sig_len < 0) {
+> +                goto out;
+> +            }
+> +            break;
+> +        case ZIPL_COMP_ENTRY_LOAD:
+> +            comp_addr = entry->compdat.load_addr;
+> +            comp_len = zipl_load_segment(entry, comp_addr);
+> +            if (comp_len < 0) {
+> +                goto out;
+> +            }
+> +
+> +            if (!sig_len) {
+> +                break;
+> +            }
+> +
+> +            verified = verify_signature(comp_len, comp_addr, sig_len, (uint64_t)sig,
+> +                                        &cert_len, &cert_idx);
+> +
+> +            if (verified) {
+> +                cert_index = handle_certificate(cert_table, &cert, cert_len, cert_idx,
+> +                                                &certs, cert_index);
+> +                if (cert_index == -1) {
+> +                    goto out;
+> +                }
+> +
+> +                puts("Verified component");
+> +                comp_list_add(&comps, comp_index, cert_table[cert_idx],
+> +                              comp_addr, comp_len,
+> +                              S390_IPL_COMPONENT_FLAG_SC | S390_IPL_COMPONENT_FLAG_CSV);
+> +            } else {
+> +                comp_list_add(&comps, comp_index, -1,
+> +                              comp_addr, comp_len,
+> +                              S390_IPL_COMPONENT_FLAG_SC);
+> +                zipl_secure_handle("Could not verify component");
+> +            }
+> +
+> +            comp_index++;
+> +            signed_count += 1;
+> +            /* After a signature is used another new one can be accepted */
+> +            sig_len = 0;
+> +            break;
+> +        default:
+> +            puts("Unknown component entry type");
+> +            return -1;
+> +        }
+> +
+> +        entry++;
+> +
+> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
+> +            puts("Wrong entry value");
+> +            return -EINVAL;
+> +        }
+> +    }
+> +
+> +    if (signed_count == 0) {
+> +        zipl_secure_handle("Secure boot is on, but components are not signed");
+> +    }
+> +
+> +    if (update_iirb(&comps, &certs)) {
+> +        zipl_secure_handle("Failed to write IPL Information Report Block");
+> +    }
+> +
+> +    *entry_ptr = entry;
+> +    free(sig);
+> +
+> +    return 0;
+> +out:
+> +    free(cert);
+> +    free(sig);
+> +
+> +    return -1;
+> +}
+> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+> new file mode 100644
+> index 0000000000..a264a44349
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/secure-ipl.h
+> @@ -0,0 +1,99 @@
+> +/*
+> + * S/390 Secure IPL
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Zhuoying Cai<zycai@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef _PC_BIOS_S390_CCW_SECURE_IPL_H
+> +#define _PC_BIOS_S390_CCW_SECURE_IPL_H
+> +
+> +#include <diag320.h>
+> +#include <diag508.h>
+> +
+> +VCStorageSizeBlock *zipl_secure_get_vcssb(void);
+> +int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
+> +
+> +static inline void zipl_secure_handle(const char *message)
+> +{
+> +    switch (boot_mode) {
+> +    case ZIPL_BOOT_MODE_SECURE_AUDIT:
+> +        IPL_check(false, message);
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +}
+> +
+> +static inline uint64_t diag320(void *data, unsigned long subcode)
+> +{
+> +    register unsigned long addr asm("0") = (unsigned long)data;
+> +    register unsigned long rc asm("1") = 0;
+> +
+> +    asm volatile ("diag %0,%2,0x320\n"
+> +                  : "+d" (addr), "+d" (rc)
+> +                  : "d" (subcode)
+> +                  : "memory", "cc");
+> +    return rc;
+> +}
+> +
+> +static inline bool is_vce_cert_valid(uint8_t vce_flags, uint32_t vce_len)
+> +{
+> +    return (vce_flags & DIAG_320_VCE_FLAGS_VALID) && (vce_len > VCE_INVALID_LEN);
+
+Shouldn't just checking the vce_flag be enough?
+
+
+> +}
+> +
+> +static inline bool is_cert_store_facility_supported(void)
+> +{
+> +    uint32_t d320_ism;
+> +
+> +    diag320(&d320_ism, DIAG_320_SUBC_QUERY_ISM);
+> +    return (d320_ism & DIAG_320_ISM_QUERY_SUBCODES) &&
+> +           (d320_ism & DIAG_320_ISM_QUERY_VCSI) &&
+> +           (d320_ism & DIAG_320_ISM_STORE_VC);
+> +}
+> +
+> +static inline uint64_t _diag508(void *data, unsigned long subcode)
+> +{
+> +    register unsigned long addr asm("0") = (unsigned long)data;
+> +    register unsigned long rc asm("1") = 0;
+> +
+> +    asm volatile ("diag %0,%2,0x508\n"
+> +                  : "+d" (addr), "+d" (rc)
+> +                  : "d" (subcode)
+> +                  : "memory", "cc");
+> +    return rc;
+> +}
+> +
+> +static inline bool is_secure_ipl_extension_supported(void)
+> +{
+> +    uint64_t d508_subcodes;
+> +
+> +    d508_subcodes = _diag508(NULL, DIAG_508_SUBC_QUERY_SUBC);
+> +    return d508_subcodes & DIAG_508_SUBC_SIG_VERIF;
+> +}
+> +
+> +static inline bool verify_signature(uint64_t comp_len, uint64_t comp_addr,
+> +                                    uint64_t sig_len, uint64_t sig_addr,
+> +                                    uint64_t *cert_len, uint8_t *cert_idx)
+> +{
+> +    Diag508SigVerifBlock svb;
+> +
+> +    svb.length = sizeof(Diag508SigVerifBlock);
+> +    svb.version = 0;
+> +    svb.comp_len = comp_len;
+> +    svb.comp_addr = comp_addr;
+> +    svb.sig_len = sig_len;
+> +    svb.sig_addr = sig_addr;
+> +
+> +    if (_diag508(&svb, DIAG_508_SUBC_SIG_VERIF) == DIAG_508_RC_OK) {
+> +        *cert_len = svb.cert_len;
+> +        *cert_idx = svb.cert_store_index;
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +#endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
 
