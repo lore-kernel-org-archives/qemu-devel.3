@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD46CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C89FCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3TM4-0008WF-OQ; Tue, 30 Sep 2025 01:56:52 -0400
+	id 1v3TMc-0000R7-Cm; Tue, 30 Sep 2025 01:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TLx-0008UH-CZ
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:56:47 -0400
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TMa-0000Qk-L8
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:57:24 -0400
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TLt-00042c-44
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:56:44 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.226])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cbS430H0Tz5wr9;
- Tue, 30 Sep 2025 05:56:35 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TMS-0004Ax-MY
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:57:21 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.133])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cbS4l1c0jz6Mww;
+ Tue, 30 Sep 2025 05:57:11 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Tue, 30 Sep
- 2025 07:56:34 +0200
+ 2025 07:57:10 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006cb911638-ef03-4498-9a4e-84254a9fcbb5,
+ (GARM-113S00788094cb5-eeb5-440e-a5ad-5adcde07db5f,
  012DEA80DA8F652C9231DB37D1304F33C12A2C6A) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <02fbbe79-277d-4d0e-b86d-ee04aae4a478@kaod.org>
-Date: Tue, 30 Sep 2025 07:56:34 +0200
+Message-ID: <a3e42923-d81a-40c2-8b17-28d6264d5518@kaod.org>
+Date: Tue, 30 Sep 2025 07:57:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed: Add support for the quanta-q7l1-bmc board
-To: Patrick Venture <venture@google.com>, <peter.maydell@linaro.org>,
- <andrew@aj.id.au>, <joel@jms.id.au>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Hao Wu
- <wuhaotsh@google.com>
-References: <20210416162426.3217033-1-venture@google.com>
+Subject: Re: [PATCH v3 2/2] aspeed: Add support for the g220a-bmc board
+To: John Wang <wangzhiqiang.bj@bytedance.com>, <xuxiaohan@bytedance.com>,
+ <yulei.sh@bytedance.com>, <joel@jms.id.au>, <f4bug@amsat.org>
+CC: Andrew Jeffery <andrew@aj.id.au>, Peter Maydell
+ <peter.maydell@linaro.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20201025131435.144-1-wangzhiqiang.bj@bytedance.com>
+ <20201025131435.144-2-wangzhiqiang.bj@bytedance.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -83,33 +85,33 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20210416162426.3217033-1-venture@google.com>
+In-Reply-To: <20201025131435.144-2-wangzhiqiang.bj@bytedance.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG6EX2.mxp5.local (172.16.2.52) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 58fea24b-6054-4d25-a588-57b2969debbb
-X-Ovh-Tracer-Id: 8147574676045335401
+X-Ovh-Tracer-GUID: a3b539e8-98d1-4e35-9d1e-f187b2f886c8
+X-Ovh-Tracer-Id: 8157989253279550255
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEgRiVgyQ65njAjSCP8e2TKx6Khk4b1lwCDOK8AxTk/fHA9TZRfcatUOTkIM4hL04eim1AFjj3PJ5gdX2YrDFl3coGuOyuS1Q5aTohQH8UjO4edV/cuHYOd4vKmqyovgAKO/MeaDo+HAT8sLp8dWQ2tlOThfwXBIH9lgq4oqdahrkXb7zrEa+njwsxCyOdIBvFpICSItNFX+oOYr4nBR9kKliEQFsLocoNrmzNntDwEyYQwhQ+6+YQVCiesSMJfVSlXVGUH3XchE0y+VFc3iQNHXkNAO9OLzRu/lFQ//1Ji8k4f3I8+IIyy0/X7qSzRSOICFyjcS/lUkGKRqi/q8w3CQbpmAVwFFDfO1kgnoDHS0bf548ZdFsrxanzoZVZFxhuXbDTpzu5cG50SXSWIDAxR3LLVXD4cQvS3maSRvncEm/LHQjIMrnBGK00p4mVEUoJNxyON91Fcxhj3vwRXg+y4hy/FrScWh22NoSk3AcafpdkkdFW6BpNvNVv1qrGeM4BwPb5dhYHwOJPS7/8X+BJhEVBIvtoMGS8/kF/9qlNkSdJXtNSUPS0VgaZCTXJHcVZos45Yfiy4k1oV0L5QET6FzypkbBvS/jhVSsGlHTM4E9dazkqYa0/HuPVZUlrB67T1EOybqy577cyszukmFNvHT1hVWrO/csEf8EA2rv0P2A
-DKIM-Signature: a=rsa-sha256; bh=AvexobqeaGNOEZPmAsSMRAApSsvwXjwfxEJgP3TJFcg=; 
+X-VR-SPAMCAUSE: dmFkZTGWbseo7FTNtuJMt3NG/7jcy6airEsBG+lEOtZR/pLSrn005JiYb89/n2h2eOpFDsgEdLm4pB7iZQjpsLX7sdmxwe/bLeXKBxC+0zBLAvQZLgBXEht4mE3hiSEEdyq4/o5HXpt4LBiQaQ7uXPbVlY23BEVGNPPSRhEcpUCePBpaAYSp6lyQpj6smzK7M/9NXvcQen0LLA8PyH3xEG8tx+SH2PiDxUW/zsaI2oTK7y0OLolXH6Y7NC5criVTu5J2eMQkl0rxvvpkAVszea/dw7AmZHn8lk3Wq/L8B9i4tK4nChAdVGJFDOM48z4D6DAnkcB/h+Kzcdi1QUPAjVBausNbY96/BWqPfUqGB5tt1hqTu9VEkol/r5XVi06Bu+Jjiqtww5x+O1F2dB4t3i35ev+hlb9cEqZvUUaCSxONW3OvdxqkiomDdktW5e/O7BJF9zv/WiKcutiu8qxWhfTtScZXXCuLlsGJ7O2RxJqrA3ZT8R529y0rTwxZcp2elKc4eMYz/0f5JpED0eln2Bim9S5J8R31ho38Ovyy7M9GHJo9/4QsQP/hgd6vk2ZUSwNMmL16Jyxy4QkcvG3gYsJ4uzIYWi9ObYbfpc3oNFSRU3r5UFxG1s3SpiqoHgxjYZDBKWWtHm0HiItQvXj727x3t72EIrTAQYZOTUSNuQfpn3gY/A
+DKIM-Signature: a=rsa-sha256; bh=K0rfuzrXAMNT00wtdL1mBIv/pHPZZXToEbhC+2FWkwI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1759211796; v=1;
- b=vqqReG0lFr98YQKW78PxMAOK4UcuP7deQHqrHpzvxpOoSbpRtNw+1YKixdI82LhEBhJ+jWD6
- 8FerjwBMOzreMzO2V8/yrKXdHgyX3OSnEgpg7ew5Y4y8VcAnChKIEV6XCkmJ4/heSXs8PDo07yg
- i2f4Se2AW/v+nB0lOGWmQkpABngp9msnzM9Ch4VlOOqxf0QJaLMXuxlOCNd9Kpt0zODHYESyFBB
- +nzLOLBRebxHnkLweQYWTSqUxuB8VLeNrJissKiKE0Esfnt0gC+6ZmNsCkqG+9T/++HrVpJ4Q14
- okjJwrgVKGNOrGIg9rPWBA3f+/4CIy5MhdJ1vwPh5ddFw==
-Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
- helo=smtpout1.mo529.mail-out.ovh.net
+ t=1759211831; v=1;
+ b=cCCaivbDHAEsjrCwqwD5qwJzIe/N3+pwnPJrWKlxkRjiXEw7kLUyDLLjDF1rFtAZVUBWdGlj
+ cuOXOJ7yycW9vHzgUHbiaEBGdDkTJD4SsNXLIfu4QVxAcsHkmzYc885+dT7hkMGqgS8SbdbzbmC
+ CFGdIw751wdgMlAyKn90v1KbxzxRgeYz7HNv/HhZpOdC61yX46CtondDTtBhvcsps2EG7Sa/8eM
+ WeUL+O5OZpNID+hdONgexFQEmWmsnAa6NiEVR3cxHZpuyhCdUhrXjA5d6MtZLM34UZts2wxCNPF
+ ZgMvt3fweuxz+5V3uipmJPFby9wyS3uD14Ngn1PAPMjVg==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,17 +129,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Patrick,
-
-On 4/16/21 18:24, Patrick Venture wrote:
-> The Quanta-Q71l BMC board is a board supported by OpenBMC.
+On 10/25/20 14:14, John Wang wrote:
+> G220A is a 2 socket x86 motherboard supported by OpenBMC.
+> Strapping configuration was obtained from hardware.
 > 
-> Tested: Booted quanta-q71l firmware.
-> Signed-off-by: Patrick Venture <venture@google.com>
-> Reviewed-by: Hao Wu <wuhaotsh@google.com>
-> ---
->   hw/arm/aspeed.c | 62 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 62 insertions(+)
+> Signed-off-by: John Wang <wangzhiqiang.bj@bytedance.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+
+Hello John
 
 Would it be possible to contribute a functional test for this
 machine ?
@@ -154,97 +154,104 @@ C.
 
 
 
+> ---
+> v3:
+>    - No changes
+> v2:
+>    - No changes
+> ---
+>   hw/arm/aspeed.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 60 insertions(+)
+> 
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index a17b75f494..4611996d21 100644
+> index bdb981d2f8..04c8ad2bcd 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -138,6 +138,19 @@ struct AspeedMachineState {
+> @@ -120,6 +120,20 @@ struct AspeedMachineState {
+>           SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
+>           SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
+>   
+> +#define G220A_BMC_HW_STRAP1 (                                      \
+> +        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
+> +        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
+> +        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
+> +        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
+> +        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+> +        SCU_HW_STRAP_2ND_BOOT_WDT |                                     \
+> +        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+> +        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
+> +        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
+> +        SCU_HW_STRAP_VGA_SIZE_SET(VGA_64M_DRAM) |                       \
+> +        SCU_AST2500_HW_STRAP_RESERVED1)
+> +
 >   /* Witherspoon hardware value: 0xF10AD216 (but use romulus definition) */
 >   #define WITHERSPOON_BMC_HW_STRAP1 ROMULUS_BMC_HW_STRAP1
 >   
-> +/* Quanta-Q71l hardware value */
-> +#define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
-> +        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
-> +        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2/* DDR3 with CL=6, CWL=5 */) | \
-> +        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
-> +        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_24M_IN) |       \
-> +        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
-> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_PASS_THROUGH) |          \
-> +        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
-> +        SCU_HW_STRAP_SPI_WIDTH |                                        \
-> +        SCU_HW_STRAP_VGA_SIZE_SET(VGA_8M_DRAM) |                        \
-> +        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
-> +
->   /* AST2600 evb hardware value */
->   #define AST2600_EVB_HW_STRAP1 0x000000C0
->   #define AST2600_EVB_HW_STRAP2 0x00000003
-> @@ -433,6 +446,34 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
->       object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
+> @@ -559,6 +573,30 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+>       /* Bus 11: TODO ucd90160@64 */
 >   }
 >   
-> +static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+> +static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
 > +{
 > +    AspeedSoCState *soc = &bmc->soc;
+> +    DeviceState *dev;
 > +
-> +    /*
-> +     * The quanta-q71l platform expects tmp75s which are compatible with
-> +     * tmp105s.
-> +     */
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4c);
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
+> +    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
+> +                                         "emc1413", 0x4c));
+> +    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+> +    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+> +    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 > +
-> +    /* TODO: i2c-1: Add baseboard FRU eeprom@54 24c64 */
-> +    /* TODO: i2c-1: Add Frontpanel FRU eeprom@57 24c64 */
-> +    /* TODO: Add Memory Riser i2c mux and eeproms. */
+> +    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 12),
+> +                                         "emc1413", 0x4c));
+> +    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+> +    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+> +    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 > +
-> +    /* TODO: i2c-2: pca9546@74 */
-> +    /* TODO: i2c-2: pca9548@77 */
-> +    /* TODO: i2c-3: Add BIOS FRU eeprom@56 24c64 */
-> +    /* TODO: i2c-7: Add pca9546@70 */
-> +    /*        - i2c@0: pmbus@59 */
-> +    /*        - i2c@1: pmbus@58 */
-> +    /*        - i2c@2: pmbus@58 */
-> +    /*        - i2c@3: pmbus@59 */
-> +    /* TODO: i2c-7: Add PDB FRU eeprom@52 */
-> +    /* TODO: i2c-8: Add BMC FRU eeprom@50 */
+> +    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 13),
+> +                                         "emc1413", 0x4c));
+> +    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+> +    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+> +    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 > +}
 > +
->   static void ast2500_evb_i2c_init(AspeedMachineState *bmc)
+>   static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
 >   {
->       AspeedSoCState *soc = &bmc->soc;
-> @@ -728,6 +769,23 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc, void *data)
+>       return ASPEED_MACHINE(obj)->mmio_exec;
+> @@ -798,6 +836,24 @@ static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
 >           aspeed_soc_num_cpus(amc->soc_name);
 >   };
 >   
-> +static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc, void *data)
+> +static void aspeed_machine_g220a_class_init(ObjectClass *oc, void *data)
 > +{
 > +    MachineClass *mc = MACHINE_CLASS(oc);
 > +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 > +
-> +    mc->desc       = "Quanta-Q71l BMC (ARM926EJ-S)";
-> +    amc->soc_name  = "ast2400-a1";
-> +    amc->hw_strap1 = QUANTA_Q71L_BMC_HW_STRAP1;
-> +    amc->fmc_model = "n25q256a";
+> +    mc->desc       = "Bytedance G220A BMC (ARM1176)";
+> +    amc->soc_name  = "ast2500-a1";
+> +    amc->hw_strap1 = G220A_BMC_HW_STRAP1;
+> +    amc->fmc_model = "n25q512a";
 > +    amc->spi_model = "mx25l25635e";
-> +    amc->num_cs    = 1;
-> +    amc->i2c_init  = quanta_q71l_bmc_i2c_init;
-> +    mc->default_ram_size       = 128 * MiB;
+> +    amc->num_cs    = 2;
+> +    amc->macs_mask  = ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+> +    amc->i2c_init  = g220a_bmc_i2c_init;
+> +    mc->default_ram_size = 1024 * MiB;
 > +    mc->default_cpus = mc->min_cpus = mc->max_cpus =
 > +        aspeed_soc_num_cpus(amc->soc_name);
-> +}
+> +};
 > +
->   static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
->                                                           void *data)
->   {
-> @@ -927,6 +985,10 @@ static const TypeInfo aspeed_machine_types[] = {
->           .name          = MACHINE_TYPE_NAME("g220a-bmc"),
+>   static const TypeInfo aspeed_machine_types[] = {
+>       {
+>           .name          = MACHINE_TYPE_NAME("palmetto-bmc"),
+> @@ -835,6 +891,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("tacoma-bmc"),
 >           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_g220a_class_init,
+>           .class_init    = aspeed_machine_tacoma_class_init,
 > +    }, {
-> +        .name          = MACHINE_TYPE_NAME("quanta-q71l-bmc"),
+> +        .name          = MACHINE_TYPE_NAME("g220a-bmc"),
 > +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_quanta_q71l_class_init,
+> +        .class_init    = aspeed_machine_g220a_class_init,
 >       }, {
 >           .name          = TYPE_ASPEED_MACHINE,
 >           .parent        = TYPE_MACHINE,
