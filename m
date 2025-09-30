@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE10CAC5B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD46CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3TLG-0008AK-BN; Tue, 30 Sep 2025 01:56:02 -0400
+	id 1v3TM4-0008WF-OQ; Tue, 30 Sep 2025 01:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TLC-00089b-Mi
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:55:59 -0400
-Received: from 8.mo552.mail-out.ovh.net ([46.105.37.156])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TLx-0008UH-CZ
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:56:47 -0400
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TL5-0003nx-9H
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:55:57 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.52])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cbS343fD5z5ybj;
- Tue, 30 Sep 2025 05:55:44 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TLt-00042c-44
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:56:44 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.226])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cbS430H0Tz5wr9;
+ Tue, 30 Sep 2025 05:56:35 +0000 (UTC)
 Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Tue, 30 Sep
- 2025 07:55:43 +0200
+ 2025 07:56:34 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006769c88b4-5ec2-4ba6-a8aa-bce0c466b76d,
+ (GARM-105G006cb911638-ef03-4498-9a4e-84254a9fcbb5,
  012DEA80DA8F652C9231DB37D1304F33C12A2C6A) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <dbea5c97-071e-4d7c-a022-8cd5d9cf6171@kaod.org>
-Date: Tue, 30 Sep 2025 07:55:43 +0200
+Message-ID: <02fbbe79-277d-4d0e-b86d-ee04aae4a478@kaod.org>
+Date: Tue, 30 Sep 2025 07:56:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed: Add Supermicro X11 SPI machine type
-To: Guenter Roeck <linux@roeck-us.net>
-CC: Peter Maydell <peter.maydell@linaro.org>, Andrew Jeffery
- <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-References: <20221025165109.1226001-1-linux@roeck-us.net>
+Subject: Re: [PATCH] aspeed: Add support for the quanta-q7l1-bmc board
+To: Patrick Venture <venture@google.com>, <peter.maydell@linaro.org>,
+ <andrew@aj.id.au>, <joel@jms.id.au>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Hao Wu
+ <wuhaotsh@google.com>
+References: <20210416162426.3217033-1-venture@google.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -83,34 +83,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20221025165109.1226001-1-linux@roeck-us.net>
+In-Reply-To: <20210416162426.3217033-1-venture@google.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG8EX2.mxp5.local
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 5fa9478f-4d0b-4213-bff6-a6ceca42dd6b
-X-Ovh-Tracer-Id: 8133500929976339238
+X-Ovh-Tracer-GUID: 58fea24b-6054-4d25-a588-57b2969debbb
+X-Ovh-Tracer-Id: 8147574676045335401
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFP0lZMU762VLmzYOc9+eYd/t/xn+R9+O25J2TQXkFFUVmIOVtNNQXYLiYI5HIXphpeMf8kxBcxJvIcqK3FtT1iNOsklIWkBzNflys3Oy3TsDF1F3xgsQ0fs2LxQ+iNw2LaE9F8CMlsJ6LzgpBozw96Az87NAsMF6mhjkBX0NhVEb/Yb4s1WsVmFT+EIOBEsEjtIAGnlEv/A/Mq/dSQy9Ger8/7Nf0DmQAa3gnoWbdaP75yYPhh1lBIuOnYYOj9f0UmctIqkfdizFhO7IFcCaO3s++WV6eDGDN8w5jIfcQCXkazdqku7iSI34es4BjsOQVlBdczPVv2wzBL5iTsH9FAgoZ0ZrqbwjXwcr9m8uVkNVm1avtSrrA3m12gu6wcLTybVNWpPRc4Y5wGKyRagEv0AxOSeBJJ4Rgpt82jcRGGObBunBK/sAgEZRuW/YNCqd2vjznzKEqX1C/RI2cku4HhZNi6dptwXv5DxwkOYaJo/WExypg2CDMOO+tMNF4gZidytcAMfnEZh8IZuDe0ZXIIlnLDjRro7vjA2tdg4r1qWz+mYOTtvqQMSYxAiE4H8hyVbBDs3xx6aGmB1kETCmINNhBILOMCCE3o/aYmXofF1OE8WFpd7mS1r+MBRO+W6qtUWgwaErZNweDOOcGLipjN/ot5cQ4El3OwenyxEBkxeQ
-DKIM-Signature: a=rsa-sha256; bh=qIjdsBWQR74vlUha8sSzNUkJmoK/Kdk3CTp7vgo3VjM=; 
+X-VR-SPAMCAUSE: dmFkZTEgRiVgyQ65njAjSCP8e2TKx6Khk4b1lwCDOK8AxTk/fHA9TZRfcatUOTkIM4hL04eim1AFjj3PJ5gdX2YrDFl3coGuOyuS1Q5aTohQH8UjO4edV/cuHYOd4vKmqyovgAKO/MeaDo+HAT8sLp8dWQ2tlOThfwXBIH9lgq4oqdahrkXb7zrEa+njwsxCyOdIBvFpICSItNFX+oOYr4nBR9kKliEQFsLocoNrmzNntDwEyYQwhQ+6+YQVCiesSMJfVSlXVGUH3XchE0y+VFc3iQNHXkNAO9OLzRu/lFQ//1Ji8k4f3I8+IIyy0/X7qSzRSOICFyjcS/lUkGKRqi/q8w3CQbpmAVwFFDfO1kgnoDHS0bf548ZdFsrxanzoZVZFxhuXbDTpzu5cG50SXSWIDAxR3LLVXD4cQvS3maSRvncEm/LHQjIMrnBGK00p4mVEUoJNxyON91Fcxhj3vwRXg+y4hy/FrScWh22NoSk3AcafpdkkdFW6BpNvNVv1qrGeM4BwPb5dhYHwOJPS7/8X+BJhEVBIvtoMGS8/kF/9qlNkSdJXtNSUPS0VgaZCTXJHcVZos45Yfiy4k1oV0L5QET6FzypkbBvS/jhVSsGlHTM4E9dazkqYa0/HuPVZUlrB67T1EOybqy577cyszukmFNvHT1hVWrO/csEf8EA2rv0P2A
+DKIM-Signature: a=rsa-sha256; bh=AvexobqeaGNOEZPmAsSMRAApSsvwXjwfxEJgP3TJFcg=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1759211745; v=1;
- b=pAOCbWT+PrI1sllYn6BChp+Edktir05FJ/IUi+pvLQTPiI55bEdNIBNrjkgDX3Y0OnHK68KE
- oSlY7O65ar+cy9Pd6pDUI6E/iqFvx4nHXm7DLvmuWeBXtb3oUAoy4ELOUi4WkixtrqFpwvFVcYF
- LFATaPdoisJYqJAU85c0kU4pVA/vw0ng+g8po5DlvDiQvU3mqh8w5KBYnWjfcXenx73mADplXAc
- ywNVrqOuFaHZepYV5dYhHWS19eX5/Pyl2j/au2zmYriH4sCXODI2wq9tc4Gc8nyadzaINp6BSES
- bowMxTgU2jsP8my4+uohY9LqKHW013jAnnQ49IupuoUig==
-Received-SPF: pass client-ip=46.105.37.156; envelope-from=clg@kaod.org;
- helo=8.mo552.mail-out.ovh.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ t=1759211796; v=1;
+ b=vqqReG0lFr98YQKW78PxMAOK4UcuP7deQHqrHpzvxpOoSbpRtNw+1YKixdI82LhEBhJ+jWD6
+ 8FerjwBMOzreMzO2V8/yrKXdHgyX3OSnEgpg7ew5Y4y8VcAnChKIEV6XCkmJ4/heSXs8PDo07yg
+ i2f4Se2AW/v+nB0lOGWmQkpABngp9msnzM9Ch4VlOOqxf0QJaLMXuxlOCNd9Kpt0zODHYESyFBB
+ +nzLOLBRebxHnkLweQYWTSqUxuB8VLeNrJissKiKE0Esfnt0gC+6ZmNsCkqG+9T/++HrVpJ4Q14
+ okjJwrgVKGNOrGIg9rPWBA3f+/4CIy5MhdJ1vwPh5ddFw==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,27 +127,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/22 18:51, Guenter Roeck wrote:
-> supermicrox11-bmc is configured with ast2400-a1 SoC. This does not match
-> the Supermicro documentation for X11 BMCs, and it does not match the
-> devicetree file in the Linux kernel.
-> 
-> As it turns out, some Supermicro X11 motherboards use AST2400 SoCs,
-> while others use AST2500.
-> 
-> Introduce new machine type supermicrox11-spi-bmc with AST2500 SoC
-> to match the devicetree description in the Linux kernel. Hardware
-> configuration details for this machine type are guesswork and taken
-> from defaults as well as from the Linux kernel devicetree file.
-> 
-> The new machine type was tested with aspeed-bmc-supermicro-x11spi.dts
-> from the Linux kernel and with Linux versions 6.0.3 and 6.1-rc2.
-> Linux booted successfully from initrd and from both SPI interfaces.
-> Ethernet interfaces were confirmed to be operational.
-> 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Hello Patrick,
 
-Hello Guenter
+On 4/16/21 18:24, Patrick Venture wrote:
+> The Quanta-Q71l BMC board is a board supported by OpenBMC.
+> 
+> Tested: Booted quanta-q71l firmware.
+> Signed-off-by: Patrick Venture <venture@google.com>
+> Reviewed-by: Hao Wu <wuhaotsh@google.com>
+> ---
+>   hw/arm/aspeed.c | 62 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 62 insertions(+)
 
 Would it be possible to contribute a functional test for this
 machine ?
@@ -163,67 +154,99 @@ C.
 
 
 
-> ---
->   hw/arm/aspeed.c | 33 +++++++++++++++++++++++++++++++++
->   1 file changed, 33 insertions(+)
-> 
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index c282ead38f..56d007de5a 100644
+> index a17b75f494..4611996d21 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -71,6 +71,16 @@ struct AspeedMachineState {
->           SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
->           SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
+> @@ -138,6 +138,19 @@ struct AspeedMachineState {
+>   /* Witherspoon hardware value: 0xF10AD216 (but use romulus definition) */
+>   #define WITHERSPOON_BMC_HW_STRAP1 ROMULUS_BMC_HW_STRAP1
 >   
-> +/* TODO: Find the actual hardware value */
-> +#define SUPERMICROX11_SPI_BMC_HW_STRAP1 (                               \
-> +        AST2500_HW_STRAP1_DEFAULTS |                                    \
-> +        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
-> +        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
-> +        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-> +        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+> +/* Quanta-Q71l hardware value */
+> +#define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
+> +        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
+> +        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2/* DDR3 with CL=6, CWL=5 */) | \
+> +        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
+> +        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_24M_IN) |       \
+> +        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_PASS_THROUGH) |          \
+> +        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
 > +        SCU_HW_STRAP_SPI_WIDTH |                                        \
-> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN))
+> +        SCU_HW_STRAP_VGA_SIZE_SET(VGA_8M_DRAM) |                        \
+> +        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 > +
->   /* AST2500 evb hardware value: 0xF100C2E6 */
->   #define AST2500_EVB_HW_STRAP1 ((                                        \
->           AST2500_HW_STRAP1_DEFAULTS |                                    \
-> @@ -1172,6 +1182,25 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
->       mc->default_ram_size = 256 * MiB;
+>   /* AST2600 evb hardware value */
+>   #define AST2600_EVB_HW_STRAP1 0x000000C0
+>   #define AST2600_EVB_HW_STRAP2 0x00000003
+> @@ -433,6 +446,34 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
+>       object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
 >   }
 >   
-> +static void aspeed_machine_supermicrox11_spi_bmc_class_init(ObjectClass *oc,
-> +                                                            void *data)
+> +static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+> +{
+> +    AspeedSoCState *soc = &bmc->soc;
+> +
+> +    /*
+> +     * The quanta-q71l platform expects tmp75s which are compatible with
+> +     * tmp105s.
+> +     */
+> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4c);
+> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
+> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
+> +
+> +    /* TODO: i2c-1: Add baseboard FRU eeprom@54 24c64 */
+> +    /* TODO: i2c-1: Add Frontpanel FRU eeprom@57 24c64 */
+> +    /* TODO: Add Memory Riser i2c mux and eeproms. */
+> +
+> +    /* TODO: i2c-2: pca9546@74 */
+> +    /* TODO: i2c-2: pca9548@77 */
+> +    /* TODO: i2c-3: Add BIOS FRU eeprom@56 24c64 */
+> +    /* TODO: i2c-7: Add pca9546@70 */
+> +    /*        - i2c@0: pmbus@59 */
+> +    /*        - i2c@1: pmbus@58 */
+> +    /*        - i2c@2: pmbus@58 */
+> +    /*        - i2c@3: pmbus@59 */
+> +    /* TODO: i2c-7: Add PDB FRU eeprom@52 */
+> +    /* TODO: i2c-8: Add BMC FRU eeprom@50 */
+> +}
+> +
+>   static void ast2500_evb_i2c_init(AspeedMachineState *bmc)
+>   {
+>       AspeedSoCState *soc = &bmc->soc;
+> @@ -728,6 +769,23 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc, void *data)
+>           aspeed_soc_num_cpus(amc->soc_name);
+>   };
+>   
+> +static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc, void *data)
 > +{
 > +    MachineClass *mc = MACHINE_CLASS(oc);
 > +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 > +
-> +    mc->desc       = "Supermicro X11 SPI BMC (ARM1176)";
-> +    amc->soc_name  = "ast2500-a1";
-> +    amc->hw_strap1 = SUPERMICROX11_SPI_BMC_HW_STRAP1;
-> +    amc->fmc_model = "mx25l25635e";
+> +    mc->desc       = "Quanta-Q71l BMC (ARM926EJ-S)";
+> +    amc->soc_name  = "ast2400-a1";
+> +    amc->hw_strap1 = QUANTA_Q71L_BMC_HW_STRAP1;
+> +    amc->fmc_model = "n25q256a";
 > +    amc->spi_model = "mx25l25635e";
 > +    amc->num_cs    = 1;
-> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-> +    amc->i2c_init  = palmetto_bmc_i2c_init;
-> +    mc->default_ram_size = 512 * MiB;
+> +    amc->i2c_init  = quanta_q71l_bmc_i2c_init;
+> +    mc->default_ram_size       = 128 * MiB;
 > +    mc->default_cpus = mc->min_cpus = mc->max_cpus =
 > +        aspeed_soc_num_cpus(amc->soc_name);
 > +}
 > +
->   static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
+>   static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+>                                                           void *data)
 >   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -1546,6 +1575,10 @@ static const TypeInfo aspeed_machine_types[] = {
->           .name          = MACHINE_TYPE_NAME("supermicrox11-bmc"),
+> @@ -927,6 +985,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("g220a-bmc"),
 >           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_supermicrox11_bmc_class_init,
+>           .class_init    = aspeed_machine_g220a_class_init,
 > +    }, {
-> +        .name          = MACHINE_TYPE_NAME("supermicrox11-spi-bmc"),
+> +        .name          = MACHINE_TYPE_NAME("quanta-q71l-bmc"),
 > +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_supermicrox11_spi_bmc_class_init,
+> +        .class_init    = aspeed_machine_quanta_q71l_class_init,
 >       }, {
->           .name          = MACHINE_TYPE_NAME("ast2500-evb"),
->           .parent        = TYPE_ASPEED_MACHINE,
+>           .name          = TYPE_ASPEED_MACHINE,
+>           .parent        = TYPE_MACHINE,
 
 
