@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2732DCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 20:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 089CBCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 20:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3grr-0001PU-4a; Tue, 30 Sep 2025 16:22:35 -0400
+	id 1v3gtQ-0002DK-CE; Tue, 30 Sep 2025 16:24:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3grl-0001Mu-Go
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 16:22:32 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1v3gtN-0002D2-5Q
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 16:24:09 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3grX-0005wA-Qy
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 16:22:26 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-27edcbcd158so67668345ad.3
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 13:22:14 -0700 (PDT)
+ id 1v3gtD-0006Om-MY
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 16:24:06 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-781ea2cee3fso3298479b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 13:23:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759263731; x=1759868531; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759263835; x=1759868635; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AW6j4WJn0Sb1B8NuExZQmk+9T/YOlnAgB256+MT3Lzk=;
- b=KvkoInnOcM3spdvLpW4EeSMGJGu+083ji4CEtV6k6cmXvG6WW0YS5ct1MvQv0j7VD9
- +dhtlME+7Yu2ilSohKux3FQjNgD80mLFvOtwkC/zkknVEkLaSPP2y4zZkYNhJEoyqoFR
- Ar7ZM6ftQvTcEv8XBppDx8ICI7PmhvZKAZjsH5gLlVoY4rt25r2hH78NzilcDyzYl5NL
- nSV2yeAJ2f8UUgbtK7nx+65RRVplLcItXSQWWpUkvuR8jK4uXYzL6Vgb8mNQa/xRAF2j
- qM3M1YHNFAZ+ZM78qoI3hxrgdnSO0fuMr7W6uYQuT7AVHJACk8Bxx0DnywoeOCwSn/Mn
- iDBw==
+ bh=L9ylyh2dM5RT8Al+sDv6RJiAWnHe0LWE4ktaPitWzh0=;
+ b=wfqK++bS+sbceRDu7ZMiih8O99tqS7y1/pS+X4RQKf/aMKkBORZCBG+zSnod9ut7FL
+ 3k1C61mUIIsTqf7r2LXLm0DdDvBzFMI/vnIrOU2Nf1CxW5vrJr8u7dw2wJMAB+nY09Fn
+ BaOh+WmFLATMkI4CcLeQYvdLtIAgjf0ZtC60tSav1g960DgsnC44fThZUKeBbFhAZUXK
+ Xk3rLbkvAOSCysYso5mhAtPiphc0DpJOPJa0iiECVXOtEZouUzhWAp1IjxabA9HzDPKs
+ H5X+mUIunjRdQd45ZIKOZu3zGfGBhhdARLjh9iPLVV8Sw2ObkQK8OB1SjCVtDj3pdaLz
+ FKgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759263731; x=1759868531;
+ d=1e100.net; s=20230601; t=1759263835; x=1759868635;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AW6j4WJn0Sb1B8NuExZQmk+9T/YOlnAgB256+MT3Lzk=;
- b=XMG8Tb7nznWBvMQLIELuHVaWESpSZFtvC9r41m+LufmhrMQC0sZYxyO9VjF17JtD8v
- rypcNocvicqsiiVEDLJZd4STmjXWiIF1fBif6YAcA1mkE6t1jCaKTFF2EBQS+oSIiLHW
- EKV2zOa28GVGgceSNpfRzc17iFejanAXF31AhqO5KjUDl+eLnea5SFq5taSaoLj+2Cze
- fFvKzzFTU8QJeChVt6uyt4wa2qk31Z8VkK/uA1vmn2Ta2eWDRf5iSFJGNLRO5mAd4rgd
- lnrOLAZdqDJCzm5urG+ZuigprAPJmQb3We3NaMwiR3BAcD943yDSQ4kUX6Yw0RuYE8Id
- NKKQ==
+ bh=L9ylyh2dM5RT8Al+sDv6RJiAWnHe0LWE4ktaPitWzh0=;
+ b=DIeM5GBCdXMfcrM8dQIio/X9XXupEFC4rMt0pj8TUKk1WHPym6BcwEKyWxDiwRtxE+
+ YY4LCTX8eWAmjkm/tTwA+U9SLpVmou/+5YGTR2sv9RkJ4rEWb1GTrDuKtZ+9ONj0vaYM
+ yxrg3iIFbuHsJG7A5l8aYTgQz/tI9h4D/mWQw/toY2I9RCC/bxgnMbUCM52PQWalQdjN
+ 3dlmhQksiyv82oY2nVCmnLA4KK1kaRn/V5A7dE5IV+EvLx08epvyijGycp5Y4JR/keQC
+ 6ZRufKEfWFwTea2BF7FzoQ+Ofrud5X8wGLy4/EBBhJVvTtDOXUH14hZbpnosjRRyVqyZ
+ VWvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxg3GUOUPnVo42pV9xe2H15CEGnJxTs04xx9yFlwQ7kGK5E5sF+NolpeR42XS+7asa6fcHnqLPZr6O@nongnu.org
-X-Gm-Message-State: AOJu0Yyf00o8VfP4a18AFDvOPP6GthGHV+CsQpTFoYf3tNRru1V/AhPN
- Dm22mmDLOYRK+9IKftgwUO6RpePWvA1X1CDxSk4m12HXKaa8LsjPBRhKk2ebpQrqT77bw3/S3vY
- 7WrticZMGsA==
-X-Gm-Gg: ASbGncuWPjpgpZyaZOqukrxHlPDuooPszuMEfePzSHuqM6XFAmhk+ELQq9WS/94Ioyw
- ivSq+GNaMRGrR+XYL4SVt3yUf2CEGZCSbyONRayIiV0K63e3zP2aPtFv/mEG+nw/TAy4szkr2Uf
- P222s7vMUyXcw8zKetxij1GXCduhQu6wNbFbD7ffmteO4iEirDTp4KXSA1KLEbhvLjb9dVDkpAO
- dhX8XHAaAppFOvIe/Fwab/cin7DG8LDu0jCPtj35YlobNah9EIK8aPHkRWZpjcwkl8S/U4cSekd
- w4nB5zogKyLz19i5KcoyXFO7doJDpcdxtgqUtSn6BIRvljOfsAEhiW9IqPpX7DQ6z+cIWMbP8LA
- 7b5TERzQ21q857L6cr0MzVRM52rKg/s985aM1z9jJMnYUeVkO6YGBwLoWTT3s
-X-Google-Smtp-Source: AGHT+IHPuYG8mZX+VkXAaDSfwaBJMeNYDcvtpH3rcxxMoWkYXiXU2T/bmo40Zj02HOba/iWyi0aVXw==
-X-Received: by 2002:a17:902:d4c2:b0:271:5bde:697e with SMTP id
- d9443c01a7336-28e7f2f5ebfmr12564345ad.3.1759263730846; 
- Tue, 30 Sep 2025 13:22:10 -0700 (PDT)
+ AJvYcCWRodnlFU5px1ThV892NxlZwDs2rYY5gHuoLSDBg8TJg1QsDLpmfY1J/Mb/LHmXyxVm1pkyDSAVThDi@nongnu.org
+X-Gm-Message-State: AOJu0YyxQvQ9nB9pP72xaKYBNBivSGmRqJ6t5lkEcwFcyzrFOYHr79zJ
+ kDCG9PyrvPjg2L5meQ/+Mr28/SKimU/5FRP4uaVOrRCn7F3QKu8pjonERt1nNluigaBq2zO/eWo
+ It6HN49nMuA==
+X-Gm-Gg: ASbGncv2d3os8LtBR9qx/4Su8RxQgQa+Eti+kWz+klnW1Ly4KJHVijAppRBK3ZlmVfb
+ T6zgWa9zzgMGPEDpECYSsuN/Jz6O1wSTwpEdNRCb8xamby0CcA7JO/cleIxzH8Hur0U8yGsgM9M
+ GtmXte3S0MWYCIqQEMB3YnYB39/+DhH3kYJI3GfCjLUMouRFt3Yn/nUdeETCOFGF4Yhn4tEf/7P
+ Oy3B2Q4bzi0WWUJmSJe7iGm6zDQHLkEjzsOVpxlGL02hqt3II6FURo7IkMlDrMeSYiyi4q/R0VV
+ RN3l00jr6m4+ij+iRkA93PUhD5C9vJtJ1bkrjd+vngHsPqQCPbJyEoQYUhvqo71ZwRPv8pmW12/
+ 4VhnZpj0EpOrBWFtgcMo/4SI/KRa8njAmnpwI9Pse1IoZP4UCXqZYPWCezwQt
+X-Google-Smtp-Source: AGHT+IHoc4VA/fFWdT6Th4F/S3vIzEJvNsijlS17hYXqMSkv7upvOIlA0Mowea/k/OfjeBhay+mIrw==
+X-Received: by 2002:a05:6a20:d310:b0:251:2a11:e61 with SMTP id
+ adf61e73a8af0-321da316837mr1370311637.17.1759263835138; 
+ Tue, 30 Sep 2025 13:23:55 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-27ed6727ea7sm167896275ad.61.2025.09.30.13.22.10
+ 41be03b00d2f7-b57c53bacf4sm14791362a12.7.2025.09.30.13.23.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 13:22:10 -0700 (PDT)
-Message-ID: <41a0aa9e-21b1-4dd9-9294-6ca3dd46288a@linaro.org>
-Date: Tue, 30 Sep 2025 13:22:08 -0700
+ Tue, 30 Sep 2025 13:23:54 -0700 (PDT)
+Message-ID: <b0ef6dde-22fe-4e2f-9e63-372431b984a1@linaro.org>
+Date: Tue, 30 Sep 2025 13:23:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/18] target/s390x/mmu: Replace [cpu_physical_memory
- -> address_space]_rw()
+Subject: Re: [PATCH v3 10/18] target/i386/whpx: Replace legacy
+ cpu_physical_memory_rw() call
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 References: <20250930082126.28618-1-philmd@linaro.org>
- <20250930082126.28618-10-philmd@linaro.org>
+ <20250930082126.28618-11-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250930082126.28618-10-philmd@linaro.org>
+In-Reply-To: <20250930082126.28618-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,20 +107,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/30/25 01:21, Philippe Mathieu-Daudé wrote:
-> When cpu_address_space_init() isn't called during vCPU creation,
-> its single address space is the global &address_space_memory.
-> 
-> As s390x boards don't call cpu_address_space_init(),
-> cpu_get_address_space(CPU(cpu), 0) returns &address_space_memory.
-> 
-> We can then replace cpu_physical_memory_rw() by the semantically
-> equivalent address_space_rw() call.
+> Get the vCPU address space and convert the legacy
+> cpu_physical_memory_rw() by address_space_rw().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Thomas Huth<thuth@redhat.com>
 > ---
->   target/s390x/mmu_helper.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+>   target/i386/whpx/whpx-all.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
