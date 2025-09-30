@@ -4,45 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660EECAC5B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE10CAC5B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 05:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3TGx-0006dJ-MG; Tue, 30 Sep 2025 01:51:36 -0400
+	id 1v3TLG-0008AK-BN; Tue, 30 Sep 2025 01:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TGt-0006d4-Ub
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:51:31 -0400
-Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TLC-00089b-Mi
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:55:59 -0400
+Received: from 8.mo552.mail-out.ovh.net ([46.105.37.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TGp-0003LV-In
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:51:31 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.85])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cbRxx1gcHz5xkl;
- Tue, 30 Sep 2025 05:51:17 +0000 (UTC)
-Received: from kaod.org (37.59.142.96) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3TL5-0003nx-9H
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 01:55:57 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.52])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cbS343fD5z5ybj;
+ Tue, 30 Sep 2025 05:55:44 +0000 (UTC)
+Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Tue, 30 Sep
- 2025 07:51:16 +0200
+ 2025 07:55:43 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-96R001abb24051-7f39-41f6-b498-32577c69948a,
+ (GARM-105G006769c88b4-5ec2-4ba6-a8aa-bce0c466b76d,
  012DEA80DA8F652C9231DB37D1304F33C12A2C6A) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <0165086d-3ab4-4986-84ff-452984d16153@kaod.org>
-Date: Tue, 30 Sep 2025 07:51:15 +0200
+Message-ID: <dbea5c97-071e-4d7c-a022-8cd5d9cf6171@kaod.org>
+Date: Tue, 30 Sep 2025 07:55:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] aspeed: Add support for the sonorapass-bmc board
-To: Patrick Williams <patrick@stwcx.xyz>
+Subject: Re: [PATCH] aspeed: Add Supermicro X11 SPI machine type
+To: Guenter Roeck <linux@roeck-us.net>
 CC: Peter Maydell <peter.maydell@linaro.org>, Andrew Jeffery
- <andrew@aj.id.au>, Amithash Prasad <amithash@fb.com>, "open list:All patches
- CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, Vijay Khemka <vijaykhemka@fb.com>, Joel Stanley
- <joel@jms.id.au>, Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>, Peter
- Delevoryas <pdel@fb.com>
-References: <20200506173035.2154053-1-patrick@stwcx.xyz>
- <20200506183219.2166987-1-patrick@stwcx.xyz>
+ <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+References: <20221025165109.1226001-1-linux@roeck-us.net>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,35 +83,34 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20200506183219.2166987-1-patrick@stwcx.xyz>
+In-Reply-To: <20221025165109.1226001-1-linux@roeck-us.net>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.96]
-X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG8EX2.mxp5.local
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: c77987f1-7f25-433f-b2ec-df6345588912
-X-Ovh-Tracer-Id: 8058347112511343538
+X-Ovh-Tracer-GUID: 5fa9478f-4d0b-4213-bff6-a6ceca42dd6b
+X-Ovh-Tracer-Id: 8133500929976339238
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGVz4ws4F7kIHG9MG+GSpUno1zsDoUS41ln38iS9OOUK0TwMl20OepYaG8Ru3AwdG0ROEc/8Wy0p8HXR0/DTgC7pqIg7h6JDG9U7LDWtyUH4MMp2Rv8onrHOJ7UV7T4yDeM7TmyOOFAdpYEH+IEQ1B8SvQX7mzxchU3FIwCFNtlt6UKaKLf0Czum4rD58O/Bl/QqQpz67Ljsk+3BaNw3vDTgI+WeE1O+6+Sgn03SkZaLenOAbyp8YkHQt+N8RdJYOegD6uvRgZVYm4zYkx0oWCPOw0bfOxd+bzLPm5KPkdCnF1UGu0Krd6jLUmUpqBiEf1k+gbHHazvPeqUIrPEpu6RBp0Y+0VkH5rL3LLj10BGauCGpXenVrzSfrs7C8xYi9uW0+rES/julOqcGuzIJHC9ZMukJcPQbP/9eb6KHIPiExhbPENo6rE0irWuCaWponxUBxL5Th3Kya1MqXlaaIP4WIHiVKDXcTf+plkFtQBLdLtLKJJcMO4kIBzL0tcPDxg4PqquYZZHPosM27YvgxrV6zMlFtrA6BUpe3aPz2I5dNXa4JIVSQ2NZ8vA9l3zXkgIDI/mxROR+RuZFGneSQFyfV74Jvz96o1VbpKbFhlpbKn1MTN+rBCcraiEP3Jd6vbSPUB/cmHbhT1ZC35TmYbt8t5vcuyHi07DAsSj/RbHDg
-DKIM-Signature: a=rsa-sha256; bh=yDUqoOiiy7Hj28q6Be/E3953fSQB5+FS8wBOX/T2QYM=; 
+X-VR-SPAMCAUSE: dmFkZTFP0lZMU762VLmzYOc9+eYd/t/xn+R9+O25J2TQXkFFUVmIOVtNNQXYLiYI5HIXphpeMf8kxBcxJvIcqK3FtT1iNOsklIWkBzNflys3Oy3TsDF1F3xgsQ0fs2LxQ+iNw2LaE9F8CMlsJ6LzgpBozw96Az87NAsMF6mhjkBX0NhVEb/Yb4s1WsVmFT+EIOBEsEjtIAGnlEv/A/Mq/dSQy9Ger8/7Nf0DmQAa3gnoWbdaP75yYPhh1lBIuOnYYOj9f0UmctIqkfdizFhO7IFcCaO3s++WV6eDGDN8w5jIfcQCXkazdqku7iSI34es4BjsOQVlBdczPVv2wzBL5iTsH9FAgoZ0ZrqbwjXwcr9m8uVkNVm1avtSrrA3m12gu6wcLTybVNWpPRc4Y5wGKyRagEv0AxOSeBJJ4Rgpt82jcRGGObBunBK/sAgEZRuW/YNCqd2vjznzKEqX1C/RI2cku4HhZNi6dptwXv5DxwkOYaJo/WExypg2CDMOO+tMNF4gZidytcAMfnEZh8IZuDe0ZXIIlnLDjRro7vjA2tdg4r1qWz+mYOTtvqQMSYxAiE4H8hyVbBDs3xx6aGmB1kETCmINNhBILOMCCE3o/aYmXofF1OE8WFpd7mS1r+MBRO+W6qtUWgwaErZNweDOOcGLipjN/ot5cQ4El3OwenyxEBkxeQ
+DKIM-Signature: a=rsa-sha256; bh=qIjdsBWQR74vlUha8sSzNUkJmoK/Kdk3CTp7vgo3VjM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1759211478; v=1;
- b=VjVt/50QEq2RiaSmOE5Tpp2DnwXa/YYvYsSrhk9/vVapWdqWxq6DaaL16s1TsJky7ZSRRyl3
- 72I9QL3YboY/uSaYpgn3oylC3kkiuQf1LcpG/mTcApONcS08Zbphv59osv7pfLwGyp9KjmX/YkQ
- xqmXIt7wtuq4zRFRpVBJ3ItHZq/jZjUEoaJGKNg0ISNafbEyAcUbtuj9OL77Xgl9k0zuWlyxvzG
- ghQr9DMWucHMKF491ZSv4FV9rFpR8NPZP+A9uOuVaKeqmozo1q8Dkgzrw1kcPEg9CGJ38xUJIHl
- perFA4W9pg42oEcl5N44vdVuemp56Hgr43xBSauXeA0Ow==
-Received-SPF: pass client-ip=188.165.42.229; envelope-from=clg@kaod.org;
- helo=4.mo548.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ t=1759211745; v=1;
+ b=pAOCbWT+PrI1sllYn6BChp+Edktir05FJ/IUi+pvLQTPiI55bEdNIBNrjkgDX3Y0OnHK68KE
+ oSlY7O65ar+cy9Pd6pDUI6E/iqFvx4nHXm7DLvmuWeBXtb3oUAoy4ELOUi4WkixtrqFpwvFVcYF
+ LFATaPdoisJYqJAU85c0kU4pVA/vw0ng+g8po5DlvDiQvU3mqh8w5KBYnWjfcXenx73mADplXAc
+ ywNVrqOuFaHZepYV5dYhHWS19eX5/Pyl2j/au2zmYriH4sCXODI2wq9tc4Gc8nyadzaINp6BSES
+ bowMxTgU2jsP8my4+uohY9LqKHW013jAnnQ49IupuoUig==
+Received-SPF: pass client-ip=46.105.37.156; envelope-from=clg@kaod.org;
+ helo=8.mo552.mail-out.ovh.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,157 +126,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Patrick
+On 10/25/22 18:51, Guenter Roeck wrote:
+> supermicrox11-bmc is configured with ast2400-a1 SoC. This does not match
+> the Supermicro documentation for X11 BMCs, and it does not match the
+> devicetree file in the Linux kernel.
+> 
+> As it turns out, some Supermicro X11 motherboards use AST2400 SoCs,
+> while others use AST2500.
+> 
+> Introduce new machine type supermicrox11-spi-bmc with AST2500 SoC
+> to match the devicetree description in the Linux kernel. Hardware
+> configuration details for this machine type are guesswork and taken
+> from defaults as well as from the Linux kernel devicetree file.
+> 
+> The new machine type was tested with aspeed-bmc-supermicro-x11spi.dts
+> from the Linux kernel and with Linux versions 6.0.3 and 6.1-rc2.
+> Linux booted successfully from initrd and from both SPI interfaces.
+> Ethernet interfaces were confirmed to be operational.
+> 
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 
-On 5/6/20 20:32, Patrick Williams wrote:
-> Sonora Pass is a 2 socket x86 motherboard designed by Facebook
-> and supported by OpenBMC.  Strapping configuration was obtained
-> from hardware and i2c configuration is based on dts found at:
-> 
-> https://github.com/facebook/openbmc-linux/blob/1633c87b8ba7c162095787c988979b748ba65dc8/arch/arm/boot/dts/aspeed-bmc-facebook-sonorapass.dts
-> 
-> Booted a test image of http://github.com/facebook/openbmc to login
-> prompt.
-> 
-> Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
-> Reviewed-by: Amithash Prasad <amithash@fb.com>
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
-> ---
->   hw/arm/aspeed.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 77 insertions(+)
-
+Hello Guenter
 
 Would it be possible to contribute a functional test for this
 machine ?
 
-The request applies to these Facebook machines :
-
-   sonorapass-bmc
-   yosemitev2-bmc
-   tiogapass-bmc
-   fuji-bmc
-   fby35-bmc
-
-Since these machines contribute little to the Aspeed models,
-their value lies in the firmware they can run to exercise the
-models. Without functional tests, I plan to schedule their
+Since this machine contributes little to the Aspeed models,
+its value lies in the firmware it can run to exercise the
+models. Without functional tests, I plan to schedule the
 removal in the QEMU 10.2 cycle.
 
-The fby35-bmc value is in its multisoc nature. We now have the
-ast2700fc available as its replacement
 
 Thanks,
 
 C.
 
+
+
+> ---
+>   hw/arm/aspeed.c | 33 +++++++++++++++++++++++++++++++++
+>   1 file changed, 33 insertions(+)
+> 
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 6f4d7075c4..74c46681e8 100644
+> index c282ead38f..56d007de5a 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -74,6 +74,21 @@ struct AspeedBoardState {
->           SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
->           SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
+> @@ -71,6 +71,16 @@ struct AspeedMachineState {
+>           SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+>           SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 >   
-> +/* Sonorapass hardware value: 0xF100D216 */
-> +#define SONORAPASS_BMC_HW_STRAP1 (                                      \
+> +/* TODO: Find the actual hardware value */
+> +#define SUPERMICROX11_SPI_BMC_HW_STRAP1 (                               \
+> +        AST2500_HW_STRAP1_DEFAULTS |                                    \
 > +        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
 > +        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
 > +        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-> +        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
 > +        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
-> +        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
-> +        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
-> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
-> +        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
-> +        SCU_HW_STRAP_VGA_BIOS_ROM |                                     \
-> +        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
-> +        SCU_AST2500_HW_STRAP_RESERVED1)
+> +        SCU_HW_STRAP_SPI_WIDTH |                                        \
+> +        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN))
 > +
->   /* Swift hardware value: 0xF11AD206 */
->   #define SWIFT_BMC_HW_STRAP1 (                                           \
+>   /* AST2500 evb hardware value: 0xF100C2E6 */
+>   #define AST2500_EVB_HW_STRAP1 ((                                        \
 >           AST2500_HW_STRAP1_DEFAULTS |                                    \
-> @@ -434,6 +449,49 @@ static void swift_bmc_i2c_init(AspeedBoardState *bmc)
->       i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 12), "tmp105", 0x4a);
+> @@ -1172,6 +1182,25 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+>       mc->default_ram_size = 256 * MiB;
 >   }
 >   
-> +static void sonorapass_bmc_i2c_init(AspeedBoardState *bmc)
-> +{
-> +    AspeedSoCState *soc = &bmc->soc;
-> +
-> +    /* bus 2 : */
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 2), "tmp105", 0x48);
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 2), "tmp105", 0x49);
-> +    /* bus 2 : pca9546 @ 0x73 */
-> +
-> +    /* bus 3 : pca9548 @ 0x70 */
-> +
-> +    /* bus 4 : */
-> +    uint8_t *eeprom4_54 = g_malloc0(8 * 1024);
-> +    smbus_eeprom_init_one(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 4), 0x54,
-> +                          eeprom4_54);
-> +    /* PCA9539 @ 0x76, but PCA9552 is compatible */
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 4), "pca9552", 0x76);
-> +    /* PCA9539 @ 0x77, but PCA9552 is compatible */
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 4), "pca9552", 0x77);
-> +
-> +    /* bus 6 : */
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 6), "tmp105", 0x48);
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 6), "tmp105", 0x49);
-> +    /* bus 6 : pca9546 @ 0x73 */
-> +
-> +    /* bus 8 : */
-> +    uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
-> +    smbus_eeprom_init_one(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 8), 0x56,
-> +                          eeprom8_56);
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 8), "pca9552", 0x60);
-> +    i2c_create_slave(aspeed_i2c_get_bus(DEVICE(&soc->i2c), 8), "pca9552", 0x61);
-> +    /* bus 8 : adc128d818 @ 0x1d */
-> +    /* bus 8 : adc128d818 @ 0x1f */
-> +
-> +    /* bus 13 : pca9548 @ 0x71
-> +     *      - channel 3:
-> +     *          - tmm421 @ 0x4c
-> +     *          - tmp421 @ 0x4e
-> +     *          - tmp421 @ 0x4f
-> +     */
-> +
-> +}
-> +
->   static void witherspoon_bmc_i2c_init(AspeedBoardState *bmc)
->   {
->       AspeedSoCState *soc = &bmc->soc;
-> @@ -552,6 +610,21 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc, void *data)
->       mc->default_ram_size       = 512 * MiB;
->   };
->   
-> +static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
+> +static void aspeed_machine_supermicrox11_spi_bmc_class_init(ObjectClass *oc,
+> +                                                            void *data)
 > +{
 > +    MachineClass *mc = MACHINE_CLASS(oc);
 > +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 > +
-> +    mc->desc       = "OCP SonoraPass BMC (ARM1176)";
+> +    mc->desc       = "Supermicro X11 SPI BMC (ARM1176)";
 > +    amc->soc_name  = "ast2500-a1";
-> +    amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
-> +    amc->fmc_model = "mx66l1g45g";
-> +    amc->spi_model = "mx66l1g45g";
-> +    amc->num_cs    = 2;
-> +    amc->i2c_init  = sonorapass_bmc_i2c_init;
-> +    mc->default_ram_size       = 512 * MiB;
-> +};
+> +    amc->hw_strap1 = SUPERMICROX11_SPI_BMC_HW_STRAP1;
+> +    amc->fmc_model = "mx25l25635e";
+> +    amc->spi_model = "mx25l25635e";
+> +    amc->num_cs    = 1;
+> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+> +    amc->i2c_init  = palmetto_bmc_i2c_init;
+> +    mc->default_ram_size = 512 * MiB;
+> +    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+> +        aspeed_soc_num_cpus(amc->soc_name);
+> +}
 > +
->   static void aspeed_machine_swift_class_init(ObjectClass *oc, void *data)
+>   static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
 >   {
 >       MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -631,6 +704,10 @@ static const TypeInfo aspeed_machine_types[] = {
->           .name          = MACHINE_TYPE_NAME("swift-bmc"),
+> @@ -1546,6 +1575,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("supermicrox11-bmc"),
 >           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_swift_class_init,
+>           .class_init    = aspeed_machine_supermicrox11_bmc_class_init,
 > +    }, {
-> +        .name          = MACHINE_TYPE_NAME("sonorapass-bmc"),
+> +        .name          = MACHINE_TYPE_NAME("supermicrox11-spi-bmc"),
 > +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_sonorapass_class_init,
+> +        .class_init    = aspeed_machine_supermicrox11_spi_bmc_class_init,
 >       }, {
->           .name          = MACHINE_TYPE_NAME("witherspoon-bmc"),
+>           .name          = MACHINE_TYPE_NAME("ast2500-evb"),
 >           .parent        = TYPE_ASPEED_MACHINE,
 
 
