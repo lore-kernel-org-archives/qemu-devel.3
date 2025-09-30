@@ -4,74 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E144ACCA470
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C14CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Sep 2025 14:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3bIE-0003WH-Kp; Tue, 30 Sep 2025 10:25:26 -0400
+	id 1v3bK5-0003wc-CJ; Tue, 30 Sep 2025 10:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3bIC-0003Vm-If
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:25:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1v3bJs-0003rz-I2
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:27:08 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3bHx-0003Ba-S7
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:25:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759242303;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=tZ5Ysy5aelVtvjkhbK4uZaQ/sQIniAcLB7CInUkiE84=;
- b=XHdGasTka0q5wR+4G6P0dxSWKElMhVSJRkXYQo5LeXpigWGICCgJBMqrZEkY5dhIpq2KJu
- o1Hs9YUZakrQcaLQVgF9WN68tDZCOVUbd3keZ/a8GGi/ROlAYsq2tyC16XuIhHWgkP4PJ0
- FlEwU3l9TDeEzldtDPYFvE5344DmSGQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-SZHfD-14PdOscC5W_VoyaA-1; Tue,
- 30 Sep 2025 10:24:57 -0400
-X-MC-Unique: SZHfD-14PdOscC5W_VoyaA-1
-X-Mimecast-MFC-AGG-ID: SZHfD-14PdOscC5W_VoyaA_1759242296
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4BF62195605B; Tue, 30 Sep 2025 14:24:55 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 00B581801420; Tue, 30 Sep 2025 14:24:50 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] aspeed: Set 'auto_create_sdcard' to false
-Date: Tue, 30 Sep 2025 16:24:48 +0200
-Message-ID: <20250930142448.1030476-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1v3bJk-0003sL-8b
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 10:27:08 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cbgNW37N7z6L5Mb;
+ Tue, 30 Sep 2025 22:26:35 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id A145D1402F5;
+ Tue, 30 Sep 2025 22:26:49 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 30 Sep
+ 2025 15:26:48 +0100
+Date: Tue, 30 Sep 2025 15:26:47 +0100
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, <vishak.g@samsung.com>,
+ <krish.reddy@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <arpit.sysdev@gmail.com>, <cpgs@samsung.com>
+Subject: Re: [PATCH v4 1/2] hw/cxl: Refactored Identify Switch Device & Get
+ Physical Port State
+Message-ID: <20250930152647.00000e84@huawei.com>
+In-Reply-To: <20250919110312.naudjnvhsjmxaxjk@test-PowerEdge-R740xd>
+References: <20250916080736.1266083-1-arpit1.kumar@samsung.com>
+ <CGME20250916080803epcas5p1cd11689108b259f21908d9779993cc0f@epcas5p1.samsung.com>
+ <20250916080736.1266083-2-arpit1.kumar@samsung.com>
+ <20250917165535.000021b1@huawei.com>
+ <20250919110312.naudjnvhsjmxaxjk@test-PowerEdge-R740xd>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,221 +74,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Don't create a default SD card device at init time.
+On Fri, 19 Sep 2025 16:33:12 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Fixes: cdc8d7cadaac ("hw/boards: Rename no_sdcard -> auto_create_sdcard")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/arm/aspeed.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+> On 17/09/25 04:55PM, Jonathan Cameron wrote:
+> >On Tue, 16 Sep 2025 13:37:35 +0530
+> >Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+> >  
+> >> -Storing physical ports info during enumeration.
+> >> -Refactored changes using physical ports info for
+> >>  Identify Switch Device (Opcode 5100h) & Get Physical Port State
+> >>  (Opcode 5101h) physical switch FM-API command set.
+> >>
+> >> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>  
+> >
+> >Hi Arpit.  One question inline, and one comment on code I've moved
+> >around whilst queue this up.  I'll push out a tree to gitlab
+> >(probably tomorrow) and when I do please check I didn't mess that up!
+> >
+> >Jonathan
+> >  
+> 
+> Hi Jonathan,
+> Thank you for the swift response and review comments.
+> Sure, will look into gitlab tree once up.
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index a3659ffea475..0d1f043ac214 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1450,7 +1450,7 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635f";
-     amc->num_cs    = 1;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 256 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1468,7 +1468,7 @@ static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635e";
-     amc->num_cs    = 1;
-     amc->i2c_init  = quanta_q71l_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 128 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1487,7 +1487,7 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
-     amc->num_cs    = 1;
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 256 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1506,7 +1506,7 @@ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
-     amc->num_cs    = 1;
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1524,7 +1524,7 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635f";
-     amc->num_cs    = 1;
-     amc->i2c_init  = ast2500_evb_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1543,7 +1543,7 @@ static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635e";
-     amc->num_cs    = 2;
-     amc->i2c_init  = yosemitev2_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1561,7 +1561,7 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
-     amc->spi_model = "mx66l1g45g";
-     amc->num_cs    = 2;
-     amc->i2c_init  = romulus_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1580,7 +1580,7 @@ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635e";
-     amc->num_cs    = 2;
-     amc->i2c_init  = tiogapass_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1598,7 +1598,7 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
-     amc->spi_model = "mx66l1g45g";
-     amc->num_cs    = 2;
-     amc->i2c_init  = sonorapass_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1616,7 +1616,7 @@ static void aspeed_machine_witherspoon_class_init(ObjectClass *oc,
-     amc->spi_model = "mx66l1g45g";
-     amc->num_cs    = 2;
-     amc->i2c_init  = witherspoon_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1638,7 +1638,7 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
-                      ASPEED_MAC3_ON;
-     amc->sdhci_wp_inverted = true;
-     amc->i2c_init  = ast2600_evb_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-     aspeed_machine_ast2600_class_emmc_init(oc);
-@@ -1657,7 +1657,7 @@ static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = g220a_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1024 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1676,7 +1676,7 @@ static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = fp5280g2_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1695,7 +1695,7 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = rainier_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-     aspeed_machine_ast2600_class_emmc_init(oc);
-@@ -1718,7 +1718,7 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
-     amc->macs_mask = ASPEED_MAC3_ON;
-     amc->i2c_init = fuji_bmc_i2c_init;
-     amc->uart_default = ASPEED_DEV_UART1;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1740,7 +1740,7 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON;
-     amc->i2c_init  = bletchley_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1760,7 +1760,7 @@ static void aspeed_machine_catalina_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON;
-     amc->i2c_init  = catalina_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = CATALINA_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
-     aspeed_machine_ast2600_class_emmc_init(oc);
-@@ -1828,7 +1828,7 @@ static void aspeed_machine_fby35_class_init(ObjectClass *oc, const void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC3_ON;
-     amc->i2c_init  = fby35_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     /* FIXME: Replace this macro with something more general */
-     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
-@@ -1941,7 +1941,7 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc,
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-     amc->vbootrom = true;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1964,7 +1964,7 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-     amc->vbootrom = true;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1985,7 +1985,7 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -2005,7 +2005,7 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
--    mc->auto_create_sdcard = true;
-+    mc->auto_create_sdcard = false;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
--- 
-2.51.0
+Oops. Got rather delayed on that - getting back to tree mangling this week.
+
+> 
+> Thanks,
+> Arpit
+> >  
+> >> +static CXLRetCode cxl_set_port_type(CXLUpstreamPort *ports, int pnum,
+> >> +                                    CXLCCI *cci)
+> >> +{
+> >> +    uint8_t current_port_config_state;
+> >> +    uint8_t connected_device_type;
+> >> +    uint8_t supported_ld_count;
+> >> +    uint16_t lnkcap, lnkcap2, lnksta;
+> >> +    PCIBus *bus;
+> >> +    PCIDevice *port_dev;
+> >> +    PCIEPort *usp = PCIE_PORT(cci->d);
+> >> +
+> >> +    if (usp->port == pnum) {
+> >> +        port_dev = PCI_DEVICE(usp);
+> >> +        current_port_config_state = CXL_PORT_CONFIG_STATE_USP;
+> >> +        connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
+> >> +        supported_ld_count = 0;
+> >> +    } else {
+> >> +        bus = &PCI_BRIDGE(cci->d)->sec_bus;
+> >> +        port_dev = pcie_find_port_by_pn(bus, pnum);
+> >> +        if (port_dev) { /* DSP */
+> >> +            PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
+> >> +                ->devices[0];
+> >> +            current_port_config_state = CXL_PORT_CONFIG_STATE_DSP;
+> >> +            if (ds_dev) {
+> >> +                if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
+> >> +                    /* To-do: controllable */  
+> >
+> >In what sense controllable?  It should always match what the downstream device
+> >is presenting as.  Do you ultimately mean if we mess with the alternate modes
+> >and reset the port to have it come up as a PCI only device?
+> >This will need to be more complex as we add different CXL type 3 device support
+> >of course, but I'd still expect to auto detect it rather that control it directly.
+> >  
+> 
+> This is with respect to your review comment from v1 patch:
+> https://lore.kernel.org/qemu-devel/20250602135942.2773823-1-arpit1.kumar@samsung.com/T/
+> As per my understanding, controllable was identification of the specific type of 
+> CXL type 3 device and accordingly initializing connected_device_type. Since you 
+> mention auto-detect, does it mean using object_get_typename() to identify the type
+> of device and initiliaze it directly to connected_device_type rather than specifying
+> it explicitly. If yes, then this anyways rules out controllable part, hence the comment
+> can be removed.
+
+Hmm. I thought I'd replied here, but seems not!
+
+I meant indeed that we can query the downstream device to find out what it is and
+assume that we have trained up to match that.
+
+So agreed just dropping the comment is the easy way forward.
+
+J
 
 
