@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA0ACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA113CCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yRQ-0002O1-Vg; Wed, 01 Oct 2025 11:08:29 -0400
+	id 1v3yQo-0001gH-Oo; Wed, 01 Oct 2025 11:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3yR3-00023i-3R
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:08:05 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3yQi-0001ad-5K
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:07:44 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3yPe-0000kY-QD
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:08:03 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3f1aff41e7eso5518917f8f.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 08:06:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3yPV-0000ix-N9
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:07:42 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-279e2554b5fso9774355ad.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 08:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759331188; x=1759935988; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HoIBFbfrsz0t0Xevzl+WovcI4TEmiT7XaJGhm9ak06U=;
- b=nlRfxxewELkEOoBWYOA6cRJ89bc1Z59JARKf3fadJUd/Ph/WL0EPsLYlsO1spmPER0
- yJ+trwz4rBlfLMd/aHhbNnzGrPq1gfW7EF0kRB4L5uehy7ciqhqRXjrjEeIrAvI9Yvtz
- h5sGzM98beDX1e5FiUhRZC4f/V+mRO05sbvgWxJ/mJ6hykC8tbvEs7TplkBJHAGCvaLT
- 4nJ2aGANSuliJWXHgiavbtgdYnOazKL10ga6ieuLpWFjxLUr/2bJDFL5VrWcxqBcjnch
- MavihMDuj8OvI3r9oVMkSZkbaaKS0IpUHTfeL6ExoXrbGxx4R9phWaMMl9kILfurr4eC
- rzrg==
+ d=linaro.org; s=google; t=1759331180; x=1759935980; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hSyuB+zquHrxue8iAHxOXVu7rZELFV4qzCL0Y+t5BaM=;
+ b=USgTtUSaiybehab/BQhpuwbGSfaEVrlYfxDXbqlS5kn1NuXThM86DWEcNkKuzGXnhk
+ I5HmksvMiUA3gfEXJsSDRoSEcH8fvTPJauwDcHlXcYEFBP+QIDPAwTLPW/teezD1Vfxk
+ 9HuhOmSUDifdYJSCNMVb1gHHETaFtA7ARlNw+DbPDO0PIshr2SFNX+re6yf2fM+BrcAi
+ RHX1mc+DqLekQn/jK3s51sEwoKte8OAZ+FvcwahOUFsaLDppKc7VlnwK7+bmg4OCUUtY
+ qHRDiUd4hJvuIq6ci7/lWoUMMG+iZ1Gfm5bmUNjWB5dlvZ2Jresi1W+GvHqDwJGevfXJ
+ uWMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759331188; x=1759935988;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HoIBFbfrsz0t0Xevzl+WovcI4TEmiT7XaJGhm9ak06U=;
- b=URbWs/Av9Jksf4FiMZ11Sku05UqAq2MykQDJoy2bR4CX7JQGyN6gVceCBzy8xnlhVo
- KaqoIkhMad06jmASegNtPIA33nfTX0QFCv8++vbLVdXA7NcWqRdeRF+V/Zi9UDvLjuLK
- BGyLcKU7PygHTL9aPm2urYAeI44TdMnNsHZS+Fv/rm4R2ixP/77pbdjYwElrBiMUtkLx
- MNoppDtJqcRVn5yKmXYT/G9d1/PpyqTYNzVq6HG3pcwm73xUyFC9GT3NixY8SFwghvyy
- DdPhkYUFnyMWVwFtUJnVEVea5wqRt+Z2A323uUZWZuWF8JUswOCzK1AUi+fsX5q7R893
- fbOQ==
-X-Gm-Message-State: AOJu0YyhiyzbJD2MbKfeDOAc/2ni54rJG9YLZm5HgzTpS03+N//a/Ind
- PrrJxlNeziEQC/Dr2V87Y3z3vt8EivpwnC/3ZSOnQwSgnisxUweDo1ileyaCpLOZzVhnjSd2TPq
- SFvjwHs5ntg==
-X-Gm-Gg: ASbGncuaEHwDHW8LUQ240n4LRY4qI5Sh3vATo98MXp1TG7aj0GTtZH4Q5tL0FuWWXMM
- 4wqY0SNEhZgt8DqBHVqRtSdyZvI7RjqPC6Z+qcLSdweITFF3ZRY3na9KWoDPUDPGaBYKQ9iYfsF
- twcGYwJP6fKFJXS76bCVzK4DNRP/vxpEFK3xzsYPOMecwQbG8aVpFA7qrwWWSqQftaSWfpUyIER
- 4uHVvRjThgrlMU/SfAoiUN5dEmORXnx2gWFiI9/gi5STis0FTWhGbE+qSJ1L3jgegtH8UUvZW91
- gu1t85PG6ncVqFU1kG47epGILOLVjymto5O9XEEY1R991TnSULWCCVIxQZxKnZ2vaGNAi74HbjJ
- 6sHtRM52wzsvI6nL9axB3vanLRAyTYSfKpfI6wzaHMzE+VhjWV3jPXixTQV23EkdUgtAYANBvkt
- ZTp4geqNLb/DVBM47gbXSX
-X-Google-Smtp-Source: AGHT+IEJ81qtfG04DHe/4mEazGBmhdqjREcWngyjsG2pu87Vb24G+7/Rah+ejZND5Mr0zO8mHcd6Fw==
-X-Received: by 2002:a05:6000:2907:b0:3e0:2a95:dc90 with SMTP id
- ffacd0b85a97d-4255780b9dfmr3190951f8f.35.1759331187866; 
- Wed, 01 Oct 2025 08:06:27 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb9e1b665sm27390018f8f.27.2025.10.01.08.06.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 08:06:27 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 11/22] target/arm: Get cpu first addr space with
- cpu_get_address_space()
-Date: Wed,  1 Oct 2025 17:05:16 +0200
-Message-ID: <20251001150529.14122-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251001150529.14122-1-philmd@linaro.org>
-References: <20251001150529.14122-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1759331180; x=1759935980;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hSyuB+zquHrxue8iAHxOXVu7rZELFV4qzCL0Y+t5BaM=;
+ b=B/T8oOn0ftj1mD0E1np+Hg6Kpn7vepZwocwJ9ZqDJHWdP+D8UUz6NeM+o3ggK9krwI
+ 9G0QTY171xloMaBTw29pzkUumjqApyPxyn7RzI8gTME+ZY41Gl1ZHtKs5ReVQdz1MAYX
+ Eqmh7dS3o3uZHcuMcrGWAMFJaBRGW4u/jKPWQpok7dHLPlSORTj+J013tmNM2z4CNZmP
+ +q6PKs078wYeBdawNGejltxXcN3fuWoM1EDWUgJAFBzR2RnfhHvEJX9vTKODUl+NtZON
+ NgQVzszjHIrllpgcQbIkou8g1ZanSslEB8HxfR08rWq9HfSIAbP7hJwrEHtnCmcb8zr3
+ 3MDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHhCigEtSeY5j6YWwfn4etZE0ZgvpUhSgcxn0+oXLVaMOMHl3RzPfG8dF7OcSSg1XOyvDmdKQVNIZm@nongnu.org
+X-Gm-Message-State: AOJu0Yxy1/yPcViFK6MY0OHhDbPVjFqhRYiGWKhNrFQ7Y2+pGHc0MxgM
+ FIOTZFAyBRmSK6dhDKVVH5vrZyy4VJXTx/ldm1n43cKNxbAekwC7IGdP2aw9j+W5SE4=
+X-Gm-Gg: ASbGnctjzREtKYBmLLeGhJZHW+Ym2d/D2CCdk+9Sgn1d7BCnU7/bglTEQu6jc+Fcbky
+ LgaOMrmc/akXRT4mF/SQYie2z1qt8Yg5SGCQG9+6WEul1x6k+EbIMqLS4hIDuKDlwY9C9dwhERu
+ hLIhTdLIfHhT55fTW5s/5s4he+FQZbXepoH3BVUWUEknWLjK0nfsnnFuu0bczEO/PxRNe/1z4Hj
+ GGsWymS6luMHeqrKyz8/Odzsu86R2xOmivFCk5/v5IeVV8bHmKCjgsV1aWxGeqZj2xj/i6a17BV
+ qmdhT0DURYsG17eKh9/LKg1RgbrgPzSdP2K1u7Nxm6LcqJcxvgCHXByaGdOXss3DchKoc9qDXOM
+ prEsCH4nglSYtz0Z4kmRyloWHL6egozX9/E751O6Xr/KuZJE6zgkdlVPRO65rhiVmjv+0dSNMts
+ uIje6QJ4Zq4aUTEsiqNQTQKja/ZuXMiqU=
+X-Google-Smtp-Source: AGHT+IFKY861LwRjSuvG+phhirbBUopsKVAqpKL7J2ACR7lHVwYNe8Au3lRjJc1dMqyfBfoMCrpEsA==
+X-Received: by 2002:a17:903:37cd:b0:271:6af4:17c with SMTP id
+ d9443c01a7336-28d16d64cb6mr87624325ad.1.1759331180072; 
+ Wed, 01 Oct 2025 08:06:20 -0700 (PDT)
+Received: from ?IPV6:2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345?
+ ([2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-27ed66cdd76sm190398835ad.4.2025.10.01.08.06.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 08:06:19 -0700 (PDT)
+Message-ID: <aa09afd3-b897-42ec-817f-c4a30d090a00@linaro.org>
+Date: Wed, 1 Oct 2025 08:06:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/25] accel/tcg: Rename @start argument of
+ tlb_reset_dirty*()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20251001082127.65741-1-philmd@linaro.org>
+ <20251001082127.65741-9-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251001082127.65741-9-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,48 +107,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to remove the convenient CPUState::as field, access
-the vcpu first address space using the cpu_get_address_space()
-helper.
+On 10/1/25 01:21, Philippe Mathieu-Daudé wrote:
+> Generally we want to clarify terminology and avoid confusions,
+> prefering @start with (exclusive) @end, and base @addr with
+> @length (for inclusive range).
+> 
+> Here as tlb_reset_dirty() and tlb_reset_dirty_range_all()
+> operate on a range, rename @start as @addr.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/exec/cputlb.h | 4 ++--
+>   accel/tcg/cputlb.c    | 6 +++---
+>   system/physmem.c      | 8 ++++----
+>   3 files changed, 9 insertions(+), 9 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/cpu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Eh.  I suppose.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 30e29fd3153..f781d1cfd80 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -371,6 +371,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
- 
-     if (arm_feature(env, ARM_FEATURE_M)) {
- #ifndef CONFIG_USER_ONLY
-+        AddressSpace *as = cpu_get_address_space(cs, 0);
-         uint32_t initial_msp; /* Loaded from 0x0 */
-         uint32_t initial_pc; /* Loaded from 0x4 */
-         uint8_t *rom;
-@@ -439,7 +440,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
- 
-         /* Load the initial SP and PC from offset 0 and 4 in the vector table */
-         vecbase = env->v7m.vecbase[env->v7m.secure];
--        rom = rom_ptr_for_as(cs->as, vecbase, 8);
-+        rom = rom_ptr_for_as(as, vecbase, 8);
-         if (rom) {
-             /* Address zero is covered by ROM which hasn't yet been
-              * copied into physical memory.
-@@ -452,8 +453,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-              * it got copied into memory. In the latter case, rom_ptr
-              * will return a NULL pointer and we should use ldl_phys instead.
-              */
--            initial_msp = ldl_phys(cs->as, vecbase);
--            initial_pc = ldl_phys(cs->as, vecbase + 4);
-+            initial_msp = ldl_phys(as, vecbase);
-+            initial_pc = ldl_phys(as, vecbase + 4);
-         }
- 
-         qemu_log_mask(CPU_LOG_INT,
--- 
-2.51.0
+What we *really* want is to abolish both end and length.  They both lead to the silliness 
+that is system/memory.h using Int128 for ranges.  Both end and length allow an empty 
+range, which we don't actually need, but do not allow a range covering the entire 2**64.
+
+We should be using first/last, where first==last is a 1 byte inclusive range, and first==0 
+&& last==UINT64_MAX is the entire 2**64.
+
+I'm not sure where you're going with this other than swapping names.
+
+
+r~
+
+> 
+> diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+> index db7cbf97826..995fe31ef75 100644
+> --- a/include/exec/cputlb.h
+> +++ b/include/exec/cputlb.h
+> @@ -32,8 +32,8 @@ void tlb_unprotect_code(ram_addr_t ram_addr);
+>   
+>   #ifndef CONFIG_USER_ONLY
+>   /* Called with rcu_read_lock held. */
+> -void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length);
+> -void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+> +void tlb_reset_dirty(CPUState *cpu, uintptr_t addr, uintptr_t length);
+> +void tlb_reset_dirty_range_all(ram_addr_t addr, ram_addr_t length);
+>   #endif
+>   
+>   /**
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 2a6aa01c57c..6807328df82 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -916,7 +916,7 @@ static inline void copy_tlb_helper_locked(CPUTLBEntry *d, const CPUTLBEntry *s)
+>    * We must take tlb_c.lock to avoid racing with another vCPU update. The only
+>    * thing actually updated is the target TLB entry ->addr_write flags.
+>    */
+> -void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
+> +void tlb_reset_dirty(CPUState *cpu, uintptr_t addr, uintptr_t length)
+>   {
+>       int mmu_idx;
+>   
+> @@ -929,12 +929,12 @@ void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
+>   
+>           for (i = 0; i < n; i++) {
+>               tlb_reset_dirty_range_locked(&desc->fulltlb[i], &fast->table[i],
+> -                                         start, length);
+> +                                         addr, length);
+>           }
+>   
+>           for (i = 0; i < CPU_VTLB_SIZE; i++) {
+>               tlb_reset_dirty_range_locked(&desc->vfulltlb[i], &desc->vtable[i],
+> -                                         start, length);
+> +                                         addr, length);
+>           }
+>       }
+>       qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 000bde90c2e..098824ad1d2 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -882,16 +882,16 @@ found:
+>       return block;
+>   }
+>   
+> -void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
+> +void tlb_reset_dirty_range_all(ram_addr_t addr, ram_addr_t length)
+>   {
+>       CPUState *cpu;
+> -    ram_addr_t start1;
+> +    ram_addr_t start, start1;
+>       RAMBlock *block;
+>       ram_addr_t end;
+>   
+>       assert(tcg_enabled());
+> -    end = TARGET_PAGE_ALIGN(start + length);
+> -    start &= TARGET_PAGE_MASK;
+> +    end = TARGET_PAGE_ALIGN(addr + length);
+> +    start = addr & TARGET_PAGE_MASK;
+>   
+>       RCU_READ_LOCK_GUARD();
+>       block = qemu_get_ram_block(start);
 
 
