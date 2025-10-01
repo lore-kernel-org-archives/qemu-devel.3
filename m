@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051AECCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18154CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v43z3-0000tV-KN; Wed, 01 Oct 2025 17:03:33 -0400
+	id 1v43zR-0000yR-3l; Wed, 01 Oct 2025 17:03:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v43yw-0000s3-UU
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:03:27 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1v43zJ-0000we-T3
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:03:50 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v43yg-00048z-58
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:03:22 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-78a9793aa09so464306b3a.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 14:03:03 -0700 (PDT)
+ id 1v43z7-0004BG-Ib
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:03:48 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-26e68904f0eso2938765ad.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 14:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759352579; x=1759957379; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759352604; x=1759957404; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TVyQQB+Wmr9wiHfhpv1Q0vD0koj+NE+rQBNo24Jg+8c=;
- b=UQbR08FXQM6cgjIEGwoeDPqbjSKxjdcUiv8oCpgI0GqOz09EVyLkG/IbQb2KRD3E1D
- aJA1LasFHdZK1ZlthnX0WcJtxRTQKkRLGxh4raXV+igMfd9SrsU5QOiM5tcKQZKkviZC
- N3KvEYYKn4hlu+e2xZm5fPKNAEXOkAse/5blWZbqn1+prr023UZXNQdPLrM4ViD4T1Sb
- RaoHHBJJhYlVrI/xImb/IXMSLPwoWcAYBsSKD0XeUWRwpoeViiWihGEJPkNIzpVfNF0c
- kq0ePe3FFY4pidhkmGP/LGbKrUO4Dty63IY4RwUyMfvX2VManLReMQi02UZO3ofA1bBT
- Y9lQ==
+ bh=ZbWysB4BLwKnNSFlp6k22DnxpWHP5NTJ3CmDeF4a/mw=;
+ b=qYO1aFaGYrKVxXchCVPURTFfYPqosgPjKixvfaXyhjAjeUSq5Ve+Z58klb94nsXa/3
+ ehRjZe5LGtgxHjeLogl5G9NhY3BYcm9IqJ4T5m8DNSN6D+C3cLYv7Aqr/1qpT6MyTsD7
+ D4CkC1B/PNi1DnfQvh1K+bhp2XpsZpVmjhGVnremFwj03NeP0gMmsi7cqUt9u8UvgIqR
+ VOOIUC7z8coMkyEO1kq/TTEXVVfx47cNfB/MRtz8+VIfuwjEeup/h+WFtl7ejhDV8vZs
+ soWV+bxhXo8uYlvg262FluQ3bKOyOJQWHBaJOhtm28SwLY4a/0cMWmFeKfxhZxdUqcwp
+ CS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759352579; x=1759957379;
+ d=1e100.net; s=20230601; t=1759352604; x=1759957404;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TVyQQB+Wmr9wiHfhpv1Q0vD0koj+NE+rQBNo24Jg+8c=;
- b=B7eQuRm+V649/3n7Z0+1dRWkitZoXzZ8axZSELdDE0TJwEVRH46vkGBKfqOSC/LkXT
- 5TnhOQIhUDM071y1kI6nekM051gpX9NAYxZ7EMO4hNhAWCQs4pD9c3utoF6BypQnS39p
- h7fEsz4DkSxbpE6diB4JcGfrH+1usl6j3Tmf/8wXzK/bZYlAh3kgks9IiPomjMLGoMn2
- K5+Zt3pndzFQrFrtqLC9VM3aeTrH4yVUqPAxWTL1GzDUHjaR+0BN5dsyyF8XwLOeke67
- w9gG+zYaqXQj/eZX6wwW59pKe9iFiJTYWA4gLjjccbTjNpy6IXci1t9W+XNPkOHF/Sdc
- JfwQ==
+ bh=ZbWysB4BLwKnNSFlp6k22DnxpWHP5NTJ3CmDeF4a/mw=;
+ b=nQWbkFQunCfDne6XNk6aaMyD7CoZUho6+GleOKR1oCkpdJTAhH7N0eRttfT4mvIzHB
+ DuBLPu/UdF0EmRnuiz5wBrP8X2zXeNE2G+OQF4wCviKFBOEA7agA0Q/spH1VGbw/K9zi
+ zReLmtI/Tkx4d87ByU10pj13BmWMug4PDx+t/F4MtLKnad67xapE55UyFpbZMFtS3v/Z
+ dhh0VP4jo/bg4e+SE5KD62gS3E5ZK8rdLvcLr5X5tdVcRDUVrx+6aYDkY/1ad0fgzDnq
+ frgCJyBQTNyinSP+kHxdGwEPW9DLYwUTZnh1ySnCnUQoMRWMnbis+1YCDJu7wcts2sM3
+ H6XQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkKkV8+A/JmQHkLBAJ39rXl7tThLsa8rm2pAQvuoToWe1omIfxof8mGTIE8/gKlTQU7kFfKRvJVnf+@nongnu.org
-X-Gm-Message-State: AOJu0YzpADZQabLm/MoQLj9TNjkr8h05JnH3gqJXb3dx5dxno1d9fC7b
- dewaourbeYGpLU76MXF5OMJc9csWN2nSt8Pg34gQkzqTWw3arWwQ67LZB1obkrpe4Sk=
-X-Gm-Gg: ASbGncsDew+aR/vNZ8i+xdtwKqrUnPhBvzma4ha4QbzrlZHJ3KnOV6R7aAnfQjNGMUB
- L5IzXs95w8HnlCqsY8Pc9Ryom3Z+YjrwVmtuoH32tRuWzl2hqwR7qwDalP3bJpqaEVncsJkQ8Z6
- iP/deE82oTreDz9K3vzW5gfEA4YslHmniGtG5Ay44cZr23/WW7iUAo3A4OF21pFXRguF1B7P1Iw
- Kpb9NgzgMnv2NrLv7OEE0S3mdJ5bCp279Ti0cy+IHSjxZ9tKJSnNoWvdHYcX9a9GrbucPhso8iP
- aklq6FlS5OulDvaf0Suy3zSH+6hVqB1aIJ2iPmKk95vQdYR69DPRDkURCuttwKoj8rgf9Ra1nJa
- Z6Bav/n9L6y3tcqw3AujEFhm7pHFkZmABkUAuiix8XVQ/5WRnoLKXX+AeHQ3y
-X-Google-Smtp-Source: AGHT+IF7yK2d5OhlOk2zuF/JBEnY8Tk0IxeJcaQU8ZwgxhbKMJ9tPMbVc9dRybkbnnQOcP+NOcEr1g==
-X-Received: by 2002:a05:6a20:3946:b0:2e3:a914:aa93 with SMTP id
- adf61e73a8af0-321e477bf0dmr6715698637.30.1759352578852; 
- Wed, 01 Oct 2025 14:02:58 -0700 (PDT)
+ AJvYcCU/0SldN7GrUZe19nw+Q/xU1ouTBZift6WnFTNqwOuHwaVfo3baQOakTlYGhAy1UyNXZ7T/TrR8WiSN@nongnu.org
+X-Gm-Message-State: AOJu0YxVQcpzl8wKonV0rNYLqGvoZUHgv9uK0eD75xwb6mj3E+/lN+sm
+ 99n7O9lo38IgZtNYZKID05zagr8QSLT7adyOuHYBE52DCMzNwHDiR81ILIYxdjhx/10=
+X-Gm-Gg: ASbGncsKVB7D75AHRFUlNku3dbcert+pzAt8h/pDn7GoalcYqP0DbSEXHt09OBCDRHM
+ xhyqFb1otsdyaRvPBKyFaxfUZJyCqdXZdFgU1tDyNU+GByYgELsgzjhSMZecHy6Vt8ivqs4zZVl
+ 7kIstDDc4542zVuoa++uONb7nngPkR+1m89Dz9fJxF/WQUZAT7AaItquZA7rGotpgESiPA34udJ
+ kQzS17AevpA56t9Q/64/CZ8Lt9NYBX5Ei8vRzlnQ9mPZ2JTYmOV1Gr1BDbDOo8gbSvm4dY4gDAh
+ 9v7vg6I2ZJPBjSMN4kW4hr1mohjEH9oW2s9EqJD+zKRVSMUm9Hwp+zNi36sUSkoWZr8EelYTPwu
+ mNY2FeJf/h6zhb/Q7q4tH3l3TGthrTKGXyowdA1Qty7ViS+qcQ5muf1IdmAdy
+X-Google-Smtp-Source: AGHT+IEze18lci6QhXSI0pyjivHhs8/ki5NdOSJauXh39b6o1CSyAoKunE55CzTsis1nowYaOBnG0w==
+X-Received: by 2002:a17:902:ce0b:b0:28e:80bc:46b4 with SMTP id
+ d9443c01a7336-28e80bc4968mr52046075ad.55.1759352603665; 
+ Wed, 01 Oct 2025 14:03:23 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78b02094847sm561906b3a.89.2025.10.01.14.02.58
+ d9443c01a7336-28e8d111a37sm5280805ad.8.2025.10.01.14.03.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 14:02:58 -0700 (PDT)
-Message-ID: <7974c867-b7c4-470a-afaa-87583a20d467@linaro.org>
-Date: Wed, 1 Oct 2025 14:02:56 -0700
+ Wed, 01 Oct 2025 14:03:23 -0700 (PDT)
+Message-ID: <51dc4cd9-a12c-4302-ac47-93aaf09a6406@linaro.org>
+Date: Wed, 1 Oct 2025 14:03:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] system/ramblock: Remove obsolete comment
+Subject: Re: [PATCH v2 2/6] system/ramblock: Move ram_block_is_pmem()
+ declaration
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  Peter Xu <peterx@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
 References: <20251001164456.3230-1-philmd@linaro.org>
- <20251001164456.3230-2-philmd@linaro.org>
+ <20251001164456.3230-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251001164456.3230-2-philmd@linaro.org>
+In-Reply-To: <20251001164456.3230-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,38 +112,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/1/25 09:44, Philippe Mathieu-Daudé wrote:
-> This comment was added almost 5 years ago in commit 41aa4e9fd84
-> ("ram_addr: Split RAMBlock definition"). Clearly it got ignored:
+> Move ramblock_is_pmem() along with the RAM Block API
+> exposed by the "system/ramblock.h" header. Rename as
+> ram_block_is_pmem() to keep API prefix consistency.
 > 
->    $ git grep -l system/ramblock.h
->    hw/display/virtio-gpu-udmabuf.c
->    hw/hyperv/hv-balloon.c
->    hw/virtio/vhost-user.c
->    migration/dirtyrate.c
->    migration/file.c
->    migration/multifd-nocomp.c
->    migration/multifd-qatzip.c
->    migration/multifd-qpl.c
->    migration/multifd-uadk.c
->    migration/multifd-zero-page.c
->    migration/multifd-zlib.c
->    migration/multifd-zstd.c
->    migration/multifd.c
->    migration/postcopy-ram.c
->    system/ram-block-attributes.c
->    target/i386/kvm/tdx.c
->    tests/qtest/fuzz/generic_fuzz.c
-> 
-> At this point it seems saner to just remove it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
->   include/system/ramblock.h | 5 -----
->   1 file changed, 5 deletions(-)
+>   include/system/ram_addr.h | 2 --
+>   include/system/ramblock.h | 5 +++++
+>   migration/ram.c           | 3 ++-
+>   system/physmem.c          | 5 +++--
+>   4 files changed, 10 insertions(+), 5 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
