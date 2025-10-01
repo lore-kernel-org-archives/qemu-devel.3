@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5314FCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 17:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D8A7CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 17:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v40qs-0005Jt-Ii; Wed, 01 Oct 2025 13:42:55 -0400
+	id 1v412k-0001hW-Ui; Wed, 01 Oct 2025 13:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v40qo-0005JH-H1
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:42:50 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v412f-0001bw-Ek
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:55:05 -0400
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v40qe-0007x9-DC
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:42:50 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3f99ac9acc4so64911f8f.3
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:42:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v412a-0000lq-DW
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:55:04 -0400
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-46e42deffa8so1074605e9.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759340550; x=1759945350; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GsFCg+F3N7BwMm6MJVCB4pefGJu92zYSW8q43aVYA+c=;
- b=QU7bAErdhgO5Er6KxMa6yr1sadHB5LLupTDFJ7MMAgxAj4ijBky1ZzYrjMlkXIH6YX
- HJhJaOcOvHL/Q3LhLM6g9CEII7CsXK+3YSV2f44vxvS8KpDGlnq2EA5+k3HM3dSzgGrZ
- KCyIV0vFGp1nIb4dwsVV6nv6XkwPg1EGTzZocMQGtnJuCNKNRDHwJA2a7CYb8yl8xt87
- htCLeGINXKuAcHToskr93Hyyz/6EmnCspw4RbVQaspq2z45ztVeUjTP/BvGjOgarPUaB
- 4HtxBWYHCNbDESLlwTf3z0lCCNVnTEcJS2K3XbULvXlT4zbl6F3SceofkD6cXseWGV0J
- PjkA==
+ d=linaro.org; s=google; t=1759341291; x=1759946091; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MnPdbQAPiABKPnqv3H2yK8f0ztbp+cDIPhAAjXtVdbI=;
+ b=DXsk6k0iKF6mJGj1zqThbJf0HFsi9yIxbXOO//AbFhdXhkm/TTgyXiziLQt+0VlpE8
+ rUAbO4SaLCeb5b4YxrJ6PLJhsoFlt0Ck0EyZiGqkiderreM0r/P/BaCsCKvNziP+VSdG
+ FqrXVYcC61sV2VfX01+hMQ+9zVK5qKfJj+s9/MWFo/YFVNLpcC2W3k5tYcoxeqZU30rI
+ yvEzyd2QB3srB053x1Rfiqjx4o/+OEqm17/nNKC0pmq3hHPN8lJmqfSfiDew2mYqBq83
+ pDytc/VqQ7g/27NBv4itzI+uQlg9B9+AX+uP/JA/lxQ5NnjAPEse3tUXpQmf4cFbJERO
+ 72eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759340550; x=1759945350;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GsFCg+F3N7BwMm6MJVCB4pefGJu92zYSW8q43aVYA+c=;
- b=qWCdDLsBIZc0vDip/IMwk4n+XaIXNxDAqGkbYedRzQlWqpoO06APwiJg4CF3omyESQ
- Rn7+KA5pff9c5Qv9xYLvCvqvi5UwiWwjF5Gkodi0crYNvxbaQ5xR7/W0jbb448AJ0P/a
- D5mNH8SeGWg5hTlfXK9IYpFsskt2gvT8yPk714n445RFE1BeZOl9UtxktBrE8zYjCi1q
- vyfSOvLivyYa5yFgfr6UagJ3YFdJuFlzYSmK32Ce/dblUxREIWXgZrercH8fh1npUwEo
- 7psAAyAWCdR/hnlqce895L64ZWL4v6GZJBdKAi4lLa/szhblkuCBjELhSBJs9Aqw2cCU
- mINQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrycr2uKC9TvVvogZ8nKzd3jE6UPVQYLaZcLUX/A2Rtb9hhWNsaLYaaxiG06lTXw979iPtzlkht7ug@nongnu.org
-X-Gm-Message-State: AOJu0YzE6wtON+Oliik4AamOtO+uqSBL7EwAnr8+/8rrjGNrz7PR6h9q
- sqf2RZhgzUDj3iD62/UyCXaorDicEq+VTMl3IFe8jbLqCSJBytBsn34aZcGLE5N8WWKc7m6jdX3
- idIg5
-X-Gm-Gg: ASbGncst4Sk/FyFo63byMhRkSczeRmrgHs0dFGYpGvxvVAcx5COFpLOD/k9qnPUk9br
- WKPSr/+Vl2VE0sYxHGMJh0RWdCdGWrhEn+uSxt+J8eK7Bw9CJ7K82HwL5MLoy/ddXyNvUsIZ1KH
- H5356bBEWvK89mago6ecUYuz198Z5CAMMS8UWrEgWK56Zi5NoV/2+br4O3fRiNFqwqAKVX/RDbp
- rNnoKsSDK4A70J6gNbXC47BP49auNbtOwsGsO+e+hW7qr0TD+7AcysCotA1Q8VklbX8mMEA4yx6
- XBYRg3alie0/n8zrQGK6v/3SjFO6NHBHA1N4esAQ4ePj+yxbvbPufskLyPBYM0jMfFQpN7jtmli
- z2BuKX5xX+Uugk8AU0c+q9F9rpPaN5Y+85EB/DjHnLF08KjURiMuP91u9qA==
-X-Google-Smtp-Source: AGHT+IHSTsdE3mv4Pz1vzKD736lJH6320ENYWbwGawRYqoyz8gjCczKtCKzfPqXRYz99+KwDHsYo0g==
-X-Received: by 2002:a05:6000:3105:b0:40d:86c9:5c9e with SMTP id
- ffacd0b85a97d-42557805113mr3957683f8f.40.1759340550153; 
- Wed, 01 Oct 2025 10:42:30 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f02a8sm54621f8f.39.2025.10.01.10.42.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 10:42:29 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8E1255F7A7;
- Wed, 01 Oct 2025 18:42:28 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Andrew Keesler <ankeesler@google.com>
-Cc: berrange@redhat.com,  marcandre.lureau@gmail.com,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/1] Support per-head resolutions with virtio-gpu
-In-Reply-To: <20250902141312.750525-1-ankeesler@google.com> (Andrew Keesler's
- message of "Tue, 2 Sep 2025 14:13:11 +0000")
-References: <20250902141312.750525-1-ankeesler@google.com>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Wed, 01 Oct 2025 18:42:28 +0100
-Message-ID: <87ecrmikmz.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1759341291; x=1759946091;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MnPdbQAPiABKPnqv3H2yK8f0ztbp+cDIPhAAjXtVdbI=;
+ b=qnwaKp42GycmOdFlRZzkWEhRvdNAN3knNehuwjf9gPPKC4XpzteBRHYjbUkvhJsJ2a
+ 8NOrzNwsFYtk/BOCexKz2BCp0LMv29U1znjwRWU4o/KkHR+dnPrdSdntVr7sA8C6DIt7
+ KS5Rhly0N6iX368tV1POOPPKeHJetoAddYCwZMg+PU+Eb06yyFxyOeiD4tQgHWTOGLPZ
+ xd8Jx9dfCjexMevnEr4s5+Uo8AWd/eiYT5t8kMV7mxO1b8GRs1IVYOkEK7F1wraZYckG
+ +PWa09quaQ3UwFfR3ISpkbh0I209xJ9It3+vYkq+20A5IzsPQnp6YrkV9edTKUKV4sp9
+ HxxA==
+X-Gm-Message-State: AOJu0Yw9+s2QExuwrekrjfd3oJY5LweA3Ov5rScnJPb/4LhB6jjw2Lbd
+ 5VQxcGBgW1lSnM1UZzxrRn4CzGT35RS3TiNItor7yrzMO/J3vwH4dSQEWuZkx6bJlNEGBlzA5j2
+ rJcZtZPTQaJga
+X-Gm-Gg: ASbGncso5iuF3Q+qDXFbGFNsEIcT8mblnF4eNAqAqnRNgB9wMhj0bXNw/SCJXxeaAVS
+ gd4Chrvi8RXdT+opdReCAmpBwP0Ou015xz8NGKoA1SK+p/bZhzEF+I0JcReRjZvrk/15y/TsxKe
+ OCBEm0Z3uWPnw9fVT7y3bmalQrLN1hv8UEPT7d9eVGfiQitLrgRBTQpntg7GrFzONrwAP41m3KQ
+ db8rz0Y4My0Eqzy5Kg9yKeYCJaCwpoA0qZhnVCkxoLbQxnlPFIoMnpx+oFiHut4t2QgK32Wu0V/
+ mnIY6hwNChX/3ethQDc/tlA6lFnEcpx+g+JqznyC8tEVAErgcgmGNAs8QlcQ9bUy1ZYyakaxG48
+ HXfS9uj4XL218do8TgpYQflAI56Y4cM8Stv1v9WSIbMcUtDyXDGNxVu1Jj61YK9I1iyj8bm4QEA
+ MsELqgQXUcz4ObUx/b+VwnbvCAeQ==
+X-Google-Smtp-Source: AGHT+IEY+a8HI+AAlq63W8TJ12+BAD5/mJQ/zQWjsLUB6yTTngVUWSOFC3iLDhJTDi6PvB23sT2xjw==
+X-Received: by 2002:a05:600c:468f:b0:46e:447d:858e with SMTP id
+ 5b1f17b1804b1-46e612dce3dmr39375945e9.28.1759341291132; 
+ Wed, 01 Oct 2025 10:54:51 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e675b557fsm23898265e9.0.2025.10.01.10.54.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 01 Oct 2025 10:54:50 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jagannathan Raman <jag.raman@oracle.com>, qemu-ppc@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ kvm@vger.kernel.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Farman <farman@linux.ibm.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: [PATCH v2 00/18] system/physmem: Extract API out of
+ 'system/ram_addr.h' header
+Date: Wed,  1 Oct 2025 19:54:29 +0200
+Message-ID: <20251001175448.18933-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,19 +114,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Andrew Keesler <ankeesler@google.com> writes:
+Missing review: #12 (new)
 
-> In 454f4b0f, we started down the path of supporting separate
-> configurations per display head (e.g., you have 2 heads - one with
-> EDID name "AAA" and the other with EDID name "BBB").
->
-> In this change, we add resolution to this configuration surface (e.g.,
-> you have 2 heads - one with resolution 111x222 and the other with
-> resolution 333x444).
+Since v2:
+- Dropped few patches
+- Do not rename @start -> @addr (rth)
 
-Queued to virtio-gpu/next, thanks.
+Following a previous comment from Richard in [*],
+reduce "system/ram_addr.h" size by un-inlining a
+lot of huge functions that aren't really justified,
+and extract the API to the hew "system/physmem.h"
+header, after renaming the functions (removing the
+confusing 'cpu_' prefix).
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+(I plan to eventually merge this myself due to the
+likelyness of conflicts).
+
+[*] https://lore.kernel.org/qemu-devel/9151205a-13d3-401e-b403-f9195cdb1a45@linaro.org/
+
+Philippe Mathieu-Daudé (18):
+  system/ram_addr: Remove unnecessary 'exec/cpu-common.h' header
+  accel/kvm: Include missing 'exec/target_page.h' header
+  hw/s390x/s390-stattrib: Include missing 'exec/target_page.h' header
+  hw/vfio/listener: Include missing 'exec/target_page.h' header
+  target/arm/tcg/mte: Include missing 'exec/target_page.h' header
+  hw: Remove unnecessary 'system/ram_addr.h' header
+  system/physmem: Un-inline cpu_physical_memory_get_dirty_flag()
+  system/physmem: Un-inline cpu_physical_memory_is_clean()
+  system/physmem: Un-inline cpu_physical_memory_range_includes_clean()
+  system/physmem: Un-inline cpu_physical_memory_set_dirty_flag()
+  system/physmem: Un-inline cpu_physical_memory_set_dirty_range()
+  system/physmem: Remove _WIN32 #ifdef'ry
+  system/physmem: Un-inline cpu_physical_memory_set_dirty_lebitmap()
+  system/physmem: Un-inline cpu_physical_memory_dirty_bits_cleared()
+  system/physmem: Reduce cpu_physical_memory_clear_dirty_range() scope
+  system/physmem: Reduce cpu_physical_memory_sync_dirty_bitmap() scope
+  system/physmem: Drop 'cpu_' prefix in Physical Memory API
+  system/physmem: Extract API out of 'system/ram_addr.h' header
+
+ MAINTAINERS                       |   1 +
+ include/system/physmem.h          |  54 ++++
+ include/system/ram_addr.h         | 413 ------------------------------
+ accel/kvm/kvm-all.c               |   5 +-
+ accel/tcg/cputlb.c                |  13 +-
+ hw/ppc/spapr.c                    |   1 -
+ hw/ppc/spapr_caps.c               |   1 -
+ hw/ppc/spapr_pci.c                |   1 -
+ hw/remote/memory.c                |   1 -
+ hw/remote/proxy-memory-listener.c |   1 -
+ hw/s390x/s390-stattrib-kvm.c      |   2 +-
+ hw/s390x/s390-stattrib.c          |   2 +-
+ hw/s390x/s390-virtio-ccw.c        |   1 -
+ hw/vfio/container-legacy.c        |  10 +-
+ hw/vfio/container.c               |   5 +-
+ hw/vfio/listener.c                |   2 +-
+ hw/vfio/spapr.c                   |   1 -
+ hw/virtio/virtio-mem.c            |   1 -
+ migration/ram.c                   |  78 +++++-
+ system/memory.c                   |   9 +-
+ system/physmem.c                  | 322 ++++++++++++++++++++++-
+ target/arm/tcg/mte_helper.c       |   5 +-
+ system/memory_ldst.c.inc          |   2 +-
+ tests/tsan/ignore.tsan            |   4 +-
+ 24 files changed, 475 insertions(+), 460 deletions(-)
+ create mode 100644 include/system/physmem.h
+
+-- 
+2.51.0
+
 
