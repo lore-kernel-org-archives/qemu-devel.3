@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A312CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3265FCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3qns-0002Gw-2s; Wed, 01 Oct 2025 02:59:08 -0400
+	id 1v3rAy-0003XI-Ov; Wed, 01 Oct 2025 03:23:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3qnp-0002Gi-W0
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 02:59:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3rAs-0003Wy-28
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:22:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3qne-0008Ec-Eu
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 02:59:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3rAh-0008Qy-0S
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:22:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759301928;
+ s=mimecast20190719; t=1759303344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=epzkE0EGwfDYdmlEsfy9QA0u25Xd0eg11REQ8ARfVlk=;
- b=JgT3ndpplgTm8cy22f2wznZQSERgM0AlrREmlcxCjdqUPYl0lCNlfnetL8BfH+hn8gliGI
- jqP9Htsx/UiJKmu4R92GkYz1WZpozQCSAN2FDyLaceNLe3CXLLEdY7WbGHuCtu5Tz7hjfO
- eWgZ2vDTycLhARx3m7+IRy0cCSk/LjE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KJZd+y0MD3WFZlpxdkG5JTA8NzD8q/fJR2eZ5tX//Hk=;
+ b=BQbIXauUlfCAJbRIIKGjRxfRvsLvIF+WwK/6qqzY4cQqbZ+lNlcUhBeYhq9qb/as0m6NiG
+ 3BUfqrYmchzWHFNWoySbfUks8uXnoYDKiagu0/zSSIg2wPgc1KixCcHbM1cbAR629KjtDp
+ yvViYjhdxxEka6TEMzgGWKPNus4Y6Ek=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-11ySlNWfOE-18wq7uKrYFQ-1; Wed, 01 Oct 2025 02:58:46 -0400
-X-MC-Unique: 11ySlNWfOE-18wq7uKrYFQ-1
-X-Mimecast-MFC-AGG-ID: 11ySlNWfOE-18wq7uKrYFQ_1759301925
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e36686ca1so53567965e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 23:58:46 -0700 (PDT)
+ us-mta-43-TkcO3nBWMRWPx2mV4O9zjA-1; Wed, 01 Oct 2025 03:22:23 -0400
+X-MC-Unique: TkcO3nBWMRWPx2mV4O9zjA-1
+X-Mimecast-MFC-AGG-ID: TkcO3nBWMRWPx2mV4O9zjA_1759303342
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3ee1365964cso4816287f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:22:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759301925; x=1759906725;
+ d=1e100.net; s=20230601; t=1759303342; x=1759908142;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=epzkE0EGwfDYdmlEsfy9QA0u25Xd0eg11REQ8ARfVlk=;
- b=dp3wYP14iEe4Vlkw4sSDniLKIahdV0pWrVymCWCY4BRxF3dJYHif6ew9ikC6SzxRoy
- EnoTG9i+z9LDPeN//f1uHmtwxIWwFUHSJ7bDdM35MXKWiZdivCgJWMk+hVwkBmVQT+gF
- AqTNEmTeopcVC5UCgfHVtQdsLrI8DDTygMFnYMGBaeOEgyiUgVqlf/lXJ6GHGgugJfCq
- FxkoQjzO7ItXKGnzWBd8XfFzwuyxTGiaZhlY/90PhJgGSg0wBuScEoOPafx66laH4NNJ
- VXCyfUYH3r+lynEdH7vvyIQ56QJ2eqmCXDvtJffWna08jLSiguNaxtdAkJLZPvzTZxyY
- 2RLg==
+ bh=KJZd+y0MD3WFZlpxdkG5JTA8NzD8q/fJR2eZ5tX//Hk=;
+ b=C2+12GXfEaqtyh792YTcoy3i1MXf9zoG2cmcyaDGFSB3XXVVT3MfhcGZXgunpIcFrG
+ cits2mFzjgsMIs+qsxmjkGxOJms3vnzyv4lcDoBXwVjijP6llsCrqi3C+pE/B5yo0mIv
+ 9nvRDKS77Wb8QG/TEUK+0k6kdJOSinGP5OhHw0G81OMbgRFsxFPYTJd7OU3g6Opxl1tm
+ n/xUgnVzlDRKV0IOQPlXAsRzfGy7Pk+8LGLb1RZk521bhnaIM3iFCcdLCN1dGkQtoUOw
+ eAacOjBnvsy9PppC12mnvBfIFr1NSOZmwyp73K2gd0UeKZ471wJ5dKNq/rOrC9+3GQ2C
+ +s4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9LwkPzte8hP/63/fOCJx23xeM9R/Dd0KcB/bv9h807r+gEXv3znPhslg+evSyCUY+nBsRtPJ2gSQO@nongnu.org
-X-Gm-Message-State: AOJu0YzXlPE+VhOR0SSsz1qDV2Dc6RoNani2EfoAf8RMcG+3rwSDd5J7
- ZH3KV+HSnE5P7k9PXGPZHagzAv7k3dUKWw/o555jz1YvXW5PVomAxkT7FaCJdxdsglfvkrDikVr
- w1G9kVhdXyQhLXfolizMiKgqIvGW1K17IaMlKCOadVse+f/sCbPL0qEhJ
-X-Gm-Gg: ASbGncvYY2gTtPB7Kb9x18h1NGOosj1kBfVAY8gAYCueaj3ArgxXj0v2iF3GPax4Wqc
- eshXgOVkuvW7MQrFjzkTDhxuBOPBxTHX7pR7XTYN4JO9vaiYIMDB3LTTp7MUO87cJ9E8frIULM1
- Pptu3qOQfPuC5pwvpHUmI6otWvNSBytQLNMqP+qqPczb1XG1SZN1MsU2C8h2B4hljbkxs3MR435
- 8pn6a9q6pAuajxcPFjJGVFtvXUFKbl6tczXWAe1f5BvtZcM24EW9gVCoITCtZmDkUc43KSDGJcM
- 72qLsnsuKqXpDF+Y5uy9+axloyR9U6cRRLZ4vkGRErDiHqEBtm+E15GIdoC5TNBaPHRnY8lajNK
- +fLF5CUWC
-X-Received: by 2002:a05:600c:8b02:b0:46e:4b79:551 with SMTP id
- 5b1f17b1804b1-46e612dafafmr20042775e9.31.1759301924984; 
- Tue, 30 Sep 2025 23:58:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFH36DLBDQV9r2kOY6W3z4M31oLsgSniSOHTuboyT4GTdocrHageB56VWwIi2y0CgTzTZ2/cw==
-X-Received: by 2002:a05:600c:8b02:b0:46e:4b79:551 with SMTP id
- 5b1f17b1804b1-46e612dafafmr20042655e9.31.1759301924608; 
- Tue, 30 Sep 2025 23:58:44 -0700 (PDT)
+ AJvYcCVEY7WSP2OOLyHQMWhAlP5Os8WHp5dqYLfhhuhqu08Ju8nzOnX/I8thB1ufmP5wPIjyDt0Tij+rPO1y@nongnu.org
+X-Gm-Message-State: AOJu0YzS2evKwTGZvn4eUNAaNSn4a19UsfQskR+99Da0z8f9jyd28ut9
+ iXOaKCteoERdwqZY2eVp8rliBe9B9ybGuJ4HTU8vKlm0H0ljjjfRdiIuxeDNF55vcohaF8Iw6En
+ +9wVPcYTAyPFNpR4EvdiHXfmYb4SvroXfMXY9T0LNLf8J95sTNWyIJsBi
+X-Gm-Gg: ASbGncuGXRp/C5I9792N+jIDNN3WttDNsKkViSzoxYFYtRs+cIsgePserQT6Vknx5Sl
+ zLuVC2T6zn4EVddbuUqAI3gebA9rph/WkDNUVzna9LBPOxAHxYG6idMc20mPaISe9BMchC/5lBi
+ 31iXO/PrSECwyE7mgm4SuPG3dvcFH+MyJvtz0MYwyCTzWIzDjsnU5HTVuVdZCmCxTbMick39bhx
+ 49AKhlQSSxEBsCsH3Y1uNNWHW9KhmBgnCN5JnL8ATU5aHgyooxBBHpEzWs2VAeOnqI08cRFVCvz
+ VSTVNMwEYJ4lpHufzhA6fGTv/ukS1ooM46Q2vqpSWh29qalDvxOJqAFHRnvNdiInznftB1c9J6Z
+ yqRnHjtMa
+X-Received: by 2002:a05:6000:22c8:b0:3ee:1296:d9e6 with SMTP id
+ ffacd0b85a97d-42557820038mr1858105f8f.61.1759303341959; 
+ Wed, 01 Oct 2025 00:22:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHm76nSlk6fTgxJMjkKEV4pGRwObbWLuK9HDsKj3m2pUy2XWZhAalO4orG73GjBjwDnqsK+dw==
+X-Received: by 2002:a05:6000:22c8:b0:3ee:1296:d9e6 with SMTP id
+ ffacd0b85a97d-42557820038mr1858086f8f.61.1759303341527; 
+ Wed, 01 Oct 2025 00:22:21 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb985e080sm25581517f8f.24.2025.09.30.23.58.43
+ ffacd0b85a97d-40fc6921b7dsm25523599f8f.42.2025.10.01.00.22.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Sep 2025 23:58:44 -0700 (PDT)
-Message-ID: <d715d9dd-a613-4406-93c1-507d1470619f@redhat.com>
-Date: Wed, 1 Oct 2025 08:58:43 +0200
+ Wed, 01 Oct 2025 00:22:21 -0700 (PDT)
+Message-ID: <a87df072-82a9-4913-a385-0458c3d0994a@redhat.com>
+Date: Wed, 1 Oct 2025 09:22:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/container: Support unmap all in one ioctl()
-To: John Levon <levon@movementarian.org>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- alex.williamson@redhat.com, eric.auger@redhat.com, joao.m.martins@oracle.com
-References: <20250924070254.1550014-1-zhenzhong.duan@intel.com>
- <20250924070254.1550014-2-zhenzhong.duan@intel.com>
- <01f0b0eb-b036-4823-8020-fd6962b26d9d@redhat.com>
- <aNxT1w0BbMH6pJ0J@movementarian.org>
+Subject: Re: [PATCH v2 3/3] pci: Fix wrong parameter passing to
+ pci_device_get_iommu_bus_devfn()
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, yi.l.liu@intel.com, clement.mathieu--drif@eviden.com
+References: <20250929034206.439266-1-zhenzhong.duan@intel.com>
+ <20250929034206.439266-4-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -131,9 +130,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aNxT1w0BbMH6pJ0J@movementarian.org>
+In-Reply-To: <20250929034206.439266-4-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -143,7 +142,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,47 +158,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 00:04, John Levon wrote:
-> On Tue, Sep 30, 2025 at 05:26:59PM +0200, Cédric Le Goater wrote:
+On 9/29/25 05:42, Zhenzhong Duan wrote:
+> The 2nd parameter of pci_device_get_iommu_bus_devfn() about root PCIBus
+> backed by an IOMMU for the PCI device, the 3rd is about aliased PCIBus
+> of the PCI device.
 > 
->>> -        }
->>> +        ret = ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL);
->>
->> Could we introduce an helper to test 'unmap_all' support in the host
->> kernel ? The result would be something like :
->>
->>    if (unmap_all) {
->>          if (vfio_legacy_has_unmap_all(VFIO_IOMMU_LEGACY(bcontainer))) {
->>              flags = VFIO_DMA_UNMAP_FLAG_ALL;
->>          } else {
->>              /* The unmap ioctl doesn't accept a full 64-bit span. */
->>              Int128 llsize = int128_rshift(int128_2_64(), 1);
->>              ...
->>          }
->>    }
+> Meanwhile the 3rd and 4th parameters are optional, pass NULL if they
+> are not needed.
 > 
-> For reference/consideration, the previous approach taken in the vfio-user
-> series:
-> 
-> https://lore.kernel.org/qemu-devel/20250219144858.266455-4-john.levon@nutanix.com/
-> 
-> @@ -533,6 +562,11 @@ static bool vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
->       vfio_get_info_iova_range(info, bcontainer);
->   
->       vfio_get_iommu_info_migration(container, info);
-> +
-> +    ret = ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL);
-> +
-> +    container->unmap_all_supported = (ret != 0);
-> 
-> (I dropped this particular change as part of getting merged.)
-Yes. I’m reconsidering now.
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Should we introduce a VFIOContainerBase attribute/flag 'unmap_all_supported',
-set in the vioc->setup handler ?
+The commit log should mention potential consequences of this change.
+
+Will this fix need to be backported ? up to ~9.1
+
 
 Thanks,
 
 C.
+
+
+
+> ---
+>   hw/pci/pci.c | 18 ++++++++----------
+>   1 file changed, 8 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index c3df9d6656..d5ed89aab7 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2967,7 +2967,7 @@ int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
+>       PCIBus *iommu_bus;
+>       int devfn;
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->init_iotlb_notifier) {
+>           iommu_bus->iommu_ops->init_iotlb_notifier(bus, iommu_bus->iommu_opaque,
+>                                                     devfn, n, fn, opaque);
+> @@ -3025,7 +3025,7 @@ int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
+>           return -EPERM;
+>       }
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->pri_request_page) {
+>           return iommu_bus->iommu_ops->pri_request_page(bus,
+>                                                        iommu_bus->iommu_opaque,
+> @@ -3049,7 +3049,7 @@ int pci_pri_register_notifier(PCIDevice *dev, uint32_t pasid,
+>           return -EPERM;
+>       }
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->pri_register_notifier) {
+>           iommu_bus->iommu_ops->pri_register_notifier(bus,
+>                                                       iommu_bus->iommu_opaque,
+> @@ -3066,7 +3066,7 @@ void pci_pri_unregister_notifier(PCIDevice *dev, uint32_t pasid)
+>       PCIBus *iommu_bus;
+>       int devfn;
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->pri_unregister_notifier) {
+>           iommu_bus->iommu_ops->pri_unregister_notifier(bus,
+>                                                         iommu_bus->iommu_opaque,
+> @@ -3098,7 +3098,7 @@ ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
+>           return -EPERM;
+>       }
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->ats_request_translation) {
+>           return iommu_bus->iommu_ops->ats_request_translation(bus,
+>                                                        iommu_bus->iommu_opaque,
+> @@ -3122,7 +3122,7 @@ int pci_iommu_register_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
+>           return -EPERM;
+>       }
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->register_iotlb_notifier) {
+>           iommu_bus->iommu_ops->register_iotlb_notifier(bus,
+>                                              iommu_bus->iommu_opaque, devfn,
+> @@ -3144,7 +3144,7 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
+>           return -EPERM;
+>       }
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+>       if (iommu_bus && iommu_bus->iommu_ops->unregister_iotlb_notifier) {
+>           iommu_bus->iommu_ops->unregister_iotlb_notifier(bus,
+>                                                           iommu_bus->iommu_opaque,
+> @@ -3158,11 +3158,9 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
+>   int pci_iommu_get_iotlb_info(PCIDevice *dev, uint8_t *addr_width,
+>                                uint32_t *min_page_size)
+>   {
+> -    PCIBus *bus;
+>       PCIBus *iommu_bus;
+> -    int devfn;
+>   
+> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
+>       if (iommu_bus && iommu_bus->iommu_ops->get_iotlb_info) {
+>           iommu_bus->iommu_ops->get_iotlb_info(iommu_bus->iommu_opaque,
+>                                                addr_width, min_page_size);
 
 
