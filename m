@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0A1CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77710CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rJW-0005nX-JI; Wed, 01 Oct 2025 03:31:50 -0400
+	id 1v3rJx-00060i-4A; Wed, 01 Oct 2025 03:32:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJR-0005lS-78
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:45 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJj-0005vx-PO
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:32:05 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIw-0003Vi-5m
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:44 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJE-0003du-Tr
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:32:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=adGpUPag/wj8I4U1qMEWl6bzVL8Z72iRcNxsuBCNXaY=; b=vhcHNpkR5SqEeqK
- Kjb7+FA1Aa1GMF/6vZIe7zkyNYLWf2mQbQA6OmqhLd0fLTsxaDGpdNBq7umh79FZgPtJtHJxpSqBq
- uUG9ynBJyu2I7o/TjQmB5TV4AhDrmORrPOEbYvmi04qKFghoPIGb/uILnRwyiWiwc+WCz26Yxegzu
- sk=;
+ List-Help; bh=Ul0C2a/hJLKF/gidGN+nOYSzrLT+OLY7P5tEI0N3Hgk=; b=VVyGL/IJ3AyPkIR
+ 4kDeDH1mclnKoKRXMdxmLGRUFVxF9QPFDTIwHzPa9mpxi0GIRJbiz1N81y+H4DmT3DqLO9xDMKwmM
+ wR8dOEZ7JAvqZ+rODTe4RC9a1iIScW9RDib8psUAuWedRAZeOInmhE25J5RDMNF++2IqPB9P0yrp/
+ v8=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
  richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: [PATCH v2 17/33] target/riscv: Fix size of ssp
-Date: Wed,  1 Oct 2025 09:32:50 +0200
-Message-ID: <20251001073306.28573-18-anjo@rev.ng>
+Subject: [PATCH v2 33/33] target/riscv: Make pmp.h target_ulong agnostic
+Date: Wed,  1 Oct 2025 09:33:06 +0200
+Message-ID: <20251001073306.28573-34-anjo@rev.ng>
 In-Reply-To: <20251001073306.28573-1-anjo@rev.ng>
 References: <20251001073306.28573-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -46,7 +46,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,105 +64,161 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As ssp holds a pointer, fix to 64 bits in size and make sure stores from
-TCG use the correct size to avoid problems on big endian hosts.
+The pmp.h header is exposed through cpu.h.  pmp_table_t is also used in
+CPUArchState.  CSR declaraions are only used in target/ and are moved to
+csr.h.  In pmp.h, addr_reg is widened to 64 bits and the privilege mode
+parameter is fixed to 8 bits, similar to previous commits.
 
-Note, the cpu/ssp VMSTATE version is bumped, breaking migration from
-older versions.
+Note, the cpu/pmp/entry and cpu/pmp VMSTATE versions are bumped, breaking
+migration from older versions.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h                            |  2 +-
- target/riscv/machine.c                        |  6 +++---
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ target/riscv/csr.h     | 12 ++++++++++++
+ target/riscv/pmp.h     | 20 +++++---------------
+ target/riscv/machine.c | 10 +++++-----
+ target/riscv/pmp.c     |  9 +++++----
+ 4 files changed, 27 insertions(+), 24 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index c2fd7368c4..d78af5e053 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -255,7 +255,7 @@ struct CPUArchState {
-     /* elp state for zicfilp extension */
-     bool      elp;
-     /* shadow stack register for zicfiss extension */
--    target_ulong ssp;
-+    uint64_t ssp;
-     /* env place holder for extra word 2 during unwind */
-     target_ulong excp_uw2;
-     /* sw check code for sw check exception */
+diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+index 552e6c5de5..3752a0ef43 100644
+--- a/target/riscv/csr.h
++++ b/target/riscv/csr.h
+@@ -78,4 +78,16 @@ void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
+ /* In th_csr.c */
+ extern const RISCVCSR th_csr_list[];
+ 
++/* PMP CSRs, defined in pmp.c */
++void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
++                      target_ulong val);
++target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
++
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
++uint64_t mseccfg_csr_read(CPURISCVState *env);
++
++void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
++                       target_ulong val);
++target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
++
+ #endif /* RISCV_CSR_H */
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index e322904637..c9b0ee6c58 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -22,8 +22,6 @@
+ #ifndef RISCV_PMP_H
+ #define RISCV_PMP_H
+ 
+-#include "cpu.h"
+-
+ typedef enum {
+     PMP_READ  = 1 << 0,
+     PMP_WRITE = 1 << 1,
+@@ -50,7 +48,7 @@ typedef enum {
+ } mseccfg_field_t;
+ 
+ typedef struct {
+-    target_ulong addr_reg;
++    uint64_t addr_reg;
+     uint8_t  cfg_reg;
+ } pmp_entry_t;
+ 
+@@ -65,21 +63,13 @@ typedef struct {
+     uint32_t num_rules;
+ } pmp_table_t;
+ 
+-void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+-                      target_ulong val);
+-target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+-
+-void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
+-uint64_t mseccfg_csr_read(CPURISCVState *env);
++typedef struct CPUArchState CPURISCVState;
+ 
+-void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+-                       target_ulong val);
+-target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
+ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+-                        target_ulong size, pmp_priv_t privs,
++                        int size, pmp_priv_t privs,
+                         pmp_priv_t *allowed_privs,
+-                        target_ulong mode);
+-target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
++                        uint8_t mode);
++uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
+ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
+ void pmp_update_rule_nums(CPURISCVState *env);
+ uint32_t pmp_get_num_rules(CPURISCVState *env);
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index f1a0d16fdd..aacd4f52b0 100644
+index aa71aa6eb1..6b92ac02b3 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -389,11 +389,11 @@ static bool ssp_needed(void *opaque)
+@@ -48,10 +48,10 @@ static int pmp_post_load(void *opaque, int version_id)
  
- static const VMStateDescription vmstate_ssp = {
-     .name = "cpu/ssp",
+ static const VMStateDescription vmstate_pmp_entry = {
+     .name = "cpu/pmp/entry",
 -    .version_id = 1,
 -    .minimum_version_id = 1,
 +    .version_id = 2,
 +    .minimum_version_id = 2,
-     .needed = ssp_needed,
      .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(env.ssp, RISCVCPU),
-+        VMSTATE_UINT64(env.ssp, RISCVCPU),
+-        VMSTATE_UINTTL(addr_reg, pmp_entry_t),
++        VMSTATE_UINT64(addr_reg, pmp_entry_t),
+         VMSTATE_UINT8(cfg_reg, pmp_entry_t),
          VMSTATE_END_OF_LIST()
      }
- };
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index b0096adcd0..4333854979 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-@@ -44,7 +46,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
-     tcg_gen_addi_tl(addr, addr, tmp);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
+@@ -59,8 +59,8 @@ static const VMStateDescription vmstate_pmp_entry = {
  
-     return true;
- }
-@@ -58,12 +61,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     TCGv addr = tcg_temp_new();
-     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
-     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     tcg_gen_addi_tl(addr, addr, tmp);
-     tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
+ static const VMStateDescription vmstate_pmp = {
+     .name = "cpu/pmp",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = pmp_needed,
+     .post_load = pmp_post_load,
+     .fields = (const VMStateField[]) {
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 85199c7387..6089e2730e 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -23,6 +23,7 @@
+ #include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "cpu.h"
++#include "csr.h"
+ #include "trace.h"
+ #include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+@@ -272,7 +273,7 @@ static int pmp_is_in_range(CPURISCVState *env, int pmp_index, hwaddr addr)
+  */
+ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
+                                        pmp_priv_t *allowed_privs,
+-                                       target_ulong mode)
++                                       uint8_t mode)
+ {
+     bool ret;
  
-     return true;
- }
-@@ -75,7 +81,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
--    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(dest, wide_addr);
-     gen_set_gpr(ctx, a->rd, dest);
- 
-     return true;
+@@ -331,8 +332,8 @@ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
+  * Return false if no match
+  */
+ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+-                        target_ulong size, pmp_priv_t privs,
+-                        pmp_priv_t *allowed_privs, target_ulong mode)
++                        int size, pmp_priv_t privs,
++                        pmp_priv_t *allowed_privs, uint8_t mode)
+ {
+     int i = 0;
+     int pmp_size = 0;
+@@ -662,7 +663,7 @@ uint64_t mseccfg_csr_read(CPURISCVState *env)
+  * To avoid this we return a size of 1 (which means no caching) if the PMP
+  * region only covers partial of the TLB page.
+  */
+-target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
++uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
+ {
+     hwaddr pmp_sa;
+     hwaddr pmp_ea;
 -- 
 2.51.0
 
