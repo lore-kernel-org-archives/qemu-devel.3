@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E177CCA472
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 14:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D84DCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 14:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yAA-0003sd-0i; Wed, 01 Oct 2025 10:50:38 -0400
+	id 1v3y9r-0003qb-E4; Wed, 01 Oct 2025 10:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3yA7-0003rs-6I
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:50:36 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1v3y9k-0003py-9o
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:50:14 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3y9r-0005sA-Kc
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:50:32 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-78af3fe5b17so1078436b3a.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 07:50:14 -0700 (PDT)
+ id 1v3y9V-0005Zu-1I
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:50:11 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-77f67ba775aso8990962b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 07:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759330210; x=1759935010; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759330186; x=1759934986; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9Wik4f061JdQK++F4f8nYGgXnGMZ15vWa3p55l9qZWA=;
- b=iI6T5s1S3dxNd6ycihbCIfcsb7QnPKg6G/uBuoPo72yXTT1lcmPRQYuIygi7zzEBdJ
- q0Byj5yRUlIyW6G0rkqQOl9fZNqoun7DADVsDA821tGAjB3H9cyOWzLPtL1aZeImeyVV
- ZNJyOxAg4xjdsZgPXZfvepKdBpWaditJIdPk8S8z3IpXDOy9TzJbBPTVi6goxOztRk42
- AwcqrO2o54YdDF5kJcd5C9eIxMAunJB5JMfMRCppuiJiV1MNghQxYgwWi1zVxZSk+9TI
- YXQVV7/o7F2fUiHRai2+58sFa5exXyyQVFaJbd5VWrWkZF8oPO0Wn+kgHt6PKm5ORoO5
- oe5g==
+ bh=+w2wg5CuDrzzNw/ic6QXuFMzFatMH0oGrk/zWVujuBk=;
+ b=P/8VxVodK+jfH8J+wkzUDpNm8vNXUf//e7GIri1QNhCLEWDFbY8UFnk5oRhxLOiSwX
+ exY1+lqkSOiBI4jw2QP1tPsUThhhyGnznbTiicbbsePjEkUay4rYVZl6aRONBIwdVcjw
+ fEG5/qk9i8Vzet5e0AQaib8Cz/h0opJyoU2ehJLSWj1qFCc+AXRsH+87QeFFIKoee9cy
+ B5yJFOLDOtgXqCdHeZLjKJTQflfbyV5g1R+VbIbcT84y5evA0CbmEJ3TGhLRmanPXSYW
+ EBYY2HAl5JNOYKXiv/puOImXEvJ0RQN97r19jS7U2b6OSlKaaBvQGPUzCoamruT9m3G8
+ x/pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759330210; x=1759935010;
+ d=1e100.net; s=20230601; t=1759330186; x=1759934986;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9Wik4f061JdQK++F4f8nYGgXnGMZ15vWa3p55l9qZWA=;
- b=QzkzynNmnaSJBSD9yWWxgFVKqRK9i0gu/Y1kr53I4SIIdiBGq2osq9OzrjomjNgbi/
- bGPEFhkhXNLDEINqsIRjniImIV5A5s8C26YehPT0UQfSp9L3P9iKHv+PpCRqF27Y7s2I
- pM4MfFRtaw5/hpAK/ppCKSxotw0x38A+QgIjsDdQu0f65ccuthr3lJdxfdBSL/XRtneJ
- 0ekSRLoP4ubCpl6PMcwusgCs7XSvdzAS05HMe1hkoPn+PkQsdOlrmoNNNmVtATMjc8mz
- 5pUFRglAg/RgUKYWUvuvTwnfFNKh390iAJi7aBxUV3jmbaLrETbNccRYH5qW2GBCVcau
- PGcg==
+ bh=+w2wg5CuDrzzNw/ic6QXuFMzFatMH0oGrk/zWVujuBk=;
+ b=EK0RFC17nmAq9wO8K3LcCz6S5PwoaN0sg38u0FUYrEJ/EC/HHrR+mBjW+6N5KxyyuA
+ cGZS23D3lVfPP0pvdLMPp2fPoAomYw7zvWfzN6At2Dd8raJkg9zGKVxt69yqfGRD0dUb
+ JwBKgMCx1R3atnVz/E435dedtn97hBT8WGRuWrAxCLEub+f9/9DLZlO6uxBgqrw1urGK
+ 0/ewtbqQuoaU27krFPh+L0ZuXnJxkl/KBk3oMOaJ+o50TVHqugOv9Vs8uJW6YERq69AE
+ cWjz9DEH1UnIXR42mtUwCsdHD0Sm7WUniO/qTfDg6u6ZoefFp6SoV7iRnQgwYGrQ4KuP
+ Wpvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUcaRQOuYlkopLuGrDBhQucCeEjanQonArCVdv7KfI24QsLnYPjw/2d4J1uu6+HDrXoiiB40LWiD7bb@nongnu.org
-X-Gm-Message-State: AOJu0YzIYuJyWog1vyZQKUzt8xAVqr9g84HQbwsWvVssjKV0X7AVG+0m
- MPBigJwGsY019vrMhiM9JDuPy2zCuo4CYUeDTPE+QtLj8K1svUvo7DTwt4JY3ormQxtfM4vTuAR
- gvfYc
-X-Gm-Gg: ASbGncsIUChNWO9OxSvmzKON29SsYjYkDsUii8bGu9udQQaKitWnLJc97TH3mWEN6+w
- K4MFhewP6me8D8PrIn3w0jd3lZ1Nxpzk+wYmpfYpTZmAOqL+l9Wd2O5CnFAQBRNT9zl6TJ7454G
- 5sGuAk5f6TeI73aBMFh+SPBD/MXkkfu0YJGcECWPNzpc3VwNrgKKztH2PD3zUtbjk0pw9+KdOpo
- EmFn8CLS46bOPNjOhuTqpr9qnRvdgPc9OLkaYfNohf0quqIetc37pPw1t4kbVJhhe7DTD+geTHa
- XaM6s+6aqvPKnpb4hk51tUG8OP+z3eWBfhDomJEon+htyobsBS3VX18gMjEhluaXb+1ONOL+cj2
- Q2ULKG6biYBjRhZj+S6eivyW+vHmAvV73KxiznQRe7q0oAAjePjRatZapJOsXOYcq3ihqu2oaNU
- dWTGq+xfWo7FhRDdEVWi20/Rj7KfOQ1sQ=
-X-Google-Smtp-Source: AGHT+IHQyv3cw7dyYlNcLu8oAJaoQhJKbxQWFbtQ+ORLcdO+qGiw27F4lU48bvcfeQM2dMIu61WIYw==
-X-Received: by 2002:a05:6a21:62c1:b0:2c5:f4a:8839 with SMTP id
- adf61e73a8af0-321ec9365afmr5477762637.60.1759330209787; 
- Wed, 01 Oct 2025 07:50:09 -0700 (PDT)
+ AJvYcCVsHcgR4OSquntD/1oD/34+ha050myj9wy3Znq6JIDZakShzWqRMBO/zPORdMmcoTCdOsV36A08NFvg@nongnu.org
+X-Gm-Message-State: AOJu0YwYqQ03xfuIyQNT3rud7O3W61Cc967cB1Yvg6ut/3bSNEFckN19
+ Zv+zWukyTK9mhPzO3InookJdQyJh1XAF0u9UTlFqa4v0rjKPOSGSSHl4Rl8G3RyQU3Q=
+X-Gm-Gg: ASbGncv6Xeuz/VrXElhIrZvIdqRjwy1HH2WR6MwsQ30VydTOrPuGFlMwrQos8k1i3Qk
+ F/5zu7DMD05tWuBoLMr/ixUoKhPdBeqzZ2jIG/mSRUpZIqBhs4OoBqyO2FqICjHEP0qhPTOUbO/
+ Wqs8WKyQ7SiWcTQwacEijpG5rAJ2cJPa8abmD9ABGgHBF8kKIAsZn9sUNkg/ZmzhIDQmS+s2JcA
+ dEOx98j0TIGXyIwRBE2uPVPMhSNUxIQ64mPHbjnoS6U4HmfYTJRAHYD5nNMx/NmLg1T3wJY+a6s
+ evzu3SQds+ZU/iM4JV6OnBVCsGCA1ZukC2iuZPkugx3yME5NQwjn0HMsduw1guGS75nTjuWv+vl
+ n1D93fqKgVM36kVxSSla6Sge18zFpPhBJhKHw0XkAdN2Kg5KDkyt1w3yJ0WHB9YfmedDC1aDV7F
+ ULVPR2uwGy49V4+vY+5yWFfaLm/l3dPtU=
+X-Google-Smtp-Source: AGHT+IHcmD0xQsc/wxrGWBN1ANPdZ3erm2Q1K1R4yon5SEPg7HmcLpHQk3nJk8BJS/XmRBnduaNLdA==
+X-Received: by 2002:a05:6a00:14cf:b0:781:19fc:abf with SMTP id
+ d2e1a72fcca58-78af41ef502mr4651718b3a.21.1759330186533; 
+ Wed, 01 Oct 2025 07:49:46 -0700 (PDT)
 Received: from ?IPV6:2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345?
  ([2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b57c55741e6sm16131304a12.29.2025.10.01.07.50.08
+ d2e1a72fcca58-7810238b19dsm16543634b3a.10.2025.10.01.07.49.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 07:50:09 -0700 (PDT)
-Message-ID: <e6eaaddf-8bdb-41e6-bb8b-7272809f3abc@linaro.org>
-Date: Wed, 1 Oct 2025 07:50:05 -0700
+ Wed, 01 Oct 2025 07:49:45 -0700 (PDT)
+Message-ID: <3479f480-da67-41a1-85fd-c1d281575694@linaro.org>
+Date: Wed, 1 Oct 2025 07:49:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/25] hw/vfio/listener: Include missing
+Subject: Re: [PATCH 03/25] hw/s390x/s390-stattrib: Include missing
  'exec/target_page.h' header
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20251001082127.65741-1-philmd@linaro.org>
- <20251001082127.65741-5-philmd@linaro.org>
+ <20251001082127.65741-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251001082127.65741-5-philmd@linaro.org>
+In-Reply-To: <20251001082127.65741-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,16 +112,19 @@ On 10/1/25 01:21, Philippe Mathieu-Daudé wrote:
 > "system/ram_addr.h". Include it explicitly, in order to
 > avoid unrelated issues when refactoring "system/ram_addr.h":
 > 
->    hw/vfio/listener.c: In function ‘vfio_ram_discard_register_listener’:
->    hw/vfio/listener.c:258:28: error: implicit declaration of function ‘qemu_target_page_size’; did you mean ‘qemu_ram_pagesize’?
->      258 |     int target_page_size = qemu_target_page_size();
->          |                            ^~~~~~~~~~~~~~~~~~~~~
->          |                            qemu_ram_pagesize
+>    hw/s390x/s390-stattrib-kvm.c: In function ‘kvm_s390_stattrib_set_stattr’:
+>    hw/s390x/s390-stattrib-kvm.c:89:57: error: ‘TARGET_PAGE_SIZE’ undeclared (first use in this function); did you mean ‘TARGET_PAGE_BITS’?
+>       89 |     unsigned long max = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
+>          |                                                         ^~~~~~~~~~~~~~~~
+>          |                                                         TARGET_PAGE_BITS
+> 
+> Since "system/ram_addr.h" is actually not needed, remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/vfio/listener.c | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/s390x/s390-stattrib-kvm.c | 2 +-
+>   hw/s390x/s390-stattrib.c     | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
