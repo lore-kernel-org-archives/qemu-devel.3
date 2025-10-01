@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B84BECCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0F5CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3zur-0002mx-KI; Wed, 01 Oct 2025 12:42:57 -0400
+	id 1v3zxR-00041G-5c; Wed, 01 Oct 2025 12:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3zuo-0002m4-Mp
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:42:54 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3zxA-0003wi-Fp
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:45:26 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3zue-0007tF-NJ
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:42:53 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46e4473d7f6so74095e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:42:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3zx1-00081k-8f
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:45:18 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-46e52279279so30735e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759336944; x=1759941744; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v+uabRtDuzJ/m4e+L6lhktLwA2GFXiRSn7Uix0Zvk/U=;
- b=uXl2HiadkNC9zR/qCyLswfhOSC9cmHN9fbymMLd5ikbM/BKExMXH8FESZSbmxbbKFK
- TS+GH9U5dYirRzz3QKQsja7WJe0R3/W+IRRylSc/qriXSw3BWiU2fmxEcDbSJQSYjuZw
- si2NaQubr0IhxhpYDxcc3Bhh7S+UHmRMOMg8OiZFwLPDbYQ7B9dkZMuHtIbQpLb0YIon
- gbLQZtqXtGnfdDR9uFutabWw0Ooi2rSBOc67gX0obi33Z5BOdjTmGT51Awm8xJ1fXBOo
- VCqCHbiEMVgMR53blVY5yGEiAZejbyrN3iZ+ngujmwNdfCgVEjqJyCPvHZsUg8om+jBr
- ts0Q==
+ d=linaro.org; s=google; t=1759337098; x=1759941898; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tPaV+VFWxQXUIKu08GdGOFPhuZfOnUHddrLWV+7K1Lw=;
+ b=e6Ek/HcMVpojx6AdQB4UUJSeFb/ZRgphbgDWDP5j0rDDBI2Eu/Kz6UsCknqwS3jpJZ
+ hMLCJQCBBW/Ou590a0Xpyh7jdPILU9CkaOKchY4KQmmlaOwE2ICvHoSR7Qo2/Bk9oCKP
+ lxMB763uC461GOW9pUlwW1yIxRbpKgL/+GxBcubjkHp/L5sf0uRwA58wtYng0Nz5qD7U
+ OOSoYcZbLEl1IDfr6ZngQRh9ijjPa+NgUwfYmd1A19F0EMDA73QG0n0QGhagUJxJUQs7
+ wF+r6FokR7QdwqTGyQKHn0WOGhpfUsf4Zc7ey57oDj6RUPoBsPkc9ppfSao56QQH53z0
+ KAgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759336944; x=1759941744;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v+uabRtDuzJ/m4e+L6lhktLwA2GFXiRSn7Uix0Zvk/U=;
- b=aPeei4+updXV1jittFn6c/2pdSV22CCaEDk1DaKt9ulxgOZpmuZp2cSFkhATVUd/72
- HWA83klM5yZopYWckgFZgly1MPUMRwEhTpdWkdvvOpm5TdzMT4A23Ul8K7H3VY4Xv8Wv
- d8HCEzj3qNcCpVp2muSmoQ/lOzxQ00RQYgE9rxbefXmql3RhbyvQPMqXoBFIFbP4n1mn
- dcXjAKgDySdIOE2bZ5okpvH0zii8teZ88LfqOGKt7g2Hpz5XZerV2n+9etikQ1RXGvJU
- EX+9/WnTWqp4avaYuImfRn2f93FqLK+5ttyeuzt17GQHoT5qpB6pEGFnnKhbJurGdJev
- KSJA==
-X-Gm-Message-State: AOJu0Yz4w6M8cNh5fzAqZLOn3dBM338V4MfnZqp7/JIfW3g2OzGLDgSs
- WfRgr4vUxUKCn7fjEeFW0KZupxVYDnH6VQaRKxXsbGPBzMPSZ2HpPhp9qYQjQQvGkms=
-X-Gm-Gg: ASbGncuYEm2oQwQ2DlLvjdpVjFyfHA0V/cM+bgUHgnWgjFJtcU94X1r5okCwIWXZR9D
- ZNar/Mn2ergZYiPBwxOHPodMyPmanCsq7ZLOhAs/vX9RdfpLoaCIQfalgk+6XlcLHN4ObVmusH2
- H0euop32eUuoY4AqMQhTk0wyem7y5QBuT6cIeteKblQKCqOVY5XJirXa+rng2LTI0n6XRw59unV
- SRYB+0UKBviXsV7YMe3Y35l4MTiVE1uBNqI6TCuExgwcVl6p1BzmQ0hexha493uE0JuPDLIZCax
- oLX1ODbHcjmtygM+AKhgHXYCZ9B6X7/feoPOfYJ/nVvNDoBTWVlrF19ICVQQXrKqwHxTW11k6go
- F6ZHXnuwfzwXma2SmGSgobR7/LHIUYuhoefnrheCDvVGlYsRC9YBqpibMw+ibEuj7YVSog8Qwhg
- hr3I/2YknK6UQQ+i8NAqo2G6x+
-X-Google-Smtp-Source: AGHT+IH4jKSsUHp9Yqoi1XvxjhdrciWHucaXnu76L7493jt6wfeUpweQHhewh9H3oV9qQHugx5YIXA==
-X-Received: by 2002:a05:600c:a304:b0:46e:652e:168f with SMTP id
- 5b1f17b1804b1-46e652e1d0fmr19150305e9.6.1759336944205; 
- Wed, 01 Oct 2025 09:42:24 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1759337098; x=1759941898;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tPaV+VFWxQXUIKu08GdGOFPhuZfOnUHddrLWV+7K1Lw=;
+ b=OFPMm9KEYvrF8nWK6sYVCZs12fhqbN4EmwOArIa8f1zt3Oar0ourGd4E6rrKfsKduC
+ Rod4xptB8Fjk+mAnKIcweT9zzKQAbe5jWqX0sVWLJawuTF369U3ukN7EB4t/uyPxHNSW
+ jRmUSO+ALEjYlvhxQ+TtttjAI754/D74YVy29EHz8FVPZHNRzC7jC4ojSJedAsXs6RH+
+ TpSRhBa0wyNrFYzXDFc0n6+TJcI+3si8k8jWV0GbU964CiO04MxxL5iewaRnHUPH5qvx
+ J2zev84E0yDJnx4z81lt2WfVhqlSruSVDIgHBWFcAkYj5wATnvbgNjZtpjEZwDLfiDIz
+ zUIw==
+X-Gm-Message-State: AOJu0YxmlTiqJ3WXLZYuUXjj6isphSR58uK7GrnEC4SNv+/LDhc4wgrO
+ eHjFSyLU2FpRN4SslZcT143GUBlcV0UCEE3B7wXsggjAqZ4KZJ4EmuHPpW29Ij7QUhgU40oucDV
+ nzT4TfT5iCA==
+X-Gm-Gg: ASbGncuqtav17kDm46nSEo2YBSijTxfDCBQoOVjYXxUF4pw+GvsUZYKXCkMtf7hKxkb
+ 7yLggpcUAZl+Jyi8in6djmow/yzgnMv9QyabV3Ft13PJ+NMD3Ai18Iaw6cJ25aHaih9FgelPwDk
+ AoxJ98BsS04DsMvQdby0isDIUFEiNRYCLeYQjl10eqfnm91OvJ3k187tLWe4LSQ0ORZEgSqdOlI
+ 07MuL6ekmeBWn7/VC/0EMHB3Na0+fADN0mTTnNu7kWSNZY71FkKVPVOsnvteC7epON0k0Z7Qmke
+ PeAt8pcdJe/WG451lxY0bTpnoHpxADUpZCJavK9OCb88K0r6jgscjSWJzS9ZVAoryFIKkCsAlvE
+ Oh6ARRZW8rOOJFxYSMb4B/tCLYFTS4JaXPabUm+F6+vqejDtg1jfNlcNp0OFenDGv6ReKjJniZI
+ mqR7yA9F3H7lsLXFjvGPTh
+X-Google-Smtp-Source: AGHT+IEkbIsBMTIstQ0lP9y8hSs1E0dcxoBKUVnIcQD9/CDQ0YIod8B2npgW5sGEVlTBXLntX/axNQ==
+X-Received: by 2002:a05:6000:24c8:b0:3f9:1571:fdea with SMTP id
+ ffacd0b85a97d-4255781b8d0mr3521580f8f.44.1759337098555; 
+ Wed, 01 Oct 2025 09:44:58 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e5c3cad50sm39100755e9.3.2025.10.01.09.42.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 09:42:23 -0700 (PDT)
-Message-ID: <2a53049c-01e2-4f0e-ac51-f55d50173b22@linaro.org>
-Date: Wed, 1 Oct 2025 18:42:22 +0200
+ ffacd0b85a97d-40fc6cf3835sm27970896f8f.46.2025.10.01.09.44.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 01 Oct 2025 09:44:58 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
+ Peter Xu <peterx@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/6] system/ramblock: Sanitize header
+Date: Wed,  1 Oct 2025 18:44:50 +0200
+Message-ID: <20251001164456.3230-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] hw/core/cpu: Remove @CPUState::as field
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu <peterx@redhat.com>
-References: <20251001150529.14122-1-philmd@linaro.org>
- <CAFEAcA-daogqBPxt72qTM6BuMuD1wuw+vXZwxLUQftwY2FZk=w@mail.gmail.com>
- <b5280074-e87c-4838-b816-eb9e42dd090c@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b5280074-e87c-4838-b816-eb9e42dd090c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,36 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/25 18:35, Richard Henderson wrote:
-> On 10/1/25 09:08, Peter Maydell wrote:
->> On Wed, 1 Oct 2025 at 16:05, Philippe Mathieu-Daudé 
->> <philmd@linaro.org> wrote:
->>>
->>> Instead of using the convenient @CPUState::as shortcut, use
->>> cpu_get_address_space(asidx=0) to get the vCPU first address
->>> space.
->>>
->>> The goal is to reduce the risk of AS mis-use for targets
->>> that uses multiple ASes per vCPU.
->>
->> I'm not sure I agree with this. The cpu->as is handy for
->> the large number of targets which only use one AddressSpace:
->> which is everything except arm and x86 right now.
->>
->> Targets that use multiple address spaces need to be careful
->> about which AS they use by definition. Unless we have a
->> track record of code in those targets carelessly using
->> cpu->as when it should do something else, I'm not sure
->> that there's a benefit that makes it worth making the
->> "use the one and only AS this CPU will ever have" more awkward.
-> 
-> I agree.
-> 
-> Moreover, '0' as a default is just as bad as cpu->as, because you're 
-> giving no thought to the selection.  Similarly using 
-> MEMATTRS_UNSPECIFIED.  When such things matter, we need the real 
-> attributes and/or as piped down from the proper memory reference.
+Usual API cleanups, here focusing on RAMBlock API:
+move few prototypes out of "exec/cpu-common.h" and
+"system/ram_addr.h" to "system/ramblock.h".
 
-OK.
+v2:
+- Do not use ram_addr_t for offsets (rth)
+
+Philippe Mathieu-Daudé (6):
+  system/ramblock: Remove obsolete comment
+  system/ramblock: Move ram_block_is_pmem() declaration
+  system/ramblock: Move ram_block_discard_*_range() declarations
+  system/ramblock: Use ram_addr_t in ram_block_discard_guest_memfd_range
+  system/ramblock: Use ram_addr_t in ram_block_discard_range()
+  system/ramblock: Move RAMBlock helpers out of "system/ram_addr.h"
+
+ include/exec/cpu-common.h                 |  3 ---
+ include/system/ram_addr.h                 | 13 ---------
+ include/system/ramblock.h                 | 27 +++++++++++++++----
+ accel/kvm/kvm-all.c                       |  1 +
+ hw/hyperv/hv-balloon-our_range_memslots.c |  1 +
+ hw/virtio/virtio-balloon.c                |  1 +
+ hw/virtio/virtio-mem.c                    |  1 +
+ migration/ram.c                           |  3 ++-
+ system/physmem.c                          | 33 ++++++++++++-----------
+ 9 files changed, 45 insertions(+), 38 deletions(-)
+
+-- 
+2.51.0
 
 
