@@ -4,110 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27875CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE5ECCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3zeD-0001kx-QA; Wed, 01 Oct 2025 12:25:45 -0400
+	id 1v3zor-0006Z9-Gp; Wed, 01 Oct 2025 12:36:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3ze8-0001kG-KG
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:25:43 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3zoq-0006Y2-16
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:36:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v3ze2-0006Ce-7g
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:25:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v3zod-0007LH-Me
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:36:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759335929;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1759336580;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=451ofA1mqmEEQNSKFV2BxE045rqyo3qnKF1sK4cAmVA=;
- b=bgQL+XYmjQLFL60Ixod/Dnpla67L1UyojB34RnfigDTavhoHzm8MWVF52aM9WS653zcUe2
- aNBVMlO+PsHGl7f6JzUjzltQvXdVkvLg0APFVMPq+oNetnvqYIvcofvh+odB/RTnBIEe/r
- RGfXlT1MPl/NiqTOmkr3eDClIwXxl5c=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=d1zUbIP6vviuRW4VFH71V9ujzRHESPUdqWcFFykoVNc=;
+ b=jSm4EzLvkWQ+Pnt8xlZ5domeyfCcJaze2i92WInr+y5JWFNxvbrDMVtKjxtDO14d8laHu4
+ gnF5f8u3OKcbAs9peMWr36do0ITnmG2kpeuiC1ZUOVP7fRSyncWJNG+JROpeobIYJGAMXI
+ x6d+vbE2cN7OdF2mUf+W47Nopa9CgUs=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-EdOEpgL_OP2GitXiNQz9Qw-1; Wed, 01 Oct 2025 12:25:27 -0400
-X-MC-Unique: EdOEpgL_OP2GitXiNQz9Qw-1
-X-Mimecast-MFC-AGG-ID: EdOEpgL_OP2GitXiNQz9Qw_1759335926
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42558f501adso414f8f.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:25:27 -0700 (PDT)
+ us-mta-483-vfSkJxreMJGNoveH6k4D6g-1; Wed, 01 Oct 2025 12:36:12 -0400
+X-MC-Unique: vfSkJxreMJGNoveH6k4D6g-1
+X-Mimecast-MFC-AGG-ID: vfSkJxreMJGNoveH6k4D6g_1759336572
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-792f273fd58so2482806d6.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:36:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759335926; x=1759940726;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=451ofA1mqmEEQNSKFV2BxE045rqyo3qnKF1sK4cAmVA=;
- b=qIyswn1mIlK6yTY8KFgat5ajpFH9J5BWISX0UbX93X2g9vi/9J4nZIlzyL1Yctf3+E
- FkunViy6Zf9Hn3C28koUx0RTJwk+iDwBbKfBNe/GgP9cMD73iod+BmvQYUTxMKyUaZaY
- b3BAPxi7DyEUDkxixZrZad4rkNyyZ3NfYNqWR+DL0jNWziarCG/GOTy94SBQonQSfAUR
- kwiTG4wx16pLGvAQdJT0aMSaghWUhNFgbNr2akaz/R8T9Y+i7QMIkoNKL4ReCKbdVroK
- 5p+TlVWPDxhQplOs/EINowNRClpsmZsisGlX7JCo/GlevxjVnJSnH/F4QLgidPQRiS87
- 7r9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSVr394jY8JBBrrt3kthzVwqbwWEdZSF/afzEAs3NleXIs5zCHwz40T1tHvO5WHoYDr1qC0OgKCS1n@nongnu.org
-X-Gm-Message-State: AOJu0Yzqv/f3PQ/drz/mmzpiQQ/4SpnxkTfKkZWQkiva389ikOf4XnTF
- f4CpPpk8W8wNG/8tfBsYCF2gxu//N6ksySbFZYnVApViuBEtOUS2BpZFCBmCWS9KQKq5SdUoRij
- o98W/skCZwHC7Q7IGV6BqI5G8moxDUP2oSwHJVSGw8tWJzDv6VZ+bN0fgyCfWRVQQ
-X-Gm-Gg: ASbGncuOGhVOoaCQOW8jYIZYOFIFU3Ckj0QZhwyprKYVFXaHJoSkSg0drWegEQ10Api
- wzhjPPmMqpcixJx9myHqiAegHdq+X7C3EWnuOhwbsnZb8j1MR9rRzvEdT6JethQBbVXQPY2uQ7t
- n/R/8u8Idc2IjqBs7OUVG/7hbbOZwQ9VcJrbslAAxaoIqBhEwzrnTNBJW2rajyE6hA2VNTfb04F
- iBjW0Zeg3XaGsUWiwSUAL00rySZPf5xrHxMEnvihYLkGDTt/zQWp9ieHW7tvKcHVi5LgwGpnsWq
- DYxrXXXBhpMcnQG1ywuqzYTqwvZfbMOUKLJ15faeIjrzIMMpl5SvApVPOVPEtUseLy7uRxGOZ0B
- mW+bS3PjSx0C7Ohgf
-X-Received: by 2002:a05:6000:2910:b0:3ea:e0fd:28e8 with SMTP id
- ffacd0b85a97d-42557816d76mr2910248f8f.32.1759335926077; 
- Wed, 01 Oct 2025 09:25:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1rr+ZoKLEqTdSuKl3u6YTjvdJwXC3VPBvwBaYlIe1OUEzXQHWRTE7Jf3VrpxW5o6gyPNnwA==
-X-Received: by 2002:a05:6000:2910:b0:3ea:e0fd:28e8 with SMTP id
- ffacd0b85a97d-42557816d76mr2910226f8f.32.1759335925600; 
- Wed, 01 Oct 2025 09:25:25 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb72facf9sm28472904f8f.13.2025.10.01.09.25.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 09:25:25 -0700 (PDT)
-Message-ID: <b36b05e2-3453-4655-b060-7259624feb08@redhat.com>
-Date: Wed, 1 Oct 2025 18:25:23 +0200
+ d=1e100.net; s=20230601; t=1759336572; x=1759941372;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d1zUbIP6vviuRW4VFH71V9ujzRHESPUdqWcFFykoVNc=;
+ b=a4lyAdbmrpQFJ2r0KpqTKiLimf+rv0S0mtBrFWIef+OdIMZEgJI+jVjXjTzbVWYq6L
+ JdnrXlo4stCFP2+TptlZ8LqEJ65wYpS390ayVsT+g8cWwzEMf7zEWrgbLR1WfUVXVaBs
+ ywz30cTdCK2jUk4ldzAmM+ZO/VWXGAsvntXFR7mirBTfm0ZR5Iekc/gtCT5By3hS9Soj
+ QMUdp50dn8QG1YXSLwmiy0klEt6Rzdtmyk15k2NNy230HU0W8RZbasCKOG9yk7/w+TGp
+ kdqdVqJfRT0bcqDwouW+n8PJUrkpK4gz47iC6NjHcpUahpuHhpptTyTlePD5d1/KccgB
+ VkxQ==
+X-Gm-Message-State: AOJu0YwZLvoL8EmFvTM6gmpigv46VXxS4CvicUrZ1ayM6ws3aM5DJQnU
+ YFuL3TcKVqi4IM2nwG9ZoQKAkOtrhbLKQeGbv0tojOP5qeuDn1MhEpShShjMvYhZFElxdVcfxwa
+ +BhtFA/geFAXqPZ/RpVvOEJh8mWyYX7TRzoe5EOqrRCnPrbI/izmy6xsk
+X-Gm-Gg: ASbGncu4lp2kBgkHuVMGd4I9cU6YfbXEUNIsPElKQ/HZCDoDAPV0LDhO2I2AxiCZ2DR
+ gM4GZShpktYo2r/WwiZj6G1YADkJDZo7MdvxuK22GXDc8qjGIFPT46Bu4f4zQFyO2pmtWVYip90
+ 8LwN8WOpzVeLaKMEgvDESWOFwZstk2rRCLxsxEDayLdDiWS5duxjj2ldHZoHU0k3DoBWNXZCvRV
+ M34w6W8XvL3Zwmlvd59UPSDuHsbjzMe6qTfILY79GBdnu/5cJ+R6UBiiIN55KPtM2usWnKf5iz/
+ yh0rTk0dkgIAJ81K5MibxUSaiXUf9UFHKr1BaA==
+X-Received: by 2002:a05:6214:2469:b0:823:f922:8f10 with SMTP id
+ 6a1803df08f44-8739f3c472cmr59597696d6.30.1759336572148; 
+ Wed, 01 Oct 2025 09:36:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiPUJbWtdHsU/sTuqNkS09A7DVu+TUqgMb1NcAWtw0+NDP0YRcbOoc8VqMeFxKiIlkdRRXTA==
+X-Received: by 2002:a05:6214:2469:b0:823:f922:8f10 with SMTP id
+ 6a1803df08f44-8739f3c472cmr59597216d6.30.1759336571547; 
+ Wed, 01 Oct 2025 09:36:11 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-878bdf53343sm812326d6.54.2025.10.01.09.36.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 01 Oct 2025 09:36:11 -0700 (PDT)
+Date: Wed, 1 Oct 2025 12:36:10 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Cedric Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH V5 05/19] migration: cpr-exec save and load
+Message-ID: <aN1YekYL7qmtI6o4@x1.local>
+References: <1759332851-370353-1-git-send-email-steven.sistare@oracle.com>
+ <1759332851-370353-6-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/27] hw/arm/smmuv3-accel: Introduce smmuv3 accel
- device
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-6-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250929133643.38961-6-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1759332851-370353-6-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,203 +106,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On Wed, Oct 01, 2025 at 08:33:57AM -0700, Steve Sistare wrote:
+> diff --git a/migration/meson.build b/migration/meson.build
+> index 0f71544..16909d5 100644
+> --- a/migration/meson.build
+> +++ b/migration/meson.build
+> @@ -16,6 +16,7 @@ system_ss.add(files(
+>    'channel-block.c',
+>    'cpr.c',
+>    'cpr-transfer.c',
+> +  'cpr-exec.c',
+>    'cpu-throttle.c',
+>    'dirtyrate.c',
+>    'exec.c',
 
-On 9/29/25 3:36 PM, Shameer Kolothum wrote:
-> Set up dedicated PCIIOMMUOps for the accel SMMUv3, since it will need
-> different callback handling in upcoming patches. This also adds a
-> CONFIG_ARM_SMMUV3_ACCEL build option so the feature can be disabled
-> at compile time. Because we now include CONFIG_DEVICES in the header to
-> check for ARM_SMMUV3_ACCEL, the meson file entry for smmuv3.c needs to
-> be changed as well.
->
-> The “accel” property isn’t user visible yet, it will be introduced in
-> a later patch once all the supporting pieces are ready.
->
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+I'll give it a shot on cross builds soon, but I wonder if the whole cpr*
+should be only compiled when "host_os == 'linux'".
 
-Eric
-> ---
->  hw/arm/Kconfig          |  5 ++++
->  hw/arm/meson.build      |  3 ++-
->  hw/arm/smmuv3-accel.c   | 52 +++++++++++++++++++++++++++++++++++++++++
->  hw/arm/smmuv3-accel.h   | 27 +++++++++++++++++++++
->  hw/arm/smmuv3.c         |  5 ++++
->  include/hw/arm/smmuv3.h |  3 +++
->  6 files changed, 94 insertions(+), 1 deletion(-)
->  create mode 100644 hw/arm/smmuv3-accel.c
->  create mode 100644 hw/arm/smmuv3-accel.h
->
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 3baa6c6c74..157c0f3517 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -12,6 +12,7 @@ config ARM_VIRT
->      select ARM_GIC
->      select ACPI
->      select ARM_SMMUV3
-> +    select ARM_SMMUV3_ACCEL
->      select GPIO_KEY
->      select DEVICE_TREE
->      select FW_CFG_DMA
-> @@ -625,6 +626,10 @@ config FSL_IMX8MP_EVK
->  config ARM_SMMUV3
->      bool
->  
-> +config ARM_SMMUV3_ACCEL
-> +    bool
-> +    depends on ARM_SMMUV3 && IOMMUFD
-> +
->  config FSL_IMX6UL
->      bool
->      default y
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index dc68391305..bcb27c0bf6 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -61,7 +61,8 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
-> -arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
-> +arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
-> +arm_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
->  arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
->  arm_ss.add(when: 'CONFIG_XEN', if_true: files(
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> new file mode 100644
-> index 0000000000..79f1713be6
-> --- /dev/null
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -0,0 +1,52 @@
-> +/*
-> + * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
-> + * Copyright (C) 2025 NVIDIA
-> + * Written by Nicolin Chen, Shameer Kolothum
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +
-> +#include "hw/arm/smmuv3.h"
-> +#include "smmuv3-accel.h"
-> +
-> +static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
-> +                                               PCIBus *bus, int devfn)
-> +{
-> +    SMMUDevice *sdev = sbus->pbdev[devfn];
-> +    SMMUv3AccelDevice *accel_dev;
-> +
-> +    if (sdev) {
-> +        return container_of(sdev, SMMUv3AccelDevice, sdev);
-> +    }
-> +
-> +    accel_dev = g_new0(SMMUv3AccelDevice, 1);
-> +    sdev = &accel_dev->sdev;
-> +
-> +    sbus->pbdev[devfn] = sdev;
-> +    smmu_init_sdev(bs, sdev, bus, devfn);
-> +    return accel_dev;
-> +}
-> +
-> +static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
-> +                                              int devfn)
-> +{
-> +    SMMUState *bs = opaque;
-> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
-> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +
-> +    return &sdev->as;
-> +}
-> +
-> +static const PCIIOMMUOps smmuv3_accel_ops = {
-> +    .get_address_space = smmuv3_accel_find_add_as,
-> +};
-> +
-> +void smmuv3_accel_init(SMMUv3State *s)
-> +{
-> +    SMMUState *bs = ARM_SMMU(s);
-> +
-> +    bs->iommu_ops = &smmuv3_accel_ops;
-> +}
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> new file mode 100644
-> index 0000000000..70da16960f
-> --- /dev/null
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -0,0 +1,27 @@
-> +/*
-> + * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
-> + * Copyright (C) 2025 NVIDIA
-> + * Written by Nicolin Chen, Shameer Kolothum
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_ARM_SMMUV3_ACCEL_H
-> +#define HW_ARM_SMMUV3_ACCEL_H
-> +
-> +#include "hw/arm/smmu-common.h"
-> +#include CONFIG_DEVICES
-> +
-> +typedef struct SMMUv3AccelDevice {
-> +    SMMUDevice  sdev;
-> +} SMMUv3AccelDevice;
-> +
-> +#ifdef CONFIG_ARM_SMMUV3_ACCEL
-> +void smmuv3_accel_init(SMMUv3State *s);
-> +#else
-> +static inline void smmuv3_accel_init(SMMUv3State *s)
-> +{
-> +}
-> +#endif
-> +
-> +#endif /* HW_ARM_SMMUV3_ACCEL_H */
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index bcf8af8dc7..ef991cb7d8 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -32,6 +32,7 @@
->  #include "qapi/error.h"
->  
->  #include "hw/arm/smmuv3.h"
-> +#include "smmuv3-accel.h"
->  #include "smmuv3-internal.h"
->  #include "smmu-internal.h"
->  
-> @@ -1882,6 +1883,10 @@ static void smmu_realize(DeviceState *d, Error **errp)
->      SysBusDevice *dev = SYS_BUS_DEVICE(d);
->      Error *local_err = NULL;
->  
-> +    if (s->accel) {
-> +        smmuv3_accel_init(s);
-> +    }
-> +
->      c->parent_realize(d, &local_err);
->      if (local_err) {
->          error_propagate(errp, local_err);
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index d183a62766..bb7076286b 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -63,6 +63,9 @@ struct SMMUv3State {
->      qemu_irq     irq[4];
->      QemuMutex mutex;
->      char *stage;
-> +
-> +    /* SMMU has HW accelerator support for nested S1 + s2 */
-> +    bool accel;
->  };
->  
->  typedef enum {
+I'm not even sure above qemu_memfd_create() is always defined.  But even if
+it'll work right now, we still compile these codes that will not be used
+outside linux..
+
+-- 
+Peter Xu
 
 
