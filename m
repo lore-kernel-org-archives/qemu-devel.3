@@ -4,94 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E26CCA472
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0978BCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v44n4-0001R3-8h; Wed, 01 Oct 2025 17:55:17 -0400
+	id 1v44nj-0001wq-Lf; Wed, 01 Oct 2025 17:55:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44mn-0001Hp-N6
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:54:58 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44nR-0001p0-Rh
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:55:42 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44mY-0005p9-Pd
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:54:57 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44mz-0006C0-GG
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:55:34 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 2E9C51F808;
- Wed,  1 Oct 2025 21:52:58 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7B76833773;
+ Wed,  1 Oct 2025 21:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1759355579; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hKSN8hGmZUHb7kr6m9FqH/JXx7Hi67L7PJwnl68BBLA=;
- b=Ncrg0KbmaCs+mgRRGWmAsvrrgIsxhRNgyYeenH9iAERm5TKPkdMgKgwpFTdZUQEZOLsK8K
- fTNeU2S3GxXJuSzDy8oxMrU/uCOzALywGQry1bVBePpkYIS5M/23X53VqwEGpIWCpgQYic
- T912Sk/nSeUQrb52rR7eBI3uEpqbO+Q=
+ t=1759355583; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gdTuOYpkm1F8Joh6I2XE/u3MBbP+kNvzRGqOQSgAM3Y=;
+ b=KyRfaelWmOAfcfVx9XjP161WnKRUOrq2SMS0zxDDv+k9vwvj7M3xMbzmlSDhDaLWCJY8xv
+ 45dBpXNpKtxgE2Olrt4klGqRAzyPNL3gcSDGzqzM9y5Eu4IJyjl1GivU76Jpz1Th1ab5Gi
+ W8MMi9pcm5Y+M3YbcCxGmfF5qW4GPDg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1759355579;
+ s=susede2_ed25519; t=1759355583;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hKSN8hGmZUHb7kr6m9FqH/JXx7Hi67L7PJwnl68BBLA=;
- b=fjn0MkEoCVKkK/+UHnYpyoJiU/BsHQLbsVs1eNE5AQR3aacRkyxy1Y+Yet9hmqHLeo6kC8
- 7nD3SgyEoww9bIDQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gdTuOYpkm1F8Joh6I2XE/u3MBbP+kNvzRGqOQSgAM3Y=;
+ b=YaC3DcsfNn24tcQWrpR+5p8+dG6L/We2re81koJhHn++IxoLb+y1RDTRUkBvBWXdb4PVYw
+ JIOSfbc4T+vHw4Ag==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KyRfaelW;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=YaC3Dcsf
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1759355578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hKSN8hGmZUHb7kr6m9FqH/JXx7Hi67L7PJwnl68BBLA=;
- b=pXNCglyUJKxfvLxdNv80q6VA0e8JNEnEdYZov0eLEUyfECnYrhOKz6QZd0L7GXmVAp5HrP
- evBcI7iwrWCiNbTvPGemwV/ytl8dDPOuUATM8RDITj/uoDhETKMmZmPuuaAZxupzweAni5
- EJpjo5Q0UQtdp+V/JuqtbimcAyY2PLU=
+ t=1759355583; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gdTuOYpkm1F8Joh6I2XE/u3MBbP+kNvzRGqOQSgAM3Y=;
+ b=KyRfaelWmOAfcfVx9XjP161WnKRUOrq2SMS0zxDDv+k9vwvj7M3xMbzmlSDhDaLWCJY8xv
+ 45dBpXNpKtxgE2Olrt4klGqRAzyPNL3gcSDGzqzM9y5Eu4IJyjl1GivU76Jpz1Th1ab5Gi
+ W8MMi9pcm5Y+M3YbcCxGmfF5qW4GPDg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1759355578;
+ s=susede2_ed25519; t=1759355583;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hKSN8hGmZUHb7kr6m9FqH/JXx7Hi67L7PJwnl68BBLA=;
- b=0aYBNz8k+M5R6lKyBvrtm//vmbDNC+UZa/nqLM0+f+3NxJzJqME4Xfs8ur8YY9wSHaH3ae
- ZADyBECsA2sQJ0Ag==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gdTuOYpkm1F8Joh6I2XE/u3MBbP+kNvzRGqOQSgAM3Y=;
+ b=YaC3DcsfNn24tcQWrpR+5p8+dG6L/We2re81koJhHn++IxoLb+y1RDTRUkBvBWXdb4PVYw
+ JIOSfbc4T+vHw4Ag==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 27A7513A3F;
- Wed,  1 Oct 2025 21:52:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 36A4F13A3F;
+ Wed,  1 Oct 2025 21:53:01 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cfL5Nbii3WhrJgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 01 Oct 2025 21:52:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kMdkOb2i3WhrJgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 01 Oct 2025 21:53:01 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 00/13] QTest patches for 2025-10-01
-Date: Wed,  1 Oct 2025 18:52:41 -0300
-Message-Id: <20251001215254.2863-1-farosas@suse.de>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PULL 03/13] tests/qtest: optimize qtest_get_machines
+Date: Wed,  1 Oct 2025 18:52:44 -0300
+Message-Id: <20251001215254.2863-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20251001215254.2863-1-farosas@suse.de>
+References: <20251001215254.2863-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+X-Rspamd-Queue-Id: 7B76833773
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,59 +128,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 29b77c1a2db2d796bc3847852a5c8dc2a1e6e83b:
+From: Steve Sistare <steven.sistare@oracle.com>
 
-  Merge tag 'rust-ci-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2025-09-30 09:29:38 -0700)
+qtest_get_machines returns the machines supported by the QEMU binary
+described by an environment variable and caches the result.  If the
+next call to qtest_get_machines passes the same variable name, the cached
+result is returned, but if the name changes, the caching is defeated.
+To make caching more effective, remember the path of the QEMU binary
+instead.  Different env vars, eg QTEST_QEMU_BINARY_SRC and
+QTEST_QEMU_BINARY_DST, usually resolve to the same path.
 
-are available in the Git repository at:
+Before the optimization, the test /x86_64/migration/precopy/unix/plain
+exec's QEMU and calls query-machines 3 times.  After optimization, that
+only happens once.  This does not significantly speed up the tests, but
+it reduces QTEST_LOG output, and launches fewer QEMU instances, making
+it easier to debug problems.
 
-  https://gitlab.com/farosas/qemu.git tags/qtest-20251001-pull-request
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-ID: <87h5ymdzrf.fsf@pond.sub.org>
+Link: https://lore.kernel.org/qemu-devel/1758290310-349623-1-git-send-email-steven.sistare@oracle.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/qtest/libqtest.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-for you to fetch changes up to ca5be51a51fc6b6402838310ae8d0162fc03ecef:
-
-  migration-test: strv parameter (2025-10-01 17:09:23 -0300)
-
-----------------------------------------------------------------
-Qtest pull request
-
-- Fix for qtest_get_machines QEMU var caching
-- Fixes for migration-test in --without-default-devices build
-- Preparation patches for cpr-exec test
-
-----------------------------------------------------------------
-
-Steve Sistare (11):
-  tests/qtest: optimize qtest_get_machines
-  tests/qtest: export qtest_qemu_binary
-  tests/qtest: qtest_qemu_args
-  tests/qtest: qtest_create_test_state
-  tests/qtest: qtest_qemu_spawn_func
-  tests/qtest: qtest_init_after_exec
-  migration-test: only_source option
-  migration-test: shm path accessor
-  migration-test: misc exports
-  migration-test: migrate_args
-  migration-test: strv parameter
-
-Thomas Huth (2):
-  tests/qtest: Add missing checks for the availability of machines
-  tests/qtest/migration: Fix cpr-tests in case the machine is not
-    available
-
- tests/qtest/bios-tables-test.c        |   2 +-
- tests/qtest/cpu-plug-test.c           |   2 +-
- tests/qtest/libqtest.c                | 120 ++++++++++++++++++--------
- tests/qtest/libqtest.h                |  25 ++++++
- tests/qtest/migration/bootfile.c      |   5 ++
- tests/qtest/migration/bootfile.h      |   1 +
- tests/qtest/migration/cpr-tests.c     |   5 +-
- tests/qtest/migration/framework.c     | 107 +++++++++++++++--------
- tests/qtest/migration/framework.h     |   7 +-
- tests/qtest/migration/migration-qmp.c |  16 ++++
- tests/qtest/migration/migration-qmp.h |   2 +
- tests/qtest/riscv-csr-test.c          |   4 +-
- 12 files changed, 217 insertions(+), 79 deletions(-)
-
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 94526b7f9c..f3d4e0829a 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -1630,7 +1630,8 @@ static void qtest_free_machine_list(struct MachInfo *machines)
+ static struct MachInfo *qtest_get_machines(const char *var)
+ {
+     static struct MachInfo *machines;
+-    static char *qemu_var;
++    static char *qemu_bin;
++    const char *new_qemu_bin;
+     QDict *response, *minfo;
+     QList *list;
+     const QListEntry *p;
+@@ -1639,9 +1640,10 @@ static struct MachInfo *qtest_get_machines(const char *var)
+     QTestState *qts;
+     int idx;
+ 
+-    if (g_strcmp0(qemu_var, var)) {
+-        g_free(qemu_var);
+-        qemu_var = g_strdup(var);
++    new_qemu_bin = qtest_qemu_binary(var);
++    if (g_strcmp0(qemu_bin, new_qemu_bin)) {
++        g_free(qemu_bin);
++        qemu_bin = g_strdup(new_qemu_bin);
+ 
+         /* new qemu, clear the cache */
+         qtest_free_machine_list(machines);
+@@ -1654,7 +1656,7 @@ static struct MachInfo *qtest_get_machines(const char *var)
+ 
+     silence_spawn_log = !g_test_verbose();
+ 
+-    qts = qtest_init_ext(qemu_var, "-machine none", NULL, true);
++    qts = qtest_init_ext(var, "-machine none", NULL, true);
+     response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
+     g_assert(response);
+     list = qdict_get_qlist(response, "return");
 -- 
 2.35.3
 
