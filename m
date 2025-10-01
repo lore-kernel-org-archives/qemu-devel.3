@@ -4,118 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202D0CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1BF8CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rKY-0006OU-LI; Wed, 01 Oct 2025 03:32:56 -0400
+	id 1v3rJM-0005iZ-9Q; Wed, 01 Oct 2025 03:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3rKU-0006NH-Bk
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:32:51 -0400
-Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIw-0005SE-Vp
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:15 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v3rKK-0003xH-CT
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:32:49 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.249.165])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cc68834m5z6V80;
- Wed,  1 Oct 2025 07:32:24 +0000 (UTC)
-Received: from kaod.org (37.59.142.107) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Wed, 1 Oct
- 2025 09:32:23 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-107S0010ed1f93f-d162-4d58-8294-20d146db9700,
- D9D4E9C7278927B1F3584C3B5B4DCE3027F8E762) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3e2c8210-9e99-438b-aa9b-13479d59f6c9@kaod.org>
-Date: Wed, 1 Oct 2025 09:32:22 +0200
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIa-0003Sb-Id
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=oYRThgkpNNbiCXwf3NPrDNilPng1ialcdgzdS1GgYhw=; b=fQ1wg1/3J2ojXdM
+ hXeUBtsVphVE2bNLGIeFD6DMC/a6s1K2ubL75sEldPGOoMf0KwZmIInQ+2178ZdL9nNFWvjhfB/+h
+ RzK6SxD6vPDlW96z4pdqc0sqxZLDlziaIClQXXVoC/eO2wEqvDcCSwEPmlYg3G3vBwAwF7so+CBLr
+ Iw=;
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
+ richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
+Subject: [PATCH v2 10/33] target/riscv: Fix size of vector CSRs
+Date: Wed,  1 Oct 2025 09:32:43 +0200
+Message-ID: <20251001073306.28573-11-anjo@rev.ng>
+In-Reply-To: <20251001073306.28573-1-anjo@rev.ng>
+References: <20251001073306.28573-1-anjo@rev.ng>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] tests/functional/aarch64/test_aspeed_ast2700fc:
- Add vbootrom test
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>
-References: <20251001064625.1058680-1-jamin_lin@aspeedtech.com>
- <20251001064625.1058680-4-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251001064625.1058680-4-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.107]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 491be42e-ca6c-4e18-bef9-e7bcf6e91bd1
-X-Ovh-Tracer-Id: 15638749707240901423
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFFHsoyT19AXg5MrYVxkXFyuf1d5s4g2ab0YH72gaNP8mxVoaO13u2nZRhv9V/aGXOpVFmmNP7PzcW2HAvho0FXUcji+gOL66fjXHmoBhRIN0g79Wuv34XOZ8YiHzTLsubq3sR5J5z58vHImZRGnBsL0DM29LfNxa/fOHtuif4GS0jK7lc+jq4psCOYmbg9057ri3qs65aHwez6uPx1gkK4D5mifA3YBwiqtYveFJ35pfRy7DnxMDpxA5IovhiWnBSe8DQ+kbnYl6pc7eNTZAGiyUdGOwJEy6OWqsJoCzHsBp6u+9oX7kPNdwvw+4f7tG2LylOdWsf5kxPlijYa6c25rIRjHnt2+GC2ulS3+xij1dObR38WW4NjiPpBFMFHN1/79bNZ7UgtHr8wcfmxNJoNY4AZtoseiKQe5qHKGhDDQ3g8129zXJnJCQTpFEFCTZCeEJXjqTZ+AVAE9+HsWg6RIO/+d49Qln0fWStLGfOaE1MLjCZ4CVfS3vEtDhr51xOevm4q4jGniMunrrocHzUPbZod09oQ8UyoIdGdOk1w4U7621PwWLJFbjFWilmC76jp2ECfS0m2Te+j8rkhTe7s9N5QkHFJd2GMt+PLTSmAAVi6w5qemADJUBLKcY6/bR+QF7aEE2cbHZB1hQHOBeq4SU1NzZb/4ndnvL/yke2VvQ
-DKIM-Signature: a=rsa-sha256; bh=difMR18pWO4rh8BX/wSxiBSjQuqUkia5f6GmVbOeTKY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1759303945; v=1;
- b=sVTWtY+cP9Xe2szB92lGQvvTYljsOj5vOeISECMjh3zjbLr1Q3pCycXWIiho1IK/9wvg/LDx
- 6RnaHqzpnTqLDGqrnVjBW10yEje40p3zLsVN4edENYqyxJ7eupHku28GRrPBBB4oBnXm5pHHpuh
- ARfhU7KD7hQlpgZRwKVZhetik0gG8dBQ1j+tT6PvSwuqQw4iBzC+mxfiQe/SGt1xZoPMK5/xOw2
- jJuw21S40MLEDZWOEawiWtOErY4wLZx7eZ/BJUurlVdD+Ap09mrNa8ACkSZZjOXWeoliXWXXjPo
- TGGMU4J0mkdiieIhT049nwW1uNkAN990cPqucXYQg+x7A==
-Received-SPF: pass client-ip=188.165.42.229; envelope-from=clg@kaod.org;
- helo=4.mo548.mail-out.ovh.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,101 +59,279 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+According to version 20250508 of the unprivileged specification:
+- vtype: bits 0..7 used, bit XLEN-1 illegal, rest reserved
+  => fix to 64-bits.
 
-On 10/1/25 08:46, Jamin Lin wrote:
-> Introduce load_ast2700fc_coprocessor() to load the SSP/TSP ELF images
-> via -device loader. Use this helper in start_ast2700fc_test() to remove
-> duplicated code.
+- vxsat: bit 0 used, vxrm which would occupy bits 1..2 is stored
+  separately, and bits 3..31 are set to 0
+  => fix to 8-bits.
 
-Ideally, this should be an extra patch. Minor.
+- vxrm: 2 lowest bits are used for rounding mode, rest set to 0
+  => fix to 8-bits.
 
-> 
-> Add start_ast2700fc_test_vbootrom() which boots the ast2700fc machine
-> with -bios ast27x0_bootrom.bin and reuses the coprocessor loader.
-> 
-> Add test_aarch64_ast2700fc_sdk_vbootrom_v09_06() to test the vbootrom
-> with ast2700fc machine.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   .../aarch64/test_aspeed_ast2700fc.py          | 37 ++++++++++++++-----
->   1 file changed, 28 insertions(+), 9 deletions(-)
-> 
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> index 28b66614d9..c0458e47b2 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> @@ -83,6 +83,17 @@ def do_ast2700fc_tsp_test(self):
->           exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
->                                             '[72c02000] 06010103')
->   
-> +    def load_ast2700fc_coprocessor(self, name):
-> +        load_elf_list = {
-> +            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
-> +            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
-> +        }
-> +
-> +        for cpu_num, key in enumerate(load_elf_list, start=4):
-> +            file = load_elf_list[key]
-> +            self.vm.add_args('-device',
-> +                             f'loader,file={file},cpu-num={cpu_num}')
-> +
->       def start_ast2700fc_test(self, name):
->           ca35_core = 4
->           uboot_size = os.path.getsize(self.scratch_file(name,
-> @@ -120,16 +131,13 @@ def start_ast2700fc_test(self, name):
->               self.vm.add_args('-device',
->                                f'loader,addr=0x430000000,cpu-num={i}')
->   
-> -        load_elf_list = {
-> -            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
-> -            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
-> -        }
-> -
-> -        for cpu_num, key in enumerate(load_elf_list, start=4):
-> -            file = load_elf_list[key]
-> -            self.vm.add_args('-device',
-> -                             f'loader,file={file},cpu-num={cpu_num}')
-> +        self.load_ast2700fc_coprocessor(name)
-> +        self.do_test_aarch64_aspeed_sdk_start(
-> +                self.scratch_file(name, 'image-bmc'))
->   
-> +    def start_ast2700fc_test_vbootrom(self, name):
-> +        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
-> +        self.load_ast2700fc_coprocessor(name)
->           self.do_test_aarch64_aspeed_sdk_start(
->                   self.scratch_file(name, 'image-bmc'))
->   
-> @@ -144,5 +152,16 @@ def test_aarch64_ast2700fc_sdk_v09_06(self):
->           self.do_ast2700fc_ssp_test()
->           self.do_ast2700fc_tsp_test()
->   
-> +    def test_aarch64_ast2700fc_sdk_vbootrom_v09_06(self):
-> +        self.set_machine('ast2700fc')
-> +
-> +        self.archive_extract(self.ASSET_SDK_V906_AST2700)
+- vstart: maximum value of VLMAX-1, where VLMAX is at most 2^16
+  => fix to 32-bits as vstart is mapped to a TCG global.
 
-Could we update all tests to use the latest SDK v09.08 [1] which
-was released ?
+- vl: maximum value of VLEN which is at most 2^16
+  => fix to 32-bits as vl is mapped to a TCG global.
 
-Thanks,
+Fields are shuffled for reduced padding.
 
-C.
+Note, the cpu/vector VMSTATE version is bumped, breaking migration from
+older versions.
 
-[1]  https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.08ed
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/riscv/cpu.h                      | 12 ++++++------
+ target/riscv/machine.c                  | 14 +++++++-------
+ target/riscv/translate.c                | 12 ++++++++----
+ target/riscv/vector_helper.c            | 22 ++++++++++++++++++----
+ target/riscv/insn_trans/trans_rvv.c.inc | 22 +++++++++++-----------
+ 5 files changed, 50 insertions(+), 32 deletions(-)
 
-> +        self.start_ast2700fc_test_vbootrom('ast2700-default')
-> +        self.verify_openbmc_boot_and_login('ast2700-default')
-> +        self.do_ast2700_i2c_test()
-> +        self.do_ast2700_pcie_test()
-> +        self.do_ast2700fc_ssp_test()
-> +        self.do_ast2700fc_tsp_test()
-> +
->   if __name__ == '__main__':
->       QemuSystemTest.main()
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index fe774b00ef..c903b4f085 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -191,7 +191,7 @@ FIELD(VTYPE, VSEW, 3, 3)
+ FIELD(VTYPE, VTA, 6, 1)
+ FIELD(VTYPE, VMA, 7, 1)
+ FIELD(VTYPE, VEDIV, 8, 2)
+-FIELD(VTYPE, RESERVED, 10, sizeof(target_ulong) * 8 - 11)
++FIELD(VTYPE, RESERVED, 10, sizeof(uint64_t) * 8 - 11)
+ 
+ typedef struct PMUCTRState {
+     /* Current value of a counter */
+@@ -217,11 +217,11 @@ struct CPUArchState {
+ 
+     /* vector coprocessor state. */
+     uint64_t vreg[32 * RV_VLEN_MAX / 64] QEMU_ALIGNED(16);
+-    target_ulong vxrm;
+-    target_ulong vxsat;
+-    target_ulong vl;
+-    target_ulong vstart;
+-    target_ulong vtype;
++    uint64_t vtype;
++    uint32_t vl;
++    uint32_t vstart;
++    uint8_t vxrm;
++    uint8_t vxsat;
+     bool vill;
+ 
+     target_ulong pc;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 6bc79cceaf..dcf18624bf 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -136,16 +136,16 @@ static bool vector_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_vector = {
+     .name = "cpu/vector",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
+     .needed = vector_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64_ARRAY(env.vreg, RISCVCPU, 32 * RV_VLEN_MAX / 64),
+-        VMSTATE_UINTTL(env.vxrm, RISCVCPU),
+-        VMSTATE_UINTTL(env.vxsat, RISCVCPU),
+-        VMSTATE_UINTTL(env.vl, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstart, RISCVCPU),
+-        VMSTATE_UINTTL(env.vtype, RISCVCPU),
++        VMSTATE_UINT8(env.vxrm, RISCVCPU),
++        VMSTATE_UINT8(env.vxsat, RISCVCPU),
++        VMSTATE_UINT32(env.vl, RISCVCPU),
++        VMSTATE_UINT32(env.vstart, RISCVCPU),
++        VMSTATE_UINT64(env.vtype, RISCVCPU),
+         VMSTATE_BOOL(env.vill, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 2f8c7a6465..5e8fc3e543 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -38,8 +38,9 @@
+ #include "tcg/tcg-cpu.h"
+ 
+ /* global register indices */
+-static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
++static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc;
+ static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
++static TCGv_i32 cpu_vl, cpu_vstart;
+ static TCGv load_res;
+ static TCGv load_val;
+ 
+@@ -1439,6 +1440,10 @@ void riscv_translate_init(void)
+     size_t field_offset = 0;
+ #endif
+ 
++    /* 32 bits in size, no offset needed */
++    size_t vl_offset = offsetof(CPURISCVState, vl);
++    size_t vstart_offset = offsetof(CPURISCVState, vstart);
++
+     for (i = 1; i < 32; i++) {
+         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
+             offsetof(CPURISCVState, gpr[i]) + field_offset,
+@@ -1454,9 +1459,8 @@ void riscv_translate_init(void)
+     }
+ 
+     cpu_pc = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), "pc");
+-    cpu_vl = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, vl), "vl");
+-    cpu_vstart = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, vstart),
+-                            "vstart");
++    cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
++    cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
+     load_res = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_res),
+                              "load_res");
+     load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 7c67d67a13..2fc5348044 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -360,6 +360,12 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+     uint32_t evl = env->vstart + elems;
+     MMUAccessType access_type = is_load ? MMU_DATA_LOAD : MMU_DATA_STORE;
+ 
++    /*
++     * Maximum vector length is VLMAX == 2^16 == LMUL * VL / SEW, and
++     * occurs for LMUL == 8, SEW == 8, VL == 2^16.
++     */
++    g_assert(env->vstart < UINT16_MAX && UINT16_MAX - env->vstart >= elems);
++
+     /* Check page permission/pmp/watchpoint/etc. */
+     probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
+                 true);
+@@ -2594,19 +2600,27 @@ static inline uint8_t get_round(int vxrm, uint64_t v, uint8_t shift)
+ 
+     d1 = extract64(v, shift - 1, 1);
+     D1 = extract64(v, 0, shift);
+-    if (vxrm == 0) { /* round-to-nearest-up (add +0.5 LSB) */
++    switch (vxrm) {
++    case 0:
++        /* round-to-nearest-up (add +0.5 LSB) */
+         return d1;
+-    } else if (vxrm == 1) { /* round-to-nearest-even */
++    case 1:
++        /* round-to-nearest-even */
+         if (shift > 1) {
+             D2 = extract64(v, 0, shift - 1);
+             return d1 & ((D2 != 0) | d);
+         } else {
+             return d1 & d;
+         }
+-    } else if (vxrm == 3) { /* round-to-odd (OR bits into LSB, aka "jam") */
++    case 2:
++        /* round-down (truncate) */
++        return 0;
++    case 3:
++        /* round-to-odd (OR bits into LSB, aka "jam") */
+         return !d & (D1 != 0);
++    default:
++        g_assert_not_reached();
+     }
+-    return 0; /* round-down (truncate) */
+ }
+ 
+ static inline int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a,
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 71f98fb350..f1b624922a 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -194,7 +194,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+ 
+     if (rd == 0 && rs1 == 0) {
+         s1 = tcg_temp_new();
+-        tcg_gen_mov_tl(s1, cpu_vl);
++        tcg_gen_ext_i32_tl(s1, cpu_vl);
+     } else if (rs1 == 0) {
+         /* As the mask is at least one bit, RV_VLEN_MAX is >= VLMAX */
+         s1 = tcg_constant_tl(RV_VLEN_MAX);
+@@ -1213,9 +1213,9 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+                             MO_LE | MO_64 | atomicity);
+                 }
+                 if (i == size - 8) {
+-                    tcg_gen_movi_tl(cpu_vstart, 0);
++                    tcg_gen_movi_i32(cpu_vstart, 0);
+                 } else {
+-                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_esz);
++                    tcg_gen_addi_i32(cpu_vstart, cpu_vstart, 8 >> log2_esz);
+                 }
+             }
+         } else {
+@@ -1231,9 +1231,9 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+                             MO_LE | MO_32 | atomicity);
+                 }
+                 if (i == size - 4) {
+-                    tcg_gen_movi_tl(cpu_vstart, 0);
++                    tcg_gen_movi_i32(cpu_vstart, 0);
+                 } else {
+-                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 4 >> log2_esz);
++                    tcg_gen_addi_i32(cpu_vstart, cpu_vstart, 4 >> log2_esz);
+                 }
+             }
+         }
+@@ -3459,7 +3459,7 @@ static bool trans_vmv_x_s(DisasContext *s, arg_vmv_x_s *a)
+         vec_element_loadi(s, t1, a->rs2, 0, true);
+         tcg_gen_trunc_i64_tl(dest, t1);
+         gen_set_gpr(s, a->rd, dest);
+-        tcg_gen_movi_tl(cpu_vstart, 0);
++        tcg_gen_movi_i32(cpu_vstart, 0);
+         finalize_rvv_inst(s);
+         return true;
+     }
+@@ -3476,7 +3476,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
+         TCGv s1;
+         TCGLabel *over = gen_new_label();
+ 
+-        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
++        tcg_gen_brcond_i32(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
+ 
+         t1 = tcg_temp_new_i64();
+ 
+@@ -3488,7 +3488,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
+         tcg_gen_ext_tl_i64(t1, s1);
+         vec_element_storei(s, a->rd, 0, t1);
+         gen_set_label(over);
+-        tcg_gen_movi_tl(cpu_vstart, 0);
++        tcg_gen_movi_i32(cpu_vstart, 0);
+         finalize_rvv_inst(s);
+         return true;
+     }
+@@ -3516,7 +3516,7 @@ static bool trans_vfmv_f_s(DisasContext *s, arg_vfmv_f_s *a)
+         }
+ 
+         mark_fs_dirty(s);
+-        tcg_gen_movi_tl(cpu_vstart, 0);
++        tcg_gen_movi_i32(cpu_vstart, 0);
+         finalize_rvv_inst(s);
+         return true;
+     }
+@@ -3536,7 +3536,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
+         TCGLabel *over = gen_new_label();
+ 
+         /* if vstart >= vl, skip vector register write back */
+-        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
++        tcg_gen_brcond_i32(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
+ 
+         /* NaN-box f[rs1] */
+         t1 = tcg_temp_new_i64();
+@@ -3545,7 +3545,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
+         vec_element_storei(s, a->rd, 0, t1);
+ 
+         gen_set_label(over);
+-        tcg_gen_movi_tl(cpu_vstart, 0);
++        tcg_gen_movi_i32(cpu_vstart, 0);
+         finalize_rvv_inst(s);
+         return true;
+     }
+-- 
+2.51.0
 
 
