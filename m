@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DBB8CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 13:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC8CCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 13:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3woF-0007Sl-4N; Wed, 01 Oct 2025 09:23:57 -0400
+	id 1v3wu8-0000r9-AH; Wed, 01 Oct 2025 09:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v3woC-0007SA-Ow
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 09:23:53 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v3wo1-0006IH-53
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 09:23:51 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591CrGWx001067;
- Wed, 1 Oct 2025 13:23:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=H2N5EvVs
- GFkZCA9WQjihAqYrhYyVGzqm9YdZGkiILYQ=; b=J6b+I5cD4lKm1ih66RHULB+G
- rpgIdWRHjH2+OIoWChmtVL9KN0rV4Vl5K7nSxf815gDXOc2E6zfseXMdvhl6Un+C
- BbLTWATeekwneOK04XNZBPJvs7jGUoOlN6fjZF5eqOnd8apJgZEJt8M3cQq37q3u
- rIJbVW/FArSycIDKmMZKYSK3SbACQd6+NAxeKkpeu+nx32G81MbNne7gd/6saFTq
- AAOjDGoP7dr+IxNZvVTVW+9wDOSS6FxBX9ArrBAh+sG8EcHJZLzufQ47QAS2Fr0x
- S8dSA244wd1tQQ1qy/ZcPD5sDRXQzICUjbnc6M659/wLRbfI3LbWD4rnw7PTnA==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49gmcq1drm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 01 Oct 2025 13:23:33 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 591D1m7x004202; Wed, 1 Oct 2025 13:23:32 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 49e6c964tw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 01 Oct 2025 13:23:32 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 591DNUAj010031;
- Wed, 1 Oct 2025 13:23:30 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 49e6c964e2-1; Wed, 01 Oct 2025 13:23:30 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH] migration-test: fix migrate_args
-Date: Wed,  1 Oct 2025 06:23:05 -0700
-Message-Id: <1759324985-369944-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-01_04,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0
- malwarescore=0 adultscore=0 phishscore=0 spamscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2509150000 definitions=main-2510010116
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTMwMDE2NiBTYWx0ZWRfX6lFiykWwV2Ct
- zkhOVhgOrMg3HSuQPXittm5z1q+ADW7W+gjt67HfHTRnYcpdVlgV0jBS3vCOhrFOT6ofbW2kXy6
- bafPjieuC/tx2U+QtRBsH9UkQC08wu5h1tb1L6SEuMdA9xw2v1iReBvI4UDrxWROzosMjbZz3ar
- NyRUppJo0lU0TO+qk3VpvlDti5pdF92hpwlNOQ8dt6WX1xHT/XOs3DsWAqLsODymfyqCE+sJwQB
- Lom19r/KEpNoj2hkIXG410f4jzb5u58gTMlQznF+jUMl9w3XyoZrK1k0tlEyUSnVPTqQBA5LX8a
- zZ5M16QjlqwIthrf5eReEAiYy3seFxVj53zZgoLlXjXMcseREM2lm4x8KDhwA5OkWOVaJsnK3Tj
- yhC6a8NueBaNd5LYrQ29BfMgD3CIUQ==
-X-Proofpoint-ORIG-GUID: N2DNVbruPWdZLAiRWJPz9_7wsCPMf0Bu
-X-Authority-Analysis: v=2.4 cv=c7amgB9l c=1 sm=1 tr=0 ts=68dd2b55 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=x6icFKpwvdMA:10 a=yPCof4ZbAAAA:8 a=Ajjz2F2qt-e2BLgdxDEA:9
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: N2DNVbruPWdZLAiRWJPz9_7wsCPMf0Bu
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3wu2-0000qk-OP
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 09:29:55 -0400
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v3wtw-0007wP-En
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 09:29:54 -0400
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-799572d92b0so64256776d6.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 06:29:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759325375; x=1759930175; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lKWlnmMTpy8J1ZutJOGESUBXl/YEDhZZSiYIPJKzcVI=;
+ b=nKl970OdzDeGOn71uCaEFMRqRsFmUJJQz9QMTKz+E7ts76pd20ic0YCD3AcEKf75jN
+ v5sOIDznug7eRRrQXFm3v/7EHHM240dP6AZMaaG7/ZfZx8fkR6CYdUok4YpBwz4rlwYx
+ tA1TN2haLe3t+Hmw98NEdboABS9Vlu5kzDuTty+HaHSMNSGVz34ItTe5kojCXGK81byB
+ QhHLEvqNz0ipIRcqY7d8TAxzhEJaZrkTR1zRBIfe5M8O6jt+TdenRpdcVi/DIIuas38A
+ pbtRzeYWQal9QEoakGyu/nHAk23OY1oXzuSFBwhdDtRri/l70+t56HG1nTxZhQb6eQJ8
+ w4hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759325375; x=1759930175;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lKWlnmMTpy8J1ZutJOGESUBXl/YEDhZZSiYIPJKzcVI=;
+ b=jd5SaG8Vj6hYOv1YxaRAa9Pg5sl03Epg/aIDSMdtxtv7X2lQ7PH3R4QrNrnLDcQiad
+ dbeXVIValOepz2cnMnW5muAyIkt62befZnklmviJy4D/0S3QCjUMrtW6e5Gs1YASkClZ
+ XytUXjL05CbQF5vcZR47a9xgRDh831dwx9VJ/pa+SvNqxEIOm3a+zaoI+EdthXaq1wOa
+ Mx5Tv5DEqSt5cjrrp+3In8I7qnc3xX6wVGrzMXSgSuTrnM06Nbw6O77wAk4yLWdmkNeT
+ dRjHAMYabTCw8ZOpJg6EBYul0IM2bbvCbhzLWv5A7bSznrq3I7VtZ5kJrivoi9QcB3fh
+ OS3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0OE0ZPbrhdrqi5g6cCxKejlQJJOeleiOj8XSz1h1aaWYWSo1eoVRFnbyRlRtBoJ0IpPqAdgNBKm5U@nongnu.org
+X-Gm-Message-State: AOJu0Yy+3MWpvaw2Rl2ELxAqc2tQkn/sDkVz7TtlzQ5JnLt2VPdPcdCj
+ 3KyAKSpubG7mm1fja+DP11LAPlbf+ByNd67NH1srRFVXuEw8xMUKI+P8mMQYhTGjHYH0/NdIEJR
+ a5R+V
+X-Gm-Gg: ASbGncsfaeLadDDK8ROFWaaw0Cls1Oc5D5w/wWz2OYZYV3b9NXUIKJmYTlNoyAKO/O8
+ 8sduLNXdih1Wkkkqwf6DFrgf95zV5EfJb4G/P9xGRq6fi3Z+xD5+JsIj4wliHuvbBpIoNWVwbEp
+ uzahaGmxCNBOQDjiWTZainlqA8mBzomQwSay5YTIOjqB1/PJyxBfNe7d3kB1cCT/jH1Pd0aIXF3
+ J1xuy6n3iI+dMud7w5cj/Z2P09dllKQuzbHiB2VV/ry7KFcnQxluUMyo+EUFldpMV0JHkFLimyD
+ sfqDXyW8HdrifkZ4dtIe1cQeX55NEirBx/k+98Slxm1ntOQ19KX8y4oOUCcMsBOXrudqKKGGG15
+ vFWMvRDvgPA8UU8XUeKLc/MZiK22p1Fpi7OLWGmeyONmZenPQeEBdMwjTKYhGqWf3SmXkGk4LBA
+ isqIrPmnNu6XRfC7OkDlq3uGgmEEyR2yw=
+X-Google-Smtp-Source: AGHT+IFP2bCdy4A/1gYa6+qBQvWPLecYJu8HVoLM/KGfOQipxFtyfNmxz1by7tN4bpBvkLIAL2TLww==
+X-Received: by 2002:a05:6214:242d:b0:77d:bc4e:e0e5 with SMTP id
+ 6a1803df08f44-8739c0fad1dmr48747186d6.14.1759325375570; 
+ Wed, 01 Oct 2025 06:29:35 -0700 (PDT)
+Received: from ?IPV6:2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345?
+ ([2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8013cdf14e8sm113255976d6.20.2025.10.01.06.29.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 06:29:35 -0700 (PDT)
+Message-ID: <5f37d626-f564-4b75-80f1-ab8021c8fc82@linaro.org>
+Date: Wed, 1 Oct 2025 06:29:31 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/5] Ui patches
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20250930075559.133650-1-marcandre.lureau@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250930075559.133650-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,72 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migrate_args calls g_test_skip, but that does not end the test.
-It must also return an error code.  This fixes the queued patch
-"migration-test: migrate_args".
+On 9/30/25 00:55, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau<marcandre.lureau@redhat.com>
+> 
+> The following changes since commit 9b16edec6e9a483469c789475b2065d26b52db35:
+> 
+>    Merge tag 'pull-ppc-for-20250928-20250929' ofhttps://gitlab.com/harshpb/qemu into staging (2025-09-29 07:25:28 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+> 
+> for you to fetch changes up to 9163424c50981dbc4ded9990228ac01a3b193656:
+> 
+>    ui/icons/qemu.svg: Add metadata information (author, license) to the logo (2025-09-30 11:21:55 +0400)
+> 
+> ----------------------------------------------------------------
+> UI-related
+> 
+> Fixes for gtk, sdl2, spice UI backends.
 
-Suggested-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- tests/qtest/migration/framework.c | 9 ++++++---
- tests/qtest/migration/framework.h | 2 +-
- 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 2dfb1ee..8044b2a 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -258,7 +258,7 @@ static char *test_shmem_path(void)
-     return g_strdup_printf("/dev/shm/qemu-%d", getpid());
- }
- 
--void migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
-+int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
- {
-     /* options for source and target */
-     g_autofree gchar *arch_opts = NULL;
-@@ -351,7 +351,7 @@ void migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
-     if (!qtest_has_machine(machine_alias)) {
-         g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
-         g_test_skip(msg);
--        return;
-+        return -1;
-     }
- 
-     machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
-@@ -398,6 +398,7 @@ void migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
- 
-     *from = cmd_source;
-     *to = cmd_target;
-+    return 0;
- }
- 
- int migrate_start(QTestState **from, QTestState **to, const char *uri,
-@@ -419,7 +420,9 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-     bootfile_create(qtest_get_arch(), tmpfs, args->suspend_me);
-     src_state.suspend_me = args->suspend_me;
- 
--    migrate_args(&cmd_source, &cmd_target, uri, args);
-+    if (migrate_args(&cmd_source, &cmd_target, uri, args)) {
-+        return -1;
-+    }
- 
-     if (!args->only_target) {
-         *from = qtest_init_ext(QEMU_ENV_SRC, cmd_source, capabilities, true);
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 51a8a7e..ad5ca57 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -227,7 +227,7 @@ void wait_for_serial(const char *side);
- void migrate_prepare_for_dirty_mem(QTestState *from);
- void migrate_wait_for_dirty_mem(QTestState *from, QTestState *to);
- 
--void migrate_args(char **from, char **to, const char *uri, MigrateStart *args);
-+int migrate_args(char **from, char **to, const char *uri, MigrateStart *args);
- int migrate_start(QTestState **from, QTestState **to, const char *uri,
-                   MigrateStart *args);
- void migrate_end(QTestState *from, QTestState *to, bool test_dest);
--- 
-1.8.3.1
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
+r~
 
