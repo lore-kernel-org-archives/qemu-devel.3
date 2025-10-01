@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7657CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C4BCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rb2-0003ab-19; Wed, 01 Oct 2025 03:49:56 -0400
+	id 1v3rdq-0006bl-2j; Wed, 01 Oct 2025 03:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3raz-0003Zl-8O
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:49:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v3rdm-0006af-Ck
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:52:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3raj-00022T-0d
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:49:51 -0400
+ id 1v3rdb-00037C-BC
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:52:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759304969;
+ s=mimecast20190719; t=1759305149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=4LJlbTi89MWiCTkK6FX/aE1z7BsUo+V9Tk+ja/kMSkE=;
- b=b3NoIDa5+HJWoE4DLV2xTd5jata1lL/whY09F9qDHnnYy4TBhx4OKPDRmLTv1sHZGEeWZg
- YPYyvXKOK3mgb2wlUsSEOqLxwF7NFfovpcZKN9EclvsXXAEc9ZE5Wu5gvURQQSPgrwPV1S
- F3Bkn9FKs7LVt36mmbPRcR+v/b/aqTQ=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z4rzyy18VHCroAiugvOh6Z84T0tr26zY/aqtmKDiKlo=;
+ b=THoDpBlPjRfRjbaFgLR+KcaNB79+iNz0YFC/y0ejkvW7D1gox4s4cyduux7vYOwuCH2qne
+ pl5I/Da0llvafYcTDyPxvqHXDk40EUmlVt4eERJQFKiYWU7021Zq4k+ceDRSzhIuTK90mO
+ GyR2E4usFp0asgEImVpoefmRLXC0mRQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-KD3cxixtNGaGWSF44Nr3Jw-1; Wed, 01 Oct 2025 03:49:24 -0400
-X-MC-Unique: KD3cxixtNGaGWSF44Nr3Jw-1
-X-Mimecast-MFC-AGG-ID: KD3cxixtNGaGWSF44Nr3Jw_1759304964
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-61d31626b01so6326276a12.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:49:24 -0700 (PDT)
+ us-mta-448-9LqYuJDSOEGJ4OW_m2sYBQ-1; Wed, 01 Oct 2025 03:52:25 -0400
+X-MC-Unique: 9LqYuJDSOEGJ4OW_m2sYBQ-1
+X-Mimecast-MFC-AGG-ID: 9LqYuJDSOEGJ4OW_m2sYBQ_1759305144
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b3afaf5defdso519805466b.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:52:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759304962; x=1759909762;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4LJlbTi89MWiCTkK6FX/aE1z7BsUo+V9Tk+ja/kMSkE=;
- b=B2sGDxQzOXfIDQMMR/5Lb5YYr0EL8LsHM5cx199HI9yj7CEy4SP6lViuMZ1wbkctOS
- LHeOBvdb4vYOrCjt2D1/fOHGBH+usT+6FASg4qOnwnhyPUibaerYVVoRNdjoIXu5ySdx
- /9+LEkPUyV3MV7fvwG++Yya8TR7zH1V8E9LBXau/fdyO4fxy3hP/oqR19KWO+kXGcFHA
- OX8vwolOnh6rEJSCMwv2ihHY0PoiH6gceHkbitTgZol0CC63FutylKev/RF+edqaPvw8
- Y0/ZGfL6a7Rxn8uwTExKtwrxrUpfyi5ykC19oaNaOMH/USBluMrLigeWsKWPKrRM27M9
- Esag==
-X-Gm-Message-State: AOJu0Yw6OqbZ+BxzUg92nQ4DmgPfvayNG5Y638+o94n+/+d0V7VJmU4J
- eXrYhJ/8UPEXLsKmChadl0F3dEYkikju7PYBYLym+4zmVypJZ2n7QHo5647kDKvS6VLegrMUp9v
- yFV/c1pwb5mI8rwDQgqOHInPzjHg17qmZCEgafP9wDCPMgvmI1dCFkKXFp9WvRhx8RBC9Tc36rc
- 2SeUIv9LuCMqVLFn5sknv7EYYz1IbowKEOqn6yBMOJ
-X-Gm-Gg: ASbGncvbAy/Zm8J9pHiYKP0yP0RawabzXNFA26FTDxJkQHEf4njp2w+N5fCXpPlNNGm
- WCRi6llVJRc1pvYSA4jga+2t4rJcPLF8JVnEUi9I3cgsqj898dXpI4jSQmX/aa0w0tXrueNqdtG
- +CQk73bnqioGroX9GYb1F6q634kJk5bPZKZLErA6KAXwNNlQ2UMD0QlhnH0g5KlQtFJ/OWMrNtJ
- SVavS5dM4JgG46+H6kcB6H+UG/Ukk39fOngi7Gn0fgsZrMxfgt14mUFDZCqpGHfvtdt/o4MRHn/
- r54lY4sayKHQVyhR2ZODsrkTopW+L6/H2f12mTG5/deBY+WXp/IFZfeMjSm8KU9fMwVN1CiClzx
- 9XemtGrFQRxlTvrh5JtDnNrnTFUyewmUF21Nv7bN2pfimMYZ645I=
-X-Received: by 2002:a05:6402:358f:b0:631:d77a:57b2 with SMTP id
- 4fb4d7f45d1cf-63678ba9b62mr3165419a12.3.1759304962491; 
- Wed, 01 Oct 2025 00:49:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuJL/aXe9TD4TmQR6Kg76QJ0p1hMwW5OyDyNZtGVJI4iFPbgjOqA/hRgjdYG71pssr0ZdwOA==
-X-Received: by 2002:a05:6402:358f:b0:631:d77a:57b2 with SMTP id
- 4fb4d7f45d1cf-63678ba9b62mr3165382a12.3.1759304962062; 
- Wed, 01 Oct 2025 00:49:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759305143; x=1759909943;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z4rzyy18VHCroAiugvOh6Z84T0tr26zY/aqtmKDiKlo=;
+ b=O9fbxFjgXgC7b02q4Y5o7M9PdYu/pqzCaMHtrfyhuRTWRqY3OpCq/SHdAFf3J+bPvh
+ q3iZtVAOGL66pozvdV1CHXEtThKuNVBk061cQoVyiVEjPns9OL/E9uEfrRB/4Dkse+F2
+ Ps5GlXR6V53O8MY11u7W+bA29V49yh3dnUL/8s+9UEz3X6oVAfvwBeWT6J6IQbHhrMMV
+ 9yx7tv40YnFGx40TqdGsQRArjCqPIgnxUCEPwZXtTYQ+ZN5Wfr7PXlGkU8ck4Tq4rqQA
+ DpP5Ig3mLJohI/XMFX2MYrqTiHihB47tzb9lBWoFitlccuOyk4JEeGO/Ywk1mtkdg6tl
+ pZFA==
+X-Gm-Message-State: AOJu0YxHBVUaljJuk+IhH1Mb62rkUZnbHjG5A8LvabXgYwIaG577oGaX
+ HaZog6qWmw4oNvDacVO4q9C76QP7rVB28QbxBniOH7iRl5bZb6WTYMZiqPjuH96x3QELqokGsjM
+ o8JkGFt2BkTvhX+Blx/oqUNCPHpIPsh7faCIfqG47C/IifX4IRciCd1tJpeDCxOpukmPefE7170
+ Tozbq7Rvza0dJa0xZ5Vc/z1v00AIaqaywpRUIRUZqc
+X-Gm-Gg: ASbGnct0Qnb3HJx5pi9VUjfiToYeudP2MrY2FFfR1S52MkUI5rwscKD7efx/rMkyMLG
+ hGfmrs/EzcCdg+L0t85WyBfGdu8P3AbmQYPnxFUoa2LzvjfsTWbAr5/oQW7KLV3qyyOQlcq8xUn
+ z4vw9A+HYREraqYHg+jpbRpqL15waRhzXAIJggAio7Vl9Z5lJTejcI97sRtLFNMsWCBv0wQUf8T
+ KUp/T2ss6wNIMXevmdv2GRmsoOyS4QJK5quMCCneDGUxwM/Yp9H02R9M90ArF6avs74lJt2jPWV
+ 8fXaXjQ9T7QV/AIeqibvlY/I0S7BEmvGjEE1TlnApygWG/daOgJnsqRgcLUPH8blrSZoLK/5rKQ
+ eLujZhMgVtWX/+r7uW3WxSm9dbagORbNyIlIcagt8aVkRrJ9hfZ8=
+X-Received: by 2002:a17:907:3d42:b0:b3e:6091:2c65 with SMTP id
+ a640c23a62f3a-b46e985e14fmr268585666b.56.1759305143489; 
+ Wed, 01 Oct 2025 00:52:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHymp+6WpTG2+RiYNFl0x5QoJMeZpU8gXIKoVmVWLD63yv1NnU0AMT+b93OHX1Z9EJRVvReog==
+X-Received: by 2002:a17:907:3d42:b0:b3e:6091:2c65 with SMTP id
+ a640c23a62f3a-b46e985e14fmr268581866b.56.1759305143017; 
+ Wed, 01 Oct 2025 00:52:23 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-634a3671beasm11100065a12.22.2025.10.01.00.49.21
+ a640c23a62f3a-b3f575aa299sm557064466b.50.2025.10.01.00.52.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 00:49:21 -0700 (PDT)
+ Wed, 01 Oct 2025 00:52:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 0/2] rust: do not generate GLib bindings
-Date: Wed,  1 Oct 2025 09:49:18 +0200
-Message-ID: <20251001074920.1041619-1-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 05/11] rust: migration: extract vmstate_fields_ref
+Date: Wed,  1 Oct 2025 09:52:04 +0200
+Message-ID: <20251001075210.1042479-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251001075005.1041833-1-pbonzini@redhat.com>
+References: <20251001075005.1041833-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,57 +108,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Don't generate FFI for glib, rely on glib-sys crate.  This makes it
-possible to limit Rust to the same minimum version as C code.
+This is useful when building a VMState for generic structs, because you have
+to avoid nested statics.  Using vmstate_fields! will fail in the likely case
+where the _FIELDS static uses Self from an outer item, because that is
+forbidden.
 
-The disadvantage is that each bindings module needs to import from
-glib explicitly.
+The separate macros are needed because you cannot just do
 
-The extra lines in Cargo.lock are all build dependencies that are not
-used by Meson.  They are only used for glib-sys's build.rs rules,
-when running e.g. "cargo check".
+                 .fields(vmstate_fields_ref! {
+                      vmstate_of!(PL011State, clock),
+                 })
 
-Marc-André Lureau (1):
-  rust: use glib-sys
-  subprojects: add glib-sys-rs
+The value returned by vmstate_fields_ref! is not promoted to static, which is
+unfortunate but intentional (https://github.com/rust-lang/rust/issues/60502):
 
- meson.build                                   |   1 +
- include/hw/core/cpu.h                         |   2 +-
- rust/Cargo.lock                               | 182 ++++++++++++++++++
- rust/Cargo.toml                               |   1 +
- rust/bql/Cargo.toml                           |   3 +
- rust/bql/meson.build                          |   1 +
- rust/bql/src/bindings.rs                      |   4 +
- rust/chardev/Cargo.toml                       |   1 +
- rust/chardev/meson.build                      |   2 +-
- rust/chardev/src/bindings.rs                  |   4 +
- rust/hw/char/pl011/Cargo.toml                 |   1 +
- rust/hw/char/pl011/meson.build                |   1 +
- rust/hw/char/pl011/src/bindings.rs            |   5 +
- rust/hw/core/Cargo.toml                       |   1 +
- rust/hw/core/meson.build                      |   2 +-
- rust/hw/core/src/bindings.rs                  |   3 +
- rust/meson.build                              |   2 +
- rust/migration/Cargo.toml                     |   1 +
- rust/migration/meson.build                    |   2 +-
- rust/migration/src/bindings.rs                |   1 +
- rust/qom/Cargo.toml                           |   1 +
- rust/qom/meson.build                          |   2 +-
- rust/qom/src/bindings.rs                      |   2 +
- rust/system/Cargo.toml                        |   1 +
- rust/system/meson.build                       |   2 +-
- rust/system/src/bindings.rs                   |   4 +
- rust/util/Cargo.toml                          |   1 +
- rust/util/meson.build                         |   2 +-
- rust/util/src/bindings.rs                     |   2 +
- scripts/archive-source.sh                     |   1 +
- subprojects/.gitignore                        |   1 +
- subprojects/glib-sys-0.21-rs.wrap             |   7 +
- .../packagefiles/glib-sys-0.21-rs/meson.build |  33 ++++
- 33 files changed, 272 insertions(+), 7 deletions(-)
- create mode 100644 subprojects/glib-sys-0.21-rs.wrap
- create mode 100644 subprojects/packagefiles/glib-sys-0.21-rs/meson.build
+error[E0716]: temporary value dropped while borrowed
+   --> rust/hw/char/pl011/libpl011.rlib.p/structured/device.rs:743:17
+    |
+738 | /      VMStateDescriptionBuilder::<PL011State>::new()
+739 | |          .name(c"pl011/clock")
+740 | |          .version_id(1)
+741 | |          .minimum_version_id(1)
+742 | |          .needed(&PL011State::clock_needed)
+743 | |          .fields(vmstate_fields_ref! {
+    | | _________________^
+744 | ||              vmstate_of!(PL011State, clock),
+745 | ||         })
+    | ||_________^- argument requires that borrow lasts for `'static`
+    |  |_________|
+    |            creates a temporary value which is freed while still in use
+746 |            .build();
+    |                   - temporary value is freed at the end of this statement
 
+Thus it is necessary to use the "static", whether explicitly or hidden by
+vmstate_fields.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/migration/src/vmstate.rs | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 22799dffdc7..2900ef1127a 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -411,19 +411,30 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
+     }};
+ }
+ 
++/// Add a terminator to the fields in the arguments, and return
++/// a reference to the resulting array of values.
++#[macro_export]
++macro_rules! vmstate_fields_ref {
++    ($($field:expr),*$(,)*) => {
++        &[
++            $($field),*,
++            $crate::bindings::VMStateField {
++                flags: $crate::bindings::VMStateFlags::VMS_END,
++                ..::common::zeroable::Zeroable::ZERO
++            }
++        ]
++    }
++}
++
+ /// Helper macro to declare a list of
+ /// ([`VMStateField`](`crate::bindings::VMStateField`)) into a static and return
+ /// a pointer to the array of values it created.
+ #[macro_export]
+ macro_rules! vmstate_fields {
+     ($($field:expr),*$(,)*) => {{
+-        static _FIELDS: &[$crate::bindings::VMStateField] = &[
++        static _FIELDS: &[$crate::bindings::VMStateField] = $crate::vmstate_fields_ref!(
+             $($field),*,
+-            $crate::bindings::VMStateField {
+-                flags: $crate::bindings::VMStateFlags::VMS_END,
+-                ..::common::zeroable::Zeroable::ZERO
+-            }
+-        ];
++        );
+         _FIELDS
+     }}
+ }
 -- 
 2.51.0
 
