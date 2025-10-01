@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8270FCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D00CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:53:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rdh-0006Wi-0f; Wed, 01 Oct 2025 03:52:41 -0400
+	id 1v3rdk-0006ZT-4G; Wed, 01 Oct 2025 03:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3rdY-0006UB-W3
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:52:33 -0400
+ id 1v3rdg-0006XK-Rh
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:52:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3rdR-000342-If
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:52:32 -0400
+ id 1v3rdW-00034m-Mq
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:52:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759305138;
+ s=mimecast20190719; t=1759305141;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zqplbETHKN8kfYff5lMiilXZJxaDojc2q2HQziOrxgI=;
- b=DEv0lsgwPMeFyeiT8jDy0wbBJdzgPgmzEHzAs1htofvSrDdZ61zu+wmQ1YQtmgDD6qycAl
- +7yCfzo4rYl6qW6gh7rIGGdIHLcT7HHYKvIYYYgAmtAMC6aeUKLcWGRLeOxWknwykT0DZr
- qiWs96ZgHY1uBgB9HU0e53jHIVbFhgc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=37A/E7m9u63AqLOql9m/xlGjyAGVMHNrlDO+98nVRkU=;
+ b=F0LnyVvYmkYWU79Ofu447gyeIM9MivogxQIVhyK5dYvGKOIvOmmHTzUr+h1E32zNP0eljZ
+ 9SJy9FpZ7seiGrGuJsq4doXPUa8ENvXV129qN5YFf0p6GsLuReXNwEiiYRXx1immGd73/q
+ ipC50Ofut6WMRMv1uw0srNzMprxnEvk=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-VDWh8bSzNxGfebzkFtY1Lw-1; Wed, 01 Oct 2025 03:52:17 -0400
-X-MC-Unique: VDWh8bSzNxGfebzkFtY1Lw-1
-X-Mimecast-MFC-AGG-ID: VDWh8bSzNxGfebzkFtY1Lw_1759305136
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b3d6645acd3so258483766b.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:52:17 -0700 (PDT)
+ us-mta-331-pEtqZIT_PA-xNsjGhnn85A-1; Wed, 01 Oct 2025 03:52:20 -0400
+X-MC-Unique: pEtqZIT_PA-xNsjGhnn85A-1
+X-Mimecast-MFC-AGG-ID: pEtqZIT_PA-xNsjGhnn85A_1759305139
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b3f2cfc26edso86388766b.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:52:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759305135; x=1759909935;
+ d=1e100.net; s=20230601; t=1759305138; x=1759909938;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zqplbETHKN8kfYff5lMiilXZJxaDojc2q2HQziOrxgI=;
- b=l03B9R0V0osI/UVFgMu/BoPpySjf+QuuiMv96AE06TyuhBmFyZpoTKXC321nZpBfeA
- 5K+C+eo+qIWgs6b9BpCAaacXA+r9+smaPk2Yx6BLnIvq9wU1Iqga1fMA+kaBTC4RFN+B
- jCJTlJGXdnG/Opr5U5NE9k1mcnKBzxwY7pQaTy5Lc0D5ARPG7g3umJiQBi0zqBIOykL7
- etUuAh4lUidaOGChmVCctE6fbkEblaDXYegWiUpYvdJtyCu8aBtN5PUaFR5E+qrRzZOh
- yEG85zjatiMsNiKFg2dNTlbh0hX4iBAN1mm7WuiCw7ICs1E2TINrI8nmYOMafgksqUrZ
- 2wqA==
-X-Gm-Message-State: AOJu0Yzk7PjgIpDCquOJY5K4Y8A0SYGHkG0EpCVMPUweADmMscHNsLc5
- s5fnSLqr5fP28/90BvlIgBBgXQGJTjsb/l+gzmTOrfj2gO0tsIZVZkKrSG+fXcKEpD326k9FXY9
- wA4jxX4izugm6pULku+SBSmyKv5RYW0lWxmiJ7wczHVhcN1aP6acOKwQp/MScv2OVEpAyR3e4xQ
- 3khLYlLXsjYcgqqElN14tDj4206JAAYqdSIlYjKiCW
-X-Gm-Gg: ASbGncszMe9TcKWittLkbYCuY+C7TqgZrsDFNwhj067u2WuapNdSoT+SK2XT75b7Zgu
- BnChR7Z3gjbAa1gDxc4zkY1tslgM2+t1aQ6rdg8nO8BC07tLSNwz5+RC6bX12xBc/3IoXIBT7mO
- kFvOotB+jmAZ2HkvDhc9dQQ9Bc0sDbuJQQm3B3UkyJFmFSrlOPvMr++royCcsAfi4riTfMcZaJb
- +1MezUwu88vbeEZ3SjTIDJJIkhEYxFkpvN7U3yLGy7dFtmTToXNLOUtv9/96N8t3FvdZ4FaxLCZ
- N6tNCudryjlREHDE7PXWpSX0CYWVdSEcmwk4I2XsIpL2Yau410N3MhtWDil1ggD0bQwl5+SeBbP
- eNXZMxINQHrsfyVJO1VGHEoXAJH6kOjCd2vJ5RmKqPF+b46ZPovo=
-X-Received: by 2002:a17:907:7204:b0:b3e:8252:cd53 with SMTP id
- a640c23a62f3a-b46e3ae17admr308088766b.27.1759305135627; 
- Wed, 01 Oct 2025 00:52:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqoEC2AE+R1M82d+ZR1bGz6Vn7PPxnGVVucI2x8ftqesW0Wt0IyM3m72rgXXjW7M+MfZR5Sw==
-X-Received: by 2002:a17:907:7204:b0:b3e:8252:cd53 with SMTP id
- a640c23a62f3a-b46e3ae17admr308086066b.27.1759305135141; 
- Wed, 01 Oct 2025 00:52:15 -0700 (PDT)
+ bh=37A/E7m9u63AqLOql9m/xlGjyAGVMHNrlDO+98nVRkU=;
+ b=mawHehE7pXQPmD1/1ckEm1uBWMhE9/mICnF770sVEbgYHriymuj04YlaWTDTAhSK0P
+ 5/2AOZP//0SspKgM+vQ6btZev7NXxAz+ChpzpiS49Kg7GueDu71OfCZ00WEcKVsuBqB1
+ 96sRwyKQbkZAQhKQuAukQmNGIcw0O3eEnKOI9X+xkgplIJvgTNjpyjvNss5Y4NQtixMR
+ jY39IpLndPwD+eGYO66sMjA+I4QHbdLgn+dkOKvJ+if+UdsZrTUJ/Gzdy47CkK7DNeoS
+ WZ/K+wXvy3hyMYwKZlazsFRjKRMAxMXX6d4V8yKHQcdggTH1PM3rUNH4tS9S9rYvtZmC
+ chsw==
+X-Gm-Message-State: AOJu0YzyJKYD6vIVSzQ16JbvFaAczcarWCXpHFNiM5tr5ZYnUOoN11HF
+ hHfEBeWLJc+hzmOkrsWKC2K+g3p+Xz6Dv8o42U5NkYRFmyaAnru0XQUzvLEo8BqowAY+9rzi0vo
+ REhd8kxdrdLRchNaJmnPMWcgds2G5/VGZgsEfBn4HYUkgZolMloGzwsm8elObGx5H+NbALB2KbT
+ g9PiRpwGNhWHCRTb+ynOsWd1eplDaSDcQjDTkbcO4c
+X-Gm-Gg: ASbGncuGEmCpqV0j4YmHwAYJM7c9CR//ELAk7Ong4CyOE8OfynSRGE1RHbhWRXHcNrx
+ 9AvsG5PdtS1K3iMnrsevYI9wvWifbZ4qjiXJtfFdZiG4AOV+V0KIoDqgETPhuop0OjI4MjvIB/x
+ CBcEBc/3RLbGyudcilY3BmXA57HkMuWVviRw+cQ1GoE7rLwdN1lkHmxPFqgEd88LP+8IT8VBQRt
+ yXnh8HwMSzjH+V4bFTNl+9DwW+fjbD7vm++m/vAfMUEbghnCl/9Bvv7iM49MlfPBxRZaYzl0GiN
+ Q/IeQ1t2It9mBCOzgcnsUH7cjLjfWTOzDdGv791BeWTnL3mTpnsAKLlsEzDLQZ/ea7CpZrIiOls
+ TSqb6fpuBvC1pyGr5NN7JY5b/KwkRHMILQDqMYYe0Daxi2JuKbAI=
+X-Received: by 2002:a17:907:2da5:b0:b45:a6e6:97ac with SMTP id
+ a640c23a62f3a-b46ea415682mr271063266b.64.1759305138436; 
+ Wed, 01 Oct 2025 00:52:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNDgnkWdeHaODzXwg+jEfB7UYR+gQyo406AWeujsWWxZE4nSLrtqVfs7Nmw+8klnONiThQew==
+X-Received: by 2002:a17:907:2da5:b0:b45:a6e6:97ac with SMTP id
+ a640c23a62f3a-b46ea415682mr271060966b.64.1759305138024; 
+ Wed, 01 Oct 2025 00:52:18 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-634d8beedf1sm7868602a12.26.2025.10.01.00.52.12
+ a640c23a62f3a-b3b9d55a5bcsm818595466b.70.2025.10.01.00.52.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 00:52:12 -0700 (PDT)
+ Wed, 01 Oct 2025 00:52:16 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 02/11] rust: migration: do not pass raw pointer to
- VMStateDescription::fields
-Date: Wed,  1 Oct 2025 09:52:01 +0200
-Message-ID: <20251001075210.1042479-2-pbonzini@redhat.com>
+Subject: [PATCH 03/11] rust: migration: do not store raw pointers into
+ VMStateSubsectionsWrapper
+Date: Wed,  1 Oct 2025 09:52:02 +0200
+Message-ID: <20251001075210.1042479-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251001075005.1041833-1-pbonzini@redhat.com>
 References: <20251001075005.1041833-1-pbonzini@redhat.com>
@@ -110,44 +110,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass a slice instead; a function that accepts a raw pointer should
-arguably be declared as unsafe.
+Raw pointers were used to insert a NULL one at the end of the array.
+However, Option<&...> has the same layout and does not remove Sync
+from the type of the array.
 
-But since it is now much easier to forget vmstate_fields!, validate the
-value (at least to some extent) before passing it to C.  (Unfortunately,
-doing the same for subsections would require const ptr::is_null(), which
-is only stable in Rust 1.84).
+As an extra benefit, this enables validation of the terminator of the
+subsection array, because is_null() in const context would not be stable
+until Rust 1.84.
 
-Suggested-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/migration/src/vmstate.rs | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ rust/migration/src/vmstate.rs | 29 +++++++++--------------------
+ 1 file changed, 9 insertions(+), 20 deletions(-)
 
 diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index e04b19b3c9f..319d353c311 100644
+index 319d353c311..6a89769984f 100644
 --- a/rust/migration/src/vmstate.rs
 +++ b/rust/migration/src/vmstate.rs
-@@ -424,7 +424,7 @@ macro_rules! vmstate_fields {
-                 ..::common::zeroable::Zeroable::ZERO
-             }
-         ];
--        _FIELDS.as_ptr()
-+        _FIELDS
-     }}
+@@ -469,33 +469,21 @@ unsafe impl $crate::vmstate::VMState for $type {
+     };
  }
  
-@@ -676,8 +676,11 @@ pub const fn unplug_pending<F: for<'a> FnCall<(&'a T,), bool>>(mut self, _f: &F)
+-/// A transparent wrapper type for the `subsections` field of
+-/// [`VMStateDescription`].
+-///
+-/// This is necessary to be able to declare subsection descriptions as statics,
+-/// because the only way to implement `Sync` for a foreign type (and `*const`
+-/// pointers are foreign types in Rust) is to create a wrapper struct and
+-/// `unsafe impl Sync` for it.
+-///
+-/// This struct is used in the
+-/// [`vm_state_subsections`](crate::vmstate_subsections) macro implementation.
+-#[repr(transparent)]
+-pub struct VMStateSubsectionsWrapper(pub &'static [*const crate::bindings::VMStateDescription]);
+-
+-unsafe impl Sync for VMStateSubsectionsWrapper {}
++/// The type returned by [`vmstate_subsections!`].
++pub type VMStateSubsections = &'static [Option<&'static crate::bindings::VMStateDescription>];
+ 
+ /// Helper macro to declare a list of subsections ([`VMStateDescription`])
+ /// into a static and return a pointer to the array of pointers it created.
+ #[macro_export]
+ macro_rules! vmstate_subsections {
+     ($($subsection:expr),*$(,)*) => {{
+-        static _SUBSECTIONS: $crate::vmstate::VMStateSubsectionsWrapper = $crate::vmstate::VMStateSubsectionsWrapper(&[
++        static _SUBSECTIONS: $crate::vmstate::VMStateSubsections = &[
+             $({
+                 static _SUBSECTION: $crate::bindings::VMStateDescription = $subsection.get();
+-                ::core::ptr::addr_of!(_SUBSECTION)
++                Some(&_SUBSECTION)
+             }),*,
+-            ::core::ptr::null()
+-        ]);
++            None,
++        ];
+         &_SUBSECTIONS
+     }}
+ }
+@@ -685,8 +673,9 @@ pub const fn fields(mut self, fields: &'static [VMStateField]) -> Self {
      }
  
      #[must_use]
--    pub const fn fields(mut self, fields: *const VMStateField) -> Self {
--        self.0.fields = fields;
-+    pub const fn fields(mut self, fields: &'static [VMStateField]) -> Self {
-+        if fields[fields.len() - 1].flags.0 != VMStateFlags::VMS_END.0 {
-+            panic!("fields are not terminated, use vmstate_fields!");
-+        }
-+        self.0.fields = fields.as_ptr();
+-    pub const fn subsections(mut self, subs: &'static VMStateSubsectionsWrapper) -> Self {
+-        self.0.subsections = subs.0.as_ptr();
++    pub const fn subsections(mut self, subs: &'static VMStateSubsections) -> Self {
++        let subs: *const Option<&bindings::VMStateDescription> = subs.as_ptr();
++        self.0.subsections = subs.cast::<*const bindings::VMStateDescription>();
          self
      }
  
