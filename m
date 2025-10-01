@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2240ACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D997CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v44pp-00041J-Ow; Wed, 01 Oct 2025 17:58:05 -0400
+	id 1v44pt-0004IO-DB; Wed, 01 Oct 2025 17:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44pT-0003Xt-Rk
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:57:48 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44pn-00041q-O4
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:58:04 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44pH-0006Zi-Rr
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:57:41 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v44ph-0006gR-8E
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:58:03 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1BB221F818;
- Wed,  1 Oct 2025 21:53:16 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5362F33782;
+ Wed,  1 Oct 2025 21:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1759355596; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1759355595; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I/BVRqZcN1gCQUwW4X5WsDSv8NvQsXHlyv6IAUtfvXo=;
- b=lZSdrB2pf8Oa/qElVmLcpLmPOliHzmPnoJveQ496R0z7+6l/S0EWEfrSiAJxXpfQ8P4loU
- othhfnQabTMNEOlUYf5fm+WSmrdei1JoGixZDRBESQ8RhhJ64bYR8YvuB7rwjfOb4B3aiN
- z+tc5hR+buQBOcAdt+RSkIAvcmAHGYs=
+ bh=oFAkAmJ1LMMnRGo0ojzgq/0tPk7u2Ujbw57PT17rmis=;
+ b=Rosj84H9bMcidhCxV9lGzodce88sGUNw8WBhaxA/DmKXpDKmRSPNwZlWxOObHqVFINDXlX
+ jCDxEEcg/ZkBCpl8uIyW7EvsKbhCsTgfc02t0Z1lF70XPynwlENBh2sH46dXWxlx0UEZg2
+ 3yowzdbMSaYPj7wmYmSoGYM79HFCne0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1759355596;
+ s=susede2_ed25519; t=1759355595;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I/BVRqZcN1gCQUwW4X5WsDSv8NvQsXHlyv6IAUtfvXo=;
- b=8ESIRdVf4Aqb9UODi2uuehLVljpdGhIIQ90UQREjIwZSP3LkImgz+o5sVlrndVXn0LUGlg
- dzccKuhytezomlAw==
-Authentication-Results: smtp-out2.suse.de;
+ bh=oFAkAmJ1LMMnRGo0ojzgq/0tPk7u2Ujbw57PT17rmis=;
+ b=TawLZBfKPIybBDelih1lNPWhqtU3D9VAFB0caygNRbaq4AH3mFAMnk63BMQZsjzgvxYju0
+ 86Ti83nWwF2VfIBQ==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1759355596; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1759355594; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I/BVRqZcN1gCQUwW4X5WsDSv8NvQsXHlyv6IAUtfvXo=;
- b=lZSdrB2pf8Oa/qElVmLcpLmPOliHzmPnoJveQ496R0z7+6l/S0EWEfrSiAJxXpfQ8P4loU
- othhfnQabTMNEOlUYf5fm+WSmrdei1JoGixZDRBESQ8RhhJ64bYR8YvuB7rwjfOb4B3aiN
- z+tc5hR+buQBOcAdt+RSkIAvcmAHGYs=
+ bh=oFAkAmJ1LMMnRGo0ojzgq/0tPk7u2Ujbw57PT17rmis=;
+ b=mUQNS2xVghwtOiv1u8OiQHMYcGG9a+DCeyyBv+G0FCa2h1m2U8TAmkYXkaCU6ive9UgoGR
+ QRaiq1cg9El6tTXVbLj+Fz6XdRAMgyi4RN/WbjB+fbsltrCImNZitbzjQ93G8+7d4u1qoq
+ CMMmmloOUL8Wv0G1t20YWCetyGam8+s=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1759355596;
+ s=susede2_ed25519; t=1759355594;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I/BVRqZcN1gCQUwW4X5WsDSv8NvQsXHlyv6IAUtfvXo=;
- b=8ESIRdVf4Aqb9UODi2uuehLVljpdGhIIQ90UQREjIwZSP3LkImgz+o5sVlrndVXn0LUGlg
- dzccKuhytezomlAw==
+ bh=oFAkAmJ1LMMnRGo0ojzgq/0tPk7u2Ujbw57PT17rmis=;
+ b=0FqOObv27heLeb4bn79whKVAyhWW724MlH03AiHayqAJs8SXJacMyEYWY2PgAsgc0Q946+
+ Ovaeiat8U+kQzqCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CAB0213ADB;
- Wed,  1 Oct 2025 21:53:14 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0E70413A3F;
+ Wed,  1 Oct 2025 21:53:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cNlhIsqi3WhrJgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 01 Oct 2025 21:53:14 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GORaMMii3WhrJgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 01 Oct 2025 21:53:12 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PULL 10/13] migration-test: shm path accessor
-Date: Wed,  1 Oct 2025 18:52:51 -0300
-Message-Id: <20251001215254.2863-11-farosas@suse.de>
+Subject: [PULL 09/13] migration-test: only_source option
+Date: Wed,  1 Oct 2025 18:52:50 -0300
+Message-Id: <20251001215254.2863-10-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20251001215254.2863-1-farosas@suse.de>
 References: <20251001215254.2863-1-farosas@suse.de>
@@ -89,13 +89,13 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,oracle.com:email,imap1.dmz-prg2.suse.org:helo];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,oracle.com:email,imap1.dmz-prg2.suse.org:helo];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -121,42 +121,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Define an accessor for the shm path.  It will be referenced from
-multiple sites in a subsequent patch.
+Add the only_source option, analogous to only_target.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/qemu-devel/1759332851-370353-16-git-send-email-steven.sistare@oracle.com
+Link: https://lore.kernel.org/qemu-devel/1759332851-370353-15-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/framework.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tests/qtest/migration/framework.c | 24 +++++++++++++++---------
+ tests/qtest/migration/framework.h |  2 ++
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
 diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 2c13fd1688..d20938ccec 100644
+index a044b35465..2c13fd1688 100644
 --- a/tests/qtest/migration/framework.c
 +++ b/tests/qtest/migration/framework.c
-@@ -255,6 +255,11 @@ static void migrate_start_set_capabilities(QTestState *from, QTestState *to,
-     return;
- }
- 
-+static char *test_shmem_path(void)
-+{
-+    return g_strdup_printf("/dev/shm/qemu-%d", getpid());
-+}
-+
- int migrate_start(QTestState **from, QTestState **to, const char *uri,
-                   MigrateStart *args)
- {
-@@ -342,7 +347,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+@@ -234,7 +234,7 @@ static void migrate_start_set_capabilities(QTestState *from, QTestState *to,
+      * to mimic as closer as that.
+      */
+     migrate_set_capability(from, "events", true);
+-    if (!args->defer_target_connect) {
++    if (!args->defer_target_connect && to) {
+         migrate_set_capability(to, "events", true);
      }
  
-     if (args->use_shmem) {
--        shmem_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
-+        shmem_path = test_shmem_path();
-         shmem_opts = g_strdup_printf(
-             "-object memory-backend-file,id=mem0,size=%s"
-             ",mem-path=%s,share=on -numa node,memdev=mem0",
+@@ -246,8 +246,10 @@ static void migrate_start_set_capabilities(QTestState *from, QTestState *to,
+     if (args->caps[MIGRATION_CAPABILITY_MULTIFD]) {
+         migrate_set_parameter_int(from, "multifd-channels",
+                                   MULTIFD_TEST_CHANNELS);
+-        migrate_set_parameter_int(to, "multifd-channels",
+-                                  MULTIFD_TEST_CHANNELS);
++        if (to) {
++            migrate_set_parameter_int(to, "multifd-channels",
++                                      MULTIFD_TEST_CHANNELS);
++        }
+     }
+ 
+     return;
+@@ -410,11 +412,13 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+                                  shmem_opts ? shmem_opts : "",
+                                  args->opts_target ? args->opts_target : "",
+                                  ignore_stderr);
+-    *to = qtest_init_ext(QEMU_ENV_DST, cmd_target, capabilities,
+-                         !args->defer_target_connect);
+-    qtest_qmp_set_event_callback(*to,
+-                                 migrate_watch_for_events,
+-                                 &dst_state);
++    if (!args->only_source) {
++        *to = qtest_init_ext(QEMU_ENV_DST, cmd_target, capabilities,
++                             !args->defer_target_connect);
++        qtest_qmp_set_event_callback(*to,
++                                     migrate_watch_for_events,
++                                     &dst_state);
++    }
+ 
+     /*
+      * Remove shmem file immediately to avoid memory leak in test failed case.
+@@ -424,7 +428,9 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+         unlink(shmem_path);
+     }
+ 
+-    migrate_start_set_capabilities(*from, *to, args);
++    migrate_start_set_capabilities(*from,
++                                   args->only_source ? NULL : *to,
++                                   args);
+ 
+     return 0;
+ }
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 744040d53a..19d552f78a 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -103,6 +103,8 @@ typedef struct {
+      */
+     bool hide_stderr;
+     bool use_shmem;
++    /* only launch the source process */
++    bool only_source;
+     /* only launch the target process */
+     bool only_target;
+     /* Use dirty ring if true; dirty logging otherwise */
 -- 
 2.35.3
 
