@@ -4,85 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0E8CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DFFCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3sOz-0004Ka-Lk; Wed, 01 Oct 2025 04:41:34 -0400
+	id 1v3sPW-0004Se-2U; Wed, 01 Oct 2025 04:42:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3sOl-0004BY-Qp
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:41:20 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3sOU-000790-U9
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:41:18 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-421851bcb25so1707635f8f.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:40:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759308050; x=1759912850; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+43Frybxtu37pJKEzYAVow0FhNpEXntydLCzq2hBNXA=;
- b=de5xEDp6qzoiNSl//Z8Eztkpu2k8j4t8UfGqO+vs1keS6XsihH2ItqeNiu9kXFLd3i
- GNJAKbYr4vhfp21mrwsHW8cGX3vpxduQfya5XGi9+t2JUSw1TUqz4eFzWqVG4y7X3kzT
- kfGERnGGtBy+BheXDQXQnpEF7E6s3iYU32e15yrKKX4Gj+iesIGsSOFptZPVsPgOKN08
- uIHOwhyjxNfLoXWJT0DSiO/EpVG32AHH3bR/SM81YtWKwPpgf4dUAgTypGFPas2mWUn1
- f34QAzRYosZLDt0e2Ag2A98VcYJ78g0lT3/E3gvu5BBxkIJfQ4dIw/iUovU1bVNNXPyR
- A4Qg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3sPN-0004Ro-N1
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:41:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v3sPB-0007U3-UX
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:41:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759308099;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=OoxPbfNPOVDhTmTUjEeR9wPvseI20Xeikoc5bFV+ZYg=;
+ b=FB79tHokiUFQfUaj6WQBtTC1xgpiagv32dBIZh1eIH+QCM9Obx4IG3CTKITLNB4NxaP3hg
+ /wJOSMjqmF/jR8I7JiG9y/Zy132bn86wQRZumX/gQEcWnLOciq+fbyB2VASPGlhyktTEUo
+ Q5OmiQFOeqyyU6naMnsRB5hIHITqg4o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-418-oN5VdGdgOma-zQnTfiFjRQ-1; Wed, 01 Oct 2025 04:41:38 -0400
+X-MC-Unique: oN5VdGdgOma-zQnTfiFjRQ-1
+X-Mimecast-MFC-AGG-ID: oN5VdGdgOma-zQnTfiFjRQ_1759308097
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e502a37cdso20272825e9.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:41:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759308050; x=1759912850;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1759308097; x=1759912897;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+43Frybxtu37pJKEzYAVow0FhNpEXntydLCzq2hBNXA=;
- b=JHXJ12opikcITxFbS8/x50J3bf74eg5flqqvDmS+SCVahYqaEE+uDasv0VOF/81XM+
- 7+wrXLkPi7s84+nffXlHwXn/l+owuBq3sOT4SnhS+/B6PMbZO4Q1dORZtLs0STyqAcFD
- 5QpR8/Z13ftCCgtRidbfVorOFzLyTg5UnB23MEdFtKyXKs+nUkERF2JvD8CeIJMwoMB9
- iLyCOL96zU9higLqVV9cXzLMciJFXJ8faEhdtfkPhZRTDMPB7x1s1jxFPu8j5eo7+RmK
- 3yQJslpP+N7zyGe9vgLQ3iKNggCUAwyAnMblOF6JUKAg0bR4WdjuQcazhjbVjn0O4uS2
- PSOA==
-X-Gm-Message-State: AOJu0YxvS/vRcGXlxRHI8bdpSrelRX2YtOKWoZnsSeMm3RQqfTksTQTi
- NaYAgcn762eAZ61IUe0dxG/RMGZeeVr4GceEZtmvhoOLv7gxRGvXmb6UGM4Z/jQFvq7O/qCnGgE
- oqTFNCwo9yw==
-X-Gm-Gg: ASbGnctDCDy3+XlkvYM9Z3qmscGJyCgmvCUwElDMcOP2uv+/cmxwWYV0q2GvKRi8r6w
- Kv6YvG3LSIa95/EK1qXb5v4Baqicv7yEd8nh5DZXvP/xM4Y6XpaEhIZeG1l0bDmhB9+uTc14J9u
- AalrjxhJ/qJnCjdsyIO1XkYNEiLAd9eUrR3NnN8HG1xh9qviDpXtBIr7eGl1ILsL1alAHikBaHy
- xS21JSVKU/JD6990fQKMJ9zIHvj+kME+A6t3ENQg6yqpWMtCefgHtQPn8lA0qekfINxYxTG/6y4
- dFcNuLCyMGaBS63Y3XypJRQn8fcSkkygoQEktXDIeXy3rBnKeerMXfmZSv+2IDK/Fey2SejnSpx
- 8euSlsjgCsCOeTqRNJPuQ3Cy4lXJM/AgM9IBBl46iz6oEnXQoKaw/F+l3CdAg4mrUleLGHDUDDN
- LXD67HxlNXmIkPCozy819t
-X-Google-Smtp-Source: AGHT+IFA2ESrvSkKsRHxIxWW3CYkosfkrh2sh8q4xToSakuURHQHsmdgbzcSCSKfXpwFQ1C4nwHN2A==
-X-Received: by 2002:a5d:64e8:0:b0:3e5:190b:b04e with SMTP id
- ffacd0b85a97d-42557824eaemr1830230f8f.37.1759308049141; 
- Wed, 01 Oct 2025 01:40:49 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc5602df0sm26180345f8f.36.2025.10.01.01.40.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 01:40:48 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/arm: Remove sl_bootparam_write() and 'hw/arm/sharpsl.h'
- header
-Date: Wed,  1 Oct 2025 10:40:47 +0200
-Message-ID: <20251001084047.67423-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ bh=OoxPbfNPOVDhTmTUjEeR9wPvseI20Xeikoc5bFV+ZYg=;
+ b=WB6OnrqHi09F42IPv5tOIWp3g1FEe40XTGyOmnmt654Nt8mk25wOWA5LkuWEaXeUUE
+ yyc7MGuo384ox8iNGGLLS2BNBaohtQ4/eD0uPRafpwNUzwZwfUJwDA/vV9FF8BUiEKOH
+ zRpwwQEUWnB5EGtaVW2jNS4wsqiuO+mU7r9KOyGK56t2EYn5x6Jgacuu0j05/ATNQscT
+ veiOUrrz72tBQkF2tk5UheITZSghmK5PRL3nyvZ5lN+3oY5nXZe0SdffUvHcmkU0RhRa
+ NzU/GNK74mt8rH5F/YeI/hzlqByCKoO/Wq7mvVc0rUjeaG09r5pnQzglWI7dzOq5a7ot
+ idVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5nFinaIXZbzrKRmDyXz+nVhF+BNQaf4bsXaPYI9/Injuz8X1ehNMKQYV4dW4iKnH7yd9o2xonGHYr@nongnu.org
+X-Gm-Message-State: AOJu0Yz3bxM9alpZhoe9kdLQp/Mp499jLgn6El9S8SdFOgdENzP87NJ+
+ GRbgIRejCl4Naai3mYhWyg/0C3jMzPxZuh1th1MGaOl1EuCfpul04tf8p7RvXSV2YgvV349Js0X
+ aoQIn8EW5O+uKxrJ0do0gQOojw0FB81oYQfMyhzpP9lDLno1mkOrdhSv9
+X-Gm-Gg: ASbGncvFxqysR74nOqmh7xb1ySsaTIcXc7/ABSFTnSRG52TM7v4u154ez8wv2AFwjhb
+ H+CwdX8rLYMwszbram4p445AQNEdjxFHyXJTgZFZy3Q4qgkbwopFAwVJbo8wpYccBAr39p37DM4
+ ZI3aI6dLPRhLZNtjbwDGnKhOZWMup8DmqMcjvVmCNjYCrStG9IakWDzFcN/6og8QkrLYaWCbLe5
+ dAPgQB0qpkZb98TDe2vBx7VStMjkozGUowFqsMu3aOOrPFI+t3pCdBCqgHok+ww8M/03Ke2e2P4
+ wm8iO+5XdZ+e4Oira1jGoZJmUILkhxlHMTt2IfPnJqJ29zlAde8nhm+C93NQNYDJ3wd3Tnk=
+X-Received: by 2002:a05:600c:4e52:b0:45b:7b00:c129 with SMTP id
+ 5b1f17b1804b1-46e612e6f9fmr20481965e9.35.1759308097329; 
+ Wed, 01 Oct 2025 01:41:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8QJAuvtlCsccWP6Z3nHhGp8ri9bfmSgiuHkBCRTAQ5VY/+kdMyl+7997vo9nNzkJh4eB3wg==
+X-Received: by 2002:a05:600c:4e52:b0:45b:7b00:c129 with SMTP id
+ 5b1f17b1804b1-46e612e6f9fmr20481615e9.35.1759308096925; 
+ Wed, 01 Oct 2025 01:41:36 -0700 (PDT)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fc5602eccsm27512661f8f.40.2025.10.01.01.41.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 01:41:36 -0700 (PDT)
+Message-ID: <07c0b947-8a17-4efb-a0e8-0f17ab70021a@redhat.com>
+Date: Wed, 1 Oct 2025 10:41:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/25] system/ram_addr: Remove unnecessary
+ 'exec/cpu-common.h' header
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ qemu-arm@nongnu.org, Jagannathan Raman <jag.raman@oracle.com>,
+ David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, kvm@vger.kernel.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ Peter Xu <peterx@redhat.com>
+References: <20251001082127.65741-1-philmd@linaro.org>
+ <20251001082127.65741-2-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251001082127.65741-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001,
  T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,112 +170,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When removing the spitz and tosa board, commit b62151489ae
-("hw/arm: Remove deprecated akita, borzoi spitz, terrier,
-tosa boards") removed the last calls to sl_bootparam_write().
-Remove it, along with the "hw/arm/sharpsl.h" header.
+On 01/10/2025 10.21, Philippe Mathieu-Daudé wrote:
+> Nothing in "system/ram_addr.h" requires definitions fromi
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS              |  1 -
- include/hw/arm/sharpsl.h | 17 ----------------
- hw/gpio/zaurus.c         | 42 ----------------------------------------
- 3 files changed, 60 deletions(-)
- delete mode 100644 include/hw/arm/sharpsl.h
+s/fromi/from/
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 866b43434c7..d1060c60091 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1006,7 +1006,6 @@ S: Odd Fixes
- F: hw/arm/collie.c
- F: hw/arm/strongarm*
- F: hw/gpio/zaurus.c
--F: include/hw/arm/sharpsl.h
- F: docs/system/arm/collie.rst
- F: tests/functional/arm/test_collie.py
- 
-diff --git a/include/hw/arm/sharpsl.h b/include/hw/arm/sharpsl.h
-deleted file mode 100644
-index 1e3992fcd00..00000000000
---- a/include/hw/arm/sharpsl.h
-+++ /dev/null
-@@ -1,17 +0,0 @@
--/*
-- * Common declarations for the Zaurii.
-- *
-- * This file is licensed under the GNU GPL.
-- */
--
--#ifndef QEMU_SHARPSL_H
--#define QEMU_SHARPSL_H
--
--#include "exec/hwaddr.h"
--
--/* zaurus.c */
--
--#define SL_PXA_PARAM_BASE   0xa0000a00
--void sl_bootparam_write(hwaddr ptr);
--
--#endif
-diff --git a/hw/gpio/zaurus.c b/hw/gpio/zaurus.c
-index b8d27f59738..590ffde89d1 100644
---- a/hw/gpio/zaurus.c
-+++ b/hw/gpio/zaurus.c
-@@ -18,7 +18,6 @@
- 
- #include "qemu/osdep.h"
- #include "hw/irq.h"
--#include "hw/arm/sharpsl.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
-@@ -265,44 +264,3 @@ static void scoop_register_types(void)
- }
- 
- type_init(scoop_register_types)
--
--/* Write the bootloader parameters memory area.  */
--
--#define MAGIC_CHG(a, b, c, d)   ((d << 24) | (c << 16) | (b << 8) | a)
--
--static struct QEMU_PACKED sl_param_info {
--    uint32_t comadj_keyword;
--    int32_t comadj;
--
--    uint32_t uuid_keyword;
--    char uuid[16];
--
--    uint32_t touch_keyword;
--    int32_t touch_xp;
--    int32_t touch_yp;
--    int32_t touch_xd;
--    int32_t touch_yd;
--
--    uint32_t adadj_keyword;
--    int32_t adadj;
--
--    uint32_t phad_keyword;
--    int32_t phadadj;
--} zaurus_bootparam = {
--    .comadj_keyword     = MAGIC_CHG('C', 'M', 'A', 'D'),
--    .comadj             = 125,
--    .uuid_keyword       = MAGIC_CHG('U', 'U', 'I', 'D'),
--    .uuid               = { -1 },
--    .touch_keyword      = MAGIC_CHG('T', 'U', 'C', 'H'),
--    .touch_xp           = -1,
--    .adadj_keyword      = MAGIC_CHG('B', 'V', 'A', 'D'),
--    .adadj              = -1,
--    .phad_keyword       = MAGIC_CHG('P', 'H', 'A', 'D'),
--    .phadadj            = 0x01,
--};
--
--void sl_bootparam_write(hwaddr ptr)
--{
--    cpu_physical_memory_write(ptr, &zaurus_bootparam,
--                              sizeof(struct sl_param_info));
--}
--- 
-2.51.0
+> "exec/cpu-common.h", remove it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/system/ram_addr.h | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
+> index 6b528338efc..f74a0ecee56 100644
+> --- a/include/system/ram_addr.h
+> +++ b/include/system/ram_addr.h
+> @@ -29,7 +29,6 @@
+>   #include "qemu/rcu.h"
+>   
+>   #include "exec/hwaddr.h"
+> -#include "exec/cpu-common.h"
+>   
+>   extern uint64_t total_dirty_pages;
+
+With the typo fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
