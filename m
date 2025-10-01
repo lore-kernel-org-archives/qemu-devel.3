@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F69CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 20:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC328CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v43oi-0005U9-EQ; Wed, 01 Oct 2025 16:52:53 -0400
+	id 1v43wb-0008Sg-35; Wed, 01 Oct 2025 17:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v43oe-0005TG-1w
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 16:52:48 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1v43wR-0008Q5-3k
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:00:52 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v43oV-0002Y6-95
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 16:52:47 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-330631e534eso398175a91.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 13:52:34 -0700 (PDT)
+ id 1v43w3-0003p6-1t
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:00:48 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-27ee41e0798so3775135ad.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 14:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759351952; x=1759956752; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759352418; x=1759957218; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DnM2eA73wUtTCL+80LATCvBN4aYheI/8sCfu1B4dJ7w=;
- b=U1YkL9VY+Yv31pWxZrrKCCvw6go6hDhtM3eOF8VViWFEvSRAzD02hV595Uq/t6fY5s
- KzcVIy3bCe2FFarcV6NUhFKI2x3k/PHeUVzN3siwOeGJVWkkCi7jdtjIlt9BEHYuHLwH
- 2xeeN5YVkOLkxs+scKnCCZAPWNIgdm8N1xzAU61gSoqXYOFpS6DrBc4ntYHqFIR1m0Bx
- UNDWcBgI5MXDdBio9qLbIGghJi4vgP/1NNobdi4rxk8wg3ddzACE9OvNhMGjKKoyk7dw
- ozgkeoHckDYRCe4qgB0Y7/dC78gfGbGKTmfC1a5KeivZFAUuyXcUpDLz/zOHVe2bDh6N
- bpxw==
+ bh=wdmqQJ/fxdEIX4rh2+AlOpIkmX6/hbmxM7dCMfu2NB0=;
+ b=Rrc5aNenQIm2iDYn0bDhub0Pg+CNe//OYlGn4n+pc5pjvYYTDSPPfPuVihrH9duFSZ
+ HzwPdeg6iZs682pRQT7gC3Q/g+SSA7bvWpz/y/QUCRih81hIL2D/IZwS9bDjFY5PShcZ
+ Ns0HztUirp7M/I8A5QFOAGbKzpvbexiW4xt9plPm8/ql8GB6ikpgp3V2pYMuFlgr3XrY
+ iCZ2dLUBUjgEyHoxqqFc9oW0sHi7DAMPeiymuCN3dyTPBzsm9m3L7ykqk3L4j/5EPWkm
+ YrUIZ+vK7P8bSMYRCeEZZ0bJ2Ok4x97lFnCteGNzddhqlbC2o5hunkzrNPTkOBJD+K09
+ bZFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759351952; x=1759956752;
+ d=1e100.net; s=20230601; t=1759352418; x=1759957218;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DnM2eA73wUtTCL+80LATCvBN4aYheI/8sCfu1B4dJ7w=;
- b=FBIqraUpTWXicIInR6nYMn8nuhNdcXTj0siYY1BDjSqZTmSCE4760MiqU1jV1tiFu2
- PC/DPtFxnOkus+lN0OR2Ek7pu37WH9N4hVju9/vW5HqSYr2ZAIRFX6cHWVMhk0SAshOU
- FCycsScRVKP4rUsZ/XwwMbYLLJzJT2FHahToDc/2DNEoSdI6vE+MQCwzRooivTomAlvy
- J6SRUL2iZYT8/UyNK0FIZGXhyYvH0SvZhPf2QvZoX8hAiUyXvLJsuzFuTRovkA6bDm4y
- ehXi1KvdinZxz+3tuox3r1w2tIeg1A8OCm3vQ8WqAViguQUaotxobHqnz093xJKrJEF3
- hfDg==
-X-Gm-Message-State: AOJu0YyMV0P7bCfAT1FvP1Ec0OrwDuKRbpdlTVDZlkdYUWjFaBPip/ig
- CdZtQd+7Axxr+dw1BxoRvofMx4WAnE3UZqsbQE8TkZ59akhGKwF2P5gFepa3DnCEta+QXqE+x4n
- 7I/9ozys=
-X-Gm-Gg: ASbGncuVYj4DBHE8Hq34UpabSqHUn4ivawDDMRDGtM9oIvNB9oC6sU6bJwOSkdxxwn7
- vM1fTXQlaiG046F8MKjD4nQy7/0N7JSEUD8k6dVqg84Gryj3ZsnFVC7RG7Vv6SRjsV7J4IK/uA0
- R3yHSanWQGpKk4ameNyZ3V5dozmg0zbpV/vCKJAU/Jxp6NT4l7my1qd35SQye9DNHfC/H7g+X5V
- WtgVtD3z7h7j9x+bRfWZIPJpX89Dl/ExszUa+Sm4q3IxAS/HnyGDRjK9uIWH/t+QLxM9t3csBvM
- pU3PeYweU820AE702bKQEkURfEMrUXaR/cTkFdDP+hBHyP+BJi8tfOID6oSAGWcEUTBcQGDnHNQ
- BwLj7wYCku9mOqYWcYg9mGF6/hAWILrl9UHc6bkjul+Ocs70fxu1ZmJTzpbRq
-X-Google-Smtp-Source: AGHT+IEpP+XtLUD8x0acUhAOtp8KQMh7B8nuAsrAvQUPLRWAv2zlwJmH8DZtzfacRYs7IjtWFwVUKg==
-X-Received: by 2002:a17:90b:3850:b0:32e:e150:8937 with SMTP id
- 98e67ed59e1d1-339a6e2821dmr6108798a91.6.1759351952169; 
- Wed, 01 Oct 2025 13:52:32 -0700 (PDT)
+ bh=wdmqQJ/fxdEIX4rh2+AlOpIkmX6/hbmxM7dCMfu2NB0=;
+ b=YfHu2QDe40ADOZV7zBbZWel4LVFgHl8XWJpq7jgnWUeOgDD1skEoakm9tUtuRK5j5p
+ GZgWpPBX6s1TEhqIT0X9O5aTnCJtUSLv98+T1s+skCIKgeAeo83mHBN59pVfmNPnGl7X
+ P/lHGyubOcZp925zp8qEWRL8gwGMvCDoLGcC7l6LbqiVTHgeshiLclgEm1TR/VqCjsnL
+ loszwy+L96UDks6wURh9MKAIU6R8LjCQQ94ooQARVcgsgWrVDc9btG7FD81H+DGgwNp4
+ Sh4zI4kS/vUL3Dw3xmbEwyLbw+qAdp0WgXwpQuPNCREfgUZqpKyh6jP7GaBItKV/BK+F
+ fadA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8lddOmZ2/lnS7wl8vmn3UmfQ7ZFjpQ6MmN1Ts5GGVjndy5GbEkQKbvoVLJ+V4wBwNRBUyi/HBOjHb@nongnu.org
+X-Gm-Message-State: AOJu0YxUK2+XUb/M870DUCUiqnXYiplylcBeawrKl0l8lz4KXbjq/wbd
+ Hws+CAEUEAY2S+WOQv9gS9unOZyzuGIu1FKlVmq3j21M/zsVVcYvkcYE+6ucmTjjd00=
+X-Gm-Gg: ASbGncsX6mxP9W7RM/6i3VjGdH1fIOilKiFZYp+j8vRdq+d9dUuoPNCMhsWIquxXPvc
+ YgGSA5SlEClLHoQ8u/n26fOYSq85HkyNjNEGd/PYhKGAsPId2aVsbq8D07BCQj0no9vi5p9DAZC
+ fTyjvFUNkQ6X9SsSngRgjOCkQSEy/B3WViAUdV3gWobPdtA6RoeI7DDKOi6fw3UOexDHobgjld6
+ NTDTeKVlq1h+o9blqE9TNlEa0kGufoI7xDklju5OHmUHXbGH6sE0/cSuFOyrfApUCDEybX9VrCa
+ i1IDMonhy/zd4M+pic3x0YWfOL3jitG0jQB1VXmzVnwtewMzbBV4hz6FoOzM7GFaX7vthGu7pn3
+ KiUAzWHFv0r0BmwSdy/d1mdCVDkC4CHUJaq54urBiKYNvKD/U18KmrdWIzsJC
+X-Google-Smtp-Source: AGHT+IErvrOUdvMK4ALfqmyePFrbzX2oD6EASyLVjzQ975A7wSh3CdfpG5IAVfHOiiAXG2d5bGGMPQ==
+X-Received: by 2002:a17:902:db0c:b0:268:f83a:835a with SMTP id
+ d9443c01a7336-28e7f45526dmr57700895ad.60.1759352418290; 
+ Wed, 01 Oct 2025 14:00:18 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a6ec12fdsm3167208a91.10.2025.10.01.13.52.31
- for <qemu-devel@nongnu.org>
+ 41be03b00d2f7-b6099f79832sm388387a12.49.2025.10.01.14.00.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 13:52:31 -0700 (PDT)
-Message-ID: <fef88665-c816-451f-9517-fa6bec2ecbc5@linaro.org>
-Date: Wed, 1 Oct 2025 13:52:30 -0700
+ Wed, 01 Oct 2025 14:00:17 -0700 (PDT)
+Message-ID: <25d11c62-afd1-4ade-8368-83490d7e3b25@linaro.org>
+Date: Wed, 1 Oct 2025 14:00:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] gitlab: move custom runners to Ubuntu 24.04
-To: qemu-devel@nongnu.org
-References: <20251001170947.2769296-1-alex.bennee@linaro.org>
- <20251001170947.2769296-7-alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 12/18] system/physmem: Remove _WIN32 #ifdef'ry
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20251001175448.18933-1-philmd@linaro.org>
+ <20251001175448.18933-13-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251001170947.2769296-7-alex.bennee@linaro.org>
+In-Reply-To: <20251001175448.18933-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,19 +103,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 10:09, Alex Bennée wrote:
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+On 10/1/25 10:54, Philippe Mathieu-Daudé wrote:
+> Commit fb3ecb7ea40 ("exec: Exclude non portable function for
+> MinGW") guarded cpu_physical_memory_set_dirty_lebitmap() within
+> _WIN32 #ifdef'ry because of the non-portable ffsl() call, which
+> was later replaced for the same reason by commit 7224f66ec3c
+> ("exec: replace ffsl with ctzl"); we don't need that anymore.
+> 
+> Reported-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   .gitlab-ci.d/custom-runners.yml               |  6 ++--
->   ...4-aarch32.yml => ubuntu-24.04-aarch32.yml} |  8 ++---
->   ...4-aarch64.yml => ubuntu-24.04-aarch64.yml} | 32 +++++++++----------
->   ...22.04-s390x.yml => ubuntu-24.04-s390x.yml} | 28 ++++++++--------
->   4 files changed, 37 insertions(+), 37 deletions(-)
->   rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml => ubuntu-24.04-aarch32.yml} (78%)
->   rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml => ubuntu-24.04-aarch64.yml} (89%)
->   rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml => ubuntu-24.04-s390x.yml} (88%)
+>   include/system/ram_addr.h | 3 ---
+>   1 file changed, 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
