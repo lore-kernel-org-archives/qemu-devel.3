@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8D3CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 503C4CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3s6H-0000av-VV; Wed, 01 Oct 2025 04:22:14 -0400
+	id 1v3s8A-0001lv-4v; Wed, 01 Oct 2025 04:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s6E-0000Zh-67
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:22:11 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s7x-0001br-AD
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:23:57 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s5s-0005Lh-PL
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:22:09 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46b303f7469so47399705e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:21:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s76-0006Ax-SB
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:23:56 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-46e37d6c21eso46992505e9.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:22:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759306900; x=1759911700; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759306976; x=1759911776; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+C5CzLMaPwDa1iB060vEOK+Ww+NfWXh/VYhisUdBYCs=;
- b=xS4+INqkvrOyo0VDk7EdrzA97R4H3E06nazlYJqUUGT+SdLdO9IawwxTPISovEhjIj
- cwf7W25cbcpHOkttjEmjU3BCmZ3Dcl0QskG96Mps+YD6zbyv0s3fBHw7lWCm2ztCLEML
- ltDwSlX9tLvy0kF7Y5/IhQmoFPVlmxRJMuWyPkhF/7IO37osNWdU0NQb3HhxYcHQu3GT
- ZW9xVK/EFXW+96lt6OJWHCERnBJFN4fKoxNBYRCQv2wYu42oIJxBRqYMf8JiRbvSdP7W
- 4lTaCgETezKtvywCUgI3b7/hnbniaU6mLa/EGUmSoQZDrjOsvNsZPI9TL6aHJFyNQHLZ
- KAyQ==
+ bh=Fn2TjoRESSlrNJjOER4d6gpZrt35+AGo12EpGqjkW1I=;
+ b=WMJORzKbWQinwJlWgOGmr2Ob2FURGzE7QVjCPlSrDSjFH5QUxp3+nsOq7ZIWsr3FQr
+ XfCmjG36S5LL2aTgZqqD6gINAVeBPgI4+jRvGovyQeaLyYGgBzmGFTwI2ZwQoEp5M/mB
+ R1FJs4RKEZkarsVTbmLmsKf8HWlGU/zHXvf19GSKyTrxAZk2tBNqe+2pjUSawMimoDYO
+ Q1prXBFBprGB2Uv3ZZlGBxNvbfMBV5x4giqjCh9ReZAPJ+y7lzQPAJLG8UGTFBXtgiFf
+ yCvKgNy1HghmXWYvHGZRD1s7oTuPftwp3bvePG6rUKB5hyukt6PnxSmZCML+b3rbveiP
+ unnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759306900; x=1759911700;
+ d=1e100.net; s=20230601; t=1759306976; x=1759911776;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+C5CzLMaPwDa1iB060vEOK+Ww+NfWXh/VYhisUdBYCs=;
- b=Jb0UrmTmxwcSL5ZHcZgpuixm2Pg0pElA/NUNf2a6Xkg+NkOj9f+HK1srq7bo3zGpPA
- nF/9oUl0qZYpMQC4GAAM/0y4R4JgJb2y77koPVD486FWg7n8WD83yQV4+6Q6MUq+JVCx
- MExYPet9jShAqG48itl4n6N52gJlfx62kRnIv+Ypeh2zJ1n9kw7VJn1hT7xsujgUyBpQ
- eP4w5dXlUe9a3CCKHh4mS9HGAkp0BUBdRE+oCxY6h97sb/1W5T7uXUDFa5wIa/bfQa2B
- I8+fH4vuCleE/x9xbbn4trwTS0qbGcB/+9hDQAj+7F0APZTZ+Ho0BKm5TdzYk3scL4cU
- 6Rnw==
-X-Gm-Message-State: AOJu0YzE029/AhTMrUuCakgkOHXxtxjY42bT3ommnz72Rkg3BEmUKkof
- CYZduFdy90yvrISjzo6a5LDWwMBZs9GQfAPohtaos9m0B4vCUgav6tsTVkRVgTmrX+jFFaujw2T
- 3RKeNHghJ6w==
-X-Gm-Gg: ASbGnctzRVqlDfy9UkmUbdNjPZaesFfX/e0jlWHdHVFdvrAplRoPR1JU6W0KOBrUlwA
- In5GGsU7AiS/eTXigsYUoQgx2mIgCjfyeD61SrtG7M1+vV9ldgDAv51tKoN0oTfCyjctP5Zh/qx
- 7crNGEx5JoIZX/ng4DWhbotMuj51rr6peVzXcFdnbhZEBLZ/XvgpAf66qQ57BAnHVqU5lLe9RVC
- +GNSxqnlgc1czo/powxXg9wWZSqp7V01KxcMFjfbQT6y2P0fRgzk+Y7J+ETv2Af7wgrKn4bBp8f
- JCkyZu6p2rTmM8EY23FYyg4vNEKdkN0ucSnV54nQdgbuKPPWufSJbp/NgF4ZDUzvFv5OcLyydOn
- B3yU2migYbxxdA9TkHgWYfFx1Nos1Sr6JXkT4ADc8rgFVTcmQnyfSM5j+PUvIPPiOWG9VO3fhz1
- CF8LrOEw1TrNYif9Q/e7dW
-X-Google-Smtp-Source: AGHT+IG+BsZmZhn5AVBasoM2tJ9zzxKe+EhfCA1OHPGY/VYR6bdoCD06Y50Qg9jsUtcYDIRS/+ZYRA==
-X-Received: by 2002:a5d:64e6:0:b0:3f7:ce62:ce17 with SMTP id
- ffacd0b85a97d-4255780b1admr2121501f8f.38.1759306900546; 
- Wed, 01 Oct 2025 01:21:40 -0700 (PDT)
+ bh=Fn2TjoRESSlrNJjOER4d6gpZrt35+AGo12EpGqjkW1I=;
+ b=nSXqZ9Uwlkk91P1tLu9VI9znnf2/TLwxEP4MKHVUEK8cGY+4CPHpfhj19518GNaSJP
+ 0GOd7TkZyK29pHIpZ4+rqB6pFqj0HjFjdcv3FX3AeNM9SStRy+tWO5hfXrzIXwMEgMsu
+ obu4oDNHB4J04IF+cmXaaowSvlMRc6HvMeVMjC6tqxtXkeGfANce7rfBG4ibjKg+uAu3
+ uRd4t6lBRr3ntCloGq/UNDLUXRwV0nEJVcDV/xS/rzk8u68w1EqxB6QParGh/1xKiq3i
+ gMCOH1aiT42Wt2Y2gv3clyy1tHcvKp2+H92FHiWo/ap8+fU6dzGZ+oYLARO5gPlevQlp
+ DaQQ==
+X-Gm-Message-State: AOJu0YzAYso5skfDAJnm/nNdlRKawrOCuwR1XUcIBxF4QXez7R5pCyPV
+ WnpnV9tIyf78vFJOn2vcujaMUoThlrN4npgt3780Wh1tAttegWgMMKguhjEFHPeIvn5OMHMTtlA
+ Smv6F1DbKcg==
+X-Gm-Gg: ASbGncv2ukNpuIqtwmSg4xE1WaL+dcY6HfepLVaq0NpIrh8JqwENcoqEFUvRrZcP4a1
+ 5U8PGYLhQHM6CoQTpN4PjtijMkjicgbuCInmmPKw+B5KUJFZ9oqpmY4WaNimFCF3revs0wOJI+K
+ 16dSQ4pjva5Weqov4b+KWZAk1Xv2cIDZsFL/y2TyB4WUgUZJYux4ojO8IOA0Bzyp4ip3DRY9NeM
+ D4WIBAW4Ug00qHDbDVfQDT9esbyxov6DWpGcYmpVkWdCjcl1lp8HFoYnkRaxH+cP8eXYejWVzH9
+ 5h//6RCv+HWsVVWx9U6Pjbx279tgMTaS6Wy10tguChRnO+LjlhQkfkW0+/5CKkfHLb78pVyX/on
+ t+S8pgPqBxBJlNsnVRggFSzy3RfNledMKuBVZxsyZvI9a2YvjYYH0bFqOZgQdAmNhRwn9gqlGZt
+ WXBmeHkuBE/QukFmhAHfXg
+X-Google-Smtp-Source: AGHT+IGa971mXhZ9J5c8QC/V145CuXilY9sHAaHNYsxw+frSzKFCefeHYCbSr6kcPeg6FkecemzV3g==
+X-Received: by 2002:a05:600c:8414:b0:46e:206a:78cc with SMTP id
+ 5b1f17b1804b1-46e612c9042mr20995395e9.28.1759306975822; 
+ Wed, 01 Oct 2025 01:22:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc6921b7dsm25730046f8f.42.2025.10.01.01.21.38
+ 5b1f17b1804b1-46e61a25dbcsm28397185e9.19.2025.10.01.01.22.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 01:21:40 -0700 (PDT)
+ Wed, 01 Oct 2025 01:22:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
@@ -84,23 +84,24 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  Peter Xu <peterx@redhat.com>
-Subject: [PATCH 02/25] accel/kvm: Include missing 'exec/target_page.h' header
-Date: Wed,  1 Oct 2025 10:21:02 +0200
-Message-ID: <20251001082127.65741-3-philmd@linaro.org>
+Subject: [PATCH 16/25] system/physmem: Rename @start argument of
+ physical_memory_*range()
+Date: Wed,  1 Oct 2025 10:21:16 +0200
+Message-ID: <20251001082127.65741-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251001082127.65741-1-philmd@linaro.org>
 References: <20251001082127.65741-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,32 +117,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "exec/target_page.h" header is indirectly pulled from
-"system/ram_addr.h". Include it explicitly, in order to
-avoid unrelated issues when refactoring "system/ram_addr.h":
+Generally we want to clarify terminology and avoid confusions,
+prefering @start with (exclusive) @end, and base @addr with
+@length (for inclusive range).
 
-  accel/kvm/kvm-all.c: In function ‘kvm_init’:
-  accel/kvm/kvm-all.c:2636:12: error: ‘TARGET_PAGE_SIZE’ undeclared (first use in this function); did you mean ‘TARGET_PAGE_BITS’?
-   2636 |     assert(TARGET_PAGE_SIZE <= qemu_real_host_page_size());
-        |            ^~~~~~~~~~~~~~~~
+Here as cpu_physical_memory_set_dirty_range() operates on a
+range, rename @start as @addr.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/kvm/kvm-all.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/system/ram_addr.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index e3c84723406..08b2b5a371c 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -36,6 +36,7 @@
- #include "accel/accel-ops.h"
- #include "qemu/bswap.h"
- #include "exec/tswap.h"
-+#include "exec/target_page.h"
- #include "system/memory.h"
- #include "system/ram_addr.h"
- #include "qemu/event_notifier.h"
+diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
+index 6ed17b455b4..84a8b5c003d 100644
+--- a/include/system/ram_addr.h
++++ b/include/system/ram_addr.h
+@@ -152,7 +152,7 @@ uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t addr,
+ 
+ void cpu_physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
+ 
+-static inline void cpu_physical_memory_set_dirty_range(ram_addr_t start,
++static inline void cpu_physical_memory_set_dirty_range(ram_addr_t addr,
+                                                        ram_addr_t length,
+                                                        uint8_t mask)
+ {
+@@ -165,8 +165,8 @@ static inline void cpu_physical_memory_set_dirty_range(ram_addr_t start,
+         return;
+     }
+ 
+-    end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
+-    page = start >> TARGET_PAGE_BITS;
++    end = TARGET_PAGE_ALIGN(addr + length) >> TARGET_PAGE_BITS;
++    page = addr >> TARGET_PAGE_BITS;
+ 
+     WITH_RCU_READ_LOCK_GUARD() {
+         for (i = 0; i < DIRTY_MEMORY_NUM; i++) {
+@@ -200,7 +200,7 @@ static inline void cpu_physical_memory_set_dirty_range(ram_addr_t start,
+     }
+ 
+     if (xen_enabled()) {
+-        xen_hvm_modified_memory(start, length);
++        xen_hvm_modified_memory(addr, length);
+     }
+ }
+ 
 -- 
 2.51.0
 
