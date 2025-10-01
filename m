@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD4D3CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 12:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E59CCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 12:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3vjm-0001by-9w; Wed, 01 Oct 2025 08:15:14 -0400
+	id 1v3vj5-000107-4Q; Wed, 01 Oct 2025 08:14:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v3vjk-0001ZN-27
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 08:15:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v3vjS-0006Aq-Vt
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 08:15:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759320879;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=EwBhlQhPSZAtayivfLvyJgOAzDEXqz+RoU20rLYvK3c=;
- b=Y5LDGPyI5H7vyabSMzO9Ad9enHUkBRORuTlXDKRKWaHmWpeYUkZznDwqrYW5bHK0z7+xUh
- 793zwnfW3V+GwiewvTAQzirO1+6d1jnaEm2NKypjpcAY10lvJk8ziOU/kfwM2Qtb6zOTzn
- 6XLgJOwTTSt98TcqssJ8lxDHHX5z+ek=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-9yX6Q0PtN-2k1Ogvyps4bA-1; Wed,
- 01 Oct 2025 08:14:33 -0400
-X-MC-Unique: 9yX6Q0PtN-2k1Ogvyps4bA-1
-X-Mimecast-MFC-AGG-ID: 9yX6Q0PtN-2k1Ogvyps4bA_1759320869
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F404E1955DB8; Wed,  1 Oct 2025 12:14:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.187])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D7B1B1800577; Wed,  1 Oct 2025 12:14:20 +0000 (UTC)
-Date: Wed, 1 Oct 2025 13:14:17 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v4 24/27] qapi/accel: Allow to query mshv capabilities
-Message-ID: <aN0bGV7zXdHjjJXq@redhat.com>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <20250916164847.77883-25-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3viu-0000vE-I4
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 08:14:25 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3vik-0005xe-93
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 08:14:19 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3f44000626bso4316741f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 05:14:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759320841; x=1759925641; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EutSndq8oB+MlZ4caVmBR2hGlbLCTV6/YaJtxzDNT/g=;
+ b=cGYMXsIpxTvK3D5c6VTrAkp/MVZRrS8wJzdXHeYd0DYFjZn5HVwLof3ELI5vXUiLak
+ 93j7Ji692pRpTxAMiTV0iIKc3tEBuYBROAyf62rBY/G16SClN4CIxlxsR6TAaz8bgNAt
+ Mt+WksshskYaOlbv8Rwdj9gWe2U/rLu6jj2v5TSiWB2ttmWZZ6zvxb+av09CmQO0NVhH
+ a0GKBVAeHiEXQjz06sLBSTAWe8nlmRWuPWQj96fRNP97YxfsEFm5mb7q8rQfu4s6SBn9
+ f9qDnHsvR5xI2YAH87g4q4pz1R6PTqyOG/jsfRJr4EfHJjl0aqzzK6qc/m9nQue47kw2
+ OSAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759320841; x=1759925641;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EutSndq8oB+MlZ4caVmBR2hGlbLCTV6/YaJtxzDNT/g=;
+ b=vt6IYByixV+gPZOqmgBRSRDjy1CUqKMeh6zHeG69u1BYjSpxzyi6O1luM2nhegbC7z
+ pqihODDcmww6mavTajGk3b9iycYgqm6QW43ZykPhgAlofGT48s/GqHZfRDTbifibp25X
+ UQMCNse18fGrFli71TUil043tnS4dhIEfyMXiufoc9H+HOkWCrRI/MWSdaczQ3Hhm9m7
+ wYwfU0tbLPXLLP1elfUEWUcpiPje4SoTYxtUTQT+ujp/AyMJZ4aErS3JHvsSe0XhqjIr
+ pFXy3TXDrIhCd5dOghYFa9kZgNe/rvazey4cFydYWatKDQNqjfonhtA6t1ng1JFWXuZG
+ 87fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUynhsgTbrwxqOvZ5wjAJ9Y36NCZMz9xe/HA68PdOMBPH/+r6jqs8qkwIVgZ+94SUFZEMSl+joNbxCQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw+H3ftYvlJW0s/vB2Q0BAT4hEjm1hTR6JTVjR0Z0EmvkEklMm4
+ usiWHm610Wmat+5wEzw3Uc/uD/4mWaosjP0ieaa0MrXxU6bqK+choHuqYG3WOIfOSzc=
+X-Gm-Gg: ASbGnctc0bz7mi0i/3wVZNW4H/uVrNejtaP2YguM1KYdsW6nXTmTeP9F7goBBDCGscW
+ fRFhCooyf4Sif1BY25CffXKyTkWuZF2+m5tF5iAHVn8kARkmj4wI8q5ffuKGwCt3mMLgHjb1yb3
+ jHJf5xpyea3sBBKC2alqoWOS9P6BI2LrLiq6vrzeTJ0tsIKG/O9FUi2Ek/Z1iuxmMdGNYXEEY8t
+ jkqf/TXrQFJrg2/892E+KlXyc57B/zlcEs3DlD0Q2dCzr5B8avBYIqXAyoAHbcCN8/mtbJF5gUx
+ lfZCzJPIYKU5oG5tgQPEFiO7gYp1BEoCpKnxJmd1SlRQo3sNio/hxOZV2eBHZ4OkGOZy4cyuUuE
+ 3MwObuOA+NV4ML+RmbVTp3+vSa76S0heu9iY3vTLywwKsdL8dOkKRqMo6niQFbqtR6+8IHg==
+X-Google-Smtp-Source: AGHT+IFGhomTvd84cDwlD0yny0+xs+on25TT5OGNcJMwnPbzDWrd/J82pawNv9BPnqnmpnGnXKAvXw==
+X-Received: by 2002:a05:6000:3102:b0:414:a552:86b1 with SMTP id
+ ffacd0b85a97d-42557820e75mr2640161f8f.63.1759320841153; 
+ Wed, 01 Oct 2025 05:14:01 -0700 (PDT)
+Received: from [192.168.69.221] ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-41f00aebdb7sm14201386f8f.57.2025.10.01.05.14.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 05:14:00 -0700 (PDT)
+Message-ID: <3da08594-1c54-48aa-a35d-3f6a6bf353fb@linaro.org>
+Date: Wed, 1 Oct 2025 14:13:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250916164847.77883-25-magnuskulke@linux.microsoft.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/7] Add RISCV big endian support
+Content-Language: en-US
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Roan Richmond <roan.richmond@codethink.co.uk>, ben.dooks@codethink.co.uk,
+ lawrence.hunter@codethink.co.uk
+Cc: felix.chong@codethink.co.uk, sagark@eecs.berkeley.edu, palmer@dabbet.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, qemu-riscv@nongnu.org,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20241220154616.283933-1-roan.richmond@codethink.co.uk>
+ <6ad3dee0-0fe8-4368-b43f-e7f8f30ead24@canonical.com>
+ <0878ebc9-f553-46b8-b2ff-b748bd45da88@ventanamicro.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0878ebc9-f553-46b8-b2ff-b748bd45da88@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,63 +105,15 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 06:48:44PM +0200, Magnus Kulke wrote:
-> From: Praveen K Paladugu <prapal@microsoft.com>
-> 
-> Allow to query mshv capabilities via query-mshv QMP and info mshv HMP commands.
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->  hmp-commands-info.hx       | 13 +++++++++++++
->  hw/core/machine-hmp-cmds.c | 15 +++++++++++++++
->  hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
->  include/monitor/hmp.h      |  1 +
->  include/system/hw_accel.h  |  1 +
->  qapi/accelerator.json      | 29 +++++++++++++++++++++++++++++
->  6 files changed, 73 insertions(+)
+On 1/10/25 13:32, Daniel Henrique Barboza wrote:
+> (ccing qemu-devel ML - please send all patches to qemu-devel too)
 
+Indeed, please repost so we can review :)
 
-> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-> index 6aca1a626e..e24bf0d97b 100644
-> --- a/hw/core/machine-qmp-cmds.c
-> +++ b/hw/core/machine-qmp-cmds.c
-> @@ -28,6 +28,20 @@
->  #include "system/runstate.h"
->  #include "system/system.h"
->  #include "hw/s390x/storage-keys.h"
-> +#include <sys/stat.h>
+Regards,
 
-I think this is left over from a previous version of the
-patch that directly called stat() on the device node, and
-can be removed.
-
-> +
-> +/*
-> + * QMP query for MSHV
-> + */
-> +MshvInfo *qmp_query_mshv(Error **errp)
-> +{
-> +    MshvInfo *info = g_malloc0(sizeof(*info));
-> +
-> +    info->enabled = mshv_enabled();
-> +    info->present = accel_find("mshv");
-> +
-> +    return info;
-> +}
->  
->  /*
->   * fast means: we NEVER interrupt vCPU threads to retrieve
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Phil.
 
