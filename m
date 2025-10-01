@@ -4,96 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B403CCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F027FCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 21:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v44Wu-0004ng-I6; Wed, 01 Oct 2025 17:38:33 -0400
+	id 1v44js-0000QL-AV; Wed, 01 Oct 2025 17:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v44Wk-0004mJ-VY
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:38:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v44WW-0002R2-Sf
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:38:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759354670;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sHJbqne6/6YMBH+43gDkcKMOvKoPAwqGJRJz6cOwLu0=;
- b=P76uzyob49yD7nBKQf0kZHfANfKo9tHqeZ5z5haoO0x+ESn/sMWnMFG06h2BGQ7XqhYBEA
- uMBWFSimrKajx0mZNG7rvP04bcgRSan6KF2NqNRj1cl+hUws6l5pTC8i36iVl/najmLVIl
- s5YH0k59YVec1t2qs1JNAXFWTD18A40=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-6QSdnuqROiWMF5-nm36cUw-1; Wed, 01 Oct 2025 17:37:49 -0400
-X-MC-Unique: 6QSdnuqROiWMF5-nm36cUw-1
-X-Mimecast-MFC-AGG-ID: 6QSdnuqROiWMF5-nm36cUw_1759354669
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4df80d0d4aaso19784731cf.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 14:37:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759354669; x=1759959469;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v44jm-0000Pc-PP
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:51:51 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v44jW-0005Ug-KI
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 17:51:48 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ee1221ceaaso176118f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 14:51:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759355485; x=1759960285; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sHJbqne6/6YMBH+43gDkcKMOvKoPAwqGJRJz6cOwLu0=;
- b=IR6i8lohLuTGk2Ij+yF1CZlTsRjwxzOUikfd3K6h27DmbDaGxcO5448PIOkKJvrENd
- 8deCEdD9UjQYyfUVUSysaZEDSEkxRpnkUqG5KPFCwM0tNKH92tXZ0rnw2htyjemp0Ndb
- TnCoEiG5gO8i/wnXaYBcdjbo/eRy1/TCaxt6C2TXK733BZs+zUghVnTLdye9WHIgDMbY
- XkTkX/YsLvwiV3PxYgxdRwmWQRMZ0/292m6M0HCdUh2B12DfAKMzW9wi511c2h9BgX6/
- z4GOSaJXGTabpWgOmsmuCsrJ26BJ5HlD/H1rxnhNQE1odGJk70YbfImj4qBj2IwXEfLz
- iQNQ==
-X-Gm-Message-State: AOJu0Yz9clN6JLiVdo66Z424DnVffLq7dFY6hpwTyU9usB9rlJJodusb
- aSztBkx7rkdS6SveWgiVEj/fcuDLk8fOET+p9Xy1bWEDmRDxNb1pL/QiBEsNYJiCWFrnupf5kn1
- JekH+bDTiBNeHtBQMHDbeEfFQmdbuIztT8ooLU67cKv50MbgSXcNNmpxx
-X-Gm-Gg: ASbGncuhJrDj6bt03UWle/ghcEguU7iekAbNykc/U9ddrJYdb55YoXUAMKpvLeOvH4+
- P5LT0dEOhs3Xvu3tFgMO6BiNbLbn3a6zD2gopMEgjHCYlxGXBHuwdAGczK2ZyNbernZGNvdxRce
- Qb/3F3LG+mj9Qlpc9zPIO6Pk+i3TUXZ4n3rBh4hWlmoIVtb8brHj7tV3sshj1BW1svkXUQiRqzh
- GX+iaqjhbhIW+fKSDSUUkdc+d20nw1ybSC4QW4akj39/df27CUSmss7OSXK6U4P+B0ov++i8ju4
- Gu57Eagm+LPipLBFxe4475mfzXDVBpsoFue42w==
-X-Received: by 2002:a05:622a:1116:b0:4b5:f6c5:cfc with SMTP id
- d75a77b69052e-4e41cb17ba8mr62565381cf.19.1759354668852; 
- Wed, 01 Oct 2025 14:37:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHF7D5SiVXlU3VzKn1vFwWngvnc77ftz8kd2eeIRy5ITJ8sneQn6jRS6dditye+sRJYY29jVg==
-X-Received: by 2002:a05:622a:1116:b0:4b5:f6c5:cfc with SMTP id
- d75a77b69052e-4e41cb17ba8mr62565091cf.19.1759354668375; 
- Wed, 01 Oct 2025 14:37:48 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bdf533a0sm7753656d6.58.2025.10.01.14.37.47
+ bh=1Ur4mhRNtXG8Powdkfb/SpSMh0Nhqn2yaLbXpJbeZDI=;
+ b=TCCH/fhjmzAzv3nlc2BhDKBLvCLFzjLe8pJOa9fSHtOL7a/EIcxE4B4wRcYgHC9a7o
+ 5ws79hrJTP5IzaijhML1ZGBsCYPAsWKESjicLGv0OKBpCocKNCD02jcT4diOYUwyeJOJ
+ cOePi+namJq8sncJfpssKVNb163YN2bsinJvzIg68Fwz1GQaV59fKGGqWKvE4zyyYNrc
+ /osc63uvDgUDcmzk1AsYFABgJASdNAZDy/5rKVakkPBR++DlZhiCzsYNZdOg5lLXDWvO
+ KW754F/9o+37qo+AcwsCB030837ikiOW49Wp7zdDc+kSeEUtVg7pf2bJeMXUkpbfLw22
+ sWJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759355485; x=1759960285;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1Ur4mhRNtXG8Powdkfb/SpSMh0Nhqn2yaLbXpJbeZDI=;
+ b=CY6VfCPQA0euCQGGdm/sLHn68HL2U/N0X5w202ntxm10N7fa+GB7Vtr3iELYAyKgnY
+ fSFF9h763K4VV/DfgtMhr9AB3cyIq3pbdVJdd/2MSezAcY5GY0+iaqDfguc+5Yg7GWAU
+ eDA+BYQWQflo91wzCSqsqFcKHyxss1MSFVtnL9Y0P2KNXPZizksON1fty9Dfvc3UcD5J
+ qof6OAUid0AQWpRFc1IESmSYHWdJOP7ADQlns4jP4nDacyZdGDVOhJVzmG/3Nzc3YcqM
+ SnUmgvRuS4v+BtEko5GXmXbuNCstnmOnF2QGvNU4Wzxa974JYt0jkLftO0J2R3MoX6BZ
+ LzXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSAiGpBEYcrKty1n7DdgRnCHTVq+hHgAZ7XaRXzj9GsFwZRHzdSjFZQ5mE7CfVpWoGEVeGElaOwrZ0@nongnu.org
+X-Gm-Message-State: AOJu0YwLPzJtPcRDjsNwKFwB5/YWDOsLuaa/qHIHkZdXQI5xtkEVEW++
+ SywaDMDBkwOz7W3hVPI2X9/CDsi/yLabGAzRkek6ikQW69eDH4NxQcYFiuYT36vpEjo=
+X-Gm-Gg: ASbGncs6vBVGk2SgQb90S4ZE9JxY40OrdbpbMHNE+vR2gbNo0vubwhrJGpjkJngTo9o
+ VPGY5U8OY6ybg4wPRvvmuZNWSDs6c+0yH18umth1RmMyc6tqm1ntAl35sxSFVZT52lWo53zN+Xm
+ 08mOCvo5tKitOnw2dsNA0CZ0RWypneWB2h5sSIQHGGvlOjL7y/f2usnURwK8+dmxysfOBMh0J50
+ 7Go2mf6WtsuDyu3/b10Tuamfi6XKCJxelf9+LBFZzlYyaSfxPHK7XvqKV74IX1Qn5r3b5f5u4L/
+ MFSYolgcZ3WVxtQsxxbVg70ioF1AE6OzZ76KQNyGPrKc0rco35IIAC+zdgixxfhAYro6yMQ/1ze
+ y+2HEhK5bORjQYgLmhGYexsre06p6/wjKXZ8WoPfrVMmqiMQ=
+X-Google-Smtp-Source: AGHT+IHIJnCpMDYRNa3Homtuufr4MvWIMp9SG7sA9UQGXUwCyPgE/UHgzyVcjIm5Dwh50mr1WznPOQ==
+X-Received: by 2002:a05:6000:2002:b0:415:7a6c:6a38 with SMTP id
+ ffacd0b85a97d-42557821a1bmr3763742f8f.59.1759355484862; 
+ Wed, 01 Oct 2025 14:51:24 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8e97fbsm752151f8f.34.2025.10.01.14.51.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 14:37:47 -0700 (PDT)
-Date: Wed, 1 Oct 2025 17:37:46 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <ehabkost@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH 0/3] system: Don't leak CPU AddressSpaces
-Message-ID: <aN2fKu6wfPSQx05S@x1.local>
-References: <20250929144228.1994037-1-peter.maydell@linaro.org>
- <1c567b4a-4966-4374-8851-81c9b1393d8a@linaro.org>
+ Wed, 01 Oct 2025 14:51:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3B6735F7A7;
+ Wed, 01 Oct 2025 22:51:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,  Philippe =?utf-8?Q?Mathieu-?=
+ =?utf-8?Q?Daud=C3=A9?=
+ <philmd@linaro.org>,  Thomas Huth <thuth@redhat.com>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 0/7] testing and misc updates (docker, ansible, .git*,
+ gitlab)
+In-Reply-To: <1a86ebf2-161e-975c-1808-d8d960c4f7e6@eik.bme.hu> (BALATON
+ Zoltan's message of "Wed, 1 Oct 2025 21:31:05 +0200 (CEST)")
+References: <20251001170947.2769296-1-alex.bennee@linaro.org>
+ <4188260c-e8ac-9bea-5e05-6cd34c3e986d@eik.bme.hu>
+ <aN102hEBf6vny20l@redhat.com>
+ <1a86ebf2-161e-975c-1808-d8d960c4f7e6@eik.bme.hu>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Wed, 01 Oct 2025 22:51:22 +0100
+Message-ID: <873482i945.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1c567b4a-4966-4374-8851-81c9b1393d8a@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,80 +114,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 01, 2025 at 01:36:16PM -0700, Richard Henderson wrote:
-> On 9/29/25 07:42, Peter Maydell wrote:
-> > When a vCPU is created, it typically calls cpu_address_space_init()
-> > one or more times to set up its address spaces. We don't currently
-> > do anything to destroy these address spaces, which means that we
-> > will leak them on a vcpu hot-plug -> hot-unplug cycle.
-> > 
-> > This patchset fixes the leak by replacing the current
-> > cpu_address_space_destroy() (which has an awkward API, includes
-> > a bug, and is never called from anywhere) with a new
-> > cpu_destroy_address_spaces() which cleans up all the ASes a CPU
-> > has and is called from generic unrealize code.
-> > 
-> > Patch 1 is just a comment improvement to clarify that
-> > address_space_destroy() defers most of its work to RCU and you
-> > can't free the memory for the AS struct itself until it's done.
-> > 
-> > Patch 2 is from Peter Xu; we need to be able to do "destroy and
-> > free an AS" via RCU, and at the moment you can't do that.
-> > 
-> > Patch 3 is the bugfix proper.
-> 
-> So... I wonder this is really the right direction.
-> 
-> To be specific:
-> 
-> Over in split-accel-land we recently had a bit of a kerfuffle over TCG
-> registering its MemoryListener with all of the per-cpu address spaces and
-> HVF not doing so.  Things get even more complicated when one finds out that
-> some MemoryListener callbacks are only used with "global" address spaces and
-> some are only used with the per-cpu address spaces.
+BALATON Zoltan <balaton@eik.bme.hu> writes:
 
-I only have a very preliminary understanding on this, so please bare with
-me if I'll make silly mistakes...
+> On Wed, 1 Oct 2025, Daniel P. Berrang=C3=A9 wrote:
+>> On Wed, Oct 01, 2025 at 07:56:21PM +0200, BALATON Zoltan wrote:
+>>> On Wed, 1 Oct 2025, Alex Benn=C3=A9e wrote:
+>>>> My first set of patches for the development tree. Should be mostly
+>>>> self-explanatory. We still need to apply the upstream COPYING patch
+>>>> the u-boot-sam460ex code but we should decide if its worth mirroring
+>>>> or should we just treat the copy as fully "ours".
+>>>
+>>> Which COPYING patch do you refer to? I have the upstream because when I
+>>> submitted this I was told to do it this way instead of adding the u-boot
+>>> sources to the QEMU tree. It can't be merged with the official u-boot u=
+sed
+>>> for e500 because it has sam460ex specific patches from the machine vend=
+or
+>>> which only supports this u-boot version. There are some updates from the
+>>> vendor for real machine which I plan to add eventually but it's still b=
+ased
+>>> on an older u-boot version. With mirroring I can update upstream and se=
+nd
+>>> one patch to update the binary once it's mirrored, otherwise I'd need to
+>>> send patches for each update and rely on somebody to merge them.
+>>
+>> I opened this:
+>>
+>>  https://gitlab.com/qemu-project/u-boot-sam460ex/-/merge_requests/1
+>>
+>> but then learnt u-boot-sam460ex is actually a mirror of your github
+>> repo, and haven't got around to opening a new MR for your repo.
+>>
+>> If you can pull the commits from that MR that'd be great, or I can
+>> open a new MR, as you prefer.
+>
+> I can get the patches from the gitlab pull request above and apply
+> them the my github repo, no need to send a pull request there. I just
+> don't get notified about what happens on gitlab so I have not seen
+> this.
+>
+> I'm not sure what Alex Benn=C3=A9e refers to as fixing up the mirror. Is =
+it
+> not mirroring now?
 
-I was expecting QEMU provides both the global view (address_space_memory),
-and the per-vcpu view.  Then we can register to any of them on demand.
-Then the global views can be the so-called "board model" mentioned below.
+It was mirroring from github.com/qemu/u-boot-sam460ex - I thought I
+might have to re-create it to get it to mirror from the right place but
+it looks like you can tweak it in the config.
+>
+> Regards,
+> BALATON Zoltan
+>
+>> With regards,
+>> Daniel
+>>
 
-Is it not the case?
-
-The root MR is also shared in this case, making sure the address space
-operations internally will share the same flatview.
-
-> 
-> On reflection, it seems to me that no address spaces should be owned by the
-> cpus.  All address spaces should be owned by the board model, and it should
-> be the board model that configures the address spaces used by each cpu.
-> 
-> If we do this then address spaces, and even the array of address spaces, may
-> be created once by the board, shared between all (relevant) cpus, and not
-> destroyed by cpu unplug.
-> 
-> Moreover, in the context of virtualization, there's now exactly one address
-> space (since Arm Secure and Tag memory spaces are not required or supported
-> except by emulation; I assume the same is true for x86 smm), and the
-> aforementioned kerfuffle goes away.  There's no difference between global
-> and per-cpu address spaces.
-> 
-> Anyway, it seems like this provides the same flexibility in the complex
-> heterogeneous case and simplifies things for the homogeneous virtualization
-> case.
-
-We have another question to ask besides this design discussion: Peter's
-series here solidly fixes a memory leak that can easily reproduce with
-x86_64 + KVM on cpu hotplugs.
-
-Should we still merge it first considering it didn't change how we manage
-per-vcpu address spaces, but only fixing it?  Then anything like a big
-overhaul can happen on top too.
-
-Thanks,
-
--- 
-Peter Xu
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
