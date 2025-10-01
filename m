@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8DD8CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2D8CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:02:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v414e-0003jz-LO; Wed, 01 Oct 2025 13:57:08 -0400
+	id 1v414V-0003Xh-Ho; Wed, 01 Oct 2025 13:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v414Z-0003fq-Cz
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:57:03 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v414T-0003WS-6E
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:56:57 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v413o-0001ER-DE
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:57:02 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e37d10ed2so792795e9.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:56:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v413m-0001Cg-3o
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:56:56 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3ee130237a8so73628f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759341372; x=1759946172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759341367; x=1759946167; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e9xet65TEOOSdiYR/N0e1Kg4Di5ZGCrU0GtjpOB6lB8=;
- b=IWs0jrYkHhiE4HcoT9ncWx4flGxfyLcashOggc8a1ha3z5EhWjAauhzFEP8Ytk9OZ2
- KotC5QXQmJEsWr9paBdHE+hylvTnl1l1V9Xl3hJw+8gU6g/yie15+UMpNv1GOafMyFy1
- iD6/QTKl1clj4oo6M+F2lA1KflmONPWX9RGWGzf5f19dvqy/sxwQpccb8Lut7CX8cbzt
- apmKmtKAN0Uxdb3u/zMdmWmuq6hpbD0FkMZt3imBMB+r98b4dzlQeCoUENUfyLBCbQwh
- DYhkXGGVz8fXzZrR7Il0Dl1O3f79l1urvnFcGkVhaYHZqGM5DjNbJ2OBudZxWaFn9nDF
- w79g==
+ bh=u2zCZOMVxUlH3hD+UCvTWPhCwey1XYt9IvIHTWoVGcc=;
+ b=flW7DW90M3AR5BsqiKpqTB1ReulObq4ueWJI+WJnEt+d/QQjPNYgSlUDehxsv6EZRk
+ xL1mWOBxMyFx6wq4BXPaMH137f8Wwhv1YKDn/a9zhTmRH7OoAux020w3WBmWoC33ZZBq
+ 9A1SlP+DW5+WYXtABGHzBDwYoLn5M7r3V8Rwb1Vg+oMMBFD5p50Or1WC4q77J/in2g7K
+ /rBoN9FWyxdWWx8K5sEWnOvlg0YTDmZ73qDH55FMzGwf3oCwXtQv1rRsbKUFk9hUivp6
+ wSJcHEdyUAmmK49j/tU33zFmSo80Xy6k4XU6NIaLHvWrflop0VMAHVhsC8aL+EKeCFkm
+ N2NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759341372; x=1759946172;
+ d=1e100.net; s=20230601; t=1759341367; x=1759946167;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e9xet65TEOOSdiYR/N0e1Kg4Di5ZGCrU0GtjpOB6lB8=;
- b=EJo5yLh0HiFrZiSGndTWfMm3L03xlmOiBxOFpwoaMuXq1i3NCpS6fYQH3aYGtWWHvc
- ZN0/VkwQXrS279hB+dGqty1hplYGLrsDCsI/04Knm2GRGim0qedfrVToD7V4oZVmEMXt
- pfgbsfXLp8b3bQ9c48UKLWXNiY+W0A7Io9UfZWu9pm35EijLJVloZro86sQmTJ0GS0bQ
- CEJ9oL1pvuYdapXJnc1meTa4wuJnbO+UvFYgNrbbuUh8Bj+4rsZAPIwwydvaF/zz9+hO
- VbVfUcChYaX8Xq9rd+vWIRXhYc78itVlQAwPlT93M66XxNqO2YAiImgU/UxlgrjVJuOr
- ZYEQ==
-X-Gm-Message-State: AOJu0YynwQNA1iZnL7c0+e1n8mp7+UturZuBM17OTVTeFFHzdhvOzqmV
- ZwsRiHbrQf+0YGAlbKgXlJgJzqWg5ZGZS+FfUcF0QmRTdVpMQx4dR2OGLmF2pRf5WGEKzq0BmN8
- lDAWf777Wkg==
-X-Gm-Gg: ASbGncvaNopptIGB86aCC4FK+8Q1iznjGrE5VJABt7REAGMsvLQ5aaLjbvX9cqR/o6q
- thQYhefOy/cYvHGmlzTCIkbYpKcd6193oeZsKleQMcx/g/Yi0fW+MOD5/yl45pBDJGBEgvZs6p0
- 9lF03jfhXlF7uqzL1xR9NFRI7TXDI2vCe+YxW+h+OJye0OsJx3Pv0WaxAmIkuy+xslBhdvVUlDC
- dPHRmHVk7lQN4gmELOzjawkrmDee64x+s96ahOat6TnUVP/aLENqJfqEnThKOA+aFjAAHKz67YR
- rPQr7bthiN2PV6h36+snOAxDS5KnShukJCZb8Jb6J235GOFlRfc0QG4hCy3pAUXj/XxjM967md3
- U0ytsNGwsw9Bn47RsQExz8KcfddLChADVXZh9OaAToRd5UhlDiE+8WpdzMU9wtOOMSjxmQfJjpZ
- qJn1xgAzJtRzh3MNrbKNqkIviOmQ==
-X-Google-Smtp-Source: AGHT+IFtPw+XkDGCPtbOzTM8COU+87F0gw68e5y7gIRqG0MAwDKlBk+G4T/X6jf8Wu0bRkQQ3KANlQ==
-X-Received: by 2002:a05:600c:4e48:b0:46e:36f9:c574 with SMTP id
- 5b1f17b1804b1-46e61269e21mr35695375e9.23.1759341372177; 
- Wed, 01 Oct 2025 10:56:12 -0700 (PDT)
+ bh=u2zCZOMVxUlH3hD+UCvTWPhCwey1XYt9IvIHTWoVGcc=;
+ b=q0olIo5147snSeTzCHeK1RjbkA98tzfE5TfjQoz6js2t2Y550DaPtkND7RCT5soeMM
+ ajSYriIJfV1lJQ7mOM2f02KxtjKJbuDlKSdUzbVk5LiirXNQIRzrVa8jH85qyfV/UkiE
+ 4MJbYOA9pyfjTJ90ILUSPR9UbvVWGX6270Y92zcVXLznQEWA2gLdflViRK8/xGGdXUHx
+ UFpCmXGHkzVNgu0sdEPiivuWj3efKMemsl66MdP4S5apCK1VWvt+1bJ33WFXPqKNQbe7
+ HNjSeqR5NYoal3uDv/h3GVRaO3CB20en/42BdRLKSG3HWQz8v2GCHrGMLNmWodB/iAOU
+ xxfg==
+X-Gm-Message-State: AOJu0Ywex6POCqgt3hZxxsDVOp5mSrbscDaK2xfC9PEri1zI7kEfS9E+
+ 2+K6VyDjDQiDQmeGPIbkQzl1Ryw3VirF/nuuEM592UOE6WMFQZth4leARuLMDA8inmoMt4XSVNr
+ cHzvS+QMjZQ==
+X-Gm-Gg: ASbGncuKIMrrDeflVzHjwjXimxoz5/dZKBPeqzkyDfLHCHTzMPxcplUU+0gm7n28ZeV
+ pCNP7itUl+SNMECNZ5kM6dOgxO7xvqKhJR94bV0qqtCJBEj3JNSp7l4o6/7SOqx4JhAv1P53dqQ
+ RUN1MN8CsyUjPY70VZnjfFjjkwm/waEweCa9lEHzURnBKwLiRtlvVHyBqfba+/gUrIJtsXXfcuw
+ wBknFatnFoqVhnBCGr6RsGPnz/uOq0/PshU/Pwhl0rSAd/4PqeI6rpZuUgmHUn798ssvWA+0mwL
+ 6Maip+VZOpnbblTsPa57sfraPj4piJWyXaSV+RdHQLCj0Rsry4KENDDBAIXHiHFe9b+a0q9WaYL
+ k/sO6938SSkBu4bdACDQGBr6nMiLg8hPa4nv+HAHCip7WnDukSeHPwGTWKpEIAYdxWs6yQ49/4a
+ dGXH5ZLWvFTjrKw5EO/iCVZp403w==
+X-Google-Smtp-Source: AGHT+IEZ4RdBmQpCq+iFSrKM7GSoqCz/Rs3gJ8kFxOIRv4Jyqw9xcJXS42HqR9BMfsO0xILWjGScAw==
+X-Received: by 2002:a05:6000:1869:b0:40f:288e:996f with SMTP id
+ ffacd0b85a97d-4255781ea71mr4021012f8f.63.1759341366824; 
+ Wed, 01 Oct 2025 10:56:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a2a808sm49585535e9.21.2025.10.01.10.56.10
+ 5b1f17b1804b1-46e61a0241bsm46954075e9.11.2025.10.01.10.56.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 10:56:11 -0700 (PDT)
+ Wed, 01 Oct 2025 10:56:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -83,24 +83,24 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  David Hildenbrand <david@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Nicholas Piggin <npiggin@gmail.com>
-Subject: [PATCH v2 15/18] system/physmem: Reduce
- cpu_physical_memory_clear_dirty_range() scope
-Date: Wed,  1 Oct 2025 19:54:44 +0200
-Message-ID: <20251001175448.18933-16-philmd@linaro.org>
+Subject: [PATCH v2 14/18] system/physmem: Un-inline
+ cpu_physical_memory_dirty_bits_cleared()
+Date: Wed,  1 Oct 2025 19:54:43 +0200
+Message-ID: <20251001175448.18933-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251001175448.18933-1-philmd@linaro.org>
 References: <20251001175448.18933-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,65 +116,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_physical_memory_clear_dirty_range() is now only called within
-system/physmem.c, by qemu_ram_resize(). Reduce its scope by making
-it internal to this file. Since it doesn't involve any CPU, remove
-the 'cpu_' prefix. As it operates on a range, rename @start as @addr.
+Avoid maintaining large functions in header, rely on the
+linker to optimize at linking time.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/system/ram_addr.h | 9 ---------
- system/physmem.c          | 9 ++++++++-
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ include/system/ram_addr.h | 10 +---------
+ system/physmem.c          |  7 +++++++
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 54b5f5ec167..cafd258580e 100644
+index 49e9a9c66d8..54b5f5ec167 100644
 --- a/include/system/ram_addr.h
 +++ b/include/system/ram_addr.h
-@@ -175,15 +175,6 @@ bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
-                                             ram_addr_t start,
-                                             ram_addr_t length);
+@@ -19,8 +19,6 @@
+ #ifndef SYSTEM_RAM_ADDR_H
+ #define SYSTEM_RAM_ADDR_H
  
--static inline void cpu_physical_memory_clear_dirty_range(ram_addr_t start,
--                                                         ram_addr_t length)
+-#include "system/tcg.h"
+-#include "exec/cputlb.h"
+ #include "exec/ramlist.h"
+ #include "system/ramblock.h"
+ #include "system/memory.h"
+@@ -164,14 +162,8 @@ uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+                                                 ram_addr_t start,
+                                                 ram_addr_t pages);
+ 
+-static inline void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start,
+-                                                          ram_addr_t length)
 -{
--    cpu_physical_memory_test_and_clear_dirty(start, length, DIRTY_MEMORY_MIGRATION);
--    cpu_physical_memory_test_and_clear_dirty(start, length, DIRTY_MEMORY_VGA);
--    cpu_physical_memory_test_and_clear_dirty(start, length, DIRTY_MEMORY_CODE);
+-    if (tcg_enabled()) {
+-        tlb_reset_dirty_range_all(start, length);
+-    }
++void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
+ 
 -}
--
--
- /* Called with RCU critical section */
- static inline
- uint64_t cpu_physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
+                                               ram_addr_t length,
+                                               unsigned client);
 diff --git a/system/physmem.c b/system/physmem.c
-index 0daadc185de..ad9705c7726 100644
+index e01b27ac252..0daadc185de 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -1139,6 +1139,13 @@ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
-     return dirty;
+@@ -901,6 +901,13 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
+     }
  }
  
-+static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
++void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length)
 +{
-+    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
-+    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
-+    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
++    if (tcg_enabled()) {
++        tlb_reset_dirty_range_all(start, length);
++    }
 +}
 +
- DirtyBitmapSnapshot *cpu_physical_memory_snapshot_and_clear_dirty
-     (MemoryRegion *mr, hwaddr offset, hwaddr length, unsigned client)
+ static bool physical_memory_get_dirty(ram_addr_t start, ram_addr_t length,
+                                       unsigned client)
  {
-@@ -2073,7 +2080,7 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
-         ram_block_notify_resize(block->host, oldsize, newsize);
-     }
- 
--    cpu_physical_memory_clear_dirty_range(block->offset, block->used_length);
-+    physical_memory_clear_dirty_range(block->offset, block->used_length);
-     block->used_length = newsize;
-     cpu_physical_memory_set_dirty_range(block->offset, block->used_length,
-                                         DIRTY_CLIENTS_ALL);
 -- 
 2.51.0
 
