@@ -4,104 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3E33CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDACCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:07:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v413O-00025Y-1d; Wed, 01 Oct 2025 13:55:52 -0400
+	id 1v4158-0004M3-Oz; Wed, 01 Oct 2025 13:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v413L-00022s-BO
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:55:47 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v412w-00010V-Vx
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:55:46 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46e504975dbso611505e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759341313; x=1759946113; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n9ekZYHpJDRZOlVJcikM1vyUhcFtsxbY7lhISL3cLWE=;
- b=dJJML1PW3Y3ZTdRusXP/F+uyUiR42C0GyHxkaHT337X5oWcokPJ5YhIAMiJonTDu1X
- d/HyyaUGIU6NWSN+k2bEm9Bekor1/ThpiASORMoby5LbcJz0IrIISXkBdezrvMqMboNc
- BhdM7+hcp4gHFl16GwDbzUfw0a2h/Fhd5d4VKLDTHgnrDNAccioLztnPwzZnEkKDUzVq
- Q2cudp5hw3QA+UWxhjhlzx3Thypt9WPM9cbSVjdrOKUVpP+vKtHC+VGDUtW5h0TOfG3u
- GETutvvieI408XS7xiIuLzftQfBNu+xB5SV3VmHey+Ja8n4gbrvJkqa6G0GgIekjJVYY
- 2WEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759341313; x=1759946113;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n9ekZYHpJDRZOlVJcikM1vyUhcFtsxbY7lhISL3cLWE=;
- b=BxQB37jLXfeKEN8iOhzbR5yOTzqXq4cZ/Cw8uEfPn6IFGggehtxKA/Nvph4zg0k+OT
- 940X8GUuEnnoXxGAINm4u5v5VYJ8ORI5bGV6EkQdRBJDr+r6SmO8IEyQJXiL72N0IjOl
- cBMldhFvAMroYEYq7asKvY0itnxaJ4d+tT79iSjyeYVufydsTz+gF0uEQVlCwiLpDoFX
- +W9UA04wCGxJYpqYZDPbFCqsujSLnBOyY8fGv9AzKyuvukoS5TZJ6FNxdVEndgiOnek5
- LtPD/DGW9FhWt236+perAEK1N49rGZvNuM2Lep7LFKJarowiJQL/3h3YXQHznv82tiuz
- 01Jg==
-X-Gm-Message-State: AOJu0YxxqM9DhQvHULk/fcHdZD+XpuQR5GOpnyMXWuoGTA+w/+koSQeN
- I1BUJnK7aEx4eADxd74FjTADCn52NW0zmOaHgkBSnCLvF3qyOVqyIVnEvcQjf/L0Wj33MHD+HQ0
- F1BnSSeGWdQ==
-X-Gm-Gg: ASbGnct1soaiJzQNgqdI5+B53WcNr1aSK8bKZDOXMOmGFMpIoUX9E7QFrmNA54698ar
- GMrPbh4d5NRdrhMrQBCw/EeeokziTo+TgotxcuPAN3JL26fZVxnWyqGvlnhl6IV0hJ62eo6vBSX
- SoJ0648ZBo5+/PcE5g0Qa5lwpqdl/96zQXtNjZKOFdtPzjW+L6W+tD1Kt8tzPdPiPGOdk+tRgnW
- kSLuErk4wG+QVQEJZ0x/Ywkdf7tliEfAnTvEb92okqvtaEZ8emQWK9TDvq2oFJWQCZdvG5Kdjlj
- MV7iBVY+//bevAYhBkejXTQ9UJJU6UNr/y2hqPeFgh4TkmWz+bOdwCUMbBvZp1eW3EXyQYjGj3z
- jG9JohKmTm4qfX/C41UW8ql6i9M4BzkdxoK9XI+3w8sB8CxkhWnK6lbmipwkahtbOGJs5Mpxgpz
- 215uK/Vp1DJf5kZRze7HCIEEQMFA==
-X-Google-Smtp-Source: AGHT+IHjfz50VbN77vl51yEZuShG9ZWJl90dZfPlk6WYnylKSeRTX299MkK2JbX1c9tALFa9dVMZ4A==
-X-Received: by 2002:a05:6000:2204:b0:3e7:ff32:1ab with SMTP id
- ffacd0b85a97d-42557819209mr2844287f8f.50.1759341312780; 
- Wed, 01 Oct 2025 10:55:12 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e97f0sm97984f8f.27.2025.10.01.10.55.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 10:55:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>, qemu-ppc@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Jason Herne <jjherne@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- kvm@vger.kernel.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Farman <farman@linux.ibm.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: [PATCH v2 04/18] hw/vfio/listener: Include missing
- 'exec/target_page.h' header
-Date: Wed,  1 Oct 2025 19:54:33 +0200
-Message-ID: <20251001175448.18933-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251001175448.18933-1-philmd@linaro.org>
-References: <20251001175448.18933-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1v414u-00045v-CV; Wed, 01 Oct 2025 13:57:25 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1v4149-0001HE-Ql; Wed, 01 Oct 2025 13:57:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4A09656FC03;
+ Wed, 01 Oct 2025 19:56:23 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id EZyKueCsLmtd; Wed,  1 Oct 2025 19:56:21 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 3ED2956F327; Wed, 01 Oct 2025 19:56:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3D07456F320;
+ Wed, 01 Oct 2025 19:56:21 +0200 (CEST)
+Date: Wed, 1 Oct 2025 19:56:21 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 0/7] testing and misc updates (docker, ansible, .git*,
+ gitlab)
+In-Reply-To: <20251001170947.2769296-1-alex.bennee@linaro.org>
+Message-ID: <4188260c-e8ac-9bea-5e05-6cd34c3e986d@eik.bme.hu>
+References: <20251001170947.2769296-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1694444252-1759341381=:80725"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,35 +68,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "exec/target_page.h" header is indirectly pulled from
-"system/ram_addr.h". Include it explicitly, in order to
-avoid unrelated issues when refactoring "system/ram_addr.h":
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-  hw/vfio/listener.c: In function ‘vfio_ram_discard_register_listener’:
-  hw/vfio/listener.c:258:28: error: implicit declaration of function ‘qemu_target_page_size’; did you mean ‘qemu_ram_pagesize’?
-    258 |     int target_page_size = qemu_target_page_size();
-        |                            ^~~~~~~~~~~~~~~~~~~~~
-        |                            qemu_ram_pagesize
+--3866299591-1694444252-1759341381=:80725
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/vfio/listener.c | 1 +
- 1 file changed, 1 insertion(+)
+On Wed, 1 Oct 2025, Alex Bennée wrote:
+> My first set of patches for the development tree. Should be mostly
+> self-explanatory. We still need to apply the upstream COPYING patch
+> the u-boot-sam460ex code but we should decide if its worth mirroring
+> or should we just treat the copy as fully "ours".
 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index a2c19a3cec1..b5cefc9395c 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -25,6 +25,7 @@
- #endif
- #include <linux/vfio.h>
- 
-+#include "exec/target_page.h"
- #include "hw/vfio/vfio-device.h"
- #include "hw/vfio/pci.h"
- #include "system/address-spaces.h"
--- 
-2.51.0
+Which COPYING patch do you refer to? I have the upstream because when I 
+submitted this I was told to do it this way instead of adding the u-boot 
+sources to the QEMU tree. It can't be merged with the official u-boot used 
+for e500 because it has sam460ex specific patches from the machine vendor 
+which only supports this u-boot version. There are some updates from the 
+vendor for real machine which I plan to add eventually but it's still 
+based on an older u-boot version. With mirroring I can update upstream and 
+send one patch to update the binary once it's mirrored, otherwise I'd need 
+to send patches for each update and rely on somebody to merge them.
 
+Regards,
+BALATON Zoltan
+
+> Hopefully I'll have the new aarch64 runner online by Friday and ready
+> for the switchover.
+>
+> Hopefully I'll also be able to pick up Gustavo's reverse debug test
+> fixes by then as well.
+>
+> Alex.
+>
+> Alex Bennée (7):
+>  .gitpublish: use origin/master as default base
+>  .gitmodules: restore qemu-project mirror of u-boot
+>  .gitmodules: restore qemu-project mirror of u-boot-sam460ex
+>  tests/lcitool: drop 64 bit guests from i686 cross build
+>  tests/lcitool: bump custom runner packages to Ubuntu 24.04
+>  gitlab: move custom runners to Ubuntu 24.04
+>  scripts/ci: use recommended registration command
+>
+> .gitlab-ci.d/custom-runners.yml               |  6 ++--
+> ...4-aarch32.yml => ubuntu-24.04-aarch32.yml} |  8 ++---
+> ...4-aarch64.yml => ubuntu-24.04-aarch64.yml} | 32 +++++++++----------
+> ...22.04-s390x.yml => ubuntu-24.04-s390x.yml} | 28 ++++++++--------
+> .gitmodules                                   |  6 ++--
+> .gitpublish                                   | 16 +++++-----
+> scripts/ci/setup/gitlab-runner.yml            | 12 ++-----
+> scripts/ci/setup/ubuntu/build-environment.yml | 12 +++----
+> ...-aarch64.yaml => ubuntu-2404-aarch64.yaml} |  4 ++-
+> ...2204-s390x.yaml => ubuntu-2404-s390x.yaml} |  4 ++-
+> scripts/ci/setup/vars.yml.template            |  5 +--
+> .../dockerfiles/debian-i686-cross.docker      |  2 +-
+> tests/lcitool/refresh                         |  6 ++--
+> 13 files changed, 69 insertions(+), 72 deletions(-)
+> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml => ubuntu-24.04-aarch32.yml} (78%)
+> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml => ubuntu-24.04-aarch64.yml} (89%)
+> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml => ubuntu-24.04-s390x.yml} (88%)
+> rename scripts/ci/setup/ubuntu/{ubuntu-2204-aarch64.yaml => ubuntu-2404-aarch64.yaml} (96%)
+> rename scripts/ci/setup/ubuntu/{ubuntu-2204-s390x.yaml => ubuntu-2404-s390x.yaml} (96%)
+>
+>
+--3866299591-1694444252-1759341381=:80725--
 
