@@ -4,49 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751E6CCA474
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC868CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rJR-0005kf-3Q; Wed, 01 Oct 2025 03:31:45 -0400
+	id 1v3rTd-0002jh-Tc; Wed, 01 Oct 2025 03:42:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJL-0005i8-IX
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:39 -0400
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIt-0003VD-BD
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=cZvQgtn3j32aQUh3vT4jwIBOytAOPaxJasURWVn88aM=; b=s89Ld7v+7qTOYdH
- ngdKkmOYk7tt4wtdeT+xv32iEEdk8vnkpWeaesjOdH4HMUGdj7aEQQaN8F2mE4GcQzFJbUJ4hI/EG
- tCcT8jXISZcAHXKfy2aHv3MEt3/9r7NSLJG2q/pjFfu6ZH8gsOdn2GvI7dd0+8JbX73Tb5Q8DOgl6
- qI=;
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
- richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: [PATCH v2 16/33] target/riscv: Fix size of retxh
-Date: Wed,  1 Oct 2025 09:32:49 +0200
-Message-ID: <20251001073306.28573-17-anjo@rev.ng>
-In-Reply-To: <20251001073306.28573-1-anjo@rev.ng>
-References: <20251001073306.28573-1-anjo@rev.ng>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3rTb-0002hu-1m
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:42:15 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3rTU-00085f-BF
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:42:14 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-421b93ee372so1619901f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:42:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759304524; x=1759909324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eQsZV97Yqr+12QmKkeTixQF0XVzCcc8sdkR3KRVf3yw=;
+ b=GKeueHcrP+/Xw5hQm3SAAGvteKs3tPIveBEhzj5avlr3WttR4WyGyaNJwkkZbcGV/6
+ FXe55T5I/M8Hp3CWxOvYFtqg7V9oA5uY/iZFWGpdhkqEieHiqPrCkj9MgPY0oYDMkV30
+ RUKW7T73s6/mPHcr7V+G186+A9n8HTotMl84Z2Yc2bOCArJnYq2UgAmIroHn9XiF6WGx
+ krm70gb9u8uH2lsua50Xodggi+EOe/cIkvA2ssZVASpOXc06fF8IcV1XLPvcaEsll2Cd
+ pywWedx4xp+rh9YXlC+4zFAim9cl2zYhqQZ4/Quz+BN+skprGGAWSQDYRCydxBzzQ/xH
+ uggA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759304524; x=1759909324;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eQsZV97Yqr+12QmKkeTixQF0XVzCcc8sdkR3KRVf3yw=;
+ b=RAvohMHEGm2M8VIAWJHz37o9QPjlaWfa53f3DHhtVE4lM2FDBiBTt3UpKHGDJI9AH6
+ YQsjwtNv5H6FA1WFPlbqTMM8hRjfio1+sBDFctJq+z4sx4LL1t8TTVfthpRs21CMnXEk
+ XB9XWVb07BJKvnQTwN3mbAg4/6sOiDx1FXdQUZOpxwRxiYNPupaQc7uCpmNDkaGLir4j
+ vc2gwXsx2eugQdVY46HJAYR/s3WnaGjucvfHsoZZ6enVgLVZ3Ye0y6/WaOwBCLCdzorC
+ +0/aClkp+veoPJRP7TX6H0DnYm7H0XTZ2a8v06aOiw1LvhaAftQZ+rQ2afJkGcjJ/7E6
+ geXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrp25NNVau/o3G5cvyC+0YedWO3lPxeJp2pKb9WWxskjFqc16XhTRj98u5z6O+JNs7Mou4eR+C/rDR@nongnu.org
+X-Gm-Message-State: AOJu0YxP2brSKYKe7Bk9xsA3dXWCeszU1FMtYexDzhcT2z+sv4d2jMWM
+ ZcMt35PUBxmkYaHp4UYquXtam/SSz5pBZZGddJK3iqoaRyxsj0iwmRpApqxvPz43ZQ892EcjZ0x
+ qdtsl82k/qA==
+X-Gm-Gg: ASbGncvZeUghZuIB8Ttotfz2+T2whLvzk5phKtMzPg89Gfg+No54jI9m9BPVuh11O9o
+ VFio4p2qxsuJZ/t/jfrN8/HzH6O2hfHcwaYC4WY4tA7u/qG6+z4hctZikZZ/X2vBGORz7ttLvtY
+ kgPaS8bGe8ZkYPWVOJ2rCeFmST34Ia9cvr13idMaSm3Qi2i4vP98bZ3fiMqDsKk1UfGSSqu8BVI
+ 3pz/jXaRgDxLx8VPV64NUx0IAKliLjn/tHBNhT5yJ4iLrA3rSM4Xhxpng9w/dtw2Fo3KKg8t3n2
+ 9JlvpLj5cPDPsq8BeWlm1qR5jWJysaiiJSOfOLt413meiwLtXSoFGg1yEVYPB9n2v5v7xF1xYFu
+ 54MHWFf5Y8il3NXiwnWFQoYDVXMM0ITOk6h4dbdpz8Afm8jvfmeG1A9cny9dUqcw+XEkJtkFnaD
+ 5+aetW4sLTB+I8UA==
+X-Google-Smtp-Source: AGHT+IFb/cJ8olbpNG9BNJ3lgyVcP5PtyrYC7lemURbomq1mB9/RsSrougkPG3vJ0b3qfprsPk+ItQ==
+X-Received: by 2002:a5d:5d85:0:b0:3b9:148b:e78 with SMTP id
+ ffacd0b85a97d-4255781c7b6mr2008782f8f.53.1759304523754; 
+ Wed, 01 Oct 2025 00:42:03 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-40fb89fb19fsm26277548f8f.21.2025.10.01.00.42.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 00:42:03 -0700 (PDT)
+Message-ID: <ce7616cd-54cb-4c8b-8c34-8ef795d34eef@linaro.org>
+Date: Wed, 1 Oct 2025 09:42:02 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/33] target/riscv: Fix size of gpr and gprh
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, richard.henderson@linaro.org,
+ alistair.francis@wdc.com, palmer@dabbelt.com
+References: <20251001073306.28573-1-anjo@rev.ng>
+ <20251001073306.28573-10-anjo@rev.ng>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251001073306.28573-10-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,123 +102,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-128-bit helpers only make sense for MXL_RV128, TARGET_RISCV64,
-and TCGv == TCGv_i64, therefore fix retxh to 64 bits.
+On 1/10/25 09:32, Anton Johansson wrote:
+> gprh is only needed for TARGET_RISCV64 when modeling 128-bit registers,
+> fixing their size to 64 bits makes sense.
+> 
+> gpr is also fixed to 64 bits since all direct uses of env->gpr
+> correctly zero extend/truncate to/from target_ulong, meaning
+> !TARGET_RISCV64 will behave as expected.
+> 
+> We do however need to be a bit careful when mapping 64-bit fields to
+> 32-bit TCGv globals on big endian hosts.
+> 
+> Note, the cpu/rv128 VMSTATE version is bumped, breaking migration from
+> older versions.
+> 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   target/riscv/cpu.h       |  4 ++--
+>   target/riscv/cpu.c       |  2 +-
+>   target/riscv/machine.c   |  8 ++++----
+>   target/riscv/translate.c | 17 +++++++++++++++--
+>   4 files changed, 22 insertions(+), 9 deletions(-)
 
-For the sake of being pedandic, update 128-bit instructions to access
-retxh via 64 bit TCG ops, even if they only make sense when TCGv ==
-TCGv_i64.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- target/riscv/cpu.h                      |  2 +-
- target/riscv/insn_trans/trans_rvi.c.inc |  8 ++++++--
- target/riscv/insn_trans/trans_rvm.c.inc | 16 ++++++++++++----
- 3 files changed, 19 insertions(+), 7 deletions(-)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index d055ddf462..3c910e44cd 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -584,7 +584,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>   
+>       for (i = 0; i < 32; i++) {
+>           qemu_fprintf(f, " %-8s " TARGET_FMT_lx,
+> -                     riscv_int_regnames[i], env->gpr[i]);
+> +                     riscv_int_regnames[i], (target_ulong) env->gpr[i]);
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 83d516e510..c2fd7368c4 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -248,7 +248,7 @@ struct CPUArchState {
-     uint32_t xl;            /* current xlen */
- 
-     /* 128-bit helpers upper part return value */
--    target_ulong retxh;
-+    uint64_t retxh;
- 
-     uint64_t jvt;
- 
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index b9c7160468..9c8c04b2dc 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -1012,10 +1012,12 @@ static bool do_csrr_i128(DisasContext *ctx, int rd, int rc)
-     TCGv destl = dest_gpr(ctx, rd);
-     TCGv desth = dest_gprh(ctx, rd);
-     TCGv_i32 csr = tcg_constant_i32(rc);
-+    TCGv_i64 wide_desth = tcg_temp_new_i64();
- 
-     translator_io_start(&ctx->base);
-     gen_helper_csrr_i128(destl, tcg_env, csr);
--    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(desth, wide_desth);
-     gen_set_gpr128(ctx, rd, destl, desth);
-     return do_csr_post(ctx);
- }
-@@ -1035,10 +1037,12 @@ static bool do_csrrw_i128(DisasContext *ctx, int rd, int rc,
-     TCGv destl = dest_gpr(ctx, rd);
-     TCGv desth = dest_gprh(ctx, rd);
-     TCGv_i32 csr = tcg_constant_i32(rc);
-+    TCGv_i64 wide_desth = tcg_temp_new_i64();
- 
-     translator_io_start(&ctx->base);
-     gen_helper_csrrw_i128(destl, tcg_env, csr, srcl, srch, maskl, maskh);
--    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(desth, wide_desth);
-     gen_set_gpr128(ctx, rd, destl, desth);
-     return do_csr_post(ctx);
- }
-diff --git a/target/riscv/insn_trans/trans_rvm.c.inc b/target/riscv/insn_trans/trans_rvm.c.inc
-index 795f0ccf14..0e2da5bed2 100644
---- a/target/riscv/insn_trans/trans_rvm.c.inc
-+++ b/target/riscv/insn_trans/trans_rvm.c.inc
-@@ -169,8 +169,10 @@ static bool trans_mulhu(DisasContext *ctx, arg_mulhu *a)
- static void gen_div_i128(TCGv rdl, TCGv rdh,
-                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
- {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_divs_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
- 
- static void gen_div(TCGv ret, TCGv source1, TCGv source2)
-@@ -212,8 +214,10 @@ static bool trans_div(DisasContext *ctx, arg_div *a)
- static void gen_divu_i128(TCGv rdl, TCGv rdh,
-                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
- {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_divu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
- 
- static void gen_divu(TCGv ret, TCGv source1, TCGv source2)
-@@ -244,8 +248,10 @@ static bool trans_divu(DisasContext *ctx, arg_divu *a)
- static void gen_rem_i128(TCGv rdl, TCGv rdh,
-                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
- {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_rems_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
- 
- static void gen_rem(TCGv ret, TCGv source1, TCGv source2)
-@@ -289,8 +295,10 @@ static bool trans_rem(DisasContext *ctx, arg_rem *a)
- static void gen_remu_i128(TCGv rdl, TCGv rdh,
-                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
- {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_remu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
- 
- static void gen_remu(TCGv ret, TCGv source1, TCGv source2)
--- 
-2.51.0
+Rebase mistake?
 
+>           if ((i & 3) == 3) {
+>               qemu_fprintf(f, "\n");
+>           }
 
