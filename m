@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2853ACCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFA9CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3s5z-0000VU-LX; Wed, 01 Oct 2025 04:21:56 -0400
+	id 1v3s6D-0000Zd-QS; Wed, 01 Oct 2025 04:22:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s5x-0000V0-3R
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:21:53 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s6C-0000ZF-69
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:22:08 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s5l-0005Gb-El
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:21:51 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-46e48d6b95fso42881035e9.3
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:21:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3s5w-0005PE-CQ
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:22:07 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-46e501a9034so21608645e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759306895; x=1759911695; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759306906; x=1759911706; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9FXrBC5DT5H2U+KHBH/fTo7fOpyh9XDm8ZSBZ4mpCC0=;
- b=a497poM6mPsCiYfvZOZH5Fcel/pZkYzjndJ7R7r9AvL0YXwUuCivkWoAm40qZWgGL2
- q57Dh9cPzSDle/1ijZYSuMhCLRvYb2WZ2B6P3clbUD2yCfXMQh1G2ynE8m7/0cjzLyNy
- aJBjJ55LrM3XfUopXmtTFjATLb4GZ+sJiKRYecWthvwn4LdYpFDiDiJKCl3aYKL67e2X
- C2il9VHR0rw14Gd3f3usfmoG9Tzl5VXnIMvIqzXeCZcsiGHXUJ3Eho1BT/fcaUU3hjDP
- o8TuB44FvpeEx3eEL+ee2OcntJ6bVlVVQ9+7rrptpZ1h68C0DJOEAADCVxYmSVcM1jj6
- X1Kg==
+ bh=CUDa5xnsT6LdBUx7EhioTD823LxktxWEacMY6wYwfL0=;
+ b=wS6jbWkqK+orFiqUpEPvKIYf7Sbu8PlcNigg5guw/sycdxFiWmG7s10vuLq79yj6Pl
+ 9mxonH6YRH+37s8J15xtqeDSqeonG+xgN84jt9C6irhlkJMGPN2MgYRTGrhr7YArMuzm
+ dUVOeb2bw9SjxNpnnOod90X24BKeAA9weYSHxyBnhrPFzSQSTGmw+ZlP4g2LhCWlripP
+ ozkKHQc+3A5lN8rp+/dcJW2OKYiaGHYeyD7PGLSueo7utIAU8oWQmynyLjQTdpzwoCTi
+ JR4glau7EEdbwh1f+iVzD0H6NlCnSZvg8QOxFX4tLnCKAYY6wnZgJJOx903vuL1d5zbK
+ QSuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759306895; x=1759911695;
+ d=1e100.net; s=20230601; t=1759306906; x=1759911706;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9FXrBC5DT5H2U+KHBH/fTo7fOpyh9XDm8ZSBZ4mpCC0=;
- b=S8BYVqGdJU2vR3jm0UzcAiw2l5TYwMAdDxjV73nzCXHiAdMCTUCKjXyrlYU1pzXqG2
- FAfaBn/IIGkKPEruoVvhIwXuAJaJZClvVAA0L1dVOlJzFSahub2fcu0gDk+ddEKHAT+P
- tePsoAf1eNBvFwNr2FdaqCYrS1ouayiDld9EINOtodz3pddrDoycrLA1kXKE4OQykMjK
- KPyfsb1EueYf0hPg3ptd22KY834H5LLiRTXlEflbajyUa2u8g6Mld+EANm9goyADnjZj
- miueY1Wo0K36u4ZZ4qK77Ilf8pUDGq3xU/3UQQmWWLoiLJQ1Ozhz0s+fk3eJii9rWHND
- 1oSA==
-X-Gm-Message-State: AOJu0YyP49MHpKeRn9cL79mC3iYR2PfZBvgjzrZGO065+edsnMvbkLlX
- ZOoir3Cb4j5GNZgnD0qM1rATYRS/J77UhAcXG0h9yW14wBKgmFHGPBPX1xEQ/3gBNzWKPU5WSWZ
- J82TEN/OKBg==
-X-Gm-Gg: ASbGnctjLUC3c2anMGhmCrnMTrir61yqdliYT17X+gNAYh6GRKRwgvjRfJ6nC9EE0lO
- 1F74243VbvP2iQCvnknvCVVS8nqTPNDnNjxxZn1ktUkEJIgaQI/QaybtdRIhw21DcKcxBHUqYqN
- p08D6t2ez3SQqc34RMiRuku2mUAvOb3biOWkKt28B1sh9r+kKGwLIXaYoUq/lGtM28G9j35itse
- FKmbEuX2RjLFu1/PwTbgW9pjRT2sacoItZks9pnIFbggwON8jH9UIGYmeuwBrR64ZjNwsamug1F
- iDmSEF0pyLhb94ONTO0LyrLGRg8iD9vNIotR/rxNT0MV04OaMj8KbR5vcgkovN1O8aiIr1IW/Ng
- e7tUDKfCBu58MkZ92ULGdiTPR7N7v8TeZ4LsmZXQfYQgVLz1XlPQyUb7yY++iTwgSiHjkW9BlVV
- ey/mFRnziInk0Qvy65Ke6R
-X-Google-Smtp-Source: AGHT+IEVW+a7ZQahLwvXdewpnTcuAcck+Pbu7pXQ3XgPa8cMZnL3kzmIaMWIdBuRBFM46G6yblRD1A==
-X-Received: by 2002:a05:600c:698c:b0:46e:4783:1a7a with SMTP id
- 5b1f17b1804b1-46e61201fb4mr19588005e9.3.1759306895019; 
- Wed, 01 Oct 2025 01:21:35 -0700 (PDT)
+ bh=CUDa5xnsT6LdBUx7EhioTD823LxktxWEacMY6wYwfL0=;
+ b=nE8l2usV4VrP1FkpS93fRlmi6kW0OJyJRZJ29cTD8XMpZDepi0l3id8Mai0A+EnNj/
+ MnOyk3fOn0Tnhos1XZtQDpOE7GNyE1RVvUn+QFaPOHmb2ksQCh/Q65OCzi3jTtE+Seg0
+ Ti117Dn30dzKb7bmfFM1Z4fou9lBRFtT7FGeKtIiCeUL2rveX6ICLHhAjbdVtO9RBdGQ
+ M494CHCLc92/WYQr84L4G0cp+mbX9hSuvW4HddzwUy+s55PKCjzkXaNI8qIBBMN5q88e
+ KSki6qIOc44bxZYpWGyuDOxqU2xppegoSS45xfkL1HR0987Cje0zUez2/OwFsfANsAgi
+ UhLg==
+X-Gm-Message-State: AOJu0YxBRlqoa7SJt1Fb5blRf/kW0Dl+AD/0/wfVu7kBLPwsQxpx376B
+ qbotwSQeSfp7TuVeMALvAjX7sPEQJ7rB4DXUJPyGo7OVOWm51yK/EEf188MJ+02LmRracwMZolS
+ XoRmR69sjLg==
+X-Gm-Gg: ASbGncvP1xTqutkK8KgTP00QF36llh4DgwXowRqJ5O2WfyR9WF8bJonjSxJDuOOXAFu
+ xB766BSnVhzlfck9I4ZwPWuhgIEijz2MmKeTxOfymPsqxyUAFbrwTbbwOfSq86rc/Udaqzb+roH
+ bCTEX9oSmCb8jNUn+KH4RF7UaYY+OPJ4CZvpVayraKRMW2qfJ9LasZLGnxaGLDUBWkTwrwSTwAq
+ IqoMwyvGo0bWh3M632NCMp2WDL1ijFw2YYVVOQ0FCmvysUHukIo7r3tAgK0aw82MBp5MtFUb0Fj
+ e1uLsTr/0JC8hDe+9q5s/s7URWYlAqJeAE7BnxlxnWE7MutTfANl61FXwsulF11thq7GLIvfWd+
+ cdiYyFzUr+pEWXbk2ARrAwwejiese3YrQpwGaVCQBit2Bv332Rri/vuDuuAi+j4kMAbDJQySM0F
+ jJIfBCOhha7lC7Y3zWoGNG
+X-Google-Smtp-Source: AGHT+IGupbg9/lAN7fK0YZ5iNSEbaJIxNUI7X13KRbrcfs3DgvFIGFl1v0k+/aPUDlPoG1Y+QWnAwA==
+X-Received: by 2002:a05:600c:1f10:b0:46e:32f5:2d4b with SMTP id
+ 5b1f17b1804b1-46e6129588emr20005035e9.37.1759306905959; 
+ Wed, 01 Oct 2025 01:21:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc72b0aeesm26590514f8f.49.2025.10.01.01.21.33
+ ffacd0b85a97d-40fb72fb1a3sm26551095f8f.10.2025.10.01.01.21.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 01:21:34 -0700 (PDT)
+ Wed, 01 Oct 2025 01:21:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
@@ -84,24 +84,25 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  Peter Xu <peterx@redhat.com>
-Subject: [PATCH 01/25] system/ram_addr: Remove unnecessary 'exec/cpu-common.h'
- header
-Date: Wed,  1 Oct 2025 10:21:01 +0200
-Message-ID: <20251001082127.65741-2-philmd@linaro.org>
+Subject: [PATCH 03/25] hw/s390x/s390-stattrib: Include missing
+ 'exec/target_page.h' header
+Date: Wed,  1 Oct 2025 10:21:03 +0200
+Message-ID: <20251001082127.65741-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251001082127.65741-1-philmd@linaro.org>
 References: <20251001082127.65741-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,26 +118,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing in "system/ram_addr.h" requires definitions fromi
-"exec/cpu-common.h", remove it.
+The "exec/target_page.h" header is indirectly pulled from
+"system/ram_addr.h". Include it explicitly, in order to
+avoid unrelated issues when refactoring "system/ram_addr.h":
+
+  hw/s390x/s390-stattrib-kvm.c: In function ‘kvm_s390_stattrib_set_stattr’:
+  hw/s390x/s390-stattrib-kvm.c:89:57: error: ‘TARGET_PAGE_SIZE’ undeclared (first use in this function); did you mean ‘TARGET_PAGE_BITS’?
+     89 |     unsigned long max = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
+        |                                                         ^~~~~~~~~~~~~~~~
+        |                                                         TARGET_PAGE_BITS
+
+Since "system/ram_addr.h" is actually not needed, remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/ram_addr.h | 1 -
- 1 file changed, 1 deletion(-)
+ hw/s390x/s390-stattrib-kvm.c | 2 +-
+ hw/s390x/s390-stattrib.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 6b528338efc..f74a0ecee56 100644
---- a/include/system/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -29,7 +29,6 @@
- #include "qemu/rcu.h"
+diff --git a/hw/s390x/s390-stattrib-kvm.c b/hw/s390x/s390-stattrib-kvm.c
+index e1fee361dc3..73df1f600b9 100644
+--- a/hw/s390x/s390-stattrib-kvm.c
++++ b/hw/s390x/s390-stattrib-kvm.c
+@@ -10,13 +10,13 @@
+  */
  
- #include "exec/hwaddr.h"
--#include "exec/cpu-common.h"
+ #include "qemu/osdep.h"
++#include "exec/target_page.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "migration/qemu-file.h"
+ #include "hw/s390x/storage-attributes.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+ #include "system/memory_mapping.h"
+-#include "system/ram_addr.h"
+ #include "kvm/kvm_s390x.h"
+ #include "qapi/error.h"
  
- extern uint64_t total_dirty_pages;
+diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+index 13a678a8037..aa185372914 100644
+--- a/hw/s390x/s390-stattrib.c
++++ b/hw/s390x/s390-stattrib.c
+@@ -11,12 +11,12 @@
  
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
++#include "exec/target_page.h"
+ #include "migration/qemu-file.h"
+ #include "migration/register.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/s390x/storage-attributes.h"
+ #include "qemu/error-report.h"
+-#include "system/ram_addr.h"
+ #include "qapi/error.h"
+ #include "qobject/qdict.h"
+ #include "cpu.h"
 -- 
 2.51.0
 
