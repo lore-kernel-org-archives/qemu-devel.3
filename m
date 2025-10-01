@@ -4,103 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4432CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 23:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4850CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 23:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v45w2-0004RG-DM; Wed, 01 Oct 2025 19:08:34 -0400
+	id 1v46Bw-0002WR-O2; Wed, 01 Oct 2025 19:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v45vz-0004QI-7U
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 19:08:31 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v45vp-0004I4-Kw
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 19:08:30 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-78118e163e5so1465905b3a.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 16:08:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1v46Bt-0002VW-4g; Wed, 01 Oct 2025 19:24:57 -0400
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1v46Ba-0007Zc-Eq; Wed, 01 Oct 2025 19:24:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759360086; x=1759964886; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0NduVUyQ85gtrdIqd/hM2I8IkeDghN4HwH8u8BvlAcc=;
- b=pyDo2ci/ml2TOS59/60NEt2PtbvPQZQ66UlENVZzVnv+iMJ+losL5NvrgGls43rK0g
- DUz5zRuGgjPp3grvPwd/QncvOSnDOX8XXGIXhhfX+6wEVOdxXfBTICEWRwDCCn5SysUz
- 04K4vyHkIpQI2JOt+FgDfqpGd1eYfKrB8bapHabKU1BzhBDdHWa09vihzYaFJzkk9RLd
- EEqZYey7oXbN4Bw4fD0+XNBh4AfHhtBpIh4yHdaagQBSGZA0yCJhIHnGVvrJkqMx+N2y
- TIuLuOTMCBaz3prve9JTpy/D9KG13a5KnkgsPsJYjsQAv133/31l7IZ2/sMN/y9Wlq2p
- nhsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759360086; x=1759964886;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0NduVUyQ85gtrdIqd/hM2I8IkeDghN4HwH8u8BvlAcc=;
- b=Xyogyp/3i1UoxlDqsWZV11CCA3Nntb6eGPtirKsKv7IHcB+ABvHg3BHgT6AbVLUtbJ
- xx5ra9ykhuz/Gw0MF7lJ4qBwrAMXq8RotffyXupW8ed3HfzZTvsDreY7oCpwtGoKURj5
- bPa/JaKrNa1i0q/wBumh742aA2lhyWEsJAS/FYjjr1Pejp8w/FpYLiXSIP6qq3s/pvnp
- nUBQcITnEYkSAHNVMK/InwWHPDr5huy/kvzUuzoSRoW/zQdMuAesdLmZUSPzFP/doZV8
- 8wK9VWxVt6q1lCSGd1Gt3e6hirNH/kqywn9jP2zUeQPERt6RhN3QkyirhCU6XUfWXrS3
- Uz1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4GeKfZ7a3tMgMVMV78TEa9e/Aimr8Glf9djl3hW+w0GjA9kSsaKhdt0Oup2qq6fpogpbl9YSdh7m3@nongnu.org
-X-Gm-Message-State: AOJu0YyFYCR7D43omE9OWa77EcXafTc0yEVIJFatgmHhg4dL2UTH6b9X
- cjYAO1gldQQXTL+JHL8E8V6sq/0Q9fDtRqpfrBBmwcK7vSgxpefHtFbjQjzdWphSQLg=
-X-Gm-Gg: ASbGnctRndj7M8W3a874xYcqwa6FjTnLSOK9nlC+Op9jn41gq9eyW4e+3uZS8DGgUv9
- J4Z0Rpr6tncFSVtuR33Th+t7//8fOMdaazG8YrUtMa++H7rdwGKJlfMw1hOpLaAtpKgBZUUtNRB
- DGBVI8j0FCwCXiwfkoZWwGSAZLc6KX3wxktscOp6OZ2g+TU120QDa+KKVADpPwmyVq+J0bkF2bk
- ++r9BBdnkckwnbJNw0taOMLmDfa1AgfYt72EseocXxBVkNH9OuQUQVNdCPdR/I02eHtL8iwfdwD
- JOLBx3ainjvSzpREM9kCbyISX741KfIVWyM98Z/vE68bC6bgT/et7xIDxO6aBMBevVmbqH9Wwjh
- G2pnI3SfV4j/V7hnGVcSidO8NbzeImw4e2tNps4wZMlONnr3I7wkihhr5S4Q=
-X-Google-Smtp-Source: AGHT+IGg3ZqhSK78RAKzfCQSnMuBzFTdqIP7QoDVXe2GuVM4amd0jtgHILbFhywgin+qBJ+H5PtZbw==
-X-Received: by 2002:a17:90b:4d05:b0:32b:7d35:a7e6 with SMTP id
- 98e67ed59e1d1-339b50d51e9mr1368341a91.18.1759360086087; 
- Wed, 01 Oct 2025 16:08:06 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a6ec12fdsm3364723a91.10.2025.10.01.16.08.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 16:08:05 -0700 (PDT)
-Message-ID: <096db5eb-1915-453d-8fd1-fd6d23777a1a@linaro.org>
-Date: Wed, 1 Oct 2025 16:08:04 -0700
+ d=codeconstruct.com.au; s=2022a; t=1759361043;
+ bh=CfNV5E5gep0TBIY3oXbFoFIKMWGummq+On+ZKn8y93o=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=Y5ni8wkjvpjcZfsco3rp0URBZ4nvbrYKKyM/3HpEkaaTSChS+7FfN+VMTCmeB+SJZ
+ 6pfS8LAZ8ZmjbFEnoPcMDuUTiATHnwCPYMQJn/gFaqzfVDFt0kMbz5lnlUxiEi4yMV
+ vUXqhE9TLQN+IScYkBi5Wadlbh4yl2Pa2hkg1yzY0oAu8BI2KgAGCVzG3kV5J1qqby
+ NnqYJSdaieXkq2bA7qG8MJKSTlzdaCVkpgG17uGmLotw8/JAzGygiKEe2h3XG63zXj
+ FuKC3xNWCsUckkdwdAQGVeI9N5Ef1BxzehRhnTBCXUWPeyw6BCkykUHY9T4YlRm8F3
+ ZLgKZlme/B1Rw==
+Received: from [192.168.68.113] (unknown [180.150.112.213])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 5146864741;
+ Thu,  2 Oct 2025 07:24:02 +0800 (AWST)
+Message-ID: <b601f750adc19ea0fe8ec8f2c578f9f23d7259cc.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v1 1/5] hw/gpio: Add property for ASPEED GPIO in 32 bits
+ basis
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Coco Li <lixiaoyan@google.com>, clg@kaod.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, flwu@google.com, Peter
+ Maydell	 <peter.maydell@linaro.org>
+Date: Thu, 02 Oct 2025 08:54:01 +0930
+In-Reply-To: <20250925005832.3708492-2-lixiaoyan@google.com>
+References: <20250925005832.3708492-1-lixiaoyan@google.com>
+ <20250925005832.3708492-2-lixiaoyan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.56.1-1 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/35] wasm: Add Wasm TCG backend based on wasm64
-Content-Language: en-US
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <cover.1756724464.git.ktokunaga.mail@gmail.com>
- <ba60c570-fff0-4ab8-b3bc-d191663d2912@linaro.org>
- <CAEDrbUYAAbF5g4-HEvqDWZyycPzZQCJvqasJ355RkLOnfm0R3A@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CAEDrbUYAAbF5g4-HEvqDWZyycPzZQCJvqasJ355RkLOnfm0R3A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,29 +71,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/25 1:26 AM, Kohei Tokunaga wrote:
-> Hi Pierrick,
-> 
-> Thank you for testing this patch.
-> 
->  > * /builddeps/target/include/ffi.h:430:6: error: 'FFI_NATIVE_RAW_API' is
->  > not defined, evaluates to 0 [-Werror,-Wundef]
->  > * various "format specifies type 'long long' but the argument has type
->  > 'long' [-Werror,-Wformat]"
-> 
-> On my side and also on the GitLab CI, these appear only as warnings and the
-> build completes without errors[1]. I'm curious why -Werror is being
-> triggered in your build. Have you applied additional configurations that
-> enabled -Werror?
-> 
-> [1] https://gitlab.com/ktock/qemu/-/jobs/11544442966#L7016 <https:// 
-> gitlab.com/ktock/qemu/-/jobs/11544442966#L7016>
-> 
-> Regards,
-> Kohei
+T24gVGh1LCAyMDI1LTA5LTI1IGF0IDAwOjU4ICswMDAwLCBDb2NvIExpIHdyb3RlOgo+IEZyb206
+IEZlbGl4IFd1IDxmbHd1QGdvb2dsZS5jb20+Cj4gCj4gQWRkZWQgMzIgYml0cyBwcm9wZXJ0eSBm
+b3IgQVNQRUVEIEdQSU8uIFByZXZpb3VzbHkgaXQgY2FuIG9ubHkgYmUgYWNjZXNzIGluIGJpdHdp
+c2UgbWFubmVyLgo+IAo+IFRoaXMgY2hhbmdlIGdpdmVzIEFTUEVFRCBzaW1pbGFyIGJlaGF2aW9y
+IGFzIE51dm90b24uCgpJIGRvbid0IHRoaW5rIHRoaXMgaGFzIGFkZXF1YXRlbHkgYWRkcmVzc2Vk
+IG15IHJlcXVlc3Qgb24gdGhlIHByaW9yCnNlcmllczoKCmh0dHBzOi8vbG9yZS5rZXJuZWwub3Jn
+L2FsbC9lMjQ0ZmRiNWQyZDg4OTY3NGE1ODNkZjhmOGI5YmM0YmY4ZDQ3NmY0LmNhbWVsQGNvZGVj
+b25zdHJ1Y3QuY29tLmF1LwoKQ2FuIHlvdSBwbGVhc2UgaW1wcm92ZSB0aGUgY29tbWl0IG1lc3Nh
+Z2U/CgpJIGRvbid0IGhhdmUgYW55IHBhcnRpY3VsYXIgY29uY2VybiB3aXRoIHRoZSBpbXBsZW1l
+bnRhdGlvbiwgb3RoZXIgdGhhbgp1bmRlcnN0YW5kaW5nIHdoZXRoZXIgaXQncyBzb21ldGhpbmcg
+dGhhdCdzIHJlYXNvbmFibGUgdG8gYWRkIHRvIGJlZ2luCndpdGguIFRoZSAic2V0cyIgYW5kIHRo
+ZWlyIGluZGV4ZXMgYXJlIHNvbWV3aGF0IGFuIGltcGxlbWVudGF0aW9uCmRldGFpbC4gRXhwb3Np
+bmcgdGhlbSBtaWdodCBwcmVjbHVkZSBhIGRpZmZlcmVudCBpbXBsZW1lbnRhdGlvbiBkZXNpZ24s
+CnRob3VnaCBJJ20gYWxzbyBub3Qgc3VyZSB3aHkgd2UnZCBjaGFuZ2UgYXQgdGhpcyBwb2ludC4K
+CkFuZHJldwoKPiAKPiBTaWduZWQtb2ZmLWJ5OiBGZWxpeCBXdSA8Zmx3dUBnb29nbGUuY29tPgo+
+IC0tLQo+IMKgaHcvZ3Bpby9hc3BlZWRfZ3Bpby5jIHwgNTcgKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKwo+IMKgMSBmaWxlIGNoYW5nZWQsIDU3IGluc2VydGlvbnMo
+KykKPiAKPiBkaWZmIC0tZ2l0IGEvaHcvZ3Bpby9hc3BlZWRfZ3Bpby5jIGIvaHcvZ3Bpby9hc3Bl
+ZWRfZ3Bpby5jCj4gaW5kZXggNjA5YTU1NjkwOC4uMmQ3OGJmOTUxNSAxMDA2NDQKPiAtLS0gYS9o
+dy9ncGlvL2FzcGVlZF9ncGlvLmMKPiArKysgYi9ody9ncGlvL2FzcGVlZF9ncGlvLmMKPiBAQCAt
+MTMwOCw2ICsxMzA4LDU3IEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9ncGlvXzI3MDBfd3JpdGUodm9p
+ZCAqb3BhcXVlLCBod2FkZHIgb2Zmc2V0LAo+IMKgfQo+IMKgCj4gwqAvKiBTZXR1cCBmdW5jdGlv
+bnMgKi8KPiArc3RhdGljIHZvaWQgYXNwZWVkX2dwaW9fc2V0X3NldChPYmplY3QgKm9iaiwgVmlz
+aXRvciAqdiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNvbnN0IGNoYXIgKm5hbWUsIHZvaWQg
+Km9wYXF1ZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEVycm9yICoqZXJycCkKPiArewo+ICvC
+oMKgwqAgdWludDMyX3Qgc2V0X3ZhbCA9IDA7Cj4gK8KgwqDCoCBBc3BlZWRHUElPU3RhdGUgKnMg
+PSBBU1BFRURfR1BJTyhvYmopOwo+ICvCoMKgwqAgQXNwZWVkR1BJT0NsYXNzICphZ2MgPSBBU1BF
+RURfR1BJT19HRVRfQ0xBU1Mocyk7Cj4gK8KgwqDCoCBpbnQgc2V0X2lkeCA9IDA7Cj4gKwo+ICvC
+oMKgwqAgaWYgKCF2aXNpdF90eXBlX3VpbnQzMih2LCBuYW1lLCAmc2V0X3ZhbCwgZXJycCkpIHsK
+PiArwqDCoMKgwqDCoMKgwqAgcmV0dXJuOwo+ICvCoMKgwqAgfQo+ICsKPiArwqDCoMKgIGlmIChz
+c2NhbmYobmFtZSwgImdwaW8tc2V0WyVkXSIsICZzZXRfaWR4KSAhPSAxKSB7Cj4gK8KgwqDCoMKg
+wqDCoMKgIGVycm9yX3NldGcoZXJycCwgIiVzOiBlcnJvciByZWFkaW5nICVzIiwgX19mdW5jX18s
+IG5hbWUpOwo+ICvCoMKgwqDCoMKgwqDCoCByZXR1cm47Cj4gK8KgwqDCoCB9Cj4gKwo+ICvCoMKg
+wqAgaWYgKHNldF9pZHggPj0gYWdjLT5ucl9ncGlvX3NldHMgfHwgc2V0X2lkeCA8IDApIHsKPiAr
+wqDCoMKgwqDCoMKgwqAgZXJyb3Jfc2V0ZyhlcnJwLCAiJXM6IGludmFsaWQgc2V0X2lkeCAlcyIs
+IF9fZnVuY19fLCBuYW1lKTsKPiArwqDCoMKgwqDCoMKgwqAgcmV0dXJuOwo+ICvCoMKgwqAgfQo+
+ICsKPiArwqDCoMKgIGFzcGVlZF9ncGlvX3VwZGF0ZShzLCAmcy0+c2V0c1tzZXRfaWR4XSwgc2V0
+X3ZhbCwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfnMt
+PnNldHNbc2V0X2lkeF0uZGlyZWN0aW9uKTsKPiArfQo+ICsKPiArc3RhdGljIHZvaWQgYXNwZWVk
+X2dwaW9fZ2V0X3NldChPYmplY3QgKm9iaiwgVmlzaXRvciAqdiwKPiArwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGNvbnN0IGNoYXIgKm5hbWUsIHZvaWQgKm9wYXF1ZSwKPiArwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIEVycm9yICoqZXJycCkKPiArewo+ICvCoMKgwqAgdWludDMyX3Qgc2V0X3ZhbCA9IDA7
+Cj4gK8KgwqDCoCBBc3BlZWRHUElPU3RhdGUgKnMgPSBBU1BFRURfR1BJTyhvYmopOwo+ICvCoMKg
+wqAgQXNwZWVkR1BJT0NsYXNzICphZ2MgPSBBU1BFRURfR1BJT19HRVRfQ0xBU1Mocyk7Cj4gK8Kg
+wqDCoCBpbnQgc2V0X2lkeCA9IDA7Cj4gKwo+ICvCoMKgwqAgaWYgKHNzY2FuZihuYW1lLCAiZ3Bp
+by1zZXRbJWRdIiwgJnNldF9pZHgpICE9IDEpIHsKPiArwqDCoMKgwqDCoMKgwqAgZXJyb3Jfc2V0
+ZyhlcnJwLCAiJXM6IGVycm9yIHJlYWRpbmcgJXMiLCBfX2Z1bmNfXywgbmFtZSk7Cj4gK8KgwqDC
+oMKgwqDCoMKgIHJldHVybjsKPiArwqDCoMKgIH0KPiArCj4gK8KgwqDCoCBpZiAoc2V0X2lkeCA+
+PSBhZ2MtPm5yX2dwaW9fc2V0cyB8fCBzZXRfaWR4IDwgMCkgewo+ICvCoMKgwqDCoMKgwqDCoCBl
+cnJvcl9zZXRnKGVycnAsICIlczogaW52YWxpZCBzZXRfaWR4ICVzIiwgX19mdW5jX18sIG5hbWUp
+Owo+ICvCoMKgwqDCoMKgwqDCoCByZXR1cm47Cj4gK8KgwqDCoCB9Cj4gKwo+ICvCoMKgwqAgc2V0
+X3ZhbCA9IHMtPnNldHNbc2V0X2lkeF0uZGF0YV92YWx1ZTsKPiArwqDCoMKgIHZpc2l0X3R5cGVf
+dWludDMyKHYsIG5hbWUsICZzZXRfdmFsLCBlcnJwKTsKPiArfQo+ICsKPiArLyoqKioqKioqKioq
+KioqKioqKiBTZXR1cCBmdW5jdGlvbnMgKioqKioqKioqKioqKioqKioqLwo+IMKgc3RhdGljIGNv
+bnN0IEdQSU9TZXRQcm9wZXJ0aWVzIGFzdDI0MDBfc2V0X3Byb3BzW0FTUEVFRF9HUElPX01BWF9O
+Ul9TRVRTXSA9IHsKPiDCoMKgwqDCoCBbMF0gPSB7MHhmZmZmZmZmZizCoCAweGZmZmZmZmZmLMKg
+IHsiQSIsICJCIiwgIkMiLCAiRCJ9IH0sCj4gwqDCoMKgwqAgWzFdID0gezB4ZmZmZmZmZmYswqAg
+MHhmZmZmZmZmZizCoCB7IkUiLCAiRiIsICJHIiwgIkgifSB9LAo+IEBAIC0xNDM1LDYgKzE0ODYs
+MTIgQEAgc3RhdGljIHZvaWQgYXNwZWVkX2dwaW9faW5pdChPYmplY3QgKm9iaikKPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgZ19mcmVlKG5hbWUpOwo+IMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKg
+wqDCoMKgIH0KPiArCj4gK8KgwqDCoCBmb3IgKGludCBpID0gMDsgaSA8IGFnYy0+bnJfZ3Bpb19z
+ZXRzOyBpKyspIHsKPiArwqDCoMKgwqDCoMKgwqAgY2hhciAqbmFtZSA9IGdfc3RyZHVwX3ByaW50
+ZigiZ3Bpby1zZXRbJWRdIiwgaSk7Cj4gK8KgwqDCoMKgwqDCoMKgIG9iamVjdF9wcm9wZXJ0eV9h
+ZGQob2JqLCBuYW1lLCAidWludDMyIiwgYXNwZWVkX2dwaW9fZ2V0X3NldCwKPiArwqDCoMKgwqDC
+oMKgwqAgYXNwZWVkX2dwaW9fc2V0X3NldCwgTlVMTCwgTlVMTCk7Cj4gK8KgwqDCoCB9Cj4gwqB9
+Cj4gwqAKPiDCoHN0YXRpYyBjb25zdCBWTVN0YXRlRGVzY3JpcHRpb24gdm1zdGF0ZV9ncGlvX3Jl
+Z3MgPSB7Cg==
 
-You're right, I indeed have a local patch forcing werror on my side that 
-I forgot I had. Sorry for the noise.
-
-I have been able to build successfully, thanks.
 
