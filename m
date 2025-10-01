@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881AECCA470
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37EDCAC5BB
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 17:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v40LT-0007vR-FX; Wed, 01 Oct 2025 13:10:27 -0400
+	id 1v40LI-0007oL-CO; Wed, 01 Oct 2025 13:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v40LN-0007p8-0r
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:10:21 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1v40LF-0007mN-ND
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:10:14 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v40L5-00034j-1o
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:10:19 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e37d6c21eso354905e9.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:09:55 -0700 (PDT)
+ id 1v40L2-00034O-4B
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:10:12 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-46e504975dbso253135e9.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759338591; x=1759943391; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=u0komx1VDBWrWu3LJvaJHmjHm69UbO44yc+hkmHvjlM=;
- b=cOMKT2jK8kEDxuQNF8KrMPXmkgIBcS97kxNR0EtckY/ezAiu/DC+32Lj7oaNEbb898
- IOiUOOiQoGPjdteKBAn0FT2FPKw3G58gewjbSmF73w1Q6zXM3rVxDVah3XK2Dw5tgtkl
- M8RyMsoSXCwn2UMf2SkZYJcUTmp68G8Xng8ysvhE3JrUJY6fmtk10fEXKk8BVrNSD7b1
- 2XZYEm+J5eqIKohXs6Rk1MUUh0i4q363adKQnqXKy87jSzphoTJsmiich4e9mj0AQFgM
- QjyHfLYehrTVXtcyApMSoduJTBpkb9YT+Wl9b1qedvgdYAse6czN6fRd+IdA+1yrS2J+
- pXBQ==
+ d=linaro.org; s=google; t=1759338589; x=1759943389; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e4Fd/atNvJSkIPexyHAIzVIfwgyt31ObPrNjCVaDM0M=;
+ b=jfu+cqETOAPlj6uwZxnh9+IdcphMkwUYfkR/2SWGW07OEp+rEvw16SOFjvHlrmO9dW
+ JRcyrdKZYGeyyQwT4ELoPZZOx/7gD4bdgEFf0cuZ14PXyZ6IfqikfLoAq89JDl61vdDI
+ w2FdMeEhwjtl8lSZ24erywqFpw5W0SM1h1obqxdMXqcsSGrAMTh7EvET0bB0WdqIHMLT
+ i3z9KshhVkYTEV8CVh08hO4MUEfiLP5ytg+x7+53Ik8ApB/tZ7NESHDj0SugUOFIOcA5
+ sYjF91Ddf4E7v9BQa7+hHnyrrTywqC/Wl85HIG9vYYUVntJUj38VkM11ZqcckT8KZRPX
+ HMXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759338591; x=1759943391;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u0komx1VDBWrWu3LJvaJHmjHm69UbO44yc+hkmHvjlM=;
- b=dRK9/VkAckvVUO1ROIAxHOVx5FNTJmZ+2RyOhsZnMz0nr+pz0nbyCAwRw60dFB5sX/
- 1fU5M0EFPegF2l9Qu8abZCNouw9s1bvRolzxE8IN/Rhr7XJE1WuYvbzJTZkCSuxMwlXg
- 2pfxj7gp44+ciiBDDWMj3sg0uRdBAMqEtQJXYIVAvoV5g/GUC1nHGE7cIxs4ZmdK+rBh
- ioUnTyFfkhk6SnGQwcEytHdnPekdJHi3vTGbv+X7vvxdBZy0OzsVCUkCrFX/DmGL4fvW
- a58iNEzYB/wIzLLgPMzf8RqCNbZ53+BysabvyXOp3X/6oKXb4LGYyZoDHWMVh/3yN04H
- bfTA==
-X-Gm-Message-State: AOJu0YzsWFgdUQAbCZyYlaC0Tvt6MB3dmgp6LbNlh9iipXQCLtW/dDj9
- ddnP5K/L70HhIcb40Kn+ikZXmc6fcWcrC17wkF/DhtU3BvUCyzIPavVm9V4pxBDYPfY=
-X-Gm-Gg: ASbGnctATrtyWhhr/B3QwCGpI+P0ZKgL+KNRYRH2kNX0NPZBu9WxmgKczDbuEi5Hjkb
- /SI1SK9wwIrDQ+HYkq7QkT7bmUgPGRx1sAutnLPNFp8YOIChojATUDD3YntbydjvV98esvGAn2d
- 6yOARA/ppz+PAg2xfzYRxgH7bRfnKGDElxtII3NGhdBwGm46wh0mwVDGeWQujc+HExoUl+3N0Qr
- IHasdf0YkI3ho4GUSlF2mNG/7EqyrC2VsQ1PL8IJwCksTmvDuEfcTerqN8/oqGmqHmFsQMJDNfN
- ggUlISKvOhJ+s6jenHkPcJw/3OTuiku645273OApIgjX/pV3nqVeYuBywpUofEG71zeV+QW7hnO
- drDfiVlrZKyx3U8VjaV5GhH5YyYmrROVAv2PKEmP2oJNODro=
-X-Google-Smtp-Source: AGHT+IGMRI2qKBkPU+whpXopZ+psRkGnjoRCdoFZYnMRQ+KUenYoRbx40Ita3ZI2Vqjvt5ik6fa75w==
-X-Received: by 2002:a05:600c:8b65:b0:43c:ec4c:25b4 with SMTP id
- 5b1f17b1804b1-46e6127cccfmr36402925e9.10.1759338590990; 
- Wed, 01 Oct 2025 10:09:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759338589; x=1759943389;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e4Fd/atNvJSkIPexyHAIzVIfwgyt31ObPrNjCVaDM0M=;
+ b=dlWonp5Bc2md8bvCmSiWL/5h/2GGZm/xZ1AsaZulyfZCV+GAf7GPnBpJNQr8o/t+I4
+ dbqV9HMYGZY/mFiRO4IcnbhZuUJ5PbNLn09ocmokjWOrAxxp+c2WScgV+S/qntFkWTI2
+ VWGNxWxCzf/1uetHtyoCOdQSWiZ71veUfQ6DHL0EsOXzc7KWcECEVFvw1adv4wT5EDxV
+ pr2AYkkeYs6KJTGWrXlroCTgabuJNTBKgwn/HN0BZMY72H2l2qviFAAdw/q4nQCXvXt3
+ uSgN7LQttGeTbZojpd+lFExFIk/5rbxbSjWxPPYKxkKLVGh/U14aJLX8E2QaxP9ehIMv
+ ewRg==
+X-Gm-Message-State: AOJu0Yy2xnA7yCrBqwHOoxig0RaBb7tJA8iLzCXxNjQQWabKVxI18mx1
+ R3zbpLOdIx57ggA8KDZC6MdUkgSYPgRIYrHZSzMOPIvR9cWc+OR1+gd0d44j5iF6EnA=
+X-Gm-Gg: ASbGncsaLKys/2faJmO5HLod1YyAGaIvC3rCwiIoB30UDf2eA2GB+or3Jot5E+BS1QB
+ EG/unKrXb1FJ4GnTXpk/ueFB3M60pjwHjDe/eOvtWkcrtKhIcnTamJbWmuNU6vJkRpV91BMTLKU
+ RDzlK6xJe7lNODYgKr+mTrTHgyyiEyEOvo+VGGIOaAxSqzJye3LBTMOAkFikibY/m1s0Umv+mPh
+ ebgAlSNzvIjJKTcp5gBTsjwjr20B4Y4/leuEct/hRuwz/2hMuVP6NAzA+cx1KKtafsIz8IDuB2n
+ wprMbv3BecQY0IdbXR0MkSn47H+GshAUuxAz/QoQKu37FcKKgzf+Wksba4U7hpoA0f+uAhpwxXk
+ XGmOeHz5Tkf1pmRn2hcTMa1VKuZrxbjDlAEaU4NpWFHLJWew=
+X-Google-Smtp-Source: AGHT+IEmsrU7UPvkr31o+OtD86tMEPW2KX7DXZKr9EnlqG33DtAMj2TAYYuLaiGHEig8MYCox0SAIQ==
+X-Received: by 2002:a05:600c:1395:b0:46e:1c16:7f42 with SMTP id
+ 5b1f17b1804b1-46e6610e1e4mr20882455e9.11.1759338589272; 
+ Wed, 01 Oct 2025 10:09:49 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc5602eccsm29529984f8f.40.2025.10.01.10.09.48
+ 5b1f17b1804b1-46e61a2a808sm48054965e9.21.2025.10.01.10.09.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 01 Oct 2025 10:09:48 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7ACD05F7A7;
+ by draig.lan (Postfix) with ESMTP id 8FE9B5F7A9;
  Wed, 01 Oct 2025 18:09:47 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -72,22 +73,24 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/7] testing and misc updates (docker, ansible, .git*, gitlab)
-Date: Wed,  1 Oct 2025 18:09:40 +0100
-Message-ID: <20251001170947.2769296-1-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH 1/7] .gitpublish: use origin/master as default base
+Date: Wed,  1 Oct 2025 18:09:41 +0100
+Message-ID: <20251001170947.2769296-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251001170947.2769296-1-alex.bennee@linaro.org>
+References: <20251001170947.2769296-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,48 +107,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-My first set of patches for the development tree. Should be mostly
-self-explanatory. We still need to apply the upstream COPYING patch
-the u-boot-sam460ex code but we should decide if its worth mirroring
-or should we just treat the copy as fully "ours".
+This is very much the result of my recent fat finger but I think it's
+safer to assume that origin/master points to a recent commit (or at
+least a commit a given branch is based on) than master.
 
-Hopefully I'll have the new aarch64 runner online by Friday and ready
-for the switchover.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ .gitpublish | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Hopefully I'll also be able to pick up Gustavo's reverse debug test
-fixes by then as well.
-
-Alex.
-
-Alex Bennée (7):
-  .gitpublish: use origin/master as default base
-  .gitmodules: restore qemu-project mirror of u-boot
-  .gitmodules: restore qemu-project mirror of u-boot-sam460ex
-  tests/lcitool: drop 64 bit guests from i686 cross build
-  tests/lcitool: bump custom runner packages to Ubuntu 24.04
-  gitlab: move custom runners to Ubuntu 24.04
-  scripts/ci: use recommended registration command
-
- .gitlab-ci.d/custom-runners.yml               |  6 ++--
- ...4-aarch32.yml => ubuntu-24.04-aarch32.yml} |  8 ++---
- ...4-aarch64.yml => ubuntu-24.04-aarch64.yml} | 32 +++++++++----------
- ...22.04-s390x.yml => ubuntu-24.04-s390x.yml} | 28 ++++++++--------
- .gitmodules                                   |  6 ++--
- .gitpublish                                   | 16 +++++-----
- scripts/ci/setup/gitlab-runner.yml            | 12 ++-----
- scripts/ci/setup/ubuntu/build-environment.yml | 12 +++----
- ...-aarch64.yaml => ubuntu-2404-aarch64.yaml} |  4 ++-
- ...2204-s390x.yaml => ubuntu-2404-s390x.yaml} |  4 ++-
- scripts/ci/setup/vars.yml.template            |  5 +--
- .../dockerfiles/debian-i686-cross.docker      |  2 +-
- tests/lcitool/refresh                         |  6 ++--
- 13 files changed, 69 insertions(+), 72 deletions(-)
- rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml => ubuntu-24.04-aarch32.yml} (78%)
- rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml => ubuntu-24.04-aarch64.yml} (89%)
- rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml => ubuntu-24.04-s390x.yml} (88%)
- rename scripts/ci/setup/ubuntu/{ubuntu-2204-aarch64.yaml => ubuntu-2404-aarch64.yaml} (96%)
- rename scripts/ci/setup/ubuntu/{ubuntu-2204-s390x.yaml => ubuntu-2404-s390x.yaml} (96%)
-
+diff --git a/.gitpublish b/.gitpublish
+index a13f8c7c0ec..a3adb21ffa1 100644
+--- a/.gitpublish
++++ b/.gitpublish
+@@ -4,48 +4,48 @@
+ # See https://github.com/stefanha/git-publish for more information
+ #
+ [gitpublishprofile "default"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "rfc"]
+-base = master
++base = origin/master
+ prefix = RFC PATCH
+ to = qemu-devel@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "stable"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cc = qemu-stable@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "trivial"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cc = qemu-trivial@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "block"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cc = qemu-block@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "arm"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cc = qemu-arm@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "s390"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cc = qemu-s390@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
+ 
+ [gitpublishprofile "ppc"]
+-base = master
++base = origin/master
+ to = qemu-devel@nongnu.org
+ cc = qemu-ppc@nongnu.org
+ cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
 -- 
 2.47.3
 
