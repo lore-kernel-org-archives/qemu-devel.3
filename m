@@ -4,92 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3417ACCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882AACCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rVO-00050W-L6; Wed, 01 Oct 2025 03:44:07 -0400
+	id 1v3rJT-0005mK-NH; Wed, 01 Oct 2025 03:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3rVF-0004w2-NJ
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:43:58 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3rV8-0008Mp-30
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:43:57 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e2562e8cbso52616985e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:43:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759304622; x=1759909422; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C16I1I8Cue92gBYxb9oNGtCo9TW4jHCo+KWKhtf8xgo=;
- b=tctm8BrU0SlDnurzzzwDWaiK1tU6bQr0UOTb0ST0veWynBDdXwu0cGKBljF5oPDudY
- bEM3BRMx76VGuDE3xFadlFoSTReVQ1SLbAphViIudaod1gPFaMLXmJuRuyeYzZ5ufQHf
- 4SN4qcIcWGMCUaFH4zslIgPsqRz7J8kJU0p5IgVwpReRT8O6NkfzcB1veClDXYFYvFZU
- 2pxe2j1DcwsWCYue+QFgROa9c1wq/ClFyXlcveMmHVTLMHUqKb49N0qNRWtl665IYbh4
- QmATq0LFTCXitb+rOpVFqjG+D+sbdc5GE/WwX0SxxryN4ODVqbRQwaMkYkxRPS8abMLE
- ilHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759304622; x=1759909422;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C16I1I8Cue92gBYxb9oNGtCo9TW4jHCo+KWKhtf8xgo=;
- b=WCMO+62n7Ki7zGCe6jdknOLQlxWmz82h9JMZ5ZtI8xV0/ZE5qfUofLLARCrw1J3FJq
- +gVJnG63zPNmSraFA4Xc8LhwDMBgvI/e1boJr5CbYfXKY45YnQsyy67BvuHnymluV5bk
- iEr2zWdUEnkriUDA9XtcC6xvFSLaB0+EvkbtCfYFnm/RGH7rW5N7sBOk9JyN25mQ9J5P
- HsSkRuWIHBweQOEPxNQow74PMLB07XIhDHHUDn190C3EJK4X6/SKrINZ3nYZtbdJSTON
- cBcAzQ9ZuI4Vw5Mrf0GCv4Yhs7ii84Q1xszAhveXfvTBZk9Spe7TUiZSroM+NSCRHvW0
- z9KQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3lGRNQBcUz79T1SM3UqoOduUITzG8cOEGISUv3syOokHU4S2U6KgGAR2PSBy0JqV21VnJPUcpyaky@nongnu.org
-X-Gm-Message-State: AOJu0YyigkmgeHak+z9lq3aKq5IGxe6AOM2kMx44KuBngbLlOR1lG9JS
- yVpZrKcmhT4qkSYq6yM8BiHrO3WHAhGYh0vii/ewu8frCsu5He58gSSYRpFs45WHYSZqoKbSCyJ
- dQIuodEVC0Q==
-X-Gm-Gg: ASbGncum1aIbErxpRTlIHRDsRsBnpvzQnYw8DgQLCW/G0p0BPHhvEElDgDLMD02GYux
- 7ncWhkDVBdlPhYYDGqq0xBQj69SA15jgj9hazcfSbeKK2jQOw6Azweq4BTQ4mCH3R2rs+iqG7b8
- sAKXrI1SP3msFclvqVWZL0sYditdFjbX/Z3JwJvYVIW+Dv1jPeNENV01TMjPhWk3dKSflu6D1yB
- b/BzjnBxnB6aYQeGsEVeE/8lVOIVvhNEVd9+w56iMOXWAJxb6Adtip7mlAHQiObOc/mg0jmOfL4
- RS2Yoff6vTx69KHx11pVRddducj5dTQjAmeRcxRFsenpSHYjWX0nrLi+l91VA+XYfp/74cr6541
- TS2MzbfCkjkQiD7SuI+RIdAB342NS/j6pgbVaPHSDbufcD/xQvTetC2PISa6t/Qv7HVF2Jl3IyQ
- mVIVo7KfbviK/8DQ==
-X-Google-Smtp-Source: AGHT+IGlczMASVkgaTlXecge7zTMziecktEyTeNUNEpefBHUar2eF94zhomezrZseRlY4g0Zv9RDXg==
-X-Received: by 2002:a05:600c:8b42:b0:46e:3d41:5fe6 with SMTP id
- 5b1f17b1804b1-46e6127a545mr18715755e9.9.1759304621838; 
- Wed, 01 Oct 2025 00:43:41 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e5b6d81f2sm29284235e9.5.2025.10.01.00.43.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 00:43:41 -0700 (PDT)
-Message-ID: <b4ef4193-5e9b-4912-8f1e-5f0edd2ea238@linaro.org>
-Date: Wed, 1 Oct 2025 09:43:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 25/33] target/riscv: Indent PMUFixedCtrState correctly
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, richard.henderson@linaro.org,
- alistair.francis@wdc.com, palmer@dabbelt.com
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJO-0005k3-Nj
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:42 -0400
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIw-0003Wf-FF
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=vNFaamYJiAryvOQipdcLsAVNhLwDaPHvkEDTw6moOYk=; b=XG9eZL/Wkk+cKC+
+ yCXfiMPToTPTzdOQU6pxkiAOqayuklZFhiQakXHPA6O77kSHc7Qo3RZQhhDVj/ELdpA9NpSoXPZf2
+ +P1xMx0WhPpnZDeE0oVcwYzgHIULG29DdIVoTLAC/uyOzD6ydbMbYqPzkBHAkoqvZ1oSb0zRH023a
+ jI=;
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
+ richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
+Subject: [PATCH v2 20/33] target/riscv: Fix size of priv
+Date: Wed,  1 Oct 2025 09:32:53 +0200
+Message-ID: <20251001073306.28573-21-anjo@rev.ng>
+In-Reply-To: <20251001073306.28573-1-anjo@rev.ng>
 References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-26-anjo@rev.ng>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251001073306.28573-26-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,15 +59,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/25 09:32, Anton Johansson wrote:
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/riscv/cpu.h | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
+The priv field of CPUArchState only stores values in the range [0,3],
+fix to 8 bits in size and update relevant function arguments.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/riscv/cpu.h        |  8 ++++----
+ target/riscv/cpu_helper.c | 10 +++++-----
+ target/riscv/machine.c    |  2 +-
+ 3 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 586b8731b2..0d2ea645e4 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -264,7 +264,7 @@ struct CPUArchState {
+     uint32_t elf_flags;
+ #endif
+ 
+-    target_ulong priv;
++    uint8_t priv;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+     uint64_t senvcfg;
+@@ -649,10 +649,10 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
++void riscv_cpu_set_mode(CPURISCVState *env, uint8_t newpriv, bool virt_en);
+ 
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, target_ulong prev_priv, bool prev_virt);
++    enum CTRType type, uint8_t prev_priv, bool prev_virt);
+ void riscv_ctr_clear(CPURISCVState *env);
+ 
+ void riscv_translate_init(void);
+@@ -723,7 +723,7 @@ static inline int cpu_address_mode(CPURISCVState *env)
+     return mode;
+ }
+ 
+-static inline RISCVMXL cpu_get_xl(CPURISCVState *env, target_ulong mode)
++static inline RISCVMXL cpu_get_xl(CPURISCVState *env, uint8_t mode)
+ {
+     RISCVMXL xl = env->misa_mxl;
+     /*
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index c9594b8719..a57f33b3cb 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -799,7 +799,7 @@ void riscv_ctr_clear(CPURISCVState *env)
+     memset(env->ctr_data, 0x0, sizeof(env->ctr_data));
+ }
+ 
+-static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
++static uint64_t riscv_ctr_priv_to_mask(uint8_t priv, bool virt)
+ {
+     switch (priv) {
+     case PRV_M:
+@@ -819,7 +819,7 @@ static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
+     g_assert_not_reached();
+ }
+ 
+-static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
++static uint64_t riscv_ctr_get_control(CPURISCVState *env, uint8_t priv,
+                                       bool virt)
+ {
+     switch (priv) {
+@@ -841,7 +841,7 @@ static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
+  * and src privilege is less than target privilege. This includes the virtual
+  * state as well.
+  */
+-static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
++static bool riscv_ctr_check_xte(CPURISCVState *env, uint8_t src_prv,
+                                 bool src_virt)
+ {
+     target_long tgt_prv = env->priv;
+@@ -930,7 +930,7 @@ static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
+  *    idx = (sctrstatus.WRPTR - entry - 1) & (depth - 1);
+  */
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, target_ulong src_priv, bool src_virt)
++    enum CTRType type, uint8_t src_priv, bool src_virt)
+ {
+     bool tgt_virt = env->virt_enabled;
+     uint64_t src_mask = riscv_ctr_priv_to_mask(src_priv, src_virt);
+@@ -1028,7 +1028,7 @@ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+     env->sctrstatus = set_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK, head);
+ }
+ 
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
++void riscv_cpu_set_mode(CPURISCVState *env, uint8_t newpriv, bool virt_en)
+ {
+     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index aacd4f52b0..615e1dd94c 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -420,7 +420,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+         VMSTATE_UNUSED(4),
+         VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
+-        VMSTATE_UINTTL(env.priv, RISCVCPU),
++        VMSTATE_UINT8(env.priv, RISCVCPU),
+         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
+         VMSTATE_UINT64(env.resetvec, RISCVCPU),
+         VMSTATE_UINT64(env.mhartid, RISCVCPU),
+-- 
+2.51.0
 
 
