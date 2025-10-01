@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257F7CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 13:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB5AECCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 13:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3xBS-0007bl-72; Wed, 01 Oct 2025 09:47:54 -0400
+	id 1v3xEI-0000iL-Ff; Wed, 01 Oct 2025 09:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1v3xBN-0007aj-6d; Wed, 01 Oct 2025 09:47:49 -0400
-Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1v3xEE-0000gy-8t; Wed, 01 Oct 2025 09:50:46 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1v3xB5-000422-2T; Wed, 01 Oct 2025 09:47:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
- Message-ID:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=N107xt8JnNVKzXcfaW7rdlZsecX3tcM604TmF1cP5hI=; b=hHUZKVAIxow7pm82FLqgDFQeji
- VUyR1L+Jzy8tZflRr/hfE+5KKRCr9cs6nKsn94ta4k99hBAlzT3Yq5F5DGNF8Cv4u35ynfixz9+P0
- y+Lbkc38mzoU6ttX6AeSoaHghKVuzwbkDBD4BvByd/WlPDMEg6Xx2D+PL20Vm9HH4eggic6Gb58qZ
- ijq9pQhkLOn+2BgbuwUp9Dw5M6qfrWAEgxSOkxwmhLNhXRaTYWS/R1CXexb2JfE/fE60lCipERw3s
- 8OnO45DnjMeSVClgjYvR7M02zeH74xOaAiU33SuDUvKys4jcyYycF96zdxjuJ93iqEN0fqgILMeiC
- z/U70zdQ==;
-Received: from [167.98.27.226] (helo=[10.35.5.151])
- by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1v3xAc-005Yzh-9A; Wed, 01 Oct 2025 14:47:02 +0100
-Message-ID: <2371c5d6-c74f-457a-819b-4baf157ddb26@codethink.co.uk>
-Date: Wed, 1 Oct 2025 14:47:01 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1v3xE2-0004iP-SE; Wed, 01 Oct 2025 09:50:43 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ccGSN6ff8z6M4Gw;
+ Wed,  1 Oct 2025 21:47:00 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id 59B6B140114;
+ Wed,  1 Oct 2025 21:50:09 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 1 Oct
+ 2025 14:50:08 +0100
+Date: Wed, 1 Oct 2025 14:50:06 +0100
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 24/27] backends/iommufd: Retrieve PASID width from
+ iommufd_backend_get_device_info()
+Message-ID: <20251001145006.00001837@huawei.com>
+In-Reply-To: <20250929133643.38961-25-skolothumtho@nvidia.com>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-25-skolothumtho@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/7] Add RISCV big endian support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Roan Richmond <roan.richmond@codethink.co.uk>,
- lawrence.hunter@codethink.co.uk
-Cc: felix.chong@codethink.co.uk, sagark@eecs.berkeley.edu, palmer@dabbet.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, qemu-riscv@nongnu.org,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20241220154616.283933-1-roan.richmond@codethink.co.uk>
- <6ad3dee0-0fe8-4368-b43f-e7f8f30ead24@canonical.com>
- <0878ebc9-f553-46b8-b2ff-b748bd45da88@ventanamicro.com>
-Content-Language: en-GB
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-Organization: Codethink Limited.
-In-Reply-To: <0878ebc9-f553-46b8-b2ff-b748bd45da88@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.40.203.114;
- envelope-from=ben.dooks@codethink.co.uk; helo=imap4.hz.codethink.co.uk
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,74 +72,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/10/2025 12:32, Daniel Henrique Barboza wrote:
-> (ccing qemu-devel ML - please send all patches to qemu-devel too)
-> 
-> On 9/30/25 6:46 AM, Heinrich Schuchardt wrote:
->> On 12/20/24 16:45, Roan Richmond wrote:
->>> This is part of our project to investigate big endian on RISC-V.
->>> The full information is documented on our gitlab[1] which includes
->>> source repositories, build information and project documentation.
->>>
->>> We have a minimal buildroot, qemu and kernel working on QEMU.
->>>
->>> As this is a work in progress any review or help is appreciated.
->>>
->>> [1] https://gitlab.com/CodethinkLabs/riscv_bigendian
->>>
->>> Ben Dooks (2):
->>>    target/riscv: Add big endian check for atomic ops
->>>    taregt/riscv: Add big endian checks for pagetable
->>>
->>> Lawrence Hunter (3):
->>>    target/riscv: Add SSTATUS_UBE
->>>    target/riscv: Add sfence.vma for endian change
->>>    target/riscv: Add big endian CPU target
->>
->> The RISC-V specification explicitly allows for bi-endian cpus. 
->> Shouldn't we change the existing generic RISC-V cpus to allow starting 
->> low-endian and switching the endianness at runtime instead of adding a 
->> new CPU?
-> 
-> 
-> Mainline Linux stated that RISC-V BE support will be "discouraged" (feel 
-> free to read
-> yet another Linus rant in linux-riscv - we're having multiple Linus 
-> rants per month).
-> This means that this work investigation will require at very least a 
-> custom kernel that
-> mainline won't support, which will in turn make it harder for QEMU to 
-> properly support
-> it in boot tests via TuxBoot and so on.
-> 
-> This doesn't mean that we should reject this work, but we should keep BE 
-> exclusive logic
-> separated from the generic LE code at least for now. Point being: the 
-> split BE CPU
-> target, like this series is already doing, seems like the way to go.
-> 
-> 
-> Thanks,
-> 
-> Daniel
+On Mon, 29 Sep 2025 14:36:40 +0100
+Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-I think since there are other architectures already doing run-time
-selectable endian I'm going to keep this in the series. I'll be replying
-to the linux-kernel portion later when I'm less inclined to be rude to
-Linus.
+Bring the bit of the description in the title down here as well.
+Depending on what tools people use for browsing git it might
+end up in very different places on their screen.
 
-The linux-kernel changes are not huge so we could probably keep our own
-out-of-tree for a bit, but I do not want to keep putting a lot of effort
-into this without anyone else being interested.
+> And store it in HostIOMMUDeviceCaps for later use.
+> 
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Trivial comment inline.
 
-Not sure if there would be any interested from any BSD for a kernel?
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
--- 
-Ben Dooks				http://www.codethink.co.uk/
-Senior Engineer				Codethink - Providing Genius
+> ---
+>  backends/iommufd.c                 | 6 +++++-
+>  hw/arm/smmuv3-accel.c              | 3 ++-
+>  hw/vfio/iommufd.c                  | 7 +++++--
+>  include/system/host_iommu_device.h | 2 ++
+>  include/system/iommufd.h           | 3 ++-
+>  5 files changed, 16 insertions(+), 5 deletions(-)
 
-https://www.codethink.co.uk/privacy.html
+...
+
+> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+> index ab849a4a82..c6a2a3899a 100644
+> --- a/include/system/host_iommu_device.h
+> +++ b/include/system/host_iommu_device.h
+> @@ -29,6 +29,7 @@ typedef union VendorCaps {
+>   *
+>   * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
+>   *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
+
+Blank line here to match local style. 
+
+> + * @max_pasid_log2: width of PASIDs supported by host IOMMU device
+>   *
+>   * @vendor_caps: host platform IOMMU vendor specific capabilities (e.g. on
+>   *               IOMMUFD this represents a user-space buffer filled by kernel
+> @@ -37,6 +38,7 @@ typedef union VendorCaps {
+>  typedef struct HostIOMMUDeviceCaps {
+>      uint32_t type;
+>      uint64_t hw_caps;
+> +    uint8_t max_pasid_log2;
+>      VendorCaps vendor_caps;
+>  } HostIOMMUDeviceCaps;
+>  #endif
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index e852193f35..d3efcffc45 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -71,7 +71,8 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>                                hwaddr iova, ram_addr_t size);
+>  bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                       uint32_t *type, void *data, uint32_t len,
+> -                                     uint64_t *caps, Error **errp);
+> +                                     uint64_t *caps, uint8_t *pasid_log2,
+> +                                     Error **errp);
+>  bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+>                                  uint32_t pt_id, uint32_t flags,
+>                                  uint32_t data_type, uint32_t data_len,
+
 
