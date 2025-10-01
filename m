@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DCB4CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F341CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yny-0001Vc-27; Wed, 01 Oct 2025 11:31:46 -0400
+	id 1v3yoJ-0001ek-Ir; Wed, 01 Oct 2025 11:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v3ynw-0001Ui-3O
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:31:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v3yo9-0001bl-C0
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:32:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v3yna-0005qF-1w
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:31:41 -0400
+ id 1v3yni-0005t0-En
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:31:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759332670;
+ s=mimecast20190719; t=1759332680;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=cMsOgMSmcXE5EW/arXueqpj+JXzJTNC0KYfmuS0w7+I=;
- b=BiKIR1b+E3mjDVESQPdgGTAWYdBqdpDHTCDn80spwrizifkbdHqtX3K1N+opazc6+EjivS
- 0fnDFyUarlx3klOFJoyeuOAUK3x1mOBCbE4Ex9vC41LbcNjKoKJhxeGYBvLY15EgIXSlQA
- Ry/byGuKJ8MbZI3txM2kUDOmAo3S8rk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Ncp7kRBTgfzSNkIaSIwFpMsSRlZh4u1D08dEz4tlJs=;
+ b=GDl9ATwf6T2sIMl69YY6w0N8ZDkMhl89y09Pnv++B7ZrmudMp55Kn6mUPu7z14RXFt8qnd
+ LL3vsIRHhj3JHrVH4Xs8ZVVOgQp+OPRP2gXxi6M+5A1YOMx+3GHTl+SJACifJ/pQ/lux/a
+ 9u0R7BRD4rcoSR3uGgV6bjDQxHopIkA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-mr2T8W0BPwaaoPPHyQzLiw-1; Wed,
- 01 Oct 2025 11:31:06 -0400
-X-MC-Unique: mr2T8W0BPwaaoPPHyQzLiw-1
-X-Mimecast-MFC-AGG-ID: mr2T8W0BPwaaoPPHyQzLiw_1759332664
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-bKnSZ7X4OnGkUlaV4EG5KA-1; Wed,
+ 01 Oct 2025 11:31:16 -0400
+X-MC-Unique: bKnSZ7X4OnGkUlaV4EG5KA-1
+X-Mimecast-MFC-AGG-ID: bKnSZ7X4OnGkUlaV4EG5KA_1759332674
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CB7B19560AD; Wed,  1 Oct 2025 15:31:02 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BCFF1800294; Wed,  1 Oct 2025 15:31:14 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.112])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE98918004D8; Wed,  1 Oct 2025 15:31:00 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C5828180047F; Wed,  1 Oct 2025 15:31:13 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -63,24 +64,28 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Darren Kenny <darren.kenny@oracle.com>,
  Michael Roth <michael.roth@amd.com>, Mads Ynddal <mads@ynddal.dk>,
  Alexandre Iooss <erdnaxe@crans.org>, John Snow <jsnow@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 00/16] Tracing patches
-Date: Wed,  1 Oct 2025 11:30:43 -0400
-Message-ID: <20251001153059.194991-1-stefanha@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 05/16] trace/ftrace: move snprintf+write from tracepoints to
+ ftrace.c
+Date: Wed,  1 Oct 2025 11:30:48 -0400
+Message-ID: <20251001153059.194991-6-stefanha@redhat.com>
+In-Reply-To: <20251001153059.194991-1-stefanha@redhat.com>
+References: <20251001153059.194991-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,117 +101,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 29b77c1a2db2d796bc3847852a5c8dc2a1e6e83b:
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-  Merge tag 'rust-ci-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2025-09-30 09:29:38 -0700)
+This simplifies the Python code and reduces the size of the tracepoints.
 
-are available in the Git repository at:
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250929154938.594389-6-pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ tests/tracetool/ftrace.h            | 28 ++++++----------------------
+ trace/ftrace.h                      |  1 +
+ trace/ftrace.c                      | 15 +++++++++++++++
+ scripts/tracetool/backend/ftrace.py | 12 ++----------
+ 4 files changed, 24 insertions(+), 32 deletions(-)
 
-  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
-
-for you to fetch changes up to 1461752f0fa4bcd7e60d51fe47e3430f8a81cdd8:
-
-  tracetool/syslog: add Rust support (2025-10-01 11:22:07 -0400)
-
-----------------------------------------------------------------
-Pull request
-
-Tanish Desai and Paolo Bonzini's tracing Rust support.
-
-----------------------------------------------------------------
-
-Paolo Bonzini (8):
-  tracetool: fix usage of try_import()
-  tracetool: remove dead code
-  treewide: remove unnessary "coding" header
-  tracetool: add SPDX headers
-  trace/ftrace: move snprintf+write from tracepoints to ftrace.c
-  rust: qdev: add minimal clock bindings
-  rust: pl011: add tracepoints
-  log: change qemu_loglevel to unsigned
-
-Tanish Desai (8):
-  tracetool: add CHECK_TRACE_EVENT_GET_STATE
-  tracetool/backend: remove redundant trace event checks
-  tracetool: Add Rust format support
-  rust: add trace crate
-  tracetool/simple: add Rust support
-  tracetool/log: add Rust support
-  tracetool/ftrace: add Rust support
-  tracetool/syslog: add Rust support
-
- include/qemu/log-for-trace.h                  |   4 +-
- include/qemu/log.h                            |  44 ++--
- tests/tracetool/ftrace.h                      |  28 +--
- tests/tracetool/log.h                         |  16 +-
- trace/ftrace.h                                |   1 +
- trace/ftrace.c                                |  15 ++
- util/log.c                                    |   2 +-
- docs/conf.py                                  |   2 -
- docs/sphinx-static/theme_overrides.css        |   3 +-
- hw/char/trace-events                          |  14 +-
- rust/Cargo.lock                               |   8 +
- rust/Cargo.toml                               |   1 +
- rust/hw/char/pl011/Cargo.toml                 |   1 +
- rust/hw/char/pl011/meson.build                |   1 +
- rust/hw/char/pl011/src/device.rs              |  57 +++--
- rust/hw/core/src/qdev.rs                      |  33 +++
- rust/meson.build                              |   2 +-
- rust/trace/Cargo.toml                         |  19 ++
- rust/trace/meson.build                        |  19 ++
- rust/trace/src/lib.rs                         |  39 ++++
- rust/util/src/log.rs                          |   2 +-
- scripts/analyse-locks-simpletrace.py          |   1 -
- scripts/modinfo-collect.py                    |   1 -
- scripts/modinfo-generate.py                   |   1 -
- scripts/oss-fuzz/minimize_qtest_trace.py      |   1 -
- scripts/oss-fuzz/output_reproducer.py         |   1 -
- .../oss-fuzz/reorder_fuzzer_qtest_trace.py    |   1 -
- scripts/probe-gdb-support.py                  |   1 -
- scripts/qapi/error.py                         |   2 -
- scripts/qapi/expr.py                          |   2 -
- scripts/qapi/gen.py                           |   2 -
- scripts/qapi/parser.py                        |   2 -
- scripts/qapi/schema.py                        |   2 -
- scripts/qemu-plugin-symbols.py                |   1 -
- scripts/qemugdb/tcg.py                        |   2 -
- scripts/qemugdb/timers.py                     |   1 -
- scripts/replay-dump.py                        |   1 -
- scripts/tracetool.py                          |   1 -
- scripts/tracetool/__init__.py                 | 202 ++++++++++++++----
- scripts/tracetool/backend/__init__.py         |  43 ++--
- scripts/tracetool/backend/dtrace.py           |   2 +-
- scripts/tracetool/backend/ftrace.py           |  26 +--
- scripts/tracetool/backend/log.py              |  22 +-
- scripts/tracetool/backend/simple.py           |  17 +-
- scripts/tracetool/backend/syslog.py           |  17 +-
- scripts/tracetool/backend/ust.py              |   2 +-
- scripts/tracetool/format/__init__.py          |   4 +-
- scripts/tracetool/format/c.py                 |   2 +-
- scripts/tracetool/format/d.py                 |   2 +-
- scripts/tracetool/format/h.py                 |  18 +-
- scripts/tracetool/format/log_stap.py          |   4 +-
- scripts/tracetool/format/rs.py                |  64 ++++++
- scripts/tracetool/format/simpletrace_stap.py  |   4 +-
- scripts/tracetool/format/stap.py              |   2 +-
- scripts/tracetool/format/ust_events_c.py      |   2 +-
- scripts/tracetool/format/ust_events_h.py      |   2 +-
- tests/tracetool/ftrace.rs                     |  40 ++++
- tests/tracetool/log.rs                        |  44 ++++
- tests/tracetool/simple.rs                     |  40 ++++
- tests/tracetool/syslog.rs                     |  40 ++++
- tests/tracetool/tracetool-test.py             |   2 +
- trace/meson.build                             |   8 +-
- 62 files changed, 720 insertions(+), 223 deletions(-)
- create mode 100644 rust/trace/Cargo.toml
- create mode 100644 rust/trace/meson.build
- create mode 100644 rust/trace/src/lib.rs
- create mode 100644 scripts/tracetool/format/rs.py
- create mode 100644 tests/tracetool/ftrace.rs
- create mode 100644 tests/tracetool/log.rs
- create mode 100644 tests/tracetool/simple.rs
- create mode 100644 tests/tracetool/syslog.rs
-
+diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
+index fe22ea0f09..1dfe423941 100644
+--- a/tests/tracetool/ftrace.h
++++ b/tests/tracetool/ftrace.h
+@@ -21,18 +21,10 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+ 
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    {
+-        char ftrace_buf[MAX_TRACE_STRLEN];
+-        int unused __attribute__ ((unused));
+-        int trlen;
+-        if (trace_event_get_state(TRACE_TEST_BLAH)) {
++    if (trace_event_get_state(TRACE_TEST_BLAH)) {
+ #line 4 "trace-events"
+-            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+-                             "test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+-#line 33 "ftrace.h"
+-            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+-            unused = write(trace_marker_fd, ftrace_buf, trlen);
+-        }
++        ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
++#line 28 "ftrace.h"
+     }
+ }
+ 
+@@ -42,18 +34,10 @@ static inline void trace_test_blah(void *context, const char *filename)
+ 
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    {
+-        char ftrace_buf[MAX_TRACE_STRLEN];
+-        int unused __attribute__ ((unused));
+-        int trlen;
+-        if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
++    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+ #line 5 "trace-events"
+-            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+-                             "test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
+-#line 54 "ftrace.h"
+-            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+-            unused = write(trace_marker_fd, ftrace_buf, trlen);
+-        }
++        ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
++#line 41 "ftrace.h"
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/trace/ftrace.h b/trace/ftrace.h
+index cb5e35d217..16c122816d 100644
+--- a/trace/ftrace.h
++++ b/trace/ftrace.h
+@@ -8,5 +8,6 @@
+ extern int trace_marker_fd;
+ 
+ bool ftrace_init(void);
++G_GNUC_PRINTF(1, 2) void ftrace_write(const char *fmt, ...);
+ 
+ #endif /* TRACE_FTRACE_H */
+diff --git a/trace/ftrace.c b/trace/ftrace.c
+index 9749543d9b..6875faedb9 100644
+--- a/trace/ftrace.c
++++ b/trace/ftrace.c
+@@ -38,6 +38,21 @@ static int find_mount(char *mount_point, const char *fstype)
+     return ret;
+ }
+ 
++void ftrace_write(const char *fmt, ...)
++{
++    char ftrace_buf[MAX_TRACE_STRLEN];
++    int unused __attribute__ ((unused));
++    int trlen;
++    va_list ap;
++
++    va_start(ap, fmt);
++    trlen = vsnprintf(ftrace_buf, MAX_TRACE_STRLEN, fmt, ap);
++    va_end(ap);
++
++    trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
++    unused = write(trace_marker_fd, ftrace_buf, trlen);
++}
++
+ bool ftrace_init(void)
+ {
+     char mount_point[PATH_MAX];
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index a14aafcee6..8c0ce3f23a 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -28,18 +28,10 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+ 
+-    out('    {',
+-        '        char ftrace_buf[MAX_TRACE_STRLEN];',
+-        '        int unused __attribute__ ((unused));',
+-        '        int trlen;',
+-        '        if (trace_event_get_state(%(event_id)s)) {',
++    out('    if (trace_event_get_state(%(event_id)s)) {',
+         '#line %(event_lineno)d "%(event_filename)s"',
+-        '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
+-        '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
++        '        ftrace_write("%(name)s " %(fmt)s "\\n" %(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
+-        '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
+-        '        }',
+         '    }',
+         name=event.name,
+         args=event.args,
 -- 
 2.51.0
 
