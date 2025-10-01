@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A606ECCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266DECAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v420V-0004nH-1r; Wed, 01 Oct 2025 14:56:57 -0400
+	id 1v420t-0004wI-Ix; Wed, 01 Oct 2025 14:57:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v420L-0004m8-UL
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:56:46 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v4209-0001O0-OF
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:56:45 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46e42fa08e4so1412375e9.3
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 11:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759344985; x=1759949785; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uU9GJw9JHFe7DtkaGrqjWk/KAYap+bJGvAOsEu9JNpA=;
- b=j5yzllx2MsUflt7dz4GtUZLeSC6ujw50wQeY1YgAxTf4vVd2HwNe1vhG7eBB7B0grN
- 8OFvtPiXcDmO1u5vLH5gxop8Fzp+9xABwP8H3GQc+0EpCZEk27rq5kPKv8HfEZMvjLCa
- G4mxoJPHrxPY0UVHD7hynrsSiP/690AooIBVaQxAQGv6yr3onzX6/rY9GvpM5+8edRZn
- HUXwWE8CDc29d+tCdTXW/c7nzbtKCRX9WHkLc6TA7bnOoLEpr+WY1idEGePTFk5TJ32l
- UmMPVGV5CSZ14idpmSnPnXbTN5RGQK42Ms2lDGMS66T+TW0+2RnqK6O++M4yO/ZlQw48
- hTlA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v420p-0004vP-2V
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:57:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v420a-0001PP-NV
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:57:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759345012;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Au/6S0gGSWaoAImOK+twcwc+6xlumU6Bi0fYmA/6ZDg=;
+ b=QPWcA6fztjA79e/GPgc/5s6dgYcwkd0RseJ0bwtBQzMmtUMuhRCItFIEZKOuW0Yv4ZZMXP
+ E9xDRFUrIGERWG5oQMPKZIAnTvPC5ishFrNrxqnIKWwJ3mYexQMJvKf70gWRPtTjRiXnZl
+ UtorEcnt7f2wjdgwcEhN7n9044yF/mY=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-563-Ci6IBx2UPP-gZp1XlCvrfQ-1; Wed, 01 Oct 2025 14:56:50 -0400
+X-MC-Unique: Ci6IBx2UPP-gZp1XlCvrfQ-1
+X-Mimecast-MFC-AGG-ID: Ci6IBx2UPP-gZp1XlCvrfQ_1759345010
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4deb67c61caso5479971cf.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 11:56:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759344985; x=1759949785;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uU9GJw9JHFe7DtkaGrqjWk/KAYap+bJGvAOsEu9JNpA=;
- b=POXPciY9FXYZ0cCQ05HhPwBJFNiR3rpWgk+dl3SZFNonCh9bG5hsO0GHXGIXehZ2wU
- GgF7ZSJgNgQWheqeGxrVPgdiP9RncAFDllqpUXfTW64M4LHY751RfBrcpNzeY180Qhhl
- tCnw3eBsydtKuPTOg0xYCYrZVNmVwiWOBYtjQH2+b9BIYi2tV5YSITCiu/c7+qAXl47D
- 1vaIVxkO9bbaNHE7pXcFAecKUbzLTM8zs+BATgYpJ3vxP6z2T15SrAhfSt2kvyk52u44
- t/D1s5B4d27SQk9+0eDyrdwusCkVvrJrAVEDyhlWYRnyxemzHJYmeS0BTQMP2f5ATU+J
- Jc2A==
-X-Gm-Message-State: AOJu0YzvEoEFh6+knEbGrkbflgAVcgkY6kn7oI61Mt6najMatL1IRGEX
- az25+TSFG6f2DBrCY/NEYheCq/3LtG0Mpk0RmcVRYJU8z3DHIp4W56x45cJyZEpt/RBvD/0nqwv
- EDtVM
-X-Gm-Gg: ASbGncuxKFKFlxAi2EojNw9C8Zr2SMImcjFzCVvwsCIFuxnqd+OncXxHEw3ll94fDCV
- tcxYj3gG3+QmE0fqA+uVCV8NS5OV8L26UtuhrkNQTRjodo/QnyxVXAXzauLnv979T7V0s34J+3b
- qNqcABfRFrIs5bdIV2irbxmAlcvNGFQAsoUeNGvVp4kjQOkQEAxG8/4+qZLnwrH0IGkSkZCMsvD
- mSgc4KXOLjNZ1fXlyrlTZr/WIjchm3LhgaiODoRNVVJb+BmK5Djp8imIhKEGpNtTAWYKDHzh9KH
- 8Wm6MFjlLgGWkJL/Polv3g30COpMrQeB1LLM39y3XGMpQKSk0pRP+I+6gu93r1FhQ8MCHKbOaAE
- h/yBtJHHxYz6NXYS/HPFha886XjKVVWtUMTjuUb94ZR/3rJ8=
-X-Google-Smtp-Source: AGHT+IFOYKIQzFUQaMpA8x+W8ph+05jD7W521ofUtAa+A2WEkY5RbhfBhZDw4EHYFRLRHBJDqfPpxw==
-X-Received: by 2002:a05:600c:37c8:b0:46e:2801:84aa with SMTP id
- 5b1f17b1804b1-46e611dd02amr37904705e9.0.1759344985113; 
- Wed, 01 Oct 2025 11:56:25 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e96e0sm285870f8f.33.2025.10.01.11.56.24
+ d=1e100.net; s=20230601; t=1759345010; x=1759949810;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Au/6S0gGSWaoAImOK+twcwc+6xlumU6Bi0fYmA/6ZDg=;
+ b=QtqIOEygrmhY98oD8GhE7+tIXGZZAe2BgiA9sxevQ6mb/WMRt+y5QQho7LO5ZkZel1
+ Ru2Lm5ebL+B/DWSwp+LyrDfSIuDws53caKkDLeh64wJmLdBC55DIFVmWkW5bDiT8LmwH
+ /k7Cgjzq7h9J0pOSwV09mFuedqRqWP9UfycZeYkxp8ehMw/6hh/LRyXtm+yvO2ABtMWp
+ taSwbVazetVnjp8WiuCZCzeIUUbYt0qrWJQeOlqTytS1NfyXQTB4g9d1G1zitBHWkPjH
+ X1PAy9l41vjO3L/77C8hAig39KGBA5auN2hWlVlvuB5yC1aXZxzf0DbNg5f71lDc++0c
+ TNVg==
+X-Gm-Message-State: AOJu0Yz/gh0Hycj/lxFqIR9o0U53vGMpHMcl4ya6hgBB7TeRzBxpSf5y
+ lwc0E5hZsI5MyjwIvu64phe3SDsN+eCan/ZosIqhZqh1TlgKWwsRuHyzTBxDXq42WYz3dJZJOm7
+ afr4JZMRxxGnkYc4Y1lmC2k53cyqgNKUHXJo4iMiB8qDYZXaYYs8ARLUp
+X-Gm-Gg: ASbGncuBsGPSfk0GRICB8Qwcv6GrC90V3XuwItj6D9PYvr4S5dayEd4kDSfA0npBQaT
+ GWLGKy2LW7/ojAriBRhSDqS3EgePolX1LkbhZwRIJT6SpOc84Ds7CpQZg+c1Uk6p0cenT2FEs4m
+ aR5zhjygFy1nNK6rBcStkXBeNU3vq6dxqD4dgyrQV0d46eJxIa09ZvEabFDP5pygR/Irnzaj9Rc
+ IlymKUF7DY6vVi5j720vdBGTUp1v/dR65pJFWh1zfGe/Mcre7Xr18ezfzenQav95MtY0CeycPRz
+ dHoOjLwp9KH3OdVh+GeiX6VJp/hX9uYoMEzKGA==
+X-Received: by 2002:ad4:5d42:0:b0:7f8:6791:2076 with SMTP id
+ 6a1803df08f44-873a78f2a17mr53588636d6.64.1759345010203; 
+ Wed, 01 Oct 2025 11:56:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcunFjSOzcPSmPQMm4Xag/Ld0Z3iEdbPmADL2yZISW6QXpmSN7R2WSxgwm5swDepKjHwFZ3A==
+X-Received: by 2002:ad4:5d42:0:b0:7f8:6791:2076 with SMTP id
+ 6a1803df08f44-873a78f2a17mr53588276d6.64.1759345009710; 
+ Wed, 01 Oct 2025 11:56:49 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-878bb446e8esm3865456d6.18.2025.10.01.11.56.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 11:56:24 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 78BC65F7A7;
- Wed, 01 Oct 2025 19:56:23 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org,  qemu-s390x@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Gustavo Romero <gustavo.romero@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
- <thuth@redhat.com>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH 0/7] testing and misc updates (docker, ansible, .git*,
- gitlab)
-In-Reply-To: <4188260c-e8ac-9bea-5e05-6cd34c3e986d@eik.bme.hu> (BALATON
- Zoltan's message of "Wed, 1 Oct 2025 19:56:21 +0200 (CEST)")
-References: <20251001170947.2769296-1-alex.bennee@linaro.org>
- <4188260c-e8ac-9bea-5e05-6cd34c3e986d@eik.bme.hu>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Wed, 01 Oct 2025 19:56:23 +0100
-Message-ID: <878qhuih7s.fsf@draig.linaro.org>
+ Wed, 01 Oct 2025 11:56:49 -0700 (PDT)
+Date: Wed, 1 Oct 2025 14:56:48 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Cedric Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH V5 00/19] Live update: cpr-exec
+Message-ID: <aN15cNEwH4HBt7NU@x1.local>
+References: <1759332851-370353-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+In-Reply-To: <1759332851-370353-1-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,77 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BALATON Zoltan <balaton@eik.bme.hu> writes:
+On Wed, Oct 01, 2025 at 08:33:52AM -0700, Steve Sistare wrote:
+> This patch series adds the live migration cpr-exec mode.
+> 
+> The new user-visible interfaces are:
+>   * cpr-exec (MigMode migration parameter)
+>   * cpr-exec-command (migration parameter)
+> 
+> cpr-exec mode is similar in most respects to cpr-transfer mode, with the
+> primary difference being that old QEMU directly exec's new QEMU.  The user
+> specifies the command to exec new QEMU in the migration parameter
+> cpr-exec-command.
 
-> On Wed, 1 Oct 2025, Alex Benn=C3=A9e wrote:
->> My first set of patches for the development tree. Should be mostly
->> self-explanatory. We still need to apply the upstream COPYING patch
->> the u-boot-sam460ex code but we should decide if its worth mirroring
->> or should we just treat the copy as fully "ours".
->
-> Which COPYING patch do you refer to? I have the upstream because when
-> I submitted this I was told to do it this way instead of adding the
-> u-boot sources to the QEMU tree. It can't be merged with the official
-> u-boot used for e500 because it has sam460ex specific patches from the
-> machine vendor which only supports this u-boot version. There are some
-> updates from the vendor for real machine which I plan to add
-> eventually but it's still based on an older u-boot version. With
-> mirroring I can update upstream and send one patch to update the
-> binary once it's mirrored, otherwise I'd need to send patches for each
-> update and rely on somebody to merge them.
+It turns out I was right where I replied to patch 5; this fails the Windows
+build.
 
-OK I'll fixup the mirror. I think I need to delete and re-create the
-gitlab project repo now.
+Smallest fix is to wrap qemu_memfd_create() with a CONFIG_LINUX ifdef,
+returning -1 to mfd otherwise.
 
->
-> Regards,
-> BALATON Zoltan
->
->> Hopefully I'll have the new aarch64 runner online by Friday and ready
->> for the switchover.
->>
->> Hopefully I'll also be able to pick up Gustavo's reverse debug test
->> fixes by then as well.
->>
->> Alex.
->>
->> Alex Benn=C3=A9e (7):
->>  .gitpublish: use origin/master as default base
->>  .gitmodules: restore qemu-project mirror of u-boot
->>  .gitmodules: restore qemu-project mirror of u-boot-sam460ex
->>  tests/lcitool: drop 64 bit guests from i686 cross build
->>  tests/lcitool: bump custom runner packages to Ubuntu 24.04
->>  gitlab: move custom runners to Ubuntu 24.04
->>  scripts/ci: use recommended registration command
->>
->> .gitlab-ci.d/custom-runners.yml               |  6 ++--
->> ...4-aarch32.yml =3D> ubuntu-24.04-aarch32.yml} |  8 ++---
->> ...4-aarch64.yml =3D> ubuntu-24.04-aarch64.yml} | 32 +++++++++----------
->> ...22.04-s390x.yml =3D> ubuntu-24.04-s390x.yml} | 28 ++++++++--------
->> .gitmodules                                   |  6 ++--
->> .gitpublish                                   | 16 +++++-----
->> scripts/ci/setup/gitlab-runner.yml            | 12 ++-----
->> scripts/ci/setup/ubuntu/build-environment.yml | 12 +++----
->> ...-aarch64.yaml =3D> ubuntu-2404-aarch64.yaml} |  4 ++-
->> ...2204-s390x.yaml =3D> ubuntu-2404-s390x.yaml} |  4 ++-
->> scripts/ci/setup/vars.yml.template            |  5 +--
->> .../dockerfiles/debian-i686-cross.docker      |  2 +-
->> tests/lcitool/refresh                         |  6 ++--
->> 13 files changed, 69 insertions(+), 72 deletions(-)
->> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml =3D> ubuntu=
--24.04-aarch32.yml} (78%)
->> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml =3D> ubuntu=
--24.04-aarch64.yml} (89%)
->> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml =3D> ubuntu-2=
-4.04-s390x.yml} (88%)
->> rename scripts/ci/setup/ubuntu/{ubuntu-2204-aarch64.yaml =3D> ubuntu-240=
-4-aarch64.yaml} (96%)
->> rename scripts/ci/setup/ubuntu/{ubuntu-2204-s390x.yaml =3D> ubuntu-2404-=
-s390x.yaml} (96%)
->>
->>
+A better one is we only include cpr*.c in meson.build if it's linux.
+Personally I'm OK if we go with the smaller one as of now, however then it
+would definitely be nice to have a follow up series to reach the better
+solution, if that makes sense.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Feel free to use "make docker-test-build@fedora-win64-cross" for verifying
+the changes.  I hope it'll work for you, even if for me currently it didn't
+work due to a gitlab.com dns resolution pulling dtc src, where I didn't dig
+deeper yet..
+
+The other thing is, this series doesn't apply on master branch.  I didn't
+feel confident to do it myself on the vfio change, please have a look on
+both issues.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
