@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5643DCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FB2CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:43:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rJu-00060V-Tn; Wed, 01 Oct 2025 03:32:15 -0400
+	id 1v3rIt-0005P9-6k; Wed, 01 Oct 2025 03:31:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJi-0005vk-Ak
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:32:05 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIl-0005NN-G7
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:03 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJB-0003cT-9J
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:32:01 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIX-0003PZ-0d
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=8ge31vtK7cTCSzhIiDlBR/koRSzu2Kf4CuOaCCFjsn4=; b=vcRBYIzaKBHQOdk
- OUz8uyZ2jC8ctFFOt7e1c6CnyxbQzG/nqE4ScxYALfkwDNC7i55QcpghjVExkBPdW4tTR3xV0ilfo
- t1HuYKs0CHaXXUVd83uhZrZrOueXrPVp5yODlb6TtvuYMCiaMMcj7E68xGh3FPFOAxqnFyPPF1/PC
- Vk=;
+ List-Help; bh=3+u6i5pOQd76RBeG5RxaFfwR423/kd5W+8YZMgZawOw=; b=IyC5IbD8u5M2RAh
+ f9JTj0NiEyyvwWKwaVd3sxEwXeY21bch68K94pJBB6UufuDWcyzqkWKVJBLrgFDQmzzgZRXQF5LlA
+ GjQk2ngGcZhu0LlHzvp7VgWTgmOLyohET4UVJqriMSk16KaNUdlZarfJG+yGWcT5m46wP9qkErZ/i
+ DU=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
  richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: [PATCH v2 31/33] target/riscv: Move CSR declarations to separate
- csr.h header
-Date: Wed,  1 Oct 2025 09:33:04 +0200
-Message-ID: <20251001073306.28573-32-anjo@rev.ng>
+Subject: [PATCH v2 02/33] target/riscv: Fix size of trivial CPUArchState fields
+Date: Wed,  1 Oct 2025 09:32:35 +0200
+Message-ID: <20251001073306.28573-3-anjo@rev.ng>
 In-Reply-To: <20251001073306.28573-1-anjo@rev.ng>
 References: <20251001073306.28573-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -65,303 +64,329 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of these definitions save riscv_csrr, riscv_csrrw, riscv_csr_read,
-riscv_csr_write are only used in target/.  Move declarations to a
-separate headers which will soon be made internal to target/.
+This commits groups together all CPUArchState fields whose behaviour can
+be retained by simply changing the size of the field.
 
-csr.h is temporarily included from cpu.h to not break includes from
-outside target/, this include will be removed in the following commit.
+Note, senvcfg is defined to be SXLEN bits wide, but is widened to 64
+bits to match henvcfg and menvcfg.  Next, [m|h]edeleg are changed to
+64 bits as defined privileged specification, and hvictl is fixed to 32
+bits which holds all relevant values, see HVICTL_VALID_MASK.  The
+remaining fields touched in the commit are widened from [H|S|M]XLEN
+to 64-bit.
+
+Note, the cpu/hyper, cpu/envcfg, cpu/jvt, and cpu VMSTATE versions are
+bumped, breaking migration from older versions.
+
+References to the privileged/unprivileged RISCV specification refer to
+version 20250508.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h         | 82 +--------------------------------
- target/riscv/csr.h         | 94 ++++++++++++++++++++++++++++++++++++++
- target/riscv/cpu.c         |  1 +
- target/riscv/csr.c         |  1 +
- target/riscv/gdbstub.c     |  1 +
- target/riscv/kvm/kvm-cpu.c |  1 +
- target/riscv/op_helper.c   |  1 +
- target/riscv/th_csr.c      |  1 +
- 8 files changed, 101 insertions(+), 81 deletions(-)
- create mode 100644 target/riscv/csr.h
+ target/riscv/cpu.h     | 78 +++++++++++++++++++--------------------
+ target/riscv/machine.c | 84 +++++++++++++++++++++---------------------
+ 2 files changed, 81 insertions(+), 81 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 70e0f3718c..61319575b0 100644
+index f05e06bb70..736e4f6daa 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -849,75 +849,7 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
- RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env);
- uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
+@@ -254,7 +254,7 @@ struct CPUArchState {
+     /* 128-bit helpers upper part return value */
+     target_ulong retxh;
  
--RISCVException riscv_csrr(CPURISCVState *env, int csrno,
--                          target_ulong *ret_value);
--
--RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
--                           target_ulong *ret_value, target_ulong new_value,
--                           target_ulong write_mask, uintptr_t ra);
--RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
--                                 target_ulong *ret_value,
--                                 target_ulong new_value,
--                                 target_ulong write_mask);
--
--static inline void riscv_csr_write(CPURISCVState *env, int csrno,
--                                   target_ulong val)
--{
--    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
--}
--
--static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
--{
--    target_ulong val = 0;
--    riscv_csrrw(env, csrno, &val, 0, 0, 0);
--    return val;
--}
--
--typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
--                                                 int csrno);
--typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
--                                            target_ulong *ret_value);
--typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
--                                             target_ulong new_value,
--                                             uintptr_t ra);
--typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
--                                          target_ulong *ret_value,
--                                          target_ulong new_value,
--                                          target_ulong write_mask);
--
--RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
--                               Int128 *ret_value);
--RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
--                                Int128 *ret_value, Int128 new_value,
--                                Int128 write_mask, uintptr_t ra);
--
--typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
--                                               Int128 *ret_value);
--typedef RISCVException (*riscv_csr_write128_fn)(CPURISCVState *env, int csrno,
--                                             Int128 new_value);
--
--typedef struct {
--    const char *name;
--    riscv_csr_predicate_fn predicate;
--    riscv_csr_read_fn read;
--    riscv_csr_write_fn write;
--    riscv_csr_op_fn op;
--    riscv_csr_read128_fn read128;
--    riscv_csr_write128_fn write128;
--    /* The default priv spec version should be PRIV_VERSION_1_10_0 (i.e 0) */
--    uint32_t min_priv_ver;
--} riscv_csr_operations;
--
--struct RISCVCSR {
--    int csrno;
--    bool (*insertion_test)(RISCVCPU *cpu);
--    riscv_csr_operations csr_ops;
--};
--
--/* CSR function table constants */
--enum {
--    CSR_TABLE_SIZE = 0x1000
--};
-+#include "csr.h"
+-    target_ulong jvt;
++    uint64_t jvt;
  
- /*
-  * The event id are encoded based on the encoding specified in the
-@@ -961,23 +893,11 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
- void riscv_add_satp_mode_properties(Object *obj);
- bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+     /* elp state for zicfilp extension */
+     bool      elp;
+@@ -271,7 +271,7 @@ struct CPUArchState {
+     target_ulong priv;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+-    target_ulong senvcfg;
++    uint64_t senvcfg;
  
--/* CSR function table */
--extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
--
- extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
+ #ifndef CONFIG_USER_ONLY
+     /* This contains QEMU specific information about the virt state. */
+@@ -313,18 +313,18 @@ struct CPUArchState {
+      */
+     uint64_t vsie;
  
--void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
--void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
--
- void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+-    target_ulong satp;   /* since: priv-1.10.0 */
+-    target_ulong stval;
+-    target_ulong medeleg;
++    uint64_t satp;   /* since: priv-1.10.0 */
++    uint64_t stval;
++    uint64_t medeleg;
  
--target_ulong riscv_new_csr_seed(target_ulong new_value,
--                                target_ulong write_mask);
--
- const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
+-    target_ulong stvec;
+-    target_ulong sepc;
+-    target_ulong scause;
++    uint64_t stvec;
++    uint64_t sepc;
++    uint64_t scause;
  
--/* In th_csr.c */
--extern const RISCVCSR th_csr_list[];
--
- const char *priv_spec_to_str(int priv_version);
- #endif /* RISCV_CPU_H */
-diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-new file mode 100644
-index 0000000000..fab53992bb
---- /dev/null
-+++ b/target/riscv/csr.h
-@@ -0,0 +1,94 @@
-+/*
-+ * QEMU RISC-V CSRs
-+ *
-+ * Copyright (c) 2016-2017 Sagar Karandikar, sagark@eecs.berkeley.edu
-+ * Copyright (c) 2017-2018 SiFive, Inc.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef RISCV_CSR_H
-+#define RISCV_CSR_H
-+
-+target_ulong riscv_new_csr_seed(target_ulong new_value,
-+                                target_ulong write_mask);
-+
-+RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-+                          target_ulong *ret_value);
-+
-+RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-+                           target_ulong *ret_value, target_ulong new_value,
-+                           target_ulong write_mask, uintptr_t ra);
-+RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
-+                                 target_ulong *ret_value,
-+                                 target_ulong new_value,
-+                                 target_ulong write_mask);
-+
-+static inline void riscv_csr_write(CPURISCVState *env, int csrno,
-+                                   target_ulong val)
-+{
-+    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
-+}
-+
-+static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
-+{
-+    target_ulong val = 0;
-+    riscv_csrrw(env, csrno, &val, 0, 0, 0);
-+    return val;
-+}
-+
-+typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
-+                                                 int csrno);
-+typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
-+                                            target_ulong *ret_value);
-+typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
-+                                             target_ulong new_value,
-+                                             uintptr_t ra);
-+typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
-+                                          target_ulong *ret_value,
-+                                          target_ulong new_value,
-+                                          target_ulong write_mask);
-+
-+RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
-+                               Int128 *ret_value);
-+RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
-+                                Int128 *ret_value, Int128 new_value,
-+                                Int128 write_mask, uintptr_t ra);
-+
-+typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
-+                                               Int128 *ret_value);
-+typedef RISCVException (*riscv_csr_write128_fn)(CPURISCVState *env, int csrno,
-+                                             Int128 new_value);
-+
-+typedef struct {
-+    const char *name;
-+    riscv_csr_predicate_fn predicate;
-+    riscv_csr_read_fn read;
-+    riscv_csr_write_fn write;
-+    riscv_csr_op_fn op;
-+    riscv_csr_read128_fn read128;
-+    riscv_csr_write128_fn write128;
-+    /* The default priv spec version should be PRIV_VERSION_1_10_0 (i.e 0) */
-+    uint32_t min_priv_ver;
-+} riscv_csr_operations;
-+
-+struct RISCVCSR {
-+    int csrno;
-+    bool (*insertion_test)(RISCVCPU *cpu);
-+    riscv_csr_operations csr_ops;
-+};
-+
-+/* CSR function table constants */
-+enum {
-+    CSR_TABLE_SIZE = 0x1000
-+};
-+
-+/* CSR function table */
-+extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
-+
-+void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
-+void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
-+
-+/* In th_csr.c */
-+extern const RISCVCSR th_csr_list[];
-+
-+#endif /* RISCV_CSR_H */
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 246ec81beb..d8d06f92bc 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
-+#include "csr.h"
- #include "internals.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 0e7236098b..3ebfd19b07 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -22,6 +22,7 @@
- #include "qemu/log.h"
- #include "qemu/timer.h"
- #include "cpu.h"
-+#include "csr.h"
- #include "tcg/tcg-cpu.h"
- #include "pmu.h"
- #include "time_helper.h"
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-index 1934f919c0..f8d3bc0df1 100644
---- a/target/riscv/gdbstub.c
-+++ b/target/riscv/gdbstub.c
-@@ -20,6 +20,7 @@
- #include "exec/gdbstub.h"
- #include "gdbstub/helpers.h"
- #include "cpu.h"
-+#include "csr.h"
+-    target_ulong mtvec;
+-    target_ulong mepc;
+-    target_ulong mcause;
+-    target_ulong mtval;  /* since: priv-1.10.0 */
++    uint64_t mtvec;
++    uint64_t mepc;
++    uint64_t mcause;
++    uint64_t mtval;  /* since: priv-1.10.0 */
  
- struct TypeSize {
-     const char *gdb_type;
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 5c19062c19..ad58e84158 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -31,6 +31,7 @@
- #include "system/kvm.h"
- #include "system/kvm_int.h"
- #include "cpu.h"
-+#include "csr.h"
- #include "trace.h"
- #include "accel/accel-cpu-target.h"
- #include "hw/pci/pci.h"
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 110292e84d..d2d9f2a47a 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -20,6 +20,7 @@
+     uint64_t mctrctl;
+     uint32_t sctrdepth;
+@@ -346,13 +346,13 @@ struct CPUArchState {
+     uint64_t mvip;
  
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "csr.h"
- #include "internals.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index 49eb7bbab5..bf6f8d62a3 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
-+#include "csr.h"
+     /* Hypervisor CSRs */
+-    target_ulong hstatus;
+-    target_ulong hedeleg;
++    uint64_t hstatus;
++    uint64_t hedeleg;
+     uint64_t hideleg;
+     uint32_t hcounteren;
+-    target_ulong htval;
+-    target_ulong htinst;
+-    target_ulong hgatp;
++    uint64_t htval;
++    uint64_t htinst;
++    uint64_t hgatp;
+     target_ulong hgeie;
+     target_ulong hgeip;
+     uint64_t htimedelta;
+@@ -366,7 +366,7 @@ struct CPUArchState {
+     uint64_t hvip;
  
- #define CSR_TH_SXSTATUS 0x5c0
+     /* Hypervisor controlled virtual interrupt priorities */
+-    target_ulong hvictl;
++    uint32_t hvictl;
+     uint8_t hviprio[64];
  
+     /* Upper 64-bits of 128-bit CSRs */
+@@ -379,26 +379,26 @@ struct CPUArchState {
+      * For RV64 this is a 64-bit vsstatus.
+      */
+     uint64_t vsstatus;
+-    target_ulong vstvec;
+-    target_ulong vsscratch;
+-    target_ulong vsepc;
+-    target_ulong vscause;
+-    target_ulong vstval;
+-    target_ulong vsatp;
++    uint64_t vstvec;
++    uint64_t vsscratch;
++    uint64_t vsepc;
++    uint64_t vscause;
++    uint64_t vstval;
++    uint64_t vsatp;
+ 
+     /* AIA VS-mode CSRs */
+     target_ulong vsiselect;
+ 
+-    target_ulong mtval2;
+-    target_ulong mtinst;
++    uint64_t mtval2;
++    uint64_t mtinst;
+ 
+     /* HS Backup CSRs */
+-    target_ulong stvec_hs;
+-    target_ulong sscratch_hs;
+-    target_ulong sepc_hs;
+-    target_ulong scause_hs;
+-    target_ulong stval_hs;
+-    target_ulong satp_hs;
++    uint64_t stvec_hs;
++    uint64_t sscratch_hs;
++    uint64_t sepc_hs;
++    uint64_t scause_hs;
++    uint64_t stval_hs;
++    uint64_t satp_hs;
+     uint64_t mstatus_hs;
+ 
+     /*
+@@ -435,8 +435,8 @@ struct CPUArchState {
+ 
+     PMUFixedCtrState pmu_fixed_ctrs[2];
+ 
+-    target_ulong sscratch;
+-    target_ulong mscratch;
++    uint64_t sscratch;
++    uint64_t mscratch;
+ 
+     /* Sstc CSRs */
+     uint64_t stimecmp;
+@@ -506,11 +506,11 @@ struct CPUArchState {
+ #endif /* CONFIG_KVM */
+ 
+     /* RNMI */
+-    target_ulong mnscratch;
+-    target_ulong mnepc;
+-    target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
+-    target_ulong mnstatus;
+-    target_ulong rnmip;
++    uint64_t mnscratch;
++    uint64_t mnepc;
++    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
++    uint64_t mnstatus;
++    uint64_t rnmip;
+     uint64_t rnmi_irqvec;
+     uint64_t rnmi_excpvec;
+ };
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 1600ec44f0..99e46c3136 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -80,17 +80,17 @@ static bool hyper_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_hyper = {
+     .name = "cpu/hyper",
+-    .version_id = 4,
+-    .minimum_version_id = 4,
++    .version_id = 5,
++    .minimum_version_id = 5,
+     .needed = hyper_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.hstatus, RISCVCPU),
+-        VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
++        VMSTATE_UINT64(env.hstatus, RISCVCPU),
++        VMSTATE_UINT64(env.hedeleg, RISCVCPU),
+         VMSTATE_UINT64(env.hideleg, RISCVCPU),
+         VMSTATE_UINT32(env.hcounteren, RISCVCPU),
+-        VMSTATE_UINTTL(env.htval, RISCVCPU),
+-        VMSTATE_UINTTL(env.htinst, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgatp, RISCVCPU),
++        VMSTATE_UINT64(env.htval, RISCVCPU),
++        VMSTATE_UINT64(env.htinst, RISCVCPU),
++        VMSTATE_UINT64(env.hgatp, RISCVCPU),
+         VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+         VMSTATE_UINTTL(env.hgeip, RISCVCPU),
+         VMSTATE_UINT64(env.hvien, RISCVCPU),
+@@ -98,28 +98,28 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
+         VMSTATE_UINT64(env.vstimecmp, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.hvictl, RISCVCPU),
++        VMSTATE_UINT32(env.hvictl, RISCVCPU),
+         VMSTATE_UINT8_ARRAY(env.hviprio, RISCVCPU, 64),
+ 
+         VMSTATE_UINT64(env.vsstatus, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsscratch, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.vscause, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstval, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsatp, RISCVCPU),
++        VMSTATE_UINT64(env.vstvec, RISCVCPU),
++        VMSTATE_UINT64(env.vsscratch, RISCVCPU),
++        VMSTATE_UINT64(env.vsepc, RISCVCPU),
++        VMSTATE_UINT64(env.vscause, RISCVCPU),
++        VMSTATE_UINT64(env.vstval, RISCVCPU),
++        VMSTATE_UINT64(env.vsatp, RISCVCPU),
+         VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
+         VMSTATE_UINT64(env.vsie, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.mtval2, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtinst, RISCVCPU),
++        VMSTATE_UINT64(env.mtval2, RISCVCPU),
++        VMSTATE_UINT64(env.mtinst, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.stvec_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.sscratch_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.sepc_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.scause_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.stval_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.satp_hs, RISCVCPU),
++        VMSTATE_UINT64(env.stvec_hs, RISCVCPU),
++        VMSTATE_UINT64(env.sscratch_hs, RISCVCPU),
++        VMSTATE_UINT64(env.sepc_hs, RISCVCPU),
++        VMSTATE_UINT64(env.scause_hs, RISCVCPU),
++        VMSTATE_UINT64(env.stval_hs, RISCVCPU),
++        VMSTATE_UINT64(env.satp_hs, RISCVCPU),
+         VMSTATE_UINT64(env.mstatus_hs, RISCVCPU),
+ 
+         VMSTATE_END_OF_LIST()
+@@ -290,12 +290,12 @@ static bool envcfg_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_envcfg = {
+     .name = "cpu/envcfg",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = envcfg_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(env.menvcfg, RISCVCPU),
+-        VMSTATE_UINTTL(env.senvcfg, RISCVCPU),
++        VMSTATE_UINT64(env.senvcfg, RISCVCPU),
+         VMSTATE_UINT64(env.henvcfg, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+@@ -355,11 +355,11 @@ static bool jvt_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_jvt = {
+     .name = "cpu/jvt",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = jvt_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.jvt, RISCVCPU),
++        VMSTATE_UINT64(env.jvt, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -402,8 +402,8 @@ static const VMStateDescription vmstate_ssp = {
+ 
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+-    .version_id = 10,
+-    .minimum_version_id = 10,
++    .version_id = 11,
++    .minimum_version_id = 11,
+     .post_load = riscv_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+@@ -434,16 +434,16 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.mvip, RISCVCPU),
+         VMSTATE_UINT64(env.sie, RISCVCPU),
+         VMSTATE_UINT64(env.mideleg, RISCVCPU),
+-        VMSTATE_UINTTL(env.satp, RISCVCPU),
+-        VMSTATE_UINTTL(env.stval, RISCVCPU),
+-        VMSTATE_UINTTL(env.medeleg, RISCVCPU),
+-        VMSTATE_UINTTL(env.stvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.sepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.scause, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.mepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.mcause, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtval, RISCVCPU),
++        VMSTATE_UINT64(env.satp, RISCVCPU),
++        VMSTATE_UINT64(env.stval, RISCVCPU),
++        VMSTATE_UINT64(env.medeleg, RISCVCPU),
++        VMSTATE_UINT64(env.stvec, RISCVCPU),
++        VMSTATE_UINT64(env.sepc, RISCVCPU),
++        VMSTATE_UINT64(env.scause, RISCVCPU),
++        VMSTATE_UINT64(env.mtvec, RISCVCPU),
++        VMSTATE_UINT64(env.mepc, RISCVCPU),
++        VMSTATE_UINT64(env.mcause, RISCVCPU),
++        VMSTATE_UINT64(env.mtval, RISCVCPU),
+         VMSTATE_UINTTL(env.miselect, RISCVCPU),
+         VMSTATE_UINTTL(env.siselect, RISCVCPU),
+         VMSTATE_UINT32(env.scounteren, RISCVCPU),
+@@ -454,8 +454,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+                              vmstate_pmu_ctr_state, PMUCTRState),
+         VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+         VMSTATE_UINTTL_ARRAY(env.mhpmeventh_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+-        VMSTATE_UINTTL(env.sscratch, RISCVCPU),
+-        VMSTATE_UINTTL(env.mscratch, RISCVCPU),
++        VMSTATE_UINT64(env.sscratch, RISCVCPU),
++        VMSTATE_UINT64(env.mscratch, RISCVCPU),
+         VMSTATE_UINT64(env.stimecmp, RISCVCPU),
+ 
+         VMSTATE_END_OF_LIST()
 -- 
 2.51.0
 
