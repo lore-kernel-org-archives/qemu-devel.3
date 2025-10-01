@@ -4,96 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99900CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 11:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AA4CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 11:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3v4n-000417-N2; Wed, 01 Oct 2025 07:32:54 -0400
+	id 1v3v9L-0005Sl-Re; Wed, 01 Oct 2025 07:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v3v4l-00040N-7o
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 07:32:51 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v3v4g-000252-23
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 07:32:50 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-74435335177so17045737b3.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 04:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1759318358; x=1759923158; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dN7uGPOq0+IjqEkygipqr1ptvic5doB1cNsl9H3Jees=;
- b=FWzuO9kMirMFo7kgCGjZSWQcBHRif4+lHuoGNBSgQJDqzM1Qkcge+IGYjkGA/0uv+p
- xq61Y0OPX1fzC0D5yKJRZpxoV3oBGJooAoNUqqHpm0h6iF+sPWXGbfPzJUaFBzDp1Cb8
- jpzF1M72twjIhLCZAkSpOWXvrHgUCDbmVywo0AMswlD+poTQ/7Mj7oXRTU50CJAem0uw
- w+xONqMgE/v4a61HjqjRaP5rdtg0wWiWGjORU9HEf2hbzGFitgQe2LJmvQYgoDu/sPBU
- jfhixoPjaZZ76/peXUIg5P7yjn9NweWyJJ5m8lUa2ygXHoqK7BFDShdpDA/DAzfjEYpw
- /tVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759318358; x=1759923158;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dN7uGPOq0+IjqEkygipqr1ptvic5doB1cNsl9H3Jees=;
- b=kUP808KWgQfUyUg+LlwKaFBaRY5kPn+cuRi4QTi8pDBmjkGk1YOvJqKfkzDr46Z0mH
- HBVYGuhySZ/vXjRNlU1LzNRadpAYh6a2+wnOb0Wuf57BfwSI5iRFA/brmvxLvYOudXi4
- 0T9MZaAFS7CM/wcM0agigvDAsyjcyugaACpgQ9QNKuUwGULDLkzR9eCnG6qhO7CB8uJx
- OeP9kUg8Y46fQpP7UDMR1GdFCVe7QFhnXCnTIpYZ9+FgltbfsdmTVgrgwI2cIrJ0ebS9
- 60hglgbscXD138+QFUQNwpB/PatksbfkInCSRXqlPxJ68UNzoXEkt7zMkoH9DCWCThfX
- asVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW63vL5JrHCFlvzIEQqoRW1YIeGjPvNUWWwW8N6ruD2mtrSujxzFuyRjY4+c0dpGHhuxc6G/TaCxwum@nongnu.org
-X-Gm-Message-State: AOJu0Ywt1wKtuHTEFBxPVhuzOimR3HR/UokH5IE/SUn0sgAiZv3Z5A/t
- jcyxpw2RTiK72SJVxlXa1WoaCxqxGyp2hayPOMXvRIr8+M5e0qifN0G04mjXguDe+wU=
-X-Gm-Gg: ASbGncuiIEz72Bf+uEMlyBjK7t+f38BGvpHhkTJCOIOWfr+RTMHBMNr5+Oxh0rKmf58
- M5Szc8gqIVdToDh/ET8peKXBAP0Si8C7wRJMCBPUNyMpZnwM5hy+5m2W3shvZfUJC0m0XLUdn9D
- MKpPJVVgAACUjd+Ug/liT1Xz2Uva2TZiHVoE0/okbiNZi76yVFX07YOpilwxFMrmQCANWj/JoLt
- dr4xyq4A6BvPXydh/wfa84xuCDkgeacG50yNJ1Ugm158nm0pNPj7NHRJV9NYZgYhKpo+DWjINYK
- JEjcMQYff1qehSkcZkcX1kqkYDzZGXX5JMkfLQ+PUtfkSEWTzXIZuzf4150bWuDAgu1A4e6OEXW
- 4aZo0kXbp3jmjOHeip4cJOryKZ9Sn83cpVPLrJq4OEQSPWMg918+Cq7yLkZNHFMmm6nz1Ttns+A
- YuAe1NUA3vbbdL3nEwZ5ZcEpogk+x4pu1w8jc=
-X-Google-Smtp-Source: AGHT+IGbFo3FnsFnTyuPSIdXDv5flYWlhMwUx7rXJtsuSIXqWTbrOOn0nzcwetcRgQt9FJwjPtlfXw==
-X-Received: by 2002:a05:690e:1582:20b0:636:d4de:a73d with SMTP id
- 956f58d0204a3-63b700bb5f2mr3736791d50.19.1759318357825; 
- Wed, 01 Oct 2025 04:32:37 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:6bd8:87f0:c4e8:3ccb:fa1b?
- ([2804:7f0:bcc0:6bd8:87f0:c4e8:3ccb:fa1b])
- by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-63ad64e5d45sm2493291d50.29.2025.10.01.04.32.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 04:32:37 -0700 (PDT)
-Message-ID: <0878ebc9-f553-46b8-b2ff-b748bd45da88@ventanamicro.com>
-Date: Wed, 1 Oct 2025 08:32:33 -0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v3v9J-0005ST-IF
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 07:37:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v3v98-0003lW-T2
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 07:37:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759318637;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=uM+C04Uou+0L5SbpdqRstzBuNSxqWZvsuF8Hy365MZ0=;
+ b=Ntwo/+ft4Mv1RY11rEzlxIboHBUPXzjznaJvj2ErPSZqqPDaXm9cFxTjbhONJ9jAB4Wm8f
+ MABpQ6LLEyV3Qs4MyE04wMX4rTRNGA+t5/GOf5BSqA/P6Peml87HiGtrgUYAd6AePOtxXB
+ F/mqmWcGm4olV03LyZ/QdePXbTbVUm4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-cqFDdJa0NNGEi0AnpbmnRw-1; Wed,
+ 01 Oct 2025 07:37:14 -0400
+X-MC-Unique: cqFDdJa0NNGEi0AnpbmnRw-1
+X-Mimecast-MFC-AGG-ID: cqFDdJa0NNGEi0AnpbmnRw_1759318632
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DB4F19560AF; Wed,  1 Oct 2025 11:37:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.187])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82A9430002C5; Wed,  1 Oct 2025 11:37:02 +0000 (UTC)
+Date: Wed, 1 Oct 2025 12:36:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v4 10/27] accel/mshv: Add vCPU creation and execution loop
+Message-ID: <aN0SWa-i-zJJLDW2@redhat.com>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+ <20250916164847.77883-11-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/7] Add RISCV big endian support
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Roan Richmond <roan.richmond@codethink.co.uk>, ben.dooks@codethink.co.uk,
- lawrence.hunter@codethink.co.uk
-Cc: felix.chong@codethink.co.uk, sagark@eecs.berkeley.edu, palmer@dabbet.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, qemu-riscv@nongnu.org,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20241220154616.283933-1-roan.richmond@codethink.co.uk>
- <6ad3dee0-0fe8-4368-b43f-e7f8f30ead24@canonical.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <6ad3dee0-0fe8-4368-b43f-e7f8f30ead24@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250916164847.77883-11-magnuskulke@linux.microsoft.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,77 +98,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(ccing qemu-devel ML - please send all patches to qemu-devel too)
-
-On 9/30/25 6:46 AM, Heinrich Schuchardt wrote:
-> On 12/20/24 16:45, Roan Richmond wrote:
->> This is part of our project to investigate big endian on RISC-V.
->> The full information is documented on our gitlab[1] which includes
->> source repositories, build information and project documentation.
->>
->> We have a minimal buildroot, qemu and kernel working on QEMU.
->>
->> As this is a work in progress any review or help is appreciated.
->>
->> [1] https://gitlab.com/CodethinkLabs/riscv_bigendian
->>
->> Ben Dooks (2):
->>    target/riscv: Add big endian check for atomic ops
->>    taregt/riscv: Add big endian checks for pagetable
->>
->> Lawrence Hunter (3):
->>    target/riscv: Add SSTATUS_UBE
->>    target/riscv: Add sfence.vma for endian change
->>    target/riscv: Add big endian CPU target
+On Tue, Sep 16, 2025 at 06:48:30PM +0200, Magnus Kulke wrote:
+> Create MSHV vCPUs using MSHV_CREATE_VP and initialize their state.
+> Register the MSHV CPU execution loop loop with the QEMU accelerator
+> framework to enable guest code execution.
 > 
-> The RISC-V specification explicitly allows for bi-endian cpus. Shouldn't we change the existing generic RISC-V cpus to allow starting low-endian and switching the endianness at runtime instead of adding a new CPU?
+> The target/i386 functionality is still mostly stubbed out and will be
+> populated in a later commit in this series.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  accel/mshv/mshv-all.c       | 188 +++++++++++++++++++++++++++++++++---
+>  accel/mshv/trace-events     |   2 +
+>  include/system/mshv.h       |  17 ++++
+>  target/i386/mshv/mshv-cpu.c |  64 ++++++++++++
+>  4 files changed, 259 insertions(+), 12 deletions(-)
+> 
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 63f2ed5fa1..b49988d294 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -392,6 +392,24 @@ int mshv_hvcall(int fd, const struct mshv_root_hvcall *args)
+>      return ret;
+>  }
+>  
+> +static int mshv_init_vcpu(CPUState *cpu)
+> +{
+> +    int vm_fd = mshv_state->vm;
+> +    uint8_t vp_index = cpu->cpu_index;
+> +    int ret;
+> +
+> +    mshv_arch_init_vcpu(cpu);
+> +    cpu->accel = g_new0(AccelCPUState, 1);
+> +
+> +    ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
+> +    if (ret < 0) {
+> +        return -1;
+> +    }
+> +
+> +    cpu->accel->dirty = true;
+> +
+> +    return 0;
+> +}
+>  
+>  static int mshv_init(AccelState *as, MachineState *ms)
+>  {
+> @@ -414,6 +432,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>          return -1;
+>      }
+>  
+> +    mshv_init_mmio_emu();
+> +
+>      mshv_init_msicontrol();
+>  
+>      ret = create_vm(mshv_fd, &vm_fd);
+> @@ -443,40 +463,184 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>      return 0;
+>  }
+>  
+> +static int mshv_destroy_vcpu(CPUState *cpu)
+> +{
+> +    int cpu_fd = mshv_vcpufd(cpu);
+> +    int vm_fd = mshv_state->vm;
+> +
+> +    mshv_remove_vcpu(vm_fd, cpu_fd);
+> +    mshv_vcpufd(cpu) = 0;
+> +
+> +    mshv_arch_destroy_vcpu(cpu);
+> +    g_free(cpu->accel);
+> +    g_clear_pointer(&cpu->accel, g_free);
+
+This is a double-free.
+
+   g_clear_pointer(&cpu->accel, g_free);
+
+is equivalent to
+
+   g_free(cpu->accel)
+   cpu->accel = NULL;
+
+So you don't need the earlier 'g_free(cpu->accel)'
+call
 
 
-Mainline Linux stated that RISC-V BE support will be "discouraged" (feel free to read
-yet another Linus rant in linux-riscv - we're having multiple Linus rants per month).
-This means that this work investigation will require at very least a custom kernel that
-mainline won't support, which will in turn make it harder for QEMU to properly support
-it in boot tests via TuxBoot and so on.
+> +void mshv_arch_destroy_vcpu(CPUState *cpu)
+> +{
+> +    X86CPU *x86_cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86_cpu->env;
+> +
+> +    g_free(env->emu_mmio_buf);
+> +    env->emu_mmio_buf = NULL;
 
-This doesn't mean that we should reject this work, but we should keep BE exclusive logic
-separated from the generic LE code at least for now. Point being: the split BE CPU
-target, like this series is already doing, seems like the way to go.
+These two lines could be replaced with
+
+  g_clear_pointer(&env->emu_mmio_buf, g_free);
 
 
-Thanks,
-
+With regards,
 Daniel
-
-> 
-> The switch to big-endian could occur at the entry-point of OpenSBI.
-> 
-> Best add a cpu parameter to define a cpu as big-endian, low-endian, or bi-endian and default to low-endian only.
-> 
-> Best regards
-> 
-> Heinrich
-> 
->>
->> Roan Richmond (2):
->>    target/riscv: Add riscv MSTATUS_xBE CSR support
->>    target/riscv: Add riscv big endian data flag into DisasContext
->>
->>   target/riscv/cpu-qom.h                      |  1 +
->>   target/riscv/cpu.c                          |  8 +++++
->>   target/riscv/cpu.h                          |  2 ++
->>   target/riscv/cpu_bits.h                     |  3 ++
->>   target/riscv/cpu_helper.c                   | 34 ++++++++++++++++-----
->>   target/riscv/csr.c                          | 19 ++++++++++--
->>   target/riscv/insn_trans/trans_rva.c.inc     |  4 +++
->>   target/riscv/insn_trans/trans_rvi.c.inc     |  6 ++++
->>   target/riscv/insn_trans/trans_rvzacas.c.inc |  8 ++---
->>   target/riscv/translate.c                    |  5 +++
->>   10 files changed, 76 insertions(+), 14 deletions(-)
->>
-> 
-> 
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
