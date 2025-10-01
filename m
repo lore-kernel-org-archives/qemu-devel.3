@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 900E7CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6153BCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3zFX-0003JF-KA; Wed, 01 Oct 2025 12:00:16 -0400
+	id 1v3zJK-0005OS-Gp; Wed, 01 Oct 2025 12:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3zFK-0003Bf-Iu
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:00:05 -0400
-Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ id 1v3zJH-0005MS-9h
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:04:08 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3zFD-00025L-6W
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:00:02 -0400
-Received: by mail-qv1-xf36.google.com with SMTP id
- 6a1803df08f44-79599d65f75so538986d6.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 08:59:43 -0700 (PDT)
+ id 1v3zIz-0002xP-1S
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:04:03 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-4e3117ea7a2so31841551cf.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:03:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759334381; x=1759939181; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759334624; x=1759939424; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3H7aos6A708jGSZuLPLSE070Fktbew8/eoA80ARhIUI=;
- b=dXQupdZGceNYc3e4Ra70GM0s4lawhMkc/y1YxLRoRBGIIL+Tvq8SKCaVaJlLMJxRm1
- Zc0rAWV5ovJumhBl4tKUgSaQopN6LvienYIWSL3oYTQ01cLfoiYxD953pvu7aHqBKwDL
- TIk0yPmahHCAj9QLTCwPCkJ6PnDGmtOKyp3vh4HXU6OfuATOS568tAdrTohQ2E7YYyJs
- FTdHKsnzBVhC3dsic9S3vWevIPaFoqpbFb0MRKK38F2/nl4+tA1ynT14FjyndytTZqal
- RC6D2E75Roysos57Rlye9X/8lqC8knpy/CFZwjrxuiIaytwpa7g1CDImwtSKvLkcze/P
- FeCA==
+ bh=LRN/gSuS1GAP18uW4uZI9r2/gGWJmDTUpS3beftY9+c=;
+ b=dtUBpzspJQio0kQ5KI4bDo5nOwzJ/kZ9eH+9UhiOIls52shWoIUEpx1xn7wdMeA8PC
+ nb/E7qBSxqky5+P+nav/mNhoYyTh60Ppc5RmoLW6kD8+4O/PGKA7hVzpgjan954Uiv7i
+ 0kYa2LQNnbjBHdIqwsZJuQ4aOlJOudQH5R2PHjUT+Iy0NJ8N8ZzIUUmP3rZJCtXfvztY
+ la9hFB4AeTnWtIznYbEQ7adx0zNVDGSEBruqOtWHPqmsZeNnBA0H43aSKhRyc3NALY7f
+ 8wIH2ca/k37Ltr36FQLA118a60fvFKGC/GZGqZLCpShuabDA+s1rmrqu4EmIZ6q65VcM
+ 3Pcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759334381; x=1759939181;
+ d=1e100.net; s=20230601; t=1759334624; x=1759939424;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3H7aos6A708jGSZuLPLSE070Fktbew8/eoA80ARhIUI=;
- b=ujYqavgFo1A8BrbYcbmsTYxWU24tlZSkdBLIkHsoDpuCbGurkbG22sn44FLl9/Ihix
- oksnSEnZe7AlhtRC6q0nMQxp7XAzkh1Q6j7dDQAhTaIGd/Q/E4X5Dowlwx5C5NzLSx8R
- 5t7PUC7zJ0Lfz3LJUWiSAR+JI65CLbcuoPov4BTmCtk3jrFCeNfmNS17nHNh/mU7p4mG
- JesWMmFP+n+uYKbCAbgs/Pn8f+75XGKJl6hLuCvUavjSUR4OmmoroND43TOjcM7eTT90
- +PTa+jSzQhP+/mHQ3v8bRTD4NgpzwRreLxrOtMv2bSlg+x3FFYiW0nCzxQLBbafUQtI5
- pGgg==
+ bh=LRN/gSuS1GAP18uW4uZI9r2/gGWJmDTUpS3beftY9+c=;
+ b=r6GyGFgNf4PR2WzntTogCNpZ9FmNnEaH9Gnnu2aA2F+rCe0RBuqUEC268saY/t/y9U
+ hqqZJWakfpnVUc/Xymvrv+4UARvj4pK9E1famlRgy05dVPGJE7W9wlaUPg1uhSwWl7tj
+ LmBDAHh3lY3w+yA42qV0HwAxq0KJ/7gV4qwoJd2DqYbz+Khc9XZnXF87H34jfwxynFlL
+ dVr7Gf2D14aY3O0xpIkWh/tC/N9AQ24/Xs+cNMBJFXQXNTaCP8E1wbOICjb8wHr6RfFJ
+ kEEg/bAWUyGzQySVSK/4PQwFOCMYQ4f2VUIGBwq3LPO1yXhbdDOAzBnln+DEwTqtGnzy
+ 4cOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMTUVkG4i7Kcu1LhzCawIJd+BjgvBItZ7wibTW46zwBbDGfxP5hVnwrLGjKtSY8IY0dGHUutMn0l8a@nongnu.org
-X-Gm-Message-State: AOJu0YxxbQcIpKB1hnNypsb1EB/cLNSd66OhVUlFgiFhusXkist5zP4Q
- xs+tl5BEcba6/pLnaaFBz941yQ5vFKffkMLt6lo7WnrlFz8LoJK84MKKL+CkOFxYipg=
-X-Gm-Gg: ASbGncsKnZrGqpBOoD7k+eEjZ6AF0y8+tnmO+Oq3EuKqAwbNCD4ISYicuaXdOGFE1l5
- ivYqgebyteNqJKQn+vqzGB/GLjSsIJ8XSQLzn/vrBuvW1UkUOuVntDrjqTXWBTS2gyNEic8Sc1+
- YQKebUOFch0pyCtSMWq7eLrQTgogNmteo1h2eIbRzp9oQ+Y3zADgRRhVUDCBcVad+NM/rt0dZqq
- fqUJPGoVJxUUOjoqHNG48Vls46J4L1+mYXSH2cVljbS+8jpaGCgq+5HwrGsdCVjnJBpMCriSxQE
- qUwPEcrn5df3HQHMrJzr+7+kXY7jSHbc+xCm7/0i5xntPo+jjHLcZ981E4awVaVIVdpN/qfJ0Eo
- 7qz1ywwgTHdaj7v/RG1BahycNBKkbLyjSkW168UFhEwxlBVvOEqclp6DX7Oi6RWMbb9x66ENRbe
- ElX0EL//TS6Wb6/8yZaQawo77lJZs76OY=
-X-Google-Smtp-Source: AGHT+IGVdskAfeNNXFR4PU+7tslHlDwSJrWZk61Zlg8p6+z91XBdxRpfUC8DJn1TrfJqCud5iIEExA==
-X-Received: by 2002:ad4:5baf:0:b0:787:982:2953 with SMTP id
- 6a1803df08f44-8739f3c7da3mr58386356d6.29.1759334381302; 
- Wed, 01 Oct 2025 08:59:41 -0700 (PDT)
+ AJvYcCUeRlR0jQcOlgZokX8THGm0H1WLSONCLwWr3q4YVLSUmX6A69cFpAvGGRsbgI/8loybE+MsJp8fyawo@nongnu.org
+X-Gm-Message-State: AOJu0YwJx+aJrXJohefWytqJgBpl1ViKJoycbosut6YX0W/08HxYoJXm
+ nT1B9DsvVEtlQO8eLNIZnVUm3ZrQ1BWpBR7HXY1HpjGWHYOLAT8KbgaEvg0pGb/PeP4=
+X-Gm-Gg: ASbGncvtPcHqlWhiCYapJgCFgvlM5pLQs6FIjDyWGV5uaRLL9iZVGNEM+5JrNOrDmJJ
+ MMBdXl5vVbbDgKCozSuCdQ5P877gPo8bXHDq4LkxwtYGmjP1UIiJ0GeqzpXGUulaJ3/S2E4m3Zm
+ 5AnCGXeG0B1ObiK4ORTvh7v8akubjiQOKHDT6PY84zsDISj3pTbFFQg/Vy1rm0hcI1uTkMPURnz
+ 9a9qc+Np1DFaBxV+pjbReaN/NjRT4EAWPYjlR6k6V9orBZzrcxotrDj8ZrStDjUtIHw3AsduvO9
+ V+OglMKs30GsgCzZJPhCM9QzypNI4Uv/702mCbAvL58fzykdeI9+l6KRIWmvACux7EozZ7cQg9N
+ kMgxhf3Fq3Dw4an46dtoN2MYk9dSFmSvSS91AIfswWsChyhsPUlOP05HLJ8BdKcKAlMMWAkoUR8
+ GhEnXoT5db8yD5rld+NDKXd4QM3A7T7qM=
+X-Google-Smtp-Source: AGHT+IEHuRntYtfblmIAnhKBBcUOe3vagIGzluokfa3UwmivMH5oOuOgJzWyvpEoKCwtykjm7AhDBA==
+X-Received: by 2002:ac8:5a55:0:b0:4e0:296e:8cbb with SMTP id
+ d75a77b69052e-4e41de7318amr48478751cf.64.1759334624359; 
+ Wed, 01 Oct 2025 09:03:44 -0700 (PDT)
 Received: from ?IPV6:2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345?
  ([2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bb4465cesm424136d6.17.2025.10.01.08.59.39
+ d75a77b69052e-4e55cadc7f0sm1011971cf.26.2025.10.01.09.03.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 08:59:40 -0700 (PDT)
-Message-ID: <2184ba65-b67f-47fd-8234-883f5d8b57fd@linaro.org>
-Date: Wed, 1 Oct 2025 08:59:37 -0700
+ Wed, 01 Oct 2025 09:03:43 -0700 (PDT)
+Message-ID: <62257ea8-f06f-4a42-b426-bc4a7d93eaff@linaro.org>
+Date: Wed, 1 Oct 2025 09:03:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] system/ramblock: Use ram_addr_t in
- ram_block_discard_guest_memfd_range
+Subject: Re: [PATCH 6/6] system/ramblock: Move RAMBlock helpers out of
+ "system/ram_addr.h"
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>,
@@ -82,20 +82,19 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org,
  Peter Xu <peterx@redhat.com>
 References: <20250929154529.72504-1-philmd@linaro.org>
- <20250929154529.72504-5-philmd@linaro.org>
+ <20250929154529.72504-7-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250929154529.72504-5-philmd@linaro.org>
+In-Reply-To: <20250929154529.72504-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x830.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,33 +112,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/29/25 08:45, Philippe Mathieu-Daudé wrote:
-> Rename @start as @offset. Since it express an offset within a
-> RAMBlock, use the ram_addr_t type to make emphasis on the QEMU
-> intermediate address space represented.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/system/ramblock.h |  3 ++-
->   system/physmem.c          | 12 ++++++------
->   2 files changed, 8 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-> index e69af20b810..897c5333eaf 100644
-> --- a/include/system/ramblock.h
-> +++ b/include/system/ramblock.h
-> @@ -104,7 +104,8 @@ struct RamBlockAttributes {
->   };
->   
->   int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
-> -int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
-> +/* @offset: the offset within the RAMBlock */
-> +int ram_block_discard_guest_memfd_range(RAMBlock *rb, ram_addr_t offset,
->                                           size_t length);
+>   include/system/ram_addr.h | 11 -----------
+>   include/system/ramblock.h | 11 +++++++++++
+>   2 files changed, 11 insertions(+), 11 deletions(-)
 
-This isn't a ram_addr_t, it's an offset.
-You can't pass the value to one of the lookup functions, for instance.
-Though I suppose 80% of the ram_addr.h interface uses ram_addr_t for lots of things that 
-aren't.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+> +static inline bool offset_in_ramblock(RAMBlock *b, ram_addr_t offset)
+> +{
+> +    return (b && b->host && offset < b->used_length) ? true : false;
+
+... though we could stand to clean up "? true : false" silliness.
+
+I assume this comes from programmers who first learned something other than C, but I can't 
+work out what language that might be.  I see it in patches every once in a while.
 
 
 r~
