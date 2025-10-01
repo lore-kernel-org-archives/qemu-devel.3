@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08992CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 06:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75599CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 06:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3qcu-00047u-6u; Wed, 01 Oct 2025 02:47:48 -0400
+	id 1v3qcd-00041a-UY; Wed, 01 Oct 2025 02:47:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v3qcp-000472-Sv; Wed, 01 Oct 2025 02:47:43 -0400
+ id 1v3qcW-0003z3-3s; Wed, 01 Oct 2025 02:47:24 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v3qce-0003bh-FZ; Wed, 01 Oct 2025 02:47:43 -0400
+ id 1v3qcH-0003bh-KZ; Wed, 01 Oct 2025 02:47:23 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 1 Oct
@@ -30,25 +30,25 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 3/3] tests/functional/aarch64/test_aspeed_ast2700fc: Add
- vbootrom test
-Date: Wed, 1 Oct 2025 14:46:24 +0800
-Message-ID: <20251001064625.1058680-4-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 2/3] hw/arm/aspeed_ast27x0-fc: Add VBOOTROM support
+Date: Wed, 1 Oct 2025 14:46:23 +0800
+Message-ID: <20251001064625.1058680-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251001064625.1058680-1-jamin_lin@aspeedtech.com>
 References: <20251001064625.1058680-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,83 +66,38 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce load_ast2700fc_coprocessor() to load the SSP/TSP ELF images
-via -device loader. Use this helper in start_ast2700fc_test() to remove
-duplicated code.
-
-Add start_ast2700fc_test_vbootrom() which boots the ast2700fc machine
-with -bios ast27x0_bootrom.bin and reuses the coprocessor loader.
-
-Add test_aarch64_ast2700fc_sdk_vbootrom_v09_06() to test the vbootrom
-with ast2700fc machine.
+Introduces support for loading a vbootrom image into the dedicated vbootrom
+memory region in the AST2700 Full Core machine.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- .../aarch64/test_aspeed_ast2700fc.py          | 37 ++++++++++++++-----
- 1 file changed, 28 insertions(+), 9 deletions(-)
+ hw/arm/aspeed_ast27x0-fc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-index 28b66614d9..c0458e47b2 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-@@ -83,6 +83,17 @@ def do_ast2700fc_tsp_test(self):
-         exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
-                                           '[72c02000] 06010103')
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 57964e336c..d7f0f3325d 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -60,6 +60,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+     Ast2700FCState *s = AST2700A1FC(machine);
+     AspeedSoCState *soc;
+     AspeedSoCClass *sc;
++    const char *bios_name = NULL;
+     BlockBackend *fmc0 = NULL;
+     DeviceState *dev = NULL;
+     uint64_t rom_size;
+@@ -117,6 +118,10 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+         aspeed_install_boot_rom(soc, fmc0, &s->ca35_boot_rom, rom_size);
+     }
  
-+    def load_ast2700fc_coprocessor(self, name):
-+        load_elf_list = {
-+            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
-+            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
-+        }
++    /* VBOOTROM */
++    bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
++    aspeed_load_vbootrom(soc, bios_name, errp);
 +
-+        for cpu_num, key in enumerate(load_elf_list, start=4):
-+            file = load_elf_list[key]
-+            self.vm.add_args('-device',
-+                             f'loader,file={file},cpu-num={cpu_num}')
-+
-     def start_ast2700fc_test(self, name):
-         ca35_core = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -120,16 +131,13 @@ def start_ast2700fc_test(self, name):
-             self.vm.add_args('-device',
-                              f'loader,addr=0x430000000,cpu-num={i}')
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
  
--        load_elf_list = {
--            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
--            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
--        }
--
--        for cpu_num, key in enumerate(load_elf_list, start=4):
--            file = load_elf_list[key]
--            self.vm.add_args('-device',
--                             f'loader,file={file},cpu-num={cpu_num}')
-+        self.load_ast2700fc_coprocessor(name)
-+        self.do_test_aarch64_aspeed_sdk_start(
-+                self.scratch_file(name, 'image-bmc'))
- 
-+    def start_ast2700fc_test_vbootrom(self, name):
-+        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
-+        self.load_ast2700fc_coprocessor(name)
-         self.do_test_aarch64_aspeed_sdk_start(
-                 self.scratch_file(name, 'image-bmc'))
- 
-@@ -144,5 +152,16 @@ def test_aarch64_ast2700fc_sdk_v09_06(self):
-         self.do_ast2700fc_ssp_test()
-         self.do_ast2700fc_tsp_test()
- 
-+    def test_aarch64_ast2700fc_sdk_vbootrom_v09_06(self):
-+        self.set_machine('ast2700fc')
-+
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700)
-+        self.start_ast2700fc_test_vbootrom('ast2700-default')
-+        self.verify_openbmc_boot_and_login('ast2700-default')
-+        self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
-+        self.do_ast2700fc_ssp_test()
-+        self.do_ast2700fc_tsp_test()
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+     return true;
 -- 
 2.43.0
 
