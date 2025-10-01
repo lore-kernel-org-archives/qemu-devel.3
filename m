@@ -4,51 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75599CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 06:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98A9CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 06:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3qcd-00041a-UY; Wed, 01 Oct 2025 02:47:32 -0400
+	id 1v3qgo-0008M5-IL; Wed, 01 Oct 2025 02:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v3qcW-0003z3-3s; Wed, 01 Oct 2025 02:47:24 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3qgl-0008KP-6G
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 02:51:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v3qcH-0003bh-KZ; Wed, 01 Oct 2025 02:47:23 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 1 Oct
- 2025 14:46:26 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 1 Oct 2025 14:46:26 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 2/3] hw/arm/aspeed_ast27x0-fc: Add VBOOTROM support
-Date: Wed, 1 Oct 2025 14:46:23 +0800
-Message-ID: <20251001064625.1058680-3-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251001064625.1058680-1-jamin_lin@aspeedtech.com>
-References: <20251001064625.1058680-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v3qgY-0005Ji-Fm
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 02:51:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759301488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Hjy+GwXXOAIZu0k+E/X9kZ88e9fpkjlxtvZ5A3hFjVM=;
+ b=gHDUWSXZdRiXGUewLJDUPWjx2bN900t6JtR+t8urqkppKokM8FM05A3mz+RLzYQy294tH9
+ yhbKQNhISHckaffH1Rbhg00pq1V+H6eSM1uk3A2XuVQF+euEFCStDiuc0czWBeG+3f/Fy1
+ cae4oUPjPeamGV7Mt9+X2V5ApYP5IL4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-bPY7Z67MO1q6e44707H7Gg-1; Wed,
+ 01 Oct 2025 02:51:26 -0400
+X-MC-Unique: bPY7Z67MO1q6e44707H7Gg-1
+X-Mimecast-MFC-AGG-ID: bPY7Z67MO1q6e44707H7Gg_1759301485
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C265219774E6; Wed,  1 Oct 2025 06:51:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CAF930002D0; Wed,  1 Oct 2025 06:51:25 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 97AAB21E6A27; Wed, 01 Oct 2025 08:51:22 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+Subject: [PULL v2 00/13] Error reporting patches for 2025-09-30
+Date: Wed,  1 Oct 2025 08:51:21 +0200
+Message-ID: <20251001065122.575596-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,44 +78,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduces support for loading a vbootrom image into the dedicated vbootrom
-memory region in the AST2700 Full Core machine.
+The following changes since commit 9b16edec6e9a483469c789475b2065d26b52db35:
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/arm/aspeed_ast27x0-fc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+  Merge tag 'pull-ppc-for-20250928-20250929' of https://gitlab.com/harshpb/qemu into staging (2025-09-29 07:25:28 -0700)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 57964e336c..d7f0f3325d 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -60,6 +60,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     Ast2700FCState *s = AST2700A1FC(machine);
-     AspeedSoCState *soc;
-     AspeedSoCClass *sc;
-+    const char *bios_name = NULL;
-     BlockBackend *fmc0 = NULL;
-     DeviceState *dev = NULL;
-     uint64_t rom_size;
-@@ -117,6 +118,10 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-         aspeed_install_boot_rom(soc, fmc0, &s->ca35_boot_rom, rom_size);
-     }
- 
-+    /* VBOOTROM */
-+    bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-+    aspeed_load_vbootrom(soc, bios_name, errp);
-+
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
- 
-     return true;
+are available in the Git repository at:
+
+  https://repo.or.cz/qemu/armbru.git tags/pull-error-2025-09-30-v2
+
+for you to fetch changes up to bcb536cabe108e71e2900cdd605f5b4e59ac3e1f:
+
+  error: Kill @error_warn (2025-10-01 08:33:24 +0200)
+
+----------------------------------------------------------------
+Error reporting patches for 2025-09-30
+
+----------------------------------------------------------------
+Markus Armbruster (13):
+      monitor: Clean up HMP gdbserver error reporting
+      tcg: Fix error reporting on mprotect() failure in tcg_region_init()
+      hw/cxl: Convert cxl_fmws_link() to Error
+      migration/cpr: Clean up error reporting in cpr_resave_fd()
+      hw/remote/vfio-user: Clean up error reporting
+      net/slirp: Clean up error reporting
+      ui/spice-core: Clean up error reporting
+      util/oslib-win32: Do not treat null @errp as &error_warn
+      ui/pixman: Consistent error handling in qemu_pixman_shareable_free()
+      ui/dbus: Clean up dbus_update_gl_cb() error checking
+      ui/dbus: Consistent handling of texture mutex failure
+      ivshmem-flat: Mark an instance of missing error handling FIXME
+      error: Kill @error_warn
+
+ include/exec/gdbstub.h         |  3 ---
+ include/qapi/error.h           |  6 ------
+ include/system/os-win32.h      |  5 ++++-
+ hw/cxl/cxl-host.c              |  7 ++++---
+ hw/display/virtio-gpu.c        |  8 ++++++--
+ hw/misc/ivshmem-flat.c         |  8 ++++++--
+ hw/net/virtio-net.c            |  8 +++++++-
+ hw/remote/vfio-user-obj.c      | 13 +++++++++----
+ io/channel-socket.c            |  4 ++--
+ io/channel-watch.c             |  6 +++---
+ migration/cpr.c                |  9 +++++----
+ monitor/hmp-cmds.c             |  7 ++++---
+ net/slirp.c                    |  9 +++++++--
+ tcg/region.c                   |  7 +++++--
+ tests/unit/test-error-report.c | 17 -----------------
+ ui/dbus-listener.c             | 22 +++++++++++++++-------
+ ui/gtk.c                       |  6 +++++-
+ ui/qemu-pixman.c               |  5 ++++-
+ ui/spice-core.c                |  6 ++++--
+ util/aio-win32.c               |  2 +-
+ util/error.c                   |  5 +----
+ util/oslib-win32.c             | 25 ++++++++++++++++++++-----
+ 22 files changed, 112 insertions(+), 76 deletions(-)
+
 -- 
-2.43.0
+2.49.0
 
 
