@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFB5CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 14:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45590CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 14:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yD8-0005zm-MO; Wed, 01 Oct 2025 10:53:42 -0400
+	id 1v3yDc-00067n-UE; Wed, 01 Oct 2025 10:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3yD4-0005yw-Dh
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:53:40 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3yCk-0006Zs-AI
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:53:38 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-781db5068b8so8845b3a.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 07:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759330392; x=1759935192; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RUIBMsGbpBirshXci8yDqtrrhh2APnLJK2FCM4aOCAg=;
- b=HD+0B16Jtp0ZA1h+0xjgDkgSyMs3qx71Y6mmy3LnQuanrkovpBIC2ZoXzy4B/7dQGQ
- 08PWcVxvCR3TMbnRXbZTDn4jo5aVt0it9+s/1rAaPIGOUNQr/mTv8awO9Qc2gjPS2CXm
- EGH7PGaZ6z5BuMSJ204boeKpMqFNHMnGf9GAGsruLgJ3aUmgzod0oj+mGS2m5X588pOf
- jCpkZNDXxwqPyh8mFCfUyI6i9M4pYh3Ykv1usYfYsnn4v3HhWpIIDcjokwZ86FMJZe7T
- DOG/AcKfhXGEX6/5AmwHLNlAJ4PhozZJbotmm0mFM/Vx1RFlm+ExxMIgI/2+3/xLxb1h
- L6Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759330392; x=1759935192;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RUIBMsGbpBirshXci8yDqtrrhh2APnLJK2FCM4aOCAg=;
- b=Zqc3wpBsYZYJJPz2t3lttY0rwTxAz/KfQIbvUwcA51UsKmJtoH4hjWMtlryHq7vIw0
- UdeCHrGqiMdlIOuK+pGJHH6usSVvBBtnCI0YzBYe+GP3x6PZTCULKipTxHHacpdMIw+R
- mp0PW4ezV7UoXD65AXOqYJs65GqxIfthGycVJ/hVmmVW3YgWc5DcBtJSg9ESzHELln7G
- AnMLmgQEg8cG1DErwm/qobeWzY6Iv03aklnDcDOs4RBfyQ7YRGpBw4wvSCf4kEeH9HU5
- wxrKwfM5jQ4S/PprHO6+8ErePyoSrFdqMSXWQiqf3XdzD7yUb6MUzxwPpot6hKD/SqmX
- 7AnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZyIv/Ji3RQdanDCAPo2poyKmzZuMt42YCb+Ze//7yPGHD5/v6HqDSs7Mp3vrnjq7yGQG7f3A/Upy6@nongnu.org
-X-Gm-Message-State: AOJu0YyTdeGr/UssIjKnp1fNXAt81JW+ycxw4snvgto69UBzpZXjJUn7
- A5q+sViXIJp+xHZXgJXIjeSn6FkN7zDPyGtmvAEeOlrGT1Q896u6Tykeh82TiUln2LM=
-X-Gm-Gg: ASbGnctoS0Wh2pQ6m/Fq7UNFigZSkwbgej5KlkOO4NnHhxwivIqAgxst+TAz5YYFV/g
- UgRnzBzfFM6EDMztjlX9v/yMXRd4YiPfggTxdN9QEy9HrgxQqLAYY7LJ/sOgvq1h03NgpCHdrNd
- zYt4QTiqJcoSkwYH1+IbGN07f1mokrxuNTyz6rBLblqyEE7+C8SJKuuvzpqRpNgo8KeKYTCLOTN
- jLtJMwOShww09NRLSyM9Fp7GkTX2dBZaB9888PxtXIWnuENdMeEc20+kE5w/nE4jWY9W/dDcwYs
- dQKtCjU5A6KNzCCGK2APBxNsJIx9a/GZRKQ1L32nNK2dcEABewlYLNg3r569lvbH7AVYcmiAq9f
- dmmgWamB4h6srM1LpK+aNjLsF5XLx5cirSo7Pu3kIfxfYzs0H6UOxRM4bb+aXjojKdaMOfL+AW3
- ukC9lXr2FJ9ytKT2fQRMZKi/3r7sjdoDI=
-X-Google-Smtp-Source: AGHT+IFYUEVKIhmSzTvTy0qSoHp8xpPC58R4hbKJA+iVcGy7Hl1D+c8W9pDfIzsGuH1FerIYhBpm7A==
-X-Received: by 2002:a05:6a21:e92:b0:2e2:3e68:6e59 with SMTP id
- adf61e73a8af0-321dacc3c78mr5382626637.15.1759330391675; 
- Wed, 01 Oct 2025 07:53:11 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345?
- ([2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b57c55bdefesm16230174a12.49.2025.10.01.07.53.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 07:53:11 -0700 (PDT)
-Message-ID: <931e7d7c-8c86-43cc-9e3b-aa4ba89cfa28@linaro.org>
-Date: Wed, 1 Oct 2025 07:53:08 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/25] hw: Remove unnecessary 'system/ram_addr.h' header
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20251001082127.65741-1-philmd@linaro.org>
- <20251001082127.65741-7-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251001082127.65741-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v3yDV-00066w-Lo
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:54:05 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v3yD4-0006d1-SH
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 10:54:05 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591CqKY8031421;
+ Wed, 1 Oct 2025 14:53:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2025-04-25; bh=Khk28l7c
+ jRmP5C995+3BN9z9jXNr8NcwC59kJp6lkSw=; b=RJ59UFlwgwCtdUubiuSTuvz5
+ 8lDR2iddAPOL0djtOaO+n+U+bjd09VAETS5aZlHqipXm8JlQshcW6MTLRGbhONDj
+ DRUea1qulRWrdFrCI5CZy9iQn8eQtuDTbEohNrftgsxUgMDo3x1phMG4UItrbN9i
+ 6+WTMMxC64YqC9SLeCFncX1UN9rY1htVzeJeWVbrLdIcBLfKRxoyezMHcbBqmnXV
+ AAKOd3vF40ttal8gnc+daqStHfmktpOaKQHMx/y8PIvzPEPJ3madZMEMgNZNJvvh
+ K5qEyfkGrgmwAMKVM137F1RgfJjAsicQiF+XsSfJq438IY/V4x2QwtPrNGt70w==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49gmf1sknj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 01 Oct 2025 14:53:26 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 591Eklxk023225; Wed, 1 Oct 2025 14:53:25 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 49e6ca98rv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 01 Oct 2025 14:53:25 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 591ErO68019141;
+ Wed, 1 Oct 2025 14:53:24 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 49e6ca98q3-1; Wed, 01 Oct 2025 14:53:24 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V2] migration-test: test cpr-exec
+Date: Wed,  1 Oct 2025 07:53:22 -0700
+Message-Id: <1759330402-370183-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-01_04,2025-09-29_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0
+ mlxlogscore=999 mlxscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2509150000 definitions=main-2510010130
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTMwMDE2NyBTYWx0ZWRfX0caFFmj1Yvev
+ L35C60cWkt8/I38euomdnLshMIUFTwFvGM5MuY4L3Z1/VihlK2Kq3VNiWtiGkRORXb4tyMJZjrZ
+ DXgyZV1d40PwULBcT4wTgbYbqGXKa9v0fnGOFTT7R4gHfSidTYYYfVG/ZWSS4IBfJV0hvsO73Og
+ 62uWmSnzjPmntdDkesrkwZ7Gwz4ciiVcaCY8eZzGb3bjVvPK1/oX025RLvqZjZH3nxA+mZXTalk
+ 4BMPsZxjniXz2jdrl0d8QBmB/+imUw/B/DCCU1Cy0qCrdjailVrzJoGFZu8yIeqUn/Ox9Z0t2K0
+ STuajczcJPRKDhTgEghjtVOrS7G1QgeCi8R5CdH//Y+L7IvtgmO6EwKquzfihLfqn8skXqeKME1
+ AXEXhtfTyqoNDM968ViklfcMEWpeZQ==
+X-Authority-Analysis: v=2.4 cv=K/cv3iWI c=1 sm=1 tr=0 ts=68dd4066 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117
+ a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=x6icFKpwvdMA:10 a=yPCof4ZbAAAA:8 a=MmjJHHjzQzRmE1GRFR0A:9
+X-Proofpoint-GUID: 1uSkQGk1XWpzVdfH-cRlnI03x66nTTWp
+X-Proofpoint-ORIG-GUID: 1uSkQGk1XWpzVdfH-cRlnI03x66nTTWp
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +107,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 01:21, Philippe Mathieu-Daudé wrote:
-> None of these files require definition exposed by "system/ram_addr.h",
-> remove its inclusion.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   hw/ppc/spapr.c                    | 1 -
->   hw/ppc/spapr_caps.c               | 1 -
->   hw/ppc/spapr_pci.c                | 1 -
->   hw/remote/memory.c                | 1 -
->   hw/remote/proxy-memory-listener.c | 1 -
->   hw/s390x/s390-virtio-ccw.c        | 1 -
->   hw/vfio/spapr.c                   | 1 -
->   hw/virtio/virtio-mem.c            | 1 -
->   8 files changed, 8 deletions(-)
+Add a test for the cpr-exec migration mode.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ tests/qtest/migration/cpr-tests.c | 133 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 133 insertions(+)
 
-r~
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 5e764a6..e22bc3b 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -110,6 +110,138 @@ static void test_mode_transfer_defer(void)
+     test_mode_transfer_common(true);
+ }
+ 
++static void set_cpr_exec_args(QTestState *who, MigrateCommon *args)
++{
++    g_autofree char *qtest_from_args = NULL;
++    g_autofree char *from_args = NULL;
++    g_autofree char *to_args = NULL;
++    g_autofree char *exec_args = NULL;
++    g_auto(GStrv) argv = NULL;
++    char *from_str, *src, *dst;
++    int ret;
++
++    /*
++     * hide_stderr appends "2>/dev/null" to the command line, but cpr-exec
++     * passes the command-line words to execv, not to the shell, so suppress it
++     * here.  fd 2 was already bound in the source VM, and execv preserves it.
++     */
++    g_assert(args->start.hide_stderr == false);
++
++    ret = migrate_args(&from_args, &to_args, args->listen_uri, &args->start);
++    g_assert(!ret);
++    qtest_from_args = qtest_qemu_args(from_args);
++
++    /*
++     * The generated args may have been formatted using "%s %s" with empty
++     * strings, which can produce consecutive spaces, which g_strsplit would
++     * convert into empty strings.  Ditto for leading and trailing space.
++     * De-dup spaces to avoid that.
++     */
++
++    from_str = src = dst = g_strstrip(qtest_from_args);
++    do {
++        if (*src != ' ' || src[-1] != ' ') {
++            *dst++ = *src;
++        }
++    } while (*src++);
++
++    exec_args = g_strconcat(qtest_qemu_binary(migration_get_env()->qemu_dst),
++                            " -incoming defer ", from_str, NULL);
++    argv = g_strsplit(exec_args, " ", -1);
++    migrate_set_parameter_strv(who, "cpr-exec-command", argv);
++}
++
++static void wait_for_migration_event(QTestState *who, const char *waitfor)
++{
++    QDict *rsp, *data;
++    char *status;
++    bool done = false;
++
++    while (!done) {
++        rsp = qtest_qmp_eventwait_ref(who, "MIGRATION");
++        g_assert(qdict_haskey(rsp, "data"));
++        data = qdict_get_qdict(rsp, "data");
++        g_assert(qdict_haskey(data, "status"));
++        status = g_strdup(qdict_get_str(data, "status"));
++        g_assert(strcmp(status, "failed"));
++        done = !strcmp(status, waitfor);
++        qobject_unref(rsp);
++    }
++}
++
++static void test_cpr_exec(MigrateCommon *args)
++{
++    QTestState *from, *to;
++    void *data_hook = NULL;
++    g_autofree char *connect_uri = g_strdup(args->connect_uri);
++    g_autofree char *filename = g_strdup_printf("%s/%s", tmpfs,
++                                                FILE_TEST_FILENAME);
++
++    if (migrate_start(&from, NULL, args->listen_uri, &args->start)) {
++        return;
++    }
++
++    /* Source and dest never run concurrently */
++    g_assert_false(args->live);
++
++    if (args->start_hook) {
++        data_hook = args->start_hook(from, NULL);
++    }
++
++    wait_for_serial("src_serial");
++    set_cpr_exec_args(from, args);
++    migrate_set_capability(from, "events", true);
++    migrate_qmp(from, NULL, connect_uri, NULL, "{}");
++    wait_for_migration_event(from, "completed");
++
++    to = qtest_init_after_exec(from);
++
++    qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
++                             "  'arguments': { "
++                             "      'channels': [ { 'channel-type': 'main',"
++                             "      'addr': { 'transport': 'file',"
++                             "                'filename': %s,"
++                             "                'offset': 0  } } ] } }",
++                             filename);
++    wait_for_migration_complete(to);
++
++    wait_for_resume(to, get_dst());
++    /* Device on target is still named src_serial because args do not change */
++    wait_for_serial("src_serial");
++
++    if (args->end_hook) {
++        args->end_hook(from, to, data_hook);
++    }
++
++    migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
++}
++
++static void *test_mode_exec_start(QTestState *from, QTestState *to)
++{
++    assert(!to);
++    migrate_set_parameter_str(from, "mode", "cpr-exec");
++    return NULL;
++}
++
++static void test_mode_exec(void)
++{
++    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
++                                           FILE_TEST_FILENAME);
++    g_autofree char *listen_uri = g_strdup_printf("defer");
++
++    MigrateCommon args = {
++        .start.only_source = true,
++        .start.opts_source = "-machine aux-ram-share=on -nodefaults",
++        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
++                                " -machine memory-backend=pc.ram",
++        .connect_uri = uri,
++        .listen_uri = listen_uri,
++        .start_hook = test_mode_exec_start,
++    };
++
++    test_cpr_exec(&args);
++}
++
+ void migration_test_add_cpr(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
+@@ -132,5 +264,6 @@ void migration_test_add_cpr(MigrationTestEnv *env)
+         migration_test_add("/migration/mode/transfer", test_mode_transfer);
+         migration_test_add("/migration/mode/transfer/defer",
+                            test_mode_transfer_defer);
++        migration_test_add("/migration/mode/exec", test_mode_exec);
+     }
+ }
+-- 
+1.8.3.1
+
 
