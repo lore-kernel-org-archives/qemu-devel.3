@@ -4,86 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E872CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8549CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yoR-0001mE-JT; Wed, 01 Oct 2025 11:32:16 -0400
+	id 1v3yqu-0004T7-3X; Wed, 01 Oct 2025 11:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v3yoH-0001eT-Pu
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:32:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v3yqg-0004Gs-EM
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:34:36 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v3yno-0005xY-Sq
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:32:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759332694;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Yzuv4TcJRCREAhbb9oTsk4FxwR25JxF2LGHUpZevxWM=;
- b=WquiVnJImBKMy1NYQZ6fu0f9uJGILxZ65YSwEjwU3yBHCijco79cvjMhA7ctr1LC0WrPxF
- PA9dfQddyKNAJh0l0h656cl+imN2ZDj6dAlTVrBjI2hverqImUjQZ40+3R1v6GyWdc0mQ1
- 7r//sOThMwPlu0JplBZjcm7J/oWGdRs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-mzwQqcMUNmWEpufQTUTpfw-1; Wed,
- 01 Oct 2025 11:31:30 -0400
-X-MC-Unique: mzwQqcMUNmWEpufQTUTpfw-1
-X-Mimecast-MFC-AGG-ID: mzwQqcMUNmWEpufQTUTpfw_1759332687
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B9DB195609E; Wed,  1 Oct 2025 15:31:27 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.112])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6F8FE195395C; Wed,  1 Oct 2025 15:31:25 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v3yqW-0006PY-Kt
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:34:33 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591FMwrN011417;
+ Wed, 1 Oct 2025 15:34:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2025-04-25; bh=DxkTeoAV2z6LUlTe
+ 15ZwnapqhTK33LHJztv5AZwLLMk=; b=TqQ0Hxetl/2uz5cKrj0ljuLWhivcheUg
+ OAJH7hLiDysFl/OWhwhDEOEuIBirVowdgjedFb9UzfSRM3p7R/JyJFB1eSAIu4Rn
+ vbMmyoQ0Qifuzq1sFxQgWbO1yHeEo16Nw99HlJ3OiQ19vb6TSFby+G7LewJzmICX
+ yVYPepZTbjkjqT6ce+WixYA1i2dOzPBzeloJGiP/hTIqxAPBR9kLy3s17zHnGycU
+ 8RfK1HGMQl0xEhv5q2f0n0UolqWxlYgQSxId0NoY4RVRJBveWPhuKcOeg60YYw3q
+ yF6zp7NoeO8h/O81G6ZATcdCYc1IyewQdWAKXnl1/M2Ph43n/IPdsQ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49gmacspw3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 01 Oct 2025 15:34:14 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 591EjTV0023180; Wed, 1 Oct 2025 15:34:12 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 49e6caaw15-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 01 Oct 2025 15:34:12 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 591FYCqc014790;
+ Wed, 1 Oct 2025 15:34:12 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 49e6caaw0k-1; Wed, 01 Oct 2025 15:34:12 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bandan Das <bsd@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Richard Henderson <rth@twiddle.net>, Alexander Bulekov <alxndr@bu.edu>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-rust@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Cleber Rosa <crosa@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>,
- Michael Roth <michael.roth@amd.com>, Mads Ynddal <mads@ynddal.dk>,
- Alexandre Iooss <erdnaxe@crans.org>, John Snow <jsnow@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 10/16] rust: qdev: add minimal clock bindings
-Date: Wed,  1 Oct 2025 11:30:53 -0400
-Message-ID: <20251001153059.194991-11-stefanha@redhat.com>
-In-Reply-To: <20251001153059.194991-1-stefanha@redhat.com>
-References: <20251001153059.194991-1-stefanha@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Cedric Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 00/19] Live update: cpr-exec
+Date: Wed,  1 Oct 2025 08:33:52 -0700
+Message-Id: <1759332851-370353-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-01_04,2025-09-29_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0
+ mlxlogscore=999 mlxscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2509150000 definitions=main-2510010134
+X-Authority-Analysis: v=2.4 cv=P5I3RyAu c=1 sm=1 tr=0 ts=68dd49f6 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117
+ a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=O4Y87kIHdoLMIBELOv4A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: WHigNE8GhTc6nSZIFEGC7sFqN97hxCNO
+X-Proofpoint-GUID: WHigNE8GhTc6nSZIFEGC7sFqN97hxCNO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTMwMDE2NSBTYWx0ZWRfX8tQsZD4j7RFv
+ LMaiJDPpXPwulNy/9++lKhGViOcjgjBBT9gRrxS/04Y+i6RBGNarU2jBq2bDr9lQpHbSwJtMxkh
+ ZAW7fm1uURrVBEF8crCJQ4xl/asCY3LpwZ6s59FQ3MJXA2bPtdZ1al+cyXTF0bm92DQKx9OxmSK
+ At8tn1ssj0YBMTugpUie9ZoC3IUY1lvYf6hj1uI3+Hc1rFecF6Lawg9T5E5XvL+ScZxG28sulG8
+ AfyjnJirMuFF0cP2sqUSVDhF4byNd9ZdSxQJHe1xcVqpqEJFrow4XEkwaoPKjr0N2WbFrRxeezU
+ uUXmUhAxuaHuEbiCvv1yN3pgR5BmC8vHnLZK/ziWZb3sz86enPYTMgZoWVS1hIqyB5wuaAxM1cZ
+ zGvAMB72OtUh/fBennQoFg0F5FJBKQ==
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,64 +116,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+This patch series adds the live migration cpr-exec mode.
 
-Add the minimal support that is needed by pl011's event and tracepoint.
+The new user-visible interfaces are:
+  * cpr-exec (MigMode migration parameter)
+  * cpr-exec-command (migration parameter)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20250929154938.594389-11-pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- rust/hw/core/src/qdev.rs | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+cpr-exec mode is similar in most respects to cpr-transfer mode, with the
+primary difference being that old QEMU directly exec's new QEMU.  The user
+specifies the command to exec new QEMU in the migration parameter
+cpr-exec-command.
 
-diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-index a4493dbf01..c3097a284d 100644
---- a/rust/hw/core/src/qdev.rs
-+++ b/rust/hw/core/src/qdev.rs
-@@ -411,6 +411,39 @@ fn init_gpio_out(&self, pins: &[InterruptSource]) {
- 
- impl<R: ObjectDeref> DeviceMethods for R where R::Target: IsA<DeviceState> {}
- 
-+impl Clock {
-+    pub const PERIOD_1SEC: u64 = bindings::CLOCK_PERIOD_1SEC;
-+
-+    pub const fn period_from_ns(ns: u64) -> u64 {
-+        ns * Self::PERIOD_1SEC / 1_000_000_000
-+    }
-+
-+    pub const fn period_from_hz(hz: u64) -> u64 {
-+        if hz == 0 {
-+            0
-+        } else {
-+            Self::PERIOD_1SEC / hz
-+        }
-+    }
-+
-+    pub const fn period_to_hz(period: u64) -> u64 {
-+        if period == 0 {
-+            0
-+        } else {
-+            Self::PERIOD_1SEC / period
-+        }
-+    }
-+
-+    pub const fn period(&self) -> u64 {
-+        // SAFETY: Clock is returned by init_clock_in with zero value for period
-+        unsafe { &*self.0.as_ptr() }.period
-+    }
-+
-+    pub const fn hz(&self) -> u64 {
-+        Self::period_to_hz(self.period())
-+    }
-+}
-+
- unsafe impl ObjectType for Clock {
-     type Class = ObjectClass;
-     const TYPE_NAME: &'static CStr =
+Why?
+
+In a containerized QEMU environment, cpr-exec reuses an existing QEMU
+container and its assigned resources.  By contrast, cpr-transfer mode
+requires a new container to be created on the same host as the target of
+the CPR operation.  Resources must be reserved for the new container, while
+the old container still reserves resources until the operation completes.
+Avoiding over commitment requires extra work in the management layer.
+This is one reason why a cloud provider may prefer cpr-exec.  A second reason
+is that the container may include agents with their own connections to the
+outside world, and such connections remain intact if the container is reused.
+
+How?
+
+cpr-exec preserves descriptors across exec by clearing the CLOEXEC flag,
+and by sending the unique name and value of each descriptor to new QEMU
+via CPR state.
+
+CPR state cannot be sent over the normal migration channel, because devices
+and backends are created prior to reading the channel, so this mode sends
+CPR state over a second migration channel that is not visible to the user.
+New QEMU reads the second channel prior to creating devices or backends.
+
+The exec itself is trivial.  After writing to the migration channels, the
+migration code calls a new main-loop hook to perform the exec.
+
+Example:
+
+In this example, we simply restart the same version of QEMU, but in
+a real scenario one would use a new QEMU binary path in cpr-exec-command.
+
+  # qemu-kvm -monitor stdio
+  -object memory-backend-memfd,id=ram0,size=1G
+  -machine memory-backend=ram0 -machine aux-ram-share=on ...
+
+  QEMU 10.1.50 monitor - type 'help' for more information
+  (qemu) info status
+  VM status: running
+  (qemu) migrate_set_parameter mode cpr-exec
+  (qemu) migrate_set_parameter cpr-exec-command qemu-kvm ... -incoming file:vm.state
+  (qemu) migrate -d file:vm.state
+
+  (qemu) QEMU 10.1.50 monitor - type 'help' for more information
+  (qemu) info status
+  VM status: running
+
+Changes in V5:
+  * included error-report.h, and used qemu_memfd_create to fix windows build
+  * documented cpr-exec environment variable in CPR.rst
+  * fixed err leak
+  * defined cpr_exec_unpreserve_fds helper
+  * misc cosmetic changes in cpr-exec.c
+  * added patches from the series "migration-test: test cpr-exec", with
+    comments addressed:
+    - renamed qts parameter
+    - fixed migrate_args bug
+    - added code comments
+    - re-privatized QEMU_ENV_DST
+    - added RB's
+
+Steve Sistare (19):
+  migration: multi-mode notifier
+  migration: add cpr_walk_fd
+  oslib: qemu_clear_cloexec
+  migration: cpr-exec-command parameter
+  migration: cpr-exec save and load
+  migration: cpr-exec mode
+  migration: cpr-exec docs
+  vfio: cpr-exec mode
+  tests/qtest: export qtest_qemu_binary
+  tests/qtest: qtest_qemu_args
+  tests/qtest: qtest_create_test_state
+  tests/qtest: qtest_qemu_spawn_func
+  tests/qtest: qtest_init_after_exec
+  migration-test: only_source option
+  migration-test: shm path accessor
+  migration-test: misc exports
+  migration-test: migrate_args
+  migration-test: strv parameter
+  migration-test: test cpr-exec
+
+ docs/devel/migration/CPR.rst          | 112 +++++++++++++++++++-
+ qapi/migration.json                   |  46 ++++++++-
+ include/migration/cpr.h               |  10 ++
+ include/migration/misc.h              |  12 +++
+ include/qemu/osdep.h                  |   9 ++
+ tests/qtest/libqtest.h                |  25 +++++
+ tests/qtest/migration/bootfile.h      |   1 +
+ tests/qtest/migration/framework.h     |   5 +
+ tests/qtest/migration/migration-qmp.h |   2 +
+ hw/vfio/container.c                   |   3 +-
+ hw/vfio/cpr-iommufd.c                 |   3 +-
+ hw/vfio/cpr-legacy.c                  |   9 +-
+ hw/vfio/cpr.c                         |  13 +--
+ migration/cpr-exec.c                  | 188 ++++++++++++++++++++++++++++++++++
+ migration/cpr.c                       |  36 ++++++-
+ migration/migration-hmp-cmds.c        |  30 ++++++
+ migration/migration.c                 |  70 ++++++++++---
+ migration/options.c                   |  14 +++
+ migration/ram.c                       |   1 +
+ migration/vmstate-types.c             |   8 ++
+ system/vl.c                           |   4 +-
+ tests/qtest/libqtest.c                | 108 +++++++++++++------
+ tests/qtest/migration/bootfile.c      |   5 +
+ tests/qtest/migration/cpr-tests.c     | 133 ++++++++++++++++++++++++
+ tests/qtest/migration/framework.c     | 101 ++++++++++++------
+ tests/qtest/migration/migration-qmp.c |  16 +++
+ util/oslib-posix.c                    |   9 ++
+ util/oslib-win32.c                    |   4 +
+ hmp-commands.hx                       |   2 +-
+ migration/meson.build                 |   1 +
+ migration/trace-events                |   1 +
+ 31 files changed, 879 insertions(+), 102 deletions(-)
+ create mode 100644 migration/cpr-exec.c
+
 -- 
-2.51.0
+1.8.3.1
 
 
