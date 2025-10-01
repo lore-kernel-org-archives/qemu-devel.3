@@ -4,104 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D63CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A60CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4158-0004Lk-Fp; Wed, 01 Oct 2025 13:57:39 -0400
+	id 1v41SU-0007JP-HY; Wed, 01 Oct 2025 14:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4150-0004BB-Cv
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:57:30 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v414A-0001Hz-Q0
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 13:57:29 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-421851bcb25so53249f8f.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 10:56:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759341389; x=1759946189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oUtiRAnaxKSP60r/7sUloA0VCWrW5xNC9QAgYTiLe7A=;
- b=oN92jdeBT/WhBqcZmieCO0B55/l14XTsug2VMKJVsSPoLnDjqClS58dzt+WB9aXNZG
- E5dbhY5J5AjSe3tsrMMM7/pRo4L0/mxOh1RvTZjacSrXlyB8PKXfnMcNbM4DM4hPWhu9
- IJMJcWUE6qFIVPgKuvL/kinBbTLeqJ9rvX68Ujt60JfLIIyIG1FpcAFvX5PGMAkzO8Yf
- ata2XMCwUggJhXoaqfxrDs0hB6pvsI3aM279ugdhEpNgnKAWdOHQXOP7j0jZaff2SEl3
- 3WjnDgipXldyCJCFK0TvmAKn6/g+GVMe2Zpp3VOGoUM50hlGWwe+T83Osw7IlgN8T4Iz
- JhLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759341389; x=1759946189;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oUtiRAnaxKSP60r/7sUloA0VCWrW5xNC9QAgYTiLe7A=;
- b=EVk5KkbRlncOvFDIfdIypCTucdiPBgUN+ouvE1zTwwxgacWMkS3qm0/vL8RoA1+XPe
- h4QBGhKsSqkx88+jhduuQSLjf4epVgElP53XZjT609EMPJW3jFZUM0zPBU20elG8ROeO
- FtL7Vsf3u05CEXwzBH314odurnXwZAaspql+odO6pQMMxgRJlsdc37AQ/VazjexXLJs0
- NedyycUFT7PaSp0dMhaUAmv1Crdiq0hdPOF+UahFWssgeek5VwjmoVGyO8Wj83qFZyxU
- CfRKKPIllTiQojFy7MLgx4phLRGUX0JbEeJLQjVIQgkIu7HgMCIzSxXXIgiPww1F2bJY
- +mrg==
-X-Gm-Message-State: AOJu0YybCanAuhWN7qE9FzrzC+EVGaD+LdvyX+GRMJ2F+RhgTRSF6EXN
- J97ZrFc8HAsHl3xsMCOyW2wOAcMspzYoyNRlXDW7kbR50gYZ2afl3Lsm2iKHBWM6NclzczbBPAx
- wGjKVnjXtnQ==
-X-Gm-Gg: ASbGncs88vxmm/q1tPXHMRHx7g44Koz6Txt7E3MXTtc5i8U6iTvrzz6U21Ug/8VMTTg
- GH/bXdKwY2TIgZKr1rYc1o52Peh52xYelMFC2P4mHurHl1VjWOq8XxXxCWtX6+gd1ZIV3t8jUDU
- twvTCk9q5qYESvxr6TAY3C8bEolLyw0PzRdJOzFgNKhBDPrRvYBg2MBTeGMjSlnN2nUJy1tI8Av
- Ouy2XHMjbUoMgS4YGjGdb6PtcIHHF5AsBwxRtS4SI9NuMpA0VWUVc2vnhyQj1kwin0kR9SQ4GPI
- 5TCF96rzqcqxConaYOEsGiaiWuCsg0TBeKppA38rRdidJwpKtVa9Dpt/TYUZhYiJkQGjsb50sVG
- YikDTAdzQX/RQ5/SOaMZJzSAsx4aMUKEna0n9KcB2yJd/pbYy/qtX+rXlj3UDxQ0xLr3DOjVahk
- /t8Coo8r2PrWFKIJgfLlEckATVqA==
-X-Google-Smtp-Source: AGHT+IF0ungF9viXC6MKUWoQtqH2uObDCFonrlzlTjU4n+Y3xL+pmh4m+aKa0XRbNR5Tcqmh1HV/fg==
-X-Received: by 2002:a5d:588b:0:b0:3e7:610b:85f6 with SMTP id
- ffacd0b85a97d-42557824eecmr3638647f8f.39.1759341388635; 
- Wed, 01 Oct 2025 10:56:28 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a265f6sm48392605e9.20.2025.10.01.10.56.27
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 10:56:28 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>, qemu-ppc@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Jason Herne <jjherne@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- kvm@vger.kernel.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Farman <farman@linux.ibm.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: [PATCH v2 18/18] system/physmem: Extract API out of
- 'system/ram_addr.h' header
-Date: Wed,  1 Oct 2025 19:54:47 +0200
-Message-ID: <20251001175448.18933-19-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251001175448.18933-1-philmd@linaro.org>
-References: <20251001175448.18933-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1v41SP-0007I9-Hz; Wed, 01 Oct 2025 14:21:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1v41S9-0004uz-WE; Wed, 01 Oct 2025 14:21:41 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591HZqJu016745;
+ Wed, 1 Oct 2025 18:21:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pFim01
+ x3tJbmkoWl3sNu+poVKhsCnv0yCcUMIKYb6b8=; b=B4hr6YFdjEgZtUhNlvPN2s
+ ajjE+hDlCrdKz5FsC7nKSUqenMvZzAEggaTwuZr8QNtb4t+kFvxtrUdvdrWXZUSI
+ PF0NNSk/CBj790P0CEsY0PJpjdXofI7U5XFAQShj/FwAPfUfgvOKkl53olvZGC26
+ Zm79T+Gyi+pPpvNMXnnGZNAIwGofBDaWnxm2XRbfTmmcAKBajYjRyeR3FHzdKz1i
+ ic+kbokZQSlAprEeNclGUp5LRjZ6tESqCvS5SCSPKaU0gwJK+nN3sxU2xrgNWWAs
+ S1t3A+d/qErLNS9W3fuy/tG7U/sFQzaLUt7aAiv8o0+N+r5koUiAmpZxaGyyuTRA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bhrjh6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Oct 2025 18:21:14 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 591FWeEe020054;
+ Wed, 1 Oct 2025 18:21:13 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49et8saf4w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Oct 2025 18:21:13 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 591ILD1623200388
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 1 Oct 2025 18:21:13 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0B04658061;
+ Wed,  1 Oct 2025 18:21:13 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 388F558059;
+ Wed,  1 Oct 2025 18:21:12 +0000 (GMT)
+Received: from [9.61.247.182] (unknown [9.61.247.182])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  1 Oct 2025 18:21:12 +0000 (GMT)
+Message-ID: <d2dd6aaa-69b5-49ca-bcd1-36d43334b5fe@linux.ibm.com>
+Date: Wed, 1 Oct 2025 11:21:11 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/5] vfio/pci: Add an error handler callback
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, thuth@redhat.com,
+ alex.williamson@redhat.com
+References: <20250925174852.1302-1-alifm@linux.ibm.com>
+ <20250925174852.1302-3-alifm@linux.ibm.com> <87qzvtstd7.fsf@pond.sub.org>
+ <90de0c70-9309-4fd0-a5d7-3bd9e7088a0e@linux.ibm.com>
+ <87ms6gmo4j.fsf@pond.sub.org>
+ <4207529b-a0a5-4360-8449-f4c20661e9e8@redhat.com>
+ <0c221734-5faf-4829-bc17-21ec96a91fa5@linux.ibm.com>
+ <87qzvo9tzk.fsf@pond.sub.org>
+ <5ebeb8ec-395b-46ca-b6d4-b2c78ae0465f@linux.ibm.com>
+ <87y0pv2pgp.fsf@pond.sub.org>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <87y0pv2pgp.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68dd711a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=uYONfy6L9GIQZX1KSxkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX+frLqDhElNHc
+ j2/8r3kCux0gCJh9QBnRlurpK/1fiBOnrW+269Bd9ZQ7kzYZ67To08sz6sbNbtz+n6M8DzBKEjB
+ DMP2sohkK2KU30WJ81om4kglB7ZrrL2ltHXQ/0tfE0aqZNBQUUvXDEieT0sfue3TXUH8yuVU3p2
+ De3rqYtH61MVNCCRLtMyJevKahF0qArymyNnLnpG9GYmaMf0HFan+OrHOBt8N+O5kgINxIsrw1t
+ rKMSbkL1qOyKVjwP+gqTK/hNQScTjMSiDfbASifeSJZgHPF8WgauK2twG5EvPCvDO9/O6JXgS3J
+ 9n/YmXgy7guicRtUSAsCA4SN0WAPfv0z6wAXMdueqtYyisgt+Z3y7gQVVYJBksFomLPllriYaxc
+ 0VpubNspV8+emYmo1G5Zkrf1PnUWkQ==
+X-Proofpoint-GUID: hTrUF22dImHJj5ud_RZ1_Zd9TzyD1s1y
+X-Proofpoint-ORIG-GUID: hTrUF22dImHJj5ud_RZ1_Zd9TzyD1s1y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-01_05,2025-09-29_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,273 +128,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Very few files use the Physical Memory API. Declare its
-methods in their own header: "system/physmem.h".
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- MAINTAINERS                 |  1 +
- include/system/physmem.h    | 54 +++++++++++++++++++++++++++++++++++++
- include/system/ram_addr.h   | 40 ---------------------------
- accel/kvm/kvm-all.c         |  2 +-
- accel/tcg/cputlb.c          |  1 +
- hw/vfio/container-legacy.c  |  2 +-
- hw/vfio/container.c         |  1 +
- hw/vfio/listener.c          |  1 -
- migration/ram.c             |  1 +
- system/memory.c             |  1 +
- system/physmem.c            |  1 +
- target/arm/tcg/mte_helper.c |  2 +-
- 12 files changed, 63 insertions(+), 44 deletions(-)
- create mode 100644 include/system/physmem.h
+On 9/30/2025 9:52 PM, Markus Armbruster wrote:
+> Farhan Ali <alifm@linux.ibm.com> writes:
+>
+>> On 9/30/2025 2:20 AM, Markus Armbruster wrote:
+>>> Farhan Ali <alifm@linux.ibm.com> writes:
+>>>
+>>>> On 9/27/2025 12:05 AM, Cédric Le Goater wrote:
+>>>>> On 9/27/25 07:59, Markus Armbruster wrote:
+> [...]
+>
+>>>>>> * Is the comment still accurate?
+>>>> This comment would still apply for vfio-pci devices on other architectures except for s390x. We are trying to change this behavior for s390x.
+>>> The comment is about things that should be done to handle the error.
+>>> Would these things be done here, or in a suitable ->err_handler()?
+>> Ideally in the err_handler(). And for s390x we try do what the comment mentions, which is inject the error into the guest through s390x architecture specific mechanism. I can remove the comment block.
+> Well, if there's stuff left to do, a comment outlining it is desirable.
+> If I understand you correctly, then the one we have is no longer
+> accurate.  Could you update it, so it is?
+>
+> [...]
+>
+How about something like this?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 406cef88f0c..9632eb7b440 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3213,6 +3213,7 @@ S: Supported
- F: include/system/ioport.h
- F: include/exec/memop.h
- F: include/system/memory.h
-+F: include/system/physmem.h
- F: include/system/ram_addr.h
- F: include/system/ramblock.h
- F: include/system/memory_mapping.h
-diff --git a/include/system/physmem.h b/include/system/physmem.h
-new file mode 100644
-index 00000000000..879f6eae38b
---- /dev/null
-+++ b/include/system/physmem.h
-@@ -0,0 +1,54 @@
-+/*
-+ * QEMU physical memory interfaces (target independent).
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef QEMU_SYSTEM_PHYSMEM_H
-+#define QEMU_SYSTEM_PHYSMEM_H
-+
-+#include "exec/hwaddr.h"
-+#include "exec/ramlist.h"
-+
-+#define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
-+#define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
-+
-+bool physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
-+
-+bool physical_memory_is_clean(ram_addr_t addr);
-+
-+uint8_t physical_memory_range_includes_clean(ram_addr_t start,
-+                                             ram_addr_t length,
-+                                             uint8_t mask);
-+
-+void physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
-+
-+void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
-+                                     uint8_t mask);
-+
-+/*
-+ * Contrary to physical_memory_sync_dirty_bitmap() this function returns
-+ * the number of dirty pages in @bitmap passed as argument. On the other hand,
-+ * physical_memory_sync_dirty_bitmap() returns newly dirtied pages that
-+ * weren't set in the global migration bitmap.
-+ */
-+uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
-+                                            ram_addr_t start,
-+                                            ram_addr_t pages);
-+
-+void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
-+
-+bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-+                                          ram_addr_t length,
-+                                          unsigned client);
-+
-+DirtyBitmapSnapshot *
-+physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
-+                                         hwaddr length, unsigned client);
-+
-+bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
-+                                        ram_addr_t start,
-+                                        ram_addr_t length);
-+
-+#endif
-diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 3894a84fb9c..683485980ce 100644
---- a/include/system/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -19,7 +19,6 @@
- #ifndef SYSTEM_RAM_ADDR_H
- #define SYSTEM_RAM_ADDR_H
- 
--#include "exec/ramlist.h"
- #include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "exec/hwaddr.h"
-@@ -133,43 +132,4 @@ static inline void qemu_ram_block_writeback(RAMBlock *block)
-     qemu_ram_msync(block, 0, block->used_length);
- }
- 
--#define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
--#define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
--
--bool physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
--
--bool physical_memory_is_clean(ram_addr_t addr);
--
--uint8_t physical_memory_range_includes_clean(ram_addr_t start,
--                                                 ram_addr_t length,
--                                                 uint8_t mask);
--
--void physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
--
--void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
--                                         uint8_t mask);
--
--/*
-- * Contrary to physical_memory_sync_dirty_bitmap() this function returns
-- * the number of dirty pages in @bitmap passed as argument. On the other hand,
-- * physical_memory_sync_dirty_bitmap() returns newly dirtied pages that
-- * weren't set in the global migration bitmap.
-- */
--uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
--                                                ram_addr_t start,
--                                                ram_addr_t pages);
--
--void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
--
--bool physical_memory_test_and_clear_dirty(ram_addr_t start,
--                                              ram_addr_t length,
--                                              unsigned client);
--
--DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
--    (MemoryRegion *mr, hwaddr offset, hwaddr length, unsigned client);
--
--bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
--                                            ram_addr_t start,
--                                            ram_addr_t length);
--
- #endif
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index a7ece7db964..58802f7c3cc 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -32,13 +32,13 @@
- #include "system/runstate.h"
- #include "system/cpus.h"
- #include "system/accel-blocker.h"
-+#include "system/physmem.h"
- #include "system/ramblock.h"
- #include "accel/accel-ops.h"
- #include "qemu/bswap.h"
- #include "exec/tswap.h"
- #include "exec/target_page.h"
- #include "system/memory.h"
--#include "system/ram_addr.h"
- #include "qemu/event_notifier.h"
- #include "qemu/main-loop.h"
- #include "trace.h"
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index a721235dea6..7214d41cb5d 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -25,6 +25,7 @@
- #include "accel/tcg/probe.h"
- #include "exec/page-protection.h"
- #include "system/memory.h"
-+#include "system/physmem.h"
- #include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/cputlb.h"
-diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-index eb9911eaeaf..755a407f3e7 100644
---- a/hw/vfio/container-legacy.c
-+++ b/hw/vfio/container-legacy.c
-@@ -25,7 +25,7 @@
- #include "hw/vfio/vfio-device.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
--#include "system/ram_addr.h"
-+#include "system/physmem.h"
- #include "qemu/error-report.h"
- #include "qemu/range.h"
- #include "system/reset.h"
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 3fb19a1c8ad..9ddec300e35 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -20,6 +20,7 @@
- #include "qemu/error-report.h"
- #include "hw/vfio/vfio-container.h"
- #include "hw/vfio/vfio-device.h" /* vfio_device_reset_handler */
-+#include "system/physmem.h"
- #include "system/reset.h"
- #include "vfio-helpers.h"
- 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index b5cefc9395c..c6bb58f5209 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -30,7 +30,6 @@
- #include "hw/vfio/pci.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
--#include "system/ram_addr.h"
- #include "hw/hw.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-diff --git a/migration/ram.c b/migration/ram.c
-index d09591c0600..12122dda685 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -53,6 +53,7 @@
- #include "qemu/rcu_queue.h"
- #include "migration/colo.h"
- #include "system/cpu-throttle.h"
-+#include "system/physmem.h"
- #include "system/ramblock.h"
- #include "savevm.h"
- #include "qemu/iov.h"
-diff --git a/system/memory.c b/system/memory.c
-index dd045da60c0..80656c69568 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -25,6 +25,7 @@
- #include "qemu/target-info.h"
- #include "qom/object.h"
- #include "trace.h"
-+#include "system/physmem.h"
- #include "system/ram_addr.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
-diff --git a/system/physmem.c b/system/physmem.c
-index 1a075da2bdd..ec3d8027e86 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -43,6 +43,7 @@
- #include "system/kvm.h"
- #include "system/tcg.h"
- #include "system/qtest.h"
-+#include "system/physmem.h"
- #include "system/ramblock.h"
- #include "qemu/timer.h"
- #include "qemu/config-file.h"
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 077ff4b2b2c..b96c953f809 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -27,7 +27,7 @@
- #include "user/cpu_loop.h"
- #include "user/page-protection.h"
- #else
--#include "system/ram_addr.h"
-+#include "system/physmem.h"
- #endif
- #include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/probe.h"
--- 
-2.51.0
+We can retrieve the error details and decide what action needs to be 
+taken in err_handler(). One of the actions could be to pass the error to 
+the guest and have the guest driver recover from the error. This 
+requires that PCIe capabilities be exposed to the guest. If 
+err_handler() is not implemented/fails, we just terminate the guest to 
+contain the error.
+
+Thanks
+
+Farhan
 
 
