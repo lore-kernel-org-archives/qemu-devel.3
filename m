@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9EFCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A606ECCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 18:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v41mG-0007kj-3K; Wed, 01 Oct 2025 14:42:12 -0400
+	id 1v420V-0004nH-1r; Wed, 01 Oct 2025 14:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v41m5-0007i8-5A
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:42:03 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v420L-0004m8-UL
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:56:46 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v41lp-00082V-5b
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:42:00 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3ee1221ceaaso81092f8f.3
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 11:41:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v4209-0001O0-OF
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 14:56:45 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-46e42fa08e4so1412375e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 11:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759344092; x=1759948892; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Nl2SIymaSoLGPM0GZwLv+GOmwyB7QiFpXfrEivX0AWY=;
- b=vuhDYXarAbGjUUoVwGLbPqIgfzsaq1GJX6P+a9rAs6+UJElnUHqkZRXnQS+VV13meL
- VFdAmd4lYhrjxFZ+nu3LJMaFi8lMmK5ojzVuQ1oHXneI90k8XXrz8h1b0vHz2jwAEAOI
- RmdfziOBgUyb0Yy0failf32oSqwyJZ0y0L81SYoNU1GgG1lYW3qzTaLlea+fKRYsnQXx
- c8SuUljOyt4te+gc+ym2dA3Xo1nk87TeN8Tnlg1XhZGewl1/np5/3l4ivrOWOAOG7sjr
- UNW1r+JKIXgFxaLgcnD/3gjM0MT2OOVSeqMRvxOhhg21elxsNLahAen1GNWVamS2YBKM
- iMHw==
+ d=linaro.org; s=google; t=1759344985; x=1759949785; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uU9GJw9JHFe7DtkaGrqjWk/KAYap+bJGvAOsEu9JNpA=;
+ b=j5yzllx2MsUflt7dz4GtUZLeSC6ujw50wQeY1YgAxTf4vVd2HwNe1vhG7eBB7B0grN
+ 8OFvtPiXcDmO1u5vLH5gxop8Fzp+9xABwP8H3GQc+0EpCZEk27rq5kPKv8HfEZMvjLCa
+ G4mxoJPHrxPY0UVHD7hynrsSiP/690AooIBVaQxAQGv6yr3onzX6/rY9GvpM5+8edRZn
+ HUXwWE8CDc29d+tCdTXW/c7nzbtKCRX9WHkLc6TA7bnOoLEpr+WY1idEGePTFk5TJ32l
+ UmMPVGV5CSZ14idpmSnPnXbTN5RGQK42Ms2lDGMS66T+TW0+2RnqK6O++M4yO/ZlQw48
+ hTlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759344092; x=1759948892;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Nl2SIymaSoLGPM0GZwLv+GOmwyB7QiFpXfrEivX0AWY=;
- b=hyTt6jRosEGoR7+RAwCP7hiFJ8T7ADfkgan+4Ayt3Pott8x/eq+fEiSbRnsB/2EbeA
- Dbk6l/fja2NyI1c6F56ahViIhrVyaSPpzd38WSfpOeexCJPgoBaUVm6u+ZW8x/K6TEJy
- 2p1oswg1986Z9E/+m4GaDJpMp9km4zHtKINO4znNqmicRcC2J6nxwF5H90QYyMI/J7+W
- r3ZmpBySl8uXeYW6uK2ypUPEx7ZrGfws/5etEEltqJTYKBHy+Y2EmXnREjeEJeczs4mv
- x1/3Kc7kLQhFi9LkhdeZR0D/mC86OlZaw3cdqpVWBrjMagTNFV4DIYTxyTspOiv+qkXe
- fW+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURc0STY1ILPMvE0VpyP1FyawaTsBdtd0DM4ITsMy5gAIqdCWjLDtfRle2vvws5B6lzukiGNNqnh3Fy@nongnu.org
-X-Gm-Message-State: AOJu0YyQAGaumBEfVvDlQMs9i9L/zLDR2jX8xsU8Ipq2SgoyfW8sNVmT
- HRnSghHW5WtjDZEfzDU3qn516A20baHtcadtLiUSNSvVoQPOpTlS4LqfUoltdWJ8/T8=
-X-Gm-Gg: ASbGncv8OO7zTYsx0tiiV+6r0w6Bpa42CZxtD/9x16xbZ5JxzvRfYfBjWERNrTjSol1
- wDZ86fN+JqK72voDoWtPgmAt17g0Mu9Tsp22KMiOxxuELMi3ESxFon+DyonWfLpryF51kmYGzzz
- MEi3NWPzBA5mhz8eM9XF+DINuqeLTYHGJN/7N4pkuM6Ne3UvoBXDPK9y7jT7H3nCnB+g32Ulgfk
- U3leOeREU7jX8B+8FttBEHpfqlM0G4QhniEN2ulqhV0Pdw2CupgZThMbv5vumoA0OBXH1sRw1XR
- tRoyoDFN0VzxCMdAMGOkp6Ct8I9kBWOG2xLeVvA0O64yREqEYi/uXkxiIFaPVxX0W+fi8KSxEtm
- 185l6Lqh8Y6RBgGqs84aLAXdSglsSYP9WAnGol3ZDILKqsiQ7OGe6Fg5YX1WNGdOF368kkw6A8F
- QFAYqNp0AabiCwj7M4ifo=
-X-Google-Smtp-Source: AGHT+IFDUgMWWFaSlg8mrmo+Ej2x7djhEHr3dK7DVzmPuJgOTJ22nVrphKZblwmNTwIXsEZAORf23w==
-X-Received: by 2002:a05:6000:1787:b0:3ee:11d1:29dd with SMTP id
- ffacd0b85a97d-42557816defmr3489400f8f.35.1759344091981; 
- Wed, 01 Oct 2025 11:41:31 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e693bcc93sm2455395e9.13.2025.10.01.11.41.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 11:41:31 -0700 (PDT)
-Message-ID: <50536048-2b05-4424-8254-d61711b03693@linaro.org>
-Date: Wed, 1 Oct 2025 20:41:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] tests/lcitool: drop 64 bit guests from i686 cross
- build
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, Thomas Huth <thuth@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-arm@nongnu.org
+ d=1e100.net; s=20230601; t=1759344985; x=1759949785;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uU9GJw9JHFe7DtkaGrqjWk/KAYap+bJGvAOsEu9JNpA=;
+ b=POXPciY9FXYZ0cCQ05HhPwBJFNiR3rpWgk+dl3SZFNonCh9bG5hsO0GHXGIXehZ2wU
+ GgF7ZSJgNgQWheqeGxrVPgdiP9RncAFDllqpUXfTW64M4LHY751RfBrcpNzeY180Qhhl
+ tCnw3eBsydtKuPTOg0xYCYrZVNmVwiWOBYtjQH2+b9BIYi2tV5YSITCiu/c7+qAXl47D
+ 1vaIVxkO9bbaNHE7pXcFAecKUbzLTM8zs+BATgYpJ3vxP6z2T15SrAhfSt2kvyk52u44
+ t/D1s5B4d27SQk9+0eDyrdwusCkVvrJrAVEDyhlWYRnyxemzHJYmeS0BTQMP2f5ATU+J
+ Jc2A==
+X-Gm-Message-State: AOJu0YzvEoEFh6+knEbGrkbflgAVcgkY6kn7oI61Mt6najMatL1IRGEX
+ az25+TSFG6f2DBrCY/NEYheCq/3LtG0Mpk0RmcVRYJU8z3DHIp4W56x45cJyZEpt/RBvD/0nqwv
+ EDtVM
+X-Gm-Gg: ASbGncuxKFKFlxAi2EojNw9C8Zr2SMImcjFzCVvwsCIFuxnqd+OncXxHEw3ll94fDCV
+ tcxYj3gG3+QmE0fqA+uVCV8NS5OV8L26UtuhrkNQTRjodo/QnyxVXAXzauLnv979T7V0s34J+3b
+ qNqcABfRFrIs5bdIV2irbxmAlcvNGFQAsoUeNGvVp4kjQOkQEAxG8/4+qZLnwrH0IGkSkZCMsvD
+ mSgc4KXOLjNZ1fXlyrlTZr/WIjchm3LhgaiODoRNVVJb+BmK5Djp8imIhKEGpNtTAWYKDHzh9KH
+ 8Wm6MFjlLgGWkJL/Polv3g30COpMrQeB1LLM39y3XGMpQKSk0pRP+I+6gu93r1FhQ8MCHKbOaAE
+ h/yBtJHHxYz6NXYS/HPFha886XjKVVWtUMTjuUb94ZR/3rJ8=
+X-Google-Smtp-Source: AGHT+IFOYKIQzFUQaMpA8x+W8ph+05jD7W521ofUtAa+A2WEkY5RbhfBhZDw4EHYFRLRHBJDqfPpxw==
+X-Received: by 2002:a05:600c:37c8:b0:46e:2801:84aa with SMTP id
+ 5b1f17b1804b1-46e611dd02amr37904705e9.0.1759344985113; 
+ Wed, 01 Oct 2025 11:56:25 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8e96e0sm285870f8f.33.2025.10.01.11.56.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 01 Oct 2025 11:56:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 78BC65F7A7;
+ Wed, 01 Oct 2025 19:56:23 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org,  qemu-s390x@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  Gustavo Romero <gustavo.romero@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
+ <thuth@redhat.com>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 0/7] testing and misc updates (docker, ansible, .git*,
+ gitlab)
+In-Reply-To: <4188260c-e8ac-9bea-5e05-6cd34c3e986d@eik.bme.hu> (BALATON
+ Zoltan's message of "Wed, 1 Oct 2025 19:56:21 +0200 (CEST)")
 References: <20251001170947.2769296-1-alex.bennee@linaro.org>
- <20251001170947.2769296-5-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251001170947.2769296-5-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+ <4188260c-e8ac-9bea-5e05-6cd34c3e986d@eik.bme.hu>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Wed, 01 Oct 2025 19:56:23 +0100
+Message-ID: <878qhuih7s.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +109,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/25 19:09, Alex Bennée wrote:
-> With only TCG available we can't support 64 bit guests on a 32 bit
-> host.
-> 
-> Fixes: 5c27baf9519 (docs/about/deprecated: Deprecate 32-bit x86 hosts for system emulation)
+BALATON Zoltan <balaton@eik.bme.hu> writes:
 
-AFAICT this is only deprecated so far. Should this patch go with
-a series taking care to remove "System emulation on 32-bit x86
-hosts"?
+> On Wed, 1 Oct 2025, Alex Benn=C3=A9e wrote:
+>> My first set of patches for the development tree. Should be mostly
+>> self-explanatory. We still need to apply the upstream COPYING patch
+>> the u-boot-sam460ex code but we should decide if its worth mirroring
+>> or should we just treat the copy as fully "ours".
+>
+> Which COPYING patch do you refer to? I have the upstream because when
+> I submitted this I was told to do it this way instead of adding the
+> u-boot sources to the QEMU tree. It can't be merged with the official
+> u-boot used for e500 because it has sam460ex specific patches from the
+> machine vendor which only supports this u-boot version. There are some
+> updates from the vendor for real machine which I plan to add
+> eventually but it's still based on an older u-boot version. With
+> mirroring I can update upstream and send one patch to update the
+> binary once it's mirrored, otherwise I'd need to send patches for each
+> update and rely on somebody to merge them.
 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/docker/dockerfiles/debian-i686-cross.docker | 2 +-
->   tests/lcitool/refresh                             | 2 --
->   2 files changed, 1 insertion(+), 3 deletions(-)
+OK I'll fixup the mirror. I think I need to delete and re-create the
+gitlab project repo now.
+
+>
+> Regards,
+> BALATON Zoltan
+>
+>> Hopefully I'll have the new aarch64 runner online by Friday and ready
+>> for the switchover.
+>>
+>> Hopefully I'll also be able to pick up Gustavo's reverse debug test
+>> fixes by then as well.
+>>
+>> Alex.
+>>
+>> Alex Benn=C3=A9e (7):
+>>  .gitpublish: use origin/master as default base
+>>  .gitmodules: restore qemu-project mirror of u-boot
+>>  .gitmodules: restore qemu-project mirror of u-boot-sam460ex
+>>  tests/lcitool: drop 64 bit guests from i686 cross build
+>>  tests/lcitool: bump custom runner packages to Ubuntu 24.04
+>>  gitlab: move custom runners to Ubuntu 24.04
+>>  scripts/ci: use recommended registration command
+>>
+>> .gitlab-ci.d/custom-runners.yml               |  6 ++--
+>> ...4-aarch32.yml =3D> ubuntu-24.04-aarch32.yml} |  8 ++---
+>> ...4-aarch64.yml =3D> ubuntu-24.04-aarch64.yml} | 32 +++++++++----------
+>> ...22.04-s390x.yml =3D> ubuntu-24.04-s390x.yml} | 28 ++++++++--------
+>> .gitmodules                                   |  6 ++--
+>> .gitpublish                                   | 16 +++++-----
+>> scripts/ci/setup/gitlab-runner.yml            | 12 ++-----
+>> scripts/ci/setup/ubuntu/build-environment.yml | 12 +++----
+>> ...-aarch64.yaml =3D> ubuntu-2404-aarch64.yaml} |  4 ++-
+>> ...2204-s390x.yaml =3D> ubuntu-2404-s390x.yaml} |  4 ++-
+>> scripts/ci/setup/vars.yml.template            |  5 +--
+>> .../dockerfiles/debian-i686-cross.docker      |  2 +-
+>> tests/lcitool/refresh                         |  6 ++--
+>> 13 files changed, 69 insertions(+), 72 deletions(-)
+>> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml =3D> ubuntu=
+-24.04-aarch32.yml} (78%)
+>> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml =3D> ubuntu=
+-24.04-aarch64.yml} (89%)
+>> rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml =3D> ubuntu-2=
+4.04-s390x.yml} (88%)
+>> rename scripts/ci/setup/ubuntu/{ubuntu-2204-aarch64.yaml =3D> ubuntu-240=
+4-aarch64.yaml} (96%)
+>> rename scripts/ci/setup/ubuntu/{ubuntu-2204-s390x.yaml =3D> ubuntu-2404-=
+s390x.yaml} (96%)
+>>
+>>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
