@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D5C2CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 09:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E17CACCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 09:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3tTi-0004tb-No; Wed, 01 Oct 2025 05:50:30 -0400
+	id 1v3tTP-0004cZ-JD; Wed, 01 Oct 2025 05:50:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1v3tTX-0004im-0h; Wed, 01 Oct 2025 05:50:19 -0400
-Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ id 1v3tSn-0004N6-3I; Wed, 01 Oct 2025 05:49:34 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1v3tTP-0004vh-JW; Wed, 01 Oct 2025 05:50:18 -0400
+ id 1v3tSh-0004yS-2r; Wed, 01 Oct 2025 05:49:32 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oVGReDcwkFQg5D7x/xTrP7ndmphMJxqVlYq2xjNiR4Lh2Ro9P6FfUy9TI8TQQ441LxwuCfQMITdfxX5iyX7OmquwpD3FPXBhbNbq2jy7q2vE/aWDGnQNJBFdurCUbDjTlrEbJ/9VW5OL7YLAsWK78sQI6qoGWuIoZsitvze43ERZ4zArhfSK/ytRbIwoQO2szvyqMKhBzdkTQyY3F5YBXtkoL1rLJDtTXrG4rWTE3HUth6xl6Nu4+Vebusm0e1kr+R3HByaZqZbfqejkEp1jJA96iy95WXfjqfRaj5hHIMegrriM/4/9EXEDgCeH/1pqsxeHwN5dxvP0MnJ1CXNziQ==
+ b=pRNRWTYik75tD35YgWkjCs6xS40MLgO6YBloqMRmONKtYrIj5JyM0cfbgheeUViGG4htqbiJOSeEYXTS+Q4zOE6O74fx6CCWFHwW6UXAitYwK/C0iuxy6V6djKTkeRsDSRm5i1TGDA/ZPZDMd7iCw0bLluNgMUjDuVDdCx+Tnj4A7YDcnhD9Ik/hjl/bixRctldsi1kvQtREqwV62P9J+IbO4TeMtAScumgGq607Xxcjq4WBhbTKMDhMJyncp0KNmIJN9IohcqkTPzJ3ZkHKOSnzZRKbBfhoMhqRLojSO0IFL+jNvoK0aQeCEG3OKBurig3Poo1oAPje4nsJLng0IQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dneX68j8FuzKTnqV5D0s0N6GQnjVcgt7XwOeOFJaEg8=;
- b=WtqzYlpnR9C02FjRvZY0eHz3gjY81+FcwoBcUa3yiE9ypnRmY42rErohqLupSOMs461BdKQlUomtICLyXI1CAKilIskaea+zXyYDtXlSAki62OqOd2jvkomZyrydBN/8tjrbML2Fnr6cVJD2t5R4cwzZcHZGumzkULE5sRi+3wmhYtUv3uNtun/n81OOsRQ8kUz7KbigAB6KDxjpjYuNEH74exbbxO8yPD32F5/jl9tDK4eHbSOJpRFlMTJHH3tlp070m1bagoizPRWzjLEd7Mb9Y5YtJEWzJ/nPMFoK6Uh/BGs4ehRNBaxdVfzGDdItZ+DtASRcRTxKNxt3WudEEQ==
+ bh=oyW3Q7ZQ6oaIBLODAOp8zDllh3sILwEUmncfhjuRgAc=;
+ b=GwA4frOi7xFz4u9MX2KXUZslWRJx1OwA8J7pujD/u/uxejTrSkuOuyLHhekvCVPQt45o7bbqALOw6dljf1lvVln1qNOjzmQW400ZmEU93IBXy35DICEl54qdrHcak3xA50mEM9J8ERsES11WMyOuly6sSq9PkFTghsPaJEBfWfwkAZRSae6DdaIEUmbup4g0RFIY2H1EJEm7vMIxEmzhPpk0zl8KUJnuBwl3CgiyLhgUMA1hTv9C3CAWIwAgM9uZ3CySVjKGjCcFUUgr4kT4iLxZ83nGJIBKW0+RzHB7cGMqu85jgdoy9rq8i9dSnYd2MNoTzzHHKfWL035PlqmcGQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dneX68j8FuzKTnqV5D0s0N6GQnjVcgt7XwOeOFJaEg8=;
- b=JnRRqgvZ1A/7AyKkpisrFEkhqpj7h5cvTtxVp1QW2TtPznOg4oW/hXeYMczWLelOyyS2DrALbnZ0vgWal4yISo8MYkNusLQlQ37GuQzXmIctoFUkUE2w/462GF6j8DABqtS466a5/9nEiQ8RNduCsZZXTTKm7KkARCvxLyX8bluopI6cE8ViP+w94fm4odkWDlthCrpF351SLAZneds43sjeVfM9q9TTfReyaMu2XKRvGUP1MHHD1LVXvFHZYxHmdDddFM8p8D0ivxjjse1hQBEa9HNo/71V/5cfBgiWAivKtR58jyMNJyKxRVcZHKmNQK2GePb5wlLOwezjrzRLJA==
+ bh=oyW3Q7ZQ6oaIBLODAOp8zDllh3sILwEUmncfhjuRgAc=;
+ b=dh3EdoUTjp8yUjHrYB45woaElLIUwutoPX5RimRNp/W6Z0AThz+u9qcKgTk+O6c4AacCxYiAwqHmrm32YXEPk1RLsZ67LN6qZgi6m8iU2cIJdo/AAlmIlT4miOkgM7CYgAK/mrEwcSexHOTztw7iYobFrRiNEoj66uoDlWfYZuoEqJA34ciq1j0pFwcLtYSq3Tc3hbBzRVRlG85uKqj0ku+sOVBpIYTIEzfv09fZxTiTsEnXGg8q0S5eOW6nCopcXrK1UTYsmjQ3JTB5lzXPicQiP8j2mcREnPcCLwcQBIb+93b9fqiQ3RTWNy4AHrQMld/tcwmJ0Po9kFQTNXcEQA==
 Received: from AS4PR09MB6518.eurprd09.prod.outlook.com (2603:10a6:20b:4fb::5)
  by PA1PR09MB7820.eurprd09.prod.outlook.com (2603:10a6:102:44a::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.17; Wed, 1 Oct
- 2025 09:49:14 +0000
+ 2025 09:49:12 +0000
 Received: from AS4PR09MB6518.eurprd09.prod.outlook.com
  ([fe80::ad50:891a:847c:580a]) by AS4PR09MB6518.eurprd09.prod.outlook.com
  ([fe80::ad50:891a:847c:580a%4]) with mapi id 15.20.9160.017; Wed, 1 Oct 2025
- 09:49:14 +0000
+ 09:49:12 +0000
 From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
@@ -51,11 +51,11 @@ CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
  "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "philmd@linaro.org"
  <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>, Djordje
  Todorovic <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v9 13/13] test/functional: Add test for boston-aia board
-Thread-Topic: [PATCH v9 13/13] test/functional: Add test for boston-aia board
-Thread-Index: AQHcMrilrjzfmWxvz0GdvBcziDSKbA==
-Date: Wed, 1 Oct 2025 09:49:14 +0000
-Message-ID: <20251001094859.2030290-14-djordje.todorovic@htecgroup.com>
+Subject: [PATCH v9 08/13] hw/misc: Add RISC-V CMGCR device implementation
+Thread-Topic: [PATCH v9 08/13] hw/misc: Add RISC-V CMGCR device implementation
+Thread-Index: AQHcMrikNNK3YEIRF0Wucy2X22Jmgg==
+Date: Wed, 1 Oct 2025 09:49:12 +0000
+Message-ID: <20251001094859.2030290-9-djordje.todorovic@htecgroup.com>
 References: <20251001094859.2030290-1-djordje.todorovic@htecgroup.com>
 In-Reply-To: <20251001094859.2030290-1-djordje.todorovic@htecgroup.com>
 Accept-Language: en-US
@@ -66,86 +66,85 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: AS4PR09MB6518:EE_|PA1PR09MB7820:EE_
-x-ms-office365-filtering-correlation-id: 34647082-fb9e-43f3-d676-08de00cfc7db
+x-ms-office365-filtering-correlation-id: 44fd0d9e-7aa4-4194-2049-08de00cfc6c1
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?JFQ5DZRdyJ49tqzeL1hOYzpkD+K3vsNkK07ROoPBTVc9LUNkiOeRYB7ZKS?=
- =?iso-8859-1?Q?eidtK0zGKNhUYGAcgm9v9xSxFjCVGco9k1eVDQjxZgkIPWzatQzsf3sqTS?=
- =?iso-8859-1?Q?Y/yjPS6Ly0VG9Ss9zhvvW+ZKtneX+PKYLNFdQlOrGFp6Cbo6TVtoSLx7EV?=
- =?iso-8859-1?Q?jklWKe6wLmAX6DTVxGhDaJrTqSrlA64ibrWKMi+lxXd2NmHNLpGcXWJ2KM?=
- =?iso-8859-1?Q?XT8IZmAZ7OJDTC6Hrr/wlqlBRz9coT5D3/F1WPDXwQXG0sjwfh6tVxavhp?=
- =?iso-8859-1?Q?cv8NWrdGadLmHteqJ92IZftqNALRwNv+WOWG0LmJvz2uzzsHj8hz0REH6d?=
- =?iso-8859-1?Q?UHrmadlH1fXeAynMxNepeN89PanD2y1C9vgcs78LYjZyZZeeQPRbfo1NJC?=
- =?iso-8859-1?Q?yMAZZAY9N4tML5jLF3fiE3dhuYWAv3W9LWFnqmgglX6/7yG8YJaTMJPE6X?=
- =?iso-8859-1?Q?xLRQ0Hoi/8XWO186Xb7E4BKVMKAAMhKJrEJfOV4GXSawD7mIRuzBw7p+7K?=
- =?iso-8859-1?Q?+A+6jmgJNyXgMKNKHVJgfiyyiOfRA1H9pIaFqpAuPFtTXMuXyDY+lrhz57?=
- =?iso-8859-1?Q?G3TGcuRq8bpmIpsCPIkK5SsoAXmD5s1v8yo/6oxXQWZyzAeTByyD4Fm6Tz?=
- =?iso-8859-1?Q?DEX3ZmzY8o3wFL6QPHTzc/zr+Klake4y/CyrlV2Yyb0w+JP1lrxiF5+9ax?=
- =?iso-8859-1?Q?Ul3iWvAZGjSAx1EvfJjZVQe+bum/CPf3r7cqOrScrKpmrknVUzmW5b4Us0?=
- =?iso-8859-1?Q?7O4at6qTlXBXc4u5D3wh/dQH32TCME+8Way7yyMpPib2WF3EKli4zriJ4k?=
- =?iso-8859-1?Q?E9YH2hJ/ooD7ZOdOVY7yrwZBB1eC2jgpFKhTIkx5ao1BTphUR7M1QP6hcN?=
- =?iso-8859-1?Q?qNMlEHcDn355j4UxRCFBl1JEMgbylZeUhxkzU3+Goa1kYz3OY156PkvBtH?=
- =?iso-8859-1?Q?Kuc3jB2XFu1Cv0iQ6BhjExrV6ad7CDxG36OCfmBsiA5ucHGf1Vv1R3RxKy?=
- =?iso-8859-1?Q?SZ8BDSvar2VAtFuIQBY8mPfX5hWYS74iEInQ2+ZFCu/UV72BezhKZrWhJ6?=
- =?iso-8859-1?Q?wqZfYMAtLDbpWhQzNHiRhJT8Z+VuDZosJqBqrLDTlMmJ5KhxJlfCiUsurL?=
- =?iso-8859-1?Q?qn+/XOjvPLL4EgIGd8qQ41Kk4HYv2EsuvPwrD3r++6DDf66ND5sfWC8VKm?=
- =?iso-8859-1?Q?VIxf9TuKtnm9+SJTPHPhHfayZVHqikyv1vc1m2pTSsyN5nevDfZipIq8ps?=
- =?iso-8859-1?Q?iazxb0aX/6DaA/Nd4QYdjPdY3eFbxnBbSfCBw2dCXkGpKaugL4ZHcMlJql?=
- =?iso-8859-1?Q?t1034h29qItmKTnWDnWunn0sHuowsNEgxKRma3Wt5uCa3r0xIAhoCFVXkX?=
- =?iso-8859-1?Q?40ljPAFfWpvuhSoPVyRuzMVaXhCpQQBysscSH2vX3noY7QrR0aZbZJuD1u?=
- =?iso-8859-1?Q?wDkq53XP1A0YPjC5928LX6fz1vJqmI0T7K5Yxz+Kb775VHlYwIWl6nr3kc?=
- =?iso-8859-1?Q?p2of/vuv+CDeOESGtCtPx7TvkI7I0C4TF7okSt/GDOhVKFTU51qsD+tP85?=
- =?iso-8859-1?Q?IhB7QLph+NH5gKotNcnSihIPtQ1H?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?B1ZfPzHaqvxga2wPoYij1yDt9SSth/nqW+WHlh+E25/Sf0RrYOPQzf8ut7?=
+ =?iso-8859-1?Q?nTW+WyLobj/6t/2KeqjrjoBLJhgIDx9iKxJm26hKSWB2w8W5Y750CY2Qm+?=
+ =?iso-8859-1?Q?Vex+jvbXYWnbRM9LlB3g/zj1eh3JlB6l6BQINtCkJRsiedmqufXU8AK8zF?=
+ =?iso-8859-1?Q?p4ytJTFrRDCDujN2HZQKl3+Zy7SlAaRjvhHu/7RiqODxnyrlnrw9A3QMSh?=
+ =?iso-8859-1?Q?i4D/PsDX8f15ueFlUtXeNptlrDwNPjTl4helNKcjFpCdJpdsI3GmnGttWe?=
+ =?iso-8859-1?Q?Du/hs6wPiOY8/2mI4wI5MGLfDoVTU85oTzqsqdzK+cBmTAiG58g/LozYrh?=
+ =?iso-8859-1?Q?HGpk67k1o4yxJqXIs3cYt4DoBKG90orElPpluYZioe98NrYBXyqAL+9zP/?=
+ =?iso-8859-1?Q?CKImZh/LzD52p5pr+FUwYuPfJtAinmVzM9w8Azc03qp4+QqYlHpFD1nxXY?=
+ =?iso-8859-1?Q?ALh7Yy3Oqnq7mBIVGJWnjokbZCK4sBU58ucdOQRUDveThK+GeMEBGjom62?=
+ =?iso-8859-1?Q?e71hokY3jTRla+OASAxtZOleuSIqp2RllXnQwLomXPFFPpOheD/tRFqQBS?=
+ =?iso-8859-1?Q?9UhUaA/5qI4zsBG/k661xNRt6qimrmShNICGUB0t6bnzEczzyz6cNmqYM7?=
+ =?iso-8859-1?Q?lrKXKJ9I0Gfn9nw6uPt954JEjQ7m4GCUwQv2ebo87bnIMxfr6q76wogX9J?=
+ =?iso-8859-1?Q?Uwysj3fPxsVtw1f1l+kKipvLrS8ahkJUYFtUTg6DNDlRzlpMBGSyN+gKXy?=
+ =?iso-8859-1?Q?RCn6LhsNMfVjOzbqacE/V8Bn7FK03/s3/jHaQuqVN+KpfVJG9XPm6qQZbd?=
+ =?iso-8859-1?Q?BHByzViF9Cg0EloUY0yAC3cAkwgab1XJ37FuqX2sQgYtGd4C5KhkxzUqmI?=
+ =?iso-8859-1?Q?WSMrHNrj6qqFErHh3hVo5OJFo3zApedXIlqCBaBr4acw1jSDES5F6yX+7z?=
+ =?iso-8859-1?Q?WScQ2uEL0z2aWOxc+gnM1YnyLsvucC9XdFJ6ufvajEMHfGZHxqXphJKo2l?=
+ =?iso-8859-1?Q?2IMUP7eH2YqTqX2Sw2KTTe/sV0kDRQts1dmCiURYn7lEyQHYsjHNcYStSV?=
+ =?iso-8859-1?Q?x/nx3TiM0fom1JYe/ByQMfIE76UAK1TjxS0qU9uF7OJUDg9jlUZAzst+Cz?=
+ =?iso-8859-1?Q?wB/E3/aGo8CVvaiabXI1tDauoOi0OyRijvWQUzkUzVCFQVeMDVIJV6Vji4?=
+ =?iso-8859-1?Q?uNfjfpOPClSTB8zDZQrAtCWgo58MFO3ez/b37d3ixjXdRjE8D91TGsI9NE?=
+ =?iso-8859-1?Q?VfYybFBdH+nKSNwZuMKLK2JAqwQnZyD3xsS7oC7v/dK7aNyMEhAYCHoTz8?=
+ =?iso-8859-1?Q?cjZX4G2QYVBfyQQP/R2l9LykfRN/ImAkv51ZrGk5sQkbcjs8HOHw8m0Xsj?=
+ =?iso-8859-1?Q?hfMgqnzgmv+lelInX4byHjoPS0yf+dtY/7wE7GOnvbl8uhRep0XsHnkgLw?=
+ =?iso-8859-1?Q?edS+djOfbJel5bTN6OTbTqMbCuiN/Ou83mj1XbWrN3wdddTiXTxTF5VYad?=
+ =?iso-8859-1?Q?Z++SAO6hjUpGTood/eMicM3rYlUFd5KQMDb2Jp/EUtkQ=3D=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AS4PR09MB6518.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?1V5jShILyfgrl8OxWkMF/5AU2GGtBuCUQqvHCf5hzZ0cVGjQrbBkV8pbY8?=
- =?iso-8859-1?Q?jLIMAJM3Q0/Bxm6SHBOqZdF2MNNDv4PSh+MfRFrmQw+rumQvxTZ1vTjCeH?=
- =?iso-8859-1?Q?OGTTrwKMTUXVJNXRRiVF9jkW6jbHQ13PzSQARqBQA3/azrabIBCNyZulG8?=
- =?iso-8859-1?Q?lkTn+Lp1BVFeAWVSTu+Eb3QPoJfgJoEUdT6UWZfgSie9VgCQ+0v7UGti7e?=
- =?iso-8859-1?Q?OKOgtBhpYiOqfHV4cMMbbddgQ+6AQjWpU2nkvzojsQe++1Ap12p4gwDryl?=
- =?iso-8859-1?Q?I+fbUR1Z7Vn3JX0ysOOSd7V4vjeYoCiR3ahqZi6RdZIbQwOaujPhoXsqUS?=
- =?iso-8859-1?Q?mQTQXrtq2YZpc9Jh1EyquA5sPzXzv1FFrgNy10UFHudaiPOa646qlOLZOa?=
- =?iso-8859-1?Q?oFyxviokYcq43xw5rvg3oLJ0ON05U1qXB8wEBPXxfkq4tbU+dNT6fYBn0V?=
- =?iso-8859-1?Q?/5tDE+3GQWbXeA+gIFEoCRk8rfoc7tqjWTsIFQHNyQ9EVtaOkjhYWJyG8Y?=
- =?iso-8859-1?Q?KrUX7ZJT+nnYYhnKy1yJQoWr6BBlZGGO+6Kyl2mIIbgrqs3YJQQC5PONIy?=
- =?iso-8859-1?Q?1+QJKFj6up6m3b+CfIHWcBNItw3GR8dpYie/o7kCbG0hTwENLpkpTOPHvt?=
- =?iso-8859-1?Q?8MqkMcryTpKJ7Sn0haLMysnLoqRr+8bTfkLO5auFc/ajwj4S8+kMWE4E1B?=
- =?iso-8859-1?Q?OpxZbQHptyFNP6xNLc3AMCb/D3BAhR/IfRi6v5uz/3s3YgYqDeAhU/zxma?=
- =?iso-8859-1?Q?71Ji0zY3fIib3Tjq5gyEOj8HCgJDtpA7kHGFq0z5WzlJcHUHVMHoQouD33?=
- =?iso-8859-1?Q?vls7xJoMAKIkf3De4yBsr3jRLpFowNWINPajiT9hrKcF2yNH159WJNz8Gz?=
- =?iso-8859-1?Q?hURfHEGh5EST4bcgiODDoj7+X3UYp5i8bv8k1fHHzABEPx3nFrEEGnM+jn?=
- =?iso-8859-1?Q?NCErvb458j8c5Ui3ndugQ4mUCgRsrCIFD3IU050GH5f2ZlDwVsVRcELP9h?=
- =?iso-8859-1?Q?0qd7LolbMV6Zpa8TMGAcsh/t77KbkTFv6D9/9QR23ZA/tZjARnFyjQ475A?=
- =?iso-8859-1?Q?rIVty72W3Jw5AJenRwlVyuqe+PkP2nksP6zmTFMP/6PAvUVAQfahzyYJ78?=
- =?iso-8859-1?Q?bj5gopJBwAAoMVoSWSlnV0osYm0ansqShBWPdlB3FErg728Xmkl1cB3I7z?=
- =?iso-8859-1?Q?IeH7diyf3hJPwLwA1WvYg7mXkcFevuZ//gUEu8FK5xyelMUQ12pnUmsX7Q?=
- =?iso-8859-1?Q?5Twd80lrdDo3sg9B6v6Z0FqeuQajM+12L05wnNbyab7kGGzKbLAfTnQ+3N?=
- =?iso-8859-1?Q?hi9mZZnkGFYdUR1gLkoZ4Crb4TXUM92hMc5hVqAaUlNdTjMk38In6yA4WX?=
- =?iso-8859-1?Q?SChHEkEeSjq1tDKrKU17Jg38KEOYMR3MRY0gFcCE9fueRtdSFOafQhcLDy?=
- =?iso-8859-1?Q?5ZgRr/sLzisuG2aKa6mzCt4cXBDsjM4ktQrvpRykzqhl7vYmAb7Os9pmNq?=
- =?iso-8859-1?Q?ODRQt7/soyB5slyjceYQsSJPwGTe6uh3E7szgmb9kEeDUz0GrVBsiiRkCH?=
- =?iso-8859-1?Q?4ZfZ6lN79Vx0ISRcCCNOW2GoGWxmlY9ESskY7u7LzkUQGBbvwPWpsUXSVp?=
- =?iso-8859-1?Q?uJUHHeOJ2K2Dv5Jbvp6o3D2Ww6FGBWpuQ3qjJ/V15PI6fcgzAlW437nnEm?=
- =?iso-8859-1?Q?EC0ODFSSUGl7PAhKxdc=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?f0DvKRS60bQlPSm5JgkLbxLsox24uWxBuj2PZ3W12r5ydQ5LhbwKYl3jUG?=
+ =?iso-8859-1?Q?EspN5ZDI1kZ92w7BXoXCd2DMFeXrBynhxadEuM/427/ss3F/ptetfWFWcL?=
+ =?iso-8859-1?Q?jQwpzdnVXF2xYn+wCvV56UHRxvbksfRAhVNVq3kbKRC8zg2ZlOUaEydAa+?=
+ =?iso-8859-1?Q?9V8e/tAQWRVX+OKGiCSchaIO5qxpo5cZp6JatA0hCkB0zxw/odvB4brEgI?=
+ =?iso-8859-1?Q?3wEfbpSqC0ny/QjAgZNESmWsT6JWuHhL6S+FgOJtNTIcr8ITY57JJvPUeW?=
+ =?iso-8859-1?Q?TD0l8c3jkV3mj4V2RkSPTSawJHFH99gBNQQS0/ar7BlFPzunLpLDi1WITl?=
+ =?iso-8859-1?Q?o4XbPF97dr4c7NrUzs1jzP48NQGwBU7iIJ/hXDv5AK2+U44KDYFGXNIWTj?=
+ =?iso-8859-1?Q?KixACt2hARlYa5XTbUZHnAE7P9F5ysNOde10Or3WcKr8ju3QjZbThWFi2e?=
+ =?iso-8859-1?Q?PQrIUpQEu47/qMnF8p1aySBvhQRZ8pzyKibqDhFm/prGLkgN4qEz631GIg?=
+ =?iso-8859-1?Q?Mha260dwmDxdiUyYUHmQuUpVOVD/bsqs3ov9qqyFKEscKG3yWHQPpGr49m?=
+ =?iso-8859-1?Q?syxthpRVWFcSiEoAnyzBZSvwtSnVYWoj5ClwfmjGOUqhY/sDyRrzCsnG66?=
+ =?iso-8859-1?Q?V/AatW61Q83/AlZDakcU0I7FBee71NSvFIqllZX/lHz0QNCs+pyUYzAoE2?=
+ =?iso-8859-1?Q?KJUu0t+eMJhZGvSgH/gK5dhuE4u2Cv1xJb+EwlicSPobaK9VW9rPVYOuIZ?=
+ =?iso-8859-1?Q?XlzrcX7r6C633sqhNPLO6r8T4ESQWza/8SIW08Jug0YEcWsB7Ze/DO8/N9?=
+ =?iso-8859-1?Q?4AaViJxZRZBjACpYQTLzjmocjw04aMlsPD9khKgxo6RzX0fHx550tcF81x?=
+ =?iso-8859-1?Q?N9waLhrGoBjSDkykRy1ezTHmMMX2CqIAtUgcA4jQfI2kXVfH7lHEZj6Ou2?=
+ =?iso-8859-1?Q?ERi7h3VkUAaaMaEwki+T+8zPCT+SgVXzfGAUQmK/dTvODfClhZ6i4pbS34?=
+ =?iso-8859-1?Q?TwwSZB619u3xfIDANhO1vRAQhUqbXy03cY0e7T5/ZZKQlmEpyjgO3dVEWL?=
+ =?iso-8859-1?Q?F7q3jdexBE15pEUnt5wXOtUMM46lzimCxgjuNA8KHEpmBTGzYW6l0rPHvy?=
+ =?iso-8859-1?Q?La3o7RQKqI7b221ajXaMYOMzACoulfU5q/Rd02DSOkvWHPExuJ20uNmJPg?=
+ =?iso-8859-1?Q?oFvYbneBbAhEx6fg3djLwbmeIh6s5ZVyrkhcgdMZq9mrtlSYqXCh0jrydL?=
+ =?iso-8859-1?Q?PKnJrjCoZHI9HVsP6MsMqPSrLxYq32Y+OfOSaXS9NzBKVTjVN6GXRPvRWK?=
+ =?iso-8859-1?Q?h5QwIU8JlijAMqXcepQTKAFf6xJDcTHMe08zd6PjwHrsEzZIyrbpeMegHi?=
+ =?iso-8859-1?Q?3gxcg/+z300Injcn/eK1Y786psqW5xdx7i8jVlGQRbL/2KAnjgTyKbCJD7?=
+ =?iso-8859-1?Q?vGmk8FRBCYTlVkZumnTiXqb8Qh31Umfu0Bpo0+Obl14/6KdCuIz27VrYDt?=
+ =?iso-8859-1?Q?IK4Ic2TwHnwyx3ybzsB7AwDHG8L8w1DHfF++/TNEibg5TuaRW+oeHqmvTP?=
+ =?iso-8859-1?Q?s99VJ9XrpNbTmu9Px4FQ8TuRjO+QiFMUPjov6MvkvyS0mApiyKzzp3NMAk?=
+ =?iso-8859-1?Q?yGULaxSnGq55vGetXRbxbZWGmMWy72Ld26gYfkLlTKbBVyJaigw0+akkYB?=
+ =?iso-8859-1?Q?06R3c5Qy0N0Q+fRi6os=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: AS4PR09MB6518.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 34647082-fb9e-43f3-d676-08de00cfc7db
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Oct 2025 09:49:14.2532 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44fd0d9e-7aa4-4194-2049-08de00cfc6c1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Oct 2025 09:49:12.3867 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fCtNhUlGoXNvbjOq/tJDU+Y4Agmaik+Tr/nC6rxHncQQDlqkQVEOj2J/93kh8RI7PJzRJNuwxD2u5rEOErDkNHRX//xI98e7wseIGWkGcRw=
+X-MS-Exchange-CrossTenant-userprincipalname: Ap+tTZZOYHHPs6D+fAzaHB2kTFNj1VYFUR2C6BCrjWc6vvVWCuMojZkgCNRy0e7fIa2kXkJwcO4G2UcYaPLmM0rbcWX38k8zRNZymhgipJ8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR09MB7820
-Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
  envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
+ helo=AM0PR02CU008.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -167,208 +166,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add functional test for Boston AIA board. The P8700 RISC-V based
-CPU by MIPS supports it at the moment.
+Add RISC-V implementation of the Coherent Manager Global Control
+Register (CMGCR) device. It is based on the existing MIPS CMGCR
+implementation but adapted for RISC-V systems.
+
+The CMGCR device provides global system control for multi-core
+configurations in RISC-V systems.
+
+This is needed for the MIPS BOSTON AIA board.
 
 Signed-off-by: Chao-ying Fu <cfu@mips.com>
 Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- tests/functional/riscv64/meson.build          |   1 +
- .../functional/riscv64/test_riscv64_boston.py | 164 ++++++++++++++++++
- 2 files changed, 165 insertions(+)
- create mode 100755 tests/functional/riscv64/test_riscv64_boston.py
+ hw/misc/Kconfig               |   9 ++
+ hw/misc/meson.build           |   2 +
+ hw/misc/riscv_cmgcr.c         | 248 ++++++++++++++++++++++++++++++++++
+ include/hw/misc/riscv_cmgcr.h |  50 +++++++
+ 4 files changed, 309 insertions(+)
+ create mode 100644 hw/misc/riscv_cmgcr.c
+ create mode 100644 include/hw/misc/riscv_cmgcr.h
 
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv6=
-4/meson.build
-index c1704d9275..9bce341b80 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -7,6 +7,7 @@ test_riscv64_timeouts =3D {
- tests_riscv64_system_quick =3D [
-   'migration',
-   'opensbi',
-+  'riscv64_boston',
- ]
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 4e35657468..222efb12fb 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -121,6 +121,15 @@ config MIPS_ITU
+     bool
+     depends on TCG
 =20
- tests_riscv64_system_thorough =3D [
-diff --git a/tests/functional/riscv64/test_riscv64_boston.py b/tests/functi=
-onal/riscv64/test_riscv64_boston.py
-new file mode 100755
-index 0000000000..0527571847
++config RISCV_MIPS_CMGCR
++    bool
++
++config MIPS_BOSTON_AIA
++    bool
++    default y
++    depends on RISCV64
++    select RISCV_MIPS_CMGCR
++
+ config MPS2_FPGAIO
+     bool
+     select LED
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index b1d8d8e5d2..489f0f3319 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -157,6 +157,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA', if_true: files(=
+'mac_via.c'))
+ specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'm=
+ips_cpc.c'))
+ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
+=20
++specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmg=
+cr.c'))
++
+ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+=20
+ # HPPA devices
+diff --git a/hw/misc/riscv_cmgcr.c b/hw/misc/riscv_cmgcr.c
+new file mode 100644
+index 0000000000..8e7b86867a
 --- /dev/null
-+++ b/tests/functional/riscv64/test_riscv64_boston.py
-@@ -0,0 +1,164 @@
-+#!/usr/bin/env python3
-+#
-+# Boston board test for RISC-V P8700 processor by MIPS
-+#
-+# Copyright (c) 2025 MIPS
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
++++ b/hw/misc/riscv_cmgcr.c
+@@ -0,0 +1,248 @@
++/*
++ * This file is subject to the terms and conditions of the GNU General Pub=
+lic
++ * License.  See the file "COPYING" in the main directory of this archive
++ * for more details.
++ *
++ * Copyright (C) 2012  MIPS Technologies, Inc.  All rights reserved.
++ * Authors: Sanjay Lal <sanjayl@kymasys.com>
++ *
++ * Copyright (C) 2015 Imagination Technologies
++ *
++ * Copyright (C) 2025 MIPS
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Reference: MIPS P8700 documentation
++ *            (https://mips.com/products/hardware/p8700/)
++ */
 +
-+import os
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "hw/sysbus.h"
++#include "migration/vmstate.h"
++#include "hw/misc/riscv_cmgcr.h"
++#include "hw/qdev-properties.h"
 +
-+class RiscvBostonTest(QemuSystemTest):
-+    """
-+    Test the boston-aia board with P8700 processor
-+    """
++#include "cpu.h"
 +
-+    timeout =3D 120  # Timeout for boot tests
++#define CM_RESET_VEC 0x1FC00000
++#define GCR_ADDRSPACE_SZ        0x8000
 +
-+    ASSET_FW_PAYLOAD =3D Asset(
-+        'https://github.com/MIPS/linux-test-downloads/raw/main/p8700/fw_pa=
-yload.bin',
-+        'd6f4ae14d0c178c1d0bb38ddf64557536ca8602a588b220729a8aa17caa383aa'=
-)
++/* Offsets to register blocks */
++#define RISCV_GCB_OFS        0x0000 /* Global Control Block */
++#define RISCV_CLCB_OFS       0x2000 /* Core Control Block */
++#define RISCV_CORE_REG_STRIDE 0x100 /* Stride between core-specific regist=
+ers */
 +
-+    ASSET_ROOTFS =3D Asset(
-+        'https://github.com/MIPS/linux-test-downloads/raw/main/p8700/rootf=
-s.ext2',
-+        'f937e21b588f0d1d17d10a063053979686897bbbbc5e9617a5582f7c1f48e565'=
-)
++/* Global Control Block Register Map */
++#define GCR_CONFIG_OFS      0x0000
++#define GCR_BASE_OFS        0x0008
++#define GCR_REV_OFS         0x0030
++#define GCR_CPC_STATUS_OFS  0x00F0
++#define GCR_L2_CONFIG_OFS   0x0130
 +
-+    def _fetch_rootfs(self):
-+        """Fetch rootfs and fix permissions"""
-+        rootfs_path =3D self.ASSET_ROOTFS.fetch()
-+        # Ensure the rootfs file is readable
-+        try:
-+            os.chmod(rootfs_path, 0o644)
-+        except:
-+            pass  # If we can't change permissions, try anyway
-+        return rootfs_path
++/* GCR_L2_CONFIG register fields */
++#define GCR_L2_CONFIG_BYPASS_SHF    20
++#define GCR_L2_CONFIG_BYPASS_MSK    ((0x1ULL) << GCR_L2_CONFIG_BYPASS_SHF)
 +
-+    def test_boston_boot_linux(self):
-+        """
-+        Test full Linux kernel boot with rootfs on Boston board
-+        """
-+        self.set_machine('boston-aia')
-+        fw_payload_path =3D self.ASSET_FW_PAYLOAD.fetch()
-+        rootfs_path =3D self._fetch_rootfs()
++/* GCR_BASE register fields */
++#define GCR_BASE_GCRBASE_MSK     0xffffffff8000ULL
 +
-+        self.vm.add_args('-cpu', 'mips-p8700')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-smp', '2')
-+        self.vm.add_args('-kernel', fw_payload_path)
-+        self.vm.add_args('-drive', f'file=3D{rootfs_path},format=3Draw')
++/* GCR_CPC_BASE register fields */
++#define GCR_CPC_BASE_CPCEN_MSK   1
++#define GCR_CPC_BASE_CPCBASE_MSK 0xFFFFFFFF8000ULL
++#define GCR_CPC_BASE_MSK (GCR_CPC_BASE_CPCEN_MSK | GCR_CPC_BASE_CPCBASE_MS=
+K)
 +
-+        self.vm.set_console()
-+        self.vm.launch()
++/* GCR_CL_RESETBASE_OFS register fields */
++#define GCR_CL_RESET_BASE_RESETBASE_MSK 0xFFFFFFFFFFFFF000U
++#define GCR_CL_RESET_BASE_MSK GCR_CL_RESET_BASE_RESETBASE_MSK
 +
-+        # Wait for OpenSBI
-+        wait_for_console_pattern(self, 'OpenSBI')
++static inline bool is_cpc_connected(RISCVGCRState *s)
++{
++    return s->cpc_mr !=3D NULL;
++}
 +
-+        # Wait for Linux kernel boot
-+        wait_for_console_pattern(self, 'Linux version')
-+        wait_for_console_pattern(self, 'Machine model: MIPS P8700')
++static inline void update_cpc_base(RISCVGCRState *gcr, uint64_t val)
++{
++    if (is_cpc_connected(gcr)) {
++        gcr->cpc_base =3D val & GCR_CPC_BASE_MSK;
++        memory_region_transaction_begin();
++        memory_region_set_address(gcr->cpc_mr,
++                                  gcr->cpc_base & GCR_CPC_BASE_CPCBASE_MSK=
+);
++        memory_region_set_enabled(gcr->cpc_mr,
++                                  gcr->cpc_base & GCR_CPC_BASE_CPCEN_MSK);
++        memory_region_transaction_commit();
++    }
++}
 +
-+        # Test e1000e network card functionality
-+        wait_for_console_pattern(self, 'e1000e')
-+        wait_for_console_pattern(self, 'Network Connection')
++static inline void update_gcr_base(RISCVGCRState *gcr, uint64_t val)
++{
++    gcr->gcr_base =3D val & GCR_BASE_GCRBASE_MSK;
++    memory_region_set_address(&gcr->iomem, gcr->gcr_base);
 +
-+        # Wait for boot to complete - system reaches login prompt
-+        wait_for_console_pattern(self, 'Run /sbin/init as init process')
++    /*
++     * For boston-aia, cpc_base is set to gcr_base + 0x8001 to enable
++     * cpc automatically.
++     */
++    update_cpc_base(gcr, val + 0x8001);
++}
 +
-+    def test_boston_7_vps_boot_linux(self):
-+        """
-+        Test full Linux kernel boot with rootfs on Boston board
-+        """
-+        self.set_machine('boston-aia')
-+        fw_payload_path =3D self.ASSET_FW_PAYLOAD.fetch()
-+        rootfs_path =3D self._fetch_rootfs()
++/* Read GCR registers */
++static uint64_t gcr_read(void *opaque, hwaddr addr, unsigned size)
++{
++    RISCVGCRState *gcr =3D (RISCVGCRState *) opaque;
 +
-+        self.vm.add_args('-cpu', 'mips-p8700')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-smp', '7')
-+        self.vm.add_args('-kernel', fw_payload_path)
-+        self.vm.add_args('-drive', f'file=3D{rootfs_path},format=3Draw')
++    switch (addr) {
++    /* Global Control Block Register */
++    case GCR_CONFIG_OFS:
++        /* Set PCORES to 0 */
++        return 0;
++    case GCR_BASE_OFS:
++        return gcr->gcr_base;
++    case GCR_REV_OFS:
++        return gcr->gcr_rev;
++    case GCR_CPC_STATUS_OFS:
++        return is_cpc_connected(gcr);
++    case GCR_L2_CONFIG_OFS:
++        /* L2 BYPASS */
++        return GCR_L2_CONFIG_BYPASS_MSK;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Read %d bytes at GCR offset 0x%" HWADDR_=
+PRIx
++                      "\n", size, addr);
++    }
++    return 0;
++}
 +
-+        self.vm.set_console()
-+        self.vm.launch()
++static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
++{
++    return vps->reset_base & GCR_CL_RESET_BASE_RESETBASE_MSK;
++}
 +
-+        # Wait for OpenSBI
-+        wait_for_console_pattern(self, 'OpenSBI')
++/* Write GCR registers */
++static void gcr_write(void *opaque, hwaddr addr, uint64_t data, unsigned s=
+ize)
++{
++    RISCVGCRState *gcr =3D (RISCVGCRState *)opaque;
++    RISCVGCRVPState *current_vps;
++    int cpu_index, c, h;
 +
-+        # Wait for Linux kernel boot
-+        wait_for_console_pattern(self, 'Linux version')
-+        wait_for_console_pattern(self, 'Machine model: MIPS P8700')
++    for (c =3D 0; c < gcr->num_core; c++) {
++        for (h =3D 0; h < gcr->num_hart; h++) {
++            if (addr =3D=3D RISCV_CLCB_OFS + c * RISCV_CORE_REG_STRIDE + h=
+ * 8) {
++                cpu_index =3D c * gcr->num_hart + h;
++                current_vps =3D &gcr->vps[cpu_index];
++                current_vps->reset_base =3D data & GCR_CL_RESET_BASE_MSK;
++                cpu_set_exception_base(cpu_index + gcr->cluster_id *
++                                       gcr->num_core * gcr->num_hart,
++                                       get_exception_base(current_vps));
++                return;
++            }
++        }
++    }
 +
-+        # Test e1000e network card functionality
-+        wait_for_console_pattern(self, 'e1000e')
-+        wait_for_console_pattern(self, 'Network Connection')
++    switch (addr) {
++    case GCR_BASE_OFS:
++        update_gcr_base(gcr, data);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Write %d bytes at GCR offset 0x%" HWADDR=
+_PRIx
++                      " 0x%" PRIx64 "\n", size, addr, data);
++        break;
++    }
++}
 +
-+        # Wait for boot to complete - system reaches login prompt
-+        wait_for_console_pattern(self, 'Run /sbin/init as init process')
++static const MemoryRegionOps gcr_ops =3D {
++    .read =3D gcr_read,
++    .write =3D gcr_write,
++    .endianness =3D DEVICE_NATIVE_ENDIAN,
++    .impl =3D {
++        .max_access_size =3D 8,
++    },
++};
 +
-+    def test_boston_35_vps_boot_linux(self):
-+        """
-+        Test full Linux kernel boot with rootfs on Boston board
-+        """
-+        self.set_machine('boston-aia')
-+        fw_payload_path =3D self.ASSET_FW_PAYLOAD.fetch()
-+        rootfs_path =3D self._fetch_rootfs()
++static void riscv_gcr_init(Object *obj)
++{
++    SysBusDevice *sbd =3D SYS_BUS_DEVICE(obj);
++    RISCVGCRState *s =3D RISCV_GCR(obj);
 +
-+        self.vm.add_args('-cpu', 'mips-p8700')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-smp', '35')
-+        self.vm.add_args('-kernel', fw_payload_path)
-+        self.vm.add_args('-drive', f'file=3D{rootfs_path},format=3Draw')
++    memory_region_init_io(&s->iomem, OBJECT(s), &gcr_ops, s,
++                          "riscv-gcr", GCR_ADDRSPACE_SZ);
++    sysbus_init_mmio(sbd, &s->iomem);
++}
 +
-+        self.vm.set_console()
-+        self.vm.launch()
++static void riscv_gcr_reset(DeviceState *dev)
++{
++    RISCVGCRState *s =3D RISCV_GCR(dev);
++    int i;
 +
-+        # Wait for OpenSBI
-+        wait_for_console_pattern(self, 'OpenSBI')
++    /* Update cpc_base to gcr_base + 0x8001 to enable cpc automatically. *=
+/
++    update_cpc_base(s, s->gcr_base + 0x8001);
 +
-+        # Wait for Linux kernel boot
-+        wait_for_console_pattern(self, 'Linux version')
-+        wait_for_console_pattern(self, 'Machine model: MIPS P8700')
++    for (i =3D 0; i < s->num_vps; i++) {
++        s->vps[i].reset_base =3D CM_RESET_VEC & GCR_CL_RESET_BASE_MSK;
++        cpu_set_exception_base(i, get_exception_base(&s->vps[i]));
++    }
++}
 +
-+        # Test e1000e network card functionality
-+        wait_for_console_pattern(self, 'e1000e')
-+        wait_for_console_pattern(self, 'Network Connection')
++static const VMStateDescription vmstate_riscv_gcr =3D {
++    .name =3D "riscv-gcr",
++    .version_id =3D 0,
++    .minimum_version_id =3D 0,
++    .fields =3D (VMStateField[]) {
++        VMSTATE_UINT64(cpc_base, RISCVGCRState),
++        VMSTATE_END_OF_LIST()
++    },
++};
 +
-+        # Wait for boot to complete - system reaches login prompt
-+        wait_for_console_pattern(self, 'Run /sbin/init as init process')
++static const Property riscv_gcr_properties[] =3D {
++    DEFINE_PROP_UINT32("cluster-id", RISCVGCRState, cluster_id, 0),
++    DEFINE_PROP_UINT32("num-vp", RISCVGCRState, num_vps, 1),
++    DEFINE_PROP_UINT32("num-hart", RISCVGCRState, num_hart, 1),
++    DEFINE_PROP_UINT32("num-core", RISCVGCRState, num_core, 1),
++    DEFINE_PROP_INT32("gcr-rev", RISCVGCRState, gcr_rev, 0xa00),
++    DEFINE_PROP_UINT64("gcr-base", RISCVGCRState, gcr_base, GCR_BASE_ADDR)=
+,
++    DEFINE_PROP_LINK("cpc", RISCVGCRState, cpc_mr, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
++};
 +
-+    def test_boston_65_vps_boot_linux(self):
-+        """
-+        Test that 65 CPUs is rejected as invalid (negative test case)
-+        """
-+        from subprocess import run, PIPE
++static void riscv_gcr_realize(DeviceState *dev, Error **errp)
++{
++    RISCVGCRState *s =3D RISCV_GCR(dev);
 +
-+        fw_payload_path =3D self.ASSET_FW_PAYLOAD.fetch()
-+        rootfs_path =3D self._fetch_rootfs()
++    /* Validate num_vps */
++    if (s->num_vps =3D=3D 0) {
++        error_setg(errp, "num-vp must be at least 1");
++        return;
++    }
++    if (s->num_vps > GCR_MAX_VPS) {
++        error_setg(errp, "num-vp cannot exceed %d", GCR_MAX_VPS);
++        return;
++    }
 +
-+        cmd =3D [
-+            self.qemu_bin,
-+            '-M', 'boston-aia',
-+            '-cpu', 'mips-p8700',
-+            '-m', '2G',
-+            '-smp', '65',
-+            '-kernel', fw_payload_path,
-+            '-drive', f'file=3D{rootfs_path},format=3Draw',
-+            '-nographic'
-+        ]
++    /* Create local set of registers for each VP */
++    s->vps =3D g_new(RISCVGCRVPState, s->num_vps);
++}
 +
-+        # Run QEMU and expect it to fail immediately.
-+        result =3D run(cmd, capture_output=3DTrue, text=3DTrue, timeout=3D=
-5)
++static void riscv_gcr_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc =3D DEVICE_CLASS(klass);
++    device_class_set_props(dc, riscv_gcr_properties);
++    dc->vmsd =3D &vmstate_riscv_gcr;
++    device_class_set_legacy_reset(dc, riscv_gcr_reset);
++    dc->realize =3D riscv_gcr_realize;
++}
 +
-+        # Check that QEMU exited with error code 1
-+        self.assertEqual(result.returncode, 1,
-+                         "QEMU should exit with code 1 for invalid SMP cou=
-nt")
++static const TypeInfo riscv_gcr_info =3D {
++    .name          =3D TYPE_RISCV_GCR,
++    .parent        =3D TYPE_SYS_BUS_DEVICE,
++    .instance_size =3D sizeof(RISCVGCRState),
++    .instance_init =3D riscv_gcr_init,
++    .class_init    =3D riscv_gcr_class_init,
++};
 +
-+        # Check error message
-+        self.assertIn('Invalid SMP CPUs 65', result.stderr,
-+                      "Error message should indicate invalid SMP CPU count=
-")
++static void riscv_gcr_register_types(void)
++{
++    type_register_static(&riscv_gcr_info);
++}
 +
-+if __name__ =3D=3D '__main__':
-+    QemuSystemTest.main()
++type_init(riscv_gcr_register_types)
+diff --git a/include/hw/misc/riscv_cmgcr.h b/include/hw/misc/riscv_cmgcr.h
+new file mode 100644
+index 0000000000..c57d4ada1c
+--- /dev/null
++++ b/include/hw/misc/riscv_cmgcr.h
+@@ -0,0 +1,50 @@
++/*
++ * This file is subject to the terms and conditions of the GNU General Pub=
+lic
++ * License.  See the file "COPYING" in the main directory of this archive
++ * for more details.
++ *
++ * Copyright (C) 2015 Imagination Technologies
++ *
++ * Copyright (C) 2025 MIPS
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
++
++#ifndef RISCV_CMGCR_H
++#define RISCV_CMGCR_H
++
++#include "hw/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_RISCV_GCR "riscv-gcr"
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVGCRState, RISCV_GCR)
++
++#define GCR_BASE_ADDR           0x1fb80000ULL
++#define GCR_MAX_VPS             256
++
++typedef struct RISCVGCRVPState RISCVGCRVPState;
++struct RISCVGCRVPState {
++    uint64_t reset_base;
++};
++
++typedef struct RISCVGCRState RISCVGCRState;
++struct RISCVGCRState {
++    SysBusDevice parent_obj;
++
++    int32_t gcr_rev;
++    uint32_t cluster_id;
++    uint32_t num_vps;
++    uint32_t num_hart;
++    uint32_t num_core;
++    hwaddr gcr_base;
++    MemoryRegion iomem;
++    MemoryRegion *cpc_mr;
++
++    uint64_t cpc_base;
++
++    /* VP Local/Other Registers */
++    RISCVGCRVPState *vps;
++};
++
++#endif /* RISCV_CMGCR_H */
 --=20
 2.34.1
 
