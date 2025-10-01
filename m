@@ -4,94 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 174C4CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 22:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2173DCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 22:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v44rl-0007De-49; Wed, 01 Oct 2025 18:00:05 -0400
+	id 1v4563-000542-DA; Wed, 01 Oct 2025 18:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v44rh-00074H-6h
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 18:00:01 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v44rT-00070f-TS
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 18:00:00 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b609a32a9b6so199760a12.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 14:59:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759355978; x=1759960778; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A7HsVqIFGQ4un/fC+NSS+74utCb+e2GrdAWlNpu/pLQ=;
- b=G7mV+9FhHvA8Tz8BXF8aIZkAsU93gy1syxzhzgF1qwvXjG6ccA6D36hUJgvv/R7+bm
- pMLkkmr9FPiEMfV/bm5aCGCe+WKQQhitSAuEQbPokV7LQ3IPkZUJ40AzQNIwVcsLc/mw
- IsN0pGuUk2HoUQfgajMWOJ6llUFfz4wDOxJd1JuUNTBTzgRsEM2uYLxHmHE5XC/AQomQ
- cVSdv51H9F2jXv76PX76sdSHPA0EWHgAB5+mJxzfK6Cs+/TX4LDtkO2kDsxgEENYV0HY
- ZV0Nap4lC2CEx3JHBdZp3PqH70W6D9otZmAitkgYQ75+6P4NP2Xo3XGws41D0+WtwCAy
- Xt+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759355978; x=1759960778;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A7HsVqIFGQ4un/fC+NSS+74utCb+e2GrdAWlNpu/pLQ=;
- b=N2gas+ekbFnd68XV3eVn19PLXNrIlF1n2w9t5JrfMYsz3CzjqheGPq54na9bweDk7N
- 7Uo+TPxEmu5jsOKDS1ncYBK3jmXSEf4evA0HDl1FbgpW9ryFtE9xgQ6IQR8zmTu6XM7J
- 99biPzrLvhzscaC3o5aC5/yzHjoJARMNeehXFHrZ1lBOlo+3vh5LJPbVxC0ybBNDQ4eo
- xwxQF+4TLM7ldBPvJ+RUH3WEg07agMBnEEidkszogGXplVdUUTKHUUzgC5l6BpNAB6hQ
- B6SM+c6TSOvM7IvnPgekHniR/qMdsTdj95sTr26XixgQ+G4d6x463V1A6FoKlb30Ynrf
- 9k9w==
-X-Gm-Message-State: AOJu0Yynk89C2ITg+tIf7vXEZk6WN0AOpDtJOTNYeYgMf7k3z0Jn9+uU
- 4dVEswc04TTo89lvkEUgHsA3K//tXAOG8lPDOH5jvTBjOtknT7RSBERzrzp/WgxotWs=
-X-Gm-Gg: ASbGncvvEdOAmkSQm2MeMOZZo1Vuifb35u3DpxZ6pwn8gz4esCMFqVlbUata5iJoy5o
- vmgnCUBQeqHwTQ4BSBsiwt8h4tQe43rTMo3AE6/ThNnBFRQJfc2Zlwx6FtEpypGMeA+PfjCWRXk
- lXn7kGDIjBGdy0Ltra5YdSMC0qIGYYmYOKZeQq3N62HuKw+sXCXrpfyzzuolFV0KiWKJ3bEhZTs
- bYBAYINBzfv817n34TeEOCpiS+cWIafXkh9hvzRxqdTGyhK10nGFivIx2yFbwUMWL8ThOJ+pPY6
- f5E3jxN4GvRDaqTx/fBZBbZ1M3ynXobQFD3vlJqt5T6QhBN9OP7Nq88ZfnJcUt1A77unPYN+RMP
- WgidaWqG3mY4hjRGz6uzZzVR0o2BN3tqb0ya2VuIiGf/R15R2j9RX21WfhLE6
-X-Google-Smtp-Source: AGHT+IE4dvjkijQeHqSDFBGwW52rULdL2YQWBfpfH/WZvS+UP1QBiR5QjZEIjz7d98yazFbnu59J8w==
-X-Received: by 2002:a17:902:ce02:b0:267:776b:a315 with SMTP id
- d9443c01a7336-28e7f32ffa9mr59534775ad.32.1759355978170; 
- Wed, 01 Oct 2025 14:59:38 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d126ae6sm6075295ad.42.2025.10.01.14.59.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 14:59:37 -0700 (PDT)
-Message-ID: <98ec5131-8468-4484-800d-36439c6b5ae9@linaro.org>
-Date: Wed, 1 Oct 2025 14:59:35 -0700
+ (Exim 4.90_1) (envelope-from <dan@islenet.com>) id 1v455z-00053e-0n
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 18:14:47 -0400
+Received: from lin1.islenet.com ([45.33.68.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dan@islenet.com>) id 1v455r-0001db-Nl
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 18:14:45 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by lin1.islenet.com (Postfix) with ESMTP id 896C1F58EB
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 18:14:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=islenet.com; h=
+ mime-version:user-agent:content-transfer-encoding:content-type
+ :content-type:date:date:from:from:subject:subject:message-id
+ :received:received; s=default; t=1759356869; x=1760220870; bh=Zx
+ lS+d2ywAJyGzm839mP/c2wQPhT3a1RdHDCaK9EPnM=; b=SljIuHGImeixeAnSYm
+ NpOj0dEMVvKwfJAkxUZWhpphuBGNSXlKZMKtP4bU1DI6ktW2IsMd32PtGrHtyIDE
+ 1tPrmYRFHSSn3UHJ3r4Eyx7TBJIirkFmKIUrKcDS+ppOi9e40AFvzivZgB5P+dqe
+ bsAMSZAJOXuTInVEgZlrDMy+0YXa5OzUZT5sdSUL5pF2O4j6TQb3/t/7It8KGh9K
+ Cd4/Xl/F+UQ0rJ93a9sEyHJBuKKs0ukoIDYPh0E/BA7vfgadEsrFeOGgOiTUQ7eu
+ Gq3Em3MtBSmDrSaanzhK2pgXZ87ioaFeLJgIMTBCa37skfurtq8gli9lWoRdA1+z
+ uM6g==
+X-Virus-Scanned: amavis at islenet.com
+Received: from lin1.islenet.com ([IPv6:::1])
+ by localhost (lin1.islenet.com [IPv6:::1]) (amavis, port 10026) with LMTP
+ id O8k8cz4TSCJc for <qemu-devel@nongnu.org>;
+ Wed,  1 Oct 2025 18:14:29 -0400 (EDT)
+Received: from venus.islenet.com (unknown [IPv6:2601:985:300:a441::7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lin1.islenet.com (Postfix) with ESMTPSA id 47507F5889
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 18:14:29 -0400 (EDT)
+Message-ID: <ebb4d277d49d53e55d9c0d56375df29981631c3e.camel@islenet.com>
+Subject: DOS 6.22 with LIM 4.0 Expanded Memory
+From: "Daniel L. Srebnick" <dan@islenet.com>
+To: qemu-devel@nongnu.org
+Date: Wed, 01 Oct 2025 18:14:28 -0400
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] system: Don't leak CPU AddressSpaces
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <ehabkost@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-References: <20250929144228.1994037-1-peter.maydell@linaro.org>
- <1c567b4a-4966-4374-8851-81c9b1393d8a@linaro.org> <aN2fKu6wfPSQx05S@x1.local>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <aN2fKu6wfPSQx05S@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=45.33.68.68; envelope-from=dan@islenet.com;
+ helo=lin1.islenet.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,36 +76,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 14:37, Peter Xu wrote:
-> I only have a very preliminary understanding on this, so please bare with
-> me if I'll make silly mistakes...
-> 
-> I was expecting QEMU provides both the global view (address_space_memory),
-> and the per-vcpu view.
+I have a need to run an old MSDOS 6.22 image with an application that
+makes use of EMS 4.0.
 
-My hypothesis is that separate views for each cpu doesn't make sense.
+After some extensive testing, it seems that DOS' EMM386 driver cannot
+find a 64k page frame that it can use.  I can manually designate the
+block beginning at D800 as a page frame but then shortly after start
+the system hangs.
 
-In the true symmetric multiprocessor case, which is the vast majority of everything we 
-emulate in QEMU, each processor has the exact same view(s).
+I have a test program that is used to determine if the system is seeing
+the EMS as expected and this fails.
 
-In the rare asymmetric multiprocessor case, of which we have a few, we have a couple of 
-clusters and within each cluster all cpus share the exact same view(s).
+If anyone is interested in taking a look at this I'll provide the XML
+for the VM, a config.sys as well as the EMSTEST program which can be
+used to validate a proper environment.
 
-Thus access to address spaces on a per-cpu basis makes sense, but allocating them on a 
-per-cpu basis does not.
+If this is not the right place to raise this issue please point me in
+the proper direction.
 
-> We have another question to ask besides this design discussion: Peter's
-> series here solidly fixes a memory leak that can easily reproduce with
-> x86_64 + KVM on cpu hotplugs.
-> 
-> Should we still merge it first considering it didn't change how we manage
-> per-vcpu address spaces, but only fixing it?  Then anything like a big
-> overhaul can happen on top too.
+Many thanks,
 
-Sure, I'm happy with that.  I just wanted to raise the related problem that we encountered 
-over this past week.
-
-
-
-r~
+Dan Srebnick
 
