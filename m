@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A2BCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D819DCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yRp-00035t-04; Wed, 01 Oct 2025 11:08:53 -0400
+	id 1v3ySL-0004FJ-UC; Wed, 01 Oct 2025 11:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3yRi-0002c8-IV
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:08:46 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3ySG-00045p-Hp
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:09:21 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3yQ9-0000nV-MF
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:08:45 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e34052bb7so73592695e9.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 08:06:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v3yQI-0000qW-Qs
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:09:19 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3f99ac9acc4so2135878f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 08:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759331208; x=1759936008; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759331229; x=1759936029; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EgRekvmTJ/VCtBPy89EpCeHzqbjnCgHMk9XzcH8ZZx8=;
- b=coLbB4WwvretULXAEtHly+zNKyYSKZ5OlEHXpauWu6MnzPmYu+rAGoHVgw+JTIvoxA
- HXwlt/kv2xIh+4giG7/UrjeCzmca7CFh8k9ERIRw47R+g06dA9w4B56PgSRsM92EBh6b
- gGfA9SnwWrERR6D6KFp71B2sED2wqsdGUoOPNB3V7yzhWmVk5X0w13HJ0WvhH11lQSl4
- wgNSsBKfP6GoDBUVB+wJXbFKotuQL47umPUXqBRoJf/CD/J8wDBfIWGkCTff9S2xyK4f
- /MB6ATIAmWD0Wc/VwYAmUQdgvmye1fRdImRQ+iVF7Q2x9XmM16KeQbjHf2bioIQoselD
- lShg==
+ bh=7mq73JsY80I+RbmAdLEU0nyn7j5rR3V80UMFQRUniNk=;
+ b=Mb1FZTm0+ohcPSX0JmiKWKJimGjmxJmvYjKXBWU+WdsAlYCXOBtsAvIiOC8eVfWNS1
+ 97vreugn8VotCDQNxOYGVLLT8hY6yUXhCflbmclbnonkGaEw2xGeOc893fQfFwmQRhr4
+ tCwxCZBxC5WcenjpSjLv/xtFdUjYIg2HhNULVzQR0qP690ZXfEonpwPdVqbbmzm93hcE
+ g1J4IlaiOCUygqF/przLqFt7DeOE91U+57QntOEirYP0DyXVaR9Mqf8avwnLEK46RMg7
+ LzJLjL5Ejx55e6ruOd8AFvUv6BVElvXJyl8AhstU12F+QXQKB/3DKtALwFqUQ+PytV9q
+ qEUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759331208; x=1759936008;
+ d=1e100.net; s=20230601; t=1759331229; x=1759936029;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EgRekvmTJ/VCtBPy89EpCeHzqbjnCgHMk9XzcH8ZZx8=;
- b=NWU/BDe1htAbfhmqsmEmbKCv1kO5Q8PRScPeDa+5saU+HagLxjWfYMnZYAkVplRSpW
- Pic6LDcOd7j+iW+5TzEw50dmmV64tS9hhn5/GcpL8yV911Yle2gEv9R52VFsUGW4kR8n
- B1unEs5vPVl6qZuCBZOX+YyB9SXfP1SL6KIWHtqvzBAgXVQiFEYHZZZFwI00iP5RPf4/
- 8zEV5dTsz7Goakx/c4zCRIWOqhv1JB7ezvs3FWOybhotEABJ2F5ZVLsqJBXt1SAyayJb
- LZ1954DwKSKF9lIQiY8KGVZSuEu12+XgHMrBiu6AA/fVztgl0mUGn0o6iUFp64E0Dfan
- vgnQ==
-X-Gm-Message-State: AOJu0YwqiFCRcFpsAGIesMfaTFXr2mvCDtuhyjiiAVN9LwW3FmFOt5yQ
- e0+iQGfpo9QbP3+jLqui47b17E685vkjMO6gUXJx4I55uaVg3KqzUErJxagIsIpzKKXnJnG/uHn
- fkDUYAJ9Zvg==
-X-Gm-Gg: ASbGnctCBTRzU4r6sQyG5qWTFXJXuXsgh4crgg5Bf+iWOksjC6eGTKgP9+4kDhV9Tl4
- u6taQRzApzesGUN/0n4g8kKM9USpT/21Nn1UPskhrUTlAaH/Lx7ypW+dXF1HdTFZbUvEemmHpHb
- Crp44ehdFutbOYKDttfhtTAZgbOYnCDclU2vf8D5kJCc8e2/OQ0/AG95UqIFoVmqFPSbduQ98Su
- GfFq1RauFNDqR7YJVyADM1kQkRabYn4/NprOXocDT8qyHQhBbf7/dzbwXcpVTvNz1Gm7OBsMJBj
- AcyCBjQ8b7D5le5gEz2Qqkgmv465pijK06x9MQQlY7H9xH3VWaIOTxfSun8ve7aOX39TOkEQcNQ
- NgHqcdc5LAsWkQz51s5jTXKsOqT/7Dp0zDmhGfZ0MZmGtoyzWGW1clatNjOLH44s5ACrLwiSBlY
- zHy99Gs7CG42k1oWJ1fJFT
-X-Google-Smtp-Source: AGHT+IF6btBrTtBXsCyTjEV0w6exyA7U2R5NCMxQNV+7lluj+aV+XkDultE+kKDstjJdSU31d77zqQ==
-X-Received: by 2002:a05:6000:200d:b0:3e2:b2f0:6e57 with SMTP id
- ffacd0b85a97d-4255780b898mr3265768f8f.36.1759331208335; 
- Wed, 01 Oct 2025 08:06:48 -0700 (PDT)
+ bh=7mq73JsY80I+RbmAdLEU0nyn7j5rR3V80UMFQRUniNk=;
+ b=QvpilthzLzsXt1vK0KSTrvFdIygGZ5FhnH4zgyT4YfwvnYjJHNUCpnxWPlIrVGRqDQ
+ 6U1N1BPgTxCRo5UnP/XyfNHRuDUqBCPqvi/kqAQBORtJ9DCAqgZddLPl0YgEmWmYgMq1
+ jdciEHiZ+CNr15hCp8c6ybBwmsFC5Grr8IL5/Y4C+S1ixIVXNDsr+P46cq10u5VH/mbd
+ wNWCNtGSX0Tc6bdbZCyuvYVolMeDnKqYVHBK/zdJ79fngYfVbUC+cRxQLph5XEBiXPjT
+ V68KLhHqsYmPdEcRPZLIHhzS9a76RD46bemRLpyprqBTTU76WlOYXgl98aXu6LPRL3eI
+ wvag==
+X-Gm-Message-State: AOJu0Yy5sYje+cvW3908pI5vQLiolvTTsMLZkkOJLPWBDOuqqO3Oy/1D
+ 2T99vjvpqOpEOQmvjE5aIYDUsBIkff31UAtZD7V3gGkeYub8KMyORTvzKI17Ggfx/q5UGF52Vhu
+ lb6IlXEoz6A==
+X-Gm-Gg: ASbGncsy5v6bdGqlC0PwOtx+Sv1QiNdTU4lWCHjvYXvwCfvBukV7uaL2s1yGLnCqJfG
+ NJ4jRfdcvQPaTfLlfBo4iVyPBS/f5ZXNqY+ltT8OAgB3dxJz2xbYtMixZ7y2b0XVKSZrYrBiV3G
+ 6djdDWCuqVMuQXBDB6fz8zEGci5n0Dde/Q1qgXWZNIdMN000SDBevqe9jLgsx78puaoSXWi0Ncj
+ ewqnYhJS3+J5I6FVI5nf+HcLm4mQhzfNpTGwkOXUO85KdeVIct8mkhdBkcL2m7JnCBRX1WJjDUV
+ aOKiqoIbCTfGmGWiXC4NZhQOBLuDHhbRQdvh1ocYnJv6kC678SAWxAWjApQFuLZZU+pA1CVwd2s
+ l1pkrtrjWZnKM3HJPOWY/ovNDJuX8wo4GNqMABhWS++CkbonFtGWVnIVynAQid2cSLd0K6JW7wO
+ uoG74pb0prlWK9vD5uEweRWW2SOe2lBm4=
+X-Google-Smtp-Source: AGHT+IG9M1GfxjLnXSzyU42V3GnIoott0XjWEOplId5rUVd+pmxzyuqf9S4f9T1BZ0baGFoBOjykwQ==
+X-Received: by 2002:a05:6000:420a:b0:3f3:3c88:505e with SMTP id
+ ffacd0b85a97d-4255780522fmr2660404f8f.29.1759331228550; 
+ Wed, 01 Oct 2025 08:07:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb72fb1a3sm27980067f8f.10.2025.10.01.08.06.47
+ ffacd0b85a97d-40fc5602f15sm27444186f8f.39.2025.10.01.08.07.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 08:06:47 -0700 (PDT)
+ Wed, 01 Oct 2025 08:07:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
@@ -73,27 +73,20 @@ Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 15/22] target/m68k: Get cpu first addr space with
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH 19/22] target/sparc: Get cpu first addr space with
  cpu_get_address_space()
-Date: Wed,  1 Oct 2025 17:05:20 +0200
-Message-ID: <20251001150529.14122-16-philmd@linaro.org>
+Date: Wed,  1 Oct 2025 17:05:24 +0200
+Message-ID: <20251001150529.14122-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251001150529.14122-1-philmd@linaro.org>
 References: <20251001150529.14122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,140 +107,202 @@ helper.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/helper.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ target/sparc/ldst_helper.c | 22 ++++++++++++----------
+ target/sparc/mmu_helper.c  | 21 ++++++++++++---------
+ 2 files changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 15f110fa7a2..0f8512af72c 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -491,6 +491,7 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
-     int32_t size;
-     int last_attr = -1, attr = -1;
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 2c63eb9e036..35d1f63fd2a 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -700,23 +700,24 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
+     {
+         MemTxResult result;
+         hwaddr access_addr = (hwaddr)addr | ((hwaddr)(asi & 0xf) << 32);
++        AddressSpace *as = cpu_get_address_space(cs, 0);
+ 
+         switch (size) {
+         case 1:
+-            ret = address_space_ldub(cs->as, access_addr,
++            ret = address_space_ldub(as, access_addr,
+                                      MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         case 2:
+-            ret = address_space_lduw(cs->as, access_addr,
++            ret = address_space_lduw(as, access_addr,
+                                      MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         default:
+         case 4:
+-            ret = address_space_ldl(cs->as, access_addr,
++            ret = address_space_ldl(as, access_addr,
+                                     MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         case 8:
+-            ret = address_space_ldq(cs->as, access_addr,
++            ret = address_space_ldq(as, access_addr,
+                                     MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         }
+@@ -809,6 +810,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+ {
+     int size = 1 << (memop & MO_SIZE);
      CPUState *cs = env_cpu(env);
 +    AddressSpace *as = cpu_get_address_space(cs, 0);
-     MemTxResult txres;
  
-     if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
-@@ -505,25 +506,25 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
-         tib_mask = M68K_4K_PAGE_MASK;
-     }
-     for (unsigned i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
--        tia = address_space_ldl(cs->as, M68K_POINTER_BASE(root_pointer) + i * 4,
-+        tia = address_space_ldl(as, M68K_POINTER_BASE(root_pointer) + i * 4,
-                                 MEMTXATTRS_UNSPECIFIED, &txres);
-         if (txres != MEMTX_OK || !M68K_UDT_VALID(tia)) {
-             continue;
-         }
-         for (unsigned j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
--            tib = address_space_ldl(cs->as, M68K_POINTER_BASE(tia) + j * 4,
-+            tib = address_space_ldl(as, M68K_POINTER_BASE(tia) + j * 4,
-                                     MEMTXATTRS_UNSPECIFIED, &txres);
-             if (txres != MEMTX_OK || !M68K_UDT_VALID(tib)) {
-                 continue;
+     do_check_align(env, addr, size - 1, GETPC());
+     switch (asi) {
+@@ -878,7 +880,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+                 MemTxResult result;
+                 hwaddr access_addr = (env->mxccregs[0] & 0xffffffffULL) + 8 * i;
+ 
+-                env->mxccdata[i] = address_space_ldq(cs->as,
++                env->mxccdata[i] = address_space_ldq(as,
+                                                      access_addr,
+                                                      MEMTXATTRS_UNSPECIFIED,
+                                                      &result);
+@@ -906,7 +908,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+                 MemTxResult result;
+                 hwaddr access_addr = (env->mxccregs[1] & 0xffffffffULL) + 8 * i;
+ 
+-                address_space_stq(cs->as, access_addr, env->mxccdata[i],
++                address_space_stq(as, access_addr, env->mxccdata[i],
+                                   MEMTXATTRS_UNSPECIFIED, &result);
+ 
+                 if (result != MEMTX_OK) {
+@@ -1068,20 +1070,20 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+ 
+             switch (size) {
+             case 1:
+-                address_space_stb(cs->as, access_addr, val,
++                address_space_stb(as, access_addr, val,
+                                   MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             case 2:
+-                address_space_stw(cs->as, access_addr, val,
++                address_space_stw(as, access_addr, val,
+                                   MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             case 4:
+             default:
+-                address_space_stl(cs->as, access_addr, val,
++                address_space_stl(as, access_addr, val,
+                                   MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             case 8:
+-                address_space_stq(cs->as, access_addr, val,
++                address_space_stq(as, access_addr, val,
+                                   MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
              }
-             for (unsigned k = 0; k < tic_size; k++) {
--                tic = address_space_ldl(cs->as, (tib & tib_mask) + k * 4,
-+                tic = address_space_ldl(as, (tib & tib_mask) + k * 4,
-                                         MEMTXATTRS_UNSPECIFIED, &txres);
-                 if (txres != MEMTX_OK || !M68K_PDT_VALID(tic)) {
-                     continue;
-                 }
-                 if (M68K_PDT_INDIRECT(tic)) {
--                    tic = address_space_ldl(cs->as, M68K_INDIRECT_POINTER(tic),
-+                    tic = address_space_ldl(as, M68K_INDIRECT_POINTER(tic),
-                                             MEMTXATTRS_UNSPECIFIED, &txres);
-                     if (txres != MEMTX_OK) {
-                         continue;
-@@ -732,6 +733,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-                                 int access_type, target_ulong *page_size)
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 217580a4d8c..1e13ef3da40 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -80,6 +80,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+     unsigned long page_offset;
+     CPUState *cs = env_cpu(env);
+     MemTxResult result;
++    AddressSpace *as;
+ 
+     is_user = mmu_idx == MMU_USER_IDX;
+ 
+@@ -96,13 +97,14 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+         return 0;
+     }
+ 
++    as = cpu_get_address_space(cs, 0);
+     *access_index = ((rw & 1) << 2) | (rw & 2) | (is_user ? 0 : 1);
+     full->phys_addr = 0xffffffffffff0000ULL;
+ 
+     /* SPARC reference MMU table walk: Context table->L1->L2->PTE */
+     /* Context base + context number */
+     pde_ptr = (env->mmuregs[1] << 4) + (env->mmuregs[2] << 2);
+-    pde = address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
++    pde = address_space_ldl(as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
+     if (result != MEMTX_OK) {
+         return 4 << 2; /* Translation fault, L = 0 */
+     }
+@@ -117,7 +119,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+         return 4 << 2;
+     case 1: /* L0 PDE */
+         pde_ptr = ((address >> 22) & ~3) + ((pde & ~3) << 4);
+-        pde = address_space_ldl(cs->as, pde_ptr,
++        pde = address_space_ldl(as, pde_ptr,
+                                 MEMTXATTRS_UNSPECIFIED, &result);
+         if (result != MEMTX_OK) {
+             return (1 << 8) | (4 << 2); /* Translation fault, L = 1 */
+@@ -131,7 +133,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+             return (1 << 8) | (4 << 2);
+         case 1: /* L1 PDE */
+             pde_ptr = ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4);
+-            pde = address_space_ldl(cs->as, pde_ptr,
++            pde = address_space_ldl(as, pde_ptr,
+                                     MEMTXATTRS_UNSPECIFIED, &result);
+             if (result != MEMTX_OK) {
+                 return (2 << 8) | (4 << 2); /* Translation fault, L = 2 */
+@@ -145,7 +147,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+                 return (2 << 8) | (4 << 2);
+             case 1: /* L2 PDE */
+                 pde_ptr = ((address & 0x3f000) >> 10) + ((pde & ~3) << 4);
+-                pde = address_space_ldl(cs->as, pde_ptr,
++                pde = address_space_ldl(as, pde_ptr,
+                                         MEMTXATTRS_UNSPECIFIED, &result);
+                 if (result != MEMTX_OK) {
+                     return (3 << 8) | (4 << 2); /* Translation fault, L = 3 */
+@@ -189,7 +191,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+         if (is_dirty) {
+             pde |= PG_MODIFIED_MASK;
+         }
+-        stl_phys_notdirty(cs->as, pde_ptr, pde);
++        stl_phys_notdirty(as, pde_ptr, pde);
+     }
+ 
+     /* the page can be put in the TLB */
+@@ -264,6 +266,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
  {
      CPUState *cs = env_cpu(env);
 +    AddressSpace *as = cpu_get_address_space(cs, 0);
-     uint32_t entry;
-     uint32_t next;
-     target_ulong page_mask;
-@@ -768,7 +770,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-     /* Root Index */
-     entry = M68K_POINTER_BASE(next) | M68K_ROOT_INDEX(address);
- 
--    next = address_space_ldl(cs->as, entry, MEMTXATTRS_UNSPECIFIED, &txres);
-+    next = address_space_ldl(as, entry, MEMTXATTRS_UNSPECIFIED, &txres);
-     if (txres != MEMTX_OK) {
-         goto txfail;
+     hwaddr pde_ptr;
+     uint32_t pde;
+     MemTxResult result;
+@@ -276,7 +279,7 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+     /* Context base + context number */
+     pde_ptr = (hwaddr)(env->mmuregs[1] << 4) +
+         (env->mmuregs[2] << 2);
+-    pde = address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
++    pde = address_space_ldl(as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
+     if (result != MEMTX_OK) {
+         return 0;
      }
-@@ -776,7 +778,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-         return -1;
-     }
-     if (!(next & M68K_DESC_USED) && !debug) {
--        address_space_stl(cs->as, entry, next | M68K_DESC_USED,
-+        address_space_stl(as, entry, next | M68K_DESC_USED,
-                           MEMTXATTRS_UNSPECIFIED, &txres);
-         if (txres != MEMTX_OK) {
-             goto txfail;
-@@ -795,7 +797,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-     /* Pointer Index */
-     entry = M68K_POINTER_BASE(next) | M68K_POINTER_INDEX(address);
- 
--    next = address_space_ldl(cs->as, entry, MEMTXATTRS_UNSPECIFIED, &txres);
-+    next = address_space_ldl(as, entry, MEMTXATTRS_UNSPECIFIED, &txres);
-     if (txres != MEMTX_OK) {
-         goto txfail;
-     }
-@@ -803,7 +805,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-         return -1;
-     }
-     if (!(next & M68K_DESC_USED) && !debug) {
--        address_space_stl(cs->as, entry, next | M68K_DESC_USED,
-+        address_space_stl(as, entry, next | M68K_DESC_USED,
-                           MEMTXATTRS_UNSPECIFIED, &txres);
-         if (txres != MEMTX_OK) {
-             goto txfail;
-@@ -826,7 +828,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-         entry = M68K_4K_PAGE_BASE(next) | M68K_4K_PAGE_INDEX(address);
-     }
- 
--    next = address_space_ldl(cs->as, entry, MEMTXATTRS_UNSPECIFIED, &txres);
-+    next = address_space_ldl(as, entry, MEMTXATTRS_UNSPECIFIED, &txres);
-     if (txres != MEMTX_OK) {
-         goto txfail;
-     }
-@@ -835,7 +837,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-         return -1;
-     }
-     if (M68K_PDT_INDIRECT(next)) {
--        next = address_space_ldl(cs->as, M68K_INDIRECT_POINTER(next),
-+        next = address_space_ldl(as, M68K_INDIRECT_POINTER(next),
-                                  MEMTXATTRS_UNSPECIFIED, &txres);
-         if (txres != MEMTX_OK) {
-             goto txfail;
-@@ -844,7 +846,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-     if (access_type & ACCESS_STORE) {
-         if (next & M68K_DESC_WRITEPROT) {
-             if (!(next & M68K_DESC_USED) && !debug) {
--                address_space_stl(cs->as, entry, next | M68K_DESC_USED,
-+                address_space_stl(as, entry, next | M68K_DESC_USED,
-                                   MEMTXATTRS_UNSPECIFIED, &txres);
-                 if (txres != MEMTX_OK) {
-                     goto txfail;
-@@ -852,7 +854,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
-             }
-         } else if ((next & (M68K_DESC_MODIFIED | M68K_DESC_USED)) !=
-                            (M68K_DESC_MODIFIED | M68K_DESC_USED) && !debug) {
--            address_space_stl(cs->as, entry,
-+            address_space_stl(as, entry,
-                               next | (M68K_DESC_MODIFIED | M68K_DESC_USED),
-                               MEMTXATTRS_UNSPECIFIED, &txres);
-             if (txres != MEMTX_OK) {
-@@ -861,7 +863,7 @@ static int get_physical_address(CPUM68KState *env, hwaddr *physical,
+@@ -292,7 +295,7 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+             return pde;
          }
-     } else {
-         if (!(next & M68K_DESC_USED) && !debug) {
--            address_space_stl(cs->as, entry, next | M68K_DESC_USED,
-+            address_space_stl(as, entry, next | M68K_DESC_USED,
-                               MEMTXATTRS_UNSPECIFIED, &txres);
-             if (txres != MEMTX_OK) {
-                 goto txfail;
+         pde_ptr = ((address >> 22) & ~3) + ((pde & ~3) << 4);
+-        pde = address_space_ldl(cs->as, pde_ptr,
++        pde = address_space_ldl(as, pde_ptr,
+                                 MEMTXATTRS_UNSPECIFIED, &result);
+         if (result != MEMTX_OK) {
+             return 0;
+@@ -310,7 +313,7 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+                 return pde;
+             }
+             pde_ptr = ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4);
+-            pde = address_space_ldl(cs->as, pde_ptr,
++            pde = address_space_ldl(as, pde_ptr,
+                                     MEMTXATTRS_UNSPECIFIED, &result);
+             if (result != MEMTX_OK) {
+                 return 0;
+@@ -328,7 +331,7 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+                     return pde;
+                 }
+                 pde_ptr = ((address & 0x3f000) >> 10) + ((pde & ~3) << 4);
+-                pde = address_space_ldl(cs->as, pde_ptr,
++                pde = address_space_ldl(as, pde_ptr,
+                                         MEMTXATTRS_UNSPECIFIED, &result);
+                 if (result != MEMTX_OK) {
+                     return 0;
 -- 
 2.51.0
 
