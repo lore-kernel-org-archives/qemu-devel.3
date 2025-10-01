@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A8BCCA474
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D958BCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rIu-0005PK-OF; Wed, 01 Oct 2025 03:31:13 -0400
+	id 1v3rJL-0005hy-MG; Wed, 01 Oct 2025 03:31:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIs-0005On-IY
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:10 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rJ7-0005bU-C3
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:29 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIY-0003QE-0f
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:10 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIm-0003Tf-3O
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:31:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=OEjzqG4SU6fmTNiK0353SNO1sOPv+E4+4/CDOtjd78A=; b=hxyiR97rRR8wmom
- /OaqFsd/nQHtXHQkerpE67hkLUfnthh5P9yo649dHoeUB1VHoHVcKrIc4WwAJfV/kykRdHMXTm6pu
- 6PIuzRRVDG2FmjRm7mOWEUBvCpGaLF77cL8Nu18mHdWlploZy5D9mWdFZ+rwxbhf8pD5G+z1XjKNT
- wU=;
+ List-Help; bh=5mLWGuPLJThdbDkRpjH47gfCdSm+z542EroHSMw057w=; b=Qymt/DHY22S2r9s
+ vQshSZvxRMC0mQrkfC4fDa4A3yyWIh0aLYIxKyXFqa3BABwr+7p3Aro5ELjqFaXlF9COkeWGhVgX/
+ 1lnzZGRQ+JBRPlggUzxBvdMTse8T6eeZ9Y9gMucDprek0R7YmfZNgoKgk1/KMLt32+i2e0Jdi1D8j
+ Lw=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
  richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: [PATCH v2 03/33] target/riscv: Fix size of mhartid
-Date: Wed,  1 Oct 2025 09:32:36 +0200
-Message-ID: <20251001073306.28573-4-anjo@rev.ng>
+Subject: [PATCH v2 13/33] target/riscv: Fix size of badaddr and bins
+Date: Wed,  1 Oct 2025 09:32:46 +0200
+Message-ID: <20251001073306.28573-14-anjo@rev.ng>
 In-Reply-To: <20251001073306.28573-1-anjo@rev.ng>
 References: <20251001073306.28573-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,68 +64,83 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-and update formatting in log.
+Fix these fields to 64 bits as they cannot be made smaller. Also make
+sure stores to these fields from TCG are 64 bits in size to avoid
+incorrect values on big endian hosts.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h         | 2 +-
- target/riscv/cpu_helper.c  | 2 +-
- target/riscv/machine.c     | 2 +-
- target/riscv/tcg/tcg-cpu.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h                             | 4 ++--
+ target/riscv/machine.c                         | 2 +-
+ target/riscv/translate.c                       | 6 ++++--
+ target/riscv/insn_trans/trans_privileged.c.inc | 2 +-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 736e4f6daa..3235108112 100644
+index f1875c6d99..9e3b6b6879 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -279,7 +279,7 @@ struct CPUArchState {
-     target_ulong geilen;
-     uint64_t resetvec;
+@@ -233,8 +233,8 @@ struct CPUArchState {
+     uint8_t frm;
+     float_status fp_status;
  
--    target_ulong mhartid;
-+    uint64_t mhartid;
-     /*
-      * For RV32 this is 32-bit mstatus and 32-bit mstatush.
-      * For RV64 this is a 64-bit mstatus.
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 3479a62cc7..9d0683f200 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -2278,7 +2278,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                      riscv_cpu_get_trap_name(cause, async));
+-    target_ulong badaddr;
+-    target_ulong bins;
++    uint64_t badaddr;
++    uint64_t bins;
  
-     qemu_log_mask(CPU_LOG_INT,
--                  "%s: hart:"TARGET_FMT_ld", async:%d, cause:"TARGET_FMT_lx", "
-+                  "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
-                   "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
-                   __func__, env->mhartid, async, cause, env->pc, tval,
-                   riscv_cpu_get_trap_name(cause, async));
+     target_ulong guest_phys_fault_addr;
+ 
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 99e46c3136..328fb674e1 100644
+index 62d103c09e..7aafe5f5dd 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -425,7 +425,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.priv, RISCVCPU),
-         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
-         VMSTATE_UINT64(env.resetvec, RISCVCPU),
--        VMSTATE_UINTTL(env.mhartid, RISCVCPU),
-+        VMSTATE_UINT64(env.mhartid, RISCVCPU),
-         VMSTATE_UINT64(env.mstatus, RISCVCPU),
-         VMSTATE_UINT64(env.mip, RISCVCPU),
-         VMSTATE_UINT64(env.miclaim, RISCVCPU),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 143ab079d4..200759eaf0 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -472,7 +472,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
-                 continue;
-             }
- #ifndef CONFIG_USER_ONLY
--            warn_report("disabling %s extension for hart 0x" TARGET_FMT_lx
-+            warn_report("disabling %s extension for hart 0x%" PRIx64
-                         " because privilege spec version does not match",
-                         edata->name, env->mhartid);
- #else
+@@ -412,7 +412,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.load_res, RISCVCPU),
+         VMSTATE_UINT64(env.load_val, RISCVCPU),
+         VMSTATE_UINT8(env.frm, RISCVCPU),
+-        VMSTATE_UINTTL(env.badaddr, RISCVCPU),
++        VMSTATE_UINT64(env.badaddr, RISCVCPU),
+         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
+         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+         VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index b856792d3b..339ef91f6b 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -252,7 +252,7 @@ static void generate_exception(DisasContext *ctx, RISCVException excp)
+ 
+ static void gen_exception_illegal(DisasContext *ctx)
+ {
+-    tcg_gen_st_i32(tcg_constant_i32(ctx->opcode), tcg_env,
++    tcg_gen_st_i64(tcg_constant_i64(ctx->opcode), tcg_env,
+                    offsetof(CPURISCVState, bins));
+     if (ctx->virt_inst_excp) {
+         generate_exception(ctx, RISCV_EXCP_VIRT_INSTRUCTION_FAULT);
+@@ -263,7 +263,9 @@ static void gen_exception_illegal(DisasContext *ctx)
+ 
+ static void gen_exception_inst_addr_mis(DisasContext *ctx, TCGv target)
+ {
+-    tcg_gen_st_tl(target, tcg_env, offsetof(CPURISCVState, badaddr));
++    TCGv_i64 ext = tcg_temp_new_i64();
++    tcg_gen_extu_tl_i64(ext, target);
++    tcg_gen_st_i64(ext, tcg_env, offsetof(CPURISCVState, badaddr));
+     generate_exception(ctx, RISCV_EXCP_INST_ADDR_MIS);
+ }
+ 
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..a8eaccef67 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -68,7 +68,7 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
+         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
+     } else {
+-        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
++        tcg_gen_st_i64(tcg_constant_i64(ebreak_addr), tcg_env,
+                       offsetof(CPURISCVState, badaddr));
+         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
+     }
 -- 
 2.51.0
 
