@@ -4,98 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6153BCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96ABCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 16:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3zJK-0005OS-Gp; Wed, 01 Oct 2025 12:04:10 -0400
+	id 1v3zNo-0007ws-P6; Wed, 01 Oct 2025 12:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3zJH-0005MS-9h
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:04:08 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v3zNb-0007sB-GX
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:08:36 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v3zIz-0002xP-1S
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:04:03 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-4e3117ea7a2so31841551cf.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:03:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v3zNQ-0003bD-Go
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 12:08:35 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-635283199a9so103396d50.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 09:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759334624; x=1759939424; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LRN/gSuS1GAP18uW4uZI9r2/gGWJmDTUpS3beftY9+c=;
- b=dtUBpzspJQio0kQ5KI4bDo5nOwzJ/kZ9eH+9UhiOIls52shWoIUEpx1xn7wdMeA8PC
- nb/E7qBSxqky5+P+nav/mNhoYyTh60Ppc5RmoLW6kD8+4O/PGKA7hVzpgjan954Uiv7i
- 0kYa2LQNnbjBHdIqwsZJuQ4aOlJOudQH5R2PHjUT+Iy0NJ8N8ZzIUUmP3rZJCtXfvztY
- la9hFB4AeTnWtIznYbEQ7adx0zNVDGSEBruqOtWHPqmsZeNnBA0H43aSKhRyc3NALY7f
- 8wIH2ca/k37Ltr36FQLA118a60fvFKGC/GZGqZLCpShuabDA+s1rmrqu4EmIZ6q65VcM
- 3Pcw==
+ d=linaro.org; s=google; t=1759334897; x=1759939697; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1uhjImz1ARsjEJI8cAqVGDV5ReAvP4bsdRzz2Hi4V9c=;
+ b=J/DL6Qekw3kALfj8U0KZyjh/WK5rgRPYQ6KzGhfJkejyZzvAijxxa3vcT1b0KNaXyc
+ TDdeBPOfGb6BKO9r4RbxqYUuxEz5xsBIg+XUwC8o2bTcZU93QTuLUvBkMJMOFJjdaR52
+ x+HiV9UkL+yoNVrRldvMg+pUOciydQA8oAxf3saELTRq9A0wRj7BjUuKNGHvsRAjFyKx
+ daQHuPuHpsVG0odQ+rXUfO4QTnjgVfS1YzwbLt6hy6eE4En0hAL7xV7//m+jHHI2/EJq
+ Bl9EJ85Sa8ilQsmMeZ1WwDnHQtH0leCjVwFIGYq8NpJ9j1ebXixysRLgOv3ZdtzM/mL2
+ VCnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759334624; x=1759939424;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LRN/gSuS1GAP18uW4uZI9r2/gGWJmDTUpS3beftY9+c=;
- b=r6GyGFgNf4PR2WzntTogCNpZ9FmNnEaH9Gnnu2aA2F+rCe0RBuqUEC268saY/t/y9U
- hqqZJWakfpnVUc/Xymvrv+4UARvj4pK9E1famlRgy05dVPGJE7W9wlaUPg1uhSwWl7tj
- LmBDAHh3lY3w+yA42qV0HwAxq0KJ/7gV4qwoJd2DqYbz+Khc9XZnXF87H34jfwxynFlL
- dVr7Gf2D14aY3O0xpIkWh/tC/N9AQ24/Xs+cNMBJFXQXNTaCP8E1wbOICjb8wHr6RfFJ
- kEEg/bAWUyGzQySVSK/4PQwFOCMYQ4f2VUIGBwq3LPO1yXhbdDOAzBnln+DEwTqtGnzy
- 4cOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeRlR0jQcOlgZokX8THGm0H1WLSONCLwWr3q4YVLSUmX6A69cFpAvGGRsbgI/8loybE+MsJp8fyawo@nongnu.org
-X-Gm-Message-State: AOJu0YwJx+aJrXJohefWytqJgBpl1ViKJoycbosut6YX0W/08HxYoJXm
- nT1B9DsvVEtlQO8eLNIZnVUm3ZrQ1BWpBR7HXY1HpjGWHYOLAT8KbgaEvg0pGb/PeP4=
-X-Gm-Gg: ASbGncvtPcHqlWhiCYapJgCFgvlM5pLQs6FIjDyWGV5uaRLL9iZVGNEM+5JrNOrDmJJ
- MMBdXl5vVbbDgKCozSuCdQ5P877gPo8bXHDq4LkxwtYGmjP1UIiJ0GeqzpXGUulaJ3/S2E4m3Zm
- 5AnCGXeG0B1ObiK4ORTvh7v8akubjiQOKHDT6PY84zsDISj3pTbFFQg/Vy1rm0hcI1uTkMPURnz
- 9a9qc+Np1DFaBxV+pjbReaN/NjRT4EAWPYjlR6k6V9orBZzrcxotrDj8ZrStDjUtIHw3AsduvO9
- V+OglMKs30GsgCzZJPhCM9QzypNI4Uv/702mCbAvL58fzykdeI9+l6KRIWmvACux7EozZ7cQg9N
- kMgxhf3Fq3Dw4an46dtoN2MYk9dSFmSvSS91AIfswWsChyhsPUlOP05HLJ8BdKcKAlMMWAkoUR8
- GhEnXoT5db8yD5rld+NDKXd4QM3A7T7qM=
-X-Google-Smtp-Source: AGHT+IEHuRntYtfblmIAnhKBBcUOe3vagIGzluokfa3UwmivMH5oOuOgJzWyvpEoKCwtykjm7AhDBA==
-X-Received: by 2002:ac8:5a55:0:b0:4e0:296e:8cbb with SMTP id
- d75a77b69052e-4e41de7318amr48478751cf.64.1759334624359; 
- Wed, 01 Oct 2025 09:03:44 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345?
- ([2607:fb91:1ec5:27b9:1bec:2e21:cc45:2345])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e55cadc7f0sm1011971cf.26.2025.10.01.09.03.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 09:03:43 -0700 (PDT)
-Message-ID: <62257ea8-f06f-4a42-b426-bc4a7d93eaff@linaro.org>
-Date: Wed, 1 Oct 2025 09:03:39 -0700
+ d=1e100.net; s=20230601; t=1759334897; x=1759939697;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1uhjImz1ARsjEJI8cAqVGDV5ReAvP4bsdRzz2Hi4V9c=;
+ b=m4IU5LpaOZj4oPx63KCBiQAWbsMxcV8XZ50G2LR/5BgjwqC3/G9z4jiXIuaIH512fC
+ lSU31fzHrxR7kYbM71W6Vl99RbJTl9qOqqYMPvp/hMb+d/A7SQkUy8C9/pLlurKI+mBX
+ zkZqgxJuuDpI332vthfdTLBYfCYSRH2s57AwXdHf7E5aqPVgSZ5XtCfHGU43SHPK4Cbx
+ tapEJ0zmGbJ4klXAkP+ZwE6H9z0lf4X8NkdOG7eEbRdNfXI+fFOf7H5LEhrwa1tT7Oi9
+ uAoS4y8i1cpbzPLjBg1fV3as4FyJtw6bhNiB4Ra8JHwVXBSvT3XiL/idZuHWBdfrS6tt
+ /FZg==
+X-Gm-Message-State: AOJu0YwUyde7TsNPpmFQVCsvGcg4x2dyGIMiEVsUHNhRskdyQYybDzz+
+ AjXmlforJio7+kW8HyQY+BlPpBvKB53ZBFL3ofB3U00uRU7lPprr1bM+sAKHJO6VdVV1vSVmp/B
+ 1d/yoEdQslAFc7t8gp2GRe2yBlAINe9qILsQRDLxYBQ==
+X-Gm-Gg: ASbGncuPiCwT4P2MsqsIomcFP1SEM9aiFBajSciXJoFX83+jWSjW1fC3wY8JsixYQ2G
+ z5vlpr54/aCDH9WF/l/nKdkgKzxbhxF111F3NQ82eqDhs+460LPCjpE77nTddPxA8C0M1ovgnAV
+ YNVbatUVtpkJs64OkotAB/rkYjeXOHFyZaecvqA04M+gaeTqM929kTbzejGzYeDs53q/svF66Wq
+ l5a7hl4gaQ+/Dj/UqtiLICWdGTnO8knhtd70cU8hAs=
+X-Google-Smtp-Source: AGHT+IHoYmujh+ngr61sUEQChrIjRT7eIMmc3+Maq5QgQ/YNihIQq6LdvIUOvIYoA0mpB6KXjQYBWJm1phxDB5HlVF8=
+X-Received: by 2002:a53:db09:0:b0:633:aff2:d73 with SMTP id
+ 956f58d0204a3-63b6fec8f93mr3901206d50.5.1759334897047; Wed, 01 Oct 2025
+ 09:08:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] system/ramblock: Move RAMBlock helpers out of
- "system/ram_addr.h"
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org,
+References: <20251001150529.14122-1-philmd@linaro.org>
+In-Reply-To: <20251001150529.14122-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 1 Oct 2025 17:08:04 +0100
+X-Gm-Features: AS18NWCCjl9FtX38MysgzZN9RRCNI1ODO31lSIAWe3O_HbUNCUneU4cyytbeDdM
+Message-ID: <CAFEAcA-daogqBPxt72qTM6BuMuD1wuw+vXZwxLUQftwY2FZk=w@mail.gmail.com>
+Subject: Re: [PATCH 00/22] hw/core/cpu: Remove @CPUState::as field
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Peter Xu <peterx@redhat.com>
-References: <20250929154529.72504-1-philmd@linaro.org>
- <20250929154529.72504-7-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250929154529.72504-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x830.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,24 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/29/25 08:45, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/system/ram_addr.h | 11 -----------
->   include/system/ramblock.h | 11 +++++++++++
->   2 files changed, 11 insertions(+), 11 deletions(-)
+On Wed, 1 Oct 2025 at 16:05, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> Instead of using the convenient @CPUState::as shortcut, use
+> cpu_get_address_space(asidx=3D0) to get the vCPU first address
+> space.
+>
+> The goal is to reduce the risk of AS mis-use for targets
+> that uses multiple ASes per vCPU.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I'm not sure I agree with this. The cpu->as is handy for
+the large number of targets which only use one AddressSpace:
+which is everything except arm and x86 right now.
 
-> +static inline bool offset_in_ramblock(RAMBlock *b, ram_addr_t offset)
-> +{
-> +    return (b && b->host && offset < b->used_length) ? true : false;
+Targets that use multiple address spaces need to be careful
+about which AS they use by definition. Unless we have a
+track record of code in those targets carelessly using
+cpu->as when it should do something else, I'm not sure
+that there's a benefit that makes it worth making the
+"use the one and only AS this CPU will ever have" more awkward.
 
-... though we could stand to clean up "? true : false" silliness.
-
-I assume this comes from programmers who first learned something other than C, but I can't 
-work out what language that might be.  I see it in patches every once in a while.
-
-
-r~
+thanks
+-- PMM
 
