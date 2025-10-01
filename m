@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9777ACAC5B8
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 01:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C54E8CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 01:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3lFD-0005HS-FB; Tue, 30 Sep 2025 21:02:59 -0400
+	id 1v3lGz-00064U-65; Tue, 30 Sep 2025 21:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v3lF6-0005Ga-7x
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 21:02:53 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1v3lGL-0005e5-Fa
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 21:04:09 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v3lEm-0007zo-Tf
- for qemu-devel@nongnu.org; Tue, 30 Sep 2025 21:02:51 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46e3a50bc0fso45686645e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 18:02:29 -0700 (PDT)
+ id 1v3lFN-0008DL-9m
+ for qemu-devel@nongnu.org; Tue, 30 Sep 2025 21:04:08 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-46e4ad36541so41966955e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Sep 2025 18:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1759280544; x=1759885344; darn=nongnu.org;
+ d=opnsrc.net; s=google; t=1759280581; x=1759885381; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UQKJ1SD5xckgEaV2WySv/XUYqgNyxKKJdcvcoJuQPMY=;
- b=YkmKU4OA7em/rLP/3WZuO3G56huL9f7Nyv8YS5T/R6MOpeyK5Q/GQB8Y3kZ8zJH5c7
- TP/WIVtpM/mrWSID34C7EwGsW7QzsesRs45kR4bD5t3YZVzVnGdyl5Y3p/0k7zI+nCjk
- PETLo2jc9tRp+pJM29vXztAfgC2RtqBfBTKKzQFKuDufVWuLXp7np+xvQNZ8sIey6pal
- FOlV3wDtdJLvknolI7kQKHu45gZAtMmsAt+Xd1FRScdWrRSGvcqDyOfQUoM4U6HS5pbj
- t626a9Ms3Zy+rjB632R8DeMJMtcpEcCZhkP2IZlO6YM3JAIXEaP0j1tDetGnLrWuJKvg
- Mrfg==
+ bh=LkorhTYVdtNEc2JK9JCYJPvsAtCb3dSBOdMaKNrFs7Y=;
+ b=c/IBDRZdX2QyTxvPUieuUL1mGP6FJHpv0VtlQwU4gLSkD/DqR+0t6Du5lRGXf9MOQ3
+ yQqG6W6msiTNi7HOseCvKC5qmNIhC6HC0Qfr/ywrIH9ttr7wB+BHLSjtKJqx0z6cFdWJ
+ JwNRkYyDLi9vRVsJStmgErvssviuF38UaYgPU+hkOh/xZMRy4Lo2eSdO0JWMfuUtSNPP
+ keP5pvwrk9WGP4i25niOj4//HhYinjoOUeqcvtQk9PMio9OEC8UdbLtIhzXtmQRi9HvI
+ +/7mgRjkVj4gdwn8DUHIeefzHfhOQUYn9rH1JDTd/R7AQNHVKbrGs2bwVVFLqizsa1el
+ SJ5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759280544; x=1759885344;
+ d=1e100.net; s=20230601; t=1759280581; x=1759885381;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UQKJ1SD5xckgEaV2WySv/XUYqgNyxKKJdcvcoJuQPMY=;
- b=LPao+vmc490UBk8IfX/f6T7qhrfhBnT1D7GBovqlSvcPSq4EN7DiETVRbVuy13Lym5
- W9IhW+5SY5tlbbXHW81zcKuV9eaO6q8nfTd3kwMDH0gCzcM9p1qd1/2nAyqCuSUnbvJ+
- E2owH0sZrPo+KnwfR3TeAElPsGnH9O48DPG2GcjvcLLnO7HyneygZRqxKCj0ZxLh9lqv
- 3YFpFAyz6mMadDf4Dht6NEAaCzilU6EicNs3bhpaMAImTDWoGOeH3Vgjgczsb3Pc4Jch
- DzAmcJAdzcLzCa2YXLpAta9vhbYwGKRwWkVSAHk0Ac3FREVN2F907Z7UYVOknSXu8i5/
- NA1A==
-X-Gm-Message-State: AOJu0Yxu+H0xu+AipMRP9WeU+CdJHoUbxPV6BT45p6KBJqwgkd1Op1yg
- gB5vLseaSbU0aWcfbJxLraoapzMuIeCAmCsKJj2ZrX+qO5Qlv042adkVKoy8UkW22y1QPU+B09a
- 1VYCKjbc20A==
-X-Gm-Gg: ASbGncvd9PxF+Kr1swvxWjPWkSaYAzmuyY1e/UQU6pJBDRgr84Gp/VMJL7yYNXQ2Abb
- CfK+ciNd+YdQIKa2YZogtk3ZyYrcbdiZH5CCxmgCRw1P0JqynT++Aen4TI5IaIXLg/E/xtEW4xv
- LTdXBWk3A9A6OdPg/IShAS9pIcCbBbJg2lF9KWNuCTZ9HXmN5c6HkTfUzb5l443kboPiei8HaEy
- Wnf9eeIBsZCsMZJbsgbkF6fItyHj4j31Ils+dwXCrCfTbVitIij9v6SCVQV3Argna2rCHHPT3tT
- PfKDsZ1xjfmMSKaF5hC1tatS7/iT1WRYwBqDUlBh87nbeZLaf3CMJC2oeIf/8yRvzDGSzQvMLL/
- c1N4vmHBxzaIMugDiTrCBVSbQYa8ZmuH7/01AYz/WWaKKdP43Wg6beSo93xwmVuKL8B1bm1Rc9Q
- kq1+lwSsv8WPEDFPH2MYLKTNj15ng5hNnj4nHURyneHrA=
-X-Google-Smtp-Source: AGHT+IFf7XYAckpJw8j1JA8eb8qMz4/K94d8qJkSnt184ST0tllV9oC3FK71HQ5ngVT+BL3XoDVweA==
-X-Received: by 2002:a05:600c:8b65:b0:43c:ec4c:25b4 with SMTP id
- 5b1f17b1804b1-46e6127cccfmr13217285e9.10.1759280543774; 
- Tue, 30 Sep 2025 18:02:23 -0700 (PDT)
+ bh=LkorhTYVdtNEc2JK9JCYJPvsAtCb3dSBOdMaKNrFs7Y=;
+ b=riRRtKeyD0PwIdYNzRRCthDA3Sk+/ZWVEEFRQ5D1ga2cDK9K68tEm3Sh43ysx9bbt6
+ Mn2vD7ycBleY2IZGhagn3uI4E/5Vlp1GNVoea0jp2MjHKLcDzq/LNAylcRraJipzqtqY
+ a/n2v22EMaaXMSd2GL3Jw3F0Kc7jOthx5deK2GyBSL7UAhSgGCTqmFnCi+McLvhE1T2p
+ sKVW/vA9cdEYsSoOQMA2tVN99yrJFJvCTAk+sVUexblyoCCef5+nd9Zi8Qc9obBKCsbD
+ RMsO+rb2Q736WIDWZaXGuQ9JLgpPoOEYoXBSYmVMlYNkmnGalgbSBcUQUtQd+cl2KqT3
+ fm8A==
+X-Gm-Message-State: AOJu0YwKK49XG+846LJX1+18OTpNe/g9J5DpdgDz3GEsyKRcAo/oLpkY
+ +HDtrZOCF7yjgCVESWSkIXVNoQnj9JU7jwE0fLdde0FRoGkLItY3pWLOp+rbZstSb/39MpCJUeF
+ l2SoaHFFOoQ==
+X-Gm-Gg: ASbGncts3hxr50RuCEpthovg24x0jct3qFC2fmpSoN15cjlkHgwI7/vAtAMcQtF7Sti
+ LRfwFlwzrJfsRZ7C1S58pmotBUm7fAm8dYeygxCmaU77vPzRCcUNkLOzzh8tTKPLbi+qsCiGOAR
+ QAbnE607DdJDECsxtDluFyOPNMeLVh/+2U2D/4rUJm1u40ilCgH0JABaTHkJ4QoqcpVNw+WR3Dw
+ 4Bu1vBE0szpzaYMB9lhlZdZWkmzzf61Hbv+AQA/9gsIJq+oEjHPeEXNGME/x0CoSfmgXWuIBJgD
+ tUD+9ZNJAW6yK+G1G+OBHzk1nA+FMU67a9ZRrUdLPmRxZbKev21ZdWTLUcrxeRb9vDFgGnmCfL/
+ lcpE29IyYLyahzE8ry0Ny2rJptoSMUIRU0doWeNMYmnOn7SiCVT9WitMSUiT8A/OEGEs97Lk8/W
+ /k5FLkfk9Xdu1DIUocWpXmSRlaJcWp2dYxMsTLaMIIYfo=
+X-Google-Smtp-Source: AGHT+IGtiMfNDTwBfFlWDk5u04zD0uoanejP/L9zghp74Y9gIVBsMBao7ceLjywLt+u/Os5JnWjkgg==
+X-Received: by 2002:a05:600c:198b:b0:45b:80ff:58f7 with SMTP id
+ 5b1f17b1804b1-46e612e57c3mr13281575e9.36.1759280580648; 
+ Tue, 30 Sep 2025 18:03:00 -0700 (PDT)
 Received: from localhost.localdomain ([90.209.204.182])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fb985e080sm24587426f8f.24.2025.09.30.18.02.22
+ ffacd0b85a97d-40fb985e080sm24587426f8f.24.2025.09.30.18.02.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Sep 2025 18:02:23 -0700 (PDT)
+ Tue, 30 Sep 2025 18:03:00 -0700 (PDT)
 From: salil.mehta@opnsrc.net
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
@@ -85,27 +85,25 @@ Cc: salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
  miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
  wangxiongfeng2@huawei.com, wangyanan55@huawei.com, wangzhou1@hisilicon.com,
  linuxarm@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, shahuang@redhat.com, zhao1.liu@intel.com,
- Keqian Zhu <zhuqian1@huawei.com>
-Subject: [PATCH RFC V6 05/24] arm/virt,
- kvm: Pre-create KVM vCPUs for 'disabled' QOM vCPUs at machine init
-Date: Wed,  1 Oct 2025 01:01:08 +0000
-Message-Id: <20251001010127.3092631-6-salil.mehta@opnsrc.net>
+ lixianglai@loongson.cn, shahuang@redhat.com, zhao1.liu@intel.com
+Subject: [PATCH RFC V6 21/24] hw/intc/arm-gicv3-kvm: Pause all vCPUs & cache
+ ICC_CTLR_EL1 for userspace PSCI CPU_ON
+Date: Wed,  1 Oct 2025 01:01:24 +0000
+Message-Id: <20251001010127.3092631-22-salil.mehta@opnsrc.net>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
 References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,336 +121,278 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Salil Mehta <salil.mehta@huawei.com>
 
-ARM CPU architecture does not allow CPUs to be plugged after system has
-initialized. This is a constraint. Hence, the Kernel must know all the CPUs
-being booted during its initialization. This applies to the Guest Kernel as
-well and therefore, the number of KVM vCPU descriptors in the host must be
-fixed at VM initialization time.
+Problem:
+=======
 
-Also, the GIC must know all the CPUs it is connected to during its
-initialization, and this cannot change afterward. This must also be ensured
-during the initialization of the VGIC in KVM. This is necessary because:
+When PSCI CPU_ON was handled entirely in KVM, the operation executed under
+VGIC/KVM locks at EL2 and appeared atomic to other vCPU threads (intermediate
+states were not observable). With the SMCCC forward-to-userspace filter enabled,
+PSCI ON/OFF calls now exit to QEMU, where policy checks are performed.
 
-1. The association between GICR and MPIDR must be fixed at VM initialization
-   time. This is represented by the register
-   `GICR_TYPER(mp_affinity, proc_num)`.
-2. Memory regions associated with GICR, etc., cannot be changed (added,
-   deleted, or modified) after the VM has been initialized. This is not an
-   ARM architectural constraint but rather invites a difficult and messy
-   change in VGIC data structures.
+In the userspace CPU_ON handling (during cpu_reset?), QEMU must perform IOCTLs
+to fetch ICC_CTLR_EL1 fields that reflect supported features and IRQ-related
+configuration (e.g. EOImode, PMHE, CBPR). While these IOCTLs are in flight,
+other vCPUs can run and cause transient inconsistency. KVM enforces atomicity by
+trying to take all vCPU locks (kvm_trylock_all_vcpus() -> -EBUSY). QEMU
+therefore pauses all vCPUs before issuing these IOCTLs to avoid contending for
+locks and to prevent -EBUSY failures during cpu_reset.
 
-To enable a hot-add–like model while preserving these constraints, the virt
-machine may enumerate more CPUs than are enabled at boot using
-`-smp disabledcpus=N`. Such CPUs are present but start offline (i.e.,
-administratively disabled at init). The topology remains fixed at VM
-creation time; only the online/offline status may change later.
+KVM Details: (As I understand and stand ready to be corrected! :))
 
-Administratively disabled vCPUs are not realized in QOM until first enabled,
-avoiding creation of unnecessary vCPU threads at boot. On large systems, this
-reduces startup time proportionally to the number of disabled vCPUs. Once a
-QOM vCPU is realized and its thread created, subsequent enable/disable actions
-do not unrealize it. This behaviour was adopted following review feedback and
-differs from earlier RFC versions.
+Userspace fetch of sysreg ICC_CTLR_EL1 results in access of ICH_VMCR_EL2 reg.
+VMCR is per-vCPU and controls the CPU interface. Pending state is recorded in
+the distributor for SPIs, and in each redistributor for SGIs and PPIs. Delivery
+to the PE depends on the CPU interface configuration (VMCR fields such as PMR,
+IGRPEN, EOImode, BPR). Updates to VMCR must therefore be applied atomically with
+respect to interrupt injection and deactivation. The KVM ioctl layer first
+attempts to lock all vCPU mutexes, and only then takes the VM lock before
+calling vgic_v3_attr_regs_access(). This ordering serializes userspace accesses
+with IRQ handling (IAR/EOI and SGI delivery?).
 
-Co-developed-by: Keqian Zhu <zhuqian1@huawei.com>
-Signed-off-by: Keqian Zhu <zhuqian1@huawei.com>
+ICC_CTLR_EL1 initially reflects architectural defaults (e.g. EOImode, PMR).
+Most fields are read-only feature indicators that never change. Writable
+fields such as EOImode, PMHE and CBPR are configured once by the guest GICv3
+driver and then remain pseudo-static. Both the initial defaults and the
+guest-configured values can be cached and reused across resets, avoiding
+repeated VM-wide pauses to fetch ICC_CTLR_EL1 from KVM on every cpu_reset().
+
+Appendix: ICC_CTLR_EL1 layout (for reviewers)
+=============================================
+
+ICC_CTLR_EL1 [63:0]
+
+  63                                                                        32
+ +----------------------------------------------------------------------------+
+ |                                   RES0                                     |
+ +----------------------------------------------------------------------------+
+  31        20 19 18 17 16 15 14 13 12 11 10   9   8  7  6   5  4  3  2  1  0
+ +------------+--+--+--+--+--+--+--+--+--+---+---+---+--+--+--+--+--+--+--+--+
+ |    RES0    |Ex|RS|RES0 |A3|SE| IDbits |  PRIbits  |R0|PM|  RES0     |EO|CB|
+ +------------+--+--+--+--+--+--+--+--+--+---+---+---+--+--+--+--+--+--+--+--+
+              |  |        |  |                       |   |             |  |
+              |  |        |  |                       |   |             |  +CBPR
+              |  |        |  |                       |   |             +EOImode
+              |  |        |  |                       |   +-PMHE
+              |  |        |  |                       +----RES0
+              |  |        |  +--SEIS
+              |  |        +-----A3V
+              |  +--------------RSS
+              +-----------------ExtRange
+
+ Access: {Ex, RS, A3, SE, IDbits, PRIbits} = RO;
+         {PMHE} = RW*;
+         {EO, CB} = RW**;
+	 others = RES0.
+ Notes : * impl-def (may be RO when DS=0)
+         ** CB may be RO when DS=0 (EO stays RW)
+
+ Source: Arm GIC Architecture Specification (IHI 0069H.b),
+         §12.2.6 “ICC_CTLR_EL1”, pp. 12-233…12-237
+
+Resets that may trigger ICC_CTLR_EL1 fetch include:
+  1. PSCI CPU_ON
+  2. qemu_system_reset() during full VM reset
+  3. Post-load path on migration
+  4. Lazy realization via device_set/-deviceset
+
+It can be expensive to pause the entire VM just to reset one vCPU, especially
+for long-lived workloads where hundreds of resets may occur. For such systems,
+frequent VM-wide pauses are unacceptable.
+
+Solution:
+========
+
+This patch caches ICC_CTLR_EL1 early, seeding it either from architectural
+defaults or on the first PSCI CPU_ON when the guest GICv3 driver has initialized
+the interface. The cached value is then reused on every cpu_reset(), avoiding
+repeated VM-wide pauses and heavy IOCTLs. The IOCTL path is retained only as a
+fallback if the cached shadow is not valid.
+
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- accel/kvm/kvm-all.c    |  2 +-
- hw/arm/virt.c          | 77 ++++++++++++++++++++++++++++++++++++++----
- hw/core/qdev.c         | 17 ++++++++++
- include/hw/qdev-core.h | 19 +++++++++++
- include/system/kvm.h   |  8 +++++
- target/arm/cpu.c       |  2 ++
- target/arm/kvm.c       | 40 +++++++++++++++++++++-
- target/arm/kvm_arm.h   | 11 ++++++
- 8 files changed, 168 insertions(+), 8 deletions(-)
+ hw/intc/arm_gicv3_kvm.c            | 93 ++++++++++++++++++++++++++++--
+ include/hw/intc/arm_gicv3_common.h | 10 ++++
+ target/arm/arm-powerctl.c          |  1 +
+ target/arm/cpu.h                   |  1 +
+ 4 files changed, 100 insertions(+), 5 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 890d5ea9f8..0e7d9d5c3d 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -460,7 +460,7 @@ static void kvm_reset_parked_vcpus(KVMState *s)
-  *
-  * @returns: 0 when success, errno (<0) when failed.
-  */
--static int kvm_create_vcpu(CPUState *cpu)
-+int kvm_create_vcpu(CPUState *cpu)
- {
-     unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
-     KVMState *s = kvm_state;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4ded19dc69..f4eeeacf6c 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2152,6 +2152,49 @@ static void virt_post_cpus_gic_realized(VirtMachineState *vms,
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index e97578f59a..62d6016e8a 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -27,6 +27,7 @@
+ #include "qemu/module.h"
+ #include "system/kvm.h"
+ #include "system/runstate.h"
++#include "system/cpus.h"
+ #include "kvm_arm.h"
+ #include "gicv3_internal.h"
+ #include "vgic_common.h"
+@@ -681,13 +682,73 @@ static void kvm_arm_gicv3_get(GICv3State *s)
      }
  }
  
-+static void
-+virt_setup_lazy_vcpu_realization(Object *cpuobj, VirtMachineState *vms)
++/* Caller must hold the iothread (BQL). */
++static inline void
++kvm_gicc_get_cached_icc_ctlr_el1(GICv3CPUState *c, uint64_t regval[2],
++                                      bool *valid)
 +{
-+    /*
-+     * Present & administratively disabled vCPUs:
-+     *
-+     * These CPUs are marked offline at init via '-smp disabledcpus=N'. We
-+     * intentionally do not realize them during the first boot, since it is
-+     * not known if or when they will ever be enabled. The decision to enable
-+     * such CPUs depends on policy (e.g. guided by SLAs or other deployment
-+     * requirements).
-+     *
-+     * Realizing all disabled vCPUs up front would make boot time proportional
-+     * to 'maxcpus', even if policy permits only a small subset to be enabled.
-+     * This can lead to unacceptable boot delays in some scenarios.
-+     *
-+     * Instead, these CPUs remain administratively disabled and unrealized at
-+     * boot, to be instantiated and brought online only if policy later allows
-+     * it.
-+     */
-+
-+    /* set this vCPU to be administratively 'disabled' in QOM */
-+    qdev_disable(DEVICE(cpuobj), NULL, &error_fatal);
-+
-+    if (vms->psci_conduit != QEMU_PSCI_CONDUIT_DISABLED) {
-+        object_property_set_int(cpuobj, "psci-conduit", vms->psci_conduit,
-+                                NULL);
-+    }
-+
-+    /*
-+     * [!] Constraint: The ARM CPU architecture does not permit new CPUs
-+     * to be added after system initialization.
-+     *
-+     * Workaround: Pre-create KVM vCPUs even for those that are not yet
-+     * online i.e. powered-off, keeping them `parked` and in an
-+     * `unrealized (at-least during boot time)` state within QEMU until
-+     * they are powered-on and made online.
-+     */
-+    if (kvm_enabled()) {
-+        kvm_arm_create_host_vcpu(ARM_CPU(cpuobj));
-+    }
-+}
-+
- static void machvirt_init(MachineState *machine)
- {
-     VirtMachineState *vms = VIRT_MACHINE(machine);
-@@ -2319,10 +2362,6 @@ static void machvirt_init(MachineState *machine)
-         Object *cpuobj;
-         CPUState *cs;
- 
--        if (n >= smp_cpus) {
--            break;
--        }
--
-         cpuobj = object_new(possible_cpus->cpus[n].type);
-         object_property_set_int(cpuobj, "mp-affinity",
-                                 possible_cpus->cpus[n].arch_id, NULL);
-@@ -2427,8 +2466,34 @@ static void machvirt_init(MachineState *machine)
-             }
-         }
- 
--        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
--        object_unref(cpuobj);
-+        /* start secondary vCPUs in a powered-down state */
-+        if(n && mc->has_online_capable_cpus) {
-+            object_property_set_bool(cpuobj, "start-powered-off", true, NULL);
-+        }
-+
-+        if (n < smp_cpus) {
-+            /* 'Present' & 'Enabled' vCPUs */
-+            qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-+            object_unref(cpuobj);
-+        } else {
-+            /* 'Present' & 'Disabled' vCPUs */
-+            virt_setup_lazy_vcpu_realization(cpuobj, vms);
-+        }
-+
-+        /*
-+         * All possible vCPUs should have QOM vCPU Object pointer & arch-id.
-+         * 'cpus_queue' (accessed via qemu_get_cpu()) contains only realized and
-+         * enabled vCPUs. Hence, we must now populate the 'possible_cpus' list.
-+         */
-+        if (kvm_enabled()) {
-+            /*
-+             * Override the default architecture ID with the one retrieved
-+             * from KVM, as they currently differ.
-+             */
-+            machine->possible_cpus->cpus[n].arch_id =
-+                arm_cpu_mp_affinity(ARM_CPU(cs));
-+        }
-+        machine->possible_cpus->cpus[n].cpu = cs;
-     }
- 
-     /* Now we've created the CPUs we can see if they have the hypvirt timer */
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index 8502d6216f..5816abae39 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -309,6 +309,23 @@ void qdev_assert_realized_properly(void)
-                                    qdev_assert_realized_properly_cb, NULL);
- }
- 
-+bool qdev_disable(DeviceState *dev, BusState *bus, Error **errp)
-+{
-+    g_assert(dev);
-+
-+    if (bus) {
-+        error_setg(errp, "Device %s 'disable' operation not supported",
-+                   object_get_typename(OBJECT(dev)));
-+        return false;
-+    }
-+
-+    /* devices like cpu don't have bus */
-+    g_assert(!DEVICE_GET_CLASS(dev)->bus_type);
-+
-+    return object_property_set_str(OBJECT(dev), "admin_power_state", "disabled",
-+                                   errp);
-+}
-+
- bool qdev_machine_modified(void)
- {
-     return qdev_hot_added || qdev_hot_removed;
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 3bc212ab3a..2c22b32a3f 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -570,6 +570,25 @@ bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
-  */
- bool qdev_realize_and_unref(DeviceState *dev, BusState *bus, Error **errp);
- 
-+/**
-+ * qdev_disable - Initiate administrative disablement and power-off of device
-+ * @dev:   The device to be administratively powered off
-+ * @bus:   The bus on which the device resides (may be NULL for CPUs)
-+ * @errp:  Pointer to a location where an error can be reported
-+ *
-+ * This function initiates an administrative transition of the device into a
-+ * DISABLED state. This may trigger a graceful shutdown process depending on
-+ * platform capabilities. For ACPI platforms, this typically involves notifying
-+ * the guest via events such as Notify(..., 0x03) and executing _EJx.
-+ *
-+ * Once completed, the device's operational power is turned off and it is
-+ * marked as administratively DISABLED. Further guest usage is blocked until
-+ * re-enabled by host-side policy.
-+ *
-+ * Returns true on success; false if an error occurs, with @errp populated.
-+ */
-+bool qdev_disable(DeviceState *dev, BusState *bus, Error **errp);
-+
- /**
-  * qdev_unrealize: Unrealize a device
-  * @dev: device to unrealize
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 3c7d314736..4896a3c9c5 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -317,6 +317,14 @@ int kvm_create_device(KVMState *s, uint64_t type, bool test);
-  */
- bool kvm_device_supported(int vmfd, uint64_t type);
- 
-+/**
-+ * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
-+ * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/created.
-+ *
-+ * @returns: 0 when success, errno (<0) when failed.
-+ */
-+int kvm_create_vcpu(CPUState *cpu);
-+
- /**
-  * kvm_park_vcpu - Park QEMU KVM vCPU context
-  * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be parked.
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 7e0d5b2ed8..a5906d1672 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1500,6 +1500,8 @@ static void arm_cpu_initfn(Object *obj)
-         /* TCG and HVF implement PSCI 1.1 */
-         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
-     }
-+
-+    CPU(obj)->thread_id = 0;
- }
- 
- /*
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 6672344855..1962eb29b2 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -991,6 +991,38 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
-     write_list_to_cpustate(cpu);
- }
- 
-+void kvm_arm_create_host_vcpu(ARMCPU *cpu)
-+{
-+    CPUState *cs = CPU(cpu);
-+    unsigned long vcpu_id = cs->cpu_index;
++    const uint64_t attr = (uint64_t)KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer);
++    const int group = KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS;
++    GICv3State *s = c->gic;
++    uint64_t val = 0;
 +    int ret;
 +
-+    ret = kvm_create_vcpu(cs);
-+    if (ret < 0) {
-+        error_report("Failed to create host vcpu %ld", vcpu_id);
-+        abort();
++    assert(regval && valid);
++
++    if (*valid) {
++        /* Fast path: return cached (no vCPU pausing required). */
++        c->icc_ctlr_el1[GICV3_NS] = regval[GICV3_NS];
++        c->icc_ctlr_el1[GICV3_S] = regval[GICV3_S];
++        return;
 +    }
 +
-+    /*
-+     * Initialize the vCPU in the host. This will reset the sys regs
-+     * for this vCPU and related registers like MPIDR_EL1 etc. also
-+     * get programmed during this call to host. These are referenced
-+     * later while setting device attributes of the GICR during GICv3
-+     * reset.
-+     */
-+    ret = kvm_arch_init_vcpu(cs);
-+    if (ret < 0) {
-+        error_report("Failed to initialize host vcpu %ld", vcpu_id);
-+        abort();
++    ret = kvm_device_access(s->dev_fd, group, attr, &val, false, NULL);
++    if (ret == -EBUSY || ret == -EAGAIN) {
++        int tries;
++
++        /* One-time heavy path: avoid contention by pausing all vCPUs. */
++        pause_all_vcpus();
++        /*
++         * Even with vCPUs paused, we cannot fully rule out a non-vCPU context
++         * temporarily holding KVM vCPU mutexes; treat -EBUSY/-EAGAIN as
++         * transient and retry a few times. Final attempt aborts in-loop.
++         */
++        for (tries = 0; tries < 5; tries++) {
++            Error **errp = (tries == 4) ? &error_abort : NULL;
++
++            ret = kvm_device_access(s->dev_fd, group, attr, &val, false, errp);
++            if (!ret) {
++                break;
++            }
++            if (ret != -EBUSY && ret != -EAGAIN) {
++               error_setg_errno(&error_abort, -ret,
++                                "KVM_GET_DEVICE_ATTR failed: Group %d "
++                                "attr 0x%016" PRIx64, group, attr);
++               /* not reached */
++            }
++            g_usleep(50);
++        }
++        resume_all_vcpus();
 +    }
 +
-+    /*
-+     * park the created vCPU. shall be used during kvm_get_vcpu() when
-+     * threads are created during realization of ARM vCPUs.
-+     */
-+    kvm_park_vcpu(cs);
++    /* Success: publish and seed cache. */
++    c->icc_ctlr_el1[GICV3_NS] = val;
++    c->icc_ctlr_el1[GICV3_S] = val;
++
++    regval[GICV3_NS] = c->icc_ctlr_el1[GICV3_NS];
++    regval[GICV3_S] = c->icc_ctlr_el1[GICV3_S];
++    *valid = true;
 +}
 +
- /*
-  * Update KVM's MP_STATE based on what QEMU thinks it is
-  */
-@@ -1876,7 +1908,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return -EINVAL;
+ static void arm_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     GICv3State *s;
+     GICv3CPUState *c;
++    ARMCPU *cpu;
+ 
+     c = (GICv3CPUState *)env->gicv3state;
+     s = c->gic;
++    cpu = ARM_CPU(c->cpu);
+ 
+     c->icc_pmr_el1 = 0;
+     /*
+@@ -713,11 +774,33 @@ static void arm_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
      }
  
--    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
+     /* Initialize to actual HW supported configuration */
+-    kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS,
+-                      KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer),
+-                      &c->icc_ctlr_el1[GICV3_NS], false, &error_abort);
+-
+-    c->icc_ctlr_el1[GICV3_S] = c->icc_ctlr_el1[GICV3_NS];
 +    /*
-+     * Install VM change handler only when vCPU thread has been spawned
-+     * i.e. vCPU is being realized
++     * Avoid racy VGIC CPU sysreg reads while vCPUs are running. KVM requires
++     * pausing all vCPUs for ICC_* sysregs accesses to prevent races with
++     * in-flight IRQ delivery (e.g. EOImode etc.).
++     *
++     * To keep the reset path fast, cache the architectural default and the
++     * guest GICv3 driver configured ICC_CTLR_EL1 on the first access and then
++     * reuse that for subsequent resets. Most fields in this register are
++     * invariants throughout the life of VM. Fields EOImode, PMHE and CBPR are
++     * pseudo static and dont change once configured by guest driver.
 +     */
-+    if (cs->thread_id) {
-+        qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
++    if (cpu->first_psci_on_request_seen || s->guest_gicc_initialized) {
++        if (!s->guest_gicc_initialized) {
++            s->guest_gicc_initialized = true;
++        }
++        kvm_gicc_get_cached_icc_ctlr_el1(c, c->icc_ctlr_configured,
++                                         &c->icc_ctlr_configured_valid);
++    } else {
++        /*
++         * kernel has not loded yet. It safe to assume not other vCPU is in
++         * KVM_RUN except vCPU 0 at this moment. Just in case, if there is
++         * other priviledged context of KVM accessing the register then we
++         * KVM device access can potentially return -EBUSY.
++         */
++        kvm_gicc_get_cached_icc_ctlr_el1(c, c->icc_ctlr_arch_def,
++                                         &c->icc_ctlr_arch_def_valid);
 +    }
+ }
  
-     /* Determine init features for this CPU */
-     memset(cpu->kvm_init_features, 0, sizeof(cpu->kvm_init_features));
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 6a9b6374a6..ec9dc95ee8 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -98,6 +98,17 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu);
- void kvm_arm_reset_vcpu(ARMCPU *cpu);
+ static void kvm_arm_gicv3_reset_hold(Object *obj, ResetType type)
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index a8a84c4687..0282a94edc 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -165,6 +165,15 @@ struct GICv3CPUState {
+     uint64_t icc_apr[3][4];
+     uint64_t icc_igrpen[3];
+     uint64_t icc_ctlr_el3;
++    /*
++     * Shadow copy of ICC_CTLR_EL1 architectural default. Fetched once per-vCPU
++     * when no vCPUs are running, and reused on reset to avoid calling
++     * kvm_device_access() in the hot path.
++     */
++    uint64_t icc_ctlr_arch_def[2]; /* per-secstate (NS=0,S=1) */
++    bool icc_ctlr_arch_def_valid;
++    uint64_t icc_ctlr_configured[2];
++    bool icc_ctlr_configured_valid;
+     bool gicc_accessible;
  
- struct kvm_vcpu_init;
-+
-+/**
-+ * kvm_arm_create_host_vcpu:
-+ * @cpu: ARMCPU
-+ *
-+ * Called to pre-create possible KVM vCPU within the host during the
-+ * `virt_machine` initialization phase. This pre-created vCPU will be parked and
-+ * will be reused when ARM QOM vCPU is actually hotplugged.
-+ */
-+void kvm_arm_create_host_vcpu(ARMCPU *cpu);
-+
- /**
-  * kvm_arm_create_scratch_host_vcpu:
-  * @fdarray: filled in with kvmfd, vmfd, cpufd file descriptors in that order
+     /* Virtualization control interface */
+@@ -240,6 +249,7 @@ struct GICv3State {
+     bool force_8bit_prio;
+     bool irq_reset_nonsecure;
+     bool gicd_no_migration_shift_bug;
++    bool guest_gicc_initialized;
+ 
+     int dev_fd; /* kvm device fd if backed by kvm vgic support */
+     Error *migration_blocker;
+diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+index 89074918a9..0b65898cec 100644
+--- a/target/arm/arm-powerctl.c
++++ b/target/arm/arm-powerctl.c
+@@ -68,6 +68,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
+     ARMCPU *target_cpu = ARM_CPU(target_cpu_state);
+     struct CpuOnInfo *info = (struct CpuOnInfo *) data.host_ptr;
+ 
++    target_cpu->first_psci_on_request_seen = true;
+     /* Initialize the cpu we are turning on */
+     cpu_reset(target_cpu_state);
+     arm_emulate_firmware_reset(target_cpu_state, info->target_el);
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index cd5982d362..603e482b3a 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -974,6 +974,7 @@ struct ArchCPU {
+ 
+     /* Current power state, access guarded by BQL */
+     ARMPSCIState power_state;
++    bool first_psci_on_request_seen;
+ 
+     /* CPU has virtualization extension */
+     bool has_el2;
 -- 
 2.34.1
 
