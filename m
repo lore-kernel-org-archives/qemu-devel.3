@@ -4,101 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0081CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3C8CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 15:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3yr6-00057q-D2; Wed, 01 Oct 2025 11:35:00 -0400
+	id 1v3yo7-0001ax-TU; Wed, 01 Oct 2025 11:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v3yqt-0004gR-Kb
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:34:48 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v3yo4-0001Zt-NW
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:31:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v3yqc-0006Ql-Ji
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:34:46 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591FMxrS018982;
- Wed, 1 Oct 2025 15:34:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=N3itqlTFBV7zPp+bNBCXvQMCPjGOgCw/pQqj9VVHmpY=; b=
- XvJ92bqh2HCWDg6oW+UYFmg0CH9MYo2DlYLRVdpug5bXAbzqocWoJv8Js12hOJRv
- CW9uZ1kHSbKousJnuRqkzXZArIT8Z3x065yAwX3b99mxJT1WKcBIKaYNuPwgBaSe
- z0pRqibvShTVfAnJydwClkQhE6e0zKcXg10QiMm7qq7o5Ole4tQGFsWv+1JC9RRN
- w8HPfBWgc0skfXlhSzknhzj6xkR8qN5DoNrAMYAtvME3syV6kaSqcz4HgGX7V2gR
- 1WC0deIknoAYzDMmrpdm9wq8W2IuDSV5qGdXCnDDucDr4LXHgm/SugevK4yff7b/
- mWLef6jpERh0fSOQ978tsA==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49gmrfsmjt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 01 Oct 2025 15:34:20 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 591EkqMX023130; Wed, 1 Oct 2025 15:34:19 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 49e6caaw62-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 01 Oct 2025 15:34:19 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 591FYCqu014790;
- Wed, 1 Oct 2025 15:34:18 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 49e6caaw0k-10; Wed, 01 Oct 2025 15:34:18 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v3ynf-0005s2-0A
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 11:31:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759332678;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PtJ6EpZ8mEfHufbAae3PmYl0gMcXLYONGFFms6VXKuo=;
+ b=ElF/vVB4qTRMVac1uTYs7PDBYzV3RXZs6DXQvzjYEHTA9t/4eN8HtJbKPZggCEgf6wQrQq
+ FHAqvcGZha4uLO2WPThPH3hqaOIvBxrjwEmQkUB0eTqQDE+U5tsxFk7WS6zpx3sDGRe5zu
+ Rdz0v3q12KJSrulynVJUjp52XN0RUuo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-GbXTsRWRMvC7OIPX_zFEBA-1; Wed,
+ 01 Oct 2025 11:31:15 -0400
+X-MC-Unique: GbXTsRWRMvC7OIPX_zFEBA-1
+X-Mimecast-MFC-AGG-ID: GbXTsRWRMvC7OIPX_zFEBA_1759332672
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFD1D1956086; Wed,  1 Oct 2025 15:31:12 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.112])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E134B1800446; Wed,  1 Oct 2025 15:31:11 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Cedric Le Goater <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 09/19] tests/qtest: export qtest_qemu_binary
-Date: Wed,  1 Oct 2025 08:34:01 -0700
-Message-Id: <1759332851-370353-10-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1759332851-370353-1-git-send-email-steven.sistare@oracle.com>
-References: <1759332851-370353-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-01_04,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- malwarescore=0
- mlxlogscore=999 mlxscore=0 phishscore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2509150000 definitions=main-2510010134
-X-Proofpoint-ORIG-GUID: vNYeAMaQddQO4zTK9beSRxTiBhQeHCPc
-X-Proofpoint-GUID: vNYeAMaQddQO4zTK9beSRxTiBhQeHCPc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTMwMDE3MCBTYWx0ZWRfX0d2D45ZD5alL
- kWFoubWJqEucieaQ9QPT9XnS5YR28AIpax0yBGeaIpgX3IigkRXA/zDaHbhLMfZhc9PqkSVAEi5
- CkBKy6++6JGz6Mf+pZ3hlpWAfQUnviFo0TTNiMtn1x+xy7u8aFsFz8S8TPzu/rW1PYpwy2P+RT8
- hfjtYxCxm3A91r7i1QJe4qNJWbwuvzGhYIZMsJgwMxZBX+IhzC7P4N0Pz8VsO5/QwtaIA45Z0fl
- c5P7goJZAJE7R/uoX/XxoGYoqMAXeV/1NbvOIEEz0g7YRAUfDqIXdnOhfiJwTy7/MbZqaw1+ugl
- UHNu/6CbdEhypxy+lqxOw2Wy+jZnjSDTCplFDdWyZ0ls89uTbTpLbjGbUGrzOSq9oh+r95SbJjD
- ii2xrLignkxptgWiRmQ/I2hesnFlVA==
-X-Authority-Analysis: v=2.4 cv=VpMuwu2n c=1 sm=1 tr=0 ts=68dd49fc b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117
- a=WeWmnZmh0fydH62SvGsd2A==:17
- a=x6icFKpwvdMA:10 a=yPCof4ZbAAAA:8 a=Df2fqW_L1vg5yVQ28mgA:9
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bandan Das <bsd@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Richard Henderson <rth@twiddle.net>, Alexander Bulekov <alxndr@bu.edu>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-rust@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Qiuhao Li <Qiuhao.Li@outlook.com>, Cleber Rosa <crosa@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>,
+ Michael Roth <michael.roth@amd.com>, Mads Ynddal <mads@ynddal.dk>,
+ Alexandre Iooss <erdnaxe@crans.org>, John Snow <jsnow@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 04/16] tracetool: add SPDX headers
+Date: Wed,  1 Oct 2025 11:30:47 -0400
+Message-ID: <20251001153059.194991-5-stefanha@redhat.com>
+In-Reply-To: <20251001153059.194991-1-stefanha@redhat.com>
+References: <20251001153059.194991-1-stefanha@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,47 +98,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/libqtest.h | 9 +++++++++
- tests/qtest/libqtest.c | 2 +-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index fd27521..dc2cdd0 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -48,6 +48,15 @@ QTestState *qtest_initf(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
- QTestState *qtest_vinitf(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
- 
- /**
-+ * qtest_qemu_binary:
-+ * @var: environment variable name
-+ *
-+ * Look up @var and return its value as the qemu binary path.
-+ * If @var is NULL, look up  the default var name.
-+ */
-+const char *qtest_qemu_binary(const char *var);
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20250929154938.594389-5-pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ scripts/tracetool/__init__.py                | 2 ++
+ scripts/tracetool/backend/__init__.py        | 2 ++
+ scripts/tracetool/backend/dtrace.py          | 2 ++
+ scripts/tracetool/backend/ftrace.py          | 2 ++
+ scripts/tracetool/backend/log.py             | 2 ++
+ scripts/tracetool/backend/simple.py          | 2 ++
+ scripts/tracetool/backend/syslog.py          | 2 ++
+ scripts/tracetool/backend/ust.py             | 2 ++
+ scripts/tracetool/format/__init__.py         | 2 ++
+ scripts/tracetool/format/c.py                | 2 ++
+ scripts/tracetool/format/d.py                | 2 ++
+ scripts/tracetool/format/h.py                | 2 ++
+ scripts/tracetool/format/log_stap.py         | 2 ++
+ scripts/tracetool/format/simpletrace_stap.py | 2 ++
+ scripts/tracetool/format/stap.py             | 2 ++
+ scripts/tracetool/format/ust_events_c.py     | 2 ++
+ scripts/tracetool/format/ust_events_h.py     | 2 ++
+ 17 files changed, 34 insertions(+)
+
+diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+index 9dd8ec27e1..c4fa0f74e6 100644
+--- a/scripts/tracetool/__init__.py
++++ b/scripts/tracetool/__init__.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+/**
-  * qtest_init:
-  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
-  * arguments are subject to word splitting and shell evaluation.
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 94526b7..43fd997 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -357,7 +357,7 @@ void qtest_remove_abrt_handler(void *data)
-     }
- }
+ """
+ Machinery for generating tracing-related intermediate files.
+ """
+diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
+index 7040130919..bf91e443e9 100644
+--- a/scripts/tracetool/backend/__init__.py
++++ b/scripts/tracetool/backend/__init__.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Backend management.
  
--static const char *qtest_qemu_binary(const char *var)
-+const char *qtest_qemu_binary(const char *var)
- {
-     const char *qemu_bin;
+diff --git a/scripts/tracetool/backend/dtrace.py b/scripts/tracetool/backend/dtrace.py
+index 4835454193..b4af403025 100644
+--- a/scripts/tracetool/backend/dtrace.py
++++ b/scripts/tracetool/backend/dtrace.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ DTrace/SystemTAP backend.
+ """
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index e6317ca4bf..a14aafcee6 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Ftrace built-in backend.
+ """
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index 9842522b18..faacec4610 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Stderr built-in backend.
+ """
+diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/backend/simple.py
+index 066e5e9f11..97e40495ee 100644
+--- a/scripts/tracetool/backend/simple.py
++++ b/scripts/tracetool/backend/simple.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Simple built-in backend.
+ """
+diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
+index 74af038089..78ee67136b 100644
+--- a/scripts/tracetool/backend/syslog.py
++++ b/scripts/tracetool/backend/syslog.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Syslog built-in backend.
+ """
+diff --git a/scripts/tracetool/backend/ust.py b/scripts/tracetool/backend/ust.py
+index 6cc651646d..3aa9bb1da2 100644
+--- a/scripts/tracetool/backend/ust.py
++++ b/scripts/tracetool/backend/ust.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ LTTng User Space Tracing backend.
+ """
+diff --git a/scripts/tracetool/format/__init__.py b/scripts/tracetool/format/__init__.py
+index 94a37bfce9..7b9d1b5782 100644
+--- a/scripts/tracetool/format/__init__.py
++++ b/scripts/tracetool/format/__init__.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Format management.
  
+diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
+index 3c4398c237..50e03313cb 100644
+--- a/scripts/tracetool/format/c.py
++++ b/scripts/tracetool/format/c.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ trace/generated-tracers.c
+ """
+diff --git a/scripts/tracetool/format/d.py b/scripts/tracetool/format/d.py
+index 684598c183..e9e33dfe30 100644
+--- a/scripts/tracetool/format/d.py
++++ b/scripts/tracetool/format/d.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ trace/generated-tracers.dtrace (DTrace only).
+ """
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index 2119753be1..be7f32e67b 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ trace/generated-tracers.h
+ """
+diff --git a/scripts/tracetool/format/log_stap.py b/scripts/tracetool/format/log_stap.py
+index 02f23bfb8d..259303a189 100644
+--- a/scripts/tracetool/format/log_stap.py
++++ b/scripts/tracetool/format/log_stap.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Generate .stp file that printfs log messages (DTrace with SystemTAP only).
+ """
+diff --git a/scripts/tracetool/format/simpletrace_stap.py b/scripts/tracetool/format/simpletrace_stap.py
+index 3c3584a931..c7bde97a85 100644
+--- a/scripts/tracetool/format/simpletrace_stap.py
++++ b/scripts/tracetool/format/simpletrace_stap.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Generate .stp file that outputs simpletrace binary traces (DTrace with SystemTAP only).
+ """
+diff --git a/scripts/tracetool/format/stap.py b/scripts/tracetool/format/stap.py
+index 04c7a35a25..285c9203ba 100644
+--- a/scripts/tracetool/format/stap.py
++++ b/scripts/tracetool/format/stap.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ Generate .stp file (DTrace with SystemTAP only).
+ """
+diff --git a/scripts/tracetool/format/ust_events_c.py b/scripts/tracetool/format/ust_events_c.py
+index ea5f0ae99f..074226bfd3 100644
+--- a/scripts/tracetool/format/ust_events_c.py
++++ b/scripts/tracetool/format/ust_events_c.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ trace/generated-ust.c
+ """
+diff --git a/scripts/tracetool/format/ust_events_h.py b/scripts/tracetool/format/ust_events_h.py
+index 242c9814fd..cee7970a40 100644
+--- a/scripts/tracetool/format/ust_events_h.py
++++ b/scripts/tracetool/format/ust_events_h.py
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
+ """
+ trace/generated-ust-provider.h
+ """
 -- 
-1.8.3.1
+2.51.0
 
 
