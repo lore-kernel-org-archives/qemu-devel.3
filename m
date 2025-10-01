@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C5A8CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B744CCA474
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 08:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rmL-0005im-KZ; Wed, 01 Oct 2025 04:01:37 -0400
+	id 1v3rmj-0005rG-BB; Wed, 01 Oct 2025 04:02:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3rmC-0005f7-BP
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:01:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v3rmf-0005qg-0Z
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:01:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v3rlt-000624-FW
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:01:25 -0400
+ id 1v3rmB-00067s-Tu
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 04:01:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759305667;
+ s=mimecast20190719; t=1759305683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CzJAcFRpGiLlMc807Y1MyWk7EnWDDDqSo1UjiURzpiA=;
- b=auu7ESBHIMQJ6HaDZ1PIeGsCGyIQsk5htajRklSBW+1TQLo0djxNy6J5XgvTDBiOK4NBX3
- njFFpoCEsUlLE1E8PW4glf0B3DaiTDC8/w+dcThGr/ICAZqw7xivHTU+u88zIOxHlCmw6b
- CEAwtZhIgXVfirA0nkvFdakyBPAobd4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UBV2+VUG7I4eiMBuAImYuaKckuDbq+FYw4y9UTZE5Xs=;
+ b=FMreVwOYgvxBFPRwDwoTsb0HNIfydI7zY3i0ed6QIjPZFHOCcUqlG9kn5lQP1JY76i8+dy
+ nh/xQI6p2a24FRCXuPF3dJmWg4vOF2p2X7VEH/vPax2J4HCq3KicqLX5eDa/puGr5Wv+QN
+ LKiTEzSqN8wD8tIw+WwOW4tTbptjwIY=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-1J-aLBi6NCKt2EdOWyMK2w-1; Wed, 01 Oct 2025 04:01:06 -0400
-X-MC-Unique: 1J-aLBi6NCKt2EdOWyMK2w-1
-X-Mimecast-MFC-AGG-ID: 1J-aLBi6NCKt2EdOWyMK2w_1759305665
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-afcb72a8816so642317466b.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:01:06 -0700 (PDT)
+ us-mta-433-C7clCZkUO_O8LkD8Qm6clQ-1; Wed, 01 Oct 2025 04:01:22 -0400
+X-MC-Unique: C7clCZkUO_O8LkD8Qm6clQ-1
+X-Mimecast-MFC-AGG-ID: C7clCZkUO_O8LkD8Qm6clQ_1759305681
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-632d1317f48so8004153a12.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 01:01:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759305664; x=1759910464;
+ d=1e100.net; s=20230601; t=1759305680; x=1759910480;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CzJAcFRpGiLlMc807Y1MyWk7EnWDDDqSo1UjiURzpiA=;
- b=u3vjR+k6YEf5omknog2DBZ02j/X1nvbfhFd14Jt0DFBzTJ7QDwACfQvujVZIjPjXIy
- tN08IOt4GPdSDkB5q2q3E5h/AIt6dJcpKbM50Co45uZHaFtlPoELNUJaxUC0/I9y/xpv
- /hqSXmZ4WKosGmMZ30gtIeiApNJENMeSMjgX4OP0R+9h2p5hkqZkbLmMJWI9lpwCjWx0
- M8D6l7KfpzHayC1IuHaGXPG70WG0gBiCpPPlcj4qyYCl6yWOl4ieeBj1jQv9sOxp0hRT
- yni2kKjOb57ZsXrYxMV7GCfBbcH+dcT+EWQ001yGAeA1jGKY4YkhTg+RJ2GZIP7juy0k
- Rbog==
-X-Gm-Message-State: AOJu0YyPdSeq5B6c5D85uL/WbxZpEnBmh0jIXZthxq3654Uf/i2cCZHv
- uwggSUj6gKRt7jQcctCekL2Xvy9652LFtaoRQo42ZKQA2Ib+f+JPO+GBJjUIgs5HpykbdC9dTw4
- 4xwkO0swuK9ZEk1S/8q5UiKEKKhbbfmILMgT4Zgh+4vbS75RG+ABib1nSQoU5x6QPFT1AyVIJLW
- HGmNEdXz8TbNbJvxNvsXLF6q6VrNs7ZnMUbfhn2m0k
-X-Gm-Gg: ASbGncu5RDOlpXM/T4IVxgZgACkmkn0qEpL9hvinPd4x6AWyr9g/Y1r46oGSAeQjnYm
- Ulacj93UI9BAKeEvNP182dNcOJJsApAS6ZXGaHiwfTMan6T38Al1cpeL07oL4Hzw18Ct1YrbjKd
- 9/+dhOERLvsjdBXQ3f2l3Qpp+iokO/22oifIUetlH6oyrZAZ8RsZig9/C5dklnEIHWrDTXf8uNL
- bCsEhBreGbRoHyuFNrvp9H3+Nh2uPC1kriFHgp9TmRx+YFhpn3Yj3tEJhgha/0g5/7hOQNssZQX
- jlY59oZPjrE1aQ1YmKH3BpETZUaQ/vOvYrwcbHb1SlwBb25Q4g/O3Zau4X+14rGj5xbzALsnSdW
- 33cUmQJjGblcsvTKsDFEcIO6RH2izndDzP3Pb+Z47EuEgW+Bz/18=
-X-Received: by 2002:a17:907:1c84:b0:b3e:dbbc:4e16 with SMTP id
- a640c23a62f3a-b46e88953abmr314595766b.41.1759305664296; 
- Wed, 01 Oct 2025 01:01:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8orUP3DP0Hak+nIAujjxei7/5sDwZ32T+UC9TQA7V24VtGbDrHyflXKD7tJExNGmEWsmhnQ==
-X-Received: by 2002:a17:907:1c84:b0:b3e:dbbc:4e16 with SMTP id
- a640c23a62f3a-b46e88953abmr314590066b.41.1759305663717; 
- Wed, 01 Oct 2025 01:01:03 -0700 (PDT)
+ bh=UBV2+VUG7I4eiMBuAImYuaKckuDbq+FYw4y9UTZE5Xs=;
+ b=Cj/5FhLJYqlGJiwZOucz/lhvU4KaQ/SDepCUOm08iv2y7fUH+c/uZ2BFvVLgCg71vQ
+ TRXYf3ueavgXSBZpmGR5Q/k7+Wko1EbdZGqEredg6AbDovBE4rssaqgx/gzMN21AEtns
+ +k+D2cj2RR0x/Z+YxurYbcni5vIBTcoYUU+n9cWWzNtwYBpuyxXOo/aLvSY0uXBkk3kW
+ dxN7qD727IAkuL91QnS+BO4ZDOGefjzQFK6isJnkpKLg3+kX/QxxHm1YkmxBWZwPG/Ta
+ 4xjcNoJelOpl53h291RwCzrdK+y5ppsYsYYiI6fSNJ5qLv/EP16Fh0RDW5ByNEi8uoSZ
+ 0ARg==
+X-Gm-Message-State: AOJu0Yzn8J/3WMZUP45hZu+kqXiWXy/t979/5t+086igXKItkCxVnWVx
+ bpAIy4afvtOip1Jek4FKwP4XDnOS45mca2meIwAHl9Bj/qtKyYTALi4AUyrfUJKQPBeCNa1k+Q4
+ f36U+5eOzDFDpgCcMAvVbFgegAqN6vSffxiyamCK3+fTHNY5Fa4pm8cN1qFt84UYN/nKYPllD3M
+ MTcaj4K/bexaq1Nppyi0u7eNI+qiejQhaLmVQBE0H9
+X-Gm-Gg: ASbGncsIJmymzMawcz48V1U1+fSyFuMxs1ELJBxTeL/iHgqG/NBdw6OscNhhIBxlwuU
+ Eu/0o7Z46QfT/RSA/tD5nB+c8CBhbInC9J+9JMynoongxZ96yiTq63aa7S/izZcgJi+I9pkqakF
+ 8+/qWyPQOmH5dtaiNDvG3iI2m0Lsmc0V1vaxWVVGPbgevD2qZRDwKEgB1tf4weKLT7bZYoMY+1r
+ Zag0O2rOwLPnV94rTAt1PRwAPcCZydlhOeeaxwAHJEzb3Rz4TSAi4EQiq7RQ2Vtnj0V+YJJ3n3a
+ OpeSXeqr397ll/2J2yA0UF4yX1PCj3EvGysTG+sRN40QUXqp32bSqVeNEEMm5S9jMC//ezHqhKl
+ DdUcgD1I97S6x5Sx9B4i0FxO4ig1GmjtKyvACOTYO6IfSgX+K4yU=
+X-Received: by 2002:a05:6402:1ed2:b0:62f:26f8:fea0 with SMTP id
+ 4fb4d7f45d1cf-63678d17dc0mr2956891a12.33.1759305680169; 
+ Wed, 01 Oct 2025 01:01:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8PHvbN/g5zE3FC0Re6MrrE8LISYk/O5fL4TgbzcfB9SPdymwICxoWP9rm7OKbfkdScQO4bw==
+X-Received: by 2002:a05:6402:1ed2:b0:62f:26f8:fea0 with SMTP id
+ 4fb4d7f45d1cf-63678d17dc0mr2956852a12.33.1759305679749; 
+ Wed, 01 Oct 2025 01:01:19 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b4762495317sm85068066b.8.2025.10.01.01.01.02
+ 4fb4d7f45d1cf-634a3629cbdsm11315900a12.3.2025.10.01.01.01.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 01:01:02 -0700 (PDT)
+ Wed, 01 Oct 2025 01:01:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	armbru@redhat.com,
 	marcandre.lureau@redhat.com
-Subject: [PATCH 05/14] rust: add Serializer (to_qobject) implementation for
- QObject
-Date: Wed,  1 Oct 2025 10:00:42 +0200
-Message-ID: <20251001080051.1043944-6-pbonzini@redhat.com>
+Subject: [PATCH 11/14] scripts/qapi: strip trailing whitespaces
+Date: Wed,  1 Oct 2025 10:00:48 +0200
+Message-ID: <20251001080051.1043944-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251001075005.1041833-1-pbonzini@redhat.com>
 References: <20251001075005.1041833-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,705 +113,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows creating QObject from any serializable data structure.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Co-authored-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+This help workaround a rustfmt issue.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20210907121943.3498701-16-marcandre.lureau@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/util/meson.build               |   2 +
- rust/util/src/qobject/error.rs      |  52 +++
- rust/util/src/qobject/mod.rs        |   4 +
- rust/util/src/qobject/serializer.rs | 585 ++++++++++++++++++++++++++++
- 4 files changed, 643 insertions(+)
- create mode 100644 rust/util/src/qobject/error.rs
- create mode 100644 rust/util/src/qobject/serializer.rs
+ scripts/qapi/gen.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/rust/util/meson.build b/rust/util/meson.build
-index 5b99d38c903..fb152766003 100644
---- a/rust/util/meson.build
-+++ b/rust/util/meson.build
-@@ -39,6 +39,8 @@ _util_rs = static_library(
-     {'.': _util_bindings_inc_rs,
-     'qobject': [
-       'src/qobject/mod.rs',
-+      'src/qobject/error.rs',
-+      'src/qobject/serializer.rs',
-       'src/qobject/serialize.rs',
-     ]}),
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-diff --git a/rust/util/src/qobject/error.rs b/rust/util/src/qobject/error.rs
-new file mode 100644
-index 00000000000..5212e65c4f7
---- /dev/null
-+++ b/rust/util/src/qobject/error.rs
-@@ -0,0 +1,52 @@
-+//! Error data type for `QObject`'s `serde` integration
-+
-+use std::{
-+    ffi::NulError,
-+    fmt::{self, Display},
-+    str::Utf8Error,
-+};
-+
-+use serde::ser;
-+
-+#[derive(Debug)]
-+pub enum Error {
-+    Custom(String),
-+    KeyMustBeAString,
-+    InvalidUtf8,
-+    NulEncountered,
-+    NumberOutOfRange,
-+}
-+
-+impl ser::Error for Error {
-+    fn custom<T: Display>(msg: T) -> Self {
-+        Error::Custom(msg.to_string())
-+    }
-+}
-+
-+impl From<NulError> for Error {
-+    fn from(_: NulError) -> Self {
-+        Error::NulEncountered
-+    }
-+}
-+
-+impl From<Utf8Error> for Error {
-+    fn from(_: Utf8Error) -> Self {
-+        Error::InvalidUtf8
-+    }
-+}
-+
-+impl Display for Error {
-+    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-+        match self {
-+            Error::Custom(msg) => formatter.write_str(msg),
-+            Error::KeyMustBeAString => formatter.write_str("key must be a string"),
-+            Error::InvalidUtf8 => formatter.write_str("invalid UTF-8 in string"),
-+            Error::NulEncountered => formatter.write_str("NUL character in string"),
-+            Error::NumberOutOfRange => formatter.write_str("number out of range"),
-+        }
-+    }
-+}
-+
-+impl std::error::Error for Error {}
-+
-+pub type Result<T> = std::result::Result<T, Error>;
-diff --git a/rust/util/src/qobject/mod.rs b/rust/util/src/qobject/mod.rs
-index 2e3cb247b27..cd034185748 100644
---- a/rust/util/src/qobject/mod.rs
-+++ b/rust/util/src/qobject/mod.rs
-@@ -6,7 +6,9 @@
+diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
+index 0c9b8db3b02..c9721545ea7 100644
+--- a/scripts/qapi/gen.py
++++ b/scripts/qapi/gen.py
+@@ -58,7 +58,11 @@ def add(self, text: str) -> None:
+         self._body += text
  
- #![deny(clippy::unwrap_used)]
+     def get_content(self) -> str:
+-        return self._top() + self._preamble + self._body + self._bottom()
++        content = self._top() + self._preamble + self._body + self._bottom()
++        # delete trailing white-spaces (working around
++        # https://github.com/rust-lang/rustfmt/issues/4248)
++        content = re.sub(r'\s+$', '\n', content, 0, re.M)
++        return content
  
-+mod error;
- mod serialize;
-+mod serializer;
- 
- use std::{
-     cell::UnsafeCell,
-@@ -17,6 +19,8 @@
- };
- 
- use common::assert_field_type;
-+pub use error::{Error, Result};
-+pub use serializer::to_qobject;
- 
- use crate::bindings;
- 
-diff --git a/rust/util/src/qobject/serializer.rs b/rust/util/src/qobject/serializer.rs
-new file mode 100644
-index 00000000000..59200683f5d
---- /dev/null
-+++ b/rust/util/src/qobject/serializer.rs
-@@ -0,0 +1,585 @@
-+//! `QObject` serializer
-+//!
-+//! This module implements a [`Serializer`](serde::ser::Serializer) that
-+//! produces `QObject`s, allowing them to be created from serializable data
-+//! structures (such as primitive data types, or structs that implement
-+//! `Serialize`).
-+
-+use std::ffi::CString;
-+
-+use serde::ser::{Impossible, Serialize};
-+
-+use super::{
-+    error::{Error, Result},
-+    QObject,
-+};
-+
-+pub struct SerializeTupleVariant {
-+    name: CString,
-+    vec: Vec<QObject>,
-+}
-+
-+impl serde::ser::SerializeTupleVariant for SerializeTupleVariant {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_field<T>(&mut self, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        self.vec.push(to_qobject(value)?);
-+        Ok(())
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        let SerializeTupleVariant { name, vec, .. } = self;
-+
-+        // TODO: insert elements one at a time
-+        let list = QObject::from_iter(vec);
-+
-+        // serde by default represents enums as a single-entry object, with
-+        // the variant stored in the key ("external tagging").  Internal tagging
-+        // is implemented by the struct that requests it, not by the serializer.
-+        let map = [(name, list)];
-+        Ok(QObject::from_iter(map))
-+    }
-+}
-+
-+pub struct SerializeStructVariant {
-+    name: CString,
-+    vec: Vec<(CString, QObject)>,
-+}
-+
-+impl serde::ser::SerializeStructVariant for SerializeStructVariant {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_field<T>(&mut self, key: &'static str, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        self.vec.push((CString::new(key)?, to_qobject(value)?));
-+        Ok(())
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        // TODO: insert keys one at a time
-+        let SerializeStructVariant { name, vec, .. } = self;
-+        let list = QObject::from_iter(vec);
-+
-+        // serde by default represents enums as a single-entry object, with
-+        // the variant stored in the key ("external tagging").  Internal tagging
-+        // is implemented by the struct that requests it, not by the serializer.
-+        let map = [(name, list)];
-+        Ok(QObject::from_iter(map))
-+    }
-+}
-+
-+pub struct SerializeVec {
-+    vec: Vec<QObject>,
-+}
-+
-+impl serde::ser::SerializeSeq for SerializeVec {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_element<T>(&mut self, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        self.vec.push(to_qobject(value)?);
-+        Ok(())
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        // TODO: insert elements one at a time
-+        let SerializeVec { vec, .. } = self;
-+        let list = QObject::from_iter(vec);
-+        Ok(list)
-+    }
-+}
-+
-+impl serde::ser::SerializeTuple for SerializeVec {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_element<T>(&mut self, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        serde::ser::SerializeSeq::serialize_element(self, value)
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        serde::ser::SerializeSeq::end(self)
-+    }
-+}
-+
-+impl serde::ser::SerializeTupleStruct for SerializeVec {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_field<T>(&mut self, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        serde::ser::SerializeSeq::serialize_element(self, value)
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        serde::ser::SerializeSeq::end(self)
-+    }
-+}
-+
-+struct MapKeySerializer;
-+
-+impl serde::Serializer for MapKeySerializer {
-+    type Ok = CString;
-+    type Error = Error;
-+
-+    type SerializeSeq = Impossible<CString, Error>;
-+    type SerializeTuple = Impossible<CString, Error>;
-+    type SerializeTupleStruct = Impossible<CString, Error>;
-+    type SerializeTupleVariant = Impossible<CString, Error>;
-+    type SerializeMap = Impossible<CString, Error>;
-+    type SerializeStruct = Impossible<CString, Error>;
-+    type SerializeStructVariant = Impossible<CString, Error>;
-+
-+    #[inline]
-+    fn serialize_unit_variant(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        variant: &'static str,
-+    ) -> Result<CString> {
-+        Ok(CString::new(variant)?)
-+    }
-+
-+    #[inline]
-+    fn serialize_newtype_struct<T>(self, _name: &'static str, value: &T) -> Result<CString>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        value.serialize(self)
-+    }
-+
-+    fn serialize_bool(self, _value: bool) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_i8(self, _value: i8) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_i16(self, _value: i16) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_i32(self, _value: i32) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_i64(self, _value: i64) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_i128(self, _value: i128) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_u8(self, _value: u8) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_u16(self, _value: u16) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_u32(self, _value: u32) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_u64(self, _value: u64) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_u128(self, _value: u128) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_f32(self, _value: f32) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_f64(self, _value: f64) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    #[inline]
-+    fn serialize_char(self, _value: char) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    #[inline]
-+    fn serialize_str(self, value: &str) -> Result<CString> {
-+        Ok(CString::new(value)?)
-+    }
-+
-+    fn serialize_bytes(self, value: &[u8]) -> Result<CString> {
-+        Ok(CString::new(value)?)
-+    }
-+
-+    fn serialize_unit(self) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_unit_struct(self, _name: &'static str) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_newtype_variant<T>(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        _variant: &'static str,
-+        _value: &T,
-+    ) -> Result<CString>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_none(self) -> Result<CString> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_some<T>(self, _value: &T) -> Result<CString>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_seq(self, _len: Option<usize>) -> Result<Self::SerializeSeq> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_tuple(self, _len: usize) -> Result<Self::SerializeTuple> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_tuple_struct(
-+        self,
-+        _name: &'static str,
-+        _len: usize,
-+    ) -> Result<Self::SerializeTupleStruct> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_tuple_variant(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        _variant: &'static str,
-+        _len: usize,
-+    ) -> Result<Self::SerializeTupleVariant> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_map(self, _len: Option<usize>) -> Result<Self::SerializeMap> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_struct(self, _name: &'static str, _len: usize) -> Result<Self::SerializeStruct> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+
-+    fn serialize_struct_variant(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        _variant: &'static str,
-+        _len: usize,
-+    ) -> Result<Self::SerializeStructVariant> {
-+        Err(Error::KeyMustBeAString)
-+    }
-+}
-+
-+pub struct SerializeMap {
-+    vec: Vec<(CString, QObject)>,
-+    next_key: Option<CString>,
-+}
-+
-+impl serde::ser::SerializeMap for SerializeMap {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_key<T>(&mut self, key: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        self.next_key = Some(key.serialize(MapKeySerializer)?);
-+        Ok(())
-+    }
-+
-+    fn serialize_value<T>(&mut self, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        let key = self.next_key.take();
-+        // Panic because this indicates a bug in the program rather than an
-+        // expected failure.
-+        let key = key.expect("serialize_value called before serialize_key");
-+        self.vec.push((key, to_qobject(value)?));
-+        Ok(())
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        // TODO: insert keys one at a time
-+        let SerializeMap { vec, .. } = self;
-+        Ok(QObject::from_iter(vec))
-+    }
-+}
-+
-+impl serde::ser::SerializeStruct for SerializeMap {
-+    type Ok = QObject;
-+    type Error = Error;
-+
-+    fn serialize_field<T>(&mut self, key: &'static str, value: &T) -> Result<()>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        serde::ser::SerializeMap::serialize_entry(self, key, value)
-+    }
-+
-+    fn end(self) -> Result<QObject> {
-+        serde::ser::SerializeMap::end(self)
-+    }
-+}
-+
-+/// Serializer whose output is a `QObject`.
-+///
-+/// This is the serializer that backs [`to_qobject`].
-+pub struct Serializer;
-+
-+impl serde::Serializer for Serializer {
-+    type Ok = QObject;
-+    type Error = Error;
-+    type SerializeSeq = SerializeVec;
-+    type SerializeTuple = SerializeVec;
-+    type SerializeTupleStruct = SerializeVec;
-+    type SerializeTupleVariant = SerializeTupleVariant;
-+    type SerializeMap = SerializeMap;
-+    type SerializeStruct = SerializeMap;
-+    type SerializeStructVariant = SerializeStructVariant;
-+
-+    #[inline]
-+    fn serialize_bool(self, value: bool) -> Result<QObject> {
-+        Ok(value.into())
-+    }
-+
-+    #[inline]
-+    fn serialize_i8(self, value: i8) -> Result<QObject> {
-+        self.serialize_i64(i64::from(value))
-+    }
-+
-+    #[inline]
-+    fn serialize_i16(self, value: i16) -> Result<QObject> {
-+        self.serialize_i64(i64::from(value))
-+    }
-+
-+    #[inline]
-+    fn serialize_i32(self, value: i32) -> Result<QObject> {
-+        self.serialize_i64(i64::from(value))
-+    }
-+
-+    fn serialize_i64(self, value: i64) -> Result<QObject> {
-+        Ok(value.into())
-+    }
-+
-+    fn serialize_i128(self, value: i128) -> Result<QObject> {
-+        if let Ok(value) = u64::try_from(value) {
-+            Ok(value.into())
-+        } else if let Ok(value) = i64::try_from(value) {
-+            Ok(value.into())
-+        } else {
-+            Err(Error::NumberOutOfRange)
-+        }
-+    }
-+
-+    #[inline]
-+    fn serialize_u8(self, value: u8) -> Result<QObject> {
-+        self.serialize_u64(u64::from(value))
-+    }
-+
-+    #[inline]
-+    fn serialize_u16(self, value: u16) -> Result<QObject> {
-+        self.serialize_u64(u64::from(value))
-+    }
-+
-+    #[inline]
-+    fn serialize_u32(self, value: u32) -> Result<QObject> {
-+        self.serialize_u64(u64::from(value))
-+    }
-+
-+    #[inline]
-+    fn serialize_u64(self, value: u64) -> Result<QObject> {
-+        Ok(value.into())
-+    }
-+
-+    fn serialize_u128(self, value: u128) -> Result<QObject> {
-+        if let Ok(value) = u64::try_from(value) {
-+            Ok(value.into())
-+        } else {
-+            Err(Error::NumberOutOfRange)
-+        }
-+    }
-+
-+    #[inline]
-+    fn serialize_f32(self, float: f32) -> Result<QObject> {
-+        self.serialize_f64(f64::from(float))
-+    }
-+
-+    #[inline]
-+    fn serialize_f64(self, float: f64) -> Result<QObject> {
-+        Ok(float.into())
-+    }
-+
-+    #[inline]
-+    fn serialize_char(self, value: char) -> Result<QObject> {
-+        let mut s = String::new();
-+        s.push(value);
-+        Ok(CString::new(s)?.into())
-+    }
-+
-+    #[inline]
-+    fn serialize_str(self, value: &str) -> Result<QObject> {
-+        Ok(CString::new(value)?.into())
-+    }
-+
-+    fn serialize_bytes(self, value: &[u8]) -> Result<QObject> {
-+        // Serialize into a vector of numeric QObjects
-+        let it = value.iter().map(|&b| u64::from(b));
-+        Ok(QObject::from_iter(it))
-+    }
-+
-+    #[inline]
-+    fn serialize_unit(self) -> Result<QObject> {
-+        Ok(().into())
-+    }
-+
-+    #[inline]
-+    fn serialize_unit_struct(self, _name: &'static str) -> Result<QObject> {
-+        self.serialize_unit()
-+    }
-+
-+    #[inline]
-+    fn serialize_unit_variant(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        variant: &'static str,
-+    ) -> Result<QObject> {
-+        self.serialize_str(variant)
-+    }
-+
-+    #[inline]
-+    fn serialize_newtype_struct<T>(self, _name: &'static str, value: &T) -> Result<QObject>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        value.serialize(self)
-+    }
-+
-+    fn serialize_newtype_variant<T>(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        variant: &'static str,
-+        value: &T,
-+    ) -> Result<QObject>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        // serde by default represents enums as a single-entry object, with
-+        // the variant stored in the key ("external tagging").  Internal tagging
-+        // is implemented by the struct that requests it, not by the serializer.
-+        let map = [(CString::new(variant)?, to_qobject(value)?)];
-+        Ok(QObject::from_iter(map))
-+    }
-+
-+    #[inline]
-+    fn serialize_none(self) -> Result<QObject> {
-+        self.serialize_unit()
-+    }
-+
-+    #[inline]
-+    fn serialize_some<T>(self, value: &T) -> Result<QObject>
-+    where
-+        T: ?Sized + Serialize,
-+    {
-+        value.serialize(self)
-+    }
-+
-+    fn serialize_seq(self, len: Option<usize>) -> Result<Self::SerializeSeq> {
-+        Ok(SerializeVec {
-+            vec: Vec::with_capacity(len.unwrap_or(0)),
-+        })
-+    }
-+
-+    fn serialize_tuple(self, len: usize) -> Result<Self::SerializeTuple> {
-+        self.serialize_seq(Some(len))
-+    }
-+
-+    fn serialize_tuple_struct(
-+        self,
-+        _name: &'static str,
-+        len: usize,
-+    ) -> Result<Self::SerializeTupleStruct> {
-+        self.serialize_seq(Some(len))
-+    }
-+
-+    fn serialize_tuple_variant(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        variant: &'static str,
-+        len: usize,
-+    ) -> Result<Self::SerializeTupleVariant> {
-+        Ok(SerializeTupleVariant {
-+            name: CString::new(variant)?,
-+            vec: Vec::with_capacity(len),
-+        })
-+    }
-+
-+    fn serialize_map(self, _len: Option<usize>) -> Result<Self::SerializeMap> {
-+        Ok(SerializeMap {
-+            vec: Vec::new(),
-+            next_key: None,
-+        })
-+    }
-+    fn serialize_struct(self, _name: &'static str, len: usize) -> Result<Self::SerializeStruct> {
-+        self.serialize_map(Some(len))
-+    }
-+
-+    fn serialize_struct_variant(
-+        self,
-+        _name: &'static str,
-+        _variant_index: u32,
-+        variant: &'static str,
-+        _len: usize,
-+    ) -> Result<Self::SerializeStructVariant> {
-+        Ok(SerializeStructVariant {
-+            name: CString::new(variant)?,
-+            vec: Vec::new(),
-+        })
-+    }
-+}
-+
-+pub fn to_qobject<T>(input: T) -> Result<QObject>
-+where
-+    T: Serialize,
-+{
-+    input.serialize(Serializer)
-+}
+     def _top(self) -> str:
+         # pylint: disable=no-self-use
 -- 
 2.51.0
 
