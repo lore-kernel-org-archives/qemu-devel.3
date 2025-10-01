@@ -4,145 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3265FCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82BDFCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Oct 2025 07:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v3rAy-0003XI-Ov; Wed, 01 Oct 2025 03:23:00 -0400
+	id 1v3rIj-0005Ly-Ui; Wed, 01 Oct 2025 03:31:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3rAs-0003Wy-28
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:22:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rId-0005Ku-Ov
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:30:55 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v3rAh-0008Qy-0S
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:22:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759303344;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KJZd+y0MD3WFZlpxdkG5JTA8NzD8q/fJR2eZ5tX//Hk=;
- b=BQbIXauUlfCAJbRIIKGjRxfRvsLvIF+WwK/6qqzY4cQqbZ+lNlcUhBeYhq9qb/as0m6NiG
- 3BUfqrYmchzWHFNWoySbfUks8uXnoYDKiagu0/zSSIg2wPgc1KixCcHbM1cbAR629KjtDp
- yvViYjhdxxEka6TEMzgGWKPNus4Y6Ek=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-43-TkcO3nBWMRWPx2mV4O9zjA-1; Wed, 01 Oct 2025 03:22:23 -0400
-X-MC-Unique: TkcO3nBWMRWPx2mV4O9zjA-1
-X-Mimecast-MFC-AGG-ID: TkcO3nBWMRWPx2mV4O9zjA_1759303342
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ee1365964cso4816287f8f.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 00:22:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759303342; x=1759908142;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KJZd+y0MD3WFZlpxdkG5JTA8NzD8q/fJR2eZ5tX//Hk=;
- b=C2+12GXfEaqtyh792YTcoy3i1MXf9zoG2cmcyaDGFSB3XXVVT3MfhcGZXgunpIcFrG
- cits2mFzjgsMIs+qsxmjkGxOJms3vnzyv4lcDoBXwVjijP6llsCrqi3C+pE/B5yo0mIv
- 9nvRDKS77Wb8QG/TEUK+0k6kdJOSinGP5OhHw0G81OMbgRFsxFPYTJd7OU3g6Opxl1tm
- n/xUgnVzlDRKV0IOQPlXAsRzfGy7Pk+8LGLb1RZk521bhnaIM3iFCcdLCN1dGkQtoUOw
- eAacOjBnvsy9PppC12mnvBfIFr1NSOZmwyp73K2gd0UeKZ471wJ5dKNq/rOrC9+3GQ2C
- +s4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVEY7WSP2OOLyHQMWhAlP5Os8WHp5dqYLfhhuhqu08Ju8nzOnX/I8thB1ufmP5wPIjyDt0Tij+rPO1y@nongnu.org
-X-Gm-Message-State: AOJu0YzS2evKwTGZvn4eUNAaNSn4a19UsfQskR+99Da0z8f9jyd28ut9
- iXOaKCteoERdwqZY2eVp8rliBe9B9ybGuJ4HTU8vKlm0H0ljjjfRdiIuxeDNF55vcohaF8Iw6En
- +9wVPcYTAyPFNpR4EvdiHXfmYb4SvroXfMXY9T0LNLf8J95sTNWyIJsBi
-X-Gm-Gg: ASbGncuGXRp/C5I9792N+jIDNN3WttDNsKkViSzoxYFYtRs+cIsgePserQT6Vknx5Sl
- zLuVC2T6zn4EVddbuUqAI3gebA9rph/WkDNUVzna9LBPOxAHxYG6idMc20mPaISe9BMchC/5lBi
- 31iXO/PrSECwyE7mgm4SuPG3dvcFH+MyJvtz0MYwyCTzWIzDjsnU5HTVuVdZCmCxTbMick39bhx
- 49AKhlQSSxEBsCsH3Y1uNNWHW9KhmBgnCN5JnL8ATU5aHgyooxBBHpEzWs2VAeOnqI08cRFVCvz
- VSTVNMwEYJ4lpHufzhA6fGTv/ukS1ooM46Q2vqpSWh29qalDvxOJqAFHRnvNdiInznftB1c9J6Z
- yqRnHjtMa
-X-Received: by 2002:a05:6000:22c8:b0:3ee:1296:d9e6 with SMTP id
- ffacd0b85a97d-42557820038mr1858105f8f.61.1759303341959; 
- Wed, 01 Oct 2025 00:22:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHm76nSlk6fTgxJMjkKEV4pGRwObbWLuK9HDsKj3m2pUy2XWZhAalO4orG73GjBjwDnqsK+dw==
-X-Received: by 2002:a05:6000:22c8:b0:3ee:1296:d9e6 with SMTP id
- ffacd0b85a97d-42557820038mr1858086f8f.61.1759303341527; 
- Wed, 01 Oct 2025 00:22:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-40fc6921b7dsm25523599f8f.42.2025.10.01.00.22.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 00:22:21 -0700 (PDT)
-Message-ID: <a87df072-82a9-4913-a385-0458c3d0994a@redhat.com>
-Date: Wed, 1 Oct 2025 09:22:19 +0200
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v3rIS-0003Oh-J3
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 03:30:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+ To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=BMFk37j5ibNWTPzKSZn+W4LOxbDmF1aD2wRsEamE9FI=; b=iR6cVbwCO9WaJgH
+ nhZ+jopQqV6eIRKkUs5hKQLJZ7yF0iGiZQiSzjgBMKxSkVoP7OYFm98IpSGWwUJVROaPZCL9kDxVD
+ 1qovKpr3Mkb0Paw8QkxIs/hxFvPn5NhFE2fh5sCFiF+JWs1WWANbIz9aIz4rX9QyMq2t+NsPB+Wyg
+ ds=;
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org,
+ richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
+Subject: [PATCH v2 00/33] single-binary: Make riscv cpu.h target independent
+Date: Wed,  1 Oct 2025 09:32:33 +0200
+Message-ID: <20251001073306.28573-1-anjo@rev.ng>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] pci: Fix wrong parameter passing to
- pci_device_get_iommu_bus_devfn()
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, yi.l.liu@intel.com, clement.mathieu--drif@eviden.com
-References: <20250929034206.439266-1-zhenzhong.duan@intel.com>
- <20250929034206.439266-4-zhenzhong.duan@intel.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250929034206.439266-4-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,113 +57,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/29/25 05:42, Zhenzhong Duan wrote:
-> The 2nd parameter of pci_device_get_iommu_bus_devfn() about root PCIBus
-> backed by an IOMMU for the PCI device, the 3rd is about aliased PCIBus
-> of the PCI device.
-> 
-> Meanwhile the 3rd and 4th parameters are optional, pass NULL if they
-> are not needed.
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Hi,
 
-The commit log should mention potential consequences of this change.
+this is a first patchset moving towards single-binary support for riscv.
+Additional patchsets for hw/ and target/ are based on this one so it's
+best to make sure the approach taken is ok.  Most patches in this set
+concern fields in CPUArchState which are either widened (usually to
+uint64_t) or fixed to a smaller size which handles all use cases.
 
-Will this fix need to be backported ? up to ~9.1
+General purpose registers and fields mapped to TCG are dealt with by
+widening the type and applying an offset to tcg_global_mem_new() to
+correctly handle 32-bit targets on big endian hosts.
 
+Quick question to correct my understanding. AFAICT riscv64-softmmu is a
+superset of riscv32-softmmu which handles 32-, 64, and 128-bit ISAs, so
+concerning single-binary do we for the time being only need to support
+riscv64-softmmu?
 
-Thanks,
+Let me know what you think of the direction taken here and if you would
+prefer something else.
 
-C.
+Changes in v2:
+  - Use BIT() to define misa extension bits in "Use 32 bits for misa
+    extensions";
 
+  - Squash "Fix size of mcause" into "Fix size of trivial CPUArchState
+    fields";
 
+  - Bump VMSTATE version_id and minimum_version_id for "cpu/pmp/entry",
+    "cpu/pmp", "cpu/hyper", "cpu/vector", "cpu/rv128", "cpu/debug",
+    "cpu/envcfg", "cpu/pmu", "cpu/jvt", "cpu/ssp", and "cpu".  Migration
+    from older versions is broken.
 
-> ---
->   hw/pci/pci.c | 18 ++++++++----------
->   1 file changed, 8 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index c3df9d6656..d5ed89aab7 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2967,7 +2967,7 @@ int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
->       PCIBus *iommu_bus;
->       int devfn;
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->init_iotlb_notifier) {
->           iommu_bus->iommu_ops->init_iotlb_notifier(bus, iommu_bus->iommu_opaque,
->                                                     devfn, n, fn, opaque);
-> @@ -3025,7 +3025,7 @@ int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
->           return -EPERM;
->       }
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->pri_request_page) {
->           return iommu_bus->iommu_ops->pri_request_page(bus,
->                                                        iommu_bus->iommu_opaque,
-> @@ -3049,7 +3049,7 @@ int pci_pri_register_notifier(PCIDevice *dev, uint32_t pasid,
->           return -EPERM;
->       }
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->pri_register_notifier) {
->           iommu_bus->iommu_ops->pri_register_notifier(bus,
->                                                       iommu_bus->iommu_opaque,
-> @@ -3066,7 +3066,7 @@ void pci_pri_unregister_notifier(PCIDevice *dev, uint32_t pasid)
->       PCIBus *iommu_bus;
->       int devfn;
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->pri_unregister_notifier) {
->           iommu_bus->iommu_ops->pri_unregister_notifier(bus,
->                                                         iommu_bus->iommu_opaque,
-> @@ -3098,7 +3098,7 @@ ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
->           return -EPERM;
->       }
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->ats_request_translation) {
->           return iommu_bus->iommu_ops->ats_request_translation(bus,
->                                                        iommu_bus->iommu_opaque,
-> @@ -3122,7 +3122,7 @@ int pci_iommu_register_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
->           return -EPERM;
->       }
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->register_iotlb_notifier) {
->           iommu_bus->iommu_ops->register_iotlb_notifier(bus,
->                                              iommu_bus->iommu_opaque, devfn,
-> @@ -3144,7 +3144,7 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
->           return -EPERM;
->       }
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
->       if (iommu_bus && iommu_bus->iommu_ops->unregister_iotlb_notifier) {
->           iommu_bus->iommu_ops->unregister_iotlb_notifier(bus,
->                                                           iommu_bus->iommu_opaque,
-> @@ -3158,11 +3158,9 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
->   int pci_iommu_get_iotlb_info(PCIDevice *dev, uint8_t *addr_width,
->                                uint32_t *min_page_size)
->   {
-> -    PCIBus *bus;
->       PCIBus *iommu_bus;
-> -    int devfn;
->   
-> -    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
->       if (iommu_bus && iommu_bus->iommu_ops->get_iotlb_info) {
->           iommu_bus->iommu_ops->get_iotlb_info(iommu_bus->iommu_opaque,
->                                                addr_width, min_page_size);
+Anton Johansson (33):
+  target/riscv: Use 32 bits for misa extensions
+  target/riscv: Fix size of trivial CPUArchState fields
+  target/riscv: Fix size of mhartid
+  target/riscv: Bugfix riscv_pmu_ctr_get_fixed_counters_val()
+  target/riscv: Combine mhpmevent and mhpmeventh
+  target/riscv: Combine mcyclecfg and mcyclecfgh
+  target/riscv: Combine minstretcfg and minstretcfgh
+  target/riscv: Combine mhpmcounter and mhpmcounterh
+  target/riscv: Fix size of gpr and gprh
+  target/riscv: Fix size of vector CSRs
+  target/riscv: Fix size of pc, load_[val|res]
+  target/riscv: Fix size of frm and fflags
+  target/riscv: Fix size of badaddr and bins
+  target/riscv: Fix size of guest_phys_fault_addr
+  target/riscv: Fix size of priv_ver and vext_ver
+  target/riscv: Fix size of retxh
+  target/riscv: Fix size of ssp
+  target/riscv: Fix size of excp_uw2
+  target/riscv: Fix size of sw_check_code
+  target/riscv: Fix size of priv
+  target/riscv: Fix size of gei fields
+  target/riscv: Fix size of [m|s|vs]iselect fields
+  target/riscv: Fix arguments to board IMSIC emulation callbacks
+  target/riscv: Fix size of irq_overflow_left
+  target/riscv: Indent PMUFixedCtrState correctly
+  target/riscv: Replace target_ulong in riscv_cpu_get_trap_name()
+  target/riscv: Replace target_ulong in riscv_ctr_add_entry()
+  target/riscv: Fix size of trigger data
+  target/riscv: Fix size of mseccfg
+  target/riscv: Move debug.h include away from cpu.h
+  target/riscv: Move CSR declarations to separate csr.h header
+  target/riscv: Introduce externally facing CSR access functions
+  target/riscv: Make pmp.h target_ulong agnostic
+
+ target/riscv/cpu.h                            | 341 +++++++-----------
+ target/riscv/csr.h                            |  93 +++++
+ target/riscv/debug.h                          |   2 -
+ target/riscv/pmp.h                            |  20 +-
+ hw/intc/riscv_imsic.c                         |  34 +-
+ hw/riscv/riscv_hart.c                         |   7 +-
+ linux-user/riscv/signal.c                     |   5 +-
+ target/riscv/cpu.c                            |  11 +-
+ target/riscv/cpu_helper.c                     |  37 +-
+ target/riscv/csr.c                            | 284 ++++++++-------
+ target/riscv/debug.c                          |   1 +
+ target/riscv/fpu_helper.c                     |   6 +-
+ target/riscv/gdbstub.c                        |   1 +
+ target/riscv/kvm/kvm-cpu.c                    |   1 +
+ target/riscv/machine.c                        | 177 +++++----
+ target/riscv/op_helper.c                      |   1 +
+ target/riscv/pmp.c                            |  13 +-
+ target/riscv/pmu.c                            | 150 ++------
+ target/riscv/tcg/tcg-cpu.c                    |   3 +-
+ target/riscv/th_csr.c                         |   1 +
+ target/riscv/translate.c                      |  53 ++-
+ target/riscv/vector_helper.c                  |  22 +-
+ .../riscv/insn_trans/trans_privileged.c.inc   |   2 +-
+ target/riscv/insn_trans/trans_rvi.c.inc       |  16 +-
+ target/riscv/insn_trans/trans_rvm.c.inc       |  16 +-
+ target/riscv/insn_trans/trans_rvv.c.inc       |  22 +-
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc |  22 +-
+ 27 files changed, 666 insertions(+), 675 deletions(-)
+ create mode 100644 target/riscv/csr.h
+
+-- 
+2.51.0
 
 
