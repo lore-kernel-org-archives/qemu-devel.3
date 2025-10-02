@@ -4,96 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B205ECAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F60ACAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4M7C-0005G3-Ga; Thu, 02 Oct 2025 12:25:11 -0400
+	id 1v4MQp-00029o-Qf; Thu, 02 Oct 2025 12:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v4M77-00058R-U0
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:25:05 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v4M6x-0003hb-T5
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:25:05 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e3a50bc0fso10325715e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 09:24:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759422283; x=1760027083; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m99izO4r9jgab72834xowzWE5+08Sb+hWHqm6S4fLGE=;
- b=wiQOEeKuwukyIlu6nUqvgwRodIfen0iXfXTJnjDqr7FBiRbTgZO8Msnnn6qsjWS9m7
- vGn7DHErNACwVHYMaZ1QGc3YsNewNgMB13SSIyfslVe/8ZoyHYog+rD/MGEs80EghUvw
- blzu8kSmoERpabT+qkAsRI2LfcjUo+sGYuCX7wayaH2ZMpXqF+gEPnYcyZujdEwAPCj8
- 8QDyItNZ0rexKjlKoJr/WobUGnIW5nUsUQIUE8U1WiBGdZmal6Fh6xa0K3b+cLszlzF9
- lC7uof9qk6RRDP31BRZrIqz5PnnYVz0WtIYJl4b2pBcLGPJpgV9NmRdA6Iy6sw3D7abW
- J1Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759422283; x=1760027083;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=m99izO4r9jgab72834xowzWE5+08Sb+hWHqm6S4fLGE=;
- b=r1eQCFb33nE0uCRv8ovQYZCDxDO1iD9oSKBf0zMpLmZzF7P0qR02D1+hjVedxTgd4I
- /6phPDlkMlSItuyaS3Qi/Q6IYsw1FckaP+g3pXh95T415hQpLcYcd2XJN/sacwLT9VbX
- OcuQjKsGS3Mk7nwN0fM1HmTCersZQnlSrVzoBQL4P4QWkBDWbZGNpG5QKiVORTd0DWs3
- FOhQO213HgxvCqGvups2lrMM0MPC9vNZVL9sU9S4vZcmv/r8BUVzN58W03jJRS0Xt7fb
- Yu3/qEXCvjRwUNUqBlC/vIxaM/xHE5ptJvLxLPqAz4m2JJj2uMWegpM4BRXoz36+5UFA
- /p2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUx/2tOhDEA1hzifUeLbqinMJvSqPnFnVFjDtexz31zVD8ZPwn8Oo72TdazjJF2o8WJG5E5tkuXUMI1@nongnu.org
-X-Gm-Message-State: AOJu0Yzx+cCYHXheUjriFFJ2kWXk0YY4V5T/UYcTwRV4Ym4kZCG5KtlG
- +XuskaH9uO9PeIOtDbXI9RjAZlYAqXvbaNsgDNHhHb/WTt9fYviPRoplMEjmPrnwO2Q=
-X-Gm-Gg: ASbGncvfBfVqekYQFE4VOpagHxguON3pcIzaN1l/S4VYLJwuTqh5FaUPDfnP0QSS4pM
- aOeO0DIaihLoDQAn/b3uQO2DBvSlGqmoYwLix5b1j07prKTBJ3Yj3VYXPoaeYx4YSAsoRD8JC50
- mOdaJdbIlC7b7WeQd050jEEHIf/ZSoYl42kTc0N8+rfXQxH1E67JOA46mTQBr/NWo/CLfUowAvU
- 65g1lqVS1vP00oaMSljlC50P+fkvFR9zuh8rtlRRUQVTD93C8BLILez0+XhdMUq/dmiEPvnn5Z0
- mKHn9z83d3ugYvJGT1o3D1jobBhRG1rgSLsl8uQl6mkU/10x4XwRwk5O9P477RutElzmWENLD3m
- afmsCShQjOhNrqmaNXRKYxQGCSKXGNLi+Cnpct978DcLngZkVg0E=
-X-Google-Smtp-Source: AGHT+IEK80UwgNjV22g47ZXnJP8YbgrgOlOSagQEfbQaiK/6SJsmQK5+2by+KwdInLbXIryPhytPug==
-X-Received: by 2002:a5d:5d0d:0:b0:3fb:9950:b9fe with SMTP id
- ffacd0b85a97d-4255781a8bbmr5534879f8f.47.1759422283145; 
- Thu, 02 Oct 2025 09:24:43 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9719sm4383031f8f.31.2025.10.02.09.24.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 09:24:42 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 663115F809;
- Thu, 02 Oct 2025 17:24:41 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
- thuth@redhat.com,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v5 4/9] tests/functional: Add GDB class
-In-Reply-To: <aN56GkbIFxs5IDRR@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 2 Oct 2025 14:11:54 +0100")
-References: <20251002020432.54443-1-gustavo.romero@linaro.org>
- <20251002020432.54443-5-gustavo.romero@linaro.org>
- <aN56GkbIFxs5IDRR@redhat.com>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Thu, 02 Oct 2025 17:24:41 +0100
-Message-ID: <875xcxgtkm.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v4MQk-00029A-Mk; Thu, 02 Oct 2025 12:45:24 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v4MQU-0003PF-TW; Thu, 02 Oct 2025 12:45:20 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hcJf6IiJcFytt4xkbmRiOiulsdbnh773Gsvny9FbDJAX18FbdfS9YdOxU/JSm4sT+rvyYs1BtPPinmBtfZdGXG5IlmiNTptN39RvRPf3oYfes/b36tZfRtAGOhzDJg7kQ8MEU7Kzn7+C0/+KyUEx8ibxwABtSHtSom+Tl0RDTrlrEvDY4UlK19LOjQEHNAUiI87af5yv5eewyG5BNZhZ+tlcD6f9n89BSQHm5JMabj18aEPbqG+BawFZlGgtN7OEj2cLNmi8z1e3jX2/U0qMw3V7KfAdgC2Uhc8nyX9BokIAza1PZTW13HQgOE7b/qq6YpC5RTVSIkxOZkUjLTcC6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lqdtbYupu9tJ0J7QGxBl/9o/wIZf9Ezu5y406Ka1I4o=;
+ b=NGQIk2cCnWKpGRq1/v0yaOtWtx4DLUZ5pp6ni7sQBoz/wYHXteuieFBAaAXcib6RDw3/k6kOT67Ehxc3Zqkc1K/YwL25shdbElnZKG9EvTdmmjxprVdq7pWEW0snrix64F1F18x+8U278AcmT+ZbYcsNSqfWY5BHa1W9O1hi+THzTCdS4saTl7TQ3GnFVd7Q1Gw8CuvJLH5yQVqEfMin+SCWWxn1RRkIpVAtKJNornQquZxcU25hktJQncpp6LqcjAZKTfAuTfp1rOp/KE7itCO2dohqWlKPHsW13grB0Sy/vg1UDIQkEZRL6pcL1BLJ6myaWJwG0df8cHtN64Se0w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lqdtbYupu9tJ0J7QGxBl/9o/wIZf9Ezu5y406Ka1I4o=;
+ b=hNc5Y9uRICoR5YuZHglqWswd8uFaAnssrAu8ZVl1ENGJc4me9mTi5G4NrNSjv6Ho5De0+WruXO+ABclRDzQxTYnI5QMEC5LuPwV2YrxrrW2X5SCKIZdb8RMKegVbF09cajFo3hWCIghztNzwxiDwOrlparKcmmgZpGeAP2CiI3+TKHyDyvYMwkNsff7XCyHjkj8aFFUBN85TOoOrL8g2q7bqcH+3dqxeOxzeNe2dNG/znEK97tJxOqfLPZ8tPXd4MrvSVIafO5ipUnOCYFZlZr+fknEbuCfPEmtmQ677/fm3qB7dY6/Abqj9s4ywZD1LMjivOnIEbenKkqUf/9FfBA==
+Received: from MN2PR11CA0015.namprd11.prod.outlook.com (2603:10b6:208:23b::20)
+ by CH3PR12MB8209.namprd12.prod.outlook.com (2603:10b6:610:123::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.19; Thu, 2 Oct
+ 2025 16:44:37 +0000
+Received: from BL02EPF0001A107.namprd05.prod.outlook.com
+ (2603:10b6:208:23b:cafe::d6) by MN2PR11CA0015.outlook.office365.com
+ (2603:10b6:208:23b::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.17 via Frontend Transport; Thu,
+ 2 Oct 2025 16:44:36 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL02EPF0001A107.mail.protection.outlook.com (10.167.241.136) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9182.15 via Frontend Transport; Thu, 2 Oct 2025 16:44:36 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 2 Oct
+ 2025 09:44:21 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 2 Oct
+ 2025 09:44:21 -0700
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Thu, 2 Oct 2025 09:44:20 -0700
+Date: Thu, 2 Oct 2025 09:44:18 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 08/27] hw/arm/smmuv3-accel: Add set/unset_iommu_device
+ callback
+Message-ID: <aN6r4n2F1s2ZLm9d@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-9-skolothumtho@nvidia.com>
+ <7167d287-f0d0-4bb8-8750-e38e9e31df10@redhat.com>
+ <CH3PR12MB7548C5CB7B9BE18AAE5492BEABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CH3PR12MB7548C5CB7B9BE18AAE5492BEABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A107:EE_|CH3PR12MB8209:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6692989f-7cd2-42a0-708c-08de01d2f92a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|36860700013|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SFRpRXhnOS9BQmY4ei85QkFCVG9tMERsb1lrcEc3RnRpU1MwTEErVzgvT1o5?=
+ =?utf-8?B?ck1NeGZVQ0NweFJRVDlnUDNsTjgvWkZzSHdQQXdwMlZlOHZkVGU5K1RKNFI2?=
+ =?utf-8?B?T2tVVVBYV1lZOFgyYnhiaFhIa0ljclh4Zkx1T0w2eUdJZnhhaGNoUTBueUlB?=
+ =?utf-8?B?d041eE1RZVFaeXB6L1FwRS9CaFhQQ1U4MTk4OGRmVlhWdkdnVFZKVEVvZDc4?=
+ =?utf-8?B?ZGVsakhXSFF0RlU0Uk82NFYwR3BEU3IvNVJSTEtJcmJrRVZyTlJMOWN3bjRy?=
+ =?utf-8?B?OURjaTY1YitHMWtqak95dGExKzFXQkYycUNqMXNmeFNJaVhucHVqN0diaXZa?=
+ =?utf-8?B?UVdPQmdVbkM5YkVLMEw3ZERyR21FUnRscW9PZHFPMlpzekx2dWpLU2o2dDFl?=
+ =?utf-8?B?bnpYajU0L0lJMlFzekR5RmxFWTRwdnhUQnF5b3REQnBnYTFsUDU5WUtZalpW?=
+ =?utf-8?B?YzRYUjFVMDlNME96eTRBV3VNTVR5WTZEM2ZjTXVQOUMveTBEOXZza3J0RmJR?=
+ =?utf-8?B?NHpVMzc5MHdNTEJjVHZnRTRUcG1KQzRVMW5YcUFVdzB4UkdFVG1uVTNGVnZo?=
+ =?utf-8?B?a2VhVmVFY1A3Y0RnMG52WUJXYmxQbS9aSktpZlpiRDBDeEhiOVhnNHJYQXlV?=
+ =?utf-8?B?WFJYNW5zZm5EdCtrUEJrakkxZWVXQTRmVWZ2OXR1dHNBUEFWMXVmdHhNbXZh?=
+ =?utf-8?B?bXV1d0ROaldiaURNdnBYR0JRTmphQy9oNXI0eG92RDZ4SnJnanRHTEhuSDJ4?=
+ =?utf-8?B?UGZEb2phREw4YnQxUUsvM1ZJQm9zd1RJcHJneDhHenJ2UXBkdnVoTUtEeFM5?=
+ =?utf-8?B?emtVYlRTZk8reFZxblo4eXZvUlYxaktoYXRDVEM5alZpSjRKQ05yMjQrSDIv?=
+ =?utf-8?B?NThIcDVQLzkxU1BtQldEQnRialIvV2tvaFJGSUxOKzNxQUFQaGhLN1Q5d1pm?=
+ =?utf-8?B?dlV4SitidU1NWVlQQmpZcFcyR0lrYWhWT3NJT3BvbzNGaVpYVjRnVFlvTWs4?=
+ =?utf-8?B?NTgrbHpzQWkvZG5RODIxcG00T0FJMnNCdDRBL3NYRnR6cTZLc1dBL1p1K1dS?=
+ =?utf-8?B?dG9OUklPeVA1cHpaS084NE1JOW5Kczh4YzFVMG90aHhYTUJUMUlvSkdBSTB0?=
+ =?utf-8?B?QjlyN1ZKUWNpZWc3ajhnNjNHdzZzeTN2endpRHAzKzN0bFFlOVgzLytSNXlm?=
+ =?utf-8?B?QTZPVDVGWjdYQzMvV2lzWWx6STlLbnhhNmNVYllYOVJvbVBBWTdKMTNTQmxJ?=
+ =?utf-8?B?MHFPVmJrTmN6Ti9IK0NGbUl6dGVjUjJXY2RnTEVnN2xQY0pzYVhmaWQvd3dP?=
+ =?utf-8?B?TFhqN0M2eXJ6aXVYT21KNjVVWng5RjJtZXFqQlpaTG8vbWtSdW53UDdmZG1T?=
+ =?utf-8?B?VEpLT2pvZ0xZT3RvcWdJY3hEcEZhOFZqU0pjMlU0U2ZsYTUyWWpsc1VwbmI5?=
+ =?utf-8?B?S0FnNmxraXQ0YTBaUVpWMW1uU2R0VWRPS2FYakdvR2lFa1pWVDVDK1BkUGps?=
+ =?utf-8?B?SzJ5N1Qzems3UlhsWlJtaWVQTzZPdVFkUXZHeWJ3QVlrMlRobEF4WWhCbHFG?=
+ =?utf-8?B?MU5TeXNNYUxMNlN2YUI0Ykh5cVBPMFVwN2xJUDhaS2FwREQySi8xTUpmcEsz?=
+ =?utf-8?B?NGM2ZTlpOXZqZmRKamZsNVhrbHhNcmw5WmMyelVubGxNY200elFjNE5yREJp?=
+ =?utf-8?B?L0JrNElWZTNBck1OcHQ2c0g3R0VSM0gyNGZ4UUZod0NyWnV1UkgrSFBLRkVN?=
+ =?utf-8?B?TXhPQWxGNmtJQlN3eW1kNE1kbWlXeExoUkl1TklCS2N3eDNxNE5pbktUejla?=
+ =?utf-8?B?bEdQNnVaY3pnYWNXN1I0QmgwYjkzWDkzRmo4TzJod2xsaVM2cTdXck9VMXhw?=
+ =?utf-8?B?Q0FqZEkxZDYxa1lOdmkwanBvZFhYa0tvTlRjN3FEM1VSR1VvZVV3K3pMdFhn?=
+ =?utf-8?B?bXkvYXU1N0dOS1VnZzl5RlZzZmdqR3ROMUpyeFdPQy9lZGc3UzVKU1BjNzQv?=
+ =?utf-8?B?UTdqTytyU05pdjFZQ21vNXBqR2V1WktYKy9HeEU4cFRVZkFjUm1nN1gvVTFm?=
+ =?utf-8?B?NmVoci92RHh0c3RySTdteGRWZnJ4UFFDOE14VWUvNWdmcWNFWHlsblRDNW9J?=
+ =?utf-8?Q?K2jg=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2025 16:44:36.6396 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6692989f-7cd2-42a0-708c-08de01d2f92a
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A107.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8209
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,58 +179,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Thu, Oct 02, 2025 at 04:34:17AM -0700, Shameer Kolothum wrote:
+> > > Implement a set_iommu_device callback:
+> > >  -If found an existing viommu reuse that.
+> > I think you need to document why you need a vIOMMU object.
+> > >  -Else,
+> > >     Allocate a vIOMMU with the nested parent S2 hwpt allocated by VFIO.
+> > >     Though, iommufd’s vIOMMU model supports nested translation by
+> > >     encapsulating a S2 nesting parent HWPT, devices cannot attach to this
+> > >     parent HWPT directly. So two proxy nested HWPTs (bypass and abort) are
+> > >     allocated to handle device attachments.
+> > 
+> > "devices cannot attach to this parent HWPT directly".  Why? It is not clear to
+> > me what those hwpt are used for compared to the original one. Why are they
+> > mandated? To me this deserves some additional explanations. If they are s2
+> > ones, I would use an s2 prefix too.
+> 
+> Ok. This needs some rephrasing.
+> 
+> The idea is, we cannot yet attach a domain to the SMMUv3 for this device yet.
+> We need a vDEVICE object (which will link vSID to pSID) for attach. Please see
+> Patch #10.
+> 
+> Here we just allocate two domains(bypass or abort) for later attach based on
+> Guest request.
+> 
+> These are not S2 only HWPT per se. They are of type IOMMU_DOMAIN_NESTED.
+> 
+> From kernel doc:
+> 
+> #define __IOMMU_DOMAIN_NESTED   (1U << 6)  /* User-managed address space nested
+>                                               on a stage-2 translation        */
 
-> On Thu, Oct 02, 2025 at 02:04:27AM +0000, Gustavo Romero wrote:
->> Add GDB class, which provides methods to run GDB commands and capture
->> their output. The GDB class is a wrapper around the pygdbmi module and
->> interacts with GDB via GDB's machine interface (MI).
->>=20
->> Acked-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>  tests/functional/qemu_test/__init__.py |  1 +
->>  tests/functional/qemu_test/gdb.py      | 88 ++++++++++++++++++++++++++
->>  2 files changed, 89 insertions(+)
->>  create mode 100644 tests/functional/qemu_test/gdb.py
->
->
->> diff --git a/tests/functional/qemu_test/gdb.py b/tests/functional/qemu_t=
-est/gdb.py
->> new file mode 100644
->> index 0000000000..05e4c29c2a
->> --- /dev/null
->> +++ b/tests/functional/qemu_test/gdb.py
->> @@ -0,0 +1,88 @@
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +#
->> +# A simple interface module built around pygdbmi for handling GDB comma=
-nds.
->> +#
->> +# Copyright (c) 2025 Linaro Limited
->> +#
->> +# Author:
->> +#  Gustavo Romero <gustavo.romero@linaro.org>
->> +#
->> +# This work is licensed under the terms of the GNU GPL, version 2 or
->> +# later.  See the COPYING file in the top-level directory.
->
-> Please remove these two lines - they should not be included in any
-> newly authored files - SPDX alone is desired.
+There are a couple of things going on here:
+1) We should not attach directly to the S2 HWPT that eventually
+   will be shared across vSMMU instances. In other word, an S2
+   HWPT will not be attachable for lacking of its tie to an SMMU
+   instance and not having a VMID at all. Instead, each vIOMMU
+   object allocated using this S2 HWPT will hold the VMID.
 
-I can clean that up when I pull this to save another round trip from
-Gustavo.
+2) A device cannot attach to a vIOMMU directly but has to attach
+   through a proxy nested HWPT (IOMMU_DOMAIN_NESTED). To attach
+   to an IOMMU_DOMAIN_NESTED, a vDEVICE must be allocated with a
+   given vSID.
 
->
-> If that is removed, then
->
->  Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
->
-> With regards,
-> Daniel
+This might sound a bit complicated but I think it makes sense from
+a VM perspective, as a device that's behind a vSMMU should have a
+guest-level SID and its corresponding STE: if the device is working
+in the S2-only mode (physically), there must be a guest-level STE
+configuring to the S1-BYPASS mode, where the "bypass" proxy HWPT
+will be picked for attachment.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+So, for rephrasing, I think it would nicer to say something like:
+
+"
+A device that is put behind a vSMMU instance must have a vSID and its
+corresponding vSTEs (bypass/abort/translate). Pre-allocate the bypass
+and abort vSTEs as two proxy nested HWPTs for the device to attach to
+a vIOMMU.
+
+Note that the core-managed nesting parent HWPT should not be attached
+directly when using the iommufd's vIOMMU model. This is also because
+we want that nesting parent HWPT to be reused eventually across vSMMU
+instances in the same VM.
+"
+
+Nicolin
 
