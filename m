@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC67CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC742CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Eqm-0004q8-Bz; Thu, 02 Oct 2025 04:39:45 -0400
+	id 1v4Es1-0005Um-7b; Thu, 02 Oct 2025 04:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v4Eqd-0004oR-2l
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:39:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v4Erm-0005Op-7m
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:40:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v4EqM-0008Gz-Lv
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:39:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v4ErY-0000fw-7Q
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:40:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759394352;
+ s=mimecast20190719; t=1759394419;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=l/viV02I/SrNrd23XIMXrxiJgAbNSjhYSvqGXZ6mj3A=;
- b=E0GO3D5KcLmLwHf2XoONUr+cTQJx6aNaCfbP5vo0JVFB+Bzxx2V54BnYbp9sbiYokcfOve
- USHhmgIiQi2lFD6MPrf5OxnYL8hOB/zq1SOr1sCj0ER/1GZKkVpcpofikUbnQGwRPfuo7b
- Eo++8DzpZDulOMFyRXn1z4k31P88UMk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KX6hnvxeCCnZ6hRDH05OcsAuyPKcD7C8RI3OIDmvJjc=;
+ b=Ls0kbL7mX42E0PmYk3yT+wWtGpY+efjoO0WK2KEzR91bYlIrjP6c+n2tliFupS2elSWDe+
+ 1SJvSGpdns6nZyYjtapryQTAX0j+HscJwwYw5s60rpqUsq/05xj63D63so6VcViBIoUBND
+ 9yKe/8r766rs5J3y4kOaVDTImPUds5I=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-R2Zqjwn1P1COAXhGVPq13A-1; Thu, 02 Oct 2025 04:39:10 -0400
-X-MC-Unique: R2Zqjwn1P1COAXhGVPq13A-1
-X-Mimecast-MFC-AGG-ID: R2Zqjwn1P1COAXhGVPq13A_1759394350
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f4fbdf144dso294671f8f.2
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 01:39:10 -0700 (PDT)
+ us-mta-665-n3AL4JHuOqKp4yMcfT33IA-1; Thu, 02 Oct 2025 04:40:17 -0400
+X-MC-Unique: n3AL4JHuOqKp4yMcfT33IA-1
+X-Mimecast-MFC-AGG-ID: n3AL4JHuOqKp4yMcfT33IA_1759394417
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e377d8c80so2380345e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 01:40:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759394350; x=1759999150;
+ d=1e100.net; s=20230601; t=1759394416; x=1759999216;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=l/viV02I/SrNrd23XIMXrxiJgAbNSjhYSvqGXZ6mj3A=;
- b=Nqxg8Bk/o6AC4EX63Np5XqnWlZPtyIxHLCJuQHtkeNXAHqb7yjTTTVyy2Wr+AMo7/G
- dPub+rgy6FPT9OUooyFOD3wg3V6EN1Qc4or7+2Z+rDzIQGWHI0Soatr7o87yWy4l4EVB
- Grr4yRQHEpIj3TcnUG41J2eSlH1UQFlhfNIYYccYCKGOANqWxlK+kfbbdi8iHcG0dDao
- FWfEVxAdGhQ3OCBjLfKGLrHaULZtVneM/5W9z6/Fzelyur5C9dvqS57JAQhoXA+zgUJp
- GvmSHs88fHoSqIKAy5Td6IvnibRVmf7miIT7kmR6/MoNgoESRO6BMy32zMqRQ/8eAJWL
- 4Odg==
+ bh=KX6hnvxeCCnZ6hRDH05OcsAuyPKcD7C8RI3OIDmvJjc=;
+ b=lW8lDaKG603J6AcBXuI1lIKVQaLVDv9Lrrk9iYdjhLL1Zm+YgPLjxaItX0hdOWLBff
+ Fb+8sQcTTo8+GvDBZydkvyEOchghRq49LV0uYelFFFBqpPa6qAgFzc06IPaGM9iMfmqA
+ 9V+HmeWCmBaSX4zc54SRbruI4fUuzp9/Zj1aC9afo/E44QrCSnfjyRflc5cGG2BEzKM2
+ 92gvzC/RhnlBxhLHlN3d7mRaJEz0MvcyyvtM33JzXuey/xS3g7ugPoZPuqDFedV4GTlW
+ 7tj/VaH56Dfq29M8zaXuf9FibeFndAccgvqF3I3ThgnWdK4fhJvWm6jirjPw6PxtdMh5
+ plCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWLGTgJdVhN+mIV33KMK7vpHjXDEA0Ty1hambUQdIUumawxldCkNGlcU0AmFZ9H6Flnim3ps1qLpB7@nongnu.org
-X-Gm-Message-State: AOJu0YynIJSg/Sd9x+kJYRYud102w+ZMjsrEAB0h8UKuDZDsLYoK1PmL
- k6ZOX+9+9tNArxAoFP0wcdU9H682skxp8Ysw42+/+axfVqzLkdUFT3j1U1fdCaBIzG03OR7Nt0m
- wIPCH6GZuv699OHsjnZC7mbRx65ZADr5LVdhwu9vhyVfcakKbaMg5URHM
-X-Gm-Gg: ASbGnctJx4NTherZ9DfXkGaSRmVBz46bFGqsDhrI8QseL1IwLU2N+nX7+ZO7s8MljPM
- 9lexxAXeJuiRStLttzAE0jBxOlM+pmMCfeokevcO99p+WCroun+xbFEsUnbC2VgTakletA0uYQ4
- QqEdfyYbbUwtASglcVR33OzqDFiAw3NhBwa0CePFmUSi0C0FcCOkjQMDbTBly+zDSBfjkD5/aYN
- txt+o5jc7LXEUXaIzAUy24tbZz2XCVH/uMi6YzdtbuH/6GN8JC5hBA0t0eX+qZ40+qomKVRG9xd
- Wpg8g6btuu7KRM31ciFTla6jMtHWJpDvHRexIYrr7B6W4LH+TVwAlqlvSxTB5IKJfbOMztr7eFv
- 3Sg23Q+n7
-X-Received: by 2002:a05:6000:1acb:b0:3e9:9282:cfdf with SMTP id
- ffacd0b85a97d-42557824f13mr4200123f8f.41.1759394349510; 
- Thu, 02 Oct 2025 01:39:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6vn86WptEkq5ZlU8sLA8Oey8vc8CHXGnMmcTXDLvHLbd40JO9yOuMsVvEZcNI0T9OZbwARA==
-X-Received: by 2002:a05:6000:1acb:b0:3e9:9282:cfdf with SMTP id
- ffacd0b85a97d-42557824f13mr4200102f8f.41.1759394348984; 
- Thu, 02 Oct 2025 01:39:08 -0700 (PDT)
+ AJvYcCW2d/+IoooIYy/tMs4Llmrh1bvTLkdENN+RFouhpVZzrOg60oCoAIQUY/CgsCH9R8m5SEn+sv+aOT70@nongnu.org
+X-Gm-Message-State: AOJu0YwEj6GCY1f3VCD0iYKNgQvnAEZ8W493PC+SV0eAyfRaWUUIcnsU
+ wtH+Cry7MivxUjOyJH7WPHx4D/eiZe9MWnhQ05lq98UQ+E/STg+BfBsEpxHZJlDycgEI4tMQ5ZC
+ y9IU/aQN3jfdYvjk7DlregrC9PvpbpA4UIYK7Z057mTvreMimm0Pq4hkt
+X-Gm-Gg: ASbGnctErOZlKXcbW3no71Z/oxIgAbz1VjA4gSVBOxNXVJO4N7VguQhzgWr19ksMlLs
+ 4PIRd7a7gDIc2gaIPCy3grzd4NcZL2ylbqtqs48njiGU2QHo1fIrUx9wkzFoYg/pgKkGL1CbRqM
+ VxJLZmskjTRrzy6g0VtD0VRbA7bqSS8DddLw+R9NH2mnbuuS12eBPW50QVDu2vEedWyZCRSsUdl
+ MGuvb0oRLjrHdXqzdWm0gH2OmmP9OSK0blIApNqi7D31MjUQIJ9ZYIVvnrgyDYtAW1qeEJA9XBc
+ 2Z2Tpt5e4tHLhGNzXZsxwRnva1irmDWjzLwLl1dBNhy+FDzJj93C8aYLxPrekgh72Y0ANp4+4wH
+ lQd+81ny/
+X-Received: by 2002:a05:600c:8409:b0:46e:3c29:ce9d with SMTP id
+ 5b1f17b1804b1-46e638352e4mr32046715e9.32.1759394416459; 
+ Thu, 02 Oct 2025 01:40:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtxHXgYBGXB2JTLZZGo2ktNkOy9ap+Noum+ElY79GzzWjdkFzY8dnbpI0zUJwf1WnJ9gH34g==
+X-Received: by 2002:a05:600c:8409:b0:46e:3c29:ce9d with SMTP id
+ 5b1f17b1804b1-46e638352e4mr32046395e9.32.1759394415902; 
+ Thu, 02 Oct 2025 01:40:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e6917a577sm24701915e9.1.2025.10.02.01.39.07
+ 5b1f17b1804b1-46e61a18b76sm73145385e9.18.2025.10.02.01.40.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 01:39:08 -0700 (PDT)
-Message-ID: <15650274-b16a-487b-9cad-0c34a8c0a8a3@redhat.com>
-Date: Thu, 2 Oct 2025 10:39:07 +0200
+ Thu, 02 Oct 2025 01:40:15 -0700 (PDT)
+Message-ID: <fa94f9ae-8448-425d-b911-4c998d265651@redhat.com>
+Date: Thu, 2 Oct 2025 10:40:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/18] system/physmem: Drop 'cpu_' prefix in Physical
- Memory API
+Subject: Re: [PATCH v2 18/18] system/physmem: Extract API out of
+ 'system/ram_addr.h' header
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -97,7 +97,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Alex Williamson <alex.williamson@redhat.com>,
  Nicholas Piggin <npiggin@gmail.com>
 References: <20251001175448.18933-1-philmd@linaro.org>
- <20251001175448.18933-18-philmd@linaro.org>
+ <20251001175448.18933-19-philmd@linaro.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -143,18 +143,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251001175448.18933-18-philmd@linaro.org>
+In-Reply-To: <20251001175448.18933-19-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,29 +172,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/1/25 19:54, Philippe Mathieu-Daudé wrote:
-> The functions related to the Physical Memory API declared
-> in "system/ram_addr.h" do not operate on vCPU. Remove the
-> 'cpu_' prefix.
+> Very few files use the Physical Memory API. Declare its
+> methods in their own header: "system/physmem.h".
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/system/ram_addr.h   | 24 +++++++++----------
+>   MAINTAINERS                 |  1 +
+>   include/system/physmem.h    | 54 +++++++++++++++++++++++++++++++++++++
+>   include/system/ram_addr.h   | 40 ---------------------------
 >   accel/kvm/kvm-all.c         |  2 +-
->   accel/tcg/cputlb.c          | 12 +++++-----
->   hw/vfio/container-legacy.c  |  8 +++----
->   hw/vfio/container.c         |  4 ++--
->   migration/ram.c             |  4 ++--
->   system/memory.c             |  8 +++----
->   system/physmem.c            | 48 ++++++++++++++++++-------------------
+>   accel/tcg/cputlb.c          |  1 +
+>   hw/vfio/container-legacy.c  |  2 +-
+>   hw/vfio/container.c         |  1 +
+>   hw/vfio/listener.c          |  1 -
+>   migration/ram.c             |  1 +
+>   system/memory.c             |  1 +
+>   system/physmem.c            |  1 +
 >   target/arm/tcg/mte_helper.c |  2 +-
->   system/memory_ldst.c.inc    |  2 +-
->   tests/tsan/ignore.tsan      |  4 ++--
->   11 files changed, 59 insertions(+), 59 deletions(-)
+>   12 files changed, 63 insertions(+), 44 deletions(-)
+>   create mode 100644 include/system/physmem.h
 
-
-
-For vfio,
+for vfio,
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -204,465 +204,250 @@ C.
 
 
 > 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 406cef88f0c..9632eb7b440 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3213,6 +3213,7 @@ S: Supported
+>   F: include/system/ioport.h
+>   F: include/exec/memop.h
+>   F: include/system/memory.h
+> +F: include/system/physmem.h
+>   F: include/system/ram_addr.h
+>   F: include/system/ramblock.h
+>   F: include/system/memory_mapping.h
+> diff --git a/include/system/physmem.h b/include/system/physmem.h
+> new file mode 100644
+> index 00000000000..879f6eae38b
+> --- /dev/null
+> +++ b/include/system/physmem.h
+> @@ -0,0 +1,54 @@
+> +/*
+> + * QEMU physical memory interfaces (target independent).
+> + *
+> + *  Copyright (c) 2003 Fabrice Bellard
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef QEMU_SYSTEM_PHYSMEM_H
+> +#define QEMU_SYSTEM_PHYSMEM_H
+> +
+> +#include "exec/hwaddr.h"
+> +#include "exec/ramlist.h"
+> +
+> +#define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
+> +#define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
+> +
+> +bool physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
+> +
+> +bool physical_memory_is_clean(ram_addr_t addr);
+> +
+> +uint8_t physical_memory_range_includes_clean(ram_addr_t start,
+> +                                             ram_addr_t length,
+> +                                             uint8_t mask);
+> +
+> +void physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
+> +
+> +void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
+> +                                     uint8_t mask);
+> +
+> +/*
+> + * Contrary to physical_memory_sync_dirty_bitmap() this function returns
+> + * the number of dirty pages in @bitmap passed as argument. On the other hand,
+> + * physical_memory_sync_dirty_bitmap() returns newly dirtied pages that
+> + * weren't set in the global migration bitmap.
+> + */
+> +uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+> +                                            ram_addr_t start,
+> +                                            ram_addr_t pages);
+> +
+> +void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
+> +
+> +bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+> +                                          ram_addr_t length,
+> +                                          unsigned client);
+> +
+> +DirtyBitmapSnapshot *
+> +physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
+> +                                         hwaddr length, unsigned client);
+> +
+> +bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
+> +                                        ram_addr_t start,
+> +                                        ram_addr_t length);
+> +
+> +#endif
 > diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-> index d2d088bbea6..3894a84fb9c 100644
+> index 3894a84fb9c..683485980ce 100644
 > --- a/include/system/ram_addr.h
 > +++ b/include/system/ram_addr.h
-> @@ -136,39 +136,39 @@ static inline void qemu_ram_block_writeback(RAMBlock *block)
->   #define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
->   #define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
+> @@ -19,7 +19,6 @@
+>   #ifndef SYSTEM_RAM_ADDR_H
+>   #define SYSTEM_RAM_ADDR_H
 >   
-> -bool cpu_physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
-> +bool physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
+> -#include "exec/ramlist.h"
+>   #include "system/ramblock.h"
+>   #include "exec/target_page.h"
+>   #include "exec/hwaddr.h"
+> @@ -133,43 +132,4 @@ static inline void qemu_ram_block_writeback(RAMBlock *block)
+>       qemu_ram_msync(block, 0, block->used_length);
+>   }
 >   
-> -bool cpu_physical_memory_is_clean(ram_addr_t addr);
-> +bool physical_memory_is_clean(ram_addr_t addr);
->   
-> -uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
-> +uint8_t physical_memory_range_includes_clean(ram_addr_t start,
->                                                    ram_addr_t length,
->                                                    uint8_t mask);
->   
-> -void cpu_physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
-> +void physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
->   
-> -void cpu_physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
-> +void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
->                                            uint8_t mask);
->   
->   /*
-> - * Contrary to cpu_physical_memory_sync_dirty_bitmap() this function returns
-> + * Contrary to physical_memory_sync_dirty_bitmap() this function returns
->    * the number of dirty pages in @bitmap passed as argument. On the other hand,
-> - * cpu_physical_memory_sync_dirty_bitmap() returns newly dirtied pages that
-> + * physical_memory_sync_dirty_bitmap() returns newly dirtied pages that
->    * weren't set in the global migration bitmap.
->    */
-> -uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
-> +uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
->                                                   ram_addr_t start,
->                                                   ram_addr_t pages);
->   
-> -void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
-> +void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
->   
-> -bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
-> +bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->                                                 ram_addr_t length,
->                                                 unsigned client);
->   
-> -DirtyBitmapSnapshot *cpu_physical_memory_snapshot_and_clear_dirty
-> +DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
->       (MemoryRegion *mr, hwaddr offset, hwaddr length, unsigned client);
->   
-> -bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
-> +bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
->                                               ram_addr_t start,
->                                               ram_addr_t length);
->   
+> -#define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
+> -#define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
+> -
+> -bool physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
+> -
+> -bool physical_memory_is_clean(ram_addr_t addr);
+> -
+> -uint8_t physical_memory_range_includes_clean(ram_addr_t start,
+> -                                                 ram_addr_t length,
+> -                                                 uint8_t mask);
+> -
+> -void physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
+> -
+> -void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
+> -                                         uint8_t mask);
+> -
+> -/*
+> - * Contrary to physical_memory_sync_dirty_bitmap() this function returns
+> - * the number of dirty pages in @bitmap passed as argument. On the other hand,
+> - * physical_memory_sync_dirty_bitmap() returns newly dirtied pages that
+> - * weren't set in the global migration bitmap.
+> - */
+> -uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+> -                                                ram_addr_t start,
+> -                                                ram_addr_t pages);
+> -
+> -void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
+> -
+> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+> -                                              ram_addr_t length,
+> -                                              unsigned client);
+> -
+> -DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
+> -    (MemoryRegion *mr, hwaddr offset, hwaddr length, unsigned client);
+> -
+> -bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
+> -                                            ram_addr_t start,
+> -                                            ram_addr_t length);
+> -
+>   #endif
 > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 08b2b5a371c..a7ece7db964 100644
+> index a7ece7db964..58802f7c3cc 100644
 > --- a/accel/kvm/kvm-all.c
 > +++ b/accel/kvm/kvm-all.c
-> @@ -758,7 +758,7 @@ static void kvm_slot_sync_dirty_pages(KVMSlot *slot)
->       ram_addr_t start = slot->ram_start_offset;
->       ram_addr_t pages = slot->memory_size / qemu_real_host_page_size();
->   
-> -    cpu_physical_memory_set_dirty_lebitmap(slot->dirty_bmap, start, pages);
-> +    physical_memory_set_dirty_lebitmap(slot->dirty_bmap, start, pages);
->   }
->   
->   static void kvm_slot_reset_dirty_pages(KVMSlot *slot)
+> @@ -32,13 +32,13 @@
+>   #include "system/runstate.h"
+>   #include "system/cpus.h"
+>   #include "system/accel-blocker.h"
+> +#include "system/physmem.h"
+>   #include "system/ramblock.h"
+>   #include "accel/accel-ops.h"
+>   #include "qemu/bswap.h"
+>   #include "exec/tswap.h"
+>   #include "exec/target_page.h"
+>   #include "system/memory.h"
+> -#include "system/ram_addr.h"
+>   #include "qemu/event_notifier.h"
+>   #include "qemu/main-loop.h"
+>   #include "trace.h"
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 2a6aa01c57c..a721235dea6 100644
+> index a721235dea6..7214d41cb5d 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -858,7 +858,7 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
->      can be detected */
->   void tlb_protect_code(ram_addr_t ram_addr)
->   {
-> -    cpu_physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
-> +    physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
->                                                TARGET_PAGE_SIZE,
->                                                DIRTY_MEMORY_CODE);
->   }
-> @@ -867,7 +867,7 @@ void tlb_protect_code(ram_addr_t ram_addr)
->      tested for self modifying code */
->   void tlb_unprotect_code(ram_addr_t ram_addr)
->   {
-> -    cpu_physical_memory_set_dirty_flag(ram_addr, DIRTY_MEMORY_CODE);
-> +    physical_memory_set_dirty_flag(ram_addr, DIRTY_MEMORY_CODE);
->   }
->   
->   
-> @@ -1085,7 +1085,7 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
->           if (prot & PAGE_WRITE) {
->               if (section->readonly) {
->                   write_flags |= TLB_DISCARD_WRITE;
-> -            } else if (cpu_physical_memory_is_clean(iotlb)) {
-> +            } else if (physical_memory_is_clean(iotlb)) {
->                   write_flags |= TLB_NOTDIRTY;
->               }
->           }
-> @@ -1341,7 +1341,7 @@ static void notdirty_write(CPUState *cpu, vaddr mem_vaddr, unsigned size,
->   
->       trace_memory_notdirty_write_access(mem_vaddr, ram_addr, size);
->   
-> -    if (!cpu_physical_memory_get_dirty_flag(ram_addr, DIRTY_MEMORY_CODE)) {
-> +    if (!physical_memory_get_dirty_flag(ram_addr, DIRTY_MEMORY_CODE)) {
->           tb_invalidate_phys_range_fast(cpu, ram_addr, size, retaddr);
->       }
->   
-> @@ -1349,10 +1349,10 @@ static void notdirty_write(CPUState *cpu, vaddr mem_vaddr, unsigned size,
->        * Set both VGA and migration bits for simplicity and to remove
->        * the notdirty callback faster.
->        */
-> -    cpu_physical_memory_set_dirty_range(ram_addr, size, DIRTY_CLIENTS_NOCODE);
-> +    physical_memory_set_dirty_range(ram_addr, size, DIRTY_CLIENTS_NOCODE);
->   
->       /* We remove the notdirty callback only if the code has been flushed. */
-> -    if (!cpu_physical_memory_is_clean(ram_addr)) {
-> +    if (!physical_memory_is_clean(ram_addr)) {
->           trace_memory_notdirty_set_dirty(mem_vaddr);
->           tlb_set_dirty(cpu, mem_vaddr);
->       }
+> @@ -25,6 +25,7 @@
+>   #include "accel/tcg/probe.h"
+>   #include "exec/page-protection.h"
+>   #include "system/memory.h"
+> +#include "system/physmem.h"
+>   #include "accel/tcg/cpu-ldst-common.h"
+>   #include "accel/tcg/cpu-mmu-index.h"
+>   #include "exec/cputlb.h"
 > diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-> index 3a710d8265c..eb9911eaeaf 100644
+> index eb9911eaeaf..755a407f3e7 100644
 > --- a/hw/vfio/container-legacy.c
 > +++ b/hw/vfio/container-legacy.c
-> @@ -92,7 +92,7 @@ static int vfio_dma_unmap_bitmap(const VFIOLegacyContainer *container,
->       bitmap = (struct vfio_bitmap *)&unmap->data;
->   
->       /*
-> -     * cpu_physical_memory_set_dirty_lebitmap() supports pages in bitmap of
-> +     * physical_memory_set_dirty_lebitmap() supports pages in bitmap of
->        * qemu_real_host_page_size to mark those dirty. Hence set bitmap_pgsize
->        * to qemu_real_host_page_size.
->        */
-> @@ -108,7 +108,7 @@ static int vfio_dma_unmap_bitmap(const VFIOLegacyContainer *container,
->   
->       ret = ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, unmap);
->       if (!ret) {
-> -        cpu_physical_memory_set_dirty_lebitmap(vbmap.bitmap,
-> +        physical_memory_set_dirty_lebitmap(vbmap.bitmap,
->                   iotlb->translated_addr, vbmap.pages);
->       } else {
->           error_report("VFIO_UNMAP_DMA with DIRTY_BITMAP : %m");
-> @@ -284,7 +284,7 @@ static int vfio_legacy_query_dirty_bitmap(const VFIOContainer *bcontainer,
->       range->size = size;
->   
->       /*
-> -     * cpu_physical_memory_set_dirty_lebitmap() supports pages in bitmap of
-> +     * physical_memory_set_dirty_lebitmap() supports pages in bitmap of
->        * qemu_real_host_page_size to mark those dirty. Hence set bitmap's pgsize
->        * to qemu_real_host_page_size.
->        */
-> @@ -503,7 +503,7 @@ static void vfio_get_iommu_info_migration(VFIOLegacyContainer *container,
->                               header);
->   
->       /*
-> -     * cpu_physical_memory_set_dirty_lebitmap() supports pages in bitmap of
-> +     * physical_memory_set_dirty_lebitmap() supports pages in bitmap of
->        * qemu_real_host_page_size to mark those dirty.
->        */
->       if (cap_mig->pgsize_bitmap & qemu_real_host_page_size()) {
+> @@ -25,7 +25,7 @@
+>   #include "hw/vfio/vfio-device.h"
+>   #include "system/address-spaces.h"
+>   #include "system/memory.h"
+> -#include "system/ram_addr.h"
+> +#include "system/physmem.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/range.h"
+>   #include "system/reset.h"
 > diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 41de3439246..3fb19a1c8ad 100644
+> index 3fb19a1c8ad..9ddec300e35 100644
 > --- a/hw/vfio/container.c
 > +++ b/hw/vfio/container.c
-> @@ -255,7 +255,7 @@ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
->       int ret;
+> @@ -20,6 +20,7 @@
+>   #include "qemu/error-report.h"
+>   #include "hw/vfio/vfio-container.h"
+>   #include "hw/vfio/vfio-device.h" /* vfio_device_reset_handler */
+> +#include "system/physmem.h"
+>   #include "system/reset.h"
+>   #include "vfio-helpers.h"
 >   
->       if (!bcontainer->dirty_pages_supported && !all_device_dirty_tracking) {
-> -        cpu_physical_memory_set_dirty_range(translated_addr, size,
-> +        physical_memory_set_dirty_range(translated_addr, size,
->                                               tcg_enabled() ? DIRTY_CLIENTS_ALL :
->                                               DIRTY_CLIENTS_NOCODE);
->           return 0;
-> @@ -280,7 +280,7 @@ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
->           goto out;
->       }
->   
-> -    dirty_pages = cpu_physical_memory_set_dirty_lebitmap(vbmap.bitmap,
-> +    dirty_pages = physical_memory_set_dirty_lebitmap(vbmap.bitmap,
->                                                            translated_addr,
->                                                            vbmap.pages);
->   
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index b5cefc9395c..c6bb58f5209 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -30,7 +30,6 @@
+>   #include "hw/vfio/pci.h"
+>   #include "system/address-spaces.h"
+>   #include "system/memory.h"
+> -#include "system/ram_addr.h"
+>   #include "hw/hw.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/main-loop.h"
 > diff --git a/migration/ram.c b/migration/ram.c
-> index 52bdfec91d9..d09591c0600 100644
+> index d09591c0600..12122dda685 100644
 > --- a/migration/ram.c
 > +++ b/migration/ram.c
-> @@ -976,7 +976,7 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
->               }
->           }
->           if (num_dirty) {
-> -            cpu_physical_memory_dirty_bits_cleared(start, length);
-> +            physical_memory_dirty_bits_cleared(start, length);
->           }
->   
->           if (rb->clear_bmap) {
-> @@ -995,7 +995,7 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
->           ram_addr_t offset = rb->offset;
->   
->           for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
-> -            if (cpu_physical_memory_test_and_clear_dirty(
-> +            if (physical_memory_test_and_clear_dirty(
->                           start + addr + offset,
->                           TARGET_PAGE_SIZE,
->                           DIRTY_MEMORY_MIGRATION)) {
+> @@ -53,6 +53,7 @@
+>   #include "qemu/rcu_queue.h"
+>   #include "migration/colo.h"
+>   #include "system/cpu-throttle.h"
+> +#include "system/physmem.h"
+>   #include "system/ramblock.h"
+>   #include "savevm.h"
+>   #include "qemu/iov.h"
 > diff --git a/system/memory.c b/system/memory.c
-> index cf8cad69611..dd045da60c0 100644
+> index dd045da60c0..80656c69568 100644
 > --- a/system/memory.c
 > +++ b/system/memory.c
-> @@ -2275,7 +2275,7 @@ void memory_region_set_dirty(MemoryRegion *mr, hwaddr addr,
->                                hwaddr size)
->   {
->       assert(mr->ram_block);
-> -    cpu_physical_memory_set_dirty_range(memory_region_get_ram_addr(mr) + addr,
-> +    physical_memory_set_dirty_range(memory_region_get_ram_addr(mr) + addr,
->                                           size,
->                                           memory_region_get_dirty_log_mask(mr));
->   }
-> @@ -2379,7 +2379,7 @@ DirtyBitmapSnapshot *memory_region_snapshot_and_clear_dirty(MemoryRegion *mr,
->       DirtyBitmapSnapshot *snapshot;
->       assert(mr->ram_block);
->       memory_region_sync_dirty_bitmap(mr, false);
-> -    snapshot = cpu_physical_memory_snapshot_and_clear_dirty(mr, addr, size, client);
-> +    snapshot = physical_memory_snapshot_and_clear_dirty(mr, addr, size, client);
->       memory_global_after_dirty_log_sync();
->       return snapshot;
->   }
-> @@ -2388,7 +2388,7 @@ bool memory_region_snapshot_get_dirty(MemoryRegion *mr, DirtyBitmapSnapshot *sna
->                                         hwaddr addr, hwaddr size)
->   {
->       assert(mr->ram_block);
-> -    return cpu_physical_memory_snapshot_get_dirty(snap,
-> +    return physical_memory_snapshot_get_dirty(snap,
->                   memory_region_get_ram_addr(mr) + addr, size);
->   }
->   
-> @@ -2426,7 +2426,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
->                                  hwaddr size, unsigned client)
->   {
->       assert(mr->ram_block);
-> -    cpu_physical_memory_test_and_clear_dirty(
-> +    physical_memory_test_and_clear_dirty(
->           memory_region_get_ram_addr(mr) + addr, size, client);
->   }
->   
+> @@ -25,6 +25,7 @@
+>   #include "qemu/target-info.h"
+>   #include "qom/object.h"
+>   #include "trace.h"
+> +#include "system/physmem.h"
+>   #include "system/ram_addr.h"
+>   #include "system/kvm.h"
+>   #include "system/runstate.h"
 > diff --git a/system/physmem.c b/system/physmem.c
-> index ad9705c7726..1a075da2bdd 100644
+> index 1a075da2bdd..ec3d8027e86 100644
 > --- a/system/physmem.c
 > +++ b/system/physmem.c
-> @@ -901,7 +901,7 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
->       }
->   }
->   
-> -void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length)
-> +void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length)
->   {
->       if (tcg_enabled()) {
->           tlb_reset_dirty_range_all(start, length);
-> @@ -947,17 +947,17 @@ static bool physical_memory_get_dirty(ram_addr_t start, ram_addr_t length,
->       return dirty;
->   }
->   
-> -bool cpu_physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client)
-> +bool physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client)
->   {
->       return physical_memory_get_dirty(addr, 1, client);
->   }
->   
-> -bool cpu_physical_memory_is_clean(ram_addr_t addr)
-> +bool physical_memory_is_clean(ram_addr_t addr)
->   {
-> -    bool vga = cpu_physical_memory_get_dirty_flag(addr, DIRTY_MEMORY_VGA);
-> -    bool code = cpu_physical_memory_get_dirty_flag(addr, DIRTY_MEMORY_CODE);
-> +    bool vga = physical_memory_get_dirty_flag(addr, DIRTY_MEMORY_VGA);
-> +    bool code = physical_memory_get_dirty_flag(addr, DIRTY_MEMORY_CODE);
->       bool migration =
-> -        cpu_physical_memory_get_dirty_flag(addr, DIRTY_MEMORY_MIGRATION);
-> +        physical_memory_get_dirty_flag(addr, DIRTY_MEMORY_MIGRATION);
->       return !(vga && code && migration);
->   }
->   
-> @@ -1000,7 +1000,7 @@ static bool physical_memory_all_dirty(ram_addr_t start, ram_addr_t length,
->       return dirty;
->   }
->   
-> -uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
-> +uint8_t physical_memory_range_includes_clean(ram_addr_t start,
->                                                    ram_addr_t length,
->                                                    uint8_t mask)
->   {
-> @@ -1021,7 +1021,7 @@ uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
->       return ret;
->   }
->   
-> -void cpu_physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client)
-> +void physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client)
->   {
->       unsigned long page, idx, offset;
->       DirtyMemoryBlocks *blocks;
-> @@ -1039,7 +1039,7 @@ void cpu_physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client)
->       set_bit_atomic(offset, blocks->blocks[idx]);
->   }
->   
-> -void cpu_physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
-> +void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
->                                            uint8_t mask)
->   {
->       DirtyMemoryBlocks *blocks[DIRTY_MEMORY_NUM];
-> @@ -1091,7 +1091,7 @@ void cpu_physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
->   }
->   
->   /* Note: start and end must be within the same ram block.  */
-> -bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
-> +bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->                                                 ram_addr_t length,
->                                                 unsigned client)
->   {
-> @@ -1133,7 +1133,7 @@ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
->       }
->   
->       if (dirty) {
-> -        cpu_physical_memory_dirty_bits_cleared(start, length);
-> +        physical_memory_dirty_bits_cleared(start, length);
->       }
->   
->       return dirty;
-> @@ -1141,12 +1141,12 @@ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
->   
->   static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
->   {
-> -    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
-> -    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
-> -    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
-> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
-> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
-> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
->   }
->   
-> -DirtyBitmapSnapshot *cpu_physical_memory_snapshot_and_clear_dirty
-> +DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
->       (MemoryRegion *mr, hwaddr offset, hwaddr length, unsigned client)
->   {
->       DirtyMemoryBlocks *blocks;
-> @@ -1193,14 +1193,14 @@ DirtyBitmapSnapshot *cpu_physical_memory_snapshot_and_clear_dirty
->           }
->       }
->   
-> -    cpu_physical_memory_dirty_bits_cleared(start, length);
-> +    physical_memory_dirty_bits_cleared(start, length);
->   
->       memory_region_clear_dirty_bitmap(mr, offset, length);
->   
->       return snap;
->   }
->   
-> -bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
-> +bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
->                                               ram_addr_t start,
->                                               ram_addr_t length)
->   {
-> @@ -1221,7 +1221,7 @@ bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
->       return false;
->   }
->   
-> -uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
-> +uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
->                                                   ram_addr_t start,
->                                                   ram_addr_t pages)
->   {
-> @@ -1314,7 +1314,7 @@ uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
->                       page_number = (i * HOST_LONG_BITS + j) * hpratio;
->                       addr = page_number * TARGET_PAGE_SIZE;
->                       ram_addr = start + addr;
-> -                    cpu_physical_memory_set_dirty_range(ram_addr,
-> +                    physical_memory_set_dirty_range(ram_addr,
->                                          TARGET_PAGE_SIZE * hpratio, clients);
->                   } while (c != 0);
->               }
-> @@ -2082,7 +2082,7 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
->   
->       physical_memory_clear_dirty_range(block->offset, block->used_length);
->       block->used_length = newsize;
-> -    cpu_physical_memory_set_dirty_range(block->offset, block->used_length,
-> +    physical_memory_set_dirty_range(block->offset, block->used_length,
->                                           DIRTY_CLIENTS_ALL);
->       memory_region_set_size(block->mr, unaligned_size);
->       if (block->resized) {
-> @@ -2287,7 +2287,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->       ram_list.version++;
->       qemu_mutex_unlock_ramlist();
->   
-> -    cpu_physical_memory_set_dirty_range(new_block->offset,
-> +    physical_memory_set_dirty_range(new_block->offset,
->                                           new_block->used_length,
->                                           DIRTY_CLIENTS_ALL);
->   
-> @@ -3136,19 +3136,19 @@ static void invalidate_and_set_dirty(MemoryRegion *mr, hwaddr addr,
->       addr += ramaddr;
->   
->       /* No early return if dirty_log_mask is or becomes 0, because
-> -     * cpu_physical_memory_set_dirty_range will still call
-> +     * physical_memory_set_dirty_range will still call
->        * xen_modified_memory.
->        */
->       if (dirty_log_mask) {
->           dirty_log_mask =
-> -            cpu_physical_memory_range_includes_clean(addr, length, dirty_log_mask);
-> +            physical_memory_range_includes_clean(addr, length, dirty_log_mask);
->       }
->       if (dirty_log_mask & (1 << DIRTY_MEMORY_CODE)) {
->           assert(tcg_enabled());
->           tb_invalidate_phys_range(NULL, addr, addr + length - 1);
->           dirty_log_mask &= ~(1 << DIRTY_MEMORY_CODE);
->       }
-> -    cpu_physical_memory_set_dirty_range(addr, length, dirty_log_mask);
-> +    physical_memory_set_dirty_range(addr, length, dirty_log_mask);
->   }
->   
->   void memory_region_flush_rom_device(MemoryRegion *mr, hwaddr addr, hwaddr size)
+> @@ -43,6 +43,7 @@
+>   #include "system/kvm.h"
+>   #include "system/tcg.h"
+>   #include "system/qtest.h"
+> +#include "system/physmem.h"
+>   #include "system/ramblock.h"
+>   #include "qemu/timer.h"
+>   #include "qemu/config-file.h"
 > diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-> index 7d80244788e..077ff4b2b2c 100644
+> index 077ff4b2b2c..b96c953f809 100644
 > --- a/target/arm/tcg/mte_helper.c
 > +++ b/target/arm/tcg/mte_helper.c
-> @@ -189,7 +189,7 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
->        */
->       if (tag_access == MMU_DATA_STORE) {
->           ram_addr_t tag_ra = memory_region_get_ram_addr(mr) + xlat;
-> -        cpu_physical_memory_set_dirty_flag(tag_ra, DIRTY_MEMORY_MIGRATION);
-> +        physical_memory_set_dirty_flag(tag_ra, DIRTY_MEMORY_MIGRATION);
->       }
->   
->       return memory_region_get_ram_ptr(mr) + xlat;
-> diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
-> index 7f32d3d9ff3..333da209d1a 100644
-> --- a/system/memory_ldst.c.inc
-> +++ b/system/memory_ldst.c.inc
-> @@ -287,7 +287,7 @@ void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
->   
->           dirty_log_mask = memory_region_get_dirty_log_mask(mr);
->           dirty_log_mask &= ~(1 << DIRTY_MEMORY_CODE);
-> -        cpu_physical_memory_set_dirty_range(memory_region_get_ram_addr(mr) + addr,
-> +        physical_memory_set_dirty_range(memory_region_get_ram_addr(mr) + addr,
->                                               4, dirty_log_mask);
->           r = MEMTX_OK;
->       }
-> diff --git a/tests/tsan/ignore.tsan b/tests/tsan/ignore.tsan
-> index 423e482d2f9..8fa00a2c49b 100644
-> --- a/tests/tsan/ignore.tsan
-> +++ b/tests/tsan/ignore.tsan
-> @@ -4,7 +4,7 @@
->   # The eventual goal would be to fix these warnings.
->   
->   # TSan is not happy about setting/getting of dirty bits,
-> -# for example, cpu_physical_memory_set_dirty_range,
-> -# and cpu_physical_memory_get_dirty.
-> +# for example, physical_memory_set_dirty_range,
-> +# and physical_memory_get_dirty.
->   src:bitops.c
->   src:bitmap.c
+> @@ -27,7 +27,7 @@
+>   #include "user/cpu_loop.h"
+>   #include "user/page-protection.h"
+>   #else
+> -#include "system/ram_addr.h"
+> +#include "system/physmem.h"
+>   #endif
+>   #include "accel/tcg/cpu-ldst.h"
+>   #include "accel/tcg/probe.h"
 
 
