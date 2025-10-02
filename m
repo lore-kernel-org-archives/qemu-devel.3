@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC2ECAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B205ECAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Lwk-0000of-1t; Thu, 02 Oct 2025 12:14:24 -0400
+	id 1v4M7C-0005G3-Ga; Thu, 02 Oct 2025 12:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4Lwg-0000nW-JG
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:14:18 -0400
-Received: from p-east3-cluster3-host2-snip4-10.eps.apple.com ([57.103.86.23]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4LwQ-0000wi-SE
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:14:17 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPS id
- E84EA1803CCB; Thu,  2 Oct 2025 16:13:51 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=Ro0Hh41El+RwH7tapGax5J9ZWB+boF9rFjySHs6PHW4=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=HvM5m7VJWYXtT8RRoD1ILEhqeMxEm7/8P3sV+POyjgpAtNj50A+LpuI637UooeqQpJfxVpGIahQwf2kYyAymHvdpbDjDn0pA+NVID/nzobduFQ3p/CX/ETqrbInZcboIr/Akzvdo973P3o+2Ulu3/NWkYmotjrc/gRjpQIGVEhx8xcu+tER8qNTff05EYStHkl9Tq4OXVnn2iwRhpxEosZ/gELJFxsmof2fze1Obstt/kQN3SnZRA5TLTZr7GH72IcMaJCDjkeSu0jDNByf8Bj6fhiS555Sfq60Hhz/whvH0RoXdOoVDb0yAnmptUWWHLcvdUfAwa9esJxbSGQqWTA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPSA id
- D92061804029; Thu,  2 Oct 2025 16:10:39 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <C8651AA3-5732-43F8-BDDD-9FE4EAEDE72A@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: [PATCH v4 00/27] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-Date: Thu, 2 Oct 2025 18:10:28 +0200
-In-Reply-To: <aN6b6HcTFo/4JEa4@example.com>
-Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <e176dfe8-b406-46ff-b1f0-95d4285472b7@linaro.org>
- <aN5Bjlf/xhsEHDNb@example.com>
- <3D0B6481-BA86-4CCE-8A51-63840A29F649@unpredictable.fr>
- <aN6b6HcTFo/4JEa4@example.com>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-ORIG-GUID: HEfMIrdluKaojs9WjcXBd9gK12UZiDMr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAyMDEzOCBTYWx0ZWRfX1lhcwZF8hjwh
- sijmxGmBOAabLhIDn+FZpmR2Tl8H4ufK5dRs/n8U4OIrrLBAWLU3235pYSB9gdo2ufk8jcEgV0A
- TcdtGcaUDS6+f9nHiy8su3jGXD2HXgLTUWV+gOKgRp9iOCp6p4TuZGtDmzOi7GcyMOXjRe6XVAa
- Ba1fienRpkL2fbar2hO0pCV8yy4JtIZZpw/1dEUWDgep3xSY8tkG9p05uzfYurLIeHGNtN/4c25
- cX1ZawIEaPkfSlLqqEfBnkGgrhRNULB3d2NAZaMh5RFWs9pEV9vMvX339NobsgnB694YB4mIQ=
-X-Proofpoint-GUID: HEfMIrdluKaojs9WjcXBd9gK12UZiDMr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-02_06,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- adultscore=0 phishscore=0 clxscore=1030 mlxscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=999 spamscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2510020138
-X-JNJ: AAAAAAABPATUja0JNi0Ibj5sYGzLXhNgQoTDNLmfXGSBT1Zh8eQLqyD49NqZNMdMLio/gpWeDcL9huUbaYanyL/FiTCwWlGMk+KKCCfIFPfnl85cTgkvo2NAdGwjqsRJf143YV7kEPJqeWugiQ4NC8Q4ECfQto0SY1TalKCGTj14Vc/bpBNgcpW3aVtDftR9MbVnGv5yEzBmC05dIjjAuscO4w6yTUbDMw74lNRcv7FGPYSvtWKeaLXM+I2TEC0JviMktLNORRJN3ve6zdyFgL/ms8UWURRVDOcqJ/88ZRdkslma+jXsPQi+9iPIxo7YP0O8jCyjIG3TnwHUnsLHnK674jYvT76ju1GcTKwDsslLnemA1zijCXg8LbI5XWj/o+poOFhQjSzlAJeln0MLKaghUoP/S8M6UFJAqQopp8mZVmZTXSiC9vHWLeCcqnY3UeHahWR9S3SUGTa94kH8YKaPA65zixtznz6sSKqV/RrL/sABqLnZdfP8j3xrThxb2nvxUu18M3Z/dKp21Qh/saubNLklTyS71sR1a1DxKc4V/b3qDV84Zrfa1JS1QgptZSgFp/5DpdKsazQ8q2PPhLBWbKqaoWz+b/ncZ1Zkl6e7BWkO16PLfn1oGCxodD71TRMlYGWbI4GnBo7zErd50TlJ1QgQuuL+KvyYfdPU29iM+Bzp0lIC3SD3KFidGlGyGy9Zo6cJwNUVV9w8QICxge4Iow/K8F43J6lXP9gmV1M0PIJck58S2o9jL208+eKtwsyEz5F5MN6M3BJAlRi27lPEBkmpztzshHSYfnj6DSx1+j0G6NTlVCIfn0pqWneAjZT3f7i8vodx+KV/5fy/FGK9O/pzih8cJzDVqZfNRAOK9rniZhuyJo/hhl6nBWynB2VRXZssWZgk6++eMx4UOqJxDglVMRrPi+o3fvseTaTNzeke
-Received-SPF: pass client-ip=57.103.86.23;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v4M77-00058R-U0
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:25:05 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v4M6x-0003hb-T5
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:25:05 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-46e3a50bc0fso10325715e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 09:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759422283; x=1760027083; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=m99izO4r9jgab72834xowzWE5+08Sb+hWHqm6S4fLGE=;
+ b=wiQOEeKuwukyIlu6nUqvgwRodIfen0iXfXTJnjDqr7FBiRbTgZO8Msnnn6qsjWS9m7
+ vGn7DHErNACwVHYMaZ1QGc3YsNewNgMB13SSIyfslVe/8ZoyHYog+rD/MGEs80EghUvw
+ blzu8kSmoERpabT+qkAsRI2LfcjUo+sGYuCX7wayaH2ZMpXqF+gEPnYcyZujdEwAPCj8
+ 8QDyItNZ0rexKjlKoJr/WobUGnIW5nUsUQIUE8U1WiBGdZmal6Fh6xa0K3b+cLszlzF9
+ lC7uof9qk6RRDP31BRZrIqz5PnnYVz0WtIYJl4b2pBcLGPJpgV9NmRdA6Iy6sw3D7abW
+ J1Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759422283; x=1760027083;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=m99izO4r9jgab72834xowzWE5+08Sb+hWHqm6S4fLGE=;
+ b=r1eQCFb33nE0uCRv8ovQYZCDxDO1iD9oSKBf0zMpLmZzF7P0qR02D1+hjVedxTgd4I
+ /6phPDlkMlSItuyaS3Qi/Q6IYsw1FckaP+g3pXh95T415hQpLcYcd2XJN/sacwLT9VbX
+ OcuQjKsGS3Mk7nwN0fM1HmTCersZQnlSrVzoBQL4P4QWkBDWbZGNpG5QKiVORTd0DWs3
+ FOhQO213HgxvCqGvups2lrMM0MPC9vNZVL9sU9S4vZcmv/r8BUVzN58W03jJRS0Xt7fb
+ Yu3/qEXCvjRwUNUqBlC/vIxaM/xHE5ptJvLxLPqAz4m2JJj2uMWegpM4BRXoz36+5UFA
+ /p2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUx/2tOhDEA1hzifUeLbqinMJvSqPnFnVFjDtexz31zVD8ZPwn8Oo72TdazjJF2o8WJG5E5tkuXUMI1@nongnu.org
+X-Gm-Message-State: AOJu0Yzx+cCYHXheUjriFFJ2kWXk0YY4V5T/UYcTwRV4Ym4kZCG5KtlG
+ +XuskaH9uO9PeIOtDbXI9RjAZlYAqXvbaNsgDNHhHb/WTt9fYviPRoplMEjmPrnwO2Q=
+X-Gm-Gg: ASbGncvfBfVqekYQFE4VOpagHxguON3pcIzaN1l/S4VYLJwuTqh5FaUPDfnP0QSS4pM
+ aOeO0DIaihLoDQAn/b3uQO2DBvSlGqmoYwLix5b1j07prKTBJ3Yj3VYXPoaeYx4YSAsoRD8JC50
+ mOdaJdbIlC7b7WeQd050jEEHIf/ZSoYl42kTc0N8+rfXQxH1E67JOA46mTQBr/NWo/CLfUowAvU
+ 65g1lqVS1vP00oaMSljlC50P+fkvFR9zuh8rtlRRUQVTD93C8BLILez0+XhdMUq/dmiEPvnn5Z0
+ mKHn9z83d3ugYvJGT1o3D1jobBhRG1rgSLsl8uQl6mkU/10x4XwRwk5O9P477RutElzmWENLD3m
+ afmsCShQjOhNrqmaNXRKYxQGCSKXGNLi+Cnpct978DcLngZkVg0E=
+X-Google-Smtp-Source: AGHT+IEK80UwgNjV22g47ZXnJP8YbgrgOlOSagQEfbQaiK/6SJsmQK5+2by+KwdInLbXIryPhytPug==
+X-Received: by 2002:a5d:5d0d:0:b0:3fb:9950:b9fe with SMTP id
+ ffacd0b85a97d-4255781a8bbmr5534879f8f.47.1759422283145; 
+ Thu, 02 Oct 2025 09:24:43 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8e9719sm4383031f8f.31.2025.10.02.09.24.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Oct 2025 09:24:42 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 663115F809;
+ Thu, 02 Oct 2025 17:24:41 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
+ thuth@redhat.com,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v5 4/9] tests/functional: Add GDB class
+In-Reply-To: <aN56GkbIFxs5IDRR@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 2 Oct 2025 14:11:54 +0100")
+References: <20251002020432.54443-1-gustavo.romero@linaro.org>
+ <20251002020432.54443-5-gustavo.romero@linaro.org>
+ <aN56GkbIFxs5IDRR@redhat.com>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Thu, 02 Oct 2025 17:24:41 +0100
+Message-ID: <875xcxgtkm.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,80 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
---Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+> On Thu, Oct 02, 2025 at 02:04:27AM +0000, Gustavo Romero wrote:
+>> Add GDB class, which provides methods to run GDB commands and capture
+>> their output. The GDB class is a wrapper around the pygdbmi module and
+>> interacts with GDB via GDB's machine interface (MI).
+>>=20
+>> Acked-by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+>>  tests/functional/qemu_test/__init__.py |  1 +
+>>  tests/functional/qemu_test/gdb.py      | 88 ++++++++++++++++++++++++++
+>>  2 files changed, 89 insertions(+)
+>>  create mode 100644 tests/functional/qemu_test/gdb.py
+>
+>
+>> diff --git a/tests/functional/qemu_test/gdb.py b/tests/functional/qemu_t=
+est/gdb.py
+>> new file mode 100644
+>> index 0000000000..05e4c29c2a
+>> --- /dev/null
+>> +++ b/tests/functional/qemu_test/gdb.py
+>> @@ -0,0 +1,88 @@
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +#
+>> +# A simple interface module built around pygdbmi for handling GDB comma=
+nds.
+>> +#
+>> +# Copyright (c) 2025 Linaro Limited
+>> +#
+>> +# Author:
+>> +#  Gustavo Romero <gustavo.romero@linaro.org>
+>> +#
+>> +# This work is licensed under the terms of the GNU GPL, version 2 or
+>> +# later.  See the COPYING file in the top-level directory.
+>
+> Please remove these two lines - they should not be included in any
+> newly authored files - SPDX alone is desired.
 
+I can clean that up when I pull this to save another round trip from
+Gustavo.
 
+>
+> If that is removed, then
+>
+>  Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+> With regards,
+> Daniel
 
-> On 2. Oct 2025, at 17:36, Magnus Kulke =
-<magnuskulke@linux.microsoft.com> wrote:
->=20
-> If I understand correctly, your suggestion is to run HyperV as a =
-nested
-> hypervisor inside a QEMU VM (with KVM accel) on the CI machine that =
-runs
-> on on baremetal/L0? (mshv-on-kvm)
-
-Yes. I=E2=80=99ve been playing around with that configuration using =
-cloud-hypervisor
-on an AMD Zen 4 host and it works fine.
-
-Thanks,=
-
---Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 2. Oct 2025, at 17:36, Magnus Kulke =
-&lt;magnuskulke@linux.microsoft.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">If I =
-understand correctly, your suggestion is to run HyperV as a =
-nested</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none; float: none; display: inline !important;">hypervisor inside a QEMU =
-VM (with KVM accel) on the CI machine that runs</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">on on baremetal/L0? (mshv-on-kvm)</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: =
-none;"></div></blockquote></div><br><div>Yes. I=E2=80=99ve been playing =
-around with that configuration using cloud-hypervisor</div><div>on an =
-AMD Zen 4 host and it works =
-fine.</div><div><br></div><div>Thanks,</div></body></html>=
-
---Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
