@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60091CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 03:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1498DCCA471
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 03:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v49zk-0004Si-9F; Wed, 01 Oct 2025 23:28:41 -0400
+	id 1v49zs-0004Tt-AZ; Wed, 01 Oct 2025 23:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v49zf-0004SU-N6
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 23:28:36 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v49zo-0004TV-8G
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 23:28:44 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v49zS-0004XZ-JY
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 23:28:32 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-46e34052bb7so4593815e9.2
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 20:28:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v49zc-0004Yk-7u
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 23:28:42 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3fa528f127fso331230f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 20:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759375694; x=1759980494; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UfjQR4Y9f8csqu3NmyR/zKukxoGk0bM2pEElqqrIVXw=;
- b=czTmb+JIkxXoA3YOcyWCdMb5m1mKMTeNUL2c2QYUYFCHziDb36mYH5KwD0VDZh6DBN
- KoTmDSVXMJN0TrPi61zl3dPdRfaDMRBWPtlsIIJmXCvcYh3vx4u+2+lsopjKIpyGWPGs
- jL5tP1ubLxj8/SHx1LAHLTnN2oIymyLCTrmDx6SqF2s0ItTuPca/1TjT9LYMyjJQ/Jsi
- T9Vn1f0g428dwW4tuWZ8tKnRCxP4RtnKCRc5sd/jAMaEAqDN1Riw06GjQFiOL8N5+ZYV
- 4XaJh/Rvpr69pZvb4By5ZftNEU+cQz2Q83vp6lzU9YeRYHWOkyek1l+4gHTI0X24MrVL
- f5nQ==
+ d=linaro.org; s=google; t=1759375701; x=1759980501; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mRS6aeO4S0WFLqM+NL6GeJq2x0UMCG4AbesJD75r0bU=;
+ b=CT9LzVPhzXXoaurc41mQC3ZHgmym3/L5s9d9hc8cua9uWu022927Hpwg7CsN9PdBOX
+ o+buDfrAlOHVkb11M9OsrxocLD6agGpb9NKUisc5JzxEd5ktZ1fZ6eJyYDD0y/1qLI5u
+ NsSS7JuhEOcTKOmKubDXGccIf47L2GlajDDSWQ0oSm4bY+aT1i3J/9lReUhoFzNXSdSk
+ 9fGKSsBJFnScn0aJUOESLVzuLjobiuTB2z8LADnDdohJ8gIsOJCZL2ZdbxLaPzkb5cdw
+ iIXkY96yxRHLKite5ACqMjRviJ9LlGr/g5AqF0//gM6Bcakd0Su0cWk5CrS21Qp8QzxX
+ D7Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759375694; x=1759980494;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UfjQR4Y9f8csqu3NmyR/zKukxoGk0bM2pEElqqrIVXw=;
- b=imgDuH+5GLx3PZ2uVnqukJUempccffAq5rxeda6C4IlCl/aTFpuedowB+U7MX0b7Jm
- +ma1xPnsZ6ixfy+d/87s37czKNXWXPpKOZ/rDryFEQ7Hup5o2DUjdkSMOcVI8n/NF4jW
- oKwFwFu6nMBdcPSgap1P+fMGlRQNwNA0ytTmwZ7I8cVS2Y/TrJ8Rnf7Y5yQsJ5wHFft4
- ifjKiEeifAca9Tl94Dm1nUtLwawhcZ9hjThT0JHaUt80mEApuv0qaMbmjX7m9HBEdrX7
- GZidU8sLCiVWQaMhWMs4CtrkjypfPbxby2/mxrsGlDmxy9JrqJBAgwdG8Jg3/6YBk95+
- /OmA==
-X-Gm-Message-State: AOJu0YxRVu76nRxNv63FR0MpcIG4YHV3V+5MNxBLIgvKzsJJlpTArDRZ
- Dq6lpfiVorZGsWgiZwempoVDBttDybzdajnxX0v7tFfmifSavg1lkg44rw0+g7tpBlfb9A7t6iI
- MspN4oa1LvQ==
-X-Gm-Gg: ASbGnctekL0APCI7VDG1H6KjVOr+WtgrgZIJ9ARWl1xFVPnmU4WVxg7NWv3h6PHhErw
- wPbfm+POUc6c098IkzSB2lBKkP7Pg5g1bdQ4bavIAMpT+kY2+7ZSI8BGLmv7jsnkPOmMc7uRYyp
- JpjEfkE6JAQ1Z/fReNHgbxwcAs/d0jXPFivFMJ3tTXe+Rw8sXjeP9KzGZ/IRjZtWeP+pnIuOAqU
- s4xRJTYIaBrUNq2EC0J+I7w7X8MIgBbFboYQyvGlX5Pzz/8cZW0qvoswr9nUFXF6fZ3yBqkgn3R
- Pm/z/xE3o50oThle5eBnCdrD6ePiZH1KsRMgaCmBIzpchnBJRDwTp6/qRo5pop9OJa+4w3uf7Sz
- anCMjL2H652OdvRctJPfObkoAeiF/qSbZzpgIpFjmlt3b7uLLkIXwyXT/aYqYjiDiaVIpEdyWIB
- F/cCNZrVcVCGFqm0IuXM2pzVk6ogn6Mg==
-X-Google-Smtp-Source: AGHT+IFaMeJH4C+jU1Rs3DrDDuKPH9/s2q9KQI8i51a4A4KvYP56ZA1zsf3emLdnKFGZoWVu/kjBxQ==
-X-Received: by 2002:a05:600c:64c5:b0:46e:1d8d:cfb6 with SMTP id
- 5b1f17b1804b1-46e612bc80dmr40792425e9.19.1759375694501; 
- Wed, 01 Oct 2025 20:28:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759375701; x=1759980501;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mRS6aeO4S0WFLqM+NL6GeJq2x0UMCG4AbesJD75r0bU=;
+ b=eJdd75zA8/QatBl92DjLqZZS93Qsk+rH45LlCxFHb1kQyIzflMfNTSnfpjvXwGmkPC
+ HttW7l4eMSd5h7uxyQRG1MN3ARvYFfwIztv7FWHvUfMOOjqH65P/o7gy7rkX8tM8S5dd
+ 7CnXtmHW4qjwMjW8COnzq8xJABVFX6FNDObMTv1R9nQZ4ldH0XW/u9iXu89trbr7s5Q4
+ IjBKeUWoWYz19KOyT0j7998RJyBP7UhGyv4VyNYgXcsEfnUGIY6J1S3ELxRODYS8+7GK
+ VRqbopvtddMUjX65CBabLtnpf0ODlzw68KN+6v7VjfUj90w0ZuOe3qnZGwJTOk9Y03Uv
+ +Hgg==
+X-Gm-Message-State: AOJu0Ywn750gj8RYAUifI5d1qVa/6MrSL4EOoLqBIbUbNfHzdbBgwUpq
+ c+AfZ1aoJv5tS4EB8/S/wwE3hcDIAPEI5uFwjaqon2k+Nn2G7xITD6LjR2bfy4Ffg8Wgy16wEYi
+ zUv2y4tiEtg==
+X-Gm-Gg: ASbGncvXuAtN5r8u6G+64ff3xq8L16qKXLuIiV1KNt/Ac0aal0nXeA8GtLl4cAAIZbe
+ GTaVXKWlmqHHl4wCYUJhFixf54iB3vxPOiC54VfofP8liAWv/F41rLa5HgkYZjjDY2ETsoDfxJY
+ mxS/m9EggNykmHRWLfZeMDMr0CTNeBkje100t393/Sdv7Bcl7EatNvZHf+j1/iJVF7qJv0ESuSn
+ vj5qN9bQ1SrfLCIpwp4CjQG+QNVC5qVxyAy7VzR4ZwsIfLMqgR85/uQSIozcTLzjeBSQ8h1FFL+
+ U8MzfnwoPSJETYB4mpg2Jkby1zRePmB1kLkYtdBKa9gbAb4x/19duhVXkSUCUlwKfhhrMEIOMBs
+ EOn8Rl2Lq8B+wdwzcKhAXrCXBXKmVN52mfT7sAXZC0eOm97rrncli0MuM1EfjO2S6sBQ9YOA+EV
+ IhJv7HS6OlFgxSxLOy1BofoXQdasfvIg==
+X-Google-Smtp-Source: AGHT+IH0OMPCx7J9hwHsXn61KTtqc/GiwpLPC8HsNzniJ9ciFldSBJGv3pbAqBv9Q1Sc3FuO6RziTQ==
+X-Received: by 2002:a05:6000:250e:b0:410:9b07:483b with SMTP id
+ ffacd0b85a97d-4255d2bb017mr971102f8f.15.1759375701355; 
+ Wed, 01 Oct 2025 20:28:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e693c9ca3sm14710065e9.22.2025.10.01.20.28.13
+ ffacd0b85a97d-4255d8e9762sm1623186f8f.38.2025.10.01.20.28.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 01 Oct 2025 20:28:13 -0700 (PDT)
+ Wed, 01 Oct 2025 20:28:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -72,15 +73,17 @@ Cc: David Hildenbrand <david@redhat.com>,
  Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v3 0/5] system/ramblock: Sanitize header
-Date: Thu,  2 Oct 2025 05:28:07 +0200
-Message-ID: <20251002032812.26069-1-philmd@linaro.org>
+Subject: [PATCH v3 1/5] system/ramblock: Remove obsolete comment
+Date: Thu,  2 Oct 2025 05:28:08 +0200
+Message-ID: <20251002032812.26069-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251002032812.26069-1-philmd@linaro.org>
+References: <20251002032812.26069-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,35 +106,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(series fully reviewed, I plan to merge via my tree)
+This comment was added almost 5 years ago in commit 41aa4e9fd84
+("ram_addr: Split RAMBlock definition"). Clearly it got ignored:
 
-Usual API cleanups, here focusing on RAMBlock API:
-move few prototypes out of "exec/cpu-common.h" and
-"system/ram_addr.h" to "system/ramblock.h".
+  $ git grep -l system/ramblock.h
+  hw/display/virtio-gpu-udmabuf.c
+  hw/hyperv/hv-balloon.c
+  hw/virtio/vhost-user.c
+  migration/dirtyrate.c
+  migration/file.c
+  migration/multifd-nocomp.c
+  migration/multifd-qatzip.c
+  migration/multifd-qpl.c
+  migration/multifd-uadk.c
+  migration/multifd-zero-page.c
+  migration/multifd-zlib.c
+  migration/multifd-zstd.c
+  migration/multifd.c
+  migration/postcopy-ram.c
+  system/ram-block-attributes.c
+  target/i386/kvm/tdx.c
+  tests/qtest/fuzz/generic_fuzz.c
 
-v2:
-- Do not use ram_addr_t for offsets (rth)
-v3:
-- Updated subject & squashed (rth)
+At this point it seems saner to just remove it.
 
-Philippe Mathieu-Daudé (5):
-  system/ramblock: Remove obsolete comment
-  system/ramblock: Move ram_block_is_pmem() declaration
-  system/ramblock: Move ram_block_discard_*_range() declarations
-  system/ramblock: Rename @start -> @offset in ram_block_discard_range()
-  system/ramblock: Move RAMBlock helpers out of "system/ram_addr.h"
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/system/ramblock.h | 5 -----
+ 1 file changed, 5 deletions(-)
 
- include/exec/cpu-common.h                 |  3 ---
- include/system/ram_addr.h                 | 13 ---------
- include/system/ramblock.h                 | 27 +++++++++++++++----
- accel/kvm/kvm-all.c                       |  1 +
- hw/hyperv/hv-balloon-our_range_memslots.c |  1 +
- hw/virtio/virtio-balloon.c                |  1 +
- hw/virtio/virtio-mem.c                    |  1 +
- migration/ram.c                           |  3 ++-
- system/physmem.c                          | 33 ++++++++++++-----------
- 9 files changed, 45 insertions(+), 38 deletions(-)
-
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 87e847e184a..8999206592d 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -11,11 +11,6 @@
+  *
+  */
+ 
+-/*
+- * This header is for use by exec.c and memory.c ONLY.  Do not include it.
+- * The functions declared here will be removed soon.
+- */
+-
+ #ifndef SYSTEM_RAMBLOCK_H
+ #define SYSTEM_RAMBLOCK_H
+ 
 -- 
 2.51.0
 
