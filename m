@@ -4,109 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7675CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 07:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E56CCCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 07:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4E9W-0006d0-Fe; Thu, 02 Oct 2025 03:55:03 -0400
+	id 1v4ECD-0007Ib-Kh; Thu, 02 Oct 2025 03:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1v4E9Q-0006by-QK; Thu, 02 Oct 2025 03:54:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v4EC9-0007E5-Ht
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 03:57:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1v4E96-0004lu-BJ; Thu, 02 Oct 2025 03:54:53 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5922bGXd024892;
- Thu, 2 Oct 2025 07:54:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0qJh+1
- TSiELVMolweI219tJAYnBK3QIXqO0r3zg6Khs=; b=dx0lTQQVu+dXfWKysVf5iT
- 20zFq18EgQ54AWNxTXEVA1xEd1zPgV9JPTjUW0HvczxusCYTD3MSoWJRz52GNPHU
- fOfZ5JpwusCHJMLfeF0QgNJi3e7hEIqX7HNAyFalDVdpOJrrDcCzI9l/UPuX5Bh0
- 48O1qQLXHtJWqIh67l9CTUITLGBTH7KuEE3ydZEbDEwBI7NdpVtYCB5Nk7N2xLTH
- Jyynz+43RH+h4PcaJX33C5h9+PNOAfbWC8QvY9yONe3oT4pBygU6jYIOLr7ouN5g
- 4A3SXxVLjKZ/T1Hf4+1ndYXFwctbkiMFVWa5yL4N7j5MDIbVYlKGX/A4r0vazsnA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7e7m8y6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Oct 2025 07:54:06 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5923wqdC007321;
- Thu, 2 Oct 2025 07:54:05 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49eurk4xnr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Oct 2025 07:54:05 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5927s1p159703586
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Oct 2025 07:54:01 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65BEB2004D;
- Thu,  2 Oct 2025 07:54:01 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2DB5720040;
- Thu,  2 Oct 2025 07:54:01 +0000 (GMT)
-Received: from [9.155.199.94] (unknown [9.155.199.94])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Oct 2025 07:54:01 +0000 (GMT)
-Message-ID: <ae47a0c8-1b39-481e-a25b-5d94b689d7d7@linux.ibm.com>
-Date: Thu, 2 Oct 2025 09:54:01 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v4EBt-0005Kf-Ja
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 03:57:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759391835;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Hde1WAEVjZaTnLU+JZolMy3480J2aMOChYGhpmr16w=;
+ b=TmapDPt8oGi0MH7RZHqi2xjbAt0RRo0X5umiCf7BMti40rXhwwAmJ1Hd3qQ2AGHPjbsXe5
+ cdhQGEdB4spejJIy6YXfp5szDCiVI0TZaXo+dEyP5Xk0b3PLbXVMohNCcFGKqPJn3cakz5
+ sOgKfbk5gVwce/5UbPbYAqRsJHC5UYY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-_aqBhMJ9MtWl2qyWUUBY8g-1; Thu,
+ 02 Oct 2025 03:57:12 -0400
+X-MC-Unique: _aqBhMJ9MtWl2qyWUUBY8g-1
+X-Mimecast-MFC-AGG-ID: _aqBhMJ9MtWl2qyWUUBY8g_1759391829
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5A7D1800452; Thu,  2 Oct 2025 07:57:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.93])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E1F730002C6; Thu,  2 Oct 2025 07:57:00 +0000 (UTC)
+Date: Thu, 2 Oct 2025 08:56:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v4 27/27] MAINTAINERS: Add maintainers for mshv accelerator
+Message-ID: <aN4wSeIwATNWIUQe@redhat.com>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+ <20250916164847.77883-28-magnuskulke@linux.microsoft.com>
+ <aN0dQ1NM5QgGSPH1@redhat.com> <aN4sWpkZ3fSJbnqR@example.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] s390x/pci: fix interrupt blocking by returning only
- the device's summary bit
-To: Jaehoon Kim <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com,
- thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- iii@linux.ibm.com
-References: <20251001154004.71917-1-jhkim@linux.ibm.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20251001154004.71917-1-jhkim@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: XCZpKqRB8ZCaCBmUKGv70iZOWCwhferi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyMCBTYWx0ZWRfX1uXAKZOpTY+D
- 06YuVxNWPDtHxO/SMcx3vHOSRpQvFM9fIKBn/FWIbmzWs9FDYYyGESZQ8t7RSubTIvexH+HiipP
- MATzZBfymTRf4EJIxnlA5sU/N/c143qbszmSJ0lQSn88hdwArUAod7Vzb4ujqHiNzFQqCrxiQIQ
- KyH/2s3SRDCC87NN9JZkKGjcwXwmj33GLKUYLSMIv6f8KYhM/0Aa9JPPwl7h8Xax9XtuKq91ZSM
- bJFIWs7/sMkxmpL+29a5mjKYYHct1Ro5LTAh04CeBwehvKdKAXviPqlB6Ls5t9JpkmNq+R/RCDa
- GtXc7VnLQ8x+biqUcBF5yPF4iuORimulM5G/uGnltVRV0FFMsX3rFHG/0fy/8UMOTr5DXAyXjql
- FOO5Z3FYTSH6ejj/luJ7k/mXKWHkWQ==
-X-Proofpoint-GUID: XCZpKqRB8ZCaCBmUKGv70iZOWCwhferi
-X-Authority-Analysis: v=2.4 cv=Jvj8bc4C c=1 sm=1 tr=0 ts=68de2f9e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=-O3EFT1qt8p55MFw648A:9
- a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-02_03,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 phishscore=0 bulkscore=0 clxscore=1011 spamscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509270020
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aN4sWpkZ3fSJbnqR@example.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,30 +102,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Am 01.10.25 um 17:39 schrieb Jaehoon Kim:
-> Previously, set_ind_atomic() returned the entire byte containing
-> multiple summary bits. This meant that if any other summary bit in the
-> byte was set, interrupt injection could be incorrectly blocked, even
-> when the current device's summary bit was not set. As a result, the
-> guest could remain blocked after I/O completion during FIO tests.
+On Thu, Oct 02, 2025 at 09:40:10AM +0200, Magnus Kulke wrote:
+> On Wed, Oct 01, 2025 at 01:23:31PM +0100, Daniel P. Berrangé wrote:
 > 
-> This patch replaces set_ind_atomic() with set_ind_bit_atomic(), which
-> returns true if the bit was set by this function, and false if it was
-> already set or mapping failed. Interrupts are now blocked only when
-> the device's own summary bit was not previously set, avoiding
-> unintended blocking when multiple PCI summary bits exist within the
-> same byte.
+> > Do you need separate groupings ? If the maintainers are the same in both
+> > cases, and changes are liable to span both accel/mshv and target/i386/mshv
+> > dir, then perhaps  'target/i386/mshv/' is fine being listed under the
+> > 'MSHV' group ?
 > 
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-[...]
-> -static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
-[...]
+> that's true. however, there is work ongoing to add MSHV support to other
+> targets, so eventually it wouldn't be the same maintainers for both.
 
-Not changing the name would have made the patch smaller, but it is probably a better name name.
+Ok, that's sounds fine then.
 
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
