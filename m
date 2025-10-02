@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC72CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B54CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Euy-0007fX-NI; Thu, 02 Oct 2025 04:44:04 -0400
+	id 1v4Eu4-0006ps-Sh; Thu, 02 Oct 2025 04:43:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Euu-0007Ya-OI
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:44:01 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Etk-0006hF-4u
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:42:48 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4EuW-00010A-Uc
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:43:59 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3ee1221ceaaso422995f8f.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 01:43:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4EtV-0000sm-Fb
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:42:46 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e37d10ed2so6474715e9.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 01:42:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759394602; x=1759999402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759394544; x=1759999344; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h9bjNs8nbmPHtqp1O3nLNnIUYP6MFEbM89LgRhzC8Oo=;
- b=kXu1aoWdJ1Hel2QIgP2/JVAyTaehtoGZAPuODmnQblyVvRnQeUQInoH6O8XfYAB96j
- 2K9xuN1X9fR+wiHVD61PtxiWZSoekgkOa4aqASUEPhy45q7Dvv6M6Phrto0OmZjxnWx2
- b1PpI9fFH5kFDtvUJih413S0ur3oxK2mAtpEoBDA2xxHhCX5rjZL3HRCdUk6bS38ZlX5
- eQ99pPMHszcvrLeW6HS88Z4W2G0BmfpMOW66JUVfl/WtOTRK5+TPBUx4XAa15a+cAjz6
- LF4O3oJ0G1QPB+cR9KGW0NuOIZpJ8RJ4TU/EkMn+6E55BdZKlkEtsFCfogTLsVV0cYrM
- Gmgw==
+ bh=2534c4RtZyXLI9bpIizaZmKA+am5Tc7GXq0BfJ3FTIY=;
+ b=KI+cYzVnf2ZESeBdBSfegymZLAVA1P8VRJwg0z9PeBsF2QfDJDUinqz9S6sEI7yw7v
+ ZTawCimwXkrKqaeCMpXGeuRukh4tdsNE+xutV2HbcG0Fhb9M6I070WEXM2d2BjMuyQb+
+ 2DmqxGv+BjGw+Pgi5Mb9acFWPJHVqWul+ahdfAGqWThROMqF/UY6kk8QMiF92mATX8uz
+ bqOrKsHQLxwUjcc9Ff2yU41x8Cg7xy7L9v/c9/Lq9qwNvBrbkj0RyVg/f5LLBGzsL3IJ
+ uperVCFT7OCm/LZKungTyy5pD1ni14c2V20kDUvooU4Jf72cALoPpK07vWIXYYaUtCYJ
+ jRjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759394602; x=1759999402;
+ d=1e100.net; s=20230601; t=1759394544; x=1759999344;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h9bjNs8nbmPHtqp1O3nLNnIUYP6MFEbM89LgRhzC8Oo=;
- b=mf0IpTPyHNEg5jCtNLMS90283mwjhB62sWhpd2jg+MTiQc0a5hWITgYHb8WCYKOBU0
- koyh9oWxCy5ArvJWoZAwyUFE9eRvzld+QVobowFVT8bO+rhBN3FeF1lpz0zFJqxYDi+N
- LBPYLtSAgW7ivnhpAq8U/ryOzSSPHBwCP9tm3/86k5E/VDO0xnD7LjWd8CORND3ynmSq
- 026/uDr5u+VyxsRCmCqza//Gb5ABQkTYHq0K6apKnMGmaHGAS6YbMwJJLgtWYPWt+DOL
- Z0QTVWLwSnfwyjq9t+NGIdX2pSj2uA4U/f8ci/TYYV4CT5Qwzgl5WWpm7B5kZfNv5vt2
- pkvQ==
-X-Gm-Message-State: AOJu0Yy3YYXJJKlvt4hUTtfQKbxHxCitpOPcfoBH5DcsvQ+3wCilxsP1
- q25wV5djbcR7F3/0N9HbEN2YGUyrM3jymmR1TC7LzuP8G6TcETxsxpChHpl65i6FHT6u3lt7udt
- xod9JbIiGpQ==
-X-Gm-Gg: ASbGncsXLj7sLgRWQd/xWqcGvUGKsfc3ls4wvFWRmgFJmklcFIgH48HNnKnJEdw0cX0
- 603myD0Stmsrx8qCo2TdGEhUjbiNLWZtlFQ2wMFCPfjfZ+nVZvP+1+1iaOQ5NnHB8ollFGbI5fi
- XMYKi0u0dNG7HVHc2Q89csy6SJ2jgv0LChiawtLjQHdPWV2tJO79iqgxwrfrfidyWh0Tp+IxlV6
- SVM8JU98GVyEaqlXVYUyhfnpITEAeB1UHXuh+SwWFN5xEId5Ucnzkbi46/RbmRDRZEHoHmF3hW1
- YIzkBVHL/quyz422ikapnzQ/5tZNeV6Ku3GI7yDj5ScAheW6gVLNWFt3vKo5+MQCbg4GYGFillq
- xMzGUBqFX2EfpIZmNSA6Z7LoPJMq1qUzDn+Ft+3QSqytlLctdt+ZtSvzr914xwfqyXTzPDLdOsT
- CJBQRKiZXmhHV4JMMgJiIDgIBDDKKvBw==
-X-Google-Smtp-Source: AGHT+IGyb5rK3wU2eYffbepInpQ5nRpyDFkLvUQpXIwaKbJPhsQ9zk9+/o3WwrGqdXtMXrkY9srT5g==
-X-Received: by 2002:a05:6000:40cc:b0:3fd:eb15:77a with SMTP id
- ffacd0b85a97d-425577ee891mr3832972f8f.6.1759394602152; 
- Thu, 02 Oct 2025 01:43:22 -0700 (PDT)
+ bh=2534c4RtZyXLI9bpIizaZmKA+am5Tc7GXq0BfJ3FTIY=;
+ b=oEc+rzOrTA4QBmcyMT59X5yiIVYuUuYDef/Nf8oR1Fds5FcLw1qGCAVdFkZW8QHqMD
+ KeLessd6TOkWe4VGmr1K8T3MXKeBcLvh+pvGt3SIsxt6Om1z6OUSK2NotvV1PE8nCAOp
+ gvxD/3FwT0VOxhs7syTOmEmZkh8/NCKBKiK78QSwKUrns+xwMdlICiahBc0Ewr27ShfZ
+ DmzjNYnzhou+X3a+bHQQVJXMa37+tgA2ssoMd4pdE6M/RXqc7daQTgyxO8/PBYb2MBzn
+ epD8/o+dAx+sJPEqP50gItpaGNqNU/n0u7emXr/pTgkifYoNDWNmn8wu/iieR7hMyKCT
+ W2Zg==
+X-Gm-Message-State: AOJu0YxRPF07aTf1A4un0fG5Yc/Q6yVVVhBX6sScX2rU3lAolhy2kuKi
+ AerHDUKcqPStOdBssnXJhwRUBMNk8WgyJ2pRtzSsOQgSPag9lnAfRzM+Q2wLvXE3wS0eZhM6xnU
+ DOloz7F4afg==
+X-Gm-Gg: ASbGncsRfPaHB8Cw7F4jX8xqLcbr5KIvstJE49PJ0gyQnRYkiaRiozCkGmhaIG+w1av
+ zvamTpLKgPzq6i3pEJPSK0rYHOYnVUCOLtrW5VAbGxd28y3y9hfF3UxENdEaADWTVuAsq7hZc7v
+ OCJKF+5Gm9xc2OMyrfLG/jtGI37X4I8nqBrh13POWKjH2UeROAy0n5wJVTvci6mC73a7m/wL8qS
+ 5qrpYAVGHrW/ZlhTr79bb2eWdrTxuGSj7A6+bAG7eE5ElQml3ey1vRwocS+Rm5iFb52qP1gYnaR
+ wNizlhSQgFe5oaSYcALyOZZ1K8hST1543p6SAFXw3GU9AYqXEI0ico/iRgEewF0vEleenmt3Mbw
+ dTdRpfndM+3tmMllUMttrarJJ1xiD5fFo4Gz+foYzPWXOR+yK0rHg4W3Ug4a3iP2pcJQOljWRpe
+ A/BxLRZWYfUQug8omKVf07U0vth2ESxw==
+X-Google-Smtp-Source: AGHT+IFP18ee6bgm/ejyh8kmRYFVi1hqLlMKkbtTf3ZacHJyOl7EopZwJsToQT2tvIjzxTw/P2KdoA==
+X-Received: by 2002:a05:600c:3149:b0:46e:3b81:c3f9 with SMTP id
+ 5b1f17b1804b1-46e61269212mr56566845e9.17.1759394543997; 
+ Thu, 02 Oct 2025 01:42:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e5c3eca22sm54562995e9.4.2025.10.02.01.43.21
+ 5b1f17b1804b1-46e693c2e6fsm23962295e9.17.2025.10.02.01.42.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Oct 2025 01:43:21 -0700 (PDT)
+ Thu, 02 Oct 2025 01:42:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v4 16/17] hw/virtio/vhost: Replace legacy
- cpu_physical_memory_*map() calls
-Date: Thu,  2 Oct 2025 10:42:01 +0200
-Message-ID: <20251002084203.63899-17-philmd@linaro.org>
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v4 04/17] hw/s390x/sclp: Use address_space_memory_is_io() in
+ sclp_service_call()
+Date: Thu,  2 Oct 2025 10:41:49 +0200
+Message-ID: <20251002084203.63899-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002084203.63899-1-philmd@linaro.org>
 References: <20251002084203.63899-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,47 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use VirtIODevice::dma_as address space to convert the legacy
-cpu_physical_memory_[un]map() calls to address_space_[un]map().
+When cpu_address_space_init() isn't called during vCPU creation,
+its single address space is the global &address_space_memory.
+
+As s390x boards don't call cpu_address_space_init(), cpu->as
+points to &address_space_memory.
+
+We can then replace cpu_physical_memory_is_io() by the semantically
+equivalent address_space_memory_is_io() call.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/virtio/vhost.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ hw/s390x/sclp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6557c58d12a..efa24aee609 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -27,6 +27,7 @@
- #include "migration/blocker.h"
- #include "migration/qemu-file-types.h"
- #include "system/dma.h"
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 9718564fa42..16057356b11 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -16,6 +16,7 @@
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "hw/boards.h"
 +#include "system/memory.h"
- #include "trace.h"
- 
- /* enabled until disconnected backend stabilizes */
-@@ -455,7 +456,8 @@ static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
-                               hwaddr *plen, bool is_write)
- {
-     if (!vhost_dev_has_iommu(dev)) {
--        return cpu_physical_memory_map(addr, plen, is_write);
-+        return address_space_map(dev->vdev->dma_as, addr, plen, is_write,
-+                                 MEMTXATTRS_UNSPECIFIED);
-     } else {
-         return (void *)(uintptr_t)addr;
+ #include "hw/s390x/sclp.h"
+ #include "hw/s390x/event-facility.h"
+ #include "hw/s390x/s390-pci-bus.h"
+@@ -308,7 +309,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+         return -PGM_PRIVILEGED;
      }
-@@ -466,7 +468,8 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void *buffer,
-                                hwaddr access_len)
- {
-     if (!vhost_dev_has_iommu(dev)) {
--        cpu_physical_memory_unmap(buffer, len, is_write, access_len);
-+        address_space_unmap(dev->vdev->dma_as, buffer, len, is_write,
-+                            access_len);
+-    if (cpu_physical_memory_is_io(sccb)) {
++    if (address_space_is_io(CPU(cpu)->as, sccb)) {
+         return -PGM_ADDRESSING;
      }
- }
- 
+     if ((sccb & ~0x1fffUL) == 0 || (sccb & ~0x1fffUL) == env->psa
 -- 
 2.51.0
 
