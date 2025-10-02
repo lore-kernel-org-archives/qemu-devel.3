@@ -4,166 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F60ACAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD291CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4MQp-00029o-Qf; Thu, 02 Oct 2025 12:45:29 -0400
+	id 1v4MRw-0002Vc-JR; Thu, 02 Oct 2025 12:46:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1v4MQk-00029A-Mk; Thu, 02 Oct 2025 12:45:24 -0400
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1v4MRj-0002R0-0B; Thu, 02 Oct 2025 12:46:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1v4MQU-0003PF-TW; Thu, 02 Oct 2025 12:45:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hcJf6IiJcFytt4xkbmRiOiulsdbnh773Gsvny9FbDJAX18FbdfS9YdOxU/JSm4sT+rvyYs1BtPPinmBtfZdGXG5IlmiNTptN39RvRPf3oYfes/b36tZfRtAGOhzDJg7kQ8MEU7Kzn7+C0/+KyUEx8ibxwABtSHtSom+Tl0RDTrlrEvDY4UlK19LOjQEHNAUiI87af5yv5eewyG5BNZhZ+tlcD6f9n89BSQHm5JMabj18aEPbqG+BawFZlGgtN7OEj2cLNmi8z1e3jX2/U0qMw3V7KfAdgC2Uhc8nyX9BokIAza1PZTW13HQgOE7b/qq6YpC5RTVSIkxOZkUjLTcC6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lqdtbYupu9tJ0J7QGxBl/9o/wIZf9Ezu5y406Ka1I4o=;
- b=NGQIk2cCnWKpGRq1/v0yaOtWtx4DLUZ5pp6ni7sQBoz/wYHXteuieFBAaAXcib6RDw3/k6kOT67Ehxc3Zqkc1K/YwL25shdbElnZKG9EvTdmmjxprVdq7pWEW0snrix64F1F18x+8U278AcmT+ZbYcsNSqfWY5BHa1W9O1hi+THzTCdS4saTl7TQ3GnFVd7Q1Gw8CuvJLH5yQVqEfMin+SCWWxn1RRkIpVAtKJNornQquZxcU25hktJQncpp6LqcjAZKTfAuTfp1rOp/KE7itCO2dohqWlKPHsW13grB0Sy/vg1UDIQkEZRL6pcL1BLJ6myaWJwG0df8cHtN64Se0w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lqdtbYupu9tJ0J7QGxBl/9o/wIZf9Ezu5y406Ka1I4o=;
- b=hNc5Y9uRICoR5YuZHglqWswd8uFaAnssrAu8ZVl1ENGJc4me9mTi5G4NrNSjv6Ho5De0+WruXO+ABclRDzQxTYnI5QMEC5LuPwV2YrxrrW2X5SCKIZdb8RMKegVbF09cajFo3hWCIghztNzwxiDwOrlparKcmmgZpGeAP2CiI3+TKHyDyvYMwkNsff7XCyHjkj8aFFUBN85TOoOrL8g2q7bqcH+3dqxeOxzeNe2dNG/znEK97tJxOqfLPZ8tPXd4MrvSVIafO5ipUnOCYFZlZr+fknEbuCfPEmtmQ677/fm3qB7dY6/Abqj9s4ywZD1LMjivOnIEbenKkqUf/9FfBA==
-Received: from MN2PR11CA0015.namprd11.prod.outlook.com (2603:10b6:208:23b::20)
- by CH3PR12MB8209.namprd12.prod.outlook.com (2603:10b6:610:123::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.19; Thu, 2 Oct
- 2025 16:44:37 +0000
-Received: from BL02EPF0001A107.namprd05.prod.outlook.com
- (2603:10b6:208:23b:cafe::d6) by MN2PR11CA0015.outlook.office365.com
- (2603:10b6:208:23b::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.17 via Frontend Transport; Thu,
- 2 Oct 2025 16:44:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL02EPF0001A107.mail.protection.outlook.com (10.167.241.136) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9182.15 via Frontend Transport; Thu, 2 Oct 2025 16:44:36 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 2 Oct
- 2025 09:44:21 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 2 Oct
- 2025 09:44:21 -0700
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 2 Oct 2025 09:44:20 -0700
-Date: Thu, 2 Oct 2025 09:44:18 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 08/27] hw/arm/smmuv3-accel: Add set/unset_iommu_device
- callback
-Message-ID: <aN6r4n2F1s2ZLm9d@Asurada-Nvidia>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-9-skolothumtho@nvidia.com>
- <7167d287-f0d0-4bb8-8750-e38e9e31df10@redhat.com>
- <CH3PR12MB7548C5CB7B9BE18AAE5492BEABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1v4MRU-0003oF-Ob; Thu, 02 Oct 2025 12:46:19 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 592DcqPu018505;
+ Thu, 2 Oct 2025 16:45:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pbhKEa
+ E1DBlDRKYZ27gq35MgCt3ia1W2prQ54VRuuz4=; b=iJJlSgvJZE0txa0d60CSr3
+ hwQjVm+nIEE5/WOGu3+aBuUeQgF/fRi7rwfZjQOiQ9o0ZkNwA/s7/3eiuOzFk/i4
+ WKucmJ7Z+ztl91g8HbqZLfVAeHYIx6/TB4Fup9sPxNNQz5ASCxMLpXwenTHWPJM5
+ NXfvd4V9gfYDtUFzUed3VTbEqqreY/kgKcZUuDnwt8y6q7Jr+svThk08syqQxfr3
+ ANH22HZUi1yU/rrJt8u2SS4TSPTOPXM1uBNnWyBEaU46H6aAn0uIrpCEGfXYveiZ
+ da0xSIdIZUq+idchaa8Wo3F22m1bIcNM0XS/OjJaH9cjpFxoRBAGDdVL4wRSGgIQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bhwq5s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Oct 2025 16:45:53 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 592GSKMD008352;
+ Thu, 2 Oct 2025 16:45:53 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bhwq5p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Oct 2025 16:45:53 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 592GIiGc003325;
+ Thu, 2 Oct 2025 16:45:52 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49etmy721d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Oct 2025 16:45:52 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 592GjoDD30605892
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Oct 2025 16:45:51 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D91095803F;
+ Thu,  2 Oct 2025 16:45:50 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 50E0958056;
+ Thu,  2 Oct 2025 16:45:48 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.134.141]) by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Oct 2025 16:45:48 +0000 (GMT)
+Message-ID: <387abc0573ed488798ec805451a5e7e6c79b9a0b.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 06/18] hw: Remove unnecessary 'system/ram_addr.h' header
+From: Eric Farman <farman@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jagannathan Raman	
+ <jag.raman@oracle.com>, qemu-ppc@nongnu.org, Ilya Leoshkevich
+ <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, Jason Herne
+ <jjherne@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater	 <clg@redhat.com>, kvm@vger.kernel.org,
+ Christian Borntraeger	 <borntraeger@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Matthew Rosato	 <mjrosato@linux.ibm.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Richard Henderson	
+ <richard.henderson@linaro.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-arm@nongnu.org,
+ qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>, Alex
+ Williamson <alex.williamson@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+Date: Thu, 02 Oct 2025 12:45:47 -0400
+In-Reply-To: <20251001175448.18933-7-philmd@linaro.org>
+References: <20251001175448.18933-1-philmd@linaro.org>
+ <20251001175448.18933-7-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CH3PR12MB7548C5CB7B9BE18AAE5492BEABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A107:EE_|CH3PR12MB8209:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6692989f-7cd2-42a0-708c-08de01d2f92a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SFRpRXhnOS9BQmY4ei85QkFCVG9tMERsb1lrcEc3RnRpU1MwTEErVzgvT1o5?=
- =?utf-8?B?ck1NeGZVQ0NweFJRVDlnUDNsTjgvWkZzSHdQQXdwMlZlOHZkVGU5K1RKNFI2?=
- =?utf-8?B?T2tVVVBYV1lZOFgyYnhiaFhIa0ljclh4Zkx1T0w2eUdJZnhhaGNoUTBueUlB?=
- =?utf-8?B?d041eE1RZVFaeXB6L1FwRS9CaFhQQ1U4MTk4OGRmVlhWdkdnVFZKVEVvZDc4?=
- =?utf-8?B?ZGVsakhXSFF0RlU0Uk82NFYwR3BEU3IvNVJSTEtJcmJrRVZyTlJMOWN3bjRy?=
- =?utf-8?B?OURjaTY1YitHMWtqak95dGExKzFXQkYycUNqMXNmeFNJaVhucHVqN0diaXZa?=
- =?utf-8?B?UVdPQmdVbkM5YkVLMEw3ZERyR21FUnRscW9PZHFPMlpzekx2dWpLU2o2dDFl?=
- =?utf-8?B?bnpYajU0L0lJMlFzekR5RmxFWTRwdnhUQnF5b3REQnBnYTFsUDU5WUtZalpW?=
- =?utf-8?B?YzRYUjFVMDlNME96eTRBV3VNTVR5WTZEM2ZjTXVQOUMveTBEOXZza3J0RmJR?=
- =?utf-8?B?NHpVMzc5MHdNTEJjVHZnRTRUcG1KQzRVMW5YcUFVdzB4UkdFVG1uVTNGVnZo?=
- =?utf-8?B?a2VhVmVFY1A3Y0RnMG52WUJXYmxQbS9aSktpZlpiRDBDeEhiOVhnNHJYQXlV?=
- =?utf-8?B?WFJYNW5zZm5EdCtrUEJrakkxZWVXQTRmVWZ2OXR1dHNBUEFWMXVmdHhNbXZh?=
- =?utf-8?B?bXV1d0ROaldiaURNdnBYR0JRTmphQy9oNXI0eG92RDZ4SnJnanRHTEhuSDJ4?=
- =?utf-8?B?UGZEb2phREw4YnQxUUsvM1ZJQm9zd1RJcHJneDhHenJ2UXBkdnVoTUtEeFM5?=
- =?utf-8?B?emtVYlRTZk8reFZxblo4eXZvUlYxaktoYXRDVEM5alZpSjRKQ05yMjQrSDIv?=
- =?utf-8?B?NThIcDVQLzkxU1BtQldEQnRialIvV2tvaFJGSUxOKzNxQUFQaGhLN1Q5d1pm?=
- =?utf-8?B?dlV4SitidU1NWVlQQmpZcFcyR0lrYWhWT3NJT3BvbzNGaVpYVjRnVFlvTWs4?=
- =?utf-8?B?NTgrbHpzQWkvZG5RODIxcG00T0FJMnNCdDRBL3NYRnR6cTZLc1dBL1p1K1dS?=
- =?utf-8?B?dG9OUklPeVA1cHpaS084NE1JOW5Kczh4YzFVMG90aHhYTUJUMUlvSkdBSTB0?=
- =?utf-8?B?QjlyN1ZKUWNpZWc3ajhnNjNHdzZzeTN2endpRHAzKzN0bFFlOVgzLytSNXlm?=
- =?utf-8?B?QTZPVDVGWjdYQzMvV2lzWWx6STlLbnhhNmNVYllYOVJvbVBBWTdKMTNTQmxJ?=
- =?utf-8?B?MHFPVmJrTmN6Ti9IK0NGbUl6dGVjUjJXY2RnTEVnN2xQY0pzYVhmaWQvd3dP?=
- =?utf-8?B?TFhqN0M2eXJ6aXVYT21KNjVVWng5RjJtZXFqQlpaTG8vbWtSdW53UDdmZG1T?=
- =?utf-8?B?VEpLT2pvZ0xZT3RvcWdJY3hEcEZhOFZqU0pjMlU0U2ZsYTUyWWpsc1VwbmI5?=
- =?utf-8?B?S0FnNmxraXQ0YTBaUVpWMW1uU2R0VWRPS2FYakdvR2lFa1pWVDVDK1BkUGps?=
- =?utf-8?B?SzJ5N1Qzems3UlhsWlJtaWVQTzZPdVFkUXZHeWJ3QVlrMlRobEF4WWhCbHFG?=
- =?utf-8?B?MU5TeXNNYUxMNlN2YUI0Ykh5cVBPMFVwN2xJUDhaS2FwREQySi8xTUpmcEsz?=
- =?utf-8?B?NGM2ZTlpOXZqZmRKamZsNVhrbHhNcmw5WmMyelVubGxNY200elFjNE5yREJp?=
- =?utf-8?B?L0JrNElWZTNBck1OcHQ2c0g3R0VSM0gyNGZ4UUZod0NyWnV1UkgrSFBLRkVN?=
- =?utf-8?B?TXhPQWxGNmtJQlN3eW1kNE1kbWlXeExoUkl1TklCS2N3eDNxNE5pbktUejla?=
- =?utf-8?B?bEdQNnVaY3pnYWNXN1I0QmgwYjkzWDkzRmo4TzJod2xsaVM2cTdXck9VMXhw?=
- =?utf-8?B?Q0FqZEkxZDYxa1lOdmkwanBvZFhYa0tvTlRjN3FEM1VSR1VvZVV3K3pMdFhn?=
- =?utf-8?B?bXkvYXU1N0dOS1VnZzl5RlZzZmdqR3ROMUpyeFdPQy9lZGc3UzVKU1BjNzQv?=
- =?utf-8?B?UTdqTytyU05pdjFZQ21vNXBqR2V1WktYKy9HeEU4cFRVZkFjUm1nN1gvVTFm?=
- =?utf-8?B?NmVoci92RHh0c3RySTdteGRWZnJ4UFFDOE14VWUvNWdmcWNFWHlsblRDNW9J?=
- =?utf-8?Q?K2jg=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2025 16:44:36.6396 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6692989f-7cd2-42a0-708c-08de01d2f92a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A107.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8209
-Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
- envelope-from=nicolinc@nvidia.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68deac41 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=aGwGTAKf3ZeqeKgWoQ8A:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX5K2/3oNHL62q
+ mPnN8/B+etDF9KFrdn/UxXWqa+l73ypEUWjN4e3pwvRWAfgWeBH0u51VuWlp8uLlvA17M+YHyio
+ iAENZpRMES16emUC23NDKzckmhhB/rLaTLynMQ/UaOPpOXCnCh+m1frDOedv7qHt/EQMq0/i7La
+ HJkcAKi+laDJ4+JQlZD0cE+ukw078y7+UJV6xgVmdT5JrcnuaSA4tbiSCktG7c1DaoA+SeLeiQ/
+ uiRYtdRBmbiMRdqRyV2ShF67XGzmUPx8FclcxIK3ANbAIsC0Qhl7SWlfEBBwBmmnwXmo0XUfOeu
+ TxkS0gyoY3LOG2bpxJUFeMLBAG2OD3H7s8x7O/NowuJia7oaQ+DLSM/B6PhjEKFKAD7g/tjVt2V
+ Hr/oDpywz0z6gJEAZxKbafXcoM14og==
+X-Proofpoint-GUID: Ip_bUE8ZxJcETWq2tmqVsME2d70jhphX
+X-Proofpoint-ORIG-GUID: dQR6yCoHl9AulGC0oIbXH9W_n3wmFPRR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-02_06,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,70 +140,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 02, 2025 at 04:34:17AM -0700, Shameer Kolothum wrote:
-> > > Implement a set_iommu_device callback:
-> > >  -If found an existing viommu reuse that.
-> > I think you need to document why you need a vIOMMU object.
-> > >  -Else,
-> > >     Allocate a vIOMMU with the nested parent S2 hwpt allocated by VFIO.
-> > >     Though, iommufd’s vIOMMU model supports nested translation by
-> > >     encapsulating a S2 nesting parent HWPT, devices cannot attach to this
-> > >     parent HWPT directly. So two proxy nested HWPTs (bypass and abort) are
-> > >     allocated to handle device attachments.
-> > 
-> > "devices cannot attach to this parent HWPT directly".  Why? It is not clear to
-> > me what those hwpt are used for compared to the original one. Why are they
-> > mandated? To me this deserves some additional explanations. If they are s2
-> > ones, I would use an s2 prefix too.
-> 
-> Ok. This needs some rephrasing.
-> 
-> The idea is, we cannot yet attach a domain to the SMMUv3 for this device yet.
-> We need a vDEVICE object (which will link vSID to pSID) for attach. Please see
-> Patch #10.
-> 
-> Here we just allocate two domains(bypass or abort) for later attach based on
-> Guest request.
-> 
-> These are not S2 only HWPT per se. They are of type IOMMU_DOMAIN_NESTED.
-> 
-> From kernel doc:
-> 
-> #define __IOMMU_DOMAIN_NESTED   (1U << 6)  /* User-managed address space nested
->                                               on a stage-2 translation        */
+On Wed, 2025-10-01 at 19:54 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
+> None of these files require definition exposed by "system/ram_addr.h",
+> remove its inclusion.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  hw/ppc/spapr.c                    | 1 -
+>  hw/ppc/spapr_caps.c               | 1 -
+>  hw/ppc/spapr_pci.c                | 1 -
+>  hw/remote/memory.c                | 1 -
+>  hw/remote/proxy-memory-listener.c | 1 -
+>  hw/s390x/s390-virtio-ccw.c        | 1 -
+>  hw/vfio/spapr.c                   | 1 -
+>  hw/virtio/virtio-mem.c            | 1 -
+>  8 files changed, 8 deletions(-)
+>=20
 
-There are a couple of things going on here:
-1) We should not attach directly to the S2 HWPT that eventually
-   will be shared across vSMMU instances. In other word, an S2
-   HWPT will not be attachable for lacking of its tie to an SMMU
-   instance and not having a VMID at all. Instead, each vIOMMU
-   object allocated using this S2 HWPT will hold the VMID.
+...snip...
 
-2) A device cannot attach to a vIOMMU directly but has to attach
-   through a proxy nested HWPT (IOMMU_DOMAIN_NESTED). To attach
-   to an IOMMU_DOMAIN_NESTED, a vDEVICE must be allocated with a
-   given vSID.
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index d0c6e80cb05..ad2c48188a8 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -13,7 +13,6 @@
+> =20
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+> -#include "system/ram_addr.h"
+>  #include "system/confidential-guest-support.h"
+>  #include "hw/boards.h"
+>  #include "hw/s390x/sclp.h"
 
-This might sound a bit complicated but I think it makes sense from
-a VM perspective, as a device that's behind a vSMMU should have a
-guest-level SID and its corresponding STE: if the device is working
-in the S2-only mode (physically), there must be a guest-level STE
-configuring to the S1-BYPASS mode, where the "bypass" proxy HWPT
-will be picked for attachment.
+This was added in 9138977b18 ("s390x/kvm: Configure page size after memory =
+has actually been
+initialized") for the purposes of calling qemu_getrampagesize(), but that g=
+ot renamed and later
+moved by c6cd30fead ("system: Declare qemu_[min/max]rampagesize() in 'syste=
+m/hostmem.h'"). So I
+agree this is no longer needed.
 
-So, for rephrasing, I think it would nicer to say something like:
-
-"
-A device that is put behind a vSMMU instance must have a vSID and its
-corresponding vSTEs (bypass/abort/translate). Pre-allocate the bypass
-and abort vSTEs as two proxy nested HWPTs for the device to attach to
-a vIOMMU.
-
-Note that the core-managed nesting parent HWPT should not be attached
-directly when using the iommufd's vIOMMU model. This is also because
-we want that nesting parent HWPT to be reused eventually across vSMMU
-instances in the same VM.
-"
-
-Nicolin
+Reviewed-by: Eric Farman <farman@linux.ibm.com>  # s390
 
