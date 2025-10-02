@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926DACAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BEBCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Klb-0007QS-Dv; Thu, 02 Oct 2025 10:58:48 -0400
+	id 1v4KlH-0007KQ-4z; Thu, 02 Oct 2025 10:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4KlS-0007OI-8z
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:39 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Kl5-0007JL-SP
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:16 -0400
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Kl4-0000Lx-Lt
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:37 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Kko-0000Dg-G4
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:13 -0400
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46e2c3b6d4cso9514315e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 07:58:09 -0700 (PDT)
+ 5b1f17b1804b1-46e33b260b9so11369115e9.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 07:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759417088; x=1760021888; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759417069; x=1760021869; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0izgqgQPxEFUV3fbD9mNX/9Xd9YILFJwZ3Tpv0yfZhc=;
- b=YM1uv/8y4S1PtmoMt4L4jy3suO7qjsKkrVhWwcZh6+h0n1DHMKNVc5UjhjBUKnJdap
- sWS/BcJcjDP0eTpWXqZ8MUUDSjZWuOcIOln+ss38//JIeU4naftCBemqxmo0H3oioub2
- ErVttl3lH4CsIC2NLfBL0ZFrAuR3wMqkn9x9fSj1P995Fgikv9k1dFjJuVlFeXHfcYKc
- ORye/67C6+I+2YVCJ24inazcrAJbYUOlvu99E22kTymS9jD556qRaLfi/0q9E/oS3A+o
- 9wdx3QoAAYQ/AIVs/YnFM44MyvS4O2y1l1zpyBloViEbmMrRcQI11V1QS+EOZEmkxFF4
- rBBg==
+ bh=487RP0R+DawU3cowpH1ljYzt+o5Cuwu3G1Z8g9QHYus=;
+ b=OXSZoz5OQcKAwoqbWXZ6NpcfnUPg6+WSKa97EsrKnmc+/F7eB8cgh4XTy26GkpfZ4Y
+ 8ue+OkJ+//vA+xIHuQnE7VpAV0PkJabt+l0D0Qh7pJBSoSfIGfsfyEHBfYcuIyObkoIM
+ c6w0iWYnPUnvcFMMk5GS7+476Raszzy8xr9WxxGIBDn59CqdUGvbYnWx1Q6FPUF9K/Ym
+ CrVDoLzOM5P07/uiwGllfWQ5YMlF27q3EzZyTLeig/+2kt0GZJIg/F+rBjy7NLTVP4Uc
+ QLKE+OxGbsSAdPkaK1KY4C1jwojXx2b8ityICWXH2SGtBTg33yyGPTD6U6mg7ifs19La
+ t0mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759417088; x=1760021888;
+ d=1e100.net; s=20230601; t=1759417069; x=1760021869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0izgqgQPxEFUV3fbD9mNX/9Xd9YILFJwZ3Tpv0yfZhc=;
- b=pveaPOeMHJO4Pauq7mkrTYv3cp9rCZRR8LovqJivr7qcKOki48qTRqF1mSaPKuDf85
- DlVsVpjIe28ORTmZ61oYv2jnFaXRndSXVfdGjRRXJwBVfzGR/Znb+m7uuhIpVasShgOB
- yr4V5SSOZhXyScctMRO6PO734AKf2UgLtmlJY5ecpRSnEa+BO86vYoJwruE1Ptu/wDbs
- 49ki3SPxL4UeW8OlyGuo/5AxiecBMyuAVNCpD73RhWpKa49weOTkTZqQdUd50C2fRiwM
- TH0GaxKd+4EY7aNQQQJKFLwARbHOZytZeIjH7bYVtqBNADAZVKji8vvdLv3bPfTE9N2d
- XD6w==
-X-Gm-Message-State: AOJu0YygJLRNDly6l1SfruxrQBTUfslpDSE5pQJi07+m+eTN6py3DUz6
- kzkxSxdtrjV09EWXKfiDrCFXuogiFxiuvkv5uc0p2B9tozGTRn0oiue1pxKpXGPNuUVinV4vpX5
- GKN3QgiF0dQ==
-X-Gm-Gg: ASbGncsydZuCGgKeagyFSgQr3hTEYz/ZsAbX7JuSbu+Gu5dTa3JnoGs2ET9JfajGhgI
- Frzu0E+5U/xmtIiFc7/GwDCXH3a7IpFDZsiANfixUWUdc0Y9T0KnBhDFZ5iZ8j5/sjAW+WM1T+Q
- MgtA73JUAO3/pNynsVeYOdCDRBZyZC8DZWJZzEzVaSgOwiA6D0Mj2kBAcCPKfWVtWG4ryHf+0wI
- nTb0jfmbHsIZ4YUAt4YHOud2vXVK7q/MdSezZp8RpOlJ5+6yG4PS3e1bZ6xq37gdTq/M3fRaSLa
- G+T3Oa678B1zH4BrUiE3H91lqUr1Bk2aIxHpk81Vj0wJIUDTDEFPtC10ZCyvkCc6jhEFVcADQ5s
- iIpYYMb4N6oN9lOSSbGnS0LqgmojHikHFh+sTOVNkDXeJ2f78+Dvrvv8ysttPdDBHnqJAaXF2uK
- +t4VQ6mVdlPPnlzyjupl3i0frO
-X-Google-Smtp-Source: AGHT+IF6k7IasRkJZ6/byTlNsF0gw6uHMcWrt6aJ835DaIWYOqY74I6isesCnT6ffcFG6J+pVs2Afg==
-X-Received: by 2002:a05:600c:1d1e:b0:46e:1fc2:f9ac with SMTP id
- 5b1f17b1804b1-46e6a2e09aemr22076735e9.10.1759417088212; 
- Thu, 02 Oct 2025 07:58:08 -0700 (PDT)
+ bh=487RP0R+DawU3cowpH1ljYzt+o5Cuwu3G1Z8g9QHYus=;
+ b=ThEjoi2um4sOni95j4UVue60M9BlhyF0hgoAEVmLwt8wkX3PZRmBd0PpCLilt4lubn
+ OgK9E5MbNE43uA2N0OJIvbyZxRJx8SKTGAmHkKUqs5TQBehCdipFmfMZKE71OTQmGkp7
+ 5caYOb8S0MGzOBGQ1KwiNPX7+tpwcsbP90YUvfze+nGUm6jJJPkDkWJ/k4WW5fGNFBbu
+ wi/VFbaUKof+A7Dray5RUl+lXGTad3T/Chyh3sahFO36qnJsarM89XHNpf7XvrLdyAPN
+ fbWJgHcw52hzJrRrtszhaDpbx6oT75l9G5XD9sa/b/AD5uCKynXegpMQW0m4uKUSYz5J
+ nSCw==
+X-Gm-Message-State: AOJu0YzTetx9Twd93t8z0txCUf7yAZIJ4LhnwQnPMboz8Zatj0DQnXNC
+ nL75nYZY+xjXx5z+/iX+R2G8qF4Tx0tZADG3bdPrTQdHSYgdQLqQI8Ucq4f3bJby/p3c0EObXWK
+ pcIaPgpRK/A==
+X-Gm-Gg: ASbGncs5T9fuCsiXzNZG/8DupuOwtnCCE6sjzNRfg4L4b2P/O+UABtXVKyUmVTFCqve
+ QDKuNxSWzZnrgE7cHOYJ4D3cg8XNuau/j2Z7lZEZJOzb2ffo02aNXjHO460YPSGUmsBCdMtzhCu
+ J0cL8LO35jYslAWKWxWjQJHJc3ekW6N7ghj+CzmAG5b0ah8vkaw1OUTwnsmctrdwlARrkFz+29L
+ d1jjLK7pcToe/DqcpJwiTMhnoYlLVdPF6q8nDg9WG0y6Lff6kBDYSN5sMhD5a+p7bJSvpxWdhAA
+ 1w6qL+S7/WKm6m2eis+3bl9ymz23MTR+CfMqIj3NmcIyGRMztpEwDeawiESZnLXdU2Pl8WIFSLM
+ Gp4vmioqLLCuDHfvFWIQgMeGogyagE37FJqhbIWyAsmQ+62SxvfDudE3nVVmXi4PB6OHLqSMaeh
+ 1MCg16WXhqSKYq06ThHEEi9vQ2
+X-Google-Smtp-Source: AGHT+IHhaoaDmiHVN4FNJv30tpvddcfE1r9Bn2+NXIH4AVmUw1py2n+Hz8AQhfurrAh2ShkbjjyIQA==
+X-Received: by 2002:a05:600c:5304:b0:46e:450d:e037 with SMTP id
+ 5b1f17b1804b1-46e6125d0fdmr63447485e9.5.1759417068833; 
+ Thu, 02 Oct 2025 07:57:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e619c396esm85237665e9.8.2025.10.02.07.58.07
+ 5b1f17b1804b1-46e61a4161bsm92753965e9.16.2025.10.02.07.57.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Oct 2025 07:58:07 -0700 (PDT)
+ Thu, 02 Oct 2025 07:57:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
@@ -75,10 +75,10 @@ Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/6] target/xtensa: Replace legacy
- cpu_physical_memory_[un]map() calls
-Date: Thu,  2 Oct 2025 16:57:40 +0200
-Message-ID: <20251002145742.75624-6-philmd@linaro.org>
+Subject: [PATCH 1/6] target/i386/monitor: Propagate CPU address space to 'info
+ mem' handlers
+Date: Thu,  2 Oct 2025 16:57:36 +0200
+Message-ID: <20251002145742.75624-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002145742.75624-1-philmd@linaro.org>
 References: <20251002145742.75624-1-philmd@linaro.org>
@@ -91,8 +91,9 @@ X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,72 +109,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit b7ecba0f6f6 ("docs/devel/loads-stores.rst: Document our
-various load and store APIs") mentioned cpu_physical_memory_*()
-methods are legacy, the replacement being address_space_*().
-
-Replace the *_map() / *_unmap() methods in the SIMCALL helper,
-using the vCPU default address space. No behavioral change expected.
+We want to replace the cpu_physical_memory_read() calls by
+address_space_read() equivalents. Since the latter requires
+an address space, and these commands are run in the context
+of a vCPU, propagate its first address space. Next commit
+will do the replacements.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/xtensa-semi.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ target/i386/monitor.c | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
-index 636f421da2b..431c263dc57 100644
---- a/target/xtensa/xtensa-semi.c
-+++ b/target/xtensa/xtensa-semi.c
-@@ -32,6 +32,7 @@
- #include "exec/target_page.h"
- #include "semihosting/semihost.h"
- #include "semihosting/uaccess.h"
-+#include "system/memory.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 3c9b6ca62f2..7e7854e6c1b 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -68,7 +68,7 @@ static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+                    pte & PG_RW_MASK ? 'W' : '-');
+ }
  
-@@ -192,7 +193,9 @@ void xtensa_sim_open_console(Chardev *chr)
- 
- void HELPER(simcall)(CPUXtensaState *env)
+-static void tlb_info_32(Monitor *mon, CPUArchState *env)
++static void tlb_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
  {
-+    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-     CPUState *cs = env_cpu(env);
-+    AddressSpace *as = cs->as;
-     uint32_t *regs = env->regs;
+     unsigned int l1, l2;
+     uint32_t pgd, pde, pte;
+@@ -96,7 +96,7 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
+     }
+ }
  
-     switch (regs[2]) {
-@@ -215,7 +218,7 @@ void HELPER(simcall)(CPUXtensaState *env)
-                     TARGET_PAGE_SIZE - (vaddr & (TARGET_PAGE_SIZE - 1));
-                 uint32_t io_sz = page_left < len ? page_left : len;
-                 hwaddr sz = io_sz;
--                void *buf = cpu_physical_memory_map(paddr, &sz, !is_write);
-+                void *buf = address_space_map(as, paddr, &sz, !is_write, attrs);
-                 uint32_t io_done;
-                 bool error = false;
+-static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
++static void tlb_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ {
+     unsigned int l1, l2, l3;
+     uint64_t pdpe, pde, pte;
+@@ -136,7 +136,7 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+ }
  
-@@ -261,7 +264,7 @@ void HELPER(simcall)(CPUXtensaState *env)
-                         error = true;
-                         io_done = 0;
-                     }
--                    cpu_physical_memory_unmap(buf, sz, !is_write, io_done);
-+                    address_space_unmap(as, buf, sz, !is_write, io_done);
-                 } else {
-                     error = true;
-                     regs[3] = TARGET_EINVAL;
-@@ -408,11 +411,11 @@ void HELPER(simcall)(CPUXtensaState *env)
+ #ifdef TARGET_X86_64
+-static void tlb_info_la48(Monitor *mon, CPUArchState *env,
++static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
+         uint64_t l0, uint64_t pml4_addr)
+ {
+     uint64_t l1, l2, l3, l4;
+@@ -197,7 +197,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+     }
+ }
  
-             while (sz) {
-                 hwaddr len = sz;
--                void *buf = cpu_physical_memory_map(base, &len, 1);
-+                void *buf = address_space_map(as, base, &len, true, attrs);
+-static void tlb_info_la57(Monitor *mon, CPUArchState *env)
++static void tlb_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ {
+     uint64_t l0;
+     uint64_t pml5e;
+@@ -208,7 +208,7 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env)
+         cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
+         pml5e = le64_to_cpu(pml5e);
+         if (pml5e & PG_PRESENT_MASK) {
+-            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
++            tlb_info_la48(mon, env, as, l0, pml5e & 0x3fffffffff000ULL);
+         }
+     }
+ }
+@@ -217,6 +217,7 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env)
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ {
+     CPUArchState *env;
++    AddressSpace *as;
  
-                 if (buf && len) {
-                     memset(buf, regs[4], len);
--                    cpu_physical_memory_unmap(buf, len, 1, len);
-+                    address_space_unmap(as, buf, len, true, len);
-                 } else {
-                     len = 1;
-                 }
+     env = mon_get_cpu_env(mon);
+     if (!env) {
+@@ -228,21 +229,22 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "PG disabled\n");
+         return;
+     }
++    as = cpu_get_address_space(env_cpu(env), X86ASIdx_MEM);
+     if (env->cr[4] & CR4_PAE_MASK) {
+ #ifdef TARGET_X86_64
+         if (env->hflags & HF_LMA_MASK) {
+             if (env->cr[4] & CR4_LA57_MASK) {
+-                tlb_info_la57(mon, env);
++                tlb_info_la57(mon, env, as);
+             } else {
+-                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
++                tlb_info_la48(mon, env, as, 0, env->cr[3] & 0x3fffffffff000ULL);
+             }
+         } else
+ #endif
+         {
+-            tlb_info_pae32(mon, env);
++            tlb_info_pae32(mon, env, as);
+         }
+     } else {
+-        tlb_info_32(mon, env);
++        tlb_info_32(mon, env, as);
+     }
+ }
+ 
+@@ -271,7 +273,7 @@ static void mem_print(Monitor *mon, CPUArchState *env,
+     }
+ }
+ 
+-static void mem_info_32(Monitor *mon, CPUArchState *env)
++static void mem_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ {
+     unsigned int l1, l2;
+     int prot, last_prot;
+@@ -312,7 +314,7 @@ static void mem_info_32(Monitor *mon, CPUArchState *env)
+     mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 32, 0);
+ }
+ 
+-static void mem_info_pae32(Monitor *mon, CPUArchState *env)
++static void mem_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ {
+     unsigned int l1, l2, l3;
+     int prot, last_prot;
+@@ -369,7 +371,7 @@ static void mem_info_pae32(Monitor *mon, CPUArchState *env)
+ 
+ 
+ #ifdef TARGET_X86_64
+-static void mem_info_la48(Monitor *mon, CPUArchState *env)
++static void mem_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ {
+     int prot, last_prot;
+     uint64_t l1, l2, l3, l4;
+@@ -449,7 +451,7 @@ static void mem_info_la48(Monitor *mon, CPUArchState *env)
+     mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 48, 0);
+ }
+ 
+-static void mem_info_la57(Monitor *mon, CPUArchState *env)
++static void mem_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ {
+     int prot, last_prot;
+     uint64_t l0, l1, l2, l3, l4;
+@@ -545,6 +547,7 @@ static void mem_info_la57(Monitor *mon, CPUArchState *env)
+ void hmp_info_mem(Monitor *mon, const QDict *qdict)
+ {
+     CPUArchState *env;
++    AddressSpace *as;
+ 
+     env = mon_get_cpu_env(mon);
+     if (!env) {
+@@ -556,21 +559,22 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "PG disabled\n");
+         return;
+     }
++    as = cpu_get_address_space(env_cpu(env), X86ASIdx_MEM);
+     if (env->cr[4] & CR4_PAE_MASK) {
+ #ifdef TARGET_X86_64
+         if (env->hflags & HF_LMA_MASK) {
+             if (env->cr[4] & CR4_LA57_MASK) {
+-                mem_info_la57(mon, env);
++                mem_info_la57(mon, env, as);
+             } else {
+-                mem_info_la48(mon, env);
++                mem_info_la48(mon, env, as);
+             }
+         } else
+ #endif
+         {
+-            mem_info_pae32(mon, env);
++            mem_info_pae32(mon, env, as);
+         }
+     } else {
+-        mem_info_32(mon, env);
++        mem_info_32(mon, env, as);
+     }
+ }
+ 
 -- 
 2.51.0
 
