@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A957CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 20:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BDBCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 20:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4PW2-00027d-5z; Thu, 02 Oct 2025 16:03:04 -0400
+	id 1v4PWT-0002D5-Gx; Thu, 02 Oct 2025 16:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4PVy-00026z-HD
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 16:02:58 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1v4PWP-0002C6-Sm
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 16:03:26 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4PVn-0000j8-6g
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 16:02:57 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-27eed7bdfeeso18788595ad.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 13:02:40 -0700 (PDT)
+ id 1v4PWF-0000o2-Q6
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 16:03:22 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-27eed7bdfeeso18795105ad.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 13:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759435358; x=1760040158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759435388; x=1760040188; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dJck/6Ven9vxRR4sAntiMygi3sYhWLlR2NXYDX7b9T8=;
- b=FEazfJYclJ2emqWF8qyIJGPU2rkG1aeXMu3CbsBTzr78GGZr5T5OS9myWaoIeLCNDi
- +uYExU9Hj4NuKYKAUgwbvry4kLMQQMc7Lirtd9IX23Je7EpMQsQIvEk7BaE9OxVcuGfu
- +YbzD0en90bnhJtl5P9I6Im7R3cM6GrDoPP5qMPOI1inC3mgeRfnjIlLUQOi2xfOKTJy
- Aq/AlUnbSzZWvo7twv4Ycg7NtQ5OwGaV5j1sdtA80OsRt9kR9BA+uHxLXrEqjnveJYDF
- YjpoXNMsHnTewKi/9ABNvd1iBpT0GyChjlCed623ii+MlAiHNDPDxkhK+SZx2EJT/zvi
- YzBA==
+ bh=0hfdq8SId+em80pbdJEgSqHqD9rZlxwH39jv9kpinLs=;
+ b=mC3ZTvKa+4Zb4WhyRGJ3Du1mLrcq0p78DelgH1RkIs6TpF+KsnBD+QZGUUxG8mlfjv
+ Tb92nmPqg7VH591yTS77qGEzUJjJPfiwiqCo5iap0APcYtZmYBarIEjZ9bo/0k4T6fex
+ AQs+//F0zL5XtCY9RjHQ3hmWw6yO1ftGQ0r4sZm4VIDAKiFptiD7XsFkMS9n+LUTEHaR
+ FZc0I5MoyPr4DmF96Uh91N7pI1AVlAbXhhAa8RSfi3U6opcjebm4KEgCifgK5e+eAceu
+ qMqZfN6sUWGtIXVfdTzwqsnd821DjassmQRV2KsJ4rxgWZE68L//exfUGPCck30degG3
+ SqPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759435358; x=1760040158;
+ d=1e100.net; s=20230601; t=1759435388; x=1760040188;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dJck/6Ven9vxRR4sAntiMygi3sYhWLlR2NXYDX7b9T8=;
- b=bzadWXzpo6cQBPybMEWGFurFYmElXAq1oTx9k51enIP4yKTTXMHG9HTG5nPoA+wcvK
- bnYvmadqsSk95yCX8iEqRjwNrPrV0iALkD3PHFHgExiBVsTCE0LXbQkiu9w70a04+810
- z67h9gtqgTSYo4NeoXjiELUVZqsQyX9TYczCkRoFFCfFvLOklu4yi61Y/564Sy3QOvSH
- AXSSPG2zNmCCSCqdaK/b2RU9tx//edG3760v2gekxdk+0bJ1J12asbRYqQSk2/JXu+8s
- i56vDMmsnXUy2ox5vrQ1KsvdjsgS005GshfHv5kSmm5OfwRtObgK2OrQK7mwVbVzYRpk
- k1Ww==
+ bh=0hfdq8SId+em80pbdJEgSqHqD9rZlxwH39jv9kpinLs=;
+ b=XZIZtCzEWZHdvB32eb3J35Fgi8xbwui3ul8zsQi6Yy/tdIu9zAW0UoroQgpdLD1ThM
+ Xf/O80p2QLTeEETphP/bJ6ICVhJfpkmcpeWw57HhsQqQqxm0+5RNPAQIT1BuwQfxl3Ti
+ J2FlkYXFnr0ebCYaaMhg9m6VDcMlM4vY+TyaEFXOeaduYbfqtTaYBvReSBNaXOtSpwNQ
+ KvN2fvOoGBw0M9o0BxTmTUPclEpx7pgY+lyNhvLq8ledyNs0AynnOIxcgJjK8c7glxwI
+ UJvwStUSBB5VbPQHQiUAt7AwFGwmKTkJgTV5WhBrN3ByVGpT87WGyAzDkC8nQUI+Xomm
+ F5cg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcJcfJVZgyKEhUwGqm2EwKdGC8hxU4ZAnanRM+i06E25DThIh17f13ZiBFmYYRnIg2LQaWFjZyL69r@nongnu.org
-X-Gm-Message-State: AOJu0YzH0cq1c560C2fPyc3DaykJNwZ7qJjDtD1Os/O5flmmtrATzCfE
- o/xtWQtQApzmm9AU8dnOJHbrL1T00zpKbkkE4p2tiMMLouC/7t655EJuur0x9Dqpc1w=
-X-Gm-Gg: ASbGncuu8mzeYQcP85nmvyzsuaQ0WmB/T817vSt0YK+scvMHJ/d9NOdsZcxPJP1WMiR
- jqOqMqLGulepRrYh8jHZSmkEFKQ21EZK2K+4SdsO/Bowk1WD2EGaqxZdXBEd3fXVCL1UdQqACWN
- QcZjj/ySJeSAWSrTFFITgDa3tEf44qRYiMnfWzFlkl9ZQEoVw5J1amlgn8rcD+2mxR2IouuuZLZ
- NlXCNnqrgbalxGdXGzl3eBsPcMj73tlckC+E1r1qrOAgvSeO6PY4ECFljnrrD7JlUPMsLwedtGd
- wy1eJWoWYE/LE7r3fMEWkAeBDGQiM55I1uUmW6RwUtnl965IYUelcyqUjhXREM+gNShOk2SH2iD
- tXGX71wSSYiTBWHCeVDjdOhF9X+3/C6GsOCKu82z5/3zulDwImdV62iJ9fVv65dk=
-X-Google-Smtp-Source: AGHT+IF//dVqXSRPG380YVNcsFOOmHyNWsfy9XN1uShp1P58/bIwpRlQWUr3VY+kd5dEcymlAQA6cA==
-X-Received: by 2002:a17:903:2c03:b0:28e:873d:8a with SMTP id
- d9443c01a7336-28e99d87aa4mr6921935ad.15.1759435357688; 
- Thu, 02 Oct 2025 13:02:37 -0700 (PDT)
+ AJvYcCWJehExy0Djv6v7GdogrRe9HyqoeshWwduq6/I7zz/c34V9nqjawziINSCOgpnA3Aw8K1BGPbaRHM4b@nongnu.org
+X-Gm-Message-State: AOJu0YwRJk8YxjcIWq3DEpP+EHeSMk+iYVtwXJd5KrEc5Ve4WDuJiymR
+ PMG/1b1YBH3E3eZfxNpzo9xEs7LWrFCHTOAKmwGl06Ls86VgESJy6zE5Y25E7D55oC4=
+X-Gm-Gg: ASbGnctd3ee0RAaM3Q3UbzLOWJJy5Sf3JEdwYIB6VWOwqO7AoRWNgFVTel8E1M8G8rQ
+ pLLf8N00dJjd3TaA9im5/IYxvKKlGF45HydSmYzYj5fWx5ppyS/aJGtn23HcspTJLiciojznLfw
+ UVpkH7bffgDU2sF1i9dvrPgVRpMVyfDn19rBOJxI/9nDn+Jc45DOaOCTDMPKm0kEzx4LVIjnvnW
+ xWD+MgfRD1eTQDF58Pg9nYPAGS1FRDmCRpwbaJviTq75z+uT/jofyetzBEf7Z8+ekfZ9EDII0z0
+ dro5U2U/pSBs3ioQuQjxaK9IBBIXwrEL9mOR+wv2ccsXRrUV/BS7R+jO5VlEjDHdJy50aRFHLeB
+ VEwXEr920df2P3SlOM5AG7P2nTJ1FSFlpUbFtzzN/C3uZc/gln855O0e6JKfE8v0=
+X-Google-Smtp-Source: AGHT+IFn4lpJ9Vt4xdt4/4/nkpUTLGzawheOLn7rZAKJWdSSMDlJIhYyjhCIbX4GsOcg8oieXUErbg==
+X-Received: by 2002:a17:902:dccb:b0:279:373b:407f with SMTP id
+ d9443c01a7336-28e8d00a47fmr42422255ad.5.1759435387849; 
+ Thu, 02 Oct 2025 13:03:07 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d111910sm29032175ad.18.2025.10.02.13.02.36
+ d9443c01a7336-28e8d1108b8sm28812705ad.26.2025.10.02.13.03.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 13:02:37 -0700 (PDT)
-Message-ID: <3e3151a7-4597-49fe-ad0c-a1087256daa3@linaro.org>
-Date: Thu, 2 Oct 2025 13:02:36 -0700
+ Thu, 02 Oct 2025 13:03:07 -0700 (PDT)
+Message-ID: <8c267bff-3e6b-40a4-98ca-da8567798e62@linaro.org>
+Date: Thu, 2 Oct 2025 13:03:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/33] target/riscv: Fix size of badaddr and bins
+Subject: Re: [PATCH v2 14/33] target/riscv: Fix size of guest_phys_fault_addr
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, richard.henderson@linaro.org,
  alistair.francis@wdc.com, palmer@dabbelt.com
 References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-14-anjo@rev.ng>
+ <20251001073306.28573-15-anjo@rev.ng>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251001073306.28573-14-anjo@rev.ng>
+In-Reply-To: <20251001073306.28573-15-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +106,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/1/25 12:32 AM, Anton Johansson wrote:
-> Fix these fields to 64 bits as they cannot be made smaller. Also make
-> sure stores to these fields from TCG are 64 bits in size to avoid
-> incorrect values on big endian hosts.
+> Widen to 64 bits, and use hwaddr as argument to get_physical_address().
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->   target/riscv/cpu.h                             | 4 ++--
->   target/riscv/machine.c                         | 2 +-
->   target/riscv/translate.c                       | 6 ++++--
->   target/riscv/insn_trans/trans_privileged.c.inc | 2 +-
->   4 files changed, 8 insertions(+), 6 deletions(-)
-
+>   target/riscv/cpu.h        | 2 +-
+>   target/riscv/cpu_helper.c | 3 +--
+>   target/riscv/machine.c    | 2 +-
+>   3 files changed, 3 insertions(+), 4 deletions(-)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
