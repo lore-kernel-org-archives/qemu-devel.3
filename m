@@ -4,87 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68975CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAD84CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v48hX-0006rq-QX; Wed, 01 Oct 2025 22:05:50 -0400
+	id 1v48xT-0007Z6-6b; Wed, 01 Oct 2025 22:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v48hU-0006rC-Jz
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:45 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v48gz-0004hx-8h
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:43 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-b556284db11so497299a12.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 19:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759370701; x=1759975501; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Knh+dOfLjacsTDZZt9NezpnCzhWm4W386c3sZeiF8sE=;
- b=v3uyYZZwNFEwoUYItjhO/gOxU/TM5EFmdRmUxcwu65HybFYswyKrRzDR8Hg8FgAzN6
- k98ToJZOUWXVdY48Lv5AU7GzcqwCZ+F4/8ib4VPj3qPuAH2IdThQN9ZGaCVZnSfsq+Eq
- 50V2jW2cF1WV5n0MA07IVghemODvUxuMXvl7Qp6HmuqpPBqLPNldJd7x7lOdVt2OP5si
- SHJmrwwvs2etDNC3urUk6ve1PLKCb75Lzt2z8+3fQWWRL6CbjwX9gvDK14hygFb4owEE
- ip3Wrbq4RaPeCbj58hV/VmjWLCetx51NvynaLP/tS44gJMv9tEZmHqT1PJ3/g4O0EYzA
- voyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759370701; x=1759975501;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Knh+dOfLjacsTDZZt9NezpnCzhWm4W386c3sZeiF8sE=;
- b=N6q2+Wgx+Ml+wl55rGiAuQyNsWnEFAVWUm0nbGKlMSnc3kVC1syefJLZDlZHXI7JMI
- 3bzTGPtGCftMy7NQZVRNC9ALtJFh9W+NKu414lGSfwf2YTpqcsZKlMwi0UOGcetBXlFA
- 6zWIabi3p/Pftf2RpEnzU7lxVPxnglo/UJMKAZ6A7IadR+lWQtoPfD+TPIhh00kNSPHU
- nJ3thmI8pTLvIH/xGn8HY+7xtOREuFi8a+s9ox9j8JMo8rXcF7DlDCB/XgESaGkOmjWA
- QelYo+OgOyaqS+uPpK3IUT+xUES70CM1UIr+3DkuHPBUWycefdutjk6HKxVGB0GWriIB
- erbg==
-X-Gm-Message-State: AOJu0YzbdeuE+c9yTDeNtsRQA7TzncxV3w+ZghBUCabOX1S0D32dcvo2
- rOnMAcVURoDGmGbwQrE38/vLKBFe5wtqqniPLDryMb8+LDJa0wc50IqRfCCmGGZrm502KvQjKg5
- /tWDL
-X-Gm-Gg: ASbGnct4NSzZRVeY6F5vw/ytN9DVowK+DDIMsv2rR1DImqHAYwtqwGiLctRUtOTgwit
- gOrgD5vN2qwtaeS2OgywgcLrdwo7v6iGiuAD0pOJo4xmvWzwlVNrqDfNzqrAAUKqzYY/RysgMKM
- v1QIGqUPxBYK877qIsIrEYpSPZ3h2xuNf4uO1XrcSlmyGuXp9E3eQxO47q/vwuQLhvzBrO1WztJ
- xw0+0kezLVWH8HlQg9AVjAK77WVqmSaS6BHLZ6r++ubGBqI1ufVaMCtnv0HQpokomHU6C0WaBEo
- rvrMprvkv9xOmu8CbZaclfCBr3xKPp+GKrKXfSxJLKAsQMOlK4bYWAKTKpl7ZrIm7JQZGEqoOZd
- TiEFkKrTziwezr+7yr285MsVRmO298sVtuPNxqdjpjpQSKKYuGlTNl7fTEBxjUsKt2ck=
-X-Google-Smtp-Source: AGHT+IHpIm8sX48sV9VHyMtAiBK8uZbM3UvO5gh/NBT0mKmcCfo5CPQaeahBX6iY3qrkqenwJLW4ng==
-X-Received: by 2002:a17:902:db07:b0:24e:95bb:88b1 with SMTP id
- d9443c01a7336-28e7f2eec89mr77298595ad.34.1759370701140; 
- Wed, 01 Oct 2025 19:05:01 -0700 (PDT)
-Received: from gromero0.. ([186.215.59.111]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d1d95bdsm9476735ad.119.2025.10.01.19.04.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 19:05:00 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
- berrange@redhat.com
-Cc: qemu-arm@nongnu.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH v5 3/9] tests/functional: Provide GDB to the functional tests
-Date: Thu,  2 Oct 2025 02:04:26 +0000
-Message-Id: <20251002020432.54443-4-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251002020432.54443-1-gustavo.romero@linaro.org>
-References: <20251002020432.54443-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>)
+ id 1v48xQ-0007WT-HW; Wed, 01 Oct 2025 22:22:12 -0400
+Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>)
+ id 1v48xH-0001EQ-D8; Wed, 01 Oct 2025 22:22:09 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id 390B01D007F7;
+ Wed,  1 Oct 2025 22:21:45 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Wed, 01 Oct 2025 22:21:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm1; t=1759371705; x=1759458105; bh=j+30Y+qcrT
+ Ic2Yi220jrPi+ylUldv4RrtBJEEKaXUgY=; b=vF+5VDwLlneOlxX5dKS+tabeiv
+ 8XlgFElZJb/jv+HuPtGq0MWmKRKp6YUEqmFhMRYd4bi6gWA7hokWs3xsyoyZ9/US
+ Z6KeH8Y40aOHBxCi2VyTf+cQd9xrfzoKbeSsW9UB6ZMRGrMoFV9KH424+Mg5E7sz
+ 3FbAc/WEmMQYb8hfTYPRwtPDtef9dtj8E8rGTqADD1ngNiLDyK+4wkrQIlT6fqUU
+ 0McL6S9G+MoRtpw3U96dKpIG+K5nbPnv7YaKoQIxMusTcRrtEvlWUtuD7lGwJCnn
+ kVD4lAfbQwbXdmggYMlHh08cTu/Gf0m9aMZsvSb2nYi/+5ZvAwNXfRIbfeQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1759371705; x=1759458105; bh=j+30Y+qcrTIc2Yi220jrPi+ylUldv4RrtBJ
+ EEKaXUgY=; b=rrxVIgeLE/0jtbOwGcYVicz9zQJTF87bjmQkWTk1S2mp7n7nDGp
+ w9pKzBsO54F9ie9LS2s1gcb1rjbMpyNuSyH+CRGvVYQYtWQ9JigdhMFOnvtX6zQS
+ sBQdWk3dcH9BQ9W31rOQAaGFBOHhD+eMbIkqBDEJX3OvF5boeYpENxfTVskoYKP7
+ X/jCOLIq9VlxXKvA1neo0RbDJQ4MGsbFBFCSkuY+d/HxiMJD12pWz6O1cI9xkz5W
+ NnqICPx5OaZKY4L59T9RHhMzphPmcm4QK25Cvb3th1UKfIZ9jD+idQNevpCM/zqq
+ Tj2IOapMtt+4/HwzAVG+MAUubwJNsvA2Yug==
+X-ME-Sender: <xms:uOHdaNdOnrBnfvrE5HsT3pwp1snHcuXJ9Rtu6zIfLbTSqYnxzcEhwg>
+ <xme:uOHdaOS85b4TbU85jAN63iu0vzYugCivotW3jizuIwC4NSKyk6SqZSUaARuaWgXMI
+ awOmHkBBGFGHoxvs7xW-Tnp-H3Z_kIf6BSHeEDl6nn-MM1Lzlu4NzA>
+X-ME-Received: <xmr:uOHdaBId1OWwTGFKvVsnnAJZbBqXYeCQ6A8wzdhQqBQSEuz2c6Clh0nlZ5o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekgeekudcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
+ cuvffnffculdejtddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtuden
+ ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
+ gtgidrgiihiieqnecuggftrfgrthhtvghrnheptdejjefgudeghfetvddugffhjeefjeef
+ hffffeefleegudevjeellefffedvffelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihiidpnhgspghr
+ tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtlhhgsehkrg
+ hougdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdr
+ ohhrghdprhgtphhtthhopegrnhgurhgvfiesrghjrdhiugdrrghupdhrtghpthhtoheprg
+ hmihhthhgrshhhsehfsgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhho
+ nhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdgrrhhmsehnohhnghhnuhdrohhrgh
+ dprhgtphhtthhopehvihhjrgihkhhhvghmkhgrsehfsgdrtghomhdprhgtphhtthhopehj
+ ohgvlhesjhhmshdrihgurdgruhdprhgtphhtthhopehpkhgrrhhthhhikhgvhigrnhduhe
+ dtleesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:uOHdaDIECa8kooUPER_z2Z7uPErY9G06v2cBjUR3P1dA-fYGa9wgvA>
+ <xmx:uOHdaEgedG5c1yPiGpmV4aN2StELrB1nCKloIEsnqoBfOZqCXl9uqw>
+ <xmx:uOHdaFOld3cwauZCQq9ZExFS6X2e6SNh7Ul8Bi5vR76L1PLBCjmpkQ>
+ <xmx:uOHdaHq4eEiIosdkR7gfNJ4ehoV3oOfQK8Loeve_-arEpkF7R0z2JA>
+ <xmx:ueHdaAutdUwG8PRrbkQjV1wS3N2Xlf_uTLeREPZOjVqdfx4E8IuIzlga>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Oct 2025 22:21:43 -0400 (EDT)
+Date: Wed, 1 Oct 2025 22:21:43 -0400
+From: Patrick Williams <patrick@stwcx.xyz>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@aj.id.au>, Amithash Prasad <amithash@fb.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ Vijay Khemka <vijaykhemka@fb.com>, Joel Stanley <joel@jms.id.au>,
+ Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>,
+ Peter Delevoryas <pdel@fb.com>
+Subject: Re: [PATCH v3] aspeed: Add support for the sonorapass-bmc board
+Message-ID: <aN3ht1MdFppiDcPz@heinlein>
+References: <20200506173035.2154053-1-patrick@stwcx.xyz>
+ <20200506183219.2166987-1-patrick@stwcx.xyz>
+ <0165086d-3ab4-4986-84ff-452984d16153@kaod.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="XNcrLs6Jc4wQQXFC"
+Content-Disposition: inline
+In-Reply-To: <0165086d-3ab4-4986-84ff-452984d16153@kaod.org>
+Received-SPF: pass client-ip=202.12.124.145; envelope-from=patrick@stwcx.xyz;
+ helo=fout-b2-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,86 +119,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The probe of GDB is done in 'configure' and the full path is passed to
-meson.build via the -Dgdb=option.
 
-Meson then can pass the location of GDB to the functional tests via an
-environment variable: QEMU_TEST_GDB.
+--XNcrLs6Jc4wQQXFC
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
----
- configure                     | 2 ++
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 2 ++
- tests/functional/meson.build  | 6 ++++++
- 4 files changed, 12 insertions(+)
+On Tue, Sep 30, 2025 at 07:51:15AM +0200, C=E9dric Le Goater wrote:
+> Hello Patrick
+>=20
+> Would it be possible to contribute a functional test for this
+> machine ?
+>=20
+> The request applies to these Facebook machines :
+>=20
+>    sonorapass-bmc
 
-diff --git a/configure b/configure
-index 0f7eb95586..7226ddd589 100755
---- a/configure
-+++ b/configure
-@@ -1984,6 +1984,8 @@ if test "$skip_meson" = no; then
-   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
-   test "$plugins" = yes && meson_option_add "-Dplugins=true"
-   test "$tcg" != enabled && meson_option_add "-Dtcg=$tcg"
-+  test -n "$gdb_bin" && meson_option_add "-Dgdb=$gdb_bin"
-+
-   run_meson() {
-     NINJA=$ninja $meson setup "$@" "$PWD" "$source_path"
-   }
-diff --git a/meson_options.txt b/meson_options.txt
-index fff1521e58..5bb41bcbc4 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -36,6 +36,8 @@ option('trace_file', type: 'string', value: 'trace',
- option('coroutine_backend', type: 'combo',
-        choices: ['ucontext', 'sigaltstack', 'windows', 'wasm', 'auto'],
-        value: 'auto', description: 'coroutine backend to use')
-+option('gdb', type: 'string', value: '',
-+       description: 'Path to GDB')
- 
- # Everything else can be set via --enable/--disable-* option
- # on the configure script command line.  After adding an option
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 0ebe6bc52a..f4bd21220e 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -58,6 +58,7 @@ meson_options_help() {
-   printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
-   printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
-   printf "%s\n" '                           firmware]'
-+  printf "%s\n" '  --gdb=VALUE              Path to GDB'
-   printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
-   printf "%s\n" '  --includedir=VALUE       Header file directory [include]'
-   printf "%s\n" '  --interp-prefix=VALUE    where to find shared libraries etc., use %M for'
-@@ -323,6 +324,7 @@ _meson_option_parse() {
-     --disable-fuzzing) printf "%s" -Dfuzzing=false ;;
-     --enable-gcrypt) printf "%s" -Dgcrypt=enabled ;;
-     --disable-gcrypt) printf "%s" -Dgcrypt=disabled ;;
-+    --gdb=*) quote_sh "-Dgdb=$2" ;;
-     --enable-gettext) printf "%s" -Dgettext=enabled ;;
-     --disable-gettext) printf "%s" -Dgettext=disabled ;;
-     --enable-gio) printf "%s" -Dgio=enabled ;;
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 2a0c5aa141..725630d308 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -77,6 +77,12 @@ foreach speed : ['quick', 'thorough']
-     test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-                                meson.current_source_dir())
- 
-+    # Define the GDB environment variable if gdb is available.
-+    gdb = get_option('gdb')
-+    if gdb != ''
-+      test_env.set('QEMU_TEST_GDB', gdb)
-+    endif
-+
-     foreach test : target_tests
-       testname = '@0@-@1@'.format(target_base, test)
-       if fs.exists('generic' / 'test_' + test + '.py')
--- 
-2.34.1
+This machine type is deprecated and never went to production.
 
+>    yosemitev2-bmc
+>    tiogapass-bmc
+>    fuji-bmc
+>    fby35-bmc
+
+All of these are used by OpenBMC and/or Meta for QEMU validation of
+new BMC images.  I can get you an image for these if necessary.
+
+>=20
+> Since these machines contribute little to the Aspeed models,
+> their value lies in the firmware they can run to exercise the
+> models. Without functional tests, I plan to schedule their
+> removal in the QEMU 10.2 cycle.
+
+I don't understand this statement.  What does "little value to the
+Aspeed models" have to do with keeping machines in place.  If we are
+only going to have support for machines that you deem as "valuable" why
+would anyone contribute a new machine?  Is this a new policy that QEMU
+only wants specific machine models for any particular SOC?
+
+> The fby35-bmc value is in its multisoc nature. We now have the
+> ast2700fc available as its replacement
+
+We actually don't use the multisoc aspect of this machine.  I'd be fine
+if we drop those pieces specifically but the general "can the BMC image
+boot" is regularly used.
+
+
+--=20
+Patrick Williams
+
+--XNcrLs6Jc4wQQXFC
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmjd4bUACgkQqwNHzC0A
+wRnZYw/+NrLkjuYUl73xo7q438D0K0dBioy4mMnSU2h1WDi4xT2Zu89n0dI62Kus
+4JcSutRKtwoXNC7/6Ky731tsyfzjdg7h+GvcT0IKfbOtDZu78qQJW/j8Lo8TkXqU
+EChgMJq+8n/8zVJMbE1gOEcHhgBlSWFB+QJOtbNzgaFgcCwi42D6S0P2M5E5ne+R
+cvNbJHTCPSa8W0yNV2j6FFyO00bH8xRDitM6O8WHDDbSLrkqtVfnh50KzG26nSuL
+BZcVWfgdIv/KLAbdf+yhKRt+WfBIPDZan3gcN9EgK6vqL6doKnRCl5bAVMH3hVTJ
+ad2IGBVICa33rPPiqcfjDir3ISHPgmrHnUGkRfM3tF7zvW6LV/3YX/qEeNELCgpx
+a2xcUHtIKAreygwYLPr2I78B1crfpJ6sUQPv66j9Ppa2Djf+iHy/wyojpskO1U+m
+4D36+VCqfhU6tz3qsInyoFu7zyP5+z8GdEqOglcT5q7DKLorXTeEsDihIlGoPdCB
++aVmAMA2c0rUnNmqbWI4gYWh1B/V9v1J+5S9tFudgKcqRz8ZkHj/NQiZEaPah9yl
+DB/ACgpTvDK6+XT1rSu7Up2R71N5L2eqg/F29/qMx716kenQj/Vi8meMRFwra/jO
+t5uaoGhQl7KpJy49Zpm36dANKovU8H43kgmDYJEDEzAOTLd3B0U=
+=DtZQ
+-----END PGP SIGNATURE-----
+
+--XNcrLs6Jc4wQQXFC--
 
