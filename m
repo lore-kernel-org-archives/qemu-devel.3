@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D28CCD182
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F352FCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Og5-0002GO-Si; Thu, 02 Oct 2025 15:09:21 -0400
+	id 1v4Ogl-0002cn-TH; Thu, 02 Oct 2025 15:10:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4Og4-0002Ey-5Z
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:09:20 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1v4Ogi-0002aA-CZ
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:10:00 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4Ofp-0000am-RS
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:09:19 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-789fb76b466so1402465b3a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 12:09:01 -0700 (PDT)
+ id 1v4OgX-0001GK-Sp
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:09:59 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-782a77b5ec7so1334102b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 12:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759432139; x=1760036939; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759432184; x=1760036984; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Zk/o9LUvOzAWwmwHoIlGagcTwKIaPR7VIu5I5om5JhQ=;
- b=WNnPq0dI3HbeQeY4pPB2Rae1wEvbfnkXccRy0UkMQWDB71a+QJjwwxkGMmTmtAcA10
- i7/JinTAl2rGoo5qspoq4/I8AI1QDQN8jOYAhPJZ0bZVaoQ77XyKv8AaczhxMRN9KZ9X
- xlBPxT6V6+/OIAWD0H/8xqdsMZpRTuR6D0qgGUlC0BkFCi6k3zRYCI5Klzmf3w+BvHNQ
- 4vsgdbdvBXd76zZIWOq4XGqyMn7koc7FpCw0hSLeYGaHSp258h5z7HsGkXKODunrVeMk
- Y34AM2wT7yfjs9EbSwLqWGz/IPw9Zdi/pkk4mUuUJinXmYi8p8GvIfBbu2BsON5bXb0X
- ZkRQ==
+ bh=kdz26z0PQ9gIHm/ArAOjbCtf1dgpjBY7z5K+yG+GOb0=;
+ b=vY8k3420p2S23b4tXkY92qJLESy+hs0PNB4fVWfdopH4LVnwZx3cFG6I7jgh2RTOtA
+ Y9AP1Hl2XSZuyWAS3U+N3tzRaM++ByIcnidRanofti00A55vEklIpmezv6FAzCdH5r0m
+ Tc0Wg4Y8qWbZXQtSyUZpk1Z2qP2nlF6O45++HigmSgkM51FI2q5SLwB4jjt3nDD5pJe7
+ FmhVBt0WN7Wu1HJNlCl0tjrY5EgrkfTpbqQhClhYrrarPsQ0fE4W7MA1JKR5EzynGwfl
+ sCvPOEscA9fgrz2yL+GyLRUGXLqOWLTABkAPSmM5mUypezva8O4cLP/Bx1xVOJqyR29u
+ AjnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759432139; x=1760036939;
+ d=1e100.net; s=20230601; t=1759432184; x=1760036984;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zk/o9LUvOzAWwmwHoIlGagcTwKIaPR7VIu5I5om5JhQ=;
- b=vAOeeBBZ5ZoIH6DF06xE4oJLl+B3krUpeOBJGstzG3pkYD3C6ndmGPyV+HaknsC2Dr
- /BCEus3ZYasAnWPc6NClwomOxmTA902lZFgKgLpFrYsy1MgZzr1AXTH8sJxxdplGpoc9
- lDkfkJkehxPmtHPi+bA9BVxBik8P8UB1sEZpSn5STSQ0s0Tdrds4rhkE+9SNYsWLu+H7
- D6uSySkMz4i7I6SEpQwbQCtVZX7UgPUqDdvPXI1qZf9T6SpS+xRr3NjJaXb7gXJR3YwS
- t/mAvsb1a0wAyvpDqgH4F7/HL4wpRpFAqAYS031h47SEoXLQ8vjkEO6LDU5UFiq65KXh
- gJVQ==
+ bh=kdz26z0PQ9gIHm/ArAOjbCtf1dgpjBY7z5K+yG+GOb0=;
+ b=GApuWMqHNEyOtNjEUhaU04Fr0lHh3OykijLlC8iYmwp1sEsNmX/BYEhdVUwWZDpaqJ
+ 03plmu+0PVfnnDpzruiuyxMc9ze1f03KB5GMd/TBbSZNIE2FSQF2QhlKjvs+JMBXptGA
+ Ls8W2hOBK72TDR4dZaK5ff/JYHBpXklMMeyP9j5AWPkAZCOpVHjOQ7c0/rMTLTrHF8Tv
+ AAdc3XV8rxm1uKrRevuz9FZlLqdQkLYYxUEPz+zq/tn5DN9PWpRRAdV3UCYdm7+hse3C
+ oJq20kmzHLra+gBoeK+jUMdvOMMZD7wRe54agM4MpjPLJblx2fiuGr+RdhWTgFoj8gBw
+ KQ7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURxJ70l24xDzv/dJGI/u/L8+K2CF1Zwm5h6cow+S7Bc177Q/LiAp/c7bhCRHXZ8sA185dsA422c5F2@nongnu.org
-X-Gm-Message-State: AOJu0Yx+qakBYuaKh80CNyMzaow+9GZ3DVNuhqUsYThNHwS3oUJvTePr
- lDhZYBC4pOuJ5+30hFDSoEkHYgG7JkuFzA0dMg6CNkdWNf7j1pzwMLkz/MiLoWb8NTY=
-X-Gm-Gg: ASbGncss1L0SgXCNfXccQ2iY5OBkqiXVmvDozW//1ps7X6TTb7kptug5vQP4xaVYZQ7
- RfJBIT8ilt4QrQ6gGSHG57VjkWNolJU/m1prqVvDsnBH273Bnkyu6n0i0FEeTcW5XcIslYqRoKy
- djqap9SmSpvLlTG80bCIgYUQa3TH0uSTC2iu/L3ITsDlCUN2ER3wHDKtHhwRn7nNyO4NXUbFwY9
- jd30EIHgqkuCpjJK4ZO6LEo0p0jr05vA9jL4VPRIrEGkp9nqtfUK02a4Ykg9dbu4BhI3MNA5PeT
- vKAOXD3KCXwxd6xNEqk6T6vM+jCsjlS+lahMTK+tu0cQQIaVXrb+9LlX2H2+IwrGDsO4TYIUJsZ
- SCedHpuS2OrrIn4qGqWU08vQbb58lkUKias7YPhYMfIcu73Xn2D5K3lZDSkW3Mw0=
-X-Google-Smtp-Source: AGHT+IEnnq6Y8OvXL2dB+a3XafD5lwjoV4Xo+sAbphAZJKY1D30TVh0XlhNXjawhOqTkQWIyXri1wg==
-X-Received: by 2002:a17:90b:4d0b:b0:336:bfce:3b48 with SMTP id
- 98e67ed59e1d1-339c271e937mr555141a91.9.1759432138612; 
- Thu, 02 Oct 2025 12:08:58 -0700 (PDT)
+ AJvYcCWhMHQQ82C8B1hwU5GJNwcmM6XYw9h/9qmC52dhiY7UfxNPXk6rLg6+Sf6HzQZ/AaOEVeqYgvysiO2E@nongnu.org
+X-Gm-Message-State: AOJu0YwaUy0BBIUE/bZUrnmHhH4SmAS45AUhoTelgZE+CAncP/EtSvug
+ wuDyb19ym7laXd1CHp4bjjfQZg/G4oBI248qmUPAQygWFTcpn6mvgLzfFLZv1NTVml5VEME1kYx
+ Klt7w
+X-Gm-Gg: ASbGncuKZTcumSt94zWgvMq4gzn3z7akNxCd5SqBsr74TFL2k3E2LOXcS9HSKPs3vej
+ 1vQdwpqSh42IR1htaVpfbGzpIotf8ljliuB/wafk8N9JlF9RdO0m+F3eJTtLFvaTJuXo1MOi+g8
+ gGEp+qwxqB0KZtbK+lOTRItBBv+jTZ7wAtXGKTacuSDR4OuEMW15wIzepTcI8qRNZ4I9wuG6CLR
+ nzGNZh2jqtxND7dDbLVvUHSSD8dv1A1nCkbepZdawGFpCQ/98XkTiF6NmPQ4guAu7t271oCIep7
+ 7nC2NOTUUQks6MyvHnXNrrIyUryRYmVQ7x6XbitPoPX7Y0fwEbqBVT5ohKIiBiw2iCP+zW/sXDP
+ 2OHpNK2CXC/gmRXJryl64C5rQdrj0ZowzIeUHLkFvQuBhv32b34poAiEJV4EOlaI=
+X-Google-Smtp-Source: AGHT+IH9GhTluu9Z/gvWGejvEZ/cs/em+6nz+6hUuq3nq9EaHod+L9H+vtI9Vif0eZIdnL6uPMvxTA==
+X-Received: by 2002:a05:6a00:3e08:b0:781:157b:3d2e with SMTP id
+ d2e1a72fcca58-78c98dc4e23mr697883b3a.21.1759432183957; 
+ Thu, 02 Oct 2025 12:09:43 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a6e9d2d4sm5819029a91.2.2025.10.02.12.08.57
+ d2e1a72fcca58-78b02053584sm2794668b3a.50.2025.10.02.12.09.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 12:08:58 -0700 (PDT)
-Message-ID: <e1748ad3-3475-4cce-8add-2a1d76994f0b@linaro.org>
-Date: Thu, 2 Oct 2025 12:08:57 -0700
+ Thu, 02 Oct 2025 12:09:43 -0700 (PDT)
+Message-ID: <2edd23b4-42da-4018-9885-2e54f22437cf@linaro.org>
+Date: Thu, 2 Oct 2025 12:09:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 05/33] target/riscv: Combine mhpmevent and mhpmeventh
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, richard.henderson@linaro.org,
- alistair.francis@wdc.com, palmer@dabbelt.com
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
 References: <20251001073306.28573-1-anjo@rev.ng>
  <20251001073306.28573-6-anjo@rev.ng>
+ <84c9b930-5f93-4175-9605-a67054187079@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251001073306.28573-6-anjo@rev.ng>
+In-Reply-To: <84c9b930-5f93-4175-9605-a67054187079@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,78 +107,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 12:32 AM, Anton Johansson wrote:
-> According to version 20250508 of the privileged specification,
-> mhpmeventn is 64 bits in size and mhpmeventnh is only ever used
-> when XLEN == 32 and accesses the top 32 bits of the 64-bit
-> mhpmeventn registers. Combine the two arrays of target_ulong
-> mhpmeventh[] and mhpmevent[] to a single array of uint64_t.
+On 10/1/25 12:39 AM, Philippe Mathieu-Daudé wrote:
+> On 1/10/25 09:32, Anton Johansson wrote:
+>> According to version 20250508 of the privileged specification,
+>> mhpmeventn is 64 bits in size and mhpmeventnh is only ever used
+>> when XLEN == 32 and accesses the top 32 bits of the 64-bit
+>> mhpmeventn registers. Combine the two arrays of target_ulong
+>> mhpmeventh[] and mhpmevent[] to a single array of uint64_t.
+>>
+>> This also allows for some minor code simplification where branches
+>> handling either mhpmeventh[] or mhpmevent[] could be combined.
+>>
+>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>> ---
+>>    target/riscv/cpu.h     | 10 +++----
+>>    target/riscv/csr.c     | 67 +++++++++++++++---------------------------
+>>    target/riscv/machine.c |  3 +-
+>>    target/riscv/pmu.c     | 53 ++++++++-------------------------
+>>    4 files changed, 42 insertions(+), 91 deletions(-)
 > 
-> This also allows for some minor code simplification where branches
-> handling either mhpmeventh[] or mhpmevent[] could be combined.
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/riscv/cpu.h     | 10 +++----
->   target/riscv/csr.c     | 67 +++++++++++++++---------------------------
->   target/riscv/machine.c |  3 +-
->   target/riscv/pmu.c     | 53 ++++++++-------------------------
->   4 files changed, 42 insertions(+), 91 deletions(-)
+>> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+>> index 328fb674e1..d9939489e1 100644
+>> --- a/target/riscv/machine.c
+>> +++ b/target/riscv/machine.c
+>> @@ -452,8 +452,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+>>            VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
+>>            VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
+>>                                 vmstate_pmu_ctr_state, PMUCTRState),
+>> -        VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+>> -        VMSTATE_UINTTL_ARRAY(env.mhpmeventh_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+>> +        VMSTATE_UINT64_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 3235108112..64b9964028 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -427,11 +427,11 @@ struct CPUArchState {
->       /* PMU counter state */
->       PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
->   
-> -    /* PMU event selector configured values. First three are unused */
-> -    target_ulong mhpmevent_val[RV_MAX_MHPMEVENTS];
-> -
-> -    /* PMU event selector configured values for RV32 */
-> -    target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
-> +    /*
-> +     * PMU event selector configured values. First three are unused.
-> +     * For RV32 top 32 bits are accessed via the mhpmeventh CSR.
-> +     */
-> +    uint64_t mhpmevent_val[RV_MAX_MHPMEVENTS];
->   
->       PMUFixedCtrState pmu_fixed_ctrs[2];
->   
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 859f89aedd..2d8916ee40 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1166,8 +1166,9 @@ static RISCVException read_mhpmevent(CPURISCVState *env, int csrno,
->                                        target_ulong *val)
->   {
->       int evt_index = csrno - CSR_MCOUNTINHIBIT;
-> +    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
->   
-> -    *val = env->mhpmevent_val[evt_index];
-> +    *val = extract64(env->mhpmevent_val[evt_index], 0, rv32 ? 32 : 64);
->   
->       return RISCV_EXCP_NONE;
->   }
-> @@ -1176,13 +1177,11 @@ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
->                                         target_ulong val, uintptr_t ra)
->   {
->       int evt_index = csrno - CSR_MCOUNTINHIBIT;
-> -    uint64_t mhpmevt_val = val;
-> +    uint64_t mhpmevt_val;
->       uint64_t inh_avail_mask;
->   
->       if (riscv_cpu_mxl(env) == MXL_RV32) {
-> -        env->mhpmevent_val[evt_index] = val;
-> -        mhpmevt_val = mhpmevt_val |
-> -                      ((uint64_t)env->mhpmeventh_val[evt_index] << 32);
-> +        mhpmevt_val = deposit64(env->mhpmevent_val[evt_index], 0, 32, val);
+> Each time you change a VMStateDescription structure you need to bump its
+> version.
 
-Maybe I missed something, but should it be:
-deposit64(env->mhpmevent_val[evt_index], 32, 32, val)
-instead?
-
-Reading the rest of the patch, I'm a bit confused about which bits are 
-supposed to be used in 32/64 mode.
+Maybe we could agree with Alistair if we prefer a single bump for whole 
+series, or bump on any change within this series.
 
