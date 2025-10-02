@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EA0CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 17:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3761BCCD182
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 17:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Muz-0000pe-Vl; Thu, 02 Oct 2025 13:16:38 -0400
+	id 1v4Mvu-0001H4-M0; Thu, 02 Oct 2025 13:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v4Mue-0000b2-Un
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:16:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v4MvT-000116-0d
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:17:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v4MuL-0005ca-8j
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:16:10 -0400
+ id 1v4MvF-0005rh-I6
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759425349;
+ s=mimecast20190719; t=1759425408;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S8mgIyUucNwmMx4EjvXo3O9E8ww8tXMy2EwnkJclxwU=;
- b=B8LFM/VF8bvO+3dOKy2519M+mbdQvZJk3B+H0E/nHadrGiK7/I88Dm3pXUpe4XyylShwuw
- QU3V1H/b10BTJrQMOX4gUim+L9cZ1Nkzf9thixr6JU4QfOyjdM2ZaN+KKvzjq0lhH4KL0R
- Lyp82WQQOVfSBshCZZQav0Ria21r+v4=
+ bh=uB+V3u/aPrqwLddsF879FaTd8eb+vL09HILtMavahqo=;
+ b=DNVyALBR8Myijppod88DUixh/GxOCssCWTODfaJV+8voH3jWUFlKh3T1qDI69pdkmE0P7Z
+ xU1gPc08Z293P8H1lxXoY6do7o2eebtDSpfPXvVArrmb0lKUTuSlSaC8ao/mL7lDm1/IwL
+ GqiSTxIPjq1UO01bsF5xTRuAaf5UrTU=
 Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
  [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608--cTr-pXSPkqsvYfUT3bLGg-1; Thu, 02 Oct 2025 13:15:48 -0400
-X-MC-Unique: -cTr-pXSPkqsvYfUT3bLGg-1
-X-Mimecast-MFC-AGG-ID: -cTr-pXSPkqsvYfUT3bLGg_1759425347
+ us-mta-37-TrA5zC-mPSu1u3OI1nzpEA-1; Thu, 02 Oct 2025 13:16:47 -0400
+X-MC-Unique: TrA5zC-mPSu1u3OI1nzpEA-1
+X-Mimecast-MFC-AGG-ID: TrA5zC-mPSu1u3OI1nzpEA_1759425406
 Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-634cdb5d528so2559242a12.1
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 10:15:48 -0700 (PDT)
+ 4fb4d7f45d1cf-638f4eaf806so170156a12.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 10:16:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759425346; x=1760030146;
+ d=1e100.net; s=20230601; t=1759425405; x=1760030205;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S8mgIyUucNwmMx4EjvXo3O9E8ww8tXMy2EwnkJclxwU=;
- b=wmxkiLLOVT+kQYUk5fyd5fVXAA0RJ5EWRxEBH+GfBI/EAPthFfQ8aWzT7mHKVWxucI
- LEc7knUqfuBm3CV1sZGU6+HnNXkW9uHlbsPcyde0fVUJpRhFLGDj79qO+M6PdPCvVcMn
- Xbm3pIoQ3FcobtZFHHW20XTl4ElHggI6w7IenEALYF2ZiVhjXy34CixGwhzFJBPTDf7G
- xB8P3d5iul9ANOtDgsAKD3lMi3872Jl9MIjyEl9cCmz+TJPmIXSzmzgXAz8GwVZr5Tbb
- jx7+nLUCYyZQ8Jsl5m/WGTCD0GD4KQ0aJBHRRjRbYBZWeMhIdjQXv/yOrsNTPLV4oxF0
- R4SA==
-X-Gm-Message-State: AOJu0YzG9QrKD0qbM2mXqLZyelfggoQchSKZ1e1A17yHmzqNdP1scnKu
- /AT2jEsbkzP73MYsRj0idVRd5yF68vgKBWBKWdhcajDPtKjF3/j80MPqtFlfitcKXmrX4XhPCfS
- DBTnZ9GJXgAw0+9IdPOTG75lAQy/t9L7jeANDUjMzIIjWs/gJwkAgtg4XVhIU00m0AX2MmcHxat
- I7LA/oXPOYcU7C/U88f2cwjw+dCu8aYsGxjUJthm71
-X-Gm-Gg: ASbGncuCyuNQCMVvV3oaXepivFsTE64G0sfJDl6H1hD3q0minVLy5Rkq1HsZoe3Vfai
- OL4HSLeXNoZobbqySWhMvD8iGKyvfC+9NSS6JCmpsk3dVBwsW3p9039D11G/R+MFnOJMoCFMqjP
- fRlNnlg5YCXuaJQVUO37dbfeQ6SgPtWDnh4G7kcIURbKSePMN/f8dJnu++XyLRFlyREOEyvpYLA
- 1RC7XmbL2x38n22JsJ31226MOQcg3QxoOl+KnMMV8Z90PniSSiCDmpxUzZulbld6tVmHfsKS3f9
- zCMfWqTEdrwooA5uv4bHGndm+eLhJ+tVUyWeh6Ls3B5R9M/hknrqnJPERUM3nPzr84xyvXcHhce
- Ai+Mqsb+R2/VGEEzTl/lpe0QAWDpkJBEdyD/JIWmRB2tabCr/
-X-Received: by 2002:a05:6402:28a8:b0:61c:b23f:417e with SMTP id
- 4fb4d7f45d1cf-6376a8cbb40mr3252415a12.2.1759425346099; 
- Thu, 02 Oct 2025 10:15:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGytOM5VjsUFLy82AEoPjbJr5WZdcqzGyIe/V/hwiMXxxLDEbgPi/tKihDyHQ4bi5dk/5ANRA==
-X-Received: by 2002:a05:6402:28a8:b0:61c:b23f:417e with SMTP id
- 4fb4d7f45d1cf-6376a8cbb40mr3252382a12.2.1759425345592; 
- Thu, 02 Oct 2025 10:15:45 -0700 (PDT)
+ bh=uB+V3u/aPrqwLddsF879FaTd8eb+vL09HILtMavahqo=;
+ b=phDdo+KUqtwm62RPvgqLPmU0lT7wY21D6tvOZl9ODYQrvGNYTv6VvBJ/oQe7wScMWo
+ 9OuROzm510NmRHRZC+J1zkLBJ8Xh0rN037V6Z99pCSNFw7s72WWPUbVO3/JGXKBzIiaL
+ 7zZNJpVszTQwsxcRHCMtyObb+n/mYI17RSB0QldK5YA31CKgJLY7wAe+f/A5+pmq/xJA
+ 2C+aPw+C+FJ/EJrr5ALkoVqYZBB3ETWtD5np1wv5bEUabyfBwE2rFIFBe28w0VGVvI5T
+ UAalYBbA4gVu8C/I4Bqi/R5aI4m4WIP0z6kDzvW4jzEkY6JZhnO275jRsDDgCvhF/eJ7
+ mUog==
+X-Gm-Message-State: AOJu0YzB188nE+/rdmz/xJZ0i7JmK6KkThBCBTXVkeeFqnLZXTm4z8qF
+ C/w1TNr0ovUYqYSLrAe71zWFcMDRWhq8KKQ7Cwhpn3pTtahEbK5fEQSvibn1qV6EPh753fxyzYz
+ 2uSgVs4W12+hoGOTZlcWm9gIiNrUOA0NPxYGvvLs1dL1p7jTmqBmfa8kbmiZiSmqZKpDjJ11XnT
+ Ns8ES8YYxrEaepFsMu5sO0cK4rmOJwGqytyelbunIe
+X-Gm-Gg: ASbGncvDidLeu4M58pS6HyR5m1dwu1xFXn20XkGDLWdzRybyT00fBmTi0BDo+tHQjo4
+ 5vIC755niZBYp1syGnIe389AOHeTI1a8YKTu0mhpc9Py/sqR9YIiuNXMpI0n35wu1AIWhSuK8CE
+ Ng3JC/0ULDNZ3yg7FbMMU53T9b60cfhB9iEH1Z6NRX4xiegA1bumQWolm+24hYCZgSx6aMT+plS
+ EN0SOsf9Z3/H+zUCpdeglM86SOM5e6AQCa13FqplOYSVCVMfnK0VDnDdk7AY+TcjpCwRmaNuFGK
+ hwuEgSIL4IUmx5WOHVSTz67Mo4YlXEVoGINddgORU5bLX4qNx1fisEaRUzKWVNJsbHKUptsTPvo
+ +LyVKNzOLJaGvau483ZdTlNLkeUAoD862FzXnmIcBFez2OeLO
+X-Received: by 2002:a05:6402:1e95:b0:638:3f72:125a with SMTP id
+ 4fb4d7f45d1cf-6383f72157dmr1138963a12.14.1759425404880; 
+ Thu, 02 Oct 2025 10:16:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbKQa2ezHyz7vYFTCZhzvNhiHQnaV19wXBRfr3cnw3DL9rQHzWeiCP+1zjsVXlqth8vqWVlw==
+X-Received: by 2002:a05:6402:1e95:b0:638:3f72:125a with SMTP id
+ 4fb4d7f45d1cf-6383f72157dmr1138904a12.14.1759425404194; 
+ Thu, 02 Oct 2025 10:16:44 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.91.106])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6378811f25fsm2165623a12.46.2025.10.02.10.15.44
+ 4fb4d7f45d1cf-63788111f1fsm2251293a12.36.2025.10.02.10.16.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 10:15:44 -0700 (PDT)
+ Thu, 02 Oct 2025 10:16:43 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, magnus.kulke@linux.microsoft.com, wei.liu@kernel.org,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH 03/27] target/i386/mshv: Add x86 decoder/emu implementation
-Date: Thu,  2 Oct 2025 19:15:12 +0200
-Message-ID: <20251002171536.1460049-4-pbonzini@redhat.com>
+Subject: [PATCH 22/27] target/i386/mshv: Implement mshv_vcpu_run()
+Date: Thu,  2 Oct 2025 19:15:31 +0200
+Message-ID: <20251002171536.1460049-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002171536.1460049-1-pbonzini@redhat.com>
 References: <20251002171536.1460049-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,420 +112,478 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-The MSHV accelerator requires a x86 decoder/emulator in userland to
-emulate MMIO instructions. This change contains the implementations for
-the generalized i386 instruction decoder/emulator.
+Add the main vCPU execution loop for MSHV using the MSHV_RUN_VP ioctl.
+
+The execution loop handles guest entry and VM exits. There are handlers for
+memory r/w, PIO and MMIO to which the exit events are dispatched.
+
+In case of MMIO the i386 instruction decoder/emulator is invoked to
+perform the operation in user space.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250916164847.77883-4-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20250916164847.77883-23-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv.h           |  25 +++
- target/i386/cpu.h               |   2 +-
- target/i386/mshv/x86.c          | 297 ++++++++++++++++++++++++++++++++
- target/i386/emulate/meson.build |   7 +-
- target/i386/meson.build         |   2 +
- target/i386/mshv/meson.build    |   7 +
- 6 files changed, 337 insertions(+), 3 deletions(-)
- create mode 100644 include/system/mshv.h
- create mode 100644 target/i386/mshv/x86.c
- create mode 100644 target/i386/mshv/meson.build
+ target/i386/mshv/mshv-cpu.c | 444 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 442 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-new file mode 100644
-index 00000000000..342f1ef6a98
---- /dev/null
-+++ b/include/system/mshv.h
-@@ -0,0 +1,25 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors: Ziqiao Zhou  <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke <magnuskulke@microsoft.com>
-+ *          Jinank Jain  <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#ifndef QEMU_MSHV_H
-+#define QEMU_MSHV_H
-+
-+#ifdef COMPILING_PER_TARGET
-+#ifdef CONFIG_MSHV
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+#else
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+
-+#endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 42168f1d6d8..3aec8fd41c8 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2126,7 +2126,7 @@ typedef struct CPUArchState {
-     QEMUTimer *xen_periodic_timer;
-     QemuMutex xen_timers_lock;
- #endif
--#if defined(CONFIG_HVF)
-+#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
-     void *emu_mmio_buf;
- #endif
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 33a3ce8b110..7edc032cea3 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1082,10 +1082,450 @@ void mshv_arch_amend_proc_features(
+     features->access_guest_idle_reg = 1;
+ }
  
-diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
-new file mode 100644
-index 00000000000..d574b3bc52f
---- /dev/null
-+++ b/target/i386/mshv/x86.c
-@@ -0,0 +1,297 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "qemu/typedefs.h"
-+#include "qemu/error-report.h"
-+#include "system/mshv.h"
-+
-+/* RW or Exec segment */
-+static const uint8_t RWRX_SEGMENT_TYPE        = 0x2;
-+static const uint8_t CODE_SEGMENT_TYPE        = 0x8;
-+static const uint8_t EXPAND_DOWN_SEGMENT_TYPE = 0x4;
-+
-+typedef enum CpuMode {
-+    REAL_MODE,
-+    PROTECTED_MODE,
-+    LONG_MODE,
-+} CpuMode;
-+
-+static CpuMode cpu_mode(CPUState *cpu)
++static int set_memory_info(const struct hyperv_message *msg,
++                           struct hv_x64_memory_intercept_message *info)
 +{
-+    enum CpuMode m = REAL_MODE;
-+
-+    if (x86_is_protected(cpu)) {
-+        m = PROTECTED_MODE;
-+
-+        if (x86_is_long_mode(cpu)) {
-+            m = LONG_MODE;
-+        }
++    if (msg->header.message_type != HVMSG_GPA_INTERCEPT
++            && msg->header.message_type != HVMSG_UNMAPPED_GPA
++            && msg->header.message_type != HVMSG_UNACCEPTED_GPA) {
++        error_report("invalid message type");
++        return -1;
 +    }
++    memcpy(info, msg->payload, sizeof(*info));
 +
-+    return m;
++    return 0;
 +}
 +
-+static bool segment_type_ro(const SegmentCache *seg)
++static int emulate_instruction(CPUState *cpu,
++                               const uint8_t *insn_bytes, size_t insn_len,
++                               uint64_t gva, uint64_t gpa)
 +{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & (~RWRX_SEGMENT_TYPE)) == 0;
-+}
-+
-+static bool segment_type_code(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & CODE_SEGMENT_TYPE) != 0;
-+}
-+
-+static bool segment_expands_down(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+
-+    if (segment_type_code(seg)) {
-+        return false;
-+    }
-+
-+    return (type_ & EXPAND_DOWN_SEGMENT_TYPE) != 0;
-+}
-+
-+static uint32_t segment_limit(const SegmentCache *seg)
-+{
-+    uint32_t limit = seg->limit;
-+    uint32_t granularity = (seg->flags & DESC_G_MASK) != 0;
-+
-+    if (granularity != 0) {
-+        limit = (limit << 12) | 0xFFF;
-+    }
-+
-+    return limit;
-+}
-+
-+static uint8_t segment_db(const SegmentCache *seg)
-+{
-+    return (seg->flags >> DESC_B_SHIFT) & 1;
-+}
-+
-+static uint32_t segment_max_limit(const SegmentCache *seg)
-+{
-+    if (segment_db(seg) != 0) {
-+        return 0xFFFFFFFF;
-+    }
-+    return 0xFFFF;
-+}
-+
-+static int linearize(CPUState *cpu,
-+                     target_ulong logical_addr, target_ulong *linear_addr,
-+                     X86Seg seg_idx)
-+{
-+    enum CpuMode mode;
 +    X86CPU *x86_cpu = X86_CPU(cpu);
 +    CPUX86State *env = &x86_cpu->env;
-+    SegmentCache *seg = &env->segs[seg_idx];
-+    target_ulong base = seg->base;
-+    target_ulong logical_addr_32b;
-+    uint32_t limit;
-+    /* TODO: the emulator will not pass us "write" indicator yet */
-+    bool write = false;
++    struct x86_decode decode = { 0 };
++    int ret;
++    x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
 +
-+    mode = cpu_mode(cpu);
++    ret = mshv_load_regs(cpu);
++    if (ret < 0) {
++        error_report("failed to load registers");
++        return -1;
++    }
 +
-+    switch (mode) {
-+    case LONG_MODE:
-+        if (__builtin_add_overflow(logical_addr, base, linear_addr)) {
-+            error_report("Address overflow");
-+            return -1;
-+        }
-+        break;
-+    case PROTECTED_MODE:
-+    case REAL_MODE:
-+        if (segment_type_ro(seg) && write) {
-+            error_report("Cannot write to read-only segment");
-+            return -1;
-+        }
++    decode_instruction_stream(env, &decode, &stream);
++    exec_instruction(env, &decode);
 +
-+        logical_addr_32b = logical_addr & 0xFFFFFFFF;
-+        limit = segment_limit(seg);
-+
-+        if (segment_expands_down(seg)) {
-+            if (logical_addr_32b >= limit) {
-+                error_report("Address exceeds limit (expands down)");
-+                return -1;
-+            }
-+
-+            limit = segment_max_limit(seg);
-+        }
-+
-+        if (logical_addr_32b > limit) {
-+            error_report("Address exceeds limit %u", limit);
-+            return -1;
-+        }
-+        *linear_addr = logical_addr_32b + base;
-+        break;
-+    default:
-+        error_report("Unknown cpu mode: %d", mode);
++    ret = mshv_store_regs(cpu);
++    if (ret < 0) {
++        error_report("failed to store registers");
 +        return -1;
 +    }
 +
 +    return 0;
 +}
 +
-+bool x86_read_segment_descriptor(CPUState *cpu,
-+                                 struct x86_segment_descriptor *desc,
-+                                 x86_segment_selector sel)
++static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
++                       MshvVmExit *exit_reason)
 +{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    memset(desc, 0, sizeof(*desc));
-+
-+    /* valid gdt descriptors start from index 1 */
-+    if (!sel.index && GDT_SEL == sel.ti) {
-+        return false;
-+    }
-+
-+    if (GDT_SEL == sel.ti) {
-+        base = env->gdt.base;
-+        limit = env->gdt.limit;
-+    } else {
-+        base = env->ldt.base;
-+        limit = env->ldt.limit;
-+    }
-+
-+    if (sel.index * 8 >= limit) {
-+        return false;
-+    }
-+
-+    gva = base + sel.index * 8;
-+    emul_ops->read_mem(cpu, desc, gva, sizeof(*desc));
-+
-+    return true;
-+}
-+
-+bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
-+                        int gate)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    base = env->idt.base;
-+    limit = env->idt.limit;
-+
-+    memset(idt_desc, 0, sizeof(*idt_desc));
-+    if (gate * 8 >= limit) {
-+        perror("call gate exceeds idt limit");
-+        return false;
-+    }
-+
-+    gva = base + gate * 8;
-+    emul_ops->read_mem(cpu, idt_desc, gva, sizeof(*idt_desc));
-+
-+    return true;
-+}
-+
-+bool x86_is_protected(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PE_MASK;
-+}
-+
-+bool x86_is_real(CPUState *cpu)
-+{
-+    return !x86_is_protected(cpu);
-+}
-+
-+bool x86_is_v8086(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    return x86_is_protected(cpu) && (env->eflags & VM_MASK);
-+}
-+
-+bool x86_is_long_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t efer = env->efer;
-+    uint64_t lme_lma = (MSR_EFER_LME | MSR_EFER_LMA);
-+
-+    return ((efer & lme_lma) == lme_lma);
-+}
-+
-+bool x86_is_long64_mode(CPUState *cpu)
-+{
-+    error_report("unimplemented: is_long64_mode()");
-+    abort();
-+}
-+
-+bool x86_is_paging_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PG_MASK;
-+}
-+
-+bool x86_is_pae_enabled(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr4 = env->cr[4];
-+
-+    return cr4 & CR4_PAE_MASK;
-+}
-+
-+target_ulong linear_addr(CPUState *cpu, target_ulong addr, X86Seg seg)
-+{
++    struct hv_x64_memory_intercept_message info = { 0 };
++    size_t insn_len;
++    uint8_t access_type;
++    uint8_t *instruction_bytes;
 +    int ret;
-+    target_ulong linear_addr;
 +
-+    ret = linearize(cpu, addr, &linear_addr, seg);
++    ret = set_memory_info(msg, &info);
 +    if (ret < 0) {
-+        error_report("failed to linearize address");
++        error_report("failed to convert message to memory info");
++        return -1;
++    }
++    insn_len = info.instruction_byte_count;
++    access_type = info.header.intercept_access_type;
++
++    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_EXECUTE) {
++        error_report("invalid intercept access type: execute");
++        return -1;
++    }
++
++    if (insn_len > 16) {
++        error_report("invalid mmio instruction length: %zu", insn_len);
++        return -1;
++    }
++
++    trace_mshv_handle_mmio(info.guest_virtual_address,
++                           info.guest_physical_address,
++                           info.instruction_byte_count, access_type);
++
++    instruction_bytes = info.instruction_bytes;
++
++    ret = emulate_instruction(cpu, instruction_bytes, insn_len,
++                              info.guest_virtual_address,
++                              info.guest_physical_address);
++    if (ret < 0) {
++        error_report("failed to emulate mmio");
++        return -1;
++    }
++
++    *exit_reason = MshvVmExitIgnore;
++
++    return 0;
++}
++
++static int set_ioport_info(const struct hyperv_message *msg,
++                           hv_x64_io_port_intercept_message *info)
++{
++    if (msg->header.message_type != HVMSG_X64_IO_PORT_INTERCEPT) {
++        error_report("Invalid message type");
++        return -1;
++    }
++    memcpy(info, msg->payload, sizeof(*info));
++
++    return 0;
++}
++
++static int set_x64_registers(const CPUState *cpu, const uint32_t *names,
++                             const uint64_t *values)
++{
++
++    hv_register_assoc assocs[2];
++    int ret;
++
++    for (size_t i = 0; i < ARRAY_SIZE(assocs); i++) {
++        assocs[i].name = names[i];
++        assocs[i].value.reg64 = values[i];
++    }
++
++    ret = mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++    if (ret < 0) {
++        error_report("failed to set x64 registers");
++        return -1;
++    }
++
++    return 0;
++}
++
++static inline MemTxAttrs get_mem_attrs(bool is_secure_mode)
++{
++    MemTxAttrs memattr = {0};
++    memattr.secure = is_secure_mode;
++    return memattr;
++}
++
++static void pio_read(uint64_t port, uint8_t *data, uintptr_t size,
++                     bool is_secure_mode)
++{
++    int ret = 0;
++    MemTxAttrs memattr = get_mem_attrs(is_secure_mode);
++    ret = address_space_rw(&address_space_io, port, memattr, (void *)data, size,
++                           false);
++    if (ret != MEMTX_OK) {
++        error_report("Failed to read from port %lx: %d", port, ret);
 +        abort();
 +    }
-+
-+    return linear_addr;
 +}
 +
-+target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
-+                              X86Seg seg)
++static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
++                     bool is_secure_mode)
 +{
-+    switch (size) {
-+    case 2:
-+        addr = (uint16_t)addr;
-+        break;
-+    case 4:
-+        addr = (uint32_t)addr;
-+        break;
++    int ret = 0;
++    MemTxAttrs memattr = get_mem_attrs(is_secure_mode);
++    ret = address_space_rw(&address_space_io, port, memattr, (void *)data, size,
++                           true);
++    return ret;
++}
++
++static int handle_pio_non_str(const CPUState *cpu,
++                              hv_x64_io_port_intercept_message *info)
++{
++    size_t len = info->access_info.access_size;
++    uint8_t access_type = info->header.intercept_access_type;
++    int ret;
++    uint32_t val, eax;
++    const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
++    size_t insn_len;
++    uint64_t rip, rax;
++    uint32_t reg_names[2];
++    uint64_t reg_values[2];
++    uint16_t port = info->port_number;
++
++    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++        union {
++            uint32_t u32;
++            uint8_t bytes[4];
++        } conv;
++
++        /* convert the first 4 bytes of rax to bytes */
++        conv.u32 = (uint32_t)info->rax;
++        /* secure mode is set to false */
++        ret = pio_write(port, conv.bytes, len, false);
++        if (ret < 0) {
++            error_report("Failed to write to io port");
++            return -1;
++        }
++    } else {
++        uint8_t data[4] = { 0 };
++        /* secure mode is set to false */
++        pio_read(info->port_number, data, len, false);
++
++        /* Preserve high bits in EAX, but clear out high bits in RAX */
++        val = *(uint32_t *)data;
++        eax = (((uint32_t)info->rax) & ~eax_mask) | (val & eax_mask);
++        info->rax = (uint64_t)eax;
++    }
++
++    insn_len = info->header.instruction_length;
++
++    /* Advance RIP and update RAX */
++    rip = info->header.rip + insn_len;
++    rax = info->rax;
++
++    reg_names[0] = HV_X64_REGISTER_RIP;
++    reg_values[0] = rip;
++    reg_names[1] = HV_X64_REGISTER_RAX;
++    reg_values[1] = rax;
++
++    ret = set_x64_registers(cpu, reg_names, reg_values);
++    if (ret < 0) {
++        error_report("Failed to set x64 registers");
++        return -1;
++    }
++
++    cpu->accel->dirty = false;
++
++    return 0;
++}
++
++static int fetch_guest_state(CPUState *cpu)
++{
++    int ret;
++
++    ret = mshv_get_standard_regs(cpu);
++    if (ret < 0) {
++        error_report("Failed to get standard registers");
++        return -1;
++    }
++
++    ret = mshv_get_special_regs(cpu);
++    if (ret < 0) {
++        error_report("Failed to get special registers");
++        return -1;
++    }
++
++    return 0;
++}
++
++static int read_memory(const CPUState *cpu, uint64_t initial_gva,
++                       uint64_t initial_gpa, uint64_t gva, uint8_t *data,
++                       size_t len)
++{
++    int ret;
++    uint64_t gpa, flags;
++
++    if (gva == initial_gva) {
++        gpa = initial_gpa;
++    } else {
++        flags = HV_TRANSLATE_GVA_VALIDATE_READ;
++        ret = translate_gva(cpu, gva, &gpa, flags);
++        if (ret < 0) {
++            return -1;
++        }
++
++        ret = mshv_guest_mem_read(gpa, data, len, false, false);
++        if (ret < 0) {
++            error_report("failed to read guest mem");
++            return -1;
++        }
++    }
++
++    return 0;
++}
++
++static int write_memory(const CPUState *cpu, uint64_t initial_gva,
++                        uint64_t initial_gpa, uint64_t gva, const uint8_t *data,
++                        size_t len)
++{
++    int ret;
++    uint64_t gpa, flags;
++
++    if (gva == initial_gva) {
++        gpa = initial_gpa;
++    } else {
++        flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
++        ret = translate_gva(cpu, gva, &gpa, flags);
++        if (ret < 0) {
++            error_report("failed to translate gva to gpa");
++            return -1;
++        }
++    }
++    ret = mshv_guest_mem_write(gpa, data, len, false);
++    if (ret != MEMTX_OK) {
++        error_report("failed to write to mmio");
++        return -1;
++    }
++
++    return 0;
++}
++
++static int handle_pio_str_write(CPUState *cpu,
++                                hv_x64_io_port_intercept_message *info,
++                                size_t repeat, uint16_t port,
++                                bool direction_flag)
++{
++    int ret;
++    uint64_t src;
++    uint8_t data[4] = { 0 };
++    size_t len = info->access_info.access_size;
++
++    src = linear_addr(cpu, info->rsi, R_DS);
++
++    for (size_t i = 0; i < repeat; i++) {
++        ret = read_memory(cpu, 0, 0, src, data, len);
++        if (ret < 0) {
++            error_report("Failed to read memory");
++            return -1;
++        }
++        ret = pio_write(port, data, len, false);
++        if (ret < 0) {
++            error_report("Failed to write to io port");
++            return -1;
++        }
++        src += direction_flag ? -len : len;
++        info->rsi += direction_flag ? -len : len;
++    }
++
++    return 0;
++}
++
++static int handle_pio_str_read(CPUState *cpu,
++                               hv_x64_io_port_intercept_message *info,
++                               size_t repeat, uint16_t port,
++                               bool direction_flag)
++{
++    int ret;
++    uint64_t dst;
++    size_t len = info->access_info.access_size;
++    uint8_t data[4] = { 0 };
++
++    dst = linear_addr(cpu, info->rdi, R_ES);
++
++    for (size_t i = 0; i < repeat; i++) {
++        pio_read(port, data, len, false);
++
++        ret = write_memory(cpu, 0, 0, dst, data, len);
++        if (ret < 0) {
++            error_report("Failed to write memory");
++            return -1;
++        }
++        dst += direction_flag ? -len : len;
++        info->rdi += direction_flag ? -len : len;
++    }
++
++    return 0;
++}
++
++static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
++{
++    uint8_t access_type = info->header.intercept_access_type;
++    uint16_t port = info->port_number;
++    bool repop = info->access_info.rep_prefix == 1;
++    size_t repeat = repop ? info->rcx : 1;
++    size_t insn_len = info->header.instruction_length;
++    bool direction_flag;
++    uint32_t reg_names[3];
++    uint64_t reg_values[3];
++    int ret;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++
++    ret = fetch_guest_state(cpu);
++    if (ret < 0) {
++        error_report("Failed to fetch guest state");
++        return -1;
++    }
++
++    direction_flag = (env->eflags & DESC_E_MASK) != 0;
++
++    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++        ret = handle_pio_str_write(cpu, info, repeat, port, direction_flag);
++        if (ret < 0) {
++            error_report("Failed to handle pio str write");
++            return -1;
++        }
++        reg_names[0] = HV_X64_REGISTER_RSI;
++        reg_values[0] = info->rsi;
++    } else {
++        ret = handle_pio_str_read(cpu, info, repeat, port, direction_flag);
++        reg_names[0] = HV_X64_REGISTER_RDI;
++        reg_values[0] = info->rdi;
++    }
++
++    reg_names[1] = HV_X64_REGISTER_RIP;
++    reg_values[1] = info->header.rip + insn_len;
++    reg_names[2] = HV_X64_REGISTER_RAX;
++    reg_values[2] = info->rax;
++
++    ret = set_x64_registers(cpu, reg_names, reg_values);
++    if (ret < 0) {
++        error_report("Failed to set x64 registers");
++        return -1;
++    }
++
++    cpu->accel->dirty = false;
++
++    return 0;
++}
++
++static int handle_pio(CPUState *cpu, const struct hyperv_message *msg)
++{
++    struct hv_x64_io_port_intercept_message info = { 0 };
++    int ret;
++
++    ret = set_ioport_info(msg, &info);
++    if (ret < 0) {
++        error_report("Failed to convert message to ioport info");
++        return -1;
++    }
++
++    if (info.access_info.string_op) {
++        return handle_pio_str(cpu, &info);
++    }
++
++    return handle_pio_non_str(cpu, &info);
++}
++
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+ {
+-    error_report("unimplemented");
+-    abort();
++    int ret;
++    enum MshvVmExit exit_reason;
++    int cpu_fd = mshv_vcpufd(cpu);
++
++    ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
++    if (ret < 0) {
++        return MshvVmExitShutdown;
++    }
++
++    switch (msg->header.message_type) {
++    case HVMSG_UNRECOVERABLE_EXCEPTION:
++        return MshvVmExitShutdown;
++    case HVMSG_UNMAPPED_GPA:
++    case HVMSG_GPA_INTERCEPT:
++        ret = handle_mmio(cpu, msg, &exit_reason);
++        if (ret < 0) {
++            error_report("failed to handle mmio");
++            return -1;
++        }
++        return exit_reason;
++    case HVMSG_X64_IO_PORT_INTERCEPT:
++        ret = handle_pio(cpu, msg);
++        if (ret < 0) {
++            return MshvVmExitSpecial;
++        }
++        return MshvVmExitIgnore;
 +    default:
 +        break;
 +    }
-+    return linear_addr(cpu, addr, seg);
-+}
 +
-+target_ulong linear_rip(CPUState *cpu, target_ulong rip)
-+{
-+    return linear_addr(cpu, rip, R_CS);
-+}
-diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
-index 4edd4f462fc..b6dafb6a5be 100644
---- a/target/i386/emulate/meson.build
-+++ b/target/i386/emulate/meson.build
-@@ -1,5 +1,8 @@
--i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
-+emulator_files = files(
-   'x86_decode.c',
-   'x86_emu.c',
-   'x86_flags.c',
--))
-+)
-+
-+i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
-+i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 092af34e2d8..89ba4912aae 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -13,6 +13,7 @@ i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_HVF', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_WHPX', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_NVMM', if_true: files('host-cpu.c'))
-+i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
++    *exit = MshvVmExitIgnore;
++    return 0;
+ }
  
- i386_system_ss = ss.source_set()
- i386_system_ss.add(files(
-@@ -34,6 +35,7 @@ subdir('nvmm')
- subdir('hvf')
- subdir('tcg')
- subdir('emulate')
-+subdir('mshv')
- 
- target_arch += {'i386': i386_ss}
- target_system_arch += {'i386': i386_system_ss}
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-new file mode 100644
-index 00000000000..8ddaa7c11dc
---- /dev/null
-+++ b/target/i386/mshv/meson.build
-@@ -0,0 +1,7 @@
-+i386_mshv_ss = ss.source_set()
-+
-+i386_mshv_ss.add(files(
-+  'x86.c',
-+))
-+
-+i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+ void mshv_remove_vcpu(int vm_fd, int cpu_fd)
 -- 
 2.51.0
 
