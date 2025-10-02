@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FEC2CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969A8CCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v48ha-0006rb-IS; Wed, 01 Oct 2025 22:05:50 -0400
+	id 1v48hI-0006on-LS; Wed, 01 Oct 2025 22:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v48hV-0006rF-H4
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:45 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1v48h9-0006nq-Bv
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:26 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v48h0-0004ri-O6
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:45 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-279e2554b5fso3540185ad.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 19:05:06 -0700 (PDT)
+ id 1v48gu-0004hb-F5
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:22 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-27d69771e3eso2834515ad.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 19:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759370704; x=1759975504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759370699; x=1759975499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5uAT3E/Kg+tLMQ6sh6TKZYgCxOSeXpVcn46MFwOuYCs=;
- b=p7R9eEeuaKNOo9pHAeomS81x3KQNAum4TDRrzIxO+WUgotJ5y3epdI4FoI5cAKk3Lu
- +x+e6LmAdFsjKNpOdOSPg9y+fN8l/TECyv7M3WWLaR2I6h2tdd1LmDvx6IrBdmWp5oHB
- rbxRWCZ5zDv+qngBKkSYE7tk/sotS9gfGfI9vgJ59Ax+ajcXUETkMNlDHKylnos5tfn8
- nsEaSKB84aD2mh0ZcfCPaufI5ip8fCQ3sTpX/+fL312W8/863++liyewzEvKkWcotD/I
- lzlACm2NyUyZMpbCuBE6RlAoXeHm4IeYyXKe1FFfvMkc5XvJ9RtYV57rLPldwLAVSfkg
- /0Sg==
+ bh=VOPeXicLAafrLttDNmWtdjRbKocV0eal4eWIHoa6qlM=;
+ b=fJlZrnVc64xZjagllZHNBa0Y1+kO6Cn7HewtL+XO3bwUtrGEkD1y8r/YQo8GgRquOe
+ 85gfOvwJv6YySJUZ7LxUzMDu6UZ3GnicPiGB8D7SGLnsWFHMHScSWs+TXxffiI3+CRFJ
+ 8Xxm3cUazENJM1V6kx0oudjT1nwottgdQgW7OgSfvNHOp0xT/EAvFZnCNaIN8kRWn8dG
+ IcSrOXnFJEV4Z7NJon3O5u/DS2S966+AO699Kx7foIRd3zjz3zriVCtwvUgtL6zXzUQs
+ w6WvLKK6uTFeCke7EFlyuI1QmaIQLXuKghPqcINO4sdToKyfiSjx8gu9CLFOAfCIUr0Z
+ Dd2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759370704; x=1759975504;
+ d=1e100.net; s=20230601; t=1759370699; x=1759975499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5uAT3E/Kg+tLMQ6sh6TKZYgCxOSeXpVcn46MFwOuYCs=;
- b=F9NEeVeHsAxp+8LzBjERJ/f6Qof/95TUL0mn+XSQJ19dz6sOvhz5F83k2s5cH6ptVF
- XZSa4sJHGc6+G8y7MOaTHFMloXKbA6iBQBgQ8klzRRO8hQvvXpBcJrjUwIO/CuKurHv/
- pNGIKwU/A40xc0MWVpSi2NJNVo7RUOF5QXX12jyUNMijP2Q2hrQCwylk+axvubwPU8f+
- E4GgPfvyK06S/S24LIRv7s9NX78srZYCFDRYmsDEqo6LmAwZDA845Qr8mUclC+hQWuj3
- smIZSfPC8UgTdHeZoY2XNb1WTc6duav08agZcmjMxJPd+9TyQpgtWZK83peN8ncpUKOn
- MNpg==
-X-Gm-Message-State: AOJu0YzV1f7/KAeVDa/xfieone0cgcAsGzocaTzbJ/z3IxFXIfRxaLvA
- NyXumkbKzVUM++tWwgFnrJX91k7bAvpnzX8It/Kk/Mf2lcCId9/T4Gn46+M23VP9rA71xWx/fQq
- cFHLQ
-X-Gm-Gg: ASbGncsWW8N5mLC1VhmYVYiwDhJuB4Y1hrAFy3GqvAjo23arqNvO6w2A81couDBuhte
- KSzUQJa0OeSiB/v8UXRYUtQUThOCnlnaqrdVjFB3fGoCMrvlZrHyVfWAWakgfEArhghFXWDO0OF
- nAw7A1gKNqyaw0b6cCIHvacl2uItxOqTZVQMbtNLb4ZRqKe7UAOPYgkuaWPgr2QwzSutJNfiUWS
- gNcMbljWW9JFL14ps2CmJ0P/lo/cRBQjKyZk9WuJd9RLpA/bXT+ZDZl+hqb4+Q7Banevbyok0ar
- h8COaq2L9stRtZu0TW77HfFrKJ18MKFef1RzTYrDQe61Z3mv5hFB1MKRvvOZhIvCjc2skeFV7cA
- U8WFxJS0nFE4n3Hqoial23y4LbybpS9LHlqykCFeQuZQn7pdpCvR/VJF3TX7S20ArYOo=
-X-Google-Smtp-Source: AGHT+IEKosOT0oxwORek+RzgMxvBeBwXw7xTc63LUvRgecNlDLdEXpxVa9SLa1xiQO6IYkGfw/CQxg==
-X-Received: by 2002:a17:903:3d05:b0:262:f975:fcba with SMTP id
- d9443c01a7336-28e8d040b78mr15780655ad.9.1759370703536; 
- Wed, 01 Oct 2025 19:05:03 -0700 (PDT)
+ bh=VOPeXicLAafrLttDNmWtdjRbKocV0eal4eWIHoa6qlM=;
+ b=VZ/2u3zustmBZH7EovLyKpl8pAtvzPxR6nCqVNNGFrHkfublOgPQ7r3qBfW+fyUqdA
+ iD4wiVfMC9ClEjEa+MF3H54Ht8DgxGnSlSPr+l2yoPanVb9EdJVFF/coIeje3XTp3JUY
+ wUFbkEuw1GvBeJK/Q+AhtPUAX/Z1lMJJ2LTdBX1R04AGjnvvWqDgc0YnkMxA1KrQGx1M
+ WKvCz6OKjTS26X9ntZoXtiJzCPJPgTmb1LIjPSjMQUjyw6BH0A8OdofvJhXfM3ZYuuoE
+ 6NR6kdkOk77D9Uon7g9swxjWhLaYBNv6Ze08LdxKOYzbYXdeQdAd2PVcYMaXAKPru4YS
+ KeKA==
+X-Gm-Message-State: AOJu0YyrtGghZ1NN+D0m68b9CTJhbolCIh5ILPkm5f1QRl6Oq2ig7NrG
+ tOPGU6qXeB1e4CDm5bQIhBlaegsww17ITcAXig+RDR3CoAWVpu+8KfNWH2Z1cZ9kiCU5zo2+D41
+ TSVbq
+X-Gm-Gg: ASbGncskyIyZ9h/gaVp+3bW9kRvR6/+7dE2HNsiWmlLBQh4IrTjN+LGUIAb10PX0AVL
+ g6YY2F/i06jbYUw/U4kmwE2rmfqete2RubbOeBmQbF5Q/q8pf3VOXWpu15l1eOAH2Cu4xDQI8qX
+ TeZ208ngahSR/fOPiI1IWE8ZUSMz4PN6a1on8FSiENtiiOITAHtxHkYKaqkrLSAKN9r/EftK2Aw
+ 9KP9Fj8KkMoQIUrCj6ECWYC80J5fbrVZNqkeEaea02YFWnx7xyH2Y+SMi+4WYOEN6YnP3p51W5M
+ oZ9ESvi1x0C0eB13XuGEOd6GNIEc2dxYiAqrL64+M73dn36gvBZSoFyphHHEnuzJHzwKX2K0NoF
+ yp97f37LQ/L35/GgbCzdZuszRrCCoyAktgGLIXp0Wyk9DSNIFj0e1N5Sp
+X-Google-Smtp-Source: AGHT+IEjdPsBhCaiASj+rlbTXJD682sqXdWjz5+iN+jcmd5NMS6PXOaw6l0sQrgslKzEfiSF9wWgig==
+X-Received: by 2002:a17:903:1585:b0:269:9a8f:a4ab with SMTP id
+ d9443c01a7336-28e7f442cb7mr62869465ad.60.1759370698706; 
+ Wed, 01 Oct 2025 19:04:58 -0700 (PDT)
 Received: from gromero0.. ([186.215.59.111]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d1d95bdsm9476735ad.119.2025.10.01.19.05.01
+ d9443c01a7336-28e8d1d95bdsm9476735ad.119.2025.10.01.19.04.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Oct 2025 19:05:03 -0700 (PDT)
+ Wed, 01 Oct 2025 19:04:58 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
  berrange@redhat.com
 Cc: qemu-arm@nongnu.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v5 4/9] tests/functional: Add GDB class
-Date: Thu,  2 Oct 2025 02:04:27 +0000
-Message-Id: <20251002020432.54443-5-gustavo.romero@linaro.org>
+Subject: [PATCH v5 2/9] python: Install pygdbmi in meson's venv
+Date: Thu,  2 Oct 2025 02:04:25 +0000
+Message-Id: <20251002020432.54443-3-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251002020432.54443-1-gustavo.romero@linaro.org>
 References: <20251002020432.54443-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,121 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GDB class, which provides methods to run GDB commands and capture
-their output. The GDB class is a wrapper around the pygdbmi module and
-interacts with GDB via GDB's machine interface (MI).
+The upcoming changes in the reverse_debugging functional test to remove
+Avocado as a dependency will require pygdbmi for interacting with GDB,
+so install it in meson's venv (located in the build dir's pyvenv/).
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/functional/qemu_test/__init__.py |  1 +
- tests/functional/qemu_test/gdb.py      | 88 ++++++++++++++++++++++++++
- 2 files changed, 89 insertions(+)
- create mode 100644 tests/functional/qemu_test/gdb.py
+ pythondeps.toml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 6e666a059f..60d19891bf 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -18,3 +18,4 @@
-     skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest
- from .archive import archive_extract
- from .uncompress import uncompress
-+from .gdb import GDB
-diff --git a/tests/functional/qemu_test/gdb.py b/tests/functional/qemu_test/gdb.py
-new file mode 100644
-index 0000000000..05e4c29c2a
---- /dev/null
-+++ b/tests/functional/qemu_test/gdb.py
-@@ -0,0 +1,88 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# A simple interface module built around pygdbmi for handling GDB commands.
-+#
-+# Copyright (c) 2025 Linaro Limited
-+#
-+# Author:
-+#  Gustavo Romero <gustavo.romero@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import re
-+
-+
-+class GDB:
-+    """Provides methods to run and capture GDB command output."""
-+
-+
-+    def __init__(self, gdb_path, echo=True, suffix='# ', prompt="$ "):
-+        from pygdbmi.gdbcontroller import GdbController
-+        from pygdbmi.constants import GdbTimeoutError
-+        type(self).TimeoutError = GdbTimeoutError
-+
-+        gdb_cmd = [gdb_path, "-q", "--interpreter=mi2"]
-+        self.gdbmi = GdbController(gdb_cmd)
-+        self.echo = echo
-+        self.suffix = suffix
-+        self.prompt = prompt
-+        self.response = None
-+        self.cmd_output = None
-+
-+
-+    def get_payload(self, response, kind):
-+        output = []
-+        for o in response:
-+            # Unpack payloads of the same type.
-+            _type, _, payload, *_ = o.values()
-+            if _type == kind:
-+                output += [payload]
-+
-+        # Some output lines do not end with \n but begin with it,
-+        # so remove the leading \n and merge them with the next line
-+        # that ends with \n.
-+        lines = [line.lstrip('\n') for line in output]
-+        lines = "".join(lines)
-+        lines = lines.splitlines(keepends=True)
-+
-+        return lines
-+
-+
-+    def cli(self, cmd, timeout=32.0):
-+        self.response = self.gdbmi.write(cmd, timeout_sec=timeout)
-+        self.cmd_output = self.get_payload(self.response, kind="console")
-+        if self.echo:
-+            print(self.suffix + self.prompt + cmd)
-+
-+            if len(self.cmd_output) > 0:
-+                cmd_output = self.suffix.join(self.cmd_output)
-+                print(self.suffix + cmd_output, end="")
-+
-+        return self
-+
-+
-+    def get_addr(self):
-+        address_pattern = r"0x[0-9A-Fa-f]+"
-+        cmd_output = "".join(self.cmd_output) # Concat output lines.
-+
-+        match = re.search(address_pattern, cmd_output)
-+
-+        return int(match[0], 16) if match else None
-+
-+
-+    def get_log(self):
-+        r = self.get_payload(self.response, kind="log")
-+        r = "".join(r)
-+
-+        return r
-+
-+
-+    def get_console(self):
-+        r = "".join(self.cmd_output)
-+
-+        return r
-+
-+
-+    def exit(self):
-+        self.gdbmi.exit()
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 16fb2a989c..98e99e7900 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -33,3 +33,4 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
+ 
+ [testdeps]
+ qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
++pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
 -- 
 2.34.1
 
