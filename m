@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D17CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 00:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CACCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 01:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v46kt-0006Gv-IE; Wed, 01 Oct 2025 20:01:07 -0400
+	id 1v485B-00037F-8v; Wed, 01 Oct 2025 21:26:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1v46kr-0006Gi-DN
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 20:01:05 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v4859-000371-0b
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 21:26:07 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1v46kc-00073Z-C7
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 20:01:03 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-b5f2c1a7e48so316828a12.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 17:00:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v484o-0002KR-Ci
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 21:26:05 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-6228de280a4so955372a12.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 18:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759363240; x=1759968040; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=19lwUuZNKZ2bDLpTXMefc0x8xklKWo67KC08NTtTmeo=;
- b=WwrtG40KXVEp6IlBt1Two32ryXmmrZ9ycrHIGA75I0y3MPmf/GbK9JkfsN6/g+cnuy
- u7pk/TPr4n3vQ2u8j0yP88n6zpPslxeAfsQatWNuhFBIL2+GmWFA/o7N/AqqzTDoNzr5
- d0PDHOVQhEqGqFKGLPiZZ1mgRHBE+qMq4M4ZPIlnt+sMPOOFy9Hw53xJpHP+V/94rN1a
- UuEK7pIt5FrttnzUB1qlQDenqWFTWUELGczdxclkhpIOg/CXz2fbYz4g5jDyQIbH7lQc
- sk+4kVrccqG+EIsc+vlVQRdqyo/TfcXXr9LyRZ2iCNjmTwntoNt4aQzslRZQF+cQ8vJA
- AgRg==
+ d=gmail.com; s=20230601; t=1759368331; x=1759973131; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0d6xTVVaGa0O7F06UlJ0sV6NonZt+8NWQ/iOUNgRuz0=;
+ b=H2syL/bvXiFNxznHBpEMn5HVXBS4fCXBdRiIc56KEIXDvv3XLnQz3Hsz6Zho+Xgus2
+ qb6uycE26CHj6LYUJoQLIKe26exmgSgQgWXOHjV4jkf8he+i2LWbpbtoMwVHGcewPzmU
+ tQMVjO0KG0m+hciI5t4ROU2SMxxWCtZu9THXHE2F48fNplfFS/yDFWRz7qFRHBkCRN16
+ BgCLWdEmyH4Sw4tDhYtc4OR3AeSNlpdRjnu29+ZGTxh+rROWBj6xUMyUoEEGqHcuhrc2
+ sN7jZmJK1Y75xfjxcNvkV2b4UOq6egLCZ3gAq3v6GQMVPqrLItQiNpDuhRekfLGU8OIy
+ u7/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759363240; x=1759968040;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=19lwUuZNKZ2bDLpTXMefc0x8xklKWo67KC08NTtTmeo=;
- b=QQelLStPLvCMHzA8Sr4sFL1rO2JnWCcHKAIvQArJxK5sVGfnydG2z4lx/DCczQPHoX
- L5j+7qC+Q3YLNHk6AWMI8q309FnxenEYxcbGnBuSqocS3Egumw+3JbY1GkBYFl6+mC8o
- 1c03sA9i3dJ+POP+AzyzVAs4uBHHBuoSSkFqMIOjCHkabG4E0GW/MId0LIyiOMknQFgr
- uS8yHwIJYRSUgVcsOqwHvVD+IdZIhpSAQXQ6YFHLMm/Dw/XCGYYW1dmChYrbF2rX191D
- JarxU2tueCCMGYRbd1e4rlxtLixQ1ZwsC2uf7ubICqIV5ryckF4206gVEmp3M4WSt7y0
- YUAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCrjLlTAu3Ets5P2uXg9x9Ehw30YT1iiprLwQ/NajV7ad8Hm5CmV+Keo3mgo6X/maw/x0vylescg9U@nongnu.org
-X-Gm-Message-State: AOJu0YzKukHjHj1aC8mgO+qRWY5VsqBFeJhDt/vGowpxnHjE2pLD1rY/
- no64OZ3fKK4oaxYGcI/E9/OUQzrp005kkQljyB49uAcspnmwPyklDzIJThfP+b3LKZyzrV+NRii
- zg46ITQ0tu3WQVtzx0qkOd6hvLkoP9+Q=
-X-Gm-Gg: ASbGncuEtS8aMEdXuIkTgXRnDwD0AaM/WqWClDoK6s+Mw4O8qp4MkVX6zFyHWMUBxkK
- cTQmmK1SpI4F89/NFheRn/Mx4/IozdMvn1kNUW26SbwrMHVTX0cMCRZkDluc2K2/XHv8v7YFwWn
- 7LGI/bg8Yg2yPM8hh+QkMnM6qjxK+gXPbmIr5ux0oDgZvJn9vCusJl4+wPoQwLA3DNQXqgF0dLn
- hO/zXM+cmJfCzt357aH74GnOgczJ/LhceKV/8MpnjHcye/mxwD1YgqlviGi
-X-Google-Smtp-Source: AGHT+IEAP3x0ZEqWZzyZLcacNQMZiKNQhUBlXwJP/p9L8otJgtSzqlIetg5287Vk7Nq5tH1F4qi8F4wOGN3ob3Wtntc=
-X-Received: by 2002:a17:902:f650:b0:24b:164d:4e61 with SMTP id
- d9443c01a7336-28e7f2a26femr60203655ad.13.1759363239998; Wed, 01 Oct 2025
- 17:00:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759368331; x=1759973131;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0d6xTVVaGa0O7F06UlJ0sV6NonZt+8NWQ/iOUNgRuz0=;
+ b=TMJdADHslRW3/oD5A0YMuV35hP1+9/B91Wks85uxNyg4p80Pk3qEnfMF7+K0NEvYsY
+ iliQ1pcjhfhCF8VRMxQtehXLOTuHEyzgWE1bQyoWblM6VZa+i+UTntuX3nSsWQO1KTzn
+ KgYYH2kEr4lod/mYsR1giFFDhQPEpldhl/D2h4OyEM073X9PizLM/8M9BeqrXtkpxGuk
+ 6r8DFEsrky8i4e9p8ZYirsbD9RKDCngu0Vq1SlUiAEBM80KudWcVdGraiRCqaYZf86LT
+ uVyPe+UEwjO5YnceeuzcNIpUmDUWIb44mrqkQaP03Q/kPw6yLAr0Fx59PB0tqBXKEVuV
+ rfZw==
+X-Gm-Message-State: AOJu0Yw5fYbOLYQJw5ve/DsaDfnqveafUOdhAbk2eutdvFiMgeH/6qXB
+ euPpJdXpCbu+v8WnZ39wzZtlpZZzoqEuiRnUo9loFGM4Q4yL2D+CD6pzG83/cv3vpu9E3I2+w4A
+ 7rQqKXjG7W68TGYy0j6DlzJotk1Tl7aU=
+X-Gm-Gg: ASbGncvIPBvXWRKhYcLCQXn8WFUk8icLP3zuLNIiaBUFn52MKOrh3t51Fw8kAMk4I6T
+ xhg96vxb+tIyQnUsleaFkE4v5bqMiIhGm3kXN3f1jpERjpS3Nlxnd26Iw5bQ1omhb7WROzckkwC
+ r2UIuX35pM1QWsg4j42645sW9UVWyhRIaEKfKq6og+KaXSMTLwZlIDNXxetlt71gtzauOphDTPZ
+ YzLRq3QbvPLliLIQPG3PAVh4E4iMPUY5HEeirgZvrm6PMssqExLW63Bbb+S10/AQUoeUZkJ
+X-Google-Smtp-Source: AGHT+IEENBqKXl7/QJqg+J4VPgf5B2VccI8HWKF395sdDp+ixKGuC/xLUDsM9f1UseQj9xOGAgJBvmF4aS8rq3r+eTU=
+X-Received: by 2002:a17:906:8f07:b0:b40:8954:a8bf with SMTP id
+ a640c23a62f3a-b46e0ea1cccmr509471366b.2.1759368330595; Wed, 01 Oct 2025
+ 18:25:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
- <20250924120426.2158655-28-marcandre.lureau@redhat.com>
- <CAEDrbUbOWp24F_wO88Tb9ZCM8Q+jXEK_1BzwGMwC3MG=3TzgAA@mail.gmail.com>
- <cbb6c926-b5a6-49c2-8b35-0988e1fcc7ce@redhat.com>
-In-Reply-To: <cbb6c926-b5a6-49c2-8b35-0988e1fcc7ce@redhat.com>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Thu, 2 Oct 2025 09:00:27 +0900
-X-Gm-Features: AS18NWD-yMDc_EwfuqcImRf38F3sXJgpX53bBJA282HVdDz9__vj9Pzi-gb0RjA
-Message-ID: <CAEDrbUZBdWOMWVYcfUf7aV1+=QpyM0GQVnxhcxcU43WPTWezeQ@mail.gmail.com>
-Subject: Re: [PATCH v2 27/27] WIP: enable rust for wasm/emscripten
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, Kyle Evans <kevans@freebsd.org>, 
- Yonggang Luo <luoyonggang@gmail.com>, Li-Wen Hsu <lwhsu@freebsd.org>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Warner Losh <imp@bsdimp.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Ed Maste <emaste@freebsd.org>,
- devel@lists.libvirt.org, 
- qemu-rust@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000f3791c064021ac4b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+References: <20251001094859.2030290-1-djordje.todorovic@htecgroup.com>
+ <20251001094859.2030290-3-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20251001094859.2030290-3-djordje.todorovic@htecgroup.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 2 Oct 2025 11:25:04 +1000
+X-Gm-Features: AS18NWCWdi9llyalL4EjQGXU9hZZQOIk1N6p8JUpwb_BnpwXvDYDau9Z2iLW8YI
+Message-ID: <CAKmqyKNvLrdgXFe9Tu-f6V70Cv5piNwNVT8nQZGLt35vAfOGbw@mail.gmail.com>
+Subject: Re: [PATCH v9 02/13] target/riscv: Add cpu_set_exception_base
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,27 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f3791c064021ac4b
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Oct 1, 2025 at 7:49=E2=80=AFPM Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
+>
+> Add a new function, so we can change reset vector from platforms
+> during runtime.
+>
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu.c | 14 ++++++++++++++
+>  target/riscv/cpu.h |  4 ++++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index d055ddf462..74728c5371 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -73,6 +73,20 @@ bool riscv_cpu_option_set(const char *optname)
+>      return g_hash_table_contains(general_user_opts, optname);
+>  }
+>
+> +#ifndef CONFIG_USER_ONLY
+> +void cpu_set_exception_base(int vp_index, target_ulong address)
 
-Hi Paolo,
+This should probably have some documentation saying that it's only for
+runtime usage
 
-> can you please open a PR for this patch?
+Alistair
 
-Sure, I've opened a PR:
-https://github.com/mesonbuild/meson/pull/15074
-
-Regards,
-Kohei
-
---000000000000f3791c064021ac4b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Paolo,<br><br>&gt; can you please open=
- a PR for this patch?<br><br>Sure, I&#39;ve opened a PR:<br><a href=3D"http=
-s://github.com/mesonbuild/meson/pull/15074">https://github.com/mesonbuild/m=
-eson/pull/15074</a><br><br>Regards,<br>Kohei</div></div>
-
---000000000000f3791c064021ac4b--
+> +{
+> +    CPUState *cpu_state =3D qemu_get_cpu(vp_index);
+> +    if (cpu_state =3D=3D NULL) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "cpu_set_exception_base: invalid vp_index: %u",
+> +                      vp_index);
+> +    }
+> +    RISCVCPU *vp =3D RISCV_CPU(cpu_state);
+> +    vp->env.resetvec =3D address;
+> +}
+> +#endif
+> +
+>  static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConf=
+ig *src)
+>  {
+>  #define BOOL_FIELD(x) dest->x |=3D src->x;
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 4a862da615..34751bd414 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -672,6 +672,10 @@ G_NORETURN void riscv_raise_exception(CPURISCVState =
+*env,
+>  target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
+>  void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
+>
+> +#ifndef CONFIG_USER_ONLY
+> +void cpu_set_exception_base(int vp_index, target_ulong address);
+> +#endif
+> +
+>  FIELD(TB_FLAGS, MEM_IDX, 0, 3)
+>  FIELD(TB_FLAGS, FS, 3, 2)
+>  /* Vector flags */
+> --
+> 2.34.1
 
