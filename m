@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D3C2CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 05:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E054CCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 05:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4BoQ-0002PA-Bv; Thu, 02 Oct 2025 01:25:06 -0400
+	id 1v4BpM-0002rG-A4; Thu, 02 Oct 2025 01:26:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4BoO-0002M4-5g
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:25:04 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4BpF-0002nC-P8
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:25:57 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4BoF-00026z-Bn
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:25:03 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3ecdf2b1751so357157f8f.0
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 22:24:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Bov-0002TY-1X
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:25:57 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-46e34052bb7so5333195e9.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 22:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759382689; x=1759987489; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759382732; x=1759987532; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xg3otllxG4rymDGijtowW+qsP9iIOj8h/65wdaLwtZA=;
- b=B3KkGEIUc+ClRUvy2XoJbrKbwIUwzeo2uCYCO3k2eFfXsdZzcPLFe+brPaOCpKyRui
- 4KxcDty1KDQFoYrYJTVF7dgAKKppX2l0XvVNh1JAA0JQ0VbXIyMA3OmrfcWjrsa6E0D8
- 8L1XphDF0mY2pDNvlw2HNoFnPdmNpN2VpPFaw3v6e+6EXSHvKePL4+bPmLwDWA4elgQB
- Etw40EXNEiGf8oa/y3KyP2HGsfZfWk1OUjOMufhBmEF0XQOkHLKIcXcAHnw9/W0tnjM4
- EToKsP56Z31yJ0JXSh2UQ2/q1NP0KcsehP66uEQ3sk5YB1urZ7Tjr6As4ObYPd2099g4
- /DdA==
+ bh=4YcCpeSxPngmWuRDPueu8LcloTnvBiLhel8FuC1rE4s=;
+ b=NzuYuJwxdksgOcgHcfQBaGYsFVec52beY5oV58593mVf476f9bks0iHFUMokos1VuY
+ b9d0M6wy4E9pwvjxDlfSxCWkypuVmfpORa2Bz17yeMPCJHLd2h4pk0KXI3pC8EHG/3cC
+ OtOFEWV/6srnXLEr2FkXzYhjnfdWaBZPfJH+5OPm7EXPkXrt8QlantcvRkZRzxmnKaNn
+ 6RhQOisZ4YCDhkWlbwpNN6XblgoOVAZCyl18lYZF7QxdD5M4+AOw3jotixm6Z148KWQf
+ WZgte2L4X2hjYhIKynPFVHoKhz0jXt/R8CMlwi88Cuq07/KtNmu9X6NT/vnhB1NMzKj8
+ qttA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759382689; x=1759987489;
+ d=1e100.net; s=20230601; t=1759382732; x=1759987532;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xg3otllxG4rymDGijtowW+qsP9iIOj8h/65wdaLwtZA=;
- b=hQWzURB4zazGNuN3CudxAASOGFkYv8iHC4zHIHapExUT0XzzA2Mt8Vj81S+0M1avyO
- QAjsd+4Vq0GuOf8+QQoMmpbU4krP4O0brSS0hiSTOZuxGZM8CpqJCNPSfcLD0TGkxqpN
- yMkPxMzVUh0e/7Xhse19R2hsG09axuSUrpLippdRXLAkjDGHWR9z6KHnFPluqIpVcKJd
- iqKbzCIJNsl0iBRTt2T2aCaTlNVSGKSFR16x15e742/VzajaJkvnRGwKzfC9IJoucEBk
- EpL5Bor+tzww1cpTNlZAskcxsTlCqziAYEKYhSMFQeOD0SvIXVuFEanHHjq6LVgOVhIG
- n+AQ==
+ bh=4YcCpeSxPngmWuRDPueu8LcloTnvBiLhel8FuC1rE4s=;
+ b=frWxI4iUwUzXUuw2FviNY4Y7v9KOD9GDalobJY7nbQ2qLKC9l4Xzth3cAz3fBSvhkL
+ cHXDBLtZDTuBRvscIu6q8sRY1KquXSARTIC36GiYdpH4P15DTrsy2+k59S+BHEqBgZfM
+ 9BoVI8LdqzxNbxcCYBgbInhUIEA4EojxjnN6g/ZWF4peWBWdiw2T0llIWvqhHkrAuMuv
+ Y/ddaa7FTWcLCSA4mQYJFSEggNh6T6kGjFYykJ/l5M9RoKUJsYHZantE0xyA03+vganF
+ 8zgmDtT12yo797rCk1gmu9WM/46U2hZdPIpFNE+d4/tW7wMQbmgg+X/maxgiZg4LWECU
+ IwhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkEr50+cS2XL+9I4uvaWByL3CWy+j7JHkMF6mBI7gLYwioLywUmAgza6rem6QLeVXqHQb8282OwJf+@nongnu.org
-X-Gm-Message-State: AOJu0YyBrtCqr8vETdJvTbtujlClQOiAjxv01cYsWY9Se53sg375brOi
- KGgk8kYjgD+iCuGlgbZSUXJDpbGSe/Vrcl33K0DQ4HtFA2s11BPuRkKfcKmBl4rqd+q1PG2FBnQ
- 6OmnXZnOCyQ==
-X-Gm-Gg: ASbGncvImiezMtwiqaIes6uIfZUvMs4h0KDHyzKmB4zZg2H4N4PMNGamvKb1jj+2kkN
- Pq6cBIipNg8n/QFphsf35oIw89n0ulgAyg++44UMS8ApSmtu4i0uoDx5VI13+Lt6c+V3DpYJuum
- RQU7YKs3WgHsbXKse7ewNNhfPPBAiVGbk3MAqn7a0GDdMdTVm5xO2OSlh2xGqL1NjYqQ2dZQpPS
- RBV3sp5jPQQ0ioVmxOK7CGsgjDkseGANv0lmssTeuKc7T1abuwItnAIYvYsj+8DmXJlvB3egamq
- 82V9If+rrhR1AfXZXSD7hffIXac8JxtdnChA6eFUMKFdv3TZsZL73bFPKGBKmY2VGPFmCnS5KMg
- GKtsiUSbwIfPS0GCJnkajP8j7gjwCA9ui0o1b3tJbVzD6M0CP2qN4d2OhQqMWJN1oxpblikfXLb
- MufRwReS7EmCfYTVV6hg==
-X-Google-Smtp-Source: AGHT+IGQj0t3+HooTq0+/8lXDgfF+cjdwCuLZh24cgVD3fdYH/wTzqLYWBamoifTpBD4sPxMC3rnuQ==
-X-Received: by 2002:a05:6000:240a:b0:3e7:6197:9947 with SMTP id
- ffacd0b85a97d-42557a15b6fmr4465216f8f.53.1759382689249; 
- Wed, 01 Oct 2025 22:24:49 -0700 (PDT)
+ AJvYcCUPsqUeicRmLif6OiaDnBjDS8q0SyJdRM0dLrCFh3Msx8uMuoCad5a8nJ/fsE/YtD4KScXXFARBvyOY@nongnu.org
+X-Gm-Message-State: AOJu0YwAQaTzyn2GBuzY6OoIHD4jhBkJ36gdQjmVWUTk3u9zl+ygKYM/
+ v7DHwi+eNKuwg7toyahltpjv71OEtf8OzjdJ6BX4HqMODSzTdKLt4tknQpmJRBA5KMtWliVJZXf
+ rAr4WpGZ2HA==
+X-Gm-Gg: ASbGncuA+zlRPSdWqnRk3DOONSXT5rKD0+vq/NZMBBy5kO2Q3D2yThWnAWgUnWzfeNq
+ CkiD07+sapoitbZxUjO5Ro2l4D02zb6lC00SaNzUbQU3tm86ZwXULsgGb9U0dSYzIQAXQtS78lp
+ lf9y3+Wh1JOiXYpl3o/kOactJoZB4heFNgTyZqG6M7zaKVF1voAlJ39j1iLa+Wzz0+QP9WkusGi
+ Qi3F3B6Albow/PRRW/DOBpzG33yGUREcG5U1EkTfLa244QLqraAfN59CaEMp7ftsA3luSTuBock
+ KxE6yDfUZDWyvUMq+CW45yKmr7XDA1a9K0nMTRP2J3cRCDpg2NpasvmA41HiMwC+TQZbmswrg5t
+ UD7YbGxeF3xOThSGH0R5EtyXSCSk4c+vBZuxhk7XtOLRNVTiIRA02pqpiEBFF0aGdTmdc8lTGgM
+ oKPnzyie/QEg2thNgFcQ==
+X-Google-Smtp-Source: AGHT+IFY7sBNXpw5Xbdmx5QdjN1TEJdy0J6Q5DQagPJ44AfrwDnFu5XPpuSAlPEwctiBUZUO0u6J5A==
+X-Received: by 2002:a5d:64c5:0:b0:3ed:e1d8:bd73 with SMTP id
+ ffacd0b85a97d-4255781ec17mr3879849f8f.57.1759382731959; 
+ Wed, 01 Oct 2025 22:25:31 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f083asm1940991f8f.43.2025.10.01.22.24.48
+ ffacd0b85a97d-4255d8abe90sm1997967f8f.23.2025.10.01.22.25.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 22:24:48 -0700 (PDT)
-Message-ID: <27b71637-b71d-40a1-adbc-799898db594c@linaro.org>
-Date: Thu, 2 Oct 2025 07:24:47 +0200
+ Wed, 01 Oct 2025 22:25:31 -0700 (PDT)
+Message-ID: <5a254c7d-043d-4795-8570-35edfe8bb286@linaro.org>
+Date: Thu, 2 Oct 2025 07:25:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] tests/lcitool: bump custom runner packages to Ubuntu
- 24.04
+Subject: Re: [PATCH 6/7] gitlab: move custom runners to Ubuntu 24.04
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
@@ -79,20 +78,20 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Gustavo Romero <gustavo.romero@linaro.org>, Thomas Huth <thuth@redhat.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, qemu-arm@nongnu.org
 References: <20251001170947.2769296-1-alex.bennee@linaro.org>
- <20251001170947.2769296-6-alex.bennee@linaro.org>
+ <20251001170947.2769296-7-alex.bennee@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251001170947.2769296-6-alex.bennee@linaro.org>
+In-Reply-To: <20251001170947.2769296-7-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,18 +108,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/10/25 19:09, Alex Bennée wrote:
-> In anticipation of new runners lets move to a newer Ubuntu LTS.
-> 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   scripts/ci/setup/gitlab-runner.yml                   |  2 +-
->   scripts/ci/setup/ubuntu/build-environment.yml        | 12 ++++++------
->   ...tu-2204-aarch64.yaml => ubuntu-2404-aarch64.yaml} |  4 +++-
->   ...ubuntu-2204-s390x.yaml => ubuntu-2404-s390x.yaml} |  4 +++-
->   tests/lcitool/refresh                                |  4 ++--
->   5 files changed, 15 insertions(+), 11 deletions(-)
->   rename scripts/ci/setup/ubuntu/{ubuntu-2204-aarch64.yaml => ubuntu-2404-aarch64.yaml} (96%)
->   rename scripts/ci/setup/ubuntu/{ubuntu-2204-s390x.yaml => ubuntu-2404-s390x.yaml} (96%)
+>   .gitlab-ci.d/custom-runners.yml               |  6 ++--
+>   ...4-aarch32.yml => ubuntu-24.04-aarch32.yml} |  8 ++---
+>   ...4-aarch64.yml => ubuntu-24.04-aarch64.yml} | 32 +++++++++----------
+>   ...22.04-s390x.yml => ubuntu-24.04-s390x.yml} | 28 ++++++++--------
+>   4 files changed, 37 insertions(+), 37 deletions(-)
+>   rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml => ubuntu-24.04-aarch32.yml} (78%)
+>   rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml => ubuntu-24.04-aarch64.yml} (89%)
+>   rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml => ubuntu-24.04-s390x.yml} (88%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
