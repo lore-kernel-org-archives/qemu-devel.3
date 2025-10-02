@@ -4,81 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFD5CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 12:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297E2CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 12:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4IGX-0007Hl-P6; Thu, 02 Oct 2025 08:18:34 -0400
+	id 1v4IQ3-0001rA-2K; Thu, 02 Oct 2025 08:28:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
- id 1v4IGP-0007HL-JM
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 08:18:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v4IPu-0001ol-SN
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 08:28:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
- id 1v4IG6-0001IV-8j
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 08:18:25 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v4IPn-0005Tg-9i
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 08:28:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759407469;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1759408079;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4y96Q9KcFnvUxbyKBj4a8MnuldiqGzsN+8tG4JredlI=;
- b=fPUYnW2FD9u/XA45LM2ym+j+9Xg0GZVcGF3wZykkaLF5TQt5zRUIVK21jaZ9XAMbZR3rEd
- QUKzX6llWahVYvBLmVezK7HKAHgMOijZQ2MGtc2AMK0wlX9rGEFmo4Q7jXUZVanPFkJUz0
- Gdnsdct5ZugEUu0LPvJ4pQ/wANg366U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-547-_r3WhApTN8G1rQOfiOV75A-1; Thu,
- 02 Oct 2025 08:17:46 -0400
-X-MC-Unique: _r3WhApTN8G1rQOfiOV75A-1
-X-Mimecast-MFC-AGG-ID: _r3WhApTN8G1rQOfiOV75A_1759407465
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85F9018002B6; Thu,  2 Oct 2025 12:17:45 +0000 (UTC)
-Received: from orkuz (unknown [10.43.3.115])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AEC4300018D; Thu,  2 Oct 2025 12:17:44 +0000 (UTC)
-Date: Thu, 2 Oct 2025 14:17:42 +0200
-From: =?utf-8?B?SmnFmcOt?= Denemark <jdenemar@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Peter Xu <peterx@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 4/4] migration: Introduce POSTCOPY_DEVICE state
-Message-ID: <aN5tZuKfIx5OJK-i@orkuz.int.mamuti.net>
-References: <20250915115918.3520735-1-jmarcin@redhat.com>
- <20250915115918.3520735-5-jmarcin@redhat.com>
- <aNUtgHsiQwR12jPs@orkuz.int.mamuti.net> <aNWITu36f_DlhZo1@x1.local>
- <aNuMe0GD0mzFbD-K@orkuz.int.mamuti.net> <aNw35iWaNDnYXOz7@x1.local>
- <aNzpxr7N420TUIIf@orkuz.int.mamuti.net>
- <aN0LFzHSyF7dMtZ1@gallifrey> <aN1EdMGbLxE10NOp@redhat.com>
+ bh=5rFOj97qj38f//+FgXYjk95Fy8po6/WBLsb31mdg278=;
+ b=Go5M7LUeCbTx0lZt4VRbswyXp5V6vfOVZQZkgb8wKfz35CaEgxW+QnHy/0rWwH2WDEPhi2
+ 3E4H2U/1r0xfGq9lfBVr43Dhy/OuN2dt9EH6iCePoWgvcDTqYMvyVXSDPPYRDBYFvAqrjn
+ hCrjXK+ut3EGRDUgDTg+jP7sbFYTMyE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-150-XXHsVxkcOreWPPG8c1XquA-1; Thu, 02 Oct 2025 08:27:58 -0400
+X-MC-Unique: XXHsVxkcOreWPPG8c1XquA-1
+X-Mimecast-MFC-AGG-ID: XXHsVxkcOreWPPG8c1XquA_1759408077
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e4c8fa2b1so3809305e9.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 05:27:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759408077; x=1760012877;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5rFOj97qj38f//+FgXYjk95Fy8po6/WBLsb31mdg278=;
+ b=Je7sO66XvN6IGHL00XgN8DcU5feDrYWiCyHed0+DCzta10IyR7xkAwLqFde0p10Do8
+ apaQd8nwMDl3aeF9bmTAH9/BmcPllQDqEYeBchimG9AMzvUkRywtU6hrSCF2GD5BhxFC
+ uZ28pD45h7MsAO2839k2O/QJAHflgBagCpIUZ2NsD7ixnzQT4tgVNSgJMqH1aNJ4/jrL
+ J+/zZAnW/LpwOf/MHq1BEG8CgrCwjHTrWoJW1w3YsteJASGw9tvlhHhp16s6ksIiNrc8
+ PR+tP45YIL8WBFjFp04I74ORxT0DgR2SjLxtVCmE8Nbg3LQwqE3usj4V0yOqme1kctKS
+ OVmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEcirviGWkRkATk2QoMP77FpIggljBFP/uVUg7CcWp0o3yI9wvFkh2sTp0RIzdSBP0UnTuUruTvZ4i@nongnu.org
+X-Gm-Message-State: AOJu0Yw08Xj5okU0Yu9svX/EazRPhcvPadQjAgImnpWjuKh+pCyVjvQR
+ PekWPJaJN4dL0vn3PJr9ej3n/+ZeYGIOikO/oFmc2JnUsZqBNggcrs6rdQODxNk0oBoeuCJS42G
+ qC/nMe0DJEhuvyELxr33XdO6S3P9lKgEJ5kUXl1hvA3aQDSKcNjI1aEMg
+X-Gm-Gg: ASbGncv2dtRA7JPk3O1CxHQcdkK5t2GrQu1Vaw2QwHojBqPRU7Wruv0ifYRdKFCaWV6
+ wKeAMjVduTgcx8AmwvdB1zAgZFb5s8cU8+eQ0XWDkkv3vHn+gGR8jQnKvHRb/CLAIEj43DF5QSE
+ hW5zb48B5FvTouLmD1ebGPcBbsTe+5kzPUFryhORBdkwphokmcBFdNGkoGQ3IbGrswaj2eBZyOj
+ ShQqZ0M8wvg7kgzmIh64c6+bPAEqZ0Qzxn8tCKeVG4p3ojEaiIpWzKel8EyDxhEXVIAbUCN9hlu
+ IknPOVfjR4MGmUU+lQu1VqH8ub8m4Sy+WqCqlAfOMCMZN+t4a+sV8BViN+8q9uOk70XEYxK/Ix8
+ PfltRSK62gknn+iNP
+X-Received: by 2002:a05:600c:c162:b0:46e:376a:c9db with SMTP id
+ 5b1f17b1804b1-46e612dd058mr56266295e9.26.1759408077294; 
+ Thu, 02 Oct 2025 05:27:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCOb8ysezD9VaG+UpYqBWzCScwHz+Kh/zZBhNi50UU0eQ17iEz+PDmBOCZDOter6FuLKjySA==
+X-Received: by 2002:a05:600c:c162:b0:46e:376a:c9db with SMTP id
+ 5b1f17b1804b1-46e612dd058mr56265935e9.26.1759408076768; 
+ Thu, 02 Oct 2025 05:27:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e619b7e37sm79856835e9.1.2025.10.02.05.27.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Oct 2025 05:27:56 -0700 (PDT)
+Message-ID: <86a647b1-5ab8-4064-968e-e3f5def81ee3@redhat.com>
+Date: Thu, 2 Oct 2025 14:27:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aN1EdMGbLxE10NOp@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jdenemar@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 09/27] hw/arm/smmuv3-accel: Support nested STE
+ install/uninstall support
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-10-skolothumtho@nvidia.com>
+ <a0a149c6-e05a-40b1-87dc-c4a9470a85ed@redhat.com>
+ <CH3PR12MB7548BF0AE78D2DE5FA0E3102ABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB7548BF0AE78D2DE5FA0E3102ABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,90 +130,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 01, 2025 at 16:10:44 +0100, Daniel P. Berrangé wrote:
-> On Wed, Oct 01, 2025 at 11:05:59AM +0000, Dr. David Alan Gilbert wrote:
-> > * Jiří Denemark (jdenemar@redhat.com) wrote:
-> > > On Tue, Sep 30, 2025 at 16:04:54 -0400, Peter Xu wrote:
-> > > > On Tue, Sep 30, 2025 at 09:53:31AM +0200, Jiří Denemark wrote:
-> > > > > On Thu, Sep 25, 2025 at 14:22:06 -0400, Peter Xu wrote:
-> > > > > > On Thu, Sep 25, 2025 at 01:54:40PM +0200, Jiří Denemark wrote:
-> > > > > > > On Mon, Sep 15, 2025 at 13:59:15 +0200, Juraj Marcin wrote:
-> > > > > > So far, dest QEMU will try to resume the VM after getting RUN command, that
-> > > > > > is what loadvm_postcopy_handle_run_bh() does, and it will (when autostart=1
-> > > > > > set): (1) firstly try to activate all block devices, iff it succeeded, (2)
-> > > > > > do vm_start(), at the end of which RESUME event will be generated.  So
-> > > > > > RESUME currently implies both disk activation success, and vm start worked.
-> > > > > > 
-> > > > > > > may still fail when locking disks fails (not sure if this is the only
-> > > > > > > way cont may fail). In this case we cannot cancel the migration on the
-> > > > > > 
-> > > > > > Is there any known issue with locking disks that dest would fail?  This
-> > > > > > really sound like we should have the admin taking a look.
-> > > > > 
-> > > > > Oh definitely, it would be some kind of an storage access issue on the
-> > > > > destination. But we'd like to give the admin an option to actually do
-> > > > > anything else than just killing the VM :-) Either by automatically
-> > > > > canceling the migration or allowing recovery once storage issues are
-> > > > > solved.
-> > > > 
-> > > > The problem is, if the storage locking stopped working properly, then how
-> > > > to guarantee the shared storage itself is working properly?
-> > > > 
-> > > > When I was replying previously, I was expecting the admin taking a look to
-> > > > fix the storage, I didn't expect the VM can still be recovered anymore if
-> > > > there's no confidence that the block devices will work all fine.  The
-> > > > locking errors to me may imply a block corruption already, or should I not
-> > > > see it like that?
-> > > 
-> > > If the storage itself is broken, there's clearly nothing we can do. But
-> > > the thing is we're accessing it from two distinct hosts. So while it may
-> > > work on the source, it can be broken on the destination. For example,
-> > > connection between the destination host and the storage may be broken.
-> > > Not sure how often this can happen in real life, but we have a bug
-> > > report that (artificially) breaking storage access on the destination
-> > > results in paused VM on the source which can only be killed.
-> > 
-> > I've got a vague memory that a tricky case is when some of your storage
-> > devices are broken on the destination, but not all.
-> > So you tell the block layer you want to take them on the destination
-> > some take their lock, one fails;  now what state are you in?
-> > I'm not sure if the block layer had a way of telling you what state
-> > you were in when I was last involved in that.
-> 
-> As long as the target QEMU CPUs have NOT started running, then
-> no I/O writes should have been sent to the storage, so the storage
-> should still be in a consistent state, and thus we can still try
-> to fail back to the source QEMU.
-> 
-> The "fun" problem here is that just because we /try/ to fail back
-> to the source QEMU, does not imply the source QEMU will now succeed
-> in re-acquiring the locks it just released a short time ago.
+Hi Shameer,
 
-Right, but if we manage to get the source QEMU out of postcopy migration
-is such scenario, the VM may be manually resumed once storage issues are
-solved. So yes, we can't always rollback, but we should at least allow
-some kind of manual recovery.
-
-> Consider the classic dead NFS server problem. The target may have
-> acquired 1 lock and failed on another lock because of a service
-> interruption to the NFS server. Well the target can't neccessarily
-> release the lock that it did successfully acquire now. So if we
-> fail back to the source, it'll be unable to reacquire the lock as
-> the target still holds it.
-> 
-> This doesn't mean we shouldn't try to fail back, but there will
-> always be some failures scenarios we'll struggle to recover from.
-> 
-> The "migration paused" state is our last chance, as that leaves
-> both QEMU's present while the admin tries to fix the underlying
-> problems.
-
-IIUC from my conversation with Juraj switching to postcopy-paused can
-only happen when CPUs were already started.
-
-Jirka
+On 10/2/25 2:08 PM, Shameer Kolothum wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 02 October 2025 11:05
+>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> smostafa@google.com; wangzhou1@hisilicon.com;
+>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+>> shameerkolothum@gmail.com
+>> Subject: Re: [PATCH v4 09/27] hw/arm/smmuv3-accel: Support nested STE
+>> install/uninstall support
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hi Shameer,
+>>
+>> On 9/29/25 3:36 PM, Shameer Kolothum wrote:
+>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>
+>>> Allocates a s1 HWPT for the Guest s1 stage and attaches that to the
+>>> pass-through vfio device. This will be invoked when Guest issues
+>>> SMMU_CMD_CFGI_STE/STE_RANGE.
+>> ON set both alloc + attachment are done. On unset you shall explain the
+>> gym related to config/abort hwpt. Those are S1 hwpt, right? I think this
+>> shall be reflected in the name to make it clearer? In the previous patch
+>> I didn't really understand that.
+> Ok. There are three HWPTs in play here.
+>
+> BYPASS HWPT
+> ABORT HWPT
+> S1 HWPT --> This is when Guest has a valid S1 (STE_VALID && STE_CFG_S1_ENABLED)
+>
+> In previous patch we allocate a common BYPASS and ABORT HWPT for all devices
+> in a vIOMMU. We reuse that here in this patch and attach if Guest request a S1
+> bypass or abort case.
+>
+> The S1 HWPT is allocated as and when the Guest has a valid STE with context
+> descriptor and use that for attachment.
+>
+> Whether we can call them S1 HWPT only, I am not sure. Because, I think,
+> during alloc() call the kernel allocates a Nested HWPT(IOMMU_DOMAIN_NESTED)
+> which uses a Guest S1 nested on a S2 HWPT.
+the role of BYPASS HWPT and ABORT_HWPT must be better explained I think.
+Same in previous patch. I understand they abstract stage 1 in abort or
+bypass. I think we shall better explain what HWPT hierarchy we are
+putting in place refering to the kernel uapi (and not kernel internal
+implementation). Thanks Eric
+>
+> Anyway, I will rephrase the comments and variable names to make it clear.
+>
+> Thanks,
+> Shameer
 
 
