@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9775CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA01CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:01:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4OWe-0006kL-FU; Thu, 02 Oct 2025 14:59:36 -0400
+	id 1v4OWk-0006mx-ID; Thu, 02 Oct 2025 14:59:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4OWY-0006ji-7E
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 14:59:30 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1v4OWh-0006lk-3w
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 14:59:39 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4OWM-0004Rz-A3
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 14:59:27 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2680cf68265so10084185ad.2
+ id 1v4OWP-0004SJ-4d
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 14:59:36 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b593def09e3so997435a12.2
  for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 11:59:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759431552; x=1760036352; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759431553; x=1760036353; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=REdHJe6z7bttc9T3I2uMMFkF69gmCqgox1fCOqDpUs8=;
- b=O9zLiSefd+OKe00hquZjopJdSr9MnOVuqJN2pf5C1jJk/RWldtSSfzdj+jakqGkEhS
- RZkpu5vhzaHZE0xs2PdtpOSx653qYZQ3G42lm0QtB5lKN/5wJ6Deigo+Laif4FWVJTaT
- TU+5eUs8EPFdsIGlxhvnBy1ksWGHS0Q0UBWJcJlxuonqiIEFzkXktpFNSVGrRYTlokai
- bfDX55vjKVXnfbhTGpr27jCtkTelvktgF9iaG6fB2JOzwKaB3YtNqJ6dJCnhiDfe8e+u
- fxB9nnhVxsk+CGP0clOzSML5/oQBhyjLOhoZHvLKxUAHfbpvjFnDuRl5SXHU2dmGKgAr
- Zrvg==
+ bh=MRoVXTbEiZRq0NCvolopAwrC29j8t8c/HT4EC4PwfXU=;
+ b=Ug6un8drqHyPpNTZ+KFRTXx47CCEVPB0HFzuMb70Q5FZ9Ow+1rR3hqGZGh3SPTBal/
+ ziSHj+MyBvLIOUQycJb2Wve8KSM72d1DNJVesOG5lLNHSUu7WyKHSBTkiFEt/vMAMfIc
+ xMev9qyrUZ/EGW90mFDhlhreQC+nla+UzvI4321qchfqWyyZ/ItComqEzONCBOAYIDwT
+ 7keqizfpYUtQ1jPJ9ePCxeuiO0vOGBc26GBC7W9f33FtDxXdIOYczXmeP6uBs9zj+ACX
+ Yewpw3V5Bh4n+9so4Khk1Fn2czT4gFdj6pQlkFiUNW8Wgv2Fp1kXRxVbJDAZ9J1s4biS
+ N0PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759431552; x=1760036352;
+ d=1e100.net; s=20230601; t=1759431553; x=1760036353;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=REdHJe6z7bttc9T3I2uMMFkF69gmCqgox1fCOqDpUs8=;
- b=DPQWxID30dj+stRs46TT+Sfwmy8OlGAKLufd1rzoKQe5hBBRMyxqrNfd3PHlUBETsr
- A7gTXHoz1918JMtQi0vYgMOdJtNrcMaE/VmT0erNb+6Z3pT5JQqTrdlx9yZ4ejDCkiqu
- 8/OdhUmoWzM6yVBLoG3vzeh110vTFMlI69EdgAN44pYCAY1kwMI8OF0Cnyafbu10RKSX
- mdRcHO3AtqbSqN9NloOcNv32TIv/ttIRHgDo+Wgv5pFHjlT2LxtAxsltNHVLsQBg17Kx
- ns91Dp4KgRsPfJ41E/Rw7XmQcEj4y278wv4xMSBUhbaFqauD1xPrJzIrDS7FCdC7oGzL
- +7CQ==
-X-Gm-Message-State: AOJu0YyTG8jtVWnNXQimk1wB/Sn6NybWzznLctgw7J/P1Heab/aA4kJl
- MQBmpMG1Fjqw4poAjgQBoYmngMOR4iM+9scG0k2+frddroM8j2KO4EiBY9AoHV4RCtZEbHfjHMe
- UzoWOvt8=
-X-Gm-Gg: ASbGncu96WmY8srWt3ujFZpg3mzFUfxxUrb3lUuJG4NZY0WGie1RrDyteAgyVnAHKHA
- i9ipdY65dTqCv/FoZmwv4mYfB7oTdTUmW2JBnfStkRbgg9NBTfou+bTMDBigd1s+k/r/q5IKKUt
- Cd8tgTaAZukE9CRnk8LxKej6MA5c+dTfu2xsp8FfbFaTsf5KjK4QtTwDYBz+s3G90I9IAS2FxHm
- Lv5DRWSERzgaA5xRpA/3GvZOts2u4wSPd8UYqQcqMmoQOTTFUFv3/0yCl6Hc7GHBikk4HsFhYMK
- Nntq9lX/7ULWLNnYXmeH3kRKhxuu1dh0J2idqx5C3IS1cfqjdkKXfQH2XhsUB6X2LHow9sK9m8b
- lItjlr62XzZu4eWL6ttSF37nIKI8xtzpzhNCPirXOd/knJWo87t+HhoQefUS3DiMWE7s=
-X-Google-Smtp-Source: AGHT+IFjej55OLe5Rha73BAm90miVczH3+6mLaFevQ4I9qrpKnaCbP6Z9TJfwev+ZYCO1WZbXDpqrw==
-X-Received: by 2002:a17:902:f64d:b0:27f:1c1a:ee43 with SMTP id
- d9443c01a7336-28e9a61ab47mr3320885ad.29.1759431552266; 
- Thu, 02 Oct 2025 11:59:12 -0700 (PDT)
+ bh=MRoVXTbEiZRq0NCvolopAwrC29j8t8c/HT4EC4PwfXU=;
+ b=dCPLeD7GGCnyn5vhwZhvenmPD6o6blRCmPpZVwH7CUJSUco4sMVpCC9JAzkPjzevQn
+ kdY4EY+/QWL++dSaQ7IMdkDKv4XTuavQX0EWFnAapWCQhz9XP4kT3oBTwpIyEPkm2sV1
+ FPpcC45FSJzYRjpbqYlOMF6JCw3K2Pst59Cy9/ABGLmOA7xwTQ90vb8Xzn1cpgx/xnh/
+ hISgNIeUkp2FHNyhy17z1c5Xt/ACqAT3CuBTQiW0ReAQx5GPeAW1pSW3Scargk3Ap6yL
+ gChAoZIQrFv4rSGAy42xfH0eD/OwRgrmuty+P9miex5Dey/Y95FcWbUgr2HTQK7GARTx
+ ay5g==
+X-Gm-Message-State: AOJu0Yx1v0DV5Dj+Jog3MQYmxXGAUvYUIcvxQdwh+bJgvZbng6TMsYUS
+ muTubRLvG94B14yaBZwnHnOswO0kAq2/QC7rcvEemAkrlHr+1ba75wSLgWDaR75OgrLXx47c7r0
+ KtSiIh60=
+X-Gm-Gg: ASbGncsIhL194Ue50h1ZGxkeHcW3Hdrz1doWXhzQv346lTddG9JG3O2qBeedceqZRJU
+ HVzr7UhUFKAVMB4AuVgRNeWXnePAy4VlCn8A/LO3oMz6GpTFg6OD2DJ+uMpA8ZySdkuPAq3hfhN
+ pfB1YMa2Wo7pvPb/2c+CgDSmMhw8McA3r+hEA3nn2Evy/d1AzYXvJ6OrugDpAl93rJYCzJQ++Gc
+ yG6iJpOiPbTTJXERcCSaiqCH0z6wQHI2PzFAR6egmD6RLoSZbi76h+gETlWzD3ZhwPkqGSjqKQT
+ u0bW3gGLw/NxNJBGe42sygDaAh/50S0c/g8R6YIL1raZTEl8ESTrpgfPvo0/H2JNlGClphhFslC
+ huDCjRdgfTNjR5cTEt7/C/pOiKAag46d0XPo85NeCF1FykBnyx2GGvsk9HY2fiVmykWo=
+X-Google-Smtp-Source: AGHT+IErqJ3btz+SPzLv+/aaDPLlL6d/QVekQfG7I+jlXmt7sSoEp/MH5YTuHK3FLYgrm41RaIobJQ==
+X-Received: by 2002:a17:903:3c70:b0:25c:46cd:1dc1 with SMTP id
+ d9443c01a7336-28e9a6aa297mr3215785ad.33.1759431553066; 
+ Thu, 02 Oct 2025 11:59:13 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d1d31c8sm28047335ad.95.2025.10.02.11.59.11
+ d9443c01a7336-28e8d1d31c8sm28047335ad.95.2025.10.02.11.59.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 11:59:11 -0700 (PDT)
+ Thu, 02 Oct 2025 11:59:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
-Subject: [PATCH 1/2] Update tf-rmm to support FEAT_S1PIE
-Date: Thu,  2 Oct 2025 11:59:08 -0700
-Message-ID: <20251002185910.584990-2-richard.henderson@linaro.org>
+Subject: [PATCH 2/2] Enable firmware support for PIE and GCS
+Date: Thu,  2 Oct 2025 11:59:09 -0700
+Message-ID: <20251002185910.584990-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251002185910.584990-1-richard.henderson@linaro.org>
 References: <20251002185910.584990-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,88 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There appears to be no tagged release with FEAT_S1PIE, but
-it is upstream.  As is the PMU patch we were carrying.
 ---
- build_tf_rmm.sh                              | 10 ++---
- patches/rmm-support-lower-pmu-versions.patch | 44 --------------------
- 2 files changed, 5 insertions(+), 49 deletions(-)
- delete mode 100644 patches/rmm-support-lower-pmu-versions.patch
+ build_arm_trusted_firmware.sh                 |  1 +
+ ...arm-trusted-firmware-support-PIE-GCS.patch | 30 +++++++++++++++++++
+ 2 files changed, 31 insertions(+)
+ create mode 100644 patches/arm-trusted-firmware-support-PIE-GCS.patch
 
-diff --git a/build_tf_rmm.sh b/build_tf_rmm.sh
-index bd1c612..009966d 100755
---- a/build_tf_rmm.sh
-+++ b/build_tf_rmm.sh
-@@ -11,14 +11,14 @@ fi
- clone()
- {
-     rm -f tf-rmm
--    url=https://github.com/TF-RMM/tf-rmm
--    version=tf-rmm-v0.7.0
--    src=$version-support-lower-pmu-versions-release
-+    url=https://git.trustedfirmware.org/TF-RMM/tf-rmm
-+    version=481cb7f4e64f5c48c03a72b75b736f183f3011d5
-+    src=tf-rmm-main-s1pie
-     if [ ! -d $src ]; then
--        git clone $url --single-branch --branch $version --depth 1 $src
-+        git clone $url $src
+diff --git a/build_arm_trusted_firmware.sh b/build_arm_trusted_firmware.sh
+index d223142..0b148ef 100755
+--- a/build_arm_trusted_firmware.sh
++++ b/build_arm_trusted_firmware.sh
+@@ -18,6 +18,7 @@ clone()
+         git clone $url --single-branch --branch $version --depth 1 $src
          pushd $src
-+        git checkout $version
-         git submodule update --init --depth 1
--        git am ../patches/rmm-support-lower-pmu-versions.patch
+         git am ../patches/arm-trusted-firmware-support-FEAT_TCR2-and-FEAT-SCTLR2.patch
++        git am ../patches/arm-trusted-firmware-support-PIE-GCS.patch
          popd
      fi
-     ln -s $src tf-rmm
-diff --git a/patches/rmm-support-lower-pmu-versions.patch b/patches/rmm-support-lower-pmu-versions.patch
-deleted file mode 100644
-index 0993edc..0000000
---- a/patches/rmm-support-lower-pmu-versions.patch
-+++ /dev/null
-@@ -1,44 +0,0 @@
--From 2235e01874d2b51e32650b2326c94ae2285c554a Mon Sep 17 00:00:00 2001
--From: Jean-Philippe Brucker <jean-philippe@linaro.org>
--Date: Fri, 14 Jul 2023 10:54:43 +0100
--Subject: [PATCH] TMP: fix(qemu): Support lower PMU versions
--
--Although RME mandates v3p7, QEMU has v3p5 at the moment. Until we
--implement the p7 extension, which provides counter isolation for EL3,
--allow p5.
--
--Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
--Change-Id: Id1dd30486f203187e3f882c7495116b743d3883a
-----
-- lib/arch/include/arch.h | 1 +
-- runtime/rmi/feature.c   | 2 +-
-- 2 files changed, 2 insertions(+), 1 deletion(-)
--
--diff --git a/lib/arch/include/arch.h b/lib/arch/include/arch.h
--index cecdf2a5..fc64365e 100644
----- a/lib/arch/include/arch.h
--+++ b/lib/arch/include/arch.h
--@@ -493,6 +493,7 @@
-- #define ID_AA64DFR0_EL1_PMUVer_WIDTH		UL(4)
-- 
-- /* Performance Monitors Extension version */
--+#define ID_AA64DFR0_EL1_PMUv3p5			UL(5)
-- #define ID_AA64DFR0_EL1_PMUv3p7			UL(7)
-- #define ID_AA64DFR0_EL1_PMUv3p8			UL(8)
-- #define ID_AA64DFR0_EL1_PMUv3p9			UL(9)
--diff --git a/runtime/rmi/feature.c b/runtime/rmi/feature.c
--index 5468f137..52487c0d 100644
----- a/runtime/rmi/feature.c
--+++ b/runtime/rmi/feature.c
--@@ -35,7 +35,7 @@ unsigned long get_feature_register_0(void)
-- 						RMI_FEATURE_TRUE);
-- 
-- 	/* RMM supports PMUv3p7+ */
---	assert(read_pmu_version() >= ID_AA64DFR0_EL1_PMUv3p7);
--+	assert(read_pmu_version() >= ID_AA64DFR0_EL1_PMUv3p5);
-- 
-- 	/* Set support for PMUv3 */
-- 	feat_reg0 |= INPLACE(RMI_FEATURE_REGISTER_0_PMU_EN,
---- 
--GitLab
--
+     ln -s $src arm-trusted-firmware
+diff --git a/patches/arm-trusted-firmware-support-PIE-GCS.patch b/patches/arm-trusted-firmware-support-PIE-GCS.patch
+new file mode 100644
+index 0000000..132e939
+--- /dev/null
++++ b/patches/arm-trusted-firmware-support-PIE-GCS.patch
+@@ -0,0 +1,30 @@
++From 0925eadf8922bbe811ec41fb983347928f3bc63b Mon Sep 17 00:00:00 2001
++From: Richard Henderson <richard.henderson@linaro.org>
++Date: Thu, 2 Oct 2025 11:43:11 -0700
++Subject: [PATCH] plat/qemu/common/: add support for FEAT_{S1PIE,S2PIE,GCS}
++
++---
++ plat/qemu/common/common.mk | 7 +++++++
++ 1 file changed, 7 insertions(+)
++
++diff --git a/plat/qemu/common/common.mk b/plat/qemu/common/common.mk
++index 6bc1084..2c344b6 100644
++--- a/plat/qemu/common/common.mk
+++++ b/plat/qemu/common/common.mk
++@@ -126,6 +126,13 @@ ENABLE_FEAT_HCX		:=	2
++ ENABLE_FEAT_TCR2	:=	2
++ ENABLE_FEAT_SCTLR2	:=	2
++ 
+++# 8.9
+++ENABLE_FEAT_S1PIE	:=	2
+++ENABLE_FEAT_S2PIE	:=	2
+++
+++# 9.4
+++ENABLE_FEAT_GCS		=	2
+++
++ # SPM_MM is not compatible with ENABLE_SVE_FOR_NS (build breaks)
++ ifeq (${SPM_MM},1)
++ 	ENABLE_SVE_FOR_NS	:= 0
++-- 
++2.43.0
++
 -- 
 2.43.0
 
