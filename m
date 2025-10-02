@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C178CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A70CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Et0-0006G3-9o; Thu, 02 Oct 2025 04:42:04 -0400
+	id 1v4Ett-0006kx-KE; Thu, 02 Oct 2025 04:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v4Esv-0006En-PC
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:41:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v4Esf-0000pF-MQ
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:41:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759394492;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aGjTtsKXC6FksXU85r08gijBuHfBcTbMDlAttzaQ8nU=;
- b=Be2pj5aFsJzZDQ7D9bLVWRKcvwVPZz9AqeN9y5iEfFBGaYLEuzreEMCbLF4r7jhY6iZej2
- 9PC9S40X/0/rYE+fxDPBt4YpZv7R5tnm4pXyl+oIl7OnFpVvai1Vr5mxk4M9+ylBHvBr+d
- vDoNvuQohmFdEPLEGxdBDR2O2bzjK4E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-mi1LLJIoOLixTGbwKJOORw-1; Thu,
- 02 Oct 2025 04:41:30 -0400
-X-MC-Unique: mi1LLJIoOLixTGbwKJOORw-1
-X-Mimecast-MFC-AGG-ID: mi1LLJIoOLixTGbwKJOORw_1759394488
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF2D81956050; Thu,  2 Oct 2025 08:41:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.93])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C896A300018D; Thu,  2 Oct 2025 08:41:19 +0000 (UTC)
-Date: Thu, 2 Oct 2025 09:41:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v4 00/27] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-Message-ID: <aN46rF5w2-wy3IMH@redhat.com>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <e176dfe8-b406-46ff-b1f0-95d4285472b7@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Ete-0006fa-2C
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:42:45 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4EtI-0000rd-5X
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:42:34 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-46e2c3b6d4cso6121115e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 01:42:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759394525; x=1759999325; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NTegPe0Bb/he6v221vBe7onQOEmqDcWQ9UUafnugHrk=;
+ b=AlHfGb33ELJBz+0W6zn4PcBEfWzE/CdxHrMQk3sO94FSKOPt4kGb0TmWnwnwNEiXxA
+ lQyshc/Vz/RbYBTBlYhjwO60c2HMjf1/xtrXeKhbpO+oaDtnv0Fl2seqUF2Me6AwAsX1
+ K4lFuoGGQQ3p+EmGoIpBCpcKoui5cVAN6WLMGPYUJ2mmMtN0SZdxUAPdBMZYJY/5UFZP
+ lAJv5dFFdokAsPQeebsJ/Xh+CLfTPSyQF9Q8yph6wGIdr65bBqCNFOxjLFFBtD+647H/
+ LkPALau6DBeX0h9/A+B77af3+GSYXD1LjExZ8fbGdIPNyr75HuEWmBQcDap69eCGD54Y
+ YFDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759394525; x=1759999325;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NTegPe0Bb/he6v221vBe7onQOEmqDcWQ9UUafnugHrk=;
+ b=pAmmmBRFhUYrBgGewfqkHLUtCcFQGQAQlmMGZIWsqX3hNzxMbJlkSJd5+vW3jN3Her
+ EYG1qJpvJCs/ynQY74WoZKYvHk7IzHNoXdQI5sBROLfaQ6FU7s9McasXfHxeg7CQ+jiD
+ jeeXtYQoYz1yrFzLtJ6N0Q8Ut4gO3rDgDhFiDLnieugbU9+RGJvyOULMsPP5mqXtefie
+ E/DHRnkoa5bVD/0Zf1rjG7ldjzmkhFyc3bORV1vMh8GfC1y5wuTIAvMhnG7DHcvB7eqf
+ jWldPXiX+Zdg88eHJcswffaGxy5a4EXBdfSf317Cgh3o/AUPIEWbz7c4Yge9m7bwFMDT
+ pqqA==
+X-Gm-Message-State: AOJu0YwuPrXR+oizo6zgOW8tOM9EuwSZwYIWT/uCMYjcON5VArCf+8q5
+ K31KT8xjDckayOjZtwHoi2Uekw/G7l5i3GVj3oZyuY+7sXiyrSFkiNZTrlPAy+SUl4YMjZoOMu3
+ PBvrWDvNIfQ==
+X-Gm-Gg: ASbGncuw/9ivwL+FE6uuh+1n/+1/05cTQJWwCryjt84SOEajp6nigpqXeiDAg2utjJq
+ 4hTMQDeH/GaGdOCcp6zFVxZw4jzyrXFOHPfP6NKaRY7ql1hsCkPDkwoJ3iWN4qNpLV1rRRac++P
+ 0UsqdAnT0UcVbVnGo1/GCHCFlRHfDVOvuBLFg+i+l0gp9ly7ICQAR0dd0Xmyu6jBnuGrHZc7LKh
+ 24G76t31sVyjdB5MnzyBXfJoVRgNWBDRT7utRFjnyH0WQZyP07Kzooer8RrrzjplF2S4cwkXdWx
+ A88j0yGO0SFGwlqt3IcdecDOvCXghXxDox9UxdjwwtRk2J1ILwCy42F8VZoS/aRSf+r4yBAdF8S
+ aPeR3GkofNavYDgTtRQsujOAeuFxCDz94rp96J6TJkKF60mZqfjjfpU2Bi02D+QfmYbTRrnoFLk
+ pSYiJ7xiidaGyN1SlkFbmN0rUh+2k2kQ==
+X-Google-Smtp-Source: AGHT+IG73iHN+13Rh40JFYt36cqDPiR27XBT7Y9OfRVKOo6LBiQqBv7ff1ie3ldwhto5T24zRQdzaQ==
+X-Received: by 2002:a05:6000:240e:b0:3eb:5e99:cbbc with SMTP id
+ ffacd0b85a97d-425577ecad9mr3404901f8f.9.1759394524821; 
+ Thu, 02 Oct 2025 01:42:04 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8ab8b0sm2683613f8f.18.2025.10.02.01.42.03
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 Oct 2025 01:42:04 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4 00/17] system/physmem: Remove cpu_physical_memory _is_io()
+ and _rw()
+Date: Thu,  2 Oct 2025 10:41:45 +0200
+Message-ID: <20251002084203.63899-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e176dfe8-b406-46ff-b1f0-95d4285472b7@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,47 +96,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 02, 2025 at 10:30:56AM +0200, Philippe Mathieu-Daudé wrote:
-> Hi Magnus,
-> 
-> On 16/9/25 18:48, Magnus Kulke wrote:
-> > Hello all,
-> > 
-> > This is the fourth revision of a patch set implementing an accelerator
-> > for the MSHV kernel driver, exposing HyperV to Linux "Dom0" hosts in
-> > various scenarios. Thanks for the feedback to the previous revision, I
-> > tried to incorporate those. The changes in the currenct patchset beyond
-> > the suggested fixes are mostly related to the replacement of retired
-> > ioctl calls that will not part of the upstreamed MSHV kernel driver.
-> 
-> 
-> > Magnus Kulke (26):
-> >    accel: Add Meson and config support for MSHV accelerator
-> 
-> >    accel/mshv: Add accelerator skeleton
-> >    accel/mshv: Register memory region listeners
-> >    accel/mshv: Initialize VM partition
-> >    accel/mshv: Add vCPU creation and execution loop
-> >    accel/mshv: Add vCPU signal handling
-> >    accel/mshv: Handle overlapping mem mappings
->
-> Due to my generic work on accelerators, I'll have to refactor these
-> patches. Obviously I don't want to break your implementation! Can
-> you add some (functional?) tests? Ideally we should be running
-> tests on our CI to ensure code doesn't bitrot.
+(Series fully reviewed)
 
-NB our CI systems don't have HyperV available, so it is unrealistic
-for us to test it in our CI upstream.
+Since v3:
+- Do not describe flatview_translate()'s plen argument
+- Use cpu->as instead of cpu_get_address_space(idx=0)
+Since v2:
+- Fixed vhost change
+- Better describe cpu_physical_memory_rw() removal (thuth)
+Since v1:
+- Removed extra 'len' arg in address_space_is_io (rth)
 
-With regards,
-Daniel
+---
+
+The cpu_physical_memory API is legacy (see commit b7ecba0f6f6):
+
+  ``cpu_physical_memory_*``
+  ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  These are convenience functions which are identical to
+  ``address_space_*`` but operate specifically on the system address space,
+  always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes and
+  ignore whether the memory transaction succeeded or failed.
+  For new code they are better avoided:
+  ...
+
+This series removes:
+  - cpu_physical_memory_is_io()
+  - cpu_physical_memory_rw()
+and start converting some
+  - cpu_physical_memory_map()
+  - cpu_physical_memory_unmap()
+calls.
+
+Based-on: <20250922192940.2908002-1-richard.henderson@linaro.org>
+          "system/memory: Split address_space_write_rom_internal"
+
+Philippe Mathieu-Daudé (17):
+  docs/devel/loads-stores: Stop mentioning
+    cpu_physical_memory_write_rom()
+  system/memory: Factor address_space_is_io() out
+  target/i386/arch_memory_mapping: Use address_space_memory_is_io()
+  hw/s390x/sclp: Use address_space_memory_is_io() in sclp_service_call()
+  system/physmem: Remove cpu_physical_memory_is_io()
+  system/physmem: Pass address space argument to
+    cpu_flush_icache_range()
+  hw/s390x/sclp: Replace [cpu_physical_memory -> address_space]_r/w()
+  target/s390x/mmu: Replace [cpu_physical_memory -> address_space]_rw()
+  target/i386/whpx: Replace legacy cpu_physical_memory_rw() call
+  target/i386/kvm: Replace legacy cpu_physical_memory_rw() call
+  target/i386/nvmm: Inline cpu_physical_memory_rw() in nvmm_mem_callback
+  hw/xen/hvm: Inline cpu_physical_memory_rw() in rw_phys_req_item()
+  system/physmem: Un-inline cpu_physical_memory_read/write()
+  system/physmem: Avoid cpu_physical_memory_rw when is_write is constant
+  system/physmem: Remove legacy cpu_physical_memory_rw()
+  hw/virtio/vhost: Replace legacy cpu_physical_memory_*map() calls
+  hw/virtio/virtio: Replace legacy cpu_physical_memory_map() call
+
+ docs/devel/loads-stores.rst            |  6 ++--
+ scripts/coccinelle/exec_rw_const.cocci | 22 --------------
+ include/exec/cpu-common.h              | 18 ++---------
+ include/system/memory.h                | 11 +++++++
+ hw/core/loader.c                       |  2 +-
+ hw/s390x/sclp.c                        | 14 ++++++---
+ hw/virtio/vhost.c                      |  7 +++--
+ hw/virtio/virtio.c                     | 10 +++---
+ hw/xen/xen-hvm-common.c                |  8 +++--
+ system/physmem.c                       | 42 ++++++++++++++------------
+ target/i386/arch_memory_mapping.c      | 10 +++---
+ target/i386/kvm/xen-emu.c              |  4 ++-
+ target/i386/nvmm/nvmm-all.c            |  5 ++-
+ target/i386/whpx/whpx-all.c            |  7 +++--
+ target/s390x/mmu_helper.c              |  7 +++--
+ 15 files changed, 85 insertions(+), 88 deletions(-)
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.51.0
 
 
