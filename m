@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CC1CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 01:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BADE2CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v48aL-0003nD-DY; Wed, 01 Oct 2025 21:58:21 -0400
+	id 1v48h9-0006nX-2U; Wed, 01 Oct 2025 22:05:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v48aI-0003kq-Cs
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 21:58:18 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v48h3-0006nK-Pw
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:18 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v48a2-0003Cu-2n
- for qemu-devel@nongnu.org; Wed, 01 Oct 2025 21:58:16 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b2e0513433bso82892866b.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 18:57:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v48gs-0004fV-Dk
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:05:16 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-269639879c3so3985655ad.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 19:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759370267; x=1759975067; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jYxzDr17ex1ArKRcKaJaschHglNbzUH5EYSWgfIQN1g=;
- b=Q7EGxfmNhqogw6qDcsIulY9SiTQ2eo7NdTS71X9fIR97OPFMMVyWmlxbnyTiC6Bk1P
- 7a402X5wV31HaTLxUzfarAwmTAQHIukugCCkGwaDl4TrSu/K3qQ3y0An2Cy72oASQeky
- 2U3JC0ld42g+1UNPLYJk5kUX3uPPas8fBZZ5FEBEuk47HFA+IAFIEm1Q0Srg4lcMTj1E
- oRi6IeHHGF+mbUKyKuTSea7aCYLiELi2cZZcMxhRFwze6vhjcYO3ImybyIYMmQEt/JWn
- FKjs7H5BeYnYcwdPilpodkkjnUmtOliou5tWFbbCQ4DiAdyrcQmsL0/U2NzLYonrr0ti
- +BlA==
+ d=linaro.org; s=google; t=1759370694; x=1759975494; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FivvktU0jbEhjj/HTdgr6u5hVHc6MYuV57Fgxg1uJks=;
+ b=H5yROKi1bk3lWOM5wTY+t/kNm/LG3GtzUh6rLTYeF/2kxMXWPoHMVVKOhdLCbv79cV
+ PH7s/o63oHv+TG4+LRpge4e2IuB9Hxr71f4YFKfKFvmPLSmTV13BVhNRN2WcfuefjOBU
+ E8+1tekgoEZjyhKEgIyyBNhzz5gOZKan0GHT3/JNS2E/oYKC4pgwd+mngbynzK+KLkzM
+ zVlsVndvz0Gz0+8cZrJJzgGc5Klv4sTkhxNTM6S+P20KGZR8xnSXK5VIa1q1k/620TmE
+ pj4wEDey8nI0OkwHfbN9TS5Jd9hrFO3TMaA7FH1rI/nnxgh2qVo3Pocx3mUbDEoGhDq0
+ Br3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759370267; x=1759975067;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jYxzDr17ex1ArKRcKaJaschHglNbzUH5EYSWgfIQN1g=;
- b=HOJnvDkomL1bvYBxG6G5jtt6mjtOR9hfHVR5mfbLz3sGgO9dGKu7Sx82qn0Lq66c2p
- 98RcDGjra6xYliuEXqh5PFLqTDdg8RwD35m/9eS/nq71ezn7YOXxz0vHkN77kbGG5vqv
- irVgsHGCLuX6CcRTF8RZid6oHiYwvZ6xcfIsb0VEVg2agCFefNWRO/9xyUmH2e57EHc0
- 4D6QDICgkPksd46lxT7JS/YtgAMx6Lq2ze4MTJlTgA/2RedaBLa4R8g83iRfID1iPK+V
- VnB32oghto1MZHCVLrVf3YO7y16xrVgk/r0GLzLn9LJXFgEt0r9mwQIDv7uxISpwlXta
- wpZg==
-X-Gm-Message-State: AOJu0Yy/EgiTg5QPQfpajiCBAzuqQ7BZujtnsmrez8YH3IhhFkCjnrqq
- CCRRhqDRrxf+GdWo264lEtXUQGafFEz5mEhw+FSRe6AIoDjSCiwVkvttWOvBMuOnobC2iaz61cF
- CK/00uEVKlew/mco0+eIh3sqOx73dAQU=
-X-Gm-Gg: ASbGncspiQxDrP4QLhxT71TnzSKWQyfI3PwP6QqR7mp0sXt440bD1s7JUH8/lOoEql7
- ZJQEc/sBoupFUPjwsg9IMFrGypgmQ8LEOIZbqXQejycLVxRc7lyYTYCe0Notvwz5q2C3QJEK97C
- z4WkDz++eMOVgW5r5zjlCepbr5IYJIo2iThT6HvpatQ0ei/W3ozeA3Qy//mxhu5wNtlixIwQGeX
- k4q58XEqXeRB1Gd2s3GdBC64yYiauVxjuS0ZLWxPQT7nZ7QNm0czmg+9gWMtw==
-X-Google-Smtp-Source: AGHT+IG/BgBsyM1lDpAlF6MWlnh5Zc2e8dr2Cn3Cso2GKAH9zb3gmKZsq5Bk/7oL6LeUzisAu7AGjHgAFzyFyMWe7GU=
-X-Received: by 2002:a17:907:94d1:b0:b3c:193:820e with SMTP id
- a640c23a62f3a-b46e4d7d8c1mr644124466b.13.1759370267214; Wed, 01 Oct 2025
- 18:57:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759370694; x=1759975494;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FivvktU0jbEhjj/HTdgr6u5hVHc6MYuV57Fgxg1uJks=;
+ b=YKtGHgsh1GAHvJYxe6m+n7nkxtsda7rI+3L0Jjngt/5SLsCxY2THMMiev/zCxWFzBu
+ GIDXz9WmfQCiGyFLKrcC25lXFT+9Pdda+tSogAm4JZDgKXNGlhGARjCngn//NWiZgIB1
+ EPHM1CU/IsxV2405vfMGKyQ3BLqd+GP8k1co5kc/bId8VUmRYkc9aKWKFEvrXj2HcdA+
+ zs19VBz9OLOnjVPmCJkJiQm4mdWD0iPdrWbJncaSOqFwVNa3zkmAdMfMUbvDBXbVoMOB
+ IJc1TvNhqhoF6Q9wdGONQvuWmnlQ5O4Sn+okwWTZoPU/v9a+AVgJ4//ItuEfZ4s5uPDN
+ vM/w==
+X-Gm-Message-State: AOJu0YwNEqZDHlkmKJVsR0rZh53MZel6W0TOLsuCysuT5E0TgZSW1mOY
+ PxLBjKUZVhHiV4tY+A3u53X5zcB8tdOkTO69QLnsRW9mwNjZvGkiJdtqVXOHv43adoqzRjdfMqb
+ MtV7l
+X-Gm-Gg: ASbGncspMUOjnBpcCYleWH9b4rSWXpt6pYVaZ4+IJzkL0HFIeRlBPwnitKUQOmD1yXl
+ RE4CfGZfsMDefMFgYkYjas6CuV2g/ks9liX9KB0HM48L4s4KYPwVGoF/PdErWa01ZyeJOF7DTls
+ eo8IVBkw9tCvO78UmhBEwemN0KBIeyydJbIV/xDQ08zY1cpnCLsMscVZ3N3PJlHImcH+SZfazxk
+ oW3RE0vYmXa9DO5gq/pZnOesIROkVUb9BI5YLm8HslZR9csVIqtuxQvIfze4t4I+6boDMyygGC9
+ s3trG6HRYquiznrOPp6U8vVyQNCdiCFuSBURrDBWak/hEgNaHSg9QWH2SmVGKtZsrt15g1vtHq7
+ 5ZRtRg1yaZFncTnuRr58dvu5UjJ2Zy1/YKIHA5HRJ/oz1CS/KLBh+uK0X
+X-Google-Smtp-Source: AGHT+IGVgOgOR4ddg0P5T4pwf/rinS24E0pt8DH8l7WBbsNeh5GVp10Utv8yBtG5q5o2P5/L+Lx6tQ==
+X-Received: by 2002:a17:902:82c6:b0:269:a8a8:4029 with SMTP id
+ d9443c01a7336-28e7f16792bmr55380585ad.5.1759370694018; 
+ Wed, 01 Oct 2025 19:04:54 -0700 (PDT)
+Received: from gromero0.. ([186.215.59.111]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-28e8d1d95bdsm9476735ad.119.2025.10.01.19.04.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 01 Oct 2025 19:04:53 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
+ berrange@redhat.com
+Cc: qemu-arm@nongnu.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH v5 0/9] tests/functional: Adapt reverse_debugging to run w/o
+ Avocado
+Date: Thu,  2 Oct 2025 02:04:23 +0000
+Message-Id: <20251002020432.54443-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-3-anjo@rev.ng>
-In-Reply-To: <20251001073306.28573-3-anjo@rev.ng>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 2 Oct 2025 11:57:20 +1000
-X-Gm-Features: AS18NWAtsHLPWqD0TpgJ1W1IgoaKI5C6JpsNXIr0gWaeMioUnikxZ8VUwN5CB88
-Message-ID: <CAKmqyKP93b87wtcCD+BuoogtW+dWnBss=1OLqhWCNK=L6Gmkkg@mail.gmail.com>
-Subject: Re: [PATCH v2 02/33] target/riscv: Fix size of trivial CPUArchState
- fields
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,341 +100,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 1, 2025 at 5:45=E2=80=AFPM Anton Johansson via
-<qemu-devel@nongnu.org> wrote:
->
-> This commits groups together all CPUArchState fields whose behaviour can
-> be retained by simply changing the size of the field.
->
-> Note, senvcfg is defined to be SXLEN bits wide, but is widened to 64
-> bits to match henvcfg and menvcfg.  Next, [m|h]edeleg are changed to
-> 64 bits as defined privileged specification, and hvictl is fixed to 32
-> bits which holds all relevant values, see HVICTL_VALID_MASK.  The
-> remaining fields touched in the commit are widened from [H|S|M]XLEN
-> to 64-bit.
->
-> Note, the cpu/hyper, cpu/envcfg, cpu/jvt, and cpu VMSTATE versions are
-> bumped, breaking migration from older versions.
->
-> References to the privileged/unprivileged RISCV specification refer to
-> version 20250508.
->
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+The goal of this series is to remove Avocado as a dependency for running
+the reverse_debugging functional test.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+After several rounds of discussions about v1 and v2, and experiments
+done by Daniel and Thomas (thanks for all the experiments and comments
+so far), I've taken a new approach and moved away from using a runner
+for GDB. The changes, I believe, are much simpler now.
 
-Alistair
+This new series uses GDB's machine interface (MI) via the pygdbmi module
+(thanks Manos and Peter for the inputs). pygdbmi provides a controller
+to start GDB and communicate with it through MI, so there is no longer a
+risk of version clashes between libpython in GDB and Python modules in
+the pyvenv, as it could, in theory, happen when GDB executes the test
+script via -x option.
 
-> ---
->  target/riscv/cpu.h     | 78 +++++++++++++++++++--------------------
->  target/riscv/machine.c | 84 +++++++++++++++++++++---------------------
->  2 files changed, 81 insertions(+), 81 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index f05e06bb70..736e4f6daa 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -254,7 +254,7 @@ struct CPUArchState {
->      /* 128-bit helpers upper part return value */
->      target_ulong retxh;
->
-> -    target_ulong jvt;
-> +    uint64_t jvt;
->
->      /* elp state for zicfilp extension */
->      bool      elp;
-> @@ -271,7 +271,7 @@ struct CPUArchState {
->      target_ulong priv;
->      /* CSRs for execution environment configuration */
->      uint64_t menvcfg;
-> -    target_ulong senvcfg;
-> +    uint64_t senvcfg;
->
->  #ifndef CONFIG_USER_ONLY
->      /* This contains QEMU specific information about the virt state. */
-> @@ -313,18 +313,18 @@ struct CPUArchState {
->       */
->      uint64_t vsie;
->
-> -    target_ulong satp;   /* since: priv-1.10.0 */
-> -    target_ulong stval;
-> -    target_ulong medeleg;
-> +    uint64_t satp;   /* since: priv-1.10.0 */
-> +    uint64_t stval;
-> +    uint64_t medeleg;
->
-> -    target_ulong stvec;
-> -    target_ulong sepc;
-> -    target_ulong scause;
-> +    uint64_t stvec;
-> +    uint64_t sepc;
-> +    uint64_t scause;
->
-> -    target_ulong mtvec;
-> -    target_ulong mepc;
-> -    target_ulong mcause;
-> -    target_ulong mtval;  /* since: priv-1.10.0 */
-> +    uint64_t mtvec;
-> +    uint64_t mepc;
-> +    uint64_t mcause;
-> +    uint64_t mtval;  /* since: priv-1.10.0 */
->
->      uint64_t mctrctl;
->      uint32_t sctrdepth;
-> @@ -346,13 +346,13 @@ struct CPUArchState {
->      uint64_t mvip;
->
->      /* Hypervisor CSRs */
-> -    target_ulong hstatus;
-> -    target_ulong hedeleg;
-> +    uint64_t hstatus;
-> +    uint64_t hedeleg;
->      uint64_t hideleg;
->      uint32_t hcounteren;
-> -    target_ulong htval;
-> -    target_ulong htinst;
-> -    target_ulong hgatp;
-> +    uint64_t htval;
-> +    uint64_t htinst;
-> +    uint64_t hgatp;
->      target_ulong hgeie;
->      target_ulong hgeip;
->      uint64_t htimedelta;
-> @@ -366,7 +366,7 @@ struct CPUArchState {
->      uint64_t hvip;
->
->      /* Hypervisor controlled virtual interrupt priorities */
-> -    target_ulong hvictl;
-> +    uint32_t hvictl;
->      uint8_t hviprio[64];
->
->      /* Upper 64-bits of 128-bit CSRs */
-> @@ -379,26 +379,26 @@ struct CPUArchState {
->       * For RV64 this is a 64-bit vsstatus.
->       */
->      uint64_t vsstatus;
-> -    target_ulong vstvec;
-> -    target_ulong vsscratch;
-> -    target_ulong vsepc;
-> -    target_ulong vscause;
-> -    target_ulong vstval;
-> -    target_ulong vsatp;
-> +    uint64_t vstvec;
-> +    uint64_t vsscratch;
-> +    uint64_t vsepc;
-> +    uint64_t vscause;
-> +    uint64_t vstval;
-> +    uint64_t vsatp;
->
->      /* AIA VS-mode CSRs */
->      target_ulong vsiselect;
->
-> -    target_ulong mtval2;
-> -    target_ulong mtinst;
-> +    uint64_t mtval2;
-> +    uint64_t mtinst;
->
->      /* HS Backup CSRs */
-> -    target_ulong stvec_hs;
-> -    target_ulong sscratch_hs;
-> -    target_ulong sepc_hs;
-> -    target_ulong scause_hs;
-> -    target_ulong stval_hs;
-> -    target_ulong satp_hs;
-> +    uint64_t stvec_hs;
-> +    uint64_t sscratch_hs;
-> +    uint64_t sepc_hs;
-> +    uint64_t scause_hs;
-> +    uint64_t stval_hs;
-> +    uint64_t satp_hs;
->      uint64_t mstatus_hs;
->
->      /*
-> @@ -435,8 +435,8 @@ struct CPUArchState {
->
->      PMUFixedCtrState pmu_fixed_ctrs[2];
->
-> -    target_ulong sscratch;
-> -    target_ulong mscratch;
-> +    uint64_t sscratch;
-> +    uint64_t mscratch;
->
->      /* Sstc CSRs */
->      uint64_t stimecmp;
-> @@ -506,11 +506,11 @@ struct CPUArchState {
->  #endif /* CONFIG_KVM */
->
->      /* RNMI */
-> -    target_ulong mnscratch;
-> -    target_ulong mnepc;
-> -    target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
-> -    target_ulong mnstatus;
-> -    target_ulong rnmip;
-> +    uint64_t mnscratch;
-> +    uint64_t mnepc;
-> +    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
-> +    uint64_t mnstatus;
-> +    uint64_t rnmip;
->      uint64_t rnmi_irqvec;
->      uint64_t rnmi_excpvec;
->  };
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 1600ec44f0..99e46c3136 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -80,17 +80,17 @@ static bool hyper_needed(void *opaque)
->
->  static const VMStateDescription vmstate_hyper =3D {
->      .name =3D "cpu/hyper",
-> -    .version_id =3D 4,
-> -    .minimum_version_id =3D 4,
-> +    .version_id =3D 5,
-> +    .minimum_version_id =3D 5,
->      .needed =3D hyper_needed,
->      .fields =3D (const VMStateField[]) {
-> -        VMSTATE_UINTTL(env.hstatus, RISCVCPU),
-> -        VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
-> +        VMSTATE_UINT64(env.hstatus, RISCVCPU),
-> +        VMSTATE_UINT64(env.hedeleg, RISCVCPU),
->          VMSTATE_UINT64(env.hideleg, RISCVCPU),
->          VMSTATE_UINT32(env.hcounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.htval, RISCVCPU),
-> -        VMSTATE_UINTTL(env.htinst, RISCVCPU),
-> -        VMSTATE_UINTTL(env.hgatp, RISCVCPU),
-> +        VMSTATE_UINT64(env.htval, RISCVCPU),
-> +        VMSTATE_UINT64(env.htinst, RISCVCPU),
-> +        VMSTATE_UINT64(env.hgatp, RISCVCPU),
->          VMSTATE_UINTTL(env.hgeie, RISCVCPU),
->          VMSTATE_UINTTL(env.hgeip, RISCVCPU),
->          VMSTATE_UINT64(env.hvien, RISCVCPU),
-> @@ -98,28 +98,28 @@ static const VMStateDescription vmstate_hyper =3D {
->          VMSTATE_UINT64(env.htimedelta, RISCVCPU),
->          VMSTATE_UINT64(env.vstimecmp, RISCVCPU),
->
-> -        VMSTATE_UINTTL(env.hvictl, RISCVCPU),
-> +        VMSTATE_UINT32(env.hvictl, RISCVCPU),
->          VMSTATE_UINT8_ARRAY(env.hviprio, RISCVCPU, 64),
->
->          VMSTATE_UINT64(env.vsstatus, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vstvec, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vsscratch, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vsepc, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vscause, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vstval, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vsatp, RISCVCPU),
-> +        VMSTATE_UINT64(env.vstvec, RISCVCPU),
-> +        VMSTATE_UINT64(env.vsscratch, RISCVCPU),
-> +        VMSTATE_UINT64(env.vsepc, RISCVCPU),
-> +        VMSTATE_UINT64(env.vscause, RISCVCPU),
-> +        VMSTATE_UINT64(env.vstval, RISCVCPU),
-> +        VMSTATE_UINT64(env.vsatp, RISCVCPU),
->          VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
->          VMSTATE_UINT64(env.vsie, RISCVCPU),
->
-> -        VMSTATE_UINTTL(env.mtval2, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mtinst, RISCVCPU),
-> +        VMSTATE_UINT64(env.mtval2, RISCVCPU),
-> +        VMSTATE_UINT64(env.mtinst, RISCVCPU),
->
-> -        VMSTATE_UINTTL(env.stvec_hs, RISCVCPU),
-> -        VMSTATE_UINTTL(env.sscratch_hs, RISCVCPU),
-> -        VMSTATE_UINTTL(env.sepc_hs, RISCVCPU),
-> -        VMSTATE_UINTTL(env.scause_hs, RISCVCPU),
-> -        VMSTATE_UINTTL(env.stval_hs, RISCVCPU),
-> -        VMSTATE_UINTTL(env.satp_hs, RISCVCPU),
-> +        VMSTATE_UINT64(env.stvec_hs, RISCVCPU),
-> +        VMSTATE_UINT64(env.sscratch_hs, RISCVCPU),
-> +        VMSTATE_UINT64(env.sepc_hs, RISCVCPU),
-> +        VMSTATE_UINT64(env.scause_hs, RISCVCPU),
-> +        VMSTATE_UINT64(env.stval_hs, RISCVCPU),
-> +        VMSTATE_UINT64(env.satp_hs, RISCVCPU),
->          VMSTATE_UINT64(env.mstatus_hs, RISCVCPU),
->
->          VMSTATE_END_OF_LIST()
-> @@ -290,12 +290,12 @@ static bool envcfg_needed(void *opaque)
->
->  static const VMStateDescription vmstate_envcfg =3D {
->      .name =3D "cpu/envcfg",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .needed =3D envcfg_needed,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_UINT64(env.menvcfg, RISCVCPU),
-> -        VMSTATE_UINTTL(env.senvcfg, RISCVCPU),
-> +        VMSTATE_UINT64(env.senvcfg, RISCVCPU),
->          VMSTATE_UINT64(env.henvcfg, RISCVCPU),
->          VMSTATE_END_OF_LIST()
->      }
-> @@ -355,11 +355,11 @@ static bool jvt_needed(void *opaque)
->
->  static const VMStateDescription vmstate_jvt =3D {
->      .name =3D "cpu/jvt",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .needed =3D jvt_needed,
->      .fields =3D (const VMStateField[]) {
-> -        VMSTATE_UINTTL(env.jvt, RISCVCPU),
-> +        VMSTATE_UINT64(env.jvt, RISCVCPU),
->          VMSTATE_END_OF_LIST()
->      }
->  };
-> @@ -402,8 +402,8 @@ static const VMStateDescription vmstate_ssp =3D {
->
->  const VMStateDescription vmstate_riscv_cpu =3D {
->      .name =3D "cpu",
-> -    .version_id =3D 10,
-> -    .minimum_version_id =3D 10,
-> +    .version_id =3D 11,
-> +    .minimum_version_id =3D 11,
->      .post_load =3D riscv_cpu_post_load,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -434,16 +434,16 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->          VMSTATE_UINT64(env.mvip, RISCVCPU),
->          VMSTATE_UINT64(env.sie, RISCVCPU),
->          VMSTATE_UINT64(env.mideleg, RISCVCPU),
-> -        VMSTATE_UINTTL(env.satp, RISCVCPU),
-> -        VMSTATE_UINTTL(env.stval, RISCVCPU),
-> -        VMSTATE_UINTTL(env.medeleg, RISCVCPU),
-> -        VMSTATE_UINTTL(env.stvec, RISCVCPU),
-> -        VMSTATE_UINTTL(env.sepc, RISCVCPU),
-> -        VMSTATE_UINTTL(env.scause, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mtvec, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mepc, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcause, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mtval, RISCVCPU),
-> +        VMSTATE_UINT64(env.satp, RISCVCPU),
-> +        VMSTATE_UINT64(env.stval, RISCVCPU),
-> +        VMSTATE_UINT64(env.medeleg, RISCVCPU),
-> +        VMSTATE_UINT64(env.stvec, RISCVCPU),
-> +        VMSTATE_UINT64(env.sepc, RISCVCPU),
-> +        VMSTATE_UINT64(env.scause, RISCVCPU),
-> +        VMSTATE_UINT64(env.mtvec, RISCVCPU),
-> +        VMSTATE_UINT64(env.mepc, RISCVCPU),
-> +        VMSTATE_UINT64(env.mcause, RISCVCPU),
-> +        VMSTATE_UINT64(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
->          VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> @@ -454,8 +454,8 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->                               vmstate_pmu_ctr_state, PMUCTRState),
->          VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVE=
-NTS),
->          VMSTATE_UINTTL_ARRAY(env.mhpmeventh_val, RISCVCPU, RV_MAX_MHPMEV=
-ENTS),
-> -        VMSTATE_UINTTL(env.sscratch, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mscratch, RISCVCPU),
-> +        VMSTATE_UINT64(env.sscratch, RISCVCPU),
-> +        VMSTATE_UINT64(env.mscratch, RISCVCPU),
->          VMSTATE_UINT64(env.stimecmp, RISCVCPU),
->
->          VMSTATE_END_OF_LIST()
-> --
-> 2.51.0
->
->
+Also, as Daniel pointed out, the overall test output is pretty bad and
+currently does not allow one to easily follow the sequence of GDB
+commands used in the test. I took this opportunity to improve the output
+and it now prints the sequence in a format that can be copied and pasted
+directly into GDB.
+
+The TAP protocol is respected, and Meson correctly displays GDB's test
+output in testlog-thorough.txt.
+
+Because the pygdbmi "shim" is so thin, I had to write a trivial GDB
+class around it to easily capture and print the payloads returned by its
+write() method. The GDB class allows clean, single-line commands to be
+used in the tests through method chaining, making them easier to follow,
+for example:
+
+pc = gdb.cli("print $pc").get_add()
+
+The test is kept “skipped” for aarch64, ppc64, and x86_64, so it is
+necessary to set QEMU_TEST_FLAKY_TESTS=1 in the test environment to
+effectively run the test on these archs.
+
+On aarch64, the test is flaky, but there is a fix that I’ve tested while
+writing this series [0] that resolves it. On ppc64 and x86_64, the test
+always fails: on ppc64, GDB gets a bogus PC, and on x86_64, the last
+part of the test (reverse-continue) does not hit the last executed PC
+(as it should happen) but instead jumps to the beginning of the code
+(first PC in forward order).
+
+Thus, to effectively run the reverse_debugging test on aarch64:
+
+$ export QEMU_TEST_FLAKY_TESTS=1
+$ make check-functional
+
+or:
+$ make check-functional-aarch64
+
+or even, to run only the reverse_debug test after 'make check-functional':
+$ ./pyvenv/bin/meson test --verbose --no-rebuild -t 1 --setup thorough --suite func-thorough func-aarch64-reverse_debug
+
+
+Cheers,
+Gustavo
+
+v1:
+https://patchew.org/QEMU/20250819143916.4138035-1-gustavo.romero@linaro.org/
+
+v2:
+https://patchew.org/QEMU/20250904154640.52687-1-gustavo.romero@linaro.org/
+
+v3:
+https://patchew.org/QEMU/20250922054351.14289-1-gustavo.romero@linaro.org/
+
+v4:
+https://patchew.org/QEMU/20250926051542.104432-1-gustavo.romero@linaro.org/
+
+v5:
+- Fixed installation of "pygdbmi" in the test env for
+  "make check-functional-<ARCH>" (thuth)
+- Increased GDB command timeout from 4 to 32 seconds (thuth)
+- Reverted use of get_pc() in reverse_debugging.py (thuth)
+- Removed $gdb_arches from configure and checked if GDB supports the
+  arch to be tested in reverse_debugging.py instead. If the arch is not
+  supported by GDB the test is skipped (thuth)
+- Corrected grammar in GDB timeout message (thuth)
+- Skipped test if "pygdbmi" is not installed in the test environment
+  (thuth, danpb)
+- Improved error handling in try: block when GDB commands fail, time out,
+  or when the test fails, so there is no "double exception"
+
+
+Daniel P. Berrangé (2):
+  tests/functional: replace avocado process with subprocess
+  tests/functional: drop datadrainer class in reverse debugging
+
+Gustavo Romero (7):
+  tests/functional: Re-activate the check-venv target
+  python: Install pygdbmi in meson's venv
+  tests/functional: Provide GDB to the functional tests
+  tests/functional: Add GDB class
+  tests/functional: Add decorator to skip test on missing env vars
+  tests/functional: Adapt reverse_debugging to run w/o Avocado
+  tests/functional: Adapt arches to reverse_debugging w/o Avocado
+
+ configure                                     |   2 +
+ meson_options.txt                             |   2 +
+ pythondeps.toml                               |   1 +
+ scripts/meson-buildoptions.sh                 |   2 +
+ tests/Makefile.include                        |   4 +-
+ .../functional/aarch64/test_reverse_debug.py  |  11 +-
+ tests/functional/meson.build                  |   6 +
+ tests/functional/ppc64/test_reverse_debug.py  |  15 +-
+ tests/functional/qemu_test/__init__.py        |   4 +-
+ tests/functional/qemu_test/decorators.py      |  18 +++
+ tests/functional/qemu_test/gdb.py             |  88 ++++++++++
+ tests/functional/reverse_debugging.py         | 151 +++++++++---------
+ tests/functional/x86_64/test_reverse_debug.py |  15 +-
+ 13 files changed, 218 insertions(+), 101 deletions(-)
+ create mode 100644 tests/functional/qemu_test/gdb.py
+
+-- 
+2.34.1
+
 
