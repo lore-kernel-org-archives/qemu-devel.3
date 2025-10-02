@@ -4,143 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71958CCA472
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC2ECAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 16:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Lrv-0007LF-Ij; Thu, 02 Oct 2025 12:09:23 -0400
+	id 1v4Lwk-0000of-1t; Thu, 02 Oct 2025 12:14:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v4Lrr-0007Kn-2i
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:09:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v4Lwg-0000nW-JG
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:14:18 -0400
+Received: from p-east3-cluster3-host2-snip4-10.eps.apple.com ([57.103.86.23]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v4Lrd-0007t1-O5
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:09:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759421336;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Rmp+/YAewlii0+8H4ZLxwk9Wj1HP5z9mVqsqLTMwS2Y=;
- b=eqD1bNsIL62+O0b1Ax1uvxfzD7X2J9Hmnq6x6CoOmUO6FWB3TkFhFdFmqSIBTPIOBbvKDT
- 105VKtv23x6ERg8PspIbaccdGZvhm+GTPAZjUm+KU1nZtljs7ZTGP6jdtMJedXvq5VUHFx
- Dr4tBSGFJSEUrrbxJIxbdIcEtpFL3Oo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-LQpxJ_0_Nyyq-jVqDulrQA-1; Thu, 02 Oct 2025 12:08:53 -0400
-X-MC-Unique: LQpxJ_0_Nyyq-jVqDulrQA-1
-X-Mimecast-MFC-AGG-ID: LQpxJ_0_Nyyq-jVqDulrQA_1759421332
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e377d8c80so4091645e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 09:08:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759421332; x=1760026132;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Rmp+/YAewlii0+8H4ZLxwk9Wj1HP5z9mVqsqLTMwS2Y=;
- b=CPa4Pf5H8nbMOPKZrmvOeBNEJzsuSWesyHoQicT0pXJsiOwkXfoKFuszxUPRPjbEI9
- gmJNxlUjo8EUHTY8AutR9cP8Y9g6PqgYd/7PiMPA7ngvnsO+bYQDUS3xqiOjUAP5sb6V
- VhGNC7XOQVhkH358ce4RJoCxsxME+En3/7m1sjMZLzBI18zx1q/bwxrCBFeFUHtCAc0p
- vEXxsfNAAJyHpm9vg/V1Rluisp2yeoB7ClWdeoxzeTedNgHCQcpw6uY60PmiL3X2Jku1
- 5urNINbLU3kD0P3XYNbu9mz9qMY0mMY8pQp9BjC16DWl1xsH7PV5U1b4NyPiiRBAzR45
- DJ1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDsbZZtV3hqmCAmN1iISrj43nKtp4vaNr7EsXh943BEE95s73KD17KTdDX7z31UKk2m5VbKduAc31j@nongnu.org
-X-Gm-Message-State: AOJu0YwNnFFjnvS7Y9PBhkrV5DPF8lIrUGqaWpSUtFnu5c4wSzbUIOqx
- 21yTeh4GCQH40GMKapxwKOvenfwi4oLd2Y4VDHwes2p6UbcgzonzMlFQ9F8a3iBeOHHpRYYHE9S
- RJSlAA582MsuWN4O5ULqDJ/Z9mPZOWY0W1mfQ/wWrdyyehgPzqpDAnyfa
-X-Gm-Gg: ASbGncue0LenZzW2Xnx+MsyHWRUVlWqMgNAcnUGSrihazaT6cAYIykfbkIy+nOPbXKD
- pAozoFkiePpaig5XRSPMOvOU/YMIYtAwFKV7ZzDsRWh2wFZ+7YQcpsQbO7IB/WfW+8i4KxXs3ZL
- YNq18Uyw0CkFJ03zFhLrGw+xA4TteHZm13c/HziovUT88x0vVkXsJf7qv/iyCNcDaYm4qxDmm1o
- 4CMYcSZpA9SqbVbWhYn1A5j7jRoFK8YcWuKpEarcPFLn6kxENdeSTymfviWylH/BfEFZktjLzy1
- Rh16BjgsLFFur4VCi4Yvy7eW6uAmhHe6RUIaOR72EGQjPIQsChx0UrrFZlknVy2KVSlQKAJ67PV
- IoJZEkg4cZQ==
-X-Received: by 2002:a05:600c:34cb:b0:45b:47e1:ef6d with SMTP id
- 5b1f17b1804b1-46e613dd3cemr68378835e9.36.1759421332297; 
- Thu, 02 Oct 2025 09:08:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2kjoJbem5Mn1OaoS9JzNz/9FIh6j5BjBjv3s+xSFzsD3atYG4uNdet52L4fTCVI1Jg7tG2g==
-X-Received: by 2002:a05:600c:34cb:b0:45b:47e1:ef6d with SMTP id
- 5b1f17b1804b1-46e613dd3cemr68378635e9.36.1759421331933; 
- Thu, 02 Oct 2025 09:08:51 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
- [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a16e13sm89942085e9.15.2025.10.02.09.08.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 09:08:51 -0700 (PDT)
-Message-ID: <d7a894de-e0f0-4528-9d00-a86a5b6f6d25@redhat.com>
-Date: Thu, 2 Oct 2025 18:08:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/9] tests/functional: Re-activate the check-venv target
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, berrange@redhat.com
-Cc: qemu-arm@nongnu.org
-References: <20251002020432.54443-1-gustavo.romero@linaro.org>
- <20251002020432.54443-2-gustavo.romero@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251002020432.54443-2-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v4LwQ-0000wi-SE
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 12:14:17 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPS id
+ E84EA1803CCB; Thu,  2 Oct 2025 16:13:51 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=Ro0Hh41El+RwH7tapGax5J9ZWB+boF9rFjySHs6PHW4=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=HvM5m7VJWYXtT8RRoD1ILEhqeMxEm7/8P3sV+POyjgpAtNj50A+LpuI637UooeqQpJfxVpGIahQwf2kYyAymHvdpbDjDn0pA+NVID/nzobduFQ3p/CX/ETqrbInZcboIr/Akzvdo973P3o+2Ulu3/NWkYmotjrc/gRjpQIGVEhx8xcu+tER8qNTff05EYStHkl9Tq4OXVnn2iwRhpxEosZ/gELJFxsmof2fze1Obstt/kQN3SnZRA5TLTZr7GH72IcMaJCDjkeSu0jDNByf8Bj6fhiS555Sfq60Hhz/whvH0RoXdOoVDb0yAnmptUWWHLcvdUfAwa9esJxbSGQqWTA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPSA id
+ D92061804029; Thu,  2 Oct 2025 16:10:39 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-Id: <C8651AA3-5732-43F8-BDDD-9FE4EAEDE72A@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: [PATCH v4 00/27] Implementing a MSHV (Microsoft Hypervisor)
+ accelerator
+Date: Thu, 2 Oct 2025 18:10:28 +0200
+In-Reply-To: <aN6b6HcTFo/4JEa4@example.com>
+Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+ <e176dfe8-b406-46ff-b1f0-95d4285472b7@linaro.org>
+ <aN5Bjlf/xhsEHDNb@example.com>
+ <3D0B6481-BA86-4CCE-8A51-63840A29F649@unpredictable.fr>
+ <aN6b6HcTFo/4JEa4@example.com>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
+X-Proofpoint-ORIG-GUID: HEfMIrdluKaojs9WjcXBd9gK12UZiDMr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAyMDEzOCBTYWx0ZWRfX1lhcwZF8hjwh
+ sijmxGmBOAabLhIDn+FZpmR2Tl8H4ufK5dRs/n8U4OIrrLBAWLU3235pYSB9gdo2ufk8jcEgV0A
+ TcdtGcaUDS6+f9nHiy8su3jGXD2HXgLTUWV+gOKgRp9iOCp6p4TuZGtDmzOi7GcyMOXjRe6XVAa
+ Ba1fienRpkL2fbar2hO0pCV8yy4JtIZZpw/1dEUWDgep3xSY8tkG9p05uzfYurLIeHGNtN/4c25
+ cX1ZawIEaPkfSlLqqEfBnkGgrhRNULB3d2NAZaMh5RFWs9pEV9vMvX339NobsgnB694YB4mIQ=
+X-Proofpoint-GUID: HEfMIrdluKaojs9WjcXBd9gK12UZiDMr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-02_06,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ adultscore=0 phishscore=0 clxscore=1030 mlxscore=0 suspectscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2510020138
+X-JNJ: AAAAAAABPATUja0JNi0Ibj5sYGzLXhNgQoTDNLmfXGSBT1Zh8eQLqyD49NqZNMdMLio/gpWeDcL9huUbaYanyL/FiTCwWlGMk+KKCCfIFPfnl85cTgkvo2NAdGwjqsRJf143YV7kEPJqeWugiQ4NC8Q4ECfQto0SY1TalKCGTj14Vc/bpBNgcpW3aVtDftR9MbVnGv5yEzBmC05dIjjAuscO4w6yTUbDMw74lNRcv7FGPYSvtWKeaLXM+I2TEC0JviMktLNORRJN3ve6zdyFgL/ms8UWURRVDOcqJ/88ZRdkslma+jXsPQi+9iPIxo7YP0O8jCyjIG3TnwHUnsLHnK674jYvT76ju1GcTKwDsslLnemA1zijCXg8LbI5XWj/o+poOFhQjSzlAJeln0MLKaghUoP/S8M6UFJAqQopp8mZVmZTXSiC9vHWLeCcqnY3UeHahWR9S3SUGTa94kH8YKaPA65zixtznz6sSKqV/RrL/sABqLnZdfP8j3xrThxb2nvxUu18M3Z/dKp21Qh/saubNLklTyS71sR1a1DxKc4V/b3qDV84Zrfa1JS1QgptZSgFp/5DpdKsazQ8q2PPhLBWbKqaoWz+b/ncZ1Zkl6e7BWkO16PLfn1oGCxodD71TRMlYGWbI4GnBo7zErd50TlJ1QgQuuL+KvyYfdPU29iM+Bzp0lIC3SD3KFidGlGyGy9Zo6cJwNUVV9w8QICxge4Iow/K8F43J6lXP9gmV1M0PIJck58S2o9jL208+eKtwsyEz5F5MN6M3BJAlRi27lPEBkmpztzshHSYfnj6DSx1+j0G6NTlVCIfn0pqWneAjZT3f7i8vodx+KV/5fy/FGK9O/pzih8cJzDVqZfNRAOK9rniZhuyJo/hhl6nBWynB2VRXZssWZgk6++eMx4UOqJxDglVMRrPi+o3fvseTaTNzeke
+Received-SPF: pass client-ip=57.103.86.23;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,37 +104,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/10/2025 04.04, Gustavo Romero wrote:
-> Add check-venv target as a dependency for the functional tests. This
-> causes Python modules listed in pythondeps.toml, under the testdeps
-> group, to be installed when 'make check-functional{-<ARCH>}' is executed
-> to prepare and run the functional tests.
-> 
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   tests/Makefile.include | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/Makefile.include b/tests/Makefile.include
-> index 62a4fc8ed3..e47ef4d45c 100644
-> --- a/tests/Makefile.include
-> +++ b/tests/Makefile.include
-> @@ -105,11 +105,11 @@ check-venv: $(TESTS_VENV_TOKEN)
->   
->   FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
->   .PHONY: $(FUNCTIONAL_TARGETS)
-> -$(FUNCTIONAL_TARGETS):
-> +$(FUNCTIONAL_TARGETS): check-venv
->   	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
->   
->   .PHONY: check-functional
-> -check-functional:
-> +check-functional: check-venv
->   	@$(NINJA) precache-functional
->   	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
->   
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+--Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
+
+
+> On 2. Oct 2025, at 17:36, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> If I understand correctly, your suggestion is to run HyperV as a =
+nested
+> hypervisor inside a QEMU VM (with KVM accel) on the CI machine that =
+runs
+> on on baremetal/L0? (mshv-on-kvm)
+
+Yes. I=E2=80=99ve been playing around with that configuration using =
+cloud-hypervisor
+on an AMD Zen 4 host and it works fine.
+
+Thanks,=
+
+--Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 2. Oct 2025, at 17:36, Magnus Kulke =
+&lt;magnuskulke@linux.microsoft.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">If I =
+understand correctly, your suggestion is to run HyperV as a =
+nested</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;">hypervisor inside a QEMU =
+VM (with KVM accel) on the CI machine that runs</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">on on baremetal/L0? (mshv-on-kvm)</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: =
+none;"></div></blockquote></div><br><div>Yes. I=E2=80=99ve been playing =
+around with that configuration using cloud-hypervisor</div><div>on an =
+AMD Zen 4 host and it works =
+fine.</div><div><br></div><div>Thanks,</div></body></html>=
+
+--Apple-Mail=_D120DC19-C3F3-4F88-B029-FCEA406624F8--
 
