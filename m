@@ -4,111 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 160E6CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 06:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBCFCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 07:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4DC1-0001vv-Dn; Thu, 02 Oct 2025 02:53:33 -0400
+	id 1v4DKu-0004VB-W7; Thu, 02 Oct 2025 03:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v4DBx-0001tl-Ai
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 02:53:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v4DKq-0004Ub-SU
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 03:02:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v4DBi-000154-SJ
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 02:53:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v4DKS-0003hm-QW
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 03:02:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759387984;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1759388529;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bPsY3CfUUFwCkoL++FUa8+ITS2ZV56ABrofUnGO7PGU=;
- b=QhWoHgWvwO4dRioPwh5VyIAFKOYhbHWKtIA+CImHyEaoy0E44lFUGMV1s3w30XpSgUg2tm
- 82TkQ0i2YrRCQBKfRaG4Iast1dVj/Jb9JlC5kajGGxQEWg/EK0TBdDhDFKKyYI8TAWXvGi
- Ye8Ig3CXvhqJ623P7qVf5NF2KRRwSPM=
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Fh1w6jQj2yhIwFSGJIvoSaCCo940qfXGO1W2RbfS63s=;
+ b=S5oxQAIqQbRqmjZ1Q2Jn7rQ8xFcYDc/S4wcRsfsX0I6JPtEdk7fyn3jz9COP5/j1cROgcm
+ B3psQfyNPsTxF4Ud16e6j/GYZ6qMJQiN05MINsdguuWg7bllxgyy/VPeQ3unFhfXUJm9z9
+ Lf5CAh3rH7g4tGWyd3cADAGVQuP2Fk4=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-2LPyVmr-P9ujtAunDX3QOQ-1; Thu, 02 Oct 2025 02:53:03 -0400
-X-MC-Unique: 2LPyVmr-P9ujtAunDX3QOQ-1
-X-Mimecast-MFC-AGG-ID: 2LPyVmr-P9ujtAunDX3QOQ_1759387982
+ us-mta-98-aTIj4NevMyqC4cMQiLHZdg-1; Thu, 02 Oct 2025 03:02:07 -0400
+X-MC-Unique: aTIj4NevMyqC4cMQiLHZdg-1
+X-Mimecast-MFC-AGG-ID: aTIj4NevMyqC4cMQiLHZdg_1759388526
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e44b9779eso2062965e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 23:53:02 -0700 (PDT)
+ 5b1f17b1804b1-46e375dab7dso2179965e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 00:02:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759387982; x=1759992782;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bPsY3CfUUFwCkoL++FUa8+ITS2ZV56ABrofUnGO7PGU=;
- b=ph0iKFXdhL+GI9Q/CLFuFHIsuE/5R1U0J5EGzOiuPhg0E7TC7JrYwjPPC74nAVc/c4
- 3jDLV73h5D6qSvrjEo4PLoGDbQvVvx+gKe5V0Wu5Pkg7X3XmmiGcFyv5EoPbNrsF12hm
- /P7ft1YA847scmV8icopem9kBlYDu/uuBFGBGczkC77rjSuBsYfEz2gwHtsV9U8nf0FN
- J5krm6KMrWEFUkaPeweKfkVdTu6zQ7T9UeMuyIsIFw7wRH3DOj3WD+6WotwPpfCfovIw
- VBsRdd3ipOvkMWnWtmiyRxfuhUOTypqCVn/73DFN1Pr1AXPlpZJsqoEGfLzA1KUedEY+
- wcnQ==
+ d=1e100.net; s=20230601; t=1759388526; x=1759993326;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fh1w6jQj2yhIwFSGJIvoSaCCo940qfXGO1W2RbfS63s=;
+ b=XrO+N0i0zBy5wWfb3DrPokOv6eLOeTbE6ZnlKUxT8HokfriVxlXFQbLsYADGxRxuu+
+ zhNbo6xBX8z/geRQPWp9Pc6t75nH+8lU+HW5RbbncSeq9Wl6ZgNyPtfYLJRRkExFFIhG
+ u3TO8KGFeBGrL/KWfHjduUFMq/iWjw1ZYFW5+pNlH3VXAlPSDh7Dyx1zl6A/LSib+RUX
+ QzjRXUEqQzcxRlIVoXg2Pds2Tz3UDrkvx487U9P+Aw+jjY+Rd7HjgTGReAuO9psGbEnA
+ rNuwL/jxm+esXEemdudvTXAjHBUYYn+lSGWz9X9mZ1dq08VhpuGng8w9mbNPQ/Prgkto
+ svUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXch1fK5NofNL3DXqQOzoNuxWiXrdf3z5sJicEbBKMPiI67anfjG2Crwzk2YnU4XfxaZnynG3yVrv4M@nongnu.org
-X-Gm-Message-State: AOJu0YyueGPHqSsARzs5fL89tKvfOQGgEAWtqofvMN8O2kr57Ka+z9RY
- KsU2Q/wBMQUfbnP36ThXLtivIpYDTqF3Be1+NFgjUnTIT7X4GtNxz1oM7uKqlrHqR/FQzBLthT6
- Bzaorg8qjWd1dhBIY+onMh34ZghWQRsHcJXcx9b6+eCEMlKmR0vCvrP9J
-X-Gm-Gg: ASbGnctW5KiuoCVYzeYTilsXU3/h/mktu7bs6RGip2xqfnu8ZEO0QPwMXOVom2gLL7E
- Ud3Sk8fYAQwwS56uzQ8SBMnp9s/btt2NSo3At7K+BrXy6aK0kQlg8HNyZf990pPwSRSxP2H2aJG
- 5NKTUXCLatDGMpyjkJfGgoJAyXSqBMDLaVFOmZoJ7DwOVEUVZ1COAY2KsC2TZlY5nxwj3fG1mko
- Fg3UqHYkCleSoKgOGlj682ixlGigilLTwQYybcVkHaIX22HcRM4Fjjri4kbj+KhxlWm2neOHPZ5
- mvfuY6QSh+Pi+8Hvif3kkdTE8KPQfrQIvRxD1Y0jhEHtRt5UuYrfl/W4OHIWFzJZuFqKflG0gCT
- zmWQFLMTjgCBQvDg7
-X-Received: by 2002:a05:6000:4382:b0:3ea:c893:95a7 with SMTP id
- ffacd0b85a97d-4255780b1b8mr4352594f8f.31.1759387981601; 
- Wed, 01 Oct 2025 23:53:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiGuxTmVYJqEsiAblpRxkylI6pVQPxNzZH+RSjaslG/dYz+gEJ8HUIEbG78AIHKIfd9BXdWg==
-X-Received: by 2002:a05:6000:4382:b0:3ea:c893:95a7 with SMTP id
- ffacd0b85a97d-4255780b1b8mr4352563f8f.31.1759387981083; 
- Wed, 01 Oct 2025 23:53:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9762sm2252557f8f.38.2025.10.01.23.52.58
+ AJvYcCXom9e2wY1LnEOjrmLfrEM8JJx/AY+/6Z+XD0eL1m33GCl3/WpmXVrPQkqob8pu7Gio+Z/imeRRVBzX@nongnu.org
+X-Gm-Message-State: AOJu0YyZTdN6R4qJHXmt7ogNHjn4PZo6D41dc9gTE6zmBLtp1DECJs5y
+ tjD531Ya3Lag7hfx1Uq1AAafOtFU7+KhxlTyeyz5UORm4Nbfd/z9exm5Kxrm87umYSQjugC/fJj
+ B65sI+IFs3B3hnFu7mMMsmTQP60w8qLBo/1LAQ7hCMbPJRQDWUOWIW/L7
+X-Gm-Gg: ASbGncuAYUjubT4rzbeqsTo24+KUhUspwkHKWWANY+0yAH9qyG2fdkaT/ZCkDL9ocux
+ r8KLFIANi4ogxAHcLiL3KPlseSyljSkvvBpuUWhLHhe3pgureO4UqecsQj5bgyoBNdidmREFEzf
+ TUQ7/7aUxf3lmd/zZYK3I+g12T7KGqAnnDP7NRj5S14oeRdnCLpxnoT8w1GjsA2ZDspdh5IYw5j
+ ZyxCuoTDgWXTZ3UKZcGC/xUV6VMPBKoHAVUjF1THmL6rucHZZ3QZRygZtmOEN3H8rGat+Uyt3L3
+ Y7KwSpmdxcu7nD7eI2Mm4GZH1C/VaG1migA62cqaAqmJ9UzxJcMovJJd7NWtSLMV1r+1Bd3TvSb
+ 2UO7D3zaKDg==
+X-Received: by 2002:a05:600c:6306:b0:46d:996b:826a with SMTP id
+ 5b1f17b1804b1-46e6129524cmr51639615e9.36.1759388525730; 
+ Thu, 02 Oct 2025 00:02:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEJqk+ThviJLmKRwkCHp0ruttBDyiVTVz75mp0sbd2cQk3IKj8vzDBY4jsWggJ7uHmgu1UENQ==
+X-Received: by 2002:a05:600c:6306:b0:46d:996b:826a with SMTP id
+ 5b1f17b1804b1-46e6129524cmr51638865e9.36.1759388524696; 
+ Thu, 02 Oct 2025 00:02:04 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
+ [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e619c3b75sm67423245e9.7.2025.10.02.00.02.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Oct 2025 23:52:59 -0700 (PDT)
-Message-ID: <7167d287-f0d0-4bb8-8750-e38e9e31df10@redhat.com>
-Date: Thu, 2 Oct 2025 08:52:58 +0200
+ Thu, 02 Oct 2025 00:02:04 -0700 (PDT)
+Message-ID: <08c481e1-bb2a-4313-951a-5bcb0f96a597@redhat.com>
+Date: Thu, 2 Oct 2025 09:02:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/27] hw/arm/smmuv3-accel: Add set/unset_iommu_device
- callback
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+Subject: Re: [PULL 4/5] ui/sdl2: fix reset scaling binding to be consistent
+ with gtk
+To: Michael Tokarev <mjt@tls.msk.ru>, marcandre.lureau@redhat.com,
  qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-9-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250929133643.38961-9-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+Cc: richard.henderson@linaro.org, Nir Lichtman <nir@lichtman.org>
+References: <20250930075559.133650-1-marcandre.lureau@redhat.com>
+ <20250930075559.133650-5-marcandre.lureau@redhat.com>
+ <24ae77e7-414b-4c19-8d7f-f21ca3fef2f4@tls.msk.ru>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <24ae77e7-414b-4c19-8d7f-f21ca3fef2f4@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,316 +154,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On 01/10/2025 22.11, Michael Tokarev wrote:
+> On 9/30/25 10:55, marcandre.lureau@redhat.com wrote:
+>> From: Nir Lichtman <nir@lichtman.org>
+>>
+>> Problem: Currently the reset scaling hotkey is inconsistent between SDL
+>> and GTK graphics modes.
+>>
+>> Solution: Fix SDL to use MOD+0 instead of MOD+u which is in line with
+>> GTK and generally more consistent with other apps.
+>>
+>> This is also related to my previously sent patch fixing the docs.
+>>
+>> Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
+>> Signed-off-by: Nir Lichtman <nir@lichtman.org>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Message-ID: <20250910114929.GA1783677@lichtman.org>
+>> ---
+>>   ui/sdl2.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/ui/sdl2.c b/ui/sdl2.c
+>> index b00e421f7f..032dc14bc3 100644
+>> --- a/ui/sdl2.c
+>> +++ b/ui/sdl2.c
+>> @@ -421,7 +421,7 @@ static void handle_keydown(SDL_Event *ev)
+>>                   sdl_grab_end(scon);
+>>               }
+>>               break;
+>> -        case SDL_SCANCODE_U:
+>> +        case SDL_SCANCODE_0:
+> 
+> Can't we keep the old behavior too, for a release or two maybe?
 
-On 9/29/25 3:36 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
-the original intent of this callback is
+It's already merge, so please send a new patch for this.
 
-     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
-     *
-     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
-     * retrieve host information from the associated HostIOMMUDevice.
-     *
-
-The implementation below goes way behond the simple "attachment" of the
-HostIOMMUDevice to the vIOMMU.
-allocation of a vIOMMU; allocation of 2 HWPTs, creation of a new
-SMMUv3AccelState
->
-> Implement a set_iommu_device callback:
->  -If found an existing viommu reuse that.
-I think you need to document why you need a vIOMMU object.
->  -Else,
->     Allocate a vIOMMU with the nested parent S2 hwpt allocated by VFIO.
->     Though, iommufd’s vIOMMU model supports nested translation by
->     encapsulating a S2 nesting parent HWPT, devices cannot attach to this
->     parent HWPT directly. So two proxy nested HWPTs (bypass and abort) are
->     allocated to handle device attachments.
-
-"devices cannot attach to this parent HWPT directly".  Why? It is not clear to me what those hwpt are used for compared to the original one. Why are they mandated? To me this deserves some additional explanations. If they are s2 ones, I would use an s2 prefix too.
-
->  -And add the dev to viommu device list
-this is the initial objective of the callback
->
-> Also add an unset_iommu_device to unwind/cleanup above.
-
-I think you shall document the introduction of SMMUv3AccelState.It
-currently contains a single member, do you plan to add others.
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c   | 150 ++++++++++++++++++++++++++++++++++++++++
->  hw/arm/smmuv3-accel.h   |  17 +++++
->  hw/arm/trace-events     |   4 ++
->  include/hw/arm/smmuv3.h |   1 +
->  4 files changed, 172 insertions(+)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 6b0e512d86..81fa738f6f 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -8,6 +8,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
-> +#include "trace.h"
->  
->  #include "hw/arm/smmuv3.h"
->  #include "hw/iommu.h"
-> @@ -17,6 +18,9 @@
->  
->  #include "smmuv3-accel.h"
->  
-> +#define SMMU_STE_VALID      (1ULL << 0)
-> +#define SMMU_STE_CFG_BYPASS (1ULL << 3)
-I would rather put that in smmuv3-internal.h where you have other STE
-macros. Look for "/* STE fields */
-> +
->  static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->                                                 PCIBus *bus, int devfn)
->  {
-> @@ -35,6 +39,149 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->      return accel_dev;
->  }
->  
-> +static bool
-> +smmuv3_accel_dev_alloc_viommu(SMMUv3AccelDevice *accel_dev,
-> +                              HostIOMMUDeviceIOMMUFD *idev, Error **errp)
-> +{
-> +    struct iommu_hwpt_arm_smmuv3 bypass_data = {
-> +        .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
-> +    };
-> +    struct iommu_hwpt_arm_smmuv3 abort_data = {
-> +        .ste = { SMMU_STE_VALID, 0x0ULL },
-> +    };
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +    SMMUState *bs = sdev->smmu;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    uint32_t s2_hwpt_id = idev->hwpt_id;
-> +    SMMUViommu *viommu;
-> +    uint32_t viommu_id;
-> +
-> +    if (s_accel->viommu) {
-> +        accel_dev->viommu = s_accel->viommu;
-> +        return true;
-> +    }
-> +
-> +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-> +                                      s2_hwpt_id, &viommu_id, errp)) {
-> +        return false;
-> +    }
-> +
-> +    viommu = g_new0(SMMUViommu, 1);
-> +    viommu->core.viommu_id = viommu_id;
-> +    viommu->core.s2_hwpt_id = s2_hwpt_id;
-> +    viommu->core.iommufd = idev->iommufd;
-> +
-> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                    viommu->core.viommu_id, 0,
-> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
-> +                                    sizeof(abort_data), &abort_data,
-> +                                    &viommu->abort_hwpt_id, errp)) {
-> +        goto free_viommu;
-> +    }
-> +
-> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                    viommu->core.viommu_id, 0,
-> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
-> +                                    sizeof(bypass_data), &bypass_data,
-> +                                    &viommu->bypass_hwpt_id, errp)) {
-> +        goto free_abort_hwpt;
-> +    }
-> +
-> +    viommu->iommufd = idev->iommufd;
-> +
-> +    s_accel->viommu = viommu;
-> +    accel_dev->viommu = viommu;
-> +    return true;
-> +
-> +free_abort_hwpt:
-> +    iommufd_backend_free_id(idev->iommufd, viommu->abort_hwpt_id);
-> +free_viommu:
-> +    iommufd_backend_free_id(idev->iommufd, viommu->core.viommu_id);
-> +    g_free(viommu);
-> +    return false;
-> +}
-> +
-> +static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-> +                                          HostIOMMUDevice *hiod, Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
-> +    SMMUState *bs = opaque;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
-> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
-you are using smmuv3_accel_get_dev but logically the function was
-already called once before in smmuv3_accel_find_add_as()? Meaning the
-add/allocate part of the function is not something that should happen
-here. Shouldn't we add a new helper that does SMMUPciBus *sbus =
-g_hash_table_lookup(bs->smmu_pcibus_by_busptr, bus); if (!sbus) {
-return; } sdev = sbus->pbdev[devfn]; if (!sdev) { return; } that would
-be used both set and unset()?
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +    uint16_t sid = smmu_get_sid(sdev);
-> +
-> +    if (!idev) {
-> +        return true;
-> +    }
-> +
-> +    if (accel_dev->idev) {
-> +        if (accel_dev->idev != idev) {
-> +            error_setg(errp, "Device 0x%x already has an associated IOMMU dev",
-> +                       sid);
-> +            return false;
-> +        }
-> +        return true;
-> +    }
-> +
-> +    if (!smmuv3_accel_dev_alloc_viommu(accel_dev, idev, errp)) {
-> +        error_setg(errp, "Device 0x%x: Unable to alloc viommu", sid);
-> +        return false;
-> +    }
-> +
-> +    accel_dev->idev = idev;
-> +    QLIST_INSERT_HEAD(&s_accel->viommu->device_list, accel_dev, next);
-> +    trace_smmuv3_accel_set_iommu_device(devfn, sid);
-> +    return true;
-> +}
-> +
-> +static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-> +                                            int devfn)
-> +{
-> +    SMMUState *bs = opaque;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUPciBus *sbus = g_hash_table_lookup(bs->smmu_pcibus_by_busptr, bus);
-> +    SMMUv3AccelDevice *accel_dev;
-> +    SMMUViommu *viommu;
-> +    SMMUDevice *sdev;
-> +    uint16_t sid;
-> +
-> +    if (!sbus) {
-> +        return;
-> +    }
-> +
-> +    sdev = sbus->pbdev[devfn];
-> +    if (!sdev) {
-> +        return;
-> +    }
-> +
-> +    sid = smmu_get_sid(sdev);
-> +    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-> +    if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
-> +                                               accel_dev->idev->hwpt_id,
-> +                                               NULL)) {
-> +        error_report("Unable to attach dev 0x%x to the default HW pagetable",
-> +                     sid);
-> +    }
-> +
-> +    accel_dev->idev = NULL;
-> +    QLIST_REMOVE(accel_dev, next);
-> +    trace_smmuv3_accel_unset_iommu_device(devfn, sid);
-> +
-> +    viommu = s->s_accel->viommu;
-> +    if (QLIST_EMPTY(&viommu->device_list)) {
-> +        iommufd_backend_free_id(viommu->iommufd, viommu->bypass_hwpt_id);
-> +        iommufd_backend_free_id(viommu->iommufd, viommu->abort_hwpt_id);
-> +        iommufd_backend_free_id(viommu->iommufd, viommu->core.viommu_id);
-> +        g_free(viommu);
-> +        s->s_accel->viommu = NULL;
-> +    }
-> +}
-> +
->  static bool smmuv3_accel_pdev_allowed(PCIDevice *pdev, bool *vfio_pci)
->  {
->  
-> @@ -121,6 +268,8 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
->  static const PCIIOMMUOps smmuv3_accel_ops = {
->      .get_address_space = smmuv3_accel_find_add_as,
->      .get_viommu_flags = smmuv3_accel_get_viommu_flags,
-> +    .set_iommu_device = smmuv3_accel_set_iommu_device,
-> +    .unset_iommu_device = smmuv3_accel_unset_iommu_device,
->  };
->  
->  void smmuv3_accel_init(SMMUv3State *s)
-> @@ -128,4 +277,5 @@ void smmuv3_accel_init(SMMUv3State *s)
->      SMMUState *bs = ARM_SMMU(s);
->  
->      bs->iommu_ops = &smmuv3_accel_ops;
-> +    s->s_accel = g_new0(SMMUv3AccelState, 1);
->  }
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 70da16960f..3c8506d1e6 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -10,12 +10,29 @@
->  #define HW_ARM_SMMUV3_ACCEL_H
->  
->  #include "hw/arm/smmu-common.h"
-> +#include "system/iommufd.h"
-> +#include <linux/iommufd.h>
->  #include CONFIG_DEVICES
->  
-> +typedef struct SMMUViommu {
-would deserve to be documented with explanation of what it does abstract
-> +    IOMMUFDBackend *iommufd;
-> +    IOMMUFDViommu core;
-> +    uint32_t bypass_hwpt_id;
-> +    uint32_t abort_hwpt_id;
-> +    QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-> +} SMMUViommu;
-> +
->  typedef struct SMMUv3AccelDevice {
->      SMMUDevice  sdev;
-> +    HostIOMMUDeviceIOMMUFD *idev;
-> +    SMMUViommu *viommu;
-> +    QLIST_ENTRY(SMMUv3AccelDevice) next;
->  } SMMUv3AccelDevice;
->  
-> +typedef struct SMMUv3AccelState {
-> +    SMMUViommu *viommu;
-> +} SMMUv3AccelState;
-> +
->  #ifdef CONFIG_ARM_SMMUV3_ACCEL
->  void smmuv3_accel_init(SMMUv3State *s);
->  #else
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index f3386bd7ae..86370d448a 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -66,6 +66,10 @@ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s
->  smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
->  smmu_reset_exit(void) ""
->  
-> +#smmuv3-accel.c
-> +smmuv3_accel_set_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
-> +smmuv3_accel_unset_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
-> +
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
->  strongarm_ssp_read_underrun(void) "SSP rx underrun"
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index bb7076286b..5f3e9089a7 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -66,6 +66,7 @@ struct SMMUv3State {
->  
->      /* SMMU has HW accelerator support for nested S1 + s2 */
->      bool accel;
-> +    struct SMMUv3AccelState  *s_accel;
->  };
->  
->  typedef enum {
-Thanks
-
-Eric
+  Thomas
 
 
