@@ -4,86 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F5ACAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 05:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D18CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 05:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4BYW-0006bd-5u; Thu, 02 Oct 2025 01:08:40 -0400
+	id 1v4Be2-0007xQ-7f; Thu, 02 Oct 2025 01:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4BYG-0006a5-Co
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:08:27 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Bdw-0007wk-KT
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:14:17 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4BXw-0003lE-I8
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:08:21 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b3f5e0e2bf7so115862466b.3
- for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 22:08:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Bdj-0005MF-66
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:14:15 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3fc36b99e92so1336449f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 22:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759381677; x=1759986477; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cSOUcqp2IlrIvHA8jMOKMPae7kynR4QEp3SeGZrNH6w=;
- b=dXovyZQQ5OprmJC0nnB0Qug5hGACccfST3vVQPCcIVWECxHdg3Pnb5BV//p5IgsWX3
- In4seiS68wFtH5rc3HzUYiSHcaQSEFR/cUYluuSCi3YlxKwXn32ZHwtNgNfajQRM4PJj
- OEhgyUt8OOzfXAxC3gcP1CKw1d3S1rCYIOYFqNGHVehnfiYj5HefDXE/vViVNaEJxupu
- mvwS9PtPGMO+0950NmxHt6QeX7wPyE9G+Ck+qQ3+uAIJnbqKagB2Bs9Mi7616XTv5Lvy
- 4He2KFfuHzc2UpOyQSqL4hIfZk4yMfoE/NNBGlJzBiDGWL72g1Airp5aT9Dcp9nFXpjn
- UYRA==
+ d=linaro.org; s=google; t=1759382035; x=1759986835; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ReRBTBalpXsueh+TsF1pHYsiu5KMMWmDk/Bn5JLfYwQ=;
+ b=jiXvAR7WV9RMWBQF7u6YrrJ0UopOgcJz0Nwp5pd+D4gcseGGd9WZrNTJcyFE6Pg0at
+ 8wVQEj90bpKO0zLuqBlrKs0JZFBf/SGgCIIf4RJWc36m6GMnxxsvSfDCC4hQzjX/URKT
+ zopznEBQLFeeQc25wFhbSkPe2+4/POk2p2LzqkdDNVsPeHDCPXAE4sFbPTSpr+KmNot9
+ 6vQAitqBc0Jmk8e94vILvEWZNSQRDUXocZ0zAXTPJF+2SuCWZEtC/i0cjztEWfAYo60p
+ 0pHEX/TW2yp2E23jh7s+EzenzDIxfB6TPVSNFJW4KpnWBgdIoBFf0GNf6970xTzgr1C8
+ Wxhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759381677; x=1759986477;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cSOUcqp2IlrIvHA8jMOKMPae7kynR4QEp3SeGZrNH6w=;
- b=BNfRtjDXprlY+94tcCZu3iNg1uy/Q/bzLqbr1BwZt9p6vPA4thPxYwAEhI7xPUdnwc
- NRnYfBeg7D2zDh+aoVX+6Nwo9hc4T1FjMq++lU0ebm/Kj0XZHdHsVu1dvTMMLPW9/S/i
- 8Jjbny82WXc8VAM+IavHqBGbMevXEbFEfRfr7PwQhoiER/jAvWQEerHC9LgSBK4mtscf
- AA80iKnXBavTgkoe1RycsN8RTOaSiH+85RN1RRvn4LKhfWiMcRunzpjMko+OyK3jgxkG
- y043mRnvTyG/XSymhGmc8tGeQVVqqZzgP/tEBWmpLmTqpb7mOI7qrhN4KAAYQ4j+Ek6X
- NVHQ==
+ d=1e100.net; s=20230601; t=1759382035; x=1759986835;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ReRBTBalpXsueh+TsF1pHYsiu5KMMWmDk/Bn5JLfYwQ=;
+ b=ER/zyd4k2a/JTCPsCUkzSVPfwTQjAngO2yazfiB4aGsRoyJmwoRB/06H3SqwdR3Um2
+ GST81q5p8uhRQantdVFGs8ihlE9rKRe6DwUnih8TN9wE2RuyrI55dfYFju/lI8PVqFTh
+ t3S6HAYpu4+muLhENUndoNpsVqcI9obNT2SQ3wJu1YFqgKPJnq9z0pJUqoz80gnFtiDs
+ RyLw1JXou5/joINhpvTFS7R8W8zeXuYZXHdRIqPH7XHRokBP/a12Tg3f8/ea4LXrH3Wd
+ eN+Hh1VfDMj1K28XTllI7VA38J4wxe5FrXwdplBszw0DQqqDwrr/zNx9tmNf8sndFzbI
+ mHcQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVR7NJqwAi2mwg/OvhbrnBevcg8/L3ROgHkquwtUv106/WJhHVs3b8ZEnkxcZLZwMdshwWNwzr72URt@nongnu.org
-X-Gm-Message-State: AOJu0Ywu+ovxYDMapl8lv1azCbfJhMH9l3U2bBTllR0SG7cGlXzqskE4
- +enPq5B3nm7Wxn8EEv4HV7u85m+M8sLoJXIF5RgALhJRgdGCImF2skBVCYx61u1qme3cWl9n8Sh
- dZPbamEjWZ2PFvLW+aL8aTKVrSVifj98=
-X-Gm-Gg: ASbGncvSDEozWspGsdLdEJhZtXFlyDK/dcIQKNWXSZsgcoSyVolOjqHK6f8lsIWmZcC
- JD1JK2Rgb57sHRBVi1aaPujArInCDgtg+juVBbGDyEI6145u4gx710RA+Zn/RV0U9a2vMDDoH87
- 5bNYql/o6vhfDmVde5Elaba0DB2X+dvCCkALayB7MvINwSkUccSTzlMJaKy0ekBXgOnFwPfXNas
- vXh3F2M6qNIsJo6ooZYlTPWuR7Y5hYrcTXWWxDYuBIks3/b+XVwlelpuTSYcg==
-X-Google-Smtp-Source: AGHT+IGbPbj4c0hWe6rckwwTwn4p9XtFbIOSiMHR+O74Jl7CyLyWE/cFBAXCXAcwNA1z6jnG/UR8LPnDKSqRCgE/vL8=
-X-Received: by 2002:a17:907:2d20:b0:b07:e3a8:5194 with SMTP id
- a640c23a62f3a-b46e515e0a5mr678873866b.22.1759381676627; Wed, 01 Oct 2025
- 22:07:56 -0700 (PDT)
+ AJvYcCUKFZR2EHHGHEsvdSpDYSrlV+DCXS1wxoRAgEdQb0yf/pkqghsGw4C2hl8y5hA00HIQFo3+5iDW/ZoA@nongnu.org
+X-Gm-Message-State: AOJu0YyvINEu/AIojYDOWl54YYS91XCASl1AhoTGu2GiEGPAs1z8OiGZ
+ QpBXHXn32MLg29OcWw5FjAl7+8G4YKF2IFqvkktHyczpbKjrM00CXhr6N24uqng/oRw=
+X-Gm-Gg: ASbGncss5mgup+TMRI/q5uIPtSMvIuZat6/KwLo+0y4IrysluZr3JfiH50cJ+uxJhvP
+ VKvSH3F45cr5VchbFoT8WRezZ4Sh9oN7KYNCOc2LjFa8LZV3HsdJVDr9kYjl/VF6fSenUvdvpVW
+ yD6X0LYFxuPxyINLww4K8MI9854UQnyxBX0nikiFiHIooSk4TNPRtZT+AM4rDeNVD8NLYpbLA5m
+ UO8fcB51EDDi5FtPGWDmRpm9mV1wA++AacR1SghbqNraD2jHaxvogs1eq3dadJ7JthLueu9thqn
+ Ht352fVxvPWSS7SuC3NZJPFx3myZ/YCzc0J8Dl7WZ5fMoskv7gE1FzCzpgk7rJguDvGiF9xV9Af
+ 9xXs8S6936fp5Vvnmn6a9RTiZkuS6XQ0ttkXg2yGSmPNLYH3ppm35jPpdrKPzr61Yge+vNY2p6z
+ UEcSKea6LJaYmke4ej91Yv/1qD9Emi+PiC0Q==
+X-Google-Smtp-Source: AGHT+IGu8zkDxeaLR+haP7gROe9lLguDX6Q2Ka0iyfeayjeG0zV0XhPYG/6/TcB+b7nkClimerFCGw==
+X-Received: by 2002:a05:6000:22c9:b0:3fa:ebaf:4c53 with SMTP id
+ ffacd0b85a97d-4255d2d64d2mr1205748f8f.29.1759382034588; 
+ Wed, 01 Oct 2025 22:13:54 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8a6b5csm1971355f8f.5.2025.10.01.22.13.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 22:13:53 -0700 (PDT)
+Message-ID: <749894d1-7301-419c-8a10-3ffbada016e3@linaro.org>
+Date: Thu, 2 Oct 2025 07:13:52 +0200
 MIME-Version: 1.0
-References: <20250913041233.972870-1-guoren@kernel.org>
-In-Reply-To: <20250913041233.972870-1-guoren@kernel.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 2 Oct 2025 15:07:30 +1000
-X-Gm-Features: AS18NWAy2EuzbdPxno_KxqHV52AiiHglsi8I-G57995-DuZlLz-NrMvn4oHwLXQ
-Message-ID: <CAKmqyKOLjbAKFmJeb2MAznHES1=pn224i-8r9yKSC+-gu0UZug@mail.gmail.com>
-Subject: Re: [PATCH V3] hw/riscv/riscv-iommu: Fixup PDT Nested Walk
-To: guoren@kernel.org
-Cc: zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
- alistair.francis@wdc.com, seb@rivosinc.com, tjeznach@rivosinc.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Nutty Liu <liujingqi@lanxincomputing.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 11/23] whpx: add arm64 support
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ kvm@vger.kernel.org, Igor Mammedov <imammedo@redhat.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250920140124.63046-1-mohamed@unpredictable.fr>
+ <20250920140124.63046-12-mohamed@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250920140124.63046-12-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,216 +117,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 13, 2025 at 2:15=E2=80=AFPM <guoren@kernel.org> wrote:
->
-> From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
->
-> Current implementation is wrong when iohgatp !=3D bare. The RISC-V
-> IOMMU specification has defined that the PDT is based on GPA, not
-> SPA. So this patch fixes the problem, making PDT walk correctly
-> when the G-stage table walk is enabled.
->
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Cc: qemu-stable@nongnu.org
-> Cc: Sebastien Boeuf <seb@rivosinc.com>
-> Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Reviewed-by: Weiwei Li <liwei1518@gmail.com>
-> Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
-> Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+Hi Mohamed,
 
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
+On 20/9/25 16:01, Mohamed Mediouni wrote:
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
-> Changes in V3:
->  - Fixup inner non-leaf walking for 4KB-align.
->  - Add two Reviewed-by tags.
->
-> Changes in V2:
->  - Remove nested param to make patch clearer.
-> ---
->  hw/riscv/riscv-iommu.c | 141 ++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 139 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 96a7fbdefcf3..ddb5236f55d1 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -866,6 +866,143 @@ static bool riscv_iommu_validate_process_ctx(RISCVI=
-OMMUState *s,
->      return true;
->  }
->
-> +/**
-> + * pdt_memory_read: PDT wrapper of dma_memory_read.
-> + *
-> + * @s: IOMMU Device State
-> + * @ctx: Device Translation Context with devid and pasid set
-> + * @addr: address within that address space
-> + * @buf: buffer with the data transferred
-> + * @len: length of the data transferred
-> + * @attrs: memory transaction attributes
-> + */
-> +static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
-> +                                   RISCVIOMMUContext *ctx,
-> +                                   dma_addr_t addr,
-> +                                   void *buf, dma_addr_t len,
-> +                                   MemTxAttrs attrs)
-> +{
-> +    uint64_t gatp_mode, pte;
-> +    struct {
-> +        unsigned char step;
-> +        unsigned char levels;
-> +        unsigned char ptidxbits;
-> +        unsigned char ptesize;
-> +    } sc;
-> +    MemTxResult ret;
-> +    dma_addr_t base =3D addr;
+>   accel/whpx/whpx-common.c    |   1 +
+>   target/arm/meson.build      |   1 +
+>   target/arm/whpx/meson.build |   3 +
+>   target/arm/whpx/whpx-all.c  | 848 ++++++++++++++++++++++++++++++++++++
+>   4 files changed, 853 insertions(+)
+>   create mode 100644 target/arm/whpx/meson.build
+>   create mode 100644 target/arm/whpx/whpx-all.c
+
+
+> +struct whpx_reg_match {
+> +    WHV_REGISTER_NAME reg;
+> +    uint64_t offset;
+> +};
 > +
-> +    /* G stages translation mode */
-> +    gatp_mode =3D get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-> +    if (gatp_mode =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE)
-> +        goto out;
+> +static const struct whpx_reg_match whpx_reg_match[] = {
+> +    { WHvArm64RegisterX0,   offsetof(CPUARMState, xregs[0]) },
+> +    { WHvArm64RegisterX1,   offsetof(CPUARMState, xregs[1]) },
+> +    { WHvArm64RegisterX2,   offsetof(CPUARMState, xregs[2]) },
+> +    { WHvArm64RegisterX3,   offsetof(CPUARMState, xregs[3]) },
+> +    { WHvArm64RegisterX4,   offsetof(CPUARMState, xregs[4]) },
+> +    { WHvArm64RegisterX5,   offsetof(CPUARMState, xregs[5]) },
+> +    { WHvArm64RegisterX6,   offsetof(CPUARMState, xregs[6]) },
+> +    { WHvArm64RegisterX7,   offsetof(CPUARMState, xregs[7]) },
+> +    { WHvArm64RegisterX8,   offsetof(CPUARMState, xregs[8]) },
+> +    { WHvArm64RegisterX9,   offsetof(CPUARMState, xregs[9]) },
+> +    { WHvArm64RegisterX10,  offsetof(CPUARMState, xregs[10]) },
+> +    { WHvArm64RegisterX11,  offsetof(CPUARMState, xregs[11]) },
+> +    { WHvArm64RegisterX12,  offsetof(CPUARMState, xregs[12]) },
+> +    { WHvArm64RegisterX13,  offsetof(CPUARMState, xregs[13]) },
+> +    { WHvArm64RegisterX14,  offsetof(CPUARMState, xregs[14]) },
+> +    { WHvArm64RegisterX15,  offsetof(CPUARMState, xregs[15]) },
+> +    { WHvArm64RegisterX16,  offsetof(CPUARMState, xregs[16]) },
+> +    { WHvArm64RegisterX17,  offsetof(CPUARMState, xregs[17]) },
+> +    { WHvArm64RegisterX18,  offsetof(CPUARMState, xregs[18]) },
+> +    { WHvArm64RegisterX19,  offsetof(CPUARMState, xregs[19]) },
+> +    { WHvArm64RegisterX20,  offsetof(CPUARMState, xregs[20]) },
+> +    { WHvArm64RegisterX21,  offsetof(CPUARMState, xregs[21]) },
+> +    { WHvArm64RegisterX22,  offsetof(CPUARMState, xregs[22]) },
+> +    { WHvArm64RegisterX23,  offsetof(CPUARMState, xregs[23]) },
+> +    { WHvArm64RegisterX24,  offsetof(CPUARMState, xregs[24]) },
+> +    { WHvArm64RegisterX25,  offsetof(CPUARMState, xregs[25]) },
+> +    { WHvArm64RegisterX26,  offsetof(CPUARMState, xregs[26]) },
+> +    { WHvArm64RegisterX27,  offsetof(CPUARMState, xregs[27]) },
+> +    { WHvArm64RegisterX28,  offsetof(CPUARMState, xregs[28]) },
+> +    { WHvArm64RegisterFp,  offsetof(CPUARMState, xregs[29]) },
+> +    { WHvArm64RegisterLr,  offsetof(CPUARMState, xregs[30]) },
+> +    { WHvArm64RegisterPc,   offsetof(CPUARMState, pc) },
+> +};
 > +
-> +    /* G stages translation tables root pointer */
-> +    base =3D PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
+> +static const struct whpx_reg_match whpx_fpreg_match[] = {
+> +    { WHvArm64RegisterQ0,  offsetof(CPUARMState, vfp.zregs[0]) },
+> +    { WHvArm64RegisterQ1,  offsetof(CPUARMState, vfp.zregs[1]) },
+> +    { WHvArm64RegisterQ2,  offsetof(CPUARMState, vfp.zregs[2]) },
+> +    { WHvArm64RegisterQ3,  offsetof(CPUARMState, vfp.zregs[3]) },
+> +    { WHvArm64RegisterQ4,  offsetof(CPUARMState, vfp.zregs[4]) },
+> +    { WHvArm64RegisterQ5,  offsetof(CPUARMState, vfp.zregs[5]) },
+> +    { WHvArm64RegisterQ6,  offsetof(CPUARMState, vfp.zregs[6]) },
+> +    { WHvArm64RegisterQ7,  offsetof(CPUARMState, vfp.zregs[7]) },
+> +    { WHvArm64RegisterQ8,  offsetof(CPUARMState, vfp.zregs[8]) },
+> +    { WHvArm64RegisterQ9,  offsetof(CPUARMState, vfp.zregs[9]) },
+> +    { WHvArm64RegisterQ10, offsetof(CPUARMState, vfp.zregs[10]) },
+> +    { WHvArm64RegisterQ11, offsetof(CPUARMState, vfp.zregs[11]) },
+> +    { WHvArm64RegisterQ12, offsetof(CPUARMState, vfp.zregs[12]) },
+> +    { WHvArm64RegisterQ13, offsetof(CPUARMState, vfp.zregs[13]) },
+> +    { WHvArm64RegisterQ14, offsetof(CPUARMState, vfp.zregs[14]) },
+> +    { WHvArm64RegisterQ15, offsetof(CPUARMState, vfp.zregs[15]) },
+> +    { WHvArm64RegisterQ16, offsetof(CPUARMState, vfp.zregs[16]) },
+> +    { WHvArm64RegisterQ17, offsetof(CPUARMState, vfp.zregs[17]) },
+> +    { WHvArm64RegisterQ18, offsetof(CPUARMState, vfp.zregs[18]) },
+> +    { WHvArm64RegisterQ19, offsetof(CPUARMState, vfp.zregs[19]) },
+> +    { WHvArm64RegisterQ20, offsetof(CPUARMState, vfp.zregs[20]) },
+> +    { WHvArm64RegisterQ21, offsetof(CPUARMState, vfp.zregs[21]) },
+> +    { WHvArm64RegisterQ22, offsetof(CPUARMState, vfp.zregs[22]) },
+> +    { WHvArm64RegisterQ23, offsetof(CPUARMState, vfp.zregs[23]) },
+> +    { WHvArm64RegisterQ24, offsetof(CPUARMState, vfp.zregs[24]) },
+> +    { WHvArm64RegisterQ25, offsetof(CPUARMState, vfp.zregs[25]) },
+> +    { WHvArm64RegisterQ26, offsetof(CPUARMState, vfp.zregs[26]) },
+> +    { WHvArm64RegisterQ27, offsetof(CPUARMState, vfp.zregs[27]) },
+> +    { WHvArm64RegisterQ28, offsetof(CPUARMState, vfp.zregs[28]) },
+> +    { WHvArm64RegisterQ29, offsetof(CPUARMState, vfp.zregs[29]) },
+> +    { WHvArm64RegisterQ30, offsetof(CPUARMState, vfp.zregs[30]) },
+> +    { WHvArm64RegisterQ31, offsetof(CPUARMState, vfp.zregs[31]) },
+> +};
 > +
-> +    /* Start at step 0 */
-> +    sc.step =3D 0;
+> +#define WHPX_SYSREG(crn, crm, op0, op1, op2) \
+> +        ENCODE_AA64_CP_REG(CP_REG_ARM64_SYSREG_CP, crn, crm, op0, op1, op2)
 > +
-> +    if (s->fctl & RISCV_IOMMU_FCTL_GXL) {
-> +        /* 32bit mode for GXL =3D=3D 1 */
-> +        switch (gatp_mode) {
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV32X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 2;
-> +            sc.ptidxbits =3D 10;
-> +            sc.ptesize   =3D 4;
-> +            break;
-> +        default:
-> +            return MEMTX_ACCESS_ERROR;
-> +        }
-> +    } else {
-> +        /* 64bit mode for GXL =3D=3D 0 */
-> +        switch (gatp_mode) {
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV39X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 3;
-> +            sc.ptidxbits =3D 9;
-> +            sc.ptesize   =3D 8;
-> +            break;
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV48X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 4;
-> +            sc.ptidxbits =3D 9;
-> +            sc.ptesize   =3D 8;
-> +            break;
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV57X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 5;
-> +            sc.ptidxbits =3D 9;
-> +            sc.ptesize   =3D 8;
-> +            break;
-> +        default:
-> +            return MEMTX_ACCESS_ERROR;
-> +        }
-> +    }
+> +struct whpx_sreg_match {
+> +    WHV_REGISTER_NAME reg;
+> +    uint32_t key;
+> +    bool global;
+> +    uint32_t cp_idx;
+> +};
 > +
-> +    do {
-> +        const unsigned va_bits =3D (sc.step ? 0 : 2) + sc.ptidxbits;
-> +        const unsigned va_skip =3D TARGET_PAGE_BITS + sc.ptidxbits *
-> +                                 (sc.levels - 1 - sc.step);
-> +        const unsigned idx =3D (addr >> va_skip) & ((1 << va_bits) - 1);
-> +        const dma_addr_t pte_addr =3D base + idx * sc.ptesize;
+> +static struct whpx_sreg_match whpx_sreg_match[] = {
+> +    { WHvArm64RegisterDbgbvr0El1, WHPX_SYSREG(0, 0, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr0El1, WHPX_SYSREG(0, 0, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr0El1, WHPX_SYSREG(0, 0, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr0El1, WHPX_SYSREG(0, 0, 2, 0, 7) },
 > +
-> +        /* Address range check before first level lookup */
-> +        if (!sc.step) {
-> +            const uint64_t va_mask =3D (1ULL << (va_skip + va_bits)) - 1=
-;
-> +            if ((addr & va_mask) !=3D addr) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +        }
+> +    { WHvArm64RegisterDbgbvr0El1, WHPX_SYSREG(0, 1, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr0El1, WHPX_SYSREG(0, 1, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr0El1, WHPX_SYSREG(0, 1, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr0El1, WHPX_SYSREG(0, 1, 2, 0, 7) },
 > +
-> +        /* Read page table entry */
-> +        if (sc.ptesize =3D=3D 4) {
-> +            uint32_t pte32 =3D 0;
-> +            ret =3D ldl_le_dma(s->target_as, pte_addr, &pte32, attrs);
-> +            pte =3D pte32;
-> +        } else {
-> +            ret =3D ldq_le_dma(s->target_as, pte_addr, &pte, attrs);
-> +        }
-> +        if (ret !=3D MEMTX_OK)
-> +            return ret;
+> +    { WHvArm64RegisterDbgbvr2El1, WHPX_SYSREG(0, 2, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr2El1, WHPX_SYSREG(0, 2, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr2El1, WHPX_SYSREG(0, 2, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr2El1, WHPX_SYSREG(0, 2, 2, 0, 7) },
 > +
-> +        sc.step++;
-> +        hwaddr ppn =3D pte >> PTE_PPN_SHIFT;
+> +    { WHvArm64RegisterDbgbvr3El1, WHPX_SYSREG(0, 3, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr3El1, WHPX_SYSREG(0, 3, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr3El1, WHPX_SYSREG(0, 3, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr3El1, WHPX_SYSREG(0, 3, 2, 0, 7) },
 > +
-> +        if (!(pte & PTE_V)) {
-> +            return MEMTX_ACCESS_ERROR; /* Invalid PTE */
-> +        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-> +            base =3D PPN_PHYS(ppn); /* Inner PTE, continue walking */
-> +        } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D PTE_W) {
-> +            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W=
- */
-> +        } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D (PTE_W | PTE_X=
-)) {
-> +            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W=
- + PTE_X */
-> +        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
-> +            return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
-> +        } else {
-> +            /* Leaf PTE, translation completed. */
-> +            base =3D PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +            break;
-> +        }
+> +    { WHvArm64RegisterDbgbvr4El1, WHPX_SYSREG(0, 4, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr4El1, WHPX_SYSREG(0, 4, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr4El1, WHPX_SYSREG(0, 4, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr4El1, WHPX_SYSREG(0, 4, 2, 0, 7) },
 > +
-> +        if (sc.step =3D=3D sc.levels) {
-> +            return MEMTX_ACCESS_ERROR; /* Can't find leaf PTE */
-> +        }
-> +    } while (1);
+> +    { WHvArm64RegisterDbgbvr5El1, WHPX_SYSREG(0, 5, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr5El1, WHPX_SYSREG(0, 5, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr5El1, WHPX_SYSREG(0, 5, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr5El1, WHPX_SYSREG(0, 5, 2, 0, 7) },
 > +
-> +out:
-> +    return dma_memory_read(s->target_as, base, buf, len, attrs);
-> +}
+> +    { WHvArm64RegisterDbgbvr6El1, WHPX_SYSREG(0, 6, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr6El1, WHPX_SYSREG(0, 6, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr6El1, WHPX_SYSREG(0, 6, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr6El1, WHPX_SYSREG(0, 6, 2, 0, 7) },
 > +
->  /*
->   * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
->   *
-> @@ -1038,7 +1175,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
-, RISCVIOMMUContext *ctx)
->           */
->          const int split =3D depth * 9 + 8;
->          addr |=3D ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
-> -        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
-> +        if (pdt_memory_read(s, ctx, addr, &de, sizeof(de),
->                              MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
->              return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
->          }
-> @@ -1053,7 +1190,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
-, RISCVIOMMUContext *ctx)
->
->      /* Leaf entry in PDT */
->      addr |=3D (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
-> -    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2=
-,
-> +    if (pdt_memory_read(s, ctx, addr, &dc.ta, sizeof(uint64_t) * 2,
->                          MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
->          return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
->      }
-> --
-> 2.40.1
->
->
+> +    { WHvArm64RegisterDbgbvr7El1, WHPX_SYSREG(0, 7, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr7El1, WHPX_SYSREG(0, 7, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr7El1, WHPX_SYSREG(0, 7, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr7El1, WHPX_SYSREG(0, 7, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr8El1, WHPX_SYSREG(0, 8, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr8El1, WHPX_SYSREG(0, 8, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr8El1, WHPX_SYSREG(0, 8, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr8El1, WHPX_SYSREG(0, 8, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr9El1, WHPX_SYSREG(0, 9, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr9El1, WHPX_SYSREG(0, 9, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr9El1, WHPX_SYSREG(0, 9, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr9El1, WHPX_SYSREG(0, 9, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr10El1, WHPX_SYSREG(0, 10, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr10El1, WHPX_SYSREG(0, 10, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr10El1, WHPX_SYSREG(0, 10, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr10El1, WHPX_SYSREG(0, 10, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr11El1, WHPX_SYSREG(0, 11, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr11El1, WHPX_SYSREG(0, 11, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr11El1, WHPX_SYSREG(0, 11, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr11El1, WHPX_SYSREG(0, 11, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr12El1, WHPX_SYSREG(0, 12, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr12El1, WHPX_SYSREG(0, 12, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr12El1, WHPX_SYSREG(0, 12, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr12El1, WHPX_SYSREG(0, 12, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr13El1, WHPX_SYSREG(0, 13, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr13El1, WHPX_SYSREG(0, 13, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr13El1, WHPX_SYSREG(0, 13, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr13El1, WHPX_SYSREG(0, 13, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr14El1, WHPX_SYSREG(0, 14, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr14El1, WHPX_SYSREG(0, 14, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr14El1, WHPX_SYSREG(0, 14, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr14El1, WHPX_SYSREG(0, 14, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr15El1, WHPX_SYSREG(0, 15, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr15El1, WHPX_SYSREG(0, 15, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr15El1, WHPX_SYSREG(0, 15, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr15El1, WHPX_SYSREG(0, 15, 2, 0, 7) },
+> +#ifdef SYNC_NO_RAW_REGS
+> +    /*
+> +     * The registers below are manually synced on init because they are
+> +     * marked as NO_RAW. We still list them to make number space sync easier.
+> +     */
+> +    { WHvArm64RegisterMidrEl1, WHPX_SYSREG(0, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterMpidrEl1, WHPX_SYSREG(0, 0, 3, 0, 5) },
+> +    { WHvArm64RegisterIdPfr0El1, WHPX_SYSREG(0, 4, 3, 0, 0) },
+> +#endif
+> +    { WHvArm64RegisterIdAa64Pfr1El1, WHPX_SYSREG(0, 4, 3, 0, 1), true },
+> +    { WHvArm64RegisterIdAa64Dfr0El1, WHPX_SYSREG(0, 5, 3, 0, 0), true },
+> +    { WHvArm64RegisterIdAa64Dfr1El1, WHPX_SYSREG(0, 5, 3, 0, 1), true },
+> +    { WHvArm64RegisterIdAa64Isar0El1, WHPX_SYSREG(0, 6, 3, 0, 0), true },
+> +    { WHvArm64RegisterIdAa64Isar1El1, WHPX_SYSREG(0, 6, 3, 0, 1), true },
+> +#ifdef SYNC_NO_MMFR0
+> +    /* We keep the hardware MMFR0 around. HW limits are there anyway */
+> +    { WHvArm64RegisterIdAa64Mmfr0El1, WHPX_SYSREG(0, 7, 3, 0, 0) },
+> +#endif
+> +    { WHvArm64RegisterIdAa64Mmfr1El1, WHPX_SYSREG(0, 7, 3, 0, 1), true },
+> +    { WHvArm64RegisterIdAa64Mmfr2El1, WHPX_SYSREG(0, 7, 3, 0, 2), true },
+> +    { WHvArm64RegisterIdAa64Mmfr3El1, WHPX_SYSREG(0, 7, 3, 0, 3), true },
+> +
+> +    { WHvArm64RegisterMdscrEl1, WHPX_SYSREG(0, 2, 2, 0, 2) },
+> +    { WHvArm64RegisterSctlrEl1, WHPX_SYSREG(1, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterCpacrEl1, WHPX_SYSREG(1, 0, 3, 0, 2) },
+> +    { WHvArm64RegisterTtbr0El1, WHPX_SYSREG(2, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterTtbr1El1, WHPX_SYSREG(2, 0, 3, 0, 1) },
+> +    { WHvArm64RegisterTcrEl1, WHPX_SYSREG(2, 0, 3, 0, 2) },
+> +
+> +    { WHvArm64RegisterApiAKeyLoEl1, WHPX_SYSREG(2, 1, 3, 0, 0) },
+> +    { WHvArm64RegisterApiAKeyHiEl1, WHPX_SYSREG(2, 1, 3, 0, 1) },
+> +    { WHvArm64RegisterApiBKeyLoEl1, WHPX_SYSREG(2, 1, 3, 0, 2) },
+> +    { WHvArm64RegisterApiBKeyHiEl1, WHPX_SYSREG(2, 1, 3, 0, 3) },
+> +    { WHvArm64RegisterApdAKeyLoEl1, WHPX_SYSREG(2, 2, 3, 0, 0) },
+> +    { WHvArm64RegisterApdAKeyHiEl1, WHPX_SYSREG(2, 2, 3, 0, 1) },
+> +    { WHvArm64RegisterApdBKeyLoEl1, WHPX_SYSREG(2, 2, 3, 0, 2) },
+> +    { WHvArm64RegisterApdBKeyHiEl1, WHPX_SYSREG(2, 2, 3, 0, 3) },
+> +    { WHvArm64RegisterApgAKeyLoEl1, WHPX_SYSREG(2, 3, 3, 0, 0) },
+> +    { WHvArm64RegisterApgAKeyHiEl1, WHPX_SYSREG(2, 3, 3, 0, 1) },
+> +
+> +    { WHvArm64RegisterSpsrEl1, WHPX_SYSREG(4, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterElrEl1, WHPX_SYSREG(4, 0, 3, 0, 1) },
+> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 0, 0) },
+> +    { WHvArm64RegisterEsrEl1, WHPX_SYSREG(5, 2, 3, 0, 0) },
+> +    { WHvArm64RegisterFarEl1, WHPX_SYSREG(6, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterParEl1, WHPX_SYSREG(7, 4, 3, 0, 0) },
+> +    { WHvArm64RegisterMairEl1, WHPX_SYSREG(10, 2, 3, 0, 0) },
+> +    { WHvArm64RegisterVbarEl1, WHPX_SYSREG(12, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterContextidrEl1, WHPX_SYSREG(13, 0, 3, 0, 1) },
+> +    { WHvArm64RegisterTpidrEl1, WHPX_SYSREG(13, 0, 3, 0, 4) },
+> +    { WHvArm64RegisterCntkctlEl1, WHPX_SYSREG(14, 1, 3, 0, 0) },
+> +    { WHvArm64RegisterCsselrEl1, WHPX_SYSREG(0, 0, 3, 2, 0) },
+> +    { WHvArm64RegisterTpidrEl0, WHPX_SYSREG(13, 0, 3, 3, 2) },
+> +    { WHvArm64RegisterTpidrroEl0, WHPX_SYSREG(13, 0, 3, 3, 3) },
+> +    { WHvArm64RegisterCntvCtlEl0, WHPX_SYSREG(14, 3, 3, 3, 1) },
+> +    { WHvArm64RegisterCntvCvalEl0, WHPX_SYSREG(14, 3, 3, 3, 2) },
+> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 4, 0) },
+> +};
+To ease maintenance, this array should follow this equivalent
+changeset:
+
+$ git log --oneline a648af4885b~..bffe756ea10
+bffe756ea10 target/arm/hvf: Sort the cpreg_indexes array
+98c2af435e6 target/arm/hvf: Replace hvf_sreg_match with hvf_sreg_list
+e6728fb3492 target/arm/hvf: Remove hvf_sreg_match.key
+7d4d89a4377 target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
+8da60618b6d target/arm/hvf: Reorder DEF_SYSREG arguments
+a648af4885b target/arm/hvf: Split out sysreg.c.inc
 
