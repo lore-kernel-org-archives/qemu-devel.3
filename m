@@ -4,92 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027C5CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61203CCA472
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 08:53:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Eu2-0006ny-5q; Thu, 02 Oct 2025 04:43:06 -0400
+	id 1v4F19-0005lA-T4; Thu, 02 Oct 2025 04:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Eth-0006g8-Ga
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:42:47 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4EtN-0000s6-GG
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:42:41 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3f2ae6fadb4so642157f8f.1
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 01:42:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759394534; x=1759999334; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HWUjqrhoII9IYKgjMFDNsLi+Cgv2QEPokr0XBtkHqiA=;
- b=NEVak5cIVXDcj1830AAQcfXMs9lOpXZXNA0om6CyKyYeYnB5Lg7t2kdY+L4Ux6Ii1e
- BslbubZfZg9aoaS6YKpigMQ7fIl9w04IynhbKNb514f/RJkgrhoJLs/oZfiwRmurThdM
- rp1qoHTXBUAgN73dY2+i9ewN6ceDqXxQlMAXGLYBWed/1HPO6UIe4fGgqesvBANU0GFR
- So8zWEqY/8Y8SJrRWcnPLbHuhAfVwTOLca0TErOqJG+wzOUU6BQyms1UwNMnhXt/pbOY
- ZI8qaXtZxteIv7NyBP3OQ7m3ITNNWrHJQyVj6iYpqq3Q9CZzpiHXjyaSXeiWvFgPwd3+
- UPIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759394534; x=1759999334;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HWUjqrhoII9IYKgjMFDNsLi+Cgv2QEPokr0XBtkHqiA=;
- b=fjU1w3JFJwFJF4sqk6VPOH7r+WcmQBoRkjObvkOpDe/WDdATBDRIDB+rWAb6jjK2DM
- IOAEmBLxUwYSJvqfE11xc+B5qETePlkYL4e4FqNN8whNEuKurArwP6QFpRNKOexXYMDw
- rvM6R1ADkH+908YER20FWKIqdEJBUwUSCIHb0vFEU0gkYgL3DquIknejZX9n++AaV3tb
- WU2GoAXVWYGUb1K5wrBuJynMsk2/0bXJMF+fekhouz94UbEsbeTTk3VHzOkoC4xnpwkM
- pjJyos7GaOZ2gQWuNOC6TOMKqkYBGv5LGkJh8Wrg1mWcymaCjIJHJK4RFrpaC9NndXPc
- r7Fg==
-X-Gm-Message-State: AOJu0Ywg0TRek67Ka3hbra1kOeI0VgxjORWXc7LvsaXCE54q3kWEPRd1
- PzdEJQoZuq3/zBI9x+Cb3jw06YwLVKs6qK08/VXGn7bXsnES4ssfDVEskDJI+13fdCyIMGSwr2l
- N+VBZQH53/Q==
-X-Gm-Gg: ASbGncuKOq81Z1bfYcfiyOtb97YXBUpIoFFTk++imcIkUVZqgyTWofitcSzhW7XkIGd
- QlUFnXEMc5j+j/153OKsiINX/ro0HmLwA4rZ56EDgunXRnAdRlIKz4/hv4tWG5v/iHhG2rS8UXj
- dhZx+QZ0zILrdNJAy5NOaXFOKFkKflcisSWhdVvbwmCu+F4FHzNXNtlrD/62aRnEUOSWJUoi7AN
- sNwoBS2fiIs5u8Mp3ZKbVxt+sH+vtwluLdc8LvAdvku1OaYkFo2u49KU+XRQXlFTY3ZNz3mhkrs
- NXZi4eWU5ft7dxvdFILVcexyI+I9LutiLYnJU7HCD9p3jBP+DrK/7kupDJimScQwapL6OEVpr4N
- qYRTixtapiXXKeKcJnoec3S+LEa+To9elyMn6WmfT2MJyr/Jx+w0nkXMaiGWMburDgMSXc8LRhb
- S5kk9kKoWRydHHqusu7PCwUzPehc4ZLg==
-X-Google-Smtp-Source: AGHT+IGTHDHXIrJOhOoypYRjJsVDikLhcyRvRa/vBA1Wlz/iaLsadlO4HdF+yc3FSV0R35r+UTvjog==
-X-Received: by 2002:a05:6000:2586:b0:3e4:d981:e312 with SMTP id
- ffacd0b85a97d-42557817210mr5123294f8f.62.1759394534260; 
- Thu, 02 Oct 2025 01:42:14 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e960asm2619549f8f.37.2025.10.02.01.42.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Oct 2025 01:42:13 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH v4 02/17] system/memory: Factor address_space_is_io() out
-Date: Thu,  2 Oct 2025 10:41:47 +0200
-Message-ID: <20251002084203.63899-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251002084203.63899-1-philmd@linaro.org>
-References: <20251002084203.63899-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1v4F13-0005df-2d
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:50:21 -0400
+Received: from smtp.eurecom.fr ([193.55.113.210])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1v4F0l-00038t-NF
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 04:50:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
+ t=1759395004; x=1790931004;
+ h=from:in-reply-to:references:date:cc:to:mime-version:
+ message-id:subject:content-transfer-encoding;
+ bh=hyffX+jy6px+0Nq2TWzG3/pMhIY3pgCCom7dcW4B7xo=;
+ b=frtxitTS9UTteHgLsPf71cYsg+tEU66MOybaV6BIIN6YqiGm32A8ReaJ
+ rAqBy5VbF4WEQmNG/SUaO3/0AjZvoC7MbTNKkeTG0OWzPtfrrlVc0NMpl
+ 27Yucu9gOXKrYxZniJUox9xclB3yIx3oXJ5HKoHr7iiZhfNoplSZVyibr M=;
+X-CSE-ConnectionGUID: eIcHfTgpT+O6PnIufibRsg==
+X-CSE-MsgGUID: kMv/62XtSoaCPQTQckLgxA==
+X-IronPort-AV: E=Sophos;i="6.18,309,1751234400"; 
+   d="scan'208";a="3128560"
+Received: from quovadis.eurecom.fr ([10.3.2.233])
+ by drago1i.eurecom.fr with ESMTP; 02 Oct 2025 10:49:46 +0200
+From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
+In-Reply-To: <20251001161823.2032399-4-Marco.Cavenati@eurecom.fr>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 193.55.114.5
+References: <20251001161823.2032399-1-Marco.Cavenati@eurecom.fr>
+ <20251001161823.2032399-4-Marco.Cavenati@eurecom.fr>
+Date: Thu, 02 Oct 2025 10:49:45 +0200
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
+ ppandit@redhat.com, berrange@redhat.com
+To: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Message-ID: <26083e-68de3c80-5f3-4691f480@28926673>
+Subject: =?utf-8?q?Re=3A?= [PATCH 3/3] =?utf-8?q?migration=3A?=
+ =?utf-8?q?_mapped-ram=3A?= handle zero pages
+User-Agent: SOGoMail 5.12.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=193.55.113.210;
+ envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,76 +74,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor address_space_is_io() out of cpu_physical_memory_is_io().
+Please note that there are a couple of errors (swapped parameters), whi=
+ch are
+detailed below.
+I will address these in the next iteration, along with any additional c=
+hanges
+based on your feedback.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/system/memory.h |  9 +++++++++
- system/physmem.c        | 21 ++++++++++++---------
- 2 files changed, 21 insertions(+), 9 deletions(-)
+Thank you
+Marco
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index aa85fc27a10..1b2b0e5ce1e 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -3029,6 +3029,15 @@ static inline MemoryRegion *address_space_translate(AddressSpace *as,
- bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
-                                 bool is_write, MemTxAttrs attrs);
- 
-+/**
-+ * address_space_is_io: check whether an guest physical addresses
-+ *                      whithin an address space is I/O memory.
-+ *
-+ * @as: #AddressSpace to be accessed
-+ * @addr: address within that address space
-+ */
-+bool address_space_is_io(AddressSpace *as, hwaddr addr);
-+
- /* address_space_map: map a physical memory region into a host virtual address
-  *
-  * May map a subset of the requested range, given by and returned in @plen.
-diff --git a/system/physmem.c b/system/physmem.c
-index 225ab817883..c2829ab407a 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3358,6 +3358,17 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr,
-     return flatview_access_valid(fv, addr, len, is_write, attrs);
- }
- 
-+bool address_space_is_io(AddressSpace *as, hwaddr addr)
-+{
-+    MemoryRegion *mr;
-+
-+    RCU_READ_LOCK_GUARD();
-+    mr = address_space_translate(as, addr, &addr, NULL, false,
-+                                 MEMTXATTRS_UNSPECIFIED);
-+
-+    return !(memory_region_is_ram(mr) || memory_region_is_romd(mr));
-+}
-+
- static hwaddr
- flatview_extend_translation(FlatView *fv, hwaddr addr,
-                             hwaddr target_len,
-@@ -3754,15 +3765,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
- 
- bool cpu_physical_memory_is_io(hwaddr phys_addr)
- {
--    MemoryRegion*mr;
--    hwaddr l = 1;
--
--    RCU_READ_LOCK_GUARD();
--    mr = address_space_translate(&address_space_memory,
--                                 phys_addr, &phys_addr, &l, false,
--                                 MEMTXATTRS_UNSPECIFIED);
--
--    return !(memory_region_is_ram(mr) || memory_region_is_romd(mr));
-+    return address_space_is_io(&address_space_memory, phys_addr);
- }
- 
- int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque)
--- 
-2.51.0
+On Wednesday, October 01, 2025 18:18 CEST, Marco Cavenati <Marco.Cavena=
+ti@eurecom.fr> wrote:
+
+> Make mapped-ram compatible with loadvm snapshot restoring by explicit=
+ly
+> zeroing memory pages in this case.
+> Skip zeroing for -incoming and -loadvm migrations to preserve perform=
+ance.
+>=20
+> Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+> ---
+>  migration/ram.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++=
++-
+>  1 file changed, 55 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/migration/ram.c b/migration/ram.c
+> index e238c9233f..597d5ffe9e 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3958,12 +3958,55 @@ static size=5Ft ram=5Fload=5Fmultifd=5Fpages(=
+void *host=5Faddr, size=5Ft size,
+>      return size;
+>  }
+> =20
+> +/**
+> + * handle=5Fzero=5Fmapped=5Fram: Zero out a range of RAM pages if re=
+quired during
+> + * mapped-ram load
+> + *
+> + * Zeroing is only performed when restoring from a snapshot (HMP loa=
+dvm).
+> + * During incoming migration or -loadvm cli snapshot load, the funct=
+ion is a
+> + * no-op and returns true as in those cases the pages are already gu=
+aranteed to
+> + * be zeroed.
+> + *
+> + * Returns: true on success, false on error (with @errp set).
+> + * @from=5Fbit=5Fidx: Starting index relative to the map of the page=
+ (inclusive)
+> + * @to=5Fbit=5Fidx:   Ending index relative to the map of the page (=
+exclusive)
+> + */
+> +static bool handle=5Fzero=5Fmapped=5Fram(RAMBlock *block, unsigned l=
+ong from=5Fbit=5Fidx,
+> +                                   unsigned long to=5Fbit=5Fidx, Err=
+or **errp)
+> +{
+> +    ERRP=5FGUARD();
+> +    ram=5Faddr=5Ft offset;
+> +    size=5Ft size;
+> +    void *host;
+> +
+> +    if (runstate=5Fcheck(RUN=5FSTATE=5FINMIGRATE) ||
+> +        runstate=5Fcheck(RUN=5FSTATE=5FPRELAUNCH)) {
+> +        return true;
+> +    }
+> +
+> +    if (from=5Fbit=5Fidx =3D=3D to=5Fbit=5Fidx) {
+> +        return true;
+> +    }
+> +
+> +    size =3D TARGET=5FPAGE=5FSIZE * (to=5Fbit=5Fidx - from=5Fbit=5Fi=
+dx);
+> +    offset =3D from=5Fbit=5Fidx << TARGET=5FPAGE=5FBITS;
+> +    host =3D host=5Ffrom=5Fram=5Fblock=5Foffset(block, offset);
+> +    if (!host) {
+> +        error=5Fsetg(errp, "zero page outside of ramblock %s range",
+> +                   block->idstr);
+> +        return false;
+> +    }
+> +    ram=5Fhandle=5Fzero(host, size);
+> +
+> +    return true;
+> +}
+> +
+>  static bool read=5Framblock=5Fmapped=5Fram(QEMUFile *f, RAMBlock *bl=
+ock,
+>                                       long num=5Fpages, unsigned long=
+ *bitmap,
+>                                       Error **errp)
+>  {
+>      ERRP=5FGUARD();
+> -    unsigned long set=5Fbit=5Fidx, clear=5Fbit=5Fidx;
+> +    unsigned long set=5Fbit=5Fidx, clear=5Fbit=5Fidx =3D 0;
+>      ram=5Faddr=5Ft offset;
+>      void *host;
+>      size=5Ft read, unread, size;
+> @@ -3972,6 +4015,12 @@ static bool read=5Framblock=5Fmapped=5Fram(QEM=
+UFile *f, RAMBlock *block,
+>           set=5Fbit=5Fidx < num=5Fpages;
+>           set=5Fbit=5Fidx =3D find=5Fnext=5Fbit(bitmap, num=5Fpages, =
+clear=5Fbit=5Fidx + 1)) {
+> =20
+> +        /* Zero pages */
+> +        if (!handle=5Fzero=5Fmapped=5Fram(block, set=5Fbit=5Fidx, cl=
+ear=5Fbit=5Fidx, errp)) {
+
+This should be
++         if (!handle=5Fzero=5Fmapped=5Fram(block, clear=5Fbit=5Fidx, s=
+et=5Fbit=5Fidx, errp)) {
+
+> +            return false;
+> +        }
+> +
+> +        /* Non-zero pages */
+>          clear=5Fbit=5Fidx =3D find=5Fnext=5Fzero=5Fbit(bitmap, num=5F=
+pages, set=5Fbit=5Fidx + 1);
+> =20
+>          unread =3D TARGET=5FPAGE=5FSIZE * (clear=5Fbit=5Fidx - set=5F=
+bit=5Fidx);
+> @@ -4003,6 +4052,11 @@ static bool read=5Framblock=5Fmapped=5Fram(QEM=
+UFile *f, RAMBlock *block,
+>          }
+>      }
+> =20
+> +    /* Handle trailing 0 pages */
+> +    if (!handle=5Fzero=5Fmapped=5Fram(block, num=5Fpages, clear=5Fbi=
+t=5Fidx, errp)) {
+
+This should be
++    if (!handle=5Fzero=5Fmapped=5Fram(block, clear=5Fbit=5Fidx, num=5F=
+pages, errp)) {
+
+> +        return false;
+> +    }
+> +
+>      return true;
+> =20
+>  err:
+> --=20
+> 2.48.1
+>
 
 
