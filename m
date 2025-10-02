@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC06CCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 14:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F3BCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 14:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4K0n-0000im-Qj; Thu, 02 Oct 2025 10:10:27 -0400
+	id 1v4K2e-0001na-L0; Thu, 02 Oct 2025 10:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4K0k-0000hO-6k
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:10:22 -0400
-Received: from p-east3-cluster7-host1-snip4-10.eps.apple.com ([57.103.84.141]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v4K2W-0001jV-Oh
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:12:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4K0X-0008Dk-2s
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:10:20 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
- DDF7D180026F; Thu,  2 Oct 2025 14:09:58 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=EuGsZTr1EuGqL8ZRssUy33gEv030KKsk/7nvj1evTAQ=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=aJY/2Ohg7bJ2+ZlvUeaD0CIr473H6/QtvgHJvvNFpJSOsUyZqLPxKIzqTVQoLB63aYRjD9KaEpAptdeLrR6P3hDCSiEI0MmYBr2qyQYqtzLhydEHjz72LXk9c8POsEFRlhmHDwrgBl+hRfy1qyFuf5hz9Rsohq6XofHw7OBsNL9gKygGqBXSV/louzE25KMONDwjn18B9JKQV1VHguTaamowkdQwfRtZ+ANrPgn/hP3feFhK9OICalq+Qk/rwTaqO/nK8yP9e//Zr9NawfoFgey4MlaNUwfMMrBNJYc4RQdbq6V01bzC9sI5wW1h12kYPSpD/FdbLRA6keDAAOts7w==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
- 33FB51800257; Thu,  2 Oct 2025 14:07:51 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: [PATCH v4 00/27] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <aN5Bjlf/xhsEHDNb@example.com>
-Date: Thu, 2 Oct 2025 16:07:39 +0200
-Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3D0B6481-BA86-4CCE-8A51-63840A29F649@unpredictable.fr>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <e176dfe8-b406-46ff-b1f0-95d4285472b7@linaro.org>
- <aN5Bjlf/xhsEHDNb@example.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAyMDEyMCBTYWx0ZWRfX8vKPRRTI0s3h
- 3/DW/bwMehrYE5EX09OcO4L52QjHRkI6j95NiPGhk57gJXFek/EFqDq6Di5VxSMrETZ7gmEwnIT
- ySRaCB9cLMtJbNwFyfT9isvfCkzONVrkPorztTs8fcTo1NTjBJNpfPaTxYLGeBTRhLk0jXHjjj0
- G9sGahQvcEcCOV9Dn68rYBCvcUfbo+cGX9kEhGRKLj/RU2CAZRbErQ1HZOzXCscJK4tcHV7MJm+
- oDVfn+T4TquQK9c/7HaFP6AL5VKcmwhFh0G+Hxa9M2RTldAM6CUytRxccdkHRfAWRRJqugMiw=
-X-Proofpoint-ORIG-GUID: I2awVdwbWVaQx1J1iIHozc6wxnckbbd5
-X-Proofpoint-GUID: I2awVdwbWVaQx1J1iIHozc6wxnckbbd5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-02_05,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 bulkscore=0 phishscore=0 suspectscore=0 clxscore=1030
- mlxlogscore=999 spamscore=0 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2510020120
-X-JNJ: AAAAAAAB5BvIm36p3bhthDRZpqvEgno5pH+58zfd11FT86zRxd0fACd94tgb3a3eLAcnZ0cBoRFOPxhTBne9/Sv2/Eti/A7FFR6kdNnZtsRjjfAE9d84LeoeMrPpt/7ULDUzEPcmRBK3vBlILi9cNGu6YWVAoHIYPJm/psXhy7+CqYl71ruIvPHRihj6zjG3ZtR6NvIxcdBmvacSXu1GEnIO8aXrITtPa7y7wXW9KLll5IGbDFR7/j9uNy5hjdaLnAL3Dhz/Qxbbec19Tka0jVTkQE5Dsxwmv+Mp6NH2x9tL4h+DE9nXR38Vyj3bfTj9JFBkVt6XY2h+CRbrulHxb77GDd1Pe+Z48dAD9+pllXYT98y5Wh6GEhbpm+1F1XAgDrQwHeiO4i7edsVRhwy0te2t2UfwYgqq51NES8rNLeSB9Wb5ihePYku6q4kxhVeqTSM1X9HO0tbawDb+8S+I8BvDVxrf48XUPTTmxZUTFbKVBZDJrXarQGQhnKnuSEvEcT5sFezMB/PSgtcx31yUXGuWccUn4JyK4DOdLB8Ju06IsHFmi8usZNd8Df8fOVl0cU6ZGZDvUydGtTbIEi8WOrlWgUbenKFR4VCoT+LB3VBXjyxmG+R3dKvQv04aBi018aDJ9489ckK+IHNizOjkc55H0BVkJ4cZ7hELBWkC7IkbpNyLst5swYge9IFj2fEnUQ5oI5HOB+nUdo8yxGrtG0AREUDIEZCXyCYm+ZNqoo9jLHkUCjENr4GWBBcHKRyRfyQQ14/uYF2LYGC4anpaf0K7wfExI7iLye3R07R0imsv5lH2I++qqSonsOl3uMv0fU5LLVN544a2xHJsXNuX4ROXeCI73ZOizfduuk188xL9V2n6qgR41b8moFN1u6lwdKUmTSwWvLOJiCSDFdY4JEHZgoZUuDllyElWIw+3A0HGEPOHjbhQp7kLZU0L6MW7
-Received-SPF: pass client-ip=57.103.84.141;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v4K2I-0001Gs-TV
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:12:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759414307;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4sGRdRuOyyivfnn+8H0fkWxGsTPt5iOxzHuw6hrltic=;
+ b=cnJVlFY2npzPCtii917wLh4EG4Qft/vjfzQwckKbU4Vb2HhcLgPeLimE/7bdvnc1pwzg7T
+ ibOYDIkwxe8lkwgAm8KnVoBIPY24fJzYRxupPx1e+654/qMYIjMAaxDMqgEjK2Nub0kILR
+ OXVm7Xy5DlV1Zth3aI6G2bkejQlVPVU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-571-qt-pyCKqNVWVvyDfcNqvFw-1; Thu, 02 Oct 2025 10:11:46 -0400
+X-MC-Unique: qt-pyCKqNVWVvyDfcNqvFw-1
+X-Mimecast-MFC-AGG-ID: qt-pyCKqNVWVvyDfcNqvFw_1759414305
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e375dab7dso4562865e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 07:11:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759414305; x=1760019105;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4sGRdRuOyyivfnn+8H0fkWxGsTPt5iOxzHuw6hrltic=;
+ b=w7ywuHkfzU6oWOzKy/iadriHJcll5588GB+BCjTc8lJ2iLTBRBNECHhu0HGfiyiQ0p
+ NljwujTVfPcJvdK9NgC1LsPoF0FHpiMNbEiYAmpYeeF5PiERH2Elutmc9lz+ZYEhwbZy
+ 3tDcBjCrsHYhU7v+bka1G6rfWuarpBws9gkPw7p5IEwbF3pyHB8/6VdErIWIzDdSrBtp
+ G9SzPsi869tlvabc4BIAjJ7yCB8bk5YL/JlmggEibMjx/r4ccFZoaKSrGhXpcvM4DbY1
+ Z1SJBhushBtSv6lxRGuWy+5ohg6kuPAP8j/+L3ZnlVDWw2lxC6QcsqwIHr+3+ybsHQQ7
+ WEuw==
+X-Gm-Message-State: AOJu0YwIte/hhQS8/xbBo6RYBRBEFAGiqdkD4wneSHOrNI4i5UwzCj/l
+ mtCN88CEKAo+z7ho/TbkMreThMX+8S9RHMBOznW5mh3saP6d1Qj7CoIHlbtjmBrgGjSh1vbjsmU
+ dJLdCvwP38V3PqZcxr8WvEPvz2t7X1ED+PNSs8lFLw+R2zqXdvXA02ric
+X-Gm-Gg: ASbGncsWyqY5wyYcql5DvR5rBDYaEJ93ljx9ndT7TXTBACd9KkdjM507I9t/2PY0fnL
+ ljgynD0RNUocrwI0ZmvELViQTtm8VavWGKwu0Mew/ui/qiQve/9K7PjCOFQzyMfoK4ffh2+Bhn7
+ idw8Q172+BESRyOwz6QaXh2//2q36QBq6wiw2cWfrG0sFreTRlWkyB2Ph4CcMrGMbt4eL85Ib2M
+ xvDWFtIPFhoPOkvjCiYPI2A5/cOHRdqih5KcoiSI4pS1ZMUG4kWr62whFcTajNRdJYgU96NBHAT
+ Wv/RhwBlPHvkGH8QE4MaqdC+VGqYqGRABq0o
+X-Received: by 2002:a05:600c:83c7:b0:46e:27fb:17f0 with SMTP id
+ 5b1f17b1804b1-46e612195bcmr58072435e9.9.1759414304751; 
+ Thu, 02 Oct 2025 07:11:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQ4qoXVKaHjD95KV660c4M6u1LSb8CMqCkFmjg6QE44YncZ5rWYcOj+BvTV+L/c5nFpi3J/A==
+X-Received: by 2002:a05:600c:83c7:b0:46e:27fb:17f0 with SMTP id
+ 5b1f17b1804b1-46e612195bcmr58072175e9.9.1759414304277; 
+ Thu, 02 Oct 2025 07:11:44 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e6917a577sm36898845e9.1.2025.10.02.07.11.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Oct 2025 07:11:43 -0700 (PDT)
+Date: Thu, 2 Oct 2025 16:11:40 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: fanhuang <FangSheng.Huang@amd.com>
+Cc: <qemu-devel@nongnu.org>, <david@redhat.com>, <Zhigang.Luo@amd.com>,
+ <Lianjie.Shi@amd.com>
+Subject: Re: [PATCH] numa: add 'spm' option for special purpose memory
+Message-ID: <20251002161140.5b908e06@fedora>
+In-Reply-To: <20250924103324.2074819-1-FangSheng.Huang@amd.com>
+References: <20250924103324.2074819-1-FangSheng.Huang@amd.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,62 +108,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 24 Sep 2025 18:33:23 +0800
+fanhuang <FangSheng.Huang@amd.com> wrote:
 
+> Hi David,
+> 
+> I hope this email finds you well. It's been several months since Zhigang last discussion about the Special Purpose Memory (SPM) implementation in QEMU with you, and I wanted to provide some background context before presenting the new patch based on your valuable suggestions.
+> 
+> Previous Discussion Summary
+> ===========================
+> Back in December 2024, we had an extensive discussion regarding my original patch that added the `hmem` option to `memory-backend-file`. During that conversation, you raised several important concerns about the design approach:
+> 
+> Original Approach (December 2024)
+> ----------------------------------
+> - Zhigang's patch: Added `hmem=on` option to `memory-backend-file`
+> - QEMU cmdline example:
+>   -object memory-backend-file,size=16G,id=m1,mem-path=/dev/dax0.0,prealloc=on,align=1G,hmem=on
+>   -numa node,nodeid=1,memdev=m1
+> 
+> Your Concerns and Suggestions
+> -----------------------------
+> You correctly identified some issues with the original approach:
+> - Configuration Safety: Users could create problematic configurations like:
+>    -object memory-backend-file,size=16G,id=unused,mem-path=whatever,hmem=on
+> 
+> - Your Recommendation: You proposed a cleaner approach using NUMA node configuration:
+>    -numa node,nodeid=1,memdev=m1,spm=on
 
-> On 2. Oct 2025, at 11:10, Magnus Kulke =
-<magnuskulke@linux.microsoft.com> wrote:
->=20
-> On Thu, Oct 02, 2025 at 10:30:56AM +0200, Philippe Mathieu-Daud=C3=A9 =
-wrote:
->> Due to my generic work on accelerators, I'll have to refactor these
->> patches. Obviously I don't want to break your implementation! Can
->> you add some (functional?) tests? Ideally we should be running
->> tests on our CI to ensure code doesn't bitrot.
->>=20
->> Regards,
->>=20
->> Phil.
->=20
-> Hey Phil,
->=20
-> yes, that's a good point. I assume for functional tests we
-> will face the challenge those will require external infra, because
-> eventually there needs to be a HyperV Hypervisor running somewhere.
-Worth noting that x86_64 MSHV on Linux is available to the public as =
-part of Azure Linux,
-and runs inside of a Qemu VM just fine. (with the catch that MBEC =
-isn=E2=80=99t currently emulated by KVM)
+that seems to me a bit backwards,
+aka it's just a particular case where node would have SPM memory only,
+which (spm) is not a property of numa node, but rather of memory device attached to it.
+ 
+> Project Context
+> ===============
+> To refresh your memory on the use case:
+> - Objective: Pass `EFI_MEMORY_SP` (Special Purpose Memory) type memory from host to QEMU virtual machine
+> - Application: Memory reserved for specific PCI devices (e.g., VFIO-PCI devices)
 
-Perhaps having an Azure Linux instance in CI could be the right thing to =
-do?
+could you elaborate on this some more /maybe with examples (assume I know nothing about it)?
 
-Thank you,
-
-> Is there any precedent/prior art in QEMU (e.g. for HVF or WHPX) that =
-we
-> could follow?
->=20
-> FWIW, in smoke tests for the patch series I've been using a nested
-> HyperV hypervisor that is shipped as dll and made available as UEFI
-> protocol to the MSHV driver (I _think_ that is how it works, I'm a
-> bit out of my depth here since I don't know how those things are
-> glued together in detail).
->=20
-> For reference: https://github.com/mkulke/qemu/actions/runs/18187719634
->=20
-> There will be other virt topologies supported by the MSHV driver and
-> the nested option is not upstreamed to mainline yet. However, from
-> QEMU's perspective those topologies do not matter, they share the same
-> ABI of the kernel driver.
->=20
-> So we could do something similar, provide/maintain a VM on Azure with =
-a
-> similar nested HyperV hypervisor configuration that we can used for
-> testing. Would this make sense?
->=20
-> Best,
->=20
-> magnus
->=20
+> - Guest Behavior: The SPM memory should be recognized by the guest OS and claimed by hmem-dax driver
+> 
+> Complete QEMU Configuration Example:
+> -object memory-backend-ram,size=8G,id=m0
+> -object memory-backend-file,size=16G,id=m1,mem-path=/dev/dax0.0,prealloc=on,align=1G
+> -numa node,nodeid=0,memdev=m0
+> -numa node,nodeid=1,memdev=m1,spm=on  # <-- New approach based on your suggestion
+> 
+> New Patch Implementation
+> ========================
+> Following your recommendations, I have completely redesigned the implementation:
+> 
+> Key Changes:
+> 1. Removed `hmem` option from `memory-backend-file`
+> 2. Added `spm` (special-purpose) option to NUMA node configuration
+> 
+> I would appreciate your review of the new patch implementation. The design now follows your suggested approach of using NUMA node configuration rather than memory backend options, which should resolve the safety and scope issues we discussed.
+> Thank you for your time and valuable guidance on this implementation.
+> 
+> Please note that I'm located in UTC+8 timezone, so there might be some delay in my responses to your emails due to the time difference. I appreciate your patience and understanding.
+> 
+> Best regards,
+> FangSheng Huang
+> 
+> 
 
 
