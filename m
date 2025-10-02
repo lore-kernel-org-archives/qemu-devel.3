@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092F8CCD182
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 17:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A77CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 17:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Mvw-0001Ij-3C; Thu, 02 Oct 2025 13:17:36 -0400
+	id 1v4Mvs-0001Et-BL; Thu, 02 Oct 2025 13:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v4MvW-00012g-P0
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:17:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v4MvK-0000w8-KZ
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:17:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v4MvM-0005sc-2C
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:17:08 -0400
+ id 1v4Mv1-0005pa-HX
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 13:16:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759425414;
+ s=mimecast20190719; t=1759425395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xo7/waLBB+eaxCnywl7D9abhJb3gDRPAUFE9UsF2G9Q=;
- b=JBNXtkZ0SiLP0cBttUQjbTsnQO6b1lox779T67lukgALjnF4Fnl5KVL2gb+DEMDgzzJLac
- Svb6FVybryBCDXH+37xX4eqB8CVfNKvWMCyGGSAGfQBV7Q2sObba/zpoaH+U9S6BTL9k6M
- I69hmErsDwPe8FYkrRYhK6rDlKcD/CY=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DIImP9rsbENMbkYn9y/syNVGQpkLhbp28x1tK4d0VmY=;
+ b=UZLgtp/zttnSifBDq4iSYCgS6fg3hlJnMuimazlF9GPFWkyQmV0cxKZZqoaCNvowH8QHVZ
+ ru7uA9Xw3VKqrUeKImCLZWl6hwc3K9taAhNZyXkJDUAEFh2R0oK6EuPXFDEWhw9xfArhcx
+ WRwi5Y+E4W2WgEP3iApdp7qS7FYBM1Y=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-jUg_GH8sMJCWDLarebZ2PA-1; Thu, 02 Oct 2025 13:16:53 -0400
-X-MC-Unique: jUg_GH8sMJCWDLarebZ2PA-1
-X-Mimecast-MFC-AGG-ID: jUg_GH8sMJCWDLarebZ2PA_1759425412
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b04a8ae1409so154862466b.2
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 10:16:53 -0700 (PDT)
+ us-mta-611-kTZXBBeqN-WezZhLTFot0w-1; Thu, 02 Oct 2025 13:16:34 -0400
+X-MC-Unique: kTZXBBeqN-WezZhLTFot0w-1
+X-Mimecast-MFC-AGG-ID: kTZXBBeqN-WezZhLTFot0w_1759425393
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-62fcb646334so1474724a12.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 10:16:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759425411; x=1760030211;
+ d=1e100.net; s=20230601; t=1759425392; x=1760030192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xo7/waLBB+eaxCnywl7D9abhJb3gDRPAUFE9UsF2G9Q=;
- b=vKjATBjWanUO5SSAYdHYvFYQNQ/4RTMwqauXWpSZ4wcl86zxv/giRsXykVjPcb0b+m
- ypE4ys/X0dBKT0wFi6UwQ+MSthT7WsDARmfCQ+rwJASCnpdeGnKZQ7yQmseUNnz7UzKB
- NLdA7CkmYTKQC28iFBYcPXmxGDhQ1mYDyrIAa80cJiabVLf5r1yCSFb5gZY+G4I8Ho3l
- ZQjRU3iIwUQ3s+yUIEN0YcfTo9aTVVgzaYQrDR+6PdXLSiK4kn/j6PsBO2OjRNx81EbC
- bqt/f2chrMILuB5hVpiWMXf0JtWWIcKBlmy0l4/gwOXJyQfoZ6oX1KRBF0qJtws5ulyg
- bKwQ==
-X-Gm-Message-State: AOJu0YxGrQ4qqDJlOccUuoMic9T08lRfAQDHAcuJu2lrTI22I8MRCx4X
- UgQ3caFoZdeqg2JqtZb9D6m4Cn4qUu1EfxYH8ZZsTBScvLgLgq8tgeuVjopbeNHm5bgcIYZz7jn
- mMihnoG0588l2VSrga4hmXoBkdE+E8n5m+J+4S/E29ieqhph31LFV2PXy2DZl+DKq2qVPG+EjqS
- 7S8PIWQ3ixzS5euub8nWA/Syw7/CZGWphrJIbU0iOj
-X-Gm-Gg: ASbGnct3d41ysbyD+j696fXRHEPKvHYtEXGsHXZ5DTj7/pcL4o3fkinrvyMXESlsI40
- /AWB6ml0nCzrkvON5H+2jHpbP027YPSgWqc0QcP7Khe01eAe3MDuVPB+iVvrTtjOQn8TpQdKtrc
- W6Rl3ojbdgya+gc9hvKCjokGinafmv5P5hYC95ibloXS3FwB9zuPUOVb6t25tYpjggDFzbLvHDK
- PEcT39d+s28xR3svlF+0s2ZN8/COXCkbdwTumkpjKsj0lAiEO1Qg8f8Y1A0Q4SywclchXmFcYvp
- 8hwXnMeNwIjYORl24s736XO+GMGM2iTNgwmh5t85TUJuYxoxK1/wq/1be2qCzfCGk8N1mnVRl5M
- 2TtdEs/2fxC9KHq27zWhCwtsd2B20m5lvAIBjkNXzAbSBTciH
-X-Received: by 2002:a17:907:7213:b0:b0b:f228:25a with SMTP id
- a640c23a62f3a-b49c449b9bdmr20771266b.64.1759425411102; 
- Thu, 02 Oct 2025 10:16:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHL7XO6APmH1KKpcwuiDsFrhG9lCEZnTSQYXxO/Kcf5x1vM8VezzT+NA+3gcpGLtzfJe/3E0g==
-X-Received: by 2002:a17:907:7213:b0:b0b:f228:25a with SMTP id
- a640c23a62f3a-b49c449b9bdmr20765866b.64.1759425410436; 
- Thu, 02 Oct 2025 10:16:50 -0700 (PDT)
+ bh=DIImP9rsbENMbkYn9y/syNVGQpkLhbp28x1tK4d0VmY=;
+ b=j8N4+LYh+8jPBlb+rdr/DZZn7jssl7/4mYqr7gWZpo8J+K8uc/5Cojv+TNgzdFK5tv
+ dhyi5boyU9lbFT2wHtC2G2oihspobapF/0B+v5qn48LRRR5iX0YQagao9f1uz7yUZZSP
+ yC+tlDJhAI8UiALRex+NpBAqXqhKYlm1oHKMtesyH9+7zt6zAQbOCcjSo4aIhctJMIHw
+ O5nkVtNqEpFuIHW6eyxbB3npexhKg7ul8kGfM03PSrvxQ6MulmCRr+eGSGcenpSGqrJu
+ wYJsr5VN5ne/vas5s+e7zDZO6E1BqdOkNCq0dn/Q682n06kHD5Q0psu5ZSiwMF1vpc6L
+ b1qg==
+X-Gm-Message-State: AOJu0Yx4BZmtvELzAVGYO7eozs89x67VG9hHQlpuFCeUD8MRtxFQBlFC
+ HoKG9JKywLVQHmOor4vRnTGjREzAw6q9G53GTEX8QaFiztQAlKciXhXE85hjDEwX3Za7dODwajA
+ yUnbwKyFe6TqmLXc8X+YybI7NNbLnyK8EugvZ/9wsMtJMgq7R+2lINw1LSxKV58d448PVsRDOAm
+ kY63Bm2yY/nmUkrs59pKV05kniXE+yAmEpTZ4uer+x
+X-Gm-Gg: ASbGncuQT59YD7LqvsjMdE6ov5P4RgDoNCDmA33oC87/fsp0dJbva49Shh3+9h4u4BH
+ +370sAPWg+dSfTR6OyeQj8fzYb/CIf8bI6QKYsCt5nmG/VH0SvcgndnFfdXqPe08IyCr8vNDUHQ
+ udR9fikOJVev0+piVn3C8p/ygmNPUskRsbIbBtLOQEFCUeqBm19URIF3iOrFZpI+D1ICserNSKu
+ jcKdRIE+hkvkEZBwjrcOwXydwS+K6D4Ooj4VN6DeTkyKf3Owz+/bVDa6gs8RRoUMIhqxncUpAgQ
+ GGBvTXCnS6QT2sxt4qH4sqOXvp1AAKYLFh/HcO/GhESSrbh5/beEuzLWsV/bMkrGHIXxikzAghi
+ xp021/kEEx7+5LiDlA/oZlFqoLZJKoTUR9KWljhKZ10xx2PvK
+X-Received: by 2002:a17:907:7e82:b0:b45:8370:ef10 with SMTP id
+ a640c23a62f3a-b49c3051da7mr18868966b.22.1759425392340; 
+ Thu, 02 Oct 2025 10:16:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9Lor7F7rfqpTlWhGfQeR/HFshq+SFyP0OmlPHuSA4H/3WlOA9cyYF58ecY2EfGHMgIBKaIw==
+X-Received: by 2002:a17:907:7e82:b0:b45:8370:ef10 with SMTP id
+ a640c23a62f3a-b49c3051da7mr18864766b.22.1759425391764; 
+ Thu, 02 Oct 2025 10:16:31 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.91.106])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b48652a9ea1sm246020966b.16.2025.10.02.10.16.47
+ a640c23a62f3a-b48652aa637sm242290966b.12.2025.10.02.10.16.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 10:16:47 -0700 (PDT)
+ Thu, 02 Oct 2025 10:16:30 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, magnus.kulke@linux.microsoft.com, wei.liu@kernel.org,
- Praveen K Paladugu <prapal@microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 24/27] qapi/accel: Allow to query mshv capabilities
-Date: Thu,  2 Oct 2025 19:15:33 +0200
-Message-ID: <20251002171536.1460049-25-pbonzini@redhat.com>
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PATCH 18/27] target/i386/mshv: Register CPUID entries with MSHV
+Date: Thu,  2 Oct 2025 19:15:27 +0200
+Message-ID: <20251002171536.1460049-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002171536.1460049-1-pbonzini@redhat.com>
 References: <20251002171536.1460049-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,160 +110,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Praveen K Paladugu <prapal@microsoft.com>
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Allow to query mshv capabilities via query-mshv QMP and info mshv HMP commands.
+Convert the guest CPU's CPUID model into MSHV's format and register it
+with the hypervisor. This ensures that the guest observes the correct
+CPU feature set during CPUID instructions.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
-Link: https://lore.kernel.org/r/20250916164847.77883-25-magnuskulke@linux.microsoft.com
-[Fix "since" version. - Paolo]
+Link: https://lore.kernel.org/r/20250916164847.77883-19-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qapi/accelerator.json      | 29 +++++++++++++++++++++++++++++
- include/monitor/hmp.h      |  1 +
- include/system/hw_accel.h  |  1 +
- hw/core/machine-hmp-cmds.c | 15 +++++++++++++++
- hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
- hmp-commands-info.hx       | 13 +++++++++++++
- 6 files changed, 73 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 206 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 206 insertions(+)
 
-diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-index fb28c8d920a..664e0272465 100644
---- a/qapi/accelerator.json
-+++ b/qapi/accelerator.json
-@@ -54,3 +54,32 @@
- { 'command': 'x-accel-stats',
-   'returns': 'HumanReadableText',
-   'features': [ 'unstable' ] }
-+
-+##
-+# @MshvInfo:
-+#
-+# Information about support for MSHV acceleration
-+#
-+# @enabled: true if MSHV acceleration is active
-+#
-+# @present: true if MSHV acceleration is built into this executable
-+#
-+# Since: 10.2.0
-+##
-+{ 'struct': 'MshvInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
-+
-+##
-+# @query-mshv:
-+#
-+# Return information about MSHV acceleration
-+#
-+# Returns: @MshvInfo
-+#
-+# Since: 10.0.92
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-mshv" }
-+#     <- { "return": { "enabled": true, "present": true } }
-+##
-+{ 'command': 'query-mshv', 'returns': 'MshvInfo' }
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index ae116d9804a..31bd812e5f4 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -24,6 +24,7 @@ strList *hmp_split_at_comma(const char *str);
- void hmp_info_name(Monitor *mon, const QDict *qdict);
- void hmp_info_version(Monitor *mon, const QDict *qdict);
- void hmp_info_kvm(Monitor *mon, const QDict *qdict);
-+void hmp_info_mshv(Monitor *mon, const QDict *qdict);
- void hmp_info_status(Monitor *mon, const QDict *qdict);
- void hmp_info_uuid(Monitor *mon, const QDict *qdict);
- void hmp_info_chardev(Monitor *mon, const QDict *qdict);
-diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-index fa9228d5d2d..55497edc293 100644
---- a/include/system/hw_accel.h
-+++ b/include/system/hw_accel.h
-@@ -14,6 +14,7 @@
- #include "hw/core/cpu.h"
- #include "system/kvm.h"
- #include "system/hvf.h"
-+#include "system/mshv.h"
- #include "system/whpx.h"
- #include "system/nvmm.h"
- 
-diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
-index 3a612e2232d..682ed9f49b8 100644
---- a/hw/core/machine-hmp-cmds.c
-+++ b/hw/core/machine-hmp-cmds.c
-@@ -163,6 +163,21 @@ void hmp_info_kvm(Monitor *mon, const QDict *qdict)
-     qapi_free_KvmInfo(info);
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 0fe3cbb48d8..2b7a81274b3 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -403,6 +403,206 @@ int mshv_load_regs(CPUState *cpu)
+     return 0;
  }
  
-+void hmp_info_mshv(Monitor *mon, const QDict *qdict)
++static void add_cpuid_entry(GList *cpuid_entries,
++                            uint32_t function, uint32_t index,
++                            uint32_t eax, uint32_t ebx,
++                            uint32_t ecx, uint32_t edx)
 +{
-+    MshvInfo *info;
++    struct hv_cpuid_entry *entry;
 +
-+    info = qmp_query_mshv(NULL);
-+    monitor_printf(mon, "mshv support: ");
-+    if (info->present) {
-+        monitor_printf(mon, "%s\n", info->enabled ? "enabled" : "disabled");
-+    } else {
-+        monitor_printf(mon, "not compiled\n");
++    entry = g_malloc0(sizeof(struct hv_cpuid_entry));
++    entry->function = function;
++    entry->index = index;
++    entry->eax = eax;
++    entry->ebx = ebx;
++    entry->ecx = ecx;
++    entry->edx = edx;
++
++    cpuid_entries = g_list_append(cpuid_entries, entry);
++}
++
++static void collect_cpuid_entries(const CPUState *cpu, GList *cpuid_entries)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t leaf, subleaf;
++    size_t max_leaf = 0x1F;
++    size_t max_subleaf = 0x20;
++
++    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
++    int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
++
++    /* Regular leaves without subleaves */
++    for (leaf = 0; leaf <= max_leaf; leaf++) {
++        bool has_subleaves = false;
++        for (int i = 0; i < n_subleaf_leaves; i++) {
++            if (leaf == leaves_with_subleaves[i]) {
++                has_subleaves = true;
++                break;
++            }
++        }
++
++        if (!has_subleaves) {
++            cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
++            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
++                /* all zeroes indicates no more leaves */
++                continue;
++            }
++
++            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            continue;
++        }
++
++        subleaf = 0;
++        while (subleaf < max_subleaf) {
++            cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
++
++            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
++                /* all zeroes indicates no more leaves */
++                break;
++            }
++            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            subleaf++;
++        }
++    }
++}
++
++static int register_intercept_result_cpuid_entry(const CPUState *cpu,
++                                                 uint8_t subleaf_specific,
++                                                 uint8_t always_override,
++                                                 struct hv_cpuid_entry *entry)
++{
++    int ret;
++    int vp_index = cpu->cpu_index;
++    int cpu_fd = mshv_vcpufd(cpu);
++
++    struct hv_register_x64_cpuid_result_parameters cpuid_params = {
++        .input.eax = entry->function,
++        .input.ecx = entry->index,
++        .input.subleaf_specific = subleaf_specific,
++        .input.always_override = always_override,
++        .input.padding = 0,
++        /*
++         * With regard to masks - these are to specify bits to be overwritten
++         * The current CpuidEntry structure wouldn't allow to carry the masks
++         * in addition to the actual register values. For this reason, the
++         * masks are set to the exact values of the corresponding register bits
++         * to be registered for an overwrite. To view resulting values the
++         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
++         * used.
++         */
++        .result.eax = entry->eax,
++        .result.eax_mask = entry->eax,
++        .result.ebx = entry->ebx,
++        .result.ebx_mask = entry->ebx,
++        .result.ecx = entry->ecx,
++        .result.ecx_mask = entry->ecx,
++        .result.edx = entry->edx,
++        .result.edx_mask = entry->edx,
++    };
++    union hv_register_intercept_result_parameters parameters = {
++        .cpuid = cpuid_params,
++    };
++
++    hv_input_register_intercept_result in = {0};
++    in.vp_index = vp_index;
++    in.intercept_type = HV_INTERCEPT_TYPE_X64_CPUID;
++    in.parameters = parameters;
++
++    struct mshv_root_hvcall args = {0};
++    args.code   = HVCALL_REGISTER_INTERCEPT_RESULT;
++    args.in_sz  = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
++
++    ret = mshv_hvcall(cpu_fd, &args);
++    if (ret < 0) {
++        error_report("failed to register intercept result for cpuid");
++        return -1;
 +    }
 +
-+    qapi_free_MshvInfo(info);
++    return 0;
 +}
 +
- void hmp_info_uuid(Monitor *mon, const QDict *qdict)
- {
-     UuidInfo *info;
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 6aca1a626e6..e24bf0d97bf 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -28,6 +28,20 @@
- #include "system/runstate.h"
- #include "system/system.h"
- #include "hw/s390x/storage-keys.h"
-+#include <sys/stat.h>
-+
-+/*
-+ * QMP query for MSHV
-+ */
-+MshvInfo *qmp_query_mshv(Error **errp)
++static int register_intercept_result_cpuid(const CPUState *cpu,
++                                           struct hv_cpuid *cpuid)
 +{
-+    MshvInfo *info = g_malloc0(sizeof(*info));
++    int ret = 0, entry_ret;
++    struct hv_cpuid_entry *entry;
++    uint8_t subleaf_specific, always_override;
 +
-+    info->enabled = mshv_enabled();
-+    info->present = accel_find("mshv");
++    for (size_t i = 0; i < cpuid->nent; i++) {
++        entry = &cpuid->entries[i];
 +
-+    return info;
++        /* set defaults */
++        subleaf_specific = 0;
++        always_override = 1;
++
++        /* Intel */
++        /* 0xb - Extended Topology Enumeration Leaf */
++        /* 0x1f - V2 Extended Topology Enumeration Leaf */
++        /* AMD */
++        /* 0x8000_001e - Processor Topology Information */
++        /* 0x8000_0026 - Extended CPU Topology */
++        if (entry->function == 0xb
++            || entry->function == 0x1f
++            || entry->function == 0x8000001e
++            || entry->function == 0x80000026) {
++            subleaf_specific = 1;
++            always_override = 1;
++        } else if (entry->function == 0x00000001
++            || entry->function == 0x80000000
++            || entry->function == 0x80000001
++            || entry->function == 0x80000008) {
++            subleaf_specific = 0;
++            always_override = 1;
++        }
++
++        entry_ret = register_intercept_result_cpuid_entry(cpu, subleaf_specific,
++                                                          always_override,
++                                                          entry);
++        if ((entry_ret < 0) && (ret == 0)) {
++            ret = entry_ret;
++        }
++    }
++
++    return ret;
 +}
- 
- /*
-  * fast means: we NEVER interrupt vCPU threads to retrieve
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 6142f60e7b1..eaaa880c1b3 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -307,6 +307,19 @@ SRST
-     Show KVM information.
- ERST
- 
-+    {
-+        .name       = "mshv",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "show MSHV information",
-+        .cmd        = hmp_info_mshv,
-+    },
 +
-+SRST
-+  ``info mshv``
-+    Show MSHV information.
-+ERST
++static int set_cpuid2(const CPUState *cpu)
++{
++    int ret;
++    size_t n_entries, cpuid_size;
++    struct hv_cpuid *cpuid;
++    struct hv_cpuid_entry *entry;
++    GList *entries = NULL;
 +
-     {
-         .name       = "numa",
-         .args_type  = "",
++    collect_cpuid_entries(cpu, entries);
++    n_entries = g_list_length(entries);
++
++    cpuid_size = sizeof(struct hv_cpuid)
++        + n_entries * sizeof(struct hv_cpuid_entry);
++
++    cpuid = g_malloc0(cpuid_size);
++    cpuid->nent = n_entries;
++    cpuid->padding = 0;
++
++    for (size_t i = 0; i < n_entries; i++) {
++        entry = g_list_nth_data(entries, i);
++        cpuid->entries[i] = *entry;
++        g_free(entry);
++    }
++    g_list_free(entries);
++
++    ret = register_intercept_result_cpuid(cpu, cpuid);
++    g_free(cpuid);
++    if (ret < 0) {
++        return ret;
++    }
++
++    return 0;
++}
++
+ static inline void populate_hv_segment_reg(SegmentCache *seg,
+                                            hv_x64_segment_register *hv_reg)
+ {
+@@ -685,6 +885,12 @@ int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
+     int ret;
+     int cpu_fd = mshv_vcpufd(cpu);
+ 
++    ret = set_cpuid2(cpu);
++    if (ret < 0) {
++        error_report("failed to set cpuid");
++        return -1;
++    }
++
+     ret = set_cpu_state(cpu, fpu, xcr0);
+     if (ret < 0) {
+         error_report("failed to set cpu state");
 -- 
 2.51.0
 
