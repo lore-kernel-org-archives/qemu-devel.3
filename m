@@ -4,114 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15AEFCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 14:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC06CCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 14:11:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4K05-0008To-OP; Thu, 02 Oct 2025 10:09:41 -0400
+	id 1v4K0n-0000im-Qj; Thu, 02 Oct 2025 10:10:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1v4Jzv-0008LT-7t; Thu, 02 Oct 2025 10:09:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v4K0k-0000hO-6k
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:10:22 -0400
+Received: from p-east3-cluster7-host1-snip4-10.eps.apple.com ([57.103.84.141]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1v4Jzl-0007Lr-LE; Thu, 02 Oct 2025 10:09:29 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 592DcqA9018505;
- Thu, 2 Oct 2025 14:09:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=IvLoj8
- f/uaT6vb3usKUYhawAOTd750whQ4Az1PbiH24=; b=rk6T7knnIq2lEBmbBAJw2c
- 9ck6wOX6+dSAZ1mz/eTDesKeIKXTvI5A6X016FABrEMYVM5AzO82QHkOJIB1tVn4
- hJDhNp2mmsWPF7Dz4PpyWjaZ37aaxztfrVgKY3BgC8NN0UExGZLzoxc3Zw+Bxhrt
- 0T5woftfwoqzR/8O44JKDVltvwY0KvgnWiPDvLp8jv5vgGL9A149BkPScFQCrXS6
- 5fpNhluH7QuUN9KaEhV6d+IouTBBQYoMhcTpqsNpmf/w+B063B5qLUeqpos8EpRJ
- Iezb8bpcSR7MkaUmfyRVZ+eXjJQxMs3U4UNAH3ThezmBZM4EbGZ0jlP/6tu+8IHA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e6bhvx26-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Oct 2025 14:09:09 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5929m9CD007292;
- Thu, 2 Oct 2025 14:09:08 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49eurk66sx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Oct 2025 14:09:08 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 592E97FB23855854
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Oct 2025 14:09:07 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A14AC58053;
- Thu,  2 Oct 2025 14:09:07 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1371158043;
- Thu,  2 Oct 2025 14:09:06 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.134.141]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Oct 2025 14:09:05 +0000 (GMT)
-Message-ID: <00c873bc92ebbc13413c8f236ed3eaa0bd7c98bb.camel@linux.ibm.com>
-Subject: Re: [PATCH v4 07/17] hw/s390x/sclp: Replace [cpu_physical_memory ->
- address_space]_r/w()
-From: Eric Farman <farman@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
- Thomas Huth <thuth@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Halil Pasic	
- <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, David Hildenbrand	 <david@redhat.com>, Ilya
- Leoshkevich <iii@linux.ibm.com>
-Date: Thu, 02 Oct 2025 10:09:05 -0400
-In-Reply-To: <20251002084203.63899-8-philmd@linaro.org>
-References: <20251002084203.63899-1-philmd@linaro.org>
- <20251002084203.63899-8-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v4K0X-0008Dk-2s
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:10:20 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
+ DDF7D180026F; Thu,  2 Oct 2025 14:09:58 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=EuGsZTr1EuGqL8ZRssUy33gEv030KKsk/7nvj1evTAQ=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=aJY/2Ohg7bJ2+ZlvUeaD0CIr473H6/QtvgHJvvNFpJSOsUyZqLPxKIzqTVQoLB63aYRjD9KaEpAptdeLrR6P3hDCSiEI0MmYBr2qyQYqtzLhydEHjz72LXk9c8POsEFRlhmHDwrgBl+hRfy1qyFuf5hz9Rsohq6XofHw7OBsNL9gKygGqBXSV/louzE25KMONDwjn18B9JKQV1VHguTaamowkdQwfRtZ+ANrPgn/hP3feFhK9OICalq+Qk/rwTaqO/nK8yP9e//Zr9NawfoFgey4MlaNUwfMMrBNJYc4RQdbq6V01bzC9sI5wW1h12kYPSpD/FdbLRA6keDAAOts7w==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
+ 33FB51800257; Thu,  2 Oct 2025 14:07:51 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: [PATCH v4 00/27] Implementing a MSHV (Microsoft Hypervisor)
+ accelerator
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <aN5Bjlf/xhsEHDNb@example.com>
+Date: Thu, 2 Oct 2025 16:07:39 +0200
+Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Se/6t/Ru c=1 sm=1 tr=0 ts=68de8785 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=nq8n1J83xunWhl9p0hoA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxMCBTYWx0ZWRfX39RhvSZB/gEw
- fSRHuBwOdxuPFd7OlaeTzHF/Nb+cKAR9udZB/zGx2iD4cQnpJQcXJQBQWGuia/xZvDJ9pxgerqG
- eFJ03+dNfvdgD9SrzbhneaThs1kybjmf2X8pvLccB2gqCFj2cpNn50xzs3YcTVZ53mzFMycFi13
- w3f5l8sQ4vGjMxiA3tDur41+reA/5qbD/wQL86ZGeofjlyUfva9IUPjwNJajtg+S3A4Nesa1VrV
- iTeVKLL6/U42HyhWqMDLEfwyMbB2H0MG00wwNQ3T8oiwnQjHyax8s5d6P1hHCA5X1RksMgmbbBF
- F6EpivV6k015dMg+arrtgZwFW9b100QiL5fZh1C2vswTWV5ABQfH1uBbkK4ySENU+94O9KAHACJ
- m9XEmZTAubBVaAVQJAhB1GgJrWI+mA==
-X-Proofpoint-GUID: uZbYcs5fD30pLPjF7MCuOSROuWpRsdRB
-X-Proofpoint-ORIG-GUID: uZbYcs5fD30pLPjF7MCuOSROuWpRsdRB
+Message-Id: <3D0B6481-BA86-4CCE-8A51-63840A29F649@unpredictable.fr>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+ <e176dfe8-b406-46ff-b1f0-95d4285472b7@linaro.org>
+ <aN5Bjlf/xhsEHDNb@example.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAyMDEyMCBTYWx0ZWRfX8vKPRRTI0s3h
+ 3/DW/bwMehrYE5EX09OcO4L52QjHRkI6j95NiPGhk57gJXFek/EFqDq6Di5VxSMrETZ7gmEwnIT
+ ySRaCB9cLMtJbNwFyfT9isvfCkzONVrkPorztTs8fcTo1NTjBJNpfPaTxYLGeBTRhLk0jXHjjj0
+ G9sGahQvcEcCOV9Dn68rYBCvcUfbo+cGX9kEhGRKLj/RU2CAZRbErQ1HZOzXCscJK4tcHV7MJm+
+ oDVfn+T4TquQK9c/7HaFP6AL5VKcmwhFh0G+Hxa9M2RTldAM6CUytRxccdkHRfAWRRJqugMiw=
+X-Proofpoint-ORIG-GUID: I2awVdwbWVaQx1J1iIHozc6wxnckbbd5
+X-Proofpoint-GUID: I2awVdwbWVaQx1J1iIHozc6wxnckbbd5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-02_05,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1011 phishscore=0 priorityscore=1501 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270010
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 bulkscore=0 phishscore=0 suspectscore=0 clxscore=1030
+ mlxlogscore=999 spamscore=0 malwarescore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2510020120
+X-JNJ: AAAAAAAB5BvIm36p3bhthDRZpqvEgno5pH+58zfd11FT86zRxd0fACd94tgb3a3eLAcnZ0cBoRFOPxhTBne9/Sv2/Eti/A7FFR6kdNnZtsRjjfAE9d84LeoeMrPpt/7ULDUzEPcmRBK3vBlILi9cNGu6YWVAoHIYPJm/psXhy7+CqYl71ruIvPHRihj6zjG3ZtR6NvIxcdBmvacSXu1GEnIO8aXrITtPa7y7wXW9KLll5IGbDFR7/j9uNy5hjdaLnAL3Dhz/Qxbbec19Tka0jVTkQE5Dsxwmv+Mp6NH2x9tL4h+DE9nXR38Vyj3bfTj9JFBkVt6XY2h+CRbrulHxb77GDd1Pe+Z48dAD9+pllXYT98y5Wh6GEhbpm+1F1XAgDrQwHeiO4i7edsVRhwy0te2t2UfwYgqq51NES8rNLeSB9Wb5ihePYku6q4kxhVeqTSM1X9HO0tbawDb+8S+I8BvDVxrf48XUPTTmxZUTFbKVBZDJrXarQGQhnKnuSEvEcT5sFezMB/PSgtcx31yUXGuWccUn4JyK4DOdLB8Ju06IsHFmi8usZNd8Df8fOVl0cU6ZGZDvUydGtTbIEi8WOrlWgUbenKFR4VCoT+LB3VBXjyxmG+R3dKvQv04aBi018aDJ9489ckK+IHNizOjkc55H0BVkJ4cZ7hELBWkC7IkbpNyLst5swYge9IFj2fEnUQ5oI5HOB+nUdo8yxGrtG0AREUDIEZCXyCYm+ZNqoo9jLHkUCjENr4GWBBcHKRyRfyQQ14/uYF2LYGC4anpaf0K7wfExI7iLye3R07R0imsv5lH2I++qqSonsOl3uMv0fU5LLVN544a2xHJsXNuX4ROXeCI73ZOizfduuk188xL9V2n6qgR41b8moFN1u6lwdKUmTSwWvLOJiCSDFdY4JEHZgoZUuDllyElWIw+3A0HGEPOHjbhQp7kLZU0L6MW7
+Received-SPF: pass client-ip=57.103.84.141;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,17 +105,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-10-02 at 10:41 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> cpu_physical_memory_read() and cpu_physical_memory_write() are
-> legacy (see commit b7ecba0f6f6), replace by address_space_read()
-> and address_space_write().
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  hw/s390x/sclp.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+
+> On 2. Oct 2025, at 11:10, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> On Thu, Oct 02, 2025 at 10:30:56AM +0200, Philippe Mathieu-Daud=C3=A9 =
+wrote:
+>> Due to my generic work on accelerators, I'll have to refactor these
+>> patches. Obviously I don't want to break your implementation! Can
+>> you add some (functional?) tests? Ideally we should be running
+>> tests on our CI to ensure code doesn't bitrot.
+>>=20
+>> Regards,
+>>=20
+>> Phil.
+>=20
+> Hey Phil,
+>=20
+> yes, that's a good point. I assume for functional tests we
+> will face the challenge those will require external infra, because
+> eventually there needs to be a HyperV Hypervisor running somewhere.
+Worth noting that x86_64 MSHV on Linux is available to the public as =
+part of Azure Linux,
+and runs inside of a Qemu VM just fine. (with the catch that MBEC =
+isn=E2=80=99t currently emulated by KVM)
+
+Perhaps having an Azure Linux instance in CI could be the right thing to =
+do?
+
+Thank you,
+
+> Is there any precedent/prior art in QEMU (e.g. for HVF or WHPX) that =
+we
+> could follow?
+>=20
+> FWIW, in smoke tests for the patch series I've been using a nested
+> HyperV hypervisor that is shipped as dll and made available as UEFI
+> protocol to the MSHV driver (I _think_ that is how it works, I'm a
+> bit out of my depth here since I don't know how those things are
+> glued together in detail).
+>=20
+> For reference: https://github.com/mkulke/qemu/actions/runs/18187719634
+>=20
+> There will be other virt topologies supported by the MSHV driver and
+> the nested option is not upstreamed to mainline yet. However, from
+> QEMU's perspective those topologies do not matter, they share the same
+> ABI of the kernel driver.
+>=20
+> So we could do something similar, provide/maintain a VM on Azure with =
+a
+> similar nested HyperV hypervisor configuration that we can used for
+> testing. Would this make sense?
+>=20
+> Best,
+>=20
+> magnus
+>=20
+
 
