@@ -4,164 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7380CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 07:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD46CCA472
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 07:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4DlV-0002Wn-Sv; Thu, 02 Oct 2025 03:30:13 -0400
+	id 1v4DpP-00043d-R3; Thu, 02 Oct 2025 03:34:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1v4DlN-0002S9-PN; Thu, 02 Oct 2025 03:30:06 -0400
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1v4DlF-00067a-6u; Thu, 02 Oct 2025 03:30:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CnPXkBqE0co70w476ncaYiLGawKiOj7DubyMrTRBeLqBMhGY94M6YsIeRb+GRagkE9QY/g5oS7ODPRIkoMhPtV0ar9HiTYCkjRGiiUbmnSeFgvSqQTjFp8UGD0vHKC+/Kx9Imjp9ibQb0K6Q6TIr4jUzlTFaAfzPFc16cLhF9LoK381hK9kz8GfloYnNj4x5KKywjSI13zzghjbEzF/yi17zbtnw/ug7/j2PgJ/OsT9cfKaQ0d4qS5OzoTCZp3dUY8mFW59tdedbCWSeJccpyOfYgIxOUr5m/ScGTPRLZ24oIq9fWYKvuOiWDIraPMWGd12TKdxFv8HX3evBKtdt8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mvHBW/JQ1NELF1tELMsYlKE2a9rh0NCLfXa6IWuAC7s=;
- b=JyWJMwyQb/xUZIHNftfuaRpmWFP8eSp7swI+EhuWMvzv0HPRge3vmTarsQGP8BbCRXEJ1YeumfZK7CkHxOdxU608amQVF3qv4iuOhokwYP2yRtZTxqWVyQfiCyef606YpYLAdPHr3zAg1Lduqosj1DsfPCRrx8HVoaDVggY8rdvnoFpAnKZIKus/bYU7UcBf8pSMPjJriWD3npzQqXp/BJ/XrSc/si97BukkXNJpfus58chMXqMBrqu4/4r6XpH1BAgao5nFz7oZp80ez4OwFe/iNQXatLbxixDlhsYrD5vWYtZ5/4nVLWenl0fgrSagqA+9pRPMB3p1StuUgahBkQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mvHBW/JQ1NELF1tELMsYlKE2a9rh0NCLfXa6IWuAC7s=;
- b=VrS8JuYLhk7TSMbw/DTlhEsexrV6eMdTIG1pUC6OXRGZdHcc+txJ35TEtIxLDSqSP4mqui3hqeWzXZUW4b7ASZJsAWagNk7INUkjeJQtPC05HFRjWRb2/NASFm3QiV3nk8kOzhpwU9218Sm7RS+f7c8SKPqIqoqj9+UnWiUe0zVaH1j1SSiRKw4i9d9+X4r5CFIVB88Htem5/Lc6obQS5HPKhtNcf45E9/MVF1NJYX5rGC+MB8104kNILEKNa+DYZFLuF7BzuahO1t/oZcO2zbgUseMFhZXKWmsyOvqsTS8GfnY03dkxDnwMd4Fw8A3Xttd7k40AEw+SAB4ywDgqUw==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by SJ2PR12MB7990.namprd12.prod.outlook.com (2603:10b6:a03:4c3::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.18; Thu, 2 Oct
- 2025 07:29:31 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9160.017; Thu, 2 Oct 2025
- 07:29:30 +0000
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: RE: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated SMMUv3
- to vfio-pci endpoints with iommufd
-Thread-Topic: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated
- SMMUv3 to vfio-pci endpoints with iommufd
-Thread-Index: AQHcMZ64HNFvMFbT2kCFLixXDfUlObSud+HQ
-Date: Thu, 2 Oct 2025 07:29:30 +0000
-Message-ID: <CH3PR12MB75480F04FD2EDCBBEE6C180BABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-7-skolothumtho@nvidia.com>
- <aNsgHV/Ebqx0WZXf@Asurada-Nvidia>
-In-Reply-To: <aNsgHV/Ebqx0WZXf@Asurada-Nvidia>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SJ2PR12MB7990:EE_
-x-ms-office365-filtering-correlation-id: 5252b14f-6b83-47ab-bd16-08de01856d48
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|366016|376014|1800799024|7053199007|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?85eTOYkEsAkpJcGekZuTB8ylOxy77oqBfW01bmqsEC7D6r+OxOFbtUC2A0MI?=
- =?us-ascii?Q?8MrzlvRVUMktljnskPaOcwRuZMRbZbqtd9MRlLnndgXTDhNIwJwTrytuPICz?=
- =?us-ascii?Q?xtHH2kt6umwcOaUYuBKBKmqsgnI6EQd8Wq2ibu/Q8Ti7/VFuGHWK8Q5opWLO?=
- =?us-ascii?Q?/0bosDPH6S8gqnoUGvAzXIaPzC4LWHCT98V4AsbkMMX4THcCC/qrDeMojrPm?=
- =?us-ascii?Q?0aDMg/uC5fsvDtYroXFZmNxoQB/25ws82TIwMyGABj7NhIHUno2Y6SnCa9sZ?=
- =?us-ascii?Q?sd1Ersvr4ZCTcHB8jxq0c6/E7sLRVPVRt/DdgCAnH7+3bVzxsFJCXgizE+VB?=
- =?us-ascii?Q?7HxMCYTkI4kdu3FdDojosvu1+bHaMYTxGHsUWd2Tr181VNNa4REzaKB9P+8x?=
- =?us-ascii?Q?cV0oWrajNz0xxtmeufI1cnJTZsTu4lVZfcE5igKVFtJCxfANVba9L+vIvgZB?=
- =?us-ascii?Q?D/XWGMarjNk4SaAQUuehMYpKJAXlDPL9BxPDL/AgkrPE0UCMRwhpXcjYsIjM?=
- =?us-ascii?Q?AqFSXwtBfCujDPvDruJXeAt08G1SyuA9YXtebLEs1WfmRfHAGOUK+gbM2iqr?=
- =?us-ascii?Q?mWubcaUqSqzuUzybNugYXq0CQa6eetFJK7YuIDFKwhlfLzm1fFF3whB/8zvW?=
- =?us-ascii?Q?1TIEMvsx98Ol55UgHyFFqPEhdghJ8BCKa2MN64J1h3TbvL3vunQ9lBUwqINm?=
- =?us-ascii?Q?Ja2ohDq9WCPp8IDAS76NLk5IRgosAByxz+sPGoJzvk/zhb/sHGtBQTTwcuT6?=
- =?us-ascii?Q?HaM0Qwi8kwy3CHPOVvfxRGNa/3aiEVE5aaokUfQnA1Byuc4ogMiW09iFU2EU?=
- =?us-ascii?Q?u19ecC7xXvIgwUrvYH7CMQeYM1yr1gm/8N43E03qSl3FPZiMEVVQaMMEtfqF?=
- =?us-ascii?Q?RjGXLP2TuYAWRfUypiPSoWMv4Id6DHLqr99AUVBo8B8tTpsLAwIgtLUcNyve?=
- =?us-ascii?Q?fA8bLDJaqQu3iOidZf1mJF+Qyjp8ioGCHortkSJlkjG8ohXvvdNLBGizXfjc?=
- =?us-ascii?Q?J5T8mXMxe6nA3BQTk1hPcLOYcYSvYt2pt4E41PgOlLO3zbLAYNu95W+f1zbJ?=
- =?us-ascii?Q?4UWtB/jY2CWjXb5VDdXUVXDYYMYyQYoo94Vsr5aHIyS1g6IPMPSjA+UWCvu8?=
- =?us-ascii?Q?OLMaFbVAFWqNrSEUiU5XaK/gaL//X1zYYKdeLnHKcWTc4PSbyi7/u8jgdNXV?=
- =?us-ascii?Q?UbWWLDfJayXlrVTGFC31ezEpxq8WYLmbNlpPBmyU5+CN9oY82hCJElBIyq59?=
- =?us-ascii?Q?3OgMmRrDxcQJM3Xp248/VuMP7c1R1sPRSLf2Tb6RNtPcuKH374Sh8uMEesxJ?=
- =?us-ascii?Q?45wtJTjFt2s7bS/wgdbkKsjvSU0fSNgWvn3/xRJeqeSzsUX//Mp4uqa2s1kb?=
- =?us-ascii?Q?AGR9V9kTKXSjvTsI1QFtQvctLW6Stc8VoQDJwbq/s7WtKvpmqSImqegF7ziV?=
- =?us-ascii?Q?xz5yhkUq8c4pGYPducJzW20pMO4ZjNQX6D7DW6qPBKQ+puMSLWNNGDsEKwF2?=
- =?us-ascii?Q?v4b+wGEM0L2OI3als/i12lSjj12FV9JpWTHf?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(366016)(376014)(1800799024)(7053199007)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?XSVqszs/d5IfmUpwH7wgA0HbZ4Zio7QFkcKNd4dcFeXzMrqESjq+3hx/TI/y?=
- =?us-ascii?Q?5zemFiWF16nfOBn3Su5237xMQe2ZCWW52MjZAKFo08QaFPpblJBM2MzLjP3+?=
- =?us-ascii?Q?Y6nGjQrjEsnn2KkKUDy8YWwAMYWoN0byu1YUKyPYOa77VYUVUqhpcjnTTqwr?=
- =?us-ascii?Q?j4b81AD3444zuAZtcC9l6Wtbfj9ULb78bmiVEz1jsCrAmCsYWdOMRqU3Ay+W?=
- =?us-ascii?Q?ZyJh1emm0/tQgf+85595Cf+QSlxLgjhJ4VVZiO/g6YAAGw3L8LI8psVvlhfe?=
- =?us-ascii?Q?tvGR9FXif8xRHoYhC44ktsZyrKELp/jicwUiuEbGbLMneOcmvRG0RuMIagSc?=
- =?us-ascii?Q?3E+rzqBaRPH1UV9PZg9yDvjEr0ftrHWizTamGVaJCvBvRbu9nB9J/nk3GcjX?=
- =?us-ascii?Q?mejO40XrL0+UJg3Cwkcz1HiMXV4PG1Pj52A9QFUrgLyr2W9hXy7SLrZHGlzO?=
- =?us-ascii?Q?SEtS0hDaH2qnYFidVAhDDTSbpiFR4w94znFYrofvTK7YAi+UtHmGpErrTJ9/?=
- =?us-ascii?Q?W865kC12eYzHucR4hIOMMegSXOzLS2quH6YKJV7chi9ybXeB3lvn0/UC99xP?=
- =?us-ascii?Q?8fxKwNOkbRS0bVe45Gi2pQbUHufKQV4dwBRRlb0yKbSmAnFZDQod0AnPSodF?=
- =?us-ascii?Q?kbruEj4lE+pBmcLoFXBfMc7yFzXiE0XoZ2IvWdjxU/Vv8Wz6/8SSPzFkR9FO?=
- =?us-ascii?Q?B+rYlo36lMSqWtRMOSDouTQBWY5bTf/NIYN6iEvBw2TOL26CHk0b/z2jK0Bn?=
- =?us-ascii?Q?rGH32gMfW1TEJpnWmMvi5BEX80yGr/zDctTlGxM4bhJEYgz1gKcGaeO9IxyR?=
- =?us-ascii?Q?aVen5Tqz09NMM7f4HoqH/OHNpdW+VXV1otonROWn+gbsrIp9tGstlFARAexD?=
- =?us-ascii?Q?nYrHSLD6hk3wycE4VfRL5jn/pHelM5aI1sqSw4/rBiyP1fuWGJRzZBl3HVtX?=
- =?us-ascii?Q?PO+5UH0OPn3S9ZZbP6UQ+9ifM/qL5l/fv4FkkBIg39Ehnk7CW44sFBXpIxWV?=
- =?us-ascii?Q?h72jHKf/bGAfqhcSURB9KDDQiHXkUJL12KMfwnnHdixQbAySHo+7KbwcFR0C?=
- =?us-ascii?Q?lySdzBEjJ8vb2eKW4Utae53tUuVHPKwARo3ZNgCxS54QKyq/8MNgaG3oJ5mV?=
- =?us-ascii?Q?ZCelih381ejSC+jxU8XiMZtCWcfAO73v8vCsQZzFsqEHfJ/+eUBB/JU1g3Ii?=
- =?us-ascii?Q?mnK3bWyQoOetEOtPosUn5JSPWUI/wAZ7KP4uFZQ7UsfvCFdk56QPyvrckF5+?=
- =?us-ascii?Q?NsvGrbfpd1GGH9OCVsdqurRlowQ8S8E4jNw+Rb2ittAnMi7P7TrwDLgv6Q4m?=
- =?us-ascii?Q?RF6GhrQPHYEOjFIuQ+7T+qQElpTN6vE5r9f6e0npgp/k3ESPjOutfBDdZgCh?=
- =?us-ascii?Q?Sqk9IgaseO2dUD3jN+9geNvjOjbMh05FsHd/ilV4Y9Pxs40+NY8sReT5LZgA?=
- =?us-ascii?Q?OErFn5GcgFOpqAOyH7qGNhX2YWCLVm9mWTmoB61xZredJHsfcfimbshFPbeg?=
- =?us-ascii?Q?30JBr40XX7jyB2sjAniqey1oWyovoyii/VjL9kQaRGSAUx38M4WLuFv64Q/Q?=
- =?us-ascii?Q?3bLNxUYAPiFOey4L564w/o83DnBfdp/pJDe3itKO?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1v4DpM-00043V-Af
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 03:34:12 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1v4DpI-0007up-CF
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 03:34:11 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-368348d30e0so6332661fa.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 00:34:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1759390441; x=1759995241; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ei5hri8GsRIEFPpEv/7Nz/nPxR7vyTwAM5TTfLk0evw=;
+ b=ZvoL/OVtZsOsVkhc5RDExC9KkBMQrHihxvGI0zyqJDtMKttMD6BvF6ttd0xU7eGj+2
+ lbZEyCERwuNzVBPrXllCcv0ThuBSBrRVgucBKKugc5X7p4H514yPXsfa5caW40Fz3jsR
+ UCX76VLwua5Z6cOKenuG5cRW334UAklGTZeqA1O1Fwzw7OYFm2pCWCK9C5YgwD0sEY22
+ MfLvC2woUJZ1FCaFdAHZmOWXTHRBOqJoS9YFn2ZE29vgKsVVhheI/gGjbYbQk60iOEi6
+ 0x8EzqM+LrLONHCnPZK1t6QrLYVQYiz2nwG4fuG8eN+1Y8sPSo/ES1GjOJi1tXxZk9Vh
+ iQdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759390441; x=1759995241;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ei5hri8GsRIEFPpEv/7Nz/nPxR7vyTwAM5TTfLk0evw=;
+ b=Jx5rjN2no3iRszAIFamFmHSm1jDgQ+cFy1Yd8E/4Mq1bqQmzTLm7MgT/lS9ESM7ulO
+ wKXVsdrWFT22rK685QVnEY4EVFSEmn3E5akJr6BisSi2dxTStoSO3cbVt8YzOMqvcFPa
+ jjKq6cxeNrhM4vOzx8K+yAZTg0PH7H/1Je5XiFTpDPk+rFoB8Qf8U+Q4BAP/7grLbhCR
+ +lUgeKb0qDObt7xI0lK7tIzI5jfWbj4BE0mdilZHnRfNkPWHH/jmUMq7woS5cm2nHVTy
+ tO5Z7V9IBZVJGg9oZhNBtLWTZvwvhOmb+7a2eIVAz9+C2o7LRjBXVqwnk4m7xoVRtJI0
+ ljxQ==
+X-Gm-Message-State: AOJu0Yzfi0+N/RU01Ry5Zdyuly8vo1/HdjNGs+eBrOKgZHCKo2GAb+eI
+ u5Js0BB6SioiL8gk2eYvf+XztVcA+JqOpClX9ProFsgqyRLW8XRz/9l5
+X-Gm-Gg: ASbGncuLKaGM1ar4ARjY/40YCQZymiuFCWmiSu8P0bMLnfet73a4TDe4IcWAjGb8jk+
+ QkzMb2AunP3F2S+0LG8YyB40epDkqJB3bX7WKzGNENo88DLG3nbYYdkVLMfc/weni3KZ6BR2HSg
+ MdyRZueR3Ze003g/xMjkMP4tzHlOr0Fv++v7UGQ8tL6Fh/rvlMsxda3H+srfNFjJOiZAC2xj6Hk
+ F66qHpTbWyi+mek8EqIzV3Cr1+YDsaY0yCgDP4aHDK7+eKbgkBOfCkMCcT9/SNE6/3Bjm1dTwHx
+ BWdbc8sGavezZE/QnCfm0K/7tMg6Yzn+O3Fpq+iU0Aieb8FCVfvzU2Z8Mtk6kqmOxD1fOHmrJx7
+ LQB8WPoC76ebcDW3bXi64NHSB6ATNk5bc5q4NrA8RMH+Hrid2TQRcHD8kCdMlsdZjiS4dkvn16k
+ ceF4gWXz8=
+X-Google-Smtp-Source: AGHT+IGbEzvxzeRniuCXp5pi8Yv7+yk+U7MOSb1ZBYe46ZTMnvXOmaz12kfdQRLrDx8qn7TVoajubw==
+X-Received: by 2002:a2e:a88a:0:b0:336:9427:3527 with SMTP id
+ 38308e7fff4ca-373a742da79mr14882371fa.21.1759390440691; 
+ Thu, 02 Oct 2025 00:34:00 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-373ba274b6fsm4962731fa.5.2025.10.02.00.33.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Oct 2025 00:33:59 -0700 (PDT)
+Date: Thu, 2 Oct 2025 09:33:58 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ alistair@alistair23.me
+Subject: Re: [PATCH 1/3] hw/arm/xlnx-zynqmp: move GIC_NUM_SPI_INTR define in
+ header
+Message-ID: <aN4q5uBfbvkI54Cc@zapote>
+References: <20250930115718.437100-1-chigot@adacore.com>
+ <20250930115718.437100-2-chigot@adacore.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5252b14f-6b83-47ab-bd16-08de01856d48
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Oct 2025 07:29:30.8765 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: nWM8tnzd9vL+Pc3EqPqvoSSDZKJinKyUp0yoCUZmAE9Nh4gjdEncPuRBfBGHr8Pa3heQo0LRfo2qQC2LDSuH5g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7990
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=skolothumtho@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.518,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250930115718.437100-2-chigot@adacore.com>
+User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,114 +106,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nocolin,
+On Tue, Sep 30, 2025 at 01:57:16PM +0200, Clément Chigot wrote:
+> This define will be needed in a later patch in XlnxZynqMPState
+> structure, hence move it within xlnx-zynqmp header.
+> 
+> Add XLXN_ZYNQMP prefix as it's now public.
+> 
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: 30 September 2025 01:11
-> To: Shameer Kolothum <skolothumtho@nvidia.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
-> <jgg@nvidia.com>; ddutile@redhat.com; berrange@redhat.com; Nathan
-> Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> smostafa@google.com; wangzhou1@hisilicon.com;
-> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
-> shameerkolothum@gmail.com
-> Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated
-> SMMUv3 to vfio-pci endpoints with iommufd
->=20
-> On Mon, Sep 29, 2025 at 02:36:22PM +0100, Shameer Kolothum wrote:
-> > Accelerated SMMUv3 is only useful when the device can take advantage of
-> > the host's SMMUv3 in nested mode. To keep things simple and correct, we
-> > only allow this feature for vfio-pci endpoint devices that use the iomm=
-ufd
-> > backend. We also allow non-endpoint emulated devices like PCI bridges a=
-nd
-> > root ports, so that users can plug in these vfio-pci devices. We can on=
-ly
-> > enforce this if devices are cold plugged. For hotplug cases, give appro=
-priate
-> > warnings.
-> >
-> > Another reason for this limit is to avoid problems with IOTLB
-> > invalidations. Some commands (e.g., CMD_TLBI_NH_ASID) lack an
-> associated
-> > SID, making it difficult to trace the originating device. If we allowed
-> > emulated endpoint devices, QEMU would have to invalidate both its own
-> > software IOTLB and the host's hardware IOTLB, which could slow things
-> > down.
-> >
-> > Since vfio-pci devices in nested mode rely on the host SMMUv3's nested
-> > translation (S1+S2), their get_address_space() callback must return the
-> > system address space so that VFIO core can setup correct S2 mappings
-> > for guest RAM.
-> >
-> > So in short:
-> >  - vfio-pci devices(with iommufd as backend) return the system address
-> >    space.
-> >  - bridges and root ports return the IOMMU address space.
-> >
-> > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->=20
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
->=20
-> With some nits:
->=20
-> > +    /*
-> > +     * We return the system address for vfio-pci devices(with iommufd =
-as
-> > +     * backend) so that the VFIO core can set up Stage-2 (S2) mappings=
- for
-> > +     * guest RAM. This is needed because, in the accelerated SMMUv3 ca=
-se,
-> > +     * the host SMMUv3 runs in nested (S1 + S2)  mode where the guest
-> > +     * manages its own S1 page tables while the host manages S2.
-> > +     *
-> > +     * We are using the global &address_space_memory here, as this wil=
-l
-> ensure
-> > +     * same system address space pointer for all devices behind the
-> accelerated
-> > +     * SMMUv3s in a VM. That way VFIO/iommufd can reuse a single IOAS =
-ID
-> in
-> > +     * iommufd_cdev_attach(), allowing the Stage-2 page tables to be
-> shared
-> > +     * within the VM instead of duplicating them for every SMMUv3
-> instance.
-> > +     */
-> > +    if (vfio_pci) {
-> > +        return &address_space_memory;
->=20
-> How about:
->=20
->     /*
->      * In the accelerated case, a vfio-pci device passed through via the =
-iommufd
->      * backend must stay in the system address space, as it is always tra=
-nslated
->      * by its physical SMMU (using a stage-2-only STE or a nested STE), i=
-n which
->      * case the stage-2 nesting parent page table is allocated by the vfi=
-o core,
->      * backing up the system address space.
->      *
->      * So, return the system address space via the global
-> address_space_memory.
->      * The shared address_space_memory also allows devices under differen=
-t
-> vSMMU
->      * instances in a VM to reuse a single nesting parent HWPT in the vfi=
-o core.
->      */
-> ?
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-Ok. I will go through the descriptions and comments in this series again an=
-d=20
-will try to improve it.
 
-Thanks,
-Shameer
 
+> ---
+>  hw/arm/xlnx-zynqmp.c         | 11 +++++------
+>  include/hw/arm/xlnx-zynqmp.h |  1 +
+>  2 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
+> index ec96a46eec..d7adc070f8 100644
+> --- a/hw/arm/xlnx-zynqmp.c
+> +++ b/hw/arm/xlnx-zynqmp.c
+> @@ -26,8 +26,6 @@
+>  #include "target/arm/cpu-qom.h"
+>  #include "target/arm/gtimer.h"
+>  
+> -#define GIC_NUM_SPI_INTR 160
+> -
+>  #define ARM_PHYS_TIMER_PPI  30
+>  #define ARM_VIRT_TIMER_PPI  27
+>  #define ARM_HYP_TIMER_PPI   26
+> @@ -206,7 +204,7 @@ static const XlnxZynqMPGICRegion xlnx_zynqmp_gic_regions[] = {
+>  
+>  static inline int arm_gic_ppi_index(int cpu_nr, int ppi_index)
+>  {
+> -    return GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
+> +    return XLNX_ZYNQMP_GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
+>  }
+>  
+>  static void xlnx_zynqmp_create_rpu(MachineState *ms, XlnxZynqMPState *s,
+> @@ -454,7 +452,7 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+>      int num_apus = MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
+>      const char *boot_cpu = s->boot_cpu ? s->boot_cpu : "apu-cpu[0]";
+>      ram_addr_t ddr_low_size, ddr_high_size;
+> -    qemu_irq gic_spi[GIC_NUM_SPI_INTR];
+> +    qemu_irq gic_spi[XLNX_ZYNQMP_GIC_NUM_SPI_INTR];
+>      Error *err = NULL;
+>  
+>      ram_size = memory_region_size(s->ddr_ram);
+> @@ -502,7 +500,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+>          g_free(ocm_name);
+>      }
+>  
+> -    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", GIC_NUM_SPI_INTR + 32);
+> +    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq",
+> +                         XLNX_ZYNQMP_GIC_NUM_SPI_INTR + 32);
+>      qdev_prop_set_uint32(DEVICE(&s->gic), "revision", 2);
+>      qdev_prop_set_uint32(DEVICE(&s->gic), "num-cpu", num_apus);
+>      qdev_prop_set_bit(DEVICE(&s->gic), "has-security-extensions", s->secure);
+> @@ -613,7 +612,7 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+>          return;
+>      }
+>  
+> -    for (i = 0; i < GIC_NUM_SPI_INTR; i++) {
+> +    for (i = 0; i < XLNX_ZYNQMP_GIC_NUM_SPI_INTR; i++) {
+>          gic_spi[i] = qdev_get_gpio_in(DEVICE(&s->gic), i);
+>      }
+>  
+> diff --git a/include/hw/arm/xlnx-zynqmp.h b/include/hw/arm/xlnx-zynqmp.h
+> index c137ac59e8..6a407c2962 100644
+> --- a/include/hw/arm/xlnx-zynqmp.h
+> +++ b/include/hw/arm/xlnx-zynqmp.h
+> @@ -67,6 +67,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQMP)
+>  #define XLNX_ZYNQMP_OCM_RAM_SIZE 0x10000
+>  
+>  #define XLNX_ZYNQMP_GIC_REGIONS 6
+> +#define XLNX_ZYNQMP_GIC_NUM_SPI_INTR 160
+>  
+>  /*
+>   * ZynqMP maps the ARM GIC regions (GICC, GICD ...) at consecutive 64k offsets
+> -- 
+> 2.34.1
+> 
 
