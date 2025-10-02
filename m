@@ -4,97 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764C8CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:43:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB78ECAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4LRF-0005By-D5; Thu, 02 Oct 2025 11:41:49 -0400
+	id 1v4LbX-00082f-TN; Thu, 02 Oct 2025 11:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4LR7-00059Y-Od
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 11:41:43 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4LQq-0006sm-T6
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 11:41:40 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-781ea2cee3fso1201477b3a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 08:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759419675; x=1760024475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Px2emP6ROhkv4xGAfiqCflc4uecgiLeSHdwUtniKE24=;
- b=Q3VcZC9SXw4Z0XPDA0FxE2IhdXUn3nM6VQmhTlhNTpl9lj1SMP1cRCQZUejraKjgwo
- fz5dBSA43ZVZBqgIops/ff8b9vq/iO7YC2/xlSOZZ7i3rYgheqz3WyWHw2gIVpDzZNZY
- AEs+JxXm41Fq5CHypB7B0HdKowhhJHGdug1JINJ2RhpWdm+wDYHqQhGNmyYhuOIZvTxu
- Z/i7BcK+ctIktGDOB0027Y+Ge5IHtSHX9CbDr3bOTi2wrDDQba3RVNwQnPCXAMvSWnQp
- PQZ9fkXgQeE+yViJZ7LWm6a8YLVI7sZVE6SI/2CVhbQVvUzzW9vCWTe/Q/n0GZh1HGOb
- bCQQ==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1v4LbU-00080F-HQ
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 11:52:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1v4LbG-0001Xw-ED
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 11:52:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759420317;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3D4gNDHRD12NV0TPCdDhtyxZEZkaPtnBihphuKahckw=;
+ b=RKrCEWcw88T35eBsKMwa+Afzhp927dF3N7GM7xlSV86lCRW9k9RqPVKcZnnXIRzgQ3jNxN
+ 9TzG01TFA7sW4vuynZy5nU51+J8T4q/NSZUZTWOYxo7l5kNzcgNgWl/KlpQrP1z1Sh6QlC
+ avohnTlOsSBuJ1IwWQdqiEOCOmuxbHw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-256-x18h4SJZPpGsRaNkhtSulg-1; Thu, 02 Oct 2025 11:51:53 -0400
+X-MC-Unique: x18h4SJZPpGsRaNkhtSulg-1
+X-Mimecast-MFC-AGG-ID: x18h4SJZPpGsRaNkhtSulg_1759420312
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e25f5ed85so9192315e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 08:51:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759419675; x=1760024475;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Px2emP6ROhkv4xGAfiqCflc4uecgiLeSHdwUtniKE24=;
- b=iXJ0y/G9fpgzLeonr/Ycq0bstPioPIE2xXRmXVS80oHr3rpdUS60HpBuTDBLIpF1DM
- V9p63zknGUSwP5d4YSxVj2UKv0DTD++IFl6vPoNF/UysmB07OmFMlqV8kP0u371LTR0L
- +hT5/wzSSkNucGevGJgONYQ/NIWo5K58KWaZAZR9vrFzrrFzy0no2V2EOlEPfLlqK2gh
- X3Z/ld5KIra/iCP+yemPB1zOH6LRAAJMCOxVQ2spJ5IjNtZReTj18zrkCDx13zUXzXc7
- uAoLTrAkFHcTjszcYMqRRt38v0o6PYm5A3gWpxVfrPpVBw+TJ9nNxAisdlqf8KvnOwB+
- lmaw==
+ d=1e100.net; s=20230601; t=1759420312; x=1760025112;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3D4gNDHRD12NV0TPCdDhtyxZEZkaPtnBihphuKahckw=;
+ b=nIhBmlB9nxoP2f2vxf5CBwarer7Nh9h88UQw1umkVqvlZspO1a2brjqNimyl3dvADi
+ t3zcZZTHjtGeMF1brkWdRuCAUCzCzk8MPMWQ9o/CZENBI30rPZJnQWHJgxQRW4UbPyUF
+ Nb99XDshphg/mMQq7ynfxsRZQiutCcjESW+YUEjJJZhotJAUcmKafJhbA0yTGXYBLUBS
+ O/uYitrsCKzM9vOnNZQ22lYofxFCYidC+PTTU3jPHSJG6qK6BCTaJgFlyVgrVkO3s30L
+ of7laFlRnmEvzfppi6c6VPaeWdW+BkpeEEqOOjE0I2NpRxxnkigXr8vUQTikRlT+/p1b
+ RHSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHVeLfccCZY6pIFPMxYFNXuwodQya19mYWvr7T5Zuk4I71eprcptXW1T8A9qv9b6bEyDHyWvM2KlKo@nongnu.org
-X-Gm-Message-State: AOJu0YygLzwDMCTH4mxvUr6s2L6WANOLZ6droOiVWDkWKepuicBGjAHK
- Lhy42Hwf81/cKPgh3SFJtZaqImEhPYBupsv/K1u/iqh7OBJimLUk4l/5iK9TtJmXtjc=
-X-Gm-Gg: ASbGnctXM9Za5gMAd1Y3NkNqZ7uqpFktFaW7ko9uf4kNVnl0LL4XHnXky4NRKD+lir1
- jxY1/PO7hiEL7ytcvzvI+LogvfGtg0ka3VtpPUz1aKdun4uqTKTUbSyphBT30tFdxANhmx5QgUT
- fHjm0JkKug8rXOVl4nRm/Wd9y2HV9DG+gOkfWWXk5e438GJZIWfLgyTCH/8t/u0PMoIvlSSmgkn
- EbIjBE5mQ+KrfSgCGOwObd6fA7o8At/2YF4GVUJlqz3UY5/iwZol/YBHONAhyZtQlOVH94aSNB3
- U5OQkc2PVjGs5cSwsb5mLsU0l2gUeO6eaESoi01i4ALdVtAuOZui2csD8QTR6LFiiWDAq1lSXTP
- 9HafEy7t3AF2JHCtqfmssnzFdmmri72vsFZW5k1Y1sWRa1ts7bTnEaCmwNwLkQHDL
-X-Google-Smtp-Source: AGHT+IH7iz1L8xKKJ9weFkuet7A3+RStIapsBDfVili+8Hb3PVwY9tf/4h5U4hyAvTcqskYZ12oS0w==
-X-Received: by 2002:a05:6a00:238d:b0:781:1cc0:d0ce with SMTP id
- d2e1a72fcca58-78c98cae836mr55041b3a.16.1759419674665; 
- Thu, 02 Oct 2025 08:41:14 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78b01f9cda9sm2452099b3a.13.2025.10.02.08.41.13
+ AJvYcCU0osev6CxhJrvRf8S4b54VQR791oAXFS4+muHFfTS97qDxZlEZn4SP9rtzVVQsBLS3EfzQgt7MBG74@nongnu.org
+X-Gm-Message-State: AOJu0YyfNTy3I/ppZdnjAilhhinLmfoUt/4iEnZ2WX+o08son8i0kzsy
+ ofFdrLgt8WayokAH8Oy6BYhOyOnfGqNqXPvGwlz14vtirMQP4P2iAPMHPIItJgsDlMdPXflqLhZ
+ 0YNEwo6HzrDyA4OONFCKi5L1iNRbfFRl+Nk9p1ayTCyzmezyqOduqhxAe
+X-Gm-Gg: ASbGnct1Biz8A/rbay454srt6DOFN2XWLzfSg/BAZqm9saoMkJmAaHZ3N5ZgXkUcfxu
+ ykg6ISRinq2YsUsdC4iRiVdGG35WmxyhNSG4zXSE9qIvKRgyNMz1otWo7qih/HxlaJd5NeFBvN0
+ W1p8ItJUYtnnwrIJwC6IYCcQZOmcokBplTAr3ugWGD2l3s6LgH7QW8VvREpoVtSwGQeHILwPe/m
+ o2vfEAmCyBs9wL0BkHyWNf/grL7WnlIi3J01cfoV05G2FDPKwMdnpYy8pTdiy0ITgWSLBBJkUaH
+ DP1FinSqKefGEXrkh/aEG9PttjNQvIfll6OHKWyFka+5XHcF/qYyFI7fDIHpKRw7LL65Nr2hA/u
+ 05DFcG67C
+X-Received: by 2002:a05:600c:34c9:b0:46e:43fa:2dd7 with SMTP id
+ 5b1f17b1804b1-46e6126a54dmr73444385e9.24.1759420312407; 
+ Thu, 02 Oct 2025 08:51:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5DK2XWgbxs1uXA611g4DmGaT2zQ5+ADngi0DNaH8bk90oWBMmBdv86g5RbmxmhHMLvGN6Qg==
+X-Received: by 2002:a05:600c:34c9:b0:46e:43fa:2dd7 with SMTP id
+ 5b1f17b1804b1-46e6126a54dmr73444185e9.24.1759420311956; 
+ Thu, 02 Oct 2025 08:51:51 -0700 (PDT)
+Received: from [192.168.3.141] (tmo-080-144.customers.d1-online.com.
+ [80.187.80.144]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e61a0204fsm89478225e9.14.2025.10.02.08.51.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 08:41:14 -0700 (PDT)
-Message-ID: <7605b216-8aa1-4897-a96e-6ed9953f4e91@linaro.org>
-Date: Thu, 2 Oct 2025 08:41:12 -0700
+ Thu, 02 Oct 2025 08:51:51 -0700 (PDT)
+Message-ID: <6e7ad90d-a467-40cc-99fa-d0915438dd05@redhat.com>
+Date: Thu, 2 Oct 2025 17:51:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC V6 24/24] tcg: Defer TB flush for 'lazy realized'
- vCPUs on first region alloc
-To: Salil Mehta <salil.mehta@huawei.com>,
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>
-References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
- <20251001010127.3092631-25-salil.mehta@opnsrc.net>
- <60631203-626f-4628-8a40-226bd45d1c8e@linaro.org>
- <bc780e0c68fa44da975d8f6fcdb38cd7@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] numa: add 'spm' option for special purpose memory
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: fanhuang <FangSheng.Huang@amd.com>, qemu-devel@nongnu.org,
+ Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
+References: <20250924103324.2074819-1-FangSheng.Huang@amd.com>
+ <20251002161140.5b908e06@fedora>
+ <aa461a43-0db8-482a-aabc-897cfa619dee@redhat.com>
+ <20251002165936.490718f5@fedora>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-In-Reply-To: <bc780e0c68fa44da975d8f6fcdb38cd7@huawei.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20251002165936.490718f5@fedora>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,90 +159,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/25 05:27, Salil Mehta wrote:
-> Hi Richard,
+On 02.10.25 16:59, Igor Mammedov wrote:
+> On Thu, 2 Oct 2025 16:19:00 +0200
+> David Hildenbrand <david@redhat.com> wrote:
 > 
-> Thanks for the reply. Please find my response inline.
-> 
-> Cheers.
-> 
->> From: qemu-devel-bounces+salil.mehta=huawei.com@nongnu.org <qemu-
->> devel-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of Richard
->> Henderson
->> Sent: Wednesday, October 1, 2025 10:34 PM
->> To: salil.mehta@opnsrc.net; qemu-devel@nongnu.org; qemu-
->> arm@nongnu.org; mst@redhat.com
->> Subject: Re: [PATCH RFC V6 24/24] tcg: Defer TB flush for 'lazy realized' vCPUs
->> on first region alloc
+>> On 02.10.25 16:11, Igor Mammedov wrote:
+>>> On Wed, 24 Sep 2025 18:33:23 +0800
+>>> fanhuang <FangSheng.Huang@amd.com> wrote:
+>>>    
+>>>> Hi David,
+>>>>
+>>>> I hope this email finds you well. It's been several months since Zhigang last discussion about the Special Purpose Memory (SPM) implementation in QEMU with you, and I wanted to provide some background context before presenting the new patch based on your valuable suggestions.
+>>>>
+>>>> Previous Discussion Summary
+>>>> ===========================
+>>>> Back in December 2024, we had an extensive discussion regarding my original patch that added the `hmem` option to `memory-backend-file`. During that conversation, you raised several important concerns about the design approach:
+>>>>
+>>>> Original Approach (December 2024)
+>>>> ----------------------------------
+>>>> - Zhigang's patch: Added `hmem=on` option to `memory-backend-file`
+>>>> - QEMU cmdline example:
+>>>>     -object memory-backend-file,size=16G,id=m1,mem-path=/dev/dax0.0,prealloc=on,align=1G,hmem=on
+>>>>     -numa node,nodeid=1,memdev=m1
+>>>>
+>>>> Your Concerns and Suggestions
+>>>> -----------------------------
+>>>> You correctly identified some issues with the original approach:
+>>>> - Configuration Safety: Users could create problematic configurations like:
+>>>>      -object memory-backend-file,size=16G,id=unused,mem-path=whatever,hmem=on
+>>>>
+>>>> - Your Recommendation: You proposed a cleaner approach using NUMA node configuration:
+>>>>      -numa node,nodeid=1,memdev=m1,spm=on
+>>>
+>>> that seems to me a bit backwards,
+>>> aka it's just a particular case where node would have SPM memory only,
+>>> which (spm) is not a property of numa node, but rather of memory device attached to it.
 >>
->> On 9/30/25 18:01, salil.mehta@opnsrc.net wrote:
->>> From: Salil Mehta <salil.mehta@huawei.com>
->>>
->>> The TCG code cache is split into regions shared by vCPUs under MTTCG.
->>> For cold-boot (early realized) vCPUs, regions are sized/allocated during
->> bring-up.
->>> However, when a vCPU is *lazy_realized* (administratively "disabled"
->>> at boot and realized later on demand), its TCGContext may fail the
->>> very first code region allocation if the shared TB cache is saturated
->>> by already-running vCPUs.
->>>
->>> Flushing the TB cache is the right remediation, but `tb_flush()` must
->>> be performed from the safe execution context
->> (cpu_exec_loop()/tb_gen_code()).
->>> This patch wires a deferred flush:
->>>
->>>     * In `tcg_region_initial_alloc__locked()`, treat an initial allocation
->>>       failure for a lazily realized vCPU as non-fatal: set `s->tbflush_pend`
->>>       and return.
->>>
->>>     * In `tcg_tb_alloc()`, if `s->tbflush_pend` is observed, clear it and
->>>       return NULL so the caller performs a synchronous `tb_flush()` and then
->>>       retries allocation.
->>>
->>> This avoids hangs observed when a newly realized vCPU cannot obtain
->>> its first region under TB-cache pressure, while keeping the flush at a safe
->> point.
->>>
->>> No change for cold-boot vCPUs and when accel ops is KVM.
->>>
->>> In earlier series, this patch was with below named,
->>> 'tcg: Update tcg_register_thread() leg to handle region alloc for hotplugged
->> vCPU'
->>
->>
->> I don't see why you need two different booleans for this.
+>> The problem is that boot memory is not modeled as a memory device.
 > 
+> That's historical abomination we currently have.
+
+Right, and that's what the memdev= parameter for the node is all about.
+
+> Question is: does it have to be boot memory, and why?
+
+I wondered the same in my reply: I'm afraid it cannot be a DIMM/NVDIMM, 
+these ranges are only described in E820 as "hotplug area".
+
+I think it must be something that's present in the memory map right from 
+the start, where the OS would identify it as SP and treat it accordingly.
+
 > 
-> I can see your point. Maybe I can move `s->tbflush_pend`  to 'CPUState' instead?
-> 
-> 
->> It seems to me that you could create the cpu in a state for which the first call
->> to
->> tcg_tb_alloc() sees highwater state, and everything after that happens per
->> usual allocating a new region, and possibly flushing the full buffer.
-> 
-> 
-> Correct. but with a distinction that highwater state is relevant to a TCGContext
-> and the regions are allocated from a common pool 'Code Generation Buffer'.
-> 'code_gen_highwater' is use to detect whether current context needs more
-> region allocation for the dynamic translation to continue. This is a different
-> condition than what we are encountering; which is the worst case condition
-> that the entire code generation buffer is saturated and cannot even allocate
-> a single free TCG region successfully.
+> Also that's why I've asked for use-cases / devices example that would make use of this feature
+> (VFIO was mentioned here).
 
-I think you misunderstand "and everything after that happens per usual".
+Yes, good point.
 
-When allocating a tb, if a cpu finds that it's current region is full, then it tries to 
-allocate another region.  If that is not successful, then we flush the entire 
-code_gen_buffer and try again.
+-- 
+Cheers
 
-Thus tbflush_pend is exactly equivalent to setting
+David / dhildenb
 
-     s->code_gen_ptr > s->code_gen_highwater.
-
-As far as lazy_realized...  The utility of the assert under these conditions may be called 
-into question; we could just remove it.
-
-
-r~
 
