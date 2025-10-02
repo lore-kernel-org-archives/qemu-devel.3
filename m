@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDF3CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00227CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4OkO-0005YH-5s; Thu, 02 Oct 2025 15:13:48 -0400
+	id 1v4OlZ-0006Cl-KQ; Thu, 02 Oct 2025 15:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4OkK-0005W3-12
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:13:44 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1v4OlW-0006CH-M1
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:14:58 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4Ok7-0002tq-Bf
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:13:43 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-27eed7bdfeeso18193735ad.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 12:13:29 -0700 (PDT)
+ id 1v4OlI-000301-LS
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:14:58 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-782e93932ffso1400635b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 12:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759432406; x=1760037206; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759432477; x=1760037277; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Sy6C1YETPjlsStjgJ4SZIG7nbW4id5Om7Rm7WDPFPq4=;
- b=yviwOo/BrWfUW8VwDnEZF+k39VGEuvGpf7L0Hdrt9xFf2AnVJ3X5n1dLwdgobL1Udg
- pBmJqiI5sQE+RS7jjdgky4MPRHHSvVnPPjEYmUfd6NdEiLNd3YSyIcskJSQ1Wk7U4cgF
- tED6INVARIlKp2yjVqBIpEHRWKWT8CH+Ee/+oMwC3VpnTsgcMe27SzNSlJ6yADaSj+MU
- LKALRpD+S+Vah6EIT2H1vQPrGyTg16MVrUUY1AcaoQUqOGkKtMI8d003d3XyPEtAT8Hh
- xnb3ROOm4sAM//fraVKegtHrlDBO+B3l8Fs9QskZuX7HcUyZiTrixJY9XGsvy5Z4/YTE
- zqIQ==
+ bh=0/qdJ/HOg5ojo/pzozIFLSp8N/iQ7FUrg4DHwEIsrPs=;
+ b=MGsa+P9LN0NLyJS5fo1pmFvtjDpnRIa2RWIRcRT8sXtP+P6y3Zru/0xuHMBOLt5Gq8
+ S9XBYT75WN9KjQbxfNHkv+UEudsWWGooOpC+TbmUhzJLePc4nOfvH3FiUYFzkqLoyc6N
+ Ddtk/ZIrwJ+zwQKM306WUOZRInNEKNpQfTmJ65stRCxtXZCg6i3sx8NPIyb+BbnfkSZg
+ fEOadLguOPMQELCPA1kHv768tl+9mRDVaokCBwnLt8w++D5wxxNElWjU0Ks5YK6zYAwK
+ DYkN7DYCuC4XFSAxa+d/QxdbWOYEiiOUykQlc7FlroJMXcxR9gfi0PMlBmkWQG3eQS/O
+ GYDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759432406; x=1760037206;
+ d=1e100.net; s=20230601; t=1759432477; x=1760037277;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Sy6C1YETPjlsStjgJ4SZIG7nbW4id5Om7Rm7WDPFPq4=;
- b=FWrYu5jTqqrIO/fgJPdrYgi3aqZ4ZzoajuJY2gMibCJfuOHieVXhYxpndkjFzw0k2T
- fXrn2qslmoEKr0F88G/EhQBRnHY8Mc8pH4Om3i069zTWxtJJQHkJlIP2usTy8DdErLR8
- XQtLCH+kCArVNkzSfhC+dLRHCGvkZnIlB5/52cMTdA5H+DZfvp0sYGGGhQg5QE1mwOk9
- a6l0/bM34FMGEPL+uM+hfz6RVgT2dt/SVcMqEa6+fj3GuuEbWvJrbPej3L8oFUlnyPVg
- ZOMtASWOZRN080gp8GPrD/zhZriBdwyDE0+hgC2fQvnKqnmTgSNSAhliXDoqlBWLKYkG
- i0RA==
+ bh=0/qdJ/HOg5ojo/pzozIFLSp8N/iQ7FUrg4DHwEIsrPs=;
+ b=j/3P28SV2tzKVbElzeF8kbLUBu2gYfvHiqrWEEwfmi4gNCa9Aa2EIc5H3w5ufe3T/x
+ ThOeEjF4TSbhQ/LgziXZnr9HOMPezdn6kOOUjZqszZUs+7//CCxjLZQvGSD43r9nSw+q
+ JVXMUmpsxz4DqkzJe46u4HaaSsxJwE6HEUCrCXyTvsfV3p45erXu3G7rXXAjQ0s30YFi
+ 6gjS9yEaFyndZfm4SZNvSuJuE9zH5C79U27zRXsjdvBeqzeo/hW4aUQHkE2Es5f2jNKw
+ RqckhDQzJyyLuY6va/GFOEA3STO28tKh/acnR7/407K/CFsOCypqJMxq/lu07v5B7WQZ
+ ZiGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXagmcM0JZMOg9gDf9OvmIHRcloN9c9IpWEqqjUmq0p3kMaTmi1rjbUVAY8XBH6rxC9sHLoUMKNbOuV@nongnu.org
-X-Gm-Message-State: AOJu0Ywy61HBWWdCOmr+Ket0nWapFTvNrdwo6+c7Zb6Aiu6azq/88Jyz
- vUuYkEvHKxXV3G36YaDC0J1dY3LwbeWIUjLn/umkaBGNcuB1Y07Qo5a5gKmV2fsPnxg=
-X-Gm-Gg: ASbGncvwFmiPhR8brmlfTQP3wPuyB1jkFOMM7ocEEon24OCFKQi0cmthVjQ3pU05a7S
- TpytmehgTR+dyOLVQL1zLI/WGHYnpSC66kO0xbtPWZwhwcZKmcRLMxwiEF3eZZFgiv38nuxpPWf
- pZnW9hQMS1Ye4BUo1cQsiqL7oLqQtINsisRMNjkjV+AySPOxUGOBOiR1HI9WnnBKo5ul3pCtBh2
- O50mO/pbX3ns9bnfPwSjXOmf/7HnMjlqeXq2PJMzAV9Ve13xvqnbjJPskHalAkKAyhM9uTZswgI
- 8WKj/XiE9c0Jeg6sh7FAmSgt+SbwznA9BErQbyqLVb5XspJ23ReRUf9If6GMehm4K033WhG+up+
- Xd5UW/QiOdngg1n0JJ0GthRSLsLz5T4lST8rvXFWUvk1k5nsGjExsR5FG1LA1QlleFhYu48vMeA
- ==
-X-Google-Smtp-Source: AGHT+IHUEP+T9yRhsz7JWwSaTsErIZo+GtzG1u6/oLelAs7Kqgd8k2rQqSf9D96iKJ7hEvthm8OqzA==
-X-Received: by 2002:a17:903:190:b0:271:9b0e:54ca with SMTP id
- d9443c01a7336-28e8d04f303mr62321315ad.13.1759432406289; 
- Thu, 02 Oct 2025 12:13:26 -0700 (PDT)
+ AJvYcCWSJwhJ41n8u/vlc8mFXTBVEbqnPBzLQvF1RcC+fOkDeLdZAiTgW7jwT6tdo5isAgRi7wLGOUOmjbf1@nongnu.org
+X-Gm-Message-State: AOJu0YwwPKrauPXgmD7s/VhbrP9dlYxFyKJ4KPpCZZ9NP/9G2jYrwvnm
+ QD0VAe3ZskHiqEp1JM8CcmygeJLTaUf2lVx/7YiulOqyHxCclx+F2r1NrIlvQV53f8E=
+X-Gm-Gg: ASbGnctS32siNdbx3duraNUehKzF0VFcv1QYKr8kFT7VFf8Hr9zXGPdZUDu5K9atnj3
+ /oWULx8JIpKdi49wAhbnuhIHjTmO648lsK4F3aAeq52vNiYaT2i1kj+PlVWgq3MNzfX3M81Thys
+ pvh9rIWIJ4wxwTSyfgQNzAx+gZYMJ+7p2qnJdhluIi29fc9npRGMfnVxr9qVbsFGf0iVIFQ0yBS
+ Z65ptumf1xVKiMSJqg5rFGUXJVBZLdM925KqRgfLLtcHXqKvZqirdKA+YMuSWwxrILv/J/ghipn
+ 2NUJlM1aDbR1tQcTJn/p0ARoKMyvsN0TCXajmgeZeqZZ9NPfRq3TtV+Eb97P510RwS3F4mlb82Y
+ j9KebX3xjOkTbqVe9wSitOXQBti3mh/Jdt8eG/+qhV2zHdWmpOtUwMDbL2snGvqg=
+X-Google-Smtp-Source: AGHT+IHVDN7JDg70p+fr5KaffFan8r8R1fbGNl+tuVHECWtbJRBJ49pFabV6osi/DaopwqFSVJP5Rw==
+X-Received: by 2002:a17:903:3c24:b0:26c:e270:6dad with SMTP id
+ d9443c01a7336-28e9a664540mr4044135ad.60.1759432477441; 
+ Thu, 02 Oct 2025 12:14:37 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d1b88c5sm28193955ad.70.2025.10.02.12.13.25
+ d9443c01a7336-28e8d1d5e36sm28200325ad.114.2025.10.02.12.14.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 12:13:25 -0700 (PDT)
-Message-ID: <954bb819-9c25-4dea-aaa8-3672820b45d7@linaro.org>
-Date: Thu, 2 Oct 2025 12:13:25 -0700
+ Thu, 02 Oct 2025 12:14:37 -0700 (PDT)
+Message-ID: <36c41e82-78db-400f-9bba-ed8daca17e94@linaro.org>
+Date: Thu, 2 Oct 2025 12:14:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/33] target/riscv: Combine mcyclecfg and mcyclecfgh
+Subject: Re: [PATCH v2 07/33] target/riscv: Combine minstretcfg and
+ minstretcfgh
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, richard.henderson@linaro.org,
  alistair.francis@wdc.com, palmer@dabbelt.com
 References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-7-anjo@rev.ng>
+ <20251001073306.28573-8-anjo@rev.ng>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251001073306.28573-7-anjo@rev.ng>
+In-Reply-To: <20251001073306.28573-8-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,17 +107,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/1/25 12:32 AM, Anton Johansson wrote:
-> According to version 20250508 of the privileged specification, mcyclecfg
-> is a 64-bit register and mcyclecfgh refers to the top 32 bits of this
-> register when XLEN == 32.  No real advantage is gained by keeping
-> them separate, and combining them allows for slight simplification.
+> According to version 20250508 of the privileged specification,
+> minstretcfg is a 64-bit register and minstretcfgh refers to the top
+> 32 bits of this register when XLEN == 32.  No real advantage is
+> gained by keeping them separate, and combining them allows for slight
+> simplification.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
 >   target/riscv/cpu.h |  3 +--
->   target/riscv/csr.c | 28 +++++++++++++++++-----------
->   2 files changed, 18 insertions(+), 13 deletions(-)
-
-Clearer on this patch.
+>   target/riscv/csr.c | 18 ++++++++++--------
+>   2 files changed, 11 insertions(+), 10 deletions(-)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
