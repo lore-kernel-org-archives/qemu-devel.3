@@ -4,66 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01BBCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 14:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFA3CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:00:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Khe-0005mq-LC; Thu, 02 Oct 2025 10:54:42 -0400
+	id 1v4KlW-0007OR-1k; Thu, 02 Oct 2025 10:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan@islenet.com>) id 1v4Khc-0005lc-Ad
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:54:40 -0400
-Received: from lin1.islenet.com ([45.33.68.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan@islenet.com>) id 1v4KhU-00087d-2q
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:54:39 -0400
-Received: from localhost (localhost [IPv6:::1])
- by lin1.islenet.com (Postfix) with ESMTP id 31BBBF5914
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 10:54:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=islenet.com; h=
- mime-version:user-agent:content-transfer-encoding:content-type
- :content-type:references:in-reply-to:date:date:from:from:subject
- :subject:message-id:received:received; s=default; t=1759416862;
- x=1760280863; bh=7PRQ13fnVPgsqc9sv5pjCnZSNc56NIXeYcmvuSEAci0=; b=
- nhYlgsXuShGvBr0VCaN7ahTN2s1F1VNKS0GOcsffiG+GRkO0hpXFMBfNIkviHdpZ
- gkwkZ/zn4QNxne7qYojGY7yZClU+q+au0yuEBE/aHDtuu9YNKS/tfHQPaj6JiLkF
- +OGnw8tsviG+JKg0JB9yX31E9dmdluhCdP5/QkKUrWG8LpnmLaRkbkxBbzgGLobC
- KY64ldMugsQwhOzYZOSYGtzWEF/KahSCOU1rWgxKfCtc5yzzXof6YK/SqAeJ1BAw
- BoFLWGiBUsM5p3JgJ8/LxQ5dYDjd1uZQWnk1HsKjm3ZVCM3f6/nywnHMIp3Gkwdv
- ZgYjUWFTsh9i2P/jy167tg==
-X-Virus-Scanned: amavis at islenet.com
-Received: from lin1.islenet.com ([IPv6:::1])
- by localhost (lin1.islenet.com [IPv6:::1]) (amavis, port 10026) with LMTP
- id 9FqfnuRHnUqd for <qemu-devel@nongnu.org>;
- Thu,  2 Oct 2025 10:54:22 -0400 (EDT)
-Received: from venus.islenet.com (unknown [IPv6:2601:985:300:a441::7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lin1.islenet.com (Postfix) with ESMTPSA id DEFC3F5889
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 10:54:21 -0400 (EDT)
-Message-ID: <30c9712977931c6c94e2bbcc63a99d5b8cff4c0b.camel@islenet.com>
-Subject: Re: DOS 6.22 with LIM 4.0 Expanded Memory
-From: "Daniel L. Srebnick" <dan@islenet.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4KlE-0007KP-Up
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:30 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Kkw-0000HU-CY
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:19 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-46e34bd8eb2so12370045e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 07:58:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759417078; x=1760021878; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=omJMsKofR3cX17dOR4xS+OkjOyOP0xrNLE6+JrjUrJA=;
+ b=Pa1f675BhOCF6ZPHgwzvpYvjOYpBhj6Qv7DTDX9YnA1rmlpVya7aRy3EXuunRoiBtu
+ +b8S4qgPkQwwCYFZOKjtTCGv2T7gMJIn4BbPUXqm3IEsOa08aS6PIoCrbo8hMneo8pRb
+ 3IenvyxLc5uCa5wGiTD5GfGo+xg8B9iNYwXIE/kh+Tpgfn/33/8cu3X6MRDnjbxaB5PO
+ Gp8b0IsZ7fAR2W595axDDRooFHebmhzrBK3fEPicqeCKQGeHtQZ2rxZ/lxpnzW6RRjW4
+ 8eQa0zA5bnJFyZUGv00SfB6zvnL7hzNH1gWV9jpLfoI4i6IZmz+60yxC+Ndb8B5c+qRD
+ Hi/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759417078; x=1760021878;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=omJMsKofR3cX17dOR4xS+OkjOyOP0xrNLE6+JrjUrJA=;
+ b=VeXPObZjdFRmCacqZkPL44BC748hEW7QKc4XJB0MlO+tvK1VJ2wsD4FYfwLpZ+C+PC
+ OfipZQTzDMjkDvEY1xyUGWHH18S8/tlTuUHsstsk03PMBEUDdj4wBdIRlCjDljzBDVO3
+ vzvzf4gziXtxF9ACR6onVlPEHckuuh5yevJr2x28/d92auD4fCa61MSzJmkSMidOXj+v
+ luP84BFFGFx8AeqVFa8qwG6CMLxDSX6zM61jpkb3yaMr2v5oh0Z8nyn3vve65Iv+sOZW
+ iz1125HvS7uJi1ElGkYKnKYbGPaUr7jnGcWo/wKIJcFiVieIghaLagnq+1z/mXe87jCx
+ ChNQ==
+X-Gm-Message-State: AOJu0Yyb866o8u46ssFTbimzDkZ52qtSYbeoqugAP37aoANc6U++KCqd
+ O8ixhs6OSOb/sFUqUCe7dW2SnQAD2dGiD4k55PrDe7sNucXyxbanX2Vlqx4x9XT7R7G2H5MsNkU
+ EDfdGkSzK0Q==
+X-Gm-Gg: ASbGnctUmT7n1tnoaR0O5+2S655tn2bprTSuMfGcoXuaktnYqUKv91fKbnFXvL3YBtv
+ UNmXnZVoMbkeyRxsj8wP8Kr2WO387PpUkFcj5xps+0TeLb6XV+87EETNeFOWgUj3hHiirIlG0Xm
+ szuQgvCdHsV21+ANcsJzvPkFO4EoUPRIbZHYHndWdrcnYmd0PeeL3dw/MPoOWbJlzFoER9j7Yya
+ tWpOrXdJbq+YB55pliSt6+u/S1fgDlz6aXnqVrT9nGfJ9IGS6B1aksb9Xe6F6gVrnFBKxkY7UN0
+ uZJ6aTQbCgvgAtHOSz2Al1I5s24m984ZNc1pcB2PCL9hdFOh4CyOJMf3mMjv8vlCMvrYFT1BIrH
+ hwJIG8qCcv1j6DS2Kq5kQgNRQ043Es1/u1fuH73+d3j524ymxEshq2SBAvcqXehPCb2TyJiou0k
+ VtxkbIoBTMyWkdVgTBJCZygWmqRrR+IRsttLY=
+X-Google-Smtp-Source: AGHT+IFZiGRObtfhcWfQ0V8vmwO0GuUgfaStXYQlBt4i/xBMuMEPLtjoeAOI9B8CLJidy3afz5IKSw==
+X-Received: by 2002:a05:600d:41d0:b0:46e:394b:4991 with SMTP id
+ 5b1f17b1804b1-46e6127a4f2mr57556625e9.11.1759417078609; 
+ Thu, 02 Oct 2025 07:57:58 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e6111c1f4sm47718395e9.0.2025.10.02.07.57.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 Oct 2025 07:57:58 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Date: Thu, 02 Oct 2025 10:54:21 -0400
-In-Reply-To: <69de1286-0750-47d1-bac6-26512a339018@linaro.org>
-References: <ebb4d277d49d53e55d9c0d56375df29981631c3e.camel@islenet.com>
- <69de1286-0750-47d1-bac6-26512a339018@linaro.org>
-Content-Type: text/markdown; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 3/6] target/riscv/kvm: Replace legacy
+ cpu_physical_memory_read/write() calls
+Date: Thu,  2 Oct 2025 16:57:38 +0200
+Message-ID: <20251002145742.75624-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251002145742.75624-1-philmd@linaro.org>
+References: <20251002145742.75624-1-philmd@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=45.33.68.68; envelope-from=dan@islenet.com;
- helo=lin1.islenet.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,12 +109,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Certainly I'm not the right person to ask about DOS and i386 machines,
-> but I'm curious: why 0xD800 (54k)? Shouldn't the EMS window be in the
-> 640K-1M range?
+Commit b7ecba0f6f6 ("docs/devel/loads-stores.rst: Document our
+various load and store APIs") mentioned cpu_physical_memory_*()
+methods are legacy, the replacement being address_space_*().
 
-D800 (used as the EMM386 frame parmameter) actually refers to D800:0000.  S=
-o yes,
-the window is in the upper memory space.
+Since the SBI DBCN is handled within a vCPU context, use its
+default address space. Replace using the address space API.
+As with the previous implementation, ignore whether the memory
+accesses succeeded or failed.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/riscv/kvm/kvm-cpu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 5c19062c19b..0c2f21fd1a1 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -36,6 +36,7 @@
+ #include "hw/pci/pci.h"
+ #include "exec/memattrs.h"
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ #include "hw/boards.h"
+ #include "hw/irq.h"
+ #include "hw/intc/riscv_imsic.h"
+@@ -1564,6 +1565,7 @@ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
+ 
+ static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
+ {
++    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     g_autofree uint8_t *buf = NULL;
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     target_ulong num_bytes;
+@@ -1602,9 +1604,9 @@ static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
+                 exit(1);
+             }
+ 
+-            cpu_physical_memory_write(addr, buf, ret);
++            address_space_write(cs->as, addr, attrs, buf, ret);
+         } else {
+-            cpu_physical_memory_read(addr, buf, num_bytes);
++            address_space_read(cs->as, addr, attrs, buf, num_bytes);
+ 
+             ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, num_bytes);
+             if (ret < 0) {
+-- 
+2.51.0
 
 
