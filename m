@@ -4,93 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00227CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998BFCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 19:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4OlZ-0006Cl-KQ; Thu, 02 Oct 2025 15:15:01 -0400
+	id 1v4Ott-000177-KP; Thu, 02 Oct 2025 15:23:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4OlW-0006CH-M1
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:14:58 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v4OlI-000301-LS
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:14:58 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-782e93932ffso1400635b3a.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 12:14:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759432477; x=1760037277; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0/qdJ/HOg5ojo/pzozIFLSp8N/iQ7FUrg4DHwEIsrPs=;
- b=MGsa+P9LN0NLyJS5fo1pmFvtjDpnRIa2RWIRcRT8sXtP+P6y3Zru/0xuHMBOLt5Gq8
- S9XBYT75WN9KjQbxfNHkv+UEudsWWGooOpC+TbmUhzJLePc4nOfvH3FiUYFzkqLoyc6N
- Ddtk/ZIrwJ+zwQKM306WUOZRInNEKNpQfTmJ65stRCxtXZCg6i3sx8NPIyb+BbnfkSZg
- fEOadLguOPMQELCPA1kHv768tl+9mRDVaokCBwnLt8w++D5wxxNElWjU0Ks5YK6zYAwK
- DYkN7DYCuC4XFSAxa+d/QxdbWOYEiiOUykQlc7FlroJMXcxR9gfi0PMlBmkWQG3eQS/O
- GYDQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4Otp-00014d-DJ
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:23:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4Otg-0005M9-En
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 15:23:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759432995;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8zmL7FnK8xVSPn9e9KuV+dNmzN/HcX9g/rnok00KEDY=;
+ b=A1GDTtL1ZRvEpponau3ZUre7NVeLiNJqNucMEwITeAZn1/vyMfW2cV7y9GXSh5xtaWfQVt
+ DWIjw3gzXCrI1t6eoSeSNE1bJLHlx/oFA8RXefsK9zX4a1Jlg8r6GjLHbC94NYZCtJyvZB
+ NmMkrC/r8RICvatlIvbl3PVzRV/B+eQ=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-DbxgB7kQPI6B1kIckN9IsA-1; Thu, 02 Oct 2025 15:23:14 -0400
+X-MC-Unique: DbxgB7kQPI6B1kIckN9IsA-1
+X-Mimecast-MFC-AGG-ID: DbxgB7kQPI6B1kIckN9IsA_1759432994
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-79538b281cdso26181296d6.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 12:23:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759432477; x=1760037277;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0/qdJ/HOg5ojo/pzozIFLSp8N/iQ7FUrg4DHwEIsrPs=;
- b=j/3P28SV2tzKVbElzeF8kbLUBu2gYfvHiqrWEEwfmi4gNCa9Aa2EIc5H3w5ufe3T/x
- ThOeEjF4TSbhQ/LgziXZnr9HOMPezdn6kOOUjZqszZUs+7//CCxjLZQvGSD43r9nSw+q
- JVXMUmpsxz4DqkzJe46u4HaaSsxJwE6HEUCrCXyTvsfV3p45erXu3G7rXXAjQ0s30YFi
- 6gjS9yEaFyndZfm4SZNvSuJuE9zH5C79U27zRXsjdvBeqzeo/hW4aUQHkE2Es5f2jNKw
- RqckhDQzJyyLuY6va/GFOEA3STO28tKh/acnR7/407K/CFsOCypqJMxq/lu07v5B7WQZ
- ZiGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSJwhJ41n8u/vlc8mFXTBVEbqnPBzLQvF1RcC+fOkDeLdZAiTgW7jwT6tdo5isAgRi7wLGOUOmjbf1@nongnu.org
-X-Gm-Message-State: AOJu0YwwPKrauPXgmD7s/VhbrP9dlYxFyKJ4KPpCZZ9NP/9G2jYrwvnm
- QD0VAe3ZskHiqEp1JM8CcmygeJLTaUf2lVx/7YiulOqyHxCclx+F2r1NrIlvQV53f8E=
-X-Gm-Gg: ASbGnctS32siNdbx3duraNUehKzF0VFcv1QYKr8kFT7VFf8Hr9zXGPdZUDu5K9atnj3
- /oWULx8JIpKdi49wAhbnuhIHjTmO648lsK4F3aAeq52vNiYaT2i1kj+PlVWgq3MNzfX3M81Thys
- pvh9rIWIJ4wxwTSyfgQNzAx+gZYMJ+7p2qnJdhluIi29fc9npRGMfnVxr9qVbsFGf0iVIFQ0yBS
- Z65ptumf1xVKiMSJqg5rFGUXJVBZLdM925KqRgfLLtcHXqKvZqirdKA+YMuSWwxrILv/J/ghipn
- 2NUJlM1aDbR1tQcTJn/p0ARoKMyvsN0TCXajmgeZeqZZ9NPfRq3TtV+Eb97P510RwS3F4mlb82Y
- j9KebX3xjOkTbqVe9wSitOXQBti3mh/Jdt8eG/+qhV2zHdWmpOtUwMDbL2snGvqg=
-X-Google-Smtp-Source: AGHT+IHVDN7JDg70p+fr5KaffFan8r8R1fbGNl+tuVHECWtbJRBJ49pFabV6osi/DaopwqFSVJP5Rw==
-X-Received: by 2002:a17:903:3c24:b0:26c:e270:6dad with SMTP id
- d9443c01a7336-28e9a664540mr4044135ad.60.1759432477441; 
- Thu, 02 Oct 2025 12:14:37 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d1d5e36sm28200325ad.114.2025.10.02.12.14.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Oct 2025 12:14:37 -0700 (PDT)
-Message-ID: <36c41e82-78db-400f-9bba-ed8daca17e94@linaro.org>
-Date: Thu, 2 Oct 2025 12:14:36 -0700
+ d=1e100.net; s=20230601; t=1759432994; x=1760037794;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8zmL7FnK8xVSPn9e9KuV+dNmzN/HcX9g/rnok00KEDY=;
+ b=rUBE7JDgZJuHIvYy6fTIw7D+IqDjuQPaUztUmLtArx+7KWJoC5Ria6lqGsz3jru7jO
+ Ws2dAvdETdEfAP1aE7lNmwldHObNhRqgxiRRreBMf5rb1qG72KKhZNt4Hl00qmJHLfdL
+ UAF0NRWmEX1MerjsNLJZNxu4TuXsFTaewW97zokBew1mBALpx7sXYtgCmMxLB9buG4Ig
+ 1Zjl652rV+VSn06j9BMvyFHpZp+8AbRxVcLqQtun/chOXtBhhCH5QQ79sl2F6Slbdn7U
+ CLKQDMN6LlAwAByUtAFfj6OMcfLrXh2aqW720akw6A4dcZAxp5vXzBSSlM4RsYoTb4R9
+ dZ3g==
+X-Gm-Message-State: AOJu0Yz0pmPlnaaA+OVGAwq58k+8t3K0OKIIgmPDbXy4Di/8LBMbz3Pr
+ C935r/uOmQPgvuDhNLOPPBNty1+pYUhzrrC3WJTfP+/nqjb3pOQ88jPlCgjn/9+VoW85dPFcGX6
+ YIhPcZ+164elcz+5+XTkoGygT5dciDzXHsBKdjP4IIenQVUwpFUPRxGQa
+X-Gm-Gg: ASbGncungTgtUO1WG2kouozl+cnYeMPPbtrtV/iS1kkemRHAG8ztl+R5O7qSLxpJPd/
+ 685RDYiNJHrRiKF6gvdU1j7dA3wOg4SHnbmsvWMXuCr2XwtPlP2f3h0r8TXaNLAnar2sMCQxzDE
+ NdFrrRBrr55kSO0Dqkmm42qhAxR0Q2z8LsV3AkofLqpYmhAinxSpnJPnR+J+6JCOP/CntASSA71
+ a4CUmAmmIhdAS/lxu2tXxUY7openNRphoOb33ZfPoQxt6ckx4rKaGOPoNzNXwvf1Hthr2332Col
+ jsApR82fqgjM3pd+09zet4w7YXAD8XZZpyFfNQ==
+X-Received: by 2002:ad4:4ee6:0:b0:802:67ee:bdae with SMTP id
+ 6a1803df08f44-878bbf0f5ddmr67693406d6.25.1759432993699; 
+ Thu, 02 Oct 2025 12:23:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyKWfBd+Pup6Vg+VGbUOLpZH2LH0jwdcZvKN2Pl9KWvEw+ZfZVbc2/oLREnbxtyjcWlUH8rg==
+X-Received: by 2002:ad4:4ee6:0:b0:802:67ee:bdae with SMTP id
+ 6a1803df08f44-878bbf0f5ddmr67692486d6.25.1759432993008; 
+ Thu, 02 Oct 2025 12:23:13 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-878bb446cffsm23871516d6.20.2025.10.02.12.23.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Oct 2025 12:23:12 -0700 (PDT)
+Date: Thu, 2 Oct 2025 15:23:10 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [PATCH 02/14] qdev: Automatically delete memory subregions
+Message-ID: <aN7RHvjeQNtrXDcQ@x1.local>
+References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+ <20250917-subregion-v1-2-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/33] target/riscv: Combine minstretcfg and
- minstretcfgh
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, richard.henderson@linaro.org,
- alistair.francis@wdc.com, palmer@dabbelt.com
-References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-8-anjo@rev.ng>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251001073306.28573-8-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250917-subregion-v1-2-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +136,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 12:32 AM, Anton Johansson wrote:
-> According to version 20250508 of the privileged specification,
-> minstretcfg is a 64-bit register and minstretcfgh refers to the top
-> 32 bits of this register when XLEN == 32.  No real advantage is
-> gained by keeping them separate, and combining them allows for slight
-> simplification.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/riscv/cpu.h |  3 +--
->   target/riscv/csr.c | 18 ++++++++++--------
->   2 files changed, 11 insertions(+), 10 deletions(-)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Wed, Sep 17, 2025 at 07:32:48PM +0900, Akihiko Odaki wrote:
+> +static int del_memory_region(Object *child, void *opaque)
+> +{
+> +    MemoryRegion *mr = (MemoryRegion *)object_dynamic_cast(child, TYPE_MEMORY_REGION);
+> +
+> +    if (mr && mr->container) {
+> +        memory_region_del_subregion(mr->container, mr);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  static void device_set_realized(Object *obj, bool value, Error **errp)
+>  {
+>      DeviceState *dev = DEVICE(obj);
+> @@ -582,6 +593,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+>          if (dc->unrealize) {
+>              dc->unrealize(dev);
+>          }
+> +        object_child_foreach(OBJECT(dev), del_memory_region, NULL);
+
+PS: I'll keep throwing some pure questions here, again, Paolo - it doesn't
+need to block merging if you're confident with the general approach.
+
+Said that, a few things I still want to mention after I read this series..
+
+One thing I really feel hard to review such work is, you hardly describe
+the problems the series is resolving.
+
+For example, this patch proposed auto-detach MRs in unrealize() for qdev,
+however there's nowhere describing "what will start to work, while it
+doesn't", "how bad is the problem", etc..  All the rest patches are about
+"what we can avoid do" after this patch.
+
+Meanwhile, the cover letter is misleading. It is:
+
+[PATCH 00/14] Fix memory region use-after-finalization
+
+I believe it's simply wrong, because the whole series is not about
+finalize() but unrealize().  For Device class, it also includes the exit()
+which will be invoked in pci_qdev_unrealize(), but that is also part of the
+unrealize() routine, not finalize().
+
+The other question is, what if a MR has a owner that is not the device
+itself?  There's no place enforcing this, hence a qdev can logically have
+some sub-objects (which may not really be qdev) that can be the owner of
+the memory regions.  Then the device emulation will found that some MRs are
+auto-detached and some are not.
+
+One example that I'm aware of is this:
+
+https://lore.kernel.org/all/20250910115420.1012191-2-aesteve@redhat.com/#t
+
+TYPE_VIRTIO_SHARED_MEMORY_MAPPING is an object, not qdev here, which can be
+the owner of the MR.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
