@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C173CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 09:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9B7CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 09:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4FMP-0005oi-Ho; Thu, 02 Oct 2025 05:12:25 -0400
+	id 1v4FMg-0005u1-Hx; Thu, 02 Oct 2025 05:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4FMG-0005mp-3j
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 05:12:16 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4FMe-0005tL-26
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 05:12:41 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4FLv-0002S5-N1
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 05:12:15 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46e42deffa8so7969675e9.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 02:11:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4FME-0002WC-K6
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 05:12:39 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-46e326e4e99so10646325e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 02:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759396304; x=1760001104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759396328; x=1760001128; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CQ2rCnIwrmK/IRH54N+833E/dWEkz+wW5RLLkGk+ncY=;
- b=BoM+0BIINjOPC1NCDxDLMPJtn1INMIZoWZMtH9es2qf/pnf1lB3WX3MN9ifl189UXU
- JIyhVPSIsK2HV29/IE1szQxzssP/GUGkPHZmWMpNPvE2W4FmFRNQEaQyjjTmMkoM5bwZ
- eaBlsZwRBX/nBxpo6gbKgs02fVCV/3pBziYgAoOEZQmGgJDbZw3RGavxVXp9uhrwgF1L
- yRVomCiLwYqIwcPl+TTfDg7xOQ2kSWEimN0hWbMScBUnDmqfpBX6DxKPndUj2+x4npeg
- SZ4Qcu3oOmdh2rktTYclpIysiajDCG/XzDMK1SIliTakz2T8K8YctC2nKdKjsXkDsN//
- a+PQ==
+ bh=E5i3kC5TI+8HL+d/5fQ2rHWMtMwDQb+xa/XGlcT3N6c=;
+ b=FcW8D4VP/gqj2U0+aepdx+nQj485bP0jWwTmz9qdh+i9RebQfqA0k+6V9kuBV2Af98
+ fESrxfbCxY5punaFZdFBcZQQG/TOVuUH8JiOR3qvDDJRuKDE9TcqAdjww8ZHmuRrYSbZ
+ psEolZvUFPoZ2Blh0C7KePV5EXBntca8VN5+LJ1S8FlJR5UJH9UP/O2pz11bfMCbStEb
+ yBUK7YG2GTSrVOMV0RucmbcJcmR3RPE5kCr7bc6mSmRVJ4HwUpuFrJS8q3kBd6jsR2yA
+ c2OWuwE19FMVBwqHEq/5kQA9nGFO81sXdH5pPgFx/QSN+aChIumnRLF79EM/mendTVG6
+ Zqqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759396304; x=1760001104;
+ d=1e100.net; s=20230601; t=1759396328; x=1760001128;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CQ2rCnIwrmK/IRH54N+833E/dWEkz+wW5RLLkGk+ncY=;
- b=QGiPRUbywe8bmqFPr2Ci09/ZoOAEeX7tG0+vn+QUXRfrIxeRzZMh5TQ2vS31WOoaG4
- ubXvrd8o6b3ndpqkfocgbHJhPxEPhruxGG4Ar+/KPYhp337WrU9de8eLY+bCSj9I43YA
- wKQroGuaFXz4hGlEEJYemA/hNDruMM+ViV+N3HFj5CbvycYXZI16aT+BZBaDjj13p/xL
- /impWVIuz5QlvszeTF30wEpGd/b10Gdng2vU/kgUq2UXSsK04GhyCHHrzCzQLkuOGMTk
- Tql8FBo6Snw6bFLXOsZFOka6XgUWYl+2i27nvgJ53Ndv5L5BBXZwlk9e72f0v/Lz/DXU
- PhtA==
-X-Gm-Message-State: AOJu0YyInpKSDXxUTSN08ZICBTmxXQoLsEgihgOypTsAFehgNSGoK5uO
- Yogps89QiKF79JnXx0nQz/5bqtw1pPVZSXAHll1nYv47tAMq0nCDjB5+h0q+XX8OLqOUibJ+tSw
- F7tg0Y94zPg==
-X-Gm-Gg: ASbGncs974YZAKUS5rWFaSUWt+j7Nz/46AYvtQaXIaIBOTotnJHJ+N404JeuKiNaBGx
- Qelue4QBZg9QkLTQunkZs2nVtwvVf6qSzykMw7AwC27Jqg8YfoJVVbMXfwPUNXMfEZZS9QWQEFj
- mctytK1TFCDjKuToHEG6Iq00ACm1MB4Iz4e6w4mnSycuqIATVngKF3Lfm5sH1ks5vnqV9rebrjg
- QU/VFAZJRYepO4m4xNUoX1CpaTAJJFsbwsbLloOeOtJDm3nMuO3K1NE16xGl563CNmx5sf1yluO
- 5RC5Qob26Was3LjEnMpivhLuPGPFKMbuQiLg82WTSgRUHC4TPbHOr6c/runx/CydoQ2LNK/EaXO
- 5NZpo6SzeUn5wNweI8NdhbHLWDiEhWlACHyPd7xrRqG7Ddnv3JNJvY/MviXdfeWaf29G48xS4H9
- DoVf/wY5bfQxuouGSuiDTUrNzmkTe6zQ==
-X-Google-Smtp-Source: AGHT+IHKyGUFPb0EXyDX1plut2vO1MLBa9dzXlEhiI4ZTeHa9WfKWyGpEBK28lBZOXWHPHtXS86j6Q==
-X-Received: by 2002:a05:6000:25c4:b0:3e2:c41c:bfe3 with SMTP id
- ffacd0b85a97d-4255780b8f6mr5293138f8f.38.1759396304167; 
- Thu, 02 Oct 2025 02:11:44 -0700 (PDT)
+ bh=E5i3kC5TI+8HL+d/5fQ2rHWMtMwDQb+xa/XGlcT3N6c=;
+ b=Mnggq3gB3GKRISJuKntK/HpdJnYUw+qlXSVeuQQNBjPw3eXTLvTQwqrnb5jZ0L+pIt
+ 81FBP4QvSYR1FqFYj/X8Cdd1sxVFqK9/jP+bJ0a0vsKWnENUB66dpFxKaggxwY/oZC+z
+ D5QmqLjtWGTsAkYWJw9ACsCL1QMOY51cGCtz5UKO8h8tA1U3dhL7xMAhNf/ZeaXCr2XE
+ TtZwxanSGlJhF89bjKGPjzVs5YifTQPTjqmD15LI0ra+G+4CBMWF4gIugeUZRKh2G3Oe
+ esNv5Fh0kV4cbY2HzHM0lB69TIHif1/qUt1BGI2hV9ipCP2pH+abmpzhneXaXPZ0Boqo
+ xStQ==
+X-Gm-Message-State: AOJu0YwrffiHclIFDie8qqJnMCdcsKIp3ZFL8kmb5Amhap0cVK5Z81rO
+ upUBOu3wP5RwZzovOuJCEo9D2RGx+sQ1KGQz+G8yJZkqV3kUWiLZfeK30tXEbLjIlPW5auFArXo
+ cTQQ8CZLlOw==
+X-Gm-Gg: ASbGncseXaxb6LoNwFofy7x9F+12Ilr+oGTj4hcITJbQgcanAMOapacsjp1qByw9gro
+ 4fhxxo4ifdHRmy7J3KxOiVKCoc2FqF+WhGPye8XynnoEleuvaXqpBF35HqXgkSFBpm/oxyMp0wG
+ 6xw15L5k5v0HFtRw/+eKM7Z55gJJJAoxRFTzMp+5GkKJgdztHpK/6drKBR862XuDfK7BLUZqT8C
+ BL3Oddgi2ZQQC+uwSEXFSgneMO6CxjEEpbyiRJgpTHvhYT//VU0UvrUaLaclaqcvXnhWPvApet3
+ HmenmWaIgKfa2WbjtTyyPhrnJLf2q/qTg7zeOCLXxgO4nk7pt7O0noG+Hjgj9k1mO0bls0HHwUD
+ 2o1ejN7d1G0i0/8F32vzJzhV7yH4a+57duHenslqahex0mKO5mEOYoi59hfhDxZ1qEmiZ+yQba9
+ AD7s7O8cw6VBguYfllDxkJq7aM2kcYyA==
+X-Google-Smtp-Source: AGHT+IEFMx4IIWWMWAAZi5nmfyx6AoW34PPMRvPgRABxL+CuW9ltTm2Y1KFxP6Dqc8Orf4iYhupoEw==
+X-Received: by 2002:a05:6000:1861:b0:404:c253:a38 with SMTP id
+ ffacd0b85a97d-4255d2d640fmr1601685f8f.28.1759396328077; 
+ Thu, 02 Oct 2025 02:12:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e97f0sm2768064f8f.27.2025.10.02.02.11.43
+ 5b1f17b1804b1-46e6917a577sm25991755e9.1.2025.10.02.02.12.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Oct 2025 02:11:43 -0700 (PDT)
+ Thu, 02 Oct 2025 02:12:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
@@ -73,17 +73,17 @@ Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/9] target/s390x: Factor diag_iplb_read() out
-Date: Thu,  2 Oct 2025 11:11:25 +0200
-Message-ID: <20251002091132.65703-3-philmd@linaro.org>
+Subject: [PATCH 7/9] target/s390x: Reduce s390_store_adtl_status() scope
+Date: Thu,  2 Oct 2025 11:11:30 +0200
+Message-ID: <20251002091132.65703-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002091132.65703-1-philmd@linaro.org>
 References: <20251002091132.65703-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,65 +106,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+s390_store_adtl_status() is only called within sigp.c,
+move it and the SigpAdtlSaveArea structure definition
+there where it belongs, with other SIGP handling code.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/diag.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ target/s390x/s390x-internal.h |  1 -
+ target/s390x/helper.c         | 40 -----------------------------------
+ target/s390x/sigp.c           | 40 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 41 deletions(-)
 
-diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index ed320fc0c1f..c2fedc55213 100644
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -73,6 +73,24 @@ static int diag308_parm_check(CPUS390XState *env, uint64_t r1, uint64_t addr,
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index 1fb752aa1d6..a49dca94a75 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -325,7 +325,6 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ hwaddr s390_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+ #define S390_STORE_STATUS_DEF_ADDR offsetof(LowCore, floating_pt_save_area)
+ int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch);
+-int s390_store_adtl_status(S390CPU *cpu, hwaddr addr, hwaddr len);
+ LowCore *cpu_map_lowcore(CPUS390XState *env);
+ void cpu_unmap_lowcore(CPUS390XState *env, LowCore *lowcore);
+ #endif /* CONFIG_USER_ONLY */
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index b01b7d9bbbf..84321e1d68e 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -248,43 +248,3 @@ int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch)
+ 
      return 0;
  }
+-
+-typedef struct SigpAdtlSaveArea {
+-    uint64_t    vregs[32][2];                     /* 0x0000 */
+-    uint8_t     pad_0x0200[0x0400 - 0x0200];      /* 0x0200 */
+-    uint64_t    gscb[4];                          /* 0x0400 */
+-    uint8_t     pad_0x0420[0x1000 - 0x0420];      /* 0x0420 */
+-} SigpAdtlSaveArea;
+-QEMU_BUILD_BUG_ON(sizeof(SigpAdtlSaveArea) != 4096);
+-
+-#define ADTL_GS_MIN_SIZE 2048 /* minimal size of adtl save area for GS */
+-int s390_store_adtl_status(S390CPU *cpu, hwaddr addr, hwaddr len)
+-{
+-    SigpAdtlSaveArea *sa;
+-    hwaddr save = len;
+-    int i;
+-
+-    sa = cpu_physical_memory_map(addr, &save, true);
+-    if (!sa) {
+-        return -EFAULT;
+-    }
+-    if (save != len) {
+-        cpu_physical_memory_unmap(sa, len, 1, 0);
+-        return -EFAULT;
+-    }
+-
+-    if (s390_has_feat(S390_FEAT_VECTOR)) {
+-        for (i = 0; i < 32; i++) {
+-            sa->vregs[i][0] = cpu_to_be64(cpu->env.vregs[i][0]);
+-            sa->vregs[i][1] = cpu_to_be64(cpu->env.vregs[i][1]);
+-        }
+-    }
+-    if (s390_has_feat(S390_FEAT_GUARDED_STORAGE) && len >= ADTL_GS_MIN_SIZE) {
+-        for (i = 0; i < 4; i++) {
+-            sa->gscb[i] = cpu_to_be64(cpu->env.gscb[i]);
+-        }
+-    }
+-
+-    cpu_physical_memory_unmap(sa, len, 1, len);
+-    return 0;
+-}
+diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
+index 5e95c4978f9..1464be76983 100644
+--- a/target/s390x/sigp.c
++++ b/target/s390x/sigp.c
+@@ -172,6 +172,46 @@ static void sigp_store_status_at_address(CPUState *cs, run_on_cpu_data arg)
+     si->cc = SIGP_CC_ORDER_CODE_ACCEPTED;
+ }
  
-+static bool diag_iplb_read(IplParameterBlock *iplb, S390CPU *cpu, uint64_t addr)
++typedef struct SigpAdtlSaveArea {
++    uint64_t    vregs[32][2];                     /* 0x0000 */
++    uint8_t     pad_0x0200[0x0400 - 0x0200];      /* 0x0200 */
++    uint64_t    gscb[4];                          /* 0x0400 */
++    uint8_t     pad_0x0420[0x1000 - 0x0420];      /* 0x0420 */
++} SigpAdtlSaveArea;
++QEMU_BUILD_BUG_ON(sizeof(SigpAdtlSaveArea) != 4096);
++
++#define ADTL_GS_MIN_SIZE 2048 /* minimal size of adtl save area for GS */
++static int s390_store_adtl_status(S390CPU *cpu, hwaddr addr, hwaddr len)
 +{
-+    if (s390_is_pv()) {
-+        s390_cpu_pv_mem_read(cpu, 0, iplb, sizeof(iplb->len));
-+        if (!iplb_valid_len(iplb)) {
-+            return false;
-+        }
-+        s390_cpu_pv_mem_read(cpu, 0, iplb, be32_to_cpu(iplb->len));
-+    } else {
-+        cpu_physical_memory_read(addr, iplb, sizeof(iplb->len));
-+        if (!iplb_valid_len(iplb)) {
-+            return false;
-+        }
-+        cpu_physical_memory_read(addr, iplb, be32_to_cpu(iplb->len));
++    SigpAdtlSaveArea *sa;
++    hwaddr save = len;
++    int i;
++
++    sa = cpu_physical_memory_map(addr, &save, true);
++    if (!sa) {
++        return -EFAULT;
 +    }
-+    return true;
++    if (save != len) {
++        cpu_physical_memory_unmap(sa, len, 1, 0);
++        return -EFAULT;
++    }
++
++    if (s390_has_feat(S390_FEAT_VECTOR)) {
++        for (i = 0; i < 32; i++) {
++            sa->vregs[i][0] = cpu_to_be64(cpu->env.vregs[i][0]);
++            sa->vregs[i][1] = cpu_to_be64(cpu->env.vregs[i][1]);
++        }
++    }
++    if (s390_has_feat(S390_FEAT_GUARDED_STORAGE) && len >= ADTL_GS_MIN_SIZE) {
++        for (i = 0; i < 4; i++) {
++            sa->gscb[i] = cpu_to_be64(cpu->env.gscb[i]);
++        }
++    }
++
++    cpu_physical_memory_unmap(sa, len, 1, len);
++    return 0;
 +}
 +
- static void diag_iplb_write(IplParameterBlock *iplb, S390CPU *cpu, uint64_t addr)
+ #define ADTL_SAVE_LC_MASK  0xfUL
+ static void sigp_store_adtl_status(CPUState *cs, run_on_cpu_data arg)
  {
-     const size_t iplb_len = be32_to_cpu(iplb->len);
-@@ -125,23 +143,12 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
-             return;
-         }
-         iplb = g_new0(IplParameterBlock, 1);
--        if (!s390_is_pv()) {
--            cpu_physical_memory_read(addr, iplb, sizeof(iplb->len));
--        } else {
--            s390_cpu_pv_mem_read(cpu, 0, iplb, sizeof(iplb->len));
--        }
- 
--        if (!iplb_valid_len(iplb)) {
-+        if (!diag_iplb_read(iplb, cpu, addr)) {
-             env->regs[r1 + 1] = DIAG_308_RC_INVALID;
-             goto out;
-         }
- 
--        if (!s390_is_pv()) {
--            cpu_physical_memory_read(addr, iplb, be32_to_cpu(iplb->len));
--        } else {
--            s390_cpu_pv_mem_read(cpu, 0, iplb, be32_to_cpu(iplb->len));
--        }
--
-         valid = subcode == DIAG308_PV_SET ? iplb_valid_pv(iplb) : iplb_valid(iplb);
-         if (!valid) {
-             if (subcode == DIAG308_SET && iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
 -- 
 2.51.0
 
