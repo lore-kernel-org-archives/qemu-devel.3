@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA87DCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 04:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F5ACAC5B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 05:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Axr-0003TO-2y; Thu, 02 Oct 2025 00:30:47 -0400
+	id 1v4BYW-0006bd-5u; Thu, 02 Oct 2025 01:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4Axl-0003QI-Na
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 00:30:41 -0400
-Received: from p-east3-cluster2-host1-snip4-5.eps.apple.com ([57.103.87.136]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4Axc-0007k9-8W
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 00:30:37 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPS id
- A843D1800346; Thu,  2 Oct 2025 04:30:15 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=AMnypSY+zGdob6ZQeFJ+VngD412wfTVoUZjiugy7xXE=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=CO1jQybVIERiU2dhddqkSq0fDKKUErWUWDJKdjPsnbXIUQcUaOhGAUubmSp0vVdG6nUIwdNItJgvOavGYhigE3E5OX44SQpHzOQV9995hg1eOFWks62NbWlgymyzkROX2oIK9qGUH3ASfgTYD759b/90t1ZcGFjEPMGLzJTw9XHYuPaWhVtf1RyxIkbtbw9+Qoi2nAJtC9H6zEKUc+faduv2HNj3xks08RY0q5JTjwN4HoGss/uIHc2Zwwf5y4mZGu7qgahvKBvz2hGD2dPWpJtpOWn68I0nf4KVSIPmdO2zVBJ4T5g1k5jTcbVhhDxK13TZPrY8Qh9T+BNTRf5EeQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPSA id
- 4DA6718000A7; Thu,  2 Oct 2025 04:30:12 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: [PATCH v6 03/23] hw/arm: virt: add GICv2m for the case when ITS
- is not available
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAFEAcA-398ZMeLUbHWyUw4np81mLikEn2PkQnFQMY4oY_iWRFA@mail.gmail.com>
-Date: Thu, 2 Oct 2025 06:30:00 +0200
-Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- kvm@vger.kernel.org, Igor Mammedov <imammedo@redhat.com>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v4BYG-0006a5-Co
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:08:27 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v4BXw-0003lE-I8
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 01:08:21 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b3f5e0e2bf7so115862466b.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 22:08:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1759381677; x=1759986477; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cSOUcqp2IlrIvHA8jMOKMPae7kynR4QEp3SeGZrNH6w=;
+ b=dXovyZQQ5OprmJC0nnB0Qug5hGACccfST3vVQPCcIVWECxHdg3Pnb5BV//p5IgsWX3
+ In4seiS68wFtH5rc3HzUYiSHcaQSEFR/cUYluuSCi3YlxKwXn32ZHwtNgNfajQRM4PJj
+ OEhgyUt8OOzfXAxC3gcP1CKw1d3S1rCYIOYFqNGHVehnfiYj5HefDXE/vViVNaEJxupu
+ mvwS9PtPGMO+0950NmxHt6QeX7wPyE9G+Ck+qQ3+uAIJnbqKagB2Bs9Mi7616XTv5Lvy
+ 4He2KFfuHzc2UpOyQSqL4hIfZk4yMfoE/NNBGlJzBiDGWL72g1Airp5aT9Dcp9nFXpjn
+ UYRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759381677; x=1759986477;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cSOUcqp2IlrIvHA8jMOKMPae7kynR4QEp3SeGZrNH6w=;
+ b=BNfRtjDXprlY+94tcCZu3iNg1uy/Q/bzLqbr1BwZt9p6vPA4thPxYwAEhI7xPUdnwc
+ NRnYfBeg7D2zDh+aoVX+6Nwo9hc4T1FjMq++lU0ebm/Kj0XZHdHsVu1dvTMMLPW9/S/i
+ 8Jjbny82WXc8VAM+IavHqBGbMevXEbFEfRfr7PwQhoiER/jAvWQEerHC9LgSBK4mtscf
+ AA80iKnXBavTgkoe1RycsN8RTOaSiH+85RN1RRvn4LKhfWiMcRunzpjMko+OyK3jgxkG
+ y043mRnvTyG/XSymhGmc8tGeQVVqqZzgP/tEBWmpLmTqpb7mOI7qrhN4KAAYQ4j+Ek6X
+ NVHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVR7NJqwAi2mwg/OvhbrnBevcg8/L3ROgHkquwtUv106/WJhHVs3b8ZEnkxcZLZwMdshwWNwzr72URt@nongnu.org
+X-Gm-Message-State: AOJu0Ywu+ovxYDMapl8lv1azCbfJhMH9l3U2bBTllR0SG7cGlXzqskE4
+ +enPq5B3nm7Wxn8EEv4HV7u85m+M8sLoJXIF5RgALhJRgdGCImF2skBVCYx61u1qme3cWl9n8Sh
+ dZPbamEjWZ2PFvLW+aL8aTKVrSVifj98=
+X-Gm-Gg: ASbGncvSDEozWspGsdLdEJhZtXFlyDK/dcIQKNWXSZsgcoSyVolOjqHK6f8lsIWmZcC
+ JD1JK2Rgb57sHRBVi1aaPujArInCDgtg+juVBbGDyEI6145u4gx710RA+Zn/RV0U9a2vMDDoH87
+ 5bNYql/o6vhfDmVde5Elaba0DB2X+dvCCkALayB7MvINwSkUccSTzlMJaKy0ekBXgOnFwPfXNas
+ vXh3F2M6qNIsJo6ooZYlTPWuR7Y5hYrcTXWWxDYuBIks3/b+XVwlelpuTSYcg==
+X-Google-Smtp-Source: AGHT+IGbPbj4c0hWe6rckwwTwn4p9XtFbIOSiMHR+O74Jl7CyLyWE/cFBAXCXAcwNA1z6jnG/UR8LPnDKSqRCgE/vL8=
+X-Received: by 2002:a17:907:2d20:b0:b07:e3a8:5194 with SMTP id
+ a640c23a62f3a-b46e515e0a5mr678873866b.22.1759381676627; Wed, 01 Oct 2025
+ 22:07:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250913041233.972870-1-guoren@kernel.org>
+In-Reply-To: <20250913041233.972870-1-guoren@kernel.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 2 Oct 2025 15:07:30 +1000
+X-Gm-Features: AS18NWAy2EuzbdPxno_KxqHV52AiiHglsi8I-G57995-DuZlLz-NrMvn4oHwLXQ
+Message-ID: <CAKmqyKOLjbAKFmJeb2MAznHES1=pn224i-8r9yKSC+-gu0UZug@mail.gmail.com>
+Subject: Re: [PATCH V3] hw/riscv/riscv-iommu: Fixup PDT Nested Walk
+To: guoren@kernel.org
+Cc: zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
+ alistair.francis@wdc.com, seb@rivosinc.com, tjeznach@rivosinc.com, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Nutty Liu <liujingqi@lanxincomputing.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <29E39B1C-40D3-4BBA-8B0B-C39594BA9B29@unpredictable.fr>
-References: <20250920140124.63046-1-mohamed@unpredictable.fr>
- <20250920140124.63046-4-mohamed@unpredictable.fr>
- <CAFEAcA-398ZMeLUbHWyUw4np81mLikEn2PkQnFQMY4oY_iWRFA@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-GUID: CJFpDVIwmkAu2IlkIvD6zUEkt3yFB_Jr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAyMDAzNiBTYWx0ZWRfX+j4lSbyT82c1
- GicabodNmbkEEp+tXIyKOa1mqlkx4ZEpi6CdQ0Uafpt8QC8RnQ5Ih6xJIInbgops15A4oC3JPkd
- FrUbYZLQhQcHC9lsCMsqHgFN37E9iLxswUDJu/SuCZ5yKkHb34aoYVbj9RKB8hgxbypkSmaYpgl
- eIfEHT5RP8MveirDjgCceDw4sMB/EWTok4Wr5G9UzOTgkm9+NGl6OedioW5Kr7SXqqyPaSlW98q
- llQR2dT3HnNI/CspZE1oo5nQnKEKj4AgRO9aul59LEaShDDWsCawndqkdoFCQ+izNQP6sJjds=
-X-Proofpoint-ORIG-GUID: CJFpDVIwmkAu2IlkIvD6zUEkt3yFB_Jr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-02_02,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- spamscore=0 mlxscore=0 malwarescore=0 clxscore=1030
- adultscore=0
- suspectscore=0 phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2510020036
-X-JNJ: AAAAAAABW4m61AJpsvVrk0/fj+8K4NGZOs8trT0wgKIFbmzFZAi0PRTBsH5xx86cKOLWGb80fK+vNIgvhx9yNLpEwOGaqVlmLuzgCcSktq7ZM4OmwwG90iGtljAM9ZjIgJ9T1o58n9bWcRo//0kSDuUBx5MqvjInB+pzQE+uOsTsN3AlU2IefYsg2rqNJjGWGyRLOmrgTY+37ML5WYA+ck1tCcEHSc6j9KLYZFSj06VvOyF2abUnb7OAY8xvgXvPmcdpvzOxkLn3COYn+ZQ/ziSrpQ8AcQeikd5DtwRkEqH+h6niTL/F61xkhWOZ+BQE6Jx8sr/Abv3a0yWL5m/TbYs5oVtnxNIT5/gj+WrdxAh019+V+fqfnuwlt1r51BpYgZwTlNvkPGMNcyN21Z/c5Xs+LHG9Lfa1wa/fqEFg/rUxBliV+HwSH28tLO2MUUMKeFu7NG6B44gQe+uzi87XC/pTCZWoP1DYfoUGnGmMNX0Mg0B1TSu9La01FglVuD0yrPOTVOQTplEzvsAGTTmsLQW+9DUsrQw7zoqDbKeQWmYIWDjsrgqlO+D/OtX3v3h/p6EHVO+UQZlVfjwEG5ZOAI3xnUqjdJ9vQpVtacjBXYzy2+Y5Fdy5zcwkA02XEJ4KAWso8lBDLuXVr8Rz5NSZjsQp7uVXkTtHTyP4fN9Eyf3YW5gcJLQsoaLTlPQu/5Wm7H92xHwjwzIQOAagEd8X9EtqKcW7CnDo1LWqBrDiaIaxotiRdpNHGCaMQwU1jDnPsxzoDYWlcQ3lY9AKLUp90kH0//z8G+klFbx3Q0VwExukrG9T/M4hmIwMcNs7mTD5Pnz2UWhUvYBedO0vFaQD5KB5IHhpHwz6Tsy0xbnVBkDr7DyM8XC4TEvA7BY4/DrZ4lUhZgCHZ7WOdgP4mDsEOewVhEnFdJbRdjUuDVJ9+WVJ058fY+5I1DDgBNuLmDtGvPcgEs5+rrwKWDqHzQY=
-Received-SPF: pass client-ip=57.103.87.136;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,81 +99,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, Sep 13, 2025 at 2:15=E2=80=AFPM <guoren@kernel.org> wrote:
+>
+> From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
+>
+> Current implementation is wrong when iohgatp !=3D bare. The RISC-V
+> IOMMU specification has defined that the PDT is based on GPA, not
+> SPA. So this patch fixes the problem, making PDT walk correctly
+> when the G-stage table walk is enabled.
+>
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Cc: qemu-stable@nongnu.org
+> Cc: Sebastien Boeuf <seb@rivosinc.com>
+> Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
+> Reviewed-by: Weiwei Li <liwei1518@gmail.com>
+> Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+> Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
 
+Thanks!
 
-> On 25. Sep 2025, at 18:24, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Sat, 20 Sept 2025 at 15:02, Mohamed Mediouni
-> <mohamed@unpredictable.fr> wrote:
->>=20
->> On Hypervisor.framework for macOS and WHPX for Windows, the provided =
-environment is a GICv3 without ITS.
->>=20
->> As such, support a GICv3 w/ GICv2m for that scenario.
->>=20
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->>=20
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->> hw/arm/virt-acpi-build.c | 4 +++-
->> hw/arm/virt.c            | 8 ++++++++
->> include/hw/arm/virt.h    | 2 ++
->> 3 files changed, 13 insertions(+), 1 deletion(-)
->=20
-> Looking at this I find myself wondering whether we need the
-> old-version back compat handling. The cases I think we have
-> at the moment are:
->=20
-> (1) TCG, virt-6.1 and earlier: no_tcg_its is set
->   -- you can have a gicv2 (always with a gicv2m)
->   -- if you specify gic-version=3D3 you get a GICv3 without ITS
-> (2) TCG, virt-6.2 and later:
->   -- gic-version=3D2 still has gicv2m
->   -- gic-version=3D3 by default gives you an ITS; if you also
->      say its=3Doff you get GICv3 with no ITS
->   -- there is no case where we provide a GICv3 and are
->      unable to provide an ITS for it
-> (3) KVM (any version):
->   -- gic-version=3D2 has a gicv2m
->   -- gic-version=3D3 gives you an ITS by default; its=3Doff
->      will remove it
->   -- there is no case where we provide a GICv3 and are
->      unable to provide an ITS for it
-> (4) HVF:
->   -- only gic-version=3D2 works, you get a gicv2m
->=20
-> and I think what we want is:
-> (a) if you explicitly disable the ITS (with its=3Doff or via
->     no_tcg_its) you get no ITS (and no gicv2m)
-> (b) if you explicitly enable the ITS you should get an
->     actual ITS or an error message
-> (c) the default should be its=3Dauto which gives
->     you "ITS if we can, gicv2m if we can't".
->     This is repurposing the its=3D property as "message signaled
->     interrupt support", which is a little bit of a hack
->     but I think OK if we're clear about it in the docs.
->     (We could rename the property to "msi=3D(off,its,gicv2m,auto)"
->     with back-compat support for "its=3D" but I don't know if
->     that's worth the effort.)
->=20
-> And then that doesn't need any back-compat handling for pre-10.2
-> machine types or a "no_gicv3_with_gicv2m" flag, because for
-> 10.1 and earlier there is no case that currently works and
-> which falls into category (c) and which doesn't give you an ITS.
-> (because we don't yet have hvf gicv3 implemented: that's a new
-> feature that never worked in 10.1.)
->=20
-> What do you think?
+Applied to riscv-to-apply.next
 
-Would it be wanted to provide MSI-X support in all scenarios even with =
-its=3Doff?
-And there=E2=80=99s the consequence of that making GICv3 + GICv2m only =
-testable with auto and not with TCG or kvm, which doesn=E2=80=99t sound =
-ideal.
+Alistair
 
-Thanks,
-> thanks
-> -- PMM
-
+> ---
+> Changes in V3:
+>  - Fixup inner non-leaf walking for 4KB-align.
+>  - Add two Reviewed-by tags.
+>
+> Changes in V2:
+>  - Remove nested param to make patch clearer.
+> ---
+>  hw/riscv/riscv-iommu.c | 141 ++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 139 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 96a7fbdefcf3..ddb5236f55d1 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -866,6 +866,143 @@ static bool riscv_iommu_validate_process_ctx(RISCVI=
+OMMUState *s,
+>      return true;
+>  }
+>
+> +/**
+> + * pdt_memory_read: PDT wrapper of dma_memory_read.
+> + *
+> + * @s: IOMMU Device State
+> + * @ctx: Device Translation Context with devid and pasid set
+> + * @addr: address within that address space
+> + * @buf: buffer with the data transferred
+> + * @len: length of the data transferred
+> + * @attrs: memory transaction attributes
+> + */
+> +static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
+> +                                   RISCVIOMMUContext *ctx,
+> +                                   dma_addr_t addr,
+> +                                   void *buf, dma_addr_t len,
+> +                                   MemTxAttrs attrs)
+> +{
+> +    uint64_t gatp_mode, pte;
+> +    struct {
+> +        unsigned char step;
+> +        unsigned char levels;
+> +        unsigned char ptidxbits;
+> +        unsigned char ptesize;
+> +    } sc;
+> +    MemTxResult ret;
+> +    dma_addr_t base =3D addr;
+> +
+> +    /* G stages translation mode */
+> +    gatp_mode =3D get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+> +    if (gatp_mode =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE)
+> +        goto out;
+> +
+> +    /* G stages translation tables root pointer */
+> +    base =3D PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
+> +
+> +    /* Start at step 0 */
+> +    sc.step =3D 0;
+> +
+> +    if (s->fctl & RISCV_IOMMU_FCTL_GXL) {
+> +        /* 32bit mode for GXL =3D=3D 1 */
+> +        switch (gatp_mode) {
+> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:
+> +            if (!(s->cap & RISCV_IOMMU_CAP_SV32X4)) {
+> +                return MEMTX_ACCESS_ERROR;
+> +            }
+> +            sc.levels    =3D 2;
+> +            sc.ptidxbits =3D 10;
+> +            sc.ptesize   =3D 4;
+> +            break;
+> +        default:
+> +            return MEMTX_ACCESS_ERROR;
+> +        }
+> +    } else {
+> +        /* 64bit mode for GXL =3D=3D 0 */
+> +        switch (gatp_mode) {
+> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:
+> +            if (!(s->cap & RISCV_IOMMU_CAP_SV39X4)) {
+> +                return MEMTX_ACCESS_ERROR;
+> +            }
+> +            sc.levels    =3D 3;
+> +            sc.ptidxbits =3D 9;
+> +            sc.ptesize   =3D 8;
+> +            break;
+> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:
+> +            if (!(s->cap & RISCV_IOMMU_CAP_SV48X4)) {
+> +                return MEMTX_ACCESS_ERROR;
+> +            }
+> +            sc.levels    =3D 4;
+> +            sc.ptidxbits =3D 9;
+> +            sc.ptesize   =3D 8;
+> +            break;
+> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:
+> +            if (!(s->cap & RISCV_IOMMU_CAP_SV57X4)) {
+> +                return MEMTX_ACCESS_ERROR;
+> +            }
+> +            sc.levels    =3D 5;
+> +            sc.ptidxbits =3D 9;
+> +            sc.ptesize   =3D 8;
+> +            break;
+> +        default:
+> +            return MEMTX_ACCESS_ERROR;
+> +        }
+> +    }
+> +
+> +    do {
+> +        const unsigned va_bits =3D (sc.step ? 0 : 2) + sc.ptidxbits;
+> +        const unsigned va_skip =3D TARGET_PAGE_BITS + sc.ptidxbits *
+> +                                 (sc.levels - 1 - sc.step);
+> +        const unsigned idx =3D (addr >> va_skip) & ((1 << va_bits) - 1);
+> +        const dma_addr_t pte_addr =3D base + idx * sc.ptesize;
+> +
+> +        /* Address range check before first level lookup */
+> +        if (!sc.step) {
+> +            const uint64_t va_mask =3D (1ULL << (va_skip + va_bits)) - 1=
+;
+> +            if ((addr & va_mask) !=3D addr) {
+> +                return MEMTX_ACCESS_ERROR;
+> +            }
+> +        }
+> +
+> +        /* Read page table entry */
+> +        if (sc.ptesize =3D=3D 4) {
+> +            uint32_t pte32 =3D 0;
+> +            ret =3D ldl_le_dma(s->target_as, pte_addr, &pte32, attrs);
+> +            pte =3D pte32;
+> +        } else {
+> +            ret =3D ldq_le_dma(s->target_as, pte_addr, &pte, attrs);
+> +        }
+> +        if (ret !=3D MEMTX_OK)
+> +            return ret;
+> +
+> +        sc.step++;
+> +        hwaddr ppn =3D pte >> PTE_PPN_SHIFT;
+> +
+> +        if (!(pte & PTE_V)) {
+> +            return MEMTX_ACCESS_ERROR; /* Invalid PTE */
+> +        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+> +            base =3D PPN_PHYS(ppn); /* Inner PTE, continue walking */
+> +        } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D PTE_W) {
+> +            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W=
+ */
+> +        } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D (PTE_W | PTE_X=
+)) {
+> +            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W=
+ + PTE_X */
+> +        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
+> +            return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
+> +        } else {
+> +            /* Leaf PTE, translation completed. */
+> +            base =3D PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+> +            break;
+> +        }
+> +
+> +        if (sc.step =3D=3D sc.levels) {
+> +            return MEMTX_ACCESS_ERROR; /* Can't find leaf PTE */
+> +        }
+> +    } while (1);
+> +
+> +out:
+> +    return dma_memory_read(s->target_as, base, buf, len, attrs);
+> +}
+> +
+>  /*
+>   * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
+>   *
+> @@ -1038,7 +1175,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
+, RISCVIOMMUContext *ctx)
+>           */
+>          const int split =3D depth * 9 + 8;
+>          addr |=3D ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
+> -        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+> +        if (pdt_memory_read(s, ctx, addr, &de, sizeof(de),
+>                              MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
+>              return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+>          }
+> @@ -1053,7 +1190,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
+, RISCVIOMMUContext *ctx)
+>
+>      /* Leaf entry in PDT */
+>      addr |=3D (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
+> -    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2=
+,
+> +    if (pdt_memory_read(s, ctx, addr, &dc.ta, sizeof(uint64_t) * 2,
+>                          MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
+>          return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+>      }
+> --
+> 2.40.1
+>
+>
 
