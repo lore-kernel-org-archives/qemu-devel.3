@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABBF5CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 10:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E11CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 11:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4Gdl-0008QU-6c; Thu, 02 Oct 2025 06:34:26 -0400
+	id 1v4HPz-0005dy-Vn; Thu, 02 Oct 2025 07:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <galush.horowitz@gmail.com>)
- id 1v4Gdf-0008Pd-V4
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 06:34:21 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1v4HPr-0005cA-0X
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 07:24:07 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <galush.horowitz@gmail.com>)
- id 1v4GdU-0002dv-RJ
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 06:34:16 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-72e565bf2feso10088467b3.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 03:34:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1v4HPb-0005be-TI
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 07:24:06 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-72ce9790acdso10459257b3.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 04:23:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759401238; x=1760006038; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=G1PifXCYidVavLIwD9Fxaih9Keb6v2gXNLURiE+Wvzw=;
- b=gP5opXgrXGEctdbftq1sg/k9D9ea8lmhrJissp61LzYsH3UFuxOsvV7bBJ9+8BJi0N
- rwsK+sBZFJw2ix9a3U0EgedKpFE0G0x2xYU85DyawmTGkXIEqbsFp63LEYiJsiT63Y6r
- nXA8iYqqvH5Pqa/oie3DJLN1bZJHhnMRXQppQgQXIGxgxIfjtw3zJDpdA18cLsbZqWj7
- ZCsB/ydZflnk8DD+mkvBhWjj8sdeEf1J7H3LzDs8h5sDW4SA2JPzxkS8+QMXMEvFOjby
- Hmebwn3oyqxt2Vsmk1nFFeMcY2MPiistybGxgPvT1Q5P8ciLUN/+eXnYPoG1SWOZhVjM
- lPLw==
+ d=ventanamicro.com; s=google; t=1759404224; x=1760009024; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/R5lzi/iXxvsb0xAjrue9SnyxZX/inc1472pC8H2YuE=;
+ b=aGeZJemV27kj4KG6Vd3+4IMIdlXvXvO0N/IQfOmwakLgJD26tvvNGRChT5+nKoEjzM
+ KazlnhtR37XE5rawmfQDmioJBVJOdMbpuxksWX+C4aIfLsuv2ns8Tk0EVKTVmMG+72JG
+ nc7YuRipDgEcAf7wAq+3i7+dTopxdK+UaxFj8blaRREeuSHSxJOXqegz30VivXcvuvq/
+ xvt/I8nF5uEzKGxnpOvsZHC/odFN2yJcg0e0mUddPBfbfukOJUx9eWb+z9ZJTYpmiT3c
+ od7tupdVwC3jwpSeNcZLfYhGCLJoT09Ng/SoJN6hP4NbvbPQxBye9H1xG07xBGtb3vxb
+ //qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759401238; x=1760006038;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1759404224; x=1760009024;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=G1PifXCYidVavLIwD9Fxaih9Keb6v2gXNLURiE+Wvzw=;
- b=CSqHzgcUHDbjvzmIyImKLtYpcZrAy2YTCzou3nXjlxF3BJbX9uGA+ITNjWPMgate/S
- YdM01v1U8gy4G2duijUWTCtSO/ehUf1rySF2PYb1tA2N5etQTeMM0J2E/SlmVQNlVvOv
- j5Jf3JWllhZQlcaLFfVuzU5Uf6M6LdIKJhHI3rvC2UPLYX0M8eLdku9vVWcfQdcLvhKR
- Fi9n4U5XiRo3eFMMkXeVIqlBI2qm66n2vB56U7tt+FYxb1k1ggoFL5W1WrfUAMmAPmDz
- l6F291qkW7VgZXmkcWUDoiw3xdrAX85I5EM0HE44gh3balZTRl2oQ6jOzlqJbF/4y2I9
- cFyA==
-X-Gm-Message-State: AOJu0YwEQgVrTJx5cVWPM2QT/EfE80+kLPFJYhiusWW5qhR7W7dngCrn
- znDcNBuwKbKy1OPd0zRYX5jdn8Q9rItA6ynAGDGTe3Qt2YmFPClD9MhXdH2F9Pgr++CImV/d1FL
- TUXnb3lfvfaQwuzVokDl2RbTR9GZ+sw1p8y/U
-X-Gm-Gg: ASbGncuhHLsQsG9jcfs+UNF9up0eGEzdsjN5eDSGbQ1r6lJ8DUqZW1lV4FeZOaHZMAL
- nIAjnOZTSNuBaBDhamcNTJ5ge/YsIzm4hwCe7GIbby6FJAbZkmpWUfPJ+49QJaUve1Og5txUDgP
- wu0kA6OMVaL66iRqoTD7C3RdNkS1J4ofXKgCUWP/gzDYoclIke5UDzKnLQJ60O9FMLu+a/0PiqC
- OteLteb94k6rVyT43sjEQItiMEFrclc64d4rp9pszNJ15II+/0v2fiHg9OtffYjWcQuKQl8Y6hD
-X-Google-Smtp-Source: AGHT+IH2KUo8moCjnnelaYThmIkO7yONDJQZ/2kP+j2p1v/NfULpcGa4ub9tZHpIbWTdLQcKyzhtI2eA6TvTPFPUe/g=
-X-Received: by 2002:a05:690e:434d:b0:636:1a8d:9d43 with SMTP id
- 956f58d0204a3-63b6ff47fa5mr6117377d50.40.1759401238206; Thu, 02 Oct 2025
- 03:33:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250924-fix-win32-multiple-taps-v3-0-9335df866c14@gmail.com>
-In-Reply-To: <20250924-fix-win32-multiple-taps-v3-0-9335df866c14@gmail.com>
-From: Gal Horowitz <galush.horowitz@gmail.com>
-Date: Thu, 2 Oct 2025 13:33:22 +0300
-X-Gm-Features: AS18NWBjG-KatCdoxDEsah6UkDnkUgiBVXoQrHuLoyrdpXqx40xjlydYHgMMMJE
-Message-ID: <CAP4rq2AYWTn5=-kGsDkwbcCAX+MMk7F5FRFd16aw5hAU2iMDDQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] tap-win32: fix multiple tap support
+ bh=/R5lzi/iXxvsb0xAjrue9SnyxZX/inc1472pC8H2YuE=;
+ b=kFfR/7ZqPuh6RPXF1ahbSSwfSkLfPUsEp+IX1g48aChvPF6La00PJDoDlhifXQpP0V
+ L/kbq77qJyfXVwtGTCQ9drDmBt9JGRG2rchhUx8W3bBV2ommjF0T9+Av/Z16Hzl6E8im
+ /5ngy/TuStSgrLEgRidQF1M/DMYl7sAweb0WA5HBGmdxjfzsvEl2lehaelLOPhg3P8lu
+ tSp5kLWkwJnWRuf2IAIpCB4TY1tWvCJMOAFVKBxWj/Rbat33ncr4RBvQcKNU3NBNPHU+
+ odK1E2x0TLt3wKaMgegZrIAfVDOuWKZU+63fHf0KMzrEUEs5d6MS7xns+ITC9eeD3o2b
+ 8hXQ==
+X-Gm-Message-State: AOJu0YyjGVFkt3FCRwGNs0rv0rMEPyvw35DWkxeIFWEFSx5k0BapvyWX
+ e6+cOLQOY0qNQMwdEBgbAZJdsVWII8ICRKbPLuzBpVFbRW50k6p1F/LAQyXFTaPrNnjZzkYqiE9
+ vhLhyFYw=
+X-Gm-Gg: ASbGncvmosXog2yICO8n0X6X9EVqULKwwen8Uo+vHW3GOlyf9hAZKDTBloNpCVTnCfx
+ G4rMZgwuozgY+ol2sspAe6w66Fi9k/OOyO02CKxJCHXhWGYczNJsEGApzsjBd0vLa2tamsK1+mt
+ zBWJLp39wEVjY/khjhLJauEnSMu6jOMUSphjXguEydCXPUCGDqompch9UHqfEZlZfFvP0Spfj6j
+ XXnRVN1koKVpcdGUg2DzdhxI27ck4xiHu19PXx+8mHL3tKdcSoTTcgDpwNO/rI5j0iW/HrdRjha
+ liYYbcYOe+I1rWwN7pvLyZ8wXRSk0UlcZVaOfzN+25hR5pmJK+XEaJgLA+EdyElYkkc6FUn8wHR
+ 2B1kXIbdfT2n3U6+T2+ZFOQ11Vm88LLtznTaddYqdqWsbxy/GPHNCAfd6szhpasYKm+GMOHrxRf
+ 8=
+X-Google-Smtp-Source: AGHT+IFHZYxq8DsucnnzorQgJRxLIBlkNXYvwXz8tEn+QVV0D0bAuI+yZfbJOQLn839mWcaUOXeYvw==
+X-Received: by 2002:a05:690c:930c:10b0:749:bc9a:6498 with SMTP id
+ 00721157ae682-77f6f1358c0mr91442007b3.1.1759404224116; 
+ Thu, 02 Oct 2025 04:23:44 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com
+ ([2804:7f0:bcc0:b174:a9af:8146:7deb:fbf3])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-77f81c068f6sm7331627b3.5.2025.10.02.04.23.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Oct 2025 04:23:43 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=galush.horowitz@gmail.com; helo=mail-yw1-x112b.google.com
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ richard.henderson@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH 00/17] hw/riscv, target/riscv: initial e-trace support
+Date: Thu,  2 Oct 2025 08:23:18 -0300
+Message-ID: <20251002112335.2374517-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.51.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,49 +102,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey, friendly ping for review.
-Patchew: https://patchew.org/QEMU/20250924-fix-win32-multiple-taps-v3-0-9335df866c14@gmail.com/
+Hi,
 
-Best Regards,
-Gal Horowitz
+This series implements the Efficient Trace (e-trace) for RISC-V [1].
+This is a hardware level trace similar to what we found in other archs
+like ARM's CoreSight. The implementation is based on [1] and also on the
+RISC-V Trace Control Interface Specification [2].
 
-On Wed, 24 Sept 2025 at 17:50, Gal Horowitz <galush.horowitz@gmail.com> wrote:
->
-> Currently when more than one tap is created on Windows, QEMU immediately
-> crashes with a null-deref since the code incorrectly uses a static global
-> for the tap state.
->
-> Instead, this series allocates a structure for each tap at startup.
-> We also take care of cleaning up when the tap device is close.
->
-> NOTE: Checkpatch has a false positive on the first commit, where it
-> mistakenly flags a cast before an address-of operator as a bitwise
-> and operator missing spaces.
->
-> Signed-off-by: Gal Horowitz <galush.horowitz@gmail.com>
-> ---
-> Changes in v3:
-> - Split to multiple commits
-> - Link to v2: https://lore.kernel.org/qemu-devel/20250923-fix-win32-multiple-taps-v2-1-d497e5ac446f@gmail.com
->
-> Changes in v2:
-> - Add cleanup of the structure fields
-> - Terminate the thread before freeing the structure
-> - Link to v1: https://lore.kernel.org/qemu-devel/20250920-fix-win32-multiple-taps-v1-1-bee41dcc213d@gmail.com
->
-> ---
-> Gal Horowitz (2):
->       tap-win32: cleanup leaked handles on tap close
->       tap-win32: allocate separate tap state for each instance
->
->  net/tap-win32.c | 44 +++++++++++++++++++++++++++++++++-----------
->  1 file changed, 33 insertions(+), 11 deletions(-)
-> ---
-> base-commit: ab8008b231e758e03c87c1c483c03afdd9c02e19
-> change-id: 20250920-fix-win32-multiple-taps-ed16ccefbd17
->
-> Best regards,
-> --
-> Gal Horowitz <galush.horowitz@gmail.com>
->
+Only a subset of all available features are implemented in this work.
+The idea is to contribute it back and allow others to keep incrementing
+it on demand. 
+
+The design implemented is the simplest topology allowed by the specs:
+one trace encoder/trace ram sink pair per CPU. This topology was added
+in the 'virt' machine. We took kernel side considerations when adding
+the FDT for these components. More info on patch 05.
+
+A lot of design decisions/simplifications were made considering how the
+TCG emulation works. I attempted to justify them in the commit messages
+when relevant. 
+
+Linux kernel driver support is available here:
+
+https://lore.kernel.org/linux-riscv/20251002060732.100213-1-apatel@ventanamicro.com/
+
+It includes steps on how to test both the kernel and QEMU support in its
+cover letter. I'll add those steps in our own QEMU documentation,
+including the capabilities implemented, limitations and so on, in the
+following versions of this work. 
+
+
+@Richard: if you could take a look at patch 07 I appreciate it. We've
+run out of tb_flags in RISC-V DisasContext and I had to be "creative" to
+avoid calling trace helpers without a trace session opened.
+
+
+Patches based on alistair/riscv-to-apply.next. You can also find them
+here:
+
+https://gitlab.com/danielhb/qemu/-/tree/rv-etrace
+
+
+Daniel Henrique Barboza (16):
+  hw/riscv: Trace Encoder initial impl
+  hw/riscv: Trace RAM Sink initial impl
+  hw/riscv/trace-encoder: add trace start/stop logic
+  hw/riscv/virt.c: add trace encoders and trace ram sinks
+  hw/riscv: add e-trace message helpers
+  target/riscv: add initial trace instrumentation
+  hw/riscv/trace-encoder: write e-trace packets to RAM sink
+  test/qtest: add riscv-trace-test.c
+  hw/riscv/rv-trace-messages.c: add encoded trap message
+  hw/riscv, target/riscv: send trace trap messages
+  target/riscv, hw/riscv: send trace ppccd packets
+  hw/riscv/trace: add format2 msg helper
+  hw/riscv, target/riscv: send resync updiscon trace packets
+  hw/riscv/rv-trace-messages: add format 1 msgs with branch info
+  hw/riscv/trace-encoder: send branches info
+  hw/riscv/trace: update branch bit in sync messages
+
+Mayuresh Chitale (1):
+  hw/riscv/virt.c add trace encoder and ramsink fdt nodes
+
+ hw/riscv/Kconfig                              |   5 +
+ hw/riscv/meson.build                          |   2 +
+ hw/riscv/rv-trace-messages.c                  | 373 +++++++++++
+ hw/riscv/rv-trace-messages.h                  |  40 ++
+ hw/riscv/trace-encoder.c                      | 609 ++++++++++++++++++
+ hw/riscv/trace-encoder.h                      |  62 ++
+ hw/riscv/trace-events                         |   9 +
+ hw/riscv/trace-ram-sink.c                     | 263 ++++++++
+ hw/riscv/trace-ram-sink.h                     |  83 +++
+ hw/riscv/virt.c                               | 135 ++++
+ include/hw/riscv/virt.h                       |   2 +
+ target/riscv/cpu.h                            |  11 +
+ target/riscv/cpu_helper.c                     |  26 +-
+ target/riscv/helper.h                         |   6 +
+ .../riscv/insn_trans/trans_privileged.c.inc   |  11 +
+ target/riscv/insn_trans/trans_rvi.c.inc       |  15 +
+ target/riscv/meson.build                      |   3 +-
+ target/riscv/tcg/tcg-cpu.c                    |   5 +
+ target/riscv/trace_helper.c                   |  62 ++
+ target/riscv/translate.c                      |  21 +
+ tests/qtest/meson.build                       |   2 +-
+ tests/qtest/riscv-trace-test.c                | 120 ++++
+ 22 files changed, 1862 insertions(+), 3 deletions(-)
+ create mode 100644 hw/riscv/rv-trace-messages.c
+ create mode 100644 hw/riscv/rv-trace-messages.h
+ create mode 100644 hw/riscv/trace-encoder.c
+ create mode 100644 hw/riscv/trace-encoder.h
+ create mode 100644 hw/riscv/trace-ram-sink.c
+ create mode 100644 hw/riscv/trace-ram-sink.h
+ create mode 100644 target/riscv/trace_helper.c
+ create mode 100644 tests/qtest/riscv-trace-test.c
+
+-- 
+2.51.0
+
 
