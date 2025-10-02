@@ -4,106 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAD84CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41626CCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 02:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v48xT-0007Z6-6b; Wed, 01 Oct 2025 22:22:16 -0400
+	id 1v49Hi-0004GP-Oq; Wed, 01 Oct 2025 22:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>)
- id 1v48xQ-0007WT-HW; Wed, 01 Oct 2025 22:22:12 -0400
-Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>)
- id 1v48xH-0001EQ-D8; Wed, 01 Oct 2025 22:22:09 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id 390B01D007F7;
- Wed,  1 Oct 2025 22:21:45 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Wed, 01 Oct 2025 22:21:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm1; t=1759371705; x=1759458105; bh=j+30Y+qcrT
- Ic2Yi220jrPi+ylUldv4RrtBJEEKaXUgY=; b=vF+5VDwLlneOlxX5dKS+tabeiv
- 8XlgFElZJb/jv+HuPtGq0MWmKRKp6YUEqmFhMRYd4bi6gWA7hokWs3xsyoyZ9/US
- Z6KeH8Y40aOHBxCi2VyTf+cQd9xrfzoKbeSsW9UB6ZMRGrMoFV9KH424+Mg5E7sz
- 3FbAc/WEmMQYb8hfTYPRwtPDtef9dtj8E8rGTqADD1ngNiLDyK+4wkrQIlT6fqUU
- 0McL6S9G+MoRtpw3U96dKpIG+K5nbPnv7YaKoQIxMusTcRrtEvlWUtuD7lGwJCnn
- kVD4lAfbQwbXdmggYMlHh08cTu/Gf0m9aMZsvSb2nYi/+5ZvAwNXfRIbfeQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1759371705; x=1759458105; bh=j+30Y+qcrTIc2Yi220jrPi+ylUldv4RrtBJ
- EEKaXUgY=; b=rrxVIgeLE/0jtbOwGcYVicz9zQJTF87bjmQkWTk1S2mp7n7nDGp
- w9pKzBsO54F9ie9LS2s1gcb1rjbMpyNuSyH+CRGvVYQYtWQ9JigdhMFOnvtX6zQS
- sBQdWk3dcH9BQ9W31rOQAaGFBOHhD+eMbIkqBDEJX3OvF5boeYpENxfTVskoYKP7
- X/jCOLIq9VlxXKvA1neo0RbDJQ4MGsbFBFCSkuY+d/HxiMJD12pWz6O1cI9xkz5W
- NnqICPx5OaZKY4L59T9RHhMzphPmcm4QK25Cvb3th1UKfIZ9jD+idQNevpCM/zqq
- Tj2IOapMtt+4/HwzAVG+MAUubwJNsvA2Yug==
-X-ME-Sender: <xms:uOHdaNdOnrBnfvrE5HsT3pwp1snHcuXJ9Rtu6zIfLbTSqYnxzcEhwg>
- <xme:uOHdaOS85b4TbU85jAN63iu0vzYugCivotW3jizuIwC4NSKyk6SqZSUaARuaWgXMI
- awOmHkBBGFGHoxvs7xW-Tnp-H3Z_kIf6BSHeEDl6nn-MM1Lzlu4NzA>
-X-ME-Received: <xmr:uOHdaBId1OWwTGFKvVsnnAJZbBqXYeCQ6A8wzdhQqBQSEuz2c6Clh0nlZ5o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekgeekudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdejtddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtuden
- ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
- gtgidrgiihiieqnecuggftrfgrthhtvghrnheptdejjefgudeghfetvddugffhjeefjeef
- hffffeefleegudevjeellefffedvffelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihiidpnhgspghr
- tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtlhhgsehkrg
- hougdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdr
- ohhrghdprhgtphhtthhopegrnhgurhgvfiesrghjrdhiugdrrghupdhrtghpthhtoheprg
- hmihhthhgrshhhsehfsgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhho
- nhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdgrrhhmsehnohhnghhnuhdrohhrgh
- dprhgtphhtthhopehvihhjrgihkhhhvghmkhgrsehfsgdrtghomhdprhgtphhtthhopehj
- ohgvlhesjhhmshdrihgurdgruhdprhgtphhtthhopehpkhgrrhhthhhikhgvhigrnhduhe
- dtleesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:uOHdaDIECa8kooUPER_z2Z7uPErY9G06v2cBjUR3P1dA-fYGa9wgvA>
- <xmx:uOHdaEgedG5c1yPiGpmV4aN2StELrB1nCKloIEsnqoBfOZqCXl9uqw>
- <xmx:uOHdaFOld3cwauZCQq9ZExFS6X2e6SNh7Ul8Bi5vR76L1PLBCjmpkQ>
- <xmx:uOHdaHq4eEiIosdkR7gfNJ4ehoV3oOfQK8Loeve_-arEpkF7R0z2JA>
- <xmx:ueHdaAutdUwG8PRrbkQjV1wS3N2Xlf_uTLeREPZOjVqdfx4E8IuIzlga>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 22:21:43 -0400 (EDT)
-Date: Wed, 1 Oct 2025 22:21:43 -0400
-From: Patrick Williams <patrick@stwcx.xyz>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@aj.id.au>, Amithash Prasad <amithash@fb.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- Vijay Khemka <vijaykhemka@fb.com>, Joel Stanley <joel@jms.id.au>,
- Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>,
- Peter Delevoryas <pdel@fb.com>
-Subject: Re: [PATCH v3] aspeed: Add support for the sonorapass-bmc board
-Message-ID: <aN3ht1MdFppiDcPz@heinlein>
-References: <20200506173035.2154053-1-patrick@stwcx.xyz>
- <20200506183219.2166987-1-patrick@stwcx.xyz>
- <0165086d-3ab4-4986-84ff-452984d16153@kaod.org>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v49Hh-0004Fo-0t
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:43:09 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v49HW-0007sR-PZ
+ for qemu-devel@nongnu.org; Wed, 01 Oct 2025 22:43:07 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-330631e534eso626426a91.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Oct 2025 19:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759372968; x=1759977768; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0arLxYg4xw4zIdDXcuBme143/eqPjLu5ZvaWFg+W6sY=;
+ b=qRTs9xQYMqAp6AP1PYH8hEdrqp6Iz/feCV83JJslJO1WznHW6Cqii5w4MFieBLJM6E
+ CisyE+dRZvNEjt+gDPFbuyZ18/crmgjuoZSH18HGz9tnH5b6rINhaTy8f/S/gvYx1fFW
+ rnT/2f1RZ3iNg1bYDO3C0Wr8hU7hlNVB6jUA0dKlOB6ofNjdpqTqCt87S4tlxjETKNhR
+ 9YYoFBKolY0IejoKbarIlDh/Zk9/u4wPUI8JQCVsjzf5E+uDRtk8lw5dVaxkfwSNjiPz
+ egcQoRwZK6tf4o6AEh+7OYfHYfzXS+3QpueVOtgLP8YTfT7X2f4mMcM2BuHlj7/UlF1U
+ eLRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759372968; x=1759977768;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0arLxYg4xw4zIdDXcuBme143/eqPjLu5ZvaWFg+W6sY=;
+ b=o+uJ0Qf6ebBbZ6dybTavO8RVMe3XiqVDCyot7AgnoZE0fTFDxsghb452mCQ1Ln7qrH
+ zRxPv7r4ofRah2kGdehLbFa5DEfzPWfzFU+inwCmhkPEszPrILpj/Qy0uBAtaGF8hxcD
+ /G3U3OoP9WaLAz0oHLpVX/Qf0IbM1Gvz8OORGTo4llxDE37cb/xuN+hkzAoe0iJ71mfA
+ 3gZo+iDUIMOWWfEyNUvHnUyCAAnKhuuK44xjVOKOJVPnR3B+OSzAS7sGZJQquCQ5ZvQS
+ M5iy2HoaJvFuEt3Qzb94kR7Rvk+LBc4BKJUqgc2pDNMYLCHHX4H16z+Hsan4xxISyHJf
+ GuGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUo3F1XsVS9nZGExt7BfIavV5O6TTifrv5oYdRcbn/36ZgjCgovZW0dJFuIfCQ59fGoiw0ZNSjK+cY1@nongnu.org
+X-Gm-Message-State: AOJu0YwUGw5D5GAS6qdrT4jUb1S8ZEdjTGNPQhYT8FlU1jtQ3+/0nPn5
+ 7GsUX6G6sBT/NgVWaE5rf4CslD49yMiuBxS5DKdLp1Nql0bknBa0RCJR++S12Y4t2fo=
+X-Gm-Gg: ASbGncvbsh5yBqPW0ItiX6fbT+Vl719lwJWj10RzCatUqarnwLQACu4pG5BHBTgZ1k5
+ m+mzB3qficGJrU+Mci3W53l++/Dqc7Wc6fQpPa7OC+zjPxQLG1Or/TvLY4CqOFrtHVUAz9rXPsB
+ L1L7SNyqIUDdgTRg6FfmckuBg6gZ2d0CLJd1u9cO5ME/jPUELbCYzDRJPgvcxeQb8PPA6pCvLSc
+ PKt5KpHdMS5PPHrrXeqR0wvLG0GzXW0S1uaJlFfl5KKXt6vBToyVYmAoVxAudAYSPbTcYsqxlN2
+ it0uI0GehXL4mw9Ky5eUEMMH+yAkKxyc31c/0p/k5i4bapFSui1Bo7c02s8yA+vJG9tw9k6ASFi
+ 3ZqgWtPi3X/rI60ApFayoHfDuVeGypVEtyfwjOf+20Gw8JSq5W6LhbxXjVBDCcGM=
+X-Google-Smtp-Source: AGHT+IHOHyQi6WG26g1S6RxuOrn7Ey+YgJgxY/FRr5dt8lQSSZph/5+gnOmgz6fJG9clj37v/GP+FA==
+X-Received: by 2002:a17:90b:1811:b0:32b:c5a9:7be9 with SMTP id
+ 98e67ed59e1d1-339a6f36babmr6166248a91.25.1759372967533; 
+ Wed, 01 Oct 2025 19:42:47 -0700 (PDT)
+Received: from [192.168.0.102] ([186.215.59.111])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-339a7039781sm3673145a91.26.2025.10.01.19.42.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Oct 2025 19:42:47 -0700 (PDT)
+Message-ID: <69de1286-0750-47d1-bac6-26512a339018@linaro.org>
+Date: Wed, 1 Oct 2025 23:42:44 -0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="XNcrLs6Jc4wQQXFC"
-Content-Disposition: inline
-In-Reply-To: <0165086d-3ab4-4986-84ff-452984d16153@kaod.org>
-Received-SPF: pass client-ip=202.12.124.145; envelope-from=patrick@stwcx.xyz;
- helo=fout-b2-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: DOS 6.22 with LIM 4.0 Expanded Memory
+To: "Daniel L. Srebnick" <dan@islenet.com>, qemu-devel@nongnu.org
+References: <ebb4d277d49d53e55d9c0d56375df29981631c3e.camel@islenet.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <ebb4d277d49d53e55d9c0d56375df29981631c3e.camel@islenet.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,74 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Dan,
 
---XNcrLs6Jc4wQQXFC
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 10/1/25 19:14, Daniel L. Srebnick wrote:
+> I have a need to run an old MSDOS 6.22 image with an application that
+> makes use of EMS 4.0.
+> 
+> After some extensive testing, it seems that DOS' EMM386 driver cannot
+> find a 64k page frame that it can use.  I can manually designate the
+> block beginning at D800 as a page frame but then shortly after start
+> the system hangs.
 
-On Tue, Sep 30, 2025 at 07:51:15AM +0200, C=E9dric Le Goater wrote:
-> Hello Patrick
->=20
-> Would it be possible to contribute a functional test for this
-> machine ?
->=20
-> The request applies to these Facebook machines :
->=20
->    sonorapass-bmc
-
-This machine type is deprecated and never went to production.
-
->    yosemitev2-bmc
->    tiogapass-bmc
->    fuji-bmc
->    fby35-bmc
-
-All of these are used by OpenBMC and/or Meta for QEMU validation of
-new BMC images.  I can get you an image for these if necessary.
-
->=20
-> Since these machines contribute little to the Aspeed models,
-> their value lies in the firmware they can run to exercise the
-> models. Without functional tests, I plan to schedule their
-> removal in the QEMU 10.2 cycle.
-
-I don't understand this statement.  What does "little value to the
-Aspeed models" have to do with keeping machines in place.  If we are
-only going to have support for machines that you deem as "valuable" why
-would anyone contribute a new machine?  Is this a new policy that QEMU
-only wants specific machine models for any particular SOC?
-
-> The fby35-bmc value is in its multisoc nature. We now have the
-> ast2700fc available as its replacement
-
-We actually don't use the multisoc aspect of this machine.  I'd be fine
-if we drop those pieces specifically but the general "can the BMC image
-boot" is regularly used.
+Certainly I'm not the right person to ask about DOS and i386 machines,
+but I'm curious: why 0xD800 (54k)? Shouldn't the EMS window be in the
+640K-1M range?
 
 
---=20
-Patrick Williams
+> I have a test program that is used to determine if the system is seeing
+> the EMS as expected and this fails.
+> 
+> If anyone is interested in taking a look at this I'll provide the XML
+> for the VM, a config.sys as well as the EMSTEST program which can be
+> used to validate a proper environment.
 
---XNcrLs6Jc4wQQXFC
-Content-Type: application/pgp-signature; name=signature.asc
+I think that would be a start yes, but I really don't remember anybody
+looking at DOS in QEMU in the last couple of years. The problem I can
+see is that the original EMM386 driver is closed source so it would be
+tricky to debug it and observe what action is possibly causing the VM
+misbehavior (I'm not saying it's a VM issue). Maybe the issue can also
+be reproduced with FreeDOS, where the EMS driver is open source and can,
+no idea how, be debugged?
 
------BEGIN PGP SIGNATURE-----
+A command line to start the VM would be better than the XML file, IMHO.
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmjd4bUACgkQqwNHzC0A
-wRnZYw/+NrLkjuYUl73xo7q438D0K0dBioy4mMnSU2h1WDi4xT2Zu89n0dI62Kus
-4JcSutRKtwoXNC7/6Ky731tsyfzjdg7h+GvcT0IKfbOtDZu78qQJW/j8Lo8TkXqU
-EChgMJq+8n/8zVJMbE1gOEcHhgBlSWFB+QJOtbNzgaFgcCwi42D6S0P2M5E5ne+R
-cvNbJHTCPSa8W0yNV2j6FFyO00bH8xRDitM6O8WHDDbSLrkqtVfnh50KzG26nSuL
-BZcVWfgdIv/KLAbdf+yhKRt+WfBIPDZan3gcN9EgK6vqL6doKnRCl5bAVMH3hVTJ
-ad2IGBVICa33rPPiqcfjDir3ISHPgmrHnUGkRfM3tF7zvW6LV/3YX/qEeNELCgpx
-a2xcUHtIKAreygwYLPr2I78B1crfpJ6sUQPv66j9Ppa2Djf+iHy/wyojpskO1U+m
-4D36+VCqfhU6tz3qsInyoFu7zyP5+z8GdEqOglcT5q7DKLorXTeEsDihIlGoPdCB
-+aVmAMA2c0rUnNmqbWI4gYWh1B/V9v1J+5S9tFudgKcqRz8ZkHj/NQiZEaPah9yl
-DB/ACgpTvDK6+XT1rSu7Up2R71N5L2eqg/F29/qMx716kenQj/Vi8meMRFwra/jO
-t5uaoGhQl7KpJy49Zpm36dANKovU8H43kgmDYJEDEzAOTLd3B0U=
-=DtZQ
------END PGP SIGNATURE-----
 
---XNcrLs6Jc4wQQXFC--
+> If this is not the right place to raise this issue please point me in
+> the proper direction.
+
+If it's an issue with one of the machines we support, yes. Better if it
+reproduces with QEMU built from upstream master branch. The problem is:
+how to confirm it's a VM issue and not an issue in the DOS sw stack?
+Ideally, we need a much simpler reproducer for it. Also, is it a regression?
+Like, does any other QEMU version runs the same sw stack without hangs? In
+this case you could use the sw stack to bisect the QEMU code.
+
+
+Cheers,
+Gustavo
+
+> 
+> Many thanks,
+> 
+> Dan Srebnick
+> 
+
+
+
+
 
