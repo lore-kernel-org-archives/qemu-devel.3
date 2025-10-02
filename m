@@ -4,110 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8BBCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 13:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F2FCCA471
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 13:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4JPc-0004im-1u; Thu, 02 Oct 2025 09:32:01 -0400
+	id 1v4JS6-0005PK-RV; Thu, 02 Oct 2025 09:34:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1v4JPa-0004iF-4a
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 09:31:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1v4JS1-0005Ia-1T; Thu, 02 Oct 2025 09:34:31 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1v4JPR-0003vD-BK
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 09:31:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759411901;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=39/TFm2zi8ceBe8dRJtVroUqk4/RnHdDPD3DzDezsIs=;
- b=GQX2yKojwgawsTvTjTKKCCZSpfL35B1Q6PApTH5SiUNnqQrtqpmjzmhDLlIpXEzcwM8KL2
- Wmdqz0/LyQcjc8kPuuWaWHpkM8S9wgh0AOSYuHENxBF9wmi5sKnmVbeqmN5bsDD5KU6x7C
- Kh9PTpVO4WKpBABjR+b3jS99G1urHQM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-iyq6UoxePqi3zxf3V1GSrw-1; Thu, 02 Oct 2025 09:31:40 -0400
-X-MC-Unique: iyq6UoxePqi3zxf3V1GSrw-1
-X-Mimecast-MFC-AGG-ID: iyq6UoxePqi3zxf3V1GSrw_1759411899
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e502a37cdso10367045e9.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 06:31:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759411899; x=1760016699;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=39/TFm2zi8ceBe8dRJtVroUqk4/RnHdDPD3DzDezsIs=;
- b=awThQ8tdDvozqSfNJi4zvw8DJoUC3TLL+bzlsFaxmqrRnDhgfwK/aEd8hoCk+c2iw5
- cuWHruUdyc8MAiXfzl3CN/mvPntPJyQA0M7FxQWKVXMfNg1e2WBEVD472pMBO1im8+gh
- kvUE48KgPBphvh2Fuso1W95ZxsV5JYwISyqDkJUPhpgXocw6L0bFV0R0sAYt1/mEmoEY
- pnViHuTl72gySd7H6dvRXwFAYqowkes+YJ8NohWccRiUbLNelPNWLkbbffkknIfvPtro
- HKx8Ea+2V+9p48NImV2LRyjg5vAPPLmtqLEWdgINEmDLxDML5DVg2pfR9OcZsIdXoBhT
- Sl6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtItWHumlt9GuvScXMl+n1P98/Mp7DYMabEh/gjMu9ACOtw6b44DAq+UfOXs+9hce+/Bky8R/6Jv8o@nongnu.org
-X-Gm-Message-State: AOJu0Yy0w6c+h9SHO8d2qN8HlEAHuy5PE3d7TmbhLeG014Bx4YHkLu5Z
- 4cdHW6S3CbLj1khiW9GXY7czqSs4uVRM0LemG3JgBjPHv/9QwybwSfcdsuQjA2Jsk135bDi9GIu
- O3/RyfsVJjrLpYoXX9YbGV5Z7Z/2vZZFNqNbfLMEWQQqOrTmcLFowJo3m
-X-Gm-Gg: ASbGnctC+gsHA/I+gHzRcn+QGuv6xcPQdDevBbq+rkRNTH1fBysRXu1nK/5WDwq5JNg
- CgG0BgijXqbTdysA1Dl2ZLv0Wrsi4ZlBJC2wdMnzdrdtOWibNrmrngRCnm5f47V3qzRdZmqeYDE
- nL+VmVnBzZSmEU/vZkVhXePzCEz/DAJHBWiF8iLYUeBprOk3jfTUL9wnWWi7Nob7Kh9Tyz1Z+8r
- +it8AdvNlinu/y7FTr+KY1b9wD4X3dDr38u50ggUnXWI6Ew2NL/ATu18nl/UZSVOXtc915qqH69
- RI/yOw+wD5qL2R4LXi4QxPzLXVau51xXMNjW
-X-Received: by 2002:a05:600c:8b42:b0:46e:59dd:1b4d with SMTP id
- 5b1f17b1804b1-46e6127bacamr64124145e9.16.1759411898687; 
- Thu, 02 Oct 2025 06:31:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGb6ADlGdOEHBEXCweBycWAsqxUQubRtAhXmR2s9tShGPAhC/geGyDmjihsqMaOspgxUIF88A==
-X-Received: by 2002:a05:600c:8b42:b0:46e:59dd:1b4d with SMTP id
- 5b1f17b1804b1-46e6127bacamr64123995e9.16.1759411898246; 
- Thu, 02 Oct 2025 06:31:38 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e693bd655sm40131685e9.14.2025.10.02.06.31.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 06:31:37 -0700 (PDT)
-Date: Thu, 2 Oct 2025 15:31:35 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Daniel
- P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Xiaoyao Li
- <xiaoyao.li@intel.com>, pbonzini@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, qemu-devel@nongnu.org,
- Jiri Denemark <jdenemar@redhat.com>
-Subject: Re: [PATCH v6 01/19] hw/i386/pc_piix.c: restrict isapc machine to
- 32-bit CPUs
-Message-ID: <20251002153135.1e89d5cd@fedora>
-In-Reply-To: <ddfb99cf-efc7-4883-8e36-6dbc1f4ece82@nutanix.com>
-References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
- <20250822121342.894223-2-mark.caveayland@nutanix.com>
- <3c2e9fbc-db80-4dd6-a1a5-deeabb8c0194@intel.com>
- <58c515a4-292e-4aec-b57e-73be89b9c322@nutanix.com>
- <aK7wDn03e8RtKmk3@redhat.com>
- <1178e514-a054-4ace-a5b7-06ca899badec@linaro.org>
- <20250922143537.39896851@fedora>
- <bb967b28-4ec5-40b5-88cc-cebd7493d381@nutanix.com>
- <20250923113029.78c03a5c@fedora>
- <ddfb99cf-efc7-4883-8e36-6dbc1f4ece82@nutanix.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1v4JRf-0004JK-TA; Thu, 02 Oct 2025 09:34:19 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5926uaCd006470;
+ Thu, 2 Oct 2025 13:33:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ovOEfM
+ 7o16m2W8NXvLc2lmWvR/n1jmSCwIbRGtjT1BE=; b=B6Guzp04vDEgG5mKBXO1i4
+ emJ4XzmWxgTJIvdrhuVfHR+9wKF/TW4b5cLl2fZmSujv149duegbDr7lq+VZv9xE
+ 7YIV20uu2rBUDTEqz7UFq6uh0Lgeji4cRPlajey6ASfrUCWPYuxoRrIl0uEuw4P+
+ snhOf0H5A9hGaXtmV8bw4oEcEybOL1BFaBqfe2WRqwRyZR7lRWNP/jiBGOZrVkzl
+ i/GP4qlGlrF7TwW8V2zVyIpRQd/Bk5PfTCNo6anw7UjCv/AeMG45ntu5lJQ7b4x+
+ SgCjH9Xf1Tvjc9VL0g7PrHWlRuyPD12XhLPfB7UYXmCyqEAeKU+b6gYBnZDmlH6w
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49e7n85myg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Oct 2025 13:33:57 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 592AGNJI001543;
+ Thu, 2 Oct 2025 13:33:56 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49evfjdv6s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Oct 2025 13:33:56 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 592DXsMq18285098
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Oct 2025 13:33:55 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CF50158053;
+ Thu,  2 Oct 2025 13:33:54 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C1A8258043;
+ Thu,  2 Oct 2025 13:33:53 +0000 (GMT)
+Received: from [9.61.10.212] (unknown [9.61.10.212])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Oct 2025 13:33:53 +0000 (GMT)
+Message-ID: <51dcc8e5-3ab4-4416-96f0-55daef22dcbb@linux.ibm.com>
+Date: Thu, 2 Oct 2025 09:33:53 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390x/pci: set kvm_msi_via_irqfd_allowed
+To: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, thuth@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, qemu-devel@nongnu.org
+References: <20251001200511.325815-1-mjrosato@linux.ibm.com>
+ <8182adea-f81a-4652-9fdd-132dc43ae690@redhat.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <8182adea-f81a-4652-9fdd-132dc43ae690@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: A--VTwDXG33bZHqLrsBPkEayU7kZitrW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyNSBTYWx0ZWRfX4AB/RL1uZj2P
+ fPWjet1iedvbxQXEkZk0tK7FkeSuwSUb0oMwx5n6oSfACJ6VronaTmZkvaFJISLnh2XhDA58NsH
+ D33396WX0ZYIB4bHzyOCcoxOBWmFh5sUrscgfhk1LwJc9waOUfakUIPP8CmeVLvicxc7u5jNJM4
+ 8/PaeWzfeXpuhWOFiHMY3cqJRHY0b6iikuriwfCfPpyY7cttcrSiL0U16ZdPedq1dZzcTnYmivx
+ 8O9YKPfz8UrOSlbn6x7aWiUbaNdZbFPlcP6LpWQ488/CnpNlk4/9iaehpr9GbRkzygjF6hdCTxU
+ 6+YPT+KOJZqSwA29ogE/t0kJGjDDBHlA+CZf5VPm/cjL5utw4YtkiGaYEreVrB5vFn5EUkfEAA7
+ d9cjmaHxDT0JNs590V2d7LMU7PVmAg==
+X-Proofpoint-GUID: A--VTwDXG33bZHqLrsBPkEayU7kZitrW
+X-Authority-Analysis: v=2.4 cv=T7qBjvKQ c=1 sm=1 tr=0 ts=68de7f45 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=TKW_Ob0L0fbEmujZKtQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-02_05,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270025
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,159 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Sep 2025 13:50:39 +0100
-Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
+On 10/2/25 3:27 AM, David Hildenbrand wrote:
+> On 01.10.25 22:05, Matthew Rosato wrote:
+>> Allow irqfd to be used for virtio-pci on s390x if the kernel supports
+>> it.
+>>
+>> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+>> ---
+>>   hw/s390x/s390-pci-bus.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+>> index e8e41c8a9a..88852acf45 100644
+>> --- a/hw/s390x/s390-pci-bus.c
+>> +++ b/hw/s390x/s390-pci-bus.c
+>> @@ -900,6 +900,7 @@ static void s390_pcihost_realize(DeviceState *dev, Error **errp)
+>>       s390_pci_init_default_group();
+>>       css_register_io_adapters(CSS_IO_ADAPTER_PCI, true, false,
+>>                                S390_ADAPTER_SUPPRESSIBLE, errp);
+>> +    kvm_msi_via_irqfd_allowed = kvm_irqfds_enabled();
+> 
+> Just wondering, what's the net result of this patch?
+> 
 
-> On 23/09/2025 10:30, Igor Mammedov wrote:
->=20
-> > On Mon, 22 Sep 2025 14:56:57 +0100
-> > Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
-> >  =20
-> >> On 22/09/2025 13:35, Igor Mammedov wrote:
-> >> =20
-> >>> On Mon, 22 Sep 2025 14:05:13 +0200
-> >>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
-> >>>     =20
-> >>>> On 27/8/25 13:46, Daniel P. Berrang=C3=A9 wrote: =20
-> >>>>> On Wed, Aug 27, 2025 at 12:10:00PM +0100, Mark Cave-Ayland wrote: =
-=20
-> >>>>>> On 26/08/2025 08:25, Xiaoyao Li wrote:
-> >>>>>>       =20
-> >>>>>>> On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote: =20
-> >>>>>>>> The isapc machine represents a legacy ISA PC with a 486 CPU. Whi=
-lst it is
-> >>>>>>>> possible to specify any CPU via -cpu on the command line, it mak=
-es no
-> >>>>>>>> sense to allow modern 64-bit CPUs to be used.
-> >>>>>>>>
-> >>>>>>>> Restrict the isapc machine to the available 32-bit CPUs, taking =
-care to
-> >>>>>>>> handle the case where if a user inadvertently uses -cpu max then=
- the
-> >>>>>>>> "best"
-> >>>>>>>> 32-bit CPU is used (in this case the pentium3).
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> >>>>>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >>>>>>>> ---
-> >>>>>>>>    =C2=A0 hw/i386/pc_piix.c | 26 ++++++++++++++++++++++++++
-> >>>>>>>>    =C2=A0 1 file changed, 26 insertions(+)
-> >>>>>>>>
-> >>>>>>>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> >>>>>>>> index c03324281b..5720b6b556 100644
-> >>>>>>>> --- a/hw/i386/pc_piix.c
-> >>>>>>>> +++ b/hw/i386/pc_piix.c
-> >>>>>>>> @@ -436,6 +436,19 @@ static void pc_set_south_bridge(Object *obj,
-> >>>>>>>> int value, Error **errp)
-> >>>>>>>>    =C2=A0 #ifdef CONFIG_ISAPC
-> >>>>>>>>    =C2=A0 static void pc_init_isa(MachineState *machine)
-> >>>>>>>>    =C2=A0 {
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0 /*
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * There is a small chance that someone=
- unintentionally passes
-> >>>>>>>> "- cpu max"
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * for the isapc machine, which will pr=
-ovide a much more modern
-> >>>>>>>> 32-bit
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * CPU than would be expected for an IS=
-A-era PC. If the "max"
-> >>>>>>>> cpu type has
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * been specified, choose the "best" 32=
--bit cpu possible which
-> >>>>>>>> we consider
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * be the pentium3 (deliberately choosi=
-ng an Intel CPU given
-> >>>>>>>> that the
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * default 486 CPU for the isapc machin=
-e is also an Intel CPU).
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0 if (!strcmp(machine->cpu_type, X86_CPU_TYPE_=
-NAME("max"))) {
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 machine->cpu_type =
-=3D X86_CPU_TYPE_NAME("pentium3");
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 warn_report("-cpu ma=
-x is invalid for isapc machine, using
-> >>>>>>>> pentium3");
-> >>>>>>>> +=C2=A0=C2=A0=C2=A0 } =20
-> >>>>>>>
-> >>>>>>> Do we need to handle the case of "-cpu host"? =20
-> >>>>>>
-> >>>>>> I don't believe so. I wasn't originally planning to support "-cpu =
-max" for
-> >>>>>> isapc, however Daniel mentioned that it could possibly be generate=
-d from
-> >>>>>> libvirt so it makes sense to add the above check to warn in this c=
-ase and
-> >>>>>> then continue. =20
-> >>>>>
-> >>>>> Libvirt will support sending any valid -cpu flag, including both
-> >>>>> 'max' (any config) and 'host' (if KVM).
-> >>>>>
-> >>>>> If 'isapc' still expects to support KVM, then it would be odd to
-> >>>>> reject 'host', but KVM presumably has no built-in way to limit to
-> >>>>> 32-bit without QEMU manually masking many features ?
-> >>>>>
-> >>>>> I'm a little worried about implications of libvirt sending '-cpu ma=
-x'
-> >>>>> and QEMU secretly turning that into '-cpu pentium3', as opposed to
-> >>>>> having '-cpu max' expand to equiv to 'pentium3', which might cauase
-> >>>>> confusion when libvirt queries the expanded CPU ? Copying Jiri for
-> >>>>> an opinion from libvirt side, as I might be worrying about nothing.=
- =20
-> >>>>
-> >>>> OK, on 2nd thought, even while warning the user, changing the type
-> >>>> under the hood isn't great. =20
-> >>>
-> >>> I second that,
-> >>> Please don't do magical mutations of CPUs, just error out.
-> >>>
-> >>> we used to 'fix|tweak' CPUs using machine compat hack,
-> >>> however with introduction of versioned cpu models we shouldn't do tha=
-t anymore.
-> >>> (aka: existing CPU devices should stay immutable if possible, and any=
- visible
-> >>> changes should go into new version) =20
-> >>
-> >> The original suggestion for allowing "max"/"host" was so that it
-> >> wouldn't cause any regressions with command lines erroneously including
-> >> -cpu max or -cpu host (which I believe may be possible with libvirt). =
-=20
-> >=20
-> > looking back and at Daniels reply,
-> > max/host are indeed are 'special' aka mutable as opposed to named cpu m=
-odels.
-> >=20
-> > if we go by the books, 'host' and by extension 'max' should work with K=
-VM accelerator.
-> > But that (aka reducing it to isapc levels) should be done at 'host' cpu=
- model code
-> > and that part of code is not really aware (nor should be) of machine ty=
-pes.
-> > I'm not sure, whether it's worth the effort and complexity.
-> >=20
-> > I'd be fine with valid_cpu_types[] approach here, i.e. user will get
-> > clear error that her is doing wrong thing trying 'host/max',
-> > and printing suggestion how to remedy error should guide user
-> > to the right config. =20
->=20
-> Okay I've just sent through a patch that removes the -cpu host and -cpu=20
-> max mapping logic for the isapc machine.
->=20
-> As an aside, I think it was originally your proposal a while back to=20
-> deprecate isapc? Now the main series has been merged, is the current=20
-> split sufficient for the tidy-up/improvements that you were planning to=20
-> do for the pc/q35 machines, or is there a way we can improve it?
-Can't answer this right of the bat,
-I'd need to through the code again to see it.
+It allows the virtio-pci core code on s390x to ever decide using irqfd is OK (e.g. without this change we would always reach virtio_queue_set_guest_notifier_fd_handler(..., with_irqfd=false) because kvm_msi_via_irqfd_enabled() was guaranteed to be false.
 
-Anyways any help with cleaning up old code are welcome.
-Thanks putting some effort into it!
+> I assume better performance. Might be worth adding that "why" to the patch description.
+> 
 
->=20
->=20
-> ATB,
->=20
-> Mark.
->=20
+And yes, in a nutshell it means better performance.
 
+How about something like...
+
+Allow irqfd to be used for virtio-pci on s390x if the kernel supports
+it.  This improves s390x virtio-pci performance when using kvm
+acceleration by allowing kvm to deliver interrupts instead of QEMU.
 
