@@ -4,96 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BEBCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94BFCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 15:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4KlH-0007KQ-4z; Thu, 02 Oct 2025 10:58:28 -0400
+	id 1v4KnP-0008Gs-72; Thu, 02 Oct 2025 11:00:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Kl5-0007JL-SP
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:16 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4Kko-0000Dg-G4
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 10:58:13 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46e33b260b9so11369115e9.2
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 07:57:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759417069; x=1760021869; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=487RP0R+DawU3cowpH1ljYzt+o5Cuwu3G1Z8g9QHYus=;
- b=OXSZoz5OQcKAwoqbWXZ6NpcfnUPg6+WSKa97EsrKnmc+/F7eB8cgh4XTy26GkpfZ4Y
- 8ue+OkJ+//vA+xIHuQnE7VpAV0PkJabt+l0D0Qh7pJBSoSfIGfsfyEHBfYcuIyObkoIM
- c6w0iWYnPUnvcFMMk5GS7+476Raszzy8xr9WxxGIBDn59CqdUGvbYnWx1Q6FPUF9K/Ym
- CrVDoLzOM5P07/uiwGllfWQ5YMlF27q3EzZyTLeig/+2kt0GZJIg/F+rBjy7NLTVP4Uc
- QLKE+OxGbsSAdPkaK1KY4C1jwojXx2b8ityICWXH2SGtBTg33yyGPTD6U6mg7ifs19La
- t0mA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v4Kmy-0007qo-7k
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 11:00:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v4Kme-00011w-JN
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 11:00:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759417181;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hMZ20mn2yM9PTyXqN3YAA2c6xt3ZbT5HGmJ6Z4yYTHs=;
+ b=AdN649eLhUHBCpPeySNQEOWE9/aGPPEWelMH3HSO4rJmPbcYZw6AWQPkwJgyASdyASEg8+
+ E9T5I3fzv6BJIgWgmnCaOTAhBVGgsel8TcaY1vrIAzcryGA0RG5rwlaF8h49oII0Gcd4TO
+ u9AmPXHYdJtfsIApxsE2llPOPWNex+g=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-510-Qu5anIw-N72K0kmSCZAKJw-1; Thu, 02 Oct 2025 10:59:40 -0400
+X-MC-Unique: Qu5anIw-N72K0kmSCZAKJw-1
+X-Mimecast-MFC-AGG-ID: Qu5anIw-N72K0kmSCZAKJw_1759417179
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e3a049abaso7453135e9.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 07:59:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759417069; x=1760021869;
+ d=1e100.net; s=20230601; t=1759417179; x=1760021979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=487RP0R+DawU3cowpH1ljYzt+o5Cuwu3G1Z8g9QHYus=;
- b=ThEjoi2um4sOni95j4UVue60M9BlhyF0hgoAEVmLwt8wkX3PZRmBd0PpCLilt4lubn
- OgK9E5MbNE43uA2N0OJIvbyZxRJx8SKTGAmHkKUqs5TQBehCdipFmfMZKE71OTQmGkp7
- 5caYOb8S0MGzOBGQ1KwiNPX7+tpwcsbP90YUvfze+nGUm6jJJPkDkWJ/k4WW5fGNFBbu
- wi/VFbaUKof+A7Dray5RUl+lXGTad3T/Chyh3sahFO36qnJsarM89XHNpf7XvrLdyAPN
- fbWJgHcw52hzJrRrtszhaDpbx6oT75l9G5XD9sa/b/AD5uCKynXegpMQW0m4uKUSYz5J
- nSCw==
-X-Gm-Message-State: AOJu0YzTetx9Twd93t8z0txCUf7yAZIJ4LhnwQnPMboz8Zatj0DQnXNC
- nL75nYZY+xjXx5z+/iX+R2G8qF4Tx0tZADG3bdPrTQdHSYgdQLqQI8Ucq4f3bJby/p3c0EObXWK
- pcIaPgpRK/A==
-X-Gm-Gg: ASbGncs5T9fuCsiXzNZG/8DupuOwtnCCE6sjzNRfg4L4b2P/O+UABtXVKyUmVTFCqve
- QDKuNxSWzZnrgE7cHOYJ4D3cg8XNuau/j2Z7lZEZJOzb2ffo02aNXjHO460YPSGUmsBCdMtzhCu
- J0cL8LO35jYslAWKWxWjQJHJc3ekW6N7ghj+CzmAG5b0ah8vkaw1OUTwnsmctrdwlARrkFz+29L
- d1jjLK7pcToe/DqcpJwiTMhnoYlLVdPF6q8nDg9WG0y6Lff6kBDYSN5sMhD5a+p7bJSvpxWdhAA
- 1w6qL+S7/WKm6m2eis+3bl9ymz23MTR+CfMqIj3NmcIyGRMztpEwDeawiESZnLXdU2Pl8WIFSLM
- Gp4vmioqLLCuDHfvFWIQgMeGogyagE37FJqhbIWyAsmQ+62SxvfDudE3nVVmXi4PB6OHLqSMaeh
- 1MCg16WXhqSKYq06ThHEEi9vQ2
-X-Google-Smtp-Source: AGHT+IHhaoaDmiHVN4FNJv30tpvddcfE1r9Bn2+NXIH4AVmUw1py2n+Hz8AQhfurrAh2ShkbjjyIQA==
-X-Received: by 2002:a05:600c:5304:b0:46e:450d:e037 with SMTP id
- 5b1f17b1804b1-46e6125d0fdmr63447485e9.5.1759417068833; 
- Thu, 02 Oct 2025 07:57:48 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a4161bsm92753965e9.16.2025.10.02.07.57.47
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Oct 2025 07:57:48 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
- Max Filippov <jcmvbkbc@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/6] target/i386/monitor: Propagate CPU address space to 'info
- mem' handlers
-Date: Thu,  2 Oct 2025 16:57:36 +0200
-Message-ID: <20251002145742.75624-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251002145742.75624-1-philmd@linaro.org>
-References: <20251002145742.75624-1-philmd@linaro.org>
+ bh=hMZ20mn2yM9PTyXqN3YAA2c6xt3ZbT5HGmJ6Z4yYTHs=;
+ b=nn1QeWkkjqb2GUY/JNS3g0a7LY4uz/aN5LPHUzQvideI1mchw2tfjGhXniY+5f1xKD
+ HjiLoNH8T5Ie9gkLjBu8T36lVNrZJNxvoG8/Ia38mfFNyLzgg+ie3I9L6N49jShBMr7b
+ bLzRQ0/rb/XuVBDPyAlZb4B2ZE1WOzkg8n4I+pzQ1bp6eDXayBPC9Rr6EX6JH51udz3P
+ werKADoIORyyUNrq5YXNejRgKtdyO4E1AZQ9aYN9B4ypui2JECsSezwM7JhLyteYBDrm
+ yW+qlEF6a0sgM2T73Hxa3MIqQvkd5bHcIuhINoqC/2W5n6MnQlQ5t2r07mgM8jY01xkM
+ EwtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+JvtwvXv4vmiEbONF21VghQxs7YVpFXTg6Bg82M+Yauhxi1duJZG0P1QL/UOagyhQsWYzcEoeMZSK@nongnu.org
+X-Gm-Message-State: AOJu0YyKU6hrv3+Zc5EGUfrsgGRyB4SJa8ye5qyywUAL3rTLgdbNjDVi
+ Ry1ETgApQdU1AP6ObjIYHwK6q2GzeSFMFvdx3DjWTXJsjVavaOJ6G4qkMl1PZa/GeIiAz0xpPf+
+ qUvQS/WSbQxz18kwPLrYcGZwKIuWwcLa8V49f6/aHeGdSKT07MF8F/3HH
+X-Gm-Gg: ASbGncv9EG8m8AjedcVEAIp9YPqEESM7YLdtzGZXfnUBodCue5OEUS6e6VEbKahcstv
+ 7Psu4A+R70m8mYXVtbp/1+N+TvgPrgcFqK/o8ZvQHGqL0fj09NVuV3Ic0eg8fsqWpST4WnescGc
+ KKk3VdPwtNMu0lVNK3QLeF/8NJbK9m/tfKz0p0A3r5thVzGzZ2Bttbti6jijWWltFcipHD4U+eA
+ n+NYjIjRm+vBBhlSVb6gJI25AodzILWWy7qwETY/E+VIk8Rpgcso1VOeHHmRO6/m03NQc1Uw937
+ 79AhH7MhFABToaEkt4nfwpdPr+Dh2zN2wVsv
+X-Received: by 2002:a05:600c:871a:b0:46e:42aa:75b5 with SMTP id
+ 5b1f17b1804b1-46e612021bdmr68411085e9.4.1759417179223; 
+ Thu, 02 Oct 2025 07:59:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQoHRWItgB5zYhYNXfNqu/Ejy4mz2XBI3KuQ+Uvri3Sq8H99XfzAiRfNugGCfx5ZUBZlmRYg==
+X-Received: by 2002:a05:600c:871a:b0:46e:42aa:75b5 with SMTP id
+ 5b1f17b1804b1-46e612021bdmr68410865e9.4.1759417178772; 
+ Thu, 02 Oct 2025 07:59:38 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e6b23d4c5sm30679225e9.17.2025.10.02.07.59.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Oct 2025 07:59:38 -0700 (PDT)
+Date: Thu, 2 Oct 2025 16:59:36 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: fanhuang <FangSheng.Huang@amd.com>, qemu-devel@nongnu.org,
+ Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
+Subject: Re: [PATCH] numa: add 'spm' option for special purpose memory
+Message-ID: <20251002165936.490718f5@fedora>
+In-Reply-To: <aa461a43-0db8-482a-aabc-897cfa619dee@redhat.com>
+References: <20250924103324.2074819-1-FangSheng.Huang@amd.com>
+ <20251002161140.5b908e06@fedora>
+ <aa461a43-0db8-482a-aabc-897cfa619dee@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.451,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,173 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to replace the cpu_physical_memory_read() calls by
-address_space_read() equivalents. Since the latter requires
-an address space, and these commands are run in the context
-of a vCPU, propagate its first address space. Next commit
-will do the replacements.
+On Thu, 2 Oct 2025 16:19:00 +0200
+David Hildenbrand <david@redhat.com> wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/i386/monitor.c | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+> On 02.10.25 16:11, Igor Mammedov wrote:
+> > On Wed, 24 Sep 2025 18:33:23 +0800
+> > fanhuang <FangSheng.Huang@amd.com> wrote:
+> >   
+> >> Hi David,
+> >>
+> >> I hope this email finds you well. It's been several months since Zhigang last discussion about the Special Purpose Memory (SPM) implementation in QEMU with you, and I wanted to provide some background context before presenting the new patch based on your valuable suggestions.
+> >>
+> >> Previous Discussion Summary
+> >> ===========================
+> >> Back in December 2024, we had an extensive discussion regarding my original patch that added the `hmem` option to `memory-backend-file`. During that conversation, you raised several important concerns about the design approach:
+> >>
+> >> Original Approach (December 2024)
+> >> ----------------------------------
+> >> - Zhigang's patch: Added `hmem=on` option to `memory-backend-file`
+> >> - QEMU cmdline example:
+> >>    -object memory-backend-file,size=16G,id=m1,mem-path=/dev/dax0.0,prealloc=on,align=1G,hmem=on
+> >>    -numa node,nodeid=1,memdev=m1
+> >>
+> >> Your Concerns and Suggestions
+> >> -----------------------------
+> >> You correctly identified some issues with the original approach:
+> >> - Configuration Safety: Users could create problematic configurations like:
+> >>     -object memory-backend-file,size=16G,id=unused,mem-path=whatever,hmem=on
+> >>
+> >> - Your Recommendation: You proposed a cleaner approach using NUMA node configuration:
+> >>     -numa node,nodeid=1,memdev=m1,spm=on  
+> > 
+> > that seems to me a bit backwards,
+> > aka it's just a particular case where node would have SPM memory only,
+> > which (spm) is not a property of numa node, but rather of memory device attached to it.  
+> 
+> The problem is that boot memory is not modeled as a memory device.
 
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 3c9b6ca62f2..7e7854e6c1b 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -68,7 +68,7 @@ static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
-                    pte & PG_RW_MASK ? 'W' : '-');
- }
- 
--static void tlb_info_32(Monitor *mon, CPUArchState *env)
-+static void tlb_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     unsigned int l1, l2;
-     uint32_t pgd, pde, pte;
-@@ -96,7 +96,7 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
-     }
- }
- 
--static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
-+static void tlb_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     unsigned int l1, l2, l3;
-     uint64_t pdpe, pde, pte;
-@@ -136,7 +136,7 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
- }
- 
- #ifdef TARGET_X86_64
--static void tlb_info_la48(Monitor *mon, CPUArchState *env,
-+static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
-         uint64_t l0, uint64_t pml4_addr)
- {
-     uint64_t l1, l2, l3, l4;
-@@ -197,7 +197,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
-     }
- }
- 
--static void tlb_info_la57(Monitor *mon, CPUArchState *env)
-+static void tlb_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     uint64_t l0;
-     uint64_t pml5e;
-@@ -208,7 +208,7 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env)
-         cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
-         pml5e = le64_to_cpu(pml5e);
-         if (pml5e & PG_PRESENT_MASK) {
--            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
-+            tlb_info_la48(mon, env, as, l0, pml5e & 0x3fffffffff000ULL);
-         }
-     }
- }
-@@ -217,6 +217,7 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env)
- void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- {
-     CPUArchState *env;
-+    AddressSpace *as;
- 
-     env = mon_get_cpu_env(mon);
-     if (!env) {
-@@ -228,21 +229,22 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "PG disabled\n");
-         return;
-     }
-+    as = cpu_get_address_space(env_cpu(env), X86ASIdx_MEM);
-     if (env->cr[4] & CR4_PAE_MASK) {
- #ifdef TARGET_X86_64
-         if (env->hflags & HF_LMA_MASK) {
-             if (env->cr[4] & CR4_LA57_MASK) {
--                tlb_info_la57(mon, env);
-+                tlb_info_la57(mon, env, as);
-             } else {
--                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
-+                tlb_info_la48(mon, env, as, 0, env->cr[3] & 0x3fffffffff000ULL);
-             }
-         } else
- #endif
-         {
--            tlb_info_pae32(mon, env);
-+            tlb_info_pae32(mon, env, as);
-         }
-     } else {
--        tlb_info_32(mon, env);
-+        tlb_info_32(mon, env, as);
-     }
- }
- 
-@@ -271,7 +273,7 @@ static void mem_print(Monitor *mon, CPUArchState *env,
-     }
- }
- 
--static void mem_info_32(Monitor *mon, CPUArchState *env)
-+static void mem_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     unsigned int l1, l2;
-     int prot, last_prot;
-@@ -312,7 +314,7 @@ static void mem_info_32(Monitor *mon, CPUArchState *env)
-     mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 32, 0);
- }
- 
--static void mem_info_pae32(Monitor *mon, CPUArchState *env)
-+static void mem_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     unsigned int l1, l2, l3;
-     int prot, last_prot;
-@@ -369,7 +371,7 @@ static void mem_info_pae32(Monitor *mon, CPUArchState *env)
- 
- 
- #ifdef TARGET_X86_64
--static void mem_info_la48(Monitor *mon, CPUArchState *env)
-+static void mem_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     int prot, last_prot;
-     uint64_t l1, l2, l3, l4;
-@@ -449,7 +451,7 @@ static void mem_info_la48(Monitor *mon, CPUArchState *env)
-     mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 48, 0);
- }
- 
--static void mem_info_la57(Monitor *mon, CPUArchState *env)
-+static void mem_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as)
- {
-     int prot, last_prot;
-     uint64_t l0, l1, l2, l3, l4;
-@@ -545,6 +547,7 @@ static void mem_info_la57(Monitor *mon, CPUArchState *env)
- void hmp_info_mem(Monitor *mon, const QDict *qdict)
- {
-     CPUArchState *env;
-+    AddressSpace *as;
- 
-     env = mon_get_cpu_env(mon);
-     if (!env) {
-@@ -556,21 +559,22 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "PG disabled\n");
-         return;
-     }
-+    as = cpu_get_address_space(env_cpu(env), X86ASIdx_MEM);
-     if (env->cr[4] & CR4_PAE_MASK) {
- #ifdef TARGET_X86_64
-         if (env->hflags & HF_LMA_MASK) {
-             if (env->cr[4] & CR4_LA57_MASK) {
--                mem_info_la57(mon, env);
-+                mem_info_la57(mon, env, as);
-             } else {
--                mem_info_la48(mon, env);
-+                mem_info_la48(mon, env, as);
-             }
-         } else
- #endif
-         {
--            mem_info_pae32(mon, env);
-+            mem_info_pae32(mon, env, as);
-         }
-     } else {
--        mem_info_32(mon, env);
-+        mem_info_32(mon, env, as);
-     }
- }
- 
--- 
-2.51.0
+That's historical abomination we currently have.
+Question is: does it have to be boot memory, and why?
+
+Also that's why I've asked for use-cases / devices example that would make use of this feature
+(VFIO was mentioned here).
 
 
