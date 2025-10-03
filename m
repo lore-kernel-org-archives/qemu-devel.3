@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1DE9CCA472
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498E9CCA470
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4WSp-0006zO-5M; Thu, 02 Oct 2025 23:28:11 -0400
+	id 1v4WSs-00070k-7b; Thu, 02 Oct 2025 23:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WSl-0006y9-Bd
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:07 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1v4WSq-0006za-7J
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:12 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WSa-0001Af-4e
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:05 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so1458358b3a.1
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:27:51 -0700 (PDT)
+ id 1v4WSk-0001C5-De
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:09 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-781010ff051so1353158b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759462065; x=1760066865; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759462078; x=1760066878; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=549xD0FIECX3W+z8z4ISC2P5+4gK7alChONN2FSd+Tw=;
- b=nXhO7gJx1YCnYy5UJ2JQFTXuv1gBSsFBisKorUeY8wTwg/jW5Evuid67AMQk30v+OB
- AQmjBk4aKaeE08jRoGinWB+3EuGd9yJ+aLeVgiIZJ8DCAmn+YS4BjYAVqix+UKDeOLAe
- LrIJlWjzoNd8NCUCkM9AZe+qfagOM/qmHJn/BNJyFspJlTDMBX8W7914Bj5rRiMhlmof
- 0b0vR3UJ5kZOsNBOG0mYvw3kgX8VliPou+gRE4laT/xt7H6DsU8dKaofQ4bTojHFWAeY
- u7sboArr3M6dUyf2slNSncUvp5Vyieo2Z9y7nsUjgBILi2k/A2RBt7Z24ZsnlUXTh4oT
- CdUg==
+ bh=93uzLakLUkrq45soCsmN9r7xZFQg+5pzlt4I7pgvPUY=;
+ b=VsAPqjjC6mXvGpH5p9tnbgbcWy/+1/WBhjKjLbtTBXL9Se5VKjbtDvvbprZFCNPNUe
+ ai+hfyGmnpIN2sew0YM3EykQ71kDnpz4q9xfccLc2BU/8/12AdpXIWzs1LWSoI1ldufP
+ Ae4rfVp2zok2a3C+W9MRHPJ4nxne9uYsvJCxdlyk14PYZZL0G5z/CwqMTHw4j65TuVb8
+ aYR8wvIz6MX2CfNRt5QSToP5Ma8p9POgOx0WoAuHtjyOkBQkPFnIo+mOOWjaIfwOISbd
+ JNKLtqtqo2VNCMnCTRmj0GuO/Z6ZTk43o1SkJOua3pra0qNi1SU40Re0TDZXo9CmogEM
+ i2ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759462065; x=1760066865;
+ d=1e100.net; s=20230601; t=1759462078; x=1760066878;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=549xD0FIECX3W+z8z4ISC2P5+4gK7alChONN2FSd+Tw=;
- b=RQAVFxjTR5VzUt+XvJxaOH1kPxPbO9+cY3zTcNmUbL3EGovR/67+CPk7LbwCYZyWY+
- Nf8kzGeIh5JGLi8+7ZZ8l98nPXGJjF+jlXFhwgy9nPjUQcZntlcJ+PxzwTXONSB5aNJR
- lAM3OXUSbvu2C8TbQ3y84W/0VqByvFQ4y7v0OAm4C2ksijONKOr4od4LHApEEi3DSbAI
- Kc151uKIzmxDxBEu5ZXe76nNBG9VoDUEAlQNfFezqrGRPnCpFxiWdekZFtUb9nZzO/n9
- gNeL1TDg48BvFUVgsa25OQdwO0pe7c957uXBgiEqSsn7RMl07PRKMOXswv+Pp8PHLqjQ
- ewZg==
-X-Gm-Message-State: AOJu0YzVUuEl2MCdtzQGhtcmZ4qCrsjFnoqDAPdZGxki2Mr0vpZUs0Xf
- T60mRzrR5dBsPOAifuoBVW6pHQz7LFBopRbiWaC0E2k/CbKV6+TYCv8T0tw2yQ==
-X-Gm-Gg: ASbGnctBf6CXTP4KBm3wYssOsJD5vSgIval2dCweVx755KC6HQVPrLJ7rB0i6lL3gJu
- m8w8rGFLrNoM+/BJ/mnhH9msl/ifNXWgqGeTGHjOoDNYW3HQ7E+wl8jLC4TAwH8gjQiUanA6kCF
- ZHTfSX5saNTruTWbOdYr6wG0pP6avZinJUAt2PNCYwvfeA5Qx54ZU3Oqr8A2xKkHqCnPyEF7sRB
- dXhqTMHq8Zg146QW9rIiRFXn2CgWb4UfHQYskWsU3zp+kQk6HyPens833aQScxiMoIzr8jDrmUh
- zgXe3NULDAhV90RTJNkLD+ROVMgeNBxaG2Srt4YJSbdsNa3hWaHYrbBVsiHNpRyh4mzIqhVxmkV
- D5c6wt/W55UyHo1JXpDW7+plqd1XJYbQaeO8TpDR47aevxJ/Q1I4ucUnjQ/KRwZK6jGDVjrZs9X
- ZdCRNsln8DgGh5Ej+wTLUfLqybsZaMYLharqDKzzYH+8vidbiocQPl
-X-Google-Smtp-Source: AGHT+IHekvoN0ZMvB7rV88EudanPA8KUeT5pGbbu/qvaiIFM++PPlmiscaSsptZZ+NRR1yin8fUfuQ==
-X-Received: by 2002:a05:6a20:729c:b0:2da:f4be:c8c2 with SMTP id
- adf61e73a8af0-32b61dde689mr2024181637.31.1759462064982; 
- Thu, 02 Oct 2025 20:27:44 -0700 (PDT)
+ bh=93uzLakLUkrq45soCsmN9r7xZFQg+5pzlt4I7pgvPUY=;
+ b=W1qoYuccxdCUm+OWScuil2nSZaOJlCdojxefM2PbPgicDpxN/DILipcdrjT7lPv2Bo
+ x8LBDP/6QxDWyb1QnSvWERKMRSR4DV/R0AEuUESH6xlkscl/VRBpHAKrdwXX3vuT4y2d
+ 55syiMmEQ2dy3vx8HZHapgxccnLmLfL1s/k5thYh593X/BN3aGBHmlOqKezUMyzYIrMN
+ v6hccxu77u3EGw0/KgRf+skrCHoK+sbTWil1IziV3fBp9brpdWPqPkAqv6fJucQeJsez
+ Hj/Fiw8JdR4mNsF7onxjwG9dokDvelFlUXf6w4lm5PrNTONJp/Bytc5XUOAdugFD9yKs
+ 26Ew==
+X-Gm-Message-State: AOJu0YxdryPRkv2zNk5OuYOEh47CFeYEvdjYi4s8jBYBATlZ/J3V/kDL
+ oaCCLFAhUMhWiMGSeOd8Iy9B9iIpGbUUNQoueRcTjX7Ju7UL8MWV5r/L+IQbHw==
+X-Gm-Gg: ASbGncuW7rsJn2+X5o4ED78d8yf8+ct5deZfDZIUXAFpf8NyBaOzcmshzFGZ0i67MRz
+ TJn4VpheGi9n39HBuF9gl6xNNjJy/vzR7rUJKxbck9lzw2LMVK0fyds22hp0sLU4YV3zLwexMeG
+ wliF5MBV0Rqnb/8XmDJrXC4k91hTME78U+qn8hJItfCYxL4S1d2FXb50TSYBlWbgclvBTOfbSVd
+ WTXE9xHeyYhInMFKZH3kw27DDtYWcJMlRq+z2yll+J4zAi1jtqLdr89MXgYS45mCdD3w4CNAfyd
+ NU9l2Ae0sFWx4yhmISNJ/t6QWp0UHCs39qWhwBmBeKxBmewIHwsN6ZCNyV3/xnvqBPrqwp2gqNR
+ dMLk9RW0CZFxfmYN7L2A4Cgt7K6Sl9bXySmIJVuVdxJD/GolP7D6Fpu+QBf/BPsbjVg9HiHrizg
+ 40tU3MIzyQbqbTWby4ptqZ8hsMH2rULAAwCQpKFkxtjIHsyB5VQ9UF
+X-Google-Smtp-Source: AGHT+IE1794/i8P9Nl5/JnEZoTmT483+ZE//dyCfsw9DLXKkX4x3GXKOlWcWhzTBHVnreVWsOIPFyw==
+X-Received: by 2002:a05:6a20:bfc7:b0:32b:727f:5fbb with SMTP id
+ adf61e73a8af0-32b727f60b9mr271982637.20.1759462077912; 
+ Thu, 02 Oct 2025 20:27:57 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.27.41
+ 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.27.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 20:27:43 -0700 (PDT)
+ Thu, 02 Oct 2025 20:27:57 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Andrea Bolognani <abologna@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>,
+Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
+ Emmanuel Blot <emmanuel.blot@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 02/26] docs/interop/firmware: Add riscv64 to
- FirmwareArchitecture
-Date: Fri,  3 Oct 2025 13:26:54 +1000
-Message-ID: <20251003032718.1324734-3-alistair.francis@wdc.com>
+Subject: [PULL 06/26] hw/char: sifive_uart: Raise IRQ according to the Tx/Rx
+ watermark thresholds
+Date: Fri,  3 Oct 2025 13:26:58 +1000
+Message-ID: <20251003032718.1324734-7-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003032718.1324734-1-alistair.francis@wdc.com>
 References: <20251003032718.1324734-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +107,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrea Bolognani <abologna@redhat.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-Descriptors using this value have been shipped for years
-by distros, so we just need to update the spec to match
-reality.
+Currently, the SiFive UART raises an IRQ whenever:
 
-Signed-off-by: Andrea Bolognani <abologna@redhat.com>
-Reviewed-by: Kashyap Chamarthy <kchamart@redhat.com>
-Message-ID: <20250910121501.676219-1-abologna@redhat.com>
+  1. ie.txwm is enabled.
+  2. ie.rxwm is enabled and the Rx FIFO is not empty.
+
+It does not check the watermark thresholds set by software. However,
+since commit [1] changed the SiFive UART character printing from
+synchronous to asynchronous, Tx overflows may occur, causing characters
+to be dropped when running Linux because:
+
+  1. The Linux SiFive UART driver sets the transmit watermark level to 1
+     [2], meaning a transmit watermark interrupt is raised whenever a
+     character is enqueued into the Tx FIFO.
+  2. Upon receiving a transmit watermark interrupt, the Linux driver
+     transfers up to a full Tx FIFO's worth of characters from the Linux
+     serial transmit buffer [3], without checking the txdata.full flag
+     before transferring multiple characters [4].
+
+To fix this issue, we must honor the Tx/Rx watermark thresholds and
+raise interrupts only when the Tx threshold is exceeded or the Rx
+threshold is undercut.
+
+[1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
+[2] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L1039
+[3] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L538
+[4] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L291
+
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Emmanuel Blot <emmanuel.blot@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250911160647.5710-2-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/interop/firmware.json | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/char/sifive_uart.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 6bbe2cce0a..ccbfaf828d 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -85,12 +85,14 @@
- #
- # @loongarch64: 64-bit LoongArch. (since: 7.1)
- #
-+# @riscv64: 64-bit RISC-V.
-+#
- # @x86_64: 64-bit x86.
- #
- # Since: 3.0
- ##
- { 'enum' : 'FirmwareArchitecture',
--  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
-+  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'riscv64', 'x86_64' ] }
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 9bc697a67b..138c31fcab 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -35,16 +35,17 @@
+  */
  
- ##
- # @FirmwareTarget:
+ /* Returns the state of the IP (interrupt pending) register */
+-static uint64_t sifive_uart_ip(SiFiveUARTState *s)
++static uint32_t sifive_uart_ip(SiFiveUARTState *s)
+ {
+-    uint64_t ret = 0;
++    uint32_t ret = 0;
+ 
+-    uint64_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
+-    uint64_t rxcnt = SIFIVE_UART_GET_RXCNT(s->rxctrl);
++    uint32_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
++    uint32_t rxcnt = SIFIVE_UART_GET_RXCNT(s->rxctrl);
+ 
+-    if (txcnt != 0) {
++    if (fifo8_num_used(&s->tx_fifo) < txcnt) {
+         ret |= SIFIVE_UART_IP_TXWM;
+     }
++
+     if (s->rx_fifo_len > rxcnt) {
+         ret |= SIFIVE_UART_IP_RXWM;
+     }
+@@ -55,15 +56,14 @@ static uint64_t sifive_uart_ip(SiFiveUARTState *s)
+ static void sifive_uart_update_irq(SiFiveUARTState *s)
+ {
+     int cond = 0;
+-    if ((s->ie & SIFIVE_UART_IE_TXWM) ||
+-        ((s->ie & SIFIVE_UART_IE_RXWM) && s->rx_fifo_len)) {
++    uint32_t ip = sifive_uart_ip(s);
++
++    if (((ip & SIFIVE_UART_IP_TXWM) && (s->ie & SIFIVE_UART_IE_TXWM)) ||
++        ((ip & SIFIVE_UART_IP_RXWM) && (s->ie & SIFIVE_UART_IE_RXWM))) {
+         cond = 1;
+     }
+-    if (cond) {
+-        qemu_irq_raise(s->irq);
+-    } else {
+-        qemu_irq_lower(s->irq);
+-    }
++
++    qemu_set_irq(s->irq, cond);
+ }
+ 
+ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
 -- 
 2.51.0
 
