@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4906BCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 01:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45426CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 01:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4UbX-0005fl-RC; Thu, 02 Oct 2025 21:29:03 -0400
+	id 1v4Umo-0000FZ-RK; Thu, 02 Oct 2025 21:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4UbV-0005fO-D8
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 21:29:01 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1v4Uml-0000FE-Jp
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 21:40:39 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4UbL-0008P3-MW
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 21:29:00 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-62ec5f750f7so2681665a12.3
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 18:28:48 -0700 (PDT)
+ id 1v4UmZ-0003Yk-LX
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 21:40:37 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-6228de280a4so3386837a12.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 18:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759454926; x=1760059726; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759455616; x=1760060416; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Nkwxz28O1WoLA/n8Tk4LlI3+YubAg4S2P97U8JEbWqw=;
- b=azvhH71YGpRjPKKHIuXETsmqgk6Bk8uSS42knAg8ZO5+chykffjFk3SBfhTzYkd7V3
- PbaoHFOqqKm9Qbhvnh+8ZIjrnhLuj9oPkpTDxjUwac1x64X6kImwzffzLA9PPHDKGVUq
- P/NqHfIH5He+fqs+RMMAig5YBwZ87nwpNKvanoXv7U6zVizkdDFqoOXUhapfkVhzW3Tb
- F27rXUNGWakEO29HI8gB5vvBSw7+3NLYBA43lT3PWgrYk+P0KQp/78ulQ4y/d4CZfkoy
- gTZlXq7nfKnABoS+U7V92aJO+aR5gRvvaDeL5/nyOne2ZZiBVE217TfvCP7FMo9rG5ng
- 4bYA==
+ bh=aQLsGW03J6qGYR3m6WmNEfCYFNehMAesc3EQALbX4VQ=;
+ b=h964Q/8ChHGugCRkLSkKj/BlIeFDXRpuYEBlCVD5/SO6AcruV4zSbO5JJHkzTBMHfK
+ wOySvHk0FFid7K8+0Pc2ntARichmiJCTO74lKL5t1kNHh4kEAJCDhPzXjE4P9jfStpmm
+ SPrhUnQ2jw7nwtc/yMWEA9w+KDTBFO7a/LYJCxeVY60VEgfYaaLiLqL+pf+HX2xdNInv
+ e1w28hEUAOgwGzf3g2YO1EmGLqV8AJW4uA6V/wKFBf/n+XDBmlaRtFyF7XaXDfro7TFo
+ n75NZT5BF1Dm1VlfxJU3HDNOegKD1bs5b8xvKBXksWXloEzDNKM8SMWhGzLYVKIQz9sn
+ zH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759454926; x=1760059726;
+ d=1e100.net; s=20230601; t=1759455616; x=1760060416;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Nkwxz28O1WoLA/n8Tk4LlI3+YubAg4S2P97U8JEbWqw=;
- b=rIL8EcuCTLrfyEuykofdQZWOGXJUllS0JelKH5du5iprQsNm3JIS4hNexlAa7+Sc5y
- ip62NyBnoFdoEcDztw5mKFSl+dFKMSIQem5GxXKqJx+jtVv0tvXzKFgl/NYNjyj/2xQr
- XY6iUbbBgqnU5PvTAs+9wgC2sceHwnb7OMavZDnQgl/+Swis7QEXXe6vk+6qai8k6RXP
- mwnpdUGCEDwUm2iyV0JXCct3w2DenMX+4Jl7Q4hXCgsjCj07AmFX43rbbxJgjKVpdeQs
- qru2/Ih962/0M9cJhuo2yF28fwV08yENyuaLFXFtDy8jQ9v7aoP/VdmX1Q3XRQfw4VmA
- brTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWG9LbecQ/QI3JKV9ONo0qfB+qhcERfrLLT9Mnqj68zRtyHKTyViHqfsMQ8wCNGOh9e2k61rdmk1eQn@nongnu.org
-X-Gm-Message-State: AOJu0YzsJ6fEAC+8norF1ZYrN3T//xy1w2XqrZB6V3QB3US7WpHPaI7V
- sIRo+7nmNcCqZZYQPG/g6uSdO/f8F9VO8kx/VsKb8LZ8DskMrBkA8FpdgbSHlTSt1Y2QrOPEfgi
- YuT+ZaW+2bpvqrF5XnoOHfVgj0km3vXs=
-X-Gm-Gg: ASbGncspOsS7Twq2iDVPhlXbubzEo9USobTW66IZziwCPETYFa7DV3o8gWcPRQVLfhu
- gTQjubznsG5NV6Y/b8XdZveR7BQTp8h0UM6sN3Qvl1uGbCCN4kRLZLezAPR03tIC1m8SzcgG0Mu
- DGmNOQzXU52xnIairqAbI4r580GASDDjMOlq4Iwa7zg2gB0HUBDPY6lmwqqTGc14SBr2nC565oq
- K4wGuSsE33f/91B68uHEfyeWlnA+s6WOeMiGDOrPBLHNAkANKENDPm856I9Mw==
-X-Google-Smtp-Source: AGHT+IGg9QskivYnj/vKYs4JtAuMFr8PkvI830CY8Uh1aznK4pRvAviuVUWCw7HHeWRb23kxlefeFQP3M2TsCwxF6EU=
-X-Received: by 2002:a17:907:7fa9:b0:b3f:9eaa:2bba with SMTP id
- a640c23a62f3a-b49c48a84f5mr160321766b.63.1759454925668; Thu, 02 Oct 2025
- 18:28:45 -0700 (PDT)
+ bh=aQLsGW03J6qGYR3m6WmNEfCYFNehMAesc3EQALbX4VQ=;
+ b=S3UwWBtmrmMxEnehYJeQzAtntWwUx8uKcpa0f9Sz/K+KpEYr1WE35W2HUeDchnncfk
+ HUIHeXQf7nY0FhDAnxsVegDmImyv4R7tvFJRwqU/d52HQzz+8nMZlHpx7UUZpos2IhLD
+ 0tyPBURf8/MKEfJlt6Z/w3CMu5UFs2pLV4S8EaiRxYTFhFE89ukbovl1jiDwslnTEV8q
+ d7vsLn0N57JZk+4UM3jMWjPxDU/zRf1oqcgQwC213HxTo4TnWdawvz1ZVtM/iQOO9LLU
+ E/znQievGRvE80rOvUi/JW7Iut2w/GWDidIvryIAGdxzZXvKgfRZmS0VGQjjgSBstVX4
+ 6Xbw==
+X-Gm-Message-State: AOJu0YwfBAsU0oTqe3wvqX4oJEwaz4upEYHBGmgxnbcNwO9BB3Gcmsho
+ Fbt8EaSzpPOqkNiH9hOa0FFLCeCETqvkxusyHx1WfxLrTzpq4TU5QLmrs6Wi5MI06aiT9TbLho2
+ 5MoOYqwAOdblInJV0zr9m6qAIHszOOWg=
+X-Gm-Gg: ASbGncuHOQjyOvd86TnNh//Eu5L11NcvRIqkqUkh0nJvr+dDp3/m947dLcwWulxAYmp
+ lkxbas7qrRk5+D8aETfO8NM66DBd4e70yziqoAd+MQYBHEq5YOapJ81frV7xofXWeVpzYFvqCQd
+ L6B66BgRWZJlK4wcufcWChX0tglk9uIZUyTx+WevH/17HOrGwiX1xvlJy1OVfZn1+aKThy2wcuv
+ ccPC+9QA/HNXHRhsIqbGUNZDzKusWYQaI9GRMj1gBgjKZ3G+RMC9EXuJADnqQ==
+X-Google-Smtp-Source: AGHT+IG8bQn79UfIqcXPIRO9LkK1+e/em1ErwNENcJKKp0r+NIzzrGQ8ieaCDET84wujn5SuQ+NBuNzNzibsqbWbJ3k=
+X-Received: by 2002:a17:907:94c5:b0:b3f:c562:faf7 with SMTP id
+ a640c23a62f3a-b49c449b9b2mr176688366b.55.1759455615673; Thu, 02 Oct 2025
+ 18:40:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250814001452.504510-1-joel@jms.id.au>
-In-Reply-To: <20250814001452.504510-1-joel@jms.id.au>
+References: <20240718021012.2057986-1-alistair.francis@wdc.com>
+ <20240718021012.2057986-22-alistair.francis@wdc.com>
+ <d42e9b86-80d6-4357-8d8a-158a60db0eb9@linaro.org>
+In-Reply-To: <d42e9b86-80d6-4357-8d8a-158a60db0eb9@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 3 Oct 2025 11:28:19 +1000
-X-Gm-Features: AS18NWCnJsH_fRBc_8QP834pXh-RuKN2m8f7KQcAQopPhHIxmmAjyuZD1huwS9Y
-Message-ID: <CAKmqyKPTXP5jipsMt7Dcs5kH2gWrjzart_ZhjUOcGCHBRAsVNg@mail.gmail.com>
-Subject: Re: [PATCH v2] docs: riscv-iommu: Update status of kernel support
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
+Date: Fri, 3 Oct 2025 11:39:49 +1000
+X-Gm-Features: AS18NWB0_jM2P7FAkGBDMAWBkY6QIfyAIOLkNPbrgbdwB55raySzcaJb2oICYr0
+Message-ID: <CAKmqyKMZwG6NDkZJqetFo+4ycEaRC6FmkH=KG5Vqyz-9aChy_g@mail.gmail.com>
+Subject: Re: [PULL 21/30] target/riscv: Implement privilege mode filtering for
+ cycle/instret
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Atish Patra <atishp@rivosinc.com>, 
+ Rajnesh Kanwal <rkanwal@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,138 +101,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 10:17=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrot=
-e:
+On Thu, Aug 21, 2025 at 7:25=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> The iommu Linux kernel support is now upstream. VFIO is still
-> downstream at this stage.
+> Hi,
 >
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> (old patch merged as b2d7a7c7e4e30fb5341d38deac968de675f9419c)
+>
+> On 18/7/24 04:10, Alistair Francis wrote:
+> > From: Atish Patra <atishp@rivosinc.com>
+> >
+> > Privilege mode filtering can also be emulated for cycle/instret by
+> > tracking host_ticks/icount during each privilege mode switch. This
+> > patch implements that for both cycle/instret and mhpmcounters. The
+> > first one requires Smcntrpmf while the other one requires Sscofpmf
+> > to be enabled.
+> >
+> > The cycle/instret are still computed using host ticks when icount
+> > is not enabled. Otherwise, they are computed using raw icount which
+> > is more accurate in icount mode.
+> >
+> > Co-Developed-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+> > Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> > Message-ID: <20240711-smcntrpmf_v7-v8-7-b7c38ae7b263@rivosinc.com>
+> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> > ---
+> >   target/riscv/cpu.h        |  11 ++++
+> >   target/riscv/pmu.h        |   2 +
+> >   target/riscv/cpu_helper.c |   9 ++-
+> >   target/riscv/csr.c        | 117 ++++++++++++++++++++++++++-----------=
+-
+> >   target/riscv/pmu.c        |  92 ++++++++++++++++++++++++++++++
+> >   5 files changed, 194 insertions(+), 37 deletions(-)
+>
+>
+> > +#if defined(CONFIG_USER_ONLY)
+> >   /* User Timers and Counters */
+> > -static target_ulong get_ticks(bool shift, bool instructions)
+> > +static target_ulong get_ticks(bool shift)
+> >   {
+> > -    int64_t val;
+> > -    target_ulong result;
+> > -
+> > -#if !defined(CONFIG_USER_ONLY)
+> > -    if (icount_enabled()) {
+> > -        if (instructions) {
+> > -            val =3D icount_get_raw();
+> > -        } else {
+> > -            val =3D icount_get();
+> > -        }
+> > -    } else {
+> > -        val =3D cpu_get_host_ticks();
+> > -    }
+>
+> I see this comes from old commit c7b95171881 ("RISC-V: Implement
+> modular CSR helper interface"), ...
+>
+> > -#else
+> > -    val =3D cpu_get_host_ticks();
+> > -#endif
+> > -
+> > -    if (shift) {
+> > -        result =3D val >> 32;
+> > -    } else {
+> > -        result =3D val;
+> > -    }
+> > +    int64_t val =3D cpu_get_host_ticks();
+> > +    target_ulong result =3D shift ? val >> 32 : val;
+> >
+> >       return result;
+> >   }
+>
+>
+> > +{
+> > +    uint64_t *snapshot_prev, *snapshot_new;
+> > +    uint64_t current_ticks;
+> > +    uint64_t *counter_arr;
+> > +    uint64_t delta;
+> > +
+> > +    if (icount_enabled()) {
+> > +        current_ticks =3D icount_get();
+> > +    } else {
+> > +        current_ticks =3D cpu_get_host_ticks();
+> > +    }
+>
+> ... but still I wonder, why not use cpus_get_elapsed_ticks()?
 
-Thanks!
-
-Applied to riscv-to-apply.next
+I don't think there is a specific reason, I didn't realised
+cpus_get_elapsed_ticks() is the way to go. Should this be changed to
+use cpus_get_elapsed_ticks()?
 
 Alistair
 
-> ---
-> v2:
->  - Fix VFIO link
->  - Fix qemu spelling
-> ---
->  docs/specs/riscv-iommu.rst | 35 +++++++++++++----------------------
->  1 file changed, 13 insertions(+), 22 deletions(-)
 >
-> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
-> index 991d376fdc24..571a6a6cc963 100644
-> --- a/docs/specs/riscv-iommu.rst
-> +++ b/docs/specs/riscv-iommu.rst
-> @@ -30,15 +30,15 @@ This will add a RISC-V IOMMU PCI device in the board =
-following any additional
->  PCI parameters (like PCI bus address).  The behavior of the RISC-V IOMMU=
- is
->  defined by the spec but its operation is OS dependent.
+> Regards,
 >
-> -As of this writing the existing Linux kernel support `linux-v8`_, not ye=
-t merged,
-> -does not have support for features like VFIO passthrough.  The IOMMU emu=
-lation
-> -was tested using a public Ventana Micro Systems kernel repository in
-> -`ventana-linux`_.  This kernel is based on `linux-v8`_ with additional p=
-atches that
-> -enable features like KVM VFIO passthrough with irqbypass.  Until the ker=
-nel support
-> -is feature complete feel free to use the kernel available in the Ventana=
- Micro Systems
-> -mirror.
-> -
-> -The current Linux kernel support will use the IOMMU device to create IOM=
-MU groups
-> +Linux kernel iommu support was merged in v6.13. QEMU IOMMU emulation can=
- be
-> +used with mainline kernels for simple IOMMU PCIe support.
-> +
-> +As of v6.17, it does not have support for features like VFIO passthrough=
-.
-> +There is a `VFIO`_ RFC series that is not yet merged. The public Ventana=
- Micro
-> +Systems kernel repository in `ventana-linux`_ can be used for testing th=
-e VFIO
-> +functions.
-> +
-> +The v6.13+ Linux kernel support uses the IOMMU device to create IOMMU gr=
-oups
->  with any eligible cards available in the system, regardless of factors s=
-uch as the
->  order in which the devices are added in the command line.
->
-> @@ -49,7 +49,7 @@ IOMMU kernel driver behaves:
->
->    $ qemu-system-riscv64 \
->          -M virt,aia=3Daplic-imsic,aia-guests=3D5 \
-> -        -device riscv-iommu-pci,addr=3D1.0,vendor-id=3D0x1efd,device-id=
-=3D0xedf1 \
-> +        -device riscv-iommu-pci,addr=3D1.0 \
->          -device e1000e,netdev=3Dnet1 -netdev user,id=3Dnet1,net=3D192.16=
-8.0.0/24 \
->          -device e1000e,netdev=3Dnet2 -netdev user,id=3Dnet2,net=3D192.16=
-8.200.0/24 \
->          (...)
-> @@ -58,21 +58,11 @@ IOMMU kernel driver behaves:
->          -M virt,aia=3Daplic-imsic,aia-guests=3D5 \
->          -device e1000e,netdev=3Dnet1 -netdev user,id=3Dnet1,net=3D192.16=
-8.0.0/24 \
->          -device e1000e,netdev=3Dnet2 -netdev user,id=3Dnet2,net=3D192.16=
-8.200.0/24 \
-> -        -device riscv-iommu-pci,addr=3D1.0,vendor-id=3D0x1efd,device-id=
-=3D0xedf1 \
-> +        -device riscv-iommu-pci,addr=3D3.0 \
->          (...)
->
->  Both will create iommu groups for the two e1000e cards.
->
-> -Another thing to notice on `linux-v8`_ and `ventana-linux`_ is that the =
-kernel driver
-> -considers an IOMMU identified as a Rivos device, i.e. it uses Rivos vend=
-or ID.  To
-> -use the riscv-iommu-pci device with the existing kernel support we need =
-to emulate
-> -a Rivos PCI IOMMU by setting 'vendor-id' and 'device-id':
-> -
-> -.. code-block:: bash
-> -
-> -  $ qemu-system-riscv64 -M virt        \
-> -     -device riscv-iommu-pci,vendor-id=3D0x1efd,device-id=3D0xedf1 (...)
-> -
->  Several options are available to control the capabilities of the device,=
- namely:
->
->  - "bus": the bus that the IOMMU device uses
-> @@ -84,6 +74,7 @@ Several options are available to control the capabiliti=
-es of the device, namely:
->  - "g-stage": enable g-stage support
->  - "hpm-counters": number of hardware performance counters available. Max=
-imum value is 31.
->    Default value is 31. Use 0 (zero) to disable HPM support
-> +- "vendor-id"/"device-id": pci device ID. Defaults to 1b36:0014 (Redhat)
->
->  riscv-iommu-sys device
->  ----------------------
-> @@ -111,6 +102,6 @@ riscv-iommu options:
->
->  .. _iommu1.0.0: https://github.com/riscv-non-isa/riscv-iommu/releases/do=
-wnload/v1.0.0/riscv-iommu.pdf
->
-> -.. _linux-v8: https://lore.kernel.org/linux-riscv/cover.1718388908.git.t=
-jeznach@rivosinc.com/
-> +.. _VFIO: https://lore.kernel.org/linux-riscv/20241114161845.502027-17-a=
-jones@ventanamicro.com/
->
->  .. _ventana-linux: https://github.com/ventanamicro/linux/tree/dev-upstre=
-am
-> --
-> 2.47.2
->
+> Phil.
 >
 
