@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B5ACCD184
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 23:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDC9CCD182
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 23:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4pRY-0005Bx-5j; Fri, 03 Oct 2025 19:44:09 -0400
+	id 1v4pRd-0005Cv-Ui; Fri, 03 Oct 2025 19:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1v4pRR-0005BO-IG
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 19:44:01 -0400
+ id 1v4pRO-0005Ap-9O
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 19:43:59 -0400
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1v4pRM-0001RK-OC
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 19:44:01 -0400
+ id 1v4pRL-0001SP-IA
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 19:43:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1759535037; x=1791071037;
+ t=1759535036; x=1791071036;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1P91eH2UA5PGQNaY7z1Sg6tLdtfMfyExdX+mCnVWtaQ=;
- b=D5GA1sSaSi7gX+wvbaTdpwxmBHPOoBDKc6XiKgMYaVyj745SO4ZPI5M6
- N0eskc10OmtYgKMLD5KVRtm+7Ks+UgS8SJxvq6egaueLo+1UcBPAzJ4W8
- CkqIXUnscWOUJyZNaPQFLXpG026QZL1aBOpdkELKHC6Q3VQELCYzvxijk
- AB92uIRLmPTjwl0h08jsRJjLDuWhNNHmksdrIcxSUMuvwkqCqk7uEl25r
- 363C3RIaELNsB0fNT62/dbCS44Q1ThmiowmYjNCBBhN8dLavK2k/8Q3eg
- eaxgKkFzYDAkkoA3Vu6cCOZU2VDobS1h0vl5LCGd2xOvrp2/8tLQ0HmU6 A==;
-X-CSE-ConnectionGUID: 4c7Vw3m4QsymrY0OoeHv+w==
-X-CSE-MsgGUID: 7bswWYiMSYKt7zZqk447sw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11571"; a="61705039"
-X-IronPort-AV: E=Sophos;i="6.18,314,1751266800"; d="scan'208";a="61705039"
+ bh=+pVa50ctXP0XgCPvdpOZl48hgQZbr6set2EyPjGDxgo=;
+ b=hAAwgyhxOS/NyY5m6fk8zA3Q3WsJQpI8yqwZYaZE0ha5DJj5ZW5BECRk
+ 0OY/51aeLAlEtBvAVCL6fTZDN1NOQsIqMYleRjjyXvnMrn3Ed5ghRn9XG
+ JkKmTHpFmBLu293se1RoxPyd7Gxwlhx6y+raDv2iqAqAG/2q5OZuLbZ6A
+ qfgokcGksIPbetyyFQ6scy6vt5foZB70/S5PtNRqrFCjXvvgi63gLTzQc
+ GNVVzTIuid+q625V8m6TmYhvABVDJRFLqZxy1Tojc8larDP2R6k6+NkyD
+ bngi6I8l8YnTBETHPsvk+r1hqaAaGHEofLABWKof0+h4sx7dEThQWi+QH A==;
+X-CSE-ConnectionGUID: WISdK1bMQ/6pCGV+PUZVvQ==
+X-CSE-MsgGUID: ex1gDkw4SambaBTaPzWw8w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11571"; a="61705034"
+X-IronPort-AV: E=Sophos;i="6.18,314,1751266800"; d="scan'208";a="61705034"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  03 Oct 2025 16:43:38 -0700
-X-CSE-ConnectionGUID: NYtm04wOS92nXVa7oHhTQw==
-X-CSE-MsgGUID: 1RnjW9ZiTy+blYVhMfTrVQ==
+X-CSE-ConnectionGUID: AyYOOrRnSCS2lE2zCceulQ==
+X-CSE-MsgGUID: D/WGCkYbTNuJQ5mV37Ws4g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,314,1751266800"; d="scan'208";a="179428149"
+X-IronPort-AV: E=Sophos;i="6.18,314,1751266800"; d="scan'208";a="179428146"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  03 Oct 2025 16:43:38 -0700
@@ -53,10 +53,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH v1 3/7] virtio-gpu: Find hva for Guest's DMA addr associated
- with a ram device
-Date: Fri,  3 Oct 2025 16:35:56 -0700
-Message-ID: <20251003234138.85820-4-vivek.kasireddy@intel.com>
+Subject: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify blob
+ resources
+Date: Fri,  3 Oct 2025 16:35:55 -0700
+Message-ID: <20251003234138.85820-3-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251003234138.85820-1-vivek.kasireddy@intel.com>
 References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
@@ -88,20 +88,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the Guest provides a DMA address that is associated with a ram
-device (such as a PCI device region and not its system memory),
-then we can obtain the hva (host virtual address) by invoking
-address_space_translate() followed by memory_region_get_ram_ptr().
-
-This is because the ram device's address space is not accessible
-to virtio-gpu directly and hence dma_memory_map() cannot be used.
-Therefore, we first need to identify the memory region associated
-with the DMA address and figure out if it belongs to a ram device
-or not and decide how to obtain the host address accordingly.
-
-Note that we take a reference on the memory region if it belongs
-to a ram device but we would still call dma_memory_unmap() later
-(to unref mr) regardless of how we obtained the hva.
+The res->blob pointer may not be valid (non-NULL) for some blobs
+where the backing storage is not memfd based. Therefore, we cannot
+use it to determine if a resource is a blob or not. Instead, we
+could use res->blob_size to make this determination as it is
+non-zero for blob resources regardless of where their backing
+storage is located.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -109,57 +101,94 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index df696611a4..22bbe76809 100644
+index 70e8757128..df696611a4 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -801,6 +801,32 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
-                               &fb, res, &ss.r, &cmd->error);
+@@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+     }
+ 
+     if (res->blob_size) {
+-        if (res->blob_size < (s->current_cursor->width *
++        if (!res->blob || res->blob_size < (s->current_cursor->width *
+                               s->current_cursor->height * 4)) {
+             return;
+         }
+@@ -144,7 +144,7 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+     }
+ 
+     if (require_backing) {
+-        if (!res->iov || (!res->image && !res->blob)) {
++        if (!res->iov || (!res->image && !res->blob_size)) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: no backing storage %d\n",
+                           caller, resource_id);
+             if (error) {
+@@ -446,7 +446,7 @@ static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
+ 
+     res = virtio_gpu_find_check_resource(g, t2d.resource_id, true,
+                                          __func__, &cmd->error);
+-    if (!res || res->blob) {
++    if (!res || res->blob_size) {
+         return;
+     }
+ 
+@@ -509,7 +509,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
+         return;
+     }
+ 
+-    if (res->blob) {
++    if (res->blob_size) {
+         for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
+             scanout = &g->parent_obj.scanout[i];
+             if (scanout->resource_id == res->resource_id &&
+@@ -540,7 +540,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
+         }
+     }
+ 
+-    if (!res->blob &&
++    if (!res->blob_size &&
+         (rf.r.x > res->width ||
+         rf.r.y > res->height ||
+         rf.r.width > res->width ||
+@@ -636,7 +636,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+ 
+     g->parent_obj.enable = 1;
+ 
+-    if (res->blob) {
++    if (res->blob_size) {
+         if (console_has_gl(scanout->con)) {
+             if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r)) {
+                 virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
+@@ -647,13 +647,16 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+             return true;
+         }
+ 
++        if (!res->blob) {
++            return false;
++        }
+         data = res->blob;
+     } else {
+         data = (uint8_t *)pixman_image_get_data(res->image);
+     }
+ 
+     /* create a surface for this scanout */
+-    if ((res->blob && !console_has_gl(scanout->con)) ||
++    if ((res->blob_size && !console_has_gl(scanout->con)) ||
+         !scanout->ds ||
+         surface_data(scanout->ds) != data + fb->offset ||
+         scanout->width != r->width ||
+@@ -901,7 +904,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+     g_free(res->addrs);
+     res->addrs = NULL;
+ 
+-    if (res->blob) {
++    if (res->blob_size) {
+         virtio_gpu_fini_udmabuf(res);
+     }
  }
- 
-+static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-+                                       struct virtio_gpu_ctrl_command *cmd,
-+                                       uint64_t a, hwaddr *len)
-+{
-+    MemoryRegion *mr = NULL;
-+    hwaddr xlat;
-+
-+    if (cmd->cmd_hdr.type != VIRTIO_GPU_CMD_RESOURCE_CREATE_BLOB) {
-+        return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-+                              DMA_DIRECTION_TO_DEVICE,
-+                              MEMTXATTRS_UNSPECIFIED);
-+    }
-+
-+    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
-+                                 DMA_DIRECTION_TO_DEVICE,
-+                                 MEMTXATTRS_UNSPECIFIED);
-+    if (memory_region_is_ram_device(mr)) {
-+        memory_region_ref(mr);
-+        return memory_region_get_ram_ptr(mr) + xlat;
-+    }
-+
-+    return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-+                          DMA_DIRECTION_TO_DEVICE,
-+                          MEMTXATTRS_UNSPECIFIED);
-+}
-+
- int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-                                   uint32_t nr_entries, uint32_t offset,
-                                   struct virtio_gpu_ctrl_command *cmd,
-@@ -842,9 +868,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
- 
-         do {
-             len = l;
--            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
--                                 DMA_DIRECTION_TO_DEVICE,
--                                 MEMTXATTRS_UNSPECIFIED);
-+            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
-             if (!map) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
-                               " element %d\n", __func__, e);
 -- 
 2.50.1
 
