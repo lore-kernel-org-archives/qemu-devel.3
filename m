@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD70CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB16CCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4huL-00050h-0D; Fri, 03 Oct 2025 11:41:22 -0400
+	id 1v4hvB-0005XL-E6; Fri, 03 Oct 2025 11:42:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htY-0004lP-Ku
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hv3-0005UQ-4g
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:42:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htI-0007aq-5G
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hu6-0007lV-4Y
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:42:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759506006;
+ s=mimecast20190719; t=1759506056;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bUAG8VWvxwhXQ02nBq6hxNJFTKGhpPmcCRapw0hlqLU=;
- b=Hu7TQHBzB9afcOJKR54WZqmXn5daCvasPX1SkJo5V6WFBGMqZXj+4TDDAELkwahCX0OAph
- nDOeUOKk5PapHRJI5XAuRlGFPFVN1rMD69BvBjMkr309Gji/8ybQxpPbsX3gg+g5goQsoU
- N+v/kkafhNvFXn38AujxvQPHicaTSxY=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zvoe1XuyFzw6D+/h8M2xMDoOxrnHPt+CbPDEsj1vlp0=;
+ b=f/ugR1Cxmk0GLIv4D3XHlMKHhNKb2l37M/Y53BLDoyM+jnChjF6cXzGgqJXMGqc9EgWdP2
+ pp9g7cK3PaulyeSTzznbvrsA+vIWtr86FnhZlM6ZNJuBsM5ZVLuXW0ASpR57gryT7Lg14B
+ KdD5308gNycy2rsbkXKWg+UqS1sR+BE=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-sEHo1ZyAPviN7eruqHWvHg-1; Fri, 03 Oct 2025 11:40:05 -0400
-X-MC-Unique: sEHo1ZyAPviN7eruqHWvHg-1
-X-Mimecast-MFC-AGG-ID: sEHo1ZyAPviN7eruqHWvHg_1759506005
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8741223accfso49080536d6.1
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:05 -0700 (PDT)
+ us-mta-139-TloALoASPGGFHc3dei0_lQ-1; Fri, 03 Oct 2025 11:40:55 -0400
+X-MC-Unique: TloALoASPGGFHc3dei0_lQ-1
+X-Mimecast-MFC-AGG-ID: TloALoASPGGFHc3dei0_lQ_1759506054
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-7e90f268f62so42097746d6.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759506005; x=1760110805;
+ d=1e100.net; s=20230601; t=1759506054; x=1760110854;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bUAG8VWvxwhXQ02nBq6hxNJFTKGhpPmcCRapw0hlqLU=;
- b=DWNSV4hZkqErJyvqIu2loSaOBaPi3yLh7dyH/ZlyplOaJFS67/HqnQd9UQuMC+l+iC
- fZzQtlX9z+YIHarPFmdd9XGwvU8iXaXxrbFmhrRuB0nEVQkLN0IsLa9ctrLacxUXyo4d
- nWCuznikewRxO2eEhfKKEnPSQq+zqx4Qc59Yglp+t66aum5YLHfaM9SG5hqx7daXO82i
- eijWkMW7xWdxZgYmKASqFd2zj8q7K7Hba80T++jtE4A8L5PddJx2H8LGfdgpbFm02uU1
- K9mEHK6OEwK4ZgKYCJdoSEM+dT11iWncY8xjVUAffaiepEep7VUw0Q1BZktu1YE7o7pi
- I6eA==
+ bh=zvoe1XuyFzw6D+/h8M2xMDoOxrnHPt+CbPDEsj1vlp0=;
+ b=NH9QZ90amO6B5mtvfyp/MpgNeUvNuvKjinMxWtCzfA4wBjxCQmv8UGhV9yzxULM4lO
+ mn5RNpU2/W1EGFb/nA+7rRIMEU06HzSbQhkxLU3Z8SazYvXuG4AYp+USy25ZSMDaVuKJ
+ DTIBxp3Go8+h0lMwbzxgJuAoEjNKeVcRmkupzUGOOd8HnG0N0pQz4eJnf9YD5R22Dkn7
+ Z88nqGLcIUlwVs2btAc92ylE+7hP3HHlSZ5zuWUbIIT/tIOEyaIc9DthBWbJ/47l+bA/
+ S7+0VVmJZz8H+M5NqFgy7aAg+Hbd7d9DsmMsPsnV6Sj5ZgRWBfcvS+b4B0Uf61sInNEY
+ nPNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvgmSQgzZWacI4bE+ZmxmpASGKzQ9CnkUYhjYi3bNXliwXOWQi+81tVAQCRUcz7JDiey9KkAiwyqTT@nongnu.org
-X-Gm-Message-State: AOJu0Yztg2QfNU7uUGQmtdLV7HzNj/q5WzALkqhInRpgC1u/ls2b17B8
- SB+cby6D4R9CVCw1h4NS7YE9uUJ/UFogkSqdJvyYPGBkKmjoOsYGnRaVYxroCPsQ0oKvUXdTXov
- Il2wCEsTjjVgxxfoh4/8czlGuopALR/nrzTAHoppaKRsZjNGTgaoadzJx
-X-Gm-Gg: ASbGnctGbtzRRFepXnIcJ+SHhLxZxJXKuF6erORahoI8ZnfVhdeGxLAkHtDBBLiQdfv
- 8od4nViGVDL2jse2VfgLbeQN+VkI+nznH0GpZFbmvglMn4d6TGFB57FsScmRcpR0Egk9wBfdqcJ
- ruPPGg5ulFhs4kBWZwqlAKjZ8O2njqq93Kh4HGsDTo5qCzHmvj+uBmpjy7NUuG7DCTCMXF+YK/9
- FNi/SpgHxunIDwCWEBJcjLjLHc+W9nK/29kL99jgeRF+hkzazIgLVeuKPcuPgH83Vs45l6IFgFP
- eqHaBmwLWV3ku0QLezMPUneQfP8SLf7vmCfqgQ==
-X-Received: by 2002:a05:6214:da7:b0:7e9:bba6:511c with SMTP id
- 6a1803df08f44-879dc77c3f0mr46511226d6.5.1759506004915; 
- Fri, 03 Oct 2025 08:40:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/KARgAXi/APAZXZ59HqRHVZfRcxk5jaQgeNwvBvknWUTUDeOZidF6JrAF2glQlntSlA4O5w==
-X-Received: by 2002:a05:6214:da7:b0:7e9:bba6:511c with SMTP id
- 6a1803df08f44-879dc77c3f0mr46510806d6.5.1759506004388; 
- Fri, 03 Oct 2025 08:40:04 -0700 (PDT)
+ AJvYcCXu4tZFVrQQfdrTm4p7QXBlV0XAtqLWBcBtX+iGHbrZNRrf2FhovTjBu2EX/qTjl9Bh4b6zq1eNoTrp@nongnu.org
+X-Gm-Message-State: AOJu0YxA43qarZfybF83IYSdu0aAVfmCAUhm1ArCWGiGN66Tdl9q3y3a
+ 6V5sv0iycy4xXYEfqXAfQ3Xo6RAr86lUaxst8Q819csUdzQcb6BT6XKkDoXuIUX+wYJRsZk7Wfz
+ 53mgg6F6t8LWGmKqPPMcX5xYbonsmXXtuFjDQwYSgQUW0+JzyF132El6w
+X-Gm-Gg: ASbGncuqZsnaFc1nuD22kyg7xldI9RcBq4T+nXoRhljTm9sC+AdfZ6F9Glz9p/oDThS
+ Hs6oa/e1mbToVS0/Tm43ee+WA7vAqPYVdhL24i5AisVLSooX+uACA0wVR+ZzWzhGC2pCO46qGyv
+ IOtXhGQN7z+QcqItWwiCqjcgDidxII2vnp2JB2Lwpiiypf02ITSc6UzSFPYoA5cC1gxorNn63ae
+ iR1duKiISm6daOHtDJ0Izi2/Mubvd/HIVl/iuaIKaKYs6131WFfsPa1ePjzR+8tfZJ8nMIOGrW9
+ WKBgZzz7fgBSAz++cSBg7dzgl2Y3OwoOXDVv1w==
+X-Received: by 2002:a05:6214:124f:b0:79c:f4b0:6813 with SMTP id
+ 6a1803df08f44-879dc79badbmr50201136d6.21.1759506054173; 
+ Fri, 03 Oct 2025 08:40:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgmSM7dDiaoS8GFq7HVsdH6sDjfz2Zm9L6IIaW7JOaTfv2kHw9MiLmRFZpO7iIG0KTo5yo5Q==
+X-Received: by 2002:a05:6214:124f:b0:79c:f4b0:6813 with SMTP id
+ 6a1803df08f44-879dc79badbmr50200646d6.21.1759506053636; 
+ Fri, 03 Oct 2025 08:40:53 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.02
+ 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 08:40:03 -0700 (PDT)
+ Fri, 03 Oct 2025 08:40:53 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Arun Menon <armenon@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 08/45] migration: push Error **errp into
- qemu_load_device_state()
-Date: Fri,  3 Oct 2025 11:39:11 -0400
-Message-ID: <20251003153948.1304776-9-peterx@redhat.com>
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 44/45] vfio: cpr-exec mode
+Date: Fri,  3 Oct 2025 11:39:47 -0400
+Message-ID: <20251003153948.1304776-45-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
 References: <20251003153948.1304776-1-peterx@redhat.com>
@@ -97,7 +95,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,77 +111,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-This is an incremental step in converting vmstate loading
-code to report error via Error objects instead of directly
-printing it to console/monitor.
-It is ensured that qemu_load_device_state() must report an error
-in errp, in case of failure.
+All blockers and notifiers for cpr-transfer mode also apply to cpr-exec.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Arun Menon <armenon@redhat.com>
-Tested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-8-36f11a6fb9d3@redhat.com
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Acked-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/r/30750362-d4a1-4392-8dd6-016624d01be1@oracle.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/savevm.h | 2 +-
- migration/colo.c   | 3 +--
- migration/savevm.c | 4 ++--
- 3 files changed, 4 insertions(+), 5 deletions(-)
+ hw/vfio/container-legacy.c |  3 ++-
+ hw/vfio/cpr-iommufd.c      |  3 ++-
+ hw/vfio/cpr-legacy.c       |  9 +++++----
+ hw/vfio/cpr.c              | 13 +++++++------
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/migration/savevm.h b/migration/savevm.h
-index b80770b746..b12681839f 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -67,7 +67,7 @@ int qemu_save_device_state(QEMUFile *f);
- int qemu_loadvm_state(QEMUFile *f, Error **errp);
- void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
- int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis);
--int qemu_load_device_state(QEMUFile *f);
-+int qemu_load_device_state(QEMUFile *f, Error **errp);
- int qemu_loadvm_approve_switchover(void);
- int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-         bool in_postcopy);
-diff --git a/migration/colo.c b/migration/colo.c
-index cf4d71d9ed..a426ec5b60 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -729,9 +729,8 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
-     bql_lock();
-     vmstate_loading = true;
-     colo_flush_ram_cache();
--    ret = qemu_load_device_state(fb);
-+    ret = qemu_load_device_state(fb, errp);
-     if (ret < 0) {
--        error_setg(errp, "COLO: load device state failed");
-         vmstate_loading = false;
-         bql_unlock();
-         return;
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 88116ed278..9e30718995 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3264,7 +3264,7 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
-     return ret;
- }
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index c0f87f774a..c0540f2bdc 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -990,7 +990,8 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+         error_setg(&vbasedev->cpr.mdev_blocker,
+                    "CPR does not support vfio mdev %s", vbasedev->name);
+         if (migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, errp,
+-                                      MIG_MODE_CPR_TRANSFER, -1) < 0) {
++                                      MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
++                                      -1) < 0) {
+             goto hiod_unref_exit;
+         }
+     }
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+index 1d70c87996..8a4d65de5e 100644
+--- a/hw/vfio/cpr-iommufd.c
++++ b/hw/vfio/cpr-iommufd.c
+@@ -159,7 +159,8 @@ bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
  
--int qemu_load_device_state(QEMUFile *f)
-+int qemu_load_device_state(QEMUFile *f, Error **errp)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     int ret;
-@@ -3272,7 +3272,7 @@ int qemu_load_device_state(QEMUFile *f)
-     /* Load QEMU_VM_SECTION_FULL section */
-     ret = qemu_loadvm_state_main(f, mis);
-     if (ret < 0) {
--        error_report("Failed to load device state: %d", ret);
-+        error_setg(errp, "Failed to load device state: %d", ret);
-         return ret;
+     if (!vfio_cpr_supported(be, cpr_blocker)) {
+         return migrate_add_blocker_modes(cpr_blocker, errp,
+-                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
++                                         MIG_MODE_CPR_TRANSFER,
++                                         MIG_MODE_CPR_EXEC, -1) == 0;
      }
  
+     vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index bbf7a0d35f..1a16cb1188 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -179,16 +179,17 @@ bool vfio_legacy_cpr_register_container(VFIOLegacyContainer *container,
+ 
+     if (!vfio_cpr_supported(container, cpr_blocker)) {
+         return migrate_add_blocker_modes(cpr_blocker, errp,
+-                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
++                                         MIG_MODE_CPR_TRANSFER,
++                                         MIG_MODE_CPR_EXEC, -1) == 0;
+     }
+ 
+     vfio_cpr_add_kvm_notifier();
+ 
+     vmstate_register(NULL, -1, &vfio_container_vmstate, container);
+ 
+-    migration_add_notifier_mode(&container->cpr.transfer_notifier,
+-                                vfio_cpr_fail_notifier,
+-                                MIG_MODE_CPR_TRANSFER);
++    migration_add_notifier_modes(&container->cpr.transfer_notifier,
++                                 vfio_cpr_fail_notifier,
++                                 MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC, -1);
+     return true;
+ }
+ 
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 2c71fc1e8e..db462aabcb 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -195,9 +195,10 @@ static int vfio_cpr_kvm_close_notifier(NotifierWithReturn *notifier,
+ void vfio_cpr_add_kvm_notifier(void)
+ {
+     if (!kvm_close_notifier.notify) {
+-        migration_add_notifier_mode(&kvm_close_notifier,
+-                                    vfio_cpr_kvm_close_notifier,
+-                                    MIG_MODE_CPR_TRANSFER);
++        migration_add_notifier_modes(&kvm_close_notifier,
++                                     vfio_cpr_kvm_close_notifier,
++                                     MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
++                                     -1);
+     }
+ }
+ 
+@@ -282,9 +283,9 @@ static int vfio_cpr_pci_notifier(NotifierWithReturn *notifier,
+ 
+ void vfio_cpr_pci_register_device(VFIOPCIDevice *vdev)
+ {
+-    migration_add_notifier_mode(&vdev->cpr.transfer_notifier,
+-                                vfio_cpr_pci_notifier,
+-                                MIG_MODE_CPR_TRANSFER);
++    migration_add_notifier_modes(&vdev->cpr.transfer_notifier,
++                                 vfio_cpr_pci_notifier,
++                                 MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC, -1);
+ }
+ 
+ void vfio_cpr_pci_unregister_device(VFIOPCIDevice *vdev)
 -- 
 2.50.1
 
