@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F30BCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E301FCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4WTE-00078O-2D; Thu, 02 Oct 2025 23:28:36 -0400
+	id 1v4WTA-00075v-HQ; Thu, 02 Oct 2025 23:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WTB-000763-54
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:33 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1v4WSz-00072F-9Q
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:21 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WSx-0001EI-Tg
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:29 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-279e2554b6fso11736015ad.2
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:28:18 -0700 (PDT)
+ id 1v4WSl-0001CP-NB
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:20 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-33292adb180so1820489a91.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759462094; x=1760066894; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759462081; x=1760066881; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4L1dP65ExrGrK+gLH5THctXyJB5NdQkz+xLUjnvqoQk=;
- b=YwLaStVIaT4ljW60XsYDo4UDTgxFpnZiwUoIKN6T9FVsBeBbiOjCQbHsERslvikmbi
- m1MTj/A8zuolvyftLaUibV4ttpNJR9y6f+2t3GaXOTmzgReu9+i1uemInwqb/9QOVB/Z
- J0cl06poW2g9TXc2lpOuiAp8/5s4uOEMmDagyVEjP5ZRDKM8exZMN+pe5PPtfbT0ScqI
- 9+0lqmzaecOx7mdOct98qMUZm/Shb+p1g3Oj51jkzD7mO7sGLFt+pt53OE3D+AlLN5s5
- 7DeO58T+rigxeMbrx0qlrTJV938D5790njROvkdnk1VxQkfgkWMau5FYNLznxE3oi6SO
- Hcaw==
+ bh=xMoeXM28MFdHREPmoHRQpNFp6LnUVRSRZ+UWLkUpths=;
+ b=EvvgmdFHnhODErqQIBdkijte/TQGLbcmfYx4rHYfQVuiuDu3X+CXZhJY1hxM2gOPjx
+ 7zIadpUNV7YA4dB9mBkTNQnsv6nasX60Ga8ulC6n6yTWcIROEIiFsT0hYgsBl+6y53Nu
+ Kx5hw1yGdqOxLxYFNJ7fUMjYww4c3J8T7eqDjlUtGeVzeCk4YlUORT6gssYGRQWAEjAg
+ gaB9FofdWxRM0T+9mPP2BsFikHDFo8jUjhRmpYM6t5GYdjUbuFtRPEjtyGGLGZk/vJ23
+ aFl2dqycA1WBX53KJdmpdgWzTJ73aTrWZnvizjgACmtZEQD7NCnvbaKrl9bZqXiXRW9W
+ DlNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759462094; x=1760066894;
+ d=1e100.net; s=20230601; t=1759462081; x=1760066881;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4L1dP65ExrGrK+gLH5THctXyJB5NdQkz+xLUjnvqoQk=;
- b=rR937MgJtYF0Ehi/mBSLM5UzAKFtV61p3/4981m0i3pPff4gBMGs8JyvxB3bXwlTF+
- 2rgPENTqEIyl2kexuwhUGwHrAjsHHyZSHkAWSJNoOyvJNOndYYPLe1hgPCDMjiCW7rj4
- sw28uSdGo7o+EQK8ZKtJLFJmrrrYcDaT5puNgmJBXBrxY6QIKMq6eB53Dd2EfW2OuLl8
- gIIk7VUH1Anz8aMf+jrtpZZrvCbkJw5GshljbrpHGhEO84kz2AKJpzfgSSfSmmsYn/+1
- C1sXtWJKMVBdMXVQQAGOc7pWXO5UEkMRNCwCP/+tsw739firPIiVGaXM3JAXBBB3GjE9
- TDdA==
-X-Gm-Message-State: AOJu0YwwbxGEmvV0isObkMyVUQ9IbtRzodmTUJ/lHfbSXOnQfuZwIRTx
- Mk8lDO06LrIqf1xHtos/ztEoY78Hy8dEUOHUPfd0LGms6RXWf0+7gtjuHxuePw==
-X-Gm-Gg: ASbGnctrjuAwsV4aQMaxs+JpVMAgmlQHIyPEpAjDk7B5oziYYzHQTpb8RTHqDktnlJQ
- 6s+RI7lWvPXwjvBFaKeAR07LjKbbhodMwFnaOuCKMIWsoqOFUISxJ23I+i9S0D838b4dowa6ryV
- I8kkF31oaLcuifHp+9UChlkhY70iKVpSVUrjPZMJkK2nZYfMcpwtuVO8mMKB/i6/KBI3LSaIqOq
- oYUMeAIavdKNwOXf+bDN+sCcgfp+SASsraH/hbYVMA0V5u+cGi5K5mQJ511pY/DyObPoBcdQpKG
- 5mTejWZ5zAB1LIcZIDvloRlzdvBxhd2pdik/8aaPEZnR2OID7wnKQGrzsFoCtVXHamf58HVejlc
- a9GYPGt/tKwluCbcEOz+ggT3+PVXj0ZyhHCE1U6z/zQDr0ZcJr/4i62CJmKBTwYuQOC23zoYShk
- bBRhenIJiQPb1MevkNRjuHJ4sgb7JBtr3ZPMLWP5Gdqa96Q6RNdIbk
-X-Google-Smtp-Source: AGHT+IGs9Ad7yrlRx0B5/kvHnDHE9Vr2d8KRPPqWeLZErAwUcV4HEVRMDkvCq6fofGjtOjkNP/FHcg==
-X-Received: by 2002:a17:902:d54d:b0:261:e1c0:1c44 with SMTP id
- d9443c01a7336-28e9a61f1d4mr17293695ad.40.1759462094163; 
- Thu, 02 Oct 2025 20:28:14 -0700 (PDT)
+ bh=xMoeXM28MFdHREPmoHRQpNFp6LnUVRSRZ+UWLkUpths=;
+ b=uSadx8AAvfdE8QVyWWpU5FiFu6wB1mwbLZs5wzDAOJ4YAVEYzsCQ4NeXOr6hPA6i0z
+ McYMn7nloAzd3GA/VAEtZSOz4pgdJH6kBs8NyT2D522jrnBPwwvq0PMkAFsv3/6gKEkT
+ SHoP368J22mE7iWII1dVvl8TM5hCXKC58BHSuqQAGlM03r81pl1VI/kE/LJQ1Fmboxlq
+ 7P4eQVU6/VgKZPNLyN0Nxtk/yTRNOrKL3UZhuusCc0CjmF4kytONW0o8Rd9Zyou/Dehr
+ tskO/M5faq2jnPlh2D7jeWxpC3UuibJ00B8FPtkiHncvVOqzjJooOa7vLx6dr+JzVNNK
+ Y3gA==
+X-Gm-Message-State: AOJu0Yw7VZxuv275LizP8pT1PSSjMsm5KXJITylVhpCwAERuaAzVkADD
+ myqmiSNe2pBP6M5tCeTcskySBhiQOpiDuq10hsqlYQULbgEdZdMaDy1wBsSALw==
+X-Gm-Gg: ASbGnctAG7ZXrWHlqp6j/QFYF7+KqIXL8otVQInHcsEUze5ppxJMLLoXZRIY+YGg8jI
+ acQoR2Al+wKD0Uruthc01gD15+S6o120IjdEb9WMmtkiKU99TeQ27v3aaE4wa3MuueR6BBCebNf
+ 2R4Wy4mwOED9+q26xBD1LVRqMZga4DiYKlsh0reaWiQeyH48x6SsEgsFI/iuXmNnsp6QOmUeO+9
+ ipH1vXi6+wmOSVyhmFuLzxc4r7I4/LLhlbpRWsOf7IAlTEK2J41uFQ4JLEGoX+Od+F4213Dj6q/
+ mu2uLDpDsHsIEygH0mEsMWfrJrACgdOfEYBhqVpzfcV8hIWejFmoKvb7B8FwjNQLtQkLXq531UZ
+ DrPaiUjkB9F9DMqP6lqjO2TGXuBlukT5TocpY9teErleS5Yyr43PXy1BFhWmEHmN3RcspT4aN4E
+ YK6i4supDtHgteb1UCcLZGQ8yTsDbv53HercbZ3oFdA1exL9f2oj3G
+X-Google-Smtp-Source: AGHT+IHJx/Ldeq+4Pbb+1cP/7gvm9xF+/72gnobMiekCG3sjGIAYhR/RseT4KRv31wezbhIBZnXD8w==
+X-Received: by 2002:a17:90b:1e09:b0:32e:70f5:6988 with SMTP id
+ 98e67ed59e1d1-339c27b3cb3mr1627953a91.32.1759462081051; 
+ Thu, 02 Oct 2025 20:28:01 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.28.11
+ 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.27.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 20:28:13 -0700 (PDT)
+ Thu, 02 Oct 2025 20:28:00 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, TANG Tiancheng <lyndra@linux.alibaba.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Peter Xu <peterx@redhat.com>,
+Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/26] migration: Add support for a variable-length array of
- UINT32 pointers
-Date: Fri,  3 Oct 2025 13:27:03 +1000
-Message-ID: <20251003032718.1324734-12-alistair.francis@wdc.com>
+Subject: [PULL 07/26] hw/char: sifive_uart: Avoid pushing Tx FIFO when size is
+ zero
+Date: Fri,  3 Oct 2025 13:26:59 +1000
+Message-ID: <20251003032718.1324734-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003032718.1324734-1-alistair.francis@wdc.com>
 References: <20251003032718.1324734-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,44 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-Add support for defining a vmstate field which is a variable-length array
-of pointers, and use this to define a VMSTATE_TIMER_PTR_VARRAY() which allows
-a variable-length array of QEMUTimer* to be used by devices.
+There's no need to call fifo8_push_all() when size is zero.
 
-Message-id: 20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250911-timers-v3-2-60508f640050@linux.alibaba.com>
+Message-ID: <20250911160647.5710-3-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/migration/vmstate.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/char/sifive_uart.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 1ff7bd9ac4..1cfddf31b5 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -522,6 +522,16 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
- }
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 138c31fcab..401f869680 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -122,7 +122,9 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+         qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow");
+     }
  
-+#define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-+    .name       = (stringify(_field)),                                    \
-+    .version_id = (_version),                                             \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
-+    .info       = &(_info),                                               \
-+    .size       = sizeof(_type),                                          \
-+    .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type),          \
-+}
-+
- #define VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, _num, _version, _vmsd, _type) { \
-     .name       = (stringify(_field)),                                     \
-     .version_id = (_version),                                              \
+-    fifo8_push_all(&s->tx_fifo, buf, size);
++    if (size > 0) {
++        fifo8_push_all(&s->tx_fifo, buf, size);
++    }
+ 
+     if (fifo8_is_full(&s->tx_fifo)) {
+         s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
 -- 
 2.51.0
 
