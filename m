@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4623CCD183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626BCCCD182
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 11:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4eO3-00014H-U2; Fri, 03 Oct 2025 07:55:48 -0400
+	id 1v4eNS-0000uT-UC; Fri, 03 Oct 2025 07:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4eNy-00012g-RM
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:55:43 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1v4eNP-0000r2-OL
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:55:08 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4eNr-00025H-K9
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:55:42 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b551350adfaso1965738a12.3
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 04:55:29 -0700 (PDT)
+ id 1v4eN6-0001nx-TN
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:55:05 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-76e4fc419a9so2123849b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 04:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759492526; x=1760097326; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759492476; x=1760097276; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=p0jbnFaCbMDHIZMwpuk0zUD4EsGJsCI8NfQtsqavRCA=;
- b=GyTylTBF2cVkC4A/J8l+mbHvoDD7usmRJURNTPohVx1RmeSv4ZRhiU1xqosOxR8W/5
- smGz0D9d7VRMxOkR0hrmq39qBGzKCRUr2EFVIZ0vsVPxYmcPNidGN7aOxdyary4tYHc6
- PC2H2Fiww4VuRs7NfF7PdiyORvXAmmvZ6YOStJV2CwrtWAq60GkjOkEkuC9+H1dKU5T6
- iV+VJR6LekrBStB7dwo4FyAf11b6zxJbKYhDIfuHgQjt8CpK6cmIU0OsnLal6tRkNpk3
- DUvSsA9FHd3sW4CcibD39jR6stjRWuOVvRJfigDu6Nx4y3eISEBSYGCqo59oflhX5e2G
- 8PVg==
+ bh=GM1v8WKUlQvcJItATHvg4vyybmkegTOyo+dMKSH18HU=;
+ b=Or9A6jOhfYsPu5Iys37BSHGiMTdBYUjDnbrG1+7f8P4I+eDN6Ndm2pgbiuw40otuCy
+ 91LGr7wVkZ/Fr3C0Wg29crDKGmPltQJuFkfw63YaFHMG70//V5Fuf1omrC7wlK0CUHUg
+ FUGZsXX59IojLlbhwoRn6OL7fkq/VaV0qzOOF8MCXJqgaR0t22AXIDqngqRrmh+2VCi1
+ f57GD0Oylt9/t4pQJ2Na3pxVAVz8+RjNDyuiDSTUmJdC97/Fq2xkCz2IzJOgt9Sf++jU
+ ak+QduA5a8C0DOoEoXpdLY5Bp50z4fEvZaKO3mIfb4eJ6GtSo1mHoLPenzHOeaIgAr5B
+ AVxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759492526; x=1760097326;
+ d=1e100.net; s=20230601; t=1759492476; x=1760097276;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p0jbnFaCbMDHIZMwpuk0zUD4EsGJsCI8NfQtsqavRCA=;
- b=Z3C6cuTM7JndHzyyJbbGrpDA/u71FAnYXJ/jBxBBAkuZCZ2CG8zPkAesGgabjmNTFX
- +g7OE8iqV4AQmkltHpFlUyBRdV2mOZSnc/NdKopBlt96Koe0/kvYI0ZLDq+8yarWD0yP
- IuE3eTfh/uU+MubagrnLQ1FSJx6Fmu4H0Eze3f9g7MbJT6Ku8s76sRP/isPw1r2KE4hk
- HsVY4Jsp2dnqpv8WTTtf1YS/NmeLYHG390iyR5K4nk2wB6XtPJOJc9a6CghpP4iBqkUD
- q152Thf0AuKF5zeSl23S/rf8OAJcDd/mfeTKFUKgrxN7hT5wQm48GG1pEF6trjJjgnOr
- 5dXg==
+ bh=GM1v8WKUlQvcJItATHvg4vyybmkegTOyo+dMKSH18HU=;
+ b=sERtB6ySelT83al5poV7jA8U1BJ9JyqiEUUF9QERbis76GujubPxWxzLhr07k9mucO
+ 2hbYRv4kFbHaaXtHWMjaTGC/vE1Tc6g5vIyW4SqeWqTX1jojVj+h7iFV0W6SUAmPhUlL
+ 30c43L3+QHcxXmJm+HfD+ZttFmJbaDSc1O0Mt4IHlqUDQIBEndACJJsqzRCq1AwO7ao3
+ 8wHDj6p1IYKDUfDulKM0cYXl8PiIs3CFdyDaJFFcRXbo4206hXo2i2625UeBjzdhdk8h
+ GgNEBc6pmPNPXSyiuy+WGCVJ6uYI03XpAASbDRPMP8g/LqVgrP1GpKolJ9ukGTwFQq7k
+ gc4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXU7T0lDoTOOEtp1OM+2b810HFJ/ddOROT1y1kcjWCcPHbW3xpzH4Q37icokLFfq0oFKtjZy6Qvbmze@nongnu.org
-X-Gm-Message-State: AOJu0YyEUIp3ZCKdDLAiYfGabRh54Hme/G+p7FSwRfaRqNfwBilNwfkL
- dNmsEz2K35MUx//J9Qg62ulfoI5y6pEMYTDHVhZg/FBCYdLSp6LyETa0RW0l2GLPHOnwRCJjW8h
- ZULUrdsU=
-X-Gm-Gg: ASbGnctdSfSvzqKNvD7SMCDhg5SO/3wfN29yP3Kr8oDkc5DVmJzB4DVA3asFobHSIS5
- tmUZM4Iazr4zooSoaGRJaCUMNG2FUOD1Uddt/W2E9a5BRVaMXz++9izj6fnHHIY7z8iVyf8IiUx
- D3GLsVU46X+7d/3Hok3XRXK4nsGZTxs+fMTebxNBOXvEFRgI+eiR0SV21O3OPnzqEuJu1XsoeaD
- ZzA+aP6v94dINnrJcqaOBHW2rUz8ZqH6RQhlMPrAiqrFjW7qE8CTzu1PuBYYCPO70L6omUhMHS6
- hZazJ6G2dqulubsMYp1ElMphYopjT0rWMgwezKbkqikcn0kthwPK+Bangse2aSxujdu+mqBzcqk
- ZbjU5fAiWnpdhw1j3cZ3NRDxSA/8Pnj015eHpaiysdmcOGD5BI68MWFpKtjQZedAfT/xYPMtLKO
- I=
-X-Google-Smtp-Source: AGHT+IFBM+RbXh19ynnCR6F3Z6XF68LguzwXbe68md1ZV7gqEx/+3iWzJNFg2ORGKY6A4Evwv7RN4w==
-X-Received: by 2002:a17:903:3c24:b0:263:b8f:77dd with SMTP id
- d9443c01a7336-28e9a6b1caemr32052015ad.57.1759492526272; 
- Fri, 03 Oct 2025 04:55:26 -0700 (PDT)
+ AJvYcCVH5wbbRqik7R3396wlbgJozDpWCBmFlqtCK0Izo/B4ZrCOi6tvzofCrakFLAsrN2PCdGQvlUcq4AiI@nongnu.org
+X-Gm-Message-State: AOJu0YxWg1gBoWQo1rHtalwhVNqY/UFgmi77yR0m8iYmAultTY1mM4vu
+ ZWF7Xpa6DOv+mk04oDkhQIzTn6r3R4A/bg0/mJZRCdzHpYYwD03AY7gM21cNOho5jvU=
+X-Gm-Gg: ASbGncvE/5r8m7aMYAlwuqkd2JCNBxChcfqG5O8F9MOpEWZtiSJKx355c1TleM67DtG
+ yYrt3FflBQlvQUuAV5TWDy5AeetgM4uT8+KrQxG6+LQm+LpurNVAVJKFE8oVcmGLvcWhPSc0X2H
+ qk58Jt22fzXUVi1f+IR8ZyKRh9nMmgYa0oKdVbF5od/f3Ln+m9dZufOi0Y5sxq2AAkypY8x5Wfl
+ 3xQGKs+FGlExqo+5AheNIZRIS+/GrbaeSecVl7AbRQgKV5GVhTAkSDeqJCsBaDd7yblWar6vK9S
+ FwyKCi/0S4lfjhMiGbvWzs2iT881kiv/SA/DaGwKd3Q3GrifGyj+0rw0sjISCesSZA/W/Bc5LKu
+ BpXWMWeDrVhQZ3eWR3YeKHjNFD0XjaC1NduUF4IgNeYPZ3gxQzkc3lSLC7ZfpjyStfvBlbIqkjp
+ Q=
+X-Google-Smtp-Source: AGHT+IEiYxP4bFrykUsS9cJCvdGwTtMlo/w4SFF86PvPdi4nRpJuP9R4QVlbDB1IWMU0zTlCXsjVfg==
+X-Received: by 2002:a05:6a00:94a7:b0:78c:99a8:b748 with SMTP id
+ d2e1a72fcca58-78c99a8b97bmr3367778b3a.0.1759492476437; 
+ Fri, 03 Oct 2025 04:54:36 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d126204sm48679865ad.40.2025.10.03.04.55.25
+ d2e1a72fcca58-78b01ea8cb8sm4811598b3a.0.2025.10.03.04.54.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Oct 2025 04:55:25 -0700 (PDT)
-Message-ID: <49533199-6585-4da3-b164-70e1570f9d82@linaro.org>
-Date: Fri, 3 Oct 2025 04:55:24 -0700
+ Fri, 03 Oct 2025 04:54:36 -0700 (PDT)
+Message-ID: <c0fddf6d-74dc-4992-ab70-0d3da2da5584@linaro.org>
+Date: Fri, 3 Oct 2025 04:54:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/13] QTest patches for 2025-10-01
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <20251001215254.2863-1-farosas@suse.de>
+Subject: Re: [PULL v2 00/13] Error reporting patches for 2025-09-30
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20251001065122.575596-1-armbru@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251001215254.2863-1-farosas@suse.de>
+In-Reply-To: <20251001065122.575596-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,25 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 14:52, Fabiano Rosas wrote:
-> The following changes since commit 29b77c1a2db2d796bc3847852a5c8dc2a1e6e83b:
+On 9/30/25 23:51, Markus Armbruster wrote:
+> The following changes since commit 9b16edec6e9a483469c789475b2065d26b52db35:
 > 
->    Merge tag 'rust-ci-pull-request' ofhttps://gitlab.com/marcandre.lureau/qemu into staging (2025-09-30 09:29:38 -0700)
+>    Merge tag 'pull-ppc-for-20250928-20250929' ofhttps://gitlab.com/harshpb/qemu into staging (2025-09-29 07:25:28 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/farosas/qemu.git tags/qtest-20251001-pull-request
+>    https://repo.or.cz/qemu/armbru.git tags/pull-error-2025-09-30-v2
 > 
-> for you to fetch changes up to ca5be51a51fc6b6402838310ae8d0162fc03ecef:
+> for you to fetch changes up to bcb536cabe108e71e2900cdd605f5b4e59ac3e1f:
 > 
->    migration-test: strv parameter (2025-10-01 17:09:23 -0300)
+>    error: Kill @error_warn (2025-10-01 08:33:24 +0200)
 > 
 > ----------------------------------------------------------------
-> Qtest pull request
+> Error reporting patches for 2025-09-30
 > 
-> - Fix for qtest_get_machines QEMU var caching
-> - Fixes for migration-test in --without-default-devices build
-> - Preparation patches for cpr-exec test
+> ----------------------------------------------------------------
+> Markus Armbruster (13):
+>        monitor: Clean up HMP gdbserver error reporting
+>        tcg: Fix error reporting on mprotect() failure in tcg_region_init()
+>        hw/cxl: Convert cxl_fmws_link() to Error
+>        migration/cpr: Clean up error reporting in cpr_resave_fd()
+>        hw/remote/vfio-user: Clean up error reporting
+>        net/slirp: Clean up error reporting
+>        ui/spice-core: Clean up error reporting
+>        util/oslib-win32: Do not treat null @errp as &error_warn
+>        ui/pixman: Consistent error handling in qemu_pixman_shareable_free()
+>        ui/dbus: Clean up dbus_update_gl_cb() error checking
+>        ui/dbus: Consistent handling of texture mutex failure
+>        ivshmem-flat: Mark an instance of missing error handling FIXME
+>        error: Kill @error_warn
+
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
