@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF886CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 18:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D95CCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 20:39:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4kAX-0001GL-Iu; Fri, 03 Oct 2025 14:06:13 -0400
+	id 1v4mWu-00031b-13; Fri, 03 Oct 2025 16:37:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rth7680@gmail.com>) id 1v4kAM-0001FB-Ba
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 14:06:02 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4mWp-00030k-LD
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 16:37:25 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rth7680@gmail.com>) id 1v4kAC-0004jM-6q
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 14:06:00 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-26816246a0aso3354725ad.2
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 11:05:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4mWg-0007qU-S2
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 16:37:21 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e491a5b96so16814335e9.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 13:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759514739; x=1760119539; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2YcG1705TfF+KXSCQpXW05rps93tHKK5RZuX+CjfwKg=;
- b=VcdtIaSYFhy8IP48UfRsFDWTEnl765DWESb/Qvpjd+cBNyIZrxejhdBCVI0uJM8ArH
- jw4OisHZwurVeYYQYGRnMtABxk+LSm0/8ZobeZUilH4luL+s8C6ql5UeJ6rl6sEXI3o6
- yJfOndS3c5gifTrBt9lRruv3CBDpEnyLNFHHlTY7gn8pVSrJd3sNiyA3mEeFC5FseNOA
- VhFPBaig2INsdOiWpTvyalNuJU9AFyhOFxfKj8TrkTfx6g6i6UpWGFiBDXJ9Mtkin1sC
- 52gASeuveHLbq9SqB/NCdM9zEksWRYvIAeTnr0CGN5KujsSMF8Qut9bZ/YpH2hZGLzAw
- Qvtg==
+ d=linaro.org; s=google; t=1759523829; x=1760128629; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fNYRxXlyhDBtOijXkeyCOlrNdnjRK5t/zEM4Lt7t8/M=;
+ b=Blv1v3Orr5whfc7vliRg01TMYPGHGW6hb0dBMNeqclZaaaHucgmKXJ01y57OPTPu5e
+ AMEmhFyRQgtnle9O+iwVE1dKwuEwnYaO61Upm1+baeOGsVcc3xnApK9Pjgu+LdJ7OlEE
+ xUR06pNSHE6l0WvynW0J3Pnvs8atDPMNbNlqZd8MRusuGKWbrRRU4wcIsMIGqiTQnDhu
+ lr8YcBBbAglVcgtHzgdl+90i5PT9KmAsM3x22W6ISk6MGf75VfPl/dQPWYjinuIUOrVU
+ YK4yS0BQ8xJ9AW3jUn3QpL3Ra0h4KDHxX0nnw1wduR6IFW75/rE3F+whBGDLOGcIH1x2
+ wJBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759514739; x=1760119539;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1759523829; x=1760128629;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2YcG1705TfF+KXSCQpXW05rps93tHKK5RZuX+CjfwKg=;
- b=BOwaeT7fkMgkGQ/084yx2pAESh44Eqj9XjKnsYuZv4C18qvePyTxEGBdb3I4TkObVx
- 0J9MF07CQVbqTko/6hsIf6AzsqwLVk9ZKCx42Fek6oaPjNxUvXClO/7l7zeKU11m1xfS
- g6S2BR6m5TngsjgoSpI0n8sExf8VepDnmrZ8Pp3uBmvaDCugrBHm/OuQkI9KHBzqqXeC
- eyXZGu32FANY/OyhdcgU9GPWUOpTKCFtol1JbZ7l9P55pa31TQCBaSn8Y0dkG+piRXo6
- F3BBGVhsT7iVSMPGLNtYjNKY5xYu8FS3rwnZF30mxFvvVr7CdXwr3Jn8kOtFI6KDFiHj
- HgBQ==
-X-Gm-Message-State: AOJu0YySHqyh5VqdZjn82cyfSv+Jdmd41dqaPF8Aumor3Jlg9LilgMkO
- HIfc4isLG0GwapEwVsCS2S67tGdZQ4iT1bcvE1MI6xyHi0UpuAkNvCjD
-X-Gm-Gg: ASbGncvWZF1O8vXaxCaB7VdpO8dhtcFTmi3+6fdXlfSc1ouA6FLPzs2cSPfYTPrwMAs
- Rv+S2k4CicGsdE5DM8cBcCsWq+GJ//JgFz//3SuRmvqUSnFw34q4YgAr62cW98vaFPg/11ATnVW
- wRGOzokGKcWiL1wskeErwf1gaiNYgajOrf9d6R30HUMsfEbK4BAG68NsXj7P0+QWh9h6NABqaYB
- +DkuTOn+1OgbERi1UyF2y3jQsYF6wyMy9xPO+mESW3Gd0skTuiOufprb7mL0AKU0uhDBhIVFXpP
- zHN7MnctI7H/KJBdIym7cLntpOTTvIwkKjBvW5rQinhHbfCkqNpm9mLg2QD70F6FBH77gQl7hy3
- eDIQl/sOKA6/KNDcW+g6+A5JkmHUG72p0fXoehfYT1uofWQ==
-X-Google-Smtp-Source: AGHT+IGimgRIeVowsGKmNmiqRZZD7SUfHNeLmxNMFvW7DMncC/pJFMKH2vVw/XsZzG3l3aJnXpdoRg==
-X-Received: by 2002:a17:90b:1b0d:b0:32b:aed4:aa1a with SMTP id
- 98e67ed59e1d1-339c27a2515mr2389193a91.4.1759514739219; 
- Fri, 03 Oct 2025 11:05:39 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b6099d4d324sm5394429a12.27.2025.10.03.11.05.38
+ bh=fNYRxXlyhDBtOijXkeyCOlrNdnjRK5t/zEM4Lt7t8/M=;
+ b=LS2vgUXOw4fST04VKj9q2ndNMHwijIjBgeVgwFILGY7OVLgsB4sIGGgHpLJzZbbg0M
+ 4YahtoFEmhbewH4Pl06hIfYIgEAwp7ZJv9wx/ENPvc2dIGnvyJPdhuv1FsMDeRzbhFbe
+ xQ49gcGfPXUOiGdovGNEseDqn/J5uVa3LRVkQuQ6Iic7WscoadpkT0wp6wBCiZ/8LTa2
+ TEXuPW/gneg9W3lkjSdyCSy8hDpKlctX2q89F71uk1c3qPVuy1DUTZm5K3BvsatXn9dh
+ qKeWqjCIxBWQMUY+VmLPT23T2cVA8AcPCjmVmH54Km4hp1wlhcGbnE5HAWXH5EP+amJT
+ /bVg==
+X-Gm-Message-State: AOJu0YwXtADpvyF39xqXqDLI0+I7eYfgtCU5oN4L1X+eW9l9YXdKZ+rs
+ nMg/NiZv9RE69X5gHd1+XrmyeLluwwrWTvM0kdUo+CvlyTk+Yu5czcZG3puiFSZFK2bAPf7KXa3
+ XzNAB6jFxIQ==
+X-Gm-Gg: ASbGncutekhEhlY3ix0BRSUTqXGKbT29y8lzeoBa6wcArRsqBMNmMrBqoaH24SYCKP9
+ VpF9Vot62qhtcWwTqZBXg4SHbUibe9mmfJX//ajxOadj3XHH2ReCFfPumhppaQaaOiy3cBfX9Oj
+ iQ9o+tbebz1TQjRx7mKrLUsTXRwUTLEcnQyZQL5CdevwQjsObiQ6EvP7NGSU92X9Ni/C+icQnPM
+ yOxeFaUMK9kSomjFJEmCc0e7kLqMhZtTDis5BD7D7GGIi0H4IaZ/J2UoHcBLmDGRXYHFbG57BH0
+ aTnkReWG0Ewy3wb3tH5w0pvgI7R5NzZsBaBgqOREuluhLzKes5QD3rcssLLdGatp2hi50lo81VP
+ 1UQ4O7UhTIa/Cqx8DB57iCZVt9G4tJxwBtI/hlxYWW1Sk0TuZ6FmyrJqGcawoYiFWCEYRWlGhLM
+ MBV7R96k18PVVM5+07XHSrZiOGrMQz
+X-Google-Smtp-Source: AGHT+IG728UvT68+4D+Tv3E6B6l6ElYPmXFRwaFbjT5iITREk+m8+c5T/kcQnUQ9F5T7TnYpk/RKMA==
+X-Received: by 2002:a05:600c:4f08:b0:46d:d949:daba with SMTP id
+ 5b1f17b1804b1-46e7608b683mr16676265e9.4.1759523828719; 
+ Fri, 03 Oct 2025 13:37:08 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e619b7e37sm140583845e9.1.2025.10.03.13.37.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Oct 2025 11:05:38 -0700 (PDT)
-Message-ID: <202c4604-61f0-4d6b-8518-cb72726f2236@gmail.com>
-Date: Fri, 3 Oct 2025 11:05:30 -0700
+ Fri, 03 Oct 2025 13:37:08 -0700 (PDT)
+Message-ID: <9225c889-6f87-4571-b886-ddae24552dc5@linaro.org>
+Date: Fri, 3 Oct 2025 22:37:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: alpine docker configuration fails rust tests
-From: Richard Henderson <rth7680@gmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <dc2a1732-5e85-4616-8304-28d00e83df35@gmail.com>
+Subject: Re: [PATCH v3 0/5] system/ramblock: Sanitize header
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20251002032812.26069-1-philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <dc2a1732-5e85-4616-8304-28d00e83df35@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251002032812.26069-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=rth7680@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,47 +106,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 11:00, Richard Henderson wrote:
-> Hiya,
-> 
-> Our Alpine docker image isn't quite right, and fails testing for rust:
-> 
->> Detecting compiler via: `rustc --target x86_64-unknown-linux-musl --version` -> 0
->> stdout:
->> rustc 1.83.0 (90b35a623 2024-11-26) (Alpine Linux 1.83.0-r0)
->> -----------
->> -----------
->> Called: `rustc --target x86_64-unknown-linux-musl -C linker=cc -C link-arg=-m64 -o /tmp/ 
->> qemu-test/build/meson-private/rusttest.exe /tmp/qemu-test/build/meson-private/sanity.rs` 
->> -> 1
->> stderr:
->> error[E0463]: can't find crate for `std`
->>   |
->>   = note: the `x86_64-unknown-linux-musl` target may not be installed
->>   = help: consider downloading the target with `rustup target add x86_64-unknown-linux- 
->> musl`
->>
->> error: aborting due to 1 previous error
-> 
-> But what's even more annoying is that --disable-rust doesn't suppress this check.
+On 2/10/25 05:28, Philippe Mathieu-Daudé wrote:
 
-Bah.  I was too quick to point the finger.
-It's a different part of the tooling that's in error:
+> Philippe Mathieu-Daudé (5):
+>    system/ramblock: Remove obsolete comment
+>    system/ramblock: Move ram_block_is_pmem() declaration
+>    system/ramblock: Move ram_block_discard_*_range() declarations
+>    system/ramblock: Rename @start -> @offset in ram_block_discard_range()
+>    system/ramblock: Move RAMBlock helpers out of "system/ram_addr.h"
 
-$ make J=8 V=1 docker-test-full@alpine EXTRA_CONFIGURE_OPTS=--disable-rust
-...
-podman run --rm   --userns keep-id   --security-opt seccomp=unconfined  --net=none -e 
-TARGET_LIST= -e EXTRA_CONFIGURE_OPTS="--disable-rust" -e TEST_COMMAND="" -e V=1 -e J=8 -e 
-DEBUG= -e SHOW_ENV=  -v $HOME/.cache/qemu:$HOME/.cache/qemu -e 
-CCACHE_DIR=DOCKER_QEMU_CACHE_DIR/docker-ccache  -v $(readlink -e 
-/home/rth/qemu/bld-pub/docker-src.2025-10-03-10.56.14.1004950):/var/tmp/qemu:z,ro 
-qemu/alpine /var/tmp/qemu/run test-full
-...
-Configure options:
---enable-werror --prefix=/tmp/qemu-test/install --disable-rust --enable-rust
-
-Clearly EXTRA_CONFIGURE_OPTS should be added at the end.
-
-
-r~
+Series queued, thanks.
 
