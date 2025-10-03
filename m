@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB23CCCA471
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A788CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4hv3-0005Ug-0p; Fri, 03 Oct 2025 11:42:05 -0400
+	id 1v4hv2-0005UR-EE; Fri, 03 Oct 2025 11:42:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4huo-0005ME-8b
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4huo-0005M9-8D
  for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hty-0007kL-LF
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htz-0007jS-Lj
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759506049;
+ s=mimecast20190719; t=1759506046;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CwRpFMPDqsMFjDqWLCLJa2x6iFH7SrRG0NI2Wano0iY=;
- b=FsNiRcp7Od5f8zRV0B9f6hGhHjPUH6jCgyNHUKyNzwv9uEZhc8uxf14/UGSwVwhu/8R2/X
- ebM5t7vDhD8RIYMjzk1mTjMZ2JLfkdERnaQas2lXdSg6TVkra77B1W18Rh+m9vpZX5nvUp
- 0o0v2SjMOTM+76F6mL6DcuoiKsOXH1k=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IPjuVNL/q1U96AXGabPRYkeJDkmfntwGHZ3pI05llmQ=;
+ b=cZhdXkZDNDu4mJl9YGjvQ+Mfo3EHRKYSqnG7QJ/0/diQcctK/VCb8OKpB+GSyjFOuTb2Ww
+ IZiwLVprNsQWEkCjNTyFFy2Yiw0eXue3/pjqIflOEtVcqYFaNAmXOrtgUn2TnJz6Cd91rA
+ syswIL9TRUSG/uXRFpTBUBgKtfMVYLA=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-355-YCbERX1EMfmxAjgrnTWOSw-1; Fri, 03 Oct 2025 11:40:48 -0400
-X-MC-Unique: YCbERX1EMfmxAjgrnTWOSw-1
-X-Mimecast-MFC-AGG-ID: YCbERX1EMfmxAjgrnTWOSw_1759506047
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-818bf399f8aso58423206d6.2
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:47 -0700 (PDT)
+ us-mta-371-F-yLHJmbP7iPpzsa0wF-cQ-1; Fri, 03 Oct 2025 11:40:44 -0400
+X-MC-Unique: F-yLHJmbP7iPpzsa0wF-cQ-1
+X-Mimecast-MFC-AGG-ID: F-yLHJmbP7iPpzsa0wF-cQ_1759506043
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-78f28554393so3364726d6.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759506047; x=1760110847;
+ d=1e100.net; s=20230601; t=1759506043; x=1760110843;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CwRpFMPDqsMFjDqWLCLJa2x6iFH7SrRG0NI2Wano0iY=;
- b=poxblUQWJ3FTu42iVnAOLESHuu9IQXmPom2hZeuyOkozXX9fgHBzPoR6k0QwoMU9R1
- Qxvro85lQDRDWC+cauC4VvCT3TDm5TzCk4xrEH+1B7JWzvygzRtt1tinClJs1ICpTJJ4
- SIknqfaux9TMGX3ez38I5WHvAUVwtLdl06IauV5C6QVebxhWnomSiwfATLudS9qla7wK
- 1J6VN/v407ClNP2WzhDuv9QEzB2T6jv3tKSJCHMyoXCisAgr15ZxztIKp9JDHfiVDlzz
- SWlePRjCa8nFYzPOtOvBCPkjcr8i9vqnDHieWhDNt0hYScz5EpQ92K381ODOVncP2Ovb
- /bOg==
+ bh=IPjuVNL/q1U96AXGabPRYkeJDkmfntwGHZ3pI05llmQ=;
+ b=GO4JSwbfJCA2N8uJkAkxQ1cz+qzbXE0/cm5gk5YLjXQGotbogveDYmoKeBkqzqP4bv
+ unlxRbdFJMIYEDf46SyNNux/xQ+OFi3MhMcwm5R98A5Q+VxHErAqtzWT7kDythfOIraI
+ +llbrvCf+xQQ6IpkcX54q98OloQfe33F6fU8b1jjzv0Gqwf+46ToMC4m60kDm4fSEKLN
+ iIMZd1jIx20umGQT0OByS+Lv0LYVLWHym3kJa1IINaVyMHVo3+I9OqpOGENfbhernS48
+ nIAzg6qpR3A9WB4YglI5wdZ/ntGfNWN7Wp/bzk/DCMfM1Ydu4WCKTEgPstLZkzk504iO
+ YF3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZp5SAx7S/6OoWMvXdfFMS1ayCZB4n7HfREZnrlSqalKWXCZcgIjUS5ypwoHTMCEOtipjn4pgxJavD@nongnu.org
-X-Gm-Message-State: AOJu0YwGMu32Xo56kuppWX14zcq1gIBAybtDgMAgvWjueIl484ta7I4k
- 1HXDdXUyY2mqyS85QOaNQLpRIeFthIjoEqwDNnIIuJgtOfock/hkxB8ZRChjNLuBwhgp5+ekuar
- oBW7iAAAYxLYtZohc5ZEM8R/nB3NhQIuUVTf7Y0IIGDmqkwymxBsmjhR0
-X-Gm-Gg: ASbGncu7lgFK1nsudZyS6Z7NUccW2sunUVcIG2YK1DCHiLEyUNQkw9dFABU+e2MvlVx
- /4XSGBULm4BzUJ9n+EPZkrv2UKbSRNEf2aN6GCWEjiZKDw8lGF0cVa6IoTIy09twJtnNaolpbBy
- Ns+YrbNynSupPFdbZTET3SqK20lyVFz0pMK/FCtTporGe7ye4FLWrA+dm9/8y1VrYCQNsgPT/hu
- CL17yFS5PbHxczevdD2OeszFRGkXrWJCFrz0Os8nCY+psb8JYWo3s/aNfmpuTMh6/yOWICJeGdC
- hEDogt0vtlqGspuU+IGFUr6Gn7ntO/wFmfdNGw==
-X-Received: by 2002:a05:6214:1942:b0:7d2:e1e6:f79f with SMTP id
- 6a1803df08f44-879dc864efamr46959606d6.47.1759506046957; 
- Fri, 03 Oct 2025 08:40:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQYpQtp1ywhWg+KRyL43zFJOwtxERh4o3QdTCZ9yGy7+SPg/D9+AMzcYUR6Uylol1FMmhenQ==
-X-Received: by 2002:a05:6214:1942:b0:7d2:e1e6:f79f with SMTP id
- 6a1803df08f44-879dc864efamr46958726d6.47.1759506046076; 
- Fri, 03 Oct 2025 08:40:46 -0700 (PDT)
+ AJvYcCWyDw5BlLgv79Bt6mkwGNK3ABk9sGST/vBVQ0NL58Tci3QsksIo7XlrcU4Xj5100gbGOigK2JAdiUC2@nongnu.org
+X-Gm-Message-State: AOJu0YyedYlr/xOU++FtfHGfJGU2p7deK2kxlU/H5iUT0NV7Dn81Fkmo
+ kKvFx+4jAUgyOJgPBLi4dhdhyTaT31HnDyxgOUnt9RRHsJiRsA8zqFTARdeS9eNKvvSeM8/L50q
+ YVjSyIHoSAzJAtWhAOlFb0UF8zr1FynSRWPsU0r7geCkkHEjE92A8I2Fp
+X-Gm-Gg: ASbGncu/8i9Rd3jygFxfiW+5HgJOLktCtv5hqgLqCgP/JdGpJpKyi5wEHdM5/qt+SBZ
+ b85008UwwhFp/9831BAKBEbOHhn9WvE14ok2tUCLOoT9Jkm/6ilMhuyn8lAGY1MC6Eg2csOnFAZ
+ pk96ibLco3IHsgvp7RKLhiUyTb+LKo+PcL76nvIj6Mz5A7X3tvutcGRO9ewJssByWjUDQh3jini
+ wpvjShs+yTNc8N1ikuXEDia0Me8HkXB7hAIAFMLK5D8q7f4Fl66yBGeYHjwvGOZC6Ay+h4hOi0C
+ 7OnxJAT9UgLXx7PuHwC2xWVpxs1EgpenJz3imA==
+X-Received: by 2002:a05:6214:3319:20b0:879:defa:a6f2 with SMTP id
+ 6a1803df08f44-879defaa90emr29180586d6.18.1759506042664; 
+ Fri, 03 Oct 2025 08:40:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxEVERul45gbjsaUPibQ2ZdU/T5y0RiOKjgwKHBc0EzV+azJPlbLV4yhULuiy2V0uOCjiUbg==
+X-Received: by 2002:a05:6214:3319:20b0:879:defa:a6f2 with SMTP id
+ 6a1803df08f44-879defaa90emr29180216d6.18.1759506042205; 
+ Fri, 03 Oct 2025 08:40:42 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.45
+ 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 08:40:45 -0700 (PDT)
+ Fri, 03 Oct 2025 08:40:41 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 39/45] oslib: qemu_clear_cloexec
-Date: Fri,  3 Oct 2025 11:39:42 -0400
-Message-ID: <20251003153948.1304776-40-peterx@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PULL 36/45] migration: simplify error reporting after channel read
+Date: Fri,  3 Oct 2025 11:39:39 -0400
+Message-ID: <20251003153948.1304776-37-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
 References: <20251003153948.1304776-1-peterx@redhat.com>
@@ -89,14 +88,13 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,77 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Define qemu_clear_cloexec, analogous to qemu_set_cloexec.
+The code handling the return value of qio_channel_read proceses
+len == 0 (EOF) separately from len < 1  (error), but in both
+cases ends up calling qemu_file_set_error_obj() with -EIO as the
+errno. This logic can be merged into one codepath to simplify it.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/1759332851-370353-4-git-send-email-steven.sistare@oracle.com
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Link: https://lore.kernel.org/r/20250801170212.54409-2-berrange@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/qemu/osdep.h | 9 +++++++++
- util/oslib-posix.c   | 9 +++++++++
- util/oslib-win32.c   | 4 ++++
- 3 files changed, 22 insertions(+)
+ migration/qemu-file.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 1b38cb7e45..ed3e511a8e 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -689,6 +689,15 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
- void qemu_set_cloexec(int fd);
- bool qemu_set_blocking(int fd, bool block, Error **errp);
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index 0ee0f48a3e..2d4ce174a5 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -348,17 +348,13 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+             } else {
+                 qio_channel_wait(f->ioc, G_IO_IN);
+             }
+-        } else if (len < 0) {
+-            len = -EIO;
+         }
+     } while (len == QIO_CHANNEL_ERR_BLOCK);
  
-+/*
-+ * Clear FD_CLOEXEC for a descriptor.
-+ *
-+ * The caller must guarantee that no other fork+exec's occur before the
-+ * exec that is intended to inherit this descriptor, eg by suspending CPUs
-+ * and blocking monitor commands.
-+ */
-+void qemu_clear_cloexec(int fd);
-+
- /* Return a dynamically allocated directory path that is appropriate for storing
-  * local state.
-  *
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 14cf94ac03..3c14b72665 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -305,6 +305,15 @@ int qemu_socketpair(int domain, int type, int protocol, int sv[2])
-     return ret;
- }
+     if (len > 0) {
+         f->buf_size += len;
+-    } else if (len == 0) {
+-        qemu_file_set_error_obj(f, -EIO, local_error);
+     } else {
+-        qemu_file_set_error_obj(f, len, local_error);
++        qemu_file_set_error_obj(f, -EIO, local_error);
+     }
  
-+void qemu_clear_cloexec(int fd)
-+{
-+    int f;
-+    f = fcntl(fd, F_GETFD);
-+    assert(f != -1);
-+    f = fcntl(fd, F_SETFD, f & ~FD_CLOEXEC);
-+    assert(f != -1);
-+}
-+
- char *
- qemu_get_local_state_dir(void)
- {
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 84bc65a765..839b8a4170 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -219,6 +219,10 @@ void qemu_set_cloexec(int fd)
- {
- }
- 
-+void qemu_clear_cloexec(int fd)
-+{
-+}
-+
- int qemu_get_thread_id(void)
- {
-     return GetCurrentThreadId();
+     for (int i = 0; i < nfd; i++) {
 -- 
 2.50.1
 
