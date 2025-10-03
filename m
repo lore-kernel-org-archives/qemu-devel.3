@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A50CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE843CCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4huS-00055g-5P; Fri, 03 Oct 2025 11:41:28 -0400
+	id 1v4hv6-0005Vj-39; Fri, 03 Oct 2025 11:42:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hty-0004qm-DP
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hup-0005M7-7S
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htU-0007fC-Pj
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hty-0007ke-NE
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759506023;
+ s=mimecast20190719; t=1759506051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f/LhqoHvjnUA/YT7CnUYKXPqSYZoyGnlE1fxboV7/fw=;
- b=gu549MXY5zbwz06LOvHrEyCtlFXZxJAOI4M3rugTc9nT2rlg0GSHPxWEzDqFBkNwV8/eGY
- mPbE9KF+4TIbcZY07hr5wNmnus6RY074almRIYLlyKEKUMM7pA4pG9eEbenYcLs/G/6DTB
- rlSIO8gpQQqJTyWM1q+1AEXxfGPJhLI=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w9pyhoFiM3epXPrFs48uoibYrGGgxuvPdNdfsLuFmoQ=;
+ b=Q2lHdR2YoInq8iLcld9K6sW34snuB+jJuRIIVFgrxP/Xwi+F0BfL7PjABhpFcM+b0WKQOM
+ GnCoMVdH6dDHH0lRiobO8TtXHL7b+JX85HiDzaROh22x+9IRRTZ80SWud646EFdQPYrM7f
+ Mb4+e0nNF8pYv9tLNO/SDzsxJY7GBUI=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-1gtKEBxUPpGqSlMyXKO_eQ-1; Fri, 03 Oct 2025 11:40:22 -0400
-X-MC-Unique: 1gtKEBxUPpGqSlMyXKO_eQ-1
-X-Mimecast-MFC-AGG-ID: 1gtKEBxUPpGqSlMyXKO_eQ_1759506022
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-78ea15d3583so48502386d6.1
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:22 -0700 (PDT)
+ us-mta-441-MdCp5EAkOOOzcn1vwXbUrQ-1; Fri, 03 Oct 2025 11:40:49 -0400
+X-MC-Unique: MdCp5EAkOOOzcn1vwXbUrQ-1
+X-Mimecast-MFC-AGG-ID: MdCp5EAkOOOzcn1vwXbUrQ_1759506048
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-876ee102b44so66407526d6.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759506022; x=1760110822;
+ d=1e100.net; s=20230601; t=1759506048; x=1760110848;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f/LhqoHvjnUA/YT7CnUYKXPqSYZoyGnlE1fxboV7/fw=;
- b=fGMHWFebJgx7Ky0b3QaFP4lB325VBOjkN+CFmKI/LBt/ezTv4oYF5Sx5u3Ag/cVMbO
- TzcmxTP4/eeZDL0Cqnjv/RpPQJeUcm8D+JdJDxR18StD8bNm7TQkX/pRU0OtFEvgl9HI
- FgRiVK6k4SzNbO+7+u/uZotX+NotYSlXSDRJw3IgYn7KCX+j5P4eJuAuSZopTn29ElRa
- f+UZOQEyii/BUR1mmzMfnXyCEKTGdOgA4JWIWGJKhxq7hz8Sa3NOarqSNBG2GZ0RxN/G
- cgMpb0xp5uVOCamproANRkI6G6ZmcngLnwvbuc3N2zziTvfV2y2JXYgNLUAJu6BqVNrW
- iWow==
+ bh=w9pyhoFiM3epXPrFs48uoibYrGGgxuvPdNdfsLuFmoQ=;
+ b=p5z1cHR0Dklk9osVOOKQxaOYARK2kfUdg79U079wU4QE9CWwxiZSaIhqyJHmt1AeQv
+ ZgzZMDbGzea62lc52Op/wQNIv3kRQZiV5cnDkcg9qc6/S5pvkui0ZoIxmG56QNTZDkC0
+ HMLeSAXKYH1hR/Su4/TyYOQSxswhxdQxgYefwtsWo8r1ol2i3uPlgKpVrv2NF3+QcXuG
+ +O28YQfqijKnwx1qQTTb/d8ZaVTclzj2s8PXkn9JY4jTWYYPxV63BVC/aAWfdJrSHDr6
+ OfgTn/qXqImMigTi3xlsXFZeAEjpUjlfumNjxj6B89kbLuAh9BvtSfrACgfou3+hb9nQ
+ Ouag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCaAdg4/w2DcmMtzTZm9tdpwdWLvTOpBY96mLbsu8JH97ihN3ZID4K0gzfpylUvU9dQUlk7pxmih1F@nongnu.org
-X-Gm-Message-State: AOJu0YzcaW1yuVQ8Wce7AUJCwa8A1MOq0sjZ2JcHXizz4wX3SlJhjsOD
- fhA7GeLBFkYYBPplARGBNJVbzzb/1Xvc3SIEJ2Z245va8a21QMIa45UvD3hJL2F6aD1UeiwwSrF
- /XjFa67a8qYdh6tkMicgEIlL8aWFwdQ0eqaZB+lhq6AnY0/4xxn7DKA6O
-X-Gm-Gg: ASbGncuKc8SLfD3/bkdvsdWlZ9pywM9Imh84dlWAadws5D2qR1FbMOoVDd+e6SN3vk6
- colDQAaqwnEksngm8pKZShXk5xVr3Ma1ykKKYyaoz2BAUGbheib2H8dK9J/7rqws+I7Xwpm6sIx
- T7hU7NXLNQEQ+6q842icCH+TGPARdf3DymQbUGRZMi+0bx64MAiTxqsBoQn9GMC9Brzp7kDQP8s
- poHZYNSVakZcBHgVhEvvDKhgQ5D8KopvdwtsZnEKvltAPokGBB0kGsOKIsyJvyiST2gkddCVfi3
- VE5l2ln453mE7Op/YgJc8lGctv3QIdyLe9oEZA==
-X-Received: by 2002:a05:6214:20ee:b0:81f:f243:f222 with SMTP id
- 6a1803df08f44-879dc7e191fmr41134886d6.22.1759506022194; 
- Fri, 03 Oct 2025 08:40:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoU8a+jP8Dffztn8kyB3/MIDBksVYPUTLDUFxUzcwacU3DbDo85VglwIMYKzwAAGyMJhZFyw==
-X-Received: by 2002:a05:6214:20ee:b0:81f:f243:f222 with SMTP id
- 6a1803df08f44-879dc7e191fmr41134336d6.22.1759506021625; 
- Fri, 03 Oct 2025 08:40:21 -0700 (PDT)
+ AJvYcCWMfv36JjPejR0t115ux7cgg4/OzmTTjAjAReL9BRe07TH886s+Ky9fsK6gvq/eDYLi4YJBiOSVuhtW@nongnu.org
+X-Gm-Message-State: AOJu0Yx+mFRZZSoLRce7pGSDd84DkvwYBC3/NH4yYVQ85rJF9yOLuICN
+ EfVAdjWji3F44fVYgYdmKpAvnD63Gpa8lxm3U6FyLzLF1kXtElFcSj5/YPs3MkxBo3VcOeiJN81
+ 7iW76T3Da0mYR2hzDhSMxPpI7cDDv1tOS/mJMpIVT8Qpqi7hj/g9e2YnY
+X-Gm-Gg: ASbGncss5x4D3LOB0zg4oQ/GFha4RN7buv9e7e6NR7AzcavKoet2zhmNFlETFNiEUcu
+ 39lU+XP9VfIkIhpY7trryOBA2slsNJsmUVi9gMYUJES2Lg/7KzdTIWjPZlbLWuMp0AUL+f+shxl
+ QXRK7HM/9aEQiehOh+0YidN5OgMwwUZsTp/WeSw+2b+9zUR91WzJL2JrgzisB4M6AWhtq/dgEoJ
+ CqPbuSU0FuZaacALLsS70Oq/P6WbrbHVeQhQ9E0y98/njQWSwjDARv3PGLFC2pO5oUJ44KB/+CP
+ MgTwGQPZpTm7aOefqXGk+AxkgQLfHA+4xG1sUw==
+X-Received: by 2002:a05:6214:4015:b0:7a7:b219:635f with SMTP id
+ 6a1803df08f44-879dc4434dbmr40017366d6.16.1759506047884; 
+ Fri, 03 Oct 2025 08:40:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+n9c5IZBaDxE8cbXOT08INkmFvKzFjkNtJeNZNM7oTTpBlzz0J+hImaerzKuURWoUo1KAVw==
+X-Received: by 2002:a05:6214:4015:b0:7a7:b219:635f with SMTP id
+ 6a1803df08f44-879dc4434dbmr40016946d6.16.1759506047201; 
+ Fri, 03 Oct 2025 08:40:47 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.20
+ 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 08:40:21 -0700 (PDT)
+ Fri, 03 Oct 2025 08:40:46 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Arun Menon <armenon@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 20/45] migration: Return -1 on memory allocation failure in
- ram.c
-Date: Fri,  3 Oct 2025 11:39:23 -0400
-Message-ID: <20251003153948.1304776-21-peterx@redhat.com>
+ Steve Sistare <steven.sistare@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 40/45] migration: cpr-exec-command parameter
+Date: Fri,  3 Oct 2025 11:39:43 -0400
+Message-ID: <20251003153948.1304776-41-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
 References: <20251003153948.1304776-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,51 +110,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-The function colo_init_ram_cache() currently returns -errno if
-qemu_anon_ram_alloc() fails. However, the subsequent cleanup loop that
-calls qemu_anon_ram_free() could potentially alter the value of errno.
-This would cause the function to return a value that does not accurately
-represent the original allocation failure.
+Create the cpr-exec-command migration parameter, defined as a list of
+strings.  It will be used for cpr-exec migration mode in a subsequent
+patch, and contains forward references to cpr-exec mode in the qapi
+doc.
 
-This commit changes the return value to -1 on memory allocation failure.
-This ensures that the return value is consistent and is not affected by
-any errno changes that may occur during the free process.
+No functional change, except that cpr-exec-command is shown by the
+'info migrate' command.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Arun Menon <armenon@redhat.com>
-Tested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-20-36f11a6fb9d3@redhat.com
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/1759332851-370353-5-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ qapi/migration.json            | 21 ++++++++++++++++++---
+ migration/migration-hmp-cmds.c | 30 ++++++++++++++++++++++++++++++
+ migration/options.c            | 14 ++++++++++++++
+ hmp-commands.hx                |  2 +-
+ 4 files changed, 63 insertions(+), 4 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 6a0dcc04f4..163265a57f 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3575,6 +3575,8 @@ static void colo_init_ram_state(void)
-  * colo cache: this is for secondary VM, we cache the whole
-  * memory of the secondary VM, it is need to hold the global lock
-  * to call this helper.
-+ *
-+ * Returns zero to indicate success or -1 on error.
-  */
- int colo_init_ram_cache(void)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 2387c21e9c..2be8fa1d16 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -924,6 +924,10 @@
+ #     only has effect if the @mapped-ram capability is enabled.
+ #     (Since 9.1)
+ #
++# @cpr-exec-command: Command to start the new QEMU process when @mode
++#     is @cpr-exec.  The first list element is the program's filename,
++#     the remainder its arguments.  (Since 10.2)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -950,7 +954,8 @@
+            'vcpu-dirty-limit',
+            'mode',
+            'zero-page-detection',
+-           'direct-io'] }
++           'direct-io',
++           'cpr-exec-command'] }
+ 
+ ##
+ # @MigrateSetParameters:
+@@ -1105,6 +1110,10 @@
+ #     only has effect if the @mapped-ram capability is enabled.
+ #     (Since 9.1)
+ #
++# @cpr-exec-command: Command to start the new QEMU process when @mode
++#     is @cpr-exec.  The first list element is the program's filename,
++#     the remainder its arguments.  (Since 10.2)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -1146,7 +1155,8 @@
+             '*vcpu-dirty-limit': 'uint64',
+             '*mode': 'MigMode',
+             '*zero-page-detection': 'ZeroPageDetection',
+-            '*direct-io': 'bool' } }
++            '*direct-io': 'bool',
++            '*cpr-exec-command': [ 'str' ]} }
+ 
+ ##
+ # @migrate-set-parameters:
+@@ -1315,6 +1325,10 @@
+ #     only has effect if the @mapped-ram capability is enabled.
+ #     (Since 9.1)
+ #
++# @cpr-exec-command: Command to start the new QEMU process when @mode
++#     is @cpr-exec.  The first list element is the program's filename,
++#     the remainder its arguments.  (Since 10.2)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -1353,7 +1367,8 @@
+             '*vcpu-dirty-limit': 'uint64',
+             '*mode': 'MigMode',
+             '*zero-page-detection': 'ZeroPageDetection',
+-            '*direct-io': 'bool' } }
++            '*direct-io': 'bool',
++            '*cpr-exec-command': [ 'str' ]} }
+ 
+ ##
+ # @query-migrate-parameters:
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 814221b260..847d18faaa 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -306,6 +306,18 @@ void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict)
+     qapi_free_MigrationCapabilityStatusList(caps);
+ }
+ 
++static void monitor_print_cpr_exec_command(Monitor *mon, strList *args)
++{
++    monitor_printf(mon, "%s:",
++        MigrationParameter_str(MIGRATION_PARAMETER_CPR_EXEC_COMMAND));
++
++    while (args) {
++        monitor_printf(mon, " %s", args->value);
++        args = args->next;
++    }
++    monitor_printf(mon, "\n");
++}
++
+ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
  {
-@@ -3594,7 +3596,7 @@ int colo_init_ram_cache(void)
-                         block->colo_cache = NULL;
-                     }
-                 }
--                return -errno;
-+                return -1;
-             }
-             if (!machine_dump_guest_core(current_machine)) {
-                 qemu_madvise(block->colo_cache, block->used_length,
+     MigrationParameters *params;
+@@ -437,6 +449,9 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+                                MIGRATION_PARAMETER_DIRECT_IO),
+                            params->direct_io ? "on" : "off");
+         }
++
++        assert(params->has_cpr_exec_command);
++        monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
+     }
+ 
+     qapi_free_MigrationParameters(params);
+@@ -718,6 +733,21 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+         p->has_direct_io = true;
+         visit_type_bool(v, param, &p->direct_io, &err);
+         break;
++    case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
++        g_autofree char **strv = NULL;
++        g_autoptr(GError) gerr = NULL;
++        strList **tail = &p->cpr_exec_command;
++
++        if (!g_shell_parse_argv(valuestr, NULL, &strv, &gerr)) {
++            error_setg(&err, "%s", gerr->message);
++            break;
++        }
++        for (int i = 0; strv[i]; i++) {
++            QAPI_LIST_APPEND(tail, strv[i]);
++        }
++        p->has_cpr_exec_command = true;
++        break;
++    }
+     default:
+         g_assert_not_reached();
+     }
+diff --git a/migration/options.c b/migration/options.c
+index 4e923a2e07..5183112775 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -959,6 +959,9 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+     params->zero_page_detection = s->parameters.zero_page_detection;
+     params->has_direct_io = true;
+     params->direct_io = s->parameters.direct_io;
++    params->has_cpr_exec_command = true;
++    params->cpr_exec_command = QAPI_CLONE(strList,
++                                          s->parameters.cpr_exec_command);
+ 
+     return params;
+ }
+@@ -993,6 +996,7 @@ void migrate_params_init(MigrationParameters *params)
+     params->has_mode = true;
+     params->has_zero_page_detection = true;
+     params->has_direct_io = true;
++    params->has_cpr_exec_command = true;
+ }
+ 
+ /*
+@@ -1297,6 +1301,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+     if (params->has_direct_io) {
+         dest->direct_io = params->direct_io;
+     }
++
++    if (params->has_cpr_exec_command) {
++        dest->cpr_exec_command = params->cpr_exec_command;
++    }
+ }
+ 
+ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+@@ -1429,6 +1437,12 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+     if (params->has_direct_io) {
+         s->parameters.direct_io = params->direct_io;
+     }
++
++    if (params->has_cpr_exec_command) {
++        qapi_free_strList(s->parameters.cpr_exec_command);
++        s->parameters.cpr_exec_command =
++            QAPI_CLONE(strList, params->cpr_exec_command);
++    }
+ }
+ 
+ void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index d0e4f35a30..3cace8f1f7 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -1009,7 +1009,7 @@ ERST
+ 
+     {
+         .name       = "migrate_set_parameter",
+-        .args_type  = "parameter:s,value:s",
++        .args_type  = "parameter:s,value:S",
+         .params     = "parameter value",
+         .help       = "Set the parameter for migration",
+         .cmd        = hmp_migrate_set_parameter,
 -- 
 2.50.1
 
