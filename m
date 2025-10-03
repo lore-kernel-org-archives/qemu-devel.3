@@ -4,111 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A10CCA471
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5810BCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4hPh-0005PK-1y; Fri, 03 Oct 2025 11:09:41 -0400
+	id 1v4hgV-0001OS-Ss; Fri, 03 Oct 2025 11:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1v4hPf-0005OG-2F
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:09:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hgT-0001OC-Ur
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:27:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1v4hPT-0007MP-4q
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:09:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4hgG-0003TN-Lr
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:27:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759504155;
+ s=mimecast20190719; t=1759505201;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c64jOOmHvNHmP/nFOv5P6EtgvCTTXQlbtYsE958WDEk=;
- b=EF2VfgCLSQZmp9cOkg4cwy3FDc+bEuf9MYnD1bTOHEm4iFr6hJkPh959GMm5/dn6cjq8VO
- VChC/sXEI2Qs3WKpL+amjSL9bMMUvizYOvpusmzeq9bk4Ryh7MZGj71kZ4My6qVf0puxkf
- 5ipvWG2+rt23T1Sqijg3RJhfIRxiKpE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=d7zbVpT2ZKmt31v7KXTFLTINitE/cIBdFBZsnKc90n4=;
+ b=N1DpNldX0u5s/p2MBuiohgHhqUSbl17kCqKD71XZtwfhsgwQbr6vq8ihnRJr/8GGdTJtIt
+ CbgCQaVICOnbpo4Pq//RQv6ArOZFKZ4BF6+wlBZyfhwVSSOkafNW+6bCLY0+1o5DwnnDly
+ 2vOs3eaWSI7J2WzYYzIUjleoIpK1be8=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-kV1iFNqMObyCeJqHuLw-oQ-1; Fri, 03 Oct 2025 11:09:13 -0400
-X-MC-Unique: kV1iFNqMObyCeJqHuLw-oQ-1
-X-Mimecast-MFC-AGG-ID: kV1iFNqMObyCeJqHuLw-oQ_1759504152
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3f42b54d159so2116070f8f.2
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:09:13 -0700 (PDT)
+ us-mta-7-dE4lNCizNuWZfxLP3RAyCA-1; Fri, 03 Oct 2025 11:26:40 -0400
+X-MC-Unique: dE4lNCizNuWZfxLP3RAyCA-1
+X-Mimecast-MFC-AGG-ID: dE4lNCizNuWZfxLP3RAyCA_1759505200
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-863cd58a92dso509482985a.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:26:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759504152; x=1760108952;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c64jOOmHvNHmP/nFOv5P6EtgvCTTXQlbtYsE958WDEk=;
- b=op+Xn9mmtP25Y14mmd2yBEN6/TtvLBY/s9awplicnZ0RajKXXbhOq84Ctiu05vni9S
- jW14gB6a+PGDgeS9Y5y/ucJLrD5aonAHBoYTJDLtrxGmZ1LKmK4rq1MitFtOlj/g87K1
- rNth2V8ZbZnAPeCxyftLLlqn4ByDSbV0GjeNzDuYHDaMAN3SbXXfcCicbgMDewQoU46c
- 1mmmHF3IkvyjusGtryFiesldZGJe+fYCRNNUAQsCmRvEkCo9r0TLa9bt8dGEXnIph56H
- wZDT1+nATQFItmcd1n1eaQhcJlU4lLRLvQux379F9+FG2lK2jPCDGtfQYPlPDfXsoNgG
- /8XA==
-X-Gm-Message-State: AOJu0YzpfUoEPPficRC/92iNzj1SYSvSNI/uEzYqvVaQ0PcDmF4EPARo
- Y9WlIzWD8pCH3KTFVdB5zRtotXUtpmbFF73rKvXrw4JN+3jUFKKU2ssdj/tKFHuM151ZdPLnjcj
- Cpy2VP9MStgK8YsPuv8KBimel/mRB7V4ztBmDX7ZGpdcT2r5Qa+1LuXZL
-X-Gm-Gg: ASbGncvVE6rkz6b70qsc/pNYvhvV6OEJ86pqJSUxlSupEb3wmO30GkhE5BIg263WtqN
- 1Ac2PZKYUNDfqIuU18grit7hsZ3Dce5A6C/7vxaC7/h2VYjepIsSKWGbon7HyUuce9ntqahh91C
- ICVvehirhDiK8lh+CLUJ07lNOSuI8xUes9mTMXEAOC1qr4RdBxxiNLvDIq/sfe8+3aIyALzqlyf
- O7oUUI+MyTU8pAQkU9qDX5zzlt1tbJ95HFTN7SpDmRhxstv8wMT1EDyFBUdQMwaSNC2B0YBPIUk
- W7oNEgVc4z+PsKBRDaKW+4lmkV6cG8iSlhPk
-X-Received: by 2002:a05:6000:4013:b0:425:58d0:4834 with SMTP id
- ffacd0b85a97d-425671948cfmr2184755f8f.39.1759504152084; 
- Fri, 03 Oct 2025 08:09:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZ2AOlAjHmEtDHHUxl7mhm3Emhq5V/ekmOgeaFFe3YcFfgeflSzKZqPg4x4jbZ+4RG9QQ3ug==
-X-Received: by 2002:a05:6000:4013:b0:425:58d0:4834 with SMTP id
- ffacd0b85a97d-425671948cfmr2184729f8f.39.1759504151564; 
- Fri, 03 Oct 2025 08:09:11 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723593d8sm41594115e9.11.2025.10.03.08.09.10
+ d=1e100.net; s=20230601; t=1759505200; x=1760110000;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d7zbVpT2ZKmt31v7KXTFLTINitE/cIBdFBZsnKc90n4=;
+ b=E2YLeuki7v/58TZOvOsQ8GL66kYC2WM1+z55GH2rwaSmYALTPkydGbV/OSnyanJG+a
+ Fc36PvEqLrCRAXu97d4UeIY0pHhjuF7Jbjy54j0LNHLvwCcqqjQJh3Vw3pXEhyfEPCT4
+ aB7xns8HbptjJlEXzM2Vv9zvSnV1ixW9v2Nwg6rr2JFD9ZqsNNFzJGMNnto62Q6yQg98
+ tgfKj4X/L158U8HkMpiVbBdYNIWJN1Y37eTma26McFvOO6gI+XvH5JkdR9LKjjxvlzgx
+ rNYAWt51YqUVmpJQV6WdOWSsWgCORVuUwuO60sDq3iR1YeVElvSu0zmHAEQ8Psq9gePt
+ fQfQ==
+X-Gm-Message-State: AOJu0YwqkBUFq4DPsmfwe0oIdBlFZ9eF6Sczm11WStMbRaruQoei0pxh
+ McjaBlKw486+ywqpazlcTyF5je6n7IYTBSUc0c7NOgpRp83yXa6iF7S4NxHHTFe7B1e5SaiGpnc
+ grladyyGQhttzHJLUqM3Swbv2vS6M4LhqhMbPNK6r9FBS86vmWjAKO4ru
+X-Gm-Gg: ASbGncsNoWmrKlubEAEw0SwlUovhPIYcgEDHiWvCiNODaQvtAHdEoDUx9WzOA1LWCY8
+ kOY85J8nSrbBgQnIw08zGHiqtfGu2j6h4mIpXqRee+yz9vv5wZultQnFMyO24xZih5Bikh95cEI
+ T972qJPfAapnqxJ/n1VzwtdXDWHlQYidb2ZV0BPZ2EtyaUqQ4zlXUvLo0opJTTEFfGXJHbI5Oz1
+ 2q68nEbI8EWJ3cIkmsYPSc2TfjB91AO0/PkcQEWc8FEJFIRhtubgeXKU29Y84KTYEb/6d9ztHla
+ WS0arxx/IqtNWPLoi9Mqyv87iaLgRqpi7LmoaQ==
+X-Received: by 2002:a05:620a:1a11:b0:875:c212:fe07 with SMTP id
+ af79cd13be357-87a390f1f2bmr434189185a.78.1759505199853; 
+ Fri, 03 Oct 2025 08:26:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4Zr3icmAnjzX/7bVjAwG5d94ur2+7y4UQxbBgkpkBWWKB6wjCUGZK3vtchiWr4XDldDPG1w==
+X-Received: by 2002:a05:620a:1a11:b0:875:c212:fe07 with SMTP id
+ af79cd13be357-87a390f1f2bmr434183985a.78.1759505199150; 
+ Fri, 03 Oct 2025 08:26:39 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-87771129478sm433186985a.1.2025.10.03.08.26.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 08:09:11 -0700 (PDT)
-Date: Fri, 3 Oct 2025 17:09:08 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: salil.mehta@opnsrc.net
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
- salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
- jonathan.cameron@huawei.com, lpieralisi@kernel.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org, armbru@redhat.com,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
- oliver.upton@linux.dev, pbonzini@redhat.com, gshan@redhat.com,
- rafael@kernel.org, borntraeger@linux.ibm.com, alex.bennee@linaro.org,
- gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- linux@armlinux.org.uk, darren@os.amperecomputing.com,
- ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
- gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
- jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
- shahuang@redhat.com, zhao1.liu@intel.com
-Subject: Re: [PATCH RFC V6 11/24] hw/arm/acpi: MADT change to size the guest
- with possible vCPUs
-Message-ID: <20251003170908.48070061@fedora>
-In-Reply-To: <20251001010127.3092631-12-salil.mehta@opnsrc.net>
-References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
- <20251001010127.3092631-12-salil.mehta@opnsrc.net>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ Fri, 03 Oct 2025 08:26:38 -0700 (PDT)
+Date: Fri, 3 Oct 2025 11:26:36 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [PATCH 02/14] qdev: Automatically delete memory subregions
+Message-ID: <aN_rLDLeMcvRtmAa@x1.local>
+References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+ <20250917-subregion-v1-2-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+ <aN7RHvjeQNtrXDcQ@x1.local> <aN7VH0j8HfaeRV1V@x1.local>
+ <32e36e0c-c947-4fa4-bdbf-5ef3ce6ea0a3@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <32e36e0c-c947-4fa4-bdbf-5ef3ce6ea0a3@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,167 +139,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  1 Oct 2025 01:01:14 +0000
-salil.mehta@opnsrc.net wrote:
+On Fri, Oct 03, 2025 at 11:01:38PM +0900, Akihiko Odaki wrote:
+> On 2025/10/03 4:40, Peter Xu wrote:
+> > On Thu, Oct 02, 2025 at 03:23:10PM -0400, Peter Xu wrote:
+> > > On Wed, Sep 17, 2025 at 07:32:48PM +0900, Akihiko Odaki wrote:
+> > > > +static int del_memory_region(Object *child, void *opaque)
+> > > > +{
+> > > > +    MemoryRegion *mr = (MemoryRegion *)object_dynamic_cast(child, TYPE_MEMORY_REGION);
+> > > > +
+> > > > +    if (mr && mr->container) {
+> > > > +        memory_region_del_subregion(mr->container, mr);
+> > > > +    }
+> > > > +
+> > > > +    return 0;
+> > > > +}
+> > > > +
+> > > >   static void device_set_realized(Object *obj, bool value, Error **errp)
+> > > >   {
+> > > >       DeviceState *dev = DEVICE(obj);
+> > > > @@ -582,6 +593,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+> > > >           if (dc->unrealize) {
+> > > >               dc->unrealize(dev);
+> > > >           }
+> > > > +        object_child_foreach(OBJECT(dev), del_memory_region, NULL);
+> > > 
+> > > PS: I'll keep throwing some pure questions here, again, Paolo - it doesn't
+> > > need to block merging if you're confident with the general approach.
+> > > 
+> > > Said that, a few things I still want to mention after I read this series..
+> > > 
+> > > One thing I really feel hard to review such work is, you hardly describe
+> > > the problems the series is resolving.
+> > > 
+> > > For example, this patch proposed auto-detach MRs in unrealize() for qdev,
+> > > however there's nowhere describing "what will start to work, while it
+> > > doesn't", "how bad is the problem", etc..  All the rest patches are about
+> > > "what we can avoid do" after this patch.
+> > 
+> > For this part, I should be more clear on what I'm requesting on the
+> > answers.
+> > 
+> > I think I get the whole point that MRs (while still with MR refcount
+> > piggypacked, as of current QEMU master does) can circular reference itself
+> > if not always detached properly, so explicitly my question is about:
+> > 
+> > - What devices / use case you encountered, that QEMU has such issue?
+> >    Especially, this is about after we have merged commit ac7a892fd3 "memory:
+> >    Fix leaks due to owner-shared MRs circular references".  Asking because I
+> >    believe most of them should already auto-detach when owner is shared.
+> > 
+> > - From above list of broken devices, are there any devices that are
+> >    hot-unpluggable (aka, high priority)?  Is it a problem if we do not
+> >    finalize a MR if it is never removable anyway?
 
-> From: Salil Mehta <salil.mehta@huawei.com>
-> 
-> When QEMU builds the MADT table, modifications are needed to include information
-> about possible vCPUs that are exposed as ACPI-disabled (i.e., `_STA.Enabled=0`).
-> This new information will help the guest kernel pre-size its resources during
-> boot time. Pre-sizing based on possible vCPUs will facilitate the future
-> hot-plugging of the currently disabled vCPUs.
-> 
-> Additionally, this change addresses updates to the ACPI MADT GIC CPU interface
-> flags, as introduced in the UEFI ACPI 6.5 specification [1]. These updates
-> enable deferred virtual CPU onlining in the guest kernel.
-> 
-> Reference:
-> [1] 5.2.12.14. GIC CPU Interface (GICC) Structure (Table 5.37 GICC CPU Interface Flags)
->     Link: https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#gic-cpu-interface-gicc-structure
-> 
-> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> ---
->  hw/arm/virt-acpi-build.c | 40 ++++++++++++++++++++++++++++++++++------
->  hw/core/machine.c        | 14 ++++++++++++++
->  include/hw/boards.h      | 20 ++++++++++++++++++++
->  3 files changed, 68 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index b01fc4f8ef..7c24dd6369 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -760,6 +760,32 @@ static void build_append_gicr(GArray *table_data, uint64_t base, uint32_t size)
->      build_append_int_noprefix(table_data, size, 4); /* Discovery Range Length */
->  }
->  
-> +static uint32_t virt_acpi_get_gicc_flags(CPUState *cpu)
-> +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-> +    const uint32_t GICC_FLAG_ENABLED = BIT(0);
-> +    const uint32_t GICC_FLAG_ONLINE_CAPABLE = BIT(3);
-> +
-> +    /* ARM architecture does not support vCPU hotplug yet */
-> +    if (!cpu) {
-> +        return 0;
-> +    }
-> +
-> +    /*
-> +     * If the machine does not support online-capable CPUs, report the GICC as
-> +     * 'enabled' only.
-> +     */
-> +    if (!mc->has_online_capable_cpus) {
-> +        return GICC_FLAG_ENABLED;
-> +    }
-> +
-> +    /*
-> +     * ACPI 6.5, 5.2.12.14 (GICC): mark the boot CPU 'enabled' and all others
-> +     * 'online-capable'.
-> +     */
-> +    return (cpu == first_cpu) ? GICC_FLAG_ENABLED : GICC_FLAG_ONLINE_CAPABLE;
-> +}
-> +
->  static void
->  build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->  {
-> @@ -785,12 +811,14 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      build_append_int_noprefix(table_data, vms->gic_version, 1);
->      build_append_int_noprefix(table_data, 0, 3);   /* Reserved */
->  
-> -    for (i = 0; i < MACHINE(vms)->smp.cpus; i++) {
-> -        ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(i));
-> +    for (i = 0; i < MACHINE(vms)->smp.max_cpus; i++) {
-                                     ^^^^^^^^^^^^
-> +        CPUState *cpu = machine_get_possible_cpu(i);
-...
-> +        CPUArchId *archid = machine_get_possible_cpu_arch_id(i);
+[1]
 
-what complexity above adds? /and then you say creating instantiating ARM VM
-is slow./
+> > 
+> > > 
+> > > Meanwhile, the cover letter is misleading. It is:
+> > > 
+> > > [PATCH 00/14] Fix memory region use-after-finalization
+> > > 
+> > > I believe it's simply wrong, because the whole series is not about
+> > > finalize() but unrealize().  For Device class, it also includes the exit()
+> > > which will be invoked in pci_qdev_unrealize(), but that is also part of the
+> > > unrealize() routine, not finalize().
+> 
+> The subject of the cover letter "fix memory region use-after-finalization"
+> is confusing. While this series has such fixes, it also contain refactoring
+> patches. The cover letter says:
+> 
+> > Patch "qdev: Automatically delete memory subregions" and the
+> > succeeding patches are for refactoring, but patch "vfio-user: Do not
+> > delete the subregion" does fix use-after-finalization.
+> 
+> More concretely, patch "qdev: Automatically delete memory subregions"
+> implements a common pattern of device unrealization, and the suceeding
+> patches remove ad-hoc implementations of it.
+> 
+> And since patch "hw/pci-bridge: Do not assume immediate MemoryRegion
+> finalization" fixes nothing as you pointed out, only patch "vfio-user: Do
+> not delete the subregion" fixes something.
+> 
+> Without patch "vfio-user: Do not delete the subregion",
+> vfio_user_msix_teardown() calls memory_region_del_subregion(). However, this
+> function is called from instance_finalize, so the subregion is already
+> finalized and results in a use-after-finalization scenario.
+> 
+> Anything else is for refactoring and it's quite unlike patch "memory: Fix
+> leaks due to owner-shared MRs circular references", which is a bug fix.
+> 
+> I think I'll drop patch "hw/pci-bridge: Do not assume immediate MemoryRegion
+> finalization" and rename this series simply to "qdev: Automatically delete
+> memory subregions" to avoid confusion.
 
-I'd drop machine_get_possible_cpu/machine_get_possible_cpu_arch_id altogether
-and mimic what acpi_build_madt() does.
+Yes, thanks.  I went over quite a few follow up patches but I missed this
+one.  IMHO you can also split the only fix out, so that can be better
+looked at by vfio-user developers.  It'll also be easier for them to verify
+if they want.
 
-> +        uint32_t flags = virt_acpi_get_gicc_flags(cpu);
-> +        uint64_t mpidr = archid->arch_id;
->  
->          if (vms->gic_version == VIRT_GIC_VERSION_2) {
->              physical_base_address = memmap[VIRT_GIC_CPU].base;
-> @@ -805,7 +833,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          build_append_int_noprefix(table_data, i, 4);    /* GIC ID */
->          build_append_int_noprefix(table_data, i, 4);    /* ACPI Processor UID */
->          /* Flags */
-> -        build_append_int_noprefix(table_data, 1, 4);    /* Enabled */
-> +        build_append_int_noprefix(table_data, flags, 4);
->          /* Parking Protocol Version */
->          build_append_int_noprefix(table_data, 0, 4);
->          /* Performance Interrupt GSIV */
-> @@ -819,7 +847,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          build_append_int_noprefix(table_data, vgic_interrupt, 4);
->          build_append_int_noprefix(table_data, 0, 8);    /* GICR Base Address*/
->          /* MPIDR */
-> -        build_append_int_noprefix(table_data, arm_cpu_mp_affinity(armcpu), 8);
-> +        build_append_int_noprefix(table_data, mpidr, 8);
->          /* Processor Power Efficiency Class */
->          build_append_int_noprefix(table_data, 0, 1);
->          /* Reserved */
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 69d5632464..65388d859a 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -1383,6 +1383,20 @@ CPUState *machine_get_possible_cpu(int64_t cpu_index)
->      return NULL;
->  }
->  
-> +CPUArchId *machine_get_possible_cpu_arch_id(int64_t cpu_index)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    CPUArchIdList *possible_cpus = ms->possible_cpus;
-> +
-> +    for (int i = 0; i < possible_cpus->len; i++) {
-> +        if (possible_cpus->cpus[i].cpu &&
-> +            possible_cpus->cpus[i].cpu->cpu_index == cpu_index) {
-> +            return &possible_cpus->cpus[i];
-> +        }
-> +    }
-> +    return NULL;
-> +}
-> +
->  static char *cpu_slot_to_string(const CPUArchId *cpu)
->  {
->      GString *s = g_string_new(NULL);
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 3ff77a8b3a..fe51ca58bf 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -461,6 +461,26 @@ struct MachineState {
->      bool acpi_spcr_enabled;
->  };
->  
-> +/*
-> + * machine_get_possible_cpu_arch_id:
-> + * @cpu_index: logical cpu_index to search for
-> + *
-> + * Return a pointer to the CPUArchId entry matching the given @cpu_index
-> + * in the current machine's MachineState. The possible_cpus array holds
-> + * the full set of CPUs that the machine could support, including those
-> + * that may be created as disabled or taken offline.
-> + *
-> + * The slot index in ms->possible_cpus[] is always sequential, but the
-> + * logical cpu_index values are assigned by QEMU and may or may not be
-> + * sequential depending on the implementation of a particular machine.
-> + * Direct indexing by cpu_index is therefore unsafe in general. This
-> + * helper performs a linear search of the possible_cpus array to find
-> + * the matching entry.
-> + *
-> + * Returns: pointer to the matching CPUArchId, or NULL if not found.
-> + */
-> +CPUArchId *machine_get_possible_cpu_arch_id(int64_t cpu_index);
-> +
->  /*
->   * The macros which follow are intended to facilitate the
->   * definition of versioned machine types, using a somewhat
+> 
+> > > 
+> > > The other question is, what if a MR has a owner that is not the device
+> > > itself?  There's no place enforcing this, hence a qdev can logically have
+> > > some sub-objects (which may not really be qdev) that can be the owner of
+> > > the memory regions.  Then the device emulation will found that some MRs are
+> > > auto-detached and some are not.
+> > > 
+> > > One example that I'm aware of is this:
+> > > 
+> > > https://lore.kernel.org/all/20250910115420.1012191-2-aesteve@redhat.com/#t
+> > > 
+> > > TYPE_VIRTIO_SHARED_MEMORY_MAPPING is an object, not qdev here, which can be
+> > > the owner of the MR.
+> 
+> Patch "qdev: Automatically delete memory subregions" and the succeeding
+> patches are for refactoring of qdev. MRs not directly owned by qdev are out
+> of scope of the change.
+
+Do you have a rough answer of above question [1], on what might suffer from
+lost MRs?  I sincerely want to know how much we are missing after we could
+already auto-detach owner-shared MRs.
+
+From a quick glance, at least patch 4-14 are detaching MRs that shares the
+same owner.  IIUC, it means at least patch 4-14 do not rely on patch 2.
+
+Then I wonder how much patch 2 helps in real life.
+
+There's indeed a difference though when a qdev may realize(), unrealize()
+and realize() in a sequence, in which case patch 2 could help whil commit
+ac7a892fd3 won't, however I don't know whether there's real use case,
+either.
+
+I also wished if there's such device, it'll have explicit detach code so
+that when I debug a problem on the device I can easily see when the MRs
+will be available, instead of remembering all the rules when something in
+some layer will auto-detach...
+
+Personally I think such automation adds burden to developers' mind if
+there're still a bunch of MRs that are not used in this way (there
+definitely are, otherwise we should be able to completely unexport
+memory_region_del_subregion). But that's subjective; I believe at least
+Paolo agrees with your general approach.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
