@@ -4,93 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD063CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 12:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E81CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 12:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4fDq-0005TE-P4; Fri, 03 Oct 2025 08:49:18 -0400
+	id 1v4fFQ-0006F4-7s; Fri, 03 Oct 2025 08:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4fDn-0005S7-2n
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 08:49:15 -0400
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4fDd-0008Ge-Ni
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 08:49:12 -0400
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-46e3ea0445fso12025755e9.1
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 05:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759495730; x=1760100530; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eKKpGIFhaAnNKkABrFN8kTPx+B+nseENfrTMzjVqiSw=;
- b=dXXz3hKZrkUtQEDUCTSDes1uRPqi+bNUgZMW/3JD32KZt7sqbBzGdpG2UJKNiwc4zr
- ItcrvEUy6S8VahAMRnGYFAfRENkOeMs+67Bz2T2RGyyTgUXkcc0VUdPM1KMMNG0zzSXQ
- ffvWW8kAP7Rg4HPjfJT5ve/Y9m8tin6VRojTbfiFniDnLDt6EhRuWKZltp6hzcCUywDk
- wnRlcULdaZFXigt0LcBDqeiq6SuuC7Lby3lwXKkKSRCRRryJn7AWzGjvruMcA+Waz4ov
- 42YHVMCBdX0nHAFv1Nr/ar0huqSsAA5VTg9priPGXNBrroIqIwEkUq8OBu1Xy2eZMM1O
- RDJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759495730; x=1760100530;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eKKpGIFhaAnNKkABrFN8kTPx+B+nseENfrTMzjVqiSw=;
- b=pH7a1W3/cPv+bVROPlbE1h23A/syqQqFbk4KQolutgJtzzh3DK4MvE0h+bqbHR8UWa
- Xo2x1+hab+FACxtf/J+eFbYPUYbD2Pdn5pWJNiW1dzQVqjBcBXPO96K7FCuYW44enT54
- 0HhJg1B9k7l9jduYPRDFsJZnzuN00S9DZR79NlYwQvOa/spYqivo029oVQuav7nCFSvS
- c1X/hesK94gyohlDw/Anz4tm2y8p7EqyrgW5kGWdO7tKkSzr+VTvifYmRvBhNch9NyXe
- Quuy34txIi09lx8z1I9VBOe2Sp9oYXkyfXWEqJ+/5kY1am1KiND4AfMOZMab3nBYf/WE
- AsRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZUN14u5pXzQceCgyn2r2fe8ItAG5h98c9v43zPaqJUIlF5//n5RBnj5hV68qUlXr5EM8IbtOPpjRG@nongnu.org
-X-Gm-Message-State: AOJu0YyabA5z2FVy3C0Hz6167fPzbCrgcOyvQglbk8oBjDh2YuNioFvS
- 3BTXEO3CLRA9dwdDdBITVRV9lSvQ7Oxsy8DSJU9kvGjTJW06S7G3mqm7tOq3vmpjD44=
-X-Gm-Gg: ASbGncsPuQnEGt8T0ASQE8cH2eIM60qSp9P7nNkZBt6S03bsk/DR22XZB5gNyAmVW4k
- 6wsXGsXUQr1NkyMg7dEfVj3BYWG++Q2o/i56g02LZ/WUyxe20h7/20+5ner5u8UKq/WvXysq8b7
- M3g56SkN0ft9avV6fxwb74AaIpfBSVRhQMVLDWgBpdmGptiQ0lQiaIZnOLIsS7wBmZkQ9MCmzn8
- HOpEdvDUqmM6rZ69MvLjeDOkK0lg7iJM6h1R2ul5G+BjwLxPb09YGVuibOo5N/LepFRmA4Nhooa
- QpInhJUlsDKJdbjH5hdCblRcTRlg7d1KCEcDggEI0n8xnEJ4VRZBML8Ig1igUJuv++P60jwAmj7
- b4ewJLwSKKwAXEFmjW5Y6NQqN5TxyI5jfv6oZRMfV4czWpMlrKIBXWool79yBIAxudIfd2J+GpC
- pJqeslUgT2cEUpcS80JcbIPywhq3Ee
-X-Google-Smtp-Source: AGHT+IG60jcQp3Q/xg2SqRGH8uGsUJfDOpxtD+AuoUQpUS70sf8/droB/XiW0ECZtWcZFJ5dNN+Thw==
-X-Received: by 2002:a05:600c:a343:b0:459:d451:3364 with SMTP id
- 5b1f17b1804b1-46e71144103mr21838005e9.24.1759495729865; 
- Fri, 03 Oct 2025 05:48:49 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9890sm7950209f8f.32.2025.10.03.05.48.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Oct 2025 05:48:49 -0700 (PDT)
-Message-ID: <6a015f1e-f298-4218-8ed7-d590bcc15ab1@linaro.org>
-Date: Fri, 3 Oct 2025 14:48:48 +0200
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v4fFJ-0006Be-KJ
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 08:50:49 -0400
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v4fF8-0000A7-6n
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 08:50:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=uBE9rJ2h99TnFCpjP6oulZ6pWiFmTnQZM0yvxM2NaPw=; b=KPKLOLbrIBN/1FC
+ y2ML4LEDVKx5aUEKpfiwfm7SZV9NkO0BYlS44vgQIAP1OKKmTsS3v6FBObi5sm3/h4bUGfQvx1zLt
+ SGt5SzfjZdy1MdKQEH96+PzK4HQNwyNKW5vpH1B61SkWrhsTzCdz1O9MhpdxZ8v45QB35hH71avoW
+ oU=;
+Date: Fri, 3 Oct 2025 14:52:57 +0200
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org, 
+ alistair.francis@wdc.com, palmer@dabbelt.com
+Subject: Re: [PATCH v2 30/33] target/riscv: Move debug.h include away from
+ cpu.h
+Message-ID: <f5rjtehuhnmvwvb7aunsujblqcoqchqftaj5tajvnzansxhtqg@xl7uur7n7ppx>
+References: <20251001073306.28573-1-anjo@rev.ng>
+ <20251001073306.28573-31-anjo@rev.ng>
+ <f29cebf7-42f1-419d-9bbe-46ad91adb57d@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] aspeed: Don't set 'auto_create_sdcard'
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20251003103024.1863551-1-clg@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251003103024.1863551-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f29cebf7-42f1-419d-9bbe-46ad91adb57d@linaro.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,25 +63,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 12:30, Cédric Le Goater wrote:
-> The Aspeed machines inherited from a 'no_sdcard' attribute when first
-> introduced in QEMU. This attribute was later renamed to
-> 'auto_create_sdcard' by commit cdc8d7cadaac ("hw/boards: Rename
-> no_sdcard -> auto_create_sdcard") and set to 'true'. This has the
-> indesirable efect to automatically create SD cards at init time.
+On 02/10/25, Pierrick Bouvier wrote:
+> On 10/1/25 12:33 AM, Anton Johansson wrote:
+> > All debug.h definitions except for RV_MAX_TRIGGERS are internal to
+> > target/riscv.  Move RV_MAX_TRIGGERS to cpu.h and include debug.h from
+> > all translation units which relied on the cpu.h include.
+> > 
+> > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > ---
+> >   target/riscv/cpu.h         | 4 ++--
+> >   target/riscv/debug.h       | 2 --
+> >   target/riscv/cpu.c         | 3 +++
+> >   target/riscv/csr.c         | 3 +++
+> >   target/riscv/debug.c       | 1 +
+> >   target/riscv/tcg/tcg-cpu.c | 1 +
+> >   6 files changed, 10 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index a53981a09b..70e0f3718c 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -177,14 +177,14 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
+> >   #define MAX_RISCV_PMPS (64)
+> >   #define OLD_MAX_RISCV_PMPS (16)
+> > -#if !defined(CONFIG_USER_ONLY)
+> > +#if !defined(CONFIG_LINUX_USER)
 > 
-> Remove 'auto_create_sdcard' to avoid creating a SD card device.
+> Squashed from another change?
 > 
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Link: https://lore.kernel.org/qemu-devel/20250930142448.1030476-1-clg@redhat.com
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/arm/aspeed.c | 22 ----------------------
->   1 file changed, 22 deletions(-)
+> ...
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Yup, nice catch!
 
