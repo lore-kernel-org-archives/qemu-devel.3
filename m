@@ -4,53 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 345D7CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 09:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E09CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 09:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4bcJ-0006vD-2I; Fri, 03 Oct 2025 04:58:19 -0400
+	id 1v4c6S-0004YR-M3; Fri, 03 Oct 2025 05:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v4bcD-0006uS-7H
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 04:58:13 -0400
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v4bbz-0003ig-1c
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 04:58:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=k9SPrNZoiEkWFN4a8bx4hpPf4wqSMOW0k1fFvoIyAxk=; b=P5a+4egAfRwERGB
- AFFc9rFfdLS38GuW5eKo22VCmqVViJ3iyrU70flWhd/7G4rO5soS63OrxfZZFm27xtY6AHtRCPGgW
- CNMipgu3rE43l10s6ETL91OlISkRQObotL5FrYqhj0o9RHhZQfD0g2wl6LggIpl+l0ZKsNeF6E82L
- WM=;
-Date: Fri, 3 Oct 2025 11:00:22 +0200
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, 
- richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: Re: [PATCH v2 09/33] target/riscv: Fix size of gpr and gprh
-Message-ID: <e7aai6e3vxpapknpivx6tq4akj2g244vojlwsdettvocvke7ec@ww3fr75vf3su>
-References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-10-anjo@rev.ng>
- <ce7616cd-54cb-4c8b-8c34-8ef795d34eef@linaro.org>
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1v4c6P-0004YJ-LN
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 05:29:25 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1v4c6J-0002cg-7e
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 05:29:24 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b463f986f80so94152366b.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 02:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=adacore.com; s=google; t=1759483748; x=1760088548; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Vy/tvwA0KhBlVA0wpXWM9Aqirz5rR3/wPq2Zlnq5zcY=;
+ b=gPdb0kPzpfZ7jFilZlXoz9jJHDlhGudmDuNzoatz/cUwwCq3cd6R7nNu8XkEKInkkE
+ MAHj2zDYO76jpN3IenIEgRdvikU6VIuvd+nsnCA7Yjyg6YLfxKmMnAn5kU7xN8diiUTN
+ OuL9k8R9lrGoeVID211vTM/idEnZju+DooWqJjfotyj18v7s48VSNwK+96nOBEi61zMT
+ 4n3fcRZKJ34U/EGQwv6oQ5fS7VQ7J+vk+hizD5rPxRLNqyMTmNDhPWjKyAB4c/FP32ee
+ koqb7bRr9A/efWvOteS81HBSTcw8/73D6qkTlSi+OpP4dwgP6E2e1zbIWrLn3RsjpPn4
+ iIsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759483748; x=1760088548;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Vy/tvwA0KhBlVA0wpXWM9Aqirz5rR3/wPq2Zlnq5zcY=;
+ b=L2+yfIdiMBpsxPMk1WigCz282LLy/E9aFX7r/onDknOoGMHvjNCI0dcJLLnctlHcPh
+ 8QgqqP56q2Q3bds9EVvcBm6lETb8WYQA1I9QPBL9H/aBY5HfMxkUP0Q+7AdBpUhTG8PA
+ iKg77a/ScHzhc2moW+1/YAuNDrX7XqxLze/sWezD3+TAx+GnOGq5LEn6e0R9g5iabT8D
+ +U8FvTATlEInO4924vgHUQouStRqeDqOFTw5FO0cdR8UiqVCoo1gP3XYjZsEt1GXHZ6o
+ 62CmzvJ5zsrXSUE7CKGSHyWEnDroJZndcou0v/yduDA1uVyhgd2bQRo2HoTBSrK9+4SB
+ Q/NQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVz1GfHi+kL95tVv6PbNLiLGA71AF9cmefaJ6m2AQrUpaht1+07zoOkCIqBu5A/ghDHmSQhLzupk8f@nongnu.org
+X-Gm-Message-State: AOJu0YwB/Xk4dmzhlMe+Pl0JSvqkWB4RPJUwBQq+q8Wau2JyatK6wFZO
+ Y25FB3UHzmwlSjmdt218UsuO3lBbAFlsUSl7zspTB89ekyB8Vc0J/TBnXaPKrFZE8p82HvmxXeu
+ w57/qhfgu+/BiyJLAcr+a17rGe5HcEunZn5LRWQ8z
+X-Gm-Gg: ASbGncv4lCSR0g3wXHehaelljVBUMoR0O6MiEKFwrxd/m5ITmhuxHc54uw3JskDSStx
+ C5v15ljIx/vRZruxBHQC8TLad/PEkgJ9RyZiQokpv/+m9nN4cHIP0Yv1paQMPeN0u7wa9IjlYSt
+ RhlT9jNgIxX0N376hKtqyaSDPQyQzmWye7Up8rP3Nuh7I3CyDEQ1+Wm4/qMtPeAxA1nG2tQmguw
+ hbBxwriPkP/e33mBWG7kzfavCxXJQhuP5I/coWRWSHoWNMrNL2ZhBIFxni1OlDQ
+X-Google-Smtp-Source: AGHT+IE079VKQEiHKEphnuoENyhXs7yaS3pF5UGMtptswuIGF8oeO1SFA0wXLsnNpP6NX1UD3/xHIE1qTfxe8PeXFtk=
+X-Received: by 2002:a17:907:9449:b0:b48:44bc:44e7 with SMTP id
+ a640c23a62f3a-b49c2d56beamr308375266b.48.1759483747718; Fri, 03 Oct 2025
+ 02:29:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ce7616cd-54cb-4c8b-8c34-8ef795d34eef@linaro.org>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+References: <20251002101648.2455374-1-peter.maydell@linaro.org>
+In-Reply-To: <20251002101648.2455374-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Fri, 3 Oct 2025 11:28:55 +0200
+X-Gm-Features: AS18NWASPQh4vjBbQoCZ2MASxpZnRIGX_OSQGIJAClg-oBRXlPUQ92vUiVB6EXk
+Message-ID: <CAJ307EhvkG4PB4wUJieeJRNzBzwdB=4y04CiiGo-=7Q-nz=KfA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] target/arm: Allow aarch64=off for TCG
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=chigot@adacore.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,46 +93,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/10/25, Philippe Mathieu-Daudé wrote:
-> On 1/10/25 09:32, Anton Johansson wrote:
-> > gprh is only needed for TARGET_RISCV64 when modeling 128-bit registers,
-> > fixing their size to 64 bits makes sense.
-> > 
-> > gpr is also fixed to 64 bits since all direct uses of env->gpr
-> > correctly zero extend/truncate to/from target_ulong, meaning
-> > !TARGET_RISCV64 will behave as expected.
-> > 
-> > We do however need to be a bit careful when mapping 64-bit fields to
-> > 32-bit TCGv globals on big endian hosts.
-> > 
-> > Note, the cpu/rv128 VMSTATE version is bumped, breaking migration from
-> > older versions.
-> > 
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >   target/riscv/cpu.h       |  4 ++--
-> >   target/riscv/cpu.c       |  2 +-
-> >   target/riscv/machine.c   |  8 ++++----
-> >   target/riscv/translate.c | 17 +++++++++++++++--
-> >   4 files changed, 22 insertions(+), 9 deletions(-)
-> 
-> 
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index d055ddf462..3c910e44cd 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -584,7 +584,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-> >       for (i = 0; i < 32; i++) {
-> >           qemu_fprintf(f, " %-8s " TARGET_FMT_lx,
-> > -                     riscv_int_regnames[i], env->gpr[i]);
-> > +                     riscv_int_regnames[i], (target_ulong) env->gpr[i]);
-> 
-> Rebase mistake?
+On Thu, Oct 2, 2025 at 12:16=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> This patchset relaxes our current constraint that we only permit
+> -cpu foo,aarch64=3Doff on KVM CPUs, so that you can also use this
+> to run a TCG CPU with aarch64 disabled. This is useful because
+> currently if you want a 32-bit TCG CPU you're limited to either
+> 'max' in qemu-system-arm or else the old v7-only CPUs like a15.
+>
+> I had a look at this last year, but never actually got the changes
+> into a completed state before I moved onto other things. Cl=C3=A9ment
+> asked about this the other day, so I figured I'd send out the
+> patches I had.
 
-Yup, I'll print as u64 instead! Thanks:)
+Thanks for the patches.
+I've been able to test a couple of our internal testsuites over ARM
+Linux (based on Yocto images) using both `cortex-a53,aarch64=3Doff` and
+`max,aarch64=3Doff` on the virt machine. Everything went right including
+the migration features we are using (basically, "migrate" to file and
+later -incoming from that file). Hence,
+
+Tested-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+
+I'll let more relevant people do the review though.
+
+Side note, IMO it would make sense to add another test under
+function/arm/virt asserting this feature.
+
+Thanks,
+Cl=C3=A9ment
+
+> The series is RFC because:
+>  * I haven't tested it enough; in particular I don't think
+>    I checked that the "clear the AArch64 ID register values"
+>    patch doesn't break KVM aarch64=3Doff (including not breaking
+>    migration). If it does we might have to make the "clear regs"
+>    only be done for TCG, but that seems a bit hacky...
+>  * I haven't checked that we forbid weird property combos like
+>    '-cpu max,aarch64=3Doff,sve=3Don'
+>
+> But I did do the work of looking through the codebase at where
+> we test ARM_FEATURE_AARCH64 to confirm that it really is the
+> right thing to test and we weren't using it any places where we
+> should instead have been checking ARM_FEATURE_V8 or something
+> else instead.
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (2):
+>   target/arm: Clear AArch64 ID regs from ARMISARegisters if AArch64
+>     disabled
+>   target/arm: Allow 'aarch64=3Doff' to be set for TCG CPUs
+>
+>  docs/system/arm/cpu-features.rst |  7 ++--
+>  target/arm/cpu-features.h        |  5 +++
+>  target/arm/cpu.h                 |  3 +-
+>  target/arm/cpu.c                 | 61 +++++++++++++++++++++++++++++---
+>  tests/qtest/arm-cpu-features.c   |  8 ++---
+>  5 files changed, 70 insertions(+), 14 deletions(-)
+>
+> --
+> 2.43.0
+>
 
