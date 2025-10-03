@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A6ADCCD183
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D457CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4WSe-0006wG-OC; Thu, 02 Oct 2025 23:28:01 -0400
+	id 1v4WSq-0006zx-6t; Thu, 02 Oct 2025 23:28:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WSc-0006vj-Km
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:27:58 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1v4WSm-0006yS-2v
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:08 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WSV-0001AI-66
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:27:58 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-32ed19ce5a3so1574151a91.0
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:27:43 -0700 (PDT)
+ id 1v4WSb-0001BB-8f
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:07 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-78127433a32so1363025b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759462061; x=1760066861; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759462072; x=1760066872; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=72uD3fuSOrRwGd0bi0oTLTeihEB7qSrLAvtmW/GYVLI=;
- b=IP9iRIWJdqEgRtklDeOIs0oYB7drjyvPe4TOHqG+uGa16FF/devJlwuL44izh5Kb5b
- SjR4+TwiLNLfLllPPQrO1Kt/z38ZyRd2drK5rIulK4OzPe1iouTlQKLysoinm+MAIyYd
- 5HrCRKB+xZJkQOXxciEj3hPTgiPHkA7zcjfkP5FbOFohA4bncoq8SjbUSzlNSzAOlJt7
- gC6yArvMPg4RgWjM9X/uVJoEW4ENEfTPmnX1JXm97VlawQYNsx1g94DX6CLaNGEl+12r
- Hh9gJgwotC8uShxRADKkfLqBfAA8Xm5PdFboss0AB6o1Vv0IKYk5iohKjZ2tbP7DXI6P
- o4aQ==
+ bh=eYQCJcXuY+7yUPJSpLnB3TDifS4Q7SIz9JpD/nzZR+w=;
+ b=ddxSOq9dgetQ45T+EcU8vFpX8XKVGmySg1ku1q3ogMRxT2LrllJovvKqBpDbo8P6uV
+ IglV5Ufn4nhNBz6UTerTZEA78cyNzwvVejm0/tkPJzxGX6Kh9isp5woyEuHZC67II3GG
+ NJxEEvJrQSAzItO+OykEe/cBAEIQD3HxOzO731rD/fm4rIp740VXnI65QBXvDEXtnf4/
+ XVpTRA+cQblCDYVeDL50LdKIXbF9k1JqobYb2yhXPLYFV07ECYlFfrsxva/PFhrFBUB2
+ MJokAl4F8YtkOAnJTMXSfMfTGDEE6U9FT21CBfTfw3PK2qDlUkM76nP+Snxq+FBlTAU2
+ e0UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759462061; x=1760066861;
+ d=1e100.net; s=20230601; t=1759462072; x=1760066872;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=72uD3fuSOrRwGd0bi0oTLTeihEB7qSrLAvtmW/GYVLI=;
- b=t5TZMiC5VtuufSmLQnZZGH0ViueKPq49xYwnbM4+4T0OTf5p1EdbSvtNeEqCb0AF3n
- 3MY5DDAeI+cvtiqZ87F9xbkLIQYuIDdQj53vFvbJFws0SnFC3IdAQOi5B3CqCyJXnXoE
- mklySgZXH638/s7JE7X6tF7SqQa1TWQ3UoXfzd1eaGM6KxdT/XIcn3aV3xC1iUzRo0cF
- X7BmfoV9UuPM1Jok7+/yi0kZKSzWpDUDLa5E8By7cHYLu00+b4RkvVglZ7Dv4v79Nija
- JsADELou9a7Nszs7Q2uz04lkS0aTXv7J5sW1ldkhygyVUIhuYyBtFfAJzM7J4b7DvZZx
- hfnA==
-X-Gm-Message-State: AOJu0Yz2HjzJiYB92PqdHWnbwTGh/HkVZSbYfE3l/tYG1Xl7/21nMQ6A
- qvmyjSUOm5/beWVx9KTdzzjVnpbXQQGlEnIEJCyjdqu18UWL5FOZxjN+AkKKYQ==
-X-Gm-Gg: ASbGncsOYZ0+DKdyiVJ+4nN53t3UfUqt3dgIMAXVSQS+94N94lzeyfA47BKbMwQ+gD5
- O9cNRF7OgPhDezC5U3jn7GY7Y3u8k5e0Y8uzv/SWw1Cs8tzplMSDSnTxjSa6KIicGr3EQdI+aWm
- UytenNndnzsSGrmy0Q0MAnzgkgcVW68tJlCq/nqpYueL+TagR7GBghU0RliSdmqMmvFgW2WnuvV
- CA+y+6RxjYdJCtFCNVoH64Ai2EAJwifp83OpLi3+FHShxf9cc8zLgEGESkhQSHZwB58veDzrGUM
- kDQNkzpT6fF4oREXgKhJSJxXCAPEUULtgnm8Ok1CQOQpKih4dZVoi4UVKg+o5kxqxxBbkVctNAP
- xssSmscIjlBVE0kUmox7uKYsCE/FY8J7G6LHe7ZLDqD37upEFpZF1EuxgGCEWCIL4Mok3DnPC1t
- +TvjwDSaesJ8hVrUljeH7dIGaBlwTGrwExvht7AwVR5FQou8za6qI40w4Ym61vyFw=
-X-Google-Smtp-Source: AGHT+IGfO0dczdrRqfT7rXQGaL6tpIG+s+MFqgIT+Vm86F782hg0nxtLUOi9P23UTjQIYG0qUPdR2A==
-X-Received: by 2002:a17:90b:3b41:b0:32d:dffc:7ad6 with SMTP id
- 98e67ed59e1d1-339c27b94demr1785432a91.33.1759462060855; 
- Thu, 02 Oct 2025 20:27:40 -0700 (PDT)
+ bh=eYQCJcXuY+7yUPJSpLnB3TDifS4Q7SIz9JpD/nzZR+w=;
+ b=Yx/SLokrkLEjAGkgBRrLf/GD3/OxGM4sKgq9nnnbxF+XhE1I/Z2Dtlxni8ZJolJLwQ
+ 5tnE23duPxBePYfJeDuiH92+kmH6f93ObgGUZ+F4H+diGKONdGiQJqevyt5sf6P2zRRC
+ PPkalQ31KRyL7aUI+V+U5afy/d4Ty5hWkI1ehBoz3rXer+1+OYTE8/4L1uewenhImCCM
+ aukb/ojSISNOHangHSgsQO7iCcJwMjNhvznmYVTZ7OcNCrS/czULtm+iCc1c8ZLXBzfe
+ k3E5B4Be4dE4ZIQPGAkNrXtSkyab5w+U/FtI65woZYJoBvzsTraX3fmlpJ/evPlsEjiW
+ jxBA==
+X-Gm-Message-State: AOJu0Yxt0TdzpsdQEzLyt5wmk+nR3cpxN3QMVtDLNWhnzwOzc6FrQKfZ
+ 8lEMRo70rA2HxLHpHQrO+eqRYJu5UNR+HuEP6UNKwJ630SWcUQdSVfIM+ZQzIQ==
+X-Gm-Gg: ASbGncvB0a3Jt9HWPH0T+8RkUO6iTqKT/66PvHE4u1EzGcn8g9RXRg3GnrdUszsfGsR
+ 8dLkEcNcAIe259M+fuGdgB9dOq/FRMciizizg1GzIv4jkci+Jg+0ivwuPK4ba8BMFJQLdXD3usI
+ tFKwQ2wo74FNAcsahCM0Rd7tiXxQMtr8yqhg2yPyyLJobAX75nbI7LWKZTduWz6ZXGQorA95Dpi
+ hp5+2ioeXLn8uOheGP2Idyh7Eq/NVWDbYkzAxT7mHdCpULOIDHyo7Od9pqwENBGPmRQHij9Ubcu
+ Rhpn0cezoA3zjJ7uqevOUfwkbr6Mg5AkTcgXogESn7nxe9+kZnxidYU1q++eFSW+5QjeFqrzQdz
+ 7acJ2eSUnS6S9okxAGnRuumEyJ1LG9eqR348q2x6w2ztgcH+QUB5mxGKvkRyfDPPlvk6BeM+A+b
+ 02Rv4ieucLuRKBavvPgdbk0XqwD24iZYA0wXTC7xpQfWxdC6rhSXueWUVw2euVFI0=
+X-Google-Smtp-Source: AGHT+IFNa3t0AhnvZTvDEn3RIguBUdQWlE4FZNYEpZVI65wOte8z77xww26O31VykOqmRFS98a+2mw==
+X-Received: by 2002:a05:6a21:338b:b0:2fa:52a0:e838 with SMTP id
+ adf61e73a8af0-32b62095839mr2063247637.36.1759462071555; 
+ Thu, 02 Oct 2025 20:27:51 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.27.30
+ 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.27.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 20:27:33 -0700 (PDT)
+ Thu, 02 Oct 2025 20:27:50 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 01/26] hw/riscv/riscv-iommu: Fix MSI table size limit
-Date: Fri,  3 Oct 2025 13:26:53 +1000
-Message-ID: <20251003032718.1324734-2-alistair.francis@wdc.com>
+Subject: [PULL 04/26] target/riscv: implement MonitorDef HMP API
+Date: Fri,  3 Oct 2025 13:26:56 +1000
+Message-ID: <20251003032718.1324734-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003032718.1324734-1-alistair.francis@wdc.com>
 References: <20251003032718.1324734-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,57 +106,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The MSI table is not limited to 4k. The only constraint the table has
-is that its base address must be aligned to its size, ensuring no
-offsets of the table size will overrun when added to the base address
-(see "8.5. MSI page tables" of the AIA spec).
+The MonitorDef API is related to two HMP monitor commands: 'p' and 'x':
 
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250904132723.614507-2-ajones@ventanamicro.com>
+(qemu) help p
+print|p /fmt expr -- print expression value (use $reg for CPU register access)
+(qemu) help x
+x /fmt addr -- virtual memory dump starting at 'addr'
+
+For x86, one of the few targets that implements it, it is possible to
+print the PC register value with $pc and use the PC value in the 'x'
+command as well.
+
+Those 2 commands are hooked into get_monitor_def(), called by
+exp_unary() in hmp.c. The function tries to fetch a reg value in two
+ways: by reading them directly via a target_monitor_defs array or using
+a target_get_monitor_def() helper. In RISC-V we have *A LOT* of
+registers and this number will keep getting bigger, so we're opting out
+of an array declaration.
+
+We're able to retrieve all regs but vregs because the API only fits an
+uint64_t and vregs have 'vlen' size that are bigger than that.
+
+With this patch we can do things such as:
+
+- print CSRs and use their val in expressions:
+(qemu) p $mstatus
+0xa000000a0
+(qemu) p $mstatus & 0xFF
+0xa0
+
+- dump the next 10 insn from virtual memory starting at x1 (ra):
+
+(qemu) x/10i $ra
+0xffffffff80958aea:  a9bff0ef          jal                     ra,-1382                # 0xffffffff80958584
+0xffffffff80958aee:  10016073          csrrsi                  zero,sstatus,2
+0xffffffff80958af2:  60a2              ld                      ra,8(sp)
+0xffffffff80958af4:  6402              ld                      s0,0(sp)
+0xffffffff80958af6:  0141              addi                    sp,sp,16
+0xffffffff80958af8:  8082              ret
+0xffffffff80958afa:  10016073          csrrsi                  zero,sstatus,2
+0xffffffff80958afe:  8082              ret
+0xffffffff80958b00:  1141              addi                    sp,sp,-16
+0xffffffff80958b02:  e422              sd                      s0,8(sp)
+(qemu)
+
+Suggested-by: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250703130815.1592493-1-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h            |   1 +
+ target/riscv/riscv-qmp-cmds.c | 148 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 149 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 96a7fbdefc..155190d032 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -558,6 +558,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
-     MemTxResult res;
-     dma_addr_t addr;
-     uint64_t intn;
-+    size_t offset;
-     uint32_t n190;
-     uint64_t pte[2];
-     int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
-@@ -565,16 +566,18 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 4a862da615..738e68fa6e 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -592,6 +592,7 @@ static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
+ extern const char * const riscv_int_regnames[];
+ extern const char * const riscv_int_regnamesh[];
+ extern const char * const riscv_fpr_regnames[];
++extern const char * const riscv_rvv_regnames[];
  
-     /* Interrupt File Number */
-     intn = riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
--    if (intn >= 256) {
-+    offset = intn * sizeof(pte);
+ const char *riscv_cpu_get_trap_name(target_ulong cause, bool async);
+ int riscv_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index 8a1856c50e..b63de8dd45 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -31,6 +31,10 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/visitor.h"
+ #include "qom/qom-qobject.h"
++#include "qemu/ctype.h"
++#include "qemu/qemu-print.h"
++#include "monitor/hmp.h"
++#include "monitor/hmp-target.h"
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+ #include "cpu-qom.h"
+@@ -240,3 +244,147 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+ 
+     return expansion_info;
+ }
 +
-+    /* fetch MSI PTE */
-+    addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
-+    if (addr & offset) {
-         /* Interrupt file number out of range */
-         res = MEMTX_ACCESS_ERROR;
-         cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
-         goto err;
-     }
- 
--    /* fetch MSI PTE */
--    addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
--    addr = addr | (intn * sizeof(pte));
-+    addr |= offset;
-     res = dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
-             MEMTXATTRS_UNSPECIFIED);
-     if (res != MEMTX_OK) {
++/*
++ * We have way too many potential CSRs and regs being added
++ * regularly to register them in a static array.
++ *
++ * Declare an empty array instead, making get_monitor_def() use
++ * the target_get_monitor_def() API directly.
++ */
++const MonitorDef monitor_defs[] = { { } };
++const MonitorDef *target_monitor_defs(void)
++{
++    return monitor_defs;
++}
++
++static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
++                                 target_ulong *val, bool is_gprh)
++{
++    const char * const *reg_names;
++    target_ulong *vals;
++
++    if (is_gprh) {
++        reg_names = riscv_int_regnamesh;
++        vals = env->gprh;
++    } else {
++        reg_names = riscv_int_regnames;
++        vals = env->gpr;
++    }
++
++    for (int i = 0; i < 32; i++) {
++        g_autofree char *reg_name = g_strdup(reg_names[i]);
++        char *reg1 = strtok(reg_name, "/");
++        char *reg2 = strtok(NULL, "/");
++
++        if (strcasecmp(reg1, name) == 0 ||
++            (reg2 && strcasecmp(reg2, name) == 0)) {
++            *val = vals[i];
++            return true;
++        }
++    }
++
++    return false;
++}
++
++static bool reg_is_u64_fpu(CPURISCVState *env, const char *name, uint64_t *val)
++{
++    if (qemu_tolower(name[0]) != 'f') {
++        return false;
++    }
++
++    for (int i = 0; i < 32; i++) {
++        g_autofree char *reg_name = g_strdup(riscv_fpr_regnames[i]);
++        char *reg1 = strtok(reg_name, "/");
++        char *reg2 = strtok(NULL, "/");
++
++        if (strcasecmp(reg1, name) == 0 ||
++            (reg2 && strcasecmp(reg2, name) == 0)) {
++            *val = env->fpr[i];
++            return true;
++        }
++    }
++
++    return false;
++}
++
++static bool reg_is_vreg(const char *name)
++{
++    if (qemu_tolower(name[0]) != 'v' || strlen(name) > 3) {
++        return false;
++    }
++
++    for (int i = 0; i < 32; i++) {
++        if (strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
++            return true;
++        }
++    }
++
++    return false;
++}
++
++int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
++{
++    CPURISCVState *env = &RISCV_CPU(cs)->env;
++    target_ulong val = 0;
++    uint64_t val64 = 0;
++    int i;
++
++    if (reg_is_ulong_integer(env, name, &val, false) ||
++        reg_is_ulong_integer(env, name, &val, true)) {
++        *pval = val;
++        return 0;
++    }
++
++    if (reg_is_u64_fpu(env, name, &val64)) {
++        *pval = val64;
++        return 0;
++    }
++
++    if (reg_is_vreg(name)) {
++        if (!riscv_has_ext(env, RVV)) {
++            return -EINVAL;
++        }
++
++        qemu_printf("Unable to print the value of vector "
++                    "vreg '%s' from this API\n", name);
++
++        /*
++         * We're returning 0 because returning -EINVAL triggers
++         * an 'unknown register' message in exp_unary() later,
++         * which feels ankward after our own error message.
++         */
++        *pval = 0;
++        return 0;
++    }
++
++    for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
++        RISCVException res;
++        int csrno = i;
++
++        /*
++         * Early skip when possible since we're going
++         * through a lot of NULL entries.
++         */
++        if (csr_ops[csrno].predicate == NULL) {
++            continue;
++        }
++
++        if (strcasecmp(csr_ops[csrno].name, name) != 0) {
++            continue;
++        }
++
++        res = riscv_csrrw_debug(env, csrno, &val, 0, 0);
++
++        /*
++         * Rely on the smode, hmode, etc, predicates within csr.c
++         * to do the filtering of the registers that are present.
++         */
++        if (res == RISCV_EXCP_NONE) {
++            *pval = val;
++            return 0;
++        }
++    }
++
++    return -EINVAL;
++}
 -- 
 2.51.0
 
