@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EF4CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 11:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECF8CCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 11:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4e9V-00033o-GF; Fri, 03 Oct 2025 07:40:46 -0400
+	id 1v4e9Z-000357-DP; Fri, 03 Oct 2025 07:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1v4e9T-00032p-Aj
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:40:43 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1v4e9U-00033Y-U3
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:40:46 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1v4e9H-0006hL-OQ
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:40:42 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3322e63602eso3073499a91.0
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 04:40:26 -0700 (PDT)
+ id 1v4e9I-0006jY-Ug
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 07:40:44 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-33067909400so1588389a91.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 04:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759491623; x=1760096423; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759491628; x=1760096428; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OvPOQ2ydXViFGQrO4rAknPCdFtMzasO1K/bp2Ako1S8=;
- b=eBExt/Wtv0MwhzSz1znPVCgghJ7xHwKZKjIj3RmloLSHAAL2UomGu7ALeM1Ua8sog/
- LVdnArigl57hpx2T5j5AzhaR4QrMqpidhfUNJnEzr9z2zzMXOUkx9qhBLox+vsZbZFpV
- TkBFQTV7NH8dJoDrNaDzuEPGcL2VmReYo2l8OyaAGD071GV7jI8k/CxoxV491VqLFxKd
- JY1LVonDGtWxVsyQyaO8xxU3RBqzAVLbFNbMbK38luuJL0hFGFJmzJGu4yDj3cGLHv8E
- ONUZNW7kq9JYCC0UEUkrrm9M6WmcpS+xlxdudb91zq0pdQhzd8dAUJMYCgytkxOQRAGJ
- GzaQ==
+ bh=zl5rMIU7K5lgnB8gd55Bcnotiih5dULebnpQ2M3dykQ=;
+ b=Slcq8MhSr1DP6BVX1B31gQpyvDdCaxXjqBbazNcEvDb0GQjZqGprQAMn4rUZDoVtHF
+ X4YoXXSr7wewQXvnwXwcjIEVvYXtQRaXCADmro5QhjkvGsqUy3AmXWLnH1dk1Kum3tib
+ 8/l1lqaeqp8J1DmiFlJ4Es6b1RtK4Xwp+Spvi5XCdH2Hz/QgVFRXvo7Xf/BqC7IU9598
+ FpexoyFgHjSXVucrDgSmEyspdBJjslfuvcWLWjnOngdC/F0PSwnw4SCIDePJjx2fP6ux
+ ws7y0cOIHu5TzRddep7MQ6KJ9t6oldk/TIHs58O5q2QjTDngnyaM0BL1Jcxhr/c1mtEI
+ 6L7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759491623; x=1760096423;
+ d=1e100.net; s=20230601; t=1759491628; x=1760096428;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OvPOQ2ydXViFGQrO4rAknPCdFtMzasO1K/bp2Ako1S8=;
- b=dvK07GTNAbvfcXTDkunY9eUtVFhBcm0LPUAVsudVVeo/MuFAgWi8GWGhbn15OpDukY
- 9kHuVn/RKJ5k8KnQO9BLJA4shgBIjbEsik4joQNjQTBkuV3nng4KDQvqM4y/i9j3JcWO
- SlznhlnIdRdF98CYbNM3kcDlWdCIWaEoERmZUB82/l/D48zY9kmqm5QIxmUgylZXZhT5
- jo9P2WPSYfPYv4mjzgY+wusUgXbqDUUc+LlE2YoRT/n0+0PHbZuO2cKFXw27FbH5m79n
- 14IBCW/TE549ZH86S984qMn5WYFlmtBB2Evj1M1pFenSvGYgoGJEWqI9DnHbHt+6ivEm
- Y/wA==
+ bh=zl5rMIU7K5lgnB8gd55Bcnotiih5dULebnpQ2M3dykQ=;
+ b=VA/OtHLBqtMyDiivPm+3mxOgTp3yCFdttRQpuPGPKBLi7YVn/Y7xQOw/WuN/he4WGH
+ OWzn41weo/HvkMnV79YojPobYkwtpw90+hMxe1drEPhcv5WB9udjgWktNyLJW47IHvfM
+ JNq1P/cCkn2nGgvUn1h3U9eOYcsMMw6E7PV6dipqcDqKW+VVvTdsUPf793gjzszs6NwC
+ SKsfzEFdsoH/hXE4adKe6ZPBYI03wfwA2w9DhXwDqezywMHumC9fPju5IJQ2sJqFlg+S
+ Hy7glnx8yRYlqNUKP0nDM4aUc8S+Ov5Q/WDikEisVn7fz28ZstxYgtGJK63XAaI4pULb
+ egRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2629AvLWqsRIermJkf93wLhThBJOpBsfTBisXUTEZArVc+Eu4MSC4z6yr5L1JXLJhjOkDe86S93Id@nongnu.org
-X-Gm-Message-State: AOJu0Yx45bcpHZv0qBOsbFMXhi3u0qzeFx/VFH69HYwtcWlzZwN1YL/6
- 1ZBrOW1/+6Ces0m/5l0415Ew90qRkP23T3zcVg5gtkxcBbhvh2O9msN1
-X-Gm-Gg: ASbGncv/T3P4UEwcTS7OlP+R0io/DPyIieOX/OdBl0CsXUs6/tiw9lZeGTcGQ8xb8uN
- hosYxWXf4gAWZE2jJ42HESpEdK9LGGpnUgZ5jTnr8yn+VDENVOlia6aAx8r8FIUVaSSapajPDkW
- KXyY8fW4Ru95QxCl82IqHEDtPacRC5234Uj94Q8olT6+wRSvkWiBoBmF8J0OoO6TyFcKVQ70tBy
- URt4kkYkM+S9vODA1UWSX6sFoZjF04r8ahD4Z9x7WSW4K7V1/9zeHGXG/S2lQftIvumv/khT3f4
- lI0qrGsOJ0rUoH/AldjrqZMCffWfLE/FV5VFdYuG1kS1qrQqHwUuf+dhA0OBHY4omuPn7EPnpsx
- fh+dIy/wpUtVvTg2m2iDO2wwbut5f5O+m/vATAoK/yR5ARWOiF9Eqv/ik4sa/wQ==
-X-Google-Smtp-Source: AGHT+IE5Drnc9VaDqfZYZURGurbDilalwvlIhaVIy1wweijgZZjfLO0QqJH1hIiZz87l67Mn45Nd6Q==
-X-Received: by 2002:a17:90b:3b8d:b0:32e:3f93:69da with SMTP id
- 98e67ed59e1d1-339c272618cmr3267749a91.6.1759491623491; 
- Fri, 03 Oct 2025 04:40:23 -0700 (PDT)
+ AJvYcCWZiN8cDEE5+GMJf2rt7bd+LlJEtC3x0E0of5EQP9qLTwqkc6P8AKZQn0f03lHF2gCTqTLSl6HIeSP+@nongnu.org
+X-Gm-Message-State: AOJu0YxWjYRtnb7mOt5seuz58bGYDoxJ53KsSvlRTZujIBnAVwAZDaNR
+ /3sf2ByO0FO5J6akamFr/uoCSpmj9gzpOzW/hSwodhJkGH87aYxF9QRg
+X-Gm-Gg: ASbGncvsNNomI+Mq1CqW0LiXDTjGV/lWIyYuRLEcFzODGDRO7nXC0691j5BahGb8JEs
+ rdAg89swVF3yHUssUu0Og0d4R1gMnzsoaJvHAg3yXc6S/xb/IfjJruYe14kTanh9d6Lj3CH3pfu
+ QUPGbxdJX06v8jvXJyAbaa8DrqXm8guelSAf8ygfzQ611nVZ0DS9pqoSFBp3a8IQyo9l2Ec1RKW
+ i2tFWV4bQPw+JYQpAYI0G90s2pfuCfXhsuOJ+7tL9Tdu4DhzBsPaVTBSEqPtZgyVzJxwzPf8S80
+ vK1rClHQSNL5DwIor2W4ZpFQT4y2CjpR0EY3yKP7YdP3VkvMO8XrkIUp93jImAGdxGIHqsND2Nf
+ MFULBb77Ee6bojL79mnfk5mfZGlXosBsC9QyxWgaS53jL0u8uY54=
+X-Google-Smtp-Source: AGHT+IG9rE5nzHU6fskQKOZM32zrWwDq1iX0yEzOuPfhEqNRlDg46M6RJCkrDngF1SFvYGlHkBb1HQ==
+X-Received: by 2002:a17:90b:4b90:b0:32d:f352:f764 with SMTP id
+ 98e67ed59e1d1-339c2707f69mr3315251a91.2.1759491628236; 
+ Fri, 03 Oct 2025 04:40:28 -0700 (PDT)
 Received: from fedora ([159.196.5.243]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a6ff26f8sm7804995a91.13.2025.10.03.04.40.19
+ 98e67ed59e1d1-339a6ff26f8sm7804995a91.13.2025.10.03.04.40.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 04:40:23 -0700 (PDT)
+ Fri, 03 Oct 2025 04:40:27 -0700 (PDT)
 From: Wilfred Mallawa <wilfred.opensource@gmail.com>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Wilfred Mallawa <wilfred.mallawa@wdc.com>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v8 3/5] hw/nvme: add NVMe Admin Security SPDM support
-Date: Fri,  3 Oct 2025 21:39:44 +1000
-Message-ID: <20251003113945.87962-5-wilfred.opensource@gmail.com>
+ qemu-block@nongnu.org, Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: [PATCH v8 4/5] spdm: define SPDM transport enum types
+Date: Fri,  3 Oct 2025 21:39:45 +1000
+Message-ID: <20251003113945.87962-6-wilfred.opensource@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003113945.87962-2-wilfred.opensource@gmail.com>
 References: <20251003113945.87962-2-wilfred.opensource@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=wilfred.opensource@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=wilfred.opensource@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,335 +104,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 
-Adds the NVMe Admin Security Send/Receive command support with support
-for DMTFs SPDM. The transport binding for SPDM is defined in the
-DMTF DSP0286.
+SPDM maybe used over different transports. This patch specifies the
+trasnport types as an enum with a qdev property definition such that
+a user input transport type (string) can be mapped directly into the
+respective SPDM transportenum for internal use.
 
 Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/nvme/ctrl.c               | 212 ++++++++++++++++++++++++++++++++++-
- hw/nvme/nvme.h               |   5 +
- include/block/nvme.h         |  15 +++
- include/system/spdm-socket.h |   2 +
- 4 files changed, 233 insertions(+), 1 deletion(-)
+ backends/spdm-socket.c       | 23 +++++++++++++++++++++++
+ include/system/spdm-socket.h | 19 +++++++++++++++----
+ 2 files changed, 38 insertions(+), 4 deletions(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f5ee6bf260..ad52e8f569 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -282,6 +282,8 @@ static const uint32_t nvme_cse_acs_default[256] = {
-     [NVME_ADM_CMD_FORMAT_NVM]       = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_ADM_CMD_DIRECTIVE_RECV]   = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_DIRECTIVE_SEND]   = NVME_CMD_EFF_CSUPP,
-+    [NVME_ADM_CMD_SECURITY_SEND]    = NVME_CMD_EFF_CSUPP,
-+    [NVME_ADM_CMD_SECURITY_RECV]    = NVME_CMD_EFF_CSUPP,
- };
+diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
+index ab74a02d9c..6d8f02d3b9 100644
+--- a/backends/spdm-socket.c
++++ b/backends/spdm-socket.c
+@@ -13,6 +13,9 @@
+ #include "qemu/osdep.h"
+ #include "system/spdm-socket.h"
+ #include "qapi/error.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-prop-internal.h"
  
- static const uint32_t nvme_cse_iocs_nvm_default[256] = {
-@@ -7282,6 +7284,207 @@ static uint16_t nvme_dbbuf_config(NvmeCtrl *n, const NvmeRequest *req)
-     return NVME_SUCCESS;
+ static bool read_bytes(const int socket, uint8_t *buffer,
+                        size_t number_of_bytes)
+@@ -246,3 +249,23 @@ void spdm_socket_close(const int socket, uint32_t transport_type)
+     send_platform_data(socket, transport_type,
+                        SPDM_SOCKET_COMMAND_SHUTDOWN, NULL, 0);
  }
- 
-+static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    StorageSpdmTransportHeader hdr = {0};
-+    g_autofree uint8_t *sec_buf = NULL;
-+    uint32_t transfer_len = le32_to_cpu(req->cmd.cdw11);
-+    uint32_t transport_transfer_len = transfer_len;
-+    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint32_t recvd;
-+    uint16_t nvme_cmd_status, ret;
-+    uint8_t secp = extract32(dw10, 24, 8);
-+    uint16_t spsp = extract32(dw10, 8, 16);
-+    bool spdm_res;
 +
-+    if (transport_transfer_len > UINT32_MAX - sizeof(hdr)) {
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
++const QEnumLookup SpdmTransport_lookup = {
++    .array = (const char *const[]) {
++        [SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC] = "unspecified",
++        [SPDM_SOCKET_TRANSPORT_TYPE_MCTP] = "mctp",
++        [SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE] = "doe",
++        [SPDM_SOCKET_TRANSPORT_TYPE_SCSI] = "scsi",
++        [SPDM_SOCKET_TRANSPORT_TYPE_NVME] = "nvme",
++    },
++    .size = SPDM_SOCKET_TRANSPORT_TYPE_MAX
++};
 +
-+    transport_transfer_len += sizeof(hdr);
-+    if (transport_transfer_len > SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE) {
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
-+
-+    ret = nvme_check_mdts(n, transport_transfer_len);
-+    if (ret != NVME_SUCCESS) {
-+        return ret;
-+    }
-+
-+    /* Generate the NVMe transport header */
-+    hdr.security_protocol = secp;
-+    hdr.security_protocol_specific = cpu_to_le16(spsp);
-+    hdr.length = cpu_to_le32(transfer_len);
-+
-+    sec_buf = g_try_malloc0(transport_transfer_len);
-+    if (!sec_buf) {
-+        return NVME_INTERNAL_DEV_ERROR;
-+    }
-+
-+    /* Attach the transport header */
-+    memcpy(sec_buf, &hdr, sizeof(hdr));
-+    ret = nvme_h2c(n, sec_buf + sizeof(hdr), transfer_len, req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_SEND,
-+                                SPDM_SOCKET_TRANSPORT_TYPE_NVME, sec_buf,
-+                                transport_transfer_len);
-+    if (!spdm_res) {
-+        return NVME_DATA_TRAS_ERROR | NVME_DNR;
-+    }
-+
-+    /* The responder shall ack with message status */
-+    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+                                &nvme_cmd_status,
-+                                SPDM_SOCKET_MAX_MSG_STATUS_LEN);
-+
-+    nvme_cmd_status = be16_to_cpu(nvme_cmd_status);
-+
-+    if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
-+        return NVME_DATA_TRAS_ERROR | NVME_DNR;
-+    }
-+
-+    return nvme_cmd_status;
-+}
-+
-+/* From host to controller */
-+static uint16_t nvme_security_send(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint8_t secp = extract32(dw10, 24, 8);
-+
-+    switch (secp) {
-+    case NVME_SEC_PROT_DMTF_SPDM:
-+        if (n->spdm_socket < 0) {
-+            return NVME_INVALID_FIELD | NVME_DNR;
-+        }
-+        return nvme_sec_prot_spdm_send(n, req);
-+    default:
-+        /* Unsupported Security Protocol Type */
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
-+
-+    return NVME_INVALID_FIELD | NVME_DNR;
-+}
-+
-+static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    StorageSpdmTransportHeader hdr;
-+    g_autofree uint8_t *rsp_spdm_buf = NULL;
-+    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint32_t alloc_len = le32_to_cpu(req->cmd.cdw11);
-+    uint32_t recvd, spdm_res;
-+    uint16_t nvme_cmd_status, ret;
-+    uint8_t secp = extract32(dw10, 24, 8);
-+    uint8_t spsp = extract32(dw10, 8, 16);
-+    if (!alloc_len) {
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
-+
-+    /* Generate the NVMe transport header */
-+    hdr = (StorageSpdmTransportHeader) {
-+        .security_protocol = secp,
-+        .security_protocol_specific = cpu_to_le16(spsp),
-+        .length = cpu_to_le32(alloc_len),
-+    };
-+
-+    /* Forward if_recv to the SPDM Server with SPSP0 */
-+    spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_RECV,
-+                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+                                &hdr, sizeof(hdr));
-+    if (!spdm_res) {
-+        return NVME_DATA_TRAS_ERROR | NVME_DNR;
-+    }
-+
-+    /* The responder shall ack with message status */
-+    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+                                &nvme_cmd_status,
-+                                SPDM_SOCKET_MAX_MSG_STATUS_LEN);
-+    if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
-+        return NVME_DATA_TRAS_ERROR | NVME_DNR;
-+    }
-+
-+    nvme_cmd_status = be16_to_cpu(nvme_cmd_status);
-+    /* An error here implies the prior if_recv from requester was spurious */
-+    if (nvme_cmd_status != NVME_SUCCESS) {
-+        return nvme_cmd_status;
-+    }
-+
-+    /* Clear to start receiving data from the server */
-+    rsp_spdm_buf = g_try_malloc0(alloc_len);
-+    if (!rsp_spdm_buf) {
-+        return NVME_INTERNAL_DEV_ERROR;
-+    }
-+
-+    recvd = spdm_socket_receive(n->spdm_socket,
-+                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+                                rsp_spdm_buf, alloc_len);
-+    if (!recvd) {
-+        return NVME_DATA_TRAS_ERROR | NVME_DNR;
-+    }
-+
-+    ret = nvme_c2h(n, rsp_spdm_buf, MIN(recvd, alloc_len), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    return NVME_SUCCESS;
-+}
-+
-+static uint16_t nvme_get_sec_prot_info(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    uint32_t alloc_len = le32_to_cpu(req->cmd.cdw11);
-+    uint8_t resp[10] = {
-+        /* Support Security Protol List Length */
-+        [6] = 0, /* MSB */
-+        [7] = 2, /* LSB */
-+        /* Support Security Protocol List */
-+        [8] = SFSC_SECURITY_PROT_INFO,
-+        [9] = 0,
-+    };
-+
-+    if (n->spdm_socket >= 0) {
-+        resp[9] = NVME_SEC_PROT_DMTF_SPDM;
-+    }
-+
-+    if (alloc_len < 10) {
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
-+
-+    return nvme_c2h(n, resp, sizeof(resp), req);
-+}
-+
-+/* From controller to host */
-+static uint16_t nvme_security_receive(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint16_t spsp = extract32(dw10, 8, 16);
-+    uint8_t secp = extract32(dw10, 24, 8);
-+
-+    switch (secp) {
-+    case SFSC_SECURITY_PROT_INFO:
-+        switch (spsp) {
-+        case 0:
-+            /* Supported security protocol list */
-+            return nvme_get_sec_prot_info(n, req);
-+        case 1:
-+            /* Certificate data */
-+            /* fallthrough */
-+        default:
-+            return NVME_INVALID_FIELD | NVME_DNR;
-+        }
-+    case NVME_SEC_PROT_DMTF_SPDM:
-+        if (n->spdm_socket < 0) {
-+            return NVME_INVALID_FIELD | NVME_DNR;
-+        }
-+        return nvme_sec_prot_spdm_receive(n, req);
-+    default:
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
-+}
-+
- static uint16_t nvme_directive_send(NvmeCtrl *n, NvmeRequest *req)
- {
-     return NVME_INVALID_FIELD | NVME_DNR;
-@@ -7389,6 +7592,10 @@ static uint16_t nvme_admin_cmd(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_directive_send(n, req);
-     case NVME_ADM_CMD_DIRECTIVE_RECV:
-         return nvme_directive_receive(n, req);
-+    case NVME_ADM_CMD_SECURITY_SEND:
-+        return nvme_security_send(n, req);
-+    case NVME_ADM_CMD_SECURITY_RECV:
-+        return nvme_security_receive(n, req);
-     default:
-         g_assert_not_reached();
-     }
-@@ -8459,6 +8666,8 @@ static void nvme_init_state(NvmeCtrl *n)
-         sctrl->vfn = cpu_to_le16(i + 1);
-     }
- 
-+    n->spdm_socket = -1;
-+
-     cap->cntlid = cpu_to_le16(n->cntlid);
-     cap->crt = NVME_CRT_VQ | NVME_CRT_VI;
- 
-@@ -8824,7 +9033,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     id->mdts = n->params.mdts;
-     id->ver = cpu_to_le32(NVME_SPEC_VER);
- 
--    oacs = NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DIRECTIVES;
-+    oacs = NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DIRECTIVES |
-+           NVME_OACS_SECURITY;
- 
-     if (n->params.dbcs) {
-         oacs |= NVME_OACS_DBCS;
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index b5c9378ea4..67ed562e00 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -461,6 +461,8 @@ static inline const char *nvme_adm_opc_str(uint8_t opc)
-     case NVME_ADM_CMD_DIRECTIVE_RECV:   return "NVME_ADM_CMD_DIRECTIVE_RECV";
-     case NVME_ADM_CMD_DBBUF_CONFIG:     return "NVME_ADM_CMD_DBBUF_CONFIG";
-     case NVME_ADM_CMD_FORMAT_NVM:       return "NVME_ADM_CMD_FORMAT_NVM";
-+    case NVME_ADM_CMD_SECURITY_SEND:    return "NVME_ADM_CMD_SECURITY_SEND";
-+    case NVME_ADM_CMD_SECURITY_RECV:    return "NVME_ADM_CMD_SECURITY_RECV";
-     default:                            return "NVME_ADM_CMD_UNKNOWN";
-     }
- }
-@@ -648,6 +650,9 @@ typedef struct NvmeCtrl {
-     } next_pri_ctrl_cap;    /* These override pri_ctrl_cap after reset */
-     uint32_t    dn; /* Disable Normal */
-     NvmeAtomic  atomic;
-+
-+    /* Socket mapping to SPDM over NVMe Security In/Out commands */
-+    int spdm_socket;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 358e516e38..9fa2ecaf28 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1779,6 +1779,21 @@ enum NvmeDirectiveOperations {
-     NVME_DIRECTIVE_RETURN_PARAMS = 0x1,
- };
- 
-+typedef enum SfscSecurityProtocol {
-+    SFSC_SECURITY_PROT_INFO = 0x00,
-+} SfscSecurityProtocol;
-+
-+typedef enum NvmeSecurityProtocols {
-+    NVME_SEC_PROT_DMTF_SPDM    = 0xE8,
-+} NvmeSecurityProtocols;
-+
-+typedef enum SpdmOperationCodes {
-+    SPDM_STORAGE_DISCOVERY      = 0x1, /* Mandatory */
-+    SPDM_STORAGE_PENDING_INFO   = 0x2, /* Optional */
-+    SPDM_STORAGE_MSG            = 0x5, /* Mandatory */
-+    SPDM_STORAGE_SEC_MSG        = 0x6, /* Optional */
-+} SpdmOperationCodes;
-+
- typedef struct QEMU_PACKED NvmeFdpConfsHdr {
-     uint16_t num_confs;
-     uint8_t  version;
++const PropertyInfo qdev_prop_spdm_trans = {
++    .type = "SpdmTransportType",
++    .description = "Spdm Transport, doe/nvme/mctp/scsi/unspecified",
++    .enum_table = &SpdmTransport_lookup,
++    .get = qdev_propinfo_get_enum,
++    .set = qdev_propinfo_set_enum,
++    .set_default_value = qdev_propinfo_set_default_value_enum,
++};
 diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 8c07dc12d2..e611633812 100644
+index e611633812..00cb0e97f3 100644
 --- a/include/system/spdm-socket.h
 +++ b/include/system/spdm-socket.h
-@@ -114,7 +114,9 @@ typedef struct {
+@@ -112,11 +112,22 @@ typedef struct {
+ #define SPDM_SOCKET_COMMAND_UNKOWN                0xFFFF
+ #define SPDM_SOCKET_COMMAND_TEST                  0xDEAD
  
- #define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
- #define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
-+#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
- 
+-#define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
+-#define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
+-#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
+-
  #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
-+#define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
+ #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
  
++typedef enum SpdmTransportType {
++    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
++    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
++    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
++    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
++    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
++    SPDM_SOCKET_TRANSPORT_TYPE_MAX
++} SpdmTransportType;
++
++extern const PropertyInfo qdev_prop_spdm_trans;
++
++#define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
++    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
++                         qdev_prop_spdm_trans, SpdmTransportType)
++
  #endif
 -- 
 2.51.0
