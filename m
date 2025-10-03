@@ -4,68 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F14DCCA471
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 09:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A0CCCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 10:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4cOQ-0000ki-Tq; Fri, 03 Oct 2025 05:48:02 -0400
+	id 1v4ckr-0001yU-Qt; Fri, 03 Oct 2025 06:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1v4cON-0000hS-HP
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 05:47:59 -0400
-Received: from smtp.eurecom.fr ([193.55.113.210])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1v4cko-0001yL-Ki
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 06:11:11 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1v4cOC-0008Qm-Oy
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 05:47:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
- t=1759484869; x=1791020869;
- h=from:in-reply-to:references:date:cc:to:mime-version:
- message-id:subject:content-transfer-encoding;
- bh=JFFGlxK9YLJee4l3cC+JZPxEyIjIf9R538BJSuGxWZQ=;
- b=P3dbPPI7MZ+effEFu6xYWIPDpalDX3bRuOlD71FanFBt8DNQFwhP3Sbs
- acIn5HgdkjB4BXwzitMQwInnIaZCFWcFyKrymIA7OyUsNvMZtsraZHQAz
- EeMMC+0363LBiyenTuLNKtjL45bJIEmoOA4qoW6UjxMZPrcoqxVnhoMnj E=;
-X-CSE-ConnectionGUID: m3U+m8kfThaBoH5J6ncDYg==
-X-CSE-MsgGUID: v0lluCQTQICQ2VeceYIY7g==
-X-IronPort-AV: E=Sophos;i="6.18,312,1751234400"; 
-   d="scan'208";a="3139859"
-Received: from quovadis.eurecom.fr ([10.3.2.233])
- by drago1i.eurecom.fr with ESMTP; 03 Oct 2025 11:47:37 +0200
-From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
-In-Reply-To: <72mloahvtgskcdjulsggewy3euoutslvpcx2dnkxijgwkogdg6@6oq3h5tncfl3>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 193.55.114.5
-References: <20251001161823.2032399-1-Marco.Cavenati@eurecom.fr>
- <20251001161823.2032399-2-Marco.Cavenati@eurecom.fr>
- <72mloahvtgskcdjulsggewy3euoutslvpcx2dnkxijgwkogdg6@6oq3h5tncfl3>
-Date: Fri, 03 Oct 2025 11:47:37 +0200
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- ppandit@redhat.com, berrange@redhat.com
-To: "Juraj Marcin" <jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1v4ckZ-00074L-VK
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 06:11:09 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 6B1723FEAD
+ for <qemu-devel@nongnu.org>; Fri,  3 Oct 2025 10:10:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1759486249;
+ bh=kW/tWYX/aWkwXZaiD/ZVpnkemo39EQVNdaoAQjqJriE=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=jxq8J0kVLUkfJOG1U1q8KRQxbW4zn3zDTH0EbybqJBACilqf0vULWNRRrSopsOZl/
+ D6p++jLEYdsTPob+Z7X3/UVxEwHTgeYJIQCsmrAS7DM3dOB56yiZ3sWHugpQNxq+Hd
+ G/eeMDOtUqgnG2S1VsYPw6Ppyh1OrTC49zjEhugasJmKyWNCFcEcP0wq8yESrd3t72
+ ZtGWaLUCiBE0FG4AA+5D9byCS08dsX9YOdCJ5hfITvFHyh6BvAUi2dMLPYeKwM6g8D
+ EajvzUPeCc51qxxMncFa0f8ndmt3bMOyemmCBXsC+sjoyywjkOIUJWzuR46yLPE6Ty
+ k4K1NkthfdRTA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 4E58A7E608
+ for <qemu-devel@nongnu.org>; Fri,  3 Oct 2025 10:10:49 +0000 (UTC)
 MIME-Version: 1.0
-Message-ID: <26358a-68df9b80-a13-40f93b80@130992167>
-Subject: =?utf-8?q?Re=3A?= [PATCH 1/3] =?utf-8?q?migration=3A?= add 
- =?utf-8?q?FEATURE=5FSEEKABLE?= to QIOChannelBlock
-User-Agent: SOGoMail 5.12.1
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=193.55.113.210;
- envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Date: Fri, 03 Oct 2025 09:59:16 -0000
+From: Valentin Haudiquet <2123828@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=glibc; component=main;
+ status=Invalid; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Confirmed; importance=Undecided;
+ assignee=valentin.haudiquet@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=gcc-15;
+ component=None; status=Invalid; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=glibc;
+ component=main; status=Invalid; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided;
+ assignee=valentin.haudiquet@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=gcc-15;
+ component=main; status=Invalid; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=glibc;
+ component=main; status=Invalid; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided;
+ assignee=valentin.haudiquet@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=gcc-15; component=main; status=Invalid; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=glibc; component=main; status=Invalid; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Undecided;
+ assignee=valentin.haudiquet@canonical.com; 
+X-Launchpad-Bug-Tags: dcr-incoming update-excuse
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: schopin slyon vhaudiquet xypron
+X-Launchpad-Bug-Reporter: =?utf-8?q?Lukas_M=C3=A4rdian_=28slyon=29?=
+X-Launchpad-Bug-Modifier: Valentin Haudiquet (vhaudiquet)
+References: <175793222278.1250191.6568998309826575823.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <175948555740.4081766.14248020688963552263.launchpad@juju-98d295-prod-launchpad-7>
+Subject: [Bug 2123828] Re: RISC-V: incorrect emulation of load and store on
+ big-endian systems
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="8f35df7956d277b113de8d286a4ca280c7b8ebdf";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 7ac4d5a3a1d85941f0ac004c73d46d25388d73b2
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -74,79 +114,322 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2123828 <2123828@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Juraj,
+** Description changed:
 
-On Thursday, October 02, 2025 16:45 CEST, Juraj Marcin <jmarcin@redhat.=
-com> wrote:
++ [ Impact ]
++=20
++ On s390x architecture, qemu cannot emulate riscv64 well because of an
++ endianess error. Original bug report :
++=20
+  QEMU's DEP-8 test fails on s390x, due to warning output on stderr about
+  "unsupported version 256 of Verdef record", which is blocking migration
+  of glibc 2.42-0ubuntu3.
+-=20
+- Minimal reproducer:
+- ```
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt update && su=
+do apt install qemu-user
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg -l | grep libc6
+- ii  libc6:s390x                           2.42-0ubuntu3
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg -l | grep qemu-u=
+ser
+- ii  qemu-user                             1:10.1.0+ds-5ubuntu1
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg --print-architec=
+ture
+- s390x
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo dpkg --add-archi=
+tecture riscv64
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt update
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt install hell=
+o:riscv64
+- ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ /usr/bin/qemu-riscv64=
+ /usr/bin/hello
+- /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+- /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
+- /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
+- /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
+- /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+- /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+- /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+- ```
+ =20
+  DEP-8 logs:
+  """
+  323s =3D=3D=3D Checking if /usr/bin/qemu-riscv64 can run executables:
+  323s glob with sh: /usr/bin/qemu-riscv64 /bin/busybox ash -c "/usr/bin/qe=
+mu-riscv64 /bin/busybox ls -dCFl debian/*[t]*":
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libresolv.so.2: unsupported ver=
+sion 256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s
+  323s Reading package lists.../bin/busybox: /lib/riscv64-linux-gnu/libc.so=
+.6: unsupported version 256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s Expected output not found
+  [...]
+  328s autopkgtest [22:14:52]: @@@@@@@@@@@@@@@@@@@@ summary
+  328s test-qemu-img.sh     PASS (superficial)
+  328s test-qemu-system.sh  PASS (superficial)
+  328s test-qemu-user.sh    FAIL stderr: /bin/busybox: /lib/ld-linux-riscv6=
+4-lp64d.so.1: unsupported version 256 of Verdef record
+  """
++=20
++ Patched by flagging the faulty instructions with the endianness swap
++ marker.
++=20
++ [ Test Plan ]
++=20
++ Minimal reproducer:
++ ```
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt update && su=
+do apt install qemu-user
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg -l | grep libc6
++ ii  libc6:s390x                           2.42-0ubuntu3
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg -l | grep qemu-u=
+ser
++ ii  qemu-user                             1:10.1.0+ds-5ubuntu1
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg --print-architec=
+ture
++ s390x
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo dpkg --add-archi=
+tecture riscv64
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt update
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt install hell=
+o:riscv64
++ ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ /usr/bin/qemu-riscv64=
+ /usr/bin/hello
++ /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
++ /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
++ /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
++ /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
++ /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
++ /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
++ /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
++ ```
++=20
++ The same thing with the patch shows "Hello, world !".
++=20
++ [ Where problems could occur ]
++=20
++ This change is really small (3 lines), and only affects riscv64
++ emulation from QEMU. If the fix was entirely wrong, riscv64 emulation of
++ compressed instruction could be affected. It can be easily tested.
++=20
++ The patch was accepted upstream, so such tests are conducted upstream as
++ well, which reduces the amount of possible problems and work to do to
++ fix those.
++=20
++ [ Other Info ]
++=20
++ Patch sent upstream: https://lore.kernel.org/qemu-devel/20250929115543.16=
+48157-1-valentin.haudiquet@canonical.com/
++ Patch available on ppa: https://launchpad.net/~vhaudiquet/+archive/ubuntu=
+/qemu-fix-lp2123828/+packages
 
-> Hi Marco,
->=20
-> On 2025-10-01 18:18, Marco Cavenati wrote:
-> > Enable the use of the mapped-ram migration feature with savevm/load=
-vm
-> > snapshots by adding the QIO=5FCHANNEL=5FFEATURE=5FSEEKABLE feature =
-to
-> > QIOChannelBlock. Implement io=5Fpreadv and io=5Fpwritev methods to =
-provide
-> > positioned I/O capabilities that don't modify the channel's positio=
-n
-> > pointer.
-> >=20
-> > Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-> > ---
-> >  migration/channel-block.c | 48 +++++++++++++++++++++++++++++++++++=
-++++
-> >  1 file changed, 48 insertions(+)
-> >=20
-> > diff --git a/migration/channel-block.c b/migration/channel-block.c
-> > index 97de5a691b..30dcefcd8e 100644
-> > --- a/migration/channel-block.c
-> > +++ b/migration/channel-block.c
-> > @@ -30,6 +30,7 @@ qio=5Fchannel=5Fblock=5Fnew(BlockDriverState *bs)
-> >      QIOChannelBlock *ioc;
-> > =20
-> >      ioc =3D QIO=5FCHANNEL=5FBLOCK(object=5Fnew(TYPE=5FQIO=5FCHANNE=
-L=5FBLOCK));
-> > +    qio=5Fchannel=5Fset=5Ffeature(QIO=5FCHANNEL(ioc), QIO=5FCHANNE=
-L=5FFEATURE=5FSEEKABLE);
-> > =20
-> >      bdrv=5Fref(bs);
-> >      ioc->bs =3D bs;
-> > @@ -96,6 +97,49 @@ qio=5Fchannel=5Fblock=5Fwritev(QIOChannel *ioc,
-> >      return qiov.size;
-> >  }
-> > =20
-> > +#ifdef CONFIG=5FPREADV
->=20
-> I don't think this conditional macro is necessary here. QIOChannelFil=
-e
-> needs it because it directly uses preadv() syscall which might not be
-> available on all systems (see when CONFIG=5FPREADV is defined below).
->=20
->     config=5Fhost=5Fdata.set('CONFIG=5FPREADV', cc.has=5Ffunction('pr=
-eadv', prefix: '#include <sys/uio.h>'))
->=20
-> However, bdrv=5Freadv=5Fvmstate() (wrapper of bdrv=5Fco=5Freadv=5Fvms=
-tate())
-> should be always available IUUC (it is not conditionally compiled bas=
-ed
-> on if preadv() syscall is available).
+** Changed in: glibc (Ubuntu Plucky)
+       Status: New =3D> Invalid
 
-You are right, thanks for pointing this out, I will remove the macro in=
- the
-next iteration.
+** Changed in: glibc (Ubuntu Noble)
+       Status: New =3D> Invalid
 
-Just to make sure nothing weird happens without preadv support and with=
-out the
-macro guard, I compiled QEMU without them and indeed it looks like snap=
-shots
-are not supported at all without preadv. savevm/loadvm gracefully fail
-independently of mapped-ram on/off.
+** Changed in: gcc-15 (Ubuntu Plucky)
+       Status: New =3D> Invalid
 
-Best regards,
-Marco
+** Changed in: gcc-15 (Ubuntu Noble)
+       Status: New =3D> Invalid
+
+** Changed in: qemu (Ubuntu Plucky)
+     Assignee: (unassigned) =3D> Valentin Haudiquet (vhaudiquet)
+
+** Changed in: qemu (Ubuntu Noble)
+     Assignee: (unassigned) =3D> Valentin Haudiquet (vhaudiquet)
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2123828
+
+Title:
+  RISC-V: incorrect emulation of load and store on big-endian systems
+
+Status in QEMU:
+  New
+Status in glibc package in Ubuntu:
+  Invalid
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in gcc-15 source package in Noble:
+  Invalid
+Status in glibc source package in Noble:
+  Invalid
+Status in qemu source package in Noble:
+  New
+Status in gcc-15 source package in Plucky:
+  Invalid
+Status in glibc source package in Plucky:
+  Invalid
+Status in qemu source package in Plucky:
+  New
+Status in gcc-15 source package in Questing:
+  Invalid
+Status in glibc source package in Questing:
+  Invalid
+Status in qemu source package in Questing:
+  Confirmed
+
+Bug description:
+  [ Impact ]
+
+  On s390x architecture, qemu cannot emulate riscv64 well because of an
+  endianess error. Original bug report :
+
+  QEMU's DEP-8 test fails on s390x, due to warning output on stderr
+  about "unsupported version 256 of Verdef record", which is blocking
+  migration of glibc 2.42-0ubuntu3.
+
+  DEP-8 logs:
+  """
+  323s =3D=3D=3D Checking if /usr/bin/qemu-riscv64 can run executables:
+  323s glob with sh: /usr/bin/qemu-riscv64 /bin/busybox ash -c "/usr/bin/qe=
+mu-riscv64 /bin/busybox ls -dCFl debian/*[t]*":
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libresolv.so.2: unsupported ver=
+sion 256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s
+  323s Reading package lists.../bin/busybox: /lib/riscv64-linux-gnu/libc.so=
+.6: unsupported version 256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/riscv64-linux-gnu/libc.so.6: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s /bin/busybox: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version =
+256 of Verdef record
+  323s Expected output not found
+  [...]
+  328s autopkgtest [22:14:52]: @@@@@@@@@@@@@@@@@@@@ summary
+  328s test-qemu-img.sh     PASS (superficial)
+  328s test-qemu-system.sh  PASS (superficial)
+  328s test-qemu-user.sh    FAIL stderr: /bin/busybox: /lib/ld-linux-riscv6=
+4-lp64d.so.1: unsupported version 256 of Verdef record
+  """
+
+  Patched by flagging the faulty instructions with the endianness swap
+  marker.
+
+  [ Test Plan ]
+
+  Minimal reproducer: (after booting up an s390x vm)
+  ```
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt update && su=
+do apt install qemu-user
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg -l | grep libc6
+  ii  libc6:s390x                           2.42-0ubuntu3
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg -l | grep qemu-u=
+ser
+  ii  qemu-user                             1:10.1.0+ds-5ubuntu1
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ dpkg --print-architec=
+ture
+  s390x
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo dpkg --add-archi=
+tecture riscv64
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt update
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ sudo apt install hell=
+o:riscv64
+  ubuntu@slyon-lp-2123828-slyon-glibc-qemu-riscv64:~$ /usr/bin/qemu-riscv64=
+ /usr/bin/hello
+  /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+  /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
+  /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
+  /usr/bin/hello: /lib/riscv64-linux-gnu/libc.so.6: unsupported version 256=
+ of Verdef record
+  /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+  /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+  /usr/bin/hello: /lib/ld-linux-riscv64-lp64d.so.1: unsupported version 256=
+ of Verdef record
+  ```
+
+  The same thing with the patch shows "Hello, world !".
+
+  [ Where problems could occur ]
+
+  This change is really small (3 lines), and only affects riscv64
+  emulation from QEMU. If the fix was entirely wrong, riscv64 emulation
+  of compressed instruction could be affected. It can be easily tested.
+
+  The patch was accepted upstream, so such tests are conducted upstream
+  as well, which reduces the amount of possible problems and work to do
+  to fix those.
+
+  [ Other Info ]
+
+  Patch sent upstream: https://lore.kernel.org/qemu-devel/20250929115543.16=
+48157-1-valentin.haudiquet@canonical.com/
+  Patch available on ppa: https://launchpad.net/~vhaudiquet/+archive/ubuntu=
+/qemu-fix-lp2123828/+packages
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2123828/+subscriptions
 
 
