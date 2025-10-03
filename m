@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5BACCD184
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 14:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB3FCCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 14:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4gcx-0004OG-Ln; Fri, 03 Oct 2025 10:19:20 -0400
+	id 1v4gcu-0004NO-Sv; Fri, 03 Oct 2025 10:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v4gcu-0004NS-DS
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 10:19:16 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1v4gco-0004Kt-GV
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 10:19:10 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v4gcY-0000O8-8m
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 10:19:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-27c369f8986so22529115ad.3
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 07:18:53 -0700 (PDT)
+ id 1v4gcT-0000NW-Mo
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 10:19:10 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b58445361e8so3007711a12.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 07:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759501126; x=1760105926; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759501124; x=1760105924; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R6mQZxd/i8+rIw1saqr0gYaKPMxA97cW8VZlbdqTAW8=;
- b=iCNj/uLHWAyxnVYqgKQxErXlrEIGAXKMcC6fSHbopEAOpotz9dItWLJ0LK4x0KeG79
- c7hTLwagROadb8xkNQRDH2dRwvMb7Zk4S5QBdbLcwCXzwcZYy8mp1rlXDupX5jlGw/Uy
- txkr/VDfN8ZJv/IcR4wxEOXYugoIzSlp6FeL8jsAYYMfgwV1+OQv9usfXrm3Tc4GTK9Y
- spjtASaItT0GjWeXujhjGLWnuGYOgZiB3yO69P7Qq4BUEfK5+zWuQfTlk3G+UrZme+3+
- vyldEPZpUNgE+dy9K5MACaHEtv8WrBGSYjb4wf0fa2b4P9FVXBIGWEWdSAJn3MdkolPd
- 5n5A==
+ bh=Mtpvyaz05WnNRIvwV0z7Z6oqmwF0DfDKz/U2RLEI+Wk=;
+ b=qowHoSlhUD7zR0clBYSTWli8UYESYqRkzhD1aFYN7AFKcYk+xbQ/QCdc1OMsfqH1nw
+ 22r3pGDFqZiX0upLB14G8UWJFEEuLZI3oZBG++l0C76T+DUwFXrfJxzgMIgEy5k+rcf2
+ OIf86vmIgwa6T06ZvIOfcLCZoxhwb+0jeDgSV/YFnjteX4twJgzAS89HnpdPkX3HXbV6
+ xFwblLmLerlocuih2g7F8xCp526KHy4Iv3L0Dm11G/YiL2kKNJjjsaRgR9SrcqSPno22
+ Ij4Z5NkvQp2OaA8qjoEdXYFaXg+xGpVxThl/bf0lNTjGqNiJzOpPoLia4KGNTDoeP7+P
+ dh4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759501126; x=1760105926;
+ d=1e100.net; s=20230601; t=1759501124; x=1760105924;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R6mQZxd/i8+rIw1saqr0gYaKPMxA97cW8VZlbdqTAW8=;
- b=Q4yWGx68JadRWKuLx2owgJqCZ/+axegk743XmcE8ilNxRWohZrYDVYs+Fd3rTPqsKr
- L91NmjX2nrjQtskWV4P9dtg+N19wQRBSDNy/kMKtOi16lhUAVjBwmFlwVScKPVUZTsnI
- sXOUQ+0fYksMwpjkwd3hIXNLSmZN8nIgY0LRX8+eU44PnLn68IN3O5hOUMcNZIKn+7z6
- 2upMmtUWq1Fxo0clxaMJheCoBIokfhAj95L99za6LYRQOY2IGb09iGKKkqh1qSoDrVKu
- nQujAQKvQbW1TTW+acOEXdYYfR71K8iCBqEE9bIwfGzJnPnA0mo0T4wijVOcpoKM1CtY
- tQlg==
-X-Gm-Message-State: AOJu0YyYD264SjEsUkWy4BlgwUEMAvz8evFKI0ByPTMtbFkptbREiFo7
- Z1cpyqFMkiNnT+iwp6J/5W1mbI+Xl+U/wqXX0Uele4JDRogOiR70spyfOrYBADdd4M04HjI8OTY
- gV7+B
-X-Gm-Gg: ASbGncsii1gUJXacLEhTbKgPJawefG+InbruTSjPQFJ+yXis67dIoUrDfIMlnLhlZr0
- 1PoK1r48YuiT1Bo/UQYt/DkziZXcIHjqbK0D4b5PrdkDaqR70qWDnl/2gbW7+w/TFtgUXM0idII
- YM30aD+8scajmxLy4DVkBnQGdd5eaUgLI8og65hCpgVrCcFexUuJ7yQxG9nuxCQItC21OIID3mo
- o7Y74rXxGH2NP3/UEacBckSEmvF5s3L5XYrmAMLE9QlKE4etpt2o+EDSF9XOEDJ8Gb54jccOvzB
- OmIQt5Fmk6dj3TMCSoAc4YrnK0JFktPpPJBaFUKwssDwU5Zwd3JrqgBNsxBXbhlSUXwEA72fVys
- el/HdOAp1jgwnWm9mOWXJCRNOBHA53fgjrdS/DjRDTxoBsQ1Ps9FgoJMD6Tp6G2erRZI=
-X-Google-Smtp-Source: AGHT+IFbiBTGvgbnzG9EmDWSimUw+CJepchtLQ5XyAxQEUwl8SBklLcmUqysRNS8oNZwghz6JT59fQ==
-X-Received: by 2002:a17:902:ce8d:b0:267:44e6:11d3 with SMTP id
- d9443c01a7336-28e9a5b1934mr53528035ad.21.1759501126352; 
- Fri, 03 Oct 2025 07:18:46 -0700 (PDT)
+ bh=Mtpvyaz05WnNRIvwV0z7Z6oqmwF0DfDKz/U2RLEI+Wk=;
+ b=hdjwvCgkClXQNtD6ZZBndg4rzVyFNiQIaIYWRpj1zF3qWzF5eCUh9qfuP4Z1GnHZdT
+ nm/HKSpaAP8dXxOTRCFwG6JVa/bi52cuS+oqa6hnaMVmiCVf0IvJCEHS73p7h0Yvr0V3
+ PgtpwwxgdzLj1+2vF6MnicvHdLuYNkeKmpgrt6oTVGHC8EL7Wk9od90csI9q11YZ9kWB
+ ou3XLVAyZBRar1jV/3l29BraJv5ZF56neFy9hMSSaVJS2NhsulQgrnfEGc5v4/nD64tY
+ qUezl2zCGjJhPzf77UbDdszI0R/orLPwqgTSavb8J0uWyjAZjlWtbWEB0YvEdVZSTejO
+ m+7w==
+X-Gm-Message-State: AOJu0YxWnT2YZ7yQaLLNlq5NB5Cv8HLFRlkXNEZbNoffVYCTs5Q3dv2d
+ Y7wtR8T+Cz+BggmnX6EipY88h15Ki/uwj99/Opnq/6FbPbj3dB3U2mLtCE8oNKSrQD5RCEXsM3V
+ UO3ic
+X-Gm-Gg: ASbGncurVNIgrVYB4D82wLwKNjtPjis4zQNVhd3BhPhqX3FScc7by1KtpbrNnBlKxhV
+ WFkKbkN1D6RS/JCzCp4X0M2qy5quu/lYGAWlEsE+WGJjVfNYLmvGXBMolkKe6I1orKYiuJxIC5A
+ KCkth1tHOaabdEjJNcP0ViB30h7yWkhaqW2ia5IkZ7gVleQezgVVIH7NfaUgxsK75bp1Sgw/7Gl
+ Fe6npWtJswkxM0BswDN96MARaoJ4fVj/XWgz6CQjq3980cqlI4R2CKpioPLdEil4F7s6VJjpuFO
+ ZZNcRqh1dePQPs5K+1/p/6eaD3AeMCU6xRW9q5jww3DvhiHi7U2p/hJmyGzxpRPkLWPSOERjISS
+ 0pqZlsw9WNDaxSne6f/4UAtW99zQXQxwIctiH6QnAfdfjZo8fUD/kf0ZC+P+/vv++OKQ=
+X-Google-Smtp-Source: AGHT+IFxb5Z1ueKe0S6WrcLScL/Nnmc4VK5AfIFlx2OugTXXpHfyeeHpAqYhciFOaMK5iJGtmNzKwA==
+X-Received: by 2002:a17:903:3806:b0:26c:4280:4860 with SMTP id
+ d9443c01a7336-28e8d038cf6mr102763055ad.8.1759501123898; 
+ Fri, 03 Oct 2025 07:18:43 -0700 (PDT)
 Received: from gromero0.. ([186.215.59.111]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d1d5635sm51759645ad.102.2025.10.03.07.18.44
+ d9443c01a7336-28e8d1d5635sm51759645ad.102.2025.10.03.07.18.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 07:18:45 -0700 (PDT)
+ Fri, 03 Oct 2025 07:18:43 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
  berrange@redhat.com
 Cc: qemu-arm@nongnu.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v6 7/9] tests/functional: Add decorator to skip test on
- missing env vars
-Date: Fri,  3 Oct 2025 14:18:18 +0000
-Message-Id: <20251003141820.85278-8-gustavo.romero@linaro.org>
+Subject: [PATCH v6 6/9] tests/functional: drop datadrainer class in reverse
+ debugging
+Date: Fri,  3 Oct 2025 14:18:17 +0000
+Message-Id: <20251003141820.85278-7-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251003141820.85278-1-gustavo.romero@linaro.org>
 References: <20251003141820.85278-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,62 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a decorator to skip tests on missing env variable(s). Multiple
-variable names can be provided and if one or more of them are not set in
-the test environment the test is skipped and the missing vars are
-printed out.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
+The reverse debugging test uses the avocado datadrainer class to
+create a background thread that reads from the console socket and
+dumps it via python logger.
+
+Most tests log console output as a side effect of doing calls
+to match strings, but this test never tries to match anything.
+
+This isn't critical, so just drop the functionality.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/functional/qemu_test/__init__.py   |  3 ++-
- tests/functional/qemu_test/decorators.py | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ tests/functional/reverse_debugging.py | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 60d19891bf..320193591b 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -15,7 +15,8 @@
- from .linuxkernel import LinuxKernelTest
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-     skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
--    skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest
-+    skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest, \
-+    skipIfMissingEnv
- from .archive import archive_extract
- from .uncompress import uncompress
- from .gdb import GDB
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index c0d1567b14..b239295804 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -11,6 +11,24 @@
- from .cmd import which
+diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
+index a7ff47cb90..7fd8c7607f 100644
+--- a/tests/functional/reverse_debugging.py
++++ b/tests/functional/reverse_debugging.py
+@@ -34,8 +34,6 @@ class ReverseDebugging(LinuxKernelTest):
+     endian_is_le = True
  
- '''
-+Decorator to skip execution of a test if the provided
-+environment variables are not set.
-+Example:
-+
-+  @skipIfMissingEnv("QEMU_ENV_VAR0", "QEMU_ENV_VAR1")
-+'''
-+def skipIfMissingEnv(*vars_):
-+    missing_vars = []
-+    for var in vars_:
-+        if os.getenv(var) == None:
-+            missing_vars.append(var)
-+
-+    has_vars = True if len(missing_vars) == 0 else False
-+
-+    return skipUnless(has_vars, f"Missing env var(s): {', '.join(missing_vars)}")
-+
-+'''
-+
- Decorator to skip execution of a test if the list
- of command binaries is not available in $PATH.
- Example:
+     def run_vm(self, record, shift, args, replay_path, image_path, port):
+-        from avocado.utils import datadrainer
+-
+         logger = logging.getLogger('replay')
+         vm = self.get_vm(name='record' if record else 'replay')
+         vm.set_console()
+@@ -53,10 +51,6 @@ def run_vm(self, record, shift, args, replay_path, image_path, port):
+         if args:
+             vm.add_args(*args)
+         vm.launch()
+-        console_drainer = datadrainer.LineLogger(vm.console_socket.fileno(),
+-                                    logger=self.log.getChild('console'),
+-                                    stop_check=(lambda : not vm.is_running()))
+-        console_drainer.start()
+         return vm
+ 
+     @staticmethod
 -- 
 2.34.1
 
