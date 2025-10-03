@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BE5CCA471
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E19CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4htG-0004g3-FG; Fri, 03 Oct 2025 11:40:14 -0400
+	id 1v4htG-0004fj-4k; Fri, 03 Oct 2025 11:40:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htC-0004Yk-KJ
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htD-0004ZP-Np
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4ht6-0007JT-6I
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4ht3-0007Mq-Si
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:40:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759505994;
+ s=mimecast20190719; t=1759505999;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wX1LmVehk+k3MR0xoXMa/YxugTpui46fvbHNb0vuak0=;
- b=MIQYqy3kMQTkNBaZr4xMPAGyMplCUkLX6NfgtDx6BK4a107gX0aXCWLIKkVtp5DpQ706SJ
- XpvRsqKV4j0Qzy1rGdPcoEO9/3yOkZpGQwFrrwzMZB69vZZ0EcZFAw/UmwloVEfMKCy9oD
- Z5dUP9VfJAQHYyZIeWWjhtuyObvVeAY=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y+YHlJ2nLWpl5OKcyvtU38uTkVZG45VSCaiO3qL/KPo=;
+ b=iXu37PutZyNhlK6PuuDzQInKf0GoiOximcq2VBVDHk2uo3CQRYP4Ldj57eNMmg/TNkzFwj
+ NUtu3WU8RODUS1d+cY+ccZdNjFSH4TKIDKyp9X/dhRl9/HuPBiqa5FKzQ5AcmLxFLbY/g+
+ pxeW/KMhPfO1A4CasMBiXs/ENdLo2U8=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-TEMudXhBPtK73gxaCRJH7g-1; Fri, 03 Oct 2025 11:39:53 -0400
-X-MC-Unique: TEMudXhBPtK73gxaCRJH7g-1
-X-Mimecast-MFC-AGG-ID: TEMudXhBPtK73gxaCRJH7g_1759505992
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-7fa235e330dso45644446d6.1
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:39:53 -0700 (PDT)
+ us-mta-42--BRZidjVO7iGWBmp_Qfz0Q-1; Fri, 03 Oct 2025 11:39:58 -0400
+X-MC-Unique: -BRZidjVO7iGWBmp_Qfz0Q-1
+X-Mimecast-MFC-AGG-ID: -BRZidjVO7iGWBmp_Qfz0Q_1759505998
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-78efb3e2738so3637836d6.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:39:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759505992; x=1760110792;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wX1LmVehk+k3MR0xoXMa/YxugTpui46fvbHNb0vuak0=;
- b=SIWDhXAHpLk506ezUOWdBO9qIkC3OOdaU/OH5dYmtv0CteGLRWURTwgEYkb72DqyM7
- Ld2ZQy+GZRpDbruWwQbuxDdmtZ9635K9U8WEAlJnTO3Dh8pszZQ4x9ogqZztt3n87hSv
- BVKWEi9B7u/a555l25QxefVT8pLn0m0palBmIdLU5llhB+kYn0rERDoTSQ07+19bHk6a
- m3bx9Ko8ZZlKdgxtai0uJKctcsjC6D0MdWBn87iVnhEvKnv9t4+9JSin9hTZ9Hj3bOBK
- mBK7Sfqz3b3ke3jt/qzvWhaJzPFJ+TDDfXA1v1f5tn0KXSr2b7S1a5UENsebd5R26yRb
- 5G7Q==
+ d=1e100.net; s=20230601; t=1759505998; x=1760110798;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Y+YHlJ2nLWpl5OKcyvtU38uTkVZG45VSCaiO3qL/KPo=;
+ b=DLI6fnWKxw7E2wZYkwoSsyMWrpvZYqD5Yyp7UQKxUJaW5Jdw+O/r6vpuhnPn/4TMm3
+ UbF9NkCohAZ4+g8w07hqua+1/lkibrRFvbUrHyZuVEuhd1zRd0zHMhPJFaJhkmxcghN6
+ BcCn2QmzwQPxCKxgl7QO0oh7s4bQcNBnWmpDM+cWHmoXOlyqNqsVkfdepypfPptu7dy+
+ wBlmwjKOuA6/PdAMpks6CSXscF+1GCOmmkdiiWTHPiiT0oyg8K3MoCehTvbfejnYGfzp
+ 1ktjqxPU1LVBdT+sCldU2eGszO+ZHU9P41WJRPSdOpbw6emECqIgsbZFclAvL9Tcfqer
+ brYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwVhwA1p3tPV/9c2lrwYzQ/QoWrZL/5JKox7JpAEspNOjc8IVctQ28ayIb5TdyGOXw98FpnuzIOnQE@nongnu.org
-X-Gm-Message-State: AOJu0Yy2lMjmT8/FlFiNH1X/waZQrTCmZXU7zbk8O2dBE9+NcNL34Onm
- kFg/4XAsXKUUGU0ki/uKgC5sfBPZVd6tXEXtCp3/56bru0ElqspA8lQB3ns4ivffIU/RbmuAKW2
- cHep/a4jPe2hE86eM0TiZcce7a9YqSIH5/8AIO+T7bsh9WUMdykv0M5QJ
-X-Gm-Gg: ASbGncvuR7IyOcFZO0NpDA/ucq9SOjbYjWQclz40pAxSkGStGohBbJFXACKmoowOlhM
- ramuO7KuqBm4td8Teujo3xbv4MmEmwQyRJRX0lh14UPbni6ZEn+TcxFUoI5uCB0qmRH1XQAOi5d
- 5JB8Wsk+/6HV/QJNP6wRdRWsoCtsjjpqrjX4AmJx4O1pxYQ5XV8rBnueuK54tujxEj65Z1fTzC1
- NE67Nl6ghHdKFxBPzH2LJLAWAEWO3StQIYabUAt2kkPOzlfi6BD2PhljulxT8DCxRNw4Tc7aGJt
- lYjxIEqrq1rSYgpJsE8Fo2P+0PozUnOxWY8ZuA==
-X-Received: by 2002:ad4:5ccd:0:b0:77c:7fbc:281d with SMTP id
- 6a1803df08f44-879dc386df6mr46275736d6.10.1759505992398; 
- Fri, 03 Oct 2025 08:39:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqsWmP3w+bwpHpmQDfA+BPdON/dV7W+JHj1hjh8PxdodqLY4L6dGWJjkXwMOu9PZDvyj8xQQ==
-X-Received: by 2002:ad4:5ccd:0:b0:77c:7fbc:281d with SMTP id
- 6a1803df08f44-879dc386df6mr46275166d6.10.1759505991810; 
- Fri, 03 Oct 2025 08:39:51 -0700 (PDT)
+ AJvYcCUiRWqQot7c3AIlohKPuBOt55cbO9FC5DTGegnv8qgXLGsjOE1dV117ZMSdji+l3w5pAeKoxwc16oNf@nongnu.org
+X-Gm-Message-State: AOJu0YwTkOKeooxbZtw2ct3b4huBgW65MsVctim2N8NBJJEPeOba58Qu
+ h+W7MQojzCVks/2PUPrSOzWUss4EYsXl5prmE7OP1Ym6wiNdmP1ISxZBczmXZqZU43cElF/xz+I
+ KvcQYlfcx2yyyjaqfS27aYoZ0Ex2lVOM04z6IND7XxjyJaLqlXsxRwyoQ
+X-Gm-Gg: ASbGnctLu6Q4TeHfbPwbqVQiH+eXDXkCdbRGsEWLa/EylU7GRYlTgmjE7v5lr71jUjZ
+ ry1PDe0zNyx5dJH5TaU/+g0fM3y0GN6im4HbngKhOH2AjEWahpY1dJXfM9MIr1aO9+QUuFLGxDl
+ Pr0PLVIM2RBlPKF0cEN6hH0e0+3Ioim6S7w2d+8mPXZ+qbzPHS0dfjvM27KyclEc3R/3M/TExJN
+ Jgvq/LAZwWXna//BXLX9D2WVQ72eIk/bqGaMM2UEYrEVnoSmR9jWgX+sDsUk8u3Bos1uT6A5O9W
+ bwllGHhZKRo85aVWWxNG9twhxhGFIhiLkWWokg==
+X-Received: by 2002:ad4:5ca3:0:b0:796:dc45:8034 with SMTP id
+ 6a1803df08f44-879dc852938mr56385556d6.45.1759505997560; 
+ Fri, 03 Oct 2025 08:39:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9ubpG9CHE9H86cTfWQs/SLalfgMURJEuddDNJ9ynRbRBZ4//y8xHnVS7RwxCf+haCndnCxQ==
+X-Received: by 2002:ad4:5ca3:0:b0:796:dc45:8034 with SMTP id
+ 6a1803df08f44-879dc852938mr56385006d6.45.1759505997037; 
+ Fri, 03 Oct 2025 08:39:57 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.39.50
+ 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.39.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 08:39:51 -0700 (PDT)
+ Fri, 03 Oct 2025 08:39:56 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 00/45] Staging patches
-Date: Fri,  3 Oct 2025 11:39:03 -0400
-Message-ID: <20251003153948.1304776-1-peterx@redhat.com>
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Arun Menon <armenon@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 03/45] migration: push Error **errp into
+ qemu_loadvm_state_header()
+Date: Fri,  3 Oct 2025 11:39:06 -0400
+Message-ID: <20251003153948.1304776-4-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
+References: <20251003153948.1304776-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,157 +113,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 517e9b4862cc9798b7a24b1935d94c2f96787f12:
+From: Arun Menon <armenon@redhat.com>
 
-  Merge tag 'qtest-20251001-pull-request' of https://gitlab.com/farosas/qemu into staging (2025-10-01 15:03:00 -0700)
+This is an incremental step in converting vmstate loading
+code to report error via Error objects instead of directly
+printing it to console/monitor.
+It is ensured that qemu_loadvm_state_header() must report an error
+in errp, in case of failure.
 
-are available in the Git repository at:
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-3-36f11a6fb9d3@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/savevm.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-  https://gitlab.com/peterx/qemu.git tags/staging-pull-request
-
-for you to fetch changes up to 27cffe16354816d57710d2d4357f16139405c749:
-
-  migration-test: test cpr-exec (2025-10-03 09:48:02 -0400)
-
-----------------------------------------------------------------
-Migration/Memory Pull for 10.2
-
-- PeterX's fix on tls warning for preempt channel when migratino completes
-- Arun's series to enhance error reporting for vTPM and migration framework
-- PeterX's patch to cleanup multifd send TLS BYE messages
-- Juraj's fix on postcopy start state transition when switchover failed
-- Yanfei's fix to migrate APIC before VFIO-PCI to avoid irq fallbacks
-- Dan's cleanup to simplify error reporting in qemu_fill_buffer()
-- PeterM's fix on address space leak when cpu hot plug / unplug
-- Steve's cpr-exec wholeset
-
-----------------------------------------------------------------
-
-Arun Menon (26):
-  migration: push Error **errp into vmstate_subsection_load()
-  migration: push Error **errp into vmstate_load_state()
-  migration: push Error **errp into qemu_loadvm_state_header()
-  migration: push Error **errp into vmstate_load()
-  migration: push Error **errp into loadvm_process_command()
-  migration: push Error **errp into loadvm_handle_cmd_packaged()
-  migration: push Error **errp into qemu_loadvm_state()
-  migration: push Error **errp into qemu_load_device_state()
-  migration: push Error **errp into qemu_loadvm_state_main()
-  migration: push Error **errp into qemu_loadvm_section_start_full()
-  migration: push Error **errp into qemu_loadvm_section_part_end()
-  migration: Update qemu_file_get_return_path() docs and remove dead
-    checks
-  migration: make loadvm_postcopy_handle_resume() void
-  migration: push Error **errp into ram_postcopy_incoming_init()
-  migration: push Error **errp into loadvm_postcopy_handle_advise()
-  migration: push Error **errp into loadvm_postcopy_handle_listen()
-  migration: push Error **errp into loadvm_postcopy_handle_run()
-  migration: push Error **errp into loadvm_postcopy_ram_handle_discard()
-  migration: push Error **errp into loadvm_handle_recv_bitmap()
-  migration: Return -1 on memory allocation failure in ram.c
-  migration: push Error **errp into loadvm_process_enable_colo()
-  migration: push Error **errp into
-    loadvm_postcopy_handle_switchover_start()
-  migration: Capture error in postcopy_ram_listen_thread()
-  migration: Remove error variant of vmstate_save_state() function
-  migration: Add error-parameterized function variants in VMSD struct
-  backends/tpm: Propagate vTPM error on migration failure
-
-Bin Guo (1):
-  migration: HMP: Adjust the order of output fields
-
-Daniel P. Berrangé (1):
-  migration: simplify error reporting after channel read
-
-Juraj Marcin (1):
-  migration: Fix state transition in postcopy_start() error handling
-
-Peter Maydell (2):
-  include/system/memory.h: Clarify address_space_destroy() behaviour
-  physmem: Destroy all CPU AddressSpaces on unrealize
-
-Peter Xu (4):
-  io/crypto: Move tls premature termination handling into QIO layer
-  migration: Make migration_has_failed() work even for CANCELLING
-  migration/multifd/tls: Cleanup BYE message processing on sender side
-  memory: New AS helper to serialize destroy+free
-
-Steve Sistare (9):
-  migration: multi-mode notifier
-  migration: add cpr_walk_fd
-  oslib: qemu_clear_cloexec
-  migration: cpr-exec-command parameter
-  migration: cpr-exec save and load
-  migration: cpr-exec mode
-  migration: cpr-exec docs
-  vfio: cpr-exec mode
-  migration-test: test cpr-exec
-
-Yanfei Xu (1):
-  migration: ensure APIC is loaded prior to VFIO PCI devices
-
- docs/devel/migration/CPR.rst       | 112 +++++++++-
- docs/devel/migration/main.rst      |  19 ++
- qapi/migration.json                |  46 +++-
- include/crypto/tlssession.h        |  10 +-
- include/exec/cpu-common.h          |  10 +-
- include/hw/core/cpu.h              |   1 -
- include/migration/colo.h           |   2 +-
- include/migration/cpr.h            |  10 +
- include/migration/misc.h           |  12 ++
- include/migration/vmstate.h        |  19 +-
- include/qemu/osdep.h               |   9 +
- include/system/memory.h            |  24 ++-
- migration/postcopy-ram.h           |   2 +-
- migration/ram.h                    |   4 +-
- migration/savevm.h                 |   7 +-
- backends/tpm/tpm_emulator.c        |  40 ++--
- crypto/tlssession.c                |   7 +-
- hw/core/cpu-common.c               |   1 +
- hw/display/virtio-gpu.c            |   5 +-
- hw/intc/apic_common.c              |   1 +
- hw/pci/pci.c                       |   5 +-
- hw/s390x/virtio-ccw.c              |   4 +-
- hw/scsi/spapr_vscsi.c              |   6 +-
- hw/vfio/container-legacy.c         |   3 +-
- hw/vfio/cpr-iommufd.c              |   3 +-
- hw/vfio/cpr-legacy.c               |   9 +-
- hw/vfio/cpr.c                      |  13 +-
- hw/vfio/pci.c                      |   9 +-
- hw/virtio/virtio-mmio.c            |   5 +-
- hw/virtio/virtio-pci.c             |   4 +-
- hw/virtio/virtio.c                 |  13 +-
- io/channel-tls.c                   |  21 +-
- migration/colo.c                   |  10 +-
- migration/cpr-exec.c               | 194 +++++++++++++++++
- migration/cpr.c                    |  42 +++-
- migration/migration-hmp-cmds.c     |  44 +++-
- migration/migration.c              | 116 +++++++---
- migration/multifd.c                |  65 +++---
- migration/options.c                |  14 ++
- migration/postcopy-ram.c           |   9 +-
- migration/qemu-file.c              |   7 +-
- migration/ram.c                    |  17 +-
- migration/savevm.c                 | 329 +++++++++++++++++------------
- migration/vmstate-types.c          |  61 ++++--
- migration/vmstate.c                | 103 ++++++---
- stubs/cpu-destroy-address-spaces.c |  15 ++
- system/memory.c                    |  20 +-
- system/physmem.c                   |  32 ++-
- system/vl.c                        |   4 +-
- tests/qtest/migration/cpr-tests.c  | 133 ++++++++++++
- tests/unit/test-vmstate.c          |  83 ++++++--
- ui/vdagent.c                       |   8 +-
- util/oslib-posix.c                 |   9 +
- util/oslib-win32.c                 |   4 +
- hmp-commands.hx                    |   2 +-
- migration/meson.build              |   1 +
- migration/trace-events             |   1 +
- stubs/meson.build                  |   1 +
- 58 files changed, 1351 insertions(+), 409 deletions(-)
- create mode 100644 migration/cpr-exec.c
- create mode 100644 stubs/cpu-destroy-address-spaces.c
-
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 55c99e0902..8ac3d33814 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2814,38 +2814,43 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
+     return 0;
+ }
+ 
+-static int qemu_loadvm_state_header(QEMUFile *f)
++static int qemu_loadvm_state_header(QEMUFile *f, Error **errp)
+ {
+     unsigned int v;
+     int ret;
+-    Error *local_err = NULL;
+ 
+     v = qemu_get_be32(f);
+     if (v != QEMU_VM_FILE_MAGIC) {
+-        error_report("Not a migration stream");
++        error_setg(errp, "Not a migration stream, magic: %x != %x",
++                   v, QEMU_VM_FILE_MAGIC);
+         return -EINVAL;
+     }
+ 
+     v = qemu_get_be32(f);
+     if (v == QEMU_VM_FILE_VERSION_COMPAT) {
+-        error_report("SaveVM v2 format is obsolete and don't work anymore");
++        error_setg(errp,
++                   "SaveVM v2 format is obsolete and no longer supported");
++
+         return -ENOTSUP;
+     }
+     if (v != QEMU_VM_FILE_VERSION) {
+-        error_report("Unsupported migration stream version");
++        error_setg(errp, "Unsupported migration stream version, "
++                   "file version %x != %x",
++                   v, QEMU_VM_FILE_VERSION);
+         return -ENOTSUP;
+     }
+ 
+     if (migrate_get_current()->send_configuration) {
+-        if (qemu_get_byte(f) != QEMU_VM_CONFIGURATION) {
+-            error_report("Configuration section missing");
++        v = qemu_get_byte(f);
++        if (v != QEMU_VM_CONFIGURATION) {
++            error_setg(errp, "Configuration section missing, %x != %x",
++                       v, QEMU_VM_CONFIGURATION);
+             return -EINVAL;
+         }
+-        ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0,
+-                                 &local_err);
+ 
++        ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0,
++                                 errp);
+         if (ret) {
+-            error_report_err(local_err);
+             return ret;
+         }
+     }
+@@ -3121,8 +3126,9 @@ int qemu_loadvm_state(QEMUFile *f)
+ 
+     qemu_loadvm_thread_pool_create(mis);
+ 
+-    ret = qemu_loadvm_state_header(f);
++    ret = qemu_loadvm_state_header(f, &local_err);
+     if (ret) {
++        error_report_err(local_err);
+         return ret;
+     }
+ 
 -- 
 2.50.1
 
