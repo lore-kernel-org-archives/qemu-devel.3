@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2158CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3643BCCA470
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 03:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4WTS-0007F1-Jn; Thu, 02 Oct 2025 23:28:51 -0400
+	id 1v4WTC-00077o-Ou; Thu, 02 Oct 2025 23:28:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WTM-0007Dh-CR
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:44 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1v4WTA-00076L-Rh
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:33 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4WTC-0001G6-1w
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:44 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-782023ca359so1820615b3a.2
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:28:30 -0700 (PDT)
+ id 1v4WT3-0001Eg-LA
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 23:28:32 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-3304dd2f119so1493221a91.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 20:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759462108; x=1760066908; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759462097; x=1760066897; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p2oqIRAe+rhE3OsYBre7zr6/HIqT/lwZR75QlsJ0wAs=;
- b=TAuUUV1YOgnsWAxzVCDgpHEk2Htb8Bf143TydM8mJ/xPrE+ye+a9e+J86TknwuFzO6
- zQV4KnlS1NN7rbsCQ60J/IdtGujI9MOU9BuytVWcTv4SsnahxjVJI6QIQ0jHVuS1xgBB
- NjdNOY0dm0D+I511wL08DC1y4L8gSno6ihtgbdk/yj8xsCb/FIVcmrXar/w7i3MVgurK
- P2/nWNS5OYa9wWwL5Arzn5UJpWvJ5OkqicB83uxwRayv4tMLOIYTESVLA+aOij7anbbS
- skZVatNUgg8iz9A+xyU5ofrEbjpe30YHBS2YQFOBHS2op5rsnJvImPCvNKJuPJF4Bxv3
- DxkQ==
+ bh=bEi5+3ZB5Bq/0qBmS/O/DQ+AkLgmhexYNY8zelmkyHc=;
+ b=dMDyexXNwGAahdLLZQewbGOtEIHpMm3o7/8mpLl27FBONcLtXjTa1XtC1XMvspINBb
+ tnq8gnlTSwUB7dBPnn4qKgDUyXiOOUd8ZIB0LpzcR74kOg/E5GGqKwwKBt8t7vPPZ9Kg
+ KsDHAA6iP+9mW9aZPsLiEpWhAdyNZGUOgJ7jU25O+7qBKfYkOceeO2MZTOvWtUlesZoi
+ 3hre07oyEbXG0E26etBGRUTIGqmwtYmh5fjX08Xo+ATzwmGWOpkWJOq2QzoO6CeDj5dC
+ f3nOL1oeT18RtCdTKAK6WWVqQJQPnRW0ov6TGZssRY957YIBp3iQ7EyWV2ga/nCx+kzg
+ wWqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759462108; x=1760066908;
+ d=1e100.net; s=20230601; t=1759462097; x=1760066897;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p2oqIRAe+rhE3OsYBre7zr6/HIqT/lwZR75QlsJ0wAs=;
- b=bcnHVhd2pFGQHQH0OeLXNqkiOk0rBh2s0dqmFfYl/uv/OLXYiJsIxa8c11gh2iJ2hf
- MWXgS1Y6yD82nZ5jPcU0AIRy0z2wijS6jijRs/KgG+xY/1LmIh4n8JEx1i62YDODS+KS
- mZqTHuargh6x8pIeAYxUhXyRYyl2dUYGPCz+79glQAYa3HkwykkDRKR5gRPFG19KPzfr
- fNbohr10wrKh16VqEV9zxQQJtVyufK5Wk8BruOJUsnIJAk4uOPqAuZtAygBWcMB6AQx0
- e++6LpJGcvAqWM2knOzxAV//CXVOb5iIwWekttk1barvlHJHzoUqzgMZunKmg8cs0bap
- 68rg==
-X-Gm-Message-State: AOJu0YxWfN4W0vpJs13CDrqY6Vs+xkRo1KSaWRosTQOLGaV5CKacTELb
- ezRV/ibFalXSv/7zVTmzToZ7VlQ6AfP18vP96/bcSpeMgstAnXuctkVuDA7l7Q==
-X-Gm-Gg: ASbGncuCaoqG4N8Swxjg7pBR2Kst5BoqAtzw5pbRzo16tkC+UujszcDu8zpGPAtgbtb
- qpZADwnPpzB+HeYz6+GFwExOiGYkJFbxRke2UV9baXvKrksRRBob+YdTL+PtAEDLy7Qc2t9ryXJ
- v5gfpK8nTqKGldZoguNWBhVY2GzyV51fu0mi8Gr8RJGPa0+rGV27IvYWFudC+Tbu+aSiNi7I4Kf
- 5hsaT7iuUYh0Y1TE8se+CTM8sk0Xq6BUbm/6A6+byZvKLwYPq4qPzS0APgM4AN3RV1L322e1kvB
- d7uyGdb2z5Uojw1VOUHIAXbwhZJOjsB1Md02X6Lrm5/rToJF7vxjkQhjBwPKbvw0w6lh6XYFFAe
- 3fHP40xaR5kdpg2DydssjGgKXEZZ0m48mwYaQ281FQVZ4O4SFiCo/b4jxwZQg+xE+i8rj9Fj5CY
- 9+6gwJGfK5qp/QiqSCleBwEoo5NVNbDC39Hx7ScJJEtomZkxhT8RSX
-X-Google-Smtp-Source: AGHT+IF+YO5OhIMmX55tnSPy8MhKRNRSRbuFhuQubcxROxeT7h/YzuHirRESvweUSxFEDxMROQkivw==
-X-Received: by 2002:a05:6a20:1611:b0:2c9:1323:f800 with SMTP id
- adf61e73a8af0-32b61dee09bmr1571603637.9.1759462107846; 
- Thu, 02 Oct 2025 20:28:27 -0700 (PDT)
+ bh=bEi5+3ZB5Bq/0qBmS/O/DQ+AkLgmhexYNY8zelmkyHc=;
+ b=B+8lJmRPLBei/2TN+1eWhgI8NvIIDrGiB1yZM7HGw6NB1Qg9I/KOHV5qs30VbxEG5q
+ sWSPoyzrmD0wr08ZP6OE6c/Qexra8kMLSgoZQ830i9ezkqaTSfOnuSTyqrlcmPl2NWUw
+ yXKTrYlKCQEB0nT/E7v4sD5kYK4iScWD5+hVkpss8XrB8218CQ15FoqlhjeZwlYGKiU4
+ JUhZfQL0PqqAwvY9dRJ998mEYsJjQ6P7T3LtAHAq9loIYNwy0hhKSIiYElFnbXU2x6Nt
+ frN4qo3rKzM0aWrEW1f0WEWunJv0hnLjP2YrtKiAhvt0nyG6NnrmsacpzQiOV7d0wUuR
+ 7QhA==
+X-Gm-Message-State: AOJu0YztnSFJX/qz9LpNqdRpmnKvm6XxRPSkggFyLRQRlh+tf7enT7e9
+ RExA/FlJKsUl+JXaE+5E/r51zJnfQJU2cAm8f2DGpVR6FTsi+obzhDnfYCytQQ==
+X-Gm-Gg: ASbGnctiqYTgiM5V7Z743Lyu9+pGNuNV8C3qCMRAyHIevl5ft2OB7Xkb10AsKmmd4kE
+ HTPC4x2O7yeF69NQDxaNkQdYdWAciGnqSEBQD1v9L5BMNq3GZ1sPVBn53uzgwLh8UCGxHU9h6IY
+ U6BnhoPAN4/VCHur+uLxE7WAkFy2e2Zeq1RW3PQWYq6uynJChh82SCNCCYOJTHrFsd56sfA7biq
+ 2eAv48v3HvOLCpplQ/XIQBKxHk4KWWpV5xBPVyN2Tkm/61fl0mDzIGHXOhcjyl0loKgz+enmZKV
+ 4Um5hlR+dPKEMhcrJEn3Uj10Nb9pUdz8Np28xbGntAt/6cMwDWlRC1QHz+YeLl2Bg7SJnrj0NHw
+ zbWM9kQXlBN1247AbozgkQH2gl0/sLCWSnM32jbkg7LPQjN+UUB9NcdlAZgd5FFr/PaFjLeAIL3
+ wbgnWKJbuSBvNtbc0dHS6XPhXxKbPKu4QGBvswWA+CSxZKdxbbCili
+X-Google-Smtp-Source: AGHT+IEIApwg9KKZlvlCxsva6yueQzPeT84N1V1CnLL/t3rBQpcYKNnt53luezdE+8aJJG9hBDXPyg==
+X-Received: by 2002:a17:90b:1b50:b0:330:7a11:f111 with SMTP id
+ 98e67ed59e1d1-339c27bfa9amr1787350a91.35.1759462097388; 
+ Thu, 02 Oct 2025 20:28:17 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.28.24
+ 41be03b00d2f7-b62ce55205csm844202a12.18.2025.10.02.20.28.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Oct 2025 20:28:27 -0700 (PDT)
+ Thu, 02 Oct 2025 20:28:16 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, stove <stove@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, TANG Tiancheng <lyndra@linux.alibaba.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 15/26] target/riscv: use riscv_csrr in riscv_csr_read
-Date: Fri,  3 Oct 2025 13:27:07 +1000
-Message-ID: <20251003032718.1324734-16-alistair.francis@wdc.com>
+Subject: [PULL 12/26] hw/intc: Save timers array in RISC-V mtimer VMState
+Date: Fri,  3 Oct 2025 13:27:04 +1000
+Message-ID: <20251003032718.1324734-13-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003032718.1324734-1-alistair.francis@wdc.com>
 References: <20251003032718.1324734-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,38 +106,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: stove <stove@rivosinc.com>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-Commit 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/CSRRC
-writes a read-only CSR") changed the behavior of riscv_csrrw, which
-would formerly be treated as read-only if the write mask were set to 0.
+The current 'timecmp' field in vmstate_riscv_mtimer is insufficient to keep
+timers functional after migration.
 
-Fixes an exception being raised when accessing read-only vector CSRs
-like vtype.
+If an mtimer's entry in 'mtimer->timers' is active at the time the snapshot
+is taken, it means riscv_aclint_mtimer_write_timecmp() has written to
+'mtimecmp' and scheduled a timer into QEMU's main loop 'timer_list'.
 
-Fixes: 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/CSRRC writes a read-only CSR")
+During snapshot save, these active timers must also be migrated; otherwise,
+after snapshot load there is no mechanism to restore 'mtimer->timers' back
+into the 'timer_list', and any pending timer events would be lost.
 
-Signed-off-by: stove <stove@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250827203617.79947-1-stove@rivosinc.com>
+QEMU's migration framework commonly uses VMSTATE_TIMER_xxx macros to save
+and restore 'QEMUTimer' variables. However, 'timers' is a pointer array
+with variable length, and vmstate.h did not previously provide a helper
+macro for such type.
+
+This commit adds a new macro, 'VMSTATE_TIMER_PTR_VARRAY', to handle saving
+and restoring a variable-length array of 'QEMUTimer *'. We then use this
+macro to migrate the 'mtimer->timers' array, ensuring that timer events
+remain scheduled correctly after snapshot load.
+
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250911-timers-v3-3-60508f640050@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/intc/riscv_aclint.h | 4 ++++
+ hw/intc/riscv_aclint.c         | 6 ++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 738e68fa6e..2c2266415e 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -874,7 +874,7 @@ static inline void riscv_csr_write(CPURISCVState *env, int csrno,
- static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
- {
-     target_ulong val = 0;
--    riscv_csrrw(env, csrno, &val, 0, 0, 0);
-+    riscv_csrr(env, csrno, &val);
-     return val;
- }
+diff --git a/include/hw/intc/riscv_aclint.h b/include/hw/intc/riscv_aclint.h
+index 693415eb6d..4b7406eec0 100644
+--- a/include/hw/intc/riscv_aclint.h
++++ b/include/hw/intc/riscv_aclint.h
+@@ -80,4 +80,8 @@ enum {
+     RISCV_ACLINT_SWI_SIZE              = 0x4000
+ };
  
++#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                        \
++VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
++                                                        QEMUTimer *)
++
+ #endif
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 318a9c8248..9f4c36e965 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -323,13 +323,15 @@ static void riscv_aclint_mtimer_reset_enter(Object *obj, ResetType type)
+ 
+ static const VMStateDescription vmstate_riscv_mtimer = {
+     .name = "riscv_mtimer",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
+     .fields = (const VMStateField[]) {
+             VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
+             VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
+                                   num_harts, 0,
+                                   vmstate_info_uint64, uint64_t),
++            VMSTATE_TIMER_PTR_VARRAY(timers, RISCVAclintMTimerState,
++                                     num_harts),
+             VMSTATE_END_OF_LIST()
+         }
+ };
 -- 
 2.51.0
 
