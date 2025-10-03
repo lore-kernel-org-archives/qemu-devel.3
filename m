@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F49CCA471
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF55FCCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 15:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4hv2-0005UH-DV; Fri, 03 Oct 2025 11:42:04 -0400
+	id 1v4hup-0005La-Lj; Fri, 03 Oct 2025 11:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4huq-0005O0-1N
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4huE-0004vZ-SF
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htw-0007kS-Dn
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v4htf-0007gW-27
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 11:41:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759506050;
+ s=mimecast20190719; t=1759506031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=89BRKDuSU239eBQPSg6ZWHWpyPPu3WW3GTnT1uWLOS8=;
- b=UUZ5DpFSCBCJzEV97EFg/U5gGhmINcduBGOzHYp7njmObT25Qpy4XCEQfnIDJGd7sbRswz
- sF15BIs2wYKMEtXPHOT53WXQ/qaR8ZXX5+ob6EVJPijfBjEyVQLFfLpom+j2GUrZfZWequ
- 3k7rd1Ep2eo2vQrIl7uOy37xia/Qv+o=
+ bh=cH4PFStgd3tkIBio2mLeCJam9cI6cbrtyVGN2JLYb+w=;
+ b=a6x5rGtjCjdG42o4WJSPhGxIhoz065EDVMIuPKt8KRf2nTN7bQV3sM34Gk9a06+Lhl7oti
+ UK0zza0tRHpxts5c2j/CT1qvVbW0CI46Nau7YJC5EBuU0wSH+8zY8iWgCDeG2VpWMdNGxR
+ 2p1NmO0VF8otD8l67VIqb8CsLK42b6s=
 Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
  [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-QHUt-M67NdyN1_xbMG-SMg-1; Fri, 03 Oct 2025 11:40:49 -0400
-X-MC-Unique: QHUt-M67NdyN1_xbMG-SMg-1
-X-Mimecast-MFC-AGG-ID: QHUt-M67NdyN1_xbMG-SMg_1759506049
+ us-mta-269-uBCnp0p5MFOTIHCl7ulZ1g-1; Fri, 03 Oct 2025 11:40:29 -0400
+X-MC-Unique: uBCnp0p5MFOTIHCl7ulZ1g-1
+X-Mimecast-MFC-AGG-ID: uBCnp0p5MFOTIHCl7ulZ1g_1759506029
 Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-7946137e7c2so66844066d6.0
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:49 -0700 (PDT)
+ 6a1803df08f44-7fa235e330dso45657946d6.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 08:40:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759506049; x=1760110849;
+ d=1e100.net; s=20230601; t=1759506029; x=1760110829;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=89BRKDuSU239eBQPSg6ZWHWpyPPu3WW3GTnT1uWLOS8=;
- b=jv9QbhRQVVrQDvMx2DAwnxx8Fk+SNri++pLzB0ukfr1EDeOTNE6/qlCQkpGaPsW3kf
- jvN8yVDQefWItPhnmkhtYxWzPd33d/sdXggKE6JIgZpDcLPkNqhUGEsrSHqaA/bl6jPH
- pS10Q7OCQgyK8w5tnCb7bz995efU5Y5xWVmHZX1XYsRaZPhEXGuV54WhL3fIAbEnoqBu
- jOu4ooEZQhGX1OMSKL+Up3MXmKjaoXepMB+zmX8ZFxpljVwm3V8Fhxw5TIJzyoLhyz/6
- RX9UQlo8h1Y3pq4qlK+AJYXJfNjHSwvc1sWKPPtxhh5MReqrijy+XlzjH8InaeFHObjC
- PMag==
+ bh=cH4PFStgd3tkIBio2mLeCJam9cI6cbrtyVGN2JLYb+w=;
+ b=EkK9uSNNRSrnBusK5gR3IklI8I3oJoLcWgXB7XmoSftz7Uv9xFXWNf3kajXvl07mne
+ cIwZ/m2+CdpANh4QXg+/saph/woc5vWcUVdyahq6pDmtmcc3jGnW7Woni3eYDlt17JKL
+ wkPxnXK05gfJdd+9sQuKrybISOTB2ph7Q4F9lDvwFW9gtGtphufbBrchVJXnDUv4r/m/
+ 7SQFgHgzkkl8pGmQdgzleVDItmh0Ks/3oTf6laNqZJTsZMMxOoTLLX2o4zm41wWgabSX
+ RzkZkbBryuJ8g2b9NRaM8ZvTK3hJXuFuRgqhzZtAZKe/z9W0HXssxM0qNjYKZSThX1bi
+ gzBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDl8sJX/Mj2bwl+JxQLfbDSkzgnk/BZGiJNGvDjJf3fsV6M66VU7Ru5+KVkepfFD8U3zLgRfZYkdKo@nongnu.org
-X-Gm-Message-State: AOJu0YwaGlQHUmoqei4nsAkBApNed0T57ThRmszi6KzwoO10NeyjTR2h
- V27m2LLdF5bgieRPerYJ2FcMzRciQkYu9+GeHhXIUZrGdaU3LUt7vdHGBCCbskGIbnnEeLPSYU9
- Om2LOZ+5uz1CNwOx9M/VCU9OXIWysTKD5F/iyO2n2Z/klxu9Gt2c/H6RL
-X-Gm-Gg: ASbGncuN8l5/c3g7OADgQCJR9d2tbSWkET9BafMlq4/kbmiCQGT8nxCgKxIADxIZSIY
- bRwt3GCHUW5ZLGHuL+g9l1Rru3GDFGoepS66vsT7mAhT7q1ux8jSg6FgSWz/qC0pHzW7I6XvFJh
- 9PY67aIvG21zAiBRZ0isR7RI2U2v4Sai6rPVDjJjZvfbo2wi0pCWmGZ9v5CoON2ebn6ODS2CwRO
- 4yfJ16nk35BLJVqvU+43XpdYOK4/Sl+a9nUvCq0uJLgQTD11eVhxYtPhrpYmNIQleEYzLEycHxD
- AZoTZqcZ6cJCTP6ZKN7Iw9+OKHfoq8skvHbiMA==
-X-Received: by 2002:a05:6214:5e01:b0:879:e76e:b093 with SMTP id
- 6a1803df08f44-879e76eb1a8mr2887306d6.13.1759506048769; 
- Fri, 03 Oct 2025 08:40:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHLwBRqSxny/SUUCT3hKWlnczb7IAvRMoRZava3CTtf1DWt6APPG4zvYwUlLe+avWCkGGK/w==
-X-Received: by 2002:a05:6214:5e01:b0:879:e76e:b093 with SMTP id
- 6a1803df08f44-879e76eb1a8mr2886876d6.13.1759506048242; 
- Fri, 03 Oct 2025 08:40:48 -0700 (PDT)
+ AJvYcCX1ViXOfqPlxEVEvyU/YpThb8NXYqIeRPUZKguK+h0jt0P21AWWJG1rqtosxIwTYtmePaRKxEv3DgIk@nongnu.org
+X-Gm-Message-State: AOJu0YxY7AtDd7OZANAYFVmeV30TpQf3p4CwwwgvNjPwRTU5iZLxX2GK
+ Z2Y9uIe0P/YIoRdbK1mk3f98Gj4BUBHFMebZVFnoEkILBGS8x4kZTiC7O0EGGzItFEUmjIRUS/m
+ BkmEnWElZl478eWmEbWzvMi1rH1IkHbYJgyXqs5rdLlwjVQrzgvTwQ4Bi
+X-Gm-Gg: ASbGncvaD2TH0YSXZssMopmKdjQQ5VmsmQdLSWyOjCqQPIJz77lTOky0bdC+XAdbooG
+ xw1mekoe7ZHrMK0cQgBLC/mNA/Me+5cdbd8QqBheZDmk3x+ek5LyXxgdAY1FszbPbEwBiSn/9Gj
+ 2LjlX/SoDoKRpU+XMZ9uJJD7tDttDhnAn3z86SOZbrU8q+TToKe4C8GRiOdCnKsjMasbgeUrSv4
+ fkCy1DUcfUHQaX0XVMaDgBY2EJ3aIMPekzdR09UIeWkurFkRpNYR8/igbjpd/MGUt7FbG49fEvg
+ UaDbDC3Yya2q/o5V+RHEVe2ANwaqfZhmd/Etwg==
+X-Received: by 2002:a05:6214:2428:b0:788:82e0:3a9 with SMTP id
+ 6a1803df08f44-879dc443233mr39547696d6.21.1759506029054; 
+ Fri, 03 Oct 2025 08:40:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKXnyKoVCB3VFVroJi84btCmkfIQyy5XrAgtfHBnJWYCjGEWfiUuj9J4ksFHEN2bRkXXef9g==
+X-Received: by 2002:a05:6214:2428:b0:788:82e0:3a9 with SMTP id
+ 6a1803df08f44-879dc443233mr39547206d6.21.1759506028470; 
+ Fri, 03 Oct 2025 08:40:28 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.47
+ 6a1803df08f44-878bb53d91fsm40656746d6.23.2025.10.03.08.40.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 08:40:47 -0700 (PDT)
+ Fri, 03 Oct 2025 08:40:28 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PULL 41/45] migration: cpr-exec save and load
-Date: Fri,  3 Oct 2025 11:39:44 -0400
-Message-ID: <20251003153948.1304776-42-peterx@redhat.com>
+ Arun Menon <armenon@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 25/45] migration: Add error-parameterized function variants in
+ VMSD struct
+Date: Fri,  3 Oct 2025 11:39:28 -0400
+Message-ID: <20251003153948.1304776-26-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
 References: <20251003153948.1304776-1-peterx@redhat.com>
@@ -91,6 +93,7 @@ X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,156 +111,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Arun Menon <armenon@redhat.com>
 
-To preserve CPR state across exec, create a QEMUFile based on a memfd, and
-keep the memfd open across exec.  Save the value of the memfd in an
-environment variable so post-exec QEMU can find it.
+- We need to have good error reporting in the callbacks in
+  VMStateDescription struct. Specifically pre_save, pre_load
+  and post_load callbacks.
+- It is not possible to change these functions everywhere in one
+  patch, therefore, we introduce a duplicate set of callbacks
+  with Error object passed to them.
+- So, in this commit, we implement 'errp' variants of these callbacks,
+  introducing an explicit Error object parameter.
+- This is a functional step towards transitioning the entire codebase
+  to the new error-parameterized functions.
+- Deliberately called in mutual exclusion from their counterparts,
+  to prevent conflicts during the transition.
+- New impls should preferentally use 'errp' variants of
+  these methods, and existing impls incrementally converted.
+  The variants without 'errp' are intended to be removed
+  once all usage is converted.
 
-These new functions are called in a subsequent patch.
-
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Link: https://lore.kernel.org/r/1759332851-370353-6-git-send-email-steven.sistare@oracle.com
-[peterx: fix build for Windows]
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-26-36f11a6fb9d3@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/cpr.h |  5 +++
- migration/cpr-exec.c    | 99 +++++++++++++++++++++++++++++++++++++++++
- migration/meson.build   |  1 +
- 3 files changed, 105 insertions(+)
- create mode 100644 migration/cpr-exec.c
+ docs/devel/migration/main.rst | 19 +++++++++++++++++++
+ include/migration/vmstate.h   | 14 ++++++++++++++
+ migration/vmstate.c           | 31 ++++++++++++++++++++++++++++---
+ 3 files changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 2b074d7a65..b84389ff04 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -53,4 +53,9 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
- QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
- QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+index 6493c1d2bc..1afe7b9689 100644
+--- a/docs/devel/migration/main.rst
++++ b/docs/devel/migration/main.rst
+@@ -444,6 +444,25 @@ The functions to do that are inside a vmstate definition, and are called:
+   This function is called after we save the state of one device
+   (even upon failure, unless the call to pre_save returned an error).
  
-+QEMUFile *cpr_exec_output(Error **errp);
-+QEMUFile *cpr_exec_input(Error **errp);
-+void cpr_exec_persist_state(QEMUFile *f);
-+bool cpr_exec_has_state(void);
-+void cpr_exec_unpersist_state(void);
- #endif
-diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-new file mode 100644
-index 0000000000..81d84425e1
---- /dev/null
-+++ b/migration/cpr-exec.c
-@@ -0,0 +1,99 @@
-+/*
-+ * Copyright (c) 2021-2025 Oracle and/or its affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++Following are the errp variants of these functions.
 +
-+#include "qemu/osdep.h"
-+#include "qemu/cutils.h"
-+#include "qemu/memfd.h"
-+#include "qapi/error.h"
-+#include "io/channel-file.h"
-+#include "io/channel-socket.h"
-+#include "migration/cpr.h"
-+#include "migration/qemu-file.h"
-+#include "migration/misc.h"
-+#include "migration/vmstate.h"
-+#include "system/runstate.h"
++- ``int (*pre_load_errp)(void *opaque, Error **errp);``
 +
-+#define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
++  This function is called before we load the state of one device.
 +
-+static QEMUFile *qemu_file_new_fd_input(int fd, const char *name)
-+{
-+    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
-+    QIOChannel *ioc = QIO_CHANNEL(fioc);
-+    qio_channel_set_name(ioc, name);
-+    return qemu_file_new_input(ioc);
-+}
++- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
 +
-+static QEMUFile *qemu_file_new_fd_output(int fd, const char *name)
-+{
-+    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
-+    QIOChannel *ioc = QIO_CHANNEL(fioc);
-+    qio_channel_set_name(ioc, name);
-+    return qemu_file_new_output(ioc);
-+}
++  This function is called after we load the state of one device.
 +
-+void cpr_exec_persist_state(QEMUFile *f)
-+{
-+    QIOChannelFile *fioc = QIO_CHANNEL_FILE(qemu_file_get_ioc(f));
-+    int mfd = dup(fioc->fd);
-+    char val[16];
++- ``int (*pre_save_errp)(void *opaque, Error **errp);``
 +
-+    /* Remember mfd in environment for post-exec load */
-+    qemu_clear_cloexec(mfd);
-+    snprintf(val, sizeof(val), "%d", mfd);
-+    g_setenv(CPR_EXEC_STATE_NAME, val, 1);
-+}
++  This function is called before we save the state of one device.
 +
-+static int cpr_exec_find_state(void)
-+{
-+    const char *val = g_getenv(CPR_EXEC_STATE_NAME);
-+    int mfd;
++New impls should preferentally use 'errp' variants of these
++methods and existing impls incrementally converted.
++The variants without 'errp' are intended to be removed
++once all usage is converted.
 +
-+    assert(val);
-+    g_unsetenv(CPR_EXEC_STATE_NAME);
-+    assert(!qemu_strtoi(val, NULL, 10, &mfd));
-+    return mfd;
-+}
+ Example: You can look at hpet.c, that uses the first three functions
+ to massage the state that is transferred.
+ 
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 5fe9bbf390..5567fd78d0 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -200,14 +200,28 @@ struct VMStateDescription {
+      * exclusive. For this reason, also early_setup VMSDs are migrated in a
+      * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
+      * a QEMU_VM_SECTION_START section.
++     *
++     * There are duplicate impls of the post/pre save/load hooks.
++     * New impls should preferentally use 'errp' variants of these
++     * methods and existing impls incrementally converted.
++     * The variants without 'errp' are intended to be removed
++     * once all usage is converted.
++     *
++     * For the errp variants,
++     * Returns: 0 on success,
++     *          <0 on error where -value is an error number from errno.h
+      */
 +
-+bool cpr_exec_has_state(void)
-+{
-+    return g_getenv(CPR_EXEC_STATE_NAME) != NULL;
-+}
-+
-+void cpr_exec_unpersist_state(void)
-+{
-+    int mfd;
-+    const char *val = g_getenv(CPR_EXEC_STATE_NAME);
-+
-+    g_unsetenv(CPR_EXEC_STATE_NAME);
-+    assert(val);
-+    assert(!qemu_strtoi(val, NULL, 10, &mfd));
-+    close(mfd);
-+}
-+
-+QEMUFile *cpr_exec_output(Error **errp)
-+{
-+    int mfd;
-+
-+#ifdef CONFIG_LINUX
-+    mfd = qemu_memfd_create(CPR_EXEC_STATE_NAME, 0, false, 0, 0, errp);
-+#else
-+    mfd = -1;
-+#endif
-+
-+    if (mfd < 0) {
-+        return NULL;
-+    }
-+
-+    return qemu_file_new_fd_output(mfd, CPR_EXEC_STATE_NAME);
-+}
-+
-+QEMUFile *cpr_exec_input(Error **errp)
-+{
-+    int mfd = cpr_exec_find_state();
-+
-+    lseek(mfd, 0, SEEK_SET);
-+    return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
-+}
-diff --git a/migration/meson.build b/migration/meson.build
-index 0f71544a82..16909d54c5 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -16,6 +16,7 @@ system_ss.add(files(
-   'channel-block.c',
-   'cpr.c',
-   'cpr-transfer.c',
-+  'cpr-exec.c',
-   'cpu-throttle.c',
-   'dirtyrate.c',
-   'exec.c',
+     bool early_setup;
+     int version_id;
+     int minimum_version_id;
+     MigrationPriority priority;
+     int (*pre_load)(void *opaque);
++    int (*pre_load_errp)(void *opaque, Error **errp);
+     int (*post_load)(void *opaque, int version_id);
++    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+     int (*pre_save)(void *opaque);
++    int (*pre_save_errp)(void *opaque, Error **errp);
+     int (*post_save)(void *opaque);
+     bool (*needed)(void *opaque);
+     bool (*dev_unplug_pending)(void *opaque);
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index ad8e5b71ae..81eadde553 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -134,6 +134,7 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp)
+ {
++    ERRP_GUARD();
+     const VMStateField *field = vmsd->fields;
+     int ret = 0;
+ 
+@@ -152,7 +153,16 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
+         return -EINVAL;
+     }
+-    if (vmsd->pre_load) {
++    if (vmsd->pre_load_errp) {
++        ret = vmsd->pre_load_errp(opaque, errp);
++        if (ret < 0) {
++            error_prepend(errp, "pre load hook failed for: '%s', "
++                          "version_id: %d, minimum version_id: %d, "
++                          "ret: %d: ", vmsd->name, vmsd->version_id,
++                          vmsd->minimum_version_id, ret);
++            return ret;
++        }
++    } else if (vmsd->pre_load) {
+         ret = vmsd->pre_load(opaque);
+         if (ret) {
+             error_setg(errp, "pre load hook failed for: '%s', "
+@@ -245,7 +255,14 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         qemu_file_set_error(f, ret);
+         return ret;
+     }
+-    if (vmsd->post_load) {
++    if (vmsd->post_load_errp) {
++        ret = vmsd->post_load_errp(opaque, version_id, errp);
++        if (ret < 0) {
++            error_prepend(errp, "post load hook failed for: %s, version_id: "
++                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
++                          vmsd->version_id, vmsd->minimum_version_id, ret);
++        }
++    } else if (vmsd->post_load) {
+         ret = vmsd->post_load(opaque, version_id);
+         if (ret < 0) {
+             error_setg(errp,
+@@ -414,12 +431,20 @@ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                          void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
+ {
++    ERRP_GUARD();
+     int ret = 0;
+     const VMStateField *field = vmsd->fields;
+ 
+     trace_vmstate_save_state_top(vmsd->name);
+ 
+-    if (vmsd->pre_save) {
++    if (vmsd->pre_save_errp) {
++        ret = vmsd->pre_save_errp(opaque, errp);
++        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
++        if (ret < 0) {
++            error_prepend(errp, "pre-save for %s failed, ret: %d: ",
++                          vmsd->name, ret);
++        }
++    } else if (vmsd->pre_save) {
+         ret = vmsd->pre_save(opaque);
+         trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+         if (ret) {
 -- 
 2.50.1
 
