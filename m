@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5349CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Oct 2025 23:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429D9CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 00:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4T9n-0006aB-4x; Thu, 02 Oct 2025 19:56:19 -0400
+	id 1v4TJG-0000aB-M8; Thu, 02 Oct 2025 20:06:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4T9i-0006Wm-SG
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 19:56:14 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1v4TJ8-0000Z7-JS
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 20:05:59 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v4T9T-0004YX-Po
- for qemu-devel@nongnu.org; Thu, 02 Oct 2025 19:56:13 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b3e44f22f15so232228366b.2
- for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 16:55:53 -0700 (PDT)
+ id 1v4TJ0-0000A3-Ay
+ for qemu-devel@nongnu.org; Thu, 02 Oct 2025 20:05:57 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-639102bba31so133808a12.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Oct 2025 17:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759449349; x=1760054149; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759449940; x=1760054740; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HPJn7z4uEK32lSgqCo6CeLfUB/KCEthQ234SXUx/6zs=;
- b=igiO2L8s2hb6W9dMaAWcxvoiV1pWQidkS1nPL1YUgo67YiZQlH/tsPPJXcCVOxmk5s
- nEG31tzqv80NtTgEA4bY4W6b88JfrM4HxCjY96NYgjY2wLZzbqQlAlZMd7EMLX82dalQ
- a7zTczMA/R86/1s7HpX+fl+P911GE7P3FoZIHSoPanF5jtKTH2BNSIMwzaBjUSwvr26+
- FdNiA2eZ3R7y2iy5uroxCFV9YFD3OVEUMmQfnYIFXhLtYSJTFpcA9ymkCoxpnJEph6JB
- 7mzw/eu/fKmsnIBkglOe5VimzXhw2hxzqqzLnb4t1Ywbm/0zeJ3+jUptQvqxdVP9O+WW
- TNzg==
+ bh=QTe+LUorf9LNR+vkn5k/y0M2mYefvNFT9dhW3DWMrCE=;
+ b=gbRdj2YdrxqfuZRsx3Qw/DgOvMBmqZJPOyfnSCjoIgDizETYSNhROri9MHowloKzCi
+ ov57Dmm73sk8HjSrfvCTopwJlwFwZowbIEHLT5U1wHg/AM3+u9O9aQNdskz/D6pkiGKj
+ t/dA+FLyqC0FATcIBkb6ebOrgaf+Hn8/G1wW8nGY6/BeUZmMj9VLZPDdXH82pwOY8qXr
+ GZFK2ToMxt9sKrDypf1O4+z8aHOrFPRcMpsxW183OE2BbQDit+nH+GA7dA5NRdDwjsAD
+ nftJPJb8CC5ckwPNBklNFLn2/S2di9kvUaekzkrzDq7fY7jB8y0bJV/CMM3naMDk6M0U
+ 2QVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759449349; x=1760054149;
+ d=1e100.net; s=20230601; t=1759449940; x=1760054740;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HPJn7z4uEK32lSgqCo6CeLfUB/KCEthQ234SXUx/6zs=;
- b=ttPMgYMEIfQcw/PGFHmv0TvUdU9EPSX/JHmihvSZtHPcnH5Umtq0LtsXXUhIv2jqM8
- t1TEG/kYQpYsu42Vskp9M3ENflEXviQ1SoepaAYZy8Dd5bzxDpaX733tOwQfB6M6FryM
- YUkGMHfL+p2zGhSOLa2u5+PfxhXOJfp4GNAXVZWUAfSk+xHLyUdlUTjH3kIWWDM9+nUO
- 24eHTCLq+PtAWP3lYGhh9aqN7+msngEkEvMPF00ra7z8bBBii+RnjNtMDIwWzjo0GHJy
- Vt+TWg+lELTi7rvU+gwHz6A+89q0AFjg5SSjqfsTjn+U0r6R82julEmAShqJUKTZqTaH
- 43+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUv3MRQs13C6+KIQC5UxKTqj6YCvEN8pHi04Zfy5JCQPd7uTnTAHACcvkFJvD/3p74PWjjM6e1emB44@nongnu.org
-X-Gm-Message-State: AOJu0Yzb9OJyOZZIgkqDK+pNdBMAkRugysbduMqfhd8aIVw4JlBQAvWy
- eyjK4j1xcP1ILLIgCMBj8PCVgf8Qlx9ADoEBMWOef0LKgtB7jSIwWo05pYD9AnUG5RUVPnfwIVc
- 8QDUdbFFo1qS4KcaZPuraYdqH4BH/5XY=
-X-Gm-Gg: ASbGncul96bPxEMqrwXAcePDZLxBpLif0s8QvqV8rWph6Eur1tbfrkhpP5MQoEJ5nw/
- HpI+dhAvGkjewgkQYiJvBlWisOKNvBPZr53OvyaVJgzm4lwVsPtErQfNqa+fnGj70nvCk/e2eix
- RLxvrmQa7jmpGsMSwgeyhbvUg27FHHQNQEJZPMGOziLovcckfVifRKT0XWP5kjO8fAQTF/1/D5q
- QRLshLni22sfUOKTn8d/Sl7VsysiTjUz1rTc3xYkZUJu4lVuYiFxLPnc6YmrQ==
-X-Google-Smtp-Source: AGHT+IFRdWJNdDZw6eBup70XP0LN5w23ktG33EvRMs6/gw03Rm1cI6ewqErfu3KPywOAijcqNO8QBTGrO4meSQzfwaA=
-X-Received: by 2002:a17:907:9486:b0:b3c:f48:ed57 with SMTP id
- a640c23a62f3a-b49c334efb0mr127220766b.35.1759449349116; Thu, 02 Oct 2025
- 16:55:49 -0700 (PDT)
+ bh=QTe+LUorf9LNR+vkn5k/y0M2mYefvNFT9dhW3DWMrCE=;
+ b=bIiU6V5tP1UUk7sSx5AnYU3aslet3HfS3/gS5JSzAmhGESIdfoqtTP8CnfQks6Qvi6
+ JrQMN/ajuEtGggpHfDruiNqZ6LHiDiCA4owxYutbLfFUmSE9+m1ivAoa2Zfgh3Uwl6nP
+ ZMGWg8zBlkl6+zcBq7ChoQXKw3yhKNzVU7kSP2+k9e/QV0nuzhxK6IQ9zh+Vwe9K0CWx
+ ohdYG6PkxMCrA5T0LGcpb+ssWvHvjVJvQoiDRyLNNSruwObkXLC+BZbeZ4lXIkx760FD
+ qEpdyTSZkIHs8YSgBNTWZZ4IDtncmcSSEWq/K9AceodPHaeEq7ruILrwaYG2lh76X69c
+ 4Uhg==
+X-Gm-Message-State: AOJu0YxKmDdaETQNyp3Jf9f/uhG4kLu8yCXpIX4wLqSPLdOZ7VWv1fr1
+ UGBs7zanbDTr5J4bm/cJoQXlJC3NzjzRzUhPE+q9vZ+6/cL0QZZrMPR70tKxwRGuELC/kn1GUA2
+ WFgoFy2BEAwrM+ccxiS04T+2kI8ZMXUOpfw==
+X-Gm-Gg: ASbGncvhKBXljwrFVr7G8JCIKT2d4vC/SyX3YdR6MiWwrfto6dQVC9WEITBPuFPthLl
+ M2VpXR0YyW4AaVgUWvinysf1ge8S+f/9Eop+h3HbNlYRri2OILfibR7js6MCCPKKNrO1IsVLwp9
+ 445Xg18Km9d8Qrsmx1G9/KCmOAcvWksF4PtWkjMiJyHpwn3hnJNJPhqaU7iDsEYpbsAGYknhXOG
+ 1nmqCBxt7GTtQPje93NwwAc8SZGck2qXKfhqvBTLaezmxEhCxqdpoew66/FBg==
+X-Google-Smtp-Source: AGHT+IGq9DDuuXRw9GnvhCoKsRoxDdW3PqQvdVl74Ysyb6KEtWF0s12+HcJ04HW3+j3hrEgmpu+DvAej/9aN1D2BAVY=
+X-Received: by 2002:a17:907:26c8:b0:b3d:98fa:b3fe with SMTP id
+ a640c23a62f3a-b49c344524cmr141665966b.63.1759449939407; Thu, 02 Oct 2025
+ 17:05:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-6-anjo@rev.ng>
- <e1748ad3-3475-4cce-8add-2a1d76994f0b@linaro.org>
- <cbc22e4a-84dd-4209-82fd-ec56ea138d27@linaro.org>
-In-Reply-To: <cbc22e4a-84dd-4209-82fd-ec56ea138d27@linaro.org>
+ <20251001073306.28573-7-anjo@rev.ng>
+In-Reply-To: <20251001073306.28573-7-anjo@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 3 Oct 2025 09:55:22 +1000
-X-Gm-Features: AS18NWBNyThXgjn0BUg9eRw6VLHLf8bbcNPEyC7gblqPxoJ6pV7NjihNMRs5xo4
-Message-ID: <CAKmqyKO6rvjBe56pDPaa_TQn8z9npQ6h_F=JkVLWBA8qHciQig@mail.gmail.com>
-Subject: Re: [PATCH v2 05/33] target/riscv: Combine mhpmevent and mhpmeventh
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org, philmd@linaro.org, 
+Date: Fri, 3 Oct 2025 10:05:13 +1000
+X-Gm-Features: AS18NWD7r6420fTysJwCNe_B-6DSDOvjSA3hlcrbZKRMmq_gpPjOhDnsMA0Zx9A
+Message-ID: <CAKmqyKPOhrFQc0WSgarBwNyGivV7eqZ4btzkz5mrX7n4wutPZg@mail.gmail.com>
+Subject: Re: [PATCH v2 06/33] target/riscv: Combine mcyclecfg and mcyclecfgh
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
  richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,110 +97,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 3, 2025 at 5:37=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Wed, Oct 1, 2025 at 5:36=E2=80=AFPM Anton Johansson via
+<qemu-devel@nongnu.org> wrote:
 >
-> On 10/2/25 12:08 PM, Pierrick Bouvier wrote:
-> > On 10/1/25 12:32 AM, Anton Johansson wrote:
-> >> According to version 20250508 of the privileged specification,
-> >> mhpmeventn is 64 bits in size and mhpmeventnh is only ever used
-> >> when XLEN =3D=3D 32 and accesses the top 32 bits of the 64-bit
-> >> mhpmeventn registers. Combine the two arrays of target_ulong
-> >> mhpmeventh[] and mhpmevent[] to a single array of uint64_t.
-> >>
-> >> This also allows for some minor code simplification where branches
-> >> handling either mhpmeventh[] or mhpmevent[] could be combined.
-> >>
-> >> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> >> ---
-> >>    target/riscv/cpu.h     | 10 +++----
-> >>    target/riscv/csr.c     | 67 +++++++++++++++------------------------=
----
-> >>    target/riscv/machine.c |  3 +-
-> >>    target/riscv/pmu.c     | 53 ++++++++-------------------------
-> >>    4 files changed, 42 insertions(+), 91 deletions(-)
-> >>
-> >> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> >> index 3235108112..64b9964028 100644
-> >> --- a/target/riscv/cpu.h
-> >> +++ b/target/riscv/cpu.h
-> >> @@ -427,11 +427,11 @@ struct CPUArchState {
-> >>        /* PMU counter state */
-> >>        PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-> >>
-> >> -    /* PMU event selector configured values. First three are unused *=
-/
-> >> -    target_ulong mhpmevent_val[RV_MAX_MHPMEVENTS];
-> >> -
-> >> -    /* PMU event selector configured values for RV32 */
-> >> -    target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
-> >> +    /*
-> >> +     * PMU event selector configured values. First three are unused.
-> >> +     * For RV32 top 32 bits are accessed via the mhpmeventh CSR.
-> >> +     */
-> >> +    uint64_t mhpmevent_val[RV_MAX_MHPMEVENTS];
-> >>
-> >>        PMUFixedCtrState pmu_fixed_ctrs[2];
-> >>
-> >> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> >> index 859f89aedd..2d8916ee40 100644
-> >> --- a/target/riscv/csr.c
-> >> +++ b/target/riscv/csr.c
-> >> @@ -1166,8 +1166,9 @@ static RISCVException read_mhpmevent(CPURISCVSta=
-te *env, int csrno,
-> >>                                         target_ulong *val)
-> >>    {
-> >>        int evt_index =3D csrno - CSR_MCOUNTINHIBIT;
-> >> +    bool rv32 =3D riscv_cpu_mxl(env) =3D=3D MXL_RV32;
-> >>
-> >> -    *val =3D env->mhpmevent_val[evt_index];
-> >> +    *val =3D extract64(env->mhpmevent_val[evt_index], 0, rv32 ? 32 : =
-64);
-> >>
-> >>        return RISCV_EXCP_NONE;
-> >>    }
-> >> @@ -1176,13 +1177,11 @@ static RISCVException write_mhpmevent(CPURISCV=
-State *env, int csrno,
-> >>                                          target_ulong val, uintptr_t r=
-a)
-> >>    {
-> >>        int evt_index =3D csrno - CSR_MCOUNTINHIBIT;
-> >> -    uint64_t mhpmevt_val =3D val;
-> >> +    uint64_t mhpmevt_val;
-> >>        uint64_t inh_avail_mask;
-> >>
-> >>        if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> >> -        env->mhpmevent_val[evt_index] =3D val;
-> >> -        mhpmevt_val =3D mhpmevt_val |
-> >> -                      ((uint64_t)env->mhpmeventh_val[evt_index] << 32=
-);
-> >> +        mhpmevt_val =3D deposit64(env->mhpmevent_val[evt_index], 0, 3=
-2, val);
-> >
-> > Maybe I missed something, but should it be:
-> > deposit64(env->mhpmevent_val[evt_index], 32, 32, val)
-> > instead?
-> >
-> > Reading the rest of the patch, I'm a bit confused about which bits are
-> > supposed to be used in 32/64 mode.
+> According to version 20250508 of the privileged specification, mcyclecfg
+> is a 64-bit register and mcyclecfgh refers to the top 32 bits of this
+> register when XLEN =3D=3D 32.  No real advantage is gained by keeping
+> them separate, and combining them allows for slight simplification.
 >
-> Indeed I missed something, it's more clear with next patchs combining
-> low/high parts.
-
-Besides this missed part the patch looks good.
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-> The concern I have that is left is regarding the definition of
-> MHPMEVENT_BIT_OF. It seems to be out of sync with what we have now given
-> that we now keep lower part in lower bits.
-
-That might be a bug, it should be using MHPMEVENTH_BIT_OF with mhpmeventh_v=
-al
-
-
 Alistair
 
-> Existing implementation is quite confusing to be honest.
+> ---
+>  target/riscv/cpu.h |  3 +--
+>  target/riscv/csr.c | 28 +++++++++++++++++-----------
+>  2 files changed, 18 insertions(+), 13 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 64b9964028..60f7611c00 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -419,8 +419,7 @@ struct CPUArchState {
+>      uint32_t mcountinhibit;
+>
+>      /* PMU cycle & instret privilege mode filtering */
+> -    target_ulong mcyclecfg;
+> -    target_ulong mcyclecfgh;
+> +    uint64_t mcyclecfg;
+>      target_ulong minstretcfg;
+>      target_ulong minstretcfgh;
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 2d8916ee40..77d0bd7bca 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1060,7 +1060,8 @@ static RISCVException read_hpmcounterh(CPURISCVStat=
+e *env, int csrno,
+>  static RISCVException read_mcyclecfg(CPURISCVState *env, int csrno,
+>                                       target_ulong *val)
+>  {
+> -    *val =3D env->mcyclecfg;
+> +    bool rv32 =3D riscv_cpu_mxl(env) =3D=3D MXL_RV32;
+> +    *val =3D extract64(env->mcyclecfg, 0, rv32 ? 32 : 64);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -1070,7 +1071,7 @@ static RISCVException write_mcyclecfg(CPURISCVState=
+ *env, int csrno,
+>      uint64_t inh_avail_mask;
+>
+>      if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> -        env->mcyclecfg =3D val;
+> +        env->mcyclecfg =3D deposit64(env->mcyclecfg, 0, 32, val);
+>      } else {
+>          /* Set xINH fields if priv mode supported */
+>          inh_avail_mask =3D ~MHPMEVENT_FILTER_MASK | MCYCLECFG_BIT_MINH;
+> @@ -1089,7 +1090,7 @@ static RISCVException write_mcyclecfg(CPURISCVState=
+ *env, int csrno,
+>  static RISCVException read_mcyclecfgh(CPURISCVState *env, int csrno,
+>                                        target_ulong *val)
+>  {
+> -    *val =3D env->mcyclecfgh;
+> +    *val =3D extract64(env->mcyclecfg, 32, 32);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -1107,7 +1108,7 @@ static RISCVException write_mcyclecfgh(CPURISCVStat=
+e *env, int csrno,
+>      inh_avail_mask |=3D (riscv_has_ext(env, RVH) &&
+>                         riscv_has_ext(env, RVS)) ? MCYCLECFGH_BIT_VSINH :=
+ 0;
+>
+> -    env->mcyclecfgh =3D val & inh_avail_mask;
+> +    env->mcyclecfg =3D deposit64(env->mcyclecfg, 32, 32, val & inh_avail=
+_mask);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -1246,8 +1247,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counter=
+s_val(CPURISCVState *env,
+>      g_assert(rv32 || !upper_half);
+>
+>      if (counter_idx =3D=3D 0) {
+> -        cfg_val =3D rv32 ? ((uint64_t)env->mcyclecfgh << 32) :
+> -                  env->mcyclecfg;
+> +        cfg_val =3D env->mcyclecfg;
+>      } else if (counter_idx =3D=3D 2) {
+>          cfg_val =3D rv32 ? ((uint64_t)env->minstretcfgh << 32) :
+>                    env->minstretcfg;
+> @@ -1521,8 +1521,12 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, i=
+nt evt_index,
+>  }
+>
+>  static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulon=
+g *val,
+> -                            target_ulong new_val, target_ulong wr_mask)
+> +                          target_ulong new_val, uint64_t wr_mask)
+>  {
+> +    /*
+> +     * wr_mask is 64-bit so upper 32 bits of mcyclecfg and minstretcfg
+> +     * are retained.
+> +     */
+>      switch (cfg_index) {
+>      case 0:             /* CYCLECFG */
+>          if (wr_mask) {
+> @@ -1548,8 +1552,9 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int c=
+fg_index, target_ulong *val,
+>  }
+>
+>  static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulo=
+ng *val,
+> -                            target_ulong new_val, target_ulong wr_mask)
+> +                           target_ulong new_val, target_ulong wr_mask)
+>  {
+> +    uint64_t cfgh;
+>
+>      if (riscv_cpu_mxl(env) !=3D MXL_RV32) {
+>          return RISCV_EXCP_ILLEGAL_INST;
+> @@ -1557,12 +1562,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, in=
+t cfg_index, target_ulong *val,
+>
+>      switch (cfg_index) {
+>      case 0:         /* CYCLECFGH */
+> +        cfgh =3D extract64(env->mcyclecfg, 32, 32);
+>          if (wr_mask) {
+>              wr_mask &=3D ~MCYCLECFGH_BIT_MINH;
+> -            env->mcyclecfgh =3D (new_val & wr_mask) |
+> -                              (env->mcyclecfgh & ~wr_mask);
+> +            cfgh =3D (new_val & wr_mask) | (cfgh & ~wr_mask);
+> +            env->mcyclecfg =3D deposit64(env->mcyclecfg, 32, 32, cfgh);
+>          } else {
+> -            *val =3D env->mcyclecfgh;
+> +            *val =3D cfgh;
+>          }
+>          break;
+>      case 2:          /* INSTRETCFGH */
+> --
+> 2.51.0
+>
 >
 
