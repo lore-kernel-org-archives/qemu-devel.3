@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70F96CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 17:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F408ACCA471
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 17:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4jGz-0001a0-Vl; Fri, 03 Oct 2025 13:08:50 -0400
+	id 1v4jHS-0001pJ-4h; Fri, 03 Oct 2025 13:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4jGv-0001Wf-EJ
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 13:08:46 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1v4jHK-0001l1-VM
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 13:09:12 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v4jGR-0006F3-5i
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 13:08:44 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-28e8c5d64d8so24202445ad.1
- for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 10:08:09 -0700 (PDT)
+ id 1v4jGW-0006Fo-PA
+ for qemu-devel@nongnu.org; Fri, 03 Oct 2025 13:09:09 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b4ee87cc81eso2275858a12.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 10:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759511288; x=1760116088; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759511292; x=1760116092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VuiQL7LRyA5U3n1ikOnovxnUWcpAWxmhlkEQq/p9QIs=;
- b=KAR3aeo7k2isp85BM/jZF4Ej3AaeSF0BhDSyzqANBq3ljbWgfWd5DffsJkIxi4olzu
- o8n2IWGhkAK0Y07VCEW2TwOvp+obK+IjPPpXzaTg8X9txAV51EESi2GKzjSZlfZVxuCi
- yGr5ZtjERlm6CqJTA29KCzvyBYI9DKdO/FwZyJYctOXr7NWEzWcI8oeq6YPDNsR8G8Jq
- NzsZuih4Mcg2xYoBYswybYViqGMoFs/XjFTXgasyhI9LhJqf7buBUxgqBCm+h0y/9inS
- usTEmobNXjEIiYb6gCeuXR3S8NPHeT7lSVi8uVrEO9c8ocD+bavCIxXbGkS20Q9/mB6f
- QuAg==
+ bh=u8jzmwbEOdXd1Y+zB9l972AjYHk0b/qSjoQoHCfbnn8=;
+ b=bu9OG5LNSjnHxd1DmJKkmhXBF7X7iMY6IuF7iKByFiMduej+ivfIltwkMRR/4KiyIT
+ RFm2sHW9TNYSctCfZHUG3IcEkr5ndyTbu/YIugRB3ILabtnKfXS34/9UkBzHyBnNgLxm
+ TtIS8wmcBxvskDQasQptRTFP6+sw+zj/CtuuMYzMfu9KDHuS4LHmdBeMRxOfSHt06fkK
+ KKG7i6frHII8hH12SJJk8J6P1BbHm53ZrWPDiBdYxVoJmVuwh2H959reFhPEbukvo+Bf
+ R98cFQoEJnva+mhaxzM29KXm8YjbLr4eaPUDCcDgf3KfHQmR9hRgvUqsedBYR88xSNRI
+ YScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759511288; x=1760116088;
+ d=1e100.net; s=20230601; t=1759511292; x=1760116092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VuiQL7LRyA5U3n1ikOnovxnUWcpAWxmhlkEQq/p9QIs=;
- b=uKCcedruOqrVH5HBkkzQORAmC1HzppjwewIRNDdwKnfZ/Cc+hEW5UDVUGZuNwOaLP7
- JMzIXsG1nzN4be/Xyg8afsKyf+kuRoacT7Y5MK/n1i0Ko7mf0psMgZMInEYV8CaHcLK7
- a5IeSKU48fKL5A42F2kG8Y5usK7glp9FGYF6G5Nie9f2QgYGvZqQf9UVRTPPQTZoihTH
- +UK4euAYnbXRgJAd3KL1flJO/LqR6Rzhcq/NjSbAUeOunHkF8N06VZ5XleYfL9zo+Fk3
- ITzIpmuvL9xWIywL7/TZq6wEkYkJZdfZDKxqtJ/zU455BY+gNVKJRMc/VgGEIbXHQBcI
- bypw==
-X-Gm-Message-State: AOJu0YzoZBlpNGtsGIWFxS6mD5TwAopZmAsdBaQXsHa3QhPaagX0spMW
- +gdM2c44H8RfGKOVQWcSrM8K7SzhPtGreJ6mnrvAjMhxNuqK09EGvKEp5dvlorhBZcLPh69O4HR
- wSf79lk4=
-X-Gm-Gg: ASbGnctLoUzhfN7ThvZ1t/ZGrWi1BAvaLEk+OhSuhkacy7wuHvL6xyEOZmEsXvoNvR3
- gUsdyQL/Vuyi5iRA17CtnF8X85hl6N8BXnap1cRnsp6Wfjwc00PZTavnfuOCdEongcAmFM6fvD1
- NCZdBtn6lbCVYycVNzw2lDrLs+WiZjZR8ctS3jELY/q9o4BlEpGLD2is1NEsVqYqBzhhYiSEo5J
- ILa/K2ycv9Fbxe0Xz70/50TfgTcyvaxHUdN+1Vz0HGqnIIuvSKfBpCZJNbaNJ/5KpPYU1p5DwJk
- nvjej3Tg57qoUP96vQQRYTy0fX3CB+pPcwgUlRAzEBRbqppZKLoOQcaD+XQbEM4v5OoDTdGYzvE
- s8zDnlxhtPG9tf4rK3q5QDaJBS1j1XcIpTo7Q9KwrapVqWEoF7NHhZcQmCY1GequNztg=
-X-Google-Smtp-Source: AGHT+IEWUF3+eSYDnnqmCblM2H7pgaBGTrLv+1qHXcUsICNayLjPbbJTXczq5RCVxxzT69ki8p6RIg==
-X-Received: by 2002:a17:903:3c4e:b0:269:9e4d:4c8b with SMTP id
- d9443c01a7336-28e9a548e86mr51520625ad.21.1759511288174; 
- Fri, 03 Oct 2025 10:08:08 -0700 (PDT)
+ bh=u8jzmwbEOdXd1Y+zB9l972AjYHk0b/qSjoQoHCfbnn8=;
+ b=k9DoblIwEmHqPp0XhRR4LggB64lU5LJIGJ8qzjbqKjoC3pxHIrN6iiO3oMWsRHaguD
+ BiIseVY/9rA9qvcaJRlyW12SluBEm2Dd9b2EoI7nRpwRjQK/A8oBAULaZ25TplTxoO+t
+ OcrWxu7zHrAykwzgMaYJ46z/5JeDn/BrjMb8EkCoq8NrYChXYhWb9vXDR4b7V/f+7tT2
+ Xz7UeUkBVOloJplmj1crc+NY9hxN4Tlo5s6smKFnklztM5/yL0QQlsMwmnwp0FiFpDW1
+ 9RYmESExoPJjRBI87DZp269o3vsL8iTtdV+RMH1/c6/kpBPoj1rnpT6/4Azq72lHVg5O
+ feuA==
+X-Gm-Message-State: AOJu0YwSGF8hJw2gjYXV2vjNifPeU+Apn/EB5zxItVyjB0BRKvEHlbdg
+ ez6u3/5FJ2ZDiHHCC4g9Ao8UnDHu1A6GmG7kCe7u5c+3pfELpvDCsJtieE90nDuSOWcyLTX/UNM
+ SOhOemog=
+X-Gm-Gg: ASbGncuvrG1VCn9LuSZMQdlJGg6/tAI2OYrtCdevMIyGtT2QtOOK5jFrRPG3ItqiChj
+ DJnjwotUaQ0X6ZxpMYkLUU1KQCzyuw1lMcJ708UayV9qYH8xIXw4+lmIS771iJ+81PimWXlOSmK
+ MUivOst3RNHZ3PIZBC2lVPnmYvxPkE3EVU9D0gKzsasax6tq2PtLBdzdWF7RQWK3aQbgATdk7ti
+ gJd9meIZ1EzpP/7dBPm9cKAcvYcNFUNKTjSa/qG/nBmAGKyoYRx3CwzkkhzJpsJ3mDdOFvxfL0i
+ tfJq+UXnpy5nnBNqqNU+LstGxWaWhUhrPuL6Y7388NAB0piyL5ME8jFGG/ebyekXebo0HX5FvZs
+ HiqG9DTERHNmUTR3yFIj/Grf2g751XH4mWBtOgFy1iBBVliEtt4v764E7J77IL1Fvsb4=
+X-Google-Smtp-Source: AGHT+IFUbSL7h/dDpwA3Nx+JYto/xWnQxc9kUgy3u1MpGOdDSzaFETfMceu/QK8A81CMghafCl0NuA==
+X-Received: by 2002:a17:903:3d07:b0:268:500:5ec7 with SMTP id
+ d9443c01a7336-28e9a5b9441mr44641475ad.2.1759511291679; 
+ Fri, 03 Oct 2025 10:08:11 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28e8d110d86sm55327115ad.6.2025.10.03.10.08.07
+ d9443c01a7336-28e8d110d86sm55327115ad.6.2025.10.03.10.08.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Oct 2025 10:08:07 -0700 (PDT)
+ Fri, 03 Oct 2025 10:08:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 07/73] target/arm: Populate PIE in aa64_va_parameters
-Date: Fri,  3 Oct 2025 10:06:54 -0700
-Message-ID: <20251003170800.997167-8-richard.henderson@linaro.org>
+Subject: [PATCH v6 11/73] target/arm: Expand syndrome parameter to
+ raise_exception*
+Date: Fri,  3 Oct 2025 10:06:58 -0700
+Message-ID: <20251003170800.997167-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251003170800.997167-1-richard.henderson@linaro.org>
 References: <20251003170800.997167-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,95 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Select the PIE bit for the translation regime.
-With PIE, the PTE layout changes, forcing HPD.
+Prepare for raising exceptions with 64-bit syndromes.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h |  3 ++-
- target/arm/helper.c    | 19 ++++++++++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ target/arm/internals.h     | 6 +++---
+ target/arm/tcg-stubs.c     | 2 +-
+ target/arm/tcg/op_helper.c | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 1d958dbf68..face1019f5 100644
+index 22947c4b78..b59650959e 100644
 --- a/target/arm/internals.h
 +++ b/target/arm/internals.h
-@@ -1491,7 +1491,7 @@ static inline int arm_granule_bits(ARMGranuleSize gran)
+@@ -304,14 +304,14 @@ FIELD(CNTHCTL, CNTPMASK, 19, 1)
+  * and never returns because we will longjump back up to the CPU main loop.
+  */
+ G_NORETURN void raise_exception(CPUARMState *env, uint32_t excp,
+-                                uint32_t syndrome, uint32_t target_el);
++                                uint64_t syndrome, uint32_t target_el);
  
  /*
-  * Parameters of a given virtual address, as extracted from the
-- * translation control register (TCR) for a given regime.
-+ * translation controls for a given regime.
+  * Similarly, but also use unwinding to restore cpu state.
   */
- typedef struct ARMVAParameters {
-     unsigned tsz    : 8;
-@@ -1506,6 +1506,7 @@ typedef struct ARMVAParameters {
-     bool ha         : 1;
-     bool hd         : 1;
-     ARMGranuleSize gran : 2;
-+    bool pie        : 1;
- } ARMVAParameters;
+ G_NORETURN void raise_exception_ra(CPUARMState *env, uint32_t excp,
+-                                      uint32_t syndrome, uint32_t target_el,
+-                                      uintptr_t ra);
++                                   uint64_t syndrome, uint32_t target_el,
++                                   uintptr_t ra);
  
- /**
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index c19345dec8..ae8948d410 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9380,11 +9380,12 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-                                    bool el1_is_aa32)
- {
-     uint64_t tcr = regime_tcr(env, mmu_idx);
--    bool epd, hpd, tsz_oob, ds, ha, hd;
-+    bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
-     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
-     ARMGranuleSize gran;
-     ARMCPU *cpu = env_archcpu(env);
-     bool stage2 = regime_is_stage2(mmu_idx);
-+    int r_el = regime_el(env, mmu_idx);
- 
-     if (!regime_has_2_ranges(mmu_idx)) {
-         select = 0;
-@@ -9396,8 +9397,17 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-              * Thus disabling them makes things easier during ptw.
-              */
-             hpd = true;
-+            pie = extract64(tcr, 36, 1) && cpu_isar_feature(aa64_s2pie, cpu);
-         } else {
-             hpd = extract32(tcr, 24, 1);
-+            if (r_el == 3) {
-+                pie = (extract64(tcr, 35, 1)
-+                       && cpu_isar_feature(aa64_s1pie, cpu));
-+            } else {
-+                pie = ((env->cp15.tcr2_el[2] & TCR2_PIE)
-+                       && (!arm_feature(env, ARM_FEATURE_EL3)
-+                           || (env->cp15.scr_el3 & SCR_TCR2EN)));
-+            }
-         }
-         epd = false;
-         sh = extract32(tcr, 12, 2);
-@@ -9437,7 +9447,13 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             regime_is_user(env, mmu_idx)) {
-             epd = true;
-         }
-+
-+        pie = ((env->cp15.tcr2_el[r_el] & TCR2_PIE)
-+               && (!arm_feature(env, ARM_FEATURE_EL3)
-+                   || (env->cp15.scr_el3 & SCR_TCR2EN))
-+               && (r_el == 2 || (arm_hcrx_el2_eff(env) & HCRX_TCR2EN)));
-     }
-+    hpd |= pie;
- 
-     gran = sanitize_gran_size(cpu, gran, stage2);
- 
-@@ -9516,6 +9532,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         .ha = ha,
-         .hd = ha && hd,
-         .gran = gran,
-+        .pie = pie,
-     };
+ /*
+  * For AArch64, map a given EL to an index in the banked_spsr array.
+diff --git a/target/arm/tcg-stubs.c b/target/arm/tcg-stubs.c
+index aac99b2672..aeeede8066 100644
+--- a/target/arm/tcg-stubs.c
++++ b/target/arm/tcg-stubs.c
+@@ -16,7 +16,7 @@ void write_v7m_exception(CPUARMState *env, uint32_t new_exc)
+     g_assert_not_reached();
  }
  
+-void raise_exception_ra(CPUARMState *env, uint32_t excp, uint32_t syndrome,
++void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
+                         uint32_t target_el, uintptr_t ra)
+ {
+     g_assert_not_reached();
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 5373e0e998..dd3700dc6f 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -46,7 +46,7 @@ int exception_target_el(CPUARMState *env)
+ }
+ 
+ void raise_exception(CPUARMState *env, uint32_t excp,
+-                     uint32_t syndrome, uint32_t target_el)
++                     uint64_t syndrome, uint32_t target_el)
+ {
+     CPUState *cs = env_cpu(env);
+ 
+@@ -70,7 +70,7 @@ void raise_exception(CPUARMState *env, uint32_t excp,
+     cpu_loop_exit(cs);
+ }
+ 
+-void raise_exception_ra(CPUARMState *env, uint32_t excp, uint32_t syndrome,
++void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
+                         uint32_t target_el, uintptr_t ra)
+ {
+     CPUState *cs = env_cpu(env);
 -- 
 2.43.0
 
