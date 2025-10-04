@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B429CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665C6CCA472
 	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wUh-0001mh-2L; Sat, 04 Oct 2025 03:15:51 -0400
+	id 1v4wV7-0002MX-D7; Sat, 04 Oct 2025 03:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wUa-0001Wh-MD
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:15:46 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wUi-0001xn-UU
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:16:00 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wUY-0005ME-AG
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:15:44 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so22727125e9.1
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:15:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wUg-0005N9-Lo
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:15:52 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3f2cf786abeso1975347f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759562139; x=1760166939; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759562148; x=1760166948; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=N1rIMdk5x26opdfLLDtgGIRHEYlRtV327JInj7x9O5U=;
- b=L/2x8QvE4VZkXsO9XLsbR75wJebz8aAfVCOz6mNKA5nwNntQXd1oSkCGImqKqCnmTL
- l5Fp0Df1O62asalr/IhdeR8uTe141aJTBvxsyMIcq+m5vnnaRSUbe4NzPZhllIx4bhOh
- b/gLrgBPN8VCYOZIRKa55ChCMt9XuuIS5c8AYjmE87/ocoHEHY/m7+Vq96gwpnTZOQzZ
- QaM3nvertOnApgJ8MxwzlPt3AkYP7qg11ZuCIvYOhZ/4k4g508sXNJJo15HmdB0G5Gvn
- zZNWNUtUaYOT0h6qjvXqI8GYQXNKgHrIESgJV2TefbSadwokdEL4QWI3QyiJFQFIClE6
- Qx9w==
+ :reply-to; bh=WF5Bt7esqOMLNtQooANTIYPWL9UFDgUZeAmTDtH6u04=;
+ b=NencHNMZvCPddsj3w2rg2YlcH03HLw36vTt41RVdcQ81dDUI34zAFNalVciBtPiAab
+ bA9aY9WkxjZxpgt7QIjUNKLOXzg7NK5jsg5tlEpRP3G3bE+hmmwIypgKYlZ77Wqu15nL
+ SiyNiShWexbzvNcacbPfaVQt/BjoCiM8HCqi8t+olxWnrRzSzQyLxJ/YBZLg5EC0UZzX
+ /lKnhX6U0R/zE5qWKZ++P/X9lkRfMeZiNYohkX4PDFasd6QTq9u2cKHUQqtMOrwe/l7+
+ Q+J0gdrySbiVyYOogqMLLcpXwRm85BqDirRA4SF5XJXDyOBo60JC/DhYqdsNeKIHA4dv
+ XU5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759562139; x=1760166939;
+ d=1e100.net; s=20230601; t=1759562148; x=1760166948;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N1rIMdk5x26opdfLLDtgGIRHEYlRtV327JInj7x9O5U=;
- b=Yv2zxavtwOgAGwnzrDB41v3C5f/MihYPAthNOWp1Mg62ejQFfRH6QRJXatovkfsGsb
- GQQ9c14l3T7eILMsLxCZ7Zpm7CqTgd1mJwAY/VRF/RNsIK86s0eLH4p7JRYk4Vm5GjeJ
- Bf8T6kZzrkNfHj0TWq8jjQfGIDQ5Yn/pEBGR+YX0LnTdSiACsKbdsYA4BSlxfidOYKNX
- QaUMG9Zx2gze2sb59LHQWxvdlm/NOqzPxYcNcOq9mYPAMfU27rz0t9eEfr69LhFAwFfo
- yNXADKALh0gp4kd53GinkA4RSqs5KDSGH9TkHUt5HaUNKy2aB1BhUMObwLkmGGXhL4Id
- yHSw==
-X-Gm-Message-State: AOJu0Yw4qySwq7L+ffAKfS8B7mF7U26Fb+RrDtkmdaZ6hBlzMvQS4nXd
- vZZZlp4E+s7OL1rsMY5CeiGXENWDm2tNo6NrdXMdQtuVGtfna/Huoq/jtAuIis/jTxqWGmWqZfA
- gNtMppOWvhQ==
-X-Gm-Gg: ASbGnctA5fjdNWB2oXqaB/jeigSdMRKmCpWuacykvgLc0np/sJwo16V8bczcHYKZqyA
- xvyGcAPo3smgU0wPSJ3xTGnksfu6WmYMNPY2/13EHR2hTeANPQOJeJL/YpAtzVAQ6Qtpo2peIUi
- PGG8oX+LJAwX7ZmvcSTcD/Xa/8nyeG8vBilfVGPxrTAWarPTJhlSrF5KS+4Mvd5/UtCJXvsUZuj
- JA0UUWfwWR6SniMk+OmaYlMnmF+vFPOQcPG3rbr6b9KzBzylLv0f2RExRUewrOAYyl4IXAAP8oA
- 7VzGgJ6InoT7qpxOkH7nIJiYzXcWDqySKr+fjWp1M51rAoGb106RUrtCBqH5jls13VQEAPM1edq
- 8v5ELWrFGfkvgdhcGrScYgK/hIebgr2YLSne2I6aSvrs2gNnV8YRCWj87k+OJCMcJ9Y9+10NQV7
- tysRb8vlpIMvAOG5LItH1YVjjPVJlVf6Hkqu0=
-X-Google-Smtp-Source: AGHT+IEtmQ+HborJkBafpVNPtA7PNhjxWb2C/ZgW1HSLqijf4qzMsZREUoIkH7u9uvVtOnr/3B6bqg==
-X-Received: by 2002:a05:600c:3b08:b0:465:a51d:d4 with SMTP id
- 5b1f17b1804b1-46e71101a79mr41519025e9.6.1759562139478; 
- Sat, 04 Oct 2025 00:15:39 -0700 (PDT)
+ bh=WF5Bt7esqOMLNtQooANTIYPWL9UFDgUZeAmTDtH6u04=;
+ b=Z7tU1UpBBtyMY6LHm44tZ+OJfgCtME5CkLbpqpoobViGBqAnnP23h5JxMhJo9r8dk1
+ HAKMzyulpUIzuLHb/9tPUeqw/xYXQ1Z1PGLC4vhljpfbQoHr1Ku8IqvbKFi4IQ+kkH5Q
+ JRdnjMLuDOPZgaG7xqz/rLQt5bzuhP/X/nnHJJIgdlEM7LKa+k84siBRVFL8jLB6zl8X
+ r35Nn8eW87YnEydmuNkR8hA1N71SjKHTsA0rH/6jSevTdFdeSXpW9tt2dxSoUDkthIV0
+ XwQyZFI8WAAANTYpudh+Fl+kEUOwSN/udKpzLf07Ls+SfEpqKabAQeEcGV0eHGXzgw4m
+ nlMA==
+X-Gm-Message-State: AOJu0YyosJ2Fm2Ng0/z7rhAz+XsIsFHmk4qf7CWI9g4Tq+zu+wjCjMJW
+ HI36U2flAJbYD+2Bz7bWpOblnV6kYd+VDZbPCkJ6BaQ7ViezGg2nT2REn0mJY3b4jcu7gy75CJG
+ QyMDKjDU9Fw==
+X-Gm-Gg: ASbGncsEnvtAEJ22ZXgPwQFJ67pCTO1pZJAeDlrYOxHcGYffJ7Bq+KiVj7+CjiEvQWY
+ YTsYPaeTygCX2UkcCzgRtsXHXGe9JksENoPbEb4J3mwWr+N/yX+JFlMOommp4FoWdl9Wzq9LBVH
+ pjQ99969G7D8wc9rU2Te7cyj8tIxbAOS+r2+rcFdMntPZiuAPpbTllYdh4OMIwDKmg/qmyQNA0D
+ Vza9daScpYTPeomvKFjyNvsVMLaloScpITaEoRHVzvLE8rZ+PDZnnABV04y+IF+D8h4TrSlcaon
+ 1LdE1aNlJfB/pA0NoFjACmCjsN7xNTWL5jVQRgn4+l0uTMiUxjtFChH1xflV5ZEJn1+AFkg9utf
+ gOSX5iGJXs0uorrtKNvHQJXiBpT82Agj5jrh+vK+qkLGBgT3z3eDPo/YbXXMZpWyFfSuIMYzIME
+ 4Z36jAaTnNiOY7OjFaeznutOgt
+X-Google-Smtp-Source: AGHT+IHkPi4cFFu567Y6AhVPPdKDM5rQScYh4s/y2rD6zEoXbRBsoZP2+8OMKz4Y5MGB6QSDNCvgGA==
+X-Received: by 2002:a05:6000:2381:b0:3f4:8579:36b8 with SMTP id
+ ffacd0b85a97d-42567193916mr3734894f8f.45.1759562148422; 
+ Sat, 04 Oct 2025 00:15:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e72374ac5sm71057335e9.18.2025.10.04.00.15.38
+ ffacd0b85a97d-4255d8e9719sm11262917f8f.31.2025.10.04.00.15.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 04 Oct 2025 00:15:39 -0700 (PDT)
+ Sat, 04 Oct 2025 00:15:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/41] system/physmem: Un-inline
- cpu_physical_memory_range_includes_clean()
-Date: Sat,  4 Oct 2025 09:12:58 +0200
-Message-ID: <20251004071307.37521-33-philmd@linaro.org>
+Subject: [PULL 34/41] system/physmem: Un-inline
+ cpu_physical_memory_set_dirty_range()
+Date: Sat,  4 Oct 2025 09:13:00 +0200
+Message-ID: <20251004071307.37521-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251004071307.37521-1-philmd@linaro.org>
 References: <20251004071307.37521-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,160 +103,135 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Avoid maintaining large functions in header, rely on the
 linker to optimize at linking time.
 
-cpu_physical_memory_all_dirty() doesn't involve any CPU,
-remove the 'cpu_' prefix.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251001175448.18933-10-philmd@linaro.org>
+Message-Id: <20251001175448.18933-12-philmd@linaro.org>
 ---
- include/system/ram_addr.h | 62 ++-------------------------------------
- system/physmem.c          | 60 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 59 deletions(-)
+ include/system/ram_addr.h | 53 ++-------------------------------------
+ system/physmem.c          | 51 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 51 deletions(-)
 
 diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index cdf25c315be..2dcca260b2b 100644
+index 81d26eb1492..ca5ae842442 100644
 --- a/include/system/ram_addr.h
 +++ b/include/system/ram_addr.h
-@@ -142,69 +142,13 @@ static inline void qemu_ram_block_writeback(RAMBlock *block)
- #define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
- #define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
+@@ -152,57 +152,8 @@ uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
  
--static inline bool cpu_physical_memory_all_dirty(ram_addr_t start,
--                                                 ram_addr_t length,
--                                                 unsigned client)
+ void cpu_physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client);
+ 
+-static inline void cpu_physical_memory_set_dirty_range(ram_addr_t start,
+-                                                       ram_addr_t length,
+-                                                       uint8_t mask)
 -{
--    DirtyMemoryBlocks *blocks;
+-    DirtyMemoryBlocks *blocks[DIRTY_MEMORY_NUM];
 -    unsigned long end, page;
 -    unsigned long idx, offset, base;
--    bool dirty = true;
+-    int i;
 -
--    assert(client < DIRTY_MEMORY_NUM);
+-    if (!mask && !xen_enabled()) {
+-        return;
+-    }
 -
 -    end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
 -    page = start >> TARGET_PAGE_BITS;
 -
--    RCU_READ_LOCK_GUARD();
--
--    blocks = qatomic_rcu_read(&ram_list.dirty_memory[client]);
--
--    idx = page / DIRTY_MEMORY_BLOCK_SIZE;
--    offset = page % DIRTY_MEMORY_BLOCK_SIZE;
--    base = page - offset;
--    while (page < end) {
--        unsigned long next = MIN(end, base + DIRTY_MEMORY_BLOCK_SIZE);
--        unsigned long num = next - base;
--        unsigned long found = find_next_zero_bit(blocks->blocks[idx], num, offset);
--        if (found < num) {
--            dirty = false;
--            break;
+-    WITH_RCU_READ_LOCK_GUARD() {
+-        for (i = 0; i < DIRTY_MEMORY_NUM; i++) {
+-            blocks[i] = qatomic_rcu_read(&ram_list.dirty_memory[i]);
 -        }
 -
--        page = next;
--        idx++;
--        offset = 0;
--        base += DIRTY_MEMORY_BLOCK_SIZE;
+-        idx = page / DIRTY_MEMORY_BLOCK_SIZE;
+-        offset = page % DIRTY_MEMORY_BLOCK_SIZE;
+-        base = page - offset;
+-        while (page < end) {
+-            unsigned long next = MIN(end, base + DIRTY_MEMORY_BLOCK_SIZE);
+-
+-            if (likely(mask & (1 << DIRTY_MEMORY_MIGRATION))) {
+-                bitmap_set_atomic(blocks[DIRTY_MEMORY_MIGRATION]->blocks[idx],
+-                                  offset, next - page);
+-            }
+-            if (unlikely(mask & (1 << DIRTY_MEMORY_VGA))) {
+-                bitmap_set_atomic(blocks[DIRTY_MEMORY_VGA]->blocks[idx],
+-                                  offset, next - page);
+-            }
+-            if (unlikely(mask & (1 << DIRTY_MEMORY_CODE))) {
+-                bitmap_set_atomic(blocks[DIRTY_MEMORY_CODE]->blocks[idx],
+-                                  offset, next - page);
+-            }
+-
+-            page = next;
+-            idx++;
+-            offset = 0;
+-            base += DIRTY_MEMORY_BLOCK_SIZE;
+-        }
 -    }
 -
--    return dirty;
+-    if (xen_enabled()) {
+-        xen_hvm_modified_memory(start, length);
+-    }
 -}
--
- bool cpu_physical_memory_get_dirty_flag(ram_addr_t addr, unsigned client);
++void cpu_physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
++                                         uint8_t mask);
  
- bool cpu_physical_memory_is_clean(ram_addr_t addr);
+ #if !defined(_WIN32)
  
--static inline uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
--                                                               ram_addr_t length,
--                                                               uint8_t mask)
--{
--    uint8_t ret = 0;
--
--    if (mask & (1 << DIRTY_MEMORY_VGA) &&
--        !cpu_physical_memory_all_dirty(start, length, DIRTY_MEMORY_VGA)) {
--        ret |= (1 << DIRTY_MEMORY_VGA);
--    }
--    if (mask & (1 << DIRTY_MEMORY_CODE) &&
--        !cpu_physical_memory_all_dirty(start, length, DIRTY_MEMORY_CODE)) {
--        ret |= (1 << DIRTY_MEMORY_CODE);
--    }
--    if (mask & (1 << DIRTY_MEMORY_MIGRATION) &&
--        !cpu_physical_memory_all_dirty(start, length, DIRTY_MEMORY_MIGRATION)) {
--        ret |= (1 << DIRTY_MEMORY_MIGRATION);
--    }
--    return ret;
--}
-+uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
-+                                                 ram_addr_t length,
-+                                                 uint8_t mask);
- 
- static inline void cpu_physical_memory_set_dirty_flag(ram_addr_t addr,
-                                                       unsigned client)
 diff --git a/system/physmem.c b/system/physmem.c
-index fb6a7378ff7..2667f289044 100644
+index 96d23630a12..8e6c6dddc3c 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -954,6 +954,66 @@ bool cpu_physical_memory_is_clean(ram_addr_t addr)
-     return !(vga && code && migration);
+@@ -1032,6 +1032,57 @@ void cpu_physical_memory_set_dirty_flag(ram_addr_t addr, unsigned client)
+     set_bit_atomic(offset, blocks->blocks[idx]);
  }
  
-+static bool physical_memory_all_dirty(ram_addr_t start, ram_addr_t length,
-+                                      unsigned client)
++void cpu_physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
++                                         uint8_t mask)
 +{
-+    DirtyMemoryBlocks *blocks;
++    DirtyMemoryBlocks *blocks[DIRTY_MEMORY_NUM];
 +    unsigned long end, page;
 +    unsigned long idx, offset, base;
-+    bool dirty = true;
++    int i;
 +
-+    assert(client < DIRTY_MEMORY_NUM);
++    if (!mask && !xen_enabled()) {
++        return;
++    }
 +
 +    end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
 +    page = start >> TARGET_PAGE_BITS;
 +
-+    RCU_READ_LOCK_GUARD();
-+
-+    blocks = qatomic_rcu_read(&ram_list.dirty_memory[client]);
-+
-+    idx = page / DIRTY_MEMORY_BLOCK_SIZE;
-+    offset = page % DIRTY_MEMORY_BLOCK_SIZE;
-+    base = page - offset;
-+    while (page < end) {
-+        unsigned long next = MIN(end, base + DIRTY_MEMORY_BLOCK_SIZE);
-+        unsigned long num = next - base;
-+        unsigned long found = find_next_zero_bit(blocks->blocks[idx],
-+                                                 num, offset);
-+        if (found < num) {
-+            dirty = false;
-+            break;
++    WITH_RCU_READ_LOCK_GUARD() {
++        for (i = 0; i < DIRTY_MEMORY_NUM; i++) {
++            blocks[i] = qatomic_rcu_read(&ram_list.dirty_memory[i]);
 +        }
 +
-+        page = next;
-+        idx++;
-+        offset = 0;
-+        base += DIRTY_MEMORY_BLOCK_SIZE;
++        idx = page / DIRTY_MEMORY_BLOCK_SIZE;
++        offset = page % DIRTY_MEMORY_BLOCK_SIZE;
++        base = page - offset;
++        while (page < end) {
++            unsigned long next = MIN(end, base + DIRTY_MEMORY_BLOCK_SIZE);
++
++            if (likely(mask & (1 << DIRTY_MEMORY_MIGRATION))) {
++                bitmap_set_atomic(blocks[DIRTY_MEMORY_MIGRATION]->blocks[idx],
++                                  offset, next - page);
++            }
++            if (unlikely(mask & (1 << DIRTY_MEMORY_VGA))) {
++                bitmap_set_atomic(blocks[DIRTY_MEMORY_VGA]->blocks[idx],
++                                  offset, next - page);
++            }
++            if (unlikely(mask & (1 << DIRTY_MEMORY_CODE))) {
++                bitmap_set_atomic(blocks[DIRTY_MEMORY_CODE]->blocks[idx],
++                                  offset, next - page);
++            }
++
++            page = next;
++            idx++;
++            offset = 0;
++            base += DIRTY_MEMORY_BLOCK_SIZE;
++        }
 +    }
 +
-+    return dirty;
-+}
-+
-+uint8_t cpu_physical_memory_range_includes_clean(ram_addr_t start,
-+                                                 ram_addr_t length,
-+                                                 uint8_t mask)
-+{
-+    uint8_t ret = 0;
-+
-+    if (mask & (1 << DIRTY_MEMORY_VGA) &&
-+        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_VGA)) {
-+        ret |= (1 << DIRTY_MEMORY_VGA);
++    if (xen_enabled()) {
++        xen_hvm_modified_memory(start, length);
 +    }
-+    if (mask & (1 << DIRTY_MEMORY_CODE) &&
-+        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_CODE)) {
-+        ret |= (1 << DIRTY_MEMORY_CODE);
-+    }
-+    if (mask & (1 << DIRTY_MEMORY_MIGRATION) &&
-+        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_MIGRATION)) {
-+        ret |= (1 << DIRTY_MEMORY_MIGRATION);
-+    }
-+    return ret;
 +}
 +
  /* Note: start and end must be within the same ram block.  */
