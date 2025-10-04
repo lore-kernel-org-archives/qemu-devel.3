@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CE9CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 06:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E94CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wBp-0007vv-ND; Sat, 04 Oct 2025 02:56:22 -0400
+	id 1v4wJA-0001WN-N9; Sat, 04 Oct 2025 03:03:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4wBc-0007pA-0e; Sat, 04 Oct 2025 02:56:09 -0400
+ id 1v4wJ8-0001WA-Cv; Sat, 04 Oct 2025 03:03:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4wBZ-0001eV-HI; Sat, 04 Oct 2025 02:56:07 -0400
+ id 1v4wJ6-0003NC-H7; Sat, 04 Oct 2025 03:03:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2042315A5B2;
- Sat, 04 Oct 2025 09:55:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4008415A5B8;
+ Sat, 04 Oct 2025 10:03:46 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB80529864E;
- Sat,  4 Oct 2025 09:55:59 +0300 (MSK)
-Message-ID: <98aa6625-90f3-4dab-ba55-3bf8978ad14d@tls.msk.ru>
-Date: Sat, 4 Oct 2025 09:55:58 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id BDEF1298653;
+ Sat,  4 Oct 2025 10:03:46 +0300 (MSK)
+Message-ID: <5893cfcf-a23b-41f9-a8db-dbd2c5e15fcb@tls.msk.ru>
+Date: Sat, 4 Oct 2025 10:03:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix MSI table size limit
-To: Andrew Jones <ajones@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, tjeznach@rivosinc.com,
+Subject: Re: [PATCH] docs/interop/firmware: Add riscv64 to FirmwareArchitecture
+To: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20250904132723.614507-2-ajones@ventanamicro.com>
+References: <20250910121501.676219-1-abologna@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250904132723.614507-2-ajones@ventanamicro.com>
+In-Reply-To: <20250910121501.676219-1-abologna@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -106,17 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/25 16:27, Andrew Jones wrote:
-> The MSI table is not limited to 4k. The only constraint the table has
-> is that its base address must be aligned to its size, ensuring no
-> offsets of the table size will overrun when added to the base address
-> (see "8.5. MSI page tables" of the AIA spec).
-> 
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+On 9/10/25 15:15, Andrea Bolognani wrote:
+> Descriptors using this value have been shipped for years
+> by distros, so we just need to update the spec to match
+> reality.
 
-This one looks like a qemu-stable material.
-Please let me know if it is not.
+Hm.  Probably to my shame, I never shipped this file in
+debian/ubuntu - neither the updated one nor the original,
+and have no idea what it is used for :)
+
+What's the context where it's used?
+
+BTW, should I perhaps pick this change up to qemu-stable
+too?
 
 Thanks,
 
