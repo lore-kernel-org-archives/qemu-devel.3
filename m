@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF6DCCA472
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5C8CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wSD-0003T1-Li; Sat, 04 Oct 2025 03:13:17 -0400
+	id 1v4wSQ-0003V9-Lf; Sat, 04 Oct 2025 03:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSD-0003Sk-0O
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:17 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSO-0003Uh-GM
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:28 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wS8-0004rz-JR
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:16 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-3f44000626bso1835255f8f.3
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:13:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSM-0004tD-Im
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:28 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-46e33b260b9so29227455e9.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759561990; x=1760166790; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=W01qdny4MY5IbBZwA2z0pOSCWsh0+a7JCMFgcrlOlGo=;
- b=B1LB+QiG81s+94Kf3jQoIvN7SooP8XMdiQkZu1TTYLv+ANylAZTUZ3OPSwK3rY7Utg
- hvNMU8090jrhznKDxR0STeeAVEH1lNRA7bS5vstjgMwX1C7E8nVOZ5qcUga70bMZUWmz
- 34cw99gYKHluD4QurKmZvGe+3ln+MOoqBfSXaIpie5V2uHFAWKj5GPfs61GLWYv1Fn4N
- 2t+gBkIYLVjSZhcl0Mi5Wz5AVxiKN5/dykO5TIYtyNe2qFPPqWtwS0Qe8nAlbQ5NUG7+
- aoPTBotlplsWaneAG7qfKUE2awc535iunQB9H2bZFw5gY22Ph0wZnwmT9WxVBGxJzeH3
- vXtQ==
+ d=linaro.org; s=google; t=1759562004; x=1760166804; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=zBOoIsCiGpI+RFwPSubFv9Y2+DYez5faZU0y7jrxEo8=;
+ b=n4dZJ3Vf9o8sCvBPb8mZnIgmrDAY8dMxkaseyiZeYpGJpEqin+JgPvDBzjKfciQ4a4
+ 4qwOHrsfzuq9xh2yEVVvWmDaftt1z7l2y8+B+UWIHNcQlOyKRDtqxEzFfqYp7TCKiZvn
+ OCF+YMNsiFdc5u4348quT0yO58/M/XIHXpYLb8/1Us2tUOYTa4Ov5C2TM5RmxnnkFar+
+ mtO4Uyo0KdymQTCVCrDLkbLSWf/o/7p1FxJUMg1qTvt2GyA/EueE/0pvTZyWZOg+U88P
+ 1kEUBIba+o/MMW0l21O0cZP9pKowOIMaIoz/3wvfEfqh63oyFc8kJOK0D7W9gbi2nbsy
+ 0KTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759561990; x=1760166790;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W01qdny4MY5IbBZwA2z0pOSCWsh0+a7JCMFgcrlOlGo=;
- b=BITkarBdjHxX2cLsPuSvVDjl7fTmuTqr7sjrggvst/+IldboG7l8FdhUDDrwZhhgUd
- +CU6ejYYzhbp4OtPx7yaeFa8FG0MqpaLyz8BI7T9uECqbZ7Wg57nWjVuZwgYIbFrJnEP
- 0X+Pi24ZcmxhSA7Z+Kytf9zZWqch2YN+3qskm82Fl540T8KU5Etm4UghscgxkSYevwIp
- UZzJBF4DMYEcjPSoCZz9JSS/DqKqH5A6GnPVZyAPLk9UL8wHdi6sSGgKZ8/tRPOhZ8YF
- awj3pCJ55egV992y8DlUdTrXddnGfc62EpOEx8ZT5fqMiVaqc2Ir4EbpA3LDyImLBPjb
- sU4Q==
-X-Gm-Message-State: AOJu0YwWzzQCNeK4x9U08YRrwoysCo3XMhWTDM9C5duNmh1mU8bOaUFN
- W9W3hCR3TbqEu4t+G9nhyeanbuxoou6w2KgHTXpc5+U5j7QRcOWKAFAVnaklqQ1r2DMjT6SLd8z
- nnbZf7HXhpBig
-X-Gm-Gg: ASbGncuU83gcI9LdNw9Mcas3XD7M2UB8umiWRgNbHyHxsA6DeoikAEfRYlVlLQvUSJz
- G4Ll9nvHg519Bv0vsgzg60QJOt/Hv0gxYfVbEAnD5R9FBbXAZgvHmeyrEH2i8mltVBonwB//xbd
- +yFWPfi2+I8JVI6HOwghk75gWEapwbu8Ut8qpVNILKBc3bFCOCieMpYbjAUpl+CzCLWhgYDaoBd
- RkUfSCEghef6bxpq/hMoFkZrTwnaczJYdr6uOQ+ySfljUseoNxWopryOHoodCrcsT61/ZUU5gyq
- XGHtPvDmkP/BIfxfLjUCDOglt2Tn8kQR9IGBwfA+qmyrYzB3B79r88TaQR0YwipMWSPP3iQmOrl
- 6loymjqwpm2E5iRDCU0G3Zt+FoVCEEoTO4u/I3FM/+qIViWm5OcI5BMHSRWUNYmPVO4hyaVp4h3
- wOIdOD5dEI9E5AzZdlRX4eYAhBonm17cXGRSA=
-X-Google-Smtp-Source: AGHT+IFOitx4OR1wqlMgvTiHvb4AgZBYaRvpVcS1zMW1CU8yPhyJQz2Ehb409zOwP1fO8AYRbZ0hqA==
-X-Received: by 2002:a05:6000:2dc3:b0:425:58d0:483b with SMTP id
- ffacd0b85a97d-425671ab837mr3626865f8f.45.1759561989504; 
- Sat, 04 Oct 2025 00:13:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759562004; x=1760166804;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zBOoIsCiGpI+RFwPSubFv9Y2+DYez5faZU0y7jrxEo8=;
+ b=s3cdK6R6hghz0I7k2BX/53g58/f2pFNIpoY8zwOB9f8j4q1vuFExKHh/0Eo1b+2kxe
+ iOy98zMsPKAzX2si7bvXUGL7dVz6nWwvJ1jgWr19lDDfabNRGXX7V5mDhyIA2LrBoh2x
+ 5/RRNPt0I2sAx9zQF/NkR3csQowzHrZaYuIRipgokQvS06druXE16siMBCMVPQA8Ep6m
+ 4wQThi0SQOwf+o5QSHrxEcCq6LB6JJ4f3CfJA8bOHzieGGdp40rzycFtws7zXigbl7xu
+ JZGA3kkqsWqh3x64WYcgLe/BAavxpiZclcKt+Da6XCeywGx1n9k8HJfBqkeHVaY6SoTM
+ Rpqg==
+X-Gm-Message-State: AOJu0YzKDj60LIYTbN9cTo4oZMWJ4jYq5eiB4CxSaxl1QkgeuW4alZ3t
+ l9lJCgx+PfIcoZQcXNWJxEj1ogxipTtFdxCnlQsOpHjVdD7GCgYxG2/SxIcyhErLcm8IPk4V9Z2
+ CevJdarpVjw==
+X-Gm-Gg: ASbGncvUJpubQhjJ+bb3se6DEHoKMTDNHeNrfoLRNmhY3aJZppjiVQ7E3igSqgutjSr
+ BrQUeD2kuPvB3f/4a2SLssjwU+7mKbGdXFQuS6ZygwmWDl2OfuYjZEE0ry2J8LOF9/XsSMDvH+h
+ N7OmGt8VHu9yguwDK6Bef8Cng5uG2khzUAUvgTp6VFMD1piGztVYyLQzovBzfUdy68Y8bGUzkdY
+ VFlQXuTdP2NriVNwLvstg3cAXkgBoNIBOVPz6uwNw4snS2OzFeZqJWblF7K02KCCYJHzrauz++p
+ BeS70gQSJQfi+FR/rMxio/bLtdjQWORKl4QGwZ0qIaQ2xHVi0ORGP4claeLyxazjx8a02DJjkAB
+ wsQR8Awy6HdYIzjXyKxsTyOUXO5ThVbGJW2sqoS6rYcq+fj2ffcRNLwScP07ADBK2I1yYuCOm4x
+ yvpM8hcWadsdd7TnXG597GggiZwF3mPij7R8k=
+X-Google-Smtp-Source: AGHT+IEiPuV+QzW5hQO/WyzJgglao/oD/eGLm0y0RUq3QHM8qvgS0to1xme5IOTUqJ7nr+kcoAmf5Q==
+X-Received: by 2002:a05:600c:4f08:b0:46e:4b79:551 with SMTP id
+ 5b1f17b1804b1-46e7608b5camr27005165e9.31.1759562003900; 
+ Sat, 04 Oct 2025 00:13:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f02a8sm11194933f8f.39.2025.10.04.00.13.08
+ 5b1f17b1804b1-46e72375b31sm66602495e9.20.2025.10.04.00.13.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 04 Oct 2025 00:13:08 -0700 (PDT)
+ Sat, 04 Oct 2025 00:13:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/41] Memory patches for 2025-10-04
-Date: Sat,  4 Oct 2025 09:12:26 +0200
-Message-ID: <20251004071307.37521-1-philmd@linaro.org>
+Subject: [PULL 03/41] system/ramblock: Move ram_block_discard_*_range()
+ declarations
+Date: Sat,  4 Oct 2025 09:12:29 +0200
+Message-ID: <20251004071307.37521-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251004071307.37521-1-philmd@linaro.org>
+References: <20251004071307.37521-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,120 +100,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 81e3121bef89bcd3ccb261899e5a36246199065d:
+Keep RAM blocks API in the same header: "system/ramblock.h".
 
-  Merge tag 'pull-vfio-20251003' of https://github.com/legoater/qemu into staging (2025-10-03 04:57:58 -0700)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20251002032812.26069-4-philmd@linaro.org>
+---
+ include/exec/cpu-common.h                 | 3 ---
+ include/system/ramblock.h                 | 4 ++++
+ accel/kvm/kvm-all.c                       | 1 +
+ hw/hyperv/hv-balloon-our_range_memslots.c | 1 +
+ hw/virtio/virtio-balloon.c                | 1 +
+ hw/virtio/virtio-mem.c                    | 1 +
+ 6 files changed, 8 insertions(+), 3 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/physmem-20251004
-
-for you to fetch changes up to 56824af2724f1b6c1e6bf6190bc63682be68e3ea:
-
-  system/physmem: Extract API out of 'system/ram_addr.h' header (2025-10-03 22:48:31 +0200)
-
-----------------------------------------------------------------
-Memory patches
-
-- Cleanups on RAMBlock API
-- Cleanups on Physical Memory API
-- Remove cpu_physical_memory_is_io()
-- Remove cpu_physical_memory_rw()
-- Legacy conversion [cpu_physical_memory -> address_space]_[un]map()
-
-----------------------------------------------------------------
-
-Philippe Mathieu-Daudé (40):
-  system/ramblock: Remove obsolete comment
-  system/ramblock: Move ram_block_is_pmem() declaration
-  system/ramblock: Move ram_block_discard_*_range() declarations
-  system/ramblock: Rename @start -> @offset in ram_block_discard_range()
-  system/ramblock: Move RAMBlock helpers out of "system/ram_addr.h"
-  docs/devel/loads-stores: Stop mentioning
-    cpu_physical_memory_write_rom()
-  system/memory: Factor address_space_is_io() out
-  target/i386/arch_memory_mapping: Use address_space_memory_is_io()
-  hw/s390x/sclp: Use address_space_memory_is_io() in sclp_service_call()
-  system/physmem: Remove cpu_physical_memory_is_io()
-  system/physmem: Pass address space argument to
-    cpu_flush_icache_range()
-  hw/s390x/sclp: Replace [cpu_physical_memory -> address_space]_r/w()
-  target/s390x/mmu: Replace [cpu_physical_memory -> address_space]_rw()
-  target/i386/whpx: Replace legacy cpu_physical_memory_rw() call
-  target/i386/kvm: Replace legacy cpu_physical_memory_rw() call
-  target/i386/nvmm: Inline cpu_physical_memory_rw() in nvmm_mem_callback
-  hw/xen/hvm: Inline cpu_physical_memory_rw() in rw_phys_req_item()
-  system/physmem: Un-inline cpu_physical_memory_read/write()
-  system/physmem: Avoid cpu_physical_memory_rw when is_write is constant
-  system/physmem: Remove legacy cpu_physical_memory_rw()
-  hw/virtio/vhost: Replace legacy cpu_physical_memory_*map() calls
-  hw/virtio/virtio: Replace legacy cpu_physical_memory_map() call
-  system/ram_addr: Remove unnecessary 'exec/cpu-common.h' header
-  accel/kvm: Include missing 'exec/target_page.h' header
-  hw/s390x/s390-stattrib: Include missing 'exec/target_page.h' header
-  hw/vfio/listener: Include missing 'exec/target_page.h' header
-  target/arm/tcg/mte: Include missing 'exec/target_page.h' header
-  hw: Remove unnecessary 'system/ram_addr.h' header
-  system/physmem: Un-inline cpu_physical_memory_get_dirty_flag()
-  system/physmem: Un-inline cpu_physical_memory_is_clean()
-  system/physmem: Un-inline cpu_physical_memory_range_includes_clean()
-  system/physmem: Un-inline cpu_physical_memory_set_dirty_flag()
-  system/physmem: Un-inline cpu_physical_memory_set_dirty_range()
-  system/physmem: Remove _WIN32 #ifdef'ry
-  system/physmem: Un-inline cpu_physical_memory_set_dirty_lebitmap()
-  system/physmem: Un-inline cpu_physical_memory_dirty_bits_cleared()
-  system/physmem: Reduce cpu_physical_memory_clear_dirty_range() scope
-  system/physmem: Reduce cpu_physical_memory_sync_dirty_bitmap() scope
-  system/physmem: Drop 'cpu_' prefix in Physical Memory API
-  system/physmem: Extract API out of 'system/ram_addr.h' header
-
-Richard Henderson (1):
-  system/memory: Split address_space_write_rom_internal
-
- MAINTAINERS                               |   1 +
- docs/devel/loads-stores.rst               |   6 +-
- scripts/coccinelle/exec_rw_const.cocci    |  22 -
- include/exec/cpu-common.h                 |  21 +-
- include/system/memory.h                   |  11 +
- include/system/physmem.h                  |  54 +++
- include/system/ram_addr.h                 | 426 -------------------
- include/system/ramblock.h                 |  27 +-
- accel/kvm/kvm-all.c                       |   6 +-
- accel/tcg/cputlb.c                        |  13 +-
- hw/core/loader.c                          |   2 +-
- hw/hyperv/hv-balloon-our_range_memslots.c |   1 +
- hw/ppc/spapr.c                            |   1 -
- hw/ppc/spapr_caps.c                       |   1 -
- hw/ppc/spapr_pci.c                        |   1 -
- hw/remote/memory.c                        |   1 -
- hw/remote/proxy-memory-listener.c         |   1 -
- hw/s390x/s390-stattrib-kvm.c              |   2 +-
- hw/s390x/s390-stattrib.c                  |   2 +-
- hw/s390x/s390-virtio-ccw.c                |   1 -
- hw/s390x/sclp.c                           |  14 +-
- hw/vfio/container-legacy.c                |  10 +-
- hw/vfio/container.c                       |   5 +-
- hw/vfio/listener.c                        |   2 +-
- hw/vfio/spapr.c                           |   1 -
- hw/virtio/vhost.c                         |   7 +-
- hw/virtio/virtio-balloon.c                |   1 +
- hw/virtio/virtio-mem.c                    |   2 +-
- hw/virtio/virtio.c                        |  10 +-
- hw/xen/xen-hvm-common.c                   |   8 +-
- migration/ram.c                           |  81 +++-
- system/memory.c                           |   9 +-
- system/physmem.c                          | 475 +++++++++++++++++-----
- target/arm/tcg/mte_helper.c               |   5 +-
- target/i386/arch_memory_mapping.c         |  10 +-
- target/i386/kvm/xen-emu.c                 |   4 +-
- target/i386/nvmm/nvmm-all.c               |   5 +-
- target/i386/whpx/whpx-all.c               |   7 +-
- target/s390x/mmu_helper.c                 |   7 +-
- system/memory_ldst.c.inc                  |   2 +-
- tests/tsan/ignore.tsan                    |   4 +-
- 41 files changed, 636 insertions(+), 633 deletions(-)
- create mode 100644 include/system/physmem.h
-
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index f373781ae07..e413d8b3079 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -163,9 +163,6 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len);
+ typedef int (RAMBlockIterFunc)(RAMBlock *rb, void *opaque);
+ 
+ int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque);
+-int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
+-int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
+-                                        size_t length);
+ 
+ /* Returns: 0 on success, -1 on error */
+ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 7059b20d919..530c5a2e4c2 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -103,6 +103,10 @@ struct RamBlockAttributes {
+     QLIST_HEAD(, RamDiscardListener) rdl_list;
+ };
+ 
++int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
++int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
++                                        size_t length);
++
+ RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block);
+ void ram_block_attributes_destroy(RamBlockAttributes *attr);
+ int ram_block_attributes_state_change(RamBlockAttributes *attr, uint64_t offset,
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 9060599cd73..e3c84723406 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -32,6 +32,7 @@
+ #include "system/runstate.h"
+ #include "system/cpus.h"
+ #include "system/accel-blocker.h"
++#include "system/ramblock.h"
+ #include "accel/accel-ops.h"
+ #include "qemu/bswap.h"
+ #include "exec/tswap.h"
+diff --git a/hw/hyperv/hv-balloon-our_range_memslots.c b/hw/hyperv/hv-balloon-our_range_memslots.c
+index 1505a395cf7..1fc95e16480 100644
+--- a/hw/hyperv/hv-balloon-our_range_memslots.c
++++ b/hw/hyperv/hv-balloon-our_range_memslots.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "system/ramblock.h"
+ #include "hv-balloon-internal.h"
+ #include "hv-balloon-our_range_memslots.h"
+ #include "trace.h"
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index db787d00b31..02cdd807d77 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -23,6 +23,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/boards.h"
+ #include "system/balloon.h"
++#include "system/ramblock.h"
+ #include "hw/virtio/virtio-balloon.h"
+ #include "system/address-spaces.h"
+ #include "qapi/error.h"
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index c46f6f9c3e2..1de2d3de521 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -17,6 +17,7 @@
+ #include "qemu/units.h"
+ #include "system/numa.h"
+ #include "system/system.h"
++#include "system/ramblock.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
+ #include "hw/virtio/virtio.h"
 -- 
 2.51.0
 
