@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60076CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 20:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D58A0CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 20:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v58RT-00010L-IM; Sat, 04 Oct 2025 16:01:19 -0400
+	id 1v58j8-0007K8-CQ; Sat, 04 Oct 2025 16:19:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1v58RM-0000tg-9J
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 16:01:12 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v58j3-0007JL-St
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 16:19:30 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1v58RF-0006D6-Ie
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 16:01:10 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3306b83ebdaso3472256a91.3
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 13:01:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v58iz-00081h-Ez
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 16:19:29 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-36d77ae9de5so34104201fa.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 13:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759608060; x=1760212860; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=Umtla3NytfKoUezBBfrxf8jHp6mLiJsfT6oOxEHYCmw=;
- b=PBNEuCymSUge7YJL7CUGfssftZ8FftVe2r91KHbbc7BjoQL3R2+3ph3N62s+2m01hm
- npz3z+ca/mzFI8YsKDBTl4BBr0drlRGIJfupy4EuDnCCwr9nHmQ7DLSiw453MGZMIgrU
- A4pTqrPm2f1PxFvfSHjt2RKK01sOZrJdGH/YUVn3+SGOXFW/5RqHsNvHV8KbnHzUIcQb
- vfcQzrMB3aM61CMauwdvFjd8hbtEdqGl5cNriusNdY5m84PYhtCJ7limpWb9irtnQ/03
- FmnT6eEb9hFArbqiS845isXV7BpnrKBy+9zU3B+IPywSSH4OBFyvHwpyfa1Eymn8INjk
- zysg==
+ d=gmail.com; s=20230601; t=1759609163; x=1760213963; darn=nongnu.org;
+ h=to:cc:date:message-id:subject:mime-version
+ :content-transfer-encoding:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Qo7hddKpSdc6MpWwF5YtNaqmI9PS33MydNZ8ZzjevYc=;
+ b=VGHBK01dXtjdl6luxlTSw/CNkO+fj/J7m1SmKxPzo34BaXkk6CI2KSt9tSfyDu57J3
+ 65M9xnsfJJmeJekSNBj4DvTygimsVpR8jEvlcUEd5MnwDx5ysrXDL4l9Y46OTLA+1mSj
+ KcDoLAj3A1znY8K71Wt3ebWTXgSRl8m43ePDdUJTDg2Kv9hxYC5Th43vvcw4gQYZ3aVF
+ 8xU2B9j32Sr0BeFQj9WGGcEn0rbNGG+jztcHED/8KlgSvVlCNcU0dGTx+xN3lUdD3XLL
+ eLg4u1BeETikMe8VdUSt9Wl1JaCy5fG5pT6LJprIRO3yBRzvJ5UYHcMpPOHmfFNa11HM
+ rCFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759608060; x=1760212860;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Umtla3NytfKoUezBBfrxf8jHp6mLiJsfT6oOxEHYCmw=;
- b=rm9Ss9GyDaR0Avd8gj9C0Gfe6G9MJ/yygOyNdGr8895Q8zDQKc1Y2RSdEinLK2/X6p
- LjoxNyVxjgnlwUshNYmSANZA5yqnJOICcNANzRO65lQtRqTqDWbBJYt+8/BiinmKBJMX
- 6nMjWzbh6Zgk/wnumM7MndQT4Rx2UdroG1euQmZl0tCGinu5orkvEvXxox+FmEZmM0Tz
- y6DUVfSoJY7Dn71+LVoH/AbwZoBvrdsKZ/SM+s3nD4MdUuhY+W7m8REpcW6Z06rsf97O
- RmpBJfCxSFRXzQDCwRUnNH4TgsYFZ9FJsxWB25cRoawuIyJsH7n0Aq45s3fEeTL2CdHM
- AjiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXKHjaCynaUOUspuVFc20PVzs5wN0hQ6DT11l/J2TIEiMaY4PXk5HmE4fFkMzwiSRwhooYopjb37iYU@nongnu.org
-X-Gm-Message-State: AOJu0Yyk1z0du3IpR7TcFBMFP0hdVCJ6UeeziVCbv/SOT0avULRH1lpM
- dJwmr7i62JalhS71vLFiXle2e/pgjBqVhgNebob6ibFivo0zLw2Ueli2
-X-Gm-Gg: ASbGncs17Y+sgFZKYT5BoTQxIj8gbBc3bOUpFNzWTEQN5kb/d4S1bGVcGca5xPoHHuB
- cbiZ2ZqP5oqzjwjWip5Qs+w+7Oo+G+64M0LRhbU5yP2SbrNrSyQTunL02Ty5xrPQs9amATZBl6H
- hR9iB48zzbib/Yse9SIawzzUlm5H78Z+OAeUCUGrT8q1BiTByqexbBDt8xeuoG5ACXipkEcLWjA
- MHfo9LuciWdCDeT6pCkkAdHwwxjzx+mNAYtOoCISPk/lp9xY0WqKhXHBKJMKAXkI2PjlCXNbdtl
- GfhOlH8MI6mW2Wg90JiBFRqzCnI1GMr8I0MVjwr2NqGXT6Ip+aT8Vy3rcYaytMQ3Ose3E0DTFHS
- bbAEAyDGzwVkCGwNaIIreuDcPe6F6krs3aYCZBtKSyx9K0qiHEJuHzXbnT2IiIXI4U+7m0NhsrV
- G0ta+S
-X-Google-Smtp-Source: AGHT+IHkvWg22yPAslH2f1Hgpxg9/CWuEhsimvAiLd7jyCSW8bnaPPPZsUWsPgw+yLtP9tSYIEKhDw==
-X-Received: by 2002:a17:90b:1c82:b0:339:bf9e:62a6 with SMTP id
- 98e67ed59e1d1-339c278225fmr8882511a91.11.1759608060288; 
- Sat, 04 Oct 2025 13:01:00 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ d=1e100.net; s=20230601; t=1759609163; x=1760213963;
+ h=to:cc:date:message-id:subject:mime-version
+ :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Qo7hddKpSdc6MpWwF5YtNaqmI9PS33MydNZ8ZzjevYc=;
+ b=qvHflnOY730gnFNdLdnNodGjujxMNXVrdVsanWqXefkt73IJ/VrcVKgSPTMa2kdJHq
+ wOJSQR+buxiy1CPgxXWR9ppYW3h98evzT4VQZ2wPIY4Si+mdD++4P2pNVboS2tprIyt7
+ NincPesMtj+z+HTM7pHGJSQPnopFYXkFZeCS2H5LJsNyFNGsYD9oQToA+/XlNLoXMRBy
+ 3Vs9bh6kE6NRYul/WAm+J94OCX2ARSWSldBTgf6r1LCwAG53sXVU7JiQmPqGv5ZEIiBO
+ 8wRhX7BlZTKmTMaiHSpOv1WhI2GqseqLx6uSRng7kxie7hj4O9euMZrqC3xvHFjnrnIy
+ kQAw==
+X-Gm-Message-State: AOJu0Yyt5DLwT4MQhWZs917AW5oFIu2OFyf+Tc3/grO+3qBrIU/qXU0u
+ dqpfiIH+4N8SWwIishyr76E4XJTq6333jKrRxoHkcHLiI4568+QENQN6mrLLap5YOE/PMK63uQM
+ =
+X-Gm-Gg: ASbGncswx+NKC4Nox86QD4Rew3SkZQPJ+mgb4ohp5TLs8CMaFVkUO0MlEyGpMXZ7c9b
+ z0ngrcrREDEqhisevBYoMz0YufPxDk0xRn1mExZpSb5jIUZwwTmOfAn3nYnWCpEGpKko37D6VSm
+ DJ3Dijm21006aITdEXZViwj81joeGwsaGhDTDz0QlsAdIVbZx97bypnjYDfAd5GsZe8x00SWZbd
+ OARPfUeEB5QwQa77dlmlJlN/GJq922DTRnGiGiO5MxmRnkm/3+tqB4EkzA/XOCoIq2sFAz80bkp
+ v3fJQsXeEPpZ9Bveool3Q+cm44vtlH2h9j5K/omBy6cxHnWeDKk5tYX4eJZ3YZWXiPAcGNcJwRS
+ 4lu59XS9c1bmx1WUh8YS22Hy9B0bxnAjgyo4KUqgCoGeK9t93vrsntA==
+X-Google-Smtp-Source: AGHT+IFmQnlWQWl2OQhtk+OiUUcBSwh8IMzLFBO9I1by351N8N2FkY+4/GQjhFIxJR+z2x5o9JRCZQ==
+X-Received: by 2002:a2e:be9c:0:b0:36b:b439:93cc with SMTP id
+ 38308e7fff4ca-374c389c921mr22620081fa.37.1759609162377; 
+ Sat, 04 Oct 2025 13:19:22 -0700 (PDT)
+Received: from smtpclient.apple ([2a02:6bf:8080:446::1:2b])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3399c0b328csm6178779a91.3.2025.10.04.13.00.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 04 Oct 2025 13:00:59 -0700 (PDT)
-From: Guenter Roeck <linux@roeck-us.net>
-To: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Jason Wang <jasowang@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 0/4] Fix Ethernet interface support for microchip-icicle-kit
-Date: Sat,  4 Oct 2025 13:00:45 -0700
-Message-ID: <20251004200049.871646-1-linux@roeck-us.net>
-X-Mailer: git-send-email 2.45.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=groeck7@gmail.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ 38308e7fff4ca-373ba2a536esm28391881fa.14.2025.10.04.13.19.19
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Sat, 04 Oct 2025 13:19:21 -0700 (PDT)
+From: Alexander Gryanko <xpahos@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.2\))
+Subject: [PATCH] hw/arm: add pvpanic mmio device for arm
+Message-Id: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+Date: Sat, 4 Oct 2025 23:19:09 +0300
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-trivial@nongnu.org,
+ =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCT0YDRj9C90LrQvg==?= <xpahos@gmail.com>
+To: qemu-devel@nongnu.org
+X-Mailer: Apple Mail (2.3776.700.51.11.2)
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=xpahos@gmail.com; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,26 +99,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Microchip PolarFire SoC Icicle Kit supports two Ethernet interfaces.
-The PHY on each may be connected to separate MDIO busses, or both may be
-connected on the same MDIO bus using different PHY addresses. Add support
-for it to the Cadence GEM emulation.
+Currently, pvpanic is available in three device types: ISA,
+MMIO, and PCI. For early stages of system initialisation
+before PCI enumeration, only ISA and MMIO are suitable.
+ISA is specific to the x86 platform; only MMIO devices
+can be used for ARM. It is not possible to specify a
+device as on the x86 platform (-device pvpanic); the
+only possible way is to add an MMIO device to the dtb,
+which can be implemented by manually adding new functions
+to the QEMU code, as was done in the VMApple implementation.
 
-The Linux kernel checks the PCS disabled bit in the R_DESCONF register
-to determine if SGMII is supported. If the bit is set, SGMII support is
-disabled. Since the Microchip Icicle devicetree file configures SGMII
-interface mode, enabling the Ethernet interfaces fails when booting
-the Linux kernel. Add support for clearing the PCS disabled bit.
+Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
+---
+hw/arm/virt.c         | 25 +++++++++++++++++++++++++
+include/hw/arm/virt.h |  1 +
+2 files changed, 26 insertions(+)
 
-----------------------------------------------------------------
-Guenter Roeck (4):
-      hw/net/cadence_gem: Support two Ethernet interfaces connected to single MDIO bus
-      hw/riscv: microchip_pfsoc: Connect Ethernet PHY channels
-      hw/net/cadence_gem: Add pcs-enabled property
-      microchip icicle: Enable PCS on Cadence Ethernet
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 02209fadcf..1059584b67 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -39,6 +39,7 @@
+#include "hw/arm/virt.h"
+#include "hw/block/flash.h"
+#include "hw/display/ramfb.h"
++#include "hw/misc/pvpanic.h"
+#include "net/net.h"
+#include "system/device_tree.h"
+#include "system/numa.h"
+@@ -182,6 +183,7 @@ static const MemMapEntry base_memmap[] = {
+    [VIRT_UART0] =              { 0x09000000, 0x00001000 },
+    [VIRT_RTC] =                { 0x09010000, 0x00001000 },
+    [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
++    [VIRT_PVPANIC] =            { 0x09021000, 0x00000002 },
+    [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+    [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+@@ -276,6 +278,27 @@ static bool ns_el2_virt_timer_present(void)
+        arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
+}
 
- hw/net/cadence_gem.c         | 31 ++++++++++++++++++++++++-------
- hw/riscv/microchip_pfsoc.c   |  6 ++++++
- include/hw/net/cadence_gem.h |  4 ++++
- 3 files changed, 34 insertions(+), 7 deletions(-)
++static void create_pvpanic(VirtMachineState *vms)
++{
++    char *nodename;
++    MachineState *ms = MACHINE(vms);
++    DeviceState *dev = qdev_new(TYPE_PVPANIC_MMIO_DEVICE);
++    SysBusDevice *s = SYS_BUS_DEVICE(dev);
++
++    hwaddr base = vms->memmap[VIRT_PVPANIC].base;
++    hwaddr size = vms->memmap[VIRT_PVPANIC].size;
++
++    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_mmio_map(s, 0, base);
++
++    nodename = g_strdup_printf("/pvpanic@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "qemu,pvpanic-mmio");
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
++                                 2, base, 2, size);
++}
++
+static void create_fdt(VirtMachineState *vms)
+{
+    MachineState *ms = MACHINE(vms);
+@@ -2498,6 +2521,8 @@ static void machvirt_init(MachineState *machine)
+    create_pcie(vms);
+    create_cxl_host_reg_region(vms);
+
++    create_pvpanic(vms);
++
+    if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+        vms->acpi_dev = create_acpi_ged(vms);
+    } else {
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index ea2cff05b0..39bf07c9c1 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -81,6 +81,7 @@ enum {
+    VIRT_NVDIMM_ACPI,
+    VIRT_PVTIME,
+    VIRT_ACPI_PCIHP,
++    VIRT_PVPANIC,
+    VIRT_LOWMEMMAP_LAST,
+};
+
+
+---
+base-commit: bd6aa0d1e59d71218c3eee055bc8d222c6e1a628
+change-id: 20251004-arm-pvpanic-84a7d7b67d8d
+
+Best regards,
+-- 
+Alexander Gryanko <xpahos@gmail.com>
+
 
