@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A062CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 19:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6083CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 19:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v57TS-0007ZW-7o; Sat, 04 Oct 2025 14:59:18 -0400
+	id 1v57ri-0002jr-Pd; Sat, 04 Oct 2025 15:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v57TF-0007XZ-B5
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 14:59:09 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1v57rg-0002j3-Ti
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 15:24:20 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v57TC-0006U3-V5
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 14:59:04 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-32ec291a325so2708866a91.1
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 11:59:02 -0700 (PDT)
+ id 1v57re-0001xw-Bm
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 15:24:20 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-78f3bfe3f69so137530b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 12:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759604340; x=1760209140; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w1ms9llnuJmjmHrm29nMb4SYndF5DNaRZj1VCllhtC8=;
- b=CNVZHpl5ZaKaHFOxIs2DIHh3oq9wbH26E4sPG6vEhrUxwOSHjBasjomsfUvhTLgIwE
- Dec32yLUvoqY18PEAbyRTOd1E9kbJe7+ViuTdtnqLmjEljB2L0KpWWeoIBeKh/+QQd4x
- NP2zqNugHvASrU2OmX/toz2ONNjjvsPYB+1XlkHwVGMigjEJKWO6K0eS3VAIjKXmkcA1
- jSFpbiRbmChX24Srikd7iWLSkfPOxAPRfMWk0uAnQaj+VtC5Ay5fHp1n1pDXhWO0yzzS
- IZL4dC39BeaaEhU3DoMvDGjTQSboKaW9adWDPJ0dOZFMFBmj2u7XwOx462L3qDDvZ8hv
- W/6A==
+ d=linaro.org; s=google; t=1759605856; x=1760210656; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lt9CXeINDO1davLN3ff4kfwC4euBhUKckNctzpEobVQ=;
+ b=oBt5MTPldvbXngUe5D7pC9/CjsKZYAIl1k+igAAXX5rM/SGTaAafS5NL0+cfsEvrfW
+ 1yr/xULYcayA9ACmfRawfpepgutwk47EJ55CVhRdyAakk06wnEWqHjMcAzWzBdkE/5iX
+ R/vNnVYb36AFG9nzUspk+tYILgAUs+4dsQU1DJVPzl7rSYMrlGZcjkzl4nyWGao4e1cC
+ cQWqdGrKCQWmzC1XY3HXz1SAH4Zl3fD8kMJARnz/WkYQe7FxHjgEnZwceQ9AhQOZwI6e
+ HyWjeuZ3QqfuXaQFGq4GWaRCd2hAe7kc1FkRp3R+AXbQ6Reb5ZYygjqZqCDpRok2fjOp
+ mjPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759604340; x=1760209140;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w1ms9llnuJmjmHrm29nMb4SYndF5DNaRZj1VCllhtC8=;
- b=rJ4Ouv5TEB4u95m1u7hi8O72ZWjeL/OLH72892Ck9CpqmmCE3zPJqHStuQC9LD8m69
- iZHJooU4zsf6RUgUGzrkLgCRADLsYBG9KNZsOQPuzo6F2JH6bRodzehupy+xry4E4Hj9
- N5aJFrt2oTiB0QY/owYXVRXQkmQXvqRY7+FzCd6SP32/FtyRNFVlFk27/9cI1gnqPx1G
- /dNxsMa+n8n1Y9QJ8zYNr8zbMn6pPGnrreqCMvdTOCcexl9zkFTBRYq65GwIMlVah003
- QJATATuy86Kv697Zw6tjHwG4hxQRsSF0q69NZ/7WjZBMMD+bxzudbcqKNW7GTxwSvmOC
- IfnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLuf+V3r5OBFf7vnYtjoDxdPRQqRV6RMmJ1m7q/JlGWZvj6kWGIsesVqfKYe9f9DOAvHXZ+xm46+pC@nongnu.org
-X-Gm-Message-State: AOJu0YwH23ndUXgPcNKIfSNFNKQ1745pRtxhe5NJ8fmP/c76sZKbJps6
- +itJBM77PJOaWzKB7o9ib7hiIhjTAtDSbDxdc44B/CxXyMUU1wW2xq78jESHJY/X0wI=
-X-Gm-Gg: ASbGncsVthjyDbSS2MeZw8RBKu1v0i0ZL4m/OcpCfLk9Gi3e7OFHbP/j7uQuYwPwlsJ
- fB097akOvacl2qtqvT+cBOJMPm1SvtPPBCEyxexXadfpg3mfB+Qeu3OZb/GcrItBCnWZEANKlMs
- RgDYdWLpPgA93GF36QdnKoeMgIsa2xXRVpGjUErCHGtgSwGtjX4h9NUQiBIetHrTazByaWWLmLy
- VNPPSTxGzUH6r0f8QVov/6HengBpQD1z9BFUHV9/+T7FGG1kGqG+2ehqHmZZEotusVPffrJcrOl
- 75GFnToAzIV5tiIs7vuG8pwVhmkrnrZn+80E5D1N4/tMsuxkbtKNE/D0qJqy4V0vj8Ac5dif9Ax
- xjq765BTJEbIDinVIa0i6gcMdyUVM27RfRwZCj1theEeriB/H/Vwdclrfd3+1mRga
-X-Google-Smtp-Source: AGHT+IGX2hLdSUkldBGsqc9VhXyyTjlnrbyblbanKvZO971S+wsEjBDvJcchPLbYnz6wicSlVRQrPQ==
-X-Received: by 2002:a17:90b:4d0f:b0:330:604a:1009 with SMTP id
- 98e67ed59e1d1-339c27b950amr9080176a91.23.1759604340302; 
- Sat, 04 Oct 2025 11:59:00 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a4f15857sm7157628a91.1.2025.10.04.11.58.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Oct 2025 11:58:59 -0700 (PDT)
-Message-ID: <1acacf21-267e-4655-8635-4389afdf6f38@linaro.org>
-Date: Sat, 4 Oct 2025 11:58:58 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 18/28] target: Use cpu_pointer_wrap_notreached for strict
- align targets
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Yoshinori Sato
- <ysato@users.sourceforge.jp>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250528081410.157251-1-richard.henderson@linaro.org>
- <20250528081410.157251-19-richard.henderson@linaro.org>
- <dee8def3-3ff7-4a86-8bcc-430f3775c1c3@tls.msk.ru>
- <b48aad39-d408-4666-9b19-e8f1fedf1a47@linaro.org>
- <a7182f42-eaa1-4130-87d9-3931e388deae@tls.msk.ru>
+ d=1e100.net; s=20230601; t=1759605856; x=1760210656;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lt9CXeINDO1davLN3ff4kfwC4euBhUKckNctzpEobVQ=;
+ b=mpSQ8T011vymCx4NqA5iArqarxOHWEpu37sQy5tH82EyTxy/n8X2TXU+90KDUydgKa
+ GejM8hVLLbLb7pcq6Gd8iqLgjYdY40K2OPfPHVzMFCwcSs9FLq8GqBni8ufuzk9x/DA7
+ YgksPQ6ZR7G/NPcBv+l3v7jO9f6IbigDGmxwaXE9QLhZ772s3Ksgbv35YBT9vMxNibMd
+ oZCM7H9E9RkQnpycnBOo6ZEt4yrCx9xlUpkNDUZvYX/69PimPLlksvxouDJtg4gYYCj9
+ kY4EE3CZtfQNOOQoqGmNGsbhNfzWHX2BBHA3IrDyalDMllqv1kP7aVwOy7Q2XvMQkUEq
+ 6fZQ==
+X-Gm-Message-State: AOJu0YwP9uORIgZvuTLk+ArKcILbpP+wEo5oaHeb4GhpcBrj0X9JdNy5
+ y308GlkvO3dVlLMrmSU4akcvIXSz8u+W7KsyDH+jijEbT/DRETanq3bHYRpZdDm/LCVbR9NLxjK
+ GmftVvng=
+X-Gm-Gg: ASbGncsYNVbrsXMSrSpjdW4Zac+tlw1rHji8Fhl+i6a2b+JJ5Zsl0hvpNTo+c2VAgu6
+ wM0XrZtw3Tz13T4N18k1+ReXMcehj6i/OZTSa0XBU5n+IMNBNN8zwAEZULDA2r+/WRsyCoSIMtO
+ WBbbxnhPB3/3CeKmj9FM5rGaIOUZZwytYSfgjcQ2bP9L9PEOMmwGWjw7tPc2WTXkuedOwbkDw++
+ nZxHPqAAnPKXTvGv4m1zHPz7Bx17498e/1gMcDkZkSPM7VN4XoKHTDjcGMDDYYKPMv7QpDtRYO2
+ mpyCOYt1nkW3qwNRtJij35rPBBLCKtJn3uqpyrxr1VxSD6EQwlTtpQNJOM4rpmAIxObCXxGTyaH
+ /DR60F6vz5pVEurpFidTRfyszxXh4DykCpQ+6Vr5jvjiT+sts22TifUQF
+X-Google-Smtp-Source: AGHT+IHxTaqDULHJxiNZHU7KXbFzddvnuI0D+i0Rz70D+pGzwlT8Imz171YBCAntb6L1sq+/HObhWA==
+X-Received: by 2002:a05:6a21:33a5:b0:319:b5a9:1601 with SMTP id
+ adf61e73a8af0-32b61e6b530mr9343646637.19.1759605855796; 
+ Sat, 04 Oct 2025 12:24:15 -0700 (PDT)
+Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b6099f3b041sm7878362a12.24.2025.10.04.12.24.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 04 Oct 2025 12:24:15 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <a7182f42-eaa1-4130-87d9-3931e388deae@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: mjt@tls.msk.ru,
+	qemu-stable@nongnu.org
+Subject: [PATCH] accel/tcg: Hoist first page lookup above pointer_wrap
+Date: Sat,  4 Oct 2025 12:24:14 -0700
+Message-ID: <20251004192414.1404950-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,34 +97,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 23:52, Michael Tokarev wrote:
-> On 8/30/25 06:11, Richard Henderson wrote:
->> On 8/29/25 16:55, Michael Tokarev wrote:
->>> On 28.05.2025 11:14, Richard Henderson wrote:
->>>> Alpha, HPPA, and SH4 always use aligned addresses,
->>>> and therefore never produce accesses that cross pages.
->>>>
->>>> Cc: Helge Deller <deller@gmx.de>
->>>> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>>
->>> This seems to broke booting debian on alpha, -- see
->>> https://bugs.debian.org/1112285 .  I weren't able to repro it
->>> though, - asked the OP to get a backtrace.
->>
->> Ok.  I haven't reproduced this either.
->> Let me know if you get more information.
-> 
-> There's some more info available at
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1112285#56 -
-> some other debian user reproduced the issue, published instructions
-> about how to do that, and published a backtrace too.
-> 
-> Maybe this is sufficient for tracking it down?
+For strict alignment targets we registered cpu_pointer_wrap_notreached,
+but generic code used it before recognizing the alignment exception.
+Hoist the first page lookup, so that the alignment exception happens first.
 
-Thanks.  I've got it now.
+Cc: qemu-stable@nongnu.org
+Buglink: https://bugs.debian.org/1112285
+Fixes: a4027ed7d4be ("target: Use cpu_pointer_wrap_notreached for strict align targets")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ accel/tcg/cputlb.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 2a6aa01c57..a09c2ed857 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1744,6 +1744,7 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+                        uintptr_t ra, MMUAccessType type, MMULookupLocals *l)
+ {
+     bool crosspage;
++    vaddr last;
+     int flags;
+ 
+     l->memop = get_memop(oi);
+@@ -1753,13 +1754,15 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+ 
+     l->page[0].addr = addr;
+     l->page[0].size = memop_size(l->memop);
+-    l->page[1].addr = (addr + l->page[0].size - 1) & TARGET_PAGE_MASK;
++    l->page[1].addr = 0;
+     l->page[1].size = 0;
+-    crosspage = (addr ^ l->page[1].addr) & TARGET_PAGE_MASK;
+ 
++    /* Lookup and recognize exceptions from the first page. */
++    mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
++
++    last = addr + l->page[0].size - 1;
++    crosspage = (addr ^ last) & TARGET_PAGE_MASK;
+     if (likely(!crosspage)) {
+-        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+-
+         flags = l->page[0].flags;
+         if (unlikely(flags & (TLB_WATCHPOINT | TLB_NOTDIRTY))) {
+             mmu_watch_or_dirty(cpu, &l->page[0], type, ra);
+@@ -1769,18 +1772,18 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+         }
+     } else {
+         /* Finish compute of page crossing. */
+-        int size0 = l->page[1].addr - addr;
++        vaddr addr1 = last & TARGET_PAGE_MASK;
++        int size0 = addr1 - addr;
+         l->page[1].size = l->page[0].size - size0;
+         l->page[0].size = size0;
+-
+         l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
+-                                                         l->page[1].addr, addr);
++                                                         addr1, addr);
+ 
+         /*
+-         * Lookup both pages, recognizing exceptions from either.  If the
+-         * second lookup potentially resized, refresh first CPUTLBEntryFull.
++         * Lookup and recognize exceptions from the second page.
++         * If the lookup potentially resized the table, refresh the
++         * first CPUTLBEntryFull pointer.
+          */
+-        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+         if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
+             uintptr_t index = tlb_index(cpu, l->mmu_idx, addr);
+             l->page[0].full = &cpu->neg.tlb.d[l->mmu_idx].fulltlb[index];
+-- 
+2.43.0
 
-r~
 
