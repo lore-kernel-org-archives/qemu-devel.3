@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70F71CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42921CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wkp-0007v1-Vo; Sat, 04 Oct 2025 03:32:32 -0400
+	id 1v4wwN-0001gh-Py; Sat, 04 Oct 2025 03:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4wkm-0007uo-Ee; Sat, 04 Oct 2025 03:32:28 -0400
+ id 1v4wwJ-0001fg-Lc; Sat, 04 Oct 2025 03:44:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4wkk-0007eI-7Q; Sat, 04 Oct 2025 03:32:28 -0400
+ id 1v4wwH-0000GR-3k; Sat, 04 Oct 2025 03:44:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2C41E15A600;
- Sat, 04 Oct 2025 10:32:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 599F315A604;
+ Sat, 04 Oct 2025 10:44:13 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93162298677;
- Sat,  4 Oct 2025 10:32:21 +0300 (MSK)
-Message-ID: <7817d067-6bf4-4628-a5b3-8e8743415c9c@tls.msk.ru>
-Date: Sat, 4 Oct 2025 10:32:20 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id DCFF5298682;
+ Sat,  4 Oct 2025 10:44:13 +0300 (MSK)
+Message-ID: <19b1f55b-810c-46b8-a934-45ae2205f351@tls.msk.ru>
+Date: Sat, 4 Oct 2025 10:44:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/3] Minor fixes of RISC-V CFI
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 0/2] riscv: Modify minimum VLEN rule
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
  <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20250924074818.230010-1-jim.shu@sifive.com>
+References: <20250923090729.1887406-1-max.chou@sifive.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,7 +82,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250924074818.230010-1-jim.shu@sifive.com>
+In-Reply-To: <20250923090729.1887406-1-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -107,20 +108,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 10:48, Jim Shu wrote:
-> This patch series contains several CFI fixes:
->    (1) Fix the mepc in the exception from sspopchk instruction
->    (2) Fix the exception type from SSP CSR and ssamoswap instruction
+On 9/23/25 12:07, Max Chou wrote:
+> According to the RISC-V unprivileged specification, the VLEN should be greater
+> or equal to the ELEN. This patchset provides following modifications:
 > 
-> Jim Shu (3):
->    target/riscv: Fix the mepc when sspopchk triggers the exception
->    target/riscv: Fix SSP CSR error handling in VU/VS mode
->    target/riscv: Fix ssamoswap error handling
+> * Replace the checkings of standard V with the checkings of Zve32x
+> * Introduces a check rule for VLEN and ELEN
+> * Modifies the minimum VLEN based on the vector extensions
+> 
+> Extension     Minimum VLEN
+> V                      128
+> Zve64[d|f|x]            64
+> Zve32[f|x]              32
+> 
+> v1: 20250627132156.440214-1-max.chou@sifive.com
+> - Rebase to riscv-to-apply.next branch
+> - Add patch 1 to replace checking RVV by checking Zve32x
+> 
+> Max Chou (2):
+>    target/riscv: rvv: Replace checking V by checking Zve32x
+>    target/riscv: rvv: Modify minimum VLEN according to enabled vector
+>      extensions
 
-Hi!
-
-Is there anything in there which should be picked up for
-qemu stable series (10.0.x lts and 10.1.x) ?
+Is this a qemu-stable material?
+(these changes does not apply directly to 10.1.x, probably the
+MonitorDef change in the first patch here can be dropped)
 
 Thanks,
 
