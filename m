@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C27FCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 17:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A062CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 19:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v56S9-0005zl-PY; Sat, 04 Oct 2025 13:53:53 -0400
+	id 1v57TS-0007ZW-7o; Sat, 04 Oct 2025 14:59:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v56S7-0005zO-Fg
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 13:53:51 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1v57TF-0007XZ-B5
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 14:59:09 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v56S5-00086W-9r
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 13:53:51 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7835321bc98so3368818b3a.2
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 10:53:48 -0700 (PDT)
+ id 1v57TC-0006U3-V5
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 14:59:04 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-32ec291a325so2708866a91.1
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 11:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759600427; x=1760205227; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759604340; x=1760209140; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Y6Q2HRl/SME04nvnRxfsLSBx9qlKBJpScKR3Rt7EIKU=;
- b=ob27k5n5w6uCHHsbYdqItaolAlNCd7R0IS5h2RZjdZ0BVWxoXlSpcEP1DclL5/ejO9
- RK5EoseWGkCb6HkW6BJcn4R9tqMHO355yiBguXUN93TTxdvPXcXkLCaV75Nu1SMm1/T+
- 1fEEP44n/sVGZTttilzWdLbn4qtO0wPjiZJ1NY0qsDJJIfkIGpk3+tc/EhLzk1qsb0Zb
- sJ1sibGtPMP+7zyEpHpRSXqPlKYP/VkfsJM+2HLLN6rY2WSDENWf7+vFk1s3kCLc7fo5
- 6eAIZEttCkEI6u5cIExM1Bf2zYkpeAgu8/siLxDxA3to71MQcBlyNue7TEsAbvRb/kWf
- 2dYw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=w1ms9llnuJmjmHrm29nMb4SYndF5DNaRZj1VCllhtC8=;
+ b=CNVZHpl5ZaKaHFOxIs2DIHh3oq9wbH26E4sPG6vEhrUxwOSHjBasjomsfUvhTLgIwE
+ Dec32yLUvoqY18PEAbyRTOd1E9kbJe7+ViuTdtnqLmjEljB2L0KpWWeoIBeKh/+QQd4x
+ NP2zqNugHvASrU2OmX/toz2ONNjjvsPYB+1XlkHwVGMigjEJKWO6K0eS3VAIjKXmkcA1
+ jSFpbiRbmChX24Srikd7iWLSkfPOxAPRfMWk0uAnQaj+VtC5Ay5fHp1n1pDXhWO0yzzS
+ IZL4dC39BeaaEhU3DoMvDGjTQSboKaW9adWDPJ0dOZFMFBmj2u7XwOx462L3qDDvZ8hv
+ W/6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759600427; x=1760205227;
+ d=1e100.net; s=20230601; t=1759604340; x=1760209140;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y6Q2HRl/SME04nvnRxfsLSBx9qlKBJpScKR3Rt7EIKU=;
- b=sIjfZXWGJKNJ4yAYg+7iRk4UO+n9oenjhrDmm/I2lWqgx+qukP7pKMQCMTdhIXfNAH
- SeiRUbw41NMUNrbtTa3SaVTRhH2HPB4mP2L2CqrkY0S/FI6ePzppBZnp1JMhzKAHyhCc
- D4i8sDg5F1OaSx1OC3pBG1G/QZcZ5ukanGiJURVM9spPJ7MZhbvCeHXaDkKz1w7C75K/
- jkQVPkzqHNYPevFXVWeGNQ5QiKD8npE4P8zHay3W+eBq3iCi5wzd8bhJfymb71BULt3j
- Nb0E3OHPmJfmgKx/rbxw+oYQDEk5iJyqbgMF89iWVuHsjXHFMx9hFe0E0mgYCAIM+C5L
- P06A==
-X-Gm-Message-State: AOJu0YzeQXRxCvvj+j28+bSNR/2bLAPF6bCdZyYvxnK4pi/rCFtkPdiK
- oKkHhDyo4NERE7ua9JQtNb4l8AlaX87q2AIHhL3GZSToZsFamuuGJ2i3Nok1QpC1del5xlAWb4j
- LUzmVc04=
-X-Gm-Gg: ASbGncvvS+14Vcrc+s673b62+cXflCZ7a6HB3a8oyk6r2qzffbpdy+NR1/gFP2UeWSZ
- 8Bz28LWeWafdqpgtmfr7o6jkFX9dYzPgKcqNtEhGZ3pLbBSW7J9CNwiPx/5wcRxZDVUvW70mjwV
- rDq/i3wwg19EzdaZZJYKHntVlOMdhhbhu8l8LdhkdE2R4AhNG+nG9O6yHVb43pSFM2gYLzk9pUK
- 8RsNhwYGjgalxQ/N/zFdPR0zVUi9UXejqYgj3BxUD4MZ2p0kogXFLyRnmKm/mXdkiJj6Xay6xrO
- 6TdOotNLQ3n4u4GXyn5wDWC3FPGvA9nuTqN99vgwiIuSZJ5cQrYnnuN3I00kkez/6Gypy5HCgbI
- NtEtEJ5tNoAZO8wOe47azz4p+pCIC733Q8Sea/sj7TyeG0JhLBYDjGJrVSOezr1n1g08dHQe1RB
- o=
-X-Google-Smtp-Source: AGHT+IGk4VS6yBRYbaOtw2LcidIZMu8mLS5iwPX9Xs3/sf6p1el8mm4Vfzst0lOCH066ofAffYjpRA==
-X-Received: by 2002:a05:6a00:238b:b0:781:8832:9159 with SMTP id
- d2e1a72fcca58-78c98d3304dmr9047475b3a.4.1759600426827; 
- Sat, 04 Oct 2025 10:53:46 -0700 (PDT)
+ bh=w1ms9llnuJmjmHrm29nMb4SYndF5DNaRZj1VCllhtC8=;
+ b=rJ4Ouv5TEB4u95m1u7hi8O72ZWjeL/OLH72892Ck9CpqmmCE3zPJqHStuQC9LD8m69
+ iZHJooU4zsf6RUgUGzrkLgCRADLsYBG9KNZsOQPuzo6F2JH6bRodzehupy+xry4E4Hj9
+ N5aJFrt2oTiB0QY/owYXVRXQkmQXvqRY7+FzCd6SP32/FtyRNFVlFk27/9cI1gnqPx1G
+ /dNxsMa+n8n1Y9QJ8zYNr8zbMn6pPGnrreqCMvdTOCcexl9zkFTBRYq65GwIMlVah003
+ QJATATuy86Kv697Zw6tjHwG4hxQRsSF0q69NZ/7WjZBMMD+bxzudbcqKNW7GTxwSvmOC
+ IfnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLuf+V3r5OBFf7vnYtjoDxdPRQqRV6RMmJ1m7q/JlGWZvj6kWGIsesVqfKYe9f9DOAvHXZ+xm46+pC@nongnu.org
+X-Gm-Message-State: AOJu0YwH23ndUXgPcNKIfSNFNKQ1745pRtxhe5NJ8fmP/c76sZKbJps6
+ +itJBM77PJOaWzKB7o9ib7hiIhjTAtDSbDxdc44B/CxXyMUU1wW2xq78jESHJY/X0wI=
+X-Gm-Gg: ASbGncsVthjyDbSS2MeZw8RBKu1v0i0ZL4m/OcpCfLk9Gi3e7OFHbP/j7uQuYwPwlsJ
+ fB097akOvacl2qtqvT+cBOJMPm1SvtPPBCEyxexXadfpg3mfB+Qeu3OZb/GcrItBCnWZEANKlMs
+ RgDYdWLpPgA93GF36QdnKoeMgIsa2xXRVpGjUErCHGtgSwGtjX4h9NUQiBIetHrTazByaWWLmLy
+ VNPPSTxGzUH6r0f8QVov/6HengBpQD1z9BFUHV9/+T7FGG1kGqG+2ehqHmZZEotusVPffrJcrOl
+ 75GFnToAzIV5tiIs7vuG8pwVhmkrnrZn+80E5D1N4/tMsuxkbtKNE/D0qJqy4V0vj8Ac5dif9Ax
+ xjq765BTJEbIDinVIa0i6gcMdyUVM27RfRwZCj1theEeriB/H/Vwdclrfd3+1mRga
+X-Google-Smtp-Source: AGHT+IGX2hLdSUkldBGsqc9VhXyyTjlnrbyblbanKvZO971S+wsEjBDvJcchPLbYnz6wicSlVRQrPQ==
+X-Received: by 2002:a17:90b:4d0f:b0:330:604a:1009 with SMTP id
+ 98e67ed59e1d1-339c27b950amr9080176a91.23.1759604340302; 
+ Sat, 04 Oct 2025 11:59:00 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78b01fb16e4sm8008075b3a.21.2025.10.04.10.53.46
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-339a4f15857sm7157628a91.1.2025.10.04.11.58.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Oct 2025 10:53:46 -0700 (PDT)
-Message-ID: <a46a3fa5-3b29-44fb-9fd2-b4716f952886@linaro.org>
-Date: Sat, 4 Oct 2025 10:53:45 -0700
+ Sat, 04 Oct 2025 11:58:59 -0700 (PDT)
+Message-ID: <1acacf21-267e-4655-8635-4389afdf6f38@linaro.org>
+Date: Sat, 4 Oct 2025 11:58:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/45] Staging patches
-To: qemu-devel@nongnu.org
-References: <20251003153948.1304776-1-peterx@redhat.com>
+Subject: Re: [PULL 18/28] target: Use cpu_pointer_wrap_notreached for strict
+ align targets
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Yoshinori Sato
+ <ysato@users.sourceforge.jp>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250528081410.157251-1-richard.henderson@linaro.org>
+ <20250528081410.157251-19-richard.henderson@linaro.org>
+ <dee8def3-3ff7-4a86-8bcc-430f3775c1c3@tls.msk.ru>
+ <b48aad39-d408-4666-9b19-e8f1fedf1a47@linaro.org>
+ <a7182f42-eaa1-4130-87d9-3931e388deae@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
+In-Reply-To: <a7182f42-eaa1-4130-87d9-3931e388deae@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +110,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 08:39, Peter Xu wrote:
-> The following changes since commit 517e9b4862cc9798b7a24b1935d94c2f96787f12:
+On 10/3/25 23:52, Michael Tokarev wrote:
+> On 8/30/25 06:11, Richard Henderson wrote:
+>> On 8/29/25 16:55, Michael Tokarev wrote:
+>>> On 28.05.2025 11:14, Richard Henderson wrote:
+>>>> Alpha, HPPA, and SH4 always use aligned addresses,
+>>>> and therefore never produce accesses that cross pages.
+>>>>
+>>>> Cc: Helge Deller <deller@gmx.de>
+>>>> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>>
+>>> This seems to broke booting debian on alpha, -- see
+>>> https://bugs.debian.org/1112285 .  I weren't able to repro it
+>>> though, - asked the OP to get a backtrace.
+>>
+>> Ok.  I haven't reproduced this either.
+>> Let me know if you get more information.
 > 
->    Merge tag 'qtest-20251001-pull-request' ofhttps://gitlab.com/farosas/qemu into staging (2025-10-01 15:03:00 -0700)
+> There's some more info available at
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1112285#56 -
+> some other debian user reproduced the issue, published instructions
+> about how to do that, and published a backtrace too.
 > 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/peterx/qemu.git tags/staging-pull-request
-> 
-> for you to fetch changes up to 27cffe16354816d57710d2d4357f16139405c749:
-> 
->    migration-test: test cpr-exec (2025-10-03 09:48:02 -0400)
-> 
-> ----------------------------------------------------------------
-> Migration/Memory Pull for 10.2
-> 
-> - PeterX's fix on tls warning for preempt channel when migratino completes
-> - Arun's series to enhance error reporting for vTPM and migration framework
-> - PeterX's patch to cleanup multifd send TLS BYE messages
-> - Juraj's fix on postcopy start state transition when switchover failed
-> - Yanfei's fix to migrate APIC before VFIO-PCI to avoid irq fallbacks
-> - Dan's cleanup to simplify error reporting in qemu_fill_buffer()
-> - PeterM's fix on address space leak when cpu hot plug / unplug
-> - Steve's cpr-exec wholeset
+> Maybe this is sufficient for tracking it down?
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Thanks.  I've got it now.
+
 
 r~
 
