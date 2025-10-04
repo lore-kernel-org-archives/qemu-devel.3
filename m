@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FC0CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1713CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wPh-0002fi-GJ; Sat, 04 Oct 2025 03:10:41 -0400
+	id 1v4wSK-0003UI-Ss; Sat, 04 Oct 2025 03:13:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4wPd-0002fI-DO; Sat, 04 Oct 2025 03:10:38 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4wPb-0004RG-BJ; Sat, 04 Oct 2025 03:10:37 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C6E7015A5BF;
- Sat, 04 Oct 2025 10:10:28 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AFC98298662;
- Sat,  4 Oct 2025 10:10:29 +0300 (MSK)
-Message-ID: <37b2a118-823b-43b7-aaf4-0c855400aee4@tls.msk.ru>
-Date: Sat, 4 Oct 2025 10:10:28 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSI-0003To-LI
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:22 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSG-0004sX-Qo
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:22 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-46e61ebddd6so27952155e9.0
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:13:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759561999; x=1760166799; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=KHkbePhkbzKsxDMSg1uIeJwujfjDCu0ba4WcfqHxU8U=;
+ b=yxe/jn0MXt4cCWxtlLJNoz0Z1p38Ing2tg73BtPoL+5R+cnuXDnUDU9TKPx3dOuMCa
+ I08mfeKyfSRnHsquaW9gEWYKNNL2RxArJ0bxauZB5J2zn+GVUz91gfUnMfAUrofmYQjq
+ RpfGEUXAsNHpciJCQ9ZcmedZSUsH8DxV8TvKz5HH0oaTKHWz/HhJnIjad0Ni/eWLxUdB
+ yxLnSCEVzKPjpdPaB3VdJvx1wdhaqgS+OsL9t8plpU/WCaumKsIVggRY4RQRKXp/cS84
+ /MeqUhoPDJvibee65WbEn3Hnquagx6BWuzxtP1WsdiKZBFtolKVUQztXCbi280aPfWfl
+ oE4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759561999; x=1760166799;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KHkbePhkbzKsxDMSg1uIeJwujfjDCu0ba4WcfqHxU8U=;
+ b=j9Jy+uAcFGmReW+Tvk+J4gljTvhcvrTszu+UDAIaqA3rM3cJ7BBzp6c2tKifWyEteR
+ thmcULFaz4yhTkSNXXiigS8Yjxe3e2bzwMzi/+y21bNdAizn/P9KfE7ScvM5vKnLtAiA
+ UTj4HnWtA4+MAXodD/6425/NGjED4+vD68xaRh1nDd2c5KeEzHPLc5bD0ZGFSBgQv5Zs
+ gADP0ded0GTzrdc7V/vAXjfjRRe+gU6j7ZPjWngm39N3EsoF8IkkoVhDoJlCIP0iIlsX
+ YOVoDAAICJIhPMQ+XNyuXtjIlBzv20EScNpg9Va3siTB3dinicmZxBTJ+lyx5nHmmItt
+ JnUA==
+X-Gm-Message-State: AOJu0YySx15RzMQ0vuV2sPheIoZDKSLCAcmUTxWJHkGWACFePxdLyMLB
+ Ne5KqxAGYp20UcUWZ5dNju8h08ImRJ66yga0tzzsCVtbtzEmbr3SlfFUzPck0cwfls6YDljdc3m
+ yvhblOfZL6g==
+X-Gm-Gg: ASbGncsnRANOL1SKdL/sJ/WOsWOg7H4BR2jtK4K3jcje4h1KIIlvW+gSI6kb0+Qg9Pc
+ uUjnNvm/aZHDerircwpRrOrZVb7KPGi2vvMvcXUCcABjd2Lic/erfoL4xQecZL+qbm3KyiuimYl
+ +4uXjAy/Xp66R9oyixEcFxdxFioGmXTLdgWecmQx0sPeDXhPaVbTH/tQRNcWaTnGBQvXBQnwlkP
+ izOTgEZfctgtsqTJU0v/2zyGD92mervQjXjfzqYSr79xXsYgbpuUNJ3rvWsdijNvKESL5EAdze6
+ kChnJHoxaXVbVscqNuiBmBFY1oI6pJdveY5sdji6ahLRGX3Xcvr+sZjr6JqLmJpGC8TccaBsnL6
+ 8SgvthhbKNR3HUvveVv1CHjJgG0nBu/9CVemr5rgUPQ9rFQ/u2ifMF6Q+ta7wZDv64AiPgnWV99
+ t7fQWu7MLAP2Ok3heTUrawDxSY
+X-Google-Smtp-Source: AGHT+IHxEoa+BPtYpNMS3R1sbNRrgwaAyE/6skcG/oPTNHTAOgk6OtU+78vyuFPWwA+luBDsg23Rvg==
+X-Received: by 2002:a05:6000:604:b0:424:211a:4141 with SMTP id
+ ffacd0b85a97d-42567165eabmr3529810f8f.27.1759561998579; 
+ Sat, 04 Oct 2025 00:13:18 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e61a022d8sm151072685e9.12.2025.10.04.00.13.17
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 04 Oct 2025 00:13:18 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 02/41] system/ramblock: Move ram_block_is_pmem() declaration
+Date: Sat,  4 Oct 2025 09:12:28 +0200
+Message-ID: <20251004071307.37521-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251004071307.37521-1-philmd@linaro.org>
+References: <20251004071307.37521-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Fix SiFive UART character drop issue and minor
- refactors
-To: frank.chang@sifive.com, qemu-devel@nongnu.org
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:SiFive Machines" <qemu-riscv@nongnu.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250911160647.5710-1-frank.chang@sifive.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250911160647.5710-1-frank.chang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,53 +99,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/25 19:06, frank.chang@sifive.com wrote:
-> From: Frank Chang <frank.chang@sifive.com>
-> 
-> This patch set fixes the SiFive UART character drop issue introduced
-> after commit [1], which changed character printing from synchronous to
-> asynchronous.
-> 
-> Since UART now transmits characters asynchronously, it is possible for
-> the Tx FIFO to become full, causing new characters to be ignored and
-> dropped when running Linux. This happens because:
-> 
->    1. The Linux SiFive UART driver sets the transmit watermark level to 1
->       [2], meaning a transmit watermark interrupt is raised whenever a
->       character is enqueued into the Tx FIFO.
->    2. Upon receiving a transmit watermark interrupt, the Linux driver
->       transfers up to a full Tx FIFO's worth of characters from the Linux
->       serial transmit buffer [3], without checking the txdata.full flag
->       before transferring multiple characters [4].
-> 
-> This patch set updates QEMU to honor the Tx/Rx watermark thresholds and
-> raise interrupts only when the Tx threshold is exceeded or the Rx
-> threshold is undercut.
+Move ramblock_is_pmem() along with the RAM Block API
+exposed by the "system/ramblock.h" header. Rename as
+ram_block_is_pmem() to keep API prefix consistency.
 
-This change seems to be worth picking up for qemu-stable series
-(10.0 & 10.1).  Please let me know if it is not.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20251002032812.26069-3-philmd@linaro.org>
+---
+ include/system/ram_addr.h | 2 --
+ include/system/ramblock.h | 5 +++++
+ migration/ram.c           | 3 ++-
+ system/physmem.c          | 5 +++--
+ 4 files changed, 10 insertions(+), 5 deletions(-)
 
-> The remaining patches contain minor refactors, including removing an
-> outdated comment about the Tx FIFO.
-
-> [1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
-> [2] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L1039
-> [3] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L538
-> [4] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L291
-> 
-> Frank Chang (4):
->    hw/char: sifive_uart: Raise IRQ according to the Tx/Rx watermark
->      thresholds
->    hw/char: sifive_uart: Avoid pushing Tx FIFO when size is zero
->    hw/char: sifive_uart: Remove outdated comment about Tx FIFO
->    hw/char: sifive_uart: Add newline to error message
-> 
->   hw/char/sifive_uart.c | 36 ++++++++++++++++--------------------
->   1 file changed, 16 insertions(+), 20 deletions(-)
-
-Thanks,
-
-/mjt
-
+diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
+index 15a1b1a4fa2..53c0c8c3856 100644
+--- a/include/system/ram_addr.h
++++ b/include/system/ram_addr.h
+@@ -99,8 +99,6 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
+     return host_addr_offset >> TARGET_PAGE_BITS;
+ }
+ 
+-bool ramblock_is_pmem(RAMBlock *rb);
+-
+ /**
+  * qemu_ram_alloc_from_file,
+  * qemu_ram_alloc_from_fd:  Allocate a ram block from the specified backing
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 8999206592d..7059b20d919 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -108,4 +108,9 @@ void ram_block_attributes_destroy(RamBlockAttributes *attr);
+ int ram_block_attributes_state_change(RamBlockAttributes *attr, uint64_t offset,
+                                       uint64_t size, bool to_discard);
+ 
++/**
++ * ram_block_is_pmem: Whether the RAM block is of persistent memory
++ */
++bool ram_block_is_pmem(RAMBlock *rb);
++
+ #endif
+diff --git a/migration/ram.c b/migration/ram.c
+index 7208bc114fb..91e65be83d8 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -53,6 +53,7 @@
+ #include "qemu/rcu_queue.h"
+ #include "migration/colo.h"
+ #include "system/cpu-throttle.h"
++#include "system/ramblock.h"
+ #include "savevm.h"
+ #include "qemu/iov.h"
+ #include "multifd.h"
+@@ -4367,7 +4368,7 @@ static bool ram_has_postcopy(void *opaque)
+ {
+     RAMBlock *rb;
+     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+-        if (ramblock_is_pmem(rb)) {
++        if (ram_block_is_pmem(rb)) {
+             info_report("Block: %s, host: %p is a nvdimm memory, postcopy"
+                          "is not supported now!", rb->idstr, rb->host);
+             return false;
+diff --git a/system/physmem.c b/system/physmem.c
+index ae8ecd50ea1..3766fae0aba 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -43,6 +43,7 @@
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+ #include "system/qtest.h"
++#include "system/ramblock.h"
+ #include "qemu/timer.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+@@ -1804,7 +1805,7 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
+ 
+ #ifdef CONFIG_LIBPMEM
+     /* The lack of support for pmem should not block the sync */
+-    if (ramblock_is_pmem(block)) {
++    if (ram_block_is_pmem(block)) {
+         void *addr = ramblock_ptr(block, start);
+         pmem_persist(addr, length);
+         return;
+@@ -3943,7 +3944,7 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
+     return ret;
+ }
+ 
+-bool ramblock_is_pmem(RAMBlock *rb)
++bool ram_block_is_pmem(RAMBlock *rb)
+ {
+     return rb->flags & RAM_PMEM;
+ }
+-- 
+2.51.0
 
 
