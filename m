@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02082CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C98ADCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wUs-0001ug-Cy; Sat, 04 Oct 2025 03:16:06 -0400
+	id 1v4wWL-0003Yn-I8; Sat, 04 Oct 2025 03:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wUL-0001G5-6r
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:15:30 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wUJ-0005L2-4Z
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:15:28 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e3a50bc0fso24495065e9.3
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:15:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759562125; x=1760166925; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7S2h4CcSSUNF/Kbr6xAuWXkdgK7luzPuydLNP0syMy8=;
- b=nLGzUsQvWHBbX4G8CXF6Elhja5OkNu75PCWBHv1keqi/OHpZUckStc5lgtD3iMlECQ
- mUTqxl80VUioQ/qWMWa5ylptoHujUefQZQIXa49HD5U9GUOWPOC5YgqQ907GfkwhBv+S
- 2ROPkvZ9+PH9Rk7Zd7NwymGZ6Iyp/ahfoekNHcgQXaAiRYLs9jRnqHqerMy1z4tce1Br
- jYXoYXEOGLiMy7/dvp+pU0pZ6vh9J87qonacZflrgj3EA7mOIGFQKJsQvtk2qTSeHFuC
- duuOh72RSZh6IhIUXnikwtIYOGC0I+A6ipsptFC6O66MTCnnjwSA9H2tgu80cZPplk1/
- 5DTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759562125; x=1760166925;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7S2h4CcSSUNF/Kbr6xAuWXkdgK7luzPuydLNP0syMy8=;
- b=ZXaqcIeBpEt1fnNcTFA+ij4jZK6mqY2lbSVyZNv0ZCZdRrOb/1+Q4A7tiWVDnb+XKf
- 4YacaLv8kluNXDXOrzUFTzdiM8Rhi3cCRCTDa3vIt8Ci7g22cR74tGKudEHC6zwZoGfh
- yOksadiHw/ZY3Zbibsf3YHNiajz30g/8u86krwgiCPdl21Z1IubSlIlAC5uG/DmdE24X
- 7R/BDmWGruZXiABKvvAjoldhRvVOLjwYW8Tmz5GRqkel2PtChZl7XR0heU+cH3OnNhpH
- tCRzblHq19nVMsDANuq0KOPTXsm0xQopZ9QBFx1wmVd34U1GIb7oV/3BW+KecbrMV75A
- J3cw==
-X-Gm-Message-State: AOJu0YwGR2C1WBVv2776Lep1Ta1xLL2/HMm0plzaI+Ww5T0ieTZRKFLd
- NfxRtp1iAGfGqK4OwoSsed+XT6RLxdPYM8CnBqo9h3LOC4nTDDBKxr4XAmR6ofTxJWEM8fe7Fyu
- bjRzvvmQdZg==
-X-Gm-Gg: ASbGncsHZGmlHZGQFaDmNACFt73PNWXyNWBffhlf9W8RsyUVij1eBQRB0RGJxUXEY3Z
- SUAxFg1laSdFXWVcpnYni2x8CEbl0W5LptCVHUlf5CB0vLLlHAKAXZJi1lpXz7n+Fha11DpJtEu
- X9H8vquURJ6sCkUpvuv5D/vVWFEvhNiiv851F7EIoXRjjqW5BH25fO/oOi1dYli1iukioFCph+x
- wyUOGEF6ExYRB+cQCEsiRZWl1m9fENJnVtGgLh0u6EIWVOt16x3jYAmbTrQxMzP+5E+U2n9rtHq
- /u2j6US1qLT3osptwrKEWvPf3ojZuHqq+E1yU8LGPabG2oqhhyJjZXme1iRZfG3xK8Jch+0nbdB
- 7mefmKQMSnAoRAZDpJ7FzWVfNPbril4IFFHUl4U/CjniQ4xdD2D3CGrw20gEpWXZ7JfkatRcQSV
- /9q049H76keSXZzQ81RZvOUEmw
-X-Google-Smtp-Source: AGHT+IEVX67uU3FpW4nxzjvfU0oenQ6NQBjeE6BIgWaK4SXfI8zsKMTPwXpkGGDPzcPayEUNxdHj5w==
-X-Received: by 2002:a05:600c:3b08:b0:46e:396b:f5ae with SMTP id
- 5b1f17b1804b1-46e7110cf6fmr42051875e9.16.1759562125089; 
- Sat, 04 Oct 2025 00:15:25 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723432c9sm61114855e9.1.2025.10.04.00.15.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 04 Oct 2025 00:15:24 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 29/41] hw: Remove unnecessary 'system/ram_addr.h' header
-Date: Sat,  4 Oct 2025 09:12:55 +0200
-Message-ID: <20251004071307.37521-30-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251004071307.37521-1-philmd@linaro.org>
-References: <20251004071307.37521-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v4wVD-0002YL-Dq; Sat, 04 Oct 2025 03:16:26 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v4wVB-0005Pa-6i; Sat, 04 Oct 2025 03:16:23 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E9AB815A5D3;
+ Sat, 04 Oct 2025 10:16:15 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 577D8298667;
+ Sat,  4 Oct 2025 10:16:16 +0300 (MSK)
+Message-ID: <8b282db4-b49b-4199-94e9-35d7cc296b8b@tls.msk.ru>
+Date: Sat, 4 Oct 2025 10:16:15 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/4] Fix RISC-V timer migration issues
+To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,123 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-None of these files require definition exposed by "system/ram_addr.h",
-remove its inclusion.
+On 9/11/25 12:56, TANG Tiancheng wrote:
+> This patch set fixes several timer-related migration issues in QEMU's
+> RISC-V implementation that cause timer events to be lost or behave
+> incorrectly after snapshot save/restore or live migration.
+> 
+> The problems addressed are:
+> 
+> 1. ACLINT mtimer time_delta not migrated: The time_delta field in
+>     RISCVAclintMTimerState was missing from vmstate, causing incorrect
+>     mtime values after snapshot restore. This resulted in guest time
+>     appearing "frozen" until enough virtual time elapsed to compensate
+>     for the offset error.
+> 
+> 2. ACLINT mtimer timers array not migrated: Active timer events
+>     scheduled via riscv_aclint_mtimer_write_timecmp() were not being
+>     migrated, causing pending timer interrupts to be lost after restore.
+> 
+> 3. CPU stimer/vstimer not migrated: The S-mode and VS-mode timer
+>     pointers in CPURISCVState were missing from vmstate_riscv_cpu,
+>     causing supervisor-level timer events to be lost.
+> 
+> The patch set introduces a new VMSTATE_TIMER_PTR_VARRAY macro to handle
+> migration of variable-length timer pointer arrays, and adds the missing
+> timer fields to the appropriate vmstate structures.
+> 
+> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+> ---
+> Changes in v3:
+> - Remove 'include/' of the subject at patch v2 2/4.
+> - Added Reviewed-by from Peter Xu.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20250910-timers-v2-0-31359f1f6ee8@linux.alibaba.com
+> 
+> Changes in v2:
+> - Split VMSTATE_VARRAY_OF_POINTER_UINT32() into a separate patch,
+>    and define VMSTATE_TIMER_PTR_VARRAY() in riscv_aclint.h.
+> - Added Reviewed-by from Daniel Henrique Barboza.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com
+> 
+> ---
+> TANG Tiancheng (4):
+>        hw/intc: Save time_delta in RISC-V mtimer VMState
+>        migration: Add support for a variable-length array of UINT32 pointers
+>        hw/intc: Save timers array in RISC-V mtimer VMState
+>        target/riscv: Save stimer and vstimer in CPU vmstate
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Message-Id: <20251001175448.18933-7-philmd@linaro.org>
----
- hw/ppc/spapr.c                    | 1 -
- hw/ppc/spapr_caps.c               | 1 -
- hw/ppc/spapr_pci.c                | 1 -
- hw/remote/memory.c                | 1 -
- hw/remote/proxy-memory-listener.c | 1 -
- hw/s390x/s390-virtio-ccw.c        | 1 -
- hw/vfio/spapr.c                   | 1 -
- hw/virtio/virtio-mem.c            | 1 -
- 8 files changed, 8 deletions(-)
+Am I right this stuff is not back-portable to previous qemu
+stable releases, as it introduces new fields into the migration
+stream which, which can't be picked up by these releases?
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 82fb23beaa8..97ab6bebd25 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -77,7 +77,6 @@
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/vhost-scsi-common.h"
- 
--#include "system/ram_addr.h"
- #include "system/confidential-guest-support.h"
- #include "hw/usb.h"
- #include "qemu/config-file.h"
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index f2f5722d8ad..0f94c192fd4 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -27,7 +27,6 @@
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "system/hw_accel.h"
--#include "system/ram_addr.h"
- #include "target/ppc/cpu.h"
- #include "target/ppc/mmu-hash64.h"
- #include "cpu-models.h"
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 1ac1185825e..f9095552e86 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -34,7 +34,6 @@
- #include "hw/pci/pci_host.h"
- #include "hw/ppc/spapr.h"
- #include "hw/pci-host/spapr.h"
--#include "system/ram_addr.h"
- #include <libfdt.h>
- #include "trace.h"
- #include "qemu/error-report.h"
-diff --git a/hw/remote/memory.c b/hw/remote/memory.c
-index 00193a552fa..8195aa5fb83 100644
---- a/hw/remote/memory.c
-+++ b/hw/remote/memory.c
-@@ -11,7 +11,6 @@
- #include "qemu/osdep.h"
- 
- #include "hw/remote/memory.h"
--#include "system/ram_addr.h"
- #include "qapi/error.h"
- 
- static void remote_sysmem_reset(void)
-diff --git a/hw/remote/proxy-memory-listener.c b/hw/remote/proxy-memory-listener.c
-index 30ac74961dd..e1a52d24f0b 100644
---- a/hw/remote/proxy-memory-listener.c
-+++ b/hw/remote/proxy-memory-listener.c
-@@ -12,7 +12,6 @@
- #include "qemu/range.h"
- #include "system/memory.h"
- #include "exec/cpu-common.h"
--#include "system/ram_addr.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/remote/mpqemu-link.h"
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index d0c6e80cb05..ad2c48188a8 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -13,7 +13,6 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "system/ram_addr.h"
- #include "system/confidential-guest-support.h"
- #include "hw/boards.h"
- #include "hw/s390x/sclp.h"
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index 8d9d68da4ec..0f23681a3f9 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -17,7 +17,6 @@
- 
- #include "hw/vfio/vfio-container-legacy.h"
- #include "hw/hw.h"
--#include "system/ram_addr.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "trace.h"
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 1de2d3de521..15ba6799f22 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -25,7 +25,6 @@
- #include "hw/virtio/virtio-mem.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
--#include "system/ram_addr.h"
- #include "migration/misc.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
--- 
-2.51.0
+ From the description it seems like all this stuff should be fixed
+in previous stable qemu releases too.
 
+Thanks,
+
+/mjt
 
