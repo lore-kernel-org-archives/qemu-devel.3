@@ -4,40 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA96CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 06:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CE9CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 06:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4w8G-0007Fq-QB; Sat, 04 Oct 2025 02:52:41 -0400
+	id 1v4wBp-0007vv-ND; Sat, 04 Oct 2025 02:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v4w8E-0007FT-Vs
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 02:52:38 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v4wBc-0007pA-0e; Sat, 04 Oct 2025 02:56:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v4w8C-0001B6-TF
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 02:52:38 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v4wBZ-0001eV-HI; Sat, 04 Oct 2025 02:56:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0FC0115A5A9;
- Sat, 04 Oct 2025 09:52:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2042315A5B2;
+ Sat, 04 Oct 2025 09:55:59 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A9849298649;
- Sat,  4 Oct 2025 09:52:22 +0300 (MSK)
-Message-ID: <a7182f42-eaa1-4130-87d9-3931e388deae@tls.msk.ru>
-Date: Sat, 4 Oct 2025 09:52:17 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB80529864E;
+ Sat,  4 Oct 2025 09:55:59 +0300 (MSK)
+Message-ID: <98aa6625-90f3-4dab-ba55-3bf8978ad14d@tls.msk.ru>
+Date: Sat, 4 Oct 2025 09:55:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 18/28] target: Use cpu_pointer_wrap_notreached for strict
- align targets
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Yoshinori Sato
- <ysato@users.sourceforge.jp>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250528081410.157251-1-richard.henderson@linaro.org>
- <20250528081410.157251-19-richard.henderson@linaro.org>
- <dee8def3-3ff7-4a86-8bcc-430f3775c1c3@tls.msk.ru>
- <b48aad39-d408-4666-9b19-e8f1fedf1a47@linaro.org>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix MSI table size limit
+To: Andrew Jones <ajones@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: alistair.francis@wdc.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, tjeznach@rivosinc.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250904132723.614507-2-ajones@ventanamicro.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -83,9 +80,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <b48aad39-d408-4666-9b19-e8f1fedf1a47@linaro.org>
+In-Reply-To: <20250904132723.614507-2-ajones@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -109,32 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/25 06:11, Richard Henderson wrote:
-> On 8/29/25 16:55, Michael Tokarev wrote:
->> On 28.05.2025 11:14, Richard Henderson wrote:
->>> Alpha, HPPA, and SH4 always use aligned addresses,
->>> and therefore never produce accesses that cross pages.
->>>
->>> Cc: Helge Deller <deller@gmx.de>
->>> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>
->> This seems to broke booting debian on alpha, -- see
->> https://bugs.debian.org/1112285 .  I weren't able to repro it
->> though, - asked the OP to get a backtrace.
+On 9/4/25 16:27, Andrew Jones wrote:
+> The MSI table is not limited to 4k. The only constraint the table has
+> is that its base address must be aligned to its size, ensuring no
+> offsets of the table size will overrun when added to the base address
+> (see "8.5. MSI page tables" of the AIA spec).
 > 
-> Ok.  I haven't reproduced this either.
-> Let me know if you get more information.
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 
-There's some more info available at
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1112285#56 -
-some other debian user reproduced the issue, published instructions
-about how to do that, and published a backtrace too.
+This one looks like a qemu-stable material.
+Please let me know if it is not.
 
-Maybe this is sufficient for tracking it down?
-
-thanks,
+Thanks,
 
 /mjt
 
