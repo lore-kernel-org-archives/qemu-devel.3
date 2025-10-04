@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D1CCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 16:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D76CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 16:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v54q5-0006zp-Fs; Sat, 04 Oct 2025 12:10:29 -0400
+	id 1v55KX-0002hF-JF; Sat, 04 Oct 2025 12:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
- id 1v54q4-0006ze-R9
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 12:10:28 -0400
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v55KW-0002h7-9r
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 12:41:56 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
- id 1v54q3-0005Av-8E
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 12:10:28 -0400
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-31d8778ce02so3356725fac.1
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 09:10:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v55KT-0000Zu-Uw
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 12:41:56 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b57d93ae3b0so2321000a12.1
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 09:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759594225; x=1760199025; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JwV2VH7YG2Zcc1Y57pIWP8I9hjDK12g+0AZrnxN+cLs=;
- b=ip9qaO/PcDJuAuG+hr99ZmyWzPkv5PVllVdFW3jo9brQbph+lBMY4aeK6i74I8OYWD
- hk2CcIIaHac9ygnOj8+0oyjaBozl756d1LVRYq4FcACe5wjW+/xB/zopBUqs2S/1TGba
- PP36QTf/cwcNMD6Kbe1db8ejmMZTbiqljA+KkteeNdIVWBy8TdnUaFwNIevijF/vI179
- VRQw193X6zBS4K+Is425qw3sPi+ktqR3P7s0DSd6R1LjDjnagziehuHwYSODBP8ylOQD
- qobwKjYLutzOJxajHGJHNAZnTNA7M4k/xbvtUJThNPloXejJZc1f66l1L/f3sBhHsWlx
- W4ZA==
+ d=linaro.org; s=google; t=1759596110; x=1760200910; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=X6ShDkrhfUEWhjlrVbJnRSaGXMiiVRsHkpZ71yrckv4=;
+ b=c4F6pdBgw7cKHo7ZNQxpjRbZs27XhD9JhTcsFwkdAMj6I96cI3t3H68pLEBdSrTcU9
+ 6r4PuR/pSiGLij+N3Y2hNi5qcShieFxUSmH9iJXPWPkshpXBlg7YLf3k40KXsdS1MMIS
+ jTc68P5kK1FzSXbP6VfHlriBMNsudlBlqc8OQmcYgaWlF91lNoIRelglp5FG+jmVAAv8
+ U8VigPF4JWpmI+uJ/uwSuPUdPoIkZE6tmvMiD99R93zaJPX6iLH1w7Wiuf/si+bIGnxI
+ cW/Onfe/R/cLqfsG7jYZ3L59y0mCOw9WaF3INkMP6LVD/xz+eoUpuASphfhkJNL+Up0x
+ i27Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759594225; x=1760199025;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JwV2VH7YG2Zcc1Y57pIWP8I9hjDK12g+0AZrnxN+cLs=;
- b=NhODVNzdsDwT05w7f8OYi9/5yDvURZt4LwmcRZFf/23xL11a+cV74auCrm2DssobnQ
- xTg+5dDYdYN+TQqi86kCepHdF3LRbGPyNPOPtijFyFX7dOa2j0hkqRq20s65NdBEToSm
- nE/ntf+MUE04zFmw6Q0TnJTi5JDDBf7uM8fUCNk1MeyDcgp4wMrZP3iZgeG39//wTusN
- 0tEwxyOK54ZRgpR6tYNUWIamGJypofmWnSaF4LQV/gkNYU+ud7ng3lkqrEcAO5bs7eIT
- PeBNRBoBrtK8SBE1ayMMK56b4q5P/g8cGLtu62sWuzD9i5+Ycj0xgSyWD8tkus5f2FHl
- 6plA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVA+wiG9g2N/r0iEQq2xZLz5zQt6JzZporQrDt6M0Juql6NnSiSDSMpCJ54iXajBcPZ9G8pHGZwuvo@nongnu.org
-X-Gm-Message-State: AOJu0Yx9gwv0BFVXly11HmZFSwXPO4Qp5t2XdcUOFhBNP4rT7tVmxej8
- XUsYNFofIlkciRVBZcyDUE4rWFFDP9tCPdJHkz1CllXQIbgA1Z3BeyFER55HKsei60ZSZJSP78D
- 2wO3xH4a9yM8B37B8q7x1j4Cgp4GAYyU=
-X-Gm-Gg: ASbGncuInzV8blvTkM+LveFJ1XPDm5d3VHgFCZ4OBwYtLbTjP8Ky6Fq4tIkOSTFmRDK
- Pi1UqMYrl+XSxNwjg2mBkNt/VeTY85j2WgnKmkSmk2i1L9T3kJftBuxC05RBgBaoQpx5zX/whuP
- 66RwPrNRNGH3QfmCi+imXk97Ab7H5loRR1kBJy3dS2KFXMTtcjEEipy1Hhx4VPt7TBk1RCljA+G
- AYo1OZG89f0CQQisz4NEf4WJ4YoQ7BdFeCcbm0R
-X-Google-Smtp-Source: AGHT+IFBRv6vuqx3RKmMDC9BTCbibO1en1bx7dTwFnmbgQNBApdVZSmmd7SaameactHAtDLEVoG+RxC4ESBAm6tsXOQ=
-X-Received: by 2002:a05:6870:e995:b0:315:255c:ced2 with SMTP id
- 586e51a60fabf-3b11876ccfcmr3788971fac.2.1759594224902; Sat, 04 Oct 2025
- 09:10:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759596110; x=1760200910;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X6ShDkrhfUEWhjlrVbJnRSaGXMiiVRsHkpZ71yrckv4=;
+ b=GX7foRRNSrdH6wkxGL0E64/KM6TYCVke0S54NHq6nMBsIZhU8gxqiOnjX7LCScH43M
+ AjwBo/naR9LVrWM+pQErmQG4aXuJgSMzm1Ks4h/E1sSrJKHq9OOeHXA1XejbaPpFhcDf
+ u3xZFPeqt1dALYge8ceKDfLr6bZ0F5m3SJByEQi0GXqZJU86Gq88VtaEmHuFxhuolSQp
+ j49NZXzcUxtEV4q4/cF/Dc1JHhc2LpTX1XlyZRbBlS/icjqpahG+O5jX45u7Lg2J4bUt
+ /2M/KsUlrXorvEVyr49K/A1IufktBffafjH5mcSSvtZUe+5MXd9uJJuIbShWefzLv3m6
+ Jacg==
+X-Gm-Message-State: AOJu0Yy5oSXDa2+b5LPi5m1Eb3EfaLZUgnsTN2+T4lR7YbpwG6whHq7l
+ TzlFsWSP9OYRuMm1EcOWY5/P3U8sLf+Jgok6YAN81cb4xq+lkm0d/Jsix85uYprvZQo=
+X-Gm-Gg: ASbGncsLi410JtmMvrEXuYNJTpM6yiy5p8iny3Bxiq8B0tyV3gXdy+Ar27zi7SZsvet
+ MhTDDVDzF0BYcyooyPeKkY4ekdUb1d6lUmAFs2Uq+3bFBAw4uHfomc4H9OqQr6nQ8y75Acuahey
+ Pa7sNdd9l72PMeUORNDoEB2tPq1ggPhoSsdH6/rUYJwaQ4cxzs5WtMM6K2KvbNnD9atxKQlvCR6
+ 1unPbvKPCLv4kDE1vbHggXTXAph9Jzz26sJfNI0TgjpoTgtQw3R9q/bI8oEbInkIWj3hH5OMOzm
+ 36oBDAqMvDd47hDB+Uwm7+j7ozhNlY3VzegT0HkTbBhrHwoKf+ddoeGzMQ5DCdbtpGHqgH/2JuM
+ YDksOiscJVIYj50TPXu4wwDXHDGYY+z97O6J1qQBbnrOSMFi2XAOB610T/ykGbT1fjzuH19R2x1
+ E=
+X-Google-Smtp-Source: AGHT+IH53NDw64fqxE+CqnsWAkaWUT+nLX9/OcPBVoSX/fSrcXxc03rRPAB9rmUnar59Gv4UDKzRdQ==
+X-Received: by 2002:a17:902:db0f:b0:276:d3e:6844 with SMTP id
+ d9443c01a7336-28e9a619e63mr78529025ad.33.1759596110335; 
+ Sat, 04 Oct 2025 09:41:50 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-339c4a49b1fsm5514279a91.24.2025.10.04.09.41.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 04 Oct 2025 09:41:49 -0700 (PDT)
+Message-ID: <c5976952-ecdc-420f-9025-c80018b6b123@linaro.org>
+Date: Sat, 4 Oct 2025 09:41:47 -0700
 MIME-Version: 1.0
-References: <CAJhHMCCfOqP6E2XvkY5JNtgQrXXH7uV_y9wfLcYFh9kecgocaQ@mail.gmail.com>
- <08EF65B7-ACA6-4AE7-802B-FDEE324CDE4B@unpredictable.fr>
-In-Reply-To: <08EF65B7-ACA6-4AE7-802B-FDEE324CDE4B@unpredictable.fr>
-From: Pranith Kumar <bobby.prani@gmail.com>
-Date: Sat, 4 Oct 2025 09:09:57 -0700
-X-Gm-Features: AS18NWDRmnWkTFoPsAMMih1eljMSZWzZRZVI9_pgigITCLqm7oobAeQDpqNlElw
-Message-ID: <CAJhHMCCgv1Knph0vJY6fouimm3u88YZhC14fJkD=krTVKqQ0oA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: Reg. guest unaligned accesses in TCG
-To: mohamed@unpredictable.fr
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::30;
- envelope-from=bobby.prani@gmail.com; helo=mail-oa1-x30.google.com
+To: Pranith Kumar <bobby.prani@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+References: <CAJhHMCCfOqP6E2XvkY5JNtgQrXXH7uV_y9wfLcYFh9kecgocaQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAJhHMCCfOqP6E2XvkY5JNtgQrXXH7uV_y9wfLcYFh9kecgocaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,35 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mohamed,
+On 10/3/25 23:34, Pranith Kumar wrote:
+> Hi Richard and Alex,
+> 
+> I am trying to implement efficient x86 guest on ARM64 host
+> virtualization where the host has FEAT_LRCPC2 instructions. If I
+> translate every x86 load to LDAPR and every x86 store to STLR, it will
+> meet the memory consistency requirements.
+> 
+> The necessary condition for using these RCpc instructions is the
+> alignment. The manual states that alignment fault will be raised if:
+> 
+> * Not all bytes of the memory access lie within a 16-byte quantity
+> aligned to 16 bytes, and
+> * The value of SCTLR_ELx.nAA applicable to the current Exception level is 0.
+> 
+> How does TCG check for alignment? How do I check if the guest memory
+> access is within the 16-byte alignment? Will alignment fault be raised
+> if it is not?
 
-On Sat, Oct 4, 2025 at 12:22=E2=80=AFAM Mohamed Mediouni
-<mohamed@unpredictable.fr> wrote:
->
+See prepare_host_addr in tcg/aarch64/tcg-target.c.inc.
 
-> Hello,
->
-> If you=E2=80=99re targeting Apple chips, note that RCpc is really slow on=
- those
-> as they expect you to use the hardware TSO mode instead.
->
-> But to get TSO mode on those you=E2=80=99ll need to use HVF=E2=80=A6
+a_mask is the alignment required by the guest, s_mask is the access size, so a_mask >= 
+s_mask is required to be at least naturally aligned.
 
-It is for general ARMv8.4+ CPUs where there is no TSO mode. Hence why
-I am planning to use the RCpc instructions.
+That's only enough to get you to the slow path for page crossings or guest misalignment. 
+For additional host alignment along the fast path, you'd need to generate additional 
+branches, and probably not here.
+
+I'll warn you that I tried this once, and the extra work proving alignment overwhelmed the 
+savings from substituting acquire/release for separate memory barriers.  I'd love for you 
+to succeed, but this won't be a trivial task.
 
 
-> > How does TCG check for alignment? How do I check if the guest memory
-> > access is within the 16-byte alignment? Will alignment fault be raised
-> > if it is not?
-> The hardware will raise an alignment fault in that case. Other emulators
-> then do backpatching to a barrier-reliant sequence in that case.
-
-Do we have to add support in QEMU to handle this alignment fault? I
-recall there being alignment checks for loads/stores but I wasn't
-quite sure.
-
-Thanks,
---=20
-Pranith
+r~
 
