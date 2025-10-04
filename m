@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F6C1CCA472
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AB9CCD183
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wWF-00032u-1l; Sat, 04 Oct 2025 03:17:27 -0400
+	id 1v4wSZ-0003Xu-HE; Sat, 04 Oct 2025 03:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wV5-0002Jc-Cv
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:16:15 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSY-0003Xm-Lq
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:38 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wV3-0005Os-2S
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:16:15 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e6c8bc46eso18465935e9.3
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:16:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSV-0004th-Go
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:37 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-46e491a5b96so18352685e9.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759562169; x=1760166969; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759562013; x=1760166813; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=b4vT0oHPpE6PzHl8pNB5QhR7O7PRoflwlDAx8XNEBOc=;
- b=DHB2Gir66Bxh/LqR5dvPH8X4Q3SzvFBJLzlnEnBAp4zQrKUy3r6qrhL6lWreRcQ1GE
- 0TgOL6A14jTbzzapxuoWaLvY0OpInpj3PadJl2m285mKezMqvFMcQ+WN63bzb6WYWls5
- n45cyq08tSadFicvYH3nIfy+dqBaYgSrEH13LOJNJU81O7+dxTbbjt3lS84JrMhRbo+N
- IqFBThYZLNNBqa1vIPvHAUV9lIh94Nb7+YRd1GOxE2e7M7+nzqSdIBWduHAf26FmB333
- S015DdENgHfYIWJb2yY9Uc1F6bWvQ/KyABqHGRSO/yhQjRASTugS/v9Nrbm/hHDzXPAU
- HLfQ==
+ :reply-to; bh=xCQrduo7/+iK4zpfNHJPTgsOKa5mIO1xtZ1NhBqYm1g=;
+ b=ncEpo0FZHCZnEDIgsiPWUTduSCr40zdS0LWNtF3LogYxoH8QsjsTnNERpV/Yta9tbN
+ rjgz9S2ztBDTq80avrJjJclN8nClhUA00XO58pWKJ4paclURAAkiIHmUSGwva0uEHYxx
+ kfbL0SuOjxOBzltdX0TLCDHmK7tu5hGaOyQc60GA/0D3cHczCcuHD5ssRXvfbexbve5B
+ 29axZEbuiQ5bLn+He21xVBneXo1jKj8mltVhKD34p8dR5eanCjED1mxeMJBM9r6ewcsF
+ U8rhfOz50+g9BYECW6yXsE+NUyXATl527uv9WII1CSMZdBwheo7EJ9nx1nAMpYfxvtxv
+ a89A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759562169; x=1760166969;
+ d=1e100.net; s=20230601; t=1759562013; x=1760166813;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b4vT0oHPpE6PzHl8pNB5QhR7O7PRoflwlDAx8XNEBOc=;
- b=urHGbAc2tEvrfoJF/1RtGLwjEpQn+lovf9V5dR/cjFEr6G+tNCqIBtlMT0IeY8CPZ7
- k60Wnrb2N0sAhI5KkBxs9tNqRE8faLJBrxdNjx1DwkS+E98VUPAtFWhfjeCe0kkj9P9/
- uFu8Ur1NfjJBQ3zw32VkTdfEF0AbYepPVrFoMVDlUmUFr9094VRXW2Ib7tXWvfld3tNw
- jwMweTE5714dEwFgyt4+lPrvSOOqUOSzurZMrkhnTo5F8T9fXyLSFHJLmd8s20PHeSlC
- +UU8nmInyoc8hZufHJ2y/RsgrhQwTnu4lbMECjA2JUJOnQ2JYfANnOFmFgVQoTAgw4gF
- ZOqQ==
-X-Gm-Message-State: AOJu0YxbbqnUAGPyCKcTWVmVWKB4ga9DH1l45WxRWNKtwRmzkHjY0hK3
- RFxuqVXJ4BSfdeFJ4HxhRYXZLowDkx+K03i/XT8dHKbo3ILwfks18k7WposJCWq8JhbiarL+sik
- DZPE2FG/QKQ==
-X-Gm-Gg: ASbGncsr40ezM3ngs9rdNrEAldzfg962izXUgpIqjboWdv5Bn+sHvNEwh9JXCamoQbG
- jgV2CZHuD08ofLzwgBORH6e0bK4CTUIepqN9g1RMfJcIDP3juZdXHIAxAeLg1CfIaDePfwXenNj
- wfygxcb924nkjHx9YNbaVs0RVKh4f+Xu6DJMuWEK2lpNIzq9YzRO0yPfEGfpHwOypD84e5QpeTB
- 15z085+Wh/Lua5a41zjgZVLE+mvEigG/vZmHAHWNCrxafkJTobcQhD0hv4jdpYHzyhQDPtCSuks
- 0WF08enn+A2nsVzqPgXxwpjy5zPttlTwQdCFzQ7eltgmzlOAK3MwDCWMcEluHpNq6pPWzmzWS+A
- g1uNJulcA0cWWhH3QxxMt2t2IGi2qw9LcqHPDkj2mecK1GIVSQC+bFOGzy3u+2vNFF+J/0v9tdW
- eOg7PNxQkq1TW4z8I60JgD/pu4oy1QXED0P80=
-X-Google-Smtp-Source: AGHT+IHKQvhr2ke9QEFVAqMApDlbFycniKJZyXX2+FlUvBNXn7eNU3NQNm4zVwhAI6JXW79IpARXaA==
-X-Received: by 2002:a05:600c:3d90:b0:45f:2922:2aef with SMTP id
- 5b1f17b1804b1-46e7115178cmr32971995e9.28.1759562169186; 
- Sat, 04 Oct 2025 00:16:09 -0700 (PDT)
+ bh=xCQrduo7/+iK4zpfNHJPTgsOKa5mIO1xtZ1NhBqYm1g=;
+ b=nsAIBDkOAQUVx747Wukd8nCqKl0I1Cs+lxC5y1qtsfB40TIHfq0zKYXtOYSD2hGkpN
+ MOvqe4HlXKHiYz2wjssEHFh3Ezv9HnWxD7Jk1r9hTExAN29UubfVmbSZ1I5hG76M4za9
+ uZRQm5/ins99ef2hwrhAFGwcd7rmu2KhNysjKE7SjtCMsBxLUycIge1ENJGNt/gnknIC
+ SvkQN1n0ugFkE2CA1iET9YrTD+x6aYe3UXJg5blBtACvgYWevAzOSiiQE9Kxg20LkmVd
+ kDg9rTgBgpaO54DL7TcXzVPotnq7+zareXh5zxfYL9i1D4GPOkqerAtILjqWacjoIMQt
+ pnRw==
+X-Gm-Message-State: AOJu0Yx0MZaNbRM506MEvB7OcTpP+SFHQKI+GwUWjKRwMyrnTT5MzMuL
+ urg8gi865cXTaEK74OjRkbNWlLh0C/IY6Lb4bnC9SeUucrh6PyJd1KH8rxghoij99PqT/8AP4ZP
+ rtjV0MZu9Tw==
+X-Gm-Gg: ASbGncueJxFGQAGHvtUCxYIA3YmelUvjDPg1smVifSRMHNljFMUmgzoDNSEj7MxndWN
+ 68fH58KBOFqKzKL+3GyJhs6MtlBXzbcDQARc7GSxb9tYxPVouvEfZ4emkoHk3/2sMqpcirhmYBG
+ TBZi5kbRV9szMnrnY57U/rVDvXERqj1jbBUy0JYNUoRlG/9u2ygyintcAIW9eWd7h5EOSnY7Avf
+ MrEFAtzgl6VaeLu2eyDAaAfNfzUToT4fNoQMTjCBnuZd/oOC738sAd0/l8BbPb5IupeOb+yHjUJ
+ 0jiZA7fmjakTdunAIeeNT/ymtiDWhm0uCamAMogEhLsl03tzlp5kLqheSZytw4sM9nxL4SCjZLA
+ i0Ftgubui7Nj4F05vqvr51eUxA3fGdVge9wok4G6lMS9znLvpEHWBXhmSi5yM8+W9i6eYr/Yo4e
+ 9TxWBchDyoWYbNs4pQwWLZ3S28
+X-Google-Smtp-Source: AGHT+IEgSRprfVNuZPy9H0U6WThriOYfmpywBAg40cUEuoFbpHUmEbKV6plVWksFLQwR6L5sXzYfSw==
+X-Received: by 2002:a05:600c:8b71:b0:46e:36fa:6b40 with SMTP id
+ 5b1f17b1804b1-46e7113d33fmr38794235e9.24.1759562013162; 
+ Sat, 04 Oct 2025 00:13:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a022d8sm151161325e9.12.2025.10.04.00.16.07
+ ffacd0b85a97d-4255d8ab909sm10880945f8f.19.2025.10.04.00.13.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 04 Oct 2025 00:16:08 -0700 (PDT)
+ Sat, 04 Oct 2025 00:13:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 38/41] system/physmem: Reduce
- cpu_physical_memory_clear_dirty_range() scope
-Date: Sat,  4 Oct 2025 09:13:04 +0200
-Message-ID: <20251004071307.37521-39-philmd@linaro.org>
+Subject: [PULL 05/41] system/ramblock: Move RAMBlock helpers out of
+ "system/ram_addr.h"
+Date: Sat,  4 Oct 2025 09:12:31 +0200
+Message-ID: <20251004071307.37521-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251004071307.37521-1-philmd@linaro.org>
 References: <20251004071307.37521-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +100,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_physical_memory_clear_dirty_range() is now only called within
-system/physmem.c, by qemu_ram_resize(). Reduce its scope by making
-it internal to this file. Since it doesn't involve any CPU, remove
-the 'cpu_' prefix. As it operates on a range, rename @start as @addr.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251001175448.18933-16-philmd@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20251002032812.26069-6-philmd@linaro.org>
 ---
- include/system/ram_addr.h | 9 ---------
- system/physmem.c          | 9 ++++++++-
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ include/system/ram_addr.h | 11 -----------
+ include/system/ramblock.h | 11 +++++++++++
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 54b5f5ec167..cafd258580e 100644
+index 53c0c8c3856..6b528338efc 100644
 --- a/include/system/ram_addr.h
 +++ b/include/system/ram_addr.h
-@@ -175,15 +175,6 @@ bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
-                                             ram_addr_t start,
-                                             ram_addr_t length);
- 
--static inline void cpu_physical_memory_clear_dirty_range(ram_addr_t start,
--                                                         ram_addr_t length)
--{
--    cpu_physical_memory_test_and_clear_dirty(start, length, DIRTY_MEMORY_MIGRATION);
--    cpu_physical_memory_test_and_clear_dirty(start, length, DIRTY_MEMORY_VGA);
--    cpu_physical_memory_test_and_clear_dirty(start, length, DIRTY_MEMORY_CODE);
--}
--
--
- /* Called with RCU critical section */
- static inline
- uint64_t cpu_physical_memory_sync_dirty_bitmap(RAMBlock *rb,
-diff --git a/system/physmem.c b/system/physmem.c
-index 0daadc185de..ad9705c7726 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1139,6 +1139,13 @@ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
-     return dirty;
+@@ -80,17 +80,6 @@ static inline bool clear_bmap_test_and_clear(RAMBlock *rb, uint64_t page)
+     return bitmap_test_and_clear(rb->clear_bmap, page >> shift, 1);
  }
  
-+static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
+-static inline bool offset_in_ramblock(RAMBlock *b, ram_addr_t offset)
+-{
+-    return (b && b->host && offset < b->used_length) ? true : false;
+-}
+-
+-static inline void *ramblock_ptr(RAMBlock *block, ram_addr_t offset)
+-{
+-    assert(offset_in_ramblock(block, offset));
+-    return (char *)block->host + offset;
+-}
+-
+ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
+                                                             RAMBlock *rb)
+ {
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 85cceff6bce..76694fe1b5b 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -119,4 +119,15 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr, uint64_t offset,
+  */
+ bool ram_block_is_pmem(RAMBlock *rb);
+ 
++static inline bool offset_in_ramblock(RAMBlock *b, ram_addr_t offset)
 +{
-+    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
-+    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
-+    cpu_physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
++    return b && b->host && (offset < b->used_length);
 +}
 +
- DirtyBitmapSnapshot *cpu_physical_memory_snapshot_and_clear_dirty
-     (MemoryRegion *mr, hwaddr offset, hwaddr length, unsigned client)
- {
-@@ -2073,7 +2080,7 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
-         ram_block_notify_resize(block->host, oldsize, newsize);
-     }
- 
--    cpu_physical_memory_clear_dirty_range(block->offset, block->used_length);
-+    physical_memory_clear_dirty_range(block->offset, block->used_length);
-     block->used_length = newsize;
-     cpu_physical_memory_set_dirty_range(block->offset, block->used_length,
-                                         DIRTY_CLIENTS_ALL);
++static inline void *ramblock_ptr(RAMBlock *block, ram_addr_t offset)
++{
++    assert(offset_in_ramblock(block, offset));
++    return (char *)block->host + offset;
++}
++
+ #endif
 -- 
 2.51.0
 
