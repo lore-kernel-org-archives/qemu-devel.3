@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3BFCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 17:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C27FCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 17:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v56Pv-00050M-Bu; Sat, 04 Oct 2025 13:51:35 -0400
+	id 1v56S9-0005zl-PY; Sat, 04 Oct 2025 13:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v56Pi-0004z9-Ua
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 13:51:24 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1v56S7-0005zO-Fg
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 13:53:51 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v56Pg-0007uu-72
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 13:51:22 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-781206cce18so2916455b3a.0
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 10:51:19 -0700 (PDT)
+ id 1v56S5-00086W-9r
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 13:53:51 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7835321bc98so3368818b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 10:53:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759600278; x=1760205078; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759600427; x=1760205227; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dOQ9sN4EO5SB4zFbuW2MVhbBdWTmAqE0qRYFcWUyUpE=;
- b=mw3PAWgjs6PRqwSwuIKyZ74lp8FJylg9MWLGce3SMCAu6xcOGtoHb0h3AWmNZDd1HI
- 0rkQ+Xu7eEL1HwxxWMqr+Jj4J8NCvZZtJnNXUxTZX+T6i2rMI4eAgB5Thdn7vk+/3+Yt
- e4bk5ed7Ag5kH1zelRCSasmQIfbFcUxMWBCeq7TokkciYR0CK3p5nppL1LUttpz+Edfi
- LgifgQVR0SQ7kcHj5M5CT57tqYQPFbdb8obEUXWL3W5mH1Y5u7Rs/1P2aHDJK53RC1jC
- 0HDiL+eqpdFo3txqtqA8aFghfazlOHjtw0aTO/JLUf/Nvi947yaGtw0dQHiYHvdE3Won
- Qe6A==
+ bh=Y6Q2HRl/SME04nvnRxfsLSBx9qlKBJpScKR3Rt7EIKU=;
+ b=ob27k5n5w6uCHHsbYdqItaolAlNCd7R0IS5h2RZjdZ0BVWxoXlSpcEP1DclL5/ejO9
+ RK5EoseWGkCb6HkW6BJcn4R9tqMHO355yiBguXUN93TTxdvPXcXkLCaV75Nu1SMm1/T+
+ 1fEEP44n/sVGZTttilzWdLbn4qtO0wPjiZJ1NY0qsDJJIfkIGpk3+tc/EhLzk1qsb0Zb
+ sJ1sibGtPMP+7zyEpHpRSXqPlKYP/VkfsJM+2HLLN6rY2WSDENWf7+vFk1s3kCLc7fo5
+ 6eAIZEttCkEI6u5cIExM1Bf2zYkpeAgu8/siLxDxA3to71MQcBlyNue7TEsAbvRb/kWf
+ 2dYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759600278; x=1760205078;
+ d=1e100.net; s=20230601; t=1759600427; x=1760205227;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dOQ9sN4EO5SB4zFbuW2MVhbBdWTmAqE0qRYFcWUyUpE=;
- b=HnDxbofTvwjssksez3rAebIkJxxWlFMXwuVJDIVNndVilv07QPcr5cThxDp1hF/Z1Z
- /WiZWfYXqJGjXAWOkvhvbSnGdLMaRoqQPweebtdgfxlBdE29mFG+cQm/9Da0CFdUz9ww
- B8A7gB4mym25QAR3n6ZNcq7JR5SLH3G5yyrEgRIPhoQ6AsTNlbcKFtGRiMN4/D/+fBrH
- GwZPEMcPdjKGG/CrsGueNd8owRhvsbLUH1yynjvU2a0YCfbIG4VmY6OruWrYYQ7wFA6O
- uA7vQMYrHjXzBR+/OMgBgnS2V78h/o33oZtJAlBR9obi77YmMo6Yuiioap9OAw1wti8+
- yP0g==
-X-Gm-Message-State: AOJu0YxaSzm0lKrAul9a+RrvJYsSkhO9JlYn9Nwfe7o3PuLjD8z505Oq
- W4OOpT1UtqpwJ2+oyYElJmIKn4CLjmvfve08RzVGpHGyaBC81sPcHHb7RYxzZS90j9jspoZWcJd
- r+soTwnk=
-X-Gm-Gg: ASbGncsDojAw8g2aMnehJYDwIYv+dwEF/nWdIKdaWgiimkuFoL6ttqeHwFNl6DAWwau
- RDGo6K/S8B+j/BlkIIipXSYshMF0RE4ygAT1hzUMAx6nSt2Ze0DfB9M8aZiwtDqmxM0YnPUTw/r
- wWrudZL6gimdmMm0y0CySRFXOwoEJmfmSUh4Dkm0K9c6hoILs9OXQ0KVUa8SFcy+ScO9u7c7K5h
- kLPgDladYKAzNZjUOTkk7hiZ9JF3gvFHk9hCEIYTOJl8yydD1a5pFSl+mVILngZMhqxGSxGKuM7
- S+ze6x8Z4bDj/whlCoAqOEpWkKlfHTj/MqYTLJjauCHJbvVXn5WrA0fuhOReGiDYc9cT2f9fQDf
- BapcQ9hQJTrDnba4vCvM/IT0x1on/AQNU7+Kgp2XBnFpxRvxS3Vfic0r1Jobu7XavlrsDwEgHkZ
- w=
-X-Google-Smtp-Source: AGHT+IFOKlyhVRC5aVIQxmUyXuFgfVzGiW5F5CM0ADicv1sFSbNuqhoIJ0H+PqBqAtTwqblJuMgKfw==
-X-Received: by 2002:a05:6a00:22c5:b0:76b:ecf2:7ece with SMTP id
- d2e1a72fcca58-78b024a6b8bmr11836339b3a.12.1759600277738; 
- Sat, 04 Oct 2025 10:51:17 -0700 (PDT)
+ bh=Y6Q2HRl/SME04nvnRxfsLSBx9qlKBJpScKR3Rt7EIKU=;
+ b=sIjfZXWGJKNJ4yAYg+7iRk4UO+n9oenjhrDmm/I2lWqgx+qukP7pKMQCMTdhIXfNAH
+ SeiRUbw41NMUNrbtTa3SaVTRhH2HPB4mP2L2CqrkY0S/FI6ePzppBZnp1JMhzKAHyhCc
+ D4i8sDg5F1OaSx1OC3pBG1G/QZcZ5ukanGiJURVM9spPJ7MZhbvCeHXaDkKz1w7C75K/
+ jkQVPkzqHNYPevFXVWeGNQ5QiKD8npE4P8zHay3W+eBq3iCi5wzd8bhJfymb71BULt3j
+ Nb0E3OHPmJfmgKx/rbxw+oYQDEk5iJyqbgMF89iWVuHsjXHFMx9hFe0E0mgYCAIM+C5L
+ P06A==
+X-Gm-Message-State: AOJu0YzeQXRxCvvj+j28+bSNR/2bLAPF6bCdZyYvxnK4pi/rCFtkPdiK
+ oKkHhDyo4NERE7ua9JQtNb4l8AlaX87q2AIHhL3GZSToZsFamuuGJ2i3Nok1QpC1del5xlAWb4j
+ LUzmVc04=
+X-Gm-Gg: ASbGncvvS+14Vcrc+s673b62+cXflCZ7a6HB3a8oyk6r2qzffbpdy+NR1/gFP2UeWSZ
+ 8Bz28LWeWafdqpgtmfr7o6jkFX9dYzPgKcqNtEhGZ3pLbBSW7J9CNwiPx/5wcRxZDVUvW70mjwV
+ rDq/i3wwg19EzdaZZJYKHntVlOMdhhbhu8l8LdhkdE2R4AhNG+nG9O6yHVb43pSFM2gYLzk9pUK
+ 8RsNhwYGjgalxQ/N/zFdPR0zVUi9UXejqYgj3BxUD4MZ2p0kogXFLyRnmKm/mXdkiJj6Xay6xrO
+ 6TdOotNLQ3n4u4GXyn5wDWC3FPGvA9nuTqN99vgwiIuSZJ5cQrYnnuN3I00kkez/6Gypy5HCgbI
+ NtEtEJ5tNoAZO8wOe47azz4p+pCIC733Q8Sea/sj7TyeG0JhLBYDjGJrVSOezr1n1g08dHQe1RB
+ o=
+X-Google-Smtp-Source: AGHT+IGk4VS6yBRYbaOtw2LcidIZMu8mLS5iwPX9Xs3/sf6p1el8mm4Vfzst0lOCH066ofAffYjpRA==
+X-Received: by 2002:a05:6a00:238b:b0:781:8832:9159 with SMTP id
+ d2e1a72fcca58-78c98d3304dmr9047475b3a.4.1759600426827; 
+ Sat, 04 Oct 2025 10:53:46 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78b020539e4sm8113154b3a.59.2025.10.04.10.51.17
+ d2e1a72fcca58-78b01fb16e4sm8008075b3a.21.2025.10.04.10.53.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Oct 2025 10:51:17 -0700 (PDT)
-Message-ID: <8066242e-853e-476b-8ce0-7b303ca67aa8@linaro.org>
-Date: Sat, 4 Oct 2025 10:51:15 -0700
+ Sat, 04 Oct 2025 10:53:46 -0700 (PDT)
+Message-ID: <a46a3fa5-3b29-44fb-9fd2-b4716f952886@linaro.org>
+Date: Sat, 4 Oct 2025 10:53:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/41] target/i386/whpx: Replace legacy
- cpu_physical_memory_rw() call
+Subject: Re: [PULL 00/45] Staging patches
 To: qemu-devel@nongnu.org
-References: <20251004071307.37521-1-philmd@linaro.org>
- <20251004071307.37521-16-philmd@linaro.org>
+References: <20251003153948.1304776-1-peterx@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251004071307.37521-16-philmd@linaro.org>
+In-Reply-To: <20251003153948.1304776-1-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,39 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/25 00:12, Philippe Mathieu-Daudé wrote:
-> Get the vCPU address space and convert the legacy
-> cpu_physical_memory_rw() by address_space_rw().
+On 10/3/25 08:39, Peter Xu wrote:
+> The following changes since commit 517e9b4862cc9798b7a24b1935d94c2f96787f12:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-Id: <20251002084203.63899-10-philmd@linaro.org>
-> ---
->   target/i386/whpx/whpx-all.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>    Merge tag 'qtest-20251001-pull-request' ofhttps://gitlab.com/farosas/qemu into staging (2025-10-01 15:03:00 -0700)
 > 
-> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-> index 2a85168ed51..82ba177c4a5 100644
-> --- a/target/i386/whpx/whpx-all.c
-> +++ b/target/i386/whpx/whpx-all.c
-> @@ -788,8 +788,11 @@ static HRESULT CALLBACK whpx_emu_mmio_callback(
->       void *ctx,
->       WHV_EMULATOR_MEMORY_ACCESS_INFO *ma)
->   {
-> -    cpu_physical_memory_rw(ma->GpaAddress, ma->Data, ma->AccessSize,
-> -                           ma->Direction);
-> +    CPUState *cpu = (CPUState *)ctx;
-> +    AddressSpace *as = cpu_addressspace(cs, MEMTXATTRS_UNSPECIFIED);
-> +
-> +    address_space_rw(as, ma->GpaAddress, MEMTXATTRS_UNSPECIFIED,
-> +                     ma->Data, ma->AccessSize, ma->Direction);
->       return S_OK;
->   }
->   
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/peterx/qemu.git tags/staging-pull-request
+> 
+> for you to fetch changes up to 27cffe16354816d57710d2d4357f16139405c749:
+> 
+>    migration-test: test cpr-exec (2025-10-03 09:48:02 -0400)
+> 
+> ----------------------------------------------------------------
+> Migration/Memory Pull for 10.2
+> 
+> - PeterX's fix on tls warning for preempt channel when migratino completes
+> - Arun's series to enhance error reporting for vTPM and migration framework
+> - PeterX's patch to cleanup multifd send TLS BYE messages
+> - Juraj's fix on postcopy start state transition when switchover failed
+> - Yanfei's fix to migrate APIC before VFIO-PCI to avoid irq fallbacks
+> - Dan's cleanup to simplify error reporting in qemu_fill_buffer()
+> - PeterM's fix on address space leak when cpu hot plug / unplug
+> - Steve's cpr-exec wholeset
 
-Build fails: https://gitlab.com/qemu-project/qemu/-/jobs/11605808806
-Mismatch cs/cpu in there.
-
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
 
