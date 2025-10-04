@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1713CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A30CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wSK-0003UI-Ss; Sat, 04 Oct 2025 03:13:24 -0400
+	id 1v4wSG-0003TQ-1B; Sat, 04 Oct 2025 03:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSI-0003To-LI
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:22 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSE-0003TG-BG
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:18 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSG-0004sX-Qo
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:22 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46e61ebddd6so27952155e9.0
- for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:13:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v4wSC-0004sC-FP
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:13:18 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-46e3ea0445fso16138535e9.1
+ for <qemu-devel@nongnu.org>; Sat, 04 Oct 2025 00:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759561999; x=1760166799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759561994; x=1760166794; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KHkbePhkbzKsxDMSg1uIeJwujfjDCu0ba4WcfqHxU8U=;
- b=yxe/jn0MXt4cCWxtlLJNoz0Z1p38Ing2tg73BtPoL+5R+cnuXDnUDU9TKPx3dOuMCa
- I08mfeKyfSRnHsquaW9gEWYKNNL2RxArJ0bxauZB5J2zn+GVUz91gfUnMfAUrofmYQjq
- RpfGEUXAsNHpciJCQ9ZcmedZSUsH8DxV8TvKz5HH0oaTKHWz/HhJnIjad0Ni/eWLxUdB
- yxLnSCEVzKPjpdPaB3VdJvx1wdhaqgS+OsL9t8plpU/WCaumKsIVggRY4RQRKXp/cS84
- /MeqUhoPDJvibee65WbEn3Hnquagx6BWuzxtP1WsdiKZBFtolKVUQztXCbi280aPfWfl
- oE4g==
+ :reply-to; bh=2oFcbpC1HbyDEsYpWRFg4rvw0CXXpnj78gi8Ht8cJ6A=;
+ b=aHOaXT+MHiQJtG3fOmrHlWIXdeXtBU/qjLUzOoQQhVJK7yPsDORdBvr5n4DspJpWWC
+ o1xuciaMleDQDEoIQAIrl+uBUkoH4f3WQTezQkzLCywSiUaKtI4B9dJKuZMbvkLKPDAz
+ JKlBKdX7ZZbBUnJ4D4LOFPMjb9zNTT5ZkgEVaREJlVeYH66/3UK/rygrUoyz5K2fVnnR
+ J0RsdEnKneHeZDsMSXZS1NqRz4iQkqenEXTqBlYqQX9nThNucNyh4ildZlY2sUqzRxKy
+ dqDCHyn24vgQ+eXbU6uXpinyb3oiveCtrOdhFXYLkrCut9iHK7F3DYtXV9oxkmC4THPJ
+ WqMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759561999; x=1760166799;
+ d=1e100.net; s=20230601; t=1759561994; x=1760166794;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KHkbePhkbzKsxDMSg1uIeJwujfjDCu0ba4WcfqHxU8U=;
- b=j9Jy+uAcFGmReW+Tvk+J4gljTvhcvrTszu+UDAIaqA3rM3cJ7BBzp6c2tKifWyEteR
- thmcULFaz4yhTkSNXXiigS8Yjxe3e2bzwMzi/+y21bNdAizn/P9KfE7ScvM5vKnLtAiA
- UTj4HnWtA4+MAXodD/6425/NGjED4+vD68xaRh1nDd2c5KeEzHPLc5bD0ZGFSBgQv5Zs
- gADP0ded0GTzrdc7V/vAXjfjRRe+gU6j7ZPjWngm39N3EsoF8IkkoVhDoJlCIP0iIlsX
- YOVoDAAICJIhPMQ+XNyuXtjIlBzv20EScNpg9Va3siTB3dinicmZxBTJ+lyx5nHmmItt
- JnUA==
-X-Gm-Message-State: AOJu0YySx15RzMQ0vuV2sPheIoZDKSLCAcmUTxWJHkGWACFePxdLyMLB
- Ne5KqxAGYp20UcUWZ5dNju8h08ImRJ66yga0tzzsCVtbtzEmbr3SlfFUzPck0cwfls6YDljdc3m
- yvhblOfZL6g==
-X-Gm-Gg: ASbGncsnRANOL1SKdL/sJ/WOsWOg7H4BR2jtK4K3jcje4h1KIIlvW+gSI6kb0+Qg9Pc
- uUjnNvm/aZHDerircwpRrOrZVb7KPGi2vvMvcXUCcABjd2Lic/erfoL4xQecZL+qbm3KyiuimYl
- +4uXjAy/Xp66R9oyixEcFxdxFioGmXTLdgWecmQx0sPeDXhPaVbTH/tQRNcWaTnGBQvXBQnwlkP
- izOTgEZfctgtsqTJU0v/2zyGD92mervQjXjfzqYSr79xXsYgbpuUNJ3rvWsdijNvKESL5EAdze6
- kChnJHoxaXVbVscqNuiBmBFY1oI6pJdveY5sdji6ahLRGX3Xcvr+sZjr6JqLmJpGC8TccaBsnL6
- 8SgvthhbKNR3HUvveVv1CHjJgG0nBu/9CVemr5rgUPQ9rFQ/u2ifMF6Q+ta7wZDv64AiPgnWV99
- t7fQWu7MLAP2Ok3heTUrawDxSY
-X-Google-Smtp-Source: AGHT+IHxEoa+BPtYpNMS3R1sbNRrgwaAyE/6skcG/oPTNHTAOgk6OtU+78vyuFPWwA+luBDsg23Rvg==
-X-Received: by 2002:a05:6000:604:b0:424:211a:4141 with SMTP id
- ffacd0b85a97d-42567165eabmr3529810f8f.27.1759561998579; 
- Sat, 04 Oct 2025 00:13:18 -0700 (PDT)
+ bh=2oFcbpC1HbyDEsYpWRFg4rvw0CXXpnj78gi8Ht8cJ6A=;
+ b=Bmlh19P7WlodiVjsmLHqar4rKRWUbOB2PcQEDtmgJcKnQOuxb51DWjJ36X1d0ukc08
+ Gz5ka39WBERYawYS8TM0Vn0sDtbjI1g/Zsk/6/37+RFL14bak8UMu/pvx1+a3Uzx5gIX
+ d5jW7Nvx3pTjRQbdClJUoepXpce9ZdDor28P4Y6u+KbnlN/Lz/M1qPKg0y4Q452UUM2x
+ ZYOthgNRGZD6V/JH3G2ndjkd/JkK7vxKPLnUoEWVKvhWec63I/rDwcHKoPTWjm/ObeLL
+ yAbpXhwmfHvjPXLY38Xs4v8BAe3kG4Xgy0gbwKqJvKAQmN53RNNUO2NzBvwkYx7VoeRK
+ cCSA==
+X-Gm-Message-State: AOJu0Yx6cQSfD9WSn6qdrR12oCPNoDgqvOUIpkpIg99VKGzk/04E6loO
+ eudzEWmGHxlSnIfztv+cmnY0+lxr7i7pACBRk9LrGMaQ6vdxB52trrlrDnexLyhyVKI00ZWaQBZ
+ J9Orot59pkw==
+X-Gm-Gg: ASbGncsDPtwliXXBOe6HZbl19N7rvUkIyvYVvbRb/rF6BCDXTDSAp4lc30Q5wKUCUOa
+ RlnTXl/MoYao4Eb3hSsA5u6r4/0170sJ5Z9wzaBhC7YFd2A9m3hAVdoTkBltx0EVfCr2ffmLrTH
+ diwnW2cylESRsNSfU/kGPUAqrb61HUtq6SqhyeJEmlWgC5xF/zJA/9OaimXrFfAFr8Q+mWfE3ji
+ +inkH7GM7bwXNU52Pt4ic25hQBTfZ58Tv5Dw1M1vj91tCkPoSYbPsjJYwd58P6M3R/PDt3+GeMB
+ hjseJzNQPJLZl0Y6IbiEhtJJg0FnguUkrNJXWTrLB5U9DoRyESU+kkB+wJ291OU/Gp5REIrUltn
+ cMEc+8zQrpDmLI9sN/kexdSdvZ6ZXcInPm20U0+5dSdOS3yz4IyT9Ye62osXOsJnmtHKroeb4XR
+ bMeViUPVxkGSGVrzEU04NwP5c2
+X-Google-Smtp-Source: AGHT+IHvnVZ2CAJ58MuI6gpXLO0Quh9sEhL9jNFk31p456DPxyok2lHrKpVtgvyzrNeDZGmBKcOipw==
+X-Received: by 2002:a05:600c:4f93:b0:46e:5cb5:20df with SMTP id
+ 5b1f17b1804b1-46e7110f0famr49145195e9.16.1759561994079; 
+ Sat, 04 Oct 2025 00:13:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a022d8sm151072685e9.12.2025.10.04.00.13.17
+ 5b1f17b1804b1-46e61a020a3sm160888675e9.10.2025.10.04.00.13.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 04 Oct 2025 00:13:18 -0700 (PDT)
+ Sat, 04 Oct 2025 00:13:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/41] system/ramblock: Move ram_block_is_pmem() declaration
-Date: Sat,  4 Oct 2025 09:12:28 +0200
-Message-ID: <20251004071307.37521-3-philmd@linaro.org>
+Subject: [PULL 01/41] system/ramblock: Remove obsolete comment
+Date: Sat,  4 Oct 2025 09:12:27 +0200
+Message-ID: <20251004071307.37521-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251004071307.37521-1-philmd@linaro.org>
 References: <20251004071307.37521-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,100 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move ramblock_is_pmem() along with the RAM Block API
-exposed by the "system/ramblock.h" header. Rename as
-ram_block_is_pmem() to keep API prefix consistency.
+This comment was added almost 5 years ago in commit 41aa4e9fd84
+("ram_addr: Split RAMBlock definition"). Clearly it got ignored:
+
+  $ git grep -l system/ramblock.h
+  hw/display/virtio-gpu-udmabuf.c
+  hw/hyperv/hv-balloon.c
+  hw/virtio/vhost-user.c
+  migration/dirtyrate.c
+  migration/file.c
+  migration/multifd-nocomp.c
+  migration/multifd-qatzip.c
+  migration/multifd-qpl.c
+  migration/multifd-uadk.c
+  migration/multifd-zero-page.c
+  migration/multifd-zlib.c
+  migration/multifd-zstd.c
+  migration/multifd.c
+  migration/postcopy-ram.c
+  system/ram-block-attributes.c
+  target/i386/kvm/tdx.c
+  tests/qtest/fuzz/generic_fuzz.c
+
+At this point it seems saner to just remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20251002032812.26069-3-philmd@linaro.org>
+Message-Id: <20251002032812.26069-2-philmd@linaro.org>
 ---
- include/system/ram_addr.h | 2 --
- include/system/ramblock.h | 5 +++++
- migration/ram.c           | 3 ++-
- system/physmem.c          | 5 +++--
- 4 files changed, 10 insertions(+), 5 deletions(-)
+ include/system/ramblock.h | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 15a1b1a4fa2..53c0c8c3856 100644
---- a/include/system/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -99,8 +99,6 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
-     return host_addr_offset >> TARGET_PAGE_BITS;
- }
- 
--bool ramblock_is_pmem(RAMBlock *rb);
--
- /**
-  * qemu_ram_alloc_from_file,
-  * qemu_ram_alloc_from_fd:  Allocate a ram block from the specified backing
 diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index 8999206592d..7059b20d919 100644
+index 87e847e184a..8999206592d 100644
 --- a/include/system/ramblock.h
 +++ b/include/system/ramblock.h
-@@ -108,4 +108,9 @@ void ram_block_attributes_destroy(RamBlockAttributes *attr);
- int ram_block_attributes_state_change(RamBlockAttributes *attr, uint64_t offset,
-                                       uint64_t size, bool to_discard);
+@@ -11,11 +11,6 @@
+  *
+  */
  
-+/**
-+ * ram_block_is_pmem: Whether the RAM block is of persistent memory
-+ */
-+bool ram_block_is_pmem(RAMBlock *rb);
-+
- #endif
-diff --git a/migration/ram.c b/migration/ram.c
-index 7208bc114fb..91e65be83d8 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -53,6 +53,7 @@
- #include "qemu/rcu_queue.h"
- #include "migration/colo.h"
- #include "system/cpu-throttle.h"
-+#include "system/ramblock.h"
- #include "savevm.h"
- #include "qemu/iov.h"
- #include "multifd.h"
-@@ -4367,7 +4368,7 @@ static bool ram_has_postcopy(void *opaque)
- {
-     RAMBlock *rb;
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
--        if (ramblock_is_pmem(rb)) {
-+        if (ram_block_is_pmem(rb)) {
-             info_report("Block: %s, host: %p is a nvdimm memory, postcopy"
-                          "is not supported now!", rb->idstr, rb->host);
-             return false;
-diff --git a/system/physmem.c b/system/physmem.c
-index ae8ecd50ea1..3766fae0aba 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -43,6 +43,7 @@
- #include "system/kvm.h"
- #include "system/tcg.h"
- #include "system/qtest.h"
-+#include "system/ramblock.h"
- #include "qemu/timer.h"
- #include "qemu/config-file.h"
- #include "qemu/error-report.h"
-@@ -1804,7 +1805,7 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
+-/*
+- * This header is for use by exec.c and memory.c ONLY.  Do not include it.
+- * The functions declared here will be removed soon.
+- */
+-
+ #ifndef SYSTEM_RAMBLOCK_H
+ #define SYSTEM_RAMBLOCK_H
  
- #ifdef CONFIG_LIBPMEM
-     /* The lack of support for pmem should not block the sync */
--    if (ramblock_is_pmem(block)) {
-+    if (ram_block_is_pmem(block)) {
-         void *addr = ramblock_ptr(block, start);
-         pmem_persist(addr, length);
-         return;
-@@ -3943,7 +3944,7 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
-     return ret;
- }
- 
--bool ramblock_is_pmem(RAMBlock *rb)
-+bool ram_block_is_pmem(RAMBlock *rb)
- {
-     return rb->flags & RAM_PMEM;
- }
 -- 
 2.51.0
 
