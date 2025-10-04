@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9A8CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70F71CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4whq-0006uv-9I; Sat, 04 Oct 2025 03:29:26 -0400
+	id 1v4wkp-0007v1-Vo; Sat, 04 Oct 2025 03:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4who-0006uQ-UN; Sat, 04 Oct 2025 03:29:24 -0400
+ id 1v4wkm-0007uo-Ee; Sat, 04 Oct 2025 03:32:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v4whm-0007HY-VL; Sat, 04 Oct 2025 03:29:24 -0400
+ id 1v4wkk-0007eI-7Q; Sat, 04 Oct 2025 03:32:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B3E6915A5FC;
- Sat, 04 Oct 2025 10:29:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C41E15A600;
+ Sat, 04 Oct 2025 10:32:21 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1744A298672;
- Sat,  4 Oct 2025 10:29:13 +0300 (MSK)
-Message-ID: <b251b5bc-49a5-4f00-9703-9b2ebb0587c9@tls.msk.ru>
-Date: Sat, 4 Oct 2025 10:29:12 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 93162298677;
+ Sat,  4 Oct 2025 10:32:21 +0300 (MSK)
+Message-ID: <7817d067-6bf4-4628-a5b3-8e8743415c9c@tls.msk.ru>
+Date: Sat, 4 Oct 2025 10:32:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: do not use translator_ldl in opcode_at
-To: Vladimir Isaev <vladimir.isaev@syntacore.com>,
- richard.henderson@linaro.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+Subject: Re: [PATCH v1 0/3] Minor fixes of RISC-V CFI
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
+References: <20250924074818.230010-1-jim.shu@sifive.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,7 +81,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
+In-Reply-To: <20250924074818.230010-1-jim.shu@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -107,17 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/25 17:06, Vladimir Isaev wrote:
-> opcode_at is used only in semihosting checks to match opcodes with expected pattern.
+On 9/24/25 10:48, Jim Shu wrote:
+> This patch series contains several CFI fixes:
+>    (1) Fix the mepc in the exception from sspopchk instruction
+>    (2) Fix the exception type from SSP CSR and ssamoswap instruction
 > 
-> This is not a translator and if we got following assert if page is not in TLB:
-> qemu-system-riscv64: ../accel/tcg/translator.c:363: record_save: Assertion `offset == db->record_start + db->record_len' failed.
-> 
-> Fixes: 1f9c4462334f ("target/riscv: Use translator_ld* for everything")
-> Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+> Jim Shu (3):
+>    target/riscv: Fix the mepc when sspopchk triggers the exception
+>    target/riscv: Fix SSP CSR error handling in VU/VS mode
+>    target/riscv: Fix ssamoswap error handling
 
-This seems like a qemu-stable material (for 10.0.x and 10.1.x series).
-Please let me know if it is not.
+Hi!
+
+Is there anything in there which should be picked up for
+qemu stable series (10.0.x lts and 10.1.x) ?
 
 Thanks,
 
