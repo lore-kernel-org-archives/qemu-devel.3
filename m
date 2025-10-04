@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2043BCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Oct 2025 23:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E776CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 06:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4pRg-0005DQ-JX; Fri, 03 Oct 2025 19:44:16 -0400
+	id 1v4vrZ-0004XC-80; Sat, 04 Oct 2025 02:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1v4pRV-0005C2-K1
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 19:44:05 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1v4pRO-0001Sg-2J
- for qemu-devel@nongnu.org; Fri, 03 Oct 2025 19:44:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1759535038; x=1791071038;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=gzul51cGI+N3oHYT9aFRo2LZYIYxvdReF+axntN4T2U=;
- b=Y0aDowa+nofmNlmkGZ9gPwqcNpxvTuL9cMl9ik9uiWwQg7v1zXm6ah/d
- 9gM5BbtiaL6A0v03U0cUyoHE70BLRRf6T1G1C8F4rEP8pr/OHbAjDRPTW
- 1ubN79m4zscrlDZ+YbMBBGdCkcuROGv31Cs6UDXJKtiMDyRQQg+Yrd7ji
- vcS42QBgE4je0NRWC9Ojr6ZU2JEmza+NAAP2GZeoVtWr9I1BnDoZSmk0/
- VCZObaAFuHfP/lZmuoysaURWexfLtZHzNkhkYauD50Ozf2lE7hQhCKzEt
- cyFlQLirMLcqIAKAfQWd4vshVv8IYxt0CudeRmmSpa/2JqPJ6clU9eUTp Q==;
-X-CSE-ConnectionGUID: u7QJSb3PQR2z2yI/Jv0qxA==
-X-CSE-MsgGUID: uL1D3ujSTGSstQy/N5E8Dg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11571"; a="61705040"
-X-IronPort-AV: E=Sophos;i="6.18,314,1751266800"; d="scan'208";a="61705040"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Oct 2025 16:43:39 -0700
-X-CSE-ConnectionGUID: AJMjB2sGTfG8yv0ILvgxzw==
-X-CSE-MsgGUID: 6FnRAmDsQbuDqFy5u1WGRg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,314,1751266800"; d="scan'208";a="179428152"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Oct 2025 16:43:38 -0700
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 4/7] vfio/region: Add a helper to get region index from
- memory region
-Date: Fri,  3 Oct 2025 16:35:57 -0700
-Message-ID: <20251003234138.85820-5-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251003234138.85820-1-vivek.kasireddy@intel.com>
-References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
+ id 1v4vrV-0004Wz-IQ
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 02:35:21 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
+ id 1v4vrU-0007H9-2j
+ for qemu-devel@nongnu.org; Sat, 04 Oct 2025 02:35:21 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-30cceb3be82so1955188fac.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Oct 2025 23:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1759559718; x=1760164518; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=pFPthaAVh2r6N8QubvLQ9+/f0boz1xnnyNTgbYSJyZ8=;
+ b=H1hYX9xBPoODAvRudZQBfs4sfIrH1rpogwdLTt9N+LWsou11c3Z3ZBbzkMpWu/s5Fm
+ CAsIeBfbsIO5bPRbM2RutMQtdBl+uhPqUALdqVGDYv5oT2TpuJRSMKOcboSKl91xmRlf
+ 7fml2j0AdzqBvarFlkhJqjfUc1eYsoJF2+NJT3wwfubL66ME8OoxM8xBKTZIxATXSZt5
+ idbWjaQ5QVDW8vsN1GIsUaojaxi3LoZihPt6RyOF+onhaSJMweKKZ457gASVGCE8atT5
+ 3LqLnaPhR7Pf7j68WBgIIdpMRx2GqSampT/J+SQ9XoMvY6KZPGyiy2cHfJRbeINvE9d/
+ ZloQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759559718; x=1760164518;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pFPthaAVh2r6N8QubvLQ9+/f0boz1xnnyNTgbYSJyZ8=;
+ b=rEc+0uVjAomHH+m+gwS6gdQYi1Q78Mep/I5tPyldLPX3QA0pp7XLnUKXtyao+NIhI1
+ oe7VGh/By8ukuz1lv1N2aYe+OvnKNRk/9SbVgJfTY0Fpf0JCArklrlT6iQXmdBLKr//T
+ hzqZuSIlqshWgOHI0A60C4ncgV3wQ2GKxQhB5VI7ejxw5J/QtF2Hw3ewPCOFecWxHtnh
+ oZyUPJI8GROczyfYazgrn+tOAyB1UPuWp4xmelYQzN/fSsNAuReMoeLZ+P01Loi/ZUyS
+ GraORFt6knY99kmAbnPPviy+XEwEq/uTFEQc98mRc8PesTLFtX+nRhupdIlfUd8yxxhF
+ aBFg==
+X-Gm-Message-State: AOJu0YzyhN8cbTHyOnIZMNjfuvQyG3jcNs6Vf6VH2vZhS1L8v2HIUial
+ 0NuSkFE4z8oDN0ItYRShFecCxlYxGT3J6BiHs88YZPLpzEyHCItKIjuR5cAnyBFeA/IaoyyO6nx
+ MUIZFpcpZZyAcRVDyU8814A65vlcL6LA=
+X-Gm-Gg: ASbGncsbT+1oNEwnteXb1ZhVkS8qcImNIpQdQlB7Gjs7wc5xpGkRncDRCO6zf/pX/ou
+ M+r7Hpt4HHCMhPB3puO8SCVOTiZlRI4sKse/MP49eqLrsZDuJ72cF+p7hyRUjedHbEHUcLbtk/W
+ 0bfQ7iHUhQoZHRnu4X//vN64Oqwr316cV8M+Kv8boj/YO/D279BuTIoMxQ8I/aByJ97sHCrfkiB
+ At6xC/4HXWtedhm1VBIQjq0iI+suLmPgDLrrGreNFcjr3Cm3Ng=
+X-Google-Smtp-Source: AGHT+IGwtHclAnyHPdGkaIEY4/GEGttqEt/+cry9InxPF0a1SYLCN8eTxIBcl5K52Z9xC+lTXLPJVqLBX+XF566t6nU=
+X-Received: by 2002:a05:6870:243:b0:381:e796:fbdd with SMTP id
+ 586e51a60fabf-3b0fa24e778mr3197577fac.35.1759559718081; Fri, 03 Oct 2025
+ 23:35:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.467,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+From: Pranith Kumar <bobby.prani@gmail.com>
+Date: Fri, 3 Oct 2025 23:34:52 -0700
+X-Gm-Features: AS18NWBVdMCYdQE4IPLOJfb_rs8OGHP4SfYjFFuoad3ATgCky4r9AybkhOIBBew
+Message-ID: <CAJhHMCCfOqP6E2XvkY5JNtgQrXXH7uV_y9wfLcYFh9kecgocaQ@mail.gmail.com>
+Subject: Reg. guest unaligned accesses in TCG
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=bobby.prani@gmail.com; helo=mail-oa1-x35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,55 +90,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having a way to figure out the region index (or bar) associated
-with a memory region is helpful in various scenarios. For example,
-this capability can be useful in retrieving the region info needed
-for mapping a part of a VFIO region or creating a dmabuf.
+Hi Richard and Alex,
 
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
----
- hw/vfio/region.c              | 14 ++++++++++++++
- include/hw/vfio/vfio-device.h |  2 ++
- 2 files changed, 16 insertions(+)
+I am trying to implement efficient x86 guest on ARM64 host
+virtualization where the host has FEAT_LRCPC2 instructions. If I
+translate every x86 load to LDAPR and every x86 store to STLR, it will
+meet the memory consistency requirements.
 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index b165ab0b93..8837afc97f 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -398,3 +398,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
-     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
-                                         enabled);
- }
-+
-+int vfio_get_region_index_from_mr(MemoryRegion *mr)
-+{
-+    VFIORegion *region = mr->opaque;
-+
-+    if (mr->ops != &vfio_region_ops) {
-+        mr = mr->container;
-+        if (mr->ops != &vfio_region_ops) {
-+            return -1;
-+        }
-+	region = mr->opaque;
-+    }
-+    return region->nr;
-+}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 7e9aed6d3c..bdb106c937 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -277,6 +277,8 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
- 
- int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_irq_info *info);
-+
-+int vfio_get_region_index_from_mr(MemoryRegion *mr);
- #endif
- 
- /* Returns 0 on success, or a negative errno. */
+The necessary condition for using these RCpc instructions is the
+alignment. The manual states that alignment fault will be raised if:
+
+* Not all bytes of the memory access lie within a 16-byte quantity
+aligned to 16 bytes, and
+* The value of SCTLR_ELx.nAA applicable to the current Exception level is 0.
+
+How does TCG check for alignment? How do I check if the guest memory
+access is within the 16-byte alignment? Will alignment fault be raised
+if it is not?
+
+Any pointers are greatly appreciated!
+
+Thank you,
 -- 
-2.50.1
-
+Pranith
 
