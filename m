@@ -4,70 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5811CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9A8CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Oct 2025 07:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v4wbg-0005XQ-Ku; Sat, 04 Oct 2025 03:23:04 -0400
+	id 1v4whq-0006uv-9I; Sat, 04 Oct 2025 03:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4wbe-0005Wb-8s
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:23:02 -0400
-Received: from p-east3-cluster3-host9-snip4-1.eps.apple.com ([57.103.86.84]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v4who-0006uQ-UN; Sat, 04 Oct 2025 03:29:24 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v4wbb-0006Ee-Ig
- for qemu-devel@nongnu.org; Sat, 04 Oct 2025 03:23:02 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-4 (Postfix) with ESMTPS id
- 6F6C71800128; Sat,  4 Oct 2025 07:22:53 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=jWl0rRljYnmnjT52LiUJwIZF+Ely2UsaP7+2W3Dmhvk=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=eikdPH0I/WSEsRh2Ezz6J3jzVdBG9HBT2/R6yztH5jMEBGvYa6cT3gObE6pENW83KrMAlRUBDHGB2kkGRwVxdLL6dAYa1sicQgPyKWmkrQTPL3y/QYnfgl4d7MaQsxhDnHkLlfScQDDMD1BQMpYWX9A4SatujviM7I2k2GE7/PUv/pcJ2zjTaWfodrtJB5Zb52U2JHQuCxVAzebGKO33nAXCQe/PL7PMUZN6kSyBsZNuR2C6EAxanvUJSImJCqzd9bTUo/IGDgn27cl5+F4YNs3rFgeFyLWi5uMdIMP+HERnUbJwMcXLp9+Y50Skhg1+5WZ22Tle2eDCugRyda9JmA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-4 (Postfix) with ESMTPSA id
- C1AE118000B1; Sat,  4 Oct 2025 07:22:51 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: Reg. guest unaligned accesses in TCG
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAJhHMCCfOqP6E2XvkY5JNtgQrXXH7uV_y9wfLcYFh9kecgocaQ@mail.gmail.com>
-Date: Sat, 4 Oct 2025 09:22:40 +0200
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <08EF65B7-ACA6-4AE7-802B-FDEE324CDE4B@unpredictable.fr>
-References: <CAJhHMCCfOqP6E2XvkY5JNtgQrXXH7uV_y9wfLcYFh9kecgocaQ@mail.gmail.com>
-To: Pranith Kumar <bobby.prani@gmail.com>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDA2MiBTYWx0ZWRfXzaFKjEeQxXs/
- YfjzJ8a4d1H/dcLuDuIODBqrsbFoRMNDsWaayiIIISDPRQ9KV574WSHTON/R5wnDwxMh01vKdrT
- lb4SAh1kFF7vZONY3R6ewe/KqpWWUX0Eky1UhuPmdyi247xdNvEAHAEezQ+N/9Dr+io4GzcA3Ki
- x2ehwmSi5GA3PFCJzSUguFVZxJIefZJ+OgTR1Zk6yxUTanHGtyTnGlIdgrIdOyAH1wsNHUwGAMw
- tBbOo3OlU5WezwWZ6Cj5+lDIlAvvqW+fga9OO7bCMneqgsTH3sGJkMMHY+iVsjaSpu3dgokgk=
-X-Proofpoint-GUID: ODqg9-ryVer906JWdPTBqEX2f5zfWo_v
-X-Proofpoint-ORIG-GUID: ODqg9-ryVer906JWdPTBqEX2f5zfWo_v
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-03_07,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 bulkscore=0 spamscore=0 phishscore=0 malwarescore=0 clxscore=1030
- mlxlogscore=999 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2510040062
-Received-SPF: pass client-ip=57.103.86.84;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v4whm-0007HY-VL; Sat, 04 Oct 2025 03:29:24 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B3E6915A5FC;
+ Sat, 04 Oct 2025 10:29:17 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1744A298672;
+ Sat,  4 Oct 2025 10:29:13 +0300 (MSK)
+Message-ID: <b251b5bc-49a5-4f00-9703-9b2ebb0587c9@tls.msk.ru>
+Date: Sat, 4 Oct 2025 10:29:12 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: do not use translator_ldl in opcode_at
+To: Vladimir Isaev <vladimir.isaev@syntacore.com>,
+ richard.henderson@linaro.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,42 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/15/25 17:06, Vladimir Isaev wrote:
+> opcode_at is used only in semihosting checks to match opcodes with expected pattern.
+> 
+> This is not a translator and if we got following assert if page is not in TLB:
+> qemu-system-riscv64: ../accel/tcg/translator.c:363: record_save: Assertion `offset == db->record_start + db->record_len' failed.
+> 
+> Fixes: 1f9c4462334f ("target/riscv: Use translator_ld* for everything")
+> Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
 
+This seems like a qemu-stable material (for 10.0.x and 10.1.x series).
+Please let me know if it is not.
 
-> On 4. Oct 2025, at 08:34, Pranith Kumar <bobby.prani@gmail.com> wrote:
->=20
-> Hi Richard and Alex,
->=20
-> I am trying to implement efficient x86 guest on ARM64 host
-> virtualization where the host has FEAT_LRCPC2 instructions. If I
-> translate every x86 load to LDAPR and every x86 store to STLR, it will
-> meet the memory consistency requirements.
-Hello,
+Thanks,
 
-If you=E2=80=99re targeting Apple chips, note that RCpc is really slow =
-on those
-as they expect you to use the hardware TSO mode instead.
-
-But to get TSO mode on those you=E2=80=99ll need to use HVF=E2=80=A6
-> The necessary condition for using these RCpc instructions is the
-> alignment. The manual states that alignment fault will be raised if:
->=20
-> * Not all bytes of the memory access lie within a 16-byte quantity
-> aligned to 16 bytes, and
-> * The value of SCTLR_ELx.nAA applicable to the current Exception level =
-is 0.
->=20
-> How does TCG check for alignment? How do I check if the guest memory
-> access is within the 16-byte alignment? Will alignment fault be raised
-> if it is not?
-The hardware will raise an alignment fault in that case. Other emulators
-then do backpatching to a barrier-reliant sequence in that case.
-
-> Any pointers are greatly appreciated!
->=20
-> Thank you,
-> --=20
-> Pranith
->=20
-
+/mjt
 
