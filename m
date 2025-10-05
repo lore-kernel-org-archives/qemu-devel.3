@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A15CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F10CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UGF-0005Yo-Jk; Sun, 05 Oct 2025 15:19:13 -0400
+	id 1v5UGV-0006Ka-HW; Sun, 05 Oct 2025 15:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UG0-00050I-2f
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:19:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFs-0004pl-DT
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFx-0006hg-Uk
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFq-0006g6-0o
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691932;
+ s=mimecast20190719; t=1759691925;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ghXDZ+n9Et0LsGtFaG9r3BwQQMqcSZpR9BTBqrZEGYw=;
- b=cTQOy6d8KEfX4Abufso4KpIgZ4nFV8XRjlNSGBSjRrg0D03LCBD5kUSfrTvzobQWVA80R/
- tAu+UPNSUk9W+7ELxWPO9A0B+0DdDx5Grns4ISHOF8Z0wp+Sb7X+ttFI2a2nJWJyIjOLb5
- mdw28dWM1bdH28kpPLjNu6aDYdpj5Ao=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VxCiyHKYD9YBF6shEy7T0nbq5E2EJ5X5H7ThZ32/yVY=;
+ b=bTcRG6qc7Dw5kruvysFY9myP7S+XBFhcSlx5KJq+LD9ie3txZGT/iKoZPI3U71Iyw3hzHx
+ cY0JE0XXbWMYWKY7qkedqglpIPMonQu/NWN19PAZC6FC96Ny9XZKkBx0E0ItFmBwgW4ACK
+ ViuGv9RYhF2nyR2Oci4ci31yXYhK9Xc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-Q2GlvWCMMZyR__UzuSS6cw-1; Sun, 05 Oct 2025 15:18:51 -0400
-X-MC-Unique: Q2GlvWCMMZyR__UzuSS6cw-1
-X-Mimecast-MFC-AGG-ID: Q2GlvWCMMZyR__UzuSS6cw_1759691930
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3efe4fcc9ccso2224274f8f.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:51 -0700 (PDT)
+ us-mta-296-XmYMgiZVPZmKwPb_oKh32Q-1; Sun, 05 Oct 2025 15:18:43 -0400
+X-MC-Unique: XmYMgiZVPZmKwPb_oKh32Q-1
+X-Mimecast-MFC-AGG-ID: XmYMgiZVPZmKwPb_oKh32Q_1759691922
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e473e577eso21448925e9.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691930; x=1760296730;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ghXDZ+n9Et0LsGtFaG9r3BwQQMqcSZpR9BTBqrZEGYw=;
- b=VFA2p/MKaUgwJ3Yzsjh+obQnJqozRr4ZUVSWb4E1wKdPEGuVGJrG62JrLdkwSJeVaI
- RBwln48tCwbP2WiGCqLLbz8JbWIGhqSRgxJ+k4kw7QxLqGxFMkpPUmYggraYQyxHvDBN
- h1+WVqWfcV9XPBYsmuD7yDLCMurMumdwGFxW1Db54rEIYYMymHRoY5WaaL+01/cafKex
- LqRwrd2jv/NqksHzsDHRsF/lrnQiNscXCUu+/5D5f/PayHhXahR46bM9bq2TG1aSQigl
- Yb18tBZ4bnJWGt5J1d5TRZmVpjOJpZ4mtHWxY74EPJdBBwOZ4/uk+27tbMlcVuZEOfCe
- VUZg==
-X-Gm-Message-State: AOJu0YyWkF4Q0wQJPMXvej68aZW2T8eID28aCmogyjYMtb11lEm47y5i
- mQtQ3evXzVEEx8vGxtAUaTdODCJsMBlrpM6sPUzdP8eSn8/pdFUetr80EqcgSxMT3TchibVhJEa
- fBd7XALgU922O4sVVzhHIqTO7biA1ykRyPSa9x4hdavpmR+c37sYbGiPpVmT7Rr0c+kPd9/Gwm1
- 2VJGtshh/LGn19MktQpCEuCY8Ets05TBnZEw==
-X-Gm-Gg: ASbGncscNUiMCj3uZ4XMi1GSA+bVQftOeIgMYoFZkw/5BHFeO29bj9y0bAJqzvCykqf
- Kw3GNMOj1oFIGU/8OPFKCGkPuX3lJET3/8yIXkasLJRce6IZyWHFq+2gtB5Kwn8iUp3gWgGXtP8
- SzGhm9B+4TR75Px6lhJDASfcuQp4h3C+AqMWVlYOuqR7vmZpdCU+dvS6p6rceF/oQDgzdPoyRWx
- PievtVIpGTk+AQMsxPRHXTqzmUx9Ck6oplZZp3e/yFxsSX37pn89iwsoHVX9amTLbpt/p2tDh/3
- BAWT7NJ/1CbY5aEHALDLwS17MqKmp3E8cRNUDsw=
-X-Received: by 2002:a05:6000:18a6:b0:3ee:2ae2:3f34 with SMTP id
- ffacd0b85a97d-4256712a506mr6269172f8f.13.1759691929750; 
- Sun, 05 Oct 2025 12:18:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBzNbQKJDOIT8Dh77yaeD0wFsFKznaKetafHFSKQ6Qrke3lsZgPmvcg1aVxZ7xK+sGtvQ9tA==
-X-Received: by 2002:a05:6000:18a6:b0:3ee:2ae2:3f34 with SMTP id
- ffacd0b85a97d-4256712a506mr6269155f8f.13.1759691929139; 
- Sun, 05 Oct 2025 12:18:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759691922; x=1760296722;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VxCiyHKYD9YBF6shEy7T0nbq5E2EJ5X5H7ThZ32/yVY=;
+ b=IeT3hvgngl8C387jiHsvAZp+ILH5ohFwAeLTQmh2leC3R82/pk0/RWqMpuxvbFl/M+
+ HuWSth1f3ecqlj5pkBp2pGvVIoumGhFXWoTcTRk7TC09YFuJNCJc7HuD6ja7MOd7kVfL
+ XqhKnYUuiO3Pz75pHv6bEq8hWm94jbY2FfVy+viu4uYwy9Gf87X3+VTLKeFQBTIhn5Ot
+ +nUts+BsFvKmj9gEOzfUvEAdwSHAgPG973pZO2Ib0szo1hcgBKTPjRXF+HENo22gARfA
+ +bS6gr9cFts+Qe52+uuXgDfEWklO83L28XiZV1QLu1DYUSib62+IgSClLLK/TNqGAYGE
+ SvTg==
+X-Gm-Message-State: AOJu0YyFG3/mPIyoc52Pgg6rnUo3Fz3dSBYqM7rcm1eP0mkGt8Q69OpM
+ UD8GtohMETl2NNPFdbN6sZH1coxuOYeyJ+I9QShqBNcCLewuMHpwJOTZcva/BtgiRBgEmik27nx
+ PHUYQG2LHRhe+phlo1dtjPpJVnKBXpCOsygD3mrQRSjtW+DqiQI76yqgiX2OubJx872NdzXEGam
+ 7zM+CUZRy0Grm2kK2PgE4saKWua9XQKw6QLQ==
+X-Gm-Gg: ASbGncuX+gQRARk4+gcHXaxWxkWyM7jBA1loNGv/5tya48A6xeSfb5mjeac6cs5Tqny
+ q0k/hhdEOlr0A4o+ViFvquqrgkFG9qaMfoWmXKB1ikEnXrxrP6lAnbx3SxOR0RUtUVrIsgqr8aG
+ Z7Ga1/bX97cbQfdya6Oy0EyKKwObazP6hO7yZFFd3ZpfW2vGgH0Zxdg4CHJ0zT1k45wxPNshEfF
+ Olzyx3A6VMND5gqLO2jjrxXSlP9wrruPMCuhSilM967udL75F0qB3F/8DOXmC7Q2Y8I38Vr3ywY
+ tO6dejz+CF7v8d7l14HQWE/1odrYWW3YQ961hjA=
+X-Received: by 2002:a05:6000:2f88:b0:425:7c14:e2e8 with SMTP id
+ ffacd0b85a97d-4257c14e303mr945356f8f.37.1759691921737; 
+ Sun, 05 Oct 2025 12:18:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG18Sjsh/St6MarFIFB7eEahBZg+EIzwimmYVYNVr0A5Sq9c+ET7pzNSNhkSFf+Q8qUAcB2jw==
+X-Received: by 2002:a05:6000:2f88:b0:425:7c14:e2e8 with SMTP id
+ ffacd0b85a97d-4257c14e303mr945329f8f.37.1759691921014; 
+ Sun, 05 Oct 2025 12:18:41 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a0204fsm225317325e9.14.2025.10.05.12.18.48
+ ffacd0b85a97d-4255d8e960asm17345713f8f.37.2025.10.05.12.18.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:18:48 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:18:47 -0400
+ Sun, 05 Oct 2025 12:18:40 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:39 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 75/75] pci: Fix wrong parameter passing to
- pci_device_get_iommu_bus_devfn()
-Message-ID: <e27b177339ea4d391ed7538fbdbad34518937408.1759691708.git.mst@redhat.com>
+Subject: [PULL 71/75] amd_iommu: HATDis/HATS=11 support
+Message-ID: <51da445f5322952e6fb26b286e8aebe464c14176.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -113,107 +114,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-The 2nd parameter of pci_device_get_iommu_bus_devfn() about root PCIBus
-backed by an IOMMU for the PCI device, the 3rd is about aliased PCIBus
-of the PCI device.
+Add a way to disable DMA translation support in AMD IOMMU by
+allowing to set IVHD HATDis to 1, and exposing HATS (Host Address
+Translation Size) as Reserved value.
 
-Meanwhile the 3rd and 4th parameters are optional, pass NULL if they
-are not needed.
-
-Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250929034206.439266-4-zhenzhong.duan@intel.com>
-Fixes: a849ff5d6f ("pci: Add a pci-level initialization function for IOMMU notifiers")
-Fixes: f0f37daf8e ("pci: Add a PCI-level API for PRI")
-Fixes: e9b457500a ("pci: Add a pci-level API for ATS")
-Fixes: 042cbc9aec ("pci: Add an API to get IOMMU's min page size and virtual address width")
+Message-ID: <20250919213515.917111-23-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci/pci.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ hw/i386/amd_iommu.h  |  1 +
+ hw/i386/acpi-build.c |  6 +++++-
+ hw/i386/amd_iommu.c  | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4854d3d618..541e03b38c 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2964,7 +2964,7 @@ int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
-     PCIBus *iommu_bus;
-     int devfn;
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index e1354686b6..daf82fc85f 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -177,6 +177,7 @@
+ /* AMDVI paging mode */
+ #define AMDVI_GATS_MODE                 (2ULL <<  12)
+ #define AMDVI_HATS_MODE                 (2ULL <<  10)
++#define AMDVI_HATS_MODE_RESERVED        (3ULL <<  10)
  
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->init_iotlb_notifier) {
-         iommu_bus->iommu_ops->init_iotlb_notifier(bus, iommu_bus->iommu_opaque,
-                                                   devfn, n, fn, opaque);
-@@ -3022,7 +3022,7 @@ int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
-         return -EPERM;
+ /* Page Table format */
+ 
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 423c4959fe..9446a9f862 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1863,7 +1863,11 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     /* IOMMU info */
+     build_append_int_noprefix(table_data, 0, 2);
+     /* IOMMU Attributes */
+-    build_append_int_noprefix(table_data, 0, 4);
++    if (!s->iommu.dma_translation) {
++        build_append_int_noprefix(table_data, (1UL << 0) /* HATDis */, 4);
++    } else {
++        build_append_int_noprefix(table_data, 0, 4);
++    }
+     /* EFR Register Image */
+     build_append_int_noprefix(table_data,
+                               amdvi_extended_feature_register(s),
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index b6851784fb..378e0cb55e 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -107,6 +107,9 @@ uint64_t amdvi_extended_feature_register(AMDVIState *s)
+     if (s->xtsup) {
+         feature |= AMDVI_FEATURE_XT;
      }
++    if (!s->iommu.dma_translation) {
++        feature |= AMDVI_HATS_MODE_RESERVED;
++    }
  
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->pri_request_page) {
-         return iommu_bus->iommu_ops->pri_request_page(bus,
-                                                      iommu_bus->iommu_opaque,
-@@ -3046,7 +3046,7 @@ int pci_pri_register_notifier(PCIDevice *dev, uint32_t pasid,
-         return -EPERM;
-     }
- 
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->pri_register_notifier) {
-         iommu_bus->iommu_ops->pri_register_notifier(bus,
-                                                     iommu_bus->iommu_opaque,
-@@ -3063,7 +3063,7 @@ void pci_pri_unregister_notifier(PCIDevice *dev, uint32_t pasid)
-     PCIBus *iommu_bus;
-     int devfn;
- 
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->pri_unregister_notifier) {
-         iommu_bus->iommu_ops->pri_unregister_notifier(bus,
-                                                       iommu_bus->iommu_opaque,
-@@ -3095,7 +3095,7 @@ ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
-         return -EPERM;
-     }
- 
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->ats_request_translation) {
-         return iommu_bus->iommu_ops->ats_request_translation(bus,
-                                                      iommu_bus->iommu_opaque,
-@@ -3119,7 +3119,7 @@ int pci_iommu_register_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-         return -EPERM;
-     }
- 
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->register_iotlb_notifier) {
-         iommu_bus->iommu_ops->register_iotlb_notifier(bus,
-                                            iommu_bus->iommu_opaque, devfn,
-@@ -3141,7 +3141,7 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-         return -EPERM;
-     }
- 
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-     if (iommu_bus && iommu_bus->iommu_ops->unregister_iotlb_notifier) {
-         iommu_bus->iommu_ops->unregister_iotlb_notifier(bus,
-                                                         iommu_bus->iommu_opaque,
-@@ -3155,11 +3155,9 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
- int pci_iommu_get_iotlb_info(PCIDevice *dev, uint8_t *addr_width,
-                              uint32_t *min_page_size)
+     return feature;
+ }
+@@ -472,6 +475,9 @@ static inline uint64_t amdvi_get_perms(uint64_t entry)
+ static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
+                                uint64_t *dte)
  {
--    PCIBus *bus;
-     PCIBus *iommu_bus;
--    int devfn;
++
++    uint64_t root;
++
+     if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
+         (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
+         (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
+@@ -482,6 +488,19 @@ static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
+         return false;
+     }
  
--    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
-     if (iommu_bus && iommu_bus->iommu_ops->get_iotlb_info) {
-         iommu_bus->iommu_ops->get_iotlb_info(iommu_bus->iommu_opaque,
-                                              addr_width, min_page_size);
++    /*
++     * 1 = Host Address Translation is not supported. Value in MMIO Offset
++     * 0030h[HATS] is not meaningful. A non-zero host page table root pointer
++     * in the DTE would result in an ILLEGAL_DEV_TABLE_ENTRY event.
++     */
++    root = (dte[0] & AMDVI_DEV_PT_ROOT_MASK) >> 12;
++    if (root && !s->iommu.dma_translation) {
++        amdvi_log_illegaldevtab_error(s, devid,
++                                      s->devtab +
++                                      devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
++        return false;
++    }
++
+     return true;
+ }
+ 
 -- 
 MST
 
