@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB5CCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E3CCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFF-0001b9-4U; Sun, 05 Oct 2025 15:18:09 -0400
+	id 1v5UG8-00053i-QK; Sun, 05 Oct 2025 15:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEm-0000A7-Aq
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFT-0002ao-3y
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEk-0006XL-KB
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFL-0006bQ-O6
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691857;
+ s=mimecast20190719; t=1759691894;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xzqumJdA2IU6uk2BKX0kvnJAwm1EzQzyigsDYU/IG3o=;
- b=XZMiWj0VK3hCkgYjbG8RLAfM4qM4KBOXb1Qd5TZJe9UD8b6R1H4IV1mEVv5jGJBGpJLsW5
- 0PBB0UVLq2U8TDFePiQFJCWqH3b9Q+JIW1UqQspMXklPKNI0vzZnogl/0+EmUcp5PX7rqJ
- yq17hmcOUDklD3DeqgO99H0mDRrgbuc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VRpFNHgPPbK5fpFtNVbPj3sQYNUpsLNHYrc3Cj0nCsg=;
+ b=LGtL+nFSnnZLUr0fLxMbinCBtc1uuXeGSWNjw8RAvKbvtO7+SvkH/8p6m7XXbRN5AtIN72
+ D9F8mWDOM20EJK2uCeQO4WycZnqIlLZ94ETuP/S7+BSb9rZ0QkyV4+ULVVmn36qv+mEuND
+ zBZkW8cteh7GcUGBBYotSrwmCe6yQH8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-GN335gjcPEmM9CGuR0iy9w-1; Sun, 05 Oct 2025 15:17:36 -0400
-X-MC-Unique: GN335gjcPEmM9CGuR0iy9w-1
-X-Mimecast-MFC-AGG-ID: GN335gjcPEmM9CGuR0iy9w_1759691855
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3ecdd80ea44so2979852f8f.1
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:35 -0700 (PDT)
+ us-mta-517-0ZS5dOcAP_Kwj4TSD2nzLg-1; Sun, 05 Oct 2025 15:18:13 -0400
+X-MC-Unique: 0ZS5dOcAP_Kwj4TSD2nzLg-1
+X-Mimecast-MFC-AGG-ID: 0ZS5dOcAP_Kwj4TSD2nzLg_1759691892
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e3dcb36a1so24953165e9.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691855; x=1760296655;
+ d=1e100.net; s=20230601; t=1759691892; x=1760296692;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xzqumJdA2IU6uk2BKX0kvnJAwm1EzQzyigsDYU/IG3o=;
- b=rsoc9A5ENKHjQ472Cb9dlwEsp5NIDKCg2VYdN2rXkgM8F53PiT/G2KoLbBg0uQOgWs
- TKkDRCuTRVBz3aYkcIbalAcJJSsRq3Wf+/ckd/kRhJ2h7ufvSOC7Svb+fPJLKrR8m/++
- 7yg0mJOzx0p3rQXnRNc7Y5Wp5WWQo+iiO7r8nlsdJIjkKqgsjnIbQ0lw254vpz+e8/2U
- GSJNhLcSwh7wbZWhOx0BQPaDXaZIPyx4TodaqDFBa3lj7cgviaUGBpmv+N9oTdTW8Amf
- aLr1SPuqdEb6GmHop/9Phoa/q0sEECIi78L4SXbDq3rBnUzbqKx6vQ9XI/dFMprzfANH
- ZKEw==
-X-Gm-Message-State: AOJu0YzfAyb6F5mRoVcEUbEaKsXYkiGj+6g6KRfFU4mxH0bNaBP0MeLe
- 3mvJUKk3ja8uJu+R5ED8v0JEoeixgyYd4TDRY1goz9M1AazbYS60O/yKfh08kmIkt+GA0ajsrRr
- tmC6tObSdMYtkY1AmgxpScf6bU4mlgC+bMLDFSfheVeQpkf22xy8c+V9o14uzK+tTrlshXXgnCQ
- 4cU3WPOWTriyNCsfjkUL/Pm8y+6QBv6XoXWA==
-X-Gm-Gg: ASbGncsi47snKkYpQrb9s5mkowkoaTflmWqq0BGo7+2cMs6NjOuJrLI/8n238CNfcn6
- oYmC2n6yNB6Z/YSBXedbbQBUz/sB/Vo21666fri/hmBNHEkIcRv6DGR2zKtIN3enPHjrIn9alyb
- +YAJL7KpfOtrKjoHWf7zKWLP1oTkSBs8EbbOlJdnQfmBU4Uy9pMrwraXn5LbJQWrcoYhETZnlel
- G07xe/0ew8MvQebxtKNm2aqQP0hDsUlmmgHQAdvePIKWzANPr5aOA4fJlShrBbnKUFrqLtW0CUy
- 6L/nS5SsW2PbakGkTFkkfE4Qo/ZxViOJBgZDnJM=
-X-Received: by 2002:a05:6000:2910:b0:414:c2e8:a739 with SMTP id
- ffacd0b85a97d-42566c5ef4amr6878664f8f.31.1759691854673; 
- Sun, 05 Oct 2025 12:17:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2uJeMWvF0P1wIRjdZRjb/My+GlBVAX1lKarrmf6fA8mj9QvBRLbnj37q8WTEsu2KuBJz1Fw==
-X-Received: by 2002:a05:6000:2910:b0:414:c2e8:a739 with SMTP id
- ffacd0b85a97d-42566c5ef4amr6878644f8f.31.1759691854167; 
- Sun, 05 Oct 2025 12:17:34 -0700 (PDT)
+ bh=VRpFNHgPPbK5fpFtNVbPj3sQYNUpsLNHYrc3Cj0nCsg=;
+ b=GOnOrSTuZxTQXmRMo/grkXrl8fUR428DpPZtHoPGxN+4Li1CPTm615NxqyZv4cIaQV
+ 8IW+tRAVUmQHcf/WDUn9hXMD/t5blEaM2hKHyjtMdi9tExMUxIYWTt6mssq0T3UzTs9v
+ JwgnDSsnwLGdqjhjf0ymX3BZi1Y3quPXUhvvnb/iZSYFiG0BWoig6D03XxEOfEMkwus0
+ fy6fcFUPJNqrg31YuMkpdF5cqHYVcJDnCqQo6kSUfpS6M0z7ZpmzLwtOul+BpadyEhK4
+ 1bRkfXAuwiakUxObrjBpmnbMdjNWW8SaxfkwsFQFl1GgHJyRkwZdp5YI+Uk/psKIaDzG
+ bZPQ==
+X-Gm-Message-State: AOJu0YxFKD0SD2vIHSs5vv/2pHUtJAQ247hQFlnG+MdXK4/+m4cpvsJ0
+ AP4rOx3Z7k/IhftH7Tfi/T5GDeDlndp0CfOJXd/9WDfogM7jgPJUR4eTkHTc4ngiJ3WNmoAm/6O
+ TB31nP1iiD19dHCytKmXBUM84YHrFOec0A+xLhwFwhS9EBi1JkX1PloX1Yf2Z4iANaBH0/MaRmV
+ S08URrhkyvhMv8VeMYCyluMJOXnTw8AIz1uw==
+X-Gm-Gg: ASbGncsAKejOKgDiu/mN1XC0Ui0caVLL+CJc18YOJF0sykhtuT2pYTZmh7SfD6BUEVu
+ M6eOBRudNs0MXuoxHf8bWf28XAaAnCJFGXm0LT+3AGmaMXTyjZgzf9YO7KviyXWEYPxZlAgVbqV
+ TlNSVWO3Q5SXp6ZPOe8VeZOTiCEeuujzBb1g7wzjValOeqRx7h+HrDO3SPW6yBDsxKP9R9TTrIN
+ QXui0MXiQm97pWAgrUwqtfAwSAhS3U4Oj+pzxttsmehbqwaZSzylamVI1N3Vq7M8F9LGxC613KS
+ xlGDYgBTQpFBIBYzCeow8ELKz15ONllXgON0yiI=
+X-Received: by 2002:a05:600c:c111:b0:46e:1b89:77f1 with SMTP id
+ 5b1f17b1804b1-46e793feb40mr30967525e9.9.1759691891486; 
+ Sun, 05 Oct 2025 12:18:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHl3ZecWmg6mZlVpPSyYDkX74MDKqzRZ1HNJ0XHkecduebYpDX4xkqUVMX9nClZ1xreciYFrw==
+X-Received: by 2002:a05:600c:c111:b0:46e:1b89:77f1 with SMTP id
+ 5b1f17b1804b1-46e793feb40mr30967395e9.9.1759691890929; 
+ Sun, 05 Oct 2025 12:18:10 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9724sm17277219f8f.28.2025.10.05.12.17.32
+ ffacd0b85a97d-4255d8e97fbsm17251517f8f.34.2025.10.05.12.18.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:33 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:31 -0400
+ Sun, 05 Oct 2025 12:18:09 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:07 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 40/75] intel_iommu: Declare registers for PRI
-Message-ID: <b84e1e0730f3063fc453ce2d0a77136f101467a2.1759691708.git.mst@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 57/75] amd_iommu: Add a page walker to sync shadow page tables
+ on invalidation
+Message-ID: <a513b8ef6c7679449ac9bc6fe7c98e6664a6c9f5.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -113,110 +113,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+For the specified address range, walk the page table identifying regions
+as mapped or unmapped and invoke registered notifiers with the
+corresponding event type.
+
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250901111630.1018573-5-clement.mathieu--drif@eviden.com>
+Message-ID: <20250919213515.917111-9-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu.c | 55 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ hw/i386/amd_iommu.c | 80 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 4e7ad3a290..d952ec1428 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3386,6 +3386,27 @@ static void vtd_handle_iectl_write(IntelIOMMUState *s)
-     }
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index c25981ff93..0e45435c77 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -681,6 +681,86 @@ fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte, uint64_t *pte,
+     return 0;
  }
  
-+static void vtd_handle_prs_write(IntelIOMMUState *s)
++/*
++ * Walk the guest page table for an IOVA and range and signal the registered
++ * notifiers to sync the shadow page tables in the host.
++ * Must be called with a valid DTE for DMA remapping i.e. V=1,TV=1
++ */
++static void __attribute__((unused))
++amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as, uint64_t *dte,
++                                   hwaddr addr, uint64_t size, bool send_unmap)
 +{
-+    uint32_t prs = vtd_get_long_raw(s, DMAR_PRS_REG);
-+    if (!(prs & VTD_PR_STATUS_PPR) && !(prs & VTD_PR_STATUS_PRO)) {
-+        vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
-+    }
-+}
++    IOMMUTLBEvent event;
 +
-+static void vtd_handle_pectl_write(IntelIOMMUState *s)
-+{
-+    uint32_t pectl = vtd_get_long_raw(s, DMAR_PECTL_REG);
-+    if ((pectl & VTD_PR_PECTL_IP) && !(pectl & VTD_PR_PECTL_IM)) {
++    hwaddr iova_next, page_mask, pagesize;
++    hwaddr iova = addr;
++    hwaddr end = iova + size - 1;
++
++    uint64_t pte;
++    int ret;
++
++    while (iova < end) {
++
++        ret = fetch_pte(as, iova, dte[0], &pte, &pagesize);
++
++        if (ret == -AMDVI_FR_PT_ROOT_INV) {
++            /*
++             * Invalid conditions such as the IOVA being larger than supported
++             * by current page table mode as configured in the DTE, or a failure
++             * to fetch the Page Table from the Page Table Root Pointer in DTE.
++             */
++            assert(pagesize == 0);
++            return;
++        }
++        /* PTE has been validated for major errors and pagesize is set */
++        assert(pagesize);
++        page_mask = ~(pagesize - 1);
++        iova_next = (iova & page_mask) + pagesize;
++
++        if (ret == -AMDVI_FR_PT_ENTRY_INV) {
++            /*
++             * Failure to read PTE from memory, the pagesize matches the current
++             * level. Unable to determine the region type, so a safe strategy is
++             * to skip the range and continue the page walk.
++             */
++            goto next;
++        }
++
++        event.entry.target_as = &address_space_memory;
++        event.entry.iova = iova & page_mask;
++        /* translated_addr is irrelevant for the unmap case */
++        event.entry.translated_addr = (pte & AMDVI_DEV_PT_ROOT_MASK) &
++                                      page_mask;
++        event.entry.addr_mask = ~page_mask;
++        event.entry.perm = amdvi_get_perms(pte);
++
 +        /*
-+         * If IP field was 1 when software clears the IM field,
-+         * the  interrupt is generated along with clearing the IP field.
++         * In cases where the leaf PTE is not found, or it has invalid
++         * permissions, an UNMAP type notification is sent, but only if the
++         * caller requested it.
 +         */
-+        vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
-+        vtd_generate_interrupt(s, DMAR_PEADDR_REG, DMAR_PEDATA_REG);
++        if (!IOMMU_PTE_PRESENT(pte) || (event.entry.perm == IOMMU_NONE)) {
++            if (!send_unmap) {
++                goto next;
++            }
++            event.type = IOMMU_NOTIFIER_UNMAP;
++        } else {
++            event.type = IOMMU_NOTIFIER_MAP;
++        }
++
++        /* Invoke the notifiers registered for this address space */
++        memory_region_notify_iommu(&as->iommu, 0, event);
++
++next:
++        /* Check for 64-bit overflow and terminate walk in such cases */
++        if (iova_next < iova) {
++            break;
++        } else {
++            iova = iova_next;
++        }
 +    }
 +}
 +
- static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+ /* log error without aborting since linux seems to be using reserved bits */
+ static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
  {
-     IntelIOMMUState *s = opaque;
-@@ -3428,6 +3449,11 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
-         val = s->iq >> 32;
-         break;
- 
-+    case DMAR_PEUADDR_REG:
-+        assert(size == 4);
-+        val = vtd_get_long_raw(s, DMAR_PEUADDR_REG);
-+        break;
-+
-     default:
-         if (size == 4) {
-             val = vtd_get_long(s, addr);
-@@ -3491,6 +3517,11 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
-         vtd_handle_iotlb_write(s);
-         break;
- 
-+    case DMAR_PEUADDR_REG:
-+        assert(size == 4);
-+        vtd_set_long(s, addr, val);
-+        break;
-+
-     /* Invalidate Address Register, 64-bit */
-     case DMAR_IVA_REG:
-         if (size == 4) {
-@@ -3671,6 +3702,18 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
-         vtd_set_long(s, addr, val);
-         break;
- 
-+    case DMAR_PRS_REG:
-+        assert(size == 4);
-+        vtd_set_long(s, addr, val);
-+        vtd_handle_prs_write(s);
-+        break;
-+
-+    case DMAR_PECTL_REG:
-+        assert(size == 4);
-+        vtd_set_long(s, addr, val);
-+        vtd_handle_pectl_write(s);
-+        break;
-+
-     default:
-         if (size == 4) {
-             vtd_set_long(s, addr, val);
-@@ -4722,6 +4765,18 @@ static void vtd_init(IntelIOMMUState *s)
-      * Interrupt remapping registers.
-      */
-     vtd_define_quad(s, DMAR_IRTA_REG, 0, 0xfffffffffffff80fULL, 0);
-+
-+    /* Page request registers */
-+    if (s->ecap & VTD_ECAP_PRS) {
-+        vtd_define_quad(s, DMAR_PQH_REG, 0, 0x7ffe0ULL, 0);
-+        vtd_define_quad(s, DMAR_PQT_REG, 0, 0x7ffe0ULL, 0);
-+        vtd_define_quad(s, DMAR_PQA_REG, 0, 0xfffffffffffff007ULL, 0);
-+        vtd_define_long(s, DMAR_PRS_REG, 0, 0, 0x3UL);
-+        vtd_define_long(s, DMAR_PECTL_REG, 0, 0x80000000UL, 0);
-+        vtd_define_long(s, DMAR_PEDATA_REG, 0, 0xffffUL, 0);
-+        vtd_define_long(s, DMAR_PEADDR_REG, 0, 0xfffffffcUL, 0);
-+        vtd_define_long(s, DMAR_PEUADDR_REG, 0, 0xffffffffUL, 0);
-+    }
- }
- 
- /* Should not reset address_spaces when reset because devices will still use
 -- 
 MST
 
