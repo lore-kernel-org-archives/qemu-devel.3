@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8997CCCD182
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6675ECCA472
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFv-0004pp-VR; Sun, 05 Oct 2025 15:18:53 -0400
+	id 1v5UEH-0007lK-1r; Sun, 05 Oct 2025 15:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFO-0002Pt-NH
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEC-0007hk-CO
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFG-0006ao-1W
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:18 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEA-0006Ry-AZ
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691887;
+ s=mimecast20190719; t=1759691820;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xISYYcoFQClxd+HhqK447x/hInZXjtzJhdgWUsDmah0=;
- b=dfE/Ej2WVPPZTKJFiFN6OXH2tiKJyhjvpE0+MSxriLKuWvjsW2FJlT84E9YnxYPgEkXvy/
- hmgLuwXTbZIvGZCYwRTImncqrAgEaqdToUac9A8U/QxSxiwTu/kHHX/3lbrgSJOFaZ9K/f
- J3kRkAe+Ohg6AxtI4fHISVh3kcfZdvY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wo4k0+GpbcFPiJ6gl4bLvcB2+0oAKyd5LRGZIg/TJvM=;
+ b=d3DUCYu7l8nxBEZdMmp3Yd2b0om3BeFSxXQYoV5j4/p7spU3jsRpzpQa5XNQqW1LEGBIJ2
+ Mp/CVQQoiT8W2feLXoKcNZtt8e0WUM/QVcZqNyBpe91aDS/YjAsjJH42ilsVXE7Z62yIod
+ OCdeI4/aVy4ThtZduPHXxwtSPhuTNBo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-s5lP3ZJtM2OrP1MpSwT0Cw-1; Sun, 05 Oct 2025 15:18:05 -0400
-X-MC-Unique: s5lP3ZJtM2OrP1MpSwT0Cw-1
-X-Mimecast-MFC-AGG-ID: s5lP3ZJtM2OrP1MpSwT0Cw_1759691884
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3f6b44ab789so2162726f8f.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:04 -0700 (PDT)
+ us-mta-641-lYG2sRL6Ovi7aWDvU2_X9A-1; Sun, 05 Oct 2025 15:16:59 -0400
+X-MC-Unique: lYG2sRL6Ovi7aWDvU2_X9A-1
+X-Mimecast-MFC-AGG-ID: lYG2sRL6Ovi7aWDvU2_X9A_1759691818
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e375dab7dso18414165e9.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691882; x=1760296682;
+ d=1e100.net; s=20230601; t=1759691818; x=1760296618;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xISYYcoFQClxd+HhqK447x/hInZXjtzJhdgWUsDmah0=;
- b=UdKTZXr2QK7Xai2IL9hw6OzYQ2j0zs83LEJ70p8lHci7jihIosVAvEV4gcezI4HjRG
- c504+BZ0mHzUvcybf3SHBL2lg/uIANwdI0FXFZtgd22tJr8TevuNpwPbLwttlHMpdYsn
- PCIw8mHDLAz6VNWtntu+K2mi2v6AwKRbHmr1qz/ZB7VtN1tphBUWVKh0C+CWjkadHtm6
- 94DNv06gVTS8MVPpouFFSJbAUtOJ0EgFlULS9cmWz/82rqt1CEwVuEUHhhFWwp7q8LMW
- LCcxEZYAeIUNc05xCZfSf7lw1124tWojXUZjZbA5/2e7tEC1aJ3hFLFyo9B1OJ+r1wMZ
- W2CA==
-X-Gm-Message-State: AOJu0YwwJHNpYc/qFYeCI8mnCuM/Mjvdgh675nP/uOUkcwxKMwgsuMUy
- /PDFfLsK/1/c7WZBP0k/0PoD1atQwzfePUYz02Vi+jvJhdbSv2A3rRGTEQElhq976rHyPxcaQJc
- flk5oJ2gqb4gXw0FAdiELF0kEXCV7r+3UUxO0I98k7zleBhQJNtjH8blTky1AriSxY1KINfCRm/
- 82ujeq/06jaZz5CcIE1GhZVLPko0hhDG0vGA==
-X-Gm-Gg: ASbGncu64Uw4hpQsA8r8XeoX9mybrZedi7YPUUYIXlMzPKO79uGAJDZVXzhGbJEQhve
- KKTf48+k9/tbL884Z+Vd2K+frmijAcxOVzAhtjQDNrTPkGXOxS6gyAN0Zw+fhEthATENSt5Ag0s
- Gnv4LbhpTQhNby077zankuhwxKd9lECt9h4n8EpT3tr6lp0hIia5CGG1dH8s/2dbbFdkAZG8r76
- uJq0WRPoBogan8+qIH7ObFOymHmKNAbDu8aQymk0CsUUfCc5w4r/IlEgP+jNb5uQ8YROzhpmxsv
- afrllE94BR+CNE1OcDC9wLeAMtSu5oAmEhKNtlE=
-X-Received: by 2002:a05:6000:4305:b0:3eb:f3de:1a87 with SMTP id
- ffacd0b85a97d-425671c2042mr7574172f8f.56.1759691882374; 
- Sun, 05 Oct 2025 12:18:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHwEnfi+OQJQCIiHpszPDOslfe2htzVCaY0Egr9eRwQ71+9kPsCgvdvUgIWNXlilAnlb9xoVw==
-X-Received: by 2002:a05:6000:4305:b0:3eb:f3de:1a87 with SMTP id
- ffacd0b85a97d-425671c2042mr7574149f8f.56.1759691881727; 
- Sun, 05 Oct 2025 12:18:01 -0700 (PDT)
+ bh=wo4k0+GpbcFPiJ6gl4bLvcB2+0oAKyd5LRGZIg/TJvM=;
+ b=i60w+u4TPvJQyO0/KJIBiNtfjScAmktxGT/NxalTfo76BtrTYoODr9o6qdthlfeH5C
+ z+KzFy6/DQBYFGlsyamaGYkIulpZIJ5xvJxm3+tV+RF6wPlXckLR793Kg07CiVl3BNP7
+ UsE4MTRr8uHujDZgUBj7nFXpazaqGzAWypK47lAmaZhJUX8YpFnC+9sLFx0l0NxHFayc
+ XtUIYFdLbxpOTOLqvhYWjTI+EHMuEILA3344Uv+1KmJEM+/8Zcu8STa8pMaJDYojNihP
+ yrS1CCTvpWlmT6lHcyFdcc5LRS5PgnqQaITY373dov1mLp2ax4vlsgibtVv1aGO9Yoep
+ jyUg==
+X-Gm-Message-State: AOJu0YwiTjYnVz3b6LyKdvlIyQlj3T+2CfxdsbVd/8L0nRtv8Jrzspe1
+ 4M3+bivL4auhszQ3rPk0VXoIH2uD76i9T7cKmcmKLklzsttbq+FIhShwzyw5czWdWLCs4JzhyYH
+ 2S2pRH6+PQ2/n347btGrhixJpg/DagS+iBCkuocX4Ztxv61kEECtn13pZeamGr61W5GCKnm6MLv
+ ihREVfXWpLZdJnEuHSQR4/mi3noHGQf7A/JQ==
+X-Gm-Gg: ASbGnct2IC3zpfnl7M9trCNI2WGFZO6TcitVx5MNRI/JrxcQpUnr+XDr2TIa1YeHVGZ
+ j3uLf5sl5OaTtp4ZPdP5VcvMXgRZkTRzenjyN4KGqPMxBkBvWfzFURM+NNHYyk0XLL/BlsSaJ7k
+ aQPmYiOiBrGslEKAOk7o7Jl4w4OUfLGqXyVL9vNfCCcJRMkF6vye9G9R4mt4VZ7HlfXeII+3O9S
+ 3AeRO2fxj6c6AchHvgLiQt1XdME6cHJB4LE/9Bn456L35f3RNfDecpXMflerpjkfyzHOMkrXxFe
+ uvbF8drtMcWn2/8u/lMw2/fx8grosRv56HZ/mUI=
+X-Received: by 2002:a05:600c:a085:b0:45d:d609:1199 with SMTP id
+ 5b1f17b1804b1-46e71151c24mr72241735e9.30.1759691817736; 
+ Sun, 05 Oct 2025 12:16:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkzDFi6nuyZGqMEwB9zdBqGx2j8fNsTRjslP3j3HYYpHUK0tMFl+PbY0uvSFypJ6Eh8F2qrQ==
+X-Received: by 2002:a05:600c:a085:b0:45d:d609:1199 with SMTP id
+ 5b1f17b1804b1-46e71151c24mr72241535e9.30.1759691817138; 
+ Sun, 05 Oct 2025 12:16:57 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8a6c3esm17619080f8f.1.2025.10.05.12.18.00
+ 5b1f17b1804b1-46e5b56c792sm126382675e9.0.2025.10.05.12.16.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:18:01 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:59 -0400
+ Sun, 05 Oct 2025 12:16:56 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 53/75] amd_iommu: Helper to decode size of page invalidation
- command
-Message-ID: <717d2f8805558ec39604c201bcbe3b36be2904db.1759691708.git.mst@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 24/75] acpi/generic_event_device: add an APEI error device
+Message-ID: <c498a36bcb59d1f96faf4771efe8f655ff5faa20.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -88,14 +85,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,81 +110,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-The size of the region to invalidate depends on the S bit and address
-encoded in the command. Add a helper to extract this information, which
-will be used to sync shadow page tables in upcoming changes.
+Adds a generic error device to handle generic hardware error
+events as specified at ACPI 6.5 specification at 18.3.2.7.2:
+https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
+using HID PNP0C33.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+The PNP0C33 device is used to report hardware errors to
+the guest via ACPI APEI Generic Hardware Error Source (GHES).
+
+Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-5-alejandro.j.jimenez@oracle.com>
+Message-ID: <2790f664c849d53de0ce3049fa8c7950c1de1f86.1758610789.git.mchehab+huawei@kernel.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.h |  4 ++++
- hw/i386/amd_iommu.c | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
+ include/hw/acpi/acpi_dev_interface.h   |  1 +
+ include/hw/acpi/aml-build.h            |  2 ++
+ include/hw/acpi/generic_event_device.h |  1 +
+ hw/acpi/aml-build.c                    | 10 ++++++++++
+ hw/acpi/generic_event_device.c         | 13 +++++++++++++
+ 5 files changed, 27 insertions(+)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 2476296c49..c1170a8202 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -126,6 +126,10 @@
- #define AMDVI_CMD_COMPLETE_PPR_REQUEST    0x07
- #define AMDVI_CMD_INVAL_AMDVI_ALL         0x08
+diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+index 68d9d15f50..8294f8f0cc 100644
+--- a/include/hw/acpi/acpi_dev_interface.h
++++ b/include/hw/acpi/acpi_dev_interface.h
+@@ -13,6 +13,7 @@ typedef enum {
+     ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+     ACPI_VMGENID_CHANGE_STATUS = 32,
+     ACPI_POWER_DOWN_STATUS = 64,
++    ACPI_GENERIC_ERROR = 128,
+ } AcpiEventStatusBits;
  
-+
-+#define AMDVI_CMD_INVAL_IOMMU_PAGES_S   (1ULL << 0)
-+#define AMDVI_INV_ALL_PAGES             (1ULL << 52)
-+
- #define AMDVI_DEVTAB_ENTRY_SIZE           32
+ #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
+diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+index c18f681342..f38e129719 100644
+--- a/include/hw/acpi/aml-build.h
++++ b/include/hw/acpi/aml-build.h
+@@ -252,6 +252,7 @@ struct CrsRangeSet {
+ /* Consumer/Producer */
+ #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
  
- /* Device table entry bits 0:63 */
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 3cbc9499db..202f0f8c6e 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -577,6 +577,40 @@ static gboolean amdvi_iotlb_remove_by_domid(gpointer key, gpointer value,
-     return entry->domid == domid;
++#define ACPI_APEI_ERROR_DEVICE   "GEDD"
+ /**
+  * init_aml_allocator:
+  *
+@@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
+              uint8_t channel);
+ Aml *aml_sleep(uint64_t msec);
+ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
++Aml *aml_error_device(void);
+ 
+ /* Block AML object primitives */
+ Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
+diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+index 2c5b055327..130c014d3f 100644
+--- a/include/hw/acpi/generic_event_device.h
++++ b/include/hw/acpi/generic_event_device.h
+@@ -103,6 +103,7 @@ OBJECT_DECLARE_TYPE(AcpiGedState, AcpiGedClass, ACPI_GED)
+ #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+ #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+ #define ACPI_GED_PCI_HOTPLUG_EVT    0x10
++#define ACPI_GED_ERROR_EVT          0x20
+ 
+ typedef struct GEDState {
+     MemoryRegion evt;
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 1e685f982f..2d5826a8f1 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2629,3 +2629,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
+ 
+     return var;
  }
- 
-+/*
-+ * Helper to decode the size of the range to invalidate encoded in the
-+ * INVALIDATE_IOMMU_PAGES Command format.
-+ * The size of the region to invalidate depends on the S bit and address.
-+ * S bit value:
-+ * 0 :  Invalidation size is 4 Kbytes.
-+ * 1 :  Invalidation size is determined by first zero bit in the address
-+ *      starting from Address[12].
-+ *
-+ * In the AMD IOMMU Linux driver, an invalidation command with address
-+ * ((1 << 63) - 1) is sent when intending to clear the entire cache.
-+ * However, Table 14: Example Page Size Encodings shows that an address of
-+ * ((1ULL << 51) - 1) encodes the entire cache, so effectively any address with
-+ * first zero at bit 51 or larger is a request to invalidate the entire address
-+ * space.
-+ */
-+static uint64_t __attribute__((unused))
-+amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
++
++/* ACPI 5.0b: 18.3.2.6.2 Event Notification For Generic Error Sources */
++Aml *aml_error_device(void)
 +{
-+    uint64_t size = AMDVI_PAGE_SIZE;
-+    uint8_t fzbit = 0;
++    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
++    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
++    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
 +
-+    if (flags & AMDVI_CMD_INVAL_IOMMU_PAGES_S) {
-+        fzbit = cto64(addr | 0xFFF);
-+
-+        if (fzbit >= 51) {
-+            size = AMDVI_INV_ALL_PAGES;
-+        } else {
-+            size = 1ULL << (fzbit + 1);
-+        }
-+    }
-+    return size;
++    return dev;
 +}
-+
- /* we don't have devid - we can't remove pages by address */
- static void amdvi_inval_pages(AMDVIState *s, uint64_t *cmd)
- {
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index b1ff6ab74d..e575b9404b 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -30,6 +30,7 @@ static const uint32_t ged_supported_events[] = {
+     ACPI_GED_NVDIMM_HOTPLUG_EVT,
+     ACPI_GED_CPU_HOTPLUG_EVT,
+     ACPI_GED_PCI_HOTPLUG_EVT,
++    ACPI_GED_ERROR_EVT,
+ };
+ 
+ /*
+@@ -120,6 +121,16 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+                            aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+                                       aml_int(0x80)));
+                 break;
++            case ACPI_GED_ERROR_EVT:
++                /*
++                 * ACPI 5.0b: 5.6.6 Device Object Notifications
++                 * Table 5-135 Error Device Notification Values
++                 * Defines 0x80 as the value to be used on notifications
++                 */
++                aml_append(if_ctx,
++                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
++                                      aml_int(0x80)));
++                break;
+             case ACPI_GED_NVDIMM_HOTPLUG_EVT:
+                 aml_append(if_ctx,
+                            aml_notify(aml_name("\\_SB.NVDR"),
+@@ -320,6 +331,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+         sel = ACPI_GED_MEM_HOTPLUG_EVT;
+     } else if (ev & ACPI_POWER_DOWN_STATUS) {
+         sel = ACPI_GED_PWR_DOWN_EVT;
++    } else if (ev & ACPI_GENERIC_ERROR) {
++        sel = ACPI_GED_ERROR_EVT;
+     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
+     } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
 -- 
 MST
 
