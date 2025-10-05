@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29FCCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C67ECAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5SiQ-0002TC-DK; Sun, 05 Oct 2025 13:40:10 -0400
+	id 1v5Sg0-0000Fr-Mv; Sun, 05 Oct 2025 13:37:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sh7-0000ro-4j; Sun, 05 Oct 2025 13:38:50 -0400
+ id 1v5Sfu-0000Cb-FV; Sun, 05 Oct 2025 13:37:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sh0-0004hB-In; Sun, 05 Oct 2025 13:38:48 -0400
+ id 1v5Sfs-0004cU-OT; Sun, 05 Oct 2025 13:37:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0F4C415AA95;
- Sun, 05 Oct 2025 20:37:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E254E15AA88;
+ Sun, 05 Oct 2025 20:37:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EB013299740;
- Sun,  5 Oct 2025 20:37:36 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2B2A299735;
+ Sun,  5 Oct 2025 20:37:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ Emmanuel Blot <emmanuel.blot@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 57/58] tests/functional/test_ppc_bamboo: Replace
- broken link with working assets
-Date: Sun,  5 Oct 2025 20:37:06 +0300
-Message-ID: <20251005173712.445160-19-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 46/58] hw/char: sifive_uart: Raise IRQ according to
+ the Tx/Rx watermark thresholds
+Date: Sun,  5 Oct 2025 20:36:55 +0300
+Message-ID: <20251005173712.445160-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,72 +62,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-The old image that we used for testing the bamboo machine has disappeared
-from the internet. Fortunately there is another kernel + initrd provided
-by Cédric that can be used for testing this machine, too.
+Currently, the SiFive UART raises an IRQ whenever:
 
-Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250707184736.88660-1-thuth@redhat.com>
-(cherry picked from commit 3b1cf40dd665a0c4c38bc339fea6eacf1742b46c)
+  1. ie.txwm is enabled.
+  2. ie.rxwm is enabled and the Rx FIFO is not empty.
+
+It does not check the watermark thresholds set by software. However,
+since commit [1] changed the SiFive UART character printing from
+synchronous to asynchronous, Tx overflows may occur, causing characters
+to be dropped when running Linux because:
+
+  1. The Linux SiFive UART driver sets the transmit watermark level to 1
+     [2], meaning a transmit watermark interrupt is raised whenever a
+     character is enqueued into the Tx FIFO.
+  2. Upon receiving a transmit watermark interrupt, the Linux driver
+     transfers up to a full Tx FIFO's worth of characters from the Linux
+     serial transmit buffer [3], without checking the txdata.full flag
+     before transferring multiple characters [4].
+
+To fix this issue, we must honor the Tx/Rx watermark thresholds and
+raise interrupts only when the Tx threshold is exceeded or the Rx
+threshold is undercut.
+
+[1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
+[2] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L1039
+[3] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L538
+[4] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L291
+
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Emmanuel Blot <emmanuel.blot@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250911160647.5710-2-frank.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 191df346175283af013f414375f4be59fb850120)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_ppc_bamboo.py b/tests/functional/test_ppc_bamboo.py
-index fddcc24d0d..c634ae7b4a 100755
---- a/tests/functional/test_ppc_bamboo.py
-+++ b/tests/functional/test_ppc_bamboo.py
-@@ -16,28 +16,32 @@ class BambooMachine(QemuSystemTest):
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index b45e6c098c..6da3401aa3 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -35,16 +35,17 @@
+  */
  
-     timeout = 90
+ /* Returns the state of the IP (interrupt pending) register */
+-static uint64_t sifive_uart_ip(SiFiveUARTState *s)
++static uint32_t sifive_uart_ip(SiFiveUARTState *s)
+ {
+-    uint64_t ret = 0;
++    uint32_t ret = 0;
  
--    ASSET_IMAGE = Asset(
--        ('http://landley.net/aboriginal/downloads/binaries/'
--         'system-image-powerpc-440fp.tar.gz'),
--        'c12b58f841c775a0e6df4832a55afe6b74814d1565d08ddeafc1fb949a075c5e')
-+    ASSET_KERNEL = Asset(
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-+         'buildroot/qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
-+        'a2e12eb45b73491ac62fc0bbeb68dead0dc5c0f22cf83146558389209b420ad1')
-+    ASSET_INITRD = Asset(
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-+         'buildroot/qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105/rootfs.cpio'),
-+        'd2a36bdb8763b389765dc8c29d4904cec2bd001c587f92e85ab9eb10d5ddda54')
+-    uint64_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
+-    uint64_t rxcnt = SIFIVE_UART_GET_RXCNT(s->rxctrl);
++    uint32_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
++    uint32_t rxcnt = SIFIVE_UART_GET_RXCNT(s->rxctrl);
  
-     def test_ppc_bamboo(self):
-         self.set_machine('bamboo')
-         self.require_accelerator("tcg")
-         self.require_netdev('user')
--        self.archive_extract(self.ASSET_IMAGE)
+-    if (txcnt != 0) {
++    if (fifo8_num_used(&s->tx_fifo) < txcnt) {
+         ret |= SIFIVE_UART_IP_TXWM;
+     }
 +
-+        kernel = self.ASSET_KERNEL.fetch()
-+        initrd = self.ASSET_INITRD.fetch()
+     if (s->rx_fifo_len > rxcnt) {
+         ret |= SIFIVE_UART_IP_RXWM;
+     }
+@@ -55,15 +56,14 @@ static uint64_t sifive_uart_ip(SiFiveUARTState *s)
+ static void sifive_uart_update_irq(SiFiveUARTState *s)
+ {
+     int cond = 0;
+-    if ((s->ie & SIFIVE_UART_IE_TXWM) ||
+-        ((s->ie & SIFIVE_UART_IE_RXWM) && s->rx_fifo_len)) {
++    uint32_t ip = sifive_uart_ip(s);
 +
-         self.vm.set_console()
--        self.vm.add_args('-kernel',
--                         self.scratch_file('system-image-powerpc-440fp',
--                                           'linux'),
--                         '-initrd',
--                         self.scratch_file('system-image-powerpc-440fp',
--                                           'rootfs.cpio.gz'),
--                         '-nic', 'user,model=rtl8139,restrict=on')
-+        self.vm.add_args('-kernel', kernel,
-+                         '-initrd', initrd,
-+                         '-nic', 'user,model=virtio-net-pci,restrict=on')
-         self.vm.launch()
--        wait_for_console_pattern(self, 'Type exit when done')
--        exec_command_and_wait_for_pattern(self, 'ping 10.0.2.2',
--                                          '10.0.2.2 is alive!')
-+        wait_for_console_pattern(self, 'buildroot login:')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+        exec_command_and_wait_for_pattern(self, 'ping -c1 10.0.2.2',
-+                '1 packets transmitted, 1 packets received, 0% packet loss')
-         exec_command_and_wait_for_pattern(self, 'halt', 'System Halted')
++    if (((ip & SIFIVE_UART_IP_TXWM) && (s->ie & SIFIVE_UART_IE_TXWM)) ||
++        ((ip & SIFIVE_UART_IP_RXWM) && (s->ie & SIFIVE_UART_IE_RXWM))) {
+         cond = 1;
+     }
+-    if (cond) {
+-        qemu_irq_raise(s->irq);
+-    } else {
+-        qemu_irq_lower(s->irq);
+-    }
++
++    qemu_set_irq(s->irq, cond);
+ }
  
- if __name__ == '__main__':
+ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
 -- 
 2.47.3
 
