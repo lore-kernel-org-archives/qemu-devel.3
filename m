@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AB0CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04457CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UG5-00050t-MS; Sun, 05 Oct 2025 15:19:01 -0400
+	id 1v5UDl-0007TL-85; Sun, 05 Oct 2025 15:16:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFS-0002a1-QP
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDd-0007Rn-K2
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFP-0006cG-Hi
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDb-0006Me-Gz
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691898;
+ s=mimecast20190719; t=1759691786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=QCxFKVOHL0at5yB+6ueybckR1t9fum92R8jP7usSf1w=;
- b=RErLm0MbVQ+ceR/4kcLYnxX11QfgCl5VgnHFVHA5oli9H2XPD+XEuDYFPpyd1HoUii1+Ou
- oYLid6v8EHwK3cSzAHZoGqd+frr5HOQO84hLSNcS025IyCzznkZGTitoLJzMeJ5EPCSP3l
- WY3z0dV6hIAt3GhUzQagIsbMTLE9GjY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vd4mdDSqlXlP9anYwvuHCBfNnSb8ZvgPYM0HvzpPyDo=;
+ b=HttCYaaXeOGSoSVmJ7FIPlus4JQM1ofh2tiylI/W4JeZG/TUey9jWyNB87zynm6s9q97k8
+ pGtp94YDfthummM/eyAwejSzVobVYNlWqAao7kFeBLwumQCeEtbUrR4fFfanw+TCjw3Ypm
+ 3vXw2ALzerlrjmbRb7bejdEJqHNaWtc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-scn8RFuyNw2BaCeDrmvDaw-1; Sun, 05 Oct 2025 15:18:17 -0400
-X-MC-Unique: scn8RFuyNw2BaCeDrmvDaw-1
-X-Mimecast-MFC-AGG-ID: scn8RFuyNw2BaCeDrmvDaw_1759691896
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e3e177893so22925895e9.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:17 -0700 (PDT)
+ us-mta-639-Pp3L1QMBPDqQNwBZZOKTKw-1; Sun, 05 Oct 2025 15:16:25 -0400
+X-MC-Unique: Pp3L1QMBPDqQNwBZZOKTKw-1
+X-Mimecast-MFC-AGG-ID: Pp3L1QMBPDqQNwBZZOKTKw_1759691784
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-42421b15185so3097767f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691896; x=1760296696;
+ d=1e100.net; s=20230601; t=1759691784; x=1760296584;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QCxFKVOHL0at5yB+6ueybckR1t9fum92R8jP7usSf1w=;
- b=UVSOj78+dXYPLi36eeR1qplceAXBY6GLskI/5ihIkM1haNNn/ctI9XkVgrVWsXo6dM
- 0T1rezHKEJLPez/bhbVxQ/y5XKktrvLsXgzw9/Yzp9RuE7SpVYgiAoSgjLCiFrIdAE//
- e3/9Z4FeuvO4Pbtv4XZ7DFLSthVEwtwtWDzjAsqHb7Y3AuapoLrMNyWkXp0FcU52rHrw
- E+uJWuEkyjZdlPa0FaUxaBs+GjxFPOBSf6wxOy96AriWnVILPubsHI81GLiqdWl3GyaF
- D9dNmA8xD4DldxLI5UKQ4AAk8xshNql4mDlpRTxwZQn3e20JEuEgPKghBO9TOHy7+DbP
- NKag==
-X-Gm-Message-State: AOJu0YzdQqK5kN7HCukwwcIGlHM2RAKAq6CqGLb/5fudxr9kQqsBcFtW
- C+zyB57CHGGYVwWs1m8zl6twyoF0vcLqSnfaJG/Elz6NxivDM1NNhtiqZxw0AT8kt//8PrJyiTF
- 6rczNJVE7k8+1vgKXH3J2kBKg8D+8EFh/xBpGWHkKCqzDVD10AFlqHvOZiXpvds9LdGakdigAw4
- MJu8WKjTaqYKsBrO38E0pieFd+gXryb6DOQw==
-X-Gm-Gg: ASbGncus8ZHpr/VzxwO3yU2U4UfM3Z6ahWe+Q72lf7qkYwgDIEM+QnJKHjOXM0rM2Mc
- cA+3mywB/q/pXmOD0LelSldPls3ZhEuqWjdQ9OsEIqw714TB2CinDc8+pViSmoYAZd4K2u4KB9L
- FaVQrepPcrjNoRqKvl8DtUeEW0Nwb736zZdBgtYIvpEtbQT2m1MrkLnc9EN2D+MaoMrb2u3DuUK
- tzr/274a8kMtbqFvUHobicS7l29A66mAcm0016HYFRjNHtFkXs2AyLc/geedIDXchAAqIOWr0ZE
- npLzlhzoXF+AMjUQC6HmOe6FX02PBJsnPZ69gLA=
-X-Received: by 2002:a05:6000:2dc8:b0:3cd:ef83:a9a1 with SMTP id
- ffacd0b85a97d-42567152194mr6125495f8f.20.1759691895890; 
- Sun, 05 Oct 2025 12:18:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEW6DC+RF4gILeNWVekpqJNJ+21AFTqBaRzRGNy33JIpOzr6tk0+z+l/NsC1CwcNtBtDo4mpA==
-X-Received: by 2002:a05:6000:2dc8:b0:3cd:ef83:a9a1 with SMTP id
- ffacd0b85a97d-42567152194mr6125473f8f.20.1759691895182; 
- Sun, 05 Oct 2025 12:18:15 -0700 (PDT)
+ bh=vd4mdDSqlXlP9anYwvuHCBfNnSb8ZvgPYM0HvzpPyDo=;
+ b=jsttjB4M8jB61mo2P1QarAF/0tarIsLgm3sesGHlSlkaxp11DSlQteHyEOUFvU8WRJ
+ JRMuqE5GLvJCuXsiuwTV6N55PqwEAl4S5SFSZJ8ZDNKL5BkKqRxIcdst3bin/uXmDfEr
+ n8GC4fZRCQfnrBoXDSVodLibigtVhXbXFpWDEETfJh1XwkOa8AGllWuP3zON7N9G5rFf
+ 4iRA3/AIxAYx+J3cxShJbcE9oC42nz2vowC7d0yxxe/9zOuTahiPl6Q4Uf1Cl0/AutyG
+ C656BLZDtfFhxcu+4g/LzQTuI1ttpsxiRrVsV/T7FF5CjlNxl03bFVPRZuBO+0HFO6qu
+ Iy/Q==
+X-Gm-Message-State: AOJu0Yyd0I4bBas82kPZb7CrS/znXKbxLw/849VftfOzjhU+T33kK82U
+ HTqBDrG5tvbx+uh8uODJii5BQyzhQD4eiY0lOKKpZ1I+9MGTvC8HB7Xos58vcNltR+pOy08ic97
+ OeUrz4AJdD0t3TFQ6MEbNr+WkHdxhFxVSpgZNGOVbfhZXPADciWqirnuK/HVqvaEvOsBaZp/R1t
+ aFT5Kh+4NTtQy0QFp7X9gWwUv60kO8YEvXAA==
+X-Gm-Gg: ASbGnct+khwyhLsdvbEiZDEffWKzQ3hDZwvK84U/jaK0h6AcvCKshpuaUdaYOi/g8St
+ x8Y7cnp/jKH8mK7Yj5opM2iLQ9tq+vdQv/MNtNkxvPmdZknEQqIzE+46VJaMmUZ7F4qERM3xGne
+ DRJt1mCB/TdtpFEvZ3y73J2bm5Bxs6GXYSDsz5aeFKlAy9L/1inlzVSDoHySg2bxjvMRxbm+4SD
+ 4pA7krQQwRkT4Lfa/bz6g1BXr06SZ8ufnhqYNxEjvs0EMOW4ERMoIAntZS7eLMz08ewKZE9qOlz
+ tLPMJV+2ZoLQz//UuPWRXKJr/BMsKPTCQ4gZj2k=
+X-Received: by 2002:a05:6000:2282:b0:401:e7a8:5ca2 with SMTP id
+ ffacd0b85a97d-425671a31e7mr6303241f8f.33.1759691783993; 
+ Sun, 05 Oct 2025 12:16:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXcbBfZ5c4zHoG1hZwR0SpEHYB3p+3cWzFl+zyJANyMlYfbetynLbuFEEmwIJ+7XbPc76ksQ==
+X-Received: by 2002:a05:6000:2282:b0:401:e7a8:5ca2 with SMTP id
+ ffacd0b85a97d-425671a31e7mr6303215f8f.33.1759691783381; 
+ Sun, 05 Oct 2025 12:16:23 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e980dsm18750958f8f.36.2025.10.05.12.18.13
+ ffacd0b85a97d-4255d8a6c3esm17614126f8f.1.2025.10.05.12.16.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:18:14 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:18:13 -0400
+ Sun, 05 Oct 2025 12:16:22 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 59/75] amd_iommu: Sync shadow page tables on page invalidation
-Message-ID: <ad598027a226624c2abe79129b032215906c3478.1759691708.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni <pabeni@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: [PULL 09/75] qmp: update virtio features map to support extended
+ features
+Message-ID: <a76f5b795cab8ea0654e4813caa694470d7250a9.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,146 +112,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-When the guest issues an INVALIDATE_IOMMU_PAGES command, decode the address
-and size of the invalidation and sync the guest page table state with the
-host. This requires walking the guest page table and calling notifiers
-registered for address spaces matching the domain ID encoded in the command.
+Extend the VirtioDeviceFeatures struct with an additional u64
+to track unknown features in the 64-127 bit range and decode
+the full virtio features spaces for vhost and virtio devices.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Also add entries for the soon-to-be-supported virtio net GSO over
+UDP features.
+
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-11-alejandro.j.jimenez@oracle.com>
+Message-ID: <e51969f94d89045b333f1bc5ef5fca9e12fc371a.1758549625.git.pabeni@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.c | 82 ++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 74 insertions(+), 8 deletions(-)
+ qapi/virtio.json            |  9 +++-
+ hw/virtio/virtio-qmp.h      |  3 +-
+ hw/virtio/virtio-hmp-cmds.c |  3 +-
+ hw/virtio/virtio-qmp.c      | 91 +++++++++++++++++++++++++------------
+ 4 files changed, 74 insertions(+), 32 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index d8a451b3a5..caae65c4b3 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -591,9 +591,8 @@ static uint64_t large_pte_page_size(uint64_t pte)
-  *      page table walk. This means that the DTE has valid data, but one of the
-  *      lower level entries in the Page Table could not be read.
-  */
--static int __attribute__((unused))
--fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte, uint64_t *pte,
--          hwaddr *page_size)
-+static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-+                          uint64_t *pte, hwaddr *page_size)
- {
-     IOMMUAccessFlags perms = amdvi_get_perms(dte);
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 9d652fe4a8..05295ab665 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -247,6 +247,7 @@
+ #              },
+ #              "host-features": {
+ #                  "unknown-dev-features": 1073741824,
++#                  "unknown-dev-features2": 0,
+ #                  "dev-features": [],
+ #                  "transports": [
+ #                      "VIRTIO_RING_F_EVENT_IDX: Used & avail. event fields enabled",
+@@ -490,14 +491,18 @@
+ #     unique features)
+ #
+ # @unknown-dev-features: Virtio device features bitmap that have not
+-#     been decoded
++#     been decoded (bits 0-63)
++#
++# @unknown-dev-features2: Virtio device features bitmap that have not
++#     been decoded (bits 64-127) (since 10.2)
+ #
+ # Since: 7.2
+ ##
+ { 'struct': 'VirtioDeviceFeatures',
+   'data': { 'transports': [ 'str' ],
+             '*dev-features': [ 'str' ],
+-            '*unknown-dev-features': 'uint64' } }
++            '*unknown-dev-features': 'uint64',
++            '*unknown-dev-features2': 'uint64' } }
  
-@@ -691,9 +690,9 @@ fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte, uint64_t *pte,
-  * notifiers to sync the shadow page tables in the host.
-  * Must be called with a valid DTE for DMA remapping i.e. V=1,TV=1
-  */
--static void __attribute__((unused))
--amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as, uint64_t *dte,
--                                   hwaddr addr, uint64_t size, bool send_unmap)
-+static void amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as,
-+                                               uint64_t *dte, hwaddr addr,
-+                                               uint64_t size, bool send_unmap)
- {
-     IOMMUTLBEvent event;
+ ##
+ # @VirtQueueStatus:
+diff --git a/hw/virtio/virtio-qmp.h b/hw/virtio/virtio-qmp.h
+index 245a446a56..e0a1e49035 100644
+--- a/hw/virtio/virtio-qmp.h
++++ b/hw/virtio/virtio-qmp.h
+@@ -18,6 +18,7 @@
+ VirtIODevice *qmp_find_virtio_device(const char *path);
+ VirtioDeviceStatus *qmp_decode_status(uint8_t bitmap);
+ VhostDeviceProtocols *qmp_decode_protocols(uint64_t bitmap);
+-VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap);
++VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
++                                          const uint64_t *bitmap);
  
-@@ -835,8 +834,7 @@ static gboolean amdvi_iotlb_remove_by_domid(gpointer key, gpointer value,
-  * first zero at bit 51 or larger is a request to invalidate the entire address
-  * space.
-  */
--static uint64_t __attribute__((unused))
--amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
-+static uint64_t amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
+ #endif
+diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
+index 7d8677bcf0..1daae482d3 100644
+--- a/hw/virtio/virtio-hmp-cmds.c
++++ b/hw/virtio/virtio-hmp-cmds.c
+@@ -74,7 +74,8 @@ static void hmp_virtio_dump_features(Monitor *mon,
+     }
+ 
+     if (features->has_unknown_dev_features) {
+-        monitor_printf(mon, "  unknown-features(0x%016"PRIx64")\n",
++        monitor_printf(mon, "  unknown-features(0x%016"PRIx64"%016"PRIx64")\n",
++                       features->unknown_dev_features2,
+                        features->unknown_dev_features);
+     }
+ }
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 3b6377cf0d..b338344c6c 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -325,6 +325,20 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+     FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+             "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+             "negotiation supported"),
++    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, \
++            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
++            "UDP tunnel packets"),
++    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
++            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
++            "UDP tunnel packets requiring checksum offload for the outer "
++            "header"),
++    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
++            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
++            "UDP tunnel packets"),
++    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, \
++            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM: Device can receive GSO over "
++            "UDP tunnel packets requiring checksum offload for the outer "
++            "header"),
+     { -1, "" }
+ };
+ #endif
+@@ -510,6 +524,24 @@ static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
+         list;                                            \
+     })
+ 
++#define CONVERT_FEATURES_EX(type, map, bitmap)           \
++    ({                                                   \
++        type *list = NULL;                               \
++        type *node;                                      \
++        for (i = 0; map[i].virtio_bit != -1; i++) {      \
++            bit = map[i].virtio_bit;                     \
++            if (!virtio_has_feature_ex(bitmap, bit)) {   \
++                continue;                                \
++            }                                            \
++            node = g_new0(type, 1);                      \
++            node->value = g_strdup(map[i].feature_desc); \
++            node->next = list;                           \
++            list = node;                                 \
++            virtio_clear_feature_ex(bitmap, bit);        \
++        }                                                \
++        list;                                            \
++    })
++
+ VirtioDeviceStatus *qmp_decode_status(uint8_t bitmap)
  {
-     uint64_t size = AMDVI_PAGE_SIZE;
-     uint8_t fzbit = 0;
-@@ -853,10 +851,76 @@ amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
-     return size;
+     VirtioDeviceStatus *status;
+@@ -545,109 +577,112 @@ VhostDeviceProtocols *qmp_decode_protocols(uint64_t bitmap)
+     return vhu_protocols;
  }
  
-+/*
-+ * Synchronize the guest page tables with the shadow page tables kept in the
-+ * host for the specified range.
-+ * The invalidation command issued by the guest and intercepted by the VMM
-+ * does not specify a device, but a domain, since all devices in the same domain
-+ * share the same page tables. However, vIOMMU emulation creates separate
-+ * address spaces per device, so it is necessary to traverse the list of all of
-+ * address spaces (i.e. devices) that have notifiers registered in order to
-+ * propagate the changes to the host page tables.
-+ * We cannot return early from this function once a matching domain has been
-+ * identified and its page tables synced (based on the fact that all devices in
-+ * the same domain share the page tables). The reason is that different devices
-+ * (i.e. address spaces) could have different notifiers registered, and by
-+ * skipping address spaces that appear later on the amdvi_as_with_notifiers list
-+ * their notifiers (which could differ from the ones registered for the first
-+ * device/address space) would not be invoked.
-+ */
-+static void amdvi_sync_domain(AMDVIState *s, uint16_t domid, uint64_t addr,
-+                              uint16_t flags)
-+{
-+    AMDVIAddressSpace *as;
-+
-+    uint64_t size = amdvi_decode_invalidation_size(addr, flags);
-+
-+    if (size == AMDVI_INV_ALL_PAGES) {
-+        addr = 0;       /* Set start address to 0 and invalidate entire AS */
-+    } else {
-+        addr &= ~(size - 1);
-+    }
-+
-+    /*
-+     * Call notifiers that have registered for each address space matching the
-+     * domain ID, in order to sync the guest pagetable state with the host.
-+     */
-+    QLIST_FOREACH(as, &s->amdvi_as_with_notifiers, next) {
-+
-+        uint64_t dte[4] = { 0 };
-+
-+        /*
-+         * Retrieve the Device Table entry for the devid corresponding to the
-+         * current address space, and verify the DomainID matches i.e. the page
-+         * tables to be synced belong to devices in the domain.
-+         */
-+        if (amdvi_as_to_dte(as, dte)) {
-+            continue;
-+        }
-+
-+        /* Only need to sync the Page Tables for a matching domain */
-+        if (domid != (dte[1] & AMDVI_DEV_DOMID_ID_MASK)) {
-+            continue;
-+        }
-+
-+        /*
-+         * We have determined that there is a valid Device Table Entry for a
-+         * device matching the DomainID in the INV_IOMMU_PAGES command issued by
-+         * the guest. Walk the guest page table to sync shadow page table.
-+         */
-+        if (as->notifier_flags & IOMMU_NOTIFIER_MAP) {
-+            /* Sync guest IOMMU mappings with host */
-+            amdvi_sync_shadow_page_table_range(as, &dte[0], addr, size, true);
-+        }
-+    }
-+}
-+
- /* we don't have devid - we can't remove pages by address */
- static void amdvi_inval_pages(AMDVIState *s, uint64_t *cmd)
+-VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap)
++VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
++                                          const uint64_t *bmap)
  {
-     uint16_t domid = cpu_to_le16((uint16_t)extract64(cmd[0], 32, 16));
-+    uint64_t addr = cpu_to_le64(extract64(cmd[1], 12, 52)) << 12;
-+    uint16_t flags = cpu_to_le16((uint16_t)extract64(cmd[1], 0, 3));
++    uint64_t bitmap[VIRTIO_FEATURES_NU64S];
+     VirtioDeviceFeatures *features;
+     uint64_t bit;
+     int i;
  
-     if (extract64(cmd[0], 20, 12) || extract64(cmd[0], 48, 12) ||
-         extract64(cmd[1], 3, 9)) {
-@@ -866,6 +930,8 @@ static void amdvi_inval_pages(AMDVIState *s, uint64_t *cmd)
++    virtio_features_copy(bitmap, bmap);
+     features = g_new0(VirtioDeviceFeatures, 1);
+     features->has_dev_features = true;
  
-     g_hash_table_foreach_remove(s->iotlb, amdvi_iotlb_remove_by_domid,
-                                 &domid);
-+
-+    amdvi_sync_domain(s, domid, addr, flags);
-     trace_amdvi_pages_inval(domid);
+     /* transport features */
+-    features->transports = CONVERT_FEATURES(strList, virtio_transport_map, 0,
+-                                            bitmap);
++    features->transports = CONVERT_FEATURES_EX(strList, virtio_transport_map,
++                                               bitmap);
+ 
+     /* device features */
+     switch (device_id) {
+ #ifdef CONFIG_VIRTIO_SERIAL
+     case VIRTIO_ID_CONSOLE:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_serial_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_serial_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_BLK
+     case VIRTIO_ID_BLOCK:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_blk_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_blk_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_GPU
+     case VIRTIO_ID_GPU:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_gpu_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_gpu_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_NET
+     case VIRTIO_ID_NET:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_net_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_net_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_SCSI
+     case VIRTIO_ID_SCSI:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_scsi_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_scsi_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_BALLOON
+     case VIRTIO_ID_BALLOON:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_balloon_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_balloon_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_IOMMU
+     case VIRTIO_ID_IOMMU:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_iommu_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_iommu_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_INPUT
+     case VIRTIO_ID_INPUT:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_input_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_input_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VHOST_USER_FS
+     case VIRTIO_ID_FS:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_fs_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_fs_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VHOST_VSOCK
+     case VIRTIO_ID_VSOCK:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_vsock_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_vsock_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_CRYPTO
+     case VIRTIO_ID_CRYPTO:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_crypto_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_crypto_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_MEM
+     case VIRTIO_ID_MEM:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_mem_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_mem_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_I2C_ADAPTER
+     case VIRTIO_ID_I2C_ADAPTER:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_i2c_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_i2c_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VIRTIO_RNG
+     case VIRTIO_ID_RNG:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_rng_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_rng_feature_map, bitmap);
+         break;
+ #endif
+ #ifdef CONFIG_VHOST_USER_GPIO
+     case VIRTIO_ID_GPIO:
+         features->dev_features =
+-            CONVERT_FEATURES(strList, virtio_gpio_feature_map, 0, bitmap);
++            CONVERT_FEATURES_EX(strList, virtio_gpio_feature_map, bitmap);
+         break;
+ #endif
+     /* No features */
+@@ -680,10 +715,9 @@ VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap)
+         g_assert_not_reached();
+     }
+ 
+-    features->has_unknown_dev_features = bitmap != 0;
+-    if (features->has_unknown_dev_features) {
+-        features->unknown_dev_features = bitmap;
+-    }
++    features->has_unknown_dev_features = !virtio_features_empty(bitmap);
++    features->unknown_dev_features = bitmap[0];
++    features->unknown_dev_features2 = bitmap[1];
+ 
+     return features;
  }
+@@ -743,11 +777,11 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+     status->device_id = vdev->device_id;
+     status->vhost_started = vdev->vhost_started;
+     status->guest_features = qmp_decode_features(vdev->device_id,
+-                                                 vdev->guest_features);
++                                                 vdev->guest_features_ex);
+     status->host_features = qmp_decode_features(vdev->device_id,
+-                                                vdev->host_features);
++                                                vdev->host_features_ex);
+     status->backend_features = qmp_decode_features(vdev->device_id,
+-                                                   vdev->backend_features);
++                                                 vdev->backend_features_ex);
  
+     switch (vdev->device_endian) {
+     case VIRTIO_DEVICE_ENDIAN_LITTLE:
+@@ -785,11 +819,12 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+         status->vhost_dev->nvqs = hdev->nvqs;
+         status->vhost_dev->vq_index = hdev->vq_index;
+         status->vhost_dev->features =
+-            qmp_decode_features(vdev->device_id, hdev->features);
++            qmp_decode_features(vdev->device_id, hdev->features_ex);
+         status->vhost_dev->acked_features =
+-            qmp_decode_features(vdev->device_id, hdev->acked_features);
++            qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
+         status->vhost_dev->backend_features =
+-            qmp_decode_features(vdev->device_id, hdev->backend_features);
++            qmp_decode_features(vdev->device_id, hdev->backend_features_ex);
++
+         status->vhost_dev->protocol_features =
+             qmp_decode_protocols(hdev->protocol_features);
+         status->vhost_dev->max_queues = hdev->max_queues;
 -- 
 MST
 
