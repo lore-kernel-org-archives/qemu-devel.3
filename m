@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95ACACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE56CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Sfj-00008y-ET; Sun, 05 Oct 2025 13:37:23 -0400
+	id 1v5SgN-0000Nk-O1; Sun, 05 Oct 2025 13:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sff-00008T-9h; Sun, 05 Oct 2025 13:37:19 -0400
+ id 1v5SgL-0000NJ-Pq; Sun, 05 Oct 2025 13:38:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfd-0004aV-9a; Sun, 05 Oct 2025 13:37:18 -0400
+ id 1v5SgJ-0004eD-Py; Sun, 05 Oct 2025 13:38:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 22A2F15AA81;
- Sun, 05 Oct 2025 20:37:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E6C915AA8E;
+ Sun, 05 Oct 2025 20:37:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4C73829972E;
- Sun,  5 Oct 2025 20:37:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B223A29973A;
+ Sun,  5 Oct 2025 20:37:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 39/58] hw/usb/hcd-uhci: don't assert for SETUP to
- non-0 endpoint
-Date: Sun,  5 Oct 2025 20:36:48 +0300
-Message-ID: <20251005173712.445160-1-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 51/58] target/riscv: rvv: Replace checking V by
+ checking Zve32x
+Date: Sun,  5 Oct 2025 20:37:00 +0300
+Message-ID: <20251005173712.445160-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
@@ -60,71 +61,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Max Chou <max.chou@sifive.com>
 
-If the guest feeds invalid data to the UHCI controller, we
-can assert:
-qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
+The Zve32x extension will be applied by the V and Zve* extensions.
+Therefore we can replace the original V checking with Zve32x checking for both
+the V and Zve* extensions.
 
-(see issue 2548 for the repro case).  This happens because the guest
-attempts USB_TOKEN_SETUP to an endpoint other than 0, which is not
-valid.  The controller code doesn't catch this guest error, so
-instead we hit the assertion in the USB core code.
-
-Catch the case of SETUP to non-zero endpoint, and treat it as a fatal
-error in the TD, in the same way we do for an invalid PID value in
-the TD.
-
-This is the UHCI equivalent of the same bug in OHCI that we fixed in
-commit 3c3c233677 ("hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or
-OUT").
-
-This bug has been tracked as CVE-2024-8354.
-
-Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2548
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit d0af3cd0274e265435170a583c72b9f0a4100dff)
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250923090729.1887406-2-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit ae4a37f57818e47e212272821a5a86ad54620eb8)
+(Mjt: drop the MonitorDef change due to missing v10.1.0-850-ge06d209aa6 "target/riscv: implement MonitorDef HMP API")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
-index 0561a6d801..8f4d6a0f71 100644
---- a/hw/usb/hcd-uhci.c
-+++ b/hw/usb/hcd-uhci.c
-@@ -735,6 +735,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
-     bool spd;
-     bool queuing = (q != NULL);
-     uint8_t pid = td->token & 0xff;
-+    uint8_t ep_id = (td->token >> 15) & 0xf;
-     UHCIAsync *async;
- 
-     async = uhci_async_find_td(s, td_addr);
-@@ -778,9 +779,14 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
- 
-     switch (pid) {
-     case USB_TOKEN_OUT:
--    case USB_TOKEN_SETUP:
-     case USB_TOKEN_IN:
-         break;
-+    case USB_TOKEN_SETUP:
-+        /* SETUP is only valid to endpoint 0 */
-+        if (ep_id == 0) {
-+            break;
-+        }
-+        /* fallthrough */
-     default:
-         /* invalid pid : frame interrupted */
-         s->status |= UHCI_STS_HCPERR;
-@@ -829,7 +835,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
-             return uhci_handle_td_error(s, td, td_addr, USB_RET_NODEV,
-                                         int_mask);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 09ded6829a..2ff56bd017 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -945,7 +945,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+             }
          }
--        ep = usb_ep_get(dev, pid, (td->token >> 15) & 0xf);
-+        ep = usb_ep_get(dev, pid, ep_id);
-         q = uhci_queue_new(s, qh_addr, td, ep);
      }
-     async = uhci_async_alloc(q, td_addr);
+-    if (riscv_has_ext(env, RVV) && (flags & CPU_DUMP_VPU)) {
++    if (riscv_cpu_cfg(env)->ext_zve32x && (flags & CPU_DUMP_VPU)) {
+         static const int dump_rvv_csrs[] = {
+                     CSR_VSTART,
+                     CSR_VXSAT,
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 66d572af1f..76e2f7e1d5 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1990,7 +1990,8 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+     if (riscv_has_ext(env, RVF)) {
+         mask |= MSTATUS_FS;
+     }
+-    if (riscv_has_ext(env, RVV)) {
++
++    if (riscv_cpu_cfg(env)->ext_zve32x) {
+         mask |= MSTATUS_VS;
+     }
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 889e2b6570..0697d813b7 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -130,7 +130,8 @@ static bool vector_needed(void *opaque)
+     RISCVCPU *cpu = opaque;
+     CPURISCVState *env = &cpu->env;
+ 
+-    return riscv_has_ext(env, RVV);
++    return kvm_enabled() ? riscv_has_ext(env, RVV) :
++                           riscv_cpu_cfg(env)->ext_zve32x;
+ }
+ 
+ static const VMStateDescription vmstate_vector = {
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 5aef9eef36..2b21580ef7 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -515,7 +515,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
+ 
+-    if (riscv_has_ext(env, RVV)) {
++    if (cpu->cfg.ext_zve32x) {
+         riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+         if (local_err != NULL) {
+             error_propagate(errp, local_err);
 -- 
 2.47.3
 
