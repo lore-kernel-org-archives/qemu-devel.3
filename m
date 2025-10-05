@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BD2CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8997CCCD182
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFg-0003hD-Ue; Sun, 05 Oct 2025 15:18:36 -0400
+	id 1v5UFv-0004pp-VR; Sun, 05 Oct 2025 15:18:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFa-00036k-Fc
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFO-0002Pt-NH
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFX-0006e1-G4
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFG-0006ao-1W
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691906;
+ s=mimecast20190719; t=1759691887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7VfnG8rVkzTSwB5pyBpyj7JN89vPRfbgI61K8aW5ts8=;
- b=T6c2mqjvh/ZlvSfAPKkKmVTckjTEM9qlnfPhI67h12r091ez+nI8sdjNdTDMjcu5hY1dJz
- Y93W0xCHpCqDXtMwHD3XFmcmd2hO9XrTWjSiAUudojlGj2NHS2VVFj6ouFWPlHPoY3S9zq
- qpBlaXdGG/eEhdFOzEnUPZ0zacBFMuo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xISYYcoFQClxd+HhqK447x/hInZXjtzJhdgWUsDmah0=;
+ b=dfE/Ej2WVPPZTKJFiFN6OXH2tiKJyhjvpE0+MSxriLKuWvjsW2FJlT84E9YnxYPgEkXvy/
+ hmgLuwXTbZIvGZCYwRTImncqrAgEaqdToUac9A8U/QxSxiwTu/kHHX/3lbrgSJOFaZ9K/f
+ J3kRkAe+Ohg6AxtI4fHISVh3kcfZdvY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-KiecCtItOUumD0y_oIvSlg-1; Sun, 05 Oct 2025 15:18:25 -0400
-X-MC-Unique: KiecCtItOUumD0y_oIvSlg-1
-X-Mimecast-MFC-AGG-ID: KiecCtItOUumD0y_oIvSlg_1759691904
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4256fae4b46so848999f8f.0
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:25 -0700 (PDT)
+ us-mta-210-s5lP3ZJtM2OrP1MpSwT0Cw-1; Sun, 05 Oct 2025 15:18:05 -0400
+X-MC-Unique: s5lP3ZJtM2OrP1MpSwT0Cw-1
+X-Mimecast-MFC-AGG-ID: s5lP3ZJtM2OrP1MpSwT0Cw_1759691884
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3f6b44ab789so2162726f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691904; x=1760296704;
+ d=1e100.net; s=20230601; t=1759691882; x=1760296682;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7VfnG8rVkzTSwB5pyBpyj7JN89vPRfbgI61K8aW5ts8=;
- b=J6aSoA5fhIBVhTsnhUhNN3xDslUwDBrDMwBcvH6Q5g/ppmntGC3wWXGEEfEnKduMN3
- NkXeQYw9PGVcUD7SXDIFE/JaLo1k5Bq4mKphr2oMqJdoBfMVBHpX8o+cmYQzfNw3wjTi
- dchj+dKAFeJHn69T00/p0Qa0KeGVDd7n3lLwdqpduuUcPSzaaCq1KpjpesS4BR3soA1m
- HFRe5aL9b6cRouPDu5spIUJLrFmV3XwsfRVyxbctgxx3f9kkiou3JHa8LguVLCl1hpNI
- EdBHanBMsk0qz6J+226OED+aLJzecG8P4v2MCyDku/qP9QSw89fMdpGYcJebtVJ1gd3s
- u2Hw==
-X-Gm-Message-State: AOJu0YyG9JriEOslw7J5am32JBNHxZezoYCpBJNVqXdWdflIODwaUasI
- DMbpJtL085/aTU4Zypyi7bmSjedFbFR/Tj1VxBeUK5RBo1yuR0hIGXj6BtfWNalb+hRRz6OmzTD
- pvdZYKXV+VIe/0pqLAkWIIbi5rvYls6YVd6nF/jJUaXmz5sWz0R3TIDr9QGG9DvEz64AgRs7pWt
- CiZlqQn/Nzma8pi/IeElWKbf7wT3leG++rnQ==
-X-Gm-Gg: ASbGncuMXg4qYZxiH1fSuf9jr4hJ/6ABkf/HqVt7/uZz3FWnrGl+AnTzIRrYUlCl4rC
- p2XfZfHkVmQCnSANmQXdV1bZLS3EPiMi/1Mi1n2sLP8Iz8dw/rHX1x3ysNu8+FAgtbjppt9IP1v
- pWaQCtwENTx6Jg2kSqVjJGgCKzqFHKHmvq/czwasA0slbs8uyLtaPEK1gZMq3RJ7RfN0xBsisFV
- 32SdQkH/rPdh34PX6TtsFoVIvY0oMzou5Ere0/dePWN3seLcxIEHoXxILn8reo4ysVMWJ3+yy57
- 6pE6QOMBaNGKeNSEy2kF7usDRzDhSctH6oxT+5M=
-X-Received: by 2002:a05:600c:64c4:b0:46d:45e:3514 with SMTP id
- 5b1f17b1804b1-46e7114310amr81618325e9.17.1759691903992; 
- Sun, 05 Oct 2025 12:18:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHYy9J2pPqOK7HUQemuxKAFiedY9kKOHYQvCRO2hjIuJOlpQcg9wOAEEzEGXZMHC62Z6SL8Zw==
-X-Received: by 2002:a05:600c:64c4:b0:46d:45e:3514 with SMTP id
- 5b1f17b1804b1-46e7114310amr81618115e9.17.1759691903388; 
- Sun, 05 Oct 2025 12:18:23 -0700 (PDT)
+ bh=xISYYcoFQClxd+HhqK447x/hInZXjtzJhdgWUsDmah0=;
+ b=UdKTZXr2QK7Xai2IL9hw6OzYQ2j0zs83LEJ70p8lHci7jihIosVAvEV4gcezI4HjRG
+ c504+BZ0mHzUvcybf3SHBL2lg/uIANwdI0FXFZtgd22tJr8TevuNpwPbLwttlHMpdYsn
+ PCIw8mHDLAz6VNWtntu+K2mi2v6AwKRbHmr1qz/ZB7VtN1tphBUWVKh0C+CWjkadHtm6
+ 94DNv06gVTS8MVPpouFFSJbAUtOJ0EgFlULS9cmWz/82rqt1CEwVuEUHhhFWwp7q8LMW
+ LCcxEZYAeIUNc05xCZfSf7lw1124tWojXUZjZbA5/2e7tEC1aJ3hFLFyo9B1OJ+r1wMZ
+ W2CA==
+X-Gm-Message-State: AOJu0YwwJHNpYc/qFYeCI8mnCuM/Mjvdgh675nP/uOUkcwxKMwgsuMUy
+ /PDFfLsK/1/c7WZBP0k/0PoD1atQwzfePUYz02Vi+jvJhdbSv2A3rRGTEQElhq976rHyPxcaQJc
+ flk5oJ2gqb4gXw0FAdiELF0kEXCV7r+3UUxO0I98k7zleBhQJNtjH8blTky1AriSxY1KINfCRm/
+ 82ujeq/06jaZz5CcIE1GhZVLPko0hhDG0vGA==
+X-Gm-Gg: ASbGncu64Uw4hpQsA8r8XeoX9mybrZedi7YPUUYIXlMzPKO79uGAJDZVXzhGbJEQhve
+ KKTf48+k9/tbL884Z+Vd2K+frmijAcxOVzAhtjQDNrTPkGXOxS6gyAN0Zw+fhEthATENSt5Ag0s
+ Gnv4LbhpTQhNby077zankuhwxKd9lECt9h4n8EpT3tr6lp0hIia5CGG1dH8s/2dbbFdkAZG8r76
+ uJq0WRPoBogan8+qIH7ObFOymHmKNAbDu8aQymk0CsUUfCc5w4r/IlEgP+jNb5uQ8YROzhpmxsv
+ afrllE94BR+CNE1OcDC9wLeAMtSu5oAmEhKNtlE=
+X-Received: by 2002:a05:6000:4305:b0:3eb:f3de:1a87 with SMTP id
+ ffacd0b85a97d-425671c2042mr7574172f8f.56.1759691882374; 
+ Sun, 05 Oct 2025 12:18:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwEnfi+OQJQCIiHpszPDOslfe2htzVCaY0Egr9eRwQ71+9kPsCgvdvUgIWNXlilAnlb9xoVw==
+X-Received: by 2002:a05:6000:4305:b0:3eb:f3de:1a87 with SMTP id
+ ffacd0b85a97d-425671c2042mr7574149f8f.56.1759691881727; 
+ Sun, 05 Oct 2025 12:18:01 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e61a4161bsm234336385e9.16.2025.10.05.12.18.22
+ ffacd0b85a97d-4255d8a6c3esm17619080f8f.1.2025.10.05.12.18.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:18:22 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:18:21 -0400
+ Sun, 05 Oct 2025 12:18:01 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:17:59 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 63/75] amd_iommu: Invalidate address translations on
- INVALIDATE_IOMMU_ALL
-Message-ID: <560e604db9d55a1d7fde5a8b6de001367b8376f8.1759691708.git.mst@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 53/75] amd_iommu: Helper to decode size of page invalidation
+ command
+Message-ID: <717d2f8805558ec39604c201bcbe3b36be2904db.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -115,86 +115,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-When the kernel IOMMU driver issues an INVALIDATE_IOMMU_ALL, the address
-translation and interrupt remapping information must be cleared for all
-Device IDs and all domains. Introduce a helper to sync the shadow page table
-for all the address spaces with registered notifiers, which replays both MAP
-and UNMAP events.
+The size of the region to invalidate depends on the S bit and address
+encoded in the command. Add a helper to extract this information, which
+will be used to sync shadow page tables in upcoming changes.
 
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-15-alejandro.j.jimenez@oracle.com>
+Message-ID: <20250919213515.917111-5-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.c | 48 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ hw/i386/amd_iommu.h |  4 ++++
+ hw/i386/amd_iommu.c | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 2476296c49..c1170a8202 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -126,6 +126,10 @@
+ #define AMDVI_CMD_COMPLETE_PPR_REQUEST    0x07
+ #define AMDVI_CMD_INVAL_AMDVI_ALL         0x08
+ 
++
++#define AMDVI_CMD_INVAL_IOMMU_PAGES_S   (1ULL << 0)
++#define AMDVI_INV_ALL_PAGES             (1ULL << 52)
++
+ #define AMDVI_DEVTAB_ENTRY_SIZE           32
+ 
+ /* Device table entry bits 0:63 */
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 9027f7c054..d74d42b3dd 100644
+index 3cbc9499db..202f0f8c6e 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -941,6 +941,47 @@ static void amdvi_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
-     amdvi_sync_shadow_page_table_range(as, &dte[0], 0, UINT64_MAX, false);
+@@ -577,6 +577,40 @@ static gboolean amdvi_iotlb_remove_by_domid(gpointer key, gpointer value,
+     return entry->domid == domid;
  }
  
-+static void amdvi_address_space_sync(AMDVIAddressSpace *as)
-+{
-+    IOMMUNotifier *n;
-+    uint64_t dte[4] = { 0 };
-+
-+    /* If only UNMAP notifiers are registered, drop all existing mappings */
-+    if (!(as->notifier_flags & IOMMU_NOTIFIER_MAP)) {
-+        IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
-+            /*
-+             * Directly calling memory_region_unmap_iommu_notifier_range() does
-+             * not guarantee that the addr_mask eventually passed as parameter
-+             * to the notifier is valid. Use amdvi_address_space_unmap() which
-+             * ensures the notifier range is divided into properly aligned
-+             * regions, and issues notifications for each one.
-+             */
-+            amdvi_address_space_unmap(as, n);
-+        }
-+        return;
-+    }
-+
-+    if (amdvi_as_to_dte(as, dte)) {
-+        return;
-+    }
-+
-+    amdvi_sync_shadow_page_table_range(as, &dte[0], 0, UINT64_MAX, true);
-+}
-+
 +/*
-+ * This differs from the replay() method in that it issues both MAP and UNMAP
-+ * notifications since it is called after global invalidation events in order to
-+ * re-sync all address spaces.
++ * Helper to decode the size of the range to invalidate encoded in the
++ * INVALIDATE_IOMMU_PAGES Command format.
++ * The size of the region to invalidate depends on the S bit and address.
++ * S bit value:
++ * 0 :  Invalidation size is 4 Kbytes.
++ * 1 :  Invalidation size is determined by first zero bit in the address
++ *      starting from Address[12].
++ *
++ * In the AMD IOMMU Linux driver, an invalidation command with address
++ * ((1 << 63) - 1) is sent when intending to clear the entire cache.
++ * However, Table 14: Example Page Size Encodings shows that an address of
++ * ((1ULL << 51) - 1) encodes the entire cache, so effectively any address with
++ * first zero at bit 51 or larger is a request to invalidate the entire address
++ * space.
 + */
-+static void amdvi_iommu_address_space_sync_all(AMDVIState *s)
++static uint64_t __attribute__((unused))
++amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
 +{
-+    AMDVIAddressSpace *as;
++    uint64_t size = AMDVI_PAGE_SIZE;
++    uint8_t fzbit = 0;
 +
-+    QLIST_FOREACH(as, &s->amdvi_as_with_notifiers, next) {
-+        amdvi_address_space_sync(as);
++    if (flags & AMDVI_CMD_INVAL_IOMMU_PAGES_S) {
++        fzbit = cto64(addr | 0xFFF);
++
++        if (fzbit >= 51) {
++            size = AMDVI_INV_ALL_PAGES;
++        } else {
++            size = 1ULL << (fzbit + 1);
++        }
 +    }
++    return size;
 +}
 +
- /* log error without aborting since linux seems to be using reserved bits */
- static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
+ /* we don't have devid - we can't remove pages by address */
+ static void amdvi_inval_pages(AMDVIState *s, uint64_t *cmd)
  {
-@@ -983,6 +1024,13 @@ static void amdvi_inval_all(AMDVIState *s, uint64_t *cmd)
-     amdvi_intremap_inval_notify_all(s, true, 0, 0);
- 
-     amdvi_iotlb_reset(s);
-+
-+    /*
-+     * Fully replay the address space i.e. send both UNMAP and MAP events in
-+     * order to synchronize guest and host IO page tables tables.
-+     */
-+    amdvi_iommu_address_space_sync_all(s);
-+
-     trace_amdvi_all_inval();
- }
- 
 -- 
 MST
 
