@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0135CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 22:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C6ACCA472
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 22:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5X6w-0003GZ-EZ; Sun, 05 Oct 2025 18:21:46 -0400
+	id 1v5XD0-0004FJ-7N; Sun, 05 Oct 2025 18:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5X6u-0003G5-CE
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:21:44 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XCx-0004Ec-SB
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:27:59 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5X6s-0001lO-8n
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:21:44 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-57933d3e498so5725659e87.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 15:21:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XCu-0002Pu-5q
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:27:59 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-36d77de259bso36843871fa.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 15:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759702899; x=1760307699; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759703272; x=1760308072; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nexgf6hd/Qhctp9El5zgWCdHTRWfKODP1WxaKeNvDkM=;
- b=Mm1vSJ1S/EhB3QKRoGZbz067Ozlsz3sJAlIaNqSUoLRqyH6B5XETWI/Y7/V9EzQFjR
- pfClSuf5/Jsj5NLNq0YC4YvxCHUrTcnOf3xJVeF9LEnzr7ekrQCU10of71pglJLbKPel
- wA62t+aoUgK4RWNmx45p4YDfck+xLgqU2STkJlPNUqaFExSRsMVW9srFr20AyfJj4XuP
- 0HNWbXhXI934vH10ACiISQDX2jjTXQ9pnRytIKBsSh0fQBq9prWvbtgrZWSCIttkEEZW
- 4fVfUhR+2GUNBoFsNDaUI8Ki1Z6LILdpk4VdYAjjREik0pAmkoUlaYQnO9Dk5QvVAMTB
- fSsQ==
+ bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
+ b=ACm0RTa38sh6U4yv1jkk2kt01nOTZn622JimEKPvmrxRUzDd9jwwhwHtT3fECq7m8r
+ qXvsPclSLqjKStuZFprnePMyNH6C0jrTIpFXrFJgzW+GnrgHkLGAIfAvT0HZtzaxEY17
+ 8fBwG2wsOQcylPPUf3anrUpxtyvQsQ86XYnu0qIJstUd0sn3y61u0LVVlnzp7kbdpDwb
+ vNwzr7VSc2k3mUHyrCi6LERpzaLUm7WZf/4Onsoq87dzEFnQk5DSaT6GaBkfbGxthY20
+ GQTbBIV3Ao09I/74VAxaEbYQsbs6e7tw+WnQYPnRTC5Nsw/i8Feoactb0NgyXzFzTUYN
+ nAeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759702899; x=1760307699;
+ d=1e100.net; s=20230601; t=1759703272; x=1760308072;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nexgf6hd/Qhctp9El5zgWCdHTRWfKODP1WxaKeNvDkM=;
- b=b6Lf0Xg6WR6pz65a1mp3huP72Lhop0+umfcrJiA2ZdCUbiILTyYohU/xdBMgG41udz
- rynoQXAU3xY8Y8pR8b8jVOl/SegSUH4vY3S9kbPoXKDoaPr5tEE15GMGptyZ6suj4zSk
- 2TX2A09vD2V27SfzGZacZTiomILD79xycGP78G4KBSw59eF2vVOFijPoHj+xWoYB9SG9
- ur5zObKVhPsnXnQ90/aG8TxhaGcyXVEcaV7tdUMGZQ1vySjOmVEp+coQmkr/miT+Zhci
- dkUv+TlA86PbLDIRlNTYFHoqH9h/HtovWM/wO7qFXs2fS9pF+ItLtVtmm/o+g7tRrax1
- rj3w==
-X-Gm-Message-State: AOJu0YwPOK9RnZM+LPHaJkcMoUgGnJ1ihUcTm1Z8Gg9ivWTBcO98ITJr
- rXwRHyg7MuJoqsLyGxyLihv6SNsfK2GzKvQXtdQIarZ51IAmuID9gIz62prUvkzYr4I=
-X-Gm-Gg: ASbGncsLM/Nh8G9GWKXa+M64wE6EpIvnfOzn7o+5dOeuD/GHj4REMVj8/fEDCQlOG1C
- 8QEv+V7wcgyD98vyU9XLb/VCLn1gdzYS/zDh26nWXM7BDS4X25rV6PrtWUGs2WjFdIeTpIWjM0l
- em4D8g9D6grHQwDWRyWs2YF3dhxd5pHFWlqIDzjDIn1aMY2l+wICRnt4SqzNR9G2q64gMwR44YP
- HVyqamM2MXOcfexJXg406MK6meliiRN3C17YbBRpR9kv9VEzlDs4g+8XHpzoXMJnt5XUkiW1NmI
- Y0JT9JJMBfMBBrHav9jH5C92g8eKBIHJxilo29EDxvyQKVSxqfnH40Z8ZdZd97+QjZr/pmeFJ5w
- mOWkhr4bkgo6whYh/iPA0DQz/HOpQPKVMz6g6nrgszxbDMqdaaISA/DN2BJKSPsPLvWpsUw==
-X-Google-Smtp-Source: AGHT+IHqiqq1Ga87SCS/M5ccId0NssfRavsYAMm5mFYo/OFF6nsontz+73I9fn0VLmka5OED/6AIsQ==
-X-Received: by 2002:a05:6512:3d27:b0:577:285f:32bd with SMTP id
- 2adb3069b0e04-58cbbdd81eemr2742917e87.26.1759702898999; 
- Sun, 05 Oct 2025 15:21:38 -0700 (PDT)
+ bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
+ b=FPvMCApTHPPP/YBEl2Snumm86dpbpPV8TeyPQUrB6mL2fampvLYohbf3k0ncMddi2C
+ tMPxX3DKuOLag+gWdoBuNrWj8N4I0OpghV54cKpWxNEqI+5MArWvVKZlECynK5ASQjB9
+ StIeoDrA0v9QdQ43+z/SC6zOewtpqGo9bI0oo8B7QXNZblqlg5LZmfzyvFfBsEIIf5qb
+ 5MEoyudxNRdfAskIL4qYBL1lFGtVF9OqNaIc1/b1DPMZIDR6emX4ghz/UQlTHMBAUuBb
+ Mrow6JzmXmaNpzn7RbentZ+KD2FWSAb/Z3IaVO7WD+PlRD+96vpF7okg+8CH031Vz7sN
+ sOmQ==
+X-Gm-Message-State: AOJu0YwyU5rx9VWUO2w3kKIbSTPf28PMazZ+TjphQpykBRGfdqzeDRwh
+ xfJxg+Dqql/KhU7G7rqzytBF7WZnCKq70Mnnm0WLT3EEJbeaHNwxnAkpp7pzzcDt9M8=
+X-Gm-Gg: ASbGncs6gPrrGq38zSyWzOaIk4UKUqCHcOFxeqK8M2LGhg60SP0QQfb/DvzkXAOrpSB
+ Ns8B8phLZBfmlAM445JZcwyLsmcy8X9JIql9sho/sDDtxcpMnuMaf0Ryty0UMXa+3Bui6NPoJ5v
+ MpTTJnhUmkh/LpSVKzqCu14x2aWEUN0+GsaNaxPmItdWiCDLwH8vOxymUtSJhMJT0E8eRbDA6tf
+ 6BCeVVBlBW/dycmD6CopE9qZ4tm3fBHbANTbroT/j/Zy5GNgxwzVV7H6oLBhYG9SKsUmByaVsvd
+ y7haIBpuE2WKWBoyUxLb31CTgJJvYhWJhURIb/S5w6grbr0tVwvgrBRoi7Pk6GbwAXO8stX6vc/
+ ymWWhXIJEw/TZD/gc2CHZHhNjdWFuIBao/mYe94K0NePYGdYmEhCQ38VXaho=
+X-Google-Smtp-Source: AGHT+IEBY5dBcu3MLYDF7IdOYTiO+zF1su8jNk5JgrpgIOiPAVkKHS5J/KRsbuc+pGayULcnQOlhMw==
+X-Received: by 2002:a2e:bd0c:0:b0:36b:2a0a:b906 with SMTP id
+ 38308e7fff4ca-374c36cc018mr30769051fa.12.1759703271919; 
+ Sun, 05 Oct 2025 15:27:51 -0700 (PDT)
 Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:c37::1:1])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-58b0119ee99sm4351827e87.106.2025.10.05.15.21.36
+ 38308e7fff4ca-373ba44441dsm37885831fa.37.2025.10.05.15.27.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 05 Oct 2025 15:21:37 -0700 (PDT)
+ Sun, 05 Oct 2025 15:27:50 -0700 (PDT)
 From: xpahos@gmail.com
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, qemu-trivial@nongnu.org,
+Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org,
  Alexander Gryanko <xpahos@gmail.com>
-Subject: [PATCH v2] system/runstate.c: Add a newline character to correctly
- log guest errors
-Date: Mon,  6 Oct 2025 01:21:27 +0300
-Message-Id: <20251004-add-newline-guest-error-log-v1-1-a61df1599936@gmail.com>
+Subject: [PATCH v2] hw/arm: add pvpanic mmio device for arm
+Date: Mon,  6 Oct 2025 01:27:31 +0300
+Message-ID: <20251004-add-newline-guest-error-log-v1-1-a61df1599936@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <32D0DF37-A1B3-4532-B350-082E19E4EABB@gmail.com>
-References: <32D0DF37-A1B3-4532-B350-082E19E4EABB@gmail.com>
+In-Reply-To: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+References: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20251004-add-newline-guest-error-log-62d68638b28c
+X-Change-ID: 20251005-arm-pvpanic-8e3e8fd05e95
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759599468; l=1584;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759689277; l=3360;
  i=xpahos@gmail.com; s=20251004; h=from:subject:message-id;
- bh=rvwWS/RTpcBRE43Pzrs+MfGd8cC10dbKpihj81a/57o=;
- b=+LjQuITtD0JEG02JJvL+AhM2l1Uq5u9EEFQc1OfrIm1pLBzveSkMxF6uRDo5Gjvprys68NKRZ
- mR8UXF/vEJTCFYsQYKk4oBFYMZV4I03p5jP5mC001Q4Wzc0uGXWbtML
+ bh=8vahP4rJaiEcZHPpEIyes8fe5YhSlu876t+4bYa3n2I=;
+ b=vONAhLi4eVISLyW7o+8CipIPEObfmTUCcqjBA6B8U4KZFyvnayVlS3I/UIOAageN477CuaXAb
+ U1enPaZJZw4DFsk1B1Aeo+g+ZNj09r3sdN+WVEP76yahEAJGXt2RxG2
 X-Developer-Key: i=xpahos@gmail.com; a=ed25519;
  pk=bsSvP3Tn7PVKgjJT3BMV3jlAwSqreKIM4099C1r51eg=
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=xpahos@gmail.com; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=xpahos@gmail.com; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,53 +107,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+Message-ID: <20251005222731.f_wbZ7pRpijDrRu9TBike1sSs-cYRNzaXDf6KaE97aM@z>
 
 From: Alexander Gryanko <xpahos@gmail.com>
 
-The pvpanic handler calls the qemu_system_guest_panicked
-function with a NULL parameter, which results in the absence
-of a newline character in the guest error log.
-The qemu_system_guest_crashloaded function has no additional
-logic, but also omits the newline character.
-The qemu_system_guest_pvshutdown has no reporting in the
-guest error log.
+Currently, pvpanic is available in three device types: ISA,
+MMIO, and PCI. For early stages of system initialisation
+before PCI enumeration, only ISA and MMIO are suitable.
+ISA is specific to the x86 platform; only MMIO devices
+can be used for ARM. It is not possible to specify a
+device as on the x86 platform (-device pvpanic); the
+only possible way is to add an MMIO device to the dtb,
+which can be implemented by manually adding new functions
+to the QEMU code, as was done in the VMApple implementation.
 
 Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
 ---
- system/runstate.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/arm/virt.c         | 26 ++++++++++++++++++++++++++
+ include/hw/arm/virt.h |  1 +
+ 2 files changed, 27 insertions(+)
 
-diff --git a/system/runstate.c b/system/runstate.c
-index 6178b0091a..8b4bf75cd6 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -674,18 +674,21 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
-         }
- 
-         qapi_free_GuestPanicInformation(info);
-+    } else {
-+        qemu_log_mask(LOG_GUEST_ERROR, "\n");
-     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 02209fadcf..78e466f935 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -39,6 +39,7 @@
+ #include "hw/arm/virt.h"
+ #include "hw/block/flash.h"
+ #include "hw/display/ramfb.h"
++#include "hw/misc/pvpanic.h"
+ #include "net/net.h"
+ #include "system/device_tree.h"
+ #include "system/numa.h"
+@@ -182,6 +183,7 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_UART0] =              { 0x09000000, 0x00001000 },
+     [VIRT_RTC] =                { 0x09010000, 0x00001000 },
+     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
++    [VIRT_PVPANIC] =            { 0x09021000, 0x00000002 },
+     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+     [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+     [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+@@ -276,6 +278,28 @@ static bool ns_el2_virt_timer_present(void)
+         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
  }
  
- void qemu_system_guest_crashloaded(GuestPanicInformation *info)
++static void create_pvpanic(VirtMachineState *vms)
++{
++    char *nodename;
++    MachineState *ms = MACHINE(vms);
++    DeviceState *dev = qdev_new(TYPE_PVPANIC_MMIO_DEVICE);
++    SysBusDevice *s = SYS_BUS_DEVICE(dev);
++
++    hwaddr base = vms->memmap[VIRT_PVPANIC].base;
++    hwaddr size = vms->memmap[VIRT_PVPANIC].size;
++
++    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_mmio_map(s, 0, base);
++
++    nodename = g_strdup_printf("/pvpanic@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "qemu,pvpanic-mmio");
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
++                                 2, base, 2, size);
++    g_free(nodename);
++}
++
+ static void create_fdt(VirtMachineState *vms)
  {
--    qemu_log_mask(LOG_GUEST_ERROR, "Guest crash loaded");
-+    qemu_log_mask(LOG_GUEST_ERROR, "Guest crash loaded\n");
-     qapi_event_send_guest_crashloaded(GUEST_PANIC_ACTION_RUN, info);
-     qapi_free_GuestPanicInformation(info);
- }
+     MachineState *ms = MACHINE(vms);
+@@ -2498,6 +2522,8 @@ static void machvirt_init(MachineState *machine)
+     create_pcie(vms);
+     create_cxl_host_reg_region(vms);
  
- void qemu_system_guest_pvshutdown(void)
- {
-+    qemu_log_mask(LOG_GUEST_ERROR, "Guest shutdown requested\n");
-     qapi_event_send_guest_pvshutdown();
-     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
- }
++    create_pvpanic(vms);
++
+     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+         vms->acpi_dev = create_acpi_ged(vms);
+     } else {
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index ea2cff05b0..39bf07c9c1 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -81,6 +81,7 @@ enum {
+     VIRT_NVDIMM_ACPI,
+     VIRT_PVTIME,
+     VIRT_ACPI_PCIHP,
++    VIRT_PVPANIC,
+     VIRT_LOWMEMMAP_LAST,
+ };
+ 
 
 ---
-base-commit: 81e3121bef89bcd3ccb261899e5a36246199065d
-change-id: 20251004-add-newline-guest-error-log-62d68638b28c
+base-commit: bd6aa0d1e59d71218c3eee055bc8d222c6e1a628
+change-id: 20251005-arm-pvpanic-8e3e8fd05e95
 
 Best regards,
 -- 
