@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20444CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73430CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Sg5-0000J2-V8; Sun, 05 Oct 2025 13:37:46 -0400
+	id 1v5Shw-0001O8-RF; Sun, 05 Oct 2025 13:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfu-0000DN-SV; Sun, 05 Oct 2025 13:37:34 -0400
+ id 1v5Sge-0000WJ-SI; Sun, 05 Oct 2025 13:38:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sft-0004cj-AJ; Sun, 05 Oct 2025 13:37:34 -0400
+ id 1v5Sgc-0004g1-4s; Sun, 05 Oct 2025 13:38:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4D32F15AA8A;
- Sun, 05 Oct 2025 20:37:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7936F15AA93;
+ Sun, 05 Oct 2025 20:37:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2C35C299736;
- Sun,  5 Oct 2025 20:37:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8117829973E;
+ Sun,  5 Oct 2025 20:37:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, stove <stove@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 47/58] target/riscv: use riscv_csrr in riscv_csr_read
-Date: Sun,  5 Oct 2025 20:36:56 +0300
-Message-ID: <20251005173712.445160-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 55/58] memory: New AS helper to serialize destroy+free
+Date: Sun,  5 Oct 2025 20:37:04 +0300
+Message-ID: <20251005173712.445160-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
@@ -61,38 +60,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: stove <stove@rivosinc.com>
+From: Peter Xu <peterx@redhat.com>
 
-Commit 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/CSRRC
-writes a read-only CSR") changed the behavior of riscv_csrrw, which
-would formerly be treated as read-only if the write mask were set to 0.
+If an AddressSpace has been created in its own allocated
+memory, cleaning it up requires first destroying the AS
+and then freeing the memory. Doing this doesn't work:
 
-Fixes an exception being raised when accessing read-only vector CSRs
-like vtype.
+    address_space_destroy(as);
+    g_free_rcu(as, rcu);
 
-Fixes: 38c83e8d3a33 ("target/riscv: raise an exception when CSRRS/CSRRC writes a read-only CSR")
+because both address_space_destroy() and g_free_rcu()
+try to use the same 'rcu' node in the AddressSpace struct
+and the address_space_destroy hook gets overwritten.
 
-Signed-off-by: stove <stove@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250827203617.79947-1-stove@rivosinc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit cebaf7434b4af059caca053ee1ec7ed8df91c2a7)
-(Mjt: context fix for v10.0.0-1030-gf1304836ea "target/riscv: Pass ra to riscv_csrrw")
+Provide a new address_space_destroy_free() function which
+will destroy the AS and then free the memory it uses, all
+in one RCU callback.
+
+(CC to stable because the next commit needs this function.)
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20250929144228.1994037-3-peter.maydell@linaro.org
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 041600e23f2fe2a9c252c9a8b26c7d147bedf982)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7a56666f9a..71141f4ea6 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -839,7 +839,7 @@ static inline void riscv_csr_write(CPURISCVState *env, int csrno,
- static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
- {
-     target_ulong val = 0;
--    riscv_csrrw(env, csrno, &val, 0, 0);
-+    riscv_csrr(env, csrno, &val);
-     return val;
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 2ad3f93344..ef6af5caee 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2635,11 +2635,24 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name);
+  * Note that destruction of the AddressSpace is done via RCU;
+  * it is therefore not valid to free the memory the AddressSpace
+  * struct is in until after that RCU callback has completed.
++ * If you want to g_free() the AddressSpace after destruction you
++ * can do that with address_space_destroy_free().
+  *
+  * @as: address space to be destroyed
+  */
+ void address_space_destroy(AddressSpace *as);
+ 
++/**
++ * address_space_destroy_free: destroy an address space and free it
++ *
++ * This does the same thing as address_space_destroy(), and then also
++ * frees (via g_free()) the AddressSpace itself once the destruction
++ * is complete.
++ *
++ * @as: address space to be destroyed
++ */
++void address_space_destroy_free(AddressSpace *as);
++
+ /**
+  * address_space_remove_listeners: unregister all listeners of an address space
+  *
+diff --git a/system/memory.c b/system/memory.c
+index 4c829793a0..94cb60c83b 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3254,7 +3254,14 @@ static void do_address_space_destroy(AddressSpace *as)
+     memory_region_unref(as->root);
  }
  
+-void address_space_destroy(AddressSpace *as)
++static void do_address_space_destroy_free(AddressSpace *as)
++{
++    do_address_space_destroy(as);
++    g_free(as);
++}
++
++/* Detach address space from global view, notify all listeners */
++static void address_space_detach(AddressSpace *as)
+ {
+     MemoryRegion *root = as->root;
+ 
+@@ -3269,9 +3276,20 @@ void address_space_destroy(AddressSpace *as)
+      * values to expire before freeing the data.
+      */
+     as->root = root;
++}
++
++void address_space_destroy(AddressSpace *as)
++{
++    address_space_detach(as);
+     call_rcu(as, do_address_space_destroy, rcu);
+ }
+ 
++void address_space_destroy_free(AddressSpace *as)
++{
++    address_space_detach(as);
++    call_rcu(as, do_address_space_destroy_free, rcu);
++}
++
+ static const char *memory_region_type(MemoryRegion *mr)
+ {
+     if (mr->alias) {
 -- 
 2.47.3
 
