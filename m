@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99CACCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 369F6CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Rud-00007x-QV; Sun, 05 Oct 2025 12:48:44 -0400
+	id 1v5Ruu-0000FT-FT; Sun, 05 Oct 2025 12:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5RuZ-00005t-PK; Sun, 05 Oct 2025 12:48:40 -0400
+ id 1v5Rur-0000Dh-6g; Sun, 05 Oct 2025 12:48:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5RuX-000728-MS; Sun, 05 Oct 2025 12:48:39 -0400
+ id 1v5Rup-00074X-D2; Sun, 05 Oct 2025 12:48:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 48AA115AA2B;
- Sun, 05 Oct 2025 19:48:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 09A7615AA32;
+ Sun, 05 Oct 2025 19:48:48 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C80072996E9;
- Sun,  5 Oct 2025 19:48:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C8F432996EF;
+ Sun,  5 Oct 2025 19:48:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Gaurav Batra <gbatra@us.ibm.com>, David Christensen <drc@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 64/81] ppc/spapr: init lrdr-capapcity phys with ram
- size if maxmem not provided
-Date: Sun,  5 Oct 2025 19:47:44 +0300
-Message-ID: <20251005164822.442861-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ Emmanuel Blot <emmanuel.blot@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 70/81] hw/char: sifive_uart: Raise IRQ according to
+ the Tx/Rx watermark thresholds
+Date: Sun,  5 Oct 2025 19:47:50 +0300
+Message-ID: <20251005164822.442861-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
@@ -61,57 +62,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-lrdr-capacity contains phys field which communicates the maximum address
-in bytes and therefore, the most memory that can be allocated to this
-partition. This is usually populated when maxmem is provided alongwith
-memory size on qemu command line. However since maxmem is an optional
-param, this leads to bits being set to 0 in absence of maxmem param.
-Fix this by initializing the respective bits as per total mem size in
-such case.
+Currently, the SiFive UART raises an IRQ whenever:
 
-Reported-by: Gaurav Batra <gbatra@us.ibm.com>
-Tested-by: David Christensen <drc@linux.ibm.com>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250506042903.76250-1-harshpb@linux.ibm.com
-Message-ID: <20250506042903.76250-1-harshpb@linux.ibm.com>
-(cherry picked from commit 6285eebd3a5fea018eb51d696b51079f44dd1eb3)
+  1. ie.txwm is enabled.
+  2. ie.rxwm is enabled and the Rx FIFO is not empty.
+
+It does not check the watermark thresholds set by software. However,
+since commit [1] changed the SiFive UART character printing from
+synchronous to asynchronous, Tx overflows may occur, causing characters
+to be dropped when running Linux because:
+
+  1. The Linux SiFive UART driver sets the transmit watermark level to 1
+     [2], meaning a transmit watermark interrupt is raised whenever a
+     character is enqueued into the Tx FIFO.
+  2. Upon receiving a transmit watermark interrupt, the Linux driver
+     transfers up to a full Tx FIFO's worth of characters from the Linux
+     serial transmit buffer [3], without checking the txdata.full flag
+     before transferring multiple characters [4].
+
+To fix this issue, we must honor the Tx/Rx watermark thresholds and
+raise interrupts only when the Tx threshold is exceeded or the Rx
+threshold is undercut.
+
+[1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
+[2] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L1039
+[3] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L538
+[4] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifive.c#L291
+
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Emmanuel Blot <emmanuel.blot@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250911160647.5710-2-frank.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 191df346175283af013f414375f4be59fb850120)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 1855a3cd8d..9e63671ece 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -907,6 +907,7 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
-     int rtas;
-     GString *hypertas = g_string_sized_new(256);
-     GString *qemu_hypertas = g_string_sized_new(256);
-+    uint64_t max_device_addr = 0;
-     uint32_t lrdr_capacity[] = {
-         0,
-         0,
-@@ -917,13 +918,15 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 9bc697a67b..138c31fcab 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -35,16 +35,17 @@
+  */
  
-     /* Do we have device memory? */
-     if (MACHINE(spapr)->device_memory) {
--        uint64_t max_device_addr = MACHINE(spapr)->device_memory->base +
-+        max_device_addr = MACHINE(spapr)->device_memory->base +
-             memory_region_size(&MACHINE(spapr)->device_memory->mr);
--
--        lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
--        lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
-+    } else if (ms->ram_size == ms->maxram_size) {
-+        max_device_addr = ms->ram_size;
+ /* Returns the state of the IP (interrupt pending) register */
+-static uint64_t sifive_uart_ip(SiFiveUARTState *s)
++static uint32_t sifive_uart_ip(SiFiveUARTState *s)
+ {
+-    uint64_t ret = 0;
++    uint32_t ret = 0;
+ 
+-    uint64_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
+-    uint64_t rxcnt = SIFIVE_UART_GET_RXCNT(s->rxctrl);
++    uint32_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
++    uint32_t rxcnt = SIFIVE_UART_GET_RXCNT(s->rxctrl);
+ 
+-    if (txcnt != 0) {
++    if (fifo8_num_used(&s->tx_fifo) < txcnt) {
+         ret |= SIFIVE_UART_IP_TXWM;
      }
- 
-+    lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
-+    lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
 +
-     _FDT(rtas = fdt_add_subnode(fdt, 0, "rtas"));
+     if (s->rx_fifo_len > rxcnt) {
+         ret |= SIFIVE_UART_IP_RXWM;
+     }
+@@ -55,15 +56,14 @@ static uint64_t sifive_uart_ip(SiFiveUARTState *s)
+ static void sifive_uart_update_irq(SiFiveUARTState *s)
+ {
+     int cond = 0;
+-    if ((s->ie & SIFIVE_UART_IE_TXWM) ||
+-        ((s->ie & SIFIVE_UART_IE_RXWM) && s->rx_fifo_len)) {
++    uint32_t ip = sifive_uart_ip(s);
++
++    if (((ip & SIFIVE_UART_IP_TXWM) && (s->ie & SIFIVE_UART_IE_TXWM)) ||
++        ((ip & SIFIVE_UART_IP_RXWM) && (s->ie & SIFIVE_UART_IE_RXWM))) {
+         cond = 1;
+     }
+-    if (cond) {
+-        qemu_irq_raise(s->irq);
+-    } else {
+-        qemu_irq_lower(s->irq);
+-    }
++
++    qemu_set_irq(s->irq, cond);
+ }
  
-     /* hypertas */
+ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
 -- 
 2.47.3
 
