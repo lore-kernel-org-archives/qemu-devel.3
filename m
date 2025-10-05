@@ -4,84 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637DFCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8FECAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5S1M-00022D-Uz; Sun, 05 Oct 2025 12:55:41 -0400
+	id 1v5Sfu-0000CX-ST; Sun, 05 Oct 2025 13:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1v5S1G-0001wS-EN
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 12:55:34 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1v5S1B-0007rL-0D
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 12:55:31 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46e5980471eso19521485e9.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 09:55:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=livius-net.20230601.gappssmtp.com; s=20230601; t=1759683326; x=1760288126;
- darn=nongnu.org; 
- h=to:date:message-id:subject:mime-version:content-transfer-encoding
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=cb25B5eY+zXxsw9NK/ZgdrE5wA39gJzOi2flC+t/2Xg=;
- b=cdZV2yPA0l3PPYGDVwmXUjLDzY+b6ai25WPwBVZV3hazh2lQ5ePTrVOX72ofE1jhM2
- qUANFODBvMzNFLmIWP2nnJf1LgmXrry2HyQP+ixFc4Shcs61FmMWKr2C+TcZ4DYH78KX
- mmpQmCnqZRaUuaVybsetDL3r/aGHmyeoxPcVRTRaqhMtt3sw9WlzKC+aMDSwsNwk05r9
- 6mQX4duEwdUsNLixG+FO5NILNtBaaCwp2qNQSNjmgeT8HXZ9yJYgj6UcfmBaQcxtRbtB
- fQC1t+rHA8jQnSfCjoukM2G5W67sVPt+hnZITVCfGn3VriOkDDTOoWhKTnbDuXoHOVMV
- OyaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759683326; x=1760288126;
- h=to:date:message-id:subject:mime-version:content-transfer-encoding
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cb25B5eY+zXxsw9NK/ZgdrE5wA39gJzOi2flC+t/2Xg=;
- b=LdJzHyxRjcyOcwKrFACmwq0QCkyAC2YFGEOaakPnF5NwBysr58mysv2HEwM6jBVbSE
- pLEDk/lHBiEtJAXgSNun4Q/A3qBejiwO9+V4mvvHYRDBT42mahQwmVKhzfmB6o5DMVw0
- kgiLgPeD1nKvnAIzvYCLnGnKamOvBfGN2IonO/1GBhyAIYgpjWiGQqxG9Y0lnCEOg5EV
- UpL81ec9qIn1tOCtVyk1sSapaTnbCRnB0SSxOWLdP4Bf0esF+Xgy1/aA97IA9Cg0lqh1
- KCnPBJY6dR41thf8YaIUuOD+juF0zYeFHmw67WYsyVEmhmdf2m+zW8SamMBLNzDLoOcQ
- eU+Q==
-X-Gm-Message-State: AOJu0Yzgvw7mRDRebVyjRrU2Oy93EDg/38qoTbQ5QWdxc3B894pXBYr5
- WBJ9PVFZDlfwBwRMrIO8B4Z+AnTRXyIahdCocRnPw+uDCS7VFa22JgCys59Xz9iYywjzHtGaUBa
- 6k+D6P2w=
-X-Gm-Gg: ASbGncvQnJoQ8cUCf1WqiS3s5gMklUIc0W+voFlcdEngFp0WXrE0ULEwp6807HsJMNN
- 1AE2vUsI/WnOAS0/oLyx5H5k1wyyNWX0lfD0VhQArFB7bYXYAE44RfXps4VqAwhGj2AhKxm3eD8
- LUCPpDAMx1WSc3+P3nRZjeQxiQ3kUan35Cfjb0J3zurWl51IRIuELMYGaNlUUsxyRTwu46i1e6Q
- b4kMkahdV7JaRHWIaslhqav20dJKNCg/yaycts/8hIiuW3ARDxLfldA8q0CKCe1gJFnCwKdIJIk
- YVRo6644YUiN8ads1KPhTmK1Rjmvs7vaXz6hyyBar6IhFpX990/hC81V9ExySEJtgtzXA3LU9ne
- u/C+grDXZDsVAvKQTovFpRqFiNgjeXi4Xe3Ns3mqM1zoSZHt4yWuafcHq9Gw3sVS1fjT1WynyKU
- ivdg==
-X-Google-Smtp-Source: AGHT+IGjXNOskYVnsyvBNP/ISSUaMV6Ohjzuh4HWOtJsQNFhSl9bhR3p5iqrt4OjB431+UDygDLAEw==
-X-Received: by 2002:a05:600c:19d0:b0:46e:3709:d88a with SMTP id
- 5b1f17b1804b1-46e7115b0bcmr62630795e9.33.1759683325454; 
- Sun, 05 Oct 2025 09:55:25 -0700 (PDT)
-Received: from smtpclient.apple ([188.25.252.134])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8abe90sm16963967f8f.23.2025.10.05.09.55.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 05 Oct 2025 09:55:25 -0700 (PDT)
-From: Liviu Ionescu <ilg@livius.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: qemu-system-aarch64 hangs in a cortex-a72 test
-Message-Id: <9EF1806D-4C25-4980-B1CA-16616FA8E32F@livius.net>
-Date: Sun, 5 Oct 2025 19:55:14 +0300
-To: QEMU Developers <qemu-devel@nongnu.org>
-X-Mailer: Apple Mail (2.3826.700.81)
-Received-SPF: none client-ip=2a00:1450:4864:20::32f;
- envelope-from=ilg@livius.net; helo=mail-wm1-x32f.google.com
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v5Sfl-00009y-9y; Sun, 05 Oct 2025 13:37:25 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v5Sfj-0004bC-7F; Sun, 05 Oct 2025 13:37:24 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4AD3E15AA83;
+ Sun, 05 Oct 2025 20:37:11 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A047299730;
+ Sun,  5 Oct 2025 20:37:14 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Gaurav Batra <gbatra@us.ibm.com>, David Christensen <drc@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 41/58] ppc/spapr: init lrdr-capapcity phys with ram
+ size if maxmem not provided
+Date: Sun,  5 Oct 2025 20:36:50 +0300
+Message-ID: <20251005173712.445160-3-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
+References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,47 +61,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-I have a small semihosted test that I use to test the xPack QEMU =
-releases.
+lrdr-capacity contains phys field which communicates the maximum address
+in bytes and therefore, the most memory that can be allocated to this
+partition. This is usually populated when maxmem is provided alongwith
+memory size on qemu command line. However since maxmem is an optional
+param, this leads to bits being set to 0 in absence of maxmem param.
+Fix this by initializing the respective bits as per total mem size in
+such case.
 
-The test worked just fine up to 8.2.9, but hangs with 9.0.0 or later, =
-including 10.0.0.
+Reported-by: Gaurav Batra <gbatra@us.ibm.com>
+Tested-by: David Christensen <drc@linux.ibm.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250506042903.76250-1-harshpb@linux.ibm.com
+Message-ID: <20250506042903.76250-1-harshpb@linux.ibm.com>
+(cherry picked from commit 6285eebd3a5fea018eb51d696b51079f44dd1eb3)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-The test is invoked with:
-
-```
-$ qemu-system-aarch64 --machine virt --cpu cortex-a72 --kernel =
-hello-world-cortex-a72.elf --nographic -smp 1 -d unimp,guest_errors =
---semihosting-config enable=3Don,target=3Dnative,arg=3Dhello-world,arg=3DA=
-7
-^C
-$
-```
-
-The test binary is available from:
-
-- =
-https://github.com/xpack-dev-tools/qemu-arm-xpack/tree/xpack/build-assets/=
-test-assets
-
-
-I tested on macOS with 9.0.0, 9.0.4, 9.2.4 compiled from sources, and =
-with 10.0.0 from the official Manjaro distribution. The 9.2.4 tests were =
-also performed on Linux, with the same result.
-
-The binary was compiled from sources; I don't have the sources at hand =
-but I can reconstruct them. I do not have a physical board to validate =
-that the test code is functional, I always ran it on QEMU. The test =
-might very well have a problem that was not detected by pre-9.x QEMU, =
-but I'm not familiar enough with A72 to diagnose it.=20
-
-Any ideas what changed from 8.x to 9.0 to cause this?
-
-Thank you,
-
-Liviu
-
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index b0a0f8c689..98cf00af5b 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -907,6 +907,7 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+     int rtas;
+     GString *hypertas = g_string_sized_new(256);
+     GString *qemu_hypertas = g_string_sized_new(256);
++    uint64_t max_device_addr = 0;
+     uint32_t lrdr_capacity[] = {
+         0,
+         0,
+@@ -917,13 +918,15 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+ 
+     /* Do we have device memory? */
+     if (MACHINE(spapr)->device_memory) {
+-        uint64_t max_device_addr = MACHINE(spapr)->device_memory->base +
++        max_device_addr = MACHINE(spapr)->device_memory->base +
+             memory_region_size(&MACHINE(spapr)->device_memory->mr);
+-
+-        lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
+-        lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
++    } else if (ms->ram_size == ms->maxram_size) {
++        max_device_addr = ms->ram_size;
+     }
+ 
++    lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
++    lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
++
+     _FDT(rtas = fdt_add_subnode(fdt, 0, "rtas"));
+ 
+     /* hypertas */
+-- 
+2.47.3
 
 
