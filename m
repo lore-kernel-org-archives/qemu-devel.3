@@ -4,63 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2359CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B98CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 20:15:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UiH-0001ON-1M; Sun, 05 Oct 2025 15:48:09 -0400
+	id 1v5V7Y-0007mz-4j; Sun, 05 Oct 2025 16:14:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <SRS0=F64V=4O=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1v5UiF-0001O6-D7
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:48:07 -0400
-Received: from domu-toccata.ens-lyon.fr ([140.77.166.138]
- helo=sonata.ens-lyon.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <SRS0=F64V=4O=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1v5UiC-0001nW-VF
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:48:07 -0400
-Received: from localhost (localhost [127.0.0.1])
- by sonata.ens-lyon.org (Postfix) with ESMTP id 781F6A0282;
- Sun,  5 Oct 2025 21:48:01 +0200 (CEST)
-Received: from sonata.ens-lyon.org ([127.0.0.1])
- by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id aGPj9FFrodQ4; Sun,  5 Oct 2025 21:48:01 +0200 (CEST)
-Received: from begin (38.127.95.79.rev.sfr.net [79.95.127.38])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (No client certificate requested)
- by sonata.ens-lyon.org (Postfix) with ESMTPSA id 31631A0283;
- Sun,  5 Oct 2025 21:48:01 +0200 (CEST)
-Received: from samy by begin with local (Exim 4.98.2)
- (envelope-from <samuel.thibault@ens-lyon.org>)
- id 1v5Uhj-0000000H8cx-0M6s; Sun, 05 Oct 2025 21:47:35 +0200
-From: Samuel Thibault <samuel.thibault@ens-lyon.org>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: Viktor Kurilko <murlockkinght@gmail.com>, stefanha@redhat.com,
- jan.kiszka@siemens.com, Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PULL 1/1] Add a feature for mapping a host unix socket to a guest
- tcp socket
-Date: Sun,  5 Oct 2025 21:47:34 +0200
-Message-ID: <20251005194734.4084726-2-samuel.thibault@ens-lyon.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251005194734.4084726-1-samuel.thibault@ens-lyon.org>
-References: <20251005194734.4084726-1-samuel.thibault@ens-lyon.org>
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v5V7W-0007mg-Kc
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 16:14:14 -0400
+Received: from m239-4.eu.mailgun.net ([185.250.239.4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v5V7U-0004hy-Rl
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 16:14:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
+ s=email; t=1759695249; x=1759702449; 
+ h=Content-Transfer-Encoding: Content-Type: Cc: To: To: Subject: Subject:
+ Message-ID: Date: From: From: In-Reply-To: References: MIME-Version: Sender:
+ Sender; bh=I+ChIouOVga1P030P3JkAbcqIwL7GH8IrTstjppXFgk=;
+ b=oB49LHMQLBwLZIDPWo7Hz/wV8OzQaVQzOXPEw0FGiwS8hb1fzwOomZZpQ7bfOx6YeooQPM6MVOFYEdx85zmV++gsbNq/C17xYVo9VQzM7ztYpoUbXZjH5h4X7o9Nob5TwYvjoKtmiro69PzFYySjQC4NCqpvecH8AM7X9YmfjapTiSpJk8ocJTP8KeWVZ688SqglofWjUy8fCJ45/bzrjmMPwWNUmx0i87CNbV82Aa9S7E2YBQJVjoyV1zkycojqld7vNA5NiS34qFNxH8cGMVBS0pisAKF0zKzQDRIEpoLosh29WHslUGuaPklBBrwzTVe6qsJjeVLr0cH50Cd5eQ==
+X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com
+ [74.125.224.49]) by
+ 77ac684261ec405a7a643a236bc29c3c26774436f831b2c9af494d6a3cfd20bf with SMTP id
+ 68e2d19158e35fe37ba5c56a (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256);
+ Sun, 05 Oct 2025 20:14:09 GMT
+X-Mailgun-Sending-Ip: 185.250.239.4
+Received: by mail-yx1-f49.google.com with SMTP id
+ 956f58d0204a3-63bbf5f77daso1568269d50.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 13:14:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6m6Sj9KwV7xjq30AguZ5zVit4iBvc1ZkpRNyKmNDko3nj4Gt6GZ0ZJiNky2mMDNmbk+Dxs0o5Y0cg@nongnu.org
+X-Gm-Message-State: AOJu0YxWHhbpJJoz4Tj6jFv0VDyobyMIh2E+exei5s2ZekVXaxdnTr+o
+ 2I0r5Uq5wTOl83XR3frRku3fPyfT1gH6H6HH/fsG9Q3Q8mwwZ3u8zOi5R4RKyBQEaCBK4vDHBrj
+ kwHpkypOrIxCDMMZ/Jt3UZJv6+b+JJTE=
+X-Google-Smtp-Source: AGHT+IF6NTB7C1J+sc5gwU09D6vTTEgQsjhGgjC0gkdmRcIaMTw5vF0hSyBdo0glo5NFxqdiep4ByU4Q6w6ugaMM3Rk=
+X-Received: by 2002:a05:690e:1590:20b0:635:4ecd:5fcb with SMTP id
+ 956f58d0204a3-63b9a0f36f3mr8506491d50.40.1759695248605; Sun, 05 Oct 2025
+ 13:14:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=140.77.166.138;
- envelope-from=SRS0=F64V=4O=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org;
- helo=sonata.ens-lyon.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+References: <cover.1759691708.git.mst@redhat.com>
+ <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
+In-Reply-To: <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
+From: Alessandro Ratti <alessandro@0x65c.net>
+Date: Sun, 5 Oct 2025 22:13:57 +0200
+X-Gmail-Original-Message-ID: <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
+X-Gm-Features: AS18NWDFzXrVB7gra8EDF1ZJ_lc9gSReJ9d7HjXxEX_DpWfsl36i4L1BzAR8hkg
+Message-ID: <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
+Subject: Re: [PULL 49/75] virtio: Add function name to error messages
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ David Hildenbrand <david@redhat.com>,
+ Alessandro Ratti <alessandroratti@gmail.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.250.239.4;
+ envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
+ helo=m239-4.eu.mailgun.net
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,260 +90,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Viktor Kurilko <murlockkinght@gmail.com>
+On Sun, 5 Oct 2025 at 21:17, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> From: Alessandro Ratti <alessandro@0x65c.net>
+>
+> Replace virtio_error() with a macro that automatically prepends the
+> calling function name to error messages. This provides better context
+> for debugging virtio issues by showing exactly which function
+> encountered the error.
+>
+> Before: "Invalid queue size: 1024"
+> After:  "virtio_queue_set_num: Invalid queue size: 1024"
+>
+> The implementation uses a macro to insert __func__ at compile time,
+> avoiding any runtime overhead while providing more specific error
+> context than a generic "virtio:" prefix.
+>
+> Also remove manual __func__ usage in virtio-balloon to avoid duplicate
+> function names in error messages.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
+> Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  include/hw/virtio/virtio.h | 4 +++-
+>  hw/virtio/virtio-balloon.c | 2 +-
+>  hw/virtio/virtio.c         | 3 ++-
+>  3 files changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index d97529c3f1..695bb56186 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_=
+id, size_t config_size);
+>
+>  void virtio_cleanup(VirtIODevice *vdev);
+>
+> -void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINT=
+F(2, 3);
+> +#define virtio_error(vdev, fmt, ...) \
+> +    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
+> +void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_PRIN=
+TF(2, 3);
+>
+>  /* Set the child bus name. */
+>  void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name=
+);
+> diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+> index db787d00b3..e443f71c01 100644
+> --- a/hw/virtio/virtio-balloon.c
+> +++ b/hw/virtio/virtio-balloon.c
+> @@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWithRetu=
+rn *n, void *data,
+>      case PRECOPY_NOTIFY_COMPLETE:
+>          break;
+>      default:
+> -        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->reaso=
+n);
+> +        virtio_error(vdev, "%d reason unknown", pnd->reason);
+>      }
+>
+>      return 0;
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index de89e8104a..0f33ca5d90 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODevice =
+*vdev, char *bus_name)
+>      vdev->bus_name =3D g_strdup(bus_name);
+>  }
+>
+> -void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fm=
+t, ...)
+> +void G_GNUC_PRINTF(2, 3)
+> +virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
+>  {
+>      va_list ap;
+>
+> --
+> MST
+>
+>
 
-This patch adds the ability to map a host unix socket to a guest tcp socket when
-using the slirp backend. This feature was added in libslirp version 4.7.0.
+Hi Michael,
 
-A new syntax for unix socket: -hostfwd=unix:hostpath-[guestaddr]:guestport
+Thanks for picking this up.
 
-Signed-off-by: Viktor Kurilko <murlockkinght@gmail.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Message-ID: <20250808143904.363907-1-murlockkinght@gmail.com>
----
- docs/system/devices/net.rst |   2 +-
- hmp-commands.hx             |   4 +-
- net/slirp.c                 | 114 +++++++++++++++++++++++++++---------
- qapi/net.json               |   2 +-
- qemu-options.hx             |  11 +++-
- 5 files changed, 100 insertions(+), 33 deletions(-)
+It seems that the version currently queued is actually the initial
+submission, which had previously been rejected following feedback from
+Markus Armbruster.
+I later submitted a corrected version ([v3]) which:
 
-diff --git a/docs/system/devices/net.rst b/docs/system/devices/net.rst
-index 7d76fe88c4..13199a44fd 100644
---- a/docs/system/devices/net.rst
-+++ b/docs/system/devices/net.rst
-@@ -79,7 +79,7 @@ those sockets. To allow ping for GID 100 (usually users group)::
- 
- When using the built-in TFTP server, the router is also the TFTP server.
- 
--When using the ``'-netdev user,hostfwd=...'`` option, TCP or UDP
-+When using the ``'-netdev user,hostfwd=...'`` option, TCP, UDP or UNIX
- connections can be redirected from the host to the guest. It allows for
- example to redirect X11, telnet or SSH connections.
- 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 3cace8f1f7..15f6082596 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -1357,8 +1357,8 @@ ERST
-     {
-         .name       = "hostfwd_add",
-         .args_type  = "arg1:s,arg2:s?",
--        .params     = "[netdev_id] [tcp|udp]:[hostaddr]:hostport-[guestaddr]:guestport",
--        .help       = "redirect TCP or UDP connections from host to guest (requires -net user)",
-+        .params     = "[netdev_id] [tcp|udp|unix]:[[hostaddr]:hostport|hostpath]-[guestaddr]:guestport",
-+        .help       = "redirect TCP, UDP or UNIX connections from host to guest (requires -net user)",
-         .cmd        = hmp_hostfwd_add,
-     },
- #endif
-diff --git a/net/slirp.c b/net/slirp.c
-index 0a1c2a5eac..c627a9dd24 100644
---- a/net/slirp.c
-+++ b/net/slirp.c
-@@ -732,6 +732,7 @@ static SlirpState *slirp_lookup(Monitor *mon, const char *id)
- 
- void hmp_hostfwd_remove(Monitor *mon, const QDict *qdict)
- {
-+    /* TODO: support removing unix fwd */
-     struct sockaddr_in host_addr = {
-         .sin_family = AF_INET,
-         .sin_addr = {
-@@ -800,12 +801,13 @@ void hmp_hostfwd_remove(Monitor *mon, const QDict *qdict)
- 
- static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
- {
--    struct sockaddr_in host_addr = {
--        .sin_family = AF_INET,
--        .sin_addr = {
--            .s_addr = INADDR_ANY,
--        },
--    };
-+    union {
-+        struct sockaddr_in in;
-+#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
-+        struct sockaddr_un un;
-+#endif
-+    } host_addr = {0};
-+
-     struct sockaddr_in guest_addr = {
-         .sin_family = AF_INET,
-         .sin_addr = {
-@@ -816,9 +818,13 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
-     int host_port, guest_port;
-     const char *p;
-     char buf[256];
--    int is_udp;
-+    int is_udp = 0;
-+#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
-+    int is_unix = 0;
-+#endif
-     const char *end;
-     const char *fail_reason = "Unknown reason";
-+    socklen_t host_addr_size;
- 
-     p = redir_str;
-     if (!p || get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
-@@ -829,30 +835,83 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
-         is_udp = 0;
-     } else if (!strcmp(buf, "udp")) {
-         is_udp = 1;
--    } else {
--        fail_reason = "Bad protocol name";
--        goto fail_syntax;
-     }
--
--    if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
--        fail_reason = "Missing : separator";
--        goto fail_syntax;
-+#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
-+    else if (!strcmp(buf, "unix")) {
-+        is_unix = 1;
-     }
--    if (buf[0] != '\0' && !inet_aton(buf, &host_addr.sin_addr)) {
--        fail_reason = "Bad host address";
-+#endif
-+    else {
-+        fail_reason = "Bad protocol name";
-         goto fail_syntax;
-     }
- 
--    if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
--        fail_reason = "Bad host port separator";
--        goto fail_syntax;
--    }
--    err = qemu_strtoi(buf, &end, 0, &host_port);
--    if (err || host_port < 0 || host_port > 65535) {
--        fail_reason = "Bad host port";
--        goto fail_syntax;
-+#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
-+    if (is_unix) {
-+        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
-+            fail_reason = "Missing - separator";
-+            goto fail_syntax;
-+        }
-+        if (buf[0] == '\0') {
-+            fail_reason = "Missing unix socket path";
-+            goto fail_syntax;
-+        }
-+        if (buf[0] != '/') {
-+            fail_reason = "unix socket path must be absolute";
-+            goto fail_syntax;
-+        }
-+
-+        size_t path_len = strlen(buf);
-+        if (path_len > sizeof(host_addr.un.sun_path) - 1) {
-+            fail_reason = "Unix socket path is too long";
-+            goto fail_syntax;
-+        }
-+
-+        struct stat st;
-+        if (stat(buf, &st) == 0) {
-+            if (!S_ISSOCK(st.st_mode)) {
-+                fail_reason = "file exists and it's not unix socket";
-+                goto fail_syntax;
-+            }
-+
-+            if (unlink(buf) < 0) {
-+                error_setg_errno(errp, errno, "Failed to unlink '%s'", buf);
-+                goto fail_syntax;
-+            }
-+        }
-+        host_addr.un.sun_family = AF_UNIX;
-+        memcpy(host_addr.un.sun_path, buf, path_len);
-+        host_addr_size = sizeof(host_addr.un);
-+    } else
-+#endif
-+    {
-+        host_addr.in.sin_family = AF_INET;
-+        host_addr.in.sin_addr.s_addr = INADDR_ANY;
-+
-+        if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
-+            fail_reason = "Missing : separator";
-+            goto fail_syntax;
-+        }
-+
-+        if (buf[0] != '\0' && !inet_aton(buf, &host_addr.in.sin_addr)) {
-+            fail_reason = "Bad host address";
-+            goto fail_syntax;
-+        }
-+
-+        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
-+            fail_reason = "Bad host port separator";
-+            goto fail_syntax;
-+        }
-+
-+        err = qemu_strtoi(buf, &end, 0, &host_port);
-+        if (err || host_port < 0 || host_port > 65535) {
-+            fail_reason = "Bad host port";
-+            goto fail_syntax;
-+        }
-+
-+        host_addr.in.sin_port = htons(host_port);
-+        host_addr_size = sizeof(host_addr.in);
-     }
--    host_addr.sin_port = htons(host_port);
- 
-     if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
-         fail_reason = "Missing guest address";
-@@ -872,12 +931,13 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
- 
- #if SLIRP_CHECK_VERSION(4, 5, 0)
-     err = slirp_add_hostxfwd(s->slirp,
--            (struct sockaddr *) &host_addr, sizeof(host_addr),
-+            (struct sockaddr *) &host_addr, host_addr_size,
-             (struct sockaddr *) &guest_addr, sizeof(guest_addr),
-             is_udp ? SLIRP_HOSTFWD_UDP : 0);
- #else
-+    (void) host_addr_size;
-     err = slirp_add_hostfwd(s->slirp, is_udp,
--            host_addr.sin_addr, host_port,
-+            host_addr.in.sin_addr, host_port,
-             guest_addr.sin_addr, guest_port);
- #endif
- 
-diff --git a/qapi/net.json b/qapi/net.json
-index 78bcc9871e..60d196afe5 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -281,7 +281,7 @@
- #
- # @smbserver: IP address of the built-in SMB server
- #
--# @hostfwd: redirect incoming TCP or UDP host connections to guest
-+# @hostfwd: redirect incoming TCP, UDP or UNIX host connections to guest
- #     endpoints
- #
- # @guestfwd: forward guest TCP connections
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 075f4be2e3..a9d640d9e6 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3324,8 +3324,8 @@ SRST
- 
-         Note that a SAMBA server must be installed on the host OS.
- 
--    ``hostfwd=[tcp|udp]:[hostaddr]:hostport-[guestaddr]:guestport``
--        Redirect incoming TCP or UDP connections to the host port
-+    ``hostfwd=[tcp|udp|unix]:[[hostaddr]:hostport|hostpath]-[guestaddr]:guestport``
-+        Redirect incoming TCP, UDP or UNIX connections to the host port
-         hostport to the guest IP address guestaddr on guest port
-         guestport. If guestaddr is not specified, its value is x.x.x.15
-         (default first address given by the built-in DHCP server). By
-@@ -3355,6 +3355,13 @@ SRST
-         Then when you use on the host ``telnet localhost 5555``, you
-         connect to the guest telnet server.
- 
-+        To redirect host unix socket /tmp/vm to guest tcp socket 23 use
-+        following:
-+
-+        .. parsed-literal::
-+            # on the host
-+            |qemu_system| -nic user,hostfwd=unix:/tmp/vm-:23
-+
-     ``guestfwd=[tcp]:server:port-dev``; \ ``guestfwd=[tcp]:server:port-cmd:command``
-         Forward guest TCP connections to the IP address server on port
-         port to the character device dev or to a program executed by
--- 
-2.51.0
+* Addresses all the feedback (including from Markus Armbruster and
+Daniel P. Berrang=C3=A9).
+* Has Daniel=E2=80=99s formal Reviewed-by:
 
+Patch: https://lore.kernel.org/qemu-devel/20250924093138.559872-2-alessandr=
+o@0x65c.net/
+Reviewed-by: https://lore.kernel.org/qemu-devel/aNO7J7Y6wsk1-wyw@redhat.com=
+/
+
+Would you mind updating the queue to reflect this version instead?
+
+Thanks again for your time and all the work you do maintaining virtio!
+
+Best regards,
+Alessandro
 
