@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6AD9CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 06:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3381DCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 06:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5If8-0004nu-J7; Sun, 05 Oct 2025 02:56:06 -0400
+	id 1v5IfB-0004pm-1U; Sun, 05 Oct 2025 02:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5If1-0004lp-6g; Sun, 05 Oct 2025 02:56:00 -0400
+ id 1v5If6-0004nD-H5; Sun, 05 Oct 2025 02:56:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Iez-0007wN-2c; Sun, 05 Oct 2025 02:55:58 -0400
+ id 1v5If4-0007xP-NU; Sun, 05 Oct 2025 02:56:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C901615A8E7;
- Sun, 05 Oct 2025 09:55:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 117AE15A8EA;
+ Sun, 05 Oct 2025 09:55:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3A22829947C;
- Sun,  5 Oct 2025 09:55:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 60D5229947F;
+ Sun,  5 Oct 2025 09:55:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: SillyZ <1357816113@qq.com>, qemu-trivial@nongnu.org,
+Cc: ShengYi Hung <aokblast@FreeBSD.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 2/8] hw/net/can: Remove redundant status bit setting in
- can_sja1000
-Date: Sun,  5 Oct 2025 09:55:30 +0300
-Message-ID: <20251005065538.436862-3-mjt@tls.msk.ru>
+Subject: [PULL 5/8] wdt_i6300esb: fix incorrect mask for interrupt type
+Date: Sun,  5 Oct 2025 09:55:33 +0300
+Message-ID: <20251005065538.436862-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251005065538.436862-1-mjt@tls.msk.ru>
 References: <20251005065538.436862-1-mjt@tls.msk.ru>
@@ -60,40 +59,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: SillyZ <1357816113@qq.com>
+From: ShengYi Hung <aokblast@FreeBSD.org>
 
-In PeliCAN mode reception, the RBS (Receive Buffer Status) bit
-is set twice at line 842 and 845 with identical operations:
-  s->status_pel |= 0x01;
-  s->status_pel |= (1 << 0);
+According to Intel 6300ESB Controller Hub Datasheet 14.4.15, the interrupt
+type mask should be 0x03 (0b11) instead of 0x11. In the original
+implementation, when we want to disable all interrupt by setting the
+value to 0x03, we will get 0x01 which is incorrect when we want to read
+the value again. However, there is no problem when considering the correct
+behavior since 0x01 is reserved and unused just like 0x03. This patch is
+just a fix to return the register value.
 
-Between these two operations, only interrupt_pel is modified and
-status_pel bit 4 is cleared, neither affecting bit 0. The second
-operation is redundant.
-
-This cleanup aligns PeliCAN mode with BasicCAN mode, which correctly
-sets this bit only once (line 883).
-
-Signed-off-by: SillyZ <1357816113@qq.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: ShengYi Hung <aokblast@FreeBSD.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/net/can/can_sja1000.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/watchdog/wdt_i6300esb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/net/can/can_sja1000.c b/hw/net/can/can_sja1000.c
-index 5b6ba9df6c..6b08e977a1 100644
---- a/hw/net/can/can_sja1000.c
-+++ b/hw/net/can/can_sja1000.c
-@@ -842,7 +842,6 @@ ssize_t can_sja_receive(CanBusClientState *client, const qemu_can_frame *frames,
-         s->status_pel |= 0x01; /* Set the Receive Buffer Status. DS-p23 */
-         s->interrupt_pel |= 0x01;
-         s->status_pel &= ~(1 << 4);
--        s->status_pel |= (1 << 0);
-         can_sja_update_pel_irq(s);
-     } else { /* BasicCAN mode */
+diff --git a/hw/watchdog/wdt_i6300esb.c b/hw/watchdog/wdt_i6300esb.c
+index bb8a2766b6..3aa01b8d68 100644
+--- a/hw/watchdog/wdt_i6300esb.c
++++ b/hw/watchdog/wdt_i6300esb.c
+@@ -55,7 +55,7 @@
+ /* Config register bits */
+ #define ESB_WDT_REBOOT  (0x01 << 5)   /* Enable reboot on timeout          */
+ #define ESB_WDT_FREQ    (0x01 << 2)   /* Decrement frequency               */
+-#define ESB_WDT_INTTYPE (0x11 << 0)   /* Interrupt type on timer1 timeout  */
++#define ESB_WDT_INTTYPE (0x03 << 0)   /* Interrupt type on timer1 timeout  */
  
+ /* Reload register bits */
+ #define ESB_WDT_RELOAD  (0x01 << 8)    /* prevent timeout                   */
 -- 
 2.47.3
 
