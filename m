@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EE9CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A84CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFj-00043W-Dv; Sun, 05 Oct 2025 15:18:39 -0400
+	id 1v5UDr-0007Xg-74; Sun, 05 Oct 2025 15:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFN-0002OX-Se
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDn-0007UC-5L
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFB-0006aM-LN
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDl-0006Nm-2M
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691879;
+ s=mimecast20190719; t=1759691796;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BsiJ9Y13upyZ0kSNDp9aMBJN8UvV+sDrJuDdQ0y5Q0M=;
- b=UkayjyA7GT/+6KHLIrqMx8NHqTIEEk3Cmku93wT3/MqwvEqQMFNf9LEFZ6nOUJY/LLSL9B
- mw5qLQmFaQHJd5bpNdvtQnpaKiiPC4mLL9bBN0ueGuDAXFLiMnQRgUF10nGXkkGZQcXrWy
- 5EiDJqbmYoI8xjqWGD6cSVkOBBy8PEo=
+ bh=GOY0xYbTallZrysMKoXU6E/qUfVtKp8T55T7WJoOLAE=;
+ b=iqWTl6vKHomFOBRidzUKzPCvfR0wMxe485TOyD7rjVVw8OwRU8Y7pfmeGbu9dWcKMFV2DT
+ mPiVOmvtEITMqY8y5smOoTrRYU0xPgALTRqbk48sZiSnTuGAmFE+utzGk9zJgyhrqQMmi/
+ yIsXQzYVNq36jUbLILDaPS/sB64ljOE=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-A4K6x0YhPbCdOKgSdd7-4A-1; Sun, 05 Oct 2025 15:17:57 -0400
-X-MC-Unique: A4K6x0YhPbCdOKgSdd7-4A-1
-X-Mimecast-MFC-AGG-ID: A4K6x0YhPbCdOKgSdd7-4A_1759691876
+ us-mta-642-wMsA42EoOKKGU5UgszcCgg-1; Sun, 05 Oct 2025 15:16:34 -0400
+X-MC-Unique: wMsA42EoOKKGU5UgszcCgg-1
+X-Mimecast-MFC-AGG-ID: wMsA42EoOKKGU5UgszcCgg_1759691794
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-41066f050a4so1555366f8f.1
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:57 -0700 (PDT)
+ ffacd0b85a97d-42557bdbe50so2378846f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691876; x=1760296676;
+ d=1e100.net; s=20230601; t=1759691793; x=1760296593;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BsiJ9Y13upyZ0kSNDp9aMBJN8UvV+sDrJuDdQ0y5Q0M=;
- b=romOGwCG8HPObLoO/R2vwFxAMtvAG7NuqyB+wfc5GY96vrR2R6a6g2gUQ6CjYMG+0f
- y5sGF/xWdka/+T4ZnbxSDvUpMm4yETBBRQMWyLLDSyNcvgsyldn09X2vP+aFMfn1pJPz
- CsCt/6o2CyZyW3zWQ4ooJRaWGvFftNqlpJJ26m9kcUyOabbfqsYbVswOioZp+O3oZMHa
- oz3XIQfsjVlIhyR6AoV9j2Gxaf2vSMuhFiBZ9rZg1LObYlHezUhj1YH9teJeNmw5oRvo
- 59NiBSiSLFK24dKNhbpfMfml9GLiPyuwzfnXj8rFEQUTtv2suKMh8V7xY+S48lf37af8
- f/YA==
-X-Gm-Message-State: AOJu0YxTtu5+0f0dS9kpnxIJaIcXlu9DFDJGmCc1/TIYWMqHHtkfeB79
- 8wiqYI2I9SHoqzkyhs1Q728yFjhUx17HO57bHgj0AzXMU7/kTZC+xyFyOp2/flcVFN1Lq7+kWIQ
- OMiz+1++RGGIBxbZFD45p+wnUaEiJMXvsBgFp8RI6CdIdziPwOTv9YPksK+tLpfz+HQRfQOucBN
- gdCAeNHemDtYLsFxvwig83Qg0kRRLhN8JWDQ==
-X-Gm-Gg: ASbGncvaOe6uYyFnuaNRjxAtXQT2rC0oNv7z9TPDBJ7g9lgCOU4AazeDQhpeM8j6tUP
- l6lA2Xjch/BDYE3JzPtMpYBejJ3pvUKzDNLDaMIzBFRwaz5B6BFpcpDmkJhTb2mzUf+4hKCTV7L
- pMjet6BJBIvSywEOzNkVdlkqqEQzFCekP7rxcx8I9u/BIUgcphjkasudCMSDkXyhA75bBgEwRZB
- 2i6XaGCzIe60mn68mJrY3E79b5XvC8SVba5QqnssJI9IBAcEU78OBMgRRCPwHrJFVEjjaIbgCx6
- +z+dtZNY63y+GmbGaFA00GTWoT86oHp7KCsEfU4=
-X-Received: by 2002:a5d:64e8:0:b0:3e2:da00:44af with SMTP id
- ffacd0b85a97d-42567176bd3mr6732613f8f.36.1759691876213; 
- Sun, 05 Oct 2025 12:17:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJ5rjni9bo30IHHcLhTA82S275kGX4b/FUvcD9MP6/vucT6O956k7TyKlugPcWM1NKXuR/6A==
-X-Received: by 2002:a5d:64e8:0:b0:3e2:da00:44af with SMTP id
- ffacd0b85a97d-42567176bd3mr6732596f8f.36.1759691875588; 
- Sun, 05 Oct 2025 12:17:55 -0700 (PDT)
+ bh=GOY0xYbTallZrysMKoXU6E/qUfVtKp8T55T7WJoOLAE=;
+ b=udCkJW1J/CoJQMITMfoejgSEONxoDdAjXbnhjSVUpyWIrDmVN6xmRpPpzyC68V2dYg
+ zqGhU58+t8noESEwwe88fUuBkU2BtCTyQti3J1jZgJGtRyzXdF9vMpJr3bYqRB8cMJd1
+ KFfdCMAyuS7R73H0HGuD0rm3wLWzIkFb8UfGhFIaL8UW9J0vTng+3NHer2IXuSwTrl2I
+ g6WiyB3sNbr6vGhVOI9y8qosAnImiQCm7FusSb2F9Gk+faktS/HQur/3m8hE2T+YlVTI
+ PaF3VPWDlnzoTDoUTnRLsMzvFXl67LymhhxFXyHpzw3qw34DLoNn7jXkMCP8MLaC5g4b
+ MiLw==
+X-Gm-Message-State: AOJu0YwEgCHCQOnrcpSPEOUcqNGb4FHnbdnnaY9CbGI/TlFQNGt5gSGY
+ 6vY5NwyXpW9MkpHE6M2DLfl5l6uAItjcgc9eq/fs0CMV/brF/mpHoeX1uPcEpyYvAngjIkH7IM6
+ 4wlJ8dhvgJUc7E/tPb3lSqTcX22W39ZJrcw1Tyr3l4TdNtAwElFfccoZmcxRS650H2uvVoNqt8B
+ lD8DAw8f/NNnHssxcyjr88ZumHZ+/UyEwrXg==
+X-Gm-Gg: ASbGncuo5DliJDCx5gfMk6a2IwS9hWhWP9Km4xgiP8j9yJCcmHOH4Z3dcX7huphiQZX
+ wDKKX0h5jIB8+WFd0hQrwfULJix+oZPgSOOj+aXboSrdoHSmvlrtdqx+DPE/XCfnYTxUXFWULMT
+ 8Ts66nXG9T6AuOCnxWRldYLaOEuLWU0vTTUffjJBRXBzjdz7nQmMsj6rqslfwWFUvKYZmpkmtH9
+ RYIW86z246QiW/pGLA/q7m78CeovNaMxIP3LXG+3crmPTb39BGMu7CG6wV4g094m9V2Z8+wAtGa
+ zCc2mdwR+L28MoT4twUQhGG5Iz0o8A9iob0JExA=
+X-Received: by 2002:a05:600c:3404:b0:46e:25f2:705c with SMTP id
+ 5b1f17b1804b1-46e68bffeedmr72023635e9.13.1759691793144; 
+ Sun, 05 Oct 2025 12:16:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFkL35SeNRQgm/lDSLzxAEg6n7QUVTB0rsoU/uQZ/9pJQE/AVfHkgz9qPjbgNx3Om+JOOytg==
+X-Received: by 2002:a05:600c:3404:b0:46e:25f2:705c with SMTP id
+ 5b1f17b1804b1-46e68bffeedmr72023425e9.13.1759691792473; 
+ Sun, 05 Oct 2025 12:16:32 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f0853sm17787138f8f.50.2025.10.05.12.17.54
+ 5b1f17b1804b1-46e5c4afb3asm124981155e9.6.2025.10.05.12.16.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:55 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:53 -0400
+ Sun, 05 Oct 2025 12:16:31 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:29 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 50/75] memory: Adjust event ranges to fit within notifier
- boundaries
-Message-ID: <2e4d32f0af7eaf87f556fb1fe802874c1b0a0799.1759691708.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni <pabeni@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 13/75] net: implement tunnel probing
+Message-ID: <fffac046282c99801b62fa7fa1032cdc261bca6d.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,56 +110,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-Invalidating the entire address space (i.e. range of [0, ~0ULL]) is a
-valid and required operation by vIOMMU implementations. However, such
-invalidations currently trigger an assertion unless they originate from
-device IOTLB invalidations.
+Tap devices support GSO over UDP tunnel offload. Probe for such
+feature in a similar manner to other offloads.
 
-Although in recent Linux guests this case is not exercised by the VTD
-implementation due to various optimizations, the assertion will be hit
-by upcoming AMD vIOMMU changes to support DMA address translation. More
-specifically, when running a Linux guest with VFIO passthrough device,
-and a kernel that does not contain commmit 3f2571fed2fa ("iommu/amd:
-Remove redundant domain flush from attach_device()").
+GSO over UDP tunnel needs to be enabled in addition to a "plain"
+offload (TSO or USO).
 
-Remove the assertion altogether and adjust the range to ensure it does
-not cross notifier boundaries.
+No need to check separately for the outer header checksum offload:
+the kernel is going to support both of them or none.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20201116165506.31315-6-eperezma@redhat.com>
+The new features are disabled by default to avoid compat issues,
+and could be enabled, after that hw_compat_10_1 will be added,
+together with the related compat entries.
+
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-2-alejandro.j.jimenez@oracle.com>
+Message-ID: <a987a8a7613cbf33bb2209c7c7f5889b512638a7.1758549625.git.pabeni@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- system/memory.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ include/net/net.h   |  3 +++
+ net/tap-linux.h     |  9 +++++++++
+ net/tap_int.h       |  1 +
+ hw/net/virtio-net.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ net/net.c           |  9 +++++++++
+ net/tap-bsd.c       |  5 +++++
+ net/tap-linux.c     | 11 +++++++++++
+ net/tap-solaris.c   |  5 +++++
+ net/tap-stub.c      |  5 +++++
+ net/tap.c           | 11 +++++++++++
+ 10 files changed, 100 insertions(+)
 
-diff --git a/system/memory.c b/system/memory.c
-index cf8cad6961..5c6ccc5c57 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2044,13 +2044,9 @@ void memory_region_notify_iommu_one(IOMMUNotifier *notifier,
-         return;
+diff --git a/include/net/net.h b/include/net/net.h
+index 48ba333d02..9a9084690d 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -65,6 +65,7 @@ typedef void (NetClientDestructor)(NetClientState *);
+ typedef RxFilterInfo *(QueryRxFilter)(NetClientState *);
+ typedef bool (HasUfo)(NetClientState *);
+ typedef bool (HasUso)(NetClientState *);
++typedef bool (HasTunnel)(NetClientState *);
+ typedef bool (HasVnetHdr)(NetClientState *);
+ typedef bool (HasVnetHdrLen)(NetClientState *, int);
+ typedef void (SetOffload)(NetClientState *, const NetOffloads *);
+@@ -95,6 +96,7 @@ typedef struct NetClientInfo {
+     NetPoll *poll;
+     HasUfo *has_ufo;
+     HasUso *has_uso;
++    HasTunnel *has_tunnel;
+     HasVnetHdr *has_vnet_hdr;
+     HasVnetHdrLen *has_vnet_hdr_len;
+     SetOffload *set_offload;
+@@ -197,6 +199,7 @@ void qemu_set_info_str(NetClientState *nc,
+ void qemu_format_nic_info_str(NetClientState *nc, uint8_t macaddr[6]);
+ bool qemu_has_ufo(NetClientState *nc);
+ bool qemu_has_uso(NetClientState *nc);
++bool qemu_has_tunnel(NetClientState *nc);
+ bool qemu_has_vnet_hdr(NetClientState *nc);
+ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
+ void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
+diff --git a/net/tap-linux.h b/net/tap-linux.h
+index 9a58cecb7f..8cd6b5874b 100644
+--- a/net/tap-linux.h
++++ b/net/tap-linux.h
+@@ -53,4 +53,13 @@
+ #define TUN_F_USO4    0x20    /* I can handle USO for IPv4 packets */
+ #define TUN_F_USO6    0x40    /* I can handle USO for IPv6 packets */
+ 
++/* I can handle TSO/USO for UDP tunneled packets */
++#define TUN_F_UDP_TUNNEL_GSO       0x080
++
++/*
++ * I can handle TSO/USO for UDP tunneled packets requiring csum offload for
++ * the outer header
++ */
++#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
++
+ #endif /* QEMU_TAP_LINUX_H */
+diff --git a/net/tap_int.h b/net/tap_int.h
+index f8bbe1cb0c..b76a05044b 100644
+--- a/net/tap_int.h
++++ b/net/tap_int.h
+@@ -38,6 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
+ int tap_probe_vnet_hdr(int fd, Error **errp);
+ int tap_probe_has_ufo(int fd);
+ int tap_probe_has_uso(int fd);
++bool tap_probe_has_tunnel(int fd);
+ void tap_fd_set_offload(int fd, const NetOffloads *ol);
+ void tap_fd_set_vnet_hdr_len(int fd, int len);
+ int tap_fd_set_vnet_le(int fd, int vnet_is_le);
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 39f2a8c987..f8e2b4823e 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
+     return qemu_has_uso(qemu_get_queue(n->nic)->peer);
+ }
+ 
++static bool peer_has_tunnel(VirtIONet *n)
++{
++    if (!peer_has_vnet_hdr(n)) {
++        return false;
++    }
++
++    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
++}
++
+ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+                                        int version_1, int hash_report)
+ {
+@@ -3079,6 +3088,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+ 
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
++
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
      }
  
--    if (notifier->notifier_flags & IOMMU_NOTIFIER_DEVIOTLB_UNMAP) {
--        /* Crop (iova, addr_mask) to range */
--        tmp.iova = MAX(tmp.iova, notifier->start);
--        tmp.addr_mask = MIN(entry_end, notifier->end) - tmp.iova;
--    } else {
--        assert(entry->iova >= notifier->start && entry_end <= notifier->end);
--    }
-+    /* Crop (iova, addr_mask) to range */
-+    tmp.iova = MAX(tmp.iova, notifier->start);
-+    tmp.addr_mask = MIN(entry_end, notifier->end) - tmp.iova;
+@@ -3092,6 +3108,15 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+     }
  
-     if (event->type & notifier->notifier_flags) {
-         notifier->notify(notifier, &tmp);
++    if (!peer_has_tunnel(n)) {
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
++    }
++
+     if (!get_vhost_net(nc->peer)) {
+         if (!use_own_hash) {
+             virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+@@ -4254,6 +4279,22 @@ static const Property virtio_net_properties[] = {
+                                   rss_data.specified_hash_types,
+                                   VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
+                                   ON_OFF_AUTO_AUTO),
++    VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
++                               false),
++    VIRTIO_DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM,
++                               false),
++    VIRTIO_DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
++                               false),
++    VIRTIO_DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
++                               false),
+ };
+ 
+ static void virtio_net_class_init(ObjectClass *klass, const void *data)
+diff --git a/net/net.c b/net/net.c
+index 63872b6855..9536184a0c 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -522,6 +522,15 @@ bool qemu_has_uso(NetClientState *nc)
+     return nc->info->has_uso(nc);
+ }
+ 
++bool qemu_has_tunnel(NetClientState *nc)
++{
++    if (!nc || !nc->info->has_tunnel) {
++        return false;
++    }
++
++    return nc->info->has_tunnel(nc);
++}
++
+ bool qemu_has_vnet_hdr(NetClientState *nc)
+ {
+     if (!nc || !nc->info->has_vnet_hdr) {
+diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+index 38eb28cb58..bbf84d1828 100644
+--- a/net/tap-bsd.c
++++ b/net/tap-bsd.c
+@@ -225,6 +225,11 @@ int tap_probe_has_uso(int fd)
+     return 0;
+ }
+ 
++bool tap_probe_has_tunnel(int fd)
++{
++    return false;
++}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index 79a9dd0da0..98b0ae9602 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -201,6 +201,17 @@ int tap_probe_has_uso(int fd)
+     return 1;
+ }
+ 
++bool tap_probe_has_tunnel(int fd)
++{
++    unsigned offload;
++
++    offload = TUN_F_CSUM | TUN_F_TSO4 | TUN_F_UDP_TUNNEL_GSO;
++    if (ioctl(fd, TUNSETOFFLOAD, offload) < 0) {
++        return false;
++    }
++    return true;
++}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
+diff --git a/net/tap-solaris.c b/net/tap-solaris.c
+index ef8e0feeb0..75397e6c54 100644
+--- a/net/tap-solaris.c
++++ b/net/tap-solaris.c
+@@ -227,6 +227,11 @@ int tap_probe_has_uso(int fd)
+     return 0;
+ }
+ 
++bool tap_probe_has_tunnel(int fd)
++{
++    return false;
++}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+diff --git a/net/tap-stub.c b/net/tap-stub.c
+index 67d14ad4d5..f7a5e0c163 100644
+--- a/net/tap-stub.c
++++ b/net/tap-stub.c
+@@ -52,6 +52,11 @@ int tap_probe_has_uso(int fd)
+     return 0;
+ }
+ 
++bool tap_probe_has_tunnel(int fd)
++{
++    return false;
++}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+diff --git a/net/tap.c b/net/tap.c
+index df23283744..5124372316 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -76,6 +76,7 @@ typedef struct TAPState {
+     bool using_vnet_hdr;
+     bool has_ufo;
+     bool has_uso;
++    bool has_tunnel;
+     bool enabled;
+     VHostNetState *vhost_net;
+     unsigned host_vnet_hdr_len;
+@@ -246,6 +247,14 @@ static bool tap_has_uso(NetClientState *nc)
+     return s->has_uso;
+ }
+ 
++static bool tap_has_tunnel(NetClientState *nc)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    return s->has_tunnel;
++}
++
+ static bool tap_has_vnet_hdr(NetClientState *nc)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+@@ -374,6 +383,7 @@ static NetClientInfo net_tap_info = {
+     .cleanup = tap_cleanup,
+     .has_ufo = tap_has_ufo,
+     .has_uso = tap_has_uso,
++    .has_tunnel = tap_has_tunnel,
+     .has_vnet_hdr = tap_has_vnet_hdr,
+     .has_vnet_hdr_len = tap_has_vnet_hdr_len,
+     .set_offload = tap_set_offload,
+@@ -403,6 +413,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     s->using_vnet_hdr = false;
+     s->has_ufo = tap_probe_has_ufo(s->fd);
+     s->has_uso = tap_probe_has_uso(s->fd);
++    s->has_tunnel = tap_probe_has_tunnel(s->fd);
+     s->enabled = true;
+     tap_set_offload(&s->nc, &ol);
+     /*
 -- 
 MST
 
