@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8069CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E0ACAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Rvw-0001zB-VQ; Sun, 05 Oct 2025 12:50:05 -0400
+	id 1v5Rvw-0001ym-OO; Sun, 05 Oct 2025 12:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Rvu-0001v2-Fo; Sun, 05 Oct 2025 12:50:02 -0400
+ id 1v5Rvt-0001t6-Gu; Sun, 05 Oct 2025 12:50:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Rvs-0007Av-5a; Sun, 05 Oct 2025 12:50:02 -0400
+ id 1v5Rvq-0007Ac-Om; Sun, 05 Oct 2025 12:50:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 57F2415AA43;
- Sun, 05 Oct 2025 19:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 823EE15AA42;
+ Sun, 05 Oct 2025 19:49:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B88362996FA;
- Sun,  5 Oct 2025 19:49:34 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 700222996F9;
+ Sun,  5 Oct 2025 19:49:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 81/81] tests/functional/aarch64: Fix assets of
- test_hotplug_pci
-Date: Sun,  5 Oct 2025 19:48:01 +0300
-Message-ID: <20251005164822.442861-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 80/81] physmem: Destroy all CPU AddressSpaces on
+ unrealize
+Date: Sun,  5 Oct 2025 19:48:00 +0300
+Message-ID: <20251005164822.442861-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
@@ -60,41 +61,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The old bookworm URLs don't work anymore, resulting in a 404 error
-now. Let's update the test to Debian Trixie to get it going again.
+When we unrealize a CPU object (which happens on vCPU hot-unplug), we
+should destroy all the AddressSpace objects we created via calls to
+cpu_address_space_init() when the CPU was realized.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Commit 24bec42f3d6eae added a function to do this for a specific
+AddressSpace, but did not add any places where the function was
+called.
+
+Since we always want to destroy all the AddressSpaces on unrealize,
+regardless of the target architecture, we don't need to try to keep
+track of how many are still undestroyed, or make the target
+architecture code manually call a destroy function for each AS it
+created.  Instead we can adjust the function to always completely
+destroy the whole cpu->ases array, and arrange for it to be called
+during CPU unrealize as part of the common code.
+
+Without this fix, AddressSanitizer will report a leak like this
+from a run where we hot-plugged and then hot-unplugged an x86 KVM
+vCPU:
+
+Direct leak of 416 byte(s) in 1 object(s) allocated from:
+    #0 0x5b638565053d in calloc (/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/qemu-system-x86_64+0x1ee153d) (BuildId: c1cd6022b195142106e1bffeca23498c2b752bca)
+    #1 0x7c28083f77b1 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x637b1) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x5b6386999c7c in cpu_address_space_init /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../system/physmem.c:797:25
+    #3 0x5b638727f049 in kvm_cpu_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../target/i386/kvm/kvm-cpu.c:102:5
+    #4 0x5b6385745f40 in accel_cpu_common_realize /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../accel/accel-common.c:101:13
+    #5 0x5b638568fe3c in cpu_exec_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/cpu-common.c:232:10
+    #6 0x5b63874a2cd5 in x86_cpu_realizefn /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../target/i386/cpu.c:9321:5
+    #7 0x5b6387a0469a in device_set_realized /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/qdev.c:494:13
+    #8 0x5b6387a27d9e in property_set_bool /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:2375:5
+    #9 0x5b6387a2090b in object_property_set /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:1450:5
+    #10 0x5b6387a35b05 in object_property_set_qobject /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/qom-qobject.c:28:10
+    #11 0x5b6387a21739 in object_property_set_bool /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../qom/object.c:1520:15
+    #12 0x5b63879fe510 in qdev_realize /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/x86-tgts-asan/../../hw/core/qdev.c:276:12
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2517
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 769acb2a1e47b97ada8e0db6ff73e303b23764d8)
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20250929144228.1994037-4-peter.maydell@linaro.org
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 300a87c502c4ba7ffc7720d8f3583e3d1a68348a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
-index 0c67991b89..bf67720431 100755
---- a/tests/functional/test_aarch64_hotplug_pci.py
-+++ b/tests/functional/test_aarch64_hotplug_pci.py
-@@ -15,14 +15,14 @@
- class HotplugPCI(LinuxKernelTest):
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 39e674aca2..04b284369a 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -295,6 +295,7 @@ void cpu_exec_unrealizefn(CPUState *cpu)
+      * accel_cpu_common_unrealize, which may free fields using call_rcu.
+      */
+     accel_cpu_common_unrealize(cpu);
++    cpu_destroy_address_spaces(cpu);
+ }
  
-     ASSET_KERNEL = Asset(
--        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-arm64/'
--         '20230607+deb12u11/images/netboot/debian-installer/arm64/linux'),
--         'd92a60392ce1e379ca198a1a820899f8f0d39a62d047c41ab79492f81541a9d9')
-+        ('https://ftp.debian.org/debian/dists/trixie/main/installer-arm64/'
-+         '20250803/images/netboot/debian-installer/arm64/linux'),
-+         '93a6e4f9627d759375d28f863437a86a0659e125792a435f8e526dda006b7d5e')
+ static void cpu_common_initfn(Object *obj)
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 9b658a3f48..4c28cdf18d 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -123,13 +123,13 @@ size_t qemu_ram_pagesize_largest(void);
+ void cpu_address_space_init(CPUState *cpu, int asidx,
+                             const char *prefix, MemoryRegion *mr);
+ /**
+- * cpu_address_space_destroy:
+- * @cpu: CPU for which address space needs to be destroyed
+- * @asidx: integer index of this address space
++ * cpu_destroy_address_spaces:
++ * @cpu: CPU for which address spaces need to be destroyed
+  *
+- * Note that with KVM only one address space is supported.
++ * Destroy all address spaces associated with this CPU; this
++ * is called as part of unrealizing the CPU.
+  */
+-void cpu_address_space_destroy(CPUState *cpu, int asidx);
++void cpu_destroy_address_spaces(CPUState *cpu);
  
-     ASSET_INITRD = Asset(
--        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-arm64/'
--         '20230607+deb12u11/images/netboot/debian-installer/arm64/initrd.gz'),
--         '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a917790c')
-+        ('https://ftp.debian.org/debian/dists/trixie/main/installer-arm64/'
-+         '20250803/images/netboot/debian-installer/arm64/initrd.gz'),
-+         'f6c78af7078ca67638ef3a50c926cd3c1485673243f8b37952e6bd854d6ba007')
+ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+                             hwaddr len, bool is_write);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 5eaf41a566..ab19bedd39 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -506,7 +506,6 @@ struct CPUState {
+     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
  
-     def test_hotplug_pci(self):
+     struct CPUAddressSpace *cpu_ases;
+-    int cpu_ases_count;
+     int num_ases;
+     AddressSpace *as;
+     MemoryRegion *memory;
+diff --git a/stubs/cpu-destroy-address-spaces.c b/stubs/cpu-destroy-address-spaces.c
+new file mode 100644
+index 0000000000..dc6813f5bd
+--- /dev/null
++++ b/stubs/cpu-destroy-address-spaces.c
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "exec/cpu-common.h"
++
++/*
++ * user-mode CPUs never create address spaces with
++ * cpu_address_space_init(), so the cleanup function doesn't
++ * need to do anything. We need this stub because cpu-common.c
++ * is built-once so it can't #ifndef CONFIG_USER around the
++ * call; the real function is in physmem.c which is system-only.
++ */
++void cpu_destroy_address_spaces(CPUState *cpu)
++{
++}
+diff --git a/stubs/meson.build b/stubs/meson.build
+index cef046e685..5d577467bf 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -55,6 +55,7 @@ endif
+ if have_user
+   # Symbols that are used by hw/core.
+   stub_ss.add(files('cpu-synchronize-state.c'))
++  stub_ss.add(files('cpu-destroy-address-spaces.c'))
  
+   # Stubs for QAPI events.  Those can always be included in the build, but
+   # they are not built at all for --disable-system builds.
+diff --git a/system/physmem.c b/system/physmem.c
+index 8705fadc01..249bb219d2 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -795,7 +795,6 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+ 
+     if (!cpu->cpu_ases) {
+         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
+-        cpu->cpu_ases_count = cpu->num_ases;
+     }
+ 
+     newas = &cpu->cpu_ases[asidx];
+@@ -809,30 +808,29 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+     }
+ }
+ 
+-void cpu_address_space_destroy(CPUState *cpu, int asidx)
++void cpu_destroy_address_spaces(CPUState *cpu)
+ {
+     CPUAddressSpace *cpuas;
++    int asidx;
+ 
+     assert(cpu->cpu_ases);
+-    assert(asidx >= 0 && asidx < cpu->num_ases);
+ 
+-    cpuas = &cpu->cpu_ases[asidx];
+-    if (tcg_enabled()) {
+-        memory_listener_unregister(&cpuas->tcg_as_listener);
+-    }
++    /* convenience alias just points to some cpu_ases[n] */
++    cpu->as = NULL;
+ 
+-    address_space_destroy(cpuas->as);
+-    g_free_rcu(cpuas->as, rcu);
+-
+-    if (asidx == 0) {
+-        /* reset the convenience alias for address space 0 */
+-        cpu->as = NULL;
++    for (asidx = 0; asidx < cpu->num_ases; asidx++) {
++        cpuas = &cpu->cpu_ases[asidx];
++        if (!cpuas->as) {
++            /* This index was never initialized; no deinit needed */
++            continue;
++        }
++        if (tcg_enabled()) {
++            memory_listener_unregister(&cpuas->tcg_as_listener);
++        }
++        g_clear_pointer(&cpuas->as, address_space_destroy_free);
+     }
+ 
+-    if (--cpu->cpu_ases_count == 0) {
+-        g_free(cpu->cpu_ases);
+-        cpu->cpu_ases = NULL;
+-    }
++    g_clear_pointer(&cpu->cpu_ases, g_free);
+ }
+ 
+ AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
 -- 
 2.47.3
 
