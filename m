@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46385CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482A3CCD182
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 06:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5If3-0004m9-L0; Sun, 05 Oct 2025 02:56:01 -0400
+	id 1v5If6-0004n5-Fp; Sun, 05 Oct 2025 02:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Iex-0004lS-8k; Sun, 05 Oct 2025 02:55:56 -0400
+ id 1v5If2-0004lt-P9; Sun, 05 Oct 2025 02:56:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Iev-0007vs-4U; Sun, 05 Oct 2025 02:55:55 -0400
+ id 1v5If0-0007wc-WA; Sun, 05 Oct 2025 02:56:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C108915A8E6;
- Sun, 05 Oct 2025 09:55:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B3A5015A8E8;
+ Sun, 05 Oct 2025 09:55:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3719B29947B;
- Sun,  5 Oct 2025 09:55:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 40F9329947D;
+ Sun,  5 Oct 2025 09:55:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Filip Hejsek <filip.hejsek@gmail.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 1/8] ui/gtk: Fix callback function signature
-Date: Sun,  5 Oct 2025 09:55:29 +0300
-Message-ID: <20251005065538.436862-2-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 3/8] vhost-user-test: remove trailing newlines in
+ g_test_message() calls
+Date: Sun,  5 Oct 2025 09:55:31 +0300
+Message-ID: <20251005065538.436862-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251005065538.436862-1-mjt@tls.msk.ru>
 References: <20251005065538.436862-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,35 +60,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Filip Hejsek <filip.hejsek@gmail.com>
-
-The correct type for opaque pointer is gpointer,
-not gpointer * (which is a pointer to a pointer).
-
-Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Fixes: c9a1ea9c52 Revert "tests/qtest: use qos_printf instead of g_test_message"
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- ui/gtk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/vhost-user-test.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 9a08cadc88..48571bedbf 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -766,9 +766,9 @@ static gboolean gd_render_event(GtkGLArea *area, GdkGLContext *context,
- }
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 6ec4ec2d5a..609ff24059 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -391,7 +391,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+          * We don't need to do anything here, the remote is just
+          * letting us know it is in charge. Just log it.
+          */
+-        g_test_message("set_owner: start of session\n");
++        g_test_message("set_owner: start of session");
+         break;
  
- static void gd_resize_event(GtkGLArea *area,
--                            gint width, gint height, gpointer *opaque)
-+                            gint width, gint height, gpointer opaque)
- {
--    VirtualConsole *vc = (void *)opaque;
-+    VirtualConsole *vc = opaque;
-     double pw = width, ph = height;
-     double sx = vc->gfx.scale_x, sy = vc->gfx.scale_y;
-     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(area));
+     case VHOST_USER_GET_PROTOCOL_FEATURES:
+@@ -417,7 +417,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+          * the remote end to send this. There is no handshake reply so
+          * just log the details for debugging.
+          */
+-        g_test_message("set_protocol_features: 0x%"PRIx64 "\n", msg.payload.u64);
++        g_test_message("set_protocol_features: 0x%"PRIx64, msg.payload.u64);
+         break;
+ 
+         /*
+@@ -425,11 +425,11 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+          * address of the vrings but we can simply report them.
+          */
+     case VHOST_USER_SET_VRING_NUM:
+-        g_test_message("set_vring_num: %d/%d\n",
++        g_test_message("set_vring_num: %d/%d",
+                    msg.payload.state.index, msg.payload.state.num);
+         break;
+     case VHOST_USER_SET_VRING_ADDR:
+-        g_test_message("set_vring_addr: 0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64"\n",
++        g_test_message("set_vring_addr: 0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64,
+                    msg.payload.addr.avail_user_addr,
+                    msg.payload.addr.desc_user_addr,
+                    msg.payload.addr.used_user_addr);
+@@ -462,7 +462,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+     case VHOST_USER_SET_VRING_CALL:
+         /* consume the fd */
+         if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
+-            g_test_message("call fd: %d, do not set non-blocking\n", fd);
++            g_test_message("call fd: %d, do not set non-blocking", fd);
+             break;
+         }
+         /*
+@@ -507,12 +507,12 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+          * fully functioning vhost-user we would enable/disable the
+          * vring monitoring.
+          */
+-        g_test_message("set_vring(%d)=%s\n", msg.payload.state.index,
++        g_test_message("set_vring(%d)=%s", msg.payload.state.index,
+                    msg.payload.state.num ? "enabled" : "disabled");
+         break;
+ 
+     default:
+-        g_test_message("vhost-user: un-handled message: %d\n", msg.request);
++        g_test_message("vhost-user: un-handled message: %d", msg.request);
+         break;
+     }
+ 
 -- 
 2.47.3
 
