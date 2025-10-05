@@ -4,45 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17D1CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 06:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFFBCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 12:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5If4-0004mr-J8; Sun, 05 Oct 2025 02:56:02 -0400
+	id 1v5NlA-0001VL-Ib; Sun, 05 Oct 2025 08:22:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Iey-0004lc-Vb; Sun, 05 Oct 2025 02:55:57 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5Nl7-0001V9-9g
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 08:22:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Iev-0007vr-Bx; Sun, 05 Oct 2025 02:55:55 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B704015A8E5;
- Sun, 05 Oct 2025 09:55:35 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5587829947A;
- Sun,  5 Oct 2025 09:55:39 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 0/8] Trivial patches for 2025-10-05
-Date: Sun,  5 Oct 2025 09:55:28 +0300
-Message-ID: <20251005065538.436862-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5Nl2-0003Nh-Tf
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 08:22:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759666949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3uH/GB8TaEG7yh514K08ygSmxD+EPnFiaGKf1haB0Uc=;
+ b=PhfHkixPqJM/jThai8ZLlJon5FIHeyfkEFf46BAne7ZA/uhTNB1Mbpk3VELzjYM5bmC3L4
+ F+GqYsqjRTq+4Yzc81ZirOVAbpJJpd0cN7azcPEM2Eoqtu8ZUzac3DNHMonnR5Yhrxgypr
+ RVoTtfZQNWdmPKcLI9cjje2HbEiVW2Q=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-341-MwLo90nePTmmwjPNos0SdQ-1; Sun, 05 Oct 2025 08:22:27 -0400
+X-MC-Unique: MwLo90nePTmmwjPNos0SdQ-1
+X-Mimecast-MFC-AGG-ID: MwLo90nePTmmwjPNos0SdQ_1759666945
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3ee888281c3so2786153f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 05:22:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759666945; x=1760271745;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3uH/GB8TaEG7yh514K08ygSmxD+EPnFiaGKf1haB0Uc=;
+ b=FjP0ZXTXOOCtKpQuO4HZ5xTStNNU3c0JhSzFW/VBH+953EtnQweXbmtded49hJCUXu
+ ed0F0qoA9K8PyOisqnHhrICMEb9jH+0OY7yQIK+65aZwSdK386WPe8vQoyK6HnBEEhlg
+ 2ugRrqKnczhcA8/tzbNmL848z1XIpdnsZLUfEs9TqZNem9t6YoUMGU+OpYOIWVCXNjOx
+ 7ffObXnirIbzk4q54XY8FOEzqVJpyROnzcaQ5npnJCE+W/OUiy8Q6kt2PpgkkDwXCGWO
+ u+rl5lX717wW9ZM9H3mYPpYtVyvf2coDiuH+x8ZMZigMl5AFpkhd0Oo+MH8nTPS2ryE2
+ Ngzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVS04+pjSVSZqk9UPMgE55QvR4a5BLA15SkeMkf6CcxPZ0a1SoquMLU0WXFsDDasL5IbP+DZgPWrzq3@nongnu.org
+X-Gm-Message-State: AOJu0YwL2eWqYKyOxK/xLJiP3IpQ8UXKcaYJB5hjUhRRPK9f4RvzIaYe
+ Kx9ft9LhUWfiY4+6fSwROAsCwFCDwdHqsdwm90lTFin8l4B5CfGkpxgJMx2G0fzm3fjDi0PDp5B
+ BnYBU87gD8+vQqgBZLxVeWWOEQM/5UiT8YhCAYpd6KqzjaU6js0M8Evit
+X-Gm-Gg: ASbGncvdYGd2jk3b5jMrARiRM8OMXfzWu3wt3cBQDJTPUEzwjfEMv8eJpfTqJtuSpjc
+ IfBPXNWgUP8v6v9OdiYelexqC1esmap6T6kIUVmS2ZkO6pGA0d5+7EIsd7Axpw1jSN/Fvl1hT+T
+ PohH9gjhjENdwPGrUzaKTFbkBD5/q35fGFjL9iKQ59P1shffLgxKEpwKA/7JcxVZyQNyW/B2tps
+ w5h62IZcX0xTHJa/rDAf7nwU2dQBeAqjNGhGAKSxkMtvZiAed/6Bx6/MBy/Ql6fQ8chW4NAKoQ8
+ UblHApTCRxtFHC93xHHVjeRFsh81gHOXNFPzdj4=
+X-Received: by 2002:a5d:5d13:0:b0:3f7:b7ac:f3aa with SMTP id
+ ffacd0b85a97d-425671a9021mr5205857f8f.29.1759666945423; 
+ Sun, 05 Oct 2025 05:22:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHG1keuMZu665iO+IbiJSlMHjR2azOMigBt5fMWxeSQ4NRIhAMCkxk2rk3nz8YU5tZ4uo9RPQ==
+X-Received: by 2002:a5d:5d13:0:b0:3f7:b7ac:f3aa with SMTP id
+ ffacd0b85a97d-425671a9021mr5205842f8f.29.1759666944911; 
+ Sun, 05 Oct 2025 05:22:24 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8f017esm16660799f8f.47.2025.10.05.05.22.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Oct 2025 05:22:24 -0700 (PDT)
+Date: Sun, 5 Oct 2025 08:22:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v12 17/17] scripts/ghes_inject: add a script to generate
+ GHES error inject
+Message-ID: <20251005082027-mutt-send-email-mst@kernel.org>
+References: <cover.1758610789.git.mchehab+huawei@kernel.org>
+ <5ea174638e33d23635332fa6d4ae9d751355f127.1758610789.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5ea174638e33d23635332fa6d4ae9d751355f127.1758610789.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,53 +112,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit bd6aa0d1e59d71218c3eee055bc8d222c6e1a628:
+On Tue, Sep 23, 2025 at 09:04:11AM +0200, Mauro Carvalho Chehab wrote:
+> +        # UEFI N.17 Integer values
+> +        g_pei.add_argument("-m", "--multiple-error", nargs="+",
+> +                        help="Number of errors: 0: Single error, 1: Multiple errors, 2-65535: Error count if known")
 
-  Merge tag 'staging-pull-request' of https://gitlab.com/peterx/qemu into staging (2025-10-04 09:10:58 -0700)
 
-are available in the Git repository at:
+While I'm merging this as is, I ask that you please address these
+unreasonably long lines in this patch by a patch on top please.
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+-- 
+MST
 
-for you to fetch changes up to 0af5926a0feb0b69a127f5c24eaa605408fed2ec:
-
-  system/runstate: remove duplicate in runstate transitions (2025-10-05 09:46:06 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2025-10-05
-
-Just a bunch of tiny fixes everywhere.
-
-----------------------------------------------------------------
-Filip Hejsek (1):
-      ui/gtk: Fix callback function signature
-
-Marco Cavenati (1):
-      system/runstate: remove duplicate in runstate transitions
-
-Michael Tokarev (1):
-      vhost-user-test: remove trailing newlines in g_test_message() calls
-
-Peter Maydell (1):
-      docs/specs/spdm.rst: Fix typo in x86_64 architecture name
-
-ShengYi Hung (2):
-      hid: fix incorrect return value for hid
-      wdt_i6300esb: fix incorrect mask for interrupt type
-
-SillyZ (1):
-      hw/net/can: Remove redundant status bit setting in can_sja1000
-
-nanliu (1):
-      docs/devel: Correct uefi-vars-x64 device name
-
- docs/devel/uefi-vars.rst      |  4 ++--
- docs/specs/spdm.rst           |  2 +-
- hw/input/hid.c                |  1 +
- hw/net/can/can_sja1000.c      |  1 -
- hw/watchdog/wdt_i6300esb.c    |  2 +-
- system/runstate.c             |  4 +---
- tests/qtest/vhost-user-test.c | 14 +++++++-------
- ui/gtk.c                      |  4 ++--
- 8 files changed, 15 insertions(+), 17 deletions(-)
 
