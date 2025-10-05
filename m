@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73430CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23978CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Shw-0001O8-RF; Sun, 05 Oct 2025 13:39:41 -0400
+	id 1v5Sfw-0000E2-G8; Sun, 05 Oct 2025 13:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sge-0000WJ-SI; Sun, 05 Oct 2025 13:38:22 -0400
+ id 1v5Sfn-0000An-HA; Sun, 05 Oct 2025 13:37:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sgc-0004g1-4s; Sun, 05 Oct 2025 13:38:20 -0400
+ id 1v5Sfm-0004bR-00; Sun, 05 Oct 2025 13:37:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7936F15AA93;
- Sun, 05 Oct 2025 20:37:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7C4DE15AA84;
+ Sun, 05 Oct 2025 20:37:12 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8117829973E;
- Sun,  5 Oct 2025 20:37:34 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8F1C5299731;
+ Sun,  5 Oct 2025 20:37:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 55/58] memory: New AS helper to serialize destroy+free
-Date: Sun,  5 Oct 2025 20:37:04 +0300
-Message-ID: <20251005173712.445160-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mohamed Akram <mohd.akram@outlook.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 42/58] ui/spice: Fix abort on macOS
+Date: Sun,  5 Oct 2025 20:36:51 +0300
+Message-ID: <20251005173712.445160-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,104 +61,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Mohamed Akram <mohd.akram@outlook.com>
 
-If an AddressSpace has been created in its own allocated
-memory, cleaning it up requires first destroying the AS
-and then freeing the memory. Doing this doesn't work:
+The check is faulty because the thread variable was assigned in the main
+thread while the main loop runs in a different thread on macOS.
 
-    address_space_destroy(as);
-    g_free_rcu(as, rcu);
-
-because both address_space_destroy() and g_free_rcu()
-try to use the same 'rcu' node in the AddressSpace struct
-and the address_space_destroy hook gets overwritten.
-
-Provide a new address_space_destroy_free() function which
-will destroy the AS and then free the memory it uses, all
-in one RCU callback.
-
-(CC to stable because the next commit needs this function.)
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/20250929144228.1994037-3-peter.maydell@linaro.org
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 041600e23f2fe2a9c252c9a8b26c7d147bedf982)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3070
+Signed-off-by: Mohamed Akram <mohd.akram@outlook.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <C87205B9-DD8F-4E53-AB5B-C8BF82EF1D16@outlook.com>
+(cherry picked from commit e7ecb533ee0dbfbe30c90abb213247f4943a9a12)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 2ad3f93344..ef6af5caee 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2635,11 +2635,24 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name);
-  * Note that destruction of the AddressSpace is done via RCU;
-  * it is therefore not valid to free the memory the AddressSpace
-  * struct is in until after that RCU callback has completed.
-+ * If you want to g_free() the AddressSpace after destruction you
-+ * can do that with address_space_destroy_free().
-  *
-  * @as: address space to be destroyed
-  */
- void address_space_destroy(AddressSpace *as);
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 0326c63bec..6ad619143c 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -50,8 +50,6 @@ static int spice_migration_completed;
+ static int spice_display_is_running;
+ static int spice_have_target_host;
  
-+/**
-+ * address_space_destroy_free: destroy an address space and free it
-+ *
-+ * This does the same thing as address_space_destroy(), and then also
-+ * frees (via g_free()) the AddressSpace itself once the destruction
-+ * is complete.
-+ *
-+ * @as: address space to be destroyed
-+ */
-+void address_space_destroy_free(AddressSpace *as);
-+
- /**
-  * address_space_remove_listeners: unregister all listeners of an address space
-  *
-diff --git a/system/memory.c b/system/memory.c
-index 4c829793a0..94cb60c83b 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3254,7 +3254,14 @@ static void do_address_space_destroy(AddressSpace *as)
-     memory_region_unref(as->root);
- }
- 
--void address_space_destroy(AddressSpace *as)
-+static void do_address_space_destroy_free(AddressSpace *as)
-+{
-+    do_address_space_destroy(as);
-+    g_free(as);
-+}
-+
-+/* Detach address space from global view, notify all listeners */
-+static void address_space_detach(AddressSpace *as)
- {
-     MemoryRegion *root = as->root;
- 
-@@ -3269,9 +3276,20 @@ void address_space_destroy(AddressSpace *as)
-      * values to expire before freeing the data.
+-static QemuThread me;
+-
+ struct SpiceTimer {
+     QEMUTimer *timer;
+ };
+@@ -220,7 +218,7 @@ static void channel_event(int event, SpiceChannelEventInfo *info)
+      * thread and grab the BQL if so before calling qemu
+      * functions.
       */
-     as->root = root;
-+}
-+
-+void address_space_destroy(AddressSpace *as)
-+{
-+    address_space_detach(as);
-     call_rcu(as, do_address_space_destroy, rcu);
- }
+-    bool need_lock = !qemu_thread_is_self(&me);
++    bool need_lock = !bql_locked();
+     if (need_lock) {
+         bql_lock();
+     }
+@@ -667,8 +665,6 @@ static void qemu_spice_init(void)
+     spice_wan_compression_t wan_compr;
+     bool seamless_migration;
  
-+void address_space_destroy_free(AddressSpace *as)
-+{
-+    address_space_detach(as);
-+    call_rcu(as, do_address_space_destroy_free, rcu);
-+}
-+
- static const char *memory_region_type(MemoryRegion *mr)
- {
-     if (mr->alias) {
+-    qemu_thread_get_self(&me);
+-
+     if (!opts) {
+         return;
+     }
 -- 
 2.47.3
 
