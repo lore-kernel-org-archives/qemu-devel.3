@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 514FCCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 18:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A6CCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5TwV-0004zt-DG; Sun, 05 Oct 2025 14:58:47 -0400
+	id 1v5UDQ-0007Q6-IB; Sun, 05 Oct 2025 15:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5TwU-0004zd-N3
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 14:58:46 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5TwT-0004p6-4d
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 14:58:46 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-36453927ffaso40569551fa.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 11:58:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759690721; x=1760295521; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nexgf6hd/Qhctp9El5zgWCdHTRWfKODP1WxaKeNvDkM=;
- b=aTOtNZLYYvRqLvoP5FibeRi5jziIm7donpzmpu+si01DTC6gjaamxHPnQWwCTAZYmi
- qhS+oFarFhTyED9YkNn2i79M/OtNA/IRhmrVwWRoagEKjQl+y4REbrHlJD3bH6haNls3
- xsWA7SrFcFq7gi2OWHbjQQeXvecNDS697q02k1W9rs9s9aLd1JyCBYV5TE1K+j5P5ztG
- xwVTn/jlEzoEglrmBpao2BVz/n8v1oxWFdTxUNzUNakTW4ZCGauXTnTVM6e1RXspOoH0
- QvfY4enINACI7hVz8c72Ljiva3jhQu2lsH8Q5kV2jEHZ9XGCF54lRgMt9RONFwyqW7uL
- kStw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDN-0007OW-R1
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDM-0006Kq-AM
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759691771;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O9X9dIbEl6s4Z3IkjW3gtvVAsBNJXdx9I4ylsa8ctmA=;
+ b=Gq005mLTynf2QwTyB3o3+fwUpXpUefwWAa4/lM1lOL5tsit1Yz38fHxaf99tVoT/1AKSSm
+ s9uMUMc2a5FlXGsAq35yVj34NDwfN9j1cRBWl3qxhLpVV/yy0ihxGFhswdLgtihdTvt4ry
+ kP260pYUZvgIPSwdwxru2iP8lRUDUb4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-551-9LVe8Q7GN9KZ0_BeGXzLUA-1; Sun, 05 Oct 2025 15:16:10 -0400
+X-MC-Unique: 9LVe8Q7GN9KZ0_BeGXzLUA-1
+X-Mimecast-MFC-AGG-ID: 9LVe8Q7GN9KZ0_BeGXzLUA_1759691769
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3ee12ab7f33so2159087f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759690721; x=1760295521;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nexgf6hd/Qhctp9El5zgWCdHTRWfKODP1WxaKeNvDkM=;
- b=aBtgxJ1Cs3UQfGh66iwENGARlAZo5XuvXlG/8aWxY0JzDG8qQ8X0eKmBMwSVEor+lo
- EealKWD5yMerRC76huHDs2WYaEtOx7L2pOJcc+SoMaYHi1yP3hHSxV1CMnthdYAczMjr
- Ntny6XsSr/nqqJTUjWixCVOkSXpo6DDROmijgtfd7bupWcKxdkJh+nyLg74faklbqb8z
- 3rWrouu7Yd20InQZZtgI9YhT3sUXJXr6aqMzhybkBwg5lSxK7GPMvnqk+3ipdmBfKUf2
- yjx8+aPVvWCk4ONVWJ5FDU0gc8XEtqof18jHVdQZIJYRl3oUBVCQrp+YS2eCobXIMtQa
- ItwQ==
-X-Gm-Message-State: AOJu0YwqHEyDpD1X62PnzhKnYhwk8yW4RpCPHfhBXXTkso0XpyRe4sVv
- Q/k5ukjV+JH4nkUvdwXqyy4P3BRlPrkbJgGtSmMrtL1ZFpdkWkUHhBpgNhX9lfvyUi0=
-X-Gm-Gg: ASbGnctQx9JGvGjIfmbF7CPBt3w3+sFBxw0KZXfhEHUW8kj6ENoIlmZaXZ+5HjTKDxB
- wz5+bmC6Lrq346Vl0G3v8osEhPrJnUAMpv0wRysdmhNAR62P9OEOx4nr2TWaTIev+0p8L56uOY8
- P1WX4SGk7plij8OHuRd29VlXohu6vewUb4N91lHGyKApahH8I/T/6fXindI3DJgwlbId1rFSHr7
- Lsjn2pBbBvkkcMO39SKiOaPoIEnO8UmajgtkOQdLp3gBhjF290yP5vBNGHMShPWPRbBhSE89mnj
- vK9UDOCZ34NQJjAwrt3AiZY7nHknQ0WuQfK6h6KGH65G9EMwkIQ1IaarKkwQQoHjNq1aWoq3fmo
- 1IuMGhPNUEc+ncTaWMRWHRd0yCVxxCr8wbh3NBRSVFCIGrAvvYVDmXD1TZPpYfElqsQ==
-X-Google-Smtp-Source: AGHT+IHGZzK+qFL/EMh8xEDEju2gdTFQ+4nuts5JR/meh2fYpAzXBvYHu89SWnN0KMN+M3BfBnIeUA==
-X-Received: by 2002:a2e:be8d:0:b0:372:8e46:3705 with SMTP id
- 38308e7fff4ca-374c3886fa3mr32017271fa.44.1759690721242; 
- Sun, 05 Oct 2025 11:58:41 -0700 (PDT)
-Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:c37::1:1])
+ d=1e100.net; s=20230601; t=1759691769; x=1760296569;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O9X9dIbEl6s4Z3IkjW3gtvVAsBNJXdx9I4ylsa8ctmA=;
+ b=aBiPghS9svI3SQScQBFbUII/BQtRTc32fSgv18E7OqIwHn5Zg4tMrPmPpLrp4v44Uz
+ 8Zbu10WwZWajSCoBjltpDZ+o1EA9ywsZMd9zRlF26q42yQ5/OjsyzDUUT69i5+DsMCHD
+ YP4UeL+Aex1GLXpuPL8ESHBpgpbGMl3zYkGQu+SBNnWtESWILxoLF0G9fqReElONp4op
+ Cb44pjKMgWY7BSMabzSnqC6BgACB+zIGJzPG09U377lO9oRIZwJTXkbKRHwK6F9r5RWB
+ K4KDtghrA4IhIVoUU9cfSZH42bN/66Zds5Pmw3pIQv+fA8jdHcfHHNvAuwSJMCI+g9kP
+ b/LA==
+X-Gm-Message-State: AOJu0YwAvKLvI6zwm58+yWSyWKnfFOgMOfIL/deFQgrk6Z4Y1U7DS6mt
+ AP8slSHHClWvwAvW+UvMvhhY3kuO6FmEaU0EXYEUvtVfcfFl++sZl96kYwcS/zDGDNMdzjgLP3e
+ QAL6Rd6EuNRZ6yoCdieYegpIjlwXrFfk+keu/+GCNWgoOe406IO63g0+ZtDuWOn+wZ1qJr1L30w
+ wCJn0Ai0LYjKxNq1WbQkmt8jreRqMpaEe3Bg==
+X-Gm-Gg: ASbGncu+Bks7PQwRtWzTiWTyH6lzEOzjly6Xx6Fq2jARz35LTEBwpn0/KA5a6988vlC
+ AWhmF6za2kO+1ugAfqep+LZd8paPPaEObieMiXD0sP+KzWz5tMinhnLfJsAYCz5jBaiBNJ34wD2
+ 5MYx4dGrJd01P0ZoSeHqUkPPl7aYTYi/cbnkd3DNkly6t95HEErnLii+u94Hh6U6sNWrMQUQnpe
+ 8ZazRZTF31c9nr28cvXOT4znHsMa9zJSmeHmyX8UNYvnrBt7OzAySrN5+NdwR168f6rLq7BOwNC
+ bnjrLVcA18R1j/fle31kbM/Sk5lEnybyYgSqkCU=
+X-Received: by 2002:a05:6000:2401:b0:3ea:e0fd:28e8 with SMTP id
+ ffacd0b85a97d-4256719e9c6mr5917257f8f.32.1759691768659; 
+ Sun, 05 Oct 2025 12:16:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOjobanu4yMzNe/1zq5h6ZXPy/A/BH9w8F+1A+e/yvEMTagvhieTZaj1Hz/o6LB4SeNmPQaw==
+X-Received: by 2002:a05:6000:2401:b0:3ea:e0fd:28e8 with SMTP id
+ ffacd0b85a97d-4256719e9c6mr5917238f8f.32.1759691768061; 
+ Sun, 05 Oct 2025 12:16:08 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-373ba49fd69sm37384161fa.43.2025.10.05.11.58.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 05 Oct 2025 11:58:39 -0700 (PDT)
-From: Alexander Gryanko <xpahos@gmail.com>
-X-Google-Original-From: Alexander Gryanko <xpahos@yandex-team.ru>
+ ffacd0b85a97d-4255d8e9762sm17448010f8f.38.2025.10.05.12.16.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Oct 2025 12:16:07 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:06 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, qemu-trivial@nongnu.org,
- Alexander Gryanko <xpahos@gmail.com>
-Subject: [PATCH v2] system/runstate.c: Add a newline character to correctly
- log guest errors
-Date: Sun,  5 Oct 2025 21:58:34 +0300
-Message-ID: <32D0DF37-A1B3-4532-B350-082E19E4EABB@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni <pabeni@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 02/75] linux-headers: deal with counted_by annotation
+Message-ID: <c3d9dcd87f0d228ea3ac5a42076da829cff401f0.1759691708.git.mst@redhat.com>
+References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20251004-add-newline-guest-error-log-62d68638b28c
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759599468; l=1584;
- i=xpahos@gmail.com; s=20251004; h=from:subject:message-id;
- bh=rvwWS/RTpcBRE43Pzrs+MfGd8cC10dbKpihj81a/57o=;
- b=+LjQuITtD0JEG02JJvL+AhM2l1Uq5u9EEFQc1OfrIm1pLBzveSkMxF6uRDo5Gjvprys68NKRZ
- mR8UXF/vEJTCFYsQYKk4oBFYMZV4I03p5jP5mC001Q4Wzc0uGXWbtML
-X-Developer-Key: i=xpahos@gmail.com; a=ed25519;
- pk=bsSvP3Tn7PVKgjJT3BMV3jlAwSqreKIM4099C1r51eg=
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=xpahos@gmail.com; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1759691708.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,57 +110,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-Message-ID: <20251005185834.-gxMlKhpaFOMGicBr2tIAJBRcoIn4rRRGQluhy5x-9E@z>
 
-From: Alexander Gryanko <xpahos@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-The pvpanic handler calls the qemu_system_guest_panicked
-function with a NULL parameter, which results in the absence
-of a newline character in the guest error log.
-The qemu_system_guest_crashloaded function has no additional
-logic, but also omits the newline character.
-The qemu_system_guest_pvshutdown has no reporting in the
-guest error log.
+Such annotation is present into the kernel uAPI headers since
+v6.7, and will be used soon by the vhost_type.h. Deal with it
+just stripping it.
 
-Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <a1430f43cc954d2a931fa60581bda6d6af4bc771.1758549625.git.pabeni@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- system/runstate.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/update-linux-headers.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/system/runstate.c b/system/runstate.c
-index 6178b0091a..8b4bf75cd6 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -674,18 +674,21 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
-         }
- 
-         qapi_free_GuestPanicInformation(info);
-+    } else {
-+        qemu_log_mask(LOG_GUEST_ERROR, "\n");
-     }
- }
- 
- void qemu_system_guest_crashloaded(GuestPanicInformation *info)
- {
--    qemu_log_mask(LOG_GUEST_ERROR, "Guest crash loaded");
-+    qemu_log_mask(LOG_GUEST_ERROR, "Guest crash loaded\n");
-     qapi_event_send_guest_crashloaded(GUEST_PANIC_ACTION_RUN, info);
-     qapi_free_GuestPanicInformation(info);
- }
- 
- void qemu_system_guest_pvshutdown(void)
- {
-+    qemu_log_mask(LOG_GUEST_ERROR, "Guest shutdown requested\n");
-     qapi_event_send_guest_pvshutdown();
-     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
- }
-
----
-base-commit: 81e3121bef89bcd3ccb261899e5a36246199065d
-change-id: 20251004-add-newline-guest-error-log-62d68638b28c
-
-Best regards,
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 717c379f9e..64c0d7c4eb 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -90,6 +90,7 @@ cp_portable() {
+         -e 's/<linux\/\([^>]*\)>/"standard-headers\/linux\/\1"/' \
+         -e "$arch_cmd" \
+         -e 's/__bitwise//' \
++        -e 's/__counted_by(\w*)//' \
+         -e 's/__attribute__((packed))/QEMU_PACKED/' \
+         -e 's/__inline__/inline/' \
+         -e 's/__BITS_PER_LONG/HOST_LONG_BITS/' \
 -- 
-Alexander Gryanko <xpahos@gmail.com>
+MST
 
 
