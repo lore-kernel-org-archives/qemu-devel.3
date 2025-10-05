@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23978CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8930FCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Sfw-0000E2-G8; Sun, 05 Oct 2025 13:37:38 -0400
+	id 1v5Sg4-0000Im-TX; Sun, 05 Oct 2025 13:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfn-0000An-HA; Sun, 05 Oct 2025 13:37:27 -0400
+ id 1v5Sfy-0000FA-RH; Sun, 05 Oct 2025 13:37:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfm-0004bR-00; Sun, 05 Oct 2025 13:37:27 -0400
+ id 1v5Sfw-0004d2-0e; Sun, 05 Oct 2025 13:37:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7C4DE15AA84;
- Sun, 05 Oct 2025 20:37:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E0C0B15AA8B;
+ Sun, 05 Oct 2025 20:37:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8F1C5299731;
- Sun,  5 Oct 2025 20:37:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 888FA299737;
+ Sun,  5 Oct 2025 20:37:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mohamed Akram <mohd.akram@outlook.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Vladimir Isaev <vladimir.isaev@syntacore.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 42/58] ui/spice: Fix abort on macOS
-Date: Sun,  5 Oct 2025 20:36:51 +0300
-Message-ID: <20251005173712.445160-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 48/58] target/riscv: do not use translator_ldl in
+ opcode_at
+Date: Sun,  5 Oct 2025 20:36:57 +0300
+Message-ID: <20251005173712.445160-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,49 +62,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Akram <mohd.akram@outlook.com>
+From: Vladimir Isaev <vladimir.isaev@syntacore.com>
 
-The check is faulty because the thread variable was assigned in the main
-thread while the main loop runs in a different thread on macOS.
+opcode_at is used only in semihosting checks to match opcodes with expected
+pattern.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3070
-Signed-off-by: Mohamed Akram <mohd.akram@outlook.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <C87205B9-DD8F-4E53-AB5B-C8BF82EF1D16@outlook.com>
-(cherry picked from commit e7ecb533ee0dbfbe30c90abb213247f4943a9a12)
+This is not a translator and if we got following assert if page is not in TLB:
+qemu-system-riscv64: ../accel/tcg/translator.c:363: record_save: Assertion
+`offset == db->record_start + db->record_len' failed.
+
+Fixes: 1f9c4462334f ("target/riscv: Use translator_ld* for everything")
+Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
+[ Changes by AF:
+ - Fixup header includes after rebase
+]
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit a86d3352ab70f33f5feabbf9bad9450d3c19d0bf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 0326c63bec..6ad619143c 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -50,8 +50,6 @@ static int spice_migration_completed;
- static int spice_display_is_running;
- static int spice_have_target_host;
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index d6651f244f..fc31b21f29 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -25,6 +25,7 @@
+ #include "exec/helper-gen.h"
  
--static QemuThread me;
--
- struct SpiceTimer {
-     QEMUTimer *timer;
- };
-@@ -220,7 +218,7 @@ static void channel_event(int event, SpiceChannelEventInfo *info)
-      * thread and grab the BQL if so before calling qemu
-      * functions.
-      */
--    bool need_lock = !qemu_thread_is_self(&me);
-+    bool need_lock = !bql_locked();
-     if (need_lock) {
-         bql_lock();
-     }
-@@ -667,8 +665,6 @@ static void qemu_spice_init(void)
-     spice_wan_compression_t wan_compr;
-     bool seamless_migration;
+ #include "exec/translator.h"
++#include "accel/tcg/cpu-ldst.h"
+ #include "exec/translation-block.h"
+ #include "exec/log.h"
+ #include "semihosting/semihost.h"
+@@ -1167,7 +1168,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+     CPUState *cpu = ctx->cs;
+     CPURISCVState *env = cpu_env(cpu);
  
--    qemu_thread_get_self(&me);
--
-     if (!opts) {
-         return;
-     }
+-    return translator_ldl(env, &ctx->base, pc);
++    return cpu_ldl_code(env, pc);
+ }
+ 
+ #define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
 -- 
 2.47.3
 
