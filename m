@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54ACCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38C0CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Sg3-0000Hb-68; Sun, 05 Oct 2025 13:37:43 -0400
+	id 1v5Sh4-0000ac-QM; Sun, 05 Oct 2025 13:38:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfr-0000C8-Tv; Sun, 05 Oct 2025 13:37:34 -0400
+ id 1v5Sge-0000TX-Gl; Sun, 05 Oct 2025 13:38:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfq-0004c8-1s; Sun, 05 Oct 2025 13:37:31 -0400
+ id 1v5Sgb-0004fl-Sd; Sun, 05 Oct 2025 13:38:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8857F15AA87;
- Sun, 05 Oct 2025 20:37:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4676C15AA91;
+ Sun, 05 Oct 2025 20:37:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 430AD299734;
- Sun,  5 Oct 2025 20:37:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2EE4329973D;
+ Sun,  5 Oct 2025 20:37:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrea Bolognani <abologna@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 45/58] docs/interop/firmware: Add riscv64 to
- FirmwareArchitecture
-Date: Sun,  5 Oct 2025 20:36:54 +0300
-Message-ID: <20251005173712.445160-7-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 54/58] include/system/memory.h: Clarify
+ address_space_destroy() behaviour
+Date: Sun,  5 Oct 2025 20:37:03 +0300
+Message-ID: <20251005173712.445160-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
@@ -62,39 +61,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrea Bolognani <abologna@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Descriptors using this value have been shipped for years
-by distros, so we just need to update the spec to match
-reality.
+address_space_destroy() doesn't actually immediately destroy the AS;
+it queues it to be destroyed via RCU. This means you can't g_free()
+the memory the AS struct is in until that has happened.
 
-Signed-off-by: Andrea Bolognani <abologna@redhat.com>
-Reviewed-by: Kashyap Chamarthy <kchamart@redhat.com>
-Message-ID: <20250910121501.676219-1-abologna@redhat.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit da14767b356c2342197708a997eeb0da053262a0)
+Clarify this in the documentation.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20250929144228.1994037-2-peter.maydell@linaro.org
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 9e7bfda4909cc688dd0327e17985019f08a78d5d)
+(Mjt: this is just a comment fix, but it makes subsequent changes to apply cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 745d21d822..ea88da0fec 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -76,12 +76,14 @@
- #
- # @loongarch64: 64-bit LoongArch. (since: 7.1)
- #
-+# @riscv64: 64-bit RISC-V.
-+#
- # @x86_64: 64-bit x86.
- #
- # Since: 3.0
- ##
- { 'enum' : 'FirmwareArchitecture',
--  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
-+  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'riscv64', 'x86_64' ] }
- 
- ##
- # @FirmwareTarget:
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index e1c196a0c2..2ad3f93344 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2627,9 +2627,14 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name);
+ /**
+  * address_space_destroy: destroy an address space
+  *
+- * Releases all resources associated with an address space.  After an address space
+- * is destroyed, its root memory region (given by address_space_init()) may be destroyed
+- * as well.
++ * Releases all resources associated with an address space.  After an
++ * address space is destroyed, the reference the AddressSpace had to
++ * its root memory region is dropped, which may result in the
++ * destruction of that memory region as well.
++ *
++ * Note that destruction of the AddressSpace is done via RCU;
++ * it is therefore not valid to free the memory the AddressSpace
++ * struct is in until after that RCU callback has completed.
+  *
+  * @as: address space to be destroyed
+  */
 -- 
 2.47.3
 
