@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E1B4CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E28CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UDl-0007TN-OA; Sun, 05 Oct 2025 15:16:37 -0400
+	id 1v5UDj-0007Sv-Aa; Sun, 05 Oct 2025 15:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDh-0007SO-OG
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDX-0007R3-BF
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDf-0006Mx-1j
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDV-0006Ll-7U
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691788;
+ s=mimecast20190719; t=1759691780;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=T9JiUJVF1IY5GSi12FGsN+bySZ+KyddxbfjDd0ABMyI=;
- b=Ojw7RRMQt8lI8OakStICf/yteUqlaiTXLJfZ4RO3djQSjDoXZEWKk+XftpgaxMYsY5Y0dC
- HjtxsOZHmxNjc6kG28GuT49F4vYeuTGSnuZoAkcJNUsw8Y2u45CTXU65FYXqDrw5kNuTi7
- YUPd7CKizQdsP1boJN5ACm0yFDgLn64=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qrOfnlzVApHW7nCp9cywejc9Pajk0HVvbfCIV3RzkUo=;
+ b=QDJXhqTS6gZz1L67EXiFdjw3qbw0aFVTukPVQzJqZAPQMt/W9h9KFdaC5Hj083LtbPHjOd
+ 7vmg5mO1WDu2tS4KOzNx359YnCawn41X+1YUCUiqOrDKyNhjjn/2rHtxOAm96s4JfNg52a
+ IRMOHGZP9BZyxcWBDu0N5H9vubEihJw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-fycBWVaFO4C5nqDsVRS78g-1; Sun, 05 Oct 2025 15:16:27 -0400
-X-MC-Unique: fycBWVaFO4C5nqDsVRS78g-1
-X-Mimecast-MFC-AGG-ID: fycBWVaFO4C5nqDsVRS78g_1759691786
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e31191379so26930945e9.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:27 -0700 (PDT)
+ us-mta-516-MYf0rnJsME-BQB2R7wspfQ-1; Sun, 05 Oct 2025 15:16:19 -0400
+X-MC-Unique: MYf0rnJsME-BQB2R7wspfQ-1
+X-Mimecast-MFC-AGG-ID: MYf0rnJsME-BQB2R7wspfQ_1759691778
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-42421b15185so3097748f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691786; x=1760296586;
+ d=1e100.net; s=20230601; t=1759691777; x=1760296577;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T9JiUJVF1IY5GSi12FGsN+bySZ+KyddxbfjDd0ABMyI=;
- b=ezd1fCYsouAkuHdUKTlYV91FXIRG6pF1EEoiwagMMTCen4CFBfkQhefmZmK9Jtw4eN
- mELGpy3BJSQ/cWJL+IpgiFiEgDtVmgyagxZhYrPWUbzw0RB1fv+Cx9zECb7bX/AO0pma
- 1FOko2k6rcysBLU89Y3c082ehFQmRLAxObFjJYK7G7eg1qg3esZa4gWprBMIv4M6jC+U
- 1no699mCl2/Kgc4csL+GImk2wI8uyBQHoeotZteqfu2Cg6OEoZspbskwxQL5nqL+4d1+
- t917V1Lj2gFdpFc52W6NxPraJHlg4I8GgRJvWBeW8nr1TlmNF086LUOMV7RigSSRrfQd
- 9ZmA==
-X-Gm-Message-State: AOJu0YySHS/nLmeQhgjZ63EN4EiySE2wBGwsyy+jjBh7mHjh4fxJQV3w
- J6PzlAYTl1qYQCva4/TvLT0wXyjI1OBDOx6TTpOXAv7sMJcuL8+q+eLzgjMlA/AbYNs/8erjnTi
- czSzkyGQQxU7YuYVakCOwXg7d/KEGNyA+c0/fPSDazJhww7fGwjqQv5nI0Ty6OEDP7HjPFZUJ7r
- cOYUXDv9WyG4M2eNpwcCNJEJGfRfOuXbzRuw==
-X-Gm-Gg: ASbGncsx38TbSUAN8ym88if8to6kTDe4YW1YQBPO1eM7QkphRoQjF09B95SCG3vh+yw
- PCuzJJP4vTBoLOUy3aeCO6it+VVa6tq443MdY6pZ4WmHwPu1J1oh0ygYxqTVoPyUbiW4sLtNntY
- AMDbtaY9POXfzk5FjOZ6ncZC2wJGf81LzBv+MxE2OdGCIpwJMvPizRDWaJtOs5lprq21nam85hj
- MQY5DXlaF6Y7+hsjwWamL3D6AfV8HTNYCSQwmgwOF59UB6/7nseUPhRO1Tlj0zhWYQfL8S3rM3s
- GSNkme8DsNOpWlbC0fKD77y3jsURtvB7vI+cKIQ=
-X-Received: by 2002:a05:600c:350b:b0:459:e398:ed89 with SMTP id
- 5b1f17b1804b1-46e710fe3a0mr61011225e9.1.1759691785971; 
- Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYqrY5rQ+cewOwkdChC4gU0ClZemwx0HVQHJ0DU8aamsFmWPjG1tYZ2vir4AiUGsKrg09UbQ==
-X-Received: by 2002:a05:600c:350b:b0:459:e398:ed89 with SMTP id
- 5b1f17b1804b1-46e710fe3a0mr61011065e9.1.1759691785502; 
- Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
+ bh=qrOfnlzVApHW7nCp9cywejc9Pajk0HVvbfCIV3RzkUo=;
+ b=xTMuoDTG4hNkr10joPkQHgeMhBNTHvi1V1oFX0KW99RfFXYkbXdmfels3gpmUFOuH7
+ VqSC4d541xZA9Yc6fjK9QcjFjpPFDLTj1zSq9nO4HoyAye61ZPLIhhDF1FJbhTWif8SI
+ jeqvmQdkJ9QaknxnABvKq/E7rdCZ9bcBgTG/nBx4u5Elw26ID5GNwnpX2uYOPrjy344o
+ B1MT8MPMYFAZ3mv3OXX6RXaOmwLDGw0X0dyZc0glXVef9HwBn1Zvst2/GczVhr4dIQ+g
+ xNb8xOyv3xNNd1kMnSj184hUHDnd035LKHPyDD4lcB5vqD/4igMtoTNJQaSZ/4uw1XNv
+ Ay5Q==
+X-Gm-Message-State: AOJu0Yx1EWmQ8t5D8oFTlyEhSWddKlDzhiypi4EdhIVXP0c+cTlES6TT
+ evy7UcT+qYKerjwm6c35TbfYGekDpt0HziLQYBmcKvewn6UzXWw3zTkQPD2yzQbr2w1fPUzvP3X
+ 7Pe49IbOti5b++yQXr1qgH0Cg4epQtmCwweRfYa8bDl6/L25oebt4nSXVl2Z4FqnGQR/RxXRCdi
+ 5tR+QfKbN+cTNKBgz80UTbNgNofa+O+umSZA==
+X-Gm-Gg: ASbGnctLK/uebvUxE4w5gN6A54rDrAqZIedf2E9ZcGKGxPhsBdl5x6Eeqe/jwqQ5cX/
+ S2zranWXkjZHgTqSCQo6EyS7mZ0bbDpdpPOQ4eA6OyyKPan2iTfnR/s2eV/miC7+7sRy2wQ1Imv
+ 7vEkljQICY16/GRyKMdU6bbKSRqYQiuo3Zipoej3aV/61zFUz/iTGDYl8UmAMOqx0JoyJkJNgu4
+ H78NaA1B5v+E8hBwbseYmlSR5A1DC7dzab+lmD7SEIk1h0MGBxs+tYtF9mqA88nrT267yELRlVl
+ dypwQ70J9d7q83FnY1Y76983J4OyRZOG8Qh9jUA=
+X-Received: by 2002:a05:6000:22c2:b0:3e6:f91e:fa72 with SMTP id
+ ffacd0b85a97d-4256713edb3mr5851564f8f.7.1759691777245; 
+ Sun, 05 Oct 2025 12:16:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs468vAjdBo/BoHJhvgXOcGckaMGaLlnNU12LRDFYAvwH/uzw/ZaWKOiAihqyswnFFqwHdPg==
+X-Received: by 2002:a05:6000:22c2:b0:3e6:f91e:fa72 with SMTP id
+ ffacd0b85a97d-4256713edb3mr5851546f8f.7.1759691776740; 
+ Sun, 05 Oct 2025 12:16:16 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e619c3b75sm217407595e9.7.2025.10.05.12.16.24
+ ffacd0b85a97d-4255d8a6c54sm17766671f8f.11.2025.10.05.12.16.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:16:23 -0400
+ Sun, 05 Oct 2025 12:16:16 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:14 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni <pabeni@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
  Lei Yang <leiyang@redhat.com>
-Subject: [PULL 10/75] vhost-backend: implement extended features support
-Message-ID: <f412c1f57ab58fd595efee26264193759220ca6f.1759691708.git.mst@redhat.com>
+Subject: [PULL 06/75] virtio: add support for negotiating extended features
+Message-ID: <64a6a336f42bc6305ab7589fd874cb4a3d403bd0.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,12 +112,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-Leverage the kernel extended features manipulation ioctls(), if
-available, and fallback to old ops otherwise. Error out when setting
-extended features but kernel support is not available.
+The virtio specifications allows for a device features space up
+to 128 bits and more. Soon we are going to use some of the 'extended'
+bits features for the virtio net driver.
 
-Note that extended support for get/set backend features is not needed,
-as the only feature that can be changed belongs to the 64 bit range.
+Add support to allow extended features negotiation on a per
+devices basis. Devices willing to negotiated extended features
+need to implemented a new pair of features getter/setter, the
+core will conditionally use them instead of the basic one.
+
+Note that 'bad_features' don't need to be extended, as they are
+bound to the 64 bits limit.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Acked-by: Jason Wang <jasowang@redhat.com>
@@ -125,107 +130,102 @@ Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Tested-by: Lei Yang <leiyang@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <150daade3d59e77629276920e014ee8e5fc12121.1758549625.git.pabeni@redhat.com>
+Message-ID: <9bb29d70adc3f2b8c7756d4e3cd076cffee87826.1758549625.git.pabeni@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/vhost-backend.c | 62 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 51 insertions(+), 11 deletions(-)
+ include/hw/virtio/virtio.h |  4 ++++
+ hw/virtio/virtio-bus.c     | 11 ++++++++---
+ hw/virtio/virtio.c         | 14 +++++++++++---
+ 3 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
-index 833804dd40..4367db0d95 100644
---- a/hw/virtio/vhost-backend.c
-+++ b/hw/virtio/vhost-backend.c
-@@ -20,6 +20,11 @@
- #include <linux/vhost.h>
- #include <sys/ioctl.h>
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 39e4059a66..2aeb021fb3 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -178,6 +178,9 @@ struct VirtioDeviceClass {
+     /* This is what a VirtioDevice must implement */
+     DeviceRealize realize;
+     DeviceUnrealize unrealize;
++    void (*get_features_ex)(VirtIODevice *vdev, uint64_t *requested_features,
++                            Error **errp);
++    void (*set_features_ex)(VirtIODevice *vdev, const uint64_t *val);
+     uint64_t (*get_features)(VirtIODevice *vdev,
+                              uint64_t requested_features,
+                              Error **errp);
+@@ -373,6 +376,7 @@ void virtio_queue_reset(VirtIODevice *vdev, uint32_t queue_index);
+ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
+ void virtio_update_irq(VirtIODevice *vdev);
+ int virtio_set_features(VirtIODevice *vdev, uint64_t val);
++int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *val);
  
-+struct vhost_features {
-+    uint64_t count;
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-+};
-+
- static int vhost_kernel_call(struct vhost_dev *dev, unsigned long int request,
-                              void *arg)
- {
-@@ -182,12 +187,6 @@ static int vhost_kernel_get_vring_worker(struct vhost_dev *dev,
-     return vhost_kernel_call(dev, VHOST_GET_VRING_WORKER, worker);
- }
+ /* Base devices.  */
+ typedef struct VirtIOBlkConf VirtIOBlkConf;
+diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+index 11adfbf3ab..cef944e015 100644
+--- a/hw/virtio/virtio-bus.c
++++ b/hw/virtio/virtio-bus.c
+@@ -62,9 +62,14 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+     }
  
--static int vhost_kernel_set_features(struct vhost_dev *dev,
--                                     uint64_t features)
--{
--    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &features);
--}
--
- static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
- {
-     uint64_t features;
-@@ -210,10 +209,51 @@ static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
-     return 0;
- }
- 
--static int vhost_kernel_get_features(struct vhost_dev *dev,
--                                     uint64_t *features)
-+static int vhost_kernel_set_features(struct vhost_dev *dev,
-+                                     const uint64_t *features)
- {
--    return vhost_kernel_call(dev, VHOST_GET_FEATURES, features);
-+    struct vhost_features farray;
-+    bool extended_in_use;
-+    int r;
-+
-+    farray.count = VIRTIO_FEATURES_NU64S;
-+    virtio_features_copy(farray.features, features);
-+    extended_in_use = virtio_features_use_ex(farray.features);
-+
-+    /*
-+     * Can't check for ENOTTY: for unknown ioctls the kernel interprets
-+     * the argument as a virtio queue id and most likely errors out validating
-+     * such id, instead of reporting an unknown operation.
-+     */
-+    r = vhost_kernel_call(dev, VHOST_SET_FEATURES_ARRAY, &farray);
-+    if (!r) {
-+        return 0;
+     /* Get the features of the plugged device. */
+-    assert(vdc->get_features != NULL);
+-    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
+-                                            &local_err);
++    if (vdc->get_features_ex) {
++        vdc->get_features_ex(vdev, vdev->host_features_ex, &local_err);
++    } else {
++        assert(vdc->get_features != NULL);
++        virtio_features_from_u64(vdev->host_features_ex,
++                                 vdc->get_features(vdev, vdev->host_features,
++                                                   &local_err));
 +    }
+     if (local_err) {
+         error_propagate(errp, local_err);
+         return;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index bf53c211e5..34f977a3c9 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3103,7 +3103,9 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
+     bad = virtio_features_andnot(tmp, val, vdev->host_features_ex);
+     virtio_features_and(tmp, val, vdev->host_features_ex);
+ 
+-    if (k->set_features) {
++    if (k->set_features_ex) {
++        k->set_features_ex(vdev, val);
++    } else if (k->set_features) {
+         bad = bad || virtio_features_use_ex(tmp);
+         k->set_features(vdev, tmp[0]);
+     }
+@@ -3149,6 +3151,13 @@ virtio_set_features_nocheck_maybe_co(VirtIODevice *vdev,
+ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+ {
+     uint64_t features[VIRTIO_FEATURES_NU64S];
 +
-+    if (extended_in_use) {
-+        error_report("Trying to set extended features without kernel support");
-+        return -EINVAL;
-+    }
-+    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &farray.features[0]);
++    virtio_features_from_u64(features, val);
++    return virtio_set_features_ex(vdev, features);
 +}
 +
-+static int vhost_kernel_get_features(struct vhost_dev *dev, uint64_t *features)
++int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *features)
 +{
-+    struct vhost_features farray;
-+    int r;
-+
-+    farray.count = VIRTIO_FEATURES_NU64S;
-+    r = vhost_kernel_call(dev, VHOST_GET_FEATURES_ARRAY, &farray);
-+    if (r) {
-+        memset(&farray, 0, sizeof(farray));
-+        r = vhost_kernel_call(dev, VHOST_GET_FEATURES, &farray.features[0]);
-+    }
-+    if (r) {
-+        return r;
-+    }
-+
-+    virtio_features_copy(features, farray.features);
-+    return 0;
- }
+     int ret;
+     /*
+      * The driver must not attempt to set features after feature negotiation
+@@ -3158,13 +3167,12 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+         return -EINVAL;
+     }
  
- static int vhost_kernel_set_owner(struct vhost_dev *dev)
-@@ -341,8 +381,8 @@ const VhostOps kernel_ops = {
-         .vhost_attach_vring_worker = vhost_kernel_attach_vring_worker,
-         .vhost_new_worker = vhost_kernel_new_worker,
-         .vhost_free_worker = vhost_kernel_free_worker,
--        .vhost_set_features = vhost_kernel_set_features,
--        .vhost_get_features = vhost_kernel_get_features,
-+        .vhost_set_features_ex = vhost_kernel_set_features,
-+        .vhost_get_features_ex = vhost_kernel_get_features,
-         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
-         .vhost_set_owner = vhost_kernel_set_owner,
-         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+-    if (val & (1ull << VIRTIO_F_BAD_FEATURE)) {
++    if (features[0] & (1ull << VIRTIO_F_BAD_FEATURE)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: guest driver for %s has enabled UNUSED(30) feature bit!\n",
+                       __func__, vdev->name);
+     }
+ 
+-    virtio_features_from_u64(features, val);
+     ret = virtio_set_features_nocheck(vdev, features);
+     if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
+         /* VIRTIO_RING_F_EVENT_IDX changes the size of the caches.  */
 -- 
 MST
 
