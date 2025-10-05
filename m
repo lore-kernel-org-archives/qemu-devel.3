@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D18CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EE9CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFG-0001mK-Cv; Sun, 05 Oct 2025 15:18:10 -0400
+	id 1v5UFj-00043W-Dv; Sun, 05 Oct 2025 15:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEf-0008H6-Rk
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFN-0002OX-Se
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEa-0006Uc-ST
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFB-0006aM-LN
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691840;
+ s=mimecast20190719; t=1759691879;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dOCKC2S0m2zbzh2H7cOU9of3P5ijZS88mc28+6tUt50=;
- b=Yew6rGyE4wKRlIBwvIBZPP0Dwc6lthEEOLDfNTNBd4gAqzZrZ1zgLTUkehacg/CCJ5TIDc
- wAsIfTnea8pHvKjTta0GBYxVQpk6WSuUlEhNXYbcgp31XjB8u43BPBR8Ol06/rsYDuc7W1
- kl7CJCxOS0d2/GScjIrkO7EDXxNR4sQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BsiJ9Y13upyZ0kSNDp9aMBJN8UvV+sDrJuDdQ0y5Q0M=;
+ b=UkayjyA7GT/+6KHLIrqMx8NHqTIEEk3Cmku93wT3/MqwvEqQMFNf9LEFZ6nOUJY/LLSL9B
+ mw5qLQmFaQHJd5bpNdvtQnpaKiiPC4mLL9bBN0ueGuDAXFLiMnQRgUF10nGXkkGZQcXrWy
+ 5EiDJqbmYoI8xjqWGD6cSVkOBBy8PEo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-160-IHcidCO2Mtavujls939-7g-1; Sun, 05 Oct 2025 15:17:19 -0400
-X-MC-Unique: IHcidCO2Mtavujls939-7g-1
-X-Mimecast-MFC-AGG-ID: IHcidCO2Mtavujls939-7g_1759691838
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ecdc9dbc5fso2219180f8f.1
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:19 -0700 (PDT)
+ us-mta-102-A4K6x0YhPbCdOKgSdd7-4A-1; Sun, 05 Oct 2025 15:17:57 -0400
+X-MC-Unique: A4K6x0YhPbCdOKgSdd7-4A-1
+X-Mimecast-MFC-AGG-ID: A4K6x0YhPbCdOKgSdd7-4A_1759691876
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-41066f050a4so1555366f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691838; x=1760296638;
+ d=1e100.net; s=20230601; t=1759691876; x=1760296676;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dOCKC2S0m2zbzh2H7cOU9of3P5ijZS88mc28+6tUt50=;
- b=nryl6RM27/u5csX+TW1ZHQAmcep02mA4Yz/in33AH53Co0hVhXTZlLPildXOmyWmyD
- Gk33DJRsXJ6RhRkYmvCl7Pk31CXnj2GCZegZridAHpNtNN+ni7Yp1yMmdRlcKvN8+kj2
- aLw4Y41Lx1RR5YSiPJlFGw+lBQW1C54yRBUTrjKmOzIB75vmbGGtzpaellph1qJhAbN+
- Pl4+dFJZrWgvbK2ZRiiWuROxUWa7I8DBU6D4cKmGtws5dyKZRefX14ItOHvrkbLPvAL5
- hm2wRKO+TPHY/6BOPjOh4ws1PcHIEAjT53vKwlt0+Wg4rKtFR4GxYPP3duNQCYRRzhDa
- L5UQ==
-X-Gm-Message-State: AOJu0YwyOHYAYdNBX80ZCI1lY4aK3hvyp6zGmgk/jfWlOSfjHxujKL77
- N5z++mium62BqNxKXSy9pP6YUfWtHX6JC3GoeRpgefAa39qT36856R5BL/tKU92NtpfBb8Zrqik
- BO0Va9+AriFqigEK19k7cy2Wkgl2+1epBu0TfkMnBvXYQpyA5kXdWoeaB3gjTliIksO5iAdO/mJ
- qwr1YiRDiMeuv/NfgPvN6IbQaL+L/FfY9UIQ==
-X-Gm-Gg: ASbGncvAXlg99fJiQLaekGrqGJqdhFo6wq4a5twy8my2iAihhRi0XzwUos7XuebozAH
- gOUFfvQEDMlITP4yJklcWy/vIazWWML24jhrgpY04kn/5+wTP5aGcl5R0QHK78JeXHb5D5lXbw7
- uP38rkeD8Fm1Cwo1rV/cEnjnunbTTyeCtM/aWG+fLsrk8fe8adZVBigH7LrzkNh8mTlcKZygZax
- /ztj1tIvysHmQU9NJvVfeO7ZHhlAzljYhe/mn8Nu6kuiwCPbEYdcMewSZ1J3txi67FjOlZsGdnq
- 1xfu+rMj03w83MeJpfl6zYjo7yp/VsRFVEQvfYQ=
-X-Received: by 2002:a05:6000:230c:b0:3ec:3d75:1330 with SMTP id
- ffacd0b85a97d-425671b037amr5855601f8f.52.1759691837881; 
- Sun, 05 Oct 2025 12:17:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFAOXcUYCeB2FcO8USs1GdU7SBrgkIqd+6HNRwNmXnCWamr//pWSH1hwgv4H/Pqzx9zML1Kug==
-X-Received: by 2002:a05:6000:230c:b0:3ec:3d75:1330 with SMTP id
- ffacd0b85a97d-425671b037amr5855584f8f.52.1759691837364; 
- Sun, 05 Oct 2025 12:17:17 -0700 (PDT)
+ bh=BsiJ9Y13upyZ0kSNDp9aMBJN8UvV+sDrJuDdQ0y5Q0M=;
+ b=romOGwCG8HPObLoO/R2vwFxAMtvAG7NuqyB+wfc5GY96vrR2R6a6g2gUQ6CjYMG+0f
+ y5sGF/xWdka/+T4ZnbxSDvUpMm4yETBBRQMWyLLDSyNcvgsyldn09X2vP+aFMfn1pJPz
+ CsCt/6o2CyZyW3zWQ4ooJRaWGvFftNqlpJJ26m9kcUyOabbfqsYbVswOioZp+O3oZMHa
+ oz3XIQfsjVlIhyR6AoV9j2Gxaf2vSMuhFiBZ9rZg1LObYlHezUhj1YH9teJeNmw5oRvo
+ 59NiBSiSLFK24dKNhbpfMfml9GLiPyuwzfnXj8rFEQUTtv2suKMh8V7xY+S48lf37af8
+ f/YA==
+X-Gm-Message-State: AOJu0YxTtu5+0f0dS9kpnxIJaIcXlu9DFDJGmCc1/TIYWMqHHtkfeB79
+ 8wiqYI2I9SHoqzkyhs1Q728yFjhUx17HO57bHgj0AzXMU7/kTZC+xyFyOp2/flcVFN1Lq7+kWIQ
+ OMiz+1++RGGIBxbZFD45p+wnUaEiJMXvsBgFp8RI6CdIdziPwOTv9YPksK+tLpfz+HQRfQOucBN
+ gdCAeNHemDtYLsFxvwig83Qg0kRRLhN8JWDQ==
+X-Gm-Gg: ASbGncvaOe6uYyFnuaNRjxAtXQT2rC0oNv7z9TPDBJ7g9lgCOU4AazeDQhpeM8j6tUP
+ l6lA2Xjch/BDYE3JzPtMpYBejJ3pvUKzDNLDaMIzBFRwaz5B6BFpcpDmkJhTb2mzUf+4hKCTV7L
+ pMjet6BJBIvSywEOzNkVdlkqqEQzFCekP7rxcx8I9u/BIUgcphjkasudCMSDkXyhA75bBgEwRZB
+ 2i6XaGCzIe60mn68mJrY3E79b5XvC8SVba5QqnssJI9IBAcEU78OBMgRRCPwHrJFVEjjaIbgCx6
+ +z+dtZNY63y+GmbGaFA00GTWoT86oHp7KCsEfU4=
+X-Received: by 2002:a5d:64e8:0:b0:3e2:da00:44af with SMTP id
+ ffacd0b85a97d-42567176bd3mr6732613f8f.36.1759691876213; 
+ Sun, 05 Oct 2025 12:17:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJ5rjni9bo30IHHcLhTA82S275kGX4b/FUvcD9MP6/vucT6O956k7TyKlugPcWM1NKXuR/6A==
+X-Received: by 2002:a5d:64e8:0:b0:3e2:da00:44af with SMTP id
+ ffacd0b85a97d-42567176bd3mr6732596f8f.36.1759691875588; 
+ Sun, 05 Oct 2025 12:17:55 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8b005dsm17262051f8f.25.2025.10.05.12.17.16
+ ffacd0b85a97d-4255d8f0853sm17787138f8f.50.2025.10.05.12.17.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:16 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:15 -0400
+ Sun, 05 Oct 2025 12:17:55 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:17:53 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- peng guo <engguopeng@buaa.edu.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 33/75] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU
-Message-ID: <d1193481dee63442fc41e47ca6ebc4cd34f1f69c.1759691708.git.mst@redhat.com>
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 50/75] memory: Adjust event ranges to fit within notifier
+ boundaries
+Message-ID: <2e4d32f0af7eaf87f556fb1fe802874c1b0a0799.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,105 +112,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: peng guo <engguopeng@buaa.edu.cn>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-When using a CXL Type 3 device together with a virtio 9p device in QEMU on a
-physical server, the 9p device fails to initialize properly. The kernel reports
-the following error:
+Invalidating the entire address space (i.e. range of [0, ~0ULL]) is a
+valid and required operation by vIOMMU implementations. However, such
+invalidations currently trigger an assertion unless they originate from
+device IOTLB invalidations.
 
-    virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
-    9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
+Although in recent Linux guests this case is not exercised by the VTD
+implementation due to various optimizations, the assertion will be hit
+by upcoming AMD vIOMMU changes to support DMA address translation. More
+specifically, when running a Linux guest with VFIO passthrough device,
+and a kernel that does not contain commmit 3f2571fed2fa ("iommu/amd:
+Remove redundant domain flush from attach_device()").
 
-Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-device was overlapped by the memory window allocated for the CXL devices. As a
-result, the kernel could not correctly access the BAR region, causing the
-virtio device to malfunction.
+Remove the assertion altogether and adjust the range to ensure it does
+not cross notifier boundaries.
 
-An excerpt from /proc/iomem shows:
-
-    480010000-cffffffff : CXL Window 0
-      480010000-4bfffffff : PCI Bus 0000:00
-      4c0000000-4c01fffff : PCI Bus 0000:0c
-        4c0000000-4c01fffff : PCI Bus 0000:0d
-      4c0200000-cffffffff : PCI Bus 0000:00
-        4c0200000-4c0203fff : 0000:00:03.0
-          4c0200000-4c0203fff : virtio-pci-modern
-
-To address this issue, this patch adds the reserved memory end calculation
-for cxl devices to reserve sufficient address space and ensure that CXL memory
-windows are allocated beyond all PCI 64-bit BARs. This prevents overlap with
-64-bit BARs regions such as those used by virtio or other pcie devices,
-resolving the conflict.
-
-QEMU Build Configuration:
-
-    ./configure --prefix=/home/work/qemu_master/build/ \
-                --target-list=x86_64-softmmu \
-                --enable-kvm \
-                --enable-virtfs
-
-QEMU Boot Command:
-
-    sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
-        -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
-        -hda /home/work/gp_qemu/rootfs.img \
-        -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
-        -kernel /home/work/linux_output/arch/x86/boot/bzImage \
-        --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
-        -object memory-backend-ram,id=vmem0,share=on,size=4096M \
-        -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-        -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
-        -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
-        -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-
-Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter")
-Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20201116165506.31315-6-eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
+Message-ID: <20250919213515.917111-2-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/pc.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ system/memory.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index bc048a6d13..eb36d50589 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -837,6 +837,7 @@ void pc_memory_init(PCMachineState *pcms,
-     hwaddr maxphysaddr, maxusedaddr;
-     hwaddr cxl_base, cxl_resv_end = 0;
-     X86CPU *cpu = X86_CPU(first_cpu);
-+    uint64_t res_mem_end;
- 
-     assert(machine->ram_size == x86ms->below_4g_mem_size +
-                                 x86ms->above_4g_mem_size);
-@@ -978,16 +979,17 @@ void pc_memory_init(PCMachineState *pcms,
- 
-     rom_set_fw(fw_cfg);
- 
--    if (machine->device_memory) {
--        uint64_t *val = g_malloc(sizeof(*val));
--        uint64_t res_mem_end;
-+    if (pcms->cxl_devices_state.is_enabled) {
-+        res_mem_end = cxl_resv_end;
-+    } else if (machine->device_memory) {
-+        res_mem_end = machine->device_memory->base
-+                      + memory_region_size(&machine->device_memory->mr);
-+    } else {
-+        res_mem_end = 0;
-+    }
- 
--        if (pcms->cxl_devices_state.is_enabled) {
--            res_mem_end = cxl_resv_end;
--        } else {
--            res_mem_end = machine->device_memory->base
--                          + memory_region_size(&machine->device_memory->mr);
--        }
-+    if (res_mem_end) {
-+        uint64_t *val = g_malloc(sizeof(*val));
-         *val = cpu_to_le64(ROUND_UP(res_mem_end, 1 * GiB));
-         fw_cfg_add_file(fw_cfg, "etc/reserved-memory-end", val, sizeof(*val));
+diff --git a/system/memory.c b/system/memory.c
+index cf8cad6961..5c6ccc5c57 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2044,13 +2044,9 @@ void memory_region_notify_iommu_one(IOMMUNotifier *notifier,
+         return;
      }
+ 
+-    if (notifier->notifier_flags & IOMMU_NOTIFIER_DEVIOTLB_UNMAP) {
+-        /* Crop (iova, addr_mask) to range */
+-        tmp.iova = MAX(tmp.iova, notifier->start);
+-        tmp.addr_mask = MIN(entry_end, notifier->end) - tmp.iova;
+-    } else {
+-        assert(entry->iova >= notifier->start && entry_end <= notifier->end);
+-    }
++    /* Crop (iova, addr_mask) to range */
++    tmp.iova = MAX(tmp.iova, notifier->start);
++    tmp.addr_mask = MIN(entry_end, notifier->end) - tmp.iova;
+ 
+     if (event->type & notifier->notifier_flags) {
+         notifier->notify(notifier, &tmp);
 -- 
 MST
 
