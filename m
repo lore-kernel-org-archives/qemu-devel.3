@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8578CCD182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE755CAC5B8
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFH-0001yb-9C; Sun, 05 Oct 2025 15:18:11 -0400
+	id 1v5UGZ-0006cD-MJ; Sun, 05 Oct 2025 15:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEj-00005Q-De
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFt-0004pr-7s
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEe-0006WA-Sz
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFm-0006fg-Pl
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691851;
+ s=mimecast20190719; t=1759691920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OKnItQYBTrXiPTFJBSTJGUjxT2lE7EF9Yn/LDwcOwGM=;
- b=Tyuz/SLbHQcpJCJEkmVOFZ3OlO4ckM/0VkuCxytT2YhOGKXCVTRCFgKZtvZt0giVptDfdf
- frAzqeTGPbRualiTQ+UyXOeEpfuTw05AmVCcJ5IxHKBbdSjUFuENgncQI6t1zRecrB+t9M
- G0i3hBKx8EnhXMkXJ56HPYy8E45iUqg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=one5aMpcdf5KTSY+OWTqXXbQYegt1IKrQftjUhBs24c=;
+ b=cILT/p6zxaFRJEK3sHK/6KK/S8LuhGN9pum9Lescfcd7sGTmQcqr/hZjvE2nGchV4NVcme
+ 5GNR5jNISfSF8NwS6q719Cs38NRH4lODYACQFubcB5+pmMM7QIWcE17xzPI6oaxBoeQogC
+ nngI1ovAvoWWn4opTDFO6rUnlW64V40=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-o6sV5EoXNGmpEI4kbzyHmQ-1; Sun, 05 Oct 2025 15:17:30 -0400
-X-MC-Unique: o6sV5EoXNGmpEI4kbzyHmQ-1
-X-Mimecast-MFC-AGG-ID: o6sV5EoXNGmpEI4kbzyHmQ_1759691849
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e35baddc1so22645465e9.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:30 -0700 (PDT)
+ us-mta-70-fX1WZsKlPuKnKk6qqJoZwQ-1; Sun, 05 Oct 2025 15:18:38 -0400
+X-MC-Unique: fX1WZsKlPuKnKk6qqJoZwQ-1
+X-Mimecast-MFC-AGG-ID: fX1WZsKlPuKnKk6qqJoZwQ_1759691918
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3efe4fcc9ccso2224259f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691849; x=1760296649;
+ d=1e100.net; s=20230601; t=1759691917; x=1760296717;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OKnItQYBTrXiPTFJBSTJGUjxT2lE7EF9Yn/LDwcOwGM=;
- b=CaVYb5nmP2VMtvdVPYg6FFgMLSPFjNgQqndFuT3EHZ31GQUwbCj/B63pgDQgEhvsxI
- kfjlWTf9ny9c7atz1OvLV1ns3s+kGeZpNr+B2AIEsTAqAoIXkErOh40ztQyiWodeK/nt
- iHvt5mhsVKDugW+kKdB+H+s4uHAPmUXIFWQHMm1qPWDAudwfBSzuv5L2zDTGkmAmJT0z
- zTArQbodV11mwg7Dea3rmFW8r1RWobcnJJVchne385BXrYxvRNugCw+WeOwa5ol4L5w5
- A42ibZH1kLkVCaWicsyd/m8mDH83NW1CF/SZhpGuuC8MnuyjQxVaYdPsFTAOlGKFmZrY
- IsZg==
-X-Gm-Message-State: AOJu0Ywbz9uQhHSxYbxjn1+g88vIXz3JsSaAEjmfHdFKfehcLeDWMy7U
- ZIS7aJC1gCrL2eb/e5qKlaZvvnPc1l8VkELuI0LsjtkPuEJxb//FSLt3Owhn3sZuevhG+c8vg/C
- TPZH3erJjDqiTjs6U4Fb3l7zxkrp88VJpAHu5iEqp4HbxJyT48XR6rO8hzBPSSn71xIq/807pYs
- RJtkUuy4bmh7USfhcuJ+LNwvpHfB8jctfbPw==
-X-Gm-Gg: ASbGncvqxWllN2BiIQAdhzELbuMUwTWBDWPvt4Ivxda+mjE17kaH8qpOwkQ2T+591AG
- d6Gxuvwh7SpPMyHByseQvGWMogYs3+0dhP3NaNHE37Pxycw6cZSzP86u5+PGvkR/my1+VR50rYs
- 6JLY5g1FG0MuFj38oDc9o6Te9iNaXU81Mi4iBipGKdE0rUh6k3COplQnyZbzof7X4OziScDZ0Qt
- wE//ml7JunbO/BYG0NufaSMy6tuajtJr98yKsHyfclq/bdJBz0Qn+WwDUd3J/qjzINeIqB2w5XM
- iHtwM8qJ05nV56LWNVoI6ILM4HOTqVwv/tpm0IU=
-X-Received: by 2002:a05:600c:3149:b0:46e:33b2:c8da with SMTP id
- 5b1f17b1804b1-46e7114829cmr57999995e9.32.1759691849154; 
- Sun, 05 Oct 2025 12:17:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4zTTH+d2bFR3+JzNmfeNs4T4/TmnBfZKwwYWYRt/p7obGkXFfF7XAkN+1Ryi6fd+ey1+9jA==
-X-Received: by 2002:a05:600c:3149:b0:46e:33b2:c8da with SMTP id
- 5b1f17b1804b1-46e7114829cmr57999785e9.32.1759691848535; 
- Sun, 05 Oct 2025 12:17:28 -0700 (PDT)
+ bh=one5aMpcdf5KTSY+OWTqXXbQYegt1IKrQftjUhBs24c=;
+ b=TljJYrypd/xMPqjsfmMSperaPncd+d63EPD9b1jt7lB48SmNrr1bdoWA7ZI0l+D62S
+ ubSe8dxPcZBIvbVUuh+voxvFK8ngom3Mb/8pwFq3dl/5YR25yDgBHWjDQNbA8j0o53F2
+ Yx7WqFjGAe4g6fZBrJZVs6ezein/Hziid3znerGo65JnTXqrlf1nXAsqFiNeA3XpktZb
+ ISPVWfxDCN/9u9jNj1Dbg6LBkY4KXwR51b0ojdgIF40h2gMDgV0VT0nSeNyCWtZBMvWT
+ k8i8DwN1wHxWME0oNBq8t5lmZLzVa17BttOGGw4bmr3P0oLcKD+iR2lBerwdhKoI8yzu
+ TMtg==
+X-Gm-Message-State: AOJu0Yz1cJ33mZmOEJc7LWPnmsUGxdPQ/i8fvpbBjZaB6Kg+mKVZnEqZ
+ 7iHJJ1WxInADuKwuqlJRR95FfE+lLxyPZaCSXt7k4DzZFYB9SWq4VGk6lBLhh4Sem0hCeypIzdN
+ JUZlowMyBpqBxtE7jhQfLU38aMLW0quimE63qbvt48I+N+6Kn5CivDtqrxDtV1SoM02n3xYGZoa
+ onBVr/J12OkrHlNz5tuYIoDNY8y6SS/OZDEw==
+X-Gm-Gg: ASbGncuZwmrUS65HXM6BlhAMZ2cNU8DKgmrgmKI1RVkJtw+JJfZV1FFzLEFfd6fJTa9
+ QIc7hYqGXx3x21k72A0Hnk+LbtGD2SxnsNUOjKfd93CdHFcYO5OThxoYHflQfK2BuuK8eDlOLZK
+ S/2LIyYXC/63JQ/c6Uy3wBOoTyXjJ+ywRg6Cwm5qsbF4SX58JNV3U0xcRuR9u8PyzHvlsTOOMQ8
+ vshvUWTD2tDJZroZmVtBAw1HWwUkKyhfzWzSKpmygdtoIGwfBHEet/2eXxh02eGYKTvbkX/hHyA
+ IlHXSxl+AZFmFbyphYgWsUYMeJzEARnPcUTPcvU=
+X-Received: by 2002:a05:6000:2212:b0:3ee:d165:2edd with SMTP id
+ ffacd0b85a97d-4256713fe43mr6044597f8f.28.1759691917180; 
+ Sun, 05 Oct 2025 12:18:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkbOrqWzWRnSQdIrcyW1mKsZwgVAOUEjk2e6LxwteV+8/Qn/cT39ijeAp3jRGIdUUtuCuftg==
+X-Received: by 2002:a05:6000:2212:b0:3ee:d165:2edd with SMTP id
+ ffacd0b85a97d-4256713fe43mr6044576f8f.28.1759691916606; 
+ Sun, 05 Oct 2025 12:18:36 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8ab8fdsm17343552f8f.15.2025.10.05.12.17.27
+ ffacd0b85a97d-4255d8f4abcsm17354316f8f.53.2025.10.05.12.18.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:28 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:26 -0400
+ Sun, 05 Oct 2025 12:18:36 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:34 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 38/75] intel_iommu: Bypass barrier wait descriptor
-Message-ID: <57ac646a2ecb2967c46febcfd0f40d396868b4dc.1759691708.git.mst@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 69/75] amd_iommu: Refactor amdvi_page_walk() to use common
+ code for page walk
+Message-ID: <ab8b7c78c265106dd53453bc7b8afa26203a4180.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -88,14 +88,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,39 +113,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-wait_desc with SW=0,IF=0,FN=1 must not be considered as an
-invalid descriptor as it is used to implement section 7.10 of
-the VT-d spec.
+Simplify amdvi_page_walk() by making it call the fetch_pte() helper that is
+already in use by the shadow page synchronization code. Ensures all code
+uses the same page table walking algorithm.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250901111630.1018573-3-clement.mathieu--drif@eviden.com>
+Message-ID: <20250919213515.917111-21-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/i386/amd_iommu.c | 77 ++++++++++++++++-----------------------------
+ 1 file changed, 27 insertions(+), 50 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 83c5e44413..4e7ad3a290 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2857,7 +2857,13 @@ static bool vtd_process_wait_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
-         vtd_generate_completion_event(s);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 1bda2a8ac3..b6851784fb 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -513,24 +513,6 @@ static inline uint8_t get_pte_translation_mode(uint64_t pte)
+     return (pte >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
+ }
+ 
+-static inline uint64_t pte_override_page_mask(uint64_t pte)
+-{
+-    uint8_t page_mask = 13;
+-    uint64_t addr = (pte & AMDVI_DEV_PT_ROOT_MASK) >> 12;
+-    /* find the first zero bit */
+-    while (addr & 1) {
+-        page_mask++;
+-        addr = addr >> 1;
+-    }
+-
+-    return ~((1ULL << page_mask) - 1);
+-}
+-
+-static inline uint64_t pte_get_page_mask(uint64_t oldlevel)
+-{
+-    return ~((1UL << ((oldlevel * 9) + 3)) - 1);
+-}
+-
+ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
+                                           uint16_t devid)
+ {
+@@ -1718,11 +1700,13 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
+                             IOMMUTLBEntry *ret, unsigned perms,
+                             hwaddr addr)
+ {
+-    unsigned level, present, pte_perms, oldlevel;
+-    uint64_t pte = dte[0], pte_addr, page_mask;
++    hwaddr page_mask, pagesize = 0;
++    uint8_t mode;
++    uint64_t pte;
++    int fetch_ret;
+ 
+     /* make sure the DTE has TV = 1 */
+-    if (!(pte & AMDVI_DEV_TRANSLATION_VALID)) {
++    if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID)) {
+         /*
+          * A DTE with V=1, TV=0 does not have a valid Page Table Root Pointer.
+          * An IOMMU processing a request that requires a table walk terminates
+@@ -1733,42 +1717,35 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
+         return;
      }
  
--    if (!(inv_desc->lo & (VTD_INV_DESC_WAIT_IF | VTD_INV_DESC_WAIT_SW))) {
+-    level = get_pte_translation_mode(pte);
+-    if (level >= 7) {
+-        trace_amdvi_mode_invalid(level, addr);
++    mode = get_pte_translation_mode(dte[0]);
++    if (mode >= 7) {
++        trace_amdvi_mode_invalid(mode, addr);
+         return;
+     }
+-    if (level == 0) {
++    if (mode == 0) {
+         goto no_remap;
+     }
+ 
+-    /* we are at the leaf page table or page table encodes a huge page */
+-    do {
+-        pte_perms = amdvi_get_perms(pte);
+-        present = pte & 1;
+-        if (!present || perms != (perms & pte_perms)) {
+-            amdvi_page_fault(as->iommu_state, as->devfn, addr, perms);
+-            trace_amdvi_page_fault(addr);
+-            return;
+-        }
+-        /* go to the next lower level */
+-        pte_addr = pte & AMDVI_DEV_PT_ROOT_MASK;
+-        /* add offset and load pte */
+-        pte_addr += ((addr >> (3 + 9 * level)) & 0x1FF) << 3;
+-        pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
+-        if (!pte) {
+-            return;
+-        }
+-        oldlevel = level;
+-        level = get_pte_translation_mode(pte);
+-    } while (level > 0 && level < 7);
++    /* Attempt to fetch the PTE to determine if a valid mapping exists */
++    fetch_ret = fetch_pte(as, addr, dte[0], &pte, &pagesize);
+ 
+-    if (level == 0x7) {
+-        page_mask = pte_override_page_mask(pte);
+-    } else {
+-        page_mask = pte_get_page_mask(oldlevel);
 +    /*
-+     * SW=0, IF=0, FN=1 is also a valid descriptor (VT-d 7.10)
-+     * Nothing to do as we process the descriptors in order
++     * If walking the page table results in an error of any type, returns an
++     * empty PTE i.e. no mapping, or the permissions do not match, return since
++     * there is no translation available.
 +     */
++    if (fetch_ret < 0 || !IOMMU_PTE_PRESENT(pte) ||
++        perms != (perms & amdvi_get_perms(pte))) {
 +
-+    if (!(inv_desc->lo & (VTD_INV_DESC_WAIT_IF | VTD_INV_DESC_WAIT_SW |
-+                                                 VTD_INV_DESC_WAIT_FN))) {
-         error_report_once("%s: invalid wait desc: hi=%"PRIx64", lo=%"PRIx64
-                           " (unknown type)", __func__, inv_desc->hi,
-                           inv_desc->lo);
++        amdvi_page_fault(as->iommu_state, as->devfn, addr, perms);
++        trace_amdvi_page_fault(addr);
++        return;
+     }
+ 
++    /* A valid PTE and page size has been retrieved */
++    assert(pagesize);
++    page_mask = ~(pagesize - 1);
++
+     /* get access permissions from pte */
+     ret->iova = addr & page_mask;
+     ret->translated_addr = (pte & AMDVI_DEV_PT_ROOT_MASK) & page_mask;
+@@ -1780,7 +1757,7 @@ no_remap:
+     ret->iova = addr & AMDVI_PAGE_MASK_4K;
+     ret->translated_addr = addr & AMDVI_PAGE_MASK_4K;
+     ret->addr_mask = ~AMDVI_PAGE_MASK_4K;
+-    ret->perm = amdvi_get_perms(pte);
++    ret->perm = amdvi_get_perms(dte[0]);
+ }
+ 
+ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
 -- 
 MST
 
