@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD92CCA472
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082E8CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UG5-0004wf-JV; Sun, 05 Oct 2025 15:19:01 -0400
+	id 1v5UDw-0007cW-JL; Sun, 05 Oct 2025 15:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFQ-0002Rv-OC
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDt-0007Zh-GV
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFN-0006bh-FN
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDr-0006P4-DH
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691896;
+ s=mimecast20190719; t=1759691802;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+0h9FTrsqm/g/IFQsQ8t5vQ0TqkRAGX49Oc6QIoc2zU=;
- b=fFfKuH7W0+gApFj/LUDzNq7IA3l6vngQ5AhxD/rXUH2SgTWxivR2TPD1Ajf0leDLzhfM2I
- wQC4SokUXHI1zWSXqQplubFrspRAlIEgR2Ryb0zsyIOref5if96g8C01us5K0Tr15YuMtH
- 61rnNYDLI3F1mNyBrC0aGkKC9+6gaRs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=G3bx+7LM3Llba1e5OHMznPMG9tdv+rmdE+oLgoJki90=;
+ b=d4nVmTXA5SIkipd6Nnrkk7vz0Cmu94ymV3XuMo2MJF8LuC0cjCY7nEYs7tAg53khbBOfDV
+ jdfzCewDF1aHKhmE04l9233TfA1j28bjLcI/J1mJj5ZOBtmpTOy3GVnopa2w9ap/JJg9DX
+ vEfSkkvGhxi6Euck2KCB0zAbxG6hJiE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-wwPX6j4dO0G7fy4ypblObQ-1; Sun, 05 Oct 2025 15:18:15 -0400
-X-MC-Unique: wwPX6j4dO0G7fy4ypblObQ-1
-X-Mimecast-MFC-AGG-ID: wwPX6j4dO0G7fy4ypblObQ_1759691894
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3ee12ab7f33so2159564f8f.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:14 -0700 (PDT)
+ us-mta-343-te7Wj2WzM8-5oubIoZENBA-1; Sun, 05 Oct 2025 15:16:41 -0400
+X-MC-Unique: te7Wj2WzM8-5oubIoZENBA-1
+X-Mimecast-MFC-AGG-ID: te7Wj2WzM8-5oubIoZENBA_1759691800
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42557bdbe50so2378861f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691894; x=1760296694;
+ d=1e100.net; s=20230601; t=1759691800; x=1760296600;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+0h9FTrsqm/g/IFQsQ8t5vQ0TqkRAGX49Oc6QIoc2zU=;
- b=aLwoQWS5PHjv+rTatCrn0d7QbGeEAw25A8L6QmPF3oNI/EQQOYNduLzSUdGV5WU0kR
- 962Kml8lNKOBkbjOKEEcAW4Jcg/+c5J/O9Mkniyq6/4p2awl7tRGIa29FvjESmidyDSC
- Tq9EGuPZ81+ml4chU2INbTLiGG3UVpLlWq5kWl7vd54zJRpAIPqYicfEQ7ciIVRuNFxD
- VnpALdr9TlAtHVjL8tsTfMzTBA9DqoBXaKXXhq7VJmM9bUxv8eYRbq2FaynvhLfZvrfu
- hmTAuZmUDUJQD/4GIxWGOOM01LAZvOU0g4ePxtlfNNKN/cK1u+9Cgjf37mcJXyFInmYf
- y2aQ==
-X-Gm-Message-State: AOJu0Yxrw7OST51Y8AsB9pPoQTjd/Hoqr8Pr/+d+omtaQqKEs8sScQ/h
- DBSmPqMfIUbVUtUeaGgVksepwDDyYUffkeY1UrNPSYLUgFokQHf+bfsdBKMZdmkxxWjiyBYlFQ8
- l/ynLH0kRSVVYYQd2dLwtVcOw4EDj8OY/+a2ysrbA+TcPiH87l0IISgTB12NdoDAy667vgOfeBN
- hO+V9Ed0L4KoAZ1SWEe4GWp9cmJt6TQojeZQ==
-X-Gm-Gg: ASbGncsgoQ+CBRhXwpHq/OztJzlX7gS73FiCPK/EkJMsNPJY8pgSvKhWcGHVSYHM12s
- oK0QuEBfEUu/SAAHR1LnsVzE4FhossBT0j+W0zdi4NAgxfGuqQ+kFeEUpOKqAvmqagOEWcNccWc
- G6Cod1QkYVqOKNaxUD6+1gqYLT9SmMKRBurnkYyu/R8A8TgbWsAGpFDDRdII1FhIF1nP2VHMuRf
- 1OLpUtGWMfS0Wo+rF+FKOn/VtdjiW8RZuRKVrV6a+ps6Pl98tzb9HIx5lDYln0CPhWbyOKW6uW/
- vQfrNloECKmdx6RRHjYTDqd3QA1Sv6TgklLGj7U=
-X-Received: by 2002:a05:6000:2287:b0:3ec:dc9d:bfcd with SMTP id
- ffacd0b85a97d-425671c8e29mr6571893f8f.63.1759691893529; 
- Sun, 05 Oct 2025 12:18:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGL2HBwSu01KsmCEmh/1Yz/m4hN2iR8zjs/od1K9bPylvxZTcm+UyNQRCkNCBAoCoj1hnK/RQ==
-X-Received: by 2002:a05:6000:2287:b0:3ec:dc9d:bfcd with SMTP id
- ffacd0b85a97d-425671c8e29mr6571876f8f.63.1759691892936; 
- Sun, 05 Oct 2025 12:18:12 -0700 (PDT)
+ bh=G3bx+7LM3Llba1e5OHMznPMG9tdv+rmdE+oLgoJki90=;
+ b=RpJkjUA+7BZFhZaAk52yQMg1su24sOv8V0vqwUS0MuQ23hKGqvZ5LxtTQBd7tXhsHc
+ 6HYZSILlJxAknqHGaSRlK5vJsdleHBD3SjrqAB2TI2/E/D2qi61nk8PcVyDP7hpblaNd
+ qfpOy6USl+jYGzaSjz3M9OPBwu1piwBrltBnvUcjSPki3BWp+paHLv5u1ciRbzYbKx7Y
+ aslYMrcZJQlu13QuJasY1bPgpA8QInslziDHT26eBN024c96Utn9yG8sPgIKtaBUyPVp
+ dAP9HkDTOp/77Wi1lSAgtI6JOaYfMqWITbwaG5WxaQSDGV9Yknd591pywwa/GekEqUQE
+ jr8Q==
+X-Gm-Message-State: AOJu0YwavB5hJvuVZ/xIRco+TJ1enrvat2CQuh/uV4jyZ8lEWEvo3GkF
+ +aLiGt0y7TE09ZUAocFer7nFquJpIPncWUZxmpjXtxZdexNbqO5aC4SruyBWSQ4jCIKlByETqP7
+ sHs8nL5UDITVHUuTfGkK0/KvonwY78YW9juNubQSLxTeKkmnMHdQ4vm4zhccUvAQrWnXJf517cs
+ xTn7p+gcM3pib30zWv9gvwM9CTWERpJszc2A==
+X-Gm-Gg: ASbGnctkbEockRWVIK/J4ZrxiSqT7bab9T+icy7qNleVRSZpCjE4TIL6synkfDn+Iyt
+ Awa6eUTLogEFKklcgcnOFkQY6q8Kf8faUeqc6a/yhcQgAVKeS55hPg6ULnn1e5Wwm0KO2xUcvMe
+ 7MAZZZ3ecVh877X927EQH+1ohHqcTdhQQf6bd5g8yqsEyv+L7PHCjDWfg4iX6fCcrXoAYmhokI6
+ H0ZVAeLALd2+eBZsBNAh5quQB7AKX0mCVjSg9uU/VFBlrmqTsKjyf/wP+jos95mXqEv2GCGUGcZ
+ mbg35+ImaW/T5FT0HqeLIrsiIU9cQf6XBsjHH9c=
+X-Received: by 2002:a05:600c:6b70:b0:46e:33ed:bca4 with SMTP id
+ 5b1f17b1804b1-46e68c0753amr67499645e9.15.1759691799718; 
+ Sun, 05 Oct 2025 12:16:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEuGB3l3pIDXSGVrRuUrUnctbOBh/MSrjC9rDycwWkkElXPcoaV30umY+0jkaNBvq5iVZK9zA==
+X-Received: by 2002:a05:600c:6b70:b0:46e:33ed:bca4 with SMTP id
+ 5b1f17b1804b1-46e68c0753amr67499405e9.15.1759691799158; 
+ Sun, 05 Oct 2025 12:16:39 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e619b86e1sm216945195e9.5.2025.10.05.12.18.11
+ 5b1f17b1804b1-46f9c8873f1sm22226505e9.8.2025.10.05.12.16.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:18:12 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:18:11 -0400
+ Sun, 05 Oct 2025 12:16:38 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 58/75] amd_iommu: Add basic structure to support IOMMU
- notifier updates
-Message-ID: <325b2562600e0c25e4fe172d1a1e9499fc854250.1759691708.git.mst@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+Subject: [PULL 16/75] acpi/ghes: Cleanup the code which gets ghes ged state
+Message-ID: <1547c5a5ff894eac9d3666ded3cbf80ce82a28e4.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -113,91 +113,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Add the minimal data structures required to maintain a list of address
-spaces (i.e. devices) with registered notifiers, and to update the type of
-events that require notifications.
-Note that the ability to register for MAP notifications is not available.
-It will be unblocked by following changes that enable the synchronization of
-guest I/O page tables with host IOMMU state, at which point an amd-iommu
-device property will be introduced to control this capability.
+Move the check logic into a common function and simplify the
+code which checks if GHES is enabled and was properly setup.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-10-alejandro.j.jimenez@oracle.com>
+Message-ID: <2bbb1d3eb88b0a668114adef2f1c2a94deebba0e.1758610789.git.mchehab+huawei@kernel.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.h |  3 +++
- hw/i386/amd_iommu.c | 20 ++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ include/hw/acpi/ghes.h | 14 +++++++-------
+ hw/acpi/ghes-stub.c    |  7 ++++---
+ hw/acpi/ghes.c         | 38 +++++++++++---------------------------
+ target/arm/kvm.c       |  7 +++++--
+ 4 files changed, 27 insertions(+), 39 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 9f833b297d..b51aa74368 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -409,6 +409,9 @@ struct AMDVIState {
-     /* for each served device */
-     AMDVIAddressSpace **address_spaces[PCI_BUS_MAX];
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 39619a2457..f96ac3e85c 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -66,7 +66,6 @@ enum {
  
-+    /* list of address spaces with registered notifiers */
-+    QLIST_HEAD(, AMDVIAddressSpace) amdvi_as_with_notifiers;
-+
-     /* IOTLB */
-     GHashTable *iotlb;
+ typedef struct AcpiGhesState {
+     uint64_t hw_error_le;
+-    bool present; /* True if GHES is present at all on this board */
+ } AcpiGhesState;
  
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 0e45435c77..d8a451b3a5 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -66,6 +66,11 @@ struct AMDVIAddressSpace {
-     MemoryRegion iommu_nodma;   /* Alias of shared nodma memory region  */
-     MemoryRegion iommu_ir;      /* Device's interrupt remapping region  */
-     AddressSpace as;            /* device's corresponding address space */
-+
-+    /* DMA address translation support */
-+    IOMMUNotifierFlag notifier_flags;
-+    /* entry in list of Address spaces with registered notifiers */
-+    QLIST_ENTRY(AMDVIAddressSpace) next;
- };
+ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+@@ -74,15 +73,16 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+                      const char *oem_id, const char *oem_table_id);
+ void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+                           GArray *hardware_errors);
+-int acpi_ghes_memory_errors(uint16_t source_id, uint64_t error_physical_addr);
+-void ghes_record_cper_errors(const void *cper, size_t len,
++int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
++                            uint64_t error_physical_addr);
++void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+                              uint16_t source_id, Error **errp);
  
- /* AMDVI cache entry */
-@@ -1773,6 +1778,7 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
-         iommu_as[devfn]->bus_num = (uint8_t)bus_num;
-         iommu_as[devfn]->devfn = (uint8_t)devfn;
-         iommu_as[devfn]->iommu_state = s;
-+        iommu_as[devfn]->notifier_flags = IOMMU_NOTIFIER_NONE;
+ /**
+- * acpi_ghes_present: Report whether ACPI GHES table is present
++ * acpi_ghes_get_state: Get a pointer for ACPI ghes state
+  *
+- * Returns: true if the system has an ACPI GHES table and it is
+- * safe to call acpi_ghes_memory_errors() to record a memory error.
++ * Returns: a pointer to ghes state if the system has an ACPI GHES table,
++ * NULL, otherwise.
+  */
+-bool acpi_ghes_present(void);
++AcpiGhesState *acpi_ghes_get_state(void);
+ #endif
+diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+index 7cec1812da..40f660c246 100644
+--- a/hw/acpi/ghes-stub.c
++++ b/hw/acpi/ghes-stub.c
+@@ -11,12 +11,13 @@
+ #include "qemu/osdep.h"
+ #include "hw/acpi/ghes.h"
  
-         amdvi_dev_as = iommu_as[devfn];
- 
-@@ -1846,6 +1852,7 @@ static int amdvi_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
-                                            Error **errp)
+-int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
++                            uint64_t physical_address)
  {
-     AMDVIAddressSpace *as = container_of(iommu, AMDVIAddressSpace, iommu);
-+    AMDVIState *s = as->iommu_state;
+     return -1;
+ }
  
-     if (new & IOMMU_NOTIFIER_MAP) {
-         error_setg(errp,
-@@ -1854,6 +1861,19 @@ static int amdvi_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
-                    PCI_FUNC(as->devfn));
-         return -EINVAL;
+-bool acpi_ghes_present(void)
++AcpiGhesState *acpi_ghes_get_state(void)
+ {
+-    return false;
++    return NULL;
+ }
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index b709c177cd..84b891fd3d 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -360,18 +360,12 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+     /* Create a read-write fw_cfg file for Address */
+     fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+         NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+-
+-    ags->present = true;
+ }
+ 
+ static void get_hw_error_offsets(uint64_t ghes_addr,
+                                  uint64_t *cper_addr,
+                                  uint64_t *read_ack_register_addr)
+ {
+-    if (!ghes_addr) {
+-        return;
+-    }
+-
+     /*
+      * non-HEST version supports only one source, so no need to change
+      * the start offset based on the source ID. Also, we can't validate
+@@ -390,35 +384,20 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+     *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+ }
+ 
+-void ghes_record_cper_errors(const void *cper, size_t len,
++void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+     uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
+-    AcpiGedState *acpi_ged_state;
+-    AcpiGhesState *ags;
+ 
+     if (len > ACPI_GHES_MAX_RAW_DATA_LENGTH) {
+         error_setg(errp, "GHES CPER record is too big: %zd", len);
+         return;
      }
-+
-+    /*
-+     * Update notifier flags for address space and the list of address spaces
-+     * with registered notifiers.
-+     */
-+    as->notifier_flags = new;
-+
-+    if (old == IOMMU_NOTIFIER_NONE) {
-+        QLIST_INSERT_HEAD(&s->amdvi_as_with_notifiers, as, next);
-+    } else if (new == IOMMU_NOTIFIER_NONE) {
-+        QLIST_REMOVE(as, next);
-+    }
-+
+ 
+-    acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+-                                                       NULL));
+-    if (!acpi_ged_state) {
+-        error_setg(errp, "Can't find ACPI_GED object");
+-        return;
+-    }
+-    ags = &acpi_ged_state->ghes_state;
+-
+     assert(ACPI_GHES_ERROR_SOURCE_COUNT == 1);
+     get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
+                          &cper_addr, &read_ack_register_addr);
+ 
+-    if (!cper_addr) {
+-        error_setg(errp, "can not find Generic Error Status Block");
+-        return;
+-    }
+-
+     cpu_physical_memory_read(read_ack_register_addr,
+                              &read_ack_register, sizeof(read_ack_register));
+ 
+@@ -444,7 +423,8 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     return;
+ }
+ 
+-int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
++                            uint64_t physical_address)
+ {
+     /* Memory Error Section Type */
+     const uint8_t guid[] =
+@@ -470,7 +450,7 @@ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+     acpi_ghes_build_append_mem_cper(block, physical_address);
+ 
+     /* Report the error */
+-    ghes_record_cper_errors(block->data, block->len, source_id, &errp);
++    ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
+ 
+     g_array_free(block, true);
+ 
+@@ -482,7 +462,7 @@ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
      return 0;
  }
  
+-bool acpi_ghes_present(void)
++AcpiGhesState *acpi_ghes_get_state(void)
+ {
+     AcpiGedState *acpi_ged_state;
+     AcpiGhesState *ags;
+@@ -491,8 +471,12 @@ bool acpi_ghes_present(void)
+                                                        NULL));
+ 
+     if (!acpi_ged_state) {
+-        return false;
++        return NULL;
+     }
+     ags = &acpi_ged_state->ghes_state;
+-    return ags->present;
++
++    if (!ags->hw_error_le) {
++        return NULL;
++    }
++    return ags;
+ }
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index b8a1c071f5..891d4fcde9 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2433,10 +2433,12 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+ {
+     ram_addr_t ram_addr;
+     hwaddr paddr;
++    AcpiGhesState *ags;
+ 
+     assert(code == BUS_MCEERR_AR || code == BUS_MCEERR_AO);
+ 
+-    if (acpi_ghes_present() && addr) {
++    ags = acpi_ghes_get_state();
++    if (ags && addr) {
+         ram_addr = qemu_ram_addr_from_host(addr);
+         if (ram_addr != RAM_ADDR_INVALID &&
+             kvm_physical_memory_addr_from_host(c->kvm_state, addr, &paddr)) {
+@@ -2454,7 +2456,8 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+              */
+             if (code == BUS_MCEERR_AR) {
+                 kvm_cpu_synchronize_state(c);
+-                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
++                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SEA,
++                                             paddr)) {
+                     kvm_inject_arm_sea(c);
+                 } else {
+                     error_report("failed to record the error");
 -- 
 MST
 
