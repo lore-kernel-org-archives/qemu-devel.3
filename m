@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D9ACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828F6CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Run-0000AW-RZ; Sun, 05 Oct 2025 12:48:53 -0400
+	id 1v5RuY-00005M-Uj; Sun, 05 Oct 2025 12:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Ruk-00009K-Rt; Sun, 05 Oct 2025 12:48:50 -0400
+ id 1v5RuV-0008WT-IG; Sun, 05 Oct 2025 12:48:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Rui-00073g-1i; Sun, 05 Oct 2025 12:48:50 -0400
+ id 1v5RuT-00071h-2m; Sun, 05 Oct 2025 12:48:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7B02815AA2E;
- Sun, 05 Oct 2025 19:48:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A0FB915AA2A;
+ Sun, 05 Oct 2025 19:48:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F2B5E2996EC;
- Sun,  5 Oct 2025 19:48:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5F70F2996E8;
+ Sun,  5 Oct 2025 19:48:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Fabian Vogt <fvogt@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Gautam Menghani <gautam@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 67/81] ui/icons/qemu.svg: Add metadata information
- (author, license) to the logo
-Date: Sun,  5 Oct 2025 19:47:47 +0300
-Message-ID: <20251005164822.442861-7-mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 63/81] hw/intc/xics: Add missing call to register
+ vmstate_icp_server
+Date: Sun,  5 Oct 2025 19:47:43 +0300
+Message-ID: <20251005164822.442861-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
@@ -62,55 +64,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Fabian Vogt <fvogt@suse.de>
 
-We've got two versions of the QEMU logo in the repository, one with
-the whole word "QEMU" (pc-bios/qemu_logo.svg) and one that only contains
-the letter "Q" (ui/icons/qemu.svg). While qemu_logo.svg contains the
-proper metadata with license and author information, this is missing
-from the ui/icons/qemu.svg file. Copy the meta data there so that
-people have a chance to know the license of the file if they only
-look at the qemu.svg file.
+An obsolete wrapper function with a workaround was removed entirely,
+without restoring the call it wrapped.
 
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3139
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20250930071419.117592-1-thuth@redhat.com>
-(cherry picked from commit 9163424c50981dbc4ded9990228ac01a3b193656)
+Without this, the guest is stuck after savevm/loadvm.
+
+Fixes: 24ee9229fe31 ("ppc/spapr: remove deprecated machine pseries-2.9")
+Signed-off-by: Fabian Vogt <fvogt@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/6187781.lOV4Wx5bFT@fvogt-thinkpad
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250819223905.2247-2-farosas@suse.de
+Message-ID: <20250819223905.2247-2-farosas@suse.de>
+(cherry picked from commit f5738aedc21790bd07dbead6b6272a605d5c1138)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg
-index 24ca23a1e9..f2500de339 100644
---- a/ui/icons/qemu.svg
-+++ b/ui/icons/qemu.svg
-@@ -918,7 +918,26 @@
-         <dc:format>image/svg+xml</dc:format>
-         <dc:type
-            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
--        <dc:title />
-+        <dc:title>Kew the Angry Emu</dc:title>
-+        <dc:creator>
-+          <cc:Agent>
-+            <dc:title>Benoît Canet</dc:title>
-+          </cc:Agent>
-+        </dc:creator>
-+        <dc:rights>
-+          <cc:Agent>
-+            <dc:title>CC BY 3.0</dc:title>
-+          </cc:Agent>
-+        </dc:rights>
-+        <dc:publisher>
-+          <cc:Agent>
-+            <dc:title>QEMU Community</dc:title>
-+          </cc:Agent>
-+        </dc:publisher>
-+        <dc:date>2012-02-15</dc:date>
-+        <cc:license
-+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
-+        <dc:source>https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865.html</dc:source>
-       </cc:Work>
-     </rdf:RDF>
-   </metadata>
+diff --git a/hw/intc/xics.c b/hw/intc/xics.c
+index d9a199e883..200710eb6c 100644
+--- a/hw/intc/xics.c
++++ b/hw/intc/xics.c
+@@ -335,6 +335,8 @@ static void icp_realize(DeviceState *dev, Error **errp)
+             return;
+         }
+     }
++
++    vmstate_register(NULL, icp->cs->cpu_index, &vmstate_icp_server, icp);
+ }
+ 
+ static void icp_unrealize(DeviceState *dev)
 -- 
 2.47.3
 
