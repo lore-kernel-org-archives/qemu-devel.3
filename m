@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9124ACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BD2CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFh-0003q7-VC; Sun, 05 Oct 2025 15:18:37 -0400
+	id 1v5UFg-0003hD-Ue; Sun, 05 Oct 2025 15:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFK-0002ET-LE
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFa-00036k-Fc
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFA-0006aG-U9
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFX-0006e1-G4
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691876;
+ s=mimecast20190719; t=1759691906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V41Pc7wPc/h125DbvUzzUxYHsFmka0IFpApuuOm1N4U=;
- b=V84VjRMCWozokdnWuuw6jdhR10KhsZUyVw/uVyxxNQ1vLxPGiB8dxNW7rKu8rHmjPaRWd1
- /mjQmtrYQUcG6+d53eDOIAVvuC2O3QxaG7U9C/5+at7XP8x5H44/dVddQkyh3X0tzUnanK
- 3Ic5qzOvhMj4tIQCnDNC7Vpx1SUYFgg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7VfnG8rVkzTSwB5pyBpyj7JN89vPRfbgI61K8aW5ts8=;
+ b=T6c2mqjvh/ZlvSfAPKkKmVTckjTEM9qlnfPhI67h12r091ez+nI8sdjNdTDMjcu5hY1dJz
+ Y93W0xCHpCqDXtMwHD3XFmcmd2hO9XrTWjSiAUudojlGj2NHS2VVFj6ouFWPlHPoY3S9zq
+ qpBlaXdGG/eEhdFOzEnUPZ0zacBFMuo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-ugGbudLiMTavVOHn-MuuXw-1; Sun, 05 Oct 2025 15:17:55 -0400
-X-MC-Unique: ugGbudLiMTavVOHn-MuuXw-1
-X-Mimecast-MFC-AGG-ID: ugGbudLiMTavVOHn-MuuXw_1759691874
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3e997eb7232so1744325f8f.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:55 -0700 (PDT)
+ us-mta-532-KiecCtItOUumD0y_oIvSlg-1; Sun, 05 Oct 2025 15:18:25 -0400
+X-MC-Unique: KiecCtItOUumD0y_oIvSlg-1
+X-Mimecast-MFC-AGG-ID: KiecCtItOUumD0y_oIvSlg_1759691904
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4256fae4b46so848999f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691874; x=1760296674;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V41Pc7wPc/h125DbvUzzUxYHsFmka0IFpApuuOm1N4U=;
- b=dpvW9XMRHML7Ykxbd2RkSUlDMAfw1KCWWysMy0Aaqg+5jBctm2ypqo0LnH/hvroDu1
- QODBq5lbbcvKjcgz/WlYk5J7kHePkhUpM8czfl4wSS0LTOfyevFvbrpjMbdpU/3lXXwl
- BnerLJw7Hxdy0CjBM3jwswpPRmCkpObStuyM06TBRzhRNhrmbnjcOtxJ0bVFagZiGWx/
- f/0zOTetZY2vSP35P73kwDWuFObIb1fz8Z4J9szZmvSHFRR0S2NnBI7yCta3YTnngTz+
- Q+iqqost0gfP2UvnTQKlUsy9Z9crLMZyjm7+XVUShk3dzaW1LrzL+Uv4QP4/xplxuV1Z
- DD8g==
-X-Gm-Message-State: AOJu0YwzXOvHvwzoVle91XNfE2OXZBV2EFjSGEFLG6Y5/OO74WmQpiO2
- /0yRNBlLrrdEYLCFBsmifOhsFy2KDHenHey3mvxKzixmAmyHqAt8nnDPuIqmIyriHB7DEWPG1kF
- SMc99I1jE05zqhIQ8nlub9jgnETO5WHig6sv2KOcZaQ/RQRoQrIjhdfN2/GDPTqoOnxlxnwdBl8
- /+J7BZopdOE5bkIJEz3BqWh+dIYZGaBC4Tng==
-X-Gm-Gg: ASbGncs/L6Z/mZIbk+WAbWx4/YLyDIBRqEOAzIiDKfKHd9vjyqD533KYyGuJmhezNDP
- tVMdCbs6a9iYiYZEH0VHrTHXA2MW7i4VJyxbkUTTY3GV+H6xdwp/a8ij+UjWk3z6w1EPvOAyD4J
- dgV0VPeYlC3BTiBMiaRQOARkDIZlR6rYH/x/hRFWLjorWc7fMbwBooic8FYZp+nYWOMz6PqjwI0
- TtHgpH/HQc39n1bJOA5w1vDble4A1o3OKvtG4cv701dSqliLkC98w12KV7A3SOjqUGGCZ9cS5Sm
- ULlqWpV6UrZQtLKPEb7BYVhcbr+xmrnORDsL3AY=
-X-Received: by 2002:a05:600c:1d1c:b0:45b:8a0e:cda9 with SMTP id
- 5b1f17b1804b1-46e71111c47mr59682655e9.2.1759691874025; 
- Sun, 05 Oct 2025 12:17:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGzex29tHDkjGvIUtPCv211VFdOMqX8odJvw1GLdsqOdrJsVU0+KBCad2lbwWPJN2LkXXkPA==
-X-Received: by 2002:a05:600c:1d1c:b0:45b:8a0e:cda9 with SMTP id
- 5b1f17b1804b1-46e71111c47mr59682515e9.2.1759691873501; 
- Sun, 05 Oct 2025 12:17:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759691904; x=1760296704;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7VfnG8rVkzTSwB5pyBpyj7JN89vPRfbgI61K8aW5ts8=;
+ b=J6aSoA5fhIBVhTsnhUhNN3xDslUwDBrDMwBcvH6Q5g/ppmntGC3wWXGEEfEnKduMN3
+ NkXeQYw9PGVcUD7SXDIFE/JaLo1k5Bq4mKphr2oMqJdoBfMVBHpX8o+cmYQzfNw3wjTi
+ dchj+dKAFeJHn69T00/p0Qa0KeGVDd7n3lLwdqpduuUcPSzaaCq1KpjpesS4BR3soA1m
+ HFRe5aL9b6cRouPDu5spIUJLrFmV3XwsfRVyxbctgxx3f9kkiou3JHa8LguVLCl1hpNI
+ EdBHanBMsk0qz6J+226OED+aLJzecG8P4v2MCyDku/qP9QSw89fMdpGYcJebtVJ1gd3s
+ u2Hw==
+X-Gm-Message-State: AOJu0YyG9JriEOslw7J5am32JBNHxZezoYCpBJNVqXdWdflIODwaUasI
+ DMbpJtL085/aTU4Zypyi7bmSjedFbFR/Tj1VxBeUK5RBo1yuR0hIGXj6BtfWNalb+hRRz6OmzTD
+ pvdZYKXV+VIe/0pqLAkWIIbi5rvYls6YVd6nF/jJUaXmz5sWz0R3TIDr9QGG9DvEz64AgRs7pWt
+ CiZlqQn/Nzma8pi/IeElWKbf7wT3leG++rnQ==
+X-Gm-Gg: ASbGncuMXg4qYZxiH1fSuf9jr4hJ/6ABkf/HqVt7/uZz3FWnrGl+AnTzIRrYUlCl4rC
+ p2XfZfHkVmQCnSANmQXdV1bZLS3EPiMi/1Mi1n2sLP8Iz8dw/rHX1x3ysNu8+FAgtbjppt9IP1v
+ pWaQCtwENTx6Jg2kSqVjJGgCKzqFHKHmvq/czwasA0slbs8uyLtaPEK1gZMq3RJ7RfN0xBsisFV
+ 32SdQkH/rPdh34PX6TtsFoVIvY0oMzou5Ere0/dePWN3seLcxIEHoXxILn8reo4ysVMWJ3+yy57
+ 6pE6QOMBaNGKeNSEy2kF7usDRzDhSctH6oxT+5M=
+X-Received: by 2002:a05:600c:64c4:b0:46d:45e:3514 with SMTP id
+ 5b1f17b1804b1-46e7114310amr81618325e9.17.1759691903992; 
+ Sun, 05 Oct 2025 12:18:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYy9J2pPqOK7HUQemuxKAFiedY9kKOHYQvCRO2hjIuJOlpQcg9wOAEEzEGXZMHC62Z6SL8Zw==
+X-Received: by 2002:a05:600c:64c4:b0:46d:45e:3514 with SMTP id
+ 5b1f17b1804b1-46e7114310amr81618115e9.17.1759691903388; 
+ Sun, 05 Oct 2025 12:18:23 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e72374b8dsm137218675e9.19.2025.10.05.12.17.52
+ 5b1f17b1804b1-46e61a4161bsm234336385e9.16.2025.10.05.12.18.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:53 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:51 -0400
+ Sun, 05 Oct 2025 12:18:22 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alessandro Ratti <alessandro@0x65c.net>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 49/75] virtio: Add function name to error messages
-Message-ID: <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 63/75] amd_iommu: Invalidate address translations on
+ INVALIDATE_IOMMU_ALL
+Message-ID: <560e604db9d55a1d7fde5a8b6de001367b8376f8.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -112,77 +113,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alessandro Ratti <alessandro@0x65c.net>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-Replace virtio_error() with a macro that automatically prepends the
-calling function name to error messages. This provides better context
-for debugging virtio issues by showing exactly which function
-encountered the error.
+When the kernel IOMMU driver issues an INVALIDATE_IOMMU_ALL, the address
+translation and interrupt remapping information must be cleared for all
+Device IDs and all domains. Introduce a helper to sync the shadow page table
+for all the address spaces with registered notifiers, which replays both MAP
+and UNMAP events.
 
-Before: "Invalid queue size: 1024"
-After:  "virtio_queue_set_num: Invalid queue size: 1024"
-
-The implementation uses a macro to insert __func__ at compile time,
-avoiding any runtime overhead while providing more specific error
-context than a generic "virtio:" prefix.
-
-Also remove manual __func__ usage in virtio-balloon to avoid duplicate
-function names in error messages.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
-Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
+Message-ID: <20250919213515.917111-15-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio.h | 4 +++-
- hw/virtio/virtio-balloon.c | 2 +-
- hw/virtio/virtio.c         | 3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ hw/i386/amd_iommu.c | 48 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index d97529c3f1..695bb56186 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size);
- 
- void virtio_cleanup(VirtIODevice *vdev);
- 
--void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
-+#define virtio_error(vdev, fmt, ...) \
-+    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
-+void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
- 
- /* Set the child bus name. */
- void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name);
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index db787d00b3..e443f71c01 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWithReturn *n, void *data,
-     case PRECOPY_NOTIFY_COMPLETE:
-         break;
-     default:
--        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->reason);
-+        virtio_error(vdev, "%d reason unknown", pnd->reason);
-     }
- 
-     return 0;
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index de89e8104a..0f33ca5d90 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name)
-     vdev->bus_name = g_strdup(bus_name);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 9027f7c054..d74d42b3dd 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -941,6 +941,47 @@ static void amdvi_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
+     amdvi_sync_shadow_page_table_range(as, &dte[0], 0, UINT64_MAX, false);
  }
  
--void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fmt, ...)
-+void G_GNUC_PRINTF(2, 3)
-+virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
++static void amdvi_address_space_sync(AMDVIAddressSpace *as)
++{
++    IOMMUNotifier *n;
++    uint64_t dte[4] = { 0 };
++
++    /* If only UNMAP notifiers are registered, drop all existing mappings */
++    if (!(as->notifier_flags & IOMMU_NOTIFIER_MAP)) {
++        IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
++            /*
++             * Directly calling memory_region_unmap_iommu_notifier_range() does
++             * not guarantee that the addr_mask eventually passed as parameter
++             * to the notifier is valid. Use amdvi_address_space_unmap() which
++             * ensures the notifier range is divided into properly aligned
++             * regions, and issues notifications for each one.
++             */
++            amdvi_address_space_unmap(as, n);
++        }
++        return;
++    }
++
++    if (amdvi_as_to_dte(as, dte)) {
++        return;
++    }
++
++    amdvi_sync_shadow_page_table_range(as, &dte[0], 0, UINT64_MAX, true);
++}
++
++/*
++ * This differs from the replay() method in that it issues both MAP and UNMAP
++ * notifications since it is called after global invalidation events in order to
++ * re-sync all address spaces.
++ */
++static void amdvi_iommu_address_space_sync_all(AMDVIState *s)
++{
++    AMDVIAddressSpace *as;
++
++    QLIST_FOREACH(as, &s->amdvi_as_with_notifiers, next) {
++        amdvi_address_space_sync(as);
++    }
++}
++
+ /* log error without aborting since linux seems to be using reserved bits */
+ static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
  {
-     va_list ap;
+@@ -983,6 +1024,13 @@ static void amdvi_inval_all(AMDVIState *s, uint64_t *cmd)
+     amdvi_intremap_inval_notify_all(s, true, 0, 0);
+ 
+     amdvi_iotlb_reset(s);
++
++    /*
++     * Fully replay the address space i.e. send both UNMAP and MAP events in
++     * order to synchronize guest and host IO page tables tables.
++     */
++    amdvi_iommu_address_space_sync_all(s);
++
+     trace_amdvi_all_inval();
+ }
  
 -- 
 MST
