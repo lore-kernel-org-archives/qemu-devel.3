@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0859CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD169CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Rup-0000BU-3V; Sun, 05 Oct 2025 12:48:55 -0400
+	id 1v5Rvp-0001l8-92; Sun, 05 Oct 2025 12:49:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Run-0000Am-VQ; Sun, 05 Oct 2025 12:48:53 -0400
+ id 1v5Rvm-0001hJ-Oq; Sun, 05 Oct 2025 12:49:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Rum-000740-A2; Sun, 05 Oct 2025 12:48:53 -0400
+ id 1v5Rvl-00077x-0z; Sun, 05 Oct 2025 12:49:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A70ED15AA2F;
- Sun, 05 Oct 2025 19:48:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E1F3E15AA3E;
+ Sun, 05 Oct 2025 19:49:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A50222996ED;
- Sun,  5 Oct 2025 19:48:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E918E2996F6;
+ Sun,  5 Oct 2025 19:49:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Jones <ajones@ventanamicro.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 68/81] hw/riscv/riscv-iommu: Fix MSI table size limit
-Date: Sun,  5 Oct 2025 19:47:48 +0300
-Message-ID: <20251005164822.442861-8-mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 77/81] migration: Fix state transition in
+ postcopy_start() error handling
+Date: Sun,  5 Oct 2025 19:47:57 +0300
+Message-ID: <20251005164822.442861-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
@@ -61,56 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Juraj Marcin <jmarcin@redhat.com>
 
-The MSI table is not limited to 4k. The only constraint the table has
-is that its base address must be aligned to its size, ensuring no
-offsets of the table size will overrun when added to the base address
-(see "8.5. MSI page tables" of the AIA spec).
+Commit 48814111366b ("migration: Always set DEVICE state") introduced
+DEVICE state to postcopy, which moved the actual state transition that
+leads to POSTCOPY_ACTIVE.
 
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250904132723.614507-2-ajones@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 4f7528295b3e6dfe1189f660fa7865ad972d82e7)
+However, the error handling part of the postcopy_start() function still
+expects the state POSTCOPY_ACTIVE, but depending on where an error
+happens, now the state can be either ACTIVE, DEVICE or CANCELLING, but
+never POSTCOPY_ACTIVE, as this transition now happens just before a
+successful return from the function.
+
+Instead, accept any state except CANCELLING when transitioning to FAILED
+state.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 48814111366b ("migration: Always set DEVICE state")
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20250826115145.871272-1-jmarcin@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 725a9e5f7885a3c0d0cd82022d6eb5a758ac9d47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 96a7fbdefc..155190d032 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -558,6 +558,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
-     MemTxResult res;
-     dma_addr_t addr;
-     uint64_t intn;
-+    size_t offset;
-     uint32_t n190;
-     uint64_t pte[2];
-     int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
-@@ -565,16 +566,18 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
- 
-     /* Interrupt File Number */
-     intn = riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
--    if (intn >= 256) {
-+    offset = intn * sizeof(pte);
-+
-+    /* fetch MSI PTE */
-+    addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
-+    if (addr & offset) {
-         /* Interrupt file number out of range */
-         res = MEMTX_ACCESS_ERROR;
-         cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
-         goto err;
-     }
- 
--    /* fetch MSI PTE */
--    addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
--    addr = addr | (intn * sizeof(pte));
-+    addr |= offset;
-     res = dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
-             MEMTXATTRS_UNSPECIFIED);
-     if (res != MEMTX_OK) {
+diff --git a/migration/migration.c b/migration/migration.c
+index 10c216d25d..32b8ce5613 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2872,8 +2872,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ fail_closefb:
+     qemu_fclose(fb);
+ fail:
+-    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                          MIGRATION_STATUS_FAILED);
++    if (ms->state != MIGRATION_STATUS_CANCELLING) {
++        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
++    }
+     migration_block_activate(NULL);
+     migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+     bql_unlock();
 -- 
 2.47.3
 
