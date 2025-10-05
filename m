@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7008ACCD182
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB0ACCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFH-00022P-O8; Sun, 05 Oct 2025 15:18:11 -0400
+	id 1v5UFZ-00030Q-TT; Sun, 05 Oct 2025 15:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEp-0000Lc-VE
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFX-0002mV-4p
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEo-0006YA-12
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFU-0006dP-8y
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691861;
+ s=mimecast20190719; t=1759691902;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ml2pFyRHG+5Bce2r6KPnxhJb7q8qJwL1Tv/Mz3Zw5Ls=;
- b=T9HPp4m5UV8eG7PSON/9yYUwZEadOjNhrMhWKwiAeF809pUMXKeHPkiC27yaQYWS9phGgS
- dpVDDg7an3UxvvL735bx69rCs2Rx4jBKXrqMX3Yae4eNg9FXqi38hzADo/wmBhO/LUW4pF
- xcEwfavaoPH6Lp1tDIeaoix1KPi7vu8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=23LWX8Qf1h5uWc6TSJ5v/9otVvLkJLt+t300V2hS7WI=;
+ b=Bgn4n+9QhzhQLKueqb0IPqMXBDcUj+h0euq8/SUUstK0A9TLwHc/TmK1VBfXmY4qx37zXW
+ Hqb4oh0b1gNLkT5Fmdnreg9wVofbpTsVX8iRpailPMeKlhAUpockuxdANvF6MQFa2eiQeI
+ m9z+yhXT6RsY5UpKB06m59SyaVM9Qb4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-47-HKJN_48YO4WlCkbFmeOOqA-1; Sun, 05 Oct 2025 15:17:40 -0400
-X-MC-Unique: HKJN_48YO4WlCkbFmeOOqA-1
-X-Mimecast-MFC-AGG-ID: HKJN_48YO4WlCkbFmeOOqA_1759691859
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3efa77de998so2422407f8f.0
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:40 -0700 (PDT)
+ us-mta-655-DxQnO7wQPlWEFaN7QzBe0A-1; Sun, 05 Oct 2025 15:18:21 -0400
+X-MC-Unique: DxQnO7wQPlWEFaN7QzBe0A-1
+X-Mimecast-MFC-AGG-ID: DxQnO7wQPlWEFaN7QzBe0A_1759691900
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e31191379so26935165e9.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691859; x=1760296659;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ml2pFyRHG+5Bce2r6KPnxhJb7q8qJwL1Tv/Mz3Zw5Ls=;
- b=rTquNMCF8HFHp/wkHetit+ZgIQywc34cWGd83e/DA7kLHF8DbJkqF2l46BF8ZIwAhw
- vFnFZOy+4TYU2oh4Vrzw7UvTrwiows5a/DhJDWOcwuM8wzLNY2u5WI60UwlSmSDzKf4V
- wOb+AgnkrzQs+QqrOAQ16FDI/Xj8x8rxH4gaCZwamP0KaeLyaUCzZur6Fi1SHf39lfco
- Pafz8ONUFkTeNhBeRqjZqelVB62X/Zc5wLNeH5CWzmRfwJPhdPOdMZ2CJo8gHcQTfNMR
- spjPbzSjeqMuA8RycAGTYU7uSoS70nLyD+8AZhN3kPO60xlFpbgQ+mmYYhQ7K1eHtnLA
- k3ag==
-X-Gm-Message-State: AOJu0YwxGvxLolAhDTLMlt+4sFNG/v2ZCXOvFpMXzG9UPpCCucRlmc1i
- WAMvfanyhb4GOfG1dulnpOtrvamzmZMh/cgyGDaEG+Llr66cQMEbwjsmyoVxgLQ0aceGnqe/NXj
- 6orlfk7PL0Ss8fSAo1xpmWmWYkAnVUff24uk+LKInYNGhADZ/7P+zXypkB5sQdci8BqDExWMreV
- SKMsfHGEWz8UFdw4ooQ1FYbLxWAZjNTdRv2A==
-X-Gm-Gg: ASbGncuRegTth6YnBUC7GJ3yp6UN0bA4rl49Cr5n5X4NPm244rmKxojZz3jvbNdPgcn
- 9E7jLji59riHp4mZtkplhtqLzB/702DHrdrHAnRCQ+CDttpdH65jqofyIRqaAlQ00BCd5MNvZdN
- r5HCBNB4BuLxmHZInqkkssaPWItSc3u1AxTDlPHJh3T86TsuBmrZf4u14IbQcCY8EjG4nflEYjk
- uxmbxJ+xNtwvklsjtiuSV421LjgvcUATrodmkfNuaTqHoqMIHwkiwqlimO1Qo6Igt1uBEFlunP7
- GncAxplOpIV1kMn2DsTLX9xCxWmxxiC+Grl/QD0=
-X-Received: by 2002:a05:600c:628b:b0:46e:4883:27d with SMTP id
- 5b1f17b1804b1-46e71147470mr70617265e9.30.1759691858955; 
- Sun, 05 Oct 2025 12:17:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEocTYVD3Zo4TaQuwGW2gr/V5ZX8yY3DnPRKTTtMy4X0M78zGcVL/zOtaT54s2UT+a6t9zig==
-X-Received: by 2002:a05:600c:628b:b0:46e:4883:27d with SMTP id
- 5b1f17b1804b1-46e71147470mr70617115e9.30.1759691858416; 
- Sun, 05 Oct 2025 12:17:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759691900; x=1760296700;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=23LWX8Qf1h5uWc6TSJ5v/9otVvLkJLt+t300V2hS7WI=;
+ b=X0e3JY8IyBCKOWdATyKmQ7JNQp/CpMPiijppL90Lgl/yYYTCYI08y4LargkiynDtO1
+ codSYR+E1o6FdRhWN++0QBZxQY7q0zgi1VauAVNJj7WqJmBdJb0g/WS3thX0kkypOXGL
+ IT+EdFmZLAk50gmPHbrCHhAuKGLO1zPpyx/S/eDafLWIPJlDRA6UuAlLnw9Sldl1iiz7
+ PjOQwswEW6a2XQlJyoEooAgI6/e7xshsEv84lDnGChB9X8D3oYwA3zZaAyhyugD7mFp9
+ Nei9Mvf76m1mfH1a9d7H6brvXmgJRt1ztFUqz78JqpUs/sBEsTzp7HLYuAs9NcGEZ/b+
+ lkHw==
+X-Gm-Message-State: AOJu0YzGnpPXdfqsP0zN30T8HgLlQPZnrfKrf7SZREHUb0pzsZwLt8b/
+ 0zJFGITfD2pK0vzm9O/VdVSM5Gr5bwKqDTES4nrq/gbInJp4cjkqC/Du9WysnwxzHnD588+K02z
+ 02PMigJmFHTxvHS63X2WlJeH8p3c2zvWTA8/4Incu8j/kvWkOh571RvC+XbHbvGxWxNV1cWMd33
+ BK7ehoLBGltZhHlPzcIjXiX51KaNGPGxq/uQ==
+X-Gm-Gg: ASbGnctr4tSTIeBSBIkzmkBOAS78YbHrplG5KF8ZXltwkMdHZHVNsaLFf/3K1uCpUJ+
+ bzRWWTFzOdK9tA8SqpKmm7SgTwCzwT9cVZdopLp78llQHDO2D0aXxb9EFC5K+Br/2KWjvcmxsVa
+ 0LvIbpQzgQHXeFYo3TTfE3BVnU0LKMadzfD6kam+X2mGMGG+/NGPX5JM1E1WVtcUy7Y5K38mxij
+ zfAdlGX2P5xO0g3Oo9rh7p4QyqVEqcnfRdZJsqiRjtOfQU5nj2O3ErG1XGDc7oy0/+1e9X2qxs+
+ EQWB5NA6mam14UZjCaEBcCuanCqNBxXhmBp1GMU=
+X-Received: by 2002:a05:600c:8506:b0:46e:1fb9:5497 with SMTP id
+ 5b1f17b1804b1-46e7113f6e2mr72103915e9.18.1759691899831; 
+ Sun, 05 Oct 2025 12:18:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7+wSypRsjnnvOqhBiK7Zp4NlVB8/bPJEr1L6RKBqSEZRxSa16BQiei4vXxjYNkxZ913eWcw==
+X-Received: by 2002:a05:600c:8506:b0:46e:1fb9:5497 with SMTP id
+ 5b1f17b1804b1-46e7113f6e2mr72103755e9.18.1759691899285; 
+ Sun, 05 Oct 2025 12:18:19 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8a6c49sm17544030f8f.3.2025.10.05.12.17.37
+ ffacd0b85a97d-4255d8e9780sm17261149f8f.29.2025.10.05.12.18.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:37 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:36 -0400
+ Sun, 05 Oct 2025 12:18:18 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:17 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 42/75] x86: ich9: fix default value of 'No Reboot' bit in GCS
-Message-ID: <b10166b104fad54d5d79024beafe1bcfe8a35c4a.1759691708.git.mst@redhat.com>
+Subject: [PULL 61/75] amd_iommu: Unmap all address spaces under the AMD IOMMU
+ on reset
+Message-ID: <53fb70ad6219bd2b3ed17e2b87ceab722e69d5b9.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -112,77 +113,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-[2] initialized 'No Reboot' bit to 1 by default. And due to quirk it happened
-to work with linux iTCO_wdt driver (which clears it on module load).
+Support dropping all existing mappings on reset. When the guest kernel
+reboots it will create new ones, but other components that run before
+the kernel (e.g. OVMF) should not be able to use existing mappings from
+the previous boot.
 
-However spec [1] states:
-"
-R/W. This bit is set when the “No Reboot” strap (SPKR pin on
-ICH9) is sampled high on PWROK.
-"
-
-So it should be set only when  '-global ICH9-LPC.noreboot=true' and cleared
-when it's false (which should be default).
-
-Fix it to behave according to spec and set 'No Reboot' bit only when
-'-global ICH9-LPC.noreboot=true'.
-
-1)
-Intel I/O Controller Hub 9 (ICH9) Family Datasheet (rev: 004)
-2)
-
-Fixes: 920557971b6 (ich9: add TCO interface emulation)
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Tested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250922132600.562193-1-imammedo@redhat.com>
+Message-ID: <20250919213515.917111-13-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/southbridge/ich9.h | 2 +-
- hw/isa/lpc_ich9.c             | 7 ++++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ hw/i386/amd_iommu.c | 74 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
 
-diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-index 1e231e89c9..2c35dd0484 100644
---- a/include/hw/southbridge/ich9.h
-+++ b/include/hw/southbridge/ich9.h
-@@ -95,7 +95,7 @@ struct ICH9LPCState {
- #define ICH9_CC_OIC                             0x31FF
- #define ICH9_CC_OIC_AEN                         0x1
- #define ICH9_CC_GCS                             0x3410
--#define ICH9_CC_GCS_DEFAULT                     0x00000020
-+#define ICH9_CC_GCS_DEFAULT                     0x00000000
- #define ICH9_CC_GCS_NO_REBOOT                   (1 << 5)
- 
- /* D28:F[0-5] */
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 304dffac32..c9cb8f7779 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -132,6 +132,11 @@ static void ich9_cc_init(ICH9LPCState *lpc)
- static void ich9_cc_reset(ICH9LPCState *lpc)
- {
-     uint8_t *c = lpc->chip_config;
-+    uint32_t gcs = ICH9_CC_GCS_DEFAULT;
-+
-+    if (lpc->pin_strap.spkr_hi) {
-+        gcs |= ICH9_CC_GCS_NO_REBOOT;
-+    }
- 
-     memset(lpc->chip_config, 0, sizeof(lpc->chip_config));
- 
-@@ -142,7 +147,7 @@ static void ich9_cc_reset(ICH9LPCState *lpc)
-     pci_set_long(c + ICH9_CC_D27IR, ICH9_CC_DIR_DEFAULT);
-     pci_set_long(c + ICH9_CC_D26IR, ICH9_CC_DIR_DEFAULT);
-     pci_set_long(c + ICH9_CC_D25IR, ICH9_CC_DIR_DEFAULT);
--    pci_set_long(c + ICH9_CC_GCS, ICH9_CC_GCS_DEFAULT);
-+    pci_set_long(c + ICH9_CC_GCS, gcs);
- 
-     ich9_cc_update(lpc);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 4376e977f8..497f18c540 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -847,6 +847,77 @@ next:
+     }
  }
+ 
++/*
++ * Unmap entire range that the notifier registered for i.e. the full AS.
++ *
++ * This is seemingly technically equivalent to directly calling
++ * memory_region_unmap_iommu_notifier_range(), but it allows to check for
++ * notifier boundaries and issue notifications with ranges within those bounds.
++ */
++static void amdvi_address_space_unmap(AMDVIAddressSpace *as, IOMMUNotifier *n)
++{
++
++    hwaddr start = n->start;
++    hwaddr end = n->end;
++    hwaddr remain;
++    DMAMap map;
++
++    assert(start <= end);
++    remain = end - start + 1;
++
++    /*
++     * Divide the notifier range into chunks that are aligned and do not exceed
++     * the notifier boundaries.
++     */
++    while (remain >= AMDVI_PAGE_SIZE) {
++
++        IOMMUTLBEvent event;
++
++        uint64_t mask = dma_aligned_pow2_mask(start, end, 64);
++
++        event.type = IOMMU_NOTIFIER_UNMAP;
++
++        IOMMUTLBEntry entry = {
++            .target_as = &address_space_memory,
++            .iova = start,
++            .translated_addr = 0,   /* irrelevant for unmap case */
++            .addr_mask = mask,
++            .perm = IOMMU_NONE,
++        };
++        event.entry = entry;
++
++        /* Call notifier registered for updates on this address space */
++        memory_region_notify_iommu_one(n, &event);
++
++        start += mask + 1;
++        remain -= mask + 1;
++    }
++
++    assert(!remain);
++
++    map.iova = n->start;
++    map.size = n->end - n->start;
++
++    iova_tree_remove(as->iova_tree, map);
++}
++
++/*
++ * For all the address spaces with notifiers registered, unmap the entire range
++ * the notifier registered for i.e. clear all the address spaces managed by the
++ * IOMMU.
++ */
++static void amdvi_address_space_unmap_all(AMDVIState *s)
++{
++    AMDVIAddressSpace *as;
++    IOMMUNotifier *n;
++
++    QLIST_FOREACH(as, &s->amdvi_as_with_notifiers, next) {
++        IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
++            amdvi_address_space_unmap(as, n);
++        }
++    }
++}
++
+ /* log error without aborting since linux seems to be using reserved bits */
+ static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
+ {
+@@ -2099,6 +2170,9 @@ static void amdvi_sysbus_reset(DeviceState *dev)
+ 
+     msi_reset(&s->pci->dev);
+     amdvi_init(s);
++
++    /* Discard all mappings on device reset */
++    amdvi_address_space_unmap_all(s);
+ }
+ 
+ static const VMStateDescription vmstate_amdvi_sysbus_migratable = {
 -- 
 MST
 
