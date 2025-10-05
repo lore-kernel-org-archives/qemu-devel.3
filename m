@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7C2CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899FBCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UGT-0006Bv-5d; Sun, 05 Oct 2025 15:19:25 -0400
+	id 1v5UGR-00064X-Jz; Sun, 05 Oct 2025 15:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFv-0004qQ-Kq
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:53 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFr-0004pT-7P
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFu-0006gr-2b
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFo-0006fv-K9
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691928;
+ s=mimecast20190719; t=1759691922;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=obTUsxxrjlh7aQvvij2ziCsIh2EBRs8F88q8/z1GRt4=;
- b=GrUDUa4MCGRRS7T+8lfDpcS6lpVyWy5j9nuRiUgAbnA+v+RVy77tmNScIrKeSSB5ej+bB7
- nwEABCtkRqJPEWe5PqRB0H+iUBEHxisGL0jJWNr0jVRvw+M+yXldTCG6PEOAkf8Lfr5usX
- hM8gh5MPofDAtErfPUiFCFKWkYi4oUA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7wcSMblAe0qmcWCzx3l/Hyp9U03Fel/2vgGIAfTWdPY=;
+ b=XD7s6vrGNz0LtZP1r6R5EEI38NnCo1rfafiAPeFWnqtGniorL5SpmtaBzER/gIwD++XA2N
+ VGBjHfHAkl6Fl7FUHfQ4ZC2QUyK0thSHVCzpNbO3809mtXRyk9rvzLSm0uFQseeHKh/9Id
+ sxYUKODAWtmk682QzyTKeBpNZbgxXkw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-b_JwMbsFN3OZvfxgeaO6Yw-1; Sun, 05 Oct 2025 15:18:47 -0400
-X-MC-Unique: b_JwMbsFN3OZvfxgeaO6Yw-1
-X-Mimecast-MFC-AGG-ID: b_JwMbsFN3OZvfxgeaO6Yw_1759691926
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e39567579so18717225e9.0
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:46 -0700 (PDT)
+ us-mta-438-6iy2ltsuMpy46sDuA0B0lA-1; Sun, 05 Oct 2025 15:18:41 -0400
+X-MC-Unique: 6iy2ltsuMpy46sDuA0B0lA-1
+X-Mimecast-MFC-AGG-ID: 6iy2ltsuMpy46sDuA0B0lA_1759691920
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-42557bdbe50so2379229f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691926; x=1760296726;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=obTUsxxrjlh7aQvvij2ziCsIh2EBRs8F88q8/z1GRt4=;
- b=VrFm4amiGW1nPVd2U8VaClD/YPuEehO1dRbcJ3J/UW3Qc0TWhjAvgWUk5Z+BjNfhX7
- E+UYZd3fzGIw13rBICaTWbjfBvWydFR8D6KLoBznd/URZOeyKGKg0wZeeVjaqOnXJ6dw
- +Mi+yVwnLC7KpVJMVGO4q96AyX4xBKB0GhmH7qcx659zPUiNHATdMi2LccsqteoXxBZ0
- lNbIP0tDe4UaLuN0QkZ3OPakZ5Upuenqyvn+d9vD109zTZ7m17jgZNMfFKaGzkq6UMR0
- 4gZPYViiw4qs0Ak4YERE2ccwqOPi+MPPlrT6vAAjg2YaNebAhYC5TNlM6XXRQ/pcCr4L
- LpNQ==
-X-Gm-Message-State: AOJu0YymkHUqXeaiw7fF6LQbnnstxP6PT6c1qgvO9Xg3gyahrDuRyyd3
- ovu2VW0PQWos6hiwP383fBzuI1buu92rd0QMk92KubWluvOGh679UKu/Px98W9T/LLLQC/V5HJu
- q722yokJBeOQMkT1qfZ3yoBCBgFyl8sj45bYH2x22lK7CvCLVGMovpEmdZtoV/pUTGi57XzO+yG
- WvUU7TXQOBtnYnskqRzRGG5mMcpnxryq9O9Q==
-X-Gm-Gg: ASbGncui32gTA0o3g6jEGQQPaSu5dwFnLeab0vp40yJxUHyZLTNKdFgH7UQJvug9ggr
- 59GVWOu194QcVBJa3kN8ObWP5x/K2i8srR3K1ipDMJBFR6pKr3vcJmNCXxlCYWdLvYshJFd3Z1+
- Gpl8ClnDwpga4pTuLqjFbfz//yQ2uvjHyk0oVEH2UCkT3tKY04nrPjnTAj1u5ZmQDHcCuUCzh/V
- 3iFQJwLR/NDfFWpD+V6LEBitXZeEtEJERTlwih2LQr0IaAkPGLFBYdfC+/DUfPbtJ89HnVqU3Iv
- fia3HXIxN86nnIWJS82Lm0TDp+yxM/IFn7VBYLE=
-X-Received: by 2002:a05:600c:a319:b0:46e:74cc:42b8 with SMTP id
- 5b1f17b1804b1-46e74cc4609mr51037755e9.17.1759691925547; 
- Sun, 05 Oct 2025 12:18:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3b8UNRIUlz/l7Hjal07dfYT6s313t1JItGYWTgsWam82yO9GgutgfMoSPHevyfoVSOvDjJA==
-X-Received: by 2002:a05:600c:a319:b0:46e:74cc:42b8 with SMTP id
- 5b1f17b1804b1-46e74cc4609mr51037595e9.17.1759691925080; 
- Sun, 05 Oct 2025 12:18:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759691919; x=1760296719;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7wcSMblAe0qmcWCzx3l/Hyp9U03Fel/2vgGIAfTWdPY=;
+ b=D2qcGmU1w8j6U97+n44eXYs1pvCKHJikzYo9mJL8WUVUy+1XI65RW6suG/LeudoOb2
+ VUs4gO7UgP02KyaWWfdN9LaWOQIqPLcfAZ9CjjDglLFDEEPo0I0+fGBzhiLOz+YkTyse
+ c/h8tg3wMrWSwTYipgnxNsTvWOIW19hhm2UEAL+ike1vgW1mXq2aHEWi7kfgrWVQrumS
+ shaXQ84I6xNhqoBOzNlQ1lEKYygLT3v5f8m9ICjz4ni+4XpcIkIvVq333QSPXNCofPYN
+ sfmIb50Wo+CA/n3pdhb75IETgMxdu0deLi6Ee95TmqqxzUlkgCF5mlIUEiCKzwAp7YXV
+ DOqQ==
+X-Gm-Message-State: AOJu0Ywio7jt2zIxbnBgK/18wbEZCvo3YXzi2jAu7X63CHMl0y5DH/Zs
+ rTbCqLkblfBVgORjit/xVuIOHzBeN0L792NVffhJh/mBVfry4PydP6RaUTcJF3atdhd7Gmu+/2w
+ cDevXDusUQltECIRf91rm+UCtDn/W13M9VsmmBMkDV6VuJeA8SPh7aBSyGTPTVEYoVQGfhYRSI0
+ DjHuCAJNv3WIw18VJJw7f1UkjkYPHZXJBK9w==
+X-Gm-Gg: ASbGncub81sgCxh6IocRlnkTOVHa0AKaatsPVIoIv+UGG0HApPbA/ECPCQUpUdm8MFW
+ 4OvuKB3ZtJiZ7ybodBmFRzIDL7ip1eOYngkxcQinxCIJobpwnYlAFMD9AFOxV8lLo6uCU+eqkl8
+ wRxtFK3a5GXTH69+cpy5kPMucTpEWjsUEemI0DzYknIgvrn/tQ4hD0ephNYz2Q50RrvCs10pv1p
+ HBn2ISTv+kSq9YaOnI1h69NudDX4kws3Fqcue+xL5j/vrRZE8otyyywMA9xnzcCJF9yei6kuIQV
+ GqcRbYQch67TN8SFpD0JvRPcMZ2eOkSDxjI1EYs=
+X-Received: by 2002:a05:6000:1447:b0:3ee:1494:27f5 with SMTP id
+ ffacd0b85a97d-42566c15e15mr6548180f8f.13.1759691919477; 
+ Sun, 05 Oct 2025 12:18:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4uNtgg2AwLFdm3cJ6XB1v5j+gYjK1t8WZjtoQY9LBGhEia7czDX3JWPNW8v6pW3q7K3uXsQ==
+X-Received: by 2002:a05:6000:1447:b0:3ee:1494:27f5 with SMTP id
+ ffacd0b85a97d-42566c15e15mr6548155f8f.13.1759691918854; 
+ Sun, 05 Oct 2025 12:18:38 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46f9c8873f1sm22294475e9.8.2025.10.05.12.18.43
+ ffacd0b85a97d-4255d8f02a8sm17684257f8f.39.2025.10.05.12.18.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:18:44 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:18:43 -0400
+ Sun, 05 Oct 2025 12:18:38 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:36 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
  Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 73/75] intel_iommu: Enable Enhanced Set Root Table Pointer
- Support (ESRTPS)
-Message-ID: <3dfe95622ad5bf9dc6fb9bb0f74605aa07d2d3f7.1759691708.git.mst@redhat.com>
+Subject: [PULL 70/75] intel-iommu: Move dma_translation to x86-iommu
+Message-ID: <5ad0a139c307e0ac5c9c961fd7d810d7cf78e7b5.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -117,65 +115,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-According to VTD spec rev 4.1 section 6.6:
-"For implementations reporting the Enhanced Set Root Table Pointer Support
-(ESRTPS) field as Clear, on a 'Set Root Table Pointer' operation, software
-must perform a global invalidate of the context cache, PASID-cache (if
-applicable), and IOTLB, in that order. This is required to ensure hardware
-references only the remapping structures referenced by the new root table
-pointer and not stale cached entries.
+To be later reused by AMD, now that it shares similar property.
 
-For implementations reporting the Enhanced Set Root Table Pointer Support
-(ESRTPS) field as Set, as part of 'Set Root Table Pointer' operation,
-hardware performs global invalidation on all DMA remapping translation
-caches and hence software is not required to perform additional
-invalidations"
-
-We already implemented ESRTPS capability in vtd_handle_gcmd_srtp() by
-calling vtd_reset_caches(), just set ESRTPS in DMAR_CAP_REG to avoid
-unnecessary global invalidation requests of context, PASID-cache and
-IOTLB from guest.
-
-This change doesn't impact migration as the content of DMAR_CAP_REG is
-migrated too.
-
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250929034206.439266-2-zhenzhong.duan@intel.com>
+Message-ID: <20250919213515.917111-22-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h | 1 +
- hw/i386/intel_iommu.c          | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ include/hw/i386/x86-iommu.h | 1 +
+ hw/i386/intel_iommu.c       | 5 ++---
+ hw/i386/x86-iommu.c         | 1 +
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 0d0069a612..0f6a1237e4 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -215,6 +215,7 @@
- #define VTD_CAP_DRAIN_WRITE         (1ULL << 54)
- #define VTD_CAP_DRAIN_READ          (1ULL << 55)
- #define VTD_CAP_FS1GP               (1ULL << 56)
-+#define VTD_CAP_ESRTPS              (1ULL << 63)
- #define VTD_CAP_DRAIN               (VTD_CAP_DRAIN_READ | VTD_CAP_DRAIN_WRITE)
- #define VTD_CAP_CM                  (1ULL << 7)
- #define VTD_PASID_ID_SHIFT          20
+diff --git a/include/hw/i386/x86-iommu.h b/include/hw/i386/x86-iommu.h
+index bfd21649d0..e89f55a5c2 100644
+--- a/include/hw/i386/x86-iommu.h
++++ b/include/hw/i386/x86-iommu.h
+@@ -64,6 +64,7 @@ struct X86IOMMUState {
+     OnOffAuto intr_supported;   /* Whether vIOMMU supports IR */
+     bool dt_supported;          /* Whether vIOMMU supports DT */
+     bool pt_supported;          /* Whether vIOMMU supports pass-through */
++    bool dma_translation;       /* Whether vIOMMU supports DMA translation */
+     QLIST_HEAD(, IEC_Notifier) iec_notifiers; /* IEC notify list */
+ };
+ 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index fa2ad9c2eb..0378551038 100644
+index 2cc9bd5e45..fa2ad9c2eb 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -4660,7 +4660,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+@@ -2704,7 +2704,7 @@ static void vtd_handle_gcmd_write(IntelIOMMUState *s)
+     uint32_t changed = status ^ val;
  
-     s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
-              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS |
--             VTD_CAP_MGAW(s->aw_bits);
-+             VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
+     trace_vtd_reg_write_gcmd(status, val);
+-    if ((changed & VTD_GCMD_TE) && s->dma_translation) {
++    if ((changed & VTD_GCMD_TE) && x86_iommu->dma_translation) {
+         /* Translation enable/disable */
+         vtd_handle_gcmd_te(s, val & VTD_GCMD_TE);
+     }
+@@ -3947,7 +3947,6 @@ static const Property vtd_properties[] = {
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+-    DEFINE_PROP_BOOL("dma-translation", IntelIOMMUState, dma_translation, true),
+     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
+     DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp, true),
+ };
+@@ -4665,7 +4664,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
      if (s->dma_drain) {
          s->cap |= VTD_CAP_DRAIN;
      }
+-    if (s->dma_translation) {
++    if (x86_iommu->dma_translation) {
+             if (s->aw_bits >= VTD_HOST_AW_39BIT) {
+                     s->cap |= VTD_CAP_SAGAW_39bit;
+             }
+diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
+index d34a6849f4..c127a44bb4 100644
+--- a/hw/i386/x86-iommu.c
++++ b/hw/i386/x86-iommu.c
+@@ -130,6 +130,7 @@ static const Property x86_iommu_properties[] = {
+                             intr_supported, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BOOL("device-iotlb", X86IOMMUState, dt_supported, false),
+     DEFINE_PROP_BOOL("pt", X86IOMMUState, pt_supported, true),
++    DEFINE_PROP_BOOL("dma-translation", X86IOMMUState, dma_translation, true),
+ };
+ 
+ static void x86_iommu_class_init(ObjectClass *klass, const void *data)
 -- 
 MST
 
