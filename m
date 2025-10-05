@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5C93CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 355F6CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UDn-0007UK-S6; Sun, 05 Oct 2025 15:16:40 -0400
+	id 1v5UDi-0007S0-QM; Sun, 05 Oct 2025 15:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDk-0007T2-59
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDP-0007Q7-MH
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDi-0006NJ-1y
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDN-0006Km-4U
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691793;
+ s=mimecast20190719; t=1759691769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bor2WhW2cNfFK9zamYg8ijHD2QP5w9JCub0cS59gaDM=;
- b=CMV0JYrgfQvWOvYcGPTObC3OUWNmspt4+E7VHF4QJhxS4j+BAkTwC3Ss+lI1q1eMIerEbu
- R8BBKq/K7W6Yb+KvEh5KWe7NFtBOcg52qJH7FdBVCYxGR5ZyztT6UiG19UKsU4tUoy64Nl
- UVJVPGA1yz9IwdH+0OAWnayYXcd2Juw=
+ bh=Rh5F3iR0qYWe5wSoBa0ieaCgok0ju7ghEdEEZdYuvW4=;
+ b=FFM4cuSIIphc+7ES+LTdqeD/C725IcLPozJJUYwWcMWG1EOw/OJE0T5P1XhXFdmH4jCkqA
+ XLwbduZwIVuldLTPj4bz5voUG0cOOVRgO1IP92ckO/+gN3ib5KbKfhuBL3YFBu+R69K2nd
+ 3bthI/U8oCfYke0kamKI7kGMQtaMGrM=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-Wg6EeoHeM4SrgHYKga0LLw-1; Sun, 05 Oct 2025 15:16:32 -0400
-X-MC-Unique: Wg6EeoHeM4SrgHYKga0LLw-1
-X-Mimecast-MFC-AGG-ID: Wg6EeoHeM4SrgHYKga0LLw_1759691791
+ us-mta-543-DD5911nQON2KAqBq_ZY2iQ-1; Sun, 05 Oct 2025 15:16:08 -0400
+X-MC-Unique: DD5911nQON2KAqBq_ZY2iQ-1
+X-Mimecast-MFC-AGG-ID: DD5911nQON2KAqBq_ZY2iQ_1759691767
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e46486972so11980365e9.0
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:31 -0700 (PDT)
+ 5b1f17b1804b1-46e3ed6540fso22341055e9.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691790; x=1760296590;
+ d=1e100.net; s=20230601; t=1759691766; x=1760296566;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bor2WhW2cNfFK9zamYg8ijHD2QP5w9JCub0cS59gaDM=;
- b=tyiqx+Zwygoz7sUJC3yvaVfPZPi6bhY+7C5aG2Cmp7Y4JcArHaV2r6TUB75cJiPS5V
- GD5p5FKfphqtZR+LRUe0dw4cP+Ga70AI3NJOLis7mQtupC/0Pbsppqjwov0urVSn9mcc
- 0tDWimQjAihOeWR2ifguKe8CDfajpfSecwYG2TipkTt3UKbOJ4RIh6jyGpXArS1rArtk
- gCtJlVvdZVHR/aE7WQ53eWWkMWGWHPfO34WfZ/nhuQPixaJ4nk/B8/Tpka2HL7Kf6p3K
- NaQYZfC+mXWN5IDdkwZbcQXZg+/ErlSySgsKXwN7XLYx162yaLW/AymRr6+g/tplhRs/
- YYLQ==
-X-Gm-Message-State: AOJu0Yynnc1bq5VE3+KdwJwQqsqUZH06yd2/bxkC7+nUXMoW7kd1TJBa
- 22cYBGda0st7q8+xsH9NUbQkzxsEXQcEVHC1OMZ9epTi38x9uLSeJjkVsL04Am9pUsX9oKb7og1
- 6w+kAU41sG0U+gHx4ZYr8937hNm8X6kHL9qqynF0WM1xXXIlVuUJ15VJL9GWGxLT9FLIK/Zng5Y
- ySmWNCuZEDm7yxB2DlB6mFe61Gdo9zn53hGQ==
-X-Gm-Gg: ASbGnctOZwvd+VDfPxIvIkF61t2/GusUeaeXscEBMRp7IgpycaOKW6elmaUYs8ZFiJp
- l/3avIviOKZn6eA9l5EbfQIPunIDeu2x67zkS36ycvLRl5t4Xuq85jf18ujfzZ8TbyMmCdLrb5+
- I40S4AvQmODyPdb/qaZcCUOh8wkIMcF3SqapcDwv4C2SgNY6KYiQTidmX2K1VqWVTDCv4hO6d5D
- 8+ccRT1MIWLqSZuxQsKuesGvR5J0sjuGauRgwTJu3rFJe0FXooH2TC5vDAD9SH7G2/SE0FuxuFk
- FB2ZyQxgmiok/VxqhpcypUr3CLHkK68cV8nDWQE=
-X-Received: by 2002:a05:600c:4746:b0:46e:506b:20c9 with SMTP id
- 5b1f17b1804b1-46e71109f22mr72336665e9.12.1759691790275; 
- Sun, 05 Oct 2025 12:16:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3s0ZN7BayOIhpfkyuY1dr9uMESvVR/g22PJbgGMSvmQQ6HlEgClWGMCtYAIQxnVyt6a+PAQ==
-X-Received: by 2002:a05:600c:4746:b0:46e:506b:20c9 with SMTP id
- 5b1f17b1804b1-46e71109f22mr72336445e9.12.1759691789606; 
- Sun, 05 Oct 2025 12:16:29 -0700 (PDT)
+ bh=Rh5F3iR0qYWe5wSoBa0ieaCgok0ju7ghEdEEZdYuvW4=;
+ b=AaPlfeZH0Yr125ZaWeEs1occHRxj7MXbb11+lJ+Hj+0q5az1G2sRpoLx1mFZqij2Xj
+ bt3wgzCFLV/j/hCuqDNnalXTG2n09LH+UkpyR6WoEZCTZGBihzOM+u3hzE4i5IyFALGC
+ B/pkDfAfBhQvg08zvja0VUCZRaO9U5njqvdVXucvDhAJiHBPp/TBfzXVAGXi2WDOSX6l
+ A7U3sLPhgFEyVjZNNLOuc9c2aRYKd/pekdN259xwxPObb6SuiQwrWvvM65siJ1yhqdgv
+ CjBXX9huuAcF0P80VBk+UeaJ7YqchyEI6uLs78vK9we+yqwIyHxIhxiteE1LfkC/qnb6
+ gDkA==
+X-Gm-Message-State: AOJu0YxFo1Rs5SDrnCQeLG8GTAgWyuExm5ekH8thdYLfsIOul+iDcUC8
+ yU4tjMDdRISVe5DK769RAmEQYlaUy3+zO5mF3OSBDuwdS3Vh58MYtVpwQck4fFBNI0SDxBW1m55
+ AkjnDz0X+pHxrQZVn6t5MTghuaA1GlIJBQWw/SvdX6CVXwwXSUo5XtNf2FORIbOYEkUc0I3adFU
+ 5wkOCodvnTscg3uXeaQPcxAVpGNofIGc/N8g==
+X-Gm-Gg: ASbGncsWOidzeMkpX1uOmToIKG3NxzotniT0/lWQfiq9XjJ8hj18G8q20CkH8sGGcfq
+ B4L6k7uPepKavuOf8leSJVzR/yqVUy51vCp0EAUPoOUSmAJCPwsewSeeC3+a8WgByKcfPG17NiQ
+ MXdGXw3mHv/JNsbB4caWNUA8acK0oR78MqjAWnduVQZIsSEN6kP1rMykd70n/hEBwEC4ubwiXUx
+ OOHAkh8LvJ17ux8+KHbie320DaUgWdox35+F38kCo6KbG8TDC+xjYPegYZYO5Y52x+k3WQn/j13
+ xpLKWaV7pRzGoDdtB4KuBJqp0NWGV+RhEyDSpYw=
+X-Received: by 2002:a05:600c:45c9:b0:46e:3b58:1b40 with SMTP id
+ 5b1f17b1804b1-46e70c49676mr78317155e9.4.1759691766429; 
+ Sun, 05 Oct 2025 12:16:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHALY+cypn8YkvnkXe8TwgZtAZG390MsUptzMg20MqiY8kzR8TGvURBMqeWjTOpmQ2py+Y5bQ==
+X-Received: by 2002:a05:600c:45c9:b0:46e:3b58:1b40 with SMTP id
+ 5b1f17b1804b1-46e70c49676mr78316905e9.4.1759691765868; 
+ Sun, 05 Oct 2025 12:16:05 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e7236267bsm134160155e9.16.2025.10.05.12.16.28
+ 5b1f17b1804b1-46e61a020a3sm224357575e9.10.2025.10.05.12.16.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:16:29 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:16:27 -0400
+ Sun, 05 Oct 2025 12:16:05 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni <pabeni@redhat.com>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Abeni <pabeni@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 12/75] virtio-net: implement extended features support
-Message-ID: <3a7741c3bdc3537de4159418d712debbd22e4df6.1759691708.git.mst@redhat.com>
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>
+Subject: [PULL 01/75] net: bundle all offloads in a single struct
+Message-ID: <e5fd02d8253abdc25c0eb145765734890c256b71.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,318 +117,353 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-Use the extended types and helpers to manipulate the virtio_net
-features.
+The set_offload() argument list is already pretty long and
+we are going to introduce soon a bunch of additional offloads.
 
-Note that offloads are still 64bits wide, as per specification,
-and extended offloads will be mapped into such range.
+Replace the offload arguments with a single struct and update
+all the relevant call-sites.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Jason Wang <jasowang@redhat.com>
+No functional changes intended.
+
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Tested-by: Lei Yang <leiyang@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <bc5afdc5c1cb1a37238dd2b36004db3d46cbf211.1758549625.git.pabeni@redhat.com>
+Message-ID: <a9d4dd043b8c71b791e9ff05e17ef06072d9714e.1758549625.git.pabeni@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio-net.h |   2 +-
- hw/net/virtio-net.c            | 140 +++++++++++++++++++--------------
- 2 files changed, 83 insertions(+), 59 deletions(-)
+ include/net/net.h    | 15 ++++++++++++---
+ net/tap_int.h        |  4 ++--
+ hw/net/e1000e_core.c |  5 +++--
+ hw/net/igb_core.c    |  5 +++--
+ hw/net/virtio-net.c  | 19 +++++++++++--------
+ hw/net/vmxnet3.c     | 13 +++++--------
+ net/net.c            |  5 ++---
+ net/netmap.c         |  3 +--
+ net/tap-bsd.c        |  3 +--
+ net/tap-linux.c      | 21 ++++++++++++---------
+ net/tap-solaris.c    |  4 ++--
+ net/tap-stub.c       |  3 +--
+ net/tap.c            |  8 ++++----
+ 13 files changed, 59 insertions(+), 49 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 73fdefc0dc..5b8ab7bda7 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -182,7 +182,7 @@ struct VirtIONet {
-     uint32_t has_vnet_hdr;
-     size_t host_hdr_len;
-     size_t guest_hdr_len;
--    uint64_t host_features;
-+    VIRTIO_DECLARE_FEATURES(host_features);
-     uint32_t rsc_timeout;
-     uint8_t rsc4_enabled;
-     uint8_t rsc6_enabled;
+diff --git a/include/net/net.h b/include/net/net.h
+index 84ee18e0f9..48ba333d02 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -35,6 +35,16 @@ typedef struct NICConf {
+     int32_t bootindex;
+ } NICConf;
+ 
++typedef struct NetOffloads {
++    bool csum;
++    bool tso4;
++    bool tso6;
++    bool ecn;
++    bool ufo;
++    bool uso4;
++    bool uso6;
++} NetOffloads;
++
+ #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
+     DEFINE_PROP_MACADDR("mac",   _state, _conf.macaddr),                \
+     DEFINE_PROP_NETDEV("netdev", _state, _conf.peers)
+@@ -57,7 +67,7 @@ typedef bool (HasUfo)(NetClientState *);
+ typedef bool (HasUso)(NetClientState *);
+ typedef bool (HasVnetHdr)(NetClientState *);
+ typedef bool (HasVnetHdrLen)(NetClientState *, int);
+-typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
++typedef void (SetOffload)(NetClientState *, const NetOffloads *);
+ typedef int (GetVnetHdrLen)(NetClientState *);
+ typedef void (SetVnetHdrLen)(NetClientState *, int);
+ typedef bool (GetVnetHashSupportedTypes)(NetClientState *, uint32_t *);
+@@ -189,8 +199,7 @@ bool qemu_has_ufo(NetClientState *nc);
+ bool qemu_has_uso(NetClientState *nc);
+ bool qemu_has_vnet_hdr(NetClientState *nc);
+ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
+-void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+-                      int ecn, int ufo, int uso4, int uso6);
++void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
+ int qemu_get_vnet_hdr_len(NetClientState *nc);
+ void qemu_set_vnet_hdr_len(NetClientState *nc, int len);
+ bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types);
+diff --git a/net/tap_int.h b/net/tap_int.h
+index 8857ff299d..f8bbe1cb0c 100644
+--- a/net/tap_int.h
++++ b/net/tap_int.h
+@@ -27,6 +27,7 @@
+ #define NET_TAP_INT_H
+ 
+ #include "qapi/qapi-types-net.h"
++#include "net/net.h"
+ 
+ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+              int vnet_hdr_required, int mq_required, Error **errp);
+@@ -37,8 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
+ int tap_probe_vnet_hdr(int fd, Error **errp);
+ int tap_probe_has_ufo(int fd);
+ int tap_probe_has_uso(int fd);
+-void tap_fd_set_offload(int fd, int csum, int tso4, int tso6, int ecn, int ufo,
+-                        int uso4, int uso6);
++void tap_fd_set_offload(int fd, const NetOffloads *ol);
+ void tap_fd_set_vnet_hdr_len(int fd, int len);
+ int tap_fd_set_vnet_le(int fd, int vnet_is_le);
+ int tap_fd_set_vnet_be(int fd, int vnet_is_be);
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 06657bb3ac..8fef598b49 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -2822,8 +2822,9 @@ e1000e_update_rx_offloads(E1000ECore *core)
+     trace_e1000e_rx_set_cso(cso_state);
+ 
+     if (core->has_vnet) {
+-        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer,
+-                         cso_state, 0, 0, 0, 0, 0, 0);
++        NetOffloads ol = { .csum = cso_state };
++
++        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer, &ol);
+     }
+ }
+ 
+diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+index 39e3ce1c8f..45d8fd795b 100644
+--- a/hw/net/igb_core.c
++++ b/hw/net/igb_core.c
+@@ -3058,8 +3058,9 @@ igb_update_rx_offloads(IGBCore *core)
+     trace_e1000e_rx_set_cso(cso_state);
+ 
+     if (core->has_vnet) {
+-        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer,
+-                         cso_state, 0, 0, 0, 0, 0, 0);
++        NetOffloads ol = {.csum = cso_state };
++
++        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer, &ol);
+     }
+ }
+ 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 129bebd82e..39f2a8c987 100644
+index 7848e26278..129bebd82e 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -90,6 +90,19 @@
-                                          VIRTIO_NET_RSS_HASH_TYPE_TCP_EX | \
-                                          VIRTIO_NET_RSS_HASH_TYPE_UDP_EX)
+@@ -773,14 +773,17 @@ static uint64_t virtio_net_bad_features(VirtIODevice *vdev)
  
-+/*
-+ * Features starting from VIRTIO_NET_FEATURES_MAP_MIN bit correspond
-+ * to guest offloads in the VIRTIO_NET_OFFLOAD_MAP range
-+ */
-+#define VIRTIO_NET_OFFLOAD_MAP_MIN    46
-+#define VIRTIO_NET_OFFLOAD_MAP_LENGTH 4
-+#define VIRTIO_NET_OFFLOAD_MAP        MAKE_64BIT_MASK(                    \
-+                                              VIRTIO_NET_OFFLOAD_MAP_MIN, \
-+                                              VIRTIO_NET_OFFLOAD_MAP_LENGTH)
-+#define VIRTIO_NET_FEATURES_MAP_MIN   65
-+#define VIRTIO_NET_F2O_SHIFT          (VIRTIO_NET_OFFLOAD_MAP_MIN - \
-+                                       VIRTIO_NET_FEATURES_MAP_MIN + 64)
+ static void virtio_net_apply_guest_offloads(VirtIONet *n)
+ {
+-    qemu_set_offload(qemu_get_queue(n->nic)->peer,
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_CSUM)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO4)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO6)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_ECN)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)));
++    NetOffloads ol = {
++       .csum = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_CSUM)),
++       .tso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO4)),
++       .tso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO6)),
++       .ecn  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_ECN)),
++       .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
++       .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
++       .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
++    };
 +
- static const VirtIOFeature feature_sizes[] = {
-     {.flags = 1ULL << VIRTIO_NET_F_MAC,
-      .end = endof(struct virtio_net_config, mac)},
-@@ -786,7 +799,14 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
-     qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
++    qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
  }
  
--static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
-+static uint64_t virtio_net_features_to_offload(const uint64_t *features)
-+{
-+    return (features[0] & ~VIRTIO_NET_OFFLOAD_MAP) |
-+           ((features[1] << VIRTIO_NET_F2O_SHIFT) & VIRTIO_NET_OFFLOAD_MAP);
-+}
+ static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index af73aa8ef2..03732375a7 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1322,14 +1322,11 @@ static void vmxnet3_update_features(VMXNET3State *s)
+               s->lro_supported, rxcso_supported,
+               s->rx_vlan_stripping);
+     if (s->peer_has_vhdr) {
+-        qemu_set_offload(qemu_get_queue(s->nic)->peer,
+-                         rxcso_supported,
+-                         s->lro_supported,
+-                         s->lro_supported,
+-                         0,
+-                         0,
+-                         0,
+-                         0);
++        NetOffloads ol = { .csum = rxcso_supported,
++                           .tso4 = s->lro_supported,
++                           .tso6 = s->lro_supported };
 +
-+static uint64_t
-+virtio_net_guest_offloads_by_features(const uint64_t *features)
- {
-     static const uint64_t guest_offloads_mask =
-         (1ULL << VIRTIO_NET_F_GUEST_CSUM) |
-@@ -797,13 +817,13 @@ static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
-         (1ULL << VIRTIO_NET_F_GUEST_USO4) |
-         (1ULL << VIRTIO_NET_F_GUEST_USO6);
- 
--    return guest_offloads_mask & features;
-+    return guest_offloads_mask & virtio_net_features_to_offload(features);
++        qemu_set_offload(qemu_get_queue(s->nic)->peer, &ol);
+     }
  }
  
- uint64_t virtio_net_supported_guest_offloads(const VirtIONet *n)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
--    return virtio_net_guest_offloads_by_features(vdev->guest_features);
-+    return virtio_net_guest_offloads_by_features(vdev->guest_features_ex);
+diff --git a/net/net.c b/net/net.c
+index da275db86e..63872b6855 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -540,14 +540,13 @@ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len)
+     return nc->info->has_vnet_hdr_len(nc, len);
  }
  
- typedef struct {
-@@ -882,34 +902,39 @@ static void failover_add_primary(VirtIONet *n, Error **errp)
-     error_propagate(errp, err);
- }
- 
--static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
-+static void virtio_net_set_features(VirtIODevice *vdev,
-+                                    const uint64_t *in_features)
+-void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+-                          int ecn, int ufo, int uso4, int uso6)
++void qemu_set_offload(NetClientState *nc, const NetOffloads *ol)
  {
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-     VirtIONet *n = VIRTIO_NET(vdev);
-     Error *err = NULL;
-     int i;
- 
-+    virtio_features_copy(features, in_features);
-     if (n->mtu_bypass_backend &&
-             !virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
--        features &= ~(1ULL << VIRTIO_NET_F_MTU);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_MTU);
+     if (!nc || !nc->info->set_offload) {
+         return;
      }
  
-     virtio_net_set_multiqueue(n,
--                              virtio_has_feature(features, VIRTIO_NET_F_RSS) ||
--                              virtio_has_feature(features, VIRTIO_NET_F_MQ));
-+                              virtio_has_feature_ex(features,
-+                                                    VIRTIO_NET_F_RSS) ||
-+                              virtio_has_feature_ex(features,
-+                                                    VIRTIO_NET_F_MQ));
+-    nc->info->set_offload(nc, csum, tso4, tso6, ecn, ufo, uso4, uso6);
++    nc->info->set_offload(nc, ol);
+ }
  
-     virtio_net_set_mrg_rx_bufs(n,
--                               virtio_has_feature(features,
-+                               virtio_has_feature_ex(features,
-                                                   VIRTIO_NET_F_MRG_RXBUF),
--                               virtio_has_feature(features,
-+                               virtio_has_feature_ex(features,
-                                                   VIRTIO_F_VERSION_1),
--                               virtio_has_feature(features,
-+                               virtio_has_feature_ex(features,
-                                                   VIRTIO_NET_F_HASH_REPORT));
+ int qemu_get_vnet_hdr_len(NetClientState *nc)
+diff --git a/net/netmap.c b/net/netmap.c
+index 297510e190..6cd8f2bdc5 100644
+--- a/net/netmap.c
++++ b/net/netmap.c
+@@ -366,8 +366,7 @@ static void netmap_set_vnet_hdr_len(NetClientState *nc, int len)
+     }
+ }
  
--    n->rsc4_enabled = virtio_has_feature(features, VIRTIO_NET_F_RSC_EXT) &&
--        virtio_has_feature(features, VIRTIO_NET_F_GUEST_TSO4);
--    n->rsc6_enabled = virtio_has_feature(features, VIRTIO_NET_F_RSC_EXT) &&
--        virtio_has_feature(features, VIRTIO_NET_F_GUEST_TSO6);
--    n->rss_data.redirect = virtio_has_feature(features, VIRTIO_NET_F_RSS);
-+    n->rsc4_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
-+        virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-+    n->rsc6_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
-+        virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-+    n->rss_data.redirect = virtio_has_feature_ex(features, VIRTIO_NET_F_RSS);
+-static void netmap_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+-                               int ecn, int ufo, int uso4, int uso6)
++static void netmap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+     NetmapState *s = DO_UPCAST(NetmapState, nc, nc);
  
-     if (n->has_vnet_hdr) {
-         n->curr_guest_offloads =
-@@ -923,7 +948,7 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
-         if (!get_vhost_net(nc->peer)) {
-             continue;
+diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+index 3f98d0ea82..38eb28cb58 100644
+--- a/net/tap-bsd.c
++++ b/net/tap-bsd.c
+@@ -239,8 +239,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     return -EINVAL;
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+ }
+ 
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index e832810665..79a9dd0da0 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -244,8 +244,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     abort();
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+     unsigned int offload = 0;
+ 
+@@ -254,20 +253,24 @@ void tap_fd_set_offload(int fd, int csum, int tso4,
+         return;
+     }
+ 
+-    if (csum) {
++    if (ol->csum) {
+         offload |= TUN_F_CSUM;
+-        if (tso4)
++        if (ol->tso4) {
+             offload |= TUN_F_TSO4;
+-        if (tso6)
++        }
++        if (ol->tso6) {
+             offload |= TUN_F_TSO6;
+-        if ((tso4 || tso6) && ecn)
++        }
++        if ((ol->tso4 || ol->tso6) && ol->ecn) {
+             offload |= TUN_F_TSO_ECN;
+-        if (ufo)
++        }
++        if (ol->ufo) {
+             offload |= TUN_F_UFO;
+-        if (uso4) {
++        }
++        if (ol->uso4) {
+             offload |= TUN_F_USO4;
          }
--        vhost_net_ack_features(get_vhost_net(nc->peer), features);
-+        vhost_net_ack_features_ex(get_vhost_net(nc->peer), features);
- 
-         /*
-          * keep acked_features in NetVhostUserState up-to-date so it
-@@ -932,12 +957,14 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
-         vhost_net_save_acked_features(nc->peer);
-     }
- 
--    if (virtio_has_feature(vdev->guest_features ^ features, VIRTIO_NET_F_CTRL_VLAN)) {
--        bool vlan = virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN);
-+    if (virtio_has_feature_ex(features, VIRTIO_NET_F_CTRL_VLAN) !=
-+        virtio_has_feature_ex(vdev->guest_features_ex,
-+                              VIRTIO_NET_F_CTRL_VLAN)) {
-+        bool vlan = virtio_has_feature_ex(features, VIRTIO_NET_F_CTRL_VLAN);
-         memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
-     }
- 
--    if (virtio_has_feature(features, VIRTIO_NET_F_STANDBY)) {
-+    if (virtio_has_feature_ex(features, VIRTIO_NET_F_STANDBY)) {
-         qapi_event_send_failover_negotiated(n->netclient_name);
-         qatomic_set(&n->failover_primary_hidden, false);
-         failover_add_primary(n, &err);
-@@ -1908,10 +1935,10 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-                 virtio_error(vdev, "virtio-net unexpected empty queue: "
-                              "i %zd mergeable %d offset %zd, size %zd, "
-                              "guest hdr len %zd, host hdr len %zd "
--                             "guest features 0x%" PRIx64,
-+                             "guest features 0x" VIRTIO_FEATURES_FMT,
-                              i, n->mergeable_rx_bufs, offset, size,
-                              n->guest_hdr_len, n->host_hdr_len,
--                             vdev->guest_features);
-+                             VIRTIO_FEATURES_PR(vdev->guest_features_ex));
-             }
-             err = -1;
-             goto err;
-@@ -3018,8 +3045,8 @@ static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-     return 0;
- }
- 
--static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
--                                        Error **errp)
-+static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-+                                    Error **errp)
- {
-     VirtIONet *n = VIRTIO_NET(vdev);
-     NetClientState *nc = qemu_get_queue(n->nic);
-@@ -3033,68 +3060,67 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
-         (supported_hash_types & peer_hash_types) == supported_hash_types;
- 
-     /* Firstly sync all virtio-net possible supported features */
--    features |= n->host_features;
-+    virtio_features_or(features, features, n->host_features_ex);
- 
--    virtio_add_feature(&features, VIRTIO_NET_F_MAC);
-+    virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
- 
-     if (!peer_has_vnet_hdr(n)) {
--        virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
--        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
--        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO6);
--        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_ECN);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
- 
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_CSUM);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO4);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
- 
--        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
- 
--        virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-     }
- 
-     if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_UFO);
--        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_UFO);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-     }
--
-     if (!peer_has_uso(n)) {
--        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-     }
- 
-     if (!get_vhost_net(nc->peer)) {
-         if (!use_own_hash) {
--            virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
--            virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
--        } else if (virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-+        } else if (virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-             virtio_net_load_ebpf(n, errp);
-         }
- 
--        return features;
-+        return;
-     }
- 
-     if (!use_peer_hash) {
--        virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
- 
-         if (!use_own_hash || !virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
-             if (!virtio_net_load_ebpf(n, errp)) {
--                return features;
-+                return;
-             }
- 
--            virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
+-        if (uso6) {
++        if (ol->uso6) {
+             offload |= TUN_F_USO6;
          }
      }
+diff --git a/net/tap-solaris.c b/net/tap-solaris.c
+index af2ebb16f5..ef8e0feeb0 100644
+--- a/net/tap-solaris.c
++++ b/net/tap-solaris.c
+@@ -27,6 +27,7 @@
+ #include "tap_int.h"
+ #include "qemu/ctype.h"
+ #include "qemu/cutils.h"
++#include "net/net.h"
  
--    features = vhost_net_get_features(get_vhost_net(nc->peer), features);
--    vdev->backend_features = features;
-+    vhost_net_get_features_ex(get_vhost_net(nc->peer), features);
-+    virtio_features_copy(vdev->backend_features_ex, features);
+ #include <sys/ethernet.h>
+ #include <sys/sockio.h>
+@@ -240,8 +241,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     return -EINVAL;
+ }
  
-     if (n->mtu_bypass_backend &&
-             (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
--        features |= (1ULL << VIRTIO_NET_F_MTU);
-+        virtio_add_feature_ex(features, VIRTIO_NET_F_MTU);
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+ }
+ 
+diff --git a/net/tap-stub.c b/net/tap-stub.c
+index 38673434cb..67d14ad4d5 100644
+--- a/net/tap-stub.c
++++ b/net/tap-stub.c
+@@ -66,8 +66,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     return -EINVAL;
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+ }
+ 
+diff --git a/net/tap.c b/net/tap.c
+index f37133e301..df23283744 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -285,15 +285,14 @@ static int tap_set_vnet_be(NetClientState *nc, bool is_be)
+     return tap_fd_set_vnet_be(s->fd, is_be);
+ }
+ 
+-static void tap_set_offload(NetClientState *nc, int csum, int tso4,
+-                     int tso6, int ecn, int ufo, int uso4, int uso6)
++static void tap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+     if (s->fd < 0) {
+         return;
      }
  
+-    tap_fd_set_offload(s->fd, csum, tso4, tso6, ecn, ufo, uso4, uso6);
++    tap_fd_set_offload(s->fd, ol);
+ }
+ 
+ static void tap_exit_notify(Notifier *notifier, void *data)
+@@ -391,6 +390,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+                                  int fd,
+                                  int vnet_hdr)
+ {
++    NetOffloads ol = {};
+     NetClientState *nc;
+     TAPState *s;
+ 
+@@ -404,7 +404,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     s->has_ufo = tap_probe_has_ufo(s->fd);
+     s->has_uso = tap_probe_has_uso(s->fd);
+     s->enabled = true;
+-    tap_set_offload(&s->nc, 0, 0, 0, 0, 0, 0, 0);
++    tap_set_offload(&s->nc, &ol);
      /*
-@@ -3109,10 +3135,8 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
-      * support it.
-      */
-     if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_CTRL_VQ)) {
--        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ANNOUNCE);
-+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ANNOUNCE);
-     }
--
--    return features;
- }
- 
- static int virtio_net_post_load_device(void *opaque, int version_id)
-@@ -4244,8 +4268,8 @@ static void virtio_net_class_init(ObjectClass *klass, const void *data)
-     vdc->unrealize = virtio_net_device_unrealize;
-     vdc->get_config = virtio_net_get_config;
-     vdc->set_config = virtio_net_set_config;
--    vdc->get_features = virtio_net_get_features;
--    vdc->set_features = virtio_net_set_features;
-+    vdc->get_features_ex = virtio_net_get_features;
-+    vdc->set_features_ex = virtio_net_set_features;
-     vdc->bad_features = virtio_net_bad_features;
-     vdc->reset = virtio_net_reset;
-     vdc->queue_reset = virtio_net_queue_reset;
+      * Make sure host header length is set correctly in tap:
+      * it might have been modified by another instance of qemu.
 -- 
 MST
 
