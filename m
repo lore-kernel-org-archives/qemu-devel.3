@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44661CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AB0CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFf-0003ZY-Lj; Sun, 05 Oct 2025 15:18:35 -0400
+	id 1v5UG5-00050t-MS; Sun, 05 Oct 2025 15:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFK-0002ER-Ge
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFS-0002a1-QP
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UF7-0006Zx-Nd
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFP-0006cG-Hi
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691873;
+ s=mimecast20190719; t=1759691898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6Ac5t+5JamsSWpgaQ7u9WqC+NkNvtLKNGeD6nXQRzw8=;
- b=E2CiT5nmAxrVEBh57CCt0vMk0lLJzy8KhO6BI1e+sdeH8Xy1c90cp0qR3hd0IwA/9b7tEy
- SNOrxrQk4KNaQXHHO83vZ6y6dK965fgmMTE1oxqEKYibHifLwAjp7GHjI12tM2wf4j58S/
- nLOCH5HLtWiB6UuGgwUBufaO6tLZ1Mo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QCxFKVOHL0at5yB+6ueybckR1t9fum92R8jP7usSf1w=;
+ b=RErLm0MbVQ+ceR/4kcLYnxX11QfgCl5VgnHFVHA5oli9H2XPD+XEuDYFPpyd1HoUii1+Ou
+ oYLid6v8EHwK3cSzAHZoGqd+frr5HOQO84hLSNcS025IyCzznkZGTitoLJzMeJ5EPCSP3l
+ WY3z0dV6hIAt3GhUzQagIsbMTLE9GjY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-N8_govmGP9iWREAWctUTMw-1; Sun, 05 Oct 2025 15:17:51 -0400
-X-MC-Unique: N8_govmGP9iWREAWctUTMw-1
-X-Mimecast-MFC-AGG-ID: N8_govmGP9iWREAWctUTMw_1759691871
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ece14b9231so2278353f8f.0
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:51 -0700 (PDT)
+ us-mta-591-scn8RFuyNw2BaCeDrmvDaw-1; Sun, 05 Oct 2025 15:18:17 -0400
+X-MC-Unique: scn8RFuyNw2BaCeDrmvDaw-1
+X-Mimecast-MFC-AGG-ID: scn8RFuyNw2BaCeDrmvDaw_1759691896
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e3e177893so22925895e9.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691870; x=1760296670;
+ d=1e100.net; s=20230601; t=1759691896; x=1760296696;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6Ac5t+5JamsSWpgaQ7u9WqC+NkNvtLKNGeD6nXQRzw8=;
- b=GybXkun7YWV+9atMZg3ci3t1HTrZ2IBjYF8TmUuhBhxFkpaaagqPrcyWc6TxhtfNOt
- lGOPGMdX/Tud3WYO0Sg1Du06/PKhlCvh1l2cSIBeMGsnD2dptirIf+r8OOPHWuQ5tJ6S
- bQtGdJydg1IT7WHHShW73LYvMhj0Gbzde2FfInSPCi+tzd6AEvKKlDZhUgTkUXggC0ZJ
- 4EY+R4gK1CJO194XhJ+4FpbTKb/zfnSbT4FEfVUKmYzrzhv9PLD9JVBeky2KJn/lYik2
- htfGotvwsNgV3KVLwhfBJ3mvVNu4z0F3aV669NkbtwRLmvgm2AzYX4mnMVl/LkYeqX32
- b9qA==
-X-Gm-Message-State: AOJu0YwDME7PjgJTplHdgJKruxLIH1VDUPaWdCJiZmzwclO0NUuKput4
- XtfC6LYNJNOzIy7ElseFyz2zWGbzzB0WtM7PhsTB3KeT8u/BawN9M4hSFf3UBVzeyxOkEM4O/AK
- IuMimnM+9anVORPJSxk2yYgjS241ttnSbHdTJkYVcOaoIROwp6Gp4xTIfkoRsjzxnFrlcnDuHTt
- OxZfiw0rnAcNJ3Yz0LjrQ/curJXi07mHRGXw==
-X-Gm-Gg: ASbGncs4b+CSIyvZOZlmWI8qin09ZfBF2gIsha9ueheg/f8ct/fPMbd6uNA1IHOS5ZV
- TZ/QBBuisZX5jtEESzIb5ROdZcsVqaBKjplfbwk+yx5nc05WTcTbb+smp3bbpVOUg7cPSrn4sxQ
- uQECe0V2az+2/i+BRbvkuaHbyO7Gy9L9NvcikH+c7S3TZhpiyx1OGSqcsCizKehpGtQOFuNC7Af
- /3Bfsg+3yB6i+5hKtwWdOAz11xFpgZUghpT/YJr7qYFoxujRzwPmkptSzQuNWnKRPMgXI40ERsO
- 5Y1EEGAVa2Oh/miywhAC7pojv9N76DfCSPhH9qY=
-X-Received: by 2002:a05:6000:402a:b0:3f3:c137:680e with SMTP id
- ffacd0b85a97d-4256719354fmr5656793f8f.43.1759691870344; 
- Sun, 05 Oct 2025 12:17:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1KeyiuZfKkYNFK4IKbC0ym6867jjDbIELzz9isSUNo4h97AFbIkPHNpAYD239sW3kK4owRQ==
-X-Received: by 2002:a05:6000:402a:b0:3f3:c137:680e with SMTP id
- ffacd0b85a97d-4256719354fmr5656778f8f.43.1759691869745; 
- Sun, 05 Oct 2025 12:17:49 -0700 (PDT)
+ bh=QCxFKVOHL0at5yB+6ueybckR1t9fum92R8jP7usSf1w=;
+ b=UVSOj78+dXYPLi36eeR1qplceAXBY6GLskI/5ihIkM1haNNn/ctI9XkVgrVWsXo6dM
+ 0T1rezHKEJLPez/bhbVxQ/y5XKktrvLsXgzw9/Yzp9RuE7SpVYgiAoSgjLCiFrIdAE//
+ e3/9Z4FeuvO4Pbtv4XZ7DFLSthVEwtwtWDzjAsqHb7Y3AuapoLrMNyWkXp0FcU52rHrw
+ E+uJWuEkyjZdlPa0FaUxaBs+GjxFPOBSf6wxOy96AriWnVILPubsHI81GLiqdWl3GyaF
+ D9dNmA8xD4DldxLI5UKQ4AAk8xshNql4mDlpRTxwZQn3e20JEuEgPKghBO9TOHy7+DbP
+ NKag==
+X-Gm-Message-State: AOJu0YzdQqK5kN7HCukwwcIGlHM2RAKAq6CqGLb/5fudxr9kQqsBcFtW
+ C+zyB57CHGGYVwWs1m8zl6twyoF0vcLqSnfaJG/Elz6NxivDM1NNhtiqZxw0AT8kt//8PrJyiTF
+ 6rczNJVE7k8+1vgKXH3J2kBKg8D+8EFh/xBpGWHkKCqzDVD10AFlqHvOZiXpvds9LdGakdigAw4
+ MJu8WKjTaqYKsBrO38E0pieFd+gXryb6DOQw==
+X-Gm-Gg: ASbGncus8ZHpr/VzxwO3yU2U4UfM3Z6ahWe+Q72lf7qkYwgDIEM+QnJKHjOXM0rM2Mc
+ cA+3mywB/q/pXmOD0LelSldPls3ZhEuqWjdQ9OsEIqw714TB2CinDc8+pViSmoYAZd4K2u4KB9L
+ FaVQrepPcrjNoRqKvl8DtUeEW0Nwb736zZdBgtYIvpEtbQT2m1MrkLnc9EN2D+MaoMrb2u3DuUK
+ tzr/274a8kMtbqFvUHobicS7l29A66mAcm0016HYFRjNHtFkXs2AyLc/geedIDXchAAqIOWr0ZE
+ npLzlhzoXF+AMjUQC6HmOe6FX02PBJsnPZ69gLA=
+X-Received: by 2002:a05:6000:2dc8:b0:3cd:ef83:a9a1 with SMTP id
+ ffacd0b85a97d-42567152194mr6125495f8f.20.1759691895890; 
+ Sun, 05 Oct 2025 12:18:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEW6DC+RF4gILeNWVekpqJNJ+21AFTqBaRzRGNy33JIpOzr6tk0+z+l/NsC1CwcNtBtDo4mpA==
+X-Received: by 2002:a05:6000:2dc8:b0:3cd:ef83:a9a1 with SMTP id
+ ffacd0b85a97d-42567152194mr6125473f8f.20.1759691895182; 
+ Sun, 05 Oct 2025 12:18:15 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8b0068sm17489436f8f.26.2025.10.05.12.17.47
+ ffacd0b85a97d-4255d8e980dsm18750958f8f.36.2025.10.05.12.18.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:49 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:47 -0400
+ Sun, 05 Oct 2025 12:18:14 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:13 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PULL 47/75] tests/virtio-scsi: add a virtio_error() IOThread test
-Message-ID: <acaa3be3f7f73d9aafeb2454c01fe50eb8b4a807.1759691708.git.mst@redhat.com>
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 59/75] amd_iommu: Sync shadow page tables on page invalidation
+Message-ID: <ad598027a226624c2abe79129b032215906c3478.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -94,7 +96,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,69 +112,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-Now that virtio_error() calls should work in an IOThread, add a
-virtio-scsi IOThread test cases that triggers virtio_error().
+When the guest issues an INVALIDATE_IOMMU_PAGES command, decode the address
+and size of the invalidation and sync the guest page table state with the
+host. This requires walking the guest page table and calling notifiers
+registered for address spaces matching the domain ID encoded in the command.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250922220149.498967-6-stefanha@redhat.com>
+Message-ID: <20250919213515.917111-11-alejandro.j.jimenez@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/virtio-scsi-test.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/i386/amd_iommu.c | 82 ++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 74 insertions(+), 8 deletions(-)
 
-diff --git a/tests/qtest/virtio-scsi-test.c b/tests/qtest/virtio-scsi-test.c
-index db10d572d0..e2350c52f6 100644
---- a/tests/qtest/virtio-scsi-test.c
-+++ b/tests/qtest/virtio-scsi-test.c
-@@ -311,6 +311,31 @@ fail:
-     unlink(tmp_path);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index d8a451b3a5..caae65c4b3 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -591,9 +591,8 @@ static uint64_t large_pte_page_size(uint64_t pte)
+  *      page table walk. This means that the DTE has valid data, but one of the
+  *      lower level entries in the Page Table could not be read.
+  */
+-static int __attribute__((unused))
+-fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte, uint64_t *pte,
+-          hwaddr *page_size)
++static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
++                          uint64_t *pte, hwaddr *page_size)
+ {
+     IOMMUAccessFlags perms = amdvi_get_perms(dte);
+ 
+@@ -691,9 +690,9 @@ fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte, uint64_t *pte,
+  * notifiers to sync the shadow page tables in the host.
+  * Must be called with a valid DTE for DMA remapping i.e. V=1,TV=1
+  */
+-static void __attribute__((unused))
+-amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as, uint64_t *dte,
+-                                   hwaddr addr, uint64_t size, bool send_unmap)
++static void amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as,
++                                               uint64_t *dte, hwaddr addr,
++                                               uint64_t size, bool send_unmap)
+ {
+     IOMMUTLBEvent event;
+ 
+@@ -835,8 +834,7 @@ static gboolean amdvi_iotlb_remove_by_domid(gpointer key, gpointer value,
+  * first zero at bit 51 or larger is a request to invalidate the entire address
+  * space.
+  */
+-static uint64_t __attribute__((unused))
+-amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
++static uint64_t amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
+ {
+     uint64_t size = AMDVI_PAGE_SIZE;
+     uint8_t fzbit = 0;
+@@ -853,10 +851,76 @@ amdvi_decode_invalidation_size(hwaddr addr, uint16_t flags)
+     return size;
  }
  
-+static void test_iothread_virtio_error(void *obj, void *data,
-+                                       QGuestAllocator *t_alloc)
++/*
++ * Synchronize the guest page tables with the shadow page tables kept in the
++ * host for the specified range.
++ * The invalidation command issued by the guest and intercepted by the VMM
++ * does not specify a device, but a domain, since all devices in the same domain
++ * share the same page tables. However, vIOMMU emulation creates separate
++ * address spaces per device, so it is necessary to traverse the list of all of
++ * address spaces (i.e. devices) that have notifiers registered in order to
++ * propagate the changes to the host page tables.
++ * We cannot return early from this function once a matching domain has been
++ * identified and its page tables synced (based on the fact that all devices in
++ * the same domain share the page tables). The reason is that different devices
++ * (i.e. address spaces) could have different notifiers registered, and by
++ * skipping address spaces that appear later on the amdvi_as_with_notifiers list
++ * their notifiers (which could differ from the ones registered for the first
++ * device/address space) would not be invoked.
++ */
++static void amdvi_sync_domain(AMDVIState *s, uint16_t domid, uint64_t addr,
++                              uint16_t flags)
 +{
-+    QVirtioSCSIPCI *scsi_pci = obj;
-+    QVirtioSCSI *scsi = &scsi_pci->scsi;
-+    QVirtioSCSIQueues *vs;
-+    QVirtQueue *vq;
++    AMDVIAddressSpace *as;
 +
-+    alloc = t_alloc;
-+    vs = qvirtio_scsi_init(scsi->vdev);
-+    vq = vs->vq[2];
++    uint64_t size = amdvi_decode_invalidation_size(addr, flags);
 +
-+    /* Move avail.idx out of bounds to trigger virtio_error() */
-+    qvirtqueue_set_avail_idx(global_qtest, scsi->vdev, vq, vq->size * 2);
-+    scsi->vdev->bus->virtqueue_kick(scsi->vdev, vq);
++    if (size == AMDVI_INV_ALL_PAGES) {
++        addr = 0;       /* Set start address to 0 and invalidate entire AS */
++    } else {
++        addr &= ~(size - 1);
++    }
 +
 +    /*
-+     * Reset the device out of the error state. If QEMU hangs or crashes then
-+     * this will fail.
++     * Call notifiers that have registered for each address space matching the
++     * domain ID, in order to sync the guest pagetable state with the host.
 +     */
-+    qvirtio_reset(scsi->vdev);
++    QLIST_FOREACH(as, &s->amdvi_as_with_notifiers, next) {
 +
-+    qvirtio_scsi_pci_free(vs);
++        uint64_t dte[4] = { 0 };
++
++        /*
++         * Retrieve the Device Table entry for the devid corresponding to the
++         * current address space, and verify the DomainID matches i.e. the page
++         * tables to be synced belong to devices in the domain.
++         */
++        if (amdvi_as_to_dte(as, dte)) {
++            continue;
++        }
++
++        /* Only need to sync the Page Tables for a matching domain */
++        if (domid != (dte[1] & AMDVI_DEV_DOMID_ID_MASK)) {
++            continue;
++        }
++
++        /*
++         * We have determined that there is a valid Device Table Entry for a
++         * device matching the DomainID in the INV_IOMMU_PAGES command issued by
++         * the guest. Walk the guest page table to sync shadow page table.
++         */
++        if (as->notifier_flags & IOMMU_NOTIFIER_MAP) {
++            /* Sync guest IOMMU mappings with host */
++            amdvi_sync_shadow_page_table_range(as, &dte[0], addr, size, true);
++        }
++    }
 +}
 +
- static void *virtio_scsi_hotplug_setup(GString *cmd_line, void *arg)
+ /* we don't have devid - we can't remove pages by address */
+ static void amdvi_inval_pages(AMDVIState *s, uint64_t *cmd)
  {
-     g_string_append(cmd_line,
-@@ -383,6 +408,13 @@ static void register_virtio_scsi_test(void)
-     };
-     qos_add_test("iothread-attach-node", "virtio-scsi-pci",
-                  test_iothread_attach_node, &opts);
+     uint16_t domid = cpu_to_le16((uint16_t)extract64(cmd[0], 32, 16));
++    uint64_t addr = cpu_to_le64(extract64(cmd[1], 12, 52)) << 12;
++    uint16_t flags = cpu_to_le16((uint16_t)extract64(cmd[1], 0, 3));
+ 
+     if (extract64(cmd[0], 20, 12) || extract64(cmd[0], 48, 12) ||
+         extract64(cmd[1], 3, 9)) {
+@@ -866,6 +930,8 @@ static void amdvi_inval_pages(AMDVIState *s, uint64_t *cmd)
+ 
+     g_hash_table_foreach_remove(s->iotlb, amdvi_iotlb_remove_by_domid,
+                                 &domid);
 +
-+    opts.before = virtio_scsi_setup_iothread;
-+    opts.edge = (QOSGraphEdgeOptions) {
-+        .extra_device_opts = "iothread=thread0",
-+    };
-+    qos_add_test("iothread-virtio-error", "virtio-scsi-pci",
-+                 test_iothread_virtio_error, &opts);
++    amdvi_sync_domain(s, domid, addr, flags);
+     trace_amdvi_pages_inval(domid);
  }
  
- libqos_init(register_virtio_scsi_test);
 -- 
 MST
 
