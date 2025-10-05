@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5EECCA472
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E1B4CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UDr-0007Xr-CV; Sun, 05 Oct 2025 15:16:43 -0400
+	id 1v5UDl-0007TN-OA; Sun, 05 Oct 2025 15:16:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDo-0007V0-TQ
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDh-0007SO-OG
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDn-0006Ns-2u
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UDf-0006Mx-1j
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691798;
+ s=mimecast20190719; t=1759691788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mLQzZp1MYba5uQ3+BNOy0Y3LASIlZed9Jbbmm8x+esA=;
- b=eOqdzmU4/eeO2jAj9ArPN1UaRsJDJLWE393ALxTJAD3lPTgSx7hIfnWPu7XMSYv7GgZJK8
- ofNyFQp3asoYlO0KFX7EZtgdtvg9sDBYY9V8Ww1wBthAJji0G80sZ3Mkj5Lw84v1GcPASN
- HMVoQlukipOtUBiSec9VZLtv4C/osK8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=T9JiUJVF1IY5GSi12FGsN+bySZ+KyddxbfjDd0ABMyI=;
+ b=Ojw7RRMQt8lI8OakStICf/yteUqlaiTXLJfZ4RO3djQSjDoXZEWKk+XftpgaxMYsY5Y0dC
+ HjtxsOZHmxNjc6kG28GuT49F4vYeuTGSnuZoAkcJNUsw8Y2u45CTXU65FYXqDrw5kNuTi7
+ YUPd7CKizQdsP1boJN5ACm0yFDgLn64=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-Lgn41wOaPzS-rfqtrXrIxg-1; Sun, 05 Oct 2025 15:16:37 -0400
-X-MC-Unique: Lgn41wOaPzS-rfqtrXrIxg-1
-X-Mimecast-MFC-AGG-ID: Lgn41wOaPzS-rfqtrXrIxg_1759691796
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f030846a41so2461039f8f.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:36 -0700 (PDT)
+ us-mta-606-fycBWVaFO4C5nqDsVRS78g-1; Sun, 05 Oct 2025 15:16:27 -0400
+X-MC-Unique: fycBWVaFO4C5nqDsVRS78g-1
+X-Mimecast-MFC-AGG-ID: fycBWVaFO4C5nqDsVRS78g_1759691786
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e31191379so26930945e9.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691795; x=1760296595;
+ d=1e100.net; s=20230601; t=1759691786; x=1760296586;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mLQzZp1MYba5uQ3+BNOy0Y3LASIlZed9Jbbmm8x+esA=;
- b=R7mwmiAsd82J+rAT8YBYLKX6+KXMYJOFci0gNaB1CkGMZ2i+Lj0MMNZSF4JihspMon
- mRGCE+OlxB5aHraS48p8XE9Og/ldP0VSwVHaeWgmocY++kGZxrwx/xCs0HuLUCYwIP9F
- coORV04NLp++ZTbH2YCEniESJPGMC8m/G+B/3hhSuUdUpGBXF1d9ddLQbPgrfn4yj42j
- rA2y5w0BSx4Hdb4wqD9cYeo5wLeNb6957D79uvMth2vD6i8AH/Cl4UXRibzR8A/WSU8V
- TavcarB7QNDhS5e2dIZP377JtB6Csdmt47VIeJ0uNJK965bM2GjYOsQCW35TQbO3o230
- /tng==
-X-Gm-Message-State: AOJu0Yx1UJNo2wcBq9YEnaFkTA9INDiJ9Dn9Ua7KNybwz0WOLDQiYUrM
- FO4Vs3vsTRwcAORL4EGeCvU4ISGVsb8aUaPo1cpxo0l7y4Y92SYxwa2OD3SWCGMx0cavLciuS6L
- 0OxS095W/8aNJKFxfTAG9a1DLI0zDaeSiWxY6O8WdQXi4W4cN4znAriP8eSmATc6ePomyMrAY6M
- tHw8X3Jnj1o+WBpcU5JIo9F25Wi39HCj1k9A==
-X-Gm-Gg: ASbGncvdwyHJQ3qMW6v8izEqgpeBUFpB+iQvVDXwztF9AW1BlNN7XnVTT4I9x1KEve6
- 7Nl6JGEgIxdU/l9Qehm8azFH+oVQ5ELu0ja/9wp7F2ZKQAa+ejk7U7SqPWsvYnByfoZxG0mYjP6
- 1d8EKCBRqlSE1OOw4gktCKwUM4D+ROBoRUEN7vu04lIsoVwDMkBphuswv9Y1t6HzN+TIn4H20we
- Sov1yt4FFmDvW83Y5kfFX7OfQ8e3Fh+T/TU5UFXYGvX7bpEFhz2UOGeUpKCMdUdjCycxnxnJPdX
- FWRiF/oEZi1Ro3Ik7fX8WCqTnGX1KEO38PLGU9k=
-X-Received: by 2002:a05:6000:1a85:b0:3e9:2fea:6795 with SMTP id
- ffacd0b85a97d-425671c7275mr6447379f8f.53.1759691795173; 
- Sun, 05 Oct 2025 12:16:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVtyKe2kxMlnMl8+oWf9X6bUdY5wNm9TaGCpRznKZ27aQWYmhtLdFFA7ZJIrYNICJcHo9xRw==
-X-Received: by 2002:a05:6000:1a85:b0:3e9:2fea:6795 with SMTP id
- ffacd0b85a97d-425671c7275mr6447361f8f.53.1759691794636; 
- Sun, 05 Oct 2025 12:16:34 -0700 (PDT)
+ bh=T9JiUJVF1IY5GSi12FGsN+bySZ+KyddxbfjDd0ABMyI=;
+ b=ezd1fCYsouAkuHdUKTlYV91FXIRG6pF1EEoiwagMMTCen4CFBfkQhefmZmK9Jtw4eN
+ mELGpy3BJSQ/cWJL+IpgiFiEgDtVmgyagxZhYrPWUbzw0RB1fv+Cx9zECb7bX/AO0pma
+ 1FOko2k6rcysBLU89Y3c082ehFQmRLAxObFjJYK7G7eg1qg3esZa4gWprBMIv4M6jC+U
+ 1no699mCl2/Kgc4csL+GImk2wI8uyBQHoeotZteqfu2Cg6OEoZspbskwxQL5nqL+4d1+
+ t917V1Lj2gFdpFc52W6NxPraJHlg4I8GgRJvWBeW8nr1TlmNF086LUOMV7RigSSRrfQd
+ 9ZmA==
+X-Gm-Message-State: AOJu0YySHS/nLmeQhgjZ63EN4EiySE2wBGwsyy+jjBh7mHjh4fxJQV3w
+ J6PzlAYTl1qYQCva4/TvLT0wXyjI1OBDOx6TTpOXAv7sMJcuL8+q+eLzgjMlA/AbYNs/8erjnTi
+ czSzkyGQQxU7YuYVakCOwXg7d/KEGNyA+c0/fPSDazJhww7fGwjqQv5nI0Ty6OEDP7HjPFZUJ7r
+ cOYUXDv9WyG4M2eNpwcCNJEJGfRfOuXbzRuw==
+X-Gm-Gg: ASbGncsx38TbSUAN8ym88if8to6kTDe4YW1YQBPO1eM7QkphRoQjF09B95SCG3vh+yw
+ PCuzJJP4vTBoLOUy3aeCO6it+VVa6tq443MdY6pZ4WmHwPu1J1oh0ygYxqTVoPyUbiW4sLtNntY
+ AMDbtaY9POXfzk5FjOZ6ncZC2wJGf81LzBv+MxE2OdGCIpwJMvPizRDWaJtOs5lprq21nam85hj
+ MQY5DXlaF6Y7+hsjwWamL3D6AfV8HTNYCSQwmgwOF59UB6/7nseUPhRO1Tlj0zhWYQfL8S3rM3s
+ GSNkme8DsNOpWlbC0fKD77y3jsURtvB7vI+cKIQ=
+X-Received: by 2002:a05:600c:350b:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-46e710fe3a0mr61011225e9.1.1759691785971; 
+ Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYqrY5rQ+cewOwkdChC4gU0ClZemwx0HVQHJ0DU8aamsFmWPjG1tYZ2vir4AiUGsKrg09UbQ==
+X-Received: by 2002:a05:600c:350b:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-46e710fe3a0mr61011065e9.1.1759691785502; 
+ Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8ac750sm17613636f8f.24.2025.10.05.12.16.33
+ 5b1f17b1804b1-46e619c3b75sm217407595e9.7.2025.10.05.12.16.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:16:34 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:16:32 -0400
+ Sun, 05 Oct 2025 12:16:25 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:16:23 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni <pabeni@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 14/75] net: implement UDP tunnel features offloading
-Message-ID: <a5289563ad74a2a37e8d2101d82935454c71fef4.1759691708.git.mst@redhat.com>
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Lei Yang <leiyang@redhat.com>
+Subject: [PULL 10/75] vhost-backend: implement extended features support
+Message-ID: <f412c1f57ab58fd595efee26264193759220ca6f.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,14 +85,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,196 +112,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-When any host or guest GSO over UDP tunnel offload is enabled the
-virtio net header includes the additional tunnel-related fields,
-update the size accordingly.
+Leverage the kernel extended features manipulation ioctls(), if
+available, and fallback to old ops otherwise. Error out when setting
+extended features but kernel support is not available.
 
-Push the GSO over UDP tunnel offloads all the way down to the tap
-device extending the newly introduced NetFeatures struct, and
-eventually enable the associated features.
-
-As per virtio specification, to convert features bit to offload bit,
-map the extended features into the reserved range.
-
-Finally, make the vhost backend aware of the exact header layout, to
-copy it correctly. The tunnel-related field are present if either
-the guest or the host negotiated any UDP tunnel related feature:
-add them to the kernel supported features list, to allow qemu
-transfer to the backend the needed information.
+Note that extended support for get/set backend features is not needed,
+as the only feature that can be changed belongs to the 64 bit range.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Tested-by: Lei Yang <leiyang@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <093b4bc68368046bffbcab2202227632d6e4e83b.1758549625.git.pabeni@redhat.com>
+Message-ID: <150daade3d59e77629276920e014ee8e5fc12121.1758549625.git.pabeni@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/net/net.h   |  2 ++
- hw/net/virtio-net.c | 34 ++++++++++++++++++++++++++--------
- net/net.c           |  3 ++-
- net/tap-linux.c     |  6 ++++++
- net/tap.c           |  2 ++
- 5 files changed, 38 insertions(+), 9 deletions(-)
+ hw/virtio/vhost-backend.c | 62 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 51 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 9a9084690d..72b476ee1d 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -43,6 +43,8 @@ typedef struct NetOffloads {
-     bool ufo;
-     bool uso4;
-     bool uso6;
-+    bool tnl;
-+    bool tnl_csum;
- } NetOffloads;
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 833804dd40..4367db0d95 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -20,6 +20,11 @@
+ #include <linux/vhost.h>
+ #include <sys/ioctl.h>
  
- #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index f8e2b4823e..33116712eb 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -103,6 +103,12 @@
- #define VIRTIO_NET_F2O_SHIFT          (VIRTIO_NET_OFFLOAD_MAP_MIN - \
-                                        VIRTIO_NET_FEATURES_MAP_MIN + 64)
++struct vhost_features {
++    uint64_t count;
++    uint64_t features[VIRTIO_FEATURES_NU64S];
++};
++
+ static int vhost_kernel_call(struct vhost_dev *dev, unsigned long int request,
+                              void *arg)
+ {
+@@ -182,12 +187,6 @@ static int vhost_kernel_get_vring_worker(struct vhost_dev *dev,
+     return vhost_kernel_call(dev, VHOST_GET_VRING_WORKER, worker);
+ }
  
-+static bool virtio_has_tunnel_hdr(const uint64_t *features)
-+{
-+    return virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) ||
-+           virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+-static int vhost_kernel_set_features(struct vhost_dev *dev,
+-                                     uint64_t features)
+-{
+-    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &features);
+-}
+-
+ static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
+ {
+     uint64_t features;
+@@ -210,10 +209,51 @@ static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
+     return 0;
+ }
+ 
+-static int vhost_kernel_get_features(struct vhost_dev *dev,
+-                                     uint64_t *features)
++static int vhost_kernel_set_features(struct vhost_dev *dev,
++                                     const uint64_t *features)
+ {
+-    return vhost_kernel_call(dev, VHOST_GET_FEATURES, features);
++    struct vhost_features farray;
++    bool extended_in_use;
++    int r;
++
++    farray.count = VIRTIO_FEATURES_NU64S;
++    virtio_features_copy(farray.features, features);
++    extended_in_use = virtio_features_use_ex(farray.features);
++
++    /*
++     * Can't check for ENOTTY: for unknown ioctls the kernel interprets
++     * the argument as a virtio queue id and most likely errors out validating
++     * such id, instead of reporting an unknown operation.
++     */
++    r = vhost_kernel_call(dev, VHOST_SET_FEATURES_ARRAY, &farray);
++    if (!r) {
++        return 0;
++    }
++
++    if (extended_in_use) {
++        error_report("Trying to set extended features without kernel support");
++        return -EINVAL;
++    }
++    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &farray.features[0]);
 +}
 +
- static const VirtIOFeature feature_sizes[] = {
-     {.flags = 1ULL << VIRTIO_NET_F_MAC,
-      .end = endof(struct virtio_net_config, mac)},
-@@ -659,7 +665,8 @@ static bool peer_has_tunnel(VirtIONet *n)
++static int vhost_kernel_get_features(struct vhost_dev *dev, uint64_t *features)
++{
++    struct vhost_features farray;
++    int r;
++
++    farray.count = VIRTIO_FEATURES_NU64S;
++    r = vhost_kernel_call(dev, VHOST_GET_FEATURES_ARRAY, &farray);
++    if (r) {
++        memset(&farray, 0, sizeof(farray));
++        r = vhost_kernel_call(dev, VHOST_GET_FEATURES, &farray.features[0]);
++    }
++    if (r) {
++        return r;
++    }
++
++    virtio_features_copy(features, farray.features);
++    return 0;
  }
  
- static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
--                                       int version_1, int hash_report)
-+                                       int version_1, int hash_report,
-+                                       int tunnel)
- {
-     int i;
-     NetClientState *nc;
-@@ -667,9 +674,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
-     n->mergeable_rx_bufs = mergeable_rx_bufs;
- 
-     if (version_1) {
--        n->guest_hdr_len = hash_report ?
--            sizeof(struct virtio_net_hdr_v1_hash) :
--            sizeof(struct virtio_net_hdr_mrg_rxbuf);
-+        n->guest_hdr_len = tunnel ?
-+            sizeof(struct virtio_net_hdr_v1_hash_tunnel) :
-+            (hash_report ?
-+             sizeof(struct virtio_net_hdr_v1_hash) :
-+             sizeof(struct virtio_net_hdr_mrg_rxbuf));
-         n->rss_data.populate_hash = !!hash_report;
-     } else {
-         n->guest_hdr_len = n->mergeable_rx_bufs ?
-@@ -803,6 +812,10 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
-        .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
-        .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
-        .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
-+       .tnl  = !!(n->curr_guest_offloads &
-+                  (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED)),
-+       .tnl_csum = !!(n->curr_guest_offloads &
-+                      (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED)),
-     };
- 
-     qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
-@@ -824,7 +837,9 @@ virtio_net_guest_offloads_by_features(const uint64_t *features)
-         (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
-         (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
-         (1ULL << VIRTIO_NET_F_GUEST_USO4) |
--        (1ULL << VIRTIO_NET_F_GUEST_USO6);
-+        (1ULL << VIRTIO_NET_F_GUEST_USO6) |
-+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED) |
-+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED);
- 
-     return guest_offloads_mask & virtio_net_features_to_offload(features);
- }
-@@ -937,7 +952,8 @@ static void virtio_net_set_features(VirtIODevice *vdev,
-                                virtio_has_feature_ex(features,
-                                                   VIRTIO_F_VERSION_1),
-                                virtio_has_feature_ex(features,
--                                                  VIRTIO_NET_F_HASH_REPORT));
-+                                                  VIRTIO_NET_F_HASH_REPORT),
-+                               virtio_has_tunnel_hdr(features));
- 
-     n->rsc4_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
-         virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-@@ -3169,13 +3185,15 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     VirtIONet *n = opaque;
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int i, link_down;
-+    bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
- 
-     trace_virtio_net_post_load_device();
-     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
-                                virtio_vdev_has_feature(vdev,
-                                                        VIRTIO_F_VERSION_1),
-                                virtio_vdev_has_feature(vdev,
--                                                       VIRTIO_NET_F_HASH_REPORT));
-+                                                      VIRTIO_NET_F_HASH_REPORT),
-+                               has_tunnel_hdr);
- 
-     /* MAC_TABLE_ENTRIES may be different from the saved image */
-     if (n->mac_table.in_use > MAC_TABLE_ENTRIES) {
-@@ -3995,7 +4013,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- 
-     n->vqs[0].tx_waiting = 0;
-     n->tx_burst = n->net_conf.txburst;
--    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0);
-+    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0, 0);
-     n->promisc = 1; /* for compatibility */
- 
-     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
-diff --git a/net/net.c b/net/net.c
-index 9536184a0c..27e0d27807 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -575,7 +575,8 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
- 
-     assert(len == sizeof(struct virtio_net_hdr_mrg_rxbuf) ||
-            len == sizeof(struct virtio_net_hdr) ||
--           len == sizeof(struct virtio_net_hdr_v1_hash));
-+           len == sizeof(struct virtio_net_hdr_v1_hash) ||
-+           len == sizeof(struct virtio_net_hdr_v1_hash_tunnel));
- 
-     nc->vnet_hdr_len = len;
-     nc->info->set_vnet_hdr_len(nc, len);
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 98b0ae9602..2a90b58467 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -284,6 +284,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
-         if (ol->uso6) {
-             offload |= TUN_F_USO6;
-         }
-+        if (ol->tnl) {
-+            offload |= TUN_F_UDP_TUNNEL_GSO;
-+        }
-+        if (ol->tnl_csum) {
-+            offload |= TUN_F_UDP_TUNNEL_GSO_CSUM;
-+        }
-     }
- 
-     if (ioctl(fd, TUNSETOFFLOAD, offload) != 0) {
-diff --git a/net/tap.c b/net/tap.c
-index 5124372316..abe3b2d036 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -62,6 +62,8 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_NOTIFICATION_DATA,
-     VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_HASH_REPORT,
-+    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
-+    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
+ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+@@ -341,8 +381,8 @@ const VhostOps kernel_ops = {
+         .vhost_attach_vring_worker = vhost_kernel_attach_vring_worker,
+         .vhost_new_worker = vhost_kernel_new_worker,
+         .vhost_free_worker = vhost_kernel_free_worker,
+-        .vhost_set_features = vhost_kernel_set_features,
+-        .vhost_get_features = vhost_kernel_get_features,
++        .vhost_set_features_ex = vhost_kernel_set_features,
++        .vhost_get_features_ex = vhost_kernel_get_features,
+         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+         .vhost_set_owner = vhost_kernel_set_owner,
+         .vhost_get_vq_index = vhost_kernel_get_vq_index,
 -- 
 MST
 
