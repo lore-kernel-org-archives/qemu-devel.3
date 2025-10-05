@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C6ACCA472
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 22:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB08CCA470
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 22:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5XD0-0004FJ-7N; Sun, 05 Oct 2025 18:28:02 -0400
+	id 1v5XYl-0007Ev-EW; Sun, 05 Oct 2025 18:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XCx-0004Ec-SB
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:27:59 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XYk-0007ER-Jn
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:50:30 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XCu-0002Pu-5q
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:27:59 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-36d77de259bso36843871fa.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 15:27:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XYi-0004cV-MU
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:50:30 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-36639c30bb7so39160711fa.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 15:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759703272; x=1760308072; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1759704626; x=1760309426; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
- b=ACm0RTa38sh6U4yv1jkk2kt01nOTZn622JimEKPvmrxRUzDd9jwwhwHtT3fECq7m8r
- qXvsPclSLqjKStuZFprnePMyNH6C0jrTIpFXrFJgzW+GnrgHkLGAIfAvT0HZtzaxEY17
- 8fBwG2wsOQcylPPUf3anrUpxtyvQsQ86XYnu0qIJstUd0sn3y61u0LVVlnzp7kbdpDwb
- vNwzr7VSc2k3mUHyrCi6LERpzaLUm7WZf/4Onsoq87dzEFnQk5DSaT6GaBkfbGxthY20
- GQTbBIV3Ao09I/74VAxaEbYQsbs6e7tw+WnQYPnRTC5Nsw/i8Feoactb0NgyXzFzTUYN
- nAeg==
+ b=K9uSTpBvKdtoYR4Ejn/lJn5iAo5y/hh2jbE1BxaWAUKD9Bxmemnx13sWK2MeK4tMTR
+ 6Ol0jjaxj375l739rVkouQewPQv1FKFs3KP8wJeMgfe/o2s//Kd2T0z9XZqJ7w57dvyV
+ SqHYStEH+FcYx+AM9CL5oNgWmg6N4OW07VVbOwMYGZ/7rk6SeqZ/3XDDAcDMS2/nBRRE
+ swu0dcx2K7mClCGii4Zx4lRBYPSHJlwf+DnITi1kKkJwyAsXeshuyjrByGVFiTAx2DCq
+ EZ5JAQU9E0s1GzkyDExdGeVA1Bhnh98ZYzZVIsTeZ23UBWOelOjZE6Z2PFevLjeEkadB
+ bZeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759703272; x=1760308072;
+ d=1e100.net; s=20230601; t=1759704626; x=1760309426;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
- b=FPvMCApTHPPP/YBEl2Snumm86dpbpPV8TeyPQUrB6mL2fampvLYohbf3k0ncMddi2C
- tMPxX3DKuOLag+gWdoBuNrWj8N4I0OpghV54cKpWxNEqI+5MArWvVKZlECynK5ASQjB9
- StIeoDrA0v9QdQ43+z/SC6zOewtpqGo9bI0oo8B7QXNZblqlg5LZmfzyvFfBsEIIf5qb
- 5MEoyudxNRdfAskIL4qYBL1lFGtVF9OqNaIc1/b1DPMZIDR6emX4ghz/UQlTHMBAUuBb
- Mrow6JzmXmaNpzn7RbentZ+KD2FWSAb/Z3IaVO7WD+PlRD+96vpF7okg+8CH031Vz7sN
- sOmQ==
-X-Gm-Message-State: AOJu0YwyU5rx9VWUO2w3kKIbSTPf28PMazZ+TjphQpykBRGfdqzeDRwh
- xfJxg+Dqql/KhU7G7rqzytBF7WZnCKq70Mnnm0WLT3EEJbeaHNwxnAkpp7pzzcDt9M8=
-X-Gm-Gg: ASbGncs6gPrrGq38zSyWzOaIk4UKUqCHcOFxeqK8M2LGhg60SP0QQfb/DvzkXAOrpSB
- Ns8B8phLZBfmlAM445JZcwyLsmcy8X9JIql9sho/sDDtxcpMnuMaf0Ryty0UMXa+3Bui6NPoJ5v
- MpTTJnhUmkh/LpSVKzqCu14x2aWEUN0+GsaNaxPmItdWiCDLwH8vOxymUtSJhMJT0E8eRbDA6tf
- 6BCeVVBlBW/dycmD6CopE9qZ4tm3fBHbANTbroT/j/Zy5GNgxwzVV7H6oLBhYG9SKsUmByaVsvd
- y7haIBpuE2WKWBoyUxLb31CTgJJvYhWJhURIb/S5w6grbr0tVwvgrBRoi7Pk6GbwAXO8stX6vc/
- ymWWhXIJEw/TZD/gc2CHZHhNjdWFuIBao/mYe94K0NePYGdYmEhCQ38VXaho=
-X-Google-Smtp-Source: AGHT+IEBY5dBcu3MLYDF7IdOYTiO+zF1su8jNk5JgrpgIOiPAVkKHS5J/KRsbuc+pGayULcnQOlhMw==
-X-Received: by 2002:a2e:bd0c:0:b0:36b:2a0a:b906 with SMTP id
- 38308e7fff4ca-374c36cc018mr30769051fa.12.1759703271919; 
- Sun, 05 Oct 2025 15:27:51 -0700 (PDT)
-Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:c37::1:1])
+ b=n9MO8cxJLNfcqmLKCfjQVKvEQbShBAk1BxpgQLInnAp7JPn26o5wiYms/fvMmzn88l
+ lGoOVai+7yKnAzxk1fJJqXv7/VNdj+7kQttN3vTnURMfYgrSsMHrLikrN8aYozPLVAev
+ zI44lDaqNN+OD/ntuQe+qDw0cVqDd/5uxZAvu8wydNjeTEyvnDHXMp5J/8XoHAGzWHsK
+ lu6souaPsY4RUPkIqSLiW1np6At2OLHGq5ZkN5fzP/6foYTWWOBybbk+swaHfmI9kYCA
+ NNKR6V4uw+06qOwGvllZUEZnEeTgfe45H6ZXkqkENXj0w3uw5EJKquFDM5+FIlrI+7vv
+ /cEA==
+X-Gm-Message-State: AOJu0YwZoNfZNM31RS6XouPRh3Ixi3rkUblIKbZ9j0nJ5JiOeYEXFlPx
+ 6gJw83cvq3Uqe9R2/WX0gOz1DIPdYQzkT2cu0nXP8qPTrgJMi06VAoeJQ0viBw2z8OTvTg==
+X-Gm-Gg: ASbGncu5gAXwL4qTlnbK75cxTeNuKs10B6aPpbaiogFn1vhpFdi5ESSWgSt51IYG3sm
+ TJu30kdRBVFvq5yt5xmy9ldSond6ZLvxppu9GUcEFTshhDzwT4OZE/G+FD0Ia4lPFzE8Okq3zdL
+ WcnIbcRtpexaIxVHS6XV0Jc6WbkqB/MUUVk1q0E2lbrfitIm95gYNESTtQk02r8DwrikNtr+Obr
+ 7PnqpbaXJO0S//R+d6AdTC13ZrF4Av8Q3EFUuSscdhqVBLCZgwd/dRbrFHRmOcO5KBODTCPF0YS
+ WpH5KTF54OQcKGFa11VJBWBGgRf7rVUFv/QMfrGvWVKIn98qcXxvBhvn9HyNdA7xstgIS9mU0zv
+ IBOMUP3+QIvW9zrJBmMmc+gJ66Sw+Gq4eVfh3wuVvagPIdkX4NM+bl+sjTesN
+X-Google-Smtp-Source: AGHT+IHay7KzOZh/r4sG251pC2HYHoRVDFj9mAu0PYz3ZujBSnTdqglHE6Y/ohthMgFe93kJX+PWmg==
+X-Received: by 2002:a05:651c:235a:10b0:372:80ac:a33a with SMTP id
+ 38308e7fff4ca-374c381c0efmr27286411fa.28.1759704625935; 
+ Sun, 05 Oct 2025 15:50:25 -0700 (PDT)
+Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:a74::1:2e])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-373ba44441dsm37885831fa.37.2025.10.05.15.27.49
+ 38308e7fff4ca-373ba4bbb7csm37638971fa.47.2025.10.05.15.50.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 05 Oct 2025 15:27:50 -0700 (PDT)
+ Sun, 05 Oct 2025 15:50:24 -0700 (PDT)
 From: xpahos@gmail.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org,
  Alexander Gryanko <xpahos@gmail.com>
 Subject: [PATCH v2] hw/arm: add pvpanic mmio device for arm
-Date: Mon,  6 Oct 2025 01:27:31 +0300
-Message-ID: <20251004-add-newline-guest-error-log-v1-1-a61df1599936@gmail.com>
+Date: Mon,  6 Oct 2025 01:50:16 +0300
+Message-Id: <20251005-arm-pvpanic-v1-1-1e473a735212@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
 References: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
@@ -84,15 +84,15 @@ X-Developer-Signature: v=1; a=ed25519-sha256; t=1759689277; l=3360;
 X-Developer-Key: i=xpahos@gmail.com; a=ed25519;
  pk=bsSvP3Tn7PVKgjJT3BMV3jlAwSqreKIM4099C1r51eg=
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=xpahos@gmail.com; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=xpahos@gmail.com; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,7 +107,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-Message-ID: <20251005222731.f_wbZ7pRpijDrRu9TBike1sSs-cYRNzaXDf6KaE97aM@z>
 
 From: Alexander Gryanko <xpahos@gmail.com>
 
