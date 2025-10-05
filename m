@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8930FCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4ACCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Sg4-0000Im-TX; Sun, 05 Oct 2025 13:37:45 -0400
+	id 1v5SiY-00030u-Pa; Sun, 05 Oct 2025 13:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfy-0000FA-RH; Sun, 05 Oct 2025 13:37:39 -0400
+ id 1v5ShA-0000vb-GT; Sun, 05 Oct 2025 13:38:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5Sfw-0004d2-0e; Sun, 05 Oct 2025 13:37:37 -0400
+ id 1v5Sh8-0004n5-Jw; Sun, 05 Oct 2025 13:38:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E0C0B15AA8B;
- Sun, 05 Oct 2025 20:37:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2489015AA96;
+ Sun, 05 Oct 2025 20:37:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 888FA299737;
- Sun,  5 Oct 2025 20:37:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4A706299741;
+ Sun,  5 Oct 2025 20:37:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Vladimir Isaev <vladimir.isaev@syntacore.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 48/58] target/riscv: do not use translator_ldl in
- opcode_at
-Date: Sun,  5 Oct 2025 20:36:57 +0300
-Message-ID: <20251005173712.445160-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 58/58] tests/functional/test_aarch64_sbsaref_freebsd:
+ Fix the URL of the ISO image
+Date: Sun,  5 Oct 2025 20:37:07 +0300
+Message-ID: <20251005173712.445160-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
@@ -62,47 +60,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Isaev <vladimir.isaev@syntacore.com>
+From: Thomas Huth <thuth@redhat.com>
 
-opcode_at is used only in semihosting checks to match opcodes with expected
-pattern.
+The original image has been removed from the server, so the test
+currently fails if it has to fetch the asset, but we can still
+download the ISO from the archive server. While we're at it, prefer
+the XZ compressed image, it's much smaller and thus the download
+should be faster.
 
-This is not a translator and if we got following assert if page is not in TLB:
-qemu-system-riscv64: ../accel/tcg/translator.c:363: record_save: Assertion
-`offset == db->record_start + db->record_len' failed.
-
-Fixes: 1f9c4462334f ("target/riscv: Use translator_ld* for everything")
-Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
-[ Changes by AF:
- - Fixup header includes after rebase
-]
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit a86d3352ab70f33f5feabbf9bad9450d3c19d0bf)
+Message-ID: <20250701105809.366180-1-thuth@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 01e2b1bc27bae874bfeb6978ce093deac5bb9639)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index d6651f244f..fc31b21f29 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -25,6 +25,7 @@
- #include "exec/helper-gen.h"
+diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
+index bd6728dc70..2a26281d25 100755
+--- a/tests/functional/test_aarch64_sbsaref_freebsd.py
++++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
+@@ -20,9 +20,9 @@
+ class Aarch64SbsarefFreeBSD(QemuSystemTest):
  
- #include "exec/translator.h"
-+#include "accel/tcg/cpu-ldst.h"
- #include "exec/translation-block.h"
- #include "exec/log.h"
- #include "semihosting/semihost.h"
-@@ -1167,7 +1168,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
-     CPUState *cpu = ctx->cs;
-     CPURISCVState *env = cpu_env(cpu);
+     ASSET_FREEBSD_ISO = Asset(
+-        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
+-         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
+-        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461')
++        ('http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/arm64'
++         '/aarch64/ISO-IMAGES/14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso.xz'),
++        '7313a4495ffd71ab77b49b1e83f571521c32756e1d75bf48bd890e0ab0f75827')
  
--    return translator_ldl(env, &ctx->base, pc);
-+    return cpu_ldl_code(env, pc);
- }
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+@@ -30,7 +30,7 @@ class Aarch64SbsarefFreeBSD(QemuSystemTest):
+     def boot_freebsd14(self, cpu=None):
+         fetch_firmware(self)
  
- #define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
+-        img_path = self.ASSET_FREEBSD_ISO.fetch()
++        img_path = self.uncompress(self.ASSET_FREEBSD_ISO)
+ 
+         self.vm.set_console()
+         self.vm.add_args(
 -- 
 2.47.3
 
