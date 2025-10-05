@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B44CCD184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBBBCCD185
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFi-0003yP-7S; Sun, 05 Oct 2025 15:18:38 -0400
+	id 1v5UFK-00022y-5Z; Sun, 05 Oct 2025 15:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFN-0002OS-QF
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UER-0007yQ-5P
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFB-0006aS-0g
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEN-0006Tx-2t
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691882;
+ s=mimecast20190719; t=1759691834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=g7mFYden9qH7zkZwD2EMTpua+ooliRaONw9JQmjB2ko=;
- b=AxQ8VOi+BzVCWVH3UMEczsiypLxcCaaysjV9hSO7HeuPrj2DbkLxOEQ85RfRDJUEDf5sHW
- nxO8Djli4BCSvR+/rgP/NcGgKD9hZLY3WxwuoCBhI/WN51TWHLozMzQhY3npFqG0Xt0r/i
- VtL9g54Cg+pfZ5DmUaMtqx3ihUntq0E=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WnDfxrNxACMbmdDqRpMpScz5AxDAbZ6usd6ALPkfGkQ=;
+ b=NgOBKs/9oPJTZrYba9p+Zx2fMkkxebwwge/Ic1+Z0zyHSMNjRqUFbLYRzYJiSfe+CKVTWi
+ LF8Igyq+CCNgRa3YNLdBmRu+VivjQ66U7h9ebhqZ5Y1cJ2ec0FSW4BTXF795vUSSEvZErb
+ PSp/SmA6X4uH3Yad3OSllbqqRWxpIU0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-F_CEArV2PDC9HEqfPBzRJw-1; Sun, 05 Oct 2025 15:18:01 -0400
-X-MC-Unique: F_CEArV2PDC9HEqfPBzRJw-1
-X-Mimecast-MFC-AGG-ID: F_CEArV2PDC9HEqfPBzRJw_1759691881
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3f030846a41so2461912f8f.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:01 -0700 (PDT)
+ us-mta-462-YFcK4520NjWG-K9V2jcfJA-1; Sun, 05 Oct 2025 15:17:12 -0400
+X-MC-Unique: YFcK4520NjWG-K9V2jcfJA-1
+X-Mimecast-MFC-AGG-ID: YFcK4520NjWG-K9V2jcfJA_1759691831
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3f030846a41so2461279f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691880; x=1760296680;
+ d=1e100.net; s=20230601; t=1759691831; x=1760296631;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g7mFYden9qH7zkZwD2EMTpua+ooliRaONw9JQmjB2ko=;
- b=wdR8y5cKQIzhEaNWRerWMaVXx5QsoQcEyRs7ii6vItzrrg3DysBCEdaZybvkg3yh4g
- R/C42rznUhy5vzKEKT1yiLMFmFVxgA+SQIQdMaEjuzb8F5310AUcOOB0JvQVpC4zQYLg
- 3awUwsD3qYe7VLcyWRm7yHvYwn5Ft9XoRc3kvc6dWmEYQlWBEoSucg75yjCsSPoJKT8s
- ATbq1N6z3MktM0ef71SG8h/bjvaHPgtRWKX9STgQW/Dd5BqA8OODRi15L2ya4RTDZ+Q+
- GvwonSZE3W+oQXmwXfyKgxhH/jYaipTpNutkCXUdXPkCAxgDsJrirok2iwdGh7XC4cv4
- bEaQ==
-X-Gm-Message-State: AOJu0Yw9fnkZ0o0psfN6iFqnandUnf5L9WvPIc4OUixu5QO2/u2vP5Hf
- GNQRvIFoPB+U50AMC79V3iVNcTf7je/EzGJuU/9/3zmrpy8LEyzQXygtvaGwZEH4xnFDPoSlgzk
- 5I9bamP9cRRuGZ/eMzI9b7JaPAHIzPnfRwvlnNg+mlTOyYwTBSatmkpVZgfQdiagF9UMzpK6vWe
- HGwcG+CBsv/7h7t6vUhwPac8KHX9GOXT/4NQ==
-X-Gm-Gg: ASbGncveilJzKqU4J8pKT+cc0KMbGxMnN1MgWI4s6SF/8K9+1NsoLP3V1Y0z4XKmCzH
- 2uVK5vnN7KLz92Bqzie4ZJE42bsoERvj95o05gLZhLs1fkYIRm5lP1JRCZYLLm9cDuReeUDsz7k
- W0y8/lB/xjlYXwvghhE4AOGOyVb54QhDOUeM6PiL0Y1YySr6hOaqFjE9IcbJGrN9ko56bFvWqpW
- um3/NoOHkX3+ykrBdq+wKq4H/Xr+xDEXKBEdaABCEfdiGFAt+e/4eh5S3vD07TV7sqi/C2HeNkH
- pMBsHOK9vsfA3fYjc75PhkFrDSe0RoK24mpZ/Ns=
-X-Received: by 2002:a05:6000:659:20b0:425:76a7:c910 with SMTP id
- ffacd0b85a97d-42576a7c9afmr1618742f8f.49.1759691880205; 
- Sun, 05 Oct 2025 12:18:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGGMCet7TBxc+rHzmr1Clg90kIGH16rZZPlQDq/DINB1SyfCLEFRKIVL2Duo3Ki136rAHavQ==
-X-Received: by 2002:a05:6000:659:20b0:425:76a7:c910 with SMTP id
- ffacd0b85a97d-42576a7c9afmr1618722f8f.49.1759691879679; 
- Sun, 05 Oct 2025 12:17:59 -0700 (PDT)
+ bh=WnDfxrNxACMbmdDqRpMpScz5AxDAbZ6usd6ALPkfGkQ=;
+ b=j5rHl0SnJ8MFgi8ZHvTnmcmUGhiq5Q/nQZgHwnuf4NuEzjLjgP+sxSAaMyvhsmuDhR
+ 4VcEKsyNqAhaVpbx5rsNMJ1Y9jt7cDQcf4ZSmR7ODCIMjM56hToZMsWLkA707daBuDxp
+ obsNaobvzWcOJ5+paCF27VsIUF3Tki3groExx0HP445Z2GKfGqiEUaYjVWHZZ6xbFbJn
+ FcdzPPVQgeizOHBdKi3drza2X2JOWoWiE3PrSs6euwf06FbOukTPAaPQimbzw17FDo/d
+ 6UQVbhqa4UXAHiUZqpl68rpwGC3LAUnUWoncAs3Gx3C8QVobmoFtvkMar5gMsR6EO+4w
+ LNYQ==
+X-Gm-Message-State: AOJu0YwNxC3QNUVJ/Xafx5s9X99cLy8h2SCeLVzi3bh6qwcuteh8B9P/
+ QYhdMCcj4kxCM63c7YQz6NAbWCNTjc+vXhjKbt026NhNxfFP0qO49r/2MDK0vjmHusFNMH5+SDZ
+ aFwkHsI8QwzTOADKOTF+0kfaMcO1CNj8AISctyPnG7wf6r+Q6mgAJhAmJU8acAKp5A6ACrh7Kpi
+ wOeVWinHWVCg5WckZUD+c4o3CgwzfRCPBg7A==
+X-Gm-Gg: ASbGnct1GqZAvkLPe68zfYApIFqaKKn4+3nse2QnBHXDUOzu9Xowa+VQuHfi0lFnMkd
+ 4nBGiLuun9Iyieysh+RVV6ZlUl01rJeaoGTcp1AyAip6Nx4weA44+Jo3gvMYwxICvC4h389N72R
+ sPE615bG6gBtTGrU9ccMLP2Jj8n/caUz03TlAmqD7X4lm6WdEBHsXU6QZ+vWS+M2RaxqEpmORBG
+ lEWzWNylgZTkwoeNyxKR3ASYNrRzxITyhtxLjq1gMosiawMxO5CnUYytQ8GnFzwvUTcNLHkZKWj
+ IPOUCXhL1F5MOfDDNmg+u+WQT7w78lKliRIQgxw=
+X-Received: by 2002:a05:600d:420d:b0:45b:47e1:ef6d with SMTP id
+ 5b1f17b1804b1-46e71172104mr65548765e9.36.1759691830828; 
+ Sun, 05 Oct 2025 12:17:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9KHgQKdExKVBqM1EG7cJqjJT/Waixo/3fiECA9mcAeyF3g2gDVdnVPPHr8FrKC3uk1qB7Lw==
+X-Received: by 2002:a05:600d:420d:b0:45b:47e1:ef6d with SMTP id
+ 5b1f17b1804b1-46e71172104mr65548595e9.36.1759691830274; 
+ Sun, 05 Oct 2025 12:17:10 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e970esm17360456f8f.35.2025.10.05.12.17.58
+ 5b1f17b1804b1-46e723432c9sm124149855e9.1.2025.10.05.12.17.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:59 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:57 -0400
+ Sun, 05 Oct 2025 12:17:09 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:17:08 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 52/75] amd_iommu: Reorder device and page table helpers
-Message-ID: <03e4960124b64e6798b5727a08358b8bed12f4a4.1759691708.git.mst@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, qemu-arm@nongnu.org
+Subject: [PULL 30/75] docs: hest: add new "etc/acpi_table_hest_addr" and
+ update workflow
+Message-ID: <92aad3fc4a0f511819a18a443797069aff77b9ba.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -87,16 +87,16 @@ Content-Disposition: inline
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,213 +112,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Move code related to Device Table and Page Table to an earlier location in
-the file, where it does not require forward declarations to be used by the
-various invalidation functions that will need to query the DTE and walk the
-page table in upcoming changes.
+While the HEST layout didn't change, there are some internal
+changes related to how offsets are calculated and how memory error
+events are triggered.
 
-This change consist of code movement only, no functional change intended.
+Update specs to reflect such changes.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-4-alejandro.j.jimenez@oracle.com>
+Message-ID: <e3e8bd92ce40d997c67ac1d4d973c0041b8f59fc.1758610789.git.mchehab+huawei@kernel.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.c | 172 ++++++++++++++++++++++----------------------
- 1 file changed, 86 insertions(+), 86 deletions(-)
+ docs/specs/acpi_hest_ghes.rst | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 26be69bec8..3cbc9499db 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -438,6 +438,92 @@ static void amdvi_completion_wait(AMDVIState *s, uint64_t *cmd)
-     trace_amdvi_completion_wait(addr, data);
- }
+diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+index c3e9f8d9a7..aaf7b1ad11 100644
+--- a/docs/specs/acpi_hest_ghes.rst
++++ b/docs/specs/acpi_hest_ghes.rst
+@@ -89,12 +89,21 @@ Design Details
+     addresses in the "error_block_address" fields with a pointer to the
+     respective "Error Status Data Block" in the "etc/hardware_errors" blob.
  
-+static inline uint64_t amdvi_get_perms(uint64_t entry)
-+{
-+    return (entry & (AMDVI_DEV_PERM_READ | AMDVI_DEV_PERM_WRITE)) >>
-+           AMDVI_DEV_PERM_SHIFT;
-+}
+-(8) QEMU defines a third and write-only fw_cfg blob which is called
+-    "etc/hardware_errors_addr". Through that blob, the firmware can send back
+-    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
+-    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
+-    for the firmware. The firmware will write back the start address of
+-    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
++(8) QEMU defines a third and write-only fw_cfg blob to store the location
++    where the error block offsets, read ack registers and CPER records are
++    stored.
 +
-+/* validate that reserved bits are honoured */
-+static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
-+                               uint64_t *dte)
-+{
-+    if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
-+        (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
-+        (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
-+        (dte[3] & AMDVI_DTE_QUAD3_RESERVED)) {
-+        amdvi_log_illegaldevtab_error(s, devid,
-+                                      s->devtab +
-+                                      devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
-+        return false;
-+    }
++    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
++    contains a GPA for the beginning of "etc/hardware_errors".
 +
-+    return true;
-+}
++    Newer versions place the location at "etc/acpi_table_hest_addr",
++    pointing to the GPA of the HEST table.
 +
-+/* get a device table entry given the devid */
-+static bool amdvi_get_dte(AMDVIState *s, int devid, uint64_t *entry)
-+{
-+    uint32_t offset = devid * AMDVI_DEVTAB_ENTRY_SIZE;
-+
-+    if (dma_memory_read(&address_space_memory, s->devtab + offset, entry,
-+                        AMDVI_DEVTAB_ENTRY_SIZE, MEMTXATTRS_UNSPECIFIED)) {
-+        trace_amdvi_dte_get_fail(s->devtab, offset);
-+        /* log error accessing dte */
-+        amdvi_log_devtab_error(s, devid, s->devtab + offset, 0);
-+        return false;
-+    }
-+
-+    *entry = le64_to_cpu(*entry);
-+    if (!amdvi_validate_dte(s, devid, entry)) {
-+        trace_amdvi_invalid_dte(entry[0]);
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
-+/* get pte translation mode */
-+static inline uint8_t get_pte_translation_mode(uint64_t pte)
-+{
-+    return (pte >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
-+}
-+
-+static inline uint64_t pte_override_page_mask(uint64_t pte)
-+{
-+    uint8_t page_mask = 13;
-+    uint64_t addr = (pte & AMDVI_DEV_PT_ROOT_MASK) >> 12;
-+    /* find the first zero bit */
-+    while (addr & 1) {
-+        page_mask++;
-+        addr = addr >> 1;
-+    }
-+
-+    return ~((1ULL << page_mask) - 1);
-+}
-+
-+static inline uint64_t pte_get_page_mask(uint64_t oldlevel)
-+{
-+    return ~((1UL << ((oldlevel * 9) + 3)) - 1);
-+}
-+
-+static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
-+                                          uint16_t devid)
-+{
-+    uint64_t pte;
-+
-+    if (dma_memory_read(&address_space_memory, pte_addr,
-+                        &pte, sizeof(pte), MEMTXATTRS_UNSPECIFIED)) {
-+        trace_amdvi_get_pte_hwerror(pte_addr);
-+        amdvi_log_pagetab_error(s, devid, pte_addr, 0);
-+        pte = 0;
-+        return pte;
-+    }
-+
-+    pte = le64_to_cpu(pte);
-+    return pte;
-+}
-+
- /* log error without aborting since linux seems to be using reserved bits */
- static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
- {
-@@ -894,92 +980,6 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
-     }
- }
++    Using above mentioned 'fw_cfg' files, the firmware can send back the
++    guest-side allocation addresses to QEMU. They contain a 8-byte entry.
++    QEMU generates a single WRITE_POINTER command for the firmware. The
++    firmware will write back the start address of either "etc/hardware_errors"
++    or HEST table at the corresponding fw_cfg file.
  
--static inline uint64_t amdvi_get_perms(uint64_t entry)
--{
--    return (entry & (AMDVI_DEV_PERM_READ | AMDVI_DEV_PERM_WRITE)) >>
--           AMDVI_DEV_PERM_SHIFT;
--}
--
--/* validate that reserved bits are honoured */
--static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
--                               uint64_t *dte)
--{
--    if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
--        (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
--        (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
--        (dte[3] & AMDVI_DTE_QUAD3_RESERVED)) {
--        amdvi_log_illegaldevtab_error(s, devid,
--                                      s->devtab +
--                                      devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
--        return false;
--    }
--
--    return true;
--}
--
--/* get a device table entry given the devid */
--static bool amdvi_get_dte(AMDVIState *s, int devid, uint64_t *entry)
--{
--    uint32_t offset = devid * AMDVI_DEVTAB_ENTRY_SIZE;
--
--    if (dma_memory_read(&address_space_memory, s->devtab + offset, entry,
--                        AMDVI_DEVTAB_ENTRY_SIZE, MEMTXATTRS_UNSPECIFIED)) {
--        trace_amdvi_dte_get_fail(s->devtab, offset);
--        /* log error accessing dte */
--        amdvi_log_devtab_error(s, devid, s->devtab + offset, 0);
--        return false;
--    }
--
--    *entry = le64_to_cpu(*entry);
--    if (!amdvi_validate_dte(s, devid, entry)) {
--        trace_amdvi_invalid_dte(entry[0]);
--        return false;
--    }
--
--    return true;
--}
--
--/* get pte translation mode */
--static inline uint8_t get_pte_translation_mode(uint64_t pte)
--{
--    return (pte >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
--}
--
--static inline uint64_t pte_override_page_mask(uint64_t pte)
--{
--    uint8_t page_mask = 13;
--    uint64_t addr = (pte & AMDVI_DEV_PT_ROOT_MASK) >> 12;
--    /* find the first zero bit */
--    while (addr & 1) {
--        page_mask++;
--        addr = addr >> 1;
--    }
--
--    return ~((1ULL << page_mask) - 1);
--}
--
--static inline uint64_t pte_get_page_mask(uint64_t oldlevel)
--{
--    return ~((1UL << ((oldlevel * 9) + 3)) - 1);
--}
--
--static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
--                                          uint16_t devid)
--{
--    uint64_t pte;
--
--    if (dma_memory_read(&address_space_memory, pte_addr,
--                        &pte, sizeof(pte), MEMTXATTRS_UNSPECIFIED)) {
--        trace_amdvi_get_pte_hwerror(pte_addr);
--        amdvi_log_pagetab_error(s, devid, pte_addr, 0);
--        pte = 0;
--        return pte;
--    }
--
--    pte = le64_to_cpu(pte);
--    return pte;
--}
--
- static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
-                             IOMMUTLBEntry *ret, unsigned perms,
-                             hwaddr addr)
+ (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
+     "Error Status Data Block", guest memory, and then injects platform specific
+@@ -105,8 +114,5 @@ Design Details
+      kernel, on receiving notification, guest APEI driver could read the CPER error
+      and take appropriate action.
+ 
+-(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
+-     find out "Error Status Data Block" entry corresponding to error source. So supported
+-     source_id values should be assigned here and not be changed afterwards to make sure
+-     that guest will write error into expected "Error Status Data Block" even if guest was
+-     migrated to a newer QEMU.
++(11) kvm_arch_on_sigbus_vcpu() reports RAS errors via a SEA notifications,
++     when a SIGBUS event is triggered.
 -- 
 MST
 
