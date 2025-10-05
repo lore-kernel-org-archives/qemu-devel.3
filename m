@@ -4,87 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9ECCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 15:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C02ACAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Qte-0006zs-FN; Sun, 05 Oct 2025 11:43:38 -0400
+	id 1v5Rua-00005l-La; Sun, 05 Oct 2025 12:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1v5Qtc-0006zj-6W
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 11:43:36 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1v5QtZ-00088h-R4
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 11:43:35 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-26983b5411aso26340065ad.1
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 08:43:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759679012; x=1760283812; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Pbx5TxDrhospeg3mAe1q2oaZh1OL3jT6kMymIr0TxRw=;
- b=mqKWrI/O02Rbf/15UhrTc0sgKhThXCOaW9/ZI6hfkT+a2sNlLgzqx1SCDK+lsg2Qgt
- 1M62y52l80qH5tBq+JE/Uh595mDasTXycNlJkPBJlIXFM5YBj2Wc4Aa563niPkz1n7ch
- OtTew4Xwcq5K+vVoURShPJZtcTXaPYwhMztyMBEnLHyiCYVxuX/crCYtT6IK8FNw1Yud
- HJlC/FcfFCrmFkRshLouaBFm9XbNO0HZo13JFYcQVTkp59mYrLm4bsMT8nXfVQBTA1S6
- oAlPbXETlvOzwUvK5gX5jZNzIGJp2YxOP46LmVLG4YRLyBAaP5ziCC0RB8I7cMPbaQYr
- LlSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759679012; x=1760283812;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pbx5TxDrhospeg3mAe1q2oaZh1OL3jT6kMymIr0TxRw=;
- b=DI0TY5DpM4kHhmq4p3inmdMqFN0PfZoRjSzIvW07FoleFnYLnlAYBxyIoyac4XmX2q
- Sy4wiElGcW4m8rChKUg1xVwFa4gMN27dV2fAyh8jm1/LuUoK5Qj39tNj0CBXVNdqPXJ1
- aeoLJSSWcwXmt8JNsPy9ICFHZXSDLEfFHjsaGXSUTmSSNVCx+w4S/JnF1L90dssEk+/x
- DrONecJXoMUDTiGbozwFEtgXaBjvk3HC2eOeWnXfSxSfT+ZY36KPeVKtQPD0f6x7/xlL
- NsPLuh7YuzYZywmT1RmGsSr5IraIP/y5JOfxdYbpbJDBPoUxxBz1FppHA1p0UOqEVGhu
- c35A==
-X-Gm-Message-State: AOJu0Yx0/A7dgvrvp9Lxn3mKNywbQPNes/fOCJR2uoNf8r8OUxWbjQ+F
- SjYqx6xTO+dRkeRDFiZkNDN18RpJAjiVvF4VTCFu5TTcoI31S3oyWMs0
-X-Gm-Gg: ASbGncuvTc4sgVEukbGpYZKonQJE9riR/yvIt1Yumq4SJ45wovLgYvbCoC8C0xrougj
- x/wCkdIjpwXGHtbOeWP756TwnDI352s2COo5avc7EYAqCH+mbdoOQeZBVMgIrn/yeluKyrpC251
- i8iHGSckeaxrrsZU2+pFYV86iSy1MkhTBv66SgOrY13cZ8RreQfxAgqWOIwMIAWL6czShekWnvC
- qmfGIRgVo8xDDvdsDKOqlLVltYVWDRfIvGOw3AxElV+hkhhES0Ukr58JZQdEPrZksDfklqWTHfY
- Gdd0OdZ1N1pa96GUHUri2+op+z2SvPg8NHVvUzRLDWX4QY+1vWpVIcwGv7ccnpbvHP8be11agni
- kyg0Q/E6iHziv0ifNa+af/Mcs++r3MBo8YVbHRWU+wEAMyVzrOuf44bGKa7g=
-X-Google-Smtp-Source: AGHT+IHaLKMtLOLbQvScGeB8e0npEJtp2patMOnVa7dTUH76DAu3LThFv0GwIh6Unp1VfJKM0QaMUA==
-X-Received: by 2002:a17:903:28f:b0:27e:ea82:5ce8 with SMTP id
- d9443c01a7336-28e9a57468bmr114263715ad.14.1759679012077; 
- Sun, 05 Oct 2025 08:43:32 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-28ea1d99ab1sm67912675ad.9.2025.10.05.08.43.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 08:43:31 -0700 (PDT)
-Date: Sun, 5 Oct 2025 08:43:29 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, ysato@users.sourceforge.jp
-Subject: Re: [PATCH] target/sh4: Use MO_ALIGN for system UNALIGN()
-Message-ID: <6c23f546-c135-4345-93a4-25d75a038902@roeck-us.net>
-References: <20250503212708.3235806-1-richard.henderson@linaro.org>
- <46ea9b87-cc73-4408-82c4-2de96dddca0a@roeck-us.net>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v5RuV-0008WU-IF; Sun, 05 Oct 2025 12:48:36 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v5RuT-00071e-2j; Sun, 05 Oct 2025 12:48:35 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3676415AA29;
+ Sun, 05 Oct 2025 19:48:20 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 065B22996E7;
+ Sun,  5 Oct 2025 19:48:23 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 62/81] net/passt: Fix build failure due to missing GIO
+ dependency
+Date: Sun,  5 Oct 2025 19:47:42 +0300
+Message-ID: <20251005164822.442861-2-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
+References: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <46ea9b87-cc73-4408-82c4-2de96dddca0a@roeck-us.net>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,34 +63,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 04, 2025 at 05:14:45PM -0700, Guenter Roeck wrote:
-> Hi,
-> 
-> On Sat, May 03, 2025 at 02:27:08PM -0700, Richard Henderson wrote:
-> > This should have been done before removing TARGET_ALIGNED_ONLY,
-> > as we did for hppa and alpha.
-> > 
-> > Fixes: 8244189419f9 ("target/sh4: Remove TARGET_ALIGNED_ONLY")
-> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> When trying to run sh4 emulations with qemu 10.1.0, I get quite interesting
-> error messages. Bisect points to this patch, and reverting it fixes the
-> problem.
+From: Laurent Vivier <lvivier@redhat.com>
 
-Actually, it is worse: Commit a4027ed7d4 ("target: Use cpu_pointer_wrap_notreached
-for strict align targets")  claims that "Alpha, HPPA, and SH4 always use aligned
-addresses" which just is not true. At least sh4 generates an unaligned trap and
-handles the problem in the trap handler. Result is
+The passt networking backend uses functions from the GIO library,
+such as g_subprocess_launcher_new(), to manage its daemon process.
+So, building with passt enabled requires GIO to be available.
 
-ERROR:../accel/tcg/cputlb.c:2944:cpu_pointer_wrap_notreached: code should not be reached
-Bail out! ERROR:../accel/tcg/cputlb.c:2944:cpu_pointer_wrap_notreached: code should not be reached
+If we enable passt and disable gio the build fails during linkage with
+undefined reference errors:
 
-after reverting this patch. Also, hppa64 has the same problem, meaning
-the hppa64 (parisc64) emulation no longer works with qemu 10.1.
+  /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `net_passt_start_daemon':
+  net/passt.c:250: undefined reference to `g_subprocess_launcher_new'
+  /usr/bin/ld: net/passt.c:251: undefined reference to `g_subprocess_launcher_take_fd'
+  /usr/bin/ld: net/passt.c:253: undefined reference to `g_subprocess_launcher_spawnv'
+  /usr/bin/ld: net/passt.c:256: undefined reference to `g_object_unref'
+  /usr/bin/ld: net/passt.c:263: undefined reference to `g_subprocess_wait'
+  /usr/bin/ld: net/passt.c:268: undefined reference to `g_subprocess_get_if_exited'
+  /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `glib_autoptr_clear_GSubprocess':
+  /usr/include/glib-2.0/gio/gio-autocleanups.h:132: undefined reference to `g_object_unref'
+  /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `net_passt_start_daemon':
+  net/passt.c:269: undefined reference to `g_subprocess_get_exit_status'
 
-I thought I can revert a couple of patches, but the problem is too deep
-for me to track down. I'll have to give up on using 10.1 for the time being.
+Fix this by adding an explicit weson dependency on GIO for the passt
+option.
+The existing dependency on linux is kept because passt is only available
+on this OS.
 
-Guenter
+Cc: qemu-stable@nongnu.org
+Fixes: 854ee02b222 ("net: Add passt network backend")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3121
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. BerrangÃ© <berrange@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 4ccca2cc05a2d904d1e25365accf3bcbe553c8b0)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/meson.build b/meson.build
+index 50c774a195..b7db736bbf 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1287,6 +1287,7 @@ endif
+ 
+ enable_passt = get_option('passt') \
+   .require(host_os == 'linux', error_message: 'passt is supported only on Linux') \
++  .require(gio.found(), error_message: 'passt requires gio') \
+   .allowed()
+ 
+ vde = not_found
+-- 
+2.47.3
+
 
