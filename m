@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB10CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB5CCAC5B8
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UEL-0007ly-Jo; Sun, 05 Oct 2025 15:17:17 -0400
+	id 1v5UFF-0001b9-4U; Sun, 05 Oct 2025 15:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UE6-0007h0-TB
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEm-0000A7-Aq
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UE4-0006RR-DI
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:16:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEk-0006XL-KB
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691815;
+ s=mimecast20190719; t=1759691857;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NIhiW5u2eQoMFtkoyQrTpDhwvgeVrThMS4HUlP2TBEA=;
- b=GRBJu6RmddsPFxaGInyw/lCoxvXQZN//4SnO5CmvLjCuG0jngID8fkDtAgTelus4R69COI
- dyhiL25myA277cRPonorKFsJ+7ZvjV4FlVr7UTIBePZkG4J6snXsafLK2PVxDOepei2y42
- GgSDNLit+6iU7wMLki3UL8Q6Ninqpy4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xzqumJdA2IU6uk2BKX0kvnJAwm1EzQzyigsDYU/IG3o=;
+ b=XZMiWj0VK3hCkgYjbG8RLAfM4qM4KBOXb1Qd5TZJe9UD8b6R1H4IV1mEVv5jGJBGpJLsW5
+ 0PBB0UVLq2U8TDFePiQFJCWqH3b9Q+JIW1UqQspMXklPKNI0vzZnogl/0+EmUcp5PX7rqJ
+ yq17hmcOUDklD3DeqgO99H0mDRrgbuc=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-597-JERAcVWfP82WSeucE2IXRg-1; Sun, 05 Oct 2025 15:16:54 -0400
-X-MC-Unique: JERAcVWfP82WSeucE2IXRg-1
-X-Mimecast-MFC-AGG-ID: JERAcVWfP82WSeucE2IXRg_1759691813
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3f42b54d159so3228473f8f.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:16:54 -0700 (PDT)
+ us-mta-493-GN335gjcPEmM9CGuR0iy9w-1; Sun, 05 Oct 2025 15:17:36 -0400
+X-MC-Unique: GN335gjcPEmM9CGuR0iy9w-1
+X-Mimecast-MFC-AGG-ID: GN335gjcPEmM9CGuR0iy9w_1759691855
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ecdd80ea44so2979852f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691813; x=1760296613;
+ d=1e100.net; s=20230601; t=1759691855; x=1760296655;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NIhiW5u2eQoMFtkoyQrTpDhwvgeVrThMS4HUlP2TBEA=;
- b=P+mCTboIPJNAS/HNx1b2xhDHxXdBZ63UvpVFprTGbgeTSv5W18zSJptUP2a/HIjWRn
- tv7Lcl3esC9tZGUNNmMVTp4l3EQngDlvPgwjmKDRSK4q2zC6+4ckIQaKmTV9XDNi+krb
- I95l2CxACiBgPdtAJwxMqqgal1wZxSwIGveHdocsefeW3joSKBgaEkWG7i6f4X7vlway
- miYom/HljCmIkz3LGEm0QMSabRxwQYVg1gVIRtm/OGNprIXPjeLgOnlpzYt0ociWTkr7
- a7KyRobdsYgN3cOiw4FV27OQP4do0nmXV3ZIjlhNODOvOHqu8O2+HbrD5eOxqdqmhu0U
- dJsg==
-X-Gm-Message-State: AOJu0YyoCISkB88+VShcxrdTBbT4rjwAUWsMpumRlQTJMLCE06hZFER+
- ZYNIyLhMUhH6i9IB3uyK6xhCgFEO2TqrX6YOc2/twgJIYeSoPkzeW3xaPkYYN6DIH4OiaAOdOlW
- wRvAtOA42XTEGPyO3eyl90q/ide0qv0OYt0rfxt/GGWciQWBE1FvMpguITWcpsJIy2yWEtat/wU
- wUgrqZze8AErRBL4eXM0zDW0y9rQyHmGkmRg==
-X-Gm-Gg: ASbGncsKBdHmvCI9Nqpu54+IZ5XPedjaV71zvPTBCT7TaVuZ2dSRWWnmaprC0MpSzji
- eHYkVcNeyRbaIHWgAc9QQx/QU4A5jnhdQiPyLVDqg7kyilBBovx5/cD6O5d7ehgxTKgpAynDHa3
- onGjq7klXwyY1wDv9EAgu4zwkN/yYpTAxcybS9kjEBr/0FjnS3HZFXs9T0Z8S1U1u+Xdwc5ynDi
- C0H0RTxO9Z025fwb9scR/hys88kfh09u0CVj3zMu6N0CsjyPkaDTbuZMKKdgp5bsaq26MMvC+Zq
- NCjiajq2hJMYPJNIHPC2JWBKHDRU/oqOTGYb8SU=
-X-Received: by 2002:a05:6000:4013:b0:425:58d0:4834 with SMTP id
- ffacd0b85a97d-425671948cfmr6288978f8f.39.1759691812924; 
- Sun, 05 Oct 2025 12:16:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsWN4zgw9e6n7Hk6GjBt1nA+9NTwZM/bYi3euHzHf3qQ7aiwEhTw9R7RDdL7iOv+R0g435wA==
-X-Received: by 2002:a05:6000:4013:b0:425:58d0:4834 with SMTP id
- ffacd0b85a97d-425671948cfmr6288960f8f.39.1759691812370; 
- Sun, 05 Oct 2025 12:16:52 -0700 (PDT)
+ bh=xzqumJdA2IU6uk2BKX0kvnJAwm1EzQzyigsDYU/IG3o=;
+ b=rsoc9A5ENKHjQ472Cb9dlwEsp5NIDKCg2VYdN2rXkgM8F53PiT/G2KoLbBg0uQOgWs
+ TKkDRCuTRVBz3aYkcIbalAcJJSsRq3Wf+/ckd/kRhJ2h7ufvSOC7Svb+fPJLKrR8m/++
+ 7yg0mJOzx0p3rQXnRNc7Y5Wp5WWQo+iiO7r8nlsdJIjkKqgsjnIbQ0lw254vpz+e8/2U
+ GSJNhLcSwh7wbZWhOx0BQPaDXaZIPyx4TodaqDFBa3lj7cgviaUGBpmv+N9oTdTW8Amf
+ aLr1SPuqdEb6GmHop/9Phoa/q0sEECIi78L4SXbDq3rBnUzbqKx6vQ9XI/dFMprzfANH
+ ZKEw==
+X-Gm-Message-State: AOJu0YzfAyb6F5mRoVcEUbEaKsXYkiGj+6g6KRfFU4mxH0bNaBP0MeLe
+ 3mvJUKk3ja8uJu+R5ED8v0JEoeixgyYd4TDRY1goz9M1AazbYS60O/yKfh08kmIkt+GA0ajsrRr
+ tmC6tObSdMYtkY1AmgxpScf6bU4mlgC+bMLDFSfheVeQpkf22xy8c+V9o14uzK+tTrlshXXgnCQ
+ 4cU3WPOWTriyNCsfjkUL/Pm8y+6QBv6XoXWA==
+X-Gm-Gg: ASbGncsi47snKkYpQrb9s5mkowkoaTflmWqq0BGo7+2cMs6NjOuJrLI/8n238CNfcn6
+ oYmC2n6yNB6Z/YSBXedbbQBUz/sB/Vo21666fri/hmBNHEkIcRv6DGR2zKtIN3enPHjrIn9alyb
+ +YAJL7KpfOtrKjoHWf7zKWLP1oTkSBs8EbbOlJdnQfmBU4Uy9pMrwraXn5LbJQWrcoYhETZnlel
+ G07xe/0ew8MvQebxtKNm2aqQP0hDsUlmmgHQAdvePIKWzANPr5aOA4fJlShrBbnKUFrqLtW0CUy
+ 6L/nS5SsW2PbakGkTFkkfE4Qo/ZxViOJBgZDnJM=
+X-Received: by 2002:a05:6000:2910:b0:414:c2e8:a739 with SMTP id
+ ffacd0b85a97d-42566c5ef4amr6878664f8f.31.1759691854673; 
+ Sun, 05 Oct 2025 12:17:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2uJeMWvF0P1wIRjdZRjb/My+GlBVAX1lKarrmf6fA8mj9QvBRLbnj37q8WTEsu2KuBJz1Fw==
+X-Received: by 2002:a05:6000:2910:b0:414:c2e8:a739 with SMTP id
+ ffacd0b85a97d-42566c5ef4amr6878644f8f.31.1759691854167; 
+ Sun, 05 Oct 2025 12:17:34 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e970esm17357225f8f.35.2025.10.05.12.16.51
+ ffacd0b85a97d-4255d8e9724sm17277219f8f.28.2025.10.05.12.17.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:16:52 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:16:50 -0400
+ Sun, 05 Oct 2025 12:17:33 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:17:31 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 22/75] acpi/generic_event_device: Update GHES migration to
- cover hest addr
-Message-ID: <d238dedae699a924c92228cb8b3bb8dc861008b5.1759691708.git.mst@redhat.com>
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 40/75] intel_iommu: Declare registers for PRI
+Message-ID: <b84e1e0730f3063fc453ce2d0a77136f101467a2.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -111,67 +113,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-The GHES migration logic should now support HEST table location too.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <ede7ddf4b10f34094a4327dc458d630ad319bd1c.1758610789.git.mchehab+huawei@kernel.org>
+Message-ID: <20250901111630.1018573-5-clement.mathieu--drif@eviden.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ hw/i386/intel_iommu.c | 55 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 95682b79a2..55998303c2 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -436,6 +436,34 @@ static const VMStateDescription vmstate_pcihp_state = {
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 4e7ad3a290..d952ec1428 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3386,6 +3386,27 @@ static void vtd_handle_iectl_write(IntelIOMMUState *s)
      }
- };
+ }
  
-+static const VMStateDescription vmstate_hest = {
-+    .name = "acpi-hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static bool hest_needed(void *opaque)
++static void vtd_handle_prs_write(IntelIOMMUState *s)
 +{
-+    AcpiGedState *s = opaque;
-+    return s->ghes_state.hest_addr_le;
++    uint32_t prs = vtd_get_long_raw(s, DMAR_PRS_REG);
++    if (!(prs & VTD_PR_STATUS_PPR) && !(prs & VTD_PR_STATUS_PRO)) {
++        vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
++    }
 +}
 +
-+static const VMStateDescription vmstate_hest_state = {
-+    .name = "acpi-ged/hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = hest_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
-+                       vmstate_hest, AcpiGhesState),
-+        VMSTATE_END_OF_LIST()
++static void vtd_handle_pectl_write(IntelIOMMUState *s)
++{
++    uint32_t pectl = vtd_get_long_raw(s, DMAR_PECTL_REG);
++    if ((pectl & VTD_PR_PECTL_IP) && !(pectl & VTD_PR_PECTL_IM)) {
++        /*
++         * If IP field was 1 when software clears the IM field,
++         * the  interrupt is generated along with clearing the IP field.
++         */
++        vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
++        vtd_generate_interrupt(s, DMAR_PEADDR_REG, DMAR_PEDATA_REG);
 +    }
-+};
++}
 +
- static const VMStateDescription vmstate_acpi_ged = {
-     .name = "acpi-ged",
-     .version_id = 1,
-@@ -449,6 +477,7 @@ static const VMStateDescription vmstate_acpi_ged = {
-         &vmstate_cpuhp_state,
-         &vmstate_ghes_state,
-         &vmstate_pcihp_state,
-+        &vmstate_hest_state,
-         NULL
-     }
- };
+ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     IntelIOMMUState *s = opaque;
+@@ -3428,6 +3449,11 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         val = s->iq >> 32;
+         break;
+ 
++    case DMAR_PEUADDR_REG:
++        assert(size == 4);
++        val = vtd_get_long_raw(s, DMAR_PEUADDR_REG);
++        break;
++
+     default:
+         if (size == 4) {
+             val = vtd_get_long(s, addr);
+@@ -3491,6 +3517,11 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         vtd_handle_iotlb_write(s);
+         break;
+ 
++    case DMAR_PEUADDR_REG:
++        assert(size == 4);
++        vtd_set_long(s, addr, val);
++        break;
++
+     /* Invalidate Address Register, 64-bit */
+     case DMAR_IVA_REG:
+         if (size == 4) {
+@@ -3671,6 +3702,18 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         vtd_set_long(s, addr, val);
+         break;
+ 
++    case DMAR_PRS_REG:
++        assert(size == 4);
++        vtd_set_long(s, addr, val);
++        vtd_handle_prs_write(s);
++        break;
++
++    case DMAR_PECTL_REG:
++        assert(size == 4);
++        vtd_set_long(s, addr, val);
++        vtd_handle_pectl_write(s);
++        break;
++
+     default:
+         if (size == 4) {
+             vtd_set_long(s, addr, val);
+@@ -4722,6 +4765,18 @@ static void vtd_init(IntelIOMMUState *s)
+      * Interrupt remapping registers.
+      */
+     vtd_define_quad(s, DMAR_IRTA_REG, 0, 0xfffffffffffff80fULL, 0);
++
++    /* Page request registers */
++    if (s->ecap & VTD_ECAP_PRS) {
++        vtd_define_quad(s, DMAR_PQH_REG, 0, 0x7ffe0ULL, 0);
++        vtd_define_quad(s, DMAR_PQT_REG, 0, 0x7ffe0ULL, 0);
++        vtd_define_quad(s, DMAR_PQA_REG, 0, 0xfffffffffffff007ULL, 0);
++        vtd_define_long(s, DMAR_PRS_REG, 0, 0, 0x3UL);
++        vtd_define_long(s, DMAR_PECTL_REG, 0, 0x80000000UL, 0);
++        vtd_define_long(s, DMAR_PEDATA_REG, 0, 0xffffUL, 0);
++        vtd_define_long(s, DMAR_PEADDR_REG, 0, 0xfffffffcUL, 0);
++        vtd_define_long(s, DMAR_PEUADDR_REG, 0, 0xffffffffUL, 0);
++    }
+ }
+ 
+ /* Should not reset address_spaces when reset because devices will still use
 -- 
 MST
 
