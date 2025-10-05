@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBBBCCD185
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED90CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFK-00022y-5Z; Sun, 05 Oct 2025 15:18:14 -0400
+	id 1v5UFD-0001KQ-SK; Sun, 05 Oct 2025 15:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UER-0007yQ-5P
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEc-00085c-MZ
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEN-0006Tx-2t
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UEa-0006VX-ML
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:17:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691834;
+ s=mimecast20190719; t=1759691848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WnDfxrNxACMbmdDqRpMpScz5AxDAbZ6usd6ALPkfGkQ=;
- b=NgOBKs/9oPJTZrYba9p+Zx2fMkkxebwwge/Ic1+Z0zyHSMNjRqUFbLYRzYJiSfe+CKVTWi
- LF8Igyq+CCNgRa3YNLdBmRu+VivjQ66U7h9ebhqZ5Y1cJ2ec0FSW4BTXF795vUSSEvZErb
- PSp/SmA6X4uH3Yad3OSllbqqRWxpIU0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3aFxoIeUx803jBt31fbg+H6tlPcEQbGoaOIOlfDZlQk=;
+ b=fjIG2gi60r2L912QkI0PaDuzZDULQT97Y0MZyDj9SIjQ3OBzMZV6tukgyAyVrq9spxfFmP
+ c0GKpKNbewkLNS39btKh0rIh6lsTIr5iG3N74XI57dcZPCUKYG46p6NnyicB4GjvKKr98m
+ G3H+3AymS8TqiDEVMGhbst/n7C0svoQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-YFcK4520NjWG-K9V2jcfJA-1; Sun, 05 Oct 2025 15:17:12 -0400
-X-MC-Unique: YFcK4520NjWG-K9V2jcfJA-1
-X-Mimecast-MFC-AGG-ID: YFcK4520NjWG-K9V2jcfJA_1759691831
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f030846a41so2461279f8f.2
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:12 -0700 (PDT)
+ us-mta-532-uq1zFbmuMPOy2kHo9jclLw-1; Sun, 05 Oct 2025 15:17:26 -0400
+X-MC-Unique: uq1zFbmuMPOy2kHo9jclLw-1
+X-Mimecast-MFC-AGG-ID: uq1zFbmuMPOy2kHo9jclLw_1759691845
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3ece0fd841cso2209893f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:17:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691831; x=1760296631;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WnDfxrNxACMbmdDqRpMpScz5AxDAbZ6usd6ALPkfGkQ=;
- b=j5rHl0SnJ8MFgi8ZHvTnmcmUGhiq5Q/nQZgHwnuf4NuEzjLjgP+sxSAaMyvhsmuDhR
- 4VcEKsyNqAhaVpbx5rsNMJ1Y9jt7cDQcf4ZSmR7ODCIMjM56hToZMsWLkA707daBuDxp
- obsNaobvzWcOJ5+paCF27VsIUF3Tki3groExx0HP445Z2GKfGqiEUaYjVWHZZ6xbFbJn
- FcdzPPVQgeizOHBdKi3drza2X2JOWoWiE3PrSs6euwf06FbOukTPAaPQimbzw17FDo/d
- 6UQVbhqa4UXAHiUZqpl68rpwGC3LAUnUWoncAs3Gx3C8QVobmoFtvkMar5gMsR6EO+4w
- LNYQ==
-X-Gm-Message-State: AOJu0YwNxC3QNUVJ/Xafx5s9X99cLy8h2SCeLVzi3bh6qwcuteh8B9P/
- QYhdMCcj4kxCM63c7YQz6NAbWCNTjc+vXhjKbt026NhNxfFP0qO49r/2MDK0vjmHusFNMH5+SDZ
- aFwkHsI8QwzTOADKOTF+0kfaMcO1CNj8AISctyPnG7wf6r+Q6mgAJhAmJU8acAKp5A6ACrh7Kpi
- wOeVWinHWVCg5WckZUD+c4o3CgwzfRCPBg7A==
-X-Gm-Gg: ASbGnct1GqZAvkLPe68zfYApIFqaKKn4+3nse2QnBHXDUOzu9Xowa+VQuHfi0lFnMkd
- 4nBGiLuun9Iyieysh+RVV6ZlUl01rJeaoGTcp1AyAip6Nx4weA44+Jo3gvMYwxICvC4h389N72R
- sPE615bG6gBtTGrU9ccMLP2Jj8n/caUz03TlAmqD7X4lm6WdEBHsXU6QZ+vWS+M2RaxqEpmORBG
- lEWzWNylgZTkwoeNyxKR3ASYNrRzxITyhtxLjq1gMosiawMxO5CnUYytQ8GnFzwvUTcNLHkZKWj
- IPOUCXhL1F5MOfDDNmg+u+WQT7w78lKliRIQgxw=
-X-Received: by 2002:a05:600d:420d:b0:45b:47e1:ef6d with SMTP id
- 5b1f17b1804b1-46e71172104mr65548765e9.36.1759691830828; 
- Sun, 05 Oct 2025 12:17:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9KHgQKdExKVBqM1EG7cJqjJT/Waixo/3fiECA9mcAeyF3g2gDVdnVPPHr8FrKC3uk1qB7Lw==
-X-Received: by 2002:a05:600d:420d:b0:45b:47e1:ef6d with SMTP id
- 5b1f17b1804b1-46e71172104mr65548595e9.36.1759691830274; 
- Sun, 05 Oct 2025 12:17:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759691845; x=1760296645;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3aFxoIeUx803jBt31fbg+H6tlPcEQbGoaOIOlfDZlQk=;
+ b=bFvcGl4gKWQwytSAU576pKYgG0ZHFppiJHFg8B6KY139VP5UV//jy+8n6LqekUMZfI
+ N7rGniOvk5rYMPysuMSfLBiF3w2fB7yG4Duh/AAQ9FdGYqZx5CJj9sFMotsvqzprVAqu
+ xdLpIpJHitWjY9Ofj9XGKuib4YdJBIc4RS0NReidvg7R01G8eUBEGf9BovHGXfR2SmtU
+ Xb4dHdtPLOYffYjodE29csaPz2DUiLqnKrh+KbNRu7EOUzRnacjC8drii0wZumMrpr73
+ DMX+V5ipbXFsrRMU938SQAxr+2obOfOBBrwzRYvmTm6xZ75cpop4+fkhTgurdggQxN0r
+ u2Gg==
+X-Gm-Message-State: AOJu0Yx1RJ71PlXnHea/XDXD4h0N1+ssTNdAp50c0KctuI3WCO1JDaMw
+ aMwFlG1F515F54a0NCIdeOKfqnPjRummhwckK83mKV0c/yVzS4VakM7GYRes5mRZG9JCnRgQ9Gn
+ 6oxVU72VdW1j3xuiTUzxuA0P3wDTj4zZAsCgruPJdBh/b2VUTTRT9eE67NBtpBlbagVeqbAKGNB
+ /iClwPl13ThJdtx0pWZ5OdkhotsnwZYQJuWQ==
+X-Gm-Gg: ASbGncvupvXngvhqb6sX97XOIsZudKfLAgqDwE7iUiwGA6W+SLjJafyQGdfKoLVixi7
+ eIZbKieXROMl0d4tGa4JyS+HfQxhNKV9XLyvHrCQwzD3K/cDDD4pGZL4B5VITJgyYrBlktd+W/9
+ 3ePfl8gNEWY/8qUiUTp4SGMHHM+6NKVCDjT/Rl2qHrYX4MlGFS5HAut7997DzzsJ8bqrXG9OthW
+ hOBLJ9/fkcVZ+gaXGp3T6dTHsOKsuIyp2WJ6vyXNtam5H6gCUwcLsuIY1eAztBUE1uJWPcPRVtq
+ ira009Hky8cnKspwlzfeJ4xWpxoxfx6cwX13qNc=
+X-Received: by 2002:a05:600c:8b45:b0:46e:3dc2:ebac with SMTP id
+ 5b1f17b1804b1-46e71168aa1mr67453965e9.27.1759691844971; 
+ Sun, 05 Oct 2025 12:17:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtSfa6Jgje5/BQ9bLxLZ5mbImqTOeqLt2mPARjKRMASsh58YgMsenlfLpaeNGUrpDk1crB/g==
+X-Received: by 2002:a05:600c:8b45:b0:46e:3dc2:ebac with SMTP id
+ 5b1f17b1804b1-46e71168aa1mr67453745e9.27.1759691844328; 
+ Sun, 05 Oct 2025 12:17:24 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723432c9sm124149855e9.1.2025.10.05.12.17.09
+ ffacd0b85a97d-4255d8a6b77sm17443982f8f.6.2025.10.05.12.17.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:09 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:08 -0400
+ Sun, 05 Oct 2025 12:17:23 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:17:22 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL 30/75] docs: hest: add new "etc/acpi_table_hest_addr" and
- update workflow
-Message-ID: <92aad3fc4a0f511819a18a443797069aff77b9ba.1759691708.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+Subject: [PULL 36/75] smbios: cap DIMM size to 2Tb as workaround for broken
+ Windows
+Message-ID: <fa82ce2ddee8208c83a5a10bf3ab7348ad3d334a.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1759691708.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -96,7 +100,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,67 +116,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Igor Mammedov <imammedo@redhat.com>
 
-While the HEST layout didn't change, there are some internal
-changes related to how offsets are calculated and how memory error
-events are triggered.
+With current limit set to match max spec size (2PTb),
+Windows fails to parse type 17 records when DIMM size reaches 4Tb+.
+Failure happens in GetPhysicallyInstalledSystemMemory() function,
+and fails "Check SMBIOS System Memory Tables" SVVP test.
+Though not fatal, it might cause issues for userspace apps,
+something like [1].
 
-Update specs to reflect such changes.
+Lets cap default DIMM size to 2Tb for now, until MS fixes it.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+1) https://issues.redhat.com/browse/RHEL-81999?focusedId=27731200&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-27731200
+
+PS: It's obvious 32 int overflow math somewhere in Windows,
+    MS admitted that it's Windows bug and in a process of fixing it.
+    However it's unclear if W10 and earlier would get the fix.
+    So however I dislike changing defaults, we heed to work around
+    the issue (it looks like QEMU regression while not being it).
+    Hopefully 2Tb/DIMM split will last longer until VM memory size
+    will become large enough to cause to many type 17 records issue
+    again.
+PPS:
+    Alternatively, instead of messing with defaults, we can create
+    a dedicated knob to ask for desired DIMM size cap explicitly
+    on CLI. That will let users to enable workaround when they
+    hit this corner case. Downside is that knob has to be propagated
+    up all mgmt stack, which might be not desirable.
+PPPS:
+    Yet alternatively, users can configure initial RAM to be less
+    than 4Tb and all additional RAM add as DIMMs on QEMU CLI.
+    (however it's the job to be done by mgmt which could know
+    Windows version and total amount of RAM)
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Fixes: 62f182c97b ("smbios: make memory device size configurable per Machine")
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <e3e8bd92ce40d997c67ac1d4d973c0041b8f59fc.1758610789.git.mchehab+huawei@kernel.org>
+Message-ID: <20250901084915.2607632-1-imammedo@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- docs/specs/acpi_hest_ghes.rst | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ hw/arm/virt.c     | 1 +
+ hw/core/machine.c | 5 ++++-
+ hw/i386/pc_piix.c | 1 +
+ hw/i386/pc_q35.c  | 1 +
+ 4 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
-index c3e9f8d9a7..aaf7b1ad11 100644
---- a/docs/specs/acpi_hest_ghes.rst
-+++ b/docs/specs/acpi_hest_ghes.rst
-@@ -89,12 +89,21 @@ Design Details
-     addresses in the "error_block_address" fields with a pointer to the
-     respective "Error Status Data Block" in the "etc/hardware_errors" blob.
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index aad557be1a..175023897a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3537,6 +3537,7 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
+     virt_machine_10_2_options(mc);
++    mc->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+ }
+ DEFINE_VIRT_MACHINE(10, 1)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 7b7a381b0a..681adbb7ac 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1118,8 +1118,11 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+      * SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
+      * use max possible value that could be encoded into
+      * 'Extended Size' field (2047Tb).
++     *
++     * Unfortunately (current) Windows Server 2025 and earlier do not handle
++     * 4Tb+ DIMM size.
+      */
+-    mc->smbios_memory_device_size = 2047 * TiB;
++    mc->smbios_memory_device_size = 2 * TiB;
  
--(8) QEMU defines a third and write-only fw_cfg blob which is called
--    "etc/hardware_errors_addr". Through that blob, the firmware can send back
--    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
--    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
--    for the firmware. The firmware will write back the start address of
--    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
-+(8) QEMU defines a third and write-only fw_cfg blob to store the location
-+    where the error block offsets, read ack registers and CPER records are
-+    stored.
-+
-+    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
-+    contains a GPA for the beginning of "etc/hardware_errors".
-+
-+    Newer versions place the location at "etc/acpi_table_hest_addr",
-+    pointing to the GPA of the HEST table.
-+
-+    Using above mentioned 'fw_cfg' files, the firmware can send back the
-+    guest-side allocation addresses to QEMU. They contain a 8-byte entry.
-+    QEMU generates a single WRITE_POINTER command for the firmware. The
-+    firmware will write back the start address of either "etc/hardware_errors"
-+    or HEST table at the corresponding fw_cfg file.
- 
- (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
-     "Error Status Data Block", guest memory, and then injects platform specific
-@@ -105,8 +114,5 @@ Design Details
-      kernel, on receiving notification, guest APEI driver could read the CPER error
-      and take appropriate action.
- 
--(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
--     find out "Error Status Data Block" entry corresponding to error source. So supported
--     source_id values should be assigned here and not be changed afterwards to make sure
--     that guest will write error into expected "Error Status Data Block" even if guest was
--     migrated to a newer QEMU.
-+(11) kvm_arch_on_sigbus_vcpu() reports RAS errors via a SEA notifications,
-+     when a SIGBUS event is triggered.
+     /* numa node memory size aligned on 8MB by default.
+      * On Linux, each node's border has to be 8MB aligned
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index caf8bab68e..7b3611e973 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -448,6 +448,7 @@ DEFINE_I440FX_MACHINE_AS_LATEST(10, 2);
+ static void pc_i440fx_machine_10_1_options(MachineClass *m)
+ {
+     pc_i440fx_machine_10_2_options(m);
++    m->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(m->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+     compat_props_add(m->compat_props, pc_compat_10_1, pc_compat_10_1_len);
+ }
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index e89951285e..6015e639d7 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -384,6 +384,7 @@ DEFINE_Q35_MACHINE_AS_LATEST(10, 2);
+ static void pc_q35_machine_10_1_options(MachineClass *m)
+ {
+     pc_q35_machine_10_2_options(m);
++    m->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(m->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+     compat_props_add(m->compat_props, pc_compat_10_1, pc_compat_10_1_len);
+ }
 -- 
 MST
 
