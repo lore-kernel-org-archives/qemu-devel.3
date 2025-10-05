@@ -4,40 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4764ACAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99CACCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 16:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5RvU-0000TE-1l; Sun, 05 Oct 2025 12:49:36 -0400
+	id 1v5Rud-00007x-QV; Sun, 05 Oct 2025 12:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5RvO-0000S6-59; Sun, 05 Oct 2025 12:49:30 -0400
+ id 1v5RuZ-00005t-PK; Sun, 05 Oct 2025 12:48:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5RvM-000777-FJ; Sun, 05 Oct 2025 12:49:29 -0400
+ id 1v5RuX-000728-MS; Sun, 05 Oct 2025 12:48:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BFE1015AA3A;
- Sun, 05 Oct 2025 19:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 48AA115AA2B;
+ Sun, 05 Oct 2025 19:48:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 472782996F3;
- Sun,  5 Oct 2025 19:49:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C80072996E9;
+ Sun,  5 Oct 2025 19:48:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, vhaudiquet <vhaudiquet343@hotmail.fr>,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- Anton Johansson <anjo@rev.ng>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.1 74/81] target/riscv: Fix endianness swap on compressed
- instructions
-Date: Sun,  5 Oct 2025 19:47:54 +0300
-Message-ID: <20251005164822.442861-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Gaurav Batra <gbatra@us.ibm.com>, David Christensen <drc@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.1 64/81] ppc/spapr: init lrdr-capapcity phys with ram
+ size if maxmem not provided
+Date: Sun,  5 Oct 2025 19:47:44 +0300
+Message-ID: <20251005164822.442861-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
 References: <qemu-stable-10.1.1-20251005194607@cover.tls.msk.ru>
@@ -66,54 +61,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: vhaudiquet <vhaudiquet343@hotmail.fr>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Three instructions were not using the endianness swap flag, which resulted in a bug on big-endian architectures.
+lrdr-capacity contains phys field which communicates the maximum address
+in bytes and therefore, the most memory that can be allocated to this
+partition. This is usually populated when maxmem is provided alongwith
+memory size on qemu command line. However since maxmem is an optional
+param, this leads to bits being set to 0 in absence of maxmem param.
+Fix this by initializing the respective bits as per total mem size in
+such case.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3131
-Buglink: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2123828
-
-Fixes: e0a3054f18e ("target/riscv: add support for Zcb extension")
-Signed-off-by: Valentin Haudiquet <valentin.haudiquet@canonical.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit b25133d38fe693589cf695b85968caa0724bfafd)
+Reported-by: Gaurav Batra <gbatra@us.ibm.com>
+Tested-by: David Christensen <drc@linux.ibm.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250506042903.76250-1-harshpb@linux.ibm.com
+Message-ID: <20250506042903.76250-1-harshpb@linux.ibm.com>
+(cherry picked from commit 6285eebd3a5fea018eb51d696b51079f44dd1eb3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
-index c77c2b927b..dd15af0f54 100644
---- a/target/riscv/insn_trans/trans_rvzce.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-@@ -88,13 +88,13 @@ static bool trans_c_lbu(DisasContext *ctx, arg_c_lbu *a)
- static bool trans_c_lhu(DisasContext *ctx, arg_c_lhu *a)
- {
-     REQUIRE_ZCB(ctx);
--    return gen_load(ctx, a, MO_UW);
-+    return gen_load(ctx, a, MO_TEUW);
- }
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 1855a3cd8d..9e63671ece 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -907,6 +907,7 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+     int rtas;
+     GString *hypertas = g_string_sized_new(256);
+     GString *qemu_hypertas = g_string_sized_new(256);
++    uint64_t max_device_addr = 0;
+     uint32_t lrdr_capacity[] = {
+         0,
+         0,
+@@ -917,13 +918,15 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
  
- static bool trans_c_lh(DisasContext *ctx, arg_c_lh *a)
- {
-     REQUIRE_ZCB(ctx);
--    return gen_load(ctx, a, MO_SW);
-+    return gen_load(ctx, a, MO_TESW);
- }
+     /* Do we have device memory? */
+     if (MACHINE(spapr)->device_memory) {
+-        uint64_t max_device_addr = MACHINE(spapr)->device_memory->base +
++        max_device_addr = MACHINE(spapr)->device_memory->base +
+             memory_region_size(&MACHINE(spapr)->device_memory->mr);
+-
+-        lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
+-        lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
++    } else if (ms->ram_size == ms->maxram_size) {
++        max_device_addr = ms->ram_size;
+     }
  
- static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
-@@ -106,7 +106,7 @@ static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
- static bool trans_c_sh(DisasContext *ctx, arg_c_sh *a)
- {
-     REQUIRE_ZCB(ctx);
--    return gen_store(ctx, a, MO_UW);
-+    return gen_store(ctx, a, MO_TEUW);
- }
++    lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
++    lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
++
+     _FDT(rtas = fdt_add_subnode(fdt, 0, "rtas"));
  
- #define X_S0    8
+     /* hypertas */
 -- 
 2.47.3
 
