@@ -4,40 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2B3CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 529EFCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 17:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5SgO-0000O2-20; Sun, 05 Oct 2025 13:38:04 -0400
+	id 1v5Sgg-0000R5-Mk; Sun, 05 Oct 2025 13:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5SgM-0000NT-1G; Sun, 05 Oct 2025 13:38:02 -0400
+ id 1v5Sga-0000Q0-F1; Sun, 05 Oct 2025 13:38:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5SgK-0004dQ-BA; Sun, 05 Oct 2025 13:38:01 -0400
+ id 1v5SgN-0004ee-IC; Sun, 05 Oct 2025 13:38:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 77FE715AA8D;
- Sun, 05 Oct 2025 20:37:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E6A8215AA90;
+ Sun, 05 Oct 2025 20:37:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F1835299739;
- Sun,  5 Oct 2025 20:37:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E721329973C;
+ Sun,  5 Oct 2025 20:37:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, vhaudiquet <vhaudiquet343@hotmail.fr>,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- Anton Johansson <anjo@rev.ng>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.5 50/58] target/riscv: Fix endianness swap on compressed
- instructions
-Date: Sun,  5 Oct 2025 20:36:59 +0300
-Message-ID: <20251005173712.445160-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.5 53/58] migration: Fix state transition in
+ postcopy_start() error handling
+Date: Sun,  5 Oct 2025 20:37:02 +0300
+Message-ID: <20251005173712.445160-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
 References: <qemu-stable-10.0.5-20251005203554@cover.tls.msk.ru>
@@ -66,54 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: vhaudiquet <vhaudiquet343@hotmail.fr>
+From: Juraj Marcin <jmarcin@redhat.com>
 
-Three instructions were not using the endianness swap flag, which resulted in a bug on big-endian architectures.
+Commit 48814111366b ("migration: Always set DEVICE state") introduced
+DEVICE state to postcopy, which moved the actual state transition that
+leads to POSTCOPY_ACTIVE.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3131
-Buglink: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2123828
+However, the error handling part of the postcopy_start() function still
+expects the state POSTCOPY_ACTIVE, but depending on where an error
+happens, now the state can be either ACTIVE, DEVICE or CANCELLING, but
+never POSTCOPY_ACTIVE, as this transition now happens just before a
+successful return from the function.
 
-Fixes: e0a3054f18e ("target/riscv: add support for Zcb extension")
-Signed-off-by: Valentin Haudiquet <valentin.haudiquet@canonical.com>
+Instead, accept any state except CANCELLING when transitioning to FAILED
+state.
+
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250929115543.1648157-1-valentin.haudiquet@canonical.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit b25133d38fe693589cf695b85968caa0724bfafd)
+Fixes: 48814111366b ("migration: Always set DEVICE state")
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20250826115145.871272-1-jmarcin@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 725a9e5f7885a3c0d0cd82022d6eb5a758ac9d47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
-index c77c2b927b..dd15af0f54 100644
---- a/target/riscv/insn_trans/trans_rvzce.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-@@ -88,13 +88,13 @@ static bool trans_c_lbu(DisasContext *ctx, arg_c_lbu *a)
- static bool trans_c_lhu(DisasContext *ctx, arg_c_lhu *a)
- {
-     REQUIRE_ZCB(ctx);
--    return gen_load(ctx, a, MO_UW);
-+    return gen_load(ctx, a, MO_TEUW);
- }
- 
- static bool trans_c_lh(DisasContext *ctx, arg_c_lh *a)
- {
-     REQUIRE_ZCB(ctx);
--    return gen_load(ctx, a, MO_SW);
-+    return gen_load(ctx, a, MO_TESW);
- }
- 
- static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
-@@ -106,7 +106,7 @@ static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
- static bool trans_c_sh(DisasContext *ctx, arg_c_sh *a)
- {
-     REQUIRE_ZCB(ctx);
--    return gen_store(ctx, a, MO_UW);
-+    return gen_store(ctx, a, MO_TEUW);
- }
- 
- #define X_S0    8
+diff --git a/migration/migration.c b/migration/migration.c
+index d46e776e24..50bd2dd51f 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2843,8 +2843,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ fail_closefb:
+     qemu_fclose(fb);
+ fail:
+-    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                          MIGRATION_STATUS_FAILED);
++    if (ms->state != MIGRATION_STATUS_CANCELLING) {
++        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
++    }
+     migration_block_activate(NULL);
+     migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+     bql_unlock();
 -- 
 2.47.3
 
