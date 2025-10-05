@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC52CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0BACCA472
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 19:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5UFe-0003To-9f; Sun, 05 Oct 2025 15:18:34 -0400
+	id 1v5UGR-00063d-KL; Sun, 05 Oct 2025 15:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFO-0002RS-Su
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFu-0004qI-Kn
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFL-0006b7-7F
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:18 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5UFr-0006gZ-Qe
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 15:18:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759691893;
+ s=mimecast20190719; t=1759691927;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=oGAY834jKYfbFDJ68UHHIZdDsuzgPXz3Cw6hb0ar51o=;
- b=JcfZcsqHX3AeGEaYwyDWrM0RhxqorXn6KhXDBodfW4+Jsn2C4WNYWdxyHSvMMe907Lv4ZN
- 09oH+YlVAI+wFBZ0XOSJCimrIuzaWHS/PboxYPTCUi657XCnF63T3haHw9IKVl3+D1qQYq
- Uz5DZSG32u5/fElybhPDVINVmiQHQZ0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TDyjruV7w7paGoEpfcBCyEgnLqMWCeMdqSyQl2kakFc=;
+ b=fFhdCdnSt0s8J7GRiQsUrqQResEulZOaPud6/DGsn02bNC3hJxgz1nT+I5+fzo/Bwt7Bh8
+ LY6fG5I5jM5IR46YBAhLGhiXVCgfk6kDSEXi0nLwZTV/fuVlwMtcl5QHgRa0UQJSRva4uz
+ UBslBmwPWUOpMoPh4NpJ2nKgQ5od144=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-y2r6h5l6MPSfVotsXLKhMw-1; Sun, 05 Oct 2025 15:18:09 -0400
-X-MC-Unique: y2r6h5l6MPSfVotsXLKhMw-1
-X-Mimecast-MFC-AGG-ID: y2r6h5l6MPSfVotsXLKhMw_1759691878
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e375dab7dso18415455e9.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:04 -0700 (PDT)
+ us-mta-151-Zs5pcooqON6506sQawg70Q-1; Sun, 05 Oct 2025 15:18:45 -0400
+X-MC-Unique: Zs5pcooqON6506sQawg70Q-1
+X-Mimecast-MFC-AGG-ID: Zs5pcooqON6506sQawg70Q_1759691924
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3ecdd80ea44so2980037f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 12:18:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759691878; x=1760296678;
+ d=1e100.net; s=20230601; t=1759691924; x=1760296724;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oGAY834jKYfbFDJ68UHHIZdDsuzgPXz3Cw6hb0ar51o=;
- b=q2faXsG70DbKNHQz6AfvLRTgSA1b21uXxkr+dI1uywqNjfiqfKosIKzsNQXrWCM583
- y2NB4EOTjky9NsMGO8FcBzzzpYyiqxPcoI5Rlz6J3VguTh9wjDLAcA16ZylxocV8iosr
- Rh60/YTWnliItQ9Rn1MFdpC+n5J6BXniDy2H2s/Iuxko4T5eya896tF8+nOAAvMWaKXr
- jQMyNf6noJit+oYVDyCPYG7+FZmOSJcjDB4v/73fT/qCAhNl2C9Xoq4QRwSQVlRkf1w7
- XfuEowRy2CBnlVd3FH0tGPxtDZP/mOoVVHEiqxRP5luv16QbgeTfyVTcMWVCAB/iev8p
- ybQg==
-X-Gm-Message-State: AOJu0YzZNVJc22qaCb4M5s4euqhkgQtrAqxEYFv/HsGHih8qCqWP612t
- 5tSlgIPL/BeYmxmV+jEr2jgc9pw6gHV27U4A5++ssO7g/7aoFn+5H6504elxwcoHvb7qkAsmpwb
- xcKxAyhPSrY0r3k3ozjt48DTiZxjfEWbqwARBCFRBTGK75MncjGQmpG17TTaH6C56I4/w5QDTQz
- n0nblBS7QSuKsECsecJV4KI2ameVBlYV4jyQ==
-X-Gm-Gg: ASbGncuElzCFglWf82mTvmbOHEEAFnAOmSAV4Yv5OhCotnatMk8zzoCf/VjURXF6FSN
- va8NUe0kg/3CqE8dwvdwlLvmEKWZOgWANR+TEa/flSZzZKRtQmVNN3SwLbQJgEplMXwJBLwZll8
- 5fubNkbfbXoPGKcTLinj+6cMCrKDV6f/pPx6foQgpH0haF2jxeJ2KnBQHr1wZowK5zBVQYtRGpu
- m7MxCK8gb2AP8q9t500zT5z9vKf/qjcaoghgoNAizqj/RVemVsYlyuDmqn3pzUwC1dR+rUQ0z5H
- TgMr231CAD3LMVFAQfdg2q7z2UcwaoHPzkwe6L0=
-X-Received: by 2002:a05:600c:a319:b0:46e:74cc:42b8 with SMTP id
- 5b1f17b1804b1-46e74cc4609mr51030425e9.17.1759691878156; 
- Sun, 05 Oct 2025 12:17:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2Rx4DnBOal6t//z0yM/sD+4kOgczG33Pu07EYw0/ix+ith9EWVS0PcJ7lVfH5jiZme8Yf8g==
-X-Received: by 2002:a05:600c:a319:b0:46e:74cc:42b8 with SMTP id
- 5b1f17b1804b1-46e74cc4609mr51030315e9.17.1759691877627; 
- Sun, 05 Oct 2025 12:17:57 -0700 (PDT)
+ bh=TDyjruV7w7paGoEpfcBCyEgnLqMWCeMdqSyQl2kakFc=;
+ b=XvTYyccYF0Z9curdCvwxgw3Qc7c4HT0BhRxp7H1pbCB9BoGWVHRAeJvAHv4VEHmH0S
+ xZStiIN7c/T2/dlf36TAc0XOAi8VOi0OGMN7TZ9Q9eF4Pw6YOfRKaR4P2MscB6yA9aiy
+ HiEO3bYwb17Xb4g5wRQFChtJVtIqzF0aU4eqgehkqenhgRG/d2/DdWk5OhigUYuf5hh4
+ KtZmJYbnncfbzQuLx7dDNxpnq4z+vA7tm5cKIMKh+8QrAgit17e8bRrJ68V0JaY0Bayz
+ xxyb8BlMCak1Xh756uZ+lcKuXB4876SSSVVb8Ntu/lzK/g3MalXCRAtb71vfjrVdOFDZ
+ 80HA==
+X-Gm-Message-State: AOJu0Yzo9mSz92aNOK8wDEGdUwuY0Dv84GRYuRSFCZQ1wjtKZi/FHaE8
+ /6+zRJ/3uDRn2+ZWD7DQpjezN2ZhKSNNI1uBYnVYXazkNf7jNFnP62m4rg73FTmp++JLdsZ1GUq
+ acJVXaHWu11sjSDr8ryUv9o/0+RSrfoG3OPySqOv5xi0v07tvc1oilW/2qiu8wDHR5Bu6fsF6pf
+ +bs8fkQICZ1vMKnX0SfOHDc7MeHv9dJoXtGQ==
+X-Gm-Gg: ASbGnctFZFG6Lp7VhE7w8xbYlvA/9F2/lhRVE7JtLLqkVTkNxxzNnZ+NU/qSjLbtLN1
+ REr+OPPZ48ImtTPVevIntlTIHiSUpwD1GIdvRjTEKagUtOmkkerE+LSmjOKfT167ypIFT4MiKls
+ pdvxXCuLctipcWVsCppdCosBCgvBgjA4FEUz/FwieDQrr5aP5pMuplDLQVTUGc7eRV+/8gEy+Hf
+ eO4Qyi00XKtxvXOdxsxoGhe6AWhH2TGNE0OQcqP23Z3HgMMBcjmLZZjPAacz00Tm7MKTdd4WJ8r
+ bFuFF1TFf8/UZ8lZJ7bHDnF+jyVhiIPj7wwZRq8=
+X-Received: by 2002:a5d:4745:0:b0:425:723b:377f with SMTP id
+ ffacd0b85a97d-425723b3c83mr2536625f8f.11.1759691923607; 
+ Sun, 05 Oct 2025 12:18:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGavaIZuPXrtSDNvT4Pbz1xuageFJjpJ8C+Nc9iPN0i0tPe+NIieVQvLiwmxBIzGnKsl80Qbg==
+X-Received: by 2002:a5d:4745:0:b0:425:723b:377f with SMTP id
+ ffacd0b85a97d-425723b3c83mr2536605f8f.11.1759691923000; 
+ Sun, 05 Oct 2025 12:18:43 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723593d8sm135637725e9.11.2025.10.05.12.17.56
+ 5b1f17b1804b1-46e619b8507sm222807075e9.3.2025.10.05.12.18.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 12:17:57 -0700 (PDT)
-Date: Sun, 5 Oct 2025 15:17:55 -0400
+ Sun, 05 Oct 2025 12:18:42 -0700 (PDT)
+Date: Sun, 5 Oct 2025 15:18:41 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 51/75] amd_iommu: Document '-device amd-iommu' common options
-Message-ID: <0888c071ff8370f118ce22c0fe873b13e11d319a.1759691708.git.mst@redhat.com>
+ Li Zhaoxin <lizhaoxin04@baidu.com>, Miao Kezhan <miaokezhan@baidu.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 72/75] vdpa-dev: add get_vhost() callback for vhost-vdpa device
+Message-ID: <f0e880f727e2c82e2a9654d53fcab732b6c353f2.1759691708.git.mst@redhat.com>
 References: <cover.1759691708.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -110,55 +111,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Li Zhaoxin <lizhaoxin04@baidu.com>
 
-Document the common parameters used when emulating AMD vIOMMU.
-Besides the two amd-iommu specific options: 'xtsup' and 'dma-remap', the
-the generic x86 IOMMU option 'intremap' is also included, since it is
-typically specified in QEMU command line examples and mailing list threads.
+Commit c255488d67 "virtio: add vhost support for virtio devices"
+added the get_vhost() function, but it did not include vhost-vdpa devices.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+So when I use the vdpa device and query the status of the vdpa device
+with the x-query-virtio-status qmp command, since vdpa does not implement
+vhost_get, it will cause qemu to crash.
+
+Therefore, in order to obtain the status of the virtio device under vhost-vdpa,
+we need to add a vhost_get implement for the vdpa device.
+
+Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
+Signed-off-by: Miao Kezhan <miaokezhan@baidu.com>
+Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250919213515.917111-3-alejandro.j.jimenez@oracle.com>
+Message-ID: <2778f817cb6740a15ecb37927804a67288b062d1.1758860411.git.lizhaoxin04@baidu.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- qemu-options.hx | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ hw/virtio/vdpa-dev.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 3ff10ec09d..9b4e870350 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1238,6 +1238,29 @@ SRST
-         Accepts either the default root complex (pcie.0) or a
-         pxb-pcie based root complex.
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index d1da40afc8..4a7b970976 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -338,6 +338,12 @@ static int vhost_vdpa_device_set_status(VirtIODevice *vdev, uint8_t status)
+     return 0;
+ }
  
-+``-device amd-iommu[,option=...]``
-+    Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
-+    Only available with ``-machine q35``, it supports the following options:
++static struct vhost_dev *vhost_vdpa_device_get_vhost(VirtIODevice *vdev)
++{
++    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
++    return &s->dev;
++}
 +
-+    ``dma-remap=on|off`` (default: off)
-+        Support for DMA address translation and access permission checking for
-+        guests attaching passthrough devices to paging domains, using the AMD v1
-+        I/O Page Table format. This enables ``-device vfio-pci,...`` to work
-+        correctly with a guest using the DMA remapping feature of the vIOMMU.
-+
-+    ``intremap=on|off`` (default: auto)
-+        Generic x86 IOMMU functionality implemented by ``amd-iommu`` device.
-+        Enables interrupt remapping feature in guests, which is also required to
-+        enable x2apic support.
-+        Currently only available with ``kernel-irqchip=off|split``, it is
-+        automatically enabled when either of those modes is in use, and disabled
-+        with ``kernel-irqchip=on``.
-+
-+    ``xtsup=on|off`` (default: off)
-+        Interrupt remapping table supports x2apic mode, enabling the use of
-+        128-bit IRTE format with 32-bit destination field by the guest. Required
-+        to support routing interrupts to vCPUs with APIC IDs larger than 0xff.
-+
- ERST
+ static const Property vhost_vdpa_device_properties[] = {
+     DEFINE_PROP_STRING("vhostdev", VhostVdpaDevice, vhostdev),
+     DEFINE_PROP_UINT16("queue-size", VhostVdpaDevice, queue_size, 0),
+@@ -369,6 +375,7 @@ static void vhost_vdpa_device_class_init(ObjectClass *klass, const void *data)
+     vdc->set_config = vhost_vdpa_device_set_config;
+     vdc->get_features = vhost_vdpa_device_get_features;
+     vdc->set_status = vhost_vdpa_device_set_status;
++    vdc->get_vhost = vhost_vdpa_device_get_vhost;
+ }
  
- DEF("name", HAS_ARG, QEMU_OPTION_name,
+ static void vhost_vdpa_device_instance_init(Object *obj)
 -- 
 MST
 
