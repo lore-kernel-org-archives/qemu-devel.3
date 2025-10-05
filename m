@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B98CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 20:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69007CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 20:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5V7Y-0007mz-4j; Sun, 05 Oct 2025 16:14:16 -0400
+	id 1v5VAg-0000v8-Pm; Sun, 05 Oct 2025 16:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1v5V7W-0007mg-Kc
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 16:14:14 -0400
-Received: from m239-4.eu.mailgun.net ([185.250.239.4])
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5VAY-0000u5-7w
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 16:17:22 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1v5V7U-0004hy-Rl
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 16:14:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
- s=email; t=1759695249; x=1759702449; 
- h=Content-Transfer-Encoding: Content-Type: Cc: To: To: Subject: Subject:
- Message-ID: Date: From: From: In-Reply-To: References: MIME-Version: Sender:
- Sender; bh=I+ChIouOVga1P030P3JkAbcqIwL7GH8IrTstjppXFgk=;
- b=oB49LHMQLBwLZIDPWo7Hz/wV8OzQaVQzOXPEw0FGiwS8hb1fzwOomZZpQ7bfOx6YeooQPM6MVOFYEdx85zmV++gsbNq/C17xYVo9VQzM7ztYpoUbXZjH5h4X7o9Nob5TwYvjoKtmiro69PzFYySjQC4NCqpvecH8AM7X9YmfjapTiSpJk8ocJTP8KeWVZ688SqglofWjUy8fCJ45/bzrjmMPwWNUmx0i87CNbV82Aa9S7E2YBQJVjoyV1zkycojqld7vNA5NiS34qFNxH8cGMVBS0pisAKF0zKzQDRIEpoLosh29WHslUGuaPklBBrwzTVe6qsJjeVLr0cH50Cd5eQ==
-X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com
- [74.125.224.49]) by
- 77ac684261ec405a7a643a236bc29c3c26774436f831b2c9af494d6a3cfd20bf with SMTP id
- 68e2d19158e35fe37ba5c56a (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256);
- Sun, 05 Oct 2025 20:14:09 GMT
-X-Mailgun-Sending-Ip: 185.250.239.4
-Received: by mail-yx1-f49.google.com with SMTP id
- 956f58d0204a3-63bbf5f77daso1568269d50.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 13:14:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6m6Sj9KwV7xjq30AguZ5zVit4iBvc1ZkpRNyKmNDko3nj4Gt6GZ0ZJiNky2mMDNmbk+Dxs0o5Y0cg@nongnu.org
-X-Gm-Message-State: AOJu0YxWHhbpJJoz4Tj6jFv0VDyobyMIh2E+exei5s2ZekVXaxdnTr+o
- 2I0r5Uq5wTOl83XR3frRku3fPyfT1gH6H6HH/fsG9Q3Q8mwwZ3u8zOi5R4RKyBQEaCBK4vDHBrj
- kwHpkypOrIxCDMMZ/Jt3UZJv6+b+JJTE=
-X-Google-Smtp-Source: AGHT+IF6NTB7C1J+sc5gwU09D6vTTEgQsjhGgjC0gkdmRcIaMTw5vF0hSyBdo0glo5NFxqdiep4ByU4Q6w6ugaMM3Rk=
-X-Received: by 2002:a05:690e:1590:20b0:635:4ecd:5fcb with SMTP id
- 956f58d0204a3-63b9a0f36f3mr8506491d50.40.1759695248605; Sun, 05 Oct 2025
- 13:14:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5VAT-0005IY-Vm
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 16:17:21 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-36ba647ac9fso34066571fa.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 13:17:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1759695435; x=1760300235; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
+ b=BFgUP3GjKt4T9Cbz4b1ZRiqKR7DO4gp0T/usHLrtarwL+LUqKCR4ya8uBNJNSqZJ3u
+ LaM+fMA2p8eL/wNrQnyJtqpIuPA+bc8k733rwdZLWrSJ9nIEDVtK2IfXQIN2r+Eg353D
+ mB9RANOZ1xT3xDVsTD0eps3ag6fUcuRbTOqVfZpm/YXR0cQ4iHAf/YabWdTizDehMlUs
+ 1bIma8Fqb/eCipqz5Z3H1pJCbzMSOaPMxaczQpNQdN0ubUTkkmpoPrrs0OUxwS7zB8XT
+ /2d/NNejph1kWeHbFSrrAeV2bpTPkG70d19m1gY+iLOyC2B7o8CKndp0+WW4UgOpY+RP
+ 4hMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759695435; x=1760300235;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
+ b=f+HE/HpoU/RWLsxAa7oQQiWShiUS+NtZkW3hsts85UPuPL6Wk59ALvgGTlYXQ29oRI
+ /k5SwdTdDfheAY1sHaNLZ549vjkaAx46Fw2EcXkrIkGcPaFHBeWXqcrPegIQ/JIR9qBj
+ hvIJOY/x1baDY+Ow5ocX1fDF29LOJPnkRrsm8+EcGuMKuFulMW/tmTSGUaMsQgkzQXH1
+ OOwSy6YvWUkJNFcu7UF+rf7BLsSZbOFePLOZioySD5Hja8vvmaGwqsliHmLsSCUWd2DE
+ 7RK/clh5e7dpQr0MvhJSxsciGdwrOGcjb105wQ3lMkL30NqRf1mIst501px6i1FUobFd
+ B57w==
+X-Gm-Message-State: AOJu0YzydNKBc5X+RT6JP57EpbmrCxWjeROvLeN6jEkl9A3pjztaUxFa
+ vpG4stBz0iGfeeYpVbYDAg9guzpLTtx8hMXoowymfKEx1ki8b388Ix6EO97ey/Agbgs=
+X-Gm-Gg: ASbGncuBNVnxi3q1ZPhYhsHlJDjYblcO7RIr8M+DZ6LCaePIivCPukBD69z4nCGDIwX
+ h9EmYJW9dPXfb0AmRxWYx4QZUttGiQOxqL4q8VAzzjL3qR8GEzBslIh+EUJWZts/GTh+7YF/3j4
+ Rx1RAYJHaNyteqdGwTy2w0wnTQKHNg+1uVIiYsni5GhZqKPGmXHwFoQ6w95wkwiDjr36NQN90lc
+ lc6xigr+ePTHbBY7QZPna2e2n2MRTbmVlKO9mvRmL7KO9DFYxyP1IziLYYwxAGbPk2N3qtwWbwi
+ tYcl1y0QcdAlV/Z62Ij1VdZ3Rg1oxpOZO9qv3Q6X3qFahiTLC9tkNmM78WqyHKL6/ybqcXX/Bh7
+ PUNzRWOUMlcjb2a0PlRLaMIshcyD7arnfvsSw74KtetE9dMdVee432wxevPQ=
+X-Google-Smtp-Source: AGHT+IGKR8NwEjUi/nxpi6CipCp/3M4Nelq5KGh1KFZpePxbMC1ihlTVsXZ7lNha3wXP+mXepM022w==
+X-Received: by 2002:a2e:bd02:0:b0:372:17eb:1191 with SMTP id
+ 38308e7fff4ca-374c37511dcmr31991331fa.18.1759695434577; 
+ Sun, 05 Oct 2025 13:17:14 -0700 (PDT)
+Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:c37::1:1])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-373ba44818csm38204561fa.41.2025.10.05.13.17.11
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 05 Oct 2025 13:17:13 -0700 (PDT)
+From: xpahos@gmail.com
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org,
+ Alexander Gryanko <xpahos@gmail.com>
+Subject: [PATCH v2] hw/arm: add pvpanic mmio device for arm
+Date: Sun,  5 Oct 2025 23:16:49 +0300
+Message-ID: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
-References: <cover.1759691708.git.mst@redhat.com>
- <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
-In-Reply-To: <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
-From: Alessandro Ratti <alessandro@0x65c.net>
-Date: Sun, 5 Oct 2025 22:13:57 +0200
-X-Gmail-Original-Message-ID: <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
-X-Gm-Features: AS18NWDFzXrVB7gra8EDF1ZJ_lc9gSReJ9d7HjXxEX_DpWfsl36i4L1BzAR8hkg
-Message-ID: <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
-Subject: Re: [PULL 49/75] virtio: Add function name to error messages
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- David Hildenbrand <david@redhat.com>,
- Alessandro Ratti <alessandroratti@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.250.239.4;
- envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
- helo=m239-4.eu.mailgun.net
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20251005-arm-pvpanic-8e3e8fd05e95
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759689277; l=3360;
+ i=xpahos@gmail.com; s=20251004; h=from:subject:message-id;
+ bh=8vahP4rJaiEcZHPpEIyes8fe5YhSlu876t+4bYa3n2I=;
+ b=vONAhLi4eVISLyW7o+8CipIPEObfmTUCcqjBA6B8U4KZFyvnayVlS3I/UIOAageN477CuaXAb
+ U1enPaZJZw4DFsk1B1Aeo+g+ZNj09r3sdN+WVEP76yahEAJGXt2RxG2
+X-Developer-Key: i=xpahos@gmail.com; a=ed25519;
+ pk=bsSvP3Tn7PVKgjJT3BMV3jlAwSqreKIM4099C1r51eg=
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=xpahos@gmail.com; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,116 +104,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+Message-ID: <20251005201649.xRRl2oWXoyJrtcwr4C2UhOWmpWvO1IgiJxIPNk4KKCI@z>
 
-On Sun, 5 Oct 2025 at 21:17, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> From: Alessandro Ratti <alessandro@0x65c.net>
->
-> Replace virtio_error() with a macro that automatically prepends the
-> calling function name to error messages. This provides better context
-> for debugging virtio issues by showing exactly which function
-> encountered the error.
->
-> Before: "Invalid queue size: 1024"
-> After:  "virtio_queue_set_num: Invalid queue size: 1024"
->
-> The implementation uses a macro to insert __func__ at compile time,
-> avoiding any runtime overhead while providing more specific error
-> context than a generic "virtio:" prefix.
->
-> Also remove manual __func__ usage in virtio-balloon to avoid duplicate
-> function names in error messages.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
-> Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->  include/hw/virtio/virtio.h | 4 +++-
->  hw/virtio/virtio-balloon.c | 2 +-
->  hw/virtio/virtio.c         | 3 ++-
->  3 files changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index d97529c3f1..695bb56186 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_=
-id, size_t config_size);
->
->  void virtio_cleanup(VirtIODevice *vdev);
->
-> -void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINT=
-F(2, 3);
-> +#define virtio_error(vdev, fmt, ...) \
-> +    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
-> +void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_PRIN=
-TF(2, 3);
->
->  /* Set the child bus name. */
->  void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name=
-);
-> diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-> index db787d00b3..e443f71c01 100644
-> --- a/hw/virtio/virtio-balloon.c
-> +++ b/hw/virtio/virtio-balloon.c
-> @@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWithRetu=
-rn *n, void *data,
->      case PRECOPY_NOTIFY_COMPLETE:
->          break;
->      default:
-> -        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->reaso=
-n);
-> +        virtio_error(vdev, "%d reason unknown", pnd->reason);
->      }
->
->      return 0;
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index de89e8104a..0f33ca5d90 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODevice =
-*vdev, char *bus_name)
->      vdev->bus_name =3D g_strdup(bus_name);
->  }
->
-> -void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fm=
-t, ...)
-> +void G_GNUC_PRINTF(2, 3)
-> +virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
->  {
->      va_list ap;
->
-> --
-> MST
->
->
+From: Alexander Gryanko <xpahos@gmail.com>
 
-Hi Michael,
+Currently, pvpanic is available in three device types: ISA,
+MMIO, and PCI. For early stages of system initialisation
+before PCI enumeration, only ISA and MMIO are suitable.
+ISA is specific to the x86 platform; only MMIO devices
+can be used for ARM. It is not possible to specify a
+device as on the x86 platform (-device pvpanic); the
+only possible way is to add an MMIO device to the dtb,
+which can be implemented by manually adding new functions
+to the QEMU code, as was done in the VMApple implementation.
 
-Thanks for picking this up.
+Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
+---
+ hw/arm/virt.c         | 26 ++++++++++++++++++++++++++
+ include/hw/arm/virt.h |  1 +
+ 2 files changed, 27 insertions(+)
 
-It seems that the version currently queued is actually the initial
-submission, which had previously been rejected following feedback from
-Markus Armbruster.
-I later submitted a corrected version ([v3]) which:
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 02209fadcf..78e466f935 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -39,6 +39,7 @@
+ #include "hw/arm/virt.h"
+ #include "hw/block/flash.h"
+ #include "hw/display/ramfb.h"
++#include "hw/misc/pvpanic.h"
+ #include "net/net.h"
+ #include "system/device_tree.h"
+ #include "system/numa.h"
+@@ -182,6 +183,7 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_UART0] =              { 0x09000000, 0x00001000 },
+     [VIRT_RTC] =                { 0x09010000, 0x00001000 },
+     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
++    [VIRT_PVPANIC] =            { 0x09021000, 0x00000002 },
+     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+     [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+     [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+@@ -276,6 +278,28 @@ static bool ns_el2_virt_timer_present(void)
+         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
+ }
+ 
++static void create_pvpanic(VirtMachineState *vms)
++{
++    char *nodename;
++    MachineState *ms = MACHINE(vms);
++    DeviceState *dev = qdev_new(TYPE_PVPANIC_MMIO_DEVICE);
++    SysBusDevice *s = SYS_BUS_DEVICE(dev);
++
++    hwaddr base = vms->memmap[VIRT_PVPANIC].base;
++    hwaddr size = vms->memmap[VIRT_PVPANIC].size;
++
++    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_mmio_map(s, 0, base);
++
++    nodename = g_strdup_printf("/pvpanic@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "qemu,pvpanic-mmio");
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
++                                 2, base, 2, size);
++    g_free(nodename);
++}
++
+ static void create_fdt(VirtMachineState *vms)
+ {
+     MachineState *ms = MACHINE(vms);
+@@ -2498,6 +2522,8 @@ static void machvirt_init(MachineState *machine)
+     create_pcie(vms);
+     create_cxl_host_reg_region(vms);
+ 
++    create_pvpanic(vms);
++
+     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+         vms->acpi_dev = create_acpi_ged(vms);
+     } else {
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index ea2cff05b0..39bf07c9c1 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -81,6 +81,7 @@ enum {
+     VIRT_NVDIMM_ACPI,
+     VIRT_PVTIME,
+     VIRT_ACPI_PCIHP,
++    VIRT_PVPANIC,
+     VIRT_LOWMEMMAP_LAST,
+ };
+ 
 
-* Addresses all the feedback (including from Markus Armbruster and
-Daniel P. Berrang=C3=A9).
-* Has Daniel=E2=80=99s formal Reviewed-by:
-
-Patch: https://lore.kernel.org/qemu-devel/20250924093138.559872-2-alessandr=
-o@0x65c.net/
-Reviewed-by: https://lore.kernel.org/qemu-devel/aNO7J7Y6wsk1-wyw@redhat.com=
-/
-
-Would you mind updating the queue to reflect this version instead?
-
-Thanks again for your time and all the work you do maintaining virtio!
+---
+base-commit: bd6aa0d1e59d71218c3eee055bc8d222c6e1a628
+change-id: 20251005-arm-pvpanic-8e3e8fd05e95
 
 Best regards,
-Alessandro
+-- 
+Alexander Gryanko <xpahos@gmail.com>
+
 
