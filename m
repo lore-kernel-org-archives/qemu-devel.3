@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944ABCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 09:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F174CCA471
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 09:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5hyk-0006Qe-Oe; Mon, 06 Oct 2025 05:58:02 -0400
+	id 1v5hyd-0006ND-SF; Mon, 06 Oct 2025 05:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyb-0006Lu-SW
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyb-0006Ll-M5
  for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:57:53 -0400
 Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyZ-0003pf-TT
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyZ-0003pU-Q6
  for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:57:53 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id B3A3F60B94
- for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:57:39 +0200 (CEST)
-Received: (qmail 18731 invoked by uid 990); 6 Oct 2025 09:57:39 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id B5C8E60B98
+ for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:57:40 +0200 (CEST)
+Received: (qmail 18776 invoked by uid 990); 6 Oct 2025 09:57:40 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 06 Oct 2025 11:57:39 +0200
+ Mon, 06 Oct 2025 11:57:40 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH v7 08/25] target/hppa: call plugin trap callbacks
-Date: Mon,  6 Oct 2025 11:57:03 +0200
-Message-ID: <bfdf4d5590d40c345a96fda9bc2dda992721f073.1759744337.git.neither@nut.email>
+	Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v7 11/25] target/m68k: call plugin trap callbacks
+Date: Mon,  6 Oct 2025 11:57:06 +0200
+Message-ID: <1246174a278a434ffae2f202fcdc586bebb01d95.1759744337.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1759744337.git.neither@nut.email>
 References: <cover.1759744337.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.075005) MID_CONTAINS_FROM(1)
+X-Rspamd-Bar: -----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.994071) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -4.675005
+X-Rspamd-Score: -5.594071
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=91oBEkE9sM09e8POP/XtNPoBLu68yemmD0bUlcGlFTs=;
- b=E8ZMSpTxr0LcZm32SLheFcnZB5tophq03ZjHq52X6TdvvbIp0z5ozppe17qo+E5fKI3D4I3Ug6
- PidghCZjjQJ9eb3x6tOK4biYxaszFvLLRwNMmxI0kmQ5e3ylzE+VQttbQYp3jLI6d7Yqrawu7Kfl
- muFcVL19yZaXNSk6hBXvNfudhBI5y4+s6qabhzWgSDkMf183YrASFF82Nrgcta22kTiZhCs6kDcr
- iozfjsI86NxQA6CKspkOT9/fB4jICQ3lB8jdvYAg+BK5UPJOh8Y7HGDQ1fpiEP/xJlFx/lRu/gVK
- XWeNuBseGD48yeGU9VITIxUg2ukQKfNn/+wP2oCMzfkUl2orrQSS+O9gHGFyo4wjFTg8kwUDxkdZ
- iLnSolezxzcJKf6NSx/CLXTR9fcie4phNdCrOyyCdtV/Q2M5Tz6a6JsBWX+9jcErIRKF1euWwOJ9
- ktf4VbQpSW0GrysZvHLGCPlFoGIluQoyBQZSdF7oSVu3hH5wTC7HsfK+1VW0M+Hj+D7PqtA+CdcG
- 3KpePiY/NodkIUPwMBm1kiZbdygN1cOetJChaXYIcR9gphGY4AIeSAe5x7c4lE56awMtzOtBJCN/
- liTs9zhrCQbS7KiMVdvhbP4aOlE9Xpwz1UW98GnuwbtDXW444XGGqQpRCjB1KeHJkWy2RjqMS4Mh
- A=
+ bh=FRZ2j8rbmm/3ycj8ZP5YixYFG9zzEquVSOdWN5ofsr0=;
+ b=orFPOe8MEQC5yqX1iBZdCP6iobJgZ9GYxs8ncYtzkv32eAFuCTejCcdRjyw0Y4DNTWwg3ZYgrL
+ sD/cinYP97ZlFE/SlAtbl7XO4vHqOFCrAX7PC58mQNGPigCTOPTqePZSS6hD7fAda0W1nV7Ocbtk
+ GTfj+S/hXgFAGxrwEcFwhQbxRh8/a+drI7t42cYFSeVV20iJdqJrYx8RDsPjy0xKxUYVamwdQ36W
+ iaYP7KaVMcEnCGiiyt+S2JlhpcgXtBhyARQ9s5T10kUYrMhWFpOE69SSn3/AysOZjIQxh5I/n94S
+ 7hyNmZ5FzNK/l03TMZmKZETP7dp0L5C11s2AdOG3NaVpW3uGlM1bb3s6jpHEfJt+HsPrDlqHUiGr
+ UG5gTMS6a7YbJgLR7ed4vJqxEveiXoj4h27ODWv4zPzuhDYs1mlVdEaRe+0duIhYmW8YwnlTyQBw
+ SSOm61zAkMJXBwb+URDyx99UgHvZbmq8xlVgdMnefDdzU23D2XLjsLFxIhLdvt30quQFPGA47Ng2
+ eT6tRAZxWNXXmgkHBPH6VhWZX3eSHx+dSAKS2VQlVDTWyH29CsGHJhJ3GP8cABTtDMDgxVnWIgFq
+ Q1l5w6Qh96J22WxV3WbGkaMfb69dFPNWjdIjIhL7YMHE0SamI+lwBhpOr4SHmprs3kmhR4Zad8JD
+ k=
 Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
  envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -80,92 +79,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We identified a number of exceptions as interrupts, and we assume
-exceptions that are not explicitly listed do exist and should be
-regarded as interrupts. This unfortunately forces us to list all
-(syncroneous) exceptions. We decided to also list every single
-known interrupt as they are few and we prefer to complete an almost
-complete list, partially as a visual aid to confirm that we did not miss
-any named exception index.
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-PA-RISC appears to not have any form of host-call.
-
-This change places the hook for PA-RISC targets.
+This change places hooks for Motorola 68000 targets.
 
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/hppa/int_helper.c | 44 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ target/m68k/op_helper.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 191ae19404..0742990c90 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -24,6 +24,7 @@
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index f29ae12af8..e9c20a8e03 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -22,6 +22,7 @@
  #include "exec/helper-proto.h"
- #include "hw/core/cpu.h"
- #include "hw/hppa/hppa_hardware.h"
+ #include "accel/tcg/cpu-ldst.h"
+ #include "semihosting/semihost.h"
 +#include "qemu/plugin.h"
  
- static void eval_interrupt(HPPACPU *cpu)
- {
-@@ -95,6 +96,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-     CPUHPPAState *env = &cpu->env;
-     int i = cs->exception_index;
-     uint64_t old_psw, old_gva_offset_mask;
-+    uint64_t last_pc = cs->cc->get_pc(cs);
+ #if !defined(CONFIG_USER_ONLY)
  
-     /* As documented in pa2.0 -- interruption handling.  */
-     /* step 1 */
-@@ -212,6 +214,48 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-     env->iasq_f = 0;
-     env->iasq_b = 0;
+@@ -183,6 +184,21 @@ static const char *m68k_exception_name(int index)
+     return "Unassigned";
+ }
  
-+    switch (i) {
-+    case EXCP_HPMC:
-+    case EXCP_POWER_FAIL:
-+    case EXCP_RC:
-+    case EXCP_EXT_INTERRUPT:
-+    case EXCP_LPMC:
-+    case EXCP_PER_INTERRUPT:
-+    case EXCP_TOC:
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
++static void do_plugin_vcpu_interrupt_cb(CPUState *cs, uint64_t from)
++{
++    switch (cs->exception_index) {
++    case EXCP_SPURIOUS ... EXCP_INT_LEVEL_7:
++        qemu_plugin_vcpu_interrupt_cb(cs, from);
 +        break;
-+    case EXCP_ITLB_MISS:
-+    case EXCP_IMP:
-+    case EXCP_ILL:
-+    case EXCP_BREAK:
-+    case EXCP_PRIV_OPR:
-+    case EXCP_PRIV_REG:
-+    case EXCP_OVERFLOW:
-+    case EXCP_COND:
-+    case EXCP_ASSIST:
-+    case EXCP_DTLB_MISS:
-+    case EXCP_NA_ITLB_MISS:
-+    case EXCP_NA_DTLB_MISS:
-+    case EXCP_DMP:
-+    case EXCP_DMB:
-+    case EXCP_TLB_DIRTY:
-+    case EXCP_PAGE_REF:
-+    case EXCP_ASSIST_EMU:
-+    case EXCP_HPT:
-+    case EXCP_LPT:
-+    case EXCP_TB:
-+    case EXCP_DMAR:
-+    case EXCP_DMPI:
-+    case EXCP_UNALIGN:
-+    case EXCP_SYSCALL:
-+    case EXCP_SYSCALL_LWS:
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
++    case EXCP_SEMIHOSTING:
++        qemu_plugin_vcpu_hostcall_cb(cs, from);
 +        break;
 +    default:
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
++        qemu_plugin_vcpu_exception_cb(cs, from);
 +        break;
 +    }
++}
 +
-     if (qemu_loglevel_mask(CPU_LOG_INT)) {
-         static const char * const names[] = {
-             [EXCP_HPMC]          = "high priority machine check",
+ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
+ {
+     CPUState *cs = env_cpu(env);
+@@ -203,6 +219,7 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
+             return;
+         case EXCP_SEMIHOSTING:
+             do_m68k_semihosting(env, env->dregs[0]);
++            qemu_plugin_vcpu_hostcall_cb(cs, retaddr);
+             return;
+         }
+     }
+@@ -239,6 +256,8 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
+     env->aregs[7] = sp;
+     /* Jump to vector.  */
+     env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
++
++    do_plugin_vcpu_interrupt_cb(cs, retaddr);
+ }
+ 
+ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
+@@ -277,6 +296,7 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+     uint32_t sp;
+     uint32_t vector;
+     uint16_t sr, oldsr;
++    uint64_t last_pc = env->pc;
+ 
+     if (!is_hw) {
+         switch (cs->exception_index) {
+@@ -417,6 +437,8 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+     env->aregs[7] = sp;
+     /* Jump to vector.  */
+     env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
++
++    do_plugin_vcpu_interrupt_cb(cs, last_pc);
+ }
+ 
+ static void do_interrupt_all(CPUM68KState *env, int is_hw)
 -- 
 2.49.1
 
