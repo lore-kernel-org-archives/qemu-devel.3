@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC96CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 16:20:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF77CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 16:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5nvj-0000Np-3E; Mon, 06 Oct 2025 12:19:19 -0400
+	id 1v5o0b-0001j3-Hi; Mon, 06 Oct 2025 12:24:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5nvg-0000Na-BH
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 12:19:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v5o0I-0001hw-FM; Mon, 06 Oct 2025 12:24:07 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5nvV-0003py-Cj
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 12:19:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759767542;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/l4eQDKT4VZhU+uwydLBNC1dO/XgBN35IGrVFWPp3Mc=;
- b=JbwPcKJ1o+QS7SGhvvaqWuOgW/R39U/eQ2DTLCSnt/h3qX5VUtsfc6Bz3oYhiWpzXylDAm
- Y+13Vs2klEOk1nxe/E5Hma6hezrpKjT/6PpB1MUigiFgUB8ihmikDoXswyYCOIb8j53dgE
- Q0Tgs15ISyJ+bNcaPJDGYp1/Cf8TKrg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-qyZ5sLcDOkWW2BvYH8p40g-1; Mon,
- 06 Oct 2025 12:18:56 -0400
-X-MC-Unique: qyZ5sLcDOkWW2BvYH8p40g-1
-X-Mimecast-MFC-AGG-ID: qyZ5sLcDOkWW2BvYH8p40g_1759767535
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D15EB1800366; Mon,  6 Oct 2025 16:18:54 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.34.132])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2FFEC1955F19; Mon,  6 Oct 2025 16:18:51 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
-	qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2] tests/functional/aarch64: Drop some sbsaref_alpine tests
-Date: Mon,  6 Oct 2025 18:18:50 +0200
-Message-ID: <20251006161850.181998-1-thuth@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v5o0A-0004PM-2m; Mon, 06 Oct 2025 12:24:00 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 596Fu14D027039;
+ Mon, 6 Oct 2025 16:23:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2025-04-25; bh=wpbx3bZU
+ 3Xjqn4rc9RCKKAaigTLmvam0d0Ns3uFKeUE=; b=KJl2mgIhx1a+dR3DNtkQ/CYg
+ s0vTKS6yKT16W5ZObib0FPSs/Dzp50sVIp1RQvEjIbwbFaWFYGJyOub7394muHRM
+ JVXUl05VnsOoMrPGfS1FRnHWecrsWP4kOyCnCCyw1Bw24Z3X5Mw+79u3kB4C2yZt
+ zV1sgFVKxLZhUIQg0QoFY0aJZRC9dO7C/40STnf6G05LpzFjgGlCcIWc+ofetbun
+ /sFsZaZzT8jsPQuLj3BWtL+fON/RKLKwh+zEPP25smicUhIAzz2/Lpbr86EDLpT0
+ N/y1xPMmBSfPW0+kZUE8LGkKWObrnJmVlzstv903vMd5kwWAuyfLnMF1yMGd0A==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49mg80061v-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 06 Oct 2025 16:23:41 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 596GBIFi000307; Mon, 6 Oct 2025 16:16:34 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 49jt17a5xa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 06 Oct 2025 16:16:34 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 596GEkOr002628;
+ Mon, 6 Oct 2025 16:16:33 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 49jt17a5wt-1; Mon, 06 Oct 2025 16:16:33 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH] hw/intc/arm_gicv3_kvm: cpr-exec support
+Date: Mon,  6 Oct 2025 09:16:32 -0700
+Message-Id: <1759767392-379114-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-06_05,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 suspectscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2509150000
+ definitions=main-2510060128
+X-Proofpoint-GUID: 6jYLzpyMLH-Xt1Nyus9SAys2EFs1Cyyj
+X-Proofpoint-ORIG-GUID: 6jYLzpyMLH-Xt1Nyus9SAys2EFs1Cyyj
+X-Authority-Analysis: v=2.4 cv=HLvO14tv c=1 sm=1 tr=0 ts=68e3ed0d cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=x6icFKpwvdMA:10 a=yPCof4ZbAAAA:8 a=IZNwnb8Dc9TsmVGaVMgA:9
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDEyMiBTYWx0ZWRfX04kMOA517/zb
+ rm+Ag2Fua5s5mSaeRzpbBnKbLMcSFK4CUu8CpV/Cnb6aRumC0c8mbqA8U/esV27UDzstVSj0a91
+ D+WjpZBpr7UCCbwnalsI73KSrhyLD1+aP2gMr1Slb2IODjxIlB6Cch3YNTDnoS5k1FwGhc8GTGL
+ bxLm0ztkIr97SsmciniboHFvRq/A59aBdKkdpE8A98X7EbruKDuT4lRPDBVRhg+S+gyhJbsCIlG
+ V4XQGyoiu+/BNjjLoJUQTjZB5A5prjLpHVM8Ff9POG9F2jnWbMue28jcv2glgk0b5kFyn9YtCWC
+ bdpYd38cGqQTCpke0vQj6zWmmoN8z5bPvok3AXJPU90wYDmVXnvtd0OpSKvCJqqUFx3sNXTc/fU
+ FDr36EmM/v1RGLaUgD07YaTHk1Fj1w==
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,43 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+The cpr-transfer notifier also applies to cpr-exec.
 
-test_sbsaref_alpine is one of the longest running test in our testsuite,
-because it does a full Linux boot a couple of times, for various different
-CPU configurations. That's quite a lot of testing each time, for a rather
-small additional test coverage. Thus let's drop some of the tests that don't
-provide much in addition to the other ones.
-
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- v2: Drop the tests instead of just not running them by default
+ hw/intc/arm_gicv3_kvm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
- tests/functional/aarch64/test_sbsaref_alpine.py | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/tests/functional/aarch64/test_sbsaref_alpine.py b/tests/functional/aarch64/test_sbsaref_alpine.py
-index abb8f5114bd..be84b7adb0c 100755
---- a/tests/functional/aarch64/test_sbsaref_alpine.py
-+++ b/tests/functional/aarch64/test_sbsaref_alpine.py
-@@ -41,15 +41,9 @@ def boot_alpine_linux(self, cpu=None):
-         self.vm.launch()
-         wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
- 
--    def test_sbsaref_alpine_linux_cortex_a57(self):
--        self.boot_alpine_linux("cortex-a57")
--
-     def test_sbsaref_alpine_linux_default_cpu(self):
-         self.boot_alpine_linux()
- 
--    def test_sbsaref_alpine_linux_max_pauth_off(self):
--        self.boot_alpine_linux("max,pauth=off")
--
-     def test_sbsaref_alpine_linux_max_pauth_impdef(self):
-         self.boot_alpine_linux("max,pauth-impdef=on")
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index 0cd14d7..ddf60e6 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -929,9 +929,10 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+     if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
+                               KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES)) {
+         qemu_add_vm_change_state_handler(vm_change_state_handler, s);
+-        migration_add_notifier_mode(&s->cpr_notifier,
+-                                    kvm_arm_gicv3_notifier,
+-                                    MIG_MODE_CPR_TRANSFER);
++        migration_add_notifier_modes(&s->cpr_notifier,
++                                     kvm_arm_gicv3_notifier,
++                                     MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
++                                     -1);
+     }
+ }
  
 -- 
-2.51.0
+1.8.3.1
 
 
