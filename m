@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB08CCA470
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Oct 2025 22:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D01CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 00:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5XYl-0007Ev-EW; Sun, 05 Oct 2025 18:50:31 -0400
+	id 1v5Yot-0000Fr-9P; Sun, 05 Oct 2025 20:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XYk-0007ER-Jn
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:50:30 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v5Yod-0000D0-Vt
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 20:11:03 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1v5XYi-0004cV-MU
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 18:50:30 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-36639c30bb7so39160711fa.3
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 15:50:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v5Yoc-0004Eu-4l
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 20:10:59 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3322e63602eso5671744a91.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 17:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759704626; x=1760309426; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759709455; x=1760314255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
- b=K9uSTpBvKdtoYR4Ejn/lJn5iAo5y/hh2jbE1BxaWAUKD9Bxmemnx13sWK2MeK4tMTR
- 6Ol0jjaxj375l739rVkouQewPQv1FKFs3KP8wJeMgfe/o2s//Kd2T0z9XZqJ7w57dvyV
- SqHYStEH+FcYx+AM9CL5oNgWmg6N4OW07VVbOwMYGZ/7rk6SeqZ/3XDDAcDMS2/nBRRE
- swu0dcx2K7mClCGii4Zx4lRBYPSHJlwf+DnITi1kKkJwyAsXeshuyjrByGVFiTAx2DCq
- EZ5JAQU9E0s1GzkyDExdGeVA1Bhnh98ZYzZVIsTeZ23UBWOelOjZE6Z2PFevLjeEkadB
- bZeg==
+ bh=rNQxTEzi80lbl0xN4caDnqv6yc8FN8B4ZjgNrtVOCtM=;
+ b=hoJFDd22LX+zUUM3wgeUb6t8TWXWvyQA5X+GV3dm10hXSzOYwglloLi5HRFXkUT0Hv
+ wT24gP5Y8ZZzqdstZptNvjQ1m51xTYLlTQkpiKlQtAPnHsQBgDReUqFI3A+OIZDX4h9o
+ A3TPmSlLLDpdtptBgzfKHwwEi/qLwd2GkHaK99QFesDZj7bWl+kHHCd78KAFi2gpmQDA
+ iW3jYjnI5O9P0/MWxvPyTuQ6z9J4V4XnrxUURID0+9t9N3/Kb0uJyjIpWhY747BF5o98
+ w1ILChlioIfE1t20Mrg/fhF5TubqPawaeYASXypP/V6cK6ibew8fwypLYNx9DKwKyd2P
+ Quzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759704626; x=1760309426;
+ d=1e100.net; s=20230601; t=1759709455; x=1760314255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X5uTlnB3NhUwPh8jYQG8VqFwbODJaHhYoBAK9FpIpFM=;
- b=n9MO8cxJLNfcqmLKCfjQVKvEQbShBAk1BxpgQLInnAp7JPn26o5wiYms/fvMmzn88l
- lGoOVai+7yKnAzxk1fJJqXv7/VNdj+7kQttN3vTnURMfYgrSsMHrLikrN8aYozPLVAev
- zI44lDaqNN+OD/ntuQe+qDw0cVqDd/5uxZAvu8wydNjeTEyvnDHXMp5J/8XoHAGzWHsK
- lu6souaPsY4RUPkIqSLiW1np6At2OLHGq5ZkN5fzP/6foYTWWOBybbk+swaHfmI9kYCA
- NNKR6V4uw+06qOwGvllZUEZnEeTgfe45H6ZXkqkENXj0w3uw5EJKquFDM5+FIlrI+7vv
- /cEA==
-X-Gm-Message-State: AOJu0YwZoNfZNM31RS6XouPRh3Ixi3rkUblIKbZ9j0nJ5JiOeYEXFlPx
- 6gJw83cvq3Uqe9R2/WX0gOz1DIPdYQzkT2cu0nXP8qPTrgJMi06VAoeJQ0viBw2z8OTvTg==
-X-Gm-Gg: ASbGncu5gAXwL4qTlnbK75cxTeNuKs10B6aPpbaiogFn1vhpFdi5ESSWgSt51IYG3sm
- TJu30kdRBVFvq5yt5xmy9ldSond6ZLvxppu9GUcEFTshhDzwT4OZE/G+FD0Ia4lPFzE8Okq3zdL
- WcnIbcRtpexaIxVHS6XV0Jc6WbkqB/MUUVk1q0E2lbrfitIm95gYNESTtQk02r8DwrikNtr+Obr
- 7PnqpbaXJO0S//R+d6AdTC13ZrF4Av8Q3EFUuSscdhqVBLCZgwd/dRbrFHRmOcO5KBODTCPF0YS
- WpH5KTF54OQcKGFa11VJBWBGgRf7rVUFv/QMfrGvWVKIn98qcXxvBhvn9HyNdA7xstgIS9mU0zv
- IBOMUP3+QIvW9zrJBmMmc+gJ66Sw+Gq4eVfh3wuVvagPIdkX4NM+bl+sjTesN
-X-Google-Smtp-Source: AGHT+IHay7KzOZh/r4sG251pC2HYHoRVDFj9mAu0PYz3ZujBSnTdqglHE6Y/ohthMgFe93kJX+PWmg==
-X-Received: by 2002:a05:651c:235a:10b0:372:80ac:a33a with SMTP id
- 38308e7fff4ca-374c381c0efmr27286411fa.28.1759704625935; 
- Sun, 05 Oct 2025 15:50:25 -0700 (PDT)
-Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:a74::1:2e])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-373ba4bbb7csm37638971fa.47.2025.10.05.15.50.23
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 05 Oct 2025 15:50:24 -0700 (PDT)
-From: xpahos@gmail.com
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org,
- Alexander Gryanko <xpahos@gmail.com>
-Subject: [PATCH v2] hw/arm: add pvpanic mmio device for arm
-Date: Mon,  6 Oct 2025 01:50:16 +0300
-Message-Id: <20251005-arm-pvpanic-v1-1-1e473a735212@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
-References: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+ bh=rNQxTEzi80lbl0xN4caDnqv6yc8FN8B4ZjgNrtVOCtM=;
+ b=iVdZt5bNOrY3aHRFuPpfEjm4EuFIGR1tFbRt+5E4ukIPTOdS8w1dkgwWVplvvageBS
+ zf6/NGNbZ6/GtACZOZma88sBS2sEfG468IWHoA0Ha8zDBHCvAHcZIv8i6x6+SXjGgBv2
+ tE+r6bWePBff2du1mDFLKMfh1Zh7b7FEtKSn/XRHTsv3MwfBEFG6jWMcWZNyqQ4dc6Af
+ Ez/S1O3MTEf8Xpvj+Esw7TII4ORlGEH1ARSbAOA97aysqt33gA1/A6M71chv2NLqZZom
+ zYM72q45CO7Z+aU3tR5jMj6U9XoeNKgexhLko4zhCxb/YLlGbNK1JpEDU740MDhenJKW
+ 6Wbg==
+X-Gm-Message-State: AOJu0YxLiUgQkjKWn5VDv9wOeKl7xfcJisBntoyyoVX/gF8qQ2a/B9H7
+ 5QjbltBwNNbQEIF4T2uWwx5YvFkj1e7AGcJ1f3Ot2a85W8IqaseRgIdnAsHWqrpU4/I6yvS/MqI
+ hu4EM
+X-Gm-Gg: ASbGncsxvQAuceHOVkh64IlMO0XW4jmKOF4s3mttkdmeLWLSNWNhRoiZ9gLBtVm0BOq
+ er8U9PLmsJqdJ0eG2KdYeGM+Q3toPCkJbr26BWqZZ45vAP482orkO06NoDXMQiAbmn88RbwqVDA
+ EY1Owp1sFBoIp8MWg6oXlAfQ0JQ3Ui6NuWL4qOFZB3Uj45uMlBuyQLlNTNiqi7I1IVz/ntD2Ffh
+ DWzQ7LVk+xHYAIzOoXsoMG+CH6gr3X0q4a2HUYr9mGqT5p+OIFC0uZjd291dX61stZ8CRNjJApH
+ 2psmXKyuZJKGORi4Icqo7aMwewWeh+y+jtFFbYqd9ac/H0BkDXTi5bpOenSFt+szt/vQAlXgwnk
+ wbnIkFztfBWBI5MRq/w9uqxJZmjDNbzSFTUYaDMpPp51rIi0hARahX/j/Q8z9QmpTlbw=
+X-Google-Smtp-Source: AGHT+IGqjr3mkrKA0/TtaTN6rI92HNJoV7++MgtxbpCawXS361PDi2jYQu6Lqvq1tra5M1+GkI4Dww==
+X-Received: by 2002:a17:90b:2544:b0:339:d03e:2a11 with SMTP id
+ 98e67ed59e1d1-339d03e2c14mr7614911a91.14.1759709455276; 
+ Sun, 05 Oct 2025 17:10:55 -0700 (PDT)
+Received: from gromero0.. ([186.215.59.111]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-339c4a48584sm8804881a91.23.2025.10.05.17.10.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Oct 2025 17:10:54 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+Cc: alex.bennee@linaro.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH v10 3/3] target/arm: Enable FEAT_MEC in -cpu max
+Date: Mon,  6 Oct 2025 00:10:18 +0000
+Message-Id: <20251006001018.219756-4-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251006001018.219756-1-gustavo.romero@linaro.org>
+References: <20251006001018.219756-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20251005-arm-pvpanic-8e3e8fd05e95
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759689277; l=3360;
- i=xpahos@gmail.com; s=20251004; h=from:subject:message-id;
- bh=8vahP4rJaiEcZHPpEIyes8fe5YhSlu876t+4bYa3n2I=;
- b=vONAhLi4eVISLyW7o+8CipIPEObfmTUCcqjBA6B8U4KZFyvnayVlS3I/UIOAageN477CuaXAb
- U1enPaZJZw4DFsk1B1Aeo+g+ZNj09r3sdN+WVEP76yahEAJGXt2RxG2
-X-Developer-Key: i=xpahos@gmail.com; a=ed25519;
- pk=bsSvP3Tn7PVKgjJT3BMV3jlAwSqreKIM4099C1r51eg=
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=xpahos@gmail.com; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,101 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Gryanko <xpahos@gmail.com>
+Advertise FEAT_MEC in AA64MMFR3 ID register for the Arm64 cpu max as a
+first step to fully support FEAT_MEC.
 
-Currently, pvpanic is available in three device types: ISA,
-MMIO, and PCI. For early stages of system initialisation
-before PCI enumeration, only ISA and MMIO are suitable.
-ISA is specific to the x86 platform; only MMIO devices
-can be used for ARM. It is not possible to specify a
-device as on the x86 platform (-device pvpanic); the
-only possible way is to add an MMIO device to the dtb,
-which can be implemented by manually adding new functions
-to the QEMU code, as was done in the VMApple implementation.
+The FEAT_MEC is an extension to FEAT_RME that implements multiple
+Memory Encryption Contexts (MEC) so the memory in a realm can be
+encrypted and accessing it from the wrong encryption context is not
+possible. An encryption context allow the selection of a memory
+encryption engine.
 
-Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
+At this point, no real memory encryption is supported, but software
+stacks that rely on FEAT_MEC should work properly.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250711140828.1714666-7-gustavo.romero@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/arm/virt.c         | 26 ++++++++++++++++++++++++++
- include/hw/arm/virt.h |  1 +
- 2 files changed, 27 insertions(+)
+ docs/system/arm/emulation.rst | 3 +++
+ target/arm/tcg/cpu64.c        | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 02209fadcf..78e466f935 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -39,6 +39,7 @@
- #include "hw/arm/virt.h"
- #include "hw/block/flash.h"
- #include "hw/display/ramfb.h"
-+#include "hw/misc/pvpanic.h"
- #include "net/net.h"
- #include "system/device_tree.h"
- #include "system/numa.h"
-@@ -182,6 +183,7 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_UART0] =              { 0x09000000, 0x00001000 },
-     [VIRT_RTC] =                { 0x09010000, 0x00001000 },
-     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
-+    [VIRT_PVPANIC] =            { 0x09021000, 0x00000002 },
-     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
-     [VIRT_UART1] =              { 0x09040000, 0x00001000 },
-     [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
-@@ -276,6 +278,28 @@ static bool ns_el2_virt_timer_present(void)
-         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
- }
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 6b04c96c8c..0876a232c6 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -92,6 +92,9 @@ the following architecture extensions:
+ - FEAT_LSE2 (Large System Extensions v2)
+ - FEAT_LSE128 (128-bit Atomics)
+ - FEAT_LVA (Large Virtual Address space)
++- FEAT_MEC (Memory Encryption Contexts)
++
++  * This is a register-only implementation without encryption.
+ - FEAT_MixedEnd (Mixed-endian support)
+ - FEAT_MixedEndEL0 (Mixed-endian support at EL0)
+ - FEAT_MOPS (Standardization of memory operations)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index abef6a246e..3661f3ec83 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1252,6 +1252,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = GET_IDREG(isar, ID_AA64MMFR3);
+     t = FIELD_DP64(t, ID_AA64MMFR3, TCRX, 1);       /* FEAT_TCR2 */
+     t = FIELD_DP64(t, ID_AA64MMFR3, SCTLRX, 1);     /* FEAT_SCTLR2 */
++    t = FIELD_DP64(t, ID_AA64MMFR3, MEC, 1);        /* FEAT_MEC */
+     t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
+     SET_IDREG(isar, ID_AA64MMFR3, t);
  
-+static void create_pvpanic(VirtMachineState *vms)
-+{
-+    char *nodename;
-+    MachineState *ms = MACHINE(vms);
-+    DeviceState *dev = qdev_new(TYPE_PVPANIC_MMIO_DEVICE);
-+    SysBusDevice *s = SYS_BUS_DEVICE(dev);
-+
-+    hwaddr base = vms->memmap[VIRT_PVPANIC].base;
-+    hwaddr size = vms->memmap[VIRT_PVPANIC].size;
-+
-+    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_mmio_map(s, 0, base);
-+
-+    nodename = g_strdup_printf("/pvpanic@%" PRIx64, base);
-+    qemu_fdt_add_subnode(ms->fdt, nodename);
-+    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-+                            "qemu,pvpanic-mmio");
-+    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
-+                                 2, base, 2, size);
-+    g_free(nodename);
-+}
-+
- static void create_fdt(VirtMachineState *vms)
- {
-     MachineState *ms = MACHINE(vms);
-@@ -2498,6 +2522,8 @@ static void machvirt_init(MachineState *machine)
-     create_pcie(vms);
-     create_cxl_host_reg_region(vms);
- 
-+    create_pvpanic(vms);
-+
-     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
-         vms->acpi_dev = create_acpi_ged(vms);
-     } else {
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index ea2cff05b0..39bf07c9c1 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -81,6 +81,7 @@ enum {
-     VIRT_NVDIMM_ACPI,
-     VIRT_PVTIME,
-     VIRT_ACPI_PCIHP,
-+    VIRT_PVPANIC,
-     VIRT_LOWMEMMAP_LAST,
- };
- 
-
----
-base-commit: bd6aa0d1e59d71218c3eee055bc8d222c6e1a628
-change-id: 20251005-arm-pvpanic-8e3e8fd05e95
-
-Best regards,
 -- 
-Alexander Gryanko <xpahos@gmail.com>
+2.34.1
 
 
