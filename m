@@ -4,157 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA93CCA471
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 13:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B3C0CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 13:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5krW-0004l1-6w; Mon, 06 Oct 2025 09:02:46 -0400
+	id 1v5l1S-0007T7-Ia; Mon, 06 Oct 2025 09:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5krS-0004ki-FQ
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:02:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5l1P-0007Sj-WD
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:13:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5krE-0001gJ-Ry
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:02:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5l1H-0002j8-HW
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:12:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759755738;
+ s=mimecast20190719; t=1759756364;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8XP+/L6ShZ+ErNDo2j7T4i24j2ImOHXB2awMNPB8ugI=;
- b=PEmm/hp7oj393jTUDtyVJjcy0EDHy/xZjl8ZK/0U1Z6ykghw7JdmOmtOYsBPH3kGrXcm7C
- cK8VsmBrIdWlz1awBX8ZcGtklwnR6r4JNA8ozeDZOPHdvzMOZBcb3h1Pn/o2AXtlc6btxE
- wHf3l3SupgYM/L8obKZzbo4/5Sln7RQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=bZX5X7NZc+e0nNEzSVMGJer7k1nFPtWQz0KM+RWSTz4=;
+ b=bq2GIaK5n/DUYUpH5xqyzx6d97VxjMgh8xu/gvFOUgRM7E1QNAsRedSBfrKZHlQcW44YgJ
+ qZx4xaa+7Js2AhdMB7OADA+REpgjlYddBvJY5A7ix9ScdnIsEHigritnORnP7ZGUA7mukg
+ LEobgSraqj+I8pXIGzuIMJQTnGWEytM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-bFm4AnRFME6l5HJm4lKtug-1; Mon, 06 Oct 2025 09:02:17 -0400
-X-MC-Unique: bFm4AnRFME6l5HJm4lKtug-1
-X-Mimecast-MFC-AGG-ID: bFm4AnRFME6l5HJm4lKtug_1759755736
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e509374dcso22765535e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 06:02:16 -0700 (PDT)
+ us-mta-685-yDddLTVFPJmtpuADZz5j7Q-1; Mon, 06 Oct 2025 09:12:40 -0400
+X-MC-Unique: yDddLTVFPJmtpuADZz5j7Q-1
+X-Mimecast-MFC-AGG-ID: yDddLTVFPJmtpuADZz5j7Q_1759756360
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e4cc8ed76so20126885e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 06:12:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759755736; x=1760360536;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8XP+/L6ShZ+ErNDo2j7T4i24j2ImOHXB2awMNPB8ugI=;
- b=OwF12DH2+otww5iseX08uF7BesxHGUKmKsX6ZV4O2d5KX2hZljWdHbqlCJw4koSOTZ
- Ks6P31v59xwwdKriQ4ybktqZKQC1W50ho+g0cFi74vcNC1kPfveqXKGeMw6jBjI59rtW
- /Ag3lxbE5EnlI9jWnaiUgRBY2u3hYXRI4u1D3eN8EmDlh30oyvVxvdbIcLcjkCBZ82K6
- LvNxSUj6EfqA2GKXk3gTYyNHcQQMQnZ0bpD7L6KGC9PiLzfMtsnZTjGLD42LmwEHIFEZ
- tfUrFTcHD/blLLjr9cHdJDkEmW5uXwdYSppoDuxk7jpon4rdndw+bGnhsM0hZ2HUjh+X
- PvTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSmrKS357kJvN52S0GiBpnV01pwmGPKPD8Z5/cCojgdhHV40TevVMlzMlQqu1jlSsFUJdxRp20sWC0@nongnu.org
-X-Gm-Message-State: AOJu0YzOtUmajpD/R6TnSNKS2E8rEJUr/VDhoV2CaDsuw8hWcNiWz73W
- iGBxtfLfe5tZJ83UqtjJ8cd4moMqem3xQa38P3hd/sZoqPf2QHqSq/vVepeGRbQ8w89wfm8Im8i
- D6n2ABoKh0vjdYvXs8ENWAERr0jdK+5zFOFVyPZ5LmeY6ANWtZ8ks4GXM
-X-Gm-Gg: ASbGncsUx5gnvnW/B8UOl7whYAKIjSK6ITxYB4J1Fpv2+vHAzXBlh9ybQOkVXspNsjv
- Qjk+Iu7LEZJxhQKpXb7kPJeJLnJXcWFA+FJiTLWxf2uvkJV3FnhHe/VdV9FxjCS00KmD9bRT6PU
- yCKlxcuAipRW7Tyyjs53eZAJKSkskKHyTec4sJ4yH3L3Skf34CO/NcA/bGEty1Q8A+V7lWXYYPD
- uC5yxMvFTn+HiPGgOwRPRq4Vg9xJ3wGO5dmML3ZuOdLEqZzAJme7L1a8znMS3rWyZj8xMdwyWma
- csqwVRY/5sWcaOEnFN5t1GV02CcUIWjgIHIoisOU55jyfBAwO8LCc6OsR5IZitZ/pFn4tJrm4eM
- /DkzYwKFyFA==
-X-Received: by 2002:a05:600c:474d:b0:46e:3901:4a25 with SMTP id
- 5b1f17b1804b1-46e7116411emr74068085e9.20.1759755735248; 
- Mon, 06 Oct 2025 06:02:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5c3nOdBnQ9j37P39o/Q5Li46dr79sX1W7PgBCfxkuek9zYsqmOCp+rbWk9IR7bBwE9cCAYw==
-X-Received: by 2002:a05:600c:474d:b0:46e:3901:4a25 with SMTP id
- 5b1f17b1804b1-46e7116411emr74067525e9.20.1759755734647; 
- Mon, 06 Oct 2025 06:02:14 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
- [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm117768045e9.0.2025.10.06.06.02.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 06:02:14 -0700 (PDT)
-Message-ID: <3209475c-ea4e-4b73-942c-6354aaa36f52@redhat.com>
-Date: Mon, 6 Oct 2025 15:02:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/25] hw: Remove unnecessary 'system/ram_addr.h' header
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin
- <npiggin@gmail.com>, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- qemu-arm@nongnu.org, Jagannathan Raman <jag.raman@oracle.com>,
+ d=1e100.net; s=20230601; t=1759756360; x=1760361160;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bZX5X7NZc+e0nNEzSVMGJer7k1nFPtWQz0KM+RWSTz4=;
+ b=h+PCxYSYSjqfshv2vaZF/ooGTPZrWGdirxzPNirf5c2MRVDBjF7w3oUQsGClmpfiu/
+ iEy5e8DpTekGwLZ0RxpGW6qyTX2u6hTZrK3niUfEs5y9+8RZgILXUSaWnifsDt58pZnL
+ 7VelGct4FZLCMds0+m0hMGn1HgKDPYZHkozWM+adLFOW4s00padcyoLWcGnNxbcpCwLP
+ YiemJJZn/C59X6R9aJZiVEWtH/VQ5K5oBbxxkw5Llqj6fPUbPGdMBbmItH4F+HOKO/G1
+ 4g2GneMJi85dg+QaCJfsrkbN7a6kHtCZgfGVEb5UT01PJYKKksUtsJvlvpyRKfCMKzRa
+ jC4w==
+X-Gm-Message-State: AOJu0YyQ39L4xPXYet0I0Qq9oDXm9Txyni9FNQ/J1azcy5YgSzo6J0Gd
+ uATF1vKtJPwFZismGdnH5A1X/J6gxvzk4dq2NOA7stsieZovIsd1MpzprjrqPs38MPOhnJ6HFLO
+ +LXRvc3pTlYrElo8Dvb8IYlwFG694OimLX1+a1RU+CSArOm8KNeuJruau
+X-Gm-Gg: ASbGncswzJ+q6VpTM1DgYonieKZQZyBFwrUjINV8qEbtqVzXf8PWmbYXagl1LTRmnjr
+ Sfl7OkvFNq4eWpWlHfOV0KedPGWFU0kW4PdLQ7OagM22W1vbM+WkloX4IC7+hdhINuRAKRcz15v
+ WrA7W02I4kdtTDoZ0jEsehXThIjiiCa9LJBX7bURwIwgSYJeYZlAnC7tUdfgYQoNOhAgi+n5n2a
+ QpkGDYLy/86uKqsR09NzG3JIvydMFLPl0H0B4tDLD9gphcB49e/wjQSKKc9Java5bvglDwC8XXk
+ JDFnaEtxMVjJgeO78CGHwcA8uOR6BuqPYYiDOzA=
+X-Received: by 2002:a05:600d:13:b0:46e:41e6:28c7 with SMTP id
+ 5b1f17b1804b1-46e714acf6amr68095535e9.8.1759756359393; 
+ Mon, 06 Oct 2025 06:12:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2qtW3lG+TMWoe50L45Fy1tpw8PbsSTr5Yr+/xRjZfuwDK3WBPkcZEhGMwJ1550s57H0s02w==
+X-Received: by 2002:a05:600d:13:b0:46e:41e6:28c7 with SMTP id
+ 5b1f17b1804b1-46e714acf6amr68095195e9.8.1759756358900; 
+ Mon, 06 Oct 2025 06:12:38 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8e9719sm21219952f8f.31.2025.10.06.06.12.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Oct 2025 06:12:38 -0700 (PDT)
+Date: Mon, 6 Oct 2025 09:12:34 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, qemu-arm@nongnu.org,
+ Jagannathan Raman <jag.raman@oracle.com>,
  David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, kvm@vger.kernel.org,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, kvm@vger.kernel.org,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH 06/25] hw: Remove unnecessary 'system/ram_addr.h' header
+Message-ID: <20251006091227-mutt-send-email-mst@kernel.org>
 References: <20251001082127.65741-1-philmd@linaro.org>
  <20251001082127.65741-7-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251001082127.65741-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <20251001082127.65741-7-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,22 +123,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/10/2025 10.21, Philippe Mathieu-DaudÃ© wrote:
+On Wed, Oct 01, 2025 at 10:21:06AM +0200, Philippe Mathieu-Daudé wrote:
 > None of these files require definition exposed by "system/ram_addr.h",
 > remove its inclusion.
 > 
-> Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
-> ---
->   hw/ppc/spapr.c                    | 1 -
->   hw/ppc/spapr_caps.c               | 1 -
->   hw/ppc/spapr_pci.c                | 1 -
->   hw/remote/memory.c                | 1 -
->   hw/remote/proxy-memory-listener.c | 1 -
->   hw/s390x/s390-virtio-ccw.c        | 1 -
->   hw/vfio/spapr.c                   | 1 -
->   hw/virtio/virtio-mem.c            | 1 -
->   8 files changed, 8 deletions(-)
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+> ---
+>  hw/ppc/spapr.c                    | 1 -
+>  hw/ppc/spapr_caps.c               | 1 -
+>  hw/ppc/spapr_pci.c                | 1 -
+>  hw/remote/memory.c                | 1 -
+>  hw/remote/proxy-memory-listener.c | 1 -
+>  hw/s390x/s390-virtio-ccw.c        | 1 -
+>  hw/vfio/spapr.c                   | 1 -
+>  hw/virtio/virtio-mem.c            | 1 -
+>  8 files changed, 8 deletions(-)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index eb22333404d..15d09ef9618 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -77,7 +77,6 @@
+>  #include "hw/virtio/virtio-scsi.h"
+>  #include "hw/virtio/vhost-scsi-common.h"
+>  
+> -#include "system/ram_addr.h"
+>  #include "system/confidential-guest-support.h"
+>  #include "hw/usb.h"
+>  #include "qemu/config-file.h"
+> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+> index f2f5722d8ad..0f94c192fd4 100644
+> --- a/hw/ppc/spapr_caps.c
+> +++ b/hw/ppc/spapr_caps.c
+> @@ -27,7 +27,6 @@
+>  #include "qapi/error.h"
+>  #include "qapi/visitor.h"
+>  #include "system/hw_accel.h"
+> -#include "system/ram_addr.h"
+>  #include "target/ppc/cpu.h"
+>  #include "target/ppc/mmu-hash64.h"
+>  #include "cpu-models.h"
+> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+> index 1ac1185825e..f9095552e86 100644
+> --- a/hw/ppc/spapr_pci.c
+> +++ b/hw/ppc/spapr_pci.c
+> @@ -34,7 +34,6 @@
+>  #include "hw/pci/pci_host.h"
+>  #include "hw/ppc/spapr.h"
+>  #include "hw/pci-host/spapr.h"
+> -#include "system/ram_addr.h"
+>  #include <libfdt.h>
+>  #include "trace.h"
+>  #include "qemu/error-report.h"
+> diff --git a/hw/remote/memory.c b/hw/remote/memory.c
+> index 00193a552fa..8195aa5fb83 100644
+> --- a/hw/remote/memory.c
+> +++ b/hw/remote/memory.c
+> @@ -11,7 +11,6 @@
+>  #include "qemu/osdep.h"
+>  
+>  #include "hw/remote/memory.h"
+> -#include "system/ram_addr.h"
+>  #include "qapi/error.h"
+>  
+>  static void remote_sysmem_reset(void)
+> diff --git a/hw/remote/proxy-memory-listener.c b/hw/remote/proxy-memory-listener.c
+> index 30ac74961dd..e1a52d24f0b 100644
+> --- a/hw/remote/proxy-memory-listener.c
+> +++ b/hw/remote/proxy-memory-listener.c
+> @@ -12,7 +12,6 @@
+>  #include "qemu/range.h"
+>  #include "system/memory.h"
+>  #include "exec/cpu-common.h"
+> -#include "system/ram_addr.h"
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+>  #include "hw/remote/mpqemu-link.h"
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index d0c6e80cb05..ad2c48188a8 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -13,7 +13,6 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+> -#include "system/ram_addr.h"
+>  #include "system/confidential-guest-support.h"
+>  #include "hw/boards.h"
+>  #include "hw/s390x/sclp.h"
+> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+> index 8d9d68da4ec..0f23681a3f9 100644
+> --- a/hw/vfio/spapr.c
+> +++ b/hw/vfio/spapr.c
+> @@ -17,7 +17,6 @@
+>  
+>  #include "hw/vfio/vfio-container-legacy.h"
+>  #include "hw/hw.h"
+> -#include "system/ram_addr.h"
+>  #include "qemu/error-report.h"
+>  #include "qapi/error.h"
+>  #include "trace.h"
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index 1de2d3de521..15ba6799f22 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -25,7 +25,6 @@
+>  #include "hw/virtio/virtio-mem.h"
+>  #include "qapi/error.h"
+>  #include "qapi/visitor.h"
+> -#include "system/ram_addr.h"
+>  #include "migration/misc.h"
+>  #include "hw/boards.h"
+>  #include "hw/qdev-properties.h"
+> -- 
+> 2.51.0
 
 
