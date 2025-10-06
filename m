@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F601CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B386CCA471
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5iZC-00036R-UP; Mon, 06 Oct 2025 06:35:43 -0400
+	id 1v5ifC-0004oq-8V; Mon, 06 Oct 2025 06:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
- id 1v5iZ6-00036B-Iz; Mon, 06 Oct 2025 06:35:36 -0400
-Received: from forward502d.mail.yandex.net ([178.154.239.210])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
- id 1v5iZ2-0000m7-2x; Mon, 06 Oct 2025 06:35:36 -0400
-Received: from mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net
- (mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:21a5:0:640:c759:0])
- by forward502d.mail.yandex.net (Yandex) with ESMTPS id 22C3AC0917;
- Mon, 06 Oct 2025 13:35:23 +0300 (MSK)
-Received: from mail.yandex.ru (2a02:6b8:c42:26cc:0:640:9e82:0
- [2a02:6b8:c42:26cc:0:640:9e82:0])
- by mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net (mxback/Yandex)
- with HTTPS id JZhNs671kmI0-wYV3y8TD; Mon, 06 Oct 2025 13:35:22 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
- t=1759746922; bh=6JxHa/9bVvUwZrL9Bxvk12xBIzzn7HllP9NEdtSfRbc=;
- h=Message-Id:References:Date:Cc:Subject:In-Reply-To:To:From;
- b=qv3PxLChCqiXHU75JmJRK94j5Z2aPon8HPZYPHLq5L0DjDwdDbA1SxFk3ZP7Nezid
- 6q8s+rX6MYL15JpMITdasYaOsvHt+Byq1sw02yobr0Bh0cHI48CYxkXcKw/L/br77u
- Dk5yKE/r0Eer21oUiKfO7mB6PV4aD2DeRuCVgLF0=
-Authentication-Results: mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex.ru
-Received: by mail-sendbernar-production-main-44.klg.yp-c.yandex.net
- (sendbernar/Yandex) with HTTPS id 18a6bb5c87a9269501119880b4f667ae; 
- Mon, 06 Oct 2025 13:35:21 +0300
-From: =?utf-8?B?0JbQtdCx0YDRj9C60L7QsiDQlNCw0L3QuNC70LA=?=
- <d.zhebryakov@yandex.ru>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>
-In-Reply-To: <20250915124650.435777-5-d.zhebryakov@yandex.ru>
-References: <20250915124650.435777-1-d.zhebryakov@yandex.ru>
- <20250915124650.435777-5-d.zhebryakov@yandex.ru>
-Subject: Re: [PATCH v3 4/4] target/ppc: fix GDB stub to work correctly with LE
- pages
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v5if1-0004ms-Uc
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:41:46 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v5iew-0001XW-IL
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:41:43 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-6354a4b4871so5839067d50.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:41:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759747297; x=1760352097; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vwrQcCJGIbsxvMRi/b1fe24qLHYm9LI3TINLoCmsLMc=;
+ b=t4bQSWbS/xP4RpK/V46JyDHY8X0mBi3sdXeeWn0SSwva/1lAKHBD9DCu5JMYgzQXR0
+ q/i6+NQMv9sRY9aT9ytP8DhjeT3DiZApEwfV7nJqpB3SbkKDqkp6D534QSksDjBIg6Hq
+ LXjh5Gey8b/8smZJi+s86+A5xqrgQsgf3XV4QWkEOMfH2o7BzL/Lq/bmVWBbxUl6XIw2
+ IbutdHa2AOiqZEjVdYzcTkXgeDgM4Z0ib/gqrqXlyp6wfp02pxW7+MDdKZ7U3H3Fuowf
+ oYWCwj+DArrWE8waChFk17zJACh7TpAT56vu814WPwGxb6KMuP15BvBsD5dSqfKULNKM
+ 4u1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759747297; x=1760352097;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vwrQcCJGIbsxvMRi/b1fe24qLHYm9LI3TINLoCmsLMc=;
+ b=UyM+8LE5Ze0DH5ptpqvfVEVU8gn0DAyjUSJpsrsyOoDwDhYj6xka+i0vsmlATMsiNO
+ UlY220U6I9AWWUSh0pHDKhLE+x3YYJefdwQE6IUjDGfp1ideXqhPMK2ZnN119AvwZqNf
+ vbk3ToYXJnJsKxquZPvC89OZo7RZdVzolWzdvjpZrKCb12oC1g0J1bYj/D7xY1e0cp7q
+ ppa4354pB20/8YODtAYEi/OOqMizfjMQp3M/+vR5HM2hJJ1Izjmj34PspD/fZYqO1BP8
+ xRlQCGPsydmmxivMVJm7dZouo5pGHVv0+Kh9ytJQ52sgEsxh1B4ge1aON5ca7bWHWsDw
+ M6ww==
+X-Gm-Message-State: AOJu0Ywkg1J0Pz+e0ztyin9FIdOW687BfL7OoH2gAi98+IzSI1QTyYXw
+ LTZEtPONCWe5zftE4714WXIoTk6NSAUSWyGUB59OCqmBlaNJ5MtjF2bPLNaumP9HRjI8vUn4KW0
+ ihCL/YsV46qmPMJi4fn/uaKmn5sbMrl4ACMmpYQRKrA==
+X-Gm-Gg: ASbGncsMToxXK0rn95kTaoMaiJ4YIVxxcXw8Gmrqkw2nrOJF4O5YfUxEZ44z4Co6O1a
+ djWDO643tH5ksB73USwKfo6fAVXdTdLfs7t5mdkqqPn5zGuMXorBlNHIcqUrYSoPE4yPjSAe+Vx
+ r9BZcUmvJL7sF8iKzwI7mRHau4qhv9D05p6W0RkzAJHTcII9YUk4k2Xb/mkqDkub3bWJzcuQu6F
+ O4aT+5S0HB9od/BYXhCWNdbtxixwScBdVNdfHhxYVI9ysM=
+X-Google-Smtp-Source: AGHT+IHMERTFx5EYN3CVOYqNP9Lw1HGa0Td0sIWgKn2ytuLOFeid3ejTjZUf5dSxY8/3eAbvuV97bsLfFKiYQrnFcHI=
+X-Received: by 2002:a05:690e:686:b0:636:1bb3:2d2d with SMTP id
+ 956f58d0204a3-63b9a07fdf7mr8736537d50.22.1759747297216; Mon, 06 Oct 2025
+ 03:41:37 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Mon, 06 Oct 2025 13:35:21 +0300
-Message-Id: <103431759746895@mail.yandex.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
-Received-SPF: pass client-ip=178.154.239.210;
- envelope-from=d.zhebryakov@yandex.ru; helo=forward502d.mail.yandex.net
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, HTML_MIME_NO_HTML_TAG=0.377, MIME_HTML_ONLY=0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+In-Reply-To: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 6 Oct 2025 11:41:25 +0100
+X-Gm-Features: AS18NWB7RZ1o_mn8Z-KGl28zNr88Ka_Hgag4hcQFKeBpYzqAoYX_71A_p7MS-eQ
+Message-ID: <CAFEAcA_PbfzTAW2qeFao1MhPG=jn9dtzt0AzwL-aPCEULijsuw@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm: add pvpanic mmio device for arm
+To: Alexander Gryanko <xpahos@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,49 +92,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PGRpdj5QaW5nIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTA5MDMxMzQx
-NDYuMTQ4Nzc5NC0xLWQuemhlYnJ5YWtvdkB5YW5kZXgucnUvPC9kaXY+PGRpdj7CoDwvZGl2Pjxk
-aXY+LS0tLS0tLS0tLS0tLS0tLTwvZGl2PjxkaXY+0JrQvtC80YM6IHFlbXUtZGV2ZWxAbm9uZ251
-Lm9yZyAocWVtdS1kZXZlbEBub25nbnUub3JnKTs8L2Rpdj48ZGl2PtCa0L7Qv9C40Y86IFJpa3Ug
-Vm9pcGlvIChyaWt1LnZvaXBpb0Bpa2kuZmkpLCBJbHlhIExlb3Noa2V2aWNoIChpaWlAbGludXgu
-aWJtLmNvbSksIExhdXJlbnQgVml2aWVyIChsYXVyZW50QHZpdmllci5ldSksIENoaW5tYXkgUmF0
-aCAocmF0aGNAbGludXguaWJtLmNvbSksIFJpY2hhcmQgSGVuZGVyc29uIChyaWNoYXJkLmhlbmRl
-cnNvbkBsaW5hcm8ub3JnKSwgRGF2aWQgSGlsZGVuYnJhbmQgKGRhdmlkQHJlZGhhdC5jb20pLCBU
-aG9tYXMgSHV0aCAodGh1dGhAcmVkaGF0LmNvbSksIHFlbXUtczM5MHhAbm9uZ251Lm9yZywgUGFv
-bG8gQm9uemluaSAocGJvbnppbmlAcmVkaGF0LmNvbSksIE5pY2hvbGFzIFBpZ2dpbiAobnBpZ2dp
-bkBnbWFpbC5jb20pLCBxZW11LXBwY0Bub25nbnUub3JnOzwvZGl2PjxkaXY+0KLQtdC80LA6IFtQ
-QVRDSCB2MyA0LzRdIHRhcmdldC9wcGM6IGZpeCBHREIgc3R1YiB0byB3b3JrIGNvcnJlY3RseSB3
-aXRoIExFIHBhZ2VzOzwvZGl2PjxkaXY+MTUuMDkuMjAyNSwgMTU6NDYsICJEYW5pbGEgWmhlYnJ5
-YWtvdiIgJmx0O2QuemhlYnJ5YWtvdkB5YW5kZXgucnUmZ3Q7OjwvZGl2PjxibG9ja3F1b3RlPjxw
-PkdEQiBpcyBleHBlY3RlZCB0byBiZSBzZXQgdG8gdGhlIGVuZGlhbm5lc3Mgb2YgdGhlIGN1cnJl
-bnRseSBydW5uaW5nIGNvZGUsIHdoaWNoIG1heSBiZSBpbiBMRSBwYWdlLiBCc3dhcCB0aGUgcmVn
-aXN0ZXJzIGFjY29yZGluZ2x5LjxiciAvPjxiciAvPlNpZ25lZC1vZmYtYnk6IERhbmlsYSBaaGVi
-cnlha292ICZsdDs8YSBocmVmPSJtYWlsdG86ZC56aGVicnlha292QHlhbmRleC5ydSIgcmVsPSJu
-b29wZW5lciBub3JlZmVycmVyIj5kLnpoZWJyeWFrb3ZAeWFuZGV4LnJ1PC9hPiZndDs8YnIgLz4t
-LS08YnIgLz7CoHRhcmdldC9wcGMvZ2Ric3R1Yi5jIHwgMTcgKysrKysrKysrKysrKysrKy08YnIg
-Lz7CoDEgZmlsZSBjaGFuZ2VkLCAxNiBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pPGJyIC8+
-PGJyIC8+ZGlmZiAtLWdpdCBhL3RhcmdldC9wcGMvZ2Ric3R1Yi5jIGIvdGFyZ2V0L3BwYy9nZGJz
-dHViLmM8YnIgLz5pbmRleCAzYjI4ZDRlMjFjLi44OWM3ODM4OTRjIDEwMDY0NDxiciAvPi0tLSBh
-L3RhcmdldC9wcGMvZ2Ric3R1Yi5jPGJyIC8+KysrIGIvdGFyZ2V0L3BwYy9nZGJzdHViLmM8YnIg
-Lz5AQCAtMTksNiArMTksOCBAQDxiciAvPsKgwqAqLzxiciAvPsKgI2luY2x1ZGUgInFlbXUvb3Nk
-ZXAuaCI8YnIgLz7CoCNpbmNsdWRlICJjcHUuaCI8YnIgLz4rI2luY2x1ZGUgImFjY2VsL3RjZy9w
-cm9iZS5oIjxiciAvPisjaW5jbHVkZSAiZXhlYy90bGItZmxhZ3MuaCI8YnIgLz7CoCNpbmNsdWRl
-ICJleGVjL2dkYnN0dWIuaCI8YnIgLz7CoCNpbmNsdWRlICJnZGJzdHViL2hlbHBlcnMuaCI8YnIg
-Lz7CoCNpbmNsdWRlICJpbnRlcm5hbC5oIjxiciAvPkBAIC04NCw3ICs4NiwyMCBAQCBzdGF0aWMg
-aW50IHBwY19nZGJfcmVnaXN0ZXJfbGVuKGludCBuKTxiciAvPsKgdm9pZCBwcGNfbWF5YmVfYnN3
-YXBfcmVnaXN0ZXIoQ1BVUFBDU3RhdGUgKmVudiwgdWludDhfdCAqbWVtX2J1ZiwgaW50IGxlbik8
-YnIgLz7CoHs8IS0tIC0tPjxiciAvPsKgI2lmbmRlZiBDT05GSUdfVVNFUl9PTkxZPGJyIC8+LSBp
-ZiAoIUZJRUxEX0VYNjQoZW52LSZndDttc3IsIE1TUiwgTEUpKSB7PCEtLSAtLT48YnIgLz4rIGJv
-b2wgbGVfcGFnZSA9IGZhbHNlOzxiciAvPis8YnIgLz4rIGlmIChlbnYtJmd0O21tdV9tb2RlbCA9
-PSBQT1dFUlBDX01NVV9CT09LRTIwNikgezwhLS0gLS0+PGJyIC8+KyBDUFVUTEJFbnRyeUZ1bGwg
-KmZ1bGw7PGJyIC8+KyB2b2lkICpob3N0OzxiciAvPisgaW50IG1tdV9pZHggPSBwcGNfZW52X21t
-dV9pbmRleChlbnYsIHRydWUpOzxiciAvPis8YnIgLz4rIHByb2JlX2FjY2Vzc19mdWxsX21tdShl
-bnYsIGVudi0mZ3Q7bmlwLCAwLCBNTVVfSU5TVF9GRVRDSCwgbW11X2lkeCw8YnIgLz4rICZhbXA7
-aG9zdCwgJmFtcDtmdWxsKTs8YnIgLz4rPGJyIC8+KyBsZV9wYWdlID0gZnVsbC0mZ3Q7dGxiX2Zp
-bGxfZmxhZ3MgJmFtcDsgVExCX0JTV0FQOzxiciAvPisgfTxiciAvPis8YnIgLz4rIGlmICghbGVf
-cGFnZSAmYW1wOyZhbXA7ICFGSUVMRF9FWDY0KGVudi0mZ3Q7bXNyLCBNU1IsIExFKSkgezwhLS0g
-LS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgLyogZG8gbm90aGluZyAqLzxiciAvPsKgwqDCoMKg
-wqB9IGVsc2UgaWYgKGxlbiA9PSA0KSB7PCEtLSAtLT48YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqBi
-c3dhcDMycygodWludDMyX3QgKiltZW1fYnVmKTs8L3A+LS08YnIgLz4yLjQ3LjI8YnIgLz7CoDwv
-YmxvY2txdW90ZT4=
+On Sat, 4 Oct 2025 at 21:19, Alexander Gryanko <xpahos@gmail.com> wrote:
+>
+> Currently, pvpanic is available in three device types: ISA,
+> MMIO, and PCI. For early stages of system initialisation
+> before PCI enumeration, only ISA and MMIO are suitable.
+> ISA is specific to the x86 platform; only MMIO devices
+> can be used for ARM. It is not possible to specify a
+> device as on the x86 platform (-device pvpanic); the
+> only possible way is to add an MMIO device to the dtb,
+> which can be implemented by manually adding new functions
+> to the QEMU code, as was done in the VMApple implementation.
+
+No, thank you. I don't want to add more devices to "virt"
+than we have to. There is a PCI pvpanic device -- use
+that. Yes, you might have to do PCI enumeration in software.
+
+thanks
+-- PMM
 
