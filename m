@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFF8CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 19:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF540CCA470
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 20:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5qZE-000121-Pi; Mon, 06 Oct 2025 15:08:16 -0400
+	id 1v5rOI-0002tr-QN; Mon, 06 Oct 2025 16:01:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5qZA-00010L-74
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 15:08:12 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5qZ7-0007NB-ND
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 15:08:11 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3ee12a63af1so3401426f8f.1
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 12:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759777687; x=1760382487; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qOTKjETXMBOffS9s6NtRmA9z9L3u3pZARMneJShhpiY=;
- b=y3FiaNgPzEB96LWl1mIoeq9T+J8sICmznS+ts5vsRY1TTZxDXen2+XLPid1qVF5Vi+
- XdYb97E8RXnc1nEWNU2Ur3WdG7AIo1LFpdcLNDEd0FHD4WZUnL3pGBTFlI+2lEKNOkwQ
- OjxSMEEMjM51DCRP4FUgQr8EONIJgnDQPuLwYH7MEEPLr7br24gCou6xPMi2mCG4yA93
- y1CqmraWq7Yuk2U5vguQiaCBJciujZbeItL9FkpJ7q+LwF0HD/OB+N/vnEsAR1mWwuZ3
- an0eaWmvaJMb8meGowhmmXf1pZoF+qQ3BQ3KtgyGBvdmJWYkpN/tco51zJY6qHGoILxx
- lFVg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v5rOG-0002tc-JG
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 16:01:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v5rO9-0005hZ-Jp
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 16:01:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759780847;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IkVeycwXsxrj/EacDrgACCPtuVj8VrJ3JURKgNP1zP4=;
+ b=KTqSwZkZyDCvizmE/eM80cvbA3g6cs8EqOgaeA19wjJeyyy9XDf4KQF8KWuX75EBP893az
+ PpPMSHqCW70zJe/Ngn6hZo8j4K7VCkeqCFHZZ6QPQORQkA3uxj9+M+TzNBMei3MmvIxFEd
+ w2tPKvsowKeHUFUOwRA2rXiwJgJE8ZU=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-256-B8zcyWdBM8eqAmNvJJafHg-1; Mon, 06 Oct 2025 16:00:45 -0400
+X-MC-Unique: B8zcyWdBM8eqAmNvJJafHg-1
+X-Mimecast-MFC-AGG-ID: B8zcyWdBM8eqAmNvJJafHg_1759780845
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-85709cdfab5so1104855785a.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 13:00:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759777687; x=1760382487;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1759780845; x=1760385645;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qOTKjETXMBOffS9s6NtRmA9z9L3u3pZARMneJShhpiY=;
- b=YN3c0mH40ubo6KPVY+l2gtQRnUU1FSaJuZAM34fdjr4a+zCKQpGE1pzPwKFl8jJHCC
- gFpN3hUiHG4E4YKDfz8DPFoV7rNkntHNOuU/7CCvaSIv/oE+uP86FoMzqyN1MPiYgIuc
- SWCYEqSKk53tb9v5P7l96DYx6wKJtTju/TGLdsKvlO0Jxec9tOwBeVSuYh+LhAiLmgpA
- fL8qf232KkUMNlbnz7x5dbce1bv9TBnZSt6EQmM5tPR51KCsn8yteIcir2bUlbIN2ife
- Mk3iiWWaMafgfrsFeJaMru+bbtMEzGP0earl4M3KoQdn43FHO0yC8cIC5RAtXGlE4g2G
- 2rSQ==
-X-Gm-Message-State: AOJu0Yyo15r6DyGxPUJpng+YABSukYiT0mk8lI7intSbmeBDLtUuTSIL
- vB2mpy0Tb1R4RUYIPeL8gyzgzYxNjIwlcevuURqws0RYz/z1bCwqBkCTpYiFf9xryEntMMHfXV5
- LFZOwWJZIrg==
-X-Gm-Gg: ASbGnctdnilV0qSFENG4vhMIWjlw0UCBcSrXVZmqsFswwIMa+5aCy8m0qjvQ/aOOulL
- VQsSpUW3P7rkDib3w7ezNGzD2SQKCUFEMWaZUcIDbVxSm+lu4KaFPFkPgi78lKlq6AfFla4PRld
- Omx0EYgz2Iil25YL0aKpacXV41zhWuThzG7AR+yWcas+Kg2X0nf1Mra0MSL2UG10ecLOQAsKY/j
- olRTCkqptbzoRtfMCK0H8td5e8DsHrXunozcYCNvykZwpmHu1QpNM8JQZEF57O8AVd+fWsvX7aL
- UoAJq9G00NmEl9d+5lesD5XFRQutHQ0oTHwGtsKX3YJD8FKfbNh23JHD6Lb8atOtPQPn1Kq8PK3
- oOUveSu/XIQJNX1ZNEYE1sX5avGhbL4Or7Vqv8jnnUoF416bCDzXiVIuVIYWr8ugK6tvOp02Xtc
- OGdyIa57Fcht6OTnK+yO4XxWrIw+Zs
-X-Google-Smtp-Source: AGHT+IE2zLackfX9ZmIkhfmMyE2JVkQ+ZGcyT5zj/rwa3m7atUT6XMgApWF9mKJEjUhhtKZj1BNVvA==
-X-Received: by 2002:a05:6000:2f87:b0:3f2:41c4:c7d5 with SMTP id
- ffacd0b85a97d-4256719ea7dmr9732894f8f.36.1759777687534; 
- Mon, 06 Oct 2025 12:08:07 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f4ab0sm22005734f8f.52.2025.10.06.12.08.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 12:08:06 -0700 (PDT)
-Message-ID: <e68dc6a2-17fb-475f-9f70-cb2cbac6f652@linaro.org>
-Date: Mon, 6 Oct 2025 21:08:05 +0200
+ bh=IkVeycwXsxrj/EacDrgACCPtuVj8VrJ3JURKgNP1zP4=;
+ b=Ipw71ssHbnNTLt+HD30cMrSv35ZMxqfB7HRVF1qoEclZjXHO73Rav9lDG/VkRRNjbp
+ 5f9SPMqHK7S80kJShGw1ZEBa31u3ksEFL7sWtBbA5WZSI+pz29b2ECHBwr+uea/RgEzJ
+ q3LeUnBc6AIAWeghUlq4psCIGCQifGJHU98huPVLMStQzKw6jubyAhQvAQGg8WAAgzEU
+ l3kIjEODls4NB6CMpe/qw0wpJrWOuB2TxMq1Qktrr0kP+2Bfu85p2nN8Lyhd7pd+FubS
+ U+WKI1BMctrNkG1tcE8fH+N3FRBs+LnB4wxEPl+eIvhDknwip7b6M4wcKOSm0fhvRZld
+ bckg==
+X-Gm-Message-State: AOJu0YzmrrhxmJxHXGqMp876RIMI5G6MWJ5jdLC3rnqqdoyngC/N+fD/
+ MB6gOdoaP5auIcWHJ7TqsVdnEaQXHdrMtkCJDmPje210a6UDnkA/nD1sTomUSwGfIo+wzCiuTg/
+ ddf2mxm9EtMtfOjAHD1kdv9fP7zPmDGwVSCppmOEl87bpcTSlnTaxnk/O
+X-Gm-Gg: ASbGncvYuvcmgDkr72S3B5jxc0K27wivyHOlOgIxyaAaljFQkaDMOudPdNZXWEQwQzq
+ Y95M0nVYFDxUtujIiIfifwcuv+uDbmXcy8GHX2t+6X3CZTFDrkonvu5g26dAhErb4nsWpnDOeMl
+ GB6jyMr4RpaIrstoJcQVm/Lwp5zpDEIwG1LABd1BAhLjLGSGik9S7Ig60ILkL5u772oSQGaLRKi
+ fWacUxiwddzb/lIYoL7KFi2X69oIEc8RLi0LDWYYtRUYaLRGqesJKkU3hJVjeFItVWR7upYsrS+
+ jNUoDIBiln0d9LGTn4dX3uveYso5px9T8gfirw==
+X-Received: by 2002:a05:620a:3908:b0:846:1789:c1cd with SMTP id
+ af79cd13be357-87a3adf32ebmr1741843785a.70.1759780844697; 
+ Mon, 06 Oct 2025 13:00:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESHxyln/CevO1JhoN82304pKgTtDYBG1wVW/xC21qq8bxD11RhdK9liazHaxorG3fZj6eEqg==
+X-Received: by 2002:a05:620a:3908:b0:846:1789:c1cd with SMTP id
+ af79cd13be357-87a3adf32ebmr1741834585a.70.1759780844057; 
+ Mon, 06 Oct 2025 13:00:44 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-87779799114sm1372348085a.55.2025.10.06.13.00.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Oct 2025 13:00:43 -0700 (PDT)
+Date: Mon, 6 Oct 2025 16:00:41 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] crypto: propagate Error object on premature termination
+Message-ID: <aOQf6dO27T4zGQd3@x1.local>
+References: <20251006190126.4159590-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/22] exec/cpu: Declare cpu_memory_rw_debug() in
- 'hw/core/cpu.h' and document
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20251001150529.14122-1-philmd@linaro.org>
- <20251001150529.14122-22-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251001150529.14122-22-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20251006190126.4159590-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,63 +105,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(ping for this single patch)
+On Mon, Oct 06, 2025 at 08:01:26PM +0100, Daniel P. Berrangé wrote:
+> The way that premature termination was handled in TLS connections was
+> changed to handle an ordering problem during graceful shutdown in the
+> migration code.
+> 
+> Unfortunately one of the codepaths returned -1 to indicate an error
+> condition, but failed to set the 'errp' parameter.
+> 
+> This broke error handling in the qio_channel_tls_handshake function,
+> as the QTask callback would no longer see that an error was raised.
+> As a result, the client will go on to try to use the already closed
+> TLS connection, resulting in misleading errors.
+> 
+> This was evidenced in the I/O test 233 which showed changes such as
 
-On 1/10/25 17:05, Philippe Mathieu-Daudé wrote:
-> cpu_memory_rw_debug() dispatches to CPUClass::memory_rw_debug(),
-> move its declaration closer to the CPU API. Document.
+Oops..
+
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> -qemu-nbd: Certificate does not match the hostname localhost
+> +qemu-nbd: Failed to read initial magic: Unable to read from socket: Connection reset by peer
+> 
+> Fixes: 7e0c22d585581b8083ffdeb332ea497218665daf
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   include/exec/cpu-common.h |  4 ----
->   include/hw/core/cpu.h     | 20 ++++++++++++++++++++
->   2 files changed, 20 insertions(+), 4 deletions(-)
+>  crypto/tlssession.c |  8 +++++---
+>  io/channel-tls.c    | 13 +++++++------
+>  2 files changed, 12 insertions(+), 9 deletions(-)
 > 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 910e1c2afb9..ce64a999035 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -150,10 +150,6 @@ typedef int (RAMBlockIterFunc)(RAMBlock *rb, void *opaque);
->   
->   int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque);
->   
-> -/* Returns: 0 on success, -1 on error */
-> -int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-> -                        void *ptr, size_t len, bool is_write);
-> -
->   /* vl.c */
->   void list_cpus(void);
->   
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 0f7eda1a10d..1e928f57c99 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -685,6 +685,26 @@ int cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cpu,
->   int cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
->                                void *opaque);
->   
-> +/**
-> + * cpu_memory_rw_debug:
-> + * @cpu: The CPU whose memory is to be accessed
-> + * @addr: guest virtual address
-> + * @ptr: buffer with the data transferred
-> + * @len: the number of bytes to read or write
-> + * @is_write: indicates the transfer direction
-> + *
-> + * Take a virtual address, convert it to a physical address via
-> + * an MMU lookup using the current settings of the specified CPU,
-> + * and then perform the access (using address_space_rw() for
-> + * reads or address_space_write_rom() for writes).
-> + *
-> + * This function is intended for use by the GDB stub and similar code.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-> +                        void *ptr, size_t len, bool is_write);
-> +
->   /**
->    * cpu_get_crash_info:
->    * @cpu: The CPU to get crash information for
+> diff --git a/crypto/tlssession.c b/crypto/tlssession.c
+> index ac38c2121d..8c0bf457ad 100644
+> --- a/crypto/tlssession.c
+> +++ b/crypto/tlssession.c
+> @@ -569,8 +569,6 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
+>      if (ret < 0) {
+>          if (ret == GNUTLS_E_AGAIN) {
+>              return QCRYPTO_TLS_SESSION_ERR_BLOCK;
+> -        } else if (ret == GNUTLS_E_PREMATURE_TERMINATION) {
+> -            return QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION;
+>          } else {
+>              if (session->rerr) {
+>                  error_propagate(errp, session->rerr);
+> @@ -580,7 +578,11 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
+>                             "Cannot read from TLS channel: %s",
+>                             gnutls_strerror(ret));
+>              }
+> -            return -1;
+> +            if (ret == GNUTLS_E_PREMATURE_TERMINATION) {
+> +                return QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION;
+> +            } else {
+> +                return -1;
+> +            }
+>          }
+>      }
+>  
+> diff --git a/io/channel-tls.c b/io/channel-tls.c
+> index 1fbed4be0c..70fad38d18 100644
+> --- a/io/channel-tls.c
+> +++ b/io/channel-tls.c
+> @@ -368,6 +368,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
+>                                       int flags,
+>                                       Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
+>      size_t i;
+>      ssize_t got = 0;
+> @@ -384,13 +385,13 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
+>              } else {
+>                  return QIO_CHANNEL_ERR_BLOCK;
+>              }
+> -        } else if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION) {
+> -            if (qio_channel_tls_allow_premature_termination(tioc, flags)) {
+> -                ret = 0;
+> -            } else {
+
+Would it be simpler to set error only here (and also we can have an
+explicit error message for the premature termination)?
+
+No strong opinions.. feel free to use whatever version:
+
+Acked-by: Peter Xu <peterx@redhat.com>
+
+Thanks!
+
+> -                return -1;
+> -            }
+>          } else if (ret < 0) {
+> +            if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION &&
+> +                qio_channel_tls_allow_premature_termination(tioc, flags)) {
+> +                error_free(*errp);
+> +                *errp = NULL;
+> +                return got;
+> +            }
+>              return -1;
+>          }
+>          got += ret;
+> -- 
+> 2.50.1
+> 
+
+-- 
+Peter Xu
 
 
