@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AEDCCA470
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 17:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC3ECAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 17:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5ohL-0006Ud-HY; Mon, 06 Oct 2025 13:08:31 -0400
+	id 1v5osX-0000O5-Gv; Mon, 06 Oct 2025 13:20:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5ohJ-0006TK-6m; Mon, 06 Oct 2025 13:08:29 -0400
+ id 1v5osU-0000MU-AU; Mon, 06 Oct 2025 13:20:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v5ohD-0001B9-MN; Mon, 06 Oct 2025 13:08:28 -0400
+ id 1v5osQ-0002C8-Gn; Mon, 06 Oct 2025 13:20:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 754F615AFE5;
- Mon, 06 Oct 2025 20:08:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D225D15AFF1;
+ Mon, 06 Oct 2025 20:19:42 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A420029A142;
- Mon,  6 Oct 2025 20:08:07 +0300 (MSK)
-Message-ID: <26067051-421d-44ed-9c7e-13ed0bdac18b@tls.msk.ru>
-Date: Mon, 6 Oct 2025 20:08:06 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D8E6229A14F;
+ Mon,  6 Oct 2025 20:19:47 +0300 (MSK)
+Message-ID: <e853228d-18e5-493c-a65c-10f0d88f0f02@tls.msk.ru>
+Date: Mon, 6 Oct 2025 20:19:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 33/75] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- peng guo <engguopeng@buaa.edu.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+Subject: Re: [PATCH v2] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "odaki@rsg.ci.i.u-tokyo.ac.jp" <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ "sriram.yagnaraman@ericsson.com" <sriram.yagnaraman@ericsson.com>,
+ DAMIEN BERGAMINI <damien.bergamini@eviden.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <cover.1759691708.git.mst@redhat.com>
- <d1193481dee63442fc41e47ca6ebc4cd34f1f69c.1759691708.git.mst@redhat.com>
+References: <20250901151314.1038020-1-clement.mathieu--drif@eviden.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +83,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <d1193481dee63442fc41e47ca6ebc4cd34f1f69c.1759691708.git.mst@redhat.com>
+In-Reply-To: <20250901151314.1038020-1-clement.mathieu--drif@eviden.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -93,8 +92,8 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,70 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/25 22:17, Michael S. Tsirkin wrote:
-> From: peng guo <engguopeng@buaa.edu.cn>
+On 9/1/25 18:14, CLEMENT MATHIEU--DRIF wrote:
+> From: Damien Bergamini <damien.bergamini@eviden.com>
 > 
-> When using a CXL Type 3 device together with a virtio 9p device in QEMU on a
-> physical server, the 9p device fails to initialize properly. The kernel reports
-> the following error:
+> Starting with commit cab1398a60eb, SR-IOV VFs are realized as soon as
+> pcie_sriov_pf_init() is called.  Because pcie_sriov_pf_init() must be
+> called before pcie_sriov_pf_init_vf_bar(), the VF BARs types won't be
+> known when the VF realize function calls pcie_sriov_vf_register_bar().
 > 
->      virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
->      9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
+> This breaks the memory regions of the VFs (for instance with igbvf):
 > 
-> Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-> device was overlapped by the memory window allocated for the CXL devices. As a
-> result, the kernel could not correctly access the BAR region, causing the
-> virtio device to malfunction.
+> $ lspci
+> ...
+>      Region 0: Memory at 281a00000 (64-bit, prefetchable) [virtual] [size=16K]
+>      Region 3: Memory at 281a20000 (64-bit, prefetchable) [virtual] [size=16K]
 > 
-> An excerpt from /proc/iomem shows:
+> $ info mtree
+> ...
+> address-space: pci_bridge_pci_mem
+>    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
+>      0000000081a00000-0000000081a03fff (prio 1, i/o): igbvf-mmio
+>      0000000081a20000-0000000081a23fff (prio 1, i/o): igbvf-msix
 > 
->      480010000-cffffffff : CXL Window 0
->        480010000-4bfffffff : PCI Bus 0000:00
->        4c0000000-4c01fffff : PCI Bus 0000:0c
->          4c0000000-4c01fffff : PCI Bus 0000:0d
->        4c0200000-cffffffff : PCI Bus 0000:00
->          4c0200000-4c0203fff : 0000:00:03.0
->            4c0200000-4c0203fff : virtio-pci-modern
+> and causes MMIO accesses to fail:
 > 
-> To address this issue, this patch adds the reserved memory end calculation
-> for cxl devices to reserve sufficient address space and ensure that CXL memory
-> windows are allocated beyond all PCI 64-bit BARs. This prevents overlap with
-> 64-bit BARs regions such as those used by virtio or other pcie devices,
-> resolving the conflict.
+>      Invalid write at addr 0x281A01520, size 4, region '(null)', reason: rejected
+>      Invalid read at addr 0x281A00C40, size 4, region '(null)', reason: rejected
 > 
-> QEMU Build Configuration:
+> To fix this, VF BARs are now registered with pci_register_bar() which
+> has a type parameter and pcie_sriov_vf_register_bar() is removed.
 > 
->      ./configure --prefix=/home/work/qemu_master/build/ \
->                  --target-list=x86_64-softmmu \
->                  --enable-kvm \
->                  --enable-virtfs
-> 
-> QEMU Boot Command:
-> 
->      sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
->          -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
->          -hda /home/work/gp_qemu/rootfs.img \
->          -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
->          -kernel /home/work/linux_output/arch/x86/boot/bzImage \
->          --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
->          -object memory-backend-ram,id=vmem0,share=on,size=4096M \
->          -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
->          -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
->          -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
->          -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-> 
-> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter")
-> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")
+> Signed-off-by: Damien Bergamini <damien.bergamini@eviden.com>
+> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 > ---
->   hw/i386/pc.c | 20 +++++++++++---------
->   1 file changed, 11 insertions(+), 9 deletions(-)
+>   docs/pcie_sriov.txt         |  5 ++---
+>   hw/net/igbvf.c              |  6 ++++--
+>   hw/nvme/ctrl.c              |  8 ++------
+>   hw/pci/pci.c                |  3 ---
+>   hw/pci/pcie_sriov.c         | 11 -----------
+>   include/hw/pci/pcie_sriov.h |  4 ----
+>   6 files changed, 8 insertions(+), 29 deletions(-)
 
-Hi!
-
-Is it qemu-stable material (10.0.x & 10.1.x)?
+This one too, - is it qemu-stable material (10.0 & 10.1)?
+For 10.0.x (which is a long-term support series), it needs
+some adjustments I guess (it doesn't apply to 10.0 directly).
 
 Thanks,
 
