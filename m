@@ -4,229 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A765CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 18:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C48CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 18:46:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5qCd-00053J-PF; Mon, 06 Oct 2025 14:44:55 -0400
+	id 1v5qDZ-0005QU-FE; Mon, 06 Oct 2025 14:45:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1v5qCb-00052z-NZ
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 14:44:53 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1v5qDW-0005P9-Dy
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 14:45:50 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1v5qCZ-0004Sc-I6
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 14:44:53 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 596Iath9000795;
- Mon, 6 Oct 2025 18:44:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=XVQL2vOTY5yZle2fILDKzV6wDVBA/8nnYBlQWqIHihg=; b=
- jlQvzL99FzBTXFoOe+/2wridtZpBpmuI1kVIbrWLgVDmM7u9M9z7h/4K19JsrJpk
- Z0FovGCtPxFhC6ISstFLtkAwW8SlVrzyrhfYj2IJiOy3Kj+4NWmUVFCUDZTUi6hG
- 1W73Yr4pZCnp7U+Yz03yOjbjgOmWx2WgukWn9KFEEjeXxiXwLMP8vzqhCIhD/yhy
- eDmz0gxEgoLceg3l9UMJ3R5n3ReH3U5BfSLF4//Oh3QtrEgjGp/QaNXl4wOYEZi8
- GJ4nSpc5JxIvDcwC3NuL9Rku9nYH3jEeIKxKYr3hpNhTJYybmGRByICexHt1FNEX
- iK1tZZwEsmuAymVD04Re3A==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49mk6s80hd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 06 Oct 2025 18:44:40 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 596IWD9c040890; Mon, 6 Oct 2025 18:44:39 GMT
-Received: from sj2pr03cu001.outbound.protection.outlook.com
- (mail-westusazon11012033.outbound.protection.outlook.com [52.101.43.33])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 49jt17fe26-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 06 Oct 2025 18:44:39 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xg8Zt6JwsqtcdLvbqGE3XQkhISAa/neoa1VwIc8jDiuUORVkpPdc9V+aPEolL8x2Hwm05iHrl5g3h28+XZDeg2/XPvYKLXztncbXPmqAKRI/D9jcPhdnca3AmjSKrga3anbMoAUoNQJNBf2lmJ/qR4JZVtdgDnN1TMUC0SBR81SAyDl+9fc5LukYl5HPtR9kBiT0UETwiyFx/KDUMN0u/hKMViOfKEzwcS44/qbofKz8iUMrC/tEEoBrVHev0PjVQ+anoxRhoZksiBhVSZJnQWhuEjUk7fJCCfnVnHIF69hK026oWCGFAMnwIZ0jgHZOyFZJA1KJck0KOa7sV7in7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XVQL2vOTY5yZle2fILDKzV6wDVBA/8nnYBlQWqIHihg=;
- b=v17mGZemE8UydBSoVE7t+MgwCARVC0zmoe9is6F4Ei3dZ10o0OgAH7O+WMZFNcpjLNGWgI/60Bp9kz6JyavQfghjUg/eVQf1JQ3KPYUImqgxzEN4aNZ5MLV9EGsCECX33zn8GFU7z5ASKOddO+ebGo8DhuC1fFHxIOkue/XFLXuDtA0rZxrTTKNxDCOY0NMJBDRe5LCSQvN/tNGI9Bfr+xegTUeoUThn8QcvO7oEnTet21QHyXuOmd0UOTYjJl9WAHiOrF36j/FKPnMXUko0PtwkzOmZSw8G3TyX45FsTuejfWTzfPkWLY2gdnsENSVFQkwVFh5kj9jKyGXRjD0nrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XVQL2vOTY5yZle2fILDKzV6wDVBA/8nnYBlQWqIHihg=;
- b=itGLyfStwyGztg4qAIAYr28oK1V2VpRQXn84tdx/WmgGApxQfzlcgLWEb/CCq88FMwNHBhPaCFggJI7s5ONmIATaPqeyF7GUh1uMH72wYM+1cUolGaKbmOTOGRTWO4M+u3NWCdFJOmgbXRLnSbLaYcvd0VUlSk2vY67Zn6I248o=
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com (2603:10b6:208:30e::6)
- by IA3PR10MB8298.namprd10.prod.outlook.com (2603:10b6:208:570::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Mon, 6 Oct
- 2025 18:44:36 +0000
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4]) by BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4%4]) with mapi id 15.20.9182.017; Mon, 6 Oct 2025
- 18:44:36 +0000
-Message-ID: <8e48a225-6ea7-4aeb-8f8a-58955d113319@oracle.com>
-Date: Mon, 6 Oct 2025 14:44:29 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/22] AMD vIOMMU: DMA remapping support for VFIO
- devices
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, clement.mathieu--drif@eviden.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, peterx@redhat.com,
- david@redhat.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
- alex.williamson@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
- santosh.shukla@amd.com, sarunkod@amd.com, Wei.Huang2@amd.com,
- Ankit.Soni@amd.com, ethan.milon@eviden.com, joao.m.martins@oracle.com,
- boris.ostrovsky@oracle.com
-References: <20250919213515.917111-1-alejandro.j.jimenez@oracle.com>
- <505e04a7-ebd6-47a2-b4bd-02b1164d841b@redhat.com>
-Content-Language: en-US
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-In-Reply-To: <505e04a7-ebd6-47a2-b4bd-02b1164d841b@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0356.namprd03.prod.outlook.com
- (2603:10b6:a03:39c::31) To BLAPR10MB5041.namprd10.prod.outlook.com
- (2603:10b6:208:30e::6)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1v5qDT-0004o0-To
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 14:45:50 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id C9DF843261
+ for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 18:45:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1759776345;
+ bh=YB+aBPPd0S+NmqdnqFrEtJK6KCGqTkh1jIvDIbq+Jq0=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=k93OS4IydV/rn5WRaLy7uVRnLS8rjiid6dlwTJmbrW8IUQP3nOpwbHz4SRlg3hu3a
+ AaZvY0RwC9nm6+8IBr1vwrljru9llV/FFDwCJhHA+W3/mPbgMJCAE3SQrrXdbfjunK
+ ft+v8D9eVV582tmmKOdYqPfuGd2HZCHjB3OzQ5F1u1s3FaBsbEZujtK6Wh0uG0EIiB
+ /xadF1Kxdtkog8hGY6Bm2YD4ClNhw6TESnR4gX52FL2kcAq0uBisWP6nc0a1T6R7by
+ eM95WhCqxaXaVLyQQoIKFZ241V13cqntDkiAn81ZyHooRe8FJed0jKWakwU9vC2bJe
+ eqqdeIUWdxdZA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id BD4287EAC3
+ for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 18:45:45 +0000 (UTC)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BLAPR10MB5041:EE_|IA3PR10MB8298:EE_
-X-MS-Office365-Filtering-Correlation-Id: 931756d4-b906-4fea-3c0d-08de0508660b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NDM4TGN3ZFA0aTVXVzA1cExSTEE2dEVaRmdSZE0rcy9IbHZwbjNDeUVEK3FK?=
- =?utf-8?B?T0hlQWxFT0t0VUpldjR6My9sbkcxOUFabXQwZlJhUUVBdDZwcURvZGxIUGdU?=
- =?utf-8?B?ZEUwT2pGY0xuQ1psMlU5bmQ2QXIxbU5iWjF5TlozbmUxeXd6TU5YaG5QV29L?=
- =?utf-8?B?bk5ZcUFPVHM0WnRMYjY2U3ovWnpmUkFkaXUwVlBVVlhXUDBjTFNPeTB5OEJT?=
- =?utf-8?B?QWlPTGRHQ3RLSWNKbTdsaTI4bW1LR0xOV0NrQlVGV2ZvdmdNTUR5RFlnQi9G?=
- =?utf-8?B?b3EwNGp1MVBoeVVyUHhjWmxlMHVVcDlGdDNqaVZsdm5sN3FNVmRlR2lwL0Zl?=
- =?utf-8?B?b0RKZi84S0FMR2tiL05qdDV5U09sZkcxUlJQck91ckxCYk1oeUtuczRta3lj?=
- =?utf-8?B?ODljUCt1NE9hM05NSFpxQ2EySWprMXpyWXlwTkN0bS9iU1c3Yy9obDc1aTRL?=
- =?utf-8?B?blJwa0l2aUplUXdtaTFZSDBKWVhjWDFxbEQ1QWJxcXQxTVd3Ymx4WHdIdHlD?=
- =?utf-8?B?WUxtZTlyS3NhcXptbjJnUXRXeDFiT2paS1JsQWRlM3BoNGFjUkwrU1R1NnY1?=
- =?utf-8?B?MVNCSU5Kb1A1V0drU0VPNWVNdTBBY1Rvdk5pRmsvU3h0MU9QT3h1ZWlRcE90?=
- =?utf-8?B?TzgwZDByL1JacGRUaURMRG8zSktYU2VrNld5Ty9IeUpRWDdZdEpIRnNLOStl?=
- =?utf-8?B?YVJObUFOOEFUcG9SWEorMlZvVUJldDljSHZmUXc4Qi94dkFGNWNETFNScFpE?=
- =?utf-8?B?cHdINlBidnUzVWk3dzlvN2ppODhrWlhha2pGaitKRkNmNlM5d3ltTDZRZUFW?=
- =?utf-8?B?dVdrN3k3ZmJlSFFkZ0YvMTlieVFEY2hnVk9wMWIxRjFJaDFhRlgrdkMyYjBl?=
- =?utf-8?B?cDliZ0FuUzA0M0RhdDF3U2NucTdjZzE3OHBTYUdmVmpGWXE3Vis3Umt4UWc5?=
- =?utf-8?B?aVUvY3VhSmdETHlZeVBvV1NlNmIzQ1l0NHNGV2RDNHhLMzA2c1YrdG5zU0Ni?=
- =?utf-8?B?ZXp6enplQlBBckFUcWVDMkgvMmNibXFwdXJSQXNUNkR1Nkd1a25xdGpJeUhR?=
- =?utf-8?B?TmJNa09ac0l6d2dQdmp5ZGNQdnBLVmViNE1PWUxteEtDaGNJTTV5MXJBOVpM?=
- =?utf-8?B?YnEwcmhqcVlVY0xMOUZBR1V6WlRjOTJSY0crY2oybVlyTWpMY1RSZXZEczNN?=
- =?utf-8?B?dHI5czBrZGRzZlBTSHFlN3A4ckRSREt4NXU1WHFNTmljOUtBeVJWRXJIeXRE?=
- =?utf-8?B?SThIVDVSdS9MMTJoR3dlcEdtei9DdWtva2Z4ZGwyZHZZSDUrNmpsbGhOdjdj?=
- =?utf-8?B?VG5aRkQrTGtWODZCaFZmNDhXT3E2dSswbGZjL3FRbW5KMmRHOWl2RUc5S0dv?=
- =?utf-8?B?TVNYbFU3MFQ1cXZJYURVRHFmM0Nyd1VZeGkwUjZyZVBtSk9FaWtseWhxeXFM?=
- =?utf-8?B?ak82T0R4d1hvblZyQ1dYOGUwYUNjN2hzaWNTODcvaWtkS29XZjhDbFRya0ZL?=
- =?utf-8?B?RHU2cG1HQ0VBT0Uyeng5ZUdpWDJqTWVGK3YycDBOdC9uQUVzbjhFek9LNERs?=
- =?utf-8?B?WTN6Z1c0TjBNcnpMZEVoWmlVdWljNVBkZkF3WjBIWWE0VkY1RXBuaitFTG5T?=
- =?utf-8?B?WGF3MFUrTHZOaTZYK1dMSVQrSWpDdmlvbDZ6VW5UcU8wY2xMeFllY1grcExS?=
- =?utf-8?B?OXE5eGRBSEVrYVA1bnFOYlpKdkVjK2hueTJ1YzdtTXVqUkdIcDhMcXNFeDNw?=
- =?utf-8?B?QVdZY21mUi92YVB2UmtRSmhPUnpSM28zSUR5TXhjcXpRYkdVeHVOQmRaTVZJ?=
- =?utf-8?B?cHpxeWtVRHk1Q1dvS0lrNStqcFJYbFBPNmREYmJhTG9QK05JcVJIQmY3cm1J?=
- =?utf-8?B?aHFvSGg3M3diekpSSk1IbjVvaVVlRWl3VjJ4ZzFMODJoMjVtZXZhZGprRzZS?=
- =?utf-8?Q?7ejkHnxZdeyD+bAGq/xZicyhbvh6k42z?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BLAPR10MB5041.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dFVDemRDeHlZNXhHZzBpR015TXhYYWIzMVJEaW9KczdjcE1tVE5vaDFxSWVW?=
- =?utf-8?B?OGZ1NnZrTmpzY0M0YUlvZFVMTnJxWmhLTzlENFI1RHl5L0phM0lQMWNXc0l5?=
- =?utf-8?B?aENYZUE1RDhXSnpTM204UXpBNVFsbEowSzJtWmFzTU80STIrS1JGVFh5VmVp?=
- =?utf-8?B?VXBtTjBRaXVyWmwrUWhiS1BRT1IwaVlmN21vTU9Td1pBTWdvRGpDUkdvVXhR?=
- =?utf-8?B?NW8zZTQySjU3M0Z3RUphUzI4dWtxVG9CRmt5cmhWSXZDOFFLeXlJeTgrVU9Y?=
- =?utf-8?B?cGxjNjAxalV6OWhVckxHa0RkUjFVYk1qRDBxU3VUTi9XSnlJaWFlVEVBYStN?=
- =?utf-8?B?WmlEbGtSMlpDQjYzQ0llSHFaTGJUcUxQTGZIYzJrdDdtRHZkL1N5YmJXb2lx?=
- =?utf-8?B?N3JEd0pDaVdPdllCd2JJeCtKVjc2MVQ1VFZDaFFLbTZQNlJ1YW15R0t0MzVs?=
- =?utf-8?B?YVRZbUxIb0pwOHNYSkZpMlZHN3hSSW5JWW51cXZpa043cDBqelc3M1hKNjRi?=
- =?utf-8?B?YVhMUFR2dFpJbjVuMEluWnRHNFI2VlRoS25yRWs3cDJ3LzhOZGVSb3NIUFZP?=
- =?utf-8?B?Q3laV0svVEljQ3JyQ3B4Z0ZLeFp0THo2bng1QTJTRWhib3FRUEFrSHNIY0Zx?=
- =?utf-8?B?a2tTRkQ3cU9mOW1KS3Y0dDdqbDA1TFREbVZVRzV4ZGxjS1JacFc2ZEZpanRl?=
- =?utf-8?B?RnZvb2RQVGhXdG5uRDRhYVJiV1VkRGQzL1RPbEw4bWZCUkppcGFza1B1ZFF4?=
- =?utf-8?B?cVF2R1U1NytyM2RoS2pndjRPK2s1aW9hTXk5WnF0RlE4K1J3MkoyUlZDNnFx?=
- =?utf-8?B?bDVLdjNWMUw0MVFqbWNzZXM4UkNXVDQvM01CRFF4Nm1nQXBXbkRpMEREQXRi?=
- =?utf-8?B?aTh5bkhtSDZLZC8rWnYyRGU3WkxDTGZtbGdWcnRVRDl2Sk83UC9vRnErVWRJ?=
- =?utf-8?B?Qm5sWTJSay9sK0JXdmY4SnQ5b1JvdnVwNFArMkRGQ1p5UVFBT25TY05kMm16?=
- =?utf-8?B?d25MeXRFeTY3ODZILy84NlJGNEJjamJBL2ZjY3JDTW1jWXNicnhqc0hzanZt?=
- =?utf-8?B?M2JrU3NpUTZBblFja1drSmxFcXBjZEN2L2xkM1hqTTBBMTBZbkJaNDhORE0w?=
- =?utf-8?B?MjZGS0V3ZlZuWm9Bb1hlNUdJUVlUWEFUOVg4MVNGUHNON2VNSHo2VXNXNFVI?=
- =?utf-8?B?Y3NtZk9SazlmRGlOaUlLR1BMdGdaYnM2dUx4all6eXlXK1p6Yk1oRXY4Ky9m?=
- =?utf-8?B?OFllUmM4S0hCV1Y4U2ZUNUFiY3dtOWlVblRBN04wN24xWktBQ2c5TmlwZjJD?=
- =?utf-8?B?Ny9EZFkyVmtRRzdkUW5oS09oS3c5THAwaFdqaVVmV1FxRzh1WkZyWW5TM21Y?=
- =?utf-8?B?RHIxKzNYWTgvUzdGd2ljazJLOW1XeFBRaFlNUkVySnVRdDZqR0ZlOWlCQTRM?=
- =?utf-8?B?ZmZDWnZYajBVNWlZa3N2ZGhtdEV6RDB6NTEwbzRDb2VveGl6OXpuSDY1ZS9o?=
- =?utf-8?B?c3VSZFg1MnYvY1loWWVpSEVjM2tKdmdzUDRhM2hDTWJvby9Jd3daRGNCdTUy?=
- =?utf-8?B?VFVGbUt4cjlYeTM0UXd5RjNMY0lpNXEyZXd5RDJrTjN5WDQrcWdmR3lielBC?=
- =?utf-8?B?S0g0QkFJbDZCRmljbUFBU1NjZEd1L3VPaEJSN0lmTmVOTXB4d1VEZGdUOHRG?=
- =?utf-8?B?RjVMRTBBMzRzL3F3dGVhTlJSRk9uN1R6eEl2WENSTzhMN3U5eEs0T1RUcWxT?=
- =?utf-8?B?SHIrYkpOakNoWE85T1RlWGdSTTRqcjV1dmJaYmxxakEvRUN1YjhwVklqaTdv?=
- =?utf-8?B?TzZ4WmdUN2Z1bVAxcGU4TWE5ektpVXVwcG1YYnkvZXJyS2lLNWR5YzBtaUVG?=
- =?utf-8?B?Tk9zSW81SWkwckJXcU5mZDJucnFWN0xOVDVTZWtMclh2VGc5dy85RUdJSFNN?=
- =?utf-8?B?MjRRN0FTS3hhRTJHVWRlSzJsbFRpMmwwR0lqNkc2MVhnQmI3bmtCL2tMSnFu?=
- =?utf-8?B?UkZ2MU9vbmNqak9wK1ZXTVR6ODRRU0JKUCs3M3NGSE9wMERqbnNsaDJtc3Za?=
- =?utf-8?B?S0Y3MnRTZTEyMUgyTmNWV1k3K1kyeWtSRUVGb2d1aEZCcVR3RmVBbzRCZGw2?=
- =?utf-8?B?cHRhaFdJeFcxbFFXN3pJTGVRMHhhYVBBdEJUTEw5UXplWnIrL1ZrWEtkUzJx?=
- =?utf-8?Q?7FYz8fJiZSxx/M1F58E9WZA=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: uQl5Mj+xrMRmb1+/C+wyIoBSuFXV7ZPjphkIYj1cAzhavSADAPW4td8V8MwFioEY/bPrHSSjjCnTUj8KQ5Mz1lkf/n/FWj66KwIySCRWYFdfWtdvW7N8ked5ApO+3UnaVQA44+3P32sNpdmrm77JXR8FnOnet/T84PmWoAqjcAbjW4AmyRp68cS07r7nPxqIX+R2K7EVVtfIrslmti1NyYdJd0g5LlD/O1pf/1PehvpRyKAEGn1Q0bq0U8wmjqddgi//R0cBr+t2hwKXBe1ziFeXoiFA/JtmvNC03dOAkA3twyZIprgEeMIfL8j68UYlN6ShjYzi5nYDy0YN0CUDUiUi79RJ0Y6rpgC3/OD3ArDFqaA1t7SJGGpGYYfznjoqHufEfg4oLBxp6hd77vggNIGeejg2LwfCd410MH73EY+D5ueQt4z5sEjSxY1aeM2zSiaTfDjvzMeakNihWIkyDYlaqJpd9uKFDfx/DylLhW+GFwFpN65tL5ABqMEDsIwyMeq9zrXaS8rhtA1z/KV4KL6/EhtJCMDgoojvPsPvapTU1AGbcNFjiMqpBjocZfjQexntQbygTFS4upZzuat8RBErx/mpFr7hodZdwtcPRDk=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 931756d4-b906-4fea-3c0d-08de0508660b
-X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5041.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2025 18:44:36.4583 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: glYW/f6efYHriYZIB3iMsYqKSCsfXUA5B1tJx0zY5jNeXotN0nwwO3+PNjtrIFTMLrIMWNsnQU3Kiy0t60IaPI3IWXFV6y9g4EFlb8eFvUE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR10MB8298
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-06_05,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2509150000
- definitions=main-2510060147
-X-Authority-Analysis: v=2.4 cv=S87UAYsP c=1 sm=1 tr=0 ts=68e40e18 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=x6icFKpwvdMA:10 a=GoEa3M9JfhUA:10 a=XlW8OQD3_76Z3SK2a5gA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=nl4s5V0KI7Kw-pW0DWrs:22
- a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
-X-Proofpoint-GUID: Rk2KOEXeGVh2mO7rocCPl9QiZ0Cp-EdY
-X-Proofpoint-ORIG-GUID: Rk2KOEXeGVh2mO7rocCPl9QiZ0Cp-EdY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDE0NiBTYWx0ZWRfX9V+7rnXZVhRD
- YHvgGW0VeeCJeaOonvNjfoYW/892wR/eRk0bTYTFkrV0diYB8za7XUFH+nuW/TM/c9jIG77YLpX
- At91arHi+xKGQbXpsJDu9Ij0H4VpLSyKQ1OeklcHKyrXqV0hsb+erAJSSpanG2JeQK709rR4604
- 5068YAtnUMAmZFDUVhdyd/Q4Uuw+UKqx0RXBnUMJOtUi4/uFWe77A2SXUs4NUMaD0Y5VAf46rEF
- qMKqBN/pLJuZY2MhQGlQB6KpYGrBlbmi49ljWtXAAyd+cl9m7FtbWed9Ur8Oe2nSIAqzn4BUmgS
- LpUofrAwbLv6QG4BMBjtxokW/Ztt0xIA++oiTDcEkKroafVAOKEb63wOU3kBkze4HowiAPdv2EJ
- Sl9fSlnlXUzOjOPluiylGM+gglVoOg==
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 06 Oct 2025 18:38:46 -0000
+From: Bug Watch Updater <2126951@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Confirmed; importance=Medium; assignee=wesley.hershberger@canonical.com;
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium;
+ assignee=wesley.hershberger@canonical.com; 
+X-Launchpad-Bug-Tags: sts
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: whershberger
+X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
+X-Launchpad-Bug-Modifier: Bug Watch Updater (bug-watch-updater)
+References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <175977592701.3159908.8224640361254246007.launchpad@scripts.lp.internal>
+Subject: [Bug 2126951] Re: `block-stream` segfault with concurrent
+ `query-named-block-nodes`
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="8f35df7956d277b113de8d286a4ca280c7b8ebdf";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 638bc6009386aa87eda6dc8c6be664d598298b52
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -235,52 +97,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2126951 <2126951@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+** Changed in: qemu
+       Status: Unknown =3D> New
 
-On 10/6/25 12:07 PM, Cédric Le Goater wrote:
-> Hello Alejandro,
-> 
-> On 9/19/25 23:34, Alejandro Jimenez wrote:
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2126951
 
-[...]
+Title:
+  `block-stream` segfault with concurrent `query-named-block-nodes`
 
-> 
-> 
-> The current status of AMD-Vi Emulation in MAINTAINERS is Orphan.
-> Since this series is about to be merged, should AMD-Vi be considered
-> maintained now ?
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  Confirmed
+Status in qemu source package in Plucky:
+  Confirmed
+Status in qemu source package in Questing:
+  Confirmed
 
-It should be considered maintained.
+Bug description:
+  [ Impact ]
 
-> and if so by whom ?
-> 
+  When running `block-stream` and `query-named-block-nodes`
+  concurrently, a null-pointer dereference causes QEMU to segfault.
 
-I volunteer as maintainer. Assuming no objections from the community, I 
-will send a follow up patch updating MAINTAINERS.
+  This occurs in every version of QEMU shipped with Ubuntu, 22.04 thru
+  25.10. I have not yet reproduced the bug using an upstream build.
 
-If there are additional suggestions/volunteers for co-maintainers, 
-please reply to this thread and I'll include them on the patch.
+  I will link the upstream bug report here as soon as I've written it.
 
-Thank you,
-Alejandro
+  [ Reproducer ]
 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
-> 
->>   hw/i386/intel_iommu.c       |    5 +-
->>   hw/i386/x86-iommu.c         |    1 +
->>   include/hw/i386/x86-iommu.h |    1 +
->>   qemu-options.hx             |   23 +
->>   system/memory.c             |   10 +-
->>   8 files changed, 999 insertions(+), 154 deletions(-)>
->> base-commit: ab8008b231e758e03c87c1c483c03afdd9c02e19
-> 
+  In `query-named-block-nodes.sh`:
+  ```sh
+  #!/bin/bash
+
+  while true; do
+      virsh qemu-monitor-command "$1" query-named-block-nodes > /dev/null
+  done
+  ```
+
+  In `blockrebase-crash.sh`:
+  ```sh
+  #!/bin/bash
+
+  set -ex
+
+  domain=3D"$1"
+
+  if [ -z "${domain}" ]; then
+      echo "Missing domain name"
+      exit 1
+  fi
+
+  ./query_named_block_nodes.sh "${domain}" &
+  query_pid=3D$!
+
+  while [ -n "$(virsh list --uuid)" ]; do
+      snap=3D"snap0-$(uuidgen)"
+
+      virsh snapshot-create-as "${domain}" \
+          --name "${snap}" \
+          --disk-only file=3D \
+          --diskspec vda,snapshot=3Dno \
+          --diskspec "vdb,stype=3Dfile,file=3D/var/lib/libvirt/images/n0-bl=
+k0_${snap}.qcow2" \
+          --atomic \
+          --no-metadata
+
+      virsh blockpull "${domain}" vdb
+
+      while bjr=3D$(virsh blockjob "$domain" vdb); do
+          if [[ "$bjr" =3D=3D *"No current block job for"* ]] ; then
+              break;
+          fi;
+      done;
+  done
+
+  kill "${query_pid}"
+  ```
+
+  Provision (`Ctrl + ]` after boot):
+  ```sh
+  wget https://cloud-images.ubuntu.com/daily/server/noble/current/noble-ser=
+ver-cloudimg-amd64.img
+
+  sudo cp noble-server-cloudimg-amd64.img /var/lib/libvirt/images/n0-root.q=
+cow2
+  sudo qemu-img create -f qcow2 /var/lib/libvirt/images/n0-blk0.qcow2 10G
+
+  touch network-config
+  touch meta-data
+  touch user-data
+
+  virt-install \
+    -n n0 \
+    --description "Test noble minimal" \
+    --os-variant=3Dubuntu24.04 \
+    --ram=3D1024 --vcpus=3D2 \
+    --import \
+    --disk path=3D/var/lib/libvirt/images/n0-root.qcow2,bus=3Dvirtio,cache=
+=3Dwritethrough,size=3D10 \
+    --disk path=3D/var/lib/libvirt/images/n0-blk0.qcow2,bus=3Dvirtio,cache=
+=3Dwritethrough,size=3D10 \
+    --graphics none \
+    --network network=3Ddefault \
+    --cloud-init user-data=3D"user-data,meta-data=3Dmeta-data,network-confi=
+g=3Dnetwork-config"
+  ```
+
+  And run the script to cause the crash (you may need to manually kill
+  query-named-block-jobs.sh):
+  ```sh
+  ./blockrebase-crash n0
+  ```
+
+  [ Details ]
+
+  Backtrace from the coredump (source at [1]):
+  ```
+  #0  bdrv_refresh_filename (bs=3D0x5efed72f8350) at /usr/src/qemu-1:10.1.0=
++ds-5ubuntu2/b/qemu/block.c:8082
+  #1  0x00005efea73cf9dc in bdrv_block_device_info (blk=3D0x0, bs=3D0x5efed=
+72f8350, flat=3Dtrue, errp=3D0x7ffeb829ebd8)
+      at block/qapi.c:62
+  #2  0x00005efea7391ed3 in bdrv_named_nodes_list (flat=3D<optimized out>, =
+errp=3D0x7ffeb829ebd8)
+      at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:6275
+  #3  0x00005efea7471993 in qmp_query_named_block_nodes (has_flat=3D<optimi=
+zed out>, flat=3D<optimized out>,
+      errp=3D0x7ffeb829ebd8) at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/b=
+lockdev.c:2834
+  #4  qmp_marshal_query_named_block_nodes (args=3D<optimized out>, ret=3D0x=
+7f2b753beec0, errp=3D0x7f2b753beec8)
+      at qapi/qapi-commands-block-core.c:553
+  #5  0x00005efea74f03a5 in do_qmp_dispatch_bh (opaque=3D0x7f2b753beed0) at=
+ qapi/qmp-dispatch.c:128
+  #6  0x00005efea75108e6 in aio_bh_poll (ctx=3D0x5efed6f3f430) at util/asyn=
+c.c:219
+  #7  0x00005efea74ffdb2 in aio_dispatch (ctx=3D0x5efed6f3f430) at util/aio=
+-posix.c:436
+  #8  0x00005efea7512846 in aio_ctx_dispatch (source=3D<optimized out>, cal=
+lback=3D<optimized out>,
+      user_data=3D<optimized out>) at util/async.c:361
+  #9  0x00007f2b77809bfb in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so=
+.0
+  #10 0x00007f2b77809e70 in g_main_context_dispatch () from /lib/x86_64-lin=
+ux-gnu/libglib-2.0.so.0
+  #11 0x00005efea7517228 in glib_pollfds_poll () at util/main-loop.c:287
+  #12 os_host_main_loop_wait (timeout=3D0) at util/main-loop.c:310
+  #13 main_loop_wait (nonblocking=3D<optimized out>) at util/main-loop.c:589
+  #14 0x00005efea7140482 in qemu_main_loop () at system/runstate.c:905
+  #15 0x00005efea744e4e8 in qemu_default_main (opaque=3Dopaque@entry=3D0x0)=
+ at system/main.c:50
+  #16 0x00005efea6e76319 in main (argc=3D<optimized out>, argv=3D<optimized=
+ out>) at system/main.c:93
+  ```
+
+  The libvirt logs suggest that the crash occurs right at the end of the bl=
+ockjob, since it reaches "concluded" state before crashing. I assume that t=
+his is one of:
+  - `stream_clean` is freeing/modifying the `cor_filter_bs` without holding=
+ a lock that it needs to [2][3]
+  - `bdrv_refresh_filename` needs to handle the possibility that the QLIST =
+of children for a filter bs could be NULL [1]
+
+  [1] https://git.launchpad.net/ubuntu/+source/qemu/tree/block.c?h=3Dubuntu=
+/questing-devel#n8071
+  [2] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
+=3Dubuntu/questing-devel#n131
+  [3] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
+=3Dubuntu/questing-devel#n340
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2126951/+subscriptions
 
 
