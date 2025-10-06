@@ -4,94 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31683CCA471
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 15:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E83FCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 15:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5mv2-0001rf-7c; Mon, 06 Oct 2025 11:14:34 -0400
+	id 1v5n9G-0005fB-8Q; Mon, 06 Oct 2025 11:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5muu-0001rS-Hw
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 11:14:24 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5mul-0002oB-Fr
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 11:14:24 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e52279279so33640155e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 08:14:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759763647; x=1760368447; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NkzsFlnEIZ6aWHV8z7vfrlidUNvMz/ENDqtv8YbKV4I=;
- b=DloLvbDeh8r7JvGoPTABru2gkhUgvLu+hgd6aORmZeekhUZacUT9iVMAGOo5tkvU1y
- Q6j/13ybvkr9l4bIXoME8jRMR2NavSSlOdJmkGb+U17THMmYFnoqr8BsGgVVXFr6SSnp
- jFgbamZJ9EZH2JGvjKciYucFuqsa89Dg4Ze1o5sLGqvkb28LkXpNKueDC1S+OZzrR5tu
- SjpaLQ1/4gfMQPIlgbaB+x/ZSkJYdDpM7UyODXz7T2NtYWpVB65bLrK76Dn678fE6tab
- m6QRRxGi4UYJuHwMOsowG9zVvBFsaUSWyns/2yoCgyaA1c5nXlSxm+O5Tma/r/6wbI1o
- AZTg==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v5n9D-0005f3-Lq
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 11:29:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v5n94-0005C7-Oj
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 11:29:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759764534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9ErsCcBIaJRXt+kQOMUvyKLpjpVetAtXfeJ2ix8XL3A=;
+ b=iQiDhKtoM4kgppK9aSRWGRDKEKTTKcERMGPRXz0U+SNvQ1fBPYQPQliQ2xbwS/ZSRL2MjU
+ Vuw9DiQYasttag1RYywfO82iaB+o/i/MUil3eXz65glCIOoDnWsDfRnqYp4i5jMCoDck+i
+ otw6IhJSTYlj237AGYN0cY0NjpWL1BE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-330-4JDM9QlCOOeOAk8nfGFbYQ-1; Mon, 06 Oct 2025 11:28:53 -0400
+X-MC-Unique: 4JDM9QlCOOeOAk8nfGFbYQ-1
+X-Mimecast-MFC-AGG-ID: 4JDM9QlCOOeOAk8nfGFbYQ_1759764532
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e4fa584e7so21027575e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 08:28:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759763647; x=1760368447;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NkzsFlnEIZ6aWHV8z7vfrlidUNvMz/ENDqtv8YbKV4I=;
- b=hPIM7vYOnESOtV2Lms2hagYiVfO8HdgWYOoAlgUdEJrHrfjhzf11FfUQQA6eac/MtW
- i90NhJ5O3QnrUjG4RcX7u6E2AQJwJUtNYt1Z3V62Cr4VOIgcKIa3JpVzjfeQxR1h/52n
- t1VCgmb2BA74dWngr8OQijqzkRIXIRbEZr6D+zQowhnF7Ct0HIbJzmfse2sGf5FUoDld
- f700PjTZ9CAZF7pADHsJ4vp8HsNj+LXcZh2Em0rSVZKLW5m5emUb9IC9Dau9A4RwWr8H
- HtxFEwB4bbAnIPHGXXhR+oITnycdL+5cjgRrOUC9159mnvFl7WAEpOjUWiHMWbRA+fq8
- JJTA==
+ d=1e100.net; s=20230601; t=1759764532; x=1760369332;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9ErsCcBIaJRXt+kQOMUvyKLpjpVetAtXfeJ2ix8XL3A=;
+ b=fz60w6rWnfOt/fvdsDH01duPZL+8WwwRoidZiXl7kiYkiAdr8x+O5SDBEg5ophH8Hs
+ s1Vi3V/xzy7+8o9xss++RmaiiC/HW8kf9ORR7ITpu0f2bVPXgv0sIPokrUeTwCuwaaIq
+ lUcjCqvOOiAOGkURL/FFdKI9wZZgUkCQFozllCPYhZrUyDr+PDpDDKIAQXFV4YZeE2Gf
+ Y7ECLJCXwp7yH2G8stYugNuYqi8i5Oe5uMA8EzO37LIPI9FTizB/oGtqsmJ3wzjKGBja
+ dqYjcijy9DG5BoqJ8eiF48kzq+tOqFhloTvPUSMeZhB5M77nY2IdPy0ewxUFUwU+xcXR
+ z/wA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6rSthGI5kFZT92bM50NHyl2XZPcKOyIagk2N28vb7iRdzUB5YwhYCGA8iMEDcwiGWGV9/DoxKsYDy@nongnu.org
-X-Gm-Message-State: AOJu0Yw4HpKtRtVimf0vNnSQnVvg/W5dD90z7hsfmNxfbNbgI3Shl0fH
- Zh38yt39jXjBSSGLTHj/lNKibZFmnSx0ADUN0nCLCMHpBT6vwzsRAcr/e/oUuwNk4bo=
-X-Gm-Gg: ASbGncvDkBYhNp4JXxu4hcXhQ0x161DRphukZNUiyY8+t/6J/Ic5850MF/qCzbRtFq4
- kcdohEGF7HyhOXFzd3KKyg6d0LnjAo6/KNjBduGU6izRqsc6dFz/3VsD4QkpFeE3NcqYA/yoUon
- VftSYI7pn6jyrvopwxj6d59omMmSvfiOog+i9cAcllWAUwrG9vy076wgF5NvZDkrbAN94CTUO5F
- 20DFbsEwOJOAFiAA2KhQneoSqMvnViLhsRXKpKeyfZxT1dQOH0QtmRo9/RjqOSe5IopDvr1NmWP
- bknXfc5nI0MYNi+h+1eK6XiGqnuspOBsRjhZKm6IhLXwPLSk5Qk+gKGKkDQ/7yZFCm5oKMK9AgX
- sOpXv2X8BK350N4xCZY7FhkV0VdXcUoPVkXnpkOWlxKIJ3NZK//w8l0hnIEdHhYur45OKPlk8R+
- b/CRokKgIS5K0Auq5JTybiD+Y/yht5
-X-Google-Smtp-Source: AGHT+IHsqTtu/nz4TrQupljwIK/Jnl0R6AC8dkChAQLHq7NV4Z1KP8uuuVsOqMu/UlgPY6Oopw7PFA==
-X-Received: by 2002:a05:600c:4510:b0:46e:59bb:63cf with SMTP id
- 5b1f17b1804b1-46e71140be1mr103691265e9.24.1759763647287; 
- Mon, 06 Oct 2025 08:14:07 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723591fcsm161818555e9.10.2025.10.06.08.14.06
+ AJvYcCXUZvObnKiX0pq+LZdZWhmoxP5Z4PvNU+Z3NoHYPjTKzOdNkpo05Am1dOvi56gEMZ5aMQt6szMLT62w@nongnu.org
+X-Gm-Message-State: AOJu0YzLGa6ZoS+TrkcYQIMgnCuQnvnDBkQAw+qnYvd8Lm1EAiElZGgd
+ Yfv+ytFrlJktuq0Ct4QUaopaibCjfbHJ/V3IfCPRndy+b6NRx7IzMeAEC3t3zJHuAJSf8D2TNwp
+ rO9ahYrWBLzxMVeMQe2kVfZkxxfvMMXyTKJPyCVZ2A073Q1qz+UuHkAva
+X-Gm-Gg: ASbGncvoVS+FKN2wuYkt0Z2Cvew2PjFdiNi/pQ9QMrX50jEyei3vsu1eti9j/RKLWHe
+ LWc+rd84Eld81BeP0+Tve7t/yx14S5CMrElNg+EaPR8L0SMzlNu3Sgnv0MA7hja5kxgxSWF427I
+ HVrvxFpGaPvBEqUjM82weD/I9ZbmfFEbo6Wp9riTlUvxQE7HFFNxrErIar+x/yYZgPjMFd8lcWg
+ 0mIsyrdEnVIM6sbKjhzQj3/DaWMm6scbAZ+i4qX+wLF3qmPaj7UH5AvbofOpUYSDxAd/38rTDSA
+ mz515uPfyoTra/jNMd6mkpDpwrMr7P183JyTkIorrJvenENk7FsHtnQo3lMZ3S2jc9oWzQJqztA
+ 9YHPK3E8g
+X-Received: by 2002:a05:600c:1383:b0:46b:932f:9201 with SMTP id
+ 5b1f17b1804b1-46e710ae7b2mr91124745e9.0.1759764531842; 
+ Mon, 06 Oct 2025 08:28:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmDX23uEwqEyxb74F8+Y6GjXwv+xWruwXj9E50/I1psNv0XujdtAtqlHaHaL56ZiWx8JzfPQ==
+X-Received: by 2002:a05:600c:1383:b0:46b:932f:9201 with SMTP id
+ 5b1f17b1804b1-46e710ae7b2mr91124455e9.0.1759764531363; 
+ Mon, 06 Oct 2025 08:28:51 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e72374ac5sm183176435e9.18.2025.10.06.08.28.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 08:14:06 -0700 (PDT)
-Message-ID: <d140d66b-60c3-4a21-9c96-7fde767cf900@linaro.org>
-Date: Mon, 6 Oct 2025 17:14:05 +0200
+ Mon, 06 Oct 2025 08:28:50 -0700 (PDT)
+Message-ID: <6aae1d93-f531-4550-95e5-07f91b432aba@redhat.com>
+Date: Mon, 6 Oct 2025 17:28:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/39] accel: Move cpus_are_resettable() declaration to
- AccelClass
-Content-Language: en-US
-To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, kvm@vger.kernel.org
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-14-philmd@linaro.org>
- <78f4e026-9abd-47eb-9540-656094b19762@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <78f4e026-9abd-47eb-9540-656094b19762@intel.com>
+Subject: Re: [PATCH v1 0/7] vfio: Implement VFIO_DEVICE_FEATURE_DMA_BUF and
+ use it in virtio-gpu
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Leon Romanovsky <leon@kernel.org>, Leon Romanovsky <leonro@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Dongwon Kim <dongwon.kim@intel.com>
+References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20251003234138.85820-1-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +162,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/25 07:36, Xiaoyao Li wrote:
-> On 7/4/2025 1:32 AM, Philippe Mathieu-Daudé wrote:
->> AccelOpsClass is for methods dealing with vCPUs.
->> When only dealing with AccelState, AccelClass is sufficient.
->>
->> Move cpus_are_resettable() declaration to accel/accel-system.c.
-> 
-> I don't think this is necessary unless a solid justfication provided.
-> 
-> One straightfroward question against it, is why don't move 
-> gdb_supports_guest_debug() to accel/accel-system.c as well in the patch 12.
+Vivek,
 
-gdb_supports_guest_debug() is used in both user / system emulation.
-
+On 10/4/25 01:35, Vivek Kasireddy wrote:
+> The virtio-gpu driver running in the Guest VM can create Guest blob
+> resources (by importing dmabufs) that are backed by System RAM. This
+> is made possible by making use of memfd memory backend and udmabuf
+> driver on the Host side. However, in order to create Guest blobs
+> that are backed by vfio-pci device regions (which happens when
+> virtio-gpu imports dmabufs from devices that have local memory such
+> as dGPU VFs), we have to implement VFIO_DEVICE_FEATURE_DMA_BUF and
+> leverage it in virtio-gpu.
 > 
->> In order to have AccelClass methods instrospect their state,
->> we need to pass AccelState by argument.
+> So, while creating the blobs we use memory_region_is_ram_device() to
+> figure out if the blob is backed by memfd or a vfio-pci device. If
+> it is determined that the blob is backed by vfio-pci device region,
+> instead of calling into udmabuf driver to create dmabuf we would
+> now call into vfio-pci driver to have a dmabuf created on the Host.
 > 
-> Is this the essential preparation for split-accel work?
-
-Yes, but also the aim is to better organize and clarify the APIs.
-
-We have a set of generic handlers that work on the AccelState context,
-regardless of vCPUs; and another set which works on vCPUs within Accel
-and must get the vCPU context by argument.
-
+> RFC -> v1:
+> - Create the CPU mapping using vfio device fd if the dmabuf exporter
+>    (vfio-pci) does not provide mmap() support (Akihiko)
+> - Log a warning with LOG_GUEST_ERROR instead of warn_report() when
+>    dmabuf cannot be created using Guest provided addresses (Akihiko)
+> - Use address_space_translate() instead of gpa2hva() to obtain the
+>    Host addresses (Akihiko)
+> - Rearrange the patches and improve the commit messages (Akihiko)
+> - Fix compilation error when VFIO is not enabled (Alex)
+> - Add a new helper to obtain VFIO region index from memory region
+> - Move vfio_device_create_dmabuf() to hw/vfio/device.c
 > 
->> Adapt KVM handler.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/qemu/accel.h       |  1 +
->>   include/system/accel-ops.h |  1 -
->>   accel/accel-system.c       | 10 ++++++++++
->>   accel/kvm/kvm-accel-ops.c  |  6 ------
->>   accel/kvm/kvm-all.c        |  6 ++++++
->>   system/cpus.c              |  8 --------
->>   6 files changed, 17 insertions(+), 15 deletions(-)
+> Tested with an SRIOV enabled Intel dGPU by running Gnome Wayland
+
+Could you please be more precise on the HW ?
+
+> (in the VM) and Qemu with the following (relevant) parameters:
+> -device vfio-pci,host=0000:03:00.1
+> -device virtio-vga,max_outputs=1,xres=1920,yres=1080,blob=true
+> -display gtk,gl=on
+> 
+> Associated vfio-pci kernel driver series:
+> https://lore.kernel.org/dri-devel/cover.1754311439.git.leon@kernel.org/
+> Associated virtio-gpu kernel driver series (merged):
+> https://lore.kernel.org/dri-devel/20241126031643.3490496-1-vivek.kasireddy@intel.com/
+> 
+> ---
+> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Alex Williamson <alex.williamson@redhat.com>
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Cc: Leon Romanovsky <leon@kernel.org>
+> Cc: Leon Romanovsky <leonro@nvidia.com>
+> Cc: Jason Gunthorpe <jgg@nvidia.com>
+> Cc: Dongwon Kim <dongwon.kim@intel.com>
+> 
+> Vivek Kasireddy (7):
+>    virtio-gpu: Recreate the resource's dmabuf if new backing is attached
+>    virtio-gpu: Don't rely on res->blob to identify blob resources
+>    virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
+>    vfio/region: Add a helper to get region index from memory region
+>    linux-headers: Update vfio.h to include VFIO_DEVICE_FEATURE_DMA_BUF
+>    vfio/device: Add support for VFIO_DEVICE_FEATURE_DMA_BUF
+>    virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO
+>      devices
+> 
+>   hw/display/Kconfig              |   5 ++
+>   hw/display/virtio-gpu-udmabuf.c | 143 ++++++++++++++++++++++++++++++--
+>   hw/display/virtio-gpu.c         |  53 +++++++++---
+>   hw/vfio/device.c                |  43 ++++++++++
+>   hw/vfio/region.c                |  14 ++++
+>   include/hw/vfio/vfio-device.h   |   5 ++
+>   linux-headers/linux/vfio.h      |  25 ++++++
+>   7 files changed, 270 insertions(+), 18 deletions(-)
+> 
+
+Please cc: Alex and I on all patches.
+
+Thanks,
+
+C.
 
 
