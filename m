@@ -4,80 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB32CCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 14:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3561CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 14:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5mMb-0000J1-7P; Mon, 06 Oct 2025 10:38:57 -0400
+	id 1v5mSG-0001Du-2c; Mon, 06 Oct 2025 10:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v5mMX-0000IP-TL
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:38:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v5mMQ-0005vY-LM
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:38:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759761519;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=id32b6E5CHy3+VImQOCaafclOiYny7pkAzCH7qyeMyU=;
- b=jVqIcpY2RpEI1oP1CInS6lfYr66//vkSjs2UD4Nd6GiBYC6j7pmem6yewywnEypvUe1Prb
- JtCDms/O6WZeldiCS7GlFyTHV4uBB5+t/gxd/o6FFcnKAW88HVlKCIJ4kfylPPTzS5OAK5
- YBtYTruqzCGijqgtdMMwpijEFTXBxA4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-2Dltu2KGOcix_w2lBt6eBw-1; Mon,
- 06 Oct 2025 10:38:38 -0400
-X-MC-Unique: 2Dltu2KGOcix_w2lBt6eBw-1
-X-Mimecast-MFC-AGG-ID: 2Dltu2KGOcix_w2lBt6eBw_1759761516
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D56891800451; Mon,  6 Oct 2025 14:38:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC2FD1956056; Mon,  6 Oct 2025 14:38:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3A1CA21E6A27; Mon, 06 Oct 2025 16:38:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org,  philmd@linaro.org,  thuth@redhat.com,
- eblake@redhat.com,  michael.roth@amd.com,  farosas@suse.de,
- peterx@redhat.com,  berrange@redhat.com,  jasowang@redhat.com,
- steven.sistare@oracle.com,  leiyang@redhat.com,
- davydov-max@yandex-team.ru,  yc-core@yandex-team.ru
-Subject: Re: [PATCH v6 16/19] qapi: add interface for backend-transfer
- virtio-net/tap migration
-In-Reply-To: <20251006092735-mutt-send-email-mst@kernel.org> (Michael
- S. Tsirkin's message of "Mon, 6 Oct 2025 09:33:28 -0400")
-References: <20250923100110.70862-1-vsementsov@yandex-team.ru>
- <20250923100110.70862-17-vsementsov@yandex-team.ru>
- <87v7kskvut.fsf@pond.sub.org>
- <20251006092735-mutt-send-email-mst@kernel.org>
-Date: Mon, 06 Oct 2025 16:38:32 +0200
-Message-ID: <878qhoksd3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5mSD-0001Dm-D5
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:44:45 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5mS9-0006m5-Jt
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:44:45 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3ee1381b835so4377482f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 07:44:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759761875; x=1760366675; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PKcnBnbBvrM4/U/psx+k3CgiR89mQJn7LHvKjTToJtg=;
+ b=seitG/43Hyyc57ZI1/eZ8RG4vqfLbBVw8FXZdyioJ+OLq4op7MqnIpg5+zKiqHONaE
+ zVNzuBqQYNuAErdhN/WTFhHbqCs23eL3kkymGUii1JR9MAl1q9BuVjES9UO1qoFegIsy
+ cF3lGm316QUdWNTBzKtaopn4kduiFSX0RVfbz9i4pqaqeWGf7r5zjJxMC2dLhzfn6Ovc
+ ML7r2R7onywdxLJmQKewT2Gy33fBtQ9RO26b4xwP4RBb8Kw5DdH8tStAQNzoZHPvl/Gp
+ gYR28b8I91JwdgfVf8jlBFow4S7ECafG2rB4cHKA8SNWZv95VXay0GvBQkKYG+MfCncp
+ HoBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759761875; x=1760366675;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PKcnBnbBvrM4/U/psx+k3CgiR89mQJn7LHvKjTToJtg=;
+ b=a7DhJlAK6akjqcAPGN5Zq8j7dzaQFQQ8XL06nuSRvonMQKV0odbANXfPanO0ygAeEe
+ ZmO7QHumwNReILwEZN4sPORYxEbj0s9iGlqI+RnF3eyltYpzSalbtR6yCSkr5W72ch/P
+ IG4/GvzQdpA5XIaQ8M7nMiC1PJ++GrBjqMJiF8WG2Sloybxui2uMDNlQUn480fLNRBM+
+ re7sZrW5AFxomkYMC1UnE4pkZwcaiQNfF8ngwoqv+rYfwH6LKzLXo0yDbAKt5OUhbjis
+ tCpctShWm/tNB+uRYSlipycvHJLTjGjk3IUXpQ/b+ESG992daOSXBuKIMr1fOFIFeGKr
+ L6Hg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTz51jp8kXbUaqOe/PPCU6yo+raoM1xfHdv0hgAMQ4CUyPjSuw0de1chrES6KvutbEYrvXCSLwyuew@nongnu.org
+X-Gm-Message-State: AOJu0YyLge1rJ+1kKofUj5f9FJ3fog5RNqbtWXAijY2tC7fp57bozA6D
+ 316+VgeR6GHtFPmRjXfNCDoT+hje4nZ0JPHgBCnhSJ8llLZ3/f7gzoPZdFbPeFS+dz0=
+X-Gm-Gg: ASbGncs7PvWsRnhSrH2pJQXe6+aNMxUgklGCdRBOQ8DZN/GfMhBdcAS0CmKharTh2zp
+ oqGG8c68DE2cIRFuGkabluzt4ZNyIa4W/3j9hlmITDjAyYnk1AfFBAsgP171KvsfxWAjpofJmBa
+ TWB3WKuJGiWW99IsQiJD2FilvgyI+qjMmyVG4hU1jLcNsw3D/X4/u276NZZPvDrthbEZBVMgJR8
+ WCUtoqxA9b6NQb86DiqJ90rXMfcfoGDm38ejp691iB2doUMzGTvv2UhSTnWKR9bgeKiKThzK88J
+ sdC9Ecq/6r5ef6/6mdttauAGBr5xnuy4cFGqjgswiv+VckHBIBiXU4KfVj01NHQg37UC3tmq/Li
+ lAK3Ht2VtZDZHjWg4maAhtlkibESsjkwLRXEpeeo8sLVHtvPWCaF840uMcsYjVHDlxhgHsK7DYF
+ eCd+c9M7sfG+cKktiuZyFxhDMno0Ua
+X-Google-Smtp-Source: AGHT+IHylU1uDTKdef/LWVtD5jQ4lrYrPO9W9RsEjcCLQimUFxiOXAP7iueUoqs8PdgE9LlqtJP+Sw==
+X-Received: by 2002:a05:6000:2888:b0:3ec:df2b:14e2 with SMTP id
+ ffacd0b85a97d-425671b08damr8312450f8f.51.1759761875420; 
+ Mon, 06 Oct 2025 07:44:35 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8f4bdcsm21278489f8f.54.2025.10.06.07.44.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Oct 2025 07:44:34 -0700 (PDT)
+Message-ID: <535d639f-6cfb-4b00-9d13-99ecd222b292@linaro.org>
+Date: Mon, 6 Oct 2025 16:44:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] target/s390x: Replace legacy
+ cpu_physical_memory_read/write() calls
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>
+References: <20251002091132.65703-1-philmd@linaro.org>
+ <20251002091132.65703-4-philmd@linaro.org>
+ <9052ebc9-190c-48e2-bc4f-a4339e7692a9@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <9052ebc9-190c-48e2-bc4f-a4339e7692a9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,91 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On 6/10/25 16:04, Thomas Huth wrote:
+> On 02/10/2025 11.11, Philippe Mathieu-Daudé wrote:
+>> cpu_physical_memory_read() and cpu_physical_memory_write() are
+>> legacy (see commit b7ecba0f6f6), replace by address_space_read()
+>> and address_space_write() respectively.
+> 
+> I'm not sure whether this patch is a good idea in the current way it is 
+> done.
+> 
+> Commit b7ecba0f6f6 says: "there is likely to be behaviour you need to 
+> model correctly for a failed read or write operation" ... so if we 
+> switch to the address_space_* API, I think you should also implement the 
+> correct handling for the case where the memory transaction failed. 
+> Otherwise this is more or less just code churn, isn't it?
 
-> On Mon, Oct 06, 2025 at 03:23:06PM +0200, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->> > To migrate virtio-net TAP device backend (including open fds) locally,
->> > user should simply set migration parameter
->> >
->> >    backend-transfer = ["virtio-net-tap"]
->> >
->> > Why not simple boolean? To simplify migration to further versions,
->> > when more devices will support backend-transfer migration.
->> >
->> > Alternatively, we may add per-device option to disable backend-transfer
->> > migration, but still:
->> >
->> > 1. It's more comfortable to set same capabilities/parameters on both
->> > source and target QEMU, than care about each device.
->> >
->> > 2. To not break the design, that machine-type + device options +
->> > migration capabilities and parameters are fully define the resulting
->> > migration stream. We'll break this if add in future more
->> > backend-transfer support in devices under same backend-transfer=true
->> > parameter.
->> >
->> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> > ---
->> >  include/qapi/util.h | 17 ++++++++++++++++
->> >  migration/options.c | 32 ++++++++++++++++++++++++++++++
->> >  migration/options.h |  2 ++
->> >  qapi/migration.json | 47 ++++++++++++++++++++++++++++++++++++---------
->> >  4 files changed, 89 insertions(+), 9 deletions(-)
->> >
->> > diff --git a/include/qapi/util.h b/include/qapi/util.h
->> > index 29bc4eb865..b953402416 100644
->> > --- a/include/qapi/util.h
->> > +++ b/include/qapi/util.h
->> > @@ -69,4 +69,21 @@ int parse_qapi_name(const char *name, bool complete);
->> >          _len;                                                       \
->> >      })
->> >  
->> > +/*
->> > + * For any GenericList @list, return true if it contains specified
->> > + * element.
->> > + */
->> > +#define QAPI_LIST_CONTAINS(list, el)                                \
->> > +    ({                                                              \
->> > +        bool _found = false;                                        \
->> > +        typeof_strip_qual(list) _tail;                              \
->> > +        for (_tail = list; _tail != NULL; _tail = _tail->next) {    \
->> > +            if (_tail->value == el) {                               \
->> > +                _found = true;                                      \
->> > +                break;                                              \
->> > +            }                                                       \
->> > +        }                                                           \
->> > +        _found;                                                     \
->> > +    })
->> > +
->> 
->> Not a fan of lengthy macros.
->> 
->> There's a single use below: migrate_virtio_net_tap().  I can't see
->> potential uses for such a search in existing code.
->
-> However, QAPI_LIST_FOR_EACH can potentially be used to implement
-> QAPI_LIST_LENGTH.
->
-> #define QAPI_LIST_FOR_EACH(list, tail)                    \
->         for (tail = list; tail != NULL; tail = tail->next)
->
-> and
->
-> #define QAPI_LIST_LENGTH(list)                                      \
->     ({                                                              \
->         size_t _len = 0;                                            \
->         typeof_strip_qual(list) _tail;                              \
->         QAPI_LIST_FOR_EACH(list, tail) {                            \
->             _len++;                                                 \
->         }                                                           \
->         _len;                                                       \
->     })
+Yes and no :) The point is to trigger reviewers/maintainers to fill the
+missing parts when they notice them, otherwise this is just a no-op.
 
-Yes, but would QAPI_LIST_FOR_EACH be better than the straightfoward &
-simple for-loop?
+It worked because now I know the error path you expect, which is
+currently ignored.
 
-[...]
+> 
+>   Thomas
+> 
+>> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+>> index c2fedc55213..737c3bbc5be 100644
+>> --- a/target/s390x/diag.c
+>> +++ b/target/s390x/diag.c
+>> @@ -17,6 +17,7 @@
+>>   #include "s390x-internal.h"
+>>   #include "hw/watchdog/wdt_diag288.h"
+>>   #include "system/cpus.h"
+>> +#include "system/memory.h"
+>>   #include "hw/s390x/ipl.h"
+>>   #include "hw/s390x/s390-virtio-ccw.h"
+>>   #include "system/kvm.h"
+>> @@ -82,11 +83,14 @@ static bool diag_iplb_read(IplParameterBlock 
+>> *iplb, S390CPU *cpu, uint64_t addr)
+>>           }
+>>           s390_cpu_pv_mem_read(cpu, 0, iplb, be32_to_cpu(iplb->len));
+>>       } else {
+>> -        cpu_physical_memory_read(addr, iplb, sizeof(iplb->len));
+>> +        const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+>> +        AddressSpace *as = CPU(cpu)->as;
+>> +
+>> +        address_space_read(as, addr, attrs, iplb, sizeof(iplb->len));
+>>           if (!iplb_valid_len(iplb)) {
+>>               return false;
+>>           }
+>> -        cpu_physical_memory_read(addr, iplb, be32_to_cpu(iplb->len));
+>> +        address_space_read(as, addr, attrs, iplb, be32_to_cpu(iplb- 
+>> >len));
+>>       }
+>>       return true;
+>>   }
 
 
