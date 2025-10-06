@@ -4,69 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335F3CCA471
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B02CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5hyr-0006an-I7; Mon, 06 Oct 2025 05:58:09 -0400
+	id 1v5i5j-00030T-RV; Mon, 06 Oct 2025 06:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyp-0006Z5-CL
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:58:07 -0400
-Received: from mailgate01.uberspace.is ([95.143.172.20])
+ (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1v5i5h-0002wz-Cy
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:05:13 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hym-0003r1-IE
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:58:06 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 4C28D60BDB
- for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:57:43 +0200 (CEST)
-Received: (qmail 18918 invoked by uid 990); 6 Oct 2025 09:57:43 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 06 Oct 2025 11:57:43 +0200
-From: Julian Ganz <neither@nut.email>
-To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH v7 20/25] target/sparc: call plugin trap callbacks
-Date: Mon,  6 Oct 2025 11:57:15 +0200
-Message-ID: <ca4b47c5db3ff41c1b846b22d921f23a544fca4c.1759744337.git.neither@nut.email>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <cover.1759744337.git.neither@nut.email>
-References: <cover.1759744337.git.neither@nut.email>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.99945) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.59945
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=XmfQC1pUHdirPeAvXHEzNtY0D5FB5BhCt4uiwodl8Ho=;
- b=eZWvw4PKS75E2t6SedZ8nVvv8oQN6WB/8q7FcVz33U01fUyEryO7DiPTfMla0EBAkd4JCm+9qm
- VI28lw8py49szgYB9DIQRahVO2L47rPb5fol//I9KQI5o4rglQTiR2U3YGil6XrcRb66hD3Ao++p
- weAq8QlZQF1aV8XXSP6cfhwKiTMsHA7h0mHs9/kaAtIDvXeOV87A9bKYD0Taw/znfw8qZ6dO9vCZ
- 2eMADywdtmaBupDemrBZ3irxxPyk608SkNjkJ2q8Uu8egQzXg0ME/bQGYDG2xZK2zivo4IdzcIGe
- xzkOoia/zBQRDMRtqLhHBJqLm75PX4Ctfxr44V/EMDX1WvyPQhmBd4+XjnwAoY0scsdq15BAcHDf
- CZUlJPg733JHtTj3b9+91C2BK5lMP5IT6mH0jGhW/DgV+8tA0RobnW1EoO7AW5ILI0C/bihAipcR
- 1Ejxuwz1DQlGSQGMdDT7Q+fUhzWwrxQIqnhcJhwcqW7OVT3tfOnflYWfMr2GNArt3uGl3f66QrsE
- P5kRpAMNZzVLkm5vTtV8CosgYPQ2DGbUoLE2FYmlOtdTV6sJHw1eXLvISI27MzDnT9ZmBRF1B/vh
- k3iyV7APME4jUC6Vf1ALGzgXyuDG1hNw0Ct+zNZO48WUa8FNNvguI2IEWxDhG9Mdwl7A2c1rt4B9
- o=
-Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
- helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1v5i5f-00056x-16
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:05:13 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-42420c7de22so2606454f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:05:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=livius-net.20230601.gappssmtp.com; s=20230601; t=1759745108; x=1760349908;
+ darn=nongnu.org; 
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8RpjllKbLo8qaaDf2tjapMYvimhTJcElqNmiDIkjl/o=;
+ b=B0IOSpdNhRel4CPRRrmlRxXOM3cduUE2MNhR+JvzN9sJzNVtpp874VOJGFzqhJpvf3
+ ep/QBXF1HOyfGi0a/sJ3fNPhlpFXj8lTM6gW/wII4hsZ/ULn6gOiAboDSn5P+4rU3iYD
+ rQIut2sW2D0b7cg4pcr1VCYJRi5ozBZTa/MVbVWzbt4QgfDXnx40347MN8pe8IkJucgi
+ qIcjavBdbvPwKv+9o4iwMXFiCu0EViAwvEaYH3smSvuvde9kf63MXVatdLQQ3TlQPaMf
+ 1z1bnx9KdxqLL/WcjTU7Vf4Tx5mt3PTTxXtoZCPqNAnhYYg5NAy2y6TLO2omEHO+NsTu
+ ZdkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759745108; x=1760349908;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8RpjllKbLo8qaaDf2tjapMYvimhTJcElqNmiDIkjl/o=;
+ b=oFBI4/Zv1LryADPcQqL2ArDsVSdzz1sVoeRvwu60ITIBTxnpcKUsuvyM3nSogwmO1m
+ aaDgqUXrHsYVe+UGQUpFbFxm/k17urDoF/JEgoZ8N4hInHumofjFoInvXtTLFLD0aXcL
+ QF6VAtli1Yevnf/UUwuH1T6HoS7SsBHVM7zbxBa6HElFxnxI8cLdK9nxIhdwmXQYd9s5
+ Qyk5NhvButQ+UmarnONZ0zE2cojEhoeeBSbDKqNPUsguFKMQqC8/7msFX86B5lc/0oSW
+ 4icQ6hn2uFor+HqWK0r8o5tsGh1yqoBUkcCrLbtljgF67NUiPEMiibE3OgBk/GP6iCVi
+ uvUQ==
+X-Gm-Message-State: AOJu0YxYNu6B+6K0CAjmZdEeTy1a5e4aLZgifUqeCQ2p7VT5hRv6wzLv
+ 9PjugUN88D+76vvq7UgKTP/lxnuQSZr3TnQpKwTvSovUC1joHXewPlzzvPdeb1KVUiY=
+X-Gm-Gg: ASbGnct56ntsYqslPvYP1zDyiE1wGx+55A5VyH4tfwHrnoguQ28Ncq93/u+nQXnNK2h
+ GJkCW6XK9ayEKHY+lIGv8USGoJXT1imL2IxlBzgXczTrqqwMpHXPrUU0+kODucHD54R3RtjhJIb
+ aJQYVJzflwz9aSObBe/4JU5Gl+a9yaRvx2kEqfgf9jxJbsqVSEZ8AcjEMHFfcIIfAy+0meOpSr1
+ 5s/cNpGn98oZHOM4Ty8CPpTh+mQujV9dXcQupq5WqMUcC2t4v8VNCsbz5gx+BuLoUUKlhEOn/Gu
+ w+TKk9s5ObLVnSBOstRSzKwJZ6WW/wLUj/1A7D0U0qXpx6ikdpoztd9YIMOZvDjAoLJQhSq6Xxz
+ EAj3q8gquTa9W0upVe/zZYjpEnSRvZPsCXs41gHjzQTdnW16p0O+3lNgPAMyuwcPIfKk=
+X-Google-Smtp-Source: AGHT+IEenVYHLqv7WB18pd7gWMDR+ei7FwI96DOtAn5GR0QTEJNSpEKwSxWyJ8ordITUHAyd6bKomQ==
+X-Received: by 2002:a05:6000:184e:b0:3b7:9c79:32bb with SMTP id
+ ffacd0b85a97d-4256719357bmr7636238f8f.44.1759745107987; 
+ Mon, 06 Oct 2025 03:05:07 -0700 (PDT)
+Received: from smtpclient.apple ([188.25.252.134])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e78c5d290sm111334185e9.0.2025.10.06.03.05.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 06 Oct 2025 03:05:07 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: qemu-system-aarch64 hangs in a cortex-a72 test
+From: Liviu Ionescu <ilg@livius.net>
+In-Reply-To: <CAFEAcA_h3-iWubDg++jcO6_S_o_Z1-Xm4RMHqLYq8T=1naADug@mail.gmail.com>
+Date: Mon, 6 Oct 2025 13:04:56 +0300
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <84A761E5-6FF2-45AC-883B-AB441E3894A0@livius.net>
+References: <9EF1806D-4C25-4980-B1CA-16616FA8E32F@livius.net>
+ <CAFEAcA_h3-iWubDg++jcO6_S_o_Z1-Xm4RMHqLYq8T=1naADug@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3826.700.81)
+Received-SPF: none client-ip=2a00:1450:4864:20::431;
+ envelope-from=ilg@livius.net; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,74 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
 
-This change places hooks for SPARC (32bit and 64bit) targets. We treat
-any interrupt other than EXTINT and IVEC as exceptions as they appear to
-be synchroneous events.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Julian Ganz <neither@nut.email>
----
- target/sparc/int32_helper.c |  7 +++++++
- target/sparc/int64_helper.c | 10 ++++++++++
- 2 files changed, 17 insertions(+)
+> On 6 Oct 2025, at 12:55, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> Notably 9.0 is the first release which included
+> commit 59754f85ed, which enforces the architectural
+> requirement that when the MMU is disabled unaligned
+> loads and stores must fault.
 
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index fdcaa0a578..b29f693a6b 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -24,6 +24,7 @@
- #include "accel/tcg/cpu-ldst.h"
- #include "exec/log.h"
- #include "system/runstate.h"
-+#include "qemu/plugin.h"
- 
- static const char * const excp_names[0x80] = {
-     [TT_TFAULT] = "Instruction Access Fault",
-@@ -174,4 +175,10 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-         env->qemu_irq_ack(env, intno);
-     }
- #endif
-+
-+    if (intno == TT_EXTINT) {
-+        qemu_plugin_vcpu_interrupt_cb(cs, env->regwptr[9]);
-+    } else {
-+        qemu_plugin_vcpu_exception_cb(cs, env->regwptr[9]);
-+    }
- }
-diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
-index 23adda4cad..067d936cbd 100644
---- a/target/sparc/int64_helper.c
-+++ b/target/sparc/int64_helper.c
-@@ -23,6 +23,7 @@
- #include "exec/helper-proto.h"
- #include "exec/log.h"
- #include "trace.h"
-+#include "qemu/plugin.h"
- 
- #define DEBUG_PCALL
- 
-@@ -255,6 +256,15 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-     }
-     env->npc = env->pc + 4;
-     cs->exception_index = -1;
-+
-+    switch (intno) {
-+    case TT_EXTINT:
-+    case TT_IVEC:
-+        qemu_plugin_vcpu_interrupt_cb(cs, tsptr->tpc);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs, tsptr->tpc);
-+    }
- }
- 
- trap_state *cpu_tsptr(CPUSPARCState* env)
--- 
-2.49.1
+Ok, this is a good hint, a loop in an exception handler is a very likely =
+cause of the program hanging.
+
+> ... (You should be able
+> to see that in the -d debug logs if it's happening,
+> or via gdbstub if you put a breakpoint on the exception
+> entry point.)
+
+I'll try to run a debug session and see if this is the case, and fix it.
+
+> If it doesn't look like that's what it's falling over on,
+> you could try a git bisect of QEMU to pinpoint the
+> commit where it stopped working.
+
+Right. Hopefully this will not be necessary, it must be some small =
+stupid mistake in my code, not detected before.
+
+
+Thank you,
+
+Liviu
 
 
