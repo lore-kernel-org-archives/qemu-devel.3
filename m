@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B386CCA471
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 038EFCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5ifC-0004oq-8V; Mon, 06 Oct 2025 06:41:54 -0400
+	id 1v5iid-0005jd-Uy; Mon, 06 Oct 2025 06:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v5if1-0004ms-Uc
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:41:46 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1v5iib-0005jV-Kh
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:45:26 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v5iew-0001XW-IL
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:41:43 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6354a4b4871so5839067d50.2
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:41:38 -0700 (PDT)
+ id 1v5iiZ-0001tw-Sz
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:45:25 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-71d6083cc69so52041317b3.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759747297; x=1760352097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759747522; x=1760352322; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vwrQcCJGIbsxvMRi/b1fe24qLHYm9LI3TINLoCmsLMc=;
- b=t4bQSWbS/xP4RpK/V46JyDHY8X0mBi3sdXeeWn0SSwva/1lAKHBD9DCu5JMYgzQXR0
- q/i6+NQMv9sRY9aT9ytP8DhjeT3DiZApEwfV7nJqpB3SbkKDqkp6D534QSksDjBIg6Hq
- LXjh5Gey8b/8smZJi+s86+A5xqrgQsgf3XV4QWkEOMfH2o7BzL/Lq/bmVWBbxUl6XIw2
- IbutdHa2AOiqZEjVdYzcTkXgeDgM4Z0ib/gqrqXlyp6wfp02pxW7+MDdKZ7U3H3Fuowf
- oYWCwj+DArrWE8waChFk17zJACh7TpAT56vu814WPwGxb6KMuP15BvBsD5dSqfKULNKM
- 4u1g==
+ bh=eMaGnUsZCpqokauiFQ22fkXOuWUzUHSGajexyteOvIg=;
+ b=YOtFkoP8eNtw71Rn/KtNmy+Su515FeFBCbD6fOJa40jO6VA6dCK35oJmaRfBBK4ukX
+ dOFlVphWo6BH3V8MY0Dbvzi/UtmDDuZlwVWtKDam8U/o09ecBMbYTm35wFldmucn4Swm
+ N6eSg4JuMyBk6r5dM0/IcHmRMe9wIY6VH82ZzMEnQxpH+Vdq7V8J2uH5ElnBfddBoh/w
+ l8mcHBgI1H3KTdoPuJ0tNwK58hEk/jnKelzaB0OmT5BbSwh9e1foOGthiHfcHew9RjcV
+ XkkxzuboNQ2DKxmVF4WkLb4y3CEdM0iw8O/BTI84GrMSLe+aSMnpX46PnVJGnaRGCNPm
+ CzYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759747297; x=1760352097;
+ d=1e100.net; s=20230601; t=1759747522; x=1760352322;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vwrQcCJGIbsxvMRi/b1fe24qLHYm9LI3TINLoCmsLMc=;
- b=UyM+8LE5Ze0DH5ptpqvfVEVU8gn0DAyjUSJpsrsyOoDwDhYj6xka+i0vsmlATMsiNO
- UlY220U6I9AWWUSh0pHDKhLE+x3YYJefdwQE6IUjDGfp1ideXqhPMK2ZnN119AvwZqNf
- vbk3ToYXJnJsKxquZPvC89OZo7RZdVzolWzdvjpZrKCb12oC1g0J1bYj/D7xY1e0cp7q
- ppa4354pB20/8YODtAYEi/OOqMizfjMQp3M/+vR5HM2hJJ1Izjmj34PspD/fZYqO1BP8
- xRlQCGPsydmmxivMVJm7dZouo5pGHVv0+Kh9ytJQ52sgEsxh1B4ge1aON5ca7bWHWsDw
- M6ww==
-X-Gm-Message-State: AOJu0Ywkg1J0Pz+e0ztyin9FIdOW687BfL7OoH2gAi98+IzSI1QTyYXw
- LTZEtPONCWe5zftE4714WXIoTk6NSAUSWyGUB59OCqmBlaNJ5MtjF2bPLNaumP9HRjI8vUn4KW0
- ihCL/YsV46qmPMJi4fn/uaKmn5sbMrl4ACMmpYQRKrA==
-X-Gm-Gg: ASbGncsMToxXK0rn95kTaoMaiJ4YIVxxcXw8Gmrqkw2nrOJF4O5YfUxEZ44z4Co6O1a
- djWDO643tH5ksB73USwKfo6fAVXdTdLfs7t5mdkqqPn5zGuMXorBlNHIcqUrYSoPE4yPjSAe+Vx
- r9BZcUmvJL7sF8iKzwI7mRHau4qhv9D05p6W0RkzAJHTcII9YUk4k2Xb/mkqDkub3bWJzcuQu6F
- O4aT+5S0HB9od/BYXhCWNdbtxixwScBdVNdfHhxYVI9ysM=
-X-Google-Smtp-Source: AGHT+IHMERTFx5EYN3CVOYqNP9Lw1HGa0Td0sIWgKn2ytuLOFeid3ejTjZUf5dSxY8/3eAbvuV97bsLfFKiYQrnFcHI=
-X-Received: by 2002:a05:690e:686:b0:636:1bb3:2d2d with SMTP id
- 956f58d0204a3-63b9a07fdf7mr8736537d50.22.1759747297216; Mon, 06 Oct 2025
- 03:41:37 -0700 (PDT)
+ bh=eMaGnUsZCpqokauiFQ22fkXOuWUzUHSGajexyteOvIg=;
+ b=JmDGO/Th0Vv2jHXfbFzOIz0o48OzhZwQfd7z+2G2CKwuWJtOmoz9TYn2+qe/yxOwXS
+ OXvAzgAEpz3gm8tuz71N2IRNEX5w555c5JaBOanVfWtRX3XcuQDgbdUyBFwGvj9FyQ0w
+ VInkKxUKCuT7n8v/nD/mJkbFFd3J5BoqRRI1O2vplVJcY4tr3PWJBeH3OuZKlW4IUcyE
+ UJ7egsT5RKvqGHPF37ypJC25sftXiSj0trDzpqfXpYDHW4V8QOjaotiPtsh8viAjnwfO
+ NNLBZjgGIOyPyUFuEIqN6XDWzIWyl7FZGtAMrtpwDWX6jqpYk/uKt4I3OeOG23kbYFpO
+ +kmw==
+X-Gm-Message-State: AOJu0YzKbbuJxyeVGmohJJLzmUjTMPFUNY9z84WzH0mTBjtxRSffOOaT
+ bgBPMCpWUiu5i9AZUvs0R7JXiqVy3wgUbKLaBAFDeIcBUXZPgt8FrGKSfmAVuvavKs7evzPBNB5
+ dpcdeTAdhrnC6QQt5yFTBweIbAA4DBqqeQsTBQQ6Kuo1TeQKQf9cH
+X-Gm-Gg: ASbGncsWuyjo/J/RrbdvHomaqJFufz+MVektqvAh8+f3JVPU+DmQ5ddhYPnXeWnPS3E
+ Yrhz2NqOI2nO24nrI+hrghiM4TIxoCH8pZyQsP6wSS7jIlO1niZNao6zFyR7mtwYlolDEGebMv/
+ o8liHl2r3EBEa8P2vkqaSDf7jQykq9L5hEuSt5bC5bb7FxPpb002++4r7hWC+KmltnVGx7N0s7U
+ +dkd19PZ76bCLdAfFrOcOaf5VHDz6WSL8FpMAZI8/HWGxE=
+X-Google-Smtp-Source: AGHT+IEyyalpiGapznVq6AKtMwu9Aj7oKmWJQDmRVajTXrNYnc0mH4sRUcYFXIGObJJbvj8EAUSlkiSFdEYDU355YWo=
+X-Received: by 2002:a53:c80e:0:b0:627:bded:b976 with SMTP id
+ 956f58d0204a3-63b9a071409mr9113419d50.22.1759747522405; Mon, 06 Oct 2025
+ 03:45:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
-In-Reply-To: <CC5A0011-CD14-40F9-8023-8BF5F989BCCF@gmail.com>
+References: <9EF1806D-4C25-4980-B1CA-16616FA8E32F@livius.net>
+ <CAFEAcA_h3-iWubDg++jcO6_S_o_Z1-Xm4RMHqLYq8T=1naADug@mail.gmail.com>
+ <84A761E5-6FF2-45AC-883B-AB441E3894A0@livius.net>
+In-Reply-To: <84A761E5-6FF2-45AC-883B-AB441E3894A0@livius.net>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Oct 2025 11:41:25 +0100
-X-Gm-Features: AS18NWB7RZ1o_mn8Z-KGl28zNr88Ka_Hgag4hcQFKeBpYzqAoYX_71A_p7MS-eQ
-Message-ID: <CAFEAcA_PbfzTAW2qeFao1MhPG=jn9dtzt0AzwL-aPCEULijsuw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: add pvpanic mmio device for arm
-To: Alexander Gryanko <xpahos@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org
+Date: Mon, 6 Oct 2025 11:45:10 +0100
+X-Gm-Features: AS18NWCbEo3nBIkkiG6fRjsH6g6MA0p7bCanMhVwz914poV3tcdyHzJroZLKGbE
+Message-ID: <CAFEAcA8DvpFmCPQJNNKkA-K8piRZ_m=FWDmHGF5bGb0uAM4JrA@mail.gmail.com>
+Subject: Re: qemu-system-aarch64 hangs in a cortex-a72 test
+To: Liviu Ionescu <ilg@livius.net>
+Cc: QEMU Developers <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,22 +94,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 4 Oct 2025 at 21:19, Alexander Gryanko <xpahos@gmail.com> wrote:
+On Mon, 6 Oct 2025 at 11:05, Liviu Ionescu <ilg@livius.net> wrote:
 >
-> Currently, pvpanic is available in three device types: ISA,
-> MMIO, and PCI. For early stages of system initialisation
-> before PCI enumeration, only ISA and MMIO are suitable.
-> ISA is specific to the x86 platform; only MMIO devices
-> can be used for ARM. It is not possible to specify a
-> device as on the x86 platform (-device pvpanic); the
-> only possible way is to add an MMIO device to the dtb,
-> which can be implemented by manually adding new functions
-> to the QEMU code, as was done in the VMApple implementation.
+>
+>
+> > On 6 Oct 2025, at 12:55, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > Notably 9.0 is the first release which included
+> > commit 59754f85ed, which enforces the architectural
+> > requirement that when the MMU is disabled unaligned
+> > loads and stores must fault.
+>
+> Ok, this is a good hint, a loop in an exception handler is a very likely cause of the program hanging.
+>
+> > ... (You should be able
+> > to see that in the -d debug logs if it's happening,
+> > or via gdbstub if you put a breakpoint on the exception
+> > entry point.)
+>
+> I'll try to run a debug session and see if this is the case, and fix it.
 
-No, thank you. I don't want to add more devices to "virt"
-than we have to. There is a PCI pvpanic device -- use
-that. Yes, you might have to do PCI enumeration in software.
+Note that depending on your compiler's config it might assume
+unaligned accesses are OK by default (because they are when
+the MMU is on for v7 and later CPUs). If that's the case, it's
+possible the fix might be as simple as "recompile with the
+-mno-unaligned-access option in CFLAGS".
 
-thanks
 -- PMM
 
