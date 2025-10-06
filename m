@@ -4,97 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3561CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 14:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CFACCA471
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 14:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5mSG-0001Du-2c; Mon, 06 Oct 2025 10:44:48 -0400
+	id 1v5mU8-0001pR-Ir; Mon, 06 Oct 2025 10:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5mSD-0001Dm-D5
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:44:45 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5mS9-0006m5-Jt
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:44:45 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3ee1381b835so4377482f8f.1
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 07:44:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759761875; x=1760366675; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PKcnBnbBvrM4/U/psx+k3CgiR89mQJn7LHvKjTToJtg=;
- b=seitG/43Hyyc57ZI1/eZ8RG4vqfLbBVw8FXZdyioJ+OLq4op7MqnIpg5+zKiqHONaE
- zVNzuBqQYNuAErdhN/WTFhHbqCs23eL3kkymGUii1JR9MAl1q9BuVjES9UO1qoFegIsy
- cF3lGm316QUdWNTBzKtaopn4kduiFSX0RVfbz9i4pqaqeWGf7r5zjJxMC2dLhzfn6Ovc
- ML7r2R7onywdxLJmQKewT2Gy33fBtQ9RO26b4xwP4RBb8Kw5DdH8tStAQNzoZHPvl/Gp
- gYR28b8I91JwdgfVf8jlBFow4S7ECafG2rB4cHKA8SNWZv95VXay0GvBQkKYG+MfCncp
- HoBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759761875; x=1760366675;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PKcnBnbBvrM4/U/psx+k3CgiR89mQJn7LHvKjTToJtg=;
- b=a7DhJlAK6akjqcAPGN5Zq8j7dzaQFQQ8XL06nuSRvonMQKV0odbANXfPanO0ygAeEe
- ZmO7QHumwNReILwEZN4sPORYxEbj0s9iGlqI+RnF3eyltYpzSalbtR6yCSkr5W72ch/P
- IG4/GvzQdpA5XIaQ8M7nMiC1PJ++GrBjqMJiF8WG2Sloybxui2uMDNlQUn480fLNRBM+
- re7sZrW5AFxomkYMC1UnE4pkZwcaiQNfF8ngwoqv+rYfwH6LKzLXo0yDbAKt5OUhbjis
- tCpctShWm/tNB+uRYSlipycvHJLTjGjk3IUXpQ/b+ESG992daOSXBuKIMr1fOFIFeGKr
- L6Hg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTz51jp8kXbUaqOe/PPCU6yo+raoM1xfHdv0hgAMQ4CUyPjSuw0de1chrES6KvutbEYrvXCSLwyuew@nongnu.org
-X-Gm-Message-State: AOJu0YyLge1rJ+1kKofUj5f9FJ3fog5RNqbtWXAijY2tC7fp57bozA6D
- 316+VgeR6GHtFPmRjXfNCDoT+hje4nZ0JPHgBCnhSJ8llLZ3/f7gzoPZdFbPeFS+dz0=
-X-Gm-Gg: ASbGncs7PvWsRnhSrH2pJQXe6+aNMxUgklGCdRBOQ8DZN/GfMhBdcAS0CmKharTh2zp
- oqGG8c68DE2cIRFuGkabluzt4ZNyIa4W/3j9hlmITDjAyYnk1AfFBAsgP171KvsfxWAjpofJmBa
- TWB3WKuJGiWW99IsQiJD2FilvgyI+qjMmyVG4hU1jLcNsw3D/X4/u276NZZPvDrthbEZBVMgJR8
- WCUtoqxA9b6NQb86DiqJ90rXMfcfoGDm38ejp691iB2doUMzGTvv2UhSTnWKR9bgeKiKThzK88J
- sdC9Ecq/6r5ef6/6mdttauAGBr5xnuy4cFGqjgswiv+VckHBIBiXU4KfVj01NHQg37UC3tmq/Li
- lAK3Ht2VtZDZHjWg4maAhtlkibESsjkwLRXEpeeo8sLVHtvPWCaF840uMcsYjVHDlxhgHsK7DYF
- eCd+c9M7sfG+cKktiuZyFxhDMno0Ua
-X-Google-Smtp-Source: AGHT+IHylU1uDTKdef/LWVtD5jQ4lrYrPO9W9RsEjcCLQimUFxiOXAP7iueUoqs8PdgE9LlqtJP+Sw==
-X-Received: by 2002:a05:6000:2888:b0:3ec:df2b:14e2 with SMTP id
- ffacd0b85a97d-425671b08damr8312450f8f.51.1759761875420; 
- Mon, 06 Oct 2025 07:44:35 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f4bdcsm21278489f8f.54.2025.10.06.07.44.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 07:44:34 -0700 (PDT)
-Message-ID: <535d639f-6cfb-4b00-9d13-99ecd222b292@linaro.org>
-Date: Mon, 6 Oct 2025 16:44:33 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v5mTo-0001jb-FV
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:46:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v5mTl-0007DP-Ei
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:46:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759761974;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CZPjZPCWKFBjEcqrTHxuvSIzKfDI0NlWllGoOg3aT4U=;
+ b=L8hiI+3noPb69OQNww8gbod0NJFEwvbvu6fxKmb+oi3alrZHgadyQGA+jdsB4Tilx7/W8Z
+ 5n1+1Ge2MsF0bO04NRFsCHtdsyuhIIqPXJ63Gtr1oMl0q8aOI+L7y4Ev65YooGYokp3WI7
+ lxqnswlTcyvsCxyk9F81TMPDra0QfUA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-htYBz3utMZuZyvbj218c9w-1; Mon,
+ 06 Oct 2025 10:46:13 -0400
+X-MC-Unique: htYBz3utMZuZyvbj218c9w-1
+X-Mimecast-MFC-AGG-ID: htYBz3utMZuZyvbj218c9w_1759761972
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE9EC180034A; Mon,  6 Oct 2025 14:46:11 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.162])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 236A6180035E; Mon,  6 Oct 2025 14:46:10 +0000 (UTC)
+Date: Mon, 6 Oct 2025 10:46:09 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH 1/3] file-posix: populate pwrite_zeroes_alignment
+Message-ID: <20251006144609.GA21887@fedora>
+References: <20251002184000.410486-1-stefanha@redhat.com>
+ <20251002184000.410486-2-stefanha@redhat.com>
+ <f4aa2d8a-0bc4-476e-aee0-0770a4bbd396@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] target/s390x: Replace legacy
- cpu_physical_memory_read/write() calls
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>
-References: <20251002091132.65703-1-philmd@linaro.org>
- <20251002091132.65703-4-philmd@linaro.org>
- <9052ebc9-190c-48e2-bc4f-a4339e7692a9@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9052ebc9-190c-48e2-bc4f-a4339e7692a9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="IncuC9+/ajPiGfdx"
+Content-Disposition: inline
+In-Reply-To: <f4aa2d8a-0bc4-476e-aee0-0770a4bbd396@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,60 +88,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 16:04, Thomas Huth wrote:
-> On 02/10/2025 11.11, Philippe Mathieu-Daudé wrote:
->> cpu_physical_memory_read() and cpu_physical_memory_write() are
->> legacy (see commit b7ecba0f6f6), replace by address_space_read()
->> and address_space_write() respectively.
-> 
-> I'm not sure whether this patch is a good idea in the current way it is 
-> done.
-> 
-> Commit b7ecba0f6f6 says: "there is likely to be behaviour you need to 
-> model correctly for a failed read or write operation" ... so if we 
-> switch to the address_space_* API, I think you should also implement the 
-> correct handling for the case where the memory transaction failed. 
-> Otherwise this is more or less just code churn, isn't it?
 
-Yes and no :) The point is to trigger reviewers/maintainers to fill the
-missing parts when they notice them, otherwise this is just a no-op.
+--IncuC9+/ajPiGfdx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It worked because now I know the error path you expect, which is
-currently ignored.
+On Fri, Oct 03, 2025 at 11:04:38AM +0300, Vladimir Sementsov-Ogievskiy wrot=
+e:
+> On 02.10.25 21:39, Stefan Hajnoczi wrote:
+> > Linux block devices require write zeroes alignment whereas files do not.
+> >=20
+> > It may come as a surprise that block devices opened in buffered I/O mode
+> > require the alignment although regular read/write requests do not.
+> >=20
+> > Therefore it is necessary to populate the pwrite_zeroes_alignment field.
+> >=20
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >   block/file-posix.c | 17 +++++++++++++++++
+> >   1 file changed, 17 insertions(+)
+> >=20
+> > diff --git a/block/file-posix.c b/block/file-posix.c
+> > index 8c738674ce..05c92c824d 100644
+> > --- a/block/file-posix.c
+> > +++ b/block/file-posix.c
+> > @@ -1602,6 +1602,23 @@ static void raw_refresh_limits(BlockDriverState =
+*bs, Error **errp)
+> >               bs->bl.pdiscard_alignment =3D dalign;
+> >           }
+> > +
+> > +#ifdef __linux__
+> > +        /*
+> > +         * When request_alignment > 1, pwrite_zeroes_alignment does no=
+t need to
+> > +         * be set explicitly. When request_alignment =3D=3D 1, it must=
+ be set
+> > +         * explicitly because Linux requires logical block size alignm=
+ent.
+> > +         */
+> > +        if (bs->bl.request_alignment =3D=3D 1) {
+>=20
+> would "if (!s->needs_alignment) {" be a more visual check? This way reade=
+r will not have to analyze
+> raw_probe_alignment, and understand that needs_alignment=3Dfalse is the o=
+nly path for block device
+> to have request_alignment=3D=3D1.
 
-> 
->   Thomas
-> 
->> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
->> index c2fedc55213..737c3bbc5be 100644
->> --- a/target/s390x/diag.c
->> +++ b/target/s390x/diag.c
->> @@ -17,6 +17,7 @@
->>   #include "s390x-internal.h"
->>   #include "hw/watchdog/wdt_diag288.h"
->>   #include "system/cpus.h"
->> +#include "system/memory.h"
->>   #include "hw/s390x/ipl.h"
->>   #include "hw/s390x/s390-virtio-ccw.h"
->>   #include "system/kvm.h"
->> @@ -82,11 +83,14 @@ static bool diag_iplb_read(IplParameterBlock 
->> *iplb, S390CPU *cpu, uint64_t addr)
->>           }
->>           s390_cpu_pv_mem_read(cpu, 0, iplb, be32_to_cpu(iplb->len));
->>       } else {
->> -        cpu_physical_memory_read(addr, iplb, sizeof(iplb->len));
->> +        const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
->> +        AddressSpace *as = CPU(cpu)->as;
->> +
->> +        address_space_read(as, addr, attrs, iplb, sizeof(iplb->len));
->>           if (!iplb_valid_len(iplb)) {
->>               return false;
->>           }
->> -        cpu_physical_memory_read(addr, iplb, be32_to_cpu(iplb->len));
->> +        address_space_read(as, addr, attrs, iplb, be32_to_cpu(iplb- 
->> >len));
->>       }
->>       return true;
->>   }
+Yes, that would make it easier to understand. Thanks!
+
+>=20
+> > +            ret =3D probe_logical_blocksize(s->fd,
+> > +                                          &bs->bl.pwrite_zeroes_alignm=
+ent);
+> > +            if (ret < 0) {
+> > +                error_setg_errno(errp, -ret,
+> > +                                 "Failed to probe logical block size");
+> > +                return;
+> > +            }
+> > +        }
+> > +#endif /* __linux__ */
+> >       }
+> >       raw_refresh_zoned_limits(bs, &st, errp);
+>=20
+>=20
+> --=20
+> Best regards,
+> Vladimir
+>=20
+
+--IncuC9+/ajPiGfdx
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjj1jEACgkQnKSrs4Gr
+c8jfzwf+JKiNm2E4ST0w0yltOxrV2na5rwX5eLATyYmfqB7iSX0WJJgDIN4Q22Qk
+hbkirOuuVj15uBjZNdgI8zKCDpX2/MD2SGbB5Nu8FMcANJqIn6eENirpDrnhf7FQ
+py7s6YGPyfNedKAo2OEFamfm6NhpSlYKX6mMgW0w8U7b7riRcoTh/CT71k+D/DUm
+0bB0yYsW6Cdj1DFn4P9AvBtzmm1XVP7uoL10wuHZsf58f+FQ4zw8Z8u1JzkwM87W
+i/KHGa/uUfGOnvWdP5lR0bJtFwiHnk+j3QuDKpiLuU48sURCjqWJVQTfd3XDT2BP
+mhl7TH9bmqeASK3Rf0QHE4cVT3AIDQ==
+=P0De
+-----END PGP SIGNATURE-----
+
+--IncuC9+/ajPiGfdx--
 
 
