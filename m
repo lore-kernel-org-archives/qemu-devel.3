@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C55CCA471
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 04:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9756CCA470
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 05:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5cbW-00038K-G4; Mon, 06 Oct 2025 00:13:42 -0400
+	id 1v5dYW-00030e-9j; Mon, 06 Oct 2025 01:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5cbQ-00035g-CB
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 00:13:38 -0400
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5cbN-0004yR-2w
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 00:13:36 -0400
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-46b303f7469so27441705e9.1
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 21:13:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759724010; x=1760328810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mSCSzwRwaRfpqUx3t2B4UZXbIF9qMkIFjMUd8+SdCbg=;
- b=VHymPSr4/Jp+Wft1F7lQT/hPx2ph/K+tEgMkXuNR/00bbLz+2acruVUzsEH5wa+cWd
- dGs/kL4mN12WbCqRcYl68kQ/lgTjjGFyVaS9QnRIB/8EZ/hJt7q8uIyP2HiABTbVMwBI
- /4D21Xt+CJGvLhmtk3MdX8xG4yW0GgYdeWdd/2ALsa/r85Qok9RlH2qfMDTqTdhzv1qU
- U1N1ONKwDGOOmDW6kgiF9laGqch6YGbKeSaKf5Mgr5AJ7UGPXyIjqNASfEXB5ktqGG6g
- 0TNzbFaty2EmXYZvCK8oWPOxF3tIe4sqebzUR6qU4PQVvscEN/Ya0tXihbLA/DbueYf4
- yBAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759724010; x=1760328810;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mSCSzwRwaRfpqUx3t2B4UZXbIF9qMkIFjMUd8+SdCbg=;
- b=goXO2GOTTiyGJjActpIzj/WHFkL1gMpf4EBN7ACc0gBmQtHt8Hct4eIXp8kGsNK7fe
- c0bD0wvlJzw09KasM5rPFPiZf0b2yACZwqqTMVCGTMDP8gRxRD8S2zk5LmpGPccI7Ts3
- SWZJ8pz+Pv245E7qb0pEeMTI5EUYBrobUHqHDgveiHBm6NaN6cDR3gkQuHtupQnD5V89
- B5r5nbwO3p7gguxJPgGIiwcapDllywqSsV0wnw3nvk8/Bei6Sdt9S5E1RGg4uJgWVPHb
- aKWDF0/sEFp6R0+wzSZLg89wsaVHwdX38gNBelIsmLm0L9Ud0ziDKJS/TRqXY2PsDmd+
- xAlQ==
-X-Gm-Message-State: AOJu0YzE+WkHny0svPif5Iz9F9ZHjILsuJwxc4A6TFmPphIearmmEtmq
- kfBhL7MmYcN7T8UJIMf3r0qQhzBdI85Yk+nimGFvTpH7Dbo9cC9IY1ZaBxtKZMaTcQBCBJrL+yv
- B8Ie+4JVpFc3j
-X-Gm-Gg: ASbGnctF5eyPt9wzXdcwAm1ryVZT2Rb6KDkSjoxOgr++0BSYIwXsGoLddfhj88uCA8a
- tn7OdQHe5wuDvIbq19ag/mEIFSG+EpTtRkblMsAKharq+SzYU4GiIsnV45vnanonyTjcZaz5I5Z
- gom3n6jtDyyfa2UnviS6ZPG0vdxT6HGgs7SKVDiJwB07Ywxba4azeIlx4zmyahO26NdhW+4/mt5
- m3bF4gpy/Xe5iYzQxvab/n3arRnenxbpcCV9MVEYAePurGkBd/2CQuXDLZ/yO5V4vLRIcLK3dLj
- GWeyupRpemOvCqbPfsG5Kayws5f/sQsjrde7Pcm8a55t3CPcck6uCcbQIuzRvw+aXc7jWXXKGpc
- OSQCFLPzBF+4H0vvXuG8nvNMwEJa+UhtRty+iS1qr0t+gWhoRafJDwIA31J8t30SO2Iqiv6F0RS
- RE6uw0UBc0mjkkcOW6Mw51tMlswaaV
-X-Google-Smtp-Source: AGHT+IEedF/kN3qVWtu0wiW8Asf9H290x0FWKY+sdPDKKuqPCLBFrFJW7kfdbyBRE8tsSjUl2If3fw==
-X-Received: by 2002:a05:600c:8b42:b0:46d:3a07:73cd with SMTP id
- 5b1f17b1804b1-46e7113f6f4mr68683655e9.23.1759724009666; 
- Sun, 05 Oct 2025 21:13:29 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e72375b31sm147110775e9.20.2025.10.05.21.13.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Oct 2025 21:13:29 -0700 (PDT)
-Message-ID: <86053cd3-fd3e-4b34-8bce-9a93ab3f72a6@linaro.org>
-Date: Mon, 6 Oct 2025 06:13:28 +0200
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1v5dYR-000307-9H; Mon, 06 Oct 2025 01:14:35 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1v5dYP-00030f-7J; Mon, 06 Oct 2025 01:14:35 -0400
+Received: from sslproxy04.your-server.de ([78.46.152.42])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1v5dYI-0004HK-08; Mon, 06 Oct 2025 07:14:26 +0200
+Received: from localhost ([127.0.0.1])
+ by sslproxy04.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1v5dYH-0003GN-0t; Mon, 06 Oct 2025 07:14:25 +0200
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 1B84B480070;
+ Mon,  6 Oct 2025 07:14:25 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id 1Ze5Pb0sXXbc; Mon,  6 Oct 2025 07:14:24 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id A57F248015B;
+ Mon,  6 Oct 2025 07:14:24 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.embedded-brains.de A57F248015B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=embedded-brains.de;
+ s=34EE5404-8E36-11F0-B577-2ECCAB4968F5; t=1759727664;
+ bh=oO3MxNzGpSD1jswt80AueKKgDMQYKm93FKjyAjP8wuA=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=F0h1JuYXwmCymUHB7X6pnqHwQ1pbf789bKVv2kuOtSfBXgC8ue86A0llL/cv+huIj
+ Rppr0yX6iLCslaPjz8/fwWbyMcIdKd5uLC3l+q17IHfQDq5um6LV4BbzBiHKgMBwwQ
+ 9NGTeUw3EAXGyySFRAZQwd03b1jE11iQTLNAavTn2EqAWl42Rohc+EPQAJGxUQcBKD
+ Kn3R4rSeJGyNPFAki4E/bU2HtBYmMEWwE492Z1wamHs+7iVpbyvC1AsoG4sqe7Dgk0
+ tZ/+c6io6LsaCWrbuDH8Tag+l2OBV7gdIMSbR7DVgvgASfKM/RBO9vA2JqGePGjgKT
+ n2/drqjIuAopw==
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id 1OSCSeALYXlf; Mon,  6 Oct 2025 07:14:24 +0200 (CEST)
+Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 70530480070;
+ Mon,  6 Oct 2025 07:14:24 +0200 (CEST)
+Date: Mon, 6 Oct 2025 07:14:23 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>, 
+ Alistair Francis <alistair23@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <788527663.312.1759727663914.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <38528707-3d28-4be8-8b58-60269cb1db1b@roeck-us.net>
+References: <20250319061342.26435-1-sebastian.huber@embedded-brains.de>
+ <20250319061342.26435-4-sebastian.huber@embedded-brains.de>
+ <38528707-3d28-4be8-8b58-60269cb1db1b@roeck-us.net>
+Subject: Re: [PATCH v3 3/6] hw/riscv: Make FDT optional for MPFS
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/checkpatch: Avoid recommending legacy
- qemu_bh_new_guarded()
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Alexander Bulekov <alxndr@bu.edu>, Thomas Huth <thuth@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, qemu-trivial@nongnu.org
-References: <20250924163911.51479-1-philmd@linaro.org>
- <2891f8d5-e4ea-433f-84ba-a878875bb4d6@linaro.org>
-In-Reply-To: <2891f8d5-e4ea-433f-84ba-a878875bb4d6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.168.96.204]
+X-Mailer: Zimbra 10.1.10_GA_4785 (ZimbraWebClient - FF140
+ (Linux)/10.1.10_GA_4785)
+Thread-Topic: hw/riscv: Make FDT optional for MPFS
+Thread-Index: 2YHcR+4M4s5iHHMa1HiiT5HMtKsMIw==
+X-DKIM-Status: pass [(embedded-brains.de) - 78.46.152.42]
+X-Virus-Scanned: Clear (ClamAV 1.0.9/27780/Thu Oct  2 04:58:32 2025)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,46 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping?
+Hello Guenter,
 
-On 24/9/25 18:40, Philippe Mathieu-Daudé wrote:
-> (forgot to Cc qemu-block@nongnu.org)
-> 
-> On 24/9/25 18:39, Philippe Mathieu-Daudé wrote:
->> qemu_bh_new_guarded() is considered legacy since commit 9c86c97f12c
->> ("async: Add an optional reentrancy guard to the BH API"); recommend
->> the new API: aio_bh_new_guarded().
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   scripts/checkpatch.pl | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
->> index 91616c974f2..6a0c06bebb9 100755
->> --- a/scripts/checkpatch.pl
->> +++ b/scripts/checkpatch.pl
->> @@ -3197,9 +3197,9 @@ sub process {
->>           if ($line =~ /\bsignal\s*\(/ && !($line =~ /SIG_(?:IGN| 
->> DFL)/)) {
->>               ERROR("use sigaction to establish signal handlers; 
->> signal is not portable\n" . $herecurr);
->>           }
->> -# recommend qemu_bh_new_guarded instead of qemu_bh_new
->> -        if ($realfile =~ /.*\/hw\/.*/ && $line =~ / 
->> \bqemu_bh_new\s*\(/) {
->> -            ERROR("use qemu_bh_new_guarded() instead of qemu_bh_new() 
->> to avoid reentrancy problems\n" . $herecurr);
->> +# recommend aio_bh_new_guarded instead of legacy qemu_bh_new / 
->> qemu_bh_new_guarded
->> +        if ($realfile =~ /.*\/hw\/.*/ && $line =~ / 
->> \bqemu_bh_new(_guarded)?\s*\(/) {
->> +            ERROR("use aio_bh_new_guarded() instead of qemu_bh_new*() 
->> to avoid reentrancy problems\n" . $herecurr);
->>           }
->>   # recommend aio_bh_new_guarded instead of aio_bh_new
->>           if ($realfile =~ /.*\/hw\/.*/ && $line =~ / 
->> \baio_bh_new\s*\(/) {
-> 
+thanks for the report. Do you have a Linux image and a Qemu command line so=
+ that I can test this?
 
+--=20
+embedded brains GmbH & Co. KG
+Herr Sebastian HUBER
+Dornierstr. 4
+82178 Puchheim
+Germany
+email: sebastian.huber@embedded-brains.de
+phone: +49-89-18 94 741 - 16
+fax:   +49-89-18 94 741 - 08
+
+Registergericht: Amtsgericht M=C3=BCnchen
+Registernummer: HRB 157899
+Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
+=C3=B6rfler
+Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
+https://embedded-brains.de/datenschutzerklaerung/
 
