@@ -4,149 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E83FCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 15:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92D8CCA476
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 15:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5n9G-0005fB-8Q; Mon, 06 Oct 2025 11:29:15 -0400
+	id 1v5nQC-00036i-1j; Mon, 06 Oct 2025 11:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v5n9D-0005f3-Lq
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 11:29:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1v5nQ9-00035t-5i; Mon, 06 Oct 2025 11:46:41 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v5n94-0005C7-Oj
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 11:29:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759764534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9ErsCcBIaJRXt+kQOMUvyKLpjpVetAtXfeJ2ix8XL3A=;
- b=iQiDhKtoM4kgppK9aSRWGRDKEKTTKcERMGPRXz0U+SNvQ1fBPYQPQliQ2xbwS/ZSRL2MjU
- Vuw9DiQYasttag1RYywfO82iaB+o/i/MUil3eXz65glCIOoDnWsDfRnqYp4i5jMCoDck+i
- otw6IhJSTYlj237AGYN0cY0NjpWL1BE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-4JDM9QlCOOeOAk8nfGFbYQ-1; Mon, 06 Oct 2025 11:28:53 -0400
-X-MC-Unique: 4JDM9QlCOOeOAk8nfGFbYQ-1
-X-Mimecast-MFC-AGG-ID: 4JDM9QlCOOeOAk8nfGFbYQ_1759764532
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e4fa584e7so21027575e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 08:28:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759764532; x=1760369332;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9ErsCcBIaJRXt+kQOMUvyKLpjpVetAtXfeJ2ix8XL3A=;
- b=fz60w6rWnfOt/fvdsDH01duPZL+8WwwRoidZiXl7kiYkiAdr8x+O5SDBEg5ophH8Hs
- s1Vi3V/xzy7+8o9xss++RmaiiC/HW8kf9ORR7ITpu0f2bVPXgv0sIPokrUeTwCuwaaIq
- lUcjCqvOOiAOGkURL/FFdKI9wZZgUkCQFozllCPYhZrUyDr+PDpDDKIAQXFV4YZeE2Gf
- Y7ECLJCXwp7yH2G8stYugNuYqi8i5Oe5uMA8EzO37LIPI9FTizB/oGtqsmJ3wzjKGBja
- dqYjcijy9DG5BoqJ8eiF48kzq+tOqFhloTvPUSMeZhB5M77nY2IdPy0ewxUFUwU+xcXR
- z/wA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUZvObnKiX0pq+LZdZWhmoxP5Z4PvNU+Z3NoHYPjTKzOdNkpo05Am1dOvi56gEMZ5aMQt6szMLT62w@nongnu.org
-X-Gm-Message-State: AOJu0YzLGa6ZoS+TrkcYQIMgnCuQnvnDBkQAw+qnYvd8Lm1EAiElZGgd
- Yfv+ytFrlJktuq0Ct4QUaopaibCjfbHJ/V3IfCPRndy+b6NRx7IzMeAEC3t3zJHuAJSf8D2TNwp
- rO9ahYrWBLzxMVeMQe2kVfZkxxfvMMXyTKJPyCVZ2A073Q1qz+UuHkAva
-X-Gm-Gg: ASbGncvoVS+FKN2wuYkt0Z2Cvew2PjFdiNi/pQ9QMrX50jEyei3vsu1eti9j/RKLWHe
- LWc+rd84Eld81BeP0+Tve7t/yx14S5CMrElNg+EaPR8L0SMzlNu3Sgnv0MA7hja5kxgxSWF427I
- HVrvxFpGaPvBEqUjM82weD/I9ZbmfFEbo6Wp9riTlUvxQE7HFFNxrErIar+x/yYZgPjMFd8lcWg
- 0mIsyrdEnVIM6sbKjhzQj3/DaWMm6scbAZ+i4qX+wLF3qmPaj7UH5AvbofOpUYSDxAd/38rTDSA
- mz515uPfyoTra/jNMd6mkpDpwrMr7P183JyTkIorrJvenENk7FsHtnQo3lMZ3S2jc9oWzQJqztA
- 9YHPK3E8g
-X-Received: by 2002:a05:600c:1383:b0:46b:932f:9201 with SMTP id
- 5b1f17b1804b1-46e710ae7b2mr91124745e9.0.1759764531842; 
- Mon, 06 Oct 2025 08:28:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmDX23uEwqEyxb74F8+Y6GjXwv+xWruwXj9E50/I1psNv0XujdtAtqlHaHaL56ZiWx8JzfPQ==
-X-Received: by 2002:a05:600c:1383:b0:46b:932f:9201 with SMTP id
- 5b1f17b1804b1-46e710ae7b2mr91124455e9.0.1759764531363; 
- Mon, 06 Oct 2025 08:28:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e72374ac5sm183176435e9.18.2025.10.06.08.28.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 08:28:50 -0700 (PDT)
-Message-ID: <6aae1d93-f531-4550-95e5-07f91b432aba@redhat.com>
-Date: Mon, 6 Oct 2025 17:28:50 +0200
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1v5nQ1-0008Ts-Hi; Mon, 06 Oct 2025 11:46:40 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 596AKP5L028440;
+ Mon, 6 Oct 2025 15:46:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=NZqiZ9+GsChO+6OpaJvPTWdDMR1dKY
+ NabCeXlTA0iLc=; b=fhtzbUvv4lUXrUmP1ScGd5H5dvBF1bM9EbXScq6kMMpFR2
+ j341e5DMz8Hi+nMeqUSienE/1ozyS1EjtLJmUaJN4394ZfDMikXbGbHbspkDCQwE
+ EcBzK1yeEkcdeUJHTFazclwyfVQ0U3Uw1Jy2YkAe0I/eNuANgl0JJSS9j6+HjUq2
+ n78FtQVW370AYauk5sVZldPf1iF/YM/mE7vj90EERhY1gsQTwCjgN7uRAHbJvW/4
+ Uu+oS/ede3m4+tGdRmIM9/WdAjn0+mrLJZd8m0IkcFnBdiGdYQv+QR3RZjHL4HIL
+ tNOeoY2I2NCwXSrACrbidevKF3YpzJppyrA2Jl2w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49js0sa4xn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Oct 2025 15:46:29 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 596FUVsg024417;
+ Mon, 6 Oct 2025 15:46:28 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49js0sa4xj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Oct 2025 15:46:28 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 596CtTqA000875;
+ Mon, 6 Oct 2025 15:46:28 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49ke9xxx0t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Oct 2025 15:46:28 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 596FkQ3232834202
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Oct 2025 15:46:26 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8C5015805D;
+ Mon,  6 Oct 2025 15:46:26 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1272758043;
+ Mon,  6 Oct 2025 15:46:26 +0000 (GMT)
+Received: from [9.10.80.187] (unknown [9.10.80.187])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Oct 2025 15:46:25 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------qN8O13IwusMh2nmuuWgNSu8d"
+Message-ID: <ba125c22-3e45-4ff1-bcac-d1c23714749f@linux.ibm.com>
+Date: Mon, 6 Oct 2025 10:46:25 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/7] vfio: Implement VFIO_DEVICE_FEATURE_DMA_BUF and
- use it in virtio-gpu
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Leon Romanovsky <leon@kernel.org>, Leon Romanovsky <leonro@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Dongwon Kim <dongwon.kim@intel.com>
-References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251003234138.85820-1-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Subject: Re: [PATCH v10 3/8] ppc/pnv: Add PnvChipClass handler to get
+ reference to interrupt controller
+To: Aditya Gupta <adityag@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
+ Ganesh Goudar <ganeshgr@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20250925173049.891406-1-adityag@linux.ibm.com>
+ <20250925173049.891406-4-adityag@linux.ibm.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <20250925173049.891406-4-adityag@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=EqnfbCcA c=1 sm=1 tr=0 ts=68e3e455 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=x6icFKpwvdMA:10 a=r77TgQKjGQsHNAKrUKIA:9 a=VnNF1IyMAAAA:8
+ a=F6NbDVzyh0JcIBd0gXcA:9 a=QEXdDO2ut3YA:10 a=iorEynmUMFpPDaT-22UA:9
+ a=BKIeoQz5Cp-robm3:21 a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10
+X-Proofpoint-GUID: ToQrCnsRKfL5g0j1_OFFDFOJv6MGfoDo
+X-Proofpoint-ORIG-GUID: xhYj-g0qpjc-A1fR44nkIv0mwcFWO8PD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAzMDIwMSBTYWx0ZWRfX6WvEDAFYQQz8
+ jElBk7Tc2wQSeGk4CbMYHy2tBvfqdbQ51D8ZTsXej8zOz1HTQyPcQqg8xhkzO3qTp2fU2NqJiaw
+ 2XRCe6AEeMhiiKrtSvWf24ttWM1TmQb8ngXMySZbTRaHiijMT6k3BLeHawQurE2mlTnGpwEpIEM
+ v5c/WrF0sglSuxsqQFfqPfV+o7RNks8645kTxuBa4zm8cL0nL8/OFUlei2GFcmjwNwHZ6B3/eIQ
+ lwvLojEKlrysw5MTOh0WSMn5sMlqGm3sdlXEM1uXslBmlfjr9lqoeOL/j+4ZVl8DuyGXFv4Ih/f
+ abrQoPCWrallcqJIqluG8I6Ax/JUfV2yrahJu7Hle0YRewleVRI2b+nGoFdPgqmsZ0nXv/UcD57
+ Nn/bC5JOoUv+Id29Yvl+hist3n6Xvw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-06_05,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 impostorscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510030201
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,86 +133,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vivek,
+This is a multi-part message in MIME format.
+--------------qN8O13IwusMh2nmuuWgNSu8d
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 10/4/25 01:35, Vivek Kasireddy wrote:
-> The virtio-gpu driver running in the Guest VM can create Guest blob
-> resources (by importing dmabufs) that are backed by System RAM. This
-> is made possible by making use of memfd memory backend and udmabuf
-> driver on the Host side. However, in order to create Guest blobs
-> that are backed by vfio-pci device regions (which happens when
-> virtio-gpu imports dmabufs from devices that have local memory such
-> as dGPU VFs), we have to implement VFIO_DEVICE_FEATURE_DMA_BUF and
-> leverage it in virtio-gpu.
-> 
-> So, while creating the blobs we use memory_region_is_ram_device() to
-> figure out if the blob is backed by memfd or a vfio-pci device. If
-> it is determined that the blob is backed by vfio-pci device region,
-> instead of calling into udmabuf driver to create dmabuf we would
-> now call into vfio-pci driver to have a dmabuf created on the Host.
-> 
-> RFC -> v1:
-> - Create the CPU mapping using vfio device fd if the dmabuf exporter
->    (vfio-pci) does not provide mmap() support (Akihiko)
-> - Log a warning with LOG_GUEST_ERROR instead of warn_report() when
->    dmabuf cannot be created using Guest provided addresses (Akihiko)
-> - Use address_space_translate() instead of gpa2hva() to obtain the
->    Host addresses (Akihiko)
-> - Rearrange the patches and improve the commit messages (Akihiko)
-> - Fix compilation error when VFIO is not enabled (Alex)
-> - Add a new helper to obtain VFIO region index from memory region
-> - Move vfio_device_create_dmabuf() to hw/vfio/device.c
-> 
-> Tested with an SRIOV enabled Intel dGPU by running Gnome Wayland
 
-Could you please be more precise on the HW ?
+On 9/25/2025 12:30 PM, Aditya Gupta wrote:
+> Existing code in XIVE2 assumes the chip to be a Power10 Chip.
+> Instead add a handler to get reference to the interrupt controller (XIVE)
+> for a given Power Chip.
 
-> (in the VM) and Qemu with the following (relevant) parameters:
-> -device vfio-pci,host=0000:03:00.1
-> -device virtio-vga,max_outputs=1,xres=1920,yres=1080,blob=true
-> -display gtk,gl=on
-> 
-> Associated vfio-pci kernel driver series:
-> https://lore.kernel.org/dri-devel/cover.1754311439.git.leon@kernel.org/
-> Associated virtio-gpu kernel driver series (merged):
-> https://lore.kernel.org/dri-devel/20241126031643.3490496-1-vivek.kasireddy@intel.com/
-> 
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
+
+> Signed-off-by: Aditya Gupta<adityag@linux.ibm.com>
 > ---
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex.williamson@redhat.com>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Cc: Leon Romanovsky <leon@kernel.org>
-> Cc: Leon Romanovsky <leonro@nvidia.com>
-> Cc: Jason Gunthorpe <jgg@nvidia.com>
-> Cc: Dongwon Kim <dongwon.kim@intel.com>
-> 
-> Vivek Kasireddy (7):
->    virtio-gpu: Recreate the resource's dmabuf if new backing is attached
->    virtio-gpu: Don't rely on res->blob to identify blob resources
->    virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
->    vfio/region: Add a helper to get region index from memory region
->    linux-headers: Update vfio.h to include VFIO_DEVICE_FEATURE_DMA_BUF
->    vfio/device: Add support for VFIO_DEVICE_FEATURE_DMA_BUF
->    virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO
->      devices
-> 
->   hw/display/Kconfig              |   5 ++
->   hw/display/virtio-gpu-udmabuf.c | 143 ++++++++++++++++++++++++++++++--
->   hw/display/virtio-gpu.c         |  53 +++++++++---
->   hw/vfio/device.c                |  43 ++++++++++
->   hw/vfio/region.c                |  14 ++++
->   include/hw/vfio/vfio-device.h   |   5 ++
->   linux-headers/linux/vfio.h      |  25 ++++++
->   7 files changed, 270 insertions(+), 18 deletions(-)
-> 
+>   hw/intc/pnv_xive2.c       |  4 ++--
+>   hw/ppc/pnv.c              | 12 ++++++++++++
+>   include/hw/ppc/pnv_chip.h |  1 +
+>   3 files changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index e019cad5c14c..0663baab544c 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+>       int i;
+>   
+>       for (i = 0; i < pnv->num_chips; i++) {
+> -        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+> -        PnvXive2 *xive = &chip10->xive;
+> +        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
+> +        PnvXive2 *xive = PNV_XIVE2(k->intc_get(pnv->chips[i]));
+>   
+>           /*
+>            * Is this the XIVE matching the forwarded VSD address is for this
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 423954ba7e0c..a4fdf59207fa 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1486,6 +1486,16 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+>       xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+>   }
+>   
+> +static void *pnv_chip_power10_intc_get(PnvChip *chip)
+> +{
+> +    return &PNV10_CHIP(chip)->xive;
+> +}
+> +
+> +static void *pnv_chip_power11_intc_get(PnvChip *chip)
+> +{
+> +    return &PNV11_CHIP(chip)->xive;
+> +}
+> +
+>   /*
+>    * Allowed core identifiers on a POWER8 Processor Chip :
+>    *
+> @@ -2680,6 +2690,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, const void *data)
+>       k->intc_reset = pnv_chip_power10_intc_reset;
+>       k->intc_destroy = pnv_chip_power10_intc_destroy;
+>       k->intc_print_info = pnv_chip_power10_intc_print_info;
+> +    k->intc_get = pnv_chip_power10_intc_get;
+>       k->isa_create = pnv_chip_power10_isa_create;
+>       k->dt_populate = pnv_chip_power10_dt_populate;
+>       k->pic_print_info = pnv_chip_power10_pic_print_info;
+> @@ -2709,6 +2720,7 @@ static void pnv_chip_power11_class_init(ObjectClass *klass, const void *data)
+>       k->chip_cfam_id = 0x220da04980000000ull; /* P11 DD2.0 (with NX) */
+>       k->cores_mask = POWER11_CORE_MASK;
+>       k->get_pir_tir = pnv_get_pir_tir_p10;
+> +    k->intc_get = pnv_chip_power11_intc_get;
+>       k->isa_create = pnv_chip_power11_isa_create;
+>       k->dt_populate = pnv_chip_power11_dt_populate;
+>       k->pic_print_info = pnv_chip_power11_pic_print_info;
+> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> index 6bd930f8b439..a5b8c49680d3 100644
+> --- a/include/hw/ppc/pnv_chip.h
+> +++ b/include/hw/ppc/pnv_chip.h
+> @@ -170,6 +170,7 @@ struct PnvChipClass {
+>       void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+>       void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+>       void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
+> +    void* (*intc_get)(PnvChip *chip);
+>       ISABus *(*isa_create)(PnvChip *chip, Error **errp);
+>       void (*dt_populate)(PnvChip *chip, void *fdt);
+>       void (*pic_print_info)(PnvChip *chip, GString *buf);
+--------------qN8O13IwusMh2nmuuWgNSu8d
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Please cc: Alex and I on all patches.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 9/25/2025 12:30 PM, Aditya Gupta
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20250925173049.891406-4-adityag@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">Existing code in XIVE2 assumes the chip to be a Power10 Chip.
+Instead add a handler to get reference to the interrupt controller (XIVE)
+for a given Power Chip.
+</pre>
+    </blockquote>
+    <br>
+    <pre>Reviewed-by: Michael Kowal <a class="moz-txt-link-rfc2396E" href="mailto:kowal@linux.ibm.com">&lt;kowal@linux.ibm.com&gt;</a></pre>
+    <blockquote type="cite"
+      cite="mid:20250925173049.891406-4-adityag@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">
+Signed-off-by: Aditya Gupta <a class="moz-txt-link-rfc2396E" href="mailto:adityag@linux.ibm.com">&lt;adityag@linux.ibm.com&gt;</a>
+---
+ hw/intc/pnv_xive2.c       |  4 ++--
+ hw/ppc/pnv.c              | 12 ++++++++++++
+ include/hw/ppc/pnv_chip.h |  1 +
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-Thanks,
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index e019cad5c14c..0663baab544c 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+     int i;
+ 
+     for (i = 0; i &lt; pnv-&gt;num_chips; i++) {
+-        Pnv10Chip *chip10 = PNV10_CHIP(pnv-&gt;chips[i]);
+-        PnvXive2 *xive = &amp;chip10-&gt;xive;
++        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv-&gt;chips[i]);
++        PnvXive2 *xive = PNV_XIVE2(k-&gt;intc_get(pnv-&gt;chips[i]));
+ 
+         /*
+          * Is this the XIVE matching the forwarded VSD address is for this
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 423954ba7e0c..a4fdf59207fa 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1486,6 +1486,16 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)-&gt;intc), buf);
+ }
+ 
++static void *pnv_chip_power10_intc_get(PnvChip *chip)
++{
++    return &amp;PNV10_CHIP(chip)-&gt;xive;
++}
++
++static void *pnv_chip_power11_intc_get(PnvChip *chip)
++{
++    return &amp;PNV11_CHIP(chip)-&gt;xive;
++}
++
+ /*
+  * Allowed core identifiers on a POWER8 Processor Chip :
+  *
+@@ -2680,6 +2690,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, const void *data)
+     k-&gt;intc_reset = pnv_chip_power10_intc_reset;
+     k-&gt;intc_destroy = pnv_chip_power10_intc_destroy;
+     k-&gt;intc_print_info = pnv_chip_power10_intc_print_info;
++    k-&gt;intc_get = pnv_chip_power10_intc_get;
+     k-&gt;isa_create = pnv_chip_power10_isa_create;
+     k-&gt;dt_populate = pnv_chip_power10_dt_populate;
+     k-&gt;pic_print_info = pnv_chip_power10_pic_print_info;
+@@ -2709,6 +2720,7 @@ static void pnv_chip_power11_class_init(ObjectClass *klass, const void *data)
+     k-&gt;chip_cfam_id = 0x220da04980000000ull; /* P11 DD2.0 (with NX) */
+     k-&gt;cores_mask = POWER11_CORE_MASK;
+     k-&gt;get_pir_tir = pnv_get_pir_tir_p10;
++    k-&gt;intc_get = pnv_chip_power11_intc_get;
+     k-&gt;isa_create = pnv_chip_power11_isa_create;
+     k-&gt;dt_populate = pnv_chip_power11_dt_populate;
+     k-&gt;pic_print_info = pnv_chip_power11_pic_print_info;
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index 6bd930f8b439..a5b8c49680d3 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -170,6 +170,7 @@ struct PnvChipClass {
+     void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+     void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+     void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
++    void* (*intc_get)(PnvChip *chip);
+     ISABus *(*isa_create)(PnvChip *chip, Error **errp);
+     void (*dt_populate)(PnvChip *chip, void *fdt);
+     void (*pic_print_info)(PnvChip *chip, GString *buf);
+</pre>
+    </blockquote>
+  </body>
+</html>
 
-C.
+--------------qN8O13IwusMh2nmuuWgNSu8d--
 
 
