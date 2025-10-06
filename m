@@ -4,80 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7420ACAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 17:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DD4CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 18:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5p8H-00081I-QF; Mon, 06 Oct 2025 13:36:21 -0400
+	id 1v5psn-0000Er-G8; Mon, 06 Oct 2025 14:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1v5p8F-0007xU-T2
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 13:36:19 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1v5p8C-0004vD-M3
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 13:36:19 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b6271ea3a6fso2964224a12.0
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 10:36:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1759772170; x=1760376970; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Q3C6CwuqIFrFI2iiklFYKdtcNRgwZcaZQoza37YVI6Y=;
- b=dYFtnmoPoKCfmNxQzhzlXIotE0mbPoHTXysUggVCEXXrHyleh4KE4JfhJih9AlLASY
- qD4jRlPGkHqU6Rcxv8ZwVAch/kdxZHNX5+EZyu9YgusTimYj7vFZdmFeSVECtm8rZGbh
- aiPUAx3icaWyorC6mBXwG8QU/1NfowsubNYLh1Uv0o4+gneyW3Zk+P7feBKIk36HaEMz
- HCMmFSkFQnKseyOMkGlNfG8/3qCBbnXmgUT3m3LyRlp8mmm2+wkLjSL6I4uRptqU2Vrj
- tjxlikwps+bZvM7S9I6Wdq2eszGKFqbcvjdKC5a2xde0mHdSCKH+Njw/xwF0wPXSyNS5
- boOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759772170; x=1760376970;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Q3C6CwuqIFrFI2iiklFYKdtcNRgwZcaZQoza37YVI6Y=;
- b=PqDwdHos5NzlTCd5Su2kws+dHGypIBRNiDw5o7ezfmw1DiVX/95qKc88pMIEv7uN84
- qeeyC6+iEePQvxs+HTB/2rf/fg3IJsj2vGniwKVr6HYhY22QvFBYr8VpwNtOc9nd9v3B
- ymFsuvFGWsWAVly+lb2Se46xd8i5IrIH4ka9L/zRzzlH/PFSV7DlHLZv0ODDG54wI2jU
- O2np25do6OtZFPs4MzZen6ibLWDOOLM4fQyjrPNULyznRzBLAaiefSSsIq30LKHlHUbw
- i68wrWkZNT1VUda6X4Pb3CVIoirzudmkwwxsd8wRrc/w5Sc7HgOKhYHdllG/tjydY4pw
- Ox/A==
-X-Gm-Message-State: AOJu0YwcJTJS5czE0yMGSaP2mKq3sF/vsr/VEecBB1bKbwJWhdygG9/b
- 4+6sdT6EKfhUzyN70zJkMp0hhROIsYJTDbRoiRx5AKBawTij9LZUJBj0LNM7KJORd4r05U0xTCv
- A9BNeGNUEk+PUfktOwkOmNM6mwG5HPjWQybvoeOKDUw==
-X-Gm-Gg: ASbGncsS4yQpnaT7yV7ZKNHjyavmvwlqnp8FJexnrxoYiVuQSoSzCYivZS6A8XsXjui
- ep0DjPA+178NaVBKjBx/SSjj/dg1rybowUAakrFaCGxdJ5iaQplCdTS+9XtgTcketrocQ0zR7oj
- XLqSlZmi59P9otUvRAxKZXtnYjFTh3cFapf8zV/JH9axcotAe5D8qTBlb/6pmVcvIdubwGqy3V1
- +hsQPo8kKdDgiRny+6qv/cI+FdVnA==
-X-Google-Smtp-Source: AGHT+IEIPK10UABKg8NL03FDJA81+SiXWFxxPBN/jVhYAXi08ON2MHpu2SKWUGGjuD3n1nVLPwZOL9APBAOI0NOi8II=
-X-Received: by 2002:a17:903:11cf:b0:275:b1cf:6dd7 with SMTP id
- d9443c01a7336-28e9a61a9a0mr152506755ad.34.1759772170111; Mon, 06 Oct 2025
- 10:36:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v5psl-0000BP-6Z; Mon, 06 Oct 2025 14:24:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v5psi-00029F-HG; Mon, 06 Oct 2025 14:24:22 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 596BLE4Z010234;
+ Mon, 6 Oct 2025 18:24:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=w11XoW
+ NbJgQGkAhq5IlooxA/dZW2acqeO4AFTX+4gr4=; b=ojjGY8TW0KuzBJ4VHoDc5d
+ u7JpQCtflJFRfkm7mT8YZ/9PjY2QiTvenTAa6gJUUMghwKH3mdL21YsID4GIk9xO
+ bxKgKYvNOPChFHcBdtosPTm4O0g+InNFRajNcQb8Xw93rQ3dWW6DeYRI2ityFKC8
+ gPglvqpml4rMVDmWZs/neXsIPmNryS8YuHEnj+oIyl1hgWx57n8KQSqJ/HoJpD5g
+ Ng+IsRq6HE5aIf0iisd2KkS+fIapCuuY2BFEjtVN1J1iilUU2HjqMAMh1c89nekI
+ LEucYL5lGFFH1nLPf2A1MFVMmCa98kS3Iy8aFp5i9w5iSiW7ONEdN/VjNXsvdM8A
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49ju3gu2wj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Oct 2025 18:24:16 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 596IGvEv022482;
+ Mon, 6 Oct 2025 18:24:15 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49ju3gu2we-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Oct 2025 18:24:15 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 596Gij7J027961;
+ Mon, 6 Oct 2025 18:24:14 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49kewmyfuf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Oct 2025 18:24:14 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 596IOAAI58458580
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Oct 2025 18:24:10 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 26AAB2004B;
+ Mon,  6 Oct 2025 18:24:10 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4D29820040;
+ Mon,  6 Oct 2025 18:24:07 +0000 (GMT)
+Received: from [9.124.214.168] (unknown [9.124.214.168])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Oct 2025 18:24:07 +0000 (GMT)
+Message-ID: <12ac41c8-7753-4191-8e64-afb91b51bde2@linux.ibm.com>
+Date: Mon, 6 Oct 2025 23:54:05 +0530
 MIME-Version: 1.0
-References: <20251006173350.17455-1-philmd@linaro.org>
-In-Reply-To: <20251006173350.17455-1-philmd@linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Mon, 6 Oct 2025 19:35:57 +0200
-X-Gm-Features: AS18NWDfcfqo26xRjAetJgiUC6-QceKursJYBV9sUI8JC5d3EJkqx9GIj4w78LI
-Message-ID: <CAJy5ezrAs7i9_gQjBTLXanFCYotTgJuL7DuecNwLTZtvTTEp4A@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/microblaze: Fix little-endianness binary
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000015ce77064080e32d"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/8] ppc/pnv: Introduce Pnv11Chip
+To: Mike Kowal <kowal@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
+ Ganesh Goudar <ganeshgr@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20250925173049.891406-1-adityag@linux.ibm.com>
+ <20250925173049.891406-2-adityag@linux.ibm.com>
+ <d845b30b-5296-485a-a360-e617fb50ed17@linux.ibm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <d845b30b-5296-485a-a360-e617fb50ed17@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxOCBTYWx0ZWRfX9diSXgEwGQT9
+ C9DcnuTjvdTWRnMMx/2zKo2EwyMNdsXe+L7S7aDveTHDaMfIjxVO6/7FY4k6mYuWM79qMXsufhk
+ yS7n7i87+HnW1Y5C6iqlyTshWg4yXBtWcMvh28mrzGKFGPw4NnlGjh0xqDmT5fmjUWEqPfqMAoF
+ HTe0tFNREa/QjbJwCPYU1IJmQZ8aOYT1QrJKo2BCvrG7jd+CyOafJjdbLFM04nY8i7itV2wi6M+
+ vaS0LZDFCgexg+4bdDgDQXzBXYjnjuK7IvMneeBODxXmGZNMBzeKvENdP98OEmJjPvhIw6w7BCz
+ +AWGisB0Zl8h/3y0YK+Qz94dQ2isQz4l0rhOcVMfP4S28SR72lQGUIGr4Q8V4+V/u9NS6xT9VfY
+ 1xUuaZbSxCTvtPssvu0h2nwm8b56Aw==
+X-Authority-Analysis: v=2.4 cv=I4dohdgg c=1 sm=1 tr=0 ts=68e40950 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=e9fe54QSqPNgmJ2B5QkA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: ih7qS6VIPVYGjoYBGSGwWWAej4_V35TP
+X-Proofpoint-ORIG-GUID: pNXbdSKnbFIBSy4AjNNMmPAYb4EfZd5d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-06_05,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040018
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,158 +133,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000015ce77064080e32d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 06/10/25 21:15, Mike Kowal wrote:
 
-On Mon, Oct 6, 2025 at 7:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org>
-wrote:
-
-> MicroBlaze CPU model has a "little-endian" property, pointing to
-> the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-> Explicit CPU endianness") took care of having all MicroBlaze
-> boards with an explicit default endianness, so later commit
-> 415aae543ed ("target/microblaze: Consider endianness while
-> translating code") could infer the endianness at runtime from
-> the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-> definition. Doing so, we forgot to make the endianness explicit
-> on user emulation, so there all CPUs are started with the default
-> "little-endian=3Doff" value, leading to breaking support for little
-> endian binaries:
->
->   $ readelf -h ./hello-world-mbel
->   ELF Header:
->     Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
->     Class:                             ELF32
->     Data:                              2's complement, little endian
->
->   $ qemu-microblazeel ./hello-world-mbel
->   qemu: uncaught target signal 11 (Segmentation fault) - core dumped
->   Segmentation fault (core dumped)
->
-> Fix by restoring the previous behavior of starting with the
-> builtin endianness of the binary:
->
->   $ qemu-microblazeel ./hello-world-mbel
->   Hello World
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 415aae543ed ("target/microblaze: Consider endianness while
-> translating code")
-> Reported-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
 
+Thanks for your reviews Michael !
 
-> ---
->  linux-user/microblaze/elfload.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/linux-user/microblaze/elfload.c
-> b/linux-user/microblaze/elfload.c
-> index 7eb1b26d170..bdc0a953d59 100644
-> --- a/linux-user/microblaze/elfload.c
-> +++ b/linux-user/microblaze/elfload.c
-> @@ -8,7 +8,8 @@
->
->  const char *get_elf_cpu_model(uint32_t eflags)
->  {
-> -    return "any";
-> +    return TARGET_BIG_ENDIAN ? "any,little-endian=3Doff"
-> +                             : "any,little-endian=3Don";
->  }
->
->  void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
-> --
-> 2.51.0
->
->
 
---00000000000015ce77064080e32d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+- Aditya G
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Oct 6, 2025 at 7:33=E2=80=AFPM Ph=
-ilippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@l=
-inaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_contain=
-er"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex">MicroBlaze CPU model =
-has a &quot;little-endian&quot; property, pointing to<br>
-the @endi internal field. Commit c36ec3a9655 (&quot;hw/microblaze:<br>
-Explicit CPU endianness&quot;) took care of having all MicroBlaze<br>
-boards with an explicit default endianness, so later commit<br>
-415aae543ed (&quot;target/microblaze: Consider endianness while<br>
-translating code&quot;) could infer the endianness at runtime from<br>
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN<br>
-definition. Doing so, we forgot to make the endianness explicit<br>
-on user emulation, so there all CPUs are started with the default<br>
-&quot;little-endian=3Doff&quot; value, leading to breaking support for litt=
-le<br>
-endian binaries:<br>
-<br>
-=C2=A0 $ readelf -h ./hello-world-mbel<br>
-=C2=A0 ELF Header:<br>
-=C2=A0 =C2=A0 Magic:=C2=A0 =C2=A07f 45 4c 46 01 01 01 00 00 00 00 00 00 00 =
-00 00<br>
-=C2=A0 =C2=A0 Class:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ELF32<br>
-=C2=A0 =C2=A0 Data:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 2&#39;s complement, little=
- endian<br>
-<br>
-=C2=A0 $ qemu-microblazeel ./hello-world-mbel<br>
-=C2=A0 qemu: uncaught target signal 11 (Segmentation fault) - core dumped<b=
-r>
-=C2=A0 Segmentation fault (core dumped)<br>
-<br>
-Fix by restoring the previous behavior of starting with the<br>
-builtin endianness of the binary:<br>
-<br>
-=C2=A0 $ qemu-microblazeel ./hello-world-mbel<br>
-=C2=A0 Hello World<br>
-<br>
-Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
-@nongnu.org</a><br>
-Fixes: 415aae543ed (&quot;target/microblaze: Consider endianness while tran=
-slating code&quot;)<br>
-Reported-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@gmail.c=
-om" target=3D"_blank">edgar.iglesias@gmail.com</a>&gt;<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.ig=
-lesias@amd.com">edgar.iglesias@amd.com</a>&gt;<br></div><div><br></div><div=
->=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0linux-user/microblaze/elfload.c | 3 ++-<br>
-=C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
-<br>
-diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfloa=
-d.c<br>
-index 7eb1b26d170..bdc0a953d59 100644<br>
---- a/linux-user/microblaze/elfload.c<br>
-+++ b/linux-user/microblaze/elfload.c<br>
-@@ -8,7 +8,8 @@<br>
-<br>
-=C2=A0const char *get_elf_cpu_model(uint32_t eflags)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return &quot;any&quot;;<br>
-+=C2=A0 =C2=A0 return TARGET_BIG_ENDIAN ? &quot;any,little-endian=3Doff&quo=
-t;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: &quot;any,little-endian=3Don&quot;;<br>
-=C2=A0}<br>
-<br>
-=C2=A0void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *en=
-v)<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
-
---00000000000015ce77064080e32d--
 
