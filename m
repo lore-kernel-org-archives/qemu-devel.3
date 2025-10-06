@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6ECCCA472
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2FFCAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5iDt-0001wv-CO; Mon, 06 Oct 2025 06:13:41 -0400
+	id 1v5iQq-0001wj-D6; Mon, 06 Oct 2025 06:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v5iDR-0001f1-Cm
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:13:13 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v5iDP-0006PW-ET
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:13:13 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-46e2e6a708fso30619285e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759745589; x=1760350389; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S27uLFqdarRJAqBGQLSekBvokGakda90uhNSpOUGR/g=;
- b=DmCvCQxDM+M+r6l7JqauO2jcJd58WoWIKViRxY4vTlObobhBonAj0qHQXX3Fkq2ZQ/
- 9N2uh7u1zA3Jqyxz2f8YfCEFcbAjhvXEPU89RgBnUN7dHRu0+y/7sYh3sdPtdHrOsAvA
- UgdQ7b+Zj1N9c6NFByUx3mlOj08xfDtSLacvuNkKSxcpur0Ovo5sTChCFBpgGOZ7EEAu
- PoZ9cJ/eInVDz6igQUkCixHIo0m+ZvmyzyvVKJBiumTzedSPawWXXneOrCHndkeTKCJ1
- KT2xk/jG3GpYu5Tb/Rmxx7DYBXTvJRYQMTuJnet/i+FUAaUD2KC31UXaHHHK1kwzoH5W
- DGbg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5iQo-0001wb-Ou
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:27:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5iQn-00089w-1H
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:27:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759746419;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hx1eRPIFFxHOm4a9J7E46IkAGP6DTYAnqRweVWO3UhI=;
+ b=UKuI+8bksK0WFBPLZFmdRoSQIKiGIxNe7d59cVUpfyvoN0bcQbEZ2q0r/PiCtPhBw+l7/t
+ Uwo6Zp9yivLEczGCWAm1optcPRDeMj1rxei/Qv9XK9to4b3FF+sBrTCcBOmSRopb7bbH9K
+ wv1HE9wEz8mWygZ0UWuDGGq3tST/R1A=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-93-3jGXUvm5NjyQRE-xU3QelQ-1; Mon, 06 Oct 2025 06:26:58 -0400
+X-MC-Unique: 3jGXUvm5NjyQRE-xU3QelQ-1
+X-Mimecast-MFC-AGG-ID: 3jGXUvm5NjyQRE-xU3QelQ_1759746417
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42558f501adso2072490f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:26:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759745589; x=1760350389;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=S27uLFqdarRJAqBGQLSekBvokGakda90uhNSpOUGR/g=;
- b=nBo0RFjo5Kt0UkOjEqDadKPnyRyNizpixCwHHOM9FvM4elh29FWbHR2eZ+PCLTN1XM
- 23RvS0xCrkqrp17ZLSrI7ayuJCeG/yzzdA5CrpvhVoOTSxPDsniTzxPRYnCZoN4xTwu0
- 1Iu5CmLWx8z3KZCeyqht7wx+dH5qqgBM/vy5B+fiGgKMRVrjKKoKqmMwa48CTu2Ml+44
- Qb60SoN5s1yFfu1UCNcsxfC7MBOhM2xeENH1lCQR29aFvrWH/+gCkY0L+5IOh3biVlpC
- 3UKg+DfraFpfvRoX+eTUUdFPRK9nQXRCX3BEGNkq9QNDwRJ6wpfokFz4h+Pohk4qYFwx
- i0rQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjWadPObhvoj6fTpZy2loFpHf1T93+xecmx4a/mQNd6agztQobV7Rap4rP1ltDKZk9J1dR4Nv+y88A@nongnu.org
-X-Gm-Message-State: AOJu0Yxkx2F4VIFtzyIPLPw8VO36hd9A4bpBGi5e2vVNSzsMWOLq9iAm
- uYI2gYymr6IdhK+D7F8bC2gaM9fu6x6RdXg5gfN+r7/66dHqKIv03dwpWX96rkxbNQ4=
-X-Gm-Gg: ASbGncsEm2d6nvnH+GXIKM14PL55NmKzkxu84lGJILsg5FJ4js+kC7onRp0vxn/TEYr
- jgBwEM4qeJFWprf2RaEU3Dj9SHKGDI+8wt0MnD2rN1MVtcVkCrc7uRgc+7mpWqiZMThRw+arP7y
- gQ5+5PC0CrYH0Qdfgs1/aUbi7S9KrhgYy4OWqts5bQiBvKHsgAc4cdSrGYvselGpEPCMy0xMI8S
- ZV1LqcNr/ilX4McCTEkcIZ0adkAt/kDAx/z1aGuf/v23YPsFNngs6Mcg/+XoJ5ReVcNzVTlXuO1
- bQFCCVuJ8MGhQPFKMVD3J22QL+RCJGEmJEjwYrpq1llnXL4Q+7LWYtg99S5Cpbztrq+QFNk6kUK
- iNu0VQ7awry429kBVbuT4aM6FZPW2gjAP396ZxG/zFMcYrSu2e2E=
-X-Google-Smtp-Source: AGHT+IHZzw8T+o7XFBCLrtC2yDC0uCOTN/vo2Dfr+4IlZyWhuIwPlXwRo7vqBL+Ce6FNEuvV7aYMhg==
-X-Received: by 2002:a05:600c:19d0:b0:46e:3709:d88a with SMTP id
- 5b1f17b1804b1-46e7115b0bcmr78471135e9.33.1759745588882; 
- Mon, 06 Oct 2025 03:13:08 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723614c9sm150018855e9.14.2025.10.06.03.13.07
+ d=1e100.net; s=20230601; t=1759746417; x=1760351217;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hx1eRPIFFxHOm4a9J7E46IkAGP6DTYAnqRweVWO3UhI=;
+ b=tsiOyn2qUh2cTMZDYHqrz0cbta8BZugH9gkj7pv6SIkTtQzpEklxE9VFJrf5YYRUgy
+ llWvI8NBV6yVBXMiMtmjync3Bf1EgPBipQfGKYVsLwu0kZsaa9AGSpFFMP5XPydmWvH6
+ 7MRgi52A09UHcyv4jvn0hh1AbhisLS+YwU1b5qP3GFyF4i10+cb3FGw4IoXtMJpIrExy
+ GduyLYRv0hUpkvs2yv2xjpjFv7ysheyMm3lsLW2bJ7ExOqT7ws8vuVTL73Ot88o/gg6B
+ SJap18KgzxSebB+jTT4WIgoGFMrJRXVhnHOf31l9nSL5V10LgyAZKtrE8ydQbdhm7b9v
+ Rj/w==
+X-Gm-Message-State: AOJu0YwVo82KswaD5MjJdD3e/3zJrxnv76r+ByL/mMszK52YOYCKSur3
+ XM2zFuwvAJy/GHIZN2ABH5I2oVKvtsqiO/2+rQn+CQ18vohzafP6DOLrnFkHkLYxoxymtRjDR/q
+ poIBmmwGYZ+D/RDlObrXiSoy3B1i92xAxqPzKL9SsDusGK27hahSN6pJe
+X-Gm-Gg: ASbGncu16CvnboHGhKimDNGhVdZDOikk3m64oMcJN9Eci5S4Y/QqKWwWsbA8cuqGgN7
+ p79io9U9Dre2aFlqqriTEWKnXPE4JLf0UZA20XCMXVK66EtEtc7dgJ2ztY/jHuI224RcP1jz09p
+ 9d/UAekcLHpRfbwElQebR1BXAq++5swX4BJPGqpvQYkt80JyAXSoBYUcbpnpM2FifNz6bS+6Lgj
+ At5FdtYwGqMqHtPQPVyd1/OnJfTNGfHuZEEzeZqgikechfznqiQbaJXOrK5+xsnILtiY1NXnwUY
+ qMR4h92m9ZHacQ01B7ceeT57xyBtr2xRcW+wyPI=
+X-Received: by 2002:a05:6000:43c6:10b0:425:72b3:7368 with SMTP id
+ ffacd0b85a97d-42572b3739fmr4111761f8f.56.1759746417042; 
+ Mon, 06 Oct 2025 03:26:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9tVSThEbRlfl5KMR9XUYu2gh6jOa/VYTVmmVj5xGGUg3oMhlQzAXj+FGtfCBlHW8wyoHL1A==
+X-Received: by 2002:a05:6000:43c6:10b0:425:72b3:7368 with SMTP id
+ ffacd0b85a97d-42572b3739fmr4111739f8f.56.1759746416515; 
+ Mon, 06 Oct 2025 03:26:56 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8e980dsm21747095f8f.36.2025.10.06.03.26.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Oct 2025 03:13:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B10C95F845;
- Mon, 06 Oct 2025 11:13:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
- berrange@redhat.com,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v6 4/9] tests/functional: Add GDB class
-In-Reply-To: <7aae5daa-5e07-463c-bc3a-6581050688af@redhat.com> (Thomas Huth's
- message of "Mon, 6 Oct 2025 08:30:30 +0200")
-References: <20251003141820.85278-1-gustavo.romero@linaro.org>
- <20251003141820.85278-5-gustavo.romero@linaro.org>
- <7aae5daa-5e07-463c-bc3a-6581050688af@redhat.com>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Mon, 06 Oct 2025 11:13:06 +0100
-Message-ID: <87frbw1gp9.fsf@draig.linaro.org>
+ Mon, 06 Oct 2025 03:26:55 -0700 (PDT)
+Date: Mon, 6 Oct 2025 06:26:53 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Jonathan Cameron via <qemu-devel@nongnu.org>, shiju.jose@huawei.com,
+ Davidlohr Bueso <dave@stgolabs.net>, armbru@redhat.com,
+ Fan Ni <fan.ni@samsung.com>, linux-cxl@vger.kernel.org,
+ linuxarm@huawei.com, Ravi Shankar <venkataravis@micron.com>
+Subject: Re: [PATCH qemu for 10.2 0/3] cxl: Additional RAS features support.
+Message-ID: <20251006062628-mutt-send-email-mst@kernel.org>
+References: <20250917143330.294698-1-Jonathan.Cameron@huawei.com>
+ <20251006101304.000055f8@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251006101304.000055f8@huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,64 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On Mon, Oct 06, 2025 at 10:13:04AM +0100, Jonathan Cameron wrote:
+> On Wed, 17 Sep 2025 15:33:27 +0100
+> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+> 
+> > These two features have been used in testing the related EDAC RAS
+> > features drivers in Linux which are now upstream. Only minor tweaks
+> > from the second part of:
+> > https://lore.kernel.org/qemu-devel/20250811085530.2263-1-shiju.jose@huawei.com/
+> > [PATCH v6 0/8] hw/cxl: Update CXL events to rev3.2 and add maintenance support for memory repair features
+> > 
+> > I've split that series up as the two parts were only slightly connected.
+> > However there is some churn if this is applied without the other part of Shiju's posted
+> > series. That was sent a few minutes ago as:
+> > https://lore.kernel.org/qemu-devel/20250917141355.293217-1-Jonathan.Cameron@huawei.com/
+> > 
+> > Based on: [PATCH qemu for 10.2 0/5] cxl: r3.2 specification events updates.
+> > Based on: 20250917141355.293217-1-Jonathan.Cameron@huawei.com
+> > 
+> > Davidlohr Bueso (1):
+> >   hw/cxl: Add support for Maintenance command and Post Package Repair
+> >     (PPR)
+> > 
+> Hi Michael,
+> 
+> I see you have queued some stuff up on your gitlab tree.
+> Just wanted to make sure these are on the radar for possible inclusion.
+> No huge rush, but I'll queue some more series up on top of these
+> shortly.
+> 
+> Thanks
+> 
+> Jonathan
 
-> On 03/10/2025 16.18, Gustavo Romero wrote:
->> Add GDB class, which provides methods to run GDB commands and capture
->> their output. The GDB class is a wrapper around the pygdbmi module and
->> interacts with GDB via GDB's machine interface (MI).
->> Acked-by: Thomas Huth <thuth@redhat.com>
->> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   tests/functional/qemu_test/__init__.py |  1 +
->>   tests/functional/qemu_test/gdb.py      | 88 ++++++++++++++++++++++++++
->>   2 files changed, 89 insertions(+)
->>   create mode 100644 tests/functional/qemu_test/gdb.py
->> diff --git a/tests/functional/qemu_test/__init__.py
->> b/tests/functional/qemu_test/__init__.py
->> index 6e666a059f..60d19891bf 100644
->> --- a/tests/functional/qemu_test/__init__.py
->> +++ b/tests/functional/qemu_test/__init__.py
->> @@ -18,3 +18,4 @@
->>       skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest
->>   from .archive import archive_extract
->>   from .uncompress import uncompress
->> +from .gdb import GDB
->> diff --git a/tests/functional/qemu_test/gdb.py b/tests/functional/qemu_t=
-est/gdb.py
->> new file mode 100644
->> index 0000000000..05e4c29c2a
->> --- /dev/null
->> +++ b/tests/functional/qemu_test/gdb.py
->> @@ -0,0 +1,88 @@
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +#
->> +# A simple interface module built around pygdbmi for handling GDB comma=
-nds.
->> +#
->> +# Copyright (c) 2025 Linaro Limited
->> +#
->> +# Author:
->> +#  Gustavo Romero <gustavo.romero@linaro.org>
->> +#
->> +# This work is licensed under the terms of the GNU GPL, version 2 or
->> +# later.  See the COPYING file in the top-level directory.
->
->  Hi,
->
-> just as a reminder, this still needs the change requested by Daniel:
->
-> https://lore.kernel.org/qemu-devel/aN56GkbIFxs5IDRR@redhat.com/
+thanks for the reminder, will queue.
 
-I've fixed that up in my current PR branch:
+> > Shiju Jose (2):
+> >   hw/cxl/cxl-mailbox-utils: Move declaration of scrub and ECS feature
+> >     attributes in cmd_features_set_feature()
+> >   hw/cxl: Add emulation for memory sparing control feature
+> > 
+> >  include/hw/cxl/cxl_device.h | 145 +++++++++
+> >  include/hw/cxl/cxl_events.h |  47 +++
+> >  hw/cxl/cxl-mailbox-utils.c  | 566 +++++++++++++++++++++++++++++++++++-
+> >  hw/mem/cxl_type3.c          | 169 +++++++++++
+> >  4 files changed, 915 insertions(+), 12 deletions(-)
+> > 
 
-  https://gitlab.com/stsquad/qemu/-/commits/pr/031025-10.2-maintainer-1
-=20=20
->
->  Thomas
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
