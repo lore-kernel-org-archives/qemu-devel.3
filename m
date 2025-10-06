@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB0CCCA471
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 14:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C62CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 14:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5lu9-0006D2-GL; Mon, 06 Oct 2025 10:09:33 -0400
+	id 1v5lwG-0007iu-Kw; Mon, 06 Oct 2025 10:11:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5lu6-0006CP-Ql
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:09:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5lwF-0007ib-Kz
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:11:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5lu1-0001ng-Gl
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:09:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v5lwC-0002NV-Cv
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 10:11:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759759764;
+ s=mimecast20190719; t=1759759898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AXhaEgLBvripi0edaqFANquXQHpZL9UUbO+70BTVils=;
- b=hEgEPfb9ciHdJllMCHZHkrMdCfNEpSry5yYgNnr43Fn/WL5/s/V3Na+qDRSCC8evrg1v6I
- D7aGfyrbQ0LS6jfNAnVuE+4m95TO4ugiUGg56JAIlicwftmuAoecj9xdmMvqeDEdHgJ/BM
- eLPdQAACpSpkAz+2azipA/9/CjfGfuw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=J63yCZy7pfxM/3no1YdElWKiRBMLIRErNOKlLX491tY=;
+ b=Yemuz96jZ08BdHSrXoLoQASEV691cBcOCgISsiv1qejBXQQU0MYvoojhFvpM3htqCwcByG
+ UNC4dXO/MGnDQrLhDYD1S/Q4KixhKglMYkuC2cK+UJZqaTuDGSnEDBnqOF5/86zEHQ0RNx
+ s0UnwRB/Z796azkuD1PBKvlsHFExDmI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-wJqzkURkNzC_dUe0pEFd4A-1; Mon, 06 Oct 2025 10:09:18 -0400
-X-MC-Unique: wJqzkURkNzC_dUe0pEFd4A-1
-X-Mimecast-MFC-AGG-ID: wJqzkURkNzC_dUe0pEFd4A_1759759757
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3f7b5c27d41so2729075f8f.0
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 07:09:18 -0700 (PDT)
+ us-mta-93-CaYik3pBNQSKrFny9eFi5w-1; Mon, 06 Oct 2025 10:11:36 -0400
+X-MC-Unique: CaYik3pBNQSKrFny9eFi5w-1
+X-Mimecast-MFC-AGG-ID: CaYik3pBNQSKrFny9eFi5w_1759759896
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e3dcb36a1so29974195e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 07:11:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759759757; x=1760364557;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AXhaEgLBvripi0edaqFANquXQHpZL9UUbO+70BTVils=;
- b=Oo9k2IrzeZpxqkDJbT6v+t4vYAWUfqZfDzejbak8VBytLHnStt4+1byoMUldRSSa9L
- Sd7G7SwMYxAquJHJiC7DiPMXSd/8t8hv1vG6VNySd9XwAD9c0tRFt5EOdZzadwISgSk0
- tR0Q8yjFoKX55Cq++sTcAd/9iT97OxeDIpfpkrFHwzWsjldb/P/oCuPfpIgNaoiF0x5u
- cokykHKuElnzwIcSr0+IiW11UVou163192y8txN5SjBQs27Xi7QUpR4OSMpVXHbV56bS
- iS59bDJLNiuzb/hQD7dKKb2xn+laIHWynvV+50IlTZKnYFS27cmkABNtU61fV0eEj+3d
- ufJg==
+ d=1e100.net; s=20230601; t=1759759895; x=1760364695;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J63yCZy7pfxM/3no1YdElWKiRBMLIRErNOKlLX491tY=;
+ b=Tum9E8nxLNJttUmRMlKBBduDQMMFoAfOUFiSIRTYyQDi+QXuXUHqzNx++dN3zpvjPl
+ mVmM+REBlukGvpg7F3jSEmLTi06q30ZFwOWmdCVO6hz3ReeHub3IiPXcakrUtUYkjUC/
+ bVyjrcY0INp1bioTG2gmPItxljNk8Wi20uAKQE2el7bjODyTI//7/tDaVC/YQhPHiome
+ npF1FSZmZni1C1sQpwAcQBvLZy+tWil31uEaWWBMybEM7bxHkBoo1H1vx6JwsXozbvoO
+ Ah/vK1bwRKUQPN63D0/vMa/3x2f/H+AuRwj3SGYTiKq1PDTQEE6nC/fntbxfwEoK3Rc8
+ OozA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULFumv2yRWEGV3d1nhZYmkMWgDk2negw7smkzhwTaxvqbsXkVcqtHVc6YCVCpy059Tk9rf/fOwm4w1@nongnu.org
-X-Gm-Message-State: AOJu0YwHGXCMgnVAQ/Klroge/bX9afLVxZjFg3mpON3j6J/n3tKltRI1
- r16/m9ZCWZVN1JfUN7BFc/EpjkvbCb/MMjtRsLEvMddqH9z08e18J/StApeLYp5PtKh81M3aRRO
- hr/C0+g6HmaUeUjw3rIl2zmiLWRA2A4eYJvPq0L2wu5qYjbsQRlBIp9k2
-X-Gm-Gg: ASbGnctD4lu9Kbul24015kA7KdmbEIcYwGoHqnHpbANJBumX6t5+wN4/92aZRwvekjQ
- HId7A5P8UtNyBAEcjEqDLd3DLj7c9u/hEtiovtQSmerYsEf8tmYVw1/UokOtaHgnOumZbiHsWkf
- YgqAE6Chn4RAqdEiz1DZAFKhPeFxZkiFfcEH+Pm4gVARwFrO80buX/kG8QQSKBEeYeiPcDx5tzi
- 2fM9Oh6Ntw8NbZ9DUws4l34rlnlYoez08hb5D/LR0Tg+E3SaMv5V1dpTaxmy93zg9Sjc/Hs7Dpq
- 20QUtS3agoH2TU0Ngv4BLhA3/AjRJqAYV7fGlqQQp69pKLpfoGlQlP6kxE0XmLveQ8gU9O1jHhi
- +vmBWn3oj5w==
-X-Received: by 2002:a05:6000:4701:b0:425:7e33:b4a9 with SMTP id
- ffacd0b85a97d-4257e33b4f6mr1621460f8f.0.1759759757078; 
- Mon, 06 Oct 2025 07:09:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTZLQBtDT6f3FhteE2YCwR/iVgMAv6jhBRsOLtpgyHapRy8WyIQ7mitgb27dmQJ4AZVu6TpA==
-X-Received: by 2002:a05:6000:4701:b0:425:7e33:b4a9 with SMTP id
- ffacd0b85a97d-4257e33b4f6mr1621442f8f.0.1759759756714; 
- Mon, 06 Oct 2025 07:09:16 -0700 (PDT)
+ AJvYcCUXBZFcoz3SGhYkzBaoX3dWXzuJaKu/rk9tSs/LKz7n6kVpPelsKlocvKMz0Hj3VJeTUMbLhjOdfGPe@nongnu.org
+X-Gm-Message-State: AOJu0YybKniWRHIwmTyVaAjSXYKsNI0tAf0+F5oXecSrN4TqTkvrHQn9
+ qllta6XBDZoyKJOfUFf0lvUKk8Ylm102PbEj1MFh7I2Px1KG3ljh5h6cVccSYZXIUeJMlPAja9B
+ 8w/A3amaVCEkWTMkeX03PUiqUKTjPwcloVPDKvnzhcp9a3Yy34Tf0dKA4wk8loA6w
+X-Gm-Gg: ASbGncsFNCSw22MhmOjZ0rIlFsFJDU0AFgiWKjVCUW+Y/NXfIlf+R3/hF1zZwzQn3ad
+ n8kVNy0q6U967oi3ePPD7TdP+dnsCBYW+rBtfLOOkaqottoKlGRub9mLAM/KONDXPpMn7oqbJPF
+ kMgZEVSy3g0IyWxKVqbKhcJXEnvS9KOKvsP5dqZTm9woyL/QPguk38j3HaEjT510e/9PBAYPFEc
+ IK5GlOXDtPtPt1i1KfrBu1a1HK3yFVMxs2CVcr/udT5O+ScP+Ei1XV58rIvXvgpgLgnov6d1MRE
+ JRskxK9TZchKw313JvzvqnPJLL4vLbd/qgA5xLa6x51aTNU5DRHgQiqH5j3kHkA6rQ9kA+zeE+P
+ J2b7DVgCJbQ==
+X-Received: by 2002:a05:6000:1786:b0:3ec:2529:b4e5 with SMTP id
+ ffacd0b85a97d-4256719980emr8894944f8f.38.1759759895535; 
+ Mon, 06 Oct 2025 07:11:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNbwsWVPEuMgtBf72UsW0KqB7vDEFmFM3or0RnDq1lrr1mUdqaQXn3wYCEHD9SXkNvl4m22w==
+X-Received: by 2002:a05:6000:1786:b0:3ec:2529:b4e5 with SMTP id
+ ffacd0b85a97d-4256719980emr8894918f8f.38.1759759895142; 
+ Mon, 06 Oct 2025 07:11:35 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-056.pools.arcor-ip.net.
  [47.64.114.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9719sm21433369f8f.31.2025.10.06.07.09.15
+ ffacd0b85a97d-4255d8efffasm21091113f8f.41.2025.10.06.07.11.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 07:09:16 -0700 (PDT)
-Message-ID: <cae00ff1-5695-488b-b0f3-31e7ac76e0fd@redhat.com>
-Date: Mon, 6 Oct 2025 16:09:15 +0200
+ Mon, 06 Oct 2025 07:11:34 -0700 (PDT)
+Message-ID: <117fcd23-f853-44b6-8fff-c5672fa5fd5e@redhat.com>
+Date: Mon, 6 Oct 2025 16:11:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] target/s390x: Replace legacy
- cpu_physical_memory_[un]map() calls (2/3)
+Subject: Re: [PATCH 7/9] target/s390x: Reduce s390_store_adtl_status() scope
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
@@ -88,9 +87,9 @@ Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
  Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
  Halil Pasic <pasic@linux.ibm.com>
 References: <20251002091132.65703-1-philmd@linaro.org>
- <20251002091132.65703-7-philmd@linaro.org>
-Content-Language: en-US
+ <20251002091132.65703-8-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -133,10 +132,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251002091132.65703-7-philmd@linaro.org>
+In-Reply-To: <20251002091132.65703-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -162,17 +161,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 02/10/2025 11.11, Philippe Mathieu-Daudé wrote:
-> Commit b7ecba0f6f6 ("docs/devel/loads-stores.rst: Document our
-> various load and store APIs") mentioned cpu_physical_memory_*()
-> methods are legacy, the replacement being address_space_*().
-> 
-> Replace the *_map() / *_unmap() methods in cpu_[un]map_lowcore().
-> No behavioral change expected.
+> s390_store_adtl_status() is only called within sigp.c,
+> move it and the SigpAdtlSaveArea structure definition
+> there where it belongs, with other SIGP handling code.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/helper.c | 11 ++++++++---
->   1 file changed, 8 insertions(+), 3 deletions(-)
+>   target/s390x/s390x-internal.h |  1 -
+>   target/s390x/helper.c         | 40 -----------------------------------
+>   target/s390x/sigp.c           | 40 +++++++++++++++++++++++++++++++++++
+>   3 files changed, 40 insertions(+), 41 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
