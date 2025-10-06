@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0CCCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D348BCCA472
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5hyg-0006OI-8i; Mon, 06 Oct 2025 05:57:58 -0400
+	id 1v5i1M-0002XE-Oh; Mon, 06 Oct 2025 06:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hye-0006Np-6l
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:57:56 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5i0S-0001Y1-8k
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:59:49 -0400
 Received: from mailgate01.uberspace.is ([95.143.172.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyc-0003qm-9g
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:57:55 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5i0Q-00041U-Gz
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:59:48 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id C3ADC60B87
- for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:57:42 +0200 (CEST)
-Received: (qmail 18887 invoked by uid 990); 6 Oct 2025 09:57:42 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 4A9CD60B91
+ for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:59:45 +0200 (CEST)
+Received: (qmail 21069 invoked by uid 990); 6 Oct 2025 09:59:45 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 06 Oct 2025 11:57:42 +0200
+ Mon, 06 Oct 2025 11:59:45 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>, David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
-Subject: [PATCH v7 18/25] target/s390x: call plugin trap callbacks
-Date: Mon,  6 Oct 2025 11:57:13 +0200
-Message-ID: <a2bf5c403c134130f4e1131787322a3775d25e5e.1759744337.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v7 25/25] tests: add test with interrupted memory accesses on
+ rv64
+Date: Mon,  6 Oct 2025 11:59:20 +0200
+Message-ID: <729c8db0f4b61033f5a460747ea50fced9dabc1e.1759744337.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1759744337.git.neither@nut.email>
 References: <cover.1759744337.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.962272) MID_CONTAINS_FROM(1)
+X-Rspamd-Bar: ----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.214157) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.562272
+X-Rspamd-Score: -4.814157
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=SaAf/mb9HEvbJAmt7DG7SMTiyDFoPmxYLnh5a2mc56Q=;
- b=TmxrrUoJKf9jdTpZBbYJ3i4NNHhlGQe7Mo85nQUR5iX8JFxJroCheorTjKxCQ4uJqowLgvX239
- PypjGXtIUR4OqCfqpXdw9hHVfvLXU1sDuughoLCH3ap5Ihi1ECcL1kaB7b95pVi4WZMQFF+vO/20
- TqrzoOLHYDZtKHtr34VlnpkBNgWMxFTaM6hXQ/adpZaAgr9GO9toMO+ft1OtzMwCOyvxOHEpX9MD
- tDY6tomx03iUU0tGh3zUSM8NGaDxRCu3p/9wQbLfuRDU2EtpH24rAkZzHDz+ZfIvt3SUhTcyiUyA
- pKVKbsTwQdjkVPOtZ7L6fWUTx19CQA4C6KUpmnWwgOs1c6j/hkaRNuNI3fhNnqDK+3QqGhVW3KAl
- qcbsO1Nov6ju8DVuciK8HAzCb24QcbS8Rvw2t70MbRL/Rwhgl+zOloqbpie0O3Y8DpyBmOnvJ4N4
- zMi38zly3pFwzhxO5UdnIwJI06U3Kc04Qjw/1B1n9/ln2JZCTa84VXkr48qWt+Uf2C/aKKbWWqSx
- GmLmpN23ixu9UqMWlDwDomB6uCS/USB7hioVvFZbmxumiwiKyPXszNCM7aSipjRzWaXpVm7tTHKs
- aBNzfPhdQzfaUcbmU9vlPsQziLJjOy1ldN5ZouhZFpN58MNz73qmAazo1K7Y6IatjONtygMwhOQg
- c=
+ bh=mVLyiyy1HWjSWhu1/Q5w+icoVuven8S3d7VhRcdbntg=;
+ b=ns2lwxA4B0p8ltBmZnDMEHNw0Bq5Ga6Y1QM+vbpm/5XynLaOFk2vRdl0z3AgZ0Stw+7b+/F/XH
+ M68z3dtDsNwwfxZQ0Z6Mp1UzWu2eygtlTiPkCrIq9YHO2vtMdiv9HaVRd/hGJuoH9shb9xDPRE0g
+ 0nEUonUD4B3KaRyVeZWIlI60J208FwcZalZHqWxcO0vDKX2mm4TgPS4s2kRTD6XgabwuXNM8BDld
+ hGhjp11tFyBks+F9BHHoKGownnqcPohMYxbp85Vx9OnIdEcKyw8VsP5EIeJQvWOPQGbMxXLU48Ma
+ /zNwBH5ytJE/8FsWNZCWo+MKrDE7i/1LEpr1W7YgP+fUI2wMN9TurOgK/UyIBDSLJ3tc7BlczeNp
+ r6d4zcGt6AVve4FwvqmmbdaoPrt7BkkxvHXnqiz0bhtQxxJ7lPoHbMGZDsjrIIeCoW2GYy9KJO2m
+ Vpj0reCAd4zAizhzLlny7qo5eNNnDsri8J8ZZZ8FxstKy3NFHygsesJEfobv9+biXzDzoWbHjfjh
+ iqInSOPHfDv8khneqkrRZFEMnc+5cSdtdHuSPDCtVt2QNN47Iso5GQaIhUnmzaQGwJ+WQFJXIJXn
+ Nt94ahfTZndbW6MbGi4YKsDEPKqPOuELNFf+Q2rcx/XwgpPYiRyJgwJzdhoTInMwibneeEDBY9mg
+ w=
 Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
  helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -82,70 +85,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+This test aims at catching API misbehaviour w.r.t. the interaction
+between interrupts and memory accesses, such as the bug fixed in
 
-This change places hooks for IBM System/390 targets. We treat "program
-interrupts" and service calls as exceptions. We treat external and io
-"exceptions" as well as resets as interrupts.
+    27f347e6a1d269c533633c812321cabb249eada8
 
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Because the condition for triggering misbehaviour may not be
+deterministic and the cross-section between memory accesses and
+interrupt handlers may be small, we have to place our trust in large
+numbers. Instead of guessing/trying an arbitrary, fixed loop-bound, we
+decided to loop for a fixed amount of real-time. This avoids the test
+running into a time-out on slower machines while enabling a high number
+of possible interactions on faster machines.
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/s390x/tcg/excp_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
+ tests/tcg/riscv64/interruptedmemory.S     | 67 +++++++++++++++++++++++
+ 2 files changed, 73 insertions(+)
+ create mode 100644 tests/tcg/riscv64/interruptedmemory.S
 
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 4c7faeee82..7265b610a6 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -34,6 +34,7 @@
- #include "hw/s390x/s390_flic.h"
- #include "hw/boards.h"
- #endif
-+#include "qemu/plugin.h"
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 1a71a78653..d8f92b8e61 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -30,5 +30,11 @@ run-plugin-doubletrap: doubletrap
+ 	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
+ 	  $(QEMU_OPTS)$<)
  
- G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
-                                            uint32_t code, uintptr_t ra)
-@@ -499,6 +500,7 @@ void s390_cpu_do_interrupt(CPUState *cs)
-     S390CPU *cpu = S390_CPU(cs);
-     CPUS390XState *env = &cpu->env;
-     bool stopped = false;
-+    uint64_t last_pc = cpu->env.psw.addr;
- 
-     qemu_log_mask(CPU_LOG_INT, "%s: %d at psw=%" PRIx64 ":%" PRIx64 "\n",
-                   __func__, cs->exception_index, env->psw.mask, env->psw.addr);
-@@ -528,21 +530,27 @@ try_deliver:
-     switch (cs->exception_index) {
-     case EXCP_PGM:
-         do_program_interrupt(env);
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-         break;
-     case EXCP_SVC:
-         do_svc_interrupt(env);
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-         break;
-     case EXCP_EXT:
-         do_ext_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_IO:
-         do_io_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_MCHK:
-         do_mchk_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_RESTART:
-         do_restart_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_STOP:
-         do_stop_interrupt(env);
++EXTRA_RUNS += run-plugin-interruptedmemory
++run-plugin-interruptedmemory: interruptedmemory
++	$(call run-test, $<, \
++	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
++	  $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/interruptedmemory.S
+new file mode 100644
+index 0000000000..a32d672849
+--- /dev/null
++++ b/tests/tcg/riscv64/interruptedmemory.S
+@@ -0,0 +1,67 @@
++	.option norvc
++
++	.text
++	.global _start
++_start:
++	# Set up trap vector
++	lla	t0, trap
++	csrw	mtvec, t0
++
++	# Set up timer
++	lui	t1, 0x02004
++	sd	zero, 0(t1) # MTIMECMP0
++
++	# Enable timer interrupts
++	li	t0, 0x80
++	csrrs	zero, mie, t0
++	csrrsi	zero, mstatus, 0x8
++
++	# Find out when to stop
++	call	rtc_get
++	li	t0, 60
++	slli	t0, t0, 30 # Approx. 10e9 ns
++	add	t0, t0, a0
++
++	# Loop with memory accesses
++	la	t1, semiargs
++0:
++	ld	t2, 0(t1)
++	sd	t2, 0(t1)
++	call	rtc_get
++	bltu	a0, t0, 0b
++
++	li	a0, 0
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++rtc_get:
++	# Get current time from the goldfish RTC
++	lui	t3, 0x0101
++	lw	a0, 0(t3)
++	lw	t3, 4(t3)
++	slli	t3, t3, 32
++	add	a0, a0, t3
++	ret
++
++trap:
++	lui	t5, 0x0200c
++	ld	t6, -0x8(t5) # MTIME
++	addi	t6, t6, 100
++	lui	t5, 0x02004
++	sd	t6, 0(t5) # MTIMECMP
++	mret
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.49.1
 
