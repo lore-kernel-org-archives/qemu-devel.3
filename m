@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D83CCCA472
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 17:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7420ACAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 17:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5p86-0007cG-Kd; Mon, 06 Oct 2025 13:36:10 -0400
+	id 1v5p8H-00081I-QF; Mon, 06 Oct 2025 13:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5p84-0007aS-4N
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 13:36:08 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1v5p8F-0007xU-T2
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 13:36:19 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5p7x-0004tl-Be
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 13:36:07 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e3cdc1a6aso39207935e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 10:35:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1v5p8C-0004vD-M3
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 13:36:19 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b6271ea3a6fso2964224a12.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 10:36:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759772157; x=1760376957; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ompXjkGtwyCsJlUF02KeFyMDHu7bcZYrK/9Du6Mnfrs=;
- b=aPurr/sT8LOCSv2cH2clAAkNkAPDvU2mVBxPtPXKg00PFOLx9kCWW7gH5jEgtBNY6Y
- 8YBMia6gqCJlmxB8aY+uaB5EoPa8f4PIrPu9mZh1tqBTXtCFjiOMKXX03W9IZFJM3KAy
- GI/LlHwA90Zw0DIyign+b3ad/D88iyf1tiYZiLFAXybcJOiiBXZBuCHEoD23yrO3CCSv
- 9cn5FeeXb/WOzYhs73DC1DwUbYRr2L1lH1YEFLmhLRd9/ylH0zGUx1+qWnKEokGluNKl
- lu9+Dqo1q3ZVUWQ01DK891SzFm+44Mlu3nxhGibfDnpzrAxWv2iWa9tzZlGsdqSvZYtU
- 1aBg==
+ d=gmail.com; s=20230601; t=1759772170; x=1760376970; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q3C6CwuqIFrFI2iiklFYKdtcNRgwZcaZQoza37YVI6Y=;
+ b=dYFtnmoPoKCfmNxQzhzlXIotE0mbPoHTXysUggVCEXXrHyleh4KE4JfhJih9AlLASY
+ qD4jRlPGkHqU6Rcxv8ZwVAch/kdxZHNX5+EZyu9YgusTimYj7vFZdmFeSVECtm8rZGbh
+ aiPUAx3icaWyorC6mBXwG8QU/1NfowsubNYLh1Uv0o4+gneyW3Zk+P7feBKIk36HaEMz
+ HCMmFSkFQnKseyOMkGlNfG8/3qCBbnXmgUT3m3LyRlp8mmm2+wkLjSL6I4uRptqU2Vrj
+ tjxlikwps+bZvM7S9I6Wdq2eszGKFqbcvjdKC5a2xde0mHdSCKH+Njw/xwF0wPXSyNS5
+ boOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759772157; x=1760376957;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ompXjkGtwyCsJlUF02KeFyMDHu7bcZYrK/9Du6Mnfrs=;
- b=fpwj8kQqNIX4LJV0+fCPVLMHXP//FNhYzMiEveaT/d/bmV8w/DZPtvS9nouxPaDlMD
- 83dEHsrI/T1VlYsvb+Yd1fD1/SgEsjwyS20NTmX4slh7rmHnAAzedW4ej3XZEcZyy/W0
- 4/ozNQThzAU1sAKJxOlEsw5m2231hp4krhMN2YUWLDMoG/iM0BpapNJJk2UHGjbINjCO
- Lb0A69+XW4cznrl+EYblOqQtqJSi1sgf58FXMnHhgFXskVSw86O2Cw7QstqcVGQF6beA
- 53x8XpYBg7K86VAfbEiXG8zJZUgpAquNeypusqrw0Xp9nxzV/RPmG3bRcwpOsHjwy2YT
- trwQ==
-X-Gm-Message-State: AOJu0YztXA30mbtidw4ifiE2i8/3Ocd0+IAJRfTew4PiVuEYm3Wa6TnV
- pyLDqEPcM7T6d6Hn7+Lb3Z5bVGIm9KU2XMtm9OxZ4WmJnd58D6S+knKr8z6grnDD9WXgIDt+/Ll
- qLIJGCNaXjg==
-X-Gm-Gg: ASbGnctzdfU66PJ3qJQLblRF8GJR53kAA6c6GcZvS4om6WqrMk1mtVcOOvWi02jq59K
- gGrGasY6GdJe6J6md5JSQOoJiNigfL9e8pUPULDxsiLZ7uTG0vUm9cVYXICVKtNEA8LsecMg+2G
- 9JajJptaHuKOV9o/depetd3oVXGVsxw/mAPItHLiXy7o4aFqCnnV+anPuqgAXnvVqndmzKgMbHy
- nNgWGPgAREHA9f0+h7M+HuR/b6BzJdwaxWToX79445nNAxrv00cGiobsVJbTzG8GDJPIeTyr8Hk
- nflyrKwDnfp30S+tEZzYB+d++outGyj8oZD2vPuhs1UAxoTSmbjOQMdqvsHromlLcYrEtOH6POW
- gPuH8ww7Fj7+xS70eWbCOmWhDd3cnPeaPtDKY3K+4ZVKKZ54MGCoTwVZGFiUXYHcWIdB+AIYXaZ
- pWXhX/SwTHlKOxeoTDim/BYRtHdv/2
-X-Google-Smtp-Source: AGHT+IE1mJ1danzthcgQvKVuflg5PhVhiPTTZqTJmph3LbDT01qzTbbrotxSQKod+Y28qXUDvN9jGA==
-X-Received: by 2002:a05:600d:810a:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-46fa29b2a32mr3347175e9.11.1759772156988; 
- Mon, 06 Oct 2025 10:35:56 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e7234e58asm165188215e9.7.2025.10.06.10.35.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 10:35:56 -0700 (PDT)
-Message-ID: <6c953c88-a31b-47d4-9384-ccd97444a7cd@linaro.org>
-Date: Mon, 6 Oct 2025 19:35:55 +0200
+ d=1e100.net; s=20230601; t=1759772170; x=1760376970;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q3C6CwuqIFrFI2iiklFYKdtcNRgwZcaZQoza37YVI6Y=;
+ b=PqDwdHos5NzlTCd5Su2kws+dHGypIBRNiDw5o7ezfmw1DiVX/95qKc88pMIEv7uN84
+ qeeyC6+iEePQvxs+HTB/2rf/fg3IJsj2vGniwKVr6HYhY22QvFBYr8VpwNtOc9nd9v3B
+ ymFsuvFGWsWAVly+lb2Se46xd8i5IrIH4ka9L/zRzzlH/PFSV7DlHLZv0ODDG54wI2jU
+ O2np25do6OtZFPs4MzZen6ibLWDOOLM4fQyjrPNULyznRzBLAaiefSSsIq30LKHlHUbw
+ i68wrWkZNT1VUda6X4Pb3CVIoirzudmkwwxsd8wRrc/w5Sc7HgOKhYHdllG/tjydY4pw
+ Ox/A==
+X-Gm-Message-State: AOJu0YwcJTJS5czE0yMGSaP2mKq3sF/vsr/VEecBB1bKbwJWhdygG9/b
+ 4+6sdT6EKfhUzyN70zJkMp0hhROIsYJTDbRoiRx5AKBawTij9LZUJBj0LNM7KJORd4r05U0xTCv
+ A9BNeGNUEk+PUfktOwkOmNM6mwG5HPjWQybvoeOKDUw==
+X-Gm-Gg: ASbGncsS4yQpnaT7yV7ZKNHjyavmvwlqnp8FJexnrxoYiVuQSoSzCYivZS6A8XsXjui
+ ep0DjPA+178NaVBKjBx/SSjj/dg1rybowUAakrFaCGxdJ5iaQplCdTS+9XtgTcketrocQ0zR7oj
+ XLqSlZmi59P9otUvRAxKZXtnYjFTh3cFapf8zV/JH9axcotAe5D8qTBlb/6pmVcvIdubwGqy3V1
+ +hsQPo8kKdDgiRny+6qv/cI+FdVnA==
+X-Google-Smtp-Source: AGHT+IEIPK10UABKg8NL03FDJA81+SiXWFxxPBN/jVhYAXi08ON2MHpu2SKWUGGjuD3n1nVLPwZOL9APBAOI0NOi8II=
+X-Received: by 2002:a17:903:11cf:b0:275:b1cf:6dd7 with SMTP id
+ d9443c01a7336-28e9a61a9a0mr152506755ad.34.1759772170111; Mon, 06 Oct 2025
+ 10:36:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional/aarch64: Drop some sbsaref_alpine
- tests
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Radoslaw Biernacki <rad@semihalf.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20251006161850.181998-1-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251006161850.181998-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+References: <20251006173350.17455-1-philmd@linaro.org>
+In-Reply-To: <20251006173350.17455-1-philmd@linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Mon, 6 Oct 2025 19:35:57 +0200
+X-Gm-Features: AS18NWDfcfqo26xRjAetJgiUC6-QceKursJYBV9sUI8JC5d3EJkqx9GIj4w78LI
+Message-ID: <CAJy5ezrAs7i9_gQjBTLXanFCYotTgJuL7DuecNwLTZtvTTEp4A@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/microblaze: Fix little-endianness binary
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000015ce77064080e32d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,23 +93,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 18:18, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> test_sbsaref_alpine is one of the longest running test in our testsuite,
-> because it does a full Linux boot a couple of times, for various different
-> CPU configurations. That's quite a lot of testing each time, for a rather
-> small additional test coverage. Thus let's drop some of the tests that don't
-> provide much in addition to the other ones.
-> 
-> Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+--00000000000015ce77064080e32d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Oct 6, 2025 at 7:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org>
+wrote:
+
+> MicroBlaze CPU model has a "little-endian" property, pointing to
+> the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
+> Explicit CPU endianness") took care of having all MicroBlaze
+> boards with an explicit default endianness, so later commit
+> 415aae543ed ("target/microblaze: Consider endianness while
+> translating code") could infer the endianness at runtime from
+> the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
+> definition. Doing so, we forgot to make the endianness explicit
+> on user emulation, so there all CPUs are started with the default
+> "little-endian=3Doff" value, leading to breaking support for little
+> endian binaries:
+>
+>   $ readelf -h ./hello-world-mbel
+>   ELF Header:
+>     Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
+>     Class:                             ELF32
+>     Data:                              2's complement, little endian
+>
+>   $ qemu-microblazeel ./hello-world-mbel
+>   qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+>   Segmentation fault (core dumped)
+>
+> Fix by restoring the previous behavior of starting with the
+> builtin endianness of the binary:
+>
+>   $ qemu-microblazeel ./hello-world-mbel
+>   Hello World
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 415aae543ed ("target/microblaze: Consider endianness while
+> translating code")
+> Reported-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
 > ---
->   v2: Drop the tests instead of just not running them by default
-> 
->   tests/functional/aarch64/test_sbsaref_alpine.py | 6 ------
->   1 file changed, 6 deletions(-)
+>  linux-user/microblaze/elfload.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/linux-user/microblaze/elfload.c
+> b/linux-user/microblaze/elfload.c
+> index 7eb1b26d170..bdc0a953d59 100644
+> --- a/linux-user/microblaze/elfload.c
+> +++ b/linux-user/microblaze/elfload.c
+> @@ -8,7 +8,8 @@
+>
+>  const char *get_elf_cpu_model(uint32_t eflags)
+>  {
+> -    return "any";
+> +    return TARGET_BIG_ENDIAN ? "any,little-endian=3Doff"
+> +                             : "any,little-endian=3Don";
+>  }
+>
+>  void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
+> --
+> 2.51.0
+>
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+--00000000000015ce77064080e32d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Oct 6, 2025 at 7:33=E2=80=AFPM Ph=
+ilippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@l=
+inaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_contain=
+er"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">MicroBlaze CPU model =
+has a &quot;little-endian&quot; property, pointing to<br>
+the @endi internal field. Commit c36ec3a9655 (&quot;hw/microblaze:<br>
+Explicit CPU endianness&quot;) took care of having all MicroBlaze<br>
+boards with an explicit default endianness, so later commit<br>
+415aae543ed (&quot;target/microblaze: Consider endianness while<br>
+translating code&quot;) could infer the endianness at runtime from<br>
+the @endi field, and not a compile time via the TARGET_BIG_ENDIAN<br>
+definition. Doing so, we forgot to make the endianness explicit<br>
+on user emulation, so there all CPUs are started with the default<br>
+&quot;little-endian=3Doff&quot; value, leading to breaking support for litt=
+le<br>
+endian binaries:<br>
+<br>
+=C2=A0 $ readelf -h ./hello-world-mbel<br>
+=C2=A0 ELF Header:<br>
+=C2=A0 =C2=A0 Magic:=C2=A0 =C2=A07f 45 4c 46 01 01 01 00 00 00 00 00 00 00 =
+00 00<br>
+=C2=A0 =C2=A0 Class:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ELF32<br>
+=C2=A0 =C2=A0 Data:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 2&#39;s complement, little=
+ endian<br>
+<br>
+=C2=A0 $ qemu-microblazeel ./hello-world-mbel<br>
+=C2=A0 qemu: uncaught target signal 11 (Segmentation fault) - core dumped<b=
+r>
+=C2=A0 Segmentation fault (core dumped)<br>
+<br>
+Fix by restoring the previous behavior of starting with the<br>
+builtin endianness of the binary:<br>
+<br>
+=C2=A0 $ qemu-microblazeel ./hello-world-mbel<br>
+=C2=A0 Hello World<br>
+<br>
+Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+Fixes: 415aae543ed (&quot;target/microblaze: Consider endianness while tran=
+slating code&quot;)<br>
+Reported-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@gmail.c=
+om" target=3D"_blank">edgar.iglesias@gmail.com</a>&gt;<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><=
+br></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.ig=
+lesias@amd.com">edgar.iglesias@amd.com</a>&gt;<br></div><div><br></div><div=
+>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+---<br>
+=C2=A0linux-user/microblaze/elfload.c | 3 ++-<br>
+=C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
+<br>
+diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfloa=
+d.c<br>
+index 7eb1b26d170..bdc0a953d59 100644<br>
+--- a/linux-user/microblaze/elfload.c<br>
++++ b/linux-user/microblaze/elfload.c<br>
+@@ -8,7 +8,8 @@<br>
+<br>
+=C2=A0const char *get_elf_cpu_model(uint32_t eflags)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 return &quot;any&quot;;<br>
++=C2=A0 =C2=A0 return TARGET_BIG_ENDIAN ? &quot;any,little-endian=3Doff&quo=
+t;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: &quot;any,little-endian=3Don&quot;;<br>
+=C2=A0}<br>
+<br>
+=C2=A0void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *en=
+v)<br>
+-- <br>
+2.51.0<br>
+<br>
+</blockquote></div></div>
+
+--00000000000015ce77064080e32d--
 
