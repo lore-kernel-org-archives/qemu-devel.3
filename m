@@ -4,209 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCD8CAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 13:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE361CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 13:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5lJ1-0004DY-3i; Mon, 06 Oct 2025 09:31:11 -0400
+	id 1v5lLl-0005YV-5m; Mon, 06 Oct 2025 09:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1v5lIy-0004DK-GD
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:31:08 -0400
-Received: from
- mail-switzerlandnorthazon11022091.outbound.protection.outlook.com
- ([40.107.168.91] helo=ZR1P278CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5lLi-0005XM-Vs
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:33:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1v5lIn-00057v-Kh
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:31:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oqwozIexeWGlho2y4SKCUyDBsVdjwFzyVikGzU+hGE8Lj2FJ1Jb9rouUPdN4WMs56B2adfkLYff6fcHbrktQzCJ7JAcdNX6Zki8+RBv8jEC+U4bHrVEVPUOAkdZUJLVjBG1EmKtDyGwEKjrfQqBsaKr+Gutvq4JvIn+faOm3OZLXnL+NIZ63NDzKnTqwDpX8XDC6k4r81pAxYJ7Ql82ZF0cs2pYttjHS2aKNayhkp1mzToHQnI3OBAybsCXLsqj8t5bWrCSvXkcsIegRHjjFVK0sMLs6PrLc2Eju0HxKfWn5eFfx2dhFjechjlucXFmmjw+d/JkpV4kkAsY/UY9n6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3HWaI5qN7b1Ii0bEOirfH2LLdHkxFYjpRvEGCU2lJbw=;
- b=J+jv88HkmENAsKmmBgnzyC7cNe31mTNUd7DEUBJgX4xftTN7+uG9pPibkllHuI/6Y+7+7FqYKAxgBBC8u3OaHXKdyNXtg3N+pzK8M2prnINe/sF/qU2sGyfCHQ1r01wWT7F/ZF9kWGbz79DZSswWYWIdleTnnCt/3lEelvrwnrNfoY27MyXneZRqka6aiRaSk6UYxvwVhD3BGwkIWjwstDSXVin7C+bg+3jLOpOw8fNEAWuhQviKcY0FuWCZhhKSyU+q/l2/qyLizd9k0LVTvojOZQ1yJOmvm8YnC/SSExKNG6JN55zxOl+dZIonJakRUO+HQxHtouPyCFPhpEC6ug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3HWaI5qN7b1Ii0bEOirfH2LLdHkxFYjpRvEGCU2lJbw=;
- b=ZBjBojk12M7+U4D58ijXtLBms2Gw2Ru45lP3tO4IJnhGtVbLTSBdPC6bI5g+i2dJ79LnU6qon9z0uHIwIrItJgZE4Efu4+iA9W2DPzx/JE7DNwwZ1VbyiFnjRQw1CrwumNAUwIax17etGCT6HaAueVQ0YyfKeiayfM36iEViYdE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by GV0P278MB1185.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:5b::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.20; Mon, 6 Oct
- 2025 13:25:43 +0000
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::db00:2f5f:f4ca:ef69]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::db00:2f5f:f4ca:ef69%7]) with mapi id 15.20.9137.012; Mon, 6 Oct 2025
- 13:25:43 +0000
-Message-ID: <e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch>
-Date: Mon, 6 Oct 2025 15:21:21 +0200
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
- richard.henderson@linaro.org, laurent@vivier.eu, imp@bsdimp.com,
- berrange@redhat.com
-Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
- 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
- 5hMMZIzTI4AtIcgA3xe4Ew==
-Subject: [RFC PATCH v2 0/2] Enable PC diversion via the plugin API
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV0P278CA0029.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:28::16) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::220)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5lLb-0005Jj-7i
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 09:33:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759757617;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PEFpbT2gNE81kp2t68eljs3m+G19tT9BF+iTZuC5jPE=;
+ b=MAoX/Q7ePAntfPjoJBUeh87F+I3kIh21+jwfTT5SmkhfeGIKCz0fS5ldbvRdcDz3C/f0hX
+ mxYbh0AnpZWExhgO8yoD63CxgUkjRNqm6bersdW7xJVwa4TAAWMthXv7eGe43LICUB/EIQ
+ X6JAVA+8IWdz9VX5fb5hkO4UqK4P/4Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-r63V_Nu5Og2aPrxTer6GVw-1; Mon, 06 Oct 2025 09:33:35 -0400
+X-MC-Unique: r63V_Nu5Og2aPrxTer6GVw-1
+X-Mimecast-MFC-AGG-ID: r63V_Nu5Og2aPrxTer6GVw_1759757613
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e3a049abaso26305725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 06:33:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759757613; x=1760362413;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PEFpbT2gNE81kp2t68eljs3m+G19tT9BF+iTZuC5jPE=;
+ b=XPTcaktQ0Jtvc++mUlkK2yuCrReumOgxGIWaBF/cAg4STmZDsmeAdIpCKPpo8OMr8U
+ K9tkGLO80GQJ4z5LgtW4jf3D7YFWPEW3H+qFnZOHIZqNnT8QFHgO5luv9aabD8kp5KCl
+ TQysJxXNpQE18hbYj2uduMdVq+ycvFs9PaeEC+w5sHa57Wu4XT0LOqY9BdoMIyKeSAbe
+ 1JVGa6XsZYjTlPesbIMhuM12qpVmGd18YcrIuypo1UxZ8ANm7evLG9NyEyCZXRqLeVmc
+ q6Y30BfUE42y5dIWu5rcxAVfsgigJN5EVLCpGkQHWYbYWCYXd9ZMuM3c4DFbhnr1ENVy
+ 6rmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSo1HXSMT03YrfYcqvdpnRh1c90eHx9eOPjh+ej3iwTyuFEsvkWbFGUWOgk0achU0MjSdpco0FQKMX@nongnu.org
+X-Gm-Message-State: AOJu0YyZ0BBrQZGBE47Ai9DbknLVl28T7zh0+l8kinkCGVqg9M438O58
+ lZnbRRBjKt+9V0orFCHIRL8ePOkfzaIE0SvxJ57uGCHvb/VyUQwJMIpSqdK4rI9jzGyZMx2YfUl
+ 7YMJbNwYuLV9LMpb2M3x3nWBC93PDstdtpNG+N/egdexKDXYhrcfDN7v2
+X-Gm-Gg: ASbGncu9xPfrsbvN/5T8KERN07tmNGMl/KznH/TaRouTVwcBWviyQYtgxIrUJidT+Zv
+ cyjhVvJCOZ/RUxVWwvSjkalaDH9Gj3uLl7PHyle6vPzrtU1AZ3vDs3wFi9kaPKxTajNjRHR4cl5
+ p6ymjdUE9u3sYEudkhIwcgGfCZMA0iK8InYEC6uYkRNcmtNReOYVB9IIO0M16LqyGC5g+9cGMSU
+ /w6Qnm49g7vyBqz+/oO5sgP18xMm2IC/mXIlQVPO47YxSiT3ArvKNpqDNinU0H0bR4NCHjozqwo
+ QH/rxn4hSP2qcH5ZwHhqPIh/QRPPWUxCJFhvT1U=
+X-Received: by 2002:a05:600c:3f1b:b0:46e:3686:a2dd with SMTP id
+ 5b1f17b1804b1-46e7110c287mr85403435e9.11.1759757612755; 
+ Mon, 06 Oct 2025 06:33:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFhFZhhUoLCKbp7TIpP/rXZBzRsljKjoTmmLx4s+GmYmnHIVjT4MFgMzLYU9yVtyaDOuraZaw==
+X-Received: by 2002:a05:600c:3f1b:b0:46e:3686:a2dd with SMTP id
+ 5b1f17b1804b1-46e7110c287mr85403145e9.11.1759757612195; 
+ Mon, 06 Oct 2025 06:33:32 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e5c4c0321sm140482425e9.8.2025.10.06.06.33.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Oct 2025 06:33:31 -0700 (PDT)
+Date: Mon, 6 Oct 2025 09:33:28 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
+ eblake@redhat.com, michael.roth@amd.com, farosas@suse.de,
+ peterx@redhat.com, berrange@redhat.com, jasowang@redhat.com,
+ steven.sistare@oracle.com, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru
+Subject: Re: [PATCH v6 16/19] qapi: add interface for backend-transfer
+ virtio-net/tap migration
+Message-ID: <20251006092735-mutt-send-email-mst@kernel.org>
+References: <20250923100110.70862-1-vsementsov@yandex-team.ru>
+ <20250923100110.70862-17-vsementsov@yandex-team.ru>
+ <87v7kskvut.fsf@pond.sub.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|GV0P278MB1185:EE_
-X-MS-Office365-Filtering-Correlation-Id: e64f4a1f-ac43-487b-f0af-08de04dbd9f1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|19092799006|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bEJGZkQ3dmJ2cDJZbTVqN1ljckJaRU1lbVFvdGRiSjNCbWVRN2lzVWFKeUYw?=
- =?utf-8?B?RkcwK0doTCtlNTA2LzdkeDAvbEpiekNTYUE2eDMrVnplaTVOeFZhM20zOUlV?=
- =?utf-8?B?eE5XeXJ5MGhGTDlWV0MvNkNhcFc2TWhmcC9FalBkN2ZUV2dwV3BHM0E5YjAz?=
- =?utf-8?B?eGt4bmh5QTFhaUtia0Q2KytJRGx5ZktGbCtNNUVrSFBIRFdxdkNhYVBLYlFj?=
- =?utf-8?B?ck9wZnJ3TitCM3k3OGFPYWtvUmhWaVNNUWtqcGpsb2IzQTNIODI2OWNva0tW?=
- =?utf-8?B?a2FLV21xbmIxSk4vdVBWVVlRL2M3ZENwZktudHhuTW5sRi83YTVuY1J1TkZN?=
- =?utf-8?B?QU1IWXA2Nno5a25LLzhkbFd1QWdGaS9peGp1KzRQaVdsYVFuZEtnQTdOODc5?=
- =?utf-8?B?ZmNpczQxVWV2b0hzTW9yZ3lWTzUrbGJPamVSWUUzVXZ0aS9LVkdrMFYxeXgx?=
- =?utf-8?B?akNCT001WkdyQUNVcUgxdkQzd3ZyMGEwWGRmQzkvS1g5OTYvZlpnTzhLWG5q?=
- =?utf-8?B?TWNwdUdoTHl3MU1PM0NBNjNvd3VvS3ZpdVluV2xHMHZJb01TZU91OTQ2dXBy?=
- =?utf-8?B?VFhqNUY5K2VXb0gyTExLZUcwajBNbDF2VURDMzVGa2lnNkIzNmVnUXpVZFho?=
- =?utf-8?B?SjUyQ1RnU0xWRW1UYzU5R1dLckNWenBjbm03UnBXSkMxdW9VOEN5SXlWbTJ5?=
- =?utf-8?B?ZEhreDg2QUYxWWE4K2ZPc0IzaSs3bFRxa2YwYlZLdTVDLzNRSGJBYitRcVNz?=
- =?utf-8?B?eGxicWl2aXloRHJra29nYWo2ZloxSnhOdlcxOGJOdFMvSGNYQUg4MlRpWWVP?=
- =?utf-8?B?bGxrZTB5akJvUjQ4amdZWHUrS1FaWkU1c0Y0TzFuZVNXUnRCcnJYY0lNWVVo?=
- =?utf-8?B?WGpLdkh6QkJmeXNra0x6ZWk4SmgvRmVDckE4OG9ybjdGQThqVUI4V0hLMnlp?=
- =?utf-8?B?VkZxQllZS01JMmdpNStLcXNPOEI5UXJWU25LNDFFWHhSOElRdU81d29HZXBC?=
- =?utf-8?B?WmxuNnFoU0ljL0hRZy9ZMGVVLzZnbGM4Y24wTlNEbzFYOTVWSjB3WjN6cVcw?=
- =?utf-8?B?d2hySXF0Z3VSTkZ1WGcvYlRYVHR0YjN4eWgwSHJyZ3dnR3BZWE1UWmFVQmJJ?=
- =?utf-8?B?VWpXMmNKYTR6c0M1RjdoaVdySXA1ZnVUdmpiQVdyV1VueDFYbXd0dVduUWs2?=
- =?utf-8?B?TVZYdG8xSmRaVTU1cWlIZTRqQVR5R2NJa2E1T1A0Y1E0YXNaZGh3aUxsMmJU?=
- =?utf-8?B?Z2FNL1J5NDFGQkhWRFl0UjY3ZnI4MGJBRi9jY3drVVREejJmUE4rblpFM1lV?=
- =?utf-8?B?elFzK2pKbFFUc2J4NGt6Z3MzbU1XUE1BVnBpNi9OL0FBOTBsV3kraEhPRTk5?=
- =?utf-8?B?QzBFRVdqVjdCNGtENHE2YlNjbXduNXp2SWhkY2VEbDRzNi9ybnY0cWhtcEhW?=
- =?utf-8?B?eExIeWNzTnYrTWMzMk9zMnFCaVJtRXNXajBVNXo4T1Y1YnQvSlZKbGR4c0ZE?=
- =?utf-8?B?Mno1d2I3M09xTWIvQVRMOHFONlViZFE1dVg1em5NWFcxbHNuazJaLzE4bzBS?=
- =?utf-8?B?M2twQVRoWmpzQ0o2UjZ4UG5RY1RtZ2VqejNhSng2VkltOWEyODJoQnI2RW44?=
- =?utf-8?B?dXd1QUxLa0puTjdqUmdGMUw2Ly9kKzllbHUxSW9ieDcxNk0rRzV0djBKQTZy?=
- =?utf-8?B?enVHWTE0MzV2MDlqbkFCcUZSZzhYdkxKMzgwNzR2Z0R6RnhWSVZubUJGdkVW?=
- =?utf-8?B?NTZMd2dqSnovdkNpTnp0UG16YjJFUWs4YXd3Vnl0U200WkJDaS96WmNvS3dw?=
- =?utf-8?B?QzNoaE5jZmxJNGI5WU1yZUNSNGpIdmprSVlGQXAxbjhUcXNpVXd3Z1lWckdW?=
- =?utf-8?B?YXFOUEhJaEEvVUtQOUhKcHZSVjBIdXgvK3V4QXp3WGFDREE9PQ==?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(19092799006)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WVozS2VPdjlqNURTMCtVSzVlaWY2cGJGY1JJWHFjckVkQWNEd0Fpd3lsc1hY?=
- =?utf-8?B?alc4K2xOWWVBdXdYVHgrL1ZmMHhMaW1yS1B6aWwzQVlUSVluTlM0b21VTHJG?=
- =?utf-8?B?Z0xpOFNWMGZVQUQ1UjJSZDhsTnEybUZ2TlhreTZWOU5DazR0RTRVa1lTOWc4?=
- =?utf-8?B?a3picE96UUlIWkgySVZXS1d4amtSMWdZQ2lCM1NOVGQxMFRjK1JpMjA0NFUy?=
- =?utf-8?B?dVpTL3dPZU1tVjNKUCtDRTVWcUdiS1RhNmRZMWQ0cXl4cE5QZlBjOVJXczRl?=
- =?utf-8?B?cU5veEExb3lHM1JOaXNGRmJkb0dlZUpOZGNJZ3FEZnNGT1BhaG1wbk9nb053?=
- =?utf-8?B?blJ2VE9EQ3c5VnVYT1BZck9QUFNRTnkyN0xZQm9QTGlqeWJ5NkprTWRZUkVM?=
- =?utf-8?B?S21KNzNzR250eHdkTlE4clpCR2FQQnFidFhUakcyckJoRnFrY3pobmNOa3dN?=
- =?utf-8?B?WGVpMDNVYUtldmVmb1lOZ2YwM3V6R0VERTd6MVR3eDBVYWIrYzhGOGNmQVhU?=
- =?utf-8?B?K241RUhOd2x5cWdwVngxSVhvdnpNeUdCZ1ZPSGJZalRjNnRSdE84Rm9rcEd1?=
- =?utf-8?B?ZVVjeUJJZi8rQ1JvL0dIYzRaNVJQVmp2aWpTOE5wQTljSGU1YTF1Zk91cnoy?=
- =?utf-8?B?UndidmpIeVRUTElZMjFTSnpzdTcwV2ZoVml1Zk9HeHc5TlhmWFRnU3k4SlB5?=
- =?utf-8?B?V0lyems4cXZWcVVjc2pLNWQydE9STzY4bHRuN2RreW8wWlAwR0VWOWRuaDZE?=
- =?utf-8?B?ZExuR09QU0hwdXpPUnduWUpuQ25tLzIxeDZ6RldBTnVWZ3V4UksxY3pjSGJW?=
- =?utf-8?B?RFpObis1bDBkdm03ZWt5cXpiYWU5b0N2V1pRajM4Mjc3bWV5TEswb1QzV0dj?=
- =?utf-8?B?S3czQ0pTV1RoVW4zRU9NYTlEbzVtUzNMbDFCU0Ewb2Q2bmd2MHVIeUJ0ZnNO?=
- =?utf-8?B?bkg0YUF2M1VEZmhtOVhwbHVJNE5MTXlNdjZxaC9WWUgydlVtK21LdUF1U1d1?=
- =?utf-8?B?NGxyemF0dU0rNDZOWnFYbGZicVB0VEJiTVRySnIyaFc0bWgxbFYrYUF3VmQ2?=
- =?utf-8?B?UkE0V0VJV3d6VGE0eG45azdVSFBlWnlaQUJjb09STTI4Q2c4ZVVDdkppSk1o?=
- =?utf-8?B?UE5aMTZocXJhR01JUjlndjRxQlhPNE9Rc2hnQTEyVGN1dGRmM1Zjank4blZa?=
- =?utf-8?B?ZE1OR3RxRmhqaDNqVlVGUUNORmIvZStGYXpkWUF0UG5CSG4xTWZ1SVBqeitR?=
- =?utf-8?B?WXhzWjk2K3dHenc4VjlPTXNwVExRZmh5ZFFiZUlxZ2g0YWoxbnpLc2NybVlo?=
- =?utf-8?B?aFBOMEhrd2kxVDFqc0dNbWk0SnNoalErcmxMNHV6NGZoenpuYmpUYmkvWXFo?=
- =?utf-8?B?SFRZOTRTRXVGSlZ0U2ZEeDVpZHZNT2JDNGloTzZyNmZwZllsUE5EeGdmYlRm?=
- =?utf-8?B?ODJYNVlIQjFBaGRuWE5TOURDbEpQdU9kZmRoamNIWlcvZEhBSDlPd3lvOXBI?=
- =?utf-8?B?aW5mT05CNzIwZ2JRdXdwR044eHRCaGZoWnlqK0lMY2NsSnQ4UHM4a0lqTnhw?=
- =?utf-8?B?UXp2RncxaFdzbWtBOGhYTTZnZytoeDAvY3A3N3hGTXAycHRsV0ZZMzNrakln?=
- =?utf-8?B?VStFY2dTUmV3ZDF1M2hYME9qM3IvUkFERHYwVDl3NXFycVppRlMveCtONUk5?=
- =?utf-8?B?RUhVN3R3SDlNanZlaDhoenJvdzY3Q0UvN2pHQlppUk5GbDlvaVMvZVQ2SzVL?=
- =?utf-8?B?Rno5dTltdDBpQ0FEOHBhdXgxWjUxYVdTazhBQm9FN2tsbVVkNmFTaS8xK01k?=
- =?utf-8?B?SWc0aUs3ZndPbkpNbk5HQ1NVOU0rNmMzbytURDdFbzB3OVNrMmxaWW1sRE9i?=
- =?utf-8?B?MWxWbmZzY3hta3c3ckFLMVFaQVFzRmVBQVErTkF1U3Q4Qy9tWXRIb1piUFdh?=
- =?utf-8?B?RVVFM0ZjODY5bW1ocnhHSEY2R3EyVm5xN2wxS0lOZkNrVVpwaEw3WkV5ZElH?=
- =?utf-8?B?cVZ6TDZ3UXlrQTZGUkswM1VFTjdGN20vRTRybStlNHFaODVORzEwbDA4MVI0?=
- =?utf-8?B?ekRFZ2s1M0x2aFVwaXREMk12VGdMenpnRGxubEZ1OG9FUEc1a0JBNnA2cHdW?=
- =?utf-8?B?VmxyaE85YjlEb0lwWXJuNytsaWRjNWNOSEpvK2xDVHIyY0RuQmpmWjBPeEUz?=
- =?utf-8?B?amc9PQ==?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: e64f4a1f-ac43-487b-f0af-08de04dbd9f1
-X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2025 13:25:43.6827 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Z/HPLLDbFqWlOHXiJTGK3Kf0KQCwFVQZwVruoPqLQp17swH7F1ouFhU9ablKngn64M4sweU3ggZjg9Jbi/Ejy4PLlh67l5InCu0h+G1e2bg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV0P278MB1185
-Received-SPF: pass client-ip=40.107.168.91;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=ZR1P278CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87v7kskvut.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -222,71 +114,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Mon, Oct 06, 2025 at 03:23:06PM +0200, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+> > To migrate virtio-net TAP device backend (including open fds) locally,
+> > user should simply set migration parameter
+> >
+> >    backend-transfer = ["virtio-net-tap"]
+> >
+> > Why not simple boolean? To simplify migration to further versions,
+> > when more devices will support backend-transfer migration.
+> >
+> > Alternatively, we may add per-device option to disable backend-transfer
+> > migration, but still:
+> >
+> > 1. It's more comfortable to set same capabilities/parameters on both
+> > source and target QEMU, than care about each device.
+> >
+> > 2. To not break the design, that machine-type + device options +
+> > migration capabilities and parameters are fully define the resulting
+> > migration stream. We'll break this if add in future more
+> > backend-transfer support in devices under same backend-transfer=true
+> > parameter.
+> >
+> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > ---
+> >  include/qapi/util.h | 17 ++++++++++++++++
+> >  migration/options.c | 32 ++++++++++++++++++++++++++++++
+> >  migration/options.h |  2 ++
+> >  qapi/migration.json | 47 ++++++++++++++++++++++++++++++++++++---------
+> >  4 files changed, 89 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/include/qapi/util.h b/include/qapi/util.h
+> > index 29bc4eb865..b953402416 100644
+> > --- a/include/qapi/util.h
+> > +++ b/include/qapi/util.h
+> > @@ -69,4 +69,21 @@ int parse_qapi_name(const char *name, bool complete);
+> >          _len;                                                       \
+> >      })
+> >  
+> > +/*
+> > + * For any GenericList @list, return true if it contains specified
+> > + * element.
+> > + */
+> > +#define QAPI_LIST_CONTAINS(list, el)                                \
+> > +    ({                                                              \
+> > +        bool _found = false;                                        \
+> > +        typeof_strip_qual(list) _tail;                              \
+> > +        for (_tail = list; _tail != NULL; _tail = _tail->next) {    \
+> > +            if (_tail->value == el) {                               \
+> > +                _found = true;                                      \
+> > +                break;                                              \
+> > +            }                                                       \
+> > +        }                                                           \
+> > +        _found;                                                     \
+> > +    })
+> > +
+> 
+> Not a fan of lengthy macros.
+> 
+> There's a single use below: migrate_virtio_net_tap().  I can't see
+> potential uses for such a search in existing code.
 
-As originally discussed in the thread at
-https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
-and later proposed in a patch at
-https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg02218.html,
-I am sending an updated version of my patch based on the previous
-feedback.
+However, QAPI_LIST_FOR_EACH can potentially be used to implement
+QAPI_LIST_LENGTH.
 
-Notable changes to v1:
-- Added a setjmp() in the syscall handling path to allow redirecting
-  the PC via cpu_loop_exit() also in syscall callbacks. The previous
-  version would only work in instruction execution / memory access
-  callback contexts, as the setjmp() corresponding to the longjmp() in
-  cpu_loop_exit() was only live in those contexts.
-- Added a flag to make sure the new API function is only called in
-  contexts where it makes sense, i.e., during execution of guest code.
-- Added a test that checks the new functionality by skipping a
-  non-existent sentinel syscall.
+#define QAPI_LIST_FOR_EACH(list, tail)                    \
+        for (tail = list; tail != NULL; tail = tail->next)
 
-I made it an RFC patch this time as I am not entirely sure if my
-setting/handling of the new flag makes sense the way it is. I briefly
-looked into making the QEMU_PLUGIN_CB_* flags actual flags via a
-bitfield instead of enum values, but that would have required touching
-a lot of code all over the place, so I'm not sure this is the way to go.
+and
 
-Happy to get feedback and your thoughts on the patches!
-
-Thanks,
-Florian
+#define QAPI_LIST_LENGTH(list)                                      \
+    ({                                                              \
+        size_t _len = 0;                                            \
+        typeof_strip_qual(list) _tail;                              \
+        QAPI_LIST_FOR_EACH(list, tail) {                            \
+            _len++;                                                 \
+        }                                                           \
+        _len;                                                       \
+    })
 
 
-Florian Hofhammer (2):
-  plugins: Add PC diversion API function
-  tests/tcg: add test for qemu_plugin_set_pc API
 
- include/qemu/qemu-plugin.h                    | 15 +++++++
- linux-user/aarch64/cpu_loop.c                 |  2 +-
- linux-user/alpha/cpu_loop.c                   |  2 +-
- linux-user/arm/cpu_loop.c                     |  2 +-
- linux-user/hexagon/cpu_loop.c                 |  2 +-
- linux-user/hppa/cpu_loop.c                    |  4 ++
- linux-user/i386/cpu_loop.c                    |  8 ++--
- linux-user/include/special-errno.h            |  8 ++++
- linux-user/loongarch64/cpu_loop.c             |  5 ++-
- linux-user/m68k/cpu_loop.c                    |  2 +-
- linux-user/microblaze/cpu_loop.c              |  2 +-
- linux-user/mips/cpu_loop.c                    |  5 ++-
- linux-user/openrisc/cpu_loop.c                |  2 +-
- linux-user/ppc/cpu_loop.c                     |  6 ++-
- linux-user/riscv/cpu_loop.c                   |  2 +-
- linux-user/s390x/cpu_loop.c                   |  2 +-
- linux-user/sh4/cpu_loop.c                     |  2 +-
- linux-user/sparc/cpu_loop.c                   |  4 +-
- linux-user/syscall.c                          |  8 ++++
- linux-user/xtensa/cpu_loop.c                  |  3 ++
- plugins/api.c                                 | 17 +++++++-
- plugins/core.c                                | 25 ++++++-----
- tests/tcg/multiarch/Makefile.target           | 42 +++++++++++++++++++
- .../tcg/multiarch/test-plugin-skip-syscalls.c | 26 ++++++++++++
- tests/tcg/plugins/syscall.c                   |  6 +++
- 25 files changed, 170 insertions(+), 32 deletions(-)
- create mode 100644 tests/tcg/multiarch/test-plugin-skip-syscalls.c
-
--- 
-2.51.0
+> Open-code it in migrate_virtio_net_tap()?
+> 
+> >  #endif
+> > diff --git a/migration/options.c b/migration/options.c
+> > index 4e923a2e07..137ca2147e 100644
+> > --- a/migration/options.c
+> > +++ b/migration/options.c
+> > @@ -13,6 +13,7 @@
+> >  
+> >  #include "qemu/osdep.h"
+> >  #include "qemu/error-report.h"
+> > +#include "qapi/util.h"
+> >  #include "exec/target_page.h"
+> >  #include "qapi/clone-visitor.h"
+> >  #include "qapi/error.h"
+> > @@ -262,6 +263,14 @@ bool migrate_mapped_ram(void)
+> >      return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
+> >  }
+> >  
+> > +bool migrate_virtio_net_tap(void)
+> > +{
+> > +    MigrationState *s = migrate_get_current();
+> > +
+> > +    return QAPI_LIST_CONTAINS(s->parameters.backend_transfer,
+> > +                              BACKEND_TRANSFER_VIRTIO_NET_TAP);
+> > +}
+> > +
+> >  bool migrate_ignore_shared(void)
+> >  {
+> >      MigrationState *s = migrate_get_current();
+> > @@ -960,6 +969,12 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+> >      params->has_direct_io = true;
+> >      params->direct_io = s->parameters.direct_io;
+> >  
+> > +    if (s->parameters.backend_transfer) {
+> > +        params->has_backend_transfer = true;
+> > +        params->backend_transfer = QAPI_CLONE(BackendTransferList,
+> > +                                              s->parameters.backend_transfer);
+> > +    }
+> > +
+> >      return params;
+> >  }
+> >  
+> > @@ -993,6 +1008,7 @@ void migrate_params_init(MigrationParameters *params)
+> >      params->has_mode = true;
+> >      params->has_zero_page_detection = true;
+> >      params->has_direct_io = true;
+> > +    params->has_backend_transfer = true;
+> >  }
+> >  
+> >  /*
+> > @@ -1179,6 +1195,11 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+> >          return false;
+> >      }
+> >  
+> > +    if (params->has_backend_transfer) {
+> > +        error_setg(errp, "Not implemented");
+> > +        return false;
+> > +    }
+> > +
+> 
+> This goes away in the next patch.  Fine, but mentioning the gap in the
+> commit message can save reviewer a bit of work.
+> 
+> >      return true;
+> >  }
+> >  
+> > @@ -1297,6 +1318,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+> >      if (params->has_direct_io) {
+> >          dest->direct_io = params->direct_io;
+> >      }
+> > +
+> > +    if (params->has_backend_transfer) {
+> > +        dest->backend_transfer = params->backend_transfer;
+> > +    }
+> >  }
+> >  
+> >  static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+> > @@ -1429,6 +1454,13 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+> >      if (params->has_direct_io) {
+> >          s->parameters.direct_io = params->direct_io;
+> >      }
+> > +
+> > +    if (params->has_backend_transfer) {
+> > +        qapi_free_BackendTransferList(s->parameters.backend_transfer);
+> > +
+> > +        s->parameters.backend_transfer = QAPI_CLONE(BackendTransferList,
+> > +                                                    params->backend_transfer);
+> > +    }
+> >  }
+> >  
+> >  void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+> > diff --git a/migration/options.h b/migration/options.h
+> > index 82d839709e..55c0345433 100644
+> > --- a/migration/options.h
+> > +++ b/migration/options.h
+> > @@ -87,6 +87,8 @@ const char *migrate_tls_hostname(void);
+> >  uint64_t migrate_xbzrle_cache_size(void);
+> >  ZeroPageDetection migrate_zero_page_detection(void);
+> >  
+> > +bool migrate_virtio_net_tap(void);
+> > +
+> >  /* parameters helpers */
+> >  
+> >  bool migrate_params_check(MigrationParameters *params, Error **errp);
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 2387c21e9c..e39785dc07 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -747,6 +747,18 @@
+> >        '*transform': 'BitmapMigrationBitmapAliasTransform'
+> >    } }
+> >  
+> > +##
+> > +# @BackendTransfer:
+> > +#
+> > +# @virtio-net-tap: Enable backend-transfer migration for virtio-net/tap. When
+> > +#     enabled, TAP fds and all related state is passed to target QEMU through
+> > +#     migration channel (which should be unix socket).
+> 
+> Suggest "are passed to the destination in the migration channel" and
+> "should be a UNIX domain socket".
+> 
+> docs/devel/qapi-code-gen.rst:
+> 
+>     For legibility, wrap text paragraphs so every line is at most 70
+>     characters long.
+> 
+>     Separate sentences with two spaces.
+> 
+> > +#
+> > +# Since: 10.2
+> > +##
+> > +{ 'enum': 'BackendTransfer',
+> > +  'data': [ 'virtio-net-tap' ] }
+> > +
+> >  ##
+> >  # @BitmapMigrationNodeAlias:
+> >  #
+> > @@ -924,10 +936,14 @@
+> >  #     only has effect if the @mapped-ram capability is enabled.
+> >  #     (Since 9.1)
+> >  #
+> > +# @backend-transfer: List of targets to enable backend-transfer
+> > +#     migration for. This requires migration channel to be a unix
+> > +#     socket (to pass fds through). (Since 10.2)
+> 
+> Elsewhere, we describe the same restriction like this:
+> 
+>                                           This CPR channel must support
+>    #     file descriptor transfer with SCM_RIGHTS, i.e. it must be a
+>    #     UNIX domain socket.
+> 
+> > +#
+> >  # Features:
+> >  #
+> > -# @unstable: Members @x-checkpoint-delay and
+> > -#     @x-vcpu-dirty-limit-period are experimental.
+> > +# @unstable: Members @x-checkpoint-delay,
+> > +#     @x-vcpu-dirty-limit-period and @backend-transfer are experimental.
+> 
+> List members in alphabetical order, please.
+> 
+> >  #
+> >  # Since: 2.4
+> >  ##
+> > @@ -950,7 +966,8 @@
+> >             'vcpu-dirty-limit',
+> >             'mode',
+> >             'zero-page-detection',
+> > -           'direct-io'] }
+> > +           'direct-io',
+> > +           'backend-transfer' ] }
+> 
+> Forgot feature 'unstable'?
+> 
+> >  
+> >  ##
+> >  # @MigrateSetParameters:
+> > @@ -1105,10 +1122,14 @@
+> >  #     only has effect if the @mapped-ram capability is enabled.
+> >  #     (Since 9.1)
+> >  #
+> > +# @backend-transfer: List of targets to enable backend-transfer
+> > +#     migration for. This requires migration channel to be a unix
+> > +#     socket (to pass fds through). (Since 10.2)
+> > +#
+> >  # Features:
+> >  #
+> > -# @unstable: Members @x-checkpoint-delay and
+> > -#     @x-vcpu-dirty-limit-period are experimental.
+> > +# @unstable: Members @x-checkpoint-delay,
+> > +#     @x-vcpu-dirty-limit-period and @backend-transfer are experimental.
+> >  #
+> >  # TODO: either fuse back into `MigrationParameters`, or make
+> >  #     `MigrationParameters` members mandatory
+> > @@ -1146,7 +1167,9 @@
+> >              '*vcpu-dirty-limit': 'uint64',
+> >              '*mode': 'MigMode',
+> >              '*zero-page-detection': 'ZeroPageDetection',
+> > -            '*direct-io': 'bool' } }
+> > +            '*direct-io': 'bool',
+> > +            '*backend-transfer': { 'type': [ 'BackendTransfer' ],
+> > +                                   'features': [ 'unstable' ] } } }
+> >  
+> >  ##
+> >  # @migrate-set-parameters:
+> > @@ -1315,10 +1338,14 @@
+> >  #     only has effect if the @mapped-ram capability is enabled.
+> >  #     (Since 9.1)
+> >  #
+> > +# @backend-transfer: List of targets to enable backend-transfer
+> > +#     migration for. This requires migration channel to be a unix
+> > +#     socket (to pass fds through). (Since 10.2)
+> > +#
+> >  # Features:
+> >  #
+> > -# @unstable: Members @x-checkpoint-delay and
+> > -#     @x-vcpu-dirty-limit-period are experimental.
+> > +# @unstable: Members @x-checkpoint-delay,
+> > +#     @x-vcpu-dirty-limit-period and @backend-transfer are experimental.
+> >  #
+> >  # Since: 2.4
+> >  ##
+> > @@ -1353,7 +1380,9 @@
+> >              '*vcpu-dirty-limit': 'uint64',
+> >              '*mode': 'MigMode',
+> >              '*zero-page-detection': 'ZeroPageDetection',
+> > -            '*direct-io': 'bool' } }
+> > +            '*direct-io': 'bool',
+> > +            '*backend-transfer': { 'type': [ 'BackendTransfer' ],
+> > +                                   'features': [ 'unstable' ] } } }
+> >  
+> >  ##
+> >  # @query-migrate-parameters:
 
 
