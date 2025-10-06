@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27D0CAC5B8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0CCCCD183
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5i1C-0002IC-5s; Mon, 06 Oct 2025 06:00:39 -0400
+	id 1v5hyg-0006OI-8i; Mon, 06 Oct 2025 05:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5i0V-0001aS-4s
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:59:51 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hye-0006Np-6l
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:57:56 -0400
 Received: from mailgate01.uberspace.is ([95.143.172.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5i0P-00041C-3e
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:59:50 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v5hyc-0003qm-9g
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 05:57:55 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id E3B4960BA5
- for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:59:42 +0200 (CEST)
-Received: (qmail 21026 invoked by uid 990); 6 Oct 2025 09:59:42 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id C3ADC60B87
+ for <qemu-devel@nongnu.org>; Mon,  6 Oct 2025 11:57:42 +0200 (CEST)
+Received: (qmail 18887 invoked by uid 990); 6 Oct 2025 09:57:42 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 06 Oct 2025 11:59:42 +0200
+ Mon, 06 Oct 2025 11:57:42 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH v7 24/25] tests: add test for double-traps on rv64
-Date: Mon,  6 Oct 2025 11:59:19 +0200
-Message-ID: <a3059c9e241a7ab5749db825908550768de81e9a.1759744337.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>, David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
+Subject: [PATCH v7 18/25] target/s390x: call plugin trap callbacks
+Date: Mon,  6 Oct 2025 11:57:13 +0200
+Message-ID: <a2bf5c403c134130f4e1131787322a3775d25e5e.1759744337.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1759744337.git.neither@nut.email>
 References: <cover.1759744337.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.976777) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.962272) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.576777
+X-Rspamd-Score: -5.562272
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=hJeTNN+EDtHALUaN38ske2iZTHRjFTg++mevsB5iNj8=;
- b=A3JSSqzyzkkR/6vP0PPq2c+7dFFNJf8N5e7AjCARoeFtRen5aUsf0js1SBk2nr70N/5HwJCqSn
- EAf+f4FQFH7rhMIucSBOzpnrSKU//xc8Autzj7JJQrWaP+tPolFpespp6lj6PT/rijGha+HdQpUk
- vYk5pacsGmdxt2+zeOAl0uyjhP7YvhZZlJJWBEv3OiLK6MU6v63mfaCiNYkE+UZvelJIkpDjkIgS
- Js6U0lwUXBQlbM0urGI7Ek6J/SZbNNocZv4t6eojcLrcDjTjXnaznoh//PJfv7VXkupaqJIqKBYP
- QgJQa1tXW6C/7s+hf8O3kq/h/VrmBa9UwBVABoYN+r5JZqoEQw0CIXTxU63SnLepDaRalJWlOFZx
- DbofmbYNHO+fVujPb9sipIYydB2KZot7jaFSmC9+l3uuN/4tUgNXiiWxpekgiq2cRSOnJ4+be4UM
- IwWMARsdZ3MFcG+p8J5p8XAPYZKikO+n5WjFPRpmVA61XmvwVon77z6285oMkxCghnXjLQlRCwcz
- i6WNWQrj1Wj4FfRN775YJgYNXPtF13vbL82qZQg7IUIbE8FwGNiFPyhdv3MtlrQg6cF/YM7dae4g
- F/ItMacEMF9NSJiIlxkI0S4JkWAOqrnX/AHWW55sBjot/bZ+uX25iuRVoT/AhT93oL6Fex+enyDG
- w=
+ bh=SaAf/mb9HEvbJAmt7DG7SMTiyDFoPmxYLnh5a2mc56Q=;
+ b=TmxrrUoJKf9jdTpZBbYJ3i4NNHhlGQe7Mo85nQUR5iX8JFxJroCheorTjKxCQ4uJqowLgvX239
+ PypjGXtIUR4OqCfqpXdw9hHVfvLXU1sDuughoLCH3ap5Ihi1ECcL1kaB7b95pVi4WZMQFF+vO/20
+ TqrzoOLHYDZtKHtr34VlnpkBNgWMxFTaM6hXQ/adpZaAgr9GO9toMO+ft1OtzMwCOyvxOHEpX9MD
+ tDY6tomx03iUU0tGh3zUSM8NGaDxRCu3p/9wQbLfuRDU2EtpH24rAkZzHDz+ZfIvt3SUhTcyiUyA
+ pKVKbsTwQdjkVPOtZ7L6fWUTx19CQA4C6KUpmnWwgOs1c6j/hkaRNuNI3fhNnqDK+3QqGhVW3KAl
+ qcbsO1Nov6ju8DVuciK8HAzCb24QcbS8Rvw2t70MbRL/Rwhgl+zOloqbpie0O3Y8DpyBmOnvJ4N4
+ zMi38zly3pFwzhxO5UdnIwJI06U3Kc04Qjw/1B1n9/ln2JZCTa84VXkr48qWt+Uf2C/aKKbWWqSx
+ GmLmpN23ixu9UqMWlDwDomB6uCS/USB7hioVvFZbmxumiwiKyPXszNCM7aSipjRzWaXpVm7tTHKs
+ aBNzfPhdQzfaUcbmU9vlPsQziLJjOy1ldN5ZouhZFpN58MNz73qmAazo1K7Y6IatjONtygMwhOQg
+ c=
 Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
  helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -68,7 +66,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,114 +82,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do have a number of test-case for various architectures exercising
-their interrupt/exception logic. However, for the recently introduced
-trap API we also want to exercise the logic for double traps on at least
-one architecture.
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+This change places hooks for IBM System/390 targets. We treat "program
+interrupts" and service calls as exceptions. We treat external and io
+"exceptions" as well as resets as interrupts.
+
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
- tests/tcg/riscv64/doubletrap.S            | 73 +++++++++++++++++++++++
- 2 files changed, 79 insertions(+)
- create mode 100644 tests/tcg/riscv64/doubletrap.S
+ target/s390x/tcg/excp_helper.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 3ca595335d..1a71a78653 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -24,5 +24,11 @@ EXTRA_RUNS += run-test-mepc-masking
- run-test-mepc-masking: test-mepc-masking
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
+index 4c7faeee82..7265b610a6 100644
+--- a/target/s390x/tcg/excp_helper.c
++++ b/target/s390x/tcg/excp_helper.c
+@@ -34,6 +34,7 @@
+ #include "hw/s390x/s390_flic.h"
+ #include "hw/boards.h"
+ #endif
++#include "qemu/plugin.h"
  
-+EXTRA_RUNS += run-plugin-doubletrap
-+run-plugin-doubletrap: doubletrap
-+	$(call run-test, $<, \
-+	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
-+	  $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/doubletrap.S b/tests/tcg/riscv64/doubletrap.S
-new file mode 100644
-index 0000000000..b61089c9c1
---- /dev/null
-+++ b/tests/tcg/riscv64/doubletrap.S
-@@ -0,0 +1,73 @@
-+	.option norvc
-+
-+	.text
-+	.global _start
-+_start:
-+	# Set up vectored interrupts
-+	lla	t0, trap
-+	add	t0, t0, 1
-+	csrw	mtvec, t0
-+
-+	# Enable sw interrupts
-+	csrrsi	zero, mie, 0x8
-+	csrrsi	zero, mstatus, 0x8
-+
-+	# Engage the double trap: we trigger an machine-level software
-+	# interrupt, which will trap to an illegal instruction
-+	lui	t1, 0x02000
-+	li	t0, 1
-+	sw	t0, 0(t1)
-+
-+	# If we still not went out via the software interrupt route after a
-+	# short while, we failed the test.
-+	lui	t0, 0x1
-+0:
-+	addi	t0, t0, -1
-+	bnez	t0, 0b
-+	j	fail
-+
-+trap:
-+	j	illegal_insn # Exceptions
-+	j	fail # Supervisor software interrupt
-+	j	fail
-+	.insn	i CUSTOM_0, 0, x0, x0, 0 # Machine software interrupt
-+	j	fail
-+	j	fail # Supervisor timer interrupt
-+	j	fail
-+	j	fail # Machine timer interrupt
-+	j	fail
-+	j	fail # Supervisor external interrupt
-+	j	fail
-+	j	fail # Machine external interrupt
-+	j	fail
-+	j	fail # Counter overflow interrupt
-+	j	fail
-+	j	fail
-+
-+illegal_insn:
-+	# Check whether we really got an illegal instruction
-+	csrr	t0, mcause
-+	li	t1, 2
-+	bne	t0, t1, fail
-+	li	a0, 0
-+	j	_exit
-+fail:
-+	li	a0, 1
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-+
-+	# Semihosting call sequence
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
+ G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
+                                            uint32_t code, uintptr_t ra)
+@@ -499,6 +500,7 @@ void s390_cpu_do_interrupt(CPUState *cs)
+     S390CPU *cpu = S390_CPU(cs);
+     CPUS390XState *env = &cpu->env;
+     bool stopped = false;
++    uint64_t last_pc = cpu->env.psw.addr;
+ 
+     qemu_log_mask(CPU_LOG_INT, "%s: %d at psw=%" PRIx64 ":%" PRIx64 "\n",
+                   __func__, cs->exception_index, env->psw.mask, env->psw.addr);
+@@ -528,21 +530,27 @@ try_deliver:
+     switch (cs->exception_index) {
+     case EXCP_PGM:
+         do_program_interrupt(env);
++        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+         break;
+     case EXCP_SVC:
+         do_svc_interrupt(env);
++        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+         break;
+     case EXCP_EXT:
+         do_ext_interrupt(env);
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+         break;
+     case EXCP_IO:
+         do_io_interrupt(env);
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+         break;
+     case EXCP_MCHK:
+         do_mchk_interrupt(env);
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+         break;
+     case EXCP_RESTART:
+         do_restart_interrupt(env);
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+         break;
+     case EXCP_STOP:
+         do_stop_interrupt(env);
 -- 
 2.49.1
 
