@@ -4,95 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2FFCAC5B8
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F601CAC5B8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 10:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5iQq-0001wj-D6; Mon, 06 Oct 2025 06:27:04 -0400
+	id 1v5iZC-00036R-UP; Mon, 06 Oct 2025 06:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5iQo-0001wb-Ou
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:27:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
+ id 1v5iZ6-00036B-Iz; Mon, 06 Oct 2025 06:35:36 -0400
+Received: from forward502d.mail.yandex.net ([178.154.239.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v5iQn-00089w-1H
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 06:27:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759746419;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hx1eRPIFFxHOm4a9J7E46IkAGP6DTYAnqRweVWO3UhI=;
- b=UKuI+8bksK0WFBPLZFmdRoSQIKiGIxNe7d59cVUpfyvoN0bcQbEZ2q0r/PiCtPhBw+l7/t
- Uwo6Zp9yivLEczGCWAm1optcPRDeMj1rxei/Qv9XK9to4b3FF+sBrTCcBOmSRopb7bbH9K
- wv1HE9wEz8mWygZ0UWuDGGq3tST/R1A=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-3jGXUvm5NjyQRE-xU3QelQ-1; Mon, 06 Oct 2025 06:26:58 -0400
-X-MC-Unique: 3jGXUvm5NjyQRE-xU3QelQ-1
-X-Mimecast-MFC-AGG-ID: 3jGXUvm5NjyQRE-xU3QelQ_1759746417
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-42558f501adso2072490f8f.1
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 03:26:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759746417; x=1760351217;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hx1eRPIFFxHOm4a9J7E46IkAGP6DTYAnqRweVWO3UhI=;
- b=tsiOyn2qUh2cTMZDYHqrz0cbta8BZugH9gkj7pv6SIkTtQzpEklxE9VFJrf5YYRUgy
- llWvI8NBV6yVBXMiMtmjync3Bf1EgPBipQfGKYVsLwu0kZsaa9AGSpFFMP5XPydmWvH6
- 7MRgi52A09UHcyv4jvn0hh1AbhisLS+YwU1b5qP3GFyF4i10+cb3FGw4IoXtMJpIrExy
- GduyLYRv0hUpkvs2yv2xjpjFv7ysheyMm3lsLW2bJ7ExOqT7ws8vuVTL73Ot88o/gg6B
- SJap18KgzxSebB+jTT4WIgoGFMrJRXVhnHOf31l9nSL5V10LgyAZKtrE8ydQbdhm7b9v
- Rj/w==
-X-Gm-Message-State: AOJu0YwVo82KswaD5MjJdD3e/3zJrxnv76r+ByL/mMszK52YOYCKSur3
- XM2zFuwvAJy/GHIZN2ABH5I2oVKvtsqiO/2+rQn+CQ18vohzafP6DOLrnFkHkLYxoxymtRjDR/q
- poIBmmwGYZ+D/RDlObrXiSoy3B1i92xAxqPzKL9SsDusGK27hahSN6pJe
-X-Gm-Gg: ASbGncu16CvnboHGhKimDNGhVdZDOikk3m64oMcJN9Eci5S4Y/QqKWwWsbA8cuqGgN7
- p79io9U9Dre2aFlqqriTEWKnXPE4JLf0UZA20XCMXVK66EtEtc7dgJ2ztY/jHuI224RcP1jz09p
- 9d/UAekcLHpRfbwElQebR1BXAq++5swX4BJPGqpvQYkt80JyAXSoBYUcbpnpM2FifNz6bS+6Lgj
- At5FdtYwGqMqHtPQPVyd1/OnJfTNGfHuZEEzeZqgikechfznqiQbaJXOrK5+xsnILtiY1NXnwUY
- qMR4h92m9ZHacQ01B7ceeT57xyBtr2xRcW+wyPI=
-X-Received: by 2002:a05:6000:43c6:10b0:425:72b3:7368 with SMTP id
- ffacd0b85a97d-42572b3739fmr4111761f8f.56.1759746417042; 
- Mon, 06 Oct 2025 03:26:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9tVSThEbRlfl5KMR9XUYu2gh6jOa/VYTVmmVj5xGGUg3oMhlQzAXj+FGtfCBlHW8wyoHL1A==
-X-Received: by 2002:a05:6000:43c6:10b0:425:72b3:7368 with SMTP id
- ffacd0b85a97d-42572b3739fmr4111739f8f.56.1759746416515; 
- Mon, 06 Oct 2025 03:26:56 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1518:6900:b69a:73e1:9698:9cd3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e980dsm21747095f8f.36.2025.10.06.03.26.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Oct 2025 03:26:55 -0700 (PDT)
-Date: Mon, 6 Oct 2025 06:26:53 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Jonathan Cameron via <qemu-devel@nongnu.org>, shiju.jose@huawei.com,
- Davidlohr Bueso <dave@stgolabs.net>, armbru@redhat.com,
- Fan Ni <fan.ni@samsung.com>, linux-cxl@vger.kernel.org,
- linuxarm@huawei.com, Ravi Shankar <venkataravis@micron.com>
-Subject: Re: [PATCH qemu for 10.2 0/3] cxl: Additional RAS features support.
-Message-ID: <20251006062628-mutt-send-email-mst@kernel.org>
-References: <20250917143330.294698-1-Jonathan.Cameron@huawei.com>
- <20251006101304.000055f8@huawei.com>
+ (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
+ id 1v5iZ2-0000m7-2x; Mon, 06 Oct 2025 06:35:36 -0400
+Received: from mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net
+ (mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:21a5:0:640:c759:0])
+ by forward502d.mail.yandex.net (Yandex) with ESMTPS id 22C3AC0917;
+ Mon, 06 Oct 2025 13:35:23 +0300 (MSK)
+Received: from mail.yandex.ru (2a02:6b8:c42:26cc:0:640:9e82:0
+ [2a02:6b8:c42:26cc:0:640:9e82:0])
+ by mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net (mxback/Yandex)
+ with HTTPS id JZhNs671kmI0-wYV3y8TD; Mon, 06 Oct 2025 13:35:22 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+ t=1759746922; bh=6JxHa/9bVvUwZrL9Bxvk12xBIzzn7HllP9NEdtSfRbc=;
+ h=Message-Id:References:Date:Cc:Subject:In-Reply-To:To:From;
+ b=qv3PxLChCqiXHU75JmJRK94j5Z2aPon8HPZYPHLq5L0DjDwdDbA1SxFk3ZP7Nezid
+ 6q8s+rX6MYL15JpMITdasYaOsvHt+Byq1sw02yobr0Bh0cHI48CYxkXcKw/L/br77u
+ Dk5yKE/r0Eer21oUiKfO7mB6PV4aD2DeRuCVgLF0=
+Authentication-Results: mail-nwsmtp-mxback-production-main-87.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex.ru
+Received: by mail-sendbernar-production-main-44.klg.yp-c.yandex.net
+ (sendbernar/Yandex) with HTTPS id 18a6bb5c87a9269501119880b4f667ae; 
+ Mon, 06 Oct 2025 13:35:21 +0300
+From: =?utf-8?B?0JbQtdCx0YDRj9C60L7QsiDQlNCw0L3QuNC70LA=?=
+ <d.zhebryakov@yandex.ru>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Laurent Vivier <laurent@vivier.eu>, Chinmay Rath <rathc@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>
+In-Reply-To: <20250915124650.435777-5-d.zhebryakov@yandex.ru>
+References: <20250915124650.435777-1-d.zhebryakov@yandex.ru>
+ <20250915124650.435777-5-d.zhebryakov@yandex.ru>
+Subject: Re: [PATCH v3 4/4] target/ppc: fix GDB stub to work correctly with LE
+ pages
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251006101304.000055f8@huawei.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.43,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Mon, 06 Oct 2025 13:35:21 +0300
+Message-Id: <103431759746895@mail.yandex.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
+Received-SPF: pass client-ip=178.154.239.210;
+ envelope-from=d.zhebryakov@yandex.ru; helo=forward502d.mail.yandex.net
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, HTML_MIME_NO_HTML_TAG=0.377, MIME_HTML_ONLY=0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,51 +86,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 06, 2025 at 10:13:04AM +0100, Jonathan Cameron wrote:
-> On Wed, 17 Sep 2025 15:33:27 +0100
-> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
-> 
-> > These two features have been used in testing the related EDAC RAS
-> > features drivers in Linux which are now upstream. Only minor tweaks
-> > from the second part of:
-> > https://lore.kernel.org/qemu-devel/20250811085530.2263-1-shiju.jose@huawei.com/
-> > [PATCH v6 0/8] hw/cxl: Update CXL events to rev3.2 and add maintenance support for memory repair features
-> > 
-> > I've split that series up as the two parts were only slightly connected.
-> > However there is some churn if this is applied without the other part of Shiju's posted
-> > series. That was sent a few minutes ago as:
-> > https://lore.kernel.org/qemu-devel/20250917141355.293217-1-Jonathan.Cameron@huawei.com/
-> > 
-> > Based on: [PATCH qemu for 10.2 0/5] cxl: r3.2 specification events updates.
-> > Based on: 20250917141355.293217-1-Jonathan.Cameron@huawei.com
-> > 
-> > Davidlohr Bueso (1):
-> >   hw/cxl: Add support for Maintenance command and Post Package Repair
-> >     (PPR)
-> > 
-> Hi Michael,
-> 
-> I see you have queued some stuff up on your gitlab tree.
-> Just wanted to make sure these are on the radar for possible inclusion.
-> No huge rush, but I'll queue some more series up on top of these
-> shortly.
-> 
-> Thanks
-> 
-> Jonathan
-
-thanks for the reminder, will queue.
-
-> > Shiju Jose (2):
-> >   hw/cxl/cxl-mailbox-utils: Move declaration of scrub and ECS feature
-> >     attributes in cmd_features_set_feature()
-> >   hw/cxl: Add emulation for memory sparing control feature
-> > 
-> >  include/hw/cxl/cxl_device.h | 145 +++++++++
-> >  include/hw/cxl/cxl_events.h |  47 +++
-> >  hw/cxl/cxl-mailbox-utils.c  | 566 +++++++++++++++++++++++++++++++++++-
-> >  hw/mem/cxl_type3.c          | 169 +++++++++++
-> >  4 files changed, 915 insertions(+), 12 deletions(-)
-> > 
-
+PGRpdj5QaW5nIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTA5MDMxMzQx
+NDYuMTQ4Nzc5NC0xLWQuemhlYnJ5YWtvdkB5YW5kZXgucnUvPC9kaXY+PGRpdj7CoDwvZGl2Pjxk
+aXY+LS0tLS0tLS0tLS0tLS0tLTwvZGl2PjxkaXY+0JrQvtC80YM6IHFlbXUtZGV2ZWxAbm9uZ251
+Lm9yZyAocWVtdS1kZXZlbEBub25nbnUub3JnKTs8L2Rpdj48ZGl2PtCa0L7Qv9C40Y86IFJpa3Ug
+Vm9pcGlvIChyaWt1LnZvaXBpb0Bpa2kuZmkpLCBJbHlhIExlb3Noa2V2aWNoIChpaWlAbGludXgu
+aWJtLmNvbSksIExhdXJlbnQgVml2aWVyIChsYXVyZW50QHZpdmllci5ldSksIENoaW5tYXkgUmF0
+aCAocmF0aGNAbGludXguaWJtLmNvbSksIFJpY2hhcmQgSGVuZGVyc29uIChyaWNoYXJkLmhlbmRl
+cnNvbkBsaW5hcm8ub3JnKSwgRGF2aWQgSGlsZGVuYnJhbmQgKGRhdmlkQHJlZGhhdC5jb20pLCBU
+aG9tYXMgSHV0aCAodGh1dGhAcmVkaGF0LmNvbSksIHFlbXUtczM5MHhAbm9uZ251Lm9yZywgUGFv
+bG8gQm9uemluaSAocGJvbnppbmlAcmVkaGF0LmNvbSksIE5pY2hvbGFzIFBpZ2dpbiAobnBpZ2dp
+bkBnbWFpbC5jb20pLCBxZW11LXBwY0Bub25nbnUub3JnOzwvZGl2PjxkaXY+0KLQtdC80LA6IFtQ
+QVRDSCB2MyA0LzRdIHRhcmdldC9wcGM6IGZpeCBHREIgc3R1YiB0byB3b3JrIGNvcnJlY3RseSB3
+aXRoIExFIHBhZ2VzOzwvZGl2PjxkaXY+MTUuMDkuMjAyNSwgMTU6NDYsICJEYW5pbGEgWmhlYnJ5
+YWtvdiIgJmx0O2QuemhlYnJ5YWtvdkB5YW5kZXgucnUmZ3Q7OjwvZGl2PjxibG9ja3F1b3RlPjxw
+PkdEQiBpcyBleHBlY3RlZCB0byBiZSBzZXQgdG8gdGhlIGVuZGlhbm5lc3Mgb2YgdGhlIGN1cnJl
+bnRseSBydW5uaW5nIGNvZGUsIHdoaWNoIG1heSBiZSBpbiBMRSBwYWdlLiBCc3dhcCB0aGUgcmVn
+aXN0ZXJzIGFjY29yZGluZ2x5LjxiciAvPjxiciAvPlNpZ25lZC1vZmYtYnk6IERhbmlsYSBaaGVi
+cnlha292ICZsdDs8YSBocmVmPSJtYWlsdG86ZC56aGVicnlha292QHlhbmRleC5ydSIgcmVsPSJu
+b29wZW5lciBub3JlZmVycmVyIj5kLnpoZWJyeWFrb3ZAeWFuZGV4LnJ1PC9hPiZndDs8YnIgLz4t
+LS08YnIgLz7CoHRhcmdldC9wcGMvZ2Ric3R1Yi5jIHwgMTcgKysrKysrKysrKysrKysrKy08YnIg
+Lz7CoDEgZmlsZSBjaGFuZ2VkLCAxNiBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pPGJyIC8+
+PGJyIC8+ZGlmZiAtLWdpdCBhL3RhcmdldC9wcGMvZ2Ric3R1Yi5jIGIvdGFyZ2V0L3BwYy9nZGJz
+dHViLmM8YnIgLz5pbmRleCAzYjI4ZDRlMjFjLi44OWM3ODM4OTRjIDEwMDY0NDxiciAvPi0tLSBh
+L3RhcmdldC9wcGMvZ2Ric3R1Yi5jPGJyIC8+KysrIGIvdGFyZ2V0L3BwYy9nZGJzdHViLmM8YnIg
+Lz5AQCAtMTksNiArMTksOCBAQDxiciAvPsKgwqAqLzxiciAvPsKgI2luY2x1ZGUgInFlbXUvb3Nk
+ZXAuaCI8YnIgLz7CoCNpbmNsdWRlICJjcHUuaCI8YnIgLz4rI2luY2x1ZGUgImFjY2VsL3RjZy9w
+cm9iZS5oIjxiciAvPisjaW5jbHVkZSAiZXhlYy90bGItZmxhZ3MuaCI8YnIgLz7CoCNpbmNsdWRl
+ICJleGVjL2dkYnN0dWIuaCI8YnIgLz7CoCNpbmNsdWRlICJnZGJzdHViL2hlbHBlcnMuaCI8YnIg
+Lz7CoCNpbmNsdWRlICJpbnRlcm5hbC5oIjxiciAvPkBAIC04NCw3ICs4NiwyMCBAQCBzdGF0aWMg
+aW50IHBwY19nZGJfcmVnaXN0ZXJfbGVuKGludCBuKTxiciAvPsKgdm9pZCBwcGNfbWF5YmVfYnN3
+YXBfcmVnaXN0ZXIoQ1BVUFBDU3RhdGUgKmVudiwgdWludDhfdCAqbWVtX2J1ZiwgaW50IGxlbik8
+YnIgLz7CoHs8IS0tIC0tPjxiciAvPsKgI2lmbmRlZiBDT05GSUdfVVNFUl9PTkxZPGJyIC8+LSBp
+ZiAoIUZJRUxEX0VYNjQoZW52LSZndDttc3IsIE1TUiwgTEUpKSB7PCEtLSAtLT48YnIgLz4rIGJv
+b2wgbGVfcGFnZSA9IGZhbHNlOzxiciAvPis8YnIgLz4rIGlmIChlbnYtJmd0O21tdV9tb2RlbCA9
+PSBQT1dFUlBDX01NVV9CT09LRTIwNikgezwhLS0gLS0+PGJyIC8+KyBDUFVUTEJFbnRyeUZ1bGwg
+KmZ1bGw7PGJyIC8+KyB2b2lkICpob3N0OzxiciAvPisgaW50IG1tdV9pZHggPSBwcGNfZW52X21t
+dV9pbmRleChlbnYsIHRydWUpOzxiciAvPis8YnIgLz4rIHByb2JlX2FjY2Vzc19mdWxsX21tdShl
+bnYsIGVudi0mZ3Q7bmlwLCAwLCBNTVVfSU5TVF9GRVRDSCwgbW11X2lkeCw8YnIgLz4rICZhbXA7
+aG9zdCwgJmFtcDtmdWxsKTs8YnIgLz4rPGJyIC8+KyBsZV9wYWdlID0gZnVsbC0mZ3Q7dGxiX2Zp
+bGxfZmxhZ3MgJmFtcDsgVExCX0JTV0FQOzxiciAvPisgfTxiciAvPis8YnIgLz4rIGlmICghbGVf
+cGFnZSAmYW1wOyZhbXA7ICFGSUVMRF9FWDY0KGVudi0mZ3Q7bXNyLCBNU1IsIExFKSkgezwhLS0g
+LS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgLyogZG8gbm90aGluZyAqLzxiciAvPsKgwqDCoMKg
+wqB9IGVsc2UgaWYgKGxlbiA9PSA0KSB7PCEtLSAtLT48YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqBi
+c3dhcDMycygodWludDMyX3QgKiltZW1fYnVmKTs8L3A+LS08YnIgLz4yLjQ3LjI8YnIgLz7CoDwv
+YmxvY2txdW90ZT4=
 
