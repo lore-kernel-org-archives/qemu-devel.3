@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356FACCA476
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ADE3CCA470
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 00:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5Yos-0000Fh-ME; Sun, 05 Oct 2025 20:11:14 -0400
+	id 1v5Yoo-0000Ej-V5; Sun, 05 Oct 2025 20:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v5Yoa-0000CR-Fk
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 20:10:58 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1v5YoY-0000Be-Tb
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 20:10:56 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1v5YoW-0004EA-L0
- for qemu-devel@nongnu.org; Sun, 05 Oct 2025 20:10:55 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-32ed19ce5a3so3947341a91.0
- for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 17:10:51 -0700 (PDT)
+ id 1v5YoW-0004Du-Ka
+ for qemu-devel@nongnu.org; Sun, 05 Oct 2025 20:10:54 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-782e93932ffso3744044b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Oct 2025 17:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759709450; x=1760314250; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l/93bmDUusvGPtBSWOQh6Rq5pqOuM8kQWpxAeUIhgpQ=;
- b=YNAL57wOuuLon9xddhZb0GfqxbcCplNkV7AdrDtiJaUTmNbFFyLOPCCAENgZlBlp26
- u5iSVjfsZu8RSMRsGxQ0sZebMNGfsHa5yjL1xu+TgEjjjH5Hsp3LOyDoHWWRHs3qERSK
- woBU0/Mm/VfJMB1xlo1tF3jiKNIxTldwEVy0e4ZdF5LP1NwK2sQdsuHbgORr9n5EGkNc
- IGYm4OGUQ7145p2SSXuwSiyK+v1dyWVZbhMGugDC7yGCIOp7CGYPjNKzrUtEjZzp0Erl
- EUBWW7y+8106pE6HFsk8VRzYejXgjhQ0d1ewnH8I4dNJZNzN81fonLXaVcfvBRvQJoCv
- kd3Q==
+ d=linaro.org; s=google; t=1759709448; x=1760314248; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OuS7+ZKbuBk4SP5WM6xYOzaowjiA7XoTY6cu4+HNTpc=;
+ b=JwYtd9PTusXMXW1ekWHIw7W2diwdtMUQiJj/nfiijq7QekpabSCQmBRSf73TcdjUcV
+ XZMcwESRIT141iBWehSyG+JK4rafqQTHU8Q0oPMrEzy7P3ZMLACDa0i2XzlTs7pt44Hs
+ SoLTEMcOcL+VLoE6Lvtx3qjM44aGG5qUdHrlLoXf2vj3oPz4i7ddUwl2bOW/DWojBdGf
+ m1vDHFnNdHfT3IWlYiwNzR83HDaeKVf+dwNagntg02NMtoda7g6VkI+K0lGsPzJKJH+d
+ gYc/xg8jV74PidHjYqlCcTMAFXtqXnMxR4RXE/lgoFhE3VTkeIYMqP+SjV3svDv1masR
+ AChg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759709450; x=1760314250;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=l/93bmDUusvGPtBSWOQh6Rq5pqOuM8kQWpxAeUIhgpQ=;
- b=XKlViRVUqP81A5YFq1HaXv9ZcZHAq+dMhAQTls9cnm3T+STqAYVVR9Bxc4ouiJ9Uf+
- 8bo+6HHKoPTy5viHVzPN6YbWKL6TOC79P5CcW5hJ31G3zDv7CzpizLUi6J4QN4UMl4wM
- 0HeR9Y2nS9ODZ3RJPwPCgyirwaer5wk7ulvD7Ij9sZaL7n3rSmUBlUPo6m8f/3phZR+M
- iIf03oUbwE09RNoo8tsakP+y1JZGKRAx83U+ePqEI3RgAQuh11bmVlk5GUjTjCChXc6T
- luiVl0iBj+rOFuDYLptbO0MN56IfOhARrXoOD2hhVpH+Z1C8gyKG8YZsPNQZX+W0rD/w
- FvAw==
-X-Gm-Message-State: AOJu0YwxD2+50QSRmflDzdHKtpCC9TeRnBz3ZpILLeMLzbvk2kP0zJfx
- aIXWqgh1k19F8E/FBAJsXDhOE9HjzNHRNRqlXJZrweSI8kOhh2aSMCx+Kso8YXJK0Mu5U5WYKxG
- LeSoM
-X-Gm-Gg: ASbGncspVUoprT4I+WhOkTjdolGCYUwU4fCuJtlBTJgG+7Vqx996eDXUSh/9as6sCEA
- Syfd6FMYkk0VnzNTX9inUnkbjuTOgyFgcjH1NS8mX4WaWk6qXkEKvDGm2fuU0s8PUgzuahYc3pg
- rXrs7HV6qqM/v0G+IWKTyjU9hfvFmrnFpWBX7KXAYttEnlsk/Kwov4kxzgxFEqEmAUf3QIOml+3
- uoDyEjGrrHiI2CwHVvcCVNCvYBjDDgo8yyLcnKhuq0S75a4Gi0V2+VMeXUOIA3sThJwQlMpWpO0
- XqVMGGZkRv5XP4q3R5tiBMbNgjgnT+Sanw/v96S9CQACgTeYEOcLyiK5cLgIvuQDT+M3xTBTjOJ
- 0kQuN2DukOb2VS0/mePEhOrEjKXyFfHSViNCkT0YfeTdITUqpG3mU//N9HAivt1oueVQ=
-X-Google-Smtp-Source: AGHT+IEpDFex5TWeNxkxhX6gA+0YmZOzHqrcpG0SjJiQVPmhJxlkMJHxJ4VxFIr9rgfp7qlewoSgsA==
-X-Received: by 2002:a17:90b:3b41:b0:32d:dffc:7ad6 with SMTP id
- 98e67ed59e1d1-339c27b94demr12136386a91.33.1759709450337; 
- Sun, 05 Oct 2025 17:10:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759709448; x=1760314248;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OuS7+ZKbuBk4SP5WM6xYOzaowjiA7XoTY6cu4+HNTpc=;
+ b=sGZPAc93DyqrZgwCWMO9WwVa/50rXl7BPvPasivWpP3VUGm65P9Q4DXAgaGf4ruNfx
+ ab2OYfY/ZEfzuDTZAxUhcXVx3sI9J8UIcNKBh3VP5kfMhVjvpgCneIz4t+HgXI427MP0
+ eULGO4XRppvjdHWf6NeFGaH+F9iPefjPV2NTJwK+dZi72SBT3Rw1xuTRvPF4ZqFOct3S
+ eD1DUiyqoM9zKLTACmDf7+MdfYyF9uc3USixmOSJdg979qBvOZST7sAxBEnQjONmIIsb
+ Il28nbhQtZSHTMW6TN81BXZGkbdRnzrKBGH39hysh9P/h4f06Jj4wNm0cQa3l/99xl4W
+ rmHA==
+X-Gm-Message-State: AOJu0YzEarRbgFIChY8E232n8dr7LGlYqKRbXGYXO6TM5WjrSZXPR1aW
+ 8m0IUH5UIs8wXspGX03iOoybxwbA/S3jLgc/k6C00kD17WmYMTygJ/muhwT3Zu+i/qp8nFQ0iek
+ por/Q
+X-Gm-Gg: ASbGncsbPFgfONKR8IVLowdRJnPMPKSL5BOQ6va8pkoXNg6cEQSQ52cZt63MNpirPDm
+ tTKnlBXER7x0lXSzrH3llGc1/u4JEYdGckVgSBiLJzIdH/p869nyIX1/Uj19QcHyD8MxjnDG681
+ tHmA5eCptQiLY0H2s9puxF3axNqlHBEtBtO3ujyaron8PrlgxZuObTzjighVnQp8m+Ktbxe4UML
+ +TdvstgtCwt6F099Fi68ZK56XxvsYfqdhSVYl84XmKeHwl37ngADJdgNW102910+xrDQ1oFl+Yi
+ DNGci0gqYdNx4M4RiWxl0grfZVZ433SGi9aGX9+S3ztQnyHRVEpXsoNVQ32W6iUPyAtDy4Yyhef
+ vQWYv7+GLovA4OaZFq2VRdKHK4S1qI13ux8IHTmzxOZgLuKduq5x0fw53
+X-Google-Smtp-Source: AGHT+IEyarihjdgmKFJ/vIIUmuIRZG6MmBWTkimtj9qZdB8dyUT9TO5e/3FZ6Cm0kQC0P2NTkteafw==
+X-Received: by 2002:a05:6300:6145:b0:32b:7334:edcd with SMTP id
+ adf61e73a8af0-32b7334ee86mr10626906637.60.1759709447989; 
+ Sun, 05 Oct 2025 17:10:47 -0700 (PDT)
 Received: from gromero0.. ([186.215.59.111]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339c4a48584sm8804881a91.23.2025.10.05.17.10.48
+ 98e67ed59e1d1-339c4a48584sm8804881a91.23.2025.10.05.17.10.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Oct 2025 17:10:49 -0700 (PDT)
+ Sun, 05 Oct 2025 17:10:47 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
  peter.maydell@linaro.org
 Cc: alex.bennee@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v10 1/3] target/arm: Add a cpreg flag to indicate no trap in NV
-Date: Mon,  6 Oct 2025 00:10:16 +0000
-Message-Id: <20251006001018.219756-2-gustavo.romero@linaro.org>
+Subject: [PATCH v10 0/3] target/arm: Add FEAT_MEC to max cpu
+Date: Mon,  6 Oct 2025 00:10:15 +0000
+Message-Id: <20251006001018.219756-1-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251006001018.219756-1-gustavo.romero@linaro.org>
-References: <20251006001018.219756-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,45 +98,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new flag, ARM_CP_NV_NO_TRAP, to indicate that a CP register, even
-though it has opc1 == 4 or 5, does not trap when nested virtualization
-is enabled (FEAT_NV/FEAT_NV2).
+This series adds support for all FEAT_MEC registers and cache
+instructions to the Arm64 max CPU.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- target/arm/cpregs.h | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+It includes the FEAT_MEC registers and cache maintenance instructions,
+but does not modify the translation regimes to support the MECIDs, so no
+encryption is supported yet. However, software stacks that rely on
+FEAT_MEC should work properly at this point.
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 57fde5f57a..abee72c9bf 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -136,6 +136,7 @@ enum {
-      * identically to the normal one, other than FGT trapping handling.)
-      */
-     ARM_CP_ADD_TLBI_NXS          = 1 << 21,
-+    ARM_CP_NV_NO_TRAP            = 1 << 22,
- };
- 
- /*
-@@ -1158,10 +1159,14 @@ static inline bool arm_cpreg_traps_in_nv(const ARMCPRegInfo *ri)
-      *
-      * In particular, note that the released sysreg XML defines that
-      * the FEAT_MEC sysregs and instructions do not follow this FEAT_NV
--     * trapping rule, so we will need to add an ARM_CP_* flag to indicate
--     * "register does not trap on NV" to handle those if/when we implement
--     * FEAT_MEC.
-+     * trapping rule, so a register flagged as ARM_CP_NV_NO_TRAP indicates
-+     * the register does not trap on NV even if opc1 == 4 or 5.
-      */
-+
-+    if (ri->type & ARM_CP_NV_NO_TRAP) {
-+        return false;
-+    }
-+
-     return ri->opc1 == 4 || ri->opc1 == 5;
- }
- 
+
+Cheers,
+Gustavo
+
+v10:
+- Addressed comment from pm215 that registers with opc1 == 4 or 5 must
+  actually not trap when nested virtualization is turned on. This
+  resulted in one additional patch in the series:
+  "Add a cpreg flag to indicate no trap in NV".
+
+All previous versions of this series can be found in:
+
+https://patchew.org/QEMU/20250727074202.83141-1-richard.henderson@linaro.org/
+
+Please note that the patches related to FEAT_SCTRL2 and FEAT_TCR2, which
+are prerequisites for this series, have already been merged into master.
+
+
+Gustavo Romero (3):
+  target/arm: Add a cpreg flag to indicate no trap in NV
+  target/arm: Implement FEAT_MEC registers
+  target/arm: Enable FEAT_MEC in -cpu max
+
+ docs/system/arm/emulation.rst |   3 +
+ target/arm/cpregs.h           |  11 +++-
+ target/arm/cpu-features.h     |   5 ++
+ target/arm/cpu.c              |   3 +
+ target/arm/cpu.h              |  10 ++++
+ target/arm/helper.c           | 109 ++++++++++++++++++++++++++++++++++
+ target/arm/internals.h        |   3 +
+ target/arm/tcg/cpu64.c        |   1 +
+ 8 files changed, 142 insertions(+), 3 deletions(-)
+
 -- 
 2.34.1
 
