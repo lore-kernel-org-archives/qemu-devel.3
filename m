@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F7ACCA470
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 22:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34851CCA470
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Oct 2025 22:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5tFN-00045C-AG; Mon, 06 Oct 2025 17:59:57 -0400
+	id 1v5tlG-0002L2-4a; Mon, 06 Oct 2025 18:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v5tFL-00044y-T1
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 17:59:56 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1v5tlE-0002Kf-KW
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 18:32:52 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v5tFJ-0001Jg-UW
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 17:59:55 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7811a02316bso3863301b3a.3
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 14:59:53 -0700 (PDT)
+ id 1v5tlC-0004Gg-1Z
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 18:32:52 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-77f605f22easo4675143b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 15:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759787992; x=1760392792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759789966; x=1760394766; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JetKnJr1VMFc21WPmRvZQoJjGbp+gfs1665rWAjQSTw=;
- b=bDuB8FtNZHyrtx6YcQc8P/wfB78fpJs+94pV/LM8jOAF1t+u1hC5rJ8uxFn0sL8M/T
- MiiR98O+x7rq9I/rlq+dHwbm+xOp2FxWcpOWMPJ9PVzaQgfzR27H2wf4YwN+QYBXpbxa
- W6S7P1mfrvLxkfVtnE0sGBYbBHKZUzOLuq6HoGOPm2FmRpupV91Qid9UYWHH053oD+X4
- BKpeIYuIodB/p7jymiC//KlT3+y4S3+oBSBjr/KGgm5bq/jBc/+NJ8iHJTX4/xiEbw6V
- 1CNPX4XyqN9/8sfKEDQR3Ro0PD65z1DCtq4befv292mgrJckhnDuvJ7HQpNIzpJZB90B
- Lkpw==
+ bh=rsqxsMd1l8+UL9H+YYEB1wAuagtWs0JQPr64WA5Asbg=;
+ b=QUiTmOMqcVoxpNcIqjLf8W8bkYh40gCJ3IJt/B4By+heAEP7h6s5oP2etReV/6XqCC
+ P+stfwDOVfHCiOuolA27/LXBv+qTruEfaGkTDFTbzT7Wr9xUSJMJRbrRhOkQyyFXtJTI
+ lPta7RhISXvA+MkbSvuwgmztOcOL39t5SqLVMuZJeZWco9XnrzPkyaCnXNufqscmfnGp
+ 6O66x6TEzeVKTJI0yUTXO6n2rnJ0C1hUFVAwiDcX2kbgBgT2jqEHmvPkqcrLnkGLshi0
+ vVwbdYvPRZOESJ3ZNpoKgldp80YR2/2rWnr+1cHFP4wkj+rK2f08bqrFDWtRacaFETZD
+ k/ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759787992; x=1760392792;
+ d=1e100.net; s=20230601; t=1759789966; x=1760394766;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JetKnJr1VMFc21WPmRvZQoJjGbp+gfs1665rWAjQSTw=;
- b=PDJo7s8nPfrhSm1GM4O1solrsd0S0pBo5yyqoNpyZy8CGhCzlWCWb8YeahW1r5DsuN
- 3x/fmGUapHubvXnvK0lNMngQR/DMUfhp0XGErhdQ5uKCR6svULl5Mx6RU4KCjMUuZ4bs
- ao4Z0DzPMBxzhN1wYc/OgpwPYE0xDtGGcVALBLXLD10OgI6MtDwcvkHr3EiP1SjlGGqu
- 6DEC46vnluRX/WdAxK+03cnrC/NGOdh9661WEDIzI7w23AWzT3F4yZGUpoRTXsP6bD04
- Q3d/nfK2j/gk0sg2tEYjpjqbFqbkcSNrfoTlqaLWY53RoFBAve0+vblZO0oEG3Zie9XJ
- KK+A==
-X-Gm-Message-State: AOJu0YzEScPMsnWlVMVtNfNeYQDha1TDzEjViroj1xNkkyLgetolgd+U
- hVJQH9jfkf2FpGEfN/TXGFMIkmYBVlbXXrtroqzfacJwAX0iVB2YkQ5Nn3MBEQXize7keHfHUD9
- 187D4o/E=
-X-Gm-Gg: ASbGncuMs1g5QeH12rbxjFRcbYAl/Yaqh2Zb9P8STfPsTgktevflsiD8x/vQcSgFkiR
- 9nmBv9bfwpU7HAhr76xxhDendfpliJwvxZlPtB82xl+gVPDGMFUdrPmeSkkEtSjGoN4wWYKp2WW
- YKwz9qEJne9LFT4ag4nTV7pJam2/2h9FgIldVd5oe1mhvG6/SzGhFVrc0sU1KADJwaufjuAl9tf
- BdlCUBADa3F3fNb2HaPen7Hiwj6SLl9T6WmPLTul6ZcONlV5SVhratFhB0PjpGzEkXoTHcWNyVn
- 3BwSKfmIh00vJMmBlZZYgmrPT9GyPVe3wwRz6r/t3hUwR2nD5csqGluY0RM75nW8NVRPTcGGpeb
- dZr3xjXC5DNdlcglipKoy1hmew29BLySEr1OFmV+W9HM52K6DPc6qHrwigsauSlGQ
-X-Google-Smtp-Source: AGHT+IFO+7cQ6wUwJ63bYPXGatx1Hv7EALC2W8vnSaO2YbOBRn7cmtjvUuvnRw1ef5EmIHDkHz53yg==
-X-Received: by 2002:a05:6a00:4f85:b0:771:fa65:ae6e with SMTP id
- d2e1a72fcca58-78c98dc4dabmr18567130b3a.17.1759787992105; 
- Mon, 06 Oct 2025 14:59:52 -0700 (PDT)
+ bh=rsqxsMd1l8+UL9H+YYEB1wAuagtWs0JQPr64WA5Asbg=;
+ b=SS83g8sDCvyG5wpwQ4H0/PzoqJxGFsAcEsDB76LJ3eAAp+l5DUNHiM7W+ELaBAtZcj
+ iMcFZB+HFUrCtJxLR27WRK01ZFu289dJlTpq9Serk/H4pQx2w/TovqQzU1eZ6+aJvqC5
+ 2QczLQShc4t/4+1B1ZhsD6bsPFDnYw26zQV+SCDqqTaupTDz4HAe3kseDCfRSfb7D6Yn
+ zDiWPVV/BZ3VYkH26X2QgJskEJFBKckiC54GMukmsK1Q1qCv9ChZscgh8IDWjiTmYFZU
+ sUvfiKgVC2tjrwJN+QcqFfNfWD6tD/UPuBmaBAbizdcsAQwA5Q3TmoJY9zHTmcVxYG9R
+ b07Q==
+X-Gm-Message-State: AOJu0YwFa+Z0b8QWa2lDXTbKlyWy6GNhO3dv4nbdMKRdcNkwOULHEC4c
+ yacxWRx2LTj1ghS1Sczfwr27W/m3OKHxyDCbi4xow1LEr67h4hnpuCKKInFZ7lnCmWs8ljM1M18
+ 5F9fp7so=
+X-Gm-Gg: ASbGncvZkBdM7yLVNP//NlBRy1iLbUYUPx2i8SChmth24tV24/BwEZF5IfZRcpuiAaF
+ iDkV+s6Kd3G1GZE372our6NPEMA+Uq8M+hzbepKBd+J8EiafGHMsf4U2J1Osme9ACP07rEJYY1S
+ 5ivKWTnh7G5sEfU6Z437S9l1jSd9xu5GJe6IU37M6GUfbcFFaJTKZnws/Vz4mubypA2ISny2amR
+ lm9n8qwNYqqClQ0go3ieuwqYbSyW8DJU/jMqv1hE82UMynaWvuq9ucPgqkQZTFGjchAQaoh9b3q
+ IBQBWXFRvyh4EGyrFOc9Uv4XqONDeds9En4cPkAU1V58zcRBQnwwiBkKoAYfUcIq9Qun/fkEVWE
+ E8W9uN7VZghoHVW/TksvhDlF4yJIeKyVRf2HH+nRAt6kp/kF38ES44HxlG9gg4xWL
+X-Google-Smtp-Source: AGHT+IFCgxvbVpGWC4CbhNNSQzEVEr8kXUzi3KJckX3cAMf0WDi5E3HKvIK9RSZZ8nKpbl77gd20Xg==
+X-Received: by 2002:a05:6a20:6a26:b0:2bd:2798:7ae7 with SMTP id
+ adf61e73a8af0-32b620be0e3mr16965814637.31.1759789966366; 
+ Mon, 06 Oct 2025 15:32:46 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-78b01f99863sm13709501b3a.14.2025.10.06.14.59.51
+ d2e1a72fcca58-78b01faf086sm13704556b3a.23.2025.10.06.15.32.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 14:59:51 -0700 (PDT)
-Message-ID: <bc3f0ca1-6b03-478a-965f-0872c727001c@linaro.org>
-Date: Mon, 6 Oct 2025 14:59:50 -0700
+ Mon, 06 Oct 2025 15:32:45 -0700 (PDT)
+Message-ID: <438dd065-8edc-49d7-922f-29719f17d02b@linaro.org>
+Date: Mon, 6 Oct 2025 15:32:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/75] virtio,pci,pc: features, fixes
+Subject: Re: [PATCH v7 06/25] target/arm: call plugin trap callbacks
 To: qemu-devel@nongnu.org
-References: <cover.1759691708.git.mst@redhat.com>
+References: <cover.1759744337.git.neither@nut.email>
+ <77e01129000585067c2f89d4c1a1efe027e6b0d9.1759744337.git.neither@nut.email>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <cover.1759691708.git.mst@redhat.com>
+In-Reply-To: <77e01129000585067c2f89d4c1a1efe027e6b0d9.1759744337.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +103,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/25 12:16, Michael S. Tsirkin wrote:
-> The following changes since commit 81e3121bef89bcd3ccb261899e5a36246199065d:
+On 10/6/25 02:57, Julian Ganz wrote:
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
 > 
->    Merge tag 'pull-vfio-20251003' ofhttps://github.com/legoater/qemu into staging (2025-10-03 04:57:58 -0700)
+> This change places hooks for ARM (and Aarch64) targets. We decided to
+> treat the (V)IRQ, (VI/VF)NMI, (V)FIQ and VSERR exceptions as interrupts
+> since they are, presumably, async in nature.
 > 
-> are available in the Git repository at:
-> 
->    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> 
-> for you to fetch changes up to e27b177339ea4d391ed7538fbdbad34518937408:
-> 
->    pci: Fix wrong parameter passing to pci_device_get_iommu_bus_devfn() (2025-10-05 09:13:26 -0400)
-> 
-> ----------------------------------------------------------------
-> virtio,pci,pc: features, fixes
-> 
-> users can now control VM bit in smbios.
-> vhost-user-device is now user-createable.
-> intel_iommu now supports PRI
-> virtio-net now supports GSO over UDP tunnel
-> ghes now supports error injection
-> amd iommu now supports dma remapping for vfio
-> 
-> small fixes all over the place.
-> 
-> Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
+> Signed-off-by: Julian Ganz<neither@nut.email>
+> ---
+>   target/arm/helper.c       | 24 ++++++++++++++++++++++++
+>   target/arm/internals.h    |  1 +
+>   target/arm/tcg/m_helper.c |  5 +++++
+>   3 files changed, 30 insertions(+)
 
-
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
