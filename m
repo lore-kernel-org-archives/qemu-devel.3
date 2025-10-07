@@ -4,54 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C359DCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B97CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v65WR-0000Sc-IP; Tue, 07 Oct 2025 07:06:23 -0400
+	id 1v65oT-0003zt-Be; Tue, 07 Oct 2025 07:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v65WO-0000QE-0H
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:06:20 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v65oP-0003zD-TI; Tue, 07 Oct 2025 07:24:57 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v65WK-0003UY-LY
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:06:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=gX8VQCWJR7zDbpsXgSUUkpDD6khT+8oQhkwzLEGx3BY=; b=fuhr3gi7wGr22E/
- L4c/m222AM4SrzBWKtUkyrKll4oablBySBCkscQM/hk57jt8qevOn+l/f+ZT66xfL0JoNR+AdnQVk
- gQjFeNKAK1qfwPmhtxC7gGWvZaPXy7wYzZrWA+8KVj5zHHDzQx2gndeytc8Q8/fhZFsU4ngHR6GbO
- qk=;
-Date: Tue, 7 Oct 2025 13:08:56 +0200
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: Re: [PATCH v2 04/33] target/riscv: Bugfix
- riscv_pmu_ctr_get_fixed_counters_val()
-Message-ID: <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
-References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-5-anjo@rev.ng>
- <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v65oN-0006U6-7o; Tue, 07 Oct 2025 07:24:57 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 731B615B412;
+ Tue, 07 Oct 2025 14:24:41 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B814429AC10;
+ Tue,  7 Oct 2025 14:24:48 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 v2 00/18] Patch Round-up for stable 7.2.21,
+ freeze on 2025-10-06 (frozen)
+Date: Tue,  7 Oct 2025 14:24:43 +0300
+Message-ID: <qemu-stable-7.2.21-20251007142433@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,30 +56,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/10/25, Alistair Francis wrote:
-> On Wed, Oct 1, 2025 at 5:43 PM Anton Johansson via
-> <qemu-devel@nongnu.org> wrote:
-> >
-> > From my understanding the upper_half argument only indicates whether the
-> > upper or lower 32 bits should be returned, and upper_half will only ever
-> > be set when MXLEN == 32.  However, the function also uses upper_half to
-> > determine whether the inhibit flags are located in mcyclecfgh or
-> > mcyclecfg, but this misses the case where MXLEN == 32, upper_half == false
-> > for TARGET_RISCV32 where we would also need to read the upper half field.
-> 
-> If MXLEN == 32, upper_half == false then we want to read mcyclecfg,
-> which the code today seems to be doing correctly.
+The following patches are queued for QEMU stable v7.2.21:
 
-Hi again, I might be missing something then, when would this function need
-to access mcyclecfg for MXLEN == 32?  AFAIU mcyclecfg and mcyclecfgh are
-modeled separately for MXLEN == 32, even when sizeof(target_ulong) == 8.
-Since this function only checks inhibit flags wouldn't we always want to
-access mcyclecfgh for MXLEN == 32?
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-//Anton
+Patch freeze is 2025-10-06 (frozen), and the release is planned for 2025-10-08:
+
+  https://wiki.qemu.org/Planning/7.2
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* 3c3c233677d4 David Hubbard:
+   hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+02* a11d1847d5ef Alex Bennée:
+   .gitmodules: move u-boot mirrors to qemu-project-mirrors
+03* 3ee7f21ed292 Paolo Bonzini:
+   tests: vhost-user-test: release mutex on protocol violation
+04* f72fc16910c8 Yuxue Liu:
+   vhost-user-test: no set non-blocking for cal fd less than 0.
+05* c9a1ea9c52e6 Markus Armbruster:
+   Revert "tests/qtest: use qos_printf instead of g_test_message"
+06* dee66bc9691a Fabiano Rosas:
+   tests/qtest: Do not run lsi53c895a test if device is not present
+07* ae4b01b34979 Richard W.M. Jones:
+   tests: Ensure TAP version is printed before other messages
+08* aaf042299acf Stéphane Graber:
+   hw/usb/network: Remove hardcoded 0x40 prefix in STRING_ETHADDR response
+09* a1499a8a94 Michael Tokarev:
+   use fedora:37 for python container instead of :latest
+10* f9922937d173 Peter Delevoryas:
+   python/machine: Fix AF_UNIX path too long on macOS
+11* a3cfea92e203 Marc-André Lureau:
+   python/qmp/protocol: add open_with_socket()
+12* 603a3bad4b9a Marc-André Lureau:
+   python/qmp/legacy: make QEMUMonitorProtocol accept a socket
+13* bd4c0ef40914 Marc-André Lureau:
+   python/qemu/machine: use socketpair() for QMP by default
+14* 4c8f69b94839 Xiaoyao Li:
+   multiboot: Fix the split lock
+15* 03fe6659803f Richard Henderson:
+   accel/tcg: Properly unlink a TB linked to itself
+16* e13e1195db8a Richard Henderson:
+   tests/tcg/multiarch: Add tb-link test
+17 d0af3cd0274e Peter Maydell:
+   hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
+18 9163424c5098 Thomas Huth:
+   ui/icons/qemu.svg: Add metadata information (author, license) to the logo
+
+(commit(s) marked with * were in previous series and are not resent)
 
