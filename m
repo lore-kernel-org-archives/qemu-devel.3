@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E86CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42FC4CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v66Iq-0002mc-Jv; Tue, 07 Oct 2025 07:56:24 -0400
+	id 1v66Is-0002oQ-MU; Tue, 07 Oct 2025 07:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66IU-0002Yc-5W
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:56:05 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1v66IX-0002Yz-4b
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:56:09 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66ID-0001Jc-Qx
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:56:01 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e37d10ed2so54279635e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:39 -0700 (PDT)
+ id 1v66IC-0001JY-72
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:56:03 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-46f53f88e0bso17290765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759838137; x=1760442937; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759838136; x=1760442936; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a76lm/FvL+H9qR+yT/bygLJJanUbAcVb3PSUoyR2HNk=;
- b=IgF/vmog+qhbK5NFZeXM04Ul+PMPehVMtn2LeBlI5W1V7tCnAqFG1InLfkC5nXHuqx
- fHY0hT3/uMJrcrLEUb9sv7EROc7uyozRX2X1tf6u0FWCJsybIpg2FFRsmhdTaSM2yVcx
- TInjZXjwnK25tre/q0iXtWwzHFe3OVq00ipdmeISPW/ZjxP3RKA5eoG8DikhSDmYsFgv
- WX4pOyUHIzQe7U9ARI7RDjpO8dHf5LyTvdJBxTk6BWK/AtekjUsxzydY9LHRQAI4YEvB
- A7ZCULF9vjeUOm66eYzHR/Uh5e4pKJwzAWK6C4wsz9uCYFzTtbAsyiSC1foHnnLjXtDm
- qQgQ==
+ bh=dJyQsL+cPE5QXe8EQvQ1Pt6/OFgKx8gOarr9WgNRk7w=;
+ b=pSSGUESdD3ZXQ24f8u2336DRdmZkok8sSAFtCfjWVEWYVbl9K4B2qn8Pp6jCbbEw8E
+ bYA/gJ1sK4lJIESILKQ1H2MUNDJJArp6z3FrQRyQPKNVMRnON6tGHF/Y5rom9P4XB3Gn
+ zxIQME6Q/bzjOXvBKL5ph6HwZ2o8H6iXSRfcnucKzI4nF+EgVyL4uqy3w/bOhXGBRTr4
+ Dee6q9GqJ/oFzXbmqr73w4BqPRsFSPAfzN4mo2mOh47EIy+zzZXMCC/H0W1gwgs+R7D4
+ M3Yq9ehjTA/+kxZJjySYsvXEhuX1mF4UIczoe9XpylDwMWI0OyvSfShbAIe+1/G90eaZ
+ l6TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759838137; x=1760442937;
+ d=1e100.net; s=20230601; t=1759838136; x=1760442936;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a76lm/FvL+H9qR+yT/bygLJJanUbAcVb3PSUoyR2HNk=;
- b=CqkpQuRpY+8PsAILNe2zAu5x3PVbJ/uriNzasUAMkwxj9wu7K9+ODfGfzdZI+b4h3C
- /iGy4eGJYlI3opIYpu6vAJA7glOUT3+bs7n8bpThnS7I7vuJIHAtmsBzhhP38li3ikgV
- 6qSzsLGNriYzkrDz+aWnJKQXnrY73rNBpyE077QTekCH6zLiSbh5o3aisbyssuerzALK
- cXbzrGnz+ZZ8AwXaIelbHuGzlVvnuF+xi8Gc3Qc6veMb2IE4wDiphT8n2KIvDb56UXc0
- IURAuWBNrKo6+Zcnb5iWci3MTeBHCZzFe7tgN7MCHH4Ci3tspIqYMkAIQa51/LFe6bD7
- 0bkQ==
-X-Gm-Message-State: AOJu0Yzn/8QbHJCzEBIVKCRQmPJJ6MZQeITSg2tp+sgzxyiCxuzQvi0h
- C2MIJ/vkS+IOSHiglpqU3Qgr4jzFFmD9tBqkhCg2KReKA+jkCezu6d7y7ZjPEAzk4pE=
-X-Gm-Gg: ASbGncuJhVOU37qDtoLmI7scZON71qqwTJmxRFXJxbQsM/ZaJJiNJSHxJGuiVZFMsCc
- Lt2V1Sg7g946Bhwy1S34+mqAOSeYmQW47Kql4PbrbtGRrhBqtAa2OdzY5/9mZ0UrwEWjzpyVr/d
- OiUIJRkq1q2VIHz8CqD7ML9SxtJb3BgSquPIkYPiRadqp+Lq7P4lqdTuwOT0uFZTOWDtb+nGf7Y
- 2AIEp80XBk+gtQagVQ/oCFxS9RS22dc6k50CRYfepg8MDaZkiLebHUJbjGU9Jplv+DdD3jENlFs
- ovc3EsqAv+uVRvr8W2JxC/n0qr81jmVxzzY+tqWn+Oa/ucGhi8bYM4oXb3ZAuQxb9NR3nV2Mqaj
- K29J+xBdTdNLRofHU3aIiazPS9Dxpsuq81lm4u+UM7mQtqgJfftU=
-X-Google-Smtp-Source: AGHT+IHZ6uvgyCCTqDM7AzOg8sE4ky8DiHGJK0x4uVBCPJ90YMj++UDeTEpiar99SU4CesSjyvGvww==
-X-Received: by 2002:a05:600c:1f11:b0:46e:6d5f:f68 with SMTP id
- 5b1f17b1804b1-46e7110c4ccmr115685735e9.12.1759838136729; 
- Tue, 07 Oct 2025 04:55:36 -0700 (PDT)
+ bh=dJyQsL+cPE5QXe8EQvQ1Pt6/OFgKx8gOarr9WgNRk7w=;
+ b=kN9DUS6GxEH7ZakqBviAsZC2B7zdlabKT5MqjnOSAKmpQEKNQsMb1Pcb3wcUdNVn3v
+ gvtGU6FMbHHNjIkC3D18wzwMqFOXwpzSGNbf7lQVy8XdzPyK5RGCwwX+OTwDNP2VQ0Pp
+ ZK9xb+yE7P02BElxGtF3YQ7QZbCLv0wXMUyWaT0ED3SfNbPC0tmmyz6hdL1wYcB1eehu
+ u7HDAZPjgVZDdADJNr/jpa67+JGAVG5LQXanJxscBdsPVpbPnkgycTKDUH3kqXG675LF
+ vmbtz/EHtDuU1xOblwhQ6pd3Wyb4BZ0Og4TafQebI0lKhoSVs6K0qJ/chTPaNxeUE4Sn
+ +33w==
+X-Gm-Message-State: AOJu0YyFyLNlAggP1oQF95OX0aURhsfl+dcVQeOL496GT8UO/SR69EiJ
+ Wbpw1a4y7zA8/oVB8D1xS5yxbSomkU1TaIwpI2nApBebwROLvilP37NLZCq1Ibcoowqt2RiKw/I
+ LJkv8
+X-Gm-Gg: ASbGncuu0DN/71KpJl/pY+PO9UZL8he1BlFL3dNcvq9LBR2lMBEs35Z8R0YPHyh57ao
+ KqUI3UCSdKLpQqSB0QQua29lZiOAAk36VLFkwx9VgOoZuZO5TEpgaVBRUh9+tZDfjeun8NLi8Ew
+ GP/OL81aaIXdiz+nHsi8YQpucB940fxpRtHy2nIlSH+BYzU6Vr0McAOTam7VEICgaqgn3BQRDjl
+ O8U6LKhUF13Lj4SSBcBsfdSuby2xCnCv9WvwU+27Vr3NXyNq+Z3ot21AQdSj4rbbVeLPjT7+sZy
+ L1aULoyShJZK8b6AAO2p3sG9kruhC8a57e+CA6wYyhIULAPy4PmW4ZYHBa8c1WrSkJcfE3iB4db
+ LQBnV6Af//zLB9cRr8mRrjHpAnYXFht887U+f7Aq/AOb49z8E4lk=
+X-Google-Smtp-Source: AGHT+IEcxwo6GFNiwVZ5WQlAe3ySYjfO0CJzQEtSuLAjGixjqVa+3xe2Bim49P1EBwtCSnGqInM5sg==
+X-Received: by 2002:a05:600c:3b12:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-46e7110efbemr109119505e9.15.1759838135964; 
+ Tue, 07 Oct 2025 04:55:35 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8a6b8bsm25118036f8f.4.2025.10.07.04.55.30
+ 5b1f17b1804b1-46e723591fcsm201851575e9.10.2025.10.07.04.55.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 07 Oct 2025 04:55:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D4D6160357;
+ by draig.lan (Postfix) with ESMTP id 969AD5FCAA;
  Tue, 07 Oct 2025 12:55:26 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/17] tests/functional: Provide GDB to the functional tests
-Date: Tue,  7 Oct 2025 12:55:18 +0100
-Message-ID: <20251007115525.1998643-11-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 07/17] scripts/ci: use recommended registration command
+Date: Tue,  7 Oct 2025 12:55:15 +0100
+Message-ID: <20251007115525.1998643-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251007115525.1998643-1-alex.bennee@linaro.org>
 References: <20251007115525.1998643-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,84 +105,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+The registration-token method is being deprecated:
 
-The probe of GDB is done in 'configure' and the full path is passed to
-meson.build via the -Dgdb=option.
+  https://docs.gitlab.com/ci/runners/new_creation_workflow/
 
-Meson then can pass the location of GDB to the functional tests via an
-environment variable: QEMU_TEST_GDB.
+As a result we can drop a bunch of the descriptive stuff as that is
+entered on the web UI. We don't need a secondary runner if we just
+create one with both aarch64 and aarch32 tags.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <20251003141820.85278-4-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20251001170947.2769296-8-alex.bennee@linaro.org>
 
-diff --git a/configure b/configure
-index 78445cbb4b3..21d1679f58e 100755
---- a/configure
-+++ b/configure
-@@ -2003,6 +2003,8 @@ if test "$skip_meson" = no; then
-   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
-   test "$plugins" = yes && meson_option_add "-Dplugins=true"
-   test "$tcg" != enabled && meson_option_add "-Dtcg=$tcg"
-+  test -n "$gdb_bin" && meson_option_add "-Dgdb=$gdb_bin"
-+
-   run_meson() {
-     NINJA=$ninja $meson setup "$@" "$PWD" "$source_path"
-   }
-diff --git a/meson_options.txt b/meson_options.txt
-index fff1521e580..5bb41bcbc43 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -36,6 +36,8 @@ option('trace_file', type: 'string', value: 'trace',
- option('coroutine_backend', type: 'combo',
-        choices: ['ucontext', 'sigaltstack', 'windows', 'wasm', 'auto'],
-        value: 'auto', description: 'coroutine backend to use')
-+option('gdb', type: 'string', value: '',
-+       description: 'Path to GDB')
+diff --git a/scripts/ci/setup/gitlab-runner.yml b/scripts/ci/setup/gitlab-runner.yml
+index 7350f6cff4a..7025935487a 100644
+--- a/scripts/ci/setup/gitlab-runner.yml
++++ b/scripts/ci/setup/gitlab-runner.yml
+@@ -16,7 +16,7 @@
+   tasks:
+     - debug:
+         msg: 'Checking for a valid GitLab registration token'
+-      failed_when: "gitlab_runner_registration_token == 'PLEASE_PROVIDE_A_VALID_TOKEN'"
++      failed_when: "gitlab_runner_authentication_token == 'PLEASE_PROVIDE_A_VALID_TOKEN'"
  
- # Everything else can be set via --enable/--disable-* option
- # on the configure script command line.  After adding an option
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 0ebe6bc52a6..f4bd21220ee 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -58,6 +58,7 @@ meson_options_help() {
-   printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
-   printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
-   printf "%s\n" '                           firmware]'
-+  printf "%s\n" '  --gdb=VALUE              Path to GDB'
-   printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
-   printf "%s\n" '  --includedir=VALUE       Header file directory [include]'
-   printf "%s\n" '  --interp-prefix=VALUE    where to find shared libraries etc., use %M for'
-@@ -323,6 +324,7 @@ _meson_option_parse() {
-     --disable-fuzzing) printf "%s" -Dfuzzing=false ;;
-     --enable-gcrypt) printf "%s" -Dgcrypt=enabled ;;
-     --disable-gcrypt) printf "%s" -Dgcrypt=disabled ;;
-+    --gdb=*) quote_sh "-Dgdb=$2" ;;
-     --enable-gettext) printf "%s" -Dgettext=enabled ;;
-     --disable-gettext) printf "%s" -Dgettext=disabled ;;
-     --enable-gio) printf "%s" -Dgio=enabled ;;
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 2a0c5aa1418..725630d3082 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -77,6 +77,12 @@ foreach speed : ['quick', 'thorough']
-     test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-                                meson.current_source_dir())
+     - name: Create a group for the gitlab-runner service
+       group:
+@@ -95,15 +95,7 @@
  
-+    # Define the GDB environment variable if gdb is available.
-+    gdb = get_option('gdb')
-+    if gdb != ''
-+      test_env.set('QEMU_TEST_GDB', gdb)
-+    endif
-+
-     foreach test : target_tests
-       testname = '@0@-@1@'.format(target_base, test)
-       if fs.exists('generic' / 'test_' + test + '.py')
+     # Register Runners
+     - name: Register the gitlab-runner
+-      command: "/usr/bin/gitlab-runner register --non-interactive --url {{ gitlab_runner_server_url }} --registration-token {{ gitlab_runner_registration_token }} --executor shell --tag-list {{ ansible_facts[\"architecture\"] }},{{ ansible_facts[\"distribution\"]|lower }}_{{ ansible_facts[\"distribution_version\"] }} --description '{{ ansible_facts[\"distribution\"] }} {{ ansible_facts[\"distribution_version\"] }} {{ ansible_facts[\"architecture\"] }} ({{ ansible_facts[\"os_family\"] }})'"
+-
+-    # The secondary runner will still run under the single gitlab-runner service
+-    - name: Register secondary gitlab-runner
+-      command: "/usr/bin/gitlab-runner register --non-interactive --url {{ gitlab_runner_server_url }} --registration-token {{ gitlab_runner_registration_token }} --executor shell --tag-list aarch32,{{ ansible_facts[\"distribution\"]|lower }}_{{ ansible_facts[\"distribution_version\"] }} --description '{{ ansible_facts[\"distribution\"] }} {{ ansible_facts[\"distribution_version\"] }} {{ ansible_facts[\"architecture\"] }} ({{ ansible_facts[\"os_family\"] }})'"
+-      when:
+-        - ansible_facts['distribution'] == 'Ubuntu'
+-        - ansible_facts['architecture'] == 'aarch64'
+-        - ansible_facts['distribution_version'] == '24.04'
++      command: "/usr/bin/gitlab-runner register --non-interactive --url {{ gitlab_runner_server_url }} --token {{ gitlab_runner_authentication_token }} --executor shell"
+ 
+     - name: Install the gitlab-runner service using its own functionality
+       command: "/usr/bin/gitlab-runner install --user gitlab-runner --working-directory /home/gitlab-runner"
+diff --git a/scripts/ci/setup/vars.yml.template b/scripts/ci/setup/vars.yml.template
+index 4b355fb80fd..e9ddc05f3b0 100644
+--- a/scripts/ci/setup/vars.yml.template
++++ b/scripts/ci/setup/vars.yml.template
+@@ -6,5 +6,6 @@ ansible_to_gitlab_arch:
+   x86_64: amd64
+   aarch64: arm64
+   s390x: s390x
+-# A unique token made available by GitLab to your project for registering runners
+-gitlab_runner_registration_token: PLEASE_PROVIDE_A_VALID_TOKEN
++# A unique token made obtained from GitLab for each runner
++# see: https://gitlab.com/PROJECT/REPO/-/runners/new
++gitlab_runner_authentication_token: PLEASE_PROVIDE_A_VALID_TOKEN
 -- 
 2.47.3
 
