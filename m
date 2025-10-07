@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA2FCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EFDECCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68Qo-0005wI-3I; Tue, 07 Oct 2025 10:12:46 -0400
+	id 1v68WW-0004uy-0t; Tue, 07 Oct 2025 10:18:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QT-0005ou-IX
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:28 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QB-0002FQ-9U
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:25 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-45b4d89217aso37568095e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:12:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846322; x=1760451122; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IYIv2Y309r90WUK07FBdrVlv4IYcETYLV13KmD86218=;
- b=HVehQt93Ggy0vmHVd+4RQ6WkTgeneF3sVn3fiC1MoLg7NBUxVm9Gtb0LL/hBUPSxRj
- o7hycgY6bTU9eYKjNvTdNlHPPZOj+lNOB+I7gncShcku17bNbuIfTBuIkXj/CzbopzzZ
- +VCoa6NZNFLBoTV4tMmoU6OOeNPQBwHIitQA1RfpPtK+0MXUQDuX27L22q86S4IAMbtb
- H/qPPYHcDsXPeqCQmKSe8FsYu+L5Y+S1VaF2D9Y7WCCKFvipURjscdD7sc93NNCm8zqK
- ijrkJ5uxzsb0nghAhNprD2HSGB19MoeTCEkiCDLrRDhGH6IicoBR/N1WX3SZFBGpx8/Q
- jpTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846322; x=1760451122;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IYIv2Y309r90WUK07FBdrVlv4IYcETYLV13KmD86218=;
- b=J5Ho7oN4VJN1dsCXDXV36xugg8Fjpie4DXQ9k4AD4magr14r0/hWwGaV7zLovS/57H
- hyvLixj5d6ELnbAf7+ua4tAiYz44exYz+7/5ggEJhQLhvi6NjutHU4M+IJi4rblyi+bP
- Wooc/BaowMgcvqPn477RG5RuYj4TrWMkcw8M7BFldvyV0PiKA66J/L0Zw7ZQ909NaQTI
- 3QRWvXWfZ+SBz3PWVzz5vmFgdkrKpdUGeoOxKCvQq43tbFM0Jnjw2odVQCIlvMXw94L6
- YpaGYgKdWd5sqD7+fb8M8iL+gg/KfEX7oXAX5686LM1NQCNAS3rG01jeFydWVJFYiHMx
- NWpg==
-X-Gm-Message-State: AOJu0YxK22l6pe5XFjOM4IeKHwDc2f6PEnZwYLpVz/SAfGFsT0L/YxYW
- KW5aGQf2YxcNnd8OljwsWqg93KvoQ+VsACIoEsjmY2GzYHUwDADtZVvGdF2KJCWouZ9Sfp9AEMU
- embbB
-X-Gm-Gg: ASbGncsr0+YC2hxPnKW6ywhn6Rp1OaKOxfeeOBTdP63wfxiMY0c6maab5RpwO2upObB
- tgBFpA3qlspRljcs8jNdD7dmtehVxYszhiP8G/Fmk6GqNVLiiDTGyTsbybove+C0z14TEJ0P9mu
- 5xJsf50X9rEiocrtDk36cf2jjnCbwGwOCm7wLesZ1Nks9rjbNh2e3hsy8pupYQ7eTrSSAw8PPZA
- 34f/6AQCslVYM4AlSVrdX8kOSd62M3nyUigkasdXLu+XxStyaWpGnW53wXErf1usokxJcEsX4WJ
- keXmD/K6Oi6uCJMDKjTfhsmmgMd/QP8by1gjupaE+mhI6WsFNU+n6z/P3xwAwmKebOAtYHYwYXR
- si4G1barRsmxeZdeBrJMsUTfV8I9lJ/Tb/Ha1rDRvOcD9IM1fcmEAJZdG
-X-Google-Smtp-Source: AGHT+IGvMPsVQ5+tRpOQ7p8mnJ7KxPRkhhGjMrLK5ymrl9rPZjG1+M+e1BVCK1ci1wpL44MdxelA+Q==
-X-Received: by 2002:a05:600c:a319:b0:46e:74cc:42b8 with SMTP id
- 5b1f17b1804b1-46e74cc4609mr86514565e9.17.1759846321876; 
- Tue, 07 Oct 2025 07:12:01 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.12.00
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:12:01 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 34/62] hw/arm/xlnx-versal: reconnect the CRL to the other
- devices
-Date: Tue,  7 Oct 2025 15:10:54 +0100
-Message-ID: <20251007141123.3239867-35-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
-References: <20251007141123.3239867-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ut-00028P-Ik
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:17:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Up-0003S2-Dc
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759846610;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OIdTNRE9b7KlIahJtOSDJZ0mFKqsglv4WheNUFLUH3E=;
+ b=Ih473FBGg8bGsXvjsK3kQ++RznWy0WV4vTc4SaMG422I78LeNLZSINobpMHewsy7V8HUTm
+ AL5UywpzPD6Q/ASTjjVyIEunuTqqjvK+yonHf6ivJneODSRoQnv1eNmmuohtiMS6w4xIL6
+ zV6VIeP2gsV6ucdCOMQEYRogeR56z5Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-LVULnhGvNfmuJk14axl3Ww-1; Tue,
+ 07 Oct 2025 10:16:44 -0400
+X-MC-Unique: LVULnhGvNfmuJk14axl3Ww-1
+X-Mimecast-MFC-AGG-ID: LVULnhGvNfmuJk14axl3Ww_1759846597
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1C5A195DE6C; Tue,  7 Oct 2025 14:16:33 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6D68319560BC; Tue,  7 Oct 2025 14:16:30 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 4/5] test/functional/aarch64: Remove test for the
+ ast2700a0-evb machine
+Date: Tue,  7 Oct 2025 16:16:03 +0200
+Message-ID: <20251007141604.761686-5-clg@redhat.com>
+In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
+References: <20251007141604.761686-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,78 +89,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luc Michel <luc.michel@amd.com>
+The 'ast2700a0-evb' machine was deprecated in commit 6888a4a9c860 and
+removal is scheduled in the QEMU 11.0 release. This change removes
+the corresponding tests ahead of time to save CI resources.
 
-The CRL connects to various devices through link properties to be able
-to reset them. The connections were dropped during the SoC refactoring.
-Reintroduce them now.
-
-Rely on the QOM tree to retrieve the devices to connect. The component
-parts of the device names are chosen to match the properties on the CRL.
-
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250926070806.292065-34-luc.michel@amd.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/xlnx-versal.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ tests/functional/aarch64/test_aspeed_ast2700.py | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 2e28b807d71..6604e24a9cd 100644
---- a/hw/arm/xlnx-versal.c
-+++ b/hw/arm/xlnx-versal.c
-@@ -1476,17 +1476,46 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-                                 sysbus_mmio_get_region(sbd, 0));
- }
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
+index ef7ed522afc3..a60dc1259f69 100755
+--- a/tests/functional/aarch64/test_aspeed_ast2700.py
++++ b/tests/functional/aarch64/test_aspeed_ast2700.py
+@@ -46,10 +46,6 @@ def verify_openbmc_boot_and_login(self, name):
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
  
-+static inline void crl_connect_dev(Object *crl, Object *dev)
-+{
-+    const char *prop = object_get_canonical_path_component(dev);
-+
-+    /* The component part of the device path matches the CRL property name */
-+    object_property_set_link(crl, prop, dev, &error_abort);
-+}
-+
-+static inline void crl_connect_dev_by_name(Versal *s, Object *crl,
-+                                           const char *name, size_t num)
-+{
-+    size_t i;
-+
-+    for (i = 0; i < num; i++) {
-+        Object *dev = versal_get_child_idx(s, name, i);
-+
-+        crl_connect_dev(crl, dev);
-+    }
-+}
-+
- static inline void versal_create_crl(Versal *s)
- {
-     const VersalMap *map;
-     const char *crl_class;
-     DeviceState *dev;
-+    Object *obj;
+-    ASSET_SDK_V906_AST2700 = Asset(
+-            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-a0-default-obmc.tar.gz',
+-            '7247b6f19dbfb700686f8d9f723ac23f3eb229226c0589cb9b06b80d1b61f3cb')
+-
+     ASSET_SDK_V908_AST2700A1 = Asset(
+             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2700-default-obmc.tar.gz',
+             'eac3dc409b7ea3cd4b03d4792d3cebd469792ad893cb51e1d15f0fc20bd1e2cd')
+@@ -124,14 +120,6 @@ def start_ast2700_test_vbootrom(self, name):
+         self.do_test_aarch64_aspeed_sdk_start(
+                 self.scratch_file(name, 'image-bmc'))
  
-     map = versal_get_map(s);
- 
-     crl_class = TYPE_XLNX_VERSAL_CRL;
-     dev = qdev_new(crl_class);
--    object_property_add_child(OBJECT(s), "crl", OBJECT(dev));
-+    obj = OBJECT(dev);
-+    object_property_add_child(OBJECT(s), "crl", obj);
-+
-+    crl_connect_dev_by_name(s, obj, "rpu-cluster/rpu",
-+                            map->rpu.num_cluster * map->rpu.num_core);
-+    crl_connect_dev_by_name(s, obj, map->zdma[0].name, map->zdma[0].num_chan);
-+    crl_connect_dev_by_name(s, obj, "uart", map->num_uart);
-+    crl_connect_dev_by_name(s, obj, "gem", map->num_gem);
-+    crl_connect_dev_by_name(s, obj, "usb", map->num_usb);
- 
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_abort);
- 
+-    def test_aarch64_ast2700a0_evb_sdk_v09_06(self):
+-        self.set_machine('ast2700a0-evb')
+-
+-        self.archive_extract(self.ASSET_SDK_V906_AST2700)
+-        self.start_ast2700_test('ast2700-a0-default')
+-        self.verify_openbmc_boot_and_login('ast2700-a0-default')
+-        self.do_ast2700_i2c_test()
+-
+     def test_aarch64_ast2700a1_evb_sdk_v09_08(self):
+         self.set_machine('ast2700a1-evb')
+         self.require_netdev('user')
 -- 
-2.43.0
+2.51.0
 
 
