@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F1FCCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 19:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70835CCD183
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 20:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6DnK-0001Us-QU; Tue, 07 Oct 2025 15:56:22 -0400
+	id 1v6E98-0004qN-6j; Tue, 07 Oct 2025 16:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6DnJ-0001Tp-Ea
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 15:56:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v6E95-0004ny-KK
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:18:51 -0400
+Received: from p-east2-cluster4-host3-snip4-1.eps.apple.com ([57.103.78.132]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6DnF-0004Gp-8a
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 15:56:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759866975;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5sVUd7rhdCuBayrWGnRSpHw0ie/+uBiOsiJRgMKAyKs=;
- b=JfHDupKGCmD9s+j5Df9yRDGXDADvZVVBZWfMiWDISHyLwKsvk1OvOHvECZruPgW79x25rV
- j4pK3CMA6FxSXIFhqdk5sBSW/t/HANSNawD1cSAS1ISHu30eezDMCXzdJHEq8T7AIhwb+Q
- tORTKG6DhmHmJCvRGF9SEv6dQah4cMo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-Pa1hVu56N120VPMEPDv4RA-1; Tue,
- 07 Oct 2025 15:56:11 -0400
-X-MC-Unique: Pa1hVu56N120VPMEPDv4RA-1
-X-Mimecast-MFC-AGG-ID: Pa1hVu56N120VPMEPDv4RA_1759866970
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7280419560A7; Tue,  7 Oct 2025 19:56:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.87])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B15419560B8; Tue,  7 Oct 2025 19:56:09 +0000 (UTC)
-Date: Tue, 7 Oct 2025 15:56:08 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH v4] block: replace TABs with space
-Message-ID: <20251007195608.GB127783@fedora>
-References: <20251007163511.334178-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v6E91-0007No-5S
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:18:50 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPS id
+ 06BFC180054D; Tue,  7 Oct 2025 20:18:41 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=V+zJwX4L/DzvblDStAA8JGYXFzCokmls2vVKdItSBSo=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=NxWQ98E6ovHVVDrjqEjJUnduec/0udsllVbu7m68Mz7EooOaoKVQW29Xj8RzzIQWuqbWD+f0FKlptP3evlsf80hk/96rjsaiXd/CiDAK7nAKbOn32QipvVQB9cmr55quejDdJ1DYHkfeaYtSHnntVr/garKKBclu+sRai407uaotnWbPjuFhEr3OGuwAjCEHZZqc1iyy/jA6BWesXv2cAieiDBMlXyn0qNsOOQskaonXQ6o9vWFcSHEt4I4u9tvJh/RcPGKGrDnQxhZa2HyyiREsOO/O125Ok8//29bOESBAFn2j1BJWS2gm0TxMU0F0vKW/Jm+CLmyGTek6sW2XkQ==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPSA id
+ 92CF118001E0; Tue,  7 Oct 2025 20:18:40 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [RFC 0/4] vmapple: making it work on the latest macOS releaases and
+ Apple M4
+Date: Tue,  7 Oct 2025 22:18:33 +0200
+Message-ID: <20251007201837.28992-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="RlrbBd5vsFp5bR+O"
-Content-Disposition: inline
-In-Reply-To: <20251007163511.334178-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA3MDE1OSBTYWx0ZWRfX4Ujmz5LvGDpf
+ m0KcrvKo6fekt12c2o+Fih3BDhUc2WcMfqia5pyfZfRYpSFsAzYQ6HRntcenPEPjS2Nt7yCs88E
+ ZG6Z9Rrt2gpxd2ggnFRb+C153plsnHETQ7DlOtY2RxKo0JLMzY+GUSrzMk+ExEWntDTzzwico+M
+ CI3etTXhHoQjmU7LIFzkBiZvMKiSu6QpkoctZQ5SuMKVnOm8asDuv70Vwav7PUUhX7ha9S6UGTt
+ jxfbUxm9y8ilCr421za3MWluOqfcNCGIFv9J/Jh12SJVURLnZjeQBJM8Rk7z8D1ItXVpSFzJw=
+X-Proofpoint-GUID: RA5ay4XNHGQ-UpzO9p_yhspPjKa2XuLJ
+X-Proofpoint-ORIG-GUID: RA5ay4XNHGQ-UpzO9p_yhspPjKa2XuLJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-07_02,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ bulkscore=0 spamscore=0 mlxlogscore=509 mlxscore=0 clxscore=1030 phishscore=0
+ malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2506270000 definitions=main-2510070159
+Received-SPF: pass client-ip=57.103.78.132;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,52 +86,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+RFC as it's hacky code, especially for the Apple M4 support workaround part.
+Support for newer guest OSes isn't part of this series.
 
---RlrbBd5vsFp5bR+O
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Mohamed Mediouni (4):
+  hw: vmapple: include missing headers
+  hvf: arm64: add workaround for Apple M4 to run older macOS versions
+  vmapple: apple-gfx: make it work on the latest macOS release
+  Revert "hw/arm: Do not build VMapple machine by default"
 
-On Tue, Oct 07, 2025 at 06:35:11PM +0200, Thomas Huth wrote:
-> From: Yeqi Fu <fufuyqqqqqq@gmail.com>
->=20
-> Bring the block files in line with the QEMU coding style, with spaces
-> for indentation. This patch partially resolves the issue 371.
->=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/371
-> Signed-off-by: Yeqi Fu <fufuyqqqqqq@gmail.com>
-> Message-ID: <20230325085224.23842-1-fufuyqqqqqq@gmail.com>
-> [thuth: Rebased the patch to the current master branch]
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  I came accross this old patch today - it fell through the cracks
->  in 2023, but I think it's still worth to get the coding style
->  finally fixed in these files.
->=20
->  include/block/nbd.h |  2 +-
->  block/bochs.c       | 14 +++++++-------
->  block/file-posix.c  |  6 +++---
->  block/file-win32.c  | 18 +++++++++---------
->  block/qcow.c        | 10 +++++-----
->  5 files changed, 25 insertions(+), 25 deletions(-)
+ accel/hvf/hvf-accel-ops.c                   |  4 +-
+ configs/devices/aarch64-softmmu/default.mak |  1 -
+ hw/display/apple-gfx-mmio.m                 | 56 +++++++++++-----
+ hw/display/apple-gfx.h                      | 13 ++++
+ hw/display/apple-gfx.m                      | 42 +++++++++++-
+ hw/vmapple/vmapple.c                        |  2 +
+ include/system/hvf_int.h                    |  4 ++
+ target/arm/hvf/hvf.c                        | 71 +++++++++++++++++++++
+ 8 files changed, 174 insertions(+), 19 deletions(-)
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---RlrbBd5vsFp5bR+O
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjlcFgACgkQnKSrs4Gr
-c8jYsQgAyVK/OZqG31TWoTFZ+LXnWQg5+/RNcBe2Ck+MPqoiFjjOWA+1QkvlW/MM
-RbndfrWaPmkPRCKqYzBlXObryu4glHzCxn+mgfv61+KYxZIDGXhmtfDqBJ1Wkw4l
-0A2WuDgnxN0jy5x3LfHJUVLQC1R9D4kdaAUooEGRewHBPnp/ARV+NfA+JHUul744
-IygfuiIZlFrJGR4nRVYXJaWaBZaPcWBm09c9nORr+IHto2HqSwSmbtDVAqZVhdJ7
-ia0Gfwezi1ilvSUYx8xNuRytIhhX5U/UlwiObRv8e9/EDI46V++Gu+mnLDPuiwl6
-QY1IUX9KN1GkWLFqiQ1CKmtMAmyiJA==
-=yLx0
------END PGP SIGNATURE-----
-
---RlrbBd5vsFp5bR+O--
+-- 
+2.50.1 (Apple Git-155)
 
 
