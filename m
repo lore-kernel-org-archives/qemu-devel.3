@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006FCCCA471
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 02:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8BBCCA471
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 02:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v5xWG-0004jb-HR; Mon, 06 Oct 2025 22:33:40 -0400
+	id 1v5xcg-0005jq-5J; Mon, 06 Oct 2025 22:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5xWE-0004jI-RD
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 22:33:38 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5xcc-0005j7-LX
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 22:40:15 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5xWC-0001KE-Mi
- for qemu-devel@nongnu.org; Mon, 06 Oct 2025 22:33:38 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-42421b1514fso2640620f8f.2
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 19:33:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v5xca-0002Ec-PY
+ for qemu-devel@nongnu.org; Mon, 06 Oct 2025 22:40:14 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e542196c7so37184195e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 19:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759804415; x=1760409215; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Jh1aLwphx6jivSdeIL6mI+co6kO5RcW7/REbFfuc41I=;
- b=LUwga6my547EaSBjoHEqQBtWih4WztwTCnV6VNoHXMS7hCj5/ruMErCYK104VfhflM
- AIFd/mCQGXWuWh/YyTjIxi8AmZk7GE9Ta5wf8xDSow4uLVavO9EGgVDbVeVf7aL7I03D
- OJlRGlXs9WhcQ3yRd11xripV86GMax2+70B6xbKA+JMN9VbMr4XiarG/tukKrWycRlSs
- V340gDFktIdZnmzQcSPnOvRlt+NH9+YSaVBflRvi2TBQHL4QW46hyZGs1usNM6QKvHG3
- i0kieBlIqt5twSUV/JZKPaWG6aqRYCLUGg/ImADNO9ih6sJjZeCR4gwmnj8c7F7DX279
- L0rQ==
+ d=linaro.org; s=google; t=1759804810; x=1760409610; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qElDuI84uOuLTQODOzfQj3jtdiNn9iH8YI/AfQgyboo=;
+ b=gDuQOtr/eP93iT8OqtwotPCkjIU7d1JLaUA2NikJLq/0ZPxnfJgNNGtTcpCsW4dqYO
+ ehpNaImIIK/PSsddRR+gXnWPxrcbMF2oYFgK4roMk4qmLYvoKjPLjc7SRlf7jvv1XO9h
+ 0fcOBUonsIBFL0Cut2lzTxfaXTGwgScuNz37rFRF5hR9/1BJfr1/URVRmeZkD7D/rePx
+ T0Igpsha1XnkAT0s3GbBcn/mJnkXM7hSMB+ug/QG+WXPxRrwhQJ8QiZxikjXIp7jcaG/
+ LmZguGddgiJFVjpfkZMSUMUA5lB4VSQzg1BD0IdIaZM2a7/UQd9uIk/aiGJtujOdGC7c
+ SQ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759804415; x=1760409215;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jh1aLwphx6jivSdeIL6mI+co6kO5RcW7/REbFfuc41I=;
- b=fZ6za/oMI5vYLQdDFwwgFApJc8Y3nf3n37I7VKDvMBPJpbGu7mPySklICOHhGoC4mH
- YT6uA6rXdamBu63XO3nhx2bkeoLwm2gEUVWiiVycgUOPno6EIE4hCavhntQMcXzqu+VR
- sCZGnhWWjWo/X4LY5uz9AcIlLPcf4vEZN8mx5jFG5dpNfp2/lrQAjlLXXVugeoW/GUbE
- 3omaOs9uaFwGzoVketY/amnFeOnLGw3/4/DO/ugdR0JlIyNCJyk/YUgRoHR552MFy0KQ
- weMs2zT/OMCoPpVtWuP3BhBaaI0DmN+RrO+Po5t6xg8yINj0oc/MICpcvk3X5D3i5zU6
- 7pxg==
-X-Gm-Message-State: AOJu0Yz3XIqgSJ0lypfY04mB1b+c7sVjTHjr6ZOvFL0/WtPkzpGRqWQ+
- IPSUG6k5r72PQiDkDSOp93Hjk7n47pbolf11naR3WuHNiMK2MWUQib2mWXVhj1A+BLs=
-X-Gm-Gg: ASbGncu/6m4YhWyYkYtMrH+uXKi46b3ZAPX+kljDjoZf9mN3rtRsyDuV38uB00OFqGq
- xVB6unRwBbt+IwT1HedPKe7mOyTrT1Img4LdckzbpXaFsk64LcbaC0hKZLIPgdCrHbUyuGGlvge
- wrKww3zN/FMATYVy7+nZfv3zaXS0+8CPCoUmVK6tTnmcmih7u7xN79zDgwv3SpHZ12Y+L9/wSpk
- 6wkoMb1URcCpfLDSpE7ffngZFXmS8klSYLCRK47fh+P4nw69vJgCcpUO2mTMXfSR1xaI3CuD5FI
- ak7ZWy1735SBUOc1QV7AjhDkeVeZPGZPVDOEodCqX3dl7h34bhHVwEFeqBaMd71M7At1VPBAWUp
- lLZgvXWNoxnRWcAR2xGAMBpjvziK7GvgleCybBnV/uJEBlwk2rcuDFVnOq1uLBF1eYQt/DYnTL3
- mPRleZGRxYqA7FnE6VuQ==
-X-Google-Smtp-Source: AGHT+IEmIN4iB81/njLnHYXR38P2vTlcg8ZacIAU+9gIqFP9AEo7YkigYfetOrHKpl31px+Om9ETFQ==
-X-Received: by 2002:a05:6000:2401:b0:3e5:394d:10bb with SMTP id
- ffacd0b85a97d-4256719eb33mr8102832f8f.41.1759804414705; 
- Mon, 06 Oct 2025 19:33:34 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1759804810; x=1760409610;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qElDuI84uOuLTQODOzfQj3jtdiNn9iH8YI/AfQgyboo=;
+ b=MP41exB7VUECMJO6fMU2VJ9ihBkhiYjKqqD9LynZo8yz1IiLY9FuWc6HboOLS4W0eS
+ cE7q9E6KndGeOBFRdjRVe1+qe1F9LcreZRhE9HvsA5OtwUOinL6RHZaFQTsUE4yS2ssy
+ txRUOWkEl9luK1roN5+FYCOVpu04T2hniU6zRj/EhAYIyJUxh0x3+aY9E5+t60rhVr3J
+ aPitoCqpJQOxUsmiOhh4t8WSty7/8tYnuqkMSi0RQdoRs2u+aUlx5FPOSJRU0BpavYOe
+ fESvqxIlYvDrVuDyXivKeCyvzuG/A3YWjyDqe5pNLCzKudGN2Xxk14yZQqE+yrXKp4qT
+ RzTA==
+X-Gm-Message-State: AOJu0YyXRI46+5NfsRFyzonlfeKKaKVYR+HUyMUgcpNKXBWjH273hMLR
+ v7Kw3jNDxxWpltuww0L3abOhf6qvkN7f8fK/M76KBd/Gfc3xPorfmjfa8Ohs+0Dfej86qwdywjJ
+ fWlnViCaQwg==
+X-Gm-Gg: ASbGncvR+quWjoJ0BvI9iJrP+0F/uTcwioLodgqY60msC4DJFsfdEKorprtjoap1GVz
+ oQnTUC+CTW/A4ewDTz7wcg/gOfpvtqfDE86dznCHvSVo4Ps/qiYv53CpFqeUU7a8Z3qPHnLJL8w
+ zbhJ2aMjDv60XK1wPo5E4izLMpuBeWQW/SQjJ9LV5eOpacxjbK9rDdRrjd3UZGA2bJVHTuQsOMQ
+ GeeKeR8IrzgxcKAkLNAVjVricGJXlkAY7vzo57qReDUiDRWY+NmhqLFRjw0ipDzAKFV4QSJejKP
+ KytSJnCchiSnNHGrew2L36i7GzhMj4TNoz/tuYKO4GmI3nK2MJM5rUhMfD0/nV+hnssJlUFCpTX
+ 8n4XFoumpJLTzf57pls22d2rqgIs+/384K7tf5wt3Dp9qeaXHyuUqdhMGjcfNfHx8M6rdNAT6dN
+ 8MoQb9GqmpWJ1McGBfo1OLPpNU
+X-Google-Smtp-Source: AGHT+IETuJoYEB3RVIv5MPzFSc86jB9aNzI81UFV85w8Xs36q86VUly6X43hMrEyumu7vjD0/dK7rg==
+X-Received: by 2002:a05:600c:8592:b0:45b:92a6:63e3 with SMTP id
+ 5b1f17b1804b1-46fa29e1c70mr6876435e9.9.1759804810240; 
+ Mon, 06 Oct 2025 19:40:10 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8a6b77sm23303259f8f.6.2025.10.06.19.33.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 19:33:33 -0700 (PDT)
-Message-ID: <662fc857-9453-4caf-ad4e-1ac3d68d8e5b@linaro.org>
-Date: Tue, 7 Oct 2025 04:33:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 01/36] MAX78000: Add MAX78000FTHR Machine
-To: Jackson Donaldson <jcksn@duck.com>,
+ ffacd0b85a97d-4255d8f0853sm23628091f8f.50.2025.10.06.19.40.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 06 Oct 2025 19:40:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jackson Donaldson <jcksn@duck.com>,
  Jackson Donaldson <jackson88044@gmail.com>
-References: <20250711133429.1423030-1-peter.maydell@linaro.org>
- <20250711133429.1423030-2-peter.maydell@linaro.org>
-Content-Language: en-US
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250711133429.1423030-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Subject: [PATCH] hw/misc/max78000_gcr: Do not ignore address_space_write()
+ errors
+Date: Tue,  7 Oct 2025 04:40:06 +0200
+Message-ID: <20251007024006.43166-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,38 +101,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Convert max78000_gcr_ops[] to take MemTxAttrs and return MemTxResult,
+allowing the write() path to return error on failure.
 
-On 11/7/25 15:33, Peter Maydell wrote:
-> From: Jackson Donaldson <jackson88044@gmail.com>
-> 
-> This patch adds support for the MAX78000FTHR machine.
-> 
-> The MAX78000FTHR contains a MAX78000 and a RISC-V core. This patch
-> implements only the MAX78000, which is Cortex-M4 based.
-> Details can be found at:
-> https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
-> 
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Jackson Donaldson <jcksn@duck.com>
+Cc: Jackson Donaldson <jackson88044@gmail.com>
+---
+ hw/misc/max78000_gcr.c | 95 +++++++++++++++++++++++++++---------------
+ 1 file changed, 61 insertions(+), 34 deletions(-)
 
-The author email doesn't match the S-o-b line, so I'm Cc'ing both
-addresses.
+diff --git a/hw/misc/max78000_gcr.c b/hw/misc/max78000_gcr.c
+index fbbc92cca32..2d1d46cc26d 100644
+--- a/hw/misc/max78000_gcr.c
++++ b/hw/misc/max78000_gcr.c
+@@ -44,80 +44,106 @@ static void max78000_gcr_reset_hold(Object *obj, ResetType type)
+     s->eccaddr = 0;
+ }
+ 
+-static uint64_t max78000_gcr_read(void *opaque, hwaddr addr,
+-                                     unsigned int size)
++static MemTxResult max78000_gcr_read(void *opaque, hwaddr addr,
++                                     uint64_t *pdata, unsigned size,
++                                     MemTxAttrs attrs)
+ {
+     Max78000GcrState *s = opaque;
++    uint64_t r;
+ 
+     switch (addr) {
+     case SYSCTRL:
+-        return s->sysctrl;
++        r = s->sysctrl;
++        break;
+ 
+     case RST0:
+-        return s->rst0;
++        r = s->rst0;
++        break;
+ 
+     case CLKCTRL:
+-        return s->clkctrl;
++        r = s->clkctrl;
++        break;
+ 
+     case PM:
+-        return s->pm;
++        r = s->pm;
++        break;
+ 
+     case PCLKDIV:
+-        return s->pclkdiv;
++        r = s->pclkdiv;
++        break;
+ 
+     case PCLKDIS0:
+-        return s->pclkdis0;
++        r = s->pclkdis0;
++        break;
+ 
+     case MEMCTRL:
+-        return s->memctrl;
++        r = s->memctrl;
++        break;
+ 
+     case MEMZ:
+-        return s->memz;
++        r = s->memz;
++        break;
+ 
+     case SYSST:
+-        return s->sysst;
++        r = s->sysst;
++        break;
+ 
+     case RST1:
+-        return s->rst1;
++        r = s->rst1;
++        break;
+ 
+     case PCKDIS1:
+-        return s->pckdis1;
++        r = s->pckdis1;
++        break;
+ 
+     case EVENTEN:
+-        return s->eventen;
++        r = s->eventen;
++        break;
+ 
+     case REVISION:
+-        return s->revision;
++        r = s->revision;
++        break;
+ 
+     case SYSIE:
+-        return s->sysie;
++        r = s->sysie;
++        break;
+ 
+     case ECCERR:
+-        return s->eccerr;
++        r = s->eccerr;
++        break;
+ 
+     case ECCED:
+-        return s->ecced;
++        r = s->ecced;
++        break;
+ 
+     case ECCIE:
+-        return s->eccie;
++        r = s->eccie;
++        break;
+ 
+     case ECCADDR:
+-        return s->eccaddr;
++        r = s->eccaddr;
++        break;
+ 
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
+             HWADDR_PRIx "\n", __func__, addr);
+-        return 0;
+-
++        r = 0;
++        break;
+     }
++    *pdata = r;
++
++    return MEMTX_OK;
+ }
+ 
+-static void max78000_gcr_write(void *opaque, hwaddr addr,
+-                       uint64_t val64, unsigned int size)
++static MemTxResult max78000_gcr_write(void *opaque, hwaddr addr,
++                                      uint64_t val64, unsigned size,
++                                      MemTxAttrs attrs)
+ {
+     Max78000GcrState *s = opaque;
+     uint32_t val = val64;
+     uint8_t zero[0xc000] = {0};
++    MemTxResult res = MEMTX_OK;
++
+     switch (addr) {
+     case SYSCTRL:
+         /* Checksum calculations always pass immediately */
+@@ -190,20 +216,20 @@ static void max78000_gcr_write(void *opaque, hwaddr addr,
+ 
+     case MEMZ:
+         if (val & ram0) {
+-            address_space_write(&s->sram_as, SYSRAM0_START,
+-                                MEMTXATTRS_UNSPECIFIED, zero, 0x8000);
++            res |= address_space_write(&s->sram_as, SYSRAM0_START,
++                                       attrs, zero, 0x8000);
+         }
+         if (val & ram1) {
+-            address_space_write(&s->sram_as, SYSRAM1_START,
+-                                MEMTXATTRS_UNSPECIFIED, zero, 0x8000);
++            res |= address_space_write(&s->sram_as, SYSRAM1_START,
++                                       attrs, zero, 0x8000);
+         }
+         if (val & ram2) {
+-            address_space_write(&s->sram_as, SYSRAM2_START,
+-                                MEMTXATTRS_UNSPECIFIED, zero, 0xC000);
++            res |= address_space_write(&s->sram_as, SYSRAM2_START,
++                                       attrs, zero, 0xC000);
+         }
+         if (val & ram3) {
+-            address_space_write(&s->sram_as, SYSRAM3_START,
+-                                MEMTXATTRS_UNSPECIFIED, zero, 0x4000);
++            res |= address_space_write(&s->sram_as, SYSRAM3_START,
++                                       attrs, zero, 0x4000);
+         }
+         break;
+ 
+@@ -254,6 +280,7 @@ static void max78000_gcr_write(void *opaque, hwaddr addr,
+         break;
+ 
+     }
++    return res;
+ }
+ 
+ static const Property max78000_gcr_properties[] = {
+@@ -272,8 +299,8 @@ static const Property max78000_gcr_properties[] = {
+ };
+ 
+ static const MemoryRegionOps max78000_gcr_ops = {
+-    .read = max78000_gcr_read,
+-    .write = max78000_gcr_write,
++    .read_with_attrs = max78000_gcr_read,
++    .write_with_attrs = max78000_gcr_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid.min_access_size = 4,
+     .valid.max_access_size = 4,
+-- 
+2.51.0
 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Message-id: 20250704223239.248781-2-jcksn@duck.com
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   include/hw/arm/max78000_soc.h |  35 +++++++
->   hw/arm/max78000_soc.c         | 172 ++++++++++++++++++++++++++++++++++
->   hw/arm/max78000fthr.c         |  50 ++++++++++
->   hw/arm/Kconfig                |  10 ++
->   hw/arm/meson.build            |   2 +
->   5 files changed, 269 insertions(+)
->   create mode 100644 include/hw/arm/max78000_soc.h
->   create mode 100644 hw/arm/max78000_soc.c
->   create mode 100644 hw/arm/max78000fthr.c
-Could we have an entry in the MAINTAINERS file covering this board please?
-Thanks,
-
-Phil.
 
