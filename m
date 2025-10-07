@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC02CCA472
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B940CCD185
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v66Io-0002lT-GB; Tue, 07 Oct 2025 07:56:22 -0400
+	id 1v66Ik-0002dQ-1N; Tue, 07 Oct 2025 07:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66IQ-0002Xj-Io
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:59 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1v66IE-0002WA-HQ
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:48 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66I9-0001JS-CQ
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:57 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3f2ae6fadb4so1005375f8f.1
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:38 -0700 (PDT)
+ id 1v66I6-0001JI-8p
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:46 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3f42b54d1b9so1009740f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759838135; x=1760442935; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759838134; x=1760442934; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lay1dX0EgU7CquIWsqnJhTZhe2aTP4vB0W0SBlr2NqI=;
- b=CHPqXQmxQJukiViL+qZW+C4ey/6Ch6FYIvEGVx8YvXnHIBQeqYkAbcFAIK+BI1OrKk
- aMd+hNTPhwRmxqtoj/sftDm9vmX91bHGuvSaNDwwwz5FPVTjGY96vbm1awYWUw+lksa/
- /OWX3Af9SQIw53AzESYx3a/BrIA5C9Xyhm9xybOsOXyO9mCBC4OIeYrUzC+dkjCt93ny
- Il8bZyfgRt2FfzdO8DUgL7DkQ606LX+UCaGSdvyqoVvFhlp94T2+hwLgDdUNAgeJhp30
- bs4KksJfB5+63QSssyl12aX1UafYBjGVJBwV9mG0zXRHDqRjgvEdpOPOJNps8AIzyQKs
- ba7g==
+ bh=7hh5wO1RfL5KSdXJKuGPnKWIJ/aE4KakJ9tCubA8v3Y=;
+ b=OhTbI8Ke7WF7W1pDYjTXJC4QSZJb85D0txKjZuK9ePdJ/TFoEzNwLVWX1Q+qr0U9KW
+ 9mabtHE4o7TatMNyUhL8+pOFqIzJ7Rpc8o2l9J8rL40pMY8KkiRwQr2+P+aghV8/rzsk
+ yZVx5CUJAXbVw+3Drp/P7f7Kx//SOuGVkgtjADOXZjfQSR72TZ/R39Gb7+B46Q/eibWS
+ f8biATCe+x0mr6mY5YtQUUY2cD/1sH3A4irKbqiyjW+x0+MLXAVhz5raPtV6RRC53d4J
+ K+LjKXgS7DPRmq9gzPSebqLIpHUUbit1ngyI4v1I9ru7GljpLLAuuEep7BpFRs1RGjfu
+ bTzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759838135; x=1760442935;
+ d=1e100.net; s=20230601; t=1759838134; x=1760442934;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lay1dX0EgU7CquIWsqnJhTZhe2aTP4vB0W0SBlr2NqI=;
- b=n71IiYNfuaMbxUkQ0It5fxfzPhuPGSxhF/tch9pqGENQgEKJjPWf5yFMUAyBh3s1w3
- RCKTJ6wZOMwSqtRF/+XXPq3L42JfT50nvylnbw2q5JOuri2AUhl0HEsc3abJhn/NwCMg
- rUl0SIZ0BIED8Lo9HYJP0CRAA85Pr/LKggzywWn6mXuyUBCI1aMAMYpYxywLiVX3LVtn
- N9b/7xAWdtbwa4MpgO5m6za148IXGFbLEt719IrZPqpZenWmLnZ/8vIwMNtM8LqnQOFx
- aS5o/YQMQV1Lq8XarKTY4HBGue60fjiWJTPvf8wqRI2iTE5Fil7w8tEbXcB97vGQs3jZ
- cMkA==
-X-Gm-Message-State: AOJu0Ywx96+3H7p5c4mhmZllJPocUd3hWmvBwEgK4nxvRcbChHl3neeA
- srmBeIVWTyVjZmOMDsIV3UGPmXxvwsuD0rfJYJdXYIUWZx1L8U7oBoptLzzve+FACFM=
-X-Gm-Gg: ASbGncsKv1O9FUfWiBoIYWTNrxw+P5NURkZbMImuyyhXXyQ/naGR+bTJOsaAvzVGpyI
- e7QezMnnC9q0CTyLH2NEuwLGZErPY5QnMCZFTqSyFoZr3FhfIW0vupIlwhmEnFlL7imK4TcNDWC
- iB9OQrKvCOA6NaR1c9vHc9dwUitQAh/HcdmMy2KbxZDlFYOu9ow8zm3FxtWMozlMHk5hD1FIuxC
- knk51nFNFa7tNWSSt7zaPoPOyJqq7E/XpHf7q9PdQ6MGh+fnlSXGgTZIEb2a4FlEs31+rsutwMa
- ZomuET7xstmmFP3Y/XPsZ35ega1fDZrbzDsfQhw42I/XPQLM7ssPKbBLkyNtZ5sLw/QlD38AqrT
- qzlswVzxUGnOOSzsXRThQTkNDETa2NcZOPaX3fHby9GcWR2LkGNo=
-X-Google-Smtp-Source: AGHT+IE389ZQLAronRaEhh0Gbi3cWgpGlzqL1jLbiPcfO+LrMt45N4TyQ2d9OP++JGcH4Xx1OsKGaQ==
-X-Received: by 2002:a05:6000:240d:b0:407:77f9:949f with SMTP id
- ffacd0b85a97d-42567165df4mr10003536f8f.28.1759838135232; 
- Tue, 07 Oct 2025 04:55:35 -0700 (PDT)
+ bh=7hh5wO1RfL5KSdXJKuGPnKWIJ/aE4KakJ9tCubA8v3Y=;
+ b=nZhvPgiFk1StaxR+z5ooxk3HqZ9OL2AsloCJ4bE5NNgHdUFBhe1PQsX3kBVXmitiod
+ DLnlutECA8ksd24dPiCHJ/CzZ9g4gLImEoU5IdyeRR0RVmIyIly++rvjbCf1kmr+K0Bi
+ 6p2vz4PBCR9B/WTB0p/atj5krANlEnk/umaR8ApfDk66fka/RPQR8xBK+tlP/nmCgTCG
+ YzVwLrUpjf92ovsGqc0sWVCmkDhDArGTR/83I7e4MfYmXv7IhomTq20voY3UfROYQPPF
+ e/50j+kCeE0bnIxJfKikJxvIiLzHMN3sNvJB2kWrKMW3WVOSBlYPjE6dYzqPrSm7m2HC
+ c8TA==
+X-Gm-Message-State: AOJu0YwSVtgPyCC7pEZ1sPmNts/fU7EsojOcYXUTCkG1k8XBXbX00mk4
+ a3ekdZLcLsVm4a1CvCj+oskyZAoW4XS6w+hA9Z6pVkEopKlcTjzr44oTQqO4BMGM1U8=
+X-Gm-Gg: ASbGncvG++DZR3EBP4V/VCAa1di0Slc09V7hrbjUEgVhZk2lZnWD9RyI51QfDx7t2rp
+ zxm81uCZIQEuI1SZPVcbGMGK5oePT1uiSAmRLD85U1w8nz4ALVzEKUzEauPvW3tMmyjmTKjoi1T
+ 3QOBITFFUdQ6LOV9PAwizD9RHMJEoHzOFUuqJHpfuqargAbWvNSw4n/HDeef2/IhUon6y7eddK0
+ UbjBuRJUUScPTDWGlMbU2DtfJclfBKYbKJAq57y5PDsY2sYsXUpfWs/HyDmjLOl2KYGBefQmik8
+ Pn3kAeln0ok22TJOuzJCoze9Gsd6fdBHVCW2Yp8TOnfSXbStUCARah3erE5wsPUX7GhJXtDRm6z
+ ZYKQ7aUXtou9HimvENCEdYTnu90aNl/yT3DHsj+ZzoLF9C3rsdcZI6TqV/GyVkw==
+X-Google-Smtp-Source: AGHT+IHElV+OAvLnVoNxqZ0u9sz1OZL7ZULJNRCFoQWSm3lF8kgAKLIipIKW/JTh89J9PQaBmQA3lg==
+X-Received: by 2002:a5d:5f94:0:b0:3fa:2316:c21 with SMTP id
+ ffacd0b85a97d-425671520a9mr9597353f8f.17.1759838133615; 
+ Tue, 07 Oct 2025 04:55:33 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8a6c49sm25322445f8f.3.2025.10.07.04.55.30
+ 5b1f17b1804b1-46e72362344sm205743565e9.15.2025.10.07.04.55.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 07 Oct 2025 04:55:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 09851603D3;
- Tue, 07 Oct 2025 12:55:27 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A9F8B5FCE6;
+ Tue, 07 Oct 2025 12:55:26 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 12/17] tests/functional: replace avocado process with subprocess
-Date: Tue,  7 Oct 2025 12:55:20 +0100
-Message-ID: <20251007115525.1998643-13-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 08/17] tests/functional: Re-activate the check-venv target
+Date: Tue,  7 Oct 2025 12:55:16 +0100
+Message-ID: <20251007115525.1998643-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251007115525.1998643-1-alex.bennee@linaro.org>
 References: <20251007115525.1998643-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,49 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-The standard python subprocess.check_call method is better than
-avocado.utils.process as it doesn't require stuffing all args
-into a single string.
+Add check-venv target as a dependency for the functional tests. This
+causes Python modules listed in pythondeps.toml, under the testdeps
+group, to be installed when 'make check-functional{-<ARCH>}' is executed
+to prepare and run the functional tests.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251003141820.85278-6-gustavo.romero@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <20251003141820.85278-2-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
-index f9a1d395f1d..a7ff47cb90c 100644
---- a/tests/functional/reverse_debugging.py
-+++ b/tests/functional/reverse_debugging.py
-@@ -11,6 +11,7 @@
- # later.  See the COPYING file in the top-level directory.
- import os
- import logging
-+from subprocess import check_output
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 62a4fc8ed31..e47ef4d45c9 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -105,11 +105,11 @@ check-venv: $(TESTS_VENV_TOKEN)
  
- from qemu_test import LinuxKernelTest, get_qemu_img
- from qemu_test.ports import Ports
-@@ -100,7 +101,6 @@ def vm_get_icount(vm):
+ FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
+ .PHONY: $(FUNCTIONAL_TARGETS)
+-$(FUNCTIONAL_TARGETS):
++$(FUNCTIONAL_TARGETS): check-venv
+ 	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
  
-     def reverse_debugging(self, shift=7, args=None):
-         from avocado.utils import gdb
--        from avocado.utils import process
- 
-         logger = logging.getLogger('replay')
- 
-@@ -111,8 +111,9 @@ def reverse_debugging(self, shift=7, args=None):
-         if qemu_img is None:
-             self.skipTest('Could not find "qemu-img", which is required to '
-                           'create the temporary qcow2 image')
--        cmd = '%s create -f qcow2 %s 128M' % (qemu_img, image_path)
--        process.run(cmd)
-+        out = check_output([qemu_img, 'create', '-f', 'qcow2', image_path, '128M'],
-+                           encoding='utf8')
-+        logger.info("qemu-img: %s" % out)
- 
-         replay_path = os.path.join(self.workdir, 'replay.bin')
+ .PHONY: check-functional
+-check-functional:
++check-functional: check-venv
+ 	@$(NINJA) precache-functional
+ 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
  
 -- 
 2.47.3
