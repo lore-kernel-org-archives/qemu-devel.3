@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA90FCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 20:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACA1CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 20:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6EOR-0003oq-OM; Tue, 07 Oct 2025 16:34:43 -0400
+	id 1v6EUs-0005y9-4h; Tue, 07 Oct 2025 16:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6EOH-0003l2-I6
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:34:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6EUp-0005uV-JE
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:41:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6EO9-0001Ps-7g
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:34:33 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6EUl-0002j3-8b
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:41:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759869261;
+ s=mimecast20190719; t=1759869667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Z5S8IGHTQa2sNKIAirWuwXw8AOD4Z9h+xYZj6llT9aE=;
- b=QxKm6E1LFzmuwZa+Vbrf/ecwaAuXsrQj0V2a5Y8EfyvGjH2uqRnvIKIXDRwqd6E8umdO9W
- ApK9btsHe2dfbmdmsVWkVYIDwWJOPFyqtQSgKAhXwD2dY173tt3nF0krs1vsjt1p6gpP34
- dda8/DGUE//v622QNVpqtddVpfBvUfY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DXDXRhtHvWsLs04AlkuIS1BUBULhGvS0mBbRInPHYZ0=;
+ b=B6pu7GlLMfewyAgKzjMeyRfucd6Bt6krYd+40qBsRzub0EhA1deqOwkUbU0TEbqmD3+Syn
+ DyUZATvcGXolHBKHqveUVuwaInqbxkA1Cw+mDE7J9IlFqcFlyk4Lsvj5kb9f79S6288etF
+ DKf9eNXGGIkFYivEE6uRId57HlsUpw8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-ocuK-iUWOMCJZBJhgnRUOA-1; Tue, 07 Oct 2025 16:34:19 -0400
-X-MC-Unique: ocuK-iUWOMCJZBJhgnRUOA-1
-X-Mimecast-MFC-AGG-ID: ocuK-iUWOMCJZBJhgnRUOA_1759869258
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e4c8fa2b1so28558425e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 13:34:19 -0700 (PDT)
+ us-mta-612-bFeEo44YNuifTv8G6i0Qbw-1; Tue, 07 Oct 2025 16:41:06 -0400
+X-MC-Unique: bFeEo44YNuifTv8G6i0Qbw-1
+X-Mimecast-MFC-AGG-ID: bFeEo44YNuifTv8G6i0Qbw_1759869665
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e3d43bbc7so25978705e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 13:41:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759869258; x=1760474058;
+ d=1e100.net; s=20230601; t=1759869665; x=1760474465;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Z5S8IGHTQa2sNKIAirWuwXw8AOD4Z9h+xYZj6llT9aE=;
- b=IAZ6U0icHHlQbVm0IEMjW32+3/9tOj3eUC1k2quD6gdT0YVDGZkHjwVHWfP74GVPbQ
- gWtoaugnkmeriKV6Kg0ZESgyTjJhANs5XEUwGPaxIBZgQwWRSOIWm1cHMcwUAbRJUrxO
- vuvDqnOguqf82K30ZU2Qh7Wx6SB0spIlpw2dUsJ+vciIxpXDhOI6ED5EBWmzOuZ6ztK/
- F946rjiQx184HbNHPhIOsG4xrCwf58ZqD6S9mzVQ4mO/JKP1gcxyC6B5z+9frCRoZbhB
- QQ/R7UULiG6I9ztheMaGDCkR4soC6Gahh88j3pht20DKXTsMGHoVppvoGP8CpJbm1QzX
- BFJg==
+ bh=DXDXRhtHvWsLs04AlkuIS1BUBULhGvS0mBbRInPHYZ0=;
+ b=GXDPoc0w6T3lQsy8ODbJ0UsXCu11yZAkd6BpeMdcLAa64RWZHGd6BgUR80SUB4ehQT
+ Cp8xbWJB0yn6LfwuHdeFgl+EGlT3Y8Z1NNquSEvvJ5x7H7TqDUSa2rsmltiZ+ZCkZ16n
+ /7U6tFych/ZkoUPrbdOpstVr84T/k+Fpnqe8itb5WPP034nGbYiFY/50/rN46+xzvimT
+ ADon3sy4F9Hr/AsVP8QQvcMnX2KdakQsc9bMxjg52g/1MoMnm6p6/uNnww1RloasMTov
+ Jss/aq6VugG6BQv+ggtFDhD3EUvWJN1UOw65UWxkdpfRlUAF5IXAhyoQWfoT3JD5oTwM
+ LDPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjAE7n17euFzZvTjqfKQwTwbQGH+S+1I/MzOxIuNQZuxauRMncF7yrzUYEv0r0NhIPsHsGvbtx0Jgh@nongnu.org
-X-Gm-Message-State: AOJu0Yx78y2y4U6Vj8a03lHGnkgB3XN4VtyKOLJTbpQyL/Y2yZuwWAtY
- 4SXungA43rLMya9FDgvKe7P6UcS3bEHJxkKUuUbn/hM3i4oKHAmMzYuE2GrXQfYAhj4RKbEjtHO
- cZpekbc7cD+yzvrYhGMIsEeI43eGt4cvcbU2q95fdDjmxnOG+Zx3uCQgh
-X-Gm-Gg: ASbGncvwwp6mBq7ixak5erixJsR2L9aOtd2ZZ0JVo/pUPSAS1N18CxEnS3v8WV+mDvw
- Z83etoBSumldVTNhzFrqt9u9wDv/51QExmlYR8QUU0lW+oa+GLqGGnxIID78I79p+gv+/nC6gKP
- WObDKJClcEvpMgwrYEKmZJCUSa6y+pOzv3ILBrTHXS/UUQLQUsnm7MYcwOk0BRnX1z/DnF4cNXv
- VNZcUXzv+anYkkz0RSsXC4CpvIXvk0PxLY1YIUgewnAuo76gjmLN+UnKDOV8c5FKjEYythtsKFG
- eZNVw0/KQFcD0rhfNkebkTaDWXlFn5s3l3oKJuZWYFcpgxSxCUClNSEVFK2TgREj+1st3ugNaiB
- TMw9Y/5Nj
-X-Received: by 2002:a05:600c:46d1:b0:46e:36f8:1eb7 with SMTP id
- 5b1f17b1804b1-46fa9a98e73mr6767395e9.10.1759869257966; 
- Tue, 07 Oct 2025 13:34:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLKPWctNW/J0wsJmQ9OZv1xmFjcYnF3Nq0n7lRbDBbgs2xrdRl6wYy3esE3Rb9CI3CNOTD3w==
-X-Received: by 2002:a05:600c:46d1:b0:46e:36f8:1eb7 with SMTP id
- 5b1f17b1804b1-46fa9a98e73mr6767265e9.10.1759869257580; 
- Tue, 07 Oct 2025 13:34:17 -0700 (PDT)
+ AJvYcCWkIlKqzEJ3zO+iyXl/LdaV7YiISXZKZLgOEtWoahKlkQWEFcSg4N2Q2x9iYcmyLIHVObSTObm1mzva@nongnu.org
+X-Gm-Message-State: AOJu0YxLhH5/zsK2hAFV7A0+pQ8tBUXejRyfMcF6WYVp2Z0uHy0zZiur
+ 4HTorJ8rRftXrfaBdWQ+MqYSD8RhtVtBgjr0JfiuRs+58MV6rpvgedthJO6porLAh6ZjLP5Oggg
+ XTVY581sVd+nZAFigZHpTBAvj/ls9kuTZnrrcbrmlsl77BrIQX1ZvA54e
+X-Gm-Gg: ASbGncv63FOR7ZegZTd+JPNKockRslLyTnU0zFx+thjYnnrIW0PAMf0FIz3uG436DEF
+ X+TP/ypODfRua5csZrlvqMHs4DxD816gkUzN/bKOthXYYS8sqYOuUXymosLwGowM7ApB0dFN6VX
+ 2Y9hTccWfOqMxg1/rQRe2U32TAdr1n6uEZVa+Jyn6GnLs4pZfJPFnta4Vx5sGkFKwnFxGRnWsBD
+ 4ILgEvPl9oSJjPtLA2eHsxd0ToZhW9WqXWs3cVOBkibDppJzn3MFpm9tLpgk0JpmJMC72azZm6m
+ yQyNm4ZW+YMMxNJaw71mntCzVi6Eca01148c5sgG5F3EJJ69vLJrxPxHcZ55/NlH4TuGXz5n3Yi
+ ZjaszMn0/
+X-Received: by 2002:a05:600c:8b16:b0:46e:4004:a296 with SMTP id
+ 5b1f17b1804b1-46fa9a965a9mr7450985e9.9.1759869664994; 
+ Tue, 07 Oct 2025 13:41:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFW67syV7a2se0zUX4BcokjiHsBOFU8zmIKwsvj/qJYapLy4DGt6CCmPDXBzRMkhZGuPdZShg==
+X-Received: by 2002:a05:600c:8b16:b0:46e:4004:a296 with SMTP id
+ 5b1f17b1804b1-46fa9a965a9mr7450845e9.9.1759869664622; 
+ Tue, 07 Oct 2025 13:41:04 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f02a8sm27268602f8f.39.2025.10.07.13.34.16
+ 5b1f17b1804b1-46fa9bf7f80sm8143435e9.1.2025.10.07.13.41.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Oct 2025 13:34:17 -0700 (PDT)
-Message-ID: <c5669458-a57e-4d95-9f73-18892dbd5c18@redhat.com>
-Date: Tue, 7 Oct 2025 22:34:16 +0200
+ Tue, 07 Oct 2025 13:41:03 -0700 (PDT)
+Message-ID: <5c394db1-221d-4a87-a1d6-6782056c54ea@redhat.com>
+Date: Tue, 7 Oct 2025 22:41:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Update entry for AMD-Vi Emulation
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- qemu-devel@nongnu.org, mst@redhat.com, sarunkod@amd.com
-Cc: philmd@linaro.org, clement.mathieu--drif@eviden.com,
- vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
- joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
-References: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
+Subject: Re: [PATCH v3 00/22] AMD vIOMMU: DMA remapping support for VFIO
+ devices
+To: Joao Martins <joao.m.martins@oracle.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: mst@redhat.com, clement.mathieu--drif@eviden.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, peterx@redhat.com,
+ david@redhat.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ alex.williamson@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
+ sarunkod@amd.com, Wei.Huang2@amd.com, Ankit.Soni@amd.com,
+ ethan.milon@eviden.com, boris.ostrovsky@oracle.com, qemu-devel@nongnu.org
+References: <20250919213515.917111-1-alejandro.j.jimenez@oracle.com>
+ <505e04a7-ebd6-47a2-b4bd-02b1164d841b@redhat.com>
+ <8e48a225-6ea7-4aeb-8f8a-58955d113319@oracle.com>
+ <c1db7b86-bdfa-40e6-8713-a0c5bfde81de@redhat.com>
+ <08ce5d66-a644-44bc-9165-b46ac618545b@oracle.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -130,7 +139,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
+In-Reply-To: <08ce5d66-a644-44bc-9165-b46ac618545b@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -158,38 +167,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 20:29, Alejandro Jimenez wrote:
-> Add myself as maintainer and Sairaj Kodilkar as reviewer.
+On 10/7/25 21:04, Joao Martins wrote:
+> On 07/10/2025 06:45, Cédric Le Goater wrote:
+>> Hello,
+>>
+>> On 10/6/25 20:44, Alejandro Jimenez wrote:
+>>> Hi Cédric,
+>>>
+>>> On 10/6/25 12:07 PM, Cédric Le Goater wrote:
+>>>> Hello Alejandro,
+>>>>
+>>>> On 9/19/25 23:34, Alejandro Jimenez wrote:
+>>>
+>>> [...]
+>>>
+>>>>
+>>>>
+>>>> The current status of AMD-Vi Emulation in MAINTAINERS is Orphan.
+>>>> Since this series is about to be merged, should AMD-Vi be considered
+>>>> maintained now ?
+>>>
+>>> It should be considered maintained.
+>>
+>> Great :)
+>>>> and if so by whom ?
+>>>>
+>>>
+>>> I volunteer as maintainer. Assuming no objections from the community, I will
+>>> send a follow up patch updating MAINTAINERS.
+>>
+>> Thanks.
+>>> If there are additional suggestions/volunteers for co-maintainers, please
+>>> reply to this thread and I'll include them on the patch.
+>> This series includes a co-author who would make an excellent reviewer !
+>>
 > 
-> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> ---
->   MAINTAINERS | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 75e1fa5c307ea..08de896ca942a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3891,8 +3891,10 @@ F: tests/functional/x86_64/test_intel_iommu.py
->   F: tests/qtest/intel-iommu-test.c
->   
->   AMD-Vi Emulation
-> -S: Orphan
-> -F: hw/i386/amd_iommu.?
-> +M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> +R: Sairaj Kodilkar <sarunkod@amd.com>
-> +S: Supported
-> +F: hw/i386/amd_iommu*
->   
->   OpenSBI Firmware
->   L: qemu-riscv@nongnu.org
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Heh, I wasn't sure you were talking about me or Sairaj but FWIW: while I know
+> some things here and there, I am not nearly as deep into AMD-VI as Alejandro and
+> Sairaj. Hence why I haven't voluntereed :)
+We don't have a cap on the number of maintainers or reviewers :)
+   
+It would be helpful to add someone responsible for handling PRs.
 
 Thanks,
 
 C.
-
 
 
