@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637D6CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B03FCCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68R4-00068m-9p; Tue, 07 Oct 2025 10:13:02 -0400
+	id 1v68WE-0003b0-Do; Tue, 07 Oct 2025 10:18:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Ql-0005vE-O9
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:43 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QM-0002Ka-2a
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:43 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-46f53f88e0bso18541725e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:12:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846334; x=1760451134; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VGPgMMlCVRnRjuzbPKqc0kAA2T5wiZUCBp+W8rMaiIk=;
- b=fNmft2nUUrfr4ZA2Z4sr0/86ga2CXg3ISGj7bvn0yEWRTPUZZJ7kGNffLuUsiOQMuh
- mmBC/mE3Zpn8i2HOqWUBh9ELn7rKugZMN6Jg0mce6ZBEQ/SKu7GwKfzPR858h0hPeUy3
- U4pNsfk5YgDWqFcT5nogsNUpPP9nx/pf8bdNXX+//eOJoUN61V6GfW5EBxwCRsF9ZMOh
- yGPPddVwFtJj9B6i95O7sC1udk2BvpXS+GIWly9Gc2fvmLRakyCRVhQdIPzAOM4UHw5u
- Qz7XrW94M3s4ni+NFrvj29pKYUybPAq4NkFeYkJobe4iLqaYv1zCJUSy2x7WUdMHh3TN
- Wbkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846334; x=1760451134;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VGPgMMlCVRnRjuzbPKqc0kAA2T5wiZUCBp+W8rMaiIk=;
- b=O3CnoOqODbzOa4wJfof7/ICZF2wjaVCm9dPUXAacQaXmq3AVAxggCQrTw4ndEbcXVG
- UOgvNcc1KeQCGmEk2gX6hD4ZvZhNpDOiFJQAXghKTbheVCNXqKlcO36v8qe0zaugiPyB
- w4HZIELnQKdCaGykE1VaJG+g/lIMxYVa42ZdRmjgDwbMPtl/XhDDmfZlKMxLUAINTdsJ
- 2tL9TWa1prnbSq6p3mDX/DzVt69ycijmJdFpuk/zG3MLWzS5dNu+Qn6Ak8jHfjbbuMbM
- DF3o8oMns07LKGkD4gmqTYf8CeVk1Krvr+PlrY+SJjdBv2hvrulxqSxgsaKIKtnFvv9m
- I4Bw==
-X-Gm-Message-State: AOJu0Yx5mG5z7foqb00CvIFPaVBlzUPAqx4uXQ2DgRGv8Lh6v6PqhVWK
- H78YA7bE6+pgnqaVBXjFgfUR1P+q43MPomJVTgjuBtjpLCdmttvor54jnnt/O9mHkrWCPrw2t4z
- dh0sm
-X-Gm-Gg: ASbGncso4mFx0ScAr3j9fMfN3H8jXMHFgGJhS+y8ia61DttvNkE9WT7BhJSNSVt/PBr
- S6WI8+HdOFvTmtiseDNDW8QXDh+4UHiT+rQzFNVn3STQ0QWb6p9K1l2uV/o7faBWHrypRoPUgqT
- Cm2DhR+eBCqoa8Gr9b/SP0atiD7cI9jSM0jkKHVaeRfV0HHMqXh5silNwDw5wnRpgcuOKCuQCbY
- 5rCoJBUkv+/Tfx4e131XZcI02w85KxYx4Tn5ktkqClREsSs5uPf7+FEo4LYbnbKMEyH+lB6yoc9
- HPGq/ZC34UaarAB+fWOqGSoosXW5gqW9MAxXyioDDizVCFvbzflQRokugTD5Ww0/h+KitNmZLaj
- magB+mxtY0/dyDezgtWb/T2KV3gxmeg6oi7l5QM3haYL+WUkEhpGCYMtR
-X-Google-Smtp-Source: AGHT+IHYkUvMIMvpEBgOxn3sCAyJrutPHbD6UDwWlCw/pzgvE7lGYbScWPXNVwN9FKEKDykLv+CfrQ==
-X-Received: by 2002:a05:600c:a319:b0:46e:74cc:42b8 with SMTP id
- 5b1f17b1804b1-46e74cc4609mr86519385e9.17.1759846334234; 
- Tue, 07 Oct 2025 07:12:14 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.12.12
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:12:12 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 45/62] docs/system/arm/xlnx-versal-virt: update supported
- devices
-Date: Tue,  7 Oct 2025 15:11:05 +0100
-Message-ID: <20251007141123.3239867-46-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
-References: <20251007141123.3239867-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ut-00028Q-Ip
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:17:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ul-0003RO-4u
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759846608;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2JoACebMZsG6pPDW6On0AOA9p0Y1tNixezKBasw1Etw=;
+ b=Oh7GTRXr10jy1/PPlgNiUtnfQUU+5MxwbC40+kqTJ+pHbc37o5kl3OFYLHFBb8I5JBfgDn
+ K7d+u7nH1Jh2X79vAaVs1Vs/riefrbkXud9+a/Rahs86U9ybDXEbguUiuUTe22JIRnmj1F
+ q2xspt1mQDlS7NU7jQCwo3MgbZDKqeU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-lslOifaNP4eIjQZ_-wqrHQ-1; Tue,
+ 07 Oct 2025 10:16:43 -0400
+X-MC-Unique: lslOifaNP4eIjQZ_-wqrHQ-1
+X-Mimecast-MFC-AGG-ID: lslOifaNP4eIjQZ_-wqrHQ_1759846594
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 325DA185FC7B; Tue,  7 Oct 2025 14:16:23 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E15F519560A2; Tue,  7 Oct 2025 14:16:16 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+Subject: [PATCH 2/5] aspeed: Deprecate the qcom-dc-scm-v1-bmc and
+ qcom-firework-bmc machines
+Date: Tue,  7 Oct 2025 16:16:01 +0200
+Message-ID: <20251007141604.761686-3-clg@redhat.com>
+In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
+References: <20251007141604.761686-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,49 +90,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luc Michel <luc.michel@amd.com>
+There are no functional tests for the 'qcom-dc-scm-v1-bmc' and
+'qcom-firework-bmc' machines which makes harder to determine when
+something becomes deprecated or unused.
 
-Update the list of supported devices in the Versal SoCs.
+Since the machines do not rely on any specific device models, they can
+be replaced by the 'ast2600-evb' machine using the 'fmc-model' option
+to specify the flash type. The I2C devices connected to the board can
+be defined via the QEMU command line.
 
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250926070806.292065-45-luc.michel@amd.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/system/arm/xlnx-versal-virt.rst | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ docs/about/deprecated.rst | 10 ++++++++++
+ hw/arm/aspeed.c           |  2 ++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/docs/system/arm/xlnx-versal-virt.rst b/docs/system/arm/xlnx-versal-virt.rst
-index 2c63fbf519f..94c8bacf61a 100644
---- a/docs/system/arm/xlnx-versal-virt.rst
-+++ b/docs/system/arm/xlnx-versal-virt.rst
-@@ -23,11 +23,11 @@ limitations. Currently, we support the following cores and devices:
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ce8fe9ac1be7..f6410037ead2 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -294,6 +294,16 @@ models, it can be replaced by the ``ast2500-evb`` machine using the
+ ``fmc-model`` option to specify the flash type. The I2C devices
+ connected to the board can be defined via the QEMU command line.
  
- Implemented CPU cores:
++Arm ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` machine (since 10.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` represent lab
++servers that never entered production. Since they do not rely on any
++specific device models, they can be replaced by the ``ast2600-evb``
++machine using the ``fmc-model`` option to specify the flash type. The
++I2C devices connected to the board can be defined via the QEMU command
++line.
++
+ RISC-V default machine option (since 10.0)
+ ''''''''''''''''''''''''''''''''''''''''''
  
--- 2 ACPUs (ARM Cortex-A72)
-+- 2 ACPUs (ARM Cortex-A72) with their GICv3 and ITS
-+- 2 RCPUs (ARM Cortex-R5F) with their GICv2
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index d3a0c81f454f..0707a760fda6 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1926,6 +1926,7 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
  
- Implemented devices:
+     mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
++    mc->deprecation_reason = "use 'ast2600-evb' instead";
+     amc->soc_name  = "ast2600-a3";
+     amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
+     amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
+@@ -1945,6 +1946,7 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
  
--- Interrupt controller (ARM GICv3)
- - 2 UARTs (ARM PL011)
- - An RTC (Versal built-in)
- - 2 GEMs (Cadence MACB Ethernet MACs)
-@@ -39,6 +39,9 @@ Implemented devices:
- - BBRAM (36 bytes of Battery-backed RAM)
- - eFUSE (3072 bytes of one-time field-programmable bit array)
- - 2 CANFDs
-+- USB controller
-+- OSPI controller
-+- TRNG controller
- 
- QEMU does not yet model any other devices, including the PL and the AI Engine.
- 
+     mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
++    mc->deprecation_reason = "use 'ast2600-evb' instead";
+     amc->soc_name  = "ast2600-a3";
+     amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
+     amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
 -- 
-2.43.0
+2.51.0
 
 
