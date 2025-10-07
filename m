@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51126CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC18CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68VJ-0002VB-Ub; Tue, 07 Oct 2025 10:17:26 -0400
+	id 1v68Qw-00062u-Nt; Tue, 07 Oct 2025 10:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Uf-000249-Gv
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ua-0003PN-KP
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759846598;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s3quiFgIla2njN+Wx4krX3jwOSMURvXmNv4PTCmYN6E=;
- b=Jo3bGBHNsvSzIhNI9wniEd7wiQBP52xnlBDVF9quZNoQOMockEwOlrHYlDYm+W+Rev/dIN
- 7mOevdtTKbquPz0LY04tVC6tYkj5AJczo69JgcuWP3w14y7nSvOGehQEsngRdlTB/sDP1z
- oZl5oRZyVnG9rjZpnM8UZnHZKz4NHmE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-9oI0KsKQMHC0ZdDHT8IQfg-1; Tue,
- 07 Oct 2025 10:16:27 -0400
-X-MC-Unique: 9oI0KsKQMHC0ZdDHT8IQfg-1
-X-Mimecast-MFC-AGG-ID: 9oI0KsKQMHC0ZdDHT8IQfg_1759846577
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67A001800583; Tue,  7 Oct 2025 14:16:16 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4EA9419560B1; Tue,  7 Oct 2025 14:16:11 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Patrick Williams <patrick@stwcx.xyz>
-Subject: [PATCH 1/5] aspeed: Deprecate the sonorapass-bmc machine
-Date: Tue,  7 Oct 2025 16:16:00 +0200
-Message-ID: <20251007141604.761686-2-clg@redhat.com>
-In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
-References: <20251007141604.761686-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v68Qi-0005s2-IR
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:45 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v68QU-0002NC-Cy
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:40 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-46f53f88e0bso18543435e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:12:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759846344; x=1760451144; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=6nKj99KdmBR33nuMOThvE6JAKFc6l5qFA/gSXuXJhag=;
+ b=yJ/Z5GDRuLS2J0U2zupXvEj+E/3yosiFZxJcHrdJ0KZ4zeWpu/fClFd8M5vkUr4E0B
+ hDTqAqGn/m6MhwjiIwEO/y4POa4va59RMFCa412mR7Tm9FGrwpQteFov3RdH/1+Gxp/d
+ CcvhQgFj3rbmfPjVI6pp/Xuvwr7J5U5lp+KECJo6CHRMEGjWjMTaSBmebByDt4BPW437
+ tnTC34aCSG1EW+kJEEXSXQlryQJ+BRyrcr0U5HUrdjettaKhIyVK3b3XJgMRS740UJ8N
+ 6IwFNaiBOhIjTVI+AZkpRbr2sMaze3+Vh+99UqhhR9pV3RMChoVbfPw2n1pdmlzYnkUN
+ 1YAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759846344; x=1760451144;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6nKj99KdmBR33nuMOThvE6JAKFc6l5qFA/gSXuXJhag=;
+ b=m/UNP10HCMyU/FUjxrcBcNQaReEtq48CXwC0/x4Sv03LdYis1SJEMo39hVvZq1n+2H
+ jtywOO/DZPDcFCk57CeIse4HhO3yj2rPBYWJqfYKIEuR4GP3CsUFthTd0wWne3XkoiAV
+ EhDYO47HtyeEjq98b1BpnDAzIndZ9MLdX8ukmaw44mDLwsANXXrIdI5Pg1P6EMmOeOBL
+ D4ayOy5zduGGL8I82Tl7pRW/CkGO1xkNGxiHf9BRbZMzuncHGnJBLNoEMGwKOT6I1HHI
+ LKgErT5R/Ir9dHeBE33RGgf4XbNPSGUjYK7te6RolKu3ol3I9PsBivDbrf2Kx3XNkB6y
+ vhgQ==
+X-Gm-Message-State: AOJu0Yz3Dkh5pudN6PL9wN9EmyCsIqpFeGHk5RYgYL1NRSvNGObpOuQF
+ 8ELGIkva0ad/nC/bA82TLaCxjo+A18UZsklCM34Z+0IuwCBGCrAKssXGYk4S5ZbGcWK2w9PHYb1
+ RSMHK
+X-Gm-Gg: ASbGncuBvjLSuRkibsPPdC2iJNoh22gsLgSUCM842FymeperMmeiNW8sRO+sG8t3vIj
+ ajEM7MVDR7wlMGJhZ2Skk/iHoCtFwlLwYYJd4sc2zfBbAjIno275IjthoKGdr3vPV9ueAM9Aqqj
+ S8HfPUN3EFeDj9SuRr7kskFDGnkdGGk3bf2jz59T5G0MXfk4w4EcAhOjG1sA1hXTvDq79EcxzTI
+ DewO9j1gpGwf1AsevC6UIpv2X0GviBs0c0qSRI6BIDM1A5wvXvlHlo4gqVhYk2YCDPKFM9t0mTF
+ HNXpXmJmPFzRBR57RTgXXxgoTE8FgC1/L3Nxh78w3QAEeoFkE7rqi+MEg7/1+D0SMIj7EoLNIZ2
+ kMOvLjwqct84mYptLzaYhZrU72PQBOmtT4gi6Y4GxTp3V5Gdb1xGvLXn6gBS5DH4TAW0=
+X-Google-Smtp-Source: AGHT+IHr14AJZLG8/JQvR8FZxKhzEpsQAPh+tTTsCmLavXFe5lPxntlRuGUJHpNmBRRE4e70tRxzMg==
+X-Received: by 2002:a05:600c:a101:b0:46f:a95d:e9e7 with SMTP id
+ 5b1f17b1804b1-46fa95dec1amr1275735e9.0.1759846343736; 
+ Tue, 07 Oct 2025 07:12:23 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.12.22
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Oct 2025 07:12:23 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 53/62] target/arm: Add isar feature test for FEAT_RME_GPC2
+Date: Tue,  7 Oct 2025 15:11:13 +0100
+Message-ID: <20251007141123.3239867-54-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
+References: <20251007141123.3239867-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,56 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'sonorapass-bmc' machine represents a lab server that never
-entered production. There are no functional tests for this machine
-which makes harder to determine when something becomes deprecated or
-unused.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Since the machine does not rely on any specific device models, it can
-be replaced by the 'ast2500-evb' machine using the 'fmc-model' option
-to specify the flash type. The I2C devices connected to the board can
-be defined via the QEMU command line.
-
-Cc: Patrick Williams <patrick@stwcx.xyz>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20250926001134.295547-2-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/about/deprecated.rst | 9 +++++++++
- hw/arm/aspeed.c           | 1 +
- 2 files changed, 10 insertions(+)
+ target/arm/cpu-features.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 67e527740c0e..ce8fe9ac1be7 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -285,6 +285,15 @@ and serves as the initial engineering sample rather than a production version.
- A newer revision, A1, is now supported, and the ``ast2700a1-evb`` should
- replace the older A0 version.
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 602f6a88e53..f59c18b6ef6 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1091,6 +1091,11 @@ static inline bool isar_feature_aa64_rme(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) != 0;
+ }
  
-+Arm ``sonorapass-bmc`` machine (since 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''
++static inline bool isar_feature_aa64_rme_gpc2(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 2;
++}
 +
-+The ``sonorapass-bmc`` machine represents a lab server that never
-+entered production. Since it does not rely on any specific device
-+models, it can be replaced by the ``ast2500-evb`` machine using the
-+``fmc-model`` option to specify the flash type. The I2C devices
-+connected to the board can be defined via the QEMU command line.
-+
- RISC-V default machine option (since 10.0)
- ''''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 58cfbc713794..d3a0c81f454f 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1552,6 +1552,7 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
- 
-     mc->desc       = "OCP SonoraPass BMC (ARM1176)";
-+    mc->deprecation_reason = "use 'ast2500-evb' instead";
-     amc->soc_name  = "ast2500-a1";
-     amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
-     amc->fmc_model = "mx66l1g45g";
+ static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
 -- 
-2.51.0
+2.43.0
 
 
