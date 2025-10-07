@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B03FCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362D4CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68WE-0003b0-Do; Tue, 07 Oct 2025 10:18:23 -0400
+	id 1v68R5-00069d-Su; Tue, 07 Oct 2025 10:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ut-00028Q-Ip
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:17:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ul-0003RO-4u
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759846608;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2JoACebMZsG6pPDW6On0AOA9p0Y1tNixezKBasw1Etw=;
- b=Oh7GTRXr10jy1/PPlgNiUtnfQUU+5MxwbC40+kqTJ+pHbc37o5kl3OFYLHFBb8I5JBfgDn
- K7d+u7nH1Jh2X79vAaVs1Vs/riefrbkXud9+a/Rahs86U9ybDXEbguUiuUTe22JIRnmj1F
- q2xspt1mQDlS7NU7jQCwo3MgbZDKqeU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-lslOifaNP4eIjQZ_-wqrHQ-1; Tue,
- 07 Oct 2025 10:16:43 -0400
-X-MC-Unique: lslOifaNP4eIjQZ_-wqrHQ-1
-X-Mimecast-MFC-AGG-ID: lslOifaNP4eIjQZ_-wqrHQ_1759846594
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 325DA185FC7B; Tue,  7 Oct 2025 14:16:23 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E15F519560A2; Tue,  7 Oct 2025 14:16:16 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-Subject: [PATCH 2/5] aspeed: Deprecate the qcom-dc-scm-v1-bmc and
- qcom-firework-bmc machines
-Date: Tue,  7 Oct 2025 16:16:01 +0200
-Message-ID: <20251007141604.761686-3-clg@redhat.com>
-In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
-References: <20251007141604.761686-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v68Qh-0005rs-Qk
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:43 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v68QL-0002Kj-KW
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:37 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-46e542196c7so41124115e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759846335; x=1760451135; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=PlsAz1YE54uBsJN/iqS/yfydW1uYs/0hWnLbeRXDss0=;
+ b=QYEipsZnua0t9/z6VPZQVjf1TWFvyt5RjILb8CE2jbMEXWxY8gwMn24FsW/JYgzKzk
+ fWiq9+SciEkmas5IZKwMcMKG1UGRLtYPCtCHKwh3CvJNeqMx+/NXR6/7vXasYTLkJAXJ
+ LNJLdjFO4nbD8/nmb41XLH/URs7dj+DlqHyn0LOaRVuDNrbn2/EciWVEvkyBqn4p+j5q
+ YmfeQoHnfsESvl+wbN18HZELqAqRbtYhRHTb1ME2UjpPdYYs8RfJos+jwjRpoSt2xn2D
+ pcfcQFvSPzym0EQtYr1M9Bqovy8lcBBJe4tqopyKVYxf8Ha4NZzUNwH5pbMz5g2Mik3c
+ VvYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759846335; x=1760451135;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PlsAz1YE54uBsJN/iqS/yfydW1uYs/0hWnLbeRXDss0=;
+ b=ZHeuzq6+tggMsEP+KEUXLVZM4iE58iNYksOmA5vTgxbt7i7n3DfSLwn+ApfK7Xs4BR
+ M+1JMdbhP5RX458KGo4uqrCD0AYtjCBrgtQZ50C1Lb3uuctNlWP2wZSIJ781vUH+FT8p
+ O6oDOZ+1SAnAG3znzNdEK9V3wr8NQ6GYoagvawLeZnywKuadNeHDiG99I2B+7NxFpUXU
+ LehvKhTaDKmdct8tZz6AZSU57YJfpBL9vq/+yk4V9Zik1g237IkcFSL9xaMW3ARnwEih
+ QPtrtvpArFKUTBn15gJDWlZmWsJ2ly1KMezR5mVC8Sf76MfjfrNUjbhZcJovBzKApJgn
+ bBQw==
+X-Gm-Message-State: AOJu0Yxns0jcbjVJS3n+MOUy1CqlJd+XJQQPYwKdES4onmjV6N/wLKH7
+ e2omcXMyqN07JgT8iE1S64f5zerACpxDM8vcl/WIfiE4/2OL2n/Ba4eGKLrXJRZEEtlJ9EYizpH
+ Jwxer
+X-Gm-Gg: ASbGncupu8GI79tQOJI/3wjwEDsiIZLhW7+MSuV9h7ECY8II+keHhuJA7iRYNT1v0T3
+ gelpWpSnOvPmW0tV5ae1kEcK62+WnANFIwSz/j469Si2LTbRPtaNNalS8Z23on3Bmuq5POqhrv1
+ R+5viHCWNPW95xDJLQ/5zG5xFNX6e+U/DaNQDR4Q5G5/nx0Zc/Rqvuu0xxiEP50T0svxfSzAkur
+ hgjtcgv44OqM/CzNM8AADYCvYRRkSL6JXmr8EnDEs8GE/Iw+8iKakDr61aT/iDTdcjhiox66dFW
+ hkAfc5GW11Kx2x+G/hyeSatMOXvhWnw32DlBPnodPGzl7JTX8pMv3mTQ/eLp14C3z0OhUWfcsks
+ A3lbYgTGXlT9eaXc3r2bneruSBAnZlrYVIU7O36wllBkNp5MU7pduS2f/
+X-Google-Smtp-Source: AGHT+IGZ+j3AKsFpD0qdpsBXugJtbhdg9fBuW1ymcx+oyKIGyos5WojTTMbjMNhiUfCqItvQn56JfQ==
+X-Received: by 2002:a05:600c:c16e:b0:45f:29eb:2148 with SMTP id
+ 5b1f17b1804b1-46fa298e604mr24797115e9.7.1759846335136; 
+ Tue, 07 Oct 2025 07:12:15 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.12.14
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Oct 2025 07:12:14 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 46/62] docs/system/arm/xlnx-versal-virt: add a note about
+ dumpdtb
+Date: Tue,  7 Oct 2025 15:11:06 +0100
+Message-ID: <20251007141123.3239867-47-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
+References: <20251007141123.3239867-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,64 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no functional tests for the 'qcom-dc-scm-v1-bmc' and
-'qcom-firework-bmc' machines which makes harder to determine when
-something becomes deprecated or unused.
+From: Luc Michel <luc.michel@amd.com>
 
-Since the machines do not rely on any specific device models, they can
-be replaced by the 'ast2600-evb' machine using the 'fmc-model' option
-to specify the flash type. The I2C devices connected to the board can
-be defined via the QEMU command line.
+Add a note in the DTB section explaining how to dump the generated DTB
+using the dumpdtb machine option.
 
-Cc: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Luc Michel <luc.michel@amd.com>
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250926070806.292065-46-luc.michel@amd.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/about/deprecated.rst | 10 ++++++++++
- hw/arm/aspeed.c           |  2 ++
- 2 files changed, 12 insertions(+)
+ docs/system/arm/xlnx-versal-virt.rst | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ce8fe9ac1be7..f6410037ead2 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -294,6 +294,16 @@ models, it can be replaced by the ``ast2500-evb`` machine using the
- ``fmc-model`` option to specify the flash type. The I2C devices
- connected to the board can be defined via the QEMU command line.
+diff --git a/docs/system/arm/xlnx-versal-virt.rst b/docs/system/arm/xlnx-versal-virt.rst
+index 94c8bacf61a..5d7fa18592b 100644
+--- a/docs/system/arm/xlnx-versal-virt.rst
++++ b/docs/system/arm/xlnx-versal-virt.rst
+@@ -65,7 +65,13 @@ When loading an OS, QEMU generates a DTB and selects an appropriate address
+ where it gets loaded. This DTB will be passed to the kernel in register x0.
  
-+Arm ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` machine (since 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ If there's no ``-kernel`` option, we generate a DTB and place it at 0x1000
+-for boot-loaders or firmware to pick it up.
++for boot-loaders or firmware to pick it up. To dump and observe the generated
++DTB, one can use the ``dumpdtb`` machine option:
 +
-+The ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` represent lab
-+servers that never entered production. Since they do not rely on any
-+specific device models, they can be replaced by the ``ast2600-evb``
-+machine using the ``fmc-model`` option to specify the flash type. The
-+I2C devices connected to the board can be defined via the QEMU command
-+line.
++.. code-block:: bash
 +
- RISC-V default machine option (since 10.0)
- ''''''''''''''''''''''''''''''''''''''''''
++  $ qemu-system-aarch64 -M amd-versal-virt,dumpdtb=example.dtb -m 2G
++
  
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index d3a0c81f454f..0707a760fda6 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1926,6 +1926,7 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
- 
-     mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
-+    mc->deprecation_reason = "use 'ast2600-evb' instead";
-     amc->soc_name  = "ast2600-a3";
-     amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
-     amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
-@@ -1945,6 +1946,7 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
- 
-     mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
-+    mc->deprecation_reason = "use 'ast2600-evb' instead";
-     amc->soc_name  = "ast2600-a3";
-     amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
-     amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
+ If users want to provide their own DTB, they can use the ``-dtb`` option.
+ These DTBs will have their memory nodes modified to match QEMU's
 -- 
-2.51.0
+2.43.0
 
 
