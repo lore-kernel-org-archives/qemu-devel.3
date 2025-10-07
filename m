@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE42CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 08:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E1DCCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 08:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v62v4-0000mu-4V; Tue, 07 Oct 2025 04:19:38 -0400
+	id 1v62vX-0001IG-3t; Tue, 07 Oct 2025 04:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v62v2-0000mT-Nm
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 04:19:36 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v62vV-0001DJ-9D
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 04:20:05 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v62v0-0002Fh-W1
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 04:19:36 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e2e363118so53806465e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 01:19:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v62vT-0002Gp-1u
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 04:20:05 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-46e3cdc1a6aso43853895e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 01:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759825172; x=1760429972; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1759825201; x=1760430001; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=o9p249xkIP82VTD57yJI9EMH5vgB2T9S3AbZV2dRRgA=;
- b=KhngiqAhv0PkoirrcvVQWHCGKJwhlvOZJ84ZX+JSBDsYfSLxDCKkqNQtvdTk6ctb7/
- MyLziJICr26Rd8O23kWmlfhMEgR/rIngN4aWAovRD/Oh9LBh3TMEJmZT2nXM8alRkI1/
- cXpirVcDpAX8E7TeDN3lITsHX/VMyxLGvVc7SApaV0Z3p8EMRYPCvus1qQDn465oikHG
- /b3WtiuDEiwPZc7X/TqtvrsaG+9wX8jTwfVmFygt+k/jbez83D84ruGvII8TtBPrjIJi
- CZ0f+MBgLXz/NLtVXIEIaU4cQg5aLsKBfxXiuHOY6P4FBHmHDrHNh6VIkFxZlf9Ps3KF
- zFXQ==
+ bh=MsMSxujLYM14Dnqu7gKvJG7wCLV3w69/rzjoYanDMMM=;
+ b=hHocgOzNvXc1PcOux7Lj0mgJjMigE0wpc6VrK7KT/JJQWVAUBltaFIL/a2d64SN9Ps
+ jIxLEFxoODKe8WlLbhmEEOrzNt46lqXZ56o+g321vXQSdX8kpzHiJ7vnnP9PtcltQSuw
+ Sp3KzN+/MWSY/XaOgBQtaheR6jqQKXCCY4+eDKzBZ7z7bGlzks5XAEuiBS8x1M0ZkQCL
+ ChHAF5q8/a9PHbO7XSqjrmoEXF6RLHSfAwLPztY44hMM4cFycfS9vfuxvraVtqlJPfOi
+ US6Dv6tnSPzfsImpZJDkvBCklM9VyzkR2UBXAadyk7WadOQShRvU1qTNqehLn1YV3Zwk
+ r/jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759825172; x=1760429972;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1759825201; x=1760430001;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o9p249xkIP82VTD57yJI9EMH5vgB2T9S3AbZV2dRRgA=;
- b=Em9xjgyUnBLqcN/prbFdfKvz2Aixm/Fl+/19wFLnfCRNTFv5Y0c0XZuHFNf+kZ0rd8
- cn4XM2Jp2XMVYGx9BHcZPZZV1eCraBFfT4bH81SOjrHX62mba2M5+pvKb5QtmdTBwB4a
- ULajTu/7NnXDq7ytuI6palMs6aYR1SbQWGCopVBky0M2l7Qv3sjHC4+Vv4TbA9CRJf6f
- Ms5KejuBC+5wvTlRTieAQFx3UGl78r+22nEanAvAjJ7agxy/NlpNPGm9AtOPY6Ic2Obg
- VCDx8gl5NyltVJ1W5ci2TcVyJQ6mma6oK0cUuuKbzKXo0nI0WfPdw8eGbV/Eh8lyhrLp
- +vNQ==
-X-Gm-Message-State: AOJu0YztpJX5kT8lYF08j4Z0Vgz/QTBjsw5PFiKD2EsI8Hqp3wB/WGTT
- ZhQ/rp1CzEw0Ab6zIafXi6/BPeEjX0XvZAgfMlsc/7Xnyq47mLl+Sbk3m2lYKtEHkqHPb+kl1sT
- 6nsbZWx7UTg==
-X-Gm-Gg: ASbGncvksScVpxVRkeos73aDvQvyWYzX/ACJbcVnrgmcl4hhgLpDU/SbPC0y3Lz4bLG
- cM7hTDWADSnXY5bMueJrLR+IBAM9MuaUHIt5Ox4UL5Vvzm3tZQwP8lieT1fGKUTJXrOW/Kvd0Cj
- 9gXSzHM4j/b598yydZTZEvMC/3C81UwfUcr+dX6jjemNfyUgM+dGiHu05+2nundd3jkqcDB8vxS
- WAEnP3r767wNkfTG2ggWgoCUHcHW9ALtrlbdQX4m4oFSoS6Xc6KXrb7EkqXBXpkGIZO32nQ7C1j
- u44NHb6CF9Cpxc/e/Q6pFMoPvcCnAAXGSH7MQpBpPRJR1eLNyqPkLrci4P5G63A/30lLdMQpWSQ
- E8geQFMflwfG5HOXiSef/2wIU7qohyxiusr+2EEKWn+Mn0Qx2CuwgTB52bwbi8JWrBNNwxJJaKJ
- 9TaOdhd83pXjVuIQN0Yg==
-X-Google-Smtp-Source: AGHT+IEFKXHCN9xuHHy+WlvTkf3dGEws6TAvxkEgi7GgML0qma5/2/dX3HtzBssjnJTA1hRQjyWYBw==
-X-Received: by 2002:a05:600c:8b65:b0:46e:5a5b:db60 with SMTP id
- 5b1f17b1804b1-46e71168c20mr112491745e9.31.1759825171917; 
- Tue, 07 Oct 2025 01:19:31 -0700 (PDT)
+ bh=MsMSxujLYM14Dnqu7gKvJG7wCLV3w69/rzjoYanDMMM=;
+ b=ubYX59DyjQGbAV3F8JEtrh4ttFxtOy+T1il29MnUd7S2dy+TomQXSZwZA2HORdkw5v
+ Sf3CX/OukaAaEQnyZCoge6UXY0CAyGP+lxoYyjrXxnRdUb6TJR8/6zZPFTiEq+vj0jiA
+ GwTJuvcSQp6O5pGFSHZxvZ6PUw0gclx+g7wpl78JsW1Ks/ZY4cszw8H+wGtdm/DvDwZv
+ UGJDzQp7vatPC30kshLC0p0wOon0Py1Q72yaod9dzo3U1LKA44DN9OVl0tinN/dEs18R
+ wexgKxgHMyPnk9w+yqU1+Gad4EQtKMiQ114jFsk1xrQeVty/EWvL5lK7jpbwsBK1NWaA
+ JhkA==
+X-Gm-Message-State: AOJu0YxFkdNCH150jfrN9RPtSINN42uhklAMjXGYmy+6mX0D3euTkr9u
+ iIjqyOfCu+y7jCChapaRbbuKOn75PwjEfeuUEFobjBFBDccdgf4U7LGtj+D/AuhPFoQCkkZclL0
+ MbzDy5QpsbA==
+X-Gm-Gg: ASbGncusm0XMJXZMQw2eAZkgDEL0WpsiS9vd5ZTyCnhvcojprX67qqVrdqshy0oGjqM
+ OFRA+Ce0A9dxmsLdlCYXjxUC50RBWjhhl94nLWK69+5z0BVNWnsgjG6jAMDfElHLosagrxuvnZd
+ DUdvIkNO2/T0XXjrMn9CaLXpWyufSU7MLTAWIbGOpWuE15XwPLLPeTDzAJa8v0lSDlXOpqiG2qH
+ NaBLLfWjhxcbRtUnyAbiiME3IKO2j0r/Z2bZCzTRdPRyfzNbZBjnNMSUpK9JZLG9xY5r1Ct1/1X
+ /ilDWifNISV+7kg0KtEMfEjo4aEi/Ci+Wy0GrsGUVvDhPlHwDeoO+RfWBGJyAxss17i7rfXI9CB
+ 6ZyDxvNzid17enzbzAyf5NYWmyL6dXsFvYIEEdvXxPWyhMbQlfLDNgH/oJWI0iPN+QDSQaXrzxc
+ It9G/ZGUP+nD5J0TnW5A==
+X-Google-Smtp-Source: AGHT+IENEb/USYE/0zuDpUlj+pkmacX0VCfFQzJ3LBeqZPzEovPwb/wuCwaKIgPsqDJw3UX9yBI1Lg==
+X-Received: by 2002:a05:600d:42a1:b0:45f:2b0e:b835 with SMTP id
+ 5b1f17b1804b1-46fa29e1b8dmr10092795e9.10.1759825200764; 
+ Tue, 07 Oct 2025 01:20:00 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e7234e5fdsm196292355e9.6.2025.10.07.01.19.31
+ 5b1f17b1804b1-46fa39ee063sm11945455e9.3.2025.10.07.01.19.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Oct 2025 01:19:31 -0700 (PDT)
-Message-ID: <225f6427-f950-4260-a95c-cf7dbe2e7867@linaro.org>
-Date: Tue, 7 Oct 2025 10:19:30 +0200
+ Tue, 07 Oct 2025 01:19:59 -0700 (PDT)
+Message-ID: <45f4ff25-7c5c-43c7-a6a3-c1a425fa4c0d@linaro.org>
+Date: Tue, 7 Oct 2025 10:19:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/alpha: Access CPUState::cpu_index via helper
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250925010438.59755-1-philmd@linaro.org>
+Subject: Re: [PATCH] target/m68k: Remove unused @cpu_exception_index TCGv
 Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20250924171308.53036-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250925010438.59755-1-philmd@linaro.org>
+In-Reply-To: <20250924171308.53036-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,25 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/9/25 03:04, Philippe Mathieu-Daudé wrote:
-> CPUState::cpu_index is a target agnostic field, meant
-> for common code (i.e. accel/ and system/ folders).
+On 24/9/25 19:13, Philippe Mathieu-Daudé wrote:
+> When moving the @exception_index from each target ArchCPU
+> to the global CPUState in commit 27103424c40 ("cpu: Move
+> exception_index field from CPU_COMMON to CPUState"), the
+> @cpu_exception_index TCGv has been created for m68k target.
 > 
-> Target specific code should use the CPUClass::get_arch_id()
-> helper, even if there is a 1:1 mapping.
-> 
-> In preparation of generic changes around CPU indexing,
-> introduce the whoami helper to access the generic
-> CPUState::cpu_index field.
+> For years, no code ever used this register. Simply remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/alpha/helper.h     | 1 +
->   target/alpha/sys_helper.c | 5 +++++
->   target/alpha/translate.c  | 3 +--
->   3 files changed, 7 insertions(+), 2 deletions(-)
+>   target/m68k/translate.c | 6 ------
+>   1 file changed, 6 deletions(-)
 
 Patch queued, thanks.
 
