@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02380CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 13:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EEBCCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 13:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v681T-0006mB-UN; Tue, 07 Oct 2025 09:46:35 -0400
+	id 1v683e-0007GC-3b; Tue, 07 Oct 2025 09:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v681L-0006ll-BX
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:46:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v6819-0007HZ-Ki
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:46:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759844766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=6MFlMmOdcHUaHBRUIVBEaj+CoVm9tQ/Wh3ynjBKbV1I=;
- b=MC1BMDk4Dtuj8zDPexgrrLAogb1+OZAx/tcTePzxljWpuaB0xItQDNEjhpqXq6XxD8hJhp
- Fj5mfEtNVi+eJuux2h21PdlvPzdEX7c215mWGXh6OLKcMZXm1rvCxUIfndhq+RjJOXmmlW
- vP8BwSrlS5Ta6817RWynkEuCS+6SZMw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-D5cKFj1QO46ePIC2U3ZhBQ-1; Tue,
- 07 Oct 2025 09:46:05 -0400
-X-MC-Unique: D5cKFj1QO46ePIC2U3ZhBQ-1
-X-Mimecast-MFC-AGG-ID: D5cKFj1QO46ePIC2U3ZhBQ_1759844764
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08C8B1955F44; Tue,  7 Oct 2025 13:46:04 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.31])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88D721800447; Tue,  7 Oct 2025 13:46:01 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, rth7680@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] build-sys: default to host vendor for rust target triple
-Date: Tue,  7 Oct 2025 17:45:58 +0400
-Message-ID: <20251007134558.251670-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v683b-0007FR-PL
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:48:47 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v683U-0007af-GA
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:48:47 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3ee12a63af1so4126779f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 06:48:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759844912; x=1760449712; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=k6ZG6KtDpB1f5Isb6p40/VGcJa3rDHywmdw6TLwXJEE=;
+ b=JJRj3mwuJxgEEM9mBK8B2Tdy8VXajeY4SDGtIzfc5y8Z//t09AIU6tufdMgDUoAblt
+ WJxNVjfkRFATH0cSBLyDjdy70bTK4f4O+t9cX0tFzjUv/Vxyd6fiJr7ZNC6kxjl9gaE6
+ pLSDS3LeCwVG7IkQ5HkgX1h8pdUBcop3C25tYndg6n3fzdNc/ukIOP62WFXV5+4WtsQh
+ zEiYGCUjqtEvoNchcZh1vaYqbfySGeZhIWayDQ+2ld5wa0bnvRBpC6ILc2NGf21puKhN
+ Ek1yAWZNX2njABYOLmSshCzfvUDiz/4iGCN+b7UiglZMyUlVUP7b0ZvijNRLB+3I/Hud
+ KUjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759844912; x=1760449712;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=k6ZG6KtDpB1f5Isb6p40/VGcJa3rDHywmdw6TLwXJEE=;
+ b=ee+lif141xgIUFjvDZRHVERvQTxZ8foRcL9WGIfdFkJkuceMf9QunQVARvHytlczdE
+ FMCMN3B9vNtRxoGAp1I7Zze7Wourn9Xwv9e6RFEtqyhWED8PnvvwfpowxwBmsiW7Ypu3
+ rffJ3XArqIaEmB46U6slRuZ37Fkhp+xM80KnDR3ppYd1vh0oWPvzYl4lDueci6JJkLSk
+ RWKZ9mFIJwet1NVGvZNfR06Kusj9GbTb+2c/oAb4FeeOYkrUtaaO9zgFV0+P2Y2hCQMg
+ 7/lor5hREszAvq3dtorF8+qByiCPpCFWE3wXYcNF9MGgsxXHD3XuHqrGJSLgGZMrunAs
+ OJ0Q==
+X-Gm-Message-State: AOJu0YxvN22jc0W3HYG5IIi/tzXSlo4yN6al0qM7t6P/41UE9HpiAaoO
+ iXmLihPVZ9lZI3BlmrmUy/O3+pcXgqscBQ8khgF4XDKsIjFHma6cTEosRPSo2uXTqC8=
+X-Gm-Gg: ASbGncuOCVR9mrCSCtLHYVrQzPU4Ohx3N53mqMnC3+lVtWfbZUYGVnkrQn3vJVX3rQ6
+ Lifhi963U6QnuHoIiSTFSWGqhbx2t5f6ci4HzVakcbJmPJkeaVhMvt0hzNvRFGT94rRdmf2SSYK
+ gAaX91vtAUqqfBKpC/tek4lVd1j5UX4dOJiCEzdKqoDjM+7+W8aqBJmGuRjI8LCRzR1zVGrZe4z
+ nDrTSqYFI92O4HoFOTwzs3TA7qIREyono3lCPMgacxbWKFJkhN7RiN2m5RlhYN0pAJovakOgQM1
+ GrL+RpsAFPP4q1NfOPJ1IJoMvucpwzyPC0zgbh4K50ztn4CGZWedOykwc4EiSDJiBoei7NlVAkq
+ pcFXuVx3f6iAWA7umbZetoV1M9eCisUiAmJKX5gmdqwjw/zlc6lTfXzSsS5Qhyw5ZP9/DgoTHs3
+ cOR9wDtJ1pgYIrIbgsaQ==
+X-Google-Smtp-Source: AGHT+IE+BWHDJYUOxUycI32bKtFoxGHlKeZV6KEvzq5EFqba3o48Z9/K80tz4ThEwbmbAtCgQYwjNg==
+X-Received: by 2002:a05:6000:1acb:b0:3fd:eb15:77a with SMTP id
+ ffacd0b85a97d-42567137c93mr9628290f8f.6.1759844911866; 
+ Tue, 07 Oct 2025 06:48:31 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8abe49sm25800014f8f.21.2025.10.07.06.48.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Oct 2025 06:48:31 -0700 (PDT)
+Message-ID: <66dbc389-4c83-4552-b447-87c0e1ada48a@linaro.org>
+Date: Tue, 7 Oct 2025 15:48:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/misc/max78000_gcr: Do not ignore address_space_write()
+ errors
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Jackson Donaldson <jcksn@duck.com>,
+ Jackson Donaldson <jackson88044@gmail.com>
+References: <20251007024006.43166-1-philmd@linaro.org>
+ <CAFEAcA_ytH+AwTr9LAZBP2nbSTod0FkfuexbewW=T7Pbb3nkmw@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_ytH+AwTr9LAZBP2nbSTod0FkfuexbewW=T7Pbb3nkmw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,74 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 7/10/25 10:27, Peter Maydell wrote:
+> On Tue, 7 Oct 2025 at 03:40, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Convert max78000_gcr_ops[] to take MemTxAttrs and return MemTxResult,
+>> allowing the write() path to return error on failure.
+> 
+> *Should* it return a MEMTX error on this failure, though?
+> This is a question of what the hardware behaviour is,
+> and there's no reference to the datasheet in this
+> commit message...
 
-This fixes docker-test@alpine, which uses "alpine" vendor.
+Right. Thanks!
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- configure | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/configure b/configure
-index 78445cbb4b..a467f3a2e0 100755
---- a/configure
-+++ b/configure
-@@ -1216,8 +1216,9 @@ fi
- if test "$rust" != disabled && test -z "$rust_target_triple"; then
-   # arch and os generally matches between meson and rust
-   rust_arch=$host_arch
-+  # default to host vendor
-+  rust_vendor=$(echo "$rust_host_triple" | cut -d'-' -f2)
-   rust_os=$host_os
--  rust_machine=unknown
-   rust_osvariant=
- 
-   # tweak rust_os if needed; also, machine and variant depend on the OS
-@@ -1225,7 +1226,7 @@ if test "$rust" != disabled && test -z "$rust_target_triple"; then
-   case "$host_os" in
-   darwin)
-     # e.g. aarch64-apple-darwin
--    rust_machine=apple
-+    rust_vendor=apple
-     ;;
- 
-   linux)
-@@ -1273,13 +1274,13 @@ EOF
-     ;;
- 
-   sunos)
--    rust_machine=pc
-+    rust_vendor=pc
-     rust_os=solaris
-     ;;
- 
-   windows)
-     # e.g. aarch64-pc-windows-gnullvm, x86_64-pc-windows-gnu (MSVC not supported)
--    rust_machine=pc
-+    rust_vendor=pc
-     if test "$host_arch" = aarch64; then
-       rust_osvariant=gnullvm
-     else
-@@ -1310,7 +1311,7 @@ EOF
-   sparc64)
-     if test "$rust_os" = solaris; then
-       rust_arch=sparcv9
--      rust_machine=sun
-+      rust_vendor=sun
-     fi
-     ;;
- 
-@@ -1324,7 +1325,7 @@ EOF
-     # e.g. aarch64-linux-android
-     rust_target_triple=$rust_arch-$rust_os-$rust_osvariant
-   else
--    rust_target_triple=$rust_arch-$rust_machine-$rust_os${rust_osvariant:+-$rust_osvariant}
-+    rust_target_triple=$rust_arch-$rust_vendor-$rust_os${rust_osvariant:+-$rust_osvariant}
-   fi
- fi
- 
--- 
-2.51.0
+> 
+> thanks
+> -- PMM
 
 
