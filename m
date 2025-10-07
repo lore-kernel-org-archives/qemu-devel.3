@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B97CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B96CCA472
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v65oT-0003zt-Be; Tue, 07 Oct 2025 07:25:01 -0400
+	id 1v65oW-00041Q-Ap; Tue, 07 Oct 2025 07:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v65oP-0003zD-TI; Tue, 07 Oct 2025 07:24:57 -0400
+ id 1v65oT-00040C-KR; Tue, 07 Oct 2025 07:25:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v65oN-0006U6-7o; Tue, 07 Oct 2025 07:24:57 -0400
+ id 1v65oR-0006UZ-EF; Tue, 07 Oct 2025 07:25:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 731B615B412;
- Tue, 07 Oct 2025 14:24:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4FB1E15B414;
+ Tue, 07 Oct 2025 14:24:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B814429AC10;
- Tue,  7 Oct 2025 14:24:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 462B829AC12;
+ Tue,  7 Oct 2025 14:24:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 v2 00/18] Patch Round-up for stable 7.2.21,
- freeze on 2025-10-06 (frozen)
-Date: Tue,  7 Oct 2025 14:24:43 +0300
-Message-ID: <qemu-stable-7.2.21-20251007142433@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 18/18] ui/icons/qemu.svg: Add metadata information
+ (author, license) to the logo
+Date: Tue,  7 Oct 2025 14:24:45 +0300
+Message-ID: <20251007112449.499875-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-7.2.21-20251007142433@cover.tls.msk.ru>
+References: <qemu-stable-7.2.21-20251007142433@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -59,61 +62,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.21:
+From: Thomas Huth <thuth@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+We've got two versions of the QEMU logo in the repository, one with
+the whole word "QEMU" (pc-bios/qemu_logo.svg) and one that only contains
+the letter "Q" (ui/icons/qemu.svg). While qemu_logo.svg contains the
+proper metadata with license and author information, this is missing
+from the ui/icons/qemu.svg file. Copy the meta data there so that
+people have a chance to know the license of the file if they only
+look at the qemu.svg file.
 
-Patch freeze is 2025-10-06 (frozen), and the release is planned for 2025-10-08:
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/3139
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20250930071419.117592-1-thuth@redhat.com>
+(cherry picked from commit 9163424c50981dbc4ded9990228ac01a3b193656)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  https://wiki.qemu.org/Planning/7.2
+diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg
+index 24ca23a1e9..f2500de339 100644
+--- a/ui/icons/qemu.svg
++++ b/ui/icons/qemu.svg
+@@ -918,7 +918,26 @@
+         <dc:format>image/svg+xml</dc:format>
+         <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+-        <dc:title />
++        <dc:title>Kew the Angry Emu</dc:title>
++        <dc:creator>
++          <cc:Agent>
++            <dc:title>Benoît Canet</dc:title>
++          </cc:Agent>
++        </dc:creator>
++        <dc:rights>
++          <cc:Agent>
++            <dc:title>CC BY 3.0</dc:title>
++          </cc:Agent>
++        </dc:rights>
++        <dc:publisher>
++          <cc:Agent>
++            <dc:title>QEMU Community</dc:title>
++          </cc:Agent>
++        </dc:publisher>
++        <dc:date>2012-02-15</dc:date>
++        <cc:license
++           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
++        <dc:source>https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865.html</dc:source>
+       </cc:Work>
+     </rdf:RDF>
+   </metadata>
+-- 
+2.47.3
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
-
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01* 3c3c233677d4 David Hubbard:
-   hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-02* a11d1847d5ef Alex Bennée:
-   .gitmodules: move u-boot mirrors to qemu-project-mirrors
-03* 3ee7f21ed292 Paolo Bonzini:
-   tests: vhost-user-test: release mutex on protocol violation
-04* f72fc16910c8 Yuxue Liu:
-   vhost-user-test: no set non-blocking for cal fd less than 0.
-05* c9a1ea9c52e6 Markus Armbruster:
-   Revert "tests/qtest: use qos_printf instead of g_test_message"
-06* dee66bc9691a Fabiano Rosas:
-   tests/qtest: Do not run lsi53c895a test if device is not present
-07* ae4b01b34979 Richard W.M. Jones:
-   tests: Ensure TAP version is printed before other messages
-08* aaf042299acf Stéphane Graber:
-   hw/usb/network: Remove hardcoded 0x40 prefix in STRING_ETHADDR response
-09* a1499a8a94 Michael Tokarev:
-   use fedora:37 for python container instead of :latest
-10* f9922937d173 Peter Delevoryas:
-   python/machine: Fix AF_UNIX path too long on macOS
-11* a3cfea92e203 Marc-André Lureau:
-   python/qmp/protocol: add open_with_socket()
-12* 603a3bad4b9a Marc-André Lureau:
-   python/qmp/legacy: make QEMUMonitorProtocol accept a socket
-13* bd4c0ef40914 Marc-André Lureau:
-   python/qemu/machine: use socketpair() for QMP by default
-14* 4c8f69b94839 Xiaoyao Li:
-   multiboot: Fix the split lock
-15* 03fe6659803f Richard Henderson:
-   accel/tcg: Properly unlink a TB linked to itself
-16* e13e1195db8a Richard Henderson:
-   tests/tcg/multiarch: Add tb-link test
-17 d0af3cd0274e Peter Maydell:
-   hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
-18 9163424c5098 Thomas Huth:
-   ui/icons/qemu.svg: Add metadata information (author, license) to the logo
-
-(commit(s) marked with * were in previous series and are not resent)
 
