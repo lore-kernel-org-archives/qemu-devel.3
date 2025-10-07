@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 752B0CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792B1CCA472
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v66Im-0002kp-Jp; Tue, 07 Oct 2025 07:56:20 -0400
+	id 1v66Im-0002jS-9Q; Tue, 07 Oct 2025 07:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66IE-0002WG-QV
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:48 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1v66IO-0002XM-05
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66I6-0001JA-KX
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:46 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e52279279so41390845e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:34 -0700 (PDT)
+ id 1v66IA-0001J7-0f
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:53 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46e42fa08e4so58171925e9.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759838131; x=1760442931; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759838130; x=1760442930; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fDCwQK3HllcZn/oLXm7cm4a9yrjhRqqLzaYppWTL0io=;
- b=X9MjW5810zkdy3cL5Bx5LK+fqEleuM6wSJYNFa7Z3QAw+laF6B30h5M1JrtH09qVRA
- rBsEtAIF67CKsnBqhJedjAFhz0c783giwV7HWnBgol5/QtN8ySN38V+oFaK2ypNvxPr9
- /l9Ze2ueiQk0sYhCqe+ou2aKKcNjVSVE58frRaBq2SECGeE1Cyk9OORam6GdTjaNljPe
- vAssQTMSPxLJ+5Hz44G9yTW57Vp4oiuhYCI9mG/aQhq2h5J/j4JbOWYlsBIOMoGGsa/T
- N4fCOF+bJLy1e/f4y3jz//n1pQoOcrEyuNNo76l89dEGjOoy7arPH79egblnvD6l7SsU
- eeDA==
+ bh=FUMZanu+fNDUlmwUPlkORZjFmvkzwi0xxbzJ7zLpfd8=;
+ b=SeB49+VtU7hDNxTI9sQ2L89jw+7pU+VD/Kl3zi/nIaKWXcRNG0OWmH8QSFWD8jtjLW
+ +gzfDAlBY57zlq5HiWuhWrIkAlDLDdMd52budato+ep9jQJvh53Z0SvthVkY7ueeDpHp
+ Z/c5tronsVoCtio1hvDPjwYyTJrImeHn8Z/XbT8YMDocLFMjP1+SUMVf7E8Q4XfVoWF9
+ fD8MtJs6s022VK/VmLU+SYwY/o54ACpM3nbYH+HS1mP/Pylh/dXZHqOJThGXTdeeKHy1
+ uulVHgvONvXSUlMqNmtUbSv5cjz5KGT4BserDvEffjkIHedhwPbvmR6amnk7nzGP2bRX
+ TYMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759838131; x=1760442931;
+ d=1e100.net; s=20230601; t=1759838130; x=1760442930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fDCwQK3HllcZn/oLXm7cm4a9yrjhRqqLzaYppWTL0io=;
- b=PKb1YH2bAzIgwWCwbu8Buh+p8Ia/hy6/OCs6eXg3ylzi9q34N/Dod9o+Nb0M+ftK3N
- ko3qNeKKXqZvf95iqgfQexZkxxCRVfLCQFpvGK9mLZJeHCbKXS2EMnzhkA3zgcD/Umxi
- wVLEADQyUlDXtZf3MvngoJOyLy4FoiXMfArpGBjeVv8KoYso9v8vkCcXqQ/EQooanfVz
- ddvnxQq05Vceb/Rz/32biMON8iGhe+1OwJbmuNuTAQko5sfrJWic2JwDJVaHYTVvevc+
- MD8R+grtF+FT5Xtg0c4xlifZJ8iXw3dPo8eO4GmppgQY/iRizrhK9K8WPnSApx10UY/o
- lEYA==
-X-Gm-Message-State: AOJu0YzjOZ9cCvAP/m8a5A8tVUULhCGwbJ5jLDe9dlgM9nRqD9ukZkqM
- xnkNAoavdlUlpNCLmVEBN2+SOWUSib9+/nyt6gVR9rqsYcM54fykYDFhJg+U5j1Vy7LmtScvK41
- Yt0cs
-X-Gm-Gg: ASbGncuzk93ueZtopGdbI7GNMnZVlu2Pjc0irOW9bkfSDm0dz4nf4s6Qwr0ZfGhSNjI
- D8QKq6GzUIv6abP0i0h4KaGK308SvxN6UURf0wG+XZikCIOmo7ZihD/YpwnrjrN065jxFL+e6rb
- FNMl1vyMU3FZkUAX7WKiZJKxMEzwY9/QS+vgcDkBis0yxEMMPxY6O9A5ThwZRB3gXDu8GDAZeZD
- C4bGQFGNft4XkShgMBqx1uKEAkV7G3NI3u5ACcZsIFSN/lBprXRbD4uP6t5bvTbSh2eFO4Amkqq
- +fYBIQ+3K1DZZ6cPbz9qUGeonPT0Est9Cf6VVkELYy5uBk7faJxWLV6dgPsGr2aUJYCyIqsHgNj
- O/7f0edQhPoSSnEYqOYoiqJqf949uxF+M4KNqjNWlyxkZSG8SStU=
-X-Google-Smtp-Source: AGHT+IGRxgHhgLZgBgOzMEuVoMQ9RMwYuZykkw2XfkIJgIGUONJPOsaO2Po66uM0aZbUUbbGX606Jw==
-X-Received: by 2002:a05:600c:4746:b0:46e:506b:20c9 with SMTP id
- 5b1f17b1804b1-46e71109f22mr113233555e9.12.1759838131307; 
- Tue, 07 Oct 2025 04:55:31 -0700 (PDT)
+ bh=FUMZanu+fNDUlmwUPlkORZjFmvkzwi0xxbzJ7zLpfd8=;
+ b=feWqgWpGa97kDQWW+xeJEAGOaoGifuQ3U9np2tAoTZ62GRdkaE0c4bw22mWsLvkb6G
+ oOXEa09vrxiHnarQJ5UE5II3FmJlINzSDq/PKu5myr4FRxdylwCx7dibJNoFUYLA7Z1k
+ 0HhwJI1Dn1lWCo4tz25XDre0JqeSOpnH8j5cYl+bGYui4eoBx7jgPVc18CXxAaW/pZol
+ q+qz7K4uXYm6Y+IMbjEK/bfOW19Kr6iQvsrqIT79oIYSDpKiAwqq5iaBf7b+PyrBtm+D
+ HsQjfEw+VJnwelglkFWUxGtiHnGeyuqrtBuTcwbnXDD69TfGbRxytHQRW5eQUhFwfhTl
+ 0GVw==
+X-Gm-Message-State: AOJu0Yw7hOWajzJKGP1urlg58KI6iUxhM+4eNTvh1t9qc2acuksc1OVY
+ qF6432rJ306bXPrUr3SZHjN/D+3T/Nk5GDs+NwecdQQBs8CS5IL7Vu3vnnVc7srl6+s7hjlobqQ
+ qBCgN
+X-Gm-Gg: ASbGncsjRYyUUcbqx5fADiYCsqqGB1NuDzKBjsaxnixVkxMx3exm/0qM5DQpjlkJsp3
+ fSWVJ9QBufWt3WHKN/MjnjfOAvuinTqVJZGadlUXwHsvSn6leY1pW4xD3dRhvgjRv4qWwB8u0uf
+ IRTzjUFSDzT/qdoDg92MGaG7KAEikdO6ivtPqBPZDvR/JGJsQbIvZD8UEv8ZqqVJiSMwa/z2Qd9
+ f8SqixQdJV7YmUVbNCrnpvRXKKYCOxXLfSLHBfHS/FLUCunY8d48Br4MJGGUt9iPEJid56VFBNS
+ KKjlCB6bTFILxps5wH1Vc8BNxNxeUUadtyiUTehOibNylbfFWZ0o9ffSG6Ddp/0E2o292c0CXiz
+ vFJiZ7M3aoYZaZf8QkLI8cfjSE/M/1JTjQvqmfwmqHoG4bMymQfg=
+X-Google-Smtp-Source: AGHT+IG+NDIKAhaQgWX1QoCh3PJ0Sn/Z5H3bGK2aXEH1n1p7fZiSFn8pAk/su3yVCufivW15ElTvvw==
+X-Received: by 2002:a05:600c:1384:b0:46e:4580:c6c5 with SMTP id
+ 5b1f17b1804b1-46e7115cac6mr90558025e9.35.1759838130475; 
+ Tue, 07 Oct 2025 04:55:30 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e723614c9sm199491695e9.14.2025.10.07.04.55.26
+ 5b1f17b1804b1-46e675b557fsm301406395e9.0.2025.10.07.04.55.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 07 Oct 2025 04:55:26 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 535125FB06;
+ by draig.lan (Postfix) with ESMTP id 3FF825FA33;
  Tue, 07 Oct 2025 12:55:26 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 04/17] tests/lcitool: drop 64 bit guests from i686 cross build
-Date: Tue,  7 Oct 2025 12:55:12 +0100
-Message-ID: <20251007115525.1998643-5-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 03/17] .gitmodules: restore qemu-project mirror of
+ u-boot-sam460ex
+Date: Tue,  7 Oct 2025 12:55:11 +0100
+Message-ID: <20251007115525.1998643-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251007115525.1998643-1-alex.bennee@linaro.org>
 References: <20251007115525.1998643-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,41 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With only TCG available we can't support 64 bit guests on a 32 bit
-host.
+With this change also reference the upstream repo.
 
-Fixes: 5c27baf9519 (docs/about/deprecated: Deprecate 32-bit x86 hosts for system emulation)
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20251001170947.2769296-5-alex.bennee@linaro.org>
+Message-ID: <20251001170947.2769296-4-alex.bennee@linaro.org>
 
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index 4e8b3a8293d..2998764065f 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -178,7 +178,7 @@ ENV ABI "i686-linux-gnu"
- ENV MESON_OPTS "--cross-file=i686-linux-gnu"
- ENV RUST_TARGET "i686-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
--ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
-+ENV DEF_TARGET_LIST i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 645959318a3..185a47cebe6 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -216,8 +216,6 @@ try:
-     generate_dockerfile("debian-i686-cross", "debian-13",
-                         cross="i686",
-                         trailer=cross_build("i686-linux-gnu-",
--                                            "x86_64-softmmu,"
--                                            "x86_64-linux-user,"
-                                             "i386-softmmu,i386-linux-user"))
- 
-     # mips no longer supported in debian-13
+diff --git a/.gitmodules b/.gitmodules
+index e51abe65258..c307216d173 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -28,7 +28,8 @@
+ 	url = https://gitlab.com/qemu-project/seabios-hppa.git
+ [submodule "roms/u-boot-sam460ex"]
+ 	path = roms/u-boot-sam460ex
+-	url = https://gitlab.com/qemu-project-mirrors/u-boot-sam460ex.git
++        # upstream is https://github.com/zbalaton/u-boot-sam460ex
++	url = https://gitlab.com/qemu-project/u-boot-sam460ex.git
+ [submodule "roms/edk2"]
+ 	path = roms/edk2
+ 	url = https://gitlab.com/qemu-project/edk2.git
 -- 
 2.47.3
 
