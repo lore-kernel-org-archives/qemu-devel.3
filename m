@@ -4,45 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B938CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 19:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F1FCCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 19:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Dln-0000dW-KV; Tue, 07 Oct 2025 15:54:47 -0400
+	id 1v6DnK-0001Us-QU; Tue, 07 Oct 2025 15:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v6Dlm-0000dO-ED
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 15:54:46 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v6DnJ-0001Tp-Ea
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 15:56:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v6Dlj-00042O-Sw
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 15:54:46 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8CE8156F2FF;
- Tue, 07 Oct 2025 21:54:37 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 1txj80Qr9f8J; Tue,  7 Oct 2025 21:54:35 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8ACAC56F2A3; Tue, 07 Oct 2025 21:54:35 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] ati-vga: Separate default control bit for source
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
-    marcandre.lureau@redhat.com
-Message-Id: <20251007195435.8ACAC56F2A3@zero.eik.bme.hu>
-Date: Tue, 07 Oct 2025 21:54:35 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v6DnF-0004Gp-8a
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 15:56:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759866975;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5sVUd7rhdCuBayrWGnRSpHw0ie/+uBiOsiJRgMKAyKs=;
+ b=JfHDupKGCmD9s+j5Df9yRDGXDADvZVVBZWfMiWDISHyLwKsvk1OvOHvECZruPgW79x25rV
+ j4pK3CMA6FxSXIFhqdk5sBSW/t/HANSNawD1cSAS1ISHu30eezDMCXzdJHEq8T7AIhwb+Q
+ tORTKG6DhmHmJCvRGF9SEv6dQah4cMo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-Pa1hVu56N120VPMEPDv4RA-1; Tue,
+ 07 Oct 2025 15:56:11 -0400
+X-MC-Unique: Pa1hVu56N120VPMEPDv4RA-1
+X-Mimecast-MFC-AGG-ID: Pa1hVu56N120VPMEPDv4RA_1759866970
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7280419560A7; Tue,  7 Oct 2025 19:56:10 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.87])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9B15419560B8; Tue,  7 Oct 2025 19:56:09 +0000 (UTC)
+Date: Tue, 7 Oct 2025 15:56:08 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v4] block: replace TABs with space
+Message-ID: <20251007195608.GB127783@fedora>
+References: <20251007163511.334178-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="RlrbBd5vsFp5bR+O"
+Content-Disposition: inline
+In-Reply-To: <20251007163511.334178-1-thuth@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,60 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DP_GUI_MASTER_CNTL register has separate bits for src and dest but
-we were only looking at the dest bit. Use the correct bit for source.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/display/ati_2d.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+--RlrbBd5vsFp5bR+O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 309bb5ccb6..e69b15b570 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -43,7 +43,8 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
-     }
- }
- 
--#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
-+#define DFLT_CNTL_SRC (s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL)
-+#define DFLT_CNTL_DST (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
- 
- void ati_2d_blt(ATIVGAState *s)
- {
-@@ -63,12 +64,12 @@ void ati_2d_blt(ATIVGAState *s)
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-         return;
-     }
--    int dst_stride = DEFAULT_CNTL ? s->regs.dst_pitch : s->regs.default_pitch;
-+    int dst_stride = DFLT_CNTL_DST ? s->regs.dst_pitch : s->regs.default_pitch;
-     if (!dst_stride) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
-         return;
-     }
--    uint8_t *dst_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
-+    uint8_t *dst_bits = s->vga.vram_ptr + (DFLT_CNTL_DST ?
-                         s->regs.dst_offset : s->regs.default_offset);
- 
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-@@ -97,13 +98,13 @@ void ati_2d_blt(ATIVGAState *s)
-                        s->regs.src_x : s->regs.src_x + 1 - s->regs.dst_width);
-         unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
-                        s->regs.src_y : s->regs.src_y + 1 - s->regs.dst_height);
--        int src_stride = DEFAULT_CNTL ?
-+        int src_stride = DFLT_CNTL_SRC ?
-                          s->regs.src_pitch : s->regs.default_pitch;
-         if (!src_stride) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-             return;
-         }
--        uint8_t *src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
-+        uint8_t *src_bits = s->vga.vram_ptr + (DFLT_CNTL_SRC ?
-                             s->regs.src_offset : s->regs.default_offset);
- 
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--- 
-2.41.3
+On Tue, Oct 07, 2025 at 06:35:11PM +0200, Thomas Huth wrote:
+> From: Yeqi Fu <fufuyqqqqqq@gmail.com>
+>=20
+> Bring the block files in line with the QEMU coding style, with spaces
+> for indentation. This patch partially resolves the issue 371.
+>=20
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/371
+> Signed-off-by: Yeqi Fu <fufuyqqqqqq@gmail.com>
+> Message-ID: <20230325085224.23842-1-fufuyqqqqqq@gmail.com>
+> [thuth: Rebased the patch to the current master branch]
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  I came accross this old patch today - it fell through the cracks
+>  in 2023, but I think it's still worth to get the coding style
+>  finally fixed in these files.
+>=20
+>  include/block/nbd.h |  2 +-
+>  block/bochs.c       | 14 +++++++-------
+>  block/file-posix.c  |  6 +++---
+>  block/file-win32.c  | 18 +++++++++---------
+>  block/qcow.c        | 10 +++++-----
+>  5 files changed, 25 insertions(+), 25 deletions(-)
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--RlrbBd5vsFp5bR+O
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjlcFgACgkQnKSrs4Gr
+c8jYsQgAyVK/OZqG31TWoTFZ+LXnWQg5+/RNcBe2Ck+MPqoiFjjOWA+1QkvlW/MM
+RbndfrWaPmkPRCKqYzBlXObryu4glHzCxn+mgfv61+KYxZIDGXhmtfDqBJ1Wkw4l
+0A2WuDgnxN0jy5x3LfHJUVLQC1R9D4kdaAUooEGRewHBPnp/ARV+NfA+JHUul744
+IygfuiIZlFrJGR4nRVYXJaWaBZaPcWBm09c9nORr+IHto2HqSwSmbtDVAqZVhdJ7
+ia0Gfwezi1ilvSUYx8xNuRytIhhX5U/UlwiObRv8e9/EDI46V++Gu+mnLDPuiwl6
+QY1IUX9KN1GkWLFqiQ1CKmtMAmyiJA==
+=yLx0
+-----END PGP SIGNATURE-----
+
+--RlrbBd5vsFp5bR+O--
 
 
