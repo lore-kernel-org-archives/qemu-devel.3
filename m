@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA727CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF31CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68WQ-0004Mq-HB; Tue, 07 Oct 2025 10:18:34 -0400
+	id 1v68WL-0003lC-HY; Tue, 07 Oct 2025 10:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68UP-0001xf-MR
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v68WA-0003c5-0b
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:18:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68UK-0003Nt-VF
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:29 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v68W0-0003dG-9f
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:18:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759846580;
+ s=mimecast20190719; t=1759846685;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5pxsBLHftUJ/CuLmv0yWEDHTmId9lPM0aAdADtsX+Bc=;
- b=TRFcMjmd1feP0aBigWeJ09gsd6B4vk89lypB3mVomuTpVhKKNmPzI65MDhAHpcbiZCtI1j
- 0xSHcKysZYEsWE2q47HheIiiDBYt9WYyqoE8O3oCGVGHsQJRFymNdbOmNVV+gbMAVtEVEB
- HnKO5vdw3kGGwxWGNxTG2CxyjJ0ef8g=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JqmAxJcwf6pRKKSUnF4GWDas5WBlnsLAsYEj/OIjsBc=;
+ b=BFZfmd/G6DTZvG0jdb3KuXxTNHr/JsJcISD5Rcum8jyHq2GeRBp9b2D0sqNa5mmCFCPlr3
+ cT3ojl1NVUoikdPayegKPqK0/+PobCSOISY8vJoG+zB3kFGOmHa3+4EdTXfBj8dG2LPRRs
+ OsxfNacgob+TlaqRQgz9hOrEjZjVO/M=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-YCmRkvUoMdS6DBckZ88vrg-1; Tue,
- 07 Oct 2025 10:16:16 -0400
-X-MC-Unique: YCmRkvUoMdS6DBckZ88vrg-1
-X-Mimecast-MFC-AGG-ID: YCmRkvUoMdS6DBckZ88vrg_1759846573
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-jDjr9vXGNaS-CNTpPZW39w-1; Tue,
+ 07 Oct 2025 10:18:04 -0400
+X-MC-Unique: jDjr9vXGNaS-CNTpPZW39w-1
+X-Mimecast-MFC-AGG-ID: jDjr9vXGNaS-CNTpPZW39w_1759846683
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97E07180034A; Tue,  7 Oct 2025 14:16:11 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 575BE19560A2; Tue,  7 Oct 2025 14:16:06 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 0/5] aspeed: machine deprecations and test improvements
-Date: Tue,  7 Oct 2025 16:15:59 +0200
-Message-ID: <20251007141604.761686-1-clg@redhat.com>
+ id 7DBC31872B0C; Tue,  7 Oct 2025 14:17:05 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.229])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8774B1800452; Tue,  7 Oct 2025 14:17:04 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Jean-Louis Dupond <jean-louis@dupond.be>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v2 1/3] file-posix: populate pwrite_zeroes_alignment
+Date: Tue,  7 Oct 2025 10:16:58 -0400
+Message-ID: <20251007141700.71891-2-stefanha@redhat.com>
+In-Reply-To: <20251007141700.71891-1-stefanha@redhat.com>
+References: <20251007141700.71891-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -85,32 +86,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Linux block devices require write zeroes alignment whereas files do not.
 
-The first three patches deprecate machines that have no functional
-tests and can be replaced by more generic machines (evbs) with
-command-line options for I2C device.
+It may come as a surprise that block devices opened in buffered I/O mode
+require the alignment for write zeroes requests although normal
+read/write requests do not.
 
-The last two patches improve the functional tests for the ast2700
-machines to save CI resources.
+Therefore it is necessary to populate the pwrite_zeroes_alignment field.
 
-Thanks,
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/file-posix.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-C.
-
-Cédric Le Goater (5):
-  aspeed: Deprecate the sonorapass-bmc machine
-  aspeed: Deprecate the qcom-dc-scm-v1-bmc and qcom-firework-bmc
-    machines
-  aspeed: Deprecate the fp5280g2-bmc machine
-  test/functional/aarch64: Remove test for the ast2700a0-evb machine
-  test/functional/aarch64: Split the ast2700a1-evb OpenBMC boot test
-
- docs/about/deprecated.rst                     | 27 +++++++++++++++++++
- hw/arm/aspeed.c                               |  4 +++
- .../functional/aarch64/test_aspeed_ast2700.py | 21 ++++-----------
- 3 files changed, 36 insertions(+), 16 deletions(-)
-
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 8c738674ce..827ffa77a5 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1602,6 +1602,22 @@ static void raw_refresh_limits(BlockDriverState *bs, Error **errp)
+ 
+             bs->bl.pdiscard_alignment = dalign;
+         }
++
++#ifdef __linux__
++        /*
++         * Linux requires logical block size alignment for write zeroes even
++         * when normal reads/writes do not require alignment.
++         */
++        if (!s->needs_alignment) {
++            ret = probe_logical_blocksize(s->fd,
++                                          &bs->bl.pwrite_zeroes_alignment);
++            if (ret < 0) {
++                error_setg_errno(errp, -ret,
++                                 "Failed to probe logical block size");
++                return;
++            }
++        }
++#endif /* __linux__ */
+     }
+ 
+     raw_refresh_zoned_limits(bs, &st, errp);
 -- 
 2.51.0
 
