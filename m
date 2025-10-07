@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F847CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FE4CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68QQ-0005oQ-BV; Tue, 07 Oct 2025 10:12:23 -0400
+	id 1v68Q6-0005gp-3B; Tue, 07 Oct 2025 10:12:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QK-0005mI-Qi
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:17 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1v68Q3-0005fx-C7
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:59 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Q6-0002Cx-Tl
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:16 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3f0308469a4so3642681f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:12:00 -0700 (PDT)
+ id 1v68Pp-00028s-GI
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:59 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-46f53f88e0bso18535425e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846313; x=1760451113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759846300; x=1760451100; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KFDaQJ8q1spuEtlWey4phuXP7A/59oefPCkhFMboMnc=;
- b=Z7RI4/m2/ZSV2drPlqefKi59R5EHLHSvSnfLphvYPMw3uLMrhFaiKOZZn5NhV3/CJn
- P7vySjmgv1KKxFMu/ps4qyo25mOfl0aQRDj1Q+oHvCnwdad+Gf82fy0oNB+4dPLok4Kg
- y94dnPoa3N8LJQfdjn7tq2GXq8BdoNo5ce3417lvpIniw9kFu24LTzswILAq2lS3BxL9
- PnD4GYGB7z46bHPb9xojrHlEdsOHTKzUOLb0JOjVKVa6Kb9X0trTBWk8K7zyGjgFdHUV
- zXGVJqYb1BYoRVGSRFs7i/fTUmwm8moihiz5sbIyhjvFg86nNceM9kXqKfQLC6J1WTh8
- pU8A==
+ :reply-to; bh=9O/hfrpW4QDwWWLEbTcsULJfyn/JGHUsRKFKhzij6oc=;
+ b=f3zZAKbjSQnd/eAE+yWLwRT60K0tXNyQBey/6dZIaSKWOnCsA4YJcwqS3RGpb7Ukhd
+ a7TX9SAaIRKI3kdcE1gJb8rv4JjEIdM9sN4KZnHkrzW62x6mcSaa11yCIdfnZFiMWIZw
+ mLb6pWgoYVDVmRCHhEFzPyaOig4mmokT7LzdHkNAp4yLJwp1VdusBKH0CrwlaNAZ5+uj
+ OsiTjHbjV2tQqXPqclWg4ml4dvRmfGnD4CQZQUyCvFesTZu22s6G1UPVZSi4WetmZcpm
+ 5Zv0Dzvy0rCNHYEMNQu+j6AUzPdpHtmXqRJNp34yEs2JUVywY6z5PaM+4iZmp412nMSy
+ JtIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846313; x=1760451113;
+ d=1e100.net; s=20230601; t=1759846300; x=1760451100;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KFDaQJ8q1spuEtlWey4phuXP7A/59oefPCkhFMboMnc=;
- b=Q/x2NmNTYs5UTyBaZfZ8wsRuvfVMXntH/X1f9ZPYkzVSDWUTroOwMokm516mN6wP0q
- SCGWgxLFkExrmPvkW+XyphX7QercqwRacBovS60Q4Q1X7qy+yI1MES3P7PepFj19/K3H
- AnAHpppechjormmnF+SRolEmHX6+n63DOBnjIqCIQZMVKRiQCrEwURtiT2yqL6Rs3Ifp
- ayU2b9fJra0bq5BBoQwqJHRMtfKfKsZ54K51mYf8Vav7oymEBEEGNozEtgyJEN6Yt93T
- ET7oyGQRsUBYbXc3rDlwOpV/aGs/xtRcXKI5YLMvND7jTNxc5zrsQti+CPxy/hEAQFAy
- 0SfQ==
-X-Gm-Message-State: AOJu0YynTrf93Faf1NZEJQRiYDgvm7re/OqWOGt6WeBCu3BbcbVQLB+K
- wDq2TIhans+18yzasLxMP53ZcgkofeAOugLuLPCYloE2jescHZHqrtdgmUinrV1OUUsKRWIMi12
- +HYex
-X-Gm-Gg: ASbGncv+BK0+zAkoLprpvmQvGyRoqyqWrt9PlKf9VqgQrwu9j8s0afgpV6GkdRrB9Ax
- ZUBaVC6NZWJnKu2NAT1BMqXBUapX93KBACByUmxoLxa2ILh8nlUhrtrlgbqRQTEEPtt33tuCsi3
- ukyunSQuvImZvy+XS8r77FnXqFywjjoD2sqZztOG7yRQglqrgMQaeccv1wmYbW4Tr+Mhe6srpUc
- lHKQ4EionONqwckrStRsnMoXXuq5RI0pT2S1oUjuyNDEt1dvIGxy2s2djSwq2xFHZGtX9spI6uQ
- 5My+kmEHZb9IhXzY1AG7i993Ut/52yU4m46SxY2/2tCcv8Y0Ekbdjj0n6fL0jHpjNI1r+J13K3O
- mqpoafKiiP2QA+/VuySFJDpDPhMWZbno1fabRjvxOyIi/M972maTcGgdS
-X-Google-Smtp-Source: AGHT+IH9Tl9uZTM7ox6wE5i9QHQ7goiQZtv10WfHnUgsKX+7u/uumr+7b4Fu0Cj8+XUM0tGhqIXR/w==
-X-Received: by 2002:a05:6000:1a85:b0:3e9:2fea:6795 with SMTP id
- ffacd0b85a97d-425671c7275mr10892978f8f.53.1759846313237; 
- Tue, 07 Oct 2025 07:11:53 -0700 (PDT)
+ bh=9O/hfrpW4QDwWWLEbTcsULJfyn/JGHUsRKFKhzij6oc=;
+ b=FKlplfFUhQFSMuC3RHu188VSm0UvKRyhpJlwNqsdzLFbMk/rZKEnep7ek87AOKdE81
+ kNkBWAXVeOp1YYdKTsmXWI6nkEGUhVLoChU3oylVv12jwNTQhcZPgwPMl1T45VHstaju
+ urZ4e0ZysUj5Oac+SvmDsBdsqIOBXRETIqBsC1n6sEVxzX/PHRAQd40rqNouIQQQsuB6
+ eH00PM91jWYdblC54rs3H3XiU2R0/ilggBXVmNy2LufKSpxouRztWsmCVo2jTJpc0z/k
+ xIh5M2Ce8wn8lKueAVWIeHYirsmEvBBTHNiXJFkVnQBoiHPgxP0cpgsZkh8ThGzEbX9j
+ Md+A==
+X-Gm-Message-State: AOJu0YzFGK6411PzkZYqg476OEMVHt+kRojOuv4ZwhCH06trmc1jECbY
+ vYof809gu1RwJN/04sxcQ0d3fmeNA+2NwSsWuGm2Wisw0WPw7PmYxwlfXiNyjiJOnMvc9NzD8ev
+ TpRQA
+X-Gm-Gg: ASbGnctfw1WMZkbQdFwZqERgnFMpYqJnLkTP9fxH6FFeQkYwCFQj+6z9UeZDqFEB+ez
+ /THO2Gwq4cDs93sR5rF+4heGQ4OAgnGwXKxNilM8hbuoN6K9hIwMqylowPQaLoGJXK1mk/zEbhI
+ YGfaetnzGwlQmOf1AlRso2vbGpSe/XY8ea/bGT52menVwRxG3PGooGQC+JXU4Xh4l4Dj7QEXjX4
+ cwF9ZulRdydXYyDvyRvMQog0ki37jYKPFH56ZlKdgz+i/WYPGbLj/0S7EuaoI8XZo8jDY2S35QR
+ +zHagTUPOUu4tx9puesMLX4lqr1Bdwv/xig9gwRqwh3ZAs353Z/WJaAIZrGP/Mjw6UdYHvnAjBB
+ K4uYDPsV7DJECcn4XjZv2fUI26pNkq5As/RsvqBfD6dkcaUmfW5T78TJP
+X-Google-Smtp-Source: AGHT+IGHEQ8TCf3Xm7HVwDxMnXvQGVvghYzznZjpggAnwnO43HlpUw/7AO1yQ9koJ0SZSkyDPPAd5w==
+X-Received: by 2002:a05:600c:4f93:b0:46e:5cb5:20df with SMTP id
+ 5b1f17b1804b1-46e7110f0famr153759155e9.16.1759846299827; 
+ Tue, 07 Oct 2025 07:11:39 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.52
+ 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:11:52 -0700 (PDT)
+ Tue, 07 Oct 2025 07:11:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/62] hw/arm/xlnx-versal: add support for GICv2
-Date: Tue,  7 Oct 2025 15:10:46 +0100
-Message-ID: <20251007141123.3239867-27-peter.maydell@linaro.org>
+Subject: [PULL 13/62] hw/arm/xlnx-versal: VersalMap: add support for OR'ed IRQs
+Date: Tue,  7 Oct 2025 15:10:33 +0100
+Message-ID: <20251007141123.3239867-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
 References: <20251007141123.3239867-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,152 +102,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Luc Michel <luc.michel@amd.com>
 
-Add support for GICv2 instantiation in the Versal SoC. This is in
-preparation for the RPU refactoring.
+Improve the IRQ index in the VersalMap structure to turn it into a
+descriptor:
+   - the lower 16 bits still represent the IRQ index
+   - bit 18 is used to indicate a shared IRQ connected to a OR gate
+   - bits 19 to 22 indicate the index on the OR gate.
+
+This allows to share an IRQ among multiple devices. An OR gate is
+created to connect the devices to the actual IRQ pin.
 
 Signed-off-by: Luc Michel <luc.michel@amd.com>
 Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250926070806.292065-26-luc.michel@amd.com
+Message-id: 20250926070806.292065-13-luc.michel@amd.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/xlnx-versal.c | 82 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 62 insertions(+), 20 deletions(-)
+ hw/arm/xlnx-versal.c | 63 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 9256eceffc7..45ea47a8b97 100644
+index 964250bf151..d3a084a0639 100644
 --- a/hw/arm/xlnx-versal.c
 +++ b/hw/arm/xlnx-versal.c
-@@ -45,6 +45,7 @@
- #include "hw/misc/xlnx-versal-crl.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/intc/arm_gicv3_its_common.h"
-+#include "hw/intc/arm_gic.h"
- #include "hw/core/split-irq.h"
+@@ -43,6 +43,17 @@
+ #define VERSAL_NUM_PMC_APB_IRQS 18
+ #define NUM_OSPI_IRQ_LINES 3
  
- #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
-@@ -74,6 +75,7 @@ typedef struct VersalGicMap {
-     int version;
-     uint64_t dist;
-     uint64_t redist;
-+    uint64_t cpu_iface;
-     uint64_t its;
-     size_t num_irq;
-     bool has_its;
-@@ -503,6 +505,10 @@ static void versal_create_gic_its(Versal *s,
-     g_autofree char *node_pat = NULL, *node = NULL;
-     const char compatible[] = "arm,gic-v3-its";
++/*
++ * IRQ descriptor to catch the following cases:
++ *   - Multiple devices can connect to the same IRQ. They are OR'ed together.
++ */
++FIELD(VERSAL_IRQ, IRQ, 0, 16)
++FIELD(VERSAL_IRQ, ORED, 18, 1)
++FIELD(VERSAL_IRQ, OR_IDX, 19, 4) /* input index on the IRQ OR gate */
++
++#define OR_IRQ(irq, or_idx) \
++    (R_VERSAL_IRQ_ORED_MASK | ((or_idx) << R_VERSAL_IRQ_OR_IDX_SHIFT) | (irq))
++
+ typedef struct VersalSimplePeriphMap {
+     uint64_t addr;
+     int irq;
+@@ -174,9 +185,53 @@ static inline Object *versal_get_child_idx(Versal *s, const char *child,
+     return versal_get_child(s, n);
+ }
  
-+    if (map->gic.version != 3) {
-+        return;
++/*
++ * When the R_VERSAL_IRQ_ORED flag is set on an IRQ descriptor, this function is
++ * used to return the corresponding or gate input IRQ. The or gate is created if
++ * not already existant.
++ *
++ * Or gates are placed under the /soc/irq-or-gates QOM container.
++ */
++static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
++                                          qemu_irq target_irq)
++{
++    Object *container = versal_get_child(s, "irq-or-gates");
++    DeviceState *dev;
++    g_autofree char *name;
++    int idx, or_idx;
++
++    idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
++    or_idx = FIELD_EX32(irq_idx, VERSAL_IRQ, OR_IDX);
++
++    name = g_strdup_printf("irq[%d]", idx);
++    dev = DEVICE(object_resolve_path_at(container, name));
++
++    if (dev == NULL) {
++        dev = qdev_new(TYPE_OR_IRQ);
++        object_property_add_child(container, name, OBJECT(dev));
++        qdev_prop_set_uint16(dev, "num-lines", 1 << R_VERSAL_IRQ_OR_IDX_LENGTH);
++        qdev_realize_and_unref(dev, NULL, &error_abort);
++        qdev_connect_gpio_out(dev, 0, target_irq);
 +    }
 +
-     if (!map->gic.has_its) {
-         return;
-     }
-@@ -542,45 +548,81 @@ static DeviceState *versal_create_gic(Versal *s,
++    return qdev_get_gpio_in(dev, or_idx);
++}
++
+ static qemu_irq versal_get_irq(Versal *s, int irq_idx)
  {
-     DeviceState *dev;
-     SysBusDevice *sbd;
--    QList *redist_region_count;
-     g_autofree char *node = NULL;
-     g_autofree char *name = NULL;
--    const char compatible[] = "arm,gic-v3";
-+    const char gicv3_compat[] = "arm,gic-v3";
-+    const char gicv2_compat[] = "arm,cortex-a15-gic";
+-    return qdev_get_gpio_in(DEVICE(&s->fpd.apu.gic), irq_idx);
++    qemu_irq irq;
++    bool ored;
 +
-+    switch (map->gic.version) {
-+    case 2:
-+        dev = qdev_new(gic_class_name());
-+        break;
++    ored = FIELD_EX32(irq_idx, VERSAL_IRQ, ORED);
 +
-+    case 3:
-+        dev = qdev_new(gicv3_class_name());
-+        break;
++    irq = qdev_get_gpio_in(DEVICE(&s->fpd.apu.gic),
++                           FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ));
 +
-+    default:
-+        g_assert_not_reached();
-+    }
- 
--    dev = qdev_new(gicv3_class_name());
-     name = g_strdup_printf("%s-gic[*]", map->name);
-     object_property_add_child(OBJECT(s), name, OBJECT(dev));
-     sbd = SYS_BUS_DEVICE(dev);
--    qdev_prop_set_uint32(dev, "revision", 3);
-+    qdev_prop_set_uint32(dev, "revision", map->gic.version);
-     qdev_prop_set_uint32(dev, "num-cpu", num_cpu);
-     qdev_prop_set_uint32(dev, "num-irq", map->gic.num_irq + 32);
--
--    redist_region_count = qlist_new();
--    qlist_append_int(redist_region_count, num_cpu);
--    qdev_prop_set_array(dev, "redist-region-count", redist_region_count);
--
-     qdev_prop_set_bit(dev, "has-security-extensions", true);
--    qdev_prop_set_bit(dev, "has-lpi", map->gic.has_its);
--    object_property_set_link(OBJECT(dev), "sysmem", OBJECT(mr), &error_abort);
-     qdev_prop_set_uint32(dev, "first-cpu-index", first_cpu_idx);
- 
-+    if (map->gic.version == 3) {
-+        QList *redist_region_count;
-+
-+        redist_region_count = qlist_new();
-+        qlist_append_int(redist_region_count, num_cpu);
-+        qdev_prop_set_array(dev, "redist-region-count", redist_region_count);
-+        qdev_prop_set_bit(dev, "has-lpi", map->gic.has_its);
-+        object_property_set_link(OBJECT(dev), "sysmem", OBJECT(mr),
-+                                 &error_abort);
-+
++    if (ored) {
++        irq = versal_get_irq_or_gate_in(s, irq_idx, irq);
 +    }
 +
-     sysbus_realize_and_unref(sbd, &error_fatal);
++    return irq;
+ }
  
-     memory_region_add_subregion(mr, map->gic.dist,
-                                 sysbus_mmio_get_region(sbd, 0));
--    memory_region_add_subregion(mr, map->gic.redist,
--                                sysbus_mmio_get_region(sbd, 1));
-+
-+    if (map->gic.version == 3) {
-+        memory_region_add_subregion(mr, map->gic.redist,
-+                                    sysbus_mmio_get_region(sbd, 1));
-+    } else {
-+        memory_region_add_subregion(mr, map->gic.cpu_iface,
-+                                    sysbus_mmio_get_region(sbd, 1));
-+    }
+ static void versal_sysbus_connect_irq(Versal *s, SysBusDevice *sbd,
+@@ -1217,6 +1272,7 @@ static void versal_realize(DeviceState *dev, Error **errp)
+ {
+     Versal *s = XLNX_VERSAL_BASE(dev);
+     qemu_irq pic[XLNX_VERSAL_NR_IRQS];
++    Object *container;
+     const VersalMap *map = versal_get_map(s);
+     size_t i;
  
-     if (map->dtb_expose) {
--        node = versal_fdt_add_subnode(s, "/gic", map->gic.dist, compatible,
--                                      sizeof(compatible));
-+        if (map->gic.version == 3) {
-+            node = versal_fdt_add_subnode(s, "/gic", map->gic.dist,
-+                                          gicv3_compat,
-+                                          sizeof(gicv3_compat));
-+            qemu_fdt_setprop_sized_cells(s->cfg.fdt, node, "reg",
-+                                         2, map->gic.dist,
-+                                         2, 0x10000,
-+                                         2, map->gic.redist,
-+                                         2, GICV3_REDIST_SIZE * num_cpu);
-+        } else {
-+            node = versal_fdt_add_subnode(s, "/gic", map->gic.dist,
-+                                          gicv2_compat,
-+                                          sizeof(gicv2_compat));
-+            qemu_fdt_setprop_sized_cells(s->cfg.fdt, node, "reg",
-+                                         2, map->gic.dist,
-+                                         2, 0x1000,
-+                                         2, map->gic.cpu_iface,
-+                                         2, 0x1000);
-+        }
+@@ -1227,6 +1283,11 @@ static void versal_realize(DeviceState *dev, Error **errp)
+ 
+     versal_create_apu_cpus(s);
+     versal_create_apu_gic(s, pic);
 +
-         qemu_fdt_setprop_cell(s->cfg.fdt, node, "phandle", s->phandle.gic);
-         qemu_fdt_setprop_cell(s->cfg.fdt, node, "#interrupt-cells", 3);
--        qemu_fdt_setprop_sized_cells(s->cfg.fdt, node, "reg",
--                                     2, map->gic.dist,
--                                     2, 0x10000,
--                                     2, map->gic.redist,
--                                     2, GICV3_REDIST_SIZE * num_cpu);
-         qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
-                                GIC_FDT_IRQ_TYPE_PPI, VERSAL_GIC_MAINT_IRQ,
-                                GIC_FDT_IRQ_FLAGS_LEVEL_HI);
++    container = object_new(TYPE_CONTAINER);
++    object_property_add_child(OBJECT(s), "irq-or-gates", container);
++    object_unref(container);
++
+     versal_create_rpu_cpus(s);
+ 
+     for (i = 0; i < map->num_uart; i++) {
 -- 
 2.43.0
 
