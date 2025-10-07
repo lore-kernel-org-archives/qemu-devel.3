@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9394ECCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 09:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253C0CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 09:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v64La-0007Nc-21; Tue, 07 Oct 2025 05:51:06 -0400
+	id 1v64PY-0000Mg-Cw; Tue, 07 Oct 2025 05:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v64LF-0007Fi-EF
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:50:45 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ id 1v64PW-0000JY-Ea
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:55:10 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v64LC-0003Iu-PX
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:50:45 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-635349b6fe6so4930078d50.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 02:50:42 -0700 (PDT)
+ id 1v64PU-0003oL-Ps
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:55:10 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-71d6051aeafso64188807b3.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 02:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759830641; x=1760435441; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6QQRlGq5iEz0PqBDGwqnp4uIgDuZXe6UJ5EjGAWxfQU=;
- b=ZpAXx2USPhisQMsTkMxy0UerS36/qqDJjhVCtR08I6+d0EI1TpyyI2r0of1/IOV9lA
- jTBB154EuBp9u08ahC4VYSzZeCnZBLSKYY+bgJXPQb0NUsTMVI3mBHvCFtJp2VqQzvzF
- cX7mVyCCM8JsFkLydDtU0P06mfiWByUc24Zn6CC88vT+VVGkfQit5vau7xH6AG4XfCY1
- AeCLEWz038JIGro5mlve2ItQ5v191LchmNGsEkTRCVUxquMWbqPJem0goJWuYz1WJ7GH
- HNYPoCEjAJk8GWtsQ7OppwkPFqk3WaRVHOPrE9pvMBHxGrHjZVIBpjvfPp0nPQ5qA9xg
- w1PQ==
+ d=linaro.org; s=google; t=1759830908; x=1760435708; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rCIvTZGGGTDqzmDo1tWcfqGgWXa3PVzNi04H2DduP7g=;
+ b=ABGJbpROkNsgJR547+7XwhXLUf8VZaJW83oWLsu5LwRhOToqTh5V4J48joKqd2JBOg
+ TzSqlm5bOQk9RcZkSikY+T3DjVU9G3B6MCqD2KI9vjI93maaCL+FmkcroJJNYAA/BVgK
+ ueN7AzDY432Enuag+7QeA+JLDRu4pSXLmbs6LHLSIauCeFotCqTc0TX0UlPnrxQXQSnH
+ 0SWiLM9g33TpROAeKLeew3PYOpVXBq+k5P22WGIZ9eacYJS9aiLYodxHEJO0CLxeJajW
+ 37w4QrZ/4EDHlUVzRURDSOUgULAQb3+hiKx2PNE7MGxkRYC7czeH3IHgworMPYUPk3Em
+ XGlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759830641; x=1760435441;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6QQRlGq5iEz0PqBDGwqnp4uIgDuZXe6UJ5EjGAWxfQU=;
- b=AKL1usuvH5fwXpBZKbDzk3mK1I/ageEE2WnWpioE4OEW05YRQH1INwrOidNeBxfMYn
- sf8Xi2VfYYaR9FCp58N8BwbMjCCGsPpcWFnpGCyq8lN6XrQrDaUen/Gln3H82EFyyP4T
- QpiUcCbuCxpkLZFuG7/I1DAHaXpjjmZvXJrIoQQheJi0fr0NUrtHEgwgsMdxuuJcIxtM
- e7LjnF7XvWRqHG1ilAnSY13gOfOPUmGMhGIg1n/8q5Ibcrlw7wyf0gG8SrpUR0vLIvAQ
- fWHEW8+3xhl6hZN8HYpV+lUk/Lod6c+M3eliQMKmvQ7naDdZT9NPjI2NbkHW09wcT2/z
- SCcQ==
-X-Gm-Message-State: AOJu0Yy2XYmI2TKzNOX5PSUVYXQ+j6Fu0fB0KiTwOnprPVVIiIJ8DCXY
- WzBrA4hAr/grwVyx/fjsCnzpZxHf/i0FFsffAkg/ypqrtZK10q7Da+ab4/4YcBD4wd3ErFJNzRG
- bVzcDTkAGypOSFSxiPvxnN9t6BLBe70gWT9aeZvGeEQ==
-X-Gm-Gg: ASbGncvfMkNKn8LlWc48M+QoOP1U1WdTHBaP1EM3iL+v165CaUi8gLfTSvZfbBI1qLe
- +rW+yUSZMKgzpl7ywKPShGNxwjzDT77a0WWLnMhR/6G107+u88Z+Ho79xeBOALgh03vmJHhmLwL
- XVLXvrwlVQHSKKWB4HWjg5VViQ/pF0VGr2rjrquJXUTL0G9qFKStpfyK8koMlj6mY0Fww8Gmd2C
- 0ku6a/+44DxKEI9Izvltd31vSjgzCIF6slf
-X-Google-Smtp-Source: AGHT+IFieBnq/e7LlyNcrWqS4M6wCuEHmQlZlq5ZwlEVYFlZE9046+gKtjdrutxjZglysm+94ZH/DoRgxoO8C9evV/8=
-X-Received: by 2002:a53:a0ca:0:b0:633:ab16:f82c with SMTP id
- 956f58d0204a3-63b9a0701b0mr11536282d50.18.1759830640358; Tue, 07 Oct 2025
- 02:50:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759830908; x=1760435708;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rCIvTZGGGTDqzmDo1tWcfqGgWXa3PVzNi04H2DduP7g=;
+ b=RJnb6v/FlJ7Fhg/c+Mt6gQk4qWzR4iXFqzaWeydK02zDDo2kSnz6WSVloQacloBFIf
+ mQypwaX8FEIoc5BTq9/XLAbQDcZD3FPubslL+fkdRQGngfIJZC/910aECauQnla32xTM
+ dSl1bCQYTrfBodAYkR8UKMBYphfDeOR88cSCeBiqRb6QtNed2kUNrs20wNT68Z87LFG0
+ /L926ISHLXkbV4iOsY8Xv81o6efSaG5qVY8VELKBjnu5enSjk6xChzBbgpz72EaEXPfP
+ uq7rxv/WMVtepIPV2ZNRHFV7kPQ9XOpbV/G2jeDnrBBtFBHuXWLdAxwbkZPTu22r6y+r
+ wsWA==
+X-Gm-Message-State: AOJu0YwxLq/t3k+tVmXFNAs+WRNZEkFUdt2hxh7zx3WYDt/P5wm+AeiR
+ ecZichdpMXc6mtsfOyvVmlpMtIKzKbW8JKC4Ov1gDFpvtkC/rnFw5tjWyNP1gn6/qe7ZbRdhIbz
+ iZsxbbm4cFHF+9XT83j1+7Sajs9/TMIR6MtpKXHYikWa7mZTJFi5Y
+X-Gm-Gg: ASbGnct5wMa2CPrg7DC5TCSw4pW8NFogXMZKbCDpewtW8qQ9xp6rvQvd/WCTdYsfnP+
+ 7mjG8q1C4Jlkg53NHjEI9nv0NiGpxLheBN9ijfg3Qzu7ghDE50yz6F9ZqT1Uu2ii/JGCkpqWWEO
+ 7nUpj7js1UL9MyO5NtFVpfdOaBsbagYVOF6vWFC4pAa9uH9D+GR+XBdEtBAAKXany9AjJ6nlLXJ
+ jN0qmh2pjBsgUZWGQmWJdnRba5jxOQWM7f7u9TWx4tVLHQ=
+X-Google-Smtp-Source: AGHT+IESDk5ZPp4UAdQuLEt5Uno382eWPQYMajQ8ytcaRfUTj+tCMf0ivEYmH/2zS2hy9AGyevo85f+5A7z+etLh/i8=
+X-Received: by 2002:a05:690e:ec8:b0:633:a260:14a1 with SMTP id
+ 956f58d0204a3-63b9a07c6b6mr12020483d50.18.1759830907412; Tue, 07 Oct 2025
+ 02:55:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250930115718.437100-1-chigot@adacore.com>
-In-Reply-To: <20250930115718.437100-1-chigot@adacore.com>
+References: <20251003170800.997167-1-richard.henderson@linaro.org>
+ <20251003170800.997167-35-richard.henderson@linaro.org>
+In-Reply-To: <20251003170800.997167-35-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 Oct 2025 10:50:29 +0100
-X-Gm-Features: AS18NWA6Tdg31JfY1JRui4UZtahTggsj4Atu5Tr_AyBkahDNg0zXo04QKve2UM0
-Message-ID: <CAFEAcA8+F0jwWaqexO2bbtUp3kuLvg+9v42KAnt7rjj_Vh-_Qg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/arm/xlnx-zynqmp: wire a second GIC for the
- Cortex-R5
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, edgar.iglesias@gmail.com, 
- alistair@alistair23.me
+Date: Tue, 7 Oct 2025 10:54:56 +0100
+X-Gm-Features: AS18NWD_-HpjFXl_4LKhUYfMysKMFdgnj3jisOUCBe_jibOEOfpFbkh-YEpuWXE
+Message-ID: <CAFEAcA_vn2hLx=PzEW3z8-BFZoq75Hs04FLyPD_zsrmfAyvyPQ@mail.gmail.com>
+Subject: Re: [PATCH v6 34/73] target/arm: Make helper_exception_return
+ system-only
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,26 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Sept 2025 at 12:57, Cl=C3=A9ment Chigot <chigot@adacore.com> wro=
-te:
+On Fri, 3 Oct 2025 at 18:36, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> The first two patches are minor improvements before the core third
-> patch.
->
-> This was initially a single patch split as per review comments (see [1])
->
-> [1] https://lists.gnu.org/archive/html/qemu-devel/2025-09/msg05899.html
->
-> Cl=C3=A9ment Chigot (2):
->   hw/arm/xlnx-zynqmp: move GIC_NUM_SPI_INTR define in header
->   hw/arm/xlnx-zynqmp: introduce helper to compute RPU number
->
-> Frederic Konrad (1):
->   hw/arm/xlnx-zynqmp: wire a second GIC for the Cortex-R5
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper-a64.h    | 5 ++++-
+>  target/arm/tcg/helper-a64.c    | 2 ++
+>  target/arm/tcg/translate-a64.c | 8 ++++++++
+>  3 files changed, 14 insertions(+), 1 deletion(-)
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-Applied to target-arm.next, thanks.
-
+thanks
 -- PMM
 
