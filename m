@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B96CCA472
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11283CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v65oW-00041Q-Ap; Tue, 07 Oct 2025 07:25:04 -0400
+	id 1v65oU-00040K-1d; Tue, 07 Oct 2025 07:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v65oT-00040C-KR; Tue, 07 Oct 2025 07:25:01 -0400
+ id 1v65oP-0003zE-Ua; Tue, 07 Oct 2025 07:24:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v65oR-0006UZ-EF; Tue, 07 Oct 2025 07:25:01 -0400
+ id 1v65oN-0006UA-Bf; Tue, 07 Oct 2025 07:24:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4FB1E15B414;
- Tue, 07 Oct 2025 14:24:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D27B915B413;
+ Tue, 07 Oct 2025 14:24:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 462B829AC12;
- Tue,  7 Oct 2025 14:24:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F208729AC11;
+ Tue,  7 Oct 2025 14:24:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.21 18/18] ui/icons/qemu.svg: Add metadata information
- (author, license) to the logo
-Date: Tue,  7 Oct 2025 14:24:45 +0300
-Message-ID: <20251007112449.499875-2-mjt@tls.msk.ru>
+Subject: [Stable-7.2.21 17/18] hw/usb/hcd-uhci: don't assert for SETUP to
+ non-0 endpoint
+Date: Tue,  7 Oct 2025 14:24:44 +0300
+Message-ID: <20251007112449.499875-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.21-20251007142433@cover.tls.msk.ru>
 References: <qemu-stable-7.2.21-20251007142433@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,55 +60,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-We've got two versions of the QEMU logo in the repository, one with
-the whole word "QEMU" (pc-bios/qemu_logo.svg) and one that only contains
-the letter "Q" (ui/icons/qemu.svg). While qemu_logo.svg contains the
-proper metadata with license and author information, this is missing
-from the ui/icons/qemu.svg file. Copy the meta data there so that
-people have a chance to know the license of the file if they only
-look at the qemu.svg file.
+If the guest feeds invalid data to the UHCI controller, we
+can assert:
+qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
 
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3139
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20250930071419.117592-1-thuth@redhat.com>
-(cherry picked from commit 9163424c50981dbc4ded9990228ac01a3b193656)
+(see issue 2548 for the repro case).  This happens because the guest
+attempts USB_TOKEN_SETUP to an endpoint other than 0, which is not
+valid.  The controller code doesn't catch this guest error, so
+instead we hit the assertion in the USB core code.
+
+Catch the case of SETUP to non-zero endpoint, and treat it as a fatal
+error in the TD, in the same way we do for an invalid PID value in
+the TD.
+
+This is the UHCI equivalent of the same bug in OHCI that we fixed in
+commit 3c3c233677 ("hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or
+OUT").
+
+This bug has been tracked as CVE-2024-8354.
+
+Cc: qemu-stable@nongnu.org
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2548
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit d0af3cd0274e265435170a583c72b9f0a4100dff)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/icons/qemu.svg b/ui/icons/qemu.svg
-index 24ca23a1e9..f2500de339 100644
---- a/ui/icons/qemu.svg
-+++ b/ui/icons/qemu.svg
-@@ -918,7 +918,26 @@
-         <dc:format>image/svg+xml</dc:format>
-         <dc:type
-            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
--        <dc:title />
-+        <dc:title>Kew the Angry Emu</dc:title>
-+        <dc:creator>
-+          <cc:Agent>
-+            <dc:title>Benoît Canet</dc:title>
-+          </cc:Agent>
-+        </dc:creator>
-+        <dc:rights>
-+          <cc:Agent>
-+            <dc:title>CC BY 3.0</dc:title>
-+          </cc:Agent>
-+        </dc:rights>
-+        <dc:publisher>
-+          <cc:Agent>
-+            <dc:title>QEMU Community</dc:title>
-+          </cc:Agent>
-+        </dc:publisher>
-+        <dc:date>2012-02-15</dc:date>
-+        <cc:license
-+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
-+        <dc:source>https://lists.gnu.org/archive/html/qemu-devel/2012-02/msg02865.html</dc:source>
-       </cc:Work>
-     </rdf:RDF>
-   </metadata>
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index ef967c42a1..1e7fc728a0 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -724,6 +724,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+     bool spd;
+     bool queuing = (q != NULL);
+     uint8_t pid = td->token & 0xff;
++    uint8_t ep_id = (td->token >> 15) & 0xf;
+     UHCIAsync *async;
+ 
+     async = uhci_async_find_td(s, td_addr);
+@@ -767,9 +768,14 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+ 
+     switch (pid) {
+     case USB_TOKEN_OUT:
+-    case USB_TOKEN_SETUP:
+     case USB_TOKEN_IN:
+         break;
++    case USB_TOKEN_SETUP:
++        /* SETUP is only valid to endpoint 0 */
++        if (ep_id == 0) {
++            break;
++        }
++        /* fallthrough */
+     default:
+         /* invalid pid : frame interrupted */
+         s->status |= UHCI_STS_HCPERR;
+@@ -816,7 +822,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+             return uhci_handle_td_error(s, td, td_addr, USB_RET_NODEV,
+                                         int_mask);
+         }
+-        ep = usb_ep_get(dev, pid, (td->token >> 15) & 0xf);
++        ep = usb_ep_get(dev, pid, ep_id);
+         q = uhci_queue_new(s, qh_addr, td, ep);
+     }
+     async = uhci_async_alloc(q, td_addr);
 -- 
 2.47.3
 
