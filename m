@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01ADCCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51126CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68Pr-0005bP-P9; Tue, 07 Oct 2025 10:11:47 -0400
+	id 1v68VJ-0002VB-Ub; Tue, 07 Oct 2025 10:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Po-0005ai-Ld
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:44 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Pd-00026R-8j
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:44 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e4ad36541so68178785e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846288; x=1760451088; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oX2FCvIB4I7ri29/FyaOfLvbFk1Cxz3ulaGtZkX8IS8=;
- b=MxT7ICH3iFBIwWfEvYy4A1Z6P5JlWx7adplQMGAclQVkUWr1O3B859geX16hTU+QM7
- 0TpIEwqhW0BKCmWwYRbBqqKuEsbVs8ORAqiFpv4Ey40aI+mEWtb8jb6tTvqP8Ze8nWSR
- 7eumgRxcoe1cmI+Wd9O0PSMrXHsXfQ3DPx+XEijs6MtCs8+YUpAY5hwp4nlLXX5p1ci6
- OM/rErsJAPr8WHTOfNWnikmAVwZH8RHoskPub7Cm7s6l251Hx/JkjNfV0EqxGpFa96cL
- qmJKe/bcbpCmCCJsNuEQkA+3c2nn2Oa+qR5udxiu3DsdvmalfM7T/2f3/Ti1sYe5kPIA
- kjqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846288; x=1760451088;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oX2FCvIB4I7ri29/FyaOfLvbFk1Cxz3ulaGtZkX8IS8=;
- b=g3+aHSREK357/FiqbHZTjkfhH9V6b143JqQnwzhphqg2HxnFXXu5sBQ1qocLZQxSbJ
- vcQWLbjPNta/I2O7UIW3gzxkKed9sP1r1JRKTQDN9flendliwVKNnzcdDc8iZE3AVA8C
- HwEFtoWWh6LCgob4mwryQRFUB0X8Z5IBivqkkg1ntzXKf212bLJLb+nh7SBIdFJTifVG
- M2XX8JyZ7BQJejMbHn/W04wdf8aJ4dC/IVHpiI35dem4sHnYIozV0UJUi/NE0fwDQ/qf
- oVwe34KmncsSEpkGL5DvToaDqJTOaTGfJ3aC3Agnddq50jsrTo46cXRrsbLtLVXuufJv
- UuTw==
-X-Gm-Message-State: AOJu0YzU+q/xwivYzeCftMFUjzYVqmwEqnbSWWJBKt9ONrfv+TDbmhc9
- 4jRpIJE1JU8dTWqavLwEjQPBxoLxFYfXwr8pMrbDFUs7DYQ8g/cMFCCArgTADeKFDGTAnS09tyR
- 5nF1F
-X-Gm-Gg: ASbGnctFPG4P0AgkfNCC33Nbc9H58sGJ+ryXlNuxIuj7Llg6MprRzqft1A8zXcpeRJ8
- G4xjCws3hcjUl1clsqkAOWtbDvmJ4Bn9oSCzmV200x1lYMDl9d/AhahT0K3OseHQl72IXnY8tSE
- 6nqT+Ev7Tv7aa5SEzFgGP8As+gLkD5sA+FEaW5JXKUkmMu7dFQmlEc1NKqpoKvFkO4If61XGN3P
- lH0H4p9vNxqajrjujcY3Pt0pWYtFEauOLTQoJ/CP6S0j9CNZN+niQP6g9CTRIn3QI8UV+lUwjjS
- xjEckY6VRW9EVo2TvrDZyylUxmMelORmXEgQSneJbNMzbIPJ72Q2jguJinvYW7b/oBXXhjalMgn
- JeeqlkNh4HnRXRFA8sn0b78aIF10t1pGV6NI0ZLvyOjqWBXQKtKiHuePa
-X-Google-Smtp-Source: AGHT+IFO9sYj0iJIOkTbH5ZUnYWrBPt7MVtPkfd7jkiS09x3M/ybUg6EPQKUSZd/QTXP8/c8ol6zxg==
-X-Received: by 2002:a05:600c:4e0e:b0:46e:5df3:190d with SMTP id
- 5b1f17b1804b1-46f9d694446mr47402235e9.11.1759846287886; 
- Tue, 07 Oct 2025 07:11:27 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.26
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:11:26 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 02/62] hw/arm/xlnx-versal: split the xlnx-versal type
-Date: Tue,  7 Oct 2025 15:10:22 +0100
-Message-ID: <20251007141123.3239867-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
-References: <20251007141123.3239867-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Uf-000249-Gv
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68Ua-0003PN-KP
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:16:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759846598;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s3quiFgIla2njN+Wx4krX3jwOSMURvXmNv4PTCmYN6E=;
+ b=Jo3bGBHNsvSzIhNI9wniEd7wiQBP52xnlBDVF9quZNoQOMockEwOlrHYlDYm+W+Rev/dIN
+ 7mOevdtTKbquPz0LY04tVC6tYkj5AJczo69JgcuWP3w14y7nSvOGehQEsngRdlTB/sDP1z
+ oZl5oRZyVnG9rjZpnM8UZnHZKz4NHmE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-9oI0KsKQMHC0ZdDHT8IQfg-1; Tue,
+ 07 Oct 2025 10:16:27 -0400
+X-MC-Unique: 9oI0KsKQMHC0ZdDHT8IQfg-1
+X-Mimecast-MFC-AGG-ID: 9oI0KsKQMHC0ZdDHT8IQfg_1759846577
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 67A001800583; Tue,  7 Oct 2025 14:16:16 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4EA9419560B1; Tue,  7 Oct 2025 14:16:11 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+Subject: [PATCH 1/5] aspeed: Deprecate the sonorapass-bmc machine
+Date: Tue,  7 Oct 2025 16:16:00 +0200
+Message-ID: <20251007141604.761686-2-clg@redhat.com>
+In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
+References: <20251007141604.761686-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,168 +89,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luc Michel <luc.michel@amd.com>
+The 'sonorapass-bmc' machine represents a lab server that never
+entered production. There are no functional tests for this machine
+which makes harder to determine when something becomes deprecated or
+unused.
 
-Split the xlnx-versal device into two classes, a base, abstract class
-and the existing concrete one. Introduce a VersalVersion type that will
-be used across several device models when versal2 implementation is
-added.
+Since the machine does not rely on any specific device models, it can
+be replaced by the 'ast2500-evb' machine using the 'fmc-model' option
+to specify the flash type. The I2C devices connected to the board can
+be defined via the QEMU command line.
 
-This is in preparation for versal2 implementation.
-
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250926070806.292065-2-luc.michel@amd.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: Patrick Williams <patrick@stwcx.xyz>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/xlnx-versal-version.h | 15 ++++++++++++++
- include/hw/arm/xlnx-versal.h         | 12 ++++++++++-
- hw/arm/xlnx-versal.c                 | 31 +++++++++++++++++++++-------
- 3 files changed, 50 insertions(+), 8 deletions(-)
- create mode 100644 include/hw/arm/xlnx-versal-version.h
+ docs/about/deprecated.rst | 9 +++++++++
+ hw/arm/aspeed.c           | 1 +
+ 2 files changed, 10 insertions(+)
 
-diff --git a/include/hw/arm/xlnx-versal-version.h b/include/hw/arm/xlnx-versal-version.h
-new file mode 100644
-index 00000000000..c4307d1304a
---- /dev/null
-+++ b/include/hw/arm/xlnx-versal-version.h
-@@ -0,0 +1,15 @@
-+/*
-+ * AMD Versal versions
-+ *
-+ * Copyright (c) 2025 Advanced Micro Devices, Inc.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 67e527740c0e..ce8fe9ac1be7 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -285,6 +285,15 @@ and serves as the initial engineering sample rather than a production version.
+ A newer revision, A1, is now supported, and the ``ast2700a1-evb`` should
+ replace the older A0 version.
+ 
++Arm ``sonorapass-bmc`` machine (since 10.2)
++'''''''''''''''''''''''''''''''''''''''''''
 +
-+#ifndef HW_ARM_XLNX_VERSAL_VERSION_H
-+#define HW_ARM_XLNX_VERSAL_VERSION_H
++The ``sonorapass-bmc`` machine represents a lab server that never
++entered production. Since it does not rely on any specific device
++models, it can be replaced by the ``ast2500-evb`` machine using the
++``fmc-model`` option to specify the flash type. The I2C devices
++connected to the board can be defined via the QEMU command line.
 +
-+typedef enum VersalVersion {
-+    VERSAL_VER_VERSAL,
-+} VersalVersion;
-+
-+#endif
-diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-index 05ed641b6b6..1f92e314d6c 100644
---- a/include/hw/arm/xlnx-versal.h
-+++ b/include/hw/arm/xlnx-versal.h
-@@ -2,6 +2,7 @@
-  * Model of the Xilinx Versal
-  *
-  * Copyright (c) 2018 Xilinx Inc.
-+ * Copyright (c) 2025 Advanced Micro Devices, Inc.
-  * Written by Edgar E. Iglesias
-  *
-  * This program is free software; you can redistribute it and/or modify
-@@ -35,9 +36,12 @@
- #include "hw/misc/xlnx-versal-cfu.h"
- #include "hw/misc/xlnx-versal-cframe-reg.h"
- #include "target/arm/cpu.h"
-+#include "hw/arm/xlnx-versal-version.h"
-+
-+#define TYPE_XLNX_VERSAL_BASE "xlnx-versal-base"
-+OBJECT_DECLARE_TYPE(Versal, VersalClass, XLNX_VERSAL_BASE)
+ RISC-V default machine option (since 10.0)
+ ''''''''''''''''''''''''''''''''''''''''''
  
- #define TYPE_XLNX_VERSAL "xlnx-versal"
--OBJECT_DECLARE_SIMPLE_TYPE(Versal, XLNX_VERSAL)
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 58cfbc713794..d3a0c81f454f 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1552,6 +1552,7 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
+     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
  
- #define XLNX_VERSAL_NR_ACPUS   2
- #define XLNX_VERSAL_NR_RCPUS   2
-@@ -137,6 +141,12 @@ struct Versal {
-     } cfg;
- };
- 
-+struct VersalClass {
-+    SysBusDeviceClass parent;
-+
-+    VersalVersion version;
-+};
-+
- /* Memory-map and IRQ definitions. Copied a subset from
-  * auto-generated files.  */
- 
-diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index a42b9e7140b..4da656318f6 100644
---- a/hw/arm/xlnx-versal.c
-+++ b/hw/arm/xlnx-versal.c
-@@ -2,6 +2,7 @@
-  * Xilinx Versal SoC model.
-  *
-  * Copyright (c) 2018 Xilinx Inc.
-+ * Copyright (c) 2025 Advanced Micro Devices, Inc.
-  * Written by Edgar E. Iglesias
-  *
-  * This program is free software; you can redistribute it and/or modify
-@@ -920,7 +921,7 @@ static void versal_unimp(Versal *s)
- 
- static void versal_realize(DeviceState *dev, Error **errp)
- {
--    Versal *s = XLNX_VERSAL(dev);
-+    Versal *s = XLNX_VERSAL_BASE(dev);
-     qemu_irq pic[XLNX_VERSAL_NR_IRQS];
- 
-     versal_create_apu_cpus(s);
-@@ -955,9 +956,9 @@ static void versal_realize(DeviceState *dev, Error **errp)
-                                         &s->lpd.rpu.mr_ps_alias, 0);
- }
- 
--static void versal_init(Object *obj)
-+static void versal_base_init(Object *obj)
- {
--    Versal *s = XLNX_VERSAL(obj);
-+    Versal *s = XLNX_VERSAL_BASE(obj);
- 
-     memory_region_init(&s->fpd.apu.mr, obj, "mr-apu", UINT64_MAX);
-     memory_region_init(&s->lpd.rpu.mr, obj, "mr-rpu", UINT64_MAX);
-@@ -975,7 +976,7 @@ static const Property versal_properties[] = {
-                       TYPE_CAN_BUS, CanBusState *),
- };
- 
--static void versal_class_init(ObjectClass *klass, const void *data)
-+static void versal_base_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-@@ -984,16 +985,32 @@ static void versal_class_init(ObjectClass *klass, const void *data)
-     /* No VMSD since we haven't got any top-level SoC state to save.  */
- }
- 
--static const TypeInfo versal_info = {
--    .name = TYPE_XLNX_VERSAL,
-+static void versal_class_init(ObjectClass *klass, const void *data)
-+{
-+    VersalClass *vc = XLNX_VERSAL_BASE_CLASS(klass);
-+
-+    vc->version = VERSAL_VER_VERSAL;
-+}
-+
-+static const TypeInfo versal_base_info = {
-+    .name = TYPE_XLNX_VERSAL_BASE,
-     .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(Versal),
--    .instance_init = versal_init,
-+    .instance_init = versal_base_init,
-+    .class_init = versal_base_class_init,
-+    .class_size = sizeof(VersalClass),
-+    .abstract = true,
-+};
-+
-+static const TypeInfo versal_info = {
-+    .name = TYPE_XLNX_VERSAL,
-+    .parent = TYPE_XLNX_VERSAL_BASE,
-     .class_init = versal_class_init,
- };
- 
- static void versal_register_types(void)
- {
-+    type_register_static(&versal_base_info);
-     type_register_static(&versal_info);
- }
- 
+     mc->desc       = "OCP SonoraPass BMC (ARM1176)";
++    mc->deprecation_reason = "use 'ast2500-evb' instead";
+     amc->soc_name  = "ast2500-a1";
+     amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
+     amc->fmc_model = "mx66l1g45g";
 -- 
-2.43.0
+2.51.0
 
 
