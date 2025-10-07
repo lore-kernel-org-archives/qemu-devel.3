@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF848CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 05:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1739CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 05:46:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v60RC-00067X-4r; Tue, 07 Oct 2025 01:40:38 -0400
+	id 1v60WP-0007To-Ba; Tue, 07 Oct 2025 01:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v60Qs-00065v-6T
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 01:40:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v60WJ-0007TI-5W
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 01:45:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v60Qm-0002rW-Cm
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 01:40:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v60WG-0003IS-Gh
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 01:45:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759815609;
+ s=mimecast20190719; t=1759815950;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=b8da17HfdHYqH+QbxR1VrUG0MULeYvU0nyEYUIDb/i8=;
- b=F81XZh7LlSmR3OFTPqdcS06R1TM4kn5BzfST9VH2OQdZrLMnYK9pwHNIMn73whTq+BmQv+
- 6CeWeAbFLzVp4x9arOUTXDRBv/Sdz4bk9mF2dXvJdaj0NKjv0yuBuyr7WnTyYeHwKFOwHH
- kgdBQ/ENs7mEqCfPSvdRy8REhlFnnPs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w2QoKgdbwuitk5KUsU8yCY6K/P3PNhevGBXKaPuIKmk=;
+ b=DGbh6FeoDUBEsoCUJM45Kzs8tdR0yiTon5NJ/FaLqO5J76baPbZfao9xfmk80yymmtuvt1
+ 9WhIyfigdgwu55olmBsFpAAuo3BFZnNiJpXvLuC4vplxuXYHRtiBLAukCdMls+sCrW5uCq
+ hOkJz3tu7ye6V27nc0nfvnxh35WKF60=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-hUB8Qo9KMd-IRGTcHnGifQ-1; Tue, 07 Oct 2025 01:40:08 -0400
-X-MC-Unique: hUB8Qo9KMd-IRGTcHnGifQ-1
-X-Mimecast-MFC-AGG-ID: hUB8Qo9KMd-IRGTcHnGifQ_1759815607
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3f93db57449so2826162f8f.2
- for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 22:40:08 -0700 (PDT)
+ us-mta-398-issJeNj_OV2PD0IWITIs6w-1; Tue, 07 Oct 2025 01:45:49 -0400
+X-MC-Unique: issJeNj_OV2PD0IWITIs6w-1
+X-Mimecast-MFC-AGG-ID: issJeNj_OV2PD0IWITIs6w_1759815948
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e3ef2dd66so28887835e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Oct 2025 22:45:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759815607; x=1760420407;
+ d=1e100.net; s=20230601; t=1759815948; x=1760420748;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=b8da17HfdHYqH+QbxR1VrUG0MULeYvU0nyEYUIDb/i8=;
- b=DE3e66gLsoZwo3YQXVnMibc81I/G+hhT7j7WbmmhDg74nQmIvgoelna0BxSqoXzMDi
- fY824OXzDAfpYwXal8iifiD70a7pJ6TeUDEquZhCPHDU+gh0bn52wcUkJ87CXJilQiRX
- +tvcZmBYoJH02M1FxjcRWwNVBqhvt+leEyoDv+szvT56dbQq7MifLUL296uNEXq5Fic6
- Q0DWzNNAIx9/EtQr3/ia8DTF8AHIOPncUW54tF6exbM20efMUy85fPD8tWuDBgeWUWfk
- W/kEhkdeLAKCBmFxL2AiNRQSpXsO4tWe41zD6tm1lGmPhpT+0wxPOZlkzwpdopc96Lq4
- VwPA==
+ bh=w2QoKgdbwuitk5KUsU8yCY6K/P3PNhevGBXKaPuIKmk=;
+ b=hNp6bfQAZMfkRnVkAxOBS/yVHVUqtr/RVMU2tFw0WLl3deYrByZ1/JvmyyvbtxH0lH
+ TY34jAMnpR2v55slPuW169p3+3ze0DECEMNbpTqwKuFNCSh76/q5sxMHHMxgaJxUPZEq
+ qrELNvJXgmDSh+bFjb6WGp3HbXxaxtxis1qmlDAkt9hdlMNZ5bD+dwE9RLIW97h0RUcz
+ 4rt+x2DUTWeHbabS0gYsBTLc91O5SI7K38F9pKQLoWM5L4I/UW+83Qmy47Njf56j8nz1
+ 5Wp1i6NR2ChwF6qjLNfaf9zcvc8mgRhmCGBPqbPSdLL5naW3Lfff66LlgbOe7p1GsYgL
+ Q4Uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVahuICptGRvkjm6lspOYgEdwRKCqkqwJW7j+XCT8xbJU9m2wvvXB3GFlrKowNJO/3Dp/rEF4DaaAUj@nongnu.org
-X-Gm-Message-State: AOJu0YwSj7+fJuymjrhJZ7CgfG57LlATgr7dl04MDTLI1VxYVPUZLItQ
- VAzL24TnUJr+ZBMb7dXPnEJHkjoNacDeBWCKBL/t6GL1wN03uS+o4yB9bRQjr/xx1fr84Hxecns
- FAnYBMhliiWhHvs/fxImtqk+wvnP9HuIwK78xBwb3Cnk1B4m0SnKpntaN
-X-Gm-Gg: ASbGncvSwfbqIw/ZYx66++5iePAkAwrxKY3bamJIwsfbhUGYNpJ4iC4Q8mpWwpBATZc
- 0jo5r/dFcvivVeRhkdlNyElPJELjOT2JSdVUjqTCjP2moAlgCsNMyvoK/DPlxCmbaUa/wP99mOK
- 2q5GJjdJ+2+L5CX3vR0v+bVre58th7oOAJ25b4dJ+Gg/wsu1scyUKbmep3aWmDS8VhECkf+D6nq
- 0wJOOszkqxatN3/3QqaB0qQCtRc71ih2Hzf9n3SKyEYEk4Bsv+CYEmTGzS+SFeWgtMZUb2ZWBjq
- 9I9wUkyha831kRrmaYoLEa4ZtWcN3DUyiYzst/ofNcieU3Zt4JZraj8PywPm2CnUD27goJI8gOK
- 1uM34GVDQ
-X-Received: by 2002:a05:6000:2086:b0:400:1bbb:d279 with SMTP id
- ffacd0b85a97d-4256719ea26mr9973750f8f.39.1759815607014; 
- Mon, 06 Oct 2025 22:40:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETgFQhfS1t3uUD58PDj/hpuoM285yqpaMZQK2OuHVDzPQyBJbyYInedAfsv5lsk6Kd22Lvvg==
-X-Received: by 2002:a05:6000:2086:b0:400:1bbb:d279 with SMTP id
- ffacd0b85a97d-4256719ea26mr9973731f8f.39.1759815606591; 
- Mon, 06 Oct 2025 22:40:06 -0700 (PDT)
+ AJvYcCWDmFa5vBpvZOxrDOiNzBEbztKgpbgHVM/xNiY088RmzytujSe904gCg4wiEFcTpQyM+vqFcKj7W79O@nongnu.org
+X-Gm-Message-State: AOJu0YzyLgtI/zciFqdKhlr8JMCyeAHCYxxCDvKf9gS2+5kZDrVUZR0F
+ s4I8oc3EmccdNd/Hde0txksHhSoBitutSeAYSXGgT/x2a6k7pBpKsDBRGuks9WwdgMxEh8ACzll
+ 3qAHty38VLAh39BoTwni3wTfBZQ6lk9UsJqhu46BB4dMePUzrXopIw8An
+X-Gm-Gg: ASbGncvuG4UvAg2KB3q3RaXDYGexWnOrTskG0I0BB5Vj6/R+aI7JgqVyRgichbA9JH7
+ yzO58n4rtoKCuls1ZOD99WP5WPf+d4CNhVPKNwbseAjMaQQ/YMHFD25bovGwgpj3P2bYHLRTAw9
+ qnojgyDewm1FQiejkL3hLsRkW4I/QP+67IX6xZpAZeP5q8Nf5u27QAkm+LkQ/U/ZIDbIMSBd39X
+ S5ff6WPjWtxSP+MP5t9WW2SAxbe6RZAnUN4ndfbMguKURvWE/0TP1BoZydFryMhTJswsON5hyIl
+ 1ibLFjbYVh+Q1CHLDn9p40bQJgZa2lsZcFC5a6ROYeQiFkZHRyR3U/J6Qml+xhAz762SXMFgQ7h
+ XZJo27dOs
+X-Received: by 2002:a05:600c:8b4c:b0:45d:dc10:a5ee with SMTP id
+ 5b1f17b1804b1-46fa29c94a8mr13489625e9.15.1759815948389; 
+ Mon, 06 Oct 2025 22:45:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvkaEMUtlR9YJI8L5iYBbrY3rEIE/rRZ9X5KhxmU6TrLOhd+fafpfvLbneDXY7xOPK97I49Q==
+X-Received: by 2002:a05:600c:8b4c:b0:45d:dc10:a5ee with SMTP id
+ 5b1f17b1804b1-46fa29c94a8mr13489335e9.15.1759815947900; 
+ Mon, 06 Oct 2025 22:45:47 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8ab960sm23785485f8f.13.2025.10.06.22.40.05
+ ffacd0b85a97d-4255d8e970esm23815546f8f.35.2025.10.06.22.45.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Oct 2025 22:40:06 -0700 (PDT)
-Message-ID: <b84b18a6-341a-4af7-bea1-4a117e69c067@redhat.com>
-Date: Tue, 7 Oct 2025 07:40:05 +0200
+ Mon, 06 Oct 2025 22:45:47 -0700 (PDT)
+Message-ID: <c1db7b86-bdfa-40e6-8713-a0c5bfde81de@redhat.com>
+Date: Tue, 7 Oct 2025 07:45:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 1/8] ppc/pnv: Introduce Pnv11Chip
-To: Aditya Gupta <adityag@linux.ibm.com>, Mike Kowal <kowal@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
- Ganesh Goudar <ganeshgr@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20250925173049.891406-1-adityag@linux.ibm.com>
- <20250925173049.891406-2-adityag@linux.ibm.com>
- <d845b30b-5296-485a-a360-e617fb50ed17@linux.ibm.com>
- <12ac41c8-7753-4191-8e64-afb91b51bde2@linux.ibm.com>
+Subject: Re: [PATCH v3 00/22] AMD vIOMMU: DMA remapping support for VFIO
+ devices
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ qemu-devel@nongnu.org, Joao Martins <joao.m.martins@oracle.com>
+Cc: mst@redhat.com, clement.mathieu--drif@eviden.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, peterx@redhat.com,
+ david@redhat.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ alex.williamson@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
+ sarunkod@amd.com, Wei.Huang2@amd.com, Ankit.Soni@amd.com,
+ ethan.milon@eviden.com, boris.ostrovsky@oracle.com
+References: <20250919213515.917111-1-alejandro.j.jimenez@oracle.com>
+ <505e04a7-ebd6-47a2-b4bd-02b1164d841b@redhat.com>
+ <8e48a225-6ea7-4aeb-8f8a-58955d113319@oracle.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -135,9 +137,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <12ac41c8-7753-4191-8e64-afb91b51bde2@linux.ibm.com>
+In-Reply-To: <8e48a225-6ea7-4aeb-8f8a-58955d113319@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -163,21 +165,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/25 20:24, Aditya Gupta wrote:
-> On 06/10/25 21:15, Mike Kowal wrote:
-> 
->> Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
-> 
-> 
-> Thanks for your reviews Michael !
-yes. Unfortunately, series is already merged.
+Hello,
 
-Michael,
+On 10/6/25 20:44, Alejandro Jimenez wrote:
+> Hi Cédric,
+> 
+> On 10/6/25 12:07 PM, Cédric Le Goater wrote:
+>> Hello Alejandro,
+>>
+>> On 9/19/25 23:34, Alejandro Jimenez wrote:
+> 
+> [...]
+> 
+>>
+>>
+>> The current status of AMD-Vi Emulation in MAINTAINERS is Orphan.
+>> Since this series is about to be merged, should AMD-Vi be considered
+>> maintained now ?
+> 
+> It should be considered maintained.
 
-Would you like to add your self as a Reviewer on PowerNV and XIVE ?
-That would be great.
+Great :)
+>> and if so by whom ?
+>>
+> 
+> I volunteer as maintainer. Assuming no objections from the community, I will send a follow up patch updating MAINTAINERS.
 
-Thanks,
+Thanks. 
+> If there are additional suggestions/volunteers for co-maintainers, please reply to this thread and I'll include them on the patch.
+This series includes a co-author who would make an excellent reviewer !
 
 C.
 
