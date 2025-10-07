@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB2ACCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 15:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B36BCCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 15:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v69ZN-0001kh-3f; Tue, 07 Oct 2025 11:25:41 -0400
+	id 1v69hv-0003ty-NF; Tue, 07 Oct 2025 11:34:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v69ZK-0001jk-LY
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 11:25:38 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v69Z8-0002ey-Ra
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 11:25:37 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-46e42deffa8so64367855e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 08:25:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759850719; x=1760455519; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bNW5WBJgpaZ6TYDjKTfJuER7o1gxFNx6674cxiGpQ3w=;
- b=GELY0SUDqX+WAQAhkscsp+bxaFG2pPQ/mtn+KnPD7OOmPqroFkY3Tk+mV7ks85odl0
- IuMgiA8dCPAaHLJ3QCAqVYJ4QpZNwEIUM5NUNT2Utqx+NKazuVb8dxhFg81M4akTMI2K
- +RlSk5qrmNBxZ5sQ9hmPhFV8XGJHwfQtErNrVXfRLMmUbggq8EZ684nz63UD5DjQfVA7
- F17tgJ/xnu3VeMzpyrrizefr31bLN1GsYT3i3olwCic0+z02AqhPXP8chEZ5M5xvWly/
- MSQT6JS4UxbLE+thArlFIFlisQjkHNxA3IXD79tift0ToC9lRNi+c5hD21MEkz8K/K3B
- NJvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759850719; x=1760455519;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bNW5WBJgpaZ6TYDjKTfJuER7o1gxFNx6674cxiGpQ3w=;
- b=iP0pG+H5W269r9HY2NHXqsARPdSAe7HeYidMfT2X3rUqq8wf289M/jCuOVISF1gAiz
- phqkAMSX2E3xwfljrc9OXSNB6q1aAllimppQcsPHQDmTbwe0BSIsVGYT4nN2cElQLZfw
- OVGM+5G3VnfHY+QyX0Yx4YVWaLAMcOrIKrCLRrLJsRDlnkyHy70zK2NjAdGEkfVW486s
- MHD5gvrlf0xraOLIgkF1lUKBGJInkF2LP8wivl9kDFWem3rS7YihYC2clTEU0mhS2sZY
- Mk8W0Zj/8FKNRbgux4kPiFOVz4cjYHH4CNY/gIRQHJLroSobOpaLwcDDuGNjSFe8+FGC
- jm9w==
-X-Gm-Message-State: AOJu0YyfIehJKYyQCjL2Rxg0UvDYFHr08foQQiJi/jZTWJlvY2zqu+eD
- bF/n6Z/UiT/pIPQW/ghEao+S40Ooj9U6hQwZmNDnqppijqAdsApHRR6+UlP1EVKHYJY=
-X-Gm-Gg: ASbGncufWf8xmAMo2VPAi2FVufdv6MqHxAwUwVpXTWEKcewgDX7Lsoe/7qy3y9X/uq0
- P0KIy3nKH5qPBF2Y++7wiPHAjLXbIG2NzrcVoq/wLVGpXAsES+H4W6alWl+/2jDAgvRQpLbvOkK
- 7AkN+PAeBJluPdyAZP+qOsidaj0gc0pODlm4ToU3tYnxYHKqos5cqNAt7D6sgwyK3zIijsQ8JTH
- 0eeYLaoCSsO/h3/lnBob17VP80WKKr9SD6jCwSEQNkXolFqyUOMmz5nTbI7RyQZ2xwHVlRpwOfX
- KeuC9UyK7rbdCAzzhzSZDy22Z2OE6RhS0jrfXhWCrC9PinvBR1/JxDNcN/lAlbJGml/nM4R31+U
- cLIJITL3wpq4Q5fIS/3+2Z97DHe7DTJuG3Ui4zV5b0IoqNZkcDoFHux6ixnlUc7UlkNP+foddkw
- YJM4XgjcoduhRyZa+O2g==
-X-Google-Smtp-Source: AGHT+IGTxNRwCtJGzUjgblJHUXZ4hnQOLmMf086tzY1s8Rorqw3yn/7IRrZPFpPanwEKo/IcgoFofA==
-X-Received: by 2002:a05:600c:64c4:b0:46d:45e:3514 with SMTP id
- 5b1f17b1804b1-46e7114310amr134690375e9.17.1759850719015; 
- Tue, 07 Oct 2025 08:25:19 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8a6c3esm26173764f8f.1.2025.10.07.08.25.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Oct 2025 08:25:18 -0700 (PDT)
-Message-ID: <5bba6470-0f06-4e52-8d19-f45ef6758388@linaro.org>
-Date: Tue, 7 Oct 2025 17:25:17 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1v69ht-0003tk-Aw
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 11:34:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1v69hl-0003X2-LF
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 11:34:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759851257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Ml/6K50So2Px3gdh3KANdf4B6zPXrWkYOkqpjsN79WY=;
+ b=ZaGyQYCJfKTtTR8ratyfEBCf1Yam7AZjCPAVNmbeYRR0H9HJSu5+ZAz0Tpt25kqZ6freAu
+ Xmy5aYEv6fABzoB3lKukgLNBh1JmxXjbG2gnD30ThkQpFsCpRUK2EPEwDcarOJ1ki1J3j8
+ I0R/dao9dMcY1JsLlcC5/QpfPIreL44=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-J8DrCWN_OLautlzLOku8CQ-1; Tue,
+ 07 Oct 2025 11:34:13 -0400
+X-MC-Unique: J8DrCWN_OLautlzLOku8CQ-1
+X-Mimecast-MFC-AGG-ID: J8DrCWN_OLautlzLOku8CQ_1759851252
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8546819560B5; Tue,  7 Oct 2025 15:34:12 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.31])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6828530002CE; Tue,  7 Oct 2025 15:34:09 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, rth7680@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] tests/docker: make --enable-rust overridable with
+ EXTRA_CONFIGURE_OPTS
+Date: Tue,  7 Oct 2025 19:34:05 +0400
+Message-ID: <20251007153406.421032-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/max78000_gcr: Do not ignore address_space_write()
- errors
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Jackson Donaldson <jcksn@duck.com>,
- Jackson Donaldson <jackson88044@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>
-References: <20251007024006.43166-1-philmd@linaro.org>
- <CAFEAcA_ytH+AwTr9LAZBP2nbSTod0FkfuexbewW=T7Pbb3nkmw@mail.gmail.com>
- <66dbc389-4c83-4552-b447-87c0e1ada48a@linaro.org>
- <a7e21714-e19f-4465-96f1-dc27bd484cdf@linaro.org>
- <CAFEAcA_TWXGCSE4y6wgQJosDBGGvWF6wGr=8Br3ivdQx+MxOig@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_TWXGCSE4y6wgQJosDBGGvWF6wGr=8Br3ivdQx+MxOig@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,39 +87,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/25 16:55, Peter Maydell wrote:
-> On Tue, 7 Oct 2025 at 15:47, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 7/10/25 15:48, Philippe Mathieu-Daudé wrote:
->>> On 7/10/25 10:27, Peter Maydell wrote:
->>>> On Tue, 7 Oct 2025 at 03:40, Philippe Mathieu-Daudé
->>>> <philmd@linaro.org> wrote:
->>>>>
->>>>> Convert max78000_gcr_ops[] to take MemTxAttrs and return MemTxResult,
->>>>> allowing the write() path to return error on failure.
->>>>
->>>> *Should* it return a MEMTX error on this failure, though?
->>>> This is a question of what the hardware behaviour is,
->>>> and there's no reference to the datasheet in this
->>>> commit message...
->>>
->>> Right. Thanks!
->>
->> Looking at "MAX78000 User Guide (UG7456; Rev 1; 3/2024)",
->> chapter "4.7.2 RAM Zeroization" and table "4-67: Memory
->> Zeroize Control Register", IIUC failure can not happen.
->>
->> Would that change be OK?
->>
->> -      address_space_write(&s->sram_as, SYSRAM0_START,
->> -                          MEMTXATTRS_UNSPECIFIED, zero, 0x8000);
->> +      /* RAM Zeroization can not fail */
->> +      (void)address_space_write(&s->sram_as, SYSRAM0_START,
->> +                                MEMTXATTRS_UNSPECIFIED, zero, 0x8000);
-> 
-> We don't generally use the void cast like that. Just
-> don't do anything with the return value.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-That would allow to use the helpful __attribute__((warn_unused_result)).
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ tests/docker/common.rc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/docker/common.rc b/tests/docker/common.rc
+index 752f4f3aed..79d533ab2e 100755
+--- a/tests/docker/common.rc
++++ b/tests/docker/common.rc
+@@ -53,8 +53,8 @@ configure_qemu()
+     config_opts="--enable-werror \
+                  ${TARGET_LIST:+--target-list=${TARGET_LIST}} \
+                  --prefix=$INSTALL_DIR \
+-                 $QEMU_CONFIGURE_OPTS $EXTRA_CONFIGURE_OPTS \
+                  $enable_rust \
++                 $QEMU_CONFIGURE_OPTS $EXTRA_CONFIGURE_OPTS \
+                  $@"
+     echo "Configure options:"
+     echo $config_opts
+-- 
+2.51.0
 
 
