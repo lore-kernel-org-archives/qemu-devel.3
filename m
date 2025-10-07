@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B1BCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 07:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589AECCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 07:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v62T9-0000TR-Cc; Tue, 07 Oct 2025 03:50:47 -0400
+	id 1v62YT-0001if-5e; Tue, 07 Oct 2025 03:56:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v62T7-0000Sb-FY
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 03:50:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v62YR-0001hJ-BS
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 03:56:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v62T5-0007bo-AC
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 03:50:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v62YO-00084G-He
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 03:56:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759823440;
+ s=mimecast20190719; t=1759823771;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dlXlFCEtQALY8njlGrYqQHJkWVUbncS5aRyoZuIZr9M=;
- b=VhyImHIjvyuDVy72sf6nhzkbnrEfUzCxTY01YSSZVMGx71dm86HQ+zXP+FBKZMPiqZg7Zb
- y9X55NWqe3s8vTYYCpkTccOPWHhDDOUA7TC9J3If4ukPzoRKOJYkb1OaiJQ8HNzItXLYJk
- xg5trpFr38JxV+IcClcBOLtxBZcWwOs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0o2RNBCLlf17vuCId3pPw+3los7yYP8fRyh6lWUrdAM=;
+ b=MxkcarYokO/Nli/9LZj2bRVnkPaLXhuNHSXkITcA3sXEPjB3H/8eF+Bwg0FVOMqLyqEe9T
+ UbeVSBSlOHJfFFCQs5AyxwN4iDjycNgfQn4/TOhLIW084E7OSEZ28vAUUMV7C93hf8niFi
+ IIpTShYAzp2Taa1sLKfWflfj6Y+VCdc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-194-EB_LeKpHPv-7BUvphFHQIQ-1; Tue, 07 Oct 2025 03:50:38 -0400
-X-MC-Unique: EB_LeKpHPv-7BUvphFHQIQ-1
-X-Mimecast-MFC-AGG-ID: EB_LeKpHPv-7BUvphFHQIQ_1759823438
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ecdfe971abso4275343f8f.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 00:50:38 -0700 (PDT)
+ us-mta-26-nCw8PjpkPySnwYdYb9kzUw-1; Tue, 07 Oct 2025 03:56:09 -0400
+X-MC-Unique: nCw8PjpkPySnwYdYb9kzUw-1
+X-Mimecast-MFC-AGG-ID: nCw8PjpkPySnwYdYb9kzUw_1759823768
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e4cb3e4deso16737085e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 00:56:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759823437; x=1760428237;
+ d=1e100.net; s=20230601; t=1759823768; x=1760428568;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dlXlFCEtQALY8njlGrYqQHJkWVUbncS5aRyoZuIZr9M=;
- b=qeKMsZDMOqWsM9tPiWHQi6zTKoEndZoRFtxb/x7tjCE74NB31uW9E3bRdR40/vbvBZ
- +/3sRl0wPrAMkDPQ4KPONyOtKHQkOSUViozN/3NN47u6YHXUhYHtmKIkAHsIWfSEYnsx
- xBhLnYIpKD1neT84dKzPfxg9cqv1vEJv9p/tTbc7BTHCOirz1tgY5yMakOAzUHxTJCHI
- Qfkqu8ohVYQRDWlmL8x4gBVm18daDq2MobTV/KFttZY1r8w1uOKI1r6eDjXN8SVriOnk
- wOy90zNhKh9dPRS3GCq2Z9R+l8s6YFDk962MWnfpZPKXX/LsQBpMING7cUjxLwfS3Zz2
- 3/5Q==
+ bh=0o2RNBCLlf17vuCId3pPw+3los7yYP8fRyh6lWUrdAM=;
+ b=ebRZ7dvdzr2ZvDLEaQ01LB8ymj9/rJujALekBkQPgu09+ooMplj4S55eSBXn/IHcAy
+ TZxLrE11BMf+SnzBb3s/h55ZeaVKlr7PRPpMiODovjvgm/2v9bV7YSGgYJb0R9BoxOiW
+ 2MBaN5ZkuijKM8a+SR89UhUX7bDs3+zRdSaEyH1FgThEBrZxi9lEnolZzHf6CNs+3q8q
+ XT6DQU6kkU3Xv+BfhSUWNo1dNTg9TpQ3YXpiYRiff61G3VQYJBnXbg4TlMrmQrQuy807
+ awGKW1YtnKziP4DGEJ+KdUmbhEgS+3P2Y6JnRipGGVSUQlbCeR1OGNPYbfh2bPdpz8pU
+ qMqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIFwyAhF+fKe7Vs33vqFfKIlLDvGtxUCztP/l13MmlDUCq4q5Lbn35ZjY4fP94IgmOa3nMBFpV7bQd@nongnu.org
-X-Gm-Message-State: AOJu0YzzsO0uip1bujmETAwho/vYf7w7zKOKEy5b+0I4pQGQKZdzdrsb
- /U1cFMUdK4a37wi++9MyIg0anS4oAU+O/BYUpDgmhg4AmdFnl9ZKVGZ/voXhbsn6Mi/95FMFRKw
- MK9dsSnTPNDP/k61BZV1X9YjFdN4o+qr8fVenh/9ipMA24OTJ9HUXVUyH
-X-Gm-Gg: ASbGncuEF1z+0lpKK9J6U/RYbJD14KRW4EJNhgd0sGlHZWR0zshsJRNEcD0RHlQhzn/
- TVQYr60AWP76Vmf+3Tx09gaYdOpuXQEgUjY33hjBiFO9RGnEVQJjpbkX+HmB7N1G3V/xkNChefP
- R/JLf/r89YIgGczzxkefcPrYb7uDuyGszufvzs3SV6QXBVI3mKsmo8wRfQYhwHWnckGAFpk4Rc/
- ZUUivUvMAuZRjr3J9bOSHH3vFyfF8WRNgpOWsmYfKhUPFjGAhWvEXwNM267A89vb5DS/YeOmixf
- uUDIiMj01xt44ZvN6l2boQDSDvYQBsMMUjjQnZJZIeChjlmJ5yPxAooHw/mF/LATIPxIxoo=
-X-Received: by 2002:a05:6000:2087:b0:3ec:d80d:e59b with SMTP id
- ffacd0b85a97d-4256713ee4bmr10652771f8f.10.1759823437707; 
- Tue, 07 Oct 2025 00:50:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHIsIsSbGBHQ7Ji2JU8LpY5keuf/u5KcnIIAaVT6A6IT2MWOyHcXnudBaHADnpArnFljsLC5Q==
-X-Received: by 2002:a05:6000:2087:b0:3ec:d80d:e59b with SMTP id
- ffacd0b85a97d-4256713ee4bmr10652754f8f.10.1759823437348; 
- Tue, 07 Oct 2025 00:50:37 -0700 (PDT)
+ AJvYcCWTGcgEhQABQKJLCrwp4N6SMJVJ1Wl342nfYXfIxyvyXdFeUzKJKmHtVr3CYfKQHaWpjR5BW+KqZbZx@nongnu.org
+X-Gm-Message-State: AOJu0Yz1eQMfESGE9WsW7cD9Ay6Fkfr0Qpz9BS9tjw/PYW+mxMS0P95x
+ LekSdG730q3S22ibCYe9j3mwFTKuMdoJAeCRXD1Ma6q7a/2kDWjqMC7dLosIlNQm4w32V0BWVvm
+ 7fwGJEQlEwLmRX9IXRFdfnd/691ifDRt3Vzzw33cx/9JUne5Zeqpbhz0O
+X-Gm-Gg: ASbGncu+hrauKJeayK1lw/K8qVSpZ90jdTP6vClRJ7iAc3KHI3kfhdxbV5wuRox3EEk
+ bYNgW9+4yr4oyqvVzk7yPt/WKRNm92+ALdW194L6uR+YJDhFRXJ0ZaSH+RKCizzFHIAJkEZsQBd
+ RiMlLCzx+A/pcKzeQtDtml0asjtzbMv0R++BNUkpmuA/xcdim2tFzfFQ5Zn/QsW50Fe6jBmPQJl
+ 8j4LuvRwJN3piRMEUGy5yI1HOvJeCKgemer11aa4rg4PYKqKjtM0iogjd3aQstYRyPP2w/NSmu5
+ ZFVwEJ6wIj12mqSAejIbyAc6F5GeSmJivjiJ5Us70ILgzF9uaf8VtwnADlNyPt7s6Dx7oaQ=
+X-Received: by 2002:a05:600c:83cf:b0:46e:5302:7751 with SMTP id
+ 5b1f17b1804b1-46fa29aa731mr15499625e9.9.1759823768146; 
+ Tue, 07 Oct 2025 00:56:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTSbyqAZKzeWKWXzNQ/8N9uwEViXRgYejX7EDgtUUZIJTUIJk/NyWoT4qcvhVf+JPn1PbFrQ==
+X-Received: by 2002:a05:600c:83cf:b0:46e:5302:7751 with SMTP id
+ 5b1f17b1804b1-46fa29aa731mr15499435e9.9.1759823767714; 
+ Tue, 07 Oct 2025 00:56:07 -0700 (PDT)
 Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e619c3b75sm286126975e9.7.2025.10.07.00.50.36
+ 5b1f17b1804b1-46e78c5d290sm153134895e9.0.2025.10.07.00.56.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Oct 2025 00:50:36 -0700 (PDT)
-Message-ID: <b8dc032c-3396-4329-bed3-171e63f87b06@redhat.com>
-Date: Tue, 7 Oct 2025 09:50:35 +0200
+ Tue, 07 Oct 2025 00:56:07 -0700 (PDT)
+Message-ID: <7908cb21-785f-48ba-899d-d02fb8bb73b6@redhat.com>
+Date: Tue, 7 Oct 2025 09:56:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] test/functional/arm: Split the ast2600 tests in two files
@@ -170,9 +170,144 @@ On 06/10/2025 19.34, Cédric Le Goater wrote:
 >   3 files changed, 100 insertions(+), 76 deletions(-)
 >   rename tests/functional/arm/{test_aspeed_ast2600.py => test_aspeed_ast2600_buildroot.py} (57%)
 >   create mode 100755 tests/functional/arm/test_aspeed_ast2600_sdk.py
+> 
+> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+> index e4e7dba8d087..d1ed076a6aa8 100644
+> --- a/tests/functional/arm/meson.build
+> +++ b/tests/functional/arm/meson.build
+> @@ -5,7 +5,8 @@ test_arm_timeouts = {
+>     'aspeed_romulus' : 120,
+>     'aspeed_witherspoon' : 120,
+>     'aspeed_ast2500' : 720,
+> -  'aspeed_ast2600' : 1200,
+> +  'aspeed_ast2600_buildroot' : 720,
+> +  'aspeed_ast2600_sdk' : 1200,
+>     'aspeed_bletchley' : 480,
+>     'aspeed_catalina' : 480,
+>     'aspeed_gb200nvl_bmc' : 480,
+> @@ -31,7 +32,8 @@ tests_arm_system_thorough = [
+>     'aspeed_romulus',
+>     'aspeed_witherspoon',
+>     'aspeed_ast2500',
+> -  'aspeed_ast2600',
+> +  'aspeed_ast2600_buildroot',
+> +  'aspeed_ast2600_sdk',
+>     'aspeed_bletchley',
+>     'aspeed_catalina',
+>     'aspeed_gb200nvl_bmc',
+> diff --git a/tests/functional/arm/test_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600_buildroot.py
+> similarity index 57%
+> rename from tests/functional/arm/test_aspeed_ast2600.py
+> rename to tests/functional/arm/test_aspeed_ast2600_buildroot.py
+> index 0127913cfb65..51f2676c9061 100755
+> --- a/tests/functional/arm/test_aspeed_ast2600.py
+> +++ b/tests/functional/arm/test_aspeed_ast2600_buildroot.py
+> @@ -97,80 +97,6 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+>   
+>           self.do_test_arm_aspeed_buildroot_poweroff()
+>   
+> -    ASSET_SDK_V908_AST2600 = Asset(
+> -        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2600-default-obmc.tar.gz',
+> -        'a0414f14ad696550efe083c2156dbeda855c08cc9ae7f40fe1b41bf292295f82')
+> -
+> -    def do_ast2600_pcie_test(self):
+> -        exec_command_and_wait_for_pattern(self,
+> -            'lspci -s 80:00.0',
+> -            '80:00.0 Host bridge: '
+> -            'ASPEED Technology, Inc. Device 2600')
+> -        exec_command_and_wait_for_pattern(self,
+> -            'lspci -s 80:08.0',
+> -            '80:08.0 PCI bridge: '
+> -            'ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
+> -        exec_command_and_wait_for_pattern(self,
+> -            'lspci -s 81:00.0',
+> -            '81:00.0 Ethernet controller: '
+> -            'Intel Corporation 82574L Gigabit Network Connection')
+> -        exec_command_and_wait_for_pattern(self,
+> -            'ip addr show dev eth4',
+> -            'inet 10.0.2.15/24')
+> -
+> -    def test_arm_ast2600_evb_sdk(self):
+> -        self.set_machine('ast2600-evb')
+> -        self.require_netdev('user')
+> -
+> -        self.archive_extract(self.ASSET_SDK_V908_AST2600)
+> -
+> -        self.vm.add_args('-device',
+> -            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
+> -        self.vm.add_args('-device',
+> -            'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
+> -        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.0')
+> -        self.vm.add_args('-netdev', 'user,id=net1')
+> -        self.do_test_arm_aspeed_sdk_start(
+> -            self.scratch_file("ast2600-default", "image-bmc"))
+> -
+> -        self.wait_for_console_pattern('ast2600-default login:')
+> -
+> -        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+> -        exec_command_and_wait_for_pattern(self, '0penBmc',
+> -                                          'root@ast2600-default:~#')
+> -
+> -        exec_command_and_wait_for_pattern(self,
+> -            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device',
+> -            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d')
+> -        exec_command_and_wait_for_pattern(self,
+> -             'cat /sys/class/hwmon/hwmon19/temp1_input', '0')
+> -        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+> -                    property='temperature', value=18000)
+> -        exec_command_and_wait_for_pattern(self,
+> -             'cat /sys/class/hwmon/hwmon19/temp1_input', '18000')
+> -
+> -        exec_command_and_wait_for_pattern(self,
+> -             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-5/device/new_device',
+> -             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32')
+> -        year = time.strftime("%Y")
+> -        exec_command_and_wait_for_pattern(self,
+> -             '/sbin/hwclock -f /dev/rtc1', year)
+> -        self.do_ast2600_pcie_test()
+> -
+> -    def test_arm_ast2600_otp_blockdev_device(self):
+> -        self.vm.set_machine("ast2600-evb")
+> -
+> -        image_path = self.archive_extract(self.ASSET_SDK_V908_AST2600)
+> -        otp_img = self.generate_otpmem_image()
+> -
+> -        self.vm.set_console()
+> -        self.vm.add_args(
+> -            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
+> -            "-global", "aspeed-otp.drive=otp",
+> -        )
+> -        self.do_test_arm_aspeed_sdk_start(
+> -            self.scratch_file("ast2600-default", "image-bmc"))
+> -        self.wait_for_console_pattern("ast2600-default login:")
+>   
+>   if __name__ == '__main__':
+>       AspeedTest.main()
+> diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk.py b/tests/functional/arm/test_aspeed_ast2600_sdk.py
+> new file mode 100755
+> index 000000000000..735a20b8df0e
+> --- /dev/null
+> +++ b/tests/functional/arm/test_aspeed_ast2600_sdk.py
+> @@ -0,0 +1,96 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots the ASPEED machines
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +import time
+> +import tempfile
+> +import subprocess
+> +
+> +from qemu_test import Asset
+> +from aspeed import AspeedTest
+> +from qemu_test import exec_command_and_wait_for_pattern, skipIfMissingCommands
 
-Thanks!
+Nit: Please drop the import of tempfile, subprocess, skipIfMissingCommands 
+and os in the new sdk file.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Thanks,
+   Thomas
 
 
