@@ -4,107 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A45CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 13:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17566CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 13:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v688V-0000sm-Uy; Tue, 07 Oct 2025 09:53:52 -0400
+	id 1v68AR-00023z-JS; Tue, 07 Oct 2025 09:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v688T-0000rJ-Sf
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:53:50 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <ilya.chichkov.dev@gmail.com>)
+ id 1v67VU-00077G-U5
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:13:34 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v688L-00086S-HD
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:53:48 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e34052bb7so68479565e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 06:53:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ilya.chichkov.dev@gmail.com>)
+ id 1v67VF-0002gw-0c
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 09:13:32 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5797c8612b4so8267264e87.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 06:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759845216; x=1760450016; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KSu7YaNQ98fqgKApTwJFR5+NIZ1z3gREge4RWvjXBYo=;
- b=Ks48qnxYIeQBgMsx58EkDKdcJgkPFAmjVOYc2bFUVJxCW8xAaEo2zgqDe6qQLbh/ha
- jiYWGYGu9aPtXBpPMI5ZN2GxBqhlR862A+OVRxA9yOqYsf3ggM3nE/XuO9T/7yQulzbU
- JO+ACxA1//cXnnQIjxEFy4iWl3ttiuCLNMe9S/W0rDKT+nSIJ7vbl1VB/xXhdC0lpUM8
- 67tTQCKAGg1gfkBMduuMLOE7xSLHzo/Lcg6qpbNVfKDWGeECAvaA1uQOC1cvPCNEK5so
- ZghfYv5x73pVedJ2802rLl+OW6onWMKrvJyCdRHV+crbf9ndwOv33+Pduv5HfG/FGIP/
- nc3g==
+ d=gmail.com; s=20230601; t=1759842787; x=1760447587; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OPGlPVwCrMb1BR/Nwhk/rS1uPnZWnjsPbXGIrC8ai/Y=;
+ b=jbUwcyU9hR8SE9vsLnajlaRWN8FZ7h97DJbZ9kEfcUeqWRKWcKo43Y2sDlqf9dHDJD
+ 2Wv9IDq3YJVtc4Er+n2HWkn/Ze3etgMTWF25F8a/jwPRz0AqCOrE4wE3/yw+FFWrTCU9
+ WEgHGL1K2qeWDK8T1z0AEPymUQ+N1/TeAeRREaXyq9BfBQ9fDt/n+uhtxMfdS/htucsj
+ 9XjbkdYKI6ZcznkkIwWFXbATRxjQ52HPUj5/f52jAbIXiCQUneAYSWustzlBciNIJ6ES
+ Zc6wtvpEGeUr/S7BfF/QA3CpQetMSKm13KRhY7keDuMIiNttjJhX1RvATidX051EHz3y
+ d+jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759845216; x=1760450016;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KSu7YaNQ98fqgKApTwJFR5+NIZ1z3gREge4RWvjXBYo=;
- b=TANG/5RXWNNTeQHqt1vf5H1H7+idHnIYSUFRJll2NA5Ylut5f0pVk3kez58bQDNsSs
- m58mvoa3sPD+m9MSXwTHVcGDHlpTKrwKAqQjj9lFg+KDlAQJyqox3s+wHx5zgMOEoeTp
- y/STAvbKXmxRld3N8tx9F/5eN8Aair6KRd48Dm3ZQmC1UjE5wiNoLqqq3I+zmFMxOGIR
- bMsy8ae0pbdxG5oT1akbjYJNi78ImWJewwNLQlbGGmustmD+muUOpkx3oxJQxcT3rhSU
- kEGxplGYrXpKym3/TGQP8m2H6qmkCC9QHu0THd3RXPEnWIJd0zNKaTNwk5gADSb+V/bx
- Do4g==
-X-Gm-Message-State: AOJu0YzAjKolqOMk+9WpPGZa4kimWkkvyRcDeubhViiqVWc/Bpjox+pd
- Qd47nzjXhPqn+hCsgEUE38oOjuA/x9qT9CtSqqOBUH3gPKN/7MRGQ73QRWgN5l8aj/Q=
-X-Gm-Gg: ASbGncse04Q5eHvBlgcGBE/muefam0o3d+3S5W9NaR8v4QC7ta9RGTLYq5lAzwM7Z4j
- tL2LdVuMI98+qAJCx9lcYOOPFGNgH1QCHMvQ4v/BejST9CVNXNMyyKUW/6JtBcqcx8qgGBTMGAa
- qcYFLpABJckGFIYrAQiI2twdqdxh5+dVY+PRzgjzCw5Vt7p/HrEu9flvHEenMGgMG5RRVNlBc57
- hl3A7o5TtBzCoWU/c6lwkjfevtCevvJsQDZCWpsRN5HAdYI7fekWG+0EqZcbJL3hZjiOeH9fAh+
- QGTsFuFEBOP1XI6Ye2T2tg2WBa3JZnuCOyTSw1P/5e+Mbp9tvlnnIzDCS4z1tqCsf36HJui3AzJ
- Pqf6l10aGCCKkOxXKUnZmQyjnU7XUks8ndro36i4F9ltwwMV+W1d/XSxknwTgbZ9II4ahyaUp6m
- gbpvVrAWJ15PCFss8cew==
-X-Google-Smtp-Source: AGHT+IEnky2yVJPGAWBDFxN4WGWRP9AzefwqPuoYNHPLT0f5ShCcXu2lf1+SKolr1wo3QdbUohJxXA==
-X-Received: by 2002:a05:600c:4e92:b0:46e:448a:1235 with SMTP id
- 5b1f17b1804b1-46e7110f1bemr142948205e9.16.1759845216081; 
- Tue, 07 Oct 2025 06:53:36 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa3a0d17fsm17718285e9.4.2025.10.07.06.53.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Oct 2025 06:53:35 -0700 (PDT)
-Message-ID: <8a931a39-fb34-4176-b8b8-c47bd2b1d266@linaro.org>
-Date: Tue, 7 Oct 2025 15:53:33 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] accel/kvm: Factor kvm_cpu_synchronize_put() out
-Content-Language: en-US
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
- Song Gao <gaosong@loongson.cn>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ d=1e100.net; s=20230601; t=1759842787; x=1760447587;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OPGlPVwCrMb1BR/Nwhk/rS1uPnZWnjsPbXGIrC8ai/Y=;
+ b=XsXzNFKAK38PCplPgYhHbMSNIaSxs9pFO3Agnkbw0eZcyB9IWuulJwpFWh6BkGOwS2
+ R56xJNp3Cu0zLNqy+d0vljq2akxr+65xxBNS3Gwrnfsu+y3BCUHGynIRdnSPhmyrRuCV
+ BtspNr+jnnXH3iTO81/Aq+2fc+LqmoU6HM3tesRhQ4XYLxM4fqifPaL/HpSq8U7dwdc7
+ jWVeZboR5Mfig7//7qNxLf8XHeeS0Q1pHGKvWxQkOFSDJJdDYXsw+wifDJ+D6JnsW9lC
+ w+F6UJ5xBt8Fd4ugEfAptXCP1hwMp4bRRB3Bd2+W1d3X1wJ1Au+3alrtBQvSdI8HYxkh
+ aJnA==
+X-Gm-Message-State: AOJu0YynEUZvR3lwZvIzRqn9bUf8EI9khVkUFC2hziEAPLFUfJOBd5Q/
+ XVJOuid6BtKJ4EWx099mgsPIEFZFc3kWc/kmIbKTkoPwMBcmG3dS4+FZU5eobcCrMjI=
+X-Gm-Gg: ASbGnct0muiK37bnvzFi/5a7PRaEGGlYUsOOdC/juGinfs47ywntcnjO36ecgyietDL
+ WltxDCnjmfgVLG9s6JFAouoO3T8g1OECR3ZptNDhoL+qlLHA2dhq9+LhukNGu84Mhvy8hg945/P
+ b/6RvOucmiNRRE7uERXD+OhDBhWLzYDewcaFMWmebx2u5cE5la92GCKPxnXVOi0v7WeZg4jnhId
+ LPZOZfQZPAjkhXx6flqjOlPRvFcPHlJYlxeo+v1fUjJ50cWqPxHTh+YfK5R8eBMvQGzqe4InaeG
+ p/f9GFD5A8zbmpRWx6ZxaP9ueys+GV/DPsS3x7ag80HVTuc0T05LSVSfQy/1yQ5GSoDCIxwA0PN
+ xUbv1XkKGQARqP6QjiyAeDILuT2AFPDUJ3H355O/UOzwZIviwJrrvrDAgLxdQf2+i
+X-Google-Smtp-Source: AGHT+IFaeGc95XGdtHxqma0a9RTvuYKSDVpXg7MDyk28503L+Bg+Wuvt/v41iuSUaDscTIgWFm7gAQ==
+X-Received: by 2002:a05:6512:10cd:b0:581:f381:4ecc with SMTP id
+ 2adb3069b0e04-58cbbdd82a7mr4694454e87.30.1759842786318; 
+ Tue, 07 Oct 2025 06:13:06 -0700 (PDT)
+Received: from gmail.com ([89.207.88.242]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-58b01135a82sm6081151e87.39.2025.10.07.06.13.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Oct 2025 06:13:05 -0700 (PDT)
+From: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Corey Minyard <cminyard@mvista.com>, Bernhard Beschow <shentey@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, kvm@vger.kernel.org,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
- <arikalo@gmail.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, qemu-riscv@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20251007081616.68442-1-philmd@linaro.org>
- <20251007081616.68442-4-philmd@linaro.org>
- <20251007-650e7ef70cc4591d1ef647f1@orel>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251007-650e7ef70cc4591d1ef647f1@orel>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Nikita Shubin <nikita.shubin@maquefel.me>,
+ Ilya Chichkov <ilya.chichkov.dev@gmail.com>
+Subject: [PATCH] hw/i2c: Add remote-i2c-master
+Date: Tue,  7 Oct 2025 16:13:02 +0300
+Message-ID: <20251007131302.485828-1-ilya.chichkov.dev@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=ilya.chichkov.dev@gmail.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 07 Oct 2025 09:55:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -119,60 +101,777 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/25 15:30, Andrew Jones wrote:
-> On Tue, Oct 07, 2025 at 10:16:16AM +0200, Philippe Mathieu-Daudé wrote:
->> The same code is duplicated 3 times: factor a common method.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   accel/kvm/kvm-all.c | 47 ++++++++++++++++++---------------------------
->>   1 file changed, 19 insertions(+), 28 deletions(-)
->>
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index 9060599cd73..de79f4ca099 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -2935,22 +2935,32 @@ void kvm_cpu_synchronize_state(CPUState *cpu)
->>       }
->>   }
->>   
->> -static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg)
->> +static bool kvm_cpu_synchronize_put(CPUState *cpu, KvmPutState state,
->> +                                    const char *desc)
->>   {
->>       Error *err = NULL;
->> -    int ret = kvm_arch_put_registers(cpu, KVM_PUT_RESET_STATE, &err);
->> +    int ret = kvm_arch_put_registers(cpu, state, &err);
->>       if (ret) {
->>           if (err) {
->> -            error_reportf_err(err, "Restoring resisters after reset: ");
->> +            error_reportf_err(err, "Restoring resisters %s: ", desc);
->>           } else {
->> -            error_report("Failed to put registers after reset: %s",
->> +            error_report("Failed to put registers %s: %s", desc,
->>                            strerror(-ret));
->>           }
->> -        cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
->> -        vm_stop(RUN_STATE_INTERNAL_ERROR);
->> +        return false;
->>       }
->>   
->>       cpu->vcpu_dirty = false;
->> +
->> +    return true;
->> +}
->> +
->> +static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg)
->> +{
->> +    if (kvm_cpu_synchronize_put(cpu, KVM_PUT_RESET_STATE, "after reset")) {
-> 
-> This should be !kvm_cpu_synchronize_put() and same comment for the other
-> calls below.
+That device allows a QEMU guest to
+create a character device on the host using CUSE (Character in
+Userspace). This enables host userspace tools (e.g., i2c-tools) to
+interact with the guest's virtual I2C bus directly.
 
-Oops! Thanks :)
+The module acts as a bridge, translating I2C commands from the host into QEMU's virtual I2C operations. This is primarily useful for developing and debugging I2C device drivers.
 
-> 
-> Thanks,
-> drew
+Key components:
+- New device type `remote-i2c-master`
+- Integration with libfuse for CUSE device management
+- Asynchronous I2C command handling using bottom-half timers
+---
+ docs/system/devices/remote-i2c-master.rst |  81 ++++
+ hw/i2c/Kconfig                            |   5 +
+ hw/i2c/meson.build                        |   1 +
+ hw/i2c/remote-i2c-master.c                | 535 ++++++++++++++++++++++
+ hw/i2c/trace-events                       |  15 +
+ include/hw/i2c/remote-i2c-master.h        |  66 +++
+ 6 files changed, 703 insertions(+)
+ create mode 100644 docs/system/devices/remote-i2c-master.rst
+ create mode 100644 hw/i2c/remote-i2c-master.c
+ create mode 100644 include/hw/i2c/remote-i2c-master.h
+
+diff --git a/docs/system/devices/remote-i2c-master.rst b/docs/system/devices/remote-i2c-master.rst
+new file mode 100644
+index 0000000000..90ebb7519a
+--- /dev/null
++++ b/docs/system/devices/remote-i2c-master.rst
+@@ -0,0 +1,81 @@
++Remote I2C master
++=================
++
++Overview
++--------
++This module implements a virtual I2C controller device using FUSE (Filesystem in Userspace)
++and CUSE (Character device in Userspace) technology. It allows userspace programs to
++emulate I2C controllers that appear as real character devices in the system.
++
++Features
++--------
++- Virtual I2C controller emulation via CUSE
++- Full I2C character device interface
++- Support for unrestricted IOCTL operations
++- Integration with QEMU's AIO context for asynchronous operations
++- Debugging support through FUSE debug mode
++
++Architecture
++------------
++The module creates a virtual character device using CUSE that behaves like a physical I2C
++controller. The device can be accessed through standard I2C tools and interfaces.
++
++Kernel Requirements
++~~~~~~~~~~~~~~~~~~~
++- CUSE module loaded: ``sudo modprobe cuse``
++- FUSE support enabled
++
++Library Dependencies
++~~~~~~~~~~~~~~~~~~~~
++- libfuse3 or libfuse (version 2.9.0 or higher)
++- FUSE development headers
++
++Troubleshooting
++~~~~~~~~~~~~~~~
++
++CUSE_INIT Failures
++^^^^^^^^^^^^^^^^^^
++If you encounter ``CUSE_INIT`` errors:
++
++1. Verify CUSE module is loaded:
++   .. code-block:: bash
++
++      lsmod | grep cuse
++      sudo modprobe cuse
++
++2. Check permissions:
++   .. code-block:: bash
++
++      # Ensure user has access to CUSE devices
++      ls -la /dev/cuse
++
++Debugging
++---------
++
++Enable debug output by including the debug option:
++
++.. code-block:: c
++
++   char fuse_opt_debug[] = FUSE_OPT_DEBUG;
++   char *fuse_argv[] = { fuse_opt_dummy, fuse_opt_fore, fuse_opt_debug };
++
++Examples
++--------
++
++Basic Usage
++~~~~~~~~~~~
++
++.. code-block:: bash
++
++    ./qemu-system-arm -M ast2600-evb -device tmp105,address=0x40,bus=aspeed.i2c.bus.0 -device remote-i2c-master,i2cbus=aspeed.i2c.bus.0,devname=i2c-33
++
++    $ i2cget -y 33 0x40 0x2
++    0x4b
++
++    $ i2cget -y 33 0x40 0x3
++    0x50
++
++See Also
++--------
++- `FUSE Documentation <https://github.com/libfuse/libfuse>`
++- `Character devices in user space <https://lwn.net/Articles/308445/>`
+\ No newline at end of file
+diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
+index 596a7a3165..84d387bf41 100644
+--- a/hw/i2c/Kconfig
++++ b/hw/i2c/Kconfig
+@@ -49,3 +49,8 @@ config PMBUS
+ config BCM2835_I2C
+     bool
+     select I2C
++
++config REMOTE_I2C_MASTER
++    bool
++    select I2C
++    default y if I2C_DEVICES
+diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
+index c459adcb59..ca6378ba3a 100644
+--- a/hw/i2c/meson.build
++++ b/hw/i2c/meson.build
+@@ -18,4 +18,5 @@ i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files('ppc4xx_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
+ i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
+ i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
++i2c_ss.add(when: 'CONFIG_REMOTE_I2C_MASTER', if_true: files('remote-i2c-master.c'))
+ system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
+diff --git a/hw/i2c/remote-i2c-master.c b/hw/i2c/remote-i2c-master.c
+new file mode 100644
+index 0000000000..ae50e84126
+--- /dev/null
++++ b/hw/i2c/remote-i2c-master.c
+@@ -0,0 +1,535 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Remote I2C master
++ *
++ * Author:
++ *   Ilya Chichkov <ilya.chichkov.dev@gmail.com>
++ *
++ */
++#include "qemu/osdep.h"
++
++#include "qapi/error.h"
++#include "qemu/main-loop.h"
++#include "hw/i2c/i2c.h"
++#include "hw/qdev-properties-system.h"
++#include "qemu/error-report.h"
++#include "block/aio.h"
++#include "qemu/log.h"
++#include "trace.h"
++
++#include "hw/i2c/remote-i2c-master.h"
++
++
++#define FUSE_OPT_DUMMY "\0\0"
++#define FUSE_OPT_FORE  "-f\0\0"
++#define FUSE_OPT_NOMULTI "-s\0\0"
++#define FUSE_OPT_DEBUG "-d\0\0"
++
++typedef enum {
++    REMOTE_I2C_START_RECV = 0,
++    REMOTE_I2C_START_SEND = 1,
++    REMOTE_I2C_FINISH = 2,
++    REMOTE_I2C_NACK = 3,
++    REMOTE_I2C_RECV = 4,
++    REMOTE_I2C_SEND = 5,
++} RemoteI2CCommand;
++
++typedef enum AUXCommand {
++    WRITE_I2C = 0,
++    READ_I2C = 1,
++    WRITE_I2C_STATUS = 2,
++    WRITE_I2C_MOT = 4,
++    READ_I2C_MOT = 5,
++    WRITE_AUX = 8,
++    READ_AUX = 9
++} AUXCommand;
++
++typedef enum AUXReply {
++    AUX_I2C_ACK = 0,
++    AUX_NACK = 1,
++    AUX_DEFER = 2,
++    AUX_I2C_NACK = 4,
++    AUX_I2C_DEFER = 8
++} AUXReply;
++
++struct remote_i2c_cmd {
++    uint8_t cmd;
++    uint8_t addr;
++    uint8_t len;
++    uint8_t data[];
++} __attribute__((packed));
++
++static void i2cdev_init(void *userdata, struct fuse_conn_info *conn)
++{
++    (void)userdata;
++
++    trace_remote_i2c_master_i2cdev_init();
++}
++
++static void i2cdev_open(fuse_req_t req, struct fuse_file_info *fi)
++{
++    RemoteI2CControllerState *s = fuse_req_userdata(req);
++
++    fuse_reply_open(req, fi);
++
++    s->is_open = true;
++
++    trace_remote_i2c_master_i2cdev_open();
++}
++
++static void i2cdev_release(fuse_req_t req, struct fuse_file_info *fi)
++{
++    RemoteI2CControllerState *s = fuse_req_userdata(req);
++
++    s->is_open = false;
++
++    fuse_reply_err(req, 0);
++
++    trace_remote_i2c_master_i2cdev_release();
++}
++
++static void i2cdev_read(fuse_req_t req, size_t size, off_t off,
++                        struct fuse_file_info *fi)
++{
++    /* unused? */
++    char *buf = NULL;
++    size_t bsize = 0;
++
++    bsize = 1;
++    buf = g_realloc(buf, bsize);
++    memset(buf, 44, 1);
++    fuse_reply_buf(req, buf, bsize);
++    g_free(buf);
++
++    trace_remote_i2c_master_i2cdev_read();
++}
++
++static void i2cdev_functional(RemoteI2CControllerState *i2c,
++                              fuse_req_t req,
++                              void *arg,
++                              const void *in_buf)
++{
++    unsigned long funcs = (I2C_FUNC_I2C | I2C_FUNC_SMBUS_QUICK |
++                           I2C_FUNC_SMBUS_BYTE | I2C_FUNC_SMBUS_BYTE_DATA |
++                           I2C_FUNC_SMBUS_BLOCK_DATA |
++                           I2C_FUNC_SMBUS_WORD_DATA |
++                           I2C_FUNC_SMBUS_I2C_BLOCK);
++    struct iovec iov = {
++        .iov_base = arg,
++        .iov_len = sizeof(size_t)
++    };
++
++    switch (i2c->ioctl_state) {
++    case I2C_IOCTL_START:
++        i2c->ioctl_state = I2C_IOCTL_GET;
++        /* Sending arg size of 'size_t' */
++        fuse_reply_ioctl_retry(req, NULL, 0, &iov, 1);
++        break;
++    case I2C_IOCTL_GET:
++        /* Sending I2C functional size of unsigned long */
++        fuse_reply_ioctl(req, 0, &funcs, sizeof(funcs));
++        i2c->ioctl_state = I2C_IOCTL_FINISHED;
++        trace_remote_i2c_master_i2cdev_functional();
++        break;
++    default:
++        /* assert */
++        break;
++    }
++}
++
++static void i2cdev_address(RemoteI2CControllerState *i2c,
++                           fuse_req_t req,
++                           void *arg,
++                           const void *in_buf)
++{
++    i2c->address = (long)arg;
++
++    trace_remote_i2c_master_i2cdev_address(i2c->address);
++
++    if (i2c->address < 0 || i2c->address > 127) {
++        fuse_reply_err(req, EINVAL);
++        return;
++    }
++    fuse_reply_ioctl(req, 0, NULL, 0);
++    i2c->ioctl_state = I2C_IOCTL_FINISHED;
++}
++
++static void send_data_to_slave(RemoteI2CControllerState *i2c,
++                               fuse_req_t req,
++                               const struct i2c_smbus_ioctl_data *in_val,
++                               const void *in_buf)
++{
++    union i2c_smbus_data data;
++    uint8_t buf[64] = { 0 };
++    size_t i = 0;
++    buf[0] = in_val->read_write;
++    buf[1] = (uint8_t)i2c->address;
++
++    /* Get SMBus data structure */
++    memcpy(&data,
++           in_buf + sizeof(struct i2c_smbus_ioctl_data),
++           sizeof(union i2c_smbus_data));
++
++    /* Parse data from SMBus struct */
++    switch (in_val->size) {
++    case I2C_SMBUS_BYTE_DATA:
++        buf[2] = 2;
++        buf[3] = in_val->command;
++        buf[4] = data.byte;
++    break;
++    case I2C_SMBUS_WORD_DATA:
++        buf[2] = 3;
++        buf[3] = in_val->command;
++        buf[4] = (uint8_t)(data.word & 0xFF);
++        buf[5] = (uint8_t)(data.word >> 8 & 0xFF);
++    break;
++    case I2C_SMBUS_I2C_BLOCK_BROKEN:
++    case I2C_SMBUS_BLOCK_DATA:
++    case I2C_SMBUS_I2C_BLOCK_DATA:
++    {
++        uint8_t len = data.block[0];
++        buf[2] = len + 1;
++        buf[3] = in_val->command;
++        for (i = 0; i < len; i++) {
++            buf[4 + i] = data.block[i + 1];
++        }
++    }
++    break;
++    }
++
++    /* Send data to I2C bus */
++    i2c_start_send(i2c->i2c_bus, i2c->address);
++    for (i = 0; i < buf[2]; i++) {
++        i2c_send(i2c->i2c_bus, buf[3 + i]);
++    }
++
++    i2c->address = 0x0;
++    i2c->ioctl_state = I2C_IOCTL_FINISHED;
++    fuse_reply_ioctl(req, 0, NULL, 0);
++
++    trace_remote_i2c_master_i2cdev_send(in_val->size);
++}
++
++static void recv_data_from_slave(RemoteI2CControllerState *i2c,
++                                 fuse_req_t req,
++                                 const struct i2c_smbus_ioctl_data *in_val,
++                                 const void *in_buf)
++{
++    union i2c_smbus_data *smbus_data = (union i2c_smbus_data *)(
++        in_buf + sizeof(struct i2c_smbus_ioctl_data)
++    );
++    uint8_t receive_byte = 0;
++    size_t i = 0;
++
++    /* Send command to slave */
++    i2c_start_send(i2c->i2c_bus, i2c->address);
++    i2c_send(i2c->i2c_bus, in_val->command);
++    i2c_start_recv(i2c->i2c_bus, i2c->address);
++
++    /* Receive data from slave */
++    switch (in_val->size) {
++    case I2C_SMBUS_BYTE_DATA:
++        smbus_data->byte = i2c_recv(i2c->i2c_bus);
++    break;
++    case I2C_SMBUS_WORD_DATA:
++        receive_byte = i2c_recv(i2c->i2c_bus);
++        smbus_data->word = ((uint16_t)receive_byte) & 0xFF;
++        receive_byte = i2c_recv(i2c->i2c_bus);
++        smbus_data->word |= (((uint16_t)receive_byte) << 8) & 0xFF00;
++    break;
++    case I2C_SMBUS_I2C_BLOCK_BROKEN:
++    case I2C_SMBUS_BLOCK_DATA:
++    case I2C_SMBUS_I2C_BLOCK_DATA:
++    {
++        uint8_t len = smbus_data->block[0];
++        for (i = 0; i < len; i++) {
++            smbus_data->block[1 + i] = i2c_recv(i2c->i2c_bus);
++        }
++    }
++    break;
++    }
++
++    i2c->ioctl_state = I2C_IOCTL_FINISHED;
++    fuse_reply_ioctl(req, 0, smbus_data, sizeof(union i2c_smbus_data *));
++
++    trace_remote_i2c_master_i2cdev_receive(in_val->size);
++}
++
++static void i2cdev_cmd_smbus(RemoteI2CControllerState *i2c,
++                             fuse_req_t req,
++                             void *in_arg,
++                             const void *in_buf,
++                             size_t in_bufsz,
++                             size_t out_bufsz)
++{
++    I2CBus *i2c_bus = i2c->i2c_bus;
++    const struct i2c_smbus_ioctl_data *in_val;
++    struct iovec in_iov[2];
++
++    in_val = in_buf;
++    in_iov[0].iov_base = in_arg;
++    in_iov[0].iov_len = sizeof(struct i2c_smbus_ioctl_data);
++
++    i2c->req = req;
++    i2c->in_val = in_val;
++    i2c->in_buf = in_buf;
++
++    trace_remote_i2c_master_i2cdev_smbus((uint8_t)i2c->ioctl_state);
++
++    switch (i2c->ioctl_state) {
++    case I2C_IOCTL_START:
++        if (!in_bufsz) {
++            fuse_reply_ioctl_retry(req, in_iov, 1, NULL, 0);
++            i2c->ioctl_state = I2C_IOCTL_GET;
++            return;
++        }
++        break;
++    case I2C_IOCTL_GET:
++        /* prepare client buf */
++        if (in_val->read_write) {
++            struct iovec out_iov = {
++                .iov_base = in_val->data,
++                .iov_len = sizeof(union i2c_smbus_data *)
++            };
++
++            in_iov[1].iov_base = in_val->data;
++            in_iov[1].iov_len = sizeof(union i2c_smbus_data *);
++
++            fuse_reply_ioctl_retry(req, in_iov, 2, &out_iov, 1);
++            i2c->ioctl_state = I2C_IOCTL_RECV;
++        } else {
++            in_iov[1].iov_base = in_val->data;
++            in_iov[1].iov_len = sizeof(union i2c_smbus_data);
++            fuse_reply_ioctl_retry(req, in_iov, 2, NULL, 0);
++            i2c->ioctl_state = I2C_IOCTL_SEND;
++        }
++        break;
++    case I2C_IOCTL_RECV:
++    case I2C_IOCTL_SEND:
++        {
++            i2c->is_recv = (i2c->ioctl_state == I2C_IOCTL_RECV);
++            if (i2c_bus_busy(i2c_bus)) {
++                timer_mod(i2c->timer,
++                            qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 5);
++            } else {
++                i2c_bus_master(i2c_bus, i2c->bh);
++                i2c_schedule_pending_master(i2c_bus);
++            }
++        }
++        break;
++    case I2C_IOCTL_FINISHED:
++        i2c->ioctl_state = I2C_IOCTL_START;
++        i2c->last_ioctl = 0;
++        break;
++    }
++}
++
++static void i2cdev_ioctl(fuse_req_t req, int cmd, void *arg,
++                          struct fuse_file_info *fi, unsigned flags,
++                          const void *in_buf, size_t in_bufsz, size_t out_bufsz)
++{
++    RemoteI2CControllerState *s = fuse_req_userdata(req);
++    unsigned int ctl = cmd;
++
++    trace_remote_i2c_master_i2cdev_ioctl(cmd);
++
++    if (flags & FUSE_IOCTL_COMPAT) {
++        fuse_reply_err(req, ENOSYS);
++        return;
++    }
++
++    if (s->ioctl_state == I2C_IOCTL_START) {
++        s->last_ioctl = ctl;
++    } else if (s->last_ioctl != ctl) {
++        s->last_ioctl = 0;
++        s->ioctl_state = I2C_IOCTL_START;
++        fuse_reply_err(req, EINVAL);
++        return;
++    }
++
++    switch (ctl) {
++    case I2C_SLAVE_FORCE:
++        fuse_reply_ioctl(req, 0, NULL, 0);
++        break;
++    case I2C_FUNCS:
++        i2cdev_functional(s, req, arg, in_buf);
++    break;
++    case I2C_SLAVE:
++        i2cdev_address(s, req, arg, in_buf);
++        break;
++    case I2C_SMBUS: {
++        i2cdev_cmd_smbus(s, req, arg, in_buf, in_bufsz, out_bufsz);
++    }
++    break;
++    default:
++        fuse_reply_err(req, EINVAL);
++    break;
++    }
++
++    if (s->ioctl_state == I2C_IOCTL_FINISHED) {
++        s->ioctl_state = I2C_IOCTL_START;
++        s->last_ioctl = 0;
++        trace_remote_i2c_master_i2cdev_ioctl_finished(cmd);
++    }
++}
++
++static void i2cdev_poll(fuse_req_t req, struct fuse_file_info *fi,
++                         struct fuse_pollhandle *ph)
++{
++    RemoteI2CControllerState *s = fuse_req_userdata(req);
++
++    s->ph = ph;
++    fuse_reply_poll(req, 0);
++}
++
++static const struct cuse_lowlevel_ops i2cdev_ops = {
++    .init       = i2cdev_init,
++    .open       = i2cdev_open,
++    .release    = i2cdev_release,
++    .read       = i2cdev_read,
++    .ioctl      = i2cdev_ioctl,
++    .poll       = i2cdev_poll,
++};
++
++static void read_from_fuse_export(void *opaque)
++{
++    RemoteI2CControllerState *s = opaque;
++    int ret;
++
++    do {
++        ret = fuse_session_receive_buf(s->fuse_session, &s->fuse_buf);
++    } while (ret == -EINTR);
++
++    if (ret < 0) {
++        return;
++    }
++
++    fuse_session_process_buf(s->fuse_session, &s->fuse_buf);
++
++    trace_remote_i2c_master_fuse_io_read();
++}
++
++static int i2c_fuse_export(RemoteI2CControllerState *i2c, Error **errp)
++{
++    struct fuse_session *session = NULL;
++    char fuse_opt_dummy[] = FUSE_OPT_DUMMY;
++    char fuse_opt_fore[] = FUSE_OPT_FORE;
++    char fuse_opt_debug[] = FUSE_OPT_DEBUG;
++    char *fuse_argv[] = { fuse_opt_dummy, fuse_opt_fore, fuse_opt_debug };
++    char dev_name[128];
++    struct cuse_info ci = { 0 };
++    char *curdir = get_current_dir_name();
++    int ret;
++
++    /* Set device name for CUSE dev info */
++    sprintf(dev_name, "DEVNAME=%s", i2c->devname);
++    const char *dev_info_argv[] = { dev_name };
++
++    memset(&ci, 0, sizeof(ci));
++    ci.dev_major = 0;
++    ci.dev_minor = 0;
++    ci.dev_info_argc = 1;
++    ci.dev_info_argv = dev_info_argv;
++    ci.flags = CUSE_UNRESTRICTED_IOCTL;
++
++    int multithreaded;
++    session = cuse_lowlevel_setup(ARRAY_SIZE(fuse_argv), fuse_argv, &ci,
++                                  &i2cdev_ops, &multithreaded, i2c);
++    if (session == NULL) {
++        error_setg(errp, "cuse_lowlevel_setup() failed");
++        errno = EINVAL;
++        return -1;
++    }
++
++    /* FIXME: fuse_daemonize() calls chdir("/") */
++    ret = chdir(curdir);
++    if (ret == -1) {
++        error_setg(errp, "chdir() failed");
++        return -1;
++    }
++
++    i2c->ctx = iohandler_get_aio_context();
++
++    aio_set_fd_handler(i2c->ctx, fuse_session_fd(session),
++                       read_from_fuse_export, NULL,
++                       NULL, NULL, i2c);
++
++    i2c->fuse_session = session;
++
++    trace_remote_i2c_master_fuse_export();
++    return 0;
++}
++
++static void remote_i2c_timer_cb(void *opaque)
++{
++    RemoteI2CControllerState *s = opaque;
++    s->is_recv = (s->ioctl_state == I2C_IOCTL_RECV);
++    if (i2c_bus_busy(s->i2c_bus)) {
++        timer_mod(s->timer,
++                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 5);
++    } else {
++        i2c_bus_master(s->i2c_bus, s->bh);
++        i2c_schedule_pending_master(s->i2c_bus);
++    }
++}
++
++
++static void remote_i2c_bh(void *opaque)
++{
++    RemoteI2CControllerState *s = opaque;
++
++    if (s->is_recv) {
++        recv_data_from_slave(s, s->req, s->in_val, s->in_buf);
++    } else {
++        send_data_to_slave(s, s->req, s->in_val, s->in_buf);
++    }
++    i2c_end_transfer(s->i2c_bus);
++    i2c_bus_release(s->i2c_bus);
++
++    if (s->ioctl_state == I2C_IOCTL_FINISHED) {
++        s->ioctl_state = I2C_IOCTL_START;
++        s->last_ioctl = 0;
++    }
++}
++
++static void remote_i2c_realize(DeviceState *dev, Error **errp)
++{
++    RemoteI2CControllerState *s = REMOTE_I2C_MASTER(dev);
++
++    s->bh = qemu_bh_new(remote_i2c_bh, s);
++
++    s->timer = timer_new(QEMU_CLOCK_VIRTUAL, SCALE_MS,
++                         &remote_i2c_timer_cb, s);
++
++    s->is_open = false;
++    i2c_fuse_export(s, errp);
++}
++
++static const Property remote_i2c_props[] = {
++    DEFINE_PROP_LINK("i2cbus", RemoteI2CControllerState, i2c_bus,
++                     TYPE_I2C_BUS, I2CBus *),
++    DEFINE_PROP_STRING("devname", RemoteI2CControllerState, devname),
++};
++
++static void remote_i2c_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    device_class_set_props(dc, remote_i2c_props);
++    dc->realize = remote_i2c_realize;
++    dc->desc = "Remote I2C Controller";
++}
++
++static const TypeInfo remote_i2c_type = {
++    .name = TYPE_REMOTE_I2C_MASTER,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(RemoteI2CControllerState),
++    .class_init = remote_i2c_class_init
++};
++
++static void remote_i2c_register(void)
++{
++    type_register_static(&remote_i2c_type);
++}
++
++type_init(remote_i2c_register)
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index 1ad0e95c0e..960d46efb1 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -61,3 +61,18 @@ pca954x_read_data(uint8_t value) "PCA954X read data: 0x%02x"
+ 
+ imx_i2c_read(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] -> 0x%02" PRIx64
+ imx_i2c_write(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] <- 0x%02" PRIx64
++
++# remote-i2c-master.c
++remote_i2c_master_fuse_export(void)
++remote_i2c_master_fuse_io_read(void)
++remote_i2c_master_i2cdev_init(void)
++remote_i2c_master_i2cdev_open(void)
++remote_i2c_master_i2cdev_release(void)
++remote_i2c_master_i2cdev_read(void)
++remote_i2c_master_i2cdev_functional(void) "Send current master functional"
++remote_i2c_master_i2cdev_address(uint32_t address) "Set slave address: 0x%x"
++remote_i2c_master_i2cdev_send(uint32_t size) "Send data to slave. Size: 0x%x"
++remote_i2c_master_i2cdev_receive(uint32_t size) "Received data from slave. Size: 0x%x"
++remote_i2c_master_i2cdev_smbus(uint8_t state) "Received SMBus command. State: 0x%x"
++remote_i2c_master_i2cdev_ioctl(int cmd) "Start, command: 0x%x"
++remote_i2c_master_i2cdev_ioctl_finished(int cmd) "Finished, command: 0x%x"
+diff --git a/include/hw/i2c/remote-i2c-master.h b/include/hw/i2c/remote-i2c-master.h
+new file mode 100644
+index 0000000000..f6f6b36654
+--- /dev/null
++++ b/include/hw/i2c/remote-i2c-master.h
+@@ -0,0 +1,66 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Remote I2C master
++ *
++ * Author:
++ *   Ilya Chichkov <ilya.chichkov.dev@gmail.com>
++ *
++ */
++#ifndef HW_REMOTE_I2C_MASTER_H
++#define HW_REMOTE_I2C_MASTER_H
++
++#include "hw/sysbus.h"
++
++#define FUSE_USE_VERSION 31
++#include <fuse3/fuse.h>
++#include <fuse3/cuse_lowlevel.h>
++#undef FUSE_USE_VERSION
++
++#include <linux/i2c.h>
++#include <linux/i2c-dev.h>
++
++#define TYPE_REMOTE_I2C_MASTER "remote-i2c-master"
++
++#define REMOTE_I2C_MASTER(obj) \
++    OBJECT_CHECK(RemoteI2CControllerState, (obj), TYPE_REMOTE_I2C_MASTER)
++
++#define REMOTE_I2C_MASTER_BUF_LEN   256
++
++typedef enum i2c_ioctl_state {
++    I2C_IOCTL_START,
++    I2C_IOCTL_GET,
++    I2C_IOCTL_RECV,
++    I2C_IOCTL_SEND,
++    I2C_IOCTL_FINISHED,
++} i2c_ioctl_state;
++
++typedef struct RemoteI2CControllerState {
++    DeviceState parent_obj;
++
++    I2CBus *i2c_bus;
++
++    long address;
++    QEMUTimer *timer;
++    QEMUBH *bh;
++
++    char *name;
++    char *devname;
++
++    struct fuse_session *fuse_session;
++    struct fuse_buf fuse_buf;
++    struct fuse_pollhandle *ph;
++    bool is_open;
++
++    /* specific CUSE helpers */
++    i2c_ioctl_state ioctl_state;
++    uint32_t last_ioctl;
++
++    fuse_req_t req;
++    const struct i2c_smbus_ioctl_data *in_val;
++    const void *in_buf;
++    bool is_recv;
++
++    AioContext *ctx;
++} RemoteI2CControllerState;
++
++#endif /* HW_GD32_I2C_H */
+-- 
+2.43.0
 
 
