@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF2CDCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA3AECCD185
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v66IL-0002XI-Bi; Tue, 07 Oct 2025 07:55:55 -0400
+	id 1v66IC-0002Vq-H1; Tue, 07 Oct 2025 07:55:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66ID-0002W3-Ff
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:46 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1v66I9-0002VJ-Ic
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:41 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66I2-0001Is-0b
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:44 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-421851bcb25so3297551f8f.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:30 -0700 (PDT)
+ id 1v66I4-0001J3-Cd
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:40 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-46e2e6a708fso40542245e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759838128; x=1760442928; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wadTPCwXFuxv3rkBg5psQt7Tdr2R+gDLUZcgA9SZcQQ=;
- b=IufPZloLFg60XbbQN84180SDerR2/frgSDl3rfugj00WZf8bN6dzMdBSehiN28Zrl5
- H0H41gojv1cLjNVdDaXzKWCpXjQUVZyz+pJpND22DEFTko8PCjMfHRYNtr7cHN2wERI1
- /swUzqkFEmX3gzKarEhhxbWZe4oQl27sY/N1E5KK4VmKymZVL7sRs3tdhBW+R9nzRPav
- FTeUSs37I07uqVEdckyX50MmyEfVs9aHTIaW6EHPdcddUhkwCtchDKHRdn7O8CZfc+Ok
- rfNpoZOtGxh+96OEY7veXjjkkMF/Woe+yXxzkLSfoYjkWkQI7/kp0gYKXX8sih+WNvdA
- fL8g==
+ d=linaro.org; s=google; t=1759838130; x=1760442930; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tfKzT3g7Sn7qm7b/Z3n563XJAu3grg1Gx+XkESNMRc8=;
+ b=K0tUye3sP6qw+QpvMS0Wn++OAOwNX2JNIbLfLLI/1vVA0zQfcuqFEJl07FRl9Bv0BD
+ ZN+YDmXIBohyM1oLQZiEHGZnnP91Xw6QgfbliVlQ64pl2HctEwr6ODet8XI1b8cPsz/Q
+ mhOO49kyKm9G+ZOniRRxzqKdryQkz97Tp3Tc0xlyG9Y905jkkdDr09yEU2LZi1lWKymP
+ MZ16jQ61RC/3T7F/CAiZS7HzgugstsZbTVBtkOuqToKG4zCf+1kPriEtfVh1WQIm8fmh
+ wST90HR/xDw9QK/WRIoZpgT+1I04dg7P2p85N5WtahmKv8PnBzg8el6DGeNIyo+T9ZVk
+ dVUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759838128; x=1760442928;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wadTPCwXFuxv3rkBg5psQt7Tdr2R+gDLUZcgA9SZcQQ=;
- b=ZVdbTkV9BJFiMwv6Cfmkh7L42GYvMzfwt8ymLGV+OFnuZ8+Lvlklphgd/kh58AskiZ
- efJ0Qy/IrT5HoNvkepKcvnarUwocJvjRUhiE7nubvu7/y6zZNYz4Y9XK0w18HCr9oLF/
- DjA32Dr37JdJxV09ib/r/HMi33mdc3SiQkn3N4T4Zj+WFFyQ9QPcO2Grhk+67Mq4vzf5
- O+WsEGHLIA7wS5ZFeEDwKJ5k/wGfPIRXqV0RBIKHWtESVlamUeQwc7JyNZw6EBhUOZ0T
- JDwfxQG7JsvcN+6XgXIH3tU7d49LI9K8ReCTTKQQzSmHdMGPMAsQtLRVerM+8jyg8i8g
- dvyg==
-X-Gm-Message-State: AOJu0YxNdkPiw4omdh2lY6GrSSEwDlk8Ej1fgXIs9QVDmC49co5hXztR
- KXcplB3unRCuEbZ86q7taqpDBCCZJ+PwjxZ0Nr33g3oQLTqvAp2C7ykFuRxrROvyrard2aBEJJJ
- GvBzd
-X-Gm-Gg: ASbGncuTUV2EVg9NpI553uCHeUD2LH9ZiNQdzewMn6YvABrmQBYVjaDhVCkybeGlGOV
- j5yupyIfunsPyAabnsquu4VC5Uy28Z0uZwng5gSD7wFPGq+5kpaL5wRDZdD1ehF9RYQWG3lFEik
- JmbSF6BcQvZvyI/sQXuGZAFoazwzUL+cgBa+UsppwTK2wGlgQfTaUAZADn7gW3l6oJZjqzP7igA
- FUZGv60iB1VirCKvswixjq56QHF2/EZKZncjt6wZtTD14sMuOcpvfIC7vyhsYyl6QeFI9+bcxdC
- e8Ur3yheXrw8YdMW8vNjKGiz5Ell55obKW9ol6oNqUwCpnBW40MVgEt0r4wxMY4A+nAfgZ28cdH
- dxsCqLQRt1W8Jhxk9cHGRhnt3HMfMo0/l5/QRqxi1hqjzOIbMQBM=
-X-Google-Smtp-Source: AGHT+IHDNIfxpMs/gTM3z+Zw9lVKKIMZ5/YGPThuFK7X6t/vCocXNZ/4K4NivCNlnjx5nDt/a58mow==
-X-Received: by 2002:a5d:5f54:0:b0:3ee:155e:f61f with SMTP id
- ffacd0b85a97d-42567129e10mr8350657f8f.8.1759838127730; 
- Tue, 07 Oct 2025 04:55:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759838130; x=1760442930;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tfKzT3g7Sn7qm7b/Z3n563XJAu3grg1Gx+XkESNMRc8=;
+ b=CnOqRtey1xdZjEIroMZUHHd42M3camjoGrwOaOXnMuvIjW4xJU7h6QW0WJLVyywmRb
+ QTNH1jT0kbyvHvQjxsXjDhLkPw3t3tCFsdrSSTNZcLjUfOyQlasce7Fep6cPzIW5oEUX
+ RiVYfby3QXyVhUyKnqRISCncZyWXmVd7qhtROLgIfbfJnelxvjPvDVFMvYokXNnkrqKI
+ 4MBpEyaXlaS0Ay/ku2N0xHHQp1NjTDceBf2h6gBBsWdPGnkFhuNR1rQjPGd/1aAUNz6e
+ B29mj7GJ4bkyMjHCkPJ4+H/ttky4E2jGtYAD19jzWH8YniNCbE9odxUG2AnxKKFM7pLi
+ P+KA==
+X-Gm-Message-State: AOJu0Yz7cpCJ/d72n+cdcTxMcQsqtJddLAPwD7HLrapYONEyVr2pExFn
+ Jde17hvG4Ejpm8PG6KvA4jIUQfekMDqJALIYHwt7/vNjfN+g+J9E+cm1Xvuq4yg1PwU=
+X-Gm-Gg: ASbGncs2Qzk5FdnLQtcJnrHQ/lvETU9b1yBtRXJRmafEx2eGP4TqdEgMgerye8IhgDd
+ RJOtzSC2fYKdKhGjF49JISje2pL6qudyPKtVY2hm2TH1i5qRHBfOd/A+JaTl4n8h4FAEUn8qlFx
+ crELHiaOu7drXTqt2SAjnb75N/KdO7neVWtD4SgVNaXe7820UbeD8zVYDXhHnqUroi6KzDwhJT+
+ QZVHMHJJrUQJIWzncFTwKW5LdV7sUaK7wQC5FVby0/U/fK+3iQlaLx7GXvIlQ3N3yCeGuyzYB+T
+ 1C/oJjBjEILQaCU9M2kcrHSDtuSAz3EsvT6UvVSptuj/fblXes9vhyho2rKmQSN7K4i+jA8QEz7
+ 3rXqOkm3KypnHJGXtaCJx4pT1DL+yljliwVtZf0/wrZRm4RczdX0=
+X-Google-Smtp-Source: AGHT+IE8D0gOVtcXzNM933+TuUEyd/ukvbijt2lbFY5cmEuyR3ISzu0yNdz9iazXlIsHTs5RsQSvKg==
+X-Received: by 2002:a05:600c:1f16:b0:46e:345d:dfde with SMTP id
+ 5b1f17b1804b1-46fa81cd1e1mr4558435e9.16.1759838129726; 
+ Tue, 07 Oct 2025 04:55:29 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8ab8fdsm24889300f8f.15.2025.10.07.04.55.26
+ 5b1f17b1804b1-46e61a25dbcsm323942845e9.19.2025.10.07.04.55.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 07 Oct 2025 04:55:26 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 06ED05F872;
+ by draig.lan (Postfix) with ESMTP id 2CCA85F8B0;
  Tue, 07 Oct 2025 12:55:26 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 00/17] testing updates
-Date: Tue,  7 Oct 2025 12:55:08 +0100
-Message-ID: <20251007115525.1998643-1-alex.bennee@linaro.org>
+Subject: [PULL 02/17] .gitmodules: restore qemu-project mirror of u-boot
+Date: Tue,  7 Oct 2025 12:55:10 +0100
+Message-ID: <20251007115525.1998643-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251007115525.1998643-1-alex.bennee@linaro.org>
+References: <20251007115525.1998643-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,92 +102,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit eb7abb4a719f93ddd56571bf91681044b4159399:
+With this change also reference the upstream repo.
 
-  hw/intc/loongarch_dintc: Set class_size for LoongArchDINTCClass (2025-10-06 13:54:50 -0700)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20251001170947.2769296-3-alex.bennee@linaro.org>
 
-are available in the Git repository at:
-
-  https://gitlab.com/stsquad/qemu.git tags/pull-10.2-maintainer-071025-1
-
-for you to fetch changes up to 41f8f2be27736192bab29aa38380c9ebaae810fa:
-
-  record/replay: fix race condition on test_aarch64_reverse_debug (2025-10-07 09:15:45 +0100)
-
-----------------------------------------------------------------
-testing updates
-
- - tweak .gitpublish base to origin/master
- - restore .gitmodules to qemu-project hosts
- - drop 64 bits guests from i686
- - update aarch64/s390x custom runners to 24.04
- - tweak gitlab-runner registration method
- - make check-venv dependency for functional tests
- - replace avocado's gdb support with pygdbmi
- - remove avocado dependencies from reverse_debug tests
- - ensure replay.bin doesn't loose events after SHUTDOWN_HOST_QMP
-
-----------------------------------------------------------------
-Alex Bennée (7):
-      .gitpublish: use origin/master as default base
-      .gitmodules: restore qemu-project mirror of u-boot
-      .gitmodules: restore qemu-project mirror of u-boot-sam460ex
-      tests/lcitool: drop 64 bit guests from i686 cross build
-      tests/lcitool: bump custom runner packages to Ubuntu 24.04
-      gitlab: move custom runners to Ubuntu 24.04
-      scripts/ci: use recommended registration command
-
-Daniel P. Berrangé (2):
-      tests/functional: replace avocado process with subprocess
-      tests/functional: drop datadrainer class in reverse debugging
-
-Gustavo Romero (7):
-      tests/functional: Re-activate the check-venv target
-      python: Install pygdbmi in meson's venv
-      tests/functional: Provide GDB to the functional tests
-      tests/functional: Add GDB class
-      tests/functional: Add decorator to skip test on missing env vars
-      tests/functional: Adapt reverse_debugging to run w/o Avocado
-      tests/functional: Adapt arches to reverse_debugging w/o Avocado
-
-Vladimir Lukianov (1):
-      record/replay: fix race condition on test_aarch64_reverse_debug
-
- configure                                          |   2 +
- replay/replay.c                                    |   2 +
- .gitlab-ci.d/custom-runners.yml                    |   6 +-
- ...-22.04-aarch32.yml => ubuntu-24.04-aarch32.yml} |   8 +-
- ...-22.04-aarch64.yml => ubuntu-24.04-aarch64.yml} |  32 ++---
- ...untu-22.04-s390x.yml => ubuntu-24.04-s390x.yml} |  28 ++--
- .gitmodules                                        |   6 +-
- .gitpublish                                        |  16 +--
- meson_options.txt                                  |   2 +
- pythondeps.toml                                    |   1 +
- scripts/ci/setup/gitlab-runner.yml                 |  12 +-
- scripts/ci/setup/ubuntu/build-environment.yml      |  12 +-
- ...-2204-aarch64.yaml => ubuntu-2404-aarch64.yaml} |   4 +-
- ...untu-2204-s390x.yaml => ubuntu-2404-s390x.yaml} |   4 +-
- scripts/ci/setup/vars.yml.template                 |   5 +-
- scripts/meson-buildoptions.sh                      |   2 +
- tests/Makefile.include                             |   4 +-
- tests/docker/dockerfiles/debian-i686-cross.docker  |   2 +-
- tests/functional/aarch64/test_reverse_debug.py     |  12 +-
- tests/functional/meson.build                       |   6 +
- tests/functional/ppc64/test_reverse_debug.py       |  15 +-
- tests/functional/qemu_test/__init__.py             |   4 +-
- tests/functional/qemu_test/decorators.py           |  18 +++
- tests/functional/qemu_test/gdb.py                  |  86 ++++++++++++
- tests/functional/reverse_debugging.py              | 152 +++++++++++----------
- tests/functional/x86_64/test_reverse_debug.py      |  15 +-
- tests/lcitool/refresh                              |   6 +-
- 27 files changed, 288 insertions(+), 174 deletions(-)
- rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch32.yml => ubuntu-24.04-aarch32.yml} (78%)
- rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-aarch64.yml => ubuntu-24.04-aarch64.yml} (89%)
- rename .gitlab-ci.d/custom-runners/{ubuntu-22.04-s390x.yml => ubuntu-24.04-s390x.yml} (88%)
- rename scripts/ci/setup/ubuntu/{ubuntu-2204-aarch64.yaml => ubuntu-2404-aarch64.yaml} (96%)
- rename scripts/ci/setup/ubuntu/{ubuntu-2204-s390x.yaml => ubuntu-2404-s390x.yaml} (96%)
- create mode 100644 tests/functional/qemu_test/gdb.py
-
+diff --git a/.gitmodules b/.gitmodules
+index e27dfe8c2c1..e51abe65258 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -15,7 +15,8 @@
+ 	url = https://gitlab.com/qemu-project/qemu-palcode.git
+ [submodule "roms/u-boot"]
+ 	path = roms/u-boot
+-	url = https://gitlab.com/qemu-project-mirrors/u-boot.git
++        # upstream is https://github.com/u-boot/u-boot
++	url = https://gitlab.com/qemu-project/u-boot.git
+ [submodule "roms/skiboot"]
+ 	path = roms/skiboot
+ 	url = https://gitlab.com/qemu-project/skiboot.git
 -- 
 2.47.3
 
