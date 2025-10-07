@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792B1CCA472
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 11:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56ECBCCA472
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 12:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v66Im-0002jS-9Q; Tue, 07 Oct 2025 07:56:20 -0400
+	id 1v66Im-0002kr-Kw; Tue, 07 Oct 2025 07:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66IO-0002XM-05
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:58 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1v66IG-0002Wb-Pr
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:49 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v66IA-0001J7-0f
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:53 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e42fa08e4so58171925e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:33 -0700 (PDT)
+ id 1v66I4-0001JE-Vl
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 07:55:48 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso3654875f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 04:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759838130; x=1760442930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759838132; x=1760442932; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FUMZanu+fNDUlmwUPlkORZjFmvkzwi0xxbzJ7zLpfd8=;
- b=SeB49+VtU7hDNxTI9sQ2L89jw+7pU+VD/Kl3zi/nIaKWXcRNG0OWmH8QSFWD8jtjLW
- +gzfDAlBY57zlq5HiWuhWrIkAlDLDdMd52budato+ep9jQJvh53Z0SvthVkY7ueeDpHp
- Z/c5tronsVoCtio1hvDPjwYyTJrImeHn8Z/XbT8YMDocLFMjP1+SUMVf7E8Q4XfVoWF9
- fD8MtJs6s022VK/VmLU+SYwY/o54ACpM3nbYH+HS1mP/Pylh/dXZHqOJThGXTdeeKHy1
- uulVHgvONvXSUlMqNmtUbSv5cjz5KGT4BserDvEffjkIHedhwPbvmR6amnk7nzGP2bRX
- TYMQ==
+ bh=Echx4uRqwkJqs/Dj8ikICL6jA4XnDYHYFfWG4FU7iJ0=;
+ b=Uq5m+5G41Wyfs7t7cNxZ46Zl9l9onSR2TPnX2+kT820IfQEkdKN+a4FCemLzUHcCYU
+ hlLL0V5QSi7DIuG3hfvMZYVtz4/Zv3lz4f6WcwE2x/Oyk/8DmuROIsnYqhczowgveGu2
+ 7N2X6pb0LyUgee3NIgPyzpxuk/t0VPYblMJNBYV8ybYvN/52VqhlPHV67jo0v1YVDzPT
+ RKpmIqjHDcs4IdfRupQ9UapS7sG2ia20C2bdSPG2CG7yW3zddFxrlgmbHuspbWgwtfwh
+ mmLV+w5t/gXKLcj/Y70X7rTY3n08fKNK6xy1LGWBs+zoXmhYbPjsiYgCHNPHJ560pqmM
+ VJgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759838130; x=1760442930;
+ d=1e100.net; s=20230601; t=1759838132; x=1760442932;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FUMZanu+fNDUlmwUPlkORZjFmvkzwi0xxbzJ7zLpfd8=;
- b=feWqgWpGa97kDQWW+xeJEAGOaoGifuQ3U9np2tAoTZ62GRdkaE0c4bw22mWsLvkb6G
- oOXEa09vrxiHnarQJ5UE5II3FmJlINzSDq/PKu5myr4FRxdylwCx7dibJNoFUYLA7Z1k
- 0HhwJI1Dn1lWCo4tz25XDre0JqeSOpnH8j5cYl+bGYui4eoBx7jgPVc18CXxAaW/pZol
- q+qz7K4uXYm6Y+IMbjEK/bfOW19Kr6iQvsrqIT79oIYSDpKiAwqq5iaBf7b+PyrBtm+D
- HsQjfEw+VJnwelglkFWUxGtiHnGeyuqrtBuTcwbnXDD69TfGbRxytHQRW5eQUhFwfhTl
- 0GVw==
-X-Gm-Message-State: AOJu0Yw7hOWajzJKGP1urlg58KI6iUxhM+4eNTvh1t9qc2acuksc1OVY
- qF6432rJ306bXPrUr3SZHjN/D+3T/Nk5GDs+NwecdQQBs8CS5IL7Vu3vnnVc7srl6+s7hjlobqQ
- qBCgN
-X-Gm-Gg: ASbGncsjRYyUUcbqx5fADiYCsqqGB1NuDzKBjsaxnixVkxMx3exm/0qM5DQpjlkJsp3
- fSWVJ9QBufWt3WHKN/MjnjfOAvuinTqVJZGadlUXwHsvSn6leY1pW4xD3dRhvgjRv4qWwB8u0uf
- IRTzjUFSDzT/qdoDg92MGaG7KAEikdO6ivtPqBPZDvR/JGJsQbIvZD8UEv8ZqqVJiSMwa/z2Qd9
- f8SqixQdJV7YmUVbNCrnpvRXKKYCOxXLfSLHBfHS/FLUCunY8d48Br4MJGGUt9iPEJid56VFBNS
- KKjlCB6bTFILxps5wH1Vc8BNxNxeUUadtyiUTehOibNylbfFWZ0o9ffSG6Ddp/0E2o292c0CXiz
- vFJiZ7M3aoYZaZf8QkLI8cfjSE/M/1JTjQvqmfwmqHoG4bMymQfg=
-X-Google-Smtp-Source: AGHT+IG+NDIKAhaQgWX1QoCh3PJ0Sn/Z5H3bGK2aXEH1n1p7fZiSFn8pAk/su3yVCufivW15ElTvvw==
-X-Received: by 2002:a05:600c:1384:b0:46e:4580:c6c5 with SMTP id
- 5b1f17b1804b1-46e7115cac6mr90558025e9.35.1759838130475; 
- Tue, 07 Oct 2025 04:55:30 -0700 (PDT)
+ bh=Echx4uRqwkJqs/Dj8ikICL6jA4XnDYHYFfWG4FU7iJ0=;
+ b=RiT7xupi/1rhUI5hPi7NEJxo+NfVBfExLM278ApSZCRz7S2H9DBCt1bt4dPOdKhWYb
+ crBdRDlNWrvJ+wBJ0wBnxdREpJVmkXMQdXIiacP0zIg7G7P2+uJ10BogqGDbyL3HVzLc
+ 8Kq7ljvQG36u9ljZ7PuGt1cCbxKo9zIj7dsfky3B8e2gXfvpx42rUdtIYmKWgoIiO8Yo
+ VP0JME+Uvtq3sjMvuBv51wLGVkqiQ+S9VzYKd+NawDmMqvc3k5GhauRBo6Frg9mF7SsJ
+ 48GAmHZjSpijVy395BYCFU31phwbq3GP7w+GcuFb+PSYOICPbriwpGQrckozUEpqGv24
+ v6/g==
+X-Gm-Message-State: AOJu0YzrqZjuY1kxm7H5oaHhJVIRiM+OBYuSUcQHTRN1iW2sNO+RBJNF
+ mdJstxCOaNq5aesq6/NGY9mr9WJOXb/cB9JEgZZgeCFqNi/Q46sgJ+/pj6VK1jze2VtNedZmUYR
+ KYlUH
+X-Gm-Gg: ASbGncvLQfAZwgcZ+s8VXPYiIm7B4b58jWzQ8go2YdNK2IgaeGJwEFA7z7nsIShwlKx
+ c7wVdFE8Jzh4CgfMTFtzTdZukXKacSmFZnPMZN0E5p46od3JF0bcxjQleXRm1282Xh5dvR1j4MI
+ 33TAeQjFVUad5x042a+13aeDaGxs9OmAkLaIFs6GSKTCGw4LBTBWJdMz8+TKPlPw04qY/VlOpLC
+ 54k3ylV1PSkCuiwyMJqNTe+lSTXCBFNSxKQzZn9kB8dzZ3b2VANUnzEH3zozSqn5magHyZ1MZyO
+ RTv1iecJtW5jjSMqyZC0bRMLFhQQzmizbyjQWiTluelxEZdMXj9pfUQ/KRl8BRcynUMtTyXwsFY
+ rc5zCy6FemEgpP7vLJCMBb63rp6s9RlLlcve1uDDhKkgbjXqheFo=
+X-Google-Smtp-Source: AGHT+IFDaa57kCZt8PFGY7eiKzO2uSJZh9SwLhgql11nCKTo9OYjrFpvrxQGwImzumwMpWx61PKNdQ==
+X-Received: by 2002:a05:6000:18a9:b0:411:3c14:3aa1 with SMTP id
+ ffacd0b85a97d-42567139debmr9962416f8f.3.1759838132223; 
+ Tue, 07 Oct 2025 04:55:32 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e675b557fsm301406395e9.0.2025.10.07.04.55.26
+ ffacd0b85a97d-4255d8abe9bsm25445095f8f.22.2025.10.07.04.55.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 04:55:26 -0700 (PDT)
+ Tue, 07 Oct 2025 04:55:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3FF825FA33;
+ by draig.lan (Postfix) with ESMTP id 82F5B5FBEE;
  Tue, 07 Oct 2025 12:55:26 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 03/17] .gitmodules: restore qemu-project mirror of
- u-boot-sam460ex
-Date: Tue,  7 Oct 2025 12:55:11 +0100
-Message-ID: <20251007115525.1998643-4-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 06/17] gitlab: move custom runners to Ubuntu 24.04
+Date: Tue,  7 Oct 2025 12:55:14 +0100
+Message-ID: <20251007115525.1998643-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251007115525.1998643-1-alex.bennee@linaro.org>
 References: <20251007115525.1998643-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,25 +106,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With this change also reference the upstream repo.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20251001170947.2769296-4-alex.bennee@linaro.org>
+Message-ID: <20251001170947.2769296-7-alex.bennee@linaro.org>
 
-diff --git a/.gitmodules b/.gitmodules
-index e51abe65258..c307216d173 100644
---- a/.gitmodules
-+++ b/.gitmodules
-@@ -28,7 +28,8 @@
- 	url = https://gitlab.com/qemu-project/seabios-hppa.git
- [submodule "roms/u-boot-sam460ex"]
- 	path = roms/u-boot-sam460ex
--	url = https://gitlab.com/qemu-project-mirrors/u-boot-sam460ex.git
-+        # upstream is https://github.com/zbalaton/u-boot-sam460ex
-+	url = https://gitlab.com/qemu-project/u-boot-sam460ex.git
- [submodule "roms/edk2"]
- 	path = roms/edk2
- 	url = https://gitlab.com/qemu-project/edk2.git
+diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
+index 2d493f70f7a..3eb8216d571 100644
+--- a/.gitlab-ci.d/custom-runners.yml
++++ b/.gitlab-ci.d/custom-runners.yml
+@@ -29,6 +29,6 @@
+       junit: build/meson-logs/*.junit.xml
+ 
+ include:
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml'
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml'
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+similarity index 78%
+rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+index 8727687e2b4..75029c9187e 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-22.04 jobs should run successfully in an environment
++# All ubuntu-24.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 22.04"
++# "Install basic packages to build QEMU on Ubuntu 24.04"
+ 
+-ubuntu-22.04-aarch32-all:
++ubuntu-24.04-aarch32-all:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch32
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+similarity index 89%
+rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+index ca2f1404710..d26c7827f45 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-22.04 jobs should run successfully in an environment
++# All ubuntu-24.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 22.04"
++# "Install basic packages to build QEMU on Ubuntu 24.04"
+ 
+-ubuntu-22.04-aarch64-all-linux-static:
++ubuntu-24.04-aarch64-all-linux-static:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -23,12 +23,12 @@ ubuntu-22.04-aarch64-all-linux-static:
+  - make check-tcg
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-all:
++ubuntu-24.04-aarch64-all:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -45,12 +45,12 @@ ubuntu-22.04-aarch64-all:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-without-defaults:
++ubuntu-24.04-aarch64-without-defaults:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -67,12 +67,12 @@ ubuntu-22.04-aarch64-without-defaults:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-alldbg:
++ubuntu-24.04-aarch64-alldbg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -86,12 +86,12 @@ ubuntu-22.04-aarch64-alldbg:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-clang:
++ubuntu-24.04-aarch64-clang:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -108,11 +108,11 @@ ubuntu-22.04-aarch64-clang:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-tci:
++ubuntu-24.04-aarch64-tci:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -128,12 +128,12 @@ ubuntu-22.04-aarch64-tci:
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc --ignore=40`
+ 
+-ubuntu-22.04-aarch64-notcg:
++ubuntu-24.04-aarch64-notcg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+similarity index 88%
+rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+index e62ff1763fa..45dbee17880 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-22.04 jobs should run successfully in an environment
++# All ubuntu-24.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 22.04"
++# "Install basic packages to build QEMU on Ubuntu 24.04"
+ 
+-ubuntu-22.04-s390x-all-linux:
++ubuntu-24.04-s390x-all-linux:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -21,12 +21,12 @@ ubuntu-22.04-s390x-all-linux:
+  - make --output-sync check-tcg
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-all-system:
++ubuntu-24.04-s390x-all-system:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  timeout: 75m
+  rules:
+@@ -42,12 +42,12 @@ ubuntu-22.04-s390x-all-system:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-alldbg:
++ubuntu-24.04-s390x-alldbg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -65,12 +65,12 @@ ubuntu-22.04-s390x-alldbg:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-clang:
++ubuntu-24.04-s390x-clang:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -87,11 +87,11 @@ ubuntu-22.04-s390x-clang:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-tci:
++ubuntu-24.04-s390x-tci:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -107,12 +107,12 @@ ubuntu-22.04-s390x-tci:
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+ 
+-ubuntu-22.04-s390x-notcg:
++ubuntu-24.04-s390x-notcg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
 -- 
 2.47.3
 
