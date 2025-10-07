@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD5DCCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 18:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D10CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 18:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6CXH-0005yn-Oe; Tue, 07 Oct 2025 14:35:43 -0400
+	id 1v6CXK-000664-Qk; Tue, 07 Oct 2025 14:35:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6CWi-0005oB-GG
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:35:09 -0400
+ id 1v6CWn-0005oV-Ax
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:35:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6CWf-0002qF-GI
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:35:08 -0400
+ id 1v6CWf-0002pz-3Z
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:35:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759862104;
+ s=mimecast20190719; t=1759862103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=05ZWYAXl5ZwTZ0FtrkUAUoGr1gQfXaB5RyM4Ta7fz84=;
- b=Y5OGIG9GaQDiTbl4mWkNRIxsCCGID95264lBD8+yXg8B2su2Grrqi9yI1CoTRKTzRWs0Cu
- pQNYiZL731PhPzMyjNSprHU/gf8pBKEPqLtGN0CeCZ6A8ejSOQkM9HbI7YMzXVArc55BU0
- wNSIE3aJwlW0GxbkyOIaks3Toy+5uzI=
+ bh=oT0Pgap99n2+YSNINo4XgcnXxn2KZv6jwWIxQ2bC8+o=;
+ b=apbbXmHGW8c/6qDeMEeO8T4NVAvbjV4CbIuG8YZzRZJYzhhsfdJ8ayUhCaDv5xCbgCSxVu
+ 59Pi5C35qO1JiMtY2K15Y2sZv6zaw4k08Tjcfmsb3sGTFTTImOzoSi7b6KGMxTKURx0R1r
+ NSm6vjp+cjCI3pLyPGgwmirxBPGv3mA=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-kldb1I1zN8SxpSlsCacXHg-1; Tue,
- 07 Oct 2025 14:35:02 -0400
-X-MC-Unique: kldb1I1zN8SxpSlsCacXHg-1
-X-Mimecast-MFC-AGG-ID: kldb1I1zN8SxpSlsCacXHg_1759862101
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-o-r2Azk3MUSfXtCvf58x8Q-1; Tue,
+ 07 Oct 2025 14:35:00 -0400
+X-MC-Unique: o-r2Azk3MUSfXtCvf58x8Q-1
+X-Mimecast-MFC-AGG-ID: o-r2Azk3MUSfXtCvf58x8Q_1759862099
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B346F1956096; Tue,  7 Oct 2025 18:35:01 +0000 (UTC)
+ id C070F19560BA; Tue,  7 Oct 2025 18:34:59 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.87])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E3F31956056; Tue,  7 Oct 2025 18:35:01 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 242CF30002C6; Tue,  7 Oct 2025 18:34:58 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
  qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 5/5] tests/functional: add vdpa-blk blockdev-mirror test
-Date: Tue,  7 Oct 2025 14:34:47 -0400
-Message-ID: <20251007183447.93120-6-stefanha@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>, Yingshun Cui <yicui@redhat.com>
+Subject: [PATCH v2 4/5] block: update inserted/removed nodes from
+ BlockRAMRegistrar
+Date: Tue,  7 Oct 2025 14:34:46 -0400
+Message-ID: <20251007183447.93120-5-stefanha@redhat.com>
 In-Reply-To: <20251007183447.93120-1-stefanha@redhat.com>
 References: <20251007183447.93120-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -69,7 +70,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,156 +86,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test case that reproduces
-https://issues.redhat.com/browse/RHEL-88175.
+BlockRAMRegistrar ensures that RAMBlocks are registered with
+BlockDriverStates. This is essential for vdpa-blk because they need to
+know the memory mappings of I/O buffers. However, BlockRAMRegistrar is
+currently unaware of changes to the block graph and newly inserted nodes
+have no RAMBlocks registered.
 
-When the mirror blockjob completes, it replaces the original vdpa-blk
-blockdev node with a new vdpa-blk blockdev. This will only work if the
-BlockRAMRegistrar populates memory mappings (see the previous commit).
+Use the new blk_add_attach_notifier() and blk_add_detach_notifier() APIs
+to bring nodes up to speed when the graph changes. This fixes vdpa-blk
+across mirror and other operations that modify the block graph.
+Previously I/O would not succeed after a new node was inserted due to
+missing memory mappings.
 
+Buglink: https://issues.redhat.com/browse/RHEL-88175
+Reported-by: Yingshun Cui <yicui@redhat.com>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- tests/functional/x86_64/meson.build           |   1 +
- .../functional/x86_64/test_vdpa_blk_mirror.py | 118 ++++++++++++++++++
- 2 files changed, 119 insertions(+)
- create mode 100755 tests/functional/x86_64/test_vdpa_blk_mirror.py
+ include/system/block-ram-registrar.h |  2 +
+ block/block-ram-registrar.c          | 61 +++++++++++++++++++++++++++-
+ 2 files changed, 61 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index f78eec5e6c..dfe0e00190 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -33,6 +33,7 @@ tests_x86_64_system_thorough = [
-   'replay',
-   'reverse_debug',
-   'tuxrun',
-+  'vdpa_blk_mirror',
-   'vfio_user_client',
-   'virtio_balloon',
-   'virtio_gpu',
-diff --git a/tests/functional/x86_64/test_vdpa_blk_mirror.py b/tests/functional/x86_64/test_vdpa_blk_mirror.py
-new file mode 100755
-index 0000000000..7d52836920
---- /dev/null
-+++ b/tests/functional/x86_64/test_vdpa_blk_mirror.py
-@@ -0,0 +1,118 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Copyright Red Hat, Inc.
-+#
-+# vdpa-blk mirror blockjob tests
+diff --git a/include/system/block-ram-registrar.h b/include/system/block-ram-registrar.h
+index 76c157bd54..292c197d1c 100644
+--- a/include/system/block-ram-registrar.h
++++ b/include/system/block-ram-registrar.h
+@@ -22,6 +22,8 @@
+ typedef struct {
+     BlockBackend *blk;
+     RAMBlockNotifier ram_block_notifier;
++    Notifier blk_attach_notifier;
++    Notifier blk_detach_notifier;
+     bool ok;
+ } BlockRAMRegistrar;
+ 
+diff --git a/block/block-ram-registrar.c b/block/block-ram-registrar.c
+index d5b84667a1..2d334c5655 100644
+--- a/block/block-ram-registrar.c
++++ b/block/block-ram-registrar.c
+@@ -7,7 +7,9 @@
+ #include "qemu/osdep.h"
+ #include "system/block-backend.h"
+ #include "system/block-ram-registrar.h"
++#include "system/ramblock.h"
+ #include "qapi/error.h"
++#include "trace.h"
+ 
+ static void ram_block_added(RAMBlockNotifier *n, void *host, size_t size,
+                             size_t max_size)
+@@ -22,8 +24,8 @@ static void ram_block_added(RAMBlockNotifier *n, void *host, size_t size,
+ 
+     if (!blk_register_buf(r->blk, host, max_size, &err)) {
+         error_report_err(err);
+-        ram_block_notifier_remove(n);
+-        r->ok = false;
++        blk_ram_registrar_destroy(r);
++        return;
+     }
+ }
+ 
+@@ -35,6 +37,50 @@ static void ram_block_removed(RAMBlockNotifier *n, void *host, size_t size,
+     blk_unregister_buf(r->blk, host, max_size);
+ }
+ 
++static void blk_attached(Notifier *n, void *data)
++{
++    BlockRAMRegistrar *r =
++        container_of(n, BlockRAMRegistrar, blk_attach_notifier);
++    BlockBackendAttachDetachArgs *args = data;
++    BlockDriverState *bs = args->bs;
++    Error *err = NULL;
 +
++    WITH_RCU_READ_LOCK_GUARD() {
++        RAMBlock *rb;
 +
-+import glob
-+import os
-+import subprocess
-+from qemu_test import LinuxKernelTest, Asset
-+from qemu_test import exec_command_and_wait_for_pattern
++        RAMBLOCK_FOREACH(rb) {
++            ram_addr_t max_size = qemu_ram_get_max_length(rb);
++            void *host = qemu_ram_get_host_addr(rb);
 +
++            if (!bdrv_register_buf(bs, host, max_size, &err)) {
++                goto err;
++            }
++        }
++    }
 +
-+def run(cmd: str) -> None:
-+    '''
-+    Run a shell command without capturing stdout/stderr and raise
-+    subprocess.CalledProcessError on failure.
-+    '''
-+    subprocess.check_call(cmd, shell=True,
-+                          stdout=subprocess.DEVNULL,
-+                          stderr=subprocess.DEVNULL)
++    return;
 +
++err:
++    error_report_err(err);
++    blk_ram_registrar_destroy(r);
++}
 +
-+class VdpaBlk(LinuxKernelTest):
++static void blk_detached(Notifier *n, void *data)
++{
++    BlockBackendAttachDetachArgs *args = data;
++    BlockDriverState *bs = args->bs;
++    RAMBlock *rb;
 +
-+    KERNEL_COMMAND_LINE = 'printk.time=0 console=ttyS0 rd.rescue'
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
-+    VDPA_DEV_1 = f'vdpa-{os.getpid()}-1'
-+    VDPA_DEV_2 = f'vdpa-{os.getpid()}-2'
++    RCU_READ_LOCK_GUARD();
 +
-+    def setUp(self) -> None:
-+        def create_vdpa_dev(name):
-+            '''
-+            Create a new vdpasim_blk device and return its vhost_vdpa device
-+            path.
-+            '''
-+            run(f'sudo -n vdpa dev add mgmtdev vdpasim_blk name {name}')
-+            sysfs_vhost_vdpa_dev_dir = \
-+                glob.glob(f'/sys/bus/vdpa/devices/{name}/vhost-vdpa-*')[0]
-+            vhost_dev_basename = os.path.basename(sysfs_vhost_vdpa_dev_dir)
-+            vhost_dev_path = f'/dev/{vhost_dev_basename}'
-+            run(f'sudo -n chown {os.getuid()}:{os.getgid()} {vhost_dev_path}')
-+            return vhost_dev_path
++    RAMBLOCK_FOREACH(rb) {
++        ram_addr_t max_size = qemu_ram_get_max_length(rb);
++        void *host = qemu_ram_get_host_addr(rb);
 +
-+        try:
-+            run('sudo -n modprobe vhost_vdpa')
-+            run('sudo -n modprobe vdpa_sim_blk')
++        bdrv_unregister_buf(bs, host, max_size);
++    }
++}
 +
-+            self.vhost_dev_1_path = create_vdpa_dev(self.VDPA_DEV_1)
-+            self.vhost_dev_2_path = create_vdpa_dev(self.VDPA_DEV_2)
-+        except subprocess.CalledProcessError:
-+            self.skipTest('Failed to set up vdpa_blk device')
-+
-+        super().setUp()
-+
-+    def tearDown(self) -> None:
-+        super().tearDown()
-+
-+        try:
-+            run(f'sudo -n vdpa dev del {self.VDPA_DEV_2}')
-+            run(f'sudo -n vdpa dev del {self.VDPA_DEV_1}')
-+            run('sudo -n modprobe --remove vdpa_sim_blk')
-+            run('sudo -n modprobe --remove vhost_vdpa')
-+        except subprocess.CalledProcessError:
-+            pass # ignore failures
-+
-+    def test_mirror(self) -> None:
-+        '''
-+        Check that I/O works after a mirror blockjob pivots. See
-+        https://issues.redhat.com/browse/RHEL-88175.
-+        '''
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+
-+        self.vm.add_args('-m', '1G')
-+        self.vm.add_args('-object', 'memory-backend-memfd,id=mem,size=1G')
-+        self.vm.add_args('-machine', 'pc,accel=kvm:tcg,memory-backend=mem')
-+        self.vm.add_args('-append', self.KERNEL_COMMAND_LINE)
-+        self.vm.add_args('-blockdev',
-+            'virtio-blk-vhost-vdpa,node-name=vdpa-blk-0,' +
-+            f'path={self.vhost_dev_1_path},cache.direct=on')
-+        self.vm.add_args('-device', 'virtio-blk-pci,drive=vdpa-blk-0')
-+
-+        self.launch_kernel(kernel_path, initrd_path,
-+                           wait_for='# ')
-+
-+        self.vm.cmd('blockdev-add',
-+                    driver='virtio-blk-vhost-vdpa',
-+                    node_name='vdpa-blk-1',
-+                    path=self.vhost_dev_2_path,
-+                    cache={'direct': True})
-+        self.vm.cmd('blockdev-mirror',
-+                    device='vdpa-blk-0',
-+                    job_id='mirror0',
-+                    target='vdpa-blk-1',
-+                    sync='full',
-+                    target_is_zero=True)
-+        self.vm.event_wait('BLOCK_JOB_READY')
-+        self.vm.cmd('block-job-complete',
-+                    device='mirror0')
-+
-+        exec_command_and_wait_for_pattern(self,
-+            'dd if=/dev/vda of=/dev/null iflag=direct bs=4k count=1',
-+            '4096 bytes (4.1 kB, 4.0 KiB) copied')
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ void blk_ram_registrar_init(BlockRAMRegistrar *r, BlockBackend *blk)
+ {
+     r->blk = blk;
+@@ -47,14 +93,25 @@ void blk_ram_registrar_init(BlockRAMRegistrar *r, BlockBackend *blk)
+          * value that does not change across resize.
+          */
+     };
++    r->blk_attach_notifier = (Notifier){
++        .notify = blk_attached,
++    };
++    r->blk_detach_notifier = (Notifier){
++        .notify = blk_detached,
++    };
+     r->ok = true;
+ 
+     ram_block_notifier_add(&r->ram_block_notifier);
++    blk_add_attach_notifier(blk, &r->blk_attach_notifier);
++    blk_add_detach_notifier(blk, &r->blk_detach_notifier);
+ }
+ 
+ void blk_ram_registrar_destroy(BlockRAMRegistrar *r)
+ {
+     if (r->ok) {
++        notifier_remove(&r->blk_detach_notifier);
++        notifier_remove(&r->blk_attach_notifier);
+         ram_block_notifier_remove(&r->ram_block_notifier);
++        r->ok = false;
+     }
+ }
 -- 
 2.51.0
 
