@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3C0CCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 09:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9394ECCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 09:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v64Ku-0007Eh-RI; Tue, 07 Oct 2025 05:50:25 -0400
+	id 1v64La-0007Nc-21; Tue, 07 Oct 2025 05:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v64Ks-0007E1-Rv
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:50:22 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1v64LF-0007Fi-EF
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:50:45 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v64Kq-0003I9-2O
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:50:22 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-71d60110772so60582177b3.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 02:50:19 -0700 (PDT)
+ id 1v64LC-0003Iu-PX
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 05:50:45 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-635349b6fe6so4930078d50.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 02:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759830618; x=1760435418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759830641; x=1760435441; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dd3HAV1p80VpWKfyRd4aQR0J95DXAq/zpGcN7qI7ITA=;
- b=nGyLCvIb+1fqerjozO/MyNuoKtKoaLT8VKEYqP1KVmndxs0PoBEStVQooIEm36f6v8
- +Dhn9MCAfZKA4o+zdSbKpEURGZg9Pq1nGcDqTZG38nmROBFQHfvBgBwQ82k2auHWLHLP
- ib6KBFWG5AN72EIxroUjsWU+P8g/18KBHNjmSSBNk5utyhKzNvKLMQMJT3KS8HQ+FwWf
- pFCn4uAQjjUgQZ/9qQIh+g32jXzP4pkj9HlNmAjwbB3QkPjnfDltyDMBH+YqX3XWgvTU
- 6eV2K9wRwoQciTmxbd8eEfy7cphWRNJUEHvn+KZSde9BBKENaMyxUXj6eu5tuDW4g9lr
- 53ug==
+ bh=6QQRlGq5iEz0PqBDGwqnp4uIgDuZXe6UJ5EjGAWxfQU=;
+ b=ZpAXx2USPhisQMsTkMxy0UerS36/qqDJjhVCtR08I6+d0EI1TpyyI2r0of1/IOV9lA
+ jTBB154EuBp9u08ahC4VYSzZeCnZBLSKYY+bgJXPQb0NUsTMVI3mBHvCFtJp2VqQzvzF
+ cX7mVyCCM8JsFkLydDtU0P06mfiWByUc24Zn6CC88vT+VVGkfQit5vau7xH6AG4XfCY1
+ AeCLEWz038JIGro5mlve2ItQ5v191LchmNGsEkTRCVUxquMWbqPJem0goJWuYz1WJ7GH
+ HNYPoCEjAJk8GWtsQ7OppwkPFqk3WaRVHOPrE9pvMBHxGrHjZVIBpjvfPp0nPQ5qA9xg
+ w1PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759830618; x=1760435418;
+ d=1e100.net; s=20230601; t=1759830641; x=1760435441;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dd3HAV1p80VpWKfyRd4aQR0J95DXAq/zpGcN7qI7ITA=;
- b=u2351JZrl8MPbSDtreDUGHoURvM+PFGUAF/OVfCnIJMfTt3lIrD/qbmMoeHs1dYoZb
- GfWfUUQEN4lFFLGUxZVF8bB1H6Iu05K9LdUEG2NKjJd28XDKIdnBAo9Xve8Dki7M9pOD
- R/O3L7zeNsP7X/JVgWk4lw//LSnYaLz+37Zfe5H93ZHkKECs1TOg31WzbzxTNDkRNmbU
- CIeHFUqD978FNGI9sbJfxO9BOReJzUUBcrqduIaSdQ1wtG5qr9gCpEhZAru8lpBUilZO
- 1YluMhieN/S/VZqsDIbpgo6h97S+pcGSb3bRpZsBVkdQLoAOKeyrd1J8cj6b7dNJki71
- rnGw==
-X-Gm-Message-State: AOJu0YxSjhxJU9UtFepZAwlReb8QtqszZQDYgntvkLmiIsgYfBPWbzoL
- 2b+HTcw0QOR7V4X0KVh1Q5mGTveOgbj9UxbLkMKao/MuShiiOPqx2LtR5YxEmRD59HnTPxe0VWf
- RxTYySZV/G1ui93MCOqU9HIG+WxItkOaYjBtCTMg4xWtkW1ULrvhB
-X-Gm-Gg: ASbGnctRRNI2tp4tJEOhmL2UdWKiwYWJpsgyNHMRRfHpQKIEk9ddXTglGQCnPpdoP+W
- /h2jUQH5ei+j2p9yN7V0+2uWBaMvfWi9ncLyW3CvNV2C0IjDxNPQpFDMkb0fNM/XOMzs1+m43b2
- a3otsobf5NkPDOotcrZ3pHrG2cUhRLXJZxvULm2a2gyX41l+HphhSZFslMhws6Hs23NYHHCFIPQ
- QWAL95rVwU+C4raUrGsIADEbnBBnBL5l4TC
-X-Google-Smtp-Source: AGHT+IFBSDZaRfUA0PhdtuZfWsUfNh++pegHP6ING5ZFSMqlU5Zr97ceSyexfYE6nBD6OvL5boyw32b+GV3jkA45qeI=
-X-Received: by 2002:a05:690c:62ca:b0:77f:90dd:af46 with SMTP id
- 00721157ae682-77f945930b1mr244167027b3.3.1759830618282; Tue, 07 Oct 2025
- 02:50:18 -0700 (PDT)
+ bh=6QQRlGq5iEz0PqBDGwqnp4uIgDuZXe6UJ5EjGAWxfQU=;
+ b=AKL1usuvH5fwXpBZKbDzk3mK1I/ageEE2WnWpioE4OEW05YRQH1INwrOidNeBxfMYn
+ sf8Xi2VfYYaR9FCp58N8BwbMjCCGsPpcWFnpGCyq8lN6XrQrDaUen/Gln3H82EFyyP4T
+ QpiUcCbuCxpkLZFuG7/I1DAHaXpjjmZvXJrIoQQheJi0fr0NUrtHEgwgsMdxuuJcIxtM
+ e7LjnF7XvWRqHG1ilAnSY13gOfOPUmGMhGIg1n/8q5Ibcrlw7wyf0gG8SrpUR0vLIvAQ
+ fWHEW8+3xhl6hZN8HYpV+lUk/Lod6c+M3eliQMKmvQ7naDdZT9NPjI2NbkHW09wcT2/z
+ SCcQ==
+X-Gm-Message-State: AOJu0Yy2XYmI2TKzNOX5PSUVYXQ+j6Fu0fB0KiTwOnprPVVIiIJ8DCXY
+ WzBrA4hAr/grwVyx/fjsCnzpZxHf/i0FFsffAkg/ypqrtZK10q7Da+ab4/4YcBD4wd3ErFJNzRG
+ bVzcDTkAGypOSFSxiPvxnN9t6BLBe70gWT9aeZvGeEQ==
+X-Gm-Gg: ASbGncvfMkNKn8LlWc48M+QoOP1U1WdTHBaP1EM3iL+v165CaUi8gLfTSvZfbBI1qLe
+ +rW+yUSZMKgzpl7ywKPShGNxwjzDT77a0WWLnMhR/6G107+u88Z+Ho79xeBOALgh03vmJHhmLwL
+ XVLXvrwlVQHSKKWB4HWjg5VViQ/pF0VGr2rjrquJXUTL0G9qFKStpfyK8koMlj6mY0Fww8Gmd2C
+ 0ku6a/+44DxKEI9Izvltd31vSjgzCIF6slf
+X-Google-Smtp-Source: AGHT+IFieBnq/e7LlyNcrWqS4M6wCuEHmQlZlq5ZwlEVYFlZE9046+gKtjdrutxjZglysm+94ZH/DoRgxoO8C9evV/8=
+X-Received: by 2002:a53:a0ca:0:b0:633:ab16:f82c with SMTP id
+ 956f58d0204a3-63b9a0701b0mr11536282d50.18.1759830640358; Tue, 07 Oct 2025
+ 02:50:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251001084047.67423-1-philmd@linaro.org>
-In-Reply-To: <20251001084047.67423-1-philmd@linaro.org>
+References: <20250930115718.437100-1-chigot@adacore.com>
+In-Reply-To: <20250930115718.437100-1-chigot@adacore.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 Oct 2025 10:50:06 +0100
-X-Gm-Features: AS18NWDc_Dwl6juhRQ_ZxETKrD6zuLry2BB3t0yD1C3-mW6O2QHvLSHkTHTmRNE
-Message-ID: <CAFEAcA9_Ysh7CEj5UcEadR-mDSGPcBFQN7V-PvkVg8yLLZnRjA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: Remove sl_bootparam_write() and
- 'hw/arm/sharpsl.h' header
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Tue, 7 Oct 2025 10:50:29 +0100
+X-Gm-Features: AS18NWA6Tdg31JfY1JRui4UZtahTggsj4Atu5Tr_AyBkahDNg0zXo04QKve2UM0
+Message-ID: <CAFEAcA8+F0jwWaqexO2bbtUp3kuLvg+9v42KAnt7rjj_Vh-_Qg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/arm/xlnx-zynqmp: wire a second GIC for the
+ Cortex-R5
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, edgar.iglesias@gmail.com, 
+ alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,15 +96,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 1 Oct 2025 at 09:40, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
+On Tue, 30 Sept 2025 at 12:57, Cl=C3=A9ment Chigot <chigot@adacore.com> wro=
+te:
 >
-> When removing the spitz and tosa board, commit b62151489ae
-> ("hw/arm: Remove deprecated akita, borzoi spitz, terrier,
-> tosa boards") removed the last calls to sl_bootparam_write().
-> Remove it, along with the "hw/arm/sharpsl.h" header.
+> The first two patches are minor improvements before the core third
+> patch.
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> This was initially a single patch split as per review comments (see [1])
+>
+> [1] https://lists.gnu.org/archive/html/qemu-devel/2025-09/msg05899.html
+>
+> Cl=C3=A9ment Chigot (2):
+>   hw/arm/xlnx-zynqmp: move GIC_NUM_SPI_INTR define in header
+>   hw/arm/xlnx-zynqmp: introduce helper to compute RPU number
+>
+> Frederic Konrad (1):
+>   hw/arm/xlnx-zynqmp: wire a second GIC for the Cortex-R5
 
 
 
