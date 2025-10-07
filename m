@@ -4,55 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F6BCCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 20:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9798ACCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 21:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6EkL-0001uU-HO; Tue, 07 Oct 2025 16:57:21 -0400
+	id 1v6EyH-0004G7-0e; Tue, 07 Oct 2025 17:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v6EkJ-0001uM-Bg
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:57:19 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v6Ey3-0004Dc-Ot
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 17:11:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v6EkH-0004AV-J0
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 16:57:19 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B061656F2FF;
- Tue, 07 Oct 2025 22:57:15 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id PjCNcFv6UpII; Tue,  7 Oct 2025 22:57:13 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9E5B356F2CA; Tue, 07 Oct 2025 22:57:13 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9C31856F2A3;
- Tue, 07 Oct 2025 22:57:13 +0200 (CEST)
-Date: Tue, 7 Oct 2025 22:57:13 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- marcandre.lureau@redhat.com
-Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using hardware-correct
- aperture sizes
-In-Reply-To: <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
-Message-ID: <2203259a-9ea3-f19d-1a81-b0c208dcd02f@eik.bme.hu>
-References: <20251001034616.3017119-1-chad@jablonski.xyz>
- <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v6Exz-0005k4-Tv
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 17:11:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759871484;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+GSS1trU36/D4/Zoq85WcGdifWUdhkengsckR8fh4kk=;
+ b=Nc/yIIepAWaW6fiYZ3nvQHudfLfnT+lbSoKRdWwVvCHkViKlw1x2GCeO3URIUrjTq2SEju
+ 9c6rWgw5OYro0q246yEDOhJkbxU5SH1ndCU+mL9LE9TvAaQfvq3F669FWNPmiLBdXf4pRZ
+ F3CPY4U4Ht32SgZg8Gu8zqKjFsjo398=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-wVowgh2FOcCX55kG9liEyw-1; Tue, 07 Oct 2025 17:11:22 -0400
+X-MC-Unique: wVowgh2FOcCX55kG9liEyw-1
+X-Mimecast-MFC-AGG-ID: wVowgh2FOcCX55kG9liEyw_1759871482
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-87ae13cc97cso1049793985a.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 14:11:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759871482; x=1760476282;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+GSS1trU36/D4/Zoq85WcGdifWUdhkengsckR8fh4kk=;
+ b=CK/b1cNlxHW+Q01bAUPkL34DrKcdDW0oGHxun+ffBOy5oVHzEczhud0gYzcf+IWubP
+ ZccKnjy6zzY8b+xRphL0/yVmgofplFzj9tn1J0RQvD0Vo4WmGl3PjHL5BfiEaXDZYY/R
+ elItMH9XxOQqV9ZZXiWeCjtcRK/YSPgUiuqoOeAAvlPSvIgqlF1tjHu7b+w2G8YS4TN7
+ YOqqpDT1auePlrEuy9Eh6LsC1774yP6CK/b3j8HZAuCZFrkz4cdYPVG6vQIUiu8QecnT
+ te+01niMpQDpvkdVmfuG13PolZOUiiQzy0mS+ANwgZT+dQLEx+BDqN8X7piC67RB5hcb
+ /E2A==
+X-Gm-Message-State: AOJu0YzwSYsSfuJGGqkjeso3ehBndIip2/EX0yQet91bztXtW0DGxvCH
+ r+IN+WHt1l9vCjs/CkFrTbm5elWzTlWqgC8oGm0L+GBTAAFhT8YmrY0WMDajZKOctbWbT+fuSBA
+ B9pAH7O5iS4oLGaYUus4wI+puA8/C8RT9Qjj1Hx50PPxUqSMI8FyC0tT3
+X-Gm-Gg: ASbGncsiN1ffgt8KsFMOEJuS3GFbu8Fdmgxto5F/W+MrSYcP2+HF5a3IhtCwJ/H0Exf
+ NHJo+IohYK8jQUm1rT7C4awRXPNSZPthkMLXE0Vq2A7jfuIzw3scXe+MnCLAP5gcvNUgbcrjduE
+ 2KA9MCkVZP9m65CAzNl2lLyk1nkpdgFa254co+OVbsuCWZbgo/ipOVST0Q6gY8rcutcH5nf0Mkn
+ JWek6jxUDL4MHBCnqZe8Xd78d5TbTixyR6GQ04jiSfFvVdQ6TGx/KedCX+L9kC938lJ5r6k5GHo
+ G+w1h58vSjH1H/whTCIg4L4MCib808JW69YSTg==
+X-Received: by 2002:a05:620a:258b:b0:864:4cb1:506e with SMTP id
+ af79cd13be357-88350a7c297mr218324785a.35.1759871481968; 
+ Tue, 07 Oct 2025 14:11:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFntRbkO4KmFlpEj/cnikxozBPCbqx+l5oVwj5qyVwXej6CMIiFjJ6mu4knsDTH+4KK8fUVxg==
+X-Received: by 2002:a05:620a:258b:b0:864:4cb1:506e with SMTP id
+ af79cd13be357-88350a7c297mr218319285a.35.1759871481355; 
+ Tue, 07 Oct 2025 14:11:21 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8777837124esm1759624685a.34.2025.10.07.14.11.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Oct 2025 14:11:20 -0700 (PDT)
+Date: Tue, 7 Oct 2025 17:11:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, ppandit@redhat.com,
+ berrange@redhat.com
+Subject: Re: [PATCH 3/3] migration: mapped-ram: handle zero pages
+Message-ID: <aOWB9oxknXYjeY-i@x1.local>
+References: <20251001161823.2032399-1-Marco.Cavenati@eurecom.fr>
+ <20251001161823.2032399-4-Marco.Cavenati@eurecom.fr>
+ <26083e-68de3c80-5f3-4691f480@28926673>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <26083e-68de3c80-5f3-4691f480@28926673>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,62 +106,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 Oct 2025, BALATON Zoltan wrote:
-> Hello,
->
-> Thanks for the contribution.
->
-> On Tue, 30 Sep 2025, Chad Jablonski wrote:
->> Real Rage 128 cards always request 64MB for their linear (framebuffer)
->> aperture. This is regardless of the amount of physical VRAM on the
->> board. This is required for 64MB alignment which is important given the
->> 26-bit addressing in src and dst registers.
->> 
->> This discrepancy caused X to segfault or display garbage depending on
->> the version tested. X expects this 64MB alignment.
->
-> The documentation does not mention 64MB alignment. It says apertures must be 
-> on a 32MB boundary and src and dst offsets are 128 bit aligned but maybe I 
-> don't have the right documentation for these chips or don't get what it 
-> means.
->
->> This was confirmed by testing against the behavior of real 16MB and 32MB
->> Rage 128 cards.
->> 
->> Real Radeon R100 cards request 128MB for linear aperture. This was
->> tested against a Radeon 7200 with 64MB of VRAM.
->
-> Can you check what the CONFIG_APER_SIZE register contains on these cards? Do 
-> all Rage 128 (and Pro) cards have 64MB and Radeon 7xxx/M6 have 128MB? The 
-> documentation is again not clear on this because it lists default value of 
-> 0x2000000 for CONFIG_APER_SIZE on Rage 128 Pro and nothing for Radeon but in 
-> a figure it shows this should contain both VRAM and AGP areas that suggests 
-> 64MB but it's possible that the documentation is wrong.
->
->> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
->> ---
->> hw/display/ati.c     | 26 ++++++++++++++++++++++++--
->> hw/display/ati_int.h |  1 +
->> 2 files changed, 25 insertions(+), 2 deletions(-)
->> 
->> diff --git a/hw/display/ati.c b/hw/display/ati.c
->> index f7c0006a87..db189e0767 100644
->> --- a/hw/display/ati.c
->> +++ b/hw/display/ati.c
->> @@ -30,9 +30,13 @@
->> #include "ui/console.h"
->> #include "hw/display/i2c-ddc.h"
->> #include "trace.h"
->> +#include "qemu/units.h"
->> 
->> #define ATI_DEBUG_HW_CURSOR 0
->> 
->> +#define ATI_RAGE128_LINEAR_APERTURE_SIZE (64 * MiB)
->> +#define ATI_RADEON_LINEAR_APERTURE_SIZE (128 * MiB)
+On Thu, Oct 02, 2025 at 10:49:45AM +0200, Marco Cavenati wrote:
+> Please note that there are a couple of errors (swapped parameters), which are
+> detailed below.
+> I will address these in the next iteration, along with any additional changes
+> based on your feedback.
+> 
+> Thank you
+> Marco
+> 
+> On Wednesday, October 01, 2025 18:18 CEST, Marco Cavenati <Marco.Cavenati@eurecom.fr> wrote:
+> 
+> > Make mapped-ram compatible with loadvm snapshot restoring by explicitly
+> > zeroing memory pages in this case.
+> > Skip zeroing for -incoming and -loadvm migrations to preserve performance.
+> > 
+> > Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+> > ---
+> >  migration/ram.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 55 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index e238c9233f..597d5ffe9e 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -3958,12 +3958,55 @@ static size_t ram_load_multifd_pages(void *host_addr, size_t size,
+> >      return size;
+> >  }
+> >  
+> > +/**
+> > + * handle_zero_mapped_ram: Zero out a range of RAM pages if required during
+> > + * mapped-ram load
+> > + *
+> > + * Zeroing is only performed when restoring from a snapshot (HMP loadvm).
+> > + * During incoming migration or -loadvm cli snapshot load, the function is a
+> > + * no-op and returns true as in those cases the pages are already guaranteed to
+> > + * be zeroed.
+> > + *
+> > + * Returns: true on success, false on error (with @errp set).
+> > + * @from_bit_idx: Starting index relative to the map of the page (inclusive)
+> > + * @to_bit_idx:   Ending index relative to the map of the page (exclusive)
+> > + */
+> > +static bool handle_zero_mapped_ram(RAMBlock *block, unsigned long from_bit_idx,
+> > +                                   unsigned long to_bit_idx, Error **errp)
+> > +{
+> > +    ERRP_GUARD();
+> > +    ram_addr_t offset;
+> > +    size_t size;
+> > +    void *host;
+> > +
+> > +    if (runstate_check(RUN_STATE_INMIGRATE) ||
+> > +        runstate_check(RUN_STATE_PRELAUNCH)) {
 
-Also maybe call it ATI_R100_APER_SIZE instead of RADEON as later Radeons 
-probably increased this.
+Should we check RUN_STATE_RESTORE_VM directly here?
 
-Regards,
-BALATON Zoltan
+I think it's still good to spell out the rest, we could put it in a
+comment, e.g.:
+
+  /*
+   * Zeroing is not needed for either -loadvm (RUN_STATE_PRELAUNCH), or
+   * -incoming (RUN_STATE_INMIGRATE).
+   */
+
+> > +        return true;
+> > +    }
+> > +
+> > +    if (from_bit_idx == to_bit_idx) {
+
+Might be safer to check >= rather than ==.
+
+> > +        return true;
+> > +    }
+> > +
+> > +    size = TARGET_PAGE_SIZE * (to_bit_idx - from_bit_idx);
+> > +    offset = from_bit_idx << TARGET_PAGE_BITS;
+> > +    host = host_from_ram_block_offset(block, offset);
+> > +    if (!host) {
+> > +        error_setg(errp, "zero page outside of ramblock %s range",
+> > +                   block->idstr);
+> > +        return false;
+> > +    }
+> > +    ram_handle_zero(host, size);
+> > +
+> > +    return true;
+> > +}
+> > +
+> >  static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+> >                                       long num_pages, unsigned long *bitmap,
+> >                                       Error **errp)
+> >  {
+> >      ERRP_GUARD();
+> > -    unsigned long set_bit_idx, clear_bit_idx;
+> > +    unsigned long set_bit_idx, clear_bit_idx = 0;
+> >      ram_addr_t offset;
+> >      void *host;
+> >      size_t read, unread, size;
+> > @@ -3972,6 +4015,12 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+> >           set_bit_idx < num_pages;
+> >           set_bit_idx = find_next_bit(bitmap, num_pages, clear_bit_idx + 1)) {
+> >  
+> > +        /* Zero pages */
+> > +        if (!handle_zero_mapped_ram(block, set_bit_idx, clear_bit_idx, errp)) {
+> 
+> This should be
+> +         if (!handle_zero_mapped_ram(block, clear_bit_idx, set_bit_idx, errp)) {
+> 
+> > +            return false;
+> > +        }
+> > +
+> > +        /* Non-zero pages */
+> >          clear_bit_idx = find_next_zero_bit(bitmap, num_pages, set_bit_idx + 1);
+> >  
+> >          unread = TARGET_PAGE_SIZE * (clear_bit_idx - set_bit_idx);
+> > @@ -4003,6 +4052,11 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+> >          }
+> >      }
+> >  
+> > +    /* Handle trailing 0 pages */
+> > +    if (!handle_zero_mapped_ram(block, num_pages, clear_bit_idx, errp)) {
+> 
+> This should be
+> +    if (!handle_zero_mapped_ram(block, clear_bit_idx, num_pages, errp)) {
+
+The rest looks all good.
+
+I can queue patch 2 now, which is trivial.  Please repost patch 1+3 after
+rebasing to Fabiano's patch here:
+
+https://lore.kernel.org/r/20251007184213.5990-1-farosas@suse.de
+
+Then in patch 3 you can remove the MAPPED_RAM cap in the list.
+
+Fabiano could also be posting some test patches too that he got for
+snapshots.  You can either respin before that, or wait for it (then you can
+also add a mapped-ram test for snapshots).
+
+Thanks,
+
+-- 
+Peter Xu
+
 
