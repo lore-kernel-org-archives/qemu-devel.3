@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D017CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F624CCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68Qy-00063B-B9; Tue, 07 Oct 2025 10:12:56 -0400
+	id 1v68Pm-0005ZI-BP; Tue, 07 Oct 2025 10:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Qq-0005yM-3s
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:48 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1v68Pj-0005Xy-Me
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:39 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QY-0002NJ-UI
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:47 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so49727675e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:12:26 -0700 (PDT)
+ id 1v68Pc-000264-LY
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:38 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-46e2826d5c6so49120975e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846345; x=1760451145; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KSc0ams8oTJrngGOePz/vyrE7HMZyBOFuHXIPVZb+bY=;
- b=iYaogQaaPKq2pQnOP5bNOvjQg+8tIWk6k301JpfGOysFWXkjz/R0azysgRzANuxt00
- 1f3LFTxRyENExikViGupgO0kCx7FnEi090MULyu3SoQ8sAAm479IoZR4wLiu7SoBjtlT
- llZZQEYaZU4Wjgc1eSLV0hGrwC4h8bvoVQluMAVI+mfoydc7QP5hTUE4KiWr0cjaAkEl
- jWX6QSy4wW+ajfpAR34Ul8rqJVWdNRj4KUBG30tgQN+6oW22texh6qimKsVauGG/g89H
- 7WGubVDB0koKPyeX3i7TQo6HDh14gTwnt/DU2UR6QWGgFR+/Z6PxlYKKXUqGn+JWnhRK
- 3apA==
+ d=linaro.org; s=google; t=1759846285; x=1760451085; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=b3NM8pke1j1hp8yVwYAVui2MboXLWX0CntlGA5K2mRs=;
+ b=Rd9WYBwDIKzEMilKXmbJyb21ERmoIJh7EaDp/k67CfHiyd2i/jgvzqx5vykAf9DmEZ
+ KPL9RiJaflXo12u0eaDhx60fFo/s4aHnNL9o1pJUh2PTYfU4Y8wpD7THrXFmkSm+FW51
+ B2c/9LGqb2bC420ZUzBp5aUNsJUY7NHp0/QRBSDfbduHeeCT/W1uFnz8ZTirfKNIBUEU
+ woP6RKQyABKrRppBJj1dDd3F1daKbUHLi9fgUMe8m/rbSR0y7egOwNbX1PXCoccZG0PU
+ seeGlQjgMTIWclukMlnW1T5trygabfHLUjlxi5L5VhNWCiLsotjhktNjo2JvcbXsmLW+
+ 5cXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846345; x=1760451145;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KSc0ams8oTJrngGOePz/vyrE7HMZyBOFuHXIPVZb+bY=;
- b=ByG2j3DDeEG2x6dNiAPdH7k/Yl60xuqss/BthFIrasKpoGwfP8DL/pqYj5n94taDgH
- NNSToTy/9nHPtSxavwq7HQmEdtyP3oG3BRMA9unSK4OtQvSoDXUCZx25D31NQDV7peB2
- ctyw+/vMUZqcSyAre72kJ2cjAwOnE8uy9aIn3fjElErrR0Xj/nC1G971DzTc1qLQRf9D
- cJh+hmVY10/9hAzK0q+TFNBbshhnt4prFNlWPfacNPQM4Ot0ltW7yHsO98/rG5r/uCnX
- GYD4pip8M+SKT7Ns+14FZ8kjHRiiq/j7nfSglCajDzxqKFfVTv1GR7Fi8fzSEsIENHUu
- ATpA==
-X-Gm-Message-State: AOJu0Ywcpyx5BHqiJ9TrYvbyQ+/I/m7OIkkH2ci2apgu2OIOOO6A6LbX
- LO93O7iP45VUMhuagniMZ12R6IleCpvVcyCaHEZ0sUKtlIvUBfv7LFfPjouNKN2IrVR0tX8+Bqz
- Lmen4
-X-Gm-Gg: ASbGnctEORe30db1vqJehYo4mPSWm6FyT4yglaMPq8UqOAb9blhxoIcrA07clpMMT08
- zaOw9Rrdw1irNdt/TnHH8BGuDYFp8Y+cI/XzBeO7ahDE4KaBvsNQWb06UKkFcy8+Hq9kOM2S42q
- Ay5ajCW7IAdjq15N5yVVlQuGE/kLz1J4mj5CDeS2/iyUnJM2kc7bqQ46QNJhyZWaFJj9v+vpWOE
- OcekrxRtEsEqfbTTMzS0Ig9amUkLsW34emOTR3PjmNH1B9yGpXm1cqDdDqcWWlO3OVYnpDoalYH
- cdGyhwufLLJjz05Yvy1YMn/n2S69YS7b9rw+MqvweH4fWFB2nkV6c3/t9YlLkhGmcZeYi+uvrcz
- Ljoixc4lFnb9q0eOIvQ8AYidc9GvwXGyF6s/Vd/VnPzWIdr4JpcfmH9pH
-X-Google-Smtp-Source: AGHT+IEnfZppIC/+/HslLxTrxh6gDQ6NdayqWcjvXsDmuDIKgKwVeAXT01mVcMqi87yxCOYLH3UekQ==
-X-Received: by 2002:a05:600c:8591:b0:468:9798:2043 with SMTP id
- 5b1f17b1804b1-46e7114ea2cmr86693425e9.26.1759846344649; 
- Tue, 07 Oct 2025 07:12:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759846285; x=1760451085;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b3NM8pke1j1hp8yVwYAVui2MboXLWX0CntlGA5K2mRs=;
+ b=dNTsisKJO0+dGkuEjlIAOB2+Cb0fV3fShUKmt7hMcNTh3hsQ8sWOY6NJLVSMKRUMJQ
+ GL0a6Y/cCnsx5ExJEFbDnrrT8jxsKawXTbeTFDxHOGU9WKpBQa9wwa8WR5MWnTeEPHHd
+ isn2hxnoMblVvHjICU2haDWYHZBP0QKJK+m/xxwkKe28aBwq65Vm517AfO0gVRwsKicl
+ u2c4dv9j19daVBGCJczKtaK0gv43GWOdkpxLIlkTRdiWPapV3MCZ7eNrFFCw1qJM80h8
+ gDebjhD/GwtfjLhi4YIEMFo75jzBVzmT6v4UGv2vS5BFKOlnW8++JJqtflfcwWBGkLJf
+ EHsg==
+X-Gm-Message-State: AOJu0YzDmLzkNGXrTcVIuVau95XSP1vyAZYOhW5YTJKDPMp14dFTe627
+ xOK9PVp3EX6woASkHhANYqlnbkjP1v39ypYil+biiT3CcmOBVM+FS+9FtOMMtE01xoonlV27gPJ
+ YuTVh
+X-Gm-Gg: ASbGnctMDFZeajy2V/m8hYkwRqMEqgE0B3LcmaUqqhAY47xv4A+eu+ELi2KKk/MI9GU
+ lhARPFd5qaXgQy7lALbKDRORcjlI+QuEhIzQqoOhp8kNhP5wxCqUyVcWHtfJk43UMAOSq6phELL
+ QePYXn/D4Ax3PHCz9WMJ0srHlLhZNAhNvinWzsJKumRd8eiY1Um4CGHl4CK2O3iq3zVv9gbleEe
+ CTvfACkVtN2LtQbr/h6LLKOwY3SfrgYDtQN6JZk5oOXm1YwnfZCFAjtLjVStl5gKwImZnEGP4XU
+ vs4NSYNIeZ2RXU2Wd3oNPWS4S9GoEvF6BYWOv8PPBG0zYrHMKMjIsolWpwFawY0gYOo70jErUC1
+ k+hIG13+B6jQLhLeENi1EWCet+p9rC7GzNsD7Aqk6982guRAPzRYxrAVP
+X-Google-Smtp-Source: AGHT+IFpYoJ5BLFqZtF4xCU2iAqg9RW22UBaOn+vTxRHGvkukm6iheLKP/x5iSLEUaKpU42iyhZJFw==
+X-Received: by 2002:a05:600c:628b:b0:46e:4883:27d with SMTP id
+ 5b1f17b1804b1-46e71147470mr118922325e9.30.1759846285262; 
+ Tue, 07 Oct 2025 07:11:25 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.12.23
+ 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:12:24 -0700 (PDT)
+ Tue, 07 Oct 2025 07:11:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 54/62] target/arm: Add GPCCR fields from ARM revision L.b
-Date: Tue,  7 Oct 2025 15:11:14 +0100
-Message-ID: <20251007141123.3239867-55-peter.maydell@linaro.org>
+Subject: [PULL 00/62] target-arm queue
+Date: Tue,  7 Oct 2025 15:10:20 +0100
+Message-ID: <20251007141123.3239867-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
-References: <20251007141123.3239867-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +97,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Hi; here's the target-arm queue. This is a little bigger than
+I prefer, but the bulk of it is Luc's versal2 series.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20250926001134.295547-3-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+thanks
+-- PMM
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 2b9585dc80a..41414ac22b8 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1995,13 +1995,19 @@ FIELD(V7M_VPR, MASK01, 16, 4)
- FIELD(V7M_VPR, MASK23, 20, 4)
- 
- FIELD(GPCCR, PPS, 0, 3)
-+FIELD(GPCCR, RLPAD, 5, 1)
-+FIELD(GPCCR, NSPAD, 6, 1)
-+FIELD(GPCCR, SPAD, 7, 1)
- FIELD(GPCCR, IRGN, 8, 2)
- FIELD(GPCCR, ORGN, 10, 2)
- FIELD(GPCCR, SH, 12, 2)
- FIELD(GPCCR, PGS, 14, 2)
- FIELD(GPCCR, GPC, 16, 1)
- FIELD(GPCCR, GPCP, 17, 1)
-+FIELD(GPCCR, TBGPCD, 18, 1)
-+FIELD(GPCCR, NSO, 19, 1)
- FIELD(GPCCR, L0GPTSZ, 20, 4)
-+FIELD(GPCCR, APPSAA, 24, 1)
- 
- FIELD(MFAR, FPA, 12, 40)
- FIELD(MFAR, NSE, 62, 1)
--- 
-2.43.0
+The following changes since commit eb7abb4a719f93ddd56571bf91681044b4159399:
 
+  hw/intc/loongarch_dintc: Set class_size for LoongArchDINTCClass (2025-10-06 13:54:50 -0700)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251007
+
+for you to fetch changes up to 932cac41ca633f24f192a69770bf91b55c4d27bb:
+
+  target/arm: Enable FEAT_RME_GPC2 for -cpu max with x-rme (2025-10-07 11:26:10 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * target/arm: Don't set HCR.RW for AArch32 only CPUs
+ * new board model: amd-versal2-virt
+ * xlnx-zynqmp: model the GIC for the Cortex-R5 RPU cluster
+ * hw/arm: Remove sl_bootparam_write() and 'hw/arm/sharpsl.h' header
+ * Emulate FEAT_RME_GPC2
+
+----------------------------------------------------------------
+Clément Chigot (2):
+      hw/arm/xlnx-zynqmp: move GIC_NUM_SPI_INTR define in header
+      hw/arm/xlnx-zynqmp: introduce helper to compute RPU number
+
+Francisco Iglesias (1):
+      hw/intc/arm_gicv3: Introduce a 'first-cpu-index' property
+
+Frederic Konrad (1):
+      hw/arm/xlnx-zynqmp: wire a second GIC for the Cortex-R5
+
+Luc Michel (46):
+      hw/arm/xlnx-versal: split the xlnx-versal type
+      hw/arm/xlnx-versal: prepare for FDT creation
+      hw/arm/xlnx-versal: uart: refactor creation
+      hw/arm/xlnx-versal: canfd: refactor creation
+      hw/arm/xlnx-versal: sdhci: refactor creation
+      hw/arm/xlnx-versal: gem: refactor creation
+      hw/arm/xlnx-versal: adma: refactor creation
+      hw/arm/xlnx-versal: xram: refactor creation
+      hw/arm/xlnx-versal: usb: refactor creation
+      hw/arm/xlnx-versal: efuse: refactor creation
+      hw/arm/xlnx-versal: ospi: refactor creation
+      hw/arm/xlnx-versal: VersalMap: add support for OR'ed IRQs
+      hw/arm/xlnx-versal: PMC IOU SCLR: refactor creation
+      hw/arm/xlnx-versal: bbram: refactor creation
+      hw/arm/xlnx-versal: trng: refactor creation
+      hw/arm/xlnx-versal: rtc: refactor creation
+      hw/arm/xlnx-versal: cfu: refactor creation
+      hw/arm/xlnx-versal: crl: refactor creation
+      hw/arm/xlnx-versal-virt: virtio: refactor creation
+      hw/arm/xlnx-versal: refactor CPU cluster creation
+      hw/arm/xlnx-versal: add the mp_affinity property to the CPU mapping
+      hw/arm/xlnx-versal: instantiate the GIC ITS in the APU
+      hw/arm/xlnx-versal: add support for multiple GICs
+      hw/arm/xlnx-versal: add support for GICv2
+      hw/arm/xlnx-versal: rpu: refactor creation
+      hw/arm/xlnx-versal: ocm: refactor creation
+      hw/arm/xlnx-versal: ddr: refactor creation
+      hw/arm/xlnx-versal: add the versal_get_num_cpu accessor
+      hw/misc/xlnx-versal-crl: remove unnecessary include directives
+      hw/misc/xlnx-versal-crl: split into base/concrete classes
+      hw/misc/xlnx-versal-crl: refactor device reset logic
+      hw/arm/xlnx-versal: reconnect the CRL to the other devices
+      hw/arm/xlnx-versal: use hw/arm/bsa.h for timer IRQ indices
+      hw/arm/xlnx-versal: tidy up
+      hw/misc/xlnx-versal-crl: add the versal2 version
+      hw/arm/xlnx-versal: add a per_cluster_gic switch to VersalCpuClusterMap
+      hw/arm/xlnx-versal: add the target field in IRQ descriptor
+      target/arm/tcg/cpu64: add the cortex-a78ae CPU
+      hw/arm/xlnx-versal: add versal2 SoC
+      hw/arm/xlnx-versal-virt: rename the machine to amd-versal-virt
+      hw/arm/xlnx-versal-virt: split into base/concrete classes
+      hw/arm/xlnx-versal-virt: tidy up
+      docs/system/arm/xlnx-versal-virt: update supported devices
+      docs/system/arm/xlnx-versal-virt: add a note about dumpdtb
+      hw/arm/xlnx-versal-virt: add the xlnx-versal2-virt machine
+      tests/functional/test_aarch64_xlnx_versal: test the versal2 machine
+
+Peter Maydell (1):
+      target/arm: Don't set HCR.RW for AArch32 only CPUs
+
+Philippe Mathieu-Daudé (1):
+      hw/arm: Remove sl_bootparam_write() and 'hw/arm/sharpsl.h' header
+
+Richard Henderson (10):
+      target/arm: Add isar feature test for FEAT_RME_GPC2
+      target/arm: Add GPCCR fields from ARM revision L.b
+      target/arm: Enable FEAT_RME_GPC2 bits in gpccr_write
+      target/arm: Add cur_space to S1Translate
+      target/arm: GPT_Secure is reserved without FEAT_SEL2
+      target/arm: Implement GPT_NonSecureOnly
+      target/arm: Implement SPAD, NSPAD, RLPAD
+      target/arm: Fix GPT fault type for address outside PPS
+      target/arm: Implement APPSAA
+      target/arm: Enable FEAT_RME_GPC2 for -cpu max with x-rme
+
+ MAINTAINERS                                  |    1 -
+ docs/system/arm/emulation.rst                |    1 +
+ docs/system/arm/xlnx-versal-virt.rst         |   80 +-
+ include/hw/arm/sharpsl.h                     |   17 -
+ include/hw/arm/xlnx-versal-version.h         |   16 +
+ include/hw/arm/xlnx-versal.h                 |  342 +---
+ include/hw/arm/xlnx-zynqmp.h                 |    5 +
+ include/hw/intc/arm_gicv3_common.h           |    1 +
+ include/hw/misc/xlnx-versal-crl.h            |  366 +++-
+ target/arm/cpu-features.h                    |    5 +
+ target/arm/cpu.h                             |    6 +
+ hw/arm/xlnx-versal-virt.c                    |  741 ++------
+ hw/arm/xlnx-versal.c                         | 2546 +++++++++++++++++++-------
+ hw/arm/xlnx-zynqmp.c                         |  103 +-
+ hw/gpio/zaurus.c                             |   42 -
+ hw/intc/arm_gicv3_common.c                   |    3 +-
+ hw/intc/arm_gicv3_cpuif.c                    |    2 +-
+ hw/intc/arm_gicv3_kvm.c                      |    6 +
+ hw/misc/xlnx-versal-crl.c                    |  614 ++++++-
+ target/arm/helper.c                          |    8 +-
+ target/arm/ptw.c                             |   95 +-
+ target/arm/tcg/cpu64.c                       |   81 +-
+ tests/functional/aarch64/test_xlnx_versal.py |   12 +-
+ 23 files changed, 3292 insertions(+), 1801 deletions(-)
+ delete mode 100644 include/hw/arm/sharpsl.h
+ create mode 100644 include/hw/arm/xlnx-versal-version.h
 
