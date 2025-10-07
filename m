@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CD2CCD187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A29FCCA470
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:13:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68QG-0005km-F5; Tue, 07 Oct 2025 10:12:13 -0400
+	id 1v68Pr-0005b1-0C; Tue, 07 Oct 2025 10:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QB-0005i5-KZ
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:07 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1v68Pm-0005Zy-ON
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:43 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Pv-0002A0-FA
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:06 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-421b93ee372so2970870f8f.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:11:47 -0700 (PDT)
+ id 1v68Pg-00027F-Sw
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:11:42 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-46e2e363118so57800195e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846304; x=1760451104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759846292; x=1760451092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8Ig/xe9lRWR8AVvmmEJBBarD/2ccaXU1t5zwOCw2epw=;
- b=emdeTDwmHy/mYTr0uzJJUzN4QZuQNlFWRVgqX+3sen9uF53BxMH/ceb8KU1q94L/P/
- QS+PKXTuFdk5o7E9fTN8wRRlhfk0kWqEjUaPKbjIHn0YrUjfb1JLvnboiSFOvPBsz7mu
- SZiXObYoz++idJ6VcEcshaZ1qtXC7gsYfZXYwloptM9IrDhJD1g/R2ZY0WVpV+x18bxl
- AoIs6ELze5QSj+hpshfJ5mAvNDgnPbyzlnQizuHNtiCvFJ0F8z0STpI2FvvZ+T+ooL6W
- d9m+5i0ZfS55f8awkH2QyXhXaD7kqSCB+92XUQtJSo3coDILp5LpAt8irJrwci3GONcF
- SEKw==
+ :reply-to; bh=0cMdDKIQDg7CKjwcQRQZC4ht62S9Iu7Xq9R+UBWw6U8=;
+ b=OWrXdlzrbp6egNXPQfXH/Xnelw/ZIlvlvDEyAu3fmOLeGJIkhkCXnKogfBo3oOfHPi
+ ugGcUPMo0Fff5VxnpM2FiaLmsJXPB1GzprISTHGedzAJXvzzPadIJPZgoieWcmkhgANa
+ 8cPm6jx39vyciaMc7k9O2+pj6QPsjDpzlWCAal8QXB5IMpjLddP8volI6dLDhaUEM42t
+ T/ody0UPjr4YTwY4E3tkr2dmhkTapr4QgNxmoja7EBpJ1qz9xd47JWmESHI1Ru+WVdKu
+ 7YZblf34dSv9lCicCzTL9n6EGJBy+vy3hvYMtoTBhdujoaSjyL3M/RoQdTpL7mzy6idq
+ xBDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846304; x=1760451104;
+ d=1e100.net; s=20230601; t=1759846292; x=1760451092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8Ig/xe9lRWR8AVvmmEJBBarD/2ccaXU1t5zwOCw2epw=;
- b=WSTmq7e4qjOJeHbX4b6E1tOgmNfBUkoM+SQ2wSIX68+x1rTR1wGmNSIc5XScHLl8bP
- dz1AyTuolHrno9Wt8LrSySFfScIXMHe87zqVILNXOpG5v1ZznkhHBMkxPtz6GJ4XcLb+
- W9hYmCpBiNErpoFDRS3DoJGgWDyIPcZDLWAZUOxb+IQAY3xEmtusFvh3VYkCFWHxVekp
- IBYJBuyUwpsqxG4mqAMYbnXYXIIs1MVE6obw6VbvfPBVTutqfarBgt0FCWLprljb5CSC
- wu/xlowKTBj7JbGA4PZx7SxrcVy0eaogdXbuoZe5uMjcAl89/wE5oYknEokF7quqylMk
- cAhA==
-X-Gm-Message-State: AOJu0YwhlTiJBCjlvTsQQr1A4tInUVzDdKMkezB6nWLFZok9q9loDixs
- dBxY91ydQKqm6zToRah/wU27YEzIqjbR+IE/Cw0zlaJEXYTEIdWLAnB4zCDr8+Fh2a/QLzTTesk
- do1Y1
-X-Gm-Gg: ASbGncsErgKj/AlYaCT6N4dI7EjExHE/owg72nfI2bmpMGdSUMMWJe728uFXdy5g5pl
- UeLul2M/TYiK2Iqd6RvNcCnNs7+L7eYIXQji31lgTL8AAhSExs8XjzOsuHMvJDD7I7y2+LwMsv3
- zQfRzl8OLC7FfQA0TRzlS/9vFcZfSn6yvMa9+59hIcUKxvaHW9lugfmQkZ0IShOLM0l1NsQFdOZ
- 4us2ijcV/OEL67r8GGUc73C/6ecr7qHHYHb2zZwlPWPHwmxrIrjO8pmCjvw4Gcuo24mkB5T0Ofw
- /DnPtVz4rAt52rAAOPqgnV/RoTLahyRJa66oseCGFyHyhDN0WayziV+byBsik+Z8Q8rYdDweOXa
- lyeBkirjSErnHKwQPucFR488j/vHYCeIgduR33GNsmy9wq/6EkCocaeGi
-X-Google-Smtp-Source: AGHT+IHZyurwGn6fPJJIDcdOIrrHZA+Jx5aDYcrrUrmoI3qfYixqWoNuuakBgI0tXpCk7oiJcXEcOw==
-X-Received: by 2002:a05:6000:60f:b0:424:2275:63c2 with SMTP id
- ffacd0b85a97d-4256719e997mr11608621f8f.33.1759846303845; 
- Tue, 07 Oct 2025 07:11:43 -0700 (PDT)
+ bh=0cMdDKIQDg7CKjwcQRQZC4ht62S9Iu7Xq9R+UBWw6U8=;
+ b=p1GYz5tzw29tLwqwB0sf3BSLPJu0mNAApfXLvO3yDuJU978uTKG52FNRUu6SuEzO9y
+ 9Yb/FHjZhUEfMK1/6sdw3Z9lIb29zy3hvyZDCW90Vs1MWnrCcOYbXF7LzfE8BfR+9s6Y
+ N1bMig73p3LrVHzDEWBOGfqzD3pfNFxVDsFWuhaJSRQD9fZ7lAgdLNh532HEkBnYcp7G
+ wK71V7ZHTjP4XeDboWtCAWmhd0EQXW3pKfs7GSXwk/ypPdw+ECL6QaC5o+Ir9FCObssA
+ 3y741d4uCKSUkS+NYgKsrhtEUZdEXWV1rkZJskmiuVoRLyqXbCt6A3vDbZV9SbmRVnxW
+ 5H+g==
+X-Gm-Message-State: AOJu0YxQwNVek4EqLlrf14xWB+Kj/S8hR/ILYstv4sEcvUbOdEj8d6rz
+ ExR5CIjLQYtpS6WUDtR+l4wdq3mLjpzAtHPC7JGsYNUrhoN7wYulXMhionokXFcCmsF8cV/RSEK
+ VtEn8
+X-Gm-Gg: ASbGncvHL1UHoMsE0RRwk1XYFQ2+35QTZivlxwJwS+Oir79LvfuELcb3nJndI/+gWO8
+ PhM6RCzKH10PZGcoUvQg5+P4osq/1dXKFpsHSU/GAaF0SwVUsH/7sh4H5dm4zRnZvp3jnQvddAE
+ trC3TvkfqJA1W4IpXgcHKNH6nXWdMsfALrUbVIBGhxcF+6R4Epa6z/JkSEnuoiNBykZa7mYgrs0
+ xUzQA0C89bzsxwr/SX9yNqhWcKQlaoInhouELSVbj7BG+VcpiWaiBbp8SG3l8LMAXaSLh+ploxb
+ QeIB3HtOkGMVXNqtFUE5On3aHtalag9c4o52jYWWP0+hyUpncY8A9ccYkUbneFjpPWcNCvewbHU
+ XVhnB8wp8eAGMu66otMF2XFinHDTRIVXMbCXfaud4zRKHvXAWudZYSOey
+X-Google-Smtp-Source: AGHT+IFRKUy6uKjh7VNdWcA+mWw8qpQJqoMnxHgQ6RnnFAge+szw492vho3fw5aY0jRD+X75/tcgHA==
+X-Received: by 2002:a05:600c:3541:b0:46e:3d41:5fe7 with SMTP id
+ 5b1f17b1804b1-46e71168cd8mr102460955e9.29.1759846292322; 
+ Tue, 07 Oct 2025 07:11:32 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.42
+ 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:11:43 -0700 (PDT)
+ Tue, 07 Oct 2025 07:11:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/62] hw/arm/xlnx-versal: rtc: refactor creation
-Date: Tue,  7 Oct 2025 15:10:37 +0100
-Message-ID: <20251007141123.3239867-18-peter.maydell@linaro.org>
+Subject: [PULL 06/62] hw/arm/xlnx-versal: sdhci: refactor creation
+Date: Tue,  7 Oct 2025 15:10:26 +0100
+Message-ID: <20251007141123.3239867-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
 References: <20251007141123.3239867-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,176 +102,294 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Luc Michel <luc.michel@amd.com>
 
-Refactor the RTC device creation using the VersalMap structure.
-
-The sysbus IRQ output 0 (APB IRQ) is connected instead of the output 1
-(addr error IRQ). This does not change the current behaviour since the
-RTC model does not implement those IRQs anyway.
+Refactor the SDHCI controllers creation using the VersalMap structure.
 
 Signed-off-by: Luc Michel <luc.michel@amd.com>
 Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250926070806.292065-17-luc.michel@amd.com
+Message-id: 20250926070806.292065-6-luc.michel@amd.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/xlnx-versal.h |  2 --
- hw/arm/xlnx-versal-virt.c    | 22 --------------------
- hw/arm/xlnx-versal.c         | 40 ++++++++++++++++++++++++++++--------
- 3 files changed, 31 insertions(+), 33 deletions(-)
+ include/hw/arm/xlnx-versal.h |  5 +-
+ hw/arm/xlnx-versal-virt.c    | 43 ++--------------
+ hw/arm/xlnx-versal.c         | 96 ++++++++++++++++++++++++++++--------
+ 3 files changed, 83 insertions(+), 61 deletions(-)
 
 diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-index bba96201d37..abdbed15689 100644
+index 007c91b596e..4a7a2d85aac 100644
 --- a/include/hw/arm/xlnx-versal.h
 +++ b/include/hw/arm/xlnx-versal.h
-@@ -17,7 +17,6 @@
+@@ -16,7 +16,6 @@
+ #include "hw/sysbus.h"
  #include "hw/cpu/cluster.h"
  #include "hw/or-irq.h"
+-#include "hw/sd/sdhci.h"
  #include "hw/intc/arm_gicv3.h"
--#include "hw/rtc/xlnx-zynqmp-rtc.h"
- #include "qom/object.h"
- #include "hw/misc/xlnx-versal-crl.h"
- #include "net/can_emu.h"
-@@ -81,7 +80,6 @@ struct Versal {
- 
+ #include "hw/dma/xlnx-zdma.h"
+ #include "hw/net/cadence_gem.h"
+@@ -105,7 +104,6 @@ struct Versal {
      /* The Platform Management Controller subsystem.  */
      struct {
--        XlnxZynqMPRTC rtc;
-         XlnxVersalCFUAPB cfu_apb;
-         XlnxVersalCFUFDRO cfu_fdro;
-         XlnxVersalCFUSFR cfu_sfr;
-diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-index f766a3e1027..d96f3433929 100644
---- a/hw/arm/xlnx-versal-virt.c
-+++ b/hw/arm/xlnx-versal-virt.c
-@@ -151,27 +151,6 @@ static void fdt_add_timer_nodes(VersalVirt *s)
-                      compat, sizeof(compat));
+         struct {
+-            SDHCIState sd[XLNX_VERSAL_NR_SDS];
+             XlnxVersalPmcIouSlcr slcr;
+ 
+             struct {
+@@ -156,7 +154,10 @@ static inline void versal_set_fdt(Versal *s, void *fdt)
+     s->cfg.fdt = fdt;
  }
  
--static void fdt_add_rtc_node(VersalVirt *s)
++void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk);
++
+ int versal_get_num_can(VersalVersion version);
++int versal_get_num_sdhci(VersalVersion version);
+ 
+ /* Memory-map and IRQ definitions. Copied a subset from
+  * auto-generated files.  */
+diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
+index 334252564be..52852082d4b 100644
+--- a/hw/arm/xlnx-versal-virt.c
++++ b/hw/arm/xlnx-versal-virt.c
+@@ -284,32 +284,6 @@ static void fdt_add_zdma_nodes(VersalVirt *s)
+     }
+ }
+ 
+-static void fdt_add_sd_nodes(VersalVirt *s)
 -{
--    const char compat[] = "xlnx,zynqmp-rtc";
--    const char interrupt_names[] = "alarm\0sec";
--    char *name = g_strdup_printf("/rtc@%x", MM_PMC_RTC);
+-    const char clocknames[] = "clk_xin\0clk_ahb";
+-    const char compat[] = "arasan,sdhci-8.9a";
+-    int i;
 -
--    qemu_fdt_add_subnode(s->fdt, name);
+-    for (i = ARRAY_SIZE(s->soc.pmc.iou.sd) - 1; i >= 0; i--) {
+-        uint64_t addr = MM_PMC_SD0 + MM_PMC_SD0_SIZE * i;
+-        char *name = g_strdup_printf("/sdhci@%" PRIx64, addr);
 -
--    qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
--                           GIC_FDT_IRQ_TYPE_SPI, VERSAL_RTC_ALARM_IRQ,
--                           GIC_FDT_IRQ_FLAGS_LEVEL_HI,
--                           GIC_FDT_IRQ_TYPE_SPI, VERSAL_RTC_SECONDS_IRQ,
--                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
--    qemu_fdt_setprop(s->fdt, name, "interrupt-names",
--                     interrupt_names, sizeof(interrupt_names));
--    qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
--                                 2, MM_PMC_RTC, 2, MM_PMC_RTC_SIZE);
--    qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
--    g_free(name);
+-        qemu_fdt_add_subnode(s->fdt, name);
+-
+-        qemu_fdt_setprop_cells(s->fdt, name, "clocks",
+-                               s->phandle.clk_25Mhz, s->phandle.clk_25Mhz);
+-        qemu_fdt_setprop(s->fdt, name, "clock-names",
+-                         clocknames, sizeof(clocknames));
+-        qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
+-                               GIC_FDT_IRQ_TYPE_SPI, VERSAL_SD0_IRQ_0 + i * 2,
+-                               GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+-        qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
+-                                     2, addr, 2, MM_PMC_SD0_SIZE);
+-        qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
+-        g_free(name);
+-    }
 -}
 -
- static void fdt_nop_memory_nodes(void *fdt, Error **errp)
+ static void fdt_add_rtc_node(VersalVirt *s)
  {
-     Error *err = NULL;
-@@ -426,7 +405,6 @@ static void versal_virt_init(MachineState *machine)
+     const char compat[] = "xlnx,zynqmp-rtc";
+@@ -564,16 +538,11 @@ static void efuse_attach_drive(XlnxEFuse *dev)
+     }
+ }
  
-     fdt_add_gic_nodes(s);
+-static void sd_plugin_card(SDHCIState *sd, DriveInfo *di)
++static void sd_plug_card(VersalVirt *s, int idx, DriveInfo *di)
+ {
+     BlockBackend *blk = di ? blk_by_legacy_dinfo(di) : NULL;
+-    DeviceState *card;
+ 
+-    card = qdev_new(TYPE_SD_CARD);
+-    object_property_add_child(OBJECT(sd), "card[*]", OBJECT(card));
+-    qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
+-    qdev_realize_and_unref(card, qdev_get_child_bus(DEVICE(sd), "sd-bus"),
+-                           &error_fatal);
++    versal_sdhci_plug_card(&s->soc, idx, blk);
+ }
+ 
+ static char *versal_get_ospi_model(Object *obj, Error **errp)
+@@ -648,7 +617,6 @@ static void versal_virt_init(MachineState *machine)
      fdt_add_timer_nodes(s);
--    fdt_add_rtc_node(s);
-     fdt_add_cpu_nodes(s, psci_conduit);
-     fdt_add_clk_node(s, "/old-clk125", 125000000, s->phandle.clk_125Mhz);
-     fdt_add_clk_node(s, "/old-clk25", 25000000, s->phandle.clk_25Mhz);
+     fdt_add_zdma_nodes(s);
+     fdt_add_usb_xhci_nodes(s);
+-    fdt_add_sd_nodes(s);
+     fdt_add_rtc_node(s);
+     fdt_add_bbram_node(s);
+     fdt_add_efuse_ctrl_node(s);
+@@ -668,10 +636,9 @@ static void versal_virt_init(MachineState *machine)
+     /* Attach efuse backend, if given */
+     efuse_attach_drive(&s->soc.pmc.efuse);
+ 
+-    /* Plugin SD cards.  */
+-    for (i = 0; i < ARRAY_SIZE(s->soc.pmc.iou.sd); i++) {
+-        sd_plugin_card(&s->soc.pmc.iou.sd[i],
+-                       drive_get(IF_SD, 0, i));
++    /* Plug SD cards */
++    for (i = 0; i < versal_get_num_sdhci(VERSAL_VER_VERSAL); i++) {
++        sd_plug_card(s, i, drive_get(IF_SD, 0, i));
+     }
+ 
+     s->binfo.ram_size = machine->ram_size;
 diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 7a97d5df6b8..9b1e0d46f1b 100644
+index 3d2e33d3dac..ff2f47daad9 100644
 --- a/hw/arm/xlnx-versal.c
 +++ b/hw/arm/xlnx-versal.c
-@@ -38,6 +38,7 @@
- #include "hw/misc/xlnx-versal-pmc-iou-slcr.h"
- #include "hw/nvram/xlnx-bbram.h"
- #include "hw/misc/xlnx-versal-trng.h"
-+#include "hw/rtc/xlnx-zynqmp-rtc.h"
+@@ -28,6 +28,7 @@
+ #include "hw/arm/fdt.h"
+ #include "hw/char/pl011.h"
+ #include "hw/net/xlnx-versal-canfd.h"
++#include "hw/sd/sdhci.h"
  
  #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
  #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
-@@ -123,6 +124,12 @@ typedef struct VersalMap {
-     VersalSimplePeriphMap pmc_iou_slcr;
-     VersalSimplePeriphMap bbram;
-     VersalSimplePeriphMap trng;
+@@ -47,6 +48,9 @@ typedef struct VersalMap {
+ 
+     VersalSimplePeriphMap canfd[4];
+     size_t num_canfd;
 +
-+    struct VersalRtcMap {
-+        VersalSimplePeriphMap map;
-+        int alarm_irq;
-+        int second_irq;
-+    } rtc;
++    VersalSimplePeriphMap sdhci[2];
++    size_t num_sdhci;
  } VersalMap;
  
  static const VersalMap VERSAL_MAP = {
-@@ -167,6 +174,10 @@ static const VersalMap VERSAL_MAP = {
-     .pmc_iou_slcr = { 0xf1060000, OR_IRQ(121, 0) },
-     .bbram = { 0xf11f0000, OR_IRQ(121, 1) },
-     .trng = { 0xf1230000, 141 },
-+    .rtc = {
-+        { 0xf12a0000, OR_IRQ(121, 2) },
-+        .alarm_irq = 142, .second_irq = 143
-+    },
+@@ -57,6 +61,10 @@ static const VersalMap VERSAL_MAP = {
+     .canfd[0] = { 0xff060000, 20 },
+     .canfd[1] = { 0xff070000, 21 },
+     .num_canfd = 2,
++
++    .sdhci[0] = { 0xf1040000, 126 },
++    .sdhci[1] = { 0xf1050000, 128 },
++    .num_sdhci = 2,
  };
  
  static const VersalMap *VERSION_TO_MAP[] = {
-@@ -762,25 +773,36 @@ static void versal_create_pmc_apb_irq_orgate(Versal *s, qemu_irq *pic)
-     qdev_connect_gpio_out(orgate, 0, pic[VERSAL_PMC_APB_IRQ]);
+@@ -73,6 +81,18 @@ static inline const VersalMap *versal_get_map(Versal *s)
+     return VERSION_TO_MAP[versal_get_version(s)];
  }
  
--static void versal_create_rtc(Versal *s, qemu_irq *pic)
-+static void versal_create_rtc(Versal *s, const struct VersalRtcMap *map)
- {
-     SysBusDevice *sbd;
-     MemoryRegion *mr;
-+    g_autofree char *node;
-+    const char compatible[] = "xlnx,zynqmp-rtc";
-+    const char interrupt_names[] = "alarm\0sec";
- 
--    object_initialize_child(OBJECT(s), "rtc", &s->pmc.rtc,
--                            TYPE_XLNX_ZYNQMP_RTC);
--    sbd = SYS_BUS_DEVICE(&s->pmc.rtc);
--    sysbus_realize(sbd, &error_fatal);
-+    sbd = SYS_BUS_DEVICE(qdev_new(TYPE_XLNX_ZYNQMP_RTC));
-+    object_property_add_child(OBJECT(s), "rtc", OBJECT(sbd));
-+    sysbus_realize_and_unref(sbd, &error_abort);
- 
-     mr = sysbus_mmio_get_region(sbd, 0);
--    memory_region_add_subregion(&s->mr_ps, MM_PMC_RTC, mr);
-+    memory_region_add_subregion(&s->mr_ps, map->map.addr, mr);
- 
-     /*
-      * TODO: Connect the ALARM and SECONDS interrupts once our RTC model
-      * supports them.
-      */
--    sysbus_connect_irq(sbd, 1,
--                       qdev_get_gpio_in(DEVICE(&s->pmc.apb_irq_orgate), 0));
-+    versal_sysbus_connect_irq(s, sbd, 0, map->map.irq);
++static inline Object *versal_get_child(Versal *s, const char *child)
++{
++    return object_resolve_path_at(OBJECT(s), child);
++}
 +
-+    node = versal_fdt_add_simple_subnode(s, "/rtc", map->map.addr, 0x10000,
-+                                         compatible, sizeof(compatible));
-+    qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
-+                           GIC_FDT_IRQ_TYPE_SPI, map->alarm_irq,
-+                           GIC_FDT_IRQ_FLAGS_LEVEL_HI,
-+                           GIC_FDT_IRQ_TYPE_SPI, map->second_irq,
-+                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-+    qemu_fdt_setprop(s->cfg.fdt, node, "interrupt-names",
-+                     interrupt_names, sizeof(interrupt_names));
++static inline Object *versal_get_child_idx(Versal *s, const char *child,
++                                           size_t idx)
++{
++    g_autofree char *n = g_strdup_printf("%s[%zu]", child, idx);
++
++    return versal_get_child(s, n);
++}
+ 
+ static qemu_irq versal_get_irq(Versal *s, int irq_idx)
+ {
+@@ -424,32 +444,39 @@ static void versal_create_admas(Versal *s, qemu_irq *pic)
  }
  
- static void versal_create_trng(Versal *s, const VersalSimplePeriphMap *map)
-@@ -1341,9 +1363,9 @@ static void versal_realize(DeviceState *dev, Error **errp)
+ #define SDHCI_CAPABILITIES  0x280737ec6481 /* Same as on ZynqMP.  */
+-static void versal_create_sds(Versal *s, qemu_irq *pic)
++static void versal_create_sdhci(Versal *s,
++                                const VersalSimplePeriphMap *map)
+ {
+-    int i;
++    DeviceState *dev;
++    MemoryRegion *mr;
++    g_autofree char *node;
++    const char compatible[] = "arasan,sdhci-8.9a";
++    const char clocknames[] = "clk_xin\0clk_ahb";
  
-     versal_create_bbram(s, &map->bbram);
-     versal_create_trng(s, &map->trng);
-+    versal_create_rtc(s, &map->rtc);
+-    for (i = 0; i < ARRAY_SIZE(s->pmc.iou.sd); i++) {
+-        DeviceState *dev;
+-        MemoryRegion *mr;
++    dev = qdev_new(TYPE_SYSBUS_SDHCI);
++    object_property_add_child(OBJECT(s), "sdhci[*]", OBJECT(dev));
  
+-        object_initialize_child(OBJECT(s), "sd[*]", &s->pmc.iou.sd[i],
+-                                TYPE_SYSBUS_SDHCI);
+-        dev = DEVICE(&s->pmc.iou.sd[i]);
++    object_property_set_uint(OBJECT(dev), "sd-spec-version", 3,
++                             &error_fatal);
++    object_property_set_uint(OBJECT(dev), "capareg", SDHCI_CAPABILITIES,
++                             &error_fatal);
++    object_property_set_uint(OBJECT(dev), "uhs", UHS_I, &error_fatal);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+-        object_property_set_uint(OBJECT(dev), "sd-spec-version", 3,
+-                                 &error_fatal);
+-        object_property_set_uint(OBJECT(dev), "capareg", SDHCI_CAPABILITIES,
+-                                 &error_fatal);
+-        object_property_set_uint(OBJECT(dev), "uhs", UHS_I, &error_fatal);
+-        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
++    memory_region_add_subregion(&s->mr_ps, map->addr, mr);
+ 
+-        mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
+-        memory_region_add_subregion(&s->mr_ps,
+-                                    MM_PMC_SD0 + i * MM_PMC_SD0_SIZE, mr);
++    versal_sysbus_connect_irq(s, SYS_BUS_DEVICE(dev), 0, map->irq);
+ 
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+-                           pic[VERSAL_SD0_IRQ_0 + i * 2]);
+-    }
++    node = versal_fdt_add_simple_subnode(s, "/sdhci", map->addr, 0x10000,
++                                         compatible, sizeof(compatible));
++    qemu_fdt_setprop_cells(s->cfg.fdt, node, "clocks",
++                           s->phandle.clk_25mhz, s->phandle.clk_25mhz);
++    qemu_fdt_setprop(s->cfg.fdt, node, "clock-names",
++                     clocknames, sizeof(clocknames));
++    qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
++                           GIC_FDT_IRQ_TYPE_SPI, map->irq,
++                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+ }
+ 
+ static void versal_create_pmc_apb_irq_orgate(Versal *s, qemu_irq *pic)
+@@ -1062,10 +1089,13 @@ static void versal_realize(DeviceState *dev, Error **errp)
+         versal_create_canfd(s, &map->canfd[i], s->cfg.canbus[i]);
+     }
+ 
++    for (i = 0; i < map->num_sdhci; i++) {
++        versal_create_sdhci(s, &map->sdhci[i]);
++    }
++
+     versal_create_usbs(s, pic);
+     versal_create_gems(s, pic);
+     versal_create_admas(s, pic);
+-    versal_create_sds(s, pic);
      versal_create_pmc_apb_irq_orgate(s, pic);
--    versal_create_rtc(s, pic);
-     versal_create_crl(s, pic);
-     versal_create_cfu(s, pic);
-     versal_map_ddr(s);
+     versal_create_rtc(s, pic);
+     versal_create_trng(s, pic);
+@@ -1089,6 +1119,23 @@ static void versal_realize(DeviceState *dev, Error **errp)
+                                         &s->lpd.rpu.mr_ps_alias, 0);
+ }
+ 
++void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk)
++{
++    DeviceState *sdhci, *card;
++
++    sdhci = DEVICE(versal_get_child_idx(s, "sdhci", sd_idx));
++
++    if (sdhci == NULL) {
++        return;
++    }
++
++    card = qdev_new(TYPE_SD_CARD);
++    object_property_add_child(OBJECT(sdhci), "card[*]", OBJECT(card));
++    qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
++    qdev_realize_and_unref(card, qdev_get_child_bus(DEVICE(sdhci), "sd-bus"),
++                           &error_fatal);
++}
++
+ int versal_get_num_can(VersalVersion version)
+ {
+     const VersalMap *map = VERSION_TO_MAP[version];
+@@ -1096,6 +1143,13 @@ int versal_get_num_can(VersalVersion version)
+     return map->num_canfd;
+ }
+ 
++int versal_get_num_sdhci(VersalVersion version)
++{
++    const VersalMap *map = VERSION_TO_MAP[version];
++
++    return map->num_sdhci;
++}
++
+ static void versal_base_init(Object *obj)
+ {
+     Versal *s = XLNX_VERSAL_BASE(obj);
 -- 
 2.43.0
 
