@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C79CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44FCCCA476
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v68Qk-0005qs-VL; Tue, 07 Oct 2025 10:12:43 -0400
+	id 1v68VN-0002i2-CF; Tue, 07 Oct 2025 10:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68QK-0005mE-Hn
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:17 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v68Q6-0002CT-9e
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:12:15 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46e4ad36541so68183165e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:11:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759846311; x=1760451111; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MvgTlUzfuW2bItObmTgfE47aXUveAlTerazWNbrwPac=;
- b=V3ggzLjG1wDt/YD6R82mXEwt0Fp+lV6gV5Na/hZIPW660DoL5my076W5M5Rs1gmvy8
- eqfYndMeHle5EUDzD0h6zRgRi402FiFvyHjBtDWWcUhbILo+thMF3loDFKQg/FQTzvJl
- 69eZDjlR1cwzK0cSamRoRJydzN4IgLiByfroDD8erutZJI6U9oZpnWi+0G6/SgKRHjpc
- 2X4mJfP5L4QPlDtjRykCllKVvPg6Ijhc3Dbgcxe12sTkcHO864p4a7KGbQ1exUNdwMKg
- iLvT6Rbesoi0U7/owM4gKmwsWKiEWLUvmnOHggdRPvl7iyPoH+JeuvR0aHPeYV03mwcZ
- HXnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759846311; x=1760451111;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MvgTlUzfuW2bItObmTgfE47aXUveAlTerazWNbrwPac=;
- b=b0i2pN1XlX+/Eiwn8Jlavm5NfbzJtJMgy5jyoyH6VxH438YbLMnCK25JVqfvC7TT2h
- xvdssRCiE4Lhv0H2664nZiPEuzA1hWGOi/+ela41zdSM7Q+YjGtwx70Fi6gZTs6YfcnN
- YCc8Jv/+JJc/TIq8JexTp0Bd4INfM71PeS1va9MIAOWrXu3vamgUjH7RXg47I7trttr1
- rr3jYin/Up2gaGULlC7na+b1PEjYQ0TeSK12kWtDWbvApq6QgGapadcoi6U0jG10CuG8
- dDY/GRHeciUzNPrhTM6/lS3wSGgxvzIrjO7C/sL8nB1fAeUFEwR7XayrKhzKwoGf9m4D
- KYSQ==
-X-Gm-Message-State: AOJu0YxbUu7YsD+gvXJ2S3B09FIWW+NYOhDnYeBbmlyHytpCEwhPdqvt
- ebNeARzwADujrqnXHolwqCB7E1KB/BkHwgeW8/c0TpLQO4Ptgeehig5Hma2u8r4vkuoOYr9Nwck
- Qcd4Y
-X-Gm-Gg: ASbGncvnOvvh0z6g5Ew8B07Xc0e3decA3bXsyXmM9h6QzVL24i/cFCGn2vZi5YjeFyg
- Lc90AEtbBiCdiVAh325Jg2XblcyDHuuowZTp0Xb+gYnesueaOs2oicsDN8De1OqXnsBTImsxBXu
- UEgrr1/MHrAcMv814xACYQC4LruWzVudvJPTHOswjPdsuskFBwC9KtPtOO//pim+ASVAQgIQloj
- SWbu47Oopbs6s45PxRbiCjqHPu/HSN8T9gCHqIxJs3v4DFWkr3mLOk2FlI8UCs1ZJPNTu+bVtOg
- 8NfOa3vgqj53eHJ837+V378KzJePqYAUxYeWAfkX/l4517zzNHCa8qoDdAhId9NRwskPHQ4oPg2
- GyRMR7oB92U27N0URG+klHE2E9IOAujzib9lpmMl6M5RCylU/0QVzhiYz
-X-Google-Smtp-Source: AGHT+IE6dTeMuY5cMj9+FvUssOgh2Z2UMJTy/ySUY6JWNdlr40d03iM3OnzueLK0n+wyhXgLVI+EnQ==
-X-Received: by 2002:a05:600c:1d11:b0:46e:330a:1762 with SMTP id
- 5b1f17b1804b1-46e71145811mr99375205e9.22.1759846310975; 
- Tue, 07 Oct 2025 07:11:50 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e78c5d290sm167037135e9.0.2025.10.07.07.11.49
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 07:11:50 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 24/62] hw/intc/arm_gicv3: Introduce a 'first-cpu-index' property
-Date: Tue,  7 Oct 2025 15:10:44 +0100
-Message-ID: <20251007141123.3239867-25-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251007141123.3239867-1-peter.maydell@linaro.org>
-References: <20251007141123.3239867-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68V9-0002Gc-Ui
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:17:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v68V3-0003Um-QU
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:17:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759846627;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=48wNYUj1L+ClzTNGgbodycFvjddsGr7fvSdA6msMzDE=;
+ b=BpTNaX1S7C0Qu1n5wGpsnCylo4N5UsbG8R9rg8Hq6Lf5lWqzLUeHk9eH7/ylll7MzvO98v
+ zpgz7i7666xCbfopv7jOlCw4NPpWCuH52GNhfKkJtJ0KsTeypHD/4Wzf4452398kIlcBDC
+ CgJR8iktE2DjzVlGFXXjl5EiDxqcx6w=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-wcpLaLOFOLyrmZGqqi8GAQ-1; Tue,
+ 07 Oct 2025 10:16:51 -0400
+X-MC-Unique: wcpLaLOFOLyrmZGqqi8GAQ-1
+X-Mimecast-MFC-AGG-ID: wcpLaLOFOLyrmZGqqi8GAQ_1759846604
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41AFA19774F0; Tue,  7 Oct 2025 14:16:39 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6B77519560B1; Tue,  7 Oct 2025 14:16:34 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 5/5] test/functional/aarch64: Split the ast2700a1-evb OpenBMC
+ boot test
+Date: Tue,  7 Oct 2025 16:16:04 +0200
+Message-ID: <20251007141604.761686-6-clg@redhat.com>
+In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
+References: <20251007141604.761686-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,94 +89,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Francisco Iglesias <francisco.iglesias@xilinx.com>
+The 'ast2700a1-evb' machine has two functional tests: one loading
+firmware components into memory and another using a vbootrom
+image. Both tests perform a full OpenBMC boot and run checks on I2C
+and PCIe devices, which is redundant and time-consuming.
 
-Introduce a 'first-cpu-index' property for specifying the first QEMU CPU
-connected to the GICv3. This makes it possible to have multiple instances
-of the GICv3 connected to different CPU clusters.
+To save CI resources, the vbootrom test is refactored to focus on the
+firmware boot process only. The OpenBMC boot verification logic is
+split and a new verify_openbmc_boot_start() helper is introduced to
+only wait for the kernel to start.
 
-For KVM, mark this property has unsupported. It probably does not make
-much sense as it is intented to be used to model non-SMP systems.
+The vbootrom test now uses this function and the less essential I2C
+and PCIe checks have been removed from this test case.
 
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250926070806.292065-24-luc.michel@amd.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/intc/arm_gicv3_common.h | 1 +
- hw/intc/arm_gicv3_common.c         | 3 ++-
- hw/intc/arm_gicv3_cpuif.c          | 2 +-
- hw/intc/arm_gicv3_kvm.c            | 6 ++++++
- 4 files changed, 10 insertions(+), 2 deletions(-)
+ tests/functional/aarch64/test_aspeed_ast2700.py | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 572d971d22c..38aa1961c50 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -229,6 +229,7 @@ struct GICv3State {
-     uint32_t *redist_region_count; /* redistributor count within each region */
-     uint32_t nb_redist_regions; /* number of redist regions */
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
+index a60dc1259f69..32c971e13528 100755
+--- a/tests/functional/aarch64/test_aspeed_ast2700.py
++++ b/tests/functional/aarch64/test_aspeed_ast2700.py
+@@ -37,11 +37,14 @@ def verify_vbootrom_firmware_flow(self):
+         wait_for_console_pattern(self, 'done')
+         wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
  
-+    uint32_t first_cpu_idx;
-     uint32_t num_cpu;
-     uint32_t num_irq;
-     uint32_t revision;
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index e438d8c042d..2d0df6da86c 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -436,7 +436,7 @@ static void arm_gicv3_common_realize(DeviceState *dev, Error **errp)
-     s->cpu = g_new0(GICv3CPUState, s->num_cpu);
+-    def verify_openbmc_boot_and_login(self, name):
++    def verify_openbmc_boot_start(self):
+         wait_for_console_pattern(self, 'U-Boot 2023.10')
+         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+         wait_for_console_pattern(self, 'Starting kernel ...')
  
-     for (i = 0; i < s->num_cpu; i++) {
--        CPUState *cpu = qemu_get_cpu(i);
-+        CPUState *cpu = qemu_get_cpu(s->first_cpu_idx + i);
-         uint64_t cpu_affid;
- 
-         s->cpu[i].cpu = cpu;
-@@ -622,6 +622,7 @@ static const Property arm_gicv3_common_properties[] = {
-                       redist_region_count, qdev_prop_uint32, uint32_t),
-     DEFINE_PROP_LINK("sysmem", GICv3State, dma, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-+    DEFINE_PROP_UINT32("first-cpu-index", GICv3State, first_cpu_idx, 0),
- };
- 
- static void arm_gicv3_common_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 72e91f971a4..2e6c1f778a9 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -3024,7 +3024,7 @@ void gicv3_init_cpuif(GICv3State *s)
-     int i;
- 
-     for (i = 0; i < s->num_cpu; i++) {
--        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(i));
-+        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(s->first_cpu_idx + i));
-         GICv3CPUState *cs = &s->cpu[i];
- 
-         /*
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 0cd14d78a75..9829e2146da 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -821,6 +821,12 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (s->first_cpu_idx != 0) {
-+        error_setg(errp, "Non-zero first-cpu-idx is unsupported with the "
-+                   "in-kernel GIC");
-+        return;
-+    }
++    def verify_openbmc_boot_and_login(self, name):
++        self.verify_openbmc_boot_start()
 +
-     gicv3_init_irqs_and_mmio(s, kvm_arm_gicv3_set_irq, NULL);
+         wait_for_console_pattern(self, f'{name} login:')
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+@@ -141,9 +144,7 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_08(self):
+         self.vm.add_args('-netdev', 'user,id=net1')
+         self.start_ast2700_test_vbootrom('ast2700-default')
+         self.verify_vbootrom_firmware_flow()
+-        self.verify_openbmc_boot_and_login('ast2700-default')
+-        self.do_ast2700_i2c_test()
+-        self.do_ast2700_pcie_test()
++        self.verify_openbmc_boot_start()
  
-     for (i = 0; i < s->num_cpu; i++) {
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
-2.43.0
+2.51.0
 
 
