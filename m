@@ -4,73 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F4B9CCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 18:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D2ECCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 18:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6CXH-0005yA-DI; Tue, 07 Oct 2025 14:35:43 -0400
+	id 1v6Cdq-0002aJ-H2; Tue, 07 Oct 2025 14:42:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6CWc-0005i4-U0
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:35:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6CWZ-0002dn-8f
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:35:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759862097;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S5jrEUwy0EJFOIS/WkiXiOdV2GbJ0vVIS71974BPMO4=;
- b=OQKDe+fES4ETQtfvfQjOJ37t3Isc5KPcqtGVwPlYla9COYFXWFWpzeZho7x5qtzvpDNA9O
- 0Gagq8Nkzxzs+tU5v0K2rstTMSzayQdqn1RQpT2Wyo4VX1Jn8ONljBoeExV9XJcHIf3F+C
- Odm9OKC9grPmC1l+FEyMW01BLZ++QEk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-cGa3z8MZMO6wSBDr6FUhlQ-1; Tue,
- 07 Oct 2025 14:34:54 -0400
-X-MC-Unique: cGa3z8MZMO6wSBDr6FUhlQ-1
-X-Mimecast-MFC-AGG-ID: cGa3z8MZMO6wSBDr6FUhlQ_1759862093
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v6Cdm-0002Zu-Th
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:42:27 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v6Cdk-0003cc-DV
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:42:26 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38A3E19560AF; Tue,  7 Oct 2025 18:34:53 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.87])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 93D811800446; Tue,  7 Oct 2025 18:34:52 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 702D91F7EF;
+ Tue,  7 Oct 2025 18:42:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1759862537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=4xy2rq8k0KPm7HUAY4Gz4yN1sW557wyEG99y0avL/Vs=;
+ b=g5ePCysUHshKqSUpiZeVXmhuxdN1YtcTbKDidsPtYfObY0qhD3aX01/9qD1AUc1DcgGt0Z
+ IIvDXn4kNuWoS2Z3u+9a3e6i4cZ02mSb78259eOklyfhP4D7YlrTeqqpe2yCAxYtLjO4A+
+ n6081SfE2S6b1FMCz5ABIC/2I6XPPlo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1759862537;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=4xy2rq8k0KPm7HUAY4Gz4yN1sW557wyEG99y0avL/Vs=;
+ b=TTg9qghx7swBp+EqBF6sWjlhGhdOU3+f6lOnngbVYF1GVg0vVa3vrHaJbEkdsy1U+WRliU
+ sKIzXPsMRIaI2LDg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=g5ePCysU;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=TTg9qghx
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1759862537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=4xy2rq8k0KPm7HUAY4Gz4yN1sW557wyEG99y0avL/Vs=;
+ b=g5ePCysUHshKqSUpiZeVXmhuxdN1YtcTbKDidsPtYfObY0qhD3aX01/9qD1AUc1DcgGt0Z
+ IIvDXn4kNuWoS2Z3u+9a3e6i4cZ02mSb78259eOklyfhP4D7YlrTeqqpe2yCAxYtLjO4A+
+ n6081SfE2S6b1FMCz5ABIC/2I6XPPlo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1759862537;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=4xy2rq8k0KPm7HUAY4Gz4yN1sW557wyEG99y0avL/Vs=;
+ b=TTg9qghx7swBp+EqBF6sWjlhGhdOU3+f6lOnngbVYF1GVg0vVa3vrHaJbEkdsy1U+WRliU
+ sKIzXPsMRIaI2LDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2180313AAC;
+ Tue,  7 Oct 2025 18:42:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KBHeMwdf5WjGCQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 07 Oct 2025 18:42:15 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 1/5] block: add BdrvChildClass->propagate_attach/detach()
- callbacks
-Date: Tue,  7 Oct 2025 14:34:43 -0400
-Message-ID: <20251007183447.93120-2-stefanha@redhat.com>
-In-Reply-To: <20251007183447.93120-1-stefanha@redhat.com>
-References: <20251007183447.93120-1-stefanha@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>,
+	Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Subject: [RESEND] migration/savevm: Add a compatibility check for capabilities
+Date: Tue,  7 Oct 2025 15:42:13 -0300
+Message-Id: <20251007184213.5990-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Rspamd-Queue-Id: 702D91F7EF
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_THREE(0.00)[3];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,133 +120,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bdrv_replace_child_noperm() is the heart of block graph changes. It is
-called when a node is inserted, removed, or replaced. These changes
-happen without notifying parents in the graph, so it is currently not
-possible to monitor changes.
+It has always been possible to enable arbitrary migration capabilities
+and attempt to take a snapshot of the VM with the savevm/loadvm
+commands as well as their QMP counterparts
+snapshot-save/snapshot-load.
 
-Add BdrvChildClass callbacks to propagate attach/detach operations to
-the roots of the graph. The next commit will introduce a BlockBackend
-API for monitoring changes using this mechanism.
+Most migration capabilities are not meant to be used with snapshots
+and there's a risk of crashing QEMU or producing incorrect
+behavior. Ideally, every migration capability would either be
+implemented for savevm or explicitly rejected.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Add a compatibility check routine and reject the snapshot command if
+an incompatible capability is enabled. For now only act on the the two
+that actually cause a crash: multifd and mapped-ram.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2881
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/block/block_int-common.h | 11 +++++++
- block.c                          | 56 +++++++++++++++++++++++++-------
- 2 files changed, 56 insertions(+), 11 deletions(-)
+ migration/options.c | 27 +++++++++++++++++++++++++++
+ migration/options.h |  1 +
+ migration/savevm.c  |  8 ++++++++
+ 3 files changed, 36 insertions(+)
 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 034c0634c8..0368a3191c 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -963,6 +963,17 @@ struct BdrvChildClass {
-     void GRAPH_RDLOCK_PTR (*activate)(BdrvChild *child, Error **errp);
-     int GRAPH_RDLOCK_PTR (*inactivate)(BdrvChild *child);
+diff --git a/migration/options.c b/migration/options.c
+index 5183112775..d9227809d7 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -445,11 +445,38 @@ INITIALIZE_MIGRATE_CAPS_SET(check_caps_background_snapshot,
+     MIGRATION_CAPABILITY_VALIDATE_UUID,
+     MIGRATION_CAPABILITY_ZERO_COPY_SEND);
  
-+    /*
-+     * Optional callbacks when a descendant (child, grandchild, etc) attaches
-+     * or detaches a BlockDriverState. Allows monitoring changes to the graph.
-+     *
-+     * Called after ->attach() and before ->detach().
-+     */
-+    void GRAPH_WRLOCK_PTR (*propagate_attach)(BdrvChild *self,
-+                                              BdrvChild *descendant);
-+    void GRAPH_WRLOCK_PTR (*propagate_detach)(BdrvChild *self,
-+                                              BdrvChild *descendant);
++/* Snapshot compatibility check list */
++static const
++INITIALIZE_MIGRATE_CAPS_SET(check_caps_savevm,
++                            MIGRATION_CAPABILITY_MULTIFD,
++                            MIGRATION_CAPABILITY_MAPPED_RAM,
++);
 +
-     void GRAPH_WRLOCK_PTR (*attach)(BdrvChild *child);
-     void GRAPH_WRLOCK_PTR (*detach)(BdrvChild *child);
- 
-diff --git a/block.c b/block.c
-index 8848e9a7ed..e1480dda04 100644
---- a/block.c
-+++ b/block.c
-@@ -1497,6 +1497,32 @@ static void GRAPH_WRLOCK bdrv_child_cb_detach(BdrvChild *child)
-     }
+ static bool migrate_incoming_started(void)
+ {
+     return !!migration_incoming_get_current()->transport_data;
  }
  
-+static void GRAPH_WRLOCK
-+bdrv_child_cb_propagate_attach(BdrvChild *self, BdrvChild *descendant)
++bool migrate_can_snapshot(Error **errp)
 +{
-+    BlockDriverState *bs = self->opaque;
-+    BdrvChild *c;
++    MigrationState *s = migrate_get_current();
++    int i;
 +
-+    QLIST_FOREACH(c, &bs->parents, next_parent) {
-+        if (c->klass->propagate_attach) {
-+            c->klass->propagate_attach(c, descendant);
++    for (i = 0; i < check_caps_savevm.size; i++) {
++        int incomp_cap = check_caps_savevm.caps[i];
++
++        if (s->capabilities[incomp_cap]) {
++            error_setg(errp,
++                       "Snapshots are not compatible with %s",
++                       MigrationCapability_str(incomp_cap));
++            return false;
 +        }
 +    }
++
++    return true;
 +}
 +
-+static void GRAPH_WRLOCK
-+bdrv_child_cb_propagate_detach(BdrvChild *self, BdrvChild *descendant)
-+{
-+    BlockDriverState *bs = self->opaque;
-+    BdrvChild *c;
 +
-+    QLIST_FOREACH(c, &bs->parents, next_parent) {
-+        if (c->klass->propagate_detach) {
-+            c->klass->propagate_detach(c, descendant);
-+        }
+ bool migrate_rdma_caps_check(bool *caps, Error **errp)
+ {
+     if (caps[MIGRATION_CAPABILITY_XBZRLE]) {
+diff --git a/migration/options.h b/migration/options.h
+index 82d839709e..a7b3262d1e 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -59,6 +59,7 @@ bool migrate_tls(void);
+ 
+ bool migrate_rdma_caps_check(bool *caps, Error **errp);
+ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
++bool migrate_can_snapshot(Error **errp);
+ 
+ /* parameters */
+ 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 7b35ec4dd0..aafa40d779 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3322,6 +3322,10 @@ bool save_snapshot(const char *name, bool overwrite, const char *vmstate,
+ 
+     GLOBAL_STATE_CODE();
+ 
++    if (!migrate_can_snapshot(errp)) {
++        return false;
 +    }
-+}
 +
- static int bdrv_child_cb_update_filename(BdrvChild *c, BlockDriverState *base,
-                                          const char *filename,
-                                          bool backing_mask_protocol,
-@@ -1519,17 +1545,19 @@ AioContext *child_of_bds_get_parent_aio_context(BdrvChild *c)
- }
- 
- const BdrvChildClass child_of_bds = {
--    .parent_is_bds   = true,
--    .get_parent_desc = bdrv_child_get_parent_desc,
--    .inherit_options = bdrv_inherited_options,
--    .drained_begin   = bdrv_child_cb_drained_begin,
--    .drained_poll    = bdrv_child_cb_drained_poll,
--    .drained_end     = bdrv_child_cb_drained_end,
--    .attach          = bdrv_child_cb_attach,
--    .detach          = bdrv_child_cb_detach,
--    .inactivate      = bdrv_child_cb_inactivate,
--    .change_aio_ctx  = bdrv_child_cb_change_aio_ctx,
--    .update_filename = bdrv_child_cb_update_filename,
-+    .parent_is_bds          = true,
-+    .get_parent_desc        = bdrv_child_get_parent_desc,
-+    .inherit_options        = bdrv_inherited_options,
-+    .drained_begin          = bdrv_child_cb_drained_begin,
-+    .drained_poll           = bdrv_child_cb_drained_poll,
-+    .drained_end            = bdrv_child_cb_drained_end,
-+    .attach                 = bdrv_child_cb_attach,
-+    .detach                 = bdrv_child_cb_detach,
-+    .propagate_attach       = bdrv_child_cb_propagate_attach,
-+    .propagate_detach       = bdrv_child_cb_propagate_detach,
-+    .inactivate             = bdrv_child_cb_inactivate,
-+    .change_aio_ctx         = bdrv_child_cb_change_aio_ctx,
-+    .update_filename        = bdrv_child_cb_update_filename,
-     .get_parent_aio_context = child_of_bds_get_parent_aio_context,
- };
- 
-@@ -2967,6 +2995,9 @@ bdrv_replace_child_noperm(BdrvChild *child, BlockDriverState *new_bs)
+     if (migration_is_blocked(errp)) {
+         return false;
      }
+@@ -3507,6 +3511,10 @@ bool load_snapshot(const char *name, const char *vmstate,
+     int ret;
+     MigrationIncomingState *mis = migration_incoming_get_current();
  
-     if (old_bs) {
-+        if (child->klass->propagate_detach) {
-+            child->klass->propagate_detach(child, child);
-+        }
-         if (child->klass->detach) {
-             child->klass->detach(child);
-         }
-@@ -2980,6 +3011,9 @@ bdrv_replace_child_noperm(BdrvChild *child, BlockDriverState *new_bs)
-         if (child->klass->attach) {
-             child->klass->attach(child);
-         }
-+        if (child->klass->propagate_attach) {
-+            child->klass->propagate_attach(child, child);
-+        }
++    if (!migrate_can_snapshot(errp)) {
++        return false;
++    }
++
+     if (!bdrv_all_can_snapshot(has_devices, devices, errp)) {
+         return false;
      }
- 
-     /*
 -- 
-2.51.0
+2.35.3
 
 
