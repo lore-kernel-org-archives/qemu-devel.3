@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 668EBCCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 10:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A61ECCCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 10:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v650q-0002N1-Cp; Tue, 07 Oct 2025 06:33:44 -0400
+	id 1v653U-0003lr-AI; Tue, 07 Oct 2025 06:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v650p-0002Ml-5i
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 06:33:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v650n-00080o-BM
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 06:33:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759833220;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fpIFgS/tEKQovSffUCAAeYs/5um4vU548+ZZc5S9F5w=;
- b=Y9cIeKcHEdQie5s4TDZ6bwXINZtBhblWW19sy31p/VlYofnfVDIhphm97/BlWDylg+iR1L
- Gb4+dSDBDOl3e0+02Cgd6l4t7FxzUXHMAbQPjcDaSbRdpGuYDTCPnauJeRVIz1olaf1CZH
- GeI1lKU8VO4ZoZh8OQ2qbKJrWX5hvuI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-q6z00T-yPsuld3eqTietgg-1; Tue,
- 07 Oct 2025 06:33:37 -0400
-X-MC-Unique: q6z00T-yPsuld3eqTietgg-1
-X-Mimecast-MFC-AGG-ID: q6z00T-yPsuld3eqTietgg_1759833216
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B74D1800378; Tue,  7 Oct 2025 10:33:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.83])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C927180141D; Tue,  7 Oct 2025 10:33:28 +0000 (UTC)
-Date: Tue, 7 Oct 2025 11:33:22 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Richard W.M. Jones" <rjones@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com
-Subject: Re: [PATCH] block/curl.c: Use explicit long constants in
- curl_easy_setopt calls
-Message-ID: <aOTsckKjAptsUppX@redhat.com>
-References: <20251001124055.2743244-1-rjones@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v653S-0003lL-Li
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 06:36:26 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v653P-00006w-Rx
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 06:36:26 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-77f9fb3bea0so38029437b3.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 03:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759833381; x=1760438181; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aFYz5iQTpMav+zDYZjX1r38q1rMTDKAazHmLiuQh6HQ=;
+ b=Ikneghr+xO9GAwIMK0HkZbrSKt7BQZ2XSB1rzwEyydBUmNkxzmmbUKAW3wWcXhw5EL
+ AP1PHBL82Cve9rRGJbVXzM3yRpMm/iLl/0EWLm4rewbrPmxM5YUIX01D6eNrZgoldE7N
+ pUl5J/QzwIPDfSzQp4FGFwLYOQfyjNL37WauhrFMCsCmqtxXKjd+b0tML6Qwf3ZKNZCA
+ pzIw5VWDj1wRM4oYmfoPkd4vxNawl6/LUBog219/FTi4FhKBMW/uXYnDKIN9f5Mkovup
+ ghevWWGwEU/2/sdWD/rtLew635uW41SrCHtVg/NyRwXhE7/IdUNxQXuqlTuuZ6BnGc8y
+ SDUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759833381; x=1760438181;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aFYz5iQTpMav+zDYZjX1r38q1rMTDKAazHmLiuQh6HQ=;
+ b=DJML4FBVY6kZX9mbcEFjWqBZaVeHyvJvXywCJpWoCIi+MB8gtrhnTMprholp37hy1J
+ loLrGdtWMFpgIYW3Jy4uthcYHlbwkPzG01R3EFH/ZyomfaQ8kWgBap69wJY/yrtB1Lwo
+ eLBVw2O0ABHkZihJFu1sfwgEt1E0P4UNrt6UufduqI+aqh1Ac2m2Lj5C/RhN77KlZVW3
+ bbLlFFVwzPJSgROYrtTGFry6eYjEDBwRwsjD2SkpPMITCs9E46qwBFr0VpYuLiFrSsHL
+ yoO0ng1iBoR7/BEuwoqpj+ixf4LsUMdVRchct9R7KuIoquuUVy141Sm3yUrx3wNZFIv/
+ kgFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFNR4cDg/kDpqbtUjIeN8cslqffFxRZRTpxoJFSP9z2FHpFMPCAl/8zF9yZtzVjP0Htd4Lxa0ArA9w@nongnu.org
+X-Gm-Message-State: AOJu0Yy+8UpWo4wPsCNjGu+nZbKvV/qFBNw+vhNs2sF8zItgXsMB3mS/
+ 1YrYdUGKs+lI0iojbozW3DePy/udcw6WmOiWLSkJ/+KSZjJFlYBr/HzUtUGqTEOYPVZJ19HwaxV
+ QPvHhqjyVqMn3yaqCaJZaw5Cd7I3jU+FlGSRkirLyVQNG9+5Ix9kx
+X-Gm-Gg: ASbGnctJJ1EqSXp+QrMjRQpQjUt5kJoiKZl0p43mm18e73V2Wv9zg7VVpwE3dVPdFeg
+ gM5X6xq/t/XVKlR9qJ4+deEbjYhuCf6A1k7I27UZbW8tpp3G7q2t3oPAG0gK2lOUIjj0N5O759w
+ SaNP0hR+rA2sqtcyPe9hFoxy4RGTuMbz3D7JPURvRebXc2d2jE/5ZrAAnsu/qkUE1DcA35VrMxg
+ ykIgYouf1PnfwL9luYn1T8cYG1gvZDU7AkM
+X-Google-Smtp-Source: AGHT+IE+bQuAbwXjq68kDA/qCcBQwtDyDQoQWf44W1o/eugZMmGbY3aHfIlGf2nlWgEBK5+0Zpuu0Rv3t1rzWfnTbwg=
+X-Received: by 2002:a05:690e:2490:b0:63b:6290:d132 with SMTP id
+ 956f58d0204a3-63b9a0f09acmr11459964d50.42.1759833381131; Tue, 07 Oct 2025
+ 03:36:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251001124055.2743244-1-rjones@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20251006182900.100580-1-skolothumtho@nvidia.com>
+In-Reply-To: <20251006182900.100580-1-skolothumtho@nvidia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 Oct 2025 11:36:09 +0100
+X-Gm-Features: AS18NWB_nX7MIs24rO0XAZ2lU6ubPmr-2VYLQphGd29Fb2BLOqnGIpxiHgf5Y3A
+Message-ID: <CAFEAcA_3Vz-4Pednqd8ALW0jTmYAOgeQZ2Cfc6h9-vAqLE_RZw@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/arm/virt: Document user-creatable SMMUv3
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ nicolinc@nvidia.com, ddutile@redhat.com, nathanc@nvidia.com, mochs@nvidia.com, 
+ jonathan.cameron@huawei.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,42 +93,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 01, 2025 at 01:40:47PM +0100, Richard W.M. Jones wrote:
-> curl_easy_setopt takes a variable argument that depends on what
-> CURLOPT you are setting.  Some require a long constant.  Passing a
-> plain int constant is potentially wrong on some platforms.
-
-In practice for QEMU I think this is all harmless, since we only target
-GCC + CLang on a selection of modern platforms, so integer promotion
-should work fine for int -> long. None the less, we need to squash the
-warnings and don't want to turn off -Wattribute-warning entirely, so
-this makes sense.
-
-> 
-> With warnings enabled, multiple warnings like this were printed:
-> 
-> ../block/curl.c: In function ‘curl_init_state’:
-> ../block/curl.c:474:13: warning: call to ‘_curl_easy_setopt_err_long’ declared with attribute warning: curl_easy_setopt expects a long argument [-Wattribute-warning]
->   474 |             curl_easy_setopt(state->curl, CURLOPT_AUTOREFERER, 1) ||
->       |             ^
-> 
-> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+On Mon, 6 Oct 2025 at 19:31, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+>
+> The virt machine now supports creating multiple SMMUv3 instances, each
+> associated with a separate PCIe root complex.
+>
+> Update the documentation with an example.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->  block/curl.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  docs/system/arm/virt.rst | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+> index 10cbffc8a7..2e0e8196be 100644
+> --- a/docs/system/arm/virt.rst
+> +++ b/docs/system/arm/virt.rst
+> @@ -37,7 +37,19 @@ The virt board supports:
+>  - An RTC
+>  - The fw_cfg device that allows a guest to obtain data from QEMU
+>  - A PL061 GPIO controller
+> -- An optional SMMUv3 IOMMU
+> +- An optional machine-wide SMMUv3 IOMMU
+> +- User-creatable SMMUv3 devices
+> +
+> +  Allows instantiating multiple SMMUv3 devices, each associated with
+> +  a separate PCIe root complex. This is only allowed if the machine-wide
+> +  SMMUv3(``iommu=smmuv3``) is not used.
+> +
+> +  Example::
+> +
+> +      -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0
+> +      ...
+> +      -device pxb-pcie,id=pcie.1
+> +      -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1
+>  - hotpluggable DIMMs
+>  - hotpluggable NVDIMMs
+>  - An MSI controller (GICv2M or ITS). GICv2M is selected by default along
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This bulleted list is intended to be a summary list of the features the
+virt board supports; if we put more detailed information and usage
+examples in here then it gets a bit odd as the list is interrupted
+by a multi-line detailed explanation of a single feature.
 
+Instead I think we should have the list entry be a short one
+that refers the user to elsewhere in the document for the
+more detailed information, like:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+ - User-creatable SMMUv3 devices (see below for example)
 
+Then you can have a new subsection
+
+SMMU configuration
+""""""""""""""""""
+
+(which I think I would put just above the "Linux guest
+kernel configuration" subsection), which can describe
+both the "machine-wide SMMU" and "multiple SMMU" options,
+maybe say when you might pick one or the other, and have
+your command line example there.
+
+This gives us as much space as we like to document the SMMU
+stuff, and a place in future where info about accelerated SMMUv3
+will naturally sit.
+
+thanks
+-- PMM
 
