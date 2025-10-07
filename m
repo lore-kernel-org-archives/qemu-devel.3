@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA84CCCA476
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 17:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F61CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 18:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6B5Y-0003OV-5S; Tue, 07 Oct 2025 13:03:00 -0400
+	id 1v6CS0-0004tJ-92; Tue, 07 Oct 2025 14:30:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6B5W-0003Nr-DB
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 13:02:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1v6CRw-0004qO-IM
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:30:13 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6B5T-000814-MV
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 13:02:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759856571;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=KdyYR+t20g9gn9tOmayJSeBKmgiZ5emAscSGHgDVxkN0r7ypLgtA+hkJjP7E62V/j/3tAY
- p3l75T2NSllAQfNKR0Bab+8i4jXdVSp5TpWKnPRvHOdCjH7f/OfTUPfPC7n/lgRk8g7U4P
- aYKlZwuxhP4TN3tJH6OPZqLxSlx+F8M=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-6TDfX5tyOaaGpgxiQykeQw-1; Tue, 07 Oct 2025 13:02:47 -0400
-X-MC-Unique: 6TDfX5tyOaaGpgxiQykeQw-1
-X-Mimecast-MFC-AGG-ID: 6TDfX5tyOaaGpgxiQykeQw_1759856567
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-6394a37e473so5074658a12.1
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 10:02:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759856566; x=1760461366;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=euJ0/tys4gV7iw+TG85aw87uWExlOpr3so4wpaSOP6mKq/hTk0Zp2MZDZaT5l5CG5v
- nYBRJnE1ItfCCtO2v5qPUihXuck/m/TqqdihLYrjX0p+kGNkVGn2eBadQGFA63y1S63+
- OaubyJm9XcD7sya8PgaGPfrpLZxotL107fkYE0afNlBxFe6ZY6pZEP7bTccmLfVI6iT3
- VKPrg+8Ue4zNb1oVEvA5nahvrSm7VTEDnu6Bdur1WXbHPSrogmBAyosdwGodgatH51/f
- IXUv0hFGdu6Bdo0ti4M5rnX/xF0LEMA+XRSGw91wLjtq46QpOPoWFGkkkJIENexYl8fW
- a57g==
-X-Gm-Message-State: AOJu0Ywb4tX7zFYzcFgDUn/6GlcN6nQDTRXjpgnY4Xi9bnuO1W/k3lp8
- 7zyZleY+N1Yb38y40z+JVmgMcwPMDBOwHgsk12yYvk8fdU2jqGL2V9ScnHfbPvqQInFPSZWSoZX
- 6LBg7nQ9TH5XSirnL9BkYCL+Amw12a8tU5xagQGbC9sWUtQRVRLTo+7Sq
-X-Gm-Gg: ASbGncuSuPSvzTv1UYZRkYaZWuaS1/xReUCZSSLtLuNk+zQQ7n2jWTh7wM4k0bAhw+P
- KOOEnVul613jsrW6BGR3BOAu2imCS7iQ/7/JxBajOjErwjs0Bm/ecrNR+XKKmUbP9Wa+HNUSUli
- 6GZAB5896heeTUikXGXGhl4Gdms39LLr00yKj0b0KOu08Tltjhy1IDSlTsd2hfLYOMg8g+GTsqd
- /FF37L3TRYWBs61GTPrtb0DfOkxunsNQKTFhM1WnKWRVi/5nhe238lvx8ZbZK+DNrVGucWg2cDz
- u6XJf+WEarc1e6mMDnKyhWw7dAKY2jCSI3//MuBWE6CVA1Kx7EEowsX/n0Oa2OYVgxFSmG5VuU9
- EVOhaKzhQOzs5QCR7INdor/RNEd/ImosTK/50rZ37Utgoh+iI
-X-Received: by 2002:a05:6402:2708:b0:632:466d:5d10 with SMTP id
- 4fb4d7f45d1cf-639d5c3ec89mr93438a12.20.1759856566625; 
- Tue, 07 Oct 2025 10:02:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGythAkW5iuYe7OUOLGHT5UFRdtaykrLD6A3D40MW3f1sXFS431yTNBuUs6d/ckzfxcn+Rm+w==
-X-Received: by 2002:a05:6402:2708:b0:632:466d:5d10 with SMTP id
- 4fb4d7f45d1cf-639d5c3ec89mr93399a12.20.1759856566213; 
- Tue, 07 Oct 2025 10:02:46 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.36.217])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63788110de2sm12839784a12.35.2025.10.07.10.02.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 10:02:45 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, rth7680@gmail.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] tests/docker: make --enable-rust overridable with
- EXTRA_CONFIGURE_OPTS
-Date: Tue,  7 Oct 2025 19:02:43 +0200
-Message-ID: <20251007170243.307193-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251007153406.421032-1-marcandre.lureau@redhat.com>
-References: 
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1v6CRs-0002Nl-KQ
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 14:30:12 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 597IJX0l031300;
+ Tue, 7 Oct 2025 18:29:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=UI6WBPgzX70SvC6fCGDI0/yZ7rKib
+ 8fzzRc7YgpoNNg=; b=WLblL5jN7YMtAATZ0lXgG+I1aPzWgkheMj28hjwa+HtLy
+ a7O+dDgkfCZmHP6LSWWZsCguIP+yHJRVnwAFOniV9gWgUWbNUcmwIuxIm5CVcrCi
+ w81URnUrLzh4qOQlGoKOZPFrcjYZveRZv3d4Fbon8Kb5Quku3/86Rvai56V4CR+c
+ EZH7NjQN07L9P8JsJLv4eHwYlsuB0kUp+0OPWH53Q+a4sI6wpg6IbfdxR81xLQVj
+ ydOizfkY8seCCr2QlkvdyYFNxXFn2omr7aBIB/Ci+3VjON2PSJI3juRc5qblMXTe
+ w9NboA9Xuw+hiir0xP0XDkZeGYYL8nJ1BFvwZItxg==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49n81r00km-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 07 Oct 2025 18:29:54 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 597HaXrM036075; Tue, 7 Oct 2025 18:29:53 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 49jt18kqm5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 07 Oct 2025 18:29:53 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 597ITq24012184;
+ Tue, 7 Oct 2025 18:29:52 GMT
+Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
+ (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.254.235])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 49jt18kqku-1; Tue, 07 Oct 2025 18:29:52 +0000
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org, mst@redhat.com, clg@redhat.com, sarunkod@amd.com
+Cc: philmd@linaro.org, clement.mathieu--drif@eviden.com, vasant.hegde@amd.com, 
+ suravee.suthikulpanit@amd.com, joao.m.martins@oracle.com,
+ boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
+Subject: [PATCH] MAINTAINERS: Update entry for AMD-Vi Emulation
+Date: Tue,  7 Oct 2025 18:29:51 +0000
+Message-ID: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-07_02,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ spamscore=0
+ phishscore=0 adultscore=0 bulkscore=0 malwarescore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2509150000 definitions=main-2510070145
+X-Proofpoint-GUID: H8oKOc-8x58LBmCLdMiOL7Z7FiwYkVQK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA3MDE0NCBTYWx0ZWRfX6TlHk/L25lTD
+ fHS/bf6mUP0PB4e3VPjwHrTRLigt9HoT+gNsZzdM7PrbNNlxI4aFGPvMgUKYJDnTP5dRb3k5Hn+
+ AdSZT6vS1MQTMHFv296PCmvjvtn1JmsccSFQLx+lR9eKi5wdpk8pAwHmc+BgfAIIpSKXyy0vKuR
+ PcuGckjkFinLTaRX5Ko9r8Y/yComC5yordhKLkkLQXDn+HmqgkahpkaLfc1kM7zveYPwLytAPa6
+ kHYON5HH0rXATZjpYPfuAyf+Mc1qg2KXL/h7p8rcNjH9Q183Hho71qkSiTK2ZPT8SAQoBsF+7XK
+ F1tzESm0gRXzX00fESIH1VfXim2i+uOA+Huv4wYws+pgE32X8do1A+duKquHwBvimCpqykbB6l7
+ HF1OqcSFq74I90jnJHh78ubCPlNtPPfoC1RbVWcgmnYC9AWZ/ao=
+X-Authority-Analysis: v=2.4 cv=dubWylg4 c=1 sm=1 tr=0 ts=68e55c22 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117
+ a=zPCbziy225d3KhSqZt3L1A==:17
+ a=x6icFKpwvdMA:10 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8 a=69wJf7TsAAAA:8
+ a=FCmSo5QTj4tFlZMtZ9wA:9 a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:12091
+X-Proofpoint-ORIG-GUID: H8oKOc-8x58LBmCLdMiOL7Z7FiwYkVQK
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,8 +113,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Add myself as maintainer and Sairaj Kodilkar as reviewer.
 
-Paolo
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+---
+ MAINTAINERS | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 75e1fa5c307ea..08de896ca942a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3891,8 +3891,10 @@ F: tests/functional/x86_64/test_intel_iommu.py
+ F: tests/qtest/intel-iommu-test.c
+ 
+ AMD-Vi Emulation
+-S: Orphan
+-F: hw/i386/amd_iommu.?
++M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
++R: Sairaj Kodilkar <sarunkod@amd.com>
++S: Supported
++F: hw/i386/amd_iommu*
+ 
+ OpenSBI Firmware
+ L: qemu-riscv@nongnu.org
+-- 
+2.43.5
 
 
