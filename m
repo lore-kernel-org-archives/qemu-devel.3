@@ -4,93 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DCECCA470
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 14:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C71C1CCA470
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Oct 2025 15:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v697x-0004CJ-Lp; Tue, 07 Oct 2025 10:57:21 -0400
+	id 1v69Nu-00071j-Os; Tue, 07 Oct 2025 11:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v697v-00045W-Gi
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:57:20 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v697i-0007uP-8l
- for qemu-devel@nongnu.org; Tue, 07 Oct 2025 10:57:17 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-339c9bf3492so5524175a91.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 07:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759849020; x=1760453820; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=00VNmTYRW9DIW/9gL8rp3MWZ1Xs6ZjjTe6Q3F6T0dhg=;
- b=r2jfarO7J8S6mGugSOQvHRGXmfPceVMaXxnRwjgKf7mfzrBBs+sG8IAKrLtAZO/KE0
- YXrxhlLrWRtSYFkF/atFrhNy9XRF3/HymbJ+GM/ckTcoxEZAV/G4bzeQXTNJf5w8RNEp
- TQc20gyh4TFAYQ9XG0nPdmcCiqxjvFZa5y5LSGkmWAWjtZSzPf3892kUhLwsh8lvh8wp
- 9JDG6MwP/RCe2kfcEzTNg87PYTqp3q/0938o/RkG7T0+pXglQ3P2yWUHf/AFcyBYdf9a
- OGH3qp8E674Kkk/4Sj+xyxqM9Gqw8nJimodB0RVL5r1t3RWCjOTer/Pf/WOVEN72Za4m
- 3/YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759849020; x=1760453820;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=00VNmTYRW9DIW/9gL8rp3MWZ1Xs6ZjjTe6Q3F6T0dhg=;
- b=Zl1zpJPldf0b1wZaLgDYHiFRyPPUCYn2jBh9bYOhTFjk5pRKk4pAyjteY4Zmcn6krX
- no5CpYXNjEhWlXjzTmr1r6qwjauNv7K5iUJdr2qechA4mMA6YojPGZibD9ebLvEmdvua
- UoMs3X6Nl8xlCY5vKnQclR5zjL5BR8T8JJ7lIjKUhkp0lbUoV5BK0fXHyKnxpj6OE/gh
- xu4Zik3IMf85BF/cU2kZcld0c/E71s3ZqAoOMex3tWbVCknLqOxAMqqn4WvF5748xhtP
- /JyOjfTJk3gTYJ3hK3zNjydVTC+jcUXfoz+LgiJER27LAdYgmdGwCR2bs5iXblAePETu
- 5VIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdiP5K5uLQwvSiUlglE0UqhIOzMMDLSFacsI07AmWdhbnqBtj9O4FnduoY80Vx+ZcJQerY0l/ws0bd@nongnu.org
-X-Gm-Message-State: AOJu0YzVobJs7mwC99b7gA7v9veIQERZi7vKLbcyzAEpuhTC5hzMyOQP
- ViAXGlOv0YshUezQAZA35scImku5ZJ7plREdHYMWTpEjFYrqzo+t+ejEwgjCjNew6ppZmJgQ7DW
- M4157hb8=
-X-Gm-Gg: ASbGncuwYKl+U1N0fSfFEo/2Bx9UfL0ts45lENRznZrbX79z7VgpaQMD2gfLlhMfMsb
- ovFzLuhMPZwvIz01uALg/lGDWR9e8V5IKmrl79vRJX0sWDDb/xKPR0mvcjOV98hL/bNgCnHOmaE
- PawARoc/LdWrBC2oqX/Lr7G9+7P5O3IdoFmxTUSlIxc/n3GwUj967pKXLPTx0zJ84KuKlwfP3XW
- rThtypbZTgPwS8ke+KBHqzsdEIwfVvCBqnl2wIJg09FYrmKO9XlnxYi4OmOtW8pZPAyvjRphxeR
- WD4cV/6Y64ilJtLkzrOBKW26aYv7MSVXT4jHQtIQCyI3sjhHq5JmR/jgiN4b57bhhQ56esJeGav
- HR+tErjowanqZTCbFLdqbhqrqGFw3kqCZU+Xwmqw9P/e42dS0gFIyeOWN5F+cHIW+
-X-Google-Smtp-Source: AGHT+IExhKowwZjyBl9bRlXFoIM6XUPNXfP6Cl/sFhHFpb7jQMlSlq2XeZe65xxozLvx8upuX0aCcA==
-X-Received: by 2002:a17:90b:38cc:b0:330:a454:c31a with SMTP id
- 98e67ed59e1d1-339c27ce0e1mr16063896a91.32.1759849019965; 
- Tue, 07 Oct 2025 07:56:59 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-339a6ff0dddsm20204735a91.18.2025.10.07.07.56.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Oct 2025 07:56:59 -0700 (PDT)
-Message-ID: <00fb1298-d2c4-484f-9989-bf88eefc84b9@linaro.org>
-Date: Tue, 7 Oct 2025 07:56:57 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v69Nr-00070f-AT; Tue, 07 Oct 2025 11:13:47 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v69NU-0001SC-W2; Tue, 07 Oct 2025 11:13:46 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 2EA77807B9;
+ Tue, 07 Oct 2025 18:13:14 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:152::1:3c] (unknown
+ [2a02:6bf:8080:152::1:3c])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id DDnklL0FoW20-M3EFNryr; Tue, 07 Oct 2025 18:13:13 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1759849993;
+ bh=FVyQvGVcMvweMXMBrcSoIzx4/Q1nsQnlRoU2RPn6I6Y=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=C5sD+zGuxnQWiFJSP7/6Eeqe7+lZBIw3ZUNh9N8fa1dnAizL++kXAkhkp3Fx2ax79
+ CaLAvWIidj+qUd29rdtpc//tgV8t3jk+pPHVQiYddMocNEmp4/CGOnkbSIhy9CGwPv
+ JNjCLj81EUa3Orz7t+c/F9KA0xLTBGqbuqejgJFM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <0ce196f8-e881-4273-bf9d-e9c0b4f7f308@yandex-team.ru>
+Date: Tue, 7 Oct 2025 18:13:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/25] target/hppa: call plugin trap callbacks
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-References: <cover.1759744337.git.neither@nut.email>
- <bfdf4d5590d40c345a96fda9bc2dda992721f073.1759744337.git.neither@nut.email>
- <411110f3-dcc6-457e-a64b-c038e616d8ae@linaro.org>
- <ceaeff0c68fadcc2069c359aee72dc6c6fd52f90@nut.email>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 1/3] file-posix: populate pwrite_zeroes_alignment
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Jean-Louis Dupond <jean-louis@dupond.be>, Hanna Reitz <hreitz@redhat.com>
+References: <20251007141700.71891-1-stefanha@redhat.com>
+ <20251007141700.71891-2-stefanha@redhat.com>
 Content-Language: en-US
-In-Reply-To: <ceaeff0c68fadcc2069c359aee72dc6c6fd52f90@nut.email>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251007141700.71891-2-stefanha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,12 +76,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 06:29, Julian Ganz wrote:
-> So that implies that there are no exceptions or interrupts that are not
-> represented by a EXCP_* constant/definition?
+On 07.10.25 17:16, Stefan Hajnoczi wrote:
+> Linux block devices require write zeroes alignment whereas files do not.
+> 
+> It may come as a surprise that block devices opened in buffered I/O mode
+> require the alignment for write zeroes requests although normal
+> read/write requests do not.
+> 
+> Therefore it is necessary to populate the pwrite_zeroes_alignment field.
+> 
+> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
 
-Yes.
 
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-r~
+-- 
+Best regards,
+Vladimir
 
