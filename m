@@ -4,96 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 703B9CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 07:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD121CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 07:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6OMs-0000vx-CZ; Wed, 08 Oct 2025 03:13:46 -0400
+	id 1v6ORN-00025O-Sp; Wed, 08 Oct 2025 03:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v6OMp-0000vZ-65; Wed, 08 Oct 2025 03:13:43 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6ORF-00022D-2w
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 03:18:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v6OMk-0008O1-BC; Wed, 08 Oct 2025 03:13:40 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B7BA15B794;
- Wed, 08 Oct 2025 10:13:16 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2921729B67E;
- Wed,  8 Oct 2025 10:13:24 +0300 (MSK)
-Message-ID: <98cc2ae8-0354-42d1-ac52-a26d09d89544@tls.msk.ru>
-Date: Wed, 8 Oct 2025 10:13:23 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6ORC-0000kq-LY
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 03:18:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759907892;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aqV2OB91OUf1agETbDGxMFK1qWXZBK5bFwEVPg/7p28=;
+ b=Xi2QkcqtbR0kvemjV90VW2hiBXTxByhPjcTIzyU3VC3C8xYtdm2ObglMr9qO+AfH/6s1HU
+ gATpJtyyd4GolRCjdbXuj+DQSmHkttJKaiyluKvz+nnDdXOrk2EoaHYMSSV5uGvZAGIGeV
+ 356ZQEG1y42y8GYR0oreKDFp2fv6GKo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-7OrKoIzXOr6ByFQqoY1NQg-1; Wed,
+ 08 Oct 2025 03:18:08 -0400
+X-MC-Unique: 7OrKoIzXOr6ByFQqoY1NQg-1
+X-Mimecast-MFC-AGG-ID: 7OrKoIzXOr6ByFQqoY1NQg_1759907888
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C656C180047F; Wed,  8 Oct 2025 07:18:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 726711800446; Wed,  8 Oct 2025 07:18:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D6DDE21E6A27; Wed, 08 Oct 2025 09:18:04 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Daniel P
+ . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  John Snow
+ <jsnow@redhat.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH 0/6] tracetool: add mypy --strict checking [AI
+ discussion ahead!]
+In-Reply-To: <20251008063546.376603-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Wed, 8 Oct 2025 08:35:39 +0200")
+References: <20251008063546.376603-1-pbonzini@redhat.com>
+Date: Wed, 08 Oct 2025 09:18:04 +0200
+Message-ID: <87ikgpn9oz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] riscv: Modify minimum VLEN rule
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250923090729.1887406-1-max.chou@sifive.com>
- <19b1f55b-810c-46b8-a934-45ae2205f351@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <19b1f55b-810c-46b8-a934-45ae2205f351@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,43 +90,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/25 10:44, Michael Tokarev wrote:
-> On 9/23/25 12:07, Max Chou wrote:
->> According to the RISC-V unprivileged specification, the VLEN should be 
->> greater
->> or equal to the ELEN. This patchset provides following modifications:
->>
->> * Replace the checkings of standard V with the checkings of Zve32x
->> * Introduces a check rule for VLEN and ELEN
->> * Modifies the minimum VLEN based on the vector extensions
->>
->> Extension     Minimum VLEN
->> V                      128
->> Zve64[d|f|x]            64
->> Zve32[f|x]              32
->>
->> v1: 20250627132156.440214-1-max.chou@sifive.com
->> - Rebase to riscv-to-apply.next branch
->> - Add patch 1 to replace checking RVV by checking Zve32x
->>
->> Max Chou (2):
->>    target/riscv: rvv: Replace checking V by checking Zve32x
->>    target/riscv: rvv: Modify minimum VLEN according to enabled vector
->>      extensions
-> 
-> Is this a qemu-stable material?
-> (these changes does not apply directly to 10.1.x, probably the
-> MonitorDef change in the first patch here can be dropped)
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Hi!
+> [People in Cc are a mix of Python people, tracing people, and people
+>  who followed the recent AI discussions. - Paolo]
+>
+> This series adds type annotations to tracetool. While useful on its own, 
+> it also served as an experiment in whether AI tools could be useful and
+> appropriate for mechanical code transformations that may not involve
+> copyrightable expression.
+>
+> In this version, the types were added mostly with the RightTyper tool
+> (https://github.com/RightTyper/RightTyper), which uses profiling to detect
+> the types of arguments and return types at run time.  However, because
+> adding type annotations is such a narrow and verifiable task, I also developed
+> a parallel version using an LLM, to provide some data on topics such as:
+>
+> - how much choice/creativity is there in writing type annotations?
+>   Is it closer to writing functional code or to refactoring?
 
-I've picked this series for qemu-stable 10.0 and 10.1 series.
-I still haven't received any reply from y previous email asking
-about these, so I'm a bit uncomfortable by picking this up for
-stable.  But I'm releasing two stable releases today with these
-patches in.
+Based on my work with John Snow on typing of the QAPI generator: there
+is some choice.
 
-Thanks,
+Consider typing a function's argument.  Should we pick it based on what
+the function requires from its argument?  Or should the type reflect how
+the function is used?
 
-/mjt
+Say the function iterates over the argument.  So we make the argument
+Iterable[...], right?  But what if all callers pass a list?  Making it
+List[...] could be clearer then.  It's a choice.
+
+I think the choice depends on context and taste.  At some library's
+external interface, picking a more general type can make the function
+more generally useful.  But for some internal helper, I'd pick the
+actual type.
+
+My point isn't that an LLM could not possibly do the right thing based
+on context, and maybe even "taste" distilled from its training data.  My
+point is that this isn't entirely mechanical with basically one correct
+output.
+
+Once we have such judgement calls, there's the question how an LLM's
+choice depends on its training data (first order approximation today:
+nobody knows), and whether and when that makes the LLM's output a
+derived work of its training data (to be settled in court).
+
+[...]
+
+> Based on this experience, my answer to the copyrightability question is
+> that, for this kind of narrow request, the output of AI can be treated as
+> the output of an imperfect tool, rather than as creative content potentially
+> tainted by the training material.
+
+Maybe.
+
+>                                    Of course this is one data point and
+> is intended as an experiment rather than a policy recommendation.
+
+Understood.  We need to develop a better understanding of capabilities,
+potential benefits and risks, and such experiments can only help with
+that.
+
 
