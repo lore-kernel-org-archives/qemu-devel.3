@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B614CCD183
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FB2CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6XQ5-0005MG-LS; Wed, 08 Oct 2025 12:53:42 -0400
+	id 1v6XQ9-0005NA-Rb; Wed, 08 Oct 2025 12:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6XPx-0005Lv-4B
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:53:34 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v6XQ3-0005MF-5p
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:53:39 -0400
+Received: from m204-227.eu.mailgun.net ([161.38.204.227])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6XPn-0003ts-Ev
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:53:32 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-78af743c232so25074b3a.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759942398; x=1760547198; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ku4fkkrwr7MrwaZwScQG5MeSbQl9rL/U/pOaFwjBcIs=;
- b=krsYWOnmNF43i/nSwibIJVXNCN95nI6MH+5u0Hte+GxxzKgiNf93pRUBKCSII7Kmgv
- fN6JpupvGlTVz0htsffVYwOIQFDalZkz6bRoZ7RsLWHjkurCxFt9qplyM6q0U0jeXq4o
- 4xPV2xmwv59Ktx1ATE8sOvU2OHlnani3p6kZxJWZve+ZoUt8cAx+pwYQEzZCY1esDr2f
- fi+kPXeaqjEirJnGTK4HXkocHeyOHnE2tnYfDDwDFzOF4Ew5Q3CcJ+BpoOwKF/svMXCB
- PqZ9mam6dUVt3UNu6GxPZEfExtwlh4p76tEiaX5vAosJGTpjMEQbe3kj6sqoLKiPc9Ty
- dW7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759942398; x=1760547198;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ku4fkkrwr7MrwaZwScQG5MeSbQl9rL/U/pOaFwjBcIs=;
- b=oJAi0DD1nkUsKd4dPAYlcwoTdwgpLKnZ/6EQQat1Z1jCw7vnFAbBnoaW/89ysk0R2t
- Av/LBXh1jeh2VuGBy1ajJcL5U+JKqoYWyegXbjgjZ2KtOD36gNoZwOEW8ZoX1imiNH2d
- bU89V8qmBiq92EunQCkI232F3U66sEA0FS97wDXK6ra7GOrrNZYSS7hSUhkOdvccFxeX
- /QwDqxBa/eSSYBzqr0iLPb9VmVDCjCLkFS9YdqesspXo9RcRl+bMgMLt/2Vj5i3VL3C1
- LvImOE7QKEci/fiIQ4hRwUnBbliHwv1LMvKSLZOrRyXYDayCEj2OKAjaIVEwYOdutuwZ
- KWZA==
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v6XPq-0003u4-Nu
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:53:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
+ s=email; t=1759942399; x=1759949599; 
+ h=Content-Transfer-Encoding: Content-Type: Cc: To: To: Subject: Subject:
+ Message-ID: Date: From: From: In-Reply-To: References: MIME-Version: Sender:
+ Sender; bh=BEHYicyPhriC0f0hnSPa+QhHaFC/HLkcVxFNVjaV6AI=;
+ b=R4AEkwAQoPFBxKSrcrbmJ6uCuVyik2lW+tXEY//lqoLFgZNIslaFmHIpfpT2E1RMbIJJQJbKXO/8QU1gmdCLOTLYOK+ZlMsPhnzE7EfwqirWOOp+0KVrg1fkEujkSvLtuMYhI5ABQQuZuekrrvY2ypCzXZ7WyXdnGvNUEroezqqmJPaqUwzUkCom92Wnylb9nBEWp01dUZYdDmov/nJeK3VjBdEkxlA4ndypubN0nrxpH/a3Tx25r+TCyNeOaBmuMSfSPQuyt81P+Zuplenezf+lTI6gI5bky8aCurhQHteefSHl4FyGIAYexEWWouX1X6mua40g/gavInzp6bz3rw==
+X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com
+ [74.125.224.42]) by
+ bc7c4d7a9363dd6e3ce8627432bd44021ad5cdf1a1a0d7c27552e15136ad7f53 with SMTP id
+ 68e696ff4554cfce2027d03a (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256);
+ Wed, 08 Oct 2025 16:53:19 GMT
+X-Mailgun-Sending-Ip: 161.38.204.227
+Received: by mail-yx1-f42.google.com with SMTP id
+ 956f58d0204a3-635283199a9so106643d50.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:53:19 -0700 (PDT)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnUyEBAZPqDfHfpfzOty3AAL34jwT/46ovdx0JY8+jAQyAGhhef70mGLJPpmyDNAVrJjffibrtKKn4@nongnu.org
-X-Gm-Message-State: AOJu0YxhtCR1HSbrdzkvT9kKcMR8GbS5693qZqFuBBL5oJEBY4n5QyUB
- HkDQWfyQlbsS9x5aC/6cbwWkpq2OhE00kdudspWhmbVceEWR6D9ucHCcNKEV/59aVAM=
-X-Gm-Gg: ASbGncv2K17WT6mJnw2cSvrtnlUAzViECRIFtWzKHmibcP4rL2qJN7LOSjOs2MfIOLo
- GgNhghw6dh4CrzmjR11tR6Zq8gXJVY+VorA5k84IaBKkwU2RlkMWTUGOCnptCzMh00aFLXVVtvA
- tFqXFVHrsLJ50Yg9i1S8/3SpLQqRVegfHxSN7L9rzQSaBZQr1kCRDiWkoujw/jOvC1qAaL6jqly
- iGq+l5w6onXxWSeo6+OlhFiOhSiq14jMKqLSRbJ+8nvbclNg+56LxntBAdwNGYPyHrjRVBWZzjW
- hIH11lg0kCH610bUTEsNod0qBnMapInNdCgjLGh+t+/B8V04aEZQHORvakwrxpjRAXptou01oD1
- ULPWWS01mgADmi81/X7u4sFAiHKkbgpfpOmGZvmiBr+dOHrNh2As1tWWaBLNjTvwI
-X-Google-Smtp-Source: AGHT+IHf5BoK9NkNfxMEQITiqizc728YSmymIw1tP2d/I0CFUA6XvjxhZfY8loHkvHTMVYrhUxMmLw==
-X-Received: by 2002:a05:6a00:990:b0:792:2dd9:d8e9 with SMTP id
- d2e1a72fcca58-79385327124mr4932579b3a.4.1759942397579; 
- Wed, 08 Oct 2025 09:53:17 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-794e33efe73sm210571b3a.73.2025.10.08.09.53.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 09:53:17 -0700 (PDT)
-Message-ID: <badbd3be-f09b-4215-a179-bc13c98a9d26@linaro.org>
-Date: Wed, 8 Oct 2025 09:53:15 -0700
+ AJvYcCWHeqCl+FPBOAmHIfZopXYNSxI+uuZEjQHrvC72EtTKgq/nGXbCLJJPYtrEcvWiE+SCFht9M8IRE8BW@nongnu.org
+X-Gm-Message-State: AOJu0YyndJPnkv2n0TeRA7G+m2dJxtjnMRXa7mudt1ecvw1F/LQvss/b
+ qERsDnyV8h2S/7XeDQ+ocMdnkg0WL/pU5a3SI0XYPcxjZ6B7QVwTd7d7pbPU/DFuupxiCgcOiAG
+ DZ9w7uuj52NET4cSBVvQo1Nwd6JMv3U8=
+X-Google-Smtp-Source: AGHT+IFKITZ1a1jnUorjvXG9Wr2JKmHqUjSpK7w8V+AnWv5lIvI+8Rz3yem4bxjtOCGeMnm643oStIu35yK3wqlCl2Q=
+X-Received: by 2002:a53:acd4:0:20b0:5f4:55cb:80d4 with SMTP id
+ 956f58d0204a3-63ccb85ff8cmr3904527d50.17.1759942398661; Wed, 08 Oct 2025
+ 09:53:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qobject: make refcount atomic
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20251008152701.411964-1-pbonzini@redhat.com>
- <50578062-8b7a-4286-a154-eebf05f3be3c@linaro.org>
- <19ec9e38-8b34-420e-ade7-f82e9e7f5969@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <19ec9e38-8b34-420e-ade7-f82e9e7f5969@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+References: <cover.1759691708.git.mst@redhat.com>
+ <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
+ <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
+ <20251008060047-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251008060047-mutt-send-email-mst@kernel.org>
+From: Alessandro Ratti <alessandro@0x65c.net>
+Date: Wed, 8 Oct 2025 18:53:07 +0200
+X-Gmail-Original-Message-ID: <CAKiXHKex4SNKaPX8FmTT+dQiCAKH+twzmumrYGkCUz4t-UH-Mg@mail.gmail.com>
+X-Gm-Features: AS18NWBaQuhRwm1C9O4bmwL76qLNCxFcri1aVBI2SUirLNzQZrTBpclMZebQPAI
+Message-ID: <CAKiXHKex4SNKaPX8FmTT+dQiCAKH+twzmumrYGkCUz4t-UH-Mg@mail.gmail.com>
+Subject: Re: [PULL 49/75] virtio: Add function name to error messages
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org, 
+ Alessandro Ratti <alessandro.ratti@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=161.38.204.227;
+ envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
+ helo=m204-227.eu.mailgun.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +92,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/25 09:14, Paolo Bonzini wrote:
-> On 10/8/25 18:06, Richard Henderson wrote:
->> On 10/8/25 08:27, Paolo Bonzini wrote:
->>> @@ -95,7 +96,7 @@ void qobject_destroy(QObject *obj);
->>>   static inline void qobject_unref_impl(QObject *obj)
->>>   {
->>>       assert(!obj || obj->base.refcnt);
->>> -    if (obj && --obj->base.refcnt == 0) {
->>> +    if (obj && qatomic_fetch_dec(&obj->base.refcnt) == 1) {
->>
->> qatomic_dec_fetch lets you compare against 0, which makes all isa's happier.
-> 
-> Happy to change all fetch_decs to dec_fetches, but wouldn't the compiler be able to change 
-> one to the other?
+On Wed, 8 Oct 2025 at 12:01, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Sun, Oct 05, 2025 at 10:13:57PM +0200, Alessandro Ratti wrote:
+> > On Sun, 5 Oct 2025 at 21:17, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > >
+> > > From: Alessandro Ratti <alessandro@0x65c.net>
+> > >
+> > > Replace virtio_error() with a macro that automatically prepends the
+> > > calling function name to error messages. This provides better context
+> > > for debugging virtio issues by showing exactly which function
+> > > encountered the error.
+> > >
+> > > Before: "Invalid queue size: 1024"
+> > > After:  "virtio_queue_set_num: Invalid queue size: 1024"
+> > >
+> > > The implementation uses a macro to insert __func__ at compile time,
+> > > avoiding any runtime overhead while providing more specific error
+> > > context than a generic "virtio:" prefix.
+> > >
+> > > Also remove manual __func__ usage in virtio-balloon to avoid duplicat=
+e
+> > > function names in error messages.
+> > >
+> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
+> > > Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+> > > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+> > > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> > > Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
+> > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > > ---
+> > >  include/hw/virtio/virtio.h | 4 +++-
+> > >  hw/virtio/virtio-balloon.c | 2 +-
+> > >  hw/virtio/virtio.c         | 3 ++-
+> > >  3 files changed, 6 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> > > index d97529c3f1..695bb56186 100644
+> > > --- a/include/hw/virtio/virtio.h
+> > > +++ b/include/hw/virtio/virtio.h
+> > > @@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t dev=
+ice_id, size_t config_size);
+> > >
+> > >  void virtio_cleanup(VirtIODevice *vdev);
+> > >
+> > > -void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_P=
+RINTF(2, 3);
+> > > +#define virtio_error(vdev, fmt, ...) \
+> > > +    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
+> > > +void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_=
+PRINTF(2, 3);
+> > >
+> > >  /* Set the child bus name. */
+> > >  void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_=
+name);
+> > > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+> > > index db787d00b3..e443f71c01 100644
+> > > --- a/hw/virtio/virtio-balloon.c
+> > > +++ b/hw/virtio/virtio-balloon.c
+> > > @@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWith=
+Return *n, void *data,
+> > >      case PRECOPY_NOTIFY_COMPLETE:
+> > >          break;
+> > >      default:
+> > > -        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->r=
+eason);
+> > > +        virtio_error(vdev, "%d reason unknown", pnd->reason);
+> > >      }
+> > >
+> > >      return 0;
+> > > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > > index de89e8104a..0f33ca5d90 100644
+> > > --- a/hw/virtio/virtio.c
+> > > +++ b/hw/virtio/virtio.c
+> > > @@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODev=
+ice *vdev, char *bus_name)
+> > >      vdev->bus_name =3D g_strdup(bus_name);
+> > >  }
+> > >
+> > > -void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char=
+ *fmt, ...)
+> > > +void G_GNUC_PRINTF(2, 3)
+> > > +virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
+> > >  {
+> > >      va_list ap;
+> > >
+> > > --
+> > > MST
+> > >
+> > >
+> >
+> > Hi Michael,
+> >
+> > Thanks for picking this up.
+> >
+> > It seems that the version currently queued is actually the initial
+> > submission, which had previously been rejected following feedback from
+> > Markus Armbruster.
+> > I later submitted a corrected version ([v3]) which:
+> >
+> > * Addresses all the feedback (including from Markus Armbruster and
+> > Daniel P. Berrang=C3=A9).
+> > * Has Daniel=E2=80=99s formal Reviewed-by:
+> >
+> > Patch: https://lore.kernel.org/qemu-devel/20250924093138.559872-2-aless=
+andro@0x65c.net/
+> > Reviewed-by: https://lore.kernel.org/qemu-devel/aNO7J7Y6wsk1-wyw@redhat=
+.com/
+> >
+> > Would you mind updating the queue to reflect this version instead?
+> >
+> > Thanks again for your time and all the work you do maintaining virtio!
+> >
+> > Best regards,
+> > Alessandro
+>
+>
+> So as you likely already noticed
+> I replaced just this patch and updated the tag in the pull.
 
-Interesting.  I had just written "optimizations tend to get blocked around atomics, so I 
-wouldn't count on it", but then I stopped to actually try it:
+Thanks Michael, I saw the update =E2=80=94 everything looks good on my end.
+I really appreciate you taking the time to sort that out!
 
-int f(int *p) { return __atomic_add_fetch(p, -1, 0) == 0; }
-int g(int *p) { return __atomic_fetch_add(p, -1, 0) == 1; }
-
-With current gcc, these two functions compile identically for x86_64, s390x, riscv, and 
-aarch64.  I didn't bother testing further.
-
-So, I'm happy with either formulation.
-
-
-r~
+Best regards,
+Alessandro
 
