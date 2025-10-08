@@ -4,79 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EB9CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 13:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF432CCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 13:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6USF-0005Hx-VQ; Wed, 08 Oct 2025 09:43:44 -0400
+	id 1v6UTk-0006Aa-Az; Wed, 08 Oct 2025 09:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1v6USE-0005HV-6F
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:43:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6UTK-0005rw-8q
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:44:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1v6US4-0007gx-En
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:43:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6UT7-0007nl-Nr
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:44:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759931009;
+ s=mimecast20190719; t=1759931073;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hePSVMl4pl78/ciTtyZmNjxbdqyuIaefwx/wN9cTjVU=;
- b=P1dXOKEH1fRGtdpiT6M6U4DtkyBVmEUHZkwYZFplQ3gr1gdDCXxfEqBk0pD58VhLqjm4rA
- LShcGhd8I+WUnJgLtd5ErP5VQ69CXtK78aRXtclxP7Be1e5c8R8Qf7nlRMpZGCJtsSQIRc
- cPp6qGmqX6aq68pwpu430CDb8+/6a8o=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-QLNj7EwCPzykDTn07UouJg-1; Wed,
- 08 Oct 2025 09:43:24 -0400
-X-MC-Unique: QLNj7EwCPzykDTn07UouJg-1
-X-Mimecast-MFC-AGG-ID: QLNj7EwCPzykDTn07UouJg_1759931001
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 890DE19560B0; Wed,  8 Oct 2025 13:43:21 +0000 (UTC)
-Received: from localhost (dhcp-192-195.str.redhat.com [10.33.192.195])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33FCD1800452; Wed,  8 Oct 2025 13:43:19 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, gshan@redhat.com
-Subject: Re: [RFC 1/3] target/arm/cpu: Add new CPU property for KVM regs to
- hide
-In-Reply-To: <20250911134324.3702720-2-eric.auger@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20250911134324.3702720-1-eric.auger@redhat.com>
- <20250911134324.3702720-2-eric.auger@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Wed, 08 Oct 2025 15:43:17 +0200
-Message-ID: <87ldllv79m.fsf@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=/z7eCjUXmv1i/5wJ6LGf0wMMBJ/xPUoWF0XimPymQSw=;
+ b=CTjVZNwp/k4cZDmt0cfxXh32/aPvpb4YyYM4eN9RwOdAsVmj8rR/aJxTd01UCtO6Kd/m+H
+ kxV0uGL5BrDiuUZbHayJcIhBgM+TyLtIfbksGreFjFehw5/cyoBZG6hqcIedBUO8435O26
+ VjoX8xKztsTufvRuqTEgt8Wtp9ybLWU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-48-QSVRJPXEOxKBUnPPgzb9-g-1; Wed, 08 Oct 2025 09:44:30 -0400
+X-MC-Unique: QSVRJPXEOxKBUnPPgzb9-g-1
+X-Mimecast-MFC-AGG-ID: QSVRJPXEOxKBUnPPgzb9-g_1759931069
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46fa88b5760so5001915e9.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 06:44:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759931069; x=1760535869;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/z7eCjUXmv1i/5wJ6LGf0wMMBJ/xPUoWF0XimPymQSw=;
+ b=Bj72nIc28K+aN7KoqX/ewNmrvNATBizxnEVcZXykq9/lzElGgaREng3zLywhHRmxk4
+ nXcHkT1lZ//LY0OBx1KTry8eP081le7P4udhC2of6KLq0lwuc3a9VLa6Ej7+VyFwl6SU
+ 9ivocqx0v6/O1FKcgQI6QgziDrKr51XX1vwLfvyajm8fgwAMciCJyr3s4KTxD+LtvrUC
+ u3v19Vpys7v+bPpX8nlcE1WwHdFpyc7orYaxa4Qv9GOESPqUU6lKgDlyod/N0gay8bY+
+ I5cQZsxlM4UataE4QWttvB8ghjq6H2+85iYdAxII7BjtMb5UwI5Qd5xLdMIxgMlMJxa+
+ Vozg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVphAvpjUNahNQU1awPSQI+IfsH0NLUMBvz704Kfhd6ERt0Rv9BMd6TNiswZUiET6i8aO2KyD2KPhE@nongnu.org
+X-Gm-Message-State: AOJu0YyMldPd55Asx/ZRVRch/17khT5XlNJcvXLSeNZpi8eIXnmgyXe4
+ 0AqJZnvSqgWm5NWzekQFUFqpYIUBr8IqUPDjlMk5yO377/E5aeQ4NBB3XsH/vlilmU+tezhW5pZ
+ P+d6qJBFQqenLPh95JlYe8SHVscLgMIdz3uSdiAybvlSMlgebOBkCH06r
+X-Gm-Gg: ASbGncv49dbBbFC2cVTQrE2GWjcZdHZFFZDleD9av01aTopEi8NPXhuSUTXhe/4RKce
+ zGx/2L1EJhU5Lnadj1Yrjkpo930X5INjS3ENBe1/7/8sICXziJhgyQqf1MOVwk6H/DCAHygn4Y9
+ EtRrNRxraGFcWMHnIGZOvmJ2OCM4cNcJF2yzRA/80wBboQexKcD2o6UfQfsPinlVQsoXDk12Nj1
+ CWd4icMV59gDK0+tEElQP96x+WjwUKL2+OGFuD7m7tGKcTwgweN2omcb0a9IFIgktsST5eIRvR8
+ 3Gl0x+qwZwLwTmVSR4tpG/0OzrPSA8q2Yn8f4S2uyIgd644JvmFn1WsLAsr2HkSsGnzTq/kAo8J
+ SiVTIxXENFw==
+X-Received: by 2002:a05:600c:8505:b0:46e:67c8:729f with SMTP id
+ 5b1f17b1804b1-46fa9a9447cmr23684625e9.7.1759931068597; 
+ Wed, 08 Oct 2025 06:44:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsHGswKm9LWsiORBCzv+XDicg5cHUcmYnHwH8yBN7R5JQfD+PWrc9U1LwDVyRaI71D3q2o8Q==
+X-Received: by 2002:a05:600c:8505:b0:46e:67c8:729f with SMTP id
+ 5b1f17b1804b1-46fa9a9447cmr23684355e9.7.1759931068144; 
+ Wed, 08 Oct 2025 06:44:28 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
+ [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fab3cd658sm15177085e9.1.2025.10.08.06.44.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Oct 2025 06:44:27 -0700 (PDT)
+Message-ID: <d6bca266-6388-49bd-ae8b-af691268d102@redhat.com>
+Date: Wed, 8 Oct 2025 15:44:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] s390x/pci: set kvm_msi_via_irqfd_allowed
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ qemu-devel@nongnu.org
+References: <20251007205614.188365-1-mjrosato@linux.ibm.com>
+ <9e04c38e-507a-4b68-a522-7e9c4a130d9a@redhat.com>
+ <1e61ac7a-3ab1-44e6-af91-fee9a261cb7e@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <1e61ac7a-3ab1-44e6-af91-fee9a261cb7e@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,70 +157,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 11 2025, Eric Auger <eric.auger@redhat.com> wrote:
+On 08/10/2025 15.19, Matthew Rosato wrote:
+> On 10/8/25 8:51 AM, Thomas Huth wrote:
+>> On 07/10/2025 22.56, Matthew Rosato wrote:
+>>> Allow irqfd to be used for virtio-pci on s390x if the kernel supports
+>>> it.  This improves s390x virtio-pci performance when using kvm
+>>> acceleration by allowing kvm to deliver interrupts instead of QEMU.
+>>>
+>>> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+>>> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+>>> ---
+>>> v2:
+>>>    - add review tag
+>>>    - tweak commit message (David)
+>>> ---
+>>>    hw/s390x/s390-pci-bus.c | 1 +
+>>>    1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+>>> index e8e41c8a9a..88852acf45 100644
+>>> --- a/hw/s390x/s390-pci-bus.c
+>>> +++ b/hw/s390x/s390-pci-bus.c
+>>> @@ -900,6 +900,7 @@ static void s390_pcihost_realize(DeviceState *dev, Error **errp)
+>>>        s390_pci_init_default_group();
+>>>        css_register_io_adapters(CSS_IO_ADAPTER_PCI, true, false,
+>>>                                 S390_ADAPTER_SUPPRESSIBLE, errp);
+>>> +    kvm_msi_via_irqfd_allowed = kvm_irqfds_enabled();
+>>>    }
+>>
+>>   Hi Matthew,
+>>
+>> this unfortunately fails to compile without KVM (e.g. on x86 hosts):
+>>
+>> ../../devel/qemu/hw/s390x/s390-pci-bus.c: In function ‘s390_pcihost_realize’:
+>> ../../devel/qemu/hw/s390x/s390-pci-bus.c:903:5: error: ‘kvm_msi_via_irqfd_allowed’ undeclared (first use in this function); did you mean ‘kvm_msi_via_irqfd_enabled’?
+>>    903 |     kvm_msi_via_irqfd_allowed = kvm_irqfds_enabled();
+>>        |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+>>        |     kvm_msi_via_irqfd_enabled
+>> ../../devel/qemu/hw/s390x/s390-pci-bus.c:903:5: note: each undeclared identifier is reported only once for each function it appears in
+>>
+> 
+> Argh, thanks for pointing this out.  Of course this value only exists when CONFIG_KVM...
+> 
+> What do you think about using a routine in hw/s390x/s390-pci-kvm.c to set the value (and is a NOP stub when !CONFIG_KVM)?
 
-> New kernels sometimes expose new registers in an unconditionnal
->  manner.  This situation breaks backward migration as qemu notices
-> there are more registers to store on guest than supported in the
-> destination kerenl. This leads to a "failed to load
-> cpu:cpreg_vmstate_array_len" error.
->
-> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
-> pseudo FW register in v6.16 by commit C0000e58c74e (=E2=80=9CKVM: arm64:
-> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2=E2=80=9D). Trying to do backward
-> migration from a host kernel which features the commit to a destination
-> host that doesn't fail.
->
-> Currently QEMU is not using that feature so ignoring this latter
-> is not a problem. An easy way to fix the migration issue is to teach
-> qemu we don't care about that register and we can simply ignore it,
-> including its state migration.
->
-> This patch introduces a CPU property, under the form of an array of
-> reg indices which indicates which registers can be ignored.
->
-> The goal then is to set this property in machine type compats such
-> as:
-> static GlobalProperty arm_virt_kernel_compat_10_1[] =3D {
->     /* KVM_REG_ARM_VENDOR_HYP_BMAP_2 */
->     { TYPE_ARM_CPU, "kvm-hidden-regs", "0x6030000000160003" },
-> }
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> ---
->  target/arm/cpu.h        |  4 ++++
->  target/arm/kvm.c        | 36 ++++++++++++++++++++++++++++++++++--
->  target/arm/trace-events |  2 ++
->  3 files changed, 40 insertions(+), 2 deletions(-)
->
+Yes, since we're doing this for some other KVM-related functions there 
+already, that sounds like the right way to go here.
 
-(...)
-
-> +/**
-> + * kvm_vcpu_compat_hidden_reg:
-> + * @cpu: ARMCPU
-> + * @regidx: index of the register to check
-> + *
-> + * Depending on the CPU compat returns true if @regidx must be
-> + * ignored during sync & migration
-
-Maybe add some more explanation, either here or at the kvm_hidden_regs[]
-def? So that people do not need to look at the introducing commit :)
-
-"This is intended for when we know that we do not use the register to be
-ignored, and want to keep compatibility."
-
-> + */
-> +static inline bool
-> +kvm_vcpu_compat_hidden_reg(ARMCPU *cpu, uint64_t regidx)
-> +{
-> +    for (int i =3D 0; i < cpu->nr_kvm_hidden_regs; i++) {
-> +        if (cpu->kvm_hidden_regs[i] =3D=3D regidx) {
-> +            trace_kvm_vcpu_compat_hidden_reg(regidx);
-> +            return true;
-> +        }
-> +    }
-> +    return false;
-> +}
+  Thomas
 
 
