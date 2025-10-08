@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17597CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29249CCD184
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Y1G-0005KO-M2; Wed, 08 Oct 2025 13:32:08 -0400
+	id 1v6YB5-0000gm-Eg; Wed, 08 Oct 2025 13:42:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v6Y1E-0005Jp-Rk
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:32:04 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v6Y17-0003P3-Oe
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:32:03 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-33082c95fd0so210132a91.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 10:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759944714; x=1760549514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n7fDejhZRn9peu/vRsHY6l007K8d/1IskghDPuSVtmg=;
- b=FyHc1g8MOrJXjahLGDka37VhAx1cFPFYJWt/8p6TAY6EbWwDwE5h7qWbErHcpTKTz4
- /Tmam8jORDvIPtAGunN4tvKpPPWQZMM8Eko2e5Q5QMFN4crN8MXnrSEb2tnmLlfCJWzM
- H3YZbZG+90C7O1+0E17I4Ijdr6GL7XAuKVOYJi4eSfUQRzUfyOOdKDXUfCYfHeatzUjI
- AxKDTtfmhRXVHFNjztv5XKo8HwUo0dqJw1KORvMaTRE47ThfSWXCdnjOG19Ak+zybpE6
- p4+QylDbRLIi6xFPL3ZEa/ooWV6B8tnhBPTkzQoaVnwTKofmYwG57OuJTpTC4Gw0K5pv
- 0hZw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v6YB2-0000gA-9j
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:42:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v6YAw-0004nt-Dy
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:42:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759945320;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MpoBmcvdxana/ADI1ZJG5jXl0VsMFcRwbiPxIMI2jDI=;
+ b=CfMAc9yey/+BJz8PuH1IGHj5Osm1rnpjsJbPF2ng/qxwE3QS9GtRfr811SaT+81Vx7W+rP
+ cusPtAsl1HyguNkhn8aX1qBihVFhZajhoGAzj09cd+rgRvHCtckJ8+P/HJqX90h5HH20oZ
+ HYn4B7VvAk7wzWv95xZOSjRI7SZ+4tc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-486-MAawfersM8Wf-fiIUlqSfA-1; Wed, 08 Oct 2025 13:41:58 -0400
+X-MC-Unique: MAawfersM8Wf-fiIUlqSfA-1
+X-Mimecast-MFC-AGG-ID: MAawfersM8Wf-fiIUlqSfA_1759945318
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3f7b5c27d41so129591f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 10:41:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759944714; x=1760549514;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n7fDejhZRn9peu/vRsHY6l007K8d/1IskghDPuSVtmg=;
- b=LAZHxgGaOJMaaKuZyzAvE3C5wCNa1vwKx9NIgMbqdFKhmqZmxjJz9u0K3yq0bzINPQ
- 6rkkZiVMNAGqguCHAFvTEw7dE2cqlrp3UrhpsZK6vEg4/pxJ4ozWlEPZfl3Va1/gahdn
- 9gCyPFleFXPxmxPAYWFk4qwhhd4o9Z/DPAYIytidno9Va3sEqXXvzSMZiv3QxsVipK6p
- nbb6XK1BkHajCJBiTKjPqHX5j6H1PpE5iKaglh4lNzlYtTEQleG9kAZ3UyrBd7gZipXC
- d4QHV7H7kKu1Z9JtcDDgJSCSiPQprDzpjAo6j9g4jPqEaMIUumDtHs2vb366u1a0g19l
- /15Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXoOCfArZFV8d984fSz2vmyCU79fSYGQeY8+FKtaC0Wr2ABs5NWEYdiCCowijAF7xTRnlTwQ9QNmySk@nongnu.org
-X-Gm-Message-State: AOJu0YxMuVUafG9OGwWjAqd9nWQua/97Nq3vJTQy6GZwv5cnK9JIjCD0
- 0B2MrcXZwOLaHKDkWCVYoRk0V4mxec9/CP7s1VxEbkT16d7moLqEqOyyuWFHtJ+jN1ezUPAVvgN
- u4YUfmw0=
-X-Gm-Gg: ASbGncvO7jpxJRL8WdJzKBTvgS+enDZOBVDTnuInVqGgaWYC+sDdWAC8QNuj300E6Mp
- N4WSJoN1dZxbNE00/zs4ybTdaPWu4RZRESPfzsQYUbxxVsFPh+HvlMWDOjC+5ZU0uJJvdkcuNaZ
- Hx4T7l1wZwO9HyipkLSZScq3EisnEni5x2vQ7+DIcMouLuompqNL8KPCjeHum2llJYltKrx8x31
- CsNOxajt1DUtdqXCDOKOx+BxX/6RuUdiw1/76iDe47vkudcxPAMrlNSsn3EBfs7l0QwBGiY54Ml
- CNiBDRDuNH0zBY858PEJr2rbIyigNTH6RC+4LjiIIG5i5ItrXcMO25JvpFB/hBn57X8Euo567tl
- kdU4Cv9R2Hwl6I3+fJ7jHBbBNGYbJNVCH/VledTBFDsQ88IaW5kZYxuqkq2hK+ps=
-X-Google-Smtp-Source: AGHT+IGuNaUvm14wVMmdX1bGwpwN6fxjUZHiRJYoSyU+AjB+ZcBYd6CuMznMzH/pvZWFFQ6bh1pDFQ==
-X-Received: by 2002:a17:902:e787:b0:273:3f62:6eca with SMTP id
- d9443c01a7336-29027379a0emr51945505ad.18.1759944713756; 
- Wed, 08 Oct 2025 10:31:53 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f95ecbsm2736315ad.130.2025.10.08.10.31.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 10:31:53 -0700 (PDT)
-Message-ID: <56fd5fe0-7f5a-4331-a1b0-618e08bdd511@linaro.org>
-Date: Wed, 8 Oct 2025 10:31:52 -0700
+ d=1e100.net; s=20230601; t=1759945317; x=1760550117;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MpoBmcvdxana/ADI1ZJG5jXl0VsMFcRwbiPxIMI2jDI=;
+ b=Q/ksVxaLPCrNlRCM1SMyaJrcbfMzjb+qHFo2TU5U3J6fO2sNKx515a8EAAZWB5/orX
+ wX2Pcs23fJtdRRU3dGxjZ9/oG49ebK+3VByUrfOvG0jOPl9vFSzuOeWMTNaqEkWdxzDs
+ 2Xh3qwff/nMj4BRGT3Y+z2ji+MpOXfNw10D8FRJxaKnfoe/5Dib3LBShiiiUQnPV7AMg
+ XEzGRlAtIQbb+McpUeHZ4GdYN5T54rYI8iakiiSjxD40h/MmxR5P8uhs3xl8N3XRbYtd
+ fOPU2/idZTOfngeEbN2e/FvBUkmgN/baSnq7SMpoJK1rtv+/N5xydhrYfqg0Plx2Y5up
+ 076w==
+X-Gm-Message-State: AOJu0Yx9d4KgwshAJu3nGu2Kh9mk+ZJYgsRZxvWcnH971wtddOUUch+R
+ 1zBfQfw0k+Q4c/QJwu8DEZjU8D+HviCZa2i8tNy4kdKvh3u9F9/Dft6LDW28mlGRS4eohbijv4F
+ B9GkaSjxdcX4h5LD3tuGHtdWDXZFdJEIw8hfgFHp66o0tmh2RaUfRMRqKN95lZXXCCm553Um7XR
+ IG9wDrVx8plAYNphPLp2dAiLdZyMZITIo=
+X-Gm-Gg: ASbGncs6Tcmx4UZ/e38Mfi6xHkPGdasW1sDgrkBIcjQ/st/rfDECL4pLPqTPnYyuVj5
+ r9h/7+G7ydlodJ/WcoZl05N9e2maVosqhJit7fVBAMs59TnW/Q5RimhHsU2eZV5fNMOianFvMyM
+ Adjz0Mzq5bTHrdTjXe1m/cKguhAyscXK1ZEThqPgLPyJ3D/+BI6Wlc1FLYxp6717gXTd2EuT8XK
+ BqcZO8aYl2CqGdzjlwuhCLhpHbytQ==
+X-Received: by 2002:a05:6000:1f09:b0:425:86b1:113a with SMTP id
+ ffacd0b85a97d-42586c057f2mr4382751f8f.16.1759945317646; 
+ Wed, 08 Oct 2025 10:41:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEInz+ylA600u0wxZhIhZohiCQkNJjGFzER2akOJS/Q84swVCtQyiOLnUyH56KNxlbNWfJ2Zkt6PpsDubA5UZc=
+X-Received: by 2002:a05:6000:1f09:b0:425:86b1:113a with SMTP id
+ ffacd0b85a97d-42586c057f2mr4382731f8f.16.1759945317157; Wed, 08 Oct 2025
+ 10:41:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target/microblaze: Convert CPUMBState::res_addr field
- to uint32_t type
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20251008060129.87579-1-philmd@linaro.org>
- <20251008060129.87579-6-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251008060129.87579-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20251008063546.376603-1-pbonzini@redhat.com>
+ <20251008172325.GA181748@fedora>
+In-Reply-To: <20251008172325.GA181748@fedora>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 8 Oct 2025 19:41:45 +0200
+X-Gm-Features: AS18NWBEg3GgHod77kNqBYKjvUK8zmb-BHda9k-XNPoUkVOunaVeM_9P4c2U1QY
+Message-ID: <CABgObfYaoJ4-tmdLdbPDiUpheXHigc9pmUAdK1Y6mFhsXo2npg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] tracetool: add mypy --strict checking [AI discussion
+ ahead!]
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>
+Content-Type: multipart/alternative; boundary="000000000000741bf20640a933a9"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,125 +109,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 11:01 PM, Philippe Mathieu-Daudé wrote:
-> CPUMBState::@res_addr field is used as u32 since commit
-> cfeea807e5a ("target-microblaze: Tighten up TCGv_i32 vs
-> TCGv type usage"). Convert it as such, bumping the migration
-> version. Use the RES_ADDR_NONE definition when appropriate.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/microblaze/cpu.h       |  2 +-
->   target/microblaze/machine.c   |  6 +++---
->   target/microblaze/translate.c | 17 +++++++++--------
->   3 files changed, 13 insertions(+), 12 deletions(-)
-> 
-> diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-> index 3ce28b302fe..14b107876a4 100644
-> --- a/target/microblaze/cpu.h
-> +++ b/target/microblaze/cpu.h
-> @@ -259,7 +259,7 @@ struct CPUArchState {
->   
->       /* lwx/swx reserved address */
->   #define RES_ADDR_NONE 0xffffffff /* Use 0xffffffff to indicate no reservation */
-> -    target_ulong res_addr;
-> +    uint32_t res_addr;
->       uint32_t res_val;
->   
->       /* Internal flags.  */
-> diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
-> index a4cf38dc891..48efa546d39 100644
-> --- a/target/microblaze/machine.c
-> +++ b/target/microblaze/machine.c
-> @@ -78,7 +78,7 @@ static const VMStateField vmstate_env_fields[] = {
->       VMSTATE_UINT32(iflags, CPUMBState),
->   
->       VMSTATE_UINT32(res_val, CPUMBState),
-> -    VMSTATE_UINTTL(res_addr, CPUMBState),
-> +    VMSTATE_UINT32(res_addr, CPUMBState),
->   
->       VMSTATE_STRUCT(mmu, CPUMBState, 0, vmstate_mmu, MicroBlazeMMU),
->   
-> @@ -87,8 +87,8 @@ static const VMStateField vmstate_env_fields[] = {
->   
->   static const VMStateDescription vmstate_env = {
->       .name = "env",
-> -    .version_id = 0,
-> -    .minimum_version_id = 0,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
->       .fields = vmstate_env_fields,
->   };
->   
-> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-> index ff33e64a710..04fbd4fe17f 100644
-> --- a/target/microblaze/translate.c
-> +++ b/target/microblaze/translate.c
-> @@ -55,7 +55,7 @@ static TCGv_i32 cpu_imm;
->   static TCGv_i32 cpu_bvalue;
->   static TCGv_i32 cpu_btarget;
->   static TCGv_i32 cpu_iflags;
-> -static TCGv cpu_res_addr;
-> +static TCGv_i32 cpu_res_addr;
->   static TCGv_i32 cpu_res_val;
->   
->   /* This is the state at translation time.  */
-> @@ -857,7 +857,7 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
->   
->       tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index,
->                           mo_endian(dc) | MO_UL);
-> -    tcg_gen_mov_tl(cpu_res_addr, addr);
-> +    tcg_gen_mov_i32(cpu_res_addr, addr);
->   
->       if (arg->rd) {
->           tcg_gen_mov_i32(cpu_R[arg->rd], cpu_res_val);
-> @@ -1024,7 +1024,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
->        * branch, but we know we can use the equal version in the global.
->        * In either case, addr is no longer needed.
->        */
-> -    tcg_gen_brcond_tl(TCG_COND_NE, cpu_res_addr, addr, swx_fail);
-> +    tcg_gen_brcond_i32(TCG_COND_NE, cpu_res_addr, addr, swx_fail);
->   
->       /*
->        * Compare the value loaded during lwx with current contents of
-> @@ -1052,7 +1052,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
->        * Prevent the saved address from working again without another ldx.
->        * Akin to the pseudocode setting reservation = 0.
->        */
-> -    tcg_gen_movi_tl(cpu_res_addr, -1);
-> +    tcg_gen_movi_i32(cpu_res_addr, RES_ADDR_NONE);
->       return true;
->   }
->   
-> @@ -1173,7 +1173,7 @@ static bool trans_brk(DisasContext *dc, arg_typea_br *arg)
->           tcg_gen_movi_i32(cpu_R[arg->rd], dc->base.pc_next);
->       }
->       tcg_gen_ori_i32(cpu_msr, cpu_msr, MSR_BIP);
-> -    tcg_gen_movi_tl(cpu_res_addr, -1);
-> +    tcg_gen_movi_i32(cpu_res_addr, RES_ADDR_NONE);
->   
->       dc->base.is_jmp = DISAS_EXIT;
->       return true;
-> @@ -1194,7 +1194,7 @@ static bool trans_brki(DisasContext *dc, arg_typeb_br *arg)
->       if (arg->rd) {
->           tcg_gen_movi_i32(cpu_R[arg->rd], dc->base.pc_next);
->       }
-> -    tcg_gen_movi_tl(cpu_res_addr, -1);
-> +    tcg_gen_movi_i32(cpu_res_addr, RES_ADDR_NONE);
->   
->   #ifdef CONFIG_USER_ONLY
->       switch (imm) {
-> @@ -1885,6 +1885,7 @@ void mb_tcg_init(void)
->             tcg_global_mem_new_i32(tcg_env, i32s[i].ofs, i32s[i].name);
->       }
->   
-> -    cpu_res_addr =
-> -        tcg_global_mem_new(tcg_env, offsetof(CPUMBState, res_addr), "res_addr");
-> +    cpu_res_addr = tcg_global_mem_new_i32(tcg_env,
-> +                                          offsetof(CPUMBState, res_addr),
-> +                                          "res_addr");
->   }
+--000000000000741bf20640a933a9
+Content-Type: text/plain; charset="UTF-8"
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Il mer 8 ott 2025, 19:23 Stefan Hajnoczi <stefanha@redhat.com> ha scritto:
+
+> On Wed, Oct 08, 2025 at 08:35:39AM +0200, Paolo Bonzini wrote:
+> > In this version, the types were added mostly with the RightTyper tool
+> > (https://github.com/RightTyper/RightTyper), which uses profiling to
+> detect
+> > the types of arguments and return types at run time.  However, because
+> > adding type annotations is such a narrow and verifiable task, I also
+> developed
+> > a parallel version using an LLM, to provide some data on topics such as:
+> >
+> > - how much choice/creativity is there in writing type annotations?
+> >   Is it closer to writing functional code or to refactoring?
+> >
+> > - how does AI output for such mechanical transformations compare to other
+> >   automated tools, whose output is known not to be copyrightable?
+> >
+> > - what is the kind of time saving that the tool can provide?
+> >
+> > - how effective is an LLM for this task?  Is the required human help a
+> >   pain to provide, or can the human keep the fun part for itself?
+>
+> Here are my thoughts:
+>
+> - Type annotations are probably not copyrightable. Although I think AI
+>   output contributions should be allowed for non-copyrightable work, I
+>   understand the slippery slope argument. Also, at QEMU Summit the
+>   consensus was to give it some time and then revisit the AI policy next
+>   year. I think we should stick to that so that the QEMU community has
+>   time to consider other scenarios involving AI.
+
+
+I agree. At the same time, rushing a policy change is bad but making an
+uninformed one is too. Submitting the non-AI change, recounting the
+experience with the AI tool, and explaining how they differed for me,
+hopefully helps informing decisions. In fact this is probably at the upper
+end of the complexity, for what can still be described as mechanical
+transformation.
+
+In other words, I want to be clear that, even though I did rush a bit the
+discussion on the policy, I don't want to rush the changes but rather be
+prepared for them.
+
+- Markus pointed out why generating them automatically may not result in
+>   the same quality as manually-written annotations because the AI
+>   doesn't have the context that is missing from the code itself. [...] The
+> difference between
+>   manually-written type hints and AI-generated ones is probably less
+>   significant than with API documentation though, so I think they are
+>   sufficiently valuable and high quality enough to merge.
+>
+
+Indeed. And also, the nuances are more important for something where type
+hints describe an API than if you're doing it only for some extra static
+checking.
+
+You can always start with a tool and refine, too. In fact I expect that
+*if* an exception is granted for mechanical changes, submissions would
+almost never consist of AI-generated changes only. Full isolation may not
+always be practical, but separating AI- or tool-generated commits from
+human refinements is something we'd ask for anyway, for the sake of
+reviewability.
+
+Paolo
+
+>
+
+--000000000000741bf20640a933a9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 8 ott 2025, 19:23 Stefan =
+Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com">stefanha@redhat.com</a>=
+&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>On Wed, Oct 08, 2025 at 08:35:39AM +0200, Paolo Bonzini wrote:<br>
+&gt; In this version, the types were added mostly with the RightTyper tool<=
+br>
+&gt; (<a href=3D"https://github.com/RightTyper/RightTyper" rel=3D"noreferre=
+r noreferrer" target=3D"_blank">https://github.com/RightTyper/RightTyper</a=
+>), which uses profiling to detect<br>
+&gt; the types of arguments and return types at run time.=C2=A0 However, be=
+cause<br>
+&gt; adding type annotations is such a narrow and verifiable task, I also d=
+eveloped<br>
+&gt; a parallel version using an LLM, to provide some data on topics such a=
+s:<br>
+&gt; <br>
+&gt; - how much choice/creativity is there in writing type annotations?<br>
+&gt;=C2=A0 =C2=A0Is it closer to writing functional code or to refactoring?=
+<br>
+&gt; <br>
+&gt; - how does AI output for such mechanical transformations compare to ot=
+her<br>
+&gt;=C2=A0 =C2=A0automated tools, whose output is known not to be copyright=
+able? <br>
+&gt; <br>
+&gt; - what is the kind of time saving that the tool can provide?<br>
+&gt; <br>
+&gt; - how effective is an LLM for this task?=C2=A0 Is the required human h=
+elp a<br>
+&gt;=C2=A0 =C2=A0pain to provide, or can the human keep the fun part for it=
+self?<br>
+<br>
+Here are my thoughts:<br>
+<br>
+- Type annotations are probably not copyrightable. Although I think AI<br>
+=C2=A0 output contributions should be allowed for non-copyrightable work, I=
+<br>
+=C2=A0 understand the slippery slope argument. Also, at QEMU Summit the<br>
+=C2=A0 consensus was to give it some time and then revisit the AI policy ne=
+xt<br>
+=C2=A0 year. I think we should stick to that so that the QEMU community has=
+<br>
+=C2=A0 time to consider other scenarios involving AI.</blockquote></div></d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto">I agree. At the same time,=
+ rushing a policy change is bad but making an uninformed one is too. Submit=
+ting the non-AI change, recounting the experience with the AI tool, and exp=
+laining how they differed for me, hopefully helps informing decisions. In f=
+act this is probably at the upper end of the complexity, for what can still=
+ be described as mechanical transformation.</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">In other words, I want to be clear that, even though I =
+did rush a bit the discussion on the policy, I don&#39;t want to rush the c=
+hanges but rather be prepared for them.</div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">- Markus pointed out why generating=
+ them automatically may not result in<br>
+=C2=A0 the same quality as manually-written annotations because the AI<br>
+=C2=A0 doesn&#39;t have the context that is missing from the code itself. [=
+...] The difference between<br>
+=C2=A0 manually-written type hints and AI-generated ones is probably less<b=
+r>
+=C2=A0 significant than with API documentation though, so I think they are<=
+br>
+=C2=A0 sufficiently valuable and high quality enough to merge.<br></blockqu=
+ote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Indeed. And a=
+lso, the nuances are more important for something where type hints describe=
+ an API than if you&#39;re doing it only for some extra static checking.</d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto">You can always start with =
+a tool and refine, too. In fact I expect that *if* an exception is granted =
+for mechanical changes, submissions would almost never consist of AI-genera=
+ted changes only. Full isolation may not always be practical, but separatin=
+g AI- or tool-generated commits from human refinements is something we&#39;=
+d ask for anyway, for the sake of reviewability.</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><div class=3D"gmail_q=
+uote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">
+</blockquote></div></div></div>
+
+--000000000000741bf20640a933a9--
 
 
