@@ -4,153 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9647FCCA472
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 13:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83CF3CCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 13:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6UC0-0001A4-6B; Wed, 08 Oct 2025 09:26:57 -0400
+	id 1v6UID-0002Gt-Rk; Wed, 08 Oct 2025 09:33:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6UBu-00018s-Jw
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:26:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v6UIA-0002Gh-TD
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:33:18 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6UBl-00056Q-Ql
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:26:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759929993;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aDLqXUOcMDBGAPh4sXR++HvZdS1uMNkJ5BjxsfNc1Jk=;
- b=gl0+ysfnQzTXYDI9DOLBA8OlsybQ62VxUaOODji81bXkbDo5zbUI93hu1XLWwF+q3l7Cqd
- 7WxIxbGZtDR2KdSOB0niNzmxkZa7JcBmjX47V4Am91pQ3sp4I6+xDFee5aWagFiMfmx8QD
- HUyDmSJtDcZGh9efRDlBptxLdWVzenU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-D7BVJja2MlOy6ItlQnXLhw-1; Wed, 08 Oct 2025 09:26:32 -0400
-X-MC-Unique: D7BVJja2MlOy6ItlQnXLhw-1
-X-Mimecast-MFC-AGG-ID: D7BVJja2MlOy6ItlQnXLhw_1759929990
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e407c600eso39378305e9.3
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 06:26:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759929990; x=1760534790;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aDLqXUOcMDBGAPh4sXR++HvZdS1uMNkJ5BjxsfNc1Jk=;
- b=IhVeoZJIfaPjqzwupBsaiEmSEilEMVBJaVkYqJVLijL8tsxU1ltdVgUAqTzYMTYC+7
- m3RKAtbvLF1TBF5nctLO3zkhUFsbAdypfUfyLIQPdXU505bhGsMwOsl1eP3yERML5c5G
- VshiKZ5hi1B8bOjvHGW6IIlh2eGKh9TF3aFnOOudLmM3RydjZe6FHyavg2hKxwXcTq5M
- 8iEGm77DZoSqTJ5bwqKJ5WuxhS+BtrruhQQhk07kwWlVDCpAumTRujlQUkEoTe49cn7Q
- FmFnKIpOE0UxjrGp9J67Jz30UF0HOuhaoK1PNfcGH86mwDLIKOBQbxJqbpvmaRYrIFX1
- t3vQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVsLtXFb+7KWaCyksamyGlhyULgsYpL8uq88W/ePvDrfSq5guuUvKB/Vr+PPT/OR0NXoxk/VCOouSM@nongnu.org
-X-Gm-Message-State: AOJu0YwyYnPX2XUXbkWdMRhzRQXVvxQYa42IaXVE9zooylwQm2FQ6kXn
- 5oG+9UOD2+RWqxvI4gmaJkOr5VNLmuiuRo6n7m9lgV2mJM13ntRfjBWNJmCBbMiMmjexaSxkRV8
- O+P6KyhhVD6t4Fh0vxG+wOaF/qCudo/6ig5cyW2gl40RRkEf3TZgsS+ye
-X-Gm-Gg: ASbGncsy3EET1U/Tv3BSO65gwhce/60+lct/mWGKQaRDfPf2vCmfTz2DUhHzI5bHmcq
- 0mPc8h4VaTeROMIqUQ/QKkbzsUwp7Um1Pn8MkBkr7iqxvR4zKVBrkkZVAFAzUmzIA1+FFA0wTIs
- +WV9wyLrl7XS8le2bbI7Sh3UrI3G82GfaaYnSDoZEsZS8AZnZaJC3dnSKVYJZwY2CgAFJnbI9np
- WRjQGKNOJLdoK8pY3w52c7IWs44PIg+rLlDUbGOAl6G/yAbREIg33MLVCn5NJ5iJjK6zgGBqLBz
- e5SoMI15CsiUGjb9C3//ZB9XKaT8fvz+VqOYO+iGSB+0tLYLcnc/LCKU5ZGSFetNBOX6ZcnCc3r
- +jQIcLUaR
-X-Received: by 2002:a05:600c:138a:b0:45f:2ed1:d1c5 with SMTP id
- 5b1f17b1804b1-46fa9b171f2mr22340555e9.36.1759929990153; 
- Wed, 08 Oct 2025 06:26:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHKqOaNLGTrFQal3t0kmjix8D9a7gTNLkZO7hxyaAHKm0kkZNLJZ3g2aqrus5synWNzZ4gNbA==
-X-Received: by 2002:a05:600c:138a:b0:45f:2ed1:d1c5 with SMTP id
- 5b1f17b1804b1-46fa9b171f2mr22340375e9.36.1759929989683; 
- Wed, 08 Oct 2025 06:26:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9c204fesm37820595e9.13.2025.10.08.06.26.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 06:26:29 -0700 (PDT)
-Message-ID: <97a100c7-501b-47c8-9c4e-201e1df6ba41@redhat.com>
-Date: Wed, 8 Oct 2025 15:26:28 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v6UI2-0006F6-8t
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:33:18 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 12C1B15B943;
+ Wed, 08 Oct 2025 16:32:48 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id DFB9129BA8A;
+ Wed,  8 Oct 2025 16:32:56 +0300 (MSK)
+Message-ID: <2d48d0b2-e1b1-49d7-ba7a-e740d3b8ac01@tls.msk.ru>
+Date: Wed, 8 Oct 2025 16:32:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/container: Support unmap all in one ioctl()
-To: John Levon <levon@movementarian.org>
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>
-References: <20250924070254.1550014-1-zhenzhong.duan@intel.com>
- <20250924070254.1550014-2-zhenzhong.duan@intel.com>
- <01f0b0eb-b036-4823-8020-fd6962b26d9d@redhat.com>
- <aNxT1w0BbMH6pJ0J@movementarian.org>
- <d715d9dd-a613-4406-93c1-507d1470619f@redhat.com>
- <IA3PR11MB91364A76C06D76B0E6ADBEBD92E1A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <7256274c-ac20-4ef8-9841-48be7bfa2b91@redhat.com>
- <aOZi6zvqp-mAH9Ke@movementarian.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aOZi6zvqp-mAH9Ke@movementarian.org>
+Subject: Re: [RFT PATCH v2 0/2] Fix cross migration issue with missing
+ features: pdcm, arch-capabilities
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, hector.cao@canonical.com, lk@c--e.de,
+ berrange@redhat.com
+References: <20250923104136.133875-1-pbonzini@redhat.com>
+ <aNVrAkx+ahn7ZRns@intel.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <aNVrAkx+ahn7ZRns@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,25 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/25 15:11, John Levon wrote:
-> On Wed, Oct 08, 2025 at 03:01:34PM +0200, Cédric Le Goater wrote:
-> 
->>>> Should we introduce a VFIOContainerBase attribute/flag
->>>> 'unmap_all_supported',
->>>> set in the vioc->setup handler ?
->>>
->>> Do you mean to check bcontainer->unmap_all_supported and do the split in vfio_listener_region_del()?
->>>
->>> If only checking it in legacy container, putting it in VFIOLegacyContainer sounds better?
->>
->> It depends if vfio-user needs it too.
-> 
-> vfio-user always supports this flag.
+On 9/25/25 19:17, Zhao Liu wrote:
+...
 
-In that case, putting it in VFIOLegacyContainer sounds better.
+> I found the previous 2 fixes were merged into stable 10.0:
+> 
+> 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
+> 3d26cb65c27190e57637644ecf6c96b8c3d246a3
+> 
+> Should stable 10.0 revert these 2 fixes, to ensure migration
+> compatibility?
+
+Yes, these two are picked up for stable 10.0.x series.
+I haven't realized they'll bring issues with migration.
+
+These 2 patches are in qemu 10.0.4 (with 10.0.5 tagged
+today).  If we revert them for 10.0.6, will it break
+migration between 10.0.4 and 10.0.6?  How about migration
+between 10.0.3 and 10.0.4?
 
 Thanks,
 
-C.
+/mjt
 
 
