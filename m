@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F1ACAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB95ACAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6UwJ-0002RO-Vk; Wed, 08 Oct 2025 10:14:48 -0400
+	id 1v6V5L-00060I-BN; Wed, 08 Oct 2025 10:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6UwB-0002HI-F2
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:14:39 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Uw2-0004Ul-52
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:14:39 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e6c8bc46eso48702495e9.3
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 07:14:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759932862; x=1760537662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4yM+pXDT0hqzaeBLR0C86iQaEkYCbGu0SVKquEIwttY=;
- b=Zqan3CsnrtIZU0VONmg9W6llCqXzbvEbfDQI4GmYn059YZ8MJ9pRyvyb1Cem+/bgib
- 5+ZPOm5z+4T4nRY7nLOKfSeP+k4KWTb8Q5MT6YN8sQmbHKMgGUDSWxBgDoh0Pwa3iKsO
- g7X/4+PYwZhB6nBf+88M2POd2Cca/LM9WaTH2/MDwW5eLA5GejTVyAPV/SXFcT46OZhB
- kStvQqvC/pJ1wyqz7TjIsUHXLfNV3pTrENpm62P8U6H+cZLQc1/l/qPH/6bPOH0Qqj2C
- l+jsj/Qn3ryqcex7MZB1TLsIYzXzp+UIM4bFcxDDFhU3Fbg5jC8+JXr4wmyegP4uBDdA
- 1yVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759932862; x=1760537662;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4yM+pXDT0hqzaeBLR0C86iQaEkYCbGu0SVKquEIwttY=;
- b=t8o6cgdicDaUMjlgRGbYKC+aFlX3EmrkT18IqKQIK1Ctc9sWJKPV0KcdTdCmTEqDs3
- jnAl7SAc7TUCfORF1oQDHxnQBnaFizeuUdA4RR9AJrqDABSxH50oPWA/LTd/TMUMgW/G
- NKaxKmU7lYReR5GigfU6Gjw7cEGJY9K8TECUcAroslj1x1GP80njqb688YiI9LgZJzmA
- BZpXiLK4SSudL37Y+m83sv95PFq68HsT5H0CXZnNiRZmBimy+9gKbSMBMw18g1soDESe
- NAMUsaHrLSY9hcFhDCN1L8VPWY5xmPDShuKMRpjlQDVJQozPt5o4Qj0bQsyV5YM3ItA2
- ePOQ==
-X-Gm-Message-State: AOJu0YyJn7Ks3osAg/oBgtcpH61BmfbqPPT9AmDJbLt3MJMkml+QZ/Wc
- dWg+c3VyVTWJPKTfPR+EBSC+ABl0hcFvPOOKR9AdKmqyql5k/5mBgr+d4hwKmkSfAStn9MtK+ww
- j1cdETkF/jg==
-X-Gm-Gg: ASbGncvhv/52JD1FI7ybVjtFlqAnhtTq7IjYnOKrz+uU5B8gMHmFr2AHNm4axnLy+EH
- hhRaGCEclOrjUH1XkNDtOLMmvBkhk38EsMO/V1j+VTpz30YuWG0WmHi+IKT7L1xOC+fK6KlOHcM
- /ePZxmv0oOk+w5YUcV6USinHovUTb1HpciG+JPUt22e3C9nZ6e/WFGJ+TYjfythw/4+x9LlOz1w
- 2aXa3mDUJ/GeOmj/xAf4LnGvtfiDVgZK6xgDhmR17+jHqoheD8W3wBfo/UIEgpmZLlQIxf2cOA1
- 4mzBkhw/uUNaa3hnVQUE6/ge7QprzonNwLLH/ceg170rkwp/Ez+J9n6fQtFI8FmRY3q3J8JOyHK
- bWtJDgQqmOODZ8eEtKXougqfnR0dabdPb1NTHg2A2wMmXGdU5XQLBSwKOVPaF5/LJUwXxJOjG+z
- SqrCpHeWTzppGZHjadnmz312F3
-X-Google-Smtp-Source: AGHT+IFI0ssxCRpnhXfm92OZl54QVm/v6Fat/+Oj+c2gMyyGj+NlbIUTLjia7iKLWTsCb6LoPL0aCA==
-X-Received: by 2002:a05:600c:3b08:b0:46e:53cb:9e7f with SMTP id
- 5b1f17b1804b1-46fa9af830fmr27402115e9.18.1759932862063; 
- Wed, 08 Oct 2025 07:14:22 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46faf185c7esm1309775e9.19.2025.10.08.07.14.21
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 Oct 2025 07:14:21 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] target/s390x/mmu_helper: Do not ignore
- address_space_rw() errors
-Date: Wed,  8 Oct 2025 16:14:09 +0200
-Message-ID: <20251008141410.99865-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251008141410.99865-1-philmd@linaro.org>
-References: <20251008141410.99865-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v6V5H-0005zk-Sf; Wed, 08 Oct 2025 10:24:04 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v6V54-0006BS-57; Wed, 08 Oct 2025 10:24:03 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3ED2315B989;
+ Wed, 08 Oct 2025 17:23:30 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2588829BB1A;
+ Wed,  8 Oct 2025 17:23:38 +0300 (MSK)
+Message-ID: <075bffac-c5fb-4fb7-917f-0bdd230922ed@tls.msk.ru>
+Date: Wed, 8 Oct 2025 17:23:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 17/19] ui/gtk: Consider scaling when propagating ui info
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Weifeng Liu <weifeng.liu.z@gmail.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250524173514.317886-1-marcandre.lureau@redhat.com>
+ <20250524173514.317886-18-marcandre.lureau@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250524173514.317886-18-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,38 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a address_space_rw() call ever fails, break the loop and
-return the PGM_ADDRESSING error (after triggerring an access
-exception).
+On 5/24/25 20:35, marcandre.lureau@redhat.com wrote:
+> From: Weifeng Liu <weifeng.liu.z@gmail.com>
+> 
+> The ui width and height sent to guest is supposed to be in buffer
+> coordinate. Hence conversion is required.
+> 
+> If scaling (global window scale and zooming scale) is not respected in
+> non-free-scale mode, window size could keep changing because of the
+> existence of the iteration of the following steps:
+> 
+> 1. In resize event or configure event, a size larger (or smaller) than
+>     the currently used one might be calculated due to not considering
+>     scaling.
+> 2. On reception of the display size change event in guest, the guest
+>     might decide to do a mode setting and use the larger (or smaller)
+>     mode.
+> 3. When the new guest scan-out command arrives, QEMU would request the
+>     window size to change to fit the new buffer size. This will trigger a
+>     resize event or a configure event, making us go back to step 1.
+> 
+> Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
+> Message-ID: <20250511073337.876650-8-weifeng.liu.z@gmail.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   ui/gtk.c | 25 +++++++++++++++++++++++--
+>   1 file changed, 23 insertions(+), 2 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/s390x/mmu_helper.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Hi!
 
-diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-index 22d3d4a97df..3b1e75f7833 100644
---- a/target/s390x/mmu_helper.c
-+++ b/target/s390x/mmu_helper.c
-@@ -546,9 +546,15 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
- 
-         /* Copy data by stepping through the area page by page */
-         for (i = 0; i < nr_pages; i++) {
-+            MemTxResult res;
-+
-             currlen = MIN(len, TARGET_PAGE_SIZE - (laddr % TARGET_PAGE_SIZE));
--            address_space_rw(as, pages[i] | (laddr & ~TARGET_PAGE_MASK),
--                             attrs, hostbuf, currlen, is_write);
-+            res = address_space_rw(as, pages[i] | (laddr & ~TARGET_PAGE_MASK),
-+                                   attrs, hostbuf, currlen, is_write);
-+            if (res != MEMTX_OK) {
-+                ret = PGM_ADDRESSING;
-+                break;
-+            }
-             laddr += currlen;
-             hostbuf += currlen;
-             len -= currlen;
--- 
-2.51.0
+I just stumbled upon this change, which looks like a good candidate
+for qemu-stable 10.0.x series (lts), what do you think?
+
+Thanks,
+
+/mjt
+
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index 47af49e387..8c4a94c8f6 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -772,8 +772,21 @@ static void gd_resize_event(GtkGLArea *area,
+>                               gint width, gint height, gpointer *opaque)
+>   {
+>       VirtualConsole *vc = (void *)opaque;
+> +    double pw = width, ph = height;
+> +    double sx = vc->gfx.scale_x, sy = vc->gfx.scale_y;
+> +    GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(area));
+> +    const int gs = gdk_window_get_scale_factor(window);
+>   
+> -    gd_set_ui_size(vc, width, height);
+> +    if (!vc->s->free_scale && !vc->s->full_screen) {
+> +        pw /= sx;
+> +        ph /= sy;
+> +    }
+> +
+> +    /**
+> +     * width and height here are in pixel coordinate, so we must divide it
+> +     * by global window scale (gs)
+> +     */
+> +    gd_set_ui_size(vc, pw / gs, ph / gs);
+>   }
+>   
+>   #endif
+> @@ -1836,8 +1849,16 @@ static gboolean gd_configure(GtkWidget *widget,
+>                                GdkEventConfigure *cfg, gpointer opaque)
+>   {
+>       VirtualConsole *vc = opaque;
+> +    const double sx = vc->gfx.scale_x, sy = vc->gfx.scale_y;
+> +    double width = cfg->width, height = cfg->height;
+> +
+> +    if (!vc->s->free_scale && !vc->s->full_screen) {
+> +        width /= sx;
+> +        height /= sy;
+> +    }
+> +
+> +    gd_set_ui_size(vc, width, height);
+>   
+> -    gd_set_ui_size(vc, cfg->width, cfg->height);
+>       return FALSE;
+>   }
+>   
 
 
