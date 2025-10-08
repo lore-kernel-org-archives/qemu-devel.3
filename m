@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D383ACCA472
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98842CCD186
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Uvv-00023T-0G; Wed, 08 Oct 2025 10:14:23 -0400
+	id 1v6UwE-0002HF-Ji; Wed, 08 Oct 2025 10:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v6Uvt-00023I-NV; Wed, 08 Oct 2025 10:14:21 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v6Uvg-0004Rm-RM; Wed, 08 Oct 2025 10:14:19 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 57DEC15B97C;
- Wed, 08 Oct 2025 17:13:45 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F7FA29BABE;
- Wed,  8 Oct 2025 17:13:53 +0300 (MSK)
-Message-ID: <29f3c19d-09fa-4b1d-ac92-65838cc69698@tls.msk.ru>
-Date: Wed, 8 Oct 2025 17:13:52 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Uw9-0002Gt-S5
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:14:37 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Uw0-0004Ty-JP
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:14:37 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-46e4f2696bdso90466625e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 07:14:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759932857; x=1760537657; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Szppyz1YU92aBnsnHh7hqhpHfCekPYvzL9kvHX4gcP4=;
+ b=BP/aaij1BxgB3ppkxks5MuFHl+yOxvHUiYRkkQwUJkE92SNSN9lY/T0n2hgkyrM79m
+ Fk9G4tI+Q/x90uImqBNPK9dcwc1iHTP6l0HeGox+u96+/u4D+JirTV9kNr7BygXdWJm/
+ JW1+sIaEy41JBgQGgSW03RyW240exqZQLlD7SP8Gn+uB7clw+KHUOHZJ3oieqE3mSUUq
+ o4yskqnNY/bQowNK013nMfmV79Z+G017tRtbQKHuxxXbGp4HI/2U+5BrvsXmk6sv55Ko
+ RFFYhUgSro1l6yEN/k2igUTfCVf8Mf4LDFCOkURkngbObD6oBE80El/YXN59XBZuUmTv
+ 97Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759932857; x=1760537657;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Szppyz1YU92aBnsnHh7hqhpHfCekPYvzL9kvHX4gcP4=;
+ b=kykCOvl2dWC5M7TTgz4biu+/1kyEu3D65jCLt2kJ32CVvIWkCppbbZ5NpEQZiZ28Ym
+ mGuizNVjyZq4X/88g12KKkfULVcrenO1+GudVy43UOYRKQQxpkdc6O2UaaId5zHgw4Ic
+ I7Y6TowPaqi8WhjO9yABLvySS53FY2GCdImY9zLXZwwdlbEmYrwSm4jOxUr31HKSBl9s
+ V97SrbnJCZwwOzXfKbl4fj36j1JigcN7hDcUMxKTl+AypbnPxAzptnFirUeGHikTXe01
+ vn24Ee+F+bJ8S03NtDg/7CNF5NkXYBKb2MpLlLBSqCeDimfqaxkhZxRnweuc/tTIhXWQ
+ YXMw==
+X-Gm-Message-State: AOJu0YwzbZB937eS+rEwxQkhfnY0RIjSIslELpayhzP9nVDGhpcS47Kw
+ 4pZoXsbmFhRusBujPiX6mvo87Xr+yQW7O0sUbbT0nGMSMNa4rW0jvcTXTZjkOPMknA9wshCiOqG
+ GiGSrkOLrUg==
+X-Gm-Gg: ASbGncuRjM7Z8hFx5I1atY5pvIob2Przp9D1nB4bI4BP2nrxpsdvGzLbCwtyfM1xRn8
+ q7FA8arKib+LQT6ufTyXDXq8SHXxC8GmdXYrvzqIInITN/RBkQ1xqrwMOjD7GzxQlW6lF8X2o9x
+ C+J726VpVT9OKpOTeIZy5I+2K4/FrV1QHPJNhLFzY35oo/6sx2rBR8zlc9SIpzUw6yRztqtwcI0
+ yjSXjxyxcWUB6c2WxQG922lfoIb0/fhIODplXb1jqGA2Xh5+il1pFao8Ttof7DxmTpBZoqzXLZU
+ esjtumpRgGfDZgzz5TfEx+DboA/BGMzse+2K2LZdfstfTI293mJM+3DqkLnx5izxevsZgm0ByOq
+ WR+i5+Og3P0TB9k1GcjZ4VqiJDedwfrDw+pl0BvqrbN9Et/ssdlPSeaWDnjC1cGjosBjJJCw3gF
+ rfPA5bZXS1LEpDph5xwCM6aKBJ
+X-Google-Smtp-Source: AGHT+IH/Au06/fgW2rLyDS0S298GyKPkoh5iIRGSqZrfOJcRPrhqgTurKnm9lpg87gHYoyMyeGodFg==
+X-Received: by 2002:a05:600c:3f10:b0:46e:5cb6:b904 with SMTP id
+ 5b1f17b1804b1-46fa9b079f7mr22962925e9.28.1759932856710; 
+ Wed, 08 Oct 2025 07:14:16 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46faf18bbe7sm1270705e9.20.2025.10.08.07.14.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 08 Oct 2025 07:14:16 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/2] target/s390x/mmu_helper: Simplify
+ s390_cpu_virt_mem_rw() logic
+Date: Wed,  8 Oct 2025 16:14:08 +0200
+Message-ID: <20251008141410.99865-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251008141410.99865-1-philmd@linaro.org>
+References: <20251008141410.99865-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/26] riscv-to-apply queue
-To: alistair23@gmail.com, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>,
- Vladimir Isaev <vladimir.isaev@syntacore.com>, stove <stove@rivosinc.com>
-References: <20251003032718.1324734-1-alistair.francis@wdc.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251003032718.1324734-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,63 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 06:26, alistair23@gmail.com wrote:
-> From: Alistair Francis <alistair.francis@wdc.com>
+In order to simplify the next commit, move the
+trigger_access_exception() call after the address_space_rw()
+calls. No logical change intended.
 
-> First RISC-V PR for 10.2
-> 
-> * Fix MSI table size limit
-> * Add riscv64 to FirmwareArchitecture
-> * Sync RISC-V hwprobe with Linux
-> * Implement MonitorDef HMP API
-> * Update OpenSBI to v1.7
-> * Fix SiFive UART character drop issue and minor refactors
-> * Fix RISC-V timer migration issues
-> * Use riscv_cpu_is_32bit() when handling SBI_DBCN reg
-> * Use riscv_csrr in riscv_csr_read
-> * Align memory allocations to 2M on RISC-V
-> * Do not use translator_ldl in opcode_at
-> * Minor fixes of RISC-V CFI
-> * Modify minimum VLEN rule
-> * Fix vslide1[up|down].vx unexpected result when XLEN=32 and SEW=64
-> * Fixup IOMMU PDT Nested Walk
-> * Fix endianness swap on compressed instructions
-> * Update status of IOMMU kernel support
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/s390x/mmu_helper.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Hi!
+diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+index 487c41bf933..22d3d4a97df 100644
+--- a/target/s390x/mmu_helper.c
++++ b/target/s390x/mmu_helper.c
+@@ -541,9 +541,7 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+     pages = g_malloc(nr_pages * sizeof(*pages));
+ 
+     ret = translate_pages(cpu, laddr, nr_pages, pages, is_write, &tec);
+-    if (ret) {
+-        trigger_access_exception(&cpu->env, ret, tec);
+-    } else if (hostbuf != NULL) {
++    if (ret == 0 && hostbuf != NULL) {
+         AddressSpace *as = CPU(cpu)->as;
+ 
+         /* Copy data by stepping through the area page by page */
+@@ -556,6 +554,9 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+             len -= currlen;
+         }
+     }
++    if (ret) {
++        trigger_access_exception(&cpu->env, ret, tec);
++    }
+ 
+     g_free(pages);
+     return ret;
+-- 
+2.51.0
 
-Is there anything in there which is worth picking up for the active
-stable releases of qemu, which are 10.0.x (lts) and 10.1.x?
-
- From the patch descriptions, it seems like quite a few changes in
-there are worth to be back-ported.   For example:
-
-  - target/riscv: rvv: Fix vslide1[up|down].vx unexpected result
-    when XLEN=32 and SEW=64
-  - target/riscv: Fix ssamoswap error handling
-  - target/riscv: Fix SSP CSR error handling in VU/VS mode
-  - target/riscv: Fix the mepc when sspopchk triggers the exception
-  - target/riscv: use riscv_csrr in riscv_csr_read
-  - hw/char: sifive_uart: Raise IRQ according to the Tx/Rx
-    watermark thresholds
-
-This is just from reading the commit messages, - I haven't looked
-at the actual changes in the code.  Maybe some other changes should
-be picked up too.
-
-I already picked up VLEN fixes, "MSI table size limit" and
-"do not use translator_ldl in opcode_at" (and I'm still unsure
-about the latter).
-
-Some changes has been Cc'd qemu-stable before, so I picked these
-up too, eg "Fix endianness swap on compressed instructions" and
-"Fixup PDT Nested Walk".
-
-Some other changes, like the timer array/time delta, does not look
-like possibilities for the older series due to incompatibility in
-migration they bring.
-
-Thanks,
-
-/mjt
 
