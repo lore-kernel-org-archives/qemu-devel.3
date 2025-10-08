@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5F2CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8A0CCA470
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 05:16:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6MWZ-0000JB-Gg; Wed, 08 Oct 2025 01:15:39 -0400
+	id 1v6MWi-0000KL-9j; Wed, 08 Oct 2025 01:15:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6MWW-0000Ic-HA
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 01:15:36 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6MWf-0000Ju-QO
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 01:15:45 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6MWU-0004Gc-Nv
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 01:15:36 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e37d6c21eso50405215e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 22:15:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6MWd-0004HV-C1
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 01:15:45 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-46e3cdc1a6aso3167365e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 22:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759900532; x=1760505332; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=n1d0kh7stPXoTC2hUJFmtwdYc61v5/MLY+/lEebOFzc=;
- b=RR6HRPB9I8xQn+0LTRWVaPbb0keoNZy68QgXTOiqmOKYMdhsDfk8P3pP2XLBtvzEtQ
- FYcmRseuUWqeMAoOFl1ATIFnjzqtkvSqWZWF15ynlTnBt78X07T6fWKiS9fZj++zSbdU
- kO6ShQ6D4Kpz2HnlYLONHvTjXpCp0z+atY7Ok/sBaLTkmbyO5+ekOgsXYfK438KUL3N6
- IG4hOCVKGTuG4jR5FLY1uK9HOBiqp2dsV1EVHQbFuK6vw2Qy1geRkj+cFdZ4zVb1C7j+
- nFjKoASNU3mWo+xvzI+3cEygPmlBxujEAhf+aVMpPIar6+w/pHEh7Ok3Kiut/SMMhBJw
- x8dA==
+ d=linaro.org; s=google; t=1759900541; x=1760505341; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N7nTG1OAwF78b/7SFJDM5fupoC2R3lO1U/+AKptoqog=;
+ b=aB3opJCKbLF8vG37ya2uF7NleTSHI+vArXUBAjAufzgNhICyIMTPn/5v5kxP/s2bwb
+ AaRdr9aWnmJsfuURGhRtE8OxhLhV334Kfum+3KbpqPfrFqq4G3aTuugE8lM/FZOD9KYR
+ BjKqepoyG5FhKInaG68H4+s3xr7LPRVw2emMckX2eTU0j7svLQdeziLYTYhLPsNUixNl
+ spJBSydcSyncspPDRYvtAjI7LgGLrDQDdRT/30ML4k2MXNnj7bsLzgQaILYFZLElvO82
+ fR9b8mwoxcUfjGqo66glxpcsbpVL9zF7cD91UYv6SRa8mGPvmaf2Hsgx6XhyT9Le0+/D
+ PLhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759900532; x=1760505332;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n1d0kh7stPXoTC2hUJFmtwdYc61v5/MLY+/lEebOFzc=;
- b=HOxUsIAo6JXUEKvq1vTane6CPVkKBrgnhCWwNCftQ1IIwV1tohZJ7ARRxdUyWAeCnu
- rKg8JIJJI0z48nNYfBlSU7uC9H69xxAiFiXbcSLHeWOV7m0GEoFlt69NDjQX6S4nOvGm
- 32ltPTveh1FJab3HEvVlpbnTEEYxhx6Rlj6CuoACen9eMF5YQZNCKSsz7nmxsn/mZSLz
- x//5pUThaYaCJ0/uePUgc0jHGbBmi/AHQpjT3cwg7rCz0xjJya8fV7f9BoEGUji0dKUI
- q1z8+/jlokWvgaPyJ3KEIfbzxlgVeqChiR25TlAQ3nyPeWuMtiPoOumnJ6ZYpgfPNMeC
- CbMA==
-X-Gm-Message-State: AOJu0YwokqcUBhJZHnvT6RyfyrIrYAGCOzARLs0y8bozMWo+yVT/ZCvX
- OaHcEJU2RF06ake2tDsXsCCk0gx+5tSrQj+kyKq/zjv4DB4v/KHlxJrvbtUnzMONQ+0MnXudKz3
- P7Y9mTd3Ifg==
-X-Gm-Gg: ASbGncvBD7k4Z1N8E7rXWd20zNGkJg2G2Jt8gGtRnRImPtLNA1yVMq7bKhXWOVjltKL
- IvhnKnhL5cYtyilY3PLda2pSGsiYQtp6rpR6MrF3ydDqCezvSFrGViXlGtIqjs+NEqhy4fhiVp9
- vl1pDm+ucU7MaNI+/8/sDQ506jUUrx0Vtdy40bflrG82J//eCsP/69updh+AJYlC5dtIdaNbjZP
- 9k4oMIqdZs30C2j936du1kH7xxxqwbY6ei0Q7D8Xk3bWrAUqH7SG9Uy5hQ2707LKZFKD3iATjuk
- vfdIK3cJmHhdbTILJUitkrdfMzGzAvWjzeeDftwEfHdeUx3YYUrsjxbh2HvYSnMQWxT284AO7mD
- LxgUc/U8QAyMX8nOzQY576x/aml+pM9BL0s3WzIkN9Cjl8dqqL76YjR4IBuJKmrWcypzTWDC0ub
- vXQUUT5EzzhGx0o6eAGjSQGpGz
-X-Google-Smtp-Source: AGHT+IErENHVTULC7odCx0/dguwLlVjj+YNUffH8pZelcr0H+WLw4v8KmjSGGAM8ChjviQaSHfHPJg==
-X-Received: by 2002:a05:6000:2509:b0:3ee:147a:9df with SMTP id
- ffacd0b85a97d-4266e7df9d1mr981809f8f.39.1759900532002; 
- Tue, 07 Oct 2025 22:15:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759900541; x=1760505341;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N7nTG1OAwF78b/7SFJDM5fupoC2R3lO1U/+AKptoqog=;
+ b=kP1ymjmumuO/j6kNpQkkwwn4TqhbcwsrIRyRm0dlk2zlUvET/6S9O2qXyyk3/aTQOH
+ 390swETK7NCiCmcGr7oOXTj+wUQpeXEIVgdHFwXSDF78qswca1zNWLx2KvSFiP82Gyoi
+ J9egMxIVQV5DOTbcxeg+nkn4Am4UIWDSqh8HP/3KLw/EhArV/mClkYl7J/8u82xMBD9o
+ TFM5Ji4+28nIWQql5mJUWLt/8RPtiODbDF5hMAPB8urcZxjMA0KtKg/M7BNCClXU62CQ
+ VOpaSclZIwgHtzdWkNE5Bydx+UwPn8IkQUK1T7Kq2tQKP+oTW+RBQp4LDHSAoPXJZIsP
+ bmOA==
+X-Gm-Message-State: AOJu0YyCNPvPOPSNXMBUAsfPgtsT2eYxje420gf9i0jOyILhjF2aRZ3t
+ 2ZMZ+TgD46SRJ1GkoqOBhi/dAbBkHFT19IT7fGDiQQVL9c3wsnrpI6PsCzN52r3PG7O/lJ0RQka
+ M2jZtu/qKfw==
+X-Gm-Gg: ASbGncslW1NLdTZbh3y+JVHiS1RinF2PPBTWq/m1GkMww2ymb6CRXTHbYZ5SAbMC9Gw
+ QP6jZIfpa1FmOsU2FnLijqDZTA/qaLutb/oJ3nWtEtruhlnh88L8cv1wUVojuTPZRTMUczDYUZL
+ n3KogI2wb9KJTzbXc73k8jEqQPMnUdKlNFP4ws/y8i3EdYhIQYFt109+ehxlo5Pvya/2iLvL4at
+ qHAlDp3gPtKXwYBq91hGkfNWD8BrZPHbv4nzdTAYNW0eI4RRX2Yabzyh9RHraVV8QhSq5DLWu05
+ 31XupapAT4Bq+BGxjmZ9kxI4WfZt3dWBvCA+Anz6r7m9Nz03ZjmjOVHLGoqEyA0yUDJpAUDkJ/Y
+ Z3DopnB+U5zzGx76M+8pKs5dAYtu52UWEl+Hueapn8ZNcxvX+JkqGXsORyLWN7c260cs9lDHrD5
+ /NtF5SGFZu+iYs5cSQhBJsBaYh
+X-Google-Smtp-Source: AGHT+IGyLCJHrxWDlaeJ2FQo10W6LT2ijwSXafF+wYaIDSAaTjkkMJq2ETGHYcOdfQxVXf6sLeFiKQ==
+X-Received: by 2002:a05:600c:450e:b0:46e:1a60:c995 with SMTP id
+ 5b1f17b1804b1-46fa9e8dcc7mr12428165e9.2.1759900541208; 
+ Tue, 07 Oct 2025 22:15:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9703sm28519467f8f.30.2025.10.07.22.15.30
+ 5b1f17b1804b1-46fa9d4c8c5sm19734935e9.11.2025.10.07.22.15.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Oct 2025 22:15:30 -0700 (PDT)
+ Tue, 07 Oct 2025 22:15:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Max Filippov <jcmvbkbc@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] target/xtensa: Remove all uses of target_ulong type
-Date: Wed,  8 Oct 2025 07:15:27 +0200
-Message-ID: <20251008051529.86378-1-philmd@linaro.org>
+Subject: [PATCH 2/2] target/xtensa: Remove target_ulong use in
+ xtensa_get_tb_cpu_state()
+Date: Wed,  8 Oct 2025 07:15:29 +0200
+Message-ID: <20251008051529.86378-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251008051529.86378-1-philmd@linaro.org>
+References: <20251008051529.86378-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the left over target_ulong uses in Xtensa frontend.
+Since commit bb5de52524c ("target: Widen pc/cs_base in
+cpu_get_tb_cpu_state"), cpu_get_tb_cpu_state() expects
+a uint64_t type for cs_base.
 
-Philippe Mathieu-Daudé (2):
-  target/xtensa: Remove target_ulong use in xtensa_tr_translate_insn()
-  target/xtensa: Remove target_ulong use in xtensa_get_tb_cpu_state()
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/xtensa/cpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- target/xtensa/cpu.c       | 6 +++---
- target/xtensa/translate.c | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index ea9b6df3aa2..1eeed44e336 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -59,13 +59,13 @@ static TCGTBCPUState xtensa_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUXtensaState *env = cpu_env(cs);
+     uint32_t flags = 0;
+-    target_ulong cs_base = 0;
++    uint64_t cs_base = 0;
+ 
+     flags |= xtensa_get_ring(env);
+     if (env->sregs[PS] & PS_EXCM) {
+         flags |= XTENSA_TBFLAG_EXCM;
+     } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_LOOP)) {
+-        target_ulong lend_dist =
++        uint64_t lend_dist =
+             env->sregs[LEND] - (env->pc & -(1u << TARGET_PAGE_BITS));
+ 
+         /*
+@@ -83,7 +83,7 @@ static TCGTBCPUState xtensa_get_tb_cpu_state(CPUState *cs)
+          * for the TB that contains this instruction.
+          */
+         if (lend_dist < (1u << TARGET_PAGE_BITS) + env->config->max_insn_size) {
+-            target_ulong lbeg_off = env->sregs[LEND] - env->sregs[LBEG];
++            uint64_t lbeg_off = env->sregs[LEND] - env->sregs[LBEG];
+ 
+             cs_base = lend_dist;
+             if (lbeg_off < 256) {
 -- 
 2.51.0
 
