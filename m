@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DA7CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A81FBCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6NFY-0000xP-7k; Wed, 08 Oct 2025 02:02:08 -0400
+	id 1v6NFy-0001Mh-4O; Wed, 08 Oct 2025 02:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NFP-0000tg-Q0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NFN-0000tN-40
  for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:02:02 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NFN-0000eW-DE
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:01:59 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-3ee12807d97so6084535f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:01:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NFJ-0000dh-02
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:01:55 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3ed20bdfdffso6196635f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759903315; x=1760508115; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759903310; x=1760508110; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IQsmpoPeW153QfGVuuE1WH9+2W3pcJi50GVTjfdpbVs=;
- b=coeOLRatdeTb6EP9cSvVIuo/nYgePOeZmTW9ba75wIm6gVa2z8w22mMdlvgTdou7Tt
- ztmQ8VIDGudoHK8Is4c87u3RWxyWWhmRcXoMEY3VkUb+3jtUmQKb8haxLpXzgF2huhuU
- EryHyikm0Cj87Hj5pmB8XkU1ro+JL68YynHzraenpRCjsE5tzOKxovAf+D9aie2MRbdX
- LpC4Qf0xSfNRf5xPd8wS7JVY/ORP7m2r+nafIIcvdTh6ugsn4obZoCLAlC231UfibTRx
- X1LG1I/FLKAmJWPsN3nlzXmhYePO1EzAQu73u+mk3rgFnBtOPGz7TdnL7YZBH8IgcLEf
- FMzQ==
+ bh=0Tv8yKkV1/Y6RhtpweElH9Zo9nKkr2eedVoUp7okr8A=;
+ b=P7JNx1rdSElkE4rsmcnbv1V/C9J/JE3bNfcbcmwOOFhsiZ5Md/9HNM3xML8kDEfd5Q
+ Mila78ahymaGvsyf8SWp0CetqfqB24B8oK6kgi1su2jLCB7kIYQRj5rO4OXOHLhw83I7
+ g1qizRNRWrCa0VcB4RCz58EwhY2U2Rtsd7RlLhVLvlrffbyb0PlO3jg5+qrHmwEHu8D2
+ 83SUpySn6PVdUQ40NdE5HpCzqv45EPn6miGnMaPw/BIfjva/OUCyYmyHTRz9nR6175r2
+ nqaps/3shV18TwWUOfJiIUp0OS4JirmjjcJ+t8a4HSVLgQk/LbCUNo4Qht/8aSzTIdDT
+ AE8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759903315; x=1760508115;
+ d=1e100.net; s=20230601; t=1759903310; x=1760508110;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IQsmpoPeW153QfGVuuE1WH9+2W3pcJi50GVTjfdpbVs=;
- b=qEuUWMWj3OQmGScD8JJPfvlG8oOucOD1IoN3/oon9p2L8DvXArlaZ8g2vy4YhX4d51
- S4nvOudfCV03KJh7bKcCf7dCG9+15DG4KBbhqRGCQ+muoK7zaHPQBp5Dm55R4aGqrTnK
- zSlrJrUltk47BSBlQ7Kjzin55stFeGTiMLJ00hClbMLSJ0bRYgc72zvraLYaKuRhDK/R
- ov+1GuXZRiXegXWjx4RywMoCbjCNMIyXMpH8apTEy4dyZiI1BJpmhilAFo12VTHYubXr
- 7gX1+ixyTYCfKe314APyI25BfV0sP5d9uxo4yf2k9xdAhXhAMq7GWZoeiuTzvB70gkAu
- cvpw==
-X-Gm-Message-State: AOJu0YwGDl0qL77hbWBqdF3cf0n/evXUqBISEhyH3lCaTgRtTg1nTgKN
- /v79Q//cQm4UHWaeAvFs/Eu3qnaM5TTe1Yq1jiCcqbId+MAYWAAtPkZhDQDJXezhD6PDwGNtjXr
- 3pkpFF0D7yODX
-X-Gm-Gg: ASbGncs85E09TDbPrjoXzqIjYHEfexj0ojl3cyliZf4LgE0ZdXLhAR7z3cG4MR3Azdg
- /FGLsPK4Kx2GxTAFIYNRc8d/F/BjUKQbFV73/p6Lp6Km5ykW7uPxD05ZUxaq9hC20a7p1klX5t3
- WZpTVHEUQYeSOXJjH2jYk755wbVETOAGCzHSFBfX5LYtBFT3Iz5TQ4k9HTHDiFIoVlp+8BOontt
- 3x9enKH68ew785JDpVYGyZvrVvwN+x2RA2OmHBR6IH7TQmOV18yKASVlJM53+JlLNoYbQZjkKBa
- TEp37R2PGXLB7SYI0XVV1DZptu47ocXP8NIh/m9uCng47hjb7f8cotu32AKQuCQDbLlbaXI0z0X
- e/BAPQlaz5hhUOCXKiBYKdTYgqzn1i+3bc3FyHo7sOjs58RHMA2qrDok0y6tqv5sKygrpzmDmLP
- oeTgP0w26IBctm2Dj/pFeYHfa3
-X-Google-Smtp-Source: AGHT+IHkllW7Co1meslhNQIl9ob6K+Ub1q0nI7YMNqutZGBiOShVAOxGquX4cji9hRQ9unqJ3cHesg==
-X-Received: by 2002:a05:6000:4205:b0:3f7:b7ac:f3d2 with SMTP id
- ffacd0b85a97d-4266f752fb9mr1037761f8f.43.1759903315173; 
- Tue, 07 Oct 2025 23:01:55 -0700 (PDT)
+ bh=0Tv8yKkV1/Y6RhtpweElH9Zo9nKkr2eedVoUp7okr8A=;
+ b=WeUPbk2U+lyvRxdcF7i6cibbOcgWH/6Zau+UJJQ0b18+3G4IKaXuF0WVHXVDJJpdYH
+ QGNNl5RNyqIv6HZnYkVpxaLEZMZVCinhedagxY5BFM53rdz4CyFpLu4U0stZjlHVKywi
+ cGrx+9z6WSSA0ng5U5yyqKGcbUMDVlaIqZ0ghcKDR5lmDXZ8rXNaa/s/KeQjpdCsJOy9
+ IxV8jj0TxFyVlt9UH0rtHzocfiwmKrP4/XS/HJZDDk7h0PWD0mQlHJElL1uTfriqOI9e
+ 0OnwFb0LedMkm9MwRRZdFY+e1pCq/OzUwWzoatLiD0mYRNy6ZvcmtaRXDBM9ixXzjbca
+ ThIg==
+X-Gm-Message-State: AOJu0YzrTEn3ICCVGr3JnAGw5iq1K9I3IPHvFkS2oGVHfAhqcijXOUU+
+ JUemsXnIJuHT3I9ZRaxNZO+RWx7YTFbVjEsS9iedjvWZ5ReMhrbzxtzDsZjbGkilPfucXbkuChZ
+ F3o7MZ3gLDw==
+X-Gm-Gg: ASbGncsmbKw/4JbBxjbVyDaEfl7x2foRJ6CsQJGTvMupxiRdIhN/N8OQR0G+HASHMwI
+ 23thqbkCFCYKHPEX6UriKILjGZ/JfA+s8Srjp33x7TyPgWGJHU9Q76dDavyDLwdhfQFy5uF7mYA
+ 0JExKOOZVpSfO7EinqDmltV2iaAAXk012vjM5bdnwRFhtROVWbD/ydrNYVAD/0ok8lQMBcXEsV2
+ XFfMmFMosnnI1H4VcGy8R+1IZapOUzWN3Wxe0GHRweffqpbl5+kTzkuw5iw/MJKnmlOppW6fn6s
+ uqRO+BG92JobsFjbXskr8582k6qsz+OuR36aqP4+thvQG42Wm2xidJxUHR4o25ACWP/i0Mu7KsE
+ cdAGC3eAlbczpeCYkCJFayxwVDetop5Gx8Dda7dOpMsUyQx8g4JkrJfBJxPgsMIc21pTkz3AUwG
+ IwxXO9uoQz4Gww33p0SQqj5Yv8XWqyTX4sJxE=
+X-Google-Smtp-Source: AGHT+IHeRZl7K78VhOBfBI9cIv+APysV588NvbDoFY9CTV6xdwmSSvJiPYs/vCYgrPQdyrIInFvfOQ==
+X-Received: by 2002:a05:6000:200d:b0:400:818:bae9 with SMTP id
+ ffacd0b85a97d-4266e7d91femr1010059f8f.32.1759903310442; 
+ Tue, 07 Oct 2025 23:01:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f4cc3sm28196503f8f.55.2025.10.07.23.01.54
+ ffacd0b85a97d-4255d8e97fbsm28101225f8f.34.2025.10.07.23.01.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Oct 2025 23:01:54 -0700 (PDT)
+ Tue, 07 Oct 2025 23:01:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
@@ -71,18 +71,18 @@ Cc: Anton Johansson <anjo@rev.ng>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/5] target/microblaze: Convert CPUMBState::res_addr field to
- uint32_t type
-Date: Wed,  8 Oct 2025 08:01:29 +0200
-Message-ID: <20251008060129.87579-6-philmd@linaro.org>
+Subject: [PATCH 4/5] target/microblaze: Remove target_ulong use in
+ helper_stackprot()
+Date: Wed,  8 Oct 2025 08:01:28 +0200
+Message-ID: <20251008060129.87579-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251008060129.87579-1-philmd@linaro.org>
 References: <20251008060129.87579-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,123 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUMBState::@res_addr field is used as u32 since commit
-cfeea807e5a ("target-microblaze: Tighten up TCGv_i32 vs
-TCGv type usage"). Convert it as such, bumping the migration
-version. Use the RES_ADDR_NONE definition when appropriate.
+Since commit 36a9529e60e ("target/microblaze: Simplify
+compute_ldst_addr_type{a,b}"), helper_stackprot() takes
+a TCGv_i32 argument.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/cpu.h       |  2 +-
- target/microblaze/machine.c   |  6 +++---
- target/microblaze/translate.c | 17 +++++++++--------
- 3 files changed, 13 insertions(+), 12 deletions(-)
+ target/microblaze/helper.h    | 2 +-
+ target/microblaze/op_helper.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index 3ce28b302fe..14b107876a4 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -259,7 +259,7 @@ struct CPUArchState {
+diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
+index ef4fad9b91e..01eba592b26 100644
+--- a/target/microblaze/helper.h
++++ b/target/microblaze/helper.h
+@@ -20,7 +20,7 @@ DEF_HELPER_FLAGS_3(fcmp_ne, TCG_CALL_NO_WG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_3(fcmp_ge, TCG_CALL_NO_WG, i32, env, i32, i32)
  
-     /* lwx/swx reserved address */
- #define RES_ADDR_NONE 0xffffffff /* Use 0xffffffff to indicate no reservation */
--    target_ulong res_addr;
-+    uint32_t res_addr;
-     uint32_t res_val;
+ DEF_HELPER_FLAGS_2(pcmpbf, TCG_CALL_NO_RWG_SE, i32, i32, i32)
+-DEF_HELPER_FLAGS_2(stackprot, TCG_CALL_NO_WG, void, env, tl)
++DEF_HELPER_FLAGS_2(stackprot, TCG_CALL_NO_WG, void, env, i32)
+ DEF_HELPER_FLAGS_2(get, TCG_CALL_NO_RWG, i32, i32, i32)
+ DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32, i32)
  
-     /* Internal flags.  */
-diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
-index a4cf38dc891..48efa546d39 100644
---- a/target/microblaze/machine.c
-+++ b/target/microblaze/machine.c
-@@ -78,7 +78,7 @@ static const VMStateField vmstate_env_fields[] = {
-     VMSTATE_UINT32(iflags, CPUMBState),
- 
-     VMSTATE_UINT32(res_val, CPUMBState),
--    VMSTATE_UINTTL(res_addr, CPUMBState),
-+    VMSTATE_UINT32(res_addr, CPUMBState),
- 
-     VMSTATE_STRUCT(mmu, CPUMBState, 0, vmstate_mmu, MicroBlazeMMU),
- 
-@@ -87,8 +87,8 @@ static const VMStateField vmstate_env_fields[] = {
- 
- static const VMStateDescription vmstate_env = {
-     .name = "env",
--    .version_id = 0,
--    .minimum_version_id = 0,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-     .fields = vmstate_env_fields,
- };
- 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index ff33e64a710..04fbd4fe17f 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -55,7 +55,7 @@ static TCGv_i32 cpu_imm;
- static TCGv_i32 cpu_bvalue;
- static TCGv_i32 cpu_btarget;
- static TCGv_i32 cpu_iflags;
--static TCGv cpu_res_addr;
-+static TCGv_i32 cpu_res_addr;
- static TCGv_i32 cpu_res_val;
- 
- /* This is the state at translation time.  */
-@@ -857,7 +857,7 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
- 
-     tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index,
-                         mo_endian(dc) | MO_UL);
--    tcg_gen_mov_tl(cpu_res_addr, addr);
-+    tcg_gen_mov_i32(cpu_res_addr, addr);
- 
-     if (arg->rd) {
-         tcg_gen_mov_i32(cpu_R[arg->rd], cpu_res_val);
-@@ -1024,7 +1024,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
-      * branch, but we know we can use the equal version in the global.
-      * In either case, addr is no longer needed.
-      */
--    tcg_gen_brcond_tl(TCG_COND_NE, cpu_res_addr, addr, swx_fail);
-+    tcg_gen_brcond_i32(TCG_COND_NE, cpu_res_addr, addr, swx_fail);
- 
-     /*
-      * Compare the value loaded during lwx with current contents of
-@@ -1052,7 +1052,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
-      * Prevent the saved address from working again without another ldx.
-      * Akin to the pseudocode setting reservation = 0.
-      */
--    tcg_gen_movi_tl(cpu_res_addr, -1);
-+    tcg_gen_movi_i32(cpu_res_addr, RES_ADDR_NONE);
-     return true;
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+index b8365b3b1d2..df93c4229d6 100644
+--- a/target/microblaze/op_helper.c
++++ b/target/microblaze/op_helper.c
+@@ -365,13 +365,13 @@ uint32_t helper_pcmpbf(uint32_t a, uint32_t b)
+     return 0;
  }
  
-@@ -1173,7 +1173,7 @@ static bool trans_brk(DisasContext *dc, arg_typea_br *arg)
-         tcg_gen_movi_i32(cpu_R[arg->rd], dc->base.pc_next);
-     }
-     tcg_gen_ori_i32(cpu_msr, cpu_msr, MSR_BIP);
--    tcg_gen_movi_tl(cpu_res_addr, -1);
-+    tcg_gen_movi_i32(cpu_res_addr, RES_ADDR_NONE);
+-void helper_stackprot(CPUMBState *env, target_ulong addr)
++void helper_stackprot(CPUMBState *env, uint32_t addr)
+ {
+     if (addr < env->slr || addr > env->shr) {
+         CPUState *cs = env_cpu(env);
  
-     dc->base.is_jmp = DISAS_EXIT;
-     return true;
-@@ -1194,7 +1194,7 @@ static bool trans_brki(DisasContext *dc, arg_typeb_br *arg)
-     if (arg->rd) {
-         tcg_gen_movi_i32(cpu_R[arg->rd], dc->base.pc_next);
-     }
--    tcg_gen_movi_tl(cpu_res_addr, -1);
-+    tcg_gen_movi_i32(cpu_res_addr, RES_ADDR_NONE);
+         qemu_log_mask(CPU_LOG_INT, "Stack protector violation at "
+-                      TARGET_FMT_lx " %x %x\n",
++                                   "0x%x 0x%x 0x%x\n",
+                       addr, env->slr, env->shr);
  
- #ifdef CONFIG_USER_ONLY
-     switch (imm) {
-@@ -1885,6 +1885,7 @@ void mb_tcg_init(void)
-           tcg_global_mem_new_i32(tcg_env, i32s[i].ofs, i32s[i].name);
-     }
- 
--    cpu_res_addr =
--        tcg_global_mem_new(tcg_env, offsetof(CPUMBState, res_addr), "res_addr");
-+    cpu_res_addr = tcg_global_mem_new_i32(tcg_env,
-+                                          offsetof(CPUMBState, res_addr),
-+                                          "res_addr");
- }
+         env->ear = addr;
 -- 
 2.51.0
 
