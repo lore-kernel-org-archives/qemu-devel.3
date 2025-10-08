@@ -4,52 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6A1CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 03:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A6F6CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 03:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6KlA-0001pq-Go; Tue, 07 Oct 2025 23:22:36 -0400
+	id 1v6LIz-0005OK-3N; Tue, 07 Oct 2025 23:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6Kl7-0001oU-Rs; Tue, 07 Oct 2025 23:22:33 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1v6LIu-0005NF-LO
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 23:57:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6Kl4-0000T8-6b; Tue, 07 Oct 2025 23:22:33 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 8 Oct
- 2025 11:22:09 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 8 Oct 2025 11:22:09 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 05/16] hw/arm/aspeed: Remove AspeedSoCState dependency from
- aspeed_mmio_map() API
-Date: Wed, 8 Oct 2025 11:21:50 +0800
-Message-ID: <20251008032207.593353-6-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251008032207.593353-1-jamin_lin@aspeedtech.com>
-References: <20251008032207.593353-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1v6LIp-0004mL-Gp
+ for qemu-devel@nongnu.org; Tue, 07 Oct 2025 23:57:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759895840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hIZ0w8lhHGgOhQZJWjiv8Biec6U6j6ZDoWJC0MhsGGY=;
+ b=ER1GTTOHzEjAH7Uj7Jx9fRgtFkLE0x3LKNgb5o+PfTRcF2F9hEi9d16oLed6LB3r2uz7pO
+ MkfQLexoJh6YeIjuUvzXns0g087FVAojUqQqfw5YQxFgvLCtumd7JXP4AAzJ92rr4YVgn3
+ 6REVmmFpCbwSHmtwfULpKh3XlCtBimM=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-199-hl3hSUPeO4Koleh88ZoFmg-1; Tue, 07 Oct 2025 23:57:18 -0400
+X-MC-Unique: hl3hSUPeO4Koleh88ZoFmg-1
+X-Mimecast-MFC-AGG-ID: hl3hSUPeO4Koleh88ZoFmg_1759895838
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2699ebc0319so68649985ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 20:57:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759895838; x=1760500638;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hIZ0w8lhHGgOhQZJWjiv8Biec6U6j6ZDoWJC0MhsGGY=;
+ b=khKthosy9amGIUa4I8fK5tFyzqZT5RPufM8zH/CWzXIC4xnCr9/ilgfbw/koPX/KfF
+ KWXCZS1h31w4grSh/KAOsKeuv+OBWpEgUbRijX+yBTL+RABYuXCmzja8rDOtse+FLmI2
+ MBZEoG8VOfRxbltNfidWRWVTCh8JZhCBJFTsWZCrE1bfM5JUn/96yVbDnLOF89TrzerR
+ QJ7DwiMf2APgjMrAq2Wj2ee5J1kn3Pd2bdRPsJ6zB0hjzpNNVNmC6ulS+ghU7jRLS6gL
+ KjrxHvZdvZHzmQvbsnYvCinJ1f4fL8/AlmAl4jL2W0R/+9FEfa1HWCYOy1altwXEitDq
+ Ob0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgcltDXp9De0yjcemLmBFY+EhoWfw8T4BctrbcDFFnEDJ1i4U0lWgO1V1sgUKXR4cJVq/4RkpcC6q4@nongnu.org
+X-Gm-Message-State: AOJu0YzJ8x0Wg63W0pWZBfs5DxUhXJHlod1EY436jEdQnXRBDWomfpuC
+ 7IyHoKUHtEVBX801ua9XrfIo6+B6rc5LVFv3kIlIMxtXL1/dXKjtH9B4P+78neqjXp1cJ4LpIz4
+ AqgSSdC31lwWLvRR2xsLHstrOr3l5m+a7UzwV1t0fMenpg1/G1GyMxYwn
+X-Gm-Gg: ASbGncurUBoqWt/BHlfOnEkfPEgb6gziuCEX+TkSu6EyKOYSkRaiV4StD6WfHDPxKG6
+ wewR9MBZOIT6PtilM66q+nx44CYO9EgHKmUT79thKZLDlAFY7NpwYJJajlpQ9Qm3wclJnKxwot8
+ TEAEgCCmBFGTMDWxY2iDxg9TZRtKUcQijKHWUv9fh6zN7/txIsElFeT/aWnWb+ixdHtApNJsZoU
+ iXL2WS8mlgf1mS8Bh0O/pPtlCddjenKzaTvewC+8gi6sb6GmH7izskkyizjNeJo2nTBfhGdujpK
+ Fb3chlLurpON2flUVFzkH6jiPX2nfWaFPWjMe+1l1xdcKhMMv8lxOmESurmhMMHuK4P8DkwtqY0
+ zA5PROrnc7g==
+X-Received: by 2002:a17:903:240c:b0:269:9a71:dc4a with SMTP id
+ d9443c01a7336-290272e1a51mr25135495ad.41.1759895837201; 
+ Tue, 07 Oct 2025 20:57:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmhjLkQM9554EriiUHdZXuKzTrYhYc6UmOldaRshg2HrxAapn9AvwXWKL21CK5aOTSH+tziQ==
+X-Received: by 2002:a17:903:240c:b0:269:9a71:dc4a with SMTP id
+ d9443c01a7336-290272e1a51mr25134865ad.41.1759895836084; 
+ Tue, 07 Oct 2025 20:57:16 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-28e8d128041sm182645235ad.37.2025.10.07.20.57.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Oct 2025 20:57:15 -0700 (PDT)
+Message-ID: <797aa453-30e5-4bfa-b71c-14dfd1bebc64@redhat.com>
+Date: Wed, 8 Oct 2025 13:57:09 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
+ CPERs injection
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, gengdongjiu1@gmail.com,
+ peter.maydell@linaro.org, pbonzini@redhat.com, Jonathan.Cameron@huawei.com,
+ shan.gavin@gmail.com
+References: <20251007060810.258536-1-gshan@redhat.com>
+ <20251007060810.258536-4-gshan@redhat.com> <20251007125759.48849939@foz.lan>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20251007125759.48849939@foz.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,924 +112,707 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor aspeed_mmio_map() to take MemoryRegion * instead of
-AspeedSoCState *, making the MMIO mapping helper more generic and
-decoupled from SoC state.
+Hi Mauro,
 
-Update all call sites to pass s->memory (or equivalent) explicitly.
-Touched files include: headers, aspeed_soc_common.c, and SoC realize
-paths in AST10x0/2400/2600/27x0 (SSP/TSP) and AST2700.
+On 10/7/25 8:57 PM, Mauro Carvalho Chehab wrote:
+> Em Tue,  7 Oct 2025 16:08:10 +1000
+> Gavin Shan <gshan@redhat.com> escreveu:
+> 
+>> In the combination of 64KB host and 4KB guest, a problematic host page
+>> affects 16x guest pages. In this specific case, it's reasonable to
+>> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
+>> dump due to the current error can't be delivered as the previous error
+>> isn't acknoledges. It's caused by the nature the host page can be
+>> accessed in parallel due to the mismatched host and guest page sizes.
+>>
+>> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
+>> for this specific case. The maximal error block size is bumped to 4KB,
+>> providing enough storage space for those 16x memory CPERs.
+>>
+>> Signed-off-by: Gavin Shan <gshan@redhat.com>
+>> ---
+>>   hw/acpi/ghes.c   |  2 +-
+>>   target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+>>   2 files changed, 46 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+>> index 045b77715f..5c87b3a027 100644
+>> --- a/hw/acpi/ghes.c
+>> +++ b/hw/acpi/ghes.c
+>> @@ -33,7 +33,7 @@
+>>   #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+>>   
+>>   /* The max size in bytes for one error block */
+>> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+>> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
+> 
+> I had a patch doing the same on my queue. Anyway, I'm OK if you do it,
+> but don't forget to also update the docs:
+> 
+> diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+> index aaf7b1ad11a5..acf31d6eeb7c 100644
+> --- a/docs/specs/acpi_hest_ghes.rst
+> +++ b/docs/specs/acpi_hest_ghes.rst
+> @@ -68,7 +68,7 @@ Design Details
+>       and N Read Ack Register entries. The size for each entry is 8-byte.
+>       The Error Status Data Block table contains N Error Status Data Block
+>       entries. The size for each entry is defined at the source code as
+> -    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 1024 bytes). The total size
+> +    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 4096 bytes). The total size
+>       for the "etc/hardware_errors" fw_cfg blob is
+>       (N * 8 * 2 + N * ACPI_GHES_MAX_RAW_DATA_LENGTH) bytes.
+>       N is the number of the kinds of hardware error sources.
+> 
+> Btw, IMO better to place th4 4K size change on a separate patch.
+> 
+> That's said, as GHES table is now part of ACPI tests, you need to have
+> a patch before/after GHES table changes to update BIOS test.
+> 
+> You'll likely need something similar to those:
+> 
+> 	8d5613d2eefa ("tests/acpi: virt: add an empty HEST file")
+> 	cd16f08ad4bd ("tests/acpi: virt: update HEST file with its current data")
+> 
+> There are more details about how to do it at the comments on this file:
+> 
+> 	tests/qtest/bios-tables-test.c
+> 
 
-This reduces coupling, improves reuse across variants, and clarifies the
-API boundary between SoC state and memory mapping.
+Thanks for your comments and all of them make sense. I've changed the code
+locally and the changes will be included to next respin (v3), but I would
+defer posting (v3) until I receive enough feedbacks on other patches.
 
-No functional change.
+The modified local code is something as below.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- include/hw/arm/aspeed_soc.h |  3 +-
- hw/arm/aspeed_ast10x0.c     | 37 ++++++++++++---------
- hw/arm/aspeed_ast2400.c     | 47 +++++++++++++++------------
- hw/arm/aspeed_ast2600.c     | 65 +++++++++++++++++++++----------------
- hw/arm/aspeed_ast27x0-ssp.c |  7 ++--
- hw/arm/aspeed_ast27x0-tsp.c |  7 ++--
- hw/arm/aspeed_ast27x0.c     | 60 +++++++++++++++++++---------------
- hw/arm/aspeed_soc_common.c  |  8 ++---
- 8 files changed, 133 insertions(+), 101 deletions(-)
+   [PATCH 1/6] tests/qtest/bios-tables-test: Prepare for changes in the HEST table
+   [PATCH 2/6] acpi/ghes: Increase GHES raw data maximal length to 4KiB
+   [PATCH 3/6] tests/qtest/bios-tables-test: Update HEST table
+   [PATCH 4/6] acpi/ghes: Extend acpi_ghes_memory_errors() to support multiple CPERs
+   [PATCH 5/6] kvm/arm/kvm: Introduce helper push_ghes_memory_errors()
+   [PATCH 6/6] target/arm/kvm: Support multiple memory CPERs injection
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 385b657b50..606cf6bb61 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -308,7 +308,8 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
- void aspeed_soc_uart_set_chr(SerialMM *uart, int dev, int uarts_base,
-                              int uarts_num, Chardev *chr);
- bool aspeed_soc_dram_init(AspeedSoCState *s, Error **errp);
--void aspeed_mmio_map(AspeedSoCState *s, SysBusDevice *dev, int n, hwaddr addr);
-+void aspeed_mmio_map(MemoryRegion *memory, SysBusDevice *dev, int n,
-+                     hwaddr addr);
- void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
-                                    const char *name, hwaddr addr,
-                                    uint64_t size);
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index dab012aa95..caa9feb667 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -242,7 +242,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[ASPEED_DEV_SCU]);
- 
-     /* I2C */
- 
-@@ -251,7 +252,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i2c), 0, sc->memmap[ASPEED_DEV_I2C]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i2c), 0,
-+                    sc->memmap[ASPEED_DEV_I2C]);
-     for (i = 0; i < ASPEED_I2C_GET_CLASS(&s->i2c)->num_busses; i++) {
-         qemu_irq irq = qdev_get_gpio_in(DEVICE(&a->armv7m),
-                                         sc->irqmap[ASPEED_DEV_I2C] + i);
-@@ -263,7 +265,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i3c), 0, sc->memmap[ASPEED_DEV_I3C]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i3c), 0,
-+                    sc->memmap[ASPEED_DEV_I3C]);
-     for (i = 0; i < ASPEED_I3C_NR_DEVICES; i++) {
-         qemu_irq irq = qdev_get_gpio_in(DEVICE(&a->armv7m),
-                                         sc->irqmap[ASPEED_DEV_I3C] + i);
-@@ -275,7 +278,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->peci), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->peci), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->peci), 0,
-                     sc->memmap[ASPEED_DEV_PECI]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peci), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_PECI));
-@@ -284,7 +287,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->lpc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->lpc), 0, sc->memmap[ASPEED_DEV_LPC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->lpc), 0,
-+                    sc->memmap[ASPEED_DEV_LPC]);
- 
-     /* Connect the LPC IRQ to the GIC. It is otherwise unused. */
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->lpc), 0,
-@@ -320,7 +324,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->timerctrl), 0,
-                     sc->memmap[ASPEED_DEV_TIMER1]);
-     for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
-         qemu_irq irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
-@@ -331,7 +335,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->adc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->adc), 0, sc->memmap[ASPEED_DEV_ADC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->adc), 0,
-+                    sc->memmap[ASPEED_DEV_ADC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
- 
-@@ -341,8 +346,9 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->fmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 0, sc->memmap[ASPEED_DEV_FMC]);
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 1,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 0,
-+                    sc->memmap[ASPEED_DEV_FMC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 1,
-                     ASPEED_SMC_GET_CLASS(&s->fmc)->flash_window_base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->fmc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_FMC));
-@@ -354,9 +360,9 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 0,
-                         sc->memmap[ASPEED_DEV_SPI1 + i]);
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-     }
- 
-@@ -364,7 +370,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sbc), 0, sc->memmap[ASPEED_DEV_SBC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sbc), 0,
-+                    sc->memmap[ASPEED_DEV_SBC]);
- 
-     /* HACE */
-     object_property_set_link(OBJECT(&s->hace), "dram", OBJECT(&s->sram),
-@@ -372,7 +379,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->hace), 0,
-                     sc->memmap[ASPEED_DEV_HACE]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-@@ -387,14 +394,14 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-     }
- 
-     /* GPIO */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->gpio), 0,
-                     sc->memmap[ASPEED_DEV_GPIO]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index 53c2a5156d..6690752215 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -289,13 +289,15 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[ASPEED_DEV_SCU]);
- 
-     /* VIC */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&a->vic), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->vic), 0, sc->memmap[ASPEED_DEV_VIC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->vic), 0,
-+                    sc->memmap[ASPEED_DEV_VIC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&a->vic), 0,
-                        qdev_get_gpio_in(DEVICE(&a->cpu), ARM_CPU_IRQ));
-     sysbus_connect_irq(SYS_BUS_DEVICE(&a->vic), 1,
-@@ -305,7 +307,8 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rtc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->rtc), 0, sc->memmap[ASPEED_DEV_RTC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->rtc), 0,
-+                    sc->memmap[ASPEED_DEV_RTC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->rtc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_RTC));
- 
-@@ -315,7 +318,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->timerctrl), 0,
-                     sc->memmap[ASPEED_DEV_TIMER1]);
-     for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
-         qemu_irq irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
-@@ -326,7 +329,8 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->adc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->adc), 0, sc->memmap[ASPEED_DEV_ADC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->adc), 0,
-+                    sc->memmap[ASPEED_DEV_ADC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
- 
-@@ -341,7 +345,8 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i2c), 0, sc->memmap[ASPEED_DEV_I2C]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i2c), 0,
-+                    sc->memmap[ASPEED_DEV_I2C]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_I2C));
- 
-@@ -349,7 +354,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->peci), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->peci), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->peci), 0,
-                     sc->memmap[ASPEED_DEV_PECI]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peci), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_PECI));
-@@ -360,8 +365,9 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->fmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 0, sc->memmap[ASPEED_DEV_FMC]);
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 1,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 0,
-+                    sc->memmap[ASPEED_DEV_FMC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 1,
-                     ASPEED_SMC_GET_CLASS(&s->fmc)->flash_window_base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->fmc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_FMC));
-@@ -377,9 +383,9 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 0,
-                         sc->memmap[ASPEED_DEV_SPI1 + i]);
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-     }
- 
-@@ -388,7 +394,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-                         sc->memmap[ASPEED_DEV_EHCI1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
-@@ -398,7 +404,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdmc), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
-                     sc->memmap[ASPEED_DEV_SDMC]);
- 
-     /* Watch dog */
-@@ -411,7 +417,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-     }
- 
-     /* RAM  */
-@@ -426,7 +432,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ftgmac100[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-                         sc->memmap[ASPEED_DEV_ETH1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_ETH1 + i));
-@@ -436,7 +442,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->xdma), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->xdma), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->xdma), 0,
-                     sc->memmap[ASPEED_DEV_XDMA]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->xdma), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_XDMA));
-@@ -445,7 +451,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->gpio), 0,
-                     sc->memmap[ASPEED_DEV_GPIO]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
-@@ -454,7 +460,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdhci), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdhci), 0,
-                     sc->memmap[ASPEED_DEV_SDHCI]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
-@@ -463,7 +469,8 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->lpc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->lpc), 0, sc->memmap[ASPEED_DEV_LPC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->lpc), 0,
-+                    sc->memmap[ASPEED_DEV_LPC]);
- 
-     /* Connect the LPC IRQ to the VIC */
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->lpc), 0,
-@@ -496,7 +503,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->hace), 0,
-                     sc->memmap[ASPEED_DEV_HACE]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 0299d97929..bf0ecde051 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -324,7 +324,7 @@ static bool aspeed_soc_ast2600_pcie_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_phy[0]), errp)) {
-         return false;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->pcie_phy[0]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->pcie_phy[0]), 0,
-                     sc->memmap[ASPEED_DEV_PCIE_PHY1]);
- 
-     object_property_set_int(OBJECT(&s->pcie[0]), "dram-base",
-@@ -335,7 +335,7 @@ static bool aspeed_soc_ast2600_pcie_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie[0]), errp)) {
-         return false;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->pcie[0]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->pcie[0]), 0,
-                     sc->memmap[ASPEED_DEV_PCIE0]);
- 
-     irq = qdev_get_gpio_in(DEVICE(&a->a7mpcore),
-@@ -414,7 +414,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-                             &error_abort);
- 
-     sysbus_realize(SYS_BUS_DEVICE(&a->a7mpcore), &error_abort);
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->a7mpcore), 0, ASPEED_A7MPCORE_ADDR);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->a7mpcore), 0,
-+                    ASPEED_A7MPCORE_ADDR);
- 
-     for (i = 0; i < sc->num_cpus; i++) {
-         SysBusDevice *sbd = SYS_BUS_DEVICE(&a->a7mpcore);
-@@ -448,13 +449,15 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[ASPEED_DEV_SCU]);
- 
-     /* RTC */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rtc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->rtc), 0, sc->memmap[ASPEED_DEV_RTC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->rtc), 0,
-+                    sc->memmap[ASPEED_DEV_RTC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->rtc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_RTC));
- 
-@@ -464,7 +467,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->timerctrl), 0,
-                     sc->memmap[ASPEED_DEV_TIMER1]);
-     for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
-         irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
-@@ -475,7 +478,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->adc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->adc), 0, sc->memmap[ASPEED_DEV_ADC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->adc), 0,
-+                    sc->memmap[ASPEED_DEV_ADC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
- 
-@@ -490,7 +494,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i2c), 0, sc->memmap[ASPEED_DEV_I2C]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i2c), 0,
-+                    sc->memmap[ASPEED_DEV_I2C]);
-     for (i = 0; i < ASPEED_I2C_GET_CLASS(&s->i2c)->num_busses; i++) {
-         irq = qdev_get_gpio_in(DEVICE(&a->a7mpcore),
-                                sc->irqmap[ASPEED_DEV_I2C] + i);
-@@ -502,7 +507,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->peci), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->peci), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->peci), 0,
-                     sc->memmap[ASPEED_DEV_PECI]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peci), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_PECI));
-@@ -518,8 +523,9 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->fmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 0, sc->memmap[ASPEED_DEV_FMC]);
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 1,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 0,
-+                    sc->memmap[ASPEED_DEV_FMC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 1,
-                     ASPEED_SMC_GET_CLASS(&s->fmc)->flash_window_base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->fmc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_FMC));
-@@ -537,9 +543,9 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 0,
-                         sc->memmap[ASPEED_DEV_SPI1 + i]);
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-     }
- 
-@@ -548,7 +554,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-                         sc->memmap[ASPEED_DEV_EHCI1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
-@@ -558,7 +564,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdmc), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
-                     sc->memmap[ASPEED_DEV_SDMC]);
- 
-     /* Watch dog */
-@@ -571,7 +577,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-     }
- 
-     /* RAM */
-@@ -586,7 +592,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ftgmac100[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-                         sc->memmap[ASPEED_DEV_ETH1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_ETH1 + i));
-@@ -597,7 +603,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-             return;
-         }
- 
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->mii[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->mii[i]), 0,
-                         sc->memmap[ASPEED_DEV_MII1 + i]);
-     }
- 
-@@ -605,7 +611,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->xdma), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->xdma), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->xdma), 0,
-                     sc->memmap[ASPEED_DEV_XDMA]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->xdma), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_XDMA));
-@@ -614,7 +620,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->gpio), 0,
-                     sc->memmap[ASPEED_DEV_GPIO]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
-@@ -622,7 +628,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio_1_8v), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio_1_8v), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->gpio_1_8v), 0,
-                     sc->memmap[ASPEED_DEV_GPIO_1_8V]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio_1_8v), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO_1_8V));
-@@ -631,7 +637,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdhci), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdhci), 0,
-                     sc->memmap[ASPEED_DEV_SDHCI]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
-@@ -640,7 +646,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->emmc), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->emmc), 0,
-                     sc->memmap[ASPEED_DEV_EMMC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_EMMC));
-@@ -649,7 +655,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->lpc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->lpc), 0, sc->memmap[ASPEED_DEV_LPC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->lpc), 0,
-+                    sc->memmap[ASPEED_DEV_LPC]);
- 
-     /* Connect the LPC IRQ to the GIC. It is otherwise unused. */
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->lpc), 0,
-@@ -685,7 +692,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->hace), 0,
-                     sc->memmap[ASPEED_DEV_HACE]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-@@ -694,7 +701,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i3c), 0, sc->memmap[ASPEED_DEV_I3C]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i3c), 0,
-+                    sc->memmap[ASPEED_DEV_I3C]);
-     for (i = 0; i < ASPEED_I3C_NR_DEVICES; i++) {
-         irq = qdev_get_gpio_in(DEVICE(&a->a7mpcore),
-                                sc->irqmap[ASPEED_DEV_I3C] + i);
-@@ -706,14 +714,15 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sbc), 0, sc->memmap[ASPEED_DEV_SBC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sbc), 0,
-+                    sc->memmap[ASPEED_DEV_SBC]);
- 
-     /* FSI */
-     for (i = 0; i < ASPEED_FSI_NUM; i++) {
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->fsi[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fsi[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fsi[i]), 0,
-                         sc->memmap[ASPEED_DEV_FSI1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->fsi[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_FSI1 + i));
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index 490e98b924..83cf3c14b6 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -196,14 +196,15 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[ASPEED_DEV_SCU]);
- 
-     /* INTC */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
-         return;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[0]), 0,
-                     sc->memmap[ASPEED_DEV_INTC]);
- 
-     /* INTCIO */
-@@ -211,7 +212,7 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[1]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[1]), 0,
-                     sc->memmap[ASPEED_DEV_INTCIO]);
- 
-     /* irq source orgates -> INTC0 */
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index d83f90ef00..86aa565608 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -196,14 +196,15 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[ASPEED_DEV_SCU]);
- 
-     /* INTC */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
-         return;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[0]), 0,
-                     sc->memmap[ASPEED_DEV_INTC]);
- 
-     /* INTCIO */
-@@ -211,7 +212,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[1]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[1]), 0,
-                     sc->memmap[ASPEED_DEV_INTCIO]);
- 
-     /* irq source orgates -> INTC */
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 2f018e9e58..8db67dc806 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -589,9 +589,9 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
-         return false;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->gic), 0,
-                     sc->memmap[ASPEED_GIC_DIST]);
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 1,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->gic), 1,
-                     sc->memmap[ASPEED_GIC_REDIST]);
- 
-     for (i = 0; i < sc->num_cpus; i++) {
-@@ -647,7 +647,7 @@ static bool aspeed_soc_ast2700_pcie_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_phy[i]), errp)) {
-             return false;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->pcie_phy[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->pcie_phy[i]), 0,
-                         sc->memmap[ASPEED_DEV_PCIE_PHY0 + i]);
- 
-         object_property_set_int(OBJECT(&s->pcie[i]), "dram-base",
-@@ -658,7 +658,7 @@ static bool aspeed_soc_ast2700_pcie_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie[i]), errp)) {
-             return false;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->pcie[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->pcie[i]), 0,
-                         sc->memmap[ASPEED_DEV_PCIE0 + i]);
-         irq = aspeed_soc_get_irq(s, ASPEED_DEV_PCIE0 + i);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie[i].rc), 0, irq);
-@@ -719,7 +719,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[0]), 0,
-                     sc->memmap[ASPEED_DEV_INTC]);
- 
-     /* INTCIO */
-@@ -727,7 +727,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[1]), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[1]), 0,
-                     sc->memmap[ASPEED_DEV_INTCIO]);
- 
-     /* irq sources -> orgates -> INTC */
-@@ -777,13 +777,14 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[ASPEED_DEV_SCU]);
- 
-     /* SCU1 */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scuio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scuio), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scuio), 0,
-                     sc->memmap[ASPEED_DEV_SCUIO]);
- 
-     /* UART */
-@@ -800,8 +801,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->fmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 0, sc->memmap[ASPEED_DEV_FMC]);
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 1,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 0,
-+                    sc->memmap[ASPEED_DEV_FMC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fmc), 1,
-                     ASPEED_SMC_GET_CLASS(&s->fmc)->flash_window_base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->fmc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_FMC));
-@@ -819,9 +821,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 0,
-                         sc->memmap[ASPEED_DEV_SPI0 + i]);
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-     }
- 
-@@ -830,7 +832,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-                         sc->memmap[ASPEED_DEV_EHCI1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
-@@ -848,7 +850,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdmc), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
-                     sc->memmap[ASPEED_DEV_SDMC]);
- 
-     /* RAM */
-@@ -865,7 +867,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ftgmac100[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-                         sc->memmap[ASPEED_DEV_ETH1 + i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
-                            aspeed_soc_get_irq(s, ASPEED_DEV_ETH1 + i));
-@@ -876,7 +878,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-             return;
-         }
- 
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->mii[i]), 0,
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->mii[i]), 0,
-                         sc->memmap[ASPEED_DEV_MII1 + i]);
-     }
- 
-@@ -890,26 +892,28 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-             return;
-         }
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-     }
- 
-     /* SLI */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sli), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sli), 0, sc->memmap[ASPEED_DEV_SLI]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sli), 0,
-+                    sc->memmap[ASPEED_DEV_SLI]);
- 
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sliio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sliio), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sliio), 0,
-                     sc->memmap[ASPEED_DEV_SLIIO]);
- 
-     /* ADC */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->adc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->adc), 0, sc->memmap[ASPEED_DEV_ADC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->adc), 0,
-+                    sc->memmap[ASPEED_DEV_ADC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
- 
-@@ -919,7 +923,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i2c), 0, sc->memmap[ASPEED_DEV_I2C]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i2c), 0,
-+                    sc->memmap[ASPEED_DEV_I2C]);
-     for (i = 0; i < ASPEED_I2C_GET_CLASS(&s->i2c)->num_busses; i++) {
-         /*
-          * The AST2700 I2C controller has one source INTC per bus.
-@@ -948,7 +953,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->gpio), 0,
-                     sc->memmap[ASPEED_DEV_GPIO]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
-@@ -957,7 +962,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rtc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->rtc), 0, sc->memmap[ASPEED_DEV_RTC]);
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->rtc), 0,
-+                    sc->memmap[ASPEED_DEV_RTC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->rtc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_RTC));
- 
-@@ -965,7 +971,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdhci), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdhci), 0,
-                     sc->memmap[ASPEED_DEV_SDHCI]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
-@@ -974,7 +980,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->emmc), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->emmc), 0,
-                     sc->memmap[ASPEED_DEV_EMMC]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_EMMC));
-@@ -985,7 +991,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->timerctrl), 0,
-                     sc->memmap[ASPEED_DEV_TIMER1]);
-     for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
-         irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
-@@ -998,7 +1004,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->hace), 0,
-                     sc->memmap[ASPEED_DEV_HACE]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index 16c7c4bb78..ca4e589dce 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -53,7 +53,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
-         }
- 
-         sysbus_connect_irq(SYS_BUS_DEVICE(smm), 0, aspeed_soc_get_irq(s, uart));
--        aspeed_mmio_map(s, SYS_BUS_DEVICE(smm), 0, sc->memmap[uart]);
-+        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(smm), 0, sc->memmap[uart]);
-     }
- 
-     return true;
-@@ -111,10 +111,10 @@ bool aspeed_soc_dram_init(AspeedSoCState *s, Error **errp)
-     return true;
- }
- 
--void aspeed_mmio_map(AspeedSoCState *s, SysBusDevice *dev, int n, hwaddr addr)
-+void aspeed_mmio_map(MemoryRegion *memory, SysBusDevice *dev, int n,
-+                     hwaddr addr)
- {
--    memory_region_add_subregion(s->memory, addr,
--                                sysbus_mmio_get_region(dev, n));
-+    memory_region_add_subregion(memory, addr, sysbus_mmio_get_region(dev, n));
- }
- 
- void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
--- 
-2.43.0
+PATCH[1-3] increases GHES raw data maximal length to 4KiB. Document update in PATCH[2]
+PATCH[4-5] refactors the code, preparing to send 16 consective CPERs
+PATCH[6]   sends 16 consective CPERs when we have 64KiB/4KiB page sizes on host/guest.
+            No significant changes as to the current revision except minor to remove
+            the 'error' tag in push_ghes_memory_errors().
+
+Thanks,
+Gavin
+
+
+> Thanks,
+> Mauro
+> 
+> ---
+> 
+> Btw, this is the patch I had increasing the size. It was submitted
+> arlready on one of the several version releases, but Igor asked me
+> to postpone it to sent it after having the main stuff merged.
+> 
+> [PATCH] hw/acpi/ghes: increase max CPER size to 4K
+> 
+> The max limit there is just made up, and it is not in sync with
+> what is specified at acpi_hest_ghes.rst.
+> 
+> Increase it to 4K to match what's written there.
+> 
+> Tested with this fake CPER:
+>      GUID: e19e3d16-bc11-11e4-9caa-c2051d5d46b0
+>      CPER:
+>        00000000  05 00 00 00 08 00 01 00 44 0f 00 00 00 00 00 00   ........D.......
+>        00000010  00 00 00 80 00 00 00 00 10 05 0f 00 00 00 00 00   ................
+>        00000020  00 00 00 00 00 00 00 00 00 20 04 00 02 01 00 03   ......... ......
+>        00000030  0f 00 91 00 00 00 00 00 ef be ad de 00 00 00 00   ................
+>        00000040  ad 0b ba ab 00 00 00 00 00 20 04 00 04 01 00 03   ......... ......
+>        00000050  7f 00 54 00 00 00 00 00 ef be ad de 00 00 00 00   ..T.............
+>        00000060  ad 0b ba ab 00 00 00 00 00 20 04 00 08 01 00 03   ......... ......
+>        00000070  ff 0f 46 d6 80 00 00 00 ef be ad de 00 00 00 00   ..F.............
+>        00000080  ad 0b ba ab 00 00 00 00 00 20 04 00 10 01 00 03   ......... ......
+>        00000090  ff 03 da 78 00 00 00 00 ef be ad de 00 00 00 00   ...x............
+>        000000a0  ad 0b ba ab 00 00 00 00 00 20 04 00 02 01 00 03   ......... ......
+>        000000b0  0f 00 91 00 00 00 00 00 ef be ad de 00 00 00 00   ................
+>        000000c0  ad 0b ba ab 00 00 00 00 00 20 04 00 04 01 00 03   ......... ......
+>        000000d0  7f 00 54 00 00 00 00 00 ef be ad de 00 00 00 00   ..T.............
+>        000000e0  ad 0b ba ab 00 00 00 00 00 20 04 00 08 01 00 03   ......... ......
+>        000000f0  ff 0f 46 d6 80 00 00 00 ef be ad de 00 00 00 00   ..F.............
+>        00000100  ad 0b ba ab 00 00 00 00 00 20 04 00 10 01 00 04   ......... ......
+>        00000110  ff 04 da 78 00 00 00 00 ef be ad de 00 00 00 00   ...x............
+>        00000120  ad 0b ba ab 00 00 00 00 00 00 04 00 00 01 00 00   ................
+>        00000130  ef be ad de 00 00 00 00 00 00 00 00 00 00 00 00   ................
+>        00000140  00 00 10 04 0f 00 00 00 00 00 00 00 00 00 00 00   ................
+>        00000150  00 20 04 00 02 01 00 0f 00 00 00 00 00 00 ef be   . ..............
+>        00000160  ad de 00 00 00 ad 0b ba 00 00 00 00 00 20 04 00   ............. ..
+>        00000170  04 01 00 7f 00 54 00 00 00 00 ef be ad de 00 00   .....T..........
+>        00000180  00 ad 0b ba ab 00 00 00 00 20 04 00 08 01 00 ff   ......... ......
+>        00000190  0f 46 d6 80 00 00 ef be ad de 00 00 00 ad 0b ba   .F..............
+>        000001a0  ab 00 00 00 00 20 04 00 10 01 00 ff 03 da 78 00   ..... ........x.
+>        000001b0  00 00 00 be ad de 00 00 00 ad 0b ba ab 00 00 00   ................
+>        000001c0  00 00 04 00 02 01 00 0f 00 91 00 00 00 00 00 ef   ................
+>        000001d0  be de 00 00 00 ad 0b ba ab 00 00 00 00 00 20 04   .............. .
+>        000001e0  04 01 00 7f 00 54 00 00 00 00 00 ef be ad de 00   .....T..........
+>        000001f0  00 ad 0b ba ab 00 00 00 00 00 20 04 00 08 00 ff   .......... .....
+>        00000200  0f 46 d6 80 00 00 00 ef be ad de 00 00 ad 0b ba   .F..............
+>        00000210  ab 00 00 00 00 00 20 04 00 10 01 00 03 da 78 00   ...... .......x.
+>        00000220  00 00 00 ef be ad de 00 00 00 ad ba ab 00 00 00   ................
+>        00000230  00 de ad be 05 00 00 00 01 00 00 28 02 00 00 00   ...........(....
+>        00000240  00 00 00 00 80 00 00 00 00 05 0f 00 00 00 00 00   ................
+>        00000250  00 00 00 00 00 00 00 20 00 02 01 00 0f 00 00 00   ....... ........
+>        00000260  00 00 00 ef be ad de 00 00 8f 71 96 1c 12 fe 95   ..........q.....
+>        00000270  80 a0 10 36 04 6e 43 3d 1d 1c 31 09 2d 13 bd 5e   ...6.nC=..1.-..^
+>        00000280  dc e2 45 e9 1f 37 ec 09 ab 4c 35 41 93 e8 04 a7   ..E..7...L5A....
+>        00000290  cd 05 50 c1 c7 03 55 a1 78 f3 95 c5 98 85 84 1f   ..P...U.x.......
+>        000002a0  a1 b7 b9 cd e6 9b 0b 89 0d f5 61 8f 71 96 8a 1c   ..........a.q...
+>        000002b0  12 fe a0 10 36 04 6e fe 43 3d 1d 1c e9 31 09 2d   ....6.n.C=...1.-
+>        000002c0  13 dc e2 45 e9 1f e7 37 ec 09 00 ab 4c 35 41 e8   ...E...7....L5A.
+>        000002d0  a7 cd 05 50 c1 f8 c7 03 73 55 a1 78 f3 c5 98 84   ...P....sU.x....
+>        000002e0  1f a1 b7 b9 58 cd c4 e6 9b 0b 89 f5 61 8f 96 8a   ....X.......a...
+>        000002f0  1c 12 fe 95 80 a0 10 36 04 fe 43 3d 1d e9 31 09   .......6..C=..1.
+>        00000300  2d 13 bd 5e dc e2 45 1f e7 37 ec 09 ab 4c 35 41   -..^..E..7...L5A
+>        00000310  93 e8 04 a7 cd 50 c1 f8 c7 03 73 a1 78 f3 95 c5   .....P....s.x...
+>        00000320  98 85 84 a1 b7 b9 58 cd c4 e6 0b 89 0d f5 61 05   ......X.......a.
+>        00000330  00 00 01 00 00 00 48 00 00 00 00 00 00 00 00 00   ......H.........
+>        00000340  00 00 00 10 05 0f 00 00 00 00 00 00 00 00 00 00   ................
+>        00000350  00 20 04 00 02 01 00 00 91 00 00 00 00 ef be ad   . ..............
+>        00000360  de 00 00 00 8f 71 8a 1c 12 95 80 a0 10 36 04 6e   .....q.......6.n
+>        00000370  fe 43 3d 1d 1c 31 09 13 bd 5e dc e2 45 e9 1f e7   .C=..1...^..E...
+>        00000380  37 ec 09 00 4c 41 93 e8 04 a7 cd 05 50 c1 f8 c7   7...LA......P...
+>        00000390  03 73 55 f3 95 c5 98 85 84 1f a1 b7 b9 58 cd c4   .sU..........X..
+>        000003a0  e6 9b 0d f5 61 8f 71 96 8a 1c 12 fe 95 80 a0 10   ....a.q.........
+>        000003b0  04 fe 43 3d 1d 1c e9 31 09 2d 13 bd 5e dc 45 e9   ..C=...1.-..^.E.
+>        000003c0  e7 37 ec 09 00 ab 4c 35 41 93 e8 04 cd 05 50 f8   .7....L5A.....P.
+>        000003d0  c7 03 73 55 a1 78 f3 95 c5 98 84 1f a1 b7 58 cd   ..sU.x........X.
+>        000003e0  c4 e6 9b 0b 89 0d f5 61 71 96 8a 1c 12 95 80 a0   .......aq.......
+>        000003f0  10 36 04 6e fe 43 1d 1c e9 31 09 2d bd 5e dc e2   .6.n.C...1.-.^..
+>        00000400  45 e9 1f e7 ec 09 00 ab 4c 35 41 e8 04 a7 cd 05   E.......L5A.....
+>        00000410  50 c1 c7 03 73 55 a1 78 f3 95 98 85 84 1f a1 b7   P...sU.x........
+>        00000420  58 cd c4 e6 9b 0b 89 0d f5 05 00 00 00 01 00 00   X...............
+>        00000430  48 00 00 00 00 00 00 00 00 80 00 00 00 10 05 0f   H...............
+>        00000440  00 00 00 00 00 00 00 00 00 00 00 20 04 00 02 01   ........... ....
+>        00000450  00 0f 00 91 00 00 00 00 be ad de 00 00 00 8f 71   ...............q
+>        00000460  96 8a 1c 12 fe 80 10 36 04 6e fe 43 3d 1d 1c e9   .......6.n.C=...
+>        00000470  31 09 2d 13 dc e2 45 e9 1f e7 37 ec 09 00 ab 4c   1.-...E...7....L
+>        00000480  35 41 93 a7 cd 05 50 c1 f8 c7 03 73 55 a1 78 f3   5A....P....sU.x.
+>        00000490  95 98 84 1f a1 b7 b9 58 cd c4 e6 9b 0b 89 0d 61   .......X.......a
+>        000004a0  8f 96 8a 1c 12 fe 95 80 a0 10 36 04 6e 43 3d 1d   ..........6.nC=.
+>        000004b0  e9 31 09 2d 13 bd 5e dc e2 45 e9 e7 37 ec 09 ab   .1.-..^..E..7...
+>        000004c0  4c 35 41 93 e8 04 a7 cd 05 c1 f8 c7 03 73 a1 78   L5A..........s.x
+>        000004d0  f3 95 c5 98 85 84 1f b7 b9 58 cd c4 e6 0b 89 0d   .........X......
+>        000004e0  f5 61 8f 71 96 1c 12 fe 95 80 a0 10 04 6e fe 43   .a.q.........n.C
+>        000004f0  3d 1d 1c 31 09 2d 13 bd 5e dc e2 e9 1f e7 37 ec   =..1.-..^.....7.
+>        00000500  09 ab 4c 35 41 93 e8 04 a7 cd 50 c1 f8 c7 03 55   ..L5A.....P....U
+>        00000510  a1 78 f3 95 c5 98 85 84 1f b7 b9 58 cd e6 9b 0b   .x.........X....
+>        00000520  89 0d f5 61 05 00 00 00 00 00 00 00 00 00 00 00   ...a............
+>        00000530  00 00 00 00 80 00 00 00 10 0f 00 00 00 00 00 00   ................
+>        00000540  00 00 00 00 00 00 20 00 02 01 00 0f 00 91 00 00   ...... .........
+>        00000550  00 00 00 ef be 00 00 00 8f 71 96 8a 1c 12 fe 95   .........q......
+>        00000560  80 a0 10 36 fe 43 3d 1d 1c e9 31 09 2d 13 bd 5e   ...6.C=...1.-..^
+>        00000570  dc e2 e9 e7 37 ec 09 00 ab 4c 35 41 93 e8 04 a7   ....7....L5A....
+>        00000580  05 50 f8 c7 03 73 55 a1 78 f3 95 c5 98 85 1f a1   .P...sU.x.......
+>        00000590  b7 58 cd c4 e6 9b 0b 89 0d f5 61 8f 96 8a 1c 12   .X........a.....
+>        000005a0  95 80 a0 10 36 04 6e fe 43 3d 1c e9 31 09 2d bd   ....6.n.C=..1.-.
+>        000005b0  5e dc e2 45 e9 1f e7 37 09 00 ab 4c 35 41 0b 89   ^..E...7...L5A..
+>        000005c0  0d f5 61 8f 71 96 1c 12 fe 95 80 a0 10 04 6e fe   ..a.q.........n.
+>        000005d0  43 3d 1d 1c 31 09 2d 13 bd 5e dc e2 e9 1f e7 37   C=..1.-..^.....7
+>        000005e0  ec 09 ab 4c 35 41 93 e8 04 a7 cd 50 c1 f8 c7 03   ...L5A.....P....
+>        000005f0  55 a1 78 f3 95 c5 98 85 84 1f b7 b9 58 cd e6 9b   U.x.........X...
+>        00000600  0b 89 0d f5 61 05 00 00 00 00 00 00 00 00 00 00   ....a...........
+>        00000610  00 00 00 00 00 80 00 00 00 10 0f 00 00 00 00 00   ................
+>        00000620  00 00 00 00 00 00 00 20 00 02 01 00 0f 00 91 00   ....... ........
+>        00000630  00 00 00 00 ef be 00 00 00 8f 71 96 8a 1c 12 fe   ..........q.....
+>        00000640  95 80 a0 10 36 fe 43 3d 1d 1c e9 31 09 2d 13 bd   ....6.C=...1.-..
+>        00000650  5e dc e2 e9 e7 37 ec 09 00 ab 4c 35 41 93 e8 04   ^....7....L5A...
+>        00000660  a7 05 50 f8 c7 03 73 55 a1 78 f3 95 c5 98 85 1f   ..P...sU.x......
+>        00000670  a1 b7 58 cd c4 e6 9b 0b 89 0d f5 61 8f 96 8a 1c   ..X........a....
+>        00000680  12 95 80 a0 10 36 04 6e fe 43 3d 1c e9 31 09 2d   .....6.n.C=..1.-
+>        00000690  bd 5e dc e2 45 e9 1f e7 37 09 00 ab 4c 35 41 e8   .^..E...7...L5A.
+>        000006a0  04 a7 cd 05 50 c1 f8 03 73 55 a1 78 f3 95 98 85   ....P...sU.x....
+>        000006b0  84 1f a1 b7 b9 cd c4 e6 9b 0b 89 0d f5 8f 71 96   ..............q.
+>        000006c0  8a 1c 12 95 80 a0 10 36 04 6e fe 43 1d 1c e9 31   .......6.n.C...1
+>        000006d0  09 13 bd 5e dc e2 45 e9 1f e7 37 09 00 ab 4c 41   ...^..E...7...LA
+>        000006e0  93 e8 04 a7 cd 05 50 c1 f8 c7 73 55 a1 f3 95 c5   ......P...sU....
+>        000006f0  98 85 84 1f a1 b7 b9 58 cd e6 9b 89 0d f5 98 85   .......X........
+>        00000700  84 1f a1 b7 b9 58 cd c4 9b 0b 89 0d 61 8f 71 96   .....X......a.q.
+>        00000710  8a 1c 12 fe 95 80 a0 36 04 6e 43 3d 1d 1c e9 31   .......6.nC=...1
+>        00000720  09 2d 13 bd 5e dc 45 e9 e7 37 ec 09 00 ab 4c 35   .-..^.E..7....L5
+>        00000730  41 93 e8 04 a7 05 c1 f8 c7 03 73 55 a1 78 f3 95   A.........sU.x..
+>        00000740  c5 98 85 84 b7 b9 58 cd c4 e6 9b 0b 89 0d f5 61   ......X........a
+>        00000750  8f 71 96 12 fe 95 80 a0 10 36 04 6e fe 43 3d 1d   .q.......6.n.C=.
+>        00000760  1c 31 2d 13 bd 5e dc e2 45 e9 1f e7 37 ec 09 ab   .1-..^..E...7...
+>        00000770  4c 41 93 e8 04 a7 cd 05 50 c1 f8 c7 03 55 a1 78   LA......P....U.x
+>        00000780  95 c5 98 85 84 1f a1 b7 b9 58 cd 98 85 84 1f b7   .........X......
+>        00000790  b9 58 cd c4 e6 9b 0b 89 0d 61 8f 71 96 8a 12 fe   .X.......a.q....
+>        000007a0  95 80 a0 10 36 04 6e 43 3d 1d 1c e9 31 2d 13 bd   ....6.nC=...1-..
+>        000007b0  5e dc e2 45 e9 e7 37 ec 09 00 ab 4c 41 93 e8 04   ^..E..7....LA...
+>        000007c0  a7 cd 05 c1 f8 c7 03 73 55 a1 78 95 c5 98 85 84   .......sU.x.....
+>        000007d0  1f b7 b9 58 cd c4 e6 9b 0b 89 f5 61 8f 71 96 1c   ...X.......a.q..
+>        000007e0  12 fe 95 80 a0 10 36 04 6e 43 3d 1d 1c 31 09 2d   ......6.nC=..1.-
+>        000007f0  13 bd 5e dc e2 45 e9 1f 37 ec 09 ab 4c 35 41 93   ..^..E..7...L5A.
+>        00000800  e8 04 a7 cd 05 50 c1 c7 03 55 a1 78 f3 95 c5 98   .....P...U.x....
+>        00000810  85 84 1f a1 b7 b9 cd 50 c1 f8 c7 03 73 55 a1 78   .......P....sU.x
+>        00000820  f3 95 c5 98 85 a1 b7 b9 58 cd c4 e6 9b 0b 89 0d   ........X.......
+>        00000830  f5 61 05 00 01 00 00 00 48 00 00 00 00 00 00 00   .a......H.......
+>        00000840  00 00 00 00 00 10 05 0f 00 00 00 00 00 00 00 00   ................
+>        00000850  00 00 00 20 04 00 02 01 00 0f 00 91 00 00 00 00   ... ............
+>        00000860  ef ad de 00 00 00 8f 71 96 8a 1c 12 95 80 a0 10   .......q........
+>        00000870  04 6e fe 43 3d 1d 1c e9 31 09 13 bd 5e dc e2 e9   .n.C=...1...^...
+>        00000880  1f e7 37 ec 09 00 ab 4c 41 93 e8 04 a7 cd 50 c1   ..7....LA.....P.
+>        00000890  f8 c7 03 73 55 a1 f3 95 c5 98 85 84 1f b7 b9 58   ...sU..........X
+>        000008a0  cd c4 e6 9b 89 0d f5 61 8f 71 96 8a 12 fe 95 80   .......a.q......
+>        000008b0  a0 10 04 6e fe 43 3d 1d 1c e9 31 2d 13 bd 5e dc   ...n.C=...1-..^.
+>        000008c0  45 e9 1f e7 37 ec 09 00 ab 4c 41 93 e8 04 cd 05   E...7....LA.....
+>        000008d0  50 c1 f8 c7 03 73 55 a1 78 95 c5 98 84 1f a1 b7   P....sU.x.......
+>        000008e0  b9 58 cd c4 e6 9b 0b 89 f5 61 71 96 8a 1c 12 fe   .X.......aq.....
+>        000008f0  95 80 a0 10 36 04 6e 43 1d 1c e9 31 09 2d 13 bd   ....6.nC...1.-..
+>        00000900  5e dc e2 45 e9 1f ec 09 00 ab 4c 35 41 93 e8 04   ^..E......L5A...
+>        00000910  a7 cd 05 50 c1 03 73 55 a1 78 f3 95 c5 98 85 84   ...P..sU.x......
+>        00000920  1f a1 b7 58 c4 e6 9b 0b 89 0d f5 61 05 00 00 00   ...X.......a....
+>        00000930  01 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00   ................
+>        00000940  10 05 00 00 00 00 00 00 00 00 00 00 00 00 20 04   .............. .
+>        00000950  00 01 00 0f 00 91 00 00 00 00 00 be ad de 00 00   ................
+>        00000960  8f 71 96 8a 1c 12 fe 95 80 10 36 04 6e fe 43 1d   .q........6.n.C.
+>        00000970  1c e9 31 09 2d 13 bd dc e2 45 e9 1f e7 37 09 00   ..1.-....E...7..
+>        00000980  ab 4c 35 41 93 04 a7 cd 05 50 c1 f8 c7 b7 b9 58   .L5A.....P.....X
+>        00000990  cd c4 e6 9b 89 0d f5 61 8f 71 96 8a 12 fe 95 80   .......a.q......
+>        000009a0  a0 10 04 6e fe 43 3d 1d 1c e9 31 2d 13 bd 5e dc   ...n.C=...1-..^.
+>        000009b0  45 e9 1f e7 37 ec 09 00 ab 4c 41 93 e8 04 cd 05   E...7....LA.....
+>        000009c0  50 c1 f8 c7 03 73 55 a1 78 95 c5 98 84 1f a1 b7   P....sU.x.......
+>        000009d0  b9 58 cd c4 e6 9b 0b 89 f5 61 71 96 8a 1c 12 fe   .X.......aq.....
+>        000009e0  95 80 a0 10 36 04 6e 43 1d 1c e9 31 09 2d 13 bd   ....6.nC...1.-..
+>        000009f0  5e dc e2 45 e9 1f ec 09 00 ab 4c 35 41 93 e8 04   ^..E......L5A...
+>        00000a00  a7 cd 05 50 c1 03 73 55 a1 78 f3 95 c5 98 85 84   ...P..sU.x......
+>        00000a10  1f a1 b7 58 c4 e6 9b 0b 89 0d f5 61 05 00 00 00   ...X.......a....
+>        00000a20  01 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00   ................
+>        00000a30  10 05 00 00 00 00 00 00 00 00 00 00 00 00 20 04   .............. .
+>        00000a40  00 01 00 0f 00 91 00 00 00 00 00 be ad de 00 00   ................
+>        00000a50  8f 71 96 8a 1c 12 fe 95 80 10 36 04 6e fe 43 1d   .q........6.n.C.
+>        00000a60  1c e9 31 09 2d 13 bd dc e2 45 e9 1f e7 37 09 00   ..1.-....E...7..
+>        00000a70  ab 4c 35 41 93 04 a7 cd 05 50 c1 f8 c7 b7 b9 58   .L5A.....P.....X
+>        00000a80  cd c4 e6 9b 89 0d f5 61 8f 71 96 8a 12 fe 95 80   .......a.q......
+>        00000a90  a0 10 04 6e fe 43 3d 1d 1c e9 31 2d 13 bd 5e dc   ...n.C=...1-..^.
+>        00000aa0  45 e9 1f e7 37 ec 09 00 ab 4c 41 93 e8 04 cd 05   E...7....LA.....
+>        00000ab0  50 c1 f8 c7 03 73 55 a1 78 95 c5 98 84 1f a1 b7   P....sU.x.......
+>        00000ac0  b9 58 cd c4 e6 9b 0b 89 f5 61 71 96 8a 1c 12 fe   .X.......aq.....
+>        00000ad0  95 80 a0 10 36 04 6e 43 1d 1c e9 31 09 2d 13 bd   ....6.nC...1.-..
+>        00000ae0  5e dc e2 45 e9 1f ec 09 00 ab 4c 35 41 93 e8 04   ^..E......L5A...
+>        00000af0  a7 cd 05 50 c1 03 73 55 a1 78 f3 95 c5 98 85 84   ...P..sU.x......
+>        00000b00  1f a1 b7 58 c4 e6 9b 0b 89 0d f5 61 05 00 00 00   ...X.......a....
+>        00000b10  01 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00   ................
+>        00000b20  10 05 00 00 00 00 00 00 00 00 00 00 00 00 20 04   .............. .
+>        00000b30  00 01 00 0f 00 91 00 00 00 00 00 be ad de 00 00   ................
+>        00000b40  8f 71 96 8a 1c 12 fe 95 80 10 36 04 6e fe 43 1d   .q........6.n.C.
+>        00000b50  1c e9 31 09 2d 13 bd dc e2 45 e9 1f e7 37 09 00   ..1.-....E...7..
+>        00000b60  ab 4c 35 41 93 04 a7 cd 05 50 c1 f8 c7 b7 b9 58   .L5A.....P.....X
+>        00000b70  cd c4 e6 9b 89 0d f5 61 8f 71 96 8a 12 fe 95 80   .......a.q......
+>        00000b80  a0 10 04 6e fe 43 3d 1d 1c e9 31 2d 13 bd 5e dc   ...n.C=...1-..^.
+>        00000b90  45 e9 1f e7 37 ec 09 00 ab 4c 41 93 e8 04 cd 05   E...7....LA.....
+>        00000ba0  50 c1 f8 c7 03 73 55 a1 78 95 c5 98 84 1f a1 b7   P....sU.x.......
+>        00000bb0  b9 58 cd c4 e6 9b 0b 89 f5 61 71 96 8a 1c 12 fe   .X.......aq.....
+>        00000bc0  95 80 a0 10 36 04 6e 43 1d 1c e9 31 09 2d 13 bd   ....6.nC...1.-..
+>        00000bd0  5e dc e2 45 e9 1f ec 09 00 ab 4c 35 41 93 e8 04   ^..E......L5A...
+>        00000be0  a7 cd 05 50 c1 03 73 55 a1 78 f3 95 c5 98 85 84   ...P..sU.x......
+>        00000bf0  1f a1 b7 58 c4 e6 9b 0b 89 0d f5 61 05 00 00 00   ...X.......a....
+>        00000c00  01 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00   ................
+>        00000c10  10 05 00 00 00 00 00 00 00 00 00 00 00 00 20 04   .............. .
+>        00000c20  00 01 00 0f 00 91 00 00 00 00 00 be ad de 00 00   ................
+>        00000c30  8f 71 96 8a 1c 12 fe 95 80 10 36 04 6e fe 43 1d   .q........6.n.C.
+>        00000c40  1c e9 31 09 2d 13 bd dc e2 45 e9 1f e7 37 09 00   ..1.-....E...7..
+>        00000c50  ab 4c 35 41 93 04 a7 cd 05 50 c1 f8 c7 96 8a 1c   .L5A.....P......
+>        00000c60  12 fe 95 80 a0 10 36 04 fe 43 3d 1d e9 31 09 2d   ......6..C=..1.-
+>        00000c70  13 bd 5e dc e2 45 1f e7 37 ec 09 ab 4c 35 41 93   ..^..E..7...L5A.
+>        00000c80  e8 04 a7 cd 50 c1 f8 c7 03 73 a1 78 f3 95 c5 98   ....P....s.x....
+>        00000c90  85 84 a1 b7 b9 58 cd c4 e6 0b 89 0d f5 61 05 00   .....X.......a..
+>        00000ca0  00 01 00 00 00 48 00 00 00 00 00 00 00 00 00 00   .....H..........
+>        00000cb0  00 00 10 05 0f 00 00 00 00 00 00 00 00 00 00 00   ................
+>        00000cc0  20 04 00 02 01 00 00 91 00 00 00 00 ef be ad de    ...............
+>        00000cd0  00 00 00 8f 71 8a 1c 12 95 80 a0 10 36 04 6e fe   ....q.......6.n.
+>        00000ce0  43 3d 1d 1c 31 09 13 bd 5e dc e2 45 e9 1f e7 37   C=..1...^..E...7
+>        00000cf0  ec 09 00 4c 41 93 e8 04 a7 cd 05 50 c1 f8 c7 03   ...LA......P....
+>        00000d00  73 55 f3 95 c5 98 85 84 1f a1 b7 b9 58 cd c4 e6   sU..........X...
+>        00000d10  9b 0d f5 61 8f 71 96 8a 1c 12 fe 95 80 a0 10 04   ...a.q..........
+>        00000d20  fe 43 3d 1d 1c e9 31 09 2d 13 bd 5e dc 45 e9 e7   .C=...1.-..^.E..
+>        00000d30  37 ec 09 00 ab 4c 35 41 93 e8 04 cd 05 50 f8 c7   7....L5A.....P..
+>        00000d40  03 73 55 a1 78 f3 95 c5 98 84 1f a1 b7 58 cd c4   .sU.x........X..
+>        00000d50  e6 9b 0b 89 0d f5 61 71 96 8a 1c 12 95 80 a0 10   ......aq........
+>        00000d60  36 04 6e fe 43 1d 1c e9 31 09 2d bd 5e dc e2 45   6.n.C...1.-.^..E
+>        00000d70  e9 1f e7 ec 09 00 ab 4c 35 41 e8 04 a7 cd 05 50   .......L5A.....P
+>        00000d80  c1 c7 03 73 55 a1 78 f3 95 98 85 84 1f a1 b7 58   ...sU.x........X
+>        00000d90  cd c4 e6 9b 0b 89 0d f5 05 00 00 00 01 00 00 48   ...............H
+>        00000da0  00 00 00 00 00 00 00 00 80 00 00 00 10 05 0f 00   ................
+>        00000db0  00 00 00 00 00 00 00 00 00 00 20 04 00 02 01 00   .......... .....
+>        00000dc0  0f 00 91 00 00 00 00 be ad de 00 00 00 8f 71 96   ..............q.
+>        00000dd0  8a 1c 12 fe 80 10 36 04 6e fe 43 3d 1d 1c e9 31   ......6.n.C=...1
+>        00000de0  09 2d 13 dc e2 45 e9 1f e7 37 ec 09 00 ab 4c 35   .-...E...7....L5
+>        00000df0  41 93 a7 cd 05 50 c1 f8 c7 03 73 55 a1 78 f3 95   A....P....sU.x..
+>        00000e00  98 84 1f a1 b7 b9 58 cd c4 e6 9b 0b 89 0d 61 8f   ......X.......a.
+>        00000e10  96 8a 1c 12 fe 95 80 a0 10 36 04 6e 43 3d 1d e9   .........6.nC=..
+>        00000e20  31 09 2d 13 bd 5e dc e2 45 e9 e7 37 ec 09 ab 4c   1.-..^..E..7...L
+>        00000e30  35 41 93 e8 04 a7 cd 05 c1 f8 c7 03 73 a1 78 f3   5A..........s.x.
+>        00000e40  95 c5 98 85 84 1f b7 b9 58 cd c4 e6 0b 89 0d f5   ........X.......
+>        00000e50  61 8f 71 96 1c 12 fe 95 80 a0 10 04 6e fe 43 3d   a.q.........n.C=
+>        00000e60  1d 1c 31 09 2d 13 bd 5e dc e2 e9 1f e7 37 ec 09   ..1.-..^.....7..
+>        00000e70  ab 4c 35 41 93 e8 04 a7 cd 50 c1 f8 c7 03 55 a1   .L5A.....P....U.
+>        00000e80  78 f3 95 c5 98 85 84 1f b7 b9 58 cd e6 9b 0b 89   x.........X.....
+>        00000e90  0d f5 61 05 00 00 00 00 00 00 00 00 00 00 00 00   ..a.............
+>        00000ea0  00 00 00 80 00 00 00 10 0f 00 00 00 00 00 00 00   ................
+>        00000eb0  00 00 00 00 00 20 00 02 01 00 0f 00 91 00 00 00   ..... ..........
+>        00000ec0  00 00 ef be 00 00 00 8f 71 96 8a 1c 12 fe 95 80   ........q.......
+>        00000ed0  a0 10 36 fe 43 3d 1d 1c e9 31 09 2d 13 bd 5e dc   ..6.C=...1.-..^.
+>        00000ee0  e2 e9 e7 37 ec 09 00 ab 4c 35 41 93 e8 04 a7 05   ...7....L5A.....
+>        00000ef0  50 f8 c7 03 73 55 a1 78 f3 95 c5 98 85 1f a1 b7   P...sU.x........
+> 
+> And checked that Linux Kernel indeed received a big CPER:
+> 
+>   Hardware error from APEI Generic Hardware Error Source: 1
+>   event severity: recoverable
+>    Error 0, type: recoverable
+>     section_type: ARM processor error
+>     MIDR: 0x00000000000f0510
+>     Multiprocessor Affinity Register (MPIDR): 0x0000000080000000
+>     running state: 0x0
+>     Power State Coordination Interface state: 0
+>     Error info structure 0:
+>     num errors: 2
+>      error_type: 0x02: cache error
+>      error_info: 0x000000000091000f
+>       transaction type: Data Access
+>       cache error, operation type: Data write
+>       cache level: 2
+>       processor context not corrupted
+>     Error info structure 1:
+>     num errors: 2
+>      error_type: 0x04: TLB error
+>      error_info: 0x000000000054007f
+>       transaction type: Instruction
+>       TLB error, operation type: Instruction fetch
+>       TLB level: 1
+>       processor context not corrupted
+>       the error has not been corrected
+>       PC is imprecise
+>     Error info structure 2:
+>     num errors: 2
+>      error_type: 0x08: bus error
+>      error_info: 0x00000080d6460fff
+>       transaction type: Generic
+>       bus error, operation type: Generic read (type of instruction or data request cannot be determined)
+>       affinity level at which the bus error occurred: 1
+>       processor context corrupted
+>       the error has been corrected
+>       PC is imprecise
+>       Program execution can be restarted reliably at the PC associated with the error.
+>       participation type: Local processor observed
+>       request timed out
+>       address space: External Memory Access
+>       memory access attributes:0x20
+>       access mode: secure
+>     Error info structure 3:
+>     num errors: 2
+>      error_type: 0x10: micro-architectural error
+>      error_info: 0x0000000078da03ff
+>     Error info structure 4:
+>     num errors: 2
+>      error_type: 0x02: cache error
+>      error_info: 0x000000000091000f
+>       transaction type: Data Access
+>       cache error, operation type: Data write
+>       cache level: 2
+>       processor context not corrupted
+>     Error info structure 5:
+>     num errors: 2
+>      error_type: 0x04: TLB error
+>      error_info: 0x000000000054007f
+>       transaction type: Instruction
+>       TLB error, operation type: Instruction fetch
+>       TLB level: 1
+>       processor context not corrupted
+>       the error has not been corrected
+>       PC is imprecise
+>     Error info structure 6:
+>     num errors: 2
+>      error_type: 0x08: bus error
+>      error_info: 0x00000080d6460fff
+>       transaction type: Generic
+>       bus error, operation type: Generic read (type of instruction or data request cannot be determined)
+>       affinity level at which the bus error occurred: 1
+>       processor context corrupted
+>       the error has been corrected
+>       PC is imprecise
+>       Program execution can be restarted reliably at the PC associated with the error.
+>       participation type: Local processor observed
+>       request timed out
+>       address space: External Memory Access
+>       memory access attributes:0x20
+>       access mode: secure
+>     Error info structure 7:
+>     num errors: 2
+>      error_type: 0x10: micro-architectural error
+>      error_info: 0x0000000078da04ff
+>     Context info structure 0:
+>      register context type: AArch64 general purpose registers
+>      00000000: deadbeef 00000000 00000000 00000000
+>      00000010: 04100000 0000000f 00000000 00000000
+>      00000020: 00042000 0f000102 00000000 beef0000
+>      00000030: 0000dead ba0bad00 00000000 00042000
+>      00000040: 7f000104 00005400 beef0000 0000dead
+>      00000050: ba0bad00 000000ab 00042000 ff000108
+>      00000060: 80d6460f beef0000 0000dead ba0bad00
+>      00000070: 000000ab 00042000 ff000110 0078da03
+>      00000080: be000000 0000dead ba0bad00 000000ab
+>      00000090: 00040000 0f000102 00009100 ef000000
+>      000000a0: 0000debe ba0bad00 000000ab 04200000
+>      000000b0: 7f000104 00005400 ef000000 00deadbe
+>      000000c0: ba0bad00 000000ab 04200000 ff000800
+>      000000d0: 80d6460f ef000000 00deadbe ba0bad00
+>      000000e0: 000000ab 04200000 00011000 0078da03
+>      000000f0: ef000000 00deadbe baad0000 000000ab
+>     Vendor specific error info has 3280 bytes:
+>      00000000: beadde00 00000005 28000001 00000002  ...........(....
+>      00000010: 00000000 00000080 000f0500 00000000  ................
+>      00000020: 00000000 20000000 00010200 0000000f  ....... ........
+>      00000030: ef000000 00deadbe 96718f00 95fe121c  ..........q.....
+>      00000040: 3610a080 3d436e04 09311c1d 5ebd132d  ...6.nC=..1.-..^
+>      00000050: e945e2dc 09ec371f 41354cab a704e893  ..E..7...L5A....
+>      00000060: c15005cd a15503c7 c595f378 1f848598  ..P...U.x.......
+>      00000070: cdb9b7a1 890b9be6 8f61f50d 1c8a9671  ..........a.q...
+>      00000080: 10a0fe12 fe6e0436 1c1d3d43 2d0931e9  ....6.n.C=...1.-
+>      00000090: 45e2dc13 37e71fe9 ab0009ec e841354c  ...E...7....L5A.
+>      000000a0: 5005cda7 03c7f8c1 78a15573 8498c5f3  ...P....sU.x....
+>      000000b0: b9b7a11f e6c4cd58 f5890b9b 8a968f61  ....X.......a...
+>      000000c0: 95fe121c 3610a080 3d43fe04 0931e91d  .......6..C=..1.
+>      000000d0: 5ebd132d 1f45e2dc 09ec37e7 41354cab  -..^..E..7...L5A
+>      000000e0: a704e893 f8c150cd a17303c7 c595f378  .....P....s.x...
+>      000000f0: a1848598 cd58b9b7 890be6c4 0561f50d  ......X.......a.
+>      00000100: 00010000 00480000 00000000 00000000  ......H.........
+>      00000110: 10000000 00000f05 00000000 00000000  ................
+>      00000120: 00042000 00000102 00000091 adbeef00  . ..............
+>      00000130: 000000de 1c8a718f a0809512 6e043610  .....q.......6.n
+>      00000140: 1d3d43fe 1309311c e2dc5ebd e71fe945  .C=..1...^..E...
+>      00000150: 0009ec37 e893414c 05cda704 c7f8c150  7...LA......P...
+>      00000160: f3557303 8598c595 b7a11f84 c4cd58b9  .sU..........X..
+>      00000170: f50d9be6 96718f61 fe121c8a 10a08095  ....a.q.........
+>      00000180: 3d43fe04 31e91c1d bd132d09 e945dc5e  ..C=...1.-..^.E.
+>      00000190: 09ec37e7 354cab00 04e89341 f85005cd  .7....L5A.....P.
+>      000001a0: 557303c7 95f378a1 1f8498c5 cd58b7a1  ..sU.x........X.
+>      000001b0: 0b9be6c4 61f50d89 1c8a9671 a0809512  .......aq.......
+>      000001c0: 6e043610 1c1d43fe 2d0931e9 e2dc5ebd  .6.n.C...1.-.^..
+>      000001d0: e71fe945 ab0009ec e841354c 05cda704  E.......L5A.....
+>      000001e0: 03c7c150 78a15573 859895f3 b7a11f84  P...sU.x........
+>      000001f0: e6c4cd58 0d890b9b 000005f5 00000100  X...............
+>      00000200: 00000048 00000000 00008000 0f051000  H...............
+>      00000210: 00000000 00000000 20000000 01020004  ........... ....
+>      00000220: 91000f00 00000000 00deadbe 718f0000  ...............q
+>      00000230: 121c8a96 361080fe 43fe6e04 e91c1d3d  .......6.n.C=...
+>      00000240: 132d0931 e945e2dc ec37e71f 4cab0009  1.-...E...7....L
+>      00000250: a7934135 c15005cd 7303c7f8 f378a155  5A....P....sU.x.
+>      00000260: 1f849895 58b9b7a1 9be6c4cd 610d890b  .......X.......a
+>      00000270: 1c8a968f 8095fe12 043610a0 1d3d436e  ..........6.nC=.
+>      00000280: 2d0931e9 dc5ebd13 e7e945e2 ab09ec37  .1.-..^..E..7...
+>      00000290: 9341354c cda704e8 c7f8c105 78a17303  L5A..........s.x
+>      000002a0: 98c595f3 b71f8485 c4cd58b9 0d890be6  .........X......
+>      000002b0: 718f61f5 fe121c96 10a08095 43fe6e04  .a.q.........n.C
+>      000002c0: 311c1d3d bd132d09 e9e2dc5e ec37e71f  =..1.-..^.....7.
+>      000002d0: 354cab09 04e89341 c150cda7 5503c7f8  ..L5A.....P....U
+>      000002e0: 95f378a1 848598c5 58b9b71f 0b9be6cd  .x.........X....
+>      000002f0: 61f50d89 00000005 00000000 00000000  ...a............
+>      00000300: 00000000 00000080 00000f10 00000000  ................
+>      00000310: 00000000 00200000 0f000102 00009100  ...... .........
+>      00000320: ef000000 000000be 8a96718f 95fe121c  .........q......
+>      00000330: 3610a080 1d3d43fe 0931e91c 5ebd132d  ...6.C=...1.-..^
+>      00000340: e7e9e2dc 0009ec37 41354cab a704e893  ....7....L5A....
+>      00000350: c7f85005 a1557303 c595f378 a11f8598  .P...sU.x.......
+>      00000360: c4cd58b7 890b9be6 8f61f50d 121c8a96  .X........a.....
+>      00000370: 10a08095 fe6e0436 e91c3d43 bd2d0931  ....6.n.C=..1.-.
+>      00000380: 45e2dc5e 37e71fe9 4cab0009 890b4135  ^..E...7...L5A..
+>      00000390: 8f61f50d 121c9671 a08095fe fe6e0410  ..a.q.........n.
+>      000003a0: 1c1d3d43 132d0931 e2dc5ebd 37e71fe9  C=..1.-..^.....7
+>      000003b0: 4cab09ec e8934135 50cda704 03c7f8c1  ...L5A.....P....
+>      000003c0: f378a155 8598c595 b9b71f84 9be6cd58  U.x.........X...
+>      000003d0: f50d890b 00000561 00000000 00000000  ....a...........
+>      000003e0: 00000000 00008000 000f1000 00000000  ................
+>      000003f0: 00000000 20000000 00010200 0091000f  ....... ........
+>      00000400: 00000000 0000beef 96718f00 fe121c8a  ..........q.....
+>      00000410: 10a08095 3d43fe36 31e91c1d bd132d09  ....6.C=...1.-..
+>      00000420: e9e2dc5e 09ec37e7 354cab00 04e89341  ^....7....L5A...
+>      00000430: f85005a7 557303c7 95f378a1 1f8598c5  ..P...sU.x......
+>      00000440: cd58b7a1 0b9be6c4 61f50d89 1c8a968f  ..X........a....
+>      00000450: a0809512 6e043610 1c3d43fe 2d0931e9  .....6.n.C=..1.-
+>      00000460: e2dc5ebd e71fe945 ab000937 e841354c  .^..E...7...L5A.
+>      00000470: 05cda704 03f8c150 78a15573 859895f3  ....P...sU.x....
+>      00000480: b7a11f84 e6c4cdb9 0d890b9b 96718ff5  ..............q.
+>      00000490: 95121c8a 3610a080 43fe6e04 31e91c1d  .......6.n.C...1
+>      000004a0: 5ebd1309 e945e2dc 0937e71f 414cab00  ...^..E...7...LA
+>      000004b0: a704e893 c15005cd 5573c7f8 c595f3a1  ......P...sU....
+>      000004c0: 1f848598 58b9b7a1 899be6cd 8598f50d  .......X........
+>      000004d0: b7a11f84 c4cd58b9 0d890b9b 96718f61  .....X......a.q.
+>      000004e0: fe121c8a 36a08095 3d436e04 31e91c1d  .......6.nC=...1
+>      000004f0: bd132d09 e945dc5e 09ec37e7 354cab00  .-..^.E..7....L5
+>      00000500: 04e89341 f8c105a7 557303c7 95f378a1  A.........sU.x..
+>      00000510: 848598c5 cd58b9b7 0b9be6c4 61f50d89  ......X........a
+>      00000520: 1296718f a08095fe 6e043610 1d3d43fe  .q.......6.n.C=.
+>      00000530: 132d311c e2dc5ebd e71fe945 ab09ec37  .1-..^..E...7...
+>      00000540: e893414c 05cda704 c7f8c150 78a15503  LA......P....U.x
+>      00000550: 8598c595 b7a11f84 98cd58b9 b71f8485  .........X......
+>      00000560: c4cd58b9 890b9be6 718f610d fe128a96  .X.......a.q....
+>      00000570: 10a08095 436e0436 e91c1d3d bd132d31  ....6.nC=...1-..
+>      00000580: 45e2dc5e ec37e7e9 4cab0009 04e89341  ^..E..7....LA...
+>      00000590: c105cda7 7303c7f8 9578a155 848598c5  .......sU.x.....
+>      000005a0: 58b9b71f 9be6c4cd 61f5890b 1c96718f  ...X.......a.q..
+>      000005b0: 8095fe12 043610a0 1d3d436e 2d09311c  ......6.nC=..1.-
+>      000005c0: dc5ebd13 1fe945e2 ab09ec37 9341354c  ..^..E..7...L5A.
+>      000005d0: cda704e8 c7c15005 78a15503 98c595f3  .....P...U.x....
+>      000005e0: a11f8485 50cdb9b7 03c7f8c1 78a15573  .......P....sU.x
+>      000005f0: 98c595f3 b9b7a185 e6c4cd58 0d890b9b  ........X.......
+>      00000600: 000561f5 00000001 00000048 00000000  .a......H.......
+>      00000610: 00000000 0f051000 00000000 00000000  ................
+>      00000620: 20000000 01020004 91000f00 00000000  ... ............
+>      00000630: 00deadef 718f0000 121c8a96 10a08095  .......q........
+>      00000640: 43fe6e04 e91c1d3d bd130931 e9e2dc5e  .n.C=...1...^...
+>      00000650: ec37e71f 4cab0009 04e89341 c150cda7  ..7....LA.....P.
+>      00000660: 7303c7f8 95f3a155 848598c5 58b9b71f  ...sU..........X
+>      00000670: 9be6c4cd 61f50d89 8a96718f 8095fe12  .......a.q......
+>      00000680: 6e0410a0 1d3d43fe 2d31e91c dc5ebd13  ...n.C=...1-..^.
+>      00000690: e71fe945 0009ec37 93414cab 05cd04e8  E...7....LA.....
+>      000006a0: c7f8c150 a1557303 98c59578 b7a11f84  P....sU.x.......
+>      000006b0: c4cd58b9 890b9be6 967161f5 fe121c8a  .X.......aq.....
+>      000006c0: 10a08095 436e0436 31e91c1d bd132d09  ....6.nC...1.-..
+>      000006d0: 45e2dc5e 09ec1fe9 354cab00 04e89341  ^..E......L5A...
+>      000006e0: 5005cda7 557303c1 95f378a1 848598c5  ...P..sU.x......
+>      000006f0: 58b7a11f 0b9be6c4 61f50d89 00000005  ...X.......a....
+>      00000700: 00000001 00000000 00000000 00000080  ................
+>      00000710: 00000510 00000000 00000000 04200000  .............. .
+>      00000720: 0f000100 00009100 be000000 0000dead  ................
+>      00000730: 8a96718f 95fe121c 04361080 1d43fe6e  .q........6.n.C.
+>      00000740: 0931e91c dcbd132d 1fe945e2 000937e7  ..1.-....E...7..
+>      00000750: 41354cab cda70493 f8c15005 58b9b7c7  .L5A.....P.....X
+>      00000760: 9be6c4cd 61f50d89 8a96718f 8095fe12  .......a.q......
+>      00000770: 6e0410a0 1d3d43fe 2d31e91c dc5ebd13  ...n.C=...1-..^.
+>      00000780: e71fe945 0009ec37 93414cab 05cd04e8  E...7....LA.....
+>      00000790: c7f8c150 a1557303 98c59578 b7a11f84  P....sU.x.......
+>      000007a0: c4cd58b9 890b9be6 967161f5 fe121c8a  .X.......aq.....
+>      000007b0: 10a08095 436e0436 31e91c1d bd132d09  ....6.nC...1.-..
+>      000007c0: 45e2dc5e 09ec1fe9 354cab00 04e89341  ^..E......L5A...
+>      000007d0: 5005cda7 557303c1 95f378a1 848598c5  ...P..sU.x......
+>      000007e0: 58b7a11f 0b9be6c4 61f50d89 00000005  ...X.......a....
+>      000007f0: 00000001 00000000 00000000 00000080  ................
+>      00000800: 00000510 00000000 00000000 04200000  .............. .
+>      00000810: 0f000100 00009100 be000000 0000dead  ................
+>      00000820: 8a96718f 95fe121c 04361080 1d43fe6e  .q........6.n.C.
+>      00000830: 0931e91c dcbd132d 1fe945e2 000937e7  ..1.-....E...7..
+>      00000840: 41354cab cda70493 f8c15005 58b9b7c7  .L5A.....P.....X
+>      00000850: 9be6c4cd 61f50d89 8a96718f 8095fe12  .......a.q......
+>      00000860: 6e0410a0 1d3d43fe 2d31e91c dc5ebd13  ...n.C=...1-..^.
+>      00000870: e71fe945 0009ec37 93414cab 05cd04e8  E...7....LA.....
+>      00000880: c7f8c150 a1557303 98c59578 b7a11f84  P....sU.x.......
+>      00000890: c4cd58b9 890b9be6 967161f5 fe121c8a  .X.......aq.....
+>      000008a0: 10a08095 436e0436 31e91c1d bd132d09  ....6.nC...1.-..
+>      000008b0: 45e2dc5e 09ec1fe9 354cab00 04e89341  ^..E......L5A...
+>      000008c0: 5005cda7 557303c1 95f378a1 848598c5  ...P..sU.x......
+>      000008d0: 58b7a11f 0b9be6c4 61f50d89 00000005  ...X.......a....
+>      000008e0: 00000001 00000000 00000000 00000080  ................
+>      000008f0: 00000510 00000000 00000000 04200000  .............. .
+>      00000900: 0f000100 00009100 be000000 0000dead  ................
+>      00000910: 8a96718f 95fe121c 04361080 1d43fe6e  .q........6.n.C.
+>      00000920: 0931e91c dcbd132d 1fe945e2 000937e7  ..1.-....E...7..
+>      00000930: 41354cab cda70493 f8c15005 58b9b7c7  .L5A.....P.....X
+>      00000940: 9be6c4cd 61f50d89 8a96718f 8095fe12  .......a.q......
+>      00000950: 6e0410a0 1d3d43fe 2d31e91c dc5ebd13  ...n.C=...1-..^.
+>      00000960: e71fe945 0009ec37 93414cab 05cd04e8  E...7....LA.....
+>      00000970: c7f8c150 a1557303 98c59578 b7a11f84  P....sU.x.......
+>      00000980: c4cd58b9 890b9be6 967161f5 fe121c8a  .X.......aq.....
+>      00000990: 10a08095 436e0436 31e91c1d bd132d09  ....6.nC...1.-..
+>      000009a0: 45e2dc5e 09ec1fe9 354cab00 04e89341  ^..E......L5A...
+>      000009b0: 5005cda7 557303c1 95f378a1 848598c5  ...P..sU.x......
+>      000009c0: 58b7a11f 0b9be6c4 61f50d89 00000005  ...X.......a....
+>      000009d0: 00000001 00000000 00000000 00000080  ................
+>      000009e0: 00000510 00000000 00000000 04200000  .............. .
+>      000009f0: 0f000100 00009100 be000000 0000dead  ................
+>      00000a00: 8a96718f 95fe121c 04361080 1d43fe6e  .q........6.n.C.
+>      00000a10: 0931e91c dcbd132d 1fe945e2 000937e7  ..1.-....E...7..
+>      00000a20: 41354cab cda70493 f8c15005 1c8a96c7  .L5A.....P......
+>      00000a30: 8095fe12 043610a0 1d3d43fe 2d0931e9  ......6..C=..1.-
+>      00000a40: dc5ebd13 e71f45e2 ab09ec37 9341354c  ..^..E..7...L5A.
+>      00000a50: cda704e8 c7f8c150 78a17303 98c595f3  ....P....s.x....
+>      00000a60: b7a18485 c4cd58b9 0d890be6 000561f5  .....X.......a..
+>      00000a70: 00000100 00004800 00000000 00000000  .....H..........
+>      00000a80: 05100000 0000000f 00000000 00000000  ................
+>      00000a90: 02000420 91000001 00000000 deadbeef   ...............
+>      00000aa0: 8f000000 121c8a71 10a08095 fe6e0436  ....q.......6.n.
+>      00000ab0: 1c1d3d43 bd130931 45e2dc5e 37e71fe9  C=..1...^..E...7
+>      00000ac0: 4c0009ec 04e89341 5005cda7 03c7f8c1  ...LA......P....
+>      00000ad0: 95f35573 848598c5 b9b7a11f e6c4cd58  sU..........X...
+>      00000ae0: 61f50d9b 8a96718f 95fe121c 0410a080  ...a.q..........
+>      00000af0: 1d3d43fe 0931e91c 5ebd132d e7e945dc  .C=...1.-..^.E..
+>      00000b00: 0009ec37 41354cab cd04e893 c7f85005  7....L5A.....P..
+>      00000b10: a1557303 c595f378 a11f8498 c4cd58b7  .sU.x........X..
+>      00000b20: 890b9be6 7161f50d 121c8a96 10a08095  ......aq........
+>      00000b30: fe6e0436 e91c1d43 bd2d0931 45e2dc5e  6.n.C...1.-.^..E
+>      00000b40: ece71fe9 4cab0009 04e84135 5005cda7  .......L5A.....P
+>      00000b50: 7303c7c1 f378a155 84859895 58b7a11f  ...sU.x........X
+>      00000b60: 9be6c4cd f50d890b 00000005 48000001  ...............H
+>      00000b70: 00000000 00000000 00000080 000f0510  ................
+>      00000b80: 00000000 00000000 04200000 00010200  .......... .....
+>      00000b90: 0091000f be000000 0000dead 96718f00  ..............q.
+>      00000ba0: fe121c8a 04361080 3d43fe6e 31e91c1d  ......6.n.C=...1
+>      00000bb0: dc132d09 1fe945e2 09ec37e7 354cab00  .-...E...7....L5
+>      00000bc0: cda79341 f8c15005 557303c7 95f378a1  A....P....sU.x..
+>      00000bd0: a11f8498 cd58b9b7 0b9be6c4 8f610d89  ......X.......a.
+>      00000be0: 121c8a96 a08095fe 6e043610 e91d3d43  .........6.nC=..
+>      00000bf0: 132d0931 e2dc5ebd 37e7e945 4cab09ec  1.-..^..E..7...L
+>      00000c00: e8934135 05cda704 03c7f8c1 f378a173  5A..........s.x.
+>      00000c10: 8598c595 b9b71f84 e6c4cd58 f50d890b  ........X.......
+>      00000c20: 96718f61 95fe121c 0410a080 3d43fe6e  a.q.........n.C=
+>      00000c30: 09311c1d 5ebd132d 1fe9e2dc 09ec37e7  ..1.-..^.....7..
+>      00000c40: 41354cab a704e893 f8c150cd a15503c7  .L5A.....P....U.
+>      00000c50: c595f378 1f848598 cd58b9b7 890b9be6  x.........X.....
+>      00000c60: 0561f50d 00000000 00000000 00000000  ..a.............
+>      00000c70: 80000000 10000000 0000000f 00000000  ................
+>      00000c80: 00000000 02002000 000f0001 00000091  ..... ..........
+>      00000c90: beef0000 8f000000 1c8a9671 8095fe12  ........q.......
+>      00000ca0: fe3610a0 1c1d3d43 2d0931e9 dc5ebd13  ..6.C=...1.-..^.
+>      00000cb0: 37e7e9e2 ab0009ec 9341354c 05a704e8  ...7....L5A.....
+>      00000cc0: 03c7f850 78a15573 98c595f3 b7a11f85  P...sU.x........
+>     GHES: Unhandled processor error type 0x02: cache error
+>     GHES: Unhandled processor error type 0x04: TLB error
+>     GHES: Unhandled processor error type 0x08: bus error
+>     GHES: Unhandled processor error type 0x10: micro-architectural error
+>     GHES: Unhandled processor error type 0x02: cache error
+>     GHES: Unhandled processor error type 0x04: TLB error
+>     GHES: Unhandled processor error type 0x08: bus error
+>     GHES: Unhandled processor error type 0x10: micro-architectural error
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> 
+> diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+> index aaf7b1ad11a5..acf31d6eeb7c 100644
+> --- a/docs/specs/acpi_hest_ghes.rst
+> +++ b/docs/specs/acpi_hest_ghes.rst
+> @@ -68,7 +68,7 @@ Design Details
+>       and N Read Ack Register entries. The size for each entry is 8-byte.
+>       The Error Status Data Block table contains N Error Status Data Block
+>       entries. The size for each entry is defined at the source code as
+> -    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 1024 bytes). The total size
+> +    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 4096 bytes). The total size
+>       for the "etc/hardware_errors" fw_cfg blob is
+>       (N * 8 * 2 + N * ACPI_GHES_MAX_RAW_DATA_LENGTH) bytes.
+>       N is the number of the kinds of hardware error sources.
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index d5d5ff7474f4..77631147cf21 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -33,7 +33,7 @@
+>   #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+>   
+>   /* The max size in bytes for one error block */
+> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
+>   
+>   /* Generic Hardware Error Source version 2 */
+>   #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+> 
+> 
+> 
 
 
