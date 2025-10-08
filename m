@@ -4,97 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD6CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 10:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC1BCCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 10:02:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6QzN-0005Nm-NU; Wed, 08 Oct 2025 06:01:41 -0400
+	id 1v6Qzq-0005Sv-QB; Wed, 08 Oct 2025 06:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v6QzL-0005Kd-Pu
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:01:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v6Qzo-0005SY-Ak
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:02:08 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v6QzI-0001t6-SE
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:01:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759917694;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/2CUweJhwx2ow90f2OQTEPZN3VqDJRDtpui+jMKPHFI=;
- b=Y82JhGBawL+PoQNSweyUApsvbX9PlY72UzbJWMUqbTGTnaJm2Ooie+pepVcgt9XippzLXQ
- mjRtB9qSPEtnwlTiYw1QcPLzduez1B4i+6ylCtBHHzb7+T7XVNyrO6vpciEGWzvoTtYxLW
- 4L1xuv0LqkA31++iD0xbHSqjq/D5eTo=
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-gX9E1cnbM42DGyHmr325kA-1; Wed, 08 Oct 2025 06:01:33 -0400
-X-MC-Unique: gX9E1cnbM42DGyHmr325kA-1
-X-Mimecast-MFC-AGG-ID: gX9E1cnbM42DGyHmr325kA_1759917693
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-8e262d00d99so1163758241.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 03:01:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759917693; x=1760522493;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/2CUweJhwx2ow90f2OQTEPZN3VqDJRDtpui+jMKPHFI=;
- b=uD1xMzUGtk5vdUwWM2gkbbM0s6ZoET1s+e7Q9O7pO7awg+eefD1fvdv6LLDe58J4hi
- vK05D8hkqHmAp1q8tCZ5/DeMrTzf4TA3/cRpxZ5EQDoTqQU619/lP28NjKIqumqVD6nD
- bfJnHRs7zyKXkULBM4hmrjqyH/S4FGimNeB7vNYo3QBC15pIioFwfGf+eGWV6rZSx6TA
- jBZhLeIaLW5IdUREKoQY0iG0erW0/3omcCs5/eZ3e/V87D/BYry6pj16ghKuVkXMfdyN
- 3VLck5TMKWMHPfCYkrcdYOgHHHisI+hRP5Vwa53t8VAMSe/sbuLwJg8qL0HZdtMgPcnO
- R6Dg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxliOEyMl0p9ZlxYzgN0mYshNzXPzqgZcPOgT6sur2nZyhDU6Gi4aLerT2IXdjxnv73SmpDpG7AuzK@nongnu.org
-X-Gm-Message-State: AOJu0YyS9AlXq0NOzm8g+MxQZBEstQsLeR9AixiozE9N5nMFExas7Wi3
- ephAR5WFbGOpqUOIptxUxRdvzq3JPa4xdjVbdnDppRYdYO6GGxFFdWvtIqJWb+ywXF+ZAa1kAfN
- ngZ11Cd2uEPiY5BrRHhJmFpro6/KZ12V6BWfYVVOri+nvVLF4VtX4bHdF
-X-Gm-Gg: ASbGncsAu7lXA+qoiW2bIBkXMVB0Xx+MwEV2ba/mWB29smFvwKHlxG085FRWCeoiw6j
- 45dB4GanIlvq4dknG/LZjGyC7DUztLuTnRIGlM2xfG0SaVNUsLm2uizvLb2QN9e8nu8pHEwrWl2
- QV9OgS5LOSG4o11W39NlSpPlw1RfkzqGaHDodaJL4FaTiUmMdgltKZ4iuhL3ZmrR3hAH3tgsmly
- NO7aeLm2g5N/XsUG4DJ43d6tOtGPGdXNtzgdT3b0aN77cF8hgoFGQ6R6LLuU5Py6KU5q3+6EGc1
- 4YrD777/VrmLtxXF+i6sQqwY+ThyiuLPpYc=
-X-Received: by 2002:a67:e8d5:0:b0:528:9956:6a3d with SMTP id
- ada2fe7eead31-5d5d4d8c9bemr2571997137.12.1759917692602; 
- Wed, 08 Oct 2025 03:01:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGClFK2v5lreAvjjWVEiAnf5AEVAZ3uJ8D2A6jJJiSxhalK39ghhbvcoO6UbvD8hmDwKZL9sg==
-X-Received: by 2002:a67:e8d5:0:b0:528:9956:6a3d with SMTP id
- ada2fe7eead31-5d5d4d8c9bemr2571974137.12.1759917691985; 
- Wed, 08 Oct 2025 03:01:31 -0700 (PDT)
-Received: from redhat.com ([138.199.52.81]) by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-92eb4d83c45sm4038067241.4.2025.10.08.03.01.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Oct 2025 03:01:31 -0700 (PDT)
-Date: Wed, 8 Oct 2025 06:01:26 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alessandro Ratti <alessandro@0x65c.net>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Alessandro Ratti <alessandroratti@gmail.com>, qemu-devel@nongnu.org
-Subject: Re: [PULL 49/75] virtio: Add function name to error messages
-Message-ID: <20251008060047-mutt-send-email-mst@kernel.org>
-References: <cover.1759691708.git.mst@redhat.com>
- <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
- <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v6Qzl-0001ue-VG
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:02:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=Htazs/JZxM3GGnLR/wPsHz+Rozn0+4MWDmX6Ucd3uz4=; b=d6OeQ1os8mTjqPS
+ DKMIU25dSbGrZEToipJR2fLouCZ/gWdzwDboT28PkTUF2enVrEBLoppXMZMLbQaWTIFXEn1gaQCuk
+ HsGLycuPYFTmaOUY6ldPJisSha9YwN4ggyvW7NmxAECv8a0gLtbC60veZnfHEl5cVU5q/TUyNR+s1
+ 0c=;
+Date: Wed, 8 Oct 2025 12:04:36 +0200
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH 1/5] target/microblaze: Remove target_ulong use in
+ cpu_handle_mmu_fault()
+Message-ID: <vywllpnlej3sjlf7yyejoshohqgt7ia5sei4ww3hh247afphvh@amdby265c2di>
+References: <20251008060129.87579-1-philmd@linaro.org>
+ <20251008060129.87579-2-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+In-Reply-To: <20251008060129.87579-2-philmd@linaro.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,117 +64,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Oct 05, 2025 at 10:13:57PM +0200, Alessandro Ratti wrote:
-> On Sun, 5 Oct 2025 at 21:17, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > From: Alessandro Ratti <alessandro@0x65c.net>
-> >
-> > Replace virtio_error() with a macro that automatically prepends the
-> > calling function name to error messages. This provides better context
-> > for debugging virtio issues by showing exactly which function
-> > encountered the error.
-> >
-> > Before: "Invalid queue size: 1024"
-> > After:  "virtio_queue_set_num: Invalid queue size: 1024"
-> >
-> > The implementation uses a macro to insert __func__ at compile time,
-> > avoiding any runtime overhead while providing more specific error
-> > context than a generic "virtio:" prefix.
-> >
-> > Also remove manual __func__ usage in virtio-balloon to avoid duplicate
-> > function names in error messages.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
-> > Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
-> > Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
-> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> > Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> >  include/hw/virtio/virtio.h | 4 +++-
-> >  hw/virtio/virtio-balloon.c | 2 +-
-> >  hw/virtio/virtio.c         | 3 ++-
-> >  3 files changed, 6 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> > index d97529c3f1..695bb56186 100644
-> > --- a/include/hw/virtio/virtio.h
-> > +++ b/include/hw/virtio/virtio.h
-> > @@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size);
-> >
-> >  void virtio_cleanup(VirtIODevice *vdev);
-> >
-> > -void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
-> > +#define virtio_error(vdev, fmt, ...) \
-> > +    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
-> > +void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
-> >
-> >  /* Set the child bus name. */
-> >  void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name);
-> > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-> > index db787d00b3..e443f71c01 100644
-> > --- a/hw/virtio/virtio-balloon.c
-> > +++ b/hw/virtio/virtio-balloon.c
-> > @@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWithReturn *n, void *data,
-> >      case PRECOPY_NOTIFY_COMPLETE:
-> >          break;
-> >      default:
-> > -        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->reason);
-> > +        virtio_error(vdev, "%d reason unknown", pnd->reason);
-> >      }
-> >
-> >      return 0;
-> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> > index de89e8104a..0f33ca5d90 100644
-> > --- a/hw/virtio/virtio.c
-> > +++ b/hw/virtio/virtio.c
-> > @@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name)
-> >      vdev->bus_name = g_strdup(bus_name);
-> >  }
-> >
-> > -void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fmt, ...)
-> > +void G_GNUC_PRINTF(2, 3)
-> > +virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
-> >  {
-> >      va_list ap;
-> >
-> > --
-> > MST
-> >
-> >
+On 08/10/25, Philippe Mathieu-Daudé wrote:
+> cpu_handle_mmu_fault() -- renamed in commit f429d607c71 -- expects
+> a vaddr type for its address argument since commit 7510454e3e7
+> ("cpu: Turn cpu_handle_mmu_fault() into a CPUClass hook").
 > 
-> Hi Michael,
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  target/microblaze/mmu.h | 2 +-
+>  target/microblaze/mmu.c | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 > 
-> Thanks for picking this up.
-> 
-> It seems that the version currently queued is actually the initial
-> submission, which had previously been rejected following feedback from
-> Markus Armbruster.
-> I later submitted a corrected version ([v3]) which:
-> 
-> * Addresses all the feedback (including from Markus Armbruster and
-> Daniel P. Berrangé).
-> * Has Daniel’s formal Reviewed-by:
-> 
-> Patch: https://lore.kernel.org/qemu-devel/20250924093138.559872-2-alessandro@0x65c.net/
-> Reviewed-by: https://lore.kernel.org/qemu-devel/aNO7J7Y6wsk1-wyw@redhat.com/
-> 
-> Would you mind updating the queue to reflect this version instead?
-> 
-> Thanks again for your time and all the work you do maintaining virtio!
-> 
-> Best regards,
-> Alessandro
+> diff --git a/target/microblaze/mmu.h b/target/microblaze/mmu.h
+> index 1068bd2d52b..2aca39c923b 100644
+> --- a/target/microblaze/mmu.h
+> +++ b/target/microblaze/mmu.h
+> @@ -86,7 +86,7 @@ typedef struct {
+>  } MicroBlazeMMULookup;
+>  
+>  unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+> -                           target_ulong vaddr, MMUAccessType rw, int mmu_idx);
+> +                           vaddr vaddr, MMUAccessType rw, int mmu_idx);
+>  uint32_t mmu_read(CPUMBState *env, bool ea, uint32_t rn);
+>  void mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
+>  void mmu_init(MicroBlazeMMU *mmu);
+> diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
+> index 8703ff5c657..db24cb399ce 100644
+> --- a/target/microblaze/mmu.c
+> +++ b/target/microblaze/mmu.c
+> @@ -78,7 +78,7 @@ static void mmu_change_pid(CPUMBState *env, unsigned int newpid)
+>  
+>  /* rw - 0 = read, 1 = write, 2 = fetch.  */
+>  unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+> -                           target_ulong vaddr, MMUAccessType rw, int mmu_idx)
+> +                           vaddr vaddr, MMUAccessType rw, int mmu_idx)
 
+`vaddr vaddr` looks a bit awkward, but very nitty and not like it really matters.
 
-So as you likely already noticed
-I replaced just this patch and updated the tag in the pull.
-
--- 
-MST
-
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 
