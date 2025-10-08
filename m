@@ -4,140 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B41CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 13:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DC3CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 13:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6To0-0000nJ-6i; Wed, 08 Oct 2025 09:02:08 -0400
+	id 1v6TpA-0000wo-Ho; Wed, 08 Oct 2025 09:03:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6Tnu-0000n5-Cz
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:02:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6Tp8-0000wN-W4
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:03:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6Tnm-0001ra-BL
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:02:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6Tp0-0001wh-JB
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:03:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759928504;
+ s=mimecast20190719; t=1759928588;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kOpkBzIvtEM9bNYBG28sJbm1wAKG2e7MnfI+0uaL1Oo=;
- b=cNqoXbVVp3rrO4qD8t1Zc9astmeyYnG2ShAolFM5pnUCrBREjTA09C424EL4KjyhOLA7gY
- ZtH6UifEsyxLNNiMKvcQeDwM5P5+vX5QRnlg2+PdOZySuFIzq+eAY7Jv/SSLqkya/mt+DX
- IdE/bKFMeAvyNBr7yvxc6W6fwz7SEmc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7Yaeo8ONDHu8yBQPVDyWe11THAIJItb6+js7md93Gng=;
+ b=eBS0HD4x7OBFfGKivrITKLdFoxz3CfpVY8uN9XnWr5Rq6jLpsqltPPiscXdPHJ6FLbxGT6
+ VdgAGleK448dDUg3fsBQ0snoJiliv2k79J4QsRHZt4Tv3U9BwOYikGdJN1uD67Is7AB5LI
+ skINotOUc30oKp5wG0Y+2xwW8hxcbkk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-MgbUXIvMOD6OLh1fqjJaWA-1; Wed, 08 Oct 2025 09:01:41 -0400
-X-MC-Unique: MgbUXIvMOD6OLh1fqjJaWA-1
-X-Mimecast-MFC-AGG-ID: MgbUXIvMOD6OLh1fqjJaWA_1759928500
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e3d43bbc7so29223945e9.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 06:01:41 -0700 (PDT)
+ us-mta-45--0r1uxEINz6v_qS_7B0WYg-1; Wed, 08 Oct 2025 09:03:06 -0400
+X-MC-Unique: -0r1uxEINz6v_qS_7B0WYg-1
+X-Mimecast-MFC-AGG-ID: -0r1uxEINz6v_qS_7B0WYg_1759928585
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e41c32209so36043165e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 06:03:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759928500; x=1760533300;
+ d=1e100.net; s=20230601; t=1759928585; x=1760533385;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kOpkBzIvtEM9bNYBG28sJbm1wAKG2e7MnfI+0uaL1Oo=;
- b=NGQGHEbmsjEyuXQ5RmwQHyaUX1hRw9vQ1mXY8vSMuBHgjziIOvTe23S3vUNL3ATEP8
- 9PgdbMHEbklKDmIF0slMKslRBZ772y06xIxkNQHLD4TztJ43uJZWND7C6Y/4b+TiCl8p
- m8O2z6sXwH4irZPRYVDqB5BIwG0fbKncox15SPH5qrqZBJQmJA4bZyan9Khtfy5D5WPE
- YuFsCXgGmHrEidZgNW67LQwuY8L7rFSMV58fs42Kcf4yob1ExFJ5Rotrknv2ozhDYKfy
- 7+pOR2k9UYpVrf7f26EeIOEDn1S7VHvFueGRlAqtRbmT1z+d+aGDXNnT2Vf//yQGUYCx
- BMGA==
-X-Gm-Message-State: AOJu0YzA/JBNh5UKXot5zdDQjA1uhWQTqB+NpMLNBu5jc3hJlk3toqAw
- muwLtLsx5zSL74DKWL2XzwvVHJSbdp88Os6pUQxDuy+Ndx7/CDMeGtJd9sZr/OxaXJEjMtn7Svi
- Pb8++5CwW6SVPZhxy5UvdQwPaZWcEZcQi9csricSYDDe71Bkse4lk618Y
-X-Gm-Gg: ASbGnct7pc+fwkQONqaA/V7T0TB8CDdIm+9bdJlm6HpzAUjUJrKEuuc+O37J/4tV5p/
- gDzP4ddQdHQs/HN2Q+bSGq6BetFmBNEmECeYXhuwZFNBh3AaFmnZ+mEMjO4Yj4PV37/BD7yEZ+y
- 4HYBvg5IW64HIRMhWGiYTEvoSW4lEMW4KXDTWBk88IfQBn2arW6rVTrC69GkEUBxShua5VRQSPv
- PlqPqi8ysDtwx+n2fstwsGQWsSnKEobHMUup/HjWABTxXOcNd+OaCspBnzJMQl2uKvq245TaM9G
- NHIScpjzbVT/z/SellrM4WPhnTFZ9ZqAb8m90przv2wDJSPzbpfHSnqfvgFUeGQe1xx/ZNTc+4R
- tNfdIwmEN
-X-Received: by 2002:a05:6000:40de:b0:3ea:e0fd:290a with SMTP id
- ffacd0b85a97d-42666ab2843mr1880261f8f.12.1759928498813; 
- Wed, 08 Oct 2025 06:01:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYVZiS2oHt94YQ2Ce2q/KaOpKWv0ktuxTiOiLMqPP4cmRc/okePPO8k5je+oMi8x8lWLkXAA==
-X-Received: by 2002:a05:6000:40de:b0:3ea:e0fd:290a with SMTP id
- ffacd0b85a97d-42666ab2843mr1880211f8f.12.1759928498158; 
- Wed, 08 Oct 2025 06:01:38 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8abf0bsm29843919f8f.17.2025.10.08.06.01.36
+ bh=7Yaeo8ONDHu8yBQPVDyWe11THAIJItb6+js7md93Gng=;
+ b=eR/aPSB+J5JeIHdIU+Ypd4O4mevL2HUhcmhu00LKl37sHULA53f1M3pQAWSNRfOg38
+ QdJfX+NAuVwdiVVdYgWCq5pvvx6DR0WekrJ3yd9jZ7/haE1VXj548tmpDhp97cRennUm
+ /fawgpcU5houc9f1gpfCIUplrGPzG+CZA2+FSOMj1/BWoPOAarco1Xbxk4yrhSwzH8U4
+ 7J761wP7jvq3OjeIoXvcj2evRutqULfHciga6SQcPlcijdHRt9VcnQCgKAS4PSaKCuor
+ aPic4Hrf4Q9tSGSZUFfSZ7iFIIikok/lOEdW/DuzYSbCivviHnTcKFa/Ffi4HFYbyQsP
+ UbqA==
+X-Gm-Message-State: AOJu0Yw7gUT/ajCiJEcN94Y2Xz1lAFIuylK53hNGnm4wgP+bd/uZX5zn
+ Gvx2Q39SpwWqD76XDEkDGg7J0fUm91JDPJ9KCIx1GkJLwsPquMx77s23YuGMN2AA2g1ziSKneD5
+ DzAcKiMaA/eSMgCYKkgiAIMoSpRsvb7DEng+htqgxZgv/8uyY9kJJIV4R
+X-Gm-Gg: ASbGncvOS3sVrIJQ5d0oSvg5fln2e7aRvV6VvnS/q0iQusi7jvQwoJNoA8H9tDu59jl
+ KZxJBIpLbEYTJIqx6koL2hvvjqrAMmg+VILPExf9BMk8XHa0HurE6z+DNf6xWP5xuWsrbDyK5qg
+ X2mWETEC4AEymObCdqOLvh7oBU5poZV8R9LKFYRPw9g+zbzgcXR/y0M28z+yOSxUa7uH4EadJhW
+ OzRboxxEcfhMtH4e283VmaehVrZaKLY8G4zCL+C9QU6QtKj3ct086x5LOy9w11888TOX9tmZBPF
+ 1xdVbkIezuX3ayJ38OjWpfP9UKko5L9m5JtFKRc/xw534W2aDggY4QdvnsY6Ggh2jsrifIez7OU
+ X7QAl4nPIRw==
+X-Received: by 2002:a05:600c:6383:b0:46e:32dd:1b1a with SMTP id
+ 5b1f17b1804b1-46fa9a8f146mr22189845e9.7.1759928584974; 
+ Wed, 08 Oct 2025 06:03:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkoLhN6Ur9RqwmSR2vHVN3qHInGnNr7kNFFKP+ThIjRimz8efVDCdERhs/qxeTdS/zLNefXw==
+X-Received: by 2002:a05:600c:6383:b0:46e:32dd:1b1a with SMTP id
+ 5b1f17b1804b1-46fa9a8f146mr22189435e9.7.1759928584381; 
+ Wed, 08 Oct 2025 06:03:04 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
+ [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fa9c16af7sm35514845e9.11.2025.10.08.06.03.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 06:01:37 -0700 (PDT)
-Message-ID: <7256274c-ac20-4ef8-9841-48be7bfa2b91@redhat.com>
-Date: Wed, 8 Oct 2025 15:01:34 +0200
+ Wed, 08 Oct 2025 06:03:03 -0700 (PDT)
+Message-ID: <cc64c0d6-dbf0-4e78-993d-01f9dd865463@redhat.com>
+Date: Wed, 8 Oct 2025 15:03:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/container: Support unmap all in one ioctl()
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- John Levon <levon@movementarian.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>
-References: <20250924070254.1550014-1-zhenzhong.duan@intel.com>
- <20250924070254.1550014-2-zhenzhong.duan@intel.com>
- <01f0b0eb-b036-4823-8020-fd6962b26d9d@redhat.com>
- <aNxT1w0BbMH6pJ0J@movementarian.org>
- <d715d9dd-a613-4406-93c1-507d1470619f@redhat.com>
- <IA3PR11MB91364A76C06D76B0E6ADBEBD92E1A@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <IA3PR11MB91364A76C06D76B0E6ADBEBD92E1A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Subject: Re: [PATCH 3/4] tests: add nbd and luks to the I/O test suites
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+References: <20251008113552.747002-1-berrange@redhat.com>
+ <20251008113552.747002-4-berrange@redhat.com>
+ <bc904027-5b58-4057-8ef5-15e4ebcca767@redhat.com>
+ <aOZfLYcJZ-6dslcK@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <aOZfLYcJZ-6dslcK@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -146,7 +141,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,69 +157,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/25 12:18, Duan, Zhenzhong wrote:
-> 
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH 1/2] vfio/container: Support unmap all in one ioctl()
+On 08/10/2025 14.55, Daniel P. Berrangé wrote:
+> On Wed, Oct 08, 2025 at 01:55:12PM +0200, Thomas Huth wrote:
+>> On 08/10/2025 13.35, Daniel P. Berrangé wrote:
+>>> This introduces new suits for running I/O tests on NBD and LUKS
+>>> drivers, giving new make targets
+>>>
+>>>    * make check-block-luks
+>>>    * make check-block-nbd
+>>>
+>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>>> ---
+>>>    tests/qemu-iotests/meson.build | 4 +++-
+>>>    1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+>>> index 939a14ffae..5735d67c8c 100644
+>>> --- a/tests/qemu-iotests/meson.build
+>>> +++ b/tests/qemu-iotests/meson.build
+>>> @@ -23,7 +23,9 @@ qemu_iotests_formats = {
+>>>      'raw': 'slow',
+>>>      'qed': 'thorough',
+>>>      'vmdk': 'thorough',
+>>> -  'vpc': 'thorough'
+>>> +  'vpc': 'thorough',
+>>> +  'nbd': 'thorough',
+>>> +  'luks': 'thorough',
+>>>    }
 >>
->> On 10/1/25 00:04, John Levon wrote:
->>> On Tue, Sep 30, 2025 at 05:26:59PM +0200, Cédric Le Goater wrote:
->>>
->>>>> -        }
->>>>> +        ret = ioctl(container->fd, VFIO_CHECK_EXTENSION,
->> VFIO_UNMAP_ALL);
->>>>
->>>> Could we introduce an helper to test 'unmap_all' support in the host
->>>> kernel ? The result would be something like :
->>>>
->>>>     if (unmap_all) {
->>>>           if
->> (vfio_legacy_has_unmap_all(VFIO_IOMMU_LEGACY(bcontainer))) {
->>>>               flags = VFIO_DMA_UNMAP_FLAG_ALL;
->>>>           } else {
->>>>               /* The unmap ioctl doesn't accept a full 64-bit span. */
->>>>               Int128 llsize = int128_rshift(int128_2_64(), 1);
->>>>               ...
->>>>           }
->>>>     }
->>>
->>> For reference/consideration, the previous approach taken in the vfio-user
->>> series:
->>>
->>>
->> https://lore.kernel.org/qemu-devel/20250219144858.266455-4-john.levon@
->> nutanix.com/
->>>
->>> @@ -533,6 +562,11 @@ static bool vfio_legacy_setup(VFIOContainerBase
->> *bcontainer, Error **errp)
->>>        vfio_get_info_iova_range(info, bcontainer);
->>>
->>>        vfio_get_iommu_info_migration(container, info);
->>> +
->>> +    ret = ioctl(container->fd, VFIO_CHECK_EXTENSION,
->> VFIO_UNMAP_ALL);
->>> +
->>> +    container->unmap_all_supported = (ret != 0);
-> 
-> Good suggestion, thanks John.
-> 
->>>
->>> (I dropped this particular change as part of getting merged.)
->> Yes. I'm reconsidering now.
+>> Before we do that, I'd first see a solution for the problem that I described
+>> in my series here:
 >>
->> Should we introduce a VFIOContainerBase attribute/flag
->> 'unmap_all_supported',
->> set in the vioc->setup handler ?
+>> https://lore.kernel.org/qemu-devel/20250910153727.226217-1-thuth@redhat.com/
+>>
+>> which, by the way, contains a patch that is very similar to yours here.
 > 
-> Do you mean to check bcontainer->unmap_all_supported and do the split in vfio_listener_region_del()?
+> IIUC, the problem you're concerned with is that 'make check SPEED=thorough'
+> is running too much, and you want to stop running skipped tests directly.
 > 
-> If only checking it in legacy container, putting it in VFIOLegacyContainer sounds better?
+> My view is that running "make check SPEED=thorough" is undesirable in
+> general, even before either of our patch series. I'd say it is almost
+> never what people actually want to use, and is only picked because of
+> the lack of a better option. That's why I thought 'make check-block-qed'
+> (and equiva for other formats) was a better option, as it gives a make
+> target that matches a specific testing use case. With that in mind, IMHO
+> it is less important if 'make check SPEED=thorough' waste a bit of time
+> launched irrelevant tests.
 
-It depends if vfio-user needs it too.
+Sounds like you're only thinking about running iotests here. But what I 
+generally want to do: Run *all* tests at once, in parallel, on as many CPUs 
+as my host system provides, i.e. also qtests and functional tests in 
+parallel with the iotests. That's what you get with "make check 
+SPEED=thorough" only right now. And the output of that list is quite 
+cluttered with a lot of skipped iotests, which will only get much worse if 
+we add more formats to qemu_iotests_formats without any other patches.
 
-C.
-
+  Thomas
 
 
