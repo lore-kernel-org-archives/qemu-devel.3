@@ -4,65 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765F4CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 09:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD6CCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 10:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Qq4-0003Tb-K2; Wed, 08 Oct 2025 05:52:05 -0400
+	id 1v6QzN-0005Nm-NU; Wed, 08 Oct 2025 06:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v6Qq1-0003SQ-OO; Wed, 08 Oct 2025 05:52:01 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v6QzL-0005Kd-Pu
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:01:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v6Qpy-0000u2-16; Wed, 08 Oct 2025 05:52:01 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5989pLbs018247
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 8 Oct 2025 18:51:21 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=rmF7oax1nduHdEzGnX44XCvOP2eZtmgvj30tMAoV4uI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:From:Subject:To;
- s=rs20250326; t=1759917082; v=1;
- b=G94DXg/WAnUUng8wESBT1WpljoAatOI1Kg6VB+lgq9lBuf9+GjQYg/Krp1xGBaXR
- hoNbYVBIUbYiktoPhkSC7bfeU1VCBXI2elsM7MtnIK+eAOmhBfQFVj5Vt+CigE4Z
- N1CuU/DsjEyfU6Dql556sPjiSfyHwbblDipVlRAJSLlzR0+1mP+6HOHBwJ7p8BCg
- xEu2undqGoJd6PyqUuk14Oj8bhZ3C/YfKx4vX/xIMJERhIF6vcVThBevTBP+00wF
- JjMrXeiH+bzQO5h9Qx3DlyTY1wkuW+zK1Vk1RuudgfllWGsvysJi/VAxq0vsn1E1
- UNnqtlNd+KmEecD7y6RK5w==
-Message-ID: <54357058-3855-44a3-98cd-31d7f19f4a92@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 8 Oct 2025 18:51:21 +0900
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v6QzI-0001t6-SE
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:01:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759917694;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/2CUweJhwx2ow90f2OQTEPZN3VqDJRDtpui+jMKPHFI=;
+ b=Y82JhGBawL+PoQNSweyUApsvbX9PlY72UzbJWMUqbTGTnaJm2Ooie+pepVcgt9XippzLXQ
+ mjRtB9qSPEtnwlTiYw1QcPLzduez1B4i+6ylCtBHHzb7+T7XVNyrO6vpciEGWzvoTtYxLW
+ 4L1xuv0LqkA31++iD0xbHSqjq/D5eTo=
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-gX9E1cnbM42DGyHmr325kA-1; Wed, 08 Oct 2025 06:01:33 -0400
+X-MC-Unique: gX9E1cnbM42DGyHmr325kA-1
+X-Mimecast-MFC-AGG-ID: gX9E1cnbM42DGyHmr325kA_1759917693
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-8e262d00d99so1163758241.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 03:01:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759917693; x=1760522493;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/2CUweJhwx2ow90f2OQTEPZN3VqDJRDtpui+jMKPHFI=;
+ b=uD1xMzUGtk5vdUwWM2gkbbM0s6ZoET1s+e7Q9O7pO7awg+eefD1fvdv6LLDe58J4hi
+ vK05D8hkqHmAp1q8tCZ5/DeMrTzf4TA3/cRpxZ5EQDoTqQU619/lP28NjKIqumqVD6nD
+ bfJnHRs7zyKXkULBM4hmrjqyH/S4FGimNeB7vNYo3QBC15pIioFwfGf+eGWV6rZSx6TA
+ jBZhLeIaLW5IdUREKoQY0iG0erW0/3omcCs5/eZ3e/V87D/BYry6pj16ghKuVkXMfdyN
+ 3VLck5TMKWMHPfCYkrcdYOgHHHisI+hRP5Vwa53t8VAMSe/sbuLwJg8qL0HZdtMgPcnO
+ R6Dg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxliOEyMl0p9ZlxYzgN0mYshNzXPzqgZcPOgT6sur2nZyhDU6Gi4aLerT2IXdjxnv73SmpDpG7AuzK@nongnu.org
+X-Gm-Message-State: AOJu0YyS9AlXq0NOzm8g+MxQZBEstQsLeR9AixiozE9N5nMFExas7Wi3
+ ephAR5WFbGOpqUOIptxUxRdvzq3JPa4xdjVbdnDppRYdYO6GGxFFdWvtIqJWb+ywXF+ZAa1kAfN
+ ngZ11Cd2uEPiY5BrRHhJmFpro6/KZ12V6BWfYVVOri+nvVLF4VtX4bHdF
+X-Gm-Gg: ASbGncsAu7lXA+qoiW2bIBkXMVB0Xx+MwEV2ba/mWB29smFvwKHlxG085FRWCeoiw6j
+ 45dB4GanIlvq4dknG/LZjGyC7DUztLuTnRIGlM2xfG0SaVNUsLm2uizvLb2QN9e8nu8pHEwrWl2
+ QV9OgS5LOSG4o11W39NlSpPlw1RfkzqGaHDodaJL4FaTiUmMdgltKZ4iuhL3ZmrR3hAH3tgsmly
+ NO7aeLm2g5N/XsUG4DJ43d6tOtGPGdXNtzgdT3b0aN77cF8hgoFGQ6R6LLuU5Py6KU5q3+6EGc1
+ 4YrD777/VrmLtxXF+i6sQqwY+ThyiuLPpYc=
+X-Received: by 2002:a67:e8d5:0:b0:528:9956:6a3d with SMTP id
+ ada2fe7eead31-5d5d4d8c9bemr2571997137.12.1759917692602; 
+ Wed, 08 Oct 2025 03:01:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGClFK2v5lreAvjjWVEiAnf5AEVAZ3uJ8D2A6jJJiSxhalK39ghhbvcoO6UbvD8hmDwKZL9sg==
+X-Received: by 2002:a67:e8d5:0:b0:528:9956:6a3d with SMTP id
+ ada2fe7eead31-5d5d4d8c9bemr2571974137.12.1759917691985; 
+ Wed, 08 Oct 2025 03:01:31 -0700 (PDT)
+Received: from redhat.com ([138.199.52.81]) by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-92eb4d83c45sm4038067241.4.2025.10.08.03.01.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Oct 2025 03:01:31 -0700 (PDT)
+Date: Wed, 8 Oct 2025 06:01:26 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alessandro Ratti <alessandro@0x65c.net>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Alessandro Ratti <alessandroratti@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PULL 49/75] virtio: Add function name to error messages
+Message-ID: <20251008060047-mutt-send-email-mst@kernel.org>
+References: <cover.1759691708.git.mst@redhat.com>
+ <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
+ <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v2] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
-To: Michael Tokarev <mjt@tls.msk.ru>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "sriram.yagnaraman@ericsson.com" <sriram.yagnaraman@ericsson.com>,
- DAMIEN BERGAMINI <damien.bergamini@eviden.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250901151314.1038020-1-clement.mathieu--drif@eviden.com>
- <e853228d-18e5-493c-a65c-10f0d88f0f02@tls.msk.ru>
-Content-Language: en-US
-In-Reply-To: <e853228d-18e5-493c-a65c-10f0d88f0f02@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,65 +112,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/07 2:19, Michael Tokarev wrote:
-> On 9/1/25 18:14, CLEMENT MATHIEU--DRIF wrote:
->> From: Damien Bergamini <damien.bergamini@eviden.com>
->>
->> Starting with commit cab1398a60eb, SR-IOV VFs are realized as soon as
->> pcie_sriov_pf_init() is called.  Because pcie_sriov_pf_init() must be
->> called before pcie_sriov_pf_init_vf_bar(), the VF BARs types won't be
->> known when the VF realize function calls pcie_sriov_vf_register_bar().
->>
->> This breaks the memory regions of the VFs (for instance with igbvf):
->>
->> $ lspci
->> ...
->>      Region 0: Memory at 281a00000 (64-bit, prefetchable) [virtual] 
->> [size=16K]
->>      Region 3: Memory at 281a20000 (64-bit, prefetchable) [virtual] 
->> [size=16K]
->>
->> $ info mtree
->> ...
->> address-space: pci_bridge_pci_mem
->>    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
->>      0000000081a00000-0000000081a03fff (prio 1, i/o): igbvf-mmio
->>      0000000081a20000-0000000081a23fff (prio 1, i/o): igbvf-msix
->>
->> and causes MMIO accesses to fail:
->>
->>      Invalid write at addr 0x281A01520, size 4, region '(null)', 
->> reason: rejected
->>      Invalid read at addr 0x281A00C40, size 4, region '(null)', 
->> reason: rejected
->>
->> To fix this, VF BARs are now registered with pci_register_bar() which
->> has a type parameter and pcie_sriov_vf_register_bar() is removed.
->>
->> Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")
->> Signed-off-by: Damien Bergamini <damien.bergamini@eviden.com>
->> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
->> ---
->>   docs/pcie_sriov.txt         |  5 ++---
->>   hw/net/igbvf.c              |  6 ++++--
->>   hw/nvme/ctrl.c              |  8 ++------
->>   hw/pci/pci.c                |  3 ---
->>   hw/pci/pcie_sriov.c         | 11 -----------
->>   include/hw/pci/pcie_sriov.h |  4 ----
->>   6 files changed, 8 insertions(+), 29 deletions(-)
+On Sun, Oct 05, 2025 at 10:13:57PM +0200, Alessandro Ratti wrote:
+> On Sun, 5 Oct 2025 at 21:17, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > From: Alessandro Ratti <alessandro@0x65c.net>
+> >
+> > Replace virtio_error() with a macro that automatically prepends the
+> > calling function name to error messages. This provides better context
+> > for debugging virtio issues by showing exactly which function
+> > encountered the error.
+> >
+> > Before: "Invalid queue size: 1024"
+> > After:  "virtio_queue_set_num: Invalid queue size: 1024"
+> >
+> > The implementation uses a macro to insert __func__ at compile time,
+> > avoiding any runtime overhead while providing more specific error
+> > context than a generic "virtio:" prefix.
+> >
+> > Also remove manual __func__ usage in virtio-balloon to avoid duplicate
+> > function names in error messages.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
+> > Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+> > Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> > Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > ---
+> >  include/hw/virtio/virtio.h | 4 +++-
+> >  hw/virtio/virtio-balloon.c | 2 +-
+> >  hw/virtio/virtio.c         | 3 ++-
+> >  3 files changed, 6 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> > index d97529c3f1..695bb56186 100644
+> > --- a/include/hw/virtio/virtio.h
+> > +++ b/include/hw/virtio/virtio.h
+> > @@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size);
+> >
+> >  void virtio_cleanup(VirtIODevice *vdev);
+> >
+> > -void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+> > +#define virtio_error(vdev, fmt, ...) \
+> > +    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
+> > +void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+> >
+> >  /* Set the child bus name. */
+> >  void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name);
+> > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+> > index db787d00b3..e443f71c01 100644
+> > --- a/hw/virtio/virtio-balloon.c
+> > +++ b/hw/virtio/virtio-balloon.c
+> > @@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWithReturn *n, void *data,
+> >      case PRECOPY_NOTIFY_COMPLETE:
+> >          break;
+> >      default:
+> > -        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->reason);
+> > +        virtio_error(vdev, "%d reason unknown", pnd->reason);
+> >      }
+> >
+> >      return 0;
+> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > index de89e8104a..0f33ca5d90 100644
+> > --- a/hw/virtio/virtio.c
+> > +++ b/hw/virtio/virtio.c
+> > @@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name)
+> >      vdev->bus_name = g_strdup(bus_name);
+> >  }
+> >
+> > -void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fmt, ...)
+> > +void G_GNUC_PRINTF(2, 3)
+> > +virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
+> >  {
+> >      va_list ap;
+> >
+> > --
+> > MST
+> >
+> >
 > 
-> This one too, - is it qemu-stable material (10.0 & 10.1)?
-
-Yes, I think so.
-
-Regards,
-Akihiko Odaki
-
-> For 10.0.x (which is a long-term support series), it needs
-> some adjustments I guess (it doesn't apply to 10.0 directly).
+> Hi Michael,
 > 
-> Thanks,
+> Thanks for picking this up.
 > 
-> /mjt
+> It seems that the version currently queued is actually the initial
+> submission, which had previously been rejected following feedback from
+> Markus Armbruster.
+> I later submitted a corrected version ([v3]) which:
+> 
+> * Addresses all the feedback (including from Markus Armbruster and
+> Daniel P. Berrangé).
+> * Has Daniel’s formal Reviewed-by:
+> 
+> Patch: https://lore.kernel.org/qemu-devel/20250924093138.559872-2-alessandro@0x65c.net/
+> Reviewed-by: https://lore.kernel.org/qemu-devel/aNO7J7Y6wsk1-wyw@redhat.com/
+> 
+> Would you mind updating the queue to reflect this version instead?
+> 
+> Thanks again for your time and all the work you do maintaining virtio!
+> 
+> Best regards,
+> Alessandro
+
+
+So as you likely already noticed
+I replaced just this patch and updated the tag in the pull.
+
+-- 
+MST
 
 
