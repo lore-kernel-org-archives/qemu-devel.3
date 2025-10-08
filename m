@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B6CCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 11:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15823CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 11:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Sdg-0007ui-Tn; Wed, 08 Oct 2025 07:47:24 -0400
+	id 1v6Slb-0000jS-5H; Wed, 08 Oct 2025 07:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6Sdd-0007uS-BL
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:47:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6SlZ-0000jK-JV
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:55:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6SdU-0007mj-QB
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:47:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6SlS-0000M1-SL
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:55:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759924025;
+ s=mimecast20190719; t=1759924516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GLvX2sHAlKlFM/JfXvLH3BDvHXb0pdmT8X99ao8jtUU=;
- b=F3rQJ25TtLmQrUuVJrcqJ3cee1rbmrjJzlRVVBYEwdsFXregdn2ogwowY3UThE+r4Q1ft6
- jntPpcxnEo//Liu3pZXKQ9V2FUsHLiYb54F+czNdcUBpMkl8pqj/i2AfGZcjA+Ab3TrZhp
- 58MahI3lpynA4SmRYRXUiZA4FJcKcDg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+p1z/OtqMtde6r75MPkwW6WZjxiEHU2eS7BelKggiNU=;
+ b=VdCnvOfZI9D4n26AZUJ3XRtaqeCXRO2N72JFLC5ORZu0MZD5cuJRDBrJdeo//WddrqxzWs
+ wBeQizN0rhhu6Ju38kV9nfIYXNFrhS1Fs7Ra3ovD7TUzGdMBy3MKFM/uVwKUNUJVEzWCnK
+ 9DHF9r6tA4UlbCSGahGQtSjjcMKcTdU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-Nxs6INzlMQa1TP5px3gylg-1; Wed, 08 Oct 2025 07:47:04 -0400
-X-MC-Unique: Nxs6INzlMQa1TP5px3gylg-1
-X-Mimecast-MFC-AGG-ID: Nxs6INzlMQa1TP5px3gylg_1759924023
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3f93db57449so3872004f8f.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 04:47:04 -0700 (PDT)
+ us-mta-656-lVKXJPOEPACNi8JgAiCzTw-1; Wed, 08 Oct 2025 07:55:15 -0400
+X-MC-Unique: lVKXJPOEPACNi8JgAiCzTw-1
+X-Mimecast-MFC-AGG-ID: lVKXJPOEPACNi8JgAiCzTw_1759924514
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e7a2c3773so3901445e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 04:55:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759924023; x=1760528823;
+ d=1e100.net; s=20230601; t=1759924514; x=1760529314;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GLvX2sHAlKlFM/JfXvLH3BDvHXb0pdmT8X99ao8jtUU=;
- b=STkgy6isWHNwWRkorMtexyB16+34JFPk90/wPTnw3QgJ40ndIgXuuN0rErXTCizFpN
- QVxahh2+L8UXoztm3GTReByEygrqkqzTZSryxVLY+TdVzVmT1gTeuO4KsaXv6kpHiNSJ
- XJmK07vR6oLRCp/c4Ge/Hc76FOE+w+3fukoS10i1gggn5SQ5SimVAm+2ByRF9qmmYxKH
- 2sd4q3CXdFAmV/jsjJPhzJ6pNHkL3qP1KnLj88c3tOdM1tiP1RVy2aHLp6dNEfIcDA68
- xc2u8rG2X+jAjk5Z8lPH0eTodW1Y0nr3vWeVpSo5AbVgcisQDKImEUmcFGhixe2jqntm
- CHdQ==
+ bh=+p1z/OtqMtde6r75MPkwW6WZjxiEHU2eS7BelKggiNU=;
+ b=mxxnKrpm6imOYD0pnPwQBt4doh1oAHMyhMJhtg1ObPzUQLe5n9YDUb/UUg1pDGj4jY
+ zqfmttANlnxcrHcOSsvHH73N4kiLKtOWSKPKiEoGVZaihzvd0sx0bLUIHFlw/zQvzl/k
+ b2IWMGWARtP9/Xq63FCuuNP/YlAzfPYQvoqP/QTvbyDDtQ9Dq4YmnxysgXbyDRFMR0ca
+ SmLlcWjozOYqVfgCLoHChDvnhkbJoc9dtwTEVkosLWsRFPVTTJczHZRU228Njh6wQXPs
+ G3NRH1BxGt0H0BYvkcsWQLtUnhOFKU/DbbkMi+C+/HlEkKzsRhBTMuMlThueYzI/Wyj8
+ n5jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMvKzSAd2XgJztZ6NmrKahXumoFvGQ2jYVcUbXyfJbRi/VqU7FN5kF2XZ1ByiAXgu9vOktu7Nasj66@nongnu.org
-X-Gm-Message-State: AOJu0YwCGgwNlLE45wDyU8iS7eFBo9adkpfUB+IdN4saiBEIR68UmQC4
- npNwgoNJqxyjhMvGBm2hx2AwYxAIwdQMd0Ri7RecsyuBq2Z979l1vTFpZ9jyyy+pNgbezcK3msz
- QCT7c2jyQJjF7r3FxqgtOgHs4BK0nu4CDtYQwoT1rm+82iZQ4XWL/C67h
-X-Gm-Gg: ASbGncuSaMmheuzJawiqKhVNuO/f/CBCE3QqvhDdoUDVlSyaiZ60gKzDwAZpxR+b35k
- ROj/tTofzuo2fZ7iRQ+jKq1YoO6fuDVxfVY9q357ghlH2TNnYmcZ/Jx9clIXPjsqRspzYUFQ4Nh
- gzvVqzTTmCQC8X/ADu1TdXAeFVjzNLzuJU1xrWhiE+K7y+mb49HblJT1con03I21jDWugWnsUp1
- RPxD6h84Zs3/UceFsz00C/UZBSwX0utiIFaJRO3J49uJmyQVPWYn8citNutz5zMDMfAgUke0tJK
- YeP/KuZ5Ymugx3u7MZOzdwmL3X1li9+D7VHLH4LBp6OrMBUIwAujgrfimnMBR+IBVQF95TmVjD+
- +YwlC7u1zsw==
-X-Received: by 2002:a05:6000:208a:b0:3ee:152e:6774 with SMTP id
- ffacd0b85a97d-42666ac6d60mr1740253f8f.28.1759924022988; 
- Wed, 08 Oct 2025 04:47:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzFftw0YAs2lAfrHqbn6mp9Nvs4WWPfG1qtqtO3v7YOJi2Qu8526bS6LfeW/K356+1BS6mww==
-X-Received: by 2002:a05:6000:208a:b0:3ee:152e:6774 with SMTP id
- ffacd0b85a97d-42666ac6d60mr1740231f8f.28.1759924022589; 
- Wed, 08 Oct 2025 04:47:02 -0700 (PDT)
+ AJvYcCVjY9hmcUoPB3oGhYKnLDVxKJhSmFZ41t3FTUBCohVuUg0Ke5GLRGsmkjzP0nhsO6V1TxtO9YQ+HtGr@nongnu.org
+X-Gm-Message-State: AOJu0YwPHOluKPUvQTa3IntUEB4sd1dRJKEGTbP2YwELvUSMVaP/7la0
+ D4JHYvSzeoaXQx/C4wqWtGetcavgIZ/IJJ9/ydv0Ah+RhwiGGFJ+7XA3kdIByMT7motj+p1O3Di
+ w6yhV7k3/cNUv28ol2OJQ//CFfrl85k+ZtqhW3sUY4SfHM3Y8Ggk+rKsY
+X-Gm-Gg: ASbGncsODnhRVty4qt4fYyBUrAVx9U5AZg5l2dg61lJVifJ95U8wlR+gQlgaVb+vM4p
+ UIrkNHPw2osBcdsLgspNJleUrbpB0KzksJMnrMXwVyQXYPQFd0pITN6UoaTbDsziQzfkJMzJzPh
+ GzHjdpklqcKvoKHc0dSssPs1j1+XZ54/a7f6y4c4Xy9iZInW2ElKky+vgMPMxmvI35mJhBt35J5
+ VGbZl+ZmTD8L2oLhR3FtTlg5PSuRjdB0u8ZH0L1AHPmOJdn8asdn4qnjFNLLJKhj2QN5TqJr/MX
+ pexIotxb+tnq+SwPgZTBpcah0cCGbYANa0FvkK2lZfUDAaupuCDr4XLjeE3WmPQg/RgRREYJWwK
+ gxDDlW3/NNA==
+X-Received: by 2002:a05:6000:3108:b0:3f5:3578:e538 with SMTP id
+ ffacd0b85a97d-425829ee04bmr4479080f8f.21.1759924513895; 
+ Wed, 08 Oct 2025 04:55:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3NT9Tgq5NGPdDZaAt8jbXpzsOUAm6fiAYI9FkC3MQB/VXo2Mcm9yLMwG/TkG3557jpe2E/Q==
+X-Received: by 2002:a05:6000:3108:b0:3f5:3578:e538 with SMTP id
+ ffacd0b85a97d-425829ee04bmr4479067f8f.21.1759924513469; 
+ Wed, 08 Oct 2025 04:55:13 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
  [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9c1589esm34372565e9.9.2025.10.08.04.47.01
+ 5b1f17b1804b1-46fa9c07992sm39118855e9.5.2025.10.08.04.55.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 04:47:02 -0700 (PDT)
-Message-ID: <d4072dec-62da-45cf-b342-c5c785125847@redhat.com>
-Date: Wed, 8 Oct 2025 13:47:00 +0200
+ Wed, 08 Oct 2025 04:55:13 -0700 (PDT)
+Message-ID: <bc904027-5b58-4057-8ef5-15e4ebcca767@redhat.com>
+Date: Wed, 8 Oct 2025 13:55:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] tests: print reason when I/O test is skipped in TAP
- mode
+Subject: Re: [PATCH 3/4] tests: add nbd and luks to the I/O test suites
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -86,7 +85,7 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  qemu-block@nongnu.org
 References: <20251008113552.747002-1-berrange@redhat.com>
- <20251008113552.747002-2-berrange@redhat.com>
+ <20251008113552.747002-4-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251008113552.747002-2-berrange@redhat.com>
+In-Reply-To: <20251008113552.747002-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -160,36 +159,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/10/2025 13.35, Daniel P. Berrangé wrote:
-> The TAP output on a skipped test:
+> This introduces new suits for running I/O tests on NBD and LUKS
+> drivers, giving new make targets
 > 
->    ok raw 181 # SKIP
-> 
-> is not informative.
-> 
-> The test program included a reason, and that should be displayed
-> in TAP mode (it is already shown in non-TAP mode):
-> 
->    ok raw 181 # SKIP Postcopy is not supported
+>   * make check-block-luks
+>   * make check-block-nbd
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/qemu-iotests/testrunner.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   tests/qemu-iotests/meson.build | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
-> index 14cc8492f9..c4ce3e29e9 100644
-> --- a/tests/qemu-iotests/testrunner.py
-> +++ b/tests/qemu-iotests/testrunner.py
-> @@ -174,7 +174,7 @@ def test_print_one_line(self, test: str,
->               elif status == 'fail':
->                   print(f'not ok {self.env.imgfmt} {test}')
->               elif status == 'not run':
-> -                print(f'ok {self.env.imgfmt} {test} # SKIP')
-> +                print(f'ok {self.env.imgfmt} {test} # SKIP {description}')
->               return
->   
->           if lasttime:
+> diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+> index 939a14ffae..5735d67c8c 100644
+> --- a/tests/qemu-iotests/meson.build
+> +++ b/tests/qemu-iotests/meson.build
+> @@ -23,7 +23,9 @@ qemu_iotests_formats = {
+>     'raw': 'slow',
+>     'qed': 'thorough',
+>     'vmdk': 'thorough',
+> -  'vpc': 'thorough'
+> +  'vpc': 'thorough',
+> +  'nbd': 'thorough',
+> +  'luks': 'thorough',
+>   }
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Before we do that, I'd first see a solution for the problem that I described 
+in my series here:
+
+https://lore.kernel.org/qemu-devel/20250910153727.226217-1-thuth@redhat.com/
+
+which, by the way, contains a patch that is very similar to yours here.
+
+Also not sure whether we should add "nbd" to the "formats" list - it's a 
+protocol, and not a format, isn't it?
+
+  Thomas
 
 
