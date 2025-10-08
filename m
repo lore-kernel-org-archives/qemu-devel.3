@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CE8CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 15:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B7BCCD183
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6WYy-00089x-65; Wed, 08 Oct 2025 11:58:48 -0400
+	id 1v6WdU-0003SR-Iy; Wed, 08 Oct 2025 12:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v6WYo-00086i-QA; Wed, 08 Oct 2025 11:58:41 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v6WYh-0001V7-Oq; Wed, 08 Oct 2025 11:58:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1759939111; x=1791475111;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=1BouwLaDdnUKXtsovcRtz7AKvj03mAL2ND+hoCcpCdw=;
- b=HAgmNnJ8sG389o1dnGqZqCkOcCLTacUrTThCBJ7OMoNbD3vmVlZtQUxD
- qD49EDVudJxEcPOyUgfBs5y1OM3yDvlP0ikTo6YyqgfCtnB6lqUKDbfRT
- K07l/jlp31JzoXjMFoJfw9DFl/QUfoFLSCz3eE78bsr8R7jCYcu555y/q
- yFGKGp7tXD0Omn10B/MdrGQ8SHuwH7Bvu7RUGu9XBwqImVDpClVjU1Jvh
- yRB5mrauGw6xFxHTtejHI1p7O8N/bNYFCMG5VDrt4weykph52gkUQui7u
- YUWW1rCq5PG7rlv84KINuEwzrkFoPMotc/MSRZY1aKpeKl5DImPX0f2kh Q==;
-X-CSE-ConnectionGUID: kQMDFUcmQ4y3vQgIUcxMhg==
-X-CSE-MsgGUID: hMHhScHFTSGjEgL05uk/AA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11576"; a="79574800"
-X-IronPort-AV: E=Sophos;i="6.19,213,1754982000"; d="scan'208";a="79574800"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Oct 2025 08:58:24 -0700
-X-CSE-ConnectionGUID: kj/JBHdVTO60oM9Exep1+A==
-X-CSE-MsgGUID: xs+Ut2d8RqihU9+DtpGDwQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,213,1754982000"; d="scan'208";a="180886281"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 08 Oct 2025 08:58:23 -0700
-Date: Thu, 9 Oct 2025 00:20:26 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: Re: [PATCH for-10.0.x] Revert "target/i386: do not expose
- ARCH_CAPABILITIES on AMD CPU"
-Message-ID: <aOaPSlnBg3rCMLbW@intel.com>
-References: <20251008134112.527650-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6WdM-0003Pk-DP
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:03:21 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6Wcw-0002S4-U2
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:03:19 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-27edcbbe7bfso117726585ad.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:02:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1759939368; x=1760544168; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rWAh6iT1BTM+JU8RITlgdOAdYNdcr/rIU/+63TMPvFQ=;
+ b=teTZAkyi+bcBhst0s7dcRLM1vIjHM0R0YnEZwQCzz++M5y/ltg/FhtabqRk+2CA8RT
+ zwjze8IxLYKZtblOHwRJyHSKCuJwVFesEwWlIhrQ1KzFBB67URCbQCp7EPENyC263TLw
+ O+SA3z+HEMEhEY00vKusHzTgeoQGBXAApzAQhnaVDyXmo4kCFAR2S9fPdI3CRYDAiW84
+ FfrKtHJ8ialBI8NJ2cBtPG3FpsSAb+etmP++tFq1ar75htAJgfXE+W40F2NRbmsgy74Q
+ T4nG5QVpBJ8GDimirSleMc9qWZfhBxCXyFbl+nvu7GoZ28+HOyO6e0DKyf17wtEetE18
+ VPeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759939368; x=1760544168;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rWAh6iT1BTM+JU8RITlgdOAdYNdcr/rIU/+63TMPvFQ=;
+ b=ngyThBGowvyTHouVzQ8aa7z4+amy6D2QQ4e7qy7EvnkYQA3l7PAo3afj/kISXlL9KN
+ No2O7/3dP7J9qQO+LLVS5/H/94kmvKlkWZWOhudJfIF+ZYM/YF33fsaMVIccKqZW8vmq
+ mlVUP9/elTP13/C6tPYKobQOE6ztz59H9fi7KCrPIjyqNG8CcdA+rjng34qy2RaqGsHX
+ 2Pk5BJIkc9McXAp3QMwYLIsW+ujrsB8ppePOfLkHl0OovWTKUIdoj/laXORoQhli5g7T
+ UG6vB3sDkB2eoB11XPbn6Azslca2sHRKLz7LfJaGc14ACjJjYcGKjEPvXqqR+MWqCqDJ
+ isQw==
+X-Gm-Message-State: AOJu0Yyf/VIXDLMEx42EGYrFtnaCM0qbGVNyNflchaNxiZ9wPPF801+v
+ PIGXVe9oxHeISDOMoAoRd5oLjYvKvAE4Dxka6Zna6lrmwtBVKIQmN9PeAkgr+BGAI9c=
+X-Gm-Gg: ASbGncu6TxoQMYxT+AN2Vakhar/GskNe3Oj+rVtUcttnEg9kmWzsI/uweR6W4/01PBq
+ pYbErKIbTpKoFeUjU+/OIKUtGC22Or7xfmkNia5aGsa07OhOp2hFveGACXjQvb0De/olnPeI8OZ
+ fnNMSPe6DDcETxlOomP+1Zsg8ckuMr5ZwM3kQbblxk/EtpDwHyksxptXmIlWgEey843tURnBt4J
+ 2eZ/ZTK95VaTZuCGR6zcwcPYW3d5Jsf0UhRmYDUkI5wGGWi114FuVjM0MUMlrBqQ9qvM3UCDmOH
+ zSwxcT2II07JaMrZ5zQ2WaK0pC4sH4w9NBQR4N+GvCUXeyKYPFcurSAQz95dfuRta3XnwNLHGVJ
+ +uGHL7Za66dEbgBDHNQoVGTR87I5mnmCrYZPzj6Wu0AENet78ZOAZ5ze7N0dOdGTs
+X-Google-Smtp-Source: AGHT+IE/siM2fhco5D7ldeSE1RxJvt+VpR+5LpSTmVAlH59RWa/Ge26apAT5zoB49N+YD7n9YKXYDw==
+X-Received: by 2002:a17:902:e5c5:b0:264:f3ed:ee10 with SMTP id
+ d9443c01a7336-290272157b5mr61995715ad.11.1759939367529; 
+ Wed, 08 Oct 2025 09:02:47 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034f05c2dsm1160045ad.73.2025.10.08.09.02.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Oct 2025 09:02:47 -0700 (PDT)
+Message-ID: <7bf3d8c5-df07-4cbd-ba62-4c7246a5f96b@linaro.org>
+Date: Wed, 8 Oct 2025 09:02:45 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251008134112.527650-1-mjt@tls.msk.ru>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] linux-user/hexagon: Fix sigcontext
+To: Anton Johansson <anjo@rev.ng>, Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org,
+ matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
+ marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, =?UTF-8?Q?Alex_R=C3=B8nne_Petersen?=
+ <alex@alexrp.com>, Laurent Vivier <laurent@vivier.eu>
+References: <20251008014754.3565553-1-brian.cain@oss.qualcomm.com>
+ <37cyiiwd6ktmjvfue7t6ifw727p4pdl52wfpbuyll7aqsocxk7@6wro7hlwb6mc>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <37cyiiwd6ktmjvfue7t6ifw727p4pdl52wfpbuyll7aqsocxk7@6wro7hlwb6mc>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,29 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 08, 2025 at 04:41:10PM +0300, Michael Tokarev wrote:
-> Date: Wed, 8 Oct 2025 16:41:10 +0300
-> From: Michael Tokarev <mjt@tls.msk.ru>
-> Subject: [PATCH for-10.0.x] Revert "target/i386: do not expose
->  ARCH_CAPABILITIES on AMD CPU"
-> X-Mailer: git-send-email 2.47.3
+On 10/8/25 08:27, Anton Johansson wrote:
+> On 08/10/25, Brian Cain wrote:
+>> In order to correspond with the kernel, we've now (1) moved the
+>> preds[] to the right offset and combined the representation as a single
+>> ulong "p3_0", (2), added the cs{0,1} registers, (3) added a pad for 48
+>> words, (4) added the user regs structure to an 8-byte aligned
+>> target_sigcontext structure.
+>>
+>> Co-authored-by: Alex Rønne Petersen <alex@alexrp.com>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   linux-user/hexagon/signal.c | 199 ++++++++++++++++++++----------------
+>>   1 file changed, 111 insertions(+), 88 deletions(-)
+>>
+>> diff --git a/linux-user/hexagon/signal.c b/linux-user/hexagon/signal.c
+>> index 492b51f155..6c3dbf91fa 100644
+>> --- a/linux-user/hexagon/signal.c
+>> +++ b/linux-user/hexagon/signal.c
+>> @@ -23,7 +23,7 @@
+>>   #include "signal-common.h"
+>>   #include "linux-user/trace.h"
+>>   
+>> -struct target_sigcontext {
+>> +struct target_user_regs_struct {
+>>       target_ulong r0,  r1,  r2,  r3;
+>>       target_ulong r4,  r5,  r6,  r7;
+>>       target_ulong r8,  r9, r10, r11;
+>> @@ -39,14 +39,21 @@ struct target_sigcontext {
+>>       target_ulong m0;
+>>       target_ulong m1;
+>>       target_ulong usr;
+>> +    target_ulong p3_0;
+>>       target_ulong gp;
+>>       target_ulong ugp;
+>>       target_ulong pc;
+>>       target_ulong cause;
+>>       target_ulong badva;
+>> -    target_ulong pred[NUM_PREGS];
+>> +    target_ulong cs0;
+>> +    target_ulong cs1;
+>> +    target_ulong pad1;
+>>   };
 > 
-> This reverts commit 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
-> (v10.0.2-66-g24778b1c7ee7) from the 10.0.x branch.
+> struct layout looks good assuming it must correspond to
+> `arch/hexagon/include/uapi/asm/user.h`.  Add a `/* pad to 48 words */`
+> comment to pad1, and static assert following the struct definition
 > 
-> The problem is that the change makes qemu 10.0.x non-migratable
-> to subsequent qemu versions, since it requires introducing a new
-> machine type.
-> 
-> This revert re-introduces the problem with windows guests (which
-> is already fixed in windows but not in prior versions).
-> Details: https://gitlab.com/qemu-project/qemu/-/issues/3001
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  target/i386/kvm/kvm.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
+>    QEMU_BUILD_BUG_ON(sizeof(struct target_user_regs_struct) != 48*4);
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+As long as you're fixing things, all of these target_ulong should be abi_ulong, because 
+user_regs_struct uses 'unsigned long'.
 
+
+r~
 
