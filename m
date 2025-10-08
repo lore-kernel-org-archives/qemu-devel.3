@@ -4,105 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0D5CCD183
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:30:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1B3CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:37:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6X2o-0007Za-Rk; Wed, 08 Oct 2025 12:29:38 -0400
+	id 1v6X8q-0001JQ-G8; Wed, 08 Oct 2025 12:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1v6X2e-0007Xu-QC
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:29:31 -0400
-Received: from mail-il1-x132.google.com ([2607:f8b0:4864:20::132])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v6X8o-0001Ii-BP
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:35:50 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1v6X2V-0007SU-2I
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:29:28 -0400
-Received: by mail-il1-x132.google.com with SMTP id
- e9e14a558f8ab-42f69f5db55so260665ab.0
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:29:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v6X7i-0000Wy-JE
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:35:48 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-330469eb750so113133a91.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1759940951; x=1760545751; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=SGCrKoZ3SyWimYoZQ8dNyyH+rUrdr46H9MVfr0Ark48=;
- b=V1VB2Oc7kMyfB1mB5DqSSX/hp90+YgHBA0Xwh5m8B5x6Ryy+ZMKQkg1BVwZbQJhGsz
- s1SCr8ePJiC53wSZXrNSLd8c08TAAGjQQHYoOXNI/x3Ibv8zxQl2yyqeiiSHxSMckjQa
- R/c0ihV4ohM6JYUE50qUpg8hkofRkOTyGSo/Jax1Xw7If9Of5SDDLWKy07JYQed68lZB
- VxkopAjAhZHZ15duvwJfZHJ4w9X3b5F1p99FtCKjhOcrzp/5RH8brb2ewu3tmshJh17k
- o8ceQII3kNvprqooCcmfEfPLAhbFCrEAehnUrlRjYLoFjM9EDd3ln2NmkEniJwI4UbKV
- hKaQ==
+ d=linaro.org; s=google; t=1759941273; x=1760546073; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=346pFNDRPIW86vtU6Q0PGhiz/IFYmG8Fle9CEvOB4Rc=;
+ b=eqmmkz0ke4PrUWBNJ7hwP6T80rFhcd85ZUzyrEyZbqQzMqxRIzP1088pOYiqoNg85p
+ svmTsKMefjTjZ5U32FT80RLcrXNDbxF9rbH/lrWI+Ifm/vUgePv71ireKJJKBdZh4Wnm
+ k5/jghFQojNKYLeAIgkbpdwYVhdL0eZkTmQMhKh73nYZzahoNp2JsXrm4lKa6GsbPclU
+ YTPC2cjD4rw6GruP2GeTekWZ/Ti6y+yljR9+HI6AOehDxkubN10ej7sQW46ERhAr5N11
+ viALlHLmHQM2iNTJuRLE7O7m95m45WKUugupVYQCkXSBltVbHksXTwHEUzaj0sbhffCu
+ e12g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759940951; x=1760545751;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1759941273; x=1760546073;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SGCrKoZ3SyWimYoZQ8dNyyH+rUrdr46H9MVfr0Ark48=;
- b=GrQX5B299S+B4wPoUd6o5Ufs8+3KrGLN8YEx98CTzmLEe0wvtzZ+jePEcwSv8L5tXY
- +HlIYLdn9Uy+6oGQb41GGC1OfnZyjmNvNAEoKD8eS94hSmxulbV/AbrFr2IBBDrvNFhf
- NXf1arstP5IFDnIpqzZq/GrMYORsrUA2Ph3mK4OLl9JFKK/aiRvDKLznNIqOjEluhCdA
- 5xC4UjHVJiOSlwnIAqzg/NBTt+e3chQG9KAjFkk/IlC1dvTWPDTck+I0eYdIxZ+zlAxs
- /x9kTTOrBjk8cmWfAuRfOUizZTt/gZGgt+AFWxaxup775z8Yw2cb86YxGkCbIqGX48vn
- 19GA==
-X-Gm-Message-State: AOJu0YxIcjaSmgsiITrfb/ej7VtDkulIStuc854JazBRj7YV1A6rRXuI
- xhFnIdkEiFxT1BKgU/4iXlS+RcV0SbjCFg+HLcME5poT2y7vGCfdXa3BxiZXu4QLtsA=
-X-Gm-Gg: ASbGnctaVHVCeH6BhZRVUvEBzdIvmJ6snq9nN2mgwSYzvegAMx4xQtuK0yQ3fZjF58T
- BMFyK+5+LR/rTIkeYvuktSqbqOy2j8abWt79Rq8z861pXSyrAAb1QeRcdn8B7j04I5L2eYFQfbi
- 2A7xM77LdFxMIel9Y5p+rTlJG2S+f3vwMBcc1yMO1L598Yo5nWY7sz4b7XwBm8s9jMxpxChi7uS
- K06QG05s2zFzMEHB1D+80TDSwzspVoz+JwP+gVsuCWAtYSpI17mYapdv+pSvnNJWZRI7OX6AHQM
- BUtGGNQ03VZ6/+UUNelZMh1espToqq+3oqrB8G2ranpeh/+XItqB/P4Ns4T34PehaFraq49f0oq
- SJ1Usg91g24gsWJJyd+1Dyc4eslXCzrYNBTVoAgW8vQRs3E9J
-X-Google-Smtp-Source: AGHT+IFnNVr7p4Ri2YprEd6Qzm6yZMtzB1axGPgJVrk5CTzM+uM6dsNRed2Gw/60wJdbFLsVj5viYg==
-X-Received: by 2002:a05:6e02:178f:b0:42f:8da6:86c3 with SMTP id
- e9e14a558f8ab-42f8da68abamr17812185ab.2.1759940950779; 
- Wed, 08 Oct 2025 09:29:10 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-57b5ea300f7sm7148800173.16.2025.10.08.09.29.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Oct 2025 09:29:10 -0700 (PDT)
-Date: Wed, 8 Oct 2025 11:29:09 -0500
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, kvm@vger.kernel.org, 
- Aleksandar Rikalo <arikalo@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-s390x@nongnu.org,
- David Hildenbrand <david@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, Song Gao <gaosong@loongson.cn>,
- Weiwei Li <liwei1518@gmail.com>, 
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>, 
- Eric Farman <farman@linux.ibm.com>
-Subject: Re: [PATCH v2 0/3] accel/kvm: Cleanups around kvm_arch_put_registers()
-Message-ID: <20251008-3120f4e8a25446b5a05aaa7d@orel>
-References: <20251008040715.81513-1-philmd@linaro.org>
+ bh=346pFNDRPIW86vtU6Q0PGhiz/IFYmG8Fle9CEvOB4Rc=;
+ b=T6L1dfi85JKBjaShYzGb5yTIc0vzTM9NUVw+jsbwWmVsZvMCVdQixIATXZJUORTU0D
+ JygdMPfUB8kEij+mmG+rNHwLN39hHIIpx8sB6ipHS2pQ/sJ7DRetLOe3cHxQq++BkxPd
+ 6wOUNEKUdgcwWE2DGGNiULTUppM92wFpmBnb1KOQGqG/MV+KwOKry8W5eBDna2tnpNPK
+ QQ1W6hltVuqwQGSO+8RhdU/lcE9j3sIQZlRKyUca04GhpJSuGcIsj+5GpyTl/S6fxsA6
+ 9uKwpE1kiOAR8S4QOCS9cRMQ9mEdrUgOuMutcS82hrc+1pEGT+JKoerfFU/Dw9WC6Ioq
+ HBGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUENmej+pr6OS0apX7og1NCRTq2H17n2i2ZlTnnlRuCz1O/R+Fpic4oeo70qtyz06C1+Rf9IKGIwJ/i@nongnu.org
+X-Gm-Message-State: AOJu0YwUd6KlSfQxBU4RNUZOyNT2fJU8kYd5HKQtIidSwnDZEmVB04KX
+ WHllN2xFXwVQe1RsAtRfOhkpbCVOfC5S8Xu001oMcC4tF95t3ZexVpCOu7ZTduqJ6MoO++ZkA0r
+ wlLiwBTA=
+X-Gm-Gg: ASbGncv+Xn3SYkKT1YdNx0E1ZbDFHSu1uiox3WVKiiiZubgfa2wXOFppFqXKekHqLU4
+ 8mHJcelkWGxFMnmbuxFLaHp6JZcjRFCelL0oAkJXroM9eB9ZR1kwKx9yKPLVxzB3UsS/BkCIps4
+ bucZ2sGcDnevpxZQ4nz2Oa/8UNM8punZ2ZHglw612MUAxFqbyp2zh49SOba7nZjre+dP0ro0yev
+ Dd92eEqzSi8tSX87IpXyq2+0g+u2a4N/YolnBCdtfO4sHDL2NgEUp+lbXSD5a7mhXNLNTZ+cGo5
+ f9rpfkxMu0Vc2hwwvNbU/lhmrr++lqRAD6l2mVFbpvm4Kgvzvqng0dPCWr6BMoox5gVE8SvMvHa
+ u1WBAt0ZhXjIdOlvFhsKaiP8mcRc3Cpf5rwqXpX0m28zeTQULq7r/wNmtrlEnJYcffZpyBYXRFg
+ ==
+X-Google-Smtp-Source: AGHT+IFdMh5rGXFQCkIlO+1sm2XZsRdJUrr+/TKvPdRV5e2KpA3zltcjx7+vgzfFtg0qlrBCCp8ZmA==
+X-Received: by 2002:a17:90b:1b11:b0:32e:70f5:6988 with SMTP id
+ 98e67ed59e1d1-33b51391ab4mr5073330a91.32.1759941272677; 
+ Wed, 08 Oct 2025 09:34:32 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b6311462b24sm7993226a12.37.2025.10.08.09.34.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Oct 2025 09:34:32 -0700 (PDT)
+Message-ID: <fb66bad0-1b40-49cd-bd99-8751726daacf@linaro.org>
+Date: Wed, 8 Oct 2025 09:34:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251008040715.81513-1-philmd@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132;
- envelope-from=ajones@ventanamicro.com; helo=mail-il1-x132.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] linux-user: add syscall-filter and fork-cpu in plugin
+ interfaces
+Content-Language: en-US
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, alex.bennee@linaro.org
+References: <1131357261.3273575.1759928457969.JavaMail.zimbra@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1131357261.3273575.1759928457969.JavaMail.zimbra@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,34 +106,420 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 08, 2025 at 06:07:11AM +0200, Philippe Mathieu-Daudé wrote:
-> Extracted from a bigger series aiming to make accelerator
-> synchronization of vcpu state slightly clearer. Here KVM
-> patches around kvm_arch_put_registers():
-> - Move KVM_PUT_[RESET|RUNTIME|FULL]_STATE to an enum
-> - Factor common code out of kvm_cpu_synchronize_post_*()
-> 
-> Philippe Mathieu-Daudé (3):
->   accel/kvm: Do not expect more then KVM_PUT_FULL_STATE
->   accel/kvm: Introduce KvmPutState enum
->   accel/kvm: Factor kvm_cpu_synchronize_put() out
-> 
->  include/system/kvm.h       | 16 +++++++------
->  accel/kvm/kvm-all.c        | 47 +++++++++++++++-----------------------
->  target/i386/kvm/kvm.c      |  6 ++---
->  target/loongarch/kvm/kvm.c |  8 +++----
->  target/mips/kvm.c          |  6 ++---
->  target/ppc/kvm.c           |  2 +-
->  target/riscv/kvm/kvm-cpu.c |  2 +-
->  target/s390x/kvm/kvm.c     |  2 +-
->  8 files changed, 41 insertions(+), 48 deletions(-)
-> 
-> -- 
-> 2.51.0
-> 
->
+Hy Ziyang,
 
-For the series,
+On 10/8/25 6:00 AM, Ziyang Zhang wrote:
+> This commit introduces a syscall filtering mechanism for user-mode
+> emulation, allowing plugins to intercept and handle system calls.
+> 
+> Key features:
+> - New API functions: qemu_plugin_set_syscall_filter() and
+>    qemu_plugin_fork_cpu_loop()
+> - A new enum qemu_plugin_syscall_filter_ret to represent filter results
+> - Integration into the cpu loop for i386 and x86_64
+> - A new header file include/user/syscall-filter.h
+> 
+> The filtering mechanism works by allowing a plugin to register a
+> callback that is invoked before each system call. The callback can
+> decide whether to pass, skip, or exit the current cpu loop. When
+> skipping, the plugin can provide a value to be returned to the guest.
+> 
+> Additionally, a new function qemu_plugin_fork_cpu_loop() is provided to
+> allow plugins to fork a new cpu loop, which is useful for temporarily
+> resuming guest emulation (e.g., for executing callbacks) during the
+> first system call.
+> 
+> The implementation inserts the filter checks in the cpu loop for both
+> the int $0x80 (i386) and syscall (x86_64) paths.
+> 
+> At KVM Forum 2025, we presented Lorelei, a system designed to enable
+> guest programs executed by the QEMU user-mode emulator to accelerate
+> performance by invoking natively compiled host libraries via syscalls.
+> We have successfully supported libraries such as SDL, OpenGL, and
+> Vulkan, allowing QEMU user-mode to emulate GPU-dependent games.
+> 
+> Following an invitation from Mr. Bouvier to upstream Lorelei to QEMU, we
+> refined its architecture to load the Lorelei module as a TCG plugin.
+> 
+> Since host libraries may execute guest function pointers (callbacks),
+> Lorelei implements a novel nested execution model:
+> 
+> - During syscall filtering, Lorelei triggers a temporary cpu_loop when a
+>    host library begins executing a guest callback
+> - This temporarily reverts to full emulation mode to execute the guest
+>    callback
+> - The guest code then issues a magic syscall to exit the temporary
+>    cpu_loop
+> - Control returns to the host library's original execution context
+> 
+> 
+> Slides: https://gitlab.com/qemu-project/kvm-forum/-/raw/main/_attachments/2025/Slides_DQPMaZE.pdf
+> Video: https://www.youtube.com/watch?v=_jioQFm7wyU&list=PLW3ep1uCIRfxwmllXTOA2txfDWN6vUOHp&index=22
+> 
+> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+> ---
+>   include/qemu/plugin.h         | 28 +++++++++++++++++++
+>   include/qemu/qemu-plugin.h    | 44 +++++++++++++++++++++++++++++
+>   include/user/syscall-filter.h | 36 ++++++++++++++++++++++++
+>   linux-user/i386/cpu_loop.c    | 52 +++++++++++++++++++++++++++++++++--
+>   linux-user/main.c             |  1 +
+>   linux-user/user-internals.h   |  1 +
+>   plugins/api.c                 | 14 ++++++++++
+>   plugins/core.c                | 31 +++++++++++++++++++++
+>   plugins/plugin.h              |  8 ++++++
+>   9 files changed, 213 insertions(+), 2 deletions(-)
+>   create mode 100644 include/user/syscall-filter.h
+> 
+> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> index af5f9db469..7b1e7df035 100644
+> --- a/include/qemu/plugin.h
+> +++ b/include/qemu/plugin.h
+> @@ -207,6 +207,22 @@ void qemu_plugin_user_prefork_lock(void);
+>    */
+>   void qemu_plugin_user_postfork(bool is_child);
+>   
+> +/**
+> + * qemu_plugin_filter_syscall(): filter a system call
+> + * @cpu: CPUState pointer
+> + * @num: syscall number
+> + * @a1-a8: syscall arguments
+> + * @sysret: pointer to the sysret value, not used if passed
+> + * @return: syscall filter return value
+> + */
+> +int qemu_plugin_filter_syscall(CPUState *cpu,
+> +                               int num, uint64_t a1, uint64_t a2,
+> +                               uint64_t a3, uint64_t a4, uint64_t a5,
+> +                               uint64_t a6, uint64_t a7, uint64_t a8,
+> +                               uint64_t *sysret);
+> +
+> +void qemu_plugin_set_fork_cpu_loop_entry(void (*entry)(uint64_t));
+> +
+>   #else /* !CONFIG_PLUGIN */
+>   
+>   static inline void qemu_plugin_add_opts(void)
+> @@ -277,6 +293,18 @@ static inline void qemu_plugin_user_prefork_lock(void)
+>   static inline void qemu_plugin_user_postfork(bool is_child)
+>   { }
+>   
+> +static inline
+> +int qemu_plugin_filter_syscall(CPUState *cpu,
+> +                               int num, uint64_t a1, uint64_t a2,
+> +                               uint64_t a3, uint64_t a4, uint64_t a5,
+> +                               uint64_t a6, uint64_t a7, uint64_t a8,
+> +                               uint64_t *sysret)
+> +{ }
+> +
+> +static inline
+> +void qemu_plugin_set_fork_cpu_loop_entry(void (*entry)(uint64_t))
+> +{ }
+> +
+>   #endif /* !CONFIG_PLUGIN */
+>   
+>   #endif /* QEMU_PLUGIN_H */
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index c71c705b69..2567eba673 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -939,4 +939,48 @@ void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
+>   QEMU_PLUGIN_API
+>   uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
+>   
+> +/**
+> + * enum qemu_plugin_syscall_filter_ret - syscall filter return values
+> + *
+> + * @QEMU_PLUGIN_SYSCALL_FILTER_PASS: control should continue as usual
+> + * @QEMU_PLUGIN_SYSCALL_FILTER_SKIP: syscall is filtered and skipped
+> + * @QEMU_PLUGIN_SYSCALL_FILTER_EXIT: current cpu loop should exit
+> + *
+> + */
+> +enum qemu_plugin_syscall_filter_ret {
+> +    QEMU_PLUGIN_SYSCALL_FILTER_PASS = 0,
+> +    QEMU_PLUGIN_SYSCALL_FILTER_SKIP,
+> +    QEMU_PLUGIN_SYSCALL_FILTER_EXIT,
+> +};
+> +
+> +/**
+> + * typedef qemu_plugin_syscall_filter_cb_t - syscall filter callback
+> + * @num: syscall number
+> + * @a1-a8: syscall arguments
+> + * @sysret: pointer to the sysret value, only used when returning SKIP
+> + * @return: syscall filter return value
+> + */
+> +typedef int
+> +(*qemu_plugin_syscall_filter_cb_t)(uint64_t num, uint64_t a1, uint64_t a2,
+> +                                   uint64_t a3, uint64_t a4, uint64_t a5,
+> +                                   uint64_t a6, uint64_t a7, uint64_t a8,
+> +                                   uint64_t *sysret);
+> +
+> +/**
+> + * qemu_plugin_set_syscall_filter() - set the unique syscall filter
+> + * @id: plugin ID
+> + * @cb: callback function to filter the syscall
+> + *
+> + * Returns true if the filter was set, false if the syscall number is already
+> + * registered or if the callback is NULL.
+> + */
+> +bool qemu_plugin_set_syscall_filter(qemu_plugin_id_t id,
+> +                                    qemu_plugin_syscall_filter_cb_t cb);
+> +
+> +/**
+> + * qemu_plugin_fork_cpu_loop() - fork a new cpu loop
+> + * @sysret: value to return to the child cpu loop
+> + */
+> +void qemu_plugin_fork_cpu_loop(uint64_t sysret);
+> +
+>   #endif /* QEMU_QEMU_PLUGIN_H */
+> diff --git a/include/user/syscall-filter.h b/include/user/syscall-filter.h
+> new file mode 100644
+> index 0000000000..45db9ff8f5
+> --- /dev/null
+> +++ b/include/user/syscall-filter.h
+> @@ -0,0 +1,36 @@
+> +/*
+> + * System Call Filter Wrappers for *-user
+> + *
+> + * Copyright (c) 2019 Linaro
+> + * Written by Ziyang Zhang <functioner@sjtu.edu.cn>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef SYSCALL_FILTER_H
+> +#define SYSCALL_FILTER_H
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +#error Cannot include this header from system emulation
+> +#endif
+> +
+> +#include "user/abitypes.h"
+> +#include "qemu/plugin.h"
+> +
+> +static inline int filter_syscall(CPUState *cpu, int num,
+> +                                 abi_long arg1, abi_long arg2,
+> +                                 abi_long arg3, abi_long arg4,
+> +                                 abi_long arg5, abi_long arg6,
+> +                                 abi_long arg7, abi_long arg8, abi_ulong *sysret)
+> +{
+> +    uint64_t sysret64 = 0;
+> +    int ret = qemu_plugin_filter_syscall(cpu, num,
+> +                             arg1, arg2, arg3, arg4,
+> +                             arg5, arg6, arg7, arg8, &sysret64);
+> +    if (ret != QEMU_PLUGIN_SYSCALL_FILTER_PASS) {
+> +        *sysret = sysret64;
+> +    }
+> +    return ret;
+> +}
+> +
+> +#endif // SYSCALL_FILTER_H
+> diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
+> index 92beb6830c..adbe48bb05 100644
+> --- a/linux-user/i386/cpu_loop.c
+> +++ b/linux-user/i386/cpu_loop.c
+> @@ -24,6 +24,7 @@
+>   #include "cpu_loop-common.h"
+>   #include "signal-common.h"
+>   #include "user-mmap.h"
+> +#include "user/syscall-filter.h"
+>   
+>   /***********************************************************/
+>   /* CPUX86 core interface */
+> @@ -203,8 +204,21 @@ static bool maybe_handle_vm86_trap(CPUX86State *env, int trapnr)
+>       return false;
+>   }
+>   
+> -void cpu_loop(CPUX86State *env)
+> -{
+> +static void cpu_loop_impl(CPUX86State *env);
+> +
+> +void cpu_loop(CPUX86State *env) {
+> +    cpu_loop_impl(env);
+> +    __builtin_unreachable();
+> +}
+> +
+> +void fork_cpu_loop(uint64_t sysret) {
+> +    CPUX86State *env = cpu_env(thread_cpu);
+> +    env->regs[R_EAX] = sysret;
+> +    process_pending_signals(env);
+> +    cpu_loop_impl(env);
+> +}
+> +
+> +static void cpu_loop_impl(CPUX86State *env) {
+>       CPUState *cs = env_cpu(env);
+>       int trapnr;
+>       abi_ulong ret;
+> @@ -220,6 +234,23 @@ void cpu_loop(CPUX86State *env)
+>   #ifndef TARGET_X86_64
+>           case EXCP_SYSCALL:
+>   #endif
+> +            /* syscall filter */
+> +            {
+> +                int syscall_filter_ret = filter_syscall(cs,
+> +                             env->regs[R_EAX],
+> +                             env->regs[R_EBX],
+> +                             env->regs[R_ECX],
+> +                             env->regs[R_EDX],
+> +                             env->regs[R_ESI],
+> +                             env->regs[R_EDI],
+> +                             env->regs[R_EBP],
+> +                             0, 0, &ret);
+> +                if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_EXIT)
+> +                    return;
+> +                else if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_SKIP)
+> +                    break;
+> +            }
+> +
+>               /* linux syscall from int $0x80 */
+>               ret = do_syscall(env,
+>                                env->regs[R_EAX],
+> @@ -238,6 +269,23 @@ void cpu_loop(CPUX86State *env)
+>               break;
+>   #ifdef TARGET_X86_64
+>           case EXCP_SYSCALL:
+> +            /* syscall filter */
+> +            {
+> +                int syscall_filter_ret = filter_syscall(cs,
+> +                                env->regs[R_EAX],
+> +                                env->regs[R_EDI],
+> +                                env->regs[R_ESI],
+> +                                env->regs[R_EDX],
+> +                                env->regs[10],
+> +                                env->regs[8],
+> +                                env->regs[9],
+> +                                0, 0, &ret);
+> +                if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_EXIT)
+> +                    return;
+> +                else if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_SKIP)
+> +                    break;
+> +            }
+> +
+>               /* linux syscall from syscall instruction.  */
+>               ret = do_syscall(env,
+>                                env->regs[R_EAX],
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index 8143a0d4b0..32b7fe38c5 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -738,6 +738,7 @@ int main(int argc, char **argv, char **envp)
+>       }
+>       trace_init_file();
+>       qemu_plugin_load_list(&plugins, &error_fatal);
+> +    qemu_plugin_set_fork_cpu_loop_entry(fork_cpu_loop);
+>   
+>       /* Zero out regs */
+>       memset(regs, 0, sizeof(struct target_pt_regs));
+> diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+> index 5c7f173ceb..224c914f33 100644
+> --- a/linux-user/user-internals.h
+> +++ b/linux-user/user-internals.h
+> @@ -66,6 +66,7 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
+>                       abi_long arg8);
+>   extern __thread CPUState *thread_cpu;
+>   G_NORETURN void cpu_loop(CPUArchState *env);
+> +void fork_cpu_loop(uint64_t sysret);
+>   abi_long get_errno(abi_long ret);
+>   const char *target_strerror(int err);
+>   int get_osversion(void);
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 2ff13d09de..f70e141cf7 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -628,3 +628,17 @@ void qemu_plugin_update_ns(const void *handle, int64_t new_time)
+>       }
+>   #endif
+>   }
+> +
+> +bool qemu_plugin_set_syscall_filter(qemu_plugin_id_t id,
+> +                                    qemu_plugin_syscall_filter_cb_t cb)
+> +{
+> +#ifdef CONFIG_USER_ONLY
+> +    return plugin_set_syscall_filter(id, cb);
+> +#else
+> +    return false;
+> +#endif
+> +}
+> +
+> +void qemu_plugin_fork_cpu_loop(uint64_t sysret) {
+> +    plugin_fork_cpu_loop(sysret);
+> +}
+> \ No newline at end of file
+> diff --git a/plugins/core.c b/plugins/core.c
+> index 12c67b4b4e..ea17e85c02 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -692,6 +692,21 @@ void qemu_plugin_user_postfork(bool is_child)
+>       }
+>   }
+>   
+> +int qemu_plugin_filter_syscall(CPUState *cpu,
+> +                               int num, uint64_t a1, uint64_t a2,
+> +                               uint64_t a3, uint64_t a4, uint64_t a5,
+> +                               uint64_t a6, uint64_t a7, uint64_t a8,
+> +                               uint64_t *sysret) {
+> +    if (plugin.syscall_filter_cb) {
+> +        return plugin.syscall_filter_cb(num, a1, a2, a3, a4, a5, a6, a7, a8, sysret);
+> +    }
+> +    return QEMU_PLUGIN_SYSCALL_FILTER_PASS;
+> +}
+> +
+> +void qemu_plugin_set_fork_cpu_loop_entry(void (*entry)(uint64_t)) {
+> +    plugin.fork_cpu_loop_entry = entry;
+> +}
+> +
+>   static bool plugin_dyn_cb_arr_cmp(const void *ap, const void *bp)
+>   {
+>       return ap == bp;
+> @@ -743,3 +758,19 @@ void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
+>       g_array_free(score->data, TRUE);
+>       g_free(score);
+>   }
+> +
+> +bool plugin_set_syscall_filter(qemu_plugin_id_t id,
+> +                               qemu_plugin_syscall_filter_cb_t cb)
+> +{
+> +    if (plugin.syscall_filter_cb) {
+> +        return false;
+> +    }
+> +    plugin.syscall_filter_cb = cb;
+> +    return true;
+> +}
+> +
+> +void plugin_fork_cpu_loop(uint64_t sysret) {
+> +    if (plugin.fork_cpu_loop_entry) {
+> +        plugin.fork_cpu_loop_entry(sysret);
+> +    }
+> +}
+> \ No newline at end of file
+> diff --git a/plugins/plugin.h b/plugins/plugin.h
+> index 30e2299a54..41899a2dc6 100644
+> --- a/plugins/plugin.h
+> +++ b/plugins/plugin.h
+> @@ -48,6 +48,9 @@ struct qemu_plugin_state {
+>       struct qht dyn_cb_arr_ht;
+>       /* How many vcpus were started */
+>       int num_vcpus;
+> +
+> +    qemu_plugin_syscall_filter_cb_t syscall_filter_cb;
+> +    void (*fork_cpu_loop_entry)(uint64_t);
+>   };
+>   
+>   
+> @@ -118,4 +121,9 @@ struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size);
+>   
+>   void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
+>   
+> +bool plugin_set_syscall_filter(qemu_plugin_id_t id,
+> +                               qemu_plugin_syscall_filter_cb_t cb);
+> +
+> +void plugin_fork_cpu_loop(uint64_t sysret);
+> +
+>   #endif /* PLUGIN_H */
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+thanks for posting this!
+
+Just for sake of centralizing the conversation, let's ignore this 
+thread, and answer of the other one, where you added someone else in copy.
+
+I'll answer on other thread.
+
+Pierrick
 
