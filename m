@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49362CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 22:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB00FCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 22:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6cCK-0007lz-60; Wed, 08 Oct 2025 17:59:48 -0400
+	id 1v6c9f-00042f-3y; Wed, 08 Oct 2025 17:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6cAZ-0004Te-OT
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:58:00 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1v6c9a-00040p-OJ
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:56:58 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6c9K-0006ij-Hi
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:57:56 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b4ee87cc81eso222899a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 14:56:36 -0700 (PDT)
+ id 1v6c91-0006dE-I6
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:56:57 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b4fb8d3a2dbso174841a12.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 14:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759960593; x=1760565393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759960579; x=1760565379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cr6Y93u/SVkcU+goxAfQSNSlnm3F8dUSxwzHBpcNsX8=;
- b=JIkSKf/K5RHRxpnRHKBtGNkhwTeifWVUH21Ay6JdHkxQ2LgAddHvmviU96ffWd33qR
- ahqZaUT11/Fv24hLcU84MpPo3Hn2Vxa9FFtcLRdMJbobswRR9yMkzOtIJmItSzEFyGLt
- V7UodFj3Fa0wBYpZGByrff+QKJIG6I8XDTAuMlIQw1o2ZbTCRzB/6fr2e77p4OW8UJMG
- a1N/5GVr7xAyoWTS+bNPeCUHqR9ThKl2WJsocgUgQ8ntGK5+0AmbywLiTua3XY2EB5wC
- th73WDym+NFnPD7PVVTihQnmrFC/Vycay2+XIuHYIf/dc0S6DEk4qF2WORFditUlixyy
- 2yQQ==
+ bh=zQVWUvLcDou/AxWVkjzuguGXQD36QliqcWswbcaqJJI=;
+ b=pBatbaAR17qFvO4NlMU3CeZV1P2wbvXC5y7Du+yxWN4NKLUsmo/oFP9LDTJ7/o9cXR
+ TvVORUT42H1rpSD/RRHhdPmvv0XhYEfpsoJ/qXJc638Ey23xMPBQrwz7qBCTpnt+QV7Z
+ AAnwo/1xJ5qULLFFK83kseG+fMn46NUgY6uixhgXQ+2hrM1AtEKNMnS4f0LFhQf7QSaY
+ R7tCrGX/nxHjOyX1TUsE3B7vFQw2cikoxiXxABeg2tXZslj6BxRSN2DAfkj799ODgQwt
+ rUb7La2jenzXWstQO2EPSx8aLwtHcXyu1gyDnkIIhyZVq0kZl/Tyx/2dtud1VaKn4hdD
+ LLPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759960593; x=1760565393;
+ d=1e100.net; s=20230601; t=1759960579; x=1760565379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cr6Y93u/SVkcU+goxAfQSNSlnm3F8dUSxwzHBpcNsX8=;
- b=H+6VSa+4CRKWrJaiBYuAOxORncmOUtniYsSyMbmTLg3+FOr+lSBP+Kum5LAEMfKILV
- 0/EEroR3m0gNLrnbOlx7A3gKS7tz/uP0kKE2xjBFRT+TaYqfk5iO/1Jz01f1KPNOWe4x
- sJDQ9Q0MLpEsNktBuPjqUtf/D7J7G5gET3cv/KPM7PEmSETWOKPLY2wVL7ldBbW42Dd9
- l1RXzG+da0W/wpt8+XrHUES1I4vNzZSIHJB1KeVYwkpHafdj09ix0Bm+/RtlMBgLwv+0
- VFIV9HDF8HzQKqRgtTMCmHc4zy4TgpKB2KAUbfuRkSZSuk1z667hmE/iFA3+hi+V+BUF
- Uqkg==
-X-Gm-Message-State: AOJu0Yw2K35hiwgPRVlutpCewgyOX6ECxxA6CTdJ22XLn1z33oQ2RxOX
- Ak9hXWqB2w916KSt3hYtG9VF5DeDQEQ9gLd3/DlByghHxM55wV8q0omEzGDN0mpEw5i+L7NU08m
- zMaFtouE=
-X-Gm-Gg: ASbGncuruw0NyR36azGnvKtJnqJBTl8UdxCzTWWSxqShOdXN68INtCe9OQFbUgkVnMa
- voNZjPaOiTCUfMW/BN6BqlEfkGCEzzdRoLtwXDAYQhauPI9SLeDtCPx+/2Q7Sq7Dj/C28BJTj4T
- 8MamhoTcJNmmF79IMKugcjbfSFhqo1Gz1uLmlnDfpz9xUS58ngy3r1oxeIQHA9mgkr+popOmd1V
- P7MkSD+vSZ3N8gUdsz6os6LSaGQlWf3Fdgf5sPvbm0w/6XxrxXqS8cjNmUpyuIhQK8VgPxfRIaD
- wi0pHRD3Ipj1Z1jO1GN1kbY5uxoY1Tj4vFIgCCuZ2OURzog7CE49BjHdc2ng9Xett2yKD/xmdaY
- +efhQJTFLYBozLHnR/+Wlb9i3yCJz08cn4UIdC2V4sMNc9nKOI4FHXIKV
-X-Google-Smtp-Source: AGHT+IGh6mV/rWB2nVYuRnidhRmmUEyrQ4I3tBgAwPuqffTOS8NDLEJ9J5e2JnoX7IEfU9JGlfrnJA==
-X-Received: by 2002:a17:903:2405:b0:267:8049:7c7f with SMTP id
- d9443c01a7336-29027356377mr71668715ad.7.1759960592781; 
- Wed, 08 Oct 2025 14:56:32 -0700 (PDT)
+ bh=zQVWUvLcDou/AxWVkjzuguGXQD36QliqcWswbcaqJJI=;
+ b=YnnWVC6zHrdCNI75Qw3hVo4At3V0fZMDBk+/39x/FtAOQzg437BZxPNDJlI9uw7Krj
+ vWSqnbLF98T1ymtw/W8JSlpc/5VeI6H3edyfHyBBMtO1wh5V1nU1/KuUNxGAKYpWoRgt
+ ex4cNQ0WhXNw3yh4DKPi/tx50oV4yTDjSGHC94A02XpyLXMu2D8JiuV4FhgQwRCWUI6T
+ 7d4219QpBLvI0+2LcRS8fizJp36ogpqa8bnfaipHCBhKMy9dz9rw2f6Xl7vYCdFX1jV/
+ 5XHFZy+4zTfTRsrsah242HKqEFzj1mkQbRbJ8YcVXr9tAOUP9Nhcef4/dc0FqKwgpdRY
+ oDMA==
+X-Gm-Message-State: AOJu0Yw8UzI497YGo9jEjL9BJtX1lr8DvL9MTquiU34ufyOgaQYplapP
+ 5Xbhitpqu0qK4c3tR3+B1QHYaaHK1Gb/CCfJPs+yfxjQSqaZNgNi2Vv9qplZciV2ojVsm4N+QmP
+ kzmom8lo=
+X-Gm-Gg: ASbGncvfoLpnRhYx0QM3doaMCaM06KqN9jrvMHtmO3H5iepF/4i6AccH0tvzv+yBNPt
+ aVdiTQ0xPT+IXWyiVtu2coorpVq+2/btc3oHvnYS4cFiiOW73t8bprHEuKWo1ZFpuZsaWT1j+Am
+ 7IdrSevqAlxjxaUbLCAFL61HqWeq3SQMwkUMGk1REA6/91CTyFFnzK9bb1YSTteel+Qvz8VLrdz
+ KIV5o0S44oIIbDxIZ+ExdgBOaMDz0yw3AW/OKoF+LTuEhlx5N5suEev2e9jn7UOUoOVCdTvBtRX
+ A+YrXyINmZnwmfYzFH1cBph1pzbVfFEj7RRVZ19EJBIIsUgAUAIgsN2TYmWZCwDXnAKUghQA/DB
+ 3/WbAFEo9ka0QTy1pOT2kboT/jL6+l0OMCK5u6qAy0BUvHjP74l8xTNmz
+X-Google-Smtp-Source: AGHT+IHyChMPFRve0iq//XRfsI8/WyMhHAz0/pznFkr3Co/Vy6DFVo5EbBZV+6xkf4EkPM5nNqToJg==
+X-Received: by 2002:a17:903:2a87:b0:25a:24f2:af00 with SMTP id
+ d9443c01a7336-2902721305cmr73599595ad.12.1759960579447; 
+ Wed, 08 Oct 2025 14:56:19 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034e44ef9sm7354285ad.52.2025.10.08.14.56.32
+ d9443c01a7336-29034e44ef9sm7354285ad.52.2025.10.08.14.56.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Oct 2025 14:56:32 -0700 (PDT)
+ Wed, 08 Oct 2025 14:56:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v7 28/73] target/arm: Introduce regime_to_gcs
-Date: Wed,  8 Oct 2025 14:55:28 -0700
-Message-ID: <20251008215613.300150-29-richard.henderson@linaro.org>
+Subject: [PATCH v7 07/73] target/arm: Populate PIE in aa64_va_parameters
+Date: Wed,  8 Oct 2025 14:55:07 -0700
+Message-ID: <20251008215613.300150-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251008215613.300150-1-richard.henderson@linaro.org>
 References: <20251008215613.300150-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,98 +100,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a lookup from any a64 mmu index to the gcs mmu index
-within the same translation regime.
+Select the PIE bit for the translation regime.
+With PIE, the PTE layout changes, forcing HPD.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/mmuidx-internal.h | 10 ++++++++++
- target/arm/mmuidx.c          | 24 +++++++++++++-----------
- 2 files changed, 23 insertions(+), 11 deletions(-)
+ target/arm/internals.h |  3 ++-
+ target/arm/helper.c    | 19 ++++++++++++++++++-
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
-index f494ec348d..962b053852 100644
---- a/target/arm/mmuidx-internal.h
-+++ b/target/arm/mmuidx-internal.h
-@@ -21,6 +21,7 @@ FIELD(MMUIDXINFO, USER, 8, 1)
- FIELD(MMUIDXINFO, STAGE1, 9, 1)
- FIELD(MMUIDXINFO, STAGE2, 10, 1)
- FIELD(MMUIDXINFO, GCS, 11, 1)
-+FIELD(MMUIDXINFO, TG, 12, 5)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 1d958dbf68..face1019f5 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1491,7 +1491,7 @@ static inline int arm_granule_bits(ARMGranuleSize gran)
  
- extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+ /*
+  * Parameters of a given virtual address, as extracted from the
+- * translation control register (TCR) for a given regime.
++ * translation controls for a given regime.
+  */
+ typedef struct ARMVAParameters {
+     unsigned tsz    : 8;
+@@ -1506,6 +1506,7 @@ typedef struct ARMVAParameters {
+     bool ha         : 1;
+     bool hd         : 1;
+     ARMGranuleSize gran : 2;
++    bool pie        : 1;
+ } ARMVAParameters;
  
-@@ -100,4 +101,13 @@ static inline bool regime_is_gcs(ARMMMUIdx idx)
-     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, GCS);
+ /**
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index b7bc27436f..37865bf70e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9386,11 +9386,12 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+                                    bool el1_is_aa32)
+ {
+     uint64_t tcr = regime_tcr(env, mmu_idx);
+-    bool epd, hpd, tsz_oob, ds, ha, hd;
++    bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
+     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
+     ARMGranuleSize gran;
+     ARMCPU *cpu = env_archcpu(env);
+     bool stage2 = regime_is_stage2(mmu_idx);
++    int r_el = regime_el(env, mmu_idx);
+ 
+     if (!regime_has_2_ranges(mmu_idx)) {
+         select = 0;
+@@ -9402,8 +9403,17 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+              * Thus disabling them makes things easier during ptw.
+              */
+             hpd = true;
++            pie = extract64(tcr, 36, 1) && cpu_isar_feature(aa64_s2pie, cpu);
+         } else {
+             hpd = extract32(tcr, 24, 1);
++            if (r_el == 3) {
++                pie = (extract64(tcr, 35, 1)
++                       && cpu_isar_feature(aa64_s1pie, cpu));
++            } else {
++                pie = ((env->cp15.tcr2_el[2] & TCR2_PIE)
++                       && (!arm_feature(env, ARM_FEATURE_EL3)
++                           || (env->cp15.scr_el3 & SCR_TCR2EN)));
++            }
+         }
+         epd = false;
+         sh = extract32(tcr, 12, 2);
+@@ -9443,7 +9453,13 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+             regime_is_user(env, mmu_idx)) {
+             epd = true;
+         }
++
++        pie = ((env->cp15.tcr2_el[r_el] & TCR2_PIE)
++               && (!arm_feature(env, ARM_FEATURE_EL3)
++                   || (env->cp15.scr_el3 & SCR_TCR2EN))
++               && (r_el == 2 || (arm_hcrx_el2_eff(env) & HCRX_TCR2EN)));
+     }
++    hpd |= pie;
+ 
+     gran = sanitize_gran_size(cpu, gran, stage2);
+ 
+@@ -9522,6 +9538,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+         .ha = ha,
+         .hd = ha && hd,
+         .gran = gran,
++        .pie = pie,
+     };
  }
  
-+/* Return the GCS MMUIdx for a given regime. */
-+static inline ARMMMUIdx regime_to_gcs(ARMMMUIdx idx)
-+{
-+    tcg_debug_assert(arm_mmuidx_is_valid(idx));
-+    uint32_t core = FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, TG);
-+    tcg_debug_assert(core != 0); /* core 0 is E10_0, not a GCS index */
-+    return core | ARM_MMU_IDX_A;
-+}
-+
- #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
-diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
-index 42b003db9c..a4663c8d87 100644
---- a/target/arm/mmuidx.c
-+++ b/target/arm/mmuidx.c
-@@ -16,27 +16,29 @@
- #define S1     R_MMUIDXINFO_STAGE1_MASK
- #define S2     R_MMUIDXINFO_STAGE2_MASK
- #define GCS    R_MMUIDXINFO_GCS_MASK
-+#define TG(X)  \
-+    ((ARMMMUIdx_##X##_GCS & ARM_MMU_IDX_COREIDX_MASK) << R_MMUIDXINFO_TG_SHIFT)
- 
- const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-     /*
-      * A-profile.
-      */
--    [ARMMMUIdx_E10_0]           = EL(0) | REL(1) | R2,
-+    [ARMMMUIdx_E10_0]           = EL(0) | REL(1) | R2 | TG(E10_0),
-     [ARMMMUIdx_E10_0_GCS]       = EL(0) | REL(1) | R2 | GCS,
--    [ARMMMUIdx_E10_1]           = EL(1) | REL(1) | R2,
--    [ARMMMUIdx_E10_1_PAN]       = EL(1) | REL(1) | R2 | PAN,
-+    [ARMMMUIdx_E10_1]           = EL(1) | REL(1) | R2 | TG(E10_1),
-+    [ARMMMUIdx_E10_1_PAN]       = EL(1) | REL(1) | R2 | TG(E10_1) | PAN,
-     [ARMMMUIdx_E10_1_GCS]       = EL(1) | REL(1) | R2 | GCS,
- 
--    [ARMMMUIdx_E20_0]           = EL(0) | REL(2) | R2,
-+    [ARMMMUIdx_E20_0]           = EL(0) | REL(2) | R2 | TG(E20_0),
-     [ARMMMUIdx_E20_0_GCS]       = EL(0) | REL(2) | R2 | GCS,
--    [ARMMMUIdx_E20_2]           = EL(2) | REL(2) | R2,
--    [ARMMMUIdx_E20_2_PAN]       = EL(2) | REL(2) | R2 | PAN,
-+    [ARMMMUIdx_E20_2]           = EL(2) | REL(2) | R2 | TG(E20_2),
-+    [ARMMMUIdx_E20_2_PAN]       = EL(2) | REL(2) | R2 | TG(E20_2) | PAN,
-     [ARMMMUIdx_E20_2_GCS]       = EL(2) | REL(2) | R2 | GCS,
- 
--    [ARMMMUIdx_E2]              = EL(2) | REL(2),
-+    [ARMMMUIdx_E2]              = EL(2) | REL(2) | TG(E2),
-     [ARMMMUIdx_E2_GCS]          = EL(2) | REL(2) | GCS,
- 
--    [ARMMMUIdx_E3]              = EL(3) | REL(3),
-+    [ARMMMUIdx_E3]              = EL(3) | REL(3) | TG(E3),
-     [ARMMMUIdx_E3_GCS]          = EL(3) | REL(3) | GCS,
-     [ARMMMUIdx_E30_0]           = EL(0) | REL(3),
-     [ARMMMUIdx_E30_3_PAN]       = EL(3) | REL(3) | PAN,
-@@ -44,10 +46,10 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-     [ARMMMUIdx_Stage2_S]        = REL(2) | S2,
-     [ARMMMUIdx_Stage2]          = REL(2) | S2,
- 
--    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | S1 | USER,
-+    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | S1 | USER | TG(Stage1_E0),
-     [ARMMMUIdx_Stage1_E0_GCS]   = REL(1) | R2 | S1 | USER | GCS,
--    [ARMMMUIdx_Stage1_E1]       = REL(1) | R2 | S1,
--    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | S1 | PAN,
-+    [ARMMMUIdx_Stage1_E1]       = REL(1) | R2 | S1 | TG(Stage1_E1),
-+    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | S1 | TG(Stage1_E1) | PAN,
-     [ARMMMUIdx_Stage1_E1_GCS]   = REL(1) | R2 | S1 | GCS,
- 
-     /*
 -- 
 2.43.0
 
