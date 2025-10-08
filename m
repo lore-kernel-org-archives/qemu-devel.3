@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE37CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC18CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6XX2-0006pA-6h; Wed, 08 Oct 2025 13:00:52 -0400
+	id 1v6XbP-0007y9-5L; Wed, 08 Oct 2025 13:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6XX0-0006ob-6y
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:00:50 -0400
+ id 1v6XbM-0007xu-2U
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:05:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6XWr-0005Hd-N0
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:00:49 -0400
+ id 1v6XbD-0005wo-G6
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:05:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759942835;
+ s=mimecast20190719; t=1759943100;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OtA238vBjbS5w4eztX9894nZPwQu2lRqnYC28Jctx18=;
- b=UhutLzqIRPG+xeGf7vz5bhv5QyBvi6Bujnm872BjkaeqetSqRvqtKGpxVN/YSHTIRF2D7/
- A0mSqkFnmYOL1zqoQD6zCy0SWSiyR6VfGTi9zeKD5vdI7qy2Bi6ntwZFrnHMZH+TpASjbJ
- DoWqFZVBIJrF6idKTzWu2UezkN+mlB4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=O+06nEThWsJ6AUuMugKUbpt6JK3XmZIO7ax7RQ0PGW0=;
+ b=NIddUfBMXw0X0ymMBCv9TdR5moBO5OrGsR4wQOQgKE+voRZ6kfyYmUMUZfpyrGk71f4PkP
+ y6oO7leVLBFoTH5FcAaPxwQhBR2oupMish4gPocBT0F4eMvaf+YGoqvtR/HlPE9U4OwKoV
+ S0BIENDuPKVS16mskwvX6giQPAnQVsE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-ga9O-xmPOtewXnLCEsc9YQ-1; Wed, 08 Oct 2025 13:00:28 -0400
-X-MC-Unique: ga9O-xmPOtewXnLCEsc9YQ-1
-X-Mimecast-MFC-AGG-ID: ga9O-xmPOtewXnLCEsc9YQ_1759942827
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3ee12ab7f33so422406f8f.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 10:00:27 -0700 (PDT)
+ us-mta-31-mEihgVZ6P4CpKNW0HK3ymQ-1; Wed, 08 Oct 2025 13:04:58 -0400
+X-MC-Unique: mEihgVZ6P4CpKNW0HK3ymQ-1
+X-Mimecast-MFC-AGG-ID: mEihgVZ6P4CpKNW0HK3ymQ_1759943098
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3ee13e43dd9so77310f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 10:04:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759942827; x=1760547627;
+ d=1e100.net; s=20230601; t=1759943097; x=1760547897;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OtA238vBjbS5w4eztX9894nZPwQu2lRqnYC28Jctx18=;
- b=UlYhDu1huBTjTZFDdTqkiokLEUbZGC3topr1bCV4ODGB92vr9kqevFxgbvFWaO2D4o
- 8VSmi7TSy/9gOIJzB53ZaE6DA+l0bVFN1ohmMl0ozSnLLVsokAbjs0xdGwojZbhAb9wi
- zgRDKW7oKj9qxXqRuWVmssRmmxGLrZbro9Cveoja6hPQOuLdbe1i5snvLPanUkRcLTht
- KGTnmRlIexZHNVhMj4EOqLSFuPYpJBUZ1IRwKJQmMVk4TOTSTXBsE+Hb6bOPteabtCsQ
- iaop07G18EUWh0vPxXJkq3lTdrdrACFIu2O/gOmQVGSxhf3FcnKDKD0JUs+mau8ShECa
- QEDQ==
-X-Gm-Message-State: AOJu0YwxGPz+pHgIyUDO8nJoUuhUCje0qVeWfgzCXxdUimhUzUuPYfo3
- UOJ48Rwh46iNxaBNjvLdLwQkfrvzTatv41UhvRgnIDAPR160IwUghAaL0qzXZI8898fwJSGS7UL
- Bup3w0nJ2fv5meyqe4A50N9aBuxK0GU6KtZU5SIVN6WnIVfQnjHPX5ihGpH/ZTpleNkgSo7WTI5
- gQ16V6EDoQpeZ1fc72JVMneKG+jPkvD54=
-X-Gm-Gg: ASbGnctE967QtduVbtB96+o8iDD9fx8rY4hGpMZBmqbdGgZlgafzQeEZMgLdWqfCgKQ
- tR5ADQopR4EDyIQ72rHmQH+KC2VFPTjGXgmzdrwnTwVLNftirkpU7aLoHdTzukkiuQHXAxxcdla
- xZLihEobVofHLGygklI3ksswCVZSP9sD48pgMkZToL372EFU1+fFai1o9IwAxJkxUZ4VGDcukWo
- UfzRyrKDUdciJucU7pAotrjeXI1qw==
-X-Received: by 2002:a05:6000:2c0e:b0:3ec:de3c:c56 with SMTP id
- ffacd0b85a97d-42667177c79mr2784699f8f.16.1759942826802; 
- Wed, 08 Oct 2025 10:00:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGc9rglzMjURsHR7z536QlHx7+7BLyLN4ItXyvFTCiajDb9cMsSjitkEqChtSHFr8+5mj8VPejrHtQd1RTqeYU=
-X-Received: by 2002:a05:6000:2c0e:b0:3ec:de3c:c56 with SMTP id
- ffacd0b85a97d-42667177c79mr2784678f8f.16.1759942826407; Wed, 08 Oct 2025
- 10:00:26 -0700 (PDT)
+ bh=O+06nEThWsJ6AUuMugKUbpt6JK3XmZIO7ax7RQ0PGW0=;
+ b=tTgOcAYk2NS/+VEWbLgnNFz9QwJKw8aWbHItJphWhx2cIIKnc+gic23HCkgQhANmiJ
+ u+NUN2gP5na2Aafl0vN57Pj3WkkfnjiPCO12+STUQQei8u3ONQV0emiHE5doGK0qCtXO
+ vhelVSyu81nLyVPH+QFPi5XZPtLbwwk6/5qTcy9H3pbCMiTfRi5pzDG/jpHxUHNp9IE5
+ CII5mgqzc5Qa1aEDa8J7cbLF5JkdPtKDAIkDjzXpbePFU8rURStWCT2bzNObvC+a2RaW
+ 8c6c8UHoz/EyoRMcU7Fq+lXWpZdT/4oeCgW9+cgKSeZ2j4WtrFA4V8S0VBdnkxHbt+0+
+ wqXA==
+X-Gm-Message-State: AOJu0Ywa4w3fxPstUnEAYab12sfJyOA7QA7T6Q8tidGrCYqJ4zleO76t
+ 2r9ZXcPA6Z61dcOuhB4X1ix2GahXoCF2jVPzXXCeQDlcnrmawfIAGc5DUQoizWCFUOOlmqh7+fh
+ ZLMyGMLofF8/n/jfFK7m8C6/235DUGnQIwZaDT6Ofgl/p+aa9kd4E5iKW4A469gjcHdio4jtJg5
+ qVnZ8lcftI6T1lT+oGBPISULDYdF2MqxU=
+X-Gm-Gg: ASbGncskib0I4LkU35xhW/L+j4jNpYi4LKi57zgrOqCJ1NLAaM4qalVboIp73VCvEYs
+ LzIskNelegZMkE9RsQXqBvU7Yma+105p9074BHRfc9mCHcrNrKh60kDf+RskqeFCoV8dilB+TMD
+ +xkXtPKc/FyQKb3taJ9mSpbUrVIGIQvnaAqgCzPHe9wETER6Qd9FlAV4LjcMeHKb46bmPPGKHub
+ oQ3vXhKPRXcTv3cs3fFVm74/cbcuw==
+X-Received: by 2002:a05:6000:1ac8:b0:3f7:b7ac:f3d4 with SMTP id
+ ffacd0b85a97d-42666abbbc1mr3393046f8f.5.1759943097532; 
+ Wed, 08 Oct 2025 10:04:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsnyEFUGtRtAzwKHUE9EeDOUmEHcvi5NsvWDwWjykamvIjDElChPJXlNNIEQUITjEd397KYCTixQSb/WmPBIk=
+X-Received: by 2002:a05:6000:1ac8:b0:3f7:b7ac:f3d4 with SMTP id
+ ffacd0b85a97d-42666abbbc1mr3393025f8f.5.1759943097130; Wed, 08 Oct 2025
+ 10:04:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251008152701.411964-1-pbonzini@redhat.com>
- <aOaOWbrE443LpqPX@redhat.com>
-In-Reply-To: <aOaOWbrE443LpqPX@redhat.com>
+ <50578062-8b7a-4286-a154-eebf05f3be3c@linaro.org>
+ <19ec9e38-8b34-420e-ade7-f82e9e7f5969@redhat.com>
+ <badbd3be-f09b-4215-a179-bc13c98a9d26@linaro.org>
+In-Reply-To: <badbd3be-f09b-4215-a179-bc13c98a9d26@linaro.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 8 Oct 2025 19:00:13 +0200
-X-Gm-Features: AS18NWCP70opTSdmE3Amsd-TCpWwF2fQ9KjOwttzWOBEzjMYWd5FWVVplSvW79Q
-Message-ID: <CABgObfZctSC6=uNXY0qjMa2AKdX4tGTQYoXQbgFaskPDg1rQVQ@mail.gmail.com>
+Date: Wed, 8 Oct 2025 19:04:45 +0200
+X-Gm-Features: AS18NWDPCjifQuAkMKA5ZQblJ8k8cancIEZT0rFZrXb7VuFQwEnrjKP9Znu4T9Y
+Message-ID: <CABgObfYAwwaASRkSWZTwwUsjcpiM2t8KcxFZ=egbrqKSDEPSQg@mail.gmail.com>
 Subject: Re: [PATCH] qobject: make refcount atomic
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -104,68 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 8, 2025 at 6:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
-> > C code will
-> > have to agree with not making changes to the QObjects after they've
-> > been passed to Rust code.
+On Wed, Oct 8, 2025 at 6:53=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+> int f(int *p) { return __atomic_add_fetch(p, -1, 0) =3D=3D 0; }
+> int g(int *p) { return __atomic_fetch_add(p, -1, 0) =3D=3D 1; }
 >
-> I wonder whether that latter constraint on the C code will hold
-> true in practice ? Particularly thinking about scenarios where
-> we add/remove link properties to QObject's, potentially at any
-> time during life of QEMU via QMP/HMP commands ?
+> With current gcc, these two functions compile identically for x86_64, s39=
+0x, riscv, and
+> aarch64.  I didn't bother testing further.
 
-Those are QOM objects, not QObjects (the QMP/JSON data model) which
-are what this patch affects.
+The trick is that you have constants everywhere. You have by
+definition add_fetch(x, y) =3D=3D fetch_add(x, y) + y, but also in this
+case the "+ y" can move to the other side and simplify, as if you were
+in 8th grade.
 
-C "things" that are not thread-safe are protected by
-"assert!(bql::is_locked!())", either written explicitly or hidden
-behind BqlCell/BqlRefCell.
-
-In this case, the safety is covered by QObject::from_raw being unsafe.
-Whoever calls it needs to know that the C code is not going to mutate
-the QObject until the Rust side is done with it.
-
-> With this unref method being void, how does the Rust code
-> know when a QObject is no longer alive after it has called
-> unref ? Does it need to know this to provide any safety
-> guarantees ?
-
-No, the safety guarantees can come from knowledge of what the C code will d=
-o.
-
-In particular, the safety is covered by QObject::from_raw being
-unsafe. Whoever calls it needs to know that the C code is not going to
-mutate the QObject until the Rust side is done with it. This for
-example is true of arguments to QMP commands, which are the main case
-where C could pass QObjects directly to Rust.
-
-Something like
-
-void qmp_marshal_query_stats(QDict *args, QObject **ret, Error **errp)
-
-would become
-
-fn qmp_marshal_query_stats(args: *mut QDict,
-    retp: *mut *mut QObject, errp: *mut *mut Error)
-{
-    let qobj =3D unsafe { QObject::cloned_from_raw(args.cast()) };
-    let result =3D from_qobject::<StatsFilter>(qobj)
-         .map_err(Into::into)
-         .and_then(qmp_query_stats);
-    match result {
-        Ok(ret) =3D> {
-            let ret_qobj =3D to_qobject::<Vec<StatsResult>>(ret);
-            unsafe { *retp =3D ret_qobj.into_raw(); }
-        },
-        Err(e) =3D> unsafe { e.propagate(errp) },
-    }
-}
-
-(and even discounting the lack of tracing, that's quite a bit smaller
-than the C code thanks to all the automatic consumption of args and
-ret when passed respectively to qmp_query_stats and to_qobject, just
-by virtue of how those functions are declared).
+If either the addend or the compared value were variables things would
+be different. I had never thought about it, so thanks for pointing it
+out!
 
 Paolo
 
