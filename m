@@ -4,148 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E08CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2C2DCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6NhL-0002e6-9P; Wed, 08 Oct 2025 02:30:51 -0400
+	id 1v6NjK-0003Ka-BU; Wed, 08 Oct 2025 02:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v6NhG-0002dp-Aq
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:30:46 -0400
-Received: from mail-westcentralusazon11010024.outbound.protection.outlook.com
- ([40.93.198.24] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6NjJ-0003KP-8D
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:32:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v6NhD-0003zV-DR
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:30:46 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ko2/a9rVSBIn1x7szPecVhHw5Y7yEz1E4JIWRg9UvN6G/sVwfw/Z8tZ7JB3ie3y2y1r2unuhNJJ3zCn3P4u2wmBJt5beKwhXAdi3wUt00amKCLV9IMZNISEZE9yQpoL6CwPEDHSiHycSstML5ZZuNCu9zMvwQYWzkSCLzZpyMvo0R1Z3COPxg0OfE+p4vDPG/HrbicOIPNOm5g+5uDkA1N2gAt6mIwOYJltBtT9TLmvz8dezKPMX472fkJpLlO+HLmZaDxL8r2Gv4kWhFTCv7RI1wDjUZHcwR0kdD9GqmYEXydgRkkZyisHVoqvRvMF6SkuPk3IZPo21ixVzLoCMsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wJLAC8PzOfXRy/ZD8HteAXYlLgCkexjD55My/QsGhn0=;
- b=E/UAUyVoXkxs/CDFMRlU5wlG7uKT0f+r6MHSu3VOdWPhWJVfLsKzYm3WNv8J8dQytbPU3nKfoiMAgVFkhF5oYOnwVmdYs5YH4C0/RPPnFlXri86fnFInj45oSfceBYeClTRD10Fo2ao10JnsAhMwAg5jBNj0PEeLLjcCSBwo2zyjVneXJKsvFgEUGIkQxbVVrMeNQTHSo0P6R0bRJAXAkrzn/DrHB+U4KfhHwzohuu2+aGmUw6TgQqM/TU0xgryq8c9zwPkojAuFsccQPZxJa6LesoletGhBZ0ZiWW3JJ5s3aS1GvDdRgeKkp43g0vaMrwzYd39PqPJZY7XX5Pf3Rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wJLAC8PzOfXRy/ZD8HteAXYlLgCkexjD55My/QsGhn0=;
- b=ckdZheyzABHZszCZwIAU+QJ202jpZODNsD411w9HFbCHun+p1F6fQFd+RrSvtIVwdjh7X5ZI4aLBoFvtSlyvPNy0RUcNs5sVcvTVtQjt7pv0DezW8ARxntPXmZn/Ipf8INxIissJx0N5xAM9n1+BrcHpOTHfwW60kJrQaBczQYA=
-Received: from CH2PR17CA0009.namprd17.prod.outlook.com (2603:10b6:610:53::19)
- by CH2PR12MB4198.namprd12.prod.outlook.com (2603:10b6:610:7e::23)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.16; Wed, 8 Oct
- 2025 06:25:27 +0000
-Received: from CH1PEPF0000AD76.namprd04.prod.outlook.com
- (2603:10b6:610:53:cafe::af) by CH2PR17CA0009.outlook.office365.com
- (2603:10b6:610:53::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.9 via Frontend Transport; Wed, 8
- Oct 2025 06:25:27 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CH1PEPF0000AD76.mail.protection.outlook.com (10.167.244.53) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9203.9 via Frontend Transport; Wed, 8 Oct 2025 06:25:27 +0000
-Received: from [172.31.35.81] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 7 Oct
- 2025 23:25:21 -0700
-Message-ID: <83764060-0cab-4c9e-90b7-034a30debebb@amd.com>
-Date: Wed, 8 Oct 2025 11:55:18 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6NjG-00043k-OT
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:32:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759905168;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bnXhYHxiYf28m/vX97R0O4Dj/PyL1DkrfnBkN+mEfZw=;
+ b=bSGpamuSZQkxaJylyvJgHRJxDY94gJeT9mRp3ITp+UT6uLUK129RYuCFp1izAZR+lm0TbA
+ fS1KcG061P5D0CjkLJATLhpEIlaa0PybB1GFSo388vlsAeqQmLno70RiP88lmhpKuOQ9ul
+ wJXmYgumUi+Fj3bV8kV3iPc+ADXB6/c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-kfqQl5o1NQqxmSVqFGnXsQ-1; Wed,
+ 08 Oct 2025 02:32:45 -0400
+X-MC-Unique: kfqQl5o1NQqxmSVqFGnXsQ-1
+X-Mimecast-MFC-AGG-ID: kfqQl5o1NQqxmSVqFGnXsQ_1759905163
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEEC7180034A; Wed,  8 Oct 2025 06:32:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CEA3F1800576; Wed,  8 Oct 2025 06:32:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5BFAD21E6A27; Wed, 08 Oct 2025 08:32:39 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  Laurent Vivier <lvivier@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2] hw/uefi: add "info ovmf-log" + "query-ovmf-log"
+ monitor commands
+In-Reply-To: <20251007135216.1687648-1-kraxel@redhat.com> (Gerd Hoffmann's
+ message of "Tue, 7 Oct 2025 15:52:16 +0200")
+References: <20251007135216.1687648-1-kraxel@redhat.com>
+Date: Wed, 08 Oct 2025 08:32:39 +0200
+Message-ID: <87347toqd4.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Update entry for AMD-Vi Emulation
-Content-Language: en-US
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- <qemu-devel@nongnu.org>, <mst@redhat.com>, <clg@redhat.com>
-CC: <philmd@linaro.org>, <clement.mathieu--drif@eviden.com>,
- <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>,
- <joao.m.martins@oracle.com>, <boris.ostrovsky@oracle.com>
-References: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD76:EE_|CH2PR12MB4198:EE_
-X-MS-Office365-Filtering-Correlation-Id: 560b2720-ca66-4163-adba-08de06337909
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NU8wNXRObi95VXVodkZJTjBldDhMQURGVFlEWWFVU0xVQ1BtNjY1RnYzTVR2?=
- =?utf-8?B?SGRIOStCdDBOK2lMSTZGd0ZCM3VPU3VkbWFwcHZRMFc4OWlDT2VTUlhIR2lp?=
- =?utf-8?B?b0pqYWs3NStnbFd4bjFMQUVlQzFscVlHTWMzSHY4cFFiUEFNRDBJaDRaWjRF?=
- =?utf-8?B?N2wzaXlydTg3MXlKOERQdEFraFRwWTFjRmRCYkcxZDlJTmMxVUNFSklteDRh?=
- =?utf-8?B?OXV1dWM2ODVNbXhiN3JtNUtRekpjNTcxanRjMEljejBGKzB1K3RhR3lJOXNi?=
- =?utf-8?B?UU81VitDTXl0NlBGYm94QnM4Y0g1NWwwclVhTFlyNHBGSEdRRFQxY3JoRW84?=
- =?utf-8?B?bVBOVTBvZjBnSy80WGozWitXdFA3N21JemhlT3JBalgwUkZvNFU1QzYxMjRS?=
- =?utf-8?B?ZCthQVBuaS9UVGpMOVJMRnJIaFR0ZS9yOHE1UnMrZXhubWNaOTlkOHZiT2NG?=
- =?utf-8?B?cWhhdTZGaHZJY1h2dHhKYVdrUkZpaU52QSthOTJWRlJHN1NOcFJ3c0s0dkYx?=
- =?utf-8?B?bFZuNWJWTzNkbHR3Zk1yTTJGUTE4Uk9wVS9ub2h6eWdHdkMzeDVteFhSb2Ry?=
- =?utf-8?B?VDlRUFQ0cTJIZUltZlFSbUhuNHFDT2l5NURjSnlqWWd3TldtOWFNTStGbmZY?=
- =?utf-8?B?RWFSZlZLeU94Rk5RSWtFS0hBMmdhdE9zTTNxQXhBTFZuYUtrM3o0K28zbDFF?=
- =?utf-8?B?a2xRb0RCcUk3ZlhqQms2R25PS0lqNUUrSVZRT3FvUU5scFR5VWl4UnlHUGVj?=
- =?utf-8?B?dWhGL3EvUVhLdWRLdUl0cEdGcmpXVnBpV3NMeEZ3ZVlqZUhCK0dnaHY0UVlD?=
- =?utf-8?B?bGFQbzZ4QjFWVUVxSGZLa2R1Mk15cExRZzZ1eDVadHhMNlowemNSZEVUNGNr?=
- =?utf-8?B?VjlpTndSZnY4QTZxWDM1MHI3TG5ySUJJOGhnak0vTVdRU3JhaGdONWtNbkY3?=
- =?utf-8?B?M0VyTWJxZVdod3pjc1JaaUovNmZMNE91c3J5NDlHbFExMGsyejZBOU1jd21P?=
- =?utf-8?B?WDRRQWFBS1B5Q0VHb05rVE5mYVRUMzZMSEg3MnlHMXIwRVRBS3c2QTZIaVA5?=
- =?utf-8?B?ZkoyZlF2NVBraFNvanROcEo3U2F2dlhOMmF5L21ucHd5VWhzVWMvbTFWOUM1?=
- =?utf-8?B?OWVkMmVwRHBvVTd2SW5BK3htcUN1VGpRREZPUnVldkduWTZzMHJzYUFjaWdD?=
- =?utf-8?B?YWRyY2R0RERweXdmL3N3L29WRG1tL2dJTHdxeXhPT3FUamlnVDZ6c1NKelZF?=
- =?utf-8?B?ZDRUL3IvM0tBVzRLQ3pYWmY4ak9qR1dBL0NuL1FQaHdUUGNUdHZOUjZvSXJy?=
- =?utf-8?B?dlNOTEVMdTJYb2JGeTZycGdaVlNhYzZmK01rUW9HdkxXYWNSWHorMXdCd09X?=
- =?utf-8?B?Z2g5Z25HNkQvNlJHcXVjUW5OTE5QNmZ0WFd2YjFtN3pmNnBwR3Y2alpnNXNI?=
- =?utf-8?B?clo5R1BsM2tTdXY2SWFxZmhJTjVHMXhybFJuZGlGREV4UTg1NzN4QTNuK1VF?=
- =?utf-8?B?SXFvRlJmSGtRS3RNUkVrc3NBbXMweDdvTkNwME9RMmxwWGtPak82c09tWktj?=
- =?utf-8?B?aHhLdnAweUYxbUJjV09nRW1qcVNHdWVnY1RVd0dpYmRpVnlwN1RIb0htU1h3?=
- =?utf-8?B?eWpJc1Jsdk1VaVl2cmFUT0VURFZlNmlxQkVWd1JPb1VNY0F5bVRSS1hlbEhE?=
- =?utf-8?B?VG5GWHBwVlFQVWxoWC9xYkc0YmthdVhIeGdEZGZkdjlkTSsrSmErNXp0NGlG?=
- =?utf-8?B?RVQxTU82N3MrRlNZWFhOdEt1MW5EMnlzN1ppMnVSalpORUVsQjVKMHlxTXo2?=
- =?utf-8?B?M2VFQzB1KzBlRFczb3ltdGozbGx1bjJLNG1EK3MwYngxRUNrV2c1WHNnOTh4?=
- =?utf-8?B?TFdNU1ZiaDBpT0gzYUVIeWQyWnd1RVU5ZUpDbDF0cFlZK1pwUHNiV2FDN2Qw?=
- =?utf-8?B?Qzc4MHJERW5CL0pYdzYvazhWTjlleU1QTlVrT3laM2pramllZm42Y2lIeGpn?=
- =?utf-8?B?Y1Q5ZHB0RExtSXB0QTU0Vm96Y0lRL3ptRUVCR1QxTURueExpTHVvZXFURXB0?=
- =?utf-8?B?a0tGTVJSNVZWb0J3Q0ZlbGFWQXBwV2o5RzlBeUIvdmNuZFRhS29saVBzWjlH?=
- =?utf-8?Q?XIfg=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026)(7053199007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2025 06:25:27.6426 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 560b2720-ca66-4163-adba-08de06337909
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD76.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4198
-Received-SPF: permerror client-ip=40.93.198.24;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -163,33 +91,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
+> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+> optional support for logging to a memory buffer.  There is guest side
+> support -- for example in linux kernels v6.17+ -- to read that buffer.
+> But that might not helpful if your guest stops booting early enough that
+> guest tooling can not be used yet.  So host side support to read that
+> log buffer is a useful thing to have.
+>
+> This patch implements both qmp and hmp monitor commands to read the
+> firmware log.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 
-On 10/7/2025 11:59 PM, Alejandro Jimenez wrote:
-> Add myself as maintainer and Sairaj Kodilkar as reviewer.
->
-> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> ---
->   MAINTAINERS | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 75e1fa5c307ea..08de896ca942a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3891,8 +3891,10 @@ F: tests/functional/x86_64/test_intel_iommu.py
->   F: tests/qtest/intel-iommu-test.c
->   
->   AMD-Vi Emulation
-> -S: Orphan
-> -F: hw/i386/amd_iommu.?
-> +M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> +R: Sairaj Kodilkar <sarunkod@amd.com>
-> +S: Supported
-> +F: hw/i386/amd_iommu*
->   
->   OpenSBI Firmware
->   L: qemu-riscv@nongnu.org
-Acked-by: Sairaj Kodilkar <sarunkod@amd.com>
+[...]
+
+> diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+> index cf718761861d..ffdb7e979e0f 100644
+> --- a/tests/qtest/qmp-cmd-test.c
+> +++ b/tests/qtest/qmp-cmd-test.c
+> @@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
+>          /* Only valid with accel=tcg */
+>          { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+>          { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
+> +        /* requires firmware with memory buffer logging support */
+> +        { "query-ovmf-log", ERROR_CLASS_GENERIC_ERROR },
+>          { NULL, -1 }
+>      };
+>      int i;
+
+Makes sense.
+
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 6142f60e7b16..eca0614903d1 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -977,3 +977,16 @@ SRST
+>    ``info cryptodev``
+>      Show the crypto devices.
+>  ERST
+> +
+> +    {
+> +        .name       = "ovmf-log",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "show the ovmf debug log",
+> +        .cmd_info_hrt = qmp_query_ovmf_log,
+> +    },
+> +
+> +SRST
+> +  ``info ovmf-log``
+> +    Show the ovmf debug log.
+> +ERST
+> diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
+> index 91eb95f89e6d..c8f38dfae247 100644
+> --- a/hw/uefi/meson.build
+> +++ b/hw/uefi/meson.build
+> @@ -1,4 +1,4 @@
+> -system_ss.add(files('hardware-info.c'))
+> +system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
+>  
+>  uefi_vars_ss = ss.source_set()
+>  if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 038eab281c78..329034035029 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1839,6 +1839,16 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ]}
+>  
+> +##
+> +# @query-ovmf-log:
+> +#
+> +# Find firmware memory log buffer in guest memory, return content.
+> +#
+> +# Since: 10.2
+> +##
+> +{ 'command': 'query-ovmf-log',
+> +  'returns': 'HumanReadableText' }
+
+All other commands returning HumanReadableText are unstable.  Does this
+one need to be stable?  If yes, why?
+
+> +
+>  ##
+>  # @dump-skeys:
+>  #
 
 
