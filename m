@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2527FCCA472
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C41CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Uj5-0002md-25; Wed, 08 Oct 2025 10:01:08 -0400
+	id 1v6UkI-0003i6-LG; Wed, 08 Oct 2025 10:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v6Uj1-0002h1-8A
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:01:04 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1v6UkA-0003hr-2S
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:02:14 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v6Uiw-0002AY-TR
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:01:01 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b3d80891c6cso155131866b.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 07:00:58 -0700 (PDT)
+ id 1v6Uk0-0002FS-Ji
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:02:13 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-62fca216e4aso2277596a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 07:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759932055; x=1760536855; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759932115; x=1760536915; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CvWOlddfwghaVSH+2JYyD0HHGY3kc4q9PORKPryKrbg=;
- b=ZA/Pge/AfxqZXgEN38+mSX4Ui38N/dicATfI0+RQcG41XgZxsiWEOGnONIucQVAdcT
- rYTMLA2nMyedYiCZNpNN0xjASvAHdGRgQNpcf3nznPBrsrK3uRAKCczbdswlYs59w2m8
- Hwj1lXLMqgJhvI3k4BsOVkvXtErTTjmA6zKfVtLRdSN/fi94H4SXVQl4DMlYtGFzFRjC
- 6BKTzOM40mkojJ3ojOH9Ho+/jCbRIsxjlzu0BS9N4HPbgPhL/YqBkqF6Knwo3xUqN2wH
- 25azVbWJj4uI4FeWZxNbc27L7rtK9z+FuiYpvXhWZKvol0GFt28a3vJ4h+466ifYA8sJ
- gmpQ==
+ bh=d10kDY2QyqMrSt0stL7AQX3Nak8ym6sbq2doRpi1vk4=;
+ b=XuDZWmwLMG45hdXj5ZY8zHohOMWZZlNukE/LzVV+x2I9wuew9JVXXHkbBIGNo2XiMs
+ 3HPUbapsunWumOf0Z02WrOkVk4tmwzRahCLhIIp5VBBonFmwRga9F9bQvQeGKJlEG0vb
+ 3Kl7DdRuGrtWvL/SzNxDSHLUFXVlD1t6e9PUbKXLDySkDO/MRRMNN/3k1XrqbGBCWO6/
+ uKFz365+AfLaOTAban8VdEw6QsR94OnF+CvbruUP56hw7DqlUjmxqDFiVcgk2/tpgF4C
+ sspZWU0W9ThlhcIYHwyoZJh64VkV+sPYH2s9Vq9sYkZ7dOV6v1cdHNJ91cMxJQrnkCic
+ CUAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759932055; x=1760536855;
+ d=1e100.net; s=20230601; t=1759932115; x=1760536915;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CvWOlddfwghaVSH+2JYyD0HHGY3kc4q9PORKPryKrbg=;
- b=TpiskP3XE9KeAEeN/n+0fQWNDrMUVp98Hv79ODqO5pzy5wXWSolQIOKkxf7rI15bbe
- UN4Xoqy6Y+IRO6H0Y7FZ3sXxeMlWTFVLPhhhbpl+FVwmngc2tQ1ppDWV/NwzosFLFwYX
- QpLb4dH1HmeY2O6Dnp3wH/7KlxgaevhOGv9zlgNm56ab7K7wcluwNbAE4Eppq+EjosQE
- FL98Wwq4ihUo7Lm24j4dcep+286MHKDtGf/Df0e5lePWDI1qKaZ1ghqKC1NQlb+cBaR3
- zIIep7pxMy7U29V/XDsYllbj0yaBgCq/riJCGsoikKUYB5IXELSrsCLQnG3V5OyezqF8
- SGyQ==
-X-Gm-Message-State: AOJu0YwdCs/YISOEUleRWyj3IUqtXEp9Hajge/VBBmNix/RuJKG5RbW/
- 73hZ51Ew6HlB5PUlr1IMaWdRch7tjZuG0TxP6qPzVW4JZDekeMd02sEUlvA0zy5JHHYUrAan5El
- phUY/RhDo9rUaF+VOJLVmW49XTu5XYz1lDQNV131+ng==
-X-Gm-Gg: ASbGncv2bmpGXYBvWl7XhQQBth5YY5lkAk6bZCcqTQbvbdjarbhUnvJY/T1olaleIvj
- Uj0W2SivnAuO+M2RmR4ld0HpwnVMth2U6i5KEmUHGIuBFCN9yJ7E2wL90kTqVdDINAkxmWDq8jP
- VxZJ1nDEQDQ2+c8njswaYrD5XCQSBRN9m21iOtm+P2SGjXCzw2s6QYgT5F8tgBVdxZDIkwGZaO3
- p51GDDNTpXNwnLrWjF8RYimm8flt5Scfx2lRhdWVwA=
-X-Google-Smtp-Source: AGHT+IHzbcvevwtiJmcSCyTnpSe6ZYqYf+ORpXPT2lt6T61tTXibD/ONxha3y1rZesbiXb2eB4p2ylYJ+00qrrJQErI=
-X-Received: by 2002:a17:907:18c6:b0:b54:2c82:40f1 with SMTP id
- a640c23a62f3a-b542c8241bbmr94793066b.11.1759932054694; Wed, 08 Oct 2025
- 07:00:54 -0700 (PDT)
+ bh=d10kDY2QyqMrSt0stL7AQX3Nak8ym6sbq2doRpi1vk4=;
+ b=Pf56KYeiVBzSUXxWfzrnhjYnwf+gtqtquNTqwbynvhRfwI9lY/Caqnwat/DT7QVSgr
+ B701hrh0izBaFYCzFIeyz8OeUvBGR8IFMFRdLXaO4XNRq2uE3M47lkmpC7daFcOm5LrK
+ 0iSurglMFrJTrGUlWM9FO5CLvf+6cHtVtwgxzp4jcV/7Hm+ELWANRNm2OvsLbN0uiTqE
+ f896mXukqMc8ECieQcFKlyisVwrBj6avDYJjEzmCdYgV8axwZtJ39ZN835Zz/99r1Ac/
+ eAwpHXQ22f5Tago3cYi6+Aaz9H4fM4SXikwkN5BUANHLLZ7yYRbSS4fOJrM+LMFjz3Y1
+ +3/w==
+X-Gm-Message-State: AOJu0Yzl51fie1qQxJaplw7b3nCyBYENrIm918FufO0P8c6IemjfuogR
+ jauMr9kk/dcEfCXsIMTdMPme5F/QQdOQz5ji2LbbH+auCFBrVK3Sq4v2kcZnpPgWuTKKi99wgMO
+ 3XaG2heOlFzeROqyZ8k16OnSiapPilQE27tPqb7kVag==
+X-Gm-Gg: ASbGnctnMel5ucF/QotZ6RdslqhqGkj5q7DU5AJcI/Z4wS3Txk3zodnE/hQ6AdlX7Cb
+ Tnvx2kL0mh4lnBpPTfucJs+dO7DvwnCPx9z4dhsEAG4i4NapIGLXzYQMQFFRcWU8P851f8CF6ZG
+ iZJ0LKvg0RpIvqanPGRqp18S/3IN674KrwTS8RQlf/UHaOXx0he+o2gz6wKtgqPJHvxY/UX+TZC
+ ReyzIuYYrVnzsuuha2Q3Kfh9tM9s+UhRKGGJPYzdv8=
+X-Google-Smtp-Source: AGHT+IGGPQDm58OwiXOMaGn7ys4Kj1un9ZDX1h0/88Z82pj0QUvuV5oK4h7oJ/wu2tnOcZiHQR2YKMd+Q3CX6ztxgyw=
+X-Received: by 2002:a05:6402:50c6:b0:634:c377:e1ae with SMTP id
+ 4fb4d7f45d1cf-639d615df4bmr3863732a12.14.1759932107509; Wed, 08 Oct 2025
+ 07:01:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251002145742.75624-1-philmd@linaro.org>
- <20251002145742.75624-5-philmd@linaro.org>
-In-Reply-To: <20251002145742.75624-5-philmd@linaro.org>
+ <20251002145742.75624-4-philmd@linaro.org>
+In-Reply-To: <20251002145742.75624-4-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 8 Oct 2025 17:00:27 +0300
-X-Gm-Features: AS18NWC0r1CfGpCOlAndQZ9y5ukBp4J5WxxvLPUGkg2KvH2wUbjmqMI3mSNwSpk
-Message-ID: <CAAjaMXbZfGF2V5e=YRnXDTwNTk4b3iaJkaHE=EVxRVB=OZ8eRQ@mail.gmail.com>
-Subject: Re: [PATCH 4/6] target/riscv/monitor: Replace legacy
- cpu_physical_memory_read() call
+Date: Wed, 8 Oct 2025 17:01:21 +0300
+X-Gm-Features: AS18NWAnN49isqZQsRSSRUNiEfxtfYZex54R-7BARcsPyfBpsRvIMQLQF_QMB8M
+Message-ID: <CAAjaMXYg6zpoj7Mp3MP0rYSUX+_RZQeamkxcyxqGqnfjG77PEw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] target/riscv/kvm: Replace legacy
+ cpu_physical_memory_read/write() calls
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  qemu-riscv@nongnu.org, 
@@ -79,15 +79,15 @@ Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,11 +110,10 @@ linaro.org> wrote:
 > various load and store APIs") mentioned cpu_physical_memory_*()
 > methods are legacy, the replacement being address_space_*().
 >
-> Propagate the address space to walk_pte(), then replace the
-> cpu_physical_memory_read() by address_space_read(). Since the
-> monitor command are run with a vCPU context, use its default
-> address space. As with the previous implementation, ignore
-> whether the memory read succeeded or failed.
+> Since the SBI DBCN is handled within a vCPU context, use its
+> default address space. Replace using the address space API.
+> As with the previous implementation, ignore whether the memory
+> accesses succeeded or failed.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
