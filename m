@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A75CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2527FCCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6UhR-0002I1-NZ; Wed, 08 Oct 2025 09:59:25 -0400
+	id 1v6Uj5-0002md-25; Wed, 08 Oct 2025 10:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v6UhN-0002Hh-C9
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:59:21 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1v6Uj1-0002h1-8A
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:01:04 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v6UhG-0001mj-Q9
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:59:21 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-631df7b2dffso2289436a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 06:59:12 -0700 (PDT)
+ id 1v6Uiw-0002AY-TR
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:01:01 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b3d80891c6cso155131866b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 07:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759931948; x=1760536748; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759932055; x=1760536855; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mKZ2hImwlN1b+rqDZz6p6av73pHb6Oqe7unc9VE/QZc=;
- b=fxZLuzjcAr1WsLrd6BTsuCR3lQSVcz3iZkqpHhZeFuxgDgRwKuQRey+xeDKkjirjUL
- AQwT1TVxPgk5VoAh1wiZ4rxC0Rd9986CnQIY0duHIc7A/5bdX3eLlXiFBqGQn36zJ7N9
- WWwwO4XsXOWpUEgzeRCdyLKzavSJ8Zaejdj0XDv+GKB11lfh5tTp5lUhL1EW0XHXkl/T
- C8Xdg2qlodlKagbiN2oHKCrl+XuckKGKZ4UcKf5iTHfpTEgRTlZtuwbVePKOhPsPOnOf
- 5glmTqgBpLX8H523CvaZAYE+BM5eXtupYTuv/pe/6tPsMU4MJe7zJL0x9kZx/WH4woos
- hR6A==
+ bh=CvWOlddfwghaVSH+2JYyD0HHGY3kc4q9PORKPryKrbg=;
+ b=ZA/Pge/AfxqZXgEN38+mSX4Ui38N/dicATfI0+RQcG41XgZxsiWEOGnONIucQVAdcT
+ rYTMLA2nMyedYiCZNpNN0xjASvAHdGRgQNpcf3nznPBrsrK3uRAKCczbdswlYs59w2m8
+ Hwj1lXLMqgJhvI3k4BsOVkvXtErTTjmA6zKfVtLRdSN/fi94H4SXVQl4DMlYtGFzFRjC
+ 6BKTzOM40mkojJ3ojOH9Ho+/jCbRIsxjlzu0BS9N4HPbgPhL/YqBkqF6Knwo3xUqN2wH
+ 25azVbWJj4uI4FeWZxNbc27L7rtK9z+FuiYpvXhWZKvol0GFt28a3vJ4h+466ifYA8sJ
+ gmpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759931948; x=1760536748;
+ d=1e100.net; s=20230601; t=1759932055; x=1760536855;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mKZ2hImwlN1b+rqDZz6p6av73pHb6Oqe7unc9VE/QZc=;
- b=Ois0g8KvjDqP6QPrC8KW8fCTOrEuY1ZLCGMGiq0EAeaePaMvW2cJ+R2A/BvIiR7U4u
- eprUcVJaauJoxJG9dNomaj6zKl9HcIwbgnHYEE+AJvRhYmLDSFIDYLzkSq40DrpKwmvD
- d1lTveT1oQRpEev3UYqLj7GB+sJnITHf7wF04nkGkB1MX2gGwHY+yFqlplzndoxKOSMp
- zjEGigBkFb7U2SInvWUdmfIkLE32TVN8463iYDKNvMzt1mALYkRhu9nVPvxtv3wC/fYM
- vlV8swtcR/bD1O/ikdq2MQodvxScztJ2XQjgMncy4SHLGqNZuAYK94X0fpxNSHIkf2rH
- rZ6Q==
-X-Gm-Message-State: AOJu0YxLAc9oYal7EF2J1fT9RQyq7QqGUW6GsHu4T+86vOpQop2Ex9Yn
- sqRo/uwmcqS1Z/RBrDnX+Mtw+t47q4Dj7GLAieaqY0Ibw3csm0hIsvrYWkJr2EliWpu5o/tNGoa
- vZrJ+Wi8raaAz66WdHyFE4cwPLzfQHz2Ie8T0Rfkd3A==
-X-Gm-Gg: ASbGncu/lXvuQXAbn8onStfBp7a6XQTC26hiGmfcO021gPHLVPP0sMEkU81740roXSV
- ymByk+3PBtr9Ut69n5A6woFfpPQl6OlTlqfWGM2chp32GLhkNu9DbsMcS1ACb/sXdAFfDK7fFWM
- P8Cf8YCQVEMoBIOJBv4OxLDfM26u1jmaaWqe0Co5feh3Gb8aZN5d7zU/1oWl+UdWB1z79gbK8m7
- 8U9mkitEOKY0PvZlu/W5H/s6oM9/LH3
-X-Google-Smtp-Source: AGHT+IF4Ag1+92MGiUt9CKwt2oOGl2No9PF3vzFEfX9vnrqJSIyk+IOeXq0IJz2p0unitfFCUOW/Et2DDz7ObCbHuHA=
-X-Received: by 2002:a05:6402:354c:b0:61c:db49:aec0 with SMTP id
- 4fb4d7f45d1cf-639d5fd60a4mr3556203a12.5.1759931948084; Wed, 08 Oct 2025
- 06:59:08 -0700 (PDT)
+ bh=CvWOlddfwghaVSH+2JYyD0HHGY3kc4q9PORKPryKrbg=;
+ b=TpiskP3XE9KeAEeN/n+0fQWNDrMUVp98Hv79ODqO5pzy5wXWSolQIOKkxf7rI15bbe
+ UN4Xoqy6Y+IRO6H0Y7FZ3sXxeMlWTFVLPhhhbpl+FVwmngc2tQ1ppDWV/NwzosFLFwYX
+ QpLb4dH1HmeY2O6Dnp3wH/7KlxgaevhOGv9zlgNm56ab7K7wcluwNbAE4Eppq+EjosQE
+ FL98Wwq4ihUo7Lm24j4dcep+286MHKDtGf/Df0e5lePWDI1qKaZ1ghqKC1NQlb+cBaR3
+ zIIep7pxMy7U29V/XDsYllbj0yaBgCq/riJCGsoikKUYB5IXELSrsCLQnG3V5OyezqF8
+ SGyQ==
+X-Gm-Message-State: AOJu0YwdCs/YISOEUleRWyj3IUqtXEp9Hajge/VBBmNix/RuJKG5RbW/
+ 73hZ51Ew6HlB5PUlr1IMaWdRch7tjZuG0TxP6qPzVW4JZDekeMd02sEUlvA0zy5JHHYUrAan5El
+ phUY/RhDo9rUaF+VOJLVmW49XTu5XYz1lDQNV131+ng==
+X-Gm-Gg: ASbGncv2bmpGXYBvWl7XhQQBth5YY5lkAk6bZCcqTQbvbdjarbhUnvJY/T1olaleIvj
+ Uj0W2SivnAuO+M2RmR4ld0HpwnVMth2U6i5KEmUHGIuBFCN9yJ7E2wL90kTqVdDINAkxmWDq8jP
+ VxZJ1nDEQDQ2+c8njswaYrD5XCQSBRN9m21iOtm+P2SGjXCzw2s6QYgT5F8tgBVdxZDIkwGZaO3
+ p51GDDNTpXNwnLrWjF8RYimm8flt5Scfx2lRhdWVwA=
+X-Google-Smtp-Source: AGHT+IHzbcvevwtiJmcSCyTnpSe6ZYqYf+ORpXPT2lt6T61tTXibD/ONxha3y1rZesbiXb2eB4p2ylYJ+00qrrJQErI=
+X-Received: by 2002:a17:907:18c6:b0:b54:2c82:40f1 with SMTP id
+ a640c23a62f3a-b542c8241bbmr94793066b.11.1759932054694; Wed, 08 Oct 2025
+ 07:00:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251002145742.75624-1-philmd@linaro.org>
- <20251002145742.75624-7-philmd@linaro.org>
-In-Reply-To: <20251002145742.75624-7-philmd@linaro.org>
+ <20251002145742.75624-5-philmd@linaro.org>
+In-Reply-To: <20251002145742.75624-5-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 8 Oct 2025 16:58:41 +0300
-X-Gm-Features: AS18NWBlZBlQ_ooaz6BrC9frnCFGO2qn7kgdxIpU9ZAMjnkM6wf8LcP_f9u6EWw
-Message-ID: <CAAjaMXZo4NER2tjOZdZSbH0YfuBuuE8DGsFWm5jUXeP0D25fWw@mail.gmail.com>
-Subject: Re: [PATCH 6/6] target/sparc: Reduce inclusions of 'exec/cpu-common.h'
+Date: Wed, 8 Oct 2025 17:00:27 +0300
+X-Gm-Features: AS18NWC0r1CfGpCOlAndQZ9y5ukBp4J5WxxvLPUGkg2KvH2wUbjmqMI3mSNwSpk
+Message-ID: <CAAjaMXbZfGF2V5e=YRnXDTwNTk4b3iaJkaHE=EVxRVB=OZ8eRQ@mail.gmail.com>
+Subject: Re: [PATCH 4/6] target/riscv/monitor: Replace legacy
+ cpu_physical_memory_read() call
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  qemu-riscv@nongnu.org, 
@@ -78,8 +79,8 @@ Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,12 +106,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Oct 2, 2025 at 6:00=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
 linaro.org> wrote:
 >
-> Only 2 files require declarations from "exec/cpu-common.h".
-> Include it there once, instead than polluting all files
-> including "cpu.h".
+> Commit b7ecba0f6f6 ("docs/devel/loads-stores.rst: Document our
+> various load and store APIs") mentioned cpu_physical_memory_*()
+> methods are legacy, the replacement being address_space_*().
+>
+> Propagate the address space to walk_pte(), then replace the
+> cpu_physical_memory_read() by address_space_read(). Since the
+> monitor command are run with a vCPU context, use its default
+> address space. As with the previous implementation, ignore
+> whether the memory read succeeded or failed.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
+
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
