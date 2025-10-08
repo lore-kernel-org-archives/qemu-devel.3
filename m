@@ -4,96 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A02F3CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E08CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6NWt-0000at-Ib; Wed, 08 Oct 2025 02:20:03 -0400
+	id 1v6NhL-0002e6-9P; Wed, 08 Oct 2025 02:30:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1v6NWq-0000a4-Ay
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:20:00 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1v6NWm-0002nS-Mw
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:20:00 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-639e34ffa69so199723a12.3
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1759904394; x=1760509194; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ezIllkPDOWek3gY0yXtjvcY07Vsmuqc1hgf6X1qZDp0=;
- b=h2GEkYXeWwNBf6uH3OOYL+GqXS8p/HgrCG2ANJ7ea0tnSTMoboq2rkEHPIE1acFLLO
- qJQWPH2p+PxGEwxFQKew+qo8DQmNrhzOAaBymAKtcH4HU3RGDTQ7OpiuFgTI+2TSkxEp
- nrp9puVUOQRLXrEL/1KzubvsBPb3+EJ0BZGcBT5KiVYsL4SbLgxprZI7QmONKOEp7r+j
- IoMzWiOb+o915MUwN/42rJgsa+f4pLA2taWcpuqUFnc6Q1rF/Bn3I8Sx0SWF8dynrDqD
- uoKKcmBOBuKX0+nveHdHLjmrhlSAXapZCU3Dtj0I66gUv2MVEJd2O7iupHJZNB/oxuOQ
- e/Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759904394; x=1760509194;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ezIllkPDOWek3gY0yXtjvcY07Vsmuqc1hgf6X1qZDp0=;
- b=hzOXBZLHb47sG5PFPlUNo0288S8iUq6iAq9voU1ulnvbgBAd5yW8sMl4UuI+q3SWwP
- 6c1f+e+C5g0rON7EcmGzZbqZ15NafFKRnrGTB6nB/42vpYmg7gY9YJY3nZ2FiRQ8gMLg
- By/afJgcmOIYo4kNzUO7X6MkeLlzwQIOMQxn/YSJONXkAyHxGcsUr7clc6mh06PbxwBA
- DC5VVX7wRYnCHmdnx74gEOREHyuA2xsWpfRxGLcvD63b5T0DPXt64hmKvRIC6SpCnJan
- Cy5jDn6No07mBP7AjN7kTTJeVEl0gPExE7ZwFShSCtSTfaPg3UfDuFCUySGlKXddRRev
- aQBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvGUEPesOCbk4oZSSKAa46M5abc4OG2LcJGM9hTcFomDhSrzTjfwjicUu35dUvPUM44Aph7h3p/dbC@nongnu.org
-X-Gm-Message-State: AOJu0YwSv4Hbpfbw3ZC2vbK/rZ08jPcPjiB3puNrqGS9W4EE52S1mgaV
- 1s5VoDg7OMaRhDo9Ehsz+o6B24//UBbOdbCp0YzW/gq49UxpJiI6R12LEwbzaYG2KjsvPAjxzdd
- hywjaDGPRdqDkZSqC0Uyx3HuKJC/tn7JKqhzL0VJCPA==
-X-Gm-Gg: ASbGnct7Mm7r6ihP09TSPjfPOAo2YM7o84UDsI992uSKkUd9Tdxm9oSQYS3iS8Z51I2
- 4y1da64+mNWfk7KSl7Izn6LHlZGsLQPQgX3hEs94Tb2bMaPCjeyVY99YR1fU0qm19f/4Pf6X6tQ
- /ISIjduaTFJuUyEQvDRuHCVDtnpwbpjVAbYT8+CWYDE3XmQs83xbXh1fD3bLZqvkoZVJALw6vaA
- ApM9KDoQr4INurvyxaZYSINUv/t4yVp5g==
-X-Google-Smtp-Source: AGHT+IGI2BO1iE0QzavqmaPr3PO53oOHjjqp0bgk1Ru5uEr5wfBPZDovA3NiNfCSyxMPa46eTNirZ0bNyzTS3I01X9s=
-X-Received: by 2002:a05:6402:34c6:b0:634:4e0:836f with SMTP id
- 4fb4d7f45d1cf-639d5b57a88mr1956076a12.1.1759904394488; Tue, 07 Oct 2025
- 23:19:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1v6NhG-0002dp-Aq
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:30:46 -0400
+Received: from mail-westcentralusazon11010024.outbound.protection.outlook.com
+ ([40.93.198.24] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1v6NhD-0003zV-DR
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:30:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ko2/a9rVSBIn1x7szPecVhHw5Y7yEz1E4JIWRg9UvN6G/sVwfw/Z8tZ7JB3ie3y2y1r2unuhNJJ3zCn3P4u2wmBJt5beKwhXAdi3wUt00amKCLV9IMZNISEZE9yQpoL6CwPEDHSiHycSstML5ZZuNCu9zMvwQYWzkSCLzZpyMvo0R1Z3COPxg0OfE+p4vDPG/HrbicOIPNOm5g+5uDkA1N2gAt6mIwOYJltBtT9TLmvz8dezKPMX472fkJpLlO+HLmZaDxL8r2Gv4kWhFTCv7RI1wDjUZHcwR0kdD9GqmYEXydgRkkZyisHVoqvRvMF6SkuPk3IZPo21ixVzLoCMsw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wJLAC8PzOfXRy/ZD8HteAXYlLgCkexjD55My/QsGhn0=;
+ b=E/UAUyVoXkxs/CDFMRlU5wlG7uKT0f+r6MHSu3VOdWPhWJVfLsKzYm3WNv8J8dQytbPU3nKfoiMAgVFkhF5oYOnwVmdYs5YH4C0/RPPnFlXri86fnFInj45oSfceBYeClTRD10Fo2ao10JnsAhMwAg5jBNj0PEeLLjcCSBwo2zyjVneXJKsvFgEUGIkQxbVVrMeNQTHSo0P6R0bRJAXAkrzn/DrHB+U4KfhHwzohuu2+aGmUw6TgQqM/TU0xgryq8c9zwPkojAuFsccQPZxJa6LesoletGhBZ0ZiWW3JJ5s3aS1GvDdRgeKkp43g0vaMrwzYd39PqPJZY7XX5Pf3Rw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wJLAC8PzOfXRy/ZD8HteAXYlLgCkexjD55My/QsGhn0=;
+ b=ckdZheyzABHZszCZwIAU+QJ202jpZODNsD411w9HFbCHun+p1F6fQFd+RrSvtIVwdjh7X5ZI4aLBoFvtSlyvPNy0RUcNs5sVcvTVtQjt7pv0DezW8ARxntPXmZn/Ipf8INxIissJx0N5xAM9n1+BrcHpOTHfwW60kJrQaBczQYA=
+Received: from CH2PR17CA0009.namprd17.prod.outlook.com (2603:10b6:610:53::19)
+ by CH2PR12MB4198.namprd12.prod.outlook.com (2603:10b6:610:7e::23)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.16; Wed, 8 Oct
+ 2025 06:25:27 +0000
+Received: from CH1PEPF0000AD76.namprd04.prod.outlook.com
+ (2603:10b6:610:53:cafe::af) by CH2PR17CA0009.outlook.office365.com
+ (2603:10b6:610:53::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.9 via Frontend Transport; Wed, 8
+ Oct 2025 06:25:27 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CH1PEPF0000AD76.mail.protection.outlook.com (10.167.244.53) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9203.9 via Frontend Transport; Wed, 8 Oct 2025 06:25:27 +0000
+Received: from [172.31.35.81] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 7 Oct
+ 2025 23:25:21 -0700
+Message-ID: <83764060-0cab-4c9e-90b7-034a30debebb@amd.com>
+Date: Wed, 8 Oct 2025 11:55:18 +0530
 MIME-Version: 1.0
-References: <20701dc8-d156-4ad9-8945-282321c15527@ventanamicro.com>
- <4d658cff-d8ab-4d95-b340-c6b7b5375395@yeah.net>
-In-Reply-To: <4d658cff-d8ab-4d95-b340-c6b7b5375395@yeah.net>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Wed, 8 Oct 2025 14:19:42 +0800
-X-Gm-Features: AS18NWCIS5O1I1BtYGVAvnrquVBQfb4fSNAzaZVeZk8Cm5VqiJ1WKZ6CtJKrwQU
-Message-ID: <CALw707r3tBUGbZqYXbPc2B+so6AVhYqUr7ccYYjVidDqqAWemw@mail.gmail.com>
-Subject: Re: [PATCH v2 13/18] hw/misc: riscv_worldguard: Add API to enable WG
- extension of CPU
-To: Chao Liu <chao.liu@yeah.net>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: alistair.francis@wdc.com, arikalo@gmail.com, atar4qemu@gmail.com, 
- aurelien@aurel32.net, david@redhat.com, deller@gmx.de, 
- edgar.iglesias@gmail.com, eduardo@habkost.net, gaosong@loongson.cn, 
- iii@linux.ibm.com, jcmvbkbc@gmail.com, jiaxun.yang@flygoat.com, 
- kbastian@mail.uni-paderborn.de, laurent@vivier.eu, liwei1518@gmail.com, 
- marcel.apfelbaum@gmail.com, mark.cave-ayland@ilande.co.uk, mrolnik@gmail.com, 
- npiggin@gmail.com, palmer@dabbelt.com, pbonzini@redhat.com, peterx@redhat.com, 
- philmd@linaro.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, richard.henderson@linaro.org, 
- shorne@gmail.com, thuth@redhat.com, wangyanan55@huawei.com, 
- zhao1.liu@intel.com, zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=jim.shu@sifive.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update entry for AMD-Vi Emulation
+Content-Language: en-US
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ <qemu-devel@nongnu.org>, <mst@redhat.com>, <clg@redhat.com>
+CC: <philmd@linaro.org>, <clement.mathieu--drif@eviden.com>,
+ <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>,
+ <joao.m.martins@oracle.com>, <boris.ostrovsky@oracle.com>
+References: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20251007182951.1284171-1-alejandro.j.jimenez@oracle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD76:EE_|CH2PR12MB4198:EE_
+X-MS-Office365-Filtering-Correlation-Id: 560b2720-ca66-4163-adba-08de06337909
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|376014|82310400026|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NU8wNXRObi95VXVodkZJTjBldDhMQURGVFlEWWFVU0xVQ1BtNjY1RnYzTVR2?=
+ =?utf-8?B?SGRIOStCdDBOK2lMSTZGd0ZCM3VPU3VkbWFwcHZRMFc4OWlDT2VTUlhIR2lp?=
+ =?utf-8?B?b0pqYWs3NStnbFd4bjFMQUVlQzFscVlHTWMzSHY4cFFiUEFNRDBJaDRaWjRF?=
+ =?utf-8?B?N2wzaXlydTg3MXlKOERQdEFraFRwWTFjRmRCYkcxZDlJTmMxVUNFSklteDRh?=
+ =?utf-8?B?OXV1dWM2ODVNbXhiN3JtNUtRekpjNTcxanRjMEljejBGKzB1K3RhR3lJOXNi?=
+ =?utf-8?B?UU81VitDTXl0NlBGYm94QnM4Y0g1NWwwclVhTFlyNHBGSEdRRFQxY3JoRW84?=
+ =?utf-8?B?bVBOVTBvZjBnSy80WGozWitXdFA3N21JemhlT3JBalgwUkZvNFU1QzYxMjRS?=
+ =?utf-8?B?ZCthQVBuaS9UVGpMOVJMRnJIaFR0ZS9yOHE1UnMrZXhubWNaOTlkOHZiT2NG?=
+ =?utf-8?B?cWhhdTZGaHZJY1h2dHhKYVdrUkZpaU52QSthOTJWRlJHN1NOcFJ3c0s0dkYx?=
+ =?utf-8?B?bFZuNWJWTzNkbHR3Zk1yTTJGUTE4Uk9wVS9ub2h6eWdHdkMzeDVteFhSb2Ry?=
+ =?utf-8?B?VDlRUFQ0cTJIZUltZlFSbUhuNHFDT2l5NURjSnlqWWd3TldtOWFNTStGbmZY?=
+ =?utf-8?B?RWFSZlZLeU94Rk5RSWtFS0hBMmdhdE9zTTNxQXhBTFZuYUtrM3o0K28zbDFF?=
+ =?utf-8?B?a2xRb0RCcUk3ZlhqQms2R25PS0lqNUUrSVZRT3FvUU5scFR5VWl4UnlHUGVj?=
+ =?utf-8?B?dWhGL3EvUVhLdWRLdUl0cEdGcmpXVnBpV3NMeEZ3ZVlqZUhCK0dnaHY0UVlD?=
+ =?utf-8?B?bGFQbzZ4QjFWVUVxSGZLa2R1Mk15cExRZzZ1eDVadHhMNlowemNSZEVUNGNr?=
+ =?utf-8?B?VjlpTndSZnY4QTZxWDM1MHI3TG5ySUJJOGhnak0vTVdRU3JhaGdONWtNbkY3?=
+ =?utf-8?B?M0VyTWJxZVdod3pjc1JaaUovNmZMNE91c3J5NDlHbFExMGsyejZBOU1jd21P?=
+ =?utf-8?B?WDRRQWFBS1B5Q0VHb05rVE5mYVRUMzZMSEg3MnlHMXIwRVRBS3c2QTZIaVA5?=
+ =?utf-8?B?ZkoyZlF2NVBraFNvanROcEo3U2F2dlhOMmF5L21ucHd5VWhzVWMvbTFWOUM1?=
+ =?utf-8?B?OWVkMmVwRHBvVTd2SW5BK3htcUN1VGpRREZPUnVldkduWTZzMHJzYUFjaWdD?=
+ =?utf-8?B?YWRyY2R0RERweXdmL3N3L29WRG1tL2dJTHdxeXhPT3FUamlnVDZ6c1NKelZF?=
+ =?utf-8?B?ZDRUL3IvM0tBVzRLQ3pYWmY4ak9qR1dBL0NuL1FQaHdUUGNUdHZOUjZvSXJy?=
+ =?utf-8?B?dlNOTEVMdTJYb2JGeTZycGdaVlNhYzZmK01rUW9HdkxXYWNSWHorMXdCd09X?=
+ =?utf-8?B?Z2g5Z25HNkQvNlJHcXVjUW5OTE5QNmZ0WFd2YjFtN3pmNnBwR3Y2alpnNXNI?=
+ =?utf-8?B?clo5R1BsM2tTdXY2SWFxZmhJTjVHMXhybFJuZGlGREV4UTg1NzN4QTNuK1VF?=
+ =?utf-8?B?SXFvRlJmSGtRS3RNUkVrc3NBbXMweDdvTkNwME9RMmxwWGtPak82c09tWktj?=
+ =?utf-8?B?aHhLdnAweUYxbUJjV09nRW1qcVNHdWVnY1RVd0dpYmRpVnlwN1RIb0htU1h3?=
+ =?utf-8?B?eWpJc1Jsdk1VaVl2cmFUT0VURFZlNmlxQkVWd1JPb1VNY0F5bVRSS1hlbEhE?=
+ =?utf-8?B?VG5GWHBwVlFQVWxoWC9xYkc0YmthdVhIeGdEZGZkdjlkTSsrSmErNXp0NGlG?=
+ =?utf-8?B?RVQxTU82N3MrRlNZWFhOdEt1MW5EMnlzN1ppMnVSalpORUVsQjVKMHlxTXo2?=
+ =?utf-8?B?M2VFQzB1KzBlRFczb3ltdGozbGx1bjJLNG1EK3MwYngxRUNrV2c1WHNnOTh4?=
+ =?utf-8?B?TFdNU1ZiaDBpT0gzYUVIeWQyWnd1RVU5ZUpDbDF0cFlZK1pwUHNiV2FDN2Qw?=
+ =?utf-8?B?Qzc4MHJERW5CL0pYdzYvazhWTjlleU1QTlVrT3laM2pramllZm42Y2lIeGpn?=
+ =?utf-8?B?Y1Q5ZHB0RExtSXB0QTU0Vm96Y0lRL3ptRUVCR1QxTURueExpTHVvZXFURXB0?=
+ =?utf-8?B?a0tGTVJSNVZWb0J3Q0ZlbGFWQXBwV2o5RzlBeUIvdmNuZFRhS29saVBzWjlH?=
+ =?utf-8?Q?XIfg=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2025 06:25:27.6426 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 560b2720-ca66-4163-adba-08de06337909
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD76.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4198
+Received-SPF: permerror client-ip=40.93.198.24;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,201 +163,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel and Chao,
-
-I will replace qemu_get_cpu() with cpu_by_arch_id().
-However, cpu_by_arch_id() can still return NULL if the hartid is
-invalid, so I will handle that case with a clean exit.
-
-I will fix these in the v3 patch.
 
 
-Thanks,
-Jim
+On 10/7/2025 11:59 PM, Alejandro Jimenez wrote:
+> Add myself as maintainer and Sairaj Kodilkar as reviewer.
+>
+> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> ---
+>   MAINTAINERS | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 75e1fa5c307ea..08de896ca942a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3891,8 +3891,10 @@ F: tests/functional/x86_64/test_intel_iommu.py
+>   F: tests/qtest/intel-iommu-test.c
+>   
+>   AMD-Vi Emulation
+> -S: Orphan
+> -F: hw/i386/amd_iommu.?
+> +M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> +R: Sairaj Kodilkar <sarunkod@amd.com>
+> +S: Supported
+> +F: hw/i386/amd_iommu*
+>   
+>   OpenSBI Firmware
+>   L: qemu-riscv@nongnu.org
+Acked-by: Sairaj Kodilkar <sarunkod@amd.com>
 
-On Wed, Aug 13, 2025 at 11:10=E2=80=AFAM Chao Liu <chao.liu@yeah.net> wrote=
-:
->
-> > On 4/17/25 7:52 AM, Jim Shu wrote:
-> > > riscv_worldguard_apply_cpu() could enable WG CPU extension and set WG
-> > > callback to CPUs. It is used by machine code after realizing global W=
-G
-> > > device.
-> > >
-> > > Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> > > ---
-> > >   hw/misc/riscv_worldguard.c         | 87 +++++++++++++++++++++++++++=
-+++
-> > >   include/hw/misc/riscv_worldguard.h |  1 +
-> > >   2 files changed, 88 insertions(+)
-> > >
-> > > diff --git a/hw/misc/riscv_worldguard.c b/hw/misc/riscv_worldguard.c
-> > > index b02bd28d02..1a910f4cf3 100644
-> > > --- a/hw/misc/riscv_worldguard.c
-> > > +++ b/hw/misc/riscv_worldguard.c
-> > > @@ -92,6 +92,93 @@ uint32_t mem_attrs_to_wid(MemTxAttrs attrs)
-> > >       }
-> > >   }
-> > >
-> > > +static void riscv_cpu_wg_reset(CPURISCVState *env)
-> > > +{
-> > > +    CPUState *cs =3D env_cpu(env);
-> > > +    RISCVCPU *cpu =3D RISCV_CPU(cs);
-> > > +    uint32_t mlwid, slwid, mwiddeleg;
-> > > +    uint32_t trustedwid;
-> > > +
-> > > +    if (!riscv_cpu_cfg(env)->ext_smwg) {
-> > > +        return;
-> > > +    }
-> > > +
-> > > +    if (worldguard_config =3D=3D NULL) {
-> > > +        /*
-> > > +         * Note: This reset is dummy now and WG CSRs will be reset a=
-gain
-> > > +         * after worldguard_config is realized.
-> > > +         */
-> > > +        return;
-> > > +    }
-> > > +
-> > > +    trustedwid =3D worldguard_config->trustedwid;
-> > > +    if (trustedwid =3D=3D NO_TRUSTEDWID) {
-> > > +        trustedwid =3D worldguard_config->nworlds - 1;
-> > > +    }
-> > > +
-> > > +    /* Reset mlwid, slwid, mwiddeleg CSRs */
-> > > +    if (worldguard_config->hw_bypass) {
-> > > +        /* HW bypass mode */
-> > > +        mlwid =3D trustedwid;
-> > > +    } else {
-> > > +        mlwid =3D 0;
-> > > +    }
-> > > +    slwid =3D 0;
-> > > +    mwiddeleg =3D 0;
-> > > +
-> > > +    env->mlwid =3D mlwid;
-> > > +    if (riscv_cpu_cfg(env)->ext_sswg) {
-> > > +        env->slwid =3D slwid;
-> > > +        env->mwiddeleg =3D mwiddeleg;
-> > > +    }
-> > > +
-> > > +    /* Check mwid, mwidlist config */
-> > > +    if (worldguard_config !=3D NULL) {
-> > > +        uint32_t valid_widlist =3D MAKE_64BIT_MASK(0, worldguard_con=
-fig->nworlds);
-> > > +
-> > > +        /* CPU use default mwid / mwidlist config if not set */
-> > > +        if (cpu->cfg.mwidlist =3D=3D UINT32_MAX) {
-> > > +            /* mwidlist contains all WIDs */
-> > > +            cpu->cfg.mwidlist =3D valid_widlist;
-> > > +        }
-> > > +        if (cpu->cfg.mwid =3D=3D UINT32_MAX) {
-> > > +            cpu->cfg.mwid =3D trustedwid;
-> > > +        }
-> > > +
-> > > +        /* Check if mwid/mwidlist HW config is valid in NWorld. */
-> > > +        g_assert((cpu->cfg.mwidlist & ~valid_widlist) =3D=3D 0);
-> > > +        g_assert(cpu->cfg.mwid < worldguard_config->nworlds);
-> > > +    }
-> > > +}
-> > > +
-> > > +/*
-> > > + * riscv_worldguard_apply_cpu - Enable WG extension of CPU
-> > > + *
-> > > + * Note: This API should be used after global WG device is created
-> > > + * (riscv_worldguard_realize()).
-> > > + */
-> > > +void riscv_worldguard_apply_cpu(uint32_t hartid)
-> > > +{
-> > > +    /* WG global config should exist */
-> > > +    g_assert(worldguard_config);
-> >
-> > We usually add g_asserts() after the variable declarations.
-> >
-> > > +
-> > > +    CPUState *cpu =3D qemu_get_cpu(hartid);
->
-> arm_get_cpu() uses CPUState::cpu_index to obtain the corresponding CPUSta=
-te pointer.
->
-> However, CPUState::cpu_index and the RISC-V HART index are not necessaril=
-y strictly
-> one-to-one (for instance, when the hartid base is non-zero or when hartid=
-s are
-> discontinuous).
->
-> Typically, we use arm_get_cpu() at the accelerators, rather than in hw/co=
-de.
->
-> A better approach is to use cpu_by_arch_id() instead of qemu_get_cpu(),
-> in RISC-V cpu_by_arch_id() uses the hartid.
->
-> e.g.
->
->      CPUState *cpu =3D cpu_by_arch_id(hartid);
->
->
-> Thanks,
->
-> Chao
->
-> > > +    RISCVCPU *rcpu =3D RISCV_CPU(cpu);
-> > > +    CPURISCVState *env =3D cpu ? cpu_env(cpu) : NULL;
-> > > +
-> > > +    rcpu->cfg.ext_smwg =3D true;
-> > > +    if (riscv_has_ext(env, RVS) && riscv_has_ext(env, RVU)) {
-> > > +        rcpu->cfg.ext_sswg =3D true;
-> > > +    }
-> >
-> > riscv_has_ext() will segfault if env =3D=3D NULL, and you're creating a=
- code
-> > path where this might happen:
-> >
-> > > +    CPURISCVState *env =3D cpu ? cpu_env(cpu) : NULL;
-> >
-> > In fact, cpu =3D=3D NULL will explode on you earlier via this macro:
-> >
-> > > +    RISCVCPU *rcpu =3D RISCV_CPU(cpu);
-> >
-> > You can either handle cpu =3D=3D NULL with a clean exit before using 'c=
-pu' to assign
-> > stuff or g_assert(cpu !=3D NULL) for a more rude exit. But with this co=
-de as is
-> > you're gambling with segfaults.
-> >
-> >
-> > Thanks,
-> >
-> > Daniel
-> >
-> >
-> > > +
-> > > +    /* Set machine specific WorldGuard callback */
-> > > +    env->wg_reset =3D riscv_cpu_wg_reset;
-> > > +    env->wid_to_mem_attrs =3D wid_to_mem_attrs;
-> > > +
-> > > +    /* Reset WG CSRs in CPU */
-> > > +    env->wg_reset(env);
-> > > +}
-> > > +
-> > >   bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock)
-> > >   {
-> > >       uint32_t wid =3D mem_attrs_to_wid(attrs);
-> > > diff --git a/include/hw/misc/riscv_worldguard.h b/include/hw/misc/ris=
-cv_worldguard.h
-> > > index 8a533a0517..211a72e438 100644
-> > > --- a/include/hw/misc/riscv_worldguard.h
-> > > +++ b/include/hw/misc/riscv_worldguard.h
-> > > @@ -48,6 +48,7 @@ extern struct RISCVWorldGuardState *worldguard_conf=
-ig;
-> > >
-> > >   DeviceState *riscv_worldguard_create(uint32_t nworlds, uint32_t tru=
-stedwid,
-> > >                                        bool hw_bypass, bool tz_compat=
-);
-> > > +void riscv_worldguard_apply_cpu(uint32_t hartid);
-> > >
-> > >   uint32_t mem_attrs_to_wid(MemTxAttrs attrs);
-> > >   bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock);
-> >
->
 
