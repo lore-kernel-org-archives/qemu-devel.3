@@ -4,93 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC18CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F89ECAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6XbP-0007y9-5L; Wed, 08 Oct 2025 13:05:24 -0400
+	id 1v6Xji-000142-0U; Wed, 08 Oct 2025 13:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6XbM-0007xu-2U
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:05:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6XbD-0005wo-G6
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:05:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759943100;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=O+06nEThWsJ6AUuMugKUbpt6JK3XmZIO7ax7RQ0PGW0=;
- b=NIddUfBMXw0X0ymMBCv9TdR5moBO5OrGsR4wQOQgKE+voRZ6kfyYmUMUZfpyrGk71f4PkP
- y6oO7leVLBFoTH5FcAaPxwQhBR2oupMish4gPocBT0F4eMvaf+YGoqvtR/HlPE9U4OwKoV
- S0BIENDuPKVS16mskwvX6giQPAnQVsE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-mEihgVZ6P4CpKNW0HK3ymQ-1; Wed, 08 Oct 2025 13:04:58 -0400
-X-MC-Unique: mEihgVZ6P4CpKNW0HK3ymQ-1
-X-Mimecast-MFC-AGG-ID: mEihgVZ6P4CpKNW0HK3ymQ_1759943098
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3ee13e43dd9so77310f8f.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 10:04:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759943097; x=1760547897;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=O+06nEThWsJ6AUuMugKUbpt6JK3XmZIO7ax7RQ0PGW0=;
- b=tTgOcAYk2NS/+VEWbLgnNFz9QwJKw8aWbHItJphWhx2cIIKnc+gic23HCkgQhANmiJ
- u+NUN2gP5na2Aafl0vN57Pj3WkkfnjiPCO12+STUQQei8u3ONQV0emiHE5doGK0qCtXO
- vhelVSyu81nLyVPH+QFPi5XZPtLbwwk6/5qTcy9H3pbCMiTfRi5pzDG/jpHxUHNp9IE5
- CII5mgqzc5Qa1aEDa8J7cbLF5JkdPtKDAIkDjzXpbePFU8rURStWCT2bzNObvC+a2RaW
- 8c6c8UHoz/EyoRMcU7Fq+lXWpZdT/4oeCgW9+cgKSeZ2j4WtrFA4V8S0VBdnkxHbt+0+
- wqXA==
-X-Gm-Message-State: AOJu0Ywa4w3fxPstUnEAYab12sfJyOA7QA7T6Q8tidGrCYqJ4zleO76t
- 2r9ZXcPA6Z61dcOuhB4X1ix2GahXoCF2jVPzXXCeQDlcnrmawfIAGc5DUQoizWCFUOOlmqh7+fh
- ZLMyGMLofF8/n/jfFK7m8C6/235DUGnQIwZaDT6Ofgl/p+aa9kd4E5iKW4A469gjcHdio4jtJg5
- qVnZ8lcftI6T1lT+oGBPISULDYdF2MqxU=
-X-Gm-Gg: ASbGncskib0I4LkU35xhW/L+j4jNpYi4LKi57zgrOqCJ1NLAaM4qalVboIp73VCvEYs
- LzIskNelegZMkE9RsQXqBvU7Yma+105p9074BHRfc9mCHcrNrKh60kDf+RskqeFCoV8dilB+TMD
- +xkXtPKc/FyQKb3taJ9mSpbUrVIGIQvnaAqgCzPHe9wETER6Qd9FlAV4LjcMeHKb46bmPPGKHub
- oQ3vXhKPRXcTv3cs3fFVm74/cbcuw==
-X-Received: by 2002:a05:6000:1ac8:b0:3f7:b7ac:f3d4 with SMTP id
- ffacd0b85a97d-42666abbbc1mr3393046f8f.5.1759943097532; 
- Wed, 08 Oct 2025 10:04:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsnyEFUGtRtAzwKHUE9EeDOUmEHcvi5NsvWDwWjykamvIjDElChPJXlNNIEQUITjEd397KYCTixQSb/WmPBIk=
-X-Received: by 2002:a05:6000:1ac8:b0:3f7:b7ac:f3d4 with SMTP id
- ffacd0b85a97d-42666abbbc1mr3393025f8f.5.1759943097130; Wed, 08 Oct 2025
- 10:04:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1v6Xje-00013s-Gq
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:13:54 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1v6XjR-00080T-37
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:13:54 -0400
+Received: from example.com (unknown [167.220.208.72])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 425A02038B69;
+ Wed,  8 Oct 2025 10:13:32 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 425A02038B69
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1759943613;
+ bh=uKMlFWSrIIcyNpy76i3BC91gGvK9t3fe8XkXjAE3qBI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=EJ46ryi2DlFIixmPRBi9GeGxo8QjC7CHxrlo38OdUBmQGHCgd9zqpqEzkFvgEE9pd
+ Jp3NewPCPvfrfuotHUI1F8NSgBiV7eCB9ZLTlLH8BnVJrDShCGFN5EUsg18UlBdnuV
+ UO7cHuMuZIdwKJX8wTj6S+gWTdNB0kP35s+sGzoU=
+Date: Wed, 8 Oct 2025 19:13:28 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, wei.liu@kernel.org
+Subject: Re: [PATCH v5 00/27] Implementing a MSHV (Microsoft Hypervisor)
+ accelerator
+Message-ID: <aOabuIpMfmbSGX5i@example.com>
+References: <20251002171536.1460049-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20251008152701.411964-1-pbonzini@redhat.com>
- <50578062-8b7a-4286-a154-eebf05f3be3c@linaro.org>
- <19ec9e38-8b34-420e-ade7-f82e9e7f5969@redhat.com>
- <badbd3be-f09b-4215-a179-bc13c98a9d26@linaro.org>
-In-Reply-To: <badbd3be-f09b-4215-a179-bc13c98a9d26@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 8 Oct 2025 19:04:45 +0200
-X-Gm-Features: AS18NWDPCjifQuAkMKA5ZQblJ8k8cancIEZT0rFZrXb7VuFQwEnrjKP9Znu4T9Y
-Message-ID: <CABgObfYAwwaASRkSWZTwwUsjcpiM2t8KcxFZ=egbrqKSDEPSQg@mail.gmail.com>
-Subject: Re: [PATCH] qobject: make refcount atomic
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251002171536.1460049-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,24 +66,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 8, 2025 at 6:53=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
-> int f(int *p) { return __atomic_add_fetch(p, -1, 0) =3D=3D 0; }
-> int g(int *p) { return __atomic_fetch_add(p, -1, 0) =3D=3D 1; }
->
-> With current gcc, these two functions compile identically for x86_64, s39=
-0x, riscv, and
-> aarch64.  I didn't bother testing further.
+On Thu, Oct 02, 2025 at 07:15:09PM +0200, Paolo Bonzini wrote:
 
-The trick is that you have constants everywhere. You have by
-definition add_fetch(x, y) =3D=3D fetch_add(x, y) + y, but also in this
-case the "+ y" can move to the other side and simplify, as if you were
-in 8th grade.
+Hey Paolo,
 
-If either the addend or the compared value were variables things would
-be different. I had never thought about it, so thanks for pointing it
-out!
+thank you for the changes! I tested the series and it passed our CI.
 
-Paolo
+I glanced over the changes, and the only thing that popped up would
+be a typo in the first commit. (get_option('s/whpx/whpx/')
 
+Best,
+
+magnus
+
+> Hi Magnus,
+> 
+> this is your series with a lot of fixes to make it pass CI.  It's very
+> much untested but the changes are mostly concentrated in the headers,
+> where you obviously didn't have great coverage of target systems. :)
+> 
+> So I don't expect any huge issues, but anyway here it is for your testing.
+> 
+> The changes are:
+> - nits from Daniel's review
+> - add check for availability with --enable-whpx
+> - do not use __uN types outside linux-headers/
+> - add stubs in accel/stubs/mshv-stub.c
+> - do not include <linux/mshv.h> on files with Linux stubs
+> - split mshv.h/mshv_int.h to avoid conflicts with other accelerators
+>   (esp. in the definition of AccelCPUState)
+> - change first argument of mshv_request_interrupt to MshvState*
+>   (though it could go away altogether)
+> - fix double free of cpu->accel [Daniel]
+> - adjust for rename of qemu_wait_io_event()
+> - use MAX_CONST instead of MAX_SIZE
+> - adjust trace-events to use PRIx64
+> 
+> Thanks,
+> 
+> Paolo
+> 
+> Magnus Kulke (26):
+>   accel: Add Meson and config support for MSHV accelerator
+>   target/i386/emulate: Allow instruction decoding from stream
+>   target/i386/mshv: Add x86 decoder/emu implementation
+>   hw/intc: Generalize APIC helper names from kvm_* to accel_*
+>   include/hw/hyperv: Add MSHV ABI header definitions
+>   linux-headers/linux: Add mshv.h headers
+>   accel/mshv: Add accelerator skeleton
+>   accel/mshv: Register memory region listeners
+>   accel/mshv: Initialize VM partition
+>   accel/mshv: Add vCPU creation and execution loop
+>   accel/mshv: Add vCPU signal handling
+>   target/i386/mshv: Add CPU create and remove logic
+>   target/i386/mshv: Implement mshv_store_regs()
+>   target/i386/mshv: Implement mshv_get_standard_regs()
+>   target/i386/mshv: Implement mshv_get_special_regs()
+>   target/i386/mshv: Implement mshv_arch_put_registers()
+>   target/i386/mshv: Set local interrupt controller state
+>   target/i386/mshv: Register CPUID entries with MSHV
+>   target/i386/mshv: Register MSRs with MSHV
+>   target/i386/mshv: Integrate x86 instruction decoder/emulator
+>   target/i386/mshv: Write MSRs to the hypervisor
+>   target/i386/mshv: Implement mshv_vcpu_run()
+>   accel/mshv: Handle overlapping mem mappings
+>   target/i386/mshv: Use preallocated page for hvcall
+>   docs: Add mshv to documentation
+>   MAINTAINERS: Add maintainers for mshv accelerator
+> 
+> Praveen K Paladugu (1):
+>   qapi/accel: Allow to query mshv capabilities
+> 
+>  MAINTAINERS                      |   15 +
+>  docs/about/build-platforms.rst   |    2 +-
+>  docs/devel/codebase.rst          |    2 +-
+>  docs/glossary.rst                |    7 +-
+>  docs/system/introduction.rst     |    3 +
+>  meson.build                      |   14 +
+>  qapi/accelerator.json            |   29 +
+>  accel/mshv/trace.h               |   14 +
+>  include/hw/hyperv/hvgdk.h        |   20 +
+>  include/hw/hyperv/hvgdk_mini.h   |  817 ++++++++++++++
+>  include/hw/hyperv/hvhdk.h        |  249 +++++
+>  include/hw/hyperv/hvhdk_mini.h   |  102 ++
+>  include/monitor/hmp.h            |    1 +
+>  include/system/accel-irq.h       |   37 +
+>  include/system/hw_accel.h        |    1 +
+>  include/system/mshv.h            |   64 ++
+>  include/system/mshv_int.h        |  155 +++
+>  linux-headers/linux/mshv.h       |  291 +++++
+>  target/i386/cpu.h                |    4 +-
+>  target/i386/emulate/x86_decode.h |    9 +
+>  target/i386/emulate/x86_emu.h    |    2 +
+>  accel/accel-irq.c                |  106 ++
+>  accel/mshv/irq.c                 |  399 +++++++
+>  accel/mshv/mem.c                 |  563 ++++++++++
+>  accel/mshv/mshv-all.c            |  727 ++++++++++++
+>  accel/mshv/msr.c                 |  375 +++++++
+>  accel/stubs/mshv-stub.c          |   44 +
+>  hw/core/machine-hmp-cmds.c       |   15 +
+>  hw/core/machine-qmp-cmds.c       |   14 +
+>  hw/intc/apic.c                   |    8 +
+>  hw/intc/ioapic.c                 |   20 +-
+>  hw/virtio/virtio-pci.c           |   21 +-
+>  target/i386/emulate/x86_decode.c |   27 +-
+>  target/i386/emulate/x86_emu.c    |    3 +-
+>  target/i386/mshv/mshv-cpu.c      | 1763 ++++++++++++++++++++++++++++++
+>  target/i386/mshv/x86.c           |  297 +++++
+>  accel/Kconfig                    |    3 +
+>  accel/meson.build                |    3 +-
+>  accel/mshv/meson.build           |    9 +
+>  accel/mshv/trace-events          |   33 +
+>  accel/stubs/meson.build          |    1 +
+>  hmp-commands-info.hx             |   13 +
+>  meson_options.txt                |    2 +
+>  qemu-options.hx                  |   16 +-
+>  scripts/meson-buildoptions.sh    |    3 +
+>  scripts/update-linux-headers.sh  |    2 +-
+>  target/i386/emulate/meson.build  |    7 +-
+>  target/i386/meson.build          |    2 +
+>  target/i386/mshv/meson.build     |    8 +
+>  49 files changed, 6281 insertions(+), 41 deletions(-)
+>  create mode 100644 accel/mshv/trace.h
+>  create mode 100644 include/hw/hyperv/hvgdk.h
+>  create mode 100644 include/hw/hyperv/hvgdk_mini.h
+>  create mode 100644 include/hw/hyperv/hvhdk.h
+>  create mode 100644 include/hw/hyperv/hvhdk_mini.h
+>  create mode 100644 include/system/accel-irq.h
+>  create mode 100644 include/system/mshv.h
+>  create mode 100644 include/system/mshv_int.h
+>  create mode 100644 linux-headers/linux/mshv.h
+>  create mode 100644 accel/accel-irq.c
+>  create mode 100644 accel/mshv/irq.c
+>  create mode 100644 accel/mshv/mem.c
+>  create mode 100644 accel/mshv/mshv-all.c
+>  create mode 100644 accel/mshv/msr.c
+>  create mode 100644 accel/stubs/mshv-stub.c
+>  create mode 100644 target/i386/mshv/mshv-cpu.c
+>  create mode 100644 target/i386/mshv/x86.c
+>  create mode 100644 accel/mshv/meson.build
+>  create mode 100644 accel/mshv/trace-events
+>  create mode 100644 target/i386/mshv/meson.build
+> 
+> -- 
+> 2.51.0
+> 
 
