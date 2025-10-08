@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83BCBCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 22:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEBFBCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 22:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6cEw-0002vu-BO; Wed, 08 Oct 2025 18:02:30 -0400
+	id 1v6cCt-0000eA-Kt; Wed, 08 Oct 2025 18:00:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6cDh-0001UK-MZ
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 18:01:19 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1v6cCd-0000As-9P
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 18:00:08 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6cCa-0007RO-0S
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 18:01:07 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-781ea2cee3fso308871b3a.0
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 15:00:02 -0700 (PDT)
+ id 1v6cCL-0007Mj-3j
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 18:00:06 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7841da939deso283486b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 14:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759960801; x=1760565601; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759960785; x=1760565585; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jUo2eLEQH3tvadRbtyXeqZmXKqgrSzHJmdQtpKn9Hto=;
- b=SX5R2+Mt/DZ+fk3dvM1EhzjTP6G7R1cOnnpsGSyPQDWYjyjwZ0MoIPMNLTOmbHislV
- Qzm2Zz7DsIi+Sg7bjwSWeBwFfcglCAMetWsgdjad8o/VcYHnshlPgJykhWbnzuHC1uIK
- KHsHyZ5emt+/fzR260s0exO6QlBc4WaQTgEFXQitE2CzCfHx6G4a3wpC3ZpFE+CkEQsJ
- h5iQxOGFZoSMdTkRGpd5hHDIAb66Zu7J3CI08Xy/SQ0YgDQoGFa5U+75QCsnm4QS91o/
- RlEPhvGzpSCsJ2jUki4tH0PY3emQmTGf4YTd+UyLVIunrQYx19/ZbP91AuoZYfAyAsw6
- Jmtw==
+ bh=2fNvE/0VLywPk9VR9GyOGl84ab7Le9+vvxZH9uub5Ig=;
+ b=hb/6UFz2jw2ikyXm/FJvWFED2a0lIy2yfOonidJSorJbc94tkP0kZpE4a1ETVvJWKu
+ NjcaShQwAak4Ye0yPO1W0Rk8Flc13ohkr/Rq3r8D+gJSU1R5TKoIV6oBMTRqv3FjZxsn
+ 1Qa8XyH484GqxdFZR4CLPrfU7B8QzUSTGo/X11X0PXROnkuekXs+k7BNsNLfUFoQ4rzc
+ l16jy6X+t+CAzyf7+UcjBHJQayueY5NnEwgfxY1MEXx4NvMZ+8IfQ/B8Vj5nRr7/IrRp
+ pZsNYDldXPb32IP0JvmwMNjNIOUhajmC67ILzUSSXTsJZi64qqzTYU1MrALI63paPmJI
+ kPhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759960801; x=1760565601;
+ d=1e100.net; s=20230601; t=1759960785; x=1760565585;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jUo2eLEQH3tvadRbtyXeqZmXKqgrSzHJmdQtpKn9Hto=;
- b=hXeWTI3C0U96mvCdRMvhzjdfkzP/+zRPZLUqUI1BGEPG5cqYrH9pqpO7Cw5TSeGQAz
- 1LJMYS1v/aCt8aTxNfykCpPOycxLiX0coRXCe0ujxEJPrl1Psw90Ay0yy4hd4BZPxtSX
- KrqMh8pLtcSNtF4MlnXcKZ5DSI+dvUe/XU3GD1qVCgMHVh71jqOQVOCy1fSo3ea+EPu4
- lQrk/lI6Gju3j0bsaqI4YS3qugKw/EeDUQbVB8xZ4w/eZ8+1oPqz28BJXm+R1dvk8Wv1
- LxWtJMQkhgBWlFyT1onbZiT/GzHB75E0uXh5R13YZWPB5gbL6ODfZwFanE8V2xq8gwpu
- /xSw==
-X-Gm-Message-State: AOJu0Yy7rqY9/np+pLIAswTEoKWhFKXRibh6G83aqmKdm9f8gN7+cdeG
- pXiVKOtStn1NlNPXEEZocwCH5B4JsB2XqwkI1RRQ89+7sR2cnpAab73ohYyPSg+BSOayT2V4ObQ
- uRnzwgFo=
-X-Gm-Gg: ASbGnctt4M2ItV2wkT5wQ7v+r0kk4YijxFIRMzbnDWn2i5M36nSojPdpBIxlC/7OXoR
- 6ZtnbOOjF4bQVrt/jsmv+2Vyix3p84yhX+C8UNWWXopJfq2Y+8qIbfMd8uTkKswei56ZJQmnQBG
- j1b2DC+CDinT/sXU+UtGWd/OuKIQgXBHYV59AbgkTTvWsFXRc4Ukapni1DpJwfdoMP8SV8r/yyO
- o4OhcbMXdFqWZbsqLkAFLGxfvh1xOnAX62IwV0hpfZzkod9dhYRY5A+8qEm555/V6GtNxuQGAoI
- sEFQlIOj1g1haugPb/hHG3y1eXxWqbJ71uZGTUQk11Yzxg2BY03XUhS2/TjTH9RkuOS68DGilkA
- aFJVCAwZcCl1ZnVud6vS4VrDy1hN69P5rqxS0LmS9cerw3PqAuX6qNYwdMdasFNmfkIA=
-X-Google-Smtp-Source: AGHT+IGGWYcaFKaFoCMBMA5VTA3mg8dktTKgIXCGMmo56TAXwjgjAFJ8iVcatXl+9Kv+Bvckl8WrPg==
-X-Received: by 2002:a05:6a00:92a2:b0:783:c2c4:9aa5 with SMTP id
- d2e1a72fcca58-79387d0f5aamr7090675b3a.32.1759960800496; 
- Wed, 08 Oct 2025 15:00:00 -0700 (PDT)
+ bh=2fNvE/0VLywPk9VR9GyOGl84ab7Le9+vvxZH9uub5Ig=;
+ b=mJN8ixM3bUY0cg4O1ntrbnrk+zBnolj5B1MsqOmzECb2Qi3FvA0THQ+iDVFpsqxqyC
+ WldjZm3jQhCmazBTrKttNmF1eIp/lTmT2se3V5aMQLQFBs07ya2tW50qSoRKtLM5eCcD
+ HLOGRmFTLYEA7tXMSQFho2BA7rrXwTEj4dLbYwQqCvGR1T6hPGINdXye5fUf48IennAM
+ vzXCHsVnY81ysQ6MKmyAvrjqrnovRzxqV0avK1wDJdsbydUyO4+IrqhE0S4p5umIqLJL
+ iV2SrStIdyoAn9CXH+pUdRPwjWT7511uxyMm6z5DihrtRyNKQDZkHPLVG3c5+5rx5WGM
+ Gg3g==
+X-Gm-Message-State: AOJu0YwcZkI3kl+sM7yEsuSsLX0xmVcN/2ZHTcdNnraZPrZDDi071QoN
+ OLU56IJdvcMrc/7AEEz7sdPWJAqN+YNkeqN7StZzIqDR00sWRaPhX9RqyOuUGI07OkCxlZDWaQb
+ ojUN9E1k=
+X-Gm-Gg: ASbGncvreHmN42GbL+eFZDpIaoyInDjgVEzsXftoYT95bbmu9L3jXQwru+ah6//C9pp
+ N19HCxbTKqWhoy3ExDH/bg1DKhM/gpMTWsxXGvOLuUJo8EuPSyvQwaJm+9/6nFZk7c9S6RoAJrq
+ 6RsAee8z5QWeiG10sJYcvOqo4xP+YCwm2PJI8cjaqQZBVyPm7GcRen+igiGh7FFndCBVa4Enl4v
+ kFgj42tf3hWVf+f2QuvJ4HJCrp1Iu/OcymZFsNv40u4DEs9LRyKnS3PvKt37oRw8H3JKphpKqck
+ lf8j740zKdZKeaTmM4Cj3yOXy+se/xxKs6dfIxJBxDHfa+frZ1niILQNDWf96ASL0iNBrYIWgJk
+ iQabhrQ0zJ7u/RQVItx9cFbaxIE7EywuHND3OfWjYSEtgqiq9aDARpiYJ
+X-Google-Smtp-Source: AGHT+IF+v0fIFZHoT01sMNEq9j/CbwJRarmWIuO4Qtl6eAEqFjURgigeWA/7PrZR7dyVVCbi2InbjA==
+X-Received: by 2002:a05:6a00:1706:b0:77f:50df:df31 with SMTP id
+ d2e1a72fcca58-793870523b6mr4711671b3a.20.1759960784761; 
+ Wed, 08 Oct 2025 14:59:44 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-794e1fc9db6sm740724b3a.66.2025.10.08.15.00.00
+ d2e1a72fcca58-794e1fc9db6sm740724b3a.66.2025.10.08.14.59.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Oct 2025 15:00:00 -0700 (PDT)
+ Wed, 08 Oct 2025 14:59:44 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v7 69/73] linux-user/aarch64: Generate GCS signal records
-Date: Wed,  8 Oct 2025 14:56:09 -0700
-Message-ID: <20251008215613.300150-70-richard.henderson@linaro.org>
+Subject: [PATCH v7 46/73] target/arm: Implement GCSSTR, GCSSTTR
+Date: Wed,  8 Oct 2025 14:55:46 -0700
+Message-ID: <20251008215613.300150-47-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251008215613.300150-1-richard.henderson@linaro.org>
 References: <20251008215613.300150-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,250 +100,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here we must push and pop a cap on the GCS stack as
-well as the gcs record on the normal stack.
+Note that CreateAccDescGCS() does not enable tagchecked,
+and Data Aborts from GCS instructions do not set iss.isv.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/signal.c | 138 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 132 insertions(+), 6 deletions(-)
+ target/arm/tcg/translate-a64.c | 42 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/a64.decode      |  3 +++
+ 2 files changed, 45 insertions(+)
 
-diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
-index ef97be3ac7..f7edfa249e 100644
---- a/linux-user/aarch64/signal.c
-+++ b/linux-user/aarch64/signal.c
-@@ -22,6 +22,7 @@
- #include "signal-common.h"
- #include "linux-user/trace.h"
- #include "target/arm/cpu-features.h"
-+#include "gcs-internal.h"
- 
- struct target_sigcontext {
-     uint64_t fault_address;
-@@ -152,6 +153,16 @@ struct target_zt_context {
- QEMU_BUILD_BUG_ON(TARGET_ZT_SIG_REG_BYTES != \
-                   sizeof_field(CPUARMState, za_state.zt0));
- 
-+#define TARGET_GCS_MAGIC       0x47435300
-+#define GCS_SIGNAL_CAP(X)      ((X) & TARGET_PAGE_MASK)
-+
-+struct target_gcs_context {
-+    struct target_aarch64_ctx head;
-+    uint64_t gcspr;
-+    uint64_t features_enabled;
-+    uint64_t reserved;
-+};
-+
- struct target_rt_sigframe {
-     struct target_siginfo info;
-     struct target_ucontext uc;
-@@ -322,6 +333,35 @@ static void target_setup_zt_record(struct target_zt_context *zt,
-     }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index c037119cdf..b72aa968cd 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -139,6 +139,12 @@ static int core_a64_user_mem_index(DisasContext *s, bool unpriv)
+     return arm_to_core_mmu_idx(full_a64_user_mem_index(s, unpriv));
  }
  
-+static bool target_setup_gcs_record(struct target_gcs_context *ctx,
-+                                    CPUARMState *env, uint64_t return_addr)
++/* For a given translation regime, return the core mmu_idx for gcs access. */
++static int core_gcs_mem_index(ARMMMUIdx armidx)
 +{
-+    uint64_t mode = gcs_get_el0_mode(env);
-+    uint64_t gcspr = env->cp15.gcspr_el[0];
-+
-+    if (mode & PR_SHADOW_STACK_ENABLE) {
-+        /* Push a cap for the signal frame. */
-+        gcspr -= 8;
-+        if (put_user_u64(GCS_SIGNAL_CAP(gcspr), gcspr)) {
-+            return false;
-+        }
-+
-+        /* Push a gcs entry for the trampoline. */
-+        if (put_user_u64(return_addr, gcspr - 8)) {
-+            return false;
-+        }
-+        env->cp15.gcspr_el[0] = gcspr - 8;
-+    }
-+
-+    __put_user(TARGET_GCS_MAGIC, &ctx->head.magic);
-+    __put_user(sizeof(*ctx), &ctx->head.size);
-+    __put_user(gcspr, &ctx->gcspr);
-+    __put_user(mode, &ctx->features_enabled);
-+    __put_user(0, &ctx->reserved);
-+
-+    return true;
++    return arm_to_core_mmu_idx(regime_to_gcs(armidx));
 +}
 +
- static void target_restore_general_frame(CPUARMState *env,
-                                          struct target_rt_sigframe *sf)
+ static void set_btype_raw(int val)
  {
-@@ -502,6 +542,64 @@ static bool target_restore_zt_record(CPUARMState *env,
+     tcg_gen_st_i32(tcg_constant_i32(val), tcg_env,
+@@ -3989,6 +3995,42 @@ static bool trans_STLR_i(DisasContext *s, arg_ldapr_stlr_i *a)
      return true;
  }
  
-+static bool target_restore_gcs_record(CPUARMState *env,
-+                                      struct target_gcs_context *ctx,
-+                                      bool *rebuild_hflags)
++static bool trans_GCSSTR(DisasContext *s, arg_GCSSTR *a)
 +{
-+    TaskState *ts = get_task_state(env_cpu(env));
-+    uint64_t cur_mode = gcs_get_el0_mode(env);
-+    uint64_t new_mode, gcspr;
++    ARMMMUIdx armidx;
 +
-+    __get_user(new_mode, &ctx->features_enabled);
-+    __get_user(gcspr, &ctx->gcspr);
++    if (!dc_isar_feature(aa64_gcs, s)) {
++        return false;
++    }
 +
 +    /*
-+     * The kernel pushes the value through the hw register:
-+     * write_sysreg_s(gcspr, SYS_GCSPR_EL0) in restore_gcs_context,
-+     * then read_sysreg_s(SYS_GCSPR_EL0) in gcs_restore_signal.
-+     * Since the bottom 3 bits are RES0, this can (CONSTRAINED UNPREDICTABLE)
-+     * force align the value.  Mirror the choice from gcspr_write().
++     * The pseudocode for GCSSTTR is
++     *
++     *   effective_el = AArch64.IsUnprivAccessPriv() ? PSTATE.EL : EL0;
++     *   if (effective_el == PSTATE.EL) CheckGCSSTREnabled();
++     *
++     * We have cached the result of IsUnprivAccessPriv in DisasContext,
++     * but since we need the result of full_a64_user_mem_index anyway,
++     * use the mmu_idx test as a proxy for the effective_el test.
 +     */
-+    gcspr &= ~7;
-+
-+    if (new_mode & ~(PR_SHADOW_STACK_ENABLE |
-+                     PR_SHADOW_STACK_WRITE |
-+                     PR_SHADOW_STACK_PUSH)) {
-+        return false;
-+    }
-+    if ((new_mode ^ cur_mode) & ts->gcs_el0_locked) {
-+        return false;
-+    }
-+    if (new_mode & ~cur_mode & PR_SHADOW_STACK_ENABLE) {
-+        return false;
++    armidx = full_a64_user_mem_index(s, a->unpriv);
++    if (armidx == s->mmu_idx && s->gcsstr_el != 0) {
++        gen_exception_insn_el(s, 0, EXCP_UDEF,
++                              syn_gcs_gcsstr(a->rn, a->rt),
++                              s->gcsstr_el);
++        return true;
 +    }
 +
-+    if (new_mode & PR_SHADOW_STACK_ENABLE) {
-+        uint64_t cap;
-+
-+        /* Pop and clear the signal cap. */
-+        if (get_user_u64(cap, gcspr)) {
-+            return false;
-+        }
-+        if (cap != GCS_SIGNAL_CAP(gcspr)) {
-+            return false;
-+        }
-+        if (put_user_u64(0, gcspr)) {
-+            return false;
-+        }
-+        gcspr += 8;
-+    } else {
-+        new_mode = 0;
++    if (a->rn == 31) {
++        gen_check_sp_alignment(s);
 +    }
-+
-+    env->cp15.gcspr_el[0] = gcspr;
-+    if (new_mode != cur_mode) {
-+        *rebuild_hflags = true;
-+        gcs_set_el0_mode(env, new_mode);
-+    }
++    tcg_gen_qemu_st_i64(cpu_reg(s, a->rt),
++                        clean_data_tbi(s, cpu_reg_sp(s, a->rn)),
++                        core_gcs_mem_index(armidx),
++                        finalize_memop(s, MO_64 | MO_ALIGN));
 +    return true;
 +}
 +
- static int target_restore_sigframe(CPUARMState *env,
-                                    struct target_rt_sigframe *sf)
+ static bool trans_LD_mult(DisasContext *s, arg_ldst_mult *a)
  {
-@@ -511,8 +609,10 @@ static int target_restore_sigframe(CPUARMState *env,
-     struct target_za_context *za = NULL;
-     struct target_tpidr2_context *tpidr2 = NULL;
-     struct target_zt_context *zt = NULL;
-+    struct target_gcs_context *gcs = NULL;
-     uint64_t extra_datap = 0;
-     bool used_extra = false;
-+    bool rebuild_hflags = false;
-     int sve_size = 0;
-     int za_size = 0;
-     int zt_size = 0;
-@@ -582,6 +682,15 @@ static int target_restore_sigframe(CPUARMState *env,
-             zt_size = size;
-             break;
+     TCGv_i64 clean_addr, tcg_rn, tcg_ebytes;
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 8283a9c83d..2ae73f443a 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -571,6 +571,9 @@ LDAPR_i         10 011001 10 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext
+ LDAPR_i         00 011001 11 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=1 sz=0
+ LDAPR_i         01 011001 11 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=1 sz=1
  
-+        case TARGET_GCS_MAGIC:
-+            if (gcs
-+                || size != sizeof(struct target_gcs_context)
-+                || !cpu_isar_feature(aa64_gcs, env_archcpu(env))) {
-+                goto err;
-+            }
-+            gcs = (struct target_gcs_context *)ctx;
-+            break;
++# GCSSTR, GCSSTTR
++GCSSTR          11011001 000 11111 000 unpriv:1 11 rn:5 rt:5
 +
-         case TARGET_EXTRA_MAGIC:
-             if (extra || size != sizeof(struct target_extra_context)) {
-                 goto err;
-@@ -612,6 +721,10 @@ static int target_restore_sigframe(CPUARMState *env,
-         goto err;
-     }
- 
-+    if (gcs && !target_restore_gcs_record(env, gcs, &rebuild_hflags)) {
-+        goto err;
-+    }
-+
-     /* SVE data, if present, overwrites FPSIMD data.  */
-     if (sve && !target_restore_sve_record(env, sve, sve_size, &svcr)) {
-         goto err;
-@@ -631,6 +744,9 @@ static int target_restore_sigframe(CPUARMState *env,
-     }
-     if (env->svcr != svcr) {
-         env->svcr = svcr;
-+        rebuild_hflags = true;
-+    }
-+    if (rebuild_hflags) {
-         arm_rebuild_hflags(env);
-     }
-     unlock_user(extra, extra_datap, 0);
-@@ -701,7 +817,7 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-                                uc.tuc_mcontext.__reserved),
-     };
-     int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
--    int zt_ofs = 0, esr_ofs = 0;
-+    int zt_ofs = 0, esr_ofs = 0, gcs_ofs = 0;
-     int sve_size = 0, za_size = 0, tpidr2_size = 0, zt_size = 0;
-     struct target_rt_sigframe *frame;
-     struct target_rt_frame_record *fr;
-@@ -720,6 +836,11 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-                                        &layout);
-     }
- 
-+    if (env->cp15.gcspr_el[0]) {
-+        gcs_ofs = alloc_sigframe_space(sizeof(struct target_gcs_context),
-+                                       &layout);
-+    }
-+
-     /* SVE state needs saving only if it exists.  */
-     if (cpu_isar_feature(aa64_sve, env_archcpu(env)) ||
-         cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-@@ -779,6 +900,12 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         goto give_sigsegv;
-     }
- 
-+    if (ka->sa_flags & TARGET_SA_RESTORER) {
-+        return_addr = ka->sa_restorer;
-+    } else {
-+        return_addr = default_rt_sigreturn;
-+    }
-+
-     target_setup_general_frame(frame, env, set);
-     target_setup_fpsimd_record((void *)frame + fpsimd_ofs, env);
-     if (esr_ofs) {
-@@ -786,6 +913,10 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         /* Leave ESR_EL1 clear while it's not relevant. */
-         env->cp15.esr_el[1] = 0;
-     }
-+    if (gcs_ofs &&
-+        !target_setup_gcs_record((void *)frame + gcs_ofs, env, return_addr)) {
-+        goto give_sigsegv;
-+    }
-     target_setup_end_record((void *)frame + layout.std_end_ofs);
-     if (layout.extra_ofs) {
-         target_setup_extra_record((void *)frame + layout.extra_ofs,
-@@ -811,11 +942,6 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-     __put_user(env->xregs[29], &fr->fp);
-     __put_user(env->xregs[30], &fr->lr);
- 
--    if (ka->sa_flags & TARGET_SA_RESTORER) {
--        return_addr = ka->sa_restorer;
--    } else {
--        return_addr = default_rt_sigreturn;
--    }
-     env->xregs[0] = usig;
-     env->xregs[29] = frame_addr + fr_ofs;
-     env->xregs[30] = return_addr;
+ # Load/store multiple structures
+ # The 4-bit opcode in [15:12] encodes repeat count and structure elements
+ &ldst_mult      rm rn rt sz q p rpt selem
 -- 
 2.43.0
 
