@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FB2CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE37CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 17:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6XQ9-0005NA-Rb; Wed, 08 Oct 2025 12:53:46 -0400
+	id 1v6XX2-0006pA-6h; Wed, 08 Oct 2025 13:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1v6XQ3-0005MF-5p
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:53:39 -0400
-Received: from m204-227.eu.mailgun.net ([161.38.204.227])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1v6XPq-0003u4-Nu
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:53:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
- s=email; t=1759942399; x=1759949599; 
- h=Content-Transfer-Encoding: Content-Type: Cc: To: To: Subject: Subject:
- Message-ID: Date: From: From: In-Reply-To: References: MIME-Version: Sender:
- Sender; bh=BEHYicyPhriC0f0hnSPa+QhHaFC/HLkcVxFNVjaV6AI=;
- b=R4AEkwAQoPFBxKSrcrbmJ6uCuVyik2lW+tXEY//lqoLFgZNIslaFmHIpfpT2E1RMbIJJQJbKXO/8QU1gmdCLOTLYOK+ZlMsPhnzE7EfwqirWOOp+0KVrg1fkEujkSvLtuMYhI5ABQQuZuekrrvY2ypCzXZ7WyXdnGvNUEroezqqmJPaqUwzUkCom92Wnylb9nBEWp01dUZYdDmov/nJeK3VjBdEkxlA4ndypubN0nrxpH/a3Tx25r+TCyNeOaBmuMSfSPQuyt81P+Zuplenezf+lTI6gI5bky8aCurhQHteefSHl4FyGIAYexEWWouX1X6mua40g/gavInzp6bz3rw==
-X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com
- [74.125.224.42]) by
- bc7c4d7a9363dd6e3ce8627432bd44021ad5cdf1a1a0d7c27552e15136ad7f53 with SMTP id
- 68e696ff4554cfce2027d03a (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256);
- Wed, 08 Oct 2025 16:53:19 GMT
-X-Mailgun-Sending-Ip: 161.38.204.227
-Received: by mail-yx1-f42.google.com with SMTP id
- 956f58d0204a3-635283199a9so106643d50.1
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:53:19 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHeqCl+FPBOAmHIfZopXYNSxI+uuZEjQHrvC72EtTKgq/nGXbCLJJPYtrEcvWiE+SCFht9M8IRE8BW@nongnu.org
-X-Gm-Message-State: AOJu0YyndJPnkv2n0TeRA7G+m2dJxtjnMRXa7mudt1ecvw1F/LQvss/b
- qERsDnyV8h2S/7XeDQ+ocMdnkg0WL/pU5a3SI0XYPcxjZ6B7QVwTd7d7pbPU/DFuupxiCgcOiAG
- DZ9w7uuj52NET4cSBVvQo1Nwd6JMv3U8=
-X-Google-Smtp-Source: AGHT+IFKITZ1a1jnUorjvXG9Wr2JKmHqUjSpK7w8V+AnWv5lIvI+8Rz3yem4bxjtOCGeMnm643oStIu35yK3wqlCl2Q=
-X-Received: by 2002:a53:acd4:0:20b0:5f4:55cb:80d4 with SMTP id
- 956f58d0204a3-63ccb85ff8cmr3904527d50.17.1759942398661; Wed, 08 Oct 2025
- 09:53:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v6XX0-0006ob-6y
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:00:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v6XWr-0005Hd-N0
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 13:00:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759942835;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OtA238vBjbS5w4eztX9894nZPwQu2lRqnYC28Jctx18=;
+ b=UhutLzqIRPG+xeGf7vz5bhv5QyBvi6Bujnm872BjkaeqetSqRvqtKGpxVN/YSHTIRF2D7/
+ A0mSqkFnmYOL1zqoQD6zCy0SWSiyR6VfGTi9zeKD5vdI7qy2Bi6ntwZFrnHMZH+TpASjbJ
+ DoWqFZVBIJrF6idKTzWu2UezkN+mlB4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-379-ga9O-xmPOtewXnLCEsc9YQ-1; Wed, 08 Oct 2025 13:00:28 -0400
+X-MC-Unique: ga9O-xmPOtewXnLCEsc9YQ-1
+X-Mimecast-MFC-AGG-ID: ga9O-xmPOtewXnLCEsc9YQ_1759942827
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ee12ab7f33so422406f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 10:00:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759942827; x=1760547627;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OtA238vBjbS5w4eztX9894nZPwQu2lRqnYC28Jctx18=;
+ b=UlYhDu1huBTjTZFDdTqkiokLEUbZGC3topr1bCV4ODGB92vr9kqevFxgbvFWaO2D4o
+ 8VSmi7TSy/9gOIJzB53ZaE6DA+l0bVFN1ohmMl0ozSnLLVsokAbjs0xdGwojZbhAb9wi
+ zgRDKW7oKj9qxXqRuWVmssRmmxGLrZbro9Cveoja6hPQOuLdbe1i5snvLPanUkRcLTht
+ KGTnmRlIexZHNVhMj4EOqLSFuPYpJBUZ1IRwKJQmMVk4TOTSTXBsE+Hb6bOPteabtCsQ
+ iaop07G18EUWh0vPxXJkq3lTdrdrACFIu2O/gOmQVGSxhf3FcnKDKD0JUs+mau8ShECa
+ QEDQ==
+X-Gm-Message-State: AOJu0YwxGPz+pHgIyUDO8nJoUuhUCje0qVeWfgzCXxdUimhUzUuPYfo3
+ UOJ48Rwh46iNxaBNjvLdLwQkfrvzTatv41UhvRgnIDAPR160IwUghAaL0qzXZI8898fwJSGS7UL
+ Bup3w0nJ2fv5meyqe4A50N9aBuxK0GU6KtZU5SIVN6WnIVfQnjHPX5ihGpH/ZTpleNkgSo7WTI5
+ gQ16V6EDoQpeZ1fc72JVMneKG+jPkvD54=
+X-Gm-Gg: ASbGnctE967QtduVbtB96+o8iDD9fx8rY4hGpMZBmqbdGgZlgafzQeEZMgLdWqfCgKQ
+ tR5ADQopR4EDyIQ72rHmQH+KC2VFPTjGXgmzdrwnTwVLNftirkpU7aLoHdTzukkiuQHXAxxcdla
+ xZLihEobVofHLGygklI3ksswCVZSP9sD48pgMkZToL372EFU1+fFai1o9IwAxJkxUZ4VGDcukWo
+ UfzRyrKDUdciJucU7pAotrjeXI1qw==
+X-Received: by 2002:a05:6000:2c0e:b0:3ec:de3c:c56 with SMTP id
+ ffacd0b85a97d-42667177c79mr2784699f8f.16.1759942826802; 
+ Wed, 08 Oct 2025 10:00:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGc9rglzMjURsHR7z536QlHx7+7BLyLN4ItXyvFTCiajDb9cMsSjitkEqChtSHFr8+5mj8VPejrHtQd1RTqeYU=
+X-Received: by 2002:a05:6000:2c0e:b0:3ec:de3c:c56 with SMTP id
+ ffacd0b85a97d-42667177c79mr2784678f8f.16.1759942826407; Wed, 08 Oct 2025
+ 10:00:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1759691708.git.mst@redhat.com>
- <a9324cdecb0d9f7ae7db7f4120251b50cc768d7c.1759691708.git.mst@redhat.com>
- <CAKiXHKeXZBS3Zhn+snXi3sxG0r0cmoUW-ekeXHrQS64T10FJPQ@mail.gmail.com>
- <20251008060047-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20251008060047-mutt-send-email-mst@kernel.org>
-From: Alessandro Ratti <alessandro@0x65c.net>
-Date: Wed, 8 Oct 2025 18:53:07 +0200
-X-Gmail-Original-Message-ID: <CAKiXHKex4SNKaPX8FmTT+dQiCAKH+twzmumrYGkCUz4t-UH-Mg@mail.gmail.com>
-X-Gm-Features: AS18NWBaQuhRwm1C9O4bmwL76qLNCxFcri1aVBI2SUirLNzQZrTBpclMZebQPAI
-Message-ID: <CAKiXHKex4SNKaPX8FmTT+dQiCAKH+twzmumrYGkCUz4t-UH-Mg@mail.gmail.com>
-Subject: Re: [PULL 49/75] virtio: Add function name to error messages
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org, 
- Alessandro Ratti <alessandro.ratti@gmail.com>
+References: <20251008152701.411964-1-pbonzini@redhat.com>
+ <aOaOWbrE443LpqPX@redhat.com>
+In-Reply-To: <aOaOWbrE443LpqPX@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 8 Oct 2025 19:00:13 +0200
+X-Gm-Features: AS18NWCP70opTSdmE3Amsd-TCpWwF2fQ9KjOwttzWOBEzjMYWd5FWVVplSvW79Q
+Message-ID: <CABgObfZctSC6=uNXY0qjMa2AKdX4tGTQYoXQbgFaskPDg1rQVQ@mail.gmail.com>
+Subject: Re: [PATCH] qobject: make refcount atomic
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=161.38.204.227;
- envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
- helo=m204-227.eu.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,129 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Oct 2025 at 12:01, Michael S. Tsirkin <mst@redhat.com> wrote:
+On Wed, Oct 8, 2025 at 6:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+> > C code will
+> > have to agree with not making changes to the QObjects after they've
+> > been passed to Rust code.
 >
-> On Sun, Oct 05, 2025 at 10:13:57PM +0200, Alessandro Ratti wrote:
-> > On Sun, 5 Oct 2025 at 21:17, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > >
-> > > From: Alessandro Ratti <alessandro@0x65c.net>
-> > >
-> > > Replace virtio_error() with a macro that automatically prepends the
-> > > calling function name to error messages. This provides better context
-> > > for debugging virtio issues by showing exactly which function
-> > > encountered the error.
-> > >
-> > > Before: "Invalid queue size: 1024"
-> > > After:  "virtio_queue_set_num: Invalid queue size: 1024"
-> > >
-> > > The implementation uses a macro to insert __func__ at compile time,
-> > > avoiding any runtime overhead while providing more specific error
-> > > context than a generic "virtio:" prefix.
-> > >
-> > > Also remove manual __func__ usage in virtio-balloon to avoid duplicat=
-e
-> > > function names in error messages.
-> > >
-> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
-> > > Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
-> > > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
-> > > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> > > Message-ID: <20250915162643.44716-2-alessandro@0x65c.net>
-> > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > > ---
-> > >  include/hw/virtio/virtio.h | 4 +++-
-> > >  hw/virtio/virtio-balloon.c | 2 +-
-> > >  hw/virtio/virtio.c         | 3 ++-
-> > >  3 files changed, 6 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> > > index d97529c3f1..695bb56186 100644
-> > > --- a/include/hw/virtio/virtio.h
-> > > +++ b/include/hw/virtio/virtio.h
-> > > @@ -253,7 +253,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t dev=
-ice_id, size_t config_size);
-> > >
-> > >  void virtio_cleanup(VirtIODevice *vdev);
-> > >
-> > > -void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_P=
-RINTF(2, 3);
-> > > +#define virtio_error(vdev, fmt, ...) \
-> > > +    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
-> > > +void virtio_error_impl(VirtIODevice *, const char *fmt, ...) G_GNUC_=
-PRINTF(2, 3);
-> > >
-> > >  /* Set the child bus name. */
-> > >  void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_=
-name);
-> > > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-> > > index db787d00b3..e443f71c01 100644
-> > > --- a/hw/virtio/virtio-balloon.c
-> > > +++ b/hw/virtio/virtio-balloon.c
-> > > @@ -697,7 +697,7 @@ virtio_balloon_free_page_hint_notify(NotifierWith=
-Return *n, void *data,
-> > >      case PRECOPY_NOTIFY_COMPLETE:
-> > >          break;
-> > >      default:
-> > > -        virtio_error(vdev, "%s: %d reason unknown", __func__, pnd->r=
-eason);
-> > > +        virtio_error(vdev, "%d reason unknown", pnd->reason);
-> > >      }
-> > >
-> > >      return 0;
-> > > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> > > index de89e8104a..0f33ca5d90 100644
-> > > --- a/hw/virtio/virtio.c
-> > > +++ b/hw/virtio/virtio.c
-> > > @@ -3968,7 +3968,8 @@ void virtio_device_set_child_bus_name(VirtIODev=
-ice *vdev, char *bus_name)
-> > >      vdev->bus_name =3D g_strdup(bus_name);
-> > >  }
-> > >
-> > > -void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char=
- *fmt, ...)
-> > > +void G_GNUC_PRINTF(2, 3)
-> > > +virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
-> > >  {
-> > >      va_list ap;
-> > >
-> > > --
-> > > MST
-> > >
-> > >
-> >
-> > Hi Michael,
-> >
-> > Thanks for picking this up.
-> >
-> > It seems that the version currently queued is actually the initial
-> > submission, which had previously been rejected following feedback from
-> > Markus Armbruster.
-> > I later submitted a corrected version ([v3]) which:
-> >
-> > * Addresses all the feedback (including from Markus Armbruster and
-> > Daniel P. Berrang=C3=A9).
-> > * Has Daniel=E2=80=99s formal Reviewed-by:
-> >
-> > Patch: https://lore.kernel.org/qemu-devel/20250924093138.559872-2-aless=
-andro@0x65c.net/
-> > Reviewed-by: https://lore.kernel.org/qemu-devel/aNO7J7Y6wsk1-wyw@redhat=
-.com/
-> >
-> > Would you mind updating the queue to reflect this version instead?
-> >
-> > Thanks again for your time and all the work you do maintaining virtio!
-> >
-> > Best regards,
-> > Alessandro
->
->
-> So as you likely already noticed
-> I replaced just this patch and updated the tag in the pull.
+> I wonder whether that latter constraint on the C code will hold
+> true in practice ? Particularly thinking about scenarios where
+> we add/remove link properties to QObject's, potentially at any
+> time during life of QEMU via QMP/HMP commands ?
 
-Thanks Michael, I saw the update =E2=80=94 everything looks good on my end.
-I really appreciate you taking the time to sort that out!
+Those are QOM objects, not QObjects (the QMP/JSON data model) which
+are what this patch affects.
 
-Best regards,
-Alessandro
+C "things" that are not thread-safe are protected by
+"assert!(bql::is_locked!())", either written explicitly or hidden
+behind BqlCell/BqlRefCell.
+
+In this case, the safety is covered by QObject::from_raw being unsafe.
+Whoever calls it needs to know that the C code is not going to mutate
+the QObject until the Rust side is done with it.
+
+> With this unref method being void, how does the Rust code
+> know when a QObject is no longer alive after it has called
+> unref ? Does it need to know this to provide any safety
+> guarantees ?
+
+No, the safety guarantees can come from knowledge of what the C code will d=
+o.
+
+In particular, the safety is covered by QObject::from_raw being
+unsafe. Whoever calls it needs to know that the C code is not going to
+mutate the QObject until the Rust side is done with it. This for
+example is true of arguments to QMP commands, which are the main case
+where C could pass QObjects directly to Rust.
+
+Something like
+
+void qmp_marshal_query_stats(QDict *args, QObject **ret, Error **errp)
+
+would become
+
+fn qmp_marshal_query_stats(args: *mut QDict,
+    retp: *mut *mut QObject, errp: *mut *mut Error)
+{
+    let qobj =3D unsafe { QObject::cloned_from_raw(args.cast()) };
+    let result =3D from_qobject::<StatsFilter>(qobj)
+         .map_err(Into::into)
+         .and_then(qmp_query_stats);
+    match result {
+        Ok(ret) =3D> {
+            let ret_qobj =3D to_qobject::<Vec<StatsResult>>(ret);
+            unsafe { *retp =3D ret_qobj.into_raw(); }
+        },
+        Err(e) =3D> unsafe { e.propagate(errp) },
+    }
+}
+
+(and even discounting the lack of tracing, that's quite a bit smaller
+than the C code thanks to all the automatic consumption of args and
+ret when passed respectively to qmp_query_stats and to_qobject, just
+by virtue of how those functions are declared).
+
+Paolo
+
 
