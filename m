@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A00CCD186
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 11:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB273CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 11:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6SSq-0003FH-Lh; Wed, 08 Oct 2025 07:36:12 -0400
+	id 1v6STe-0003fs-Up; Wed, 08 Oct 2025 07:37:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v6SSo-0003EP-HU
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:36:10 -0400
-Received: from p-east3-cluster1-host12-snip4-6.eps.apple.com ([57.103.87.119]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v6STV-0003cL-F0
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:36:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v6SSk-0006gS-Sv
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:36:10 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-3 (Postfix) with ESMTPS id
- 06E7118004DD; Wed,  8 Oct 2025 11:36:01 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=f1Pbcg3fVKJmv3dCg3ZQaZBGC+6jeUasiVzqBAL5huk=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=bLcvEBAJksfreqYlmyyF4jU89bIUDw0x/Hi05LavK/V19hIhIObP3CT75ZwMouL3sp+1eaGiLzJgdQ5G9ANXOCg9SdSnj2It/jKT0hxIza481uxQSJnupKbfDKg3zfq/mnUWcLW0cFUxH/zeb+MG8uRZSHeP30b/IokM+/MgYdQa3t56H3xIX2aScQEsi0lUrYsZQ/4YjxCHm4e9KQYdCjmtH1D1Usv+vF3aoiUEa7zZNc0F7dvMMYM2Eln1pu1IZvsaX9cmHBEZl4XC1kYwJxnU/15mnjBYFyX/XEaKXG/X4Eu/U6fNyGWu1P6uf+V03S3zFvY4dQryTNaRamuU9w==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-3 (Postfix) with ESMTPSA id
- 53823180015E; Wed,  8 Oct 2025 11:36:00 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: [RFC v2 2/4] hvf: arm64: add workaround for Apple M4 to run older
- macOS versions
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <184ed096-60d1-41d7-a0af-c1af75cfd014@csgraf.de>
-Date: Wed, 8 Oct 2025 13:35:48 +0200
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
- Cameron Esfahani <dirty@apple.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <2399E8DA-E73F-4B59-8E06-F989BA2B462E@unpredictable.fr>
-References: <20251007203153.30136-1-mohamed@unpredictable.fr>
- <20251007203153.30136-3-mohamed@unpredictable.fr>
- <184ed096-60d1-41d7-a0af-c1af75cfd014@csgraf.de>
-To: Alexander Graf <agraf@csgraf.de>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-GUID: U5GoMbDa4py-ewmchPwdspxK2wWB5ZWO
-X-Proofpoint-ORIG-GUID: U5GoMbDa4py-ewmchPwdspxK2wWB5ZWO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDA4MCBTYWx0ZWRfX+2eNaf/Gcmam
- Xksrs2WuBSSEsqeNeGOmtIw0s9/KpEfJ7PK90lDt2TnwiDzcXiB+tbP62mGXTcjCjQU/VY8OIfi
- f0lsmorL/bmpH5PqhVIaJvb7rQQoXzXGFYQ/wkikFA9LQjvIET7LAEZ22HGY1j2wuc96bSjm28W
- ivX/PfTCo5RhDAQ+ZWmGtTgpuLCkpU8+LLeaOiZ8mZQmIfyws/d+7pMWvBbPbukQ+JvFhk3EI8j
- 8hVqQiJa7javxC9tROJ4lHYsAdx4p1h2TTT2CeuKIVt0mjy4cCOMUhmDiM+MKG7V5sYQ7aO9I=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-08_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
- spamscore=0 clxscore=1030 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2510080080
-Received-SPF: pass client-ip=57.103.87.119;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v6STT-0006oE-Lf
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:36:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759923410;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AQxlXqUyEMl5S6CzW6GWfG2JziW8ZZSra0bx3StafgI=;
+ b=YmFKb+UMblHruBZ4ypMlIL0FYLTU2HKHHRvCNBQuRC0KzmHvcy5umCPYPZzPzKl6CO9L7Q
+ GQ1xQY8etjNg/UCDeRr4eDA1nxCBr0CdZ2Gka9sTaIBRVK8Jc3gPQhnAHHcnJ2uH7kO5C9
+ gmKc6FfOxcdqLfAn0VyVIw2u/UU4JCg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-XKo1HV80OPyA6TR-tHtfqA-1; Wed,
+ 08 Oct 2025 07:36:46 -0400
+X-MC-Unique: XKo1HV80OPyA6TR-tHtfqA-1
+X-Mimecast-MFC-AGG-ID: XKo1HV80OPyA6TR-tHtfqA_1759923405
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A07DE1800576; Wed,  8 Oct 2025 11:36:45 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.74])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 146491956056; Wed,  8 Oct 2025 11:36:40 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH RFC/WIP 4/4] gitlab: add jobs for thorough block tests
+Date: Wed,  8 Oct 2025 12:35:52 +0100
+Message-ID: <20251008113552.747002-5-berrange@redhat.com>
+In-Reply-To: <20251008113552.747002-1-berrange@redhat.com>
+References: <20251008113552.747002-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,25 +89,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+CI is only exercising the qcow2 'auto' tests currently. As a result we
+get no exposure of changes which cause regressions in other block format
+drivers.
 
+This adds new CI jobs for each block format, that will run the target
+'make check-block-$FORMAT'. The jobs are separate so that we have the
+ability to make each formats gating or not, depending on their level
+of reliability.
 
-> On 7. Oct 2025, at 23:12, Alexander Graf <agraf@csgraf.de> wrote:
->=20
->=20
-> On 07.10.25 22:31, Mohamed Mediouni wrote:
->> Apple M4 removes FEAT_SSBS. However, older macOS releases
->> do misbehave in such a configuration and do not boot.
->>=20
->> Use private API to trap SCTLR_EL1 accesses through FGT.
->>=20
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->=20
->=20
-> These old macOS versions did not include M4 support, correct? So =
-wouldn't it make more sense to make more recent macOS work instead?
->=20
-> Alex
->=20
-Apple ships such a workaround in Virtualization.framework to allow older =
-macOS VMs to work=
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ .gitlab-ci.d/buildtest.yml | 63 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 0502094b9a..e4ee48cf9e 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -176,6 +176,69 @@ build-system-centos:
+       x86_64-softmmu rx-softmmu sh4-softmmu
+     MAKE_CHECK_ARGS: check-build
+ 
++check-block-raw-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-raw
++
++check-block-qcow2-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-qcow2
++
++check-block-vpc-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vpc
++
++check-block-vmdk-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vmdk
++
++check-block-qed-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-qed
++
++check-block-luks-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-luks
++
++check-block-nbd-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-nbd
++
+ # Previous QEMU release. Used for cross-version migration tests.
+ build-previous-qemu:
+   extends: .native_build_job_template
+-- 
+2.50.1
+
 
