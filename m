@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AD8CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 708F7CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 07:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Nyh-00024M-9P; Wed, 08 Oct 2025 02:48:47 -0400
+	id 1v6OJ0-00082Q-DC; Wed, 08 Oct 2025 03:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyU-00020u-7V
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:35 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyS-0005Xq-Kr
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:33 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-42420c7de22so3783616f8f.1
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759906109; x=1760510909; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sRF8Uyf38eujUALOuDgoXpdcVfr9o4Mr1Zd6XLJHY8s=;
- b=EVwA2B0xnNgipTRIjtAIPb4sDNb/QixLt64zr2lX8FUEeYA+3JdtBKxlP97KuSAv7a
- e0mF8HFboq5U8R159WKgTCULTXQ+wrQUycnLPSsge6ihAqsdLnidL2QCyfe7jSMjH2Xh
- dpT6pxhu+Ac8NfPMrf13uNxi4DuztfRmiGqZLRvzuoBNXze/0Kwj8svhGpRE0rYn0y/f
- tz0VdA/BHgNBVsQDWsTiRCBkZuA0IJWdp0bEaavxr0XukqZ7LmBkpZcEM2mHCeSvnZbf
- XJ6CNX9786C6uFxskdtzNZOD88kzM8oDCdmBcUOMbG1nKSDMn7DPC6kqzG9MTyiljEGj
- pYNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759906109; x=1760510909;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sRF8Uyf38eujUALOuDgoXpdcVfr9o4Mr1Zd6XLJHY8s=;
- b=XBzgG26SJ8poi3KvLwVkUF9tJud+PnK8n7OtFirlGeiFxzC6WSkeHkRSFy5o101r/e
- uGpSxm82wpfKY/otp7vV8xvLkNDhi4A4LsJnqecvyksumFVEukWQ8AgY7awTu3XzDbO8
- 8hM3m8gPrxj76K9DryZStkLIqs7VjD3H1kQbemuHF933bVzwlsrXltha78Y/VTXSxovt
- qPagIUqhJi91sf9wjCm2OdDSQRpTHxT77JvOhxaWls7eDMulZ63IEJFyOxKbBTUEcbZL
- ZhfroXJJLxmSlD2tA5AAFuHdoMDT0KLLcGSPtK8W1DW7wU6PEcFWVgo1a5X/wOOPPlOE
- GxHA==
-X-Gm-Message-State: AOJu0YwX+biKBcl97kQuSpQxbYh5Emk7QaevILIXlTvuzr0yM5xQSKZ8
- WwSsI+tAI3eX+8UUrOEVnlJzOC+TjtzKfqPXdzvIS0bypc2vkdxiUYDBkkz2F8GGNflhg3+OPyv
- 6AuXsNLIcCw==
-X-Gm-Gg: ASbGncsDgwHN+OM0S8CxmXnuYJcJWxBpMedkWkiyVBvAIebHKzdQcl/aieWPIRE+AhT
- B9xGTiL4XKm92TQ1yVJh4lgQV78RHfiduAx3JRUnxK7gutymJibwU7VBr5pdxOugLxVvyDjGpJY
- x6Hmk5z1QFIWUPMHsA88/oiuv3g0Li7forayO9jvw0fsDNPMVMB4JWcZh6nn1JyELV+AJFZQ0wn
- Zidzw0JjP2y6tO3WA6/6G9KvXHrv9D+W8S+Ov8l3LiHk6/PNY2MrpBQJmGEzul6QARMxrw/94VN
- o2ER8q4mXWJKhd6CjN6oeB6hXpy9avMBpJcqEFnXTu1ObCBRnV7nwCJTK7R6CJLvQYP0ayPDqtL
- tzv63jG9xMp4S/k4IKt5Ac2cZcCe7XSPpPu8fT3soX/+W3A/rq2D/o1xG0E/6h8v1/43rl4pqg0
- mHUK9mtREFnLOBfS072Ba4YoLT
-X-Google-Smtp-Source: AGHT+IGJ4gir10hU7up608QVA+AuTnhdihI8dvBvH9/JNcvps4twT5f2EedDP90wQ1oz6w2nylIoGQ==
-X-Received: by 2002:a05:6000:2c0d:b0:3e2:da00:44af with SMTP id
- ffacd0b85a97d-4266e8d8d0dmr1220714f8f.36.1759906109456; 
- Tue, 07 Oct 2025 23:48:29 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e97fbsm28258162f8f.34.2025.10.07.23.48.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Oct 2025 23:48:29 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/6] target/sh4: Use hwaddr type for hardware addresses
-Date: Wed,  8 Oct 2025 08:48:10 +0200
-Message-ID: <20251008064814.90520-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251008064814.90520-1-philmd@linaro.org>
-References: <20251008064814.90520-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v6OIy-00082D-Va
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 03:09:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v6OIw-0007sE-1s
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 03:09:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759907379;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=ip+5hxYM5RoHvplk/0yvZuFaQCSsgm4UDgG8D3LX/3c=;
+ b=FPJQnSPDu9ne3NE+TfPBT1wRElY6qmOPxpYsEpXb4Id7Oq/+DjXesrFhFSrryK+pMhEJLE
+ gPG3n54qmtNYFg9op4cxWcEcEvu2plS0mNk4X+idbq5CoDvqlIoSEuYngD+2onBZEu7BfL
+ cHG74gEZWoWa8wb5E+ikLS3/b9kpXNQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-108--0ch0m5pPWyS0jMdsGvCvg-1; Wed,
+ 08 Oct 2025 03:09:35 -0400
+X-MC-Unique: -0ch0m5pPWyS0jMdsGvCvg-1
+X-Mimecast-MFC-AGG-ID: -0ch0m5pPWyS0jMdsGvCvg_1759907374
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8EF5519560A7; Wed,  8 Oct 2025 07:09:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.74])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 811451800446; Wed,  8 Oct 2025 07:09:29 +0000 (UTC)
+Date: Wed, 8 Oct 2025 08:09:26 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2] hw/uefi: add "info ovmf-log" + "query-ovmf-log"
+ monitor commands
+Message-ID: <aOYN1d2UYF3cYuDK@redhat.com>
+References: <20251007135216.1687648-1-kraxel@redhat.com>
+ <87347toqd4.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87347toqd4.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,57 +90,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CPUClass::get_phys_page_debug() handler returns a 'hwaddr' type.
+On Wed, Oct 08, 2025 at 08:32:39AM +0200, Markus Armbruster wrote:
+> Gerd Hoffmann <kraxel@redhat.com> writes:
+> 
+> > Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+> > optional support for logging to a memory buffer.  There is guest side
+> > support -- for example in linux kernels v6.17+ -- to read that buffer.
+> > But that might not helpful if your guest stops booting early enough that
+> > guest tooling can not be used yet.  So host side support to read that
+> > log buffer is a useful thing to have.
+> >
+> > This patch implements both qmp and hmp monitor commands to read the
+> > firmware log.
+> >
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> 
+> [...]
+> 
+> > diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+> > index cf718761861d..ffdb7e979e0f 100644
+> > --- a/tests/qtest/qmp-cmd-test.c
+> > +++ b/tests/qtest/qmp-cmd-test.c
+> > @@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
+> >          /* Only valid with accel=tcg */
+> >          { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+> >          { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
+> > +        /* requires firmware with memory buffer logging support */
+> > +        { "query-ovmf-log", ERROR_CLASS_GENERIC_ERROR },
+> >          { NULL, -1 }
+> >      };
+> >      int i;
+> 
+> Makes sense.
+> 
+> > diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> > index 6142f60e7b16..eca0614903d1 100644
+> > --- a/hmp-commands-info.hx
+> > +++ b/hmp-commands-info.hx
+> > @@ -977,3 +977,16 @@ SRST
+> >    ``info cryptodev``
+> >      Show the crypto devices.
+> >  ERST
+> > +
+> > +    {
+> > +        .name       = "ovmf-log",
+> > +        .args_type  = "",
+> > +        .params     = "",
+> > +        .help       = "show the ovmf debug log",
+> > +        .cmd_info_hrt = qmp_query_ovmf_log,
+> > +    },
+> > +
+> > +SRST
+> > +  ``info ovmf-log``
+> > +    Show the ovmf debug log.
+> > +ERST
+> > diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
+> > index 91eb95f89e6d..c8f38dfae247 100644
+> > --- a/hw/uefi/meson.build
+> > +++ b/hw/uefi/meson.build
+> > @@ -1,4 +1,4 @@
+> > -system_ss.add(files('hardware-info.c'))
+> > +system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
+> >  
+> >  uefi_vars_ss = ss.source_set()
+> >  if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
+> > diff --git a/qapi/machine.json b/qapi/machine.json
+> > index 038eab281c78..329034035029 100644
+> > --- a/qapi/machine.json
+> > +++ b/qapi/machine.json
+> > @@ -1839,6 +1839,16 @@
+> >    'returns': 'HumanReadableText',
+> >    'features': [ 'unstable' ]}
+> >  
+> > +##
+> > +# @query-ovmf-log:
+> > +#
+> > +# Find firmware memory log buffer in guest memory, return content.
+> > +#
+> > +# Since: 10.2
+> > +##
+> > +{ 'command': 'query-ovmf-log',
+> > +  'returns': 'HumanReadableText' }
+> 
+> All other commands returning HumanReadableText are unstable.  Does this
+> one need to be stable?  If yes, why?
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sh4/helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+The main reason why all the others are 'unstable' is that I did a "blind"
+conversion of "info XXXX" to "x-query-XXXX", with no consideration for
+the data design. They are all returning structured data munged into an
+opaque string targetted at humans, not machines.
 
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 42e324589e8..0e13339b33b 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -325,7 +325,7 @@ static int find_utlb_entry(CPUSH4State * env, target_ulong address, int use_asid
-    MMU_ITLB_MULTIPLE, MMU_ITLB_VIOLATION,
-    MMU_IADDR_ERROR, MMU_DADDR_ERROR_READ, MMU_DADDR_ERROR_WRITE.
- */
--static int get_mmu_address(CPUSH4State * env, target_ulong * physical,
-+static int get_mmu_address(CPUSH4State *env, hwaddr *physical,
-                            int *prot, target_ulong address,
-                            MMUAccessType access_type)
- {
-@@ -392,7 +392,7 @@ static int get_mmu_address(CPUSH4State * env, target_ulong * physical,
-     return n;
- }
- 
--static int get_physical_address(CPUSH4State * env, target_ulong * physical,
-+static int get_physical_address(CPUSH4State *env, hwaddr* physical,
-                                 int *prot, target_ulong address,
-                                 MMUAccessType access_type)
- {
-@@ -433,7 +433,7 @@ static int get_physical_address(CPUSH4State * env, target_ulong * physical,
- 
- hwaddr superh_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
--    target_ulong physical;
-+    hwaddr physical;
-     int prot;
- 
-     if (get_physical_address(cpu_env(cs), &physical, &prot, addr, MMU_DATA_LOAD)
-@@ -800,7 +800,7 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     CPUSH4State *env = cpu_env(cs);
-     int ret;
- 
--    target_ulong physical;
-+    hwaddr physical;
-     int prot;
- 
-     ret = get_physical_address(env, &physical, &prot, address, access_type);
+For this log command the data is inherantly a string to begin with, so
+the general problem data design doesn't apply here. This command is
+suitable for consumption both by machines and humans. Overall I think
+it is reasonable to consider this new command stable.
+
+Maybe this means we should return 'str' instead of 'HumanReadableText'
+to distinguish it ?
+
+With regards,
+Daniel
 -- 
-2.51.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
