@@ -4,77 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2217DCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 15:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CE8CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 15:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6WYO-00080R-AB; Wed, 08 Oct 2025 11:58:12 -0400
+	id 1v6WYy-00089x-65; Wed, 08 Oct 2025 11:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v6WYL-0007zu-Jz
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 11:58:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v6WYo-00086i-QA; Wed, 08 Oct 2025 11:58:41 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v6WYD-0001Oe-AZ
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 11:58:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759939076;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NBNCSxW1vannHZzDX8K8aKItoHf65X2ZY/RRBbEu8eI=;
- b=bH3sBjBBSYt1IhVYPfv8xISLMzaykmPDcOUOALtNE64cRcKHh4QFMbnpVPLdQiLVsdoYIA
- d2+HzKlxbZKYrzP63+N9Qki/aGiucWw1+gidjbb6s0kzZDJVgDEdaHEMHIXi2PsZq2vNAL
- XeAMRazYNGizAaIuwdt1ocPxYuZ0raA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-178-h5As5PDlP6WxEZ9m2syoLg-1; Wed,
- 08 Oct 2025 11:57:52 -0400
-X-MC-Unique: h5As5PDlP6WxEZ9m2syoLg-1
-X-Mimecast-MFC-AGG-ID: h5As5PDlP6WxEZ9m2syoLg_1759939071
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 104691800371; Wed,  8 Oct 2025 15:57:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.101])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F2FB1956056; Wed,  8 Oct 2025 15:57:48 +0000 (UTC)
-Date: Wed, 8 Oct 2025 10:57:45 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- qemu-block@nongnu.org
-Subject: Re: [PATCH RFC/WIP 4/4] gitlab: add jobs for thorough block tests
-Message-ID: <wboov2wdkicvhzwpkckoav3d4uwghdzd7g6kwzy3ynrdt3cyr4@qeu6nviffl2i>
-References: <20251008113552.747002-1-berrange@redhat.com>
- <20251008113552.747002-5-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v6WYh-0001V7-Oq; Wed, 08 Oct 2025 11:58:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1759939111; x=1791475111;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=1BouwLaDdnUKXtsovcRtz7AKvj03mAL2ND+hoCcpCdw=;
+ b=HAgmNnJ8sG389o1dnGqZqCkOcCLTacUrTThCBJ7OMoNbD3vmVlZtQUxD
+ qD49EDVudJxEcPOyUgfBs5y1OM3yDvlP0ikTo6YyqgfCtnB6lqUKDbfRT
+ K07l/jlp31JzoXjMFoJfw9DFl/QUfoFLSCz3eE78bsr8R7jCYcu555y/q
+ yFGKGp7tXD0Omn10B/MdrGQ8SHuwH7Bvu7RUGu9XBwqImVDpClVjU1Jvh
+ yRB5mrauGw6xFxHTtejHI1p7O8N/bNYFCMG5VDrt4weykph52gkUQui7u
+ YUWW1rCq5PG7rlv84KINuEwzrkFoPMotc/MSRZY1aKpeKl5DImPX0f2kh Q==;
+X-CSE-ConnectionGUID: kQMDFUcmQ4y3vQgIUcxMhg==
+X-CSE-MsgGUID: hMHhScHFTSGjEgL05uk/AA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11576"; a="79574800"
+X-IronPort-AV: E=Sophos;i="6.19,213,1754982000"; d="scan'208";a="79574800"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Oct 2025 08:58:24 -0700
+X-CSE-ConnectionGUID: kj/JBHdVTO60oM9Exep1+A==
+X-CSE-MsgGUID: xs+Ut2d8RqihU9+DtpGDwQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,213,1754982000"; d="scan'208";a="180886281"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 08 Oct 2025 08:58:23 -0700
+Date: Thu, 9 Oct 2025 00:20:26 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH for-10.0.x] Revert "target/i386: do not expose
+ ARCH_CAPABILITIES on AMD CPU"
+Message-ID: <aOaPSlnBg3rCMLbW@intel.com>
+References: <20251008134112.527650-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251008113552.747002-5-berrange@redhat.com>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+In-Reply-To: <20251008134112.527650-1-mjt@tls.msk.ru>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,57 +82,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 08, 2025 at 12:35:52PM +0100, Daniel P. Berrangé wrote:
-> CI is only exercising the qcow2 'auto' tests currently. As a result we
-> get no exposure of changes which cause regressions in other block format
-> drivers.
+On Wed, Oct 08, 2025 at 04:41:10PM +0300, Michael Tokarev wrote:
+> Date: Wed, 8 Oct 2025 16:41:10 +0300
+> From: Michael Tokarev <mjt@tls.msk.ru>
+> Subject: [PATCH for-10.0.x] Revert "target/i386: do not expose
+>  ARCH_CAPABILITIES on AMD CPU"
+> X-Mailer: git-send-email 2.47.3
 > 
-> This adds new CI jobs for each block format, that will run the target
-> 'make check-block-$FORMAT'. The jobs are separate so that we have the
-> ability to make each formats gating or not, depending on their level
-> of reliability.
+> This reverts commit 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
+> (v10.0.2-66-g24778b1c7ee7) from the 10.0.x branch.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> The problem is that the change makes qemu 10.0.x non-migratable
+> to subsequent qemu versions, since it requires introducing a new
+> machine type.
+> 
+> This revert re-introduces the problem with windows guests (which
+> is already fixed in windows but not in prior versions).
+> Details: https://gitlab.com/qemu-project/qemu/-/issues/3001
+> 
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > ---
->  .gitlab-ci.d/buildtest.yml | 63 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
+>  target/i386/kvm/kvm.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
 
-The idea makes sense to me.
-
-Did you have a link a URL of a CI run that failed tests on NBD, where
-I might be able to help make the tests more deterministic?
-
-> 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index 0502094b9a..e4ee48cf9e 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -176,6 +176,69 @@ build-system-centos:
->        x86_64-softmmu rx-softmmu sh4-softmmu
->      MAKE_CHECK_ARGS: check-build
->  
-
-> +
-> +check-block-nbd-centos:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-nbd
-> +
->  # Previous QEMU release. Used for cross-version migration tests.
->  build-previous-qemu:
->    extends: .native_build_job_template
-> -- 
-> 2.50.1
-> 
-> 
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
