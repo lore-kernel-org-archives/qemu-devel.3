@@ -4,100 +4,181 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16266CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 19:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF8A0CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 19:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Ziz-000691-1X; Wed, 08 Oct 2025 15:21:21 -0400
+	id 1v6a7u-0003c5-SV; Wed, 08 Oct 2025 15:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1v6Ziv-00066a-R1
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 15:21:18 -0400
-Received: from cyan.elm.relay.mailchannels.net ([23.83.212.47])
+ (Exim 4.90_1) (envelope-from <jon@nutanix.com>) id 1v6a7m-0003aK-TI
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 15:47:01 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1v6Zim-0001eb-HV
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 15:21:16 -0400
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 0C4AC6C232C;
- Wed, 08 Oct 2025 19:21:00 +0000 (UTC)
-Received: from pdx1-sub0-mail-a288.dreamhost.com
- (trex-green-1.trex.outbound.svc.cluster.local [100.114.113.86])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 770236C27FF;
- Wed, 08 Oct 2025 19:20:55 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1759951255; a=rsa-sha256;
- cv=none;
- b=caatB9lKE6zFG2TYUIK2nDq5xa9HJTnWFm08nWtEEpHqAu+n4OPkqoA2IZ2KVDSRNLVXPA
- 55hBwGLyGH37y9uj0EU0DF6cLIUEtKhy2PbEXUiseP7LC31hi8PVeAMHZbYevyGe7NRzD0
- 1+az3k3MBaVHLyWHX/YTPqfknRY6Foq+hRtitA6r3MjmO6T6XvdX/67fUYZqRBkYtxkanb
- Fzb9MmHCXgOi9QbqOR3Nx98BFfc60i5V0F5y3UvorBZcWBuGeqn2ChVmOIWv4/eSRE+fba
- HiYZwqe8ENujw1g3x7EECIWoZVnElhb794Jt8Tno8ryrQeCcvWc5cVNFJMvuiw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1759951255;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=KJ1Op03WI2x/dk6yMtHipbmkKXsf9y6mdKjG6wS82Uk=;
- b=fr+K3V4OlfouC5rTLKU/Jj2axnNITU0+efOEN/ra5VxHHHmh/n8b6YnA7oZjs3eQBnq5qH
- unQhrfu/VyIuhZwZDKdcwgKSZoBmCJLGxqQnGgCs824j80P/xpeMEFaw6XKkJ+T56aALmw
- dqQJ+nU9n1dJjIEgXxk3hM87QYETM14nMh1GrY7n4O35ekfPk6cBeQ2jQahnLAkf7LAvfD
- CbiGI/npWQ5wnX+eBN46ChaIIWKDGG5JsUXp1Qf0UL7myO134D6OTm6479zJGIVArzLZDJ
- pCuHtX0JGzObBLx/wNbAEaRI6bVVcibCIRyR9ARCWWVbUEfIQWZF5camjSLYtw==
-ARC-Authentication-Results: i=1; rspamd-777888ddf6-5t7sn;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Relation-Invention: 20e519c20c392525_1759951259799_2734449751
-X-MC-Loop-Signature: 1759951259799:1509360160
-X-MC-Ingress-Time: 1759951259799
-Received: from pdx1-sub0-mail-a288.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.114.113.86 (trex/7.1.3); Wed, 08 Oct 2025 19:20:59 +0000
-Received: from offworld (syn-076-167-199-067.res.spectrum.com [76.167.199.67])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a288.dreamhost.com (Postfix) with ESMTPSA id 4chjXQ5mv3z47; 
- Wed,  8 Oct 2025 12:20:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1759951255;
- bh=KJ1Op03WI2x/dk6yMtHipbmkKXsf9y6mdKjG6wS82Uk=;
- h=Date:From:To:Cc:Subject:Content-Type;
- b=B+ybFnG4DRj+yPK8mQnnNSvIhAQY5Mp44HgRAMreERHPHqSfFsT8fCF07nIH7+GsW
- T2vLgUUhtszPgXGn6n3tkn7d3bw2URR/TmnBkj9/xVhHNtXavaXIHaxYy+mMPQ5xL2
- Cr3Z/i9+vwtM8xbaGAOF/ODaYAmlFiSivIH3F9/uBGb776PCkmU1cgmhgN07gmEANZ
- e+o7g9IFzU42VgA6Ix7Yf3dlPE3PYjbQfoHdsvll9ynO8O2WhnqsFLGOSN1A154Dbn
- KZLZrGWcHupj75xMVY5u+IXm6HJOx8PLIviUIy30KZAZ5z+bWM2WsJ1CGNMjvXHdpV
- ANxlal637ToVw==
-Date: Wed, 8 Oct 2025 12:20:52 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: ira.weiny@intel.com, lucerop@amd.com, a.manzanares@samsung.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com, armbru@redhat.com,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org, ravis.opensrc@micron.com
-Subject: Re: [PATCH 1/5] hw/pcie: Support enabling flit mode
-Message-ID: <20251008192052.hu5qtgdcvwwoz42n@offworld>
-References: <20250930032153.1127773-1-dave@stgolabs.net>
- <20250930032153.1127773-2-dave@stgolabs.net>
- <20250930161903.00006583@huawei.com>
+ (Exim 4.90_1) (envelope-from <jon@nutanix.com>) id 1v6a7f-0005RR-9Q
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 15:46:58 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 598JLHk0416997; Wed, 8 Oct 2025 12:46:36 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=AjOBsPR09xvpk
+ AhRXeY/pD/u5BN9qoFTLTGQLUbHnEs=; b=rQPuYW1DiY8e8OPgGW1CCkKDyUZoD
+ cDpf4FZ7aZt76fxSNJNogg2fKkCd85vdHZhRQEx12ucQgKdI9eF1SLvgaPZNjC6q
+ WQ/RhuY2xOKLayY2WeGi97xV5huUxT8lN9XEi5PPey49kfABF3I5Eo4P3hKZihBc
+ cqaFHPdlo0BRL48rSqlZFn66nPdN8DSmB4oJQA3eZBa3F8LiIaN/hd+lVH8eVLPK
+ ts3WQzVEsWmE5TByt9YCpbQTOMqqNo1UCKSutvwAlVM5K0ahuncl+JXcHvqrQZSV
+ heQCTYCtt8E56XO/Oaw5LLE5ZOXBowojhcbP2bmeJsiDpRkRs/lg3Sg5Q==
+Received: from ph7pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11020099.outbound.protection.outlook.com [52.101.201.99])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 49nx1tr1k1-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 08 Oct 2025 12:46:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T4CdV4cxd6h1ZNFpCWNfqccXFurQwjrxSScRbBq0SPTGHpArhzHaTQ31o9OBnG1PHUYE6JcU5wnRzsQkD4iDLZFhAvTphxr8z96cPXKmAqMZb1AABwWZ/fcWhX7krtOOC5OUsStOINSmdN9CAj1jCGuitoy1DI9hLURpAhGyJU5VsCUXp/0wtelhUa0JxS3N0zPPiWw35CJvPC7VnSrzvWCiPnLGB+fKMkn14h/cVC5qmu9oml3x/66u0caod3E1EYiL4kd/p1Aics3RFHMJM9G0wCrXU1vODnTJNZZJ8Zaj3Gj3o0JKxQX/mdQZ5BRnpmuPr2Gs3H/qD7mq/SLS8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AjOBsPR09xvpkAhRXeY/pD/u5BN9qoFTLTGQLUbHnEs=;
+ b=CCq2v/h81TdFIcJZwl2519nLOFg+Wj43/Enjm/tmaBKSYMnHZsdg7HfN4tE5iKEWJRkAv9/u4UAX+HfTmOm7boK+rsdMetTEQRMN8apxl+WSfvVhBYpegZViF42wXNHpDYf0W5wRKmuhewpaBRj4BAvTCSPXraiI6temGuQwiR5f8hw1kpqjewF2e5boL7SbLKGa4+kM1JP1NlFM3H2oqlEMZcjfmOlbhoGQvIQKWQsbrY7h+kVjVtGXrMXJ0eWZdq+F2zCOjaq8yIv8aYVAA/vkJXHQm/nu+Pd/0pdNeQeMkC+ZYNT11xSBsulS5RDIUSFjClWU73it5weMpaeLXQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AjOBsPR09xvpkAhRXeY/pD/u5BN9qoFTLTGQLUbHnEs=;
+ b=F6fJA8AgwMBjC7z5JzsM7dicO1mwo02m45bRJTAJJKDb6AH1TAoXzlWRNjD0EUmuV7PiT4CvrXNp23IY5Zc2FYCLCqAOWylAgYIr4Jraiz2rU4udwNvxEEyI9O9Nv2Dr35Yap8sRwkEo9jtqeoppgtqMiHEJRnPDoi3MOoqLIxz27KZ1yEAP9MxktmfO5K/xu4C8B3dbIV0Z6Ezb1aNRVDgZjSesCj/hO0llsCL7eTqIiSKFvjkE0LpYPz2bb5U5VsAStHeBLUKoyKAj1vhptwOt1+X/qJvtn7GZyeGVruhB3ofPKEiv1LjCK9XGPvB4z2EetJ1t9B9FVWi70lMiHA==
+Received: from LV8PR02MB10287.namprd02.prod.outlook.com
+ (2603:10b6:408:1fa::10) by MN2PR02MB7005.namprd02.prod.outlook.com
+ (2603:10b6:208:209::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.9; Wed, 8 Oct
+ 2025 19:46:30 +0000
+Received: from LV8PR02MB10287.namprd02.prod.outlook.com
+ ([fe80::b769:6234:fd94:5054]) by LV8PR02MB10287.namprd02.prod.outlook.com
+ ([fe80::b769:6234:fd94:5054%5]) with mapi id 15.20.9182.017; Wed, 8 Oct 2025
+ 19:46:30 +0000
+From: Jon Kohler <jon@nutanix.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Cc: Jon Kohler <jon@nutanix.com>,
+ Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+ Sean Christopherson <seanjc@google.com>
+Subject: [PATCH] i386/kvm: Expose ARCH_CAP_FB_CLEAR when invulnerable to MDS
+Date: Wed,  8 Oct 2025 13:25:57 -0700
+Message-ID: <20251008202557.4141285-1-jon@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH7P221CA0039.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:33c::18) To LV8PR02MB10287.namprd02.prod.outlook.com
+ (2603:10b6:408:1fa::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250930161903.00006583@huawei.com>
-User-Agent: NeoMutt/20220429
-Received-SPF: pass client-ip=23.83.212.47; envelope-from=dave@stgolabs.net;
- helo=cyan.elm.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR02MB10287:EE_|MN2PR02MB7005:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0e50c16b-857f-4a23-26ac-08de06a3608e
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|52116014|1800799024|376014|38350700014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Rjc5AP3T82B56KDrImDXEGC68bTXdOCYXmUaret2PuWMkWLIoEYR+7RPunIA?=
+ =?us-ascii?Q?gUZcpLOIH5llOZpUI+m7s+LkD8gcm/atNSCrtrritB7oRwvD5UOQcV05xhXq?=
+ =?us-ascii?Q?Y94fwi9CZOdvYzNN9YfCIX1dJI9y6oDFIj3RD4OjCO2do1ieeuMphDWZLhOR?=
+ =?us-ascii?Q?eyUAno1Jb2QqTponFWoOzfY0yWgM04QvmWrWRg75Ugu0cq0T6GHYL2Py1yp3?=
+ =?us-ascii?Q?8q7Xj4oPIXnP56P1IRnwTAl/mjxcZ6rCozWA9hXpSzOnWVICM4WsSSoDaO0D?=
+ =?us-ascii?Q?Eb0elhdQQ2QdKMnCPTvquBL1TiYZiO697Ygvmdo8jNfl5BpaI/uQtp5pZ/Ev?=
+ =?us-ascii?Q?kxLOcFrwg1LtungDiDo5QHyGxklKOgTPMTx96opzLCRX50mp22OHBMSyp1eb?=
+ =?us-ascii?Q?qYygnzkEr/l75blOlYrwHug/JspQBJMyXInmrZi5dZBwgZuOCOLQszST3j2V?=
+ =?us-ascii?Q?FRoCVLtifaZT4rDJxSJvXHtmfRXXWp2UCVJk7URr51l1MiGhee2noaK1+bsZ?=
+ =?us-ascii?Q?Mul/y3k0PwixC8oLTaedTtdX7OEmQtO59ihCNUDgpfWSj87QxxkybmdnBVZF?=
+ =?us-ascii?Q?5goRyHEP/V4PHk3VH/0fFD2Igwa46v/faFVMNe5jmeF+dACwa5sBXflspdAC?=
+ =?us-ascii?Q?JwS8N9BkB3tkbj9vNeYuIU98QxqhuKA/Zva1jxxZuKZkAoStZBC4yzSz4/Me?=
+ =?us-ascii?Q?9U6n9p+vMza+rh4v/BnXpjq2spz/+/yibUhg1OkZbEh1weegX8uJpbrpFsIE?=
+ =?us-ascii?Q?pph3YiOGY/mVFpLOMBQ3lMhoEo26cS4R8rNfXFWO6b6ez14zPAVIP1gGJ1gI?=
+ =?us-ascii?Q?jHum8zuaX+PL+afnj55KOThVHg1ndbW2lzrrRUxWhJkcgrbUwO04+jptq+jn?=
+ =?us-ascii?Q?hRfZfXxSidOLdNUTsFKRpZdazl/J+/FpchFsl459r5kdscMKppffyv4J0xOM?=
+ =?us-ascii?Q?69V+w7YcEz47NaXsQ7r6d/yYi2zlzt1bfDhCPSSzWE0MOOyBTYkwVcjpkpYA?=
+ =?us-ascii?Q?5KIbK9HR4sQzSWecgWxiFcIAo9PhSyKdmRU7Zn9UxZ7l9ORfzZ0HtRx9LqmI?=
+ =?us-ascii?Q?VhT/5DaH4FU27iO3uIi676O4sa30YcvPqZ9JJ5hncXcUcv4v7EoAogsRZtY+?=
+ =?us-ascii?Q?RoIC5N8vgX2dp7yXRJsiMr+auwyKXQ6Wz3184Fex14K4TlX+ZebMwzKoUYeS?=
+ =?us-ascii?Q?FoYygFBb8m16kiv10FCKXXd0un1Bh+UujStQbboWCsR1qF5QS+R8CtJYLAnD?=
+ =?us-ascii?Q?ZLMHlkz4Frf8oFKPV/eB/Cl37ABEe9i5Lf0kQgehdzH5r+UYVG8ABCrDuFvC?=
+ =?us-ascii?Q?16T+MFbu/1Vmqvo5hfMLwLRXu355zkfZbPMuB33ZMJqLVJcPNcD/YmpywJ+K?=
+ =?us-ascii?Q?3FFvJxs58cgtwhRWYHMPbPJlVBAo49iRI+uNZBhuiTFUMf6QlQCriXRMtLTs?=
+ =?us-ascii?Q?jpNbiT20vYKjSzcbjFrYV6jeOiZR0sTPvfZn0BGm/6i4N1gO1Ey+Ukl8ky73?=
+ =?us-ascii?Q?PPGQIrQCETsPO7KOGY1MADU6V+3rV6hszvUd?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LV8PR02MB10287.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(52116014)(1800799024)(376014)(38350700014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?oqlsmxOcwNa/9H5oxSUVEQB3f246JUVjmhkylYWugzytp2eEmHV/gzZDgwBG?=
+ =?us-ascii?Q?MTtFNxxmiowvVgg5R1BMHQWHAfCb3JJ4v3gJ7deNp3u/oaydU8HQvJODUUt7?=
+ =?us-ascii?Q?6YoAb0nFKFqguGdZFcovLoZU4mg9ThML0TIk4Nf9reQX8vWhqltAQFHg3uU/?=
+ =?us-ascii?Q?j8sLkGmtqvcqD7gt0WP0IiA204H66r5wbFXo78ak3RMcIbmIIche6gZHtXbN?=
+ =?us-ascii?Q?rOzr1rOKJltM9Jshj63q7RAVOhrDz/ybII9Ca94uvDXbcAfzcWA5MvpUT82w?=
+ =?us-ascii?Q?3MAuMSyQYCoM5GcZD/Vu6qlHue5DjikmDx/m1zmdpg/t3aeoCq1djEI43RIj?=
+ =?us-ascii?Q?31EiYaN7ajd1Hxj20+NmMlgOIL88IEFj0T1eFwy2w0JXJ6IS46GeT4JCNfks?=
+ =?us-ascii?Q?ipntUNC0sdGifC2fG5BdvCCb35t0BRuWo98NFFg8tur2jgF5xkya7wFMBSUB?=
+ =?us-ascii?Q?tsOPiETxrO3KEkcAGksGH7ye6O0Tpnj2udGAPqGBgYqXZQkNMRgbz+SRSiRB?=
+ =?us-ascii?Q?xRsZPZgpoteI00zH3NApgZPLZT0XgL5mSfONv1UlfuxsIdN0UyvAjp218BHz?=
+ =?us-ascii?Q?eSKT3zdgRjC7/sGUT/K5cWsHVrvnOSZUSOgH0JGphGhmuNTRMm2mv2ehpd3q?=
+ =?us-ascii?Q?pfZ7mx1uGo5iKWQBqKaLQW8WA5B8fcvWqazyH85fkYQRciCFidmOxStdGYDm?=
+ =?us-ascii?Q?CjHlYE/tomtlxWFWS6YfhLsw12T9Ovz4Ad+mEecUMp97/7S9Vl3XmqGQni1q?=
+ =?us-ascii?Q?Ec4vEttCw6Po5tgZfqmWp12K1x64Sm+2o0IlD4jqzU8NU41ZJLoDwlAINQtl?=
+ =?us-ascii?Q?G9C1nljc6PtzeUSKlkrUvt0Y6zIlPfBZ7om9Qt9WHHszrxcM5Er3c85OjmIC?=
+ =?us-ascii?Q?tGO0rqswiFE3PTwWTUrbUzWKYpG5c6b1+QXiSnaNbyE0mUax4cZnsdfVxfuD?=
+ =?us-ascii?Q?ubZNdxJy3TTKmDsLs5px4XjA3Da2sh6IA9imlVEoGwAekXmmWc2ysyIH5h89?=
+ =?us-ascii?Q?895yY+7xptrt1ohW63ktIsZpHI+xhwQSTQgPZKwHkAm1C7F5nHa95qty3P+Y?=
+ =?us-ascii?Q?2dxTOiQSXo/FlWXbe6XwidkW6C6hLxmOhqBvRJ4V7qQRmIjzLXktsLL/UAyU?=
+ =?us-ascii?Q?DBeflPvC6Nj/XwtuhV7qbmuB6Sw4h1XuRA2VlHp7eAU5PTVosjhK5Jx0j4+Z?=
+ =?us-ascii?Q?UfPS0HAVTQSDmdgPz0EaCiG4qbNq0rOYkM57e2W7juBQMocKCNoYPTJGsJAM?=
+ =?us-ascii?Q?BKM24WwhtFxazaIooC7pr4VLCVP6tT8E5pAgYbt3vjuEvO4e5h+wJ8bHmX/+?=
+ =?us-ascii?Q?2ZSAKNj/gST6+bO2t0KQ/ZrCGZFv0lxFB/mpnraLOJGOIzRQzffbz8Gllv+5?=
+ =?us-ascii?Q?NY9ngu4Kpx8SrdmpmX7iZLfjpqa0xEXafyu0xMF3F2hgAt6LisHVo7jE2yh8?=
+ =?us-ascii?Q?PlsVyAER4WROveWf186E9A+DcqK56Mhc8sudrIUUSNcZ0nDyTWsNpHoSOoki?=
+ =?us-ascii?Q?rfWHb74dmsVNNTK1oGU3VjsyB7coGG8GkJzlGy887IgbN0ND1MYOfF2/1cKq?=
+ =?us-ascii?Q?qEQ+vWL4fTiJNVtzdHEdk369FBVkhtM/A6s491cuS07ckdX1Zi8JK1ISA2xl?=
+ =?us-ascii?Q?9w=3D=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e50c16b-857f-4a23-26ac-08de06a3608e
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR02MB10287.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2025 19:46:30.5221 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DPILzs2iCciiu0Iq8NmLXKShb7s4+IpnWLCQNyIE+HPoPghmqMv3F8uplDLmVKT/cb9tqbCIwcaO0XaCmGvKMcYn0Bbe1QpAeFGCvywh9BM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR02MB7005
+X-Proofpoint-ORIG-GUID: JwaKPUXDVp6G-6n8R-7wLHnVAo8t8eE7
+X-Authority-Analysis: v=2.4 cv=OdOVzxTY c=1 sm=1 tr=0 ts=68e6bf9c cx=c_pps
+ a=kJh41/vVy0mmRivLipeQDA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=x6icFKpwvdMA:10 a=0kUYKlekyDsA:10 a=VwQbUJbxAAAA:8
+ a=64Cc0HZtAAAA:8 a=QyXUC8HyAAAA:8 a=1XWaLZrsAAAA:8 a=QHeVMHjclCThQL4jRR0A:9
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: JwaKPUXDVp6G-6n8R-7wLHnVAo8t8eE7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEzOCBTYWx0ZWRfX9sdMIhJUH1aC
+ jeXZ9lxPBh/jQN3VGH9AP0R4/ouSJMKT5WYHE2/+eNgr7C4Ny1WNkRQpoPR9wyNtFxt2ZtSAif0
+ 0zSSGWo628uEF9r3Pqz/4kOi1nUKKBexBF7qClcFtC3uoB6nXwaHKPMo3c25B/k5sIbszlUedV1
+ 0G6yTSwD3DWXlFOMWNY95dsx4FrjLP6MSOhHWHbB0zmQLJGa4Oec9tuHIx/RykkG9ZuSNCmqdK6
+ vZHgF2pUYL0iub7xKMcp/3N9uVrz6cHaHgAeiA4zoq09HY8zX8NmUo1XfiiGAv4uoMWNwYy8UNk
+ 0zWrcrp29GFYzfJ/QTPoBAy9OOky8m30QdaFusazVYx/EGC8PfH2qIhU3mdKDwZckn4Pky4vXy/
+ 9fRu+pa8sMdR5MvWjfEP6zRJLuQfag==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-08_05,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12; envelope-from=jon@nutanix.com;
+ helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,143 +196,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Sep 2025, Jonathan Cameron wrote:
+Newer Intel hardware (Sapphire Rapids and higher) sets multiple MDS
+immunity bits in MSR_IA32_ARCH_CAPABILITIES but lacks the hardware-level
+MSR_ARCH_CAP_FB_CLEAR (bit 17):
+    ARCH_CAP_MDS_NO
+    ARCH_CAP_TAA_NO
+    ARCH_CAP_PSDP_NO
+    ARCH_CAP_FBSDP_NO
+    ARCH_CAP_SBDR_SSDP_NO
 
->On Mon, 29 Sep 2025 20:21:49 -0700
->Davidlohr Bueso <dave@stgolabs.net> wrote:
->
->> PCIe Flit Mode, introduced with the PCIe 6.0 specification, is a
->> fundamental change in how data is transmitted over the bus to
->> improve transfer rates. It shifts from variable-sized Transaction
->> Layer Packets (TLPs) to fixed 256-byte Flow Control Units (FLITs).
->>
->> As with the link speed and width training, have ad-hoc property for
->> setting the flit mode and allow CXL components to make use of it.
->>
->> For the CXL root port and dsp cases, always report flit mode but
->> the actual value after 'training' will depend on the downstream
->> device configuration.
->>
->> Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
->Hi Davidlohr,
->
->A few comments inline. Main one is that I think we need the CAP to still
->say we support 68B flits on the CXL devices and just mess with the
->status.
->
->> ---
->>  hw/mem/cxl_type3.c                        |  9 ++++++---
->>  hw/pci-bridge/cxl_downstream.c            | 11 +++++++----
->>  hw/pci-bridge/cxl_root_port.c             | 11 +++++++----
->>  hw/pci-bridge/cxl_upstream.c              | 19 +++++++++++--------
->>  hw/pci-bridge/gen_pcie_root_port.c        |  1 +
->>  hw/pci/pcie.c                             | 23 +++++++++++++++++++----
->>  include/hw/cxl/cxl_device.h               |  1 +
->>  include/hw/pci-bridge/cxl_upstream_port.h |  1 +
->>  include/hw/pci/pcie.h                     |  2 +-
->>  include/hw/pci/pcie_port.h                |  1 +
->>  10 files changed, 55 insertions(+), 24 deletions(-)
->>
->> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
->> index c4658e0955d5..891b75618892 100644
->> --- a/hw/mem/cxl_type3.c
->> +++ b/hw/mem/cxl_type3.c
->> @@ -533,9 +533,10 @@ static void build_dvsecs(CXLType3Dev *ct3d)
->>                                 GPF_DEVICE_DVSEC_REVID, dvsec);
->>
->>      dvsec = (uint8_t *)&(CXLDVSECPortFlexBus){
->> -        .cap                     = 0x26, /* 68B, IO, Mem, non-MLD */
->> +                                   /* 68B (maybe), IO, Mem, non-MLD */
->> +        .cap                     = ct3d->flitmode ? 0x6 : 0x26,
->
->Do we need this capability bit change?  The bit says the device is capable of doing it,
->not that we currently are.   I think from a spec point of view we aren't allowed to
->not support this.  Applies int the various other places as well.
+This prevents VMs with fb-clear=on from migrating from older hardware
+(Cascade Lake, Ice Lake) to newer hardware, limiting live migration
+capabilities. Note fb-clear was first introduced in v8.1.0 [1].
 
-I agree, we should leave it alone, for which when in flitmode lspci shows:
+Expose MSR_ARCH_CAP_FB_CLEAR for MDS-invulnerable systems to enable
+seamless migration between hardware generations.
 
-		FBCap:	Cache- IO+ Mem+ 68BFlit+ MltLogDev- 256BFlit- PBRFlit-
+Note: There is no impact when a guest migrates to newer hardware as
+the existing bit combinations already mark the host as MMIO-immune and
+disable FB_CLEAR operations in the kernel (see Linux's
+arch_cap_mmio_immune() and vmx_update_fb_clear_dis()). See kernel side
+discussion for [2] for additional context.
 
-... noting that that misleading 256BFlit- output is dependent on bit 13 (as reported
-by Ravi), but that in fact is the latency optimized version, which is not mandatory.
+[1] 22e1094ca82 ("target/i386: add support for FB_CLEAR feature")
+[2] https://patchwork.kernel.org/project/kvm/patch/20250401044931.793203-1-jon@nutanix.com/
 
->
->>          .ctrl                    = 0x02, /* IO always enabled */
->> -        .status                  = 0x26, /* same as capabilities */
->> +        .status                  = ct3d->flitmode ? 0x6 : 0x26, /* same */
->
->This is correct but if we do leave teh cap alone we probably need to note
->that flitmode means we aren't in the old 68B flit mode.
+Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Jon Kohler <jon@nutanix.com>
+---
+ target/i386/kvm/kvm.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-		FBSta:	Cache- IO+ Mem+ SynHdrByp- DrftBuf- 68BFlit- MltLogDev- 256BFlit- PBRFlit-
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 6a3a1c1ed8..610d786310 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -657,6 +657,23 @@ uint64_t kvm_arch_get_supported_msr_feature(KVMState *s, uint32_t index)
+         must_be_one = (uint32_t)value;
+         can_be_one = (uint32_t)(value >> 32);
+         return can_be_one & ~must_be_one;
++    case MSR_IA32_ARCH_CAPABILITIES:
++        /*
++         * Special handling for fb-clear bit in ARCH_CAPABILITIES MSR.
++         * KVM will only report the bit if it is enabled in the host,
++         * but, for live migration capability purposes, we want to
++         * expose the bit to the guest even if it is disabled in the
++         * host, as long as the host itself is not vulnerable to
++         * the issue that the fb-clear bit is meant to mitigate.
++         */
++        if ((value & MSR_ARCH_CAP_MDS_NO) &&
++            (value & MSR_ARCH_CAP_TAA_NO) &&
++            (value & MSR_ARCH_CAP_SBDR_SSDP_NO) &&
++            (value & MSR_ARCH_CAP_FBSDP_NO) &&
++            (value & MSR_ARCH_CAP_PSDP_NO)) {
++                value |= MSR_ARCH_CAP_FB_CLEAR;
++        }
++        return value;
+ 
+     default:
+         return value;
+-- 
+2.43.0
 
-... which that 68BFlit- in fact implies regular 256B flit mode.
-
-Thanks,
-Davidlohr
-
->
->>          .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
->>      };
->>      cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
->> @@ -1501,7 +1502,8 @@ void ct3d_reset(DeviceState *dev)
->>      uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
->>      uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
->>
->> -    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed);
->> +    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
->> +                              ct3d->flitmode);
->>      cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
->>      cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
->>
->> @@ -1540,6 +1542,7 @@ static const Property ct3_props[] = {
->>                                  speed, PCIE_LINK_SPEED_32),
->>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLType3Dev,
->>                                  width, PCIE_LINK_WIDTH_16),
->> +    DEFINE_PROP_BOOL("x-256b-flit", CXLType3Dev, flitmode, false),
->>      DEFINE_PROP_UINT16("chmu-port", CXLType3Dev, cxl_dstate.chmu[0].port, 0),
->>  };
->>
->> diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
->> index 6aa8586f0161..f8d64263ac08 100644
->> --- a/hw/pci-bridge/cxl_downstream.c
->> +++ b/hw/pci-bridge/cxl_downstream.c
->
->>  static void gen_rp_dev_class_init(ObjectClass *klass, const void *data)
->> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
->> index eaeb68894e6e..cc8e7c3cbf3f 100644
->> --- a/hw/pci/pcie.c
->> +++ b/hw/pci/pcie.c
->
->> @@ -1106,6 +1111,8 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
->>      if (!target || !target->exp.exp_cap) {
->>          lnksta = lnkcap;
->>      } else {
->> +        uint16_t lnksta2;
->> +
->>          lnksta = target->config_read(target,
->>                                       target->exp.exp_cap + PCI_EXP_LNKSTA,
->>                                       sizeof(lnksta));
->> @@ -1119,6 +1126,14 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
->>              lnksta &= ~PCI_EXP_LNKSTA_CLS;
->>              lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
->>          }
->> +
->> +        lnksta2 = target->config_read(target,
->> +                                      target->exp.exp_cap + PCI_EXP_LNKSTA2,
->> +                                      sizeof(lnksta2));
->> +        pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA2,
->> +                                     PCI_EXP_LNKSTA2_FLIT);
->> +        pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA2, lnksta2 &
->> +                                   PCI_EXP_LNKSTA2_FLIT);
->
->Odd linewrap. Kind of makes some sense for the linksta one I guess you based this
->on but here, we can fit the whole parameter on one line.
->
->
->>      }
->>
->>      if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
->
 
