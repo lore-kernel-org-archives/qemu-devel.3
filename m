@@ -4,145 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC2CCCA472
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C34CAC5BB
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 12:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6TSG-0003LJ-FD; Wed, 08 Oct 2025 08:39:40 -0400
+	id 1v6TSB-0003KQ-PR; Wed, 08 Oct 2025 08:39:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6TSE-0003Kj-8W
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 08:39:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <quic_mburton@quicinc.com>)
+ id 1v6TS6-0003JX-NR
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 08:39:31 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v6TS2-0007dz-4U
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 08:39:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759927160;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xJ3bC2XNpdwps5TKScSgQfzcmo3SBfvH58vfrMb+ORc=;
- b=A1RJepOdWorqE7o9bUiBmkBKjn6qJBSRa8vO2D2IWzJfolvqKLWHlLMAktWd/mTkstuJ4O
- ZWT9aDgl+moNgq5b3ttOTB86JtKBin9MvHgJq5nL9bXt1Y9PrACh+RThL7SS3pulhwPNVq
- UScEI2Ts6LURbOPmdeyH59qcC+Vsn8g=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-hoTRYN_WNjGjRyVOIBys7Q-1; Wed, 08 Oct 2025 08:39:19 -0400
-X-MC-Unique: hoTRYN_WNjGjRyVOIBys7Q-1
-X-Mimecast-MFC-AGG-ID: hoTRYN_WNjGjRyVOIBys7Q_1759927158
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e32eb4798so41347765e9.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 05:39:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759927158; x=1760531958;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xJ3bC2XNpdwps5TKScSgQfzcmo3SBfvH58vfrMb+ORc=;
- b=gSYKcEeltiFT08S9lcWq4fCAY3iqgpH1lxqhwZitLpqxaJjrnPbSCf3jMNTgx9+Esl
- iRYLCr0BsB2RmEl9Sr7up+3mrq212rEGWYeOqn11nZSUz9J1mpQoDur66u0j/WpWcjS4
- xq9mL132R7iWrjZiZkyqPd/AykcFlbEk15ks0FSOOH2LV9OonyJR6hD1wOLmC+nUe9jk
- P3aDOiLjNs8iazBGcO0GSuJ3YZcr1rGQ6rHAR8vQrL/rq//sAosHCDO6ROK+8jGLRW+4
- mw/vz0+Y/PbPCUEkhQd+JMrSOmVjanc6jdYu+XVARwK52oOhICG4gfq8o/g+PnICpjVF
- d+zA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8DXFGfxUeugC9DG7BzlPLXTgGaAPIZGkUAhfdHIsr/aRvIe69zwWAr0mZB2wgYRzBFnSkxtBvKlKO@nongnu.org
-X-Gm-Message-State: AOJu0Yz3e+7rTPQlrNdsjONHIskEwtulfdDXwXh1nwy8rjuEexmAU5wy
- HkYseHQ5KNNSM0NXUc3/WyRjz9ma/EkPeZH0zVDYzqDXGhi4UDmjMtw5ZXcPHvqLWfR9UE3Yx+B
- vWCyvmSXvPzm28orvbdgl+RsMGwHm+r6ow3WouvCB3nA1osBUph+DeopZ
-X-Gm-Gg: ASbGnctGrLSH9ACxufi4H7WQlKD/dLWH+fakLB+1gu3d0ouLfZjQ+T4IWUC6Pzn64hS
- Dcs6RYyqa4wXoeYAayrLX1ddHc2MvK633pFvr515X/sri8RWSwPGOsw5y/KqZn+Kqo4IVZ0lLXD
- AKcGEJjRQl7XJYscVRkqAJ4uv3taHJib4nc/7awS9had+uPbly5R5fUgompcoI4sOZ64+6y1tW/
- PGkRDlTzSVxcPbAnSJGb4Tc4g6/TNFV88GUY3B7o1yoEzYLWFOYBTi//0Z0KUKQ9O/qe192NuwV
- HUiroxKuYD39B6GU3ksd44f6aHcUwQ1Y1m+HKh2bClI0zKMxtdt969FfkSlFIzEYm9/IJVxd6xW
- Pew9RxNhflA==
-X-Received: by 2002:a05:600c:4753:b0:46e:4a13:e6c6 with SMTP id
- 5b1f17b1804b1-46fa9aef36bmr20980805e9.19.1759927157988; 
- Wed, 08 Oct 2025 05:39:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1Wxty4GaUP6Bt6Lrzwxv/9fBRz8bMzx9ZI+JeNtac8Ggh2Kr+ikPyTsw1Tali9zAf6s9FoQ==
-X-Received: by 2002:a05:600c:4753:b0:46e:4a13:e6c6 with SMTP id
- 5b1f17b1804b1-46fa9aef36bmr20980635e9.19.1759927157564; 
- Wed, 08 Oct 2025 05:39:17 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
- [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9d7f91esm36329445e9.20.2025.10.08.05.39.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 05:39:17 -0700 (PDT)
-Message-ID: <6a0a9fa7-93cd-40bf-b493-c805c5db072a@redhat.com>
-Date: Wed, 8 Oct 2025 14:39:16 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x/mmu_helper: Do not ignore address_space_rw()
- errors
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-References: <20251007021046.27470-1-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251007021046.27470-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <quic_mburton@quicinc.com>)
+ id 1v6TRv-0007dA-JI
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 08:39:30 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890Mcc021114;
+ Wed, 8 Oct 2025 12:39:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=DeAO8UNX2XSokITIooVSzC
+ OHV9PjVZYE1+zbarmEOkY=; b=YtRu9BubERy3/lF5KFYEFSXwOUXBwbUzs9VSdJ
+ nPgTb/sfUxYIXECT8xBW3CyNtXpxQ/7b1H8KY9P2hzIKZudQALaSSMlHKNjqSgH8
+ DF8Dj2YaHBujS8cta+YGNAIzjbUYXIsHrVXSQ9ujehVkfdvP76VU95CQYzWDk0T0
+ HOEelaWLcdUFRd80CsV5bMaREeOhZkMujsdQyjr5x7rMJ+xgW+Nev8qwLW698b1R
+ t3HifnfSnCJ6Tum+yTPCB9g1e7g92FtrRL/d2zVBkU4sa+iac3vSw9SdBFJMawbt
+ dRlKYYmbcf+ybxOH7jcYSlrVWT1Mxr79QCLnO9aO3oXEjwFw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com
+ [199.106.103.254])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jut1tesq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Oct 2025 12:39:04 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com
+ [10.46.141.250])
+ by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 598Cd37S009846
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 8 Oct 2025 12:39:04 GMT
+Received: from smtpclient.apple (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 8 Oct
+ 2025 05:39:00 -0700
+From: Mark Burton <quic_mburton@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: MMIO through IOMMU from a TCG processor
+Message-ID: <1C343F6E-05E2-4EA0-A338-0C48A97FF263@quicinc.com>
+Date: Wed, 8 Oct 2025 14:38:48 +0200
+To: QEMU Developers <qemu-devel@nongnu.org>, <peterx@redhat.com>,
+ <eric.auger@redhat.com>, <zhenzhong.duan@intel.com>,
+ <alejandro.j.jimenez@oracle.com>, <peter.maydell@linaro.org>,
+ <jasowang@redhat.com>, <pbonzini@redhat.com>, <tjeznach@rivosinc.com>,
+ <steven.sistare@oracle.com>, <clement.mathieu--drif@eviden.com>,
+ <joao.m.martins@oracle.com>, <ean-philippe@linaro.org>,
+ <jean-philippe@linaro.org>, <sarunkod@amd.com>,
+ =?utf-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3826.700.81)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: wJYcaNT_clLp-Wips1JcwHWO0OyC7qPf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAyNyBTYWx0ZWRfX/9USMxqkKvqm
+ ZfM+qzj+9tFstTqYfGQ/LThBSMrgkeyN4M0oog5aV9VtrN8L9w6bLycQK50+XzmGipyaknOWbyz
+ 7DSowZbzKOibBW4Nr1Sh3mqjHmoGUZgaOM9K3qz3sKJYFaIrVn2sfPHpq0ESctgetDHVyXydSJq
+ rUr1wLwQMAf+LDuHnCHEov6umSSObtKvbvFfwXFWAsa13ZtFSiLvyLjCZH9l7UjdB2HzFGeEqK9
+ 3lcrWjONu2WBTa+RSDK6dy7/FaWMFjrWAzA1G4VfAirMjy40Fg+Y3JoTkW08YO+DrQlrowEq+BR
+ vOo37l9wKCMsWS/PVhBw3rqzWZjlK1/8yKzJ/09od4pWEP+rhcWA7pkYNduAA1qnJDH/yIbTKiT
+ b5VnfzK0/YQvNCXJ/hhOls2HcccMkw==
+X-Authority-Analysis: v=2.4 cv=Vqcuwu2n c=1 sm=1 tr=0 ts=68e65b68 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=IwR0v29mHd8DpTKDBTcA:9 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: wJYcaNT_clLp-Wips1JcwHWO0OyC7qPf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-08_04,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 clxscore=1011 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040027
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mburton@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,48 +114,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/10/2025 04.10, Philippe Mathieu-Daudé wrote:
-> Break the loop and return an error if address_space_rw() ever failed.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20251007014958.19086-1-philmd@linaro.org>
-> ---
->   target/s390x/mmu_helper.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-> index 7bcf1810bca..643141e7847 100644
-> --- a/target/s390x/mmu_helper.c
-> +++ b/target/s390x/mmu_helper.c
-> @@ -544,12 +544,18 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
->           trigger_access_exception(&cpu->env, ret, tec);
->       } else if (hostbuf != NULL) {
->           AddressSpace *as = CPU(cpu)->as;
-> +        MemTxResult res;
->   
->           /* Copy data by stepping through the area page by page */
->           for (i = 0; i < nr_pages; i++) {
->               currlen = MIN(len, TARGET_PAGE_SIZE - (laddr % TARGET_PAGE_SIZE));
-> -            address_space_rw(as, pages[i] | (laddr & ~TARGET_PAGE_MASK),
-> -                             MEMTXATTRS_UNSPECIFIED, hostbuf, currlen, is_write);
-> +            res = address_space_rw(as, pages[i] | (laddr & ~TARGET_PAGE_MASK),
-> +                                   MEMTXATTRS_UNSPECIFIED, hostbuf, currlen,
-> +                                   is_write);
-> +            if (res != MEMTX_OK) {
-> +                ret = 1;
+All, sorry for the wide CC, I=E2=80=99m trying to find somebody who =
+understands this corder of the code=E2=80=A6. This is perhaps a obscure, =
+but I think it should work.
+I am trying to access an MMIO region through an IOMMU, from TCG.
+The IOMMU translation has provided an address space that is different =
+from the CPU=E2=80=99s own address space.
 
-I think you'd need to call trigger_access_exception() here like it is done 
-when translate_pages() failed earlier in this function. And I think I'd 
-rather use ret = PGM_ADDRESSING in this case.
+In address_space_translate_for_iotlb the section is calculated using the =
+address space provide by the IOMMU translation.
+> d =3D =
+flatview_to_dispatch(address_space_to_flatview(iotlb.target_as));
+>=20
+Later, we come to do the actual access (via e.g. do_st_mmio_leN), and at =
+this point we pick up the cpu=E2=80=99s address spaces in =
+iotlb_to_section, which is different, and the recorded section therefore =
+seems to be incorrect.
 
-  Thomas
+> CPUAddressSpace *cpuas =3D &cpu->cpu_ases[asidx];
+> AddressSpaceDispatch *d =3D cpuas->memory_dispatch;
+> int section_index =3D index & ~TARGET_PAGE_MASK;
+> MemoryRegionSection *ret;
+>=20
+> assert(section_index < d->map.sections_nb);
+> ret =3D d->map.sections + section_index;
 
+What I don=E2=80=99t fully understand is how this is supposed to =
+work=E2=80=A6.?
 
-> +                break;
-> +            }
->               laddr += currlen;
->               hostbuf += currlen;
->               len -= currlen;
+Have I missed something obvious?
 
+Cheers
+Mark.
 
