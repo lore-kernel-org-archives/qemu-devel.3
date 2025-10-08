@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BC7CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 07:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB48CCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 08:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6P5M-000630-NN; Wed, 08 Oct 2025 03:59:45 -0400
+	id 1v6PFo-0007p7-3Y; Wed, 08 Oct 2025 04:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6P5L-00062r-Hk
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 03:59:43 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6P5J-00051O-NZ
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 03:59:43 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-46e37d10ed2so61602175e9.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 00:59:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759910379; x=1760515179; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RW++muA8ipgAQrf+PnjwO0dFWxxR4qJIDUHasbAhPQw=;
- b=d7mdTUxWIUqtrAb07AcxSYB//XGe7JTT73RjhKeP8KoDnoZimIQF9nz2t0NMFc9wP8
- omcSy8KItrw26IENvWFojjS9xDqdNSwk1P368fdGyMvnpn+cVjnLH0sZ/TLrI4yKwB9b
- kgpA9ti5Ki3e+kw8ltGyEnE1XA3IkOxuE5/T42O2ETLZml9kZqFXd3axDYbME1SOmqgH
- 3aReOh+JfzW+2vIo20GfODqxXT17neuPMk/CavLNbhAME9bGr8scnzaofCciZMxNdWHh
- UuyDL76DDpHl4+b/MjlvIRxaR5A9uJQJLU+WuqFgYaHQihSpLpl+Stmgxm49w6308jiT
- 9J0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759910379; x=1760515179;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RW++muA8ipgAQrf+PnjwO0dFWxxR4qJIDUHasbAhPQw=;
- b=XJbDT+AmUZDAlwNSUDfTGWloPv3JXLjO6OJEJQqOLAMgT6N36no3SMy/qgj1tA8rxQ
- XMu2vGrbi6eQXzar0amnBWUOEnrETEWiA3TF/9xfAPGfAby3GwTTBVwOLPCYdC4dTZPf
- ad7rPqg0zJuGwxbE8XiGyUXZtNdQ+hjdHmIhcWF4D5HRI7VHshJkVBiPdapVVVSmSoZ2
- yJKh310pkDkblWTqNeK2uqB7/KKbd2CWpEfmTYrQFaZsvPokjWn6DIFAjkgcVYdMRMA2
- sN65p2JWzbgSZ8o2OXW+Kp1llxP1nXTxeeiDAgM1nfbH0pYl5J+ZdEEWa14QyFqF9OGg
- mzJw==
-X-Gm-Message-State: AOJu0YyvCP/N7cDMdIxC8luKdaKR0uD4EWfV8BI6mvXCBmkZhLcsb2h/
- pf2u8fBhujmZ8U6YwDmwp3OhWLfZuxvGkREAWdkfDfImBK/AkUj0IXIQWcjDyjCWvB1zPlSgirf
- tTgZO4ht8EA==
-X-Gm-Gg: ASbGncsLN28gVJN9QrcQPUrKj2BlhZ/cBQIRSc4pSGSkXt5cpxWrUNBnL3FhB40w5sR
- TiJsaprFJHkRAr/sauBEDh274Mip5BRM4ErmDLLajEgHLJ2O9EDc6P4fRvP4KhndHNAOoBK0Qio
- Mjc/44zHrYhqEnzUv8wrdmojsCSmcBGlRlDdpB8HzyNIkZkHQQEBvt8eBOZHcy6ZG7k1vRAxNEu
- b9Fdf0hdi52ISHuhZrEtI7JiKssHnj38kDuTo0+NKomW+yuXjn8RepefBKcDrqR6TqCGRpeuw1F
- Y9HvGHaRX/Jt77VBRdMqs4Lkdhz0i9x2EVY/5PLGDURO3elz/9TADbZW+Us2DbICAABB1hlFxdZ
- oAjhsCXMy0xhWQm2JjQfIyS6I+UlkiHhyzdVzFmR8Z17KbJ3sOuu/lxytSIKcFIQjD04bx2BeYF
- 2lmw6mHeBx3fbwul4Epm0qp8vTx4ID
-X-Google-Smtp-Source: AGHT+IGkF7zzrmL6f7PGM22bNNtfBb0UaDfBLH31FdnGZrXUldVx5HjuHHGUxaqksgDoOpjT2jMAZA==
-X-Received: by 2002:a05:600c:1394:b0:45d:d1a3:ba6a with SMTP id
- 5b1f17b1804b1-46fa9b1706amr14020645e9.33.1759910379540; 
- Wed, 08 Oct 2025 00:59:39 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9d4caa4sm26056765e9.12.2025.10.08.00.59.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 00:59:39 -0700 (PDT)
-Message-ID: <6ecda129-3cb9-4d70-a0a7-bd0b7ee806a9@linaro.org>
-Date: Wed, 8 Oct 2025 09:59:38 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v6PFk-0007ov-RR
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 04:10:28 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v6PFh-0006PI-VB
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 04:10:28 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 59B2915B7EA;
+ Wed, 08 Oct 2025 11:10:12 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id ABD0229B70A;
+ Wed,  8 Oct 2025 11:10:20 +0300 (MSK)
+Message-ID: <78e722ee-cd01-43f4-abfe-efc019cce48f@tls.msk.ru>
+Date: Wed, 8 Oct 2025 11:10:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 7/7] target/openrisc: Replace target_ulong -> uint32_t
-To: qemu-devel@nongnu.org
-Cc: Stafford Horne <shorne@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>
-References: <20251008075612.94193-1-philmd@linaro.org>
- <20251008075612.94193-8-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251008075612.94193-8-philmd@linaro.org>
+Subject: Re: [PATCH 2/2] migration/vmstate: remove
+ VMSTATE_BUFFER_POINTER_UNSAFE macro
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+References: <20250802142115.41638-1-mjt@tls.msk.ru>
+ <20250802142115.41638-2-mjt@tls.msk.ru> <aNqsXPt3LGJv4F1O@x1.local>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <aNqsXPt3LGJv4F1O@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 09:56, Philippe Mathieu-Daudé wrote:
-> The OpenRISC targets are only built as 32-bit, therefore
-> target_ulong always expands to uint32_t. Replace and adapt
-> the API uses mechanically:
-> 
->    target_ulong -> uint32_t
->    target_long -> int32_t
->    tl -> i32
->    TCGv -> TCGv_i32
->    tcg_global_mem_new -> tcg_global_mem_new_i32
+On 9/29/25 18:57, Peter Xu wrote:
+> On Sat, Aug 02, 2025 at 05:21:09PM +0300, Michael Tokarev wrote:
+>> The only user of this macro was VirtIONet.vlans, which has been
+>> converted to regular VMSTATE_BUFFER.
+..
+> I'm scanning over lost patches on the list.  I suspect this is lost when
+> you sent v2 replying to v1.
 
-I forgot:
+This hasn't been lost due to v2 vs v1, - the reason was that the first
+patch in the series was trivial, while the second (this one) is a bit
+more than trivial, - so the first patch went through qemu-trivial, and
+the second went nowhere :)
 
-      VMSTATE_UINTTL -> VMSTATE_UINT32
+> Wanna repost with a full v2 to catch Michael's attention once more?  I also
+> always would suggest a cover letter..
+Yeah, re-sending it is ok.  Dunno what's the reason for the cover letter
+though, for a single patch.
 
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> RFC: not sure how to split to ease review :|
+Thank you for your attention - I'd lost it myself without you ;)
 
-~200 lines, not that bad.
-
-> ---
->   target/openrisc/cpu.h        |  22 +--
->   target/openrisc/helper.h     |   8 +-
->   target/openrisc/fpu_helper.c |   8 +-
->   target/openrisc/machine.c    |  16 +-
->   target/openrisc/sys_helper.c |   5 +-
->   target/openrisc/translate.c  | 374 +++++++++++++++++------------------
->   6 files changed, 216 insertions(+), 217 deletions(-)
-
+/mjt
 
