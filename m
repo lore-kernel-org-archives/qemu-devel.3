@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B30E0CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D383ACCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Uw4-0002Ee-4t; Wed, 08 Oct 2025 10:14:32 -0400
+	id 1v6Uvv-00023T-0G; Wed, 08 Oct 2025 10:14:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Uw1-0002Cv-EP
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:14:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Uvr-0004TA-DV
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 10:14:29 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46e2c3b6d4cso60517235e9.3
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 07:14:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759932852; x=1760537652; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HMtJ9Bh3gq0ohWVQj4zIGGKICthhP+e2lHMmVOlS6Lg=;
- b=tO2YRzSAL2oSpiJceBV9vc/CmMdqQ/aDh0BgEnCiuw8EYevQ9mLVuhAWETlC6N+5YI
- pIJPBvGmhhroisiBYIC6+TbCzOKMh/2JFnBLcW+b4QC+7slwOZnxLm/bmNe+6Zv+6zxa
- W0d/bjiKyPSIHvS3w/fPjVcTsPwt3fpoWg4oJixfv5/Gch2aubT43MsPRaYktLHCn1hm
- RvW74fAy/pjGfpZBAFPJezBp+XVIc58hn2uupclPZp/1LTUYPur5TPg2PjvSXR2HhmGk
- U/4j3P4K6f2laBzPt0LIZX0uCNpvA1W9cuLk2GaTm5/Q6BB9jfmjEcjVYVW7oM8ZxZZQ
- viUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759932852; x=1760537652;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HMtJ9Bh3gq0ohWVQj4zIGGKICthhP+e2lHMmVOlS6Lg=;
- b=Oqzd3VUzSa2HtlsS5MtdMMVal8Z8P7efB5Q7NsPIC31kAp4XDlZ23JXn3rVlQyqKyF
- 6EoycZ30LL813fnes9G1SbCqGUPRfv0FEqqW3/nmZjM+OeVlRT2lAHDB2FO4QT3rY/2k
- eFmH/Ma451CPp1YI6ahzHN5kntIgvRIOKv80hjsPPZ1uyshobP8gJlubhLlSWOl6PGyr
- NrTSZfdcxqR6xF/kIzJ/bItvkwMxk0Jv/IWr7YRTkVGIoKk64/u9uctyO0r/6fkfO3uL
- ih+9r9YdXlk/g5sve523HyesUTgdiDd93jNx1r1YchEWEDWuRVaBBktyqTJzV39kPH3F
- SXww==
-X-Gm-Message-State: AOJu0YypGAaSTn8W8KMgL3FYcW162rh5OCU8dfsIYQQehrv8M0b0VhXe
- jk6o1fGnZc14K+c0XN75miP6SoGv8gQojfORdogwjXzEyJyz0BBJYDhs8OYf2uXERvSIKqTm7Cx
- rIIUlAopzmg==
-X-Gm-Gg: ASbGncv3boz7ROP1++tv8M8N1H38mrH/ys1L6yCFLYR2Mdg0FTf1eHvbr4alSZajFdg
- 0HRcVgPDzd57jfA00HgYti4qXsyLGH+iPBgYdI9+axSjFqrFZSRyerCbvItH6e0+vrX9JQMCbCj
- 3v2OLKr00BK+Nr1X+QNm7UFax4AKqYvdzG/AdwEl0GSx+ibXQMCv6LraL0eXGBR/GI3GBK6xJF7
- FfQGKGw/O4tU93wqjYEZFPisy66SfjVusCAh1qCaUiPCYkY40nsZFPhtkGZuU9vRoQv4qGzQHj9
- GiG1jvGPG7sI7NSNpF5Re8dMgAs3AemtJxPZv3dc5Gh26qoW5HDZXyEHG+TSpAyCJzrUzRAyo+9
- kxk11DEv4X60DginK9+IEwGWUL57/2BbZp32ynqSM1G+1BfWOrQV08Y9KbhkAYJaibd7/CYZSVO
- GLm2k/22bvewLCtg60Er2N1PTG
-X-Google-Smtp-Source: AGHT+IHUCSpBMFPqbcq7SkdE3XP9sPVbkUUFggbr2OUQ9ALvV4dDmq/NFngapaFsAphRXDgbVLknAw==
-X-Received: by 2002:a05:600d:41f2:b0:46e:456e:ada5 with SMTP id
- 5b1f17b1804b1-46fa9b01934mr22776195e9.28.1759932851921; 
- Wed, 08 Oct 2025 07:14:11 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9c0e35dsm40839755e9.8.2025.10.08.07.14.10
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 Oct 2025 07:14:11 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/2] target/s390x/mmu_helper: Do not ignore
- address_space_rw() errors
-Date: Wed,  8 Oct 2025 16:14:07 +0200
-Message-ID: <20251008141410.99865-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v6Uvt-00023I-NV; Wed, 08 Oct 2025 10:14:21 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v6Uvg-0004Rm-RM; Wed, 08 Oct 2025 10:14:19 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 57DEC15B97C;
+ Wed, 08 Oct 2025 17:13:45 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F7FA29BABE;
+ Wed,  8 Oct 2025 17:13:53 +0300 (MSK)
+Message-ID: <29f3c19d-09fa-4b1d-ac92-65838cc69698@tls.msk.ru>
+Date: Wed, 8 Oct 2025 17:13:52 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/26] riscv-to-apply queue
+To: alistair23@gmail.com, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>,
+ Vladimir Isaev <vladimir.isaev@syntacore.com>, stove <stove@rivosinc.com>
+References: <20251003032718.1324734-1-alistair.francis@wdc.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251003032718.1324734-1-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,16 +106,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: Addressed Thomas' review comment
+On 10/3/25 06:26, alistair23@gmail.com wrote:
+> From: Alistair Francis <alistair.francis@wdc.com>
 
-Philippe Mathieu-Daudé (2):
-  target/s390x/mmu_helper: Simplify s390_cpu_virt_mem_rw() logic
-  target/s390x/mmu_helper: Do not ignore address_space_rw() errors
+> First RISC-V PR for 10.2
+> 
+> * Fix MSI table size limit
+> * Add riscv64 to FirmwareArchitecture
+> * Sync RISC-V hwprobe with Linux
+> * Implement MonitorDef HMP API
+> * Update OpenSBI to v1.7
+> * Fix SiFive UART character drop issue and minor refactors
+> * Fix RISC-V timer migration issues
+> * Use riscv_cpu_is_32bit() when handling SBI_DBCN reg
+> * Use riscv_csrr in riscv_csr_read
+> * Align memory allocations to 2M on RISC-V
+> * Do not use translator_ldl in opcode_at
+> * Minor fixes of RISC-V CFI
+> * Modify minimum VLEN rule
+> * Fix vslide1[up|down].vx unexpected result when XLEN=32 and SEW=64
+> * Fixup IOMMU PDT Nested Walk
+> * Fix endianness swap on compressed instructions
+> * Update status of IOMMU kernel support
 
- target/s390x/mmu_helper.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+Hi!
 
--- 
-2.51.0
+Is there anything in there which is worth picking up for the active
+stable releases of qemu, which are 10.0.x (lts) and 10.1.x?
 
+ From the patch descriptions, it seems like quite a few changes in
+there are worth to be back-ported.   For example:
+
+  - target/riscv: rvv: Fix vslide1[up|down].vx unexpected result
+    when XLEN=32 and SEW=64
+  - target/riscv: Fix ssamoswap error handling
+  - target/riscv: Fix SSP CSR error handling in VU/VS mode
+  - target/riscv: Fix the mepc when sspopchk triggers the exception
+  - target/riscv: use riscv_csrr in riscv_csr_read
+  - hw/char: sifive_uart: Raise IRQ according to the Tx/Rx
+    watermark thresholds
+
+This is just from reading the commit messages, - I haven't looked
+at the actual changes in the code.  Maybe some other changes should
+be picked up too.
+
+I already picked up VLEN fixes, "MSI table size limit" and
+"do not use translator_ldl in opcode_at" (and I'm still unsure
+about the latter).
+
+Some changes has been Cc'd qemu-stable before, so I picked these
+up too, eg "Fix endianness swap on compressed instructions" and
+"Fixup PDT Nested Walk".
+
+Some other changes, like the timer array/time delta, does not look
+like possibilities for the older series due to incompatibility in
+migration they bring.
+
+Thanks,
+
+/mjt
 
