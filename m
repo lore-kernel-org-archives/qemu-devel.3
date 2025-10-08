@@ -4,93 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1B3CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB272CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 16:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6X8q-0001JQ-G8; Wed, 08 Oct 2025 12:35:52 -0400
+	id 1v6XGr-000330-Jn; Wed, 08 Oct 2025 12:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v6X8o-0001Ii-BP
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:35:50 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v6X7i-0000Wy-JE
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:35:48 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-330469eb750so113133a91.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 09:34:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759941273; x=1760546073; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=346pFNDRPIW86vtU6Q0PGhiz/IFYmG8Fle9CEvOB4Rc=;
- b=eqmmkz0ke4PrUWBNJ7hwP6T80rFhcd85ZUzyrEyZbqQzMqxRIzP1088pOYiqoNg85p
- svmTsKMefjTjZ5U32FT80RLcrXNDbxF9rbH/lrWI+Ifm/vUgePv71ireKJJKBdZh4Wnm
- k5/jghFQojNKYLeAIgkbpdwYVhdL0eZkTmQMhKh73nYZzahoNp2JsXrm4lKa6GsbPclU
- YTPC2cjD4rw6GruP2GeTekWZ/Ti6y+yljR9+HI6AOehDxkubN10ej7sQW46ERhAr5N11
- viALlHLmHQM2iNTJuRLE7O7m95m45WKUugupVYQCkXSBltVbHksXTwHEUzaj0sbhffCu
- e12g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759941273; x=1760546073;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=346pFNDRPIW86vtU6Q0PGhiz/IFYmG8Fle9CEvOB4Rc=;
- b=T6L1dfi85JKBjaShYzGb5yTIc0vzTM9NUVw+jsbwWmVsZvMCVdQixIATXZJUORTU0D
- JygdMPfUB8kEij+mmG+rNHwLN39hHIIpx8sB6ipHS2pQ/sJ7DRetLOe3cHxQq++BkxPd
- 6wOUNEKUdgcwWE2DGGNiULTUppM92wFpmBnb1KOQGqG/MV+KwOKry8W5eBDna2tnpNPK
- QQ1W6hltVuqwQGSO+8RhdU/lcE9j3sIQZlRKyUca04GhpJSuGcIsj+5GpyTl/S6fxsA6
- 9uKwpE1kiOAR8S4QOCS9cRMQ9mEdrUgOuMutcS82hrc+1pEGT+JKoerfFU/Dw9WC6Ioq
- HBGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUENmej+pr6OS0apX7og1NCRTq2H17n2i2ZlTnnlRuCz1O/R+Fpic4oeo70qtyz06C1+Rf9IKGIwJ/i@nongnu.org
-X-Gm-Message-State: AOJu0YwUd6KlSfQxBU4RNUZOyNT2fJU8kYd5HKQtIidSwnDZEmVB04KX
- WHllN2xFXwVQe1RsAtRfOhkpbCVOfC5S8Xu001oMcC4tF95t3ZexVpCOu7ZTduqJ6MoO++ZkA0r
- wlLiwBTA=
-X-Gm-Gg: ASbGncv+Xn3SYkKT1YdNx0E1ZbDFHSu1uiox3WVKiiiZubgfa2wXOFppFqXKekHqLU4
- 8mHJcelkWGxFMnmbuxFLaHp6JZcjRFCelL0oAkJXroM9eB9ZR1kwKx9yKPLVxzB3UsS/BkCIps4
- bucZ2sGcDnevpxZQ4nz2Oa/8UNM8punZ2ZHglw612MUAxFqbyp2zh49SOba7nZjre+dP0ro0yev
- Dd92eEqzSi8tSX87IpXyq2+0g+u2a4N/YolnBCdtfO4sHDL2NgEUp+lbXSD5a7mhXNLNTZ+cGo5
- f9rpfkxMu0Vc2hwwvNbU/lhmrr++lqRAD6l2mVFbpvm4Kgvzvqng0dPCWr6BMoox5gVE8SvMvHa
- u1WBAt0ZhXjIdOlvFhsKaiP8mcRc3Cpf5rwqXpX0m28zeTQULq7r/wNmtrlEnJYcffZpyBYXRFg
- ==
-X-Google-Smtp-Source: AGHT+IFdMh5rGXFQCkIlO+1sm2XZsRdJUrr+/TKvPdRV5e2KpA3zltcjx7+vgzfFtg0qlrBCCp8ZmA==
-X-Received: by 2002:a17:90b:1b11:b0:32e:70f5:6988 with SMTP id
- 98e67ed59e1d1-33b51391ab4mr5073330a91.32.1759941272677; 
- Wed, 08 Oct 2025 09:34:32 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b6311462b24sm7993226a12.37.2025.10.08.09.34.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 09:34:32 -0700 (PDT)
-Message-ID: <fb66bad0-1b40-49cd-bd99-8751726daacf@linaro.org>
-Date: Wed, 8 Oct 2025 09:34:31 -0700
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1v6XGp-00032o-Rm
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:44:07 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1v6XGd-0002YO-Gr
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 12:44:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SNMwUW5u7Au71MwPL1H+f/g/DdEXzWM/o5WqcY5lkv3XT3bfFzLXh7H/zXRp8ZmQ5UXwoSrFlwr75c8gTRRTjc4nZXoWTCc9x74o2CeHKkr46gp2Rnugh1WzYb1PMWADWGIFy4K7QzvSxQwYbirv/5p2IBQlb2bwr/y+bxAcro1jDvDrbOjvSLo0/OmLXsTtMgF+6s7jUOwfI0B4QnPWVuAJD92lDdZ8kwkkiJUW6DFAMYKZyIxNJ3+k3Nh0dAzK464tmcXCWJ/Djbnsy50kS/KU8KI9sL9wJv2KRmCY6KKL4Zy2Jn84fTY7VIjvVBZDd3YEq+93Hh4FmgBeg4ijpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1vw2Y255YaCFz1cSzME1kJg/KuaUPv8/Ca3CIJ3VKy8=;
+ b=NYoeyRiOyaTXOlINnqylxykUkGCIqaQmww5ys1KjrJA4TXzdgZmJCd78BtUptSVJORkqc3hlTZPIXwg21wVyU/4k9poch4WnidLj1OTz4db0avHauTTAe0KwEn4p4I5DMl3aE4SXmC+s+JBAZnxi88rZ7qnGxP8UtQap5CFL0h6nzjoJP9pSU34lIksojNt71zmZ14HT40VwQQ/jGVppVfCcEEvJK1hlGM+aC/YHQc4rnhgxgkClsqxI845D2wXlsppt5SNT0SK/1Ikc8fsWfb0oCZaSOAMR8sjlkDS0y+OIx+UN1UoSnvTxK1fKD8c6iPo4XnE8/WKoucx9iLeNGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1vw2Y255YaCFz1cSzME1kJg/KuaUPv8/Ca3CIJ3VKy8=;
+ b=ZNNPavI8jvgC65X2ZlaSWvEMj3LcUPuNZ772nLKmTzkjyfevbKaw45NdQ3lcZrIPqv4Xlh+0J8uvIJE5npYuw2eCWyW9rLPdkLYy7jd2D8vdDtRKYWoI1kcTcDHclFyVgMMjETR+5n2pzB/FPfMHkuR9zk4Y744xsjA0dbAPhig=
+Received: from SA0PR11CA0044.namprd11.prod.outlook.com (2603:10b6:806:d0::19)
+ by IA0PR12MB7602.namprd12.prod.outlook.com (2603:10b6:208:43a::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.20; Wed, 8 Oct
+ 2025 16:43:39 +0000
+Received: from SA2PEPF00001508.namprd04.prod.outlook.com
+ (2603:10b6:806:d0:cafe::f) by SA0PR11CA0044.outlook.office365.com
+ (2603:10b6:806:d0::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9182.20 via Frontend Transport; Wed,
+ 8 Oct 2025 16:43:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SA2PEPF00001508.mail.protection.outlook.com (10.167.242.40) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9203.9 via Frontend Transport; Wed, 8 Oct 2025 16:43:38 +0000
+Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 8 Oct
+ 2025 09:43:34 -0700
+From: Sairaj Kodilkar <sarunkod@amd.com>
+To: <qemu-devel@nongnu.org>, <alejandro.j.jimenez@oracle.com>
+CC: <mst@redhat.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
+ <philmd@linaro.org>, <suravee.suthikulpanit@amd.com>, <vasant.hegde@amd.com>, 
+ <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>,
+ <santosh.shukla@amd.com>, <aik@amd.com>, Sairaj Kodilkar <sarunkod@amd.com>
+Subject: [PATCH 0/2] Cleanups and fixes (PART 2)
+Date: Wed, 8 Oct 2025 22:13:22 +0530
+Message-ID: <20251008164324.21553-1-sarunkod@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] linux-user: add syscall-filter and fork-cpu in plugin
- interfaces
-Content-Language: en-US
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, alex.bennee@linaro.org
-References: <1131357261.3273575.1759928457969.JavaMail.zimbra@sjtu.edu.cn>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <1131357261.3273575.1759928457969.JavaMail.zimbra@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00001508:EE_|IA0PR12MB7602:EE_
+X-MS-Office365-Filtering-Correlation-Id: dc0a79c0-c838-4efa-251e-08de0689d4cc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|36860700013|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?d69024qMNchRH+QE8mF4/HEL52q8IGelPdago8tWcKa9ZHzwrnRgk93hD7jo?=
+ =?us-ascii?Q?se7VxbIUcLBBs8MGNq2HtHond9Wx+68DS3Zwyq9ZuSMCp2PETg9D8IYFUltw?=
+ =?us-ascii?Q?75cIiGWo5LWPF8gS+twsLC0WyqLOvqGMSw2VUD4X7rOyCqmB5IxHj5NQdutf?=
+ =?us-ascii?Q?2C3uDFX110w0PPVbfKymqYWhjeewUX7FoyPsAlepxsPsG/emQ1kORXE5cKzB?=
+ =?us-ascii?Q?Cct6ay8jQr+XjUrLjzB0jd5ckr9BQgiAuj4L38bj5tWOKw6Av0r63/Ek7C7W?=
+ =?us-ascii?Q?pMIbTh3PehioHpi74oUaEnx4zNkPvIk680DhV71VkLOMi7z0ib7ac7nDqGl3?=
+ =?us-ascii?Q?vdUnn8G4JDftsqm5ZFTA3aqmSo9LzbJCDNBWi7PzwbRpjeU7s2EjBrz0YaXf?=
+ =?us-ascii?Q?zt8f4VTpYTCHVyO6jL0gKO2XnzehaxO90mW/Uemfndz9cJ4WdXe76sR1yv1n?=
+ =?us-ascii?Q?fAMJsTccJOWM70BSZyzZkhM+ge8njPE+x+DKq9mDTshQ/4f2kAODImAxmMFL?=
+ =?us-ascii?Q?nC4lnzHdTogXr8eA4CNQkl7HesJiwJDxoTILOhVDkDDiqeffNT2OQQrGL2t2?=
+ =?us-ascii?Q?AzEh1a5I7KDrfGvvvX+nOqIk0mwzODvdgPq5UgEarPNO/fNsUW3vJ7KJ1A18?=
+ =?us-ascii?Q?so+l+MheCjRYY/Xe6PHeCR0ASEx1XUZFEv31L28WCvnPH54u8So4o+2FY4UA?=
+ =?us-ascii?Q?TSfVeSIs4+O8/VLbrZA+353HbSfVhtfpFyqAUJHIIkqbVYlJXl7T8JgBOwMz?=
+ =?us-ascii?Q?dX4q5AZ0H2FOwKdHd7/oZ9pQDHiUWLz2CoGkLYuaRbKlTs3/DiM6YaVqCIBM?=
+ =?us-ascii?Q?lRUnY6cWlA7KC5uRmslNj9gFwLFY5A/reN0MFlIHPSXAZkYfLtVNkbiGNVuO?=
+ =?us-ascii?Q?407q6B8aDrLaP3jWTN14+i9rZzEJVN3GjdW3wofjlgtew9jRHDZTvYS6K3Q9?=
+ =?us-ascii?Q?Y+LVEsEyRqPR8RRJty87dMXlcdZ6pYhJcCOYbVfjayrqZ5fBaVLAZP9lr41e?=
+ =?us-ascii?Q?6xGkZ+MmoH8MHUOnW9V5yUudbFrVh1tQDA+wP8d2uh4GIw2RNqz0DU8U1LIv?=
+ =?us-ascii?Q?Gl+jQ8eBKh0O8YfEjGcEhmGd+dVjKfBYkbiOyjVyfP8OSYkXRvwfcAF7BQrP?=
+ =?us-ascii?Q?XMYWX4Z919QzDtqdEXBT8K9Ue5hResQDDbvLTSLAIGxEiH38o8KYlGJqwXRY?=
+ =?us-ascii?Q?CzoKyuIQZVkkIafD/g6OzifgNDZBsY46rHEXQDJwE1Glg6ciLCPIV+oClETN?=
+ =?us-ascii?Q?hxdRQ4jLstN6s/FCuN+2HgSR/C7fvB0lkFkWP6ogZlzb1Vjn4wBqtvWLycuL?=
+ =?us-ascii?Q?M74ZJm0WkJYZRURVm+14fr8xVP3cMsBsLPLA1vsCtM9+OUDhJFuI+fjrxHQ7?=
+ =?us-ascii?Q?5LXzutYN6v6jkQmZcMqd74zZyN1xVOpg9VQjprWEvPBblHyZOSGH7MmLpkgi?=
+ =?us-ascii?Q?I3Hv+Odq2CUWGd3DoS4iXzf/6gGz17zP++X3sCVObGUoAnSCKke4wGJgWM89?=
+ =?us-ascii?Q?uU7TjpazAbN0q0q4b0F0rQt2BOTpaI5GGI4BXcl9/lFyGJXPGPlMUzK97/P+?=
+ =?us-ascii?Q?q8mF8jo8QKnHle8/nFc=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(36860700013)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2025 16:43:38.2962 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dc0a79c0-c838-4efa-251e-08de0689d4cc
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001508.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7602
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,420 +149,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hy Ziyang,
+This series provide fixes for following two issues:
 
-On 10/8/25 6:00 AM, Ziyang Zhang wrote:
-> This commit introduces a syscall filtering mechanism for user-mode
-> emulation, allowing plugins to intercept and handle system calls.
-> 
-> Key features:
-> - New API functions: qemu_plugin_set_syscall_filter() and
->    qemu_plugin_fork_cpu_loop()
-> - A new enum qemu_plugin_syscall_filter_ret to represent filter results
-> - Integration into the cpu loop for i386 and x86_64
-> - A new header file include/user/syscall-filter.h
-> 
-> The filtering mechanism works by allowing a plugin to register a
-> callback that is invoked before each system call. The callback can
-> decide whether to pass, skip, or exit the current cpu loop. When
-> skipping, the plugin can provide a value to be returned to the guest.
-> 
-> Additionally, a new function qemu_plugin_fork_cpu_loop() is provided to
-> allow plugins to fork a new cpu loop, which is useful for temporarily
-> resuming guest emulation (e.g., for executing callbacks) during the
-> first system call.
-> 
-> The implementation inserts the filter checks in the cpu loop for both
-> the int $0x80 (i386) and syscall (x86_64) paths.
-> 
-> At KVM Forum 2025, we presented Lorelei, a system designed to enable
-> guest programs executed by the QEMU user-mode emulator to accelerate
-> performance by invoking natively compiled host libraries via syscalls.
-> We have successfully supported libraries such as SDL, OpenGL, and
-> Vulkan, allowing QEMU user-mode to emulate GPU-dependent games.
-> 
-> Following an invitation from Mr. Bouvier to upstream Lorelei to QEMU, we
-> refined its architecture to load the Lorelei module as a TCG plugin.
-> 
-> Since host libraries may execute guest function pointers (callbacks),
-> Lorelei implements a novel nested execution model:
-> 
-> - During syscall filtering, Lorelei triggers a temporary cpu_loop when a
->    host library begins executing a guest callback
-> - This temporarily reverts to full emulation mode to execute the guest
->    callback
-> - The guest code then issues a magic syscall to exit the temporary
->    cpu_loop
-> - Control returns to the host library's original execution context
-> 
-> 
-> Slides: https://gitlab.com/qemu-project/kvm-forum/-/raw/main/_attachments/2025/Slides_DQPMaZE.pdf
-> Video: https://www.youtube.com/watch?v=_jioQFm7wyU&list=PLW3ep1uCIRfxwmllXTOA2txfDWN6vUOHp&index=22
-> 
-> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
-> ---
->   include/qemu/plugin.h         | 28 +++++++++++++++++++
->   include/qemu/qemu-plugin.h    | 44 +++++++++++++++++++++++++++++
->   include/user/syscall-filter.h | 36 ++++++++++++++++++++++++
->   linux-user/i386/cpu_loop.c    | 52 +++++++++++++++++++++++++++++++++--
->   linux-user/main.c             |  1 +
->   linux-user/user-internals.h   |  1 +
->   plugins/api.c                 | 14 ++++++++++
->   plugins/core.c                | 31 +++++++++++++++++++++
->   plugins/plugin.h              |  8 ++++++
->   9 files changed, 213 insertions(+), 2 deletions(-)
->   create mode 100644 include/user/syscall-filter.h
-> 
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index af5f9db469..7b1e7df035 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -207,6 +207,22 @@ void qemu_plugin_user_prefork_lock(void);
->    */
->   void qemu_plugin_user_postfork(bool is_child);
->   
-> +/**
-> + * qemu_plugin_filter_syscall(): filter a system call
-> + * @cpu: CPUState pointer
-> + * @num: syscall number
-> + * @a1-a8: syscall arguments
-> + * @sysret: pointer to the sysret value, not used if passed
-> + * @return: syscall filter return value
-> + */
-> +int qemu_plugin_filter_syscall(CPUState *cpu,
-> +                               int num, uint64_t a1, uint64_t a2,
-> +                               uint64_t a3, uint64_t a4, uint64_t a5,
-> +                               uint64_t a6, uint64_t a7, uint64_t a8,
-> +                               uint64_t *sysret);
-> +
-> +void qemu_plugin_set_fork_cpu_loop_entry(void (*entry)(uint64_t));
-> +
->   #else /* !CONFIG_PLUGIN */
->   
->   static inline void qemu_plugin_add_opts(void)
-> @@ -277,6 +293,18 @@ static inline void qemu_plugin_user_prefork_lock(void)
->   static inline void qemu_plugin_user_postfork(bool is_child)
->   { }
->   
-> +static inline
-> +int qemu_plugin_filter_syscall(CPUState *cpu,
-> +                               int num, uint64_t a1, uint64_t a2,
-> +                               uint64_t a3, uint64_t a4, uint64_t a5,
-> +                               uint64_t a6, uint64_t a7, uint64_t a8,
-> +                               uint64_t *sysret)
-> +{ }
-> +
-> +static inline
-> +void qemu_plugin_set_fork_cpu_loop_entry(void (*entry)(uint64_t))
-> +{ }
-> +
->   #endif /* !CONFIG_PLUGIN */
->   
->   #endif /* QEMU_PLUGIN_H */
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index c71c705b69..2567eba673 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -939,4 +939,48 @@ void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
->   QEMU_PLUGIN_API
->   uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
->   
-> +/**
-> + * enum qemu_plugin_syscall_filter_ret - syscall filter return values
-> + *
-> + * @QEMU_PLUGIN_SYSCALL_FILTER_PASS: control should continue as usual
-> + * @QEMU_PLUGIN_SYSCALL_FILTER_SKIP: syscall is filtered and skipped
-> + * @QEMU_PLUGIN_SYSCALL_FILTER_EXIT: current cpu loop should exit
-> + *
-> + */
-> +enum qemu_plugin_syscall_filter_ret {
-> +    QEMU_PLUGIN_SYSCALL_FILTER_PASS = 0,
-> +    QEMU_PLUGIN_SYSCALL_FILTER_SKIP,
-> +    QEMU_PLUGIN_SYSCALL_FILTER_EXIT,
-> +};
-> +
-> +/**
-> + * typedef qemu_plugin_syscall_filter_cb_t - syscall filter callback
-> + * @num: syscall number
-> + * @a1-a8: syscall arguments
-> + * @sysret: pointer to the sysret value, only used when returning SKIP
-> + * @return: syscall filter return value
-> + */
-> +typedef int
-> +(*qemu_plugin_syscall_filter_cb_t)(uint64_t num, uint64_t a1, uint64_t a2,
-> +                                   uint64_t a3, uint64_t a4, uint64_t a5,
-> +                                   uint64_t a6, uint64_t a7, uint64_t a8,
-> +                                   uint64_t *sysret);
-> +
-> +/**
-> + * qemu_plugin_set_syscall_filter() - set the unique syscall filter
-> + * @id: plugin ID
-> + * @cb: callback function to filter the syscall
-> + *
-> + * Returns true if the filter was set, false if the syscall number is already
-> + * registered or if the callback is NULL.
-> + */
-> +bool qemu_plugin_set_syscall_filter(qemu_plugin_id_t id,
-> +                                    qemu_plugin_syscall_filter_cb_t cb);
-> +
-> +/**
-> + * qemu_plugin_fork_cpu_loop() - fork a new cpu loop
-> + * @sysret: value to return to the child cpu loop
-> + */
-> +void qemu_plugin_fork_cpu_loop(uint64_t sysret);
-> +
->   #endif /* QEMU_QEMU_PLUGIN_H */
-> diff --git a/include/user/syscall-filter.h b/include/user/syscall-filter.h
-> new file mode 100644
-> index 0000000000..45db9ff8f5
-> --- /dev/null
-> +++ b/include/user/syscall-filter.h
-> @@ -0,0 +1,36 @@
-> +/*
-> + * System Call Filter Wrappers for *-user
-> + *
-> + * Copyright (c) 2019 Linaro
-> + * Written by Ziyang Zhang <functioner@sjtu.edu.cn>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef SYSCALL_FILTER_H
-> +#define SYSCALL_FILTER_H
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +#error Cannot include this header from system emulation
-> +#endif
-> +
-> +#include "user/abitypes.h"
-> +#include "qemu/plugin.h"
-> +
-> +static inline int filter_syscall(CPUState *cpu, int num,
-> +                                 abi_long arg1, abi_long arg2,
-> +                                 abi_long arg3, abi_long arg4,
-> +                                 abi_long arg5, abi_long arg6,
-> +                                 abi_long arg7, abi_long arg8, abi_ulong *sysret)
-> +{
-> +    uint64_t sysret64 = 0;
-> +    int ret = qemu_plugin_filter_syscall(cpu, num,
-> +                             arg1, arg2, arg3, arg4,
-> +                             arg5, arg6, arg7, arg8, &sysret64);
-> +    if (ret != QEMU_PLUGIN_SYSCALL_FILTER_PASS) {
-> +        *sysret = sysret64;
-> +    }
-> +    return ret;
-> +}
-> +
-> +#endif // SYSCALL_FILTER_H
-> diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
-> index 92beb6830c..adbe48bb05 100644
-> --- a/linux-user/i386/cpu_loop.c
-> +++ b/linux-user/i386/cpu_loop.c
-> @@ -24,6 +24,7 @@
->   #include "cpu_loop-common.h"
->   #include "signal-common.h"
->   #include "user-mmap.h"
-> +#include "user/syscall-filter.h"
->   
->   /***********************************************************/
->   /* CPUX86 core interface */
-> @@ -203,8 +204,21 @@ static bool maybe_handle_vm86_trap(CPUX86State *env, int trapnr)
->       return false;
->   }
->   
-> -void cpu_loop(CPUX86State *env)
-> -{
-> +static void cpu_loop_impl(CPUX86State *env);
-> +
-> +void cpu_loop(CPUX86State *env) {
-> +    cpu_loop_impl(env);
-> +    __builtin_unreachable();
-> +}
-> +
-> +void fork_cpu_loop(uint64_t sysret) {
-> +    CPUX86State *env = cpu_env(thread_cpu);
-> +    env->regs[R_EAX] = sysret;
-> +    process_pending_signals(env);
-> +    cpu_loop_impl(env);
-> +}
-> +
-> +static void cpu_loop_impl(CPUX86State *env) {
->       CPUState *cs = env_cpu(env);
->       int trapnr;
->       abi_ulong ret;
-> @@ -220,6 +234,23 @@ void cpu_loop(CPUX86State *env)
->   #ifndef TARGET_X86_64
->           case EXCP_SYSCALL:
->   #endif
-> +            /* syscall filter */
-> +            {
-> +                int syscall_filter_ret = filter_syscall(cs,
-> +                             env->regs[R_EAX],
-> +                             env->regs[R_EBX],
-> +                             env->regs[R_ECX],
-> +                             env->regs[R_EDX],
-> +                             env->regs[R_ESI],
-> +                             env->regs[R_EDI],
-> +                             env->regs[R_EBP],
-> +                             0, 0, &ret);
-> +                if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_EXIT)
-> +                    return;
-> +                else if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_SKIP)
-> +                    break;
-> +            }
-> +
->               /* linux syscall from int $0x80 */
->               ret = do_syscall(env,
->                                env->regs[R_EAX],
-> @@ -238,6 +269,23 @@ void cpu_loop(CPUX86State *env)
->               break;
->   #ifdef TARGET_X86_64
->           case EXCP_SYSCALL:
-> +            /* syscall filter */
-> +            {
-> +                int syscall_filter_ret = filter_syscall(cs,
-> +                                env->regs[R_EAX],
-> +                                env->regs[R_EDI],
-> +                                env->regs[R_ESI],
-> +                                env->regs[R_EDX],
-> +                                env->regs[10],
-> +                                env->regs[8],
-> +                                env->regs[9],
-> +                                0, 0, &ret);
-> +                if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_EXIT)
-> +                    return;
-> +                else if (syscall_filter_ret == QEMU_PLUGIN_SYSCALL_FILTER_SKIP)
-> +                    break;
-> +            }
-> +
->               /* linux syscall from syscall instruction.  */
->               ret = do_syscall(env,
->                                env->regs[R_EAX],
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index 8143a0d4b0..32b7fe38c5 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -738,6 +738,7 @@ int main(int argc, char **argv, char **envp)
->       }
->       trace_init_file();
->       qemu_plugin_load_list(&plugins, &error_fatal);
-> +    qemu_plugin_set_fork_cpu_loop_entry(fork_cpu_loop);
->   
->       /* Zero out regs */
->       memset(regs, 0, sizeof(struct target_pt_regs));
-> diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-> index 5c7f173ceb..224c914f33 100644
-> --- a/linux-user/user-internals.h
-> +++ b/linux-user/user-internals.h
-> @@ -66,6 +66,7 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
->                       abi_long arg8);
->   extern __thread CPUState *thread_cpu;
->   G_NORETURN void cpu_loop(CPUArchState *env);
-> +void fork_cpu_loop(uint64_t sysret);
->   abi_long get_errno(abi_long ret);
->   const char *target_strerror(int err);
->   int get_osversion(void);
-> diff --git a/plugins/api.c b/plugins/api.c
-> index 2ff13d09de..f70e141cf7 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -628,3 +628,17 @@ void qemu_plugin_update_ns(const void *handle, int64_t new_time)
->       }
->   #endif
->   }
-> +
-> +bool qemu_plugin_set_syscall_filter(qemu_plugin_id_t id,
-> +                                    qemu_plugin_syscall_filter_cb_t cb)
-> +{
-> +#ifdef CONFIG_USER_ONLY
-> +    return plugin_set_syscall_filter(id, cb);
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +void qemu_plugin_fork_cpu_loop(uint64_t sysret) {
-> +    plugin_fork_cpu_loop(sysret);
-> +}
-> \ No newline at end of file
-> diff --git a/plugins/core.c b/plugins/core.c
-> index 12c67b4b4e..ea17e85c02 100644
-> --- a/plugins/core.c
-> +++ b/plugins/core.c
-> @@ -692,6 +692,21 @@ void qemu_plugin_user_postfork(bool is_child)
->       }
->   }
->   
-> +int qemu_plugin_filter_syscall(CPUState *cpu,
-> +                               int num, uint64_t a1, uint64_t a2,
-> +                               uint64_t a3, uint64_t a4, uint64_t a5,
-> +                               uint64_t a6, uint64_t a7, uint64_t a8,
-> +                               uint64_t *sysret) {
-> +    if (plugin.syscall_filter_cb) {
-> +        return plugin.syscall_filter_cb(num, a1, a2, a3, a4, a5, a6, a7, a8, sysret);
-> +    }
-> +    return QEMU_PLUGIN_SYSCALL_FILTER_PASS;
-> +}
-> +
-> +void qemu_plugin_set_fork_cpu_loop_entry(void (*entry)(uint64_t)) {
-> +    plugin.fork_cpu_loop_entry = entry;
-> +}
-> +
->   static bool plugin_dyn_cb_arr_cmp(const void *ap, const void *bp)
->   {
->       return ap == bp;
-> @@ -743,3 +758,19 @@ void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
->       g_array_free(score->data, TRUE);
->       g_free(score);
->   }
-> +
-> +bool plugin_set_syscall_filter(qemu_plugin_id_t id,
-> +                               qemu_plugin_syscall_filter_cb_t cb)
-> +{
-> +    if (plugin.syscall_filter_cb) {
-> +        return false;
-> +    }
-> +    plugin.syscall_filter_cb = cb;
-> +    return true;
-> +}
-> +
-> +void plugin_fork_cpu_loop(uint64_t sysret) {
-> +    if (plugin.fork_cpu_loop_entry) {
-> +        plugin.fork_cpu_loop_entry(sysret);
-> +    }
-> +}
-> \ No newline at end of file
-> diff --git a/plugins/plugin.h b/plugins/plugin.h
-> index 30e2299a54..41899a2dc6 100644
-> --- a/plugins/plugin.h
-> +++ b/plugins/plugin.h
-> @@ -48,6 +48,9 @@ struct qemu_plugin_state {
->       struct qht dyn_cb_arr_ht;
->       /* How many vcpus were started */
->       int num_vcpus;
-> +
-> +    qemu_plugin_syscall_filter_cb_t syscall_filter_cb;
-> +    void (*fork_cpu_loop_entry)(uint64_t);
->   };
->   
->   
-> @@ -118,4 +121,9 @@ struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size);
->   
->   void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
->   
-> +bool plugin_set_syscall_filter(qemu_plugin_id_t id,
-> +                               qemu_plugin_syscall_filter_cb_t cb);
-> +
-> +void plugin_fork_cpu_loop(uint64_t sysret);
-> +
->   #endif /* PLUGIN_H */
+1. AMD IOMMU fails to detect the devices when they are attached to PCI bus with
+   bus id != 0.
+   e.g. With following command line, dhclient command fails inside the guest
 
-thanks for posting this!
+    -device pcie-root-port,port=0x10,chassis=1,id=pci.1,bus=pcie.0,multifunction=on,addr=0x5 \
+    -netdev user,id=USER0,hostfwd=tcp::3333-:22 \
+    -device virtio-net-pci,id=vnet0,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER0,bus=pci.1,addr=0 \
 
-Just for sake of centralizing the conversation, let's ignore this 
-thread, and answer of the other one, where you added someone else in copy.
+2. Current AMD IOMMU supports IOVAs upto 60 bit which cause failure while
+   setting up the devices when guest is booted with command line 
+   "iommu.forcedac=1".
 
-I'll answer on other thread.
+   One example of the failure is when there are two virtio ethernet devices
+   attached to the guest with command line
+   
+       -netdev user,id=USER0 \
+       -netdev user,id=USER1 \
+       -device virtio-net-pci,id=vnet0,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER0 \
+       -device virtio-net-pci,id=vnet1,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER1 \
+   
+   In this case dhclient fails for second device with following dmesg
+   
+   [   24.802644] virtio_net virtio0 enp0s1: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 5664000 usecs ago
+   [   29.856716] virtio_net virtio0 enp0s1: NETDEV WATCHDOG: CPU: 59: transmit queue 0 timed out 10720 ms
+   [   29.858585] virtio_net virtio0 enp0s1: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 10720000 usecs ago
 
-Pierrick
+Base commit: (qemu uptream) eb7abb4a719f
+
+Sairaj Kodilkar (2):
+  hw/i386/amd_iommu: Fix handling device on buses != 0
+  hw/i386/amd_iommu: Support 64 bit address for IOTLB lookup
+
+ hw/i386/amd_iommu.c | 166 +++++++++++++++++++++++++++-----------------
+ hw/i386/amd_iommu.h |   7 +-
+ 2 files changed, 106 insertions(+), 67 deletions(-)
+
+-- 
+2.34.1
+
 
