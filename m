@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 416C6CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AD8CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Nyi-00027K-F3; Wed, 08 Oct 2025 02:48:48 -0400
+	id 1v6Nyh-00024M-9P; Wed, 08 Oct 2025 02:48:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Nyc-00023f-E9
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:44 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyU-00020u-7V
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:35 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6Nya-0005YP-Nt
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:42 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45b4d89217aso41605445e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:48:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyS-0005Xq-Kr
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:33 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42420c7de22so3783616f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759906119; x=1760510919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759906109; x=1760510909; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TX+6TIzMvbiySIam4hedU4eyrfXXsCN6EkPBQRKAqak=;
- b=QUsVEaZqM3qRumi2hh4hFEwZM/ZqrYbSanV1wmbE+sOiVbx2bs9Fjoj7HCE8InekF7
- tbn3f4tzVDQ525VJvY81XUS4N3TTW0enkspBGAM6sWiZ5os1KGlq2O4FaRCGsI1QKjz9
- 18/pRt1nrzqWVxy1jnud53tJVZAxEObTPrllp93wQBpnmREk0Ta8PEfCLioAE1yv4QNX
- SYtI99N0ZxPzuAPpA7nabvJdMRVaurKCxcn3NwGzA4hZmTYYsPK5folvLGzAI8AnQiB2
- 4+ZHfYywf9ZCAoqkC4JocXvYvmeneThbWmrLrl959R59rO149xkuJcEY70t6ZQiSjkMU
- OY3Q==
+ bh=sRF8Uyf38eujUALOuDgoXpdcVfr9o4Mr1Zd6XLJHY8s=;
+ b=EVwA2B0xnNgipTRIjtAIPb4sDNb/QixLt64zr2lX8FUEeYA+3JdtBKxlP97KuSAv7a
+ e0mF8HFboq5U8R159WKgTCULTXQ+wrQUycnLPSsge6ihAqsdLnidL2QCyfe7jSMjH2Xh
+ dpT6pxhu+Ac8NfPMrf13uNxi4DuztfRmiGqZLRvzuoBNXze/0Kwj8svhGpRE0rYn0y/f
+ tz0VdA/BHgNBVsQDWsTiRCBkZuA0IJWdp0bEaavxr0XukqZ7LmBkpZcEM2mHCeSvnZbf
+ XJ6CNX9786C6uFxskdtzNZOD88kzM8oDCdmBcUOMbG1nKSDMn7DPC6kqzG9MTyiljEGj
+ pYNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759906119; x=1760510919;
+ d=1e100.net; s=20230601; t=1759906109; x=1760510909;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TX+6TIzMvbiySIam4hedU4eyrfXXsCN6EkPBQRKAqak=;
- b=aiGh2+npeTR/Vk1SNt8iXEFpInNLDCjv94A2Wfw7YaAJqgh1xqo8GzOuVYLI/Bqq21
- sxTZtUPH2lnzWlMpketeHshyb2bHZImoeF+93Sh3VLE21cGHVnw8ywcWhCdMEfyOdjzk
- 3yFHFnXEQ3beCO5OlPHTyvI6hWCqy8UlGHbHj+Zwwr/uCx0PIgE47Ch/ux6vaDbXKxMo
- bSUhb05t1aUsJPMZ23J96siE6RnkmfG+4MPbytJVvxMvnra7gfSzgbY87/+zvfWpn0DL
- KC0Dpi8QhkABrCnFa5oMlIvcBNdX6+xcBXf+rVKbCi1WswE/fvZIf9o30BFjcy7qt78S
- MhLQ==
-X-Gm-Message-State: AOJu0YwnpuUczwLC4+TVtuZA5CvfOiTVuxqtp/gfyjtOeZyev7eDRKVd
- Zs+6j00VYOuQI21g7pPKxdF1iyZt5g3MIKj25K+cj4Q+gfmwvpRbnMMMeGTTyZ3YlwCPWGeQQRw
- cp+zLAOjVqQ==
-X-Gm-Gg: ASbGncvN2SaDbJ3pTpmNRLlE/vR0Hn7kW/bHDBo77Rt2259OReq/zoiPxLaqd581oPy
- 6Ml+z536YFvMxqtQby5/Botbzt2MU42ClZgLg4sU6aT7jnk8tVfbEM+434sMFUwtYQ5LgIkJ+yf
- 0LbIyG3cB/SFiwFsHYNUWN0tx6zESExwb7kmKMz7QxCUaSme5yrjeIhaHHQV9tUcziENjk1tPU0
- CXC1KrktXKfKzXu9hTK+U2kfJhDej/tJYu4lifn8GdE4Mn7kEDv0EbnkH72L+wtP+gNrHzga/3j
- Ve+LFQkPEeagAZ9KkPmN3A9zc1KzCb757PsQS6igVcQ8zwRjeA+Hh/c7/nui4Mdrzwj475B2PWW
- zHe19dsaA75mStC5dGz1wYXlDfGg6XTG7N5xfsA7wVbLwYlyPWMollhjEvgy8FZKFf2rjmxy4f+
- kGGverJURqCmvaZpXSlIlM3/dq
-X-Google-Smtp-Source: AGHT+IElgTXIGO02jDS7WykqEOgI2I/hFIeEaV3UlikPVyE6Hez8IrjM6naswdTMJjx5Ttx3PNoqbg==
-X-Received: by 2002:a05:600c:1395:b0:46e:27fb:17f0 with SMTP id
- 5b1f17b1804b1-46fa9aa204cmr14482385e9.9.1759906118726; 
- Tue, 07 Oct 2025 23:48:38 -0700 (PDT)
+ bh=sRF8Uyf38eujUALOuDgoXpdcVfr9o4Mr1Zd6XLJHY8s=;
+ b=XBzgG26SJ8poi3KvLwVkUF9tJud+PnK8n7OtFirlGeiFxzC6WSkeHkRSFy5o101r/e
+ uGpSxm82wpfKY/otp7vV8xvLkNDhi4A4LsJnqecvyksumFVEukWQ8AgY7awTu3XzDbO8
+ 8hM3m8gPrxj76K9DryZStkLIqs7VjD3H1kQbemuHF933bVzwlsrXltha78Y/VTXSxovt
+ qPagIUqhJi91sf9wjCm2OdDSQRpTHxT77JvOhxaWls7eDMulZ63IEJFyOxKbBTUEcbZL
+ ZhfroXJJLxmSlD2tA5AAFuHdoMDT0KLLcGSPtK8W1DW7wU6PEcFWVgo1a5X/wOOPPlOE
+ GxHA==
+X-Gm-Message-State: AOJu0YwX+biKBcl97kQuSpQxbYh5Emk7QaevILIXlTvuzr0yM5xQSKZ8
+ WwSsI+tAI3eX+8UUrOEVnlJzOC+TjtzKfqPXdzvIS0bypc2vkdxiUYDBkkz2F8GGNflhg3+OPyv
+ 6AuXsNLIcCw==
+X-Gm-Gg: ASbGncsDgwHN+OM0S8CxmXnuYJcJWxBpMedkWkiyVBvAIebHKzdQcl/aieWPIRE+AhT
+ B9xGTiL4XKm92TQ1yVJh4lgQV78RHfiduAx3JRUnxK7gutymJibwU7VBr5pdxOugLxVvyDjGpJY
+ x6Hmk5z1QFIWUPMHsA88/oiuv3g0Li7forayO9jvw0fsDNPMVMB4JWcZh6nn1JyELV+AJFZQ0wn
+ Zidzw0JjP2y6tO3WA6/6G9KvXHrv9D+W8S+Ov8l3LiHk6/PNY2MrpBQJmGEzul6QARMxrw/94VN
+ o2ER8q4mXWJKhd6CjN6oeB6hXpy9avMBpJcqEFnXTu1ObCBRnV7nwCJTK7R6CJLvQYP0ayPDqtL
+ tzv63jG9xMp4S/k4IKt5Ac2cZcCe7XSPpPu8fT3soX/+W3A/rq2D/o1xG0E/6h8v1/43rl4pqg0
+ mHUK9mtREFnLOBfS072Ba4YoLT
+X-Google-Smtp-Source: AGHT+IGJ4gir10hU7up608QVA+AuTnhdihI8dvBvH9/JNcvps4twT5f2EedDP90wQ1oz6w2nylIoGQ==
+X-Received: by 2002:a05:6000:2c0d:b0:3e2:da00:44af with SMTP id
+ ffacd0b85a97d-4266e8d8d0dmr1220714f8f.36.1759906109456; 
+ Tue, 07 Oct 2025 23:48:29 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9c2a39dsm25250575e9.18.2025.10.07.23.48.37
+ ffacd0b85a97d-4255d8e97fbsm28258162f8f.34.2025.10.07.23.48.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Oct 2025 23:48:38 -0700 (PDT)
+ Tue, 07 Oct 2025 23:48:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/6] target/sh4: Use vaddr type for TLB virtual addresses
-Date: Wed,  8 Oct 2025 08:48:12 +0200
-Message-ID: <20251008064814.90520-6-philmd@linaro.org>
+Subject: [PATCH 3/6] target/sh4: Use hwaddr type for hardware addresses
+Date: Wed,  8 Oct 2025 08:48:10 +0200
+Message-ID: <20251008064814.90520-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251008064814.90520-1-philmd@linaro.org>
 References: <20251008064814.90520-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,63 +103,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tlb_flush_page() expects a vaddr type since commit 732d548732e
-("accel: Replace target_ulong in tlb_*()").
+The CPUClass::get_phys_page_debug() handler returns a 'hwaddr' type.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sh4/helper.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ target/sh4/helper.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 345efbfdd0e..507ec78368d 100644
+index 42e324589e8..0e13339b33b 100644
 --- a/target/sh4/helper.c
 +++ b/target/sh4/helper.c
-@@ -452,7 +452,7 @@ void cpu_load_tlb(CPUSH4State * env)
+@@ -325,7 +325,7 @@ static int find_utlb_entry(CPUSH4State * env, target_ulong address, int use_asid
+    MMU_ITLB_MULTIPLE, MMU_ITLB_VIOLATION,
+    MMU_IADDR_ERROR, MMU_DADDR_ERROR_READ, MMU_DADDR_ERROR_WRITE.
+ */
+-static int get_mmu_address(CPUSH4State * env, target_ulong * physical,
++static int get_mmu_address(CPUSH4State *env, hwaddr *physical,
+                            int *prot, target_ulong address,
+                            MMUAccessType access_type)
+ {
+@@ -392,7 +392,7 @@ static int get_mmu_address(CPUSH4State * env, target_ulong * physical,
+     return n;
+ }
  
-     if (entry->v) {
-         /* Overwriting valid entry in utlb. */
--        target_ulong address = entry->vpn << 10;
-+        vaddr address = entry->vpn << 10;
-         tlb_flush_page(cs, address);
-     }
+-static int get_physical_address(CPUSH4State * env, target_ulong * physical,
++static int get_physical_address(CPUSH4State *env, hwaddr* physical,
+                                 int *prot, target_ulong address,
+                                 MMUAccessType access_type)
+ {
+@@ -433,7 +433,7 @@ static int get_physical_address(CPUSH4State * env, target_ulong * physical,
  
-@@ -528,7 +528,7 @@ void cpu_sh4_write_mmaped_itlb_addr(CPUSH4State *s, hwaddr addr,
-     tlb_t * entry = &s->itlb[index];
-     if (entry->v) {
-         /* Overwriting valid entry in itlb. */
--        target_ulong address = entry->vpn << 10;
-+        vaddr address = entry->vpn << 10;
-         tlb_flush_page(env_cpu(s), address);
-     }
-     entry->asid = asid;
-@@ -570,7 +570,7 @@ void cpu_sh4_write_mmaped_itlb_data(CPUSH4State *s, hwaddr addr,
-         /* ITLB Data Array 1 */
-         if (entry->v) {
-             /* Overwriting valid entry in utlb. */
--            target_ulong address = entry->vpn << 10;
-+            vaddr address = entry->vpn << 10;
-             tlb_flush_page(env_cpu(s), address);
-         }
-         entry->ppn = (mem_value & 0x1ffffc00) >> 10;
-@@ -665,7 +665,7 @@ void cpu_sh4_write_mmaped_utlb_addr(CPUSH4State *s, hwaddr addr,
-             CPUState *cs = env_cpu(s);
+ hwaddr superh_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ {
+-    target_ulong physical;
++    hwaddr physical;
+     int prot;
  
-             /* Overwriting valid entry in utlb. */
--            target_ulong address = entry->vpn << 10;
-+            vaddr address = entry->vpn << 10;
-             tlb_flush_page(cs, address);
-         }
-         entry->asid = asid;
-@@ -716,7 +716,7 @@ void cpu_sh4_write_mmaped_utlb_data(CPUSH4State *s, hwaddr addr,
-         /* UTLB Data Array 1 */
-         if (entry->v) {
-             /* Overwriting valid entry in utlb. */
--            target_ulong address = entry->vpn << 10;
-+            vaddr address = entry->vpn << 10;
-             tlb_flush_page(env_cpu(s), address);
-         }
-         entry->ppn = (mem_value & 0x1ffffc00) >> 10;
+     if (get_physical_address(cpu_env(cs), &physical, &prot, addr, MMU_DATA_LOAD)
+@@ -800,7 +800,7 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     CPUSH4State *env = cpu_env(cs);
+     int ret;
+ 
+-    target_ulong physical;
++    hwaddr physical;
+     int prot;
+ 
+     ret = get_physical_address(env, &physical, &prot, address, access_type);
 -- 
 2.51.0
 
