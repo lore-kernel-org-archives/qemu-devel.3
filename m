@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4D4CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 10:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4F1CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 11:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6RrY-0007id-F1; Wed, 08 Oct 2025 06:57:40 -0400
+	id 1v6Rul-0008VI-So; Wed, 08 Oct 2025 07:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v6RrX-0007iJ-0X
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:57:39 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v6RuQ-0008QL-QN
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:00:44 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v6RrV-0000eR-Fe
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 06:57:38 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v6RuO-0001AU-T3
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 07:00:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=i7TKhZCLsY4FCkXexQG3ega4ZaW2pGhVB+d+4IsnINo=; b=fD3ddAeYtsyPn3v
- RxvDYcefpVE+fIhXJ/AEhR4XFj9PzW2gnk4WlEV0L7hYZOuJZQEGmQybYrtcz4N5f9WOpK86U1bLk
- +v/orcQ1YiEmbPnxbLeG/1bUXWzlciYd9gli20asFrvzQYtzIDqkQe8YAdvDap4RxriI3vwla64E2
- nI=;
-Date: Wed, 8 Oct 2025 13:00:14 +0200
+ List-Help; bh=A/fGiWPMbgMbPh0LNzCyFklXS+ZpdAS3R5IDH+clByM=; b=olP0gFPaJN9W8be
+ ZOI3EwOHmkFyrsdxi9JcmeCuRuMMK2MwECL6B3sKkrzPgnB+lnR25lh6GffOtcHKOJfH2PrbFi5hh
+ TkCjtZDVhOvLInGx6augKmoQDzu+LdRy5PUHQMyoBdnLowCqQNeZ0JOxB43zv0TxnEL85jWp9Fm73
+ /Q=;
+Date: Wed, 8 Oct 2025 13:03:14 +0200
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Yoshinori Sato <yoshinori.sato@nifty.com>
-Subject: Re: [PATCH 5/6] target/sh4: Use vaddr type for TLB virtual addresses
-Message-ID: <hos5lolhzgft3lymsaxlgoujng64ytomzoivyd5ghqennfibb6@obgtdf7qfj2f>
+Subject: Re: [PATCH 6/6] target/sh4: Remove target_ulong use in gen_goto_tb()
+Message-ID: <qqv2xuyizicsfap5ostzxprdxor2yfaxmelm6uugx5jd64j2eo@snpwi5pj63co>
 References: <20251008064814.90520-1-philmd@linaro.org>
- <20251008064814.90520-6-philmd@linaro.org>
+ <20251008064814.90520-7-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251008064814.90520-6-philmd@linaro.org>
+In-Reply-To: <20251008064814.90520-7-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -68,13 +68,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/10/25, Philippe Mathieu-Daudé wrote:
-> tlb_flush_page() expects a vaddr type since commit 732d548732e
-> ("accel: Replace target_ulong in tlb_*()").
+> translator_use_goto_tb() expects a vaddr type since commit
+> b1c09220b4c ("accel/tcg: Replace target_ulong with vaddr in
+> translator_*()").
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/sh4/helper.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  target/sh4/translate.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
