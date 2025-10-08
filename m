@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8CBCAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF19CCD185
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6NmX-0004wE-KL; Wed, 08 Oct 2025 02:36:13 -0400
+	id 1v6NmZ-0004y3-Gy; Wed, 08 Oct 2025 02:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6NmT-0004q1-GW
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:36:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v6NmW-0004v4-GI
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:36:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6NmR-0004Yc-Mc
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:36:09 -0400
+ id 1v6NmU-0004by-Jk
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:36:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759905367;
+ s=mimecast20190719; t=1759905369;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fcj2smrNauxxGVU8euLwnSzw63zkZlk4ZxNct1+YYZ8=;
- b=OTZl0wcZKuKcAalyrSc7y+RzvOhD6rUy6wpTYp2HWbykbzIH7Ssm04MThbU0NX22s6s8I1
- 2REfUybH2i/b9pvl4nEc32z6a6MFvQImIODWtighMCLFHVQ5pT+rsbekIy26odYlUgeFPf
- pezhnLYTK706OVIuCgxI2v2xXDkM6nA=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nfiGfyaUtQw93g5vDuIo9R5ZncfvN9pDh/NQvXv7C7U=;
+ b=CW3LykAyujtY0Fl5Qs3i63+7nrtM9AhZ86mEfxyoyXOlHogOTL10mokq4myUlc7L21yNyx
+ v72mbZVkaO3yvD3Qfsoky+1z8KuY8wgeLkqR5KITZmgPDknMthuHyZmRAJetROvi7v2y8Y
+ DlB4ljoiiEsGGdrn2/wFHCIBExmwxdo=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-m89xkYmPPamJacV1icL4cw-1; Wed, 08 Oct 2025 02:36:05 -0400
-X-MC-Unique: m89xkYmPPamJacV1icL4cw-1
-X-Mimecast-MFC-AGG-ID: m89xkYmPPamJacV1icL4cw_1759905364
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6341958f08fso6377796a12.0
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:36:05 -0700 (PDT)
+ us-mta-118-bgM5sRkLMQKxNBcO9PhjsA-1; Wed, 08 Oct 2025 02:36:08 -0400
+X-MC-Unique: bgM5sRkLMQKxNBcO9PhjsA-1
+X-Mimecast-MFC-AGG-ID: bgM5sRkLMQKxNBcO9PhjsA_1759905367
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-634779072f7so7219375a12.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:36:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759905364; x=1760510164;
+ d=1e100.net; s=20230601; t=1759905366; x=1760510166;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fcj2smrNauxxGVU8euLwnSzw63zkZlk4ZxNct1+YYZ8=;
- b=nQrxnihH6qGoq9NWRLvEnhDLTwytqgbVquiGP2kWa0AYoGUyTJJ45zr6gd+DfHo8IC
- JHtqRNXQ6CKHe7NWA8+YpTW9aAVRrn4kBmyguCIRDR9M9bwwS72bYUVpL+O917wgZgol
- UYiEmzakKl6UJs7dFeHC24dYyMJOjZqqlliMLqRzzg3Z+FtezsS5kgsHAWh2Q1xnvVFU
- ALqYjxpLyBYJzdyEYRpWuZCXStVN8+Mf1N2OICEsH2+AtSmwPIPzf9dlZswzsEkbfgi+
- 17ldlINJgsi8/WgWqC1y+xUOW3rOpQcjnUYLZ7qLgb4iXI4ZOxG5OnrCEqvn0CRkFn4B
- jzvg==
-X-Gm-Message-State: AOJu0Yy5IKr8q/GzmevMKjqU7JDQxA5tvy6YQx5BhnPy9FRwuYGHRHcj
- BUrXkEzKceIoteuEnXYkSX2DAt9/J8BqK3t0sju7qiAGh8V1VcaxQBGjBPoUS3NUIqpC9CWy1ro
- z9dzh9kvSXuajCpSjlOTXlwLSYFPFhBfgLJkZuyrw8fpKbRKndVcjljuBcd2W2Jyv6p7TcyUr1o
- 3sNpA18VPbE2s84U9CkPIeBhQvGgykW1LGhxY70OZB
-X-Gm-Gg: ASbGncvdpijiMN8IBEgVZcGyY44UKrBsaFnpxbbYHoOIpMTrmMVi2qgByvJmMncL/+V
- 3OiRAWEBtv7vORwHX7w4a3zgx2JcD0WAd6PPwCt/WVpTHFCY18qrxXAjfzRFaXMhYIze3gbKG+K
- v+r1lEmgLyRWoGxfA6we4xM4F195pVVt+XBhUO0E1WZA6k+OdE/5xq4qzpR5aE1wu1aDz58s22y
- uuaMHJkz9US6C5ppxRv5rS7bXkNl25i+bSEntlosDgb1Q2KtPReBq5tzZuM0MuWUCFXDmZ8zUfD
- BZ5WuswzM3/K5JTF4mrawp0VNNfnAuICsGjx8QkYfCkxalCAFWakE+yrMlkS/Su9vH3ELWHZv2M
- Ej3WxPDyjHnPrKRssKkJJSsx7dJwd+kalZzczAuJ+AnP8OJcC
-X-Received: by 2002:a05:6402:4306:b0:634:bf56:d6b0 with SMTP id
- 4fb4d7f45d1cf-639d5b8c37emr1974484a12.11.1759905363750; 
- Tue, 07 Oct 2025 23:36:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFN3u+4Ujkv/oyn5jP1rqOZdTc3NkAZ3pmVDmykCkdzEwbDDVAql7fOLdlBVeroUcRmM7kMWg==
-X-Received: by 2002:a05:6402:4306:b0:634:bf56:d6b0 with SMTP id
- 4fb4d7f45d1cf-639d5b8c37emr1974467a12.11.1759905363258; 
- Tue, 07 Oct 2025 23:36:03 -0700 (PDT)
+ bh=nfiGfyaUtQw93g5vDuIo9R5ZncfvN9pDh/NQvXv7C7U=;
+ b=hyOXJVU6mqdBgV6X2NfKW86dgUgDx00s/VKxdogr5c7WwzPiyyuqlEpDgnh3EqZfqs
+ FdtxaEhLWy/GVA/6DY+fp35PaT088yHbjavn/W8WcRgJj8KYS02ErpeaHtyn2J7+b0eh
+ hRiyiOqCRgib8bmzXIoYVeMKY56qITkyb2ucwT5A/ogElSPzXASqx1D3U0ubPlx6IaCD
+ 7Tha65Lz5Sa0nHi4EaeX2jwdeJkHolk9ubDAj3R99myZL8EYNvoFM4/LddKMcn4Z4MA2
+ OJCUx0HFvwM5qLIoY6zdg0wEfBpmBSUttbLxpGI4h/hryThx/YBPN8jINhxPaxsOCVTz
+ W/qA==
+X-Gm-Message-State: AOJu0YxcH5KDP/YYY/1hPEpDzAYfJta3M5bfgaAHJbrh1Iv0bsfCLfn+
+ qRKl8EQ73Z4tO5a8K3kJMASj3taYVj3xZjmQtx1G6ce5Rppj9yyVgeR9h7gYZ6JobrxPiJqnZNc
+ pu84Zl6MEim/RgyljBRCtFnof1hNiRDkztFKpatJ4RTOfHiVtDTwgmxS3vHWK9cbpFt7oE4/+Yt
+ ogfnVlcU6aGCCXUOUqRg8dshrCF0/0PQ8vEIx8E8wb
+X-Gm-Gg: ASbGncs05Mb7gDBQv8mWYKejR7PajytjcUZ7X1+bhHuAdP6BCENEtxe4LDI1FPHGnI4
+ hgPJOj1uD1fumyi43BZt4XOFgZfOrh1MBCvdUWytjX3us3694i4O9jlPwwx0qqG3dTJak0FG3Ij
+ g3WE+BhkDTtRnR2OeSrMP1rpSYG7+DNWQVZZpaV+bS/1PQhPS4mOAQdVDwmg+kirpkRey/b58RA
+ zQXBQTdYKOdVxcZTrmmF2vqeIII8a054oA+YTvw8fLOzU62+lOVH0/QkmsBevWzsD0VT1gjlDWS
+ EU1wJXACqVx53bQq/Whe7eYNFMw5Icm8EGJqLxBfb0hEd1BA4EzyrI0uEQOUylRDv9zycSpUyGm
+ HOyXUcTIEiVFC5DXYlQ+tGfz7MAxrc/yM4zCuRB0qQJVXvZac
+X-Received: by 2002:a05:6402:1ed4:b0:633:e4e7:76af with SMTP id
+ 4fb4d7f45d1cf-639d5c7391cmr1824113a12.33.1759905366608; 
+ Tue, 07 Oct 2025 23:36:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEurzwv65Xm1Spu/ogsBm+1jDzByWJX5RDP8c7BGaYRYUZmhn8ZYcDDdXKavzNtd//t9w/2hw==
+X-Received: by 2002:a05:6402:1ed4:b0:633:e4e7:76af with SMTP id
+ 4fb4d7f45d1cf-639d5c7391cmr1824084a12.33.1759905366199; 
+ Tue, 07 Oct 2025 23:36:06 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.36.217])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63781c46688sm13966935a12.22.2025.10.07.23.36.01
+ 4fb4d7f45d1cf-637881011e9sm13924865a12.25.2025.10.07.23.36.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Oct 2025 23:36:01 -0700 (PDT)
+ Tue, 07 Oct 2025 23:36:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,15 +81,15 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 5/6] tracetool: complete typing annotations
-Date: Wed,  8 Oct 2025 08:35:44 +0200
-Message-ID: <20251008063546.376603-6-pbonzini@redhat.com>
+Subject: [PATCH 6/6] tracetool: add typing checks to "make -C python check"
+Date: Wed,  8 Oct 2025 08:35:45 +0200
+Message-ID: <20251008063546.376603-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251008063546.376603-1-pbonzini@redhat.com>
 References: <20251008063546.376603-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -114,174 +114,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add more annotations so that "mypy --strict".  These have to be done
-manually due to limitations of RightTyper.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/tracetool/__init__.py         | 30 +++++++++++++--------------
- scripts/tracetool/backend/__init__.py |  2 +-
- scripts/tracetool/format/log_stap.py  |  2 +-
- 3 files changed, 17 insertions(+), 17 deletions(-)
+ python/tests/tracetool-mypy.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+ create mode 100755 python/tests/tracetool-mypy.sh
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 62895261a0d..c9509b327f4 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -19,17 +19,17 @@
- import sys
- from io import TextIOWrapper
- from pathlib import PurePath
--from typing import Any, Iterator
-+from typing import Any, Iterator, Sequence
- 
- import tracetool.backend
- import tracetool.format
- 
- 
--def error_write(*lines) -> None:
-+def error_write(*lines: str) -> None:
-     """Write a set of error lines."""
-     sys.stderr.writelines("\n".join(lines) + "\n")
- 
--def error(*lines):
-+def error(*lines: str) -> None:
-     """Write a set of error lines and exit."""
-     error_write(*lines)
-     sys.exit(1)
-@@ -51,7 +51,7 @@ def error(*lines):
- }
- 
- def expand_format_string(c_fmt: str, prefix: str="") -> str:
--    def pri_macro_to_fmt(pri_macro):
-+    def pri_macro_to_fmt(pri_macro: str) -> str:
-         assert pri_macro.startswith("PRI")
-         fmt_type = pri_macro[3]  # 'd', 'i', 'u', or 'x'
-         fmt_size = pri_macro[4:]  # '8', '16', '32', '64', 'PTR', 'MAX'
-@@ -87,7 +87,7 @@ def out_open(filename: str) -> None:
-     out_filename = posix_relpath(filename)
-     out_fobj = open(filename, 'wt')
- 
--def out(*lines, **kwargs) -> None:
-+def out(*lines: str, **kwargs: Any) -> None:
-     """Write a set of output lines.
- 
-     You can use kwargs as a shorthand for mapping variables when formatting all
-@@ -229,14 +229,14 @@ def c_type_to_rust(name: str) -> str:
- class Arguments:
-     """Event arguments description."""
- 
--    def __init__(self, args: list[tuple[str, str]]) -> None:
-+    def __init__(self, args: Sequence[tuple[str, str] | Arguments]) -> None:
-         """
-         Parameters
-         ----------
-         args :
-             List of (type, name) tuples or Arguments objects.
-         """
--        self._args = []
-+        self._args: list[tuple[str, str]] = []
-         for arg in args:
-             if isinstance(arg, Arguments):
-                 self._args.extend(arg._args)
-@@ -271,7 +271,7 @@ def build(arg_str: str) -> Arguments:
-             res.append((arg_type, identifier))
-         return Arguments(res)
- 
--    def __getitem__(self, index):
-+    def __getitem__(self, index: int | slice) -> Arguments | tuple[str, str]:
-         if isinstance(index, slice):
-             return Arguments(self._args[index])
-         else:
-@@ -287,7 +287,7 @@ def __len__(self) -> int:
- 
-     def __str__(self) -> str:
-         """String suitable for declaring function arguments."""
--        def onearg(t, n):
-+        def onearg(t: str, n: str) -> str:
-             if t[-1] == '*':
-                 return "".join([t, n])
-             else:
-@@ -298,7 +298,7 @@ def onearg(t, n):
-         else:
-             return ", ".join([ onearg(t, n) for t,n in self._args ])
- 
--    def __repr__(self):
-+    def __repr__(self) -> str:
-         """Evaluable string representation for this object."""
-         return "Arguments(\"%s\")" % str(self)
- 
-@@ -310,7 +310,7 @@ def types(self) -> list[str]:
-         """List of argument types."""
-         return [ type_ for type_, _ in self._args ]
- 
--    def casted(self):
-+    def casted(self) -> list[str]:
-         """List of argument names casted to their type."""
-         return ["(%s)%s" % (type_, name) for type_, name in self._args]
- 
-@@ -321,7 +321,7 @@ def rust_decl_extern(self) -> str:
- 
-     def rust_decl(self) -> str:
-         """Return a Rust argument list for a tracepoint function"""
--        def decl_type(type_):
-+        def decl_type(type_: str) -> str:
-             if type_ == "const char *":
-                 return "&std::ffi::CStr"
-             return c_type_to_rust(type_)
-@@ -331,7 +331,7 @@ def decl_type(type_):
- 
-     def rust_call_extern(self) -> str:
-         """Return a Rust argument list for a call to an extern "C" function"""
--        def rust_cast(name, type_):
-+        def rust_cast(name: str, type_: str) -> str:
-             if type_ == "const char *":
-                 return f"_{name}.as_ptr()"
-             return f"_{name}"
-@@ -340,7 +340,7 @@ def rust_cast(name, type_):
- 
-     def rust_call_varargs(self) -> str:
-         """Return a Rust argument list for a call to a C varargs function"""
--        def rust_cast(name, type_):
-+        def rust_cast(name: str, type_: str) -> str:
-             if type_ == "const char *":
-                 return f"_{name}.as_ptr()"
- 
-@@ -449,7 +449,7 @@ def build(line_str: str, lineno: int, filename: str) -> Event:
- 
-         return Event(name, props, fmt, args, lineno, posix_relpath(filename))
- 
--    def __repr__(self):
-+    def __repr__(self) -> str:
-         """Evaluable string representation for this object."""
-         return "Event('%s %s(%s) %s')" % (" ".join(self.properties),
-                                           self.name,
-diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
-index 645e78ece06..84bab3f42a0 100644
---- a/scripts/tracetool/backend/__init__.py
-+++ b/scripts/tracetool/backend/__init__.py
-@@ -122,7 +122,7 @@ def backend_modules(self) -> Iterator[Any]:
-              if module is not None:
-                  yield module
- 
--    def _run_function(self, name: str, *args, check_trace_event_get_state: bool | None=None, **kwargs) -> None:
-+    def _run_function(self, name: str, *args: Any, check_trace_event_get_state: bool | None=None, **kwargs: Any) -> None:
-         for backend in self.backend_modules():
-             func = getattr(backend, name % self._format, None)
-             if func is not None and \
-diff --git a/scripts/tracetool/format/log_stap.py b/scripts/tracetool/format/log_stap.py
-index d7ad0bb6a72..914e4674ffe 100644
---- a/scripts/tracetool/format/log_stap.py
-+++ b/scripts/tracetool/format/log_stap.py
-@@ -25,7 +25,7 @@
- STATE_LITERAL = 1
- STATE_MACRO = 2
- 
--def c_macro_to_format(macro):
-+def c_macro_to_format(macro: str) -> str:
-     if macro.startswith("PRI"):
-         return macro[3]
- 
+diff --git a/python/tests/tracetool-mypy.sh b/python/tests/tracetool-mypy.sh
+new file mode 100755
+index 00000000000..7b4011e52d6
+--- /dev/null
++++ b/python/tests/tracetool-mypy.sh
+@@ -0,0 +1,5 @@
++#!/bin/sh -e
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++cd ../scripts
++python3 -m mypy --strict tracetool
 -- 
 2.51.0
 
