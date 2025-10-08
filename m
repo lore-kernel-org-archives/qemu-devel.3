@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CD5CAC5BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A38CCA470
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6NyU-00020p-5W; Wed, 08 Oct 2025 02:48:34 -0400
+	id 1v6NyJ-0001zk-CW; Wed, 08 Oct 2025 02:48:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyO-00020Z-Nc
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:28 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyG-0001za-1X
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:20 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyM-0005Xb-UD
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:28 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3ee13baf2e1so5228186f8f.3
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:48:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NyE-0005X5-6b
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:48:19 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3f0134ccc0cso4323926f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759906105; x=1760510905; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5gDcFnOxp7kWdYGhN5BfEl0/mb5oVLdE9DRkGyv2lAk=;
- b=G4T8JLZqXlcVee48W5ro5sa41wO0zJMnkh9J+UdF7XYGb/WSWfupnvHZVmN68+lwAA
- ziVyIxQ8pq98i0l2UCDNhQaXGPEvWWj7eT1j67puBbtkHXy3k7h4+DL3tTyRofMvqtwV
- Jj9d2sTzDYZ9Xceb6eTuChHjXK8XZ8pZgn2suWqL546chy9V/6Q1t5CLxDMiBcbIiams
- mmoochzHB42Uel2x7an/GMniGBShZ76cex6dUKGhCqLUyCGvCDKYI2W70ypgMRoa1L8k
- SXE14RKu8lhRpy/NS5Ggw+1AKLMqoHyt5M11DYfjdvvbaQkbmCGJKZcIKxFoHpGZqsmd
- wV+w==
+ d=linaro.org; s=google; t=1759906096; x=1760510896; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=C7NY/k7OcdrA+sb3+kDS/Wts5ntQ0DzLG892QEuKXY8=;
+ b=CmUBwXTW6+QxfDNxIu8MSe/q11BUP2rMH+a02Faz8kSgyeoEbUsa5wK55n1ezPUvJ6
+ r4sXKIgr6OEiKVDj2Zn1mZ0NqcCY4sIeq8DmCql/pb/S5aCYzvK55EfOLO+Cevfo1VN7
+ 1CSVDiYhvQNCB2fKiMzVkYuWjB4DQqSCvGrS49bcTrQ3fcoA8MBEc5Tl5Rv6VmgdvEUT
+ yb3ZDFwSfmSWQ16fN9PmlHhuOIfGZGVIl0Iht1vCz1ZQJ6QjswS0k++p4AES/zQlbXfP
+ bQb+eNfrb0Ehwe25LEwfxYdSOYPNabz+qiKeKgXGyBJXMuFliF24/5BoG6FXbYXvUGfc
+ H35g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759906105; x=1760510905;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5gDcFnOxp7kWdYGhN5BfEl0/mb5oVLdE9DRkGyv2lAk=;
- b=IlcX9XagudsUkfLlMYZh/xJ/TKL9ACxQHJy75zeIOeFAFapCNpsfCsTVXgxmrkltTR
- eLjcJ0faRCqAhLcb8iZNhM88SFzSVzjvYYa+FSxWM8jdyPSrvcEBSV/dmqz+EQHNggJT
- yqiLt21bUsVdgbBcd7gfGCNxpdOCkw0+/qKD63DljoJsP7ijdqI6Q+ry0vgX2yCOT3yd
- YKkYDyDbp3/PXfEsYP2FS1yQcW/W7JVUYU5NkfLXtmIkm+rRb21ZkM7jFw0X1YfLe0wx
- mWJjoA7hXC5t4aNqenXhZpZKYPIC7Xd1q+GTNF+YuApmvi4UMcT6c6BA1RZfObXdbIxe
- WcWQ==
-X-Gm-Message-State: AOJu0YzGl60w0Tu7Ll0JjLqHjWwd/s+7HNQnmpldOlj67bjp7rqnFsAF
- X2b8snC18erXthdroLzY3oy99c0Zi5aLsOgmqK7nnyx+xqsQEYS67yhSe/hU8kHKwzECeVy3Uhh
- PtLF61jqCAg==
-X-Gm-Gg: ASbGncvTZdUatiO/nGfaWDJV8TRfwGns6d2tS85Kj1R3rKRom3W0/BWyOT7+kh+i7uw
- v1nZmgFtdFvnrtZJcNqRRl+BoVYtMq2Jk7mqJ6GHEa96M/cLjCLo0EIMLK7+bLGVuqQQEaIR9sP
- ++jzW3w/1Sw+wfw7YxrAKk17YPYGFVTvWoOw+ECE8K6wbFY8c5YKAnyoh3/nFdZiShyUeY54e5I
- +2rktp6YMwADsfw+vlbFBm9KE3ZOC1RwOeMp6c0fGq9jMWTpNAjQv7PM5VBYbjbf22qJV906HYp
- eMpKzN4TcetD/NWtanVxHWX1KlQLTHdkCV/tvyWJPL2CzCiicAYIGBj20WELxX5rbixAxPrOVPb
- NMX/PPk4EMsC3oke1xR7Zv8ZlJg0fC3bUfKRRo9se4VOF/atwAUMgUzZuIK2aUC8mlrgD9ZTHns
- eMpno2jI8VkSVHSj7Go0xFv2Gk
-X-Google-Smtp-Source: AGHT+IF0jgxXoo/FWMhl5sWm9+kO5Ie7Xzzj7PE5S2L2ygdgTZ/hjYXhVuN4RLJqHZH/sO24p0GACQ==
-X-Received: by 2002:a05:6000:2501:b0:3ee:1125:5250 with SMTP id
- ffacd0b85a97d-42666ab97e2mr970049f8f.24.1759906104856; 
- Tue, 07 Oct 2025 23:48:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759906096; x=1760510896;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=C7NY/k7OcdrA+sb3+kDS/Wts5ntQ0DzLG892QEuKXY8=;
+ b=a5OMrC1HqGv3NH1zAqaoC9TBtBkDIIVqcqDqEGmJfKK0+ez5ARi+h9ALx27qpZK2/L
+ 55MLJZScoYC1WSRhL3nfcsKVKSHhfHT0K74AEL8PqPiERuiHe5Ro+zTkadKvX4U2R8TL
+ o9MAiZmz063zmWzfwN6haCnnYQqMv34NkW5wX+lLtjxinclIzMJR8ce8eyRnmnLKWom0
+ wJiZzJ0MPfTXx57D0R1lTtt0+KeApkgtKxRRu0WAMssIeczF6lF/jjDXuocY0S4b0wZs
+ 3xR/+BLnKYkywhyfC/e3h1E+f5my8tY1PBbREy0v7+iUBhJCltSmDQZgG4s14xiYF2wA
+ Y+IA==
+X-Gm-Message-State: AOJu0YwjLdgjfSqtMEmHUprvZkcnOLsb9IfaMdU2KUN1jCvuIPxd9/dm
+ 5o78ASzkCPICKgvfJ7fbV4cRQ1Sx0gEMyMI8gBpergHX8YmR+M+83rUmOwfDezhIAZ+GMDZoHKm
+ rTuuVZzCRZA==
+X-Gm-Gg: ASbGncsljRGSo/mIHNlTp2GiJSIWFcvK6vibuzC9sFy6IYDBFmnwKqDt5R1fizfmNiC
+ PZeXFmWOSmnJ4n3T9x1nkZI7buUc732GBzNar4JbYpT7HhgYRXrXjrqmsRi5Ay4SL8PmA9mHKmj
+ fkfObfVUHrnsFr8FCz2nWFZY75lC0VYoUO3mZvddahL4g28g/oiTRdOM1f8KnGT1FCmlTizzolG
+ nAv8MpBooL77POf0VU+28SDwA5EpLFYLt3e5M3Twqkxbq37udRxRALYZtU30wzJEVB0VmaVdB/o
+ oOLyIX3FaOXNFiPPfse3WmC2XnThELEw370KNHQrEmgg/aHwsT3v/gc1ImS1Ya/ZCB775Qpl2lv
+ qwXsEWAQU2NIpAoMiECkGJEVgSwu+j57COFFG2JPVsHI1hC9Q+RmE3ulk88fTMikQm5EAlZiwrs
+ Dv/Ld1x0q+9a5dzeB8P1FHBOM2
+X-Google-Smtp-Source: AGHT+IESczl/c26YIaTMZKpgP7XiLUacSFWyjnRr5p5UNINfmNNb9B6pX+jd+X327vNTLcNAGrEj9A==
+X-Received: by 2002:a05:6000:2004:b0:425:769e:515a with SMTP id
+ ffacd0b85a97d-4266e8dc000mr1138022f8f.42.1759906095716; 
+ Tue, 07 Oct 2025 23:48:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9bf94ddsm23744515e9.2.2025.10.07.23.48.24
+ ffacd0b85a97d-4255d8ab909sm27803330f8f.19.2025.10.07.23.48.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Oct 2025 23:48:24 -0700 (PDT)
+ Tue, 07 Oct 2025 23:48:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/6] target/sh4: Remove target_ulong use in cpu_sh4_is_cached()
-Date: Wed,  8 Oct 2025 08:48:09 +0200
-Message-ID: <20251008064814.90520-3-philmd@linaro.org>
+Subject: [PATCH 0/6] target/sh4: Remove all uses of target_ulong type
+Date: Wed,  8 Oct 2025 08:48:07 +0200
+Message-ID: <20251008064814.90520-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251008064814.90520-1-philmd@linaro.org>
-References: <20251008064814.90520-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,50 +100,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 852d481faf7 ("SH: Improve movca.l/ocbi emulation")
-helper_movcal() pass a uint32_t type to cpu_sh4_is_cached().
+Remove the left over target_ulong uses in SH4 frontend.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sh4/cpu.h    | 2 +-
- target/sh4/helper.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Philippe Mathieu-Daudé (6):
+  target/sh4: Convert CPUSH4State::sr register to uint32_t type
+  target/sh4: Remove target_ulong use in cpu_sh4_is_cached()
+  target/sh4: Use hwaddr type for hardware addresses
+  target/sh4: Remove target_ulong uses in superh_cpu_get_phys_page_debug
+  target/sh4: Use vaddr type for TLB virtual addresses
+  target/sh4: Remove target_ulong use in gen_goto_tb()
 
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index db27a693f12..41f634fe162 100644
---- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -277,7 +277,7 @@ void cpu_sh4_write_mmaped_utlb_data(CPUSH4State *s, hwaddr addr,
-                                     uint32_t mem_value);
- #endif
- 
--int cpu_sh4_is_cached(CPUSH4State * env, target_ulong addr);
-+int cpu_sh4_is_cached(CPUSH4State * env, uint32_t addr);
- 
- void cpu_load_tlb(CPUSH4State * env);
- 
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 1744ef0e6d8..42e324589e8 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -47,7 +47,7 @@
- 
- #if defined(CONFIG_USER_ONLY)
- 
--int cpu_sh4_is_cached(CPUSH4State *env, target_ulong addr)
-+int cpu_sh4_is_cached(CPUSH4State *env, uint32_t addr)
- {
-     /* For user mode, only U0 area is cacheable. */
-     return !(addr & 0x80000000);
-@@ -735,7 +735,7 @@ void cpu_sh4_write_mmaped_utlb_data(CPUSH4State *s, hwaddr addr,
-     }
- }
- 
--int cpu_sh4_is_cached(CPUSH4State * env, target_ulong addr)
-+int cpu_sh4_is_cached(CPUSH4State * env, uint32_t addr)
- {
-     int n;
-     int use_asid = !(env->mmucr & MMUCR_SV) || !(env->sr & (1u << SR_MD));
+ target/sh4/cpu.h       |  6 +++---
+ target/sh4/helper.c    | 34 +++++++++++++++++-----------------
+ target/sh4/translate.c |  6 +++---
+ 3 files changed, 23 insertions(+), 23 deletions(-)
+
 -- 
 2.51.0
 
