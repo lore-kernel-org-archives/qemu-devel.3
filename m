@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4867CCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 18:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E850CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 18:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6YYp-0007ao-VW; Wed, 08 Oct 2025 14:06:48 -0400
+	id 1v6YYh-0007aK-Ij; Wed, 08 Oct 2025 14:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6YYo-0007af-8U
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 14:06:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v6YYZ-0007Zr-II
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 14:06:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6YYb-00082P-VX
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 14:06:44 -0400
+ id 1v6YYR-00081y-9i
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 14:06:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759946787;
+ s=mimecast20190719; t=1759946775;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dRZM0gWyUaghq4QJOhOiqvtZZEcG0Sgzuf4BeVinvVM=;
- b=ASdPCRM/Xs0jjJ29UV9/3aCmdarM+nITPCKGFs21c3dold1T4IU1JHKsefXuIYOLr1Gl4x
- ChDoTvHgZviM7hALIpzcIL6S1gjLchmxTmGzlrzTzU63/mOmSh59fDsy1R6nSffYEf84eb
- 7DCcZ2v3yXawGVw9cdJKZY0Y0fEXlns=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bBCgC1Ap4fol/JWZcFp6h0saBjXFyMIzcDO/pFtWzMg=;
+ b=XhGeK9VjqvjtCv5ZR8mi4gOweMzFKPM3Y415WM9n1XohacY9ygk5BATVt1whN9TvlHo2uX
+ uhMrTmEmhszADd+rGIDIdDrD+5BudL9L90DQ5EGu1DKlly4NwiQL9WLegsvXlOol2s5Gda
+ TdcaC4hBiTKkXPJlUfrYHvqsiScuQJY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-xHkpMILgNISTh0KQqPBKbg-1; Wed,
- 08 Oct 2025 14:06:21 -0400
-X-MC-Unique: xHkpMILgNISTh0KQqPBKbg-1
-X-Mimecast-MFC-AGG-ID: xHkpMILgNISTh0KQqPBKbg_1759946777
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-Ie0_K6U4PDG221lYPTPLRg-1; Wed,
+ 08 Oct 2025 14:06:10 -0400
+X-MC-Unique: Ie0_K6U4PDG221lYPTPLRg-1
+X-Mimecast-MFC-AGG-ID: Ie0_K6U4PDG221lYPTPLRg_1759946769
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEDDB1800292; Wed,  8 Oct 2025 18:06:16 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F69519560B0; Wed,  8 Oct 2025 18:06:09 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.157])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EBFBB3000198; Wed,  8 Oct 2025 18:06:15 +0000 (UTC)
-Date: Wed, 8 Oct 2025 14:06:14 -0400
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9159E1956056; Wed,  8 Oct 2025 18:06:08 +0000 (UTC)
+Date: Wed, 8 Oct 2025 14:06:07 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,
@@ -55,23 +55,24 @@ Cc: qemu-devel@nongnu.org,
  John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 3/6] tracetool: "import annotations"
-Message-ID: <20251008180614.GD181748@fedora>
+Subject: Re: [PATCH 1/6] tracetool: rename variable with conflicting types
+Message-ID: <20251008180607.GC181748@fedora>
 References: <20251008063546.376603-1-pbonzini@redhat.com>
- <20251008063546.376603-4-pbonzini@redhat.com>
+ <20251008063546.376603-2-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="UbmlT02X1TGU5C/3"
+ protocol="application/pgp-signature"; boundary="Rxzx/uAuRN+dnOwB"
 Content-Disposition: inline
-In-Reply-To: <20251008063546.376603-4-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20251008063546.376603-2-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,57 +91,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---UbmlT02X1TGU5C/3
+--Rxzx/uAuRN+dnOwB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 08, 2025 at 08:35:42AM +0200, Paolo Bonzini wrote:
-> In preparations for adding type annotations, make Python process them laz=
-ily.
->=20
-> This avoids the need to express some annotations as strings.
+On Wed, Oct 08, 2025 at 08:35:40AM +0200, Paolo Bonzini wrote:
+> "backend" is used as both a string and a backend.Wrapper.  In preparation
+> for adding type annotations, use different names.
 >=20
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  scripts/tracetool.py                         | 2 ++
->  scripts/tracetool/__init__.py                | 2 ++
->  scripts/tracetool/backend/__init__.py        | 2 ++
->  scripts/tracetool/backend/dtrace.py          | 2 ++
->  scripts/tracetool/backend/ftrace.py          | 2 ++
->  scripts/tracetool/backend/log.py             | 2 ++
->  scripts/tracetool/backend/simple.py          | 2 ++
->  scripts/tracetool/backend/syslog.py          | 2 ++
->  scripts/tracetool/backend/ust.py             | 2 ++
->  scripts/tracetool/format/__init__.py         | 2 ++
->  scripts/tracetool/format/c.py                | 2 ++
->  scripts/tracetool/format/d.py                | 2 ++
->  scripts/tracetool/format/h.py                | 2 ++
->  scripts/tracetool/format/log_stap.py         | 2 ++
->  scripts/tracetool/format/rs.py               | 2 ++
->  scripts/tracetool/format/simpletrace_stap.py | 2 ++
->  scripts/tracetool/format/stap.py             | 2 ++
->  scripts/tracetool/format/ust_events_c.py     | 2 ++
->  scripts/tracetool/format/ust_events_h.py     | 2 ++
->  19 files changed, 38 insertions(+)
+>  scripts/tracetool/__init__.py | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---UbmlT02X1TGU5C/3
+--Rxzx/uAuRN+dnOwB
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjmqBYACgkQnKSrs4Gr
-c8j3yAf+IjTkGzyJ5XAGDF7fg3no/Lz6ZYroEqtYLLmrVkZodwk0yb3cK9zBMFkR
-nbLuYjxGwBybwETc37yc6OCUzArY2DFSbpPvdW+k2aTyq4kNlZi0nzU1C0n8Y0JR
-1wYc9ylOYvV+JHLY8oIDWKIcogzykFS6mNd1kXRYwqyavoAqmrb/2IrWU3jKGf5s
-gjG9Ja2Ek4E8FjmLz/c9O+zWHrV2RJ36Oa9akcnnBKPodlOvsxVTUIg3bfJd7ePK
-tvYAMBQo+1Z8Q/xAHOKifzitX2O/VIUuPwBmGqmdesBGq7mpTPT++q/UnYaDizCB
-1QP7gQl6l/OuxXxUXTEOORN9faknfQ==
-=MKyT
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjmqA8ACgkQnKSrs4Gr
+c8hVPggAjihrvvNE9jCqImQbz9Lt5R3IaAmzOHUZUGvpRMxPAiyOURqGblfINpeX
+w9OtYkhOEJMwacxNbVJfKRQE/pkAZa08H3NSYr6a6GNN79fSi86C8GIp15PiY6ry
++YfDRpa/nXoCTx6BYmZnjCaxVs5Ovj4jYKAqYE8XrGH26X3gLNkAXxeeoHgHoPLH
+2zw15meNNF8UvXQS9Y2Y+08rMwMc4jws0l5TZp5KEGQywsIWgJHrOK4FY8BU8DRo
+T/5uAKOTE0bpH1DbwgUGdBLuVTj4L+PG+2znayc2GNEpjdk40pQew84eJNq+awJO
+JH7UTFlquHDj5wKVYqPTKWXr+Bnw4Q==
+=6ZV6
 -----END PGP SIGNATURE-----
 
---UbmlT02X1TGU5C/3--
+--Rxzx/uAuRN+dnOwB--
 
 
