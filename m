@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F1ECCD185
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA8DCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 06:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6NFS-0000sP-7j; Wed, 08 Oct 2025 02:02:05 -0400
+	id 1v6NF9-0000q5-31; Wed, 08 Oct 2025 02:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NFA-0000rB-Ic
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:01:44 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NF6-0000or-Ec
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:01:40 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NF8-0000aP-FO
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:01:44 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-46e5980471eso34916475e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:01:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6NF4-0000Zv-OO
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 02:01:40 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-46e6674caa5so2725065e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Oct 2025 23:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759903300; x=1760508100; darn=nongnu.org;
+ d=linaro.org; s=google; t=1759903296; x=1760508096; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cU/Z9f8hQK2W+I5bFCKgqWvOzfwEaQk014ZzzMuXKdk=;
- b=f7vysyrPrA/lK4MfIlZ5Xz+gK5cR/Ng8F4fTWCPTk1UhZAsBrBqd97wVE8aNlVKIzi
- vAixn/Iz3RKZG0eFKz3q6j2mS0O1loP39ODYDRAmObDgAwcwm4NdUHrA9RONRTDxvBY6
- fdxUpBsghRVOKwW3S81WfzQuyQBKhyN1g65K8lOiLD//2XbaFEssIX8mxNimDr2rRQSO
- rKZWNkmZEAMoG5/b8Ium94U8Th6an/l1JLsT/yJBacP7tWc7UXqucqRzcELr8+CrvJuC
- PifsFi1dpZQd9L1ysxmXuVtKMzwiexHSGmEAZA7DXo0/RoKQyAbhNsX1gsp4GK3vJ/DK
- 9emA==
+ bh=JDjZ8U4cTaxg8aqx2zZG6gVloPONIY9wFGLLwdhXBOY=;
+ b=h4nuItB7lV/tMDDiQeN/TsLdoZluzoFDICU2Somtxh3gOYVrF+ftVJVw66ejB2YfZs
+ j3D9pKeTx/CTxuwkjtOPFN1GzGBsV8YRQOwV+g901BzNQFMSKNyCq0mo1FT6FyIKXxOk
+ d5enc4TuXPgOvYly2CEx+uNQQAERxKViNAtQVYJkQIpFGbMJyjT0LATry51LhNopf++y
+ AROWIe8L+jR+WqK7Ky9KJbFX95AqjSfoqTe05gZALAp0xhhhACYgIN9KC1y9+276vDpq
+ ay48A9HhX7vNV2yy7OS0nbpz70BGozCPEGhisqXzFd18CEdGUqrtC9TQc486N+gwrGKk
+ fUtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759903300; x=1760508100;
+ d=1e100.net; s=20230601; t=1759903296; x=1760508096;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cU/Z9f8hQK2W+I5bFCKgqWvOzfwEaQk014ZzzMuXKdk=;
- b=uq88g4mPvU1sdNUfEakHMMbKJoqaG/KyneIg/A7YeBDhA7uSPAuCANeRLgdrwei5KJ
- wNmP10Cg6G12Trh/AB9YwABGP/pJk4wjJfgQ1gOGmZfPDYKZzeZSWUpHrELObkf+qNOd
- GNPsBqaSEZQLJk7GYFEtN2M0H11OCsVc+a8vPnDcbAVHcVzaZl8b4oAaBXgTNXurdyWj
- W+OFaxUhT+4VxRW7Ucth3aE+VRHZ3hs6LfsqI7gNSkUT3WQXNIEddZD69ZxnDh8kQhRL
- Xb24Vz53wqtYhVonZjNTV2+V7f7URhhYm675RKmmIPgzwejCgp0ekAUSqam6y915ypJ0
- QbTw==
-X-Gm-Message-State: AOJu0YzKcVGQcVWsC9hMLQGzmXyd1Qa8ZBVbkL+yVUW455TFU+AWmkPo
- 5N2YJr4AU45FnllaLmVe1nijht664tOaMko4f/gTWZpzAQrlP2SWxC9Y4nReZxhVZflk9ZmMOH/
- Hl4KUiEwI8g==
-X-Gm-Gg: ASbGncuwyIAUrjF4AXH8a1iFcSVYapWZlv2oJFAbjHzq8gcik+gOi9I+H5g1eQt9xgQ
- 3PMXbpgH03bylJxZidQO2gZYIIHfKDOsP3wGDJTxNpDetkeUJT0/yOpmFRxmcDtbgRFsNITuuai
- 6dJiuYeAlFf51iiqQGwb7cUiH4GMm9cQOwiU4Inb9SwiqZ11Xnp5jXTsaqZInrbzyGid+M4Cb0l
- 8ozXueuJ7ZMWfgxX9nuCFyKfw+7DKtHY678c7O6f6ALNxUAGbA1n4k/OqqFpihgRgnTMomgrreY
- 2QLPtsU/Nn3R2qxCV4E8GuOOWcB35j2k+Hlx069StgYySNH7Izo546+BA1c4Ww1rypluQn9dhi0
- 5cIQ806pO7HPsJcYGyaIxHEk7AITF4CMsgOKlPETKeyDBOSkYdNMQxFXlerRGEMQiaB0uACdVWg
- SwiZjmahKiIghmvzOTjLUIaPpp
-X-Google-Smtp-Source: AGHT+IGe+M0Ewh7DUN0zDgrjRz377UolvuDev5/vJHg7PdcpbLPsJC4Mct/o7S4AkO4yoOfR8HuovQ==
-X-Received: by 2002:a05:600c:3b08:b0:456:1b6f:c888 with SMTP id
- 5b1f17b1804b1-46fa9af364bmr10987205e9.23.1759903300533; 
- Tue, 07 Oct 2025 23:01:40 -0700 (PDT)
+ bh=JDjZ8U4cTaxg8aqx2zZG6gVloPONIY9wFGLLwdhXBOY=;
+ b=NxGAdux1o3ULWIXUcsiM0R/UnpmOb6YdA1enlAyiJ73NMKKqRSMUDJaOPAzzf3gv2g
+ JQlFv3na7ZbJkMzSyDnRc3Tfdj5nJtNykdzauzdassT3n+es7v3pzcH4rcxNS5mOfWFu
+ JJV29MZVbDer+IIhTrirtm5jFlaN4Ojm40uX4S0crxsLN5//qG84iHo/bilMdNhM/P/L
+ tpzjSZ82zsXPzRDStwaaFuJaLGnn08Pg5/TXZZu2Ln1W9ysxTyu06Zs4U8RxslGT+s8N
+ AP+hmev0j5qmo99/yLgG0V9Ujp4ogA5GqI1s7tFpiIFEfeHa5rlwowoi2GnVD7ryg37S
+ yahw==
+X-Gm-Message-State: AOJu0YzhB4gZMHy+UH0ACZWi2/73MgAH0tIEDYBdkZORhIX/B5awOKo7
+ F6O+BSGTW18MSI5kdfRLazfzQGTpAB6osCIPtYZXNsx83BOCI18nvf6HcEcGUXR1Wn3zbgcIUOE
+ WuHd/U/00mA==
+X-Gm-Gg: ASbGncvWclOQhbu2X4D84GdvL8gjwuuV1S/AtPWRB/qpGHc/XnDgFVDbdIV5uavgXc/
+ V3pKybirhGxeQki5/veUUSOMz/8ybksIfREZ0V9q8jmMjV/Snak29prz1bLEuqzuexkNOEIiK/R
+ APf3CHnoHLrEusHUIYqjLmvFe8cRdrkHQYhv6QY/L8NvUP1rNQBAIsweqdUpUskrjcauOTqP+HQ
+ R8/O20y91vOGHAe6kp7uqXDuyP3SPDAwUW+AHUS3OPliU1uWPtzJK1VWZIGqVn5xUs7vWRdAwiM
+ iyCcQy5FOKDHNEexABkCZ78gLrpSujXR0Qg/1HAGenaPTrpU5Pr0hk2h8SgK2E24/j1SCP2QMuv
+ GqeqSseDwzpqrf5R+82wBuDad+tmst3U0mjpI9Ato1imy3rn30RyBkArfXcMWa1KhoaR2bi4hr3
+ z4ugNpUdXKgVJF7ZD7nrfKrdAV
+X-Google-Smtp-Source: AGHT+IHoxOTGeMTYS+ZRcW8wNxZDTkxNrX/qIW+HqcPnHGBOtByIpdsxs79Tg/Z2oz5rMUwspPLezw==
+X-Received: by 2002:a05:600c:a105:b0:46d:83e7:45ec with SMTP id
+ 5b1f17b1804b1-46fa29e1e0amr30050495e9.11.1759903295881; 
+ Tue, 07 Oct 2025 23:01:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9d7f91esm22137655e9.20.2025.10.07.23.01.39
+ 5b1f17b1804b1-46fa9b622cdsm22729895e9.0.2025.10.07.23.01.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Oct 2025 23:01:40 -0700 (PDT)
+ Tue, 07 Oct 2025 23:01:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
@@ -71,18 +71,18 @@ Cc: Anton Johansson <anjo@rev.ng>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/5] target/microblaze: Remove target_ulong uses in
- get_phys_page_attrs_debug
-Date: Wed,  8 Oct 2025 08:01:26 +0200
-Message-ID: <20251008060129.87579-3-philmd@linaro.org>
+Subject: [PATCH 1/5] target/microblaze: Remove target_ulong use in
+ cpu_handle_mmu_fault()
+Date: Wed,  8 Oct 2025 08:01:25 +0200
+Message-ID: <20251008060129.87579-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251008060129.87579-1-philmd@linaro.org>
 References: <20251008060129.87579-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,29 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CPUClass::get_phys_page_debug() handler takes a 'vaddr' address
-and return a 'hwaddr' type since commit 00b941e581b ("cpu: Turn
-cpu_get_phys_page_debug() into a CPUClass hook").
+cpu_handle_mmu_fault() -- renamed in commit f429d607c71 -- expects
+a vaddr type for its address argument since commit 7510454e3e7
+("cpu: Turn cpu_handle_mmu_fault() into a CPUClass hook").
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/microblaze/mmu.h | 2 +-
+ target/microblaze/mmu.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index ef0e2f973fa..cf577a72268 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -274,7 +274,8 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-                                         MemTxAttrs *attrs)
+diff --git a/target/microblaze/mmu.h b/target/microblaze/mmu.h
+index 1068bd2d52b..2aca39c923b 100644
+--- a/target/microblaze/mmu.h
++++ b/target/microblaze/mmu.h
+@@ -86,7 +86,7 @@ typedef struct {
+ } MicroBlazeMMULookup;
+ 
+ unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+-                           target_ulong vaddr, MMUAccessType rw, int mmu_idx);
++                           vaddr vaddr, MMUAccessType rw, int mmu_idx);
+ uint32_t mmu_read(CPUMBState *env, bool ea, uint32_t rn);
+ void mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
+ void mmu_init(MicroBlazeMMU *mmu);
+diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
+index 8703ff5c657..db24cb399ce 100644
+--- a/target/microblaze/mmu.c
++++ b/target/microblaze/mmu.c
+@@ -78,7 +78,7 @@ static void mmu_change_pid(CPUMBState *env, unsigned int newpid)
+ 
+ /* rw - 0 = read, 1 = write, 2 = fetch.  */
+ unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+-                           target_ulong vaddr, MMUAccessType rw, int mmu_idx)
++                           vaddr vaddr, MMUAccessType rw, int mmu_idx)
  {
-     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
--    target_ulong vaddr, paddr = 0;
-+    vaddr vaddr;
-+    hwaddr paddr = 0;
-     MicroBlazeMMULookup lu;
-     int mmu_idx = cpu_mmu_index(cs, false);
-     unsigned int hit;
+     MicroBlazeMMU *mmu = &cpu->env.mmu;
+     unsigned int i, hit = 0;
+@@ -172,7 +172,7 @@ unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+     }
+ done:
+     qemu_log_mask(CPU_LOG_MMU,
+-                  "MMU vaddr=0x" TARGET_FMT_lx
++                  "MMU vaddr=0x%" VADDR_PRIx
+                   " rw=%d tlb_wr=%d tlb_ex=%d hit=%d\n",
+                   vaddr, rw, tlb_wr, tlb_ex, hit);
+     return hit;
 -- 
 2.51.0
 
