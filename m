@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF7EACCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 09:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765F4CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 09:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Qni-0002WO-TO; Wed, 08 Oct 2025 05:49:38 -0400
+	id 1v6Qq4-0003Tb-K2; Wed, 08 Oct 2025 05:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1v6Qnh-0002Vs-FV
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 05:49:37 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1v6Qnd-0000Xb-FQ
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 05:49:37 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-6500448067dso186526eaf.3
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 02:49:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1759916971; x=1760521771; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h248Y39NaeoKPvczexRmiByL3fhpX1/s6ccZjvtD08s=;
- b=f3tQPeLKJ68O21ka/eXISEjhPw1lrMGrhMkDLgXCtSSmdbeEUbwyzCVlUmh9YMwYlI
- yUuwBCEZ2r4dqFRWiLAkkF827y7rMSUlLk5pgnhwxORJf2AvSz+VmbYtIjCiF+QgCbMe
- U2VW23wtmYP0+ypOko4iPSue+p0gc/LFd0/i4MeLvhCISPOcIY7YI5keVliUKVHKabjz
- y9mSfN0PrWSZvw0GvKbqdPInJ0zIZDXKwDOsdzn3jtEo9Iwoewl55iJdprGv91NkNNIP
- qPL5/Njeq/KcssfvXQm+k2GMHPcWAolvYXS+oLeJWAOYwAJ9kBtukMhaFP9ZXSjdXM+5
- GgQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759916971; x=1760521771;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=h248Y39NaeoKPvczexRmiByL3fhpX1/s6ccZjvtD08s=;
- b=Ge11WzuN6jRnQMpZzcO0A5QQDEMs/sXkvP7WAkQFZvT5ddDxnREQeimi+7YRfknLMt
- Qx3uZwbvCW0LaJ0fdT3tXot5P2yJFjStlTnWZsuJw+lDLENfbhUbmn5MpY+IM+SQUK1J
- 2iKpPnrjyfPBeFI64dGvzTKuK6SOXYNnnkL7l5QvT9MtlB21lcqesZxj2qvGMLweSQca
- 8uLUAAEWqAu/R6b4W7Bex5RQwyn0lXj0c2cqk1Lk1s9PtY3PRTzih0pcz+G9w6P71f3+
- hBrnD1KLYmgKl346kMvR6q4kCs82hsL2XLEN0wCXwZTxZ1zfBAlol0fIc33xWEwdXHB0
- n9Sw==
-X-Gm-Message-State: AOJu0YzGAHp1sJaRjMo64/zBYhua6OcJK+EWn3Bm4tGH3pakkYVHVOFf
- AaiOH8Arj+wvxyjf35GZxrDy++P4/+xPoKYGQfBr3MN1+wsoBC1gpBNfHITa0nJOddoeFXLpX6g
- lBJ3cLT7EOlcQbTQUK5yPlohzfDf6V5dcK8c6RUivRA==
-X-Gm-Gg: ASbGncuOiikan4+MTe9YbRMNtyhD5leeGV1ClcVC/Q4ZMvTzFRvRcQSJPvjPBC5TDF6
- e8bkJlsJhPy+UawSNXw+o8Ak5efkiYgMBlmLOmbTGK43RlisbgbE++rx3mn6xe2myF9uN0dE8BU
- B0i/1eVEHRiZPeRSo7oRK7E9PJb7yUeCnGjwyGIm2NXsqyZmIzgDheH2AEFebFgF6tPO3OEzDwG
- OUVPGYqloTUJBBstZDljGOKdKi+obZUL7rKphmxmRmQ
-X-Google-Smtp-Source: AGHT+IGuXILsKqAYNZqQC2bYuAi6pWYN7l6Gug2zKoXKTPmKUq9BcGZWni5mQSKPSQoapCwuY8rgvJ9RcjBf5arbp88=
-X-Received: by 2002:a05:6820:a01b:b0:621:cca4:d01b with SMTP id
- 006d021491bc7-64fffc384b0mr1141915eaf.2.1759916971113; Wed, 08 Oct 2025
- 02:49:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v6Qq1-0003SQ-OO; Wed, 08 Oct 2025 05:52:01 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v6Qpy-0000u2-16; Wed, 08 Oct 2025 05:52:01 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5989pLbs018247
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 8 Oct 2025 18:51:21 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=rmF7oax1nduHdEzGnX44XCvOP2eZtmgvj30tMAoV4uI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:From:Subject:To;
+ s=rs20250326; t=1759917082; v=1;
+ b=G94DXg/WAnUUng8wESBT1WpljoAatOI1Kg6VB+lgq9lBuf9+GjQYg/Krp1xGBaXR
+ hoNbYVBIUbYiktoPhkSC7bfeU1VCBXI2elsM7MtnIK+eAOmhBfQFVj5Vt+CigE4Z
+ N1CuU/DsjEyfU6Dql556sPjiSfyHwbblDipVlRAJSLlzR0+1mP+6HOHBwJ7p8BCg
+ xEu2undqGoJd6PyqUuk14Oj8bhZ3C/YfKx4vX/xIMJERhIF6vcVThBevTBP+00wF
+ JjMrXeiH+bzQO5h9Qx3DlyTY1wkuW+zK1Vk1RuudgfllWGsvysJi/VAxq0vsn1E1
+ UNnqtlNd+KmEecD7y6RK5w==
+Message-ID: <54357058-3855-44a3-98cd-31d7f19f4a92@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 8 Oct 2025 18:51:21 +0900
 MIME-Version: 1.0
-References: <20250923090729.1887406-1-max.chou@sifive.com>
- <19b1f55b-810c-46b8-a934-45ae2205f351@tls.msk.ru>
- <98cc2ae8-0354-42d1-ac52-a26d09d89544@tls.msk.ru>
-In-Reply-To: <98cc2ae8-0354-42d1-ac52-a26d09d89544@tls.msk.ru>
-From: Max Chou <max.chou@sifive.com>
-Date: Wed, 8 Oct 2025 17:49:20 +0800
-X-Gm-Features: AS18NWCXAATiSodcb4j0tTldINOUqZHTj6qNoBP0HQ_KqACuaSnPBdMAv1-nA5Y
-Message-ID: <CANiaA1vyhHCt1skA977+5ZLf=f5zYY=-dCT5vc3qH9VotyEbzg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] riscv: Modify minimum VLEN rule
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-stable <qemu-stable@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000e5d0b00640a299b9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=max.chou@sifive.com; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH v2] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "sriram.yagnaraman@ericsson.com" <sriram.yagnaraman@ericsson.com>,
+ DAMIEN BERGAMINI <damien.bergamini@eviden.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250901151314.1038020-1-clement.mathieu--drif@eviden.com>
+ <e853228d-18e5-493c-a65c-10f0d88f0f02@tls.msk.ru>
+Content-Language: en-US
+In-Reply-To: <e853228d-18e5-493c-a65c-10f0d88f0f02@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,140 +78,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e5d0b00640a299b9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2025/10/07 2:19, Michael Tokarev wrote:
+> On 9/1/25 18:14, CLEMENT MATHIEU--DRIF wrote:
+>> From: Damien Bergamini <damien.bergamini@eviden.com>
+>>
+>> Starting with commit cab1398a60eb, SR-IOV VFs are realized as soon as
+>> pcie_sriov_pf_init() is called.  Because pcie_sriov_pf_init() must be
+>> called before pcie_sriov_pf_init_vf_bar(), the VF BARs types won't be
+>> known when the VF realize function calls pcie_sriov_vf_register_bar().
+>>
+>> This breaks the memory regions of the VFs (for instance with igbvf):
+>>
+>> $ lspci
+>> ...
+>>      Region 0: Memory at 281a00000 (64-bit, prefetchable) [virtual] 
+>> [size=16K]
+>>      Region 3: Memory at 281a20000 (64-bit, prefetchable) [virtual] 
+>> [size=16K]
+>>
+>> $ info mtree
+>> ...
+>> address-space: pci_bridge_pci_mem
+>>    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
+>>      0000000081a00000-0000000081a03fff (prio 1, i/o): igbvf-mmio
+>>      0000000081a20000-0000000081a23fff (prio 1, i/o): igbvf-msix
+>>
+>> and causes MMIO accesses to fail:
+>>
+>>      Invalid write at addr 0x281A01520, size 4, region '(null)', 
+>> reason: rejected
+>>      Invalid read at addr 0x281A00C40, size 4, region '(null)', 
+>> reason: rejected
+>>
+>> To fix this, VF BARs are now registered with pci_register_bar() which
+>> has a type parameter and pcie_sriov_vf_register_bar() is removed.
+>>
+>> Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")
+>> Signed-off-by: Damien Bergamini <damien.bergamini@eviden.com>
+>> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+>> ---
+>>   docs/pcie_sriov.txt         |  5 ++---
+>>   hw/net/igbvf.c              |  6 ++++--
+>>   hw/nvme/ctrl.c              |  8 ++------
+>>   hw/pci/pci.c                |  3 ---
+>>   hw/pci/pcie_sriov.c         | 11 -----------
+>>   include/hw/pci/pcie_sriov.h |  4 ----
+>>   6 files changed, 8 insertions(+), 29 deletions(-)
+> 
+> This one too, - is it qemu-stable material (10.0 & 10.1)?
 
-Hi Michael,
+Yes, I think so.
 
-Apologies for the delayed response to your question about qemu-stable.
-Yes, I believe this patchset is appropriate for qemu-stable material.
-The changes fix the VLEN minimum value to properly align with the RISC-V
-specification requirements (VLEN >=3D ELEN), which could affect the
-correctness of RISC-V vector extension behavior in QEMU.
+Regards,
+Akihiko Odaki
 
-Thank you for picking this up for the stable 10.0 and 10.1 releases.
-This series is based on the riscv-to-apply.next branch (the VERSION file
-shows 10.1.50).
-
-Thanks,
-Max
-
-
-On Wed, Oct 8, 2025 at 3:13=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
-te:
-
-> On 10/4/25 10:44, Michael Tokarev wrote:
-> > On 9/23/25 12:07, Max Chou wrote:
-> >> According to the RISC-V unprivileged specification, the VLEN should be
-> >> greater
-> >> or equal to the ELEN. This patchset provides following modifications:
-> >>
-> >> * Replace the checkings of standard V with the checkings of Zve32x
-> >> * Introduces a check rule for VLEN and ELEN
-> >> * Modifies the minimum VLEN based on the vector extensions
-> >>
-> >> Extension     Minimum VLEN
-> >> V                      128
-> >> Zve64[d|f|x]            64
-> >> Zve32[f|x]              32
-> >>
-> >> v1: 20250627132156.440214-1-max.chou@sifive.com
-> >> - Rebase to riscv-to-apply.next branch
-> >> - Add patch 1 to replace checking RVV by checking Zve32x
-> >>
-> >> Max Chou (2):
-> >>    target/riscv: rvv: Replace checking V by checking Zve32x
-> >>    target/riscv: rvv: Modify minimum VLEN according to enabled vector
-> >>      extensions
-> >
-> > Is this a qemu-stable material?
-> > (these changes does not apply directly to 10.1.x, probably the
-> > MonitorDef change in the first patch here can be dropped)
->
-> Hi!
->
-> I've picked this series for qemu-stable 10.0 and 10.1 series.
-> I still haven't received any reply from y previous email asking
-> about these, so I'm a bit uncomfortable by picking this up for
-> stable.  But I'm releasing two stable releases today with these
-> patches in.
->
+> For 10.0.x (which is a long-term support series), it needs
+> some adjustments I guess (it doesn't apply to 10.0 directly).
+> 
 > Thanks,
->
+> 
 > /mjt
->
 
---000000000000e5d0b00640a299b9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi=C2=A0Michael,</div><div><br></div><div>Apologies f=
-or the delayed response to your question about qemu-stable.<br></div><div>Y=
-es, I believe this patchset is appropriate for qemu-stable material.</div><=
-div>The changes fix the VLEN minimum value to properly align with the RISC-=
-V specification requirements (VLEN &gt;=3D ELEN), which could affect the co=
-rrectness of RISC-V vector extension behavior in QEMU.<br></div><div><br></=
-div><div>Thank you for picking this up for the stable 10.0 and 10.1 release=
-s.<br></div><div>This series is based on the=C2=A0riscv-to-apply.next branc=
-h (the VERSION file shows 10.1.50).</div><div><br></div><div><div dir=3D"lt=
-r" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D=
-"ltr">Thanks,<br>Max</div></div></div><br></div><br><div class=3D"gmail_quo=
-te gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct=
- 8, 2025 at 3:13=E2=80=AFPM Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.m=
-sk.ru">mjt@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-st=
-yle:solid;border-left-color:rgb(204,204,204);padding-left:1ex">On 10/4/25 1=
-0:44, Michael Tokarev wrote:<br>
-&gt; On 9/23/25 12:07, Max Chou wrote:<br>
-&gt;&gt; According to the RISC-V unprivileged specification, the VLEN shoul=
-d be <br>
-&gt;&gt; greater<br>
-&gt;&gt; or equal to the ELEN. This patchset provides following modificatio=
-ns:<br>
-&gt;&gt;<br>
-&gt;&gt; * Replace the checkings of standard V with the checkings of Zve32x=
-<br>
-&gt;&gt; * Introduces a check rule for VLEN and ELEN<br>
-&gt;&gt; * Modifies the minimum VLEN based on the vector extensions<br>
-&gt;&gt;<br>
-&gt;&gt; Extension=C2=A0=C2=A0=C2=A0=C2=A0 Minimum VLEN<br>
-&gt;&gt; V=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 128<br>
-&gt;&gt; Zve64[d|f|x]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 64<br>
-&gt;&gt; Zve32[f|x]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 32<br>
-&gt;&gt;<br>
-&gt;&gt; v1: <a href=3D"mailto:20250627132156.440214-1-max.chou@sifive.com"=
- target=3D"_blank">20250627132156.440214-1-max.chou@sifive.com</a><br>
-&gt;&gt; - Rebase to riscv-to-apply.next branch<br>
-&gt;&gt; - Add patch 1 to replace checking RVV by checking Zve32x<br>
-&gt;&gt;<br>
-&gt;&gt; Max Chou (2):<br>
-&gt;&gt; =C2=A0=C2=A0 target/riscv: rvv: Replace checking V by checking Zve=
-32x<br>
-&gt;&gt; =C2=A0=C2=A0 target/riscv: rvv: Modify minimum VLEN according to e=
-nabled vector<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 extensions<br>
-&gt; <br>
-&gt; Is this a qemu-stable material?<br>
-&gt; (these changes does not apply directly to 10.1.x, probably the<br>
-&gt; MonitorDef change in the first patch here can be dropped)<br>
-<br>
-Hi!<br>
-<br>
-I&#39;ve picked this series for qemu-stable 10.0 and 10.1 series.<br>
-I still haven&#39;t received any reply from y previous email asking<br>
-about these, so I&#39;m a bit uncomfortable by picking this up for<br>
-stable.=C2=A0 But I&#39;m releasing two stable releases today with these<br=
->
-patches in.<br>
-<br>
-Thanks,<br>
-<br>
-/mjt<br>
-</blockquote></div>
-
---000000000000e5d0b00640a299b9--
 
