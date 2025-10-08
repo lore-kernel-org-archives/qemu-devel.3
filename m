@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CFE1CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9060CCA472
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 14:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Ulh-0004T8-PO; Wed, 08 Oct 2025 10:03:51 -0400
+	id 1v6Ulc-0004Q5-6E; Wed, 08 Oct 2025 10:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1v6UQi-0004yg-Ao
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:42:09 -0400
+ id 1v6TxD-0003g6-Lt
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:11:39 -0400
 Received: from smtp233.sjtu.edu.cn ([202.120.2.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1v6UQa-0007Vo-MZ
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:42:07 -0400
-Received: from mta91.sjtu.edu.cn (unknown [10.118.0.91])
- by smtp233.sjtu.edu.cn (Postfix) with ESMTPS id F050211A81069;
- Wed,  8 Oct 2025 21:41:51 +0800 (CST)
+ id 1v6Tx2-0002s7-8D
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 09:11:38 -0400
+Received: from mta90.sjtu.edu.cn (unknown [10.118.0.90])
+ by smtp233.sjtu.edu.cn (Postfix) with ESMTPS id 2A00311B2C27D;
+ Wed,  8 Oct 2025 21:00:58 +0800 (CST)
 Received: from mstore136.sjtu.edu.cn (unknown [10.118.0.136])
- by mta91.sjtu.edu.cn (Postfix) with ESMTP id C096A37C9CC;
- Wed,  8 Oct 2025 21:41:51 +0800 (CST)
-Date: Wed, 8 Oct 2025 21:41:44 +0800 (CST)
+ by mta90.sjtu.edu.cn (Postfix) with ESMTP id DC61937C878;
+ Wed,  8 Oct 2025 21:00:49 +0800 (CST)
+Date: Wed, 8 Oct 2025 21:00:57 +0800 (CST)
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: alex bennee <alex.bennee@linaro.org>, 
- richard henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, trueful <trueful@163.com>
-Message-ID: <386568240.3278044.1759930904927.JavaMail.zimbra@sjtu.edu.cn>
-In-Reply-To: <625873322.3277896.1759930752814.JavaMail.zimbra@sjtu.edu.cn>
-References: <625873322.3277896.1759930752814.JavaMail.zimbra@sjtu.edu.cn>
-Subject: [RFC PATCH] linux-user: add syscall-filter and fork-cpu-loop in
- plugin interfaces
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, alex.bennee@linaro.org, 
+ pierrick.bouvier@linaro.org
+Message-ID: <1131357261.3273575.1759928457969.JavaMail.zimbra@sjtu.edu.cn>
+Subject: [RFC PATCH] linux-user: add syscall-filter and fork-cpu in plugin
+ interfaces
 MIME-Version: 1.0
 Content-Type: text/plain; charset=GB2312
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [203.198.248.168]
-X-Mailer: Zimbra 10.0.14_GA_4767 (ZimbraModernWebClient - GC140
- (Windows)/10.0.14_GA_4767)
-Thread-Topic: linux-user: add syscall-filter and fork-cpu-loop in plugin
- interfaces
-Thread-Index: TCaCJWub/iGAGJ09OZss4qINLCPfqFkrKYvt
+X-Originating-IP: [202.120.40.100]
+X-Mailer: Zimbra 10.0.14_GA_4767 (ZimbraWebClient - GC140
+ (Win)/10.0.15_GA_4781)
+Thread-Index: vcDRvR7ZNby8oOQopADL0ZfFO7eiCQ==
+Thread-Topic: linux-user: add syscall-filter and fork-cpu in plugin interfaces
 Received-SPF: pass client-ip=202.120.2.233;
  envelope-from=functioner@sjtu.edu.cn; helo=smtp233.sjtu.edu.cn
 X-Spam_score_int: -18
@@ -55,7 +51,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 08 Oct 2025 10:03:42 -0400
+X-Mailman-Approved-At: Wed, 08 Oct 2025 10:03:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
