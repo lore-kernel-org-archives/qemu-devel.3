@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7161CCCA470
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 21:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66957CCA470
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 21:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6bgA-0006m1-9a; Wed, 08 Oct 2025 17:26:34 -0400
+	id 1v6bzX-0002Bp-8g; Wed, 08 Oct 2025 17:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v6bg6-0006lR-20
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:26:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v6bfz-0003Ea-OM
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:26:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759958777;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=P8/l5ezATf5Ul3xcL8S/XkKRMX6R8kKSZrW/VEh3t/s=;
- b=h4rusQ6vCIKL3bKSWPK5kZ8Fou3jigoZBLIppcQt72rsvAP5MBPQp3jOnD8aHx634FFLhw
- QWhsFbXLEcqykekempm7c7ABJUDjwFJXXSUp207cZj6kimwT31kklzUwPcJCD7gqssYkB8
- /VA1s4SKeLCZMxrAWAVEHxtXpVSSmzc=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-WS0EzMNQPo2QibPtAPlzjw-1; Wed, 08 Oct 2025 17:26:16 -0400
-X-MC-Unique: WS0EzMNQPo2QibPtAPlzjw-1
-X-Mimecast-MFC-AGG-ID: WS0EzMNQPo2QibPtAPlzjw_1759958776
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4d6a82099cfso8294981cf.2
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 14:26:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1v6bzT-0002Bb-3L
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:46:31 -0400
+Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1v6bzN-0005iL-6L
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 17:46:30 -0400
+Received: by mail-il1-x12e.google.com with SMTP id
+ e9e14a558f8ab-42f90b88beaso1120625ab.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 14:46:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1759959980; x=1760564780; darn=nongnu.org;
+ h=thread-index:content-language:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vJ8SfzIdx+SJaHWsgs83MQwO3tWBO/QOE4WeVV6EyqI=;
+ b=JSsl0kDRIKhvrfMhnQNOcRF1M3wcf0Ros3/ZeBnx7v4Syt+lerpvt1a3hzpRlwrUlW
+ HcFd0u/39j8e8lPc5ISwkbuBDnWu5/o6t6DvuEaEKINtpuKf6ys2lZ8Jr+dXRe0UoPkz
+ pmrfM8tMLc0kEx5HCSXmrFFVaYAR4/8Wt+lTLl0CVZ05Bs0sJmIyoN1hCityE1WfnA3b
+ 8upP2POLsOgZZRweNh7/3/WgsMvXqzcwIFbaAmF2CPAGDZxKg1QcfP9ze8fFy7Iu9gUQ
+ vljz0ICoEKYa9k0blsDGFtD6nB/GbixoJgmNEQLxnmlEpA1kOvMdEExvSA7QmjLMLPz7
+ HQgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759958776; x=1760563576;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P8/l5ezATf5Ul3xcL8S/XkKRMX6R8kKSZrW/VEh3t/s=;
- b=PAh88CTPN5NHNZl0nPI9pOcS4YolKeYlcnzSIz9twMcW7lNziHrA8KWsUVx9TViaaN
- fYn3XFAy10W3R+0Qzgz56X62/VT/JNGfB8PGF37T4442u64IHPQlCXvn2YrIibmJG8qX
- 1vItTrZAWiTk7bgeGr++pyN3FDF449jxE8Eyg5v9l92ViHB3VHf+n6ySzpAZAngaWMSK
- TZ9Jaze3eGrMDEatAvdLf86CLb36jsaHM7kUhgPg80avwq7QMqskJIP/0OAmoS+Eny+3
- waj/pUzJlITfY0ZVa7p7AChl+Iver5SdUYfRSphXGl+y2hgTgJ/n+5F1JR1u4bb6MTrS
- w+Dg==
+ d=1e100.net; s=20230601; t=1759959980; x=1760564780;
+ h=thread-index:content-language:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vJ8SfzIdx+SJaHWsgs83MQwO3tWBO/QOE4WeVV6EyqI=;
+ b=obBakn5FsH6wjoMYAi9AszlW5styvTIyWxTxYC9QsxVgAWYCFzZ1hl4xcGdK1WJI/O
+ 5WsXAnqZz81rloaUQQgqwZyD5uS905c7FD1fZU+FvSi8U50/AkGkKTo0OoWNXGDfLlIX
+ 2i37iCe5ycP4z2qC+BJ9UiuMZYSVjUjzicATVayVkh/FWUTYgcBeQFtBoO/syZSC4/Xm
+ EGtPoNVux9t2WoHt73VL9pcip92vdWtVaZyiIy/UF/EjTbPu6SOyvw6wtXQ30sdfYJQc
+ RjKZefb/jnXQB6L2t138kHRw1dLeB9i6jZItYEw3vQ4rxE9skQSZbydtpcLY42P/MG9R
+ MyaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPJBX7JvlfuYlrilB/hxTI6Ig9iUgtU9oet+KXSWMsZ5do0sqnivE36mQobO5rhoHvvbefSXL5+SKJ@nongnu.org
-X-Gm-Message-State: AOJu0Yyg/zskc5wp0jumtM6LjwZQHmfLgOCv3Gy8rpNXq7Tm4o160a7s
- BtKgr8VXIUQbzO4vr/vPmKe3iuOonYNgkoRGLN2uang7mbWv1xzC5WEQERfGPnqoxstvTL2eBG+
- V5VblPD6lX/4L6SrpDPQ74gzTy4LvP833s9Ozg//rqsTFeVCF+AncmqAf
-X-Gm-Gg: ASbGncsotL5Tjz+A1jDNSSOXl0RlXiNpZmg9guKQ0wDrzEIAXdHlOXMJiEQTslOjnHf
- Y+d1wrjCFyzWELJbsunD1kJiynq5rrrtoCg1X9vi0tR8QCM7uA7kxDLDJBZ9FqF4I4c0jPsAJ14
- 1RIHwwdx10895F2cxmZhvRvEt6idR4QS9r6GUkxPArp8ZwY90Gykr2DKF12SLt49/lquHFzEumB
- 9IGioyuWn++oPg1qEvzUF2/7uDzEVik9umHx0JdnnIxGAtH+R1nqjJkLdKVDMEKQSHeCQBpy3Hr
- vcEHpvDxsX/ejPykDP8zlQxRbKp05mB7IP+q5Q==
-X-Received: by 2002:ac8:7e96:0:b0:4b7:9efd:ba9d with SMTP id
- d75a77b69052e-4e6ead54273mr64509501cf.53.1759958775753; 
- Wed, 08 Oct 2025 14:26:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGteUbtFJhSQlTdgxdvCTRFonpZKOEasMtw7KEA6B02DkF897mfu2kdO5YWT1hBiIVslZbe8w==
-X-Received: by 2002:ac8:7e96:0:b0:4b7:9efd:ba9d with SMTP id
- d75a77b69052e-4e6ead54273mr64509171cf.53.1759958775249; 
- Wed, 08 Oct 2025 14:26:15 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e55c9e7409sm175555721cf.31.2025.10.08.14.26.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Oct 2025 14:26:14 -0700 (PDT)
-Date: Wed, 8 Oct 2025 17:26:13 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: Hailiang Zhang <zhanghailiang@xfusion.com>, qemu-devel@nongnu.org,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Yury Kotov <yury-kotov@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Prasad Pandit <ppandit@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC 0/9] migration: Threadify loadvm process
-Message-ID: <aObW9WrmWzTWs4N0@x1.local>
-References: <20250827205949.364606-1-peterx@redhat.com>
- <CAK3tnvKa=C-9qkOuyB+sZB8+o6YU0V+qaYheK-h9KBEumpyfBw@mail.gmail.com>
+ AJvYcCWq15ZUQ6JXv8f7b0QfC6DdbB/cOC+0+sJe912hZzMS1QQQRNGKchtkZbS6Tj3Fz8igntND+XGr9Pur@nongnu.org
+X-Gm-Message-State: AOJu0YyTfy2GTeBolpeErARfA1/5z/AiskDVXKK9oCKHqRDuk79Nof7D
+ TrE2cfMLZ/SL4DjuxlJONE9zpFI2AxNz6ndD0DcNUpMWzEQObqdl6SSK
+X-Gm-Gg: ASbGncvv0yZzibI7cnxNLQQlNPjgEEmZj3CphaNOGkwe7UnxHmLHEx28iDL1zu9sUMj
+ dZOd9vjwD49th+VIYgoa78fK9Z/SVdBkr8X4GKoKmwanjQzecp19jS0doRS7Fs1p1boFXaPA28L
+ vWABmWrsOLxpz0treycik6/o8YLeZdsBMPa16lw1sgMWmT9Wvqt4XOP0nYRxNZBDMm8dIWRAMBc
+ 8uWp9kxTTJRihUASux2MZorbxRzLlk4oXQC2P6ufRAaUtCWu4thvbn2ZPZKC9K5q/funemCUBug
+ C0/tlROeRERPis+gYn3EuY1o9PH+28DLyxS56fH81Vli641XxRk8f7UrNkO1ww4xX0aiEURHCCH
+ V6rLxxwnUui7NsMK0yosf25O+NDfz4S7C8AIjlu8roxC+PyZx32RktTC3Aw8BVHI=
+X-Google-Smtp-Source: AGHT+IH3Th2TTcRcBAgT6Kw3pnlgvt/inXMX7pXPivnLrWVm9QvWZKu4iLe9A9aLFFQFn1IsLFpgbg==
+X-Received: by 2002:a05:6e02:219d:b0:426:3ab1:74b4 with SMTP id
+ e9e14a558f8ab-42f873ebd0fmr41747215ab.19.1759959980178; 
+ Wed, 08 Oct 2025 14:46:20 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2601:281:881:bb90:7176:1e71:15fd:4673])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-57b5ebc87b4sm7466642173.43.2025.10.08.14.46.18
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 08 Oct 2025 14:46:19 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <matheus.bernardino@oss.qualcomm.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sid.manning@oss.qualcomm.com>,
+ =?UTF-8?Q?'Alex_R=C3=B8nne_Petersen'?= <alex@alexrp.com>,
+ "'Laurent Vivier'" <laurent@vivier.eu>
+References: <20251008014754.3565553-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20251008014754.3565553-1-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 1/2] linux-user/hexagon: Fix sigcontext
+Date: Wed, 8 Oct 2025 15:46:17 -0600
+Message-ID: <023e01dc389c$faf84320$f0e8c960$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAK3tnvKa=C-9qkOuyB+sZB8+o6YU0V+qaYheK-h9KBEumpyfBw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-us
+Thread-Index: AQHus+aLkVWMPesY8ig/bcBi9wF1CLSTzx0Q
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,30 +110,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 04, 2025 at 04:27:39PM +0800, Zhang Chen wrote:
-> > I confess I didn't test anything on COLO but only from code observations
-> > and analysis.  COLO maintainers: could you add some unit tests to QEMU's
-> > qtests?
-> 
-> For the COLO part, I think remove the coroutines related code is OK for me.
-> Because the original coroutine still need to call the
-> "colo_process_incoming_thread".
 
-Chen, thanks for the comment.  It's still reassuring.
 
-> 
-> Hi Hailiang, any comments for this part?
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Tuesday, October 7, 2025 7:48 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
+> anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sid.manning@oss.qualcomm.com; Alex R=C3=B8nne Petersen =
+<alex@alexrp.com>;
+> Laurent Vivier <laurent@vivier.eu>
+> Subject: [PATCH 1/2] linux-user/hexagon: Fix sigcontext
+>=20
+> In order to correspond with the kernel, we've now (1) moved the =
+preds[] to
+> the right offset and combined the representation as a single ulong =
+"p3_0", (2),
+> added the cs{0,1} registers, (3) added a pad for 48 words, (4) added =
+the user
+> regs structure to an 8-byte aligned target_sigcontext structure.
 
-Any further comment on this series would always be helpful.
+Should you include the other control registers also (e.g., framekey)?  =
+Perhaps this is a bug in the kernel as well?
 
-It'll be also great if anyone can come up with a selftest for COLO.  Now
-any new migration features needs both unit test and doc to get merged.
-COLO was merged earlier so it doesn't need to, however these will be
-helpful for sure to make sure COLO won't be easily broken.
+>=20
+> Co-authored-by: Alex R=C3=B8nne Petersen <alex@alexrp.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  linux-user/hexagon/signal.c | 199 =
+++++++++++++++++++++----------------
+>  1 file changed, 111 insertions(+), 88 deletions(-)
+>=20
+> diff --git a/linux-user/hexagon/signal.c b/linux-user/hexagon/signal.c =
+index
+> 492b51f155..6c3dbf91fa 100644
+> --- a/linux-user/hexagon/signal.c
+> +++ b/linux-user/hexagon/signal.c
+> @@ -23,7 +23,7 @@
+>  #include "signal-common.h"
+>  #include "linux-user/trace.h"
+>=20
+> -struct target_sigcontext {
+> +struct target_user_regs_struct {
+>      target_ulong r0,  r1,  r2,  r3;
+>      target_ulong r4,  r5,  r6,  r7;
+>      target_ulong r8,  r9, r10, r11;
 
-Thanks,
+Consider creating an array for these, then use a for loop below.
 
--- 
-Peter Xu
+> @@ -39,14 +39,21 @@ struct target_sigcontext {
+>      target_ulong m0;
+>      target_ulong m1;
+>      target_ulong usr;
+> +    target_ulong p3_0;
+>      target_ulong gp;
+>      target_ulong ugp;
+>      target_ulong pc;
+>      target_ulong cause;
+>      target_ulong badva;
+> -    target_ulong pred[NUM_PREGS];
+> +    target_ulong cs0;
+> +    target_ulong cs1;
+> +    target_ulong pad1;
+>  };
+>=20
+> +struct target_sigcontext {
+> +    struct target_user_regs_struct sc_regs; }
+> +__attribute__((aligned(8)));
+> +
+>  struct target_ucontext {
+>      unsigned long uc_flags;
+>      target_ulong uc_link; /* target pointer */ @@ -76,53 +83,63 @@ =
+static
+> abi_ulong get_sigframe(struct target_sigaction *ka,
+>=20
+>  static void setup_sigcontext(struct target_sigcontext *sc, =
+CPUHexagonState
+> *env)  {
+> -    __put_user(env->gpr[HEX_REG_R00], &sc->r0);
+> -    __put_user(env->gpr[HEX_REG_R01], &sc->r1);
+> -    __put_user(env->gpr[HEX_REG_R02], &sc->r2);
+> -    __put_user(env->gpr[HEX_REG_R03], &sc->r3);
+> -    __put_user(env->gpr[HEX_REG_R04], &sc->r4);
+> -    __put_user(env->gpr[HEX_REG_R05], &sc->r5);
+> -    __put_user(env->gpr[HEX_REG_R06], &sc->r6);
+> -    __put_user(env->gpr[HEX_REG_R07], &sc->r7);
+> -    __put_user(env->gpr[HEX_REG_R08], &sc->r8);
+> -    __put_user(env->gpr[HEX_REG_R09], &sc->r9);
+> -    __put_user(env->gpr[HEX_REG_R10], &sc->r10);
+> -    __put_user(env->gpr[HEX_REG_R11], &sc->r11);
+> -    __put_user(env->gpr[HEX_REG_R12], &sc->r12);
+> -    __put_user(env->gpr[HEX_REG_R13], &sc->r13);
+> -    __put_user(env->gpr[HEX_REG_R14], &sc->r14);
+> -    __put_user(env->gpr[HEX_REG_R15], &sc->r15);
+> -    __put_user(env->gpr[HEX_REG_R16], &sc->r16);
+> -    __put_user(env->gpr[HEX_REG_R17], &sc->r17);
+> -    __put_user(env->gpr[HEX_REG_R18], &sc->r18);
+> -    __put_user(env->gpr[HEX_REG_R19], &sc->r19);
+> -    __put_user(env->gpr[HEX_REG_R20], &sc->r20);
+> -    __put_user(env->gpr[HEX_REG_R21], &sc->r21);
+> -    __put_user(env->gpr[HEX_REG_R22], &sc->r22);
+> -    __put_user(env->gpr[HEX_REG_R23], &sc->r23);
+> -    __put_user(env->gpr[HEX_REG_R24], &sc->r24);
+> -    __put_user(env->gpr[HEX_REG_R25], &sc->r25);
+> -    __put_user(env->gpr[HEX_REG_R26], &sc->r26);
+> -    __put_user(env->gpr[HEX_REG_R27], &sc->r27);
+> -    __put_user(env->gpr[HEX_REG_R28], &sc->r28);
+> -    __put_user(env->gpr[HEX_REG_R29], &sc->r29);
+> -    __put_user(env->gpr[HEX_REG_R30], &sc->r30);
+> -    __put_user(env->gpr[HEX_REG_R31], &sc->r31);
+> -    __put_user(env->gpr[HEX_REG_SA0], &sc->sa0);
+> -    __put_user(env->gpr[HEX_REG_LC0], &sc->lc0);
+> -    __put_user(env->gpr[HEX_REG_SA1], &sc->sa1);
+> -    __put_user(env->gpr[HEX_REG_LC1], &sc->lc1);
+> -    __put_user(env->gpr[HEX_REG_M0], &sc->m0);
+> -    __put_user(env->gpr[HEX_REG_M1], &sc->m1);
+> -    __put_user(env->gpr[HEX_REG_USR], &sc->usr);
+> -    __put_user(env->gpr[HEX_REG_GP], &sc->gp);
+> -    __put_user(env->gpr[HEX_REG_UGP], &sc->ugp);
+> -    __put_user(env->gpr[HEX_REG_PC], &sc->pc);
+> +    __put_user(env->gpr[HEX_REG_R00], &sc->sc_regs.r0);
+> +    __put_user(env->gpr[HEX_REG_R01], &sc->sc_regs.r1);
+> +    __put_user(env->gpr[HEX_REG_R02], &sc->sc_regs.r2);
+> +    __put_user(env->gpr[HEX_REG_R03], &sc->sc_regs.r3);
+> +    __put_user(env->gpr[HEX_REG_R04], &sc->sc_regs.r4);
+> +    __put_user(env->gpr[HEX_REG_R05], &sc->sc_regs.r5);
+> +    __put_user(env->gpr[HEX_REG_R06], &sc->sc_regs.r6);
+> +    __put_user(env->gpr[HEX_REG_R07], &sc->sc_regs.r7);
+> +    __put_user(env->gpr[HEX_REG_R08], &sc->sc_regs.r8);
+> +    __put_user(env->gpr[HEX_REG_R09], &sc->sc_regs.r9);
+> +    __put_user(env->gpr[HEX_REG_R10], &sc->sc_regs.r10);
+> +    __put_user(env->gpr[HEX_REG_R11], &sc->sc_regs.r11);
+> +    __put_user(env->gpr[HEX_REG_R12], &sc->sc_regs.r12);
+> +    __put_user(env->gpr[HEX_REG_R13], &sc->sc_regs.r13);
+> +    __put_user(env->gpr[HEX_REG_R14], &sc->sc_regs.r14);
+> +    __put_user(env->gpr[HEX_REG_R15], &sc->sc_regs.r15);
+> +    __put_user(env->gpr[HEX_REG_R16], &sc->sc_regs.r16);
+> +    __put_user(env->gpr[HEX_REG_R17], &sc->sc_regs.r17);
+> +    __put_user(env->gpr[HEX_REG_R18], &sc->sc_regs.r18);
+> +    __put_user(env->gpr[HEX_REG_R19], &sc->sc_regs.r19);
+> +    __put_user(env->gpr[HEX_REG_R20], &sc->sc_regs.r20);
+> +    __put_user(env->gpr[HEX_REG_R21], &sc->sc_regs.r21);
+> +    __put_user(env->gpr[HEX_REG_R22], &sc->sc_regs.r22);
+> +    __put_user(env->gpr[HEX_REG_R23], &sc->sc_regs.r23);
+> +    __put_user(env->gpr[HEX_REG_R24], &sc->sc_regs.r24);
+> +    __put_user(env->gpr[HEX_REG_R25], &sc->sc_regs.r25);
+> +    __put_user(env->gpr[HEX_REG_R26], &sc->sc_regs.r26);
+> +    __put_user(env->gpr[HEX_REG_R27], &sc->sc_regs.r27);
+> +    __put_user(env->gpr[HEX_REG_R28], &sc->sc_regs.r28);
+> +    __put_user(env->gpr[HEX_REG_R29], &sc->sc_regs.r29);
+> +    __put_user(env->gpr[HEX_REG_R30], &sc->sc_regs.r30);
+> +    __put_user(env->gpr[HEX_REG_R31], &sc->sc_regs.r31);
+
+Replace the above with a for loop when the GPRs are declared as an =
+array.
+
+> +    __put_user(env->gpr[HEX_REG_SA0], &sc->sc_regs.sa0);
+> +    __put_user(env->gpr[HEX_REG_LC0], &sc->sc_regs.lc0);
+> +    __put_user(env->gpr[HEX_REG_SA1], &sc->sc_regs.sa1);
+> +    __put_user(env->gpr[HEX_REG_LC1], &sc->sc_regs.lc1);
+> +    __put_user(env->gpr[HEX_REG_M0], &sc->sc_regs.m0);
+> +    __put_user(env->gpr[HEX_REG_M1], &sc->sc_regs.m1);
+> +    __put_user(env->gpr[HEX_REG_USR], &sc->sc_regs.usr);
+> +    __put_user(env->gpr[HEX_REG_GP], &sc->sc_regs.gp);
+> +    __put_user(env->gpr[HEX_REG_UGP], &sc->sc_regs.ugp);
+> +    __put_user(env->gpr[HEX_REG_PC], &sc->sc_regs.pc);
+>=20
+> +    /* Consolidate predicates into p3_0 */
+> +    target_ulong preds =3D 0;
+>      int i;
+>      for (i =3D 0; i < NUM_PREGS; i++) {
+> -        __put_user(env->pred[i], &(sc->pred[i]));
+> +        preds |=3D (env->pred[i] & 0xff) << (i * 8);
+>      }
+> +    __put_user(preds, &sc->sc_regs.p3_0);
+> +
+> +    /* Set cause and badva to 0 - these are set by kernel on =
+exceptions */
+> +    __put_user(0, &sc->sc_regs.cause);
+> +    __put_user(0, &sc->sc_regs.badva);
+
+Strange that we have this if they are ignored.  Perhaps it's to match =
+the kernel behavior.
+
+> +
+> +    __put_user(env->gpr[HEX_REG_CS0], &sc->sc_regs.cs0);
+> +    __put_user(env->gpr[HEX_REG_CS1], &sc->sc_regs.cs1);
+>  }
+>=20
+>  static void setup_ucontext(struct target_ucontext *uc, @@ -192,53 =
++209,59
+> @@ badframe:
+>  static void restore_sigcontext(CPUHexagonState *env,
+>                                 struct target_sigcontext *sc)  {
+> -    __get_user(env->gpr[HEX_REG_R00], &sc->r0);
+> -    __get_user(env->gpr[HEX_REG_R01], &sc->r1);
+> -    __get_user(env->gpr[HEX_REG_R02], &sc->r2);
+> -    __get_user(env->gpr[HEX_REG_R03], &sc->r3);
+> -    __get_user(env->gpr[HEX_REG_R04], &sc->r4);
+> -    __get_user(env->gpr[HEX_REG_R05], &sc->r5);
+> -    __get_user(env->gpr[HEX_REG_R06], &sc->r6);
+> -    __get_user(env->gpr[HEX_REG_R07], &sc->r7);
+> -    __get_user(env->gpr[HEX_REG_R08], &sc->r8);
+> -    __get_user(env->gpr[HEX_REG_R09], &sc->r9);
+> -    __get_user(env->gpr[HEX_REG_R10], &sc->r10);
+> -    __get_user(env->gpr[HEX_REG_R11], &sc->r11);
+> -    __get_user(env->gpr[HEX_REG_R12], &sc->r12);
+> -    __get_user(env->gpr[HEX_REG_R13], &sc->r13);
+> -    __get_user(env->gpr[HEX_REG_R14], &sc->r14);
+> -    __get_user(env->gpr[HEX_REG_R15], &sc->r15);
+> -    __get_user(env->gpr[HEX_REG_R16], &sc->r16);
+> -    __get_user(env->gpr[HEX_REG_R17], &sc->r17);
+> -    __get_user(env->gpr[HEX_REG_R18], &sc->r18);
+> -    __get_user(env->gpr[HEX_REG_R19], &sc->r19);
+> -    __get_user(env->gpr[HEX_REG_R20], &sc->r20);
+> -    __get_user(env->gpr[HEX_REG_R21], &sc->r21);
+> -    __get_user(env->gpr[HEX_REG_R22], &sc->r22);
+> -    __get_user(env->gpr[HEX_REG_R23], &sc->r23);
+> -    __get_user(env->gpr[HEX_REG_R24], &sc->r24);
+> -    __get_user(env->gpr[HEX_REG_R25], &sc->r25);
+> -    __get_user(env->gpr[HEX_REG_R26], &sc->r26);
+> -    __get_user(env->gpr[HEX_REG_R27], &sc->r27);
+> -    __get_user(env->gpr[HEX_REG_R28], &sc->r28);
+> -    __get_user(env->gpr[HEX_REG_R29], &sc->r29);
+> -    __get_user(env->gpr[HEX_REG_R30], &sc->r30);
+> -    __get_user(env->gpr[HEX_REG_R31], &sc->r31);
+> -    __get_user(env->gpr[HEX_REG_SA0], &sc->sa0);
+> -    __get_user(env->gpr[HEX_REG_LC0], &sc->lc0);
+> -    __get_user(env->gpr[HEX_REG_SA1], &sc->sa1);
+> -    __get_user(env->gpr[HEX_REG_LC1], &sc->lc1);
+> -    __get_user(env->gpr[HEX_REG_M0], &sc->m0);
+> -    __get_user(env->gpr[HEX_REG_M1], &sc->m1);
+> -    __get_user(env->gpr[HEX_REG_USR], &sc->usr);
+> -    __get_user(env->gpr[HEX_REG_GP], &sc->gp);
+> -    __get_user(env->gpr[HEX_REG_UGP], &sc->ugp);
+> -    __get_user(env->gpr[HEX_REG_PC], &sc->pc);
+> +    __get_user(env->gpr[HEX_REG_R00], &sc->sc_regs.r0);
+> +    __get_user(env->gpr[HEX_REG_R01], &sc->sc_regs.r1);
+> +    __get_user(env->gpr[HEX_REG_R02], &sc->sc_regs.r2);
+> +    __get_user(env->gpr[HEX_REG_R03], &sc->sc_regs.r3);
+> +    __get_user(env->gpr[HEX_REG_R04], &sc->sc_regs.r4);
+> +    __get_user(env->gpr[HEX_REG_R05], &sc->sc_regs.r5);
+> +    __get_user(env->gpr[HEX_REG_R06], &sc->sc_regs.r6);
+> +    __get_user(env->gpr[HEX_REG_R07], &sc->sc_regs.r7);
+> +    __get_user(env->gpr[HEX_REG_R08], &sc->sc_regs.r8);
+> +    __get_user(env->gpr[HEX_REG_R09], &sc->sc_regs.r9);
+> +    __get_user(env->gpr[HEX_REG_R10], &sc->sc_regs.r10);
+> +    __get_user(env->gpr[HEX_REG_R11], &sc->sc_regs.r11);
+> +    __get_user(env->gpr[HEX_REG_R12], &sc->sc_regs.r12);
+> +    __get_user(env->gpr[HEX_REG_R13], &sc->sc_regs.r13);
+> +    __get_user(env->gpr[HEX_REG_R14], &sc->sc_regs.r14);
+> +    __get_user(env->gpr[HEX_REG_R15], &sc->sc_regs.r15);
+> +    __get_user(env->gpr[HEX_REG_R16], &sc->sc_regs.r16);
+> +    __get_user(env->gpr[HEX_REG_R17], &sc->sc_regs.r17);
+> +    __get_user(env->gpr[HEX_REG_R18], &sc->sc_regs.r18);
+> +    __get_user(env->gpr[HEX_REG_R19], &sc->sc_regs.r19);
+> +    __get_user(env->gpr[HEX_REG_R20], &sc->sc_regs.r20);
+> +    __get_user(env->gpr[HEX_REG_R21], &sc->sc_regs.r21);
+> +    __get_user(env->gpr[HEX_REG_R22], &sc->sc_regs.r22);
+> +    __get_user(env->gpr[HEX_REG_R23], &sc->sc_regs.r23);
+> +    __get_user(env->gpr[HEX_REG_R24], &sc->sc_regs.r24);
+> +    __get_user(env->gpr[HEX_REG_R25], &sc->sc_regs.r25);
+> +    __get_user(env->gpr[HEX_REG_R26], &sc->sc_regs.r26);
+> +    __get_user(env->gpr[HEX_REG_R27], &sc->sc_regs.r27);
+> +    __get_user(env->gpr[HEX_REG_R28], &sc->sc_regs.r28);
+> +    __get_user(env->gpr[HEX_REG_R29], &sc->sc_regs.r29);
+> +    __get_user(env->gpr[HEX_REG_R30], &sc->sc_regs.r30);
+> +    __get_user(env->gpr[HEX_REG_R31], &sc->sc_regs.r31);
+
+Replace the above with a for loop when the GPRs are declared as an =
+array.=20
+
+> +    __get_user(env->gpr[HEX_REG_SA0], &sc->sc_regs.sa0);
+> +    __get_user(env->gpr[HEX_REG_LC0], &sc->sc_regs.lc0);
+> +    __get_user(env->gpr[HEX_REG_SA1], &sc->sc_regs.sa1);
+> +    __get_user(env->gpr[HEX_REG_LC1], &sc->sc_regs.lc1);
+> +    __get_user(env->gpr[HEX_REG_M0], &sc->sc_regs.m0);
+> +    __get_user(env->gpr[HEX_REG_M1], &sc->sc_regs.m1);
+> +    __get_user(env->gpr[HEX_REG_USR], &sc->sc_regs.usr);
+> +    __get_user(env->gpr[HEX_REG_GP], &sc->sc_regs.gp);
+> +    __get_user(env->gpr[HEX_REG_UGP], &sc->sc_regs.ugp);
+> +    __get_user(env->gpr[HEX_REG_PC], &sc->sc_regs.pc);
+>=20
+> +    /* Restore predicates from p3_0 */
+> +    target_ulong preds;
+> +    __get_user(preds, &sc->sc_regs.p3_0);
+>      int i;
+>      for (i =3D 0; i < NUM_PREGS; i++) {
+> -        __get_user(env->pred[i], &(sc->pred[i]));
+> +        env->pred[i] =3D (preds >> (i * 8)) & 0xff;
+>      }
+> +
+> +    __get_user(env->gpr[HEX_REG_CS0], &sc->sc_regs.cs0);
+> +    __get_user(env->gpr[HEX_REG_CS1], &sc->sc_regs.cs1);
+>  }
+>=20
+>  static void restore_ucontext(CPUHexagonState *env, struct =
+target_ucontext
+> *uc)
+> --
+> 2.34.1
+
 
 
