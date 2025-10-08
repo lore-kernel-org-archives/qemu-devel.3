@@ -4,77 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5468ECAC5BB
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 18:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42DFCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Oct 2025 19:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6Yf8-0001jU-Fh; Wed, 08 Oct 2025 14:13:18 -0400
+	id 1v6ZbZ-0004A9-F9; Wed, 08 Oct 2025 15:13:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6Yf6-0001jJ-Ap
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 14:13:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1v6ZbS-00049v-CI
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 15:13:34 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v6Yev-0000K2-5q
- for qemu-devel@nongnu.org; Wed, 08 Oct 2025 14:13:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759947179;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mMSmvRZScVRTJV/S2LQPdugoY6PlXkAyHCiPNXsA3jw=;
- b=Rvw/zNY32UOuhtCbzmbhBZZV4PxmAlp/+ki0GuwcWu6vKfVBsQ3WaJ6mrGbM/eBorKqOlf
- bftO/8sbrcEQ4qqeq+0f5S6J7f8dU3db1CUxOr7mW25p2i+V3CfKqNafBdO1X7eR6bnOSZ
- 3GUrDX0eQnIaBV/7eVnzhUSFOm6ubK8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-IIl7qZPhMeK5dUpZBcuixA-1; Wed,
- 08 Oct 2025 14:12:55 -0400
-X-MC-Unique: IIl7qZPhMeK5dUpZBcuixA-1
-X-Mimecast-MFC-AGG-ID: IIl7qZPhMeK5dUpZBcuixA_1759947174
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99C9E180057A; Wed,  8 Oct 2025 18:12:54 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.157])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 16A5C19560BA; Wed,  8 Oct 2025 18:12:53 +0000 (UTC)
-Date: Wed, 8 Oct 2025 14:12:52 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1v6ZbE-0000gN-BO
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 15:13:34 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 6F4B2458E8;
+ Wed,  8 Oct 2025 19:13:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34121C4CEE7;
+ Wed,  8 Oct 2025 19:13:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1759950791;
+ bh=m/A0eV+ZBKqXV1MdOleiu/NIzcJwVTqXPBdIqk5vM/U=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=sTeCSIKh1uKAInaS56ojh4FqIxTiPu6juj2ZHNXDMu5rwrQO0VuwpeD4rzdYjgDu2
+ y7Sh1h1zQ0DqoH0hfJ/Rrkp5QfnupR2uANVZgbNtl8Sp2NJa1L5jDC4RcfJL9CfnZ5
+ gjpgV3fePkMsfeV6Taxw+iy1rpW3+SYUmp7h32/5Gyw9UdruE5wi6V4MqSk8mtmu6R
+ kLXGQqvcVb/u1SkY4cdAuuUF03ZjvE1dW8LUkV+UdGaNia0j3DHtAyQrxg6kam8wlI
+ Rr/luCkOS+9dQnkA7O+7McIh6j3Cu2UM62M1RCREDgCl0ulEo4e5lSuUuMzV5poIXZ
+ G5bzdqyhMKthQ==
+Date: Wed, 8 Oct 2025 19:13:09 +0000
+From: Wei Liu <wei.liu@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 6/6] tracetool: add typing checks to "make -C python check"
-Message-ID: <20251008181252.GG181748@fedora>
-References: <20251008063546.376603-1-pbonzini@redhat.com>
- <20251008063546.376603-7-pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com,
+ magnus.kulke@linux.microsoft.com, wei.liu@kernel.org,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: Re: [PATCH 26/27] docs: Add mshv to documentation
+Message-ID: <20251008191309.GA2474240@liuwe-devbox-debian-v2.local>
+References: <20251002171536.1460049-1-pbonzini@redhat.com>
+ <20251002171536.1460049-27-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="0rOxspD2+hsfg9xF"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251008063546.376603-7-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+In-Reply-To: <20251002171536.1460049-27-pbonzini@redhat.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=wei.liu@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,35 +73,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Oct 02, 2025 at 07:15:35PM +0200, Paolo Bonzini wrote:
+> From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+[...]
+>  
+>  In the context of QEMU, an hypervisor is an API, provided by the Host OS,
+> -allowing to execute virtual machines. Linux implementation is KVM (and supports
+> -Xen as well). For MacOS, it's HVF. Windows defines WHPX. And NetBSD provides
+> -NVMM.
+> +allowing to execute virtual machines.  Linux provides a choice of KVM, Xen
+> +or MSHV; MacOS provides HVF; Windows provides WPHX; NetBSD provides NVMM.
 
---0rOxspD2+hsfg9xF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Typo here. It should be WHPX.
 
-On Wed, Oct 08, 2025 at 08:35:45AM +0200, Paolo Bonzini wrote:
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  python/tests/tracetool-mypy.sh | 5 +++++
->  1 file changed, 5 insertions(+)
->  create mode 100755 python/tests/tracetool-mypy.sh
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---0rOxspD2+hsfg9xF
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjmqaQACgkQnKSrs4Gr
-c8jJ0wf9GrYqLPsAmSiJCMU/Souz0qfggn3zUbKVvmAO41YjGQP8kHLj1x/mkBUG
-St7MdV0z5gSCMARI25gM1GEoHunVSRiy6+u3M0yXto40ePsPdAwRUjFmcBmGZ1Cl
-ykC7foecSpwbP1lX6IXATWP1WK3pYvHfLyRi7u83xXEVoZkXOfs3o+8xfSV5WccY
-Cv8sckCYV2HwwF1C0TeHi7numDWviu5RqTCDtbKfyalGw/uEj9dSGtoswJxUIQ4y
-j6+b+6CR/lILU0m5aSwVBAq1ih0hBN6el7XrzqNAHTaz4uCZz0fKxnccVnNJpbkG
-FbOJDGwyzEJq06kMRtxet+uk7RvJgg==
-=KP6K
------END PGP SIGNATURE-----
-
---0rOxspD2+hsfg9xF--
-
+Wei
 
