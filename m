@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4CA0CCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B64CCD185
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6rjg-0006i6-9s; Thu, 09 Oct 2025 10:35:17 -0400
+	id 1v6rlb-0008Lg-2d; Thu, 09 Oct 2025 10:37:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6rjN-0006a5-3L
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:34:59 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6rjG-0003Kh-Bi
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:34:56 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-57bd04f2e84so1153254e87.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 07:34:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760020487; x=1760625287; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/3004OsejbQepgqHH10D2B9muuMVta85bk3ebxZXnTk=;
- b=eMvIsxPAOAJj2KQK7/bZ74H+A3a8QMoWGkQdFnr8376m1+2EE4h2uAidDiTRDP9A2Z
- QVQFr6XgD72ePZYRxD3RmBcwLbQWAabeqY+Wpno4bZmAbV/P/y/bqwpDpjaWd13u0ndN
- DnYxgyy/xpUFMBxf4/RWPhiUFbjo39Q4ifmLd3G1uWBgSqmROVRbT23uiYRPG6ozgaRB
- kK2XYfp4h4yrE4L7lMV+RLMa94eOw5XSIiAmZ8VseIeRf/X+qsXCaRlZgSeCqShy1Z5q
- rgI0iIjFCrclCCmNvb51uOcNGwTPInLnJbGCSTYAjvqbG4FLv1QOxst4ZG1pEZNzIwM1
- gdsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760020487; x=1760625287;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/3004OsejbQepgqHH10D2B9muuMVta85bk3ebxZXnTk=;
- b=QUwGxyorHSouR7UXLq/qzhedLvTPUmKWrfTaOjOmnlY2/avEJlX6cUicYin9beosGc
- Hg7dboK/hGJo5fb3Cl/5AayHPk/Tvdvc5b9lQYIdDF9TKF2Lm9vdKSQ9yGJpCbeEYMjh
- 9Lsh91h0/2IaRpwUtIW+BMGSBQhpq9B037yUugsmEmcJjH+gi2VLAdq1nuEMcF+UuZLr
- m2GWVyOHOUHPO7COrvYlivIgpvRAltjzJgytDiNNkKwYjQN6vacocW2i/ampKHk/SwSA
- 4eYW1oHGPkb8AKjIjoI9+sJYNCWrHiTF3nCi0M1vQbllw1ztUUsC9PB3mVAs9ERSuYJf
- 1MUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXE0UvndvdCLXIVA/JHuBqK/G7mAyXvS97f/FSIx5yzo3t8KatT+iQd/f0KQS4Kmfk0ePnv1H+H1XQO@nongnu.org
-X-Gm-Message-State: AOJu0YzjWBbFqfg0cs61y51s29TaRsk2sgKVcWqhb8MbQD/tMPv0BUmn
- XS7C00iuJhMZew4yWFPZ4ylK+TUNPv6VrYlDlS4N+3fTFx5UdFWNN0rWAnxRWUF7Mqc=
-X-Gm-Gg: ASbGncuABbW/4IKYq2icMapmLDau3NV0nnUpaAeQboBFpmGEnnz0P7T74GQTiB/D6y9
- dtl40LfWd3oqdq6I5mYa1F8u2wnX7+G1sJ3/LI4hFQbC8G9Vz3rt1OM68juvd/8Ak72o44QMgor
- FyDs5V3KbMZtTFPsvZlVQjrHzK2O9u9R28htbc5PysIgSOimNfBEfHT285/2TepUo+3yF1xcwfA
- mO6Zmn85KJv2aZ1lVvvJQQMRrDgBdjZDNFy9Ffi5S2LutvL0wJGwDbZ1ifJ/CH1BfksgaHCkmtY
- L5EAddreCdKjIYip22yNoldqHZFrc7TNQmH5yomNbLlMRgXq2g5s2iftf28b7sKCU912KW7P7mL
- a0Nxj9XZcTlFyGXnktsBntIPwVLZUuTn8tIlK/xgRZwUNV8ABuNnvOhFBPX6h56Xhmgn4c46Zn+
- M0IbMdXYRFmpL0WSXbEQ==
-X-Google-Smtp-Source: AGHT+IGu76ExjfJv7UhWEz0lLd1hbTNmCfoSynhXx8D8DdjX+cLX7Mu6kVjObBa5tsqbc+DSr1zjww==
-X-Received: by 2002:a05:6512:b12:b0:577:285f:32bf with SMTP id
- 2adb3069b0e04-5906dd54208mr2064761e87.35.1760020487499; 
- Thu, 09 Oct 2025 07:34:47 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5907ac234absm1113221e87.55.2025.10.09.07.34.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 07:34:46 -0700 (PDT)
-Message-ID: <94f9389f-608c-410d-b1b2-4e03c3370ce6@linaro.org>
-Date: Thu, 9 Oct 2025 16:34:45 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v6rlY-0008Ky-Gw
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:37:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v6rlU-0003id-Te
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:37:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760020622;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+t0insfJw4JsMpFWMdphTVnOfzg4qWIP7xcgOLdKRvE=;
+ b=PLTWDBxB1k3i9LNN8mLpZnfoq9wxtEEJBy4t2MN27cIxwCppH7WOQEC0OyHMSG5hXSjQBi
+ wmNeRkwIoe4FndeNJwolnPKEIy6up9irUvc5q9drjN7sP8YEtkt78JXQNyV0KRrBtyTonz
+ vR1PZisCGApuV3z+TZQk9ohAhzdHamI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-A8XtsAs7PkWyosgaGuaZow-1; Thu,
+ 09 Oct 2025 10:36:59 -0400
+X-MC-Unique: A8XtsAs7PkWyosgaGuaZow-1
+X-Mimecast-MFC-AGG-ID: A8XtsAs7PkWyosgaGuaZow_1760020618
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D0CD1800578; Thu,  9 Oct 2025 14:36:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.196])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EAACD1955F42; Thu,  9 Oct 2025 14:36:54 +0000 (UTC)
+Date: Thu, 9 Oct 2025 15:36:51 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+ "query-balloon" after CPR transfer
+Message-ID: <aOfIgzCkwmtVXhvt@redhat.com>
+References: <20250928085432.40107-1-zhenzhong.duan@intel.com>
+ <20250928085432.40107-7-zhenzhong.duan@intel.com>
+ <1ba0dbca-08b2-4f80-ba12-01884a25ef0d@oracle.com>
+ <IA3PR11MB913635F06F6522102D8FC15D921AA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <78df77e2-43a6-48d6-b09e-fcc61a662b6e@oracle.com>
+ <IA3PR11MB9136EF2C01DAB2C2EA261CC092E1A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <ab688cce-283d-4541-b7ca-be651085979e@oracle.com>
+ <aOfEiogVQiAhBqMG@redhat.com>
+ <2ac44a27-d4f2-4191-a9c3-513af25925b0@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 39/73] target/arm: Use arm_hcr_el2_nvx_eff in access_nv1
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20251008215613.300150-1-richard.henderson@linaro.org>
- <20251008215613.300150-40-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251008215613.300150-40-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <2ac44a27-d4f2-4191-a9c3-513af25925b0@oracle.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,16 +98,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 23:55, Richard Henderson wrote:
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Oct 09, 2025 at 10:32:34AM -0400, Steven Sistare wrote:
+> On 10/9/2025 10:19 AM, Daniel P. Berrangé wrote:
+> > On Thu, Oct 09, 2025 at 10:11:17AM -0400, Steven Sistare wrote:
+> > > On 10/8/2025 6:22 AM, Duan, Zhenzhong wrote:
+> > > > 
+> > > > 
+> > > > > -----Original Message-----
+> > > > > From: Steven Sistare <steven.sistare@oracle.com>
+> > > > > Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+> > > > > "query-balloon" after CPR transfer
+> > > > > 
+> > > > > On 9/30/2025 2:00 AM, Duan, Zhenzhong wrote:
+> > > > > > > -----Original Message-----
+> > > > > > > From: Steven Sistare <steven.sistare@oracle.com>
+> > > > > > > Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+> > > > > > > "query-balloon" after CPR transfer
+> > > > > > > 
+> > > > > > > On 9/28/2025 4:54 AM, Zhenzhong Duan wrote:
+> > > > > > > > After CPR transfer, source QEMU closes kvm fd and sets kvm_state to
+> > > > > > > NULL,
+> > > > > > > > "query-balloon" will check kvm_state->sync_mmu and trigger NULL
+> > > > > pointer
+> > > > > > > > reference.
+> > > > > > > > 
+> > > > > > > > We don't need to NULL kvm_state as all states in kvm_state aren't
+> > > > > released
+> > > > > > > > actually. Just closing kvm fd is enough so we could still query states
+> > > > > > > > through "query_*" qmp command.
+> > > > > > > 
+> > > > > > > IMO this does not make sense.  Much of the state in kvm_state was
+> > > > > derived
+> > > > > > >from ioctl's on the descriptors, and closing them invalidates it.  Asking
+> > > > > > > historical questions about what used to be makes no sense.
+> > > > > > 
+> > > > > > You also have your valid point.
+> > > > > > 
+> > > > > > > 
+> > > > > > > Clearing kvm_state and setting kvm_allowed=false would be a safer fix.
+> > > > > 
+> > > > > Setting kvm_allowed=false causes kvm_enabled() to return false which should
+> > > > > prevent kvm_state from being dereferenced anywhere:
+> > > > > 
+> > > > >       #define kvm_enabled()           (kvm_allowed)
+> > > > > 
+> > > > >     Eg for the balloon:
+> > > > > 
+> > > > >       static bool have_balloon(Error **errp)
+> > > > >       {
+> > > > >           if (kvm_enabled() && !kvm_has_sync_mmu()) {
+> > > > 
+> > > > OK, will do, clearing kvm_allowed is a good idea.
+> > > > 
+> > > > Currently there are two qmp commands "query-balloon" and "query-cpu-definitions"
+> > > > causing SIGSEGV after CPR-transfer, clearing kvm_allowed helps for both.
+> > > > But clearing both kvm_allowed and kvm_state cause SIGSEGV on "query-cpu-definitions".
+> > > > 
+> > > > I'll send a patch to clearing only kvm_allowed if you are fine with it.
+> > > 
+> > > I still don't love the idea.  kvm_state is no longer valid.
+> > > 
+> > > It sounds like "query-cpu-definitions" is missing a check for kvm_enabled().
+> > 
+> > This patch  / bug feels like it is side-stepping a general conceptual
+> > question.  After cpr-transfer is complete what QMP commands are still
+> > valid to call in general ? This thread mentions two which have caused
+> > bugs, but beyond that it feels like a large subset of QMP comamnds
+> > are conceptually invalid to use.
+> 
+> Agreed. I don't see why these commands should be issued to the dead instance.
+> How about migration status, quit, and nothing else?
+> Half serious.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I was hoping you'd suggest such a short list :-)
+
+Essentially a case of calling qmp_for_each_command(), and in the callback
+run qmp_disable_command() for everything not in the allow-list.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
