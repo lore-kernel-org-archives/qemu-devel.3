@@ -4,114 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DEFCCD187
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBBACCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 10:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6nCI-0004Mg-B7; Thu, 09 Oct 2025 05:44:30 -0400
+	id 1v6nSX-000116-V0; Thu, 09 Oct 2025 06:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v6nCH-0004Lw-08
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:44:29 -0400
-Received: from 7.mo552.mail-out.ovh.net ([188.165.59.253])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v6nCD-0002y1-St
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:44:28 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.210])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cj4hj3N4fz6WHw;
- Thu,  9 Oct 2025 09:44:21 +0000 (UTC)
-Received: from kaod.org (37.59.142.101) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Thu, 9 Oct
- 2025 11:44:21 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-101G00441fa69a7-59dc-4a1c-ab2b-f8593e3c15f7,
- 0ABBE769FBEA5341A3875E1E3E57BEA7B23E4658) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <de71dc5f-a47d-4230-9307-ab12214ebbfe@kaod.org>
-Date: Thu, 9 Oct 2025 11:44:20 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6nSO-0000tY-4F
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:01:08 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6nSI-0005fu-5f
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:01:07 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-46e542196c7so10333355e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 03:01:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760004059; x=1760608859; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9RG89XrDFBbwVSS1mzn7nIux6+M1k+HOgEdjwqshi6E=;
+ b=wyfJyTU+dltzDJy3XYQYl7HvcH6wPs2MYaJjF3gFQSiujlfipY6WvsraxAIs8AE1jZ
+ rnD7jKimyjnoCaKmgLF1Bx/eaUd0+Dh1KrVob7p0BP0cpLJhxaVqzIZXYXUPkSdyrs/D
+ 622s/ENKfly+cDSNqnGVB0a3TCT2OC9HKcL8MrSmoisibupGS8r62cuL2NTKrFAg7+Eb
+ 5O0Dy24ihNZNnr62CqjEoc9h+9Z/bjMM2yupL6XbLwawciCaehjWW8gWLxk749jFRkds
+ P+FDRCyy9sQRJh3wEj7+u1496bvp56wEozLNJNLDPtJ+EDrPMVY7WbIG8BJ3FtnbLNi3
+ y+cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760004059; x=1760608859;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9RG89XrDFBbwVSS1mzn7nIux6+M1k+HOgEdjwqshi6E=;
+ b=FHHwRgtoVUdAQ0mEJHKGguFXjDAP4zduieLuJE/U/Qglm/8hKzLlrdbadGwcHX0HLp
+ E5jhWNkOMGkXz9Rwna6CdbiNal21LSEs+bXt8hFsR7RM81fAdLvTJE+2lcwgeG5WK43P
+ mG5ZlkLxqmow8Qrv/5TzM1C3OonqQoMJAtY4ZhupjVbh5N+82uLssR2GBBZxMjbWqV3k
+ B1G1J6wb0EerfE1OLU6gMaCDsDhCAMjhJNLXm1ssMgYewxItLtCf5xoI4HuI+ZtIfJ8T
+ Q+oKmPGIHQ1ABSbCJXGrO8gfrxeIL8AgHjJrQhevtRTXplWPdhL2/CJ3udP0N6OzIpf4
+ VBGg==
+X-Gm-Message-State: AOJu0YxmvccZxI+4t9me5JC+koHZ2q3nPFFuYuSwRaxubQspBTPZW419
+ lcSgs0xE8n+/Huurr9aaxYSPN2CO8xeAHuMENw+vXzrm5UmmBRtJDNeXrd1zJTlOqq0=
+X-Gm-Gg: ASbGncv5/bEV6AoOHKoOpAaT8Itx0f5jFRDny4XoI380+GFJrB8srKlRu5M8Eu/IDeS
+ Dp+PiGsiNuMAMw7QeWzXqB/t+aFlcLpIMECvDZ7eBNVvCNG3jllzW+7DBmgFfIjlGsq3JviuNOG
+ SlT2WmNestnuAqDTDSI1uBGPIDeBzQh6B6ZjN5Ecoo47bLzXFmqpBWoz0Blo7K91tZ+2IAkw9bw
+ 8HV/BKYMCGFsrBtH+nOtReUy7U64/VswRwvruikrJLma6ZSwl7CC8+fWR+4p54VltfxWBui4qqk
+ c2988jZnZ6cz4weS9k0FhWDcRdXcOf9oJHr+Ygro/B1dtqo4QXcnHwhI9Rrk8c5mtAK+5YprASh
+ Fyt72PHbPH5qxw0NQJ415bVoW/gpWX5a+P+B/c0GigOfrLWDjxrAvkUOvrEM/RQOpw/sh1qnMSa
+ Wu8pExdB/UPk7ShTUHxQ==
+X-Google-Smtp-Source: AGHT+IFqkYnn1gSK8NqNOMLy1N/yJEooJgYKi9U6nNwDgyjYjQIGtHr0Px8W4LKWJjvUgTMK+7y0Yg==
+X-Received: by 2002:a5d:64e8:0:b0:3e9:4fe4:2621 with SMTP id
+ ffacd0b85a97d-42666aa6354mr5077430f8f.7.1760004059479; 
+ Thu, 09 Oct 2025 03:00:59 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8f4cc3sm33893324f8f.55.2025.10.09.03.00.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 03:00:58 -0700 (PDT)
+Message-ID: <a843f99c-f5d7-43d5-beae-1ac17261cd3c@linaro.org>
+Date: Thu, 9 Oct 2025 12:00:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] ppc/spapr: remove deprecated machine pseries-4.1
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>,
- <qemu-devel@nongnu.org>, <philmd@linaro.org>
-CC: <npiggin@gmail.com>
-References: <20251009184057.19973-1-harshpb@linux.ibm.com>
- <20251009184057.19973-5-harshpb@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251009184057.19973-5-harshpb@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [RFC PATCH 7/7] target/openrisc: Replace target_ulong -> uint32_t
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, Stafford Horne <shorne@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251008075612.94193-1-philmd@linaro.org>
+ <20251008075612.94193-8-philmd@linaro.org>
+ <fowsbt2ovqpl5mzizniyqx6xhlnvu7lc2po3jbi2cslwrpu5ew@dkcvbphrov6u>
+ <1b81d317-6c1a-42ca-8aba-7e71cfece3a5@linaro.org>
+In-Reply-To: <1b81d317-6c1a-42ca-8aba-7e71cfece3a5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.101]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: b9b84862-ac4e-43fd-b4e1-3da852faa95c
-X-Ovh-Tracer-Id: 9508506189877775267
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEkbQBDRvm3OHt6Zo+Fbj5bag0uoB72fGiDKmEiz8JpeqKGOybpKdbisdSIHnIl6Zhq8EleWzih6CkBYHLDnLhbQttMUSP6M3ZOt/P/+4LbcUgdy69uPeOibUFKJUU0vTMU96AwZCn3nhcTSyw4iFVNgqJtPiOE4GtwLMT5TXIBjQFBi2Xo/9Sr2W3pSnwQUjndCYjLDzcM0Pa7iuB0NCfmHICetz82DUh/gPkr3eOlzC4DoFVTt+mYVG2qV0l7nMlsI4x1NefNI7IEO6uO85WN07DI5vkK1YJZ54kR+CqBkprhGY56vqAkwwPaTDQVey3353PUDqR0HoUQfhhunvVNt+JBRhxv/o/6IObhn2JrFLsD0KMSIQaAlEVA/uMo2RrujXj2CEpxyYTayE8PEu38/rdv0bqGcIG5j1y4PeBkBBGlaryRWqhfu6QtoQqBTX646ztKzmJXSzZuYa6W3kyCmK0zJ5cFBIZ5r57Euc/SN2CB7KMQN0z7dlpL8NnHgXjYYSD68dacCndKXTYIGTme4cOvXaRBt50bkAeVCmrmyFbjqksEdk4C8S3VYHh6Uwkr3itKYs5rTzeruUY/Hzjpy4uJffebFVKT1YEfta8eOP8HxBS6aXExM2uU/4IRx7K0L1K/sbpvE5pQjr9KENdtUOTtQUpww7WDztu5GXSuLA
-DKIM-Signature: a=rsa-sha256; bh=lEXNQY93XF7K5NKl7hVtGLKPRYyzr/Pfqqlbs2LrJ+s=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760003061; v=1;
- b=mTgBy6cdJCZahoSaag3ahVRufRV69DIYQZSHc36m2GszGkO97uZA8X6mXxOJkuUBb2DqxAsY
- VEV7MWqpAohUPV4iMDvrwI69Taa+8ZRlk5INm45Ckcf8XnCg2hYPgPbqepYnWT9VgkIEUCmj4sC
- OeoGvSV8kyoICAXNE2mXcIzjeyCm22LNi6Cafqko9CqOCOCu+x6IGNZsCmEv+f1JeI3kPEAWhOz
- WV+LdQalQHtzw+CJp3bG+l35NZ67fcceKoZbOR2ENfm+wFEFpjtLGK7yFzapelsmTldO1iv1ZvX
- TV4IkZJtPxd9QIOTXtXpUImJdekAd2AOvhZPdrWItkkCA==
-Received-SPF: pass client-ip=188.165.59.253; envelope-from=clg@kaod.org;
- helo=7.mo552.mail-out.ovh.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,19 +104,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 20:40, Harsh Prateek Bora wrote:
-> Remove the pseries-4.1 machine specific logic as had been deprecated and
-> due for removal now as per policy.
+On 9/10/25 10:17, Philippe Mathieu-Daudé wrote:
+> On 8/10/25 14:16, Anton Johansson wrote:
+>> On 08/10/25, Philippe Mathieu-Daudé wrote:
+>>> The OpenRISC targets are only built as 32-bit, therefore
+>>> target_ulong always expands to uint32_t. Replace and adapt
+>>> the API uses mechanically:
+>>>
+>>>    target_ulong -> uint32_t
+>>>    target_long -> int32_t
+>>>    tl -> i32
+>>>    TCGv -> TCGv_i32
+>>>    tcg_global_mem_new -> tcg_global_mem_new_i32
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> RFC: not sure how to split to ease review :|
+>>> ---
+>>>   target/openrisc/cpu.h        |  22 +--
+>>>   target/openrisc/helper.h     |   8 +-
+>>>   target/openrisc/fpu_helper.c |   8 +-
+>>>   target/openrisc/machine.c    |  16 +-
+>>>   target/openrisc/sys_helper.c |   5 +-
+>>>   target/openrisc/translate.c  | 374 +++++++++++++++++------------------
+>>>   6 files changed, 216 insertions(+), 217 deletions(-)
+>>
+>> [...]
+>>
+>>> -static void gen_add(DisasContext *dc, TCGv dest, TCGv srca, TCGv srcb)
+>>> +static void gen_add(DisasContext *dc, TCGv_i32 dest, TCGv_i32 srca, 
+>>> TCGv_i32 srcb)
+>>>   {
+>>> -    TCGv t0 = tcg_temp_new();
+>>> -    TCGv res = tcg_temp_new();
+>>> +    TCGv_i32 t0 = tcg_temp_new();
+>>> +    TCGv_i32 res = tcg_temp_new();
+>>
+>> I think you missed transforming tcg_temp_new -> tcg_temp_new_i32.
+>>
+>>>   static bool trans_l_lwa(DisasContext *dc, arg_load *a)
+>>>   {
+>>> -    TCGv ea;
+>>> +    TCGv_i32 ea;
+>>>       check_r0_write(dc, a->d);
+>>>       ea = tcg_temp_new();
+>>> -    tcg_gen_addi_tl(ea, cpu_R(dc, a->a), a->i);
+>>> -    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx, MO_TEUL);
+>>> -    tcg_gen_mov_tl(cpu_lock_addr, ea);
+>>> -    tcg_gen_mov_tl(cpu_lock_value, cpu_R(dc, a->d));
+>>> +    tcg_gen_addi_i32(ea, cpu_R(dc, a->a), a->i);
+>>> +    tcg_gen_qemu_ld_i32(cpu_R(dc, a->d), ea, dc->mem_idx, MO_TEUL);
+>>> +    tcg_gen_mov_i32(cpu_lock_addr, ea);
+>>> +    tcg_gen_mov_i32(cpu_lock_value, cpu_R(dc, a->d));
+>>>       return true;
+>>>   }
+>>
+>> What about MO_TE -> MO_BE to handle MO_TE[SU][WL]?
 > 
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> ---
+> I thought we already had that merged...
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+Found it in a branch from March 17 of this year, but forgot to post,
+thanks for the reminder!
 
