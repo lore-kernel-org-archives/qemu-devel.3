@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A17CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14ECCCCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6moR-0000tN-UQ; Thu, 09 Oct 2025 05:19:52 -0400
+	id 1v6mqi-0002Jz-QH; Thu, 09 Oct 2025 05:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6moI-0000oX-F3
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:19:42 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6mqd-0002IB-Sz
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:22:08 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6moC-0007fx-00
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:19:42 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-46e4ad36541so7922425e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 02:19:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6mqb-0008Hn-BH
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:22:07 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e2826d5c6so4743775e9.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 02:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760001567; x=1760606367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760001718; x=1760606518; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tfz23iC1uiDn8qWaRnTEstu7/K/eo7uOk4dqFFL6EgA=;
- b=n9Xut/7OBfsXn44rJuY1rIiH22zdhaREaY9ajiWHAxe2x288zGHOsVZMqGWTed1UMr
- WxmAyBMFzDjHMql580LrCYmLrlZ8aFEQKELFwAGlWJ+s2yenDSHlPJ3kjhZxbM4Wkylj
- N+/Cb7Bn13OeTqU+7QRCf3y1/P8Ig0V3Hb2qn4/pwsTlMVjzN3Vch/+gkIYYJmF7peNh
- yCwwy8GBEVhnM0G0NsFKPFACK0lWDB4iGLkFfAsABVR8eUtXRZfMSYWQPH6Kakbv2snr
- GP9dKVKKZXJhplu0l2AUy7pSCg1bdHMPRy35N1p4U3b4hqWk3Gj/i7wnFTysTlUKI/Y6
- xbMA==
+ bh=x4PTUjRAj8pRAtPl1ODWBTzVr7iM09LnqH5Jlh7j3hc=;
+ b=RW7ByAwmsE4iByECGqhvt+FuaF1F39AmGFzYS8nN3qDxDUZDeKoQOyHmvyS4m/YZOo
+ w/1haUttqRtQUb3PZCAfPLemZMDRG2iUGibfN+/SSAb8HHqg4Kom8kD2r2sfWAEEu0NR
+ fzFkHnZpaznv9B39pXufvn1LSBEKg7xhJ55S2Y5wqJKrp+H7+39v65dW5qh0KXKgyQjS
+ tAGMOm1ZN12FjdPZ7dQVg2acx3PPOTvVQIkdJOCYsRl4tqYmVLqeAKKfJGjbMXjM3zBD
+ Y6idK9s1GxnkXHjAU1cT2QYLCJatvnCZawkgXcXsgJIuC7RxwEBnhPNKnJuGn1DEHyi/
+ EfjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760001567; x=1760606367;
+ d=1e100.net; s=20230601; t=1760001718; x=1760606518;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tfz23iC1uiDn8qWaRnTEstu7/K/eo7uOk4dqFFL6EgA=;
- b=ZFCi1KlqDFjx0081P5NhdhrS0RuvHeCrckijOcHr1c999jtTQHXV2KVs0Qk8MLL+d9
- lKTOyAOhdva7JuEVUPT2Ge8xJWfHFL5Na5nnmZz9aOiPZBkU+pTYXPy/wb1FEdhC3aHj
- RqmJSfFJwUE9Nr/JyZsmzBJ7vkXg97acR7FQrGZbbuoin6BpdpvbysLHtiWMzAqoZnUQ
- j8G1Loi+2bV88ysStoi7i99ZueOYECzbanD1Vj5ZLntQHd0WotJ3hQJaqRLapYtoamVe
- NItBegmQ8DuqguxB9zqUd/uDKkhP+yWB9d5Kc69kieUG4H3uYQlIiERo3cbQ0lcuvsTm
- wt+g==
-X-Gm-Message-State: AOJu0YxVOHhDT+NzKojL1oRa6gK0RTgPUj8/AoEgbGS71NiliswxXXLW
- V1qcYlQaFZ2ErsJ7i4fn+fbg/T8bm82YPh+FWJjMokmsebEqCepr+MuHhXlPFFGv7Pf147Gidg6
- fgJr1WC2PLw==
-X-Gm-Gg: ASbGncsTMhOozTkfkDlaL0bX7NtHQ7rE21m8cpQW4h0gOX6XIGf3rOrjL+7LdQXUghI
- u+SOPA7qV1NH3OM5t9IzvR7MnIgfe6L+Okxp/LvzQDVAH1r9ij3zmrxC+7hStGl0Kjt5Mm81urn
- HxumaYlxRBYoz1OrmIvGNMc4uMJUTiDXe7pB26A1HA6qZg+ygerM4YgAUrZjxHUkzMyRmlF/9eJ
- EKsLf8yPnvgBflSmI4d/YvC3RTrRmkRNQWl/7hC8Cx8Op+WXltfGZzsNix2wq7CnpBnQeYUyMbA
- 2wZftS6ZS6xXbf/XTNbOy8gy0b+3OCR8npb956h8S4zJ4jqfpVOoukimYX8iQezlBsCBkj0qYp8
- jFX43E7OjseKa8QKvXmk4OfI8mMhZWRPt3SzsP8o3k0613jedllerLU/lP7KYcez4y3paxkUz/R
- xJI4PDmdGxqf7tQY1nABKebWtrZzIL
-X-Google-Smtp-Source: AGHT+IHno8mGOZIh7UCF2eLax8iKZo7i4ZE83gXj3Mkq2CFyleHELVk1LyOvKaOHt1dyhW48JL6Tyw==
-X-Received: by 2002:a05:6000:26c5:b0:3ee:1357:e191 with SMTP id
- ffacd0b85a97d-4266e7d9252mr4082637f8f.30.1760001567236; 
- Thu, 09 Oct 2025 02:19:27 -0700 (PDT)
+ bh=x4PTUjRAj8pRAtPl1ODWBTzVr7iM09LnqH5Jlh7j3hc=;
+ b=ewmNJTdLKAuG6S8ZWMWf1fU9BPLYy8S0z3V3BOZ18J6jPTwPOrW9IuEN0WUNKJXeMr
+ x+epNq2HtceYW+JNAKBJwEK6xxfSoNOAJyKY52JQUxUgYqULkZJlrtj5pZWLZIgVKyfk
+ GdAubQIhsGbF/05+WbnevUl2N+t6a6hoGOmSIR2tNx4AczEjAfnqU6cpcHu7a/jnuni/
+ Kn0tAMEFhtrPN4n1ioKWRgmzpkX3d11xMUAOQ7W3cwY7ACACLZrOUFnSBanfBBTqt5TB
+ TWNpNNsMt1bx8yiqFCPjq1VwmKnoemMHINg0IP/WcoIASA6EQ9FG+N2/bkTrwGvrnd4x
+ jqBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHGWTE1FEXuxrsoaLQGhEpYb5BMWBgxsGYjIFfUo++i1pa7c9JD5JM+dpxggyW+9iNanAnkihyAIBV@nongnu.org
+X-Gm-Message-State: AOJu0YxJzpzuYhvcCdXRg6OgTxI2ZOeCFf9FwJ2Th6MwaYleaXvF5gzy
+ LuucuC4oTVeJC7RqsIUSAHpjUXCQIDoYW7kMuM7Mccu7QYWwplkBx9ecj5Bpnha+aaQ=
+X-Gm-Gg: ASbGncs/GpnpE+YFUzoMgmLludiKTkLeMKkiBhtUQPndotqSrV7foB5qvsTeClxrzwN
+ C0zwgqNyNhLwFfgXCbDTYp4JHyX9a879cHTNeLiCEJjHtuIot2e5f+3RcycN7tG9H5/S2oCzHoL
+ NZAnkfNlO1QOtEmnbOkcc9vbDJXhh4Y7R5sFste0i3QbWEfsz+lBDNDxKPFZxSGFSXP28m2z/UF
+ WeUs5+yLjx7ztWU5jTaVkIs2Bd6ZDQ/bVW4v5P3PJrwPAJStHfopYkIKlcqTmuaDNuMH0/BCFVQ
+ 5QM6NHunrPHSKobEuwhdgfPAVnbMeVtE+p+VFkZl5LiRBGf5oyR2rrzrs93Yt6RQM4UrRHJeHog
+ GzffejcCUN47HHV40/PJM/z4a1Vx4o21wLKWp31HNXHCtQK2YFUJ6gyoKg07UfJCRJAschBwq4n
+ 57GxpzzCRSicNLl+rFdA==
+X-Google-Smtp-Source: AGHT+IExgwxwbWckfpHBISW0fcq/yIc8Ev5ES+47Oj7rSVRKMi5OEU4SagdWODwrro6GOOJQAAzaeA==
+X-Received: by 2002:a05:600c:1395:b0:46e:37fc:def0 with SMTP id
+ 5b1f17b1804b1-46fa9a9efaamr48489145e9.9.1760001718469; 
+ Thu, 09 Oct 2025 02:21:58 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9780sm33442643f8f.29.2025.10.09.02.19.26
+ 5b1f17b1804b1-46faf17b82bsm37527155e9.15.2025.10.09.02.21.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 02:19:26 -0700 (PDT)
-Message-ID: <f9e70ff3-f782-44f9-8df0-7a5bd117d1a1@linaro.org>
-Date: Thu, 9 Oct 2025 11:19:25 +0200
+ Thu, 09 Oct 2025 02:21:57 -0700 (PDT)
+Message-ID: <39be0def-fc09-4f24-9457-00858daba247@linaro.org>
+Date: Thu, 9 Oct 2025 11:21:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] target/openrisc: Replace MO_TE -> MO_BE
+Subject: Re: [PATCH] bql: Fix bql_locked status with condvar APIs
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stafford Horne <shorne@gmail.com>
-References: <20251009081903.13426-1-philmd@linaro.org>
- <20251009081903.13426-4-philmd@linaro.org>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20250904223158.1276992-1-peterx@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251009081903.13426-4-philmd@linaro.org>
+In-Reply-To: <20250904223158.1276992-1-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,49 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 10:18, Philippe Mathieu-Daudé wrote:
-> We only build the OpenRISC targets using big endianness order:
+On 5/9/25 00:31, Peter Xu wrote:
+> QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
+> whether the current thread is holding the BQL lock.
 > 
->    $ git grep TARGET_BIG_ENDIAN configs/targets/or1k-*
->    configs/targets/or1k-linux-user.mak:2:TARGET_BIG_ENDIAN=y
->    configs/targets/or1k-softmmu.mak:2:TARGET_BIG_ENDIAN=y
+> It's a pretty handy variable.  Function-wise, QEMU have codes trying to
+> conditionally take bql, relying on the var reflecting the locking status
+> (e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look at
+> the variable (in reality, co_tls_bql_locked), to see which thread is
+> currently holding the bql.
 > 
-> Therefore the MO_TE definition always expands to MO_BE. Use the
-> latter to simplify.
+> When using that as a debugging facility, sometimes we can observe multiple
+> threads holding bql at the same time. It's because QEMU's condvar APIs
+> bypassed the bql_*() API, hence they do not update bql_locked even if they
+> have released the mutex while waiting.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> It can cause confusion if one does "thread apply all p co_tls_bql_locked"
+> and see multiple threads reporting true.
+> 
+> Fix this by moving the bql status updates into the mutex debug hooks.  Now
+> the variable should always reflect the reality.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   target/openrisc/translate.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-> index df0ebcd3138..4ece2547614 100644
-> --- a/target/openrisc/translate.c
-> +++ b/target/openrisc/translate.c
-> @@ -647,7 +647,7 @@ static bool trans_l_lwa(DisasContext *dc, arg_load *a)
->       check_r0_write(dc, a->d);
->       ea = tcg_temp_new();
->       tcg_gen_addi_tl(ea, cpu_R(dc, a->a), a->i);
-> -    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx, MO_TE | MO_UL);
-> +    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx, MO_BE | MO_UL);
->       tcg_gen_mov_tl(cpu_lock_addr, ea);
->       tcg_gen_mov_tl(cpu_lock_value, cpu_R(dc, a->d));
->       return true;
-> @@ -665,13 +665,13 @@ static void do_load(DisasContext *dc, arg_load *a, MemOp mop)
->   
->   static bool trans_l_lwz(DisasContext *dc, arg_load *a)
->   {
-> -    do_load(dc, a, MO_TE | MO_UL);
-> +    do_load(dc, a, MO_BE | MO_UL);
->       return true;
->   }
->   
->   static bool trans_l_lws(DisasContext *dc, arg_load *a)
->   {
-> -    do_load(dc, a, MO_TE | MO_SL);
-> +    do_load(dc, a, MO_BE | MO_SL);
->       return true;
->   }
+> rfc->v1
+> - Fix comment [Stefan]
+> ---
+>   include/qemu/main-loop.h  | 18 ++++++++++++++++++
+>   util/qemu-thread-common.h |  7 +++++++
+>   stubs/iothread-lock.c     |  9 +++++++++
+>   system/cpus.c             | 14 ++++++++++++--
+>   4 files changed, 46 insertions(+), 2 deletions(-)
 
-Hmm should we move MO_BE within do_load()?
+Patch queued, thanks.
 
