@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01440CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF897CCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6ubQ-00033L-6C; Thu, 09 Oct 2025 13:38:56 -0400
+	id 1v6udE-0003g0-Tx; Thu, 09 Oct 2025 13:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6ubM-000339-Vk
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:38:54 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1v6udB-0003fi-9M
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:40:45 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6ubI-0004sk-3z
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:38:52 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-77f343231fcso1007096b3a.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:38:46 -0700 (PDT)
+ id 1v6ud2-0005Tg-Ux
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:40:44 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-33082c95fd0so1636868a91.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760031522; x=1760636322; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760031634; x=1760636434; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=R4HqC0xY2YFn5wJKlagqSl6R0tn6uK5yeAC8Qtq31VA=;
- b=dZ3Mi6+wJjnlFfUzvMLHBLByYsVEOiew7piHigUFA2uyHlWT1/bbGtL+Kyy5IvPWHL
- lzgSImObx4WkPyjj+TkHM9ZTz0r29XT+FulEG4CE8E4n/cnWCsIcXfuoJGKEfI+YDT8y
- 6s8wFrDM4sK5vwlljVW6kYaH+pta7rtHoFbxQHaxBMjqTdKo8V+gQPKVhVuWpr0BWpM3
- 3UpDS4FYTzR6uSLzS2zvQ7uHCPwDp43Q7vzDrLOTuA0PXEfzEjK0wOWgvxGleEp/eTxP
- UUGm/aAEanP/RDJqkoIpqs/pZetkgjehyEFHY2jy3dzTAewienkZ2Y/1LT6VAyrRjf6h
- bovw==
+ bh=UyP+FBZJLq6xKNT7V4iq8Qi9Lqostur0CLvJD/v/ox0=;
+ b=pyU2Zh2If6t8t3EiX8QqRamq/4y0jbs7oDnOdf28GIzuiz/DSZuJZjds2ErwDtoR5M
+ 4fxO2WcYlDieopC/3SJwWzPitee+sRv82E/NLUen+CIwwZwULMAV2ccvpwXopjWbp+4f
+ EaKMjyWAT+TUoImQtORpVpejSgb88VDb4YhQf2huR6tLhEnA0jVKNBXAXUPWFYIB+3/L
+ iWz8lWZJKXHn502J0ghKJL5/DJ1vL9cdouhiif+GufYh5YN+CgIfkNRYiI+ZmQgMMdCh
+ 9GqjtuP0NME/5bmDLIXs6+qaqVYQprGUxmx22yMMSvxKO7xHXUY0+vnqxFpVdwop2QvI
+ wosQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760031522; x=1760636322;
+ d=1e100.net; s=20230601; t=1760031634; x=1760636434;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R4HqC0xY2YFn5wJKlagqSl6R0tn6uK5yeAC8Qtq31VA=;
- b=qBBD0mijsWVyMZVmFsiUUE5CA9JN1JhMrDwxnhOS8RpFPrfED7UyaoYBIPbxZXxIaI
- fqTJR8CyGs+e5XbRzbDpatCwat+9Nf3EbLzEoh9YCl8/zgwMjfkaDsB4httnl8GFehNK
- OtF5mK3yVGPrslC2/PpN3A0W8yF6E36wj2e6dCHC19z6qUOPMoD/YaPzbo68z29Raan5
- lr2O8UaFI60/BczdCQn7VX7tVMQUdUDOvy38b9oqJQyjUdP9QZc47nDilPhXdTWzbzh/
- ZvXy04DCLnnfKlK3nAN8a60xyYkUECbRAghBQfV10SVp6QOkRv0RRJ8lSSDP6V5KPs59
- EzOA==
+ bh=UyP+FBZJLq6xKNT7V4iq8Qi9Lqostur0CLvJD/v/ox0=;
+ b=lpwkWzl9uiVI9Mxxk5gOnFtQti1vDda4GAN68eV35nARuwRIdGit9DdBlftEcFP7eK
+ vCaGA/vN4/DzEd54PTqCo/S/vhmRL7AguaCwozeSEBNdWtvmJkK8KHbYB1FHu9jmlZsM
+ oXp3Ca2k7+f1ySqykyG2ODg+yn4sA1L/N31uOmF2BHyfGqBQuoQHSCvmmYHNvSrBGiUN
+ XUmazZavsBnXOq92VJYfzcAeL5GT9ONfEFGFlLk4b4lDphM+yyVAYQt8pfO1N8e/P+4s
+ JqgmT5XPjjnQ3EXjKUQN/kEZv6osuUG0/PkHGVnxjhiASBbqLYrAWhVWfg/mUr989xhP
+ JQDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU017mLVWy8Bi5/juZYC1RRqyMGFh/TUBtBepabbIgviNRc00MjTpmlBTyB4l555vSGyjSnviomNQlY@nongnu.org
-X-Gm-Message-State: AOJu0Yzb4gEHj+YUJgJ7h4ewJnLIoxzJuRLv8NT1wt0VD3jH1bav3KZz
- Q5Amz0wNf1OKHxLpHfKDq0V5P/k8/Y+IGvGR+0mtvN9u9Jd9dc6N1s++yOQl86C7fpA=
-X-Gm-Gg: ASbGncuh2RLdiM7GiwlKLBbghsX43wtWn62asYitWVhBRgD+L8encw9MTUEitS9G7RQ
- RQjKu1eDYshIT7B8BK0gZm2qlG3cFBNPZGcMsBowYD5lD3kqndRcR49n/LWfo4qYCTtUtPpB2dQ
- jglPPwSHF80DnBV+H7z11Ysl9bv4gWcH4hFdRjDMsSqLv9EVfOSbOyD5jYl1Q4o5nnUy3E8Sqhj
- bjtdiBvxYUojppJZexS3WqCjN/gM73gZaSQhUCPVuZNazV3uWHF48mC6wJvnrMOCI8pL7Dpp1MD
- ViUnK7pxSkk6ujkcfzAfnzlLHrvZVY0yAqKUm+bcVR0ZQU6J8SPH/Jdy2giyP+lc3pZKabHy+rk
- d1G6i7ozYpBZSaVi43ppQeHlmoLcR4qwCmmB0Xdoc0+S6CaODdPhuaRWOeO86COi5
-X-Google-Smtp-Source: AGHT+IH6GV0fupNVGLxh1j3gVcUaZ8rnBPuG+bt23WP5S5lb4V+S5vmZPBq6kqYGcdginayn1Acmvg==
-X-Received: by 2002:a05:6a20:6a28:b0:25b:f1b8:b421 with SMTP id
- adf61e73a8af0-32da81f3ad0mr10717146637.27.1760031522467; 
- Thu, 09 Oct 2025 10:38:42 -0700 (PDT)
+ AJvYcCXepCRj/MKhcOeZ2W3bLjV/p/EQ5stslsNSE8xHIpQbn0bsW6HoxB/gS7x0cKIl7fhrcMK8GqRCTX5n@nongnu.org
+X-Gm-Message-State: AOJu0YxqVeDpl0Z5TlI9XfWNlv8FHeycxdyKwpt25ovViOUcztw2gLWk
+ 2FKVaYGjj6LJbw6SEALl3ccUKGZAR52HrYcgO5NBFbokDz8ZDh8M1KSP80hJ1dT3HhQ=
+X-Gm-Gg: ASbGncuwamnxft6+vAiZklht96tomBtFPwvTVOSo2OqFMnXuN/vTHgKStGKiZ/Rixve
+ xs65/0zZF4VuA4nHXcf799HnoXwTCjhkIajhSpFVSgSm2JUgM2gdn1oWNEnG+CvsqXCeX1dfK8l
+ x7/lfn9SAVjPHxcaKyVKNuLPTl1nSqhKAwrn/txM1c8ckRZLblDA7QIg34WrfUAPh/poWLihImt
+ 5VLrpE7Gp7GXUcpPliSZCPgzfOfWiu+aXolYNXqVKhuVLRqXaNsgWD6QLlMgZLRkARlznmfCWEA
+ IhswNQMkj7h9TAax2LTLe7VSWHNEsPvqWDHRYOs+PBrIIK//zQswydxp9cy90bBqRmvHt7AuM/z
+ Qf+8FFlx2cbKUkKjXB6nESdjYOKS65VvmbjQ690R7dfY4Ktc7Kh1h2Q6PdSIOF7xE
+X-Google-Smtp-Source: AGHT+IHZ96NW4MMM/hInIdXXFxq98t+HhezGWxPEL9/PdOgxH011jpkvpVDjmNhhIoqt8vu7nE9l5A==
+X-Received: by 2002:a17:90b:1b4c:b0:32e:4924:6902 with SMTP id
+ 98e67ed59e1d1-33b511496d1mr11792218a91.3.1760031634137; 
+ Thu, 09 Oct 2025 10:40:34 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7992d993853sm289926b3a.74.2025.10.09.10.38.42
+ 98e67ed59e1d1-33b61a3cc5csm477891a91.10.2025.10.09.10.40.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 10:38:42 -0700 (PDT)
-Message-ID: <b9e34640-43bf-4345-9718-f319ff185c1a@linaro.org>
-Date: Thu, 9 Oct 2025 10:38:40 -0700
+ Thu, 09 Oct 2025 10:40:33 -0700 (PDT)
+Message-ID: <fef2f604-453d-4d12-a75e-f84e05ff4242@linaro.org>
+Date: Thu, 9 Oct 2025 10:40:32 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
- hosts
+Subject: Re: [PATCH 1/6] hw/hppa: Use the machine default boot order at reset
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250820134937.45077-1-philmd@linaro.org>
- <226ab909-0482-493f-bacf-5d2930d07ad7@linaro.org>
- <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>
+References: <20251009143106.22724-1-philmd@linaro.org>
+ <20251009143106.22724-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
+In-Reply-To: <20251009143106.22724-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,24 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 10:23, Philippe Mathieu-Daudé wrote:
-> On 21/8/25 22:27, Richard Henderson wrote:
->> On 8/20/25 23:49, Philippe Mathieu-Daudé wrote:
->>> qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
->>> and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
->>> ("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
->>> ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
->>> is C_NotImplemented.
->>
->> Not true: ld2/st2 are also used for 128-bit load store.
->>
->> See: aarch64, x86_64, loongarch64, ppc64, s390x.
+On 10/9/25 07:31, Philippe Mathieu-Daudé wrote:
+> Since new machines might be added with different boot order
+> than 'c', take the machine default one at reset.
 > 
-> OK. Hmm I guess I need to add a __attribute__((unused)) check like
-> you did in commit f408df587a0 ("tcg: Convert brcond2_i32 to
-> TCGOutOpBrcond2") to outop_qemu_ld2/st2 then.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/hppa/machine.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+> index dacedc5409c..1cce5c47b91 100644
+> --- a/hw/hppa/machine.c
+> +++ b/hw/hppa/machine.c
+> @@ -640,6 +640,7 @@ static void machine_HP_C3700_init(MachineState *machine)
+>   
+>   static void hppa_machine_reset(MachineState *ms, ResetType type)
+>   {
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>       unsigned int smp_cpus = ms->smp.cpus;
+>       int i;
+>   
+> @@ -671,7 +672,7 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+>       cpu[0]->env.kernel_entry = 0;
+>       cpu[0]->env.initrd_base = 0;
+>       cpu[0]->env.initrd_end = 0;
+> -    cpu[0]->env.cmdline_or_bootorder = 'c';
+> +    cpu[0]->env.cmdline_or_bootorder = mc->default_boot_order[0];
+>   }
+>   
+>   static void hppa_nmi(NMIState *n, int cpu_index, Error **errp)
 
-Why?  Please expand on the error you're seeing.
+Is this perhaps trying to reset boot order to 'c' for reboot?
 
 
 r~
