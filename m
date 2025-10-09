@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A62CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED604CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6vus-0005eo-2Z; Thu, 09 Oct 2025 15:03:06 -0400
+	id 1v6vwe-0006HB-Qq; Thu, 09 Oct 2025 15:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6vup-0005dK-77
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:03:03 -0400
-Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
+ id 1v6vwd-0006Gq-KF
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:04:55 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6vul-0006oc-PW
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:03:02 -0400
-Received: by mail-io1-xd30.google.com with SMTP id
- ca18e2360f4ac-92b92e4b078so54492839f.0
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:02:59 -0700 (PDT)
+ id 1v6vwX-0006tI-AM
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:04:55 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-42e2c336adcso4890995ab.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:04:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760036578; x=1760641378; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760036687; x=1760641487; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q7ISF1Zio3LRktd7VytfLR6ITcBjsQ/w8Wi0n94pHTw=;
- b=O45AawKoKX/hEXY5iBbV0HW4YNc/tFOmI7j3PU32BgyxBmut0CstI7thSRh96JZDKZ
- bWKhR1RaU223mMDrBbQicq340G8borZERmBDTLmmXjJAoPaipuHpUeNTcUNBlKHqRLW0
- +5X9ELPT7XiKW73jC0VF8+TuO/2NNsV1L61OfWZhr/FCnC6k3BWy56kWx7gIEVgrdNHJ
- WZ1XwDjjnBDzU3cSEhzPeHK/Pp7Wldd2CMiCLFH5Tle7QsSFI5luKuQQaGuuNxpBNIVZ
- /GvKklVivePba8iDd3/m41aZc8u3dIZ7dFj1NPW+Nb5wtGq20PqHjh9E+Upgc5igLwfT
- gdEQ==
+ bh=/Bg58HkihUUbzA34OgMoSfRqMOeAGUABlUl+Is8LvUA=;
+ b=lQVXxgz/8vT427O/PGoZCQU8E6TLcJ9F/3/rrGETrliX+BS3wWzBpZd/6k8EereeLJ
+ Y7VPX79K+lbzDUIsaPJZflnRXVK7wAOZ0Ss88AWrlDV28zcFtAptXiZRdoeptCdK4Nef
+ JEb3PGAXsbBhVT+5iXx/R70Kt6Ln3PITdhiB1z4RzqJOM4whcJ+wQVy7K5UviP0K9kNZ
+ GUClAi41jSuVTUpWB0Y7cFhf4OmwmCjaj5+/poc0fng0e7oGYFTx1d1mBCapuTNVb5b5
+ Yh5gDErqJWzw5h9AfHLT1lFtyD44wGTALiJ46WP/xokSTazz/5Rxw279UVTcXvnhcFXO
+ YWyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760036578; x=1760641378;
+ d=1e100.net; s=20230601; t=1760036687; x=1760641487;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q7ISF1Zio3LRktd7VytfLR6ITcBjsQ/w8Wi0n94pHTw=;
- b=N/345tcIpBMN2q5NH8ipBn248RKIJjKag3GDu1wj4Hooh2WtUSSpHnWbhZrLl04PoK
- eW0ElRi5omkYPVPkaGlmfxZFRN8///q465gCR/LrC2L3IZCZh4rYimUZV0vySz6szSxJ
- K0lm2FXvQ3bN/5CcNux99tX+wdvNKlT9GVtqTtnwUBEFSMvGG3Q9cfgVozifTN8VHOS8
- wFRvYRMQ+MxeLhOP90cyXM8CfnGtMGtN9TZUC/6TmDtKbPlkAhf2jm+5uJpM8LDdQlq8
- buRPNc0jnZKoiTuPNQOW3H55rGkdKbZoHdt7Eg6lAOPgyjluKBqQ6j9Vp8mhgAnnk7dJ
- HXlQ==
+ bh=/Bg58HkihUUbzA34OgMoSfRqMOeAGUABlUl+Is8LvUA=;
+ b=IRqXC1SxvY/ygktki1lfPpW+bhhNYUv8ViB4xIbs+XPiiT0Xmb8vgPYX7rMZC7cDmG
+ D9SOvTa/zqn+yGtWgWxZf+NjXgmJmi4ItdoOhs1pvWSnAf2tIJ4GZu49DJ11idStgAhd
+ zyXLaB5as+AMoLXLcGcFe6GNXdYYh0U97adekbapnkdz8XMUtzhs0VTl0y3SpbjOl7kt
+ ScE94KWbCAVl6tFEPOuaM2LsKg+xgu5HYa59NBu7lGOuUOFqhWWAaBZldxvPIyOZqjQb
+ 6r+P5krfSs0rHJ7jbpWvdw2Q0Ei1rd9HKWGQVJcx688P9rsseueqi+oXsGBJFvupidp+
+ EDkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlfUf37HTCSKs91GrzRS+I3p+mv94r+GEP8hJhMnC1a3xu132g7dN5n9RcT+DwEpoWQ+PkZKQ2sTu/@nongnu.org
-X-Gm-Message-State: AOJu0Ywq0dQowh1N/x6BSgz5QPHK5NZiHiPtXROKZkTvQC5xm4Wwh4ex
- 9DueWoE3ysgsKK1qd8g7jcmJBU1Rq48g/pZNH1kPaSawrwlKu9hgMmmbx68cxbepPZM4/0ZV4g3
- szsSAqVgx3gryG/ItQ7tnnuySbjdz7jE=
-X-Gm-Gg: ASbGncsxiaovi9BlbOIUAZD5CYHS8xmmBss70tg56HK0ySOKp1s2HJ4hxjIp/u/i2uo
- avKm3EN9+MgqnS/SpTupAw0azuIwiPdXGH0gmeLh6cR7Z2UUP8zafWCR+ocftyGczG9n4pzVQLG
- y4/cWSWDyFIK/eap62F1X/uRnz0SslpcKS1ZpVx+jIqfEhTa3qtf3vJxep2nFslaNjoTYGE6Egl
- 1G+RfozsnJBTgwunyEfraUGDiZJRSHdP8Z8nDxpjA==
-X-Google-Smtp-Source: AGHT+IEpBAdyPRW2Ghhr0FzyRnAjELIEQB2bgmvo3U/YiAvBVWyxagqkqExJHSfAo46WGAjwNOa4nd5fXHn+/vC5Jwo=
-X-Received: by 2002:a05:6e02:12cb:b0:42e:7589:6290 with SMTP id
- e9e14a558f8ab-42f87377de2mr84232745ab.12.1760036575266; Thu, 09 Oct 2025
- 12:02:55 -0700 (PDT)
+ AJvYcCUMe5FkUGpoz+rL93FO6wOJ7MBblYzoTwnpJ6R5jI6PDOjz7uegsH4Cwg/ULgjwBWJZbU19tNUMDR9D@nongnu.org
+X-Gm-Message-State: AOJu0Yx3XImMxMIHWQ8m11SYjB52oAVWf/pEF2fiYHG80GU1FsS4TlPH
+ dipiTVvMCm7qf/DTyBFzrWexHK5Yj7hrjGkWxUDtUy/VPTCymB5VF75uPgbYyR84vSswRSA93VW
+ 1TtRifo5b7Ezx1tuElVHqNraIBGuan5A=
+X-Gm-Gg: ASbGncvd4FXyDppgobwpDPzvnF63TiqNLBilU4M2a+Cr2jnlkHh9IU5tDumft04aqL9
+ PxBJ3DepC7IXbz/yuhuvh2oU6c3ZqmQujZVfeur09gSPgab988zNIQj+HjsRqOi7K9U4kPqQw0y
+ col8F1jnkbUFH0SbvM0xKsByiMDt4aphqD2aGYg3DWHTmmWYf1gX0ipov7qxqgJmRHi9qY7YqvS
+ i9q1u5MupHjxTKSHgGmDmMlmkKhBkZlJqGmU7hXlQ==
+X-Google-Smtp-Source: AGHT+IH+35imRfux+MrYHGFxeC/8RmHsDKIEc8S8SFq8Skpn83Q5m4XWSunBAD9QSe8rt0MofThLIHCbkl5DRnng+H4=
+X-Received: by 2002:a05:6e02:1847:b0:428:c370:d972 with SMTP id
+ e9e14a558f8ab-42f87359880mr70585455ab.7.1760036687180; Thu, 09 Oct 2025
+ 12:04:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-16-vsementsov@yandex-team.ru>
-In-Reply-To: <20250813164856.950363-16-vsementsov@yandex-team.ru>
+ <20250813164856.950363-17-vsementsov@yandex-team.ru>
+In-Reply-To: <20250813164856.950363-17-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Thu, 9 Oct 2025 15:02:44 -0400
-X-Gm-Features: AS18NWDjaip0rSWC-CYlG5sDhQE6HIIeOh4vDTMucUiekpvrBDRBG2om2RK6wrs
-Message-ID: <CAFubqFt+sUt9aDfD6nXYEgdOs4HZkQZCK_GxtZ=E_WgEO8F58w@mail.gmail.com>
-Subject: Re: [PATCH 15/33] vhost: final refactoring of vhost vrings map/unmap
+Date: Thu, 9 Oct 2025 15:04:34 -0400
+X-Gm-Features: AS18NWApDiGrJlC7m-7l9Pf3h27MjY68v4Fek6DP99wdzoWoedLDoAefYiyghic
+Message-ID: <CAFubqFs5OTfvjyNsqS-TiMEXsrMivs2dQWQevpVZChDDykxNUA@mail.gmail.com>
+Subject: Re: [PATCH 16/33] vhost: simplify vhost_dev_init() error-path
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
  sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
@@ -77,15 +77,15 @@ Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net,
  steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d30;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,144 +101,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I=E2=80=99m happy with factoring out these helpers. My only concern is the =
-one
-around vq->{used, avail, desc} being nulled out in patch 11/33.
+Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
-On Wed, Aug 13, 2025 at 12:51=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Wed, Aug 13, 2025 at 12:54=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> Introduce helper functions vhost_vrings_map() and
-> vhost_vrings_unmap() and use them.
+> No reason to rollback setting up busyloop timeout on failure.
+> We don't do such rollback for other things we setup in backend.
+> Also, look at vhost_net_init() in hw/net/vhost_net.c: we may fail
+> after successfully called vhost_dev_init(), and in this case we'll
+> just call vhost_dev_cleanup(), which doesn't rollback busyloop
+> timeout.
+>
+> So, let's keep it simple.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/virtio/vhost.c | 82 ++++++++++++++++++++++++++++++-----------------
->  1 file changed, 52 insertions(+), 30 deletions(-)
+>  hw/virtio/vhost.c | 12 +++---------
+>  1 file changed, 3 insertions(+), 9 deletions(-)
 >
 > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index c76e2dbb4e..f6ee59425f 100644
+> index f6ee59425f..a3620c82d8 100644
 > --- a/hw/virtio/vhost.c
 > +++ b/hw/virtio/vhost.c
-> @@ -498,6 +498,53 @@ static void vhost_memory_unmap(struct vhost_dev *dev=
-, void *buffer,
+> @@ -1602,7 +1602,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
+aque,
+>                                                       busyloop_timeout);
+>              if (r < 0) {
+>                  error_setg_errno(errp, -r, "Failed to set busyloop timeo=
+ut");
+> -                goto fail_busyloop;
+> +                goto fail;
+>              }
+>          }
 >      }
->  }
->
-> +static void vhost_vrings_unmap(struct vhost_dev *dev,
-> +                               struct vhost_virtqueue *vq, bool touched)
-> +{
-> +    vhost_memory_unmap(dev, vq->used, vq->used_size, touched,
-> +                       touched ? vq->used_size : 0);
-> +    vhost_memory_unmap(dev, vq->avail, vq->avail_size, 0,
-> +                       touched ? vq->avail_size : 0);
-> +    vhost_memory_unmap(dev, vq->desc, vq->desc_size, 0,
-> +                       touched ? vq->desc_size : 0);
-> +}
-> +
-> +static int vhost_vrings_map(struct vhost_dev *dev,
-> +                            struct VirtIODevice *vdev,
-> +                            struct vhost_virtqueue *vq,
-> +                            unsigned idx)
-> +{
-> +    vq->desc_phys =3D virtio_queue_get_desc_addr(vdev, idx);
-> +    if (vq->desc_phys =3D=3D 0) {
-> +        /* Queue might not be ready for start */
-> +        return 0;
-> +    }
-> +    vq->desc_size =3D virtio_queue_get_desc_size(vdev, idx);
-> +    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, vq->desc_size, fal=
-se);
-> +    if (!vq->desc) {
-> +        return -ENOMEM;
-> +    }
-> +
-> +    vq->avail_size =3D virtio_queue_get_avail_size(vdev, idx);
-> +    vq->avail_phys =3D virtio_queue_get_avail_addr(vdev, idx);
-> +    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, vq->avail_size, =
-false);
-> +    if (!vq->avail) {
-> +        goto fail;
-> +    }
-> +
-> +    vq->used_size =3D virtio_queue_get_used_size(vdev, idx);
-> +    vq->used_phys =3D virtio_queue_get_used_addr(vdev, idx);
-> +    vq->used =3D vhost_memory_map(dev, vq->used_phys, vq->used_size, tru=
-e);
-> +    if (!vq->used) {
-> +        goto fail;
-> +    }
-> +
-> +    return 1;
-> +fail:
-> +    vhost_vrings_unmap(dev, vq, false);
-> +    return -ENOMEM;
-> +}
-> +
->  static int vhost_verify_ring_part_mapping(void *ring_hva,
->                                            uint64_t ring_gpa,
->                                            uint64_t ring_size,
-> @@ -1282,30 +1329,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
->      };
->      struct VirtQueue *vvq =3D virtio_get_queue(vdev, idx);
->
-> -    vq->desc_phys =3D virtio_queue_get_desc_addr(vdev, idx);
-> -    if (vq->desc_phys =3D=3D 0) {
-> -        /* Queue might not be ready for start */
-> -        return 0;
-> -    }
-> -    vq->desc_size =3D virtio_queue_get_desc_size(vdev, idx);
-> -    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, vq->desc_size, fal=
-se);
-> -    if (!vq->desc) {
-> -        r =3D -ENOMEM;
-> -        goto fail;
-> -    }
-> -    vq->avail_size =3D virtio_queue_get_avail_size(vdev, idx);
-> -    vq->avail_phys =3D virtio_queue_get_avail_addr(vdev, idx);
-> -    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, vq->avail_size, =
-false);
-> -    if (!vq->avail) {
-> -        r =3D -ENOMEM;
-> -        goto fail;
-> -    }
-> -    vq->used_size =3D virtio_queue_get_used_size(vdev, idx);
-> -    vq->used_phys =3D virtio_queue_get_used_addr(vdev, idx);
-> -    vq->used =3D vhost_memory_map(dev, vq->used_phys, vq->used_size, tru=
-e);
-> -    if (!vq->used) {
-> -        r =3D -ENOMEM;
-> -        goto fail;
-> +    r =3D vhost_vrings_map(dev, vdev, vq, idx);
-> +    if (r <=3D 0) {
-> +        return r;
+> @@ -1642,7 +1642,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
+aque,
+>      if (hdev->migration_blocker !=3D NULL) {
+>          r =3D migrate_add_blocker_normal(&hdev->migration_blocker, errp)=
+;
+>          if (r < 0) {
+> -            goto fail_busyloop;
+> +            goto fail;
+>          }
 >      }
 >
->      vq->num =3D state.num =3D virtio_queue_get_num(vdev, idx);
-> @@ -1367,9 +1393,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+> @@ -1674,17 +1674,11 @@ int vhost_dev_init(struct vhost_dev *hdev, void *=
+opaque,
+>                     " than current number of used (%d) and reserved (%d)"
+>                     " memory slots for memory devices.", limit, used, res=
+erved);
+>          r =3D -EINVAL;
+> -        goto fail_busyloop;
+> +        goto fail;
+>      }
+>
 >      return 0;
 >
+> -fail_busyloop:
+> -    if (busyloop_timeout) {
+> -        while (--i >=3D 0) {
+> -            vhost_virtqueue_set_busyloop_timeout(hdev, hdev->vq_index + =
+i, 0);
+> -        }
+> -    }
 >  fail:
-> -    vhost_memory_unmap(dev, vq->used, vq->used_size, 0, 0);
-> -    vhost_memory_unmap(dev, vq->avail, vq->avail_size, 0, 0);
-> -    vhost_memory_unmap(dev, vq->desc, vq->desc_size, 0, 0);
-> +    vhost_vrings_unmap(dev, vq, false);
->      return r;
->  }
->
-> @@ -1416,9 +1440,7 @@ static int do_vhost_virtqueue_stop(struct vhost_dev=
- *dev,
->                                                  vhost_vq_index);
->      }
->
-> -    vhost_memory_unmap(dev, vq->used, vq->used_size, 1, vq->used_size);
-> -    vhost_memory_unmap(dev, vq->avail, vq->avail_size, 0, vq->avail_size=
-);
-> -    vhost_memory_unmap(dev, vq->desc, vq->desc_size, 0, vq->desc_size);
-> +    vhost_vrings_unmap(dev, vq, true);
->      return r;
->  }
->
+>      hdev->nvqs =3D n_initialized_vqs;
+>      vhost_dev_cleanup(hdev);
 > --
 > 2.48.1
 >
