@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8423BCCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278DACCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6uOF-00047s-Ur; Thu, 09 Oct 2025 13:25:19 -0400
+	id 1v6uT8-00064b-Hb; Thu, 09 Oct 2025 13:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6uOC-00044I-3A
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:25:16 -0400
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6uT5-00061u-Eh
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:30:19 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6uO8-0002sU-7f
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:25:15 -0400
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-46e6a6a5e42so6275865e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:25:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6uT1-0003fa-23
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:30:18 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b5515eaefceso1039699a12.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760030707; x=1760635507; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o4CWR6Dqa5t6AnqwaKPk6brm/OwdP60uMV2JauDuWsU=;
- b=SkVQ2M2eP3BhGHNzKgqpTH5Vh2RcoeeW5WLEzpKox9CEq0JC7XcK3zCti0IpyPZD51
- NtiWpJvZH/Eo0qC/ZtI8kKiQK3nEgvmSdaG5fRBZV/WPgbwRxLLrvQjVkhLjXggS0Cd8
- Z6wZxdoDLB+Xu3gE4cg7qoSPg0IlNB8+ZplpuWUXIEFZ92DRU05OY1jn452LwFYrxw+q
- pQOYBr+PyTj788ZLbF2fxMG9uyc9b3j0r3tAQ281RednQ8qdPJbMDrOxFXCyt5SwGhl9
- kAatp14oYUYNWPnDpc6k3vl9/1U6adoftfCVZ3Yt53AOHldWt8hdD8caeCsVd501+P6m
- XKFQ==
+ d=linaro.org; s=google; t=1760031008; x=1760635808; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ROdeIa9mi4lfjO4SE76khyfKtLwAqnBPn1GAQHuZR18=;
+ b=Cb8vw95UnkWC/Z5Y3Yzo1T+QJBNU2g7xr9urvAS932EBsqrKokmht9BkO5J4OxMceT
+ T1sUzNj8lf+Gfd/YIsnMrM6xbT7WOSm9rfe5C3X9mL0rkk9MEkKREGYqqJO62lARFk94
+ yAMVS+c/zp/9Cb0Kg36XBY5nkjz/lFCcsbNUf20RFU07v67BDuEmPz6kAtFtQrhHCRDY
+ 5hs9kYm0zaW2SMDi/633sciWvMblPxGZh4+BHBa6WAT7pdLH7N3VMZleuUpBLUE+fXQk
+ ZRSh6RLR70AS+lYs1PVjpav+nHQUfmVynutXZ7kK2hcsF1K4S+O3DB6OglY6wUrNosCi
+ XtSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760030707; x=1760635507;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760031008; x=1760635808;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o4CWR6Dqa5t6AnqwaKPk6brm/OwdP60uMV2JauDuWsU=;
- b=Tc+8Ge486gkvVr4jzD2ou4z4zJKQNAqZnlsowubyKLhiIDHTJTNt3fDP21luLnDXDK
- 98fMTU/5CybtyJCTlEk0QCXOyvdbIVWXkbWoGOrtqQIkkpgQM+qLCs3zGGptiJ2Mct0I
- 9Dl1ZWn4tbL6qmJurKbh44hDQN/zzIrrmwb5YyffTzEANP/sSyPSiBG0iXT3HKE8Kib2
- sFQsEjL5xJNZB9K/KYorqKzMQIUlkeMLrVfQ+XKuQyYXdjclg5Ldv9XCjU6dRG0o66VO
- TmW0WuKmVAxt+0dnr4YUXACWj8GBxSUxp3Ah/QyBYF7xDHuwANCXDGjDE/0XtJEcTqSZ
- VlDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtNNJf5Lgfw7aKy5eEj2OgTHJKVPh9zUSNIxAblxbYlN0o3CbV27/fPcjo4ZaO53BKJkY5L+A0CUSd@nongnu.org
-X-Gm-Message-State: AOJu0Yx5aH0n7j6+lVu/R3CNGm1oGmMtQpHy4XOFhiSYp+w+qvR3vpF0
- CtCxVodX/GC9RV//lw38g0dwJyFnanpi/EtsQTrIL9dUKU840NNiGdxNP4aWVRvesuY=
-X-Gm-Gg: ASbGnctTgamamu8s0kMI+kEa8S4zc4kQXdqbomw3VMTZmZtctizQSebZU894p4+wKu+
- 6VlgNkOvwtV8LJ/bkn7THfDnt78mhTx7Okhy0TxJLCq1CIOrQjT6HciItz/ktxaLiRVoxIMtWCo
- 2QvEuFgIxv/e+CJ8F0pc4Mug0l9Y2KyyXEHAD0mqPGPdoEpM+NDurv2YKjA8Zmvr51zIlOgjNod
- cGeoQEo5tkWVydC6uJcVVxXpmjCW4NFqASvMSXE6omd04Qp5UGZQs4nGN4F9B073jQDIIZkTPgv
- ArAmdtguCPruwuPUEQIXm77ZcQwmGyBgzq0FSm7Y/MY9CTcQqlWx3Mlvn/1WPCRZYzRIeu/CBYL
- gplrp0QncCPl0hrzdWZPVwh4YZDPSm6yYx2aU4RHbnekvMWIem4juQZbzsSNONDza/JTW/FQT1d
- AyZyrcx3OADgOpPWYNLQOQnfKCmCdQ
-X-Google-Smtp-Source: AGHT+IGuOw4/6+3Zr1DlPoizcGznvLfHnlHcsIJ8BgyYYCZX3cjVph8r4sRr0D2pOD4q3EWpOGml6g==
-X-Received: by 2002:a05:600d:42f2:b0:46e:4341:7302 with SMTP id
- 5b1f17b1804b1-46fb15396d6mr17984015e9.34.1760030707043; 
- Thu, 09 Oct 2025 10:25:07 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb49c4027sm4866645e9.17.2025.10.09.10.25.06
+ bh=ROdeIa9mi4lfjO4SE76khyfKtLwAqnBPn1GAQHuZR18=;
+ b=CF3Yb1MXBJGkz/IWSDwJmXwm5ZHc8HUJTr2g0auNnbnjFAxioE3Wkpj46F+ds49HkY
+ 2eC3lfmx5J9n85G73a1aFoyPkxq21jmgOyR80B1k31K0OhK52tCuQkkcT94DHrgV8bcN
+ 7vq9Q4IcJRT1fFfJPsxBuwI6WL1VlRwOOrugENt/4oLHfBULc6wNttmPc0zc1E9Y5ABr
+ p+LZJqGx+iL+/KwnqjqUjiF+e1HvHvzYpVEOnTXvOPZevKrrkowGSOcqtU0pk9HwAWfO
+ 7ZIPBYsDXVnayU5GYHFFh115oVj95oudcxIiZ2SJIyL4I4Q+cSjDJBFKHufAc5mJjudr
+ Nrbg==
+X-Gm-Message-State: AOJu0YyHEQsczcn86HUHjkfT2KEV7w2iFVSGb67Gw/HDzDr8btYrg3aX
+ 4u8N4guhZUzrRtbAtw8/3+kY4bPGERFROPMqs4HbYhvDt7gT9Za48Wl9jqkS4HOEcWIubIPRUHi
+ R9zbPIMo=
+X-Gm-Gg: ASbGncu5J4i8HxS8R6EUFTUyXyMgYf1mr28B9lUiyQmXrwA6qRyHmJ8tz6NkP0JBDld
+ FIy4JHuf2wVM8oHmxwo4Re8RZpv86G6l1q2rrdfY31XTiaVuDis5aUbjMsZazmNpzR04ONlo/OH
+ n2TXbeJRHSSG6tEVh6XvW0Z9Q9qx+4AcIHxJFFpb4YUECUsrSsnKIO+7JYr77MjxjTvwnwiSYCb
+ wcO3x/VBm/368kIGarrzIRk5isYK3vUb7EVe9McpLb7acAddXZFPyhCpvFwoJb4ufKdHXF1OJdA
+ Iyz96kReuJi3LqBh/ba3ACWOwEqKHgL8uu+Mp6SjOVA2iNwa526wT3fYNx7edQ8HJo3JOHIjh2y
+ B9L431r4e3Ixk57pbv7yBKDHNKSctyOOoUGu4k15epIjQV0hw6Y5fZjMGba0Dx19+Vtp2NKi0Rx
+ s=
+X-Google-Smtp-Source: AGHT+IHQLrG+l/rvMW5h26s5IkckZpNwDKiGuNscUPJyjS05qMrZmAQihVs5RDEWrcMa0ZGPRUCsUQ==
+X-Received: by 2002:a17:903:2d1:b0:277:3488:787e with SMTP id
+ d9443c01a7336-29027356933mr108119805ad.12.1760031007975; 
+ Thu, 09 Oct 2025 10:30:07 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034f93b71sm34207625ad.114.2025.10.09.10.30.07
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 10:25:06 -0700 (PDT)
-Message-ID: <895ac1bb-99cd-457a-817d-8fdf2d2e90ce@linaro.org>
-Date: Thu, 9 Oct 2025 19:25:05 +0200
+ Thu, 09 Oct 2025 10:30:07 -0700 (PDT)
+Message-ID: <ef968eaf-8197-4aed-9018-8f5b8987494b@linaro.org>
+Date: Thu, 9 Oct 2025 10:30:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] hw/hppa: Introduce
- HppaMachineState::boot_info::firmware structure
+Subject: Re: [PATCH 1/8] target/rx: Replace target_ulong -> vaddr for
+ translator API uses
+To: qemu-devel@nongnu.org
+References: <20251009151607.26278-1-philmd@linaro.org>
+ <20251009151607.26278-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>
-References: <20251009143106.22724-1-philmd@linaro.org>
- <20251009143106.22724-5-philmd@linaro.org>
- <bba7ba47-cb69-4bcc-9dce-bee9cc4b9bf2@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bba7ba47-cb69-4bcc-9dce-bee9cc4b9bf2@linaro.org>
+In-Reply-To: <20251009151607.26278-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,122 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 19:20, Richard Henderson wrote:
-> On 10/9/25 07:31, Philippe Mathieu-Daudé wrote:
->> Current code uses CPUHPPAState::@kernel_entry to hold either:
->>   - kernel entry virtual address
->>   - firmware interactive mode
->> and CPUHPPAState::@cmdline_or_bootorder to hold either:
->>   - kernel &cmdline physical address
->>   - firmware boot order
->>
->> Besides, these variables don't belong to CPUHPPAState, they
->> depend on how the machine is started, and only apply to the
->> first CPU.
->>
->> Introduce firmware specific fields in HppaMachineState, using
->> their correct type. Introduce the @is_kernel field, to allow
->> distinguishing between firmware or kernel mode.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/hppa/machine.c | 36 ++++++++++++++++++++++++++++--------
->>   1 file changed, 28 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
->> index a2996ef7682..138cd97efd9 100644
->> --- a/hw/hppa/machine.c
->> +++ b/hw/hppa/machine.c
->> @@ -41,6 +41,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(HppaMachineState, 
->> HPPA_COMMON_MACHINE)
->>   struct HppaMachineState {
->>       MachineState parent_obj;
->> +
->> +    struct {
->> +        bool is_kernel; /* kernel:1 firmware:0 */
->> +        union {
->> +            struct {
->> +                char bootorder;
->> +                bool interactive_mode;
->> +            } firmware;
->> +        };
->> +    } boot_info;
+On 10/9/25 08:16, Philippe Mathieu-Daudé wrote:
+> Since commit b1c09220b4c ("accel/tcg: Replace target_ulong with
+> vaddr in translator_*()") the API takes vaddr argument, not
+> target_ulong. Update the 2 callers.
 > 
-> I think this is more complicated than necessary.
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/rx/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Certainly...
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->> @@ -481,6 +492,7 @@ static void 
->> machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->>                         "-0x%08" PRIx64 ", entry at 0x%08" PRIx64
->>                         ", size %" PRIu64 " kB\n",
->>                         kernel_low, kernel_high, kernel_entry, size / 
->> KiB);
->> +        hms->boot_info.is_kernel = true;
->>           if (kernel_cmdline) {
->>               cpu[0]->env.cmdline_or_bootorder = 0x4000;
->> @@ -519,13 +531,15 @@ static void 
->> machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->>           }
->>       }
->> -    if (!kernel_entry) {
->> +    if (!hms->boot_info.is_kernel) {
->>           /* When booting via firmware, tell firmware if we want 
->> interactive
->> -         * mode (kernel_entry=1), and to boot from CD 
->> (cmdline_or_bootorder='d')
->> -         * or hard disc (cmdline_or_bootorder='c').
->> +         * mode (interactive_mode=1), and to boot from CD 
->> (bootorder='d')
->> +         * or hard disc (bootorder='c').
->>            */
->> -        kernel_entry = machine->boot_config.has_menu ? machine- 
->> >boot_config.menu : 0;
->> -        cpu[0]->env.cmdline_or_bootorder = machine- 
->> >boot_config.order[0];
->> +        hms->boot_info.firmware.interactive_mode = machine- 
->> >boot_config.has_menu
->> +                                                  ? machine- 
->> >boot_config.menu
->> +                                                  : 0;
->> +        hms->boot_info.firmware.bootorder = machine- 
->> >boot_config.order[0];
-> ...
->> @@ -668,8 +683,12 @@ static void hppa_machine_reset(MachineState *ms, 
->> ResetType type)
->>       }
->>       cpu[0]->env.gr[26] = ms->ram_size;
->> -    cpu[0]->env.gr[25] = cpu[0]->env.kernel_entry;
->> -    cpu[0]->env.gr[24] = cpu[0]->env.cmdline_or_bootorder;
->> +    cpu[0]->env.gr[25] = hms->boot_info.is_kernel
->> +                         ? cpu[0]->env.kernel_entry
->> +                         : hms->boot_info.firmware.interactive_mode;
->> +    cpu[0]->env.gr[24] = hms->boot_info.is_kernel
->> +                         ? cpu[0]->env.cmdline_or_bootorder
->> +                         : hms->boot_info.firmware.bootorder;
-> 
-> 
-> I think you'd be better served by placing
-> 
->      uint64_t boot_gr24;
->      uint64_t boot_gr25;
-
-Clever :)
-
-> in HppaMachineState and set them in machine_HP_common_init_tail.
-> 
->> @@ -679,7 +698,8 @@ static void hppa_machine_reset(MachineState *ms, 
->> ResetType type)
->>       cpu[0]->env.kernel_entry = 0;
->>       cpu[0]->env.initrd_base = 0;
->>       cpu[0]->env.initrd_end = 0;
->> -    cpu[0]->env.cmdline_or_bootorder = mc->default_boot_order[0];
->> +    cpu[0]->env.cmdline_or_bootorder = 0;
->> +    hms->boot_info.firmware.bootorder = mc->default_boot_order[0];
-> 
-> Setting hms in reset seems wrong.
-
-Yes, a pre-existing issue. I couldn't figure that piece of code (and
-comment) myself.
-
+r~
 
