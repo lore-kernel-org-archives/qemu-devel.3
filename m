@@ -4,179 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DB4CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 10:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B415FCCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 10:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6ngF-0002FI-68; Thu, 09 Oct 2025 06:15:27 -0400
+	id 1v6nl6-0005Wm-93; Thu, 09 Oct 2025 06:20:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tejus.gk@nutanix.com>)
- id 1v6nfy-00024s-EP
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:15:11 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1v6nl4-0005Vw-0S
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:20:26 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tejus.gk@nutanix.com>)
- id 1v6nfi-0007hb-Cb
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:15:10 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5998VSLW414272
- for <qemu-devel@nongnu.org>; Thu, 9 Oct 2025 03:14:45 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=proofpoint20171006; bh=k7Sovs1Ls0fPQ
- yts8UN93UYSiqjmAnBkgCLuhypgrtg=; b=H1mHzTAQjUBncUw43mNIIMvZ442Ls
- u05V2KipSPwY30G3cxN9Kem0hybZDQkQra8129v6PcmhMaxCjUEWZk595vaAhLPX
- kctVVmBtNs+wRh0uFF0wS18lOQmrGZVzoLyVkVGMEyZLRuhsVGW38efcX/bQaRI7
- xUz+J3wiEFxFUMDqzOzclnprpdT7e69iEMsUc3at9pOMdlRuRBZA/S449gL+tsLl
- tybX5sWL61Eh8M522YLbAJEVc0hNWIob7k1E45gwYtf33Y6Q6g2JmMEkA5Si9a+p
- BDd2W5YwZt0X3Y2AbCbTrPeC0x3snMaWYLEUea1xBLeRg4rrO33KmCOtQ==
-Received: from sj2pr03cu001.outbound.protection.outlook.com
- (mail-westusazon11022124.outbound.protection.outlook.com [52.101.43.124])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 49nx1qskc4-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 03:14:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1v6nku-0008Vw-KS
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:20:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760005216; x=1791541216;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=rzJpmTI01NOZZ9aw8CPql/JlK2flnKBU7HworDlimN8=;
+ b=EQXNPmcxs+S180YOC2RMIPjx/NQYi4Uf8DU/SttagyI0NIJ0D4K+HPE2
+ Akjdf4GW/pnS1rzwKkwLNFS5vuIbsktz3OwpO7rsRD/fyOk5WPt0OS4ko
+ 08KKFqKaQiMy3mViHZPwHF6BBPjoO3X5gB8JaeLoRKs5R2Y2Df5SYz20v
+ 2HVRO4saMAjritx25qX9oFEGRkgaCluaDlR7MUg+mtoCpiIDzBKsjW8Sd
+ /Okowojcsa4vg4H496I9vuMH5Q+u3dXjBl4RpRGLGxuo/cmCdBmrHj/fW
+ kZUAVJ73MuKViUxEv3CA98m2Ky+vxaY2v8Yv8r6dVZ2SjJVTz5CwmSxHE w==;
+X-CSE-ConnectionGUID: FGXcWZ0cSkuRgHxJ579KTg==
+X-CSE-MsgGUID: FXwsNQFWS0y30Fcy5y5qkA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11576"; a="62095985"
+X-IronPort-AV: E=Sophos;i="6.19,215,1754982000"; d="scan'208";a="62095985"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2025 03:20:08 -0700
+X-CSE-ConnectionGUID: +GkqostYTVKREd9q1D38BQ==
+X-CSE-MsgGUID: cpv44IpSQzChQN0w4FbrUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,215,1754982000"; d="scan'208";a="204390591"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2025 03:20:08 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 9 Oct 2025 03:20:07 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Thu, 9 Oct 2025 03:20:07 -0700
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.17) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 9 Oct 2025 03:20:06 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q3mJj5OaucAZnbPt8X15pPdfi81VotkkpR6CljK+WL2NUqyKVM+t+4Ej32l+6cunSjWMggxAsp2YCQBoFYJRd9nnXEedBOh5bypuHA8+d76PnJPRXdAKm9hXV9K0/lFh0dJkLGce7wK62ir2357ip/iP0B7JBnAwjriqQYOGy8Cr57E+8F9kBKpFoIUXCGY2DktOqNm/3fFEmEx8WRZ5zXQWc9jw83LP1F/ICJhR+z87hpQtmYUTUTBRuhOeXzTMHITJot1F7bnOKNb9nVSil8giEaKn7d+eBHEj21yDCOXGzOMwP42g+6AaRDFHLVgvkJTOHdab5cec02W76ktdiQ==
+ b=zUKV/DDoqsok4hwjES3NLqgR4Ssff0JFtBuJlI9tOifn+WnDHoeZxeYDMyWoLXXkntHZvVFiOTm88NH2FnCF95XLCjpnKXBL5FFEhB7nBO656DUMcY3PAO26s7AKAXJLVR++W5dMxTM9rrScBZlTfmtv+bWmEW72BtRaHJQIDOJk6Pb/FoFcF93G6D/vy1yhXsl48o4i54PUg1vTjS7aN/WAIwAC1z1Dgxbst7rieESHheAt+EfhUawqLg3yq3Igk4Gy65nRbiPlrs/J2vpVA+J8T88papmDOyvFWvv5QYz333YZ8hkOnOeZjEyudkQs0Utl7rgsfTDqg3rvn7Vy4A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=k7Sovs1Ls0fPQyts8UN93UYSiqjmAnBkgCLuhypgrtg=;
- b=PVwGfgLhejTFvnzwsvDfoTT6Krd1hERuWIvsKcICz8FOKS2tVK/3ZZPk0mNN0LNPvwm41IL2sGuk5EZxuNB7ZLFXoYei0hOhnNTK9VqvYXz53oxPi+LECGyDf4nsG8V+vnXybHqE1/DIzcnbF83Mo8aKCHbJiU1JjUu9u9fIvKCMmzd4/Q6tHeJba6e+nyFCW+nCuax8MkZQGnNVooYJKLCtT91Aclyk6GBf7Apz7grahQouTCeBZWYRaQSjzfFojubkLPtC6H8uoyEneF3XvzhP5nf8BetH1cl9cZjPJGCExWPHZSEcBIHokXICVrKHe73WIHGOr+zF//QmL2dbuw==
+ bh=RoJH4GFWoRVjyvYEAVU/OEAQooEqBnMbBxlSbEQimTA=;
+ b=aRuvrSvpEKNbBgu8fVgnWAIhqQLr5p74m+IG+nkZo0z+7yLuzQnrlri9NzX8eMxomIXN/VGb0URTIN2zp8iDvyx4IEPLfoZwoVTZCXAGVHHnD8/DGic1umE5nGjO8uOmFTZw3wu9r5R0+tG9wvdGhViSyJTTKQdp+YDD9+sw7ICGKz0jX4JB7gYNhcWcHu1ItJHXBksoNZYr5/xKhlAmTtA3hrsRKAgqAGwkUzPBSEwI76g8iS39BVT9z8ovcB6z+6lmcvRInBTUtPsx24d7XX5ad07+eQkxz3fujgPpgn3KxKkIA0mP/wd1ZOBwYq64D4qezqYIDeD0sp2TCmie8g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k7Sovs1Ls0fPQyts8UN93UYSiqjmAnBkgCLuhypgrtg=;
- b=QOqdIuwExwFjlzAqVqsCI4l4lRzsEBRnF59o2SsyQBrPEFqzbl7Osu1n9XDc1TG0QYxbtlbmEiYD91+9u/iF/i+TfJnNis2jQ5sesYuXQC4tXLscY+FxRigcnN+9tVsNPjbL5NQ3V0aVQEaFdmDPXhqv/9Lczv0WydYt5sHIPUQKmpJW0QvmhCtMKRynm+I+HVGP9bLcHhFb93b2YtEvVKYqw5cEd3AKB7UoMlwICptA3fbV/OhGlHqJY0G/MTAF+4rpV4k5exYM5KqKqQQ+8PHDdgUTlDJoXiAwKjJL1bSlVobwRCq8yjCPxtXBCeH/odIW9YWfab0FwgsiYRc3hg==
-Received: from MW6PR02MB9817.namprd02.prod.outlook.com (2603:10b6:303:23b::15)
- by MN2PR02MB6973.namprd02.prod.outlook.com (2603:10b6:208:20d::8)
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by CH3PR11MB8436.namprd11.prod.outlook.com (2603:10b6:610:173::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.9; Thu, 9 Oct
- 2025 10:14:42 +0000
-Received: from MW6PR02MB9817.namprd02.prod.outlook.com
- ([fe80::86e5:3449:a3f7:ee4c]) by MW6PR02MB9817.namprd02.prod.outlook.com
- ([fe80::86e5:3449:a3f7:ee4c%7]) with mapi id 15.20.9160.017; Thu, 9 Oct 2025
- 10:14:42 +0000
-From: Tejus GK <tejus.gk@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: Tejus GK <tejus.gk@nutanix.com>
-Subject: [PATCH v5 0/3] Add zerocopy partial flush support for live migrations
-Date: Thu,  9 Oct 2025 10:14:15 +0000
-Message-ID: <20251009101420.3048487-1-tejus.gk@nutanix.com>
-X-Mailer: git-send-email 2.43.7
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH8PR07CA0015.namprd07.prod.outlook.com
- (2603:10b6:510:2cd::20) To MW6PR02MB9817.namprd02.prod.outlook.com
- (2603:10b6:303:23b::15)
+ 2025 10:20:04 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9115.020; Thu, 9 Oct 2025
+ 10:20:04 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, Joao Martins
+ <joao.m.martins@oracle.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "avihaih@nvidia.com"
+ <avihaih@nvidia.com>, "Hao, Xudong" <xudong.hao@intel.com>, "Cabiddu,
+ Giovanni" <giovanni.cabiddu@intel.com>, "Gross, Mark" <mark.gross@intel.com>, 
+ "Van De Ven, Arjan" <arjan.van.de.ven@intel.com>
+Subject: RE: [PATCH 3/5] vfio/iommufd: Add
+ IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
+Thread-Topic: [PATCH 3/5] vfio/iommufd: Add
+ IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
+Thread-Index: AQHcIfvtcDcAUY1arESRh5H1VPguD7SaXCYAgAQ5VOCAANsXgIAaVi/w
+Date: Thu, 9 Oct 2025 10:20:04 +0000
+Message-ID: <IA3PR11MB9136EAD2D625ED90DD89A13492EEA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250910023701.244356-1-zhenzhong.duan@intel.com>
+ <20250910023701.244356-4-zhenzhong.duan@intel.com>
+ <d167b62a-be06-4bb1-b88e-e1cc96d7c4a4@oracle.com>
+ <IA3PR11MB9136B9DA08CC2A48E1678DED9212A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <ac9e71a9-972d-4fba-a0f1-9823ae6664cb@redhat.com>
+In-Reply-To: <ac9e71a9-972d-4fba-a0f1-9823ae6664cb@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CH3PR11MB8436:EE_
+x-ms-office365-filtering-correlation-id: b121bccf-dc80-4318-3fc8-08de071d69e8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?9IP9moL9BE/LNk4z6VQ5baY0okvTHTpA2EgywEdfoj7fCXkkh5tl/HSRVn?=
+ =?iso-8859-1?Q?QIVe5wOv/R9Z3rrQwH78/mzidZQR1Mp6ZcLhC9ygBZ9KYKcF/NQc60mRFK?=
+ =?iso-8859-1?Q?Amf1yxyX2TeYd1/bkFlLwl1k5CDW1IgU4WOwnG53kZK1G1FRutIuAWvzgQ?=
+ =?iso-8859-1?Q?pDZSjxxdJAq1iFG6kkx7ZtNvHPwz+oIecpoAn+9FoZTAV3y9rxSA6gPR48?=
+ =?iso-8859-1?Q?vK9raIkAZIlq8wq11uF27mmKDOS38f2lSLpz3bi5GUdVY7vb2Znyz6H6EI?=
+ =?iso-8859-1?Q?qcyKrJtKWVktbicTuJiuRUmyoYics498X+UZwyep+Jn8+QF4NJoQ5szJO0?=
+ =?iso-8859-1?Q?ga3XaS9hTY8VREjMxK2dv6K1Jbvv4v76bxrFqWSmuRfDKiW/luVWldYtA4?=
+ =?iso-8859-1?Q?6qpVNxKkPuJCXpa6yceUsHmxopwqYV1tSQ9b4rDcd23+vmpwBAn8GUqrlq?=
+ =?iso-8859-1?Q?IeM7SEgYuvqO3C3sNKll3Lpue7Py23s2Ts/wjpbnzBLRs6zABnrbPfXwDd?=
+ =?iso-8859-1?Q?bgdZG1r9nN/cCRQW9+Be40spkqRBJU2S/CG78+ZL5yeHc7Ch0bV4O9EbVH?=
+ =?iso-8859-1?Q?8+7NcoL8VtvDfce0kRY3GSuXqofV75EsKdevxwAjIbGSQ0f6vpOnXZw3Bm?=
+ =?iso-8859-1?Q?XUs0FZmJJpj9974Z8IpJeXpIOL/AsiNXjNY+sj1LYkFEP5ng1J0BbwLs9a?=
+ =?iso-8859-1?Q?xpw89QChD8MGPxVLHOOfubVzq4LZsOboF2d6TK2s8vmcndc+0FwRgRC1lZ?=
+ =?iso-8859-1?Q?FzTSitX0HuxT9HsqOOIHwpdDHh/S1+QWEoRY1NLf2Wcrz35fNERzXIVJFu?=
+ =?iso-8859-1?Q?bHdk7ODjuFRiJ3zFepf/LRYmMjAEFC51IoyzCXmGtpjNQ202MV+A3grRT6?=
+ =?iso-8859-1?Q?EKarJnXmOIohdr7Cqav5KkwhzFqX8FARNZdyinscHFC+/3ZLxvg+GYwEVD?=
+ =?iso-8859-1?Q?B22+qk/8uq5g0lqTIkPqU48QLwWcjgrYv5wH+CJJQ246x44BSXUYYCyo6n?=
+ =?iso-8859-1?Q?tin6mv22juYiVSfKIqr31JRv9qVCVFmhem3giiP0Y2MhnMPP/CyU8SLdad?=
+ =?iso-8859-1?Q?8yFluLPX3clU6c06DLdlYV1YhhvDD4lOxUXk3ray9QrsYiG3WzjTCjHO9D?=
+ =?iso-8859-1?Q?/OzA/PfCvSZkVX5j2nSuNvNrhJzbHUV2okorIJQZ4wcc8kLaV+xJJ61jdy?=
+ =?iso-8859-1?Q?QB2wYDDTJE0yma5C8Zw9i27/dM6xMMRcPBRKri3PYbffjQALz0T4d61bo+?=
+ =?iso-8859-1?Q?unFXhyDRTGtCbpFECQN5dekukqrjGFlsKS/8RQTnI7Ff0xXHdjxRZm1maW?=
+ =?iso-8859-1?Q?wU3SPhdXgdO5Q0SKkJyfi+fBtSeG/ba245oT4VyqfWSn850kdqJ0zlVwx6?=
+ =?iso-8859-1?Q?XUE0O3JsbyvGOVP1qzQCjU5eM2KQY/uIgNXQSnKSZ7ReGFbLFxrgfQ0Eva?=
+ =?iso-8859-1?Q?h5y7hd9NzZCxKRD+Zuj44YhqBRoAnMr9pEII210TQfeEte43lTH7SltdSH?=
+ =?iso-8859-1?Q?Kdjtv05RqqnrJYTMKqHfL3DrgOBDdT7W0xfkf6jGyDjEI2gDoAADvWFldI?=
+ =?iso-8859-1?Q?aUFsltjdYTEEyj6sLWHzsJdvWzDK?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?sWsG6iMwpWt1zpM6FV2raOcOqi4yNkU5lef1o59oVBJGkqwxk96wZKLo9O?=
+ =?iso-8859-1?Q?5qLKu7hcq2I8KXDMrHMS+Pgv2RiHojEOhJbk8bz3XUwhdhCMe6OF+pEu8s?=
+ =?iso-8859-1?Q?Lly9lz/6CQZt3rqi/OfLvC+qsXnsdao5BhPTZ/Md1/T/6ejLU8DdYBX421?=
+ =?iso-8859-1?Q?J9FoA022D79leIMyfzuDDl4Q6ZQonY0ESJXwqyr+l4ok4l1qU3zBX8WGqj?=
+ =?iso-8859-1?Q?up1Ggws4tflnlL0kMi1ELk7kngvXgW81Y8iHq+BOvBwJyMWTz2qeZVPh/E?=
+ =?iso-8859-1?Q?B6mTTgmaYGrbw3lDkS7eMH7oeCX+91HbtVJLRf1v0zlT7qLpo/QQSRKBUy?=
+ =?iso-8859-1?Q?tiyTZ5HenjzNzsIZGLorFmdn941ai1POmiRedWKAFqaqXn+MzLFAM+bzlP?=
+ =?iso-8859-1?Q?iDwpKwpz8UQVR1eRfVh1zaMi23bZRece1q81Aa4lObhotatdu9vKq3Nj1u?=
+ =?iso-8859-1?Q?uRyXkc802W2FK6o7yKgxkFuUwEEqvKsJtREIaD/go0ZZDNFfjlTXZ0V0Im?=
+ =?iso-8859-1?Q?pJtv6+BgdkE9FKgBSaeJt0/hKaeOUgQP0VKsGMXVH235D1V5w9K18d0w2S?=
+ =?iso-8859-1?Q?7SZZvqnLaqi6FgJp+8YkyJXUPr4doKP1NEjyUzqDEilyedULrXp+qSC/rg?=
+ =?iso-8859-1?Q?ltQb6Vb3MWD6UtrzorM1YXaMt47zvzcjUpeqbsVuqS1qeyqLdR+okKP4rR?=
+ =?iso-8859-1?Q?DwQe/RCXcmiJNGuhOQNItYJcDnLTljOC7D0vn7G54lcBJGfpl2vx5QIOnZ?=
+ =?iso-8859-1?Q?30988RbqCiGI5R/gLC3Ah1wUybuiZt5N/EZptCbGUI3w4+wdB2TlKOYBBg?=
+ =?iso-8859-1?Q?f9JiZVbkbfL288s8z+FRWM7Emus/1yTwzvLEWLHiMaSFxmOm+mS0MW10iS?=
+ =?iso-8859-1?Q?Sp5PCBImbJSqAhGejZTLkOU17e7wsv1DKCjPlkknmP5HQtIxb/N83D2hgD?=
+ =?iso-8859-1?Q?36XNf136jj2iPmUCjWijktw5sMS/H4Ois0slZgDjlwA36iY2xRMy5R31d5?=
+ =?iso-8859-1?Q?WRuzINMiuVNgJP8SaR35qnbTsTfoY0pUtFSilVyrg58J2dPB93bIHFtJcI?=
+ =?iso-8859-1?Q?1m03Lyp9qxNMg2RYCiffF44YNsuYVjhkRg5xMDEUkkMbopb1SJ036LUqdO?=
+ =?iso-8859-1?Q?80gxHef7LPTVmPyd22T772QKr1t9P1W4FZMZyF3XCOUrZcpemfSwdrET61?=
+ =?iso-8859-1?Q?4+gVa68YYCzteOXeM4LtTGmSuUfV8b26F9r0cmNtB++bDxTqdymX1g428j?=
+ =?iso-8859-1?Q?yoBGD1ZRjNUZs61UptaCrSRbrOcZ/bcuJT/HfRoK8SfSI0Pwo7TjLhv18g?=
+ =?iso-8859-1?Q?SHldypuCAiPE2KHGGQEJ1X9Gv3kIS93m9/SV26GDfAjvQDK16tdo/eVP3Q?=
+ =?iso-8859-1?Q?p27/iKAvMqyWf6JCzJbgy6WVsCRcSAykOuBka9VOLiuLgE1+5db90jnKjl?=
+ =?iso-8859-1?Q?MFZ+ylgpByYO+Umav2jeyGI/zRVq014RPo/WE9LjAu1C1UEQiZE2NxsbLW?=
+ =?iso-8859-1?Q?a+HQTU+SqiwJda0X5r00oeFOQRZaEDVogF4OWVGqgzP8WSCHpMgAmjFnSC?=
+ =?iso-8859-1?Q?jQjx/X6iowXbzgBs5JcRovPl/dXiOxHH4OzujlmZWyj0CyiU+sAQc5l+WQ?=
+ =?iso-8859-1?Q?CevmXNlN7GTbWBKk/y95oj50pbjDOoBMpQ?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW6PR02MB9817:EE_|MN2PR02MB6973:EE_
-X-MS-Office365-Filtering-Correlation-Id: be545d0e-f671-4be9-b080-08de071ca9d9
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|52116014|376014|366016|1800799024|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?tl0B9LEFKZB06ab3dCmYVTQfuzSdLW5g63ydpmRgtLlWY36ft4WVvnCaTrt5?=
- =?us-ascii?Q?Mes9CEDLCI9WI8SfPQRQlBhjX9pLpWEsnTk0BwYr1y+6bYFWmjeEvwAg7N/H?=
- =?us-ascii?Q?puHPK/wIMvdPfZGRP8M7uSBrGgSMOoaJWu1h/ros3hhlZs6cfqUAh9VT+2Ys?=
- =?us-ascii?Q?u7u6R8MlzzAqXzOyXIdjQ4wgYmsglQJ41aG1qPz8s5fBgKEAlUO2R+Ipv/r9?=
- =?us-ascii?Q?lBpG+INgymsCQ30YeSvdEASUio+XjWt9pAUuCy7/KyaFMjOR650yT81zgEnq?=
- =?us-ascii?Q?bZCBZ5hK953DVAzR0U2T58qtcjYoB47DzkW5Hl0B7nSV7S7RAtcJZh3q8s9k?=
- =?us-ascii?Q?iWTSL7VOdA6d9VZMTS9uE0k5Cah/l1ozaPsYdwDvjJGJYcEoXK+XvthgaFc8?=
- =?us-ascii?Q?hQeFbH8lwQHCiLKn9xArjM/2GX4s+EYcHJvHSnSZwgoo3pTaJrOoXJBm6R5f?=
- =?us-ascii?Q?BeIcV4gjassbWdhoYEMyQdTYHUht7AqdyLL+exsPyl5uC+UNhhlEWWiSS9Qv?=
- =?us-ascii?Q?/RgxU8RC4yHgElnTN7oYJG2c3dZXRNFgbDWODaMg9gtUMhXNBlGVc9MFVKpn?=
- =?us-ascii?Q?yFp28t86dhXfyBzs1nzrZL6QOmzGElE4nAvHJ7vG2VdjbgEGPMA3swk3y3vr?=
- =?us-ascii?Q?GvWj0w2aDa36S+mmxLelFo8WLABEoV2HDoHw7Dful+m0nZVJ/nN2o+rrngWM?=
- =?us-ascii?Q?m9Q1l0bREM427t6uc1xS5mtqJSiFFw5OjSRhI0xl7RIK0MFlzKMF6suALh4t?=
- =?us-ascii?Q?wuMN4/QW8feaRwPjIMQVTGF4FF4cOvRVFSrlaNmv8qPmDLe7UJeAeCbDVp+V?=
- =?us-ascii?Q?Cg2f//SB53PM1JXRTdG9S49qouUv9Z9lqxU1bLzAspotbfEQuevK6VTPp9T9?=
- =?us-ascii?Q?cVkItbzTE1Plp2xZzkbOtKdzwtar29JvK527/pguqrKn7W4GSm6RDDunIiAe?=
- =?us-ascii?Q?dplEIwmPKjZD8z8xG8VEnUeex9ChVZIx8ji4z05WYE3zDxjOnf0yt9dvKwaP?=
- =?us-ascii?Q?2KygfLOuNEEnSEBitRCSKG2dJDU/2579cK4a+0D4i84f+tp0vmyBccGQLSgE?=
- =?us-ascii?Q?BgB8EPwok8bPxK7EBI2XAbhi8qELVYK+/arQIUPru3lAW0AhwQgc0ri4OUAh?=
- =?us-ascii?Q?SGQ52Rmyj2WsFugQ26otows7FjDBAcMcv0CPUetbiGToAt9M8uRYDYFGbxxT?=
- =?us-ascii?Q?fEgf8ouNYZcKKoMRQPhJEwSyRbftLJ4BatTqVbg+v6xBeExCOKtUKwnKu9pT?=
- =?us-ascii?Q?bRLXzU126T4LC5K6NxQ26LyTjuiSyrZq88hTDFmi2f7N9A34nklRkNv8UTgv?=
- =?us-ascii?Q?5giBhcbRrOH3TRq6XyWLVKwjK8EjmY8Y6fvp+0kv+0WbTUE2VhnaBYeSejtt?=
- =?us-ascii?Q?MB+mCWVXbFHQImAg600pDxdLFh+QJQ66wncBhne6XPD27Hj5CvAPLVW9vs60?=
- =?us-ascii?Q?7eCLjLj+UlChzTT3U1ZsOIdSmV1Y0dC6dc8KrVJcQq6xwEaPFJ0NghDC0z4z?=
- =?us-ascii?Q?5Wp2oUhv8a0o7HY+ekGYUQENRL4rAaDbL0JF?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW6PR02MB9817.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(52116014)(376014)(366016)(1800799024)(38350700014); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?52d9EtOSAfOOtmG22Iu+0ME0tU80FrYneg7DD+JGWzDdHyCxEQY+EeIFtGaU?=
- =?us-ascii?Q?eqxi45yrMmR7aE3+weKFJGCdXHySqNGbWKtt3edtgj4poUGEtEPtEBq+Y6W3?=
- =?us-ascii?Q?/c73lJCpD27uEwgpOW73bU3Ojp+JmXyqjkL32QUmIGhlxRcnlvI+n87kUc8h?=
- =?us-ascii?Q?zslpxFwoyQ4xzleiu5TxxqQtJ0b2XxcdhmbAdszGKuCxY/jEFaPGRqbHPos1?=
- =?us-ascii?Q?YNvO3pn6AcujhJl+RUEtra8g7mAOZ/+J6UzUunpZPgsH0g/rglsfyun2vCXK?=
- =?us-ascii?Q?oT3IHThqGctS8Ww3KEIojR320XV4khr7HjQXukWxWS4N9XdEY5MZMtUOQGi6?=
- =?us-ascii?Q?VGbW3GDMZkqeBSyZI0bQiPqvWTjI1ngFYqjyK4FC/32uGPlmt2ndf1Pxdusm?=
- =?us-ascii?Q?lBi7FWAKYfgnxsLhj1fQ0P1b3HB0pxYMFMwfedz6gk1cNL+rOA7BYSee7X03?=
- =?us-ascii?Q?bho9K6EV2fqs4v9UlTHhYxsdYrHYI5QJ7sZMPaP4xngroFPA7qcHleMnCqMO?=
- =?us-ascii?Q?cJZ/+F3MULekBhLg1YUjAT7UMt9TPV+28G1f94L1WfFlgQntHqaV1cI0StGk?=
- =?us-ascii?Q?+yGRqWJTReVSIQ+TyvfK15yhvHX5dzDffeV4LG3975Xkuy3AZUM9KMJu5Rhy?=
- =?us-ascii?Q?sAv8AB0bARbvU8TfqvI5r7949hZmkXbOg6o8T9MDaMhIWBUG1MnzhVuV38BK?=
- =?us-ascii?Q?u81FJgccNw92biDDOOjI+cg8zDDaRhhQiJkxQNO/v+pDj1gAFEOq6WUsh1cO?=
- =?us-ascii?Q?u8rhYF2IRbs50xTpN1MDqAWFAKXGP6405VARQTtzQM7H+4LNWxY8QlnTVf84?=
- =?us-ascii?Q?52QlDVs4rpfAVGsgAevLROfJUB8gms/jkPPmyLDzFGGUUg5mT9okRMQ69JGH?=
- =?us-ascii?Q?mh0HY3aJ5joa2pRU0G1tq6AoHF8RS7/0gyQdcMLVAINGfLo6ZBUqIM0Puwov?=
- =?us-ascii?Q?D/SuCLO8y/JIMqStYoJI62xw2jaLo1ZsuAJY8Xo7AHIIYeTgcCMMdX+x0iXY?=
- =?us-ascii?Q?NMz1nw1Qir4VYYTQfa8ZNLOzt1vgwV8ZCRXyMm+/kRzemCYmi/ayphVP6bBI?=
- =?us-ascii?Q?1RvLoD2k736Pb96CgMOhXNz8mX4P6JrwP2JIbYCyB80VhDB1zhgIlKu4I5el?=
- =?us-ascii?Q?FtdEHCD/+nW7HqlJln0QJ1ZYptHSPXLvWNNlXOGzxbedb3lLueym+i7tTUyH?=
- =?us-ascii?Q?2K6uzwVYhgyn9q2EwUsDIYPnz36r4gD1EPPjbCFYQ9JO8xx9aa95ntFIFRCc?=
- =?us-ascii?Q?kzQlZCZwUEgm2HhGqW9cY5yBz6LNP0+pui1FCYpgVQH9pJG6wQu9gEvE72gQ?=
- =?us-ascii?Q?y94YmMyxTJaRCjz4Mjsi575egFXBTbF3tCuv2mZcvKyeOKHCQEQYmwA8kSZc?=
- =?us-ascii?Q?vvl8Cse8aF+8WO/dTZYdr8+GXWuZ34DBq4ZrFwc9FCi13DCSgRRoOcp+2Dbc?=
- =?us-ascii?Q?Gq2g+PCaVpUU4FU17fjljuhdUrDjCaDzzYejxfQzQus3zrfO8+W4P6hBKDmb?=
- =?us-ascii?Q?okL/c6ne5d8AIOX1a2RM0X7yJ2euPS1/MeprAr9FU2GGs5hWZ85LAsGbHG25?=
- =?us-ascii?Q?wEeD4UcF/OPwsI0fbJZasAYO82dryPQSTyb8KKev?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: be545d0e-f671-4be9-b080-08de071ca9d9
-X-MS-Exchange-CrossTenant-AuthSource: MW6PR02MB9817.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2025 10:14:42.4389 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: M9FJL5SZWlU//4A3QtbGC5KtkXE84DnhZeULM4K+MlDoSM1ukg2CR7Zyxy/TZCsqNS+N82KWhBZu2DF/mJQ6VA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR02MB6973
-X-Proofpoint-GUID: H-dLDEhzECgEcHtBpCmBYFoHriDr-kJh
-X-Proofpoint-ORIG-GUID: H-dLDEhzECgEcHtBpCmBYFoHriDr-kJh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA5MDA1OCBTYWx0ZWRfX/RJFWhFx/0wF
- 1VksrA9ZI94m3SdIZQlMcy9wKbOv8vfBkkJGOct8NkgzlAoprTr3Lwqmu/vbmgES3PHVRiFqGb0
- s9NJNcP4/4Q+DDW8fPPTiWukbAc35RLbEeMmt8PGW9KTDfcl7PRPjIJzn+3uy0+ri/9aGE4FXeR
- 46C0mSMrv8RQdFl2H4Gs7y829HnXAP5SitrApcZB5HheX208fX1Y7Ap1EDmsUP0EkTD6V8TWMo6
- Z0gQnlQWiMPJWiG0DFVyTj5JhxbuFiT5rL0aKIzNSeJnR3+8yQ1zwZClCLP2jWT3Y/71T8uTTBs
- rG4g2Q3quvge/AFUZD1Cg2Zb1kqJoQgmzlJJlFZXIKVYn62zr7bipKLpxMvOVWDyUaqUdQH9ZLL
- z9M++hXjXkYnhAsnwFkJ5uaXVCysZw==
-X-Authority-Analysis: v=2.4 cv=ecswvrEH c=1 sm=1 tr=0 ts=68e78b15 cx=c_pps
- a=c6dg65S2wtm7yx+exz2oDQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=x6icFKpwvdMA:10 a=0kUYKlekyDsA:10
- a=oDbL7gjR8uCct6WExN0A:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=tejus.gk@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b121bccf-dc80-4318-3fc8-08de071d69e8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2025 10:20:04.4934 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: mkOj0VZTZ6nCA6fHJxLUWUMFSXxO6aq9y+J99GZ340OebcbbbXgvdoOXLC/cpx9+mNamtc2dsJMeBHR/tkFHBsnByEnWMLLMNbbbM9aMqKM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8436
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -194,50 +210,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+Hi C=E9dric,
 
-This series introduces support for partial flushing of the socket error
-queue during a zerocopy enabled live migration. This will help reduce
-live migration errors due to ENOBUFS in scenarios where a lot of
-out-of-order processing may happen.
+>-----Original Message-----
+>From: C=E9dric Le Goater <clg@redhat.com>
+>Subject: Re: [PATCH 3/5] vfio/iommufd: Add
+>IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
+>
+>On 9/22/25 07:49, Duan, Zhenzhong wrote:
+>> Hi Joao,
+>>
+>>> -----Original Message-----
+>>> From: Joao Martins <joao.m.martins@oracle.com>
+>>> Subject: Re: [PATCH 3/5] vfio/iommufd: Add
+>>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
+>>>
+>>> On 10/09/2025 03:36, Zhenzhong Duan wrote:
+>>>> Pass IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR when doing the
+>last
+>>> dirty
+>>>> bitmap query right before unmap, no PTEs flushes. This accelerates the
+>>>> query without issue because unmap will tear down the mapping anyway.
+>>>>
+>>>> Add a new element dirty_tracking_flags in VFIOIOMMUFDContainer to
+>>>> be used for the flags of iommufd dirty tracking. Currently it is
+>>>> set to either IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR or 0 based
+>on
+>>>> the scenario.
+>>>>
+>>>> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+>>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>>> Tested-by: Xudong Hao <xudong.hao@intel.com>
+>>>> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+>>>> ---
+>>>>   hw/vfio/vfio-iommufd.h   | 1 +
+>>>>   include/system/iommufd.h | 2 +-
+>>>>   backends/iommufd.c       | 5 +++--
+>>>>   hw/vfio/iommufd.c        | 6 +++++-
+>>>>   backends/trace-events    | 2 +-
+>>>>   5 files changed, 11 insertions(+), 5 deletions(-)
+>>>>
+>>>> diff --git a/hw/vfio/vfio-iommufd.h b/hw/vfio/vfio-iommufd.h
+>>>> index 07ea0f4304..e0af241c75 100644
+>>>> --- a/hw/vfio/vfio-iommufd.h
+>>>> +++ b/hw/vfio/vfio-iommufd.h
+>>>> @@ -26,6 +26,7 @@ typedef struct VFIOIOMMUFDContainer {
+>>>>       VFIOContainerBase bcontainer;
+>>>>       IOMMUFDBackend *be;
+>>>>       uint32_t ioas_id;
+>>>> +    uint64_t dirty_tracking_flags;
+>>>>       QLIST_HEAD(, VFIOIOASHwpt) hwpt_list;
+>>>>   } VFIOIOMMUFDContainer;
+>>>>
+>>>> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+>>>> index c9c72ffc45..63898e7b0d 100644
+>>>> --- a/include/system/iommufd.h
+>>>> +++ b/include/system/iommufd.h
+>>>> @@ -64,7 +64,7 @@ bool
+>>> iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t
+>>> hwpt_id,
+>>>>   bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+>>> uint32_t hwpt_id,
+>>>>                                         uint64_t iova,
+>ram_addr_t
+>>> size,
+>>>>                                         uint64_t page_size,
+>>> uint64_t *data,
+>>>> -                                      Error **errp);
+>>>> +                                      uint64_t flags, Error
+>>> **errp);
+>>>>   bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be,
+>>> uint32_t id,
+>>>>                                         uint32_t data_type,
+>>> uint32_t entry_len,
+>>>>                                         uint32_t *entry_num,
+>void
+>>> *data,
+>>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>>>> index 2a33c7ab0b..3c4f6157e2 100644
+>>>> --- a/backends/iommufd.c
+>>>> +++ b/backends/iommufd.c
+>>>> @@ -361,7 +361,7 @@ bool
+>>> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+>>>>                                         uint32_t hwpt_id,
+>>>>                                         uint64_t iova,
+>ram_addr_t
+>>> size,
+>>>>                                         uint64_t page_size,
+>>> uint64_t *data,
+>>>> -                                      Error **errp)
+>>>> +                                      uint64_t flags, Error
+>**errp)
+>>>>   {
+>>>>       int ret;
+>>>>       struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap =3D {
+>>>> @@ -371,11 +371,12 @@ bool
+>>> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+>>>>           .length =3D size,
+>>>>           .page_size =3D page_size,
+>>>>           .data =3D (uintptr_t)data,
+>>>> +        .flags =3D flags,
+>>>>       };
+>>>>
+>>>>       ret =3D ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP,
+>>> &get_dirty_bitmap);
+>>>>       trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id,
+>iova,
+>>> size,
+>>>> -                                           page_size, ret ?
+>errno :
+>>> 0);
+>>>> +                                           flags, page_size,
+>ret ?
+>>> errno : 0);
+>>>>       if (ret) {
+>>>>           error_setg_errno(errp, errno,
+>>>>                            "IOMMU_HWPT_GET_DIRTY_BITMAP
+>>> (iova: 0x%"HWADDR_PRIx
+>>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>>> index 0057488ce9..c897aa6b17 100644
+>>>> --- a/hw/vfio/iommufd.c
+>>>> +++ b/hw/vfio/iommufd.c
+>>>> @@ -62,7 +62,7 @@ static int iommufd_cdev_unmap_one(const
+>>> VFIOContainerBase *bcontainer,
+>>>>                                     hwaddr iova, ram_addr_t
+>size,
+>>>>                                     IOMMUTLBEntry *iotlb)
+>>>>   {
+>>>> -    const VFIOIOMMUFDContainer *container =3D
+>>>> +    VFIOIOMMUFDContainer *container =3D
+>>>>           container_of(bcontainer, VFIOIOMMUFDContainer,
+>>> bcontainer);
+>>>>       bool need_dirty_sync =3D false;
+>>>>       Error *local_err =3D NULL;
+>>>> @@ -73,9 +73,12 @@ static int iommufd_cdev_unmap_one(const
+>>> VFIOContainerBase *bcontainer,
+>>>>       if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer=
+))
+>{
+>>>>           if
+>>> (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+>>>>               bcontainer->dirty_pages_supported) {
+>>>> +            container->dirty_tracking_flags =3D
+>>>> +
+>>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR;
+>>>>               ret =3D vfio_container_query_dirty_bitmap(bcontainer,
+>iova,
+>>> size,
+>>>>
+>>> iotlb->translated_addr,
+>>>>
+>>> &local_err);
+>>>> +            container->dirty_tracking_flags =3D 0;
+>>>
+>>> Why not changing vfio_container_query_dirty_bitmap to pass a flags too,
+>like
+>>> the
+>>> original patches? This is a little unnecssary odd style to pass a flag =
+via
+>>> container structure rather and then clearing.
+>>
+>> Just want to be simpler, original patch introduced a new parameter to
+>almost all
+>> variants of *_query_dirty_bitmap() while the flags parameter is only use=
+d by
+>> IOMMUFD backend when doing unmap_bitmap. Currently we already have
+>three
+>> backends, legacy VFIO, IOMMUFD and VFIO-user, only IOMMUFD need the
+>flag.
+>>
+>> I take container->dirty_tracking_flags as a notification mechanism, so s=
+et it
+>before
+>> vfio_container_query_dirty_bitmap() and clear it thereafter. Maybe clear=
+ing
+>it in
+>> iommufd_query_dirty_bitmap() is easier to be acceptable?
+>>
+>>>
+>>> Part of the reason the original series had a VFIO_GET_DIRTY_NO_FLUSH
+>for
+>>> generic
+>>> container abstraction was to not mix IOMMUFD UAPI specifics into base
+>>> container
+>>> API. Then in getting a VFIO_GET_DIRTY_NO_FLUSH, then type1 backend
+>>> could just
+>>> ignore the flag, while IOMMUFD translates it to
+>>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR
+>>
+>> I did port original patch
+>https://github.com/yiliu1765/qemu/commit/99f83595d79d2e4170c9e456cf1
+>a7b9521bd4f80
+>> But it looks complex to have 'flags' parameter everywhere.
+>I think I would prefer like Joao to avoid caching information if possible
+>but I haven't check closely the mess it would introduce in the code. Let
+>me check.
 
-V5:
-  1. Introduced a new write flag
-     QIO_CHANNEL_WRITE_FLAG_ZERO_COPY_FLUSH_ONCE, which will let callers
-     decide if they want to do a partial flush on an ENOBUFS.
-  2. Added a "blocking" field to QIOChannelSocket, which indicates if
-     the socket is in blocking mode or not.
+Kindly ping. Just in case you have further comments on this.
 
-V4:
-  1. Minor nit to rename s/zero_copy_flush_pending/zerocopy_flushed_once.
-
-V3:
-  1. Add the dirty_sync_missed_zero_copy migration stat again.
-
-V2:
-  1. Removed the dirty_sync_missed_zero_copy migration stat.
-  2. Made the call to qio_channel_socket_flush_internal() from
-     qio_channel_socket_writev() non-blocking
-
-regards,
-tejus
-
-Manish Mishra (1):
-  QIOChannelSocket: flush zerocopy socket error queue on sendmsg failure
-    due to ENOBUF
-
-Tejus GK (2):
-  QIOChannelSocket: add a "blocking" field to QIOChannelSocket
-  io: add a write flag for partial flushing during a zerocopy write
-
- include/io/channel-socket.h |  6 +++
- include/io/channel.h        |  1 +
- io/channel-socket.c         | 80 ++++++++++++++++++++++++++++++-------
- migration/multifd-nocomp.c  |  3 +-
- migration/multifd.c         |  3 +-
- 5 files changed, 76 insertions(+), 17 deletions(-)
-
--- 
-2.43.7
-
+Thanks
+Zhenzhong
 
