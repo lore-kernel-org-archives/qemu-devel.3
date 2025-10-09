@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B87CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 06:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E41CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 06:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6kDx-0002t2-8m; Thu, 09 Oct 2025 02:34:01 -0400
+	id 1v6kWt-0006nW-Eg; Thu, 09 Oct 2025 02:53:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6kDt-0002s2-Kq
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 02:33:57 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6kWq-0006ms-Qb
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 02:53:32 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6kDp-0003DI-Bx
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 02:33:57 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4060b4b1200so656636f8f.3
- for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 23:33:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6kWk-0005bf-2t
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 02:53:32 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-41174604d88so277481f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Oct 2025 23:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1759991627; x=1760596427; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1759992802; x=1760597602; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GYzC75wWAZej4UuEIDmUKOezyjzGUUOJzlifIRQQ6O0=;
- b=SHOfi0Emmg2E7i3jxkguBsnyC8JwVqIwCi/xVp8VD7Hg5mT5zhTI2bD+vMUbE4iB9+
- f/m5Ob6PxroooEaNY7lMR0SUONk0JeNnr8/+CE8XGv/Erd2suwTErc5m8GY1RpY1n3sB
- ExDcrAxXQLd8txzsOj2o/R+4ldzuDyCj+YIiTcysaRvTQVO50Wrob8HwhGNywzdoi0ZH
- tcbZpa5ryTItD8FQOmz1iDwS7V6VWjmoLlS8o91I7fegJk/RTEGZzTiS5ZDD0aRC7n1i
- 7Jgd0UmcAgFZI7cHMFmQglSyuw90QUxxtZWyeVby6NlIP4B3JIJkKk97b5u8aGJ2gJDB
- FwCw==
+ bh=E6Q4EtsBNVZlQr7FFaPPDr1nc2rYfW1UAd90i7w7t1Q=;
+ b=BJIYf67gPABXO7YFG032iTJrbFAUUjIn/BgtkOa5VWjTSc8g7hKsnJWp1tL8uPgTae
+ +6SaR3+1lrpxTsMNIZezy8XHNZ7ZoHQumqpCnq/uZGoMTXUmcclb7kvrgCGdyoz7yJln
+ 165E73ni7kkl9ZwnYG9xDiwHrcOja34Xu5peGzE5MfLOlvqZqqGwo/UsoOGllYxXOCty
+ 6TpkQLaojXPhCDn5gjnMtu3M3+xDRWAuy/VSSv+gju1Q7y5pJWexrG7XhlUbEpwUZNvd
+ osNk8swV7D3B4eOgg7jstpQ0nRa/Prq6llfcw/D2Lb70+bjgbzSxoKRjGYxHksp7Vat8
+ c4cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759991627; x=1760596427;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1759992802; x=1760597602;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GYzC75wWAZej4UuEIDmUKOezyjzGUUOJzlifIRQQ6O0=;
- b=q7g0Q3n8uJ0F0xJJ5IAdsPLMpR+nfR6Tox5onkFaImY6ABjCUnTUH/jN6HfvhF3Jda
- IjRI8tz7GhVqVJVcuThZKeQ7f+7b/rGycMdSyu5CFt1SCRcOrKrAY9RC9thgerve0Kf2
- 6faCgrEvn5QJefTsCtfbMlZpVm/Izld1brf9+r1/t96IryUDCDQjwS4Yui8iy1Fnh7KV
- s/6nriZ3aCQbaCCX8E64AFr4GbfcC4c8MrKzQk79T5uS0NzJyfT7Q3UldYPVZKe20NZL
- Z92H4o4lrM+TRmUDSFKwLD7I69fEqMhu326PYzh7E23rSTcJb+MEQZJg45PDyKEk0v/a
- R43Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5Fl0rOvsyUpiF9n9dNxtKh8EiyUZt281afI/kCACU4TgLZOfaKf7z99wC3k7Ey87kfyAqCvyNuV4t@nongnu.org
-X-Gm-Message-State: AOJu0Yyl7opnOvxqUVnH00jj1YVmHInaky8GW4eTQh2Z5fap2U6NZtRm
- v+uYOq9lglDNQTX2urOA5m+/ZEYXFdp90DrkXCt7jmSf/6Aqii/fcw3cihllIjYWolI=
-X-Gm-Gg: ASbGncuK2LAen4grt07p4l42lT42Q9omrgPo8Ymw5xmL6RMiiomCk+fO+8NkqGoPviv
- MDl09FsAtzikI+G0wbuvt4342endFd78qq25LS3A9+YVK7kGmiq7WCoh6OK2xzpr0i3OGeu6FDm
- wOhqkj/GAkTAbZ0E3YMtJSWuLdRL6tZrDJhPXweqLOE+DXrszgGQW6TM8HfELo1jyLMNqR3Rs0H
- rJjb2bRUoXSmqgqdDCOnZJkWSkfWgr3cBb8kgbuXruV0a+wFF5BjiLDypuz00UtQ+3I/SRO4iyi
- Yc+K4x7nDQfFD/JJPDPexrRRlQG9fNJ7VScT3j/Qon6LRhCozADjgU608IoKoo3/28cFdNX8sYm
- X/1QD7TJiWDJXnO86oKmc+aquVawkHDYHakjo2TSJs/NFeIzYuft60sgJrgZs1TPLcDZcoPi+p6
- IzCiLxd6baUKl9OlapHw==
-X-Google-Smtp-Source: AGHT+IGRMfMbS5ExzOnBQ/G6CiSdh8HoLtJx633PjWfgjJCF6PZk2X/grgTybN/DDUN7UTdjIRcIUg==
-X-Received: by 2002:a05:6000:240d:b0:425:7c3c:82cf with SMTP id
- ffacd0b85a97d-4266e7cdc8fmr4338579f8f.11.1759991627504; 
- Wed, 08 Oct 2025 23:33:47 -0700 (PDT)
+ bh=E6Q4EtsBNVZlQr7FFaPPDr1nc2rYfW1UAd90i7w7t1Q=;
+ b=swonxVj9fN+GrOHgsOXREfZGLqK+7bBKgnqXEZnlPsOKd54kc+wlC42o+JOUJdAK0U
+ vTEYH6P2xFQO73IjZrdANvHLHLjMMooA5HGN85Lnz33Mdki8DkP/jFimmJs3BRpBHNmO
+ tex9RyJxHnicmJd2LkMCi5+EX6wT1quwVJ6qVixh9qTjXe/ATT0OEk5DiJyaidjhNJ68
+ zvxHobep1SkiZirtqL6TEMXbWLqZ+TV1GScGB6d0pkQtV4y47HkOT7GVpRQsdGd1FVh6
+ FrCMKzb86d7Aug3TCGLCkp7GD3obpWe3hHAUWK0EYCkYBzjuJjRG2WKtHiE8m0CM/P3J
+ Fhow==
+X-Gm-Message-State: AOJu0Yx65cJOQzqNnvvrB/BROuvPAZThZfufHm6W4nlplfY29Cd4kYTu
+ qpPF1talCCs/AmF+4hSAU7u8Fn/TipXfmQre1CdSzjfPeUCq3zdlqV4C3i8aR0cwa+3E7ENQyYG
+ JCHuACCi+KQ==
+X-Gm-Gg: ASbGnctZf5w7rPs0dbHh0jlKycJQDXbLXDhf1uVZnUJ4LQnv8KVixdaILDZh4M/Mq3u
+ 2zYGytkeCTn5u2Mc0ATqS9+cEwf4y6cVByTDjNvlFcSORzVzbmruEr645+WMYL6+xFO5YanG3Zg
+ k07D8BCPTQ5577tvh/8ymvqYlUxgCUgaSmraAlfYtmzwXzDb9ui49otiffCvoXEd+R8Cr+alpA5
+ 5/eqSigf7vC/KNfWhTiFgXrRLR8nJtayvM44V8/X6faWcvjLyYPjgJWjddcNTjOgDZRL/SrLX9A
+ 9sFn/LUQ/BJnjo2SYd4S/+6jVRMNO3hmOaoUHxoi0bbkLw57X2ZDc1AXKuefKbTAPc3Kv4Jbsix
+ rF6LcPR6CUDACnZgmgnb4pYk/p7+PzSfBZVNlkY47hlcZj+e7p3SBqbrQ2pM4Ff1VKfYjmvomqM
+ T5GwRrtQqo9RPSDXLaIw==
+X-Google-Smtp-Source: AGHT+IFKnORvjaje2NDnm40KneHD8rqVW1F5kwfllOnnM9knvkCRB93F+HccAh32Sjp+CarhzFOocg==
+X-Received: by 2002:a05:6000:2902:b0:3ec:de27:aaae with SMTP id
+ ffacd0b85a97d-4266e7e0f57mr4230891f8f.38.1759992801970; 
+ Wed, 08 Oct 2025 23:53:21 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8e9724sm32855296f8f.28.2025.10.08.23.33.46
+ 5b1f17b1804b1-46fa9d62890sm67188125e9.14.2025.10.08.23.53.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Oct 2025 23:33:46 -0700 (PDT)
-Message-ID: <bad14513-b99b-4cf8-b6d0-2d338e4ebc50@linaro.org>
-Date: Thu, 9 Oct 2025 08:33:46 +0200
+ Wed, 08 Oct 2025 23:53:21 -0700 (PDT)
+Message-ID: <a3bed2c6-7597-4638-a4be-b4058ad7b7b3@linaro.org>
+Date: Thu, 9 Oct 2025 08:53:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] Register API leaks fixes
+Subject: Re: [PATCH] target/avr: Mark I/O space mapped cpu regs as
+ reentrancy-safe
 Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Darren Kenny <darren.kenny@oracle.com>, Michael Rolnik
+ <mrolnik@gmail.com>, Alexander Bulekov <alxndr@bu.edu>
+References: <20250924164329.51644-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
-References: <20251002073418.109375-1-luc.michel@amd.com>
- <64f40ff8-3694-4c9a-80b6-0f58f01d7995@linaro.org>
-In-Reply-To: <64f40ff8-3694-4c9a-80b6-0f58f01d7995@linaro.org>
+In-Reply-To: <20250924164329.51644-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,124 +103,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 08:23, Philippe Mathieu-Daudé wrote:
-> Hi Luc,
+On 24/9/25 18:43, Philippe Mathieu-Daudé wrote:
+> The test_avr_mega2560.py functional test hangs displaying:
 > 
-> On 2/10/25 09:34, Luc Michel wrote:
+>    qemu-system-avr: warning: Blocked re-entrant IO on MemoryRegion: avr-cpu-reg2 at addr: 0x5
 > 
->> This series addresses the memory leaks caused by the register API. The
->> first patches fix the API itself while the last ones take care of the
->> CANFD model.
+> Mark the I/O space mapped cpu regs as reentrancy-safe to avoid that.
 > 
+> Process 71455 stopped
+> * thread #4, stop reason = breakpoint 1.1
+>      frame #0: 0x1000a2d30 access_with_adjusted_size(addr=5, value=0x16ff9e4f0, size=1, access_size_min=<unavailable>, access_size_max=4, access_fn=(memory_region_read_accessor at memory.c:435), mr=0x12101bce0, attrs=MemTxAttrs @ x7) at memory.c:547:13
+>     544 	    if (mr->dev && !mr->disable_reentrancy_guard &&
+>     545 	        !mr->ram_device && !mr->ram && !mr->rom_device && !mr->readonly) {
+>     546 	        if (mr->dev->mem_reentrancy_guard.engaged_in_io) {
+> -> 547 	            warn_report_once("Blocked re-entrant IO on MemoryRegion: "
+>     548 	                             "%s at addr: 0x%" HWADDR_PRIX,
+>     549 	                             memory_region_name(mr), addr);
+>     550 	            return MEMTX_ACCESS_ERROR;
+> Target 0: (qemu-system-avr) stopped.
+> (lldb) bt
+> * thread #4, stop reason = breakpoint 1.1
+>    * frame #0: 0x1000a2d30 access_with_adjusted_size(addr=5, value=0x16ff9e4f0, size=1, access_size_min=<unavailable>, access_size_max=4, access_fn=(memory_region_read_accessor at memory.c:435), mr=0x12101bce0, attrs=MemTxAttrs @ x7) at memory.c:547:13
+>      frame #1: 0x1000a27a4 memory_region_dispatch_read [inlined] memory_region_dispatch_read1(mr=0x12101bce0, addr=5, pval=0x16ff9e4f0, size=1, attrs=MemTxAttrs @ x21) at memory.c:0
+>      frame #2: 0x1000a2768 memory_region_dispatch_read(mr=0x12101bce0, addr=5, pval=<unavailable>, op=<unavailable>, attrs=<unavailable>) at memory.c:1484:9
+>      frame #3: 0x1000af89c flatview_read_continue_step(attrs=MemTxAttrs @ x24, buf="", len=<unavailable>, mr_addr=5, l=0x16ff9e568, mr=0x12101bce0) at physmem.c:3061:18
+>      frame #4: 0x1000afb4c flatview_read [inlined] flatview_read_continue(fv=0x0000600003993b40, addr=8388701, attrs=MemTxAttrs @ x21, ptr=0x16ff9e5c0, len=1, mr_addr=5, l=1, mr=<unavailable>) at physmem.c:3102:19
+>      frame #5: 0x1000afb3c flatview_read(fv=0x0000600003993b40, addr=8388701, attrs=MemTxAttrs @ x21, buf=0x16ff9e5c0, len=1) at physmem.c:3132:12
+>      frame #6: 0x1000b50bc subpage_read(opaque=<unavailable>, addr=<unavailable>, data=0x16ff9e630, len=1, attrs=<unavailable>) at physmem.c:2615:11
+>      frame #7: 0x1000a9150 memory_region_read_with_attrs_accessor(mr=0x104096400, addr=93, value=0x16ff9e790, size=1, shift=0, mask=255, attrs=<unavailable>) at memory.c:461:9
+>      frame #8: 0x1000a2c9c access_with_adjusted_size(addr=93, value=<unavailable>, size=<unavailable>, access_size_min=<unavailable>, access_size_max=<unavailable>, access_fn=<unavailable>, mr=<unavailable>, attrs=<unavailable>) at memory.c:566:18
+>      frame #9: 0x1000a27a4 memory_region_dispatch_read [inlined] memory_region_dispatch_read1(mr=0x104096400, addr=93, pval=0x16ff9e790, size=1, attrs=MemTxAttrs @ x21) at memory.c:0
+>      frame #10: 0x1000a2768 memory_region_dispatch_read(mr=0x104096400, addr=93, pval=<unavailable>, op=<unavailable>, attrs=<unavailable>) at memory.c:1484:9
+>      frame #11: 0x100163034 do_ld_mmio_beN [inlined] int_ld_mmio_beN(cpu=<unavailable>, full=<unavailable>, ret_be=0, addr=93, size=1, mmu_idx=<unavailable>, type=<unavailable>, ra=<unavailable>, mr=<unavailable>, mr_offset=93) at cputlb.c:1963:13
+>      frame #12: 0x100163004 do_ld_mmio_beN(cpu=0x121018ec0, full=0x121027400, ret_be=<unavailable>, addr=<unavailable>, size=<unavailable>, mmu_idx=1, type=MMU_DATA_LOAD, ra=12884916912) at cputlb.c:1997:12
+>      frame #13: 0x1001536f0 helper_ldub_mmu [inlined] do_ld_1(cpu=<unavailable>, p=0x16ff9e800, mmu_idx=<unavailable>, type=MMU_DATA_LOAD, ra=12884916912) at cputlb.c:2262:16
+>      frame #14: 0x1001536dc helper_ldub_mmu [inlined] do_ld1_mmu(cpu=<unavailable>, addr=<unavailable>, oi=<unavailable>, ra=<unavailable>, access_type=MMU_DATA_LOAD) at cputlb.c:2338:12
+>      frame #15: 0x1001536dc helper_ldub_mmu(env=0x12101baf0, addr=<unavailable>, oi=<unavailable>, retaddr=12884916912) at ldst_common.c.inc:19:12
+>      frame #16: 0x300003ae4
+>      frame #17: 0x10013c6dc cpu_tb_exec(cpu=<unavailable>, itb=<unavailable>, tb_exit=<unavailable>) at cpu-exec.c:439:11
+>      frame #18: 0x10013d418 cpu_exec_loop [inlined] cpu_loop_exec_tb(cpu=0x121018ec0, tb=<unavailable>, pc=<unavailable>, last_tb=<unavailable>, tb_exit=0x16ff9ee0c) at cpu-exec.c:878:10
+>      frame #19: 0x10013d400 cpu_exec_loop(cpu=0x121018ec0, sc=0x16ff9eed0) at cpu-exec.c:991:13
+>      frame #20: 0x10013cc00 cpu_exec_setjmp(cpu=0x121018ec0, sc=0x16ff9eed0) at cpu-exec.c:1011:12
+>      frame #21: 0x10013cb24 cpu_exec(cpu=0x121018ec0) at cpu-exec.c:1037:11
+>      frame #22: 0x100165830 tcg_cpu_exec(cpu=0x121018ec0) at tcg-accel-ops.c:98:11
+>      frame #23: 0x10016607c mttcg_cpu_thread_routine [inlined] mttcg_cpu_exec(cpu=0x121018ec0) at tcg-accel-ops-mttcg.c:154:11
+>      frame #24: 0x100166070 mttcg_cpu_thread_routine(arg=0x121018ec0) at tcg-accel-ops-mttcg.c:113:21
+>      frame #25: 0x100334218 qemu_thread_start(args=<unavailable>) at qemu-thread-posix.c:393:9
 > 
->> Luc Michel (7):
->>    hw/core/register: remove the REGISTER device type
->>    hw/core/register: add the REGISTER_ARRAY type
->>    hw/core/register: remove the calls to `register_finalize_block'
->>    hw/core/register: remove the `register_finalize_block' function
->>    hw/net/can/xlnx-versal-canfd: remove unused include directives
->>    hw/net/can/xlnx-versal-canfd: refactor the banked registers logic
->>    hw/net/can/xlnx-versal-canfd: remove register API usage for banked
->>      regs
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/avr/cpu.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> I had few issues with your series:
-> 
-> ../../hw/net/can/xlnx-versal-canfd.c:1917:30: error: unused variable 
-> 'canfd_regs_ops' [-Werror,-Wunused-const-variable]
->   1917 | static const MemoryRegionOps canfd_regs_ops = {
->        |                              ^~~~~~~~~~~~~~
-> 
-> ../../hw/net/can/xlnx-versal-canfd.c:1871:42: error: use of undeclared 
-> identifier 'TYPE_REGISTER'
->   1871 |         object_initialize(r, sizeof(*r), TYPE_REGISTER);
->        |                                          ^
-> 
-> ../../hw/net/can/xlnx-versal-canfd.c:1700:48: error: incompatible 
-> pointer types passing 'hwaddr *' (aka 'unsigned long long *') to 
-> parameter of type 'size_t *' (aka 'unsigned long *') [-Werror,- 
-> Wincompatible-pointer-types]
->   1700 |     if (!canfd_decode_addr(s, addr, &bank_idx, &reg_offset)) {
->        |                                                ^~~~~~~~~~~
-> ../../hw/net/can/xlnx-versal-canfd.c:1651:52: note: passing argument to 
-> parameter 'offset' here
->   1651 |                               size_t *idx, size_t *offset)
->        |                                                    ^
-> ../../hw/net/can/xlnx-versal-canfd.c:1722:48: error: incompatible 
-> pointer types passing 'hwaddr *' (aka 'unsigned long long *') to 
-> parameter of type 'size_t *' (aka 'unsigned long *') [-Werror,- 
-> Wincompatible-pointer-types]
->   1722 |     if (!canfd_decode_addr(s, addr, &bank_idx, &reg_offset)) {
->        |                                                ^~~~~~~~~~~
-> ../../hw/net/can/xlnx-versal-canfd.c:1651:52: note: passing argument to 
-> parameter 'offset' here
->   1651 |                               size_t *idx, size_t *offset)
->        |                                                    ^
-> 
-> I fixed them by re-ordering the xlnx-versal-canfd patches first,
-> having canfd_decode_FOO() taking a 'hwaddr *offset' and using a
-> temporary __attribute__ ((unused)) for canfd_regs_ops[].
-> 
-> I'm queuing this series as fixed, except if you disagree.
+> diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+> index a6df71d0205..306c3590f23 100644
+> --- a/target/avr/cpu.c
+> +++ b/target/avr/cpu.c
+> @@ -151,6 +151,7 @@ static void avr_cpu_realizefn(DeviceState *dev, Error **errp)
+>   
+>       memory_region_init_io(&cpu->cpu_reg2, OBJECT(cpu), &avr_cpu_reg2, env,
+>                             "avr-cpu-reg2", 8);
+> +    cpu->cpu_reg2.disable_reentrancy_guard = true;
 
-Bah, qtest/device-introspect-test is failing:
+Same applies to cpu_reg1.
 
-# Testing device 'xlnx-zynqmp-efuse'
-Broken pipe
-../../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from 
-signal 11 (Segmentation fault: 11)
-Abort trap: 6
+>       memory_region_add_subregion(get_system_memory(),
+>                                   OFFSET_DATA + 0x58, &cpu->cpu_reg2);
+>   }
 
-(lldb) bt
-* thread #5, stop reason = EXC_BAD_ACCESS (code=1, address=0x50)
-   * frame #0: 0x00000001007dcf18 
-qemu-system-aarch64`object_finalize_child_property(obj=<unavailable>, 
-name=<unavailable>, opaque=0x00000001561f0c90) at object.c:1814:23
-     frame #1: 0x00000001007d9ebc 
-qemu-system-aarch64`object_property_del_all(obj=0x0000000138008000) at 
-object.c:667:21 [inlined]
-     frame #2: 0x00000001007d9e1c 
-qemu-system-aarch64`object_finalize(data=0x0000000138008000) at 
-object.c:728:5 [inlined]
-     frame #3: 0x00000001007d9e14 
-qemu-system-aarch64`object_unref(objptr=0x0000000138008000) at 
-object.c:1232:9
-     frame #4: 0x00000001008af32c 
-qemu-system-aarch64`qmp_device_list_properties(typename=<unavailable>, 
-errp=0x000000017002ac98) at qom-qmp-cmds.c:237:5
-     frame #5: 0x000000010092d7a4 
-qemu-system-aarch64`qmp_marshal_device_list_properties(args=0x0000000145809400, 
-ret=0x0000000104827a18, errp=0x0000000104827a20) at 
-qapi-commands-qdev.c:65:14
-     frame #6: 0x0000000100948784 
-qemu-system-aarch64`do_qmp_dispatch_bh(opaque=0x00000001048279e8) at 
-qmp-dispatch.c:128:5
-
-I'm dropping this series, please have a look.
-
-Stashed changes:
-
--- >8 --
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index 81615bc52a6..d559fc06804 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1784,3 +1784,3 @@ static bool 
-canfd_decode_reg_bank(XlnxVersalCANFDState *s, hwaddr addr,
-                                    hwaddr first_reg, hwaddr last_reg,
--                                  size_t num_banks, size_t *idx, size_t 
-*offset)
-+                                  size_t num_banks, size_t *idx, hwaddr 
-*offset)
-  {
-@@ -1809,3 +1809,3 @@ static bool 
-canfd_decode_reg_bank(XlnxVersalCANFDState *s, hwaddr addr,
-  static bool canfd_decode_addr(XlnxVersalCANFDState *s, hwaddr addr,
--                              size_t *idx, size_t *offset)
-+                              size_t *idx, hwaddr *offset)
-  {
-@@ -1916,2 +1916,3 @@ static const MemoryRegionOps canfd_ops = {
-
-+__attribute__ ((unused))
-  static const MemoryRegionOps canfd_regs_ops = {
----
 
