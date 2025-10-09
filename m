@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B9FCCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5119FCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 18:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6ugQ-0004wz-IZ; Thu, 09 Oct 2025 13:44:06 -0400
+	id 1v6v3D-0002HI-Tm; Thu, 09 Oct 2025 14:07:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6ugP-0004wg-EM
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:44:05 -0400
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v6v3C-0002Gt-3u
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 14:07:38 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6ugM-0005rl-A6
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:44:05 -0400
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-46b303f755aso10035305e9.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:44:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v6v32-0000MF-6N
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 14:07:37 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b554bb615dcso822164a12.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 11:07:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760031839; x=1760636639; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1760033241; x=1760638041; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4yJjwJiN4Wu8yEEngc5Fjvek4J1FNJRvT4aV2R9EfdI=;
- b=HA1woxmHB53ZxKLhWeL1UxEpIZe1AHMwu3krJTcuMa+KDeyoNFjGueo2fZUjzGiXHF
- F9ETAjn3KYDCVVs0V0V6MSJ67bZAHLSl5D/HxbGtWh9SgQSq2Cp8MScamoVU6eZouYDQ
- H9NHues/SM/FusJvHgzFxpiyowwzEepv4fMbNpJOuvwcxilUhP8KXTH0B9iQWWxrVzip
- RMxqY9eqMdhYTjljdew5Ad+W9bAK+0cXmNylDplj1FwOOido6KOd7Jr5T6NyR18tAhHr
- VRzE5pL6QM44Ubs0Bf39InlxUBe5YzmmaXFi7IYVYySOUVvdkXXev2lVLrKLyMQ8aHY1
- QudA==
+ bh=OEaeQKPIB7FV/TcqxYbuUO3MTeQ9nNgkw+rNGbqxasw=;
+ b=ywBEaMh5MTfqBflv2fhHqoCnjYESQ/5wFVZ31wDoE+64fljHOe2lbuQ210Obw9hGin
+ KScGz8UIL92MGst93F41LgCidZJHbmKy5niiywSjwYXxPOm8SAUTbqk6qliCRGo2FveJ
+ fB9lR5D7OW8S2JtiHl40kPcCPcnY4VEQF9ZCwGD5Q3s91SC4eW5W8brEQY89bvdgSYjl
+ jRJifiTdz7QS9mwzNftZci9ec4WPCe1/k3CSgLAekt0Zs+/uBPuUYoo+pEsC1KDn1djI
+ OVNp1pVsbhH6n0YeowPp4ECozVZ8xQVbBVYr7zoEQ8a1O9I+nEHkBUiWXz4ajti2CJl3
+ 2Skg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760031839; x=1760636639;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1760033241; x=1760638041;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4yJjwJiN4Wu8yEEngc5Fjvek4J1FNJRvT4aV2R9EfdI=;
- b=d/aq4jwKgmN8UyGNG3c6reMh6jXOAAcBTtciern54DBPXgQV9XrQq0FX25sTMBvfQn
- 2JAUyR2D3kcmCbXryBC6WlGP6h7+Je7hRw0DebeQo4eo+raRCYo/AtyRB874DFDTlzFw
- zjIgdjw4qKH22HZapMUQrSF0TL2p/mZ/EFlTlx/xgZD129hWe7oJoxKShC2+djjff0kS
- dOOuvVnpfgba4Fq8boRGlNL6l5aLLJ6XKG9AEIFvpqeJgtds/o38xVkdOTYRewk8gREZ
- Dk2Fko3g55ebu0HghgxzxuqZmbwaA1Pi0Cp21T1ynae3gkir83WSVJFJti0Uf45vwBcc
- 9ucA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUbFRXmnPzTzo94Yei//V+SxlMad/Y3R2cJ97ZzofCViIIojck9yocrmZNiexgvv2X/5kyk7Qjr/aKp@nongnu.org
-X-Gm-Message-State: AOJu0Yxa5UbFq/WMgHncxjVakmJQ+3YJsjs2BpRB0qXaaYHd7kqxZH6h
- 08RwjeEICpYtMvf/Feq52MYSnMnMkbqc8j0TCJ9p+RDzxRl3JCeFPv+r2Ps2xoLJmcw=
-X-Gm-Gg: ASbGnctNIsCTsr5/IJmnbvUeUzAAbXrkQHadMzdKUQFS6E6lJrgbOFr996kU5FNUw3A
- Ey8G4u9tUOdnPPKCfqgJihrnOde4m5YVdJvSF+S8K63aF1GhaKIxsjF8B2dY3ZgALGb99LbKNDN
- uvYJy57JnjnYxPTL3Qy1Rz75K8zmXnpXijIpCCIdtYpfguhswNtKwXpWO0bPJiBiwin+ue43G6R
- mWibIJMXAvnnVwlOK/SkJ2qrpy4giEFF18lF7umI/kDR8BTxhEwE5qag/fvgv0Kud0F0qvVNtd+
- LBlQA8Wbce9MJiFkBMma32AGfpuN+suE0Vwq7LVOeTJZ2wqODxF+RiZ/Ndi40vjC3A+G0lq8r40
- ljR6kSaL3mqz45Bqahz1NEAwnUnlwB00RxTPEaFJFysNTYiuHuG8FJLEJ5r1aDlZMmei8fKB5M4
- h5QQe5UW5rj9ZpNzhEAA==
-X-Google-Smtp-Source: AGHT+IGLF0LmbCnKzKmW8KiT6uNNXXtj28jyyOCp1LRQrXqKeBMdRqhNAEVjJv6HwV+h4EvPYOQyFA==
-X-Received: by 2002:a05:600c:8487:b0:45b:80ff:58f7 with SMTP id
- 5b1f17b1804b1-46fa9b16570mr65762765e9.36.1760031838927; 
- Thu, 09 Oct 2025 10:43:58 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e8309sm75196f8f.50.2025.10.09.10.43.58
+ bh=OEaeQKPIB7FV/TcqxYbuUO3MTeQ9nNgkw+rNGbqxasw=;
+ b=UP/y8MMihKZLncqINNB/Hc5x8AxPSC3ZTCBfLv1dPt7ofabgA/l44QrCrNpCX5e2XR
+ bZn4tFemGAFnePky6CE3et84N6WkwfMlDwniGZ0L5xoVl+azRL93vqq1mYK7aNWC2pC5
+ pQskjNaDpTgPzAe2T7WC0wn+UQwWH+VFAUR8hiqObXJW9gqJKBXF4Yg0N6XchOok35e+
+ 2XszPfAaR9WVwxi/HSozyBefms9k0eqfT/yheQ/gjCOB7USoOLUO8Wee5raJNMzSVZQF
+ vIxrX/mU41PyBSSUjCaY9JkfONWhxc7xcoEpcOU9DuAU9WB0tQfTQ6UXeLdSZCVG2tCj
+ Pa5A==
+X-Gm-Message-State: AOJu0Yxj4EC1bqjM/qidI+Acy835Q1hVCkA2QJ18MjABpj6xb1hZ0JLd
+ fLKD9tPTL18K3BTA3bNIEJDs0UBP7EV8L9W2XklvkrBTfgbP6RvMN/h5gkH7OFkzYVI=
+X-Gm-Gg: ASbGncv3okUdeZRwpWxE3rUh3ns7GADJxL290ip6pWfute8l5PA5pG09TvWlUqSEa97
+ M1tpins20UF6k/5+/0/387Qmxs8RGJZ5bdYQ1WrqLjq4fUZIGmDE0cEtOKvICI1HFChjixsHvQd
+ CdPMAJ9y+hJMEyTLwwOEP0XJUkBL2T572gMowxcARRUBQ3Py6IDhiFhWMtFM7bkr6jNF6FFVwaP
+ tTaAtRqcoPJr1qga0Vtdxkw/tzGDdNy2FuSNZ8WK7gPKM8dWWwg1vfyD+xZR1bXiMR8CnqmWbnG
+ 6ROvAjAOsROOZIiqFQpbYLQRFRGrTA+94ofI4kh4HChn3yh9+4M0VEYXI8DJowfHPiOP9ed2zlC
+ pQqDkYJBLCUCjexBlmD2/x+aCBAjjg1/kYgD5FbgDRdXd0+1MHNQ4HcZvIK7rhPE=
+X-Google-Smtp-Source: AGHT+IHVlCDhBPdlZeo/pmPsdy+LWfunvstEDSM/Rs9kyVTRudRvWdnxZm7bcO4cPBCmvSk/6omUug==
+X-Received: by 2002:a17:903:120c:b0:26c:4085:e3f5 with SMTP id
+ d9443c01a7336-29027391377mr103344525ad.50.1760033241353; 
+ Thu, 09 Oct 2025 11:07:21 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034f93ea2sm34695995ad.126.2025.10.09.11.07.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 10:43:58 -0700 (PDT)
-Message-ID: <c75dc27a-5c56-4010-a205-a8296a9ab1e0@linaro.org>
-Date: Thu, 9 Oct 2025 19:43:57 +0200
+ Thu, 09 Oct 2025 11:07:20 -0700 (PDT)
+Message-ID: <0138de27-04af-4ec6-83bd-db917f867aa5@linaro.org>
+Date: Thu, 9 Oct 2025 11:07:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
- hosts
+Subject: Re: MMIO through IOMMU from a TCG processor
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250820134937.45077-1-philmd@linaro.org>
- <226ab909-0482-493f-bacf-5d2930d07ad7@linaro.org>
- <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
-In-Reply-To: <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
+To: Mark Burton <quic_mburton@quicinc.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, peterx@redhat.com,
+ eric.auger@redhat.com, zhenzhong.duan@intel.com,
+ alejandro.j.jimenez@oracle.com, peter.maydell@linaro.org,
+ jasowang@redhat.com, pbonzini@redhat.com, tjeznach@rivosinc.com,
+ steven.sistare@oracle.com, clement.mathieu--drif@eviden.com,
+ joao.m.martins@oracle.com, ean-philippe@linaro.org,
+ jean-philippe@linaro.org, sarunkod@amd.com,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <1C343F6E-05E2-4EA0-A338-0C48A97FF263@quicinc.com>
+ <db2ca904-5d1c-4c96-8950-d3d943940d64@nutanix.com>
+ <D7DA7B85-2439-4CC2-A852-604154ABDC99@quicinc.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <D7DA7B85-2439-4CC2-A852-604154ABDC99@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,106 +111,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 19:23, Philippe Mathieu-Daudé wrote:
-> On 21/8/25 22:27, Richard Henderson wrote:
->> On 8/20/25 23:49, Philippe Mathieu-Daudé wrote:
->>> qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
->>> and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
->>> ("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
->>> ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
->>> is C_NotImplemented.
->>
->> Not true: ld2/st2 are also used for 128-bit load store.
->>
->> See: aarch64, x86_64, loongarch64, ppc64, s390x.
+Hi Mark,
+
+"recorded section therefore seems to be incorrect".
+do you observe a crash, or on assert failing at execution?
+
+I don't know in details the code you mention, but after investigating 
+and fixing https://gitlab.com/qemu-project/qemu/-/issues/3040, I can 
+share a few things.
+
+Overall, what you describe looks like a race condition exposing a 
+lifetime issue, especially when saying "we 'loose' the address space 
+that has been returned by the translate function".
+A value was not updated as expected and is out of sync, or was freed too 
+early. Memory regions lifetime is something definitely tricky in QEMU, 
+and when you mix that with RCU, things can become very obscure in 
+multithreaded scenarios.
+
+In the bug above, the solution was to stop duplicating this information, 
+and get it from the same source. The overhead to read such atomic data 
+is quite small, thanks to use of RCU.
+At KVM Forum, Paolo told me he introduced this copy precisely to avoid 
+issues, but the opposite happened in reality, which we both found was 
+quite funny.
+
+Additional questions:
+- At which time of execution does it happen? Is it during pci devices 
+initialization, or when remapping specific memory sections?
+- Is the bug deterministic or random? If random, does increasing the 
+number of pci devices attached increase the probably to meet it?
+
+Additional tools:
+- If you observe a crash, build with asan. If you get a use-after-free 
+error, it's probably an issue with RCU cleaning up things before you 
+expect. This is what I had in the bug mentioned above.
+- If your assert fail, I can recommend you capture execution through rr 
+(https://github.com/rr-debugger/rr), using chaos mode rr record --chaos, 
+which will randomize scheduling of threads. I don't know if you're 
+familiar with it, but it allows you to debug your execution "backward".
+Once you captured the faulty execution, you can reach the crash or 
+faulty assert, then execute backward (reverse-continue) with a 
+watchpoint set on the (correct) value that was updated meanwhile. This 
+way, you'll find which sequence led to desynchronization, and then 
+you'll have a good start to deduce what the root cause is.
+- Spend some time making the crash/assert almost deterministic, it will 
+save you time later, especially when implementing a possible fix and 
+prove it works.
+
+I hope it helps.
+
+Regards,
+Pierrick
+
+On 10/9/25 2:10 AM, Mark Burton wrote:
 > 
-> OK. Hmm I guess I need to add a __attribute__((unused)) check like
-> you did in commit f408df587a0 ("tcg: Convert brcond2_i32 to
-> TCGOutOpBrcond2") to outop_qemu_ld2/st2 then.
+> (Adding Pierrick)
+> Thanks for getting back to me Mark.
+> 
+> I initially thought the same, and I think I have seen that issue, I have also taken that patch, However …..
+> 
+> For MMIO access, as best I can tell, the initial calculation of the despatch is based on the iotlb reported by the translate function (correct), while the subsequent use of the section number uses the dispatch table from the CPU’s address space….. which gives you the wrong section.
+> 
+> I would very happily do a live debug with you (or anybody) if it would help… I’m more than willing to believe I’ve made a mistake, but I just don’t see how it’s supposed to work.
+> 
+> I have been looking at solutions, and right now, I don’t see anything obvious. As best I can tell, we “loose” the address space that has been returned by the translate function - so, either we would need a way to hold onto that, or, we would have to re-call the function, or….
+> All of those options look really really nasty to me.
+> 
+> The issue is going to be systems where SMMU’s are used all over the place, specifically, in front of MMIO. (Memory works OK because we get the memory pointer itself, all is fine, the issue seems only be with MMIO accesses through IOMMU regions).
+> 
+> Cheers
+> Mark.
+> 
+> 
+>> On 9 Oct 2025, at 10:43, Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
+>>
+>> On 08/10/2025 13:38, Mark Burton wrote:
+>>
+>>> All, sorry for the wide CC, I’m trying to find somebody who understands this corder of the code…. This is perhaps a obscure, but I think it should work.
+>>> I am trying to access an MMIO region through an IOMMU, from TCG.
+>>> The IOMMU translation has provided an address space that is different from the CPU’s own address space.
+>>> In address_space_translate_for_iotlb the section is calculated using the address space provide by the IOMMU translation.
+>>>> d = flatview_to_dispatch(address_space_to_flatview(iotlb.target_as));
+>>>>
+>>> Later, we come to do the actual access (via e.g. do_st_mmio_leN), and at this point we pick up the cpu’s address spaces in iotlb_to_section, which is different, and the recorded section therefore seems to be incorrect.
+>>>> CPUAddressSpace *cpuas = &cpu->cpu_ases[asidx];
+>>>> AddressSpaceDispatch *d = cpuas->memory_dispatch;
+>>>> int section_index = index & ~TARGET_PAGE_MASK;
+>>>> MemoryRegionSection *ret;
+>>>>
+>>>> assert(section_index < d->map.sections_nb);
+>>>> ret = d->map.sections + section_index;
+>>> What I don’t fully understand is how this is supposed to work….?
+>>> Have I missed something obvious?
+>>> Cheers
+>>> Mark.
+>>
+>> What version of QEMU are you using? I'm wondering if you're getting caught out by a variant of this: https://gitlab.com/qemu-project/qemu/-/issues/3040.
+>>
+>>
+>> ATB,
+>>
+>> Mark.
+>>
+> 
 
-OK I figured my issue, I shouldn't remove the following in the
-MIPS series [*]:
-
--- >8 --
-diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-index 3f4aca25b13..c519dfbf7d5 100644
---- a/tcg/mips/tcg-target.c.inc
-+++ b/tcg/mips/tcg-target.c.inc
-@@ -1311,2 +1311,34 @@ static const TCGOutOpQemuLdSt outop_qemu_ld = {
-
-+static void tgen_qemu_ld2(TCGContext *s, TCGType type, TCGReg datalo,
-+                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
-+{
-+    MemOp opc = get_memop(oi);
-+    TCGLabelQemuLdst *ldst;
-+    HostAddress h;
-+
-+    tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
-+    ldst = prepare_host_addr(s, &h, addr, oi, true);
-+
-+    if (use_mips32r6_instructions || h.aa.align >= (opc & MO_SIZE)) {
-+        tcg_out_qemu_ld_direct(s, datalo, datahi, h.base, opc, type);
-+    } else {
-+        tcg_out_qemu_ld_unalign(s, datalo, datahi, h.base, opc, type);
-+    }
-+
-+    if (ldst) {
-+        ldst->type = type;
-+        ldst->datalo_reg = datalo;
-+        ldst->datahi_reg = datahi;
-+        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
-+    }
-+}
-+
-+static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
-+    /* Ensure that the mips32 code is compiled but discarded for mips64. */
-+    .base.static_constraint =
-+        TCG_TARGET_REG_BITS == 32 ? C_O2_I1(r, r, r) : C_NotImplemented,
-+    .out =
-+        TCG_TARGET_REG_BITS == 32 ? tgen_qemu_ld2 : NULL,
-+};
-+
-  static void tcg_out_qemu_st_direct(TCGContext *s, TCGReg lo, TCGReg hi,
-@@ -1390,2 +1422,34 @@ static const TCGOutOpQemuLdSt outop_qemu_st = {
-
-+static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
-+                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
-+{
-+    MemOp opc = get_memop(oi);
-+    TCGLabelQemuLdst *ldst;
-+    HostAddress h;
-+
-+    tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
-+    ldst = prepare_host_addr(s, &h, addr, oi, false);
-+
-+    if (use_mips32r6_instructions || h.aa.align >= (opc & MO_SIZE)) {
-+        tcg_out_qemu_st_direct(s, datalo, datahi, h.base, opc);
-+    } else {
-+        tcg_out_qemu_st_unalign(s, datalo, datahi, h.base, opc);
-+    }
-+
-+    if (ldst) {
-+        ldst->type = type;
-+        ldst->datalo_reg = datalo;
-+        ldst->datahi_reg = datahi;
-+        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
-+    }
-+}
-+
-+static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
-+    /* Ensure that the mips32 code is compiled but discarded for mips64. */
-+    .base.static_constraint =
-+        TCG_TARGET_REG_BITS == 32 ? C_O0_I3(rz, rz, r) : C_NotImplemented,
-+    .out =
-+        TCG_TARGET_REG_BITS == 32 ? tgen_qemu_st2 : NULL,
-+};
-+
-  static void tcg_out_mb(TCGContext *s, unsigned a0)
-
----
-
-Let's ignore this bogus patch then :)
-
-[*] 
-https://lore.kernel.org/qemu-devel/20250820142108.46639-1-philmd@linaro.org/
 
