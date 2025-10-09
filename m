@@ -4,113 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A14DCCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD5B9CCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6n2g-0005uz-2b; Thu, 09 Oct 2025 05:34:34 -0400
+	id 1v6nBk-0004E4-Qu; Thu, 09 Oct 2025 05:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v6n2e-0005sY-3U; Thu, 09 Oct 2025 05:34:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v6nBi-0004Du-J6
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:43:54 -0400
+Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v6n2U-0001lg-Uh; Thu, 09 Oct 2025 05:34:30 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59953vCd012427;
- Thu, 9 Oct 2025 09:34:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=POA1He
- S75COE92NsOG/SsNmTEwJpDG97qvIL24lTrB0=; b=YjW4Kh/jhhzZ86AKL0ZszN
- IS2TBW58FWP8+xh16b/HMs5ZjFcZcurtsSkUUchO3Xqt01NvSfjn/jguo8cjgRKd
- V3VPgJ8tkKbkZ3qetlb2eBxZDzGri/z79V97RCN9nFzHvAAtah1LD55s1X+XDhJy
- nW5PLRlEM1T31pWTOE6vOWsD9Yr6urzjYmkYHSoGPrq6g16V1wa6Z12CuFkt2gWK
- sSJPpJVjeGA0X1Y0+wq1jmciTnvU1TfncS/VdkqwbzfC2ZcSzP7rP2GK0rtdwHup
- 1DIZx4Z3I1XKduHWeTpXT4qo0dEvRqDHozdTLa5j5tOEUGJ91YXjEE32uvh9NUSg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv7ybwpy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 09:34:11 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5999UVBI029054;
- Thu, 9 Oct 2025 09:34:11 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv7ybwpw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 09:34:11 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5998Ub6Q012985;
- Thu, 9 Oct 2025 09:34:10 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49nvamusaq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 09:34:10 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5999Y8Th52232496
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Oct 2025 09:34:08 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 834B320075;
- Thu,  9 Oct 2025 09:34:08 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4CAD520082;
- Thu,  9 Oct 2025 09:34:07 +0000 (GMT)
-Received: from ltcfuji9aw-lp7.ltc.tadn.ibm.com (unknown [9.5.7.39])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Oct 2025 09:34:07 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org, philmd@linaro.org
-Cc: npiggin@gmail.com, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 1/5] ppc/spapr: remove deprecated machine pseries-3.0
-Date: Thu,  9 Oct 2025 14:40:53 -0400
-Message-ID: <20251009184057.19973-2-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251009184057.19973-1-harshpb@linux.ibm.com>
-References: <20251009184057.19973-1-harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v6nBa-0002wC-Ki
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:43:54 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.178])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cj4gx2MCNz6WCc;
+ Thu,  9 Oct 2025 09:43:41 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Thu, 9 Oct
+ 2025 11:43:40 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G0048738cb1f-198f-4364-beaa-4d0cd191ff4e,
+ 0ABBE769FBEA5341A3875E1E3E57BEA7B23E4658) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <b29b0c7c-caaa-461d-b258-e8573519466c@kaod.org>
+Date: Thu, 9 Oct 2025 11:43:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] ppc/spapr: remove deprecated machine pseries-4.2
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>,
+ <qemu-devel@nongnu.org>, <philmd@linaro.org>
+CC: <npiggin@gmail.com>
+References: <20251009184057.19973-1-harshpb@linux.ibm.com>
+ <20251009184057.19973-6-harshpb@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251009184057.19973-6-harshpb@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: URw9sM3SFWxZai4rqkufJ162dVtx-LaB
-X-Proofpoint-ORIG-GUID: G99mRDUBZDXyonkEyCEYR3-t3S7lOlbo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX8u56AvYOx8tS
- fECAQBc5Q6PhKUIS0eTH/kO+srgV6yi9E8DAog4+sFpw9Mgk9A19/m5TBMHssUpLuP+0PbAYcma
- CADz3tP85OZstHfcdGsNIpQ4aFRWgAsmFtZ8ksSCrcwFN6ZbrJFc7gD5q0/XSe7WPj4iVEPrbh5
- oRHX6G6OOSGj+V+Sd9jUMqcFr73pKHXTTg2lakl/zdrSkc8MZSqimyX24rgxcPPhQMURSeVNW90
- 9DtAc5d8kTnYM54sNHo1VrfZ6NM3p1FGaW+SB/Ezu3yLCKTj4rDlFM/IBzbqpa7yfashtTYG9Fo
- nQsxVAMJKPaEYsLEb1OMl6k7Ww0m9mhls2oXK5gRe5A8q3qizn3MNN7Ew2PALI8s7UeUm25nC3T
- kSBfNSNY1R8yTsAGEpbGeJie6cpwdg==
-X-Authority-Analysis: v=2.4 cv=FtwIPmrq c=1 sm=1 tr=0 ts=68e78193 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=aow-egSQAAAA:8
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=GhfPg2sD2UaM3MgJKtQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22 a=cPQSjfK2_nFv0Q5t_7PE:22
- a=oH34dK2VZjykjzsv8OSz:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 clxscore=1015 phishscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 086c22ef-4109-4193-a4aa-f45cbd9c22c6
+X-Ovh-Tracer-Id: 9497247189207452579
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEkbQBDRvm3OHt6Zo+Fbj5bag0uoB72fGiDKmEiz8JpeqKGOybpKdbisdSIHnIl6Zhq8EleWzih6CkBYHLDnLhbQttMUSP6M3ZOt/P/+4LbcUgdy69uPeOibUFKJUU0vTMU96AwZCn3nhcTSyw4iFVNgqJtPiOE4GtwLMT5TXIBjQFBi2Xo/9Sr2W3pSnwQUjndCYjLDzcM0Pa7iuB0NCfmHICetz82DUh/gPkr3eOlzC4DoFVTt+mYVG2qV0l7nMlsI4x1NefNI7IEO6uO85WN07DI5vkK1YJZ54kR+CqBkprhGY56vqAkwwPaTDQVey3353PUDqR0HoUQfhhunvVNtnkIKs6cH+ZTmm1bFSgC7jvLJnjZSwN8G6lMjcrSchDWgJ/ekLaDKKNS4p3zLMMBQgm9MvmM8IixMxXPc/2kRThoEFAEsREpuuDFq2tpa33xo8Bi371mtg4yj48nwVQz+SFwLJA/gz8NrQqKG/HkEdma/FBpARWP0GJuFz3A/pIKy0JI7So/vbx24j2ieczB/uE5tBR6Rh18I0194imhKPWtCZefuyL8y65dAvPMrliA8Bl35/0/ewUUk7d/dWqK/YMVyj+aUqNoE4izIVwbcJMQEhSktfrg9alh4tNmO0KRoj4o5RuaBkogqW9ajULxsp/Ukqr1FaYTsXz7ySEeVA
+DKIM-Signature: a=rsa-sha256; bh=dt+grPzi785KY46Zn1ySZdYT7OrYF7LCa4GDA9tQv1Y=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1760003021; v=1;
+ b=Bal3qwaW6OHniiZg36okLNeuoy3MzEtx1WpCX2SOjn5ZCzvHvjsG44D/znmvFMWG5JtBDFbP
+ a7jq6+4Ex8VtkyxYfrmAbz/Vjv37i66rS4+fbHLu9Y5iN4ATXMh01mVh356OrdYghcdtEC4lVVT
+ SoTMzczGCUiD49ehCvuwbATuZiE0CLBvr+FNjqQVs8TVSm4q85S3+yO8uuFcpMREbo3JCO+ex7R
+ fobWa/k2FpDOp79oQWxkJCAuGD7uH0u//GEcbJuVopzbyn6DcdOHc5f8vBR6UqhD8z7mSyU0GHj
+ Z4+4d4ke/hd4SNKpqrdikUbvN97kbW3chj2G0qFbKB69Q==
+Received-SPF: pass client-ip=178.33.43.201; envelope-from=clg@kaod.org;
+ helo=4.mo552.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,266 +127,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pseries-3.0 had been deprecated and due for removal now as per policy.
-Also remove legacy irq support which existed for pre pseries-3.1 machines.
+On 10/9/25 20:40, Harsh Prateek Bora wrote:
+> Remove the pseries-4.2 machine specific logic as had been deprecated and
+> due for removal now as per policy.
+> 
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+>   include/hw/ppc/spapr.h |  1 -
+>   hw/ppc/spapr.c         | 27 ---------------------------
+>   2 files changed, 28 deletions(-)
 
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/ppc/spapr.h     |  1 -
- include/hw/ppc/spapr_irq.h |  1 -
- hw/ppc/spapr.c             | 27 +--------------------------
- hw/ppc/spapr_events.c      |  8 --------
- hw/ppc/spapr_irq.c         | 16 +---------------
- hw/ppc/spapr_pci.c         | 32 ++++----------------------------
- hw/ppc/spapr_vio.c         |  9 ---------
- 7 files changed, 6 insertions(+), 88 deletions(-)
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 39bd5bd5ed..0c1e5132de 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -145,7 +145,6 @@ struct SpaprMachineClass {
-     /*< public >*/
-     bool dr_phb_enabled;       /* enable dynamic-reconfig/hotplug of PHBs */
-     bool update_dt_enabled;    /* enable KVMPPC_H_UPDATE_DT */
--    bool legacy_irq_allocation;
-     uint32_t nr_xirqs;
-     bool broken_host_serial_model; /* present real host info to the guest */
-     bool pre_4_1_migration; /* don't migrate hpt-max-page-size */
-diff --git a/include/hw/ppc/spapr_irq.h b/include/hw/ppc/spapr_irq.h
-index cb9a85f657..5ddd1107c3 100644
---- a/include/hw/ppc/spapr_irq.h
-+++ b/include/hw/ppc/spapr_irq.h
-@@ -100,7 +100,6 @@ typedef struct SpaprIrq {
- } SpaprIrq;
- 
- extern SpaprIrq spapr_irq_xics;
--extern SpaprIrq spapr_irq_xics_legacy;
- extern SpaprIrq spapr_irq_xive;
- extern SpaprIrq spapr_irq_dual;
- 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 97ab6bebd2..426a778d3e 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -3347,9 +3347,7 @@ static char *spapr_get_ic_mode(Object *obj, Error **errp)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(obj);
- 
--    if (spapr->irq == &spapr_irq_xics_legacy) {
--        return g_strdup("legacy");
--    } else if (spapr->irq == &spapr_irq_xics) {
-+    if (spapr->irq == &spapr_irq_xics) {
-         return g_strdup("xics");
-     } else if (spapr->irq == &spapr_irq_xive) {
-         return g_strdup("xive");
-@@ -3363,11 +3361,6 @@ static void spapr_set_ic_mode(Object *obj, const char *value, Error **errp)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(obj);
- 
--    if (SPAPR_MACHINE_GET_CLASS(spapr)->legacy_irq_allocation) {
--        error_setg(errp, "This machine only uses the legacy XICS backend, don't pass ic-mode");
--        return;
--    }
--
-     /* The legacy IRQ backend can not be set */
-     if (strcmp(value, "xics") == 0) {
-         spapr->irq = &spapr_irq_xics;
-@@ -5062,24 +5055,6 @@ static void spapr_machine_3_1_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE(3, 1);
- 
--/*
-- * pseries-3.0
-- */
--
--static void spapr_machine_3_0_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--
--    spapr_machine_3_1_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_3_0, hw_compat_3_0_len);
--
--    smc->legacy_irq_allocation = true;
--    smc->nr_xirqs = 0x400;
--    smc->irq = &spapr_irq_xics_legacy;
--}
--
--DEFINE_SPAPR_MACHINE(3, 0);
--
- static void spapr_machine_register_types(void)
- {
-     type_register_static(&spapr_machine_info);
-diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
-index 832b0212f3..548a190ce8 100644
---- a/hw/ppc/spapr_events.c
-+++ b/hw/ppc/spapr_events.c
-@@ -1043,10 +1043,6 @@ void spapr_events_init(SpaprMachineState *spapr)
- {
-     int epow_irq = SPAPR_IRQ_EPOW;
- 
--    if (SPAPR_MACHINE_GET_CLASS(spapr)->legacy_irq_allocation) {
--        epow_irq = spapr_irq_findone(spapr, &error_fatal);
--    }
--
-     spapr_irq_claim(spapr, epow_irq, false, &error_fatal);
- 
-     QTAILQ_INIT(&spapr->pending_events);
-@@ -1067,10 +1063,6 @@ void spapr_events_init(SpaprMachineState *spapr)
-     if (spapr->use_hotplug_event_source) {
-         int hp_irq = SPAPR_IRQ_HOTPLUG;
- 
--        if (SPAPR_MACHINE_GET_CLASS(spapr)->legacy_irq_allocation) {
--            hp_irq = spapr_irq_findone(spapr, &error_fatal);
--        }
--
-         spapr_irq_claim(spapr, hp_irq, false, &error_fatal);
- 
-         spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_HOT_PLUG,
-diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
-index d6d368dd08..317d57a380 100644
---- a/hw/ppc/spapr_irq.c
-+++ b/hw/ppc/spapr_irq.c
-@@ -33,11 +33,6 @@ static const TypeInfo spapr_intc_info = {
- 
- static void spapr_irq_msi_init(SpaprMachineState *spapr)
- {
--    if (SPAPR_MACHINE_GET_CLASS(spapr)->legacy_irq_allocation) {
--        /* Legacy mode doesn't use this allocator */
--        return;
--    }
--
-     spapr->irq_map_nr = spapr_irq_nr_msis(spapr);
-     spapr->irq_map = bitmap_new(spapr->irq_map_nr);
- }
-@@ -286,11 +281,7 @@ uint32_t spapr_irq_nr_msis(SpaprMachineState *spapr)
- {
-     SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
- 
--    if (smc->legacy_irq_allocation) {
--        return smc->nr_xirqs;
--    } else {
--        return SPAPR_XIRQ_BASE + smc->nr_xirqs - SPAPR_IRQ_MSI;
--    }
-+    return SPAPR_XIRQ_BASE + smc->nr_xirqs - SPAPR_IRQ_MSI;
- }
- 
- void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-@@ -588,11 +579,6 @@ int spapr_irq_find(SpaprMachineState *spapr, int num, bool align, Error **errp)
-     return first + ics->offset;
- }
- 
--SpaprIrq spapr_irq_xics_legacy = {
--    .xics        = true,
--    .xive        = false,
--};
--
- static void spapr_irq_register_types(void)
- {
-     type_register_static(&spapr_intc_info);
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index f9095552e8..bdec8f0728 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -268,7 +268,6 @@ static void rtas_ibm_change_msi(PowerPCCPU *cpu, SpaprMachineState *spapr,
-                                 target_ulong args, uint32_t nret,
-                                 target_ulong rets)
- {
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     uint32_t config_addr = rtas_ld(args, 0);
-     uint64_t buid = rtas_ldq(args, 1);
-     unsigned int func = rtas_ld(args, 3);
-@@ -373,13 +372,8 @@ static void rtas_ibm_change_msi(PowerPCCPU *cpu, SpaprMachineState *spapr,
-     }
- 
-     /* Allocate MSIs */
--    if (smc->legacy_irq_allocation) {
--        irq = spapr_irq_find(spapr, req_num, ret_intr_type == RTAS_TYPE_MSI,
--                             &err);
--    } else {
--        irq = spapr_irq_msi_alloc(spapr, req_num,
--                                  ret_intr_type == RTAS_TYPE_MSI, &err);
--    }
-+    irq = spapr_irq_msi_alloc(spapr, req_num,
-+                              ret_intr_type == RTAS_TYPE_MSI, &err);
-     if (err) {
-         error_reportf_err(err, "Can't allocate MSIs for device %x: ",
-                           config_addr);
-@@ -393,9 +387,7 @@ static void rtas_ibm_change_msi(PowerPCCPU *cpu, SpaprMachineState *spapr,
-             if (i) {
-                 spapr_irq_free(spapr, irq, i);
-             }
--            if (!smc->legacy_irq_allocation) {
--                spapr_irq_msi_free(spapr, irq, req_num);
--            }
-+            spapr_irq_msi_free(spapr, irq, req_num);
-             error_reportf_err(err, "Can't allocate MSIs for device %x: ",
-                               config_addr);
-             rtas_st(rets, 0, RTAS_OUT_HW_ERROR);
-@@ -1789,12 +1781,9 @@ static void spapr_phb_unrealize(DeviceState *dev)
- static void spapr_phb_destroy_msi(gpointer opaque)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     SpaprPciMsi *msi = opaque;
- 
--    if (!smc->legacy_irq_allocation) {
--        spapr_irq_msi_free(spapr, msi->first_irq, msi->num);
--    }
-+    spapr_irq_msi_free(spapr, msi->first_irq, msi->num);
-     spapr_irq_free(spapr, msi->first_irq, msi->num);
-     g_free(msi);
- }
-@@ -1808,7 +1797,6 @@ static void spapr_phb_realize(DeviceState *dev, Error **errp)
-     SpaprMachineState *spapr =
-         (SpaprMachineState *) object_dynamic_cast(qdev_get_machine(),
-                                                   TYPE_SPAPR_MACHINE);
--    SpaprMachineClass *smc = spapr ? SPAPR_MACHINE_GET_CLASS(spapr) : NULL;
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(sbd);
-     PCIHostState *phb = PCI_HOST_BRIDGE(sbd);
-@@ -1956,18 +1944,6 @@ static void spapr_phb_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < PCI_NUM_PINS; i++) {
-         int irq = SPAPR_IRQ_PCI_LSI + sphb->index * PCI_NUM_PINS + i;
- 
--        if (smc->legacy_irq_allocation) {
--            irq = spapr_irq_findone(spapr, errp);
--            if (irq < 0) {
--                error_prepend(errp, "can't allocate LSIs: ");
--                /*
--                 * Older machines will never support PHB hotplug, ie, this is an
--                 * init only path and QEMU will terminate. No need to rollback.
--                 */
--                return;
--            }
--        }
--
-         if (spapr_irq_claim(spapr, irq, true, errp) < 0) {
-             error_prepend(errp, "can't allocate LSIs: ");
-             goto unrealize;
-diff --git a/hw/ppc/spapr_vio.c b/hw/ppc/spapr_vio.c
-index 7759436a4f..c21a2a3274 100644
---- a/hw/ppc/spapr_vio.c
-+++ b/hw/ppc/spapr_vio.c
-@@ -507,15 +507,6 @@ static void spapr_vio_busdev_realize(DeviceState *qdev, Error **errp)
- 
-     dev->irq = spapr_vio_reg_to_irq(dev->reg);
- 
--    if (SPAPR_MACHINE_GET_CLASS(spapr)->legacy_irq_allocation) {
--        int irq = spapr_irq_findone(spapr, errp);
--
--        if (irq < 0) {
--            return;
--        }
--        dev->irq = irq;
--    }
--
-     if (spapr_irq_claim(spapr, dev->irq, false, errp) < 0) {
-         return;
-     }
--- 
-2.51.0
+Thanks,
+
+C.
+
+
 
 
