@@ -4,83 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0BCCCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 12:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3354FCCD185
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 12:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6pPK-0000FY-GL; Thu, 09 Oct 2025 08:06:07 -0400
+	id 1v6pTl-0001NZ-EI; Thu, 09 Oct 2025 08:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v6pPG-0000Ew-I4
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:06:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1v6pTg-0001ND-1b
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:10:37 -0400
+Received: from smarthost1.eviden.com ([80.78.11.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v6pP0-0008GU-44
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:06:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760011540;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7AE49c/NRdkWV0HzD04idUEpIjimLR4Pvv3chvzWfJ8=;
- b=I3RDnSheYUatR/JKHqVrKTt501DGhD910kBxcYu+IOnOpEv0XE+VEuixj7BQstN4HXzK2D
- oZWS9wliGY+04lHvoN/r1WsAM0p7OuOqefBAzC0tXCc/8XmzaSBmheQaAXdAEn8UIvx3Lo
- b2k6M41y1Q6pp7NgIeAZbi2WvUSVLdA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-35wVr05WPEikP7IWEdFsEA-1; Thu,
- 09 Oct 2025 08:05:36 -0400
-X-MC-Unique: 35wVr05WPEikP7IWEdFsEA-1
-X-Mimecast-MFC-AGG-ID: 35wVr05WPEikP7IWEdFsEA_1760011530
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9489819560B7; Thu,  9 Oct 2025 12:05:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.196])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C47E30001B7; Thu,  9 Oct 2025 12:05:26 +0000 (UTC)
-Date: Thu, 9 Oct 2025 13:05:22 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 2/6] tracetool: apply isort and add check
-Message-ID: <aOelAgpeQbdByULq@redhat.com>
-References: <20251008063546.376603-1-pbonzini@redhat.com>
- <20251008063546.376603-3-pbonzini@redhat.com>
- <20251008175811.GB181748@fedora> <aOdpofyFVoYVQc3D@redhat.com>
- <CABgObfYx8V+mUm-1eaimMeBmXyFiiBLBKWNc23_+HFXXFFb5sw@mail.gmail.com>
- <aOd5IFgFZG91izxG@redhat.com>
- <CABgObfZkEOj8HoPa8WFDw-AjHgsGskPr_ct3EmSxJyWJB1K0xQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1v6pTO-0000K2-P4
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:10:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1760011819; x=1791547819;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=+TblyALE8m+VoqZBn1L/4PCW7cyGAUd8KvJ7wJZZVqE=;
+ b=leyme2iKutrEuX26ALys24XJ3KWGZSViASmlrcG2WLjxiKTEQoWPh9TD
+ vvfAKJXOHqc6sHzAdb/KAp+0Utexw/wI75x+GLzPdnAZr/6SCqVEmSY+U
+ DMzmRigibRUkTpA0CnlnlsALCPhPwE3kLzVj40pBP9fvKgirfGZtFla8D
+ M18QQmKA6NMVfO1AYq6iHfF4ocuNEOL5phmWTO585X1BovthY7SdEo/4T
+ Dlnsm/FMIKs7XitwqIj/Lb3wD2JV8lqxNDJFhCYJBOdRXfYIkm8aXTeON
+ QsHlHc7WPLebGG4C9/El441edG54+nyaTGUC0amiZKdzt9HnbKfF5MBif A==;
+X-CSE-ConnectionGUID: 2qDwNxLRSEusk2aVlTK13w==
+X-CSE-MsgGUID: /lEULGA4RiO6dtD+EOInPg==
+X-IronPort-AV: E=Sophos;i="6.19,216,1754949600"; d="scan'208";a="43692293"
+X-MGA-submission: =?us-ascii?q?MDF0yQh4HkkTTASRRAg3CnfZGjG7YUKbN9nah4?=
+ =?us-ascii?q?A4Z/DXkI+lorgXKwTCWjpls51/rzHAFMEbVmpPL/w+0Rspau0rl69Ghr?=
+ =?us-ascii?q?enm/mxlCi9qqSnRHVSUNDjB59rJVQ0tvltFJK1rhy84FZ3XW51/puQvz?=
+ =?us-ascii?q?5D+SNz3KEWaqIX0EhCIjY06A=3D=3D?=
+Received: from mail-westeuropeazon11010068.outbound.protection.outlook.com
+ (HELO AM0PR83CU005.outbound.protection.outlook.com) ([52.101.69.68])
+ by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 09 Oct 2025 14:10:05 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MbbYTQ5w2tJR1ftfn6VHbxm+QvTPDehBU0vNQcHOWhOl/EKJkJSur94NMaZel6Ektju/Nvtchsm+zhYvAVuM6irQFxNYMSpYuSVdL/1roqPRN0UvvVdEZzlkvSoP7HsRbAcvw4op++XBTgEt4oeLy9N+03dSlTXT0JlVEQ69yp104kpCDHo6TL8xF9szw9eyKtt1JbHxmQZ5RgGB18dpRuFjZWu6YsiGdrjuB++1U+/f4BP9BdECxzscgfukuBIrm3Sm8DkituIrDZiDBOsyp1juX/RoQLHa6nExKyei7G6rhh7XJ854XcMecYXR+OdKV+k97H+x2b35gLIKbOcw/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+TblyALE8m+VoqZBn1L/4PCW7cyGAUd8KvJ7wJZZVqE=;
+ b=zFjIM/y5XYdrJG2Sgnw9M+Q2ONAh+4yK+aKl66XGb9Ix8IDDpqd3tJ02OLn5+9Sgc7j+RVYgXRdbmSGNco7TsBURLGhfWR2ZTsGRh+nA/vLXbVBoynRJr2JSVpMn3YWnCOmUT3VxR1hF3TkXDhBzD+V9aPWR/+xECJvKRfI+31GOlXIMKWfZwz+cjAhb5sIhvd7esluWKjtGL69I5Eyqx3awSFE9NOQ87EQDAjpEOqQkplqJvMSeR+/3Q8gEB5+V6eI3gWxVEeiFdkjz2Yzk2DPAccKe+I1GS3YBNnDFT2e1jo7gP5ZdX9Z6eb1ug4lwuz9MAnKXBShRDXI2vkhnyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+TblyALE8m+VoqZBn1L/4PCW7cyGAUd8KvJ7wJZZVqE=;
+ b=aE6sFmrIAjmqN7cjHAfoZJmJ60viyzHxn7sUido60VCyGsZFPeWWohFFtnBrsOOy2EKcL96zAW4URoofUWnXv3HJ3PsJe3VsGTSGc96PaoGASGbenN15/sTaUhBWwn1dM1UuFdVxponDg++t4Mov5UC39piuR4q+0/YZCx77LV8cWnoSjXOHWlwwE1t+yD3E8wAKk7B++SKf9Ds9I3IXqF+ToawAqpBeDrgdNIUVb4yp+zZh25Xiub1j+Uv1Q43vlkCLqGJDnt0tFT5epboiB0b8lrSAUOcxDlufhwFkxPJVaSI9b5cs6RfDOXuXNpSF6s8m8Xk4pIK84NheQvmOrA==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by PAXPR07MB8338.eurprd07.prod.outlook.com (2603:10a6:102:231::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.10; Thu, 9 Oct
+ 2025 12:10:03 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf%5]) with mapi id 15.20.9203.007; Thu, 9 Oct 2025
+ 12:10:03 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Markus Armbruster <armbru@redhat.com>
+Subject: =?utf-8?B?UmU6IFtQQVRDSCAyLzNdIG1haWxtYXA6IFVuaWZ5IENsw6ltZW50IE1hdGhp?=
+ =?utf-8?Q?eu--Drif_emails?=
+Thread-Topic: =?utf-8?B?W1BBVENIIDIvM10gbWFpbG1hcDogVW5pZnkgQ2zDqW1lbnQgTWF0aGlldS0t?=
+ =?utf-8?Q?Drif_emails?=
+Thread-Index: AQHcOOsXjLE7dAO95kChCZs00r4Jg7S5uT8A
+Date: Thu, 9 Oct 2025 12:10:03 +0000
+Message-ID: <46477b945bee1b9aeb9b952c5722daee5f88414d.camel@eviden.com>
+References: <20251009070512.8736-1-philmd@linaro.org>
+ <20251009070512.8736-3-philmd@linaro.org>
+In-Reply-To: <20251009070512.8736-3-philmd@linaro.org>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PAXPR07MB8338:EE_
+x-ms-office365-filtering-correlation-id: 5f34dee4-1824-474a-a010-08de072cc71f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|38070700021|7053199007; 
+x-microsoft-antispam-message-info: =?utf-8?B?RmEwbHpHTGdlR2FTMThBOTdwRk5wNXJQQXpUbC81bFdlaUFjNDM2eHhuR0F0?=
+ =?utf-8?B?RTFjMzRtYWFaQ3JGbkIvV0FDQlZCalNlLzBTNm5uempyUmRmTEw3dytHalVD?=
+ =?utf-8?B?N0JlTkFyeVhVL0FSdm9KZ3BWN3RhblRYSVVsUnJJOW5MS1ZaYlQxYVByMkl3?=
+ =?utf-8?B?Q0t5SlF4b2dqVUY4eGJrZzh0K2Q4Q0RzUDZEK2ZYaFNxeFRrdGNyVVI0U0xa?=
+ =?utf-8?B?YzZXV1JMaEJJT2RwS2pIS0Fub0U1WFloVStQY2tGa3p4Z0VWVkxjdHdTUXdq?=
+ =?utf-8?B?M0UxdXpSclBCeDJQVHF6RGlGZFNnc0ZSZExkR1d5dE81Kzdid1hJVmpoZ2Jw?=
+ =?utf-8?B?NGNlMkRKZkt5SFovdERHK042dVdmYXpOd2drR2NSUnQ5b3RmS3REZmhTN1hN?=
+ =?utf-8?B?Q3VUNk5vbTNrcTZBaTBKWTJNeUJETU15dzJzT1JPV0s5WmFtU0JrZ1htcFBN?=
+ =?utf-8?B?dG9mMjBMU1Z6NjRVVlpFMExxMzc1Q3BJeTRGRGI3Tng4M3NNeHRvRm5GeHZp?=
+ =?utf-8?B?aHhlWDV2THBZNVF2NVMzSlZqcDNVUnBWVjR0Y3lKMzVINjJqNXJNMG9pYzFX?=
+ =?utf-8?B?YWtocUJkQi9yeDFNbEZZZUxlcmNmamRBci90SXQvSWEveFRQS3J2Vkp6MVRl?=
+ =?utf-8?B?QWJQNmh6VWc2MmJxRHV4RFc1c1pkZXZDMFd3bWtNeTcySVlHdU45b1o0Vllz?=
+ =?utf-8?B?YlpGdTBEL0RVRm9GempvWmtielo3Z0hPNTcyNE4rVWozNFlDc2J1eEVGSjE4?=
+ =?utf-8?B?cHM0WWJTbXNLUEVBdlJjU3dkODQzeEZBMFI5aFFYZmp1R2xmTUxlMlFJbVFi?=
+ =?utf-8?B?R25odWJlbUpiQy9TM2NzdFBQbG8wZTgrcGhFclN1Qk84clQxTDcyWWRSVFNX?=
+ =?utf-8?B?ZWlacmM0ejVaM1p0TW9qL2hGZ01Xb1V3T1NzdjcvQk14MElHRWx4Uk5oMlNt?=
+ =?utf-8?B?Q3psZ3huNHlZcTBMOS9PT1NzQWc2MlR1SGxwZWxEZUszdldjWlhNVEdKUFRN?=
+ =?utf-8?B?V1hCMHMvYllpWkd2QXE0ZmhSc3IybXFRYThlbnIrMFp1SnYvOGJGTE0zSDBa?=
+ =?utf-8?B?Q09veVdsQ1haZkp4aE9tNm9iaDczV3N2QUJzSFNmaENocGhXYkpuYUd5SVNF?=
+ =?utf-8?B?alltN1J6MElWS0l6RWpFL3dxZElwa214Q1ZSTkVHRWpEMzhyb0lHbjgvaGcy?=
+ =?utf-8?B?bzVnMzNwcDA1dXNBS01PUTNyZzlJVGIxa2hwY2dCaVZ4aGJPNCtldlVzQTZl?=
+ =?utf-8?B?cnhSaU0xNVF2STlOVmRCL0Z5TTFYU2lyV3dGUENnbzRiRE1ZWVdtRmNKL3Nk?=
+ =?utf-8?B?a0RmUjNmdkxNU3JpdmxySC9EMUduendYZ1BxLzlzNWlaOWtGK0pvY0UydWZl?=
+ =?utf-8?B?OHYwbEE1OVFUTk51WUxlNnpLWkpaV0drTDRUcFJ1clowWGk4VkpVb0JkTHR2?=
+ =?utf-8?B?M3VtTTVIYTJNcU1wWkpETHlpcVpsV1lPOVB6QXM1RkNaVGJ3NzBhRDIrNHpl?=
+ =?utf-8?B?Ujhzd0dvNjdnYTJrVDB4OVo4cW4ySUphMlk5SnJKdnJCUE83TmRyWUo5djVF?=
+ =?utf-8?B?eUFvZzg4UHg1aiswY2lvT0FnTTM3NWhkN3dOUUFtNVlWYktOdFMvRWhyVnRS?=
+ =?utf-8?B?cFdmUUpXdWExTGZMejN0RnZTdld2ZWE3RXVGM3lvN0ZFZGpYSU1xS3FpeUU4?=
+ =?utf-8?B?cDF0MjFrSUIxYWtHeXlYSXFwZXozODh0MGVLb0VGYkJRd1JyaHk1dmxJTWdo?=
+ =?utf-8?B?TDd1S2JoYlNJTENLSjY0R2RFMGQvdkhMSnlldW1NT0ZJQm5WK2lURXRpL2l2?=
+ =?utf-8?B?Q0krRGV6dHdwNGlya1l0VzhXOWlqN0tmR0w1QXQvWjF1M05tTjJta2xxbGRp?=
+ =?utf-8?B?a2h1eHBLcHVHUndFK0UrbUF6NXNjVmUvNGZldkdvOHpadUVTMVNKVzBYZlha?=
+ =?utf-8?B?RlU2cit6aVBpTUpwTmpGK2IydEV1dzJyanJaNkNTdWFESnVGVGM3dmY2eWZS?=
+ =?utf-8?B?MExUTm9xays1WjBaMzZvdjNEVmtRaGtiQnBvZmtRWERHSHFkN2ZYNkUrWG9U?=
+ =?utf-8?Q?gREmbJ?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(7053199007); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Qll2Z3FJQ09aUlhZKy94dGt3YXA1Z0dQUHUxRXBzdjhkOGdSWmJBalNUb0N1?=
+ =?utf-8?B?TkNoN1NIbkVvSWlSMXJjSmk1bkYwWVdyU1dGQldVVG1icDBkZWt4ZW1ZeHA0?=
+ =?utf-8?B?ZEJOY3Y5c1VMU0t1RDBXRmt3OHhVV1A2emh1Ym5vbkNxOFR0WCtkYUhLNVI4?=
+ =?utf-8?B?MVJsa05qdWg3eGcwWjlBRWxpK2dwRHR6NGVqc2UyYWh5VlpVc3JvTGdEN2Qy?=
+ =?utf-8?B?VXk0R25na2R3a2NXZ1gzMmd2NnNzZ2lJMmVqZ0VjSFpROUo1VkFnZEdoZjhO?=
+ =?utf-8?B?d1ZMdmFLZ3lXZXIyNFl3MEhTRlFLV0tqYnBOZm9lZGZjVWRibTQwVFF5dDZX?=
+ =?utf-8?B?cXpnL0YwNXcvenl1MzlwbWFwNHdTbXVSWmZoakw0dldsRndlOEFSdEZ6alFi?=
+ =?utf-8?B?RFlpNGFSNDAyWUVyMCtvVXpjYjd2MWlscUQycDNJUXd5RWZqb1UvajduWHZP?=
+ =?utf-8?B?emphQmR2NUJNMmsrTlZEcDFnaTdqT3Y2bzBjUTJtR0c2ay9nREU0clRlRGw3?=
+ =?utf-8?B?eEpuQ01xL2ZCTGVXclJCVXJKbThWdmR5QXN1VG9lQkJXWVRKWXI0V0p3TE0x?=
+ =?utf-8?B?TkZBS3NXVHc1SE9DblFnemJqWDhPK2psVHh0ajJyTGZtSDRGMnFraHNCRVRI?=
+ =?utf-8?B?SlRzMWN0OWY5SzgwQVdFbitiSWJCVUU2WXFYZk1GR09lSG5kL1gzdlk3VUpX?=
+ =?utf-8?B?aW8vRVBlZGwxbVRUVnVhZHp3dWJ5SWpvOW5xb1pyNVlKUWpYNEtvSXNxbnVn?=
+ =?utf-8?B?aExtRWFlaWhrWExYZm5ZRERpenlaL3J0R2NPS1l2UTVNdjFuOEYxaGl0dGJQ?=
+ =?utf-8?B?b01KUXpRblNuakFUZHhlaFgrUGNkM0NFN1lFRTR4T3FrYXBWNUVGL3ZLSFJ0?=
+ =?utf-8?B?K1IrYlptd0R5RkNhVFpYOGlnQXQvUjZDQnRScmJzY2VZOTVQVWN1V3YwMFlC?=
+ =?utf-8?B?c3V1ZGs4ODN1L2svUkJuSVpZTVl1ZGI4TDQrQnlpZy9JcGkxRFg0VnJiQ01D?=
+ =?utf-8?B?bmZQcmJDTWMwQkpUVXEyN3dtTnY4ajNIZnl4V29tZmRUbzRwOS9ZMGs5RHFi?=
+ =?utf-8?B?a1BJNmhzcnNnenhNOGVpY1B2U2ZjSWxVcVNINmNUaVl5aEQyNFdxNXpkS0Ur?=
+ =?utf-8?B?TjVlL0dmM1MwNDBZTnp0dWIvMGtHR2hjKzNlWDg3UllJL0Y2TlVCV0VxQ1Rs?=
+ =?utf-8?B?NkZMUlFOWE8yMldFNEtKMzdhSVhybjZyMnVtZTF6dDR4UFU3UVhGajcvY3Qx?=
+ =?utf-8?B?UXBUei9FTy9CbzVPMG94NitueDRQQVZYSEx5SjU2ZVFxaGRkUFdQZDdCNS9h?=
+ =?utf-8?B?YzNJQVAwcDRyWTNXY2k3b0NzOUtOQUQzM2hNblhlL3hIOUpYK1h3NmVhT2xs?=
+ =?utf-8?B?OHZHKzQ5M3I0aVFXTnEyNXV1T3Y3ZE5zMlhDMlRSUk9QNkNCdXJYVlc2d0Y4?=
+ =?utf-8?B?UUgrUEwrQ1ZSMWFzU1RTUWh3U0lXQXVVRUZLckgrbEZGYVM2Ky9nMEtKRUVD?=
+ =?utf-8?B?cHhGVUdacjRMdUFsMktLSng0QitwQWF1L0NvaU92eDJsZ3I0dHIrWnpaeUFs?=
+ =?utf-8?B?YUlscjNkNWlRN0loZnJ6UENjZi9FTEVmTktNNXNxSE5NRHRoeEtPYnFnemNZ?=
+ =?utf-8?B?QlI0bkRwM0dpQWpnMTVwaG45NkxDLzA4V2gxL1UrRWM2c1plSzYxSXRXc2ll?=
+ =?utf-8?B?Y3ZJZWdMZGVtbmxwdmJPSnllMlR5bjdlZnV4K0lVc291TnhiOGlLNGR3TWpu?=
+ =?utf-8?B?VytwbEpUcjlreU9WVUJDMUw2UDl4TlBwOXkwWThFK2ZxNGdsalBtQjBpSWQv?=
+ =?utf-8?B?ZUxuZHR5NGlzc1NxY3VjOSsrMzc3WGUrL0p2YmxVOERjMU1DcU9UczBPc1I5?=
+ =?utf-8?B?UnoyNDFvbDdEL3JNSlJRMHJ6YlBBNFpRODdya0JRY01BSFJ5SEVwRitENnNV?=
+ =?utf-8?B?ajZlR1JTWTArTUpsd2djWFd2SUhlYUMvWlA4c1hOQzdFU2gxTnRqVnE4TlZs?=
+ =?utf-8?B?Vnc5ck1PWG1hdGUzYnYweVBsRDJHcnA2TGt2V0NoTW9NYkg4UjhOSWlhc0sv?=
+ =?utf-8?B?MXdTeFFFOFF1aGR0dzFzV2VLVHlreTNYY3RYRS9Wbzl5bCt2NUs4RzlTaDdL?=
+ =?utf-8?B?UGJ2ZnZVYUFZR3l4TW5DeUZKem0ybnVhNm9kVktxVnRtYXYvV20yVmFCUVhT?=
+ =?utf-8?Q?xueBhhbgrr2eiI9Sxqbvucw=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <337F2A23B40D8B468B2577D1A245505C@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfZkEOj8HoPa8WFDw-AjHgsGskPr_ct3EmSxJyWJB1K0xQ@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f34dee4-1824-474a-a010-08de072cc71f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2025 12:10:03.3865 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: peks8Tqotr6QD5BgXtzwjMRA/QS0L3DIxA5FtH652PdJCy2Ra74uZi2Is/Nqbn8GFuy1KXr78TQw/hYyq+in3y5IWAhNyPd7hlSrLrWtyC2MLBEGvu9qyerdzUq0mzMH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR07MB8338
+Received-SPF: pass client-ip=80.78.11.82;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost1.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,119 +206,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 09, 2025 at 01:26:25PM +0200, Paolo Bonzini wrote:
-> On Thu, Oct 9, 2025 at 10:58 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Oct 09, 2025 at 10:22:43AM +0200, Paolo Bonzini wrote:
-> > > On Thu, Oct 9, 2025 at 9:52 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > > I've proposed removing them in favour of meson rules earlier
-> > > > this year:
-> > > >
-> > > >   https://lists.gnu.org/archive/html/qemu-devel/2025-02/msg04920.html
-> > >
-> > > I mostly agree with the intent of integrating tests with the
-> > > configure/pyvenv/meson infrastructure, but I'd do things in a
-> > > different order:
-> > >
-> > > - split part of scripts/ into contrib/scripts/ to identify one-off
-> > > scripts vs. what is really used in the build process
-> >
-> > IMHO we should rather aim to eliminate contrib. We should either care
-> > about the contents, and find an appropriate home for it in tree & have
-> > ability to install it, or they should live outside QEMU git in their
-> > own home.
-> >
-> > We shouldn't encourage a "dumping ground" for stuff that we don't
-> > know what to do with.
-> 
-> I don't disagree but we have a lot of scripts like that:
-> 
-> scripts/analyse-9p-simpletrace.py
-> scripts/analyse-locks-simpletrace.py
-> scripts/compare-machine-types.py
-> scripts/dump-guest-memory.py
-> scripts/get-wraps-from-cargo-registry.py
-> scripts/python_qmp_updater.py
-> scripts/qcow2-to-stdout.py
-> scripts/qemu-gdb.py
-> scripts/qom-cast-macro-clean-cocci-gen.py
-> scripts/render_block_graph.py
-> scripts/replay-dump.py
-> scripts/simpletrace.py
-> scripts/u2f-setup-gen.py
-> scripts/userfaultfd-wrlat.py
-> 
-> and a bunch more that aren't .py so I didn't check them; plus entire
-> directories:
-> 
-> scripts/coccinelle/
-> scripts/codeconverter
-> scripts/coverage/
-> scripts/kvm/
-> scripts/performance/
-> scripts/simplebench/
-> 
-> Separating them would be useful.
-> 
-> > > - move python/scripts/ to scripts/venv/, adjusting python/tests
-> > >
-> > > - move tests/minreqs.txt to pythondeps.toml. switch from pip to mkvenv
-> > > in tests/Makefile.
-> > >
-> > > - unifying the test scripts for all of scripts/, as much as possible
-> > >
-> > > - integrate tests in meson, but keeping the shell scripts for now.
-> > > move python/tests to tests/python. add a custom_target() to do "mkvenv
-> > > ensuregroup tests"
-> > >
-> > > - move tox usage to .gitlab-ci.d, placing tox outside the configure
-> > > script instead of inside. this makes the QEMU venv a "child" of the
-> > > tox venv rather than the opposite, and allows more testing than just
-> > > running the linters
-> >
-> > If tox is outside, that seems to require that we re-run configure for
-> > each different python version we want to run tests with, which feels
-> > pretty undesirable.
-> >
-> > There's the (system) python version that we want to run the overall
-> > build system with, and then there are N other python versions which
-> > we want to be able to run linters against.
-> 
-> I think we do want to check that configure can set up a virtual
-> environment for all those versions of Python. Then we can use the
-> virtual environment to run the linters too.
-> 
-> In fact I'm not even sure we need tox. Thanks to mkvenv, we would be
-> using "configure --python" as a much cheaper substitute of tox. The
-> only thing that is lost is the ability to test all versions through a
-> single build tree, but I'm not sure the complexity is worth it.
-
-FWIW, from my POV as a contributor, what I dislike is submitting a
-patch series that has run through "make check" and then getting
-complaints from maintainers that it fails various tests that are
-not run as part of "make check".
-
-If the maintainer is going to send feedback about failures under
-5 different versions of python, then IMHO 'make check' needs to
-be validating those 5 different versions of python in one go.
-That was what my patch series aimed to address.
-
-I'm not bothered whether we use tox or directly call mkvenv to
-setup our test envs, provided we don't end up running
-
-  configure; make; make check
-
-for each python version we want linter checks against.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+VGhhbmtzIFBoaWxpcHBlDQoNClJldmlld2VkLWJ5OiBDbMOpbWVudCBNYXRoaWV1LS1EcmlmIDxj
+bGVtZW50Lm1hdGhpZXUtLWRyaWZAZXZpZGVuLmNvbT4NCg0KT24gVGh1LCAyMDI1LTEwLTA5IGF0
+IDA5OjA1ICswMjAwLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gQ2F1dGlvbjog
+RXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRzIG9yIGNsaWNrIGxpbmtzLCB1
+bmxlc3MgdGhpcyBlbWFpbCBjb21lcyBmcm9tIGEga25vd24gc2VuZGVyIGFuZCB5b3Uga25vdyB0
+aGUgY29udGVudCBpcyBzYWZlLg0KPiANCj4gDQo+IERvIG5vdCBsZXQgZ2l0LXNob3J0bG9nIG1h
+a2UgZGlzdGluY3Rpb24gYmV0d2VlbjoNCj4gDQo+IMKgLiBDbMOpbWVudCBNYXRoaWV1LS1Ecmlm
+ICANCj4gwqAuIENsZW1lbnQgTWF0aGlldS0tRHJpZiAgDQo+IMKgLiBDTEVNRU5UIE1BVEhJRVUt
+LURSSUYNCj4gDQo+IGFzIHRoaXMgaXMgdGhlIHNhbWUgcGVyc29uLg0KPiANCj4gU2lnbmVkLW9m
+Zi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPFtwaGlsbWRAbGluYXJvLm9yZ10obWFpbHRv
+OnBoaWxtZEBsaW5hcm8ub3JnKT4gIA0KPiAtLS0gIA0KPiBDYzogQ2zDqW1lbnQgTWF0aGlldS0t
+RHJpZiA8W2NsZW1lbnQubWF0aGlldS0tZHJpZkBldmlkZW4uY29tXShtYWlsdG86Y2xlbWVudC5t
+YXRoaWV1LS1kcmlmQGV2aWRlbi5jb20pPiAgDQo+IC0tLSAgDQo+IMKgLm1haWxtYXAgfCAxICsg
+IA0KPiDCoDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKQ0KPiANCj4gZGlmZiAtLWdpdCBh
+Ly5tYWlsbWFwIGIvLm1haWxtYXAgIA0KPiBpbmRleCBmMmY4M2U4MDYxZi4uYTUxMGI1ZDY4MWYg
+MTAwNjQ0ICANCj4gLS0tIGEvLm1haWxtYXAgIA0KPiArKysgYi8ubWFpbG1hcCAgDQo+IEBAIC0x
+MzcsNiArMTM3LDcgQEAgQ2hlbiBHYW5nIDxbZ2FuZy5jaGVuLjVpNWpAZ21haWwuY29tXShtYWls
+dG86Z2FuZy5jaGVuLjVpNWpAZ21haWwuY29tKT4gIA0KPiDCoENoZW4gR2FuZyA8W2dhbmcuY2hl
+bkBzdW5ydXMuY29tLmNuXShtYWlsdG86Z2FuZy5jaGVuQHN1bnJ1cy5jb20uY24pPiAgDQo+IMKg
+Q2hlbiBXZWktUmVuIDxbY2hlbndqQGlpcy5zaW5pY2EuZWR1LnR3XShtYWlsdG86Y2hlbndqQGlp
+cy5zaW5pY2EuZWR1LnR3KT4gIA0KPiDCoENocmlzdG9waGUgTHlvbiA8W2NocmlzdG9waGUubHlv
+bkBzdC5jb21dKG1haWx0bzpjaHJpc3RvcGhlLmx5b25Ac3QuY29tKT4gIA0KPiArQ2zDqW1lbnQg
+TWF0aGlldS0tRHJpZiA8W2NsZW1lbnQubWF0aGlldS0tZHJpZkBldmlkZW4uY29tXShtYWlsdG86
+Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRlbi5jb20pPiAgDQo+IMKgQ29sbGluIEwuIFdhbGxp
+bmcgPFt3YWxsaW5nQGxpbnV4LmlibS5jb21dKG1haWx0bzp3YWxsaW5nQGxpbnV4LmlibS5jb20p
+PiAgDQo+IMKgRGFuaWVsIFAuIEJlcnJhbmfDqSA8W2JlcnJhbmdlQHJlZGhhdC5jb21dKG1haWx0
+bzpiZXJyYW5nZUByZWRoYXQuY29tKT4gIA0KPiDCoEVkdWFyZG8gT3R1Ym8gPFtvdHVib0ByZWRo
+YXQuY29tXShtYWlsdG86b3R1Ym9AcmVkaGF0LmNvbSk+ICANCj4gLS0gIA0KPiAyLjUxLjANCj4g
 
