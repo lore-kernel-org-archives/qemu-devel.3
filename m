@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20BBCCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 13:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A25CCD185
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 13:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6qkz-0002og-7Z; Thu, 09 Oct 2025 09:32:33 -0400
+	id 1v6r7L-0007Ym-3q; Thu, 09 Oct 2025 09:55:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v6qkw-0002nr-8V
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 09:32:30 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6r7E-0007Wv-33
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 09:55:33 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v6qkj-0003Kr-M5
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 09:32:28 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-63497c2a27dso1002799d50.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 06:32:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6r6w-0006IS-JB
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 09:55:18 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46e52279279so6916925e9.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 06:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760016731; x=1760621531; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7tUj8sV+Fgo8Ban9njb2D8BBwZZzojvQOYNXH7K/xy0=;
- b=deLqNMwunIYoatySBBk7H824G7FZ37V9At7A7jz4LcA/Wt37Es1/91njQ+Z/z5I9Ro
- YgMsJLGjc+8qie6rw4m6AZZc7kdr9w14ucRJDgdbjV56OvWBfzUrkXL8zPrG4nQXwxSF
- JWHAZfCeaHUCSagN098v/3K9EK/w50aicok7LnV6kd6JHuOFnjxgQBd2tBYTqUmQghgq
- b9CWpt320IWooeFFxk0U3rH1SQqh8CFR3caVmyi/cfKBtqrx5zp9QYxjyamQH/pEBwcl
- ncskqOqpGIeo48ckQbrI06wLXnh3CeG8DG6HwoJiN6qD9ZmUIF5VaSpCe7chB42JQhUy
- byFA==
+ d=linaro.org; s=google; t=1760018109; x=1760622909; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ybct9pJQYEuLIPqCEkL1aRZyibnRP606l8XHiiAj60s=;
+ b=y8iCBIdku/LR6VfGFXfsZzik2c4u7vG6YEvpPGc4D3e3j0oQIsCUodlaN+t/Y8NlAW
+ 0u9eNLMBuFA3799CDHkAAz3IcoEimZ3QBles3/wPmva48prw/QKScfmJgMW83mANGhkU
+ GBv8MbOWT3PxaP3T0X371ohb4pOk1wDzTKVIgLv2VtMh9PlrmbbiVKptciPnp9wkTso7
+ m3UBx9DfMxu0jCHBzpZG4NtHQUoZUoyS9WNYraxdoklQ0G1X7H6Jx9wG/ynUkorxoL7L
+ 46IXhSIxagoA1zM/a3nXcBGx3wSZyHWQRr5ymM0tf7ggtLKGoEYqE0FBZ92Tl9XLSaWW
+ KyKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760016731; x=1760621531;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7tUj8sV+Fgo8Ban9njb2D8BBwZZzojvQOYNXH7K/xy0=;
- b=No1309bZucmTCUyQ5+6Z+m4mm64WdBQYLLjQnjk/Y6VV4TBw/S8sHvHlJ+6tN6l01A
- 6BlSn3xXebFwKMcQRt8V9FinyQLwdMvs/xvzqkCehWAqkU3k8wAKxJofMT+HJrmQCtYo
- fuQQY8/gBObSnM5ei4rym6zeSAnp2lOcKAFoS9yD1zNK827qgjF9GIxZqbl759Tx4hfJ
- ZGwhCz7DCEJG4lpOjDuvWIh9k2QQRGUlbqojErQKN5CaGbCDa65B9I4nJ3jPkSFyo5Ky
- 3HSdN2mQOL2Yzjl2kvfwvq1+J3MCPqnojvAWFK2yycNCzvdeYpxdPTUsjWYyPr+qzf5Y
- vdNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyfp20gNsoR0XGebTedJuihTIiDTdlry+J6LZSJVLNZLcVYNuWabYhGwEtjcZ5yE7WRVRihgVMhM1w@nongnu.org
-X-Gm-Message-State: AOJu0YwHQP1F2EyDex5GC3ApuC7Eq5IYls18BAAMhNaCGxRcEPJQIEgb
- eAbIVS2DU3P78WBDM11cASEYvlRdjBQkJNBFUc4PmBcEoxcIHRZKQsdgiRj7+aJ8SJXLabxiEpM
- 8g7e6rzm3TB80E/QOQcrdOQOQev8oY8vvGirQtGHCZg==
-X-Gm-Gg: ASbGncuNIu6FAMMlSIwzZpT7ZznMMbflyyuAK+bES7rUjlJ9Nix8gSZvYcFCfnmPRmO
- 5R/4Zii4SwYu/jiS0xgL8AGp5KPQ4adqEZwmmfpNcRyyF7N1iDBlIqOToqg2GSyXscGXL19fUSU
- PFQF4nDw0SD504VxtRzzTNXfy8IiY8gd4IzT9qEfj0c9QGSo7CVH6X9y5PAlX8SDpkkSlRtPjuf
- llqo+QnmNltw6ghRvdODq51zLchjyXQ3/DNo2KG0dFxXv4=
-X-Google-Smtp-Source: AGHT+IFpKDUk6bwsQSQeXG6gw1gCwlKSLG+fhOZCowDDLRnLM9Xe2KQhSjrIiizaDvoLy9wKZCRpf5hudBjy7/2RfqA=
-X-Received: by 2002:a05:690c:64c8:b0:766:6507:686b with SMTP id
- 00721157ae682-780e1520680mr119740827b3.8.1760016731612; Thu, 09 Oct 2025
- 06:32:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760018109; x=1760622909;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ybct9pJQYEuLIPqCEkL1aRZyibnRP606l8XHiiAj60s=;
+ b=L8EAYk006H9Ri0nKA0jjJnuqEnMmuB7Atl/iQNym4CSPTFfX1iBGDftyEpDTAG97qP
+ A74Sz3Umf9UXmz8v/sKid1e4e9lUno544a/ic/vWiExTsDYVGWMOWwUqhy9//mox+3me
+ IJ7mBQrn9esIig3GIk0BO6tRCR+YOuAqti2XEpQBMgP592abTEkM/WAZVHwVMV06PVAR
+ JqFsRVhRISvNuRYNyY3UpgjH6N8HC7ag8Ank4us/XLe+6wKqylsl6PtcYgnuM/ZhAaoD
+ bbBycq122UAKFTp6OLyaQFTCvc5gU6bcd4KTlrsq9u6X/OuFa6zJWoBzVr+L0dTbpFkW
+ 2tzA==
+X-Gm-Message-State: AOJu0Yyi/l83n7V4f/b00GvSCE56dhTZyW6xR/h2j0E/13tVHi7kTEDr
+ mamXWOod+nOBmXINIjTNoZy/Jlo13+scyesMx9sxzQIrvufB/VXEOfWNGlAgMO+tITc=
+X-Gm-Gg: ASbGncv7UspgK3D+DzhCbvJazZwwc/54y/anISAD9YtePk8o6yP/d4rx/U/M8JX8ZNZ
+ S6kc7NNUHOPSTHpi5wUmtwlED6bv+E/ixQLFykrOFXMNKKC/oQAjIyhOLEFr6kyVA5W6Zs6UJz1
+ SCFpKl73aO8Tk1KXX9Am8zuuwqu5cf0yCr51+pYI8fvh6JpUK77uy+DWwwb/o3NJfZVAbZ3mCGd
+ JtLGLEtgELa5+c0FqAYo67nxA4OrY7cx5pJJsNMDOcB2u1DYT6R9M9CpYap3ZYan5yncaGZQj01
+ zp2/WA8rE56hpXWzLx9TlKxrJAVvxTtPAeaPbGS/pdUblE6ksaC3VVdHvQCyWWJa/1V3Ko05Qkz
+ WD1j1ORaOPr7reFf6e2QFIBQl8I8HtjxonW7raPjgtzZxjX6QoQ91k+hczzLm5aJzRk2iDjy0lm
+ S/SvqrnoXWX0U7Kfu/Yw==
+X-Google-Smtp-Source: AGHT+IE0aI8itZkEvXiwcAl2OgjsIgbBbCaFS6J+BJd0Ki4Hf4PbQbPrwXzV5vmNJN2kaP/5zrQkBg==
+X-Received: by 2002:a05:600c:8719:b0:46e:4287:a85e with SMTP id
+ 5b1f17b1804b1-46fa9a9efc4mr58998465e9.13.1760018108851; 
+ Thu, 09 Oct 2025 06:55:08 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fa9c07992sm106419715e9.5.2025.10.09.06.55.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 06:55:08 -0700 (PDT)
+Message-ID: <97a43b68-7f68-4f8f-a647-0967b604267d@linaro.org>
+Date: Thu, 9 Oct 2025 15:55:07 +0200
 MIME-Version: 1.0
-References: <20251009070010.1863345-1-maochenxi@bosc.ac.cn>
-In-Reply-To: <20251009070010.1863345-1-maochenxi@bosc.ac.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Oct 2025 14:32:00 +0100
-X-Gm-Features: AS18NWC12v9CuMqpDmMhtLetme-khdndvqQydXbeqFUxt6tqGitcgzDMJ92IkUg
-Message-ID: <CAFEAcA9oHpFmxmWV6dwVsQdJ6=_fKUrB4coD8m-QNi_KMMgSfg@mail.gmail.com>
-Subject: Re: [PATCH v1] Fix build break when LTO is enabled
-To: Chenxi Mao <maochenxi@bosc.ac.cn>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, "Richard W.M. Jones" <rjones@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: fix layout of struct target_msq_id_ds
+Content-Language: en-US
+To: Andreas Schwab <schwab@suse.de>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+References: <mvma520fd3i.fsf@suse.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <mvma520fd3i.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,65 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Oct 2025 at 14:15, Chenxi Mao <maochenxi@bosc.ac.cn> wrote:
->
-> QEMU build fails when LTO is enabled:
-> ../configure --target-list=3Driscv64-softmmu --enable-lto
-> make
->
-> Several errors occur due to incorrect curl_easy_setopt usage:
->
-> ../contrib/elf2dmp/download.c:30:16: error: call to =E2=80=98_curl_easy_s=
-etopt_err_long=E2=80=99 declared with attribute warning: curl_easy_setopt e=
-xpects a long argument [-Werror=3Dattribute-warning]
->    30 |             || curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1) =
-!=3D CURLE_OK
->       |                ^
-> lto1: all warnings being treated as errors
-> ../block/curl.c: In function =E2=80=98curl_open=E2=80=99:
-> ../block/curl.c:806:9: error: call to =E2=80=98_curl_easy_setopt_err_long=
-=E2=80=99 declared with attribute warning: curl_easy_setopt expects a long =
-argument [-Werror=3Dattribute-warning]
->   806 |     if (curl_easy_setopt(state->curl, CURLOPT_NOBODY, 1) ||
->       |         ^
-> lto1: all warnings being treated as errors
->
-> The third parameter of curl_easy_setopt should be of long type.
-> Change integer constants to long by adding 'L' suffix.
->
-> After this change, build passes and runs without errors.
->
-> Signed-off-by: Chenxi Mao <maochenxi@bosc.ac.cn>
+Hi Andreas,
 
-Hi; there's already a patch on list for this:
+On 9/10/25 14:56, Andreas Schwab wrote:
+> The msg_lspid and msg_lrpid members are of type pid_t, which is a 32-bit
+> integer.
+> 
+> Signed-off-by: Andreas Schwab <schwab@suse.de>
+> ---
+>   linux-user/syscall.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 0956a7b310..3dcdb3ef42 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -4185,8 +4185,8 @@ struct target_msqid_ds
+>       abi_ulong __msg_cbytes;
+>       abi_ulong msg_qnum;
+>       abi_ulong msg_qbytes;
+> -    abi_ulong msg_lspid;
+> -    abi_ulong msg_lrpid;
+> +    unsigned int msg_lspid;
+> +    unsigned int msg_lrpid;
 
-https://patchew.org/QEMU/20251001124055.2743244-1-rjones@redhat.com/
+Why not use the explicit 'uint32_t' type?
 
-Looks like that missed the elf2dmp usage though:
+>       abi_ulong __unused4;
+>       abi_ulong __unused5;
+>   };
+> @@ -4206,8 +4206,8 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
+>       host_md->__msg_cbytes = tswapal(target_md->__msg_cbytes);
+>       host_md->msg_qnum = tswapal(target_md->msg_qnum);
+>       host_md->msg_qbytes = tswapal(target_md->msg_qbytes);
+> -    host_md->msg_lspid = tswapal(target_md->msg_lspid);
+> -    host_md->msg_lrpid = tswapal(target_md->msg_lrpid);
+> +    host_md->msg_lspid = tswap32(target_md->msg_lspid);
+> +    host_md->msg_lrpid = tswap32(target_md->msg_lrpid);
+>       unlock_user_struct(target_md, target_addr, 0);
+>       return 0;
+>   }
+> @@ -4227,8 +4227,8 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
+>       target_md->__msg_cbytes = tswapal(host_md->__msg_cbytes);
+>       target_md->msg_qnum = tswapal(host_md->msg_qnum);
+>       target_md->msg_qbytes = tswapal(host_md->msg_qbytes);
+> -    target_md->msg_lspid = tswapal(host_md->msg_lspid);
+> -    target_md->msg_lrpid = tswapal(host_md->msg_lrpid);
+> +    target_md->msg_lspid = tswap32(host_md->msg_lspid);
+> +    target_md->msg_lrpid = tswap32(host_md->msg_lrpid);
+>       unlock_user_struct(target_md, target_addr, 1);
+>       return 0;
+>   }
 
-> diff --git a/contrib/elf2dmp/download.c b/contrib/elf2dmp/download.c
-> index 21306b3fd4..fa8da0f9a2 100644
-> --- a/contrib/elf2dmp/download.c
-> +++ b/contrib/elf2dmp/download.c
-> @@ -27,8 +27,8 @@ bool download_url(const char *name, const char *url)
->      if (curl_easy_setopt(curl, CURLOPT_URL, url) !=3D CURLE_OK
->              || curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, NULL) !=3D =
-CURLE_OK
->              || curl_easy_setopt(curl, CURLOPT_WRITEDATA, file) !=3D CURL=
-E_OK
-> -            || curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1) !=3D CU=
-RLE_OK
-> -            || curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0) !=3D CURLE_=
-OK
-> +            || curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L) !=3D C=
-URLE_OK
-> +            || curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L) !=3D CURLE=
-_OK
->              || curl_easy_perform(curl) !=3D CURLE_OK) {
->          unlink(name);
->          fclose(file);
-
-
-thanks
--- PMM
 
