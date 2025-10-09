@@ -4,91 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CAFCCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8CFECCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6y6z-0008Od-FJ; Thu, 09 Oct 2025 17:23:45 -0400
+	id 1v6yDo-0001K1-C0; Thu, 09 Oct 2025 17:30:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6y6t-0008Mm-JZ
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:23:40 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6y6r-00061E-FP
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:23:39 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-269af38418aso17820045ad.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 14:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760045016; x=1760649816; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IOidL4uzr+VbN48SlOGg2P6JVFnfJml2ayX/o2NPQnA=;
- b=ynFsoiPLKD2ToPx1MhVW4x1JMsbIQRzzeBkVW/tJWY/npzmScF5tEfmVS2q24Q9ajj
- k3eFE6LD4Th5PvECD9U6Wy86lDM6+koP/TO9rkv3kcWhVmQ2vUNvsrKTNEMBHSZJNdPE
- q7J6ONxYs8TJKbxE4GS8SrgcNZgl2n4NFNZYtcBiKhNZ3uo+2V//EI2y7sCvzRVKKTLa
- NaJBvOkFvv1MRiBoT4frlIXv0h75EFy6lxACviwYeE7KKOQOYyBE19M33YIbQcnmT9JT
- ULAo5heOynr1vlEohmnU1vGCLsAFx9FSr3JZGU7OgIQOXC8Qdy/zfBP/8do11e10XoaF
- Savg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760045016; x=1760649816;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IOidL4uzr+VbN48SlOGg2P6JVFnfJml2ayX/o2NPQnA=;
- b=HfvXKZoDjnrKhLC9S0ISuWJCAIJfTq/gBfbby4HVDhv9YJZo6mkFuUVGBCFyLvu67X
- 5yu0u4Apuq4O4q7bRUMU44zajnhlpQLkomAiRvoTXNtVh8GwcZ0VqMAVWOb6Zi71h0h5
- Ixq9mWzCK/dt2Cp+14ENeEEn+43yc5gpWVDrPv47eDjRKuibcBAZuGY895rIalkBGaar
- bVmTsHVBuJz/kKVphSewElZpkAv+umE6OkzEfhYBJGW1zKSo+m+R7F7yzLiqiVfnvilK
- Hyh05QpluUnO3KrZ64DIzKDQZDTdYx2FvjPqGeNuPLvLYiJMViyTB2CiYwtJ3E9kRDbJ
- YxRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXqI57PaAsG5sKzOGWstsIw7OUs3K3pENakdCvj5SgxOZMSF9QqAx3c2M1URQdXWnI8Nnsig8xIL9d@nongnu.org
-X-Gm-Message-State: AOJu0YxlnxVC/EDWvOagrK44oo0966TWAvnAS2m6eW2IgSw1rmDhli7/
- Dcyq9RyvfgpE1LpqwmaCOPQyhhVmKg34rX0BELXWiafpvudjgF/G4fF+I4BVXifEIUE=
-X-Gm-Gg: ASbGncstsvbiuWw4YJ1wY116Ngg4ZBvcCTRr1JuHPh9ajO9IMfqKyNO/cgcAr3vRNxp
- LNq2YXjG4ofGKvg6oG0PawssMFmac/sV2nWEjQJpN6Gf3L0ZdAqBi/NibUdHfwB8wYprOQVN3wL
- BV8UtTP73hCWwoRTeX7T3jkfTtMcBKCIz7SBgMWE1O2dV4adIbJSkKeFniKTkvxCdER6ez87rQP
- pn/1/Iuwp91EwtjsNdK6nay3YjMnfj0caxu+x1/51OHgvJlwmij/YuaqWzUJGMKhyLYebhVWFsO
- Lt9jI4XRcam4I3J31o67sVtPLIxr9lyW1VFmaTM274xNtayfnWIMSbm8sx8px1hPjnZKh8mMpxg
- zzUmgWKaK/aYenSOW50hHdKagOyX0NVOea600WHPquqwaxN/tN3lMx3oqrTb7OP0v
-X-Google-Smtp-Source: AGHT+IFppvy+jZEpPC5NKKZzPOFPoRJM+XuKoJY/wb0SpMpY5vtQJIAarfgCsxyeiN2FlabzBQFZHQ==
-X-Received: by 2002:a17:903:1b44:b0:258:f033:3ff9 with SMTP id
- d9443c01a7336-29027402c05mr95559025ad.48.1760045015725; 
- Thu, 09 Oct 2025 14:23:35 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034de9febsm38088915ad.7.2025.10.09.14.23.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 14:23:35 -0700 (PDT)
-Message-ID: <b5e928a2-f4ae-4b24-a2c0-2f67442dff2e@linaro.org>
-Date: Thu, 9 Oct 2025 14:23:33 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: correct size bit parity for fmpyadd
-To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Andreas_H=C3=BCttel?= <andreas.huettel@ur.de>
+ (Exim 4.90_1) (envelope-from <dilfridge@gentoo.org>)
+ id 1v6yDk-0001JW-Mv
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:30:45 -0400
+Received: from woodpecker.gentoo.org ([2001:470:ea4a:1:5054:ff:fec7:86e4]
+ helo=smtp.gentoo.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <dilfridge@gentoo.org>)
+ id 1v6yDi-0006ih-Ic
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:30:44 -0400
+Received: from pinacolada.localnet (130-185-5-161.hsi.r-kom.net
+ [130.185.5.161])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: dilfridge)
+ by smtp.gentoo.org (Postfix) with ESMTPSA id 11574341042;
+ Thu, 09 Oct 2025 21:30:28 +0000 (UTC)
+From: "Andreas K. Huettel" <dilfridge@gentoo.org>
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [EXT] Re: [PATCH] target/hppa: correct size bit parity for fmpyadd
+Date: Thu, 09 Oct 2025 23:30:18 +0200
+Message-ID: <10069660.lOV4Wx5bFT@pinacolada>
+Organization: Gentoo Linux
+In-Reply-To: <b5e928a2-f4ae-4b24-a2c0-2f67442dff2e@linaro.org>
 References: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <b5e928a2-f4ae-4b24-a2c0-2f67442dff2e@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="nextPart8915427.31r3eYUQgx";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=2001:470:ea4a:1:5054:ff:fec7:86e4;
+ envelope-from=dilfridge@gentoo.org; helo=smtp.gentoo.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +64,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 13:51, Gabriel Brookman wrote:
-> For the fmpyadd instruction on the hppa architecture, there is a bit
-> used to specify whether the instruction is operating on a 32 bit or 64
-> bit floating point register. For most instructions, such a bit is 0 when
-> operating on the smaller register and 1 when operating on the larger
-> register. However, according to page 6-57 of the PA-RISC 1.1 Architecture
-> and Instruction Set Reference Manual, 
+--nextPart8915427.31r3eYUQgx
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: "Andreas K. Huettel" <dilfridge@gentoo.org>
+Date: Thu, 09 Oct 2025 23:30:18 +0200
+Message-ID: <10069660.lOV4Wx5bFT@pinacolada>
+Organization: Gentoo Linux
+In-Reply-To: <b5e928a2-f4ae-4b24-a2c0-2f67442dff2e@linaro.org>
+MIME-Version: 1.0
 
-Annoyingly, page 6-57 doesn't actually mention the interpretation of the f bit at all. 
-However, I can see how the H specifier is processed in gas, and the confirmation of glibc 
-fixes is nice.
+Am Donnerstag, 9. Oktober 2025, 23:23:33 Mitteleurop=C3=A4ische Sommerzeit =
+schrieb Richard Henderson:
+> On 10/9/25 13:51, Gabriel Brookman wrote:
+> > For the fmpyadd instruction on the hppa architecture, there is a bit
+> > used to specify whether the instruction is operating on a 32 bit or 64
+> > bit floating point register. For most instructions, such a bit is 0 when
+> > operating on the smaller register and 1 when operating on the larger
+> > register. However, according to page 6-57 of the PA-RISC 1.1 Architectu=
+re
+> > and Instruction Set Reference Manual,=20
+>=20
+> Annoyingly, page 6-57 doesn't actually mention the interpretation of the =
+f bit at all.=20
+> However, I can see how the H specifier is processed in gas, and the confi=
+rmation of glibc=20
+> fixes is nice.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+1) I can confirm the patch makes the test case run correctly.
+
+2) The doc is probably page 6-18 (fig. 6-8) and 6-19 (table 6-16), where th=
+e=20
+f field for FMPYADD and FMPYSUB is documented.=20
 
 
-r~
+>=20
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>=20
+>=20
+> r~
+>=20
+
+
+=2D-=20
+PD Dr. Andreas K. Huettel
+Institute for Experimental and Applied Physics
+University of Regensburg
+93040 Regensburg
+Germany
+
+tel. +49 151 241 67748 (mobile)
+tel. +49 941 943 1618 (office)
+fax +49 941 943 3196
+e-mail andreas.huettel@ur.de
+http://www.akhuettel.de/
+
+
+=2D-=20
+Andreas K. H=C3=BCttel
+dilfridge@gentoo.org
+Gentoo Linux developer
+(council, toolchain, base-system, perl, libreoffice)
+--nextPart8915427.31r3eYUQgx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQKTBAABCgB9FiEE/Rnm0xsZLuTcY+rT3CsWIV7VQSoFAmjoKWpfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEZE
+MTlFNkQzMUIxOTJFRTREQzYzRUFEM0RDMkIxNjIxNUVENTQxMkEACgkQ3CsWIV7V
+QSpZTQ//YgEENBivZCttUKKM/jDmz7XZGXgvTwCuYD1A3R58dJjZxaI4+SA8V6sL
+BrTAh2LTAIccH4OtThd6B/7HCLqFB2rV7O9L5PgWuS+QUgTQs65BO9J0eQgwAszp
+qDRuwUgnKZYNw2U235crHx/bxpqZUny46aJVlfcGjL5kHYYK4DzGYz2VkpVdRtEA
+5RAHhox86K1NGdC5OU2qUZCs0ivbxpE9PTHbdssPZagU+7xZf8H3RUiI2bDUafyX
+TnSgrhOqsCsbGxfdTpSzP8a+vtIg1O1BI5cY0wQT/10rISV9aTA3SHmsVk1+MULD
+GEYOZIE0qnKdJp8A+UYf+hcT6AAFhipkzCWWwGhsq9i68+E/fxcZG1x+QXxkFv8A
+H7CJ4x1hTIGRXKm0mqMU4GGIfrsYznWZK7UWvlHm1VHaCp7SXs1NAcwJI4yveZzw
+/CMSxM7xE/QlulAlRuIMtUaJ4Biy5R2n/CD3h1MlzJF4OMz3vKLIr7/jrDtueiVo
+/L6Y08eUnxVCa/L2dyqIrOroP7dpXnChLzYRHGlZ4r0nY22jwZSd3sjcpkcSBrCB
+2yhD5sp/ljJf1SfA4Gpt1S34h+KBSZ/NKWF4eWv78JL/VynDMZsbGNI09VVVK+zt
+f5+R25+FS8YX8AIz8mgP7EvWFgT32jCLe0alI654tQfCD29FAaY=
+=v2xn
+-----END PGP SIGNATURE-----
+
+--nextPart8915427.31r3eYUQgx--
+
+
+
 
