@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CEDCCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE252CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6vt8-0003Wr-04; Thu, 09 Oct 2025 15:01:18 -0400
+	id 1v6vtx-0004gq-AD; Thu, 09 Oct 2025 15:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6vt6-0003Ti-FT
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:01:16 -0400
+ id 1v6vtv-0004gI-Hr
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:02:07 -0400
 Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6vt2-0006iM-UG
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:01:15 -0400
+ id 1v6vtr-0006m9-Ru
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:02:06 -0400
 Received: by mail-io1-xd2a.google.com with SMTP id
- ca18e2360f4ac-92c781fd73aso120011639f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:01:12 -0700 (PDT)
+ ca18e2360f4ac-92aee734585so50939039f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760036470; x=1760641270; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760036522; x=1760641322; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3ot3sChwYtWpudcTaNMo+EI+gXM+26Ybar7Cz3mLkAI=;
- b=B7BUE8C9NcwDAcLRitGLSJrbys04+vUvWu6Gc9COwWeIqhyewXBnVtNJGAdgaM0QQQ
- Nt4kx4QOgzqTDZmyl2fcJr9BDbu8qaLZKDeFRBR4mTj158JkX4JjOClXxdFs+pzSJZRA
- YncMGXQ3i4lhU3FNZ76VixJwvnBtXr5S/TCX+JX9B8WFHgS9ERK6wIupgnWNXrYXoTBk
- x8t4HMDT+yYZrAJwNR+OOmJ5gfJNQ0qHPIAmAQX8JFnJiid4+Kl47COkawMHmWTJODU/
- Sl+j3PgYVOzSghpyGR8+jC/tHdkXx1IN7U2ctK7CfzdEDJ2zImtzVrDaemMOiLYD2hvX
- 3tnw==
+ bh=DNmAlGlHKdAsP+3VdtI8g+Hpoc+y4dVZly3cQCqKXNI=;
+ b=YENoc4sqTzCf2+/CjePY5U0MyfaPJh/7PClk7W2LVU/kn0Mgxj9d+HT5Kk9mY9vMXp
+ IXG0ublqSyZih0+VTt6KxfA2BDuickx6vtcvV/cmuzt28RoDKlgTkQ+ZhSDsn4BfvdhZ
+ hfOTgyldEtRgN8WEHWQdQ7YzQD17QsGBhQmob80WWS1lwkbl+QuqKO4Ige8XzUHu1+Jh
+ ktiheO309r48gAJ5dhqWkboqhAUa9F06VEhsPXYVCOjj+MFJVvyphzt+sAuKac10nAWk
+ sO5paCxNH2GHNd39v0psJn3IFYhusrdW2iDQikCRLP/tZQf6aeCkTpmMTh01dp9OKsTm
+ RU8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760036470; x=1760641270;
+ d=1e100.net; s=20230601; t=1760036522; x=1760641322;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3ot3sChwYtWpudcTaNMo+EI+gXM+26Ybar7Cz3mLkAI=;
- b=ur9rhBHTHN9QFPuERW/bBxLfdEarB77NHYGArF6kL7E0DswRX0oJp/aiLNYaZk4SFv
- uz/zvOAfCwwUmRGbJl0N35ogqLvTWsjFUSyuQJHJHNcqJpS7kD6Xpzssqv+SKjhdVQNz
- cHPBh/0WQJd3cume1uvgK9lrs0puk6Vv1Bqyi1M5Xa+uvdfaBxknWKgiZ5wEQ8QmyHpY
- 9PSjqkauNYZqrjhgXTxhe1mxVzVnEA1VVHJLBTRpMxV/RNtb7XfJpYJc/jboBKyOxfK2
- hxe/OF3DPAm8JeRDZ/2x05pyMzvTs0IcdLMam3ZtXJqPrkU66DxpcXQrltsaTdCO0CUl
- 1lYw==
+ bh=DNmAlGlHKdAsP+3VdtI8g+Hpoc+y4dVZly3cQCqKXNI=;
+ b=gktXbDLT4qZsf4QY4QVSRkK55TlD69V+bRmobdegCHD3d8AgPLXQPycLBKx1akkkaE
+ BtAjVs/P6Nys2KjogLetJWN6FjT3Ae5TmeNPOLZy9xk+it7MMv1od919lKOaBe8ErxsH
+ 2KX/4280KSh0aCeiQF7ve/0A8WrjpM6rWN7JRWRUKUWDt+fhONmq728FufAF+vmDTf2m
+ 2H1iVTI3yje6owj4Uk1v7crrS41W4BxxlwJDAlP9w2NRrc7/q5j7UYJjCmR71AiNkaUr
+ V1DDnMIeeJ89iahJFOHYRD8EogurDwES/M2B4Yc+O0W5KkeAUa04+750QrYhX3GwHGCf
+ 5a5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXf5P8boJ/Dl/1FBuAGdlyBc3sS0jo7E8sW8vScVlRPYRIqEpAcFhS0Wx9fY9/rh+BpzzGv8Bqg8e2u@nongnu.org
-X-Gm-Message-State: AOJu0YywOp0rkHiB5FZvpOqC6J/KMJrYwMtqG4G8FrFicG9nibXSigtP
- oWa/8RFL+VojOtg40oXp8Qy+ocluJecb89Ny1/Yp04SlndjbEHX7fxNydyP4epXSUqrqUEE/hRt
- 2U30EuazhTAwCl+rM6N9MiL1MdihRfI0=
-X-Gm-Gg: ASbGncsIWw855M4XeyjeDr4W2Ypv4n6xm0MJssJzCCQDvAipiIVRfomMBMwkqSIz4MV
- DScgOtnsneC+CXYwGmJ4U0VOEVq3fBsFpOLPSsVm2epjCrSEZIGvVXNBC+TFLHhdYXLJuq/q59B
- MgT92otI+USHe/MwAt9hLAg1tX7Z729FsZJ06PO2QtPngf1VQwrbbEwLkmSdDXoRpM728k+qANu
- +L8u8Zr6LbBHgarbDhOcETDxJfyDmM=
-X-Google-Smtp-Source: AGHT+IFqP1J3cmPrDLlRp53HqlkpvV0p1upaVfOiU3frrWcsfIOodz26quogAH/CcNSttxLFjYJYqBWORm3xTIldjak=
-X-Received: by 2002:a05:6e02:491c:b0:42f:8fef:a610 with SMTP id
- e9e14a558f8ab-42f8fefa8bamr45185245ab.20.1760036470203; Thu, 09 Oct 2025
- 12:01:10 -0700 (PDT)
+ AJvYcCWX8Mfu6GJokqZecWInrAE6nJ5lipXCqVCC5nC8ka8fXZ2IiJRCl4hca3Oyz/6iiYIx54+LFR8xE58I@nongnu.org
+X-Gm-Message-State: AOJu0YzZlWujtChPbeFlw9GzVjSKKIxC9mHt4t/9V3Og7R8IoJDqUeTQ
+ 3IjvOkuE2LtwYt9B4IRqQGNSPUo7wJ+5bjG4B22/xICt+lsi/81aJQHnjUzLkCva+AsVPbHSLKZ
+ oudbEvNFVT9+JSYIXxyHyIRMe7pMsvqY=
+X-Gm-Gg: ASbGncuR2bAQBPLsmI6ypvjdUKkN5cgEMxUJLWiO1cabuPWOZjj2b/IVfx/GWMGT788
+ vc777keEmjP53ThM4+EK+BZ2Hy8my8lMQSXKRFkfVDgu/rFlc8XO5zmCh+r3H1EnlajnIZwFiP5
+ WwoKUtTNoHj25SF8YWt3ts1gkQJk/LU8go3vk+FYH7KhDbHJ1CfL4Fcw1MD7DKzD34kpA7+jBQO
+ X9Mjd7rZzR4vCIkE1uWVmVnCvcnWneAODPRtVmNtA==
+X-Google-Smtp-Source: AGHT+IEF9q3QKZWY1yk9eDzw9xN0J1ywBw18mzoOfkFHPL07YRV+YG/VaoEVmDnONbYYKyZ0qVSa3Sz16v/ngfH31IQ=
+X-Received: by 2002:a05:6602:26c5:b0:887:574d:dfbb with SMTP id
+ ca18e2360f4ac-93bd1987f13mr963402339f.11.1760036522101; Thu, 09 Oct 2025
+ 12:02:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-13-vsementsov@yandex-team.ru>
-In-Reply-To: <20250813164856.950363-13-vsementsov@yandex-team.ru>
+ <20250813164856.950363-14-vsementsov@yandex-team.ru>
+In-Reply-To: <20250813164856.950363-14-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Thu, 9 Oct 2025 15:00:59 -0400
-X-Gm-Features: AS18NWA3ET-arIvbnGxm8aS5RHPMOzGu1nXxkXvMvfBUqBGGPTgtpHCqL5utJRQ
-Message-ID: <CAFubqFs_NsizYtbQDVary5hr59HTR8Xs68ytMcUmR=81tmH5Ww@mail.gmail.com>
-Subject: Re: [PATCH 12/33] vhost: simplify calls to vhost_memory_unmap()
+Date: Thu, 9 Oct 2025 15:01:49 -0400
+X-Gm-Features: AS18NWDqJxKTO4-89wvju966bINbIH9aTw2GPWuZH5ucuJegFXBb7wzRbJXiXAs
+Message-ID: <CAFubqFuYrQsEnJ35Cj=yVZf9qwbruegyuf=3KGK8nr5AefVvkQ@mail.gmail.com>
+Subject: Re: [PATCH 13/33] vhost: move vrings mapping to the top of
+ vhost_virtqueue_start()
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
  sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
@@ -85,7 +86,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,63 +102,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I=E2=80=99m happy with this modulo comments for patch 11/33.
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
 On Wed, Aug 13, 2025 at 12:52=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> No reason to calculate memory size again, as we have corresponding
-> variable for each vring.
+> This simplifies further refactoring and final introduction
+> of vhost backend live migration.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/virtio/vhost.c | 18 ++++++------------
->  1 file changed, 6 insertions(+), 12 deletions(-)
+>  hw/virtio/vhost.c | 47 +++++++++++++++++++++++------------------------
+>  1 file changed, 23 insertions(+), 24 deletions(-)
 >
 > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 1fdc1937b6..bc1821eadd 100644
+> index bc1821eadd..97113174b9 100644
 > --- a/hw/virtio/vhost.c
 > +++ b/hw/virtio/vhost.c
-> @@ -1370,12 +1370,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
->      return 0;
->
->  fail:
-> -    vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, i=
-dx),
-> -                       0, 0);
-> -    vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev,=
- idx),
-> -                       0, 0);
-> -    vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, i=
-dx),
-> -                       0, 0);
-> +    vhost_memory_unmap(dev, vq->used, vq->used_size, 0, 0);
-> +    vhost_memory_unmap(dev, vq->avail, vq->avail_size, 0, 0);
-> +    vhost_memory_unmap(dev, vq->desc, vq->desc_size, 0, 0);
->      return r;
->  }
->
-> @@ -1422,12 +1419,9 @@ static int do_vhost_virtqueue_stop(struct vhost_de=
-v *dev,
->                                                  vhost_vq_index);
+> @@ -1288,30 +1288,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          /* Queue might not be ready for start */
+>          return 0;
+>      }
+> -
+> -    vq->num =3D state.num =3D virtio_queue_get_num(vdev, idx);
+> -    r =3D dev->vhost_ops->vhost_set_vring_num(dev, &state);
+> -    if (r) {
+> -        VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
+> -        return r;
+> -    }
+> -
+> -    state.num =3D virtio_queue_get_last_avail_idx(vdev, idx);
+> -    r =3D dev->vhost_ops->vhost_set_vring_base(dev, &state);
+> -    if (r) {
+> -        VHOST_OPS_DEBUG(r, "vhost_set_vring_base failed");
+> -        return r;
+> -    }
+> -
+> -    if (vhost_needs_vring_endian(vdev)) {
+> -        r =3D vhost_virtqueue_set_vring_endian_legacy(dev,
+> -                                                    virtio_is_big_endian=
+(vdev),
+> -                                                    vhost_vq_index);
+> -        if (r) {
+> -            return r;
+> -        }
+> -    }
+> -
+>      vq->desc_size =3D l =3D virtio_queue_get_desc_size(vdev, idx);
+>      vq->desc_phys =3D a;
+>      vq->desc =3D vhost_memory_map(dev, a, l, false);
+> @@ -1334,6 +1310,29 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          goto fail;
 >      }
 >
-> -    vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, i=
-dx),
-> -                       1, virtio_queue_get_used_size(vdev, idx));
-> -    vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev,=
- idx),
-> -                       0, virtio_queue_get_avail_size(vdev, idx));
-> -    vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, i=
-dx),
-> -                       0, virtio_queue_get_desc_size(vdev, idx));
-> +    vhost_memory_unmap(dev, vq->used, vq->used_size, 1, vq->used_size);
-> +    vhost_memory_unmap(dev, vq->avail, vq->avail_size, 0, vq->avail_size=
-);
-> +    vhost_memory_unmap(dev, vq->desc, vq->desc_size, 0, vq->desc_size);
->      return r;
->  }
->
+> +    vq->num =3D state.num =3D virtio_queue_get_num(vdev, idx);
+> +    r =3D dev->vhost_ops->vhost_set_vring_num(dev, &state);
+> +    if (r) {
+> +        VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
+> +        goto fail;
+> +    }
+> +
+> +    state.num =3D virtio_queue_get_last_avail_idx(vdev, idx);
+> +    r =3D dev->vhost_ops->vhost_set_vring_base(dev, &state);
+> +    if (r) {
+> +        VHOST_OPS_DEBUG(r, "vhost_set_vring_base failed");
+> +        goto fail;
+> +    }
+> +
+> +    if (vhost_needs_vring_endian(vdev)) {
+> +        r =3D vhost_virtqueue_set_vring_endian_legacy(dev,
+> +                                                    virtio_is_big_endian=
+(vdev),
+> +                                                    vhost_vq_index);
+> +        if (r) {
+> +            goto fail;
+> +        }
+> +    }
+> +
+>      r =3D vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_ena=
+bled);
+>      if (r < 0) {
+>          goto fail;
 > --
 > 2.48.1
 >
