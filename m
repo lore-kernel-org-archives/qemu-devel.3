@@ -4,173 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B2ACCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 01:20:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A85CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 01:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6fIt-0004WG-Jr; Wed, 08 Oct 2025 21:18:47 -0400
+	id 1v6ftL-0000bY-Rj; Wed, 08 Oct 2025 21:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6fIr-0004Vy-9c; Wed, 08 Oct 2025 21:18:45 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1v6ftG-0000av-7P
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 21:56:22 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6fId-0007uv-Rn; Wed, 08 Oct 2025 21:18:44 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IpBbGBV18A/UQYFmhcFnDlr7hRgBzNIB/sVWP1KGfQVr6NjiuCX/rXaXT4Xxtn+XIu7jzR0dQQBlymVwMEsyeEl3NVgB20gT+Vh2gx6Lm5yUY6hVkCMkn6gcVhvYcnFkq3QJ6p4LE6YRqYtBbBu+cLW814DK29oHH7Q6NNQHh52qX3FUhOIKVX2Q8gHOJaZzCtLeKkClfnxusE45i0na3o0uUQK19zC5fNJtRmbyR+jgH+FgV8r0FlN0eb6L8x2D1mnLo24ylVGbZZ2i/P7JVKY2o3CA5eEhZATsjLShgwF3kDB8LJUEUcgemc6o9Q+UfmtSwmtcVkR64niRZgxPew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6xGPPCnxh1ZbSZ6Zx8W0/G5XJEukK1ZwDbmOJz9z+/k=;
- b=REQOgCBboudAAcZ8XWyOImjEFHGQW5cVCr+RmT2GQitFn7v+0OuupCU4TXh382gzzXvxySKF/rQcSzpanWG0XLFFFfVoDjg/LHbHAHN8n19VfFgO+sdyPctMHmvsVVGTh+ZU4rAHpwTS2R8PXEXNbjCulvY9IMg3SH3pIqGagSpMOVtx+LY55RPOqCwLGU3xr9+ae4pk9Q1nM73fjrrUEZq22kXYdVFzvLWdpyBsRqcUAWm8UN6X8sLI5zf6AsWhDeKEioHbz6WztGu1pT7pU2L4+8zfgOcyDjNCoxjCoQRNhNwzhdYHI8RnhPDEI9GbUbLsW53cAaDRIBXwXxaaZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6xGPPCnxh1ZbSZ6Zx8W0/G5XJEukK1ZwDbmOJz9z+/k=;
- b=mMjcz/iKiXwGvn+tJ8hpemcLOkGWDmh8OXUAOfX/LIIfyYmbj2+BRUYbMnqLYuQexh6Ust9SpndoETWsExiz1hUkjaRTcZ65fTsNt9a9yrphRO00afesxFmbW6xPPTNtrMdhNJlx4xsFEIUzMbIprnTrlDfjTTaExnWa+8K5UaP4Z1wsoKqhmaJR7oNjzT09l9LF8RFMO0/XH9rG4NJTf2Jx6BAk8+arO9QLdbPP/1WAh6zLEAszOM+jAiazW7BJL2iKvCQ+led3YaOaBsVw8rLJkxQpPmqjWjy3fN6CegY9eVWoSFjtU7759/BYek8JJa/A0eFVIDb0Co4FhYRssA==
-Received: from KL1PR0601MB4196.apcprd06.prod.outlook.com (2603:1096:820:30::6)
- by TY1PPFECF6DCA7C.apcprd06.prod.outlook.com (2603:1096:408::92f)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.19; Thu, 9 Oct
- 2025 01:18:08 +0000
-Received: from KL1PR0601MB4196.apcprd06.prod.outlook.com
- ([fe80::13a8:12fc:7753:8156]) by KL1PR0601MB4196.apcprd06.prod.outlook.com
- ([fe80::13a8:12fc:7753:8156%6]) with mapi id 15.20.9203.007; Thu, 9 Oct 2025
- 01:18:08 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: RE: [SPAM] [PATCH v1 09/16] hw/arm/aspeed: Introduce
- AspeedCoprocessor class and base implementation
-Thread-Topic: [SPAM] [PATCH v1 09/16] hw/arm/aspeed: Introduce
- AspeedCoprocessor class and base implementation
-Thread-Index: AQHcOALBM4w/0GRf3UeQ4sfVXx64lrS4bSAAgACXbGA=
-Date: Thu, 9 Oct 2025 01:18:07 +0000
-Message-ID: <KL1PR0601MB41961FD3E7FAABFBAA7ECF5BFCEEA@KL1PR0601MB4196.apcprd06.prod.outlook.com>
-References: <20251008032207.593353-1-jamin_lin@aspeedtech.com>
- <20251008032207.593353-10-jamin_lin@aspeedtech.com>
- <73c1f147-8251-48ff-8b3d-84afeb6b3186@kaod.org>
-In-Reply-To: <73c1f147-8251-48ff-8b3d-84afeb6b3186@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: KL1PR0601MB4196:EE_|TY1PPFECF6DCA7C:EE_
-x-ms-office365-filtering-correlation-id: 4a6dc1ca-f6ec-48e1-2cf0-08de06d1b48c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|38070700021|217643003; 
-x-microsoft-antispam-message-info: =?utf-8?B?UGkxVEJ4a0N2ajZGeEtKdHgwY0ttek40bWRrMENoanU3SXJuQnRObllMUmJJ?=
- =?utf-8?B?L1J0UkJQTnRFVkI2d2FhMll3NERIeUJBY1FaRUdJRlJpUFU2WW1lV09MWTNU?=
- =?utf-8?B?bU9VNzBub2txTnNHS3VvQU5DMzZHblJTUFBMM3FVQ25sRFA3aU1DNHlMZlNK?=
- =?utf-8?B?T3ZBODl0Y3NBTVF5L0RXZE9wYzdRQmYzQXYxczVOalpsbERTRm82ekw4eVRX?=
- =?utf-8?B?SDJDUVdIWngrNTh4Wmk1ZVNqYkpWd0cxMUR5anhaSmtBeTdNWHBnbnhwaFBR?=
- =?utf-8?B?OUlBcHJNU0ZiendWWWxmZzJ1SGEwcy9LaUJ4N0NFL3pYTmxaa21Za01mYWJr?=
- =?utf-8?B?b0dnUWgzK1FlSFJzcVB3U21PYVdKMDZpMnFMUTVvVTVNV2U5UlFNR3hBKzFW?=
- =?utf-8?B?YXd3UXloN3hXWVpyQ0dyZUNMRzNtalV2L1d5K0tRY2dqdUwxcFB0VS9CWlJQ?=
- =?utf-8?B?cXhsWGt0YjZIOHRPenEwV3pjbEkyQXFVcm1Ucjhjanl1TEpVRGwvR3JtakRL?=
- =?utf-8?B?OUtoWGY0OENWT0VydnRmZEJ3TUgva1BwTlNZSmFiZ3hCaisxRW5VYjYvRjM3?=
- =?utf-8?B?MktPdmFXOVg5a1RZYXp6ZzgxWGhOWGNqaGhxZGE4MXNXM1JxZXN5WHNDRy96?=
- =?utf-8?B?dUliVVhMQzYySGxHVno4MG9BZnF0bE5JbE95OXV5dTcwOVBSZ1pydjBVR0J1?=
- =?utf-8?B?QVgzZ1l2Szh0SnpjclZJeWIrMm1JR1Z5VC9ZZExIV0NoM1VWODVCL2VTS3Rs?=
- =?utf-8?B?WjU1MG4rZnNrRHB6M1BwYnhUa2xZS0Ewb09DUkpMdU1GR3RvL2oxdGFUSzgr?=
- =?utf-8?B?RG1IMUNvNUkycjBWOXFIRFJkdnZxSVFZWTdGbi9NZmxjUUZZQmFtbDF3MG9P?=
- =?utf-8?B?NktFckFGMEhLSktOZ2tFVkg2OEV2TU1IMms4cXMzSDZCckprWVR5NFMxZTNt?=
- =?utf-8?B?bENZczMwK01aUENNSTZEdEEzQUZEc0czUXlBV3M1cDZONXp4cERyZWg5V3N6?=
- =?utf-8?B?RE9zcnZEL1BNWk5qR0s1RHpDVjNBalVNeC92Q1V0bDUvd0pyRzRpWjYzcXVj?=
- =?utf-8?B?Y1o3T2ZTSkdnNTI2eWdoeWNJZmJIQ2RXM3FSWE5COXdYb2JMRWhBZHl4WTdB?=
- =?utf-8?B?Zjh0ZmgydGh0M2NEOUk3NUd4dEIwbFBobnFraHdlTER2MnE2Wm4ybjZ0L2o5?=
- =?utf-8?B?bGgvcTYvZVg1MGZJT3NpYjdNQTVCSUs4T2M3amw0ME5Xam5MVmY3RGNxakNC?=
- =?utf-8?B?dHFLZzdaK1dEL3JnN2hDVlRNRnJxb2VTOURmVUlaWG1pemRLVzl5eS8xZENo?=
- =?utf-8?B?MEVTSHZMWWswalFQRjFBcndHT3NaNk9Gck1RTTB5YnRIT0lVNjZORGMySXVx?=
- =?utf-8?B?WWZ0SEp3QUM3ZVBDbHRBempHNWRvam5qQjJZUCthT2tiZkF6cUFHNG9DTkJJ?=
- =?utf-8?B?YUtFVWRtd3lsZEkwRkZKTlBZb2l3cXJZSnpyakMxdCtldHRobDgyKzQrNFI4?=
- =?utf-8?B?Q2pJOFhLKzBLVTM1SjRvbUFIdDVOVm80ZkcwcS83SGIvWHJPdE8zZ3B2Yzda?=
- =?utf-8?B?d0YxSmVRWll3NEgwQmtwcVFYb1ZKUWdoWUJjelp6TlJnblQ3OXV1MkFwSWlj?=
- =?utf-8?B?OUpOUm9hcVNsKzdVdmtLSjYxTEpQUDZqTUIwQ2dNekhxcjNQcGdUeWZBd1dH?=
- =?utf-8?B?TUZaQklKNnRMckxkMDFLUEx1blh6cVhYNnRmcEx0dE1ZYVJYYmNYeGJWS1Rj?=
- =?utf-8?B?M3NiUkNmdmdRRzF3cFNGRnZ3dWpDRlhYS0xwSjZxNWFFemxhUjdhRzEvMTF3?=
- =?utf-8?B?aytqU3gyTE9HR1BPdHRkZDBhL3FJTmpGSFA0Q1U5Qmg3cmY0cTFOQ25Fazlt?=
- =?utf-8?B?NWZjUWR0dWticWwweG1wK1lxcHE3R21ETnB1QVoySDFEYTM2SC8wRDdRUXl5?=
- =?utf-8?B?WUZ4emU1V1ZIa3ZaRWVmL1RaanlOVTVkQWdmdEZRMG14T0J0aUlyM3ZOWjNY?=
- =?utf-8?B?NC9PQmIvMzNGa29vZnhET1R6MzVDdGU4ZUljY1doc0pvN2pIcDZZWWcyNEgr?=
- =?utf-8?B?aWJ4QU15L3BLTlJNb2lSVit1MTZjb293eUVmQT09?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:KL1PR0601MB4196.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(376014)(1800799024)(38070700021)(217643003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SEFSZHg3bFROZGNxNm4ydjZJVjd3bk1nZU9meTZ3emo4Y1BuR0czTHNzNWxT?=
- =?utf-8?B?OStyYloxc0tDRGlFbGJKMm4zTEVpeTFybzhNSW5BMjl1bjBrT2I3Rit0TXp0?=
- =?utf-8?B?OXFpQXh6STdUOGcrNldoVlJXUHJBVjlHbVZGUU1PTFZLU3lWL2RLM0xKSkNO?=
- =?utf-8?B?MVRjRzVVbVYwbFVud3I2L3R4ek4yUmQ1Wkp6WnptZFRydVdhOVFXL2FqQnBG?=
- =?utf-8?B?Z0s3UVU5aHhzVVp2SjVnWjBQWnVDM1J2N3k4TjZXaEtaRXRoblJTWmVxTisv?=
- =?utf-8?B?SWFEMG1JcWtPcFAwcUpXemlNall2Tkl6Sy9STTdRRTl1OE9haHFVY3ZZd0lP?=
- =?utf-8?B?cjNDMUx5YmRyRHRmZENsZGM4MzE2RXBDVnMycUlkNmRVd0tqNGprQ0FqMU1C?=
- =?utf-8?B?eEFHZ20xZVZDV09YWjhDQ0V0blRoNHBkWm1EbDBxL1pDQ3dlWHdBNUgwT0lh?=
- =?utf-8?B?YWxyYk5rN2pqMFFmWW1nMStFOEloTmFRWlp4S0dMaURRRFU1QWYxTUlUZDE2?=
- =?utf-8?B?dnB4eFd6M25McG5yNEtHKzB0RE9Pbi9JM3hTM09UQUZnNHpZMDBTU05RVktn?=
- =?utf-8?B?RTF1dTNUK0lEdWIzMHRNTHRqUDhPelE1MDQvMGJWT0R5Y0VUTkhaWkxwVzNi?=
- =?utf-8?B?ZmFXWlZBdkFWUDdkVDYrYjhnZG9XMEpNVko0TnBsU0JXVTFZK3VzVGF4KzZn?=
- =?utf-8?B?bjFvcHVjajVvM1RjOUk0bnAwMFMzMHptdStvU3p3c3VKK2hPTHlPODFRVU9H?=
- =?utf-8?B?NW50K1o5c1lNMjB5SWc3bkdYT2JtOU1LTUd1alZ3bFR4NXdFek50bmw0Q2RE?=
- =?utf-8?B?MWRUcExmNFBjaUpicWtKdjY1L3hFR2N3cVV1cjFVNlI3UTB0dS8vWVNoNlFn?=
- =?utf-8?B?YU1nSGREK1NmeXF0clVoUnNGRUVnT2dvcjloK0IyRnJGcTdXbjlJN3NISnEv?=
- =?utf-8?B?ZnRpd3JyYXF1eDB6S2VhWDVGUUpTNE55UzVJbjY0dDNxbkMxSUV2VmYvbHFN?=
- =?utf-8?B?SzkyQ2JibHpJT29oT2FjTms3VGhNVE1ocjdlZEZENURSSjV4bHVmandvK2tk?=
- =?utf-8?B?T09yYjVxTCt2RmcvWG5iVzdvNEZ3OURBQ0dtRlUrbG9jdVV6Q09uV3FPNXk1?=
- =?utf-8?B?akFtajBkMnltOHhTbUFFVVplTlR5R1ZmK0FBeXk4SlcyVTViZGFYTmVScURX?=
- =?utf-8?B?YmRXcEJ5V2pJbWNZVUxXTldGMjdpeVJQV0hxSDVrTENsaThhNzA1Z0RFZ1NC?=
- =?utf-8?B?d3dGSkF1VTI5NDlzcjFXWUZkWWFVeVNTWjRzTU9NbmV2a0RidUJwOGoyU0Rt?=
- =?utf-8?B?emRKNXN4bFJNSmcxTmdlTXA2TUZsRDlVeUVuZjExbFBVb0N4cXBHR3Y4RnJT?=
- =?utf-8?B?dmg3OUpDUXlOTDIwNlVadEVCcjlmbUFFUWR5MkNhdXd1UUFpcjVDTDMyeElZ?=
- =?utf-8?B?YnVRTWMxYWE4NmdlUW5IZGcvdi9hamxqMStPcGtDdjdWcTBNTFlSSkFsZ2g4?=
- =?utf-8?B?TXRZU0M0TkRwOVBVcVIxa3Rhc3VBNysrYk9OK0ppSWZ5c1VyZGM5R2dHUm5U?=
- =?utf-8?B?UU9Wck1FdEppM0dNUnZkWC96NHRhRW5RZTVuZjN0UkxLcjFaMTAxNkh1TU5I?=
- =?utf-8?B?TG9CY2lnRlZSR0JpenpPS2VNQVBrdVlLNm5OVHFyUlUvTHc1TlJFL2hEM2gr?=
- =?utf-8?B?R1Y0ZjN5VnM2Y1l3NEVDczFKRzFzbXhNUVFRaFd1RGpwS3lKYnNVUXhBMHph?=
- =?utf-8?B?NGlmZy9NYmFmaEZyMjIzaXV6aHVBVEN2bkkzSTM1YUpzUnBSYlNWbXRXeXZr?=
- =?utf-8?B?clcxM2JMaFlnZnlzdzcwWTcrT2g3ZCs4VnNqMW1rUVl1YkVZd2NtaHVZd2th?=
- =?utf-8?B?Rk9vR2QvWHV0QVoxWDlMUVdJNzZhakNSSFdiQWEwNjZhNnVaOWUwV1pOaUxG?=
- =?utf-8?B?MjRrbGdMZzMrLzlPeW9FT2pZd1QwaktYQ2xnY2tTbm5MT2FHaHVTMWtkenN3?=
- =?utf-8?B?V2hPZGIzWmZKODJYZGNnb3AvUktLbkxIUUdpc0tsaTE4RE44UDlkZXRlakZG?=
- =?utf-8?B?OUtyR21BeWUvSnUxdFpmeVd6WEM3NFc1Z2p4cjBBa0d3WUhGOWkzOW9GUnBr?=
- =?utf-8?Q?+8y0wf/2ExKzWpCs/taGhrSIK?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1v6ftB-0003m5-FB
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 21:56:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=pA+Wk5omjMCa70hJHsYuBlSOynRYxrx0G2BCLz4bYLw=; b=Dnke1dtQ53KZuGo5
+ wuHDSFg05NNbotdsrCcpusgGMRnFksvKVDxrScSBbILdLMuAwBFbHV0aKTntHqEqFgQ/vaQfHCPRK
+ 1YUkBPp8gZo6jZFklZ4sHha/RBMDBclhNlCBfhd3SHDrop5lbxOYCpeS6xrqHT/8KdddxSopkG9Lt
+ bZLtUXYw0qvWLQmUc9fK77/yYkzH3UEGjnx8VfhWUx0HnJ79TXGLTYe9d6OkfNFwiGmKAIlA72/up
+ x+dbqmcKqItZbIVXbKvT438fxTt4DDt/lsjRiTl7KxEmYTYXQkmLjISXgS/dDt0FbQYdSo+0TnXRe
+ CCvvnNRsbf9+m4yWng==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1v6ft3-00FPH7-0s;
+ Thu, 09 Oct 2025 01:56:09 +0000
+Date: Thu, 9 Oct 2025 01:56:09 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2] hw/uefi: add "info ovmf-log" + "query-ovmf-log"
+ monitor commands
+Message-ID: <aOcWOQJt-zLbiyUK@gallifrey>
+References: <20251007135216.1687648-1-kraxel@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB4196.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4a6dc1ca-f6ec-48e1-2cf0-08de06d1b48c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2025 01:18:08.0094 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Fvk1qTb8aCsDkcw8CavW+XfMz2gWHqIX/oSHJ7OiAU7+dhDDeHqOfcXd6V2gVmgaZ0uZhwJc5bESBdV2Nn9NcTDaBYRINoDNd+ZbIhwONYM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPFECF6DCA7C
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20251007135216.1687648-1-kraxel@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 01:52:24 up 164 days, 10:05,  2 users,  load average: 0.05, 0.04,
+ 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -187,109 +76,352 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYw0KDQo+IEFzcGVlZENvcHJvY2Vzc29yIGNsYXNzIGFuZCBiYXNlIGltcGxlbWVu
-dGF0aW9uDQo+IA0KPiBKYW1pbiwNCj4gDQo+IE9uIDEwLzgvMjUgMDU6MjEsIEphbWluIExpbiB3
-cm90ZToNCj4gPiBBZGQgYSBuZXcgQXNwZWVkQ29wcm9jZXNzb3IgY2xhc3MgdGhhdCBkZWZpbmVz
-IHRoZSBmb3VuZGF0aW9uYWwNCj4gPiBzdHJ1Y3R1cmUgZm9yIEFTUEVFRCBjb3Byb2Nlc3NvciBt
-b2RlbHMuIFRoaXMgY2xhc3MgZW5jYXBzdWxhdGVzIGENCj4gPiBiYXNlIERldmljZVN0YXRlIHdp
-dGggbGlua3MgdG8gc3lzdGVtIG1lbW9yeSwgY2xvY2ssIGFuZCBwZXJpcGhlcmFsDQo+ID4gY29t
-cG9uZW50cyBzdWNoIGFzIFNDVSwgU0NVSU8sIFRpbWVyIENvbnRyb2xsZXIsIGFuZCBVQVJUcy4N
-Cj4gPg0KPiA+IEludHJvZHVjZSB0aGUgY29ycmVzcG9uZGluZyBpbXBsZW1lbnRhdGlvbiBmaWxl
-DQo+ID4gYXNwZWVkX2NvcHJvY2Vzc29yX2NvbW1vbi5jLCB3aGljaCBwcm92aWRlcyB0aGUNCj4g
-PiBhc3BlZWRfY29wcm9jZXNzb3JfcmVhbGl6ZSgpIG1ldGhvZCwgcHJvcGVydHkgcmVnaXN0cmF0
-aW9uLCBhbmQgUU9NDQo+ID4gdHlwZSByZWdpc3RyYXRpb24uIFRoZSBjbGFzcyBpcyBtYXJrZWQg
-YXMgYWJzdHJhY3QgYW5kIGludGVuZGVkIHRvDQo+ID4gc2VydmUgYXMgYSBjb21tb24gYmFzZSBm
-b3Igc3BlY2lmaWMgY29wcm9jZXNzb3IgdmFyaWFudHMgKGUuZy4gU1NQL1RTUA0KPiBzdWJzeXN0
-ZW1zKS4NCj4gPg0KPiA+IFRoaXMgZXN0YWJsaXNoZXMgYSByZXVzYWJsZSBhbmQgZXh0ZW5zaWJs
-ZSBmcmFtZXdvcmsgZm9yIG1vZGVsaW5nDQo+ID4gQVNQRUVEIGNvcHJvY2Vzc29yIGRldmljZXMu
-DQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNo
-LmNvbT4NCj4gPiAtLS0NCj4gPiAgIGluY2x1ZGUvaHcvYXJtL2FzcGVlZF9jb3Byb2Nlc3Nvci5o
-IHwgNDUNCj4gKysrKysrKysrKysrKysrKysrKysrKysrKysNCj4gPiAgIGh3L2FybS9hc3BlZWRf
-Y29wcm9jZXNzb3JfY29tbW9uLmMgIHwgNDkNCj4gKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysNCj4gPiAgIGh3L2FybS9tZXNvbi5idWlsZCAgICAgICAgICAgICAgICAgIHwgIDMgKy0NCj4g
-PiAgIDMgZmlsZXMgY2hhbmdlZCwgOTYgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPiA+
-ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvaHcvYXJtL2FzcGVlZF9jb3Byb2Nlc3Nvci5o
-DQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvYXJtL2FzcGVlZF9jb3Byb2Nlc3Nvcl9jb21t
-b24uYw0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvaHcvYXJtL2FzcGVlZF9jb3Byb2Nl
-c3Nvci5oDQo+ID4gYi9pbmNsdWRlL2h3L2FybS9hc3BlZWRfY29wcm9jZXNzb3IuaA0KPiA+IG5l
-dyBmaWxlIG1vZGUgMTAwNjQ0DQo+ID4gaW5kZXggMDAwMDAwMDAwMC4uNjkzOGRmZTI0Yw0KPiA+
-IC0tLSAvZGV2L251bGwNCj4gPiArKysgYi9pbmNsdWRlL2h3L2FybS9hc3BlZWRfY29wcm9jZXNz
-b3IuaA0KPiA+IEBAIC0wLDAgKzEsNDUgQEANCj4gPiArLyoNCj4gPiArICogQVNQRUVEIENvcHJv
-Y2Vzc29yDQo+ID4gKyAqDQo+ID4gKyAqIENvcHlyaWdodCAoQykgMjAyNSBBU1BFRUQgVGVjaG5v
-bG9neSBJbmMuDQo+ID4gKyAqDQo+ID4gKyAqIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwt
-Mi4wLW9yLWxhdGVyICAqLw0KPiA+ICsNCj4gPiArI2lmbmRlZiBBU1BFRURfQ09QUk9DRVNTT1Jf
-SA0KPiA+ICsjZGVmaW5lIEFTUEVFRF9DT1BST0NFU1NPUl9IDQo+ID4gKw0KPiA+ICsjaW5jbHVk
-ZSAicW9tL29iamVjdC5oIg0KPiA+ICsjaW5jbHVkZSAiaHcvYXJtL2FzcGVlZF9zb2MuaCINCj4g
-PiArDQo+ID4gK3N0cnVjdCBBc3BlZWRDb3Byb2Nlc3NvclN0YXRlIHsNCj4gPiArICAgIERldmlj
-ZVN0YXRlIHBhcmVudDsNCj4gPiArDQo+ID4gKyAgICBNZW1vcnlSZWdpb24gKm1lbW9yeTsNCj4g
-PiArICAgIE1lbW9yeVJlZ2lvbiBzcmFtOw0KPiA+ICsgICAgQ2xvY2sgKnN5c2NsazsNCj4gPiAr
-DQo+ID4gKyAgICBBc3BlZWRTQ1VTdGF0ZSBzY3U7DQo+ID4gKyAgICBBc3BlZWRTQ1VTdGF0ZSBz
-Y3VpbzsNCj4gPiArICAgIEFzcGVlZFRpbWVyQ3RybFN0YXRlIHRpbWVyY3RybDsNCj4gPiArICAg
-IFNlcmlhbE1NIHVhcnRbQVNQRUVEX1VBUlRTX05VTV07DQo+ID4gK307DQo+ID4gKw0KPiA+ICsj
-ZGVmaW5lIFRZUEVfQVNQRUVEX0NPUFJPQ0VTU09SICJhc3BlZWQtY29wcm9jZXNzb3IiDQo+ID4g
-K09CSkVDVF9ERUNMQVJFX1RZUEUoQXNwZWVkQ29wcm9jZXNzb3JTdGF0ZSwgQXNwZWVkQ29wcm9j
-ZXNzb3JDbGFzcywNCj4gPiArICAgICAgICAgICAgICAgICAgICBBU1BFRURfQ09QUk9DRVNTT1Ip
-DQo+ID4gKw0KPiA+ICtzdHJ1Y3QgQXNwZWVkQ29wcm9jZXNzb3JDbGFzcyB7DQo+ID4gKyAgICBE
-ZXZpY2VDbGFzcyBwYXJlbnRfY2xhc3M7DQo+ID4gKw0KPiA+ICsgICAgLyoqIHZhbGlkX2NwdV90
-eXBlczogTlVMTCB0ZXJtaW5hdGVkIGFycmF5IG9mIGEgc2luZ2xlIENQVSB0eXBlLiAqLw0KPiA+
-ICsgICAgY29uc3QgY2hhciAqIGNvbnN0ICp2YWxpZF9jcHVfdHlwZXM7DQo+ID4gKyAgICB1aW50
-MzJfdCBzaWxpY29uX3JldjsNCj4gPiArICAgIGNvbnN0IGh3YWRkciAqbWVtbWFwOw0KPiA+ICsg
-ICAgY29uc3QgaW50ICppcnFtYXA7DQo+ID4gKyAgICBpbnQgdWFydHNfYmFzZTsNCj4gPiArICAg
-IGludCB1YXJ0c19udW07DQo+ID4gKyAgICBxZW11X2lycSAoKmdldF9pcnEpKHZvaWQgKmN0eCwg
-aW50IGRldik7IH07DQo+ID4gKw0KPiA+ICsjZW5kaWYgLyogQVNQRUVEX0NPUFJPQ0VTU09SX0gg
-Ki8NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL2FzcGVlZF9jb3Byb2Nlc3Nvcl9jb21tb24uYw0K
-PiA+IGIvaHcvYXJtL2FzcGVlZF9jb3Byb2Nlc3Nvcl9jb21tb24uYw0KPiA+IG5ldyBmaWxlIG1v
-ZGUgMTAwNjQ0DQo+ID4gaW5kZXggMDAwMDAwMDAwMC4uOGE5NGI0NGYwNw0KPiA+IC0tLSAvZGV2
-L251bGwNCj4gPiArKysgYi9ody9hcm0vYXNwZWVkX2NvcHJvY2Vzc29yX2NvbW1vbi5jDQo+ID4g
-QEAgLTAsMCArMSw0OSBAQA0KPiA+ICsvKg0KPiA+ICsgKiBBU1BFRUQgQ29wcm9jZXNzb3INCj4g
-PiArICoNCj4gPiArICogQ29weXJpZ2h0IChDKSAyMDI1IEFTUEVFRCBUZWNobm9sb2d5IEluYy4N
-Cj4gPiArICoNCj4gPiArICogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb3ItbGF0
-ZXIgICovDQo+ID4gKw0KPiA+ICsjaW5jbHVkZSAicWVtdS9vc2RlcC5oIg0KPiA+ICsjaW5jbHVk
-ZSAicWFwaS9lcnJvci5oIg0KPiA+ICsjaW5jbHVkZSAic3lzdGVtL21lbW9yeS5oIg0KPiA+ICsj
-aW5jbHVkZSAiaHcvcWRldi1wcm9wZXJ0aWVzLmgiDQo+ID4gKyNpbmNsdWRlICJody9hcm0vYXNw
-ZWVkX2NvcHJvY2Vzc29yLmgiDQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBhc3BlZWRfY29wcm9j
-ZXNzb3JfcmVhbGl6ZShEZXZpY2VTdGF0ZSAqZGV2LCBFcnJvcg0KPiA+ICsqKmVycnApIHsNCj4g
-PiArICAgIEFzcGVlZENvcHJvY2Vzc29yU3RhdGUgKnMgPSBBU1BFRURfQ09QUk9DRVNTT1IoZGV2
-KTsNCj4gPiArDQo+ID4gKyAgICBpZiAoIXMtPm1lbW9yeSkgew0KPiA+ICsgICAgICAgIGVycm9y
-X3NldGcoZXJycCwgIidtZW1vcnknIGxpbmsgaXMgbm90IHNldCIpOw0KPiA+ICsgICAgICAgIHJl
-dHVybjsNCj4gPiArICAgIH0NCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIGNvbnN0IFByb3Bl
-cnR5IGFzcGVlZF9jb3Byb2Nlc3Nvcl9wcm9wZXJ0aWVzW10gPSB7DQo+ID4gKyAgICBERUZJTkVf
-UFJPUF9MSU5LKCJtZW1vcnkiLCBBc3BlZWRDb3Byb2Nlc3NvclN0YXRlLCBtZW1vcnksDQo+ID4g
-KyAgICAgICAgICAgICAgICAgICAgIFRZUEVfTUVNT1JZX1JFR0lPTiwgTWVtb3J5UmVnaW9uICop
-LCB9Ow0KPiA+ICsNCj4gPiArc3RhdGljIHZvaWQgYXNwZWVkX2NvcHJvY2Vzc29yX2NsYXNzX2lu
-aXQoT2JqZWN0Q2xhc3MgKm9jLCBjb25zdCB2b2lkDQo+ID4gKypkYXRhKSB7DQo+ID4gKyAgICBE
-ZXZpY2VDbGFzcyAqZGMgPSBERVZJQ0VfQ0xBU1Mob2MpOw0KPiA+ICsNCj4gPiArICAgIGRjLT5y
-ZWFsaXplID0gYXNwZWVkX2NvcHJvY2Vzc29yX3JlYWxpemU7DQo+ID4gKyAgICBkZXZpY2VfY2xh
-c3Nfc2V0X3Byb3BzKGRjLCBhc3BlZWRfY29wcm9jZXNzb3JfcHJvcGVydGllcyk7IH0NCj4gPiAr
-DQo+ID4gK3N0YXRpYyBjb25zdCBUeXBlSW5mbyBhc3BlZWRfY29wcm9jZXNzb3JfdHlwZXNbXSA9
-IHsNCj4gPiArICAgIHsNCj4gPiArICAgICAgICAubmFtZSAgICAgICAgICAgPSBUWVBFX0FTUEVF
-RF9DT1BST0NFU1NPUiwNCj4gPiArICAgICAgICAucGFyZW50ICAgICAgICAgPSBUWVBFX0RFVklD
-RSwNCj4gPiArICAgICAgICAuaW5zdGFuY2Vfc2l6ZSAgPSBzaXplb2YoQXNwZWVkQ29wcm9jZXNz
-b3JTdGF0ZSksDQo+ID4gKyAgICAgICAgLmNsYXNzX3NpemUgICAgID0gc2l6ZW9mKEFzcGVlZENv
-cHJvY2Vzc29yQ2xhc3MpLA0KPiA+ICsgICAgICAgIC5jbGFzc19pbml0ICAgICA9IGFzcGVlZF9j
-b3Byb2Nlc3Nvcl9jbGFzc19pbml0LA0KPiA+ICsgICAgICAgIC5hYnN0cmFjdCAgICAgICA9IHRy
-dWUsDQo+ID4gKyAgICB9LA0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArREVGSU5FX1RZUEVTKGFzcGVl
-ZF9jb3Byb2Nlc3Nvcl90eXBlcykNCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL21lc29uLmJ1aWxk
-IGIvaHcvYXJtL21lc29uLmJ1aWxkIGluZGV4DQo+ID4gZGM2ODM5MTMwNS4uMGIyYzY2ZTM5MSAx
-MDA2NDQNCj4gPiAtLS0gYS9ody9hcm0vbWVzb24uYnVpbGQNCj4gPiArKysgYi9ody9hcm0vbWVz
-b24uYnVpbGQNCj4gPiBAQCAtNTIsNyArNTIsOCBAQCBhcm1fc3MuYWRkKHdoZW46ICdDT05GSUdf
-QVNQRUVEX1NPQycsIGlmX3RydWU6DQo+IGZpbGVzKA0KPiA+ICAgICAnZmJ5MzUuYycpKQ0KPiA+
-ICAgYXJtX2NvbW1vbl9zcy5hZGQod2hlbjogWydDT05GSUdfQVNQRUVEX1NPQycsDQo+ICdUQVJH
-RVRfQUFSQ0g2NCddLCBpZl90cnVlOiBmaWxlcygNCj4gPiAgICAgJ2FzcGVlZF9hc3QyN3gwLmMn
-LA0KPiA+IC0gICdhc3BlZWRfYXN0Mjd4MC1mYy5jJywpKQ0KPiA+ICsgICdhc3BlZWRfYXN0Mjd4
-MC1mYy5jJywNCj4gPiArICAnYXNwZWVkX2NvcHJvY2Vzc29yX2NvbW1vbi5jJywpKQ0KPiANCj4g
-SSBkb24ndCB0aGluayB3ZSBuZWVkIHRvIGtlZXAgdGhlIGVuZGluZyBjb21tYSAnLCcuDQo+IA0K
-PiANCj4gTW9yZSBpbXBvcnRhbnQsIHRoaXMgbGlzdCBsYWNrcyBzb3VyY2UgZmlsZXMgOg0KPiAN
-Cj4gICAgJ2FzcGVlZF9hc3QyN3gwLXNzcC5jJywNCj4gICAgJ2FzcGVlZF9hc3QyN3gwLXRzcC5j
-JywNCj4gDQo+IHdoaWNoIGFyZSBhYXJjaDY0IHNwZWNpZmljIGFuZCB3aXRoIHRoZSBmb2xsb3dp
-bmcgY2hhbmdlcyBvZiB0aGlzIHNlcmllcywgJ21ha2UNCj4gY2hlY2snIGZhaWxzIHdpdGggOg0K
-PiANCj4gICAgVHlwZSAnYXNwZWVkMjd4MHNzcC1zb2MnIGlzIG1pc3NpbmcgaXRzIHBhcmVudCAn
-YXNwZWVkLWNvcHJvY2Vzc29yJw0KPiANCj4gQSBwcmVsaW1pbmFyeSBmaXggaXMgbmVlZGVkLg0K
-PiANCj4gUGxlYXNlIHJ1biAgJ21ha2UgY2hlY2snICBiZWZvcmUgc2VuZGluZy4NCj4gDQpUaGFu
-a3MgZm9yIHJlcG9ydGluZyB0aGlzIGlzc3VlLg0KSeKAmWxsIHJ1biB0aGUgdGVzdHMgYW5kIHJl
-c2VuZCB2Mi4NCg0KSmFtaW4NCg0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiANCj4gDQo+IA0KPiAN
-Cj4gPiAgIGFybV9jb21tb25fc3MuYWRkKHdoZW46ICdDT05GSUdfTVBTMicsIGlmX3RydWU6IGZp
-bGVzKCdtcHMyLmMnKSkNCj4gPiAgIGFybV9jb21tb25fc3MuYWRkKHdoZW46ICdDT05GSUdfTVBT
-MicsIGlmX3RydWU6IGZpbGVzKCdtcHMyLXR6LmMnKSkNCj4gPiAgIGFybV9jb21tb25fc3MuYWRk
-KHdoZW46ICdDT05GSUdfTVNGMicsIGlmX3RydWU6IGZpbGVzKCdtc2YyLXNvYy5jJykpDQoNCg==
+* Gerd Hoffmann (kraxel@redhat.com) wrote:
+> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+> optional support for logging to a memory buffer.  There is guest side
+> support -- for example in linux kernels v6.17+ -- to read that buffer.
+> But that might not helpful if your guest stops booting early enough that
+> guest tooling can not be used yet.  So host side support to read that
+> log buffer is a useful thing to have.
+> 
+> This patch implements both qmp and hmp monitor commands to read the
+> firmware log.
+> 
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+
+I'm OK with that, but I wonder if it would be better to have a command
+that wrote the buffer to a file rather than displaying it directly; I don't
+think we normally have anything else which outputs that much raw guest
+provided data directly.
+I assume when it goes wrong you end up with random unprintable junk in
+the buffer.
+
+Dave
+
+> ---
+>  hw/uefi/ovmf-log.c         | 237 +++++++++++++++++++++++++++++++++++++
+>  tests/qtest/qmp-cmd-test.c |   2 +
+>  hmp-commands-info.hx       |  13 ++
+>  hw/uefi/meson.build        |   2 +-
+>  qapi/machine.json          |  10 ++
+>  5 files changed, 263 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/uefi/ovmf-log.c
+> 
+> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+> new file mode 100644
+> index 000000000000..f7fdb1f6bcad
+> --- /dev/null
+> +++ b/hw/uefi/ovmf-log.c
+> @@ -0,0 +1,237 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * print ovmf debug log
+> + *
+> + * see OvmfPkg/Library/MemDebugLogLib/ in edk2
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qemu/target-info-qapi.h"
+> +#include "hw/boards.h"
+> +#include "hw/i386/x86.h"
+> +#include "hw/arm/virt.h"
+> +#include "system/dma.h"
+> +#include "monitor/hmp.h"
+> +#include "monitor/monitor.h"
+> +#include "qapi/error.h"
+> +#include "qapi/type-helpers.h"
+> +#include "qapi/qapi-commands-machine.h"
+> +
+> +
+> +/* ----------------------------------------------------------------------- */
+> +/* copy from edk2                                                          */
+> +
+> +#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
+> +#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
+> +
+> +/*
+> + * Mem Debug Log buffer header.
+> + * The Log buffer is circular. Only the most
+> + * recent messages are retained. Older messages
+> + * will be discarded if the buffer overflows.
+> + * The Debug Log starts just after the header.
+> + */
+> +typedef struct {
+> +    /*
+> +     * Magic values
+> +     * These fields are used by tools to locate the buffer in
+> +     * memory. These MUST be the first two fields of the structure.
+> +     * Use a 128 bit Magic to vastly reduce the possibility of
+> +     * a collision with random data in memory.
+> +     */
+> +    uint64_t             Magic1;
+> +    uint64_t             Magic2;
+> +    /*
+> +     * Header Size
+> +     * This MUST be the third field of the structure
+> +     */
+> +    uint64_t             HeaderSize;
+> +    /*
+> +     * Debug log size (minus header)
+> +     */
+> +    uint64_t             DebugLogSize;
+> +    /*
+> +     * edk2 uses this for locking access.
+> +     */
+> +    uint64_t             MemDebugLogLock;
+> +    /*
+> +     * Debug log head offset
+> +     */
+> +    uint64_t             DebugLogHeadOffset;
+> +    /*
+> +     *  Debug log tail offset
+> +     */
+> +    uint64_t             DebugLogTailOffset;
+> +    /*
+> +     * Flag to indicate if the buffer wrapped and was thus truncated.
+> +     */
+> +    uint64_t             Truncated;
+> +    /*
+> +     * Firmware Build Version (PcdFirmwareVersionString)
+> +     */
+> +    char                 FirmwareVersion[128];
+> +} MEM_DEBUG_LOG_HDR;
+> +
+> +
+> +/* ----------------------------------------------------------------------- */
+> +/* qemu monitor command                                                    */
+> +
+> +typedef struct {
+> +    uint64_t             Magic1;
+> +    uint64_t             Magic2;
+> +} MEM_DEBUG_LOG_MAGIC;
+> +
+> +/* find log buffer in guest memory by searching for the magic cookie */
+> +static dma_addr_t find_ovmf_log_range(dma_addr_t start, dma_addr_t end)
+> +{
+> +    static const MEM_DEBUG_LOG_MAGIC magic = {
+> +        .Magic1 = MEM_DEBUG_LOG_MAGIC1,
+> +        .Magic2 = MEM_DEBUG_LOG_MAGIC2,
+> +    };
+> +    MEM_DEBUG_LOG_MAGIC check;
+> +    dma_addr_t step = 4 * KiB;
+> +    dma_addr_t offset;
+> +
+> +    for (offset = start; offset < end; offset += step) {
+> +        if (dma_memory_read(&address_space_memory, offset,
+> +                            &check, sizeof(check),
+> +                            MEMTXATTRS_UNSPECIFIED)) {
+> +            /* dma error -> stop searching */
+> +            break;
+> +        }
+> +        if (memcmp(&magic, &check, sizeof(check)) == 0) {
+> +            return offset;
+> +        }
+> +    }
+> +    return -1;
+> +}
+> +
+> +static dma_addr_t find_ovmf_log(void)
+> +{
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+> +    dma_addr_t start, end, offset;
+> +
+> +    if (target_arch() == SYS_EMU_TARGET_X86_64 &&
+> +        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
+> +        X86MachineState *x86ms = X86_MACHINE(ms);
+> +
+> +        /* early log buffer, static allocation in memfd, sec + early pei */
+> +        offset = find_ovmf_log_range(0x800000, 0x900000);
+> +        if (offset != -1) {
+> +            return offset;
+> +        }
+> +
+> +        /*
+> +         * normal log buffer, dynamically allocated close to end of low memory,
+> +         * late pei + dxe phase
+> +         */
+> +        end = x86ms->below_4g_mem_size;
+> +        start = end - MIN(end, 128 * MiB);
+> +        offset = find_ovmf_log_range(start, end);
+> +        return offset;
+> +    }
+> +
+> +    if (target_arch() == SYS_EMU_TARGET_AARCH64 &&
+> +        object_dynamic_cast(OBJECT(ms), TYPE_VIRT_MACHINE)) {
+> +        /* edk2 ArmVirt firmware allocations are in the first 128 MB */
+> +        VirtMachineState *vms = VIRT_MACHINE(ms);
+> +        start = vms->memmap[VIRT_MEM].base;
+> +        end = start + 128 * MiB;
+> +        offset = find_ovmf_log_range(start, end);
+> +        return offset;
+> +    }
+> +
+> +    return -1;
+> +}
+> +
+> +static void handle_ovmf_log_range(GString *out,
+> +                                  dma_addr_t start,
+> +                                  dma_addr_t end,
+> +                                  Error **errp)
+> +{
+> +    g_autofree char *buf = NULL;
+> +
+> +    if (start > end) {
+> +        return;
+> +    }
+> +
+> +    buf = g_malloc(end - start + 1);
+> +    if (dma_memory_read(&address_space_memory, start,
+> +                        buf, end - start,
+> +                        MEMTXATTRS_UNSPECIFIED)) {
+> +        error_setg(errp, "firmware log: buffer read error");
+> +        return;
+> +    }
+> +
+> +    buf[end - start] = 0;
+> +    g_string_append_printf(out, "%s", buf);
+> +}
+> +
+> +HumanReadableText *qmp_query_ovmf_log(Error **errp)
+> +{
+> +    MEM_DEBUG_LOG_HDR header;
+> +    dma_addr_t offset, base;
+> +    g_autoptr(GString) out = g_string_new("");
+> +
+> +    offset = find_ovmf_log();
+> +    if (offset == -1) {
+> +        error_setg(errp, "firmware log: not found");
+> +        goto err;
+> +    }
+> +
+> +    if (dma_memory_read(&address_space_memory, offset,
+> +                        &header, sizeof(header),
+> +                        MEMTXATTRS_UNSPECIFIED)) {
+> +        error_setg(errp, "firmware log: header read error");
+> +        goto err;
+> +    }
+> +
+> +    if (header.DebugLogSize > MiB) {
+> +        /* default size is 128k (32 pages), allow up to 1M */
+> +        error_setg(errp, "firmware log: log buffer is too big");
+> +        goto err;
+> +    }
+> +
+> +    if (header.DebugLogHeadOffset > header.DebugLogSize ||
+> +        header.DebugLogTailOffset > header.DebugLogSize) {
+> +        error_setg(errp, "firmware log: invalid header");
+> +        goto err;
+> +    }
+> +
+> +    g_string_append_printf(out, "firmware log: version \"%s\"\n",
+> +                           header.FirmwareVersion);
+> +
+> +    base = offset + header.HeaderSize;
+> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+> +        /* wrap around */
+> +        handle_ovmf_log_range(out,
+> +                              base + header.DebugLogHeadOffset,
+> +                              base + header.DebugLogSize,
+> +                              errp);
+> +        if (*errp) {
+> +            goto err;
+> +        }
+> +        handle_ovmf_log_range(out,
+> +                              base + 0,
+> +                              base + header.DebugLogTailOffset,
+> +                              errp);
+> +        if (*errp) {
+> +            goto err;
+> +        }
+> +    } else {
+> +        handle_ovmf_log_range(out,
+> +                              base + header.DebugLogHeadOffset,
+> +                              base + header.DebugLogTailOffset,
+> +                              errp);
+> +        if (*errp) {
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    return human_readable_text_from_str(out);
+> +
+> +err:
+> +    return NULL;
+> +}
+> diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+> index cf718761861d..ffdb7e979e0f 100644
+> --- a/tests/qtest/qmp-cmd-test.c
+> +++ b/tests/qtest/qmp-cmd-test.c
+> @@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
+>          /* Only valid with accel=tcg */
+>          { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+>          { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
+> +        /* requires firmware with memory buffer logging support */
+> +        { "query-ovmf-log", ERROR_CLASS_GENERIC_ERROR },
+>          { NULL, -1 }
+>      };
+>      int i;
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 6142f60e7b16..eca0614903d1 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -977,3 +977,16 @@ SRST
+>    ``info cryptodev``
+>      Show the crypto devices.
+>  ERST
+> +
+> +    {
+> +        .name       = "ovmf-log",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "show the ovmf debug log",
+> +        .cmd_info_hrt = qmp_query_ovmf_log,
+> +    },
+> +
+> +SRST
+> +  ``info ovmf-log``
+> +    Show the ovmf debug log.
+> +ERST
+> diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
+> index 91eb95f89e6d..c8f38dfae247 100644
+> --- a/hw/uefi/meson.build
+> +++ b/hw/uefi/meson.build
+> @@ -1,4 +1,4 @@
+> -system_ss.add(files('hardware-info.c'))
+> +system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
+>  
+>  uefi_vars_ss = ss.source_set()
+>  if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 038eab281c78..329034035029 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1839,6 +1839,16 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ]}
+>  
+> +##
+> +# @query-ovmf-log:
+> +#
+> +# Find firmware memory log buffer in guest memory, return content.
+> +#
+> +# Since: 10.2
+> +##
+> +{ 'command': 'query-ovmf-log',
+> +  'returns': 'HumanReadableText' }
+> +
+>  ##
+>  # @dump-skeys:
+>  #
+> -- 
+> 2.51.0
+> 
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
