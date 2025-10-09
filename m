@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DA45CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2B2CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6x9q-0006wj-Q2; Thu, 09 Oct 2025 16:22:38 -0400
+	id 1v6xA4-00074L-60; Thu, 09 Oct 2025 16:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6x9b-0006qM-O8
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:22:26 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6x9x-0006zV-Cw
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:22:45 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6x9Y-0007mZ-0G
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:22:23 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-3ece1102998so826659f8f.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 13:22:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6x9u-0007nh-D9
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:22:44 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-4060b4b1200so123648f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 13:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760041337; x=1760646137; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760041360; x=1760646160; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aKSswabPU/8R3lhuB6jBAxLqRgzybmIf+RPVJzc6u9A=;
- b=OKDtShxaMIDaCdElJ6mnG/v0rNYYJybzi+Ix2R551MyuDaHnK75p3dV0V+Wa038WPo
- 355C7EtE7RUdOs/ZVqG6GpH3X5Vg51TFp7LwBB9ryJCZtJ+8v6oVlnlqno92bFq/BEVm
- DBR5xFi2h406kDSatrn8+hLEj3zyMe4fnyMFyy7ZBhyZ7L4ZAx8OvfSCPJXklYRctuWS
- nHCDxAOMOkrC0ddTetWz75op2+Qt+13GhIKd5Bfvic0UjMq28qO97Zp+VeCeDQamjcM4
- PP03LdiNe3UvNSSRL3OMCK8/8igzDHWjoEkSOROXz4TFlpc9IeYwOnEB9JFKtAhlqguk
- rm+Q==
+ bh=gQrCik6YlkH2KQmaQufDJvH5ooAj07D854A632oiWpo=;
+ b=fI06GbkfJEhFrBbVuw96k8Q2qM67hX3plNS0xp+eTDrKgHgrihN7u5dCUcu1fGmaJa
+ JQ7LZTu7cYPZktXsDKwTTKr+XOfWquRR1iU9WvRLLAr8pJ3KVbx3wRC30AHAkQIvVDkV
+ G1HzSUB3RkpxgyqV7ln0YxEmOjcWojkabTCsjIxvygYh0ZXKyQ0O1snL2Lmu8vdVj9j6
+ VMZ3iYBK2Lxid/SZ1YiuJnbe8kkgT0ZIAZYHWElW+LHPyvCJ6FI56keOln8uZwhbqfSV
+ q1DbLXhHZFRo74u+VBTPccFwDfEmKwKB7A4+WbLQHfyO8bYXlnCKkb/ne4613atgmsYn
+ alvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760041337; x=1760646137;
+ d=1e100.net; s=20230601; t=1760041360; x=1760646160;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aKSswabPU/8R3lhuB6jBAxLqRgzybmIf+RPVJzc6u9A=;
- b=Ey/hlpx1SWel0Nmkm028FWQqYTcG9P7fQF31pgOfRd404OF3CMSbeLABrm2W2wFFlC
- GlrcxkMRgx099fotkaurjvhnI+7IbTsOO/+ZOqP+nIkdVk5MNFftSOfh3u53Z9ioR0b3
- PyOyBDUM0QFkXNdNLtAkHaBcvsnUL3nv+/V4AajpUn63yZPk92FBWzarSgCeQaC5cjRL
- jJgydvou5UnndVJ26QQ5KMIqioODm8dvF4IweITcoc1hY/BWI7I/VTzceDi9OvKCU7cc
- EgjNcJLdaE7HGbmxLytYAa3Kou/xXB1Blhpjf8a+cJaBBjM3iJ0/SSvziQftwDzp+GW4
- zylg==
+ bh=gQrCik6YlkH2KQmaQufDJvH5ooAj07D854A632oiWpo=;
+ b=QlCcTPjO9DXfGaaBQun/sd+pVWXK2CD+bNL3yjQt/OSiWPuI+Oj9ngD0nvQh9Zesq6
+ GZ2oVflzKUfgrgsOj5Xq69DncbAb3PS5FLpzfN7snBc5a4Z0i4gwOO1HCZZfJc18Qbk9
+ Ch0dRHW3ObCt+AjQnSrh7FnJjfGOF+08EZ1ETfsLZTraMhPkT1GiSbOTgfrlpw5ajbek
+ 77xgsVHw+h0rwoWmMRHQGFS6Z9N4vDQ6aM745BMxamqxsoxJeamqoqiPZ+XdWEQLDPNg
+ 2Qr5q+GM3Jizu5eavv56pUt66XGe1wvQNrJnG0wq7ZX6ESX1oc8NwtBVjKfsFHE+JeGg
+ 76nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWU1GsD3axGCdR9fvsc0Lttie4nkwuFRPmtWbsPOJyXpzn7zmXXv/a8Ls2Z44goXwnEgM5vY7tq+b9k@nongnu.org
-X-Gm-Message-State: AOJu0Yz6Sk+95/o9noAzCnExmf+aHMs65wUAZW+lGHBq+hI6ZhrjW/Rs
- zH7twlGh9FjRzvmBfUJJxUSozy2xxZFLwqFs2CTx6T+/UP6f+zEBsz0qRvPsoqzO0wQ=
-X-Gm-Gg: ASbGncs6kKIMn1RKRgDI9tGtVCRsksRq6EXXjBEdlhU+JxqjlQQY2jXka6uVH8C7tci
- stQKgWkxM2elF35Xz85Z8nte4ufAhratGIYa4IzAc67dQa7GOwU6JMripxVrFUdRyp8ckjPEQbv
- o95xkz6U7new6CYnc89FSgh4db+qLlymR8xfcYQavvR/T3aiR9P2DLNca4K5J+580G/r7iwf3mK
- 2oC4CypHnoVhRf9TaqR/D1ht+oK3PyzeOmmAJOg9mwYB5179mLMRh6a3M0Yoe3SrtT08bO5Hhim
- P0mv20JNSCepyg0zAL7aTnprQcBDDjD3w5DTuRM3KWR6eLETiE/d2ZFoAI9KbjMAcuBnjLqLHRn
- qSrkd7P+U3WDERQbOCiIHkJMpA8xnuEekVv2k02qJi2tNAeTrkSzrog6z7Cha3xer4k9MnuxKex
- /0tJv5g+Mum9OC23ckf6Q6d5usRF/P
-X-Google-Smtp-Source: AGHT+IF9y7060pmQ3TIL5BAGiH+K9B7/YIYtPFzNLvWdRSHHjAd4h8EFbhzrbZt0eAgPQ54R5l3ffA==
-X-Received: by 2002:a05:6000:310a:b0:414:a552:86b1 with SMTP id
- ffacd0b85a97d-4266e8e48ccmr5712641f8f.63.1760041336945; 
- Thu, 09 Oct 2025 13:22:16 -0700 (PDT)
+ AJvYcCVlAkSWgBjURSyviH3u4isG+GzxSAHZwMDRUjb28Z1FWhDfNJr82V2ojHzKh0bjasDHe5p5velP6wAz@nongnu.org
+X-Gm-Message-State: AOJu0YzGiPPAxqwUiBnBYviroylpcXkOzoAMscraaHFemAo+UxIDcYAG
+ XDnEleMSssIE0ZTM+VIXKnnFM6E/23Ejk1KYIlUc2vmi0Lca9s673vu3F+69bD67ZYU=
+X-Gm-Gg: ASbGncuqRqnQ4A4MnPLcKxJ8NxE+y0DwKgMRQJ74kNkJjqfOz1ZNsS9FDAUAgEf3IqK
+ XrdFPDiCPrbXv7vBnF/AX87ae+EtDSA9ZX8nXh/uuFcVbvmsKf5pgdN4RAi/GoJPWBvb4Kl3u6q
+ kqsGBrpjemGrOsOBLe/gWmENorpr1TZ2V49oMMvZZB4hVCaiemvLO4ObwFAwfettWeCSff59dDm
+ hCtotUojuu0JUklN/njV5MJTBnUagRuxKEbe+RHiFMrjDi3HXsyeWaiB/vaAisf/wXn0YF6DF8T
+ Fn5ahXege/ph+W3d3PgFtLSDhrNC26gLD740qEaJIWnqvWLK1VnQgRCdna7L7s9on/1rxUffQbw
+ tfxXWI4ptFtG9PgbQBemZVak61P/dk1lKz32TI4eOltRe3LX9e/+XWPB6bFcT9OlZN1vqX7LYk7
+ GQ7WF+o+RCKLzyhbFK5V/6DCJS2EPD
+X-Google-Smtp-Source: AGHT+IFJM22AW3bm8qfUk3TpElk3yNVDwV07+/LqFCc/fqnzT7BGf2Rw/CQTYBRGOoGLhv2Uf8q/Qw==
+X-Received: by 2002:a5d:588a:0:b0:3ec:4e41:fd86 with SMTP id
+ ffacd0b85a97d-4267260e213mr5444219f8f.50.1760041360568; 
+ Thu, 09 Oct 2025 13:22:40 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e82dfsm625224f8f.52.2025.10.09.13.22.15
+ ffacd0b85a97d-426ce5cfe74sm598894f8f.35.2025.10.09.13.22.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 13:22:16 -0700 (PDT)
-Message-ID: <e61d9cbd-62eb-43f7-ad82-904ae4ba9ee0@linaro.org>
-Date: Thu, 9 Oct 2025 22:22:15 +0200
+ Thu, 09 Oct 2025 13:22:39 -0700 (PDT)
+Message-ID: <9173ed6e-c952-457a-9f6c-ab0e827199f7@linaro.org>
+Date: Thu, 9 Oct 2025 22:22:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] linux-user/hexagon: use abi_ulong
+Subject: Re: [PATCH v2 3/4] linux-user/hexagon: Use an array for GPRs
 Content-Language: en-US
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, matheus.bernardino@oss.qualcomm.com,
@@ -77,13 +77,13 @@ Cc: richard.henderson@linaro.org, matheus.bernardino@oss.qualcomm.com,
  ltaylorsimpson@gmail.com, alex.bennee@linaro.org, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, Laurent Vivier <laurent@vivier.eu>
 References: <20251009195943.438454-1-brian.cain@oss.qualcomm.com>
- <20251009195943.438454-3-brian.cain@oss.qualcomm.com>
+ <20251009195943.438454-4-brian.cain@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251009195943.438454-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20251009195943.438454-4-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,34 +107,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/10/25 21:59, Brian Cain wrote:
-> Change the user_regs_struct to use abi_ulong instead of
-> target_ulong.
-> 
-> Link: https://lore.kernel.org/qemu-devel/7bf3d8c5-df07-4cbd-ba62-4c7246a5f96b@linaro.org/
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Link: https://lore.kernel.org/qemu-devel/023e01dc389c$faf84320$f0e8c960$@gmail.com/
+> Suggested-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   linux-user/hexagon/signal.c | 52 ++++++++++++++++++-------------------
->   1 file changed, 26 insertions(+), 26 deletions(-)
-> 
-> diff --git a/linux-user/hexagon/signal.c b/linux-user/hexagon/signal.c
-> index 2847952216..e5514b2bec 100644
-> --- a/linux-user/hexagon/signal.c
-> +++ b/linux-user/hexagon/signal.c
-> @@ -24,30 +24,30 @@
->   #include "linux-user/trace.h"
->   
->   struct target_user_regs_struct {
-> -    target_ulong r0,  r1,  r2,  r3;
-> -    target_ulong r4,  r5,  r6,  r7;
-> -    target_ulong r8,  r9, r10, r11;
-> -    target_ulong r12, r13, r14, r15;
-> -    target_ulong r16, r17, r18, r19;
-> -    target_ulong r20, r21, r22, r23;
-> -    target_ulong r24, r25, r26, r27;
-> -    target_ulong r28, r29, r30, r31;
-
-Yay!
+>   linux-user/hexagon/signal.c | 79 ++++---------------------------------
+>   1 file changed, 7 insertions(+), 72 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
