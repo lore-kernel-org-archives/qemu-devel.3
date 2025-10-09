@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A703CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0FECCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6lR4-0008WU-M5; Thu, 09 Oct 2025 03:51:38 -0400
+	id 1v6lR5-000051-5x; Thu, 09 Oct 2025 03:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lR1-0008VT-7w
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:35 -0400
+ id 1v6lR2-0008WE-9q
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lQt-0004R4-VE
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:34 -0400
+ id 1v6lQz-0004Sr-3O
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759996281;
+ s=mimecast20190719; t=1759996291;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=011a463v1dGyOKFiUiQNsEioHBlxgPsH4SJpYihX+aE=;
- b=FP272V5wBGyYUaMTHUA569UQJ4D8Zhr6Y3Wu1ri1IqnsM6qkT3KugQT2yySlUONhOU7fTt
- G+KmdYzDyAlMIS7oPt0AIlJwf8cfc2udxs7px2Qx+zdSYQyzOs51ok/YozO5a0kCBjILt3
- A/c442PhwLeW8kfh16D7uww7KQ2L86E=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E6w7VzOtHR3BZVmb/GNxbKkCwO8qv7ohv9fFtyVvBzo=;
+ b=fF3u0NcF/L+AMWLWLbCHLEvKxB6a7MlLsQQWQgDbs4ZFrXRNiBiwQhSjrdmQDJJ+6PpO8i
+ I/3BKYjrokVymYYGylRYqy57vfdkO7KCrumVrF1zCuLQmWliaPoFLEaypDcVFLiiJFe559
+ LDfzw+mMag51G5z2v+p3qRy2xWNvIMU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-kuK76CgJMcGP2fzHODBE0g-1; Thu, 09 Oct 2025 03:51:15 -0400
-X-MC-Unique: kuK76CgJMcGP2fzHODBE0g-1
-X-Mimecast-MFC-AGG-ID: kuK76CgJMcGP2fzHODBE0g_1759996271
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3ee13e43dd9so433447f8f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:14 -0700 (PDT)
+ us-mta-639-nhAa99paNgCdjevK9p0Icw-1; Thu, 09 Oct 2025 03:51:30 -0400
+X-MC-Unique: nhAa99paNgCdjevK9p0Icw-1
+X-Mimecast-MFC-AGG-ID: nhAa99paNgCdjevK9p0Icw_1759996289
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e3ed6540fso4538915e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759996270; x=1760601070;
+ d=1e100.net; s=20230601; t=1759996288; x=1760601088;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=011a463v1dGyOKFiUiQNsEioHBlxgPsH4SJpYihX+aE=;
- b=C58sz5brJQ7ya8jhYqyLthzLyEWTm6NMoPzPxTPcD7/MJRMMTNQklBZwFphQaonMR2
- LUHn314DRvqtc5f08jEZsT0WSuX/bhgneYDYHXpi3o4bEJ+rg47LgDsbMkTe6RYMB06j
- hOCltwlsIDJNhKfN1DSN8svKIvXvtZ7aKF6f5V/d57PF4HreXJp9pjL1B/nSp0J8eoCt
- mVxhBreIn8Dre7S8hcmJmwhrPWk7a48cXMQZXqGVxA6brcU9afFiJs0FMjmeqKCrmL9W
- 6pA13HZxMSQOb+OqcwRHhsGaot6hpnjx7By5uRCpEQwOZ59/uQ2tjR/venNO2X7iW3iR
- u23A==
-X-Gm-Message-State: AOJu0YxTZryvl18ntE+iBR9jqE+sAFc8vIGpOutJVfXkjOmqjZFk2EWM
- zg6C4GWTyk2YKG0m7LE+8d0KPFjNLcdMj3MNkF/jNzV17D2BdgMIKYLsDb7pGDbXom/Tu52+2sc
- R94baGDOpdvEntORiw8iJyCemcXHDqaiQxqvJge8klSNvilZqMYWgwxHZvG2wj+phpsKohNyCQc
- H+LpCgxRKQ3lqsTXG6WUqq87zbb64B3tAr7HGt3TuoYy0=
-X-Gm-Gg: ASbGncvYsC3m5pLFJC7FkYlJSw53p6invLzYi0lsYYxzOP92kMaW+jJ1vXAlz4nqvge
- wXBNuYx5ucLn7ygPJ/6MW9mc7TCVX0YwYbV5kMm/jz7z5LLhxnyCmWWDO1iEdB8Zc8cd95SF8v3
- EYWeju+5GawU4ry8f9pVPM10zU8RJqqPllpE4roIlCTPh101WBs8y7svMoZy+Vx63RYPFjDEya3
- SF/ABEz3Eo/NEZJEcc927wYWj2cDS7R6m14LnAw3QcKI4jD5xgkOo6Z/Bw/NxiGKQ2cKgmizrIP
- N5oFD5yCyJDECM2Wkc7RFTgKwJXSY/eTJ/7Vl8LS2E2reYR+uuj9J1J488w4KXXEwAABq4nv4QN
- dK3f09ZuY7KH3tC3H8mUhYz0LZY9c7/LPvCNf5TouIktf+z5k
-X-Received: by 2002:a05:6000:2289:b0:3ec:dd2f:eeb8 with SMTP id
- ffacd0b85a97d-4266e8e6e5bmr3986789f8f.62.1759996269836; 
- Thu, 09 Oct 2025 00:51:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiVOo4Adpp90D8E3NCR16dXXLIfwzrHxaEqIGYPIOhHQ3slyw776nG3DTi9lHnbCxfH2RSVQ==
-X-Received: by 2002:a05:6000:2289:b0:3ec:dd2f:eeb8 with SMTP id
- ffacd0b85a97d-4266e8e6e5bmr3986764f8f.62.1759996269330; 
- Thu, 09 Oct 2025 00:51:09 -0700 (PDT)
+ bh=E6w7VzOtHR3BZVmb/GNxbKkCwO8qv7ohv9fFtyVvBzo=;
+ b=bH2dCTFZrI6AzAxbjpeeKhUkKYohGbEnotJg+SLYSc9aql4gid6vo0yyLYKLi3dS1J
+ PxCTsdHBFHRdsFRNQdkbK0spYQhUEk5GFGaDGsuO1OhfFI3BJ6nRncd+asqdqoOwpI1n
+ IvKxyeek++BtadaAI50HSjKQMvZ5pgKA7LegEUsKA059eB/dv4GNf26IVhziG0BGefIy
+ MZVl0R9yAvXs33QFcWRpLV7ET4LZSmRHZYGdWw0y/dzr4mInfSJn+2cwbJAgyetX126X
+ YibyjrVlAb2N0129NvNKk0LS7wADB1sxaTF7c0KSp+jU77SnTwAW5Vq6n/9e3oo74QRz
+ h1bw==
+X-Gm-Message-State: AOJu0Yzu544ACCRTLAs6ejSanNApmYeeGh9EHje6KzDXP+nnley7sb/G
+ /nbysaAE8J8SY0vUmGysmHaLljG2hmEjwCQxfLUXG7VZz3gqxn8+d3Nh92nuOzb5d+UeFaW7Eaq
+ A6fE/O7YK499Ita7uEyUKbT6sGWVA32qY1OU/khIDX/AvMelUy0sHeVKbR4cYbUIDmoZ4PLP7ql
+ UERnAxmi1RlbH4vX2KR1JGz587PjFfG120nS9hI96s1C4=
+X-Gm-Gg: ASbGncvlfKxEk4Pa9MWGIF8Il+iMS+qqNENRy0/NrOlBUYyy8LnrPanIaV/2Rf7GG7X
+ 5Bw062SRGa+fXcvk8nWg/b7WFUWoowNaXMDH0nG96y06FDZ7W9sWH9x+oDSca/qOB4+5HfBc/Tt
+ KUKqDi4wP28ve55os63dYMLQiENoI9P5ACGiJR31uPaLaYvxIiwRyRA9NB4wR6duPMJH8sTg+9j
+ T9YniX2J/iuaeIUK0AIZi33FAQj1ofZnjV0nQ1pRpMt5AsfnqdO5OWBu4Qm2wWjdvFcFWHiehXA
+ tZ62pMjAQNy3iafx7KhdlzqNxghZHap/53lMegPJR/MizQz/iIYnBCms186NMlJ82uLXZHmOlGC
+ Vt8e+TuLG8lUc4zVS8JZ4GKMYZytwG8dZw4N87WeQ1ln98oF+
+X-Received: by 2002:a05:600c:6a07:b0:46e:74bb:6bd with SMTP id
+ 5b1f17b1804b1-46fa2952c89mr55072155e9.4.1759996288557; 
+ Thu, 09 Oct 2025 00:51:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFuKEhRlcHDyUNZBk8Ba7Kh4nkdjuEb3sxsQGHMtqJXZJgKXBD4e7miOQaZD/nsjWlgQvKPnA==
+X-Received: by 2002:a05:600c:6a07:b0:46e:74bb:6bd with SMTP id
+ 5b1f17b1804b1-46fa2952c89mr55071985e9.4.1759996288058; 
+ Thu, 09 Oct 2025 00:51:28 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.36.217])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9c07992sm82926675e9.5.2025.10.09.00.51.08
+ 5b1f17b1804b1-46faf17b82bsm33438305e9.15.2025.10.09.00.51.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Oct 2025 00:51:08 -0700 (PDT)
+ Thu, 09 Oct 2025 00:51:26 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 19/35] target/i386/mshv: Implement mshv_store_regs()
-Date: Thu,  9 Oct 2025 09:50:09 +0200
-Message-ID: <20251009075026.505715-20-pbonzini@redhat.com>
+Subject: [PULL 27/35] target/i386/mshv: Write MSRs to the hypervisor
+Date: Thu,  9 Oct 2025 09:50:17 +0200
+Message-ID: <20251009075026.505715-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009075026.505715-1-pbonzini@redhat.com>
 References: <20251009075026.505715-1-pbonzini@redhat.com>
@@ -111,177 +111,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Add support for writing general-purpose registers to MSHV vCPUs
-during initialization or migration using the MSHV register interface. A
-generic set_register call is introduced to abstract the HV call over
-the various register types.
+Push current model-specific register (MSR) values to MSHV's vCPUs as
+part of setting state to the hypervisor.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250916164847.77883-14-magnuskulke@linux.microsoft.com
-[mshv.h/mshv_int.h split. - Paolo]
+Link: https://lore.kernel.org/r/20250916164847.77883-22-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv.h       |   1 +
- include/system/mshv_int.h   |   2 +
- target/i386/mshv/mshv-cpu.c | 116 +++++++++++++++++++++++++++++++++++-
- 3 files changed, 117 insertions(+), 2 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 68 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 66 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index bbc42f4dc3a..8b1fc20c80d 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -18,6 +18,7 @@
- #include "qemu/accel.h"
- #include "hw/hyperv/hyperv-proto.h"
- #include "hw/hyperv/hvhdk.h"
-+#include "hw/hyperv/hvgdk_mini.h"
- #include "qapi/qapi-types-common.h"
- #include "system/memory.h"
- #include "accel/accel-ops.h"
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index fb80f69772b..731841af929 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -61,6 +61,8 @@ void mshv_remove_vcpu(int vm_fd, int cpu_fd);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_load_regs(CPUState *cpu);
- int mshv_store_regs(CPUState *cpu);
-+int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-+                          size_t n_regs);
- int mshv_arch_put_registers(const CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 5069ab7a22f..9ead03ca2d8 100644
+index 424ebdb1228..33a3ce8b110 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -32,12 +32,124 @@
+@@ -998,6 +998,65 @@ static int put_regs(const CPUState *cpu)
+     return 0;
+ }
  
- #include <sys/ioctl.h>
- 
-+static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
-+    HV_X64_REGISTER_RAX,
-+    HV_X64_REGISTER_RBX,
-+    HV_X64_REGISTER_RCX,
-+    HV_X64_REGISTER_RDX,
-+    HV_X64_REGISTER_RSI,
-+    HV_X64_REGISTER_RDI,
-+    HV_X64_REGISTER_RSP,
-+    HV_X64_REGISTER_RBP,
-+    HV_X64_REGISTER_R8,
-+    HV_X64_REGISTER_R9,
-+    HV_X64_REGISTER_R10,
-+    HV_X64_REGISTER_R11,
-+    HV_X64_REGISTER_R12,
-+    HV_X64_REGISTER_R13,
-+    HV_X64_REGISTER_R14,
-+    HV_X64_REGISTER_R15,
-+    HV_X64_REGISTER_RIP,
-+    HV_X64_REGISTER_RFLAGS,
++struct MsrPair {
++    uint32_t index;
++    uint64_t value;
 +};
 +
-+int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-+                          size_t n_regs)
++static int put_msrs(const CPUState *cpu)
 +{
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vp_index = cpu->cpu_index;
-+    size_t in_sz, assocs_sz;
-+    hv_input_set_vp_registers *in;
-+    struct mshv_root_hvcall args = {0};
-+    int ret;
-+
-+    /* find out the size of the struct w/ a flexible array at the tail */
-+    assocs_sz = n_regs * sizeof(hv_register_assoc);
-+    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
-+
-+    /* fill the input struct */
-+    in = g_malloc0(in_sz);
-+    in->vp_index = vp_index;
-+    memcpy(in->elements, assocs, assocs_sz);
-+
-+    /* create the hvcall envelope */
-+    args.code = HVCALL_SET_VP_REGISTERS;
-+    args.in_sz = in_sz;
-+    args.in_ptr = (uint64_t) in;
-+    args.reps = (uint16_t) n_regs;
-+
-+    /* perform the call */
-+    ret = mshv_hvcall(cpu_fd, &args);
-+    g_free(in);
-+    if (ret < 0) {
-+        error_report("Failed to set registers");
-+        return -1;
-+    }
-+
-+    /* assert we set all registers */
-+    if (args.reps != n_regs) {
-+        error_report("Failed to set registers: expected %zu elements"
-+                     ", got %u", n_regs, args.reps);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int set_standard_regs(const CPUState *cpu)
-+{
++    int ret = 0;
 +    X86CPU *x86cpu = X86_CPU(cpu);
 +    CPUX86State *env = &x86cpu->env;
-+    hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)];
-+    int ret;
-+    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
++    MshvMsrEntries *msrs = g_malloc0(sizeof(MshvMsrEntries));
 +
-+    /* set names */
-+    for (size_t i = 0; i < ARRAY_SIZE(STANDARD_REGISTER_NAMES); i++) {
-+        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-+    }
-+    assocs[0].value.reg64 = env->regs[R_EAX];
-+    assocs[1].value.reg64 = env->regs[R_EBX];
-+    assocs[2].value.reg64 = env->regs[R_ECX];
-+    assocs[3].value.reg64 = env->regs[R_EDX];
-+    assocs[4].value.reg64 = env->regs[R_ESI];
-+    assocs[5].value.reg64 = env->regs[R_EDI];
-+    assocs[6].value.reg64 = env->regs[R_ESP];
-+    assocs[7].value.reg64 = env->regs[R_EBP];
-+    assocs[8].value.reg64 = env->regs[R_R8];
-+    assocs[9].value.reg64 = env->regs[R_R9];
-+    assocs[10].value.reg64 = env->regs[R_R10];
-+    assocs[11].value.reg64 = env->regs[R_R11];
-+    assocs[12].value.reg64 = env->regs[R_R12];
-+    assocs[13].value.reg64 = env->regs[R_R13];
-+    assocs[14].value.reg64 = env->regs[R_R14];
-+    assocs[15].value.reg64 = env->regs[R_R15];
-+    assocs[16].value.reg64 = env->eip;
-+    lflags_to_rflags(env);
-+    assocs[17].value.reg64 = env->eflags;
++    struct MsrPair pairs[] = {
++        { MSR_IA32_SYSENTER_CS,    env->sysenter_cs },
++        { MSR_IA32_SYSENTER_ESP,   env->sysenter_esp },
++        { MSR_IA32_SYSENTER_EIP,   env->sysenter_eip },
++        { MSR_EFER,                env->efer },
++        { MSR_PAT,                 env->pat },
++        { MSR_STAR,                env->star },
++        { MSR_CSTAR,               env->cstar },
++        { MSR_LSTAR,               env->lstar },
++        { MSR_KERNELGSBASE,        env->kernelgsbase },
++        { MSR_FMASK,               env->fmask },
++        { MSR_MTRRdefType,         env->mtrr_deftype },
++        { MSR_VM_HSAVE_PA,         env->vm_hsave },
++        { MSR_SMI_COUNT,           env->msr_smi_count },
++        { MSR_IA32_PKRS,           env->pkrs },
++        { MSR_IA32_BNDCFGS,        env->msr_bndcfgs },
++        { MSR_IA32_XSS,            env->xss },
++        { MSR_IA32_UMWAIT_CONTROL, env->umwait },
++        { MSR_IA32_TSX_CTRL,       env->tsx_ctrl },
++        { MSR_AMD64_TSC_RATIO,     env->amd_tsc_scale_msr },
++        { MSR_TSC_AUX,             env->tsc_aux },
++        { MSR_TSC_ADJUST,          env->tsc_adjust },
++        { MSR_IA32_SMBASE,         env->smbase },
++        { MSR_IA32_SPEC_CTRL,      env->spec_ctrl },
++        { MSR_VIRT_SSBD,           env->virt_ssbd },
++    };
 +
-+    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
-+    if (ret < 0) {
-+        error_report("failed to set standard registers");
-+        return -errno;
++    if (ARRAY_SIZE(pairs) > MSHV_MSR_ENTRIES_COUNT) {
++        error_report("MSR entries exceed maximum size");
++        g_free(msrs);
++        return -1;
 +    }
-+    return 0;
++
++    for (size_t i = 0; i < ARRAY_SIZE(pairs); i++) {
++        MshvMsrEntry *entry = &msrs->entries[i];
++        entry->index = pairs[i].index;
++        entry->reserved = 0;
++        entry->data = pairs[i].value;
++        msrs->nmsrs++;
++    }
++
++    ret = mshv_configure_msr(cpu, &msrs->entries[0], msrs->nmsrs);
++    g_free(msrs);
++    return ret;
 +}
 +
- int mshv_store_regs(CPUState *cpu)
++
+ int mshv_arch_put_registers(const CPUState *cpu)
  {
+     int ret;
+@@ -1008,8 +1067,13 @@ int mshv_arch_put_registers(const CPUState *cpu)
+         return -1;
+     }
+ 
 -    error_report("unimplemented");
 -    abort();
-+    int ret;
-+
-+    ret = set_standard_regs(cpu);
++    ret = put_msrs(cpu);
 +    if (ret < 0) {
-+        error_report("Failed to store standard registers");
++        error_report("Failed to put msrs");
 +        return -1;
 +    }
 +
 +    return 0;
  }
  
-+
- int mshv_load_regs(CPUState *cpu)
- {
-     error_report("unimplemented");
+ void mshv_arch_amend_proc_features(
 -- 
 2.51.0
 
