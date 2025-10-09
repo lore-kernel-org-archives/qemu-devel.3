@@ -4,149 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD1BCCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 12:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6EC7CCD185
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 12:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6pzJ-0007n4-3P; Thu, 09 Oct 2025 08:43:17 -0400
+	id 1v6q7Z-0002vL-31; Thu, 09 Oct 2025 08:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6pzF-0007mC-7f
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:43:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v6q7U-0002v8-6P
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:51:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v6pzB-0004UP-7a
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:43:11 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v6q7O-0005fi-Np
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 08:51:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760013784;
+ s=mimecast20190719; t=1760014293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/vmtdZcdvLK513x17z5yo895Ry80XRNN/mc17JxcCw0=;
- b=cfprJgYiD/2MvnJ3sx9V7S1XVMyvz/+AxTVX9xQuHg98OyaThIwn+dvM36VflGo2gzHc82
- bygNaG2hovfmka+SPs5Wpuoy685E60Hxvcf60ykJZZBzvl563dwClivexWF7QQVuQvIUsE
- GfRXrnb2s2FlnGxcOkvqqQwsbL3msVs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=zol2J4ObuodIwQfQ/7QAzSmiVw6roWxQLGHZuPMy4wU=;
+ b=Xc2AecuypNQ1hN4/5NeHlhp0wOtw+0afSUjNk+TRhohbKW4ZC5kb/gzqFCSkBBsEFefTTL
+ e5jXCl5SxfvTVA9k7VfLKrmvOgVbRkUKe0Ra/7Bk66zua7sZkXJb39YpZA2fQ96nAzzmjP
+ Jg7z8Z9l9Vwz57w6VQEUbjEGKdM4amo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-GL2VzCa5PvmVUCRW-yisVg-1; Thu, 09 Oct 2025 08:43:03 -0400
-X-MC-Unique: GL2VzCa5PvmVUCRW-yisVg-1
-X-Mimecast-MFC-AGG-ID: GL2VzCa5PvmVUCRW-yisVg_1760013782
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e36f9c651so6280935e9.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 05:43:03 -0700 (PDT)
+ us-mta-644-o13U-WIOO2-jsfp1ZpaORA-1; Thu, 09 Oct 2025 08:51:31 -0400
+X-MC-Unique: o13U-WIOO2-jsfp1ZpaORA-1
+X-Mimecast-MFC-AGG-ID: o13U-WIOO2-jsfp1ZpaORA_1760014290
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ecdd80ea44so931026f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 05:51:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760013782; x=1760618582;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/vmtdZcdvLK513x17z5yo895Ry80XRNN/mc17JxcCw0=;
- b=DMPx4fv1Cwn+3AbXAzUdv3Rw6sVPSZ/JXgwNIAfJoeq67lWDXLe2cUPNv4LvxlDeY8
- kGx6tVvfhcaQMO2ZTjCqWnIxKTTF/wYbJo4HZKAAe/ah4LMzybF6LK1C6oABTwRYJeem
- bj2yh7i0nHP5jrjmswGgKzgdyUC2jbQ8/K95qNG9QWCD6SnSw0q/ezzT8SykffWThLWw
- 4C/akdbzJ2ScpYpk5ka2P1P0OymYEZKTqm5Fp0TfScnlnS1dCQM6GlHDShU4tZmg+R0O
- HPXsKc4fjswQO7cDl+kLDmJOg/rR2xCCr0Mda0v40jTu88AfiTlPA0kohupJbsJPw/AB
- grYw==
+ d=1e100.net; s=20230601; t=1760014290; x=1760619090;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zol2J4ObuodIwQfQ/7QAzSmiVw6roWxQLGHZuPMy4wU=;
+ b=oVcnqpJIk3nNApprBcfWP3iNRgwTOcIsmO7iLTyor/lAlhSHNjTB7LyHFp8sq3EyEW
+ jkLCY3O6sY0HtimEmP0fjZtDqU3U1ZSPNTeDwmiaxJZTZmI7D3pwPbpQpeTAChSGbfRF
+ KF8RnIkmYj52Xd9ApzW/fZk99PLeWCQxvHDpmC/I3vWtpWcdFraisRjYdU7quozL+M9E
+ QzQZoLpeAHrYA37ba+/saGPmG6xQxrin12iQLlQu4mWU/EirLIeXdvT0/HOgZSBF+z2s
+ eSqVXqCm1x2EmpWifETCco7mdlT+T3eUNfMu3rQS2o/FKTM5X4S4K3g0GX3f1Lf6ruNr
+ gFAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoYrIE/KCrAx9OaBBUTKAgGZ8V+6zydOy0eaewV0o0RBcjmjxvydXFOttngv2w8dk0iBPM3glVxubx@nongnu.org
-X-Gm-Message-State: AOJu0YyRfkxacR4R0RHH5tWSPo+QMGXyWlaBU1pRAKt8zCKJh5Bmc6wc
- Na+appBK5c0DKAXDwxs/ZoD+8xaOgaXkxmaVihTM26GkH7pOzvhAyTGmAtnE8vY69cFZxqlx5hb
- Pywh+rYIk8MPUJ99iJAPg9QIerC2Soz9VTrdwVhzZDFtKjQrghn/ugVHI
-X-Gm-Gg: ASbGncuGRMjq6GqrvIHP6fFlkjSZTPApS+PSmRUVdPIGFV6t2pvCrrIwTZZw9S6NZJX
- 4g2lsSHsNWSbHMM+EHWgJQHUbA06yC4v89SMv74OkATyiFsELjDE53aR8Yz+sCFRYMRZn9pT/7P
- v4d4aM+/0xcpHtX5wAmomurAJtNBxjmWxufKTqTD4QQ7dzNGZqmluPDBs2pvHYNUJcm7qBhEJQn
- DM1ZXr/208hw8IMG0a3ESgVarrJNw8YeujR3yDyzZ41pRcDjjqg+hJ6fYR1gmvXPPFb74n7rR8s
- d3HtIB+qRpgsdti/RoeU63dhbq8SI9oZfartxacGDYR3Pw9qclW/UgHsFt8nnT8Bdni1pokLDKN
- CM7lDeTOO
-X-Received: by 2002:a05:600c:c4a4:b0:46e:1d01:11dd with SMTP id
- 5b1f17b1804b1-46fa9a89444mr48824755e9.2.1760013782272; 
- Thu, 09 Oct 2025 05:43:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXzK/HE9cCbGAQ/m3+wtG4/uww/876VMCWo1V/qwaiUvtOmxqjRYkdw/2nvMmTIT+I/8bwRQ==
-X-Received: by 2002:a05:600c:c4a4:b0:46e:1d01:11dd with SMTP id
- 5b1f17b1804b1-46fa9a89444mr48824455e9.2.1760013781848; 
- Thu, 09 Oct 2025 05:43:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fa9c0e35dsm85051235e9.8.2025.10.09.05.43.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 05:43:01 -0700 (PDT)
-Message-ID: <835d840f-ad65-4f09-8d5c-051e32641ace@redhat.com>
-Date: Thu, 9 Oct 2025 14:43:00 +0200
+ AJvYcCX+yGWURE+D6WwuS7ntgwJ1aWOTKP0/jM+gYuy1QY0zaNCv6WXn4XJ08LJuqzoJVlTmkfUsop1EM2Tu@nongnu.org
+X-Gm-Message-State: AOJu0YwquZqBpnQS4Vuo/w0z4MmmvK74QIbDzzRLGwzqYPyNN/GkrxL8
+ U34bZsN18XlFWBD6DuUGC9Z89MsHKYhTH3ZL17toJ4JxjwKOeXMfQZpDwjuZ6EnnLK+YnIhs675
+ 73XosjphTjxh4BgaQpLPrsMVy+d4i370bCmePKV4ivD77SVKOLH+z/ut7
+X-Gm-Gg: ASbGnctJD8lUtPX67AW+Qr8InOxgcQIK9Ibxnz8/G1M01anWQmWm3snVoBKyOi4aL18
+ ALjcvfTNsH4cCGoZeOqIQlOOlHrZ0MH72Vm9LwQY4/aGDLiODHrkz2Ck4vAtPM08rLwF55GDFLm
+ 20PYinv0Od7tqFWzoz8YHFneyKHOk5SCxWmeGM0fnx6eHosUfa0nQc1CKtFfZ33kjy3ErEsDc9G
+ JzN8/95m7qJQ9nTF3P7ya/SAetrlKp6R4h/nltHF0j6iqrzNvxKNBSEGQfGMNgreO2ROaL89LC1
+ IwVriTo9rR6fZzezFUyLYe560yPksk0NeErE
+X-Received: by 2002:a05:6000:40d9:b0:404:c253:a38 with SMTP id
+ ffacd0b85a97d-42582a053d4mr8053089f8f.28.1760014289802; 
+ Thu, 09 Oct 2025 05:51:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkNBloNj6n8d75gMpZvao+iiP90ewDmXHph980mr8fmR4pkfG6rD4lQnmLLfjFRFBwoBSDJA==
+X-Received: by 2002:a05:6000:40d9:b0:404:c253:a38 with SMTP id
+ ffacd0b85a97d-42582a053d4mr8053017f8f.28.1760014289167; 
+ Thu, 09 Oct 2025 05:51:29 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8b005dsm34180419f8f.25.2025.10.09.05.51.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Oct 2025 05:51:28 -0700 (PDT)
+Date: Thu, 9 Oct 2025 14:51:25 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: salil.mehta@opnsrc.net, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com, salil.mehta@huawei.com, maz@kernel.org,
+ jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, andrew.jones@linux.dev, david@redhat.com,
+ philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
+ oliver.upton@linux.dev, pbonzini@redhat.com, gshan@redhat.com,
+ rafael@kernel.org, borntraeger@linux.ibm.com, alex.bennee@linaro.org,
+ gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com, devel@lists.libvirt.org
+Subject: Re: [PATCH RFC V6 22/24] monitor,qdev: Introduce 'device_set' to
+ change admin state of existing devices
+Message-ID: <20251009145125.6583a24a@fedora>
+In-Reply-To: <87plawh2sz.fsf@pond.sub.org>
+References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
+ <20251001010127.3092631-23-salil.mehta@opnsrc.net>
+ <87plawh2sz.fsf@pond.sub.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] vfio/iommufd: Add
- IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "avihaih@nvidia.com" <avihaih@nvidia.com>, "Hao, Xudong"
- <xudong.hao@intel.com>, "Cabiddu, Giovanni" <giovanni.cabiddu@intel.com>,
- "Gross, Mark" <mark.gross@intel.com>,
- "Van De Ven, Arjan" <arjan.van.de.ven@intel.com>
-References: <20250910023701.244356-1-zhenzhong.duan@intel.com>
- <20250910023701.244356-4-zhenzhong.duan@intel.com>
- <d167b62a-be06-4bb1-b88e-e1cc96d7c4a4@oracle.com>
- <IA3PR11MB9136B9DA08CC2A48E1678DED9212A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <ac9e71a9-972d-4fba-a0f1-9823ae6664cb@redhat.com>
- <IA3PR11MB9136EAD2D625ED90DD89A13492EEA@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <IA3PR11MB9136EAD2D625ED90DD89A13492EEA@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -171,241 +127,506 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Zhenzhong, Joao,
+On Thu, 09 Oct 2025 10:55:40 +0200
+Markus Armbruster <armbru@redhat.com> wrote:
 
-On 10/9/25 12:20, Duan, Zhenzhong wrote:
-> Hi Cédric,
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH 3/5] vfio/iommufd: Add
->> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
->>
->> On 9/22/25 07:49, Duan, Zhenzhong wrote:
->>> Hi Joao,
->>>
->>>> -----Original Message-----
->>>> From: Joao Martins <joao.m.martins@oracle.com>
->>>> Subject: Re: [PATCH 3/5] vfio/iommufd: Add
->>>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
->>>>
->>>> On 10/09/2025 03:36, Zhenzhong Duan wrote:
->>>>> Pass IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR when doing the
->> last
->>>> dirty
->>>>> bitmap query right before unmap, no PTEs flushes. This accelerates the
->>>>> query without issue because unmap will tear down the mapping anyway.
->>>>>
->>>>> Add a new element dirty_tracking_flags in VFIOIOMMUFDContainer to
->>>>> be used for the flags of iommufd dirty tracking. Currently it is
->>>>> set to either IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR or 0 based
->> on
->>>>> the scenario.
->>>>>
->>>>> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
->>>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>>>> Tested-by: Xudong Hao <xudong.hao@intel.com>
->>>>> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
->>>>> ---
->>>>>    hw/vfio/vfio-iommufd.h   | 1 +
->>>>>    include/system/iommufd.h | 2 +-
->>>>>    backends/iommufd.c       | 5 +++--
->>>>>    hw/vfio/iommufd.c        | 6 +++++-
->>>>>    backends/trace-events    | 2 +-
->>>>>    5 files changed, 11 insertions(+), 5 deletions(-)
->>>>>
->>>>> diff --git a/hw/vfio/vfio-iommufd.h b/hw/vfio/vfio-iommufd.h
->>>>> index 07ea0f4304..e0af241c75 100644
->>>>> --- a/hw/vfio/vfio-iommufd.h
->>>>> +++ b/hw/vfio/vfio-iommufd.h
->>>>> @@ -26,6 +26,7 @@ typedef struct VFIOIOMMUFDContainer {
->>>>>        VFIOContainerBase bcontainer;
->>>>>        IOMMUFDBackend *be;
->>>>>        uint32_t ioas_id;
->>>>> +    uint64_t dirty_tracking_flags;
->>>>>        QLIST_HEAD(, VFIOIOASHwpt) hwpt_list;
->>>>>    } VFIOIOMMUFDContainer;
->>>>>
->>>>> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
->>>>> index c9c72ffc45..63898e7b0d 100644
->>>>> --- a/include/system/iommufd.h
->>>>> +++ b/include/system/iommufd.h
->>>>> @@ -64,7 +64,7 @@ bool
->>>> iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t
->>>> hwpt_id,
->>>>>    bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
->>>> uint32_t hwpt_id,
->>>>>                                          uint64_t iova,
->> ram_addr_t
->>>> size,
->>>>>                                          uint64_t page_size,
->>>> uint64_t *data,
->>>>> -                                      Error **errp);
->>>>> +                                      uint64_t flags, Error
->>>> **errp);
->>>>>    bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be,
->>>> uint32_t id,
->>>>>                                          uint32_t data_type,
->>>> uint32_t entry_len,
->>>>>                                          uint32_t *entry_num,
->> void
->>>> *data,
->>>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
->>>>> index 2a33c7ab0b..3c4f6157e2 100644
->>>>> --- a/backends/iommufd.c
->>>>> +++ b/backends/iommufd.c
->>>>> @@ -361,7 +361,7 @@ bool
->>>> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
->>>>>                                          uint32_t hwpt_id,
->>>>>                                          uint64_t iova,
->> ram_addr_t
->>>> size,
->>>>>                                          uint64_t page_size,
->>>> uint64_t *data,
->>>>> -                                      Error **errp)
->>>>> +                                      uint64_t flags, Error
->> **errp)
->>>>>    {
->>>>>        int ret;
->>>>>        struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap = {
->>>>> @@ -371,11 +371,12 @@ bool
->>>> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
->>>>>            .length = size,
->>>>>            .page_size = page_size,
->>>>>            .data = (uintptr_t)data,
->>>>> +        .flags = flags,
->>>>>        };
->>>>>
->>>>>        ret = ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP,
->>>> &get_dirty_bitmap);
->>>>>        trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id,
->> iova,
->>>> size,
->>>>> -                                           page_size, ret ?
->> errno :
->>>> 0);
->>>>> +                                           flags, page_size,
->> ret ?
->>>> errno : 0);
->>>>>        if (ret) {
->>>>>            error_setg_errno(errp, errno,
->>>>>                             "IOMMU_HWPT_GET_DIRTY_BITMAP
->>>> (iova: 0x%"HWADDR_PRIx
->>>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->>>>> index 0057488ce9..c897aa6b17 100644
->>>>> --- a/hw/vfio/iommufd.c
->>>>> +++ b/hw/vfio/iommufd.c
->>>>> @@ -62,7 +62,7 @@ static int iommufd_cdev_unmap_one(const
->>>> VFIOContainerBase *bcontainer,
->>>>>                                      hwaddr iova, ram_addr_t
->> size,
->>>>>                                      IOMMUTLBEntry *iotlb)
->>>>>    {
->>>>> -    const VFIOIOMMUFDContainer *container =
->>>>> +    VFIOIOMMUFDContainer *container =
->>>>>            container_of(bcontainer, VFIOIOMMUFDContainer,
->>>> bcontainer);
->>>>>        bool need_dirty_sync = false;
->>>>>        Error *local_err = NULL;
->>>>> @@ -73,9 +73,12 @@ static int iommufd_cdev_unmap_one(const
->>>> VFIOContainerBase *bcontainer,
->>>>>        if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer))
->> {
->>>>>            if
->>>> (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
->>>>>                bcontainer->dirty_pages_supported) {
->>>>> +            container->dirty_tracking_flags =
->>>>> +
->>>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR;
->>>>>                ret = vfio_container_query_dirty_bitmap(bcontainer,
->> iova,
->>>> size,
->>>>>
->>>> iotlb->translated_addr,
->>>>>
->>>> &local_err);
->>>>> +            container->dirty_tracking_flags = 0;
->>>>
->>>> Why not changing vfio_container_query_dirty_bitmap to pass a flags too,
->> like
->>>> the
->>>> original patches? This is a little unnecssary odd style to pass a flag via
->>>> container structure rather and then clearing.
->>>
->>> Just want to be simpler, original patch introduced a new parameter to
->> almost all
->>> variants of *_query_dirty_bitmap() while the flags parameter is only used by
->>> IOMMUFD backend when doing unmap_bitmap. Currently we already have
->> three
->>> backends, legacy VFIO, IOMMUFD and VFIO-user, only IOMMUFD need the
->> flag.
->>>
->>> I take container->dirty_tracking_flags as a notification mechanism, so set it
->> before
->>> vfio_container_query_dirty_bitmap() and clear it thereafter. Maybe clearing
->> it in
->>> iommufd_query_dirty_bitmap() is easier to be acceptable?
->>>
->>>>
->>>> Part of the reason the original series had a VFIO_GET_DIRTY_NO_FLUSH
->> for
->>>> generic
->>>> container abstraction was to not mix IOMMUFD UAPI specifics into base
->>>> container
->>>> API. Then in getting a VFIO_GET_DIRTY_NO_FLUSH, then type1 backend
->>>> could just
->>>> ignore the flag, while IOMMUFD translates it to
->>>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR
->>>
->>> I did port original patch
->> https://github.com/yiliu1765/qemu/commit/99f83595d79d2e4170c9e456cf1
->> a7b9521bd4f80
->>> But it looks complex to have 'flags' parameter everywhere.
->> I think I would prefer like Joao to avoid caching information if possible
->> but I haven't check closely the mess it would introduce in the code. Let
->> me check.
-> 
-> Kindly ping. Just in case you have further comments on this.
-Regarding the whole series,
+> salil.mehta@opnsrc.net writes:
+>=20
+> > From: Salil Mehta <salil.mehta@huawei.com>
+> >
+> > This patch adds a "device_set" interface for modifying properties of de=
+vices
+> > that already exist in the guest topology. Unlike 'device_add'/'device_d=
+el'
+> > (hot-plug), 'device_set' does not create or destroy devices. It is inte=
+nded
+> > for guest-visible hot-add semantics where hardware is provisioned at bo=
+ot but
+> > logically enabled/disabled later via administrative policy.
+> >
+> > Compared to the existing 'qom-set' command, which is less intuitive and=
+ works
+> > only with object IDs, device_set provides a more device-oriented interf=
+ace.
+> > It can be invoked at the QEMU prompt using natural device arguments, an=
+d the
+> > new '-deviceset' CLI option allows properties to be set at boot time, s=
+imilar
+> > to how '-device' specifies device creation. =20
+>=20
+> Why can't we use -device?
 
-* [1/5] vfio/iommufd: Add framework code to support getting dirty bitmap before unmap
+that's was my concern/suggestion in reply to cover letter
+(as a place to put high level review and what can be done for the next revi=
+sion)
 
-   Needs refactoring. iommufd_cdev_unmap_one() seems superfluous now ?
-
-* [2/5] vfio/iommufd: Query dirty bitmap before DMA unmap
-
-   Looks OK.
-
-   In an extra patch, could we rename 'vfio_dma_unmap_bitmap()' to
-   'vfio_legacy_dma_unmap_get_dirty_bitmap()' ? Helps (me) remember
-   what it does.
-
-* [3/5] vfio/iommufd: Add IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
-
-   Sorry, I lost track of the discussion between you and Joao regarding
-   the new '->dirty_tracking_flags' attribute.
-
-   I'd prefer adding a 'backend_flag' parameter, even if it’s currently
-   only used by IOMMUFD. Since we’re not going to redefine all possible
-   IOMMU backend flags, we can treat it as an opaque parameter for
-   the upper container layer and document it as such.
-
-   Is that ok for you ? A bit more churn for you but Joao did provide
-   some parts.
-
-* [4/5] intel_iommu: Optimize unmap_bitmap during migration
-
-   Ack by Clément may be ?
-
-* [5/5] vfio/migration: Allow live migration with vIOMMU without VFs
-   using device dirty tracking
-
-   ok.
+(PS: It looks like I'm having email receiving issues (i.e. not getting from
+mail list my own emails that it bonces to me, so threading is all broken on
+my side and I'm might miss replies). But on positive side it looks like my
+replies reach the list and CCed just fine)
 
 
-Thanks,
+> > While the initial implementation focuses on "admin-state" changes (e.g.,
+> > enable/disable a CPU already described by ACPI/DT), the interface is de=
+signed
+> > to be generic. In future, it could be used for other per-device set/uns=
+et
+> > style controls =E2=80=94 beyond administrative power-states =E2=80=94 p=
+rovided the target
+> > device explicitly allows such changes. This enables fine-grained runtime
+> > control of device properties. =20
+>=20
+> Beware, designing a generic interface can be harder, sometimes much
+> harder, than designing a specialized one.
+>=20
+> device_add and qom-set are generic, and they have issues:
+>=20
+> * device_add effectively bypasses QAPI by using 'gen': false.
+>=20
+>   This bypasses QAPI's enforcement of documentation.  Property
+>   documentation is separate and poor.
+>=20
+>   It also defeats introspection with query-qmp-schema.  You need to
+>   resort to other means instead, say QOM introspection (which is a bag
+>   of design flaws on its own), then map from QOM to qdev.
+>=20
+> * device_add lets you specify any qdev property, even properties that
+>   are intended only for use by C code.
+>=20
+>   This results in accidental external interfaces.
+>=20
+>   We tend to name properties like "x-prop" to discourage external use,
+>   but I wouldn't bet my own money on us getting that always right.
+>   Moreover, there's beauties like "x-origin".
+>=20
+> * qom-set & friends effectively bypass QAPI by using type 'any'.
+>=20
+>   Again, the bypass results in poor documentation and a defeat of
+>   query-qmp-schema.
+>=20
+> * qom-set lets you mess with any QOM property with a setter callback.
+>=20
+>   Again, accidental external interfaces: most of these properties are
+>   not meant for use with qom-set.  For some, qom-set works, for some it
+>   silently does nothing, and for some it crashes.  A lot more dangerous
+>   than device_add.
+>=20
+>   The "x-" convention can't help here: some properties are intended for
+>   external use with object-add, but not with qom-set.
+>=20
+> We should avoid such issues in new interfaces.
+>=20
+> We'll examine how this applies to device_set when I review the QAPI
+> schema.
+>=20
+> > Key pieces:
+> >   * QMP: qmp_device_set() to update an existing device. The device can =
+be
+> >     located by "id" or via driver+property match using a DeviceListener
+> >     callback (qdev_find_device()).
+> >   * HMP: "device_set" command with tab-completion. Errors are surfaced =
+via
+> >     hmp_handle_error().
+> >   * CLI: "-deviceset" option for setting startup/admin properties at bo=
+ot,
+> >     including a JSON form. Options are parsed into qemu_deviceset_opts =
+and
+> >     applied after device creation.
+> >   * Docs/help: HMP help text and qemu-options.hx additions explain usag=
+e and
+> >     explicitly note that no hot-plug occurs.
+> >   * Safety: disallowed during live migration (migration_is_idle() check=
+).
+> >
+> > Semantics:
+> >   * Operates on an existing DeviceState; no enumeration/new device appe=
+ars.
+> >   * Complements device_add/device_del by providing state mutation only.
+> >   * Backward compatible: no behavior change unless "device_set"/"-devic=
+eset"
+> >     is used.
+> >
+> > Examples:
+> >   HMP:
+> >     (qemu) device_set host-arm-cpu,core-id=3D3,admin-state=3Denable
+> >
+> >   CLI (at boot):
+> >     -smp cpus=3D4,maxcpus=3D4 \
+> >     -deviceset host-arm-cpu,core-id=3D2,admin-state=3Ddisable
+> >
+> >   QMP (JSON form):
+> >     { "execute": "device_set",
+> >       "arguments": {
+> >         "driver": "host-arm-cpu",
+> >         "core-id": 1,
+> >         "admin-state": "disable"
+> >       }
+> >     } =20
+>=20
+> {"error": {"class": "CommandNotFound", "desc": "The command device_set ha=
+s not been found"}}
+>=20
+> Clue below.
+>=20
+> > NOTE: The qdev_enable()/qdev_disable() hooks for acting on admin-state =
+will be
+> > added in subsequent patches. Device classes must explicitly support any
+> > property they want to expose through device_set.
+> >
+> > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> > ---
+> >  hmp-commands.hx         |  30 +++++++++
+> >  hw/arm/virt.c           |  86 +++++++++++++++++++++++++
+> >  hw/core/cpu-common.c    |  12 ++++
+> >  hw/core/qdev.c          |  21 ++++++
+> >  include/hw/arm/virt.h   |   1 +
+> >  include/hw/core/cpu.h   |  11 ++++
+> >  include/hw/qdev-core.h  |  22 +++++++
+> >  include/monitor/hmp.h   |   2 +
+> >  include/monitor/qdev.h  |  30 +++++++++
+> >  include/system/system.h |   1 +
+> >  qemu-options.hx         |  51 +++++++++++++--
+> >  system/qdev-monitor.c   | 139 +++++++++++++++++++++++++++++++++++++++-
+> >  system/vl.c             |  39 +++++++++++
+> >  13 files changed, 440 insertions(+), 5 deletions(-) =20
+>=20
+> Clue: no update to the QAPI schema, i.e. the QMP command does not exist.
+>=20
+> >
+> > diff --git a/hmp-commands.hx b/hmp-commands.hx
+> > index d0e4f35a30..18056cf21d 100644
+> > --- a/hmp-commands.hx
+> > +++ b/hmp-commands.hx
+> > @@ -707,6 +707,36 @@ SRST
+> >    or a QOM object path.
+> >  ERST
+> > =20
+> > +{
+> > +    .name       =3D "device_set",
+> > +    .args_type  =3D "device:O",
+> > +    .params     =3D "driver[,prop=3Dvalue][,...]",
+> > +    .help       =3D "set/unset existing device property",
+> > +    .cmd        =3D hmp_device_set,
+> > +    .command_completion =3D device_set_completion,
+> > +},
+> > +
+> > +SRST
+> > +``device_set`` *driver[,prop=3Dvalue][,...]*
+> > +  Change the administrative power state of an existing device.
+> > +
+> > +  This command enables or disables a known device (e.g., CPU) using the
+> > +  "device_set" interface. It does not hotplug or add a new device.
+> > +
+> > +  Depending on platform support (e.g., PSCI or ACPI), this may trigger
+> > +  corresponding operational changes =E2=80=94 such as powering down a =
+CPU or
+> > +  transitioning it to active use.
+> > +
+> > +  Administrative state:
+> > +    * *enabled*  =E2=80=94 Allows the guest to use the device (e.g., C=
+PU_ON)
+> > +    * *disabled* =E2=80=94 Prevents guest use; device is powered off (=
+e.g., CPU_OFF)
+> > +
+> > +  Note: The device must already exist (be declared during machine crea=
+tion).
+> > +
+> > +  Example:
+> > +      (qemu) device_set host-arm-cpu,core-id=3D3,admin-state=3Ddisabled
+> > +ERST =20
+>=20
+> How exactly is the device selected?  You provide a clue above: 'can be
+> located by "id" or via driver+property match'.
+>=20
+> I assume by "id" is just like device_del, i.e. by qdev ID or QOM path.
+>=20
+> By "driver+property match" is not obvious.  Which of the arguments are
+> for matching, and which are for setting?
+>=20
+> If "id" is specified, is there any matching?
+>=20
+> The matching feature complicates this interface quite a bit.  I doubt
+> it's worth the complexity.  If you think it is, please split it off into
+> a separate patch.
 
-C.
+It's likely /me who to blame for asking to invent generic
+device-set QMP command.
+I see another application (beside ARM CPU power-on/off) for it,
+PCI devices to simulate powering on/off them at runtime without
+actually removing device.
+
+wrt command,
+I'd use only 'id' with it to identify target device
+(i.e. no template matching nor QMP path either).
+To enforce rule, what user hasn't named explicitly by providing 'id'
+isn't meant to be accessed/manged by user later on.=20
+
+potentially we can invent specialized power_set/get command as
+an alternative if it makes design easier.
+But then we would be spawning similar commands for other things,
+where as device-set would cover it all. But then I might be
+over-complicating things by suggesting a generic approach.=20
+
+> Next question.  Is there a way for management applications to detect
+> whether a certain device supports device_set for a certain property?
+
+is there some kind of QMP command to check what does a device support,
+or at least what properties it supports? Can we piggy-back on that?
+=20
+>=20
+> Without that, what are management application supposed to do?  Hard-code
+> what works?  Run the command and see whether it fails?
+
+Adding libvirt list to discussion and possible ideas on what can be done he=
+re.
+
+> I understand right now the command supports just "admin-state" for a
+> certain set of devices, so hard-coding would be possible.  But every new
+> (device, property) pair then requires management application updates,
+> and the hard-coded information becomes version specific.  This will
+> become unworkable real quick.  Not good enough for a command designed to
+> be generic.
+>=20
+> > +
+> >      {
+> >          .name       =3D "cpu",
+> >          .args_type  =3D "index:i", =20
+
+We still do have a few legacy uses of cpu index (CLI|HMP), but
+I'd avoid using cpu index or something similar in new interfaces.
+
+> [...]
+>=20
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index 83ccde341b..f517b91042 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -375,7 +375,10 @@ SRST
+> >      This is different from CPU hotplug where additional CPUs are not e=
+ven
+> >      present in the system description. Administratively disabled CPUs =
+appear in
+> >      ACPI tables i.e. are provisioned, but cannot be used until explici=
+tly
+> > -    enabled via QMP/HMP or the deviceset API.
+> > +    enabled via QMP/HMP or the deviceset API. On ACPI guests, each vCP=
+U counted
+> > +    by 'disabledcpus=3D' is provisioned with '\ ``_STA``\ ' reporting =
+Present=3D1
+> > +    and Enabled=3D0 (present-offline) at boot; it becomes Enabled=3D1 =
+when brought
+> > +    online via 'device_set ... admin-state=3Denable'.
+> > =20
+> >      On boards supporting CPU hotplug, the optional '\ ``maxcpus``\ ' p=
+arameter
+> >      can be set to enable further CPUs to be added at runtime. When both
+> > @@ -455,6 +458,15 @@ SRST
+> > =20
+> >          -smp 2
+> > =20
+> > +    Note: The cluster topology will only be generated in ACPI and expo=
+sed
+> > +    to guest if it's explicitly specified in -smp.
+> > +
+> > +    Note: Administratively disabled CPUs (specified via 'disabledcpus=
+=3D' and
+> > +    '-deviceset' at CLI during boot) are especially useful for platfor=
+ms like
+> > +    ARM that lack native CPU hotplug support. These CPUs will appear t=
+o the
+> > +    guest as unavailable, and any attempt to bring them online must go=
+ through
+> > +    QMP/HMP commands like 'device_set'.
+> > +
+> >      Examples using 'disabledcpus':
+> > =20
+> >      For a board without CPU hotplug, enable 4 CPUs at boot and provisi=
+on
+> > @@ -472,9 +484,6 @@ SRST
+> >      ::
+> > =20
+> >          -smp cpus=3D4,disabledcpus=3D2,maxcpus=3D8
+> > -
+> > -    Note: The cluster topology will only be generated in ACPI and expo=
+sed
+> > -    to guest if it's explicitly specified in -smp.
+> >  ERST
+> > =20
+> >  DEF("numa", HAS_ARG, QEMU_OPTION_numa,
+> > @@ -1281,6 +1290,40 @@ SRST
+> > =20
+> >  ERST
+> > =20
+> > +DEF("deviceset", HAS_ARG, QEMU_OPTION_deviceset,
+> > +    "-deviceset driver[,prop[=3Dvalue]][,...]\n"
+> > +    "                Set administrative power state of an existing dev=
+ice.\n"
+> > +    "                Does not hotplug a new device. Can disable or ena=
+ble\n"
+> > +    "                devices (such as CPUs) at boot based on policy.\n"
+> > +    "                Example:\n"
+> > +    "                    -deviceset host-arm-cpu,core-id=3D2,admin-sta=
+te=3Ddisabled\n"
+> > +    "                Use '-deviceset help' for supported drivers\n"
+> > +    "                Use '-deviceset driver,help' for driver-specific =
+properties\n",
+> > +    QEMU_ARCH_ALL)
+> > +SRST
+> > +``-deviceset driver[,prop[=3Dvalue]][,...]``
+> > +    Configure an existing device's administrative power state or prope=
+rties.
+> > +
+> > +    Unlike ``-device``, this option does not create a new device. Inst=
+ead,
+> > +    it sets startup properties (such as administrative power state) for
+> > +    a device already declared via -smp or other machine configuration.
+> > +
+> > +    Example:
+> > +        -smp cpus=3D4
+> > +        -deviceset host-arm-cpu,core-id=3D2,admin-state=3Ddisabled
+> > +
+> > +    The above disables CPU core 2 at boot using administrative offlini=
+ng.
+> > +    The guest may later re-enable the core (if permitted by platform p=
+olicy).
+> > +
+> > +    ``state=3Denabled|disabled``
+> > +        Sets the administrative state of the device:
+> > +        - ``enabled``: device is made available at boot
+> > +        - ``disabled``: device is administratively disabled and powere=
+d off
+> > +
+> > +    Use ``-deviceset help`` to view all supported drivers.
+> > +    Use ``-deviceset driver,help`` for property-specific help.
+> > +ERST
+> > +
+> >  DEF("name", HAS_ARG, QEMU_OPTION_name,
+> >      "-name string1[,process=3Dstring2][,debug-threads=3Don|off]\n"
+> >      "                set the name of the guest\n"
+> > diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> > index 2ac92d0a07..1099b1237d 100644
+> > --- a/system/qdev-monitor.c
+> > +++ b/system/qdev-monitor.c
+> > @@ -263,12 +263,20 @@ static DeviceClass *qdev_get_device_class(const c=
+har **driver, Error **errp)
+> >      }
+> > =20
+> >      dc =3D DEVICE_CLASS(oc);
+> > -    if (!dc->user_creatable) {
+> > +    if (!dc->user_creatable && !dc->admin_power_state_supported) {
+> >          error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "driver",
+> >                     "a pluggable device type");
+> >          return NULL;
+> >      }
+> > =20
+> > +    if (phase_check(PHASE_MACHINE_READY) &&
+> > +        (!dc->hotpluggable || !dc->admin_power_state_supported)) {
+> > +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "driver",
+> > +                   "a pluggable device type or which supports changing=
+ power-"
+> > +                   "state administratively");
+> > +        return NULL;
+> > +    }
+> > +
+> >      if (object_class_dynamic_cast(oc, TYPE_SYS_BUS_DEVICE)) {
+> >          /* sysbus devices need to be allowed by the machine */
+> >          MachineClass *mc =3D MACHINE_CLASS(object_get_class(qdev_get_m=
+achine()));
+> > @@ -939,6 +947,76 @@ void qmp_device_del(const char *id, Error **errp)
+> >      }
+> >  }
+> > =20
+> > +void qmp_device_set(const QDict *qdict, Error **errp)
+> > +{
+> > +    const char *state;
+> > +    const char *driver;
+> > +    DeviceState *dev;
+> > +    DeviceClass *dc;
+> > +    const char *id;
+> > +
+> > +    driver =3D qdict_get_try_str(qdict, "driver");
+> > +    if (!driver) {
+> > +        error_setg(errp, "Parameter 'driver' is missing");
+> > +        return;
+> > +    }
+> > +
+> > +    /* check driver exists and we are at the right phase of machine in=
+it */
+> > +    dc =3D qdev_get_device_class(&driver, errp);
+> > +    if (!dc) { =20
+>=20
+> Since qdev_get_device_class() sets an error when it fails, *errp is not
+> null here, ...
+>=20
+> > +        error_setg(errp, "driver '%s' not supported", driver); =20
+>=20
+> ... which makes this wrong.  Caught by error_setv()'s assertion.
+>=20
+> Please test your error paths.
+>=20
+> > +        return;
+> > +    }
+> > +
+> > +    if (migration_is_running()) {
+> > +        error_setg(errp, "device_set not allowed while migrating");
+> > +        return;
+> > +    }
+> > +
+> > +    id =3D qdict_get_try_str(qdict, "id");
+> > +
+> > +    if (id) {
+> > +        /* Lookup by ID */
+> > +        dev =3D find_device_state(id, false, errp);
+> > +        if (errp && *errp) {
+> > +            error_prepend(errp, "Device lookup failed for ID '%s': ", =
+id);
+> > +            return;
+> > +        }
+> > +    } else {
+> > +        /* Lookup using driver and properties */
+> > +        dev =3D qdev_find_device(qdict, errp);
+> > +        if (errp && *errp) {
+> > +            error_prepend(errp, "Device lookup for %s failed: ", drive=
+r);
+> > +            return;
+> > +        }
+> > +    }
+> > +    if (!dev) {
+> > +        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
+> > +                  "No device found for driver '%s'", driver);
+> > +        return;
+> > +    }
+> > +
+> > +    state =3D qdict_get_try_str(qdict, "admin-state");
+> > +    if (!state) {
+> > +        error_setg(errp, "no device state change specified for device =
+%s ",
+> > +                   dev->id);
+> > +        return;
+> > +    } else if (!strcmp(state, "enable")) {
+> > +
+> > +        if (!qdev_enable(dev, qdev_get_parent_bus(DEVICE(dev)), errp))=
+ {
+> > +            return;
+> > +        }
+> > +    } else if (!strcmp(state, "disable")) {
+> > +        if (!qdev_disable(dev, qdev_get_parent_bus(DEVICE(dev)), errp)=
+) {
+> > +            return;
+> > +        }
+> > +    } else {
+> > +        error_setg(errp, "unrecognized specified state *%s* for device=
+ %s",
+> > +                   state, dev->id);
+> > +        return;
+> > +    }
+> > +}
+> > +
+> >  int qdev_sync_config(DeviceState *dev, Error **errp)
+> >  {
+> >      DeviceClass *dc =3D DEVICE_GET_CLASS(dev); =20
+>=20
+> [...]
+>=20
 
 
