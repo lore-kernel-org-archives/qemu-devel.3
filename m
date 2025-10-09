@@ -4,106 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B31CCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 939F4CCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6s2T-0003wE-P0; Thu, 09 Oct 2025 10:54:41 -0400
+	id 1v6s45-0004Fz-6t; Thu, 09 Oct 2025 10:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1v6s2P-0003vG-84; Thu, 09 Oct 2025 10:54:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6s42-0004Fm-Sb
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:56:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1v6s2H-0005TJ-3S; Thu, 09 Oct 2025 10:54:36 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 599Bj1fF031098;
- Thu, 9 Oct 2025 14:54:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nC3KpB
- HsdstQRk6/Z0SMa6ILfZlbSKWNxtYsuCgKOK4=; b=JQkoo9JhUKm3oiVUdW2zo+
- +yDp4aZ8BPiK7n/kkpQBTe1dzss3smf0RS/Zr2e81Yd7s4hOjrFpk70V4E423wV/
- 9beQoLyDKqUeBA/6Be5HIrSU3IJavbS/87cpxA8l2vAbW7totTD8u0BPTla+n7sT
- NyKI02PTVGKa8IBPn0rbo4z4Pnjphpi6isbRs/Lpa42AvG60AJdWK+uO8EWlWKVL
- 397DKYGKF/Pmw74PA5iJmf5QLPc+J64kmEQXq9QXsF0/Iv55OhmBvuaQlH9hfbCR
- uvBYULC7MTmA3FoXcjiqhoGdvVAP/6nofk/ZJDALi7YF7fNszkaat6rnVXSTGWOg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv81nc2m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 14:54:20 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 599CAtVo026053;
- Thu, 9 Oct 2025 14:54:20 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49nvamn2qp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 14:54:20 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 599EsIBs20054614
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Oct 2025 14:54:19 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C2F5C58059;
- Thu,  9 Oct 2025 14:54:18 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8F5D5805B;
- Thu,  9 Oct 2025 14:54:17 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.142.86]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Oct 2025 14:54:17 +0000 (GMT)
-Message-ID: <91a9835f6580c38aaa2dbe3d03c76bf03eb434ae.camel@linux.ibm.com>
-Subject: Re: [PATCH v3] s390x/pci: set kvm_msi_via_irqfd_allowed
-From: Eric Farman <farman@linux.ibm.com>
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: thuth@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- alifm@linux.ibm.com, qemu-devel@nongnu.org
-Date: Thu, 09 Oct 2025 10:54:17 -0400
-In-Reply-To: <20251008203350.354121-1-mjrosato@linux.ibm.com>
-References: <20251008203350.354121-1-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6s40-0005pQ-2L
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:56:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760021771;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WVf/lRk+QaH8PpFgzq0sN1AEKQ2SmFmrUZpswuqW2b4=;
+ b=fFF5j5BfffqnnbegEmTPBmZkpIc3a09KiCUR11caI1PXIU+mp85hdV/1i1BlvWaSTjquzw
+ gOgsIs22ER97glSeeg9zfg3baumTlzhyinOaCgt6Qt6i2Bt7DPGfhUGOwXC8HvX2vs1NZB
+ VdLCun7NTIuIfRCOugsfIlNJiQB6bYg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-6y7kGA5qPZ-CASnxbtKjNg-1; Thu,
+ 09 Oct 2025 10:56:07 -0400
+X-MC-Unique: 6y7kGA5qPZ-CASnxbtKjNg-1
+X-Mimecast-MFC-AGG-ID: 6y7kGA5qPZ-CASnxbtKjNg_1760021762
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9C88180057D; Thu,  9 Oct 2025 14:56:00 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99AD21800576; Thu,  9 Oct 2025 14:55:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C49D321E6A27; Thu, 09 Oct 2025 16:55:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: salil.mehta@opnsrc.net,  qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
+ mst@redhat.com,  salil.mehta@huawei.com,  maz@kernel.org,
+ jean-philippe@linaro.org,  jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org,  peter.maydell@linaro.org,
+ richard.henderson@linaro.org,  andrew.jones@linux.dev,  david@redhat.com,
+ philmd@linaro.org,  eric.auger@redhat.com,  will@kernel.org,
+ ardb@kernel.org,  oliver.upton@linux.dev,  pbonzini@redhat.com,
+ gshan@redhat.com,  rafael@kernel.org,  borntraeger@linux.ibm.com,
+ alex.bennee@linaro.org,  gustavo.romero@linaro.org,  npiggin@gmail.com,
+ harshpb@linux.ibm.com,  linux@armlinux.org.uk,
+ darren@os.amperecomputing.com,  ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com,  gankulkarni@os.amperecomputing.com,
+ karl.heubaum@oracle.com,  miguel.luis@oracle.com,  zhukeqian1@huawei.com,
+ wangxiongfeng2@huawei.com,  wangyanan55@huawei.com,
+ wangzhou1@hisilicon.com,  linuxarm@huawei.com,  jiakernel2@gmail.com,
+ maobibo@loongson.cn,  lixianglai@loongson.cn,  shahuang@redhat.com,
+ zhao1.liu@intel.com,  devel@lists.libvirt.org
+Subject: Re: [PATCH RFC V6 22/24] monitor,qdev: Introduce 'device_set' to
+ change admin state of existing devices
+In-Reply-To: <20251009145125.6583a24a@fedora> (Igor Mammedov's message of
+ "Thu, 9 Oct 2025 14:51:25 +0200")
+References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
+ <20251001010127.3092631-23-salil.mehta@opnsrc.net>
+ <87plawh2sz.fsf@pond.sub.org> <20251009145125.6583a24a@fedora>
+Date: Thu, 09 Oct 2025 16:55:54 +0200
+Message-ID: <87wm54nmyt.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 161UZR9MuMpMTERFGSv8Xp5o-2PrCaKw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfXzqHWd/LTVoiD
- DIxqmQyZm+/T0tRd4XJRTs995WxsQFf4ZFdkiqC7Z8jHDoz4G9HW8Rm4QN5N6FTpmgF5QnBq1GT
- 2alOTX0l5wDh9apqG1kt6WZSbP0YjO8KvHll7s4HVqRRATwNy7uXcPzX5lbRBJT8uqHf8j93Ta5
- XQRV3tdo+Ow/n+6GNWlhlydw/uvUw3/3UDrix47cKAlt30HyvtbdLO+7T7Nw6mtOwQ+OIl4FKmS
- 8QkydbsmYF+nsQ9EB26PKwRx49POzvy7SFAg4hTs7EICeHMNAj/TU6EG8Ioc1FrgjT1svZaRtE1
- aI0xbYJ2lfGlcOkB/R2PZ3ztnC6Qn+D89sqDKPo45+nfkgCgw0DlWDRX940Bu0zOy42iW8wNrbT
- /XlLsbRvl5Y7Q1X7G/okyMaM51O4Rw==
-X-Authority-Analysis: v=2.4 cv=cKntc1eN c=1 sm=1 tr=0 ts=68e7cc9c cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=HxSfouJ9v2ZbyTOdTxkA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: 161UZR9MuMpMTERFGSv8Xp5o-2PrCaKw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_05,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,18 +105,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-10-08 at 16:33 -0400, Matthew Rosato wrote:
-> Allow irqfd to be used for virtio-pci on s390x if the kernel supports
-> it.  This improves s390x virtio-pci performance when using kvm
-> acceleration by allowing kvm to deliver interrupts instead of QEMU.
->=20
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> ---
-> v3:
->  - Fix builds when !KVM (Thomas). Tested build on x86 and s390.
->  - Note: Dropped all review tags due to the code re-organization.
+Igor Mammedov <imammedo@redhat.com> writes:
 
-Ah, my apologies for missing the !KVM case before.
+> On Thu, 09 Oct 2025 10:55:40 +0200
+> Markus Armbruster <armbru@redhat.com> wrote:
+>
+>> salil.mehta@opnsrc.net writes:
+>>=20
+>> > From: Salil Mehta <salil.mehta@huawei.com>
+>> >
+>> > This patch adds a "device_set" interface for modifying properties of d=
+evices
+>> > that already exist in the guest topology. Unlike 'device_add'/'device_=
+del'
+>> > (hot-plug), 'device_set' does not create or destroy devices. It is int=
+ended
+>> > for guest-visible hot-add semantics where hardware is provisioned at b=
+oot but
+>> > logically enabled/disabled later via administrative policy.
+>> >
+>> > Compared to the existing 'qom-set' command, which is less intuitive an=
+d works
+>> > only with object IDs, device_set provides a more device-oriented inter=
+face.
+>> > It can be invoked at the QEMU prompt using natural device arguments, a=
+nd the
+>> > new '-deviceset' CLI option allows properties to be set at boot time, =
+similar
+>> > to how '-device' specifies device creation.=20=20
+>>=20
+>> Why can't we use -device?
+>
+> that's was my concern/suggestion in reply to cover letter
+> (as a place to put high level review and what can be done for the next re=
+vision)
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Yes.
+
+> (PS: It looks like I'm having email receiving issues (i.e. not getting fr=
+om
+> mail list my own emails that it bonces to me, so threading is all broken =
+on
+> my side and I'm might miss replies). But on positive side it looks like my
+> replies reach the list and CCed just fine)
+
+For what it's worth, your replies arrive fine here.
+
+>> > While the initial implementation focuses on "admin-state" changes (e.g=
+.,
+>> > enable/disable a CPU already described by ACPI/DT), the interface is d=
+esigned
+>> > to be generic. In future, it could be used for other per-device set/un=
+set
+>> > style controls =E2=80=94 beyond administrative power-states =E2=80=94 =
+provided the target
+>> > device explicitly allows such changes. This enables fine-grained runti=
+me
+>> > control of device properties.=20=20
+>>=20
+>> Beware, designing a generic interface can be harder, sometimes much
+>> harder, than designing a specialized one.
+>>=20
+>> device_add and qom-set are generic, and they have issues:
+>>=20
+>> * device_add effectively bypasses QAPI by using 'gen': false.
+>>=20
+>>   This bypasses QAPI's enforcement of documentation.  Property
+>>   documentation is separate and poor.
+>>=20
+>>   It also defeats introspection with query-qmp-schema.  You need to
+>>   resort to other means instead, say QOM introspection (which is a bag
+>>   of design flaws on its own), then map from QOM to qdev.
+>>=20
+>> * device_add lets you specify any qdev property, even properties that
+>>   are intended only for use by C code.
+>>=20
+>>   This results in accidental external interfaces.
+>>=20
+>>   We tend to name properties like "x-prop" to discourage external use,
+>>   but I wouldn't bet my own money on us getting that always right.
+>>   Moreover, there's beauties like "x-origin".
+>>=20
+>> * qom-set & friends effectively bypass QAPI by using type 'any'.
+>>=20
+>>   Again, the bypass results in poor documentation and a defeat of
+>>   query-qmp-schema.
+>>=20
+>> * qom-set lets you mess with any QOM property with a setter callback.
+>>=20
+>>   Again, accidental external interfaces: most of these properties are
+>>   not meant for use with qom-set.  For some, qom-set works, for some it
+>>   silently does nothing, and for some it crashes.  A lot more dangerous
+>>   than device_add.
+>>=20
+>>   The "x-" convention can't help here: some properties are intended for
+>>   external use with object-add, but not with qom-set.
+>>=20
+>> We should avoid such issues in new interfaces.
+
+[...]
+
+>> > diff --git a/hmp-commands.hx b/hmp-commands.hx
+>> > index d0e4f35a30..18056cf21d 100644
+>> > --- a/hmp-commands.hx
+>> > +++ b/hmp-commands.hx
+>> > @@ -707,6 +707,36 @@ SRST
+>> >    or a QOM object path.
+>> >  ERST
+>> >=20=20
+>> > +{
+>> > +    .name       =3D "device_set",
+>> > +    .args_type  =3D "device:O",
+>> > +    .params     =3D "driver[,prop=3Dvalue][,...]",
+>> > +    .help       =3D "set/unset existing device property",
+>> > +    .cmd        =3D hmp_device_set,
+>> > +    .command_completion =3D device_set_completion,
+>> > +},
+>> > +
+>> > +SRST
+>> > +``device_set`` *driver[,prop=3Dvalue][,...]*
+>> > +  Change the administrative power state of an existing device.
+>> > +
+>> > +  This command enables or disables a known device (e.g., CPU) using t=
+he
+>> > +  "device_set" interface. It does not hotplug or add a new device.
+>> > +
+>> > +  Depending on platform support (e.g., PSCI or ACPI), this may trigger
+>> > +  corresponding operational changes =E2=80=94 such as powering down a=
+ CPU or
+>> > +  transitioning it to active use.
+>> > +
+>> > +  Administrative state:
+>> > +    * *enabled*  =E2=80=94 Allows the guest to use the device (e.g., =
+CPU_ON)
+>> > +    * *disabled* =E2=80=94 Prevents guest use; device is powered off =
+(e.g., CPU_OFF)
+>> > +
+>> > +  Note: The device must already exist (be declared during machine cre=
+ation).
+>> > +
+>> > +  Example:
+>> > +      (qemu) device_set host-arm-cpu,core-id=3D3,admin-state=3Ddisabl=
+ed
+>> > +ERST=20=20
+>>=20
+>> How exactly is the device selected?  You provide a clue above: 'can be
+>> located by "id" or via driver+property match'.
+>>=20
+>> I assume by "id" is just like device_del, i.e. by qdev ID or QOM path.
+>>=20
+>> By "driver+property match" is not obvious.  Which of the arguments are
+>> for matching, and which are for setting?
+>>=20
+>> If "id" is specified, is there any matching?
+>>=20
+>> The matching feature complicates this interface quite a bit.  I doubt
+>> it's worth the complexity.  If you think it is, please split it off into
+>> a separate patch.
+>
+> It's likely /me who to blame for asking to invent generic
+> device-set QMP command.
+> I see another application (beside ARM CPU power-on/off) for it,
+> PCI devices to simulate powering on/off them at runtime without
+> actually removing device.
+
+I prefer generic commands over collecting ad hoc single-purpose
+commands, too.  Getting the design right can be difficult.
+
+> wrt command,
+> I'd use only 'id' with it to identify target device
+> (i.e. no template matching nor QMP path either).
+> To enforce rule, what user hasn't named explicitly by providing 'id'
+> isn't meant to be accessed/manged by user later on.=20
+
+Works well, except when we need to access / manage onboard devices.
+That's still an unsolved problem.
+
+> potentially we can invent specialized power_set/get command as
+> an alternative if it makes design easier.
+> But then we would be spawning similar commands for other things,
+> where as device-set would cover it all. But then I might be
+> over-complicating things by suggesting a generic approach.=20
+
+Unclear.
+
+I feel it's best to start the design process with ensvisaged uses.  Can
+you tell me a bit more about the uses you have in mind?
+
+>> Next question.  Is there a way for management applications to detect
+>> whether a certain device supports device_set for a certain property?
+>
+> is there some kind of QMP command to check what does a device support,
+> or at least what properties it supports? Can we piggy-back on that?
+
+Maybe.
+
+QAPI schema introspection (query-qmp-schema) has been a success.  It has
+a reasonably expressive type system, deprecation information, and hides
+much implementation detail.  Sadly, it doesn't cover most of QOM and all
+of qdev due to QAPI schema bypass.
+
+QOM type introspection (qom-list-types and qom-list-properties) is weak.
+You can retrieve a property's name and type.  The latter is seriously
+underspecified, and somewhere between annoying and impossible to use
+reliably.  Properties created in certain ways are not visible here.
+These are rare.
+
+QOM object introspection (qom-list) is the same for concrete objects
+rather than types.
+
+qdev introspection (device-list-properties) is like QOM type
+introspection.  I'm not sure why it exists.  Use QOM type introspection
+instead.
+
+QOM introspection is servicable for checking whether a certain property
+exists.  Examining a property's type is unadvisable.
+
+>> Without that, what are management application supposed to do?  Hard-code
+>> what works?  Run the command and see whether it fails?
+>
+> Adding libvirt list to discussion and possible ideas on what can be done =
+here.
+>
+>> I understand right now the command supports just "admin-state" for a
+>> certain set of devices, so hard-coding would be possible.  But every new
+>> (device, property) pair then requires management application updates,
+>> and the hard-coded information becomes version specific.  This will
+>> become unworkable real quick.  Not good enough for a command designed to
+>> be generic.
+
+[...]
+
 
