@@ -4,117 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EBECCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 05:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D407ECCA471
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 05:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6j0u-0003Fz-No; Thu, 09 Oct 2025 01:16:29 -0400
+	id 1v6jQH-00062T-6t; Thu, 09 Oct 2025 01:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v6j0s-0003Fh-Od; Thu, 09 Oct 2025 01:16:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6jQ9-000627-NN
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 01:42:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v6j0p-0001xG-Lw; Thu, 09 Oct 2025 01:16:26 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 598HIUeg002656;
- Thu, 9 Oct 2025 05:16:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9hCjAR
- TaqakU9yx1RGL6zIRes4Bja5Kf/+lfQSGX6NQ=; b=RctimfVp82VRsHRCdCveCQ
- KTSVkucA410Twgm2kymmXQHwOhs1HzXFFxaKXJggkLaPmj+tBaqJtGhOEYybjkcm
- eHGY/Ry6MS/mGh5QP3Iw17bSVLZH4Oqx7HIqx6Ts++NVCfETaHLr1lu/lh0y57zw
- NmBAiWWrBROI324uGmQMQODeZ04Ob/3xa3WaIdtHwnWg5NOphG2cMh0QeXMOA8uq
- PzaC7TCV45Mfn36LwaIzE/x42OJuspiOTblsRm+tFL+eObhxe/p8OCCezrA0WfM6
- iR+b15/eS0FzJVLBi65mqG94eZI7fAuY1ChaNnV/vHP4zPucjGWuEeXDaRDp9B1Q
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv86tfbe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 05:16:09 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5995BAru001263;
- Thu, 9 Oct 2025 05:16:09 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv86tfbb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 05:16:09 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5991U4us021035;
- Thu, 9 Oct 2025 05:16:08 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49nv8sjfjq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 05:16:08 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5995G71s26477170
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Oct 2025 05:16:07 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C149958052;
- Thu,  9 Oct 2025 05:16:07 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C2AF58056;
- Thu,  9 Oct 2025 05:16:06 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Oct 2025 05:16:05 +0000 (GMT)
-Message-ID: <089f1165-2c4e-445e-902b-80ad14b21d4c@linux.ibm.com>
-Date: Thu, 9 Oct 2025 10:46:04 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v6jQ5-00054e-Dy
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 01:42:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1759988546;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=E8LTEQnUajLca63w2yUdz6g2pijb8Z7LsQjOZ8AGWX0=;
+ b=LPAFyNXWpxJ/STDIGv6OzLEA34HYmf7oxR1K5y390VRaKeNGYcSYW7YuIaDWfLLGii18fd
+ lNw8ijqznwmt3LPwXw62KM9CnbdtD/NJmLNzhzWuwE9dhm1Z9QA8UYMJUrIxZur69efWp9
+ gjhKmwI5CLxVtC1aYRs62lT3oS3kTtg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-BEt2Gxy-NFWEPIot1Uinmw-1; Thu,
+ 09 Oct 2025 01:42:22 -0400
+X-MC-Unique: BEt2Gxy-NFWEPIot1Uinmw-1
+X-Mimecast-MFC-AGG-ID: BEt2Gxy-NFWEPIot1Uinmw_1759988539
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3F19180057D; Thu,  9 Oct 2025 05:42:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6608C1956056; Thu,  9 Oct 2025 05:42:13 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4EC5E21E6A27; Thu, 09 Oct 2025 07:42:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Miguel Luis <miguel.luis@oracle.com>
+Cc: Salil Mehta <salil.mehta@huawei.com>,  "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>,  "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,  "andrew.jones@linux.dev"
+ <andrew.jones@linux.dev>,  "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,  "eric.auger@redhat.com"
+ <eric.auger@redhat.com>,  "will@kernel.org" <will@kernel.org>,
+ "ardb@kernel.org" <ardb@kernel.org>,  "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>,  "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "gshan@redhat.com" <gshan@redhat.com>,  "rafael@kernel.org"
+ <rafael@kernel.org>,  "borntraeger@linux.ibm.com"
+ <borntraeger@linux.ibm.com>,  "alex.bennee@linaro.org"
+ <alex.bennee@linaro.org>,  "gustavo.romero@linaro.org"
+ <gustavo.romero@linaro.org>,  "npiggin@gmail.com" <npiggin@gmail.com>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,  "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>,  "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>,  "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>,  "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>,  "gankulkarni@os.amperecomputing.com"
+ <gankulkarni@os.amperecomputing.com>,  Karl Heubaum
+ <karl.heubaum@oracle.com>,  "salil.mehta@opnsrc.net"
+ <salil.mehta@opnsrc.net>,  "zhukeqian1@huawei.com"
+ <zhukeqian1@huawei.com>,  "wangxiongfeng2@huawei.com"
+ <wangxiongfeng2@huawei.com>,  "wangyanan55@huawei.com"
+ <wangyanan55@huawei.com>,  "wangzhou1@hisilicon.com"
+ <wangzhou1@hisilicon.com>,  "linuxarm@huawei.com" <linuxarm@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>,  "maobibo@loongson.cn"
+ <maobibo@loongson.cn>,  "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "shahuang@redhat.com" <shahuang@redhat.com>,  "zhao1.liu@intel.com"
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH RFC V6 00/24] Support of Virtual CPU Hotplug-like
+ Feature for ARMv8+ Arch
+In-Reply-To: <6A8391B8-5E75-49B0-834B-00183BA4CF3E@oracle.com> (Miguel Luis's
+ message of "Wed, 8 Oct 2025 16:04:11 +0000")
+References: <20250930224037.224833-1-salil.mehta@huawei.com>
+ <871pndlgi7.fsf@pond.sub.org>
+ <6A8391B8-5E75-49B0-834B-00183BA4CF3E@oracle.com>
+Date: Thu, 09 Oct 2025 07:42:10 +0200
+Message-ID: <87bjmgiqbx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] ppc/spapr: remove deprecated machine pseries-4.0
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, clg@kaod.org
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com
-References: <20250507052048.90559-1-harshpb@linux.ibm.com>
- <20250507052048.90559-4-harshpb@linux.ibm.com>
- <a5893e2f-c340-4d6c-8014-e207de4b3cfb@linaro.org>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <a5893e2f-c340-4d6c-8014-e207de4b3cfb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: OUANCx3LGGLRY4y3rgJlEBDR8P9IA1_9
-X-Proofpoint-ORIG-GUID: ZO9RrhhaGaSqkFC6gdiRqRCwpNk9l9OH
-X-Authority-Analysis: v=2.4 cv=MKNtWcZl c=1 sm=1 tr=0 ts=68e74519 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=aow-egSQAAAA:8
- a=VnNF1IyMAAAA:8 a=VJ07JQiwR9Yi3m89-oEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX9/ppWoPZxn6Z
- 1hedH8sRJj9XjMMR2l+YSQYR90jPFtQWEQUmmC5wWzDtG1OM43MqDxHMJGagHIqYUGzIJsOgjzZ
- KzMYWvLvrdyM+qV0UsY4rJpq9OgIZTRFGzqncShjT6xW8mtDJd3y8k0OAQh9/0bPuE/GLkZ5PnE
- WK/F6Cgizx+215TbfXZso28+Toj/COEhC4uh1pYf28aL3pz8fRF+0BzMn5Ub2hH6mxy2rm9zzN7
- 77KdV/UrgkGd79uFDfFv3HQH2NvfAqNNXK3HNLXlBKwT6q+6T0y/vjjHFPAA+xsxNUM/Rg4qCkO
- eNxT9RvxNRsxkCJjaEHcYtgRuR7CSdKQnfj5Iy2p2t6UEcZ9P3QIkujvGMyuSvntwio3I046yUF
- Zt0I1wpThoFiOb4Mgxgid62rmPvmHA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_01,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 malwarescore=0 bulkscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 clxscore=1015
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510080121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,36 +123,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Miguel Luis <miguel.luis@oracle.com> writes:
 
+> Hi Markus,
+>
+>> On 8 Oct 2025, at 12:33, Markus Armbruster <armbru@redhat.com> wrote:
+>>=20
+>> Salil Mehta <salil.mehta@huawei.com> writes:
+>>=20
+>> [...]
+>>=20
+>>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>> (VIII) Repositories
+>>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>>=20
+>>> (*) Latest Qemu RFC V6 (Architecture Specific) patch set:
+>>>    https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v6
+>>=20
+>> Does not compile for me (x86_64 box running Fedora 41):
+>>=20
+>>    [...]
+>>=20
+>>    FAILED: qemu-system-loongarch64=20
+>>    cc -m64 @qemu-system-loongarch64.rsp
+>>    /usr/bin/ld: libsystem.a.p/hw_acpi_generic_event_device.c.o:(.data.re=
+l+0x50): undefined reference to `vmstate_cpu_ospm_state'
+>>    collect2: error: ld returned 1 exit status
+>>    [6757/7232] Linking target qemu-system-mips64
+>>    [6758/7232] Generating docs/QEMU manual with a custom command
+>>    FAILED: docs/docs.stamp=20
+>>    /usr/bin/env CONFDIR=3Detc/qemu /work/armbru/qemu/bld/pyvenv/bin/sphi=
+nx-build -q -W -Dkerneldoc_werror=3D1 -j auto -Dversion=3D10.1.50 -Drelease=
+=3D -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp -b html -d /w=
+ork/armbru/qemu/bld/docs/manual.p /work/armbru/qemu/docs /work/armbru/qemu/=
+bld/docs/manual
+>>    /work/armbru/qemu/docs/../include/hw/qdev-core.h:190: warning: Functi=
+on parameter or member 'admin_power_state_supported' not described in 'Devi=
+ceClass'
+>>    /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum v=
+alue 'DEVICE_ADMIN_POWER_STATE_ENABLED' not described in enum 'DeviceAdminP=
+owerState'
+>>    /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum v=
+alue 'DEVICE_ADMIN_POWER_STATE_DISABLED' not described in enum 'DeviceAdmin=
+PowerState'
+>>    /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum v=
+alue 'DEVICE_ADMIN_POWER_STATE_REMOVED' not described in enum 'DeviceAdminP=
+owerState'
+>>    /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum v=
+alue 'DEVICE_ADMIN_POWER_STATE_MAX' not described in enum 'DeviceAdminPower=
+State'
+>>    1 warnings as Errors
+>>=20
+>>    Warning, treated as error:
+>>    kernel-doc 'perl /work/armbru/qemu/docs/../scripts/kernel-doc -rst -e=
+nable-lineno -sphinx-version 7.3.7 -Werror /work/armbru/qemu/docs/../includ=
+e/hw/qdev-core.h' failed with return code 1
+>>    [6759/7232] Linking target qemu-system-i386
+>>    FAILED: qemu-system-i386=20
+>>    cc -m64 @qemu-system-i386.rsp
+>>    /usr/bin/ld: libsystem.a.p/hw_acpi_generic_event_device.c.o:(.data.re=
+l+0x50): undefined reference to `vmstate_cpu_ospm_state'
+>>    collect2: error: ld returned 1 exit status
+>>=20
+>>    [...]
+>>=20
+>>    [6874/7232] Linking target qemu-system-x86_64
+>>    FAILED: qemu-system-x86_64=20
+>>    cc -m64 @qemu-system-x86_64.rsp
+>>    /usr/bin/ld: libsystem.a.p/hw_acpi_generic_event_device.c.o:(.data.re=
+l+0x50): undefined reference to `vmstate_cpu_ospm_state'
+>>    collect2: error: ld returned 1 exit status
+>>=20
+>
+> I=E2=80=99ve had that same issue although it got compiled for me adding A=
+CPI_CPU_OSPM_INTERFACE for MICROVM:
+>
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index 3a0e2b8ebb..29d9b09486 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -133,6 +133,7 @@ config MICROVM
+>      select VIRTIO_MMIO
+>      select ACPI_PCI
+>      select ACPI_HW_REDUCED
+> +    select ACPI_CPU_OSPM_INTERFACE
+>      select PCI_EXPRESS_GENERIC_BRIDGE
+>      select USB_XHCI_SYSBUS
+>      select I8254
+>
+> Miguel
 
-On 5/8/25 12:49, Philippe Mathieu-Daudé wrote:
-> On 7/5/25 07:20, Harsh Prateek Bora wrote:
->> pseries-4.0 had been deprecated and due for removal now as per policy.
-> 
-> Please consider splitting, but up to the maintainer.
+Thanks for the hint.  I additionally need a similar change to
+hw/loongarch/Kconfig, and comment hackery in hw/qdev-core.h.
 
-Hi Philippe,
-Thanks for your reviews on this patchset.
-I am revisiting this patchset to include 4.1 and 4.2 also.
-I usually prefer to split patches wherever appropriate, however, in this
-case, I think related hacks are better removed along as there remains no
-other consumer of those hacks and can cause build breaks in some cases.
+>
+>>    [...]
+>>=20
+>>    ninja: build stopped: cannot make progress due to previous errors.
+>>    make: *** [Makefile:168: run-ninja] Error 1
+>>    make: Target 'all' not remade because of errors.
+>>    make: Leaving directory '/work/armbru/qemu/bld'
+>>=20
+>> [...]
+>>=20
 
-I will send a v2 including removal of 4.1 and 4.2 though.
-
-Thanks
-Harsh
-
-> 
->> Also remove pre-4.1 migration hacks which were introduced for backward
->> compatibility.
->>
->> Suggested-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> ---
->>   include/hw/ppc/spapr.h |  1 -
->>   hw/ppc/spapr.c         | 27 ---------------------------
->>   hw/ppc/spapr_caps.c    | 12 +-----------
->>   3 files changed, 1 insertion(+), 39 deletions(-)
-> 
 
