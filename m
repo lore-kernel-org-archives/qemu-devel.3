@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF53CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97E3CCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6tnh-0001VW-Ku; Thu, 09 Oct 2025 12:47:33 -0400
+	id 1v6to6-0001Yt-Q7; Thu, 09 Oct 2025 12:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6tnc-0001V7-7E
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:47:29 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6to3-0001Xv-0A
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:47:55 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6tnW-0004iC-90
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:47:26 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-793021f348fso1118081b3a.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:47:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6tnz-0004lz-IU
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:47:54 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-46e61ebddd6so12335075e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760028439; x=1760633239; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SKQG7ejLqpGGpxpXCgpef2DjMI2GPjfUDuLg/RQNH2k=;
- b=LgzefDeVD2OW7097kqHQw0CF8tj2RxizQGQgSiPU2KiHUtr3hcYFV1CDJ+rdAI876O
- 2r96Z9czFX8LuAPxvDQObftgB/CuX9JPjg5z3BSxQhrpl8b1Gjx1w0OMHV4fb+t77syN
- zFLvHvRXcepJB/EuJguyvnG+0q8R/2Rng+ohyqthYYC0g2UR0NmWctU2/i+fSEkfF9Hv
- V6+LIoZySRbRYCj4eTdORTrqSNLO08SBcpUD4qfxMR8+cSgg+q3uXfikiWZnrZvGr1Im
- SuDtz4DSo+qIFBXq/Y0QRyLi5aXAB7cq6hLS8qSUURLFY7fBxbiWdhQAQ7Zbhx4Nnod2
- Z9bg==
+ d=linaro.org; s=google; t=1760028468; x=1760633268; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kkFJShCPRzclL+PLVGeCJ+9eP9tjTj4Lgzbu6jrD5Mo=;
+ b=WC1DTRrWnbnRCoLW1yH2WErEC4n8I/6TfP9cZzMYT61Km2TTpQFU1vjvem2oralGQ7
+ FkK2dhTO7U/OFx27wdHedDC6n38dNCrQXYL80zIoo5Wqx2MSXQyf3Ous3fwURb0NSCLm
+ 6Mgxu87QNLom5nazzz+HpAp6fchdIvCXuRivBlSMwW0Xcn986888NTwFcn7Hc4KDJ62x
+ TDOXALn9rluJFbDaN6eBfi+jNp1qOz2h2+x5HaP+WBbGDvTJn0lSwP/tSlBGzQoPue7Y
+ UoIP3kVcHVDdXeU7GlGX2q2WtiXmfPyljc0Auff7in3R0z3V45quzSI/4mkVLMkHUmdR
+ rN4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760028439; x=1760633239;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760028468; x=1760633268;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SKQG7ejLqpGGpxpXCgpef2DjMI2GPjfUDuLg/RQNH2k=;
- b=BZFYcUd/iYWGA5XjqHC8yslsDZ9l308RKb12L60TfMNgJ8UhQc9xxxsiib7/CM65dj
- 00s9WFm3WYSxaczbLU7doJFccO3GmpgZwATgPTgDpNcoi5PMkfIYhPMAVWPfAwXt8Lb1
- mMYoZJLwe286IkqoeYU7qeIpbaPeGvr6nTFKwwhrdlaj1IhMyZx6hpmAQMzD/Y7Y4wSu
- kfEPMWCzXqDnH/T64406fTuSYP1NEEQ98y+5kFG/mEAVgbkMzCl6txxfq8ievC39c6Pw
- fDubO8Lwzj5EbGZhjzcm6UPweBYlPMUJvjHM7YtR837csd0GcHNipQ/zVsx2Natvn+u3
- /0+A==
-X-Gm-Message-State: AOJu0YxAAO87GW/aeiJg5JFeT0KvIgOE2upg6hH7iJRVfKbK39toX/Ta
- F6sH4koFpBpJTBsG09I7Cwlu1yu2PbI/QoNIaStYDFnHJwRdU/SOWAferQ+rleGA2V7/y5hTBe5
- JAB8i3ig=
-X-Gm-Gg: ASbGncuGTFR9qSCUoaWhVn/Bp8dkDDzcqrAUaDcCuw9wd5TUMyXifmGUYIo+xTr+RMl
- Fw8J3bgRFeZ/tEHwREt5vW15yBmIE85Dnh1devBwtd5N3oq1d7Px/3u1PMGHEiWdUKtSpMF+vRx
- DZ7iTzSIZVC1iu8o6aCi++FAyfAkfNoSQuiFh0Xei4YF/ta5UenkFQopePf35LwDVCINDPMkYh+
- znYWNUgAa54VweCJ/dOAYqP9bG5z959Y8hEKQOUwNCt3k2ABNi1jBgKEUV/JE2rQCM7mNurvhpb
- xokdafBdvkdZXMOSxfIWRCYPGiS+tCPZTAiesNdgR3dwAhbW7nGdkqFFkSPmImEQZj2uHlpnaik
- fZXbCggNWhmyxQi1CKGeVnUoQnymtCK3vFzjrnszH7UQMh3T09Rz+BXC9ab6PRmrb
-X-Google-Smtp-Source: AGHT+IEwkzVb22EAdlqrrzoSPmJSrDE4oyOEnuW8IVu3GtYjHPtaIgHi2h2NrBSWsiTWdcgd5P9Y8w==
-X-Received: by 2002:a17:902:e851:b0:26d:58d6:3fb2 with SMTP id
- d9443c01a7336-2902729031cmr128556415ad.12.1760028439087; 
- Thu, 09 Oct 2025 09:47:19 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f08eb7sm33356645ad.82.2025.10.09.09.47.18
- for <qemu-devel@nongnu.org>
+ bh=kkFJShCPRzclL+PLVGeCJ+9eP9tjTj4Lgzbu6jrD5Mo=;
+ b=RtngoPaYGgLSJM7UiGvQaYHRnD2+rphPA5psFlYbXphi6cl53v6rdNpTwdBqKhXE+5
+ qHmdNuf+qK8e9hJJ22fKvo9peMmi/ycyUyUizcvqGYFCfneNQTW0mjSalFieFLYSHe0p
+ HOFHZ7ekwPvALovFGwqDzIyZGBA4TtqiRUpJ8Q72tml6KBEQgXqbU5vYr2SXCE8wgala
+ Lrw1DkuAO3C+Kn2Q4HNST6QvfrA7L1b62UtMHM8B8FjT3M116aHQsVY513RNdgNAEHQ3
+ aC+XhGiM7nkVj7tLcwqZFkCadG7bSF7NjwU/W2gyODOOM/3/nwCDTQuyQAI5LX9IT3H0
+ 4U9w==
+X-Gm-Message-State: AOJu0YzthqCM1bX6gnmzYz4SDpTdl3Z+Ati5YHabj1WKk7pQLdNQzX5k
+ ADwjdyRNTDNSM55zP56Pqs+kvqR+aq2Eytc4sX3bN5ptEZjGHV1W66+nREqYNHDxGPk=
+X-Gm-Gg: ASbGncuGOBFroZaCDCWuD0pJ3Rv76bZaYmhvzWgnaPQSxB3WIF/L4VcEUspw2yB/j4M
+ NgDCydo+ymu7PNleZVgOr8m0xNghXO9VRWv8tVUXA8I3qYzkRQMPNGcAvzSO2PdrA7KTdPqnROY
+ LmGoBXb7To5FA2MgvmufktS6SInyr8HpeVrPlS6s7akcmj5Rb4tuvMrmN9c7g7Ywh/iYHu5HdSr
+ FVVsAUJguBbG+440dm3Pr57mi2khxc3yNppz422bkcVlDbeeZAcAtrKuIhSkPnW/NbVvm0jFB9n
+ +utbv/yguoojaugpkESxHlFw0K3p1msTDLjfCCG5rrAXs6urZfVUsUcZT6BD2nkp9/gzpMOxORD
+ 6y3Df7/tQQVUVz9U95dtv0V5Rg3fjOlGyBWR2u/6Sp7GXN4T31Egciubkc1iluEtz9C3/76WoaC
+ CG19U9z2pp/RAbsIDVbQ==
+X-Google-Smtp-Source: AGHT+IHl9zXdpbOHN61YhK9TwIZk6o+/cTSiJ3yEh4+jFsfIUBhgnZYaFPKzrpnQSJgc44jC67yM8A==
+X-Received: by 2002:a05:6000:4014:b0:3fe:4fa2:8cd5 with SMTP id
+ ffacd0b85a97d-42666ac4518mr4832865f8f.9.1760028467772; 
+ Thu, 09 Oct 2025 09:47:47 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426cd9a025asm174957f8f.46.2025.10.09.09.47.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 09:47:18 -0700 (PDT)
-Message-ID: <51f0489e-a6ad-46d4-8a0d-49baa8f2a302@linaro.org>
-Date: Thu, 9 Oct 2025 09:47:16 -0700
+ Thu, 09 Oct 2025 09:47:47 -0700 (PDT)
+Message-ID: <531f953f-6afe-4b61-a9ac-2e02cae2f6e4@linaro.org>
+Date: Thu, 9 Oct 2025 18:47:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/10] target/openrisc: Remove unused
- cpu_openrisc_map_address_*() handlers
-To: qemu-devel@nongnu.org
-References: <20251009081903.13426-1-philmd@linaro.org>
- <20251009081903.13426-6-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/5] docker: Remove 32-bit MIPS toolchain from
+ debian-all-test image
 Content-Language: en-US
-In-Reply-To: <20251009081903.13426-6-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Aleksandar Rikalo <arikalo@gmail.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Aurelien Jarno <aurelien@aurel32.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20250820142108.46639-1-philmd@linaro.org>
+ <20250820142108.46639-2-philmd@linaro.org> <87ect3k3c4.fsf@draig.linaro.org>
+ <592c3338-77f7-4393-aef3-7670e6ec90fc@linaro.org>
+In-Reply-To: <592c3338-77f7-4393-aef3-7670e6ec90fc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,43 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 01:18, Philippe Mathieu-Daudé wrote:
-> Commit 23d45ebdb19 ("target/openrisc: Remove indirect
-> function calls for mmu") removed the last uses of both
-> cpu_openrisc_map_address_code() and
-> cpu_openrisc_map_address_data() helpers.
+On 22/8/25 16:49, Philippe Mathieu-Daudé wrote:
+> On 22/8/25 13:23, Alex Bennée wrote:
+>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>
+>>> In commit d3322023bfe ("configure: unify again the case arms in
+>>> probe_target_compiler") we lost coverage of 32-bit MIPS with the
+>>> debian-all-test image. No need to keep installing the toolchain.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   tests/docker/dockerfiles/debian-all-test-cross.docker | 4 ----
+>>>   1 file changed, 4 deletions(-)
+>>>
+>>> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/ 
+>>> tests/docker/dockerfiles/debian-all-test-cross.docker
+>>> index 420a4e33e60..bc74d65a634 100644
+>>> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
+>>> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+>>> @@ -40,14 +40,10 @@ ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
+>>>           libc6-dev-arm64-cross \
+>>>           gcc-arm-linux-gnueabihf \
+>>>           libc6-dev-armhf-cross \
+>>> -        gcc-mips-linux-gnu \
+>>> -        libc6-dev-mips-cross \
+>>>           gcc-mips64-linux-gnuabi64 \
+>>>           libc6-dev-mips64-cross \
+>>>           gcc-mips64el-linux-gnuabi64 \
+>>>           libc6-dev-mips64el-cross \
+>>> -        gcc-mipsel-linux-gnu \
+>>> -        libc6-dev-mipsel-cross \
+>>>           gcc-powerpc64le-linux-gnu \
+>>>           libc6-dev-ppc64el-cross \
+>>>           gcc-riscv64-linux-gnu \
+>>
+>> You also need to remove the references in configure:
+>>
+
+Expanding:
+
+     case $target_arch in
+
+>>        hppa|m68k|mips|riscv64|sparc64)
+>>          container_image=debian-all-test-cross
+>>          ;;
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/openrisc/cpu.h | 9 ---------
->   1 file changed, 9 deletions(-)
+> OK.
+
+So actual patch is correct here.
+
 > 
-> diff --git a/target/openrisc/cpu.h b/target/openrisc/cpu.h
-> index f4bcf00b073..87201365a91 100644
-> --- a/target/openrisc/cpu.h
-> +++ b/target/openrisc/cpu.h
-> @@ -220,15 +220,6 @@ typedef struct OpenRISCTLBEntry {
->   typedef struct CPUOpenRISCTLBContext {
->       OpenRISCTLBEntry itlb[TLB_SIZE];
->       OpenRISCTLBEntry dtlb[TLB_SIZE];
-> -
-> -    int (*cpu_openrisc_map_address_code)(OpenRISCCPU *cpu,
-> -                                         hwaddr *physical,
-> -                                         int *prot,
-> -                                         target_ulong address, int rw);
-> -    int (*cpu_openrisc_map_address_data)(OpenRISCCPU *cpu,
-> -                                         hwaddr *physical,
-> -                                         int *prot,
-> -                                         target_ulong address, int rw);
->   } CPUOpenRISCTLBContext;
->   #endif
->   
+>>        mips64)
+>>          container_image=debian-all-test-cross
+>>          container_cross_prefix=mips64-linux-gnuabi64-
+>>          ;;
+> 
+> We aren't removing mips64 yet. We will but since the reason is
+> different, it will be in another series.
 
-Oops, my bad.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
 
