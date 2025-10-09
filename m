@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EB8CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAE8CCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6yJi-0003tt-Ev; Thu, 09 Oct 2025 17:36:54 -0400
+	id 1v6yKR-0003xU-4e; Thu, 09 Oct 2025 17:37:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1v6yJf-0003tN-Rl
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:36:51 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1v6yKN-0003wx-Gm
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:37:36 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1v6yJd-0007Nv-UZ
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:36:51 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3f2ae6fadb4so1660881f8f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 14:36:49 -0700 (PDT)
+ id 1v6yKL-0007Q5-Ay
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:37:35 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-45b4d89217aso8363805e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 14:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760045807; x=1760650607; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760045851; x=1760650651; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=en60SiizG4qoGioX6w6/FkegkbZ4Y3jxv/Hq0XUoBao=;
- b=UhrNeUQ6qp94oiVfwuzMqd9i1iIeDF2hprdRIGOAn//fvfWvrGoPcRGGgnJbGXlt2Q
- nVNimLfetsxa0kdZN3wmm1+Ju+DMsJF39hqTqXqUq0dEKQivfjY1zD1/KgryWlpdKnXh
- dPPCaUUakerE7OaKRrErhVzm71ZmxmjIq92mJrEWkSyPsVuSh8clm7pLBEHxBqtutQGQ
- VL8VLUgs4cgIO3XftmzdvyIxfhcEQB0eV1xeItvmog/U8BIdsEFxg/v/Q0pHCwq2Bveb
- KehrfWwxjquMHniUuQNpdv97GFG8qrWW2MgJJw5mmMbggTwBBqXnYC7KyCkGMpMG1DY2
- 3IOw==
+ bh=gOiVfHvJLTWKFT5cd9kXslkC3OOmjDCzvnPlGAylBms=;
+ b=NB1n0H/wVOBuDEwCHCTLpBmkBtCfKMn7JYNvGGavPO+HZ9e4ViiJqVzW03q2fSOvLp
+ 5wHEx18oi3N/eEBTMnaIyh/A5Bh7edcQa38unY5VD5WbY3up82LXWF2OjEJIGVjxaRJ3
+ v9ir/kdFU4ZodLcZDP79xIO7uGaqWHOgVgS3Xsj1Q4tsLpI9xAkfbEiTXgfIili580JT
+ cauoA5n5Xfe/yfQYdJhYz2HUh0yRY3mwWdGxz2fNhUC/eUyZhUmvRawXlyFslDhSCAN0
+ VW9TDX5/YbPjjhBlsIAFA5+C9rI2oqFWWdSA6G1hHb683FtKWEJVnvPADB8etm6vV7GG
+ XqaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760045807; x=1760650607;
+ d=1e100.net; s=20230601; t=1760045851; x=1760650651;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=en60SiizG4qoGioX6w6/FkegkbZ4Y3jxv/Hq0XUoBao=;
- b=AbnRnONAVRs6VCk0hFEdTAlbbQbwRu1inzYT2KGfIhx8LYZ2FvPhh6uJ88JD4L77ER
- IGT71LFPs7HQFC3uJaMxPDGJm+iXxMcDCHHkmddTP0zp4cUV0aGudHn+sZpL7URqOOIO
- 8Ja+FzhoCfOTtcU4gXjeSdGIIRQ/Xpe7WpyKwCdnK64AEJA1dyjekstgOIPAaBgg+h9A
- NcdJOM9Q5UzJqi6Ty5KWnASUC2HOLJZHz2vNuNri3k+vLCp+Xz3rkgSJxAHu6U7YXNhw
- wJBWz7m7SHDM+tu8vRxjPNsEvsKVQVS0QYrHrmkEaipKjBGp1kxUB7eMdB59n3GKCNPM
- Nt9Q==
-X-Gm-Message-State: AOJu0YwNgOJbkqpJXWZu9ptJQAGLsto8X6sUdKHvh0spnEfH2lsGvaX7
- YtOLh6ghjl1V8BusVM0QofcpWeXfuyTVta20TMy5/IotyFnJ0rOwc5psQiWmsG6nzuHrzbgDSJ6
- 9Gvvxvhb5FVtZpoObAwB8aIxarEnvcDo=
-X-Gm-Gg: ASbGncvmf52BFpRaZ048gVUBd52gY1NZuqyXofMy7uHeRRlYsMGqL2kBgDOua0q2U3N
- 4S1+ayRnjThzXO58P1yl+FfmNRHZbD9h86VJcRxuv910C4uBlvKtvKHK1MkQuWyVvRpDB2a5h36
- lWdR3lkhdAuE6aS/6+T2iVFWQqQbD2qV9rhbLYCDlNUNf6T3/4FmdwPnwgY7QKZAfjOYPMWMCb7
- iTxU+96Td/uORhrHSS4lwCqVKSmw7X6/jONa1bU9E3bf/wIAf0Mq42IKKYleOQ=
-X-Google-Smtp-Source: AGHT+IEEibu9NqtNdi4PxG9hGv+MrOki49CFVM87VQ+zbQ+1lWqaPUavVlIOPp+X7SqEo3t8FYouWLGD3IfkOyulY9w=
-X-Received: by 2002:a05:6000:4301:b0:3d8:3eca:a978 with SMTP id
- ffacd0b85a97d-4266726d56emr5130047f8f.21.1760045806828; Thu, 09 Oct 2025
- 14:36:46 -0700 (PDT)
+ bh=gOiVfHvJLTWKFT5cd9kXslkC3OOmjDCzvnPlGAylBms=;
+ b=CdVOsx58/k2VshPBmqZNQD4bPLoPzxszDgXXmV2rE/TpjvsCA+vAEUSlZkKeojsnyj
+ KB2twsjnfjYJEKAu/vIKYpQjkY6A5vNid8fLVxAn2Z6DD4dU9Byb9TU34lP2BSdzDC5G
+ z1aV9HDRr7kfEESgh3oncWUp2j+jbC2kt3Bv5Hqhzd+6ge+rg5rVwRovzthRsleUeqRj
+ jIyfHRkczZi1+jrmRiqldR90IGVeP91Vg/c9VfKaLWoZ7QWy81GKTJRlFkgQVKHl9VA0
+ nlsnU8FqPKBK6NPT/2PVM87mwMSNpcSg1n0G8yi9MAeZuwPtXwdSnhVKJBZl/GsFaQmA
+ jMrg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWg46NjI5TZSiIZ20Tjke1RlhV4MiYIoO1JlMnd1gfwqBI0SjJK/MFVuHfqe4EVAxH5uR5BnDQTxTe@nongnu.org
+X-Gm-Message-State: AOJu0YzIcUcuxGJs32mDnauJUj36p8lDN25rhCVPMKJQLgi6DPpEMKRx
+ LJr+KP+xVX9j0jCBVBNF/RJwgjyptL/jSmmZEtYLrvWdH5cxIwyQ+JvQyLhAuk8H2mEFjR9DsOM
+ 5So/bTLb0Z/y6TRuHTN0opou2+mqM+8k=
+X-Gm-Gg: ASbGnctxXHgQbOA5OM47xSdLdAZpfyYbzrzl3nSESdWPWHy8cIELpkQlNU7GoxkaiTE
+ ZfYkvqtG6DOd1/O01Z+qZxJyBtspVup0dKKzxQfGJJLaQo2Kgv8z4QluqX0ND+LEehmICNNEWzv
+ hkx242a6xB+m0QrRaAhIZtve/4HrjqMlWWoiS6qOHN4m5vibc91HJhXFNffnewRhOvy2MSSA8Sj
+ 7YxFSMmJd1FQAvAC5tEoOSHmUd5kp6XxCEohSxvovq/dpv1I268lLkFVb8kYeE=
+X-Google-Smtp-Source: AGHT+IEAQ8qNd8DOYr6eNnXk9rwnGqjnEdwR8O/uOAhp45H+GNZ4SIBzfhBNE2PaZubwFfM9eHIjnac9tqNiC09XC/A=
+X-Received: by 2002:a05:600c:810a:b0:45f:2805:91df with SMTP id
+ 5b1f17b1804b1-46fa9af8338mr56646395e9.20.1760045851314; Thu, 09 Oct 2025
+ 14:37:31 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251009195943.438454-1-brian.cain@oss.qualcomm.com>
- <20251009195943.438454-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20251009195943.438454-2-brian.cain@oss.qualcomm.com>
+ <20251009195943.438454-3-brian.cain@oss.qualcomm.com>
+ <e61d9cbd-62eb-43f7-ad82-904ae4ba9ee0@linaro.org>
+In-Reply-To: <e61d9cbd-62eb-43f7-ad82-904ae4ba9ee0@linaro.org>
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Thu, 9 Oct 2025 15:36:35 -0600
-X-Gm-Features: AS18NWD2ZCdBv_jB1YHAg2d1DiO4DyNo5i3GqewYB5uU5FhL1OUgUZ_OfOjRMpQ
-Message-ID: <CAATN3NrnVardwm9rXvHL_OhaotpWWEAiP0efL23G3h=nq4t4MA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] linux-user/hexagon: Fix sigcontext
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org, 
- matheus.bernardino@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, 
- marco.liebel@oss.qualcomm.com, alex.bennee@linaro.org, 
+Date: Thu, 9 Oct 2025 15:37:20 -0600
+X-Gm-Features: AS18NWAOiWIiVxptEWiSJK03OsMF3GEdYCuAMDGGbHJvFaAgM4kK9OAs9SW7U_4
+Message-ID: <CAATN3Now7mYz0Xg=hu5d7EzR54EGx7XPSdqhwLBv+urWAuhNeg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] linux-user/hexagon: use abi_ulong
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org, 
+ richard.henderson@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, alex.bennee@linaro.org, 
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, 
- =?UTF-8?Q?Alex_R=C3=B8nne_Petersen?= <alex@alexrp.com>, 
  Laurent Vivier <laurent@vivier.eu>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,21 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 9, 2025 at 1:59=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm.=
-com> wrote:
+On Thu, Oct 9, 2025 at 2:22=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
 >
-> In order to correspond with the kernel, we've now (1) moved the
-> preds[] to the right offset and combined the representation as a single
-> ulong "p3_0", (2), added the cs{0,1} registers, (3) added a pad for 48
-> words, (4) added the user regs structure to an 8-byte aligned
-> target_sigcontext structure.
+> On 9/10/25 21:59, Brian Cain wrote:
+> > Change the user_regs_struct to use abi_ulong instead of
+> > target_ulong.
+> >
+> > Link: https://lore.kernel.org/qemu-devel/7bf3d8c5-df07-4cbd-ba62-4c7246=
+a5f96b@linaro.org/
+> > Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> > ---
+> >   linux-user/hexagon/signal.c | 52 ++++++++++++++++++------------------=
+-
+> >   1 file changed, 26 insertions(+), 26 deletions(-)
+> >
+> > diff --git a/linux-user/hexagon/signal.c b/linux-user/hexagon/signal.c
+> > index 2847952216..e5514b2bec 100644
+> > --- a/linux-user/hexagon/signal.c
+> > +++ b/linux-user/hexagon/signal.c
+> > @@ -24,30 +24,30 @@
+> >   #include "linux-user/trace.h"
+> >
+> >   struct target_user_regs_struct {
+> > -    target_ulong r0,  r1,  r2,  r3;
+> > -    target_ulong r4,  r5,  r6,  r7;
+> > -    target_ulong r8,  r9, r10, r11;
+> > -    target_ulong r12, r13, r14, r15;
+> > -    target_ulong r16, r17, r18, r19;
+> > -    target_ulong r20, r21, r22, r23;
+> > -    target_ulong r24, r25, r26, r27;
+> > -    target_ulong r28, r29, r30, r31;
 >
-> Co-authored-by: Alex R=C3=B8nne Petersen <alex@alexrp.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  linux-user/hexagon/signal.c | 209 ++++++++++++++++++++----------------
->  1 file changed, 117 insertions(+), 92 deletions(-)
+> Yay!
 >
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
