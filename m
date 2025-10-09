@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F613CCD18D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1641FCCD18A
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6lQi-0008JB-P9; Thu, 09 Oct 2025 03:51:17 -0400
+	id 1v6lQk-0008KL-AY; Thu, 09 Oct 2025 03:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lQh-0008I6-HF
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:15 -0400
+ id 1v6lQi-0008Im-5G
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lQc-0004Pw-Hq
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:13 -0400
+ id 1v6lQe-0004QG-Rj
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759996269;
+ s=mimecast20190719; t=1759996271;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b35OUmPIlkjRw+EK5NvtUyTuytJCRQht6eOVyHoxw6k=;
- b=bO4U6/Z1E0TBjKKQfMW9LE1k1zPjeo0Iu+xXc6rujXAL5uptG0885Xm0CKKYPyJGAuQme0
- cSAs7JSwBCYqZfBJJdpO16JrHeYUCO/jDU9gKbo3yRPvWLBwqphMm9vYAVcM/nj9jvyw8a
- 8V1TinsUd76FMFVK4q8XViwAkebgt2Y=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rUFiULUVUzPH0BKks65FyI6vNwb5lhVHtOUe9XrvOsw=;
+ b=MxkeYlvPktbiKY0jlexyzuhvMmUKk69WUOMcnQtlIN9b05eot3X+RUwWHfYz6UpZm+4QS/
+ e4zcyYXi5vIOZPBsZHuV27ZGSOtYJDbckB5gf1j/pqDLAK+RcHlJg7SZgQNopGbUjUGx0l
+ tXbKoFPICwyIIuNP1czrUzf9LUKWYY4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615--WtnrEZrOOeAWN1SdpzbTg-1; Thu, 09 Oct 2025 03:51:07 -0400
-X-MC-Unique: -WtnrEZrOOeAWN1SdpzbTg-1
-X-Mimecast-MFC-AGG-ID: -WtnrEZrOOeAWN1SdpzbTg_1759996266
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e36686ca1so6611835e9.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:07 -0700 (PDT)
+ us-mta-277-lqbaUwSDOP2jKGhIorblWw-1; Thu, 09 Oct 2025 03:51:09 -0400
+X-MC-Unique: lqbaUwSDOP2jKGhIorblWw-1
+X-Mimecast-MFC-AGG-ID: lqbaUwSDOP2jKGhIorblWw_1759996268
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46b303f6c9cso4328605e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759996265; x=1760601065;
+ d=1e100.net; s=20230601; t=1759996268; x=1760601068;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b35OUmPIlkjRw+EK5NvtUyTuytJCRQht6eOVyHoxw6k=;
- b=XJEH1iZjy+pAq1db30rQDFoRwuqKHa5sVAbytezK9wAeh8H1tQAdUusX0NKw+OY1+U
- ZazUFTIDfvpAmczi/Bl5czD6M6yO5B9FS+UlijdCKuYHh+BDRCfL5W4hksAsqrDT4+6p
- tXCJvdTeYJ4QQDUXFkXMY2DOtkP12RHCn5M2c9gvqM9d6TrUgHX2Pqus4co30gkYKvgz
- 5ELgH/TKMLb6zGCIlR/mcXdw3G9+Q7Oy8b7hthRlUp2A6VPw701MvjVSGW0XBfurxPnW
- 9wZJYzU6yFhacn3gNVizluk1locF5FGtZ+xsAi1Wq1pJVAXRIMsUAa+mkMtE9Sfb0gkZ
- 8Nsw==
-X-Gm-Message-State: AOJu0YwGrv6h86Zbg1WQDXR5D1lnIhul+IuuWCLwvTF97n2qd6+88j2n
- btDJHh7SjzvvQfPV2sA6SAwfr+2D27OhZWzc7AhmuhcZ+jaF1DB4gBjFpIZi1euWjp6NQxYB+U9
- o+Ygr8eUJ8mSj6rnH8ASY+9tPF8sms70Iy1wTdvO/U9EDxJI0YriWWw+aqvg/Y6wTeWQB/umhMp
- q53uq43fPS1pafJ3B5kVom+RAZqILts7i2wAMkLSfexrA=
-X-Gm-Gg: ASbGncv2Fayvqedj/0HM/E4cuBAhi8p+CsvHsRoQurnx5Qp/4clFwKjipFIjrFsgBvd
- 6AO2ivxRfAWM6U/yOira4tYUnwTvBSZazZws9SUCPuOhs1H+Bbe6IbeyWQNVH9CeBcop7h28aKb
- 3fbTzJVdXYNWa6BL1cbhAe6SunLqyaQqIHrfryOWSBj+/A2zMbtWYsUCRJGld/leed+fbV5JoK4
- wkMispMGZCuqUB2fDILTDq254v9atttHWDEfdkhurCEop/JiCfluJ/OggEGaDEJSbPFWeV2NYjR
- nIxMgxGvOZWSHB4ITGdC6IhzcSJiBMVDCSk/uvB1pg42BJvDSVEOlLYrnQnkmMxa8X41AUQ46dd
- CJTPA466r/c1B+9X5uYiUYWodXjd0VhfusDqSYT8acIDqG/Ew
-X-Received: by 2002:a05:600c:5492:b0:46e:477a:16cc with SMTP id
- 5b1f17b1804b1-46fa9af84ecmr50381985e9.24.1759996264644; 
- Thu, 09 Oct 2025 00:51:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAvcuJXjN4OaFnvU0BDpMBtHHOzemqxtXXbrzSy/pAfs0RHqZFHrlS13MzzsnxgNxVybLHlA==
-X-Received: by 2002:a05:600c:5492:b0:46e:477a:16cc with SMTP id
- 5b1f17b1804b1-46fa9af84ecmr50381745e9.24.1759996264196; 
- Thu, 09 Oct 2025 00:51:04 -0700 (PDT)
+ bh=rUFiULUVUzPH0BKks65FyI6vNwb5lhVHtOUe9XrvOsw=;
+ b=ppEF7SaBzvtPJp5UmRnnnHtTrIXtTpcsBC1EWzTidfBiCUywYIRcwqqpxNDJDsqegw
+ pyIyjry4B+AHBg7wRI/ed2HVQP9EBmGZa4Jcgbs409zgj+RoSzwCYxe9KTtgvIrxM5tA
+ +xXfhDoyOrgTBdfh1GxSWFs/p/xnNTamaS+YtO5z3mapgBuV8Vjy8hwViE6H8xCQc7QE
+ ov3P67NqqcYKSlhBuj1oreKtxNnuODBvHLzNWOR2Kw+Rq/V53PXK7uXH4tnzKvrdI5bH
+ B9Kd7O03lUHAIgYQ6hBsyxtjyImaB3vWnUR6ISa9E6r8j4iKoxC6SNH1GBnJoAorOepn
+ 0F5Q==
+X-Gm-Message-State: AOJu0YxbngIuQLYGd3fi5eQ0seLE1/8IjQSKu5snxCs+Jv/WEUuQ2d8u
+ tYTIn2JHJ8hHyC2tQTuDmMXsXp5sj4FQD4kbwjpTwS1rWOAtExu5J+YiSIQLHq5N605uJNQ/k7v
+ WvSyVqRkN5w7OQzWmi5/mYChKZ4Kgu0xh2Z4bSH/gzLBoUdxBKLZG7Z/Qff7gFKiyMu4Hkm32lH
+ iEzH1DUgwF5o4mGouxqWPC2ryfOlB+6gWar+MRtfzH2xU=
+X-Gm-Gg: ASbGncuKC68bXyy/ExRp6B/P2QoJQU7fxFXD4oNDyC4shKrwLF22Zy0sixell8O1dh9
+ 3SdLhz+iIxzWVKdX9n+po76Q1WGlyR0gPPV3fgFOksplZc1RPmOEWN10zmJ1x4nPkNOaGWUAYia
+ VUP/qnUB1NMlT71ZbTztjaiQ8RDaEOF7Lng/gsP8V28Ha8bk18YJVZbxGlxHx0AkEPQBKP9Bq9C
+ q8UDfiQUZv4of3cooWhFObb0e0gob0cxs2Mloe/v2EloU+OmfLvP38AP4eXXB2vdxKXU816F9ZN
+ JHIjt2r4X3RjRzv77aSA0j3y1LoH0vYMXsU97GLbdNxqHXxRl69QYGocZPz6l43Ya3iAv6JvKmm
+ 3LQVLWxPGB6CG/FAWnX7FDyeh5kD0QjWOfe3lUmhEDusfc9bw
+X-Received: by 2002:a05:600c:3b2a:b0:461:8bdb:e8 with SMTP id
+ 5b1f17b1804b1-46fa9b06c50mr50772595e9.30.1759996267940; 
+ Thu, 09 Oct 2025 00:51:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcmxZ0RQ3ZSpR7X2jz0a7Uc3cD7JtYWf8Nr2Y04yPz0GR7R04c0TGJprT5HfxkzfiNxk1kBg==
+X-Received: by 2002:a05:600c:3b2a:b0:461:8bdb:e8 with SMTP id
+ 5b1f17b1804b1-46fa9b06c50mr50772305e9.30.1759996267492; 
+ Thu, 09 Oct 2025 00:51:07 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.36.217])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d8f02a8sm33790239f8f.39.2025.10.09.00.51.03
+ 5b1f17b1804b1-46fab633cdasm30515265e9.9.2025.10.09.00.51.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Oct 2025 00:51:03 -0700 (PDT)
+ Thu, 09 Oct 2025 00:51:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 17/35] accel/mshv: Add vCPU signal handling
-Date: Thu,  9 Oct 2025 09:50:07 +0200
-Message-ID: <20251009075026.505715-18-pbonzini@redhat.com>
+Subject: [PULL 18/35] target/i386/mshv: Add CPU create and remove logic
+Date: Thu,  9 Oct 2025 09:50:08 +0200
+Message-ID: <20251009075026.505715-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009075026.505715-1-pbonzini@redhat.com>
 References: <20251009075026.505715-1-pbonzini@redhat.com>
@@ -111,64 +111,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Implement signal handling for MSHV vCPUs to support asynchronous
-interrupts from the main thread.
+Implement MSHV-specific hooks for vCPU creation and teardown in the
+i386 target.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250916164847.77883-12-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20250916164847.77883-13-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/mshv/mshv-all.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index e02421d79d4..fa1f8f35bdb 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -524,6 +524,35 @@ static int mshv_cpu_exec(CPUState *cpu)
-     return ret;
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 02d71ebc14a..5069ab7a22f 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -30,6 +30,8 @@
+ #include "trace-accel_mshv.h"
+ #include "trace.h"
+ 
++#include <sys/ioctl.h>
++
+ int mshv_store_regs(CPUState *cpu)
+ {
+     error_report("unimplemented");
+@@ -62,20 +64,29 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+ 
+ void mshv_remove_vcpu(int vm_fd, int cpu_fd)
+ {
+-    error_report("unimplemented");
+-    abort();
++    close(cpu_fd);
  }
  
-+/*
-+ * The signal handler is triggered when QEMU's main thread receives a SIG_IPI
-+ * (SIGUSR1). This signal causes the current CPU thread to be kicked, forcing a
-+ * VM exit on the CPU. The VM exit generates an exit reason that breaks the loop
-+ * (see mshv_cpu_exec). If the exit is due to a Ctrl+A+x command, the system
-+ * will shut down. For other cases, the system will continue running.
-+ */
-+static void sa_ipi_handler(int sig)
-+{
-+    /* TODO: call IOCTL to set_immediate_exit, once implemented. */
 +
-+    qemu_cpu_kick_self();
-+}
-+
-+static void init_signal(CPUState *cpu)
-+{
-+    /* init cpu signals */
-+    struct sigaction sigact;
-+    sigset_t set;
-+
-+    memset(&sigact, 0, sizeof(sigact));
-+    sigact.sa_handler = sa_ipi_handler;
-+    sigaction(SIG_IPI, &sigact, NULL);
-+
-+    pthread_sigmask(SIG_BLOCK, NULL, &set);
-+    sigdelset(&set, SIG_IPI);
-+    pthread_sigmask(SIG_SETMASK, &set, NULL);
-+}
-+
- static void *mshv_vcpu_thread(void *arg)
+ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
  {
-     CPUState *cpu = arg;
-@@ -540,6 +569,7 @@ static void *mshv_vcpu_thread(void *arg)
-         error_report("Failed to init vcpu %d", cpu->cpu_index);
-         goto cleanup;
-     }
-+    init_signal(cpu);
+-    error_report("unimplemented");
+-    abort();
++    int ret;
++    struct mshv_create_vp vp_arg = {
++        .vp_index = vp_index,
++    };
++    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
++    if (ret < 0) {
++        error_report("failed to create mshv vcpu: %s", strerror(errno));
++        return -1;
++    }
++
++    *cpu_fd = ret;
++
++    return 0;
+ }
  
-     /* signal CPU creation */
-     cpu_thread_signal_created(cpu);
+ void mshv_init_mmio_emu(void)
+ {
+-    error_report("unimplemented");
+-    abort();
+ }
+ 
+ void mshv_arch_init_vcpu(CPUState *cpu)
 -- 
 2.51.0
 
