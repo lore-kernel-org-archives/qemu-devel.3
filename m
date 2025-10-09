@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3929CCD18A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 11:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC4CCCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 11:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6p1R-00081k-EP; Thu, 09 Oct 2025 07:41:25 -0400
+	id 1v6p4W-0001Ou-4d; Thu, 09 Oct 2025 07:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1v6p1N-00081A-Mq
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 07:41:22 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1v6p4T-0001NX-BG; Thu, 09 Oct 2025 07:44:33 -0400
+Received: from mxhk.zte.com.cn ([160.30.148.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1v6p1H-0005Bm-1l
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 07:41:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=iGljD3PrM0SPifuG12leOCv9//BjDBDvOjuQuhn9WyE=; b=B+so5T4MtN/7NpyN
- kPGaj2eZA3EastluDPUD3eT0DXzzDVuNWCyxa6+Au1JycoSIeoFyHqxgzzq95xHNaSsfgW19bFOjx
- 4f4sFd48BLblemqBBXulBdVoZFeaC/aUGqFAf3HLIJjDl/3+HQuGrHPtAX4MRgSRP9O3itrVSvdWv
- kdI7DAypgkzJJ+nw9S6VZl9gJDxehdskB4Y4+YiJUop4jvwKMIy7I/Y+zeGyeQjcqU4vilAz+Iars
- xFJAkip3b+UZFp4/ZiSLQfFNYLRYDb29/bqIjGF03kl4Y1/rqtdyQmXOxcwZKMMErXCAXmDy4tsqd
- T0EW3gHQ066BAPvzcg==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1v6p16-00FTyG-25;
- Thu, 09 Oct 2025 11:41:04 +0000
-Date: Thu, 9 Oct 2025 11:41:04 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2] hw/uefi: add "info ovmf-log" + "query-ovmf-log"
- monitor commands
-Message-ID: <aOefUN5_bSKjWPLc@gallifrey>
-References: <20251007135216.1687648-1-kraxel@redhat.com>
- <aOcWOQJt-zLbiyUK@gallifrey> <aOdggKKyDtf3z57J@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aOdggKKyDtf3z57J@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 11:08:27 up 164 days, 19:22,  1 user,  load average: 0.12, 0.07, 0.01
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1v6p4M-0005Nh-IY; Thu, 09 Oct 2025 07:44:32 -0400
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4cj7M76bwfz8Xs6y;
+ Thu, 09 Oct 2025 19:44:19 +0800 (CST)
+Received: from xaxapp02.zte.com.cn ([10.88.97.241])
+ by mse-fl1.zte.com.cn with SMTP id 599BiAws092771;
+ Thu, 9 Oct 2025 19:44:10 +0800 (+08)
+ (envelope-from liu.xuemei1@zte.com.cn)
+Received: from mapi (xaxapp05[null]) by mapi (Zmail) with MAPI id mid32;
+ Thu, 9 Oct 2025 19:44:12 +0800 (CST)
+Date: Thu, 9 Oct 2025 19:44:12 +0800 (CST)
+X-Zmail-TransId: 2afc68e7a00c147-47f10
+X-Mailer: Zmail v1.0
+Message-ID: <20251009194412991WyQf8sgUCjO63sDJZCgAT@zte.com.cn>
+In-Reply-To: <202510091940382809HwqVAalRODBWrvsUvqF8@zte.com.cn>
+References: 202510091940382809HwqVAalRODBWrvsUvqF8@zte.com.cn
+Mime-Version: 1.0
+From: <liu.xuemei1@zte.com.cn>
+To: <liu.xuemei1@zte.com.cn>
+Cc: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <sunilvl@ventanamicro.com>,
+ <bjorn@rivosinc.com>, <anisinha@redhat.com>, <qemu-riscv@nongnu.org>,
+ <qemu-devel@nongnu.org>, <liu.xuemei1@zte.com.cn>
+Subject: =?UTF-8?B?W1BBVENIIHY0IDEvMl0gaHcvcmlzY3YvdmlydDogQWRkIGFjcGkgZ2VkIGFuZCBwb3dlcmRvd24gc3VwcG9ydA==?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl1.zte.com.cn 599BiAws092771
+X-TLS: YES
+X-SPF-DOMAIN: zte.com.cn
+X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
+X-SPF: None
+X-SOURCE-IP: 10.5.228.132 unknown Thu, 09 Oct 2025 19:44:19 +0800
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 68E7A013.000/4cj7M76bwfz8Xs6y
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.738,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,51 +79,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Daniel P. Berrang� (berrange@redhat.com) wrote:
-> On Thu, Oct 09, 2025 at 01:56:09AM +0000, Dr. David Alan Gilbert wrote:
-> > * Gerd Hoffmann (kraxel@redhat.com) wrote:
-> > > Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
-> > > optional support for logging to a memory buffer.  There is guest side
-> > > support -- for example in linux kernels v6.17+ -- to read that buffer.
-> > > But that might not helpful if your guest stops booting early enough that
-> > > guest tooling can not be used yet.  So host side support to read that
-> > > log buffer is a useful thing to have.
-> > > 
-> > > This patch implements both qmp and hmp monitor commands to read the
-> > > firmware log.
-> > > 
-> > > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> > 
-> > I'm OK with that, but I wonder if it would be better to have a command
-> > that wrote the buffer to a file rather than displaying it directly; I don't
-> > think we normally have anything else which outputs that much raw guest
-> > provided data directly.
-> > I assume when it goes wrong you end up with random unprintable junk in
-> > the buffer.
-> 
-> 128 KB is on the high side, but is not terrible. Libvirt (arbitrarily)
-> caps a QMP reply at 10 MB. Libvirt is going to want to send this on to
-> the client app and will likely do that streaming in memory, so having
-> it iin a file is not required from our POV.
-> 
-> IIRC, some of the query-block command replies can get insanely huge
-> when the qcow2 chain is very long.
+From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-OK, what about sanitisation - if that text contains random binary what happens,
-or should we make sure it's sanitised?
+This adds powerdown support by implementing the ACPI GED.
 
-Dave
+Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+Co-authored-by: Björn Töpel <bjorn@rivosinc.com>
+---
+ hw/riscv/Kconfig                            |  1 +
+ hw/riscv/virt-acpi-build.c                  | 10 ++++++
+ hw/riscv/virt.c                             | 35 +++++++++++++++++++++
+ include/hw/riscv/virt.h                     |  4 +++
+ tests/qtest/bios-tables-test-allowed-diff.h |  1 +
+ 5 files changed, 51 insertions(+)
 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-> 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index fc9c35bd98..f89a6e3672 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -68,6 +68,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    select ACPI_HW_REDUCED
+
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index f1406cb683..64fd8aa426 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -27,6 +27,7 @@
+ #include "hw/acpi/acpi-defs.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "hw/acpi/pci.h"
+ #include "hw/acpi/utils.h"
+ #include "hw/intc/riscv_aclint.h"
+@@ -498,6 +499,15 @@ static void build_dsdt(GArray *table_data,
+         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
+     }
+
++    if (s->acpi_ged) {
++        build_ged_aml(scope, "\\_SB."GED_DEVICE,
++                      HOTPLUG_HANDLER(s->acpi_ged),
++                      ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
++                      s->memmap[VIRT_ACPI_GED].base);
++    }
++
++    acpi_dsdt_add_power_button(scope);
++
+     aml_append(dsdt, scope);
+
+     /* copy AML table into ACPI tables blob and patch header there */
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 47e573f85a..5bb1504498 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -51,10 +51,12 @@
+ #include "system/kvm.h"
+ #include "system/tpm.h"
+ #include "system/qtest.h"
++#include "system/runstate.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci-host/gpex.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
+@@ -95,6 +97,7 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_UART0] =        { 0x10000000,         0x100 },
+     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
++    [VIRT_ACPI_GED] =     { 0x10101000, ACPI_GED_EVT_SEL_LEN },
+     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+@@ -1270,6 +1273,22 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+     return dev;
+ }
+
++static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqchip)
++{
++    DeviceState *dev;
++    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
++
++    dev = qdev_new(TYPE_ACPI_GED);
++    qdev_prop_set_uint32(dev, "ged-event", event);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
++                       qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
++
++    return dev;
++}
++
+ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ {
+     FWCfgState *fw_cfg;
+@@ -1428,6 +1447,14 @@ static void virt_build_smbios(RISCVVirtState *s)
+     }
+ }
+
++static void virt_powerdown_req(Notifier *notifier, void *opaque)
++{
++    RISCVVirtState *s;
++
++    s = container_of(notifier, RISCVVirtState, powerdown_notifier);
++    acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
++}
++
+ static void virt_machine_done(Notifier *notifier, void *data)
+ {
+     RISCVVirtState *s = container_of(notifier, RISCVVirtState,
+@@ -1701,6 +1728,11 @@ static void virt_machine_init(MachineState *machine)
+
+     create_platform_bus(s, mmio_irqchip);
+
++    /* acpi ged */
++    if (virt_is_acpi_enabled(s)) {
++        s->acpi_ged = create_acpi_ged(s, mmio_irqchip);
++    }
++
+     serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
+         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+         serial_hd(0), DEVICE_LITTLE_ENDIAN);
+@@ -1742,6 +1774,9 @@ static void virt_machine_init(MachineState *machine)
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+     }
+
++    s->powerdown_notifier.notify = virt_powerdown_req;
++    qemu_register_powerdown_notifier(&s->powerdown_notifier);
++
+     s->machine_done.notify = virt_machine_done;
+     qemu_add_machine_init_done_notifier(&s->machine_done);
+ }
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 7b4c2c8b7d..9422b45d0c 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -47,6 +47,8 @@ struct RISCVVirtState {
+
+     /*< public >*/
+     Notifier machine_done;
++    Notifier powerdown_notifier;
++    DeviceState *acpi_ged;
+     DeviceState *platform_bus_dev;
+     RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
+     DeviceState *irqchip[VIRT_SOCKETS_MAX];
+@@ -88,9 +90,11 @@ enum {
+     VIRT_PLATFORM_BUS,
+     VIRT_PCIE_ECAM,
+     VIRT_IOMMU_SYS,
++    VIRT_ACPI_GED,
+ };
+
+ enum {
++    ACPI_GED_IRQ = 9,
+     UART0_IRQ = 10,
+     RTC_IRQ = 11,
+     VIRTIO_IRQ = 1, /* 1 to 8 */
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..8e85fcdee9 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/riscv64/virt/DSDT",
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.27.0
 
