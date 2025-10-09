@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED29CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35412CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6xjO-0002Ww-KX; Thu, 09 Oct 2025 16:59:22 -0400
+	id 1v6xv3-0004ql-2e; Thu, 09 Oct 2025 17:11:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v6xjM-0002WR-Bi; Thu, 09 Oct 2025 16:59:20 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v6xjK-0003Cx-CV; Thu, 09 Oct 2025 16:59:20 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8CF47C0548;
- Thu, 09 Oct 2025 23:59:15 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:162::1:3a] (unknown
- [2a02:6bf:8080:162::1:3a])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ExRB131FKGk0-kNosNbKe; Thu, 09 Oct 2025 23:59:15 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760043555;
- bh=M9Py21Dd2Nh55ZgOTUI+3ecbIR7LYGocwR9OsyxhdU0=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=kP0tp5NUQhZL6DrXsbe84P1rDGVPYZy8/GD++ro7e/TgD1sxZrrt6OTKQAV+zW6Ns
- 7tdu2ETkHr+oV3DEpszoPhQFdirxESMMxQRYhzK4kTblbXNY5iOwU8vK/IF/jGkBMy
- X7Jm16hbC/h6RcTBGk1KwmuOjM2QzeB+zKsiEAaQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <727971fa-f181-460d-80f9-9fab24774269@yandex-team.ru>
-Date: Thu, 9 Oct 2025 23:59:14 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 30/33] virtio: support vhost backend migration
-To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
- den-plotnikov@yandex-team.ru
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-31-vsementsov@yandex-team.ru>
- <CAFubqFs_N0bUF9Gh2y14fX1W0ZwtrJfTomR7Q6sHXNGWMY7QrQ@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAFubqFs_N0bUF9Gh2y14fX1W0ZwtrJfTomR7Q6sHXNGWMY7QrQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <39iToaAcKCi8YLgTOPXRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--navidem.bounces.google.com>)
+ id 1v6xv1-0004qc-G3
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:11:23 -0400
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <39iToaAcKCi8YLgTOPXRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--navidem.bounces.google.com>)
+ id 1v6xuz-0004eS-EN
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:11:23 -0400
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-269880a7bd9so30887545ad.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 14:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1760044278; x=1760649078; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Q0tFtzyt+FjI6rkGDEv+WSzzOsZAtXdzvzGPwjAg5wc=;
+ b=JfO/w8rL8WaHQatX7YfUfJewwkgh9+Wzj+5nG13gAe9vq5uH3jjivSFfbgRFMuS6Jy
+ hzKnG2WTLpdHkDkMyJgu8W01r6vQYetxrI1VfG2mxYY/WGD7R9VX7lz0Cy75Wb4rV5ll
+ L+ZhAGFXC+633VneFhKwocIibu78CDv72k090iV/5GfOL8mBZfGaAf1gc/2qL5Udphpe
+ yz6Mt6F60D6tdZYidp43n/H+en2efWBVmzBhj66Xiuke+Je9xgE7qa6+UdAKOsSAhRgg
+ 94SXeJ0cgmIXUCuW7fesVHe8ce0dCOXNlhRX5U7l+lTyarDwpve9yjy12kNyUAM8/KiR
+ qbxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760044278; x=1760649078;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q0tFtzyt+FjI6rkGDEv+WSzzOsZAtXdzvzGPwjAg5wc=;
+ b=vPnoFBgrcsGUA0iLI52vmMqUyR6AJT8aQf+7gQJz1l6BeRWBgCZAF6ZDAOSSwgmIo3
+ Zp59O8lJuE1pvwgUkhXViCL9pCP8XSp5SSXpdAXq8NODAmmn7NDGshnpv8LobA7inbKX
+ sbe3x7BU9jFOUUxsPBoGWkXjRZI3TcfJ621ZqkdxyujQLnUa7MMPVIaMqz80vm3YLSTB
+ Rn8tLvsMsMqS948stJ8QN8vaAwaGemSQz7O1tXmnkvs86GEco21EPNvQDAbQQbLq7Kv/
+ DfQBttQH5LEhq1ouDeFG9hS1PVnZeFWPxlweXeIVtn1nlZPyXJdYA8cQQYgQZI0+mr/8
+ m1pQ==
+X-Gm-Message-State: AOJu0YzOve9j72kLIYq46gp6nWFgtSAnYZAyTHOkV8pVyLAE1TGTAqkN
+ ensU4/gBBymh1Hu7sxbBpzrTQi0ORLeevUc8WoJTyQvLIgngbqiSGF3sZxIAHh06F96b13M8Qjr
+ LP2U6nzRgcwdYaYxLIvEZSnaV0Sx7I2npWkcRTOLHjCu9Pfk6x1YjdPpA8eR5QjXyxO4eFan9ML
+ hKHkQAv/XtAvhWMjvHUPitPVQgYVl4d5YtOsXd7SVr
+X-Google-Smtp-Source: AGHT+IEjxUHtaBRgvdS8JX3l6pH1dqgm6gpXAUAFlRBkb7BZToCZxiuU3uswLKIrLiiCg8ho1Wy3UgYBYxbG
+X-Received: from plsa9.prod.google.com ([2002:a17:902:b589:b0:269:9eda:4f2c])
+ (user=navidem job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:903:2ecd:b0:265:57dc:977b
+ with SMTP id d9443c01a7336-2902741e47dmr104890575ad.61.1760044278280; Thu, 09
+ Oct 2025 14:11:18 -0700 (PDT)
+Date: Thu,  9 Oct 2025 21:11:14 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.51.0.740.g6adb054d12-goog
+Message-ID: <20251009211114.2214848-1-navidem@google.com>
+Subject: [PATCH] tests/qtest/fuzz: Add generic fuzzer for VNC
+From: Navid Emamdoost <navidem@google.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, navidem@google.com, zsm@google.com, 
+ Alexander Bulekov <alxndr@bu.edu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Bandan Das <bsd@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>, 
+ Qiuhao Li <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=39iToaAcKCi8YLgTOPXRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--navidem.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,68 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.10.25 22:09, Raphael Norwitz wrote:
-> A few nits. Looks like there has been some churn here so this patch
-> will need to be rebased.
-> 
-> On Wed, Aug 13, 2025 at 1:01 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> Add logic to transfer virtio notifiers through migration channel
->> for vhost backend migration case.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
+Add a new generic fuzz target for the QEMU VNC server. This allows the
+generic fuzzer to directly exercise the VNC protocol implementation by
+connecting to a VNC unix socket.
 
-[..]
+---
 
->> @@ -3317,6 +3340,10 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
->>           }
->>       }
->>
->> +    if (migrating_backend) {
-> 
-> nit: spurious spaces after &vdev->config_notifier
+This new target increases code coverage in the VNC subsystem
+and related networking and I/O code.
+The baseline coverage below was generated by running all existing fuzz
+targets with the oss-fuzz corpus. The new target shows significant gains:
 
-Oh, kept in v2) Will fix.
+----------------------------------------------------------------------------
+File                       New Target                Baseline        Change
+----------------------------------------------------------------------------
+vnc.c                      339/3212 (10.6%)     3/3212 (0.1%)        +336
+keymaps.c                  91/184 (49.5%)       0/184 (0.0%)         +91
+net-listener.c             76/198 (38.4%)       3/198 (1.5%)         +73
+channel-socket.c           73/575 (12.7%)       19/575 (3.3%)        +54
+qemu-sockets.c             44/1019 (4.3%)       0/1019 (0.0%)        +44
+vnc-jobs.c                 41/219 (18.7%)       0/219 (0.0%)         +41
+dns-resolver.c             28/145 (19.3%)       3/145 (2.1%)         +25
 
-> 
->> +        event_notifier_init_fd(&vdev->config_notifier   , qemu_file_get_fd(f));
->> +    }
->> +
->>       virtio_notify_vector(vdev, VIRTIO_NO_VECTOR);
->>
->>       if (vdc->load != NULL) {
+Signed-off-by: Navid Emamdoost <navidem@google.com>
+---
+ tests/qtest/fuzz/generic_fuzz_configs.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-[..]
-
->> @@ -3394,6 +3434,18 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
->>                   continue;
->>               }
->>
->> +            if (migrating_backend) {
->> +                /*
-> 
-> "prior to backend migration"?
-> 
-
-Right, will fix.
-
-> 
-> 
->> +                 * Indices are not synced prior backend migration (as we don't
->> +                 * stop vrings by GET_VRING_BASE). No reason to sync them now,
->> +                 * and do any checks.
->> +                 */
->> +                vdev->vq[i].used_idx = 0;
->> +                vdev->vq[i].shadow_avail_idx = 0;
->> +                vdev->vq[i].inuse = 0;
->> +                continue;
->> +            }
-
-[..]
-
+diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/generic_fuzz_configs.h
+index ef0ad95712..2e802ab226 100644
+--- a/tests/qtest/fuzz/generic_fuzz_configs.h
++++ b/tests/qtest/fuzz/generic_fuzz_configs.h
+@@ -247,6 +247,10 @@ const generic_fuzz_config predefined_configs[] = {
+         .args = "-machine q35 -nodefaults "
+         "-parallel file:/dev/null",
+         .objects = "parallel*",
++    },{
++        .name = "vnc",
++        .args = "-machine q35 -nodefaults -vnc vnc=unix:/tmp/qemu-vnc.sock",
++        .objects = "*",
+     }
+ };
+ 
 -- 
-Best regards,
-Vladimir
+2.51.0.740.g6adb054d12-goog
+
 
