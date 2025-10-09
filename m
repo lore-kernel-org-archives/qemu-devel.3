@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1321ECCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB98CCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6tqX-0003VU-B7; Thu, 09 Oct 2025 12:50:29 -0400
+	id 1v6tqx-00041u-Kq; Thu, 09 Oct 2025 12:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6tqT-0003T6-RX
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:50:26 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1v6tqs-0003sa-Is
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:50:51 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6tqP-0005Jm-4E
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:50:25 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-793021f348fso1121141b3a.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:50:20 -0700 (PDT)
+ id 1v6tqm-0005Np-B4
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:50:50 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-781010ff051so868967b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760028617; x=1760633417; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760028640; x=1760633440; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5qY8ajv3HEH8Vsg1klMI+O3dfzQOSkTVp4xxu2G3fgs=;
- b=KVE7KbhJvLbtB9jbwj6n87dERyR9DHpWxYzfa09xInpMV2gjX1gQDHLXScIvPnK3tB
- R0g/Yyw3DQh9h8PCS4ICIvyWnXyvaavBwk+YJZ8ZfLQaDTfiEjpqA6Vxv/lYUy+zqJcp
- 7ItPNfeQUtR78SAiKCx/L0SdLM3qmBUMpatw0+JJyHEgFuTnIimI6O6id7FQYShwgdMU
- FOFpS8ZvjMXLt/unH4bZqEs6e/wSYDhTgrLO1B05jd1FsUi/KJk756h+VrhBp5e6Xjr5
- drqpQuor711GsLYf8AuxsW+p/PEeI8Tz+/fZStE8AyfqmsCuTCx4KeaC+xKkLWqi+DEQ
- LFnw==
+ bh=WVWUoSnflEAuoeO//LSBJcINHjLqJlfUIk8dX86DK1s=;
+ b=o6XAJRCLRdG+PsuT5+lQOtppXGaWUlo9eGQU4DcUadFjx/IeqIlU8p6fz7LWlivfKl
+ /w2FCLYY3Un445D3H2FiRXdQi4pjtTfdAtNBXVl6srazzIiVFoRizp+4HU2mLXgM7Le4
+ OrXYiYAe0SCvBS/PmYL3/bmmGL1bLKVEjrNF+Yvywh/P8ZfQAlsksnUH2uVFBTDzNKj1
+ uLLNYS/PJvsab8M+t4szD7oxMJzBKkzqVv/nJ68tdbK4z4cOPUOazczG9W+pwcg9oM5X
+ KYqxzH2wtFLdCSAU02TzIidmjstL1EjXbVNq37SPEFAUJNsNNpNsOgto6Oal8iJMitYU
+ 1bRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760028617; x=1760633417;
+ d=1e100.net; s=20230601; t=1760028640; x=1760633440;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5qY8ajv3HEH8Vsg1klMI+O3dfzQOSkTVp4xxu2G3fgs=;
- b=YCCUX+caBzC09RJIDO1tOlCHp+8gBo+u24R7cnctWLQ/QmmvpO6nqefUauMMK44WEt
- aFRthUkPHsk4jjA8LPEVnOYrDDbBW4u0gI7dbMo5X7+pLmUPTuiVUmOWnmphFwPORsQX
- pA4hBd6mMs0Ym/WGIpl7VXmQSf1l2lckSrs43upgC+T6tcYlEkZD0lHRAIfYWz/fK5MG
- EXm8NBfun9GuLjY4ueweFI8OfoPByzqelueIlH27bqscE+7rXVJBfpanZ7m39kQwq2wQ
- uxxxw9JXQLytlCnfJr/2zqOhBayD2AfEuOFs+gAPIydxx+aSA2tu8GllHZNeMl0TWkn+
- Fytg==
-X-Gm-Message-State: AOJu0YxG1p8KMtHa9vuDmt1aRMTB/q4naR9Rqp6nhOJgSz2a9IqW44HD
- hCNlmdtpJ7I+aVYfJjyDz3zGNqvBacTsSOhHVqKXLFUy4PLSZQuQZbBZOjsU/DnPTaEqDZ6/6Hs
- T10ZW+4U=
-X-Gm-Gg: ASbGncuyCWhzkM1LMtlwg8be/k6C5yVbfTZ5hAeo/C2w/Wxtpnpbtf0oQDK//NzY7+Z
- CRxIQnbggTji4iVGzgM9YciavOImC5QZ5uf7A0QyI1/HRsy2S4903zokPuEkuwmH7MB1ec/QtuR
- XDNoBsqAw3Mo1rrCCC2QfwaoiwxsdeP+LR1+onBJp3T9pjAHZMTiAJ+FgEJDIF8xMkvviA1D5AJ
- GOk5OoFNPfvcsYc5Cp/Lmz+X1VMK5W5KMLW7/mHwxB+9oayn09sETbroo5VwUo1qULTStlcDqXf
- HtdNphwNcTZQgxlRMrajFtpBd03TjUOqJZvG11+ibup/lx9LbhKIFt60U+NIRAHjk55VE9ZEREb
- fJIrSZ5h2jlHvpvYse38EPWX1CwLEKGUHlvKg5iNFkRBL43nEmx6x8GJaaK8P/Qck
-X-Google-Smtp-Source: AGHT+IEVsDh7c8te65IYZhBsIi+WRyB0zF5eVbKnc1lhCUM8ltjnkmQEvRBuXQv5jbJUkiXpaoDn3A==
-X-Received: by 2002:a05:6a20:3d19:b0:32d:7f48:4aa7 with SMTP id
- adf61e73a8af0-32da850e806mr10355951637.60.1760028616838; 
- Thu, 09 Oct 2025 09:50:16 -0700 (PDT)
+ bh=WVWUoSnflEAuoeO//LSBJcINHjLqJlfUIk8dX86DK1s=;
+ b=a+9OYjoThqlRi4YfVdWjvBbGT+ucfxTNRzj04WS97Q99KNWblgISfdL99ItDa6wlXd
+ kigQlwwijoqSdfLlUNqqDxyHpyBD8aVdkx6UcPivpLu/JyEDe3cnFJdLR20RRg42VRgc
+ 5U7kT1G6yplh/6EoS3I17h+Vio4ZkVC6GPapiaAFEclS/CoYPgLjo56H4u5OA1I0/oHe
+ mmszBfSQ7t1IpKEqulTi35rnmJq0xoYs4K7GMJdVvI+2NTVEF7qQP3tty8D0nNk3SFRJ
+ ZdPlOvrnSH6z5gTkUJZAAu7AnwQ6bGgGoYVgmsXuGsZW0JqNNXYP9EoCfMi8WpHxu/+F
+ SHRg==
+X-Gm-Message-State: AOJu0Yw9hhAcjibqgClMW5BXSfQwAyXM8c24CgiHH68VyjB3wWg0Re+d
+ dvCjDxX+NRuzhUhC+u/PChajXekRUAsBugpP7ee/EkhAS12cty+slvoKbB7XQkkURD/UibCgJ1u
+ t2BfBF1w=
+X-Gm-Gg: ASbGnctKL21VAjdPEA9V78AKMhY+F81yMDVuQ25uhEVvSP8Yt8AbTTU8jBnHujbUp0G
+ EYqyM1h9iZqMq8Dcwvueek5kIgINV96o+i5A86QxGnKd0H9H+Wvgvwbm7El+EeOm9v8A6ycUfMr
+ K7JmK6wAKIce6zl1750vk8ONsFYoGCtktV3i5B0E+NTXhyOp2apVBsIj7ktySFVj5GEGjCCPfPF
+ N1pcN0UUGEyaNcjSFpE6u33DhnI1vNlzoo7nVx7N4WIOrgd1cbTEiHMKf2M8ewPbv06UYTHXWmJ
+ aFh7jvtiOdDjzspgJGYNwJHi0E9/9rocpbLkr9NNhKsFUdfP1+5kx+76BstgT6Q8RmVr9OJb+H+
+ s2hZvl4it7pwI6khgt32CiIFx7lag3tiEcPf5GLomm41+T0AHi+sm+bW3TzowrUWF
+X-Google-Smtp-Source: AGHT+IEl0YA2OyZninmgVZ0B2MKzLlchGW4S51Z6SlCyQihEDSgwIdPBAr4kGVD7w5X7UtYe0W2txQ==
+X-Received: by 2002:a05:6a00:14c5:b0:780:f758:4133 with SMTP id
+ d2e1a72fcca58-793857038fdmr8391106b3a.10.1760028639497; 
+ Thu, 09 Oct 2025 09:50:39 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7992d0e2774sm198300b3a.63.2025.10.09.09.50.16
+ d2e1a72fcca58-7992d0966d7sm203396b3a.40.2025.10.09.09.50.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 09:50:16 -0700 (PDT)
-Message-ID: <44c5909e-8c88-460b-a51d-54b3420106b4@linaro.org>
-Date: Thu, 9 Oct 2025 09:50:15 -0700
+ Thu, 09 Oct 2025 09:50:39 -0700 (PDT)
+Message-ID: <fffdf0dc-b17c-4597-abcd-2cc06b359503@linaro.org>
+Date: Thu, 9 Oct 2025 09:50:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/10] target/openrisc: Remove 'TARGET_LONG_BITS != 32'
- dead code
+Subject: Re: [PATCH v2 09/10] target/openrisc: Inline tcg_gen_trunc_i64_tl()
 To: qemu-devel@nongnu.org
 References: <20251009081903.13426-1-philmd@linaro.org>
- <20251009081903.13426-9-philmd@linaro.org>
+ <20251009081903.13426-10-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251009081903.13426-9-philmd@linaro.org>
+In-Reply-To: <20251009081903.13426-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +104,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/25 01:19, Philippe Mathieu-Daudé wrote:
-> The OpenRISC targets are only built as 32-bit:
-> 
->    $ git grep TARGET_LONG_BITS configs/targets/or1k-*
->    configs/targets/or1k-linux-user.mak:5:TARGET_LONG_BITS=32
->    configs/targets/or1k-softmmu.mak:5:TARGET_LONG_BITS=32
-> 
-> Remove the dead code guarded within TARGET_LONG_BITS != 32.
+> The OpenRISC targets are only built as 32-bit, so tcg_gen_trunc_i64_tl
+> expands to tcg_gen_extrl_i64_i32(). Use the latter to simplify the
+> next commit mechanical change.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Anton Johansson<anjo@rev.ng>
 > ---
->   target/openrisc/translate.c | 33 ++++-----------------------------
->   1 file changed, 4 insertions(+), 29 deletions(-)
+>   target/openrisc/translate.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
