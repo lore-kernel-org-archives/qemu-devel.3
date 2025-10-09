@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BC0CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 23:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB56CCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 23:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v704G-0000X8-LV; Thu, 09 Oct 2025 19:29:04 -0400
+	id 1v70I6-0001z0-7A; Thu, 09 Oct 2025 19:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v704F-0000Wp-EA
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 19:29:03 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ id 1v70I4-0001yW-Rv
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 19:43:20 -0400
+Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v704D-0000bG-K0
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 19:29:03 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-4259247208aso10973845ab.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 16:29:01 -0700 (PDT)
+ id 1v70I1-00035Q-7c
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 19:43:20 -0400
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-4242bb22132so14913195ab.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 16:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760052540; x=1760657340; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760053395; x=1760658195; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1qcgMGBsBUVslFfDAB5CgTqqMmqVbE1LOeNVsrV6THc=;
- b=ZrUsUQDuIHtDWZUB6xA8on4XsOEFPUu6uUhHcFRzN5ngxYio/RVxZtIfrLbipevdOa
- nzv+Irx0DYkw9Skb830usidh7GRYFCt1O8wclzUrNBujd7qA8gV4W9wyuK3JHjalx2Y7
- 67EFW6aZEwQM5ts7F2ytKCgi+2zrk75FA0KupXMeFOfMy5Afre3uzTSla6DtZiL/MWcp
- BYk3Jj7n3l2TTiDQxj8CwiqAaPfJsj9IW9BJ/rXY4tJbrcsUGdjptdSkArsEZbAdJyKQ
- Up2+wfqwJ+rWNQ3QQrNo1ju/03fKQbk/RksUR1Ksl1N4nMiWoA7zD2ujf11qgA88lscn
- N/jQ==
+ bh=VhOg/aalE5mwEsK0fIwhA11A8T+XjeEVqJce3MQllgg=;
+ b=Wqn6iQH6vs2CJ+pJDWZrSXCGQzau45CXzT+m/8HmgSW8QuSMJ2cdHT2gyrjOp3R7vE
+ pdwWCnRsyzDe5q1b4bLTL4ZKg+YhigvV6EFb4TUfahaAXW2HLKQHP4mPj1nu/1cFd227
+ PgF6AEW2GDcMV+k3GUlfXcnFbQQDyI6tb3dZiioNzRMs8v44jX08zSI2rmSAcu0MDCsN
+ nXSd0LKnFXn25VcN6M8UtXDcKncqYzCys6d9Uc6A9THrREkerMuqZ5eSrPYo4GtvfsLf
+ Mkcp68ftBtp7i9zJSpQY8vF/aCdGWsmpzp1LHk+J59VctJdmJK2n3W8NoeBgczz+9o55
+ O1Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760052540; x=1760657340;
+ d=1e100.net; s=20230601; t=1760053395; x=1760658195;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1qcgMGBsBUVslFfDAB5CgTqqMmqVbE1LOeNVsrV6THc=;
- b=wchaovN40lqBt+oSZsEldS534m3caVf7q2Y5BLgkVNSnF0WyA19lvSyB1qdj4iJAc0
- 2rAHqIq7iIMrjSi2Cxeueh5xanc6kGsj1Ei1EKvvghMvxlyNjpdvTC7U4zF1N1gaqfZl
- JaCKXnBV3+KoJPc/R3qyhwFhj126PUOfbZjD6l3uMJiCsOwv7dVWFyYd0dhcS/oV7vmM
- /Aww8UJMk4KI+erzp7vSCAM9lfRMR8n02p7KX6GRL37YrPs6aY8c/tNp3KKt9AtiIqkK
- sTs7y4c8HewscU8sYzspwcqBnN9FQdOGqdNEPHC5+mDh48Kw0WmgpobJaiptJ1zme3eP
- DvZA==
+ bh=VhOg/aalE5mwEsK0fIwhA11A8T+XjeEVqJce3MQllgg=;
+ b=YXhQraG+9nVruC1JUlZcjU/71eF8NvXczvHTMZdSL3UtZT1dw76Kc7JeAxWF6Bjza/
+ 3+4NGpmzEWjKJMDE0AU9Kg03hbaM/oBOIjBLyRXGA2R73HkEUzuD2gMT1XXShD+L3MPo
+ kYgKVa8FcVIDf2PCxsnEu2r50d3/vWe7bskPg5G6nPGInR2Enpj9E8znbfyFfrCY0fmy
+ MVfu8+C7aRDcolwMLnkqKp7J0Mmd/dOK0f3jpOoHI4xMs+CuPgxITmDZINOPk2z6hpMr
+ GKixVcE7xndq0Eeghww5of6u8nlg0Y5x3AHxNgYd+Hq1acOX8bOjyorOSRH7BPruT6ud
+ jhKw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlJL6teKi/NqcP1a3TBYSjh4XKzZ2IMJxNweEfGHqw2KOxx4rUyr4gT5Fu07TJb138s0btIrtrimO4@nongnu.org
-X-Gm-Message-State: AOJu0YxGMJCRaGULYst9dhRvO2A/hZnPNHPfvWGo2jinRAPoKjzyQ6Rj
- J/MUrwM50Y+W2ykcoS+wlc3ddUkPrTX4iymgTYWohtnFwfw8RLa88azAxoMbDiOuotsEkbpCHB/
- KWZwfRwHXYyz88xudqN3DtqtGOcHEcOA=
-X-Gm-Gg: ASbGnctkm4ozSt3X+y1oIHz3pwF+57BM9vjXNlpf1ot5oiu69D5Ine4uuWjKi2lvBIS
- ZM88JxyGizUSSmDbBo+WblRCobTvziKaAU/9nt7ve/arU882VcR9QkMnQwaoR5ET6Ok6XZ1E8NN
- ATRtupSADDSzfKrl7P3rBG5lP29EjiLZJjS8mJpGBt8YbW2/XsfWng8b9/fuT0aDm/+NYJyhCvh
- 9PFGz/1ac+AkYBFeHSxkmROJPyros7SEx1Jbi8RZg==
-X-Google-Smtp-Source: AGHT+IEx2a+sHK6SYD9xqghhnh8uuL9qYIk+s4orIIC/kK6o5kIgcCnMxepB08ez3Ag01f2ZTTm3xZ6fu0KCD9rl0tM=
-X-Received: by 2002:a05:6e02:2783:b0:424:866:ec6d with SMTP id
- e9e14a558f8ab-42f8736d251mr97333985ab.12.1760052539683; Thu, 09 Oct 2025
- 16:28:59 -0700 (PDT)
+ AJvYcCV9sFLacU/fWVsVoth6owNpt3RBdoMLQbqV2ZCDDO+wiYcUqpfdtegTLuDv6IvYLG2Tewh6tv4MWKkM@nongnu.org
+X-Gm-Message-State: AOJu0YztviWqfNzmsiC8QBL9B6a14vYfoOAMCKw0OVRqPYK0i9Zlbbpl
+ 8cvZ+S5L2Yiw35AHlh4n1bbfcxXig/ZCrFH3zlXvugzqJ7kNUKnRzQgl7eGyO3E6UZg6J7e+9yH
+ rqWafXSxD2ut3xGlobbFSP86RtZ52bTI=
+X-Gm-Gg: ASbGnctnXolnn2ZmvdCPNHr9B7cgpiDf3TYW9PkmL7dIh+LOaMLAsf6LGItXHdZbo1f
+ xyphkQDpSh5htklQTp2umh8iW056/3UfHcOXP79Bwe+/zTIEznHJ/bmaF0qeeFXU4sJ7B0vkLrL
+ lFHq1/KChzrOs2xVzL/bk3W/OeOl9a8g45DlE+uqgR0l7KIRisGUVYq+wA+T4TdKJ0C7fuERdTS
+ xTJzGc0rexrM9H01nN0l9T5drf229mRLTkVc5g4xA==
+X-Google-Smtp-Source: AGHT+IF7cCjbnUWn1oBnFob5BwkY0p8WGoghxnfdDypphB0Y+2ClbSISE7Z1qlTr4BECtpTT4P+EomyuCeNZcFaxA0k=
+X-Received: by 2002:a05:6e02:1fe3:b0:42f:95af:9594 with SMTP id
+ e9e14a558f8ab-42f95af9700mr33042295ab.23.1760053395237; Thu, 09 Oct 2025
+ 16:43:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <CAFubqFv8F8swA3EwZfgnVYpHNgs0yZSFgf6wm2DwXgPxSTjs5A@mail.gmail.com>
- <aabfa3db-e434-4dde-b01e-b0195eb4adee@yandex-team.ru>
-In-Reply-To: <aabfa3db-e434-4dde-b01e-b0195eb4adee@yandex-team.ru>
+ <20250813164856.950363-32-vsementsov@yandex-team.ru>
+ <CAFubqFsL4O=zEbmCEQ9KtBYVOsFjf6tuaur+oU9=1+hRDrPtNw@mail.gmail.com>
+ <800c806a-c44c-4c4b-827b-acd9eb4a0e53@yandex-team.ru>
+In-Reply-To: <800c806a-c44c-4c4b-827b-acd9eb4a0e53@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Thu, 9 Oct 2025 19:28:48 -0400
-X-Gm-Features: AS18NWB6hjOf5642jdWHU54Fx6pKk0x5wKuAKDzY5mIt13ykK6EBGF_cZKJmVck
-Message-ID: <CAFubqFsANpc_v8Dvd4P=Swmei2P_Nt33+0eXn4UdC8-dcJCPfA@mail.gmail.com>
-Subject: Re: [PATCH 00/33] vhost-user-blk: live-backend local migration
+Date: Thu, 9 Oct 2025 19:43:04 -0400
+X-Gm-Features: AS18NWDWKiOYGxFXO4zQaZckrqmSlEQuhlvMYK-VCH6_M0WQcWm1HtF50siV_iY
+Message-ID: <CAFubqFv7M4tD14PaWWDg1+K70NLL+jN-Qjxkv=dFAQ9inOULmg@mail.gmail.com>
+Subject: Re: [PATCH 31/33] vhost-user-blk: support vhost backend migration
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
  sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
@@ -78,8 +79,8 @@ Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net,
  steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,139 +103,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the detailed response here, it does clear up the intent.
-
-I agree it's much better to keep the management layer from having to
-make API calls back and forth to the backend so that the migration
-looks like a reconnect from the backend's perspective. I'm not totally
-clear on the fundamental reason why the management layer would have to
-call out to the backend, as opposed to having the vhost-user code in
-the backend figure out that it's a local migration when the new
-destination QEMU tries to connect and respond accordingly.
-
-That said, I haven't followed the work here all that closely. If MST
-or other maintainers have blessed this as the right way I'm ok with
-it.
-
-On Thu, Oct 9, 2025 at 6:43=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Thu, Oct 9, 2025 at 5:14=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> On 09.10.25 22:16, Raphael Norwitz wrote:
-> > My apologies for the late review here. I appreciate the need to work
-> > around these issues but I do feel the approach complicates Qemu
-> > significantly and it may be possible to achieve similar results
-> > managing state inside the backend. More comments inline.
+> On 09.10.25 22:09, Raphael Norwitz wrote:
+> > A small question here but will review more thoroughly pending feedback
+> > on my overall comments.
 > >
-> > I like a lot of the cleanups here - maybe consider breaking out a
-> > series with some of the cleanups?
 >
-> Of course, I thought about that too.
+> I really hope you didn't spent much time on these 28-31 patches :/
 >
-> >
-> > On Wed, Aug 13, 2025 at 12:56=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+
+I spent much more time on the cleanups :)
+
+> > On Wed, Aug 13, 2025 at 12:53=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 > > <vsementsov@yandex-team.ru> wrote:
 > >>
-> >> Hi all!
+>
+> [..]
+>
+> >> --- a/migration/options.c
+> >> +++ b/migration/options.c
+> >> @@ -269,6 +269,13 @@ bool migrate_local_char_socket(void)
+> >>       return s->capabilities[MIGRATION_CAPABILITY_LOCAL_CHAR_SOCKET];
+> >>   }
 > >>
-> >> Local migration of vhost-user-blk requires non-trivial actions
-> >> from management layer, it should provide a new connection for new
-> >> QEMU process and handle disk operation movement from one connection
-> >> to another.
-> >>
-> >> Such switching, including reinitialization of vhost-user connection,
-> >> draining disk requests, etc, adds significant value to local migration
-> >> downtime.
+> >> +bool migrate_local_vhost_user_blk(void)
+> >> +{
+> >> +    MigrationState *s =3D migrate_get_current();
+> >> +
 > >
-> > I see how draining IO requests adds downtime and is impactful. That
-> > said, we need to start-stop the device anyways
+> > Where was MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK added/defined?
 >
-> No, with this series and new feature enabled we don't have this drain,
-> see
+> It is generated by QAPI code generator.
 >
->      if (dev->backend_transfer) {
->          return 0;
->      }
+> Exactly, it's defined by 'local-vhost-user-blk' member inside 'MigrationC=
+apability':
 >
-> at start of do_vhost_virtqueue_stop().
+> { 'enum': 'MigrationCapability',
+>    'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
 >
-> > so I'm not convinced
-> > that setting up mappings and sending messages back and forth are
-> > impactful enough to warrant adding a whole new migration mode. Am I
-> > missing anything here?
+>             ...
 >
-> In management layer we have to manage two end-points for remote
-> disk, and accompany a safe switch from one to another. That's
-> complicated and often long procedure, which contributes an
-> average delay of 0.6 seconds, and (which is worse) ~2.4 seconds
-> in p99.
+>             { 'name': 'local-vhost-user-blk', 'features': [ 'unstable' ] =
+} ] }
 >
-> Of course, you may say "just rewrite your management layer to
-> work better":) But that's not simple, and we came to idea, that
-> we can do the whole local migration at QEMU side, not touching
-> backend at all.
 >
-> The main benefit: fewer participants. We don't rely on management layer
-> and vhost-user server to do proper things for migration. Backend even
-> don't know, that QEMU is updated. This makes the whole process
-> simpler and therefore safer.
+> and after build, the generated code is in build/qapi/qapi-types-migration=
+.h, as a enum:
 >
-> The disk service may also be temporarily down at some time, which of cour=
-se has
-> a bad effect on live migration and its freeze-time. We avoid this
-> issue with my series (as we don't communicate to the backend in
-> any way during migration, and disk service should not manage any
-> endpoints switching)
+> typedef enum MigrationCapability {
+>      MIGRATION_CAPABILITY_XBZRLE,
 >
-> Note also, that my series is not a precedent in QEMU, and not a totally n=
-ew
-> mode.
+>      ,,,
 >
-> Steve Sistare works on the idea to pass backends through UNIX socket, and=
- it
-> is now merged as cpr-transfer and cpr-exec migration modes, and supports
-> VFIO devices.
+>      MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK,
+>      MIGRATION_CAPABILITY__MAX,
+> } MigrationCapability;
 >
-> So, my work shares this existing concept on vhost-user-blk and virtio-net=
-,
-> and may be used as part of cpr-transfer / cpr-exec, or in separate.
 >
+> In v2, I'll follow the interface of virtio-net series, look at
+>
+> https://patchew.org/QEMU/20250923100110.70862-1-vsementsov@yandex-team.ru=
+/20250923100110.70862-17-vsementsov@yandex-team.ru/
+>
+> so, it would be migration parameter instead of capability, like
+>
+>      QMP migrate-set-parameters {... backend-transfer =3D ["vhost-user-bl=
+k"] }
+>
+> and to enable both vhost-user-blk and virtio-net-tap together:
+>
+>      QMP migrate-set-parameters {... backend-transfer =3D ["vhost-user-bl=
+k", "virtio-net-tap"] }
+>
+
+Why do we need two separate migration parameters for vhost-user-blk
+and virtio-net-tap? Why not have a single parameter for virtio local
+migrations and, if it is set, all backends types which support local
+migration can advertise and take advantage of it?
+
 > >
-> >>
-> >> This all leads to an idea: why not to just pass all we need from
-> >> old QEMU process to the new one (including open file descriptors),
-> >> and don't touch the backend at all? This way, the vhost user backend
-> >> server will not even know, that QEMU process is changed, as live
-> >> vhost-user connection is migrated.
 > >
-> > Alternatively, if it really is about avoiding IO draining, what if
-> > Qemu advertised a new vhost-user protocol feature which would query
-> > whether the backend already has state for the device? Then, if the
-> > backend indicates that it does, Qemu and the backend can take a
-> > different path in vhost-user, exchanging relevant information,
-> > including the descriptor indexes for the VQs such that draining can be
-> > avoided. I expect that could be implemented to cut down a lot of the
-> > other vhost-user overhead anyways (i.e. you could skip setting the
-> > memory table). If nothing else it would probably help other device
-> > types take advantage of this without adding more options to Qemu.
-> >
+> >> +    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK]=
+;
+> >> +}
+> >> +
 >
-> Hmm, if say only about draining, as I understand, the only thing we need
-> is support migrating of "inflight region". This done in the series,
-> and we are also preparing a separate feature to support migrating
-> inflight region for remote migration.
->
-> But, for local migration we want more: remove disk service from
-> the process at all, to have a guaranteed small downtime for live updates.
-> independent of any problems which may occur on disk service side.
->
-> Why freeze-time is more sensitive for live-updates than for remote
-> migration? Because we have to run a lot of live-update operations:
-> simply update all the vms in the cloud to a new version. Remote
-> migration happens much less frequently: when we need to move all
-> vms from physical server to reboot it (or repair it, serve it, etc).
->
-> So, I still believe, that migrating backend states through QEMU migration
-> stream makes sense in general, and for vhost-user-blk it works well too.
+> [..]
 >
 >
 > --
