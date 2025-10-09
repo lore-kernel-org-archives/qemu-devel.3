@@ -4,120 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACC5CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2A1CCD18A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6woP-0003r8-Ea; Thu, 09 Oct 2025 16:00:30 -0400
+	id 1v6woX-0003sS-5C; Thu, 09 Oct 2025 16:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1v6wnz-0003jI-Aw
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:00:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v6woI-0003px-Di; Thu, 09 Oct 2025 16:00:23 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1v6wnt-0005BM-Uu
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:00:02 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 599Eq1pr005247
- for <qemu-devel@nongnu.org>; Thu, 9 Oct 2025 19:59:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:content-type:date:from
- :message-id:mime-version:subject:to; s=qcppdkim1; bh=9k2NTzuiRyd
- ULBorjQcMlpF1jsBY7/L4I2SUrpaWH3o=; b=Fw+xZ+sKrq41WQdy46R8MOokQTv
- TMAMu/UzpUPLBcjO40wuRwAl7dj8F+tA+uVjsZG2sGRzgV20DAQ4CyctyAWO3f1g
- B6jKSjCvO6fJFHWNvQIeoMBs3pK1DDb2doTHvZ+NnzM/URvPsoNBLaqpZLTpF91S
- aRPQuFT/5R0JWWgFJlGHhFvvHhAfLn8gOQcY8sVifAWkPw617W4z7tm5pIdEaJPL
- qARk7bipVqOdCw3HdgplAtEt4oCxg64PEfVpqHwgXRBh6hly5M4yN3jNGQW7yfqH
- V63yZm4p4ca6JgXiLTyZaHDmeWKbcLVzw4MpxrJj4QTNi34kANIm5FwaZ2g==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4j45w9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 19:59:52 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-28e538b5f23so23409305ad.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:59:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760039991; x=1760644791;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9k2NTzuiRydULBorjQcMlpF1jsBY7/L4I2SUrpaWH3o=;
- b=rZuEKANEObusblNqA/msLj2KJnYzhpx5ywi8d3bJ/daH9Oee0A0049LUQbHBcMssr0
- yB8t6SSCB2UyFxQb1miEvGoEJsmZ393fJHpftJOPiekEsamauMgXnmKn0mAPYCVw7YZY
- pICyOpBLYZ3PZ1Nf3Y1FLGLPMKf9Hm9K2WEbk/VixBiFl5iEndxEaWYdSTvEsOw0/GHn
- mWKbLvAHbjbAJzNr7hy4SVs02xGOk4gE8Lm2a0Z3KUWzM0qlRPxMMKFGsDb0fQNKYBE9
- JqUoCIBEWR/nZSQfQaAMDiTAFv90rbzoByGA1jIchAIZV4YSo5f2+NJYFoMxHtmLNy29
- 9/aQ==
-X-Gm-Message-State: AOJu0Ywr43/MrRBeeHzEHWaXtBriGhMSK5hLl6xQp4Ax2Xmm2IUQl5Eu
- tVEcYJ8MAHKoDZm7s7wJfwdt0EDZFK/nkyYLKcT5eT9jHYnINnD87KYPnmERWPUjURCnKmSFRsx
- zl6k2icLnGiswyOil0q7MMVyBueg50uf+TaoErLW5+Ya7M6H7UFDhF6+NwRgTZ/fxlA==
-X-Gm-Gg: ASbGncs1wwM/LoUTR62E7cD7qloZVFr2QRnfLEcgRXQ3IA49GzI71UIJ1NJCj8BeeEd
- B33k4xh5FOb4mlAvpV07SFSusqvMuyNe4Ci5yRPDH3hDA3ihyXNFd3Ot4qCgWT7P6/REahRS9qr
- jlNzXV6Zc4TbOU0j+bNVp6ZFOvSKH7Uh5i4MfTYiZa14ReNj5UFsi2AB2jKUynGQYpGgjefEPHj
- mCjasGrq8eQ3fY60LO4zRpBhUl0TxOdeW4GmClVztETyl/YK8GKaxiH37PJz0Zt9R4yZ8QE1RDx
- O6480cnwDogZKNEICG7GsvugK6dy7kP0KbkamhmRSjPxtvW6up706x7zPXMhpuimYc89SHxYBED
- /r+mG3ufQfLcuTwD6pg==
-X-Received: by 2002:a17:903:1106:b0:264:567b:dd92 with SMTP id
- d9443c01a7336-29027303325mr110290905ad.52.1760039990962; 
- Thu, 09 Oct 2025 12:59:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMqlN+HD3jQ5/XDNQuNstoaoFqH4luFg07edI8dNBvP9tezgtI3GX8YNDuDDYptxzIb5qdGg==
-X-Received: by 2002:a17:903:1106:b0:264:567b:dd92 with SMTP id
- d9443c01a7336-29027303325mr110290605ad.52.1760039990516; 
- Thu, 09 Oct 2025 12:59:50 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f32d6fsm36678805ad.96.2025.10.09.12.59.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Oct 2025 12:59:50 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
- philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- alex.bennee@linaro.org, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com
-Subject: [PATCH v2 0/4] hexagon: Fixes to sigcontext
-Date: Thu,  9 Oct 2025 12:59:39 -0700
-Message-Id: <20251009195943.438454-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v6woD-0005QL-Cg; Thu, 09 Oct 2025 16:00:22 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:8982:0:640:5cf4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 6A252C04D7;
+ Thu, 09 Oct 2025 23:00:08 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:162::1:3a] (unknown
+ [2a02:6bf:8080:162::1:3a])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 60Rgu81F8iE0-sLEWbq2q; Thu, 09 Oct 2025 23:00:07 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760040007;
+ bh=I6tW7bSqzdpUx2rHXI49rHLIqxTL2oSweCIJ2pV1w7k=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=VpgeenKWcEo/tOvha0lnYc4QoRoXhIwv6eD2/i/VDbqMb7n7gm7SKZnrffWPeMLBb
+ U2/9iBAOBUDfAaPWI6LsGmT18PBMXmgxK6LAouLXRrr9r2k797DqLjNgkI5YImqLji
+ R/p34XpBmb2KiRyDhfDb5vmHoWAjo1SwFo1J/zok=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <735ce0e5-6c04-4b3e-9d21-50a4624092c9@yandex-team.ru>
+Date: Thu, 9 Oct 2025 23:00:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: hUrktOrhTGzjKvVbjk2XnhLNIDWQoqoq
-X-Proofpoint-ORIG-GUID: hUrktOrhTGzjKvVbjk2XnhLNIDWQoqoq
-X-Authority-Analysis: v=2.4 cv=f91FxeyM c=1 sm=1 tr=0 ts=68e81438 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=jBgUiILNZ4taLe3DBhAA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX5uWI80nygnPv
- N9MSPgbrK93GUMP0mtbEIUY9+YRR32pnMphYMPYYzzeH2d7oHLuI38XM2KQCSZSALie/YuyVv82
- zAusFGcFlWVgjqfNN7bL2DzKrXivdHRYLpBZZ2lrZLrxbRRMmiTH1UAnxji+OGbCNREcdZL/ror
- 2ZM9sR9KypsytrVTSIGaArMzt2jTnlf52F80y3OqTPKeiia91t2Ei073Js0cxOwkpz8hZ9FDMg8
- fT7PrBHvyla4EyGL3jZIbyj79CmpDc6xMNCXGZtI5v32DBB3M8pZod1Wu19wwNLdsvBuGoaWZ8U
- zA+ZjtA9quK/GqrcQwWngTh/6vthMabKvSalEKzEcxV3yBi8K4jZfZaGB1IcQp5bUw3N+QonMWZ
- jgSKNv7+w0VZmD2/omIoVMzoa/vDQw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_07,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/33] vhost: make vhost_memory_unmap() null-safe
+To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
+ pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
+ den-plotnikov@yandex-team.ru
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-12-vsementsov@yandex-team.ru>
+ <CAFubqFudmBtoPSGptvZiSuzabV4SrRaL45BYCDtpiU9i6wNzeA@mail.gmail.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CAFubqFudmBtoPSGptvZiSuzabV4SrRaL45BYCDtpiU9i6wNzeA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,13 +82,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UmV2aXNlZCBmcm9tIHRoZSBvcmlnaW5hbCBzZXJpZXMgYXQKaHR0cHM6Ly9sb3JlLmtlcm5lbC5v
-cmcvcWVtdS1kZXZlbC8yMDI1MTAwODAxNDc1NC4zNTY1NTUzLTEtYnJpYW4uY2FpbkBvc3MucXVh
-bGNvbW0uY29tLwoKQnJpYW4gQ2FpbiAoNCk6CiAgbGludXgtdXNlci9oZXhhZ29uOiBGaXggc2ln
-Y29udGV4dAogIGxpbnV4LXVzZXIvaGV4YWdvbjogdXNlIGFiaV91bG9uZwogIGxpbnV4LXVzZXIv
-aGV4YWdvbjogVXNlIGFuIGFycmF5IGZvciBHUFJzCiAgdGVzdHMvdGNnL2hleGFnb246IEFkZCBj
-c3swLDF9IGNvdmVyYWdlCgogbGludXgtdXNlci9oZXhhZ29uL3NpZ25hbC5jICAgICAgICB8IDE4
-NCArKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLQogdGVzdHMvdGNnL2hleGFnb24vc2lnbmFs
-X2NvbnRleHQuYyB8ICAyMiArKystCiAyIGZpbGVzIGNoYW5nZWQsIDkxIGluc2VydGlvbnMoKyks
-IDExNSBkZWxldGlvbnMoLSkKCi0tCjIuMzQuMQoK
+On 09.10.25 22:00, Raphael Norwitz wrote:
+> On Wed, Aug 13, 2025 at 12:56 PM Vladimir Sementsov-Ogievskiy
+> <vsementsov@yandex-team.ru> wrote:
+>>
+>> This helps to simplify failure paths of vhost_virtqueue_start()
+>> a lot.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   hw/virtio/vhost.c | 23 +++++++++++------------
+>>   1 file changed, 11 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> index 1e14987cd5..1fdc1937b6 100644
+>> --- a/hw/virtio/vhost.c
+>> +++ b/hw/virtio/vhost.c
+>> @@ -489,6 +489,10 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void *buffer,
+>>                                  hwaddr len, int is_write,
+>>                                  hwaddr access_len)
+>>   {
+>> +    if (!buffer) {
+>> +        return;
+>> +    }
+>> +
+>>       if (!vhost_dev_has_iommu(dev)) {
+>>           cpu_physical_memory_unmap(buffer, len, is_write, access_len);
+>>       }
+>> @@ -1313,33 +1317,33 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>>       vq->desc = vhost_memory_map(dev, a, l, false);
+>>       if (!vq->desc) {
+>>           r = -ENOMEM;
+>> -        goto fail_alloc_desc;
+>> +        goto fail;
+>>       }
+>>       vq->avail_size = l = virtio_queue_get_avail_size(vdev, idx);
+>>       vq->avail_phys = a = virtio_queue_get_avail_addr(vdev, idx);
+>>       vq->avail = vhost_memory_map(dev, a, l, false);
+>>       if (!vq->avail) {
+>>           r = -ENOMEM;
+>> -        goto fail_alloc_avail;
+>> +        goto fail;
+>>       }
+>>       vq->used_size = l = virtio_queue_get_used_size(vdev, idx);
+>>       vq->used_phys = a = virtio_queue_get_used_addr(vdev, idx);
+>>       vq->used = vhost_memory_map(dev, a, l, true);
+>>       if (!vq->used) {
+>>           r = -ENOMEM;
+>> -        goto fail_alloc_used;
+>> +        goto fail;
+>>       }
+>>
+>>       r = vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_enabled);
+>>       if (r < 0) {
+>> -        goto fail_alloc;
+>> +        goto fail;
+>>       }
+>>
+>>       file.fd = event_notifier_get_fd(virtio_queue_get_host_notifier(vvq));
+>>       r = dev->vhost_ops->vhost_set_vring_kick(dev, &file);
+>>       if (r) {
+>>           VHOST_OPS_DEBUG(r, "vhost_set_vring_kick failed");
+>> -        goto fail_kick;
+>> +        goto fail;
+>>       }
+>>
+>>       /* Clear and discard previous events if any. */
+>> @@ -1359,24 +1363,19 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>>           file.fd = -1;
+>>           r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>>           if (r) {
+>> -            goto fail_vector;
+>> +            goto fail;
+>>           }
+>>       }
+>>
+>>       return 0;
+>>
+>> -fail_vector:
+>> -fail_kick:
+>> -fail_alloc:
+>> +fail:
+>>       vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, idx),
+>>                          0, 0);
+>> -fail_alloc_used:
+>>       vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev, idx),
+>>                          0, 0);
+>> -fail_alloc_avail:
+>>       vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
+>>                          0, 0);
+>> -fail_alloc_desc:
+>>       return r;
+> 
+> This assumes that vq->{used, avail, desc} will be nulled out. I’m not
+> totally convinced that will be the case when a device is started and
+> stopped, or at least I don’t see the unmap path doing it.
+> 
+
+Oh, right, good caught. Seems we never zero these fields, and after do_vhost_virtqueue_stop()
+they become invalid. I'll rework it somehow.
+
+I also notice now, that we do
+
+     vq->used = vhost_memory_map(dev, a, &l, true);
+     if (!vq->used || l != s) {
+         r = -ENOMEM;
+         goto fail_alloc_used;
+     }
+
+so, theoretically pre-patch we may leak the mapping in case when vq->used is not NULL but l != s after vhost_memory_map().
+
+this should be fixed with this commit (of course, if fix also the problem you pointed out)
+
+>>   }
+> 
+>>
+>> --
+>> 2.48.1
+>>
+>>
+
+
+-- 
+Best regards,
+Vladimir
 
