@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF84CCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD007CCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6rXR-0006A2-VX; Thu, 09 Oct 2025 10:22:38 -0400
+	id 1v6rgO-0002QD-7L; Thu, 09 Oct 2025 10:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
- id 1v6r2V-0006vy-LP
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 09:50:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
- id 1v6r2R-0005u1-Uh
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 09:50:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760017830;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=qU6zMeJ0/ARZy55R8Auba5Y3tNCmNLUYpGMtFIVjVPg=;
- b=fFbOEDyN2mBsKxOZ3pBGkVd5pXkvvP41l3HJHFBehblpchjYAFBzX1wESJSkwv96YAE/ZC
- 9dINhB9hl8z35LeEV+Pfy6826Z46skfgZN8gTCREo5ln6saqWx3nQb7dv+3CwHadI+RGWh
- zEE838ImYfc25KnsoUvHYxFxgvkPTwU=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-21-VgHG1N_QPcGv7B3p4F-b4w-1; Thu, 09 Oct 2025 09:50:28 -0400
-X-MC-Unique: VgHG1N_QPcGv7B3p4F-b4w-1
-X-Mimecast-MFC-AGG-ID: VgHG1N_QPcGv7B3p4F-b4w_1760017828
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-63b781aecedso1879108d50.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 06:50:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6rgJ-0002Nc-7l
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:31:49 -0400
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6rgC-00032j-Rr
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:31:46 -0400
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-45b4d89217aso6314275e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 07:31:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760020297; x=1760625097; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=en3dcYp1l8Mnw3yI5A0cTlQE3qzHT+C3z70ER6xSWVg=;
+ b=eZoHrsg1wQXHYXaMzLRcp/VUtBXKAaijst3LEc+rDjvMDS4qWkRbTtACntBHPIwtuB
+ RUuhMJth14Kvhy7NriPLV8NA9a2nYfBR1kJea8A7U+MiZ93Dp7rB6kjHF89MRbNhuciK
+ YYFouHsIXSosksjVL4i0aAvTmKlQJfYThGPBifiSY3iF/GfEIUioUvOoiDe442yOf8tx
+ efOx30ME5x57/xm8I7Ww0CQr5JH8ofHppKZI4RUUEYjdDlZMXdq80XWN8MAtMTgUCUBb
+ TT30gleeZ3bz+Dm9QVgNd1nmVapuVZWF06kkGs1976zz/QyPeywCmIdmL9887Dc1w1it
+ /gVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760017828; x=1760622628;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qU6zMeJ0/ARZy55R8Auba5Y3tNCmNLUYpGMtFIVjVPg=;
- b=nwMFHfxKKCt5S1qzo10uZPA9WR6DHW6oMtB7xNjJl+IQ34Wen3enGD0PhnHEvCcQSb
- tRJ3LpmqwpwicDqMQwYB+yvHTgJSWf5HpSKCQ/8A4F/glUa6QgIq6xoQ/dEHSoUM3SF1
- T4JGWUoElKiqq34FF36WPxogxcZxNF8ISmPTKg/atkfyMvzpclRMLt17nQnGP3b4l+bd
- xdtGV/FqQ4RTCxrOlfql5n/fy5CLnZgP/+RkkCCfLsBbTVBGzKQJjM3vuCuEvXlyEq+G
- y0IY6FZQTF6nfAEt3QLyR0R7ds18QNJ3c0+IfrOijzafH+Ltm6qABOHfHquEg09x1MTg
- lQdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQI66HA0MF4rHbJ20brMrNKsAd0eVCoKMoiTfURRzEBSbrRCxcu8tAFG/aZitcsWpTwo3TD38b7Nt7@nongnu.org
-X-Gm-Message-State: AOJu0YxsOYwbHw5qOmr9PdPD1Pr3Sgp2SFlFjqxTlU1GekZuirZSrf+X
- zBiCUB3kfEiElbD3rrc5E5Uh8hH+zYii89ltvE6lGXDde6nV2kQFp4DPoHaesidd5oRXRE1Xl9g
- uXLUxsnFku9v6MMD5JNLqxdl4N1tsKNKhHlNC7sVi3sNSC4iRTZ1qq10nphsrl2D5TFJEaB5Lkl
- sZsVh4+B8N8D0eLM4YDfPPl4wP6MW6qts=
-X-Gm-Gg: ASbGnctfTcWUchoiOx8PUyZRYQZdDaIdH2LDDJjXpkvfGsElTU+FcM5phRuDDaMhaP2
- qfHq7BT+bBPBDsJOAMyYtFdKyGO6oh07AzNafIci+sr7JLRJQzY8RmCaIEu4gOReOL9T+oN+99L
- HI5M8mk52qRJRPGhz83k4fB7ZeoQ==
-X-Received: by 2002:a53:b888:0:b0:635:4ed0:5714 with SMTP id
- 956f58d0204a3-63ccb931f6amr5162003d50.46.1760017828275; 
- Thu, 09 Oct 2025 06:50:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvBVG6OOJLJG8wsYJg/5ahBsnr1oj1rBS5B5SzEro2Z3CngB550GzypHOyBlaSfKeOn7fxIJd4umWwhBggSMU=
-X-Received: by 2002:a53:b888:0:b0:635:4ed0:5714 with SMTP id
- 956f58d0204a3-63ccb931f6amr5161993d50.46.1760017827901; Thu, 09 Oct 2025
- 06:50:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760020297; x=1760625097;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=en3dcYp1l8Mnw3yI5A0cTlQE3qzHT+C3z70ER6xSWVg=;
+ b=UCG1WHo/MdvcgSC7cvetlsNUGmNL5UxuDMZhSts9EZwNdZ1bw0I3QXrJlNmvVrvRdi
+ QlujR18WzxorrVBuZqmIIsPBdppt6R7j0ZVQuSKSAuSXP3hiNORL4HJ5i/IAsdDxb6W2
+ B0bbzpBwVOeb94Psqpb9Ri+h7c15+dQ5HfqZ1x7lVzVwGXi3z0puBLSJyETMsC5O+5jz
+ G4a80UedgcqYioGi+E67NxIlxumcmit3v0CFn53yoL7uP+zKMpM0H+jaHAu0YSqvExco
+ M67ytBNvX9Ti/GjRzd20vL/QP3gyw8kL/2JoUt11ut51qlQw02ALCjByG05effav6yBj
+ O5iQ==
+X-Gm-Message-State: AOJu0YzhCf2IlRA5wH6ZpSoGbv3kZXJ0aRMEVCuorekXnrQbYPvHfiac
+ bm+8Ol7yVpYglmsxjV9OXNPtwdxLMjYDA0wLrJ5aq05wAdjmnr99Eq/NFv1lXp/YLR4hmwVy9wY
+ 6SRyxUvIiGmGP
+X-Gm-Gg: ASbGncscp2zvwzT+NfuloEqh2scpUBm60tNK1bExxtRBWLjFvqJ+wAeCSAfUWYMakLV
+ nTWk3gSJhWCu74W40g4yJwejHVba+oqfr5m9uGhtYLsXovJvHk5a1pyfo9bG0MxuoIRD32UMoVd
+ 9Ov7Rp01QiUn0b1UgW7Ey+TKN0fa10SWZ4ZJJtltGqmPwnGiIRChVZUWTxqtgCSiLPI/3nHFRp7
+ ZcaAmXsd0ZYIKcFptHbLpjO5BrRqcfxYBDHqG8lr4npqGX0HXPiYOj9xAJ8NXQTM7p38cp2WU7I
+ gNpmBr9kBIDStvNMhU7YAqt6q+BjxzChbJXqYQ/1dCnVmQzcgGXsowcpLS38JIYK40aLJniWOC/
+ l9c7+1dEfhk8b5qyO2xBmha7h0t1e6gLuR8Ki5PjH+bpOVlzKDfOcYGBPNgwfNoCGKAahwd1tC2
+ Pu7Yk3pygQ5fcUHmR1USlS8w1/oy3U3LMkZS8=
+X-Google-Smtp-Source: AGHT+IE6XCqrEkYZB1CG3bgwp5GUeW9YMKqRzVMsUEGq39whnB9SXoJMtxcUNrfxeOCsEaZVfxA/xg==
+X-Received: by 2002:a05:600c:4584:b0:46f:b42e:e367 with SMTP id
+ 5b1f17b1804b1-46fb42ee40cmr5271085e9.41.1760020296961; 
+ Thu, 09 Oct 2025 07:31:36 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fab3e3520sm40997635e9.2.2025.10.09.07.31.36
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Oct 2025 07:31:36 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 6/6] hw/hppa: Move kernel addresses to
+ HppaMachineState::boot_info structure
+Date: Thu,  9 Oct 2025 16:31:06 +0200
+Message-ID: <20251009143106.22724-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251009143106.22724-1-philmd@linaro.org>
+References: <20251009143106.22724-1-philmd@linaro.org>
 MIME-Version: 1.0
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Thu, 9 Oct 2025 15:50:17 +0200
-X-Gm-Features: AS18NWBozEpO0MjfGnF71tqkXqaQvBfG3uDo70enT-b8KfeWrKaqC0uQNgGGWEI
-Message-ID: <CANo9s6nV-gUFKqxaOqH7qFzLTdY3RcA=WYhhcQhdQpMXQG=Qpw@mail.gmail.com>
-Subject: SVSM device assignment: device tree support
-To: joro@8bytes.org
-Cc: coconut-svsm@lists.linux.dev, qemu-devel@nongnu.org, 
- Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Oliver Steffen <osteffen@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lleonard@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 09 Oct 2025 10:22:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,47 +102,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Joerg,
+Restrict kernel* related variables scope, move fields that don't
+belong to CPUHPPAState to HppaMachineState::boot_info::kernel.
+Replace target_ulong -> vaddr type for virtual addresses.
 
-I am working on device tree support for SVSM to allow it to discover
-MMIO devices that should be used only by SVSM.
-In this way we can differentiate the devices attached to VMPL0 and
-VMPLX. As we discussed in the SVSM community call,
-we can use IGVM to expose the device tree to SVSM. This should be
-generic enough to be supported by any hypervisor
-(vs the PoC we currently have that uses the fw-cfg).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hppa/cpu.h |  3 ---
+ hw/hppa/machine.c | 31 +++++++++++++++++--------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-My idea is to use the IGVM directive "IGVM_VHT_DEVICE_TREE", basically
-replicating what was done for MADT,
-allocating a page (maybe more?)  for the DT blob, using a new index
-for the parameter area.
-
-I think that the DT parameter, just like MADT, should be marked as
-optional for now, as not all hypervisors support it.
-
-For the QEMU support, I had an offline discussion with Stefano, who
-suggested creating a new object (for example "svsm-devices")
-where we can specify all the devices that need to be attached to SVSM.
-
-something like this:
-
--machine [..] svsm-bus=bus1
--device virtio-blk-device,drive=svsm_storage,id=dev1
--object svsm-devices,id=bus1,devices=dev1,dev2,dev3
-
-This object would be in charge of creating the DT.
-
-Note that we are not sure if it's doable or not, we still need to
-investigate the best QEMU interface.
-
-What do you think? Do you have a different idea for the DT support?
-
-Of course I am very open to suggestions and comments from everybody.
-
-Thanks,
-Luigi
-
-PS: sorry to send this again, I accidentally didn't set plain text
-mode and was rejected by the ML.
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 0aa06f6ebec..49d0243f677 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -271,9 +271,6 @@ typedef struct CPUArchState {
+     struct {} end_reset_fields;
+ 
+     bool is_pa20;
+-
+-    target_ulong kernel_entry; /* Linux kernel was loaded here */
+-    target_ulong initrd_base, initrd_end;
+ } CPUHPPAState;
+ 
+ /**
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index c315d13ea01..a50efac375d 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -50,6 +50,8 @@ struct HppaMachineState {
+                 bool interactive_mode;
+             } firmware;
+             struct {
++                vaddr entry; /* Linux kernel was loaded here */
++                vaddr initrd_base, initrd_end;
+                 hwaddr cmdline_paddr;
+             } kernel;
+         };
+@@ -365,8 +367,6 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                                         TranslateFn *translate)
+ {
+     const char *kernel_filename = machine->kernel_filename;
+-    const char *kernel_cmdline = machine->kernel_cmdline;
+-    const char *initrd_filename = machine->initrd_filename;
+     const char *firmware = machine->firmware;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     HppaMachineState *hms = HPPA_COMMON_MACHINE(machine);
+@@ -375,7 +375,6 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     char *firmware_filename;
+     uint64_t firmware_low, firmware_high;
+     long size;
+-    uint64_t kernel_entry = 0, kernel_low, kernel_high;
+     MemoryRegion *addr_space = get_system_memory();
+     MemoryRegion *rom_region;
+     SysBusDevice *s;
+@@ -481,6 +480,11 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+ 
+     /* Load kernel */
+     if (kernel_filename) {
++        uint64_t kernel_entry;
++        uint64_t kernel_low, kernel_high;
++        const char *kernel_cmdline = machine->kernel_cmdline;
++        const char *initrd_filename = machine->initrd_filename;
++
+         size = load_elf(kernel_filename, NULL, linux_kernel_virt_to_phys,
+                         NULL, &kernel_entry, &kernel_low, &kernel_high, NULL,
+                         ELFDATA2MSB, EM_PARISC, 0, 0);
+@@ -496,6 +500,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                       ", size %" PRIu64 " kB\n",
+                       kernel_low, kernel_high, kernel_entry, size / KiB);
+         hms->boot_info.is_kernel = true;
++        /* Keep initial kernel_entry for first boot */
++        hms->boot_info.kernel.entry = kernel_entry;
+ 
+         if (kernel_cmdline) {
+             hms->boot_info.kernel.cmdline_paddr = 0x4000;
+@@ -529,8 +535,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+             }
+ 
+             load_image_targphys(initrd_filename, initrd_base, initrd_size);
+-            cpu[0]->env.initrd_base = initrd_base;
+-            cpu[0]->env.initrd_end  = initrd_base + initrd_size;
++            hms->boot_info.kernel.initrd_base = initrd_base;
++            hms->boot_info.kernel.initrd_end  = initrd_base + initrd_size;
+         }
+     }
+ 
+@@ -544,9 +550,6 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                                                   : 0;
+         hms->boot_info.firmware.bootorder = machine->boot_config.order[0];
+     }
+-
+-    /* Keep initial kernel_entry for first boot */
+-    cpu[0]->env.kernel_entry = kernel_entry;
+ }
+ 
+ /*
+@@ -687,20 +690,20 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+ 
+     cpu[0]->env.gr[26] = ms->ram_size;
+     cpu[0]->env.gr[25] = hms->boot_info.is_kernel
+-                         ? cpu[0]->env.kernel_entry
++                         ? hms->boot_info.kernel.entry
+                          : hms->boot_info.firmware.interactive_mode;
+     cpu[0]->env.gr[24] = hms->boot_info.is_kernel
+                          ? hms->boot_info.kernel.cmdline_paddr
+                          : hms->boot_info.firmware.bootorder;
+-    cpu[0]->env.gr[23] = cpu[0]->env.initrd_base;
+-    cpu[0]->env.gr[22] = cpu[0]->env.initrd_end;
++    cpu[0]->env.gr[23] = hms->boot_info.kernel.initrd_base;
++    cpu[0]->env.gr[22] = hms->boot_info.kernel.initrd_end;
+     cpu[0]->env.gr[21] = smp_cpus;
+     cpu[0]->env.gr[19] = FW_CFG_IO_BASE;
+ 
+     /* reset static fields to avoid starting Linux kernel & initrd on reboot */
+-    cpu[0]->env.kernel_entry = 0;
+-    cpu[0]->env.initrd_base = 0;
+-    cpu[0]->env.initrd_end = 0;
++    hms->boot_info.kernel.entry = 0;
++    hms->boot_info.kernel.initrd_base = 0;
++    hms->boot_info.kernel.initrd_end = 0;
+     hms->boot_info.kernel.cmdline_paddr = 0;
+     hms->boot_info.firmware.bootorder = mc->default_boot_order[0];
+ }
+-- 
+2.51.0
 
 
