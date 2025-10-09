@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA37CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EE6CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6u3V-00051d-MR; Thu, 09 Oct 2025 13:03:54 -0400
+	id 1v6u4C-0005I2-0w; Thu, 09 Oct 2025 13:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6u3T-00051R-QA
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:03:51 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6u49-0005GK-5q
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:04:33 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6u3A-0007wx-Sl
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:03:39 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-46e42fa08e4so12379055e9.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:03:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6u44-00081U-K4
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:04:30 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-789fb76b466so1113390b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760029407; x=1760634207; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1760029463; x=1760634263; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4njHFwtTgYWjoLiirQjSif/JvDx7xxqikRECsyZvXmA=;
- b=cZNkHCJqBCYEwIIjI0kqLSM2qu8sem7YwW3+7kQe3PtXdscyU2+5KOW5nksvux+Ung
- gnxqzrO8L/Jv9PYWIvUleRoAKdHzHHrub5Qar9llgd6pBk84hdb7wUafzVc0j5oNn3oT
- BRldEjC6RozbOhkpgRn2DkdhUemhPH8BiIETTWVwZxJIQrqMuJi5InEzqP2v7QJT48Sy
- HhuQnux9NmSO/DNyc19hUYMBAZP8SjKNkNEauv/QcNJRwcxwbAps1ciGYhhNDeC17L3c
- NBqOQ44zU1BAjpI1PjjjYYRn2AiouIROJngUTUAHtcPuA3gna4SLSpewxJ6x5i0Tls3K
- g3kQ==
+ bh=NOk4G83rA6p/0bnV7+xPoGK6Y5FL79tMXgcdFyUkQd4=;
+ b=xwm0aIkEhyX+siZU91O4NUqVABsTPny3zQKMsGz7FNhObG+D/EAeQlDMRraxUe4gWu
+ N5gwFYN07xkLbvwwwmCwk84ScHHqiJ1VE0BhJpul1NVcNP+au9ZTk6oKH+B2uYRz+3Oc
+ ejBq2mBp3clrFPLQqkAslFRLo8H8OznjXwWbXdHnORHZSNB9n6dz3M5ajIN2X5qlhc8o
+ CdoFcUCa+eJCFnVfJb+DavrcdLS9Eo0SLu8leR16hTgJeey3qWVmNXZ9yr5j090o6TUR
+ 0QbEd3xisLw02R5bpnn6UJ49Cvo1bfe9mMo6T+IRPCxWTV34zPhuJnD6lYgGU121Uew5
+ PLVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760029407; x=1760634207;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760029463; x=1760634263;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4njHFwtTgYWjoLiirQjSif/JvDx7xxqikRECsyZvXmA=;
- b=bnNEFESJbEdKS4fuQnBd/mkTCeiFPvs+qjQoZ/tpZ831psBnprfEvm44FgwFZiPt77
- GnEsXXOQ5G2cWe52SI2lLvg1/woBPPJS77TIMFTUJWXI6NGRDy9/NHMzws4sm9pkxh7m
- Q2r65v+6y5LiQDRn153FpHymqwha42s6uNwWmpz8J9/7jluFO8Q90IAKjQj3g0bJfGig
- 1yw2zaPdZ0aUXlI7eDA+/NcbHCQHD6pk45Lg0LYjgKMPGbthtk3y/o1Gv5yr5oHw0nRu
- 4hAHgS5i8DvuporAZdjWjHsKePiyzSHTP2B6kPeewL3bjCik4bwS8d2ptZ6Mna9q7C0W
- aLmA==
+ bh=NOk4G83rA6p/0bnV7+xPoGK6Y5FL79tMXgcdFyUkQd4=;
+ b=dDMsObGI7JFQzt6lUyJKyuEriukRnc7A096uVKzJ7TXEZkujW18Xpr8ro8/uiNctVe
+ iNjtNaL8Yy7wMFPeynQtNivPcNfKHkx3OspnFIpq9qYa0XVl/g06825rAU4l4+PWZwlJ
+ OnQ6/xtKuU7z9qKadZwMIXKxaazz3o8VF5Ux6aDkQ5EkFEvBY1W/QDY4z10shK/lptt5
+ KJbTktyLc04rsXFwlgQ2ryb/zIU5F3aODyiAHAmTOrQOTxLdFlJWSPUFA8hkCsWWmXDH
+ 6qj6p8siC2TRxb4R7taP8McW9d3mpEbx3kbCA4cp5zApIgGF6YqRNRsYHyNsAXAiiYto
+ +tlQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWojg6dKQ7ROgTUCDWLoAAkin+kp583a4V6CPHeiEnRPE+0bGFv8n3H4FM+xIv2tR8MzfoxDaC/VcDI@nongnu.org
-X-Gm-Message-State: AOJu0Yx8oAUKUvbXQ5fFN3DGIGjshsakZlhzUKuKBB+Mvj/el/OOiRNR
- eKBEr0gbCtq1oc1wTdVj+1wQhmxEDp6IPXklqz7+lqo8xD+a2JZWeQ9G1sxoQgBXKmg=
-X-Gm-Gg: ASbGncsuwNol2z/PMmNJGDon2kdGU8ezO5fDBxL9bx1EKflA+SLMzy46GUV4R//InfE
- HcFhB6l8mwSe07lwyJJdQM6HQ3eR3UmsW+pG4sCQpugROmdMV3MG2+JfSm55Hy9C7fjNeLovAcI
- aNe7huSvYWGCuB5+vdLuzQEQILH2CWZtOnweCjlfCMqnnKJMsxZQYGzHA9xKYwzbc5xGf/v5nKu
- c+X6bVg8YnTD5qjldXCSbFKesfx9l+K9VaZ5ewgV6uO1utlMZqyuCDXAAld8LXqXMn+N8/35tZm
- bEObPrHq6vx8HOsLs7/EvzLb7+mwabXJ2QAEKN8cvXmLGxR3eS1OsrFCXjdGJ6ecM74nR6bbPPQ
- yVqCh+Gc82Vi/lr1+UgsR+zCMrgNkpBT3UoCDdX2LjXhjoIbdA1N1nhwK0rdihPbJ+5CVkWEkpp
- /ZzQad8xcD4talyWdaKA==
-X-Google-Smtp-Source: AGHT+IEnFOZY+450UnqRg299FQ3+YOOL3jb3ywXeYWcnmmuWpF+MhphsrrmLorHZhwu8GAOQrkhGXA==
-X-Received: by 2002:a05:600c:4750:b0:45f:28d2:bd38 with SMTP id
- 5b1f17b1804b1-46fa9af3095mr62232305e9.18.1760029407141; 
- Thu, 09 Oct 2025 10:03:27 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb482ba41sm7537825e9.4.2025.10.09.10.03.26
+ AJvYcCWLWe6QSkY1vxkA0rc3U9selMyP99THujAABhJQOCfUnPchSVaz5jR94yZuRhHwBFYhQF3LMBde1e4N@nongnu.org
+X-Gm-Message-State: AOJu0YzD1Lvj4B5EGlXk0t2kUwbVGowSenNevDar1JF4PeuOFFcD772c
+ QJnEcNGiam3Gm13utru2iWv7NoFt0LjrGOU1BwKQnL8XRV0XUdwcVyXjZGMbjM5Kk3A=
+X-Gm-Gg: ASbGncsYxb9lZnQnXU3BXyePliznjwM0O2W/t5giVHAmirQ5uP9gGZ9ddi32z7MBlum
+ +O2JirnL/fn4dPNgO0w9qt3vSf5DkpcsRovs+l5l0e8Dpo+InIPq/KNDoswt7iDRkabK/8Gi0Mp
+ ZucYNPpsrkZ8Z9n07Dkt59zu3+fuErnomKHQPZUc8WuZkcuvt7Mgz1zmN3sHvFx+9X/r0viIN81
+ gj/QnWhbsbMyysig2C7vZXn4RzAxF5KZ6mUhyPOB0akwxiXZPVhVz0Rnoa2cuOwD14f578efxOv
+ 0RujwKtwSYzowoLbUlcMx2+hg2wHcxm8xLrJxmIpr7XN+FTuSVNbCEYOYBwmESjUoRwKNsvW20B
+ Wa9uv3UT/kJt9L6msh2U+mhZAp6s0alwPMbjmCmbTX7Y4EycZkEKgj2ToDhAwjW3B
+X-Google-Smtp-Source: AGHT+IF5cIP3RdOG1ZYCDwlHU8MGr+aAiPJJub25o3CgYj6Zfn7lwu438Dg3OIjj7zVwflFDC75uQA==
+X-Received: by 2002:a17:902:fc4c:b0:28e:a875:f7d1 with SMTP id
+ d9443c01a7336-2902729036bmr95426145ad.10.1760029463422; 
+ Thu, 09 Oct 2025 10:04:23 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b678df4ba7fsm169125a12.32.2025.10.09.10.04.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 10:03:26 -0700 (PDT)
-Message-ID: <ca183d5c-5788-4ec9-8beb-22e1311268bc@linaro.org>
-Date: Thu, 9 Oct 2025 19:03:25 +0200
+ Thu, 09 Oct 2025 10:04:23 -0700 (PDT)
+Message-ID: <2079231a-e7e9-4b1f-80a6-b60e2431c8e1@linaro.org>
+Date: Thu, 9 Oct 2025 10:04:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] tcg/mips: Check O32/N32/64 ABI definitions actually
- exist
+Subject: Re: [PATCH 9/9] target/hppa: Replace MO_TE -> MO_BE
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>
+References: <20251009101040.18378-1-philmd@linaro.org>
+ <20251009101040.18378-10-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>, Riku Voipio <riku.voipio@iki.fi>,
- Aurelien Jarno <aurelien@aurel32.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20250820142108.46639-1-philmd@linaro.org>
- <20250820142108.46639-5-philmd@linaro.org>
- <861610db-6bc7-4e5d-b54a-a86c5818e9ca@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <861610db-6bc7-4e5d-b54a-a86c5818e9ca@linaro.org>
+In-Reply-To: <20251009101040.18378-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,57 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/8/25 23:09, Richard Henderson wrote:
-> On 8/21/25 00:21, Philippe Mathieu-Daudé wrote:
->> Similarly noted in libunwind: https://reviews.llvm.org/D38110#895887,
->> when _ABIO32 / _ABIN32 / _ABI64 are not defined (like on OpenBSD) we
->> get:
->>
->>    [666/1234] Compiling C object libsystem.a.p/tcg_tcg-common.c.o
->>    In file included from ../tcg/tcg-common.c:26:
->>    In file included from include/tcg/tcg.h:34:
->>    tcg/mips/tcg-target-reg-bits.h:10:18: warning: '_ABIO32' is not 
->> defined, evaluates to 0 [-Wundef]
->>    #if _MIPS_SIM == _ABIO32
->>                     ^
->>    tcg/mips/tcg-target-reg-bits.h:12:20: warning: '_ABIN32' is not 
->> defined, evaluates to 0 [-Wundef]
->>    #elif _MIPS_SIM == _ABIN32 || _MIPS_SIM == _ABI64
->>                       ^
->>    2 warnings generated.
+On 10/9/25 03:10, Philippe Mathieu-Daudé wrote:
+> We only build the PA-RISC targets using big endianness order:
 > 
+>    $ git grep TARGET_BIG_ENDIAN configs/targets/hppa-*
+>    configs/targets/hppa-linux-user.mak:5:TARGET_BIG_ENDIAN=y
+>    configs/targets/hppa-softmmu.mak:2:TARGET_BIG_ENDIAN=y
 > 
+> Therefore the MO_TE definition always expands to MO_BE. Use the
+> latter to simplify.
 > 
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tcg/mips/tcg-target-reg-bits.h           | 5 +++--
->>   tcg/mips/tcg-target.c.inc                | 5 +++--
->>   common-user/host/mips/safe-syscall.inc.S | 4 ++--
->>   3 files changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/tcg/mips/tcg-target-reg-bits.h b/tcg/mips/tcg-target-reg- 
->> bits.h
->> index 56fe0a725e9..a957d2312f3 100644
->> --- a/tcg/mips/tcg-target-reg-bits.h
->> +++ b/tcg/mips/tcg-target-reg-bits.h
->> @@ -7,9 +7,10 @@
->>   #ifndef TCG_TARGET_REG_BITS_H
->>   #define TCG_TARGET_REG_BITS_H
->> -#if _MIPS_SIM == _ABIO32
->> +#if defined(_ABIO32) && _MIPS_SIM == _ABIO32
->>   # define TCG_TARGET_REG_BITS 32
->> -#elif _MIPS_SIM == _ABIN32 || _MIPS_SIM == _ABI64
->> +#elif (defined(_ABIN32) && _MIPS_SIM == _ABIN32) \
->> +       || (defined(_ABI64) && _MIPS_SIM == _ABI64)
->>   # define TCG_TARGET_REG_BITS 64
->>   #else
->>   # error "Unknown ABI"
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/hppa/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-> Alternately, remove all of this.  If we're removing 32-bit hosts, _ABI64 
-> is the only valid answer (N32 has 64-bit registers but 32-bit pointers).
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 6fec63cb433..c9009441ad0 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -106,7 +106,7 @@ typedef struct DisasContext {
+>   
+>   static inline MemOp mo_endian(DisasContext *ctx)
+>   {
+> -    return MO_TE;
+> +    return MO_BE;
+>   }
+>   
+>   /* Note that ssm/rsm instructions number PSW_W and PSW_E differently.  */
 
-OK, but meanwhile can you consider this patch out of 32-bit host
-removal? (I should have posted it separately for OpenBSD).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Indeed.  Like ppc64, hppa always defaults to big-endian and has a PSW bit to enable 
+little-endian.  (Which we don't implement, and quite possibly was never implemented in any 
+hardware.)
+
+
+r~
 
