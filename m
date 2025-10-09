@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E980ECCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B9FCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6ufk-0004RT-4C; Thu, 09 Oct 2025 13:43:24 -0400
+	id 1v6ugQ-0004wz-IZ; Thu, 09 Oct 2025 13:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6ufg-0004RB-3O
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:43:20 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6ugP-0004wg-EM
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:44:05 -0400
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6ufc-0005nM-8z
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:43:19 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-26c209802c0so12883935ad.0
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:43:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6ugM-0005rl-A6
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:44:05 -0400
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-46b303f755aso10035305e9.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760031793; x=1760636593; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1760031839; x=1760636639; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1rw47ZkWgjMwlr6iJUjZpho1/IE4CCt9CzOsiPMXHNg=;
- b=SRNgdnwj6D75Y0Bjbocz6yXsH1YnsRPIJqNSDJ9yffss69iVeugJhDP7rp8SfXRQEQ
- 3mzrssieught0lfAHs/jPIZISKAV85unMpi1KXALh7nzGscrCmK+/m5VXeaxAjv+5Wzm
- Vs81eY6DH3zuCEyzQz/A0/1LSuy4NJ7FdO7IU8GjWe9/CcAGN0bpW/ip1swrmIl7CLsJ
- d3+mHLhFY3HR3MkmvdG3h7fdaopPtKTZ61/su65Nf8M3eK/RuQ4lS4RP09eKaPEYU2BS
- fUIwrbUzL1ruf4fITykN4pHj4TUaN88mBjVqcJMylqumYedsfzGRZMkxLGwv9zhsaga5
- ujiQ==
+ bh=4yJjwJiN4Wu8yEEngc5Fjvek4J1FNJRvT4aV2R9EfdI=;
+ b=HA1woxmHB53ZxKLhWeL1UxEpIZe1AHMwu3krJTcuMa+KDeyoNFjGueo2fZUjzGiXHF
+ F9ETAjn3KYDCVVs0V0V6MSJ67bZAHLSl5D/HxbGtWh9SgQSq2Cp8MScamoVU6eZouYDQ
+ H9NHues/SM/FusJvHgzFxpiyowwzEepv4fMbNpJOuvwcxilUhP8KXTH0B9iQWWxrVzip
+ RMxqY9eqMdhYTjljdew5Ad+W9bAK+0cXmNylDplj1FwOOido6KOd7Jr5T6NyR18tAhHr
+ VRzE5pL6QM44Ubs0Bf39InlxUBe5YzmmaXFi7IYVYySOUVvdkXXev2lVLrKLyMQ8aHY1
+ QudA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760031793; x=1760636593;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760031839; x=1760636639;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1rw47ZkWgjMwlr6iJUjZpho1/IE4CCt9CzOsiPMXHNg=;
- b=PRME28l4nitTwuHv64hoD0GV0eQ2tqXfIsoxSl2Pa9Zl+MuZhaWKF4HTDCorJMh8BM
- hNdwtC4s2zL7K4GhsHMwsm2+hP6Icm+h1vvhPg95aAp02nAP1Ioy4yRq01n3EaxS7bhX
- w9YCse3Fwt9JwJDNBoRznfsVN9qooH8v7Xa739fKsdz1dSVLr6HIdQSDav0v0E/MExuL
- UGGZorZ/zDnQ3Qw/9oy66eZbg/UDhkp2IUC3YGhb3suOVtynlFd7rYRTY+8znNe+sU7h
- 5LayVhxQcEbX8zFTXhBEsPfsWRXsjqe7EB0NCVnb0vRFpJ8wZQMMXsEu19AwGLq0ssyq
- 8xkw==
+ bh=4yJjwJiN4Wu8yEEngc5Fjvek4J1FNJRvT4aV2R9EfdI=;
+ b=d/aq4jwKgmN8UyGNG3c6reMh6jXOAAcBTtciern54DBPXgQV9XrQq0FX25sTMBvfQn
+ 2JAUyR2D3kcmCbXryBC6WlGP6h7+Je7hRw0DebeQo4eo+raRCYo/AtyRB874DFDTlzFw
+ zjIgdjw4qKH22HZapMUQrSF0TL2p/mZ/EFlTlx/xgZD129hWe7oJoxKShC2+djjff0kS
+ dOOuvVnpfgba4Fq8boRGlNL6l5aLLJ6XKG9AEIFvpqeJgtds/o38xVkdOTYRewk8gREZ
+ Dk2Fko3g55ebu0HghgxzxuqZmbwaA1Pi0Cp21T1ynae3gkir83WSVJFJti0Uf45vwBcc
+ 9ucA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuIomCQO7a57PALfCyX2IR2SHOgU8VGzjZ4qjkOLnzsmKzWe/Yr8KBTxrKxtB4xDzGGmdWyR96eeN+@nongnu.org
-X-Gm-Message-State: AOJu0YwaFMwlrHOEULCo3nRf7hoG0Grx+uKsTMXpaL66ZawnTVvEIu1V
- 4Nj5QG5h7kAM5ZVLkr7rcu51cRR8/4UirXjulGgsRzbbfFR7PSWNk1xKrlcV1IGJMDI=
-X-Gm-Gg: ASbGncuKZ++/IXKZfWVHuiSY6WTiLfSVHkXQ0Q1UnItHpV4I84pQ7xEqy2rIzahZ71/
- dhQ5WJ/Z1Hmbhd7Vn/nbiyc8jg2oRzuDgCBr+DIOI5ASIf03t36PU1aTShWo/+tMx4leTugQvoy
- 7DrIIaaXOIptuY4bVhP62OtvANolMogGwt1aARDouWOtdN80fvHFTfmivOoCo/PKPdJOQek/DVb
- OUPq/JbPMHAx6IXwQcTJdZPRGjT/l2p6nNcpIlofKjjQYF4jQWky3kLwxIbts95uoTqeeV/vWcJ
- xdqU+zr/l7nMKrh+6n2kRzXZWDR+MNz6mX6isiDM8GgeLY6VLrqKkjQNGtITceYqusR42RJ0Ruk
- J/GEvAg72HAFFYlkfSuufZZePlBeZ5CTBntplAXNZUvyXhEUSugskWWOsQsKdlzNt
-X-Google-Smtp-Source: AGHT+IFijQOI+hnyHC/G8T9aE9lw2O606LXRIao4dB1BkFibDc/LSU5JKVNUga+avjUIkvQkSVAqVg==
-X-Received: by 2002:a17:902:d54b:b0:288:e46d:b318 with SMTP id
- d9443c01a7336-290274008ddmr125193985ad.40.1760031793413; 
- Thu, 09 Oct 2025 10:43:13 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f8770dsm34334805ad.117.2025.10.09.10.43.12
+ AJvYcCUbFRXmnPzTzo94Yei//V+SxlMad/Y3R2cJ97ZzofCViIIojck9yocrmZNiexgvv2X/5kyk7Qjr/aKp@nongnu.org
+X-Gm-Message-State: AOJu0Yxa5UbFq/WMgHncxjVakmJQ+3YJsjs2BpRB0qXaaYHd7kqxZH6h
+ 08RwjeEICpYtMvf/Feq52MYSnMnMkbqc8j0TCJ9p+RDzxRl3JCeFPv+r2Ps2xoLJmcw=
+X-Gm-Gg: ASbGnctNIsCTsr5/IJmnbvUeUzAAbXrkQHadMzdKUQFS6E6lJrgbOFr996kU5FNUw3A
+ Ey8G4u9tUOdnPPKCfqgJihrnOde4m5YVdJvSF+S8K63aF1GhaKIxsjF8B2dY3ZgALGb99LbKNDN
+ uvYJy57JnjnYxPTL3Qy1Rz75K8zmXnpXijIpCCIdtYpfguhswNtKwXpWO0bPJiBiwin+ue43G6R
+ mWibIJMXAvnnVwlOK/SkJ2qrpy4giEFF18lF7umI/kDR8BTxhEwE5qag/fvgv0Kud0F0qvVNtd+
+ LBlQA8Wbce9MJiFkBMma32AGfpuN+suE0Vwq7LVOeTJZ2wqODxF+RiZ/Ndi40vjC3A+G0lq8r40
+ ljR6kSaL3mqz45Bqahz1NEAwnUnlwB00RxTPEaFJFysNTYiuHuG8FJLEJ5r1aDlZMmei8fKB5M4
+ h5QQe5UW5rj9ZpNzhEAA==
+X-Google-Smtp-Source: AGHT+IGLF0LmbCnKzKmW8KiT6uNNXXtj28jyyOCp1LRQrXqKeBMdRqhNAEVjJv6HwV+h4EvPYOQyFA==
+X-Received: by 2002:a05:600c:8487:b0:45b:80ff:58f7 with SMTP id
+ 5b1f17b1804b1-46fa9b16570mr65762765e9.36.1760031838927; 
+ Thu, 09 Oct 2025 10:43:58 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce5e8309sm75196f8f.50.2025.10.09.10.43.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 10:43:13 -0700 (PDT)
-Message-ID: <081b5886-56de-4037-9be3-5f60345bf5b5@linaro.org>
-Date: Thu, 9 Oct 2025 10:43:11 -0700
+ Thu, 09 Oct 2025 10:43:58 -0700 (PDT)
+Message-ID: <c75dc27a-5c56-4010-a205-a8296a9ab1e0@linaro.org>
+Date: Thu, 9 Oct 2025 19:43:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 10/73] target/arm: Expand
- CPUARMState.exception.syndrome to 64 bits
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251008215613.300150-1-richard.henderson@linaro.org>
- <20251008215613.300150-11-richard.henderson@linaro.org>
- <e16277df-c8e1-41ea-8a59-da2ae11dafe1@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
+ hosts
 Content-Language: en-US
-In-Reply-To: <e16277df-c8e1-41ea-8a59-da2ae11dafe1@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250820134937.45077-1-philmd@linaro.org>
+ <226ab909-0482-493f-bacf-5d2930d07ad7@linaro.org>
+ <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
+In-Reply-To: <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,82 +105,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 07:14, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 8/10/25 23:55, Richard Henderson wrote:
->> This will be used for storing the ISS2 portion of the
->> ESR_ELx registers in aarch64 state.  Re-order the fsr
->> member to eliminate two structure holes.
+On 9/10/25 19:23, Philippe Mathieu-Daudé wrote:
+> On 21/8/25 22:27, Richard Henderson wrote:
+>> On 8/20/25 23:49, Philippe Mathieu-Daudé wrote:
+>>> qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
+>>> and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
+>>> ("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
+>>> ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
+>>> is C_NotImplemented.
 >>
->> Drop the comment about "if we implement EL2" since we
->> have already done so.
+>> Not true: ld2/st2 are also used for 128-bit load store.
 >>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/cpu.h     |  7 ++-----
->>   target/arm/helper.c  |  2 +-
->>   target/arm/machine.c | 32 +++++++++++++++++++++++++++++++-
->>   3 files changed, 34 insertions(+), 7 deletions(-)
->>
->> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->> index c9ea160d03..04b57f1dc5 100644
->> --- a/target/arm/cpu.h
->> +++ b/target/arm/cpu.h
->> @@ -633,13 +633,10 @@ typedef struct CPUArchState {
->>        * entry process.
->>        */
->>       struct {
->> -        uint32_t syndrome; /* AArch64 format syndrome register */
->> -        uint32_t fsr; /* AArch32 format fault status register info */
->> +        uint64_t syndrome; /* AArch64 format syndrome register */
->>           uint64_t vaddress; /* virtual addr associated with exception, if any */
->> +        uint32_t fsr; /* AArch32 format fault status register info */
->>           uint32_t target_el; /* EL the exception should be targeted for */
->> -        /* If we implement EL2 we will also need to store information
->> -         * about the intermediate physical address for stage 2 faults.
->> -         */
->>       } exception;
+>> See: aarch64, x86_64, loongarch64, ppc64, s390x.
 > 
-> 
->> diff --git a/target/arm/machine.c b/target/arm/machine.c
->> index 6666a0c50c..ce20b46f50 100644
->> --- a/target/arm/machine.c
->> +++ b/target/arm/machine.c
->> @@ -848,6 +848,23 @@ static const VMStateInfo vmstate_powered_off = {
->>       .put = put_power,
->>   };
->> +static bool syndrome64_needed(void *opaque)
->> +{
->> +    ARMCPU *cpu = opaque;
->> +    return cpu->env.exception.syndrome > UINT32_MAX;
-> 
-> Hmm...
-> 
->> +}
->> +
->> +static const VMStateDescription vmstate_syndrome64 = {
->> +    .name = "cpu/syndrome64",
->> +    .version_id = 1,
->> +    .minimum_version_id = 1,
->> +    .needed = syndrome64_needed,
-> 
-> Why not simply add a new description for the high bits and
-> always migrate?
-> 
->         .info = &vmstate_info_uint32,
->         .offset = offsetofhigh32(ARMCPU, env.exception.syndrome),
-> 
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_UINT64(env.exception.syndrome, ARMCPU),
->> +        VMSTATE_END_OF_LIST()
->> +    },
->> +};
->> +
+> OK. Hmm I guess I need to add a __attribute__((unused)) check like
+> you did in commit f408df587a0 ("tcg: Convert brcond2_i32 to
+> TCGOutOpBrcond2") to outop_qemu_ld2/st2 then.
 
-Because that's more complicated, IMO.
+OK I figured my issue, I shouldn't remove the following in the
+MIPS series [*]:
 
+-- >8 --
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index 3f4aca25b13..c519dfbf7d5 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -1311,2 +1311,34 @@ static const TCGOutOpQemuLdSt outop_qemu_ld = {
 
-r~
++static void tgen_qemu_ld2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
++{
++    MemOp opc = get_memop(oi);
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
++    ldst = prepare_host_addr(s, &h, addr, oi, true);
++
++    if (use_mips32r6_instructions || h.aa.align >= (opc & MO_SIZE)) {
++        tcg_out_qemu_ld_direct(s, datalo, datahi, h.base, opc, type);
++    } else {
++        tcg_out_qemu_ld_unalign(s, datalo, datahi, h.base, opc, type);
++    }
++
++    if (ldst) {
++        ldst->type = type;
++        ldst->datalo_reg = datalo;
++        ldst->datahi_reg = datahi;
++        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
++    }
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
++    /* Ensure that the mips32 code is compiled but discarded for mips64. */
++    .base.static_constraint =
++        TCG_TARGET_REG_BITS == 32 ? C_O2_I1(r, r, r) : C_NotImplemented,
++    .out =
++        TCG_TARGET_REG_BITS == 32 ? tgen_qemu_ld2 : NULL,
++};
++
+  static void tcg_out_qemu_st_direct(TCGContext *s, TCGReg lo, TCGReg hi,
+@@ -1390,2 +1422,34 @@ static const TCGOutOpQemuLdSt outop_qemu_st = {
+
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
++{
++    MemOp opc = get_memop(oi);
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
++    ldst = prepare_host_addr(s, &h, addr, oi, false);
++
++    if (use_mips32r6_instructions || h.aa.align >= (opc & MO_SIZE)) {
++        tcg_out_qemu_st_direct(s, datalo, datahi, h.base, opc);
++    } else {
++        tcg_out_qemu_st_unalign(s, datalo, datahi, h.base, opc);
++    }
++
++    if (ldst) {
++        ldst->type = type;
++        ldst->datalo_reg = datalo;
++        ldst->datahi_reg = datahi;
++        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
++    }
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    /* Ensure that the mips32 code is compiled but discarded for mips64. */
++    .base.static_constraint =
++        TCG_TARGET_REG_BITS == 32 ? C_O0_I3(rz, rz, r) : C_NotImplemented,
++    .out =
++        TCG_TARGET_REG_BITS == 32 ? tgen_qemu_st2 : NULL,
++};
++
+  static void tcg_out_mb(TCGContext *s, unsigned a0)
+
+---
+
+Let's ignore this bogus patch then :)
+
+[*] 
+https://lore.kernel.org/qemu-devel/20250820142108.46639-1-philmd@linaro.org/
 
