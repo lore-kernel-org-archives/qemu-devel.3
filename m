@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72305CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01440CCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 17:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6uZG-00022W-G9; Thu, 09 Oct 2025 13:36:42 -0400
+	id 1v6ubQ-00033L-6C; Thu, 09 Oct 2025 13:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6uZB-00022A-VU
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:36:38 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1v6ubM-000339-Vk
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:38:54 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6uZ5-0004c4-CK
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:36:37 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-3306b83ebdaso1099291a91.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:36:26 -0700 (PDT)
+ id 1v6ubI-0004sk-3z
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 13:38:52 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-77f343231fcso1007096b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 10:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760031383; x=1760636183; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760031522; x=1760636322; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+2mqU4Qfsz06aSMKjuySZ29iDhl1xy/YYAlUuSzJ0LI=;
- b=SkXp1pd1kY0Y0/S6C837V8ErUv9wufCwt5U+17e+rEs229d4IZLKyAZGhveYPwUWmp
- xop84rh8HVoxzLkEl21FWxvzQRHXIgBjI7ytr2YP/sNnyl592xKTn+jS6cfp47FSvV8u
- 15x/bdYkktLmj6DkMSYOGKCW+QOmvwbYViI0yA6LMEsFlPPKK8IhlIsABOU8i+bVZNq3
- pOfoRN1NRNFdwIPo2oW9j2GGiXo7E7MEdwxLw6oXkQaPbLmrs2wzig1yMb5xnZ2zhorh
- ojqBmafMRsLBHRQZ97N4iD0RreXpK5djpLAREmLxgrn2EdhuBbUO09wnJETHnZHSUvqF
- 28OQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R4HqC0xY2YFn5wJKlagqSl6R0tn6uK5yeAC8Qtq31VA=;
+ b=dZ3Mi6+wJjnlFfUzvMLHBLByYsVEOiew7piHigUFA2uyHlWT1/bbGtL+Kyy5IvPWHL
+ lzgSImObx4WkPyjj+TkHM9ZTz0r29XT+FulEG4CE8E4n/cnWCsIcXfuoJGKEfI+YDT8y
+ 6s8wFrDM4sK5vwlljVW6kYaH+pta7rtHoFbxQHaxBMjqTdKo8V+gQPKVhVuWpr0BWpM3
+ 3UpDS4FYTzR6uSLzS2zvQ7uHCPwDp43Q7vzDrLOTuA0PXEfzEjK0wOWgvxGleEp/eTxP
+ UUGm/aAEanP/RDJqkoIpqs/pZetkgjehyEFHY2jy3dzTAewienkZ2Y/1LT6VAyrRjf6h
+ bovw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760031383; x=1760636183;
+ d=1e100.net; s=20230601; t=1760031522; x=1760636322;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+2mqU4Qfsz06aSMKjuySZ29iDhl1xy/YYAlUuSzJ0LI=;
- b=NpQ9UKSxak1zvTX4jHFpeLGlsti7/gegWi5b5kwJelnt/G6oN7vP/BeDm2d98u40Wg
- rX3N2fRsl/bz1DzLX3pUmg5IEBCsKnJtkEV43HK+YAyaJ12lYXyj98wKRVbctMGTfzXO
- 9qjIwbdHk8gmFU4JojmuX0E7AxBGJgMTgkBj/IRrXIr/6QU7RgjZrBaC2h/kYPOnnXV9
- a8/seRtQDny2ESCMdfcYx3biGfLV4HZsia/BvonbylHRluXIJm9ORx8j7iNZz6/knktn
- uCwN/i5XZhoXVI9LrTJjGm1AuCJFeMoLnHHWdWFbNGZsSv4dxJeJEv6lArfvKCNSpRMw
- 0rXA==
-X-Gm-Message-State: AOJu0Yw83iOuXOyR71CowB26mGE+2Z+fTkFHKeaemzV0ZU7St2xo0NyN
- 6hAcIAX+L+Uj9SDhuJlqK3xVBwlJ71uINtjzLgrUluS405FQQEoxz4DATh672D+j3aRLlTvqAUE
- MaVY9KWY=
-X-Gm-Gg: ASbGncsM4J1LVIztMSfdJwe5qe8oVv8TbiGPu2AiynqEE6XqHHZIZIT4RrAQ+dXFzfE
- V7JjIkKyExEEPTIGAQ/YpOCpDtBc1D7d62JVVegJnzcFC7D71kV5T33B+kXRdyEIVplNIv/d3NY
- E90zcuRitbyQbl5Y7ZUeHkXopP7fOokza0k0GpNSxBoox2kvrukhvzDrzhWTjyExsndCHlH6utz
- I3u1Nz0hBJ9Ku0Ey1BfbvmyYlFgmlki1LHg0QWpujEeo3+T5/6OlRP6MSAdYJsHF/6VRdnQFlyq
- exPmOaCuA2+N4IoFu2FFLiU2W/jHEdJ2hirGReZ1a8U8tC+BkozxXCSGYv0jiWmHi6B0EVA9t/f
- El09QXOmuWiD2ILmuH5FkwfOoGNTnSMUt5eAPE2/CdZu3ExazvogfgL7scuhFVb2Yi30JVnQIXg
- s=
-X-Google-Smtp-Source: AGHT+IFcjEVH4ucJOzjOwzr4vyYf8B9MFYy89fAEjwN37Ja8v9Mas0dn9RBIoYw7kXy0drJ6M0znlQ==
-X-Received: by 2002:a17:90b:1b11:b0:330:7f80:bbd9 with SMTP id
- 98e67ed59e1d1-33b5139a422mr10038297a91.31.1760031383508; 
- Thu, 09 Oct 2025 10:36:23 -0700 (PDT)
+ bh=R4HqC0xY2YFn5wJKlagqSl6R0tn6uK5yeAC8Qtq31VA=;
+ b=qBBD0mijsWVyMZVmFsiUUE5CA9JN1JhMrDwxnhOS8RpFPrfED7UyaoYBIPbxZXxIaI
+ fqTJR8CyGs+e5XbRzbDpatCwat+9Nf3EbLzEoh9YCl8/zgwMjfkaDsB4httnl8GFehNK
+ OtF5mK3yVGPrslC2/PpN3A0W8yF6E36wj2e6dCHC19z6qUOPMoD/YaPzbo68z29Raan5
+ lr2O8UaFI60/BczdCQn7VX7tVMQUdUDOvy38b9oqJQyjUdP9QZc47nDilPhXdTWzbzh/
+ ZvXy04DCLnnfKlK3nAN8a60xyYkUECbRAghBQfV10SVp6QOkRv0RRJ8lSSDP6V5KPs59
+ EzOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU017mLVWy8Bi5/juZYC1RRqyMGFh/TUBtBepabbIgviNRc00MjTpmlBTyB4l555vSGyjSnviomNQlY@nongnu.org
+X-Gm-Message-State: AOJu0Yzb4gEHj+YUJgJ7h4ewJnLIoxzJuRLv8NT1wt0VD3jH1bav3KZz
+ Q5Amz0wNf1OKHxLpHfKDq0V5P/k8/Y+IGvGR+0mtvN9u9Jd9dc6N1s++yOQl86C7fpA=
+X-Gm-Gg: ASbGncuh2RLdiM7GiwlKLBbghsX43wtWn62asYitWVhBRgD+L8encw9MTUEitS9G7RQ
+ RQjKu1eDYshIT7B8BK0gZm2qlG3cFBNPZGcMsBowYD5lD3kqndRcR49n/LWfo4qYCTtUtPpB2dQ
+ jglPPwSHF80DnBV+H7z11Ysl9bv4gWcH4hFdRjDMsSqLv9EVfOSbOyD5jYl1Q4o5nnUy3E8Sqhj
+ bjtdiBvxYUojppJZexS3WqCjN/gM73gZaSQhUCPVuZNazV3uWHF48mC6wJvnrMOCI8pL7Dpp1MD
+ ViUnK7pxSkk6ujkcfzAfnzlLHrvZVY0yAqKUm+bcVR0ZQU6J8SPH/Jdy2giyP+lc3pZKabHy+rk
+ d1G6i7ozYpBZSaVi43ppQeHlmoLcR4qwCmmB0Xdoc0+S6CaODdPhuaRWOeO86COi5
+X-Google-Smtp-Source: AGHT+IH6GV0fupNVGLxh1j3gVcUaZ8rnBPuG+bt23WP5S5lb4V+S5vmZPBq6kqYGcdginayn1Acmvg==
+X-Received: by 2002:a05:6a20:6a28:b0:25b:f1b8:b421 with SMTP id
+ adf61e73a8af0-32da81f3ad0mr10717146637.27.1760031522467; 
+ Thu, 09 Oct 2025 10:38:42 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33b529eecf9sm3405573a91.4.2025.10.09.10.36.22
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-7992d993853sm289926b3a.74.2025.10.09.10.38.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 10:36:23 -0700 (PDT)
-Message-ID: <b4c8e9e8-fcaa-45b7-9e19-dcb4ef3780d4@linaro.org>
-Date: Thu, 9 Oct 2025 10:36:21 -0700
+ Thu, 09 Oct 2025 10:38:42 -0700 (PDT)
+Message-ID: <b9e34640-43bf-4345-9718-f319ff185c1a@linaro.org>
+Date: Thu, 9 Oct 2025 10:38:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] target/rx: Expand TCG register definitions for 32-bit
- target
-To: qemu-devel@nongnu.org
-References: <20251009151607.26278-1-philmd@linaro.org>
- <20251009151607.26278-9-philmd@linaro.org>
+Subject: Re: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
+ hosts
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250820134937.45077-1-philmd@linaro.org>
+ <226ab909-0482-493f-bacf-5d2930d07ad7@linaro.org>
+ <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251009151607.26278-9-philmd@linaro.org>
+In-Reply-To: <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,26 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 08:16, Philippe Mathieu-Daudé wrote:
-> The RX target is only built as 32-bit:
+On 10/9/25 10:23, Philippe Mathieu-Daudé wrote:
+> On 21/8/25 22:27, Richard Henderson wrote:
+>> On 8/20/25 23:49, Philippe Mathieu-Daudé wrote:
+>>> qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
+>>> and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
+>>> ("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
+>>> ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
+>>> is C_NotImplemented.
+>>
+>> Not true: ld2/st2 are also used for 128-bit load store.
+>>
+>> See: aarch64, x86_64, loongarch64, ppc64, s390x.
 > 
->    $ git grep TARGET_LONG_BITS configs/targets/rx-*
->    configs/targets/rx-softmmu.mak:5:TARGET_LONG_BITS=32
-> 
-> Therefore target_ulong always expands to uint32_t.\
-> Replace and adapt the API uses mechanically:
-> 
->    TCGv -> TCGv_i32
->    tcg_temp_new -> tcg_temp_new_i32
-> 
-> There is no functional change.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/rx/translate.c | 322 +++++++++++++++++++++---------------------
->   1 file changed, 161 insertions(+), 161 deletions(-)
+> OK. Hmm I guess I need to add a __attribute__((unused)) check like
+> you did in commit f408df587a0 ("tcg: Convert brcond2_i32 to
+> TCGOutOpBrcond2") to outop_qemu_ld2/st2 then.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Why?  Please expand on the error you're seeing.
+
 
 r~
 
