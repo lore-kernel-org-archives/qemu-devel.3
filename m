@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3D7CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBCCCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6wtT-0007yW-Ky; Thu, 09 Oct 2025 16:05:44 -0400
+	id 1v6wv9-0000NK-Bg; Thu, 09 Oct 2025 16:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6wtL-0007vq-5o
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:05:37 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6wv7-0000NB-EB
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:07:25 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6wtH-0005xE-73
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:05:34 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-4256866958bso800177f8f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 13:05:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6wv4-00065C-TR
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:07:24 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-330631e534eso1579600a91.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 13:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760040327; x=1760645127; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CoUvQ9nbly8+dvty8KME2tD8evW2VaAcWLjz90m2xgE=;
- b=ja3EU1xKZZYaY2UsS2rJWiISldPlVkvGm4Jz0cVVEW9JjXE7K+I1EIcnA961LgP3wx
- bbe6wRB40atBNEk1dDILRsVxpKWAToYQFP/YGtyydkZFeYdSX9xbGUJunis4/5VUK0pK
- 1bthlrWz2MfpI5MnqesL8b3jg2mRpk+DMKFmVYRFaiygC+9Ql5rFhwCeXo7kPQ3b4khq
- ietDBZqn3gexOpYWDgCp8qpVY7u8IYUOBGSOLAGQJbq7WlTiT3Y+xhIyv2/7e2FXB3I3
- jKuwPEeBOI5WIynNKbOUU84whGZkqmVvJUfo1bZjKRk2sPEdkVMCwIb0ApkV3aU9tkgX
- kPKA==
+ d=linaro.org; s=google; t=1760040440; x=1760645240; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qfRFv3NWczBeWgLVV/UAE4Ev6bIX1V5WX9MAku99Hkg=;
+ b=fO2SNRAQpvJ1H8HE9KA1RILM5Gmne7Gn0PENh5mF3ekaWAS7FRPUqtCOWIkJPJ8eJN
+ i8LcJoKDJKM5roLkm46aiXmcNN3c6Ln0s41pm+pu/znBSdCoCCjxiHxqEZmqSWL5wq9B
+ qFOAy8ql5jUH4wlOFOaM96+Ex2CPg3ov7Xs1qUXXtTk275v8xVhuuPe2LoUgjTq0n/J3
+ ApyTdZWuh+CaW3T8UFRIlUFcqNp2hRPhG6vR7Zwb2p2gLWRJVboRxgkjkNQoGyff8tO8
+ 7AcVYapItgu//IpkWLibreIgV+GHppMzgT6yH5IcO0yfO/V9pXgGpDlT8jjMMIHhUAr0
+ 228A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760040327; x=1760645127;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CoUvQ9nbly8+dvty8KME2tD8evW2VaAcWLjz90m2xgE=;
- b=WHg45lApOpr5iNY9JEFOxJ8kZkIwFjj4kPxMMKtHw3s6sAqdQ91pScWUpsqcyOQ4UF
- aqlMN7MWpm0aj6kO/009e5ajsxZobN46b+MmdYfNAKw7otbpo4FDif3xg2HP2AhVtj5Q
- KvzUf0Zo6mrG1bCidfGSwoGdKvdksXHIovwUsMP0OXPEnRgU5WLlG9oP+X/HSuFrdyDE
- n9iovWYbv9orj2rGuFrGlpy2gjnaTlOt0Ltj2jcl0YNLuhpn6RlvIT1sWAu/YWmnaGle
- w2k6nl7qP4IBSN4EU5c4848zsocTG2DYM/+gEHmvm+6q7Aw87UvbWo8N0RdtObdCWh+v
- mpdg==
-X-Gm-Message-State: AOJu0YywiUGZ5G2zUQXcSyouGEhg7jWnyDAMqLpLL3HseUwCWFN8lFqa
- UZpBUlXBgNsK+JjEobRf11TWDPc6rOvNW9gUsbTAvRZn0CWRLLWkB9FBdT96sB7Y3nn/asIavB1
- pQOabPSW3CUco
-X-Gm-Gg: ASbGncvr0umV7ocUlMixUJQaktTr6DxzQEe4AOW7E3UPmQv2Br3AMmVHQjV2SjjHzQy
- m1Jbd//B9yWDez5iKaj95wTShFfk7WBpCzk2JcC2Gn2qF4JUs0sBZOfmcgdG3Q+oCZBA+51xP/e
- VOtjaePvwq7ICUjOKJ4TGgKeyLwkKB/K7+2d9ZLo+z1SwkmXPszOsuoEpwJdTWMsg5nnfVSWDVq
- XDoPpS/aw+YP0UCIOrU5FDCqVtC8QymboT7ALKbg0+iTRhcpKDgQwrLzbx9bwF3NjfXJESk9/F0
- 0R6JRWFMF9ro0epTjT65HkVFexyPgnpugJSybHZDHeju19p3RDgWiwkn/o5G9d3G6HnPH6xtbPF
- I36oJ6uCRkKwvalCfzH2d9njaMDf8NI8CEuu9UjEkNnk3rk7qLKf7FmajMSpckZcRqmDa018ek9
- wecr4CBzsYgSRil27xTCdsH2+J
-X-Google-Smtp-Source: AGHT+IFy2N2ztq8bF00YVnkc2AjL6IysON1rZ5UrsvqS5uh7NmB6js+HfUAuVx9mckNBap3uM7D+8g==
-X-Received: by 2002:a05:6000:2884:b0:3ff:d5c5:6b03 with SMTP id
- ffacd0b85a97d-4266e7dfbafmr5977786f8f.35.1760040326864; 
- Thu, 09 Oct 2025 13:05:26 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e8309sm548498f8f.50.2025.10.09.13.05.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Oct 2025 13:05:26 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Michael Rolnik <mrolnik@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] target/avr: Use vaddr type for $PC jumps
-Date: Thu,  9 Oct 2025 22:05:25 +0200
-Message-ID: <20251009200525.33987-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ d=1e100.net; s=20230601; t=1760040440; x=1760645240;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qfRFv3NWczBeWgLVV/UAE4Ev6bIX1V5WX9MAku99Hkg=;
+ b=oXpl7xwV4OtysYAdclpnqbaYkRoXU9H9UkERnC+h4WnGvNQIFhHbsQ4lQXUD4SYL5K
+ Nvfap28rptlB4/5Z4FTJbE69/CLNaiwuSZ+QULb13hYyVV0pp05aeeHGJZ6xMI8WATlm
+ cpWaY61fnUTy+eNZA7RrZPMN9QIH9dLTgKXwwQ+0taUusFZHQqQ3l3+2NYZ/v73vIW3X
+ 6HqHUa37YZqQLSQYEC8emHz8zw90jMTtC0LJaH+lLHVu3ss87vsf0phuNZdtu6fCpCcA
+ azz26AAaaE+3G044sY50g6AY8U8SqbcrIKLQ04w9yEVM09KNzUFi0c7xOtXKxm4MXcbk
+ eTpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjVZmewzaM3NVpMeUWd8KpigY6oP5z4G/kCDBr463mXXuUf70Lv+33+NpmySNUGhePgSz0AeiCS0XA@nongnu.org
+X-Gm-Message-State: AOJu0YwM6vgB6AAPFBhr86Dj3fqnsqgAcEkpPwk7cF/1sXLi3PDMwsr+
+ Lh/yHOO3DyU3abjYF8GRNyb0W9cDelTaqkUOP2xd/g6luyWzPXXfbDrdQKtHMbwRrO8=
+X-Gm-Gg: ASbGncuiJD7uHl7uiZFVg34b8I3zmLFgXMIWhw96orPkx+8f5VrXtszqC0MpEcf7CxP
+ Hd4HOahOb9gwCo9jYyEuFk6ttYEL1KeDV79Rr5730keWuQp820IS320oM15DheF44UOIc+2nsSg
+ n3+sCdthW8dJo3dOgbcmH7L692HGZDWhi8IslGnPAgmh/kV7hAF2Nr1cFC4nhf0iwPjIlIJDQHy
+ Snf8D2elICb3tkQ5aL83EFmbRm/C2kDk//u6putkVdYZdJz6sU+zSoSIA5/BIYtiCSaqtZjWnDB
+ KERF9t1c7MJYmwduPzygv9hxoaF9GFvLr7ee1P9xT0rOJIByqN460UXhdUhqW/cM1rsrH0kTFe4
+ c9XxiW8NCyEvNODTDaY77N2woF1YZOUy8+pv3Fd588tf2dp1c7rp87tol6eTZhTIa
+X-Google-Smtp-Source: AGHT+IEAzfZC++2qnPjm5Zp09rWNedZb1rOeqcqQRvku3ofouShUA1jeBOUhakV2kpTiP+EyYCPECA==
+X-Received: by 2002:a17:90b:3844:b0:32e:d649:f98c with SMTP id
+ 98e67ed59e1d1-33b510f8fc3mr11409334a91.1.1760040439521; 
+ Thu, 09 Oct 2025 13:07:19 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33b626bb49esm391811a91.12.2025.10.09.13.07.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 13:07:19 -0700 (PDT)
+Message-ID: <aee36f07-1ea5-4364-bde7-1ebcc482ced5@linaro.org>
+Date: Thu, 9 Oct 2025 13:07:17 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] hexagon: Fixes to sigcontext
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com
+References: <20251009195943.438454-1-brian.cain@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251009195943.438454-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,87 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_use_goto_tb() expects a vaddr type since commit
-b1c09220b4c ("accel/tcg: Replace target_ulong with vaddr in
-translator*()").
+On 10/9/25 12:59, Brian Cain wrote:
+> Revised from the original series at
+> https://lore.kernel.org/qemu-devel/20251008014754.3565553-1-brian.cain@oss.qualcomm.com/
+> 
+> Brian Cain (4):
+>    linux-user/hexagon: Fix sigcontext
+>    linux-user/hexagon: use abi_ulong
+>    linux-user/hexagon: Use an array for GPRs
+>    tests/tcg/hexagon: Add cs{0,1} coverage
+> 
+>   linux-user/hexagon/signal.c        | 184 +++++++++++------------------
+>   tests/tcg/hexagon/signal_context.c |  22 +++-
+>   2 files changed, 91 insertions(+), 115 deletions(-)
+> 
+> --
+> 2.34.1
+> 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/avr/translate.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Series:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/target/avr/translate.c b/target/avr/translate.c
-index 804b0b21dbd..20191055861 100644
---- a/target/avr/translate.c
-+++ b/target/avr/translate.c
-@@ -87,7 +87,7 @@ struct DisasContext {
-     CPUAVRState *env;
-     CPUState *cs;
- 
--    target_long npc;
-+    vaddr npc;
-     uint32_t opcode;
- 
-     /* Routine used to access memory */
-@@ -981,7 +981,7 @@ static void gen_pop_ret(DisasContext *ctx, TCGv ret)
-     }
- }
- 
--static void gen_goto_tb(DisasContext *ctx, int n, target_ulong dest)
-+static void gen_goto_tb(DisasContext *ctx, int n, vaddr dest)
- {
-     const TranslationBlock *tb = ctx->base.tb;
- 
-@@ -1004,7 +1004,7 @@ static void gen_goto_tb(DisasContext *ctx, int n, target_ulong dest)
-  */
- static bool trans_RJMP(DisasContext *ctx, arg_RJMP *a)
- {
--    int dst = ctx->npc + a->imm;
-+    vaddr dst = ctx->npc + a->imm;
- 
-     gen_goto_tb(ctx, 0, dst);
- 
-@@ -1072,8 +1072,8 @@ static bool trans_JMP(DisasContext *ctx, arg_JMP *a)
-  */
- static bool trans_RCALL(DisasContext *ctx, arg_RCALL *a)
- {
--    int ret = ctx->npc;
--    int dst = ctx->npc + a->imm;
-+    vaddr ret = ctx->npc;
-+    vaddr dst = ctx->npc + a->imm;
- 
-     gen_push_ret(ctx, ret);
-     gen_goto_tb(ctx, 0, dst);
-@@ -1094,7 +1094,7 @@ static bool trans_ICALL(DisasContext *ctx, arg_ICALL *a)
-         return true;
-     }
- 
--    int ret = ctx->npc;
-+    vaddr ret = ctx->npc;
- 
-     gen_push_ret(ctx, ret);
-     gen_jmp_z(ctx);
-@@ -1136,8 +1136,8 @@ static bool trans_CALL(DisasContext *ctx, arg_CALL *a)
-         return true;
-     }
- 
--    int Imm = a->imm;
--    int ret = ctx->npc;
-+    vaddr Imm = a->imm;
-+    vaddr ret = ctx->npc;
- 
-     gen_push_ret(ctx, ret);
-     gen_goto_tb(ctx, 0, Imm);
-@@ -2743,7 +2743,7 @@ static void avr_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     }
- 
-     if (ctx->base.is_jmp == DISAS_NEXT) {
--        target_ulong page_first = ctx->base.pc_first & TARGET_PAGE_MASK;
-+        vaddr page_first = ctx->base.pc_first & TARGET_PAGE_MASK;
- 
-         if ((ctx->base.pc_next - page_first) >= TARGET_PAGE_SIZE - 4) {
-             ctx->base.is_jmp = DISAS_TOO_MANY;
--- 
-2.51.0
 
+r~
 
