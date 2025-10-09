@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DA0CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CAFCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 21:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6xyc-0006Fz-CR; Thu, 09 Oct 2025 17:15:06 -0400
+	id 1v6y6z-0008Od-FJ; Thu, 09 Oct 2025 17:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v6xyZ-0006FH-C4; Thu, 09 Oct 2025 17:15:03 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v6xyV-000535-IK; Thu, 09 Oct 2025 17:15:03 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id EA1E3C0D56;
- Fri, 10 Oct 2025 00:14:54 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:162::1:3a] (unknown
- [2a02:6bf:8080:162::1:3a])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id sESWF31FG8c0-2gVoiKo1; Fri, 10 Oct 2025 00:14:54 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760044494;
- bh=USxTptVZ+u9S8/B4pDZXBBSGqoLcxKM4NpbXvJ3iQ+M=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=XOf96wRVusLrMwAy0Hezv/oryGHcMS+KEzg0nGG8L1f926opIupncNnEnjkXgb+5j
- NSBdgyfADvuGg+yItHXaLMn1bi5fQnGzhh82T6zyNs3lrDklG9crUEbuN1mT6RGv2A
- XDK0BHs15rU6/BtsVwKfbguFXh02yF+mX+ZrkV2o=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <800c806a-c44c-4c4b-827b-acd9eb4a0e53@yandex-team.ru>
-Date: Fri, 10 Oct 2025 00:14:54 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6y6t-0008Mm-JZ
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:23:40 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6y6r-00061E-FP
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 17:23:39 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-269af38418aso17820045ad.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 14:23:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760045016; x=1760649816; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IOidL4uzr+VbN48SlOGg2P6JVFnfJml2ayX/o2NPQnA=;
+ b=ynFsoiPLKD2ToPx1MhVW4x1JMsbIQRzzeBkVW/tJWY/npzmScF5tEfmVS2q24Q9ajj
+ k3eFE6LD4Th5PvECD9U6Wy86lDM6+koP/TO9rkv3kcWhVmQ2vUNvsrKTNEMBHSZJNdPE
+ q7J6ONxYs8TJKbxE4GS8SrgcNZgl2n4NFNZYtcBiKhNZ3uo+2V//EI2y7sCvzRVKKTLa
+ NaJBvOkFvv1MRiBoT4frlIXv0h75EFy6lxACviwYeE7KKOQOYyBE19M33YIbQcnmT9JT
+ ULAo5heOynr1vlEohmnU1vGCLsAFx9FSr3JZGU7OgIQOXC8Qdy/zfBP/8do11e10XoaF
+ Savg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760045016; x=1760649816;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IOidL4uzr+VbN48SlOGg2P6JVFnfJml2ayX/o2NPQnA=;
+ b=HfvXKZoDjnrKhLC9S0ISuWJCAIJfTq/gBfbby4HVDhv9YJZo6mkFuUVGBCFyLvu67X
+ 5yu0u4Apuq4O4q7bRUMU44zajnhlpQLkomAiRvoTXNtVh8GwcZ0VqMAVWOb6Zi71h0h5
+ Ixq9mWzCK/dt2Cp+14ENeEEn+43yc5gpWVDrPv47eDjRKuibcBAZuGY895rIalkBGaar
+ bVmTsHVBuJz/kKVphSewElZpkAv+umE6OkzEfhYBJGW1zKSo+m+R7F7yzLiqiVfnvilK
+ Hyh05QpluUnO3KrZ64DIzKDQZDTdYx2FvjPqGeNuPLvLYiJMViyTB2CiYwtJ3E9kRDbJ
+ YxRA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXqI57PaAsG5sKzOGWstsIw7OUs3K3pENakdCvj5SgxOZMSF9QqAx3c2M1URQdXWnI8Nnsig8xIL9d@nongnu.org
+X-Gm-Message-State: AOJu0YxlnxVC/EDWvOagrK44oo0966TWAvnAS2m6eW2IgSw1rmDhli7/
+ Dcyq9RyvfgpE1LpqwmaCOPQyhhVmKg34rX0BELXWiafpvudjgF/G4fF+I4BVXifEIUE=
+X-Gm-Gg: ASbGncstsvbiuWw4YJ1wY116Ngg4ZBvcCTRr1JuHPh9ajO9IMfqKyNO/cgcAr3vRNxp
+ LNq2YXjG4ofGKvg6oG0PawssMFmac/sV2nWEjQJpN6Gf3L0ZdAqBi/NibUdHfwB8wYprOQVN3wL
+ BV8UtTP73hCWwoRTeX7T3jkfTtMcBKCIz7SBgMWE1O2dV4adIbJSkKeFniKTkvxCdER6ez87rQP
+ pn/1/Iuwp91EwtjsNdK6nay3YjMnfj0caxu+x1/51OHgvJlwmij/YuaqWzUJGMKhyLYebhVWFsO
+ Lt9jI4XRcam4I3J31o67sVtPLIxr9lyW1VFmaTM274xNtayfnWIMSbm8sx8px1hPjnZKh8mMpxg
+ zzUmgWKaK/aYenSOW50hHdKagOyX0NVOea600WHPquqwaxN/tN3lMx3oqrTb7OP0v
+X-Google-Smtp-Source: AGHT+IFppvy+jZEpPC5NKKZzPOFPoRJM+XuKoJY/wb0SpMpY5vtQJIAarfgCsxyeiN2FlabzBQFZHQ==
+X-Received: by 2002:a17:903:1b44:b0:258:f033:3ff9 with SMTP id
+ d9443c01a7336-29027402c05mr95559025ad.48.1760045015725; 
+ Thu, 09 Oct 2025 14:23:35 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034de9febsm38088915ad.7.2025.10.09.14.23.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 14:23:35 -0700 (PDT)
+Message-ID: <b5e928a2-f4ae-4b24-a2c0-2f67442dff2e@linaro.org>
+Date: Thu, 9 Oct 2025 14:23:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 31/33] vhost-user-blk: support vhost backend migration
-To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
- den-plotnikov@yandex-team.ru
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-32-vsementsov@yandex-team.ru>
- <CAFubqFsL4O=zEbmCEQ9KtBYVOsFjf6tuaur+oU9=1+hRDrPtNw@mail.gmail.com>
+Subject: Re: [PATCH] target/hppa: correct size bit parity for fmpyadd
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Andreas_H=C3=BCttel?= <andreas.huettel@ur.de>
+References: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAFubqFsL4O=zEbmCEQ9KtBYVOsFjf6tuaur+oU9=1+hRDrPtNw@mail.gmail.com>
+In-Reply-To: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,78 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.10.25 22:09, Raphael Norwitz wrote:
-> A small question here but will review more thoroughly pending feedback
-> on my overall comments.
-> 
+On 10/9/25 13:51, Gabriel Brookman wrote:
+> For the fmpyadd instruction on the hppa architecture, there is a bit
+> used to specify whether the instruction is operating on a 32 bit or 64
+> bit floating point register. For most instructions, such a bit is 0 when
+> operating on the smaller register and 1 when operating on the larger
+> register. However, according to page 6-57 of the PA-RISC 1.1 Architecture
+> and Instruction Set Reference Manual, 
 
-I really hope you didn't spent much time on these 28-31 patches :/
+Annoyingly, page 6-57 doesn't actually mention the interpretation of the f bit at all. 
+However, I can see how the H specifier is processed in gas, and the confirmation of glibc 
+fixes is nice.
 
-> On Wed, Aug 13, 2025 at 12:53 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
-
-[..]
-
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -269,6 +269,13 @@ bool migrate_local_char_socket(void)
->>       return s->capabilities[MIGRATION_CAPABILITY_LOCAL_CHAR_SOCKET];
->>   }
->>
->> +bool migrate_local_vhost_user_blk(void)
->> +{
->> +    MigrationState *s = migrate_get_current();
->> +
-> 
-> Where was MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK added/defined?
-
-It is generated by QAPI code generator.
-
-Exactly, it's defined by 'local-vhost-user-blk' member inside 'MigrationCapability':
-
-{ 'enum': 'MigrationCapability',
-   'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
-
-            ...
-
-            { 'name': 'local-vhost-user-blk', 'features': [ 'unstable' ] } ] }
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-and after build, the generated code is in build/qapi/qapi-types-migration.h, as a enum:
-
-typedef enum MigrationCapability {
-     MIGRATION_CAPABILITY_XBZRLE,
-
-     ,,,
-
-     MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK,
-     MIGRATION_CAPABILITY__MAX,
-} MigrationCapability;
-
-
-In v2, I'll follow the interface of virtio-net series, look at
-
-https://patchew.org/QEMU/20250923100110.70862-1-vsementsov@yandex-team.ru/20250923100110.70862-17-vsementsov@yandex-team.ru/
-
-so, it would be migration parameter instead of capability, like
-
-     QMP migrate-set-parameters {... backend-transfer = ["vhost-user-blk"] }
-
-and to enable both vhost-user-blk and virtio-net-tap together:
-
-     QMP migrate-set-parameters {... backend-transfer = ["vhost-user-blk", "virtio-net-tap"] }
-
-> 
-> 
->> +    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK];
->> +}
->> +
-
-[..]
-
-
--- 
-Best regards,
-Vladimir
+r~
 
