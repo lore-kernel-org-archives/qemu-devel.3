@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7372CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 02:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F169CCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 02:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6gUw-0008B7-Kn; Wed, 08 Oct 2025 22:35:18 -0400
+	id 1v6gTx-0006lz-Aq; Wed, 08 Oct 2025 22:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6gUu-00088Y-37; Wed, 08 Oct 2025 22:35:16 -0400
+ id 1v6gTv-0006lK-Oa; Wed, 08 Oct 2025 22:34:15 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6gUq-0007jC-5Q; Wed, 08 Oct 2025 22:35:15 -0400
+ id 1v6gTq-0007cH-UI; Wed, 08 Oct 2025 22:34:14 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 9 Oct
- 2025 10:33:10 +0800
+ 2025 10:33:07 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 9 Oct 2025 10:33:10 +0800
+ Transport; Thu, 9 Oct 2025 10:33:07 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 16/16] hw/arm/aspeed_ast27x0-{ssp,tsp}: Fix coding style
-Date: Thu, 9 Oct 2025 10:32:55 +0800
-Message-ID: <20251009023301.4085829-17-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 09/16] hw/arm/aspeed: Introduce AspeedCoprocessor class and
+ base implementation
+Date: Thu, 9 Oct 2025 10:32:48 +0800
+Message-ID: <20251009023301.4085829-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251009023301.4085829-1-jamin_lin@aspeedtech.com>
 References: <20251009023301.4085829-1-jamin_lin@aspeedtech.com>
@@ -66,43 +67,149 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coding style warnings in aspeed_ast27x0-ssp.c and aspeed_ast27x0-tsp.c
-reported by checkpatch.pl regarding line length exceeding 80 characters.
+Add a new AspeedCoprocessor class that defines the foundational structure for
+ASPEED coprocessor models. This class encapsulates a base DeviceState with
+links to system memory, clock, and peripheral components such as SCU, SCUIO,
+Timer Controller, and UARTs.
+
+Introduce the corresponding implementation file
+aspeed_coprocessor_common.c, which provides the aspeed_coprocessor_realize()
+method, property registration, and QOM type registration. The class is marked
+as abstract and intended to serve as a common base for specific coprocessor
+variants (e.g. SSP/TSP subsystems).
+
+This establishes a reusable and extensible framework for modeling ASPEED
+coprocessor devices.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0-ssp.c | 3 ++-
- hw/arm/aspeed_ast27x0-tsp.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ include/hw/arm/aspeed_coprocessor.h | 45 ++++++++++++++++++++++++++
+ hw/arm/aspeed_coprocessor_common.c  | 49 +++++++++++++++++++++++++++++
+ hw/arm/meson.build                  |  3 +-
+ 3 files changed, 96 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/arm/aspeed_coprocessor.h
+ create mode 100644 hw/arm/aspeed_coprocessor_common.c
 
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index a0b8289c35..6800d7b6b2 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -263,7 +263,8 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
- }
- 
--static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass, const void *data)
-+static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,
-+                                             const void *data)
- {
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO: cortex-m4f */
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 8d3d457919..e409d94e28 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -263,7 +263,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
- }
- 
--static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass, const void *data)
-+static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,
-+                                             const void *data)
- {
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
+diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
+new file mode 100644
+index 0000000000..6938dfe24c
+--- /dev/null
++++ b/include/hw/arm/aspeed_coprocessor.h
+@@ -0,0 +1,45 @@
++/*
++ * ASPEED Coprocessor
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef ASPEED_COPROCESSOR_H
++#define ASPEED_COPROCESSOR_H
++
++#include "qom/object.h"
++#include "hw/arm/aspeed_soc.h"
++
++struct AspeedCoprocessorState {
++    DeviceState parent;
++
++    MemoryRegion *memory;
++    MemoryRegion sram;
++    Clock *sysclk;
++
++    AspeedSCUState scu;
++    AspeedSCUState scuio;
++    AspeedTimerCtrlState timerctrl;
++    SerialMM uart[ASPEED_UARTS_NUM];
++};
++
++#define TYPE_ASPEED_COPROCESSOR "aspeed-coprocessor"
++OBJECT_DECLARE_TYPE(AspeedCoprocessorState, AspeedCoprocessorClass,
++                    ASPEED_COPROCESSOR)
++
++struct AspeedCoprocessorClass {
++    DeviceClass parent_class;
++
++    /** valid_cpu_types: NULL terminated array of a single CPU type. */
++    const char * const *valid_cpu_types;
++    uint32_t silicon_rev;
++    const hwaddr *memmap;
++    const int *irqmap;
++    int uarts_base;
++    int uarts_num;
++    qemu_irq (*get_irq)(void *ctx, int dev);
++};
++
++#endif /* ASPEED_COPROCESSOR_H */
+diff --git a/hw/arm/aspeed_coprocessor_common.c b/hw/arm/aspeed_coprocessor_common.c
+new file mode 100644
+index 0000000000..8a94b44f07
+--- /dev/null
++++ b/hw/arm/aspeed_coprocessor_common.c
+@@ -0,0 +1,49 @@
++/*
++ * ASPEED Coprocessor
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "system/memory.h"
++#include "hw/qdev-properties.h"
++#include "hw/arm/aspeed_coprocessor.h"
++
++static void aspeed_coprocessor_realize(DeviceState *dev, Error **errp)
++{
++    AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev);
++
++    if (!s->memory) {
++        error_setg(errp, "'memory' link is not set");
++        return;
++    }
++}
++
++static const Property aspeed_coprocessor_properties[] = {
++    DEFINE_PROP_LINK("memory", AspeedCoprocessorState, memory,
++                     TYPE_MEMORY_REGION, MemoryRegion *),
++};
++
++static void aspeed_coprocessor_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = aspeed_coprocessor_realize;
++    device_class_set_props(dc, aspeed_coprocessor_properties);
++}
++
++static const TypeInfo aspeed_coprocessor_types[] = {
++    {
++        .name           = TYPE_ASPEED_COPROCESSOR,
++        .parent         = TYPE_DEVICE,
++        .instance_size  = sizeof(AspeedCoprocessorState),
++        .class_size     = sizeof(AspeedCoprocessorClass),
++        .class_init     = aspeed_coprocessor_class_init,
++        .abstract       = true,
++    },
++};
++
++DEFINE_TYPES(aspeed_coprocessor_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index dc68391305..56bdb88b11 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -52,7 +52,8 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'fby35.c'))
+ arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
+   'aspeed_ast27x0.c',
+-  'aspeed_ast27x0-fc.c',))
++  'aspeed_ast27x0-fc.c',
++  'aspeed_coprocessor_common.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
+ arm_common_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
 -- 
 2.43.0
 
