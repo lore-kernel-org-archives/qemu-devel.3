@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88ACCCCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BABECCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6lQC-0008AI-2Q; Thu, 09 Oct 2025 03:50:44 -0400
+	id 1v6lQm-0008Oj-4x; Thu, 09 Oct 2025 03:51:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lQ9-00089m-Dg
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:50:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v6lQj-0008KH-Um
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lQ4-0004JA-D3
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:50:41 -0400
+ id 1v6lQa-0004Pj-85
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759996231;
+ s=mimecast20190719; t=1759996267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=eGAQrIfPghrF8Y9k90GmQZxemesTKOLpHp39boAZMHo=;
- b=WgDEFE/iiPol1JWkDtTVkk5osktu7Mr2R8wHfmCRG18zkVG+ITzi1QZFHae7DNYrbFOgu1
- rC7OLkLLBFt7/MZh/h6U1/V3fAOXIJCIeENhOwcwE7EGb/ZDDXIp7sa4J8+fQfAxje0obt
- JaXWPeRsCyFfGDJBY1Mu0k/5hDd2HKM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9jql7MUxN6DyQAt65oei9CU9WqI9qc1PVKDanIBuSZI=;
+ b=WhIoQO2m3OBenNCvbGV4B8uLTFLnxR2L40mKtOMu5CqIoawKOwO8ebIu1nD9xnEY8dZ1AS
+ J1d7IMnqiTxHZh+hIzjWl9jJgw8pAuqsJS0+U5wOg/tXSqGtFb6w+RbeBi/1RhDiT4ZMEv
+ zXay2YBF/ISN7R7ZvtMWz+AwZzc0y2I=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-V3Q40afcOsKyyF2uOkCZDw-1; Thu, 09 Oct 2025 03:50:29 -0400
-X-MC-Unique: V3Q40afcOsKyyF2uOkCZDw-1
-X-Mimecast-MFC-AGG-ID: V3Q40afcOsKyyF2uOkCZDw_1759996229
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3efe4fcc9ccso558296f8f.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:50:29 -0700 (PDT)
+ us-mta-182-1Uxvgyj1NyyEBApO9SPepQ-1; Thu, 09 Oct 2025 03:51:05 -0400
+X-MC-Unique: 1Uxvgyj1NyyEBApO9SPepQ-1
+X-Mimecast-MFC-AGG-ID: 1Uxvgyj1NyyEBApO9SPepQ_1759996265
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e7a2c3773so7856585e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759996228; x=1760601028;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eGAQrIfPghrF8Y9k90GmQZxemesTKOLpHp39boAZMHo=;
- b=m7D+V+6kjAY9AHNwne3QVBYs1VAHXrQVUSR4YzBVH3Rpvm8khtgGxK3uiaMTncUe52
- 6mUAj0MEkpX5P+QF+edqBrTS/YOt1/wjJRxq5SXpWPDPBvqdgssF6G/znUGEhnny4YC6
- vubbeXOnIRnL0Hi6+Hlvxd7HxvuZ/sAsvTWQ0w7ElpnzCyJWjkTyfWVMZDU7XIsBuxs2
- arZRVKqyGmw1KpLA5drxmtNkTrFNaPgZo4rqKP3rBBPfHeF9mTvtmknKRpLTcVz2SW2A
- IO0wKYX5asp1fMsYGTg5/5Bqd2jBe7ubmPFJlBuuVt4+pcepKhahthzq8q89DlsVwna/
- 3OhQ==
-X-Gm-Message-State: AOJu0Yx3GQhlJpWXMTuwbpLm5Y9NNblhPXJf/4Z8xzCTVp6HIV4BAYh1
- 4B7flhDmkUCqje5J0MkSqHe/PQMcUm7nB9vgzfSRlilvn+O6kqATKjTN7raLN0kIcKkMuyfLhhe
- bjz3icfdFxJhovbOO7fgKDtA1JMMQ13upGVF9aDahmeKqyqvL2+9tenC8Jx6cjJw1eu3yptzKyj
- 3pGGv8Z6EyVWJ1afalqaDdiohtRFglCsscDLlaHQ8QeRs=
-X-Gm-Gg: ASbGncvF4CW0kfNC8C8LcZPrbMQ+HHyV/eEmDh/nKE6qOYTRcUFcrd3SGZ6l2g19Zij
- i7eRIoWmWW+g0El1iRb2SZ/csmI9hECWsPppUcT8fUTuYMQrnBSDZUcAAif272g2Gcv9s0xMhuk
- bqi7vjmzquEhKrYm6JSsz72ya4PdQWnXJcNKctS0VSQ+75xVTx+Br+/aoEtB/7h/YpdDSbM2HBd
- uQs4dCfC9O6pJrU/bbTVKDpCl5NkILgfe6V4wXjKS8Q+MBw+9f2CHK16LCOL19y60FoG8Xs6i9v
- TNyg554SVh62Pe5f4T5ZSiVppAl8C47xCwdGNYYUSEx9z3WPH9rQwsoqiAmnrYyRIF5wrmq6YxA
- fWamSsiWUtLvqvDiqRphq74Kq0G8LJC7sjUT5wkvoXthU5k92
-X-Received: by 2002:a05:6000:4382:b0:424:21d8:de30 with SMTP id
- ffacd0b85a97d-4266e8e90eamr4189718f8f.62.1759996227950; 
- Thu, 09 Oct 2025 00:50:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJmnh6KrKnvtR/eS8VwMS4RF6RFnusGTZNqIhe0YnC0KGYZVZSseP6+qzm1pKhMKxZNqjlJg==
-X-Received: by 2002:a05:6000:4382:b0:424:21d8:de30 with SMTP id
- ffacd0b85a97d-4266e8e90eamr4189696f8f.62.1759996227296; 
- Thu, 09 Oct 2025 00:50:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1759996263; x=1760601063;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9jql7MUxN6DyQAt65oei9CU9WqI9qc1PVKDanIBuSZI=;
+ b=ObteTb/HQOeOS7J4WCy0F2HpHmllxn4ZLR0ggPuKFM79m1PWu9WN/dZVpZjp8+SNty
+ Ej+7YkNNDZ/XdrSiWGH4A4nE+gqG0mW/l1GWkhPblfHL9a/+55xTBwhhXVsDhwv3gB8n
+ 2d+tWXwVBrj0sB/ERuYoda9ILpM3SQrMva7BnvzKO3KGxVyTDzHg3df7W5rrwDe52sak
+ lCTNUEVtoPZ7tfPe/8JAB6bJt5WhpR9BBh/p/5CY9hITkvjUoRDf3FMbyyOQyq8f1n4O
+ aCJ8y4KToRU4+PqDlcAPMILp4ajm7WDtQMP9yqaLM/sKonqrnoPL9cTOmY13WG1X7e/O
+ aEow==
+X-Gm-Message-State: AOJu0Yx1ZaRE6Cl56F1OJ/d22sFEpIFRVkF4IfoYt+8fIhiphjrBb6Fq
+ 9sDvU9RzJGGrd16BjxYCJcISfQmOD3TRaRxbQoQoVpBfX/FeGjocwumfxdVtwx0pYyXWhBJWNTj
+ e+TxbYOfZ6xM1oXG9KM2UKMdSEpFx3DGNM8zIiYqpXsWJeFHlx253JgAmWnFUHhIW0vHKIdRXT1
+ wpyQOhDFtSSVHzRt3DMYjoiLT3IBM9pEd9NENKgXGD3wY=
+X-Gm-Gg: ASbGnctqeN1dG8LdSO3fdFrQ59rY6ZOS/kYXHjCYtoMGoZIbcvbFQmem4ejrLLJrnQA
+ utgcQysTyAB1+D2fTrsvBJKNQqiscBJ975RfwjQ7MI/PshHGS4Hr44V3kesSxgnHx0qRHwcmfdf
+ 7nJY0phVGMN1kHL9NrQ644cd3gFR3XkzuxRP8Qp872FiY0/gnRehqMawouO11TZTnWT0qEQNPzw
+ 6ksIp+iPFGMKbTMPF7zFwNmrm+hR4fXgmAiXOsjl850gaP176SHJ37dm3kR5LDkMTi57bedL0kp
+ EC0vOYdMmMAjLz1qNuWAYzGErpmow3OxZRkwq3nSX37Uolg7IEpm1vHlqTada4bXYOd+RX3Nnu3
+ JRafnvCjpptu9uV7g5af4AKyrVq4tq3oUcdKNdBSzJrS/thc0
+X-Received: by 2002:a05:6000:2386:b0:425:6fb5:2ad4 with SMTP id
+ ffacd0b85a97d-425829e78f4mr6787994f8f.15.1759996263044; 
+ Thu, 09 Oct 2025 00:51:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/09Lu9aEGppm7HeredNwct2rqsEPCktxM0aQDFNI66hpR08C76DkfP/ogl+xXjG0GTWyUXg==
+X-Received: by 2002:a05:6000:2386:b0:425:6fb5:2ad4 with SMTP id
+ ffacd0b85a97d-425829e78f4mr6787968f8f.15.1759996262435; 
+ Thu, 09 Oct 2025 00:51:02 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.36.217])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4255d869d50sm34367739f8f.0.2025.10.09.00.50.26
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-4255d8a6b8bsm33340575f8f.4.2025.10.09.00.51.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Oct 2025 00:50:26 -0700 (PDT)
+ Thu, 09 Oct 2025 00:51:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/35] i386 (MSHV, migration) and Rust changes for 2025-10-09
-Date: Thu,  9 Oct 2025 09:49:50 +0200
-Message-ID: <20251009075026.505715-1-pbonzini@redhat.com>
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PULL 16/35] accel/mshv: Add vCPU creation and execution loop
+Date: Thu,  9 Oct 2025 09:50:06 +0200
+Message-ID: <20251009075026.505715-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251009075026.505715-1-pbonzini@redhat.com>
+References: <20251009075026.505715-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -90,7 +93,8 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,182 +110,408 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 517e9b4862cc9798b7a24b1935d94c2f96787f12:
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-  Merge tag 'qtest-20251001-pull-request' of https://gitlab.com/farosas/qemu into staging (2025-10-01 15:03:00 -0700)
+Create MSHV vCPUs using MSHV_CREATE_VP and initialize their state.
+Register the MSHV CPU execution loop loop with the QEMU accelerator
+framework to enable guest code execution.
 
-are available in the Git repository at:
+The target/i386 functionality is still mostly stubbed out and will be
+populated in a later commit in this series.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250916164847.77883-11-magnuskulke@linux.microsoft.com
+[Fix g_free/g_clear_pointer confusion; rename qemu_wait_io_event;
+ mshv.h/mshv_int.h split. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/system/mshv.h       |   2 +-
+ include/system/mshv_int.h   |  20 ++++
+ accel/mshv/mshv-all.c       | 186 +++++++++++++++++++++++++++++++++---
+ target/i386/mshv/mshv-cpu.c |  63 ++++++++++++
+ accel/mshv/trace-events     |   2 +
+ 5 files changed, 260 insertions(+), 13 deletions(-)
 
-for you to fetch changes up to b9ef6198d709f431d893d1b5525cdf7fd7a3e11b:
-
-  rust: fix path to rust_root_crate.sh (2025-10-09 09:48:35 +0200)
-
-----------------------------------------------------------------
-* i386: fix migration issues in 10.1
-* target/i386/mshv: new accelerator
-* rust: use glib-sys-rs
-* rust: fixes for docker tests
-
-----------------------------------------------------------------
-Hector Cao (1):
-      target/i386: add compatibility property for pdcm feature
-
-Magnus Kulke (26):
-      accel: Add Meson and config support for MSHV accelerator
-      target/i386/emulate: Allow instruction decoding from stream
-      target/i386/mshv: Add x86 decoder/emu implementation
-      hw/intc: Generalize APIC helper names from kvm_* to accel_*
-      include/hw/hyperv: Add MSHV ABI header definitions
-      linux-headers/linux: Add mshv.h headers
-      accel/mshv: Add accelerator skeleton
-      accel/mshv: Register memory region listeners
-      accel/mshv: Initialize VM partition
-      accel/mshv: Add vCPU creation and execution loop
-      accel/mshv: Add vCPU signal handling
-      target/i386/mshv: Add CPU create and remove logic
-      target/i386/mshv: Implement mshv_store_regs()
-      target/i386/mshv: Implement mshv_get_standard_regs()
-      target/i386/mshv: Implement mshv_get_special_regs()
-      target/i386/mshv: Implement mshv_arch_put_registers()
-      target/i386/mshv: Set local interrupt controller state
-      target/i386/mshv: Register CPUID entries with MSHV
-      target/i386/mshv: Register MSRs with MSHV
-      target/i386/mshv: Integrate x86 instruction decoder/emulator
-      target/i386/mshv: Write MSRs to the hypervisor
-      target/i386/mshv: Implement mshv_vcpu_run()
-      accel/mshv: Handle overlapping mem mappings
-      target/i386/mshv: Use preallocated page for hvcall
-      docs: Add mshv to documentation
-      MAINTAINERS: Add maintainers for mshv accelerator
-
-Marc-André Lureau (4):
-      subprojects: add glib-sys-rs
-      rust: use glib-sys
-      build-sys: default to host vendor for rust target triple
-      tests/docker: make --enable-rust overridable with EXTRA_CONFIGURE_OPTS
-
-Paolo Bonzini (2):
-      subprojects: Remove version number from .gitignore
-      target/i386: add compatibility property for arch_capabilities
-
-Praveen K Paladugu (1):
-      qapi/accel: Allow to query mshv capabilities
-
-Stefan Hajnoczi (1):
-      rust: fix path to rust_root_crate.sh
-
- MAINTAINERS                                        |   15 +
- docs/about/build-platforms.rst                     |    2 +-
- docs/devel/codebase.rst                            |    2 +-
- docs/glossary.rst                                  |    7 +-
- docs/system/introduction.rst                       |    3 +
- configure                                          |   13 +-
- meson.build                                        |   15 +
- qapi/accelerator.json                              |   29 +
- accel/mshv/trace.h                                 |   14 +
- include/hw/core/cpu.h                              |    2 +-
- include/hw/hyperv/hvgdk.h                          |   20 +
- include/hw/hyperv/hvgdk_mini.h                     |  817 +++++++++
- include/hw/hyperv/hvhdk.h                          |  249 +++
- include/hw/hyperv/hvhdk_mini.h                     |  102 ++
- include/monitor/hmp.h                              |    1 +
- include/system/accel-irq.h                         |   37 +
- include/system/hw_accel.h                          |    1 +
- include/system/mshv.h                              |   64 +
- include/system/mshv_int.h                          |  155 ++
- linux-headers/linux/mshv.h                         |  291 ++++
- target/i386/cpu.h                                  |   16 +-
- target/i386/emulate/x86_decode.h                   |    9 +
- target/i386/emulate/x86_emu.h                      |    2 +
- accel/accel-irq.c                                  |  106 ++
- accel/mshv/irq.c                                   |  399 +++++
- accel/mshv/mem.c                                   |  563 +++++++
- accel/mshv/mshv-all.c                              |  727 ++++++++
- accel/mshv/msr.c                                   |  375 +++++
- accel/stubs/mshv-stub.c                            |   44 +
- hw/core/machine-hmp-cmds.c                         |   15 +
- hw/core/machine-qmp-cmds.c                         |   14 +
- hw/i386/pc.c                                       |    2 +
- hw/intc/apic.c                                     |    8 +
- hw/intc/ioapic.c                                   |   20 +-
- hw/virtio/virtio-pci.c                             |   21 +-
- target/i386/cpu.c                                  |   32 +-
- target/i386/emulate/x86_decode.c                   |   27 +-
- target/i386/emulate/x86_emu.c                      |    3 +-
- target/i386/kvm/kvm.c                              |    6 +-
- target/i386/mshv/mshv-cpu.c                        | 1763 ++++++++++++++++++++
- target/i386/mshv/x86.c                             |  297 ++++
- accel/Kconfig                                      |    3 +
- accel/meson.build                                  |    3 +-
- accel/mshv/meson.build                             |    9 +
- accel/mshv/trace-events                            |   33 +
- accel/stubs/meson.build                            |    1 +
- hmp-commands-info.hx                               |   13 +
- meson_options.txt                                  |    2 +
- qemu-options.hx                                    |   16 +-
- rust/Cargo.lock                                    |  180 ++
- rust/Cargo.toml                                    |    1 +
- rust/bql/Cargo.toml                                |    1 +
- rust/bql/meson.build                               |    1 +
- rust/bql/src/bindings.rs                           |    4 +
- rust/chardev/Cargo.toml                            |    1 +
- rust/chardev/meson.build                           |    2 +-
- rust/chardev/src/bindings.rs                       |    4 +
- rust/hw/char/pl011/Cargo.toml                      |    1 +
- rust/hw/char/pl011/meson.build                     |    1 +
- rust/hw/char/pl011/src/bindings.rs                 |    5 +
- rust/hw/core/Cargo.toml                            |    1 +
- rust/hw/core/meson.build                           |    2 +-
- rust/hw/core/src/bindings.rs                       |    3 +
- rust/meson.build                                   |    2 +
- rust/migration/Cargo.toml                          |    1 +
- rust/migration/meson.build                         |    2 +-
- rust/migration/src/bindings.rs                     |    1 +
- rust/qom/Cargo.toml                                |    1 +
- rust/qom/meson.build                               |    2 +-
- rust/qom/src/bindings.rs                           |    2 +
- rust/system/Cargo.toml                             |    1 +
- rust/system/meson.build                            |    2 +-
- rust/system/src/bindings.rs                        |    4 +
- rust/util/Cargo.toml                               |    1 +
- rust/util/meson.build                              |    2 +-
- rust/util/src/bindings.rs                          |    2 +
- scripts/archive-source.sh                          |    1 +
- scripts/meson-buildoptions.sh                      |    3 +
- scripts/rust/rust_root_crate.sh                    |    2 +-
- scripts/update-linux-headers.sh                    |    2 +-
- subprojects/.gitignore                             |   31 +-
- subprojects/glib-sys-0.21-rs.wrap                  |    7 +
- .../packagefiles/glib-sys-0.21-rs/meson.build      |   33 +
- target/i386/emulate/meson.build                    |    7 +-
- target/i386/meson.build                            |    2 +
- target/i386/mshv/meson.build                       |    8 +
- tests/docker/common.rc                             |    2 +-
- 87 files changed, 6617 insertions(+), 79 deletions(-)
- create mode 100644 accel/mshv/trace.h
- create mode 100644 include/hw/hyperv/hvgdk.h
- create mode 100644 include/hw/hyperv/hvgdk_mini.h
- create mode 100644 include/hw/hyperv/hvhdk.h
- create mode 100644 include/hw/hyperv/hvhdk_mini.h
- create mode 100644 include/system/accel-irq.h
- create mode 100644 include/system/mshv.h
- create mode 100644 include/system/mshv_int.h
- create mode 100644 linux-headers/linux/mshv.h
- create mode 100644 accel/accel-irq.c
- create mode 100644 accel/mshv/irq.c
- create mode 100644 accel/mshv/mem.c
- create mode 100644 accel/mshv/mshv-all.c
- create mode 100644 accel/mshv/msr.c
- create mode 100644 accel/stubs/mshv-stub.c
- create mode 100644 target/i386/mshv/mshv-cpu.c
- create mode 100644 target/i386/mshv/x86.c
- create mode 100644 accel/mshv/meson.build
- create mode 100644 accel/mshv/trace-events
- create mode 100644 subprojects/glib-sys-0.21-rs.wrap
- create mode 100644 subprojects/packagefiles/glib-sys-0.21-rs/meson.build
- create mode 100644 target/i386/mshv/meson.build
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 1011e81df47..bbc42f4dc3a 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -41,7 +41,7 @@ extern bool mshv_allowed;
+ #define mshv_msi_via_irqfd_enabled() mshv_enabled()
+ #else /* CONFIG_MSHV_IS_POSSIBLE */
+ #define mshv_enabled() false
+-#define mshv_msi_via_irqfd_enabled() false
++#define mshv_msi_via_irqfd_enabled() mshv_enabled()
+ #endif
+ 
+ typedef struct MshvState MshvState;
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index b36124a0ea7..fb80f69772b 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -14,6 +14,8 @@
+ #ifndef QEMU_MSHV_INT_H
+ #define QEMU_MSHV_INT_H
+ 
++typedef struct hyperv_message hv_message;
++
+ struct AccelCPUState {
+     int cpufd;
+     bool dirty;
+@@ -44,6 +46,24 @@ typedef struct MshvMsiControl {
+     GHashTable *gsi_routes;
+ } MshvMsiControl;
+ 
++#define mshv_vcpufd(cpu) (cpu->accel->cpufd)
++
++/* cpu */
++typedef enum MshvVmExit {
++    MshvVmExitIgnore   = 0,
++    MshvVmExitShutdown = 1,
++    MshvVmExitSpecial  = 2,
++} MshvVmExit;
++
++void mshv_init_mmio_emu(void);
++int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
++void mshv_remove_vcpu(int vm_fd, int cpu_fd);
++int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
++int mshv_load_regs(CPUState *cpu);
++int mshv_store_regs(CPUState *cpu);
++int mshv_arch_put_registers(const CPUState *cpu);
++void mshv_arch_init_vcpu(CPUState *cpu);
++void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
+ int mshv_arch_post_init_vm(int vm_fd);
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 653195c57c9..e02421d79d4 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -393,6 +393,24 @@ int mshv_hvcall(int fd, const struct mshv_root_hvcall *args)
+     return ret;
+ }
+ 
++static int mshv_init_vcpu(CPUState *cpu)
++{
++    int vm_fd = mshv_state->vm;
++    uint8_t vp_index = cpu->cpu_index;
++    int ret;
++
++    mshv_arch_init_vcpu(cpu);
++    cpu->accel = g_new0(AccelCPUState, 1);
++
++    ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
++    if (ret < 0) {
++        return -1;
++    }
++
++    cpu->accel->dirty = true;
++
++    return 0;
++}
+ 
+ static int mshv_init(AccelState *as, MachineState *ms)
+ {
+@@ -415,6 +433,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
+         return -1;
+     }
+ 
++    mshv_init_mmio_emu();
++
+     mshv_init_msicontrol();
+ 
+     ret = create_vm(mshv_fd, &vm_fd);
+@@ -444,40 +464,182 @@ static int mshv_init(AccelState *as, MachineState *ms)
+     return 0;
+ }
+ 
++static int mshv_destroy_vcpu(CPUState *cpu)
++{
++    int cpu_fd = mshv_vcpufd(cpu);
++    int vm_fd = mshv_state->vm;
++
++    mshv_remove_vcpu(vm_fd, cpu_fd);
++    mshv_vcpufd(cpu) = 0;
++
++    mshv_arch_destroy_vcpu(cpu);
++    g_clear_pointer(&cpu->accel, g_free);
++    return 0;
++}
++
++static int mshv_cpu_exec(CPUState *cpu)
++{
++    hv_message mshv_msg;
++    enum MshvVmExit exit_reason;
++    int ret = 0;
++
++    bql_unlock();
++    cpu_exec_start(cpu);
++
++    do {
++        if (cpu->accel->dirty) {
++            ret = mshv_arch_put_registers(cpu);
++            if (ret) {
++                error_report("Failed to put registers after init: %s",
++                              strerror(-ret));
++                ret = -1;
++                break;
++            }
++            cpu->accel->dirty = false;
++        }
++
++        ret = mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, &exit_reason);
++        if (ret < 0) {
++            error_report("Failed to run on vcpu %d", cpu->cpu_index);
++            abort();
++        }
++
++        switch (exit_reason) {
++        case MshvVmExitIgnore:
++            break;
++        default:
++            ret = EXCP_INTERRUPT;
++            break;
++        }
++    } while (ret == 0);
++
++    cpu_exec_end(cpu);
++    bql_lock();
++
++    if (ret < 0) {
++        cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
++        vm_stop(RUN_STATE_INTERNAL_ERROR);
++    }
++
++    return ret;
++}
++
++static void *mshv_vcpu_thread(void *arg)
++{
++    CPUState *cpu = arg;
++    int ret;
++
++    rcu_register_thread();
++
++    bql_lock();
++    qemu_thread_get_self(cpu->thread);
++    cpu->thread_id = qemu_get_thread_id();
++    current_cpu = cpu;
++    ret = mshv_init_vcpu(cpu);
++    if (ret < 0) {
++        error_report("Failed to init vcpu %d", cpu->cpu_index);
++        goto cleanup;
++    }
++
++    /* signal CPU creation */
++    cpu_thread_signal_created(cpu);
++    qemu_guest_random_seed_thread_part2(cpu->random_seed);
++
++    do {
++        qemu_process_cpu_events(cpu);
++        if (cpu_can_run(cpu)) {
++            mshv_cpu_exec(cpu);
++        }
++    } while (!cpu->unplug || cpu_can_run(cpu));
++
++    mshv_destroy_vcpu(cpu);
++cleanup:
++    cpu_thread_signal_destroyed(cpu);
++    bql_unlock();
++    rcu_unregister_thread();
++    return NULL;
++}
++
+ static void mshv_start_vcpu_thread(CPUState *cpu)
+ {
+-    error_report("unimplemented");
+-    abort();
++    char thread_name[VCPU_THREAD_NAME_SIZE];
++
++    cpu->thread = g_malloc0(sizeof(QemuThread));
++    cpu->halt_cond = g_malloc0(sizeof(QemuCond));
++
++    qemu_cond_init(cpu->halt_cond);
++
++    trace_mshv_start_vcpu_thread(thread_name, cpu->cpu_index);
++    qemu_thread_create(cpu->thread, thread_name, mshv_vcpu_thread, cpu,
++                       QEMU_THREAD_JOINABLE);
++}
++
++static void do_mshv_cpu_synchronize_post_init(CPUState *cpu,
++                                              run_on_cpu_data arg)
++{
++    int ret = mshv_arch_put_registers(cpu);
++    if (ret < 0) {
++        error_report("Failed to put registers after init: %s", strerror(-ret));
++        abort();
++    }
++
++    cpu->accel->dirty = false;
+ }
+ 
+ static void mshv_cpu_synchronize_post_init(CPUState *cpu)
+ {
+-    error_report("unimplemented");
+-    abort();
++    run_on_cpu(cpu, do_mshv_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
+ }
+ 
+ static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
+ {
+-    error_report("unimplemented");
+-    abort();
++    int ret = mshv_arch_put_registers(cpu);
++    if (ret) {
++        error_report("Failed to put registers after reset: %s",
++                     strerror(-ret));
++        cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
++        vm_stop(RUN_STATE_INTERNAL_ERROR);
++    }
++    cpu->accel->dirty = false;
++}
++
++static void do_mshv_cpu_synchronize_pre_loadvm(CPUState *cpu,
++                                               run_on_cpu_data arg)
++{
++    cpu->accel->dirty = true;
+ }
+ 
+ static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
+ {
+-    error_report("unimplemented");
+-    abort();
++    run_on_cpu(cpu, do_mshv_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
++}
++
++static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
++{
++    if (!cpu->accel->dirty) {
++        int ret = mshv_load_regs(cpu);
++        if (ret < 0) {
++            error_report("Failed to load registers for vcpu %d",
++                         cpu->cpu_index);
++
++            cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
++            vm_stop(RUN_STATE_INTERNAL_ERROR);
++        }
++
++        cpu->accel->dirty = true;
++    }
+ }
+ 
+ static void mshv_cpu_synchronize(CPUState *cpu)
+ {
+-    error_report("unimplemented");
+-    abort();
++    if (!cpu->accel->dirty) {
++        run_on_cpu(cpu, do_mshv_cpu_synchronize, RUN_ON_CPU_NULL);
++    }
+ }
+ 
+ static bool mshv_cpus_are_resettable(void)
+ {
+-    error_report("unimplemented");
+-    abort();
++    return false;
+ }
+ 
+ static void mshv_accel_class_init(ObjectClass *oc, const void *data)
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index de0c26bc6c6..02d71ebc14a 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -22,15 +22,78 @@
+ #include "hw/hyperv/hvgdk_mini.h"
+ #include "hw/hyperv/hvhdk_mini.h"
+ 
++#include "cpu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
++#include "emulate/x86_flags.h"
++
+ #include "trace-accel_mshv.h"
+ #include "trace.h"
+ 
++int mshv_store_regs(CPUState *cpu)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++int mshv_load_regs(CPUState *cpu)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++int mshv_arch_put_registers(const CPUState *cpu)
++{
++    error_report("unimplemented");
++    abort();
++}
++
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features)
+ {
+     features->access_guest_idle_reg = 1;
+ }
+ 
++int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++void mshv_remove_vcpu(int vm_fd, int cpu_fd)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++void mshv_init_mmio_emu(void)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++void mshv_arch_init_vcpu(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++
++    env->emu_mmio_buf = g_new(char, 4096);
++}
++
++void mshv_arch_destroy_vcpu(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++
++    g_clear_pointer(&env->emu_mmio_buf, g_free);
++}
++
+ /*
+  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+  * fault to the guest if it tries to access it. It is possible to override
+diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
+index 6130c4abf8a..a4dffeb24a3 100644
+--- a/accel/mshv/trace-events
++++ b/accel/mshv/trace-events
+@@ -3,6 +3,8 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
++mshv_start_vcpu_thread(const char* thread, uint32_t cpu) "thread=%s cpu_index=%d"
++
+ mshv_set_memory(bool add, uint64_t gpa, uint64_t size, uint64_t user_addr, bool readonly, int ret) "add=%d gpa=0x%" PRIx64 " size=0x%" PRIx64 " user=0x%" PRIx64 " readonly=%d result=%d"
+ mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr=0x%" PRIx64 " size=%d data=0x%x"
+ mshv_mem_ioeventfd_del(uint64_t addr, uint32_t size, uint32_t data) "addr=0x%" PRIx64 " size=%d data=0x%x"
 -- 
 2.51.0
 
