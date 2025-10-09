@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E7EBCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DABCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6w1G-0003X6-EC; Thu, 09 Oct 2025 15:09:42 -0400
+	id 1v6w1Z-0003dI-47; Thu, 09 Oct 2025 15:10:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6w1F-0003VN-39
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:09:41 -0400
-Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
+ id 1v6w1X-0003co-Nc
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:09:59 -0400
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6w1C-0007PP-Kx
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:09:40 -0400
-Received: by mail-io1-xd29.google.com with SMTP id
- ca18e2360f4ac-92aee734485so52412939f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:09:38 -0700 (PDT)
+ id 1v6w1U-0007Q9-Lm
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:09:59 -0400
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-8cf4f90b6f0so118793339f.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:09:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760036976; x=1760641776; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760036995; x=1760641795; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l8X37u7lrCUJ9h9Iqm9Xbut2vhy3JqBf630j4O+SF2g=;
- b=QQ1MkF94IFdS/dNXv00O9I4GTUJKefgArvUg94obCMzT0YAiCxhI9XNew/GLUc7Ikv
- 97j6j1CzQwHuc2CXJvNakRJvO1VCTbgj//C7z/+9txu5h+UaHZ0r2BGLobKGr/aHDWNP
- U3EsEY92zIHVCgrsaynKkNKXCPHKIH71IvSsjIAe4hsbeWPSvnnzftQccnmgnp8gGt7e
- d/mLTKn3q/JRCytBgHVPmnLUPmNwlm39F7cpngZqMgddavzlrmPhpj++qhgKOCl21nkz
- JA0EwhpxqQb5ItjZZOg476YrcqYYPmdSS05dv51EmIz7HYyVQyAy750JJ0cbGqaFd/k+
- zp6w==
+ bh=cRdmiAxMC9hb/2oazKfviEk/Bf6FHDRSiniJpu6uxUU=;
+ b=NPyoHtUGKOeEvAGYuK5jdaa/zndM9J3S/XofayJ4tXGFxziSjhvytTEqTepVMKdGIu
+ dkZN9GaRb6JqoSs/KvubRYK9z9m5Lw3Y7u3QFZBgB9QqdIxfn7xR1GsgrmNmSBKaN3bA
+ o9JKVX/a2mjdTyhWteHA8iVNDKpVhtD1OY4cXSuxhuSSlAVAJmkDZH4vo+7YmPxV1TD9
+ PpRSfWeR9slG03YYEMeF8/FSN5qoiKF0YXVLXyjs1H7oKJj28bE6LYNGpWJJXlwg5uJu
+ 8KDbYmkT7EiWh9d2Iv2Vo428VP69VfWITF3/szPK3z4EGMYj16XO0cIcPUJbq1oAjIuJ
+ dikQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760036976; x=1760641776;
+ d=1e100.net; s=20230601; t=1760036995; x=1760641795;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l8X37u7lrCUJ9h9Iqm9Xbut2vhy3JqBf630j4O+SF2g=;
- b=YsnjWq5Uxl9cxAkNI8bDU4mJNtkBIf0+N7eVdnE0tL71krqT6Dy8PrFk7huRSwKgzQ
- hkckAgsfVxLEMk3SXooiZCL8Jt0nACTOFI31EZJ9jvDkXqgcrKeZq/5doyaOC5je1ZfE
- vQNiCUijqdsR1/3Ebl/uXhm+R7UWB0ygYTk0pI8/W8A/FxQ8d0gGGXPBFXAleRvrVEdq
- quQ5xITaANSXp6b+RznupyIibD9FpC9qLjClJytIi7f/XKO5hipRYChZhUdrJntAicNy
- 9SvILkdcOXPQSLBPT0H0J5NJboWbsEw5Mq35TtwZJu0vRU6ketBRixi9wBf4BS0Qd3B/
- 755g==
+ bh=cRdmiAxMC9hb/2oazKfviEk/Bf6FHDRSiniJpu6uxUU=;
+ b=uFFFYbnX+SBUOJ9dFtbnD4DNnZBWGXJD1Wwqlv+sjEARqJs1td7X19t177aNP38XKm
+ DvZ50Obv3nFA1KNHJC9GBz6Mk3JK8gh9ZYPvQ6/tE36XPobRzb3dXgu0w6NX7AGa81e7
+ qmesOr2MluaXDL0oPdvO6FY2kDg9Uhr0wXZa25DnqRXm4ry0NU/0GK+87DOaha9gq5tP
+ yOPdBojurr0L0mJnYthgq4V6IYGUl+s9ULh4jjq8q5u6jMTbGT9ZJdVEjO+FHmrgKWOa
+ mxuh2y5uX4x998wh9EekviFqVyFe9daxP7OhNogg+ex/M+MNhxGcRidaF9thLg4v9J85
+ YP7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUu6+phyYz16QfVUDwVXYP1U6xhVKI1xL1S7F+BdCU5FWXYOqs1K0mpNgTqamOBJN0lOtPSQ3C43Cjs@nongnu.org
-X-Gm-Message-State: AOJu0YwbXnANOwoVIXrpCJM61AcU++XBr9aMR56UKGCJxsptniuElQOl
- piv/fxi7WCAhe67MQ8qLYN7xWWwN0j+/SNjWWxJhU/ZR6JE4nYt9fJE2OP/IzEBWsdg0Cj+88ms
- 9jgDus4SJ9hx2j5xjlHYpy914d5KODIQ=
-X-Gm-Gg: ASbGncsmN9aLovI4GKRCsbjohwjQy/WX/Hk1clb1HHKfmbTQPCJBNzd5fpyVviErCDy
- ckyiWjLV7r5XyuWg2Y8jzkWxcWbZQd+JrUMXkHaW87rkIPLont5+8EcMm41tD8HwvzAbvGfvF/H
- fCKkTHKQDPu+2NLTszTN/jqEY8KaC0Zqjw7J4n2QjhzAocWt704bmsLYId38s6u5oQzH/wzbyHw
- hQYD0BEyDceQPEgmTaxZGDaW2Xa6Ns=
-X-Google-Smtp-Source: AGHT+IHhFh0yuV4CwuEh/eeqXNrjZ6uncTZmRRRU0sJX9o7r7Cqwk3X1+8EySSuoOyuKOvbGLKkvKL4p6DKu82IUIII=
-X-Received: by 2002:a05:6e02:380e:b0:42d:8b1c:572e with SMTP id
- e9e14a558f8ab-42f872ca190mr76168855ab.0.1760036976064; Thu, 09 Oct 2025
- 12:09:36 -0700 (PDT)
+ AJvYcCVLqxct4xrq4jDKSm4BySDW4V7Rkoa97qh1oNw2NqcEn6CXziVwH6PtaGIApn1w+ESJLFSSY3yfVYDT@nongnu.org
+X-Gm-Message-State: AOJu0Yywde8sjwJ6maQ8x31S0BqzVRKoDbBzInPWiSFzgHw+TkFTQrQA
+ gGJjUddnBBUfM3Ql7Yr+bqOSIkcxmotUwueNzqTpvyP63QezHVS/vUKbwoyv40QmJ/SUNayUuYf
+ D4bL0YMQnmyQg+oSjjsgRqK/UWn791uU=
+X-Gm-Gg: ASbGncuWOraOrk6oxqWKL/Ax3HUab8/5HgAEIxVEv6a694DfjTfkFuoGSRQR+ttFvBW
+ o9i+xtC3z6Cw0GVM17ls8PTOPepQbLr/J1DMjyO0LEBYp99HwZ8meUJKBPjI4F8xlY/P1EQVTaD
+ s3p/gzt9v2SGbNJQW+Pa2/AC83paXawVq+PXNgqpYoJtKAPEMDmc8ekBhmyuPSuJXuIy+bUbZUi
+ vD4blLcfCj+fM2x8WeACcbzk8XgDQBF/O9O4mV5pQ==
+X-Google-Smtp-Source: AGHT+IFhPxd+g3ARscLURGJB7qTaJPbuieMD1du85/jt1Qcaakrvj28c9U5g8UKRRG710Eg5oIUjSWywEgMMXAwiZz8=
+X-Received: by 2002:a05:6e02:230a:b0:42f:946f:8eb4 with SMTP id
+ e9e14a558f8ab-42f946f904fmr26024575ab.21.1760036995005; Thu, 09 Oct 2025
+ 12:09:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-30-vsementsov@yandex-team.ru>
-In-Reply-To: <20250813164856.950363-30-vsementsov@yandex-team.ru>
+ <20250813164856.950363-31-vsementsov@yandex-team.ru>
+In-Reply-To: <20250813164856.950363-31-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Thu, 9 Oct 2025 15:09:24 -0400
-X-Gm-Features: AS18NWDBVu4Tw0uLVWqJB3s4Ho6WcPildJMILzl7itgxOgi0Z5arUi19NZyHD4Q
-Message-ID: <CAFubqFv6U4MhU4Wjxz2oxodvVHG5eea4knvVrMW+6HY58oC0fg@mail.gmail.com>
-Subject: Re: [PATCH 29/33] vhost-user: support backend migration
+Date: Thu, 9 Oct 2025 15:09:42 -0400
+X-Gm-Features: AS18NWDWquckcsINW_IymQpcNP0qvx_AXXnYYp9K56v7UtGOwCHZMPz5biVoJGo
+Message-ID: <CAFubqFs_N0bUF9Gh2y14fX1W0ZwtrJfTomR7Q6sHXNGWMY7QrQ@mail.gmail.com>
+Subject: Re: [PATCH 30/33] virtio: support vhost backend migration
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
  sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
@@ -77,15 +77,15 @@ Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net,
  steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,135 +101,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just a naming nit.
+A few nits. Looks like there has been some churn here so this patch
+will need to be rebased.
 
-On Wed, Aug 13, 2025 at 12:54=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Wed, Aug 13, 2025 at 1:01=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> In case of local backend migration, skip backend-related
-> initialization, but instead get the state from migration
-> channel (including secondary channel file descriptor).
+> Add logic to transfer virtio notifiers through migration channel
+> for vhost backend migration case.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/virtio/vhost-user.c | 62 ++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
+>  hw/virtio/virtio-bus.c     |  2 +-
+>  hw/virtio/virtio.c         | 74 ++++++++++++++++++++++++++++++++++++--
+>  include/hw/virtio/virtio.h |  2 ++
+>  3 files changed, 75 insertions(+), 3 deletions(-)
 >
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 3979582975..f220af270e 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -28,6 +28,8 @@
->  #include "system/runstate.h"
->  #include "system/cryptodev.h"
->  #include "migration/postcopy-ram.h"
-> +#include "migration/qemu-file-types.h"
+> diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+> index c7e3941b1e..c1848144a2 100644
+> --- a/hw/virtio/virtio-bus.c
+> +++ b/hw/virtio/virtio-bus.c
+> @@ -286,7 +286,7 @@ int virtio_bus_set_host_notifier(VirtioBusState *bus,=
+ int n, bool assign)
+>          return -ENOSYS;
+>      }
+>
+> -    if (assign) {
+> +    if (assign && !virtio_is_vhost_migrating_backend(vdev)) {
+>          r =3D event_notifier_init(notifier, 1);
+>          if (r < 0) {
+>              error_report("%s: unable to init event notifier: %s (%d)",
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 10891f0e0c..87c243edad 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -26,6 +26,7 @@
+>  #include "hw/virtio/virtio.h"
+>  #include "hw/virtio/vhost.h"
+>  #include "migration/qemu-file-types.h"
 > +#include "migration/qemu-file.h"
->  #include "trace.h"
->  #include "system/ramblock.h"
+>  #include "qemu/atomic.h"
+>  #include "hw/virtio/virtio-bus.h"
+>  #include "hw/qdev-properties.h"
+> @@ -2992,6 +2993,7 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
+>      VirtioDeviceClass *vdc =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+>      uint32_t guest_features_lo =3D (vdev->guest_features & 0xffffffff);
+>      int i;
+> +    bool migrating_backend =3D virtio_is_vhost_migrating_backend(vdev);
 >
-> @@ -2273,6 +2275,10 @@ static int vhost_user_backend_init(struct vhost_de=
-v *dev, void *opaque,
->      u->dev =3D dev;
->      dev->opaque =3D u;
->
-> +    if (dev->migrating_backend) {
-> +        goto out;
-> +    }
+>      if (k->save_config) {
+>          k->save_config(qbus->parent, f);
+> @@ -3025,11 +3027,23 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
+>           */
+>          qemu_put_be64(f, vdev->vq[i].vring.desc);
+>          qemu_put_be16s(f, &vdev->vq[i].last_avail_idx);
 > +
->      err =3D vhost_user_get_features(dev, &features);
->      if (err < 0) {
->          error_setg_errno(errp, -err, "vhost_backend_init failed");
-> @@ -2387,6 +2393,7 @@ static int vhost_user_backend_init(struct vhost_dev=
- *dev, void *opaque,
+> +        if (migrating_backend) {
+> +            qemu_file_put_fd(f,
+> +                             event_notifier_get_fd(&vdev->vq[i].host_not=
+ifier));
+> +            qemu_file_put_fd(
+> +                f, event_notifier_get_fd(&vdev->vq[i].guest_notifier));
+> +        }
+> +
+>          if (k->save_queue) {
+>              k->save_queue(qbus->parent, i, f);
 >          }
 >      }
 >
-
-Maybe call the goto target migrating_backend_out or something else to
-indicate what it's for.
-
-
-> +out:
->      u->postcopy_notifier.notify =3D vhost_user_postcopy_notifier;
->      postcopy_add_notifier(&u->postcopy_notifier);
->
-> @@ -2936,6 +2943,10 @@ void vhost_user_async_close(DeviceState *d,
->
->  static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
->  {
-> +    if (dev->migrating_backend) {
-> +        return 0;
+> +    if (migrating_backend) {
+> +        qemu_file_put_fd(f, event_notifier_get_fd(&vdev->config_notifier=
+));
 > +    }
 > +
->      if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
->          return 0;
+>      if (vdc->save !=3D NULL) {
+>          vdc->save(vdev, f);
 >      }
-> @@ -3105,6 +3116,55 @@ static void vhost_user_qmp_status(struct vhost_dev=
- *dev, VhostStatus *status)
->      status->protocol_features =3D qmp_decode_protocols(u->protocol_featu=
-res);
+> @@ -3235,6 +3249,8 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int ve=
+rsion_id)
+>      BusState *qbus =3D qdev_get_parent_bus(DEVICE(vdev));
+>      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
+>      VirtioDeviceClass *vdc =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+> +    Error *local_err =3D NULL;
+> +    bool migrating_backend =3D virtio_is_vhost_migrating_backend(vdev);
+>
+>      /*
+>       * We poison the endianness to ensure it does not get used before
+> @@ -3304,6 +3320,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int v=
+ersion_id)
+>          vdev->vq[i].signalled_used_valid =3D false;
+>          vdev->vq[i].notification =3D true;
+>
+> +        if (migrating_backend) {
+> +            event_notifier_init_fd(&vdev->vq[i].host_notifier,
+> +                                   qemu_file_get_fd(f));
+> +            event_notifier_init_fd(&vdev->vq[i].guest_notifier,
+> +                                   qemu_file_get_fd(f));
+> +        }
+> +
+>          if (!vdev->vq[i].vring.desc && vdev->vq[i].last_avail_idx) {
+>              error_report("VQ %d address 0x0 "
+>                           "inconsistent with Host index 0x%x",
+> @@ -3317,6 +3340,10 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int v=
+ersion_id)
+>          }
+>      }
+>
+> +    if (migrating_backend) {
+
+nit: spurious spaces after &vdev->config_notifier
+
+> +        event_notifier_init_fd(&vdev->config_notifier   , qemu_file_get_=
+fd(f));
+> +    }
+> +
+>      virtio_notify_vector(vdev, VIRTIO_NO_VECTOR);
+>
+>      if (vdc->load !=3D NULL) {
+> @@ -3333,6 +3360,19 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int v=
+ersion_id)
+>          }
+>      }
+>
+> +    if (migrating_backend) {
+> +        /*
+> +         * On vhost backend migration, device do load host_features from
+> +         * migration stream. So update host_features.
+> +         */
+> +        vdev->host_features =3D vdc->get_features(vdev, vdev->host_featu=
+res,
+> +                                                &local_err);
+> +        if (local_err) {
+> +            error_report_err(local_err);
+> +            return -EINVAL;
+> +        }
+> +    }
+> +
+>      /* Subsections */
+>      ret =3D vmstate_load_state(f, &vmstate_virtio, vdev, 1);
+>      if (ret) {
+> @@ -3394,6 +3434,18 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int v=
+ersion_id)
+>                  continue;
+>              }
+>
+> +            if (migrating_backend) {
+> +                /*
+
+"prior to backend migration"?
+
+
+
+> +                 * Indices are not synced prior backend migration (as we=
+ don't
+> +                 * stop vrings by GET_VRING_BASE). No reason to sync the=
+m now,
+> +                 * and do any checks.
+> +                 */
+> +                vdev->vq[i].used_idx =3D 0;
+> +                vdev->vq[i].shadow_avail_idx =3D 0;
+> +                vdev->vq[i].inuse =3D 0;
+> +                continue;
+> +            }
+> +
+>              nheads =3D vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_=
+avail_idx;
+>              /* Check it isn't doing strange things with descriptor numbe=
+rs. */
+>              if (nheads > vdev->vq[i].vring.num) {
+> @@ -3762,8 +3814,9 @@ int virtio_queue_set_guest_notifier(VirtIODevice *v=
+dev, int n, bool assign,
+>      EventNotifierHandler *read_fn =3D is_config ?
+>          virtio_config_guest_notifier_read :
+>          virtio_queue_guest_notifier_read;
+> +    bool migrating_backend =3D virtio_is_vhost_migrating_backend(vdev);
+>
+> -    if (assign) {
+> +    if (assign && !migrating_backend) {
+>          int r =3D event_notifier_init(notifier, 0);
+>          if (r < 0) {
+>              return r;
+> @@ -3773,7 +3826,7 @@ int virtio_queue_set_guest_notifier(VirtIODevice *v=
+dev, int n, bool assign,
+>      event_notifier_set_handler(notifier,
+>                                 (assign && !with_irqfd) ? read_fn : NULL)=
+;
+>
+> -    if (!assign) {
+> +    if (!assign && !migrating_backend) {
+>          /* Test and clear notifier before closing it,*/
+>          /* in case poll callback didn't have time to run. */
+>          read_fn(notifier);
+> @@ -4392,6 +4445,23 @@ done:
+>      return element;
 >  }
 >
-> +static void vhost_user_save(struct vhost_dev *dev, QEMUFile *f)
+> +bool virtio_is_vhost_migrating_backend(VirtIODevice *vdev)
 > +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +    bool has_backend_channel =3D !!u->backend_sioc;
-> +    qemu_put_be64(f, u->protocol_features);
-> +    qemu_put_be32(f, u->user->memory_slots);
+> +    VirtioDeviceClass *vdc =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+> +    struct vhost_dev *hdev;
 > +
-> +    qemu_put_byte(f, has_backend_channel);
-> +    if (u->backend_sioc) {
-> +        qemu_file_put_fd(f, u->backend_sioc->fd);
+> +    if (!vdc->get_vhost) {
+> +        return false;
 > +    }
+> +
+> +    hdev =3D vdc->get_vhost(vdev);
+> +    if (!hdev) {
+> +        return false;
+> +    }
+> +
+> +    return hdev->migrating_backend;
 > +}
 > +
-> +static int vhost_user_load(struct vhost_dev *dev, QEMUFile *f)
-> +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +    uint8_t has_backend_channel;
-> +    uint32_t memory_slots;
-> +
-> +    qemu_get_be64s(f, &u->protocol_features);
-> +    qemu_get_be32s(f, &memory_slots);
-> +    qemu_get_8s(f, &has_backend_channel);
-> +
-> +    u->user->memory_slots =3D memory_slots;
-> +
-> +    if (has_backend_channel) {
-> +        int fd =3D qemu_file_get_fd(f);
-> +        Error *local_err =3D NULL;
-> +
-> +        u->backend_sioc =3D qio_channel_socket_new_fd(fd, &local_err);
-> +        if (!u->backend_sioc) {
-> +            error_report_err(local_err);
-> +            return -ECONNREFUSED;
-> +        }
-> +        u->backend_src =3D qio_channel_add_watch_source(
-> +            QIO_CHANNEL(u->backend_sioc), G_IO_IN | G_IO_HUP,
-> +            backend_read, dev, NULL, NULL);
-> +    }
-> +
-> +    if (dev->migration_blocker =3D=3D NULL &&
-> +        !vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_LOG_SHMFD)) {
-> +        error_setg(&dev->migration_blocker,
-> +                   "Migration disabled: vhost-user backend lacks "
-> +                   "VHOST_USER_PROTOCOL_F_LOG_SHMFD feature.");
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->  const VhostOps user_ops =3D {
->          .backend_type =3D VHOST_BACKEND_TYPE_USER,
->          .vhost_backend_init =3D vhost_user_backend_init,
-> @@ -3146,4 +3206,6 @@ const VhostOps user_ops =3D {
->          .vhost_set_device_state_fd =3D vhost_user_set_device_state_fd,
->          .vhost_check_device_state =3D vhost_user_check_device_state,
->          .vhost_qmp_status =3D vhost_user_qmp_status,
-> +        .vhost_save_backend =3D vhost_user_save,
-> +        .vhost_load_backend =3D vhost_user_load,
+>  static const TypeInfo virtio_device_info =3D {
+>      .name =3D TYPE_VIRTIO_DEVICE,
+>      .parent =3D TYPE_DEVICE,
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 9a4a0a94aa..f94a7e5895 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -238,6 +238,8 @@ struct VirtioDeviceClass {
+>      bool (*skip_vhost_migration_log)(VirtIODevice *vdev);
 >  };
+>
+> +bool virtio_is_vhost_migrating_backend(VirtIODevice *vdev);
+> +
+>  void virtio_instance_init_common(Object *proxy_obj, void *data,
+>                                   size_t vdev_size, const char *vdev_name=
+);
+>
 > --
 > 2.48.1
 >
