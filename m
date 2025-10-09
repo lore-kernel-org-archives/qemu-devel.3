@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00737CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662B2CCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 20:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6x3P-0002MK-6t; Thu, 09 Oct 2025 16:15:59 -0400
+	id 1v6x7a-0003Zt-95; Thu, 09 Oct 2025 16:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v6x3N-0002LW-AV; Thu, 09 Oct 2025 16:15:57 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v6x3K-00079t-7p; Thu, 09 Oct 2025 16:15:57 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id CFEA5C04D7;
- Thu, 09 Oct 2025 23:15:47 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:162::1:3a] (unknown
- [2a02:6bf:8080:162::1:3a])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id kFRfq91FoSw0-AXm4rbDU; Thu, 09 Oct 2025 23:15:47 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760040947;
- bh=PTLZDIc/CNTa7e0Qnl7K8ZaroUem2dJUE/PHuBpoJbw=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=pSiYFH5EJ7rRnq3MzDiWRUChv7woSRmtg1W14UztV6guGYg8x1KT0aY/O6uId9dhl
- z3S80k2HsWqi6xxoCQ43+Hb9tFBoJMkx/QOblW8xoO/YXNxIa7qQbEnUUGjG5R1cpE
- 20LUXRbbncy44rpl7EMi2ZTuE3oM5KMem9Zxg0VM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a2644d77-e2ab-469d-a501-6e7057362be0@yandex-team.ru>
-Date: Thu, 9 Oct 2025 23:15:46 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6x7X-0003YW-5c
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:20:15 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6x7T-0007Y9-W7
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 16:20:13 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e61ebddd6so14155825e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 13:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760041209; x=1760646009; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1cz9eJ7l65uvp3HvDZSjhvUhN2k1gW4KljY+HIgDhJY=;
+ b=deZzpWKsl1ycVhOwFzSl7dfxjUJuycDW80uI4ZgrOeL+hmakMo46CeX+52wNJzDL1R
+ FkAUrslKhHV38i5WFgNWi933f2zcFnl5BILwQMfuOktCryOLlXUTkf5VxTCvPqTue8h/
+ QjiyfryMbUFST46vrsyEsROxMcEQvpvEolkC2PkNhRJ9qoAR3wcnPgViCAR6Woi0N6x6
+ f7uxEB+dwJaso+gUWcZwIN+vkMYOJVYXhpqXvsDX/IpTkmdycY/CnrZEU1QpYA1qfUz1
+ Tty7ptB5PraV0v41u0v5q0wc5IDY+t9MWSZKYVj/YDweytg7nzpFtsPx83Yu0l8Lo4Y+
+ 6ufQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760041209; x=1760646009;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1cz9eJ7l65uvp3HvDZSjhvUhN2k1gW4KljY+HIgDhJY=;
+ b=J3Hp286qt3YPQ7lRi/DIJvywTrRNGz+0zDsvx0Bbw+TmmLDrZBadNmEopgbdh7O8Um
+ gwMZPCfvDaYSSbEPwfL9NUlaTO16SPr7hH6qkRzA2hJRIdPrV6nNIfE9EDc7G2w81Yiv
+ BEMUHoVgpx6KgGK4eaRcXQINqUcfMOe2d7j2YaGd7PHuthWA+cNmZzcQA7AYUPvELzG6
+ ZhipPPkRHx8XYtn8k5Bg8N7MhHl0w4lxPmX5wT8ca7RofF6i1wSsUGMIWJgdKxlwub1K
+ bteS8e/LmwbwLWAapDEwsAOlUsZhlyfwGYW6h3c5c3YA50dnx0ENoKJy3M/Tu9nFM5ES
+ ALVg==
+X-Gm-Message-State: AOJu0YyFC9lvFD7fnHTQvMJ2zt+zFUAhs3XPAIer9Yh0oyfCIz8+x6zI
+ MQFDrVV8SWLq456rJsa6wiskQYl1CjKBAM94HY7pDna+lG4szkUN4gcfxKSE3YrT6SVm5VIqIwm
+ L1F58DaNKvw==
+X-Gm-Gg: ASbGncvXwo5xQCj4uByzhyX4CbfQtaKbN1aMOz2aEcpSx/cyfY9bPstQk0bqkRJCslj
+ 32R1bIis9yUN0YTUZz2wzlo6GVyZenExTCch0LiXQDoiE7UINLa9AIDZNaTa3yg3snHrc+AqVBi
+ 4VtCOYF9viGWjBfmh2oqMkpMbF3se4UuP8cGH330LxQvbqIS936KzjXlQVtzvBip/kqiaAvYDFt
+ VDPSBmxrbG0l51qOnLLHaqVYPm50yogXh7hrsMUrA/RPu67znGZM8qxOJesbKJSnrQExJWF3y8a
+ WQtaTmsfJc/yVgJrj7vqtyP2OnC/rVCQ9bhHDMFRnXoHVI6fLWDV3CZX/ODY+uDGiZNMMSqE5HM
+ Ow/M5ir+P8fr7l+HGjBBTrMjNUClSVvubKkHw1x1zqbG+3H2rWcXeC+/M2Nxv0dhRUafbD/CaEX
+ KhzOq7nbu9ccGOQn/50vaSYyZAdBlHW02KK6k=
+X-Google-Smtp-Source: AGHT+IFUesgI7GDjCnuL0BiZb1a3C5n1efEHafTBJ+tIxi0rY1j3ydydGaP2Y5k+K+IRb83leSOYyA==
+X-Received: by 2002:a5d:64c3:0:b0:3fa:2316:c21 with SMTP id
+ ffacd0b85a97d-42669895abbmr5733212f8f.17.1760041208841; 
+ Thu, 09 Oct 2025 13:20:08 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fab36a773sm45958475e9.0.2025.10.09.13.20.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Oct 2025 13:20:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 4/4] target/loongarch: Do not use target_ulong type for LDDIR
+ level
+Date: Thu,  9 Oct 2025 22:19:46 +0200
+Message-ID: <20251009201947.34643-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251009201947.34643-1-philmd@linaro.org>
+References: <20251009201947.34643-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/33] vhost: vhost_dev_init(): drop extra features
- variable
-To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
- den-plotnikov@yandex-team.ru
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-20-vsementsov@yandex-team.ru>
- <CAFubqFvDAWborVr0BKff_CWM9gt5f3ZvNsPd6RroA=+yyL469g@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAFubqFvDAWborVr0BKff_CWM9gt5f3ZvNsPd6RroA=+yyL469g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,62 +104,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.10.25 22:06, Raphael Norwitz wrote:
-> Looks like this patch no longer applies cleanly but looks like the
-> same cleanup to drop the local array may be fine?
+The LDDIR level page table is a 5-bit immediate. Using the
+uint32_t type for it is sufficient. Avoid the target_ulong type.
 
-Yes, seems we can do simply
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/loongarch/cpu-mmu.h                             | 2 +-
+ target/loongarch/tcg/helper.h                          | 2 +-
+ target/loongarch/cpu_helper.c                          | 2 +-
+ target/loongarch/tcg/tlb_helper.c                      | 4 ++--
+ target/loongarch/tcg/insn_trans/trans_privileged.c.inc | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-vhost_dev_get_features(hdev, hdev->features_ex)
-
-without extra copying.
-
-> 
-> On Wed, Aug 13, 2025 at 12:51 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   hw/virtio/vhost.c | 5 +----
->>   1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> index f9163ba895..e796ad347d 100644
->> --- a/hw/virtio/vhost.c
->> +++ b/hw/virtio/vhost.c
->> @@ -1596,7 +1596,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->>                      VhostBackendType backend_type, uint32_t busyloop_timeout,
->>                      Error **errp)
->>   {
->> -    uint64_t features;
->>       int i, r, n_initialized_vqs = 0;
->>
->>       hdev->vdev = NULL;
->> @@ -1616,7 +1615,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->>           goto fail;
->>       }
->>
->> -    r = hdev->vhost_ops->vhost_get_features(hdev, &features);
->> +    r = hdev->vhost_ops->vhost_get_features(hdev, &hdev->_features);
->>       if (r < 0) {
->>           error_setg_errno(errp, -r, "vhost_get_features failed");
->>           goto fail;
->> @@ -1631,8 +1630,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->>           }
->>       }
->>
->> -    hdev->_features = features;
->> -
->>       hdev->memory_listener = (MemoryListener) {
->>           .name = "vhost",
->>           .begin = vhost_begin,
->> --
->> 2.48.1
->>
->>
-
-
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index 0068d22efcb..dbc69c7c0f2 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -34,7 +34,7 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+                             MMUAccessType access_type, int mmu_idx,
+                             int is_debug);
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+-                               uint64_t *dir_width, target_ulong level);
++                        uint64_t *dir_width, unsigned int level);
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ 
+ #endif  /* LOONGARCH_CPU_MMU_H */
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index db57dbfc167..7e508c5a7b9 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -129,7 +129,7 @@ DEF_HELPER_2(invtlb_all_asid, void, env, tl)
+ DEF_HELPER_3(invtlb_page_asid, void, env, tl, tl)
+ DEF_HELPER_3(invtlb_page_asid_or_g, void, env, tl, tl)
+ 
+-DEF_HELPER_4(lddir, tl, env, tl, tl, i32)
++DEF_HELPER_4(lddir, tl, env, tl, i32, i32)
+ DEF_HELPER_4(ldpte, void, env, tl, tl, i32)
+ DEF_HELPER_1(ertn, void, env)
+ DEF_HELPER_1(idle, void, env)
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 4a9db3ea4c1..867e7c88670 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -17,7 +17,7 @@
+ #include "tcg/tcg_loongarch.h"
+ 
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+-                        uint64_t *dir_width, target_ulong level)
++                        uint64_t *dir_width, unsigned int level)
+ {
+     switch (level) {
+     case 1:
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 8cfce48a297..f85b68fa53d 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -595,7 +595,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ }
+ 
+ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+-                          target_ulong level, uint32_t mem_idx)
++                          uint32_t level, uint32_t mem_idx)
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong badvaddr, index, phys;
+@@ -603,7 +603,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+ 
+     if (unlikely((level == 0) || (level > 4))) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "Attepted LDDIR with level %"PRId64"\n", level);
++                      "Attepted LDDIR with level %u\n", level);
+         return base;
+     }
+ 
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index a407ab51b74..64e53a44606 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -380,7 +380,7 @@ static bool trans_lddir(DisasContext *ctx, arg_lddir *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
+-    gen_helper_lddir(dest, tcg_env, src, tcg_constant_tl(a->imm), mem_idx);
++    gen_helper_lddir(dest, tcg_env, src, tcg_constant_i32(a->imm), mem_idx);
+     return true;
+ }
+ 
 -- 
-Best regards,
-Vladimir
+2.51.0
+
 
