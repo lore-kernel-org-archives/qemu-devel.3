@@ -4,52 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFA4CCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 02:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 169E0CCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 02:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6gTh-0006i6-BK; Wed, 08 Oct 2025 22:34:01 -0400
+	id 1v6gW3-0002jF-8r; Wed, 08 Oct 2025 22:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6gTf-0006ho-Il; Wed, 08 Oct 2025 22:33:59 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v6gVz-0002Vr-8S
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 22:36:25 -0400
+Received: from p-east3-cluster5-host2-snip4-8.eps.apple.com ([57.103.86.149]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v6gTY-0007cH-Jj; Wed, 08 Oct 2025 22:33:59 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 9 Oct
- 2025 10:33:05 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 9 Oct 2025 10:33:05 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 06/16] hw/arm/aspeed: Remove AspeedSoCState dependency from
- aspeed_mmio_map_unimplemented() API
-Date: Thu, 9 Oct 2025 10:32:45 +0800
-Message-ID: <20251009023301.4085829-7-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251009023301.4085829-1-jamin_lin@aspeedtech.com>
-References: <20251009023301.4085829-1-jamin_lin@aspeedtech.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v6gVs-000812-V9
+ for qemu-devel@nongnu.org; Wed, 08 Oct 2025 22:36:22 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-10 (Postfix) with ESMTPS id
+ 12A39184ACD6; Thu,  9 Oct 2025 02:36:07 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=DrEI+kQ5A2j0E2bb2LGyhrbbxJk1fkRV/0em6w8QAHI=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=f8yixT8v6xMARGv3K/X0zOUAXGRF1G0RzKx6DpZRceFTF5Nur7LrzGuXbcE8hfzsLBSkBMTWCL6odih41atshSKvKg5y5ft51fCQvBPBIYbYjKhjYfHiW2xQdUCJRMJu2EkWoiieqp/eCOA/T6Q2U7zmLAzSQQVeLyXWD/AqROIwxYrzvBsy0EarzZRaD8G80cWMrlQ/7jtJQhVaF9tf2k1SSe7xHAl+fg+IsMug5rapgW+JdGAw0Kypj26ce+6FVi6q0LnRNc5/Eea1S08R3sBi1lcpeZtqRxA4Qsmvk2OHPVeIZlkdE5Wy/xayAqq3ErojKQSACQIADM6Zf47xWQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-10 (Postfix) with ESMTPSA id
+ 07A271800D2F; Thu,  9 Oct 2025 02:36:05 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-Id: <774802D2-E1B7-40B7-A189-82B4CE18B152@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_3211F23C-F7D3-4C26-9AE8-DB4552D22EEF"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: [RFC v2 2/4] hvf: arm64: add workaround for Apple M4 to run older
+ macOS versions
+Date: Thu, 9 Oct 2025 04:35:54 +0200
+In-Reply-To: <19C5D37A-55BC-438D-951B-72A36FF67948@csgraf.de>
+Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Cameron Esfahani <dirty@apple.com>,
+ Maydell Peter <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+To: Alexander Graf <agraf@csgraf.de>
+References: <2399E8DA-E73F-4B59-8E06-F989BA2B462E@unpredictable.fr>
+ <19C5D37A-55BC-438D-951B-72A36FF67948@csgraf.de>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA5MDAxMyBTYWx0ZWRfX2bacyqn6wuvS
+ YqbP6hRx9EmUSCctY082aS9EfN/18eSeTgakeT7BZDhb+kX/YhcFauWEQXAbh/vVuzjBF4lAfeA
+ Cfjco0htha4qymxAnJIZkQFZk00Fhh5yW/Dmg+sHlNjmE5K/hKZiGexygQKPKiKdZbckc5YIg9f
+ zFyiyN42F2HPwfYXbINLHyl3R3/Ng80dokIE6cZ5hmYhmNYHyFqc0GfigRr8Ivuj0iUclySfKRY
+ 3D4bbFTpKy/3Zq2ntmgxll0rBgloQuKSoFdKLjr72CAsz99hkWQQhniK2dVrCpa4cqug2EERo=
+X-Proofpoint-GUID: 75QYtl4f4kOwtMILkFQDLSaKQXVYbTC4
+X-Proofpoint-ORIG-GUID: 75QYtl4f4kOwtMILkFQDLSaKQXVYbTC4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-09_01,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 phishscore=0 mlxscore=0 adultscore=0 spamscore=0 clxscore=1030
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2510090013
+X-JNJ: AAAAAAAB+qQGj7+xUchlN4i30Ynxr7iiTe2M4G7jjvpRZUKr/zLKRHKeQagnPrUZ41/L789exHRQCNLd6xe3eOCMJC5uIHfi342TC5n0dOWZR+kS78sfpbSHPlaEMv5bxviXPEhNZc+r/38s8Ea7N8PtuZZ1bVljcirUopp1U99FnO10UsJZpw7JUgsMhAIdr0utSOqOifpXQ/7NyfOuhEh8ZeeiBmTXTY4Tr3UYIT0Vcpepg+DqJ+8ysCqN9UBWpKcAWlWqxiS6RdqYmDqsazA9CHcOkovCuZxc8j+DwEepxdz7Wm1mz5tGCItkGdJnpUCdv2cc+/PqRseb8mk5LVuUpwDvH573BzZLdNWNaG/PHrzP3gZpusWLZ0smh7IrEBDF8S8z4W1JzeAEfXGpI4rnzIPJ0eXdP3WDB2ASDB4FBWEYjHlXnKLIRhh5CDWpavd4k+Ar6CJFZfu6m4iTqDvt5is+9hZXJcOcTBMMga++J61w06k4GIfFn47MCOw7E+u/+2xWUV0SXoVBCuGw00ufPvClOP3ORih3dzKrW0nWN9jX1J1sAj43pkjDV/gLRMymKokY6PVDcBWA6WHE3l6uQP1n3FMhPOFyO+w7UUSC2fLoj19KYZKGgHrqE93blqxNpIBH6Z/FFpUTc3Z/qgpmHXNIFBzpjwypmjfSdDeJsZvlukKDs3wgdfkGWYWCQc0w05MKEouZAa1gRRqFowllb/Uy2NmBt37hslKdw3UzJ+pxLagRvYBRQK50j3bXWFioSO42n0g=
+Received-SPF: pass client-ip=57.103.86.149;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,265 +86,117 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor aspeed_mmio_map_unimplemented() to take MemoryRegion *
-instead of AspeedSoCState *, removing its dependency on SoC state and
-aligning it with the updated aspeed_mmio_map() interface.
 
-All related call sites are updated to explicitly pass s->memory.
-Affected files include headers, aspeed_soc_common.c, and SoC realize
-functions in AST10x0, AST2400, AST2600, AST27x0 (SSP/TSP), and AST2700.
+--Apple-Mail=_3211F23C-F7D3-4C26-9AE8-DB4552D22EEF
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-This change simplifies the MMIO mapping helpers, improves API
-consistency, and reduces coupling between SoC logic and memory
-operations.
 
-No functional change.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- include/hw/arm/aspeed_soc.h |  2 +-
- hw/arm/aspeed_ast10x0.c     | 24 ++++++++++++++++--------
- hw/arm/aspeed_ast2400.c     |  6 ++++--
- hw/arm/aspeed_ast2600.c     | 12 ++++++++----
- hw/arm/aspeed_ast27x0-ssp.c |  8 ++++----
- hw/arm/aspeed_ast27x0-tsp.c |  8 ++++----
- hw/arm/aspeed_ast27x0.c     | 10 +++++-----
- hw/arm/aspeed_soc_common.c  |  4 ++--
- 8 files changed, 44 insertions(+), 30 deletions(-)
+> On 8. Oct 2025, at 22:00, Alexander Graf <agraf@csgraf.de> wrote:
+>=20
+>=20
+>=20
+>> Am 08.10.2025 um 13:36 schrieb Mohamed Mediouni =
+<mohamed@unpredictable.fr>:
+>>=20
+>> =EF=BB=BF
+>>=20
+>>> On 7. Oct 2025, at 23:12, Alexander Graf <agraf@csgraf.de> wrote:
+>>>=20
+>>>=20
+>>>> On 07.10.25 22:31, Mohamed Mediouni wrote:
+>>>> Apple M4 removes FEAT_SSBS. However, older macOS releases
+>>>> do misbehave in such a configuration and do not boot.
+>>>>=20
+>>>> Use private API to trap SCTLR_EL1 accesses through FGT.
+>>>>=20
+>>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>>=20
+>>>=20
+>>> These old macOS versions did not include M4 support, correct? So =
+wouldn't it make more sense to make more recent macOS work instead?
+>>>=20
+>>> Alex
+>>>=20
+>> Apple ships such a workaround in Virtualization.framework to allow =
+older macOS VMs to work
+>=20
+> Fair, but we don't have to implement the same hacks :). I think from a =
+user's point of view, running macOS 26 is more important than 12 :)
+>=20
+> Alex
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 606cf6bb61..957362b88d 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -310,7 +310,7 @@ void aspeed_soc_uart_set_chr(SerialMM *uart, int dev, int uarts_base,
- bool aspeed_soc_dram_init(AspeedSoCState *s, Error **errp);
- void aspeed_mmio_map(MemoryRegion *memory, SysBusDevice *dev, int n,
-                      hwaddr addr);
--void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
-+void aspeed_mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
-                                    const char *name, hwaddr addr,
-                                    uint64_t size);
- void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index caa9feb667..e861b6dad6 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -201,10 +201,12 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     }
- 
-     /* General I/O memory space to catch all unimplemented device */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem), "aspeed.io",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
-+                                  "aspeed.io",
-                                   sc->memmap[ASPEED_DEV_IOMEM],
-                                   ASPEED_SOC_IOMEM_SIZE);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->sbc_unimplemented),
-+    aspeed_mmio_map_unimplemented(s->memory,
-+                                  SYS_BUS_DEVICE(&s->sbc_unimplemented),
-                                   "aspeed.sbc", sc->memmap[ASPEED_DEV_SBC],
-                                   0x40000);
- 
-@@ -406,20 +408,26 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->pwm), "aspeed.pwm",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),
-+                                  "aspeed.pwm",
-                                   sc->memmap[ASPEED_DEV_PWM], 0x100);
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->espi), "aspeed.espi",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->espi),
-+                                  "aspeed.espi",
-                                   sc->memmap[ASPEED_DEV_ESPI], 0x800);
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->udc), "aspeed.udc",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->udc),
-+                                  "aspeed.udc",
-                                   sc->memmap[ASPEED_DEV_UDC], 0x1000);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->sgpiom), "aspeed.sgpiom",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom),
-+                                  "aspeed.sgpiom",
-                                   sc->memmap[ASPEED_DEV_SGPIOM], 0x100);
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->jtag[0]), "aspeed.jtag",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[0]),
-+                                  "aspeed.jtag",
-                                   sc->memmap[ASPEED_DEV_JTAG0], 0x20);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->jtag[1]), "aspeed.jtag",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[1]),
-+                                  "aspeed.jtag",
-                                   sc->memmap[ASPEED_DEV_JTAG1], 0x20);
- }
- 
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index 6690752215..e0604851a5 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -259,12 +259,14 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
-                                 &s->spi_boot_container);
- 
-     /* IO space */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem), "aspeed.io",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
-+                                  "aspeed.io",
-                                   sc->memmap[ASPEED_DEV_IOMEM],
-                                   ASPEED_SOC_IOMEM_SIZE);
- 
-     /* Video engine stub */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->video), "aspeed.video",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->video),
-+                                  "aspeed.video",
-                                   sc->memmap[ASPEED_DEV_VIDEO], 0x1000);
- 
-     /* CPU */
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index bf0ecde051..ed0985a16e 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -370,16 +370,19 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-                                 &s->spi_boot_container);
- 
-     /* IO space */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem), "aspeed.io",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
-+                                  "aspeed.io",
-                                   sc->memmap[ASPEED_DEV_IOMEM],
-                                   ASPEED_SOC_IOMEM_SIZE);
- 
-     /* Video engine stub */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->video), "aspeed.video",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->video),
-+                                  "aspeed.video",
-                                   sc->memmap[ASPEED_DEV_VIDEO], 0x1000);
- 
-     /* eMMC Boot Controller stub */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->emmc_boot_controller),
-+    aspeed_mmio_map_unimplemented(s->memory,
-+                                  SYS_BUS_DEVICE(&s->emmc_boot_controller),
-                                   "aspeed.emmc-boot-controller",
-                                   sc->memmap[ASPEED_DEV_EMMC_BC], 0x1000);
- 
-@@ -441,7 +444,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-                                 sc->memmap[ASPEED_DEV_SRAM], &s->sram);
- 
-     /* DPMCU */
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu), "aspeed.dpmcu",
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
-+                                  "aspeed.dpmcu",
-                                   sc->memmap[ASPEED_DEV_DPMCU],
-                                   ASPEED_SOC_DPMCU_SIZE);
- 
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index 83cf3c14b6..99a3de15b5 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -241,16 +241,16 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
-                                   "aspeed.timerctrl",
-                                   sc->memmap[ASPEED_DEV_TIMER1], 0x200);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[0]),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),
-                                   "aspeed.ipc0",
-                                   sc->memmap[ASPEED_DEV_IPC0], 0x1000);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[1]),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),
-                                   "aspeed.ipc1",
-                                   sc->memmap[ASPEED_DEV_IPC1], 0x1000);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->scuio),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
-                                   "aspeed.scuio",
-                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
- }
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 86aa565608..568d7555e2 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -241,16 +241,16 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
-                                   "aspeed.timerctrl",
-                                   sc->memmap[ASPEED_DEV_TIMER1], 0x200);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[0]),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),
-                                   "aspeed.ipc0",
-                                   sc->memmap[ASPEED_DEV_IPC0], 0x1000);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[1]),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),
-                                   "aspeed.ipc1",
-                                   sc->memmap[ASPEED_DEV_IPC1], 0x1000);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->scuio),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
-                                   "aspeed.scuio",
-                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
- }
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 8db67dc806..9b645c6c55 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -1014,23 +1014,23 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
-                                   "aspeed.dpmcu",
-                                   sc->memmap[ASPEED_DEV_DPMCU],
-                                   AST2700_SOC_DPMCU_SIZE);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ltpi),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->ltpi),
-                                   "aspeed.ltpi",
-                                   sc->memmap[ASPEED_DEV_LTPI],
-                                   AST2700_SOC_LTPI_SIZE);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
-                                   "aspeed.io",
-                                   sc->memmap[ASPEED_DEV_IOMEM],
-                                   AST2700_SOC_IO_SIZE);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem0),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem0),
-                                   "aspeed.iomem0",
-                                   sc->memmap[ASPEED_DEV_IOMEM0],
-                                   AST2700_SOC_IOMEM_SIZE);
--    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem1),
-+    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem1),
-                                   "aspeed.iomem1",
-                                   sc->memmap[ASPEED_DEV_IOMEM1],
-                                   AST2700_SOC_IOMEM_SIZE);
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index ca4e589dce..e7d0a9c290 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -117,14 +117,14 @@ void aspeed_mmio_map(MemoryRegion *memory, SysBusDevice *dev, int n,
-     memory_region_add_subregion(memory, addr, sysbus_mmio_get_region(dev, n));
- }
- 
--void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
-+void aspeed_mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
-                                    const char *name, hwaddr addr, uint64_t size)
- {
-     qdev_prop_set_string(DEVICE(dev), "name", name);
-     qdev_prop_set_uint64(DEVICE(dev), "size", size);
-     sysbus_realize(dev, &error_abort);
- 
--    memory_region_add_subregion_overlap(s->memory, addr,
-+    memory_region_add_subregion_overlap(memory, addr,
-                                         sysbus_mmio_get_region(dev, 0), -1000);
- }
- 
--- 
-2.43.0
+There are at least two mean things that newer macOS releases do on =
+vmapples, but I=E2=80=99m pretty sure I=E2=80=99m missing some more:
 
+- an HVC #0 with x0 set to 0xc1000000 - this is not trapped all the way =
+to the VMM but handled by the virtualisation stack.
+
+The value returned is zero if the VM is running with a private ISA =
+level. The guest then checks it straight away and goes in an infinite =
+loop if the value isn=E2=80=99t 0.
+
+Fine, let=E2=80=99s run with private ISA and see what happens, well...
+
+- An access to the GIC memory ranges that doesn=E2=80=99t meet ISV =
+requirements - using pre-indexing with SP as the base register.
+
+That said I got pretty far with handling those two but I=E2=80=99m not =
+sure that any of this is upstreamable really=E2=80=A6
+
+-Mohamed
+
+
+--Apple-Mail=_3211F23C-F7D3-4C26-9AE8-DB4552D22EEF
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 8. Oct 2025, at 22:00, Alexander Graf =
+&lt;agraf@csgraf.de&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div><br><br><blockquote =
+type=3D"cite">Am 08.10.2025 um 13:36 schrieb Mohamed Mediouni =
+&lt;mohamed@unpredictable.fr&gt;:<br><br>=EF=BB=BF<br><br><blockquote =
+type=3D"cite">On 7. Oct 2025, at 23:12, Alexander Graf =
+&lt;agraf@csgraf.de&gt; wrote:<br><br><br><blockquote type=3D"cite">On =
+07.10.25 22:31, Mohamed Mediouni wrote:<br>Apple M4 removes FEAT_SSBS. =
+However, older macOS releases<br>do misbehave in such a configuration =
+and do not boot.<br><br>Use private API to trap SCTLR_EL1 accesses =
+through FGT.<br><br>Signed-off-by: Mohamed Mediouni =
+&lt;mohamed@unpredictable.fr&gt;<br></blockquote><br><br>These old macOS =
+versions did not include M4 support, correct? So wouldn't it make more =
+sense to make more recent macOS work =
+instead?<br><br>Alex<br><br></blockquote>Apple ships such a workaround =
+in Virtualization.framework to allow older macOS VMs to =
+work<br></blockquote><br>Fair, but we don't have to implement the same =
+hacks :). I think from a user's point of view, running macOS 26 is more =
+important than 12 =
+:)<br><br>Alex</div></div></blockquote><br></div><div>There are <i>at =
+least </i>two mean things that newer macOS releases do on vmapples, but =
+I=E2=80=99m pretty sure I=E2=80=99m missing some =
+more:</div><div><br></div><div>- an HVC #0 with x0 set =
+to&nbsp;0xc1000000 - this is not trapped all the way to the VMM but =
+handled by the virtualisation stack.</div><div><br></div><div>The value =
+returned is zero if the VM is running with a private ISA level. The =
+guest then checks it straight away and goes in an infinite loop if the =
+value isn=E2=80=99t 0.</div><div><br></div><div>Fine, let=E2=80=99s run =
+with private ISA and see what happens, =
+well...</div><div><br></div><div>- An access to the GIC memory ranges =
+that doesn=E2=80=99t meet ISV requirements - using pre-indexing with SP =
+as the base register.</div><div><br></div><div>That said I got pretty =
+far with handling those two but I=E2=80=99m not sure that any of this is =
+upstreamable =
+really=E2=80=A6</div><div><br></div><div>-Mohamed</div><br></body></html>=
+
+--Apple-Mail=_3211F23C-F7D3-4C26-9AE8-DB4552D22EEF--
 
