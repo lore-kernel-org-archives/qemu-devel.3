@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E382ECCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 18:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024EECCD18A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 18:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6vqF-0006kJ-Gx; Thu, 09 Oct 2025 14:58:19 -0400
+	id 1v6vqn-000896-6x; Thu, 09 Oct 2025 14:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6vq5-0006eV-SK
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 14:58:09 -0400
-Received: from mail-il1-x134.google.com ([2607:f8b0:4864:20::134])
+ id 1v6vql-00081m-FY
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 14:58:51 -0400
+Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v6vq2-00068J-T7
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 14:58:09 -0400
-Received: by mail-il1-x134.google.com with SMTP id
- e9e14a558f8ab-424da17e309so13285705ab.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 11:58:06 -0700 (PDT)
+ id 1v6vqi-0006CO-Fm
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 14:58:51 -0400
+Received: by mail-il1-x136.google.com with SMTP id
+ e9e14a558f8ab-42f9353c810so4058555ab.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 11:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760036285; x=1760641085; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760036325; x=1760641125; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7I9b0fN84UmIfYuhJOvvL9xt4SLepjHkKxYWpxymlTA=;
- b=AnPYQ3UqVTB5YJRdhf1L5BwaHG0tBlI2ZKzbteZu+yKk3rDxN6YEToT9N1IqoZfgvA
- mpna9Brwlago5vUPTkpOw7V4GIrxp82tyHpyQvk+hgIk7DLLwjYinmg/ZJ2fWXNf2IHI
- eMwhsFGyO1+LMAhFZxh9B49tDYnYMkIS1XuC/0GT0Oo5AA0ITxUiTAEMfBdIkzo+kDwP
- tdB4pkKYkVuOxcNwSGVGPIqDOkSlnlpr6ZdUgDEPR1S7xxtZTItB79wxhXrrMP7fuT9K
- n3Hjaqq4SEG2CqZOtPSPGyPFPV7I74ZI7QyE/jNOSuCXxrhKsx5ORPQ6o6meYHFyjU/E
- JXAg==
+ bh=T6xGVDe7uVy4lIHX0yY/ZG/TO5rSZ9MOFLK0ktZq6WY=;
+ b=B0l57ZTIUYlhJUeoxqBfpP5yv+OYDJj+cfsugY7r9TOetUVwAoU6zWXNcr5uU7ANIv
+ TdjJCDMin1LWlllVQks4yAIzznDTOKsxGF7xnFLgTRTXVm+FrMZoPCpiQTOasB2oCe4J
+ ebySOAfB/vxrdXipC0MsA5AgUC2QFdwKcFysUF0SnU9Rp+PK3jBeD1qgMMsm3qL1+cWl
+ Ur96tK8+1kgGUyYfPlKiDBrqynpbuQbLCy9qtCKudk5mL59Gs+ZPdt9gn7ui/Q1S96Xz
+ YRxUod2Ou5P+CXsZT+D6QXGx46AIqqOfAH127qBUl23aXv3oL4QG33gatoqFmmqmIWF5
+ XmaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760036285; x=1760641085;
+ d=1e100.net; s=20230601; t=1760036325; x=1760641125;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7I9b0fN84UmIfYuhJOvvL9xt4SLepjHkKxYWpxymlTA=;
- b=po65xRsqjUbs3k9akhjbFrJJKBiK0Rm30sL1JkmjC6MGSk+rVQ+PxV2rq4/LmOgEFJ
- CMpnFe1yiX0cHZF5TmKaniqK22shPm36t3LUqQxXjKA0x1Wsvtv4LVYJeGQd9uMyOBiE
- iJGmfSYdEKl8jidzviklpREZoIL80DQcmsYKO9R1kOfZMfOQMOyEgpLyuhBcFpEulSsW
- BRycflvVRa255NctQbY7UHYHGdPsvS99VuuLxOB7nsdRciW1WOKRHF9aAFQUYj25k21y
- RbKTcDWuFWdS8iwqSq89sQWTVZ34P4LRzcYGYY0rQXsShSa2jJFTIGJ/Fk8X4gvjNmzD
- rA5A==
+ bh=T6xGVDe7uVy4lIHX0yY/ZG/TO5rSZ9MOFLK0ktZq6WY=;
+ b=tRvVme5hKDH3Emsm19RtnDNtphRAbu20dxggbSabXLEJHYtMpP943UljKnlXCL6lvQ
+ CCkM+4hrIXoncyLMtkuRb4DDEM84EdcMbukfmsQOllFlxJ6PhaJ2Am8OF0QFxh7TkwM3
+ i6kqPiMFS0QW5KyotkVXs6Y6C8vADHjLIWdI+Ge6PNtnkCqPaW0QbMSvvfwV5fiEE+2v
+ BQVwrUA3A53BSryui/VP4Pua2ajUGekKtWZl0IcsHh7CWUN0EGCLkUr4kwDoNU/9obTc
+ azdpeLDqSB4KgRfdRsur7v0zZombl2xwL1Sz396SONgzItgYqA0erFCRT+4WrZNG4zAd
+ sOgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLcCH758Wpo6XA9jraNDf3qGMmZ/8l0ZcRua5KCkKsrr1LjIYaZPtV0QD2HZg7noL9kEaBpw+kbEe7@nongnu.org
-X-Gm-Message-State: AOJu0YwgmvxE7qHkJg1l8nA1swccIc8U64j2V9sgqKvv4bFs891MSIJs
- f0wHe8wyN2IMK7K1NzjxmivVAzdTH4R2GInewG7IIwtQKt3/FC/gC0NRJjsw+lgWg+qyva/DBPi
- 2MAMgfx6LIxmATV25OEVLxlrnopcod8w=
-X-Gm-Gg: ASbGncui0w4BpTdSn/9YCwlk2Y5f358KYQMw+tHbHUHqkO62SgPyOon67A8nJE/Ur2H
- 8yNKku+ceqvj5IlAffFyPnx6dDkw6ClWaWXHUCfkNnjqfkTExlswQ2yPZgPc1867yn1hXiytvYn
- mghUKgjH+Z/KWGXhl3ZiNzrBEiZLVwhgOIQpbJhHtX7Q0901wM3jNU+VOf1p0xx6JFaKx8G7l/q
- 3cL63G/bNB7K1l+TeQWR04KEDi/v/ZvRrurisZwHQ==
-X-Google-Smtp-Source: AGHT+IHvJuDe/eLMzXKnYPiaVrsUnvocPq80SB50+YpUy4cUIPKnkskjUb6hH+gNcvKLSnmcy3YAobMky5vjpOtEcxk=
-X-Received: by 2002:a92:cda6:0:b0:427:c8d1:bea5 with SMTP id
- e9e14a558f8ab-42f873bed54mr78078455ab.21.1760036284666; Thu, 09 Oct 2025
- 11:58:04 -0700 (PDT)
+ AJvYcCWKpBtInU9a5Gv5mErx/OgR7pkrZ1Q8kdPmvmwndILtvflu5zZ6gudrdfZ9IZJa2cgs3CB632FuN4eo@nongnu.org
+X-Gm-Message-State: AOJu0Yz+aMqW9f4+WLFXyLTlVAvoO26S0356PrdDme8wBMti6ICbQ1I2
+ p2skJ5YZyWzHCMs/ZtBjF8hytSHUhRWXDLezRGhlqfWkgBpYeYMnPUbbGpU4SlEtq5Nzh3v2+jb
+ mBffelojeMWFSGi7wW0AyrKYHNG/2F08=
+X-Gm-Gg: ASbGncug0WPcAKNULvdIUnT0YYNDSG5N9FHXjuRP4wqGS2a0wgoySBiji7TL4OFL+Tn
+ b1hBfzyKDsA4uvKE/UAubgCvixo3NmR0SERKQz4euoZgyRz0BFX2ZmzwePqweJOJnLWWLvk5uqj
+ 4Z8S4P+wxhb6h293HWhEte8eqfo+rLM3XxlmUof0Ibz40eLCuu5/i93vf3gGLBwlGk9u9Fzd0dO
+ ChKULhoxalazzU+nX7z+H8zswwNvfLBDUwQ8z+xTg==
+X-Google-Smtp-Source: AGHT+IHLD+dNho87OMRMNsv6iJ+qqY4dU2LLUwofv1nRME2A1VgkYWaEMHNHtRkym6Ixn5G+gepAcV3yMROO4QFIoFg=
+X-Received: by 2002:a05:6e02:218f:b0:429:6c5a:61e4 with SMTP id
+ e9e14a558f8ab-42f87362431mr69166495ab.7.1760036324940; Thu, 09 Oct 2025
+ 11:58:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-5-vsementsov@yandex-team.ru>
-In-Reply-To: <20250813164856.950363-5-vsementsov@yandex-team.ru>
+ <20250813164856.950363-7-vsementsov@yandex-team.ru>
+In-Reply-To: <20250813164856.950363-7-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Thu, 9 Oct 2025 14:57:53 -0400
-X-Gm-Features: AS18NWCF6Y0r9ADOAaf3xjZUqPg09aSXJdRHsjHibCral3T6mw6vXKtTgL-r5K4
-Message-ID: <CAFubqFvSkXDgpttJLz8dtCtsbWLqfS2BRWP=UZxF81st5_Qn_g@mail.gmail.com>
-Subject: Re: [PATCH 04/33] vhost: move protocol_features to vhost_user
+Date: Thu, 9 Oct 2025 14:58:34 -0400
+X-Gm-Features: AS18NWAfcdEub2u8MN_7JR5WeffBUndjqg-YvyQ407-8rjYQIssIP5DIKNarE04
+Message-ID: <CAFubqFtQNGxbiuC+r8g=28tvC=qz5c+1HfqT-jAG6T8xM_Wv9A@mail.gmail.com>
+Subject: Re: [PATCH 06/33] vhost: make vhost_dev.features private
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
  sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
  kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
  armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  steven.sistare@oracle.com, den-plotnikov@yandex-team.ru, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>, Jason Wang <jasowang@redhat.com>
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::134;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,204 +103,346 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 13, 2025 at 12:57=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Wed, Aug 13, 2025 at 12:58=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> As comment says: it's only for vhost-user. So, let's move it
-> to corresponding vhost backend realization.
+> It's hard to control where and how do we use this field. Let's
+> cover all usages by getters/setters, and keep direct access to the
+> field only in vhost.c. It will help to control migration of this
+> field in further commits.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  backends/cryptodev-vhost.c        |  1 -
->  hw/net/vhost_net.c                |  2 --
->  hw/virtio/vhost-user.c            | 23 ++++++++++++++++++++---
->  hw/virtio/virtio-qmp.c            |  6 ++++--
->  include/hw/virtio/vhost-backend.h |  3 +++
->  include/hw/virtio/vhost.h         |  8 --------
->  6 files changed, 27 insertions(+), 16 deletions(-)
+>  hw/display/vhost-user-gpu.c |  7 +++----
+>  hw/net/vhost_net.c          | 17 +++++++++--------
+>  hw/virtio/vdpa-dev.c        |  2 +-
+>  hw/virtio/vhost-user-base.c |  8 ++++++--
+>  hw/virtio/vhost-user.c      |  7 +++----
+>  hw/virtio/vhost.c           | 21 ++++++++++++++++++---
+>  hw/virtio/virtio-qmp.c      |  2 +-
+>  include/hw/virtio/vhost.h   | 21 +++++++++++++++++++--
+>  net/vhost-vdpa.c            |  7 +++----
+>  9 files changed, 63 insertions(+), 29 deletions(-)
 >
-> diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-> index 943680a23a..3bcdc494d8 100644
-> --- a/backends/cryptodev-vhost.c
-> +++ b/backends/cryptodev-vhost.c
-> @@ -60,7 +60,6 @@ cryptodev_vhost_init(
+> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+> index 79ea64b12c..146620e0a3 100644
+> --- a/hw/display/vhost-user-gpu.c
+> +++ b/hw/display/vhost-user-gpu.c
+> @@ -631,17 +631,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Er=
+ror **errp)
 >
->      crypto->cc =3D options->cc;
->
-> -    crypto->dev.protocol_features =3D 0;
->      crypto->backend =3D -1;
->
->      /* vhost-user needs vq_index to initiate a specific queue pair */
-> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> index fcee279f0b..ce30b6e197 100644
-> --- a/hw/net/vhost_net.c
-> +++ b/hw/net/vhost_net.c
-> @@ -260,9 +260,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *opt=
-ions)
->              goto fail;
->          }
->          net->backend =3D r;
-> -        net->dev.protocol_features =3D 0;
->      } else {
-> -        net->dev.protocol_features =3D 0;
->          net->backend =3D -1;
->
->          /* vhost-user needs vq_index to initiate a specific queue pair *=
+>      /* existing backend may send DMABUF, so let's add that requirement *=
 /
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 6fa5b8a8bd..abdf47ee7b 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -11,6 +11,7 @@
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
->  #include "hw/virtio/virtio-dmabuf.h"
-> +#include "hw/virtio/virtio-qmp.h"
->  #include "hw/virtio/vhost.h"
->  #include "hw/virtio/virtio-crypto.h"
->  #include "hw/virtio/vhost-user.h"
-> @@ -264,6 +265,14 @@ struct vhost_user {
->      /* Our current regions */
->      int num_shadow_regions;
->      struct vhost_memory_region shadow_regions[VHOST_USER_MAX_RAM_SLOTS];
-> +
-> +    /**
-> +     * @protocol_features: the vhost-user protocol feature set by
-> +     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
-> +     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
-> +     * by the backend (see @features).
-> +     */
-> +    uint64_t protocol_features;
->  };
->
->  struct scrub_regions {
-> @@ -274,7 +283,8 @@ struct scrub_regions {
->
->  static bool vhost_user_has_prot(struct vhost_dev *dev, uint64_t feature)
->  {
-> -    return virtio_has_feature(dev->protocol_features, feature);
-> +    struct vhost_user *u =3D dev->opaque;
-> +    return virtio_has_feature(u->protocol_features, feature);
->  }
->
->  static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *m=
-sg)
-> @@ -2218,8 +2228,8 @@ static int vhost_user_backend_init(struct vhost_dev=
- *dev, void *opaque,
->          }
->
->          /* final set of protocol features */
-> -        dev->protocol_features =3D protocol_features;
-> -        err =3D vhost_user_set_protocol_features(dev, dev->protocol_feat=
-ures);
-> +        u->protocol_features =3D protocol_features;
-> +        err =3D vhost_user_set_protocol_features(dev, u->protocol_featur=
-es);
->          if (err < 0) {
->              error_setg_errno(errp, EPROTO, "vhost_backend_init failed");
->              return -EPROTO;
-> @@ -3001,6 +3011,12 @@ static int vhost_user_check_device_state(struct vh=
-ost_dev *dev, Error **errp)
->      return 0;
->  }
->
-> +static void vhost_user_qmp_status(struct vhost_dev *dev, VhostStatus *st=
-atus)
-> +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +    status->protocol_features =3D qmp_decode_protocols(u->protocol_featu=
-res);
-> +}
-> +
->  const VhostOps user_ops =3D {
->          .backend_type =3D VHOST_BACKEND_TYPE_USER,
->          .vhost_backend_init =3D vhost_user_backend_init,
-> @@ -3041,4 +3057,5 @@ const VhostOps user_ops =3D {
->          .vhost_supports_device_state =3D vhost_user_supports_device_stat=
-e,
->          .vhost_set_device_state_fd =3D vhost_user_set_device_state_fd,
->          .vhost_check_device_state =3D vhost_user_check_device_state,
-> +        .vhost_qmp_status =3D vhost_user_qmp_status,
->  };
-> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-> index e514a4797e..d55b12f9f3 100644
-> --- a/hw/virtio/virtio-qmp.c
-> +++ b/hw/virtio/virtio-qmp.c
-> @@ -788,12 +788,14 @@ VirtioStatus *qmp_x_query_virtio_status(const char =
-*path, Error **errp)
->              qmp_decode_features(vdev->device_id, hdev->features);
->          status->vhost_dev->acked_features =3D
->              qmp_decode_features(vdev->device_id, hdev->acked_features);
-> -        status->vhost_dev->protocol_features =3D
-> -            qmp_decode_protocols(hdev->protocol_features);
->          status->vhost_dev->max_queues =3D hdev->max_queues;
->          status->vhost_dev->backend_cap =3D hdev->backend_cap;
->          status->vhost_dev->log_enabled =3D hdev->log_enabled;
->          status->vhost_dev->log_size =3D hdev->log_size;
-> +
-> +        if (hdev->vhost_ops->vhost_qmp_status) {
-> +            hdev->vhost_ops->vhost_qmp_status(hdev, status->vhost_dev);
-> +        }
-
-Same comment as patch 1/33 - why have it in vhost_ops if it is
-vhost_user specific, rather than checking the backend type and calling
-a helper?
-
-
+>      g->parent_obj.conf.flags |=3D 1 << VIRTIO_GPU_FLAG_DMABUF_ENABLED;
+> -    if (virtio_has_feature(g->vhost->dev.features, VIRTIO_GPU_F_VIRGL)) =
+{
+> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_VIRGL)) {
+>          g->parent_obj.conf.flags |=3D 1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED=
+;
+>      }
+> -    if (virtio_has_feature(g->vhost->dev.features, VIRTIO_GPU_F_EDID)) {
+> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_EDID)) {
+>          g->parent_obj.conf.flags |=3D 1 << VIRTIO_GPU_FLAG_EDID_ENABLED;
+>      } else {
+>          error_report("EDID requested but the backend doesn't support it.=
+");
+>          g->parent_obj.conf.flags &=3D ~(1 << VIRTIO_GPU_FLAG_EDID_ENABLE=
+D);
+>      }
+> -    if (virtio_has_feature(g->vhost->dev.features,
+> -        VIRTIO_GPU_F_RESOURCE_UUID)) {
+> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_RESOURCE_UUID=
+)) {
+>          g->parent_obj.conf.flags |=3D 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID=
+_ENABLED;
 >      }
 >
->      return status;
-> diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-=
-backend.h
-> index f65fa26298..0785fc764d 100644
-> --- a/include/hw/virtio/vhost-backend.h
-> +++ b/include/hw/virtio/vhost-backend.h
-> @@ -12,6 +12,7 @@
->  #define VHOST_BACKEND_H
+> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+> index ce30b6e197..5269533864 100644
+> --- a/hw/net/vhost_net.c
+> +++ b/hw/net/vhost_net.c
+> @@ -55,7 +55,8 @@ void vhost_net_ack_features(struct vhost_net *net, uint=
+64_t features)
+>  {
+>      net->dev.acked_features =3D
+>          (qemu_has_vnet_hdr(net->nc) ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NE=
+T_HDR))
+> -         | (net->dev.features & (1ULL << VHOST_USER_F_PROTOCOL_FEATURES)=
+);
+> +         | (vhost_dev_features(&net->dev) &
+> +            (1ULL << VHOST_USER_F_PROTOCOL_FEATURES));
 >
->  #include "system/memory.h"
-> +#include "qapi/qapi-commands-virtio.h"
+>      vhost_ack_features(&net->dev, net->feature_bits, features);
+>  }
+> @@ -277,23 +278,23 @@ struct vhost_net *vhost_net_init(VhostNetOptions *o=
+ptions)
+>      if (backend_kernel) {
+>          if (!qemu_has_vnet_hdr_len(options->net_backend,
+>                                 sizeof(struct virtio_net_hdr_mrg_rxbuf)))=
+ {
+> -            net->dev.features &=3D ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
+> +            vhost_dev_clear_feature(&net->dev, VIRTIO_NET_F_MRG_RXBUF);
+>          }
+>          if (!qemu_has_vnet_hdr(options->net_backend) &&
+> -            (~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR)))=
+ {
+> -            fprintf(stderr, "vhost lacks feature mask 0x%llx for backend=
+\n",
+> -                    ~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET=
+_HDR));
+> +            !vhost_dev_has_feature(&net->dev, VHOST_NET_F_VIRTIO_NET_HDR=
+)) {
+> +            fprintf(stderr, "vhost lacks VHOST_NET_F_VIRTIO_NET_HDR "
+> +                    "feature for backend\n");
+>              goto fail;
+>          }
+>      }
 >
->  typedef enum VhostBackendType {
->      VHOST_BACKEND_TYPE_NONE =3D 0,
-> @@ -160,6 +161,7 @@ typedef int (*vhost_set_device_state_fd_op)(struct vh=
-ost_dev *dev,
->                                              int *reply_fd,
->                                              Error **errp);
->  typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error =
-**errp);
-> +typedef void (*vhost_qmp_status_op)(struct vhost_dev *dev, VhostStatus *=
-status);
+>      /* Set sane init value. Override when guest acks. */
+>      if (options->get_acked_features) {
+> +        uint64_t backend_features =3D vhost_dev_features(&net->dev);
+>          features =3D options->get_acked_features(net->nc);
+> -        if (~net->dev.features & features) {
+> +        if (~backend_features & features) {
+>              fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
+> -                    " for backend\n",
+> -                    (uint64_t)(~net->dev.features & features));
+> +                    " for backend\n", ~backend_features & features);
+>              goto fail;
+>          }
+>      }
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index 3c0eed3e8e..4dfb03aaa7 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -224,7 +224,7 @@ static uint64_t vhost_vdpa_device_get_features(VirtIO=
+Device *vdev,
+>                                                 Error **errp)
+>  {
+>      VhostVdpaDevice *s =3D VHOST_VDPA_DEVICE(vdev);
+> -    uint64_t backend_features =3D s->dev.features;
+> +    uint64_t backend_features =3D vhost_dev_features(&s->dev);
 >
->  typedef struct VhostOps {
->      VhostBackendType backend_type;
-> @@ -216,6 +218,7 @@ typedef struct VhostOps {
->      vhost_supports_device_state_op vhost_supports_device_state;
->      vhost_set_device_state_fd_op vhost_set_device_state_fd;
->      vhost_check_device_state_op vhost_check_device_state;
-> +    vhost_qmp_status_op vhost_qmp_status;
->  } VhostOps;
+>      if (!virtio_has_feature(features, VIRTIO_F_IOMMU_PLATFORM)) {
+>          virtio_clear_feature(&backend_features, VIRTIO_F_IOMMU_PLATFORM)=
+;
+> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> index ff67a020b4..cf311c3bfc 100644
+> --- a/hw/virtio/vhost-user-base.c
+> +++ b/hw/virtio/vhost-user-base.c
+> @@ -118,9 +118,13 @@ static uint64_t vub_get_features(VirtIODevice *vdev,
+>                                   uint64_t requested_features, Error **er=
+rp)
+>  {
+>      VHostUserBase *vub =3D VHOST_USER_BASE(vdev);
+> +    uint64_t backend_features =3D vhost_dev_features(&vub->vhost_dev);
+> +
+>      /* This should be set when the vhost connection initialises */
+> -    g_assert(vub->vhost_dev.features);
+> -    return vub->vhost_dev.features & ~(1ULL << VHOST_USER_F_PROTOCOL_FEA=
+TURES);
+> +    g_assert(backend_features);
+> +    virtio_clear_feature(&backend_features, VHOST_USER_F_PROTOCOL_FEATUR=
+ES);
+> +
+> +    return backend_features;
+>  }
 >
->  int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
+>  /*
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index abdf47ee7b..46f09f5988 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -1245,15 +1245,14 @@ static int vhost_user_set_vring_base(struct vhost=
+_dev *dev,
+>
+>  static bool vhost_user_set_vring_enable_supported(struct vhost_dev *dev)
+>  {
+> -    return virtio_has_feature(dev->features,
+> -                              VHOST_USER_F_PROTOCOL_FEATURES);
+> +    return vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES);
+>  }
+>
+>  static int vhost_user_set_vring_enable(struct vhost_dev *dev, int enable=
+)
+>  {
+>      int i;
+>
+> -    if (!virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURE=
+S)) {
+> +    if (!vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES)) {
+>          return -EINVAL;
+>      }
+>
+> @@ -1465,7 +1464,7 @@ static int vhost_user_set_features(struct vhost_dev=
+ *dev,
+>       * Don't lose VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user
+>       * specific.
+>       */
+> -    if (virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURES=
+)) {
+> +    if (vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES)) {
+>          features |=3D 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
+>      }
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index c33dad4acd..2631bbabcf 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -50,6 +50,21 @@ static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BA=
+CKEND_TYPE_MAX];
+>  static QLIST_HEAD(, vhost_dev) vhost_devices =3D
+>      QLIST_HEAD_INITIALIZER(vhost_devices);
+>
+> +bool vhost_dev_has_feature(struct vhost_dev *dev, uint64_t feature)
+> +{
+> +    return virtio_has_feature(dev->_features, feature);
+> +}
+> +
+> +uint64_t vhost_dev_features(struct vhost_dev *dev)
+> +{
+> +    return dev->_features;
+> +}
+> +
+> +void vhost_dev_clear_feature(struct vhost_dev *dev, uint64_t feature)
+> +{
+> +    virtio_clear_feature(&dev->_features, feature);
+> +}
+> +
+>  unsigned int vhost_get_max_memslots(void)
+>  {
+>      unsigned int max =3D UINT_MAX;
+> @@ -1571,7 +1586,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
+aque,
+>          }
+>      }
+>
+> -    hdev->features =3D features;
+> +    hdev->_features =3D features;
+>
+>      hdev->memory_listener =3D (MemoryListener) {
+>          .name =3D "vhost",
+> @@ -1594,7 +1609,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
+aque,
+>      };
+>
+>      if (hdev->migration_blocker =3D=3D NULL) {
+> -        if (!(hdev->features & (0x1ULL << VHOST_F_LOG_ALL))) {
+> +        if (!vhost_dev_has_feature(hdev, VHOST_F_LOG_ALL)) {
+>              error_setg(&hdev->migration_blocker,
+>                         "Migration disabled: vhost lacks VHOST_F_LOG_ALL =
+feature.");
+>          } else if (vhost_dev_log_is_shared(hdev) && !qemu_memfd_alloc_ch=
+eck()) {
+> @@ -1865,7 +1880,7 @@ uint64_t vhost_get_features(struct vhost_dev *hdev,=
+ const int *feature_bits,
+>      const int *bit =3D feature_bits;
+>      while (*bit !=3D VHOST_INVALID_FEATURE_BIT) {
+>          uint64_t bit_mask =3D (1ULL << *bit);
+> -        if (!(hdev->features & bit_mask)) {
+> +        if (!vhost_dev_has_feature(hdev, *bit)) {
+>              features &=3D ~bit_mask;
+>          }
+>          bit++;
+> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+> index d55b12f9f3..4bd23c015e 100644
+> --- a/hw/virtio/virtio-qmp.c
+> +++ b/hw/virtio/virtio-qmp.c
+> @@ -785,7 +785,7 @@ VirtioStatus *qmp_x_query_virtio_status(const char *p=
+ath, Error **errp)
+>          status->vhost_dev->nvqs =3D hdev->nvqs;
+>          status->vhost_dev->vq_index =3D hdev->vq_index;
+>          status->vhost_dev->features =3D
+> -            qmp_decode_features(vdev->device_id, hdev->features);
+> +            qmp_decode_features(vdev->device_id, vhost_dev_features(hdev=
+));
+>          status->vhost_dev->acked_features =3D
+>              qmp_decode_features(vdev->device_id, hdev->acked_features);
+>          status->vhost_dev->max_queues =3D hdev->max_queues;
 > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index 9f9dd2d46d..15bc287a9d 100644
+> index 15bc287a9d..8a4c8c3502 100644
 > --- a/include/hw/virtio/vhost.h
 > +++ b/include/hw/virtio/vhost.h
-> @@ -104,14 +104,6 @@ struct vhost_dev {
->      uint64_t features;
+> @@ -98,10 +98,11 @@ struct vhost_dev {
+>       * offered by a backend which may be a subset of the total
+>       * features eventually offered to the guest.
+>       *
+> -     * @features: available features provided by the backend
+> +     * @_features: available features provided by the backend, private,
+> +     *             direct access only in vhost.c
+>       * @acked_features: final negotiated features with front-end driver
+>       */
+> -    uint64_t features;
+> +    uint64_t _features;
 >      uint64_t acked_features;
 >
-> -    /**
-> -     * @protocol_features: is the vhost-user only feature set by
-> -     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
-> -     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
-> -     * by the backend (see @features).
-> -     */
-> -    uint64_t protocol_features;
-> -
 >      uint64_t max_queues;
->      uint64_t backend_cap;
->      /* @started: is the vhost device started? */
+> @@ -352,6 +353,22 @@ int vhost_dev_get_inflight(struct vhost_dev *dev, ui=
+nt16_t queue_size,
+>                             struct vhost_inflight *inflight);
+>  bool vhost_dev_has_iommu(struct vhost_dev *dev);
+>
+> +/**
+> + * vhost_dev_has_feature() - check if vhost device has a specific featur=
+e
+> + * @dev: common vhost_dev structure
+> + * @feature: feature bit to check
+> + *
+> + * Return: true if the feature is supported, false otherwise
+> + */
+> +bool vhost_dev_has_feature(struct vhost_dev *dev, uint64_t feature);
+> +
+> +/**
+> + * vhost_dev_features() - simple getter for dev->features
+> + */
+> +uint64_t vhost_dev_features(struct vhost_dev *dev);
+> +
+> +void vhost_dev_clear_feature(struct vhost_dev *dev, uint64_t feature);
+
+Why not define these as static inline helpers in the header file?
+
+
+> +
+>  #ifdef CONFIG_VHOST
+>  int vhost_reset_device(struct vhost_dev *hdev);
+>  #else
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 74d26a9497..0af0d3bdd3 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -256,15 +256,14 @@ static bool vhost_vdpa_get_vnet_hash_supported_type=
+s(NetClientState *nc,
+>  {
+>      assert(nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA);
+>      VhostVDPAState *s =3D DO_UPCAST(VhostVDPAState, nc, nc);
+> -    uint64_t features =3D s->vhost_vdpa.dev->features;
+>      int fd =3D s->vhost_vdpa.shared->device_fd;
+>      struct {
+>          struct vhost_vdpa_config hdr;
+>          uint32_t supported_hash_types;
+>      } config;
+>
+> -    if (!virtio_has_feature(features, VIRTIO_NET_F_HASH_REPORT) &&
+> -        !virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
+> +    if (!vhost_dev_has_feature(s->vhost_vdpa.dev, VIRTIO_NET_F_HASH_REPO=
+RT) &&
+> +        !vhost_dev_has_feature(s->vhost_vdpa.dev, VIRTIO_NET_F_RSS)) {
+>          return false;
+>      }
+>
+> @@ -585,7 +584,7 @@ static int vhost_vdpa_net_cvq_start(NetClientState *n=
+c)
+>       * If we early return in these cases SVQ will not be enabled. The mi=
+gration
+>       * will be blocked as long as vhost-vdpa backends will not offer _F_=
+LOG.
+>       */
+> -    if (!vhost_vdpa_net_valid_svq_features(v->dev->features, NULL)) {
+> +    if (!vhost_vdpa_net_valid_svq_features(vhost_dev_features(v->dev), N=
+ULL)) {
+>          return 0;
+>      }
+>
 > --
 > 2.48.1
 >
