@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28EBCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52B1CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 19:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6w4u-0005xp-N1; Thu, 09 Oct 2025 15:13:28 -0400
+	id 1v6w8F-00078B-29; Thu, 09 Oct 2025 15:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6w4t-0005xf-12
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:13:27 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1v6w8E-00077l-22
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:16:54 -0400
+Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6w4p-0007oh-FN
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:13:26 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-46e34052bb7so15998135e9.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:13:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1v6w8B-0008GB-KP
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 15:16:53 -0400
+Received: by mail-io1-xd34.google.com with SMTP id
+ ca18e2360f4ac-930cfdfabb3so107681839f.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 12:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760037199; x=1760641999; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LsRf36nDc+pGUoipjWTJPy+E7vmtzxM8ieVkpb7+MjU=;
- b=s7BZ/10gj6TJP1zj+ioPNcTBItTjnR8NzWTfyQ2O8lYhfvGxOkbH6l4+wC6E09NcBw
- N2Hon7El33sY1PK0FZaux8WVUShso6zB4dA01Wc1cABrOZ5Aq0xaKPfEufPADP0BED0E
- Cwf38GDWw6zsJUiRHEKNb1Rtyp/X6FykLEhFr9K5+rXiI4ONFwdfBMWz2JJ6UULAnHb2
- 1hxiuKC9cq+Ap21RDd4xockeBrCOQ1i/1ROxda7pXmItyChkGT4273DSAu/wL1XjjT28
- KiV6T6mtt4Jj+Enj2vzxsSrI7MioSoI26LZ94PTCfBCfwecb3+i9h8tcattwqrenB6Ug
- SLrw==
+ d=gmail.com; s=20230601; t=1760037409; x=1760642209; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yC7kD2MtrJeTgU0ulwUJLYLiLM02R/yJPJ8Z2Gvf43I=;
+ b=mtF0XBt+rkwExMYdGXM5cJkfrYyknQQTZ02xSUUto8fE5H+ymjA4aazrqKaQrmS5U8
+ WDilujvHBXrUF6PJ60vkl5d95sDaYme04FVzVYHY1/cF1Ne6CQGrPakZUXtbGsGf7i+k
+ vaS6WA3JtAEaeb/VAOa7de0/CXKeCr2T9DohtG49TCd+qXRda96d86sNHyv88IqBpSgw
+ OFB/trgaGmvXjIjmCzZBF1XD1VVKM6tbWlUndFVmgd0pPMKb+c22HUs1sYZGtDiOO/1R
+ sOcJ7ZgQsRMAn/Aw2Th1mNyggGxwntQsVePjVu12MhlpdAz3TXWQYw7qYajnXXFW5GuD
+ L2Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760037199; x=1760641999;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LsRf36nDc+pGUoipjWTJPy+E7vmtzxM8ieVkpb7+MjU=;
- b=eoivByQLQKphFK2aaQyO7k0yvv6iyyCHNISq9wKWF2BF1UK0OHF1sosn4z6lH8QDqs
- a5CoXUeDGvQFcotoCYP1r3lSaoLAXukcOZ4qu3vmJVfXKGFW61Pa97uIl6V/1MbbAioo
- UOlmnnumq/Gl0aZENDi+GSzAX1oJb/UCm3Lo5Je1HdM3WnI/rrwFBB6yXHlOfxPnvL8h
- S4p4rzGDDs+LlELMST3EVdOhJseuiYVMJ3rnQcW7E/2DKrlEt6k7We2LpZO0rarkUF10
- /RLUXfCRLtRbOcAtlBt6XYCh0GsYgbTI0sFHtqQ17wc2oGKoJgjzCn1jLr1H/U0adsts
- tsdw==
+ d=1e100.net; s=20230601; t=1760037409; x=1760642209;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yC7kD2MtrJeTgU0ulwUJLYLiLM02R/yJPJ8Z2Gvf43I=;
+ b=R8RrmOiusFVaqozLe+iZR3X3zGD6xc378ErcGfRuBU1IUQ4jAiUEwnK2kUc5Sb6Bbe
+ aShetf0vcD3Q535inmrHd+8t25upeaguYPhUiFv1MydrbY0Fk7rwWD9cuWukqZ6+WQdx
+ cRK6Oa0da8gXjnVNjP1Oy24xJce46lV5Iv3W7m9aZyFbdO4dGscHKHkJ7+aTMFfBw3Go
+ gohnLFGgri7zKsUcIzWgqhF72a3SVqU5Exyl7tKAWZIK8k8KXdm6uLVe+8iYDFJEBcoC
+ wpca8S3GMmocw+vriNYr09i15kjWbWKFfUy+Gw4tfIyW5OgIY3gACTOUg+r62y7rrYUq
+ Gz5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWK4b/DuCN6sfpaYDL6RawKR0QweC+aszCdIiBsjzsYt1e4i4NFGMQoFinc73Zfkyk3+cScdfYzrmMM@nongnu.org
-X-Gm-Message-State: AOJu0YzJBA9Ha1a+O19z5lWpQRsv6LmigrG8jCGs7Y7HLI8Z21fuyMzT
- Xm7720h1AEUqqUttwXFPt8Q8SGOiuNFXRZXysSMyuqscJDeEmZHN/8aphObghYMQ3kQ=
-X-Gm-Gg: ASbGncs+uUur4AfcOoE9xT1+hxc6r8lVCj+v9+BPfY7Y1KvMWhxkYtSqkr7Qrm5QJTC
- yT4vOkN5jFalJnRDRhQYxrBlqFXkYXEvvk19nOEgN1p0/djHz+4mQ7CzRavnwlN9aKcB81t6lY3
- WjWwcHQXr4M/+ZOt2OdiK72srATNmTQDh8nndHhkiPcxitBtNFuGmnHIOXzXJ+9Yf/9l0gsIQmg
- LZFdbqOclxG0dRMSmx1jcm2KdZ1ytvFUkCaOvj4SBnXb/62q+8Ha3C8ZwuvTT5aKbs88fYqNcBt
- c7QStRJZwRX8FPN1ulwtAqHPEYjPuuZs+T8NEM3GEcvgxMOVsSzYXRYd3sLOyOduu2sOOitnES1
- PloHdEX1VxAC4vtIUZRDOfp3U4JbO/6inxkaE2HERP2WMsNnViREsDzaOnU4+ULjE4CE1Itjb39
- ZcSyAEXujmWSFu0bQQQA==
-X-Google-Smtp-Source: AGHT+IHBHNPjKRw5ThkNbBdjkX3IdedLfg4ozDOzg2Mk5nrV784GmIA5hunOLPMLOZjdPpx8yMCXBQ==
-X-Received: by 2002:a05:600c:1d11:b0:46e:49dd:525e with SMTP id
- 5b1f17b1804b1-46fa9af197fmr70597475e9.21.1760037199307; 
- Thu, 09 Oct 2025 12:13:19 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e81d2sm371489f8f.49.2025.10.09.12.13.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 12:13:18 -0700 (PDT)
-Message-ID: <30b243ef-e1b6-4f61-a6cd-a693c6c043ed@linaro.org>
-Date: Thu, 9 Oct 2025 21:13:18 +0200
+ AJvYcCWNJAmH5h9NBH5X2XS6yObSJJiV+TEmIlwfSMC8yHIZzyNfBwk2m2InJXPQKPdY5yegEZcTDvkU8hbK@nongnu.org
+X-Gm-Message-State: AOJu0YyTMhFB3zIUYvxmFmlMC0adEpAWXB2RtyhLwzzW0+h8e7+NvpmQ
+ 2+nbM5umc6Z3sXtEPwqsLwOHNn7+DMXxKgCY4A9lNiXgbDmbYeSdoKUX8OFk/t3Q+utDQDXOY8K
+ rfADRneggZ2NauZtkgxxL5Own5VzwxT0=
+X-Gm-Gg: ASbGncs0a3pGpLXaC/o78p1MMhbBzGJyuNMzYkMTUStNldJTwE7HN9f1Xuf7JNiVtvJ
+ 5BoNPY2TdXiaAPnnCriU/hmQyek7dajjjuqnhxcMhIuvrlGTMj2Kc4RS2BAKO00cyf4kiTZZQzv
+ bqTCHdL0C6K72/MH6siwijLd6RzmP8AVtUFQ3m9WccRio5ZMa+9/QWNy36uX3GpnLIqf0GWLxd4
+ nvz9MJDyQDrQynhkMugQmTpHBm6DMStlFp6VNidNA==
+X-Google-Smtp-Source: AGHT+IH2OmZv9AeU8A/8lqpwkLelvSrbrf+2gk33E6NBnIcEI4SWwbhnZyurNcx5f7IfFCowErx60TEat7xA319/ris=
+X-Received: by 2002:a05:6e02:4813:b0:42f:7d6f:7a72 with SMTP id
+ e9e14a558f8ab-42f7d6f8053mr133724735ab.5.1760037409016; Thu, 09 Oct 2025
+ 12:16:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
- hosts
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250820134937.45077-1-philmd@linaro.org>
- <226ab909-0482-493f-bacf-5d2930d07ad7@linaro.org>
- <f745f163-6bad-47ad-a1c0-4be96b604266@linaro.org>
- <b9e34640-43bf-4345-9718-f319ff185c1a@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b9e34640-43bf-4345-9718-f319ff185c1a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Thu, 9 Oct 2025 15:16:37 -0400
+X-Gm-Features: AS18NWAvnbn_I1oxbx50YHJwCA94G9pR75hiysIp0M56VxWqX_0aFG5sgJ0Fgp8
+Message-ID: <CAFubqFv8F8swA3EwZfgnVYpHNgs0yZSFgf6wm2DwXgPxSTjs5A@mail.gmail.com>
+Subject: Re: [PATCH 00/33] vhost-user-blk: live-backend local migration
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
+ sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d34;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,27 +100,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 19:38, Richard Henderson wrote:
-> On 10/9/25 10:23, Philippe Mathieu-Daudé wrote:
->> On 21/8/25 22:27, Richard Henderson wrote:
->>> On 8/20/25 23:49, Philippe Mathieu-Daudé wrote:
->>>> qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
->>>> and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
->>>> ("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
->>>> ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
->>>> is C_NotImplemented.
->>>
->>> Not true: ld2/st2 are also used for 128-bit load store.
->>>
->>> See: aarch64, x86_64, loongarch64, ppc64, s390x.
->>
->> OK. Hmm I guess I need to add a __attribute__((unused)) check like
->> you did in commit f408df587a0 ("tcg: Convert brcond2_i32 to
->> TCGOutOpBrcond2") to outop_qemu_ld2/st2 then.
-> 
-> Why?  Please expand on the error you're seeing.
+My apologies for the late review here. I appreciate the need to work
+around these issues but I do feel the approach complicates Qemu
+significantly and it may be possible to achieve similar results
+managing state inside the backend. More comments inline.
 
-It was a mistake on my side, no worry:
-https://lore.kernel.org/qemu-devel/c75dc27a-5c56-4010-a205-a8296a9ab1e0@linaro.org/
+I like a lot of the cleanups here - maybe consider breaking out a
+series with some of the cleanups?
 
+On Wed, Aug 13, 2025 at 12:56=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> Hi all!
+>
+> Local migration of vhost-user-blk requires non-trivial actions
+> from management layer, it should provide a new connection for new
+> QEMU process and handle disk operation movement from one connection
+> to another.
+>
+> Such switching, including reinitialization of vhost-user connection,
+> draining disk requests, etc, adds significant value to local migration
+> downtime.
+
+I see how draining IO requests adds downtime and is impactful. That
+said, we need to start-stop the device anyways so I'm not convinced
+that setting up mappings and sending messages back and forth are
+impactful enough to warrant adding a whole new migration mode. Am I
+missing anything here?
+
+>
+> This all leads to an idea: why not to just pass all we need from
+> old QEMU process to the new one (including open file descriptors),
+> and don't touch the backend at all? This way, the vhost user backend
+> server will not even know, that QEMU process is changed, as live
+> vhost-user connection is migrated.
+
+Alternatively, if it really is about avoiding IO draining, what if
+Qemu advertised a new vhost-user protocol feature which would query
+whether the backend already has state for the device? Then, if the
+backend indicates that it does, Qemu and the backend can take a
+different path in vhost-user, exchanging relevant information,
+including the descriptor indexes for the VQs such that draining can be
+avoided. I expect that could be implemented to cut down a lot of the
+other vhost-user overhead anyways (i.e. you could skip setting the
+memory table). If nothing else it would probably help other device
+types take advantage of this without adding more options to Qemu.
+
+Thoughts?
+
+>
+> So this series realize the idea. No requests are done to backend
+> during migration, instead all backend-related state and all related
+> file descriptors (vhost-user connection, guest/host notifiers,
+> inflight region) are passed to new process. Of course, migration
+> should go through unix socket.
+>
+> The most of the series are refactoring patches. The core feature is
+> spread between 24, 28-31 patches.
+>
+> Why not CPR-transfer?
+>
+> 1. In the new mode of local migration we need to pass not only
+> file descriptors, but additional parts of backend-related state,
+> which we don't want (or even can't) reinitialize in target process.
+> And it's a lot simpler to add new fields to common migration stream.
+> And why not to pass fds in the same stream?
+>
+> 2. No benefit of vhost-user connection fd passed to target in early
+> stage before device creation: we can't use it together with source
+> QEMU process anyway. So, we need a moment, when source qemu stops using
+> the fd, and target start doing it. And native place for this moment is
+> usual save/load of the device in migration process. And yes, we have to
+> deeply update initialization/starting of the device to not reinitialize
+> the backend, but just continue to work with it in a new QEMU process.
+>
+> 3. So, if we can't actually use fd, passed early before device creation,
+> no reason to care about:
+> - non-working QMP connection on target until "migrate" command on source
+> - additional migration channel
+> - implementing code to pass additional non-fd fields together with fds in=
+ CPR
+>
+> However, the series doesn't conflict with CPR-transfer, as it's actually
+> a usual migration with some additional capabilities. The only
+> requirement is that main migration channel should be a unix socket.
+>
+> Vladimir Sementsov-Ogievskiy (33):
+>   vhost: introduce vhost_ops->vhost_set_vring_enable_supported method
+>   vhost: drop backend_features field
+>   vhost-user: introduce vhost_user_has_prot() helper
+>   vhost: move protocol_features to vhost_user
+>   vhost-user-gpu: drop code duplication
+>   vhost: make vhost_dev.features private
+>   virtio: move common part of _set_guest_notifier to generic code
+>   virtio: drop *_set_guest_notifier_fd_handler() helpers
+>   vhost-user: keep QIOChannelSocket for backend channel
+>   vhost: vhost_virtqueue_start(): fix failure path
+>   vhost: make vhost_memory_unmap() null-safe
+>   vhost: simplify calls to vhost_memory_unmap()
+>   vhost: move vrings mapping to the top of vhost_virtqueue_start()
+>   vhost: vhost_virtqueue_start(): drop extra local variables
+>   vhost: final refactoring of vhost vrings map/unmap
+>   vhost: simplify vhost_dev_init() error-path
+>   vhost: move busyloop timeout initialization to vhost_virtqueue_init()
+>   vhost: introduce check_memslots() helper
+>   vhost: vhost_dev_init(): drop extra features variable
+>   hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
+>   vhost-user: make trace events more readable
+>   vhost-user-blk: add some useful trace-points
+>   vhost: add some useful trace-points
+>   chardev-add: support local migration
+>   virtio: introduce .skip_vhost_migration_log() handler
+>   io/channel-socket: introduce qio_channel_socket_keep_nonblock()
+>   migration/socket: keep fds non-block
+>   vhost: introduce backend migration
+>   vhost-user: support backend migration
+>   virtio: support vhost backend migration
+>   vhost-user-blk: support vhost backend migration
+>   test/functional: exec_command_and_wait_for_pattern: add vm arg
+>   tests/functional: add test_x86_64_vhost_user_blk_fd_migration.py
+>
+>  backends/cryptodev-vhost.c                    |   1 -
+>  chardev/char-socket.c                         | 101 +++-
+>  hw/block/trace-events                         |  10 +
+>  hw/block/vhost-user-blk.c                     | 201 ++++++--
+>  hw/display/vhost-user-gpu.c                   |  11 +-
+>  hw/net/vhost_net.c                            |  27 +-
+>  hw/scsi/vhost-scsi.c                          |   1 -
+>  hw/scsi/vhost-user-scsi.c                     |   1 -
+>  hw/virtio/trace-events                        |  12 +-
+>  hw/virtio/vdpa-dev.c                          |   3 +-
+>  hw/virtio/vhost-user-base.c                   |   8 +-
+>  hw/virtio/vhost-user.c                        | 326 +++++++++---
+>  hw/virtio/vhost.c                             | 474 ++++++++++++------
+>  hw/virtio/virtio-bus.c                        |  20 +-
+>  hw/virtio/virtio-hmp-cmds.c                   |   2 -
+>  hw/virtio/virtio-mmio.c                       |  41 +-
+>  hw/virtio/virtio-pci.c                        |  34 +-
+>  hw/virtio/virtio-qmp.c                        |  10 +-
+>  hw/virtio/virtio.c                            | 120 ++++-
+>  include/chardev/char-socket.h                 |   3 +
+>  include/hw/virtio/vhost-backend.h             |  10 +
+>  include/hw/virtio/vhost-user-blk.h            |   2 +
+>  include/hw/virtio/vhost.h                     |  42 +-
+>  include/hw/virtio/virtio-pci.h                |   3 -
+>  include/hw/virtio/virtio.h                    |  11 +-
+>  include/io/channel-socket.h                   |   3 +
+>  io/channel-socket.c                           |  16 +-
+>  migration/options.c                           |  14 +
+>  migration/options.h                           |   2 +
+>  migration/socket.c                            |   1 +
+>  net/vhost-vdpa.c                              |   7 +-
+>  qapi/char.json                                |  16 +-
+>  qapi/migration.json                           |  19 +-
+>  qapi/virtio.json                              |   3 -
+>  stubs/meson.build                             |   1 +
+>  stubs/qemu_file.c                             |  15 +
+>  stubs/vmstate.c                               |   6 +
+>  tests/functional/qemu_test/cmd.py             |   7 +-
+>  ...test_x86_64_vhost_user_blk_fd_migration.py | 279 +++++++++++
+>  tests/qtest/meson.build                       |   2 +-
+>  tests/unit/meson.build                        |   4 +-
+>  41 files changed, 1420 insertions(+), 449 deletions(-)
+>  create mode 100644 stubs/qemu_file.c
+>  create mode 100644 tests/functional/test_x86_64_vhost_user_blk_fd_migrat=
+ion.py
+>
+> --
+> 2.48.1
+>
+>
 
