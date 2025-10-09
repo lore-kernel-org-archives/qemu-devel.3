@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B73BCCD187
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44688CCD187
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6n2f-0005u2-At; Thu, 09 Oct 2025 05:34:33 -0400
+	id 1v6n2f-0005u9-BL; Thu, 09 Oct 2025 05:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v6n2d-0005sH-M5; Thu, 09 Oct 2025 05:34:31 -0400
+ id 1v6n2b-0005rB-VD; Thu, 09 Oct 2025 05:34:30 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1v6n2a-0001mw-4w; Thu, 09 Oct 2025 05:34:31 -0400
+ id 1v6n2W-0001l8-8v; Thu, 09 Oct 2025 05:34:28 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59951QBk032654;
- Thu, 9 Oct 2025 09:34:16 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59962VI8031850;
+ Thu, 9 Oct 2025 09:34:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UJsam/
- dfveOxGjlSLxbmOckc1isELOCxyoEWERpAL34=; b=cLrCaNWYIXXUTG05dBL19w
- Ep5JMqDtk0QeJVUVEuiwk34svNfpBaSlygvIanLWg7dUSPH+w5KOo/vWhJr5eZch
- G8PZrZp9idMGlx3SdVIuA+ZF5C4ZcjFNb9W8j+QT+CO7IYTUwsWSJW2gNJPq6eAF
- Lj/uZH/gk2Sao0kckAoWXxpkyH5speGN4Kl89aDz7o4yhvv7NphVUgN2xFLj0sLN
- V74Sy1AJxZaNBlk5+UAdgGDnHJycUcZ4PL2z2m1meR5IuEPpbnA3iz593hM/O5cI
- NSSZUNlMZ8LZDMRElVEQTK7vvGARzp3cdwHqKLEzXE8FAGOunZSc2YbXYAcpl0Ww
+ :message-id:mime-version:references:subject:to; s=pp1; bh=bcZgkA
+ 2B7l0ubR6zJsm659M6fCSWFRvN7M+ZtYY+20A=; b=FWZ9a9hNz9nbZHMTUJFBXw
+ s5DyZ+wv4yJd6JuCfaGB8UGeM0lyn7V2VreJbvAoQx3jONs170BHyBmKqLEUXClr
+ BpUKKxpAlyVCQQuQE7FQiYuhSreqKhgotW+vj3TMyzy+L+F19fc2eYFRfyS17RDI
+ O3M0o0hvuoXnYD0DHcNAnnOI131QlOnRCpIBDLynS+oHAiISFdhkCm7EyoQwQYi/
+ wr/DhMICqOpwbrtqO0NKCbulSm/HVEQB4JAvnVd18FDmLlMWeN1q7wdJmwoLjrgi
+ j1QAyzsNAATsj0vbWlKafq6dQknFm4M5ddD7G5ULqSwju5Ny2AUTS2HWzV0TQBIg
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv823xxu-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv823xxs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 09 Oct 2025 09:34:15 +0000 (GMT)
 Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5999Dno9017429;
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5999YFkT026169;
  Thu, 9 Oct 2025 09:34:15 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv823xxq-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv823xxp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 09 Oct 2025 09:34:15 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5998KtcK012977;
- Thu, 9 Oct 2025 09:34:14 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49nvamusb0-1
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59987eig008363;
+ Thu, 9 Oct 2025 09:34:13 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49nvanurs2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Oct 2025 09:34:14 +0000
+ Thu, 09 Oct 2025 09:34:13 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5999YDwI35127940
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5999YBqf53739894
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Oct 2025 09:34:13 GMT
+ Thu, 9 Oct 2025 09:34:11 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA08A20072;
- Thu,  9 Oct 2025 09:34:12 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D78E620084;
+ by IMSVA (Postfix) with ESMTP id 8FA5D20082;
  Thu,  9 Oct 2025 09:34:11 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5959E20072;
+ Thu,  9 Oct 2025 09:34:10 +0000 (GMT)
 Received: from ltcfuji9aw-lp7.ltc.tadn.ibm.com (unknown [9.5.7.39])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Oct 2025 09:34:11 +0000 (GMT)
+ Thu,  9 Oct 2025 09:34:10 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org, philmd@linaro.org
-Cc: npiggin@gmail.com
-Subject: [PATCH v2 4/5] ppc/spapr: remove deprecated machine pseries-4.1
-Date: Thu,  9 Oct 2025 14:40:56 -0400
-Message-ID: <20251009184057.19973-5-harshpb@linux.ibm.com>
+Cc: npiggin@gmail.com, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 3/5] ppc/spapr: remove deprecated machine pseries-4.0
+Date: Thu,  9 Oct 2025 14:40:55 -0400
+Message-ID: <20251009184057.19973-4-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009184057.19973-1-harshpb@linux.ibm.com>
 References: <20251009184057.19973-1-harshpb@linux.ibm.com>
@@ -78,21 +78,21 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=KrpAGGWN c=1 sm=1 tr=0 ts=68e78198 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=KrpAGGWN c=1 sm=1 tr=0 ts=68e78197 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=aow-egSQAAAA:8
- a=VnNF1IyMAAAA:8 a=DRTwgpVIqhQ9bHD4Ks0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: txCuuUSdheyBVP3a_DUxYxXsxKan-bq_
-X-Proofpoint-ORIG-GUID: slxuMj4JbXrTkHt7ZrNlU7EL0eS2WVwu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX8qTeaj+PxKjN
- dP3LA9qlkkEJh6LL2kGclBu72Hfy6KRWOnxTkVv6OouasnKOWYtQTakVNTBf89w1BgUH5+y1MFv
- tG9JdkP7s8J2Alo+Kgne6zlYLNMdVStThYwT765ltXCMNFzuOpwLIqr/osTeCs48V+/dXSOLauP
- Foh7kRes6o+97vsfRNoOjiXzZCQu9jktLYxmtVYDK6l1qXecHW9NKJCxTN2aVZDWGSMVMLsEOXM
- Xi7BR6wyyH2PqthbYQsLgVGhmQM51zYkzWA7A6XBQpGkqnWGfv5HH1yg/3OA3bVWdniCoIcqCzV
- ipFxl+GK+IFoH2x2wGwoQJHqPfeKnaUOgIpd7oUxLPHtj8O7pAb/nqMwh0Br5siTi1JXe2GW7vg
- ZGNuvI5+k4coQKmDnMFZOuZHCGUtmw==
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=v6HMyaa53sa_SYkxinkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22 a=oH34dK2VZjykjzsv8OSz:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
+X-Proofpoint-GUID: Uy2lbuPEs51KFUE8t2Tx-kSd8t4aEim0
+X-Proofpoint-ORIG-GUID: LXnNpwEonQku4CzHe9qhF7qW1OVBG4n5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX5fnY52P94y0l
+ gWQXbhGCTE2o3WEntz9fZqvoTEfmoXQfmeeDhItqDCf6Odx5fsiIhI2gGNrc7qo8rnetET6ynjA
+ y1wTiwEzU0S/M8OrWAuWN+2q2dmbnCCaKIPiU05vDDyiWNy31pmiRX2aergpNvKVPL3nzKK3Ge3
+ NLHG4E0AkDIVRpxA7125jd5btTdt2+uUgbYcgiy2szt9ZrS2Umrul4St+tubDfI10U52EXNX9HK
+ Mf4RRxhyuswVRmbL6rJvFG6XPZuLAnWFImej8hxoyv15qUPOaA+FHfm38TbNCeklDfO4JwwzASk
+ c3mvgZEVZ469cIibPlbuZW5H2TW13/IgGykPIB3GcZGOfVhUR231H6QRzujxEP8Quq4QFJP50Q9
+ pzS5ciRBlVpczDIrl3ZnoZAB/ukiEg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
@@ -126,112 +126,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pseries-4.1 machine specific logic as had been deprecated and
-due for removal now as per policy.
+pseries-4.0 had been deprecated and due for removal now as per policy.
+Also remove pre-4.1 migration hacks which were introduced for backward
+compatibility.
 
 Suggested-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/ppc/spapr.h |  2 --
- hw/ppc/spapr.c         | 37 +------------------------------------
- 2 files changed, 1 insertion(+), 38 deletions(-)
+ include/hw/ppc/spapr.h |  1 -
+ hw/ppc/spapr.c         | 27 ---------------------------
+ hw/ppc/spapr_caps.c    | 12 +-----------
+ 3 files changed, 1 insertion(+), 39 deletions(-)
 
 diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 328681a585..96ee868e88 100644
+index 02b66f7ffa..328681a585 100644
 --- a/include/hw/ppc/spapr.h
 +++ b/include/hw/ppc/spapr.h
-@@ -144,8 +144,6 @@ struct SpaprMachineClass {
+@@ -144,7 +144,6 @@ struct SpaprMachineClass {
  
      /*< public >*/
      uint32_t nr_xirqs;
--    bool linux_pci_probe;
--    bool smp_threads_vsmt; /* set VSMT to smp_threads by default */
+-    bool pre_4_1_migration; /* don't migrate hpt-max-page-size */
+     bool linux_pci_probe;
+     bool smp_threads_vsmt; /* set VSMT to smp_threads by default */
      hwaddr rma_limit;          /* clamp the RMA to this size */
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index b93015c335..780688deaf 100644
+index 48526ad69c..b93015c335 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -1072,7 +1072,6 @@ static void spapr_dt_ov5_platform_support(SpaprMachineState *spapr, void *fdt,
- static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
- {
-     MachineState *machine = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(machine);
-     int chosen;
+@@ -4976,33 +4976,6 @@ static void spapr_machine_4_1_class_options(MachineClass *mc)
  
-     _FDT(chosen = fdt_add_subnode(fdt, 0, "chosen"));
-@@ -1143,9 +1142,7 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
-          * We can deal with BAR reallocation just fine, advertise it
-          * to the guest
-          */
--        if (smc->linux_pci_probe) {
--            _FDT(fdt_setprop_cell(fdt, chosen, "linux,pci-probe-only", 0));
--        }
-+        _FDT(fdt_setprop_cell(fdt, chosen, "linux,pci-probe-only", 0));
- 
-         spapr_dt_ov5_platform_support(spapr, fdt, chosen);
-     }
-@@ -2595,7 +2592,6 @@ static CPUArchId *spapr_find_cpu_slot(MachineState *ms, uint32_t id, int *idx)
- static void spapr_set_vsmt_mode(SpaprMachineState *spapr, Error **errp)
- {
-     MachineState *ms = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     Error *local_err = NULL;
-     bool vsmt_user = !!spapr->vsmt;
-     int kvm_smt = kvmppc_smt_threads();
-@@ -2631,15 +2627,6 @@ static void spapr_set_vsmt_mode(SpaprMachineState *spapr, Error **errp)
-             return;
-         }
-         /* In this case, spapr->vsmt has been set by the command line */
--    } else if (!smc->smp_threads_vsmt) {
--        /*
--         * Default VSMT value is tricky, because we need it to be as
--         * consistent as possible (for migration), but this requires
--         * changing it for at least some existing cases.  We pick 8 as
--         * the value that we'd get with KVM on POWER8, the
--         * overwhelmingly common case in production systems.
--         */
--        spapr->vsmt = MAX(8, smp_threads);
-     } else {
-         spapr->vsmt = smp_threads;
-     }
-@@ -4659,8 +4646,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
-     smc->default_caps.caps[SPAPR_CAP_AIL_MODE_3] = SPAPR_CAP_ON;
-     spapr_caps_add_properties(smc);
-     smc->irq = &spapr_irq_dual;
--    smc->linux_pci_probe = true;
--    smc->smp_threads_vsmt = true;
-     smc->nr_xirqs = SPAPR_NR_XIRQS;
-     xfc->match_nvt = spapr_match_nvt;
-     vmc->client_architecture_support = spapr_vof_client_architecture_support;
-@@ -4956,26 +4941,6 @@ static void spapr_machine_4_2_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE(4, 2);
+ DEFINE_SPAPR_MACHINE(4, 1);
  
 -/*
-- * pseries-4.1
+- * pseries-4.0
 - */
--static void spapr_machine_4_1_class_options(MachineClass *mc)
+-static bool phb_placement_4_0(SpaprMachineState *spapr, uint32_t index,
+-                              uint64_t *buid, hwaddr *pio,
+-                              hwaddr *mmio32, hwaddr *mmio64,
+-                              unsigned n_dma, uint32_t *liobns, Error **errp)
+-{
+-    if (!spapr_phb_placement(spapr, index, buid, pio, mmio32, mmio64, n_dma,
+-                             liobns, errp)) {
+-        return false;
+-    }
+-    return true;
+-}
+-static void spapr_machine_4_0_class_options(MachineClass *mc)
 -{
 -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--    static GlobalProperty compat[] = {
--        /* Only allow 4kiB and 64kiB IOMMU pagesizes */
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pgsz", "0x11000" },
--    };
 -
--    spapr_machine_4_2_class_options(mc);
--    smc->linux_pci_probe = false;
--    smc->smp_threads_vsmt = false;
--    compat_props_add(mc->compat_props, hw_compat_4_1, hw_compat_4_1_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    spapr_machine_4_1_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_4_0, hw_compat_4_0_len);
+-    smc->phb_placement = phb_placement_4_0;
+-    smc->irq = &spapr_irq_xics;
+-    smc->pre_4_1_migration = true;
 -}
 -
--DEFINE_SPAPR_MACHINE(4, 1);
+-DEFINE_SPAPR_MACHINE(4, 0);
 -
  static void spapr_machine_register_types(void)
  {
      type_register_static(&spapr_machine_info);
+diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+index 0f94c192fd..170795ad6a 100644
+--- a/hw/ppc/spapr_caps.c
++++ b/hw/ppc/spapr_caps.c
+@@ -66,7 +66,6 @@ typedef struct SpaprCapabilityInfo {
+     void (*apply)(SpaprMachineState *spapr, uint8_t val, Error **errp);
+     void (*cpu_apply)(SpaprMachineState *spapr, PowerPCCPU *cpu,
+                       uint8_t val, Error **errp);
+-    bool (*migrate_needed)(void *opaque);
+ } SpaprCapabilityInfo;
+ 
+ static void spapr_cap_get_bool(Object *obj, Visitor *v, const char *name,
+@@ -336,11 +335,6 @@ static void cap_hpt_maxpagesize_apply(SpaprMachineState *spapr,
+     spapr_check_pagesize(spapr, qemu_minrampagesize(), errp);
+ }
+ 
+-static bool cap_hpt_maxpagesize_migrate_needed(void *opaque)
+-{
+-    return !SPAPR_MACHINE_GET_CLASS(opaque)->pre_4_1_migration;
+-}
+-
+ static bool spapr_pagesize_cb(void *opaque, uint32_t seg_pshift,
+                               uint32_t pshift)
+ {
+@@ -793,7 +787,6 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+         .type = "int",
+         .apply = cap_hpt_maxpagesize_apply,
+         .cpu_apply = cap_hpt_maxpagesize_cpu_apply,
+-        .migrate_needed = cap_hpt_maxpagesize_migrate_needed,
+     },
+     [SPAPR_CAP_NESTED_KVM_HV] = {
+         .name = "nested-hv",
+@@ -982,11 +975,8 @@ int spapr_caps_post_migration(SpaprMachineState *spapr)
+ static bool spapr_cap_##sname##_needed(void *opaque)    \
+ {                                                       \
+     SpaprMachineState *spapr = opaque;                  \
+-    bool (*needed)(void *opaque) =                      \
+-        capability_table[cap].migrate_needed;           \
+                                                         \
+-    return needed ? needed(opaque) : true &&            \
+-           spapr->cmd_line_caps[cap] &&                 \
++    return spapr->cmd_line_caps[cap] &&                 \
+            (spapr->eff.caps[cap] !=                     \
+             spapr->def.caps[cap]);                      \
+ }                                                       \
 -- 
 2.51.0
 
