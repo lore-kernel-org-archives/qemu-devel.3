@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97E3CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8121CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6to6-0001Yt-Q7; Thu, 09 Oct 2025 12:47:58 -0400
+	id 1v6tp1-00029F-Eg; Thu, 09 Oct 2025 12:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6to3-0001Xv-0A
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:47:55 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6toy-00028Q-Ml
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:48:52 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6tnz-0004lz-IU
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:47:54 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-46e61ebddd6so12335075e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:47:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6tos-0004vZ-Jj
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:48:52 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3304a57d842so1087214a91.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760028468; x=1760633268; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kkFJShCPRzclL+PLVGeCJ+9eP9tjTj4Lgzbu6jrD5Mo=;
- b=WC1DTRrWnbnRCoLW1yH2WErEC4n8I/6TfP9cZzMYT61Km2TTpQFU1vjvem2oralGQ7
- FkK2dhTO7U/OFx27wdHedDC6n38dNCrQXYL80zIoo5Wqx2MSXQyf3Ous3fwURb0NSCLm
- 6Mgxu87QNLom5nazzz+HpAp6fchdIvCXuRivBlSMwW0Xcn986888NTwFcn7Hc4KDJ62x
- TDOXALn9rluJFbDaN6eBfi+jNp1qOz2h2+x5HaP+WBbGDvTJn0lSwP/tSlBGzQoPue7Y
- UoIP3kVcHVDdXeU7GlGX2q2WtiXmfPyljc0Auff7in3R0z3V45quzSI/4mkVLMkHUmdR
- rN4g==
+ d=linaro.org; s=google; t=1760028524; x=1760633324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2BfWnLYMvEFqLkbTJMAzVQIPHIxrSLXwuEKVgi6pRpk=;
+ b=b2i0375gfQxuxlPN0FhN5Mq8z0p35+3gW4qFlAO4dTvSNuMbqanoxtgGg2eKp0qYX9
+ +l9qtYXosNZZJOO2CVo5aD2PKsPhzYE7Dz4+V56SMhYQ67+1GtQphkdp0J201VfKH90P
+ /E21sh0LVkemX98g4f2HIndhlhvR+M+mtq9x02VenKyeB4hZq45UwXHRCV70+IOSn+za
+ Lq+ulvJCu3/xcSdljoy05cXKYZYClf0LluWqeygE0dA8a79p+cXVRrhVWmA+llncc0wA
+ MK3PuH4XjP+Dztic6SWeHNxEDBxVqHINSvVX4g5twW1bIZL54u3Aa5za4g0JtCvFQxe3
+ rPZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760028468; x=1760633268;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760028524; x=1760633324;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kkFJShCPRzclL+PLVGeCJ+9eP9tjTj4Lgzbu6jrD5Mo=;
- b=RtngoPaYGgLSJM7UiGvQaYHRnD2+rphPA5psFlYbXphi6cl53v6rdNpTwdBqKhXE+5
- qHmdNuf+qK8e9hJJ22fKvo9peMmi/ycyUyUizcvqGYFCfneNQTW0mjSalFieFLYSHe0p
- HOFHZ7ekwPvALovFGwqDzIyZGBA4TtqiRUpJ8Q72tml6KBEQgXqbU5vYr2SXCE8wgala
- Lrw1DkuAO3C+Kn2Q4HNST6QvfrA7L1b62UtMHM8B8FjT3M116aHQsVY513RNdgNAEHQ3
- aC+XhGiM7nkVj7tLcwqZFkCadG7bSF7NjwU/W2gyODOOM/3/nwCDTQuyQAI5LX9IT3H0
- 4U9w==
-X-Gm-Message-State: AOJu0YzthqCM1bX6gnmzYz4SDpTdl3Z+Ati5YHabj1WKk7pQLdNQzX5k
- ADwjdyRNTDNSM55zP56Pqs+kvqR+aq2Eytc4sX3bN5ptEZjGHV1W66+nREqYNHDxGPk=
-X-Gm-Gg: ASbGncuGOBFroZaCDCWuD0pJ3Rv76bZaYmhvzWgnaPQSxB3WIF/L4VcEUspw2yB/j4M
- NgDCydo+ymu7PNleZVgOr8m0xNghXO9VRWv8tVUXA8I3qYzkRQMPNGcAvzSO2PdrA7KTdPqnROY
- LmGoBXb7To5FA2MgvmufktS6SInyr8HpeVrPlS6s7akcmj5Rb4tuvMrmN9c7g7Ywh/iYHu5HdSr
- FVVsAUJguBbG+440dm3Pr57mi2khxc3yNppz422bkcVlDbeeZAcAtrKuIhSkPnW/NbVvm0jFB9n
- +utbv/yguoojaugpkESxHlFw0K3p1msTDLjfCCG5rrAXs6urZfVUsUcZT6BD2nkp9/gzpMOxORD
- 6y3Df7/tQQVUVz9U95dtv0V5Rg3fjOlGyBWR2u/6Sp7GXN4T31Egciubkc1iluEtz9C3/76WoaC
- CG19U9z2pp/RAbsIDVbQ==
-X-Google-Smtp-Source: AGHT+IHl9zXdpbOHN61YhK9TwIZk6o+/cTSiJ3yEh4+jFsfIUBhgnZYaFPKzrpnQSJgc44jC67yM8A==
-X-Received: by 2002:a05:6000:4014:b0:3fe:4fa2:8cd5 with SMTP id
- ffacd0b85a97d-42666ac4518mr4832865f8f.9.1760028467772; 
- Thu, 09 Oct 2025 09:47:47 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426cd9a025asm174957f8f.46.2025.10.09.09.47.46
+ bh=2BfWnLYMvEFqLkbTJMAzVQIPHIxrSLXwuEKVgi6pRpk=;
+ b=FSXRnG35j3zryoTn/3pwCdakZ5n8JUUtJYHM8+iB3FoZmFDSl0l8jtrAh2QCEixPVS
+ 58Bm3HRhMhbi2nVrfqqxu+ODHJuqLMu/lTwXj1awnCYRzcJxQY4ThRAyKlqY6Q7+wi2E
+ jXpTSVYPQs3o3hVQ7ZnZDh0nWk6VpdWaSgItKOZYPLhEydkmCETrj5TnzIvtyaC4l+FT
+ JvqM+iC3wbOGCClxXGBQy2/m0o3pkbxVM1wxoT5NxSIbib+d7UXRbwGCv5nQkJ/4P7ak
+ vMJTXVwnK+goM0LpRPPQodR2n4uVWeOhmw6R8pD1gdCeZMv6cqJnOKBd3OiNcunH27Bp
+ sdow==
+X-Gm-Message-State: AOJu0YyfCmCO6WQkcPngZUHR9IcMUUEpPS4p5aLwueqFksOk7katuMJk
+ 0aWcvua87IV5ZiEOYojYTdQd3Z3+9LdyZxs99MkeJeY/h6hXgSygMlE0SRoTt38O0T9MoiQRRou
+ rYm42I0g=
+X-Gm-Gg: ASbGncuSAvmC3BZGaTo2p0mNxHbWlnH1PoJH9Weeo7VVrDd43AyNPnNMkp5kGhh0U8D
+ 4hav2Tqf3nnyjMoWGHfkrXgAsnnucSX8HF72zJ7mGny7M1FR2o2aGD+JB66jOSk5XzA+5o0FTiK
+ Uw6tBLzMTpNeyF5pqVISIjtVhq7F1dYZ+5SWUVeOAiYqd3/wN1pAUZ1yKH+7lzUFC8yblxYIwwh
+ +lra5kScYT4Nu+16lZuf6zbdM7G202qCXkMoFUMphwMoRr8Cs7dcCQdIqIjxZyMYHN3R9db2xgH
+ 4S+GeMOAIJiWSBZ9wrsawUf3wkJOIxVndWOA7EeRd2kC1dmP7UXi2ZOLupiMxqBP/l8dMq36ttm
+ 0oL1sv9p9vx9z3ElAeT+fyofYhaSyCgbuh+zp6+i0H671qu4LZUlET5NNpIO11ZxroEUU2lTkAG
+ 4=
+X-Google-Smtp-Source: AGHT+IHLGxvat/CL2kgkyyBSu84GLQGNwVuCN1l/kRi9V1g6/LRqfyrwvaPumMUwJVUy2GYs9XBv3w==
+X-Received: by 2002:a17:90b:4b06:b0:32e:9f1e:4ee4 with SMTP id
+ 98e67ed59e1d1-33b513b2d70mr11447703a91.17.1760028523801; 
+ Thu, 09 Oct 2025 09:48:43 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33b61a392cdsm365958a91.7.2025.10.09.09.48.42
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 09:47:47 -0700 (PDT)
-Message-ID: <531f953f-6afe-4b61-a9ac-2e02cae2f6e4@linaro.org>
-Date: Thu, 9 Oct 2025 18:47:46 +0200
+ Thu, 09 Oct 2025 09:48:43 -0700 (PDT)
+Message-ID: <d6248333-9f2a-4e2e-bdac-40db92a46138@linaro.org>
+Date: Thu, 9 Oct 2025 09:48:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] docker: Remove 32-bit MIPS toolchain from
- debian-all-test image
+Subject: Re: [PATCH v2 06/10] target/openrisc: Remove target_ulong use in
+ raise_mmu_exception()
+To: qemu-devel@nongnu.org
+References: <20251009081903.13426-1-philmd@linaro.org>
+ <20251009081903.13426-7-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Aleksandar Rikalo <arikalo@gmail.com>,
- Riku Voipio <riku.voipio@iki.fi>, Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20250820142108.46639-1-philmd@linaro.org>
- <20250820142108.46639-2-philmd@linaro.org> <87ect3k3c4.fsf@draig.linaro.org>
- <592c3338-77f7-4393-aef3-7670e6ec90fc@linaro.org>
-In-Reply-To: <592c3338-77f7-4393-aef3-7670e6ec90fc@linaro.org>
+In-Reply-To: <20251009081903.13426-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,62 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/25 16:49, Philippe Mathieu-Daudé wrote:
-> On 22/8/25 13:23, Alex Bennée wrote:
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> In commit d3322023bfe ("configure: unify again the case arms in
->>> probe_target_compiler") we lost coverage of 32-bit MIPS with the
->>> debian-all-test image. No need to keep installing the toolchain.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   tests/docker/dockerfiles/debian-all-test-cross.docker | 4 ----
->>>   1 file changed, 4 deletions(-)
->>>
->>> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/ 
->>> tests/docker/dockerfiles/debian-all-test-cross.docker
->>> index 420a4e33e60..bc74d65a634 100644
->>> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
->>> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
->>> @@ -40,14 +40,10 @@ ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
->>>           libc6-dev-arm64-cross \
->>>           gcc-arm-linux-gnueabihf \
->>>           libc6-dev-armhf-cross \
->>> -        gcc-mips-linux-gnu \
->>> -        libc6-dev-mips-cross \
->>>           gcc-mips64-linux-gnuabi64 \
->>>           libc6-dev-mips64-cross \
->>>           gcc-mips64el-linux-gnuabi64 \
->>>           libc6-dev-mips64el-cross \
->>> -        gcc-mipsel-linux-gnu \
->>> -        libc6-dev-mipsel-cross \
->>>           gcc-powerpc64le-linux-gnu \
->>>           libc6-dev-ppc64el-cross \
->>>           gcc-riscv64-linux-gnu \
->>
->> You also need to remove the references in configure:
->>
-
-Expanding:
-
-     case $target_arch in
-
->>        hppa|m68k|mips|riscv64|sparc64)
->>          container_image=debian-all-test-cross
->>          ;;
+On 10/9/25 01:18, Philippe Mathieu-Daudé wrote:
+> TCGCPUOps::tlb_fill() handler provides a vaddr type (since commit
+> 7510454e3e7 "cpu: Turn cpu_handle_mmu_fault() into a CPUClass hook").
 > 
-> OK.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   target/openrisc/mmu.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 
-So actual patch is correct here.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> 
->>        mips64)
->>          container_image=debian-all-test-cross
->>          container_cross_prefix=mips64-linux-gnuabi64-
->>          ;;
-> 
-> We aren't removing mips64 yet. We will but since the reason is
-> different, it will be in another series.
 
+r~
 
