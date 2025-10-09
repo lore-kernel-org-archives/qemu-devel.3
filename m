@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7BE3CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB641CCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 07:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6lR5-000053-Or; Thu, 09 Oct 2025 03:51:40 -0400
+	id 1v6lQt-0008T0-Uc; Thu, 09 Oct 2025 03:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lR1-0008Vj-GP
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:35 -0400
+ id 1v6lQr-0008Sn-3w
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v6lQy-0004SY-JM
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:35 -0400
+ id 1v6lQl-0004Qr-6D
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 03:51:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1759996289;
+ s=mimecast20190719; t=1759996277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F7AoqxUKObbMsXJjOBehknEDHvdGEyjdVUlJubkLvsI=;
- b=HvSzER380fi8qRycl3XU4ngNv0gMudOHzO/uL4gsoskSFaTyTf230tJDy8p5RCQ8S19p+o
- hpJL0HqrYVGo/u7t0fqq7UhEqgzX+V7vc2iF1qdxp2MCgI2KhKiVHetpk9BHXB/2Amj12+
- jvoZy1pkKjQcTRmKYtqatrnBaijtD0o=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ybg7xeLuE7xqCSx05hiU1cBvGy3lci2b+snhEgiPC5w=;
+ b=V9PhQoO6vEon4UXaCRWI3skbGPmwxBaQ4E6rMIGxo5wvi0yZesvDBjRGnSpU8AbH+E8VJq
+ bITVcvpbFA5pEHtaBvmnNEI0QmMYm930mHbDZiz9gvStpJSFjJjl5p37N7hiecdz3yrlIX
+ cNl8AHTCI2t7qQ+8d0gNlKfp4GSxZM0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-TnboVIKqMKyV5Dz06kcjfw-1; Thu, 09 Oct 2025 03:51:28 -0400
-X-MC-Unique: TnboVIKqMKyV5Dz06kcjfw-1
-X-Mimecast-MFC-AGG-ID: TnboVIKqMKyV5Dz06kcjfw_1759996287
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ee1365964cso632245f8f.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:28 -0700 (PDT)
+ us-mta-609-a-H9N710Na-zYiBnhbFAGw-1; Thu, 09 Oct 2025 03:51:16 -0400
+X-MC-Unique: a-H9N710Na-zYiBnhbFAGw-1
+X-Mimecast-MFC-AGG-ID: a-H9N710Na-zYiBnhbFAGw_1759996275
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e4c8fa2b1so2946735e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 00:51:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1759996286; x=1760601086;
+ d=1e100.net; s=20230601; t=1759996274; x=1760601074;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F7AoqxUKObbMsXJjOBehknEDHvdGEyjdVUlJubkLvsI=;
- b=QgkY0If3+UhCcbXDrI9Umeqt7Gj2SkPaaOkYqSulv96XHC5Yn4bj296jIeeLp4XXGT
- krLRj1L2t9IfIbSv8ODW8yu7f0jonSstkJTFlb1nWjWzoJa3/LMN+UYvYipxr3NUeBzk
- ABSia/pzr7Fw1mNwYcXtMWVERIgGBQpBYcY07AuDvdYBmpJvpF3GKle2HCL06J2Y8eif
- uFR322DSTupf1/Buk9qV4nraQ08QHpXfqnr6cELT20RL1noT1YJBObXALZR36smg+FWX
- Y3z0mEeZUCQJDVMTdjPgibwRTpGZ88kZTMGkbeDJl7FVY3RKPNgm8ewBHuWWEwcS+e4/
- o4uw==
-X-Gm-Message-State: AOJu0YzLkI5BtgXCX+fcKBrPP3OLUmKKBcVNe/A9IWIRXEg3OLpWH3ef
- pYCDjOwJjegHDCWYtDPzD5UPL/Cfu5YadhWyKoW9ALt1q/c+1uJPb8PE3GPjSnzB0YKks9sJ+pU
- cKrEe5DUoGAW1nVkPs8tVPF9jgJjI1dugaL7auApNSYadYgAKvJGQ7Yu19lfLfdHpo1OiIwU2a9
- 5/5HZD55LjJ0I1sParSAeykXAcBLykNooivVbGmVspSMU=
-X-Gm-Gg: ASbGncuEc3S0fCtwHC+Z2/94WbKNDsmnhj1l9hQG1372kGk+ziB5FNHNSde2Nff26Kc
- g/D/uNDMfr48yxNc2zlqgEoGhx+0lKsw5hGEBIEpluZFB7GlYbuOe2mpp4c4r4qsQa1JrAWD7Ea
- kQIss3tDXM2syrlyE3dpV3ALDoqua0xse6LuLPyo1wYgzNkQQjhdwUtYwNAMb8i1fgmBGMJIkZH
- B5dpr+nBNdjkUqJR22x0YnWN18VvIr+bJw3whzWUPWc+qSU39qq9adWyXPr4mccpk0P9SCT5k4b
- dGevR0sDDsRe/AHr34xPZIdXfDtM8V1pmBGcWt4+9y6c5iFI7DQ299g4YottZOqpeVjiGCi1Weo
- 8yqkp2DXeZmhZ2s/weQnVd4CWkMQLbvAj1uVRl3wa+ZSmW127
-X-Received: by 2002:a05:6000:186a:b0:425:72cd:835e with SMTP id
- ffacd0b85a97d-4266e7e140amr3544137f8f.37.1759996286387; 
- Thu, 09 Oct 2025 00:51:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJm6sGFZUx8Q+UmW9VWNxeKb8Bi2e6s13YaR4A4Hyq5qiCyvwdC9X7WAl/u8ge5ov0KGoD3Q==
-X-Received: by 2002:a05:6000:186a:b0:425:72cd:835e with SMTP id
- ffacd0b85a97d-4266e7e140amr3544117f8f.37.1759996285842; 
- Thu, 09 Oct 2025 00:51:25 -0700 (PDT)
+ bh=ybg7xeLuE7xqCSx05hiU1cBvGy3lci2b+snhEgiPC5w=;
+ b=XFCrAcx4RD1Zc3SHDB2TyWSCS0Nl76MaSRR199J2TxaKw1AilMQKVITMML36Z6KzHH
+ iK/RH3BBP9zj7UGLXn+ZL63lt0Y+XHnvMv3Kgki198bWLjup1nsGBhlRQZVb3MXm4wNX
+ vv7BaZgKU8b89lW6i8HPl33Jp4qj41Mj8+fOe9sLf9p58XXeG0AAdnJww6Pu4mENbDbH
+ rm5hiYP9uB+gD8ikRFgi9azxbnyc5wNfF0WmfBtIKKbGsLcHbOQ78oBTpeIN7lq/evXW
+ p0175+Q1Y6vzSIDv8R1ccGMemoxJE8X5r47RuyiOfp+R87ukLW+VK/82fvRPnmjbODbe
+ bYFQ==
+X-Gm-Message-State: AOJu0YwF/uY0P45E+33qIkN2BInmlOP80xfHSjZbGi+ZwKBuCCvoP84o
+ 2DaDEMKfBhdotSoLXn68bb5YJ+BTcLr179EGVLwbk3kHggQBT+T/CMQle3wwBU4G9wicFsh6A49
+ X0n+dTkoe6JJvTQYI7tFelKhjnaYcvrDQae6WKzArTsJ/DntsWO26MyoNg4z4poK6eLXhCJAXyL
+ o3wCnom2CxqCN3NzW6M7lMI9v6+8yk3wnsUXyJ2rsegm8=
+X-Gm-Gg: ASbGnct3RLqk8wCdodTnFcuHFKiBCGy7be+2xsj5h1rznh9vWOauFhk2xIv88qVsaid
+ eQyouLP5g0IFKh330ReBwqT7ScJTueAnKbNo6cJy5AipjpAnQ1rcuXA24/8j3pTVrNtlUusAMNK
+ lOBQ/xKG7SM4DuiaUfbM38bLWCYMunMryl1nk984ahNPo5/om2vb+UoAnupo9VNIiSmAKM7OhOD
+ aAlTPqKT1EQZGuAGQ95ACK9LrLi+n99N4qT99yXYTG2bmTFhiFr1TtWEepQfENuFJM9eWzrR1Xm
+ c1YJabHqlJy9PYvMYKzatGVyzdz4UbXFPva7LjIgrAj2IobTLR26nhl5npS36UcsFkELisehaW/
+ OC5wQekDHjKRna9/iYHNkhM/SLvjU3tb9X5NGY0L1sr7x6y+z
+X-Received: by 2002:a05:600c:529a:b0:46e:4912:d02a with SMTP id
+ 5b1f17b1804b1-46fa9aef4cbmr41445395e9.23.1759996273980; 
+ Thu, 09 Oct 2025 00:51:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQWHFlSbyyhOh/uM+oPcIJ35RkNmWpcnYrefdqO+fMmCvOfGmhIcdQjJAR8RG22VqqLZ2lvw==
+X-Received: by 2002:a05:600c:529a:b0:46e:4912:d02a with SMTP id
+ 5b1f17b1804b1-46fa9aef4cbmr41445225e9.23.1759996273518; 
+ Thu, 09 Oct 2025 00:51:13 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.36.217])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fab3d2c1asm30928305e9.1.2025.10.09.00.51.24
+ ffacd0b85a97d-4255d8a6bb2sm32514984f8f.10.2025.10.09.00.51.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Oct 2025 00:51:24 -0700 (PDT)
+ Thu, 09 Oct 2025 00:51:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 26/35] target/i386/mshv: Integrate x86 instruction
- decoder/emulator
-Date: Thu,  9 Oct 2025 09:50:16 +0200
-Message-ID: <20251009075026.505715-27-pbonzini@redhat.com>
+Subject: [PULL 21/35] target/i386/mshv: Implement mshv_get_special_regs()
+Date: Thu,  9 Oct 2025 09:50:11 +0200
+Message-ID: <20251009075026.505715-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009075026.505715-1-pbonzini@redhat.com>
 References: <20251009075026.505715-1-pbonzini@redhat.com>
@@ -87,11 +86,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -112,271 +111,162 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Connect the x86 instruction decoder and emulator to the MSHV backend
-to handle intercepted instructions. This enables software emulation
-of MMIO operations in MSHV guests. MSHV has a translate_gva hypercall
-that is used to accessing the physical guest memory.
+Retrieve special registers (e.g. segment, control, and descriptor
+table registers) from MSHV vCPUs.
 
-A guest might read from unmapped memory regions (e.g. OVMF will probe
-0xfed40000 for a vTPM). In those cases 0xFF bytes is returned instead of
-aborting the execution.
+Various helper functions to map register state representations between
+Qemu and MSHV are introduced.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250916164847.77883-21-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20250916164847.77883-16-magnuskulke@linux.microsoft.com
 [mshv.h/mshv_int.h split. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv_int.h   |   4 ++
- accel/mshv/mem.c            |  65 +++++++++++++++++
- target/i386/mshv/mshv-cpu.c | 135 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 204 insertions(+)
+ include/system/mshv_int.h   |   1 +
+ target/i386/mshv/mshv-cpu.c | 104 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 105 insertions(+)
 
 diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 66494383134..b29d39911db 100644
+index b0a79296ad9..c6e6e8af307 100644
 --- a/include/system/mshv_int.h
 +++ b/include/system/mshv_int.h
-@@ -101,6 +101,10 @@ typedef struct MshvMemoryRegion {
-     bool readonly;
- } MshvMemoryRegion;
- 
-+int mshv_guest_mem_read(uint64_t gpa, uint8_t *data, uintptr_t size,
-+                        bool is_secure_mode, bool instruction_fetch);
-+int mshv_guest_mem_write(uint64_t gpa, const uint8_t *data, uintptr_t size,
-+                         bool is_secure_mode);
- void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-                        bool add);
- 
-diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-index a0a40eb3333..e55c38d4db9 100644
---- a/accel/mshv/mem.c
-+++ b/accel/mshv/mem.c
-@@ -59,6 +59,71 @@ static int map_or_unmap(int vm_fd, const MshvMemoryRegion *mr, bool map)
-     return set_guest_memory(vm_fd, &region);
- }
- 
-+static int handle_unmapped_mmio_region_read(uint64_t gpa, uint64_t size,
-+                                            uint8_t *data)
-+{
-+    warn_report("read from unmapped mmio region gpa=0x%lx size=%lu", gpa, size);
-+
-+    if (size == 0 || size > 8) {
-+        error_report("invalid size %lu for reading from unmapped mmio region",
-+                     size);
-+        return -1;
-+    }
-+
-+    memset(data, 0xFF, size);
-+
-+    return 0;
-+}
-+
-+int mshv_guest_mem_read(uint64_t gpa, uint8_t *data, uintptr_t size,
-+                        bool is_secure_mode, bool instruction_fetch)
-+{
-+    int ret;
-+    MemTxAttrs memattr = { .secure = is_secure_mode };
-+
-+    if (instruction_fetch) {
-+        trace_mshv_insn_fetch(gpa, size);
-+    } else {
-+        trace_mshv_mem_read(gpa, size);
-+    }
-+
-+    ret = address_space_rw(&address_space_memory, gpa, memattr, (void *)data,
-+                           size, false);
-+    if (ret == MEMTX_OK) {
-+        return 0;
-+    }
-+
-+    if (ret == MEMTX_DECODE_ERROR) {
-+        return handle_unmapped_mmio_region_read(gpa, size, data);
-+    }
-+
-+    error_report("failed to read guest memory at 0x%lx", gpa);
-+    return -1;
-+}
-+
-+int mshv_guest_mem_write(uint64_t gpa, const uint8_t *data, uintptr_t size,
-+                         bool is_secure_mode)
-+{
-+    int ret;
-+    MemTxAttrs memattr = { .secure = is_secure_mode };
-+
-+    trace_mshv_mem_write(gpa, size);
-+    ret = address_space_rw(&address_space_memory, gpa, memattr, (void *)data,
-+                           size, true);
-+    if (ret == MEMTX_OK) {
-+        return 0;
-+    }
-+
-+    if (ret == MEMTX_DECODE_ERROR) {
-+        warn_report("write to unmapped mmio region gpa=0x%lx size=%lu", gpa,
-+                    size);
-+        return 0;
-+    }
-+
-+    error_report("Failed to write guest memory");
-+    return -1;
-+}
-+
- static int set_memory(const MshvMemoryRegion *mshv_mr, bool add)
- {
-     int ret = 0;
+@@ -59,6 +59,7 @@ void mshv_init_mmio_emu(void);
+ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
+ void mshv_remove_vcpu(int vm_fd, int cpu_fd);
+ int mshv_get_standard_regs(CPUState *cpu);
++int mshv_get_special_regs(CPUState *cpu);
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
+ int mshv_load_regs(CPUState *cpu);
+ int mshv_store_regs(CPUState *cpu);
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 1f43dfc58ac..424ebdb1228 100644
+index 4e3eee113bb..bc75686f828 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -104,6 +104,47 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
-     HV_X64_REGISTER_XMM_CONTROL_STATUS,
+@@ -53,6 +53,26 @@ static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
+     HV_X64_REGISTER_RFLAGS,
  };
  
-+static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
-+                         uint64_t flags)
-+{
-+    int ret;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vp_index = cpu->cpu_index;
-+
-+    hv_input_translate_virtual_address in = { 0 };
-+    hv_output_translate_virtual_address out = { 0 };
-+    struct mshv_root_hvcall args = {0};
-+    uint64_t gva_page = gva >> HV_HYP_PAGE_SHIFT;
-+
-+    in.vp_index = vp_index;
-+    in.control_flags = flags;
-+    in.gva_page = gva_page;
-+
-+    /* create the hvcall envelope */
-+    args.code = HVCALL_TRANSLATE_VIRTUAL_ADDRESS;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t) &in;
-+    args.out_sz = sizeof(out);
-+    args.out_ptr = (uint64_t) &out;
-+
-+    /* perform the call */
-+    ret = mshv_hvcall(cpu_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to invoke gva->gpa translation");
-+        return -errno;
-+    }
-+
-+    if (out.translation_result.result_code != HV_TRANSLATE_GVA_SUCCESS) {
-+        error_report("Failed to translate gva (" TARGET_FMT_lx ") to gpa", gva);
-+        return -1;
-+    }
-+
-+    *gpa = ((out.gpa_page << HV_HYP_PAGE_SHIFT)
-+         | (gva & ~(uint64_t)HV_HYP_PAGE_MASK));
-+
-+    return 0;
-+}
++static enum hv_register_name SPECIAL_REGISTER_NAMES[17] = {
++    HV_X64_REGISTER_CS,
++    HV_X64_REGISTER_DS,
++    HV_X64_REGISTER_ES,
++    HV_X64_REGISTER_FS,
++    HV_X64_REGISTER_GS,
++    HV_X64_REGISTER_SS,
++    HV_X64_REGISTER_TR,
++    HV_X64_REGISTER_LDTR,
++    HV_X64_REGISTER_GDTR,
++    HV_X64_REGISTER_IDTR,
++    HV_X64_REGISTER_CR0,
++    HV_X64_REGISTER_CR2,
++    HV_X64_REGISTER_CR3,
++    HV_X64_REGISTER_CR4,
++    HV_X64_REGISTER_CR8,
++    HV_X64_REGISTER_EFER,
++    HV_X64_REGISTER_APIC_BASE,
++};
 +
  int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
                            size_t n_regs)
  {
-@@ -1006,8 +1047,102 @@ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
+@@ -255,6 +275,84 @@ int mshv_get_standard_regs(CPUState *cpu)
      return 0;
  }
  
-+static int guest_mem_read_with_gva(const CPUState *cpu, uint64_t gva,
-+                                   uint8_t *data, uintptr_t size,
-+                                   bool fetch_instruction)
++static inline void populate_segment_reg(const hv_x64_segment_register *hv_seg,
++                                        SegmentCache *seg)
 +{
++    memset(seg, 0, sizeof(SegmentCache));
++
++    seg->base = hv_seg->base;
++    seg->limit = hv_seg->limit;
++    seg->selector = hv_seg->selector;
++
++    seg->flags = (hv_seg->segment_type << DESC_TYPE_SHIFT)
++                 | (hv_seg->present * DESC_P_MASK)
++                 | (hv_seg->descriptor_privilege_level << DESC_DPL_SHIFT)
++                 | (hv_seg->_default << DESC_B_SHIFT)
++                 | (hv_seg->non_system_segment * DESC_S_MASK)
++                 | (hv_seg->_long << DESC_L_SHIFT)
++                 | (hv_seg->granularity * DESC_G_MASK)
++                 | (hv_seg->available * DESC_AVL_MASK);
++
++}
++
++static inline void populate_table_reg(const hv_x64_table_register *hv_seg,
++                                      SegmentCache *tbl)
++{
++    memset(tbl, 0, sizeof(SegmentCache));
++
++    tbl->base = hv_seg->base;
++    tbl->limit = hv_seg->limit;
++}
++
++static void populate_special_regs(const hv_register_assoc *assocs,
++                                  X86CPU *x86cpu)
++{
++    CPUX86State *env = &x86cpu->env;
++
++    populate_segment_reg(&assocs[0].value.segment, &env->segs[R_CS]);
++    populate_segment_reg(&assocs[1].value.segment, &env->segs[R_DS]);
++    populate_segment_reg(&assocs[2].value.segment, &env->segs[R_ES]);
++    populate_segment_reg(&assocs[3].value.segment, &env->segs[R_FS]);
++    populate_segment_reg(&assocs[4].value.segment, &env->segs[R_GS]);
++    populate_segment_reg(&assocs[5].value.segment, &env->segs[R_SS]);
++
++    populate_segment_reg(&assocs[6].value.segment, &env->tr);
++    populate_segment_reg(&assocs[7].value.segment, &env->ldt);
++
++    populate_table_reg(&assocs[8].value.table, &env->gdt);
++    populate_table_reg(&assocs[9].value.table, &env->idt);
++
++    env->cr[0] = assocs[10].value.reg64;
++    env->cr[2] = assocs[11].value.reg64;
++    env->cr[3] = assocs[12].value.reg64;
++    env->cr[4] = assocs[13].value.reg64;
++
++    cpu_set_apic_tpr(x86cpu->apic_state, assocs[14].value.reg64);
++    env->efer = assocs[15].value.reg64;
++    cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
++}
++
++
++int mshv_get_special_regs(CPUState *cpu)
++{
++    struct hv_register_assoc assocs[ARRAY_SIZE(SPECIAL_REGISTER_NAMES)];
 +    int ret;
-+    uint64_t gpa, flags;
++    X86CPU *x86cpu = X86_CPU(cpu);
++    size_t n_regs = ARRAY_SIZE(SPECIAL_REGISTER_NAMES);
 +
-+    flags = HV_TRANSLATE_GVA_VALIDATE_READ;
-+    ret = translate_gva(cpu, gva, &gpa, flags);
++    for (size_t i = 0; i < n_regs; i++) {
++        assocs[i].name = SPECIAL_REGISTER_NAMES[i];
++    }
++    ret = get_generic_regs(cpu, assocs, n_regs);
 +    if (ret < 0) {
-+        error_report("failed to translate gva to gpa");
-+        return -1;
++        error_report("failed to get special registers");
++        return -errno;
 +    }
 +
-+    ret = mshv_guest_mem_read(gpa, data, size, false, fetch_instruction);
-+    if (ret < 0) {
-+        error_report("failed to read from guest memory");
-+        return -1;
-+    }
-+
++    populate_special_regs(assocs, x86cpu);
 +    return 0;
 +}
 +
-+static int guest_mem_write_with_gva(const CPUState *cpu, uint64_t gva,
-+                                    const uint8_t *data, uintptr_t size)
-+{
-+    int ret;
-+    uint64_t gpa, flags;
-+
-+    flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
-+    ret = translate_gva(cpu, gva, &gpa, flags);
-+    if (ret < 0) {
-+        error_report("failed to translate gva to gpa");
-+        return -1;
-+    }
-+    ret = mshv_guest_mem_write(gpa, data, size, false);
-+    if (ret < 0) {
-+        error_report("failed to write to guest memory");
-+        return -1;
-+    }
-+    return 0;
-+}
-+
-+static void write_mem(CPUState *cpu, void *data, target_ulong addr, int bytes)
-+{
-+    if (guest_mem_write_with_gva(cpu, addr, data, bytes) < 0) {
-+        error_report("failed to write memory");
-+        abort();
-+    }
-+}
-+
-+static void fetch_instruction(CPUState *cpu, void *data,
-+                              target_ulong addr, int bytes)
-+{
-+    if (guest_mem_read_with_gva(cpu, addr, data, bytes, true) < 0) {
-+        error_report("failed to fetch instruction");
-+        abort();
-+    }
-+}
-+
-+static void read_mem(CPUState *cpu, void *data, target_ulong addr, int bytes)
-+{
-+    if (guest_mem_read_with_gva(cpu, addr, data, bytes, false) < 0) {
-+        error_report("failed to read memory");
-+        abort();
-+    }
-+}
-+
-+static void read_segment_descriptor(CPUState *cpu,
-+                                    struct x86_segment_descriptor *desc,
-+                                    enum X86Seg seg_idx)
-+{
-+    bool ret;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    SegmentCache *seg = &env->segs[seg_idx];
-+    x86_segment_selector sel = { .sel = seg->selector & 0xFFFF };
-+
-+    ret = x86_read_segment_descriptor(cpu, desc, sel);
-+    if (ret == false) {
-+        error_report("failed to read segment descriptor");
-+        abort();
-+    }
-+}
-+
-+static const struct x86_emul_ops mshv_x86_emul_ops = {
-+    .fetch_instruction = fetch_instruction,
-+    .read_mem = read_mem,
-+    .write_mem = write_mem,
-+    .read_segment_descriptor = read_segment_descriptor,
-+};
-+
- void mshv_init_mmio_emu(void)
+ int mshv_load_regs(CPUState *cpu)
  {
-+    init_decoder();
-+    init_emu(&mshv_x86_emul_ops);
+     int ret;
+@@ -265,6 +363,12 @@ int mshv_load_regs(CPUState *cpu)
+         return -1;
+     }
+ 
++    ret = mshv_get_special_regs(cpu);
++    if (ret < 0) {
++        error_report("Failed to load special registers");
++        return -1;
++    }
++
+     return 0;
  }
  
- void mshv_arch_init_vcpu(CPUState *cpu)
 -- 
 2.51.0
 
