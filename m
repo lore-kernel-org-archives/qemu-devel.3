@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CE4CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 10:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B332CCD18C
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 10:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6nVN-00039f-6g; Thu, 09 Oct 2025 06:04:13 -0400
+	id 1v6nbu-0005Y7-CD; Thu, 09 Oct 2025 06:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1v6nVK-00037Y-0t
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:04:10 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1v6nVF-0006St-M5
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:04:09 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5997u4Ux011879;
- Thu, 9 Oct 2025 10:03:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=lwGExlen9vGR1GGrrc9JkUD+Tt+Pq
- wW6A8dF9YCEiSE=; b=a9a7pAkgKG0KqF4P+9iCwVKr9rjkNLSqhfQENkyvSSv41
- D9J/x+zDoCI7vbWcUsw4O4IMrWy4cxL9IipupHNgTWaNtFCJIi/udDOnJLaYep0I
- Nks0GsIzE2eRrZ9CyKuUD/iXNvyZUAWwz5OfNcQDsW3piN1ca4AeYDR066bbxqT5
- lMOYZeNwZTRj7wadxmTMjcjcQgna0evavG9o944dDU7pVIdiqDQub4bNJmjP7LBW
- LZI1mT8Fjf8otxvRtRsnMSx5j1BmEBM4wir8c8szkEePMNQB2Kn5F/5rJPCSi+IB
- hW18eDe3OUSsYiJVJ/Z9Eu1wnb0giK6lpySzNzhYg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49nv8ps9jj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 09 Oct 2025 10:03:42 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 5999EWtY014356; Thu, 9 Oct 2025 10:03:41 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 49nv675q79-1; Thu, 09 Oct 2025 10:03:41 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, mtosatti@redhat.com,
- dwmw2@infradead.org
-Subject: [PATCH 1/1] target/i386/kvm: account blackout downtime for kvm-clock
- and guest TSC
-Date: Thu,  9 Oct 2025 02:58:31 -0700
-Message-ID: <20251009095831.46297-1-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6nbs-0005XQ-2Q
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:10:57 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6nbn-00078y-R4
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 06:10:55 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3f1aff41e7eso618252f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 03:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760004647; x=1760609447; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eje4YWkqKgg8NBiuIwNMBnlRUEmEtxWTgD+7Ffa7cA8=;
+ b=dbwntN8ktMuD74Sp3dYdB2QrKPc0OOzJI8JbB+qR4f05w/o2FrpU7gdSl2AheiwapE
+ 2Np0ngHVAbNYnsNU4JtzZ/cQdtIzroE8bR39uI07nhwpuaAE2Gee6Thhp+8aytS7VYfH
+ cJpvyUo9otvLs8fo8zEH5lOCkfbe6UAUBRfO5avmqyehjV6+hP3JblRZyoMSbcrIIM/v
+ 7cb7LfpEFtJdeXW0ol7EiZFdCQV54luH/ndjCs35/MInxXy3Y1GcOGltEIenvjFFmR87
+ qyK0kJWodokwRbNvNScgRXQGP5YmXhrZFouShE7UhWxuZltAMR9UFUyT2CMChFJCtr/x
+ ZYAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760004647; x=1760609447;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eje4YWkqKgg8NBiuIwNMBnlRUEmEtxWTgD+7Ffa7cA8=;
+ b=u8IirkduflbbCHAXLKJQaJe0BW/dV3hW5lwSZJQKLhDHCWN2aGT2p6PwtF+dgWp9wE
+ QGh1E1ERwZNV5p2JA6AV/i4zi5M3za8iaJflVErpnb7TzvLpNQUGpedARzp9WpUraGzU
+ q3RIxohN9dj1QUyHkNzRKiSLku0Y9Y4tFuJy3r/MW2m+S28i2B2NqY+QEJw28THKgcRF
+ Q0GgbUPBu/cepl3IpwTwTNb9NDwCHpnkElJYDmBv/wuE1YVtpjnwSmIRw8reSBGYTW8n
+ wpAqy1JEJIWRYT3+ceDght9hDq9AMZIK2Bc+SXZvBlbrFPe80IjbZlGJ4s34IzS+jLKg
+ U9/A==
+X-Gm-Message-State: AOJu0Yy6azrTQbWYoxJBHOnqgifO/bfcQuK4k9v6s0KgC5jyClnOXGdv
+ KoSh+a5KgHpENXCtG+Dst4TZJ5RXvVd7SkcYkjJh//9B4j8lF2Y/vfuv1Vm8WFY6hbKYXwsj9O4
+ fTAc5T3QB/A==
+X-Gm-Gg: ASbGncvjpwG3Wl6zP8BAZSO56hDWjH7tXf5gODv8quxXbSNB36smwv4DnLZ9a/Mr7w4
+ qwM/T/AAL6cb2K6qJNoLLhONy4N9YujL6giLtdIULablVCl0QKO/BdNrXjTOuuUBuAh18vaH46Y
+ r6a33JqIkJfp9u3qmwo1fVNq0prDCOBGPoFUOoXxKUm1FmS2bDUeSWTJfnwrKC+j4cNPoZxUJsm
+ R5zPgWb8ry1LhMBqJ2kZ8apZqRI3fHcUupux0gODiGilyrjEpDKpOuNMJppRJYLSTeExvRainUX
+ i8n/B0oqiADfq7TpxIYhMlO8Za9Hu+CalfWJ4mcmf/Q4mFBucTeF6xpQ8kb8EvdnPshlFEl41Aj
+ RZulSIotm50oUj1nqddjstVxX3T8d8yi7VgGb9tvnCTY4h9xy/8fATPgPWThMLHqCNGqvpojYQ1
+ IQsD9TvG+pBIB8sNi7YneNvNiD
+X-Google-Smtp-Source: AGHT+IGrWxnOWaQi+NZYGYjo8hXLvScl3QI1rpdJZKjsOXDuHr7XKG3BK+48NHwTvUnjahU6wbaq/Q==
+X-Received: by 2002:a05:6000:4210:b0:3f2:b077:94bc with SMTP id
+ ffacd0b85a97d-42666ac4119mr4038348f8f.4.1760004646619; 
+ Thu, 09 Oct 2025 03:10:46 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fab6343d1sm33423735e9.8.2025.10.09.03.10.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Oct 2025 03:10:46 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/9] target/hppa: Use hwaddr type for HPPATLBEntry::pa
+Date: Thu,  9 Oct 2025 12:10:31 +0200
+Message-ID: <20251009101040.18378-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251009101040.18378-1-philmd@linaro.org>
+References: <20251009101040.18378-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- suspectscore=0
- malwarescore=0 adultscore=0 phishscore=0 spamscore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2510020000 definitions=main-2510090057
-X-Proofpoint-GUID: kaw1_-jQqB3EgdylB7zItoGPa0D-ZRng
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMiBTYWx0ZWRfXwZqAONGOX9Zc
- jiIXfvHeCfmKss07VAcijO8VdjONKPeiRR6aY+v+ntInG5sbDaFn6OaCBcpqQaGubmIAWzQr9TV
- JsF+u1U4krx6XsLX2uJ/PJMfaJC/WRAw+TLOJyEawAQXGpLvUfU3/yAm0jacJf/9ccfc/65MhsS
- nqVmRvFqqi37dA9v2tcf5qfT2WsfI+dI+7zwT1W1/vTQhWmnzhC8mHP8NZdTJIksv/h6IBwa7L2
- sM9wpQwAdRECyyhfx+sNIZ4ZbcxzipIhosF275UC1PpF4WOZ+x3JVEcD1Lgqm19oVNY4ldvDoCe
- DMt0fdTVjhd+9CpfEjpFdi9myiD0Di7inDIyQMONqMTDUqvau5e7kN5KFySHcnXnoIl2aCWEsL5
- TQxtBcDT1A4Blhq7tVLBgajKgKTUIg==
-X-Proofpoint-ORIG-GUID: kaw1_-jQqB3EgdylB7zItoGPa0D-ZRng
-X-Authority-Analysis: v=2.4 cv=U6SfzOru c=1 sm=1 tr=0 ts=68e7887e cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8 a=yPCof4ZbAAAA:8
- a=JfrnYn6hAAAA:8 a=Zv9mPx-HKjNCLyymYHQA:9 a=KH3HcEfJi14A:10
- a=1CNFftbPRP8L7MoqJWF3:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_PH_BODY_ACCOUNTS_PRE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,426 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, QEMU/KVM live migration does not account all elapsed blackout
-downtimes. For example, if a guest is live-migrated to a file, left idle
-for one hour, and then restored from that file to the target host, the
-one-hour blackout period will not be reflected in the kvm-clock or guest
-TSC.
+HPPATLBEntry::@pa is a physical address, use the appropriate type.
 
-Typically, the elapsed time between KVM_GET_CLOCK (on the source QEMU) and
-KVM_SET_CLOCK (on the target QEMU) is not accounted in the kvm-clock.
-Similarly, the elapsed time between reading MSR_IA32_TSC on the source QEMU
-and writing it on the target QEMU is not reflected in the guest TSC.
-
-The KVM patchset [1] introduced KVM_VCPU_TSC_CTRL, KVM_CLOCK_REALTIME, and
-KVM_CLOCK_HOST_TSC to account the elapsed time during live migration
-blackouts in the guest's system counter view.
-
-The core idea is to use the realtime clock (KVM_CLOCK_REALTIME) from both
-the source and target hosts as a reference to calculate the elapsed
-downtime in nanoseconds and adjust kvm-clock. In addition, these
-nanoseconds are converted into TSC cycles using the vCPU's virtual TSC
-frequency, and the corresponding elapsed cycles are compensated in the
-guest TSC as well (KVM_CLOCK_HOST_TSC and KVM_VCPU_TSC_CTRL).
-
-The following steps are copied from the Linux kernel documentation [2].
-
-From the source VMM process:
-
-1. Invoke the KVM_GET_CLOCK ioctl to record the host TSC (tsc_src),
-kvmclock nanoseconds (guest_src), and host CLOCK_REALTIME nanoseconds
-(host_src).
-
-2. Read the KVM_VCPU_TSC_OFFSET attribute for every vCPU to record the
-guest TSC offset (ofs_src[i]).
-
-3. Invoke the KVM_GET_TSC_KHZ ioctl to record the frequency of the guest's
-TSC (freq).
-
-From the destination VMM process:
-
-4. Invoke the KVM_SET_CLOCK ioctl, providing the source nanoseconds from
-kvmclock (guest_src) and CLOCK_REALTIME (host_src) in their respective
-fields. Ensure that the KVM_CLOCK_REALTIME flag is set in the provided
-structure.
-
-KVM will advance the VM's kvmclock to account for elapsed time since
-recording the clock values. Note that this will cause problems in the guest
-(e.g., timeouts) unless CLOCK_REALTIME is synchronized between the source
-and destination, and a reasonably short time passes between the source
-pausing the VMs and the destination executing steps 4-7.
-
-5. Invoke the KVM_GET_CLOCK ioctl to record the host TSC (tsc_dest) and
-kvmclock nanoseconds (guest_dest).
-
-6. Adjust the guest TSC offsets for every vCPU to account for (1) time
-elapsed since recording state and (2) difference in TSCs between the
-source and destination machine:
-
-ofs_dst[i] = ofs_src[i] -
-    (guest_src - guest_dest) * freq + (tsc_src - tsc_dest)
-
-("ofs[i] + tsc - guest * freq" is the guest TSC value corresponding to a
-time of 0 in kvmclock. The above formula ensures that it is the same on
-the destination as it was on the source).
-
-7. Write the KVM_VCPU_TSC_OFFSET attribute for every vCPU with the
-respective value derived in the previous step.
-
-Introduce 'realtime', 'host_tsc', and 'flags' fields to KVMClockState,
-and enable their live migration. Re-use CPUX86State->tsc_offset (currently
-used by TCG) for the KVM accelerator.
-
-References:
-[1] https://lore.kernel.org/all/20210916181538.968978-8-oupton@google.com/
-[2] https://docs.kernel.org/virt/kvm/devices/vcpu.html
-[3] https://lore.kernel.org/qemu-devel/2d375ec3-a071-4ae3-b03a-05a823c48016@oracle.com/
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-This patch takes advantage of existing mainline linux kernel features,
-excluding WIP features:
-https://lore.kernel.org/all/20240522001817.619072-8-dwmw2@infradead.org/
+ target/hppa/cpu.h        | 2 +-
+ target/hppa/trace-events | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
- hw/i386/kvm/clock.c        | 89 +++++++++++++++++++++++++++++++++++++-
- hw/i386/pc.c               |  4 +-
- target/i386/kvm/kvm.c      | 73 +++++++++++++++++++++++++++++++
- target/i386/kvm/kvm_i386.h |  6 +++
- 4 files changed, 170 insertions(+), 2 deletions(-)
-
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index f56382717f..b0fd18ac0c 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -38,6 +38,9 @@ struct KVMClockState {
-     /*< public >*/
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 672ab3750c8..869a75876e2 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -187,7 +187,7 @@ typedef struct HPPATLBEntry {
+         struct HPPATLBEntry *unused_next;
+     };
  
-     uint64_t clock;
-+    uint64_t realtime;
-+    uint64_t host_tsc;
-+    uint32_t flags;
-     bool clock_valid;
+-    target_ulong pa;
++    hwaddr pa;
  
-     /* whether the 'clock' value was obtained in the 'paused' state */
-@@ -49,6 +52,12 @@ struct KVMClockState {
-     /* whether the 'clock' value was obtained in a host with
-      * reliable KVM_GET_CLOCK */
-     bool clock_is_reliable;
-+
-+    /*
-+     * whether to account downtimes by taking advantage of
-+     * KVM_CLOCK_REALTIME, KVM_CLOCK_HOST_TSC and KVM_VCPU_TSC_CTRL.
-+     */
-+    bool account_downtime;
- };
+     unsigned entry_valid : 1;
  
- struct pvclock_vcpu_time_info {
-@@ -100,6 +109,7 @@ static uint64_t kvmclock_current_nsec(KVMClockState *s)
- static void kvm_update_clock(KVMClockState *s)
- {
-     struct kvm_clock_data data;
-+    bool has_aux;
-     int ret;
+diff --git a/target/hppa/trace-events b/target/hppa/trace-events
+index a10ba73d5d4..01761a4559b 100644
+--- a/target/hppa/trace-events
++++ b/target/hppa/trace-events
+@@ -1,13 +1,13 @@
+ # See docs/devel/tracing.rst for syntax documentation.
  
-     ret = kvm_vm_ioctl(kvm_state, KVM_GET_CLOCK, &data);
-@@ -109,6 +119,18 @@ static void kvm_update_clock(KVMClockState *s)
-     }
-     s->clock = data.clock;
- 
-+    s->realtime = 0;
-+    s->host_tsc = 0;
-+    s->flags = 0;
-+
-+    has_aux = with_kvmclock_aux_flags(data.flags);
-+
-+    if (s->account_downtime && kvm_support_clock_downtime() && has_aux) {
-+        s->realtime = data.realtime;
-+        s->host_tsc = data.host_tsc;
-+        s->flags = data.flags & KVM_CLOCK_AUX_FLAGS;
-+    }
-+
-     /* If kvm_has_adjust_clock_stable() is false, KVM_GET_CLOCK returns
-      * essentially CLOCK_MONOTONIC plus a guest-specific adjustment.  This
-      * can drift from the TSC-based value that is computed by the guest,
-@@ -160,6 +182,30 @@ static void do_kvmclock_ctrl(CPUState *cpu, run_on_cpu_data data)
-     }
- }
- 
-+static void kvmclock_adjust_tsc_offset(KVMClockState *s)
-+{
-+    CPUX86State *env = cpu_env(first_cpu);
-+    struct kvm_clock_data data;
-+    uint64_t delta;
-+    int ret;
-+
-+    ret = kvm_vm_ioctl(kvm_state, KVM_GET_CLOCK, &data);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_GET_CLOCK failed: %s\n", strerror(-ret));
-+        abort();
-+    }
-+
-+    if (!with_kvmclock_aux_flags(data.flags)) {
-+        fprintf(stderr, "warning: cannot adjust tsc offset\n");
-+        return;
-+    }
-+
-+    delta = ((data.clock - s->clock) * env->tsc_khz + 999999) / 1000000 +
-+            (s->host_tsc - data.host_tsc);
-+
-+    kvm_write_all_tsc_offset(delta);
-+}
-+
- static void kvmclock_vm_state_change(void *opaque, bool running,
-                                      RunState state)
- {
-@@ -170,6 +216,7 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
- 
-     if (running) {
-         struct kvm_clock_data data = {};
-+        bool account_downtime;
- 
-         /*
-          * If the host where s->clock was read did not support reliable
-@@ -184,14 +231,28 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
-         }
- 
-         s->clock_valid = false;
--
-         data.clock = s->clock;
-+
-+        account_downtime = s->account_downtime &&
-+            kvm_support_clock_downtime() &&
-+            with_kvmclock_aux_flags(s->flags);
-+
-+        if (account_downtime) {
-+            data.realtime = s->realtime;
-+            data.host_tsc = s->host_tsc;
-+            data.flags = s->flags & KVM_CLOCK_AUX_FLAGS;
-+        }
-+
-         ret = kvm_vm_ioctl(kvm_state, KVM_SET_CLOCK, &data);
-         if (ret < 0) {
-             fprintf(stderr, "KVM_SET_CLOCK failed: %s\n", strerror(-ret));
-             abort();
-         }
- 
-+        if (account_downtime) {
-+            kvmclock_adjust_tsc_offset(s);
-+        }
-+
-         if (!cap_clock_ctrl) {
-             return;
-         }
-@@ -250,6 +311,26 @@ static const VMStateDescription kvmclock_reliable_get_clock = {
-     }
- };
- 
-+static bool kvmclock_account_downtime(void *opaque)
-+{
-+    KVMClockState *s = opaque;
-+
-+    return s->account_downtime;
-+}
-+
-+static const VMStateDescription kvmclock_auxiliary = {
-+    .name = "kvmclock/auxiliary",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = kvmclock_account_downtime,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32(flags, KVMClockState),
-+        VMSTATE_UINT64(realtime, KVMClockState),
-+        VMSTATE_UINT64(host_tsc, KVMClockState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- /*
-  * When migrating, assume the source has an unreliable
-  * KVM_GET_CLOCK unless told otherwise.
-@@ -259,6 +340,9 @@ static int kvmclock_pre_load(void *opaque)
-     KVMClockState *s = opaque;
- 
-     s->clock_is_reliable = false;
-+    s->realtime = 0;
-+    s->host_tsc = 0;
-+    s->flags = 0;
- 
-     return 0;
- }
-@@ -300,6 +384,7 @@ static const VMStateDescription kvmclock_vmsd = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &kvmclock_reliable_get_clock,
-+        &kvmclock_auxiliary,
-         NULL
-     }
- };
-@@ -307,6 +392,8 @@ static const VMStateDescription kvmclock_vmsd = {
- static const Property kvmclock_properties[] = {
-     DEFINE_PROP_BOOL("x-mach-use-reliable-get-clock", KVMClockState,
-                       mach_use_reliable_get_clock, true),
-+    DEFINE_PROP_BOOL("x-account-downtime", KVMClockState,
-+                      account_downtime, true),
- };
- 
- static void kvmclock_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 34b00663f2..322375a2ca 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -81,7 +81,9 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
--GlobalProperty pc_compat_10_1[] = {};
-+GlobalProperty pc_compat_10_1[] = {
-+    { "kvmclock", "x-account-downtime", "off" },
-+};
- const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
- 
- GlobalProperty pc_compat_10_0[] = {
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6a3a1c1ed8..92930be353 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -178,6 +178,9 @@ static int has_triple_fault_event;
- 
- static bool has_msr_mcg_ext_ctl;
- 
-+static bool has_kvmclock_aux;
-+static bool has_tsc_offset;
-+
- static struct kvm_cpuid2 *cpuid_cache;
- static struct kvm_cpuid2 *hv_cpuid_cache;
- static struct kvm_msr_list *kvm_feature_msrs;
-@@ -259,6 +262,11 @@ bool kvm_has_exception_payload(void)
-     return has_exception_payload;
- }
- 
-+bool kvm_support_clock_downtime(void)
-+{
-+    return has_kvmclock_aux && has_tsc_offset;
-+}
-+
- static bool kvm_x2apic_api_set_flags(uint64_t flags)
- {
-     KVMState *s = KVM_STATE(current_accel());
-@@ -304,6 +312,20 @@ static int kvm_get_tsc(CPUState *cs)
-     uint64_t value;
-     int ret;
- 
-+    if (kvm_support_clock_downtime()) {
-+        struct kvm_device_attr attr;
-+
-+        attr.group = KVM_VCPU_TSC_CTRL;
-+        attr.attr = KVM_VCPU_TSC_OFFSET;
-+        attr.flags = 0;
-+        attr.addr = (uint64_t)&env->tsc_offset;
-+
-+        ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-     if (env->tsc_valid) {
-         return 0;
-     }
-@@ -335,6 +357,40 @@ void kvm_synchronize_all_tsc(void)
-     }
- }
- 
-+static inline void do_kvm_write_tsc_offset(CPUState *cs, run_on_cpu_data arg)
-+{
-+    uint64_t delta = arg.host_ulong;
-+    X86CPU *cpu = X86_CPU(cs);
-+    CPUX86State *env = &cpu->env;
-+    struct kvm_device_attr attr;
-+    int ret;
-+
-+    env->tsc_offset += delta;
-+
-+    attr.group = KVM_VCPU_TSC_CTRL;
-+    attr.attr = KVM_VCPU_TSC_OFFSET;
-+    attr.flags = 0;
-+    attr.addr = (uint64_t)&env->tsc_offset;
-+
-+    ret = kvm_vcpu_ioctl(cs, KVM_SET_DEVICE_ATTR, &attr);
-+    if (ret) {
-+        error_report("KVM_SET_DEVICE_ATTR: %s", strerror(-ret));
-+        exit(1);
-+    }
-+}
-+
-+void kvm_write_all_tsc_offset(uint64_t delta)
-+{
-+    CPUState *cpu;
-+
-+    if (kvm_enabled() && !is_tdx_vm()) {
-+        CPU_FOREACH(cpu) {
-+            run_on_cpu(cpu, do_kvm_write_tsc_offset,
-+                       RUN_ON_CPU_HOST_ULONG(delta));
-+        }
-+    }
-+}
-+
- static struct kvm_cpuid2 *try_get_cpuid(KVMState *s, int max)
- {
-     struct kvm_cpuid2 *cpuid;
-@@ -2378,6 +2434,18 @@ int kvm_arch_init_vcpu(CPUState *cs)
- 
-     kvm_init_msrs(cpu);
- 
-+    if (cs == first_cpu) {
-+        struct kvm_device_attr attr = {
-+            .group = KVM_VCPU_TSC_CTRL,
-+            .attr = KVM_VCPU_TSC_OFFSET,
-+            .flags = 0,
-+        };
-+
-+        if (!kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr)) {
-+            has_tsc_offset = true;
-+        }
-+    }
-+
-     return 0;
- 
-  fail:
-@@ -3371,6 +3439,11 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         }
-     }
- 
-+    ret = kvm_check_extension(s, KVM_CAP_ADJUST_CLOCK);
-+    if (ret) {
-+        has_kvmclock_aux = with_kvmclock_aux_flags(ret);
-+    }
-+
-     return 0;
- }
- 
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 5f83e8850a..0f658527f0 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -51,10 +51,16 @@ typedef struct KvmCpuidInfo {
-     struct kvm_cpuid_entry2 entries[KVM_MAX_CPUID_ENTRIES];
- } KvmCpuidInfo;
- 
-+#define KVM_CLOCK_AUX_FLAGS (KVM_CLOCK_REALTIME | KVM_CLOCK_HOST_TSC)
-+#define with_kvmclock_aux_flags(flags) \
-+    ((flags & KVM_CLOCK_AUX_FLAGS) == KVM_CLOCK_AUX_FLAGS)
-+
- bool kvm_is_vm_type_supported(int type);
- bool kvm_has_adjust_clock_stable(void);
- bool kvm_has_exception_payload(void);
-+bool kvm_support_clock_downtime(void);
- void kvm_synchronize_all_tsc(void);
-+void kvm_write_all_tsc_offset(uint64_t delta);
- 
- void kvm_get_apic_state(DeviceState *d, struct kvm_lapic_state *kapic);
- void kvm_put_apicbase(X86CPU *cpu, uint64_t value);
+ # mem_helper.c
+-disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%lx"
+-disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%lx"
++disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
++disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+ disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
+ disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
+ disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
+ disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%lx"
++disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+ disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
+ disable hppa_tlb_ptlb(void *env) "env=%p"
+ disable hppa_tlb_ptlb_local(void *env) "env=%p"
 -- 
-2.39.3
+2.51.0
 
 
