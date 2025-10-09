@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7316BCCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 15:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA06CCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 15:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6sXC-00081l-Bz; Thu, 09 Oct 2025 11:26:27 -0400
+	id 1v6siz-00021N-7i; Thu, 09 Oct 2025 11:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v6sWx-0007vX-Tn
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 11:26:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v6sWp-0002bN-Qs
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 11:26:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760023558;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6CB4PuUbH0eXCKY/NZYPj1ZikRRce9S2C+/c0qS163A=;
- b=fBHqIWYmLCyM4YrLX/wn2LTJ7IxbdHJUgMned+qGbS1+Z9k9ZKbZcrnLkVVp+mAgEd2ErC
- bo/1Zhjqe4ONzRd3oozaYezqZbXPTeeED3gJpItm0G1197IJsQSW7a/d8kNdSb7gmzpvOU
- p4KMsVZbNfq80J3FizrhoGi9CbjDJ7I=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-nnLjgM_7PsicbA3H1b_HhQ-1; Thu,
- 09 Oct 2025 11:25:55 -0400
-X-MC-Unique: nnLjgM_7PsicbA3H1b_HhQ-1
-X-Mimecast-MFC-AGG-ID: nnLjgM_7PsicbA3H1b_HhQ_1760023554
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEFD419560B0; Thu,  9 Oct 2025 15:25:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.99])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45B081955F6A; Thu,  9 Oct 2025 15:25:49 +0000 (UTC)
-Date: Thu, 9 Oct 2025 17:25:47 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Aarushi Mehta <mehta.aaru20@gmail.com>,
- Fam Zheng <fam@euphon.net>, Stefano Garzarella <sgarzare@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
- qemu-block@nongnu.org, hibriansong@gmail.com,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 04/12] aio-posix: integrate fdmon into glib event loop
-Message-ID: <aOfT-zK_3XXM_9_8@redhat.com>
-References: <20250910175703.374499-1-stefanha@redhat.com>
- <20250910175703.374499-5-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6siw-000218-Rl
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 11:38:34 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v6siu-0004Bn-4P
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 11:38:34 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-27d4d6b7ab5so15627245ad.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 08:38:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760024306; x=1760629106; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NixckH1D+RutLfGCv7CVHhrdUyUA0GTWfkdmBr9d90o=;
+ b=DZuxFLRZvjKjQ83jNYzb+bMpxKSTadO0ZHYBPbCbeXPvWqUXYiQMAY3+bOON0ms/jP
+ 67BzSmYVZRzA6Ft71xpcsqWccw9Fz+jnZdhxW4RBQYpuwoFy5Sv6aFYDnTIL2+2zslGO
+ Ube8epjU0SwgzmgsIyZdw2cImn/9GM8WNFHrWZFDXqX755K/vsSccJyMela1KoPRMmPI
+ Bgo6/G/KDc4TjdAcgxJHDKVuBHw8neUGftdd+tVNc13XjaRSxK5BKkIR1MlH7NSkenye
+ TfBQh38REP5rm7mHeZ5mjBmiyuARlRdVFO/g5SInwbA1zDtJu6f0paqJrmnEOSbfOOCp
+ 8XYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760024306; x=1760629106;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NixckH1D+RutLfGCv7CVHhrdUyUA0GTWfkdmBr9d90o=;
+ b=a74mFJ9DljsoWC7MK3bNtf60G6CfDfGuJrTlxN1VJB18t3RLJgcc1jm4UZ/EiUAXS6
+ Mjkd7V9dU0mR0KabFAvQESSi6PNqYWihbvp+um5bV5CyatgRZO9r42Tpcbv+EsNS9xgm
+ ea3fuPQzxzsaPtC3Rt2v62jrELAste+XUoV2zrArEBVcg7t/Aat0Gyuv8cBzqp8YzK1m
+ qcKr1lbHvbPqPviL8kWPL45hNVUmROQ2gVDQiLk/vMo/pU0OTc3U9eLI6V+dxcN7aJjD
+ TrJoMhZtU+zIcmOTxUpZgafKaatCttDiIwFlfDyZYqLpWGPxMsb9iq/MSisIFmM/77j4
+ SeQw==
+X-Gm-Message-State: AOJu0YxrU62B1cqzP5h3W4uZuz9ACQPZqcE4oWf1SLpF7WUDHXjIlIOj
+ ocmtDUUUh40yojtFpUhNMGMvqWUYvt45ONyJJjXw/Trh9qPe8ySLVNjgc/WGrBSXv3ilCRua+lR
+ 6iHrVbU8=
+X-Gm-Gg: ASbGncuU6YWFbZv6dpExDHCBllBEg6fUhu4XnyIzsvogR7eb6b/uRkuq53oS2GyieDB
+ gjGF9hNmC2cEPH/YZLJjAVL+Da7X1SWHBt33Q5frW0FEu3T/pxvdsM0kEP3eOQw0GQtqUG5+Owg
+ 8uBxS1l14UirO9otccWw/7o+J6lqrQcLYucG7vuWawgFMJfPpl81SADWB9lngq2UmGaegsWmlyk
+ PpJXjfF4hlW3ab9uvgckVdc3d1x+OstGFb6MOcB8pmEntA43Z5JrekON0jamcrJrhPZlYIbFIkC
+ 6njBpWsaR4UVk+T0Dt8toU5UNEPsESMGPh+9uxvM2NAd/Z1sJiUWHUY6oGTqhi2LH0ytn1l3aPF
+ GxOR9MhlRrE1WS3iOh6VUzA4Je2QDAzHDmid4J28n0wyQFS5iqGSD6IzpEOumNXEV
+X-Google-Smtp-Source: AGHT+IEYR2luF7ETqe39rf2npuP3yPtmWUaPA1JTt7tF3Ch953ZazYGXShzZ3vaCVtKHTL3H3K0C9A==
+X-Received: by 2002:a17:902:e943:b0:248:79d4:93be with SMTP id
+ d9443c01a7336-290272c1648mr103625985ad.30.1760024305663; 
+ Thu, 09 Oct 2025 08:38:25 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034de53f9sm32567995ad.14.2025.10.09.08.38.25
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 08:38:25 -0700 (PDT)
+Message-ID: <ef9a9f73-6f84-442d-8eec-a2050bc9acf6@linaro.org>
+Date: Thu, 9 Oct 2025 08:38:23 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250910175703.374499-5-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] block/curl.c: Use explicit long constants in
+ curl_easy_setopt calls
+To: qemu-devel@nongnu.org
+References: <20251009141026.4042021-1-rjones@redhat.com>
+ <20251009141026.4042021-2-rjones@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251009141026.4042021-2-rjones@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,192 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.09.2025 um 19:56 hat Stefan Hajnoczi geschrieben:
-> AioContext's glib integration only supports ppoll(2) file descriptor
-> monitoring. epoll(7) and io_uring(7) disable themselves and switch back
-> to ppoll(2) when the glib event loop is used. The main loop thread
-> cannot use epoll(7) or io_uring(7) because it always uses the glib event
-> loop.
+On 10/9/25 07:08, Richard W.M. Jones wrote:
+> curl_easy_setopt takes a variable argument that depends on what
+> CURLOPT you are setting.  Some require a long constant.  Passing a
+> plain int constant is potentially wrong on some platforms.
 > 
-> Future QEMU features may require io_uring(7). One example is uring_cmd
-> support in FUSE exports. Each feature could create its own io_uring(7)
-> context and integrate it into the event loop, but this is inefficient
-> due to extra syscalls. It would be more efficient to reuse the
-> AioContext's existing fdmon-io_uring.c io_uring(7) context because
-> fdmon-io_uring.c will already be active on systems where Linux io_uring
-> is available.
+> With warnings enabled, multiple warnings like this were printed:
 > 
-> In order to keep fdmon-io_uring.c's AioContext operational even when the
-> glib event loop is used, extend FDMonOps with an API similar to
-> GSourceFuncs so that file descriptor monitoring can integrate into the
-> glib event loop.
+> ../block/curl.c: In function ‘curl_init_state’:
+> ../block/curl.c:474:13: warning: call to ‘_curl_easy_setopt_err_long’ declared with attribute warning: curl_easy_setopt expects a long argument [-Wattribute-warning]
+>    474 |             curl_easy_setopt(state->curl, CURLOPT_AUTOREFERER, 1) ||
+>        |             ^
 > 
-> A quick summary of the GSourceFuncs API:
-> - prepare() is called each event loop iteration before waiting for file
->   descriptors and timers.
-> - check() is called to determine whether events are ready to be
->   dispatched after waiting.
-> - dispatch() is called to process events.
-> 
-> More details here: https://docs.gtk.org/glib/struct.SourceFuncs.html
-> 
-> Move the ppoll(2)-specific code from aio-posix.c into fdmon-poll.c and
-> also implement epoll(7)- and io_uring(7)-specific file descriptor
-> monitoring code for glib event loops.
-> 
-> Note that it's still faster to use aio_poll() rather than the glib event
-> loop since glib waits for file descriptor activity with ppoll(2) and
-> does not support adaptive polling. But at least epoll(7) and io_uring(7)
-> now work in glib event loops.
-> 
-> Splitting this into multiple commits without temporarily breaking
-> AioContext proved difficult so this commit makes all the changes. The
-> next commit will remove the aio_context_use_g_source() API because it is
-> no longer needed.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: Eric Blake <eblake@redhat.com>
+> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+> Signed-off-by: Chenxi Mao <maochenxi@bosc.ac.cn>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   block/curl.c               | 10 +++++-----
+>   contrib/elf2dmp/download.c |  4 ++--
+>   2 files changed, 7 insertions(+), 7 deletions(-)
 
-It looks to me like we get a lot of duplication between implementations
-of .wait and the new .gsource_* callbacks. We can probably clean this up
-later. In the meantime, we need to make sure that the implementations
-don't diverge.
 
->  include/block/aio.h   | 36 ++++++++++++++++++
->  util/aio-posix.h      |  5 +++
->  tests/unit/test-aio.c |  7 +++-
->  util/aio-posix.c      | 69 ++++++++-------------------------
->  util/fdmon-epoll.c    | 52 ++++++++++++++++++++++---
->  util/fdmon-io_uring.c | 44 +++++++++++++++++++++-
->  util/fdmon-poll.c     | 88 ++++++++++++++++++++++++++++++++++++++++++-
->  7 files changed, 239 insertions(+), 62 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +static void fdmon_epoll_gsource_dispatch(AioContext *ctx,
-> +                                         AioHandlerList *ready_list)
-> +{
-> +    AioHandler *node;
-> +    int ret;
-> +    struct epoll_event events[128];
-> +
-> +    /* Collect events and process them */
-> +    ret = epoll_wait(ctx->epollfd, events, ARRAY_SIZE(events), 0);
-> +    if (ret <= 0) {
-> +        return;
-> +    }
-> +    for (int i = 0; i < ret; i++) {
-> +        int ev = events[i].events;
-> +        int revents = (ev & EPOLLIN ? G_IO_IN : 0) |
-> +                      (ev & EPOLLOUT ? G_IO_OUT : 0) |
-> +                      (ev & EPOLLHUP ? G_IO_HUP : 0) |
-> +                      (ev & EPOLLERR ? G_IO_ERR : 0);
-> +
-> +        node = events[i].data.ptr;
-> +        aio_add_ready_handler(ready_list, node, revents);
-> +    }
-> +}
 
-Isn't this just fdmon_epoll_wait(ctx, ready_list, 0)?
-
-> @@ -97,11 +102,92 @@ static void fdmon_poll_update(AioContext *ctx,
->                                AioHandler *old_node,
->                                AioHandler *new_node)
->  {
-> -    /* Do nothing, AioHandler already contains the state we'll need */
-> +    if (old_node && !new_node) {
-> +        /*
-> +         * If the GSource is in the process of being destroyed then
-> +         * g_source_remove_poll() causes an assertion failure.  Skip removal in
-> +         * that case, because glib cleans up its state during destruction
-> +         * anyway.
-> +         */
-> +        if (!g_source_is_destroyed(&ctx->source)) {
-> +            g_source_remove_poll(&ctx->source, &old_node->pfd);
-> +        }
-> +    }
-> +
-> +    if (!old_node && new_node) {
-> +        g_source_add_poll(&ctx->source, &new_node->pfd);
-> +    }
-> +}
-
-I think this changes the behaviour for the case where we update a node,
-i.e. old_node and new_node are both non-NULL. Previously we added the
-new node and removed the old one, now you're skipping this.
-
-Both are referring to the same file descriptor, but we're not passing
-an integer here but a pointer to a heap-allocated GPollFD (which is
-contined in the AioHandler). The next thing that happens in the caller
-is that we free old_node.
-
-Doesn't this cause use after free?
-
-> +static void fdmon_poll_gsource_prepare(AioContext *ctx)
-> +{
-> +    /* Do nothing */
-> +}
-> +
-> +static bool fdmon_poll_gsource_check(AioContext *ctx)
-> +{
-> +    AioHandler *node;
-> +    bool result = false;
-> +
-> +    /*
-> +     * We have to walk very carefully in case aio_set_fd_handler is
-> +     * called while we're walking.
-> +     */
-> +    qemu_lockcnt_inc(&ctx->list_lock);
-> +
-> +    QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
-> +        int revents = node->pfd.revents & node->pfd.events;
-> +
-> +        if (revents & (G_IO_IN | G_IO_HUP | G_IO_ERR) && node->io_read) {
-> +            result = true;
-> +            break;
-> +        }
-> +        if (revents & (G_IO_OUT | G_IO_ERR) && node->io_write) {
-> +            result = true;
-> +            break;
-> +        }
-> +    }
-> +
-> +    qemu_lockcnt_dec(&ctx->list_lock);
-> +
-> +    return result;
-> +}
-> +
-> +static void fdmon_poll_gsource_dispatch(AioContext *ctx,
-> +                                        AioHandlerList *ready_list)
-> +{
-> +    AioHandler *node;
-> +
-> +    QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
-> +        int revents;
-> +
-> +        revents = node->pfd.revents & node->pfd.events;
-> +        if (revents & (G_IO_IN | G_IO_HUP | G_IO_ERR) && node->io_read) {
-> +            aio_add_ready_handler(ready_list, node, revents);
-> +        } else if (revents & (G_IO_OUT | G_IO_ERR) && node->io_write) {
-> +            aio_add_ready_handler(ready_list, node, revents);
-> +        }
-
-Why do we need these checks? Don't we already know that if an event is
-in node->pfd.events, there is a matching io_read/io_write callback, too?
-This is how aio_set_fd_handler() decides which events to monitor.
-
-If we do need them, why doesn't fdmon_poll_wait()?
-
-> +    }
->  }
->  
->  const FDMonOps fdmon_poll_ops = {
->      .update = fdmon_poll_update,
->      .wait = fdmon_poll_wait,
->      .need_wait = aio_poll_disabled,
-> +    .gsource_prepare = fdmon_poll_gsource_prepare,
-> +    .gsource_check = fdmon_poll_gsource_check,
-> +    .gsource_dispatch = fdmon_poll_gsource_dispatch,
->  };
-
-Kevin
-
+r~
 
