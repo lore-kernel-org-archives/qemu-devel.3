@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA667CCD184
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:08:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C1FACCD185
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6rIn-0004HT-MD; Thu, 09 Oct 2025 10:07:29 -0400
+	id 1v6rJL-0004uW-At; Thu, 09 Oct 2025 10:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v6rIk-0004A5-R9
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:07:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v6rId-0007ub-Kv
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:07:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760018832;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=PWYJgAL524rjLa4pf7U7RdS9ywTYRJpVdQ8o4Wifl6g=;
- b=Be66tgO0DHjdA2FcHDzy6TUBXxAdO9foOR10Tzn6MFWEQMZYBnoME4biD5Z4aYwO7Vxf+T
- aPkYwFbIKCfibwdV7dz8jHFq2KG7rv/mngerr3FULFM383zb4k1tXo5XrhC6zrrQcfv6we
- BcDraZ+rviIFNGeCqfHHhUlEXY2XZ2Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-v9Eob-Q2P1K5DtX_9HcoXg-1; Thu,
- 09 Oct 2025 10:06:58 -0400
-X-MC-Unique: v9Eob-Q2P1K5DtX_9HcoXg-1
-X-Mimecast-MFC-AGG-ID: v9Eob-Q2P1K5DtX_9HcoXg_1760018812
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F29A418002EA; Thu,  9 Oct 2025 14:06:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.196])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E37719560BB; Thu,  9 Oct 2025 14:06:41 +0000 (UTC)
-Date: Thu, 9 Oct 2025 15:06:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-devel@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2] hw/uefi: add "info ovmf-log" + "query-ovmf-log"
- monitor commands
-Message-ID: <aOfBYBff1-BVhZao@redhat.com>
-References: <20251007135216.1687648-1-kraxel@redhat.com>
- <aOcWOQJt-zLbiyUK@gallifrey> <aOdggKKyDtf3z57J@redhat.com>
- <aOefUN5_bSKjWPLc@gallifrey> <aOejzqM74_NiOHJJ@redhat.com>
- <ef6m5kcsotrgshbtrj2jawjk7waq5ggrt42ugazkxs7u3jt2sq@ccef4acxnshv>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v6rJJ-0004tK-Pu
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:08:01 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v6rJ9-0007wi-Fs
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:08:00 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-6360397e8c7so1067243d50.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 07:07:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760018867; x=1760623667; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LBpmB0t2Abcl/tjUhtlIndO+4a/2qaqZnWQnYzhMc5U=;
+ b=peDKhfEp37B97+i+PrgqULpXdtk+acfM7K2lwZRVxn91NWfviNccJWxK732q+7KWod
+ rzA7R9aPvclqYT4spIWfGlVrwbYXlro2udVqZFakfBUGiUDpWOnS2TXhs5CTjUvFurJO
+ dQHL2lWz9ln2FriUiKuAlLiOam3HsCAo3hIUT/eDmKwRapjaTlXUTBzJNt76tpCcYauI
+ a5ud6VAgrFej587n5/U2POVQh4rJfHtLdD+yAAa1wL/3dca2+1ioLaRLIonkVMiTIhnu
+ htWtKihP7yLR5IhpirO+4JdGZi7wuUhSKkjNLmycrSyRu2a8ctIt6lZb7ZjSprRftr+P
+ R6GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760018867; x=1760623667;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LBpmB0t2Abcl/tjUhtlIndO+4a/2qaqZnWQnYzhMc5U=;
+ b=doMg6gc91GTwBn7VOxILaEYvo9J/ix2a/+cP8tMU32/uuAX28glD8Fhcj+itdqgOMU
+ PtUfybol+T2KpbH7lPsWuZVQN6LGp7eDE6eBFV7ArIu9KSxtRMnTfi0hzEahzE1zjnDV
+ vhhN8DRI1j/UJpHJOzX+WzONOFYVb5rz/mxsRAVNU5x0iX4FifyUOZNQxOcTPY5Mh+np
+ noGSt+SUP3lWXWVPWsrK/jFFK1wwQiaRLs4/zVRnxwXA1AsI05MdvwmnheZp5QdY2HEh
+ bjzeCaNSE5oC37SyOvawjEgaAwP+55UHTlBoeFajzbWStFlv0rmm/Y2nXpbYCEVP6lB4
+ i4Jg==
+X-Gm-Message-State: AOJu0YxyOuKP09pL6iHXbceQPTSCYdYTZiyba56H0YGMGpYhBiPq/zNU
+ 28uE7yuwUMOxUpZQbxr7zS2jLnyblX29tckW5TKVTfX8IDy38wq+GSdpWJHhfk8AFYrEnYP6LC3
+ Q4Zl0Pp7LaELdH1HkpQvzrLqWj834E3RDYkyJbMgD0Q==
+X-Gm-Gg: ASbGnctbLGuudnFNZFxPwlhRjT8YUS62gvPZZX5rl3ROwTs2K7Vm1lTQp9eL+Mj4EUW
+ 8MdiGeqALJuXkH1ZPlL4O8O2s5SdUBswyd78y/P9VD3eZXwPtwy/eSxzkjk0VbC0Iozk7kt2cZC
+ uZgBJmZ8DalXD19kAOIa1/cPXPAKHZ+zt8KVYbklSzOD0goFdLkIDeyB9bVTKZeZQs+NiI9axNT
+ mbXxqlLbCq9AlT4HWjP+34FwcFDjamxGUZHOYILOXrxdAw=
+X-Google-Smtp-Source: AGHT+IFUZRUXFXh0HnLfYTraSlVPcuabW3RqKHRgLOliiPP/qZCBLcK4QFnHiIqVxIFR5KM1q+tPKTX1lt5tZOt5OVg=
+X-Received: by 2002:a53:b987:0:b0:636:18e6:258e with SMTP id
+ 956f58d0204a3-63ccb812e35mr5219746d50.2.1760018866996; Thu, 09 Oct 2025
+ 07:07:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ef6m5kcsotrgshbtrj2jawjk7waq5ggrt42ugazkxs7u3jt2sq@ccef4acxnshv>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251009140206.386249-1-john.levon@nutanix.com>
+In-Reply-To: <20251009140206.386249-1-john.levon@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 9 Oct 2025 15:07:35 +0100
+X-Gm-Features: AS18NWDATbcZSyRNNmFTu1FZyyFbKRuJ9JJp9TUbwt7tgyBVKogH_9p7XLMCgzw
+Message-ID: <CAFEAcA--cf9SO4sHgwTPDDCatUif2+X0_6S+GTuF4NGLkLpf=A@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/devices/vfio-user: fix formatting
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +89,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 09, 2025 at 02:41:51PM +0200, Gerd Hoffmann wrote:
->   Hi,
-> 
-> > > OK, what about sanitisation - if that text contains random binary what happens,
-> > > or should we make sure it's sanitised?
-> > 
-> > As prior art, the QGA  'guest-exec' command will return stdout/stderr
-> > of the command in base64 format.  The downside is that it is bloated
-> > in size, but it is at least safe wrt JSON encoding.
-> 
-> In theory the log should just be text, but I've managed to f*ck up
-> logging with broken patches in the past, with the result that random
-> binary crap landed in the log.
-> 
-> So sending base64 in the json reply makes sense to me.  Do we have a
-> qapi type for that?  Or should I use string?
-> 
-> > The HMP command could still dump the raw data IMHO, as that's human
-> > facing and base64 is horrible for human consumption.
-> 
-> And probably a hmp implementation /not/ using the qmp command so we
-> don't convert text -> base64 -> text ...
+On Thu, 9 Oct 2025 at 15:03, John Levon <john.levon@nutanix.com> wrote:
+>
+> The example QEMU argument was not rendering properly, as it was not
+> indented.
+>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>  docs/system/devices/vfio-user.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/docs/system/devices/vfio-user.rst b/docs/system/devices/vfio-user.rst
+> index b6dcaa5615..7c110b1644 100644
+> --- a/docs/system/devices/vfio-user.rst
+> +++ b/docs/system/devices/vfio-user.rst
+> @@ -20,7 +20,7 @@ Presuming a suitable ``vfio-user`` server has opened a socket at
+>
+>  .. code-block:: console
+>
+> --device '{"driver": "vfio-user-pci","socket": {"path": "/tmp/vfio-user.sock", "type": "unix"}}'
+> +  --device '{"driver": "vfio-user-pci","socket": {"path": "/tmp/vfio-user.sock", "type": "unix"}}'
+>
+>  See `libvfio-user <https://github.com/nutanix/libvfio-user/>`_ for further
+>  information.
 
-Although that is indeed inefficient, our overall long term goal is for
-*all* HMP comamnds to be implemented by invoking a QMP command. This
-will ultimately get us to the point where QAPI describes our public
-facing functionality, and HMP could be moved to become an out-of-process
-client side interface to QMP.
+Cc: qemu-stable@nongnu.org
+Fixes: c688cc165b ("docs: add vfio-user documentation")
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
