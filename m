@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F31CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF46CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 16:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6tvM-0007cB-AB; Thu, 09 Oct 2025 12:55:29 -0400
+	id 1v6txA-0008Vu-2p; Thu, 09 Oct 2025 12:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6tvG-0007aZ-5K
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:55:22 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1v6tx6-0008Vk-L2
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:57:16 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v6tv1-0006An-IW
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:55:19 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-267facf9b58so7833825ad.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:55:04 -0700 (PDT)
+ id 1v6tx3-0006iI-La
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 12:57:16 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-32ee4817c43so1085272a91.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 09:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760028899; x=1760633699; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760029030; x=1760633830; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FWU/DjIfFPTUo1gApvEVzBkwErgjVTIG2wFt5b87CHc=;
- b=CR5iovY/o3eeL5/FSo+URUS6A9zv0UHdN0vCyviYnfGJLwVM1WwMsiiD1o33KuN1E8
- x6NtYUPTJSTy5rLzVHgUVKUSMdNcI76Md/l7lAn9Vl4QdcgfvSsgDH1u1qEG0h0HTQ8N
- dKFoW6/LI9gTjvouZ/09el9PBoynIGXbjXJC9I55uCUEcMOy0yHgjTcMjk2WpSfsDLb3
- XFqClq/IFmSuCjv7D2MLUXpepxEEn3UaeArd/NGIkOvU2NjdbqlOVRxRIyHelSUb6Btf
- h36HT7YX5fZlT9mwTLpL7XbwRiBrIt0wU7Bnjqygs6n1KsQOlGHVATCoUPb04blJO0FY
- VKdA==
+ bh=x2wvjjpZdXT6RlT2//Rb8pcJp10CPSnhh0YcY50WSyU=;
+ b=Yg1YeKRklLJ5tsJziQszNVCWncfTFpfZGtgSkhCTsX/vCv+ji1oHkZqrkzN2oK6jyf
+ cyy9BN6Okj931x9U5CeAVS+6yGenHpN8Cp2fLPmswJZ7kuXwk0HLHCZaxwXncfC65Hd0
+ SlS9GWbU7p5U3icRzjk0WFupPpxM83R6ORYZwV4v2pH9knF80vwEzc99Xo0YHcPrEh3n
+ +Ni5fCMj61VwnrHEb1szvrQSCxMTeawkCyvKvJGoB3EGt/mYIQBRMFx8MbIRjM2etIPJ
+ ALBq8oNxGfQjlN+rPd6MMLtsgw0ATW/xJ8svburGIoQwF2RPCki5U7Y3Sn9dseSNFUkM
+ iopw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760028899; x=1760633699;
+ d=1e100.net; s=20230601; t=1760029030; x=1760633830;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FWU/DjIfFPTUo1gApvEVzBkwErgjVTIG2wFt5b87CHc=;
- b=Cj4K+ndoJQV6gmT28DNNtPX6QsvVq81k83gYoadI8T3tG8QuKH+IVkqQxNqr49NTAo
- JBGwhUzkg2lMqfYjHWGYckTbn12w7Hsx1iCA526uH65HNNAyzq8S2uvw+iIVs6O0EdrT
- q3mrxDITrfAjivu1aZuNuMadH1buW8rQOju2b+WwP+kkBKorrEne5ExO2clygYwFQRMN
- j7Bp9OuHsLUcAiy7kCWyx2kYvtX9tXQWtqunzfXmEhnGNMBjqPQK4kiELIvi+lUWPnHi
- VUR7HzbfpxU/QV3GOrESBYJfewOLPTBUiKjGKFjkF66bmfqtabYxyHJTfM3Y61uzBH9/
- mOZA==
+ bh=x2wvjjpZdXT6RlT2//Rb8pcJp10CPSnhh0YcY50WSyU=;
+ b=GZiDLGmD4sswuEBaN1Yqbog76P+fpFb/eqbeE/Fe6BVGTfww+BnofObvM4AXI7C3jT
+ fEuKavUPq9D3r0JizpB/MbD2cJR00CiegWeFgXL5CNZZ9dWOqAbV9OZUxTcvQBZD0wMz
+ c8EPxgFn1t4hG9/5lyitoFH1SnuW96mKysZ1rdH1LYbC00EOMfIa/e7U0oGeJwirTXLi
+ Pj+FXoHjfbtitwCwTadLFH+VwHnvbmaGwZzdMNfmMzu0ZYdQEdj8q/CV1+rN95ZSjdPA
+ fksHVJo3zFsi35WsJqASkwIhG7jG8DZGNXU3LK7rMCRcOqiezMp4oW88yoNAOZYMyAbr
+ Ct5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6lejxFZU+hgpKohns2L56eLQZx3hr/Nw1d/Al6hu/8dd8vUKDaE8anZV5QtDdD5P1MuscwiiTP1P6@nongnu.org
-X-Gm-Message-State: AOJu0Yy9X+u9eJKqa6RMNpr8Vv3+svzGKRu9lxIgddyBuG14+lwuTnG1
- DTSZhdA421IxLhfWHsCYk7z2AiAK6pQPDouy8x/YkIaEJqUmiUzzUsVJz4ZF673TW7bJaBNT/wA
- MoJLGs+0=
-X-Gm-Gg: ASbGnctJAav07+k2yKGqEnC7XnYVyu1WC56veUFdr853ZNARU/A09TbnClR892eJos0
- 6wTwpH/csC/v5ma7nqVUR3mkAQ9PY6Aue7mwO0flpm4LXW2DTU6mshBk4NZjslwGF2s//90W1Qk
- /Z2lfB2QkO7lv9YfJFXGWSIFYwkDTZhJRsYtN1/rLktknJ3hPgfO4oxODGp3UBLaMEml8BBaC6L
- jX9k2U4QzynM5tTpyjN827hq7UICZJBQ9MSuf+R9G2OPbrqPKllOxS/A7JK6jkV+cWuReIv9qdD
- 4V/tqTKw/NzaIahP2jx8kBoYMwUIANI2lAKsPEgJZ9vx/DngSd8Hbs4CPva5v5tn7iCyTiLwq6o
- Axa3eqlcJ+H8oVngF8/4qAwG8ilmhVETwbj34a/DkpuumS5xA/IaBg2g75zTBM4pq
-X-Google-Smtp-Source: AGHT+IEiG4vSI4288VKHA9m5fZzGfNZtKevvopml1JtuldOu4QwEvl1lKCfJiMajWT+evKVVmY9RhA==
-X-Received: by 2002:a17:902:c94f:b0:271:479d:3ddc with SMTP id
- d9443c01a7336-290273748efmr107314445ad.15.1760028899202; 
- Thu, 09 Oct 2025 09:54:59 -0700 (PDT)
+ AJvYcCUKA/h7eogHGgydAlhXqRf/gC9DDcF1yACNaeMoEmfFoUY+hvG3rWUpzNGI+juWlPQVTxR/WaTuquJz@nongnu.org
+X-Gm-Message-State: AOJu0YwOiyywQwH7PiYNtLmRS+MnXuJmmSN9sZZynsio+Qr0+P09wHPo
+ av5JMuU/6jDGCai01Pf4KIsadYqWdmutpioI4ZHEvX1pb60Lkfcyyf3LDqR3IwEwe+k=
+X-Gm-Gg: ASbGncvYzHbrcwOOewWQbpftSgGKqeovsSA++cKrSNgNxujhYQtZTjWPcZXYiTcF7np
+ RZDx0PN8vlaUlMB00intOgHSpGLRBns3WsN2jc5u04ZH50q0dggI9HvtkBo4rVfGnjE84imat+A
+ bthQWVEJA6FBqCxNEiAvAtMzT9zSsHJbCadLycACmhKioL9XHD4xLJPoXdUkcdagZkI/F0ab9sR
+ MFCzQHOYiOMMaNX3zBvaDsDjSJhS2kE6xKdYPMwyzmr/7e/ZhM72AILgW+4VPd0gPe464cKgy2p
+ wN23Mw7n/CmTy/Frc435UFTUM4qsEew2P6XphM6ba2zkbAfCFYaO8Njewuimb45Gx7iNUbZEo7e
+ VMVI7SlMZwnLXNbSdMGE+KNzLj6EgpVrTFDvlYGAE79YcfdfwqLSJ9yra7LUzrGpA
+X-Google-Smtp-Source: AGHT+IEDVkMdmZpYtbb/7C5ugzZUgt7A9S6StUIkvkOekUVA8TpBKh1MWnVKRpVBSS9eNEKD1XNixA==
+X-Received: by 2002:a17:90b:58ec:b0:330:a1ee:e119 with SMTP id
+ 98e67ed59e1d1-339edaae564mr17264616a91.9.1760029029580; 
+ Thu, 09 Oct 2025 09:57:09 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f4ae6csm33675075ad.108.2025.10.09.09.54.58
+ 98e67ed59e1d1-33b5296d52esm3860015a91.2.2025.10.09.09.57.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 09:54:58 -0700 (PDT)
-Message-ID: <7a558894-d9aa-40e9-a0ae-7d941b9474b3@linaro.org>
-Date: Thu, 9 Oct 2025 09:54:57 -0700
+ Thu, 09 Oct 2025 09:57:09 -0700 (PDT)
+Message-ID: <f29f0755-eded-4d56-879a-42c174d532f0@linaro.org>
+Date: Thu, 9 Oct 2025 09:57:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] target/hppa: Use hwaddr type for HPPATLBEntry::pa
+Subject: Re: [PATCH 2/9] target/hppa: Have hppa_form_gva*() return vaddr type
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>
 References: <20251009101040.18378-1-philmd@linaro.org>
- <20251009101040.18378-2-philmd@linaro.org>
+ <20251009101040.18378-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251009101040.18378-2-philmd@linaro.org>
+In-Reply-To: <20251009101040.18378-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,29 +107,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/25 03:10, Philippe Mathieu-Daudé wrote:
-> HPPATLBEntry::@pa is a physical address, use the appropriate type.
+> Return a 'vaddr' type for "guest virtual address".
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/hppa/cpu.h        | 2 +-
->   target/hppa/trace-events | 6 +++---
->   2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-> index 672ab3750c8..869a75876e2 100644
-> --- a/target/hppa/cpu.h
-> +++ b/target/hppa/cpu.h
-> @@ -187,7 +187,7 @@ typedef struct HPPATLBEntry {
->           struct HPPATLBEntry *unused_next;
->       };
->   
-> -    target_ulong pa;
-> +    hwaddr pa;
->   
->       unsigned entry_valid : 1;
->   
+>   target/hppa/cpu.h        | 4 ++--
+>   target/hppa/helper.c     | 4 ++--
+>   target/hppa/mem_helper.c | 2 +-
+>   3 files changed, 5 insertions(+), 5 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+> 
+> diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+> index 869a75876e2..e14f238827b 100644
+> --- a/target/hppa/cpu.h
+> +++ b/target/hppa/cpu.h
+> @@ -320,7 +320,7 @@ void hppa_translate_code(CPUState *cs, TranslationBlock *tb,
+>   
+>   #define CPU_RESOLVING_TYPE TYPE_HPPA_CPU
+>   
+> -static inline target_ulong hppa_form_gva_mask(uint64_t gva_offset_mask,
+> +static inline vaddr hppa_form_gva_mask(uint64_t gva_offset_mask,
+>                                           uint64_t spc, target_ulong off)
+
+But indentation needs fixing on the second line.
+
+>   {
+>   #ifdef CONFIG_USER_ONLY
+> @@ -330,7 +330,7 @@ static inline target_ulong hppa_form_gva_mask(uint64_t gva_offset_mask,
+>   #endif
+>   }
+>   
+> -static inline target_ulong hppa_form_gva(CPUHPPAState *env, uint64_t spc,
+> +static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
+>                                            target_ulong off)
+
+Likewise.
+
 
 r~
 
