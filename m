@@ -4,81 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F61CCA470
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 08:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB568CCA470
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 09:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6mTm-0001ow-S2; Thu, 09 Oct 2025 04:58:31 -0400
+	id 1v6mgR-0005KY-C8; Thu, 09 Oct 2025 05:11:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v6mTk-0001ld-NT
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 04:58:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <quic_mburton@quicinc.com>)
+ id 1v6mgO-0005K1-0r
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:11:32 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v6mTf-0005B0-VZ
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 04:58:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760000301;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bc2l4y/fRMXy98EnEPtWeJaE5mh6QV7R6DafmVZFBno=;
- b=Dlku7A72bq/jQRUYrjIGOt4HzHYR73/E+HtgqbvkV3Jk1Dqu3X15oblxFO1UL/yocRfZ8H
- xd0zKD1FlH7itTi8tl3Z9OAiHBeRT+Y4yo9DnxSwkx9R/4NdaPoD7MIpZBrLYlCA9e45+S
- LbaftLUkVuptt7ZtMJphSlDKO34XlJQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-mWEkb8WBNAOPAT-iQJ-j2A-1; Thu,
- 09 Oct 2025 04:58:17 -0400
-X-MC-Unique: mWEkb8WBNAOPAT-iQJ-j2A-1
-X-Mimecast-MFC-AGG-ID: mWEkb8WBNAOPAT-iQJ-j2A_1760000296
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B945019560B2; Thu,  9 Oct 2025 08:58:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76CAF30002C5; Thu,  9 Oct 2025 08:58:12 +0000 (UTC)
-Date: Thu, 9 Oct 2025 09:58:08 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 2/6] tracetool: apply isort and add check
-Message-ID: <aOd5IFgFZG91izxG@redhat.com>
-References: <20251008063546.376603-1-pbonzini@redhat.com>
- <20251008063546.376603-3-pbonzini@redhat.com>
- <20251008175811.GB181748@fedora> <aOdpofyFVoYVQc3D@redhat.com>
- <CABgObfYx8V+mUm-1eaimMeBmXyFiiBLBKWNc23_+HFXXFFb5sw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfYx8V+mUm-1eaimMeBmXyFiiBLBKWNc23_+HFXXFFb5sw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <quic_mburton@quicinc.com>)
+ id 1v6mgK-0006em-Cz
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 05:11:31 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5996EPf2005152;
+ Thu, 9 Oct 2025 09:11:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ JYTvXQ0uwjgKwnsflHBLGDh9pEmUlCWwgmXA6R3C6/U=; b=XceGXUNueDLJqxvj
+ BbL4xGULA79Zn1mHdB7MLwbmr4M249jJbe7f2Jp/lDEL0jvy5q8R8WLIEcXMiz2H
+ /pke7q0/Xd7xiGkI3FIpuYt1fe+eAqDXmr7uPHnE2vLbns94gn4upVNhl7t2SAGd
+ tLqtR8zODv6mvqNWHgO45815udV64omeBKIxFvb2QL3Qq83xuoD1UHOHuBtmf0Ph
+ 71Golm+PCTN+hqJ2sqe6TA2DE/ci3oL2IdyPm/oWYSbwhmtf4+t7od7vDXjx3RJ/
+ N7lu+Z/jr7w6BbeqPHRZZeKPpYzuHDQOmIJZYG+okxPiN3UwUytcO7PfJORWDSt3
+ e0BAgA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com
+ [199.106.103.254])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4u26ex-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Oct 2025 09:11:16 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com
+ [10.46.141.250])
+ by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5999BFLv023031
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 9 Oct 2025 09:11:15 GMT
+Received: from smtpclient.apple (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 9 Oct
+ 2025 02:11:11 -0700
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: MMIO through IOMMU from a TCG processor
+From: Mark Burton <quic_mburton@quicinc.com>
+In-Reply-To: <db2ca904-5d1c-4c96-8950-d3d943940d64@nutanix.com>
+Date: Thu, 9 Oct 2025 11:10:58 +0200
+CC: QEMU Developers <qemu-devel@nongnu.org>, <peterx@redhat.com>,
+ <eric.auger@redhat.com>, <zhenzhong.duan@intel.com>,
+ <alejandro.j.jimenez@oracle.com>, <peter.maydell@linaro.org>,
+ <jasowang@redhat.com>, <pbonzini@redhat.com>, <tjeznach@rivosinc.com>,
+ <steven.sistare@oracle.com>, <clement.mathieu--drif@eviden.com>,
+ <joao.m.martins@oracle.com>, <ean-philippe@linaro.org>,
+ <jean-philippe@linaro.org>, <sarunkod@amd.com>,
+ =?utf-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <D7DA7B85-2439-4CC2-A852-604154ABDC99@quicinc.com>
+References: <1C343F6E-05E2-4EA0-A338-0C48A97FF263@quicinc.com>
+ <db2ca904-5d1c-4c96-8950-d3d943940d64@nutanix.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+X-Mailer: Apple Mail (2.3826.700.81)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Authority-Analysis: v=2.4 cv=Vrcuwu2n c=1 sm=1 tr=0 ts=68e77c34 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=p0WdMEafAAAA:8
+ a=64Cc0HZtAAAA:8 a=SsrUhwFMDyuMi7dro90A:9 a=QEXdDO2ut3YA:10
+ a=cPQSjfK2_nFv0Q5t_7PE:22 a=poXaRoVlC6wW9_mwW8W4:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
+ a=jd6J4Gguk5HxikPWLKER:22
+X-Proofpoint-GUID: sFKnW9FoDAn4JJBQzig_7utFu04sF0bk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX0gVWJm187e/5
+ hi1yo1Sn4YYDz8zMQDpFzpM4q/8lenjAJ8NVTiMXL7mqE9ut3VsbkyxwFdi96CfE+KRsocRl6Lg
+ mMHpXjYmfOhwe9z09Q/4Cq2Bcnr3JNzmEvty6b8Uhh1U7ql8qNm6dmKZ7BzufaKXz9q/+Np/gZf
+ RspmW9kCc7yMSNRF+JOhvXC7W6yptdhc+izwg5upn+WoxjijiIXvDURYE+OA/zuqOrmaOWmWtFL
+ SSVpZQ/2IaeVYxHeTCfmrqtQyLkcCY9kLaVtPLyp3HrKI4zyx2dv2fqWitXZCpbSoPVmc9Dkio0
+ SediOdT7bieZTeeDUkZ7/Jt59Enbs0/6HMgyJxBrLJkt0cyiuYNoDSUwVk7JHSHJUoEvkE0R3i5
+ O/yMghvOEINgabsROcugebmnpIRXng==
+X-Proofpoint-ORIG-GUID: sFKnW9FoDAn4JJBQzig_7utFu04sF0bk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mburton@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,68 +119,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 09, 2025 at 10:22:43AM +0200, Paolo Bonzini wrote:
-> On Thu, Oct 9, 2025 at 9:52 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > I've proposed removing them in favour of meson rules earlier
-> > this year:
-> >
-> >   https://lists.gnu.org/archive/html/qemu-devel/2025-02/msg04920.html
-> 
-> I mostly agree with the intent of integrating tests with the
-> configure/pyvenv/meson infrastructure, but I'd do things in a
-> different order:
-> 
-> - split part of scripts/ into contrib/scripts/ to identify one-off
-> scripts vs. what is really used in the build process
 
-IMHO we should rather aim to eliminate contrib. We should either care
-about the contents, and find an appropriate home for it in tree & have
-ability to install it, or they should live outside QEMU git in their
-own home.
+(Adding Pierrick)
+Thanks for getting back to me Mark.
 
-We shouldn't encourage a "dumping ground" for stuff that we don't
-know what to do with.
+I initially thought the same, and I think I have seen that issue, I have =
+also taken that patch, However =E2=80=A6..
 
-> - move python/scripts/ to scripts/venv/, adjusting python/tests
-> 
-> - move tests/minreqs.txt to pythondeps.toml. switch from pip to mkvenv
-> in tests/Makefile.
-> 
-> - unifying the test scripts for all of scripts/, as much as possible
-> 
-> - integrate tests in meson, but keeping the shell scripts for now.
-> move python/tests to tests/python. add a custom_target() to do "mkvenv
-> ensuregroup tests"
-> 
-> - move tox usage to .gitlab-ci.d, placing tox outside the configure
-> script instead of inside. this makes the QEMU venv a "child" of the
-> tox venv rather than the opposite, and allows more testing than just
-> running the linters
+For MMIO access, as best I can tell, the initial calculation of the =
+despatch is based on the iotlb reported by the translate function =
+(correct), while the subsequent use of the section number uses the =
+dispatch table from the CPU=E2=80=99s address space=E2=80=A6.. which =
+gives you the wrong section.
 
-If tox is outside, that seems to require that we re-run configure for
-each different python version we want to run tests with, which feels
-pretty undesirable.
+I would very happily do a live debug with you (or anybody) if it would =
+help=E2=80=A6 I=E2=80=99m more than willing to believe I=E2=80=99ve made =
+a mistake, but I just don=E2=80=99t see how it=E2=80=99s supposed to =
+work.
 
-There's the (system) python version that we want to run the overall
-build system with, and then there are N other python versions which
-we want to be able to run linters against.
+I have been looking at solutions, and right now, I don=E2=80=99t see =
+anything obvious. As best I can tell, we =E2=80=9Cloose=E2=80=9D the =
+address space that has been returned by the translate function - so, =
+either we would need a way to hold onto that, or, we would have to =
+re-call the function, or=E2=80=A6.
+All of those options look really really nasty to me.
 
-> - remove testing-related parts of tests/Makefile
-> 
-> Only then I'd look at opportunities for unifying all the settings and
-> moving away from the shell scripts
+The issue is going to be systems where SMMU=E2=80=99s are used all over =
+the place, specifically, in front of MMIO. (Memory works OK because we =
+get the memory pointer itself, all is fine, the issue seems only be with =
+MMIO accesses through IOMMU regions).
+
+Cheers
+Mark.
 
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> On 9 Oct 2025, at 10:43, Mark Cave-Ayland =
+<mark.caveayland@nutanix.com> wrote:
+>=20
+> On 08/10/2025 13:38, Mark Burton wrote:
+>=20
+>> All, sorry for the wide CC, I=E2=80=99m trying to find somebody who =
+understands this corder of the code=E2=80=A6. This is perhaps a obscure, =
+but I think it should work.
+>> I am trying to access an MMIO region through an IOMMU, from TCG.
+>> The IOMMU translation has provided an address space that is different =
+from the CPU=E2=80=99s own address space.
+>> In address_space_translate_for_iotlb the section is calculated using =
+the address space provide by the IOMMU translation.
+>>> d =3D =
+flatview_to_dispatch(address_space_to_flatview(iotlb.target_as));
+>>>=20
+>> Later, we come to do the actual access (via e.g. do_st_mmio_leN), and =
+at this point we pick up the cpu=E2=80=99s address spaces in =
+iotlb_to_section, which is different, and the recorded section therefore =
+seems to be incorrect.
+>>> CPUAddressSpace *cpuas =3D &cpu->cpu_ases[asidx];
+>>> AddressSpaceDispatch *d =3D cpuas->memory_dispatch;
+>>> int section_index =3D index & ~TARGET_PAGE_MASK;
+>>> MemoryRegionSection *ret;
+>>>=20
+>>> assert(section_index < d->map.sections_nb);
+>>> ret =3D d->map.sections + section_index;
+>> What I don=E2=80=99t fully understand is how this is supposed to =
+work=E2=80=A6.?
+>> Have I missed something obvious?
+>> Cheers
+>> Mark.
+>=20
+> What version of QEMU are you using? I'm wondering if you're getting =
+caught out by a variant of this: =
+https://gitlab.com/qemu-project/qemu/-/issues/3040.
+>=20
+>=20
+> ATB,
+>=20
+> Mark.
+>=20
 
 
