@@ -4,113 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E9B9CCD185
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC3DCCD184
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Oct 2025 14:14:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v6rOQ-0000ig-Nn; Thu, 09 Oct 2025 10:13:18 -0400
+	id 1v6rPL-0000vs-Gr; Thu, 09 Oct 2025 10:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1v6rOO-0000ga-F1
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:13:16 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6rPG-0000vY-Vs
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:14:12 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1v6rOE-0000EH-61
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:13:16 -0400
-Received: from hawking.nue2.suse.org (unknown
- [IPv6:2a07:de40:a101:3:92b1:1cff:fe69:ddc])
- by smtp-out2.suse.de (Postfix) with ESMTP id 575361F74A;
- Thu,  9 Oct 2025 14:12:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1760019176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xU/JZGNmkGTrl19lB1V8Tq1nAMa1tPKyxGuNvC0Scm0=;
- b=FB8orlAzA48Fm5KH7HP61Iw33my/GbxG+Dp3yzlGySxSyR27Qj5s+gJyZTqHrUZb+b2En5
- HEemq7NopUAZ+tXNh8Aimrn0Wa1nPrWPXD99wvpm6a08nK6XgQX99Wu+AwufeL3Cm24Abv
- +M7wb3JmN3881bZuMSOBvdBYQTnqyXE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1760019176;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xU/JZGNmkGTrl19lB1V8Tq1nAMa1tPKyxGuNvC0Scm0=;
- b=M8bSRaMi0HhqMFsHv3B9BPAtbtFxFK2VPE4M6SMqzTah9PUzV9xsxykBx18V+nEfS0SN1T
- pL0QcafmyLAEWGCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FB8orlAz;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=M8bSRaMi
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1760019176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xU/JZGNmkGTrl19lB1V8Tq1nAMa1tPKyxGuNvC0Scm0=;
- b=FB8orlAzA48Fm5KH7HP61Iw33my/GbxG+Dp3yzlGySxSyR27Qj5s+gJyZTqHrUZb+b2En5
- HEemq7NopUAZ+tXNh8Aimrn0Wa1nPrWPXD99wvpm6a08nK6XgQX99Wu+AwufeL3Cm24Abv
- +M7wb3JmN3881bZuMSOBvdBYQTnqyXE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1760019176;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xU/JZGNmkGTrl19lB1V8Tq1nAMa1tPKyxGuNvC0Scm0=;
- b=M8bSRaMi0HhqMFsHv3B9BPAtbtFxFK2VPE4M6SMqzTah9PUzV9xsxykBx18V+nEfS0SN1T
- pL0QcafmyLAEWGCw==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 40B624A0784; Thu,  9 Oct 2025 16:12:56 +0200 (CEST)
-From: Andreas Schwab <schwab@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Laurent Vivier <laurent@vivier.eu>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] linux-user: fix layout of struct target_msq_id_ds
-In-Reply-To: <97a43b68-7f68-4f8f-a647-0967b604267d@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 9 Oct 2025 15:55:07
- +0200")
-References: <mvma520fd3i.fsf@suse.de>
- <97a43b68-7f68-4f8f-a647-0967b604267d@linaro.org>
-Date: Thu, 09 Oct 2025 16:12:56 +0200
-Message-ID: <mvmwm54duzb.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v6rPE-0000I0-1w
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 10:14:10 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3f0134ccc0cso738640f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 07:14:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760019245; x=1760624045; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uiAndZ5h0BaxToWyVH30SManz3spE/lV8OAscQ62MwU=;
+ b=pM26Ng8POKgTJzZYJGD+N97pk1gAMF45kaeDfRYVecM5lqCy5zNCXLfxq/XVOq/GmF
+ w9NBX85JvrAjMCo3RysgZvnBPuRNH2Q7yXSJMdChWrp9vwuPBowXEpAVjijYmtUJHwTu
+ DSmdvWBMwniD5Pc6rmOB6JJf6D9uNlxUMkQXAnQGNwKa9j8QHfADx+RV4Epu2e5QDYBv
+ t8ddy5Fl2XYTZovmqfTNsuWhebVkbe/n4Pi4MNYtIrh//CyBn7t5M3Uoe9PGtXSTLFk8
+ 5on6TJzj6HpTlrvT6RZUk+TUaLqA7ju2cuJo+SMOhqUPebAsf+r+pd5iNlvPS4FiRAkT
+ VmpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760019245; x=1760624045;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uiAndZ5h0BaxToWyVH30SManz3spE/lV8OAscQ62MwU=;
+ b=bo+oClMSIvSw13ROsYJIp4AVLp5evWyknxrQR6jrPHsV0ojNlkgMwjVARayl/7AFRY
+ sYxXV1XnP6h++zox2fdU0K+fqLFL/9IXVijlp4iqRTEp8ycjaKNGZtj+bUq0gsB9Fu6l
+ ydNeU4HE9W3or5Cd30cdUIY2q6Yen+tS4iRFn2CH5DLoX2WILL+4nbIwCTbebxI587Ze
+ mDx5HLPQGimTxNa/yuhpgx7X9jzdhxxzw57A94Jce93Np/AOmqmjfIg5qeNv8W3gERfl
+ XZkVa266kDcOMuQcWlFqLgcc2FnZaWnBG5d4GZyW/L4S54zmVcxucl9Fwu65gJLnO/QK
+ xkyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8LYUsHFi3+HMEWFvpbbRWZmBBpDR14XEwhurbSdmdGJ6/GJqywJzTHpK05gRAFLP5jrcuDH83ZSRz@nongnu.org
+X-Gm-Message-State: AOJu0Yzi36ZJ5auDytC5AQnwaCBKohh2g/8s7Y9lmAZ2mJdXF+jQhs/1
+ XxulxXlHWCjuhSRkxO3RNusxqe9owrffHJrgWqONq/OxRvuIuYP0rKjhUzmlfyB5l4k=
+X-Gm-Gg: ASbGncvQ09sdSH0ustK3K4gNiRuSLTAQVKD4abM4+rXDHUcvfUzcnFVgoHcJhfywADN
+ A6XdRPmmjQ+WntwqxnX7mYEyKVaARqbAA5OGDQCH9eLbaESRasGTcvWNz/lh99+9LT2TzHiBk4o
+ RaALEtcJgFh1n+YLzpAu1y4rXt6Ba69z/y1ES7GpIAiBCpSWTX+B+yiPwVx0FefjqFAf8qdtCbj
+ 9h3kUa90X8EctpzO23fXW7pR72YckDEfhHD4OWfw06tPd0JgD1XUq6trQFFI0i3fVuur6xFdGFH
+ rmd6fNtyhWEVvBx7ZHYkAkDsKurOPQ68nOx5nu/O4nvGopSGYeG45vFeCvyBl/YpY4YuX08/zAM
+ J8sgrJRwt37lNxPnMAV0/JRJUOatAuygLC2rRfK6azlgG9FDY7gyYA6CK7VJPPx6ZhVlUZJF35U
+ D2tOReHcA6f4LmI23AZQ==
+X-Google-Smtp-Source: AGHT+IEuU0dS0L7Mv2XaUwAIWSJUOcqWpt0XoE/5r8vYD+YU39tRz1oJMgwakSqcdtuMG9ZKFeO+RQ==
+X-Received: by 2002:a05:6000:4028:b0:425:825d:25d5 with SMTP id
+ ffacd0b85a97d-4266e8de0demr5090789f8f.45.1760019244686; 
+ Thu, 09 Oct 2025 07:14:04 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4255d8f0853sm35589606f8f.50.2025.10.09.07.14.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 07:14:04 -0700 (PDT)
+Message-ID: <e16277df-c8e1-41ea-8a59-da2ae11dafe1@linaro.org>
+Date: Thu, 9 Oct 2025 16:14:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [15.28 / 50.00]; SPAM_FLAG(5.00)[];
- NEURAL_SPAM_LONG(3.50)[1.000]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_SPAM_SHORT(2.99)[0.997];
- HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
- ONCE_RECEIVED(1.20)[];
- HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
- HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; RCVD_NO_TLS_LAST(0.10)[];
- MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_ONE(0.00)[1]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
- DNSWL_BLOCKED(0.00)[2a07:de40:a101:3:92b1:1cff:fe69:ddc:from];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
-X-Spamd-Bar: +++++++++++++++
-X-Rspamd-Queue-Id: 575361F74A
-X-Rspamd-Action: add header
-X-Spam: Yes
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=schwab@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 10/73] target/arm: Expand
+ CPUARMState.exception.syndrome to 64 bits
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251008215613.300150-1-richard.henderson@linaro.org>
+ <20251008215613.300150-11-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251008215613.300150-11-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,37 +104,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Okt 09 2025, Philippe Mathieu-Daudé wrote:
+Hi,
 
-> Hi Andreas,
->
-> On 9/10/25 14:56, Andreas Schwab wrote:
->> The msg_lspid and msg_lrpid members are of type pid_t, which is a 32-bit
->> integer.
->> Signed-off-by: Andreas Schwab <schwab@suse.de>
->> ---
->>   linux-user/syscall.c | 12 ++++++------
->>   1 file changed, 6 insertions(+), 6 deletions(-)
->> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
->> index 0956a7b310..3dcdb3ef42 100644
->> --- a/linux-user/syscall.c
->> +++ b/linux-user/syscall.c
->> @@ -4185,8 +4185,8 @@ struct target_msqid_ds
->>       abi_ulong __msg_cbytes;
->>       abi_ulong msg_qnum;
->>       abi_ulong msg_qbytes;
->> -    abi_ulong msg_lspid;
->> -    abi_ulong msg_lrpid;
->> +    unsigned int msg_lspid;
->> +    unsigned int msg_lrpid;
->
-> Why not use the explicit 'uint32_t' type?
+On 8/10/25 23:55, Richard Henderson wrote:
+> This will be used for storing the ISS2 portion of the
+> ESR_ELx registers in aarch64 state.  Re-order the fsr
+> member to eliminate two structure holes.
+> 
+> Drop the comment about "if we implement EL2" since we
+> have already done so.
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/cpu.h     |  7 ++-----
+>   target/arm/helper.c  |  2 +-
+>   target/arm/machine.c | 32 +++++++++++++++++++++++++++++++-
+>   3 files changed, 34 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index c9ea160d03..04b57f1dc5 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -633,13 +633,10 @@ typedef struct CPUArchState {
+>        * entry process.
+>        */
+>       struct {
+> -        uint32_t syndrome; /* AArch64 format syndrome register */
+> -        uint32_t fsr; /* AArch32 format fault status register info */
+> +        uint64_t syndrome; /* AArch64 format syndrome register */
+>           uint64_t vaddress; /* virtual addr associated with exception, if any */
+> +        uint32_t fsr; /* AArch32 format fault status register info */
+>           uint32_t target_el; /* EL the exception should be targeted for */
+> -        /* If we implement EL2 we will also need to store information
+> -         * about the intermediate physical address for stage 2 faults.
+> -         */
+>       } exception;
 
-linux-user/syscall.c often just uses int for 32-bit integers, and it's
-the same as x86_64/target_syscall.h:struct target_msgid64_ds.
 
--- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
+> diff --git a/target/arm/machine.c b/target/arm/machine.c
+> index 6666a0c50c..ce20b46f50 100644
+> --- a/target/arm/machine.c
+> +++ b/target/arm/machine.c
+> @@ -848,6 +848,23 @@ static const VMStateInfo vmstate_powered_off = {
+>       .put = put_power,
+>   };
+>   
+> +static bool syndrome64_needed(void *opaque)
+> +{
+> +    ARMCPU *cpu = opaque;
+> +    return cpu->env.exception.syndrome > UINT32_MAX;
+
+Hmm...
+
+> +}
+> +
+> +static const VMStateDescription vmstate_syndrome64 = {
+> +    .name = "cpu/syndrome64",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = syndrome64_needed,
+
+Why not simply add a new description for the high bits and
+always migrate?
+
+        .info = &vmstate_info_uint32,
+        .offset = offsetofhigh32(ARMCPU, env.exception.syndrome),
+
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(env.exception.syndrome, ARMCPU),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+>   static int cpu_pre_save(void *opaque)
+>   {
+>       ARMCPU *cpu = opaque;
+> @@ -1065,7 +1082,19 @@ const VMStateDescription vmstate_arm_cpu = {
+>           VMSTATE_UINT64(env.exclusive_val, ARMCPU),
+>           VMSTATE_UINT64(env.exclusive_high, ARMCPU),
+>           VMSTATE_UNUSED(sizeof(uint64_t)),
+> -        VMSTATE_UINT32(env.exception.syndrome, ARMCPU),
+> +        /*
+> +         * If any bits are set in the upper 32 bits of syndrome,
+> +         * then the cpu/syndrome64 subsection will override this
+> +         * with the full 64 bit state.
+> +         */
+> +        {
+> +            .name = "env.exception.syndrome",
+> +            .version_id = 0,
+> +            .size = sizeof(uint32_t),
+> +            .info = &vmstate_info_uint32,
+> +            .flags = VMS_SINGLE,
+> +            .offset = offsetoflow32(ARMCPU, env.exception.syndrome),
+> +        },
+>           VMSTATE_UINT32(env.exception.fsr, ARMCPU),
+>           VMSTATE_UINT64(env.exception.vaddress, ARMCPU),
+>           VMSTATE_TIMER_PTR(gt_timer[GTIMER_PHYS], ARMCPU),
+> @@ -1098,6 +1127,7 @@ const VMStateDescription vmstate_arm_cpu = {
+>           &vmstate_serror,
+>           &vmstate_irq_line_state,
+>           &vmstate_wfxt_timer,
+> +        &vmstate_syndrome64,
+>           NULL
+>       }
+>   };
 
