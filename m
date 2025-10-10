@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45ED7CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 19:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A94CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 19:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7IOq-0000gV-1p; Fri, 10 Oct 2025 15:03:32 -0400
+	id 1v7IPA-0001Fp-Bk; Fri, 10 Oct 2025 15:03:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7IOo-0000g8-DA
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:03:30 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1v7IP8-0001DC-HB
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:03:50 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7IOe-0007Zt-Pf
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:03:30 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-33b5a3e8ae2so1707982a91.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 12:03:19 -0700 (PDT)
+ id 1v7IP0-0007bI-8W
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:03:50 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3306b83ebdaso2143865a91.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 12:03:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760122995; x=1760727795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760123019; x=1760727819; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Y4bjIaIgFhpJYjshyQ+5nwUZ0nRqGq0a2Abz5FkDk6c=;
- b=IupNUxBpfO4Vktbc+qPpbgyMfGo8cPQ9wXdQQf1wlFGNzEycRIdpv9D2sTroYAAgYp
- dbyGFLkf8Dp9fPzNX0Bj0rl3wjmjUQteoSoDh0C4KrA8D+7MgJSt2JrzUFrMqtxw7yNX
- 76YL9eEvOYuFaGHBQy7GVbdVv0k9MRUFgIVHZ8uPei7DOHUf7iVG3vEDxR0eFR1arW2C
- MtbeAb7dQdehrQ8PR2EJ5wTlez17PlCP9oHt6roTaWdxlgNuju2EhCP/NLbQvxPN4r8s
- 1OUym/szV4UtTwI8ttYVSP/NKtdMxdQyWhNsy64m/Ow+YO0QdAo9jSeJWB4XDutw176n
- eb5A==
+ bh=PF9aAije30IVympYVSl2qD0049UQshA91FzIHdSPVXw=;
+ b=bNy14VVxL0nQqDMxStaGArkWAc/wLG4z9JP1AXhEyx6X4uw53B7ObTGtOcwqtoJOuP
+ rUbo0q42shCPjY2cdK7yISorPkh28vAASgfiU2nuCCXv/2IJtCw/ly5SlOcbiOQni7u8
+ oyt7x/VfEHFHWNcqdBMkEmXlYEe4JutKdpATaXz7pUT+ZC5gBg9dSWjd5lPQmT0PWGF3
+ Viyoolfh1dy6n5DczYn2xFxqTK3YsKZpCKakCsUquZuKfFhfq7Vb4ywOl/Cbx/Bygcc4
+ isfQeEfVSztnaG+eJYBJ4iijDYTGvYmmV9HAjOMygX3eCBWCRzgDb5NdQBNh4QniUw7M
+ vkLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760122995; x=1760727795;
+ d=1e100.net; s=20230601; t=1760123019; x=1760727819;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y4bjIaIgFhpJYjshyQ+5nwUZ0nRqGq0a2Abz5FkDk6c=;
- b=jTb9FZnMXjLZ4gmEqiD0tclO+rXDyJ6giokJfY3eJVO0PiacKNagkVOiWfZQky9KBi
- mqniSgW7yEWIjeXvbpgbj6/JJdIU6VMPj9loGiZotjZlQJ4acLfgRwgOS6J8JNX8t1pq
- Cv2Vq5LiIiIi6yZ6EaUU6oJnchSiSp6my3LLFXYZ3QaFrxvAvpOep090FfxP1I6rmQCL
- /DnKmFX8l9zaROed93eWeWD4xg6U1CtUk2PSA/grkpg+U/wHzxmWM85j/qzJMq+IOG4W
- UYIfdDUsXDm6F7JQ5gH8jsagB4GYJ9GW72uG69zaEgBuu9aMnK2RIdoTSmGK4zkdwz9Y
- UVGQ==
-X-Gm-Message-State: AOJu0YyLY0g2T0JEU1PstUJK3Snq/5QDBzbpZJvviY382azIpPERAZ82
- IBFBfUqQPJP0ABeCOstRoNlRFQMX8jmyA5UiWeddQU8lvRkajofWKDvRuitbmLawTTwr2aL0OZ/
- UGioDkic=
-X-Gm-Gg: ASbGnctAoY+zHMNKrq8Bp4LGTD7EfOAM5LmPQX/WvlGSSqh9HHO4Utl0pZuf3CT0GgI
- aRImQfjaNgi9QjZKE/pVvBbdNvJmnX7aMLK/L4hQnhUOH2bLassLdt1LFc+3zOA/C05P4xpLXle
- wgeyTeerFNroSRnV5xPKXkWSOpXS37eZlYre5W7dEixg9070ih6AMsFku49y+7U1z8VMXXyr50Z
- BnmcETNz37cK+rTwCmRhrVfqFAZDEVBj+bu3Z5/LZZN5WQzV68kbtyoJ0AgAIBFa/UZ0UMZ/Ro7
- BjXIlG3+mbOVoeSYXd+ERN3PvWjluid0qQnVI8ixdr2fNyA0D5arRZB8za5/wmgaEcUtPYcHw67
- gywPahOrDCngndBYcQkdG13y4sTJII3ID8ja52h2K+GaMyy0Q5dZLOuTGFgM=
-X-Google-Smtp-Source: AGHT+IFw7U6hyzk0/JNoLA2LRSYbfgMvQw2147ATBxbxzOIC2kyrPonTDWHejP+9g0Jg84De27leew==
-X-Received: by 2002:a17:90b:384d:b0:32e:72bd:6d5a with SMTP id
- 98e67ed59e1d1-33b51660472mr17364460a91.1.1760122994606; 
- Fri, 10 Oct 2025 12:03:14 -0700 (PDT)
+ bh=PF9aAije30IVympYVSl2qD0049UQshA91FzIHdSPVXw=;
+ b=crW7p9bkRd8FP2og/9ubTQ3fCl/AESWs8nPW7/Do+cnRxkmUiE10qgEOgixqFPYgrG
+ iViEhzq5gNf1U6g717OjZ+c8H4qkNaz4fM87Xpdru6g7UoaWjB8fT94eARmlkGXPnKd6
+ 6n16PqcPpt78LbNITkXire24FSJMTQf2PDj0evPd/f1oyLUK4c/jQULXDVyu2+hEvng0
+ 3FWZgFAd+bU5UxLq1Wwx/ljE262vzXh2suYbD5Wt0GhGMqZNRas1AYz3XCeyAZQzxhyk
+ fB2pi4MFHTn+QBr0GTD6D87+5pRwNek1W/9EqS05DAj27G6nhUv9yyWxk0WhXLaTyfwH
+ qwQA==
+X-Gm-Message-State: AOJu0YzX+sWfTZhM0FiHzk5P3vlxTuySjoUBpAHYI05hTjkT/QcIyKKF
+ zXQcz1y2Px4W1xcs785+wh8FWjZeg9zaJwiJeK125PVRVn7G4pwt6BfIxlVtJvOmSlT3++895QT
+ AYreJSh0=
+X-Gm-Gg: ASbGncs4r0UgSnDqoLihrg+AAipSKPdcontqYFFW375p1inTUBEyObuaJxXBVtV8UZ9
+ 5Rrsz73ZBJ2vawXgfgAlySliz/glfxpCJYFijNcjknSlo7fYCyZwKGj8y0F6eERmSK+9mX4VER9
+ 76XvOnHnt9a7MM5cVt7wzules3F5ihF9CaAMdOkrkvSJ4v1r/+5Tu73Df1GlAJpeY/qwvrkMu04
+ QSHbLY6lhVT51oWyKQhCo/tXCkJ2s+vc5am4ZQtQU3FU2PGNkV0DOUf8naEY+XBYGU5lJ7XKka2
+ sMZRZaf21DdDzOfEv5t6GlbSqM+CvZzMPNbIWTuvSYHR674ysoiC6lMzYozXc+B8xNrEESWdPbC
+ SCj4RAn2S4Y4sp4tS+lecizAKXPJ6laM9MmTVJx9u2fabkjGDqPUDTaxjw/QjwVLmdxuY5g==
+X-Google-Smtp-Source: AGHT+IHqY75HqgfwquYjfbshpbl/OCCobYnJnHqPJJdrZj+2sM14KBz7J+n1zREngMUHpWcexumMhg==
+X-Received: by 2002:a17:90b:3908:b0:335:21bf:3b99 with SMTP id
+ 98e67ed59e1d1-33b5139a3c6mr16993651a91.32.1760123018683; 
+ Fri, 10 Oct 2025 12:03:38 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33b6262df70sm3771221a91.1.2025.10.10.12.03.14
+ 41be03b00d2f7-b678df24ac2sm2964238a12.22.2025.10.10.12.03.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 12:03:14 -0700 (PDT)
-Message-ID: <5b5e10b1-cede-42da-91ae-72f2d5172116@linaro.org>
-Date: Fri, 10 Oct 2025 12:03:12 -0700
+ Fri, 10 Oct 2025 12:03:38 -0700 (PDT)
+Message-ID: <35087274-df34-4528-88a2-d855768fb5af@linaro.org>
+Date: Fri, 10 Oct 2025 12:03:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] block/curl.c: Use explicit long constants in
- curl_easy_setopt calls
+Subject: Re: [PULL 00/76] target-arm queue
 To: qemu-devel@nongnu.org
-References: <20251009141026.4042021-1-rjones@redhat.com>
- <20251009141026.4042021-2-rjones@redhat.com>
+References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251009141026.4042021-2-rjones@redhat.com>
+In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 07:08, Richard W.M. Jones wrote:
-> curl_easy_setopt takes a variable argument that depends on what
-> CURLOPT you are setting.  Some require a long constant.  Passing a
-> plain int constant is potentially wrong on some platforms.
+On 10/10/25 06:04, Peter Maydell wrote:
+> Hi; this is another target-arm pullreq. It's a big one but it's
+> only two series: FEAT_MEC and FEAT_GCS.
 > 
-> With warnings enabled, multiple warnings like this were printed:
+> thanks
+> -- PMM
 > 
-> ../block/curl.c: In function ‘curl_init_state’:
-> ../block/curl.c:474:13: warning: call to ‘_curl_easy_setopt_err_long’ declared with attribute warning: curl_easy_setopt expects a long argument [-Wattribute-warning]
->    474 |             curl_easy_setopt(state->curl, CURLOPT_AUTOREFERER, 1) ||
->        |             ^
+> The following changes since commit 94474a7733a57365d5a27efc28c05462e90e8944:
 > 
-> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
-> Signed-off-by: Chenxi Mao <maochenxi@bosc.ac.cn>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   block/curl.c               | 10 +++++-----
->   contrib/elf2dmp/download.c |  4 ++--
->   2 files changed, 7 insertions(+), 7 deletions(-)
+>    Merge tag 'pull-loongarch-20251009' ofhttps://github.com/gaosong715/qemu into staging (2025-10-09 07:59:29 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251010
+> 
+> for you to fetch changes up to 00936783abf77ebb47a78312a2e6500c6a13d938:
+> 
+>    target/arm: Enable FEAT_MEC in -cpu max (2025-10-10 13:22:05 +0100)
+> 
+> ----------------------------------------------------------------
+> target-arm queue:
+>   * Implement FEAT_GCS
+>   * Implement FEAT_MEC
 
-Thanks.  I directly applied this to master during the last PR batch.
-
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
 
