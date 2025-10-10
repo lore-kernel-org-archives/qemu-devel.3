@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9911ACCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFB9CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7GQf-0002B2-O7; Fri, 10 Oct 2025 12:57:17 -0400
+	id 1v7GQu-0002Dv-EK; Fri, 10 Oct 2025 12:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7GQe-0002AS-QB
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:16 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1v7GQs-0002DZ-GL
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:30 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7GQW-0007sG-Sp
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:16 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-782a77b5ec7so2138851b3a.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:57:06 -0700 (PDT)
+ id 1v7GQp-0008A5-O3
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:30 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7930132f59aso3256077b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760115420; x=1760720220; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760115441; x=1760720241; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pf6DqYhLys9vVFknX9I8ydYubWfT3qAkpEC9s2UPNhM=;
- b=LytgH/FCOjQN2sipK4DATXv9hw85TOPm8DJd+XCkiDT5PIeev5JvMlMLFvjEYZ07bH
- uC+/1wWInP69SawSWVO2VkkmVWVXoTvRjnOt1YjxbMbHa3MKIq1yf7V+1wOy5Td5qKX9
- qTgIdBfE8I4harmvLzUAqMxOUhWB+LNhDvKhN4NyMFDNx71pEOYlTC8wYVyELxbc+y9z
- DJfQ2C1ZU7rkQio0L4F35YTBubWVEJld0wxll823uhTuhU/lJP6vju3EzR5xT3fUwhTl
- zdkcIGdZ0LLXbN2eAp4vo4QFPdqClrXFBUbH1obelMvQCECj2FNY+Z6UeieKEZtlMyFR
- 87Yg==
+ bh=XmCc5jPEyTPNa6wJ1h1HXyfWGGshQ+TdRfe/mtlnCmo=;
+ b=nVv+us/d/wMxKHaz1tGDFN59Nm6epP4k4Uo8TxTYhZhAHmoV5h/zgVJJLxkS829pWj
+ OjNd0PRN+rBKz10I2lWmm2Z/ao1yRdv+lh5v5EzuY4psR3VcTFXHAfDPI9Zt7I0Q1Bsx
+ TcJ2EY3K/6v001y0cpQhFcn3+y7sKMTFVjkY1D8sryqPK5xbpXtej0acohE3woWBUMbH
+ 9TXnuPq6kBeYmSzEunfAAFYbOqDKgwkoooWyJxdlxmvMJyp+Eo6/rJJrK7W0iqtauBn4
+ 906GbbQy0Q+6k05tt8yhaxu0d78ZKqM/VaAeGMBL6tuxJHxi7r+ltWNWucHtVdnF0Wrg
+ NEJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760115420; x=1760720220;
+ d=1e100.net; s=20230601; t=1760115441; x=1760720241;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pf6DqYhLys9vVFknX9I8ydYubWfT3qAkpEC9s2UPNhM=;
- b=CJLf3Qa66cjkA/W5eWWe23VIrZ7sRncCGV8LZ3m2oesObLfWGAAgrKlG6N2JHVqGp/
- AqikE760tNLP59AhjvArUctI+qEhnLZV0XMI2no2q1IS0rpKu6NOtdNDgUKI2PMezJ/D
- ooPJWnnpqfXPZk70smWdRuGAoicJHk8PvH5bDtmfU4IFJ/i7SAmTmZiI/VIqWJsDN2XE
- SQYymapogJCV5AwcODXhje4cFmRzLC7oZLz9jjM4Ghfjrg93rwIg4jSPDldHNlTUaEA/
- +w+/1+XCIu+eXxVuR7Tfb6KzUDpMzF73Xbqw9HPSXRpwXnE3h/i5odM/FpFe1f9/7H1P
- QCSA==
-X-Gm-Message-State: AOJu0YyZMY+TbFPsjt8g1ZuAtrGiZ8ftxRraWj4PZUBWUo4BFxt1+8is
- vcYLQu0xKf+MQeHfWj3eXT4kPGnOPvhc/TCdeSe4elq0DkKyyV0MRUqXohZgUwybd5iVANohPcg
- tPcRbIe0=
-X-Gm-Gg: ASbGncvd9FdWJCGZYsvEEZtmex9VYl2BvfX0CvJPUcJn4b952LknA/M0cYYIHa2KvzZ
- 99slvcBrDN8qdTJXoIah0QhkiRRfTxSx8OSurqb5XBm/QpdkydwoK4i/nNyYCl2MAwZA5tkErg/
- kvnGIKWOrXd5ocdyrQO4D0jWgdvWVuLZVTF980NwxWDuFLYODiLnBPb3a/Y0DkwuiWsXAHhygEd
- 07/OSJ5cincsk1TQe0gbiPZZIydAW5+fWtM1lXq0tWjWugWnwKLZQ/PoyxnUK5OuzRJIwgCFyYH
- 2MpmygHqYB5U1XuYh2WDOjNrIPX9jsjh4LJYKpfrGC/V/lTT64poerc0wrr6WzCofY2/2yXK6rq
- 6CAgwCgG/+6KC1ahnLxT5UOAgaldVeybrD5p23pi0qFHHkKfDXDM20XoIRuM=
-X-Google-Smtp-Source: AGHT+IEsXfEY08hGV+hYilgSWsd5Htugm+GKIFpuczdMj8CeN/LHpMVy1gFUpCh70zlP6vq0+0908g==
-X-Received: by 2002:a05:6a21:3282:b0:2df:b68d:f64 with SMTP id
- adf61e73a8af0-32da854060cmr16800662637.52.1760115420175; 
- Fri, 10 Oct 2025 09:57:00 -0700 (PDT)
+ bh=XmCc5jPEyTPNa6wJ1h1HXyfWGGshQ+TdRfe/mtlnCmo=;
+ b=Q/WXRwEKdDfP2mM2AOFw7ehcG4jhs7RiSLbCul/t5RcGyu07DXhnoiCjCSFTozMW+J
+ tONxqxEgNyZWr0LUhPv9IrCEiQ9w0wpqfmQGibLq5ZbgePsqKjZK8XO06RK9+7U9aQ+K
+ qMKdgqFlnrnnyO2IIAKde4QidpneEhlsYu2jHscXt0y9njStCqyhNDlbCnjLTa64CwEm
+ H9sPVubts7lGBN2DKpmtiEO9f2UU0RCLcAOYIBZ3teUq3FIc7AJyjyhW0kjD0/pkfqIc
+ jtunh05J4QCIFQ4DjUwYvJ3PNUP/xme1wQJOVVi6yGVYjpEYuxyNEKIZAeu7Z5iRBBeM
+ jncA==
+X-Gm-Message-State: AOJu0YyoMxvbyJXMEnu1Jk6b8H3XEB923BddUFJmkfHsVo79AoESwsmd
+ fKSHd5xT7OUO1Qf3PkvW48ktJWhF4ziHFVNf0yNq5+ro6BXdTa3+JDj+FOiMEXJoZrYkArQhep3
+ AWyzmQR0=
+X-Gm-Gg: ASbGncsLwyx6s8TFDL0c6we5XyTtKqYqdWGmhK0F4YjKKcTeoORyX+imRdUCjQ4IJXf
+ 2zjs48xC/vK4W8pYB90dODMYNrX7Lx6DakKi2BlkXLIKEBvTT5ffAeWHd56HAR+ymv/htrWLpL5
+ EVMhZfLN2B6mLMg3x1x1PEoQGw1uyfxrLBeHkLMFRrecVHnfFSH5mhEyMeDJpp1vNmCD2oyp6Gm
+ r3xGvJ+7ufvqOFNqAnF6C0v2cSigaRjCKEeO4+EBJuD9eGfixIN4azIEt9gi8Qy7xvj4OFoP9wW
+ Prr8gNnTZrZCwYwA/GfQYl71rBRa769RssKZS8OTHGlFNdqtf6NZGacdJq99ypJRGLgIv+1RrmW
+ YOkEd93gU85mRmoT232DlAyX99Ac/hceVsHXX53OICB69c+cnL2j8Q+xsXVo=
+X-Google-Smtp-Source: AGHT+IGSDSxB6oe7sjkGIrJoFYG4ECAQgqMIrY/Fb9fw8M34qp5a0WKJG7OAf/QDw5HtU2qdRKtbBA==
+X-Received: by 2002:a05:6a00:a8f:b0:781:f1ee:a9cd with SMTP id
+ d2e1a72fcca58-793858fb683mr16259263b3a.13.1760115440745; 
+ Fri, 10 Oct 2025 09:57:20 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33b6262de64sm3452183a91.4.2025.10.10.09.56.59
+ d2e1a72fcca58-7992d0966d7sm3487972b3a.40.2025.10.10.09.57.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 09:56:59 -0700 (PDT)
-Message-ID: <18d49c34-0615-4f16-8d03-013e04192a1d@linaro.org>
-Date: Fri, 10 Oct 2025 09:56:58 -0700
+ Fri, 10 Oct 2025 09:57:20 -0700 (PDT)
+Message-ID: <76aa4062-4811-4822-8b5b-c585a88f789b@linaro.org>
+Date: Fri, 10 Oct 2025 09:57:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/12] target/tricore: Replace target_ulong -> vaddr with
- tlb_fill() callees
+Subject: Re: [PATCH 03/12] target/tricore: Remove target_ulong use in
+ translate_insn() handler
 To: qemu-devel@nongnu.org
 References: <20251010052141.42460-1-philmd@linaro.org>
- <20251010052141.42460-3-philmd@linaro.org>
+ <20251010052141.42460-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251010052141.42460-3-philmd@linaro.org>
+In-Reply-To: <20251010052141.42460-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,36 +105,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/25 22:21, Philippe Mathieu-Daudé wrote:
-> tlb_fill() provides a vaddr type since commit 68d6eee73c
-> ("target/tricore: Convert to CPUClass::tlb_fill").
+> Since commit 85c19af63e7 ("include/exec: Use vaddr in DisasContextBase
+> for virtual addresses") the DisasContextBase::pc_first field is a
+> vaddr type.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/tricore/helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   target/tricore/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-> index e4c53d453dd..7574111c87d 100644
-> --- a/target/tricore/helper.c
-> +++ b/target/tricore/helper.c
-> @@ -35,7 +35,7 @@ enum {
->   };
+> diff --git a/target/tricore/translate.c b/target/tricore/translate.c
+> index dd09f0651f5..4b769b204ab 100644
+> --- a/target/tricore/translate.c
+> +++ b/target/tricore/translate.c
+> @@ -8414,7 +8414,7 @@ static void tricore_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+>       ctx->base.pc_next = ctx->pc_succ_insn;
 >   
->   static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
-> -                                int *prot, target_ulong address,
-> +                                int *prot, vaddr address,
->                                   MMUAccessType access_type, int mmu_idx)
->   {
->       int ret = TLBRET_MATCH;
-> @@ -61,7 +61,7 @@ hwaddr tricore_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
->   }
+>       if (ctx->base.is_jmp == DISAS_NEXT) {
+> -        target_ulong page_start;
+> +        vaddr page_start;
 >   
->   /* TODO: Add exception support */
-> -static void raise_mmu_exception(CPUTriCoreState *env, target_ulong address,
-> +static void raise_mmu_exception(CPUTriCoreState *env, vaddr address,
->                                   int rw, int tlb_error)
->   {
->   }
+>           page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
+>           if (ctx->base.pc_next - page_start >= TARGET_PAGE_SIZE
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
