@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB17DCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF18CCD18A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7EmO-0000Zy-S2; Fri, 10 Oct 2025 11:11:38 -0400
+	id 1v7EmZ-0000hG-3g; Fri, 10 Oct 2025 11:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7EmD-0000Wv-Qk
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:27 -0400
+ id 1v7EmX-0000g6-S7
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7Elc-0004B3-Fs
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:25 -0400
+ id 1v7Ell-0004Cg-Ep
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760109045;
+ s=mimecast20190719; t=1760109053;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hJgKnO4p5NCBfsiH7X9uVt6uTBPOKNgBfFsL5Wo3g90=;
- b=P7vcDPwSNpu05Pjdok2nxsi8MvmUXsfLoJ7L56Avr340JBpMUvOT3I7IcHkvzxvn7/Jn5u
- coUSapY+ujEVwQW9DhgNYpZ6KKiPrVYiy+WJ+X3OHUyOAOSHXXnu8EERaNvCLtv8aBmzkJ
- mFVDH28JY1FFkjtGgzRue7YNXTlMcuw=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qLAzjRg81thfU2aBxeIBMEWinBk0XD4qCND6oGCuTHg=;
+ b=FBKKWJARpYzarLA7ixMWQoqafmis43RUqd1FCdhutJyndXXQ7+GAssfTZfGk5Rk2GbsZy+
+ 5iWvkv7ct1V21XkNWOHjcblawx3WNK+Oq3vVegrChDCY67ksjxb8fm8FVj/JiRWBXT9cwp
+ azm++0cR/pelsrIyz8LHfuIuuvf4MUU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-104-KNCh28XKOwKgEpxh0tonwQ-1; Fri, 10 Oct 2025 11:10:43 -0400
-X-MC-Unique: KNCh28XKOwKgEpxh0tonwQ-1
-X-Mimecast-MFC-AGG-ID: KNCh28XKOwKgEpxh0tonwQ_1760109042
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b47cf7544e0so217080866b.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:43 -0700 (PDT)
+ us-mta-494-DzONFOBAOj6rcHdnEwOWVg-1; Fri, 10 Oct 2025 11:10:52 -0400
+X-MC-Unique: DzONFOBAOj6rcHdnEwOWVg-1
+X-Mimecast-MFC-AGG-ID: DzONFOBAOj6rcHdnEwOWVg_1760109051
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b4af88aba57so205999066b.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760109041; x=1760713841;
+ d=1e100.net; s=20230601; t=1760109051; x=1760713851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hJgKnO4p5NCBfsiH7X9uVt6uTBPOKNgBfFsL5Wo3g90=;
- b=OfGysu9/3LIUrbjBV4nkkYYjST7bYCo4+2zxti8lhOq71BkfxkiXTZdCkGuWbhGI4u
- CGHjo4YAio+r0lu+/41hWPrmwOLOJp2G6aR8o7lzyCGOk3Q8ZmwLgCQqKdpthyohdcB6
- uMdL6OMNTRaZ5H1HSuIVi+Zivjt/rpqIc0aHcGSTEs2OocJ7pmYS9LsDx3bcxzJJTndt
- BJTk1x4MgDXjxfQlVcXYDjFQyt88m0+s/bPqs5y45EfZTF7zVazMf/AQbNZRUE7fNOMu
- 2zS01ZEiiPe7e+U/9FLc68akxe4Wc3vxfREUeoMjni5kOuxpe5LX/Uq9oxyoNKFHbMZO
- /NYg==
-X-Gm-Message-State: AOJu0YzOAI7NQoRsMPXXEfl9NzMLg+P3w9Ef4iUDFcXm7xe66YUTuEto
- Yr65tU6SZTPKjMKtdkSUhjUSg7agjmpcLtRwba0dDfuopbSQq4qkle9IfL+EKpvtKpdpmE+QIrX
- 5GsxCCNkvRwOjmlIW4ifa6aZJ7khcau9Iq2UQcfR+LnAarisLn4B6bFgoH1IJhDhWf4GB9tsgrd
- yY+/swUZ3AUrhX3zcPTGEbM41qjW0KDOH3J2DN6evq
-X-Gm-Gg: ASbGncsAPi55akiXmzCRfLWZ5Tx2QRrhPqHfwQR34TLarfY79QVCOhRbDViMFV8bRXE
- 3Ri4TInUde1Jrkd9VwQGxTXMoBc0Ah21UmWuQUV11GSjKo6wRZKwucLpXI2LnnT3J2Fc4uyd05n
- 25V+wRnNohO6V9fRtKF9itjxt55dHMEQ6J4uJ8CzWb2rqEVVX+si4vrfovqHP7Y/YCK95k9PVTB
- BvZxnbXmc+B9ZdoshlYGfMeOETjCGHHmyXwjJbvwdESaCERr2JEF2SceSDHwK4qUDImfZZN1wL/
- oTd3TJRft1jNi6+6iwGGnpBAPqjg60Z5UNQ72dXGH2TAX7zQV3E8WOjux9FKjLkxBQYtKeBMEO1
- G2+qnx6aQQ5TEcpTR66HvtMBUpNyP78GSakmiylRIfbHA
-X-Received: by 2002:a17:906:4788:b0:b0c:fdb7:4df5 with SMTP id
- a640c23a62f3a-b50aa08f7f4mr1389339266b.18.1760109041473; 
- Fri, 10 Oct 2025 08:10:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE491ow71Xn+kTdRFhbgU/RYKqRUnCR6cj5ICQnAJbi9K9r4MnXO8OtjBc2PBq3vRKmHl1bIg==
-X-Received: by 2002:a17:906:4788:b0:b0c:fdb7:4df5 with SMTP id
- a640c23a62f3a-b50aa08f7f4mr1389335966b.18.1760109040950; 
- Fri, 10 Oct 2025 08:10:40 -0700 (PDT)
+ bh=qLAzjRg81thfU2aBxeIBMEWinBk0XD4qCND6oGCuTHg=;
+ b=V/dsYAL2dxmsTYELjBofOuIfHrGblHiNvuiUd9wyrmCMduVsLzVDYB786SKQiumPaB
+ cFsgv7g4zDw36BBtXgVKBzE9I66CE/hEqyKTiSleSBbSq8SYrS8T4eI6FYT/ezYLa4i7
+ NE5mAFKaEIO0FPik1GiOrMd61n7GDdy4h0eZ57l1AiutAOc+mgt2YjMh83USunWImGy8
+ UboP9NM99v6ELsFMu6ccDlZWIbyvruygfCLmyUi7rh4ecO10KcMImiLUkxjD2xmr+DI1
+ efa34tVpAW6UNtkLmJ3pNS8KexU/7/pT1LayZMaQuQVzCAtkrWUkatVSEg+mfrMvX608
+ fDbA==
+X-Gm-Message-State: AOJu0YxJCI8qvhbpV9ecGRtQEhoT19dml6GXMVpdaDR4m9oLfGRNpWJO
+ k0jPHyP8wFQUskqZCH1kyTEhSBEqD3vYeXrdZ6dtz41CzM14IBrW97dlDGn4wxB1Mu3ElbIXnXp
+ cJL4Y81tzlpg5y6FrG/p4mrf+QQ9j+QwU29VE1/kM09xdrbf9jxydjZ1THTIWPciOyMb28itAEO
+ S6ibDtfrIMh6/XgWzfSCdA1QcXSDBP9wWYrXxgOvqY
+X-Gm-Gg: ASbGnctsbH9BwyJWMYthkOaJqFH5AloQHjN0LVr1RaQAhUC6RN0PxCiTdP76CDTC0Zq
+ d3P5i4MACilcK06XUeet2wUSeGBpVvroTpHUSKsNGTZV1CqbuAjXhH8uSRiQcqrtSPTXvPUVel0
+ YppNld+OYcgKY8Ek0TmyFBKCA02EUVBhMINPNZgrHfB4tvjwIB33lIXqdc2z4A0sumADBJ2FonS
+ MbS9vqJkapWKLPcGmBeIxFusJa6NBrKpeB498Yan1nWkz2iAAzqoNGZHnEkbNrrVdURAPMVn/fv
+ 8F+AsySacd48eUD8HmBvuKmuH+NO1VFrK8yHfQO5meyJI6D8tNchg+hXySNI9Iow9l6ZjD3B4/l
+ dLsxDJLntgG/UWsECwQXkDWSLvtK48LUHUmFqMjWS4s16
+X-Received: by 2002:a17:906:c144:b0:b49:b3ca:52b4 with SMTP id
+ a640c23a62f3a-b50aab9d64amr1227764766b.23.1760109050848; 
+ Fri, 10 Oct 2025 08:10:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5BpqB1n7IwGrSa3hxTlnzREuidDabK7inECo3W37egXG6QpbbHe8MINppXAIxIGHcsa7Kpg==
+X-Received: by 2002:a17:906:c144:b0:b49:b3ca:52b4 with SMTP id
+ a640c23a62f3a-b50aab9d64amr1227761266b.23.1760109050433; 
+ Fri, 10 Oct 2025 08:10:50 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.231.162])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d8c12a08sm256553266b.52.2025.10.10.08.10.38
+ a640c23a62f3a-b55d8c12978sm253961966b.44.2025.10.10.08.10.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 08:10:39 -0700 (PDT)
+ Fri, 10 Oct 2025 08:10:48 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com,
 	marcandre.lureau@redhat.com,
 	qemu-rust@nongnu.org
-Subject: [PATCH 13/19] scripts/qapi: add QAPISchemaIfCond.rsgen()
-Date: Fri, 10 Oct 2025 17:09:58 +0200
-Message-ID: <20251010151006.791038-14-pbonzini@redhat.com>
+Subject: [PATCH 17/19] scripts/rustc_args: add --no-strict-cfg
+Date: Fri, 10 Oct 2025 17:10:02 +0200
+Message-ID: <20251010151006.791038-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010151006.791038-1-pbonzini@redhat.com>
 References: <20251010151006.791038-1-pbonzini@redhat.com>
@@ -89,13 +89,13 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,64 +113,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Generate Rust #[cfg(...)] guards from QAPI 'if' conditions.
+Allow to generate all --cfg flags, regardless of Cargo.toml content.
+We can't easily list and include all the features used by QAPI types.
+Access via #[cfg()] then requires #![allow(unexpected_cfgs)].
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20210907121943.3498701-15-marcandre.lureau@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/qapi/common.py | 16 ++++++++++++++++
- scripts/qapi/schema.py |  4 ++++
- 2 files changed, 20 insertions(+)
+ scripts/rust/rustc_args.py | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
-index d7c8aa3365c..f16b9568bb9 100644
---- a/scripts/qapi/common.py
-+++ b/scripts/qapi/common.py
-@@ -199,6 +199,22 @@ def guardend(name: str) -> str:
-                  name=c_fname(name).upper())
+diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
+index 63b0748e0d3..c70b95b8bed 100644
+--- a/scripts/rust/rustc_args.py
++++ b/scripts/rust/rustc_args.py
+@@ -116,7 +116,7 @@ def generate_lint_flags(cargo_toml: CargoTOML, strict_lints: bool) -> Iterable[s
+         yield from lint.flags
  
  
-+def rsgen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]]) -> str:
-+
-+    def cfg(ifcond: Union[str, Dict[str, Any]]) -> str:
-+        if isinstance(ifcond, str):
-+            return ifcond
-+        if isinstance(ifcond, list):
-+            return ', '.join([cfg(c) for c in ifcond])
-+        oper, operands = next(iter(ifcond.items()))
-+        operands = cfg(operands)
-+        return f'{oper}({operands})'
-+
-+    if not ifcond:
-+        return ''
-+    return '#[cfg(%s)]' % cfg(ifcond)
-+
-+
- def gen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]],
-                cond_fmt: str, not_fmt: str,
-                all_operator: str, any_operator: str) -> str:
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 8d88b40de2e..848a7401251 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -37,6 +37,7 @@
-     docgen_ifcond,
-     gen_endif,
-     gen_if,
-+    rsgen_ifcond,
- )
- from .error import QAPIError, QAPISemError, QAPISourceError
- from .expr import check_exprs
-@@ -63,6 +64,9 @@ def gen_endif(self) -> str:
-     def docgen(self) -> str:
-         return docgen_ifcond(self.ifcond)
+-def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
++def generate_cfg_flags(header: str, cargo_toml: Optional[CargoTOML]) -> Iterable[str]:
+     """Converts defines from config[..].h headers to rustc --cfg flags."""
  
-+    def rsgen(self) -> str:
-+        return rsgen_ifcond(self.ifcond)
-+
-     def is_present(self) -> bool:
-         return bool(self.ifcond)
+     with open(header, encoding="utf-8") as cfg:
+@@ -125,8 +125,9 @@ def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
+     cfg_list = []
+     for cfg in config:
+         name = cfg[0]
+-        if f'cfg({name})' not in cargo_toml.check_cfg:
+-            continue
++        if cargo_toml:
++            if f'cfg({name})' not in cargo_toml.check_cfg:
++                continue
+         if len(cfg) >= 2 and cfg[1] != "1":
+             continue
+         cfg_list.append("--cfg")
+@@ -194,6 +195,13 @@ def main() -> None:
+         help="apply stricter checks (for nightly Rust)",
+         default=False,
+     )
++    parser.add_argument(
++        "--no-strict-cfg",
++        help="only generate expected cfg",
++        action="store_false",
++        dest="strict_cfg",
++        default=True,
++    )
+     args = parser.parse_args()
+     if args.verbose:
+         logging.basicConfig(level=logging.DEBUG)
+@@ -224,7 +232,7 @@ def main() -> None:
+                     print(f'cfg(feature,values("{feature}"))')
+ 
+     for header in args.config_headers:
+-        for tok in generate_cfg_flags(header, cargo_toml):
++        for tok in generate_cfg_flags(header, cargo_toml if args.strict_cfg else None):
+             print(tok)
+ 
  
 -- 
 2.51.0
