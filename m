@@ -4,94 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DE1CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698B8CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7C3V-0000kp-QG; Fri, 10 Oct 2025 08:17:05 -0400
+	id 1v7CAI-0002Gy-4r; Fri, 10 Oct 2025 08:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v7C3S-0000jW-9M
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:17:02 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v7C3L-0005Fg-CE
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:17:01 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59A8tM1h003680;
- Fri, 10 Oct 2025 12:16:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=iDzhWHqJ
- +KIDITg8y7iLfTA4e121WBjnQvtG1VK/WN8=; b=CKYI+aA4zlm3/vy1KCCxMOlx
- sZHnV15Q2eHHrS0UX9TuXnn/sJdG/fijncKcGtCYSZfdzVW/h3FcWdWKxCslvHB8
- 4bPdSPBXx8UGRW4BDNThjTb/IiSW7cP14cBC8HqDYZbBQjCM5171OuT2nfNJSxpt
- XIjDrl5+C7u4NTj8AP6WpKGe/VvHo1pPlCOEBLYF1nlKmZGJvUCO265ukY/FBB3G
- Lxtz2FRJ681ztKdoHdGjwfhBZL8BikakWBlazY0oNc881ItwMwQPJVlZ5pc4/S5e
- xSGte8TIuPs7lKvOC61bAD2XXsPaRNCs+THqWZhOU+sJE8FDJT90sLT/ucn49g==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49nv6duhmc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Oct 2025 12:16:43 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 59ABYGYq022916; Fri, 10 Oct 2025 12:16:42 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 49nv63wgd5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Oct 2025 12:16:42 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 59ACGgHr001220;
- Fri, 10 Oct 2025 12:16:42 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 49nv63wgcq-1; Fri, 10 Oct 2025 12:16:42 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH] MAINTAINERS: update cpr reviewers
-Date: Fri, 10 Oct 2025 05:16:40 -0700
-Message-Id: <1760098600-399192-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-10_02,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- adultscore=0
- mlxlogscore=999 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2510020000 definitions=main-2510100070
-X-Proofpoint-ORIG-GUID: pkxjUWAh2wmFARQ1NUjJtXVK8ClgkKov
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX46dm9pHACUB9
- avtmBaKsAkUHLjKfD/ZhTtsu+eAAwCU6Z8QcKNkOQYclNZ/GbVxbPB3V6+nFEU0ee/jIrN2LunR
- 3XYEv5eRHEiY1rsC4NDVpnVFgrHQalaYzf2Qlo1RTnWulYGnioTRvJ6g6OtON7VoBImE+7pIq3A
- rBSrK12RCxMu85zjHXUHxY1xsHhp662YsoaQUiDwieXtHHUcTMWS5s+HR4q6GHPzvs08bCQgwJi
- s8XUwfYU5RH1KfNxesQ2xgPqqGRSFQVJec1/VuGxm5M4hSGtXJRrAnywdrmR0O95KuH79q4ABzm
- yAreZD0WO8vj/xGHp5RoOjrfm6uJZMGTxj65YCuGagpHrvtkxiFjcMiwZcI01a6Qvh/xwHmmp0F
- NlbFDLFH8FhwSfE0QaeTtphE+de/tiChw0uyEJPrmc/rGzX1iAM=
-X-Authority-Analysis: v=2.4 cv=etHSD4pX c=1 sm=1 tr=0 ts=68e8f92b b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117
- a=zPCbziy225d3KhSqZt3L1A==:17
- a=x6icFKpwvdMA:10 a=p0WdMEafAAAA:8 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=n0Zxfx1fad7VIAJ_cMQA:9 cc=ntf awl=host:12091
-X-Proofpoint-GUID: pkxjUWAh2wmFARQ1NUjJtXVK8ClgkKov
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1v7CAE-0002Fw-Aq
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:24:02 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1v7CA5-0007Wt-78
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:24:01 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-639fb035066so3232754a12.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 05:23:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760099024; x=1760703824; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=61F3ksA7PYdsBTIHhvoY3uxIPSjTQ8deWzb9AI9KO1w=;
+ b=WBPWiBb4bLXNPZ3TudBeH5oCO0VRkf3tGzXRHUfavyFSsMnLOMItMMLeC5YOjWAyBH
+ KchAxriNEIZiwIZ3yHdoKSxr4H5QhlYrav0wwyxtYzc9i+1KJgvSjdBCbuBo5851f6wv
+ Rhu7ZMX6SkRlqlPNZ5b4US1tvrB7uWzyBS4GIXlPxVKxr5lHIN6mIqUjic1QgGjf+ATZ
+ XNXac13ptXgA9ESZnwEVZXhwo2kPXxOLupCeD7QZE33PCDJJbKX0tOK+NyY48Fzw9cjH
+ zTDZ2Zs6zOXksDtLXhM+aRDuzDTqk/uoFvAoOtoO1ZfimH3IOWMtQ0yWa0/v8e7SjNRO
+ 2X4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760099024; x=1760703824;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=61F3ksA7PYdsBTIHhvoY3uxIPSjTQ8deWzb9AI9KO1w=;
+ b=j5drdHtLidMObmkQeakNoztDqgHK4sTZcczEnXEu51LjLz1QM7jx3i0dtzxcYDd+Sh
+ isSyiXEvJeZ92KNEyX6tl7Jlzbi4M58lB9o1uHhtVuYmSkRMCLx9PxUu4Fo7uMugHrgM
+ si9EWsAXoK2BPpqG9QJhxe4sk6SlqWpuPo4ggdBJkOYRJ4spz0VlE5EznH9jOEOgCcnG
+ JZEP8wbR0R/fx9+sq1hP8Cr8+Qy2iwaY68fqf4ip9+B0gG2iK2qd9cP9tQ8f2eeRB67T
+ jDXCoEEsRIeTKTJIhp2XZoFTwlN+WHI2DD2h0P+OIW3Pgk2QGOHDrptKjiO2GOrklK/s
+ pm0Q==
+X-Gm-Message-State: AOJu0YygYpO1SYW3thKI1/hcrmkLHLaVgut9GMCzRlTXJR7QchNEzW98
+ s7fY/O0u1mkWN1VhjOO+v2jC2f3sc097T1iW1gH01N4BxYZAQTmfAxwVqUTSVg/XDLMgJrUHRD+
+ JcOT0D3TEY/7ao4m0+jJIlvgE6NKA7Bv2ss8lg8x9yA==
+X-Gm-Gg: ASbGncvDqyYtrJWr+5O2OLuG9f6MHejhBY1sp5hS2eUs2bygJGqyIKHBTIR8WKmXX7y
+ Ifv94hUW2vVcD5y9V0KNZG77fIsWIs7Iza8GXBJM19bVjV++Ac29F8mcqPpNAWy3QbglxDqdxSl
+ tIdokVQ81/Sm7yX0sLWFv44dJIRqOnPg+puxfcJAp+WZSUGAyj2OpCpRq8W+96x5Y9Zu8VhxB+l
+ BVOrpaJUY1aR8KooDwLMG8lpRSlRs8Ho+DroQ==
+X-Google-Smtp-Source: AGHT+IF+gShXjliGy/ZnBKoVOfgHiCfuLC/rs0Pa5YHKdLzDeu/3+GLHZyA0nnul7pDg3bb8QKC/DVMQ0xZVaO571GA=
+X-Received: by 2002:a05:6402:34d0:b0:638:74dc:cf78 with SMTP id
+ 4fb4d7f45d1cf-639d5c75d9dmr10283150a12.34.1760099023941; Fri, 10 Oct 2025
+ 05:23:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20251009211208.643222-1-pbonzini@redhat.com>
+In-Reply-To: <20251009211208.643222-1-pbonzini@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 10 Oct 2025 15:23:17 +0300
+X-Gm-Features: AS18NWDmuuMkw3l_m71ex9obDDatrZ3q4Xjdc5hWLJDGEQf7zYpRP5_MwSJUj1U
+Message-ID: <CAAjaMXaPv+hENfLuZUeLEOjakuw7dOTLQCeaUbuveZW4Y_2PBQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: temporarily disable double_parens check
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,29 +95,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update cpr reviewers.  Some of these files overlap with migration
-files, but some do not.
+On Fri, Oct 10, 2025 at 12:12=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>
+> It is showing in the output of the bits! macro and not easy to fix there
+> (at least not without making the macro more complex).  Disable it for
+> now.
+>
+> Link: https://github.com/rust-lang/rust-clippy/issues/15852
+> Reported-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+How about putting it in the macro expansion instead of globally allowing it=
+?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 84cfd85..9a10bda 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3107,7 +3107,8 @@ T: git https://gitlab.com/jsnow/qemu.git jobs
- T: git https://gitlab.com/vsementsov/qemu.git block
- 
- CheckPoint and Restart (CPR)
--R: Steve Sistare <steven.sistare@oracle.com>
-+R: Peter Xu <peterx@redhat.com>
-+R: Fabiano Rosas <farosas@suse.de>
- S: Supported
- F: hw/vfio/cpr*
- F: include/hw/vfio/vfio-cpr.h
--- 
-1.8.3.1
+macro_rules! foo {
+    ($a:expr, $b:expr, $c:expr, $d:expr) =3D> {
+        #[allow(clippy::double_parens)]
+        InterruptMask(((($a.union($b).union($c).union($d))).into_bits()) as=
+ u32)
+    }
+}
 
+Why is the double parenthesis needed here by the way? It's a method chain
+
+
+>  rust/Cargo.toml | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+> index 783e626802c..4f98b2c03d3 100644
+> --- a/rust/Cargo.toml
+> +++ b/rust/Cargo.toml
+> @@ -109,6 +109,9 @@ used_underscore_binding =3D "deny"
+>  # nice to have, but cannot be enabled yet
+>  #wildcard_imports =3D "deny"   # still have many bindings::* imports
+>
+> +# https://github.com/rust-lang/rust-clippy/issues/15852
+> +double_parens =3D "allow"
+> +
+>  # these may have false positives
+>  #option_if_let_else =3D "deny"
+>  cognitive_complexity =3D "deny"
+> --
+> 2.51.0
+>
+>
 
