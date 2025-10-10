@@ -4,98 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA81BCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 17:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC282CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 17:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7H7F-00007Q-Cn; Fri, 10 Oct 2025 13:41:17 -0400
+	id 1v7H6s-0008Ky-Cg; Fri, 10 Oct 2025 13:40:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v7H79-0008Sw-R9; Fri, 10 Oct 2025 13:41:12 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v7H6j-0008Iq-8z
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 13:40:46 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v7H74-0007cp-FN; Fri, 10 Oct 2025 13:41:11 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2C52915C5B6;
- Fri, 10 Oct 2025 20:40:45 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7DAB529CDCC;
- Fri, 10 Oct 2025 20:40:57 +0300 (MSK)
-Message-ID: <8a754d6c-1d8c-43d7-b3f8-a4b3e194d30e@tls.msk.ru>
-Date: Fri, 10 Oct 2025 20:40:56 +0300
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v7H6J-0007TQ-UL
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 13:40:43 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id F2E1CC0177;
+ Fri, 10 Oct 2025 20:40:12 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a89::1:23])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id xdPFQ30FtmI0-GFfeL6ht; Fri, 10 Oct 2025 20:40:12 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760118012;
+ bh=nl2+2Bb8Tc8O3k95uaNJdjhEm6v2qoQg7sRCDCKeFb4=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=i6GJBRgKSzliPngBM589FXBgO+c07aCssUGedb87vJsZhy9Z1ZOOePEOAF1CyV8Lk
+ n5eYuJw9sq3sr+tZZ9zOiYNxZTXUbaBX8qL5q+VSgLeB78MDN4eqWItPGgvhg1zFFX
+ WRJGit/LG5QSF8AwRqd73+7xYxjttCfvafPjImhM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: mst@redhat.com,
+	jasowang@redhat.com
+Cc: peterx@redhat.com, farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
+ armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ berrange@redhat.com, qemu-devel@nongnu.org, michael.roth@amd.com,
+ steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
+ yc-core@yandex-team.ru, vsementsov@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+Subject: [PATCH v7 12/19] net/tap: move vhost fd initialization to
+ net_tap_new()
+Date: Fri, 10 Oct 2025 20:39:50 +0300
+Message-ID: <20251010173957.166759-13-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251010173957.166759-1-vsementsov@yandex-team.ru>
+References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFT PATCH v2 0/2] Fix cross migration issue with missing
- features: pdcm, arch-capabilities
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, hector.cao@canonical.com, lk@c--e.de,
- berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250923104136.133875-1-pbonzini@redhat.com>
- <aNVrAkx+ahn7ZRns@intel.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <aNVrAkx+ahn7ZRns@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -107,76 +81,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/25 19:17, Zhao Liu wrote:
-> On Tue, Sep 23, 2025 at 12:41:34PM +0200, Paolo Bonzini wrote:
->> Date: Tue, 23 Sep 2025 12:41:34 +0200
->> From: Paolo Bonzini <pbonzini@redhat.com>
->> Subject: [RFT PATCH v2 0/2] Fix cross migration issue with missing
->>   features: pdcm, arch-capabilities
->> X-Mailer: git-send-email 2.51.0
->>
->> Add two compatibility properties to restore legacy behavior of machine types
->> prior to QEMU 10.1.  Each of them addresses the two changes to CPUID:
->>
->> - ARCH_CAPABILITIES should not be autoenabled when the CPU model specifies AMD
->>    as the vendor
->>
->> - specifying PDCM without PMU now causes an error, instead of being silently
->>    dropped in cpu_x86_cpuid.
->>
->> Note, I only tested this lightly.
-> 
-> Sorry for late.
-> 
-> I found the previous 2 fixes were merged into stable 10.0:
-> 
-> 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
-> 3d26cb65c27190e57637644ecf6c96b8c3d246a3
-> 
-> Should stable 10.0 revert these 2 fixes, to ensure migration
-> compatibility?
+Continue the track to avoid dependency on @tap in net_tap_setup(),
+no move the vhost fd initialization to net_tap_new(). So in
+net_tap_setup() we simply check, do we have and vhostfd at this
+point or not.
 
-Now when I think about it.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+---
+ net/tap.c | 90 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 50 insertions(+), 40 deletions(-)
 
-There were at least 2 point releases of 10.0.x (10.0.4 & 10.0.5)
-with these 2 patches already.  Reverting them in 10.0 will make
-10.0 to be non-migratable with itself (10.0.5 can't be migrated
-to 10.0.6 if we'll release 10.0.6 with these 2 patches reverted).
+diff --git a/net/tap.c b/net/tap.c
+index b01cd4d6c2..d08ef070e9 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -86,11 +86,11 @@ typedef struct TAPState {
+ 
+     bool sndbuf_required;
+     int sndbuf;
++    int vhostfd;
++    uint32_t vhost_busyloop_timeout;
+ } TAPState;
+ 
+-static bool net_tap_setup(TAPState *s, const NetdevTapOptions *tap,
+-                          const char *vhostfdname,
+-                          int fd, int vnet_hdr, Error **errp);
++static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp);
+ 
+ static void launch_script(const char *setup_script, const char *ifname,
+                           int fd, Error **errp);
+@@ -361,6 +361,11 @@ static void tap_cleanup(NetClientState *nc)
+     tap_write_poll(s, false);
+     close(s->fd);
+     s->fd = -1;
++
++    if (s->vhostfd != -1) {
++        close(s->vhostfd);
++        s->vhostfd = -1;
++    }
+ }
+ 
+ static void tap_poll(NetClientState *nc, bool enable)
+@@ -420,12 +425,14 @@ static NetClientInfo net_tap_info = {
+ };
+ 
+ static TAPState *net_tap_new(NetClientState *peer, const char *model,
+-                             const char *name, const NetdevTapOptions *tap)
++                             const char *name, const NetdevTapOptions *tap,
++                             const char *vhostfdname, Error **errp)
+ {
+     NetClientState *nc = qemu_new_net_client(&net_tap_info, peer, model, name);
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+ 
+     s->fd = -1;
++    s->vhostfd = -1;
+ 
+     if (!tap) {
+         return s;
+@@ -435,7 +442,36 @@ static TAPState *net_tap_new(NetClientState *peer, const char *model,
+     s->sndbuf =
+         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+ 
++    if (tap->has_vhost ? tap->vhost :
++        vhostfdname || (tap->has_vhostforce && tap->vhostforce)) {
++        if (vhostfdname) {
++            s->vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
++            if (s->vhostfd == -1) {
++                goto failed;
++            }
++            if (!qemu_set_blocking(s->vhostfd, false, errp)) {
++                goto failed;
++            }
++        } else {
++            s->vhostfd = open("/dev/vhost-net", O_RDWR);
++            if (s->vhostfd < 0) {
++                error_setg_errno(errp, errno,
++                                 "tap: open vhost char device failed");
++                goto failed;
++            }
++            if (!qemu_set_blocking(s->vhostfd, false, errp)) {
++                goto failed;
++            }
++        }
++
++        s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++    }
++
+     return s;
++
++failed:
++    qemu_del_net_client(&s->nc);
++    return NULL;
+ }
+ 
+ static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
+@@ -685,7 +721,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+         return -1;
+     }
+ 
+-    s = net_tap_new(peer, "bridge", name, NULL);
++    s = net_tap_new(peer, "bridge", name, NULL, NULL, &error_abort);
+     net_tap_set_fd(s, fd, vnet_hdr, &error_abort);
+ 
+     qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
+@@ -726,7 +762,10 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              const char *downscript, const char *vhostfdname,
+                              int vnet_hdr, int fd, Error **errp)
+ {
+-    TAPState *s = net_tap_new(peer, model, name, tap);
++    TAPState *s = net_tap_new(peer, model, name, tap, vhostfdname, errp);
++    if (!s) {
++        return;
++    }
+ 
+     if (tap->fd || tap->fds) {
+         qemu_set_info_str(&s->nc, "fd=%d", fd);
+@@ -745,53 +784,24 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+     }
+ 
+-    if (!net_tap_setup(s, tap, vhostfdname, fd, vnet_hdr, errp)) {
++    if (!net_tap_setup(s, fd, vnet_hdr, errp)) {
+         qemu_del_net_client(&s->nc);
+     }
+ }
+ 
+-static bool net_tap_setup(TAPState *s, const NetdevTapOptions *tap,
+-                          const char *vhostfdname,
+-                          int fd, int vnet_hdr, Error **errp)
++static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp)
+ {
+-    int vhostfd;
+-
+     if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
+         return false;
+     }
+ 
+-    if (tap->has_vhost ? tap->vhost :
+-        vhostfdname || (tap->has_vhostforce && tap->vhostforce)) {
++    if (s->vhostfd != -1) {
+         VhostNetOptions options;
+ 
+         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+         options.net_backend = &s->nc;
+-        if (tap->has_poll_us) {
+-            options.busyloop_timeout = tap->poll_us;
+-        } else {
+-            options.busyloop_timeout = 0;
+-        }
+-
+-        if (vhostfdname) {
+-            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
+-            if (vhostfd == -1) {
+-                return false;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                return false;
+-            }
+-        } else {
+-            vhostfd = open("/dev/vhost-net", O_RDWR);
+-            if (vhostfd < 0) {
+-                error_setg_errno(errp, errno,
+-                                 "tap: open vhost char device failed");
+-                return false;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                return false;
+-            }
+-        }
+-        options.opaque = (void *)(uintptr_t)vhostfd;
++        options.busyloop_timeout = s->vhost_busyloop_timeout;
++        options.opaque = (void *)(uintptr_t)s->vhostfd;
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
+         options.get_acked_features = NULL;
+-- 
+2.48.1
 
-Also, as far as I can see (and I asked about this some 5 times
-already, with no one answering - is it that difficult?) - we
-should pick this series (pdcm, arch-capabilities) to 10.1.x stable
-series too, since we can't migrate from previous versions to 10.1
-which has the two changes mentioned above.
-
-It looks to me - since the breakage is already done, and both 10.0
-and 10.1 is broken, we should declare the current situation as a
-status quo, and do the following:
-
-1. keep the above mentioned 24778b1c7ee7a and 3d26cb65c27190e5 in
-    10.0.x (instead of reverting them);
-
-2. pick up this 2 patches (fix cross migration issue with missing
-    pdcm, arch-capabilities) to 10.1.x (it should be done either way,
-    I think);
-
-3. on top of these 2 "missing features: pdcm, arch-capabilities",
-    make the crossing line for before-10.0, not for before-10.1 series, -
-    ie, consider 10.0 *also* has these properties, but 9.2 and before
-    are not.
-
-This too will make 10.0.5 => 10.0.6 non-migrateable, just like if
-I'll revert 24778b1c7ee7a and 3d26cb65c27190e5 in 10.0.  But this way
-we will also have these bugs fixed in 10.0.  And all subsequent
-versions of 10.0 and 10.1 will be migratable again.
-
-Please, don't be quiet this time, - I need your comments for this
-matter, because I don't understand well enough how migration works.
-
-Cc'ing Peter too, because I'm stuck here and no my questions are
-getting answered.. maybe he can help to at least clear some questions.
-
-Thanks,
-
-/mjt
 
