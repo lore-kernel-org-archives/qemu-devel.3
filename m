@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1118BCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E78CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7AWt-00046Z-Iy; Fri, 10 Oct 2025 06:39:19 -0400
+	id 1v7AXA-0004nH-9O; Fri, 10 Oct 2025 06:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7AWq-000456-S7
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:39:17 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7AWn-00070r-VA
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:39:16 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3ee15b5435bso1149895f8f.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 03:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760092749; x=1760697549; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=O9iVZ5Q3cW7hr/RUC/phwyUJA2GkOJxml1ASShhmT30=;
- b=rPG3wYuT6tqZwU97ZopYW6MRdU0vfg99E1+IpqKQXE7XiUgf4TeGFXgYtDslHNrg1a
- Ie4QjiNbRVhOmw5OrrYg/9e51zHAhe2Mms2GMEsKSxeeITh7wjkLBqMoJVj2soyj70PT
- c4PXfB00YGvHFUVEGhaelFl1y5h7vUc4wT5dL2+6vkppkk439uKPX/Kf2+Wdlcv2lcgG
- Ogpi6zRcVjfBLzQ0TpQRP4FuDl3UbbPWlSPxEq/t/8acmR3/tNtgsoDGm/VJKP0R719k
- qOJgzSG2PPxV5VVsPN9an0qumx1mxhwHL6GKaSQt24FpH50IHmRSqXjhLoj3GikJK1Hr
- z0dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760092749; x=1760697549;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=O9iVZ5Q3cW7hr/RUC/phwyUJA2GkOJxml1ASShhmT30=;
- b=TAqr/Nm0ucMoVSOqQxhXWbPEEeDTR0lg2Lzf52axp4s6spV/kDr6W+hH8ttBwlQ3NE
- gFhckxqtQVzEU8V4FToKI2+kIR0ipeaLcwJaZ9xsecHoYU6tNaB+FgBgi2GkJBzaJuv7
- oGa4ci20nWxvnetC6xfmy0luqzfDeMAaUMNnLg0fyZYA2vKhCyaGfnrfxIAGiptK8ehn
- J+SGBwOdaP12y6vGj52UwexzG28/7IxVOqPSRSPYYaxC9SIdBhfN/VGZsErJJkmjHjAs
- HhdUlpv96ZuTHARMVoDALvEiwQEDivKVn270EE1v0yaH5VNWCTlmwLrt9gnvkjn1Vk9b
- lz8A==
-X-Gm-Message-State: AOJu0YyVY8NwLIc3n0ZxqMOgQrwg7cOKlqBX+TIaLaOZrkbuXNShAcG+
- FERmhuWINxW3TVFyZuAliZ7J3gWLy8UD8cWRpquZ4bgZwBb4W+zEwbHIgC+lsaQ8zg8=
-X-Gm-Gg: ASbGnctkL4wt+Ln2Ilg9aaNGAqydd79TB9AxKp9LKc3yrMdgX9t8rvqYgQoIRnI8ERt
- l83jSDEHSF9jMML0lYANi366OMEabYRPjVXwe550Sq3zYSH1ZqI0wNM44gwldsEGCNnMcc94Lzp
- QM2lQHzkQ5t07sWDD79VPbopqHJOck3l7qZ0M7He/W9WsbvFCpnxJk7xrTgLJ54QxhAZbpUj3kl
- 3Sni0tKuhKVt6LgJRldTypKJXUmXypvn2nH5j9uXG/lbsAIji+puPbMrvs7fiAXQeRENIBXyUyl
- r9C11ZqWzwjJQdSueZH1h0XNkl0tVb5g75yV17I4UH3VE34B/CvHYb4XrWGe1oupdxuLVTQBPaw
- F9ULdN+ijmj0MehbX/6pIP7ChacDxwqpD3snMyChH1en2817lpB7Z06nF6gWHsfaB+oxqIu51Ad
- bHiPKCUhX+qrhz
-X-Google-Smtp-Source: AGHT+IHXzCVOhUUfHUMsSRDTQ7ao8sC5dvSmKJ4A+9mi4LRist/2RzXc4gZO+0SOcNry84VRrgM9qA==
-X-Received: by 2002:a05:600d:4203:b0:46e:6af4:ed83 with SMTP id
- 5b1f17b1804b1-46fa9af9099mr80658745e9.23.1760092749352; 
- Fri, 10 Oct 2025 03:39:09 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5833dcsm3593962f8f.19.2025.10.10.03.39.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 03:39:08 -0700 (PDT)
-Message-ID: <9c49aa4e-5402-42b6-9a80-ddd19bb81db5@linaro.org>
-Date: Fri, 10 Oct 2025 12:39:07 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v7AX7-0004fu-S9; Fri, 10 Oct 2025 06:39:33 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v7AX2-00072I-4r; Fri, 10 Oct 2025 06:39:33 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSe065199
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 10 Oct 2025 19:36:47 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=POdHoCg5/LDRfXqqwG2wxEKm9Lch4GRRuKLv3lF9UqQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1760092607; v=1;
+ b=omWHPnB0kq/HsZeLCV9201g//O7pESlMmKNQVAuFVdHJqzrokmRHvwFBsFx025tJ
+ rVhAW/HbNUh7rJIeuC68dIQ2YVvRW9mjZiGNtYAPaOaRSPKqCYwc7I4gWj1FMgNQ
+ nFWBkDC04ZVWOufnynP1t1BVyfFhmOrZE7dgT16PfFMVmJJAfQsjH6+hzDzkLRsP
+ HXWChVgESyX4icQehaKFmIQS6+aJfRjgN6qYVVOpPiPzAWDQHQ36F/r7mu/aNCms
+ U2jlZMnfvght/LWe6htOy409jEQajuK2JyD+xeFE1Iz4zTcjlni37eUgChHi21cp
+ 5N91WqbvzsfDhOViZ7v3Yg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 10 Oct 2025 19:35:40 +0900
+Subject: [PATCH v2 12/12] hw/usb/hcd-xhci: Do not delete the subregions
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] buildsys: Remove support for 32-bit MIPS hosts
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251010-subregion-v2-12-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
+References: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Riku Voipio <riku.voipio@iki.fi>,
- Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20251009195210.33161-1-philmd@linaro.org>
- <20251009195210.33161-8-philmd@linaro.org> <aOjH2b5YbeyBmiZS@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aOjH2b5YbeyBmiZS@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,105 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 10:46, Daniel P. Berrangé wrote:
-> On Thu, Oct 09, 2025 at 09:52:10PM +0200, Philippe Mathieu-Daudé wrote:
->> Stop detecting 32-bit MIPS host as supported, update the
->> deprecation document. See previous commit for rationale.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   docs/about/deprecated.rst       | 13 +++++--------
->>   docs/about/removed-features.rst |  6 ++++++
->>   configure                       |  7 -------
->>   3 files changed, 11 insertions(+), 15 deletions(-)
->>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 67e527740c0..79cc34cfeb6 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -172,17 +172,14 @@ This argument has always been ignored.
->>   Host Architectures
->>   ------------------
->>   
->> -Big endian MIPS since 7.2; 32-bit little endian MIPS since 9.2, MIPS since 11.0
-> 
-> Did 'Big endian MIPS' refer to 32-bit, or both 32 & 64-bit ?  I'm guessing
-> it was only 32-bit BE, given the heading of your removed-features.txt
-> change.
+It is no longer necessary.
 
-Both.
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/usb/hcd-xhci.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-* 7.2 deprecated:
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 292c378bfc98..b68a2aec3171 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -3454,16 +3454,6 @@ static void usb_xhci_unrealize(DeviceState *dev)
+         xhci->mfwrap_timer = NULL;
+     }
+ 
+-    memory_region_del_subregion(&xhci->mem, &xhci->mem_cap);
+-    memory_region_del_subregion(&xhci->mem, &xhci->mem_oper);
+-    memory_region_del_subregion(&xhci->mem, &xhci->mem_runtime);
+-    memory_region_del_subregion(&xhci->mem, &xhci->mem_doorbell);
+-
+-    for (i = 0; i < xhci->numports; i++) {
+-        XHCIPort *port = &xhci->ports[i];
+-        memory_region_del_subregion(&xhci->mem, &port->mem);
+-    }
+-
+     usb_bus_release(&xhci->bus);
+ }
+ 
 
-   - 32-bit big endian MIPS host
-   - 64-bit big endian MIPS host
-
-   Not deprecated remaining:
-
-   - 32-bit little endian MIPS host
-   - 64-bit little endian MIPS host
-
-* 9.2 deprecated:
-
-   - 32-bit little endian MIPS host
-
-   Not deprecated remaining:
-
-   - 64-bit little endian MIPS host
-
-* 11.0 deprecated:
-
-   - 64-bit little endian MIPS host
-
-   No non-deprecated MIPS host remaining
-
-As of 11.0 we can remove what was deprecated previous 10.1.
-
-> 
-> But then did "MIPS since 11.0" refer to 64-bit little endian only, or
-> both big & little endian for 64-bit ?
-> 
-> Given the wide variety of things all ambiguously called "MIPS",
-> its worth being explicit....
-> 
->> -'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
->> +MIPS (since 11.0)
->> +'''''''''''''''''
-> 
-> ...so if this is 64-bit MIPS, big & little endian, lets say so
-I'll update to "64-bit little endian MIPS".
-
-> 
->>   
->> -As Debian 10 ("Buster") moved into LTS the big endian 32 bit version of
->> -MIPS moved out of support making it hard to maintain our
->> -cross-compilation CI tests of the architecture. As we no longer have
->> -CI coverage support may bitrot away before the deprecation process
->> +MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
->> +maintain our cross-compilation CI tests of the architecture. As we no longer
->> +have CI coverage support may bitrot away before the deprecation process
->>   completes.
->>   
->> -Likewise, MIPS is not supported by Debian 13 ("Trixie") and newer.
->> -
->>   System emulation on 32-bit x86 hosts (since 8.0)
->>   ''''''''''''''''''''''''''''''''''''''''''''''''
->>   
->> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
->> index a5338e44c24..53829f59e65 100644
->> --- a/docs/about/removed-features.rst
->> +++ b/docs/about/removed-features.rst
->> @@ -896,6 +896,12 @@ work around the atomicity issues in system mode by running all vCPUs
->>   in a single thread context; in user mode atomicity was simply broken.
->>   From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
->>   
->> +32-bit MIPS (since 11.0)
->> +''''''''''''''''''''''''
->> +
->> +Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
->> +maintain our cross-compilation CI tests of the architecture.
->> +
->>   Guest Emulator ISAs
->>   -------------------
+-- 
+2.51.0
 
 
