@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DF2CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF11ACCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Byz-0007Fj-N2; Fri, 10 Oct 2025 08:12:25 -0400
+	id 1v7C1Q-00089H-V7; Fri, 10 Oct 2025 08:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v7Byw-0007DJ-91
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:12:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v7Byo-0002W7-Vl
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:12:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760098328;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fvEkDcS6t/0bVaT3tyrJKiNVB+cBYj8UOiEzRtoswOg=;
- b=MehcgFgkDYsg59rOmIntGjwkFXUb/N5C5MyDybYaWLXT4NJW/T6W726dSLSJHx+5974oVa
- zp38NGMyxqCkDV2hzaPO8UGcKOGVy3OynyQBz/VZ85ONH3o078pBdu9r4Q1A2y8xhGarqi
- DvzPUEL6m2O/7JDs8kVwSU4nfUNPld0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-5VAG2eTmOsiAvRIjO7A1Ww-1; Fri,
- 10 Oct 2025 08:12:05 -0400
-X-MC-Unique: 5VAG2eTmOsiAvRIjO7A1Ww-1
-X-Mimecast-MFC-AGG-ID: 5VAG2eTmOsiAvRIjO7A1Ww_1760098322
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F7671956096; Fri, 10 Oct 2025 12:12:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.177])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2B1B1953947; Fri, 10 Oct 2025 12:11:59 +0000 (UTC)
-Date: Fri, 10 Oct 2025 13:11:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH RFC/WIP 4/4] gitlab: add jobs for thorough block tests
-Message-ID: <aOj4BUeUP_PgDLFG@redhat.com>
-References: <20251008113552.747002-1-berrange@redhat.com>
- <20251008113552.747002-5-berrange@redhat.com>
- <996a6f93-9abd-46a1-9647-296983101f00@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7C1N-00088V-Ih
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:14:54 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7C1D-00049b-GF
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:14:53 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46e34bd8eb2so19048485e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 05:14:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760098478; x=1760703278; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=99QTQsT/X3kKgANc7QxAgqQpSYhzCiePxxa+8tWhc7g=;
+ b=ykh42IFbNYLDUT4C1hYycJPhJ3pqbn3HwYjPyLQirDa+RizzaiUWFS38Q0dh0y3C/U
+ aVd7JiHR80d8AAjQTf2szBJ5f4xVI2xN1h/bRVICWj3YTRBYE4tMPaLdz08QMZXbw+yJ
+ +vvz/R5AglIwCrYdySZmxobLeoH3iyM46EyiPbG6Tz9msxmjkiXXdgrszphAROMsspi+
+ o4qO8AJgoVvIqVF5YeXInNK4gOrBEHFEBDbeCpmSfmF0gAP7UEy2vWmNs18P+rtpwMMR
+ hz/59Yq4IyfWCEmC8JoQ+FOJfeZBFGFtZo/8eTJP01f+4s/2UmjNwFKzn5kWAxZI1Y6t
+ 5WWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760098478; x=1760703278;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=99QTQsT/X3kKgANc7QxAgqQpSYhzCiePxxa+8tWhc7g=;
+ b=tCXUzS5YMgqrwHVS9A7aCqhg45xINuerIU8c4Sw2po3b8QKumWSHPWRlUsXmQttI6V
+ q2CDIqCqrVtGLNk5nWJgYbey+thqDwgA7nj54b6NuCEIXtCu4L+VPwdSWMWnkZuPMBLh
+ INQHhetgb9Kx9Bs5K72yfrcN6akU8tmWJ4DvNYjbAtKGgeoejY0P5V57I9y/vztdDgJ8
+ ueU5eTD1zjXY3mMEI/68WDL4t2pcRM6FyBrNywsP9hvYZzbZxfIb4VDy5lNu0OstFc6X
+ YK3exvQkRwYPh0EUQxFA7oUYBxNTfVsXeLyrgd32qtHm1FddHB7nezsUETj+aZPWltfM
+ JnAQ==
+X-Gm-Message-State: AOJu0YwrB5Uv6VKlsP5o7vHOkJj1TkIVyS77XREW1g+ypQb7TG1L3iUm
+ F2hYfZ9gs4iUwXiPcTXHKHmqwKIRW5tY0zd+Mbzm/+CiIdB476x3VZ4SIbPvLJbAYxm9rFPivVm
+ 79Q9p
+X-Gm-Gg: ASbGncvkN8wYYtHedTfXRd9x637CJ7YegpY3XpR5MjDuGH95eaxW15gpNfLedWq8qjp
+ fdl08L3DaNpJHCPXSpDuDlcOiW4Gp6gG2jKXgKoYTEXCj0JvD7AqP5eOQgCe6chwSd3wq3GUFv1
+ XCuGNvxEXBYGSN0cHxBtgYloUFsg7bNHuIb4sIfKVIFkwoIZHi7HK1tOP3GyTFD3hpj8Kwj3gq+
+ WPTxj8cxOC7BAPzGjRr2pYsO7br9kxO4T7W0Nfyyy4+jZGm36f3yinRxH3s3hhB4/MS8pEvluP5
+ 61pb68c/FIu9Bey49gEwoQDF8tao4VJgG+5CIDFSz45+Um21MLSo1U5r0Woncxci6X9V63y/Lqb
+ KXX+kpLMUdJ5e13UddpvqX6kjUzoxolOa5y7Y1zda21+Wah5KG2w=
+X-Google-Smtp-Source: AGHT+IGJGkmfOqstO3NChPXxNbqrukNe7v6e+GPfHmcst2CPZjB6uxEHfz4wqqoYVuH/ojGTc8KGpw==
+X-Received: by 2002:a05:600c:502c:b0:46e:45d3:82fa with SMTP id
+ 5b1f17b1804b1-46fa9aa0eacmr77684495e9.10.1760098477640; 
+ Fri, 10 Oct 2025 05:14:37 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce582b39sm3901637f8f.15.2025.10.10.05.14.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Oct 2025 05:14:36 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] tests/tcg/multiarch/linux/linux-test: Don't try to test atime
+ update
+Date: Fri, 10 Oct 2025 13:14:35 +0100
+Message-ID: <20251010121435.3885228-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <996a6f93-9abd-46a1-9647-296983101f00@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,46 +96,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 10, 2025 at 01:55:28PM +0200, Thomas Huth wrote:
-> On 08/10/2025 13.35, Daniel P. Berrangé wrote:
-> > CI is only exercising the qcow2 'auto' tests currently. As a result we
-> > get no exposure of changes which cause regressions in other block format
-> > drivers.
-> > 
-> > This adds new CI jobs for each block format, that will run the target
-> > 'make check-block-$FORMAT'. The jobs are separate so that we have the
-> > ability to make each formats gating or not, depending on their level
-> > of reliability.
-> 
-> Some of the jobs seem to be quite quick, though, only 5 minutes and less:
-> 
->  https://gitlab.com/berrange/qemu/-/jobs/11633680698
->  https://gitlab.com/berrange/qemu/-/jobs/11633680704
->  https://gitlab.com/berrange/qemu/-/jobs/11633680694
-> 
-> I think I'd prefer to see them rather merged into one job, to avoid that we
-> waste too much time with setting up the container each time. We can still
-> sort out flaky parts into separate jobs later if necessary.
+The linux-test test includes an attempt to check the utime and stat
+syscalls by setting the atime and mtime of a file to specific values,
+and then calling stat() to check that the values read back correctly.
 
-The container setup / job prep is not a significant time sink  - just
-at the 1 minute mark. I wanted to have separate jobs per backend so
-that the pipeline dashboard gives an informative summary of which
-block backends are impacted by the change, rather than having to
-search the logs to discover it.
+Unfortunately this is flaky, as it will fail if some other process
+(for instance a virus scanner, backup program, etc) gets in and reads
+the file between the utime() and stat() call, resulting in a host
+syscall sequence like this:
 
-Flaky parts shouldn't be separate jobs  - the tests should either be
-fixed or removed, because unreliable tests just end up being ignored,
-leading to regressions being missed. 
+utimensat(AT_FDCWD, "file2",
+  [{tv_sec=1001, tv_nsec=0} /* 1970-01-01T01:16:41+0100 */,
+   {tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */], 0) = 0
+# successfully set atime to 1001 and mtime to 1000
+statx(AT_FDCWD, "file2", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT,
+  STATX_BASIC_STATS,
+  {stx_mask=STATX_BASIC_STATS|STATX_MNT_ID,
+   stx_blksize=4096, stx_attributes=0, stx_nlink=1, stx_uid=32808,
+   stx_gid=32808, stx_mode=S_IFREG|0600, stx_ino=21659016,
+   stx_size=100, stx_blocks=8,
+   stx_attributes_mask=STATX_ATTR_COMPRESSED|STATX_ATTR_IMMUTABLE|
+         STATX_ATTR_APPEND|STATX_ATTR_NODUMP|STATX_ATTR_ENCRYPTED|
+         STATX_ATTR_AUTOMOUNT|STATX_ATTR_MOUNT_ROOT|STATX_ATTR_VERITY|
+         STATX_ATTR_DAX,
+   stx_atime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+   stx_ctime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+   stx_mtime={tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */,
+   stx_rdev_major=0, stx_rdev_minor=0, stx_dev_major=252,
+   stx_dev_minor=0, stx_mnt_id=0x1f}) = 0
+# but when we statx the file, we get back an mtime of 1000
+# but an atime corresponding to when the other process read it
 
-With regards,
-Daniel
+and which will cause the test program to fail with the error
+message "stat time".
+
+In theory we could defend against this by e.g.  operating on files in
+a dummy loopback mount filesystem which we mounted as 'noatime', but
+this isn't worth the hassle.  Just drop the check on atime.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+The failure happens to me occasionally on my local system.
+---
+ tests/tcg/multiarch/linux/linux-test.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
+index 64f57cb287e..bf6e0fda262 100644
+--- a/tests/tcg/multiarch/linux/linux-test.c
++++ b/tests/tcg/multiarch/linux/linux-test.c
+@@ -155,9 +155,14 @@ static void test_file(void)
+         error("stat mode");
+     if ((st.st_mode & 0777) != 0600)
+         error("stat mode2");
+-    if (st.st_atime != 1001 ||
+-        st.st_mtime != 1000)
++    /*
++     * Only check mtime, not atime: other processes such as
++     * virus scanners might race with this test program and get
++     * in and update the atime, causing random failures.
++     */
++    if (st.st_mtime != 1000) {
+         error("stat time");
++    }
+ 
+     chk_error(stat(tmpdir, &st));
+     if (!S_ISDIR(st.st_mode))
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
