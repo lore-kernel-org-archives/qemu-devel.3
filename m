@@ -4,89 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F595CCD184
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 02:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3D1CCD183
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 02:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v73JO-0006HJ-3m; Thu, 09 Oct 2025 22:56:54 -0400
+	id 1v73Jf-0006If-Qf; Thu, 09 Oct 2025 22:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v73JM-0006HA-4d
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:56:52 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v73JF-0001kJ-6W
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:56:51 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-46e34052bb7so18748255e9.2
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 19:56:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760065000; x=1760669800; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lcY/56VJ8b9tiERvGPI7f1dYWKOqbJy45Kwg8QaOX1k=;
- b=y0WQht23yf0aZxZ2zi8INNKmTiA6JXUJERtQaTRiKpI2cVwvAuboS/3vLPNNrDZaHT
- SPm9pVu1t5BsX/tGO9dRRluf1ClRnFbxx25IVJZ/qCVVdLsLLRTnfVIBQ14ACMz8w68H
- aK3BQ6ltACy0TlaDZCR2LWud4vKJhsmRQTm8IoIEESWoNznlhVOfNM/VHrRwUU2P5WHH
- wNIb/gyjFXTrLtvjxziCOjsBOYrf7aIeBbgT8xPIzhG1bm5wtiICqypyCJyGv+7gh+hA
- 2wjIzpNK1PDOUOr9nkqhgvStC+VvZBoKyHoDWKqiwQImGI0l77bbPYR2wEr5NTNFAK0w
- 7iPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760065000; x=1760669800;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lcY/56VJ8b9tiERvGPI7f1dYWKOqbJy45Kwg8QaOX1k=;
- b=u8k/gbzRXvRnXwZgaf1Tnn2CW11yos1zdoz2wQSgScbnwKD8aXIt48AIAN4A5JjF5t
- A4pNiREIv48+jOCSncVc27KHbuMu68w61GO/csMKjlpxZzXOo4LdTU+8z1g61I5qBNKY
- NkBHwcVcpLs33oqcHXIOmFAQXR9lHXpVjEF2GFtE5xa+/4v0A3/61GSw6hrleXEX2Gdn
- JlerfMelHhcNybO+RkherKT4QYix4hbIudJwJNWVOVGSK9sU3ms/Rw3pX/WPSJD8tVSm
- MuenSgXeWcyXDAmKtLdruuBAXtdCUsxjDnQ8d/0S2l/D7d+ED3mFmofn4AFSI/6Z+Bog
- KrqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhhC60t4HVYuouyT0A5NKqqiTzfFtLZ32drg07SH4a4PgeIWsQpTou+9qoHnqgkUrN+8f0u+7U3BMB@nongnu.org
-X-Gm-Message-State: AOJu0YyoG0VkUIr+hMAmMxeObWh+n4GpSoPBaV9U0Qg69g4w0Zwyzi5t
- iCu9lLCWSW1MqMvjDBBBrgRE51tIDahs9GCzKcBmjqZB8lJQD1r4eHqKqtBknxmr7JI=
-X-Gm-Gg: ASbGncuH1Ed547zNhaolU6qW0sZ465nDa7aIrUPnQImbRtqG6rbZvmDCjRQJ0ivYMYG
- BWcmB1PYcL3gx4cMM1evgeCjm6YqDad7Xl3V2ICIM2oMiHMQOChhEexdjI5RTsN1gW9GtHvg8XE
- FjUMAfZKJLBF6DwCm8pea1GLpmn5M/+wzNMhk5Q8Ixme8WyaBz+K2uoQTr2W3gMxYXslp8vFYAX
- 8qk2xiMji8ublr+wwXjfOK1iM8+iMJtWONus7+5sku9WVBYKD2AH/Nb7T1GgVKMZwFZopZnV/Sy
- n/l5Q7+NTE1DdX9yZ33J8LOBhuDcEssgUIq+sNDzxWTOOseV4/va4jFLhg8uwzSNYzltlBXNa0W
- crUdoAKNTjZ5nYcUKXWoz/h7OVI0aERtfGCy9crCaTFOlIUgsgSlF9xQx0MWDI0xNa/DD+NRAPs
- TDGDV5G32DZJYo1tv0CzSMqWg=
-X-Google-Smtp-Source: AGHT+IGotSL+4T08nNdItuMy0Sq1VsJk7rSYLuN3aKB/APH0tYZAwymYcuhxHln9FHng26vXek1FSw==
-X-Received: by 2002:a05:600c:83ce:b0:46e:394b:49b7 with SMTP id
- 5b1f17b1804b1-46fa9b16597mr61536225e9.37.1760064999929; 
- Thu, 09 Oct 2025 19:56:39 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e0e70sm1799837f8f.40.2025.10.09.19.56.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 19:56:39 -0700 (PDT)
-Message-ID: <78a13e96-1404-484d-a985-6b403fd1462c@linaro.org>
-Date: Fri, 10 Oct 2025 04:56:38 +0200
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v73JZ-0006IG-O9
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:57:06 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v73JS-0001kj-QV
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:57:05 -0400
+DKIM-Signature: a=rsa-sha256; bh=yFAyRCYZF6OU/chPVhuheF5qFHBRpIViN8VbVhB+zTA=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1760065007; v=1;
+ b=PTEbWnxgV4p1tgmasqu0iIDWpMNJZGssZGWGcYq8wyLQXfSM1MrpNfxDvpk6asK/GxL0O1G2
+ 0UdqN2ZLspFdSq+cA8DJoAZ5lmmPFyZ3qrI3US9GSbfRfzIa5AcAQRLMGe+yfaEkEhbhq5+LJ70
+ xR0V8LlGGuc+/43y37WWjS7ADPVrPfqgGw8X4RUZE31jwqnqpVY+7GpAuY118GpF6ztWq14js0B
+ B/CEdKEKytjeXau9Rf/EoPbXMCP1Pj3LEm1Uo5Zq5KpkcyOYOkttfTcW14UOsjyGcdb4XHos0xN
+ tifBw6esdEBGTHhp7+o+9fq/hKmsqgBU9uIA1qplv4vEQ==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 7EF4F23ADD;
+ Fri, 10 Oct 2025 02:56:47 +0000 (UTC)
+From: ~myrslint <myrslint@git.sr.ht>
+Date: Fri, 10 Oct 2025 02:43:48 +0000
+Subject: [PATCH qemu v6 1/1] Honor guest PAT on x86, absent Bochs display
+Message-ID: <176006500714.5527.9159197863408802401-1@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <176006500714.5527.9159197863408802401-0@git.sr.ht>
+To: qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/avr: Use vaddr type for $PC jumps
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20251009200525.33987-1-philmd@linaro.org>
- <3460610b-5c1a-4189-8f0a-fd04897effb5@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3460610b-5c1a-4189-8f0a-fd04897effb5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,66 +63,195 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 23:42, Richard Henderson wrote:
-> On 10/9/25 13:05, Philippe Mathieu-Daudé wrote:
->> translator_use_goto_tb() expects a vaddr type since commit
->> b1c09220b4c ("accel/tcg: Replace target_ulong with vaddr in
->> translator*()").
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/avr/translate.c | 18 +++++++++---------
->>   1 file changed, 9 insertions(+), 9 deletions(-)
->>
->> diff --git a/target/avr/translate.c b/target/avr/translate.c
->> index 804b0b21dbd..20191055861 100644
->> --- a/target/avr/translate.c
->> +++ b/target/avr/translate.c
->> @@ -87,7 +87,7 @@ struct DisasContext {
->>       CPUAVRState *env;
->>       CPUState *cs;
->> -    target_long npc;
->> +    vaddr npc;
-> 
-> Ah, here's where proper typing might have saved us a bug.
-> 
-> npc is not a virtual (or physical) address in the normal sense, it is a 
-> *word* address (i.e. byte address / 2).
-> 
-> So I think you should just use uint32_t here.
+From: myrslint <qemu.haziness801@passinbox.com>
 
-IIUC the field is 24-bit wide, OK.
+On x86_64, where most CPUs support self-snoop, it is preferrable to
+always honor guest PAT. Not doing so is a quirk. There is a default
+enabled KVM quirk flag which enforces not doing so due to a former bug
+in Bochs display driver.
 
-> 
->>       uint32_t opcode;
->>       /* Routine used to access memory */
->> @@ -981,7 +981,7 @@ static void gen_pop_ret(DisasContext *ctx, TCGv ret)
->>       }
->>   }
->> -static void gen_goto_tb(DisasContext *ctx, int n, target_ulong dest)
->> +static void gen_goto_tb(DisasContext *ctx, int n, vaddr dest)
->>   {
->>       const TranslationBlock *tb = ctx->base.tb;
->> @@ -1004,7 +1004,7 @@ static void gen_goto_tb(DisasContext *ctx, int 
->> n, target_ulong dest)
->>    */
->>   static bool trans_RJMP(DisasContext *ctx, arg_RJMP *a)
->>   {
->> -    int dst = ctx->npc + a->imm;
->> +    vaddr dst = ctx->npc + a->imm;
-> 
-> And here...
-> 
->>       gen_goto_tb(ctx, 0, dst);
-> 
-> ... and therefore also in the gen_goto_tb argument.
-> 
-> The bug can thus be said to be within gen_goto_tb, where we don't 
-> convert from word address to byte address.
+The bug has been fixed but not enough has yet passed since so we only
+disable said quirk flag if a Bochs display is not configured for the
+virtual machine.
 
-Oh I see. Then avr_tr_insn_start() is also buggy?
+This commit also moves around a bit of code that would be called when
+the initialization of a VM is done.
 
+Signed-off-by: myrslint <qemu.haziness801@passinbox.com>
+---
+ accel/kvm/kvm-all.c        |  1 +
+ accel/stubs/kvm-stub.c     |  1 +
+ hw/display/bochs-display.c |  5 +++++
+ include/system/kvm.h       |  9 ++++++++
+ target/i386/kvm/kvm.c      | 42 +++++++++++++++++++++++++++++++-------
+ 5 files changed, 51 insertions(+), 7 deletions(-)
+
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 58802f7c3c..391ec08629 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -103,6 +103,7 @@ bool kvm_readonly_mem_allowed;
+ bool kvm_vm_attributes_allowed;
+ bool kvm_msi_use_devid;
+ bool kvm_pre_fault_memory_supported;
++bool kvm_bochs_drm;
+ static bool kvm_has_guest_debug;
+ static int kvm_sstep_flags;
+ static bool kvm_immediate_exit;
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index 68cd33ba97..e56b745d5d 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -24,6 +24,7 @@ bool kvm_gsi_direct_mapping;
+ bool kvm_allowed;
+ bool kvm_readonly_mem_allowed;
+ bool kvm_msi_use_devid;
++bool kvm_bochs_drm;
+=20
+ void kvm_flush_coalesced_mmio_buffer(void)
+ {
+diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
+index ad2821c974..9a33a4cd26 100644
+--- a/hw/display/bochs-display.c
++++ b/hw/display/bochs-display.c
+@@ -20,6 +20,8 @@
+ #include "ui/qemu-pixman.h"
+ #include "qom/object.h"
+=20
++#include "system/kvm.h"
++
+ typedef struct BochsDisplayMode {
+     pixman_format_code_t format;
+     uint32_t             bytepp;
+@@ -261,6 +263,7 @@ static const GraphicHwOps bochs_display_gfx_ops =3D {
+     .gfx_update =3D bochs_display_update,
+ };
+=20
++
+ static void bochs_display_realize(PCIDevice *dev, Error **errp)
+ {
+     BochsDisplayState *s =3D BOCHS_DISPLAY(dev);
+@@ -309,6 +312,8 @@ static void bochs_display_realize(PCIDevice *dev, Error *=
+*errp)
+     }
+=20
+     memory_region_set_log(&s->vram, true, DIRTY_MEMORY_VGA);
++
++    kvm_bochs_drm =3D true;
+ }
+=20
+ static bool bochs_display_get_big_endian_fb(Object *obj, Error **errp)
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 4fc09e3891..62b49deb3d 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -43,6 +43,7 @@ extern bool kvm_gsi_direct_mapping;
+ extern bool kvm_readonly_mem_allowed;
+ extern bool kvm_msi_use_devid;
+ extern bool kvm_pre_fault_memory_supported;
++extern bool kvm_bochs_drm;
+=20
+ #define kvm_enabled()           (kvm_allowed)
+ /**
+@@ -144,6 +145,13 @@ extern bool kvm_pre_fault_memory_supported;
+  */
+ #define kvm_msi_devid_required() (kvm_msi_use_devid)
+=20
++/**
++ * kvm_has_bochs_drm:
++ * Returns: true if KVM is possible and a Bochs DRM driver is
++ * in use for display.
++ */
++#define kvm_has_bochs_drm() (kvm_bochs_drm)
++
+ #else
+=20
+ #define kvm_enabled()           (0)
+@@ -158,6 +166,7 @@ extern bool kvm_pre_fault_memory_supported;
+ #define kvm_gsi_direct_mapping() (false)
+ #define kvm_readonly_mem_enabled() (false)
+ #define kvm_msi_devid_required() (false)
++#define kvm_has_bochs_drm() (false)
+=20
+ #endif  /* CONFIG_KVM_IS_POSSIBLE */
+=20
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index db40caa341..a720cc791b 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2692,13 +2692,13 @@ static bool kvm_rdmsr_pkg_energy_status(X86CPU *cpu,
+     return true;
+ }
+=20
+-static Notifier smram_machine_done;
++static Notifier kvm_machine_done;
+ static KVMMemoryListener smram_listener;
+ static AddressSpace smram_address_space;
+ static MemoryRegion smram_as_root;
+ static MemoryRegion smram_as_mem;
+=20
+-static void register_smram_listener(Notifier *n, void *unused)
++static void register_smram_listener(void)
+ {
+     CPUState *cpu;
+     MemoryRegion *smram =3D
+@@ -2731,6 +2731,37 @@ static void register_smram_listener(Notifier *n, void =
+*unused)
+     }
+ }
+=20
++static bool kvm_x86_smm_enabled(void)
++{
++    return object_dynamic_cast(OBJECT(current_machine), TYPE_X86_MACHINE) &&
++        x86_machine_is_smm_enabled(X86_MACHINE(current_machine));
++}
++
++static int kvm_x86_disable_quirsk2_mask(void)
++{
++    return kvm_check_extension(kvm_state, KVM_CAP_DISABLE_QUIRKS2);
++}
++
++static int kvm_disable_ignore_guest_pat(void)
++{
++    return kvm_vm_enable_cap(kvm_state, KVM_CAP_DISABLE_QUIRKS2, 0, \
++                             KVM_X86_QUIRK_IGNORE_GUEST_PAT);
++}
++
++static void handle_machine_done(Notifier *n, void *unused)
++{
++    if (kvm_x86_smm_enabled()) {
++        register_smram_listener();
++    }
++    if (!kvm_has_bochs_drm() && \
++        (kvm_x86_disable_quirsk2_mask() & KVM_X86_QUIRK_IGNORE_GUEST_PAT)) {
++        if (kvm_disable_ignore_guest_pat()) {
++            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
++                         "modifiable but we failed to disable it\n");
++        }
++    }
++}
++
+ static void *kvm_msr_energy_thread(void *data)
+ {
+     KVMState *s =3D data;
+@@ -3311,11 +3342,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return ret;
+     }
+=20
+-    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
+-        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
+-        smram_machine_done.notify =3D register_smram_listener;
+-        qemu_add_machine_init_done_notifier(&smram_machine_done);
+-    }
++    kvm_machine_done.notify =3D handle_machine_done;
++    qemu_add_machine_init_done_notifier(&kvm_machine_done);
+=20
+     if (enable_cpu_pm) {
+         ret =3D kvm_vm_enable_disable_exits(s);
+--=20
+2.49.1
 
