@@ -4,117 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02745CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D943CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7G69-0001ZA-Ij; Fri, 10 Oct 2025 12:36:05 -0400
+	id 1v7G8Q-0002se-Lu; Fri, 10 Oct 2025 12:38:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1v7G67-0001YY-BT
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:36:03 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1v7G8O-0002ql-8w; Fri, 10 Oct 2025 12:38:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1v7G5v-0000cC-Ks
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:36:03 -0400
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 1750B3F856
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 16:35:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1760114146;
- bh=QaVtz2NggfnfOX88S3WaJFIqZE/kNbMv9KPKHmYvMY8=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=MaGJPwW5Mhw+fdNhpzpfLzdjsWBjhdkQbTGTmFglNXBxtXoM9Xh7lRpajsFShkyZf
- NZFhzP8zftayd25AI3HyL+KZD3uXqppwHlJFD6cnxGKIzY6ND4y/NdZbNr3z1y4ml7
- hFDJFunEm6Ed5UdWsy7w/3hp9DhIQwBSUsTdd6uP78ukojhWD1tnrPnQAMPk389b7k
- rJfvJxESnPGKoHk0xQ3tu2bjW8Y5IqBilvseeUAWj8KrhaqjdetiVHZzKMz087L2Qm
- o+0fQ0QrdPrnzhzE36M1T8c2yl+3yvd7h7DuZh9PzIQnTAwA87QALVTwSLMqtOpTwe
- UfAx1/FEILwarmPwJgLc8nSuxVoy5MlTvUwGsglxVmOriE44ExFChq/WndX1e5hTqu
- xhWwryd6A5dfdAQhx1uhRVcAXtP1HAbmFIiZUegJjjX56vv3j7olurpLf+6Y5NmVKh
- mQHxmeCpfchM4BCaatuRf43URHDxTmw6i3dtbWNRy/0U1Md9lJ1bonJQxaD7ZCFsSt
- xI3XBDuzDbHQnRBOsx5Bkv94xGuZraWuoFnKFw/t6Bg7knBc1bCx3JaiaKtWr1LxUu
- pt8GOBIX6QFnt5S9dcs9SvvvWT/rZ1pw6U0Yo3R/aWQsjuXFqaP9RpXv1z/7eHBPGP
- vTGBiz/PRD4Fk72GT0qclLfc=
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e31191379so16284645e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:35:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760114145; x=1760718945;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QaVtz2NggfnfOX88S3WaJFIqZE/kNbMv9KPKHmYvMY8=;
- b=J2qflEHPggBQVV9ncv6kvQrWiOy+JMe6zWAzgygFECTrUUA/bwRlhVr9C4MeVb5wEb
- UtvqRxOIkNBtMy2wZWgg55KuxBQlamoUriILT6WDGsBB7Om5y9iP267bTPtbrZ5KlE5r
- 78fLPecPz7csIXLL3ywCY7+zilwqxZk3cpieaXMMoM3Uf4HtylZcZ+dQyFQ4GtcmSmXU
- /cbtCTC8SDSKfrCYsMNO+8oGVOTQCx6SR6U5joXZ9K74KSfsCHFe6EaPIdPJOE1tkBkx
- WOtl4QvVcQIQmHpSAS9Q5RxtCWDKLhgsImU7mJGYjJridvL34HLJpr8r6tlfjqMRLz9D
- /qCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU33nHYquyln8/QeZmdkHNmOEV9UCAfL8gFa6lKIb85MmfOYHKXk13gmVpWcZzcGzeA1Xl5x6X1hK72@nongnu.org
-X-Gm-Message-State: AOJu0YxQCGsTqebYebNLtzD5jU8dkieYxw52A3tZQPZkFgiGqAUX3TS3
- 1oHdeYpv5+gpEfqeMSvLf2HF6jLsQ1AmQftzz1lDuNI7Db2rvBF9gLPhZTqBEodLm28Ahpndze2
- XaVXjm7hmG4zafqdjW1ix/CAh8BlbcPY9+9ZirAmNz3Ruo3I4txrZML4MbpAVb1AT49nYlugb
-X-Gm-Gg: ASbGncuG0K5Djo3DQHt7WIWjXkHko1pjUlwkRd9jH4NjNKLqga09Eyg0tPTKXeE4Ykt
- MU9csVcOPyIUAkKFU/60fNHtQTsnvwoyXpEnIvQyGUXxCgTpr75/2sf+9JsDzoANgDjmwOHEAxu
- BAY+bD6lpsDd/e4W2XbOzca5tEeZrDHUeaUguklpBnLqLZJQzN4IHLmKCjv1jcoUh283/LIcmcq
- PfWiJe+Zzkxhw3/foSObhFKavLZ0alKxfGXxwwZ/E1bZT9C5jjPwm7SJADBrxwyldCG6OzpxpEJ
- UFsE4PylnMvIRixLDd8pWA4wjAD+U1B2u7iF6RAEMj6xgH4oCLlPfsF6K4M9K42rW4SVbYBZMiJ
- q47j3eDOupkOMgt8+LCaeeWrlgdikLK/fsBPHkA==
-X-Received: by 2002:a05:600c:1d18:b0:46e:4c02:c2f9 with SMTP id
- 5b1f17b1804b1-46fa9b18e0emr91219565e9.36.1760114144803; 
- Fri, 10 Oct 2025 09:35:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGq1jeN58U8h5TTRGrIVxqrLszuLlxV0cwv7qK0wlXC4jVtfkB1NoCzNADOwuLSfjAjTdD6KQ==
-X-Received: by 2002:a05:600c:1d18:b0:46e:4c02:c2f9 with SMTP id
- 5b1f17b1804b1-46fa9b18e0emr91219375e9.36.1760114144345; 
- Fri, 10 Oct 2025 09:35:44 -0700 (PDT)
-Received: from [192.168.103.116]
- (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fab633cdasm62544555e9.9.2025.10.10.09.35.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 09:35:43 -0700 (PDT)
-Message-ID: <911ff888-2188-48c7-b347-9705d859e2c3@canonical.com>
-Date: Fri, 10 Oct 2025 18:35:42 +0200
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1v7G8E-0001pc-4L; Fri, 10 Oct 2025 12:38:22 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59A9gYWI031146;
+ Fri, 10 Oct 2025 16:37:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7sPDJm
+ siV4b7dxgH72UO9PRA0SHd1rKNB7Fm8YquCJE=; b=tpiH4TweZ+vSZ2p77PLq0e
+ CSuAdUdw2ZD44d+Ire0Oe0MPLntUeW/66nRHl0Kn/WYKqbysPNCwuuWZ/C64T+ZB
+ GOdv7d+w3fhGVhiOWrE4hUhlamo/XIz2sWa95Ux4h/PWIPaVLVtVR+u3sKGpG3Tl
+ FC7h6AjuhH5xVJt4GW7IDFAWV4UaFzuZ8YaghHCq0Gr0OLA4RQ4JpN2yITajWzk0
+ ofZWag5C66l3678R10o0bmbLJn6TOXgLH3mY0EhzOERMDoR1GSkZ8LWXNA15HLXx
+ gtWm/z+Amz8RpuLCCJYoK1mS0PsU7cmm99iax2FlC6Na/EfU2fgVLJ6Tr0OlYR8A
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv81umv7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Oct 2025 16:37:58 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59AG0CTN022773;
+ Fri, 10 Oct 2025 16:37:57 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49nv8vjrpp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Oct 2025 16:37:57 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59AGbu4B27984638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 10 Oct 2025 16:37:56 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EF82458056;
+ Fri, 10 Oct 2025 16:37:55 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E633858052;
+ Fri, 10 Oct 2025 16:37:54 +0000 (GMT)
+Received: from [9.61.95.157] (unknown [9.61.95.157])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 10 Oct 2025 16:37:54 +0000 (GMT)
+Message-ID: <4a05dabf-44cc-43f4-979c-82f6f554cfb5@linux.ibm.com>
+Date: Fri, 10 Oct 2025 12:37:54 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/13] target/riscv: Introduce mo_endian() helper
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
- Ben Dooks <ben.dooks@codethink.co.uk>
-References: <20251010155045.78220-1-philmd@linaro.org>
- <20251010155045.78220-13-philmd@linaro.org>
+Subject: Re: [PATCH v6 12/28] s390x/diag: Implement DIAG 508 subcode 1 for
+ signature verification
+To: Thomas Huth <thuth@redhat.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-13-zycai@linux.ibm.com>
+ <9acf7d52-0dc9-4c07-9d74-758682a5c62e@redhat.com>
 Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <20251010155045.78220-13-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <9acf7d52-0dc9-4c07-9d74-758682a5c62e@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Zbn3ErMHn2dYUA61C0I31oXm9Ps4Do-H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX1+Qr4T7xBISx
+ yra9ILxJzJk7gGgCt0k6qCa2bJK9cXxrouN2P55CZRv9yQDkYKENF9J73KMVPl7Von+UbYgZ1m6
+ dFdRfi1smi5J3MoEKg5R1VMad8bOqCmDiDyGCXfky5+B2yWaF2yiDmd+MDHnHDaMxfFN/Iwx6yg
+ TJn+zjSfsqlXM2oZcIXOc4DVkbNIWT6S+2lBMk8CKYK8JMwgY75UmS3djDU5F89Hx7mQgkJZTRV
+ rA9T6z7MUXRszG/j759gr9DXd7za42vdHnwlzLaZbLXA9C0kq8O6b6BT33Kc/I3ATWobiA0ZyVP
+ sPq7H5sitYBxVOGCEVm+4JKO3F/WM+ET5XK+on5T9Srvp9t6Jk75qoopgc1J0lrQCSyl5E5hdmY
+ i9dN6+QAY57mGHTCnDZCwW+lmG6mnw==
+X-Authority-Analysis: v=2.4 cv=cKntc1eN c=1 sm=1 tr=0 ts=68e93666 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=mDV3o1hIAAAA:8 a=VnNF1IyMAAAA:8
+ a=q3pf7pJw0Im37hG0fjQA:9 a=QEXdDO2ut3YA:10 a=ZuZp5r4odJYA:10
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: Zbn3ErMHn2dYUA61C0I31oXm9Ps4Do-H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-10_03,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,329 +127,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 17:50, Philippe Mathieu-Daudé wrote:
-> mo_endian() returns the target endianness from DisasContext.
+On 10/7/25 6:27 AM, Thomas Huth wrote:
+> On 18/09/2025 01.21, Zhuoying Cai wrote:
+>> From: Collin Walling <walling@linux.ibm.com>
+>>
+>> DIAG 508 subcode 1 performs signature-verification on signed components.
+>> A signed component may be a Linux kernel image, or any other signed
+>> binary. **Verification of initrd is not supported.**
+>>
+>> The instruction call expects two item-pairs: an address of a device
+>> component, an address of the analogous signature file (in PKCS#7 DER format),
+>> and their respective lengths. All of this data should be encapsulated
+>> within a Diag508SigVerifBlock.
+>>
+>> The DIAG handler will read from the provided addresses
+>> to retrieve the necessary data, parse the signature file, then
+>> perform the signature-verification. Because there is no way to
+>> correlate a specific certificate to a component, each certificate
+>> in the store is tried until either verification succeeds, or all
+>> certs have been exhausted.
+>>
+>> The subcode value is denoted by setting the second-to-left-most bit of
+>> a 2-byte field.
+>>
+>> A return code of 1 indicates success, and the index and length of the
+>> corresponding certificate will be set in the Diag508SigVerifBlock.
+>> The following values indicate failure:
+>>
+>> 	0x0102: certificate not available
+>> 	0x0202: component data is invalid
+>> 	0x0302: signature is not in PKCS#7 format
+>> 	0x0402: signature-verification failed
+>> 	0x0502: length of Diag508SigVerifBlock is invalid
+>>
+>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+
+[...]
+
+>> +
+>> +static int handle_diag508_sig_verif(uint64_t addr, size_t svb_size,
+>> +                                    S390IPLCertificateStore *qcs)
+>> +{
+>> +    int rc;
+>> +    int verified;
+>> +    uint32_t svb_len;
+>> +    uint64_t comp_len, comp_addr;
+>> +    uint64_t sig_len, sig_addr;
+>> +    g_autofree uint8_t *svb_comp = NULL;
+>> +    g_autofree uint8_t *svb_sig = NULL;
+>> +    g_autofree Diag508SigVerifBlock *svb = NULL;
+>> +
+>> +    if (!qcs || !qcs->count) {
+>> +        return DIAG_508_RC_NO_CERTS;
+>> +    }
+>> +
+>> +    svb = g_new0(Diag508SigVerifBlock, 1);
+>> +    cpu_physical_memory_read(addr, svb, svb_size);
+>> +
+>> +    svb_len = be32_to_cpu(svb->length);
+>> +    if (svb_len != svb_size) {
+>> +        return DIAG_508_RC_INVAL_LEN;
+>> +    }
+>> +
+>> +    comp_len = be64_to_cpu(svb->comp_len);
+>> +    comp_addr = be64_to_cpu(svb->comp_addr);
+>> +    sig_len = be64_to_cpu(svb->sig_len);
+>> +    sig_addr = be64_to_cpu(svb->sig_addr);
+>> +
+>> +    if (!comp_len || !comp_addr) {
+>> +        return DIAG_508_RC_INVAL_COMP_DATA;
+>> +    }
+>> +
+>> +    if (!sig_len || !sig_addr) {
+>> +        return DIAG_508_RC_INVAL_PKCS7_SIG;
+>> +    }
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/riscv/translate.c                      | 18 +++++++++++++++---
->   target/riscv/insn_trans/trans_rva.c.inc       |  4 ++--
->   target/riscv/insn_trans/trans_rvd.c.inc       |  4 ++--
->   target/riscv/insn_trans/trans_rvf.c.inc       |  4 ++--
->   target/riscv/insn_trans/trans_rvi.c.inc       |  4 ++--
->   target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 ++--
->   target/riscv/insn_trans/trans_rvzce.c.inc     |  4 ++--
->   target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 ++--
->   target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 ++--
->   target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++++++++--------
->   10 files changed, 39 insertions(+), 27 deletions(-)
+> I think there should also be something like an upper limit for comp_len and 
+> sign_len here. Otherwise a malicious guest could force QEMU into allocating 
+> giga- or terabytes of memory here to cause out-of-memory situations in the host.
 > 
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 2e6f39aa02d..e1f4dc5ffd0 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -126,6 +126,18 @@ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
->       return ctx->misa_ext & ext;
->   }
->   
-> +static inline MemOp mo_endian(DisasContext *ctx)
-> +{
-> +    /*
-> +     * A couple of bits in MSTATUS set the endianness:
-> +     *  - MSTATUS_UBE (User-mode),
-> +     *  - MSTATUS_SBE (Supervisor-mode),
-> +     *  - MSTATUS_MBE (Machine-mode)
-> +     * but we don't implement that yet.
 
-CCing Ben as he is interested in big-endian RISC-V emulation.
+Thank you for the suggestion. I agree that setting an upper limit would
+help prevent unreasonable memory requests. I think it makes sense to
+choose a reasonable value so we don't have to adjust it too often, but
+I'm not entirely sure how to determine an appropriate upper bound.
 
-Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Re: sig_len - the signature length can vary depending on the
+cryptographic algorithm, and I don't believe there's a strict limit.
+(FYI, in a somewhat similar situation, we haven't enforced a maximum
+size on certificate files when loading them into memory, since they're
+assumed to be trusted, as Daniel previously suggested -
+https://lists.gnu.org/archive/html/qemu-s390x/2025-06/msg00049.html).
 
-> +     */
-> +    return MO_TE;
-> +}
-> +
->   #ifdef TARGET_RISCV32
->   #define get_xl(ctx)    MXL_RV32
->   #elif defined(CONFIG_USER_ONLY)
-> @@ -142,7 +154,7 @@ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
->   #define get_address_xl(ctx)    ((ctx)->address_xl)
->   #endif
->   
-> -#define mxl_memop(ctx) ((get_xl(ctx) + 1) | MO_TE)
-> +#define mxl_memop(ctx) ((get_xl(ctx) + 1) | mo_endian(ctx))
->   
->   /* The word size for this machine mode. */
->   static inline int __attribute__((unused)) get_xlen(DisasContext *ctx)
-> @@ -1135,7 +1147,7 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
->       TCGv src1, src2 = get_gpr(ctx, a->rs2, EXT_NONE);
->       MemOp size = mop & MO_SIZE;
->   
-> -    mop |= MO_TE;
-> +    mop |= mo_endian(ctx);
->       if (ctx->cfg_ptr->ext_zama16b && size >= MO_32) {
->           mop |= MO_ATOM_WITHIN16;
->       } else {
-> @@ -1156,7 +1168,7 @@ static bool gen_cmpxchg(DisasContext *ctx, arg_atomic *a, MemOp mop)
->       TCGv src1 = get_address(ctx, a->rs1, 0);
->       TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);
->   
-> -    mop |= MO_TE;
-> +    mop |= mo_endian(ctx);
->       decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
->       tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
->   
-> diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
-> index 8737e8d60d1..a7a3278d242 100644
-> --- a/target/riscv/insn_trans/trans_rva.c.inc
-> +++ b/target/riscv/insn_trans/trans_rva.c.inc
-> @@ -35,7 +35,7 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
->       TCGv src1;
->   
->       mop |= MO_ALIGN;
-> -    mop |= MO_TE;
-> +    mop |= mo_endian(ctx);
->   
->       decode_save_opc(ctx, 0);
->       src1 = get_address(ctx, a->rs1, 0);
-> @@ -65,7 +65,7 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
->       TCGLabel *l2 = gen_new_label();
->   
->       mop |= MO_ALIGN;
-> -    mop |= MO_TE;
-> +    mop |= mo_endian(ctx);
->   
->       decode_save_opc(ctx, 0);
->       src1 = get_address(ctx, a->rs1, 0);
-> diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/insn_trans/trans_rvd.c.inc
-> index 62b75358158..ffea0c2a1f9 100644
-> --- a/target/riscv/insn_trans/trans_rvd.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvd.c.inc
-> @@ -60,7 +60,7 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
->       } else {
->           memop |= MO_ATOM_IFALIGN;
->       }
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->   
->       decode_save_opc(ctx, 0);
->       addr = get_address(ctx, a->rs1, a->imm);
-> @@ -85,7 +85,7 @@ static bool trans_fsd(DisasContext *ctx, arg_fsd *a)
->       } else {
->           memop |= MO_ATOM_IFALIGN;
->       }
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->   
->       decode_save_opc(ctx, 0);
->       addr = get_address(ctx, a->rs1, a->imm);
-> diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
-> index 878417eae92..89fb0f604ad 100644
-> --- a/target/riscv/insn_trans/trans_rvf.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvf.c.inc
-> @@ -48,7 +48,7 @@ static bool trans_flw(DisasContext *ctx, arg_flw *a)
->       REQUIRE_FPU;
->       REQUIRE_EXT(ctx, RVF);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       if (ctx->cfg_ptr->ext_zama16b) {
->           memop |= MO_ATOM_WITHIN16;
->       }
-> @@ -71,7 +71,7 @@ static bool trans_fsw(DisasContext *ctx, arg_fsw *a)
->       REQUIRE_FPU;
->       REQUIRE_EXT(ctx, RVF);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       if (ctx->cfg_ptr->ext_zama16b) {
->           memop |= MO_ATOM_WITHIN16;
->       }
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-> index 8db3e78baab..a6fe912b30c 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -404,7 +404,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
->   {
->       bool out;
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       if (ctx->cfg_ptr->ext_zama16b) {
->           memop |= MO_ATOM_WITHIN16;
->       }
-> @@ -508,7 +508,7 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
->   
->   static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
->   {
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       if (ctx->cfg_ptr->ext_zama16b) {
->           memop |= MO_ATOM_WITHIN16;
->       }
-> diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/insn_trans/trans_rvzacas.c.inc
-> index 6458ac4f241..8d94b83ce94 100644
-> --- a/target/riscv/insn_trans/trans_rvzacas.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
-> @@ -76,7 +76,7 @@ static bool gen_cmpxchg64(DisasContext *ctx, arg_atomic *a, MemOp mop)
->       TCGv src1 = get_address(ctx, a->rs1, 0);
->       TCGv_i64 src2 = get_gpr_pair(ctx, a->rs2);
->   
-> -    mop |= MO_TE;
-> +    mop |= mo_endian(ctx);
->       decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
->       tcg_gen_atomic_cmpxchg_i64(dest, src1, dest, src2, ctx->mem_idx, mop);
->   
-> @@ -121,7 +121,7 @@ static bool trans_amocas_q(DisasContext *ctx, arg_amocas_q *a)
->       TCGv_i64 desth = get_gpr(ctx, a->rd == 0 ? 0 : a->rd + 1, EXT_NONE);
->       MemOp memop = MO_ALIGN | MO_UO;
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_concat_i64_i128(src2, src2l, src2h);
->       tcg_gen_concat_i64_i128(dest, destl, desth);
->       decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-> diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
-> index 172c2c19c17..0d3ba40e52a 100644
-> --- a/target/riscv/insn_trans/trans_rvzce.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-> @@ -185,7 +185,7 @@ static bool gen_pop(DisasContext *ctx, arg_cmpp *a, bool ret, bool ret_val)
->   
->       tcg_gen_addi_tl(addr, sp, stack_adj - reg_size);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       for (i = X_Sn + 11; i >= 0; i--) {
->           if (reg_bitmap & (1 << i)) {
->               TCGv dest = dest_gpr(ctx, i);
-> @@ -239,7 +239,7 @@ static bool trans_cm_push(DisasContext *ctx, arg_cm_push *a)
->   
->       tcg_gen_subi_tl(addr, sp, reg_size);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       for (i = X_Sn + 11; i >= 0; i--) {
->           if (reg_bitmap & (1 << i)) {
->               TCGv val = get_gpr(ctx, i, EXT_NONE);
-> diff --git a/target/riscv/insn_trans/trans_rvzfh.c.inc b/target/riscv/insn_trans/trans_rvzfh.c.inc
-> index 5355cd46c3d..791ee51f652 100644
-> --- a/target/riscv/insn_trans/trans_rvzfh.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzfh.c.inc
-> @@ -49,7 +49,7 @@ static bool trans_flh(DisasContext *ctx, arg_flh *a)
->       REQUIRE_FPU;
->       REQUIRE_ZFHMIN_OR_ZFBFMIN(ctx);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       decode_save_opc(ctx, 0);
->       t0 = get_gpr(ctx, a->rs1, EXT_NONE);
->       if (a->imm) {
-> @@ -74,7 +74,7 @@ static bool trans_fsh(DisasContext *ctx, arg_fsh *a)
->       REQUIRE_FPU;
->       REQUIRE_ZFHMIN_OR_ZFBFMIN(ctx);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       decode_save_opc(ctx, 0);
->       t0 = get_gpr(ctx, a->rs1, EXT_NONE);
->       if (a->imm) {
-> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> index 89eed007587..0b6ad57965c 100644
-> --- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> @@ -105,7 +105,7 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
->       decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
->       src1 = get_address(ctx, a->rs1, 0);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx), memop);
->       gen_set_gpr(ctx, a->rd, dest);
->       return true;
-> @@ -135,7 +135,7 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
->       decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
->       src1 = get_address(ctx, a->rs1, 0);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx), memop);
->       gen_set_gpr(ctx, a->rd, dest);
->       return true;
-> diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/insn_trans/trans_xthead.c.inc
-> index 2f31842791e..f8b95c6498b 100644
-> --- a/target/riscv/insn_trans/trans_xthead.c.inc
-> +++ b/target/riscv/insn_trans/trans_xthead.c.inc
-> @@ -349,7 +349,7 @@ static bool gen_fload_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
->       TCGv_i64 rd = cpu_fpr[a->rd];
->       TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_ld_i64(rd, addr, ctx->mem_idx, memop);
->       if ((memop & MO_SIZE) == MO_32) {
->           gen_nanbox_s(rd, rd);
-> @@ -370,7 +370,7 @@ static bool gen_fstore_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
->       TCGv_i64 rd = cpu_fpr[a->rd];
->       TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_st_i64(rd, addr, ctx->mem_idx, memop);
->   
->       return true;
-> @@ -570,7 +570,7 @@ static bool gen_load_inc(DisasContext *ctx, arg_th_meminc *a, MemOp memop,
->       TCGv rd = dest_gpr(ctx, a->rd);
->       TCGv rs1 = get_gpr(ctx, a->rs1, EXT_NONE);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_ld_tl(rd, addr, ctx->mem_idx, memop);
->       tcg_gen_addi_tl(rs1, rs1, imm);
->       gen_set_gpr(ctx, a->rd, rd);
-> @@ -591,7 +591,7 @@ static bool gen_store_inc(DisasContext *ctx, arg_th_meminc *a, MemOp memop,
->       TCGv data = get_gpr(ctx, a->rd, EXT_NONE);
->       TCGv rs1 = get_gpr(ctx, a->rs1, EXT_NONE);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
->       tcg_gen_addi_tl(rs1, rs1, imm);
->       gen_set_gpr(ctx, a->rs1, rs1);
-> @@ -747,7 +747,7 @@ static bool gen_load_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
->       TCGv rd = dest_gpr(ctx, a->rd);
->       TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_ld_tl(rd, addr, ctx->mem_idx, memop);
->       gen_set_gpr(ctx, a->rd, rd);
->   
-> @@ -765,7 +765,7 @@ static bool gen_store_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
->       TCGv data = get_gpr(ctx, a->rd, EXT_NONE);
->       TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
->   
->       return true;
-> @@ -926,7 +926,7 @@ static bool gen_loadpair_tl(DisasContext *ctx, arg_th_pair *a, MemOp memop,
->       addr1 = get_address(ctx, a->rs, imm);
->       addr2 = get_address(ctx, a->rs, memop_size(memop) + imm);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_ld_tl(t1, addr1, ctx->mem_idx, memop);
->       tcg_gen_qemu_ld_tl(t2, addr2, ctx->mem_idx, memop);
->       gen_set_gpr(ctx, a->rd1, t1);
-> @@ -965,7 +965,7 @@ static bool gen_storepair_tl(DisasContext *ctx, arg_th_pair *a, MemOp memop,
->       addr1 = get_address(ctx, a->rs, imm);
->       addr2 = get_address(ctx, a->rs, memop_size(memop) + imm);
->   
-> -    memop |= MO_TE;
-> +    memop |= mo_endian(ctx);
->       tcg_gen_qemu_st_tl(data1, addr1, ctx->mem_idx, memop);
->       tcg_gen_qemu_st_tl(data2, addr2, ctx->mem_idx, memop);
->       return true;
+If we'd like to set an upper limit for sig_len, the largest signature
+I've tested is 1165 bytes, signed with an RSA certificate using an
+8192-bit key. Would 4096 be a reasonable upper bound?
+
+Re: comp_len - the size of the guest kernel I'm currently using is
+14,184,448 (0xD87000). When I built a kernel with make allyesconfig, the
+size can reach 261,005,383 (0xF8EA047). Based on this value, would
+262,000,000 (0xF9DCD80) an appropriate upper limit?
+
+>> +    svb_comp = g_malloc0(comp_len);
+>> +    cpu_physical_memory_read(comp_addr, svb_comp, comp_len);
+>> +
+>> +    svb_sig = g_malloc0(sig_len);
+>> +    cpu_physical_memory_read(sig_addr, svb_sig, sig_len);
+>> +
+>> +    rc = DIAG_508_RC_FAIL_VERIF;
+>> +    /*
+>> +     * It is uncertain which certificate contains
+>> +     * the analogous key to verify the signed data
+>> +     *
+>> +     * Ignore errors from signature format convertion and verification,
+>> +     * because currently in the certificate lookup process.
+> 
+> The second half of above sentence looks incomplete?
+> 
+>> +     *
+>> +     * Any error is treated as a verification failure,
+>> +     * and the final result (verified or not) will be reported later.
+>> +     */
+>> +    for (int i = 0; i < qcs->count; i++) {
+>> +        verified = diag_508_verify_sig(qcs->certs[i].raw,
+>> +                                       qcs->certs[i].size,
+>> +                                       svb_comp, comp_len,
+>> +                                       svb_sig, sig_len);
+>> +        if (verified == 0) {
+>> +            svb->cert_store_index = i;
+>> +            svb->cert_len = cpu_to_be64(qcs->certs[i].der_size);
+>> +            cpu_physical_memory_write(addr, svb, be32_to_cpu(svb_size));
+>> +            rc = DIAG_508_RC_OK;
+>> +            break;
+>> +       }
+>> +    }
+>> +
+>> +    return rc;
+>> +}
+> 
+>   Thomas
+> 
 
 
