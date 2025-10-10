@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F482CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748B6CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Cpu-0006hA-6S; Fri, 10 Oct 2025 09:07:06 -0400
+	id 1v7Cpv-0006gu-2d; Fri, 10 Oct 2025 09:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cps-0006dn-ME
+ id 1v7Cpq-0006V9-LR
  for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:04 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cp1-0003uT-L3
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:04 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so14131765e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:05 -0700 (PDT)
+ id 1v7Cp9-0003wg-Ty
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:01 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3f99ac9acc4so1729070f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101563; x=1760706363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101574; x=1760706374; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/huW5XyGSqEWizP95On9B8pHQS13+WfJtd9lPwIS+q0=;
- b=C18f0zgtxPMkQOzYwIBrqkpLZ9EHWbQdT+5ssC0k76Dhvf4r/Pa3glEIjbh4qWto5e
- lQflDSpBf66B8nidI43/8oDe7TvR5kUGRRCgtB0hzoemGEsEK/QfwT0b4qTwjTZJkHmy
- sQspQloJ/8CJ3+2KZy/2U9kW+B+iPiDg7xfKXq0mx98S3qfgmnyJ4bPFraDebhhHtNkK
- WAiAuYYtprStkoEfLwENCpOo4xmTbDJZUGRUgXjs39B6cbFyENz+i5Ye2hbUedck0m7m
- kHNmfbUN6PyXNbezWtvkKGafXJDJLp2hwO1L1CCX/IhoHILlBdpRsfsyzaQQ47Zc7X21
- pclg==
+ :reply-to; bh=+8jceCDiRONn0TjKUE44ua6cHHKQ5femih0Xr9aWkgk=;
+ b=RVvw+MUEDznlWaRVJHiq9jpia8PIGCpk/LR+PiU1TbFqJKtokEEAZNCqMB6KeJ23yk
+ 9wgl1Cfucdewv7NNeLnYLe/3cIUlsKZ9AdA0M0UM3c44Bj7ksIfcP6W8OfgxQq89d9TP
+ w3qJ1dwwQ0daxURrps07uqfWD8aJBXgLHPhRxBqRtpXwWOZYrX5P8C+lWhMi1ckLjAe+
+ UDwe6w/f6amMDs5SxY85eZIdq5K+b8v4qs9K4Iku9SuFoUgwu6+igr2iTbNgvivTaIhC
+ KL11drkTMs+GQUTT1euT757iMFapt5Ud2LhM++8LkDYLSqlGgVjzGlKv/4vjOsqCoNSX
+ C0sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101563; x=1760706363;
+ d=1e100.net; s=20230601; t=1760101574; x=1760706374;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/huW5XyGSqEWizP95On9B8pHQS13+WfJtd9lPwIS+q0=;
- b=LYNN439T11cz4bYIxGs6F4w/fcUrqoN/j1fx4OwCZ9J/qK0AaKsxS+YEIfQSP4oYkI
- /m31K05bjeGtMUE8OtxH1CW/jvvsvKEmmq3VAvN0RSPAPQBrkmC7rFwEt0hiGanQdI7d
- gzNkH64yv3DjKfQphb4PiavBYprCF2+Bxu+InMhne9LggPwSy8XybA7Ii90S9ZYrTazl
- F3fRPPVtagDjHlO9cf6iK0oJLOJBT42sAGekoiqQH0KEv4CWf1p+PaeIf4FQHElF77DV
- MW2wrJOrN3vQlcwSnIKxYpG5QNesNTxhI5asern0Z8RtBOps/sJCSpZAmQihcDDGuNa0
- XuYg==
-X-Gm-Message-State: AOJu0YybfFcNUA9868NQ5KobCXjmUO0WV5h9EyveIwJBzPGmlbEl7hfg
- XFPLlutm8n13cA6HD1XmQF1mlYGPHS+IDeNZMTBVBkfW0zE7zahCWEstNuHC0/aCJFRWcmfySlj
- F1wyL
-X-Gm-Gg: ASbGncuH5WPBLv8dE+TZExlINL4BzwO68Q0wXiyWVun4jdPajOmFkuIjvl/+IqW9/eQ
- iHcSZdRqFHqWGx+C3Lp1E5+1CoFkW/l176FV4hre4ZAgqstDFUPMfPCbKlvgKQO1PPzo+qAyD3C
- jVvns/XM/HfaNIy74FlI21urjbhKXwC6RPQO6am/+HB4uBG6OFNXr17omtJ4eiX9XP5kpkQsHFo
- zkFTbAHL/WefxiL7L7C+SIU2BcSJorTXNF/F8gXMR3R8ASmYaK9aGZgqNqUDoKLqANGUMmveYKQ
- U2suQQYQFcBXZ64MpUcMqzjWQoP9lykcJjBfyGBWyjUlyYpsj6p0F/OxJN97TAAIMvQrmdSXXQQ
- 6JkRMsD1TsMNpOXJySfsxuH20RmVTQzDxXtbqwytUujZPEHvY4WEXzX5cir55euvqYKw/vtct
-X-Google-Smtp-Source: AGHT+IEUia3J4j29m6CoOlZtCF9PJfdjjrF3B/EIrY03NFrnfLzMzoPE6ukbwbWUodVj4n/wpTkrSA==
-X-Received: by 2002:a5d:5d88:0:b0:3eb:dcf:bfad with SMTP id
- ffacd0b85a97d-4266e7e17c7mr6627858f8f.34.1760101563107; 
- Fri, 10 Oct 2025 06:06:03 -0700 (PDT)
+ bh=+8jceCDiRONn0TjKUE44ua6cHHKQ5femih0Xr9aWkgk=;
+ b=lZp/AfWB3QZM7BmSXcSfS3qbkv4zFnpKLzv9WpdZrcLPzZJ7kiN7cTHOLItMhssnt9
+ bYuALyvB5sSmuFgl72yQyHUb34p5e3XZf/yXh/grPf2FXohhIiQfDq+YOTbgt4fYYWP9
+ /xHYpX7R+RxrQipCdf/JQtPfVO/s0DjK7nRwder2qj7N2nSSgA+LVZ/h75xCLgOYD7Z3
+ VLbRj4QU/gEMj0/2rMbndhSy21xKuumub6XpZoj1K/hDSF/SVk5vJNRc53ADX0V0+ZS2
+ F8H825akpOMzFY4kQBEmbRF8smvXPjitqCls8pKQW2BjsjY/gJRGGPwwpkldmPZ/ybdr
+ XeHQ==
+X-Gm-Message-State: AOJu0YyLOFDJCY8Fx56PRxm/EH62JZUGSUDfBLeJtNT5LvJAF3Q79kRJ
+ LkRfggraLKXRwpHnl0rcikX4CHnpPhomf00sW9imMkXUveuYXiWOxF6kyQ2vYnc/VczMXOTIJ+z
+ AUNsf
+X-Gm-Gg: ASbGncsswOi9K8yyMALZqZVOA4sJ+u+YwxQxyfkOzqVfLvHAU27U14H4l7bmDeQw8UP
+ YcE2Yw/7nMizXKN1taRL0Ll7M3qj02jSSG4C8nlK7lm5ysq/HmzAAV3D3gjCn500MtnF/bhLsXX
+ Qr0hUCsvsSXjFCvHR8ceYwA0m6r/m5E5Ar3rAEl12yy8qMGUvOTTfqA8Z/KOKIO2zLwEUdfCneU
+ +ip6WeOgZQMZpICsxQ1TD02mMOGytvGcaj+MNlKzxdkvsexghD2HX5ZoqXDd9W7Xb5HpbbLdvJA
+ jQ3YIyiCvKFsxz1jTmtogccPI5BNiJua5f31UIT+oOA7YL589+1GzdW7WMYuDGax+GRNcebyaZl
+ lXcUva/FrzubzF4zrTb2lNPXwB5+VdGd8scWTX/DQOEE5igJqLwdI6o+gUV2dsQ==
+X-Google-Smtp-Source: AGHT+IGxZ+WS9BfrhqvxH3/RvtgowMEhSuGSv7RYfCRlnYmlIfcif9bfEjvhTa6BcYJXZxJcErbjSg==
+X-Received: by 2002:a5d:5f48:0:b0:3ea:dd2b:5ef with SMTP id
+ ffacd0b85a97d-42667363e68mr6119464f8f.18.1760101573916; 
+ Fri, 10 Oct 2025 06:06:13 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.02
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:06:02 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:13 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/76] target/arm: Support page protections for GCS mmu indexes
-Date: Fri, 10 Oct 2025 14:04:40 +0100
-Message-ID: <20251010130527.3921602-30-peter.maydell@linaro.org>
+Subject: [PULL 39/76] target/arm: Use arm_hcr_el2_nvx_eff in access_nv1
+Date: Fri, 10 Oct 2025 14:04:50 +0100
+Message-ID: <20251010130527.3921602-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +102,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Take read and write from the s1perms.gcs bit computed
-by the Arm pseudocode.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-30-richard.henderson@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20251008215613.300150-40-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/ptw.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ target/arm/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 6c52ed1ad00..d4386ede73e 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1619,12 +1619,16 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
-         }
-     }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index e397fe75bd1..2875f0ddd2e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3427,7 +3427,7 @@ static CPAccessResult access_nv1(CPUARMState *env, const ARMCPRegInfo *ri,
+                                  bool isread)
+ {
+     if (arm_current_el(env) == 1) {
+-        uint64_t hcr_nv = arm_hcr_el2_eff(env) & (HCR_NV | HCR_NV1 | HCR_NV2);
++        uint64_t hcr_nv = arm_hcr_el2_nvx_eff(env);
  
--    if (perm & PAGE_WXN) {
-+    if (regime_is_gcs(mmu_idx)) {
-+        /*
-+         * Note that the one s1perms.gcs bit controls both read and write
-+         * access via AccessType_GCS.  See AArch64.S1CheckPermissions.
-+         */
-+        perm = (perm & PAGE_GCS ? PAGE_READ | PAGE_WRITE : 0);
-+    } else if (perm & PAGE_WXN) {
-         perm &= ~PAGE_EXEC;
-     }
- 
--    /* TODO: FEAT_GCS */
--
-     return perm & PAGE_RWX;
- }
- 
-@@ -2277,6 +2281,13 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-              */
-             prot = get_S1prot_indirect(env, ptw, mmu_idx, pi, po,
-                                        result->f.attrs.space, out_space);
-+        } else if (regime_is_gcs(mmu_idx)) {
-+            /*
-+             * While one must use indirect permissions to successfully
-+             * use GCS instructions, AArch64.S1DirectBasePermissions
-+             * faithfully supplies s1perms.gcs = 0, Just In Case.
-+             */
-+            prot = 0;
-         } else {
-             int xn = extract64(attrs, 54, 1);
-             int pxn = extract64(attrs, 53, 1);
+         if (hcr_nv == (HCR_NV | HCR_NV1)) {
+             return CP_ACCESS_TRAP_EL2;
 -- 
 2.43.0
 
