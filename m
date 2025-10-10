@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D47CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CD2CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v78eq-00042j-UZ; Fri, 10 Oct 2025 04:39:24 -0400
+	id 1v78lx-0005ei-8N; Fri, 10 Oct 2025 04:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v78ep-00042b-O8
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:39:23 -0400
+ id 1v78lv-0005eL-9u
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:46:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v78ek-0007p3-RN
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:39:23 -0400
+ id 1v78ls-0002fm-L4
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:46:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760085554;
+ s=mimecast20190719; t=1760085997;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BfrPMHJYvTkmNjp6IZnGIlUOFxqGXOgS+qxlJXvM4Mg=;
- b=fxLZ0H9N26IH00qsVCJ4Tb1cErPIe9BI8juHuVTHKG97x8CfwBsxcAu/Ij7apUibZenB7Z
- XzWmOFKtuoQqkB7oQ/1M1XlVhAEYZQ40uQjEoceLqndIVjfGLSRw1dUf2/ttGI63MpBziW
- uaKmW9qg8rro7W9wX0Iwe/ryLoBFV6U=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=+IKOq++wEKoMyzTQJBrM58Mp6NLyJoDaqf9CbrRpyHw=;
+ b=cHxywZ/h46e5jRZ4RxUk/q4495+y8+vvZXAPaZnqWL3munyw0QoEUJSZxn0WaA9de2Lg7z
+ gTmHFhI7pL/3QCpDE74A+EWKgGWrBEfX/qNfLt6YoocRbZ2yMtFzRp3hxCezmfmiKu+MNw
+ J2o/3O7RWbriYG3XTjJCNVxQXHzA9hA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-HxR6y0dpMxiGG6aaGsgHpg-1; Fri,
- 10 Oct 2025 04:39:11 -0400
-X-MC-Unique: HxR6y0dpMxiGG6aaGsgHpg-1
-X-Mimecast-MFC-AGG-ID: HxR6y0dpMxiGG6aaGsgHpg_1760085550
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-GYLyXGrXOo66CwQV2-VWKA-1; Fri,
+ 10 Oct 2025 04:46:30 -0400
+X-MC-Unique: GYLyXGrXOo66CwQV2-VWKA-1
+X-Mimecast-MFC-AGG-ID: GYLyXGrXOo66CwQV2-VWKA_1760085987
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4AFD7195608D; Fri, 10 Oct 2025 08:39:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A766180057F; Fri, 10 Oct 2025 08:46:26 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.177])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A9671955F22; Fri, 10 Oct 2025 08:39:06 +0000 (UTC)
-Date: Fri, 10 Oct 2025 09:39:03 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EFC6B180035E; Fri, 10 Oct 2025 08:46:20 +0000 (UTC)
+Date: Fri, 10 Oct 2025 09:46:17 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
- "query-balloon" after CPR transfer
-Message-ID: <aOjGEPHsSCc0ULma@redhat.com>
-References: <20250928085432.40107-7-zhenzhong.duan@intel.com>
- <1ba0dbca-08b2-4f80-ba12-01884a25ef0d@oracle.com>
- <IA3PR11MB913635F06F6522102D8FC15D921AA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <78df77e2-43a6-48d6-b09e-fcc61a662b6e@oracle.com>
- <IA3PR11MB9136EF2C01DAB2C2EA261CC092E1A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <ab688cce-283d-4541-b7ca-be651085979e@oracle.com>
- <aOfEiogVQiAhBqMG@redhat.com>
- <2ac44a27-d4f2-4191-a9c3-513af25925b0@oracle.com>
- <aOfIgzCkwmtVXhvt@redhat.com>
- <IA3PR11MB9136738C2CE19566F4543DFE92EFA@IA3PR11MB9136.namprd11.prod.outlook.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: [PATCH v2 7/7] buildsys: Remove support for 32-bit MIPS hosts
+Message-ID: <aOjH2b5YbeyBmiZS@redhat.com>
+References: <20251009195210.33161-1-philmd@linaro.org>
+ <20251009195210.33161-8-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <IA3PR11MB9136738C2CE19566F4543DFE92EFA@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <20251009195210.33161-8-philmd@linaro.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -103,114 +96,103 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 10, 2025 at 03:54:42AM +0000, Duan, Zhenzhong wrote:
+On Thu, Oct 09, 2025 at 09:52:10PM +0200, Philippe Mathieu-Daudé wrote:
+> Stop detecting 32-bit MIPS host as supported, update the
+> deprecation document. See previous commit for rationale.
 > 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  docs/about/deprecated.rst       | 13 +++++--------
+>  docs/about/removed-features.rst |  6 ++++++
+>  configure                       |  7 -------
+>  3 files changed, 11 insertions(+), 15 deletions(-)
 > 
-> >-----Original Message-----
-> >From: Daniel P. Berrangé <berrange@redhat.com>
-> >Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
-> >"query-balloon" after CPR transfer
-> >
-> >On Thu, Oct 09, 2025 at 10:32:34AM -0400, Steven Sistare wrote:
-> >> On 10/9/2025 10:19 AM, Daniel P. Berrangé wrote:
-> >> > On Thu, Oct 09, 2025 at 10:11:17AM -0400, Steven Sistare wrote:
-> >> > > On 10/8/2025 6:22 AM, Duan, Zhenzhong wrote:
-> >> > > >
-> >> > > >
-> >> > > > > -----Original Message-----
-> >> > > > > From: Steven Sistare <steven.sistare@oracle.com>
-> >> > > > > Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
-> >> > > > > "query-balloon" after CPR transfer
-> >> > > > >
-> >> > > > > On 9/30/2025 2:00 AM, Duan, Zhenzhong wrote:
-> >> > > > > > > -----Original Message-----
-> >> > > > > > > From: Steven Sistare <steven.sistare@oracle.com>
-> >> > > > > > > Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when
-> >execute
-> >> > > > > > > "query-balloon" after CPR transfer
-> >> > > > > > >
-> >> > > > > > > On 9/28/2025 4:54 AM, Zhenzhong Duan wrote:
-> >> > > > > > > > After CPR transfer, source QEMU closes kvm fd and sets
-> >kvm_state to
-> >> > > > > > > NULL,
-> >> > > > > > > > "query-balloon" will check kvm_state->sync_mmu and trigger
-> >NULL
-> >> > > > > pointer
-> >> > > > > > > > reference.
-> >> > > > > > > >
-> >> > > > > > > > We don't need to NULL kvm_state as all states in kvm_state
-> >aren't
-> >> > > > > released
-> >> > > > > > > > actually. Just closing kvm fd is enough so we could still query
-> >states
-> >> > > > > > > > through "query_*" qmp command.
-> >> > > > > > >
-> >> > > > > > > IMO this does not make sense.  Much of the state in kvm_state
-> >was
-> >> > > > > derived
-> >> > > > > > >from ioctl's on the descriptors, and closing them invalidates it.
-> >Asking
-> >> > > > > > > historical questions about what used to be makes no sense.
-> >> > > > > >
-> >> > > > > > You also have your valid point.
-> >> > > > > >
-> >> > > > > > >
-> >> > > > > > > Clearing kvm_state and setting kvm_allowed=false would be a
-> >safer fix.
-> >> > > > >
-> >> > > > > Setting kvm_allowed=false causes kvm_enabled() to return false
-> >which should
-> >> > > > > prevent kvm_state from being dereferenced anywhere:
-> >> > > > >
-> >> > > > >       #define kvm_enabled()           (kvm_allowed)
-> >> > > > >
-> >> > > > >     Eg for the balloon:
-> >> > > > >
-> >> > > > >       static bool have_balloon(Error **errp)
-> >> > > > >       {
-> >> > > > >           if (kvm_enabled() && !kvm_has_sync_mmu()) {
-> >> > > >
-> >> > > > OK, will do, clearing kvm_allowed is a good idea.
-> >> > > >
-> >> > > > Currently there are two qmp commands "query-balloon" and
-> >"query-cpu-definitions"
-> >> > > > causing SIGSEGV after CPR-transfer, clearing kvm_allowed helps for
-> >both.
-> >> > > > But clearing both kvm_allowed and kvm_state cause SIGSEGV on
-> >"query-cpu-definitions".
-> >> > > >
-> >> > > > I'll send a patch to clearing only kvm_allowed if you are fine with it.
-> >> > >
-> >> > > I still don't love the idea.  kvm_state is no longer valid.
-> >> > >
-> >> > > It sounds like "query-cpu-definitions" is missing a check for
-> >kvm_enabled().
-> >> >
-> >> > This patch  / bug feels like it is side-stepping a general conceptual
-> >> > question.  After cpr-transfer is complete what QMP commands are still
-> >> > valid to call in general ? This thread mentions two which have caused
-> >> > bugs, but beyond that it feels like a large subset of QMP comamnds
-> >> > are conceptually invalid to use.
-> >>
-> >> Agreed. I don't see why these commands should be issued to the dead
-> >instance.
-> >> How about migration status, quit, and nothing else?
-> >> Half serious.
-> >
-> >I was hoping you'd suggest such a short list :-)
-> >
-> >Essentially a case of calling qmp_for_each_command(), and in the callback
-> >run qmp_disable_command() for everything not in the allow-list.
-> 
-> Thanks for your suggestion, I agree this is a perfect scheme, but is also heavy on this corner case😊
-> Just curious if we need to do same for live migration. E.g., send qmp command on source qemu after live migration.
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 67e527740c0..79cc34cfeb6 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -172,17 +172,14 @@ This argument has always been ignored.
+>  Host Architectures
+>  ------------------
+>  
+> -Big endian MIPS since 7.2; 32-bit little endian MIPS since 9.2, MIPS since 11.0
 
-At the end of a normal migration, there is no functional reason to prevent
-use of any QMP command.  Indeed we need to have the ability to carry on
-using the orignal source QEMU, in case the final steps on migration on
-the target fail and we need to restart the source.
+Did 'Big endian MIPS' refer to 32-bit, or both 32 & 64-bit ?  I'm guessing
+it was only 32-bit BE, given the heading of your removed-features.txt
+change.
 
-The cpr-transfer is unusual in the restrictions it has after completion.
+But then did "MIPS since 11.0" refer to 64-bit little endian only, or
+both big & little endian for 64-bit ?
+
+Given the wide variety of things all ambiguously called "MIPS",
+its worth being explicit....
+
+> -'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +MIPS (since 11.0)
+> +'''''''''''''''''
+
+...so if this is 64-bit MIPS, big & little endian, lets say so
+
+>  
+> -As Debian 10 ("Buster") moved into LTS the big endian 32 bit version of
+> -MIPS moved out of support making it hard to maintain our
+> -cross-compilation CI tests of the architecture. As we no longer have
+> -CI coverage support may bitrot away before the deprecation process
+> +MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
+> +maintain our cross-compilation CI tests of the architecture. As we no longer
+> +have CI coverage support may bitrot away before the deprecation process
+>  completes.
+>  
+> -Likewise, MIPS is not supported by Debian 13 ("Trixie") and newer.
+> -
+>  System emulation on 32-bit x86 hosts (since 8.0)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''
+>  
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index a5338e44c24..53829f59e65 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -896,6 +896,12 @@ work around the atomicity issues in system mode by running all vCPUs
+>  in a single thread context; in user mode atomicity was simply broken.
+>  From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+>  
+> +32-bit MIPS (since 11.0)
+> +''''''''''''''''''''''''
+> +
+> +Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+> +maintain our cross-compilation CI tests of the architecture.
+> +
+>  Guest Emulator ISAs
+>  -------------------
+>  
+> diff --git a/configure b/configure
+> index 6a633ac2b16..8236f43e8f9 100755
+> --- a/configure
+> +++ b/configure
+> @@ -404,8 +404,6 @@ elif check_define _ARCH_PPC ; then
+>  elif check_define __mips__ ; then
+>    if check_define __mips64 ; then
+>      cpu="mips64"
+> -  else
+> -    cpu="mips"
+>    fi
+>  elif check_define __s390__ ; then
+>    if check_define __s390x__ ; then
+> @@ -473,11 +471,6 @@ case "$cpu" in
+>      host_arch=mips
+>      linux_arch=mips
+>      ;;
+> -  mips*)
+> -    cpu=mips
+> -    host_arch=mips
+> -    linux_arch=mips
+> -    ;;
+>  
+>    ppc)
+>      host_arch=ppc
+> -- 
+> 2.51.0
+> 
 
 With regards,
 Daniel
