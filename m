@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC60BCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31E3CCD187
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7AVX-0002rv-Md; Fri, 10 Oct 2025 06:37:55 -0400
+	id 1v7AVe-0002xN-Sv; Fri, 10 Oct 2025 06:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AVT-0002pP-76; Fri, 10 Oct 2025 06:37:51 -0400
+ id 1v7AVd-0002wD-6a; Fri, 10 Oct 2025 06:38:01 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AVL-0006sL-5W; Fri, 10 Oct 2025 06:37:49 -0400
+ id 1v7AVM-0006sU-4d; Fri, 10 Oct 2025 06:37:59 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSd065199
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSZ065199
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 10 Oct 2025 19:36:46 +0900 (JST)
+ Fri, 10 Oct 2025 19:36:44 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=F0AyM/lua4p28w0QtF6/Ku3cctKLYXgOBYs6U3KWbds=; 
+DKIM-Signature: a=rsa-sha256; bh=N6KvdcMXa6qsZ06cdDLF8MQ7k2CfW5mVvMJOUaALk2A=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1760092607; v=1;
- b=sk0m9MtpFdPqIsbZw2aWD+b7Frj6I4P++MNRQXm0vNjJLwaJYEFPTedDP8kPiT+9
- Fzsoh/3WjsmVvGZJ4bO+5dsyiPf0hHXE48ce8UpgEOJLqgHJOzOXtAx6905GiuIt
- hTsolJqixDwYrv9dyZ9uKbAkef1OEteb+8IwtoMJYDu6mEg5lxkY5d2qsa59voOo
- kkL6qojYLvL+U9Ze20SJwx1RzJA06TsOoMJisiYudSK+g8O6dofs7K+AcX5ggEUs
- htEt9zsOELtmbPLvmdC19CxMuwrI2NguBvPY7XHULDVkxLsM1cK0cEHZOLQXMQ0R
- Syjl7sg9kHZV4gzfIEbLGg==
+ s=rs20250326; t=1760092605; v=1;
+ b=X8PPMq0xCHZIS1VdksljQCoIc09bGeA5sFgX0BoK4fqrNkTmD3rrDQumWfEpY4HO
+ otKojbtgPFcNQ7G6lWhEX24n/GTykSvCVCPgImNJE5fIq3GMzTHflqxa+5JSvZrv
+ LyLAFEhPOAJwUcOSxWbtNGO2TcDsHrJE0zEt7o+jWC0fY68fGU+TlsmoUJtGR5GQ
+ claW5MrBnplQ44fQE4OQcDL08fZVM4bfRsXmEhAeq3Y/078pOPmy/iv9VVJl9a2L
+ MXbVyd5bMM3JceOCtdIFzkYukXofQA/sWKI8+dyWxlk7EgB5fQE0o0PYP6xES4rU
+ YqaUiaN0Nn8AZqrT7KisPQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 10 Oct 2025 19:35:39 +0900
-Subject: [PATCH v2 11/12] hw/usb/hcd-ehci: Do not delete the subregions
+Date: Fri, 10 Oct 2025 19:35:35 +0900
+Subject: [PATCH v2 07/12] hw/ide/via: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251010-subregion-v2-11-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20251010-subregion-v2-7-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 References: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,7 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,24 +106,39 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-ehci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/ide/via.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-index b090f253656b..21c3501455b5 100644
---- a/hw/usb/hcd-ehci.c
-+++ b/hw/usb/hcd-ehci.c
-@@ -2557,10 +2557,6 @@ void usb_ehci_unrealize(EHCIState *s, DeviceState *dev)
-     ehci_queues_rip_all(s, 0);
-     ehci_queues_rip_all(s, 1);
+diff --git a/hw/ide/via.c b/hw/ide/via.c
+index dedc2674c002..cbaf4ad1548b 100644
+--- a/hw/ide/via.c
++++ b/hw/ide/via.c
+@@ -234,17 +234,6 @@ static void via_ide_realize(PCIDevice *dev, Error **errp)
+     }
+ }
  
--    memory_region_del_subregion(&s->mem, &s->mem_caps);
--    memory_region_del_subregion(&s->mem, &s->mem_opreg);
--    memory_region_del_subregion(&s->mem, &s->mem_ports);
+-static void via_ide_exitfn(PCIDevice *dev)
+-{
+-    PCIIDEState *d = PCI_IDE(dev);
+-    unsigned i;
 -
-     usb_bus_release(&s->bus);
- 
-     if (s->vmstate) {
+-    for (i = 0; i < ARRAY_SIZE(d->bmdma); ++i) {
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
+-    }
+-}
+-
+ static void via_ide_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -258,7 +247,6 @@ static void via_ide_class_init(ObjectClass *klass, const void *data)
+     k->config_read = via_ide_cfg_read;
+     k->config_write = via_ide_cfg_write;
+     k->realize = via_ide_realize;
+-    k->exit = via_ide_exitfn;
+     k->vendor_id = PCI_VENDOR_ID_VIA;
+     k->device_id = PCI_DEVICE_ID_VIA_IDE;
+     k->revision = 0x06;
 
 -- 
 2.51.0
