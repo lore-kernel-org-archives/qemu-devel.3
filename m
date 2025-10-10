@@ -4,78 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DDECCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC49CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7BVd-0004sJ-IU; Fri, 10 Oct 2025 07:42:05 -0400
+	id 1v7Bgr-0008N8-Ts; Fri, 10 Oct 2025 07:53:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7BVa-0004s1-7D
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:42:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7BVO-00027N-Qf
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:42:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760096505;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zfISe9KtEDrMShNVxYy7Tf9dlgGpPaynZGcqAJEWGZo=;
- b=aqijDZECdvqSVSys7wXRqmtnpq7FYnuWJhUayHkmqGjgmf+rIJrSmfze9Dh9vU8eDKpxV/
- Q0tS3Fsao83hXUyTW5lsYaKZy/lrL1apKVyueflauT7c/UbShmQMOrN57GV75TFIQnSkNl
- 0xBrK0dJwQg4t7KqYL8EcI/eqXieAlk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-um25dA03NHCtylRI9isJIw-1; Fri,
- 10 Oct 2025 07:41:42 -0400
-X-MC-Unique: um25dA03NHCtylRI9isJIw-1
-X-Mimecast-MFC-AGG-ID: um25dA03NHCtylRI9isJIw_1760096500
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 401A01800365; Fri, 10 Oct 2025 11:41:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFBD219560BB; Fri, 10 Oct 2025 11:41:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ED20621E6A27; Fri, 10 Oct 2025 13:41:35 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Yanan Wang
- <wangyanan55@huawei.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Laurent Vivier
- <lvivier@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v3] hw/uefi: add "info firmware-log" +
- "query-firmware-log" monitor commands
-In-Reply-To: <20251010071008.2555267-1-kraxel@redhat.com> (Gerd Hoffmann's
- message of "Fri, 10 Oct 2025 09:10:08 +0200")
-References: <20251010071008.2555267-1-kraxel@redhat.com>
-Date: Fri, 10 Oct 2025 13:41:35 +0200
-Message-ID: <87ecrbj85s.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v7Bgp-0008Mu-S7
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:53:39 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v7Bgi-0006E7-Vd
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:53:39 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b403bb7843eso411857266b.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 04:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760097204; x=1760702004; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5HX2bit+Q+N9hc9RuZAdnMfGq8JDdUCV45g1a41Zdsg=;
+ b=G5VmDzCW0qza+dBX93yF95Oug1y+k2gPAXEsyJfEjOn2yb6ZYUIc3HPoJWTyp8XqbD
+ +8J0zMMeFs853Tz7IKZQ3cUMGP44VQgLzx8F1Cf9lpHjRAoCd92VT/kneO2gNZs5o96C
+ 1X66+pCMSEBuf38QJYjYdR1AViVNBVJHHtuMMONWddmgw1Vu46lqjDSvG3RCeeeu4zhO
+ HcsiwIPvy9JDwBJCURBVIEThCOWxjzqXUQFy6XmTiMpcIxoUknH7Q22syZ8xUzYZ70KH
+ n7PqBgZ1hDmXHhNlo4ji4yXdP+op5E+KdCWrQ+wkkQM0dhlHrHXIqNmQYYSITV1jfbE/
+ UsDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760097204; x=1760702004;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5HX2bit+Q+N9hc9RuZAdnMfGq8JDdUCV45g1a41Zdsg=;
+ b=R59OHx8vOWnTgBZmr2JkUEbNWkKgvZ2oTunhP9KrbD7E9B7aY8JbZj2aqmrGWyX9yQ
+ ML2Rh4IqJCF45APTmsFeoijH6d2pg0CRGKfeb0GtGYbAilb8sHg4V9qonCGenfARD/2H
+ obs2444ktJbVq5xhR3L2/pe+HZpgDT92kKA8FNGxHju1CRqGnbh9kn+Dr6IzNmdvqbuX
+ DF/tdhz9e7Jkxb+j114jVc4LqTdXy3NGDRwd9s3lHL04VrsZ67DvYA9kvJ0LKZg42k95
+ VgYMrw6xyHkW73v9k3AMxGK0JDuQ5OLP2BI6eUt1sul+8gy1k/b3YfC0M2F1sj9lJSWX
+ Pvqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXurOfwmA5fgMDfncKVH11XPrin95fgH3H4tEMSeteSWMdfjLwWcdZj4rVIa3Jqj+fzUj6WJ9MMj0Py@nongnu.org
+X-Gm-Message-State: AOJu0Ywi2PcFcIIH+9t+LST4EHS1zz19w+tJznLKASfiBD+x5ECUSY9X
+ mmYNBcvYfvGELsxlFUpgerdGP4PTD1E4VYanYjOSbTYQFEspwYYoyY8pPNTQ/3ykY+U=
+X-Gm-Gg: ASbGncsXr1VfKwaDatD2IYrqIp7h3f9577nCA5iuIZzg0SHt/MLJdXijbtXcVGIkl4i
+ 1l6/7pHbb2HFk3wMMMe3hEDN3ouQak0QZD94DX7w+t4TZ4FamJzvXZzyHuXrRqvLiKowYbOlU8x
+ hdETskiT0tzQVhUKVNtzHhL0tzUorTNzBoJMh0sK1xMrH1xelRS/UgxVYejozm8EUA5iWpE84Md
+ H06cTDNC4pJz6t+T/Z9NwyS7MaGhSh7GwOLB3oULfduBL0qq73MMuHOu/9371XslzAl/nSH2NB5
+ lFEQBibrtLdbx7BTQmzAUQgphLDZAa7N1g5G2wFMGv1qznTsuPxCeiijY2GDILTU/xEVoZRVai1
+ RzuTK3YL5GMfVylr+4CvelwJ3jG23zhjKVoShcTa7cZ9uhQ==
+X-Google-Smtp-Source: AGHT+IE8zIQzkifg4Ebek3jDvHwN8mDWe3akQYP14n6E6xMsnt8wpS93jQH0QRD0Epl7+w/RkKk9pQ==
+X-Received: by 2002:a17:906:7313:b0:b41:297c:f7bb with SMTP id
+ a640c23a62f3a-b50aaa9b6f8mr1244720466b.26.1760097203747; 
+ Fri, 10 Oct 2025 04:53:23 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b55d61d04dfsm216300466b.22.2025.10.10.04.53.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Oct 2025 04:53:22 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2641A5F7F6;
+ Fri, 10 Oct 2025 12:53:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daan De Meyer <daan.j.demeyer@gmail.com>,  qemu-devel@nongnu.org,  Gerd
+ Hoffmann <kraxel@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-arm@nongnu.org
+Subject: Re: [PATCH] Add support for zboot images compressed with zstd
+In-Reply-To: <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 10 Oct 2025 11:05:43 +0100")
+References: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
+ <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Fri, 10 Oct 2025 12:53:22 +0100
+Message-ID: <87sefrvuq5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,469 +108,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gerd Hoffmann <kraxel@redhat.com> writes:
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
-> optional support for logging to a memory buffer.  There is guest side
-> support -- for example in linux kernels v6.17+ -- to read that buffer.
-> But that might not helpful if your guest stops booting early enough that
-> guest tooling can not be used yet.  So host side support to read that
-> log buffer is a useful thing to have.
+> On Wed, 8 Oct 2025 at 20:17, Daan De Meyer <daan.j.demeyer@gmail.com> wro=
+te:
+>>
+>> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+>> ---
+>>  hw/arm/boot.c       |  2 +-
+>>  hw/core/loader.c    | 36 ++++++++++++++++++++++++------------
+>>  hw/nvram/fw_cfg.c   |  2 +-
+>>  include/hw/loader.h |  2 +-
+>>  4 files changed, 27 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+>> index e77d8679d8..c0dec0343a 100644
+>> --- a/hw/arm/boot.c
+>> +++ b/hw/arm/boot.c
+>> @@ -826,7 +826,7 @@ static uint64_t load_aarch64_image(const char *filen=
+ame, hwaddr mem_base,
+>>      ssize_t size;
+>>
+>>      /* On aarch64, it's the bootloader's job to uncompress the kernel. =
+*/
+>> -    size =3D load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_GUNZIP_=
+BYTES,
+>> +    size =3D load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_DECOMPR=
+ESSED_BYTES,
+>>                                       &buffer);
 >
-> This patch implements both qmp and hmp monitor commands to read the
-> firmware log.
-
-So this is just for EDK2, at least for now.
-
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  include/monitor/hmp.h      |   1 +
->  hw/uefi/ovmf-log.c         | 265 +++++++++++++++++++++++++++++++++++++
->  tests/qtest/qmp-cmd-test.c |   2 +
->  hmp-commands-info.hx       |  14 ++
->  hw/uefi/meson.build        |   2 +-
->  qapi/machine.json          |  23 ++++
->  6 files changed, 306 insertions(+), 1 deletion(-)
->  create mode 100644 hw/uefi/ovmf-log.c
+> I would either not bother renaming this constant, or else do
+> it in a preliminary patch of its own in the series. (That
+> makes the part of the patch which is making the functional
+> change easier to read and review.)
 >
-> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-> index ae116d9804a3..885c0ecd2aed 100644
-> --- a/include/monitor/hmp.h
-> +++ b/include/monitor/hmp.h
-> @@ -178,5 +178,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
->  void hmp_info_mtree(Monitor *mon, const QDict *qdict);
->  void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
->  void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
-> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
->  
->  #endif
-> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-> new file mode 100644
-> index 000000000000..89e27d916531
-> --- /dev/null
-> +++ b/hw/uefi/ovmf-log.c
-> @@ -0,0 +1,265 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * print ovmf debug log
-> + *
-> + * see OvmfPkg/Library/MemDebugLogLib/ in edk2
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +#include "qemu/base64.h"
-> +#include "qemu/target-info-qapi.h"
-> +#include "hw/boards.h"
-> +#include "hw/i386/x86.h"
-> +#include "hw/arm/virt.h"
-> +#include "system/dma.h"
-> +#include "monitor/hmp.h"
-> +#include "monitor/monitor.h"
-> +#include "qapi/error.h"
-> +#include "qapi/type-helpers.h"
-> +#include "qapi/qapi-commands-machine.h"
-> +
-> +
-> +/* ----------------------------------------------------------------------- */
-> +/* copy from edk2                                                          */
-> +
-> +#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
-> +#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
-> +
-> +/*
-> + * Mem Debug Log buffer header.
-> + * The Log buffer is circular. Only the most
-> + * recent messages are retained. Older messages
-> + * will be discarded if the buffer overflows.
-> + * The Debug Log starts just after the header.
-> + */
-> +typedef struct {
-> +    /*
-> +     * Magic values
-> +     * These fields are used by tools to locate the buffer in
-> +     * memory. These MUST be the first two fields of the structure.
-> +     * Use a 128 bit Magic to vastly reduce the possibility of
-> +     * a collision with random data in memory.
-> +     */
-> +    uint64_t             Magic1;
-> +    uint64_t             Magic2;
-> +    /*
-> +     * Header Size
-> +     * This MUST be the third field of the structure
-> +     */
-> +    uint64_t             HeaderSize;
-> +    /*
-> +     * Debug log size (minus header)
-> +     */
-> +    uint64_t             DebugLogSize;
-> +    /*
-> +     * edk2 uses this for locking access.
-> +     */
-> +    uint64_t             MemDebugLogLock;
-> +    /*
-> +     * Debug log head offset
-> +     */
-> +    uint64_t             DebugLogHeadOffset;
-> +    /*
-> +     *  Debug log tail offset
-> +     */
-> +    uint64_t             DebugLogTailOffset;
-> +    /*
-> +     * Flag to indicate if the buffer wrapped and was thus truncated.
-> +     */
-> +    uint64_t             Truncated;
-> +    /*
-> +     * Firmware Build Version (PcdFirmwareVersionString)
-> +     */
-> +    char                 FirmwareVersion[128];
-> +} MEM_DEBUG_LOG_HDR;
+>> @@ -882,14 +887,6 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ss=
+ize_t *size)
+>>          return 0;
+>>      }
+>>
+>> -    if (strcmp(header->compression_type, "gzip") !=3D 0) {
+>> -        fprintf(stderr,
+>> -                "unable to handle EFI zboot image with \"%.*s\" compres=
+sion\n",
+>> -                (int)sizeof(header->compression_type) - 1,
+>> -                header->compression_type);
+>> -        return -1;
+>> -    }
+>> -
+>>      ploff =3D ldl_le_p(&header->payload_offset);
+>>      plsize =3D ldl_le_p(&header->payload_size);
+>>
+>> @@ -898,8 +895,23 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ss=
+ize_t *size)
+>>          return -1;
+>>      }
+>>
+>> -    data =3D g_malloc(LOAD_IMAGE_MAX_GUNZIP_BYTES);
+>> -    bytes =3D gunzip(data, LOAD_IMAGE_MAX_GUNZIP_BYTES, *buffer + ploff=
+, plsize);
+>> +    data =3D g_malloc(LOAD_IMAGE_MAX_DECOMPRESSED_BYTES);
+>> +
+>> +    if (strcmp(header->compression_type, "gzip") =3D=3D 0) {
+>> +        bytes =3D gunzip(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buff=
+er + ploff, plsize);
+>> +#ifdef CONFIG_ZSTD
+>> +    } else if (strcmp(header->compression_type, "zstd") =3D=3D 0) {
+>> +        size_t ret =3D ZSTD_decompress(data, LOAD_IMAGE_MAX_DECOMPRESSE=
+D_BYTES, *buffer + ploff, plsize);
+>> +        bytes =3D ZSTD_isError(ret) ? -1 : (ssize_t) ret;
+>> +#endif
+>> +    } else {
+>> +        fprintf(stderr,
+>> +                "unable to handle EFI zboot image with \"%.*s\" compres=
+sion\n",
+>> +                (int)sizeof(header->compression_type) - 1,
+>> +                header->compression_type);
+>> +        return -1;
+>
+> Moving the "unrecognized compression type" error path down to
+> here means that we have moved it below the g_malloc() of the
+> data buffer, so we now need to g_free() to avoid a leak.
 
-I understand this is a (close to) literal copy from EDK2, and adjusting
-it to QEMU style would be a bad idea.
+Could we not declare:
 
-> +
-> +
-> +/* ----------------------------------------------------------------------- */
-> +/* qemu monitor command                                                    */
-> +
-> +typedef struct {
-> +    uint64_t             Magic1;
-> +    uint64_t             Magic2;
-> +} MEM_DEBUG_LOG_MAGIC;
+      g_autofree uint8_t *data =3D NULL;
 
-Unusual capitalization for a typedef name.  Why?  To emphasize the
-relation to MEM_DEBUG_LOG_HDR?
+and drop the cleanup?
 
-> +
-> +/* find log buffer in guest memory by searching for the magic cookie */
-> +static dma_addr_t find_ovmf_log_range(dma_addr_t start, dma_addr_t end)
-> +{
-> +    static const MEM_DEBUG_LOG_MAGIC magic = {
-> +        .Magic1 = MEM_DEBUG_LOG_MAGIC1,
-> +        .Magic2 = MEM_DEBUG_LOG_MAGIC2,
-> +    };
-> +    MEM_DEBUG_LOG_MAGIC check;
-> +    dma_addr_t step = 4 * KiB;
-> +    dma_addr_t offset;
-> +
-> +    for (offset = start; offset < end; offset += step) {
-> +        if (dma_memory_read(&address_space_memory, offset,
-> +                            &check, sizeof(check),
-> +                            MEMTXATTRS_UNSPECIFIED)) {
-> +            /* dma error -> stop searching */
-> +            break;
-> +        }
-> +        if (memcmp(&magic, &check, sizeof(check)) == 0) {
-> +            return offset;
-> +        }
-> +    }
-> +    return -1;
+>
+>> +    }
+>> +
+>>      if (bytes < 0) {
+>>          fprintf(stderr, "failed to decompress EFI zboot image\n");
+>>          g_free(data);
+>
+> Otherwise I think this looks OK.
+>
+> thanks
+> -- PMM
 
-Cast this to dma_addr_t?  dma_addr_t is unsigned...
-
-> +}
-> +
-> +static dma_addr_t find_ovmf_log(void)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    dma_addr_t start, end, offset;
-> +
-> +    if (target_arch() == SYS_EMU_TARGET_X86_64 &&
-> +        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-> +        X86MachineState *x86ms = X86_MACHINE(ms);
-> +
-> +        /* early log buffer, static allocation in memfd, sec + early pei */
-> +        offset = find_ovmf_log_range(0x800000, 0x900000);
-> +        if (offset != -1) {
-> +            return offset;
-> +        }
-> +
-> +        /*
-> +         * normal log buffer, dynamically allocated close to end of low memory,
-> +         * late pei + dxe phase
-> +         */
-> +        end = x86ms->below_4g_mem_size;
-> +        start = end - MIN(end, 128 * MiB);
-> +        offset = find_ovmf_log_range(start, end);
-> +        return offset;
-
-Collapse these two statements to
-
-           return find_ovmf_log_range(start, end);
-
-> +    }
-> +
-> +    if (target_arch() == SYS_EMU_TARGET_AARCH64 &&
-> +        object_dynamic_cast(OBJECT(ms), TYPE_VIRT_MACHINE)) {
-> +        /* edk2 ArmVirt firmware allocations are in the first 128 MB */
-> +        VirtMachineState *vms = VIRT_MACHINE(ms);
-
-Suggest blank line between declarations and statements.
-
-> +        start = vms->memmap[VIRT_MEM].base;
-> +        end = start + 128 * MiB;
-> +        offset = find_ovmf_log_range(start, end);
-> +        return offset;
-
-Collapse these two statements to
-
-           return find_ovmf_log_range(start, end);
-
-> +    }
-> +
-> +    return -1;
-
-Cast this to dma_addr_t?
-
-> +}
-> +
-> +static void handle_ovmf_log_range(GString *out,
-> +                                  dma_addr_t start,
-> +                                  dma_addr_t end,
-> +                                  Error **errp)
-> +{
-> +    g_autofree char *buf = NULL;
-> +
-> +    if (start > end) {
-> +        return;
-> +    }
-> +
-> +    buf = g_malloc(end - start + 1);
-
-How big can this buffer become?  See [*] below.
-
-> +    if (dma_memory_read(&address_space_memory, start,
-> +                        buf, end - start,
-> +                        MEMTXATTRS_UNSPECIFIED)) {
-> +        error_setg(errp, "firmware log: buffer read error");
-> +        return;
-> +    }
-> +
-> +    buf[end - start] = 0;
-> +    g_string_append_printf(out, "%s", buf);
-
-This falls apart when the log contains '\0'.  Suggest something like
-
-       g_string_append_len(out, buf, end - start);
-
-or even better, the direct read Daniel suggested.
-
-> +}
-> +
-> +FirmwareLog *qmp_query_firmware_log(Error **errp)
-> +{
-> +    MEM_DEBUG_LOG_HDR header;
-> +    dma_addr_t offset, base;
-> +    FirmwareLog *ret;
-> +    g_autoptr(GString) log = g_string_new("");
-> +
-> +    offset = find_ovmf_log();
-> +    if (offset == -1) {
-> +        error_setg(errp, "firmware log: not found");
-> +        return NULL;
-> +    }
-> +
-> +    if (dma_memory_read(&address_space_memory, offset,
-> +                        &header, sizeof(header),
-> +                        MEMTXATTRS_UNSPECIFIED)) {
-> +        error_setg(errp, "firmware log: header read error");
-> +        return NULL;
-> +    }
-> +
-> +    if (header.DebugLogSize > MiB) {
-> +        /* default size is 128k (32 pages), allow up to 1M */
-> +        error_setg(errp, "firmware log: log buffer is too big");
-
-[*] We limit the buffer to 1MiB.  No objection to the size.
-
-What do you mean by "default" in "default size"?  Is the size
-configurable in EDK2?
-
-Should we try to cope more gracefully with oversized log buffers?  It's
-a ring buffer.  What about silently reading the latest 1MiB then?
-Behaves just as if the ring buffer was 1MiB.
-
-> +        return NULL;
-> +    }
-> +
-> +    if (header.DebugLogHeadOffset > header.DebugLogSize ||
-> +        header.DebugLogTailOffset > header.DebugLogSize) {
-> +        error_setg(errp, "firmware log: invalid header");
-> +        return NULL;
-> +    }
-> +
-> +    base = offset + header.HeaderSize;
-> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
-> +        /* wrap around */
-> +        handle_ovmf_log_range(log,
-> +                              base + header.DebugLogHeadOffset,
-> +                              base + header.DebugLogSize,
-> +                              errp);
-> +        if (*errp) {
-> +            return NULL;
-> +        }
-> +        handle_ovmf_log_range(log,
-> +                              base + 0,
-> +                              base + header.DebugLogTailOffset,
-> +                              errp);
-> +        if (*errp) {
-> +            return NULL;
-> +        }
-> +    } else {
-> +        handle_ovmf_log_range(log,
-> +                              base + header.DebugLogHeadOffset,
-> +                              base + header.DebugLogTailOffset,
-> +                              errp);
-> +        if (*errp) {
-> +            return NULL;
-> +        }
-> +    }
-> +
-> +    ret = g_new0(FirmwareLog, 1);
-> +    ret->version = g_strdup(header.FirmwareVersion);
-> +    ret->log = g_base64_encode((const guchar *)log->str, log->len);
-> +    return ret;
-
-Note for later [**]: both ->version and ->log are non-null on success.
-
-> +}
-> +
-> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
-> +{
-> +    Error *errp = NULL;
-> +    FirmwareLog *log;
-> +
-> +    log = qmp_query_firmware_log(&errp);
-> +    if (errp)  {
-> +        monitor_printf(mon, "ERROR: %s\n", error_get_pretty(errp));
-
-Let's not shout "ERROR" :)
-
-Recommend
-
-           hmp_handle_error(mon, errp);
-
-> +        return;
-> +    }
-> +
-> +    g_assert(log != NULL);
-> +
-> +    if (log->version) {
-> +        monitor_printf(mon, "[ firmware version: %s ]\n", log->version);
-> +    }
-> +
-> +    if (log->log) {
-> +        size_t outlen;
-> +        uint8_t *out = qbase64_decode(log->log, -1, &outlen, &errp);
-
-We first encode to base64, then back.  Tolerable.  To avoid it, factor
-everything but the encode out of qmp_query_firmware_log() into a helper.
-
-> +        if (errp)  {
-> +            monitor_printf(mon, "ERROR: %s\n", error_get_pretty(errp));
-
-hmp_handle_error()
-
-> +            return;
-> +        }
-> +        monitor_printf(mon, "%s\n", out);
-> +        g_free(out);
-> +    }
-> +}
-> diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
-> index cf718761861d..ffdb7e979e0f 100644
-> --- a/tests/qtest/qmp-cmd-test.c
-> +++ b/tests/qtest/qmp-cmd-test.c
-> @@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
->          /* Only valid with accel=tcg */
->          { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
->          { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
-> +        /* requires firmware with memory buffer logging support */
-> +        { "query-ovmf-log", ERROR_CLASS_GENERIC_ERROR },
->          { NULL, -1 }
->      };
->      int i;
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index 6142f60e7b16..257015f0b403 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -977,3 +977,17 @@ SRST
->    ``info cryptodev``
->      Show the crypto devices.
->  ERST
-> +
-> +    {
-> +        .name       = "firmware-log",
-> +        .args_type  = "",
-> +        .params     = "",
-> +        .help       = "show the firmware (ovmf) debug log",
-> +        .cmd        = hmp_info_firmware_log,
-> +        .flags      = "p",
-> +    },
-> +
-> +SRST
-> +  ``info firmware-log``
-> +    Show the firmware (ovmf) debug log.
-> +ERST
-> diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
-> index 91eb95f89e6d..c8f38dfae247 100644
-> --- a/hw/uefi/meson.build
-> +++ b/hw/uefi/meson.build
-> @@ -1,4 +1,4 @@
-> -system_ss.add(files('hardware-info.c'))
-> +system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
->  
->  uefi_vars_ss = ss.source_set()
->  if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 038eab281c78..c96e582afdd6 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -1839,6 +1839,29 @@
->    'returns': 'HumanReadableText',
->    'features': [ 'unstable' ]}
->  
-> +##
-> +# @FirmwareLog:
-> +#
-> +# @version: Firmware version.
-> +#
-> +# @log: Firmware debug log, in base64 encoding.
-
-Can this have a partial line at the beginning and/or the end?
-
-> +#
-> +# Since: 10.2
-> +##
-> +{ 'struct': 'FirmwareLog',
-> +  'data': { '*version': 'str',
-> +            '*log': 'str' } }
-
-These aren't actually optional with the current code.  See [**] above.
-I guess you make them optional just in case some other firmware can
-provide only one of them.
-
-> +
-> +##
-> +# @query-firmware-log:
-> +#
-> +# Find firmware memory log buffer in guest memory, return content.
-
-Should we mention this is implemented only for EDK2 at this time?
-
-Have you considered an optional size argument to retrieve the tail of
-the log?
-
-> +#
-> +# Since: 10.2
-> +##
-> +{ 'command': 'query-firmware-log',
-> +  'returns': 'FirmwareLog' }
-> +
->  ##
->  # @dump-skeys:
->  #
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
