@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D22B0CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF462CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7A5D-00029F-92; Fri, 10 Oct 2025 06:10:43 -0400
+	id 1v7AFh-0005zM-Bb; Fri, 10 Oct 2025 06:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v7A5B-000291-DJ
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:10:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v7AFZ-0005y5-HQ; Fri, 10 Oct 2025 06:21:25 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v7A55-00064K-I0
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:10:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760091032;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Da2hPdt8gxwQ9sRZ8zZDAP7xU6gnCxDtjxclWqF30qE=;
- b=N3gwnT9c40IODHIcUAPUA6j9d+VVCq2qYolApqY+5j2gai2u2N/MnmJzYjfZ97abJPrVy5
- YZYZ9H4wfhhVTKzOvZ6LCL6nLIjUssI/ztpY2QC21GBNWFQ7ejZaq/yfPZ3l+mhZZmZK4N
- OIdyOwKDGwunRiNzjMlVfDPPf45vc9s=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-DqNYVb3fN-qUwWjjuYK6Sg-1; Fri,
- 10 Oct 2025 06:10:31 -0400
-X-MC-Unique: DqNYVb3fN-qUwWjjuYK6Sg-1
-X-Mimecast-MFC-AGG-ID: DqNYVb3fN-qUwWjjuYK6Sg_1760091030
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E65D19560B2; Fri, 10 Oct 2025 10:10:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.177])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 006A41955F22; Fri, 10 Oct 2025 10:10:27 +0000 (UTC)
-Date: Fri, 10 Oct 2025 11:10:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Richard W.M. Jones" <rjones@redhat.com>
-Cc: qemu-devel@nongnu.org, lvivier@redhat.com, farosas@suse.de,
- pbonzini@redhat.com
-Subject: Re: [PATCH v2 2/2] tests/qtest: Use exit-with-parent=on in qtest
- invocations
-Message-ID: <aOjbj3gyh6dPjsbs@redhat.com>
-References: <20251009161526.140497-1-rjones@redhat.com>
- <20251009161526.140497-3-rjones@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v7AFV-0008WH-Ds; Fri, 10 Oct 2025 06:21:25 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAK498061262
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 10 Oct 2025 19:20:04 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=0BQmMj3dqVZtAqGuHHlC8WVY7AKpHYkbM3DbYZ7Oj2Y=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760091605; v=1;
+ b=GX6+f0JQqLxHFR7V/khLhFm2SYMbOLl2JPYJaX2SQj7s3JSR56LwK42XEmqTRRJZ
+ yR8W5jVe3zf/oyfXj/dNrsLSe63o5Z0y3gqQ3W5HWd1sIgwvcqBY3kUKDMtcv37Z
+ eaYn2fQQBFjmMNkEsiENbt+XkF0rjkS2c2p7pw/fVmVZScZLXIvCadiXUV+kib7M
+ nZz/0d2K72AUlBrzcj36yEl403z02Nzeg2zgd4x47sk1uBkK4vB2SgjlzfSaT9bi
+ TwGgFxTsjluiLRvnBlw51wDVfjMUhr5Ro0XBxYwN+BQvhOI8WiX8VLCKgEkHaQx1
+ 0+CFzL5u5GaNWOi9xsVacA==
+Message-ID: <036d19ce-490b-49d2-b114-0b5a91e5e66c@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 10 Oct 2025 19:20:04 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/14] Fix memory region use-after-finalization
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+ <4664fcb7-c747-42dd-966f-6f282abece89@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <4664fcb7-c747-42dd-966f-6f282abece89@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251009161526.140497-3-rjones@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,34 +99,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 09, 2025 at 05:12:47PM +0100, Richard W.M. Jones wrote:
-> Previously libqtest.c set PR_SET_PDEATHSIG (or the equivalent on
-> FreeBSD) after forking the qemu subprocess.  However we can get the
-> same behaviour now by using the new -run-with exit-with-parent=on
-> flag, on platforms that support it.
-
-Perhaps note
-
-  "This conversion extends the qtest auto-cleanup to macOS"
-
+On 2025/10/03 0:03, Paolo Bonzini wrote:
+> On 9/17/25 12:32, Akihiko Odaki wrote:
+>> Based-on: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+>> ("[PATCH v3 0/7] Do not unparent in instance_finalize()")
+>>
+>> This patch series was spun off from "[PATCH v2 00/15] Fix memory region
+>> leaks and use-after-finalization":
+>> https://lore.kernel.org/qemu-devel/20250915-use-v2-0- 
+>> f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp/
+>>
+>> When developing the next version of "[PATCH 00/16] memory: Stop
+>> piggybacking on memory region owners*", I faced multiple memory region
+>> leaks and use-after-finalization. This series extracts their fixes so
+>> that the number of Cc: won't explode.
+>>
+>> Patch "qdev: Automatically delete memory subregions" and the succeeding
+>> patches are for refactoring, but patch "vfio-user: Do not delete the
+>> subregion" does fix use-after-finalization.
+>>
+>> * https://lore.kernel.org/qemu-devel/20250901-mr-v1-0- 
+>> dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp/
+>>
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > 
-> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
-> ---
->  tests/qtest/libqtest.c | 22 ++++------------------
->  1 file changed, 4 insertions(+), 18 deletions(-)
+> This makes sense, but I think it is not bisectable, because of this in 
+> memory_region_del_subregion():
+> 
+>      assert(subregion->container == mr);
+>      subregion->container = NULL;
+> 
+> You would need to add a temporary
+> 
+>      if (subregion->container == NULL) {
+>          return;
+>      }
+> 
+> and undo it at the end of the series.  Do you agree?  With this change I 
+> can apply it.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+It is unnecessary because patch "qdev: Automatically delete memory 
+subregions" satisfies the following:
 
+1. the device-specific code can assume that subregions they added are 
+present until it finishes unrealization. The unrealize() callback can 
+also assume the subregions are present and delete them. qdev satisfies 
+this by deleting subregions only after calling the unrealize().
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2. qdev should delete the remaining subregions before it finishes 
+unrealization to ensure that the devices are hidden from the guest. qdev 
+satisfies this by checking if memory regions have containers before 
+deleting.
 
+Regards,
+Akihiko Odaki
 
