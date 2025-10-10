@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7A9CCD183
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 02:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227D4CCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 02:21:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v72RQ-0006wa-3K; Thu, 09 Oct 2025 22:01:08 -0400
+	id 1v72jf-0000Kf-49; Thu, 09 Oct 2025 22:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v72RN-0006wQ-GR
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:01:05 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v72jd-0000KO-7w
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:19:57 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v72RG-0004XA-1w
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:01:05 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so1560282b3a.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 19:00:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v72jZ-0000Z0-ND
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:19:56 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-46e2826d5c6so10045445e9.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 19:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760061655; x=1760666455; darn=nongnu.org;
- h=content-transfer-encoding:subject:cc:to:from:content-language
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BZ+YTXoXxDfos6hEvgqSAEBzYEkyHnckX/N1c8lt7Y0=;
- b=M+6lCmSUL9P8gmLlBEWqek+sfz6U/IPtLV0PZRFRKsUj0T8o9BpeJRyz5eYAOe99RB
- aG5ojvKavVVFXwVudFLZel2wvoapKXCUY8YSyuw1Is1l5CfsJ807lfzO0tiN6q0T56gb
- Owqc5RMC0Ls3TSFq3mOOq1c3uvZj9FPyMl1ujW5lUGDQ58Ju+nmsdRzjLXLQeNjWSqW9
- 9U0nZyXsORkyZ+kAvchZUbwxRl6qE5CoH4FPvjTAVdbYTdFN1jjXG5rb3VzPt3+VUkr1
- enl1ioZp3MNHfB3+TtqC747jh58JvrnCp19bz85neTRfuQe9GOz/Qabz6CF8HtU1vq1U
- mKgQ==
+ d=linaro.org; s=google; t=1760062787; x=1760667587; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=g+vNKejzR6V0jtRZUBGGU95Jl9y5Lua5p2J/58NSCrU=;
+ b=tRVheYPAT/89FQjQ0g/BX5yZM3/UDjuYrZvGpICOuriBSGOIUKl09fiokqYHDRLeVm
+ SM+WpiSHtSU5dzjSknPbaV3Q1OAeEadTZX9nhaq4U/8JTUkJufuW6WgBw+WdJm3ZkCFT
+ XdoXXHv2Q5sIZZR7VGsw8+z7E06/LWIKyPLkmHXXp5LnKAhCpl2dgw9ssdPqFTe6ChPT
+ x+v+DJxoBYstUKZxkYHmIzdiVeoGISMUb4tWMzo79rPkICz6FWrlJmv4MUPRweWQa7lH
+ pLC0lajDMEdgod8cpV2w1qmbp4L3eML1Y9LgeTm2VSKnV1tbV1rnxiGK+ZcBKkCAH6vN
+ ECyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760061655; x=1760666455;
- h=content-transfer-encoding:subject:cc:to:from:content-language
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=BZ+YTXoXxDfos6hEvgqSAEBzYEkyHnckX/N1c8lt7Y0=;
- b=ThzDLq7Nof1Rq7JAVJPLsbFISNMe5RaHqqyl5lED2ameCOyOhIDoTtsCx5+04hMwhG
- TpXozBGkircvhJ5NmrzvVviBvQGQ7Y74yeKKp25yz3y9iqq4Zu2FBzP/jFRMEj1Pg9hj
- CzhcVY6SQWJWQAiCZaM+JOHaqjYY+LtaSHPUfSAaCiOh2YQ+Tk25l0F1aG3a0DITITJK
- FiKQ2MfDlFyCoc9Lih6y1s4K+GCFsgj8mrH2yrGKOYSFZMdoGcip9NkKzIJDvuBCfRxo
- 5ZrtaJiShjVVRrFeu0I3UFCjasx7mi3ECgktAuIyaHRe+ec77U7I+3VOr6M5LiQfFTvS
- O0Bw==
-X-Gm-Message-State: AOJu0YwikbAFfSqK0ccFHafej4DB7+S7/f8NNJgy7VYfW7Y7IJnADSm5
- 8mdbMPJjepEDR3BSV9zJMIM/Tkse6Bf+xXGadM8I/Gi5TtciI3UE/CKWUEgpGnegAWz9J9DS6RH
- BcwKc
-X-Gm-Gg: ASbGncvoPH+VNZ8Kt/rD5T5eMJDANnZOmkkquLSktMt3qvFTHhP3IphIWtbexGveUW3
- hEuIifPlymwnwon3pyMedzXgj2PJu9jfJ4qFKSUN5qklAMq9RFd33fxQ7R+rIMvwcjd7vRWkgJb
- 8ecSy4/flgGyqkuz//ZrzPPRnW8NpYdZZZWtBjU4aQl+3B11TaqGp4W+FGzFehSWVAmrXINr/0h
- Y3E991pp1I9FdsXJEc/+a8hfH49v46PjiLmIsNs5gEldc3tAfODb7QCJobiUr8EOV7rJPoruyea
- LNwm4nAAyT8NSBV2jJ0P31OuZZIor4PRdHmtHh4ShsVllBCjJVAC1f/pjpWQ8H3zQU8VnuWAqPx
- oAQCblKl/luWKs0EBkL7n86DTyEYI8Vfa6f/4KhPCrI/n4gapS5pVcfVxs1TOmvey9TXRlHwzTw
- ==
-X-Google-Smtp-Source: AGHT+IH8b32D+RUk42jiblMogUEiQHgKtugUmU/9QkoYENI02mbKznVHAsCvGOlcvxX/pxmD8efaHw==
-X-Received: by 2002:a05:6a21:790a:b0:32d:973b:e02a with SMTP id
- adf61e73a8af0-32d973be2aemr15789698637.30.1760061655030; 
- Thu, 09 Oct 2025 19:00:55 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b678df47919sm883133a12.27.2025.10.09.19.00.54
+ d=1e100.net; s=20230601; t=1760062787; x=1760667587;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g+vNKejzR6V0jtRZUBGGU95Jl9y5Lua5p2J/58NSCrU=;
+ b=thWpz5NAw1nRBc4bAK2beVGiXY8gJwS1RnzwP93qih1KwCy2Y74ypw3E/+Z4Q2rDbJ
+ ob0JtMnSzYNwoOSbBAWvPURTzA0mqqXHgw97/1dkf66IyEOLvZMZ41doy6e4S3/0I/Zq
+ /xGdcC2ssAcPSSOXud0xoN2Tof5GgrPbsj0ADAnu7hH+43ZodWAoi01ywNy6+Af5DD/N
+ 9711s3vF5z5sehhgDRc+NcZWe77CWdENc/BfiUxLO2ij/3MZ7GBiKH5Jb0+a3gKG50ij
+ jGMbqgIZw922dxAQXulzds8bXJ3q4AngNE/6pcJZGtMGEXaQGgraEwGLIttaEHKJAXb4
+ mldg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgv+CSWuTnpfHIbpEmkeRAer9YPs/MuxgiZbAnd+GlA2amf1cgu3I35HZjqTUkouHf74MWioS1u8uK@nongnu.org
+X-Gm-Message-State: AOJu0Yw4Q5ySJ60R1+2DVrsMq84zmR3R819EdtGnoZ61X4v1NpGfcLaB
+ mmpl5aC9sMTbYC2qL6EknuN6+ahGXH87UgC1fd/rOYmwge+MLGAzq9hhVkDzQn0nbNg=
+X-Gm-Gg: ASbGncsrhdFANyk/01V0KAQmGk9mBfhmu8zSt7iswRSQGJgSOlZQduQ3uXTdaL5d0p3
+ wg7K4QJPSFNMQXnnwldbBm7B5WfB825Sd8xW1WKmFoKWVuIYyvfyAzDQx0p2Ugm3Mcw0FLPIus6
+ GVd6s7kPnC/AgWw0uziB0VXQGrskaNrUInOHMw0W0rQQPfU79lqjhYH0gf4TyGkT8n+jY6oY2Si
+ nnVV6vPXQ7x7x+aXTBh8SFyYK97564lt1meFSUjkRCIyMdefEtez0r1kVkzus/Z837XjblvSO+h
+ 7iFeAWyeV965P5pdqHe0oky0Y60717kp1sVVm8IqtO8QaDBaQF0sMSfX5nppIiBtEGQRFZDAJZu
+ Bul/xJfZE91iI1+298G9/H5ZCA2VTGaDTGjeCpLfN51OVnOJQfZwcdebOP5e7gqnb3lxDZ0JVY3
+ sK9dNLPWUlhnpx
+X-Google-Smtp-Source: AGHT+IGkMCJibAeJlMqlMJaH9lhKkpXhFhiRBKgVsaSaeQlengNwZGuzMX3UYuFRIFRj2MruiYqrWw==
+X-Received: by 2002:a05:600c:4e41:b0:45f:2cf9:c229 with SMTP id
+ 5b1f17b1804b1-46fa9a220b1mr65380505e9.0.1760062787600; 
+ Thu, 09 Oct 2025 19:19:47 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fab633cdasm48713935e9.9.2025.10.09.19.19.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 19:00:54 -0700 (PDT)
-Message-ID: <25e9f54c-81eb-42d8-ba62-65fad6ad8e79@linaro.org>
-Date: Thu, 9 Oct 2025 19:00:52 -0700
+ Thu, 09 Oct 2025 19:19:47 -0700 (PDT)
+Message-ID: <0f6dbb37-9d00-43da-9807-c0629575cefb@linaro.org>
+Date: Fri, 10 Oct 2025 04:19:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Cleanups and fixes (PART 2)
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ suravee.suthikulpanit@amd.com, vasant.hegde@amd.com,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, santosh.shukla@amd.com,
+ aik@amd.com
+References: <20251008164324.21553-1-sarunkod@amd.com>
+ <e0cd4386-c367-49f0-b83d-6c38cc6eeef8@oracle.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eric Auger <eric.auger@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: IOMMU group for pci root port and attached devices
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e0cd4386-c367-49f0-b83d-6c38cc6eeef8@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi folks,
+Hi Alejandro,
 
-we are currently trying to enable the Device Assignment stack published 
-recently Arm under QEMU [1].
+On 10/10/25 03:33, Alejandro Jimenez wrote:
 
-Our test case launches a nested (Realm) guest with a vfio-pci passed 
-through. The configuration expects a SATA device and a root port to 
-attach it.
+> I know the commit log is not consistent so far, but going forward I 
+> propose we adopt the shorter prefix "amd_iommu: " for commit summaries. 
+> There is no ambiguity (only one arch has amd_iommu), so the full path is 
+> not required (i.e. avoid 'hw/i386/amd_iommu: '). Shorter boilerplate 
+> leaves more space for relevant details, and helps people like me who 
+> struggle to comply with character limits :).
 
--device pcie-root-port,id=root_port \
--drive id=disk,file=out/disk,if=none \
--device ahci,id=ahci,spdm_port=2323,bus=root_port \
--device ide-hd,drive=disk,bus=ahci.0
-
-We notice that iommu groups are identical for the SATA device and the 
-Root Port, which prevents us from passing the device to the nested guest.
-
-After investigating a little bit, it seems like ACS capability is not 
-present on the root port, at least, it's not reported by lspci -vvv.
-That's a bit confusing, because reading QEMU code source [2], we 
-definitely add it to the root port (and the code is definitely executed 
-at runtime).
-
-Any idea if we are missing something obvious, or if there is another 
-issue completely unrelated to ACS?
-
-[1] 
-https://git.trustedfirmware.org/plugins/gitiles/TF-RMM/tf-rmm.git/+/refs/heads/topics/da_alp12_v2
-[2] 
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/pci-bridge/pcie_root_port.c?ref_type=heads#L121
-
-Regards,
-Pierrick
+What about "hw/amd_iommu:" to keep 'hw' in subject?
 
