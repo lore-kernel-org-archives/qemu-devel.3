@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07021CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C57CCCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CqI-0007BZ-KH; Fri, 10 Oct 2025 09:07:31 -0400
+	id 1v7Cpr-0006a6-R8; Fri, 10 Oct 2025 09:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cq7-0006vj-9a
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:21 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1v7Cpj-0006RR-8S
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:56 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CpK-0003yN-Jo
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:18 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3ee64bc6b90so1281472f8f.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:27 -0700 (PDT)
+ id 1v7Cp4-0003vd-Pe
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:54 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42420c7de22so960230f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101583; x=1760706383; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101568; x=1760706368; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R86oz+iNvRN69XS6d62TZCluTT9+zfgjPz1VdRvohSk=;
- b=Wydmscj/v1eC/DnFGMG3UzDtmJ1bxpFOssCA4D70R69sgWZyaVUsUUFS/VEl6Vw3AI
- KXqyhiHWWLruaDY3EHrHki+2aC3t0BqBBY80asvaH3/8sEdsfA6Ue09xvMUNw+2rSAyp
- DJTuiMQyxuj0DyvX37yOZfh+QQPQaMC9jgN8z5Pms38h0TKFQqrHc8mpUNCvIzarcbSo
- h7f9JR0O9nbN/NLurnPq2LdkAH1YiXS8TjMlla6vf/sP0/6/zK2ED5r0fqdzSF++YJNi
- w3HFG5PeREf6eXq/N8B99lOfYa50VrYgZtfyIj0wGyl7Ayfw4LVVZCO5TZ/9fGdpqxoH
- ab+g==
+ :reply-to; bh=ewlPxRur2UwbnMrdBufYyXSEz9OIf5mQHJvcBpq1vY8=;
+ b=ONzoXpJq1i0UDd7pabsxm7c+tsREbTdhJsRXJzS5t5wwr+nYKgxtzVk2wCZZgxU7aK
+ IqAmmVMsPgWIzxIaBCh+jOVMIEicFcXYeIgOgbN9Y7G8TvI3K1H/P2yvwbXE5/wOlXL0
+ o4Zp8q/YOM7tNgwqrIxdyrmOAnhc9oL152wEjtekkXfnhIgOOMcf0UuTkfy6qokmdb67
+ B21yGSlbJNciS1MNGBju/9xE6PXvam+K7LPCh+wqebbKW7HhqqGfMkOk5fV9NKTCWYIX
+ fcXK2BGTlf+nMeiQjSoLDB2ZYRoUx3uNlEHG7rEdfghBGVxQwbKZIyGFNB48qRHIEaP0
+ j4Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101583; x=1760706383;
+ d=1e100.net; s=20230601; t=1760101568; x=1760706368;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R86oz+iNvRN69XS6d62TZCluTT9+zfgjPz1VdRvohSk=;
- b=mga3xwPXjN5Bn0Zv/8Wq7R0s7Hz2BoEuf1ILj3HHDIxGv+dnkQr2WjZuB4rpVhthiv
- zW8/pl/vgJV53mtMb8rbrOb6u3K+otzyelecz/qFjfy0Np/YZacQfWIgX8Vu38MkvzZl
- 2qhyhDCDpR5WqezpXDdrVJEXDRByfgBvQCuQXEIIiulY2+CF2VT9IzPsReoTiVsMD4j5
- g8SS+OLcyhxvrxHowYHxFlOBKE69+VPAQBf5cSXk2K/pN+U85gqnLSjOEXbr0PLWw3jV
- WJiey9v3kZna8t17+IBBtWntPY0LXOMo8vx9Y06KCjWMvayMAqFjKEasA+ReOfMeh7Vp
- 6seg==
-X-Gm-Message-State: AOJu0YzXLiQqvNSx+bnsGHH05VTGwtRrEYnjS81kxogH8Vw/QbvqtgU0
- hzSEQr/M7ki1TFzOWa18h89X9I6eEs3vOP419lVwakl5io4ryvfipEvul3H2GItQoouqGjLF5Jx
- Uvb1L
-X-Gm-Gg: ASbGncu5K1/nkFtNcERknHQH5Vf6C+z++2QL15iSdnihma4Masp1109rwiVPTAN7NIo
- K0sRb1xS2noT3u+Z6styyFY7fuSngnnW3Qd+94Uz2QlDR+IfJsMnQd8A1ZnIXSzk8FNKQU4SuQ9
- ExRymXzAESjIVEqtBSBFbGX0+PJhJ/uarO+dm1SjwfJSevtFscoN8iz1NHYU2AMOj5KEr/c03bT
- pOa2uJTHobKCEHcekHTtmKv8q3CK3H0q2NODQOMi6Qa19xk2qfeMV+978CeX99R1I+aQvUbYcbv
- VFRWKaEIz924yWONa85re8tei/HlJs6BC4UAdZ/5B+2J0das7vnrBJYSj89lKUXOzTcQHb2GVPX
- fOmespeVxPm+yGNSIfTg5oZhzzpQGjAm2L3kUnUAZz2NCY7vsVBLiyy1B5U8FPA==
-X-Google-Smtp-Source: AGHT+IE2tZtyvtRVqfiLapzkubyjsorwLXmW3ocHNBIYf3E6Rw7PB69l2jENlDayOyYd5ajbahZ2nw==
-X-Received: by 2002:a5d:5f83:0:b0:425:8125:78fd with SMTP id
- ffacd0b85a97d-4266e8d8b1dmr8035770f8f.48.1760101583306; 
- Fri, 10 Oct 2025 06:06:23 -0700 (PDT)
+ bh=ewlPxRur2UwbnMrdBufYyXSEz9OIf5mQHJvcBpq1vY8=;
+ b=unu5OvzoJnnsVSVbDM6qEdGLAWW8mJFNptFRs9uOO9H855EJfjJ2YBfWnSaqMAO8vk
+ J6A9ID6mHuvlPcCOmMp2uIe9At63a05r58yhwGyYHqknUDg8xB7eKX2drZgakm8Td6AI
+ t/L10gpIICfhKmQJCi5vu+A9ZEdll/c6hBw535oaCgdOrpeF3ys1T9QTK0SXUL9LCDwA
+ TrwKIZRqvvkGWXT4DLigUNUIjry60NZCirMcHnOWDjBUcIp/8/u4gj7ea4G0B1x7EKnm
+ nBxMABv/g+3l6inIYBCXXWI5zHJmR6YWWSfIki1twOqoa67gmSKOVp7dInjkoey5+VQs
+ R3EQ==
+X-Gm-Message-State: AOJu0YzrkUmMEE1V6RAGjIAzvusfGiPfrhDqAGiDDh8+2wSjpOxND9Jb
+ Fx4+P/H07+7iT1bjd54J9M399fzJCZWuiUAx3kLboicqeM1c/0Xqmb7B05zCMewFIJbzZqBnPM+
+ G+Fsx
+X-Gm-Gg: ASbGncsdaO5w5VTx5ZNNLNGkDqpmVL8JPpltAN2cwMkhZgpaz/dUv+BAGln1ExojsmV
+ vy4EWpqpx8qfo0aMpVMHdRlzk/CFZG3k6RKjvpOfhBj3OfZ5ImUzWlG6hUk61WoF0aDlGBQa9Wl
+ /amtRjEW5TBZ7hZf+V3NV85+2J+LFk+326BmFX1INMsKzFWWgSDq0Rk7FW+HXcKc48s90+mzPJS
+ zyp8R1DbKxReBB6hrv4eiXxWXuOxiRS5W1WnP5PZzyitOLvc9NYwQt+JVxFBi8PulZeiv5r0ZcI
+ EUZ/OBzcp5+KUNfZIhwaLcHj3vjgnONrLxFox8Y7wuAwPrTi4M6ky4L/3YejYbE1HZ6iAuVtoBy
+ mjkna+/geU5w01KRk/hYJCKFSef5MkhiSQ5Dsk8RVzdlMzyWp/8uUyv+k+vBahA==
+X-Google-Smtp-Source: AGHT+IHpPQF66e/Z6WC2IIzfZ4YDrDPbuNeLnnR3xNayZm1WVVQKsFG7u28jrlCVx5RsPQUd/nLoLg==
+X-Received: by 2002:a05:6000:4212:b0:406:87ba:99a3 with SMTP id
+ ffacd0b85a97d-4266e8d8a8bmr6283991f8f.30.1760101568059; 
+ Fri, 10 Oct 2025 06:06:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.22
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:06:22 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/76] target/arm: Implement GCSB
-Date: Fri, 10 Oct 2025 14:04:58 +0100
-Message-ID: <20251010130527.3921602-48-peter.maydell@linaro.org>
+Subject: [PULL 34/76] target/arm: Make helper_exception_return system-only
+Date: Fri, 10 Oct 2025 14:04:45 +0100
+Message-ID: <20251010130527.3921602-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,46 +102,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-48-richard.henderson@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20251008215613.300150-35-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      | 1 +
+ target/arm/tcg/helper-a64.h    | 5 ++++-
+ target/arm/tcg/helper-a64.c    | 2 ++
  target/arm/tcg/translate-a64.c | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 2ae73f443a6..01b1b3e38be 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -248,6 +248,7 @@ ERETA           1101011 0100 11111 00001 m:1 11111 11111 &reta  # ERETAA, ERETAB
-     AUTIA1716   1101 0101 0000 0011 0010 0001 100 11111
-     AUTIB1716   1101 0101 0000 0011 0010 0001 110 11111
-     ESB         1101 0101 0000 0011 0010 0010 000 11111
-+    GCSB        1101 0101 0000 0011 0010 0010 011 11111
-     PACIAZ      1101 0101 0000 0011 0010 0011 000 11111
-     PACIASP     1101 0101 0000 0011 0010 0011 001 11111
-     PACIBZ      1101 0101 0000 0011 0010 0011 010 11111
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b72aa968cd2..38a1f51ed5e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2080,6 +2080,14 @@ static bool trans_ESB(DisasContext *s, arg_ESB *a)
-     return true;
+diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
+index 85023465b76..b6008b5a3ac 100644
+--- a/target/arm/tcg/helper-a64.h
++++ b/target/arm/tcg/helper-a64.h
+@@ -80,7 +80,6 @@ DEF_HELPER_3(vfp_ah_maxh, f16, f16, f16, fpst)
+ DEF_HELPER_3(vfp_ah_maxs, f32, f32, f32, fpst)
+ DEF_HELPER_3(vfp_ah_maxd, f64, f64, f64, fpst)
+ 
+-DEF_HELPER_2(exception_return, void, env, i64)
+ DEF_HELPER_FLAGS_2(dc_zva, TCG_CALL_NO_WG, void, env, i64)
+ 
+ DEF_HELPER_FLAGS_3(pacia, TCG_CALL_NO_WG, i64, env, i64, i64)
+@@ -145,3 +144,7 @@ DEF_HELPER_FLAGS_5(gvec_fmulx_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32
+ DEF_HELPER_FLAGS_5(gvec_fmulx_idx_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmulx_idx_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmulx_idx_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++
++#ifndef CONFIG_USER_ONLY
++DEF_HELPER_2(exception_return, void, env, i64)
++#endif
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 71c6c44ee8a..6d77fd0113d 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -576,6 +576,7 @@ uint32_t HELPER(advsimd_rinth)(uint32_t x, float_status *fp_status)
+     return ret;
  }
  
-+static bool trans_GCSB(DisasContext *s, arg_GCSB *a)
-+{
-+    if (dc_isar_feature(aa64_gcs, s)) {
-+        tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-+    }
-+    return true;
-+}
-+
- static bool trans_PACIAZ(DisasContext *s, arg_PACIAZ *a)
++#ifndef CONFIG_USER_ONLY
+ static int el_from_spsr(uint32_t spsr)
  {
-     if (s->pauth_active) {
+     /* Return the exception level that this SPSR is requesting a return to,
+@@ -787,6 +788,7 @@ illegal_return:
+     qemu_log_mask(LOG_GUEST_ERROR, "Illegal exception return at EL%d: "
+                   "resuming execution at 0x%" PRIx64 "\n", cur_el, env->pc);
+ }
++#endif /* !CONFIG_USER_ONLY */
+ 
+ void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
+ {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 78b2881a155..43c9bfef93f 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1870,6 +1870,9 @@ static bool trans_BLRA(DisasContext *s, arg_bra *a)
+ 
+ static bool trans_ERET(DisasContext *s, arg_ERET *a)
+ {
++#ifdef CONFIG_USER_ONLY
++    return false;
++#else
+     TCGv_i64 dst;
+ 
+     if (s->current_el == 0) {
+@@ -1889,10 +1892,14 @@ static bool trans_ERET(DisasContext *s, arg_ERET *a)
+     /* Must exit loop to check un-masked IRQs */
+     s->base.is_jmp = DISAS_EXIT;
+     return true;
++#endif
+ }
+ 
+ static bool trans_ERETA(DisasContext *s, arg_reta *a)
+ {
++#ifdef CONFIG_USER_ONLY
++    return false;
++#else
+     TCGv_i64 dst;
+ 
+     if (!dc_isar_feature(aa64_pauth, s)) {
+@@ -1918,6 +1925,7 @@ static bool trans_ERETA(DisasContext *s, arg_reta *a)
+     /* Must exit loop to check un-masked IRQs */
+     s->base.is_jmp = DISAS_EXIT;
+     return true;
++#endif
+ }
+ 
+ static bool trans_NOP(DisasContext *s, arg_NOP *a)
 -- 
 2.43.0
 
