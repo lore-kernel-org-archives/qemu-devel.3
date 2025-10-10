@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9635ACCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E208CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7A0k-0000bY-Gx; Fri, 10 Oct 2025 06:06:06 -0400
+	id 1v7A3y-0001YY-Kk; Fri, 10 Oct 2025 06:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7A0h-0000aV-4r
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:06:04 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7A0b-0003Nb-Mv
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:06:02 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-6354a4b4871so2351295d50.2
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 03:05:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760090754; x=1760695554; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=oIoax9uN8gg45sVHNBStsxb2JzoQaro5TWlzSUBN8IQ=;
- b=tAHT2XiefWDB0wSrMI3zXOa+0xQSCMLrhmxDAsuZ2lThHFZiD/v7q1pOu0UMSempgE
- MOs2//Nuy8gXuw10/JnNa+XW1/vF4zqQhmrjUfBhlsbdGK+ekMJUkLGZ8+gUsMjbvTkf
- j8HHRasaa50WdqdxdCM4g5qzzvLjNdUKPB939Sjw8tVCEnBQm0o3lAETEec/+Nl4VDd2
- wF3mIxyt1c1+InhbXMRRbKw19aIVM1FEmTzc7rIpVwav7n3yUqgs8Un2JGURqPi5mGgL
- Pmc9VFGBWw1L5LypONkMOZyXL65OoIYOiWNH8riCKgj1jdILjeDD0nFCn9iX6oGEpgda
- jeNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760090754; x=1760695554;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oIoax9uN8gg45sVHNBStsxb2JzoQaro5TWlzSUBN8IQ=;
- b=bHzjIhZD9ZlVRZPqZkREnsuIjiL4Yq7Ola5gr7cKd8Re6QCQk8Pr8OnD++3TBUb6sp
- 47S+NzcVYm4tv4NjdfE4OZLdWImzwo82URLbFajiP4LYZram4uxy5GgAqdv3oBO+dAFK
- 1+94AHcmwdU3b8HKw0LLLCF+MJ/hBzh4al0ACe+/xyktjiN11ele3t15oh+0MYFDp1XD
- msc6jQuadmYu0UyhW8OIeGWBjMoQbEvyRBkD9oz5BI/IP67JcpSJgZPa/X5RJpN2Snqx
- 8ft5O83dClrcZqpDfKY+ulB7el+ZsfPblAHr/ERPxjjVa84ZmR+2VdgMnVr3sdN6lKed
- CBIw==
-X-Gm-Message-State: AOJu0Yw6w5UIhORcArOESNAwvScHHEL1DROZ3eiToJZ1q5wWspNw7aDR
- 1Wtx70omkZiT/u/jgZYc3MW8DzJTcMjoKqF7sbiunhBTVHdBuRtZOGQg6Nkna79smQnjxITUcq6
- +hipLGvlwzyMZrk1s5YP7rUBLhiXrj4vEhbN+D+RwLg==
-X-Gm-Gg: ASbGnctGc4tbHDNNqXnmhoWdCreyczQjS7HADWcoqDmXFJdhgBmhMpZFjO43laGwVzc
- X0kRD6hp8hE5uoYk5j52AElNV+H86F5P3DwW7nyBGzB/cnMVDJlzGFT+gQy2IFhzedAW4KU6mGu
- euHAtgtcPtFBqF3Q9VOM/9nnKd1r6hqqjBEvLe+Ijztza/50GLBsXQHQ3d00KlAclDqf9oZDgEQ
- i8uvOl0gEV0Qz2YCy+c3wF36nGuz8qqy2js92zGTA2z4FsSPuwM
-X-Google-Smtp-Source: AGHT+IF3QESCaFC0aA2EnILx5L3ho7+zGK1rBALBf+620KHP1wALSqdfWhmO1OtrV9tLWjCgGfz2+sGzZhRZ7U0ieUk=
-X-Received: by 2002:a05:690e:158e:10b0:63c:e3dc:bef with SMTP id
- 956f58d0204a3-63ce3dc1563mr3412328d50.40.1760090754277; Fri, 10 Oct 2025
- 03:05:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v7A3x-0001YQ-NC
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:09:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v7A3p-0004EH-UU
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:09:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760090955;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=y48iJxJyL97VXcPqgRH2ScMv/vaYDTYBVhwB4sOjtis=;
+ b=A+dfX2JIZjUVGrgecfIZTFVH+ClFO+EQMZHSM7PI1n3e9PTwxQkrkTN0+l8ekbaQOAlU0m
+ DZD3HEgCqkZ4WlMOYabA8TeHZ0rf+j2yO2mgxYDJVSp/znvr5aPLn716RRwED2EXEllrVO
+ DGDSX0i4GHcGKeJB9PGhE1E7Jha76/A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-YhQDgVY-M7yZ2TUDzHsfrg-1; Fri,
+ 10 Oct 2025 06:09:14 -0400
+X-MC-Unique: YhQDgVY-M7yZ2TUDzHsfrg-1
+X-Mimecast-MFC-AGG-ID: YhQDgVY-M7yZ2TUDzHsfrg_1760090953
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59D781800562; Fri, 10 Oct 2025 10:09:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.177])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75E641800447; Fri, 10 Oct 2025 10:09:10 +0000 (UTC)
+Date: Fri, 10 Oct 2025 11:09:04 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Richard W.M. Jones" <rjones@redhat.com>
+Cc: qemu-devel@nongnu.org, lvivier@redhat.com, farosas@suse.de,
+ pbonzini@redhat.com
+Subject: Re: [PATCH v2 1/2] Implement -run-with exit-with-parent=on
+Message-ID: <aOjbQITMTLHSXEYo@redhat.com>
+References: <20251009161526.140497-1-rjones@redhat.com>
+ <20251009161526.140497-2-rjones@redhat.com>
 MIME-Version: 1.0
-References: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
-In-Reply-To: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Oct 2025 11:05:43 +0100
-X-Gm-Features: AS18NWD3-O5OrmtNOmCHdMsQxniwCHYzGfre40vQnil6iNE0F30IMys2Uqs6_jA
-Message-ID: <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
-Subject: Re: [PATCH] Add support for zboot images compressed with zstd
-To: Daan De Meyer <daan.j.demeyer@gmail.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251009161526.140497-2-rjones@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,85 +86,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Oct 2025 at 20:17, Daan De Meyer <daan.j.demeyer@gmail.com> wrote:
->
-> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+On Thu, Oct 09, 2025 at 05:12:46PM +0100, Richard W.M. Jones wrote:
+> Libguestfs wants to use qemu to run a captive appliance.  When the
+> program linked to libguestfs exits, we want qemu to be cleaned up.
+> Libguestfs goes to great lengths to do this at the moment: it either
+> forks a separate process to ensure clean-up is done, or it asks
+> libvirt to clean up the qemu process.  However this is complicated and
+> not totally reliable.
+> 
+> On Linux, FreeBSD and macOS, there are mechanisms to ensure a signal
+> or message is delivered to a process when its parent process goes
+> away.  The qemu test suite even uses this mechanism on Linux (see
+> PR_SET_PDEATHSIG in tests/qtest/libqtest.c).
+> 
+> In nbdkit we have long had the concept of running nbdkit captively,
+> and we have the nbdkit --exit-with-parent flag to help
+> (https://libguestfs.org/nbdkit-captive.1.html#EXIT-WITH-PARENT)
+> 
+> This commit adds the same mechanism.  The syntax is:
+> 
+>   qemu -run-with exit-with-parent=on [...]
+> 
+> This is not a feature that most typical users of qemu (for running
+> general purpose, long-lived VMs) should use, so it defaults to off.
+> 
+> The exit-with-parent.[ch] files are copied from nbdkit, where they
+> have a 3-clause BSD license which is compatible with qemu:
+> 
+> https://gitlab.com/nbdkit/nbdkit/-/tree/master/common/utils?ref_type=heads
+> 
+> Thanks: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
 > ---
->  hw/arm/boot.c       |  2 +-
->  hw/core/loader.c    | 36 ++++++++++++++++++++++++------------
->  hw/nvram/fw_cfg.c   |  2 +-
->  include/hw/loader.h |  2 +-
->  4 files changed, 27 insertions(+), 15 deletions(-)
->
-> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-> index e77d8679d8..c0dec0343a 100644
-> --- a/hw/arm/boot.c
-> +++ b/hw/arm/boot.c
-> @@ -826,7 +826,7 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
->      ssize_t size;
->
->      /* On aarch64, it's the bootloader's job to uncompress the kernel. */
-> -    size = load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_GUNZIP_BYTES,
-> +    size = load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES,
->                                       &buffer);
+>  include/qemu/exit-with-parent.h |  57 +++++++++++++
+>  qemu-options.hx                 |  13 ++-
+>  system/exit-with-parent.c       | 140 ++++++++++++++++++++++++++++++++
+>  system/meson.build              |   1 +
+>  system/vl.c                     |  13 +++
+>  5 files changed, 222 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/qemu/exit-with-parent.h b/include/qemu/exit-with-parent.h
+> new file mode 100644
+> index 0000000000..c00b863fe9
+> --- /dev/null
+> +++ b/include/qemu/exit-with-parent.h
+> @@ -0,0 +1,57 @@
 
-I would either not bother renaming this constant, or else do
-it in a preliminary patch of its own in the series. (That
-makes the part of the patch which is making the functional
-change easier to read and review.)
+snip
 
-> @@ -882,14 +887,6 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
->          return 0;
->      }
->
-> -    if (strcmp(header->compression_type, "gzip") != 0) {
-> -        fprintf(stderr,
-> -                "unable to handle EFI zboot image with \"%.*s\" compression\n",
-> -                (int)sizeof(header->compression_type) - 1,
-> -                header->compression_type);
-> -        return -1;
-> -    }
-> -
->      ploff = ldl_le_p(&header->payload_offset);
->      plsize = ldl_le_p(&header->payload_size);
->
-> @@ -898,8 +895,23 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
->          return -1;
->      }
->
-> -    data = g_malloc(LOAD_IMAGE_MAX_GUNZIP_BYTES);
-> -    bytes = gunzip(data, LOAD_IMAGE_MAX_GUNZIP_BYTES, *buffer + ploff, plsize);
-> +    data = g_malloc(LOAD_IMAGE_MAX_DECOMPRESSED_BYTES);
 > +
-> +    if (strcmp(header->compression_type, "gzip") == 0) {
-> +        bytes = gunzip(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
-> +#ifdef CONFIG_ZSTD
-> +    } else if (strcmp(header->compression_type, "zstd") == 0) {
-> +        size_t ret = ZSTD_decompress(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
-> +        bytes = ZSTD_isError(ret) ? -1 : (ssize_t) ret;
+> +#ifndef NBDKIT_EXIT_WITH_PARENT_H
+> +#define NBDKIT_EXIT_WITH_PARENT_H
+
+I'd suggest s/NBDKIT/QEMU/ here & at the end
+
+> +
+> +/* Test if the feature is available on the platform. */
+> +static inline bool can_exit_with_parent(void)
+> +{
+> +#if defined(__linux__) || defined(__FreeBSD__) || defined(__APPLE__)
+> +    return true;
+> +#else
+> +    return false;
 > +#endif
-> +    } else {
-> +        fprintf(stderr,
-> +                "unable to handle EFI zboot image with \"%.*s\" compression\n",
-> +                (int)sizeof(header->compression_type) - 1,
-> +                header->compression_type);
-> +        return -1;
-
-Moving the "unrecognized compression type" error path down to
-here means that we have moved it below the g_malloc() of the
-data buffer, so we now need to g_free() to avoid a leak.
-
-> +    }
+> +}
 > +
->      if (bytes < 0) {
->          fprintf(stderr, "failed to decompress EFI zboot image\n");
->          g_free(data);
+> +/*
+> + * --exit-with-parent: kill the current process if the parent exits.
+> + * This may return -1 on error.
+> + *
+> + * Note this will abort on platforms where can_exit_with_parent()
+> + * returned false.
+> + */
+> +extern int set_exit_with_parent(void);
+> +
+> +#endif /* NBDKIT_EXIT_WITH_PARENT_H */
 
-Otherwise I think this looks OK.
 
-thanks
--- PMM
+
+With that minor change
+
+ Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+ 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
