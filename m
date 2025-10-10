@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF18CCD18A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C07CCA476
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7EmZ-0000hG-3g; Fri, 10 Oct 2025 11:11:47 -0400
+	id 1v7ElQ-0008LA-9e; Fri, 10 Oct 2025 11:10:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7EmX-0000g6-S7
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:45 -0400
+ id 1v7ElK-0008IH-QF
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:10:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7Ell-0004Cg-Ep
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:44 -0400
+ id 1v7El7-00042W-8s
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:10:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760109053;
+ s=mimecast20190719; t=1760109014;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qLAzjRg81thfU2aBxeIBMEWinBk0XD4qCND6oGCuTHg=;
- b=FBKKWJARpYzarLA7ixMWQoqafmis43RUqd1FCdhutJyndXXQ7+GAssfTZfGk5Rk2GbsZy+
- 5iWvkv7ct1V21XkNWOHjcblawx3WNK+Oq3vVegrChDCY67ksjxb8fm8FVj/JiRWBXT9cwp
- azm++0cR/pelsrIyz8LHfuIuuvf4MUU=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FCuQFa5fX4KQKF7cPe8uVRBcotSflZGTjBWBJT+Gw1A=;
+ b=CUEZPO0MmUV8onUngrlXt+EVf7ZLiP1J3ZMocvG78bYdWKyZm48KVXQ5gi8hqr+k17vzo+
+ Lt1zFbDtq/2x92M50oGW0GqkI1/E8uBoV36g66S5HucODENLzixJ0xd/jNfyW75/6gXajl
+ oEJ3GVVkzBm2z7o2ModRzgYau/HxkRw=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-494-DzONFOBAOj6rcHdnEwOWVg-1; Fri, 10 Oct 2025 11:10:52 -0400
-X-MC-Unique: DzONFOBAOj6rcHdnEwOWVg-1
-X-Mimecast-MFC-AGG-ID: DzONFOBAOj6rcHdnEwOWVg_1760109051
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b4af88aba57so205999066b.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:52 -0700 (PDT)
+ us-mta-594-jef618aBNuSVrW4vuVYYJA-1; Fri, 10 Oct 2025 11:10:12 -0400
+X-MC-Unique: jef618aBNuSVrW4vuVYYJA-1
+X-Mimecast-MFC-AGG-ID: jef618aBNuSVrW4vuVYYJA_1760109012
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-6349af0e766so2508832a12.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760109051; x=1760713851;
+ d=1e100.net; s=20230601; t=1760109011; x=1760713811;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qLAzjRg81thfU2aBxeIBMEWinBk0XD4qCND6oGCuTHg=;
- b=V/dsYAL2dxmsTYELjBofOuIfHrGblHiNvuiUd9wyrmCMduVsLzVDYB786SKQiumPaB
- cFsgv7g4zDw36BBtXgVKBzE9I66CE/hEqyKTiSleSBbSq8SYrS8T4eI6FYT/ezYLa4i7
- NE5mAFKaEIO0FPik1GiOrMd61n7GDdy4h0eZ57l1AiutAOc+mgt2YjMh83USunWImGy8
- UboP9NM99v6ELsFMu6ccDlZWIbyvruygfCLmyUi7rh4ecO10KcMImiLUkxjD2xmr+DI1
- efa34tVpAW6UNtkLmJ3pNS8KexU/7/pT1LayZMaQuQVzCAtkrWUkatVSEg+mfrMvX608
- fDbA==
-X-Gm-Message-State: AOJu0YxJCI8qvhbpV9ecGRtQEhoT19dml6GXMVpdaDR4m9oLfGRNpWJO
- k0jPHyP8wFQUskqZCH1kyTEhSBEqD3vYeXrdZ6dtz41CzM14IBrW97dlDGn4wxB1Mu3ElbIXnXp
- cJL4Y81tzlpg5y6FrG/p4mrf+QQ9j+QwU29VE1/kM09xdrbf9jxydjZ1THTIWPciOyMb28itAEO
- S6ibDtfrIMh6/XgWzfSCdA1QcXSDBP9wWYrXxgOvqY
-X-Gm-Gg: ASbGnctsbH9BwyJWMYthkOaJqFH5AloQHjN0LVr1RaQAhUC6RN0PxCiTdP76CDTC0Zq
- d3P5i4MACilcK06XUeet2wUSeGBpVvroTpHUSKsNGTZV1CqbuAjXhH8uSRiQcqrtSPTXvPUVel0
- YppNld+OYcgKY8Ek0TmyFBKCA02EUVBhMINPNZgrHfB4tvjwIB33lIXqdc2z4A0sumADBJ2FonS
- MbS9vqJkapWKLPcGmBeIxFusJa6NBrKpeB498Yan1nWkz2iAAzqoNGZHnEkbNrrVdURAPMVn/fv
- 8F+AsySacd48eUD8HmBvuKmuH+NO1VFrK8yHfQO5meyJI6D8tNchg+hXySNI9Iow9l6ZjD3B4/l
- dLsxDJLntgG/UWsECwQXkDWSLvtK48LUHUmFqMjWS4s16
-X-Received: by 2002:a17:906:c144:b0:b49:b3ca:52b4 with SMTP id
- a640c23a62f3a-b50aab9d64amr1227764766b.23.1760109050848; 
- Fri, 10 Oct 2025 08:10:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5BpqB1n7IwGrSa3hxTlnzREuidDabK7inECo3W37egXG6QpbbHe8MINppXAIxIGHcsa7Kpg==
-X-Received: by 2002:a17:906:c144:b0:b49:b3ca:52b4 with SMTP id
- a640c23a62f3a-b50aab9d64amr1227761266b.23.1760109050433; 
- Fri, 10 Oct 2025 08:10:50 -0700 (PDT)
+ bh=FCuQFa5fX4KQKF7cPe8uVRBcotSflZGTjBWBJT+Gw1A=;
+ b=smCFdhm38ExnLq7LCkHGy0rBjKOHdVlc+FFXx9E41I42iXMlRpg3RMdd095rVT2m9c
+ aQ/sSrlgxLp0VIDQeW0zTdP3CTdHNvKGgHjXeD6RdsELmLm3C2WZcFVexoHsh2e3F7P+
+ hkdkHyKqBpnzod6xj6j4BJQ/mNP4bbphtgbpYDuAN2THuMWNrHWONCckoufnUEoYvuto
+ Tv/wAuMbAAF0bSZ50Oc6gngt0tH2y1WYeo2y794yfemTB8j/DD7Abhx3tTlvTarkf5qh
+ H7oi7KFZhHg94EbJMu+u6C26qx8vxYKg+qVCAgI2TjbgJz3iYIPIp/1LvqY430eWYGH+
+ dyhA==
+X-Gm-Message-State: AOJu0YziCjkdt2T748RlJGsiO88SITj5sZVCuteC8zZtwqRsWF9+SNut
+ 5UJyNbKNBp2MnzcCJP7WJ3rP8rwT0MCavFI9GvMAE+x0i+dzVwRqeQz1WW15LUSnsk0EmqvGEGZ
+ WX8Xf9hM/6tt2u8fU/PgJa7xEiaqtEKxybOXQWTXJKcjszIyq7dG9CI35lQSlthjyscS+pBuMZi
+ ZNPxqKTugmtixtXKp5+8C9CgoW7rO5sEuDcpMjdZXV
+X-Gm-Gg: ASbGnctZEwT21OndyX6V65s9V16Vf2Q3lWjlJm8PgmmEMrBo2093Eomye2wIvc86eQa
+ Oq8EkvFZRvv66PDLl4FhRk4o32hxE+eXTwPI3JKb22BKTX72KyH9dq4vlb+KLWuzyjiYXeZFUi1
+ SwA28M2SRBScvR5g4p0wWp/qrW6248VxCbeagMz7WFqVYuSj6YB+wNd/S68bXQP1Y2JtgMi+wbO
+ +D77x/cNOKneJK6CODX3pyoqy5RKR3Wwr82E+2h8LRZ7zmhG7A21LLfcDdL4yY6HmpdZUe8YuX5
+ hs09lVRSS5B8iC/wuwbCtOvsWkYnoH4+d2E4Z1GyKceSjvb+jOrbBiWEj4qEq3WQCLSqRmP6Byp
+ UqzKkO7uTYJvce2iAQI/eCt1PtZTvp0f5bpZs7yxxoNVj
+X-Received: by 2002:aa7:dcca:0:b0:636:240f:9ece with SMTP id
+ 4fb4d7f45d1cf-639d5c75d2amr8827969a12.34.1760109010808; 
+ Fri, 10 Oct 2025 08:10:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWT7mfaLiPP25ccYmgmOyWXrCLTdr+R4Lpky3/nq8T98ppQJkLXVDDiXep81ijjnycbqtbSg==
+X-Received: by 2002:aa7:dcca:0:b0:636:240f:9ece with SMTP id
+ 4fb4d7f45d1cf-639d5c75d2amr8827942a12.34.1760109010199; 
+ Fri, 10 Oct 2025 08:10:10 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.231.162])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d8c12978sm253961966b.44.2025.10.10.08.10.48
+ 4fb4d7f45d1cf-63a5c32249esm2454971a12.41.2025.10.10.08.10.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 08:10:48 -0700 (PDT)
+ Fri, 10 Oct 2025 08:10:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com,
 	marcandre.lureau@redhat.com,
 	qemu-rust@nongnu.org
-Subject: [PATCH 17/19] scripts/rustc_args: add --no-strict-cfg
-Date: Fri, 10 Oct 2025 17:10:02 +0200
-Message-ID: <20251010151006.791038-18-pbonzini@redhat.com>
+Subject: [PATCH 01/19] util: add ensure macro
+Date: Fri, 10 Oct 2025 17:09:46 +0200
+Message-ID: <20251010151006.791038-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010151006.791038-1-pbonzini@redhat.com>
 References: <20251010151006.791038-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,66 +111,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+The macro is similar to anyhow::ensure but uses QEMU's variation
+on anyhow::Error.  It can be used to easily check a condition
+and format an error message.
 
-Allow to generate all --cfg flags, regardless of Cargo.toml content.
-We can't easily list and include all the features used by QAPI types.
-Access via #[cfg()] then requires #![allow(unexpected_cfgs)].
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/rust/rustc_args.py | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 21 ++++++-----
+ rust/hw/timer/hpet/src/fw_cfg.rs |  7 ++--
+ rust/util/src/error.rs           | 65 ++++++++++++++++++++++++++++++++
+ 3 files changed, 80 insertions(+), 13 deletions(-)
 
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index 63b0748e0d3..c70b95b8bed 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -116,7 +116,7 @@ def generate_lint_flags(cargo_toml: CargoTOML, strict_lints: bool) -> Iterable[s
-         yield from lint.flags
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 86638c07666..4218372a2a1 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -25,7 +25,10 @@
+     bindings::{address_space_memory, address_space_stl_le, hwaddr},
+     MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder, MEMTXATTRS_UNSPECIFIED,
+ };
+-use util::timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND};
++use util::{
++    ensure,
++    timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
++};
  
+ use crate::fw_cfg::HPETFwConfig;
  
--def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
-+def generate_cfg_flags(header: str, cargo_toml: Optional[CargoTOML]) -> Iterable[str]:
-     """Converts defines from config[..].h headers to rustc --cfg flags."""
+@@ -728,14 +731,14 @@ fn post_init(&self) {
+     }
  
-     with open(header, encoding="utf-8") as cfg:
-@@ -125,8 +125,9 @@ def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
-     cfg_list = []
-     for cfg in config:
-         name = cfg[0]
--        if f'cfg({name})' not in cargo_toml.check_cfg:
--            continue
-+        if cargo_toml:
-+            if f'cfg({name})' not in cargo_toml.check_cfg:
-+                continue
-         if len(cfg) >= 2 and cfg[1] != "1":
-             continue
-         cfg_list.append("--cfg")
-@@ -194,6 +195,13 @@ def main() -> None:
-         help="apply stricter checks (for nightly Rust)",
-         default=False,
-     )
-+    parser.add_argument(
-+        "--no-strict-cfg",
-+        help="only generate expected cfg",
-+        action="store_false",
-+        dest="strict_cfg",
-+        default=True,
-+    )
-     args = parser.parse_args()
-     if args.verbose:
-         logging.basicConfig(level=logging.DEBUG)
-@@ -224,7 +232,7 @@ def main() -> None:
-                     print(f'cfg(feature,values("{feature}"))')
+     fn realize(&self) -> util::Result<()> {
+-        if self.num_timers < HPET_MIN_TIMERS || self.num_timers > HPET_MAX_TIMERS {
+-            Err(format!(
+-                "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
+-            ))?;
+-        }
+-        if self.int_route_cap == 0 {
+-            Err("hpet.hpet-intcap property not initialized")?;
+-        }
++        ensure!(
++            (HPET_MIN_TIMERS..=HPET_MAX_TIMERS).contains(&self.num_timers),
++            "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
++        );
++        ensure!(
++            self.int_route_cap != 0,
++            "hpet.hpet-intcap property not initialized"
++        );
  
-     for header in args.config_headers:
--        for tok in generate_cfg_flags(header, cargo_toml):
-+        for tok in generate_cfg_flags(header, cargo_toml if args.strict_cfg else None):
-             print(tok)
+         self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
  
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index e569b57b93b..27b3b2495a0 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -5,6 +5,7 @@
+ use std::ptr::addr_of_mut;
  
+ use common::Zeroable;
++use util::{self, ensure};
+ 
+ /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
+ /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
+@@ -36,7 +37,7 @@ unsafe impl Zeroable for HPETFwConfig {}
+ };
+ 
+ impl HPETFwConfig {
+-    pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
++    pub(crate) fn assign_hpet_id() -> util::Result<usize> {
+         assert!(bql::is_locked());
+         // SAFETY: all accesses go through these methods, which guarantee
+         // that the accesses are protected by the BQL.
+@@ -47,9 +48,7 @@ pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
+             fw_cfg.count = 0;
+         }
+ 
+-        if fw_cfg.count == 8 {
+-            Err("Only 8 instances of HPET are allowed")?;
+-        }
++        ensure!(fw_cfg.count != 8, "Only 8 instances of HPET are allowed");
+ 
+         let id: usize = fw_cfg.count.into();
+         fw_cfg.count += 1;
+diff --git a/rust/util/src/error.rs b/rust/util/src/error.rs
+index bfa5a8685bc..20b8e7d5af5 100644
+--- a/rust/util/src/error.rs
++++ b/rust/util/src/error.rs
+@@ -86,6 +86,19 @@ fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+     }
+ }
+ 
++impl From<Cow<'static, str>> for Error {
++    #[track_caller]
++    fn from(msg: Cow<'static, str>) -> Self {
++        let location = panic::Location::caller();
++        Error {
++            msg: Some(msg),
++            cause: None,
++            file: location.file(),
++            line: location.line(),
++        }
++    }
++}
++
+ impl From<String> for Error {
+     #[track_caller]
+     fn from(msg: String) -> Self {
+@@ -126,6 +139,17 @@ fn from(error: anyhow::Error) -> Self {
+ }
+ 
+ impl Error {
++    #[track_caller]
++    #[doc(hidden)]
++    pub fn format(args: fmt::Arguments) -> Self {
++        if let Some(msg) = args.as_str() {
++            Self::from(msg)
++        } else {
++            let msg = std::fmt::format(args);
++            Self::from(msg)
++        }
++    }
++
+     /// Create a new error, prepending `msg` to the
+     /// description of `cause`
+     #[track_caller]
+@@ -311,6 +335,47 @@ unsafe fn cloned_from_foreign(c_error: *const bindings::Error) -> Self {
+     }
+ }
+ 
++/// Ensure that a condition is true, returning an error if it is false.
++///
++/// This macro is similar to [`anyhow::ensure`] but returns a QEMU [`Result`].
++/// If the condition evaluates to `false`, the macro returns early with an error
++/// constructed from the provided message.
++///
++/// # Examples
++///
++/// ```
++/// # use util::{ensure, Result};
++/// # fn check_positive(x: i32) -> Result<()> {
++/// ensure!(x > 0, "value must be positive");
++/// #   Ok(())
++/// # }
++/// ```
++///
++/// ```
++/// # use util::{ensure, Result};
++/// # const MIN: i32 = 123;
++/// # const MAX: i32 = 456;
++/// # fn check_range(x: i32) -> Result<()> {
++/// ensure!(x >= MIN && x <= MAX, "{} not between {} and {}", x, MIN, MAX);
++/// #   Ok(())
++/// # }
++/// ```
++#[macro_export]
++macro_rules! ensure {
++    ($cond:expr, $fmt:literal, $($arg:tt)*) => {
++        if !$cond {
++            let e = $crate::Error::format(format_args!($fmt, $($arg)*));
++            return $crate::Result::Err(e);
++        }
++    };
++    ($cond:expr, $err:expr $(,)?) => {
++        if !$cond {
++            let s = ::std::borrow::Cow::<'static, str>::from($err);
++            return $crate::Result::Err(s.into());
++        }
++    };
++}
++
+ #[cfg(test)]
+ mod tests {
+     use std::ffi::CStr;
 -- 
 2.51.0
 
