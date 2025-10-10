@@ -4,151 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0877CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 05:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6527ECCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 05:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v75Sf-0005Fd-Ta; Fri, 10 Oct 2025 01:14:37 -0400
+	id 1v75Zr-0006d0-LG; Fri, 10 Oct 2025 01:22:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v75Sd-0005FM-Gu
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 01:14:35 -0400
-Received: from mail-westusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v75SY-0007dv-Ow
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 01:14:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kTdFtMEl8i6RRQp4x9fyKjByQNZsR3iGpLSzu6x6ZYBFj+0jgiq7b661fX1V4TwAG7M3dF5vz8UUPBocZHpGlxaWk2PB2Fds/zSEF1i67DbUsMSvWyzwhxhH6TNUZoipoqfN8cd5KYYeRSHCpNH1hK9emTHpggHy+vT943A0eOfZSkHxwTOhRZ/GpiZUHNxnTgazrUGaXrOcUSxJ7dOfAD99QSMM5qpzQgvAv3x6zjEI1vCi35P/c3nT0Dkhbd24/sSJJ+ix8uf0TmQZxXEn2PX1oZi2z3lQWSr/i+bU/unQY+JdvCjVFyMgDrrYwDgyQvHrPIFpqUD1aiIrUCKi2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=I73Bu/2qTsOL3nPDRTt6gfUXEXjTWGy2TQqCkiIXHv0=;
- b=sb4q7kuga6IVkPQnxcMud/hcQRMoN2EhbGRLP0K/Adz7VylmFxjQbieJev0ooe4mDXgzXNKDRzcVVMh6J6AycVW0tK4X7xGYDVLwTNSe6GeBSUqNz591TC3rc8A7yjNLk8RY5MJMAXWZWKZb6efKZ9KFvpLvHxcFK1/rs9IayWv2TlPzIA8gvuu4n4fb4HGIj2mfzpaThDm1uuMmlrQzHMkovpZUHytCV9EjTydB/3rlRCe9rh/sKmn6r6fu22iLUr6Pq/h82+FGPgNA+33Yf8nQ/sxryq88TMC7j/02Y2nRp82sQShuEuFfc5cOD9rF3K+2JGBAz8yFUGFDkfUeNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I73Bu/2qTsOL3nPDRTt6gfUXEXjTWGy2TQqCkiIXHv0=;
- b=eCzqIOzjYBoxNUaxW5pbIh1Lrd7jB71ENrkOv1tytTeryPK1kzj9KkmRTAKme1/afO+YOwpvwP+wmkU5FoEZcHgDQc1/1lnqh2D+pM8k3t9bauvIkFQiMmglEcDP23G/wPZGEq5+/xYTAZntwqOvmTL4N81ZY4Ol3KShSFNCgLY=
-Received: from BL1PR13CA0176.namprd13.prod.outlook.com (2603:10b6:208:2bd::31)
- by IA1PR12MB6305.namprd12.prod.outlook.com (2603:10b6:208:3e7::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.10; Fri, 10 Oct
- 2025 05:14:15 +0000
-Received: from BN3PEPF0000B076.namprd04.prod.outlook.com
- (2603:10b6:208:2bd:cafe::fc) by BL1PR13CA0176.outlook.office365.com
- (2603:10b6:208:2bd::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.6 via Frontend Transport; Fri,
- 10 Oct 2025 05:14:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN3PEPF0000B076.mail.protection.outlook.com (10.167.243.121) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9203.9 via Frontend Transport; Fri, 10 Oct 2025 05:14:15 +0000
-Received: from [172.31.35.81] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 9 Oct
- 2025 22:14:11 -0700
-Message-ID: <87a149a9-e506-411e-a8be-07a283bc2c57@amd.com>
-Date: Fri, 10 Oct 2025 10:44:03 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v75Zq-0006cW-8B
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 01:22:02 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v75Zm-0000R2-TS
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 01:22:01 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso964765f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 22:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760073712; x=1760678512; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8dkPBiJNXnSWqBCOZmrlfRJjTHIubzqAhRQ4khOG5q4=;
+ b=bMEXp8/NjXIQPbV+OPtl7PP810Y0d3hz8IWtmZ8ogJrpeg9cgekQ36U1NU4yjLlQnJ
+ Epy5LP4CkwcdsVTO43thHdF5prJ7/Q98EOApY6BTulIKH64P9SCyjeAswNpxSD37VDg4
+ ihRYoIXW81UbpxkMhMFg1zLJJGvWPqsb3Ed+/6EPaUFVBEUDNjHRf3wiJhFa41f9heoX
+ 2wDl68wAXo8DdCHNSqj5glht8EuXzxCRVUUzAFQnyxJ3wUdFh8VSNqh0PqFmLZ02VCad
+ tNECpqMdHu9Wd1UeaF+spBRgFl2Z6ylogq6BKteacMP04j79rkicMA9ifgOJD0Ml8ENq
+ RYXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760073712; x=1760678512;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8dkPBiJNXnSWqBCOZmrlfRJjTHIubzqAhRQ4khOG5q4=;
+ b=fQuapVLiX2BUeWRQG2FPZ9cBfJ5hLxzoiZZyKT9hGdWGJ2aXO0AaeyfCL7dUZ2Y4Wp
+ 3vTn35YjZzChGZvkfwjJFsDgL9lHuqUpuYYDyVuAKui1moqTihdVQhWqTnkQH/woSB7f
+ oyCjWub5SirVWT65q12ptCP1NcUPc2gWi5vUnxoRl8bjd2jjB7x53KXNc7pcWJizOm+6
+ reLLRGAtpMd3Sl4NqPGUibDM92XzdCE+EvCg8CsnWpsAErpulB5YluuiTil7vJGikQW2
+ NoG46WCE75AMonwMWw5JU+LRp2+UHUG/+jvh3MVbMjlmkvM/ZDL7Fw7n6rbzJqN/5Hke
+ xoYg==
+X-Gm-Message-State: AOJu0Ywhf9CiN9FZcfmWOAu45HSJJmvgLKagMUnvejxfY1g5BR0o0DuO
+ RpMNWgvqXKlU0bKkh8Ta+BkJsPNyLNveOfOOBkMsP4NKmJ3wGgQxDC/MckcQUzSW08VHab021DF
+ SVe97zv5GJg==
+X-Gm-Gg: ASbGnctJtDe45E2R8xpt/bi3Uj4N/Xhi7euci6f47C5xEl2uCowL7g15IngpolLzzBz
+ fFbiksKYUzk8WkRpne81OP979xbgY53Yhtb+mrZZrKC00pLsUYF8VBHpRo1vLEFa2te6A+Mmjh4
+ Z7RsHGNoPIQl48F5JNpey+90vn3Y5wDb5H5Ok9SDp3L2DlVXXQYV5jJ5ZTD9kviMNcKzZSIbmA8
+ WKj3N8IHQ3IpkaxiJCnmsNIMRuAGO0u4lxsrSK9dXNvlrDr4BE1NijVBOYuF6klw9F68drHxxyq
+ PGzVqAzqmr9yFsOVltY81HsEhrBVeWQHsnNZcJjsLdNvJ+0+A+D/7QgdOMncBlS+PfHj8T0Lp+t
+ ezTKlVKy03NapoVrpHYt/ZYRl1CUV0AsGWJ+J5tZdnpqUBZmo46JFmIb/s5be7z7zwQm5ZVbEqA
+ N7Abi/2q1nHKX/Md/rL5ZJUmezdT1Gqg/pCos=
+X-Google-Smtp-Source: AGHT+IFc9cBrDo5ZopAuiqv4MO4IniHXVg4g5ugNnliERcuu362/Vr0BsdKfwXKC5M4FAmQY/JGBKA==
+X-Received: by 2002:a05:6000:186f:b0:425:7134:edd0 with SMTP id
+ ffacd0b85a97d-42666abb2cemr5138081f8f.9.1760073712535; 
+ Thu, 09 Oct 2025 22:21:52 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce57d447sm2346957f8f.9.2025.10.09.22.21.51
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Oct 2025 22:21:51 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 02/12] target/tricore: Replace target_ulong -> vaddr with
+ tlb_fill() callees
+Date: Fri, 10 Oct 2025 07:21:30 +0200
+Message-ID: <20251010052141.42460-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251010052141.42460-1-philmd@linaro.org>
+References: <20251010052141.42460-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/i386/amd_iommu: Support 64 bit address for IOTLB
- lookup
-Content-Language: en-US
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
- <philmd@linaro.org>, <suravee.suthikulpanit@amd.com>, <vasant.hegde@amd.com>, 
- <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>,
- <santosh.shukla@amd.com>, <aik@amd.com>
-References: <20251008164324.21553-1-sarunkod@amd.com>
- <20251008164324.21553-3-sarunkod@amd.com>
- <91118d9e-eba8-47da-8eea-e535685e4a01@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <91118d9e-eba8-47da-8eea-e535685e4a01@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B076:EE_|IA1PR12MB6305:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9f637eaf-f454-4f67-d351-08de07bbdb4b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cG1CblovaWNvV21ybytrc2ZPbFluVGFmUm1HOG0rU01yS29pOWkyNHV6cGJs?=
- =?utf-8?B?Ri9GV0U4ell5N1FwWmxRV240NjdJZjRvRW5Fd0ZuVUwyYUhVd29lYXZJeGgr?=
- =?utf-8?B?MUExUC9SV1krUWJuVzBlcEM0RlUzNS9RZ3I5OWoxOVlZNTlCMElPcFh5bkp4?=
- =?utf-8?B?NTFyWUVQMk1ITWt5ZUhqVFNYaUxQSXcwczdpL2M1eGJweTJqZ1RwMGc0dnZX?=
- =?utf-8?B?MitEVkdZemZ3MHA1L1ZPZGk4V1NLdGs0NloyMTZHWlNZYkpIbUUzOXZkWUkw?=
- =?utf-8?B?NUtpdXNoa0RTbDJMMGpZMjhJNk5DcVlhTm5tQzJBdEZ5bUt4YzlkT1Z5Vms4?=
- =?utf-8?B?VndlTW9RdTlpeFBzRXp1WHY3VWhYRGswdGQ2TVhlN1E0eDRwZ1dPZTRDQkgy?=
- =?utf-8?B?MmplRXZvYms3S0NVVmc5aHhwZFlKa09ET0dwbWVHQS9ha1h5djdiWHU3citV?=
- =?utf-8?B?aUlzN21SWDFaUkp0Z3hOZi9VbWl5TGRuNk96RVM1b3M1WFlVanVLRUw3Tlps?=
- =?utf-8?B?cUNndXF3dkhJTkdrMDlGRGJSNTZrS01MdmJrVzJQVlhoaTVkaDdVVDRZQTdQ?=
- =?utf-8?B?TnFzUVR5VEFtQVp4Sys3VFUzeDFoZW5KMXB1dkhFVzJVY0FBTmh2c0RGMzZE?=
- =?utf-8?B?Y0h1Ukk0ZHRKeFZUSkJCN3NtZG5jVkt4aHJaMnpUUjJoWkJBQjQvdWFDcFdF?=
- =?utf-8?B?RWphTHlQVVhxUnV3OWVvWXBUTDh3TzVpVVg2Umk5bFl1VjlRMzBkTlVPRXRD?=
- =?utf-8?B?WFJmbzg0Y1ZtWlh0RTQ3UDA0RmwyQnUrRzY4cWI3YzlGM2RTSDNVU1FWZlNM?=
- =?utf-8?B?dkJWQVd2VDhvcEhhODJDWWdUZG9FU29VUjRmTzh0dnVKci9FVzZ6T2ZXamtZ?=
- =?utf-8?B?UG1RTHVlNlFKNjM0YnU4eVI5RkFzcnRIYlQ2d1pCbUNnV3FleXF0TmR5N0oy?=
- =?utf-8?B?c2JJd2lXRUpLSkx3eTQ3SnN0VzVUS0h1a3A3bUpBTmprMWpjUFBHYlhHNUJH?=
- =?utf-8?B?aVNObHFPcWJyNEpyUHgzN216RWxCK1VwMzUrTWtobm5RWk9naDd1TmYwV1Vt?=
- =?utf-8?B?eXl5Sk4yZHN2UEp0UDlCQ1pCbW1jZlVNYS9jUTBZZmVYTitXcm5Pb0h4MVV6?=
- =?utf-8?B?S0hBSnpvcStlMDE0MDY2TGRkaUhZcGhzU0xFQ1NRSnNQTytXeFJlQXY1YmRh?=
- =?utf-8?B?ejRtdGQ4eUVmcFlSN2w2MnZoWEtlaFhqSGFMTVJ0RkJGT09BdmdtZCthc0gy?=
- =?utf-8?B?Z1NkaHVUQUZPRXVPOGNKZlkxdnVTWW1ycW5xSGNHcHpiMWhvdWpUbTZjbkhp?=
- =?utf-8?B?WHNFZ0hYNXB6ZTlCNVVpdTRycWlwbDZKOFdZQjNNVUhWQ0dwL00zdGIySFZD?=
- =?utf-8?B?WWdiRHlxZitORXBUeUEvQXZDdmYrenZKdEZxT0Z2ZVJiZXVJWktZdWlxTnFF?=
- =?utf-8?B?L0ZuZFpHRHdtVk5zTXJOLzBOMGN1MGRucjhHRTFhcWc5SnZIQWJ3d3kwdXZJ?=
- =?utf-8?B?SEtoM2ZSZjFTNCs3bnNoS3cxWWZtcVY0R0NJYXUwVzJ2T09uM01HVnZyeVVn?=
- =?utf-8?B?QzlNT2lFM0FBR2FwOWNPc0M3ckx1U21JekxaVm8ya0N2SktERHpyRWVPaWpp?=
- =?utf-8?B?MlVIcGQ3WnY4TktvVk4xUkNxRGdFUWVIVndXaEpsbEplN0FjNFdFQjdLdGcy?=
- =?utf-8?B?M0pKeWN0WU5oKzZCajcxKy90WEVVTktGQ1RaMm1GNWNMeklJem92ZWxkNHFs?=
- =?utf-8?B?ZjAzOHlvREdYL1hJR2FWS0duWEF6K1g1cXByb2F2ZHhpTCtlVnVUQ3JjSUEr?=
- =?utf-8?B?NTRHRkh5TC9QdSs2dm5tek5xL1NoQk5jR0pHVURMWkVHY25kVHFjd3Z0RFFo?=
- =?utf-8?B?bStsNzJ1L0NHV2RlbnpBL0FHOGswa3NkQ3lWRUxBblg5dHBERUd6WW9hQjI1?=
- =?utf-8?B?dUJPczRuN1VMb05qaTdlYnNtZDZsa0lCaHkvMHBRNnBoVCsvcXBVeXNGb01o?=
- =?utf-8?B?R1h3NWVWWDdPd2NKbU5zQlp3SExnb3JQSVRuSld0MkJjdlVkMjJzUmtsb1BK?=
- =?utf-8?B?K01PeDZ4OFVEVjNwY20zcUlHRThTUVUvYi9UcmlEbExnajF5c1M3dEZhRU0w?=
- =?utf-8?Q?gkJA=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2025 05:14:15.2226 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9f637eaf-f454-4f67-d351-08de07bbdb4b
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B076.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6305
-Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,205 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+tlb_fill() provides a vaddr type since commit 68d6eee73c
+("target/tricore: Convert to CPUClass::tlb_fill").
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/tricore/helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 10/10/2025 6:52 AM, Alejandro Jimenez wrote:
-Hi Alejandro,
-> Hi Sairaj,
->
-> On 10/8/25 12:43 PM, Sairaj Kodilkar wrote:
->> Physical AMD IOMMU supports upto 64 bits of DMA address. When device 
->> tries
->
-> s/upto/up to/ and "a device"
->
->> to read or write from the given DMA address, IOMMU translates the 
->> address
->
-> "a given DMA address"
->
->> using page table assigned to that device. Since IOMMU uses per device 
->> page
->> tables, the emulated IOMMU should use the cache tag of 68 bits
->> (64 bit address - 12 bit page alignment + 16 device ID).
->>
->> Current emulated AMD IOMMU uses GLib hash table to create software iotlb
->> and uses 64 bit key to store the IOVA and deviceID, which limits the 
->> IOVA
->> to 60 bits. This cause failure while setting up the device when guest is
->> booted with "iommu.forcedac=1".
->>
->> To solve this problem, define `struct amdvi_iotlb_key` which uses 64 bit
->> IOVA and 16 bit devid as key to store and lookup IOTLB entry.
->>
->
-> I wouldn't necessarily mention and quote the structure name since that 
-> is an implementation detail and it might change in the future.
->
-> Also, the current implementation also combines a 64-bit IOVA 
-> (technically a 52bit gfn) with a 16-bit devid, the real change in this 
-> patch is in how those same values are being shifted to construct a 
-> hash key that avoids truncation as much as possible. So I'd reword the 
-> commit message to highlight that.
->
+diff --git a/target/tricore/helper.c b/target/tricore/helper.c
+index e4c53d453dd..7574111c87d 100644
+--- a/target/tricore/helper.c
++++ b/target/tricore/helper.c
+@@ -35,7 +35,7 @@ enum {
+ };
+ 
+ static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
+-                                int *prot, target_ulong address,
++                                int *prot, vaddr address,
+                                 MMUAccessType access_type, int mmu_idx)
+ {
+     int ret = TLBRET_MATCH;
+@@ -61,7 +61,7 @@ hwaddr tricore_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ }
+ 
+ /* TODO: Add exception support */
+-static void raise_mmu_exception(CPUTriCoreState *env, target_ulong address,
++static void raise_mmu_exception(CPUTriCoreState *env, vaddr address,
+                                 int rw, int tlb_error)
+ {
+ }
+-- 
+2.51.0
 
-I will update the commit message to highlight this.
-
->> Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
->> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
->> ---
->>   hw/i386/amd_iommu.c | 51 ++++++++++++++++++++++++++++-----------------
->>   hw/i386/amd_iommu.h |  5 +++--
->>   2 files changed, 35 insertions(+), 21 deletions(-)
->>
->> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
->> index 0a4b4d46d885..5106d9cc4036 100644
->> --- a/hw/i386/amd_iommu.c
->> +++ b/hw/i386/amd_iommu.c
->> @@ -106,6 +106,11 @@ typedef struct amdvi_as_key {
->>       int devfn;
->>   } amdvi_as_key;
->>   +typedef struct amdvi_iotlb_key {
->> +    uint64_t gfn;
->> +    uint16_t devid;
->> +} amdvi_iotlb_key;
->> +
->>   uint64_t amdvi_extended_feature_register(AMDVIState *s)
->>   {
->>       uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
->> @@ -377,16 +382,6 @@ static void amdvi_log_pagetab_error(AMDVIState 
->> *s, uint16_t devid,
->>                PCI_STATUS_SIG_TARGET_ABORT);
->>   }
->>   -static gboolean amdvi_uint64_equal(gconstpointer v1, gconstpointer 
->> v2)
->> -{
->> -    return *((const uint64_t *)v1) == *((const uint64_t *)v2);
->> -}
->> -
->> -static guint amdvi_uint64_hash(gconstpointer v)
->> -{
->> -    return (guint)*(const uint64_t *)v;
->> -}
->> -
->>   static gboolean amdvi_as_equal(gconstpointer v1, gconstpointer v2)
->>   {
->>       const struct amdvi_as_key *key1 = v1;
->> @@ -423,11 +418,27 @@ static AMDVIAddressSpace 
->> *amdvi_get_as_by_devid(AMDVIState *s, uint16_t devid)
->>                                amdvi_find_as_by_devid, &devid);
->>   }
->>   +static gboolean amdvi_iotlb_equal(gconstpointer v1, gconstpointer v2)
->> +{
->> +    const amdvi_iotlb_key *key1 = v1;
->> +    const amdvi_iotlb_key *key2 = v2;
->> +
->> +    return key1->devid == key2->devid && key1->gfn == key2->gfn;
->> +}
->> +
->> +static guint amdvi_iotlb_hash(gconstpointer v)
->> +{
->> +    const amdvi_iotlb_key *key = v;
->> +    /* Use GPA and DEVID to find the bucket */
->> +    return (guint)(key->gfn << AMDVI_PAGE_SHIFT_4K |
->> +                   (key->devid & ~AMDVI_PAGE_MASK_4K));
->> +}
->> +
->> +
->>   static AMDVIIOTLBEntry *amdvi_iotlb_lookup(AMDVIState *s, hwaddr addr,
->>                                              uint64_t devid)
->>   {
->> -    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
->> -                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
->> +    amdvi_iotlb_key key = {devid, AMDVI_GET_IOTLB_GFN(addr)};
->
-> This line initializes the key fields with the opposite of the intended 
-> values. Please use this initialization style instead to prevent these 
-> types of errors, plus it makes the definitions more readable:
-
-Good catch. This was something from my older prototype where fields were 
-reversed.
-Will update it.
-
->
-> -    amdvi_iotlb_key key = {devid, AMDVI_GET_IOTLB_GFN(addr)};
-> +    amdvi_iotlb_key key = {
-> +        .gfn = AMDVI_GET_IOTLB_GFN(addr),
-> +        .devid = devid,
-> +    };
->
->
->>       return g_hash_table_lookup(s->iotlb, &key);
->>   }
->>   @@ -449,8 +460,7 @@ static gboolean 
->> amdvi_iotlb_remove_by_devid(gpointer key, gpointer value,
->>   static void amdvi_iotlb_remove_page(AMDVIState *s, hwaddr addr,
->>                                       uint64_t devid)
->>   {
->> -    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
->> -                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
->> +    amdvi_iotlb_key key = {devid, AMDVI_GET_IOTLB_GFN(addr)};
->
-> Same as above, key fields are initialized in incorrect order. Same 
-> easy fix by using designated initializers.
->
->>       g_hash_table_remove(s->iotlb, &key);
->>   }
->>   @@ -461,8 +471,10 @@ static void amdvi_update_iotlb(AMDVIState *s, 
->> uint16_t devid,
->>       /* don't cache erroneous translations */
->>       if (to_cache.perm != IOMMU_NONE) {
->>           AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
->> -        uint64_t *key = g_new(uint64_t, 1);
->> -        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
->> +        amdvi_iotlb_key *key = g_new(amdvi_iotlb_key, 1);
->> +
->> +        key->gfn = AMDVI_GET_IOTLB_GFN(gpa);
->> +        key->devid = devid;
->>             trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), 
->> PCI_SLOT(devid),
->>                   PCI_FUNC(devid), gpa, to_cache.translated_addr);
->> @@ -475,7 +487,8 @@ static void amdvi_update_iotlb(AMDVIState *s, 
->> uint16_t devid,
->>           entry->perms = to_cache.perm;
->>           entry->translated_addr = to_cache.translated_addr;
->>           entry->page_mask = to_cache.addr_mask;
->> -        *key = gfn | ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
->> +        entry->devid = devid;
->> +
->>           g_hash_table_replace(s->iotlb, key, entry);
->>       }
->>   }
->> @@ -2529,8 +2542,8 @@ static void amdvi_sysbus_realize(DeviceState 
->> *dev, Error **errp)
->>           }
->>       }
->>   -    s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
->> -                                     amdvi_uint64_equal, g_free, 
->> g_free);
->> +    s->iotlb = g_hash_table_new_full(amdvi_iotlb_hash,
->> +                                     amdvi_iotlb_equal, g_free, 
->> g_free);
->>         s->address_spaces = g_hash_table_new_full(amdvi_as_hash,
->>                                        amdvi_as_equal, g_free, g_free);
->> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
->> index 38471b95d153..8089f9472ac4 100644
->> --- a/hw/i386/amd_iommu.h
->> +++ b/hw/i386/amd_iommu.h
->> @@ -220,8 +220,9 @@
->>   #define PAGE_SIZE_PTE_COUNT(pgsz)       (1ULL << ((ctz64(pgsz) - 
->> 12) % 9))
->>     /* IOTLB */
->> -#define AMDVI_IOTLB_MAX_SIZE 1024
->> -#define AMDVI_DEVID_SHIFT    36
->> +#define AMDVI_IOTLB_MAX_SIZE        1024
->> +#define AMDVI_IOTLB_DEVID_SHIFT     48
->
-> Remove AMDVI_IOTLB_DEVID_SHIFT since it is not currently used (I 
-> assume it is a left over from earlier prototype)...
-
-Right
-
-Thanks
-Sairaj
 
