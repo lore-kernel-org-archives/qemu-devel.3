@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6F0CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBEACCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CXG-0001UI-Vg; Fri, 10 Oct 2025 08:47:51 -0400
+	id 1v7Cks-0004mv-6L; Fri, 10 Oct 2025 09:01:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7CXF-0001U7-79
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:47:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7CX7-0006iC-G5
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:47:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760100448;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:resent-to:
- resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=ZEjvalNo2M1LrpcT35JfZAI12Md4s8l53dRmza1sqWc=;
- b=drrpxgjD55p+cO96gyQnWTIkVI7GXwfKu2xwuOSEI/9vttefod+9InJgNtgeBIprxcvCqn
- Qar6dEudJPthMGr/s2gt3Bo7ISqC9GEIs7bqm6W7L5BlcKDJloe6Psm8D712MQpwQ6YNsJ
- I4pmPPaPKNz17Dhl6v98mtAseIGoxjI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-o3t7oSl8MR-I2mKvnb9Khg-1; Fri,
- 10 Oct 2025 08:47:26 -0400
-X-MC-Unique: o3t7oSl8MR-I2mKvnb9Khg-1
-X-Mimecast-MFC-AGG-ID: o3t7oSl8MR-I2mKvnb9Khg_1760100445
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61A35180057D; Fri, 10 Oct 2025 12:47:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6EBF218004D8; Fri, 10 Oct 2025 12:47:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B160D21E6A27; Fri, 10 Oct 2025 14:47:21 +0200 (CEST)
-Resent-To: alex.bennee@linaro.org, peter.maydell@linaro.org,
- qemu-devel@nongnu.org, mads@ynddal.dk
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Fri, 10 Oct 2025 14:47:21 +0200
-Resent-Message-ID: <87zf9yhqjq.fsf@pond.sub.org>
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  John Snow
- <jsnow@redhat.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 0/6] tracetool: add mypy --strict checking [AI
- discussion ahead!]
-In-Reply-To: <aOY-PFGNPY7aOwkJ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 8 Oct 2025 11:34:36 +0100")
-References: <20251008063546.376603-1-pbonzini@redhat.com>
- <87ikgpn9oz.fsf@pond.sub.org> <aOY-PFGNPY7aOwkJ@redhat.com>
-Date: Fri, 10 Oct 2025 14:38:09 +0200
-Message-ID: <87cy6vhqz2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <robert.hoo.linux@gmail.com>)
+ id 1v7Cjl-0004cG-N5
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:00:46 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <robert.hoo.linux@gmail.com>)
+ id 1v7Cjb-0001tM-5e
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:00:45 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-b609a32a9b6so1271670a12.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:00:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760101225; x=1760706025; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vOOXZGCs8bQ+qHQrZlVXdYoF24tKQxHP/cXnUs7wLho=;
+ b=Kp4EPMGWJ3PYbWF3De5UMRobOJ3XHpz63CpCJ/T9HngB6MojcxqZ5LSU/PCyKq3CwS
+ Nlh4kT6hYScTtd97fWrPRA1oihnNIKfeavF6Yy06JpVm5N2zTzNr1TVEBBE2odDp0f+N
+ UCJ2K5iPmw1/EY2sAYPEVd2sGYDKtgRjDXDr2PVLDT1FYT/QEE7Zl2aiKjNx/w/nA5Kq
+ BdRuAwvGVG7yZSlVtPR5Im3F5rpnwZCIdvsCq8BMQ/Ws5F94TCvaLOBAZK0qN8Gvor2U
+ Tf1tqSZYNyzKfqvm8gj1oLcihnwymKPfhTWSaRdctUzB0H4BXAXect+T0d066HtRMyuf
+ 7jqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760101225; x=1760706025;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=vOOXZGCs8bQ+qHQrZlVXdYoF24tKQxHP/cXnUs7wLho=;
+ b=gXawXYaa2gjS1iTXqWcRerT8Vb7k9Im83OsMr6A+DjlQHt8y900zqzXDnuO6vMjN20
+ f6oywL7Fg3cTVpA3JqWADqeGZWSxLK0nxr1IjHZio7ajZIrEdKwbV7D1AZ898uYppqd3
+ TABGUw9fOsgI/bNmjHO2CywgHNvdr6TnhWAL1cBANU5jzqf8SFHyYueJXKvbMRsY7Ice
+ c270jOKvJjDfcFmhfMIvJ8rBLcpqWwAJ4guawgrzPV0hD89RySUmvjkYkDxIFMRHTqVG
+ 0auKwW5OFdtQUkTYs7eUUyFCKgPRqayyyhuKXedmRJeIGXKDehEG3onMsTRJ6chGTjpT
+ qevA==
+X-Gm-Message-State: AOJu0Ywxm74cSrE2yF41Q5ThFANAEBS8yvafQKtTm7nwAsUUzwV5NXkH
+ apdLk+eBGijvWAyzowlbi8usVZ31HZj7ghAD8j1RTzfmfIbOhZ4VnO5xF/BwbZCB
+X-Gm-Gg: ASbGnctU8guasUs2ASXNtdCckaDCN24I69IJOPNwcDnAbx7fRDqRuQUexDliKdm4BZR
+ mVBxOuYgXzFSWFg+Ilp55PXjlKNgZDZXwOHk7NIB4Eh/UN6z4HyIlSfuFqy4CBWA6fhHRsoDIP9
+ qF9EKlAoJK9XIiSMKhp5x83mE/UNJyCqRsuEkqlJSAgWACgFkAOH4vfvkoOTFWzfmaslajsV8f8
+ dzzWD2CmiIdzJqp2PxO/QaRBCtNhZp2BPBXQTKVAmVsHwk10S5gD9cBOGtZZAympNkWY08cZ5eg
+ LxYl/s7YKvOMjvNujJbO8U3iPPpWe4VOW3zE56lCdnKe9y8k7gEQha0JCu1ZESfV1ySzJX09vUm
+ pD6paV+LYqCvtgWkkI1viPlvvqFCYJBhXMkjPoZRdElH2Ai2SUqDXWAT3RXgRQnxLNnbcvqbBQ7
+ QIX344b3ScaC5SGX0gTOBp8gRUnCp8KDAYp9Q5iVDcJXQnAv0Xe6UQplhqqJkRIkQY
+X-Google-Smtp-Source: AGHT+IEYuNdt8adqxLdE30t6Z6WFdRp/jd/MialuY+uI4QVuv21WKO0OSuuGmIgtwvNpmNOpRPUddw==
+X-Received: by 2002:a17:902:ef09:b0:27f:1c1a:ee43 with SMTP id
+ d9443c01a7336-290272c2564mr138425485ad.29.1760101225347; 
+ Fri, 10 Oct 2025 06:00:25 -0700 (PDT)
+Received: from [172.27.236.23]
+ (ec2-13-250-3-147.ap-southeast-1.compute.amazonaws.com. [13.250.3.147])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034e45568sm56691545ad.55.2025.10.10.06.00.23
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 06:00:24 -0700 (PDT)
+Message-ID: <1943ea16-c3cb-4442-be72-5719026ee13a@gmail.com>
+Date: Fri, 10 Oct 2025 21:00:21 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: Robert Hoo <robert.hoo.linux@gmail.com>
+Subject: vsock support for communication between guests
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=robert.hoo.linux@gmail.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,140 +101,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hi,
 
-> On Wed, Oct 08, 2025 at 09:18:04AM +0200, Markus Armbruster wrote:
->> Paolo Bonzini <pbonzini@redhat.com> writes:
->>=20
->> > [People in Cc are a mix of Python people, tracing people, and people
->> >  who followed the recent AI discussions. - Paolo]
->> >
->> > This series adds type annotations to tracetool. While useful on its ow=
-n,=20
->> > it also served as an experiment in whether AI tools could be useful and
->> > appropriate for mechanical code transformations that may not involve
->> > copyrightable expression.
->> >
->> > In this version, the types were added mostly with the RightTyper tool
->> > (https://github.com/RightTyper/RightTyper), which uses profiling to de=
-tect
->> > the types of arguments and return types at run time.  However, because
->> > adding type annotations is such a narrow and verifiable task, I also d=
-eveloped
->> > a parallel version using an LLM, to provide some data on topics such a=
-s:
->> >
->> > - how much choice/creativity is there in writing type annotations?
->> >   Is it closer to writing functional code or to refactoring?
->>=20
->> Based on my work with John Snow on typing of the QAPI generator: there
->> is some choice.
->>=20
->> Consider typing a function's argument.  Should we pick it based on what
->> the function requires from its argument?  Or should the type reflect how
->> the function is used?
->>=20
->> Say the function iterates over the argument.  So we make the argument
->> Iterable[...], right?  But what if all callers pass a list?  Making it
->> List[...] could be clearer then.  It's a choice.
->>=20
->> I think the choice depends on context and taste.  At some library's
->> external interface, picking a more general type can make the function
->> more generally useful.  But for some internal helper, I'd pick the
->> actual type.
->>=20
->> My point isn't that an LLM could not possibly do the right thing based
->> on context, and maybe even "taste" distilled from its training data.  My
->> point is that this isn't entirely mechanical with basically one correct
->> output.
->>
->> Once we have such judgement calls, there's the question how an LLM's
->> choice depends on its training data (first order approximation today:
->> nobody knows), and whether and when that makes the LLM's output a
->> derived work of its training data (to be settled in court).
->
-> There's perhaps a missing step here. The work first has to be considered
-> eligible for copyright protection, before we get onto questions wrt
-> derivative works, but that opens a can of worms....
->
->
-> The big challenge is that traditionally projects did not really have
-> to think much about where the "threshold of originality"[1] came into
-> play for a work to be considered eligible for copyright.
->
-> It was fine to take the conservative view that any patch benefits
-> from copyright protection for the individual (or more often their
-> employer). There was rarely any compelling need for the project to
-> understand if something failed to meet the threshold. We see this
-> in cases where a project re-licenses code - it is simpler/cheaper
-> just to contact all contributors for permission, than to evaluate
-> which subset held copyright.
->
-> This is a very good thing. Understanding where that threshold applies
-> is an challenging intellectual task that consumes time better spent
-> on other tasks. Especially notable though is that threshold varies
-> across countries in the world, and some places have at times even
-> considered merely expending labour to make a work eligible.
-
-Moreover, having software developers apply copyright law is about as
-smart as having copyright lawyers write mission-critical code.  Both
-tasks require education and experience.
-
-> In trying to create an policy that permits AI contributions in some
-> narrow scenarios, we're trying to thread the needle and as a global
-> project that implies satisfying a wide variety of interpretations
-> for the copyright threshold. There's no clear cut answer to that,
-> the only option is to mitigate risk to a tolerable level.
-
-Yes!
-
-The boundary between legal and illegal is a superposition of fuzzy,
-squiggly lines, one per jurisdiction.
-
-We can only try to approximate it from the legal side.
-
-The tighter we try to approximate, the more risk we take on.
-
-In addition, tighter approximations can be difficult to understand and
-apply.
-
-> That's something all projects already do. For example when choosing
-> between a CLA, vs a DCO signup, vs implicitly expecting contributors
-> to be good, we're making a risk/cost tradeoff.
-
-A tradeoff made with competent legal advice.  In addition, it's easy to
-understand and apply.
-
-[Strong argument why type annotations are low risk snipped...]
-
-> The problem I have remaining is around the practicality of expressing
-> this in a policy and having contributors & maintainers apply it well
-> in practice.
->
-> There's a definite "slippery slope" situation. The incentive for
-> contributors will be to search out reasons to justify why a work
-> matches the AI exception,
-
-=E2=80=9ELibenter homines id quod volunt credunt.=E2=80=9C
-
->                           while overworked maintainers probably
-> aren't going to spend much (any) mental energy on objectively
-> analysing the situation, unless the proposal looks terribly out
-> of line with expectations.
-
-Yup.  Code review takes so much brain capacity that it can impair my
-spelling.  Legal reasoning is right out.
-
-> I'm not saying we shouldn't have an exception. I think the mypy case
-> is an fairly compelling example of a low risk activity. We will need
-> to become comfortable with the implications around the incentives
-> for contributors & maintainers when applying it though.
-
-Makes sense.
-
-> With regards,
-> Daniel
->
-> [1] https://en.wikipedia.org/wiki/Threshold_of_originality
-
+Does vsock support communication between guests?
+ From man page, and my experiment, seems it doesn't.
+But why not?
 
