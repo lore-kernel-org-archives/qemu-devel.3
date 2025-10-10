@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF639CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 06:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B661BCAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 06:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v76zt-0005vs-5o; Fri, 10 Oct 2025 02:53:01 -0400
+	id 1v7713-0006pC-Pr; Fri, 10 Oct 2025 02:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v76zq-0005te-VV
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:52:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v7711-0006ob-7t
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:54:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v76zm-0003tl-GF
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:52:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v770s-0003y7-V3
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:54:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760079172;
+ s=mimecast20190719; t=1760079238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eZFkfFocmD57foPVQMUsSd2vim8jpwznB10BxZFBEtg=;
- b=SDtgdwT/kPNVLEQwf5BKvVMDAdeOtGJI1xx6LK4oFdllZ8IUlroSMg/giViKFpp5YsODy6
- q8bfBb6umbq6A4mnCFZh8EbfRsmiYa973zvGMnTb5WS85gXGjF0LzxsVl4tdqNGRTnFMnT
- Iv8Q3b22gBsyMpAjErXZLLDe/g3KTy4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+L5Hm9vf0vQ+TaXitMync4ZUehDbQwjC4xOqm8pFaYI=;
+ b=SE6fyeU81V+IIl5vFBYCw+iRqGj00LlBu7xUOaHBB7l/6ZNPSgh3TQH0VCwE5Y3i66dkWg
+ OVGtMHAJjfHn5pGkecNxsgPoAsW8W7lHyMa90k17+f77DMvUmnAIooutp5hPcFBuGETnj7
+ i5960qju6BUwMpujUoV3l6gM/xs1Y8E=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-eJouihHeNviOJB6TnzsMow-1; Fri, 10 Oct 2025 02:52:49 -0400
-X-MC-Unique: eJouihHeNviOJB6TnzsMow-1
-X-Mimecast-MFC-AGG-ID: eJouihHeNviOJB6TnzsMow_1760079169
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b48635cf06fso305940866b.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 23:52:49 -0700 (PDT)
+ us-mta-256-Ooje4MNQOamPblD-VgBi_w-1; Fri, 10 Oct 2025 02:53:57 -0400
+X-MC-Unique: Ooje4MNQOamPblD-VgBi_w-1
+X-Mimecast-MFC-AGG-ID: Ooje4MNQOamPblD-VgBi_w_1760079236
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b3cd45a823cso201550466b.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 23:53:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760079168; x=1760683968;
+ d=1e100.net; s=20230601; t=1760079236; x=1760684036;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eZFkfFocmD57foPVQMUsSd2vim8jpwznB10BxZFBEtg=;
- b=I63220w1L8gOtpkwWKtWPoVnjQziWjd4exk3MGYDkJLjYl2CA+kDqRkJzduCoWwLlc
- wSIiPFWOcwB9ee+PFsUblcSl4B2NarfcN1cihlnHD8K207Gji/itwK/dS9InyoL/vCKo
- tCNGKw4h5Mcz6u4TxQViK776wi8DvLFeKrWCv66xnAmzFIFCF0/wsp2RwvukjdLRvgkL
- JzeqmzImE9s79ey3C3m9zPzCIht8tB3z7Y4e9kYGzXPa7tQ42inONs2fo5Cy/b08WedJ
- MnUUztDNi8fAxyZi7WH46gK2pUNZ0oyP9TUYhmYrxZnnJa8EZBj8VeVfzSrtJWvIkMp/
- aqfA==
+ bh=+L5Hm9vf0vQ+TaXitMync4ZUehDbQwjC4xOqm8pFaYI=;
+ b=vacK6/inLIb8VnrUFTjpb+66xIO2dqvfREjOAFt3YjlujOYM5e9srsS5LGf6so9/Ow
+ +f4o7xfqo87z3MLjP5e0Y4D2xnU7vP7CbfqAH69RVwh6hUlrHqXtaaiJCWAulzoDWH1b
+ z40wxF0sD+mhJtkkPN9SodP2r/Jj9pgKvS6qgwcrh8pLPG1ee8Eq4x8SihdWmVk8NLn/
+ +DWHTpj2RcAGajCCB10SAfPcf+e/sXDUVwOZgW/+HpbHuDL1G9ZDa4uJ7/h0sr61uA5b
+ vZT1MxMLhAnmvIFwem1QhJxEusRKnS6yaCU+X8RnOY2ubq4empEQlQNzmEFa6V+g/Kxq
+ 7Gbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmTpBUWwi4PWa1VnQ+Ngnfbx4b6tPhJripWwfxUlc3U7DPqiTBYJASoV8AeJu/Kkpvfb4evrNKLMXX@nongnu.org
-X-Gm-Message-State: AOJu0YyEHcS9yh6igt/HtzoMhoonitoU4aHtxr+9vIdN9MSXUfT3qDt3
- 9uMGai3S1uKUnRc0w2U8JrodTW1BEsmpeXgJ5y1YyTUhJZ+l6xMWmPuk+NWsUcKmEUToaoNnvnW
- Qvvy785L+ONm7B4YHQwddU7woL4k1nFmV8W1T1fjO8pI9J7XNAo+EB/09
-X-Gm-Gg: ASbGnct5LsB2elA6AFtXiODPZIs+95Uhd3hBzkxzt11FFiIJ1ruOpXsvzI4HmSC4qP/
- bNA3/2k3u1XPyS58NICUNgMfejI27oCh/ssPS0GtMGBymQyaItSevM171Vqr/FAMLmA9dsm8tCh
- uR653HZrsnpeMJiyfIOrKbfXrc8N3IgqPiKcBkkiGFcpxoSgp2sXtNq6dcmMhMO2vRxV7vBkqN0
- CsNdO+t8RxenGb/RR96qyb5/2sYeK09JMVpKAPBHMpH/R9N8pLwFtzk1dbF9iBqjl9K9UabBEcC
- 1ImtXZXBNJRKSZ8cxUmpb130g88JNtX/80ujgIEDsEzk+FArD/iX19ro1sMdOdOF74612bf12vj
- XBYMZ
-X-Received: by 2002:a17:907:3f13:b0:b4b:4f7:7a51 with SMTP id
- a640c23a62f3a-b50aca0b07cmr1145472066b.62.1760079168660; 
- Thu, 09 Oct 2025 23:52:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGS8k0U+T1Kp46r0mG1ll6BB7xbPbINhdP7loagbfnR825zKjhJguSWrHE2uc7Z5Uc+AAQs+A==
-X-Received: by 2002:a17:907:3f13:b0:b4b:4f7:7a51 with SMTP id
- a640c23a62f3a-b50aca0b07cmr1145469566b.62.1760079168273; 
- Thu, 09 Oct 2025 23:52:48 -0700 (PDT)
+ AJvYcCVOGsBD0p36naICKZbRrWZP6JvgbIOUQ1WO2qw3zhU9z/YiOIEyu6Lz174zo95klPYYeeRyhwEbeBUB@nongnu.org
+X-Gm-Message-State: AOJu0Yywn4tCuLVhUz35/WfW7WxFywt2e66DUg4Wh0Vb56qBbhSMaXF5
+ aqe6lnu0fD63+W6RQgJXRMhXBC5YCMr1mlelo0c1GDlFK3zxWj+eFH3m3GGTC9HnIdk3POLem5+
+ MXH+uT7wgTOzOfR8cbK4jBOOxRqG6gT+gpSlCeqlMnhQ4anf03uPi03SR
+X-Gm-Gg: ASbGncuit+4vBcjCDeJTyK1GQ/kLkXeSPkJWzGn0eVXhyhhw3zUlJDPwHBoIjXvE1S2
+ jpzT/dG2DbejfVYqey5jmG/L5LYrMm1Oegxe5Udo4oxqGvlVmnJdemzdZ4+lnddCzbrYVrAgJBL
+ wnozwKwsZRzU+SLCqS2OqXxUh0pFQy1vHHDVryixxGU5MzHBnMtvYyTVaQjQ+/C6SS0OFrARth5
+ VrTdbe/sViIvjoJNZGdtAsmqhXj51NpHjF0nxZwDYypSbaAIsR4jZFFnGjid0bMv26EqTc7SxCY
+ c4LHGbe4ZAZNVw4XTV5NeUbRVdAz0a8+nNS3i48Pu9XOVybgpRSAxjQ6srcQYRTyxijoxgpcsUu
+ eAF5W
+X-Received: by 2002:a17:907:9489:b0:b1d:285c:e0ef with SMTP id
+ a640c23a62f3a-b50ab27db76mr1029986966b.26.1760079236024; 
+ Thu, 09 Oct 2025 23:53:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz4LYZGgIK1tMOx6X5rhb09p61zl/eez2nOtHLMnYR7PvW44k6iGMNpZdLvvFNkHIXaMfpLg==
+X-Received: by 2002:a17:907:9489:b0:b1d:285c:e0ef with SMTP id
+ a640c23a62f3a-b50ab27db76mr1029985366b.26.1760079235600; 
+ Thu, 09 Oct 2025 23:53:55 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
  [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d900e2bcsm154864266b.64.2025.10.09.23.52.47
+ a640c23a62f3a-b55d67d5c2bsm158196866b.37.2025.10.09.23.53.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 23:52:47 -0700 (PDT)
-Message-ID: <f7c891eb-2921-4464-a12b-1c51f955219c@redhat.com>
-Date: Fri, 10 Oct 2025 08:52:46 +0200
+ Thu, 09 Oct 2025 23:53:55 -0700 (PDT)
+Message-ID: <12826e4f-7c91-4cbe-aa64-add7f9c9f57a@redhat.com>
+Date: Fri, 10 Oct 2025 08:53:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] kvm/mips: Remove support for 32-bit hosts
+Subject: Re: [PATCH v2 7/7] buildsys: Remove support for 32-bit MIPS hosts
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -89,7 +89,7 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
 References: <20251009195210.33161-1-philmd@linaro.org>
- <20251009195210.33161-7-philmd@linaro.org>
+ <20251009195210.33161-8-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -134,7 +134,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251009195210.33161-7-philmd@linaro.org>
+In-Reply-To: <20251009195210.33161-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -163,26 +163,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 09/10/2025 21.52, Philippe Mathieu-Daudé wrote:
-> See previous commit for rationale.
+> Stop detecting 32-bit MIPS host as supported, update the
+> deprecation document. See previous commit for rationale.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   meson.build | 2 --
->   1 file changed, 2 deletions(-)
+>   docs/about/deprecated.rst       | 13 +++++--------
+>   docs/about/removed-features.rst |  6 ++++++
+>   configure                       |  7 -------
+>   3 files changed, 11 insertions(+), 15 deletions(-)
 > 
-> diff --git a/meson.build b/meson.build
-> index afaefa01722..c5710a6a47c 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -295,8 +295,6 @@ elif cpu == 'ppc'
->     kvm_targets = ['ppc-softmmu']
->   elif cpu == 'ppc64'
->     kvm_targets = ['ppc-softmmu', 'ppc64-softmmu']
-> -elif cpu == 'mips'
-> -  kvm_targets = ['mips-softmmu', 'mipsel-softmmu']
->   elif cpu == 'mips64'
->     kvm_targets = ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmmu', 'mips64el-softmmu']
->   elif cpu == 'riscv32'
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 67e527740c0..79cc34cfeb6 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -172,17 +172,14 @@ This argument has always been ignored.
+>   Host Architectures
+>   ------------------
+>   
+> -Big endian MIPS since 7.2; 32-bit little endian MIPS since 9.2, MIPS since 11.0
+> -'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +MIPS (since 11.0)
+> +'''''''''''''''''
+>   
+> -As Debian 10 ("Buster") moved into LTS the big endian 32 bit version of
+> -MIPS moved out of support making it hard to maintain our
+> -cross-compilation CI tests of the architecture. As we no longer have
+> -CI coverage support may bitrot away before the deprecation process
+> +MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
+> +maintain our cross-compilation CI tests of the architecture. As we no longer
+> +have CI coverage support may bitrot away before the deprecation process
+>   completes.
+>   
+> -Likewise, MIPS is not supported by Debian 13 ("Trixie") and newer.
+> -
+>   System emulation on 32-bit x86 hosts (since 8.0)
+>   ''''''''''''''''''''''''''''''''''''''''''''''''
+>   
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index a5338e44c24..53829f59e65 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -896,6 +896,12 @@ work around the atomicity issues in system mode by running all vCPUs
+>   in a single thread context; in user mode atomicity was simply broken.
+>   From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+>   
+> +32-bit MIPS (since 11.0)
+> +''''''''''''''''''''''''
+> +
+> +Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+> +maintain our cross-compilation CI tests of the architecture.
+> +
+>   Guest Emulator ISAs
+>   -------------------
+>   
+> diff --git a/configure b/configure
+> index 6a633ac2b16..8236f43e8f9 100755
+> --- a/configure
+> +++ b/configure
+> @@ -404,8 +404,6 @@ elif check_define _ARCH_PPC ; then
+>   elif check_define __mips__ ; then
+>     if check_define __mips64 ; then
+>       cpu="mips64"
+> -  else
+> -    cpu="mips"
+>     fi
+>   elif check_define __s390__ ; then
+>     if check_define __s390x__ ; then
+> @@ -473,11 +471,6 @@ case "$cpu" in
+>       host_arch=mips
+>       linux_arch=mips
+>       ;;
+> -  mips*)
+> -    cpu=mips
+> -    host_arch=mips
+> -    linux_arch=mips
+> -    ;;
+>   
+>     ppc)
+>       host_arch=ppc
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
