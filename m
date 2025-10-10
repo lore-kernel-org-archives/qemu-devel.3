@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571F3CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B53CCD18E
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Cp2-0006AF-Aa; Fri, 10 Oct 2025 09:06:12 -0400
+	id 1v7Cok-00064y-Ni; Fri, 10 Oct 2025 09:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Coq-00067Q-HW
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:01 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1v7Cof-00062x-WD
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:05:50 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CoZ-0003ll-Uh
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:00 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-46e37d10f3eso15327415e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:05:40 -0700 (PDT)
+ id 1v7CoX-0003lV-19
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:05:49 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-46e6a6a5e42so10069505e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101538; x=1760706338; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101537; x=1760706337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ASyzth2+dJyh1MI3oXSuce6UC/YaXqBlkKj5sq9zv/8=;
- b=vrvhbYyCtdzT5BlYbsVWSGmBudnB4U+EilDevsHkuRwsmfbqtBGUsFauMZz/qEmB0F
- 30G6W1Wt+kbE+YYq8/ma5nXSSnjN7EK5hOFDz9uft4vrL/8Pc+ZkvJEM/Zx4PwK2a5bB
- iSiBWM7BvoT1o3oV3Wexc3QElfBAdqybwsiHbKRan9DebtttU9pX33ohPCWWC8pdce5Y
- Hph2L6tjknmu3WlYfix8u5YlgVdpr8dbQLRhZNkHotJgPWboXH7c4ULf8+WjgGVP9dfY
- 5L2WTqd4hr4ahZrvsir43WBkckSHrK0GT656AmRccPXNcpGrh7fWwz9wJeUrvaP7ii3P
- FpDA==
+ :reply-to; bh=YLNaK8Bxzz1FjdeCqLMiRgOHl9BJ6T9HI3hQdq9vqtQ=;
+ b=XUO41K2/ii7c5dqg4DyM8svdSaIMrPdyUjDVT8kLZu5dGDIXkegzV9PlV0NiItizeH
+ NuMgeBUqdTDQo2yyLFYvzrtcK25/1sWIdR5lcTqzJiG3gvilgQL1Hmi2+dVMQ++4lLZF
+ 52x7QMsqxztR8KFXi9ak05OfQ5L+m8PSiaqGOhZmWf8sXGwSowv3PAxXm4T38omoTkt6
+ ih9WHH7Dowk3NusFzf/AGzYZTPzB0/YigORKshPNpB3xG0fIXttwE1SX2ThjmFOjrN+h
+ AO4Xu38YBVHAXl2+WTtdRAFFdIAMVa4uo6QKqth1KsbWH/KnUi8Jn5Rp42ESxt0z1LFh
+ 2zOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101538; x=1760706338;
+ d=1e100.net; s=20230601; t=1760101537; x=1760706337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ASyzth2+dJyh1MI3oXSuce6UC/YaXqBlkKj5sq9zv/8=;
- b=fDCAQvx+Tam8/aAElDwEn8vJ9yKp2e1DVKAADeEocreHcGuHRVpuvo0j1X/1VLHdFL
- bpXpjCUi/wbLPlIKkCytWg/BEGz/MxrJNj9cKzMq9bwPHqY9kMc2tor1BuDOI/7dQtFX
- uynYZqItNErCkz1IEgMJhRx8dXeZsj+aIdoZk9w7gZ6lq3IMi8oCWDrVjQMX4t+BsO4I
- NszpeYRWl/D+qKMHUH3bsae6ibkWxcmaXR+wOc+efIjY2A4cU86i1a4Y/Ih7Q5AC2fWP
- mU8PhqdNbL3AwoZRDyYAwcxhtctKEfNcA8rBXE74xoYzhA3AjDvPLBNueeSp8RYIMfVC
- 3csQ==
-X-Gm-Message-State: AOJu0YyucSE8/WePYRbbd7QHKSvmHK19RYBQBvTIBCYKyYmkDT2LptMv
- /oeP0O+zE20pc5zTMPF1s+B+HDZWad0V3ZtkdSW02F1nQu52eWHeqFDQDGVzHa4b2FcHYFVQOdV
- K4njp
-X-Gm-Gg: ASbGnctU8yq2uo4mBnQFXRbep3SHTypJtr0Y/j8IUH6L7fiX/M76o3alTnkhVlHxtSJ
- 4gtTiakLKO1UqiB5Ot8Vdkbh60sdD+U1feARiLr3zuNCWtdTIW1vnJUkXDZA3+f5rhRgArMhDyK
- PVuGYOzxwX40RdF9eU30lGXHXR1k8ucZzlKHMwmwHc8MFx/cfbRYQ83UkQz6vUgARqC3mUEh6iZ
- tIc5VwaBrozzdoetICmc57ccQoXH5dyWy0UZntYvR6bsOxII7bVO/bBf1Zm0jlXDv9PQx1v0pU6
- kFYGGqtYJi+8BQxYWPza2xJ0wc4Sow+JV7XKPN4BsMPwICUd9Ov0ryekQ+IMlHhHckksXiL6+HE
- YcOd0i2+rHdigaQFhyz6klAePYZc0aYNG140cVeMWQleqQMTePjI=
-X-Google-Smtp-Source: AGHT+IEHPJyeEhNjV1tb8c4DcYPcjewmSjBQkHNYgjkSgLwFEsSCtcbmCT3fxi/vStiukbbl8Jualw==
-X-Received: by 2002:a05:600c:1d18:b0:45f:2869:c3b2 with SMTP id
- 5b1f17b1804b1-46fa9b1834dmr83842385e9.33.1760101537784; 
- Fri, 10 Oct 2025 06:05:37 -0700 (PDT)
+ bh=YLNaK8Bxzz1FjdeCqLMiRgOHl9BJ6T9HI3hQdq9vqtQ=;
+ b=GXk2Oob9RegZVrUXPDeqK7qJrLp3lrzUX4T+JxZacH2tYhCxMiTfhXejKsth211clG
+ wdlqNt3oPT1CV5LakaSZGCl1JYOUhIVyGth/ziEHf7ysyMqkRJI9Z8QcAcvpuTqnW/DS
+ 7uwXAZ4CKkd2spyZ33N8wznqGzqrSAkvnjl5IaoDl1qw1k6EpXchkyXmHgcCf5j9EmVo
+ XCZTk7JbMaLXQDDRbLMHnzyu1keRmPbT5IO+OmrAH6bjyIlPSBDEsRZgM6QF09HO/gK0
+ mqr+5+EzUiTFat/cZJVw6EZ7t7d9d9JeEfdRxwSnyPSVXr8Fv/EZyX7P5xeelFpp7yP1
+ 83GA==
+X-Gm-Message-State: AOJu0Yyarz87sWCSWW6R9Aj798QVUOku0HWXEUu35qt6IZ9GDLKAvkaV
+ o1fDtWL/d/SOESMPXBquk855fnz9PBoiE/xudl7q48Paq5+peJU7OweTR6AtpEVvfb301HzT7bY
+ qhEtC
+X-Gm-Gg: ASbGncv4sHxdud67hs5F5m8ylh1JaSarwKF8dfCjEbGrdUJhO7kf1M5fyADHm62CEcS
+ XTHF2XoYPjyG0AWivTi30nPng7rxF16R7XYYrxWBYc/Tsm5KEI5H363KrKc+dXJ5Ovc5HzKOXzV
+ 8xbXuFWF2jWdZEwxeZmir06CJ8d7z8mPCPCGP44vtXGluihfjCXxCj+qoQI2BM7/9grWluAlhWH
+ WgiKFKITpGL1UBxtlMKg9JUYzK+oe3aggB+O4zC/17Fih4EGkbPXADAX68DDATiE5GXeBdgs+L+
+ NA5Q1qYkbzc19xI9dWaVVWdMRrnmUzAtVE70bKItWj3wIr1n2yhdBy4YIcWpG0Dyu6c/5z3Ko7C
+ J8da1SI2snNKV7B8D3oDagafFNcBf0JzBTJgpzmhEwRLWWIDbdvc=
+X-Google-Smtp-Source: AGHT+IGQbZCxOiyRNI3movBRua5/hlyJbawQOx8xPA8AT8VSJMixHAoy02CVEJiOzz4hOyP05KPfuw==
+X-Received: by 2002:a05:600c:45c6:b0:46d:ba6d:65bb with SMTP id
+ 5b1f17b1804b1-46fa9b01de9mr90074565e9.31.1760101536654; 
+ Fri, 10 Oct 2025 06:05:36 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.05.36
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.05.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:05:37 -0700 (PDT)
+ Fri, 10 Oct 2025 06:05:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/76] target/arm: Populate PIE in aa64_va_parameters
-Date: Fri, 10 Oct 2025 14:04:18 +0100
-Message-ID: <20251010130527.3921602-8-peter.maydell@linaro.org>
+Subject: [PULL 06/76] target/arm: Cache NV1 early in get_phys_addr_lpae
+Date: Fri, 10 Oct 2025 14:04:17 +0100
+Message-ID: <20251010130527.3921602-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,97 +101,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Select the PIE bit for the translation regime.
-With PIE, the PTE layout changes, forcing HPD.
+We were not using the correct security space in the existing call
+to nv_nv1_enabled, because it may have been modified for NSTable.
+
+Cache it early, as we will shortly need it elsewhere as well.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-8-richard.henderson@linaro.org
+Message-id: 20251008215613.300150-7-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/internals.h |  3 ++-
- target/arm/helper.c    | 19 ++++++++++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ target/arm/ptw.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 1d958dbf685..face1019f52 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1491,7 +1491,7 @@ static inline int arm_granule_bits(ARMGranuleSize gran)
- 
- /*
-  * Parameters of a given virtual address, as extracted from the
-- * translation control register (TCR) for a given regime.
-+ * translation controls for a given regime.
-  */
- typedef struct ARMVAParameters {
-     unsigned tsz    : 8;
-@@ -1506,6 +1506,7 @@ typedef struct ARMVAParameters {
-     bool ha         : 1;
-     bool hd         : 1;
-     ARMGranuleSize gran : 2;
-+    bool pie        : 1;
- } ARMVAParameters;
- 
- /**
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index b7bc27436f7..37865bf70eb 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9386,11 +9386,12 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-                                    bool el1_is_aa32)
- {
-     uint64_t tcr = regime_tcr(env, mmu_idx);
--    bool epd, hpd, tsz_oob, ds, ha, hd;
-+    bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
-     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
-     ARMGranuleSize gran;
-     ARMCPU *cpu = env_archcpu(env);
-     bool stage2 = regime_is_stage2(mmu_idx);
-+    int r_el = regime_el(env, mmu_idx);
- 
-     if (!regime_has_2_ranges(mmu_idx)) {
-         select = 0;
-@@ -9402,8 +9403,17 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-              * Thus disabling them makes things easier during ptw.
-              */
-             hpd = true;
-+            pie = extract64(tcr, 36, 1) && cpu_isar_feature(aa64_s2pie, cpu);
-         } else {
-             hpd = extract32(tcr, 24, 1);
-+            if (r_el == 3) {
-+                pie = (extract64(tcr, 35, 1)
-+                       && cpu_isar_feature(aa64_s1pie, cpu));
-+            } else {
-+                pie = ((env->cp15.tcr2_el[2] & TCR2_PIE)
-+                       && (!arm_feature(env, ARM_FEATURE_EL3)
-+                           || (env->cp15.scr_el3 & SCR_TCR2EN)));
-+            }
-         }
-         epd = false;
-         sh = extract32(tcr, 12, 2);
-@@ -9443,7 +9453,13 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             regime_is_user(env, mmu_idx)) {
-             epd = true;
-         }
-+
-+        pie = ((env->cp15.tcr2_el[r_el] & TCR2_PIE)
-+               && (!arm_feature(env, ARM_FEATURE_EL3)
-+                   || (env->cp15.scr_el3 & SCR_TCR2EN))
-+               && (r_el == 2 || (arm_hcrx_el2_eff(env) & HCRX_TCR2EN)));
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 26570231205..e1515675eb9 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -79,6 +79,8 @@ typedef struct S1Translate {
+      * may be suppressed for debug or AT insns.
+      */
+     uint8_t in_prot_check;
++    /* Cached EffectiveHCR_EL2_NVx() bit */
++    bool in_nv1;
+     bool out_rw;
+     bool out_be;
+     ARMSecuritySpace out_space;
+@@ -1677,12 +1679,6 @@ static bool lpae_block_desc_valid(ARMCPU *cpu, bool ds,
      }
-+    hpd |= pie;
- 
-     gran = sanitize_gran_size(cpu, gran, stage2);
- 
-@@ -9522,6 +9538,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         .ha = ha,
-         .hd = ha && hd,
-         .gran = gran,
-+        .pie = pie,
-     };
  }
  
+-static bool nv_nv1_enabled(CPUARMState *env, S1Translate *ptw)
+-{
+-    uint64_t hcr = arm_hcr_el2_eff_secstate(env, ptw->in_space);
+-    return (hcr & (HCR_NV | HCR_NV1)) == (HCR_NV | HCR_NV1);
+-}
+-
+ /**
+  * get_phys_addr_lpae: perform one stage of page table walk, LPAE format
+  *
+@@ -1734,6 +1730,16 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+                                    !arm_el_is_aa64(env, 1));
+         level = 0;
+ 
++        /*
++         * Cache NV1 before we adjust ptw->in_space for NSTable.
++         * Note that this is only relevant for EL1&0, and that
++         * computing it would assert for ARMSS_Root.
++         */
++        if (el == 1) {
++            uint64_t hcr = arm_hcr_el2_eff_secstate(env, ptw->in_space);
++            ptw->in_nv1 = (hcr & (HCR_NV | HCR_NV1)) == (HCR_NV | HCR_NV1);
++        }
++
+         /*
+          * If TxSZ is programmed to a value larger than the maximum,
+          * or smaller than the effective minimum, it is IMPLEMENTATION
+@@ -2109,7 +2115,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         xn = extract64(attrs, 54, 1);
+         pxn = extract64(attrs, 53, 1);
+ 
+-        if (el == 1 && nv_nv1_enabled(env, ptw)) {
++        if (el == 1 && ptw->in_nv1) {
+             /*
+              * With FEAT_NV, when HCR_EL2.{NV,NV1} == {1,1}, the block/page
+              * descriptor bit 54 holds PXN, 53 is RES0, and the effective value
 -- 
 2.43.0
 
