@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0842CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 17:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3894CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 17:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7H6v-0008ML-H3; Fri, 10 Oct 2025 13:40:57 -0400
+	id 1v7H6P-00087C-Kl; Fri, 10 Oct 2025 13:40:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7H6t-0008LC-8r
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 13:40:55 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1v7H6M-00083y-7g
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 13:40:22 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7H6M-0007VE-1c
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 13:40:54 -0400
+ id 1v7H6B-0007Rr-C9
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 13:40:20 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 79C75807F4;
- Fri, 10 Oct 2025 20:40:17 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 8C5BE80787;
+ Fri, 10 Oct 2025 20:40:07 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a89::1:23])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id xdPFQ30FtmI0-JsuqmfgU; Fri, 10 Oct 2025 20:40:16 +0300
+ ESMTPSA id xdPFQ30FtmI0-NRxkOOZG; Fri, 10 Oct 2025 20:40:07 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760118016;
- bh=61jCkT5i+9uBQRoCzNnQJOXoZpL2mbbhlFGP6ZbMFB8=;
+ s=default; t=1760118007;
+ bh=AqHqBScLVphRHYcYitihKjsg9x0DNw0fNX+yiK30WWI=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=KA/cG8cON0canPRGrwQqqMWMTXBVXe4WwZohOagDFe0Au92/TwpGoWSW37mMb89Nb
- wKYNL3/A5fun1dtC97QFua/9C7ZOVOwmdbAf9m09vPo2zDum6YH01k86+omdgyIAix
- qURpXyRO54xz4PpZCmHRNf5vGZMnN+sDmOJ0/mtI=
+ b=BEF3J81FIMPxj4UPUw3Kcd2aIZfgSPYOmBIBk8/OMkiicS3OM/H2+pAM70zfag0YU
+ H4YOfCV0UxJSP9zz9wAjSkUzE1kDvLtB5TdVgxxZG02+XtoeN9pFV3b0U6LwODe81H
+ KVYuk75YuKEbIOSRR1nomMT1oruhqAq4nsrds/To=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,25 +48,23 @@ Cc: peterx@redhat.com, farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
  steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
  yc-core@yandex-team.ru, vsementsov@yandex-team.ru,
  raphael.s.norwitz@gmail.com
-Subject: [PATCH v7 17/19] virtio-net: support backend-transfer migration for
- virtio-net/tap
-Date: Fri, 10 Oct 2025 20:39:55 +0300
-Message-ID: <20251010173957.166759-18-vsementsov@yandex-team.ru>
+Subject: [PATCH v7 06/19] net/tap: setup exit notifier only when needed
+Date: Fri, 10 Oct 2025 20:39:44 +0300
+Message-ID: <20251010173957.166759-7-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251010173957.166759-1-vsementsov@yandex-team.ru>
 References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,245 +79,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Finally implement the new migration option
-
-    backend-transfer = ["virtio-net-tap"].
-
-With this enabled (both on source and target) of-course, and with
-unix-socket used as migration-channel, we do "migrate" the virtio-net
-backend - TAP device, with all its fds.
-
-This way management tool should not care about creating new TAP, and
-should not handle switching to it. Migration downtime become shorter.
-
-How it works:
-
-1. For incoming migration, we postpone TAP initialization up to
-   pre-incoming point.
-
-2. At pre-incoming point we see that "virtio-net-tap" is set for
-   backend-transfer, so we postpone TAP initialization up to
-   post-load
-
-3. During virtio-load, we get TAP state (and fds) as part of
-   virtio-net state
-
-4. In post-load we finalize TAP initialization
+No reason to setup notifier on each queue of multique tap,
+when we actually want to run downscript only once.
+As well, let's not setup notifier, when downscript is
+not enabled (downsciprt="no").
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Tested-by: Lei Yang <leiyang@redhat.com>
 Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 ---
- hw/net/virtio-net.c | 74 ++++++++++++++++++++++++++++++++++++++++++++-
- include/net/tap.h   |  2 ++
- migration/options.c |  6 ----
- net/tap.c           | 45 ++++++++++++++++++++++++++-
- 4 files changed, 119 insertions(+), 8 deletions(-)
+ net/tap.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 661413c72f..41c45a4bc7 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -38,6 +38,7 @@
- #include "qapi/qapi-events-migration.h"
- #include "hw/virtio/virtio-access.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
- #include "system/replay.h"
-@@ -3358,6 +3359,9 @@ struct VirtIONetMigTmp {
-     uint16_t        curr_queue_pairs_1;
-     uint8_t         has_ufo;
-     uint32_t        has_vnet_hdr;
-+
-+    NetClientState *ncs;
-+    uint32_t max_queue_pairs;
- };
- 
- /* The 2nd and subsequent tx_waiting flags are loaded later than
-@@ -3627,6 +3631,71 @@ static const VMStateDescription vhost_user_net_backend_state = {
-     }
- };
- 
-+static bool virtio_net_is_tap_mig(void *opaque, int version_id)
-+{
-+    VirtIONet *n = opaque;
-+    NetClientState *nc;
-+
-+    nc = qemu_get_queue(n->nic);
-+
-+    return migrate_virtio_net_tap() && nc->peer &&
-+        nc->peer->info->type == NET_CLIENT_DRIVER_TAP;
-+}
-+
-+static int virtio_net_nic_pre_save(void *opaque)
-+{
-+    struct VirtIONetMigTmp *tmp = opaque;
-+
-+    tmp->ncs = tmp->parent->nic->ncs;
-+    tmp->max_queue_pairs = tmp->parent->max_queue_pairs;
-+
-+    return 0;
-+}
-+
-+static int virtio_net_nic_pre_load(void *opaque)
-+{
-+    /* Reuse the pointer setup from save */
-+    virtio_net_nic_pre_save(opaque);
-+
-+    return 0;
-+}
-+
-+static int virtio_net_nic_post_load(void *opaque, int version_id)
-+{
-+    struct VirtIONetMigTmp *tmp = opaque;
-+    Error *local_err = NULL;
-+
-+    if (!virtio_net_update_host_features(tmp->parent, &local_err)) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_virtio_net_nic_nc = {
-+    .name = "virtio-net-nic-nc",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT_POINTER(peer, NetClientState, vmstate_tap,
-+                               NetClientState),
-+        VMSTATE_END_OF_LIST()
-+   },
-+};
-+
-+static const VMStateDescription vmstate_virtio_net_nic = {
-+    .name      = "virtio-net-nic",
-+    .pre_load  = virtio_net_nic_pre_load,
-+    .pre_save  = virtio_net_nic_pre_save,
-+    .post_load  = virtio_net_nic_post_load,
-+    .fields    = (const VMStateField[]) {
-+        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(ncs, struct VirtIONetMigTmp,
-+                                             max_queue_pairs,
-+                                             vmstate_virtio_net_nic_nc,
-+                                             struct NetClientState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static const VMStateDescription vmstate_virtio_net_device = {
-     .name = "virtio-net-device",
-     .version_id = VIRTIO_NET_VM_VERSION,
-@@ -3658,6 +3727,9 @@ static const VMStateDescription vmstate_virtio_net_device = {
-          * but based on the uint.
-          */
-         VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
-+        VMSTATE_WITH_TMP_TEST(VirtIONet, virtio_net_is_tap_mig,
-+                              struct VirtIONetMigTmp,
-+                              vmstate_virtio_net_nic),
-         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
-                          vmstate_virtio_net_has_vnet),
-         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
-@@ -4239,7 +4311,7 @@ static bool vhost_user_blk_pre_incoming(void *opaque, Error **errp)
-     VirtIONet *n = opaque;
-     int i;
- 
--    if (peer_wait_incoming(n)) {
-+    if (!virtio_net_is_tap_mig(opaque, 0) && peer_wait_incoming(n)) {
-         for (i = 0; i < n->max_queue_pairs; i++) {
-             if (!peer_postponed_init(n, i, errp)) {
-                 return false;
-diff --git a/include/net/tap.h b/include/net/tap.h
-index 5a926ba513..506f7ab719 100644
---- a/include/net/tap.h
-+++ b/include/net/tap.h
-@@ -36,4 +36,6 @@ int tap_get_fd(NetClientState *nc);
- bool tap_wait_incoming(NetClientState *nc);
- bool tap_postponed_init(NetClientState *nc, Error **errp);
- 
-+extern const VMStateDescription vmstate_tap;
-+
- #endif /* QEMU_NET_TAP_H */
-diff --git a/migration/options.c b/migration/options.c
-index 76709af3ab..7c7df6c484 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1205,12 +1205,6 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
-     }
- 
--    /* TODO: implement backend-transfer and remove this check */
--    if (params->has_backend_transfer) {
--        error_setg(errp, "Not implemented");
--        return false;
--    }
--
-     return true;
- }
- 
 diff --git a/net/tap.c b/net/tap.c
-index 8afbf3b407..b9c12dd64c 100644
+index 994e885c5f..17ad561f9c 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -819,7 +819,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+@@ -326,11 +326,9 @@ static void tap_exit_notify(Notifier *notifier, void *data)
+     TAPState *s = container_of(notifier, TAPState, exit);
+     Error *err = NULL;
  
- static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp)
- {
--    if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
-+    if (fd != -1 && !net_tap_set_fd(s, fd, vnet_hdr, errp)) {
-         return false;
-     }
- 
-@@ -1225,6 +1225,49 @@ int tap_disable(NetClientState *nc)
+-    if (s->down_script[0]) {
+-        launch_script(s->down_script, s->down_script_arg, s->fd, &err);
+-        if (err) {
+-            error_report_err(err);
+-        }
++    launch_script(s->down_script, s->down_script_arg, s->fd, &err);
++    if (err) {
++        error_report_err(err);
      }
  }
  
-+static int tap_pre_load(void *opaque)
-+{
-+    TAPState *s = opaque;
-+
-+    if (s->fd != -1) {
-+        error_report(
-+            "TAP is already initialized and cannot receive incoming fd");
-+        return -EINVAL;
+@@ -346,8 +344,11 @@ static void tap_cleanup(NetClientState *nc)
+ 
+     qemu_purge_queued_packets(nc);
+ 
+-    tap_exit_notify(&s->exit, NULL);
+-    qemu_remove_exit_notifier(&s->exit);
++    if (s->exit.notify) {
++        tap_exit_notify(&s->exit, NULL);
++        qemu_remove_exit_notifier(&s->exit);
++        s->exit.notify = NULL;
 +    }
-+
-+    return 0;
-+}
-+
-+static int tap_post_load(void *opaque, int version_id)
-+{
-+    TAPState *s = opaque;
-+    Error *local_err = NULL;
-+
-+    if (!net_tap_setup(s, -1, -1, &local_err)) {
-+        error_report_err(local_err);
-+        qemu_del_net_client(&s->nc);
-+        return -EINVAL;
-+    }
-+
-+    return 0;
-+}
-+
-+const VMStateDescription vmstate_tap = {
-+    .name = "net-tap",
-+    .pre_load = tap_pre_load,
-+    .post_load = tap_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_FD(fd, TAPState),
-+        VMSTATE_BOOL(using_vnet_hdr, TAPState),
-+        VMSTATE_BOOL(has_ufo, TAPState),
-+        VMSTATE_BOOL(has_uso, TAPState),
-+        VMSTATE_BOOL(has_tunnel, TAPState),
-+        VMSTATE_BOOL(enabled, TAPState),
-+        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- bool tap_wait_incoming(NetClientState *nc)
- {
-     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+ 
+     tap_read_poll(s, false);
+     tap_write_poll(s, false);
+@@ -443,9 +444,6 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     tap_read_poll(s, true);
+     s->vhost_net = NULL;
+ 
+-    s->exit.notify = tap_exit_notify;
+-    qemu_add_exit_notifier(&s->exit);
+-
+     return s;
+ }
+ 
+@@ -725,6 +723,8 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+             snprintf(s->down_script, sizeof(s->down_script), "%s", downscript);
+             snprintf(s->down_script_arg, sizeof(s->down_script_arg),
+                      "%s", ifname);
++            s->exit.notify = tap_exit_notify;
++            qemu_add_exit_notifier(&s->exit);
+         }
+     }
+ 
 -- 
 2.48.1
 
