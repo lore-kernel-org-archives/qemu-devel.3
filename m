@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698B8CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49828CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CAI-0002Gy-4r; Fri, 10 Oct 2025 08:24:06 -0400
+	id 1v7CBz-00030c-WF; Fri, 10 Oct 2025 08:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v7CAE-0002Fw-Aq
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:24:02 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1v7CBv-00030J-NO
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:25:47 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v7CA5-0007Wt-78
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:24:01 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-639fb035066so3232754a12.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 05:23:46 -0700 (PDT)
+ id 1v7CBh-0000Bb-2S
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:25:47 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b3e234fcd4bso346133566b.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 05:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760099024; x=1760703824; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760099117; x=1760703917; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=61F3ksA7PYdsBTIHhvoY3uxIPSjTQ8deWzb9AI9KO1w=;
- b=WBPWiBb4bLXNPZ3TudBeH5oCO0VRkf3tGzXRHUfavyFSsMnLOMItMMLeC5YOjWAyBH
- KchAxriNEIZiwIZ3yHdoKSxr4H5QhlYrav0wwyxtYzc9i+1KJgvSjdBCbuBo5851f6wv
- Rhu7ZMX6SkRlqlPNZ5b4US1tvrB7uWzyBS4GIXlPxVKxr5lHIN6mIqUjic1QgGjf+ATZ
- XNXac13ptXgA9ESZnwEVZXhwo2kPXxOLupCeD7QZE33PCDJJbKX0tOK+NyY48Fzw9cjH
- zTDZ2Zs6zOXksDtLXhM+aRDuzDTqk/uoFvAoOtoO1ZfimH3IOWMtQ0yWa0/v8e7SjNRO
- 2X4A==
+ bh=iJef+65pVyTbDY80dc3E9C47XCo6DR8VHYIZD9Yp23I=;
+ b=oCPqzJadY7luhZ0xnucCQB9HL5PU63iipdykF6DmfVhxZvx0dfUyJkvLOXVx+NcR4b
+ 6M9HDMm5/yu7RnYbCX5sKkasyhzyQNOspYAjcvqxKEDROG0m3/JGVB4qeLDw2VOsj90k
+ Ap/ZSem8uPmfhcYlowiqH+1khgvXQA2+3o8AgyFFgffinKObfaHKue0h8ZqYxnYaQltM
+ jEw7TmJgrpopdEO0jA7ILxT4uq5itbpIa5w6FjvCY3aqH4C7kiC0d/3gtpTJIxrj/lwp
+ XHLZ4ILLMmxpq3OzE6wihm4mQET531tFSBdZYIuej6ua6XNEHvAq09BB8ML2uf+AnFeW
+ xtEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760099024; x=1760703824;
+ d=1e100.net; s=20230601; t=1760099117; x=1760703917;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=61F3ksA7PYdsBTIHhvoY3uxIPSjTQ8deWzb9AI9KO1w=;
- b=j5drdHtLidMObmkQeakNoztDqgHK4sTZcczEnXEu51LjLz1QM7jx3i0dtzxcYDd+Sh
- isSyiXEvJeZ92KNEyX6tl7Jlzbi4M58lB9o1uHhtVuYmSkRMCLx9PxUu4Fo7uMugHrgM
- si9EWsAXoK2BPpqG9QJhxe4sk6SlqWpuPo4ggdBJkOYRJ4spz0VlE5EznH9jOEOgCcnG
- JZEP8wbR0R/fx9+sq1hP8Cr8+Qy2iwaY68fqf4ip9+B0gG2iK2qd9cP9tQ8f2eeRB67T
- jDXCoEEsRIeTKTJIhp2XZoFTwlN+WHI2DD2h0P+OIW3Pgk2QGOHDrptKjiO2GOrklK/s
- pm0Q==
-X-Gm-Message-State: AOJu0YygYpO1SYW3thKI1/hcrmkLHLaVgut9GMCzRlTXJR7QchNEzW98
- s7fY/O0u1mkWN1VhjOO+v2jC2f3sc097T1iW1gH01N4BxYZAQTmfAxwVqUTSVg/XDLMgJrUHRD+
- JcOT0D3TEY/7ao4m0+jJIlvgE6NKA7Bv2ss8lg8x9yA==
-X-Gm-Gg: ASbGncvDqyYtrJWr+5O2OLuG9f6MHejhBY1sp5hS2eUs2bygJGqyIKHBTIR8WKmXX7y
- Ifv94hUW2vVcD5y9V0KNZG77fIsWIs7Iza8GXBJM19bVjV++Ac29F8mcqPpNAWy3QbglxDqdxSl
- tIdokVQ81/Sm7yX0sLWFv44dJIRqOnPg+puxfcJAp+WZSUGAyj2OpCpRq8W+96x5Y9Zu8VhxB+l
- BVOrpaJUY1aR8KooDwLMG8lpRSlRs8Ho+DroQ==
-X-Google-Smtp-Source: AGHT+IF+gShXjliGy/ZnBKoVOfgHiCfuLC/rs0Pa5YHKdLzDeu/3+GLHZyA0nnul7pDg3bb8QKC/DVMQ0xZVaO571GA=
-X-Received: by 2002:a05:6402:34d0:b0:638:74dc:cf78 with SMTP id
- 4fb4d7f45d1cf-639d5c75d9dmr10283150a12.34.1760099023941; Fri, 10 Oct 2025
- 05:23:43 -0700 (PDT)
+ bh=iJef+65pVyTbDY80dc3E9C47XCo6DR8VHYIZD9Yp23I=;
+ b=kstx78BuMgyX0pgVb1GltTxSRC8ieD43Ya39DnOeXBBqrr71rtJoxUBk0o9M8ltSNJ
+ 5pvvrtVogBmeG7z1JxJByfcFCEVWrtRKCq3U3loOh3h7MKBN1Z/LTVBJ8XacrTBcQfu3
+ 8utCZIi8W9Arn8kW7QWy8aabcqKWopoKIdRV9n0ciPbGuBcwM8vn4z1SDuTdnzjbGEYG
+ u7MRlqiweGsi7NACzNPDn7cgbEp+GD/sLietBkB9yOTUkWxbqmcZ25Yp5LqRyrOmrkTM
+ 89vyUbJbNxzkXgbmsG6DMy/SozwX6zFYogTKgHqCMKfbUBs8aPPiVUTiBF9I7vlBHxeU
+ BhUA==
+X-Gm-Message-State: AOJu0YwXt3glur9Mb3g4hQDgS2Uc4AUcOkyphW5eZ+Ugmhsg1vsobozQ
+ MSayUNekd+rGhIxSF0W2CgDcd7yCOJXtU10EfwxVjDQ5AGlBomkM3brtxY3HF3M9rzpAZmywY8Q
+ eAPBbO1/PGljAzsdYidVGKK4ICvVX6DPgvVZccDjzfA==
+X-Gm-Gg: ASbGnctQbze3kgyRBV1e1zzZVmNNMdLOaLEFeewXSeL6D3FyADg2188C+C0QRQttVXT
+ 6MCoQKPMOaioyPfBNkj8Ng92mgCptDfz3srcSct0jqJAJ9WdO9HJr7Lt4ucz64a+L66XVmS8Xqy
+ dM0f4bgBI1K7JxQOuxYOrtpB6RBBXkKkUA27MYMKSZe/+6ZbovEz80x0sFTN1gLZrb+Q27HdnDg
+ KVsgWCkdqoRzrePru9yi8jY7e2VdAUClszpew==
+X-Google-Smtp-Source: AGHT+IF656kEBXTzZ8byg7Devab5wI1Hv+Xa7n1VCnzFCHVk9ljSd3UVs7N8bOMVGxwtGbYcqq2wqERBNtdCvFNjJQU=
+X-Received: by 2002:a17:907:1c91:b0:b3b:5fe6:577a with SMTP id
+ a640c23a62f3a-b50aa79279fmr1224710566b.8.1760099116632; Fri, 10 Oct 2025
+ 05:25:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251009211208.643222-1-pbonzini@redhat.com>
-In-Reply-To: <20251009211208.643222-1-pbonzini@redhat.com>
+References: <20251009211148.642966-1-pbonzini@redhat.com>
+In-Reply-To: <20251009211148.642966-1-pbonzini@redhat.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 10 Oct 2025 15:23:17 +0300
-X-Gm-Features: AS18NWDmuuMkw3l_m71ex9obDDatrZ3q4Xjdc5hWLJDGEQf7zYpRP5_MwSJUj1U
-Message-ID: <CAAjaMXaPv+hENfLuZUeLEOjakuw7dOTLQCeaUbuveZW4Y_2PBQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: temporarily disable double_parens check
+Date: Fri, 10 Oct 2025 15:24:50 +0300
+X-Gm-Features: AS18NWA7cAXZZ0OXHK_huRz8qy5i8lVmyvq7ApWiiE9yVX2dj303xnWJo8-4KAE
+Message-ID: <CAAjaMXYocRnv-TFFw8nBSsLDihooVNoM_VGrFNeeq5-9YVNdSw@mail.gmail.com>
+Subject: Re: [PATCH] rust: pl011: fix warning with new clippy
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
  Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,46 +98,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Oct 10, 2025 at 12:12=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
 > wrote:
 >
-> It is showing in the output of the bits! macro and not easy to fix there
-> (at least not without making the macro more complex).  Disable it for
-> now.
+> Newer versions of clippy are able to see that all the variants in
+> the PL011 word length enum end with "Bits", and complain about it.
+> Allow it.
 >
-> Link: https://github.com/rust-lang/rust-clippy/issues/15852
 > Reported-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
 
-How about putting it in the macro expansion instead of globally allowing it=
-?
-
-macro_rules! foo {
-    ($a:expr, $b:expr, $c:expr, $d:expr) =3D> {
-        #[allow(clippy::double_parens)]
-        InterruptMask(((($a.union($b).union($c).union($d))).into_bits()) as=
- u32)
-    }
-}
-
-Why is the double parenthesis needed here by the way? It's a method chain
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
->  rust/Cargo.toml | 3 +++
->  1 file changed, 3 insertions(+)
+>  rust/hw/char/pl011/src/registers.rs | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-> index 783e626802c..4f98b2c03d3 100644
-> --- a/rust/Cargo.toml
-> +++ b/rust/Cargo.toml
-> @@ -109,6 +109,9 @@ used_underscore_binding =3D "deny"
->  # nice to have, but cannot be enabled yet
->  #wildcard_imports =3D "deny"   # still have many bindings::* imports
+> diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src=
+/registers.rs
+> index 0c3a4d7d214..fa572811b29 100644
+> --- a/rust/hw/char/pl011/src/registers.rs
+> +++ b/rust/hw/char/pl011/src/registers.rs
+> @@ -255,6 +255,7 @@ pub enum Mode {
 >
-> +# https://github.com/rust-lang/rust-clippy/issues/15852
-> +double_parens =3D "allow"
-> +
->  # these may have false positives
->  #option_if_let_else =3D "deny"
->  cognitive_complexity =3D "deny"
+>  #[bitsize(2)]
+>  #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
+> +#[allow(clippy::enum_variant_names)]
+>  /// `WLEN` Word length, field of [Line Control register](LineControl).
+>  ///
+>  /// These bits indicate the number of data bits transmitted or received =
+in a
 > --
 > 2.51.0
 >
