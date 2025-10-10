@@ -4,61 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119CECCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 14:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B9A2CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 14:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7EYp-0001pO-Vy; Fri, 10 Oct 2025 10:57:36 -0400
+	id 1v7EZV-0001vM-H9; Fri, 10 Oct 2025 10:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
- id 1v7EYY-0001ng-Dw; Fri, 10 Oct 2025 10:57:20 -0400
-Received: from mail-m16.yeah.net ([1.95.21.15])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v7EZR-0001v6-WA
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 10:58:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
- id 1v7EYL-0007ub-8h; Fri, 10 Oct 2025 10:57:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=BX
- YGifCienPI1jzoyndm7T5P3SXtXv5rKB4Tlv/TCMs=; b=ABUX6vsZTJ5gtBOXOl
- bSB8LPALeJkfYjWH2wvWiRFRPM2Z8sbgGH27VIKzjxQycL4nn0sLlfgRyilpLmfJ
- Pi4Ty9kTLgFZgioqcLbQT0pixpaAaFPuycxbS3o95KEkujFSNjLXF7EGpcD/NdSE
- jJFYH+ZMkG7g75+Dwd9HVFOmY=
-Received: from well.lan (unknown [])
- by gzsmtp1 (Coremail) with SMTP id Mc8vCgBnbbGWHulo9wpFBg--.17191S2;
- Fri, 10 Oct 2025 22:56:26 +0800 (CST)
-From: Jialong Yang <z_bajeer@yeah.net>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: jialong.yang@barrietech.com, Jialong Yang <z_bajeer@yeah.net>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3] aplic: fix mask for smsiaddrcfgh
-Date: Fri, 10 Oct 2025 22:56:21 +0800
-Message-ID: <20251010145621.24961-1-z_bajeer@yeah.net>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v7EZM-0008Ne-3c
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 10:58:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760108282;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7s9EiLhlZflinEBwM73+iJsHXRyl2pAwtAtyO0Xql9k=;
+ b=gwykt5aAkOar8eCpJQ3w/tbVnGVKpr5o+VJeLqtqRL29bIdVYPPNaH30A8n5/oXKmdjni/
+ u/HyqQeOvWhA82JlQQBJLtzDouGFqctY2bdRylvBolWMVFtp9OOydB+x48PGJm1tw0+XAH
+ NfMab+wlOM6ZMJCKTV50iXQRPaAgoso=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-WqYpaJxyPnmr7JHMwjG5BA-1; Fri, 10 Oct 2025 10:58:01 -0400
+X-MC-Unique: WqYpaJxyPnmr7JHMwjG5BA-1
+X-Mimecast-MFC-AGG-ID: WqYpaJxyPnmr7JHMwjG5BA_1760108280
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-633958a757fso1739481a12.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 07:58:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760108279; x=1760713079;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7s9EiLhlZflinEBwM73+iJsHXRyl2pAwtAtyO0Xql9k=;
+ b=K/XajgK4LY3mR/KGBSMf1O+lBmARI3IaKAGtCB+zA8RmzR3q2nYGQ7P5Xh6jPbJQBt
+ Gd2Libxqr0/hvft8yiUdTF/wRBNuH/jJwpsqtgFNg9cCcxrWQdmMlTlGNPS7BK30CrCL
+ Wf8DIa6TdP4opQ8IsgB9tG7qPqyHpUv1rY0pf8mKQqef63iwyyYo9Dkj7U+9myFFHZuR
+ qUcwdChNH3IMVgz3tHoQ80iZ6BKLJDOgZ24q9w185JL4lt3qPs8feBqSVSe8dnrfIlMv
+ HUc6T+rSYq3yVTUBySWdRhxN0vRLJ+b7WRP5pLjn7UuWw5cdJvM6KP0zpnNL9rChsHpG
+ DOVg==
+X-Gm-Message-State: AOJu0YzwUsWMysBIp9kTHZyfxxB1qznKGMCBAIO7NOAWmdxkStPzThWA
+ CNnkIQliawNl8IDXf0AwUQdbpc7H7mJDKPEVukbTmizI17xyaXyaPZm0GmZpO+kfuDE4vwhpeD3
+ JVEs6WTkBW/C5zmid5cEBqcNxKoym5nHLHkYGx3IBW+1LkzC/Kllb/GiELPLONaSCsJhoOQX63O
+ mH0bF8a7fnv39K5oYakHlY8etWy/C8tRpn1heaXwGX
+X-Gm-Gg: ASbGnctY6atjjaZxYFFYWWN6fjzPsMWQ/+OLyciDWGpkqjFRTgahyNtNmsshEvaoHmg
+ Um+PYncQ4zA2QG9w+TLF07pq1XQusp54jHg3+NflKXSXAUNefizrbQCpMUEixNaUPH+Dp7tG/99
+ m/eS/Ryj7qFBY1ipl3LEuBpRKHIb7fbgrHl1aX1y7+kvIbRykOMwVKsS+qYwa/mk4S7gv6Ek+mb
+ Tie3432iT/k2Y4dEyDMrTJZ/yDMGrbkSmLdnrxDIY4Q5y5bO16y6hL1P6+cfo3KvefamMrb7Ybj
+ 9DbDQm4rFDo9W7Z2BwfD/WlMtAbkL/KgZ0bXIYEDOFG+Hl9i0EIGyXornNz3yh18mV+quGJXhsi
+ R1jsqh2goBLMmehwQU9raHWdBp0IurDXXQpMC1WMbNVj0
+X-Received: by 2002:a05:6402:5106:b0:634:544b:a756 with SMTP id
+ 4fb4d7f45d1cf-639d5c59407mr10672956a12.32.1760108279317; 
+ Fri, 10 Oct 2025 07:57:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEybSr5SrzNqJnlH+7OprsG/jjWlGw41JQiczdq4BTtPJawMSNl0jLnofWJIrFaF9HeylBD9Q==
+X-Received: by 2002:a05:6402:5106:b0:634:544b:a756 with SMTP id
+ 4fb4d7f45d1cf-639d5c59407mr10672918a12.32.1760108278826; 
+ Fri, 10 Oct 2025 07:57:58 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.231.162])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63a52b0f860sm2462367a12.15.2025.10.10.07.57.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Oct 2025 07:57:58 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2] rust: bits: disable double_parens check
+Date: Fri, 10 Oct 2025 16:57:56 +0200
+Message-ID: <20251010145756.787800-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-smsiaddrcfgh: bits 22:20 LHXS(WARL) bits 11:0  High Base PPN(WARL)
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Mc8vCgBnbbGWHulo9wpFBg--.17191S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZFWDJr1DJryktw43Cry5XFb_yoW5KrWDpF
- 4kGwsxKF45Jr1xKanay3ZrJry3JrykAr9Fyr1DW3409F1kZr4q934ktayq9r15JryfWr15
- Aw4FqF1DWFsxA37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziKLvtUUUUU=
-X-Originating-IP: [223.160.231.226]
-X-CM-SenderInfo: p2betyxhhuq5hhdkh0dhw/1tbiCQviI2jo5st87gAAs8
-Received-SPF: pass client-ip=1.95.21.15; envelope-from=z_bajeer@yeah.net;
- helo=mail-m16.yeah.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,102 +107,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jialong Yang <z_bajeer@yeah.net>
+It is showing in the output of the bits! macro when using the nightly
+toolchain, though it's not clear if it is intentional or a bug.
+Shut it up for now.
+
+Link: https://github.com/rust-lang/rust-clippy/issues/15852
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/intc/riscv_aplic.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ rust/qemu-macros/src/lib.rs | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-v1 --> v2:
-- fix calculation of MSI address.
-- In Supervisor mode, lhxw/hhxs/hhxw fields are in mmsiaddrcfgh register.
-- And lhxs field is in smsiaddrcfgh.
-
-v2 --> v3:
-- Fix compile error when enable kvm.
-
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index a1d9fa5085..6dccca73af 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -96,7 +96,7 @@
-     (APLIC_xMSICFGADDR_PPN_HHX_MASK(__hhxw) << \
-      APLIC_xMSICFGADDR_PPN_HHX_SHIFT(__hhxs))
+diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+index 3e21b67b471..9157f77a4dd 100644
+--- a/rust/qemu-macros/src/lib.rs
++++ b/rust/qemu-macros/src/lib.rs
+@@ -401,7 +401,14 @@ pub fn bits_const_internal(ts: TokenStream) -> TokenStream {
+     let ts = proc_macro2::TokenStream::from(ts);
+     let mut it = ts.into_iter();
  
--#define APLIC_xMSICFGADDRH_VALID_MASK   \
-+#define APLIC_MMSICFGADDRH_VALID_MASK   \
-     (APLIC_xMSICFGADDRH_L | \
-      (APLIC_xMSICFGADDRH_HHXS_MASK << APLIC_xMSICFGADDRH_HHXS_SHIFT) | \
-      (APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
-@@ -104,6 +104,10 @@
-      (APLIC_xMSICFGADDRH_LHXW_MASK << APLIC_xMSICFGADDRH_LHXW_SHIFT) | \
-      APLIC_xMSICFGADDRH_BAPPN_MASK)
- 
-+#define APLIC_SMSICFGADDRH_VALID_MASK   \
-+    ((APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
-+     APLIC_xMSICFGADDRH_BAPPN_MASK)
+-    BitsConstInternal::parse(&mut it)
+-        .unwrap_or_else(syn::Error::into_compile_error)
+-        .into()
++    let out = BitsConstInternal::parse(&mut it)
++        .unwrap_or_else(syn::Error::into_compile_error);
 +
- #define APLIC_SETIP_BASE               0x1c00
- #define APLIC_SETIPNUM                 0x1cdc
- 
-@@ -184,7 +188,7 @@ void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
-         addr >>= APLIC_xMSICFGADDR_PPN_SHIFT;
-         aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
-         aplic->kvm_msicfgaddrH = extract64(addr, 32, 32) &
--                                 APLIC_xMSICFGADDRH_VALID_MASK;
-+                                 APLIC_MMSICFGADDRH_VALID_MASK;
-     }
- #endif
++    // https://github.com/rust-lang/rust-clippy/issues/15852
++    quote! {
++        {
++            #[allow(clippy::double_parens)]
++            #out
++        }
++    }.into()
  }
-@@ -409,13 +413,8 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
-         msicfgaddr = aplic->kvm_msicfgaddr;
-         msicfgaddrH = ((uint64_t)aplic->kvm_msicfgaddrH << 32);
-     } else {
--        if (aplic->mmode) {
--            msicfgaddr = aplic_m->mmsicfgaddr;
--            msicfgaddrH = aplic_m->mmsicfgaddrH;
--        } else {
--            msicfgaddr = aplic_m->smsicfgaddr;
--            msicfgaddrH = aplic_m->smsicfgaddrH;
--        }
-+        msicfgaddr = aplic_m->mmsicfgaddr;
-+        msicfgaddrH = aplic_m->mmsicfgaddrH;
-     }
- 
-     lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
-@@ -427,6 +426,14 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
-     hhxw = (msicfgaddrH >> APLIC_xMSICFGADDRH_HHXW_SHIFT) &
-             APLIC_xMSICFGADDRH_HHXW_MASK;
- 
-+    if (!aplic->kvm_splitmode && !aplic->mmode) {
-+        msicfgaddrH = aplic_m->smsicfgaddrH;
-+        msicfgaddr = aplic_m->smsicfgaddr;
-+
-+        lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
-+            APLIC_xMSICFGADDRH_LHXS_MASK;
-+    }
-+
-     group_idx = hart_idx >> lhxw;
- 
-     addr = msicfgaddr;
-@@ -771,7 +778,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_MMSICFGADDRH)) {
-         if (!(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
--            aplic->mmsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
-+            aplic->mmsicfgaddrH = value & APLIC_MMSICFGADDRH_VALID_MASK;
-         }
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_SMSICFGADDR)) {
-@@ -792,7 +799,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
-                (addr == APLIC_SMSICFGADDRH)) {
-         if (aplic->num_children &&
-             !(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
--            aplic->smsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
-+            aplic->smsicfgaddrH = value & APLIC_SMSICFGADDRH_VALID_MASK;
-         }
-     } else if ((APLIC_SETIP_BASE <= addr) &&
-             (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
 -- 
-2.43.0
+2.51.0
 
 
