@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5BD5CCD18E
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9422CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7DOt-0002Ch-84; Fri, 10 Oct 2025 09:43:15 -0400
+	id 1v7DPV-0002LY-Du; Fri, 10 Oct 2025 09:43:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7DOm-000294-Lq
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:43:09 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7DPB-0002Gy-Bb
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:43:33 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7DOT-0007np-GR
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:43:02 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3f2ae6fadb4so2426655f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:42:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7DOl-0007wl-VF
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:43:32 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46e3af7889fso11681465e9.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760103753; x=1760708553; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760103776; x=1760708576; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wozWQ4+uKhU2Woke0EiPtGgDjWqN+p+Av15OT51Ys1o=;
- b=CZyK/SYWWIqxN+JiCD0ks+wEAzbLuIBS4tJZTut0Q1ReuEWtDLuwaSTQUTFK/JK1xs
- 6VyuLPFwgOqHw8F8JPWTLrOiOQtJMO3AfZLGA4R6tqLd0vTcp0xkA3JYUG8+uP+iqqG5
- hWZgWBQl4QPoqJ7zhA1bERTfkq55OOZiHESccj5nPiknrGbQALDnH8dIX7O8FVJJkUaO
- 2a9HvvVGUulf+gPOPOAXqA/mh6Cqmd84S0Rn3dtSUIvRzbk+IhBEsdI+YmDdYp9CUYAX
- mXhvsWAwKKARE3Ja2BhgUh3gMy20ae9kjqM/rWXJKGVwaTQA+3VW9G/R7vETRC9qTG16
- Gb5w==
+ bh=jgHI5TW5wRLub5UB51c3C5+CkIARcYS3PKLqV1Iqios=;
+ b=IltQhRWvYpt0+OGIqM6wz4NAEs6czEH0QA7n9e6vNbdyJdS25vfx1dvxYbS4VBSwRk
+ /Pq+je/jX3L/CGq5Ahbb/PSS6+Ixa4p+mNqJ74PlVlVP1F+mXK/Dkzi5mxTUVIvjWOYJ
+ 8mXe7koqfUyBeor9Hhl2W1GvA4CJKrQurjpz9iMuJ9fzzkWOg1MJS854n3r0n6J85kn7
+ z6xn0AcMvUNOx9Y87v0zqL2EovQYvSs54n3wzuDIvp5W+78TojN72qWx9focgSAeuZ3/
+ 1/GeK2QcvIGnA3Oe2H6sR1nEJrgd5GjEDA2bj+KYPRYnlXZ0IjSaEYPxVvy+39TNC2cl
+ dFWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760103753; x=1760708553;
+ d=1e100.net; s=20230601; t=1760103776; x=1760708576;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wozWQ4+uKhU2Woke0EiPtGgDjWqN+p+Av15OT51Ys1o=;
- b=bqmX7n8N5xbnoOR9VcYVW6rZ8qhtptVQXbUpgfZe8NnOMDUTaNQKub5QeebHKQvDRw
- WNa6z/UYFpKJngw1zNlMc6DeP6MLZcL6WEvBlLtvKzoP2n5lI4TUEGtQTfHzMaU9YQP+
- W3ZUO+2+r+wCu7bPbumrmnG0eslW87lQatuJqTxkfnAXHuqFSSxG0+6d5d4lr1Uzr7n/
- TbjEBO4QzHTa1oDDcdhD37FfCm1ZyHttVY87a04DtElFB5eBHA46o41R5GpEHbqEgGzf
- VAiq9kYFeGgEs+J1lDR/xJ/7vv/YPf549EWjg3Jtj8oGPt10bQl54btSHzKqBBpJhYAB
- hVZw==
-X-Gm-Message-State: AOJu0Yx3lZb3Xxqnkcj3oEIo16uzNaHgqAVtJd5mx1lGi/BK0wcfw483
- x7OgaQMWp4aWfwScOR6BCyd6fW5Z8h93BJzlJcH03EU16+DbUpw7kac207EI4he23KpmG25G+VB
- IUnpBTMQb6w==
-X-Gm-Gg: ASbGncvIxO2zKTGyD5bnnvp6cVXKhwOJpe9PGepvRFXVZ9fMlL2hHb3Q4cNpeJlYynl
- HgIS5XLoaVWKpSPyw670MKxn8C+3xcj88krcDny3omNL45Uwpc4aCcJuA/lcbaFFxyuGkiTDYso
- CHgIj9kCAMFk/+3K91VvCjnQeqHcRE9ppHWDWK7d2U+3vH1yPin2ov9gCfgkieYAI5U/OGTsWUM
- 5ohDRvR6ulDNUvF/2C59EO5S6q/1IWc4/cfFwdBF5CcuV231pG6YInj8l7pL71M7hSBHzzWziQm
- pQu6Hk1/3cDzBHFSwzOfWAY5GZSwS7+d/rPMt95gB9io74liBJbHPpxmbz+iYVQuvKLeYaXw5lz
- +WkrJS2V2p8316OVrHDI80CVMOm5gbs74KHtoiDdXu/kMV/lPEUCKwiMP277RUk/FQby/SA472y
- QFEn5IOGBM53R2QpvxYkmv4Uk9C5a32g==
-X-Google-Smtp-Source: AGHT+IErZZEwB4uw1hXoXCFarD7Y+fhbeaRNLRAD8qc0l2ueYPzIctHC9WNhaN8/3Y7GMnt0v+LIkA==
-X-Received: by 2002:a05:6000:2505:b0:405:3028:1be2 with SMTP id
- ffacd0b85a97d-42666ac4748mr7297622f8f.11.1760103753514; 
- Fri, 10 Oct 2025 06:42:33 -0700 (PDT)
+ bh=jgHI5TW5wRLub5UB51c3C5+CkIARcYS3PKLqV1Iqios=;
+ b=jeoP7Y6/vQJ/jQyDjri4YkNhFLdn2cJtTcoiE8ubhSF4Ud9hnmA25yDbCTs9rmzaT3
+ dIw3f8lewfnEKcD+2KpG+PLBhU2qNBrAPrgTAZKM4jDyEhhbf5AjEK93XyyISGCm3URN
+ DkOOLQucXldYzgXQgzeCLNg95fo1f0Ztzz0XMTK5NUA1/g/uw2mgNBVMauaV1rkDVFeg
+ ZO/DaEvACSs2B3xukS8TYW29DWX8gaLzVZ/ZZTYY6vok2wK4Gd3PBc5MkQCAHkNlYGt5
+ reQRyKfP63Eb7AipZAWz5StttpWRLfTQSm3i0PtIrKwHZvLl9qAMLaqyqCBKyyGIS2El
+ YeIQ==
+X-Gm-Message-State: AOJu0YyvWMaAk3TLugSHPM2RnpSa+k9/eHRQEQPQs6IEpfeugK+9Ybk/
+ olkuY5QwX3OajuaUoEwMAck5udfCOW9LYSPtF00wn24QUVDZ2+w9BLTnalfYypnEDqR9KWm1r/+
+ KM2KgYFvEhQ==
+X-Gm-Gg: ASbGncs0C/Zu/lZ9n1gNFq9YnB8BpYSiJYZcw/53wFBqCsQz57j6DNopRn+JvNKETxT
+ s1l0HEO4onU0w3bRLuZDJQCBbtWkLbjxhjj8gf4YSaqQ87i56botIbehhZs9llLS8NZs1fkLMOJ
+ XmDzpM0ctGxoG7MGeNp2FtoT+BtRcHwq04Hq/A9KuWeJ5NG0MzdeuRTemwGMnMzu3V080cwXRLY
+ TSSumIW+FC+f0/d1QKGGw547t3U0ZoM4Wc19irV0r9NsqhLjX1EhFy5xRyX6g2Dd613byA5u9c1
+ K2ZbjL/pTEHTV2hzXXbm3gTqRrkZhXxr/XElw/W2dpAEaJ9F7eFVZsFKdch6/xNoEnxa+qDckL2
+ 9G7f+hhcbE2MxtYvbQ9qXM6xeoiwjQ4m0f0HldoIZtQHldanWItSVDiOnOm8ouYh63V17Lb9Avj
+ uncbc0ctGYkLOx7Off3mY=
+X-Google-Smtp-Source: AGHT+IGJIe3UiNIYTyhOEp3oDaTG0ipq8utQ5sMTJPXtgT8ePs3zSizNPMCFuwtMpE4+/UxIGkxGWw==
+X-Received: by 2002:a05:600c:1d18:b0:46e:3901:4a25 with SMTP id
+ 5b1f17b1804b1-46fa9aef67bmr77368985e9.20.1760103775971; 
+ Fri, 10 Oct 2025 06:42:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce50d70esm4457288f8f.0.2025.10.10.06.42.32
+ 5b1f17b1804b1-46fab3703adsm59917755e9.0.2025.10.10.06.42.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Oct 2025 06:42:32 -0700 (PDT)
+ Fri, 10 Oct 2025 06:42:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 01/16] linux-user/arm: Checkpatch style cleanups
-Date: Fri, 10 Oct 2025 15:42:10 +0200
-Message-ID: <20251010134226.72221-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 05/16] disas: Replace HOST_BIG_ENDIAN #ifdef with runtime if()
+ check
+Date: Fri, 10 Oct 2025 15:42:14 +0200
+Message-ID: <20251010134226.72221-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010134226.72221-1-philmd@linaro.org>
 References: <20251010134226.72221-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,119 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update style in a pair of methods we are going to modify in
-the following commit. No functional change.
+Replace compile-time #ifdef with a runtime check to ensure all code
+paths are built and tested. This reduces build-time configuration
+complexity and improves maintainability.
+
+No functional change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- linux-user/arm/nwfpe/fpa11_cpdt.c | 66 ++++++++++++++++---------------
- 1 file changed, 35 insertions(+), 31 deletions(-)
+ disas/disas-host.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/linux-user/arm/nwfpe/fpa11_cpdt.c b/linux-user/arm/nwfpe/fpa11_cpdt.c
-index fee525937c5..6b0317883a7 100644
---- a/linux-user/arm/nwfpe/fpa11_cpdt.c
-+++ b/linux-user/arm/nwfpe/fpa11_cpdt.c
-@@ -40,18 +40,18 @@ void loadSingle(const unsigned int Fn, target_ulong addr)
- static inline
- void loadDouble(const unsigned int Fn, target_ulong addr)
- {
--   FPA11 *fpa11 = GET_FPA11();
--   unsigned int *p;
--   p = (unsigned int*)&fpa11->fpreg[Fn].fDouble;
--   fpa11->fType[Fn] = typeDouble;
-+    FPA11 *fpa11 = GET_FPA11();
-+    unsigned int *p;
-+    p = (unsigned int *)&fpa11->fpreg[Fn].fDouble;
-+    fpa11->fType[Fn] = typeDouble;
- #if HOST_BIG_ENDIAN
--   /* FIXME - handle failure of get_user() */
--   get_user_u32(p[0], addr); /* sign & exponent */
--   get_user_u32(p[1], addr + 4);
-+    /* FIXME - handle failure of get_user() */
-+    get_user_u32(p[0], addr);       /* sign & exponent */
-+    get_user_u32(p[1], addr + 4);
- #else
--   /* FIXME - handle failure of get_user() */
--   get_user_u32(p[0], addr + 4);
--   get_user_u32(p[1], addr); /* sign & exponent */
-+    /* FIXME - handle failure of get_user() */
-+    get_user_u32(p[0], addr + 4);
-+    get_user_u32(p[1], addr);       /* sign & exponent */
- #endif
- }
+diff --git a/disas/disas-host.c b/disas/disas-host.c
+index 8146fafe804..54be5ef18e4 100644
+--- a/disas/disas-host.c
++++ b/disas/disas-host.c
+@@ -37,11 +37,7 @@ static void initialize_debug_host(CPUDebug *s)
  
-@@ -108,16 +108,18 @@ void storeSingle(const unsigned int Fn, target_ulong addr)
- {
-    FPA11 *fpa11 = GET_FPA11();
-    float32 val;
--   register unsigned int *p = (unsigned int*)&val;
-+   register unsigned int *p = (unsigned int *)&val;
- 
-    switch (fpa11->fType[Fn])
-    {
-       case typeDouble:
--         val = float64_to_float32(fpa11->fpreg[Fn].fDouble, &fpa11->fp_status);
-+         val = float64_to_float32(fpa11->fpreg[Fn].fDouble,
-+                                  &fpa11->fp_status);
-       break;
- 
-       case typeExtended:
--         val = floatx80_to_float32(fpa11->fpreg[Fn].fExtended, &fpa11->fp_status);
-+         val = floatx80_to_float32(fpa11->fpreg[Fn].fExtended,
-+                                   &fpa11->fp_status);
-       break;
- 
-       default: val = fpa11->fpreg[Fn].fSingle;
-@@ -130,29 +132,31 @@ void storeSingle(const unsigned int Fn, target_ulong addr)
- static inline
- void storeDouble(const unsigned int Fn, target_ulong addr)
- {
--   FPA11 *fpa11 = GET_FPA11();
--   float64 val;
--   register unsigned int *p = (unsigned int*)&val;
-+    FPA11 *fpa11 = GET_FPA11();
-+    float64 val;
-+    register unsigned int *p = (unsigned int *)&val;
- 
--   switch (fpa11->fType[Fn])
--   {
--      case typeSingle:
--         val = float32_to_float64(fpa11->fpreg[Fn].fSingle, &fpa11->fp_status);
--      break;
-+    switch (fpa11->fType[Fn]) {
-+    case typeSingle:
-+        val = float32_to_float64(fpa11->fpreg[Fn].fSingle,
-+                                 &fpa11->fp_status);
-+        break;
- 
--      case typeExtended:
--         val = floatx80_to_float64(fpa11->fpreg[Fn].fExtended, &fpa11->fp_status);
--      break;
-+    case typeExtended:
-+        val = floatx80_to_float64(fpa11->fpreg[Fn].fExtended,
-+                                  &fpa11->fp_status);
-+        break;
- 
--      default: val = fpa11->fpreg[Fn].fDouble;
--   }
--   /* FIXME - handle put_user() failures */
-+    default:
-+        val = fpa11->fpreg[Fn].fDouble;
-+    }
-+    /* FIXME - handle put_user() failures */
- #if HOST_BIG_ENDIAN
--   put_user_u32(p[0], addr);	/* msw */
--   put_user_u32(p[1], addr + 4);	/* lsw */
-+    put_user_u32(p[0], addr);           /* msw */
-+    put_user_u32(p[1], addr + 4);       /* lsw */
- #else
--   put_user_u32(p[1], addr);	/* msw */
--   put_user_u32(p[0], addr + 4);	/* lsw */
-+    put_user_u32(p[1], addr);           /* msw */
-+    put_user_u32(p[0], addr + 4);       /* lsw */
- #endif
- }
- 
+     s->info.read_memory_func = host_read_memory;
+     s->info.print_address_func = host_print_address;
+-#if HOST_BIG_ENDIAN
+-    s->info.endian = BFD_ENDIAN_BIG;
+-#else
+-    s->info.endian = BFD_ENDIAN_LITTLE;
+-#endif
++    s->info.endian = HOST_BIG_ENDIAN ? BFD_ENDIAN_BIG : BFD_ENDIAN_LITTLE;
+ #if defined(CONFIG_TCG_INTERPRETER)
+     s->info.print_insn = print_insn_tci;
+ #elif defined(__i386__)
 -- 
 2.51.0
 
