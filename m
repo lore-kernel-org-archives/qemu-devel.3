@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E4CCCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2189CCD18A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Com-00065X-Qa; Fri, 10 Oct 2025 09:05:57 -0400
+	id 1v7CrI-00015q-Ax; Fri, 10 Oct 2025 09:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cog-00062z-DU
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:05:50 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1v7Cqu-00089e-Ef
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:08:09 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CoU-0003ke-P9
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:05:50 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e61ebddd6so21344665e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:05:34 -0700 (PDT)
+ id 1v7Cpk-000443-9Y
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:08:07 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3c68ac7e18aso1426261f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101531; x=1760706331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101609; x=1760706409; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=j8CXWoA91XTJZvcdb9Zd4U3ILTUSgZk3asP3C56vbhg=;
- b=K8kM1dZG/dII8jcrEvg3FK287Y6DYe+933oXETGKmkwgI88nv5eUq/x4XMDu1Rkaeb
- vmfZfTSGkltBRdcbsdm+Nik0wY8VdJblZIbPwqlFxM6vtBFsKNJovLPAsVT6K/m5IomY
- eDzXFp+tpqzjdv9OfK003a4zDgZqcq4YdeToP22iXyBgDKnQI9jZELUaasqPFs6YNN5O
- wj1TKnoEkMTe8f66D+G8XZt8Bzy4vXqktufil23njmcOAxOSR1v3Ic/6jo9QfxdvvQBr
- 6YTneE6KjAqu6dsiFZt3iWamA35fGqMRmbnaJJEiOOrFex+xiTDb0vjDUT1y33j7RlJN
- iQ/w==
+ :reply-to; bh=6v6hOcOHDggmkiaDV77PZmhbEfhoJVgBwmXFKtv68nQ=;
+ b=OH+YgjYPxrw26v1jY27VxOvUOqQ9tifb5S5+mfS46Z/iRgsLSYmabKOKrKrLrZckO6
+ Wfhz/XCpafHf+hawO7bzoWxz1C1qxr+9tAh/ogiC/aNPY2Ojxw0W8Ilbvk9bOV82ij9N
+ KXiNby8Lo3cTvHML+YXOZqKdWu+eeZ8j43n4Le9B/6uJZ+lc3i/z5sv7iw6etlaU1gjx
+ uZa4+MOodoUmy7IS6TcuQFynoSDCfMPaegAkEpUD7mNyUUjuDeLRvUrnWuckdOCQlDlj
+ JEmggbM8FEgWVBcx4rKsUVuMcPp+2mAwNvyviM2cZJBbhWhBWuV0/OZp/u6JfYPx6RGj
+ 0MMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101531; x=1760706331;
+ d=1e100.net; s=20230601; t=1760101609; x=1760706409;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j8CXWoA91XTJZvcdb9Zd4U3ILTUSgZk3asP3C56vbhg=;
- b=QKOH41db7aizfl1+e1MYPVU6pVLgc7mDwQWQCNZnTxokQXwFVCjUgSxXaFcQ35yqyH
- owhlgJpzXONi6bu9BNd132n3yTk3elChAilON8nQQ3KDyAU4lzJVifoBdbwgR6qwYoNl
- Fb33Fu4ENsjmtp/bFwTt4meZFm2H7amVnvh4Z69pL6mb9+Nsm3HMH8T2ZTgYs3dMb5z8
- 2GG4FrC5Udt0ConEvBJQkmU2zb58PoK57UsvuCd9jEjkeaG/RFMLRNh9dyc4s3wNDQ74
- 2DJwqMk9uoNA7ahQBeJI+xrhhpxhKH/0Jtc36jttE4gCs2ALuOkKptTSnY9v6QhQiBq1
- rilw==
-X-Gm-Message-State: AOJu0Yw0WKKumMRmHFdP1jrUglxCLseUj6zonnocjrYdJETB4Hq7q9SB
- ADPVK4q+S6fOyyMFzpkX7tNWO9WcUxjewci6kC1aH3I25i6Dv/PgPQ6KhYb9ezzefEvdOzjWJkE
- q1pcg
-X-Gm-Gg: ASbGnctH9WMhtZa5LPgC669PEClEYLKWJw98SQ2qjGzUiiEfXU+4bdgxwdzzgp5ouYa
- RjMmKWM/ABivFlGJ4Ki51YPM+eZgeme2J/BuR9ZpVn3QOUfemhAO7qET2Hm/bPEDAhjHICSDESe
- blFTgGEtjEiQJzbj9hRwO3v96Xwe0Peo2P2actWdegLRKqTsQkuEZ1D3x+Ao2UuWB4nKk4uF45B
- 2isfIr7DtSMH1/13jzbBIveBzXbvbYX16KRji/tST578zvoXq6iTV+rFQqXijtfoeHWRrk0DerF
- y5vUiYF+WAWeIa8LW70fQjJBAOe4Fl2g4cPK5eZGJXXPXcXm7NvXXzoaYxOKaP9VcEVQkANkoII
- q/spgU8hbRtpBz86hhItl1epCicDFTEp9NMCpQQM6L+D/E9/yXyaVXQYea34G+w==
-X-Google-Smtp-Source: AGHT+IGyid99tW4GPFPPNx6LaJM+DPdTHWGJH+l126E+dIz6nwiqNNde4FE8MsZ3KDq9fCv1ZKqVzA==
-X-Received: by 2002:a05:6000:4006:b0:3f1:2d30:cb5c with SMTP id
- ffacd0b85a97d-4266e204a1fmr7345699f8f.23.1760101531048; 
- Fri, 10 Oct 2025 06:05:31 -0700 (PDT)
+ bh=6v6hOcOHDggmkiaDV77PZmhbEfhoJVgBwmXFKtv68nQ=;
+ b=ZrXWwTIz8bdA6LcaHGCMapZY/q5LdL9HsOrQ0OIIEuaPrLsFfgLqbvVM3BdARMyhS3
+ DPgpf+F3dhxk0BXctsjkHne3IR00ymZ0+ibINcd4Th189jUylDBq5XbBszeiwtid4iWn
+ gaeJ1VJzE/C8TFdn0Srf4yGhhQHMKsltxxCU5KfdFDNm6h3QCCPD1KdzVCsa83iCjSWR
+ NmMdVaFNwE/mngyPrINUmv+0nxGMCoIeU6ziQe0Rd8ftmybjSxTtN8GH3gOTIz4YkxP5
+ FmKvITPERgxPBlbqfDd198oHVcAbAzE86b7JYjjZ6fZTMTFAfT/gyF+DYrb6upfTjC/V
+ uigw==
+X-Gm-Message-State: AOJu0YwHZmUPInDrAraK+xolMhgCroSPDwtwerj3b81HMu7TWQlxJ1Hu
+ fx11tuZEM1J/OGLTCYwLMEL2LW5oFBdMQTekFzOMwroJ3vNC2Rn5HN2kTqXRB1qfIefgaIh7s06
+ XwxfX
+X-Gm-Gg: ASbGncsBN3NwlOBH9J/F1u4zhgjGk59cx8uqxem5w44ql7IkKi/DhSBLUY+O9XebheQ
+ q7tPWyBJHUrQ6d9Z9Q6dcS02G3T0IFJU9WyEct4BkWHf8qQgjl4FGNzlC3DMB+GiCbn1e0DAHWr
+ u5dexW3oCpEfPuPagPY58bM1kl6che8Bz7H5clFcubFI2CNH77DpkkuX5AJkGGeQT7hcsypDP7D
+ LIws3NV2vegckMaieXBX94/2edaGPRbdY7BADQjqiRujzKCR9qwn3oLv1xxS6rU+Hzpj9weP5NN
+ 5my3N1b3S9wYf5zJMoWOTX8IGgTRJkFpeLeVBW4UFZ8wlSiCi2FcpLYSf8dNzj7an6LShZN5lle
+ 2JxZdwSVT1CPNz6BahcCi22fBfQx0pqCPvnRpgkLoHMPdvNR1pUg=
+X-Google-Smtp-Source: AGHT+IEdVPTQMAbnYwenkKRHs8WtHIFJzPInRcpcOQ7mqtrwCLc5uty3xPx5w+7k/HkA11zIHe+40A==
+X-Received: by 2002:a5d:64c3:0:b0:3e7:4197:c99d with SMTP id
+ ffacd0b85a97d-42667363e76mr7236930f8f.15.1760101608965; 
+ Fri, 10 Oct 2025 06:06:48 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.05.30
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:05:30 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/76] tests/functional: update tests using TF-A/TF-RMM to
- support FEAT_GCS
-Date: Fri, 10 Oct 2025 14:04:12 +0100
-Message-ID: <20251010130527.3921602-2-peter.maydell@linaro.org>
+Subject: [PULL 72/76] tests/tcg/aarch64: Add gcspushm
+Date: Fri, 10 Oct 2025 14:05:23 +0100
+Message-ID: <20251010130527.3921602-73-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,63 +99,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Validate successful and trapped executions of GCSPUSHM, GCSPOPM.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-2-richard.henderson@linaro.org
+Message-id: 20251008215613.300150-73-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/functional/aarch64/test_device_passthrough.py | 4 ++--
- tests/functional/aarch64/test_rme_sbsaref.py        | 4 ++--
- tests/functional/aarch64/test_rme_virt.py           | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ tests/tcg/aarch64/gcspushm.c      | 71 +++++++++++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.target |  2 +-
+ 2 files changed, 72 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/aarch64/gcspushm.c
 
-diff --git a/tests/functional/aarch64/test_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
-index 17437784bbe..05a3f52d5e2 100755
---- a/tests/functional/aarch64/test_device_passthrough.py
-+++ b/tests/functional/aarch64/test_device_passthrough.py
-@@ -85,8 +85,8 @@ class Aarch64DevicePassthrough(QemuSystemTest):
-     # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
-     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
-         ('https://github.com/pbo-linaro/qemu-linux-stack/'
--         'releases/download/build/device_passthrough-c3fb84a.tar.xz'),
--         '15ac2b02bed0c0ea8e3e007de0bcfdaf6fd51c1ba98213f841dc7d01d6f72f04')
-+         'releases/download/build/device_passthrough-a9612a2.tar.xz'),
-+         'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
+diff --git a/tests/tcg/aarch64/gcspushm.c b/tests/tcg/aarch64/gcspushm.c
+new file mode 100644
+index 00000000000..c330417a2fa
+--- /dev/null
++++ b/tests/tcg/aarch64/gcspushm.c
+@@ -0,0 +1,71 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "gcs.h"
++
++
++#define GCSPUSHM  "sys #3, c7, c7, #0, %[push]"
++#define GCSPOPM   "sysl %[pop], #3, c7, c7, #1"
++
++static void test_sigsegv(int sig, siginfo_t *info, void *vuc)
++{
++    ucontext_t *uc = vuc;
++    uint64_t inst_sigsegv;
++
++    __asm__("adr %0, inst_sigsegv" : "=r"(inst_sigsegv));
++    assert(uc->uc_mcontext.pc == inst_sigsegv);
++    assert(info->si_code == SEGV_CPERR);
++    /* TODO: Dig for ESR and verify syndrome. */
++    uc->uc_mcontext.pc += 4;
++}
++
++static void test_sigill(int sig, siginfo_t *info, void *vuc)
++{
++    ucontext_t *uc = vuc;
++    uint64_t inst_sigill;
++
++    __asm__("adr %0, inst_sigill" : "=r"(inst_sigill));
++    assert(uc->uc_mcontext.pc == inst_sigill);
++    assert(info->si_code == ILL_ILLOPC);
++    uc->uc_mcontext.pc += 4;
++}
++
++int main()
++{
++    struct sigaction sa = { .sa_flags = SA_SIGINFO };
++    uint64_t old, new;
++
++    sa.sa_sigaction = test_sigsegv;
++    if (sigaction(SIGSEGV, &sa, NULL) < 0) {
++        perror("sigaction");
++        exit(1);
++    }
++
++    sa.sa_sigaction = test_sigill;
++    if (sigaction(SIGILL, &sa, NULL) < 0) {
++        perror("sigaction");
++        exit(1);
++    }
++
++    /* Pushm is disabled -- SIGILL via EC_SYSTEMREGISTERTRAP */
++    asm volatile("inst_sigill:\t" GCSPUSHM
++                 : : [push] "r" (1));
++
++    enable_gcs(PR_SHADOW_STACK_PUSH);
++
++    /* Valid value -- low 2 bits clear */
++    old = 0xdeadbeeffeedcaec;
++    asm volatile(GCSPUSHM "\n\t" GCSPOPM
++                 : [pop] "=r" (new)
++                 : [push] "r" (old)
++                 : "memory");
++    assert(old == new);
++
++    /* Invalid value -- SIGSEGV via EC_GCS */
++    asm volatile(GCSPUSHM "\n"
++                 "inst_sigsegv:\t" GCSPOPM
++                 : [pop] "=r" (new)
++                 : [push] "r" (1)
++                 : "memory");
++
++    exit(0);
++}
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 5e1b3a33851..fddb7bc9cdc 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -76,7 +76,7 @@ $(SME_TESTS): CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
+ endif
  
-     # This tests the device passthrough implementation, by booting a VM
-     # supporting it with two nvme disks attached, and launching a nested VM
-diff --git a/tests/functional/aarch64/test_rme_sbsaref.py b/tests/functional/aarch64/test_rme_sbsaref.py
-index ca892e0a8c9..6f92858397a 100755
---- a/tests/functional/aarch64/test_rme_sbsaref.py
-+++ b/tests/functional/aarch64/test_rme_sbsaref.py
-@@ -25,8 +25,8 @@ class Aarch64RMESbsaRefMachine(QemuSystemTest):
-     # ./build.sh && ./archive_artifacts.sh out.tar.xz
-     ASSET_RME_STACK_SBSA = Asset(
-         ('https://github.com/pbo-linaro/qemu-linux-stack/'
--         'releases/download/build/rme_sbsa_release-a7f02cf.tar.xz'),
--         '27d8400b11befb828d6db0cab97e7ae102d0992c928d3dfbf38b24b6cf6c324c')
-+         'releases/download/build/rme_sbsa_release-6a2dfc5.tar.xz'),
-+         '5adba482aa069912292a8da746c6b21268224d9d81c97fe7c0bed690579ebdcb')
+ # GCS Tests
+-GCS_TESTS += gcsstr
++GCS_TESTS += gcsstr gcspushm
+ AARCH64_TESTS += $(GCS_TESTS)
+ $(GCS_TESTS): gcs.h
  
-     # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-     # and launching a nested VM using it.
-diff --git a/tests/functional/aarch64/test_rme_virt.py b/tests/functional/aarch64/test_rme_virt.py
-index bb603aaa26c..5e23773f93d 100755
---- a/tests/functional/aarch64/test_rme_virt.py
-+++ b/tests/functional/aarch64/test_rme_virt.py
-@@ -23,8 +23,8 @@ class Aarch64RMEVirtMachine(QemuSystemTest):
-     # ./build.sh && ./archive_artifacts.sh out.tar.xz
-     ASSET_RME_STACK_VIRT = Asset(
-         ('https://github.com/pbo-linaro/qemu-linux-stack/'
--         'releases/download/build/rme_release-86101e5.tar.xz'),
--         'e42fef8439badb52a071ac446fc33cff4cb7d61314c7a28fdbe61a11e1faad3a')
-+         'releases/download/build/rme_release-56bc99e.tar.xz'),
-+         '0e3dc6b8a4b828dbae09c951a40dcb710eded084b32432b50c69cf4173ffa4be')
- 
-     # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-     # and launching a nested VM using it.
 -- 
 2.43.0
 
