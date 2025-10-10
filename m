@@ -4,114 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D943CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B2ECCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7G8Q-0002se-Lu; Fri, 10 Oct 2025 12:38:26 -0400
+	id 1v7G9J-0003FA-DO; Fri, 10 Oct 2025 12:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1v7G8O-0002ql-8w; Fri, 10 Oct 2025 12:38:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1v7G9C-0003D6-FM
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:39:17 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1v7G8E-0001pc-4L; Fri, 10 Oct 2025 12:38:22 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59A9gYWI031146;
- Fri, 10 Oct 2025 16:37:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7sPDJm
- siV4b7dxgH72UO9PRA0SHd1rKNB7Fm8YquCJE=; b=tpiH4TweZ+vSZ2p77PLq0e
- CSuAdUdw2ZD44d+Ire0Oe0MPLntUeW/66nRHl0Kn/WYKqbysPNCwuuWZ/C64T+ZB
- GOdv7d+w3fhGVhiOWrE4hUhlamo/XIz2sWa95Ux4h/PWIPaVLVtVR+u3sKGpG3Tl
- FC7h6AjuhH5xVJt4GW7IDFAWV4UaFzuZ8YaghHCq0Gr0OLA4RQ4JpN2yITajWzk0
- ofZWag5C66l3678R10o0bmbLJn6TOXgLH3mY0EhzOERMDoR1GSkZ8LWXNA15HLXx
- gtWm/z+Amz8RpuLCCJYoK1mS0PsU7cmm99iax2FlC6Na/EfU2fgVLJ6Tr0OlYR8A
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv81umv7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Oct 2025 16:37:58 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59AG0CTN022773;
- Fri, 10 Oct 2025 16:37:57 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49nv8vjrpp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Oct 2025 16:37:57 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59AGbu4B27984638
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Oct 2025 16:37:56 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EF82458056;
- Fri, 10 Oct 2025 16:37:55 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E633858052;
- Fri, 10 Oct 2025 16:37:54 +0000 (GMT)
-Received: from [9.61.95.157] (unknown [9.61.95.157])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 10 Oct 2025 16:37:54 +0000 (GMT)
-Message-ID: <4a05dabf-44cc-43f4-979c-82f6f554cfb5@linux.ibm.com>
-Date: Fri, 10 Oct 2025 12:37:54 -0400
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1v7G90-00023c-MZ
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:39:10 -0400
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id AC5273FCD8
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 16:38:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1760114331;
+ bh=Y4iIKwW/REG2fy7zqN/4K0VxvoaFykjEUhPEfuHJTMk=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=Ph8scYjSKJxw48lGhaMiTPyIcSfob9Baez/q986mjt7hmCW/y6l7k27cv9CqcIu8K
+ 3WHQLYRL/I6Kjp/Pts8dwNoQpvZpfgAGNr8gYNrorhUcoNUZLG9x+OSzMMYWjYTJRM
+ EX5i7ej6Y252LTD0V25mpFMIamgLcNwZ7wh4kww5zSRDPc5jPQTwA+V0/SvVV+od+6
+ Gcuey7NjLQcL9l23treV+yQeDJx2gL890xz/F5fcjyGVWh272xgSwRCtFG79ZvfCa/
+ C2x93GbOWXwuWT/Gx1EDWD4fT3TAJ+YMfaMhHaIdvFIWV7X0DWicSeQlVI7Fsj/Sb+
+ nrDX7cQkt0AaJYpZk/0MgG5wbX9095kk9sBQkmVOkB/gusyw+WrThbgb6dIHWtJbQl
+ OWsjTaurcdx7AkTlCjYMQHzYY8I6AxT7zjk8SIDMQh1yDhTskSHkmfVpYUBT9UrRA4
+ S2uN55K30UEysIrzWC7fRuj0nX/lPZBxwiy4ifGaP8rX2xelUJubVVlZPZgMI6e8lx
+ DClO8xPizWfSwzvM/5ESsDazknvof3KHi1ujROk7oz5uQU9nYtw1dwGpjA0lA/wk14
+ sqms/4AStxvnhk9dTGMsKxETbXorV0B4d+JgAt2MJBRPIzFWJTIEHr03C4M0C2T0oU
+ ZLyJFDyH7bsFV/TXr37MgQGg=
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e39567579so11585655e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:38:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760114329; x=1760719129;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y4iIKwW/REG2fy7zqN/4K0VxvoaFykjEUhPEfuHJTMk=;
+ b=Wmk/Ych47eGxCd9FYloJyKAZJDVoo3c2SizlIMHLSeEoXOVFj+UOi/7Owzj+wCb1Ad
+ n5PtbbcHvij04UginkNV86xOFx+1EW9PF4F4LPhep+JIO4rCHTv45z9BDhd0z0n4ZMC6
+ AxEXBQWcnPrDPL4tWVaVEWQe99EQOp3gOs93tZV2PzslwGJTZsNtaWjMJ7rgoMDY7GTH
+ OErLNEs+u/8v6ASIQAZgrcvmUaoP1huCGiMbJDygRiIvpNHKWYa+cXr/nd7rRvUAiThc
+ 4Hr0iNqROYTnjsnYSAwL6MluWzL6JhQf+62h+CJfdVrICzUDsYHDi845h9vXQevr5gjC
+ gYRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxzqNT8fX9V4G+XsQCLT7Pw+m50QYGC0cqvnWv1XjlV54TxbVNsV69njvCz5tqF7ou9DBAeHI5/50U@nongnu.org
+X-Gm-Message-State: AOJu0YxTwEh+0YEW79bkO+wrDxOnxp3zRwF6O/T3yh/t2kBom5tguzAE
+ LJ7aM07PLYw+6nKy+EZNtdS8zZSE7v8dHneV4vUb4H+sR7wFYseOp65SMVV0tN7wrAdtBJ+F1NA
+ iwftnHUHadMCyLZmleeVC//EXGVjCyckaHecBaaTWsah17C1wvi1R0NribunkiS9OiDlZmVBt
+X-Gm-Gg: ASbGncvnBv5qJ//lpz6/ATcWeQRda4Y8t/f+2GnJA4ethmYOTIxGjAV7kwTWCH0UCZV
+ 1lHpNZBXizFWd/w23m/RqBMG+1bfwU6Shvj4fPizVyV3WPZzwx8IMuC5FP0/Bt09+MbszFMFCK9
+ CHpzokVUhyRic7Sh6Y/T6bPaVsGya04iA+YSU+1IXzxPgarshSM4WNGotzz3FWZ2+qkJFu+62hu
+ 3lFPnw38ljLVUoWb5z6nHnWMDvEfmI83uIbve8Wc1PF/FZG/MAu7Ux9orBXFhS2ESt+SasU2KqO
+ ApIKYYxuIQ2nCO79YoX787ONfpe7h32TXLIWnfoFeAPX111HDhmK4zeRt6ZEQJk+FGN+AMuIBqG
+ ROHLQSXYdEbjGsMcDnEUtmcg8EFkrT9KnYLle7LnWb6OSYZah
+X-Received: by 2002:a05:600c:4752:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-46fa9aa48d7mr91075665e9.15.1760114329210; 
+ Fri, 10 Oct 2025 09:38:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiEuIKCmOtGqvJgAJqkvjEdLIdBMsg4fCh16P5xIzF/GR83E2w+iJm/EX3eLpvQ1mCPZ0RJQ==
+X-Received: by 2002:a05:600c:4752:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-46fa9aa48d7mr91075405e9.15.1760114328766; 
+ Fri, 10 Oct 2025 09:38:48 -0700 (PDT)
+Received: from [192.168.103.116]
+ (dynamic-046-114-109-147.46.114.pool.telefonica.de. [46.114.109.147])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb4982b30sm53309035e9.6.2025.10.10.09.38.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 09:38:48 -0700 (PDT)
+Message-ID: <174e2a19-85f4-48f5-9a22-aadd8c3848a6@canonical.com>
+Date: Fri, 10 Oct 2025 18:38:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 12/28] s390x/diag: Implement DIAG 508 subcode 1 for
- signature verification
-To: Thomas Huth <thuth@redhat.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-13-zycai@linux.ibm.com>
- <9acf7d52-0dc9-4c07-9d74-758682a5c62e@redhat.com>
+Subject: Re: [PATCH 13/13] target/riscv: Introduce mo_endian_env() helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Valentin Haudiquet <valentin.haudiquet@canonical.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ Ben Dooks <ben.dooks@codethink.co.uk>
+References: <20251010155045.78220-1-philmd@linaro.org>
+ <20251010155045.78220-14-philmd@linaro.org>
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <9acf7d52-0dc9-4c07-9d74-758682a5c62e@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Zbn3ErMHn2dYUA61C0I31oXm9Ps4Do-H
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX1+Qr4T7xBISx
- yra9ILxJzJk7gGgCt0k6qCa2bJK9cXxrouN2P55CZRv9yQDkYKENF9J73KMVPl7Von+UbYgZ1m6
- dFdRfi1smi5J3MoEKg5R1VMad8bOqCmDiDyGCXfky5+B2yWaF2yiDmd+MDHnHDaMxfFN/Iwx6yg
- TJn+zjSfsqlXM2oZcIXOc4DVkbNIWT6S+2lBMk8CKYK8JMwgY75UmS3djDU5F89Hx7mQgkJZTRV
- rA9T6z7MUXRszG/j759gr9DXd7za42vdHnwlzLaZbLXA9C0kq8O6b6BT33Kc/I3ATWobiA0ZyVP
- sPq7H5sitYBxVOGCEVm+4JKO3F/WM+ET5XK+on5T9Srvp9t6Jk75qoopgc1J0lrQCSyl5E5hdmY
- i9dN6+QAY57mGHTCnDZCwW+lmG6mnw==
-X-Authority-Analysis: v=2.4 cv=cKntc1eN c=1 sm=1 tr=0 ts=68e93666 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=mDV3o1hIAAAA:8 a=VnNF1IyMAAAA:8
- a=q3pf7pJw0Im37hG0fjQA:9 a=QEXdDO2ut3YA:10 a=ZuZp5r4odJYA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: Zbn3ErMHn2dYUA61C0I31oXm9Ps4Do-H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-10_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <20251010155045.78220-14-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,146 +130,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 6:27 AM, Thomas Huth wrote:
-> On 18/09/2025 01.21, Zhuoying Cai wrote:
->> From: Collin Walling <walling@linux.ibm.com>
->>
->> DIAG 508 subcode 1 performs signature-verification on signed components.
->> A signed component may be a Linux kernel image, or any other signed
->> binary. **Verification of initrd is not supported.**
->>
->> The instruction call expects two item-pairs: an address of a device
->> component, an address of the analogous signature file (in PKCS#7 DER format),
->> and their respective lengths. All of this data should be encapsulated
->> within a Diag508SigVerifBlock.
->>
->> The DIAG handler will read from the provided addresses
->> to retrieve the necessary data, parse the signature file, then
->> perform the signature-verification. Because there is no way to
->> correlate a specific certificate to a component, each certificate
->> in the store is tried until either verification succeeds, or all
->> certs have been exhausted.
->>
->> The subcode value is denoted by setting the second-to-left-most bit of
->> a 2-byte field.
->>
->> A return code of 1 indicates success, and the index and length of the
->> corresponding certificate will be set in the Diag508SigVerifBlock.
->> The following values indicate failure:
->>
->> 	0x0102: certificate not available
->> 	0x0202: component data is invalid
->> 	0x0302: signature is not in PKCS#7 format
->> 	0x0402: signature-verification failed
->> 	0x0502: length of Diag508SigVerifBlock is invalid
->>
->> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-
-[...]
-
->> +
->> +static int handle_diag508_sig_verif(uint64_t addr, size_t svb_size,
->> +                                    S390IPLCertificateStore *qcs)
->> +{
->> +    int rc;
->> +    int verified;
->> +    uint32_t svb_len;
->> +    uint64_t comp_len, comp_addr;
->> +    uint64_t sig_len, sig_addr;
->> +    g_autofree uint8_t *svb_comp = NULL;
->> +    g_autofree uint8_t *svb_sig = NULL;
->> +    g_autofree Diag508SigVerifBlock *svb = NULL;
->> +
->> +    if (!qcs || !qcs->count) {
->> +        return DIAG_508_RC_NO_CERTS;
->> +    }
->> +
->> +    svb = g_new0(Diag508SigVerifBlock, 1);
->> +    cpu_physical_memory_read(addr, svb, svb_size);
->> +
->> +    svb_len = be32_to_cpu(svb->length);
->> +    if (svb_len != svb_size) {
->> +        return DIAG_508_RC_INVAL_LEN;
->> +    }
->> +
->> +    comp_len = be64_to_cpu(svb->comp_len);
->> +    comp_addr = be64_to_cpu(svb->comp_addr);
->> +    sig_len = be64_to_cpu(svb->sig_len);
->> +    sig_addr = be64_to_cpu(svb->sig_addr);
->> +
->> +    if (!comp_len || !comp_addr) {
->> +        return DIAG_508_RC_INVAL_COMP_DATA;
->> +    }
->> +
->> +    if (!sig_len || !sig_addr) {
->> +        return DIAG_508_RC_INVAL_PKCS7_SIG;
->> +    }
+On 10/10/25 17:50, Philippe Mathieu-Daudé wrote:
+> mo_endian_env() returns the target endianness from CPUArchState.
 > 
-> I think there should also be something like an upper limit for comp_len and 
-> sign_len here. Otherwise a malicious guest could force QEMU into allocating 
-> giga- or terabytes of memory here to cause out-of-memory situations in the host.
-> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Thank you for the suggestion. I agree that setting an upper limit would
-help prevent unreasonable memory requests. I think it makes sense to
-choose a reasonable value so we don't have to adjust it too often, but
-I'm not entirely sure how to determine an appropriate upper bound.
+LGTM
 
-Re: sig_len - the signature length can vary depending on the
-cryptographic algorithm, and I don't believe there's a strict limit.
-(FYI, in a somewhat similar situation, we haven't enforced a maximum
-size on certificate files when loading them into memory, since they're
-assumed to be trusted, as Daniel previously suggested -
-https://lists.gnu.org/archive/html/qemu-s390x/2025-06/msg00049.html).
+Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-If we'd like to set an upper limit for sig_len, the largest signature
-I've tested is 1165 bytes, signed with an RSA certificate using an
-8192-bit key. Would 4096 be a reasonable upper bound?
-
-Re: comp_len - the size of the guest kernel I'm currently using is
-14,184,448 (0xD87000). When I built a kernel with make allyesconfig, the
-size can reach 261,005,383 (0xF8EA047). Based on this value, would
-262,000,000 (0xF9DCD80) an appropriate upper limit?
-
->> +    svb_comp = g_malloc0(comp_len);
->> +    cpu_physical_memory_read(comp_addr, svb_comp, comp_len);
->> +
->> +    svb_sig = g_malloc0(sig_len);
->> +    cpu_physical_memory_read(sig_addr, svb_sig, sig_len);
->> +
->> +    rc = DIAG_508_RC_FAIL_VERIF;
->> +    /*
->> +     * It is uncertain which certificate contains
->> +     * the analogous key to verify the signed data
->> +     *
->> +     * Ignore errors from signature format convertion and verification,
->> +     * because currently in the certificate lookup process.
+> ---
+>   target/riscv/op_helper.c | 28 ++++++++++++++++++++--------
+>   1 file changed, 20 insertions(+), 8 deletions(-)
 > 
-> The second half of above sentence looks incomplete?
-> 
->> +     *
->> +     * Any error is treated as a verification failure,
->> +     * and the final result (verified or not) will be reported later.
->> +     */
->> +    for (int i = 0; i < qcs->count; i++) {
->> +        verified = diag_508_verify_sig(qcs->certs[i].raw,
->> +                                       qcs->certs[i].size,
->> +                                       svb_comp, comp_len,
->> +                                       svb_sig, sig_len);
->> +        if (verified == 0) {
->> +            svb->cert_store_index = i;
->> +            svb->cert_len = cpu_to_be64(qcs->certs[i].der_size);
->> +            cpu_physical_memory_write(addr, svb, be32_to_cpu(svb_size));
->> +            rc = DIAG_508_RC_OK;
->> +            break;
->> +       }
->> +    }
->> +
->> +    return rc;
->> +}
-> 
->   Thomas
-> 
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index c486f771d35..9d048089e2a 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -28,6 +28,18 @@
+>   #include "exec/tlb-flags.h"
+>   #include "trace.h"
+>   
+> +static inline MemOp mo_endian_env(CPURISCVState *env)
+> +{
+> +    /*
+> +     * A couple of bits in MSTATUS set the endianness:
+> +     *  - MSTATUS_UBE (User-mode),
+> +     *  - MSTATUS_SBE (Supervisor-mode),
+> +     *  - MSTATUS_MBE (Machine-mode)
+> +     * but we don't implement that yet.
+> +     */
+> +    return MO_TE;
+> +}
+> +
+>   /* Exceptions processing helpers */
+>   G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+>                                         RISCVException exception,
+> @@ -633,7 +645,7 @@ target_ulong helper_hyp_hlv_hu(CPURISCVState *env, target_ulong addr)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, false, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UW, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UW, mmu_idx);
+>   
+>       return cpu_ldw_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+>   }
+> @@ -642,7 +654,7 @@ target_ulong helper_hyp_hlv_wu(CPURISCVState *env, target_ulong addr)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, false, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UL, mmu_idx);
+>   
+>       return cpu_ldl_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+>   }
+> @@ -651,7 +663,7 @@ target_ulong helper_hyp_hlv_d(CPURISCVState *env, target_ulong addr)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, false, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UQ, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UQ, mmu_idx);
+>   
+>       return cpu_ldq_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+>   }
+> @@ -669,7 +681,7 @@ void helper_hyp_hsv_h(CPURISCVState *env, target_ulong addr, target_ulong val)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, false, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UW, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UW, mmu_idx);
+>   
+>       cpu_stw_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
+>   }
+> @@ -678,7 +690,7 @@ void helper_hyp_hsv_w(CPURISCVState *env, target_ulong addr, target_ulong val)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, false, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UL, mmu_idx);
+>   
+>       cpu_stl_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
+>   }
+> @@ -687,7 +699,7 @@ void helper_hyp_hsv_d(CPURISCVState *env, target_ulong addr, target_ulong val)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, false, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UQ, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UQ, mmu_idx);
+>   
+>       cpu_stq_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
+>   }
+> @@ -703,7 +715,7 @@ target_ulong helper_hyp_hlvx_hu(CPURISCVState *env, target_ulong addr)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, true, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UW, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UW, mmu_idx);
+>   
+>       return cpu_ldw_code_mmu(env, addr, oi, GETPC());
+>   }
+> @@ -712,7 +724,7 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, target_ulong addr)
+>   {
+>       uintptr_t ra = GETPC();
+>       int mmu_idx = check_access_hlsv(env, true, ra);
+> -    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL, mmu_idx);
+> +    MemOpIdx oi = make_memop_idx(mo_endian_env(env) | MO_UL, mmu_idx);
+>   
+>       return cpu_ldl_code_mmu(env, addr, oi, ra);
+>   }
 
 
