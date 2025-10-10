@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50917CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F1BCCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7EmW-0000fj-R8; Fri, 10 Oct 2025 11:11:44 -0400
+	id 1v7EmZ-0000iE-TK; Fri, 10 Oct 2025 11:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7EmI-0000a1-V3
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v7EmU-0000dP-T2
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7Elh-0004CA-Re
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:29 -0400
+ id 1v7Elj-0004C0-Kc
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:11:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760109048;
+ s=mimecast20190719; t=1760109051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vpOG7lTDLWHSKWSO4AEYXx9n/+p7b8N9rehUHPIdpTs=;
- b=Y/3YwBgwql5o60FSREk77c+T6mQe3s2WKa9BEUJbnJwV5VwVUz38Ta3MA0EyJYATnUifWs
- m+J9DIIUaZdHWWcdfOX5nLlR8wn5GLRFFmozLY1HaFzI1NOUikAeN2hX9EwvJIcPXeLl4m
- d6Npz81tOtelobtgfQk3hIVcjHf4yug=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UBV2+VUG7I4eiMBuAImYuaKckuDbq+FYw4y9UTZE5Xs=;
+ b=NPfp8pmt6oCYgaRwOK9OlYVm9O+aTqnqhQlfjY4hpQ/IsuAF7kVl7VcQT/UKiwF95NN8YS
+ wgZrkBdEcgVsvkD0Xek0Lyb/m4lP93EkVyznxZL09tjAdu4sQ81XRSBHr4GKm4AeN91Jcm
+ Rj7b5GoVo9e0+ViTV8cSbSl4FDvq1e4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375-bFJzWbDTM86pdD_3eJLcZQ-1; Fri, 10 Oct 2025 11:10:47 -0400
-X-MC-Unique: bFJzWbDTM86pdD_3eJLcZQ-1
-X-Mimecast-MFC-AGG-ID: bFJzWbDTM86pdD_3eJLcZQ_1760109046
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b4ea3f1c12eso290765966b.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:47 -0700 (PDT)
+ us-mta-264-WAvaDppNM4u1UgMQ5iwt4A-1; Fri, 10 Oct 2025 11:10:49 -0400
+X-MC-Unique: WAvaDppNM4u1UgMQ5iwt4A-1
+X-Mimecast-MFC-AGG-ID: WAvaDppNM4u1UgMQ5iwt4A_1760109049
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b3d21b18e8fso198615666b.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760109045; x=1760713845;
+ d=1e100.net; s=20230601; t=1760109048; x=1760713848;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vpOG7lTDLWHSKWSO4AEYXx9n/+p7b8N9rehUHPIdpTs=;
- b=cFXcl/Qz25hF/Vp8q3SyHU3mXIo2HRUAmuyFmD5K4BzjNqIR4q/0V2TnymAmoObdJc
- ijKZCfv7G5g0yusUS7rrp7nR1+6+bVfM+SjnFu29im/MIRg8xxJ2m1aLywWfF1EVoYw0
- Eixh+gLi5OI9wixZe9wJm4/CcsXvNtNTbTiJ03oorll+0C1v9StYH2yMN5IO4jk9gQeR
- W1f43il9+UVqhgfLY5jKUWktGxZ+aZXmHaR6uBGys6JVRj50yKcnZk+4FMfN0i8GXyuk
- OFhKN75bRZzQ7Vctber/mibIhXQfS1rhpZTVDN6a/7UppvE1f2eN5ziSSx0g+m6EfGlY
- lNVA==
-X-Gm-Message-State: AOJu0YxSyUcI2Rv9nTCK0J36y43xzXM4fQWIVTmy/BXv4kOVIwHpensd
- PvLGvzNmKatNKhEKIT00unG6bhWfZ/BumuVXECnMQ3/m1tgRdeJ08OQQSWgZxVwxS+vHdfXXjY3
- BsR3lkA9DURJzhIxkv1gt8YhVBiYjLtszbM7PDRHGFxjdPEF4AYG/LsTW+NKTzMCXCKCMqBhJBF
- 9lf2pf/x5wU5YjHgsRhMjpcdgL16rCOnWWlQasFvlx
-X-Gm-Gg: ASbGncsNoyWq+ZjNGV6WFU3pucv6WVnhnhY/Hjkm+QdfBo/ilkwg1CzymVQgT8MiiZm
- GzCCYPBD1b6XJdbwD+C4LUVtwRvLiPlDz+AhBnbRjMy3PcHemXA4BYh+0+Xmzpp3zB6cV7hBGQC
- HVj8m81TSZ3OaLEC7CQvG8EED9wFgulbB7Gcqe43O7MYgx782XRRV8H9D98BAQ/m7Gj02R27PFj
- dbXZqKaEM+ykEHKvkLw7rCypitEG6ttWmvCvnlflLE92uwJcbRAYerx8uwasSs2y8ZvUoaFsGDd
- T0FTllLSGKHZMJCtXgdKaJISsg96Mpqca/X71xUMFi4yClc8rvpQsEb8+w/UdLhP9a1kcIFgPc5
- IFRI+j7yL9wcPwaEC1Fbr/jHxQK8uI7kdE1Wqy5UxCNEG
-X-Received: by 2002:a17:907:9710:b0:b2e:34f1:9dbf with SMTP id
- a640c23a62f3a-b50aa48d314mr1255300366b.1.1760109045078; 
- Fri, 10 Oct 2025 08:10:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/QfEEMSOOvhANB/Xy1Xu0rDgd9YPCAmSSq26VUi3QhqkM5jdYj96nXAU/kTVoZdddJ0dJkw==
-X-Received: by 2002:a17:907:9710:b0:b2e:34f1:9dbf with SMTP id
- a640c23a62f3a-b50aa48d314mr1255296766b.1.1760109044642; 
- Fri, 10 Oct 2025 08:10:44 -0700 (PDT)
+ bh=UBV2+VUG7I4eiMBuAImYuaKckuDbq+FYw4y9UTZE5Xs=;
+ b=BSb5P/uV7Y0zT2S37EzqbLjg+8vmqBxR/SZJY0G1j/S6eVaE6ADkwuI+0KabhZ1YMU
+ trOxkAItHMo/bxs2u8zF0cE99a9KkKA4HFturfS1W50zCpul6RvPQlP+qF627Pp8x0GH
+ pANb331lz3/XfVYUGeOEkKowTeaRSwaVGw1bAQUesmSexN7rt7KOsvTLzm6/yo92q6uj
+ toKP+5zTI3vJhbRMqVgr1AflOO9TA+ca9CXaAcS5BKFwHHVYRc+sH14lfaVeKYaLQp7V
+ clRgIfd/Z+tUGzlv64e8qv2oPr7KnGQOx8MUJeUhayYN/d8fhXAHswNwSOkfxHLoNcuy
+ f20A==
+X-Gm-Message-State: AOJu0YyhsVQQSatFjqnoSJCyYyiIuybRtnKnLIc9wXcBzp0CD/FD76Hb
+ RpbgSquygvKB2YE/eM4iVkXladbQz4qr49LVArrZMd+F2Monhbm4GDLRSR741logLQQ6SLy4oSV
+ /qDMKKsFPJmjQRKPa4FnyxlmFo1NtaYpmzr8iVaXMhmXkF9cz5TWm8AZK0cMSck8ued6fx7Prak
+ 7Yt7Nxd7wEeknWZpA8QV6oovbKdQ5fK5PGdMp9RsDU
+X-Gm-Gg: ASbGncsVJynnzYr3qm1xHUFplj3J2n3v3YYYNan4VukDUsYiWMbJTefjWfqXX1W9x4L
+ ySBjibpn3K3q83yXkW7iU/BmmsXg6QmYDqgH41BPNeGwRgoRfDlGyQEzV01mURXi2zF6p7sDkzD
+ 7Fugpe/D4ztwgCHwzcPSl1ZeBAusGB8EYVrbr0OLfBVq3AuWG4TKJFB1/jrYEix48VngFR3AACT
+ ZfScFH63RWBoM79OrsQx8/0VgpjX2bFq7XSnwREARlNLt9cfl8uUKqf+t27RZlG5TZumKMQSIeJ
+ XBNmGumQFFWswIdAxs17hnzcKae5kGkhXxHQa4qhkr3wlNQR1dRIJuEkQlOdcTPYDXHI3BgmFAC
+ lNMP+CBssvGoKvoHsYC04Y2ZpX3nlPsJ0QX2bFkEx4u7X
+X-Received: by 2002:a17:906:c104:b0:b46:3dab:7dac with SMTP id
+ a640c23a62f3a-b50ac6d274amr1159286066b.45.1760109048153; 
+ Fri, 10 Oct 2025 08:10:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQJLLWmczUilmoE67+BLTRUznp0F4fknCSl/G2nWxPnjBPjf/d+Xi1YW8KApL96Vz/lh0K0Q==
+X-Received: by 2002:a17:906:c104:b0:b46:3dab:7dac with SMTP id
+ a640c23a62f3a-b50ac6d274amr1159283066b.45.1760109047675; 
+ Fri, 10 Oct 2025 08:10:47 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.231.162])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d5cad86csm245763566b.17.2025.10.10.08.10.43
+ a640c23a62f3a-b55d900e2bcsm249020466b.64.2025.10.10.08.10.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 08:10:44 -0700 (PDT)
+ Fri, 10 Oct 2025 08:10:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com,
 	marcandre.lureau@redhat.com,
 	qemu-rust@nongnu.org
-Subject: [PATCH 15/19] scripts/qapi: add serde attributes
-Date: Fri, 10 Oct 2025 17:10:00 +0200
-Message-ID: <20251010151006.791038-16-pbonzini@redhat.com>
+Subject: [PATCH 16/19] scripts/qapi: strip trailing whitespaces
+Date: Fri, 10 Oct 2025 17:10:01 +0200
+Message-ID: <20251010151006.791038-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010151006.791038-1-pbonzini@redhat.com>
 References: <20251010151006.791038-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -114,171 +114,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Generate serde attributes to match the serialization format to QAPI's:
-
-- for enums, map Rust enum variants to original QAPI names
-
-- for structs, rejects JSON with extra fields and omit optional fields
-  (as opposed to serializing them as null)
-
-- for union variants:
-  - use tagged union format matching QAPI's discriminator,
-  - map variant names to original QAPI names
-  - flatten union data into parent struct
-
-- for alternates, use type-based discrimination
+This help workaround a rustfmt issue.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20210907121943.3498701-16-marcandre.lureau@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/qapi/rs_types.py | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ scripts/qapi/gen.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/qapi/rs_types.py b/scripts/qapi/rs_types.py
-index 436adcf5be6..f53b419dc2f 100644
---- a/scripts/qapi/rs_types.py
-+++ b/scripts/qapi/rs_types.py
-@@ -31,6 +31,7 @@
+diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
+index 0c9b8db3b02..c9721545ea7 100644
+--- a/scripts/qapi/gen.py
++++ b/scripts/qapi/gen.py
+@@ -58,7 +58,11 @@ def add(self, text: str) -> None:
+         self._body += text
  
+     def get_content(self) -> str:
+-        return self._top() + self._preamble + self._body + self._bottom()
++        content = self._top() + self._preamble + self._body + self._bottom()
++        # delete trailing white-spaces (working around
++        # https://github.com/rust-lang/rustfmt/issues/4248)
++        content = re.sub(r'\s+$', '\n', content, 0, re.M)
++        return content
  
- objects_seen = set()
-+SERDE_SKIP_NONE = '#[serde(skip_serializing_if = "Option::is_none")]'
- 
- 
- def gen_rs_variants_to_tag(name: str,
-@@ -77,11 +78,13 @@ def gen_rs_variants(name: str,
-     ret = mcgen('''
- 
- %(cfg)s
--#[derive(Clone, Debug, PartialEq)]
-+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-+#[serde(tag = "%(tag)s")]
- pub enum %(rs_name)sVariant {
- ''',
-                 cfg=ifcond.rsgen(),
--                rs_name=rs_name(name))
-+                rs_name=rs_name(name),
-+                tag=variants.tag_member.name)
- 
-     for var in variants.variants:
-         type_name = var.type.name
-@@ -89,21 +92,25 @@ def gen_rs_variants(name: str,
-         if type_name == 'q_empty':
-             ret += mcgen('''
-     %(cfg)s
-+    #[serde(rename = "%(rename)s")]
-     %(var_name)s,
- ''',
-                          cfg=var.ifcond.rsgen(),
--                         var_name=var_name)
-+                         var_name=var_name,
-+                         rename=var.name)
-         else:
-             c_type = var.type.c_unboxed_type()
-             if c_type.endswith('_wrapper'):
-                 c_type = c_type[6:-8]  # remove q_obj*-wrapper
-             ret += mcgen('''
-     %(cfg)s
-+    #[serde(rename = "%(rename)s")]
-     %(var_name)s(%(rs_type)s),
- ''',
-                          cfg=var.ifcond.rsgen(),
-                          var_name=var_name,
--                         rs_type=rs_type(c_type, ''))
-+                         rs_type=rs_type(c_type, ''),
-+                         rename=var.name)
- 
-     ret += mcgen('''
- }
-@@ -159,9 +166,11 @@ def gen_struct_members(members: List[QAPISchemaObjectTypeMember],
-                       optional=memb.optional, box=is_recursive)
-         ret += mcgen('''
-     %(cfg)s
-+    %(serde_skip_if)s
-     pub %(rs_name)s: %(rs_type)s,
- ''',
-                      cfg=memb.ifcond.rsgen(),
-+                     serde_skip_if=SERDE_SKIP_NONE if memb.optional else '',
-                      rs_type=typ,
-                      rs_name=rs_name(to_lower_case(memb.name)))
-     return ret
-@@ -182,17 +191,23 @@ def gen_rs_object(name: str,
-     ret = ''
-     objects_seen.add(name)
- 
-+    serde_deny_unknown_fields = "#[serde(deny_unknown_fields)]"
-     if variants:
-         ret += gen_rs_variants(name, ifcond, variants)
-+        # we can't use because of the flatten unions
-+        # serde FlatMapAccess should consume the fields?
-+        serde_deny_unknown_fields = ""
- 
-     ret += mcgen('''
- 
- %(cfg)s
--#[derive(Clone, Debug, PartialEq)]
-+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-+%(serde_deny_unknown_fields)s
- pub struct %(rs_name)s {
- ''',
-                  cfg=ifcond.rsgen(),
--                 rs_name=rs_name(name))
-+                 rs_name=rs_name(name),
-+                 serde_deny_unknown_fields=serde_deny_unknown_fields)
- 
-     if base:
-         if not base.is_implicit():
-@@ -214,6 +229,7 @@ def gen_rs_object(name: str,
- 
-     if variants:
-         ret += mcgen('''
-+    #[serde(flatten)]
-     pub u: %(rs_type)sVariant,
- ''', rs_type=rs_name(name))
-     ret += mcgen('''
-@@ -232,7 +248,8 @@ def gen_rs_enum(name: str,
- 
- %(cfg)s
- #[repr(u32)]
--#[derive(Copy, Clone, Debug, PartialEq, common::TryInto)]
-+#[derive(Copy, Clone, Debug, PartialEq, Serialize, Deserialize,
-+         common::TryInto)]
- pub enum %(rs_name)s {
- ''',
-                 cfg=ifcond.rsgen(),
-@@ -241,10 +258,12 @@ def gen_rs_enum(name: str,
-     for member in enum_members:
-         ret += mcgen('''
-     %(cfg)s
-+    #[serde(rename = "%(member_name)s")]
-     %(c_enum)s,
- ''',
-                      cfg=member.ifcond.rsgen(),
--                     c_enum=rs_name(to_upper_case(member.name)))
-+                     c_enum=rs_name(to_upper_case(member.name)),
-+                     member_name=member.name)
-     # picked the first, since that's what malloc0 does
-     default = rs_name(to_upper_case(enum_members[0].name))
-     ret += mcgen('''
-@@ -275,7 +294,8 @@ def gen_rs_alternate(name: str,
- 
-     ret += mcgen('''
- %(cfg)s
--#[derive(Clone, Debug, PartialEq)]
-+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-+#[serde(untagged)]
- pub enum %(rs_name)s {
- ''',
-                  cfg=ifcond.rsgen(),
-@@ -323,6 +343,8 @@ def visit_begin(self, schema: QAPISchema) -> None:
- // that *could* be Eq too.
- #![allow(clippy::derive_partial_eq_without_eq)]
- 
-+use serde_derive::{Serialize, Deserialize};
-+
- use util::qobject::QObject;
- '''))
- 
+     def _top(self) -> str:
+         # pylint: disable=no-self-use
 -- 
 2.51.0
 
