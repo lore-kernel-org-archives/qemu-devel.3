@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C07CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34D5CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 15:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7ElQ-0008LA-9e; Fri, 10 Oct 2025 11:10:36 -0400
+	id 1v7Elm-00007e-81; Fri, 10 Oct 2025 11:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7ElK-0008IH-QF
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:10:30 -0400
+ id 1v7Eli-000054-Jl
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:10:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7El7-00042W-8s
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:10:30 -0400
+ id 1v7ElP-00047J-5L
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:10:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760109014;
+ s=mimecast20190719; t=1760109031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FCuQFa5fX4KQKF7cPe8uVRBcotSflZGTjBWBJT+Gw1A=;
- b=CUEZPO0MmUV8onUngrlXt+EVf7ZLiP1J3ZMocvG78bYdWKyZm48KVXQ5gi8hqr+k17vzo+
- Lt1zFbDtq/2x92M50oGW0GqkI1/E8uBoV36g66S5HucODENLzixJ0xd/jNfyW75/6gXajl
- oEJ3GVVkzBm2z7o2ModRzgYau/HxkRw=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pCPK7I5rXb+g55P6MWyJcXND3mxADuY6GKf7ZyxSOeg=;
+ b=KxaiTc7HdPWUe/YzO4EGeLsjuaECgx4pFzs/E6cGYvv4IO2D2hY6ppSnHGVt+FgP7J0mYs
+ 5EB48nIFbi+UCuLOJqwI4STTTVLACAVVgVcJNuE8xfCYFCD1xyOZI/pyIkRrcUNIGUjN8m
+ XiY35JEn7kIrSNvbLu2aGTmBDBRo6Fg=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-jef618aBNuSVrW4vuVYYJA-1; Fri, 10 Oct 2025 11:10:12 -0400
-X-MC-Unique: jef618aBNuSVrW4vuVYYJA-1
-X-Mimecast-MFC-AGG-ID: jef618aBNuSVrW4vuVYYJA_1760109012
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-6349af0e766so2508832a12.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:12 -0700 (PDT)
+ us-mta-612-MKMyhrP3MziRcFiZKLs8nQ-1; Fri, 10 Oct 2025 11:10:30 -0400
+X-MC-Unique: MKMyhrP3MziRcFiZKLs8nQ-1
+X-Mimecast-MFC-AGG-ID: MKMyhrP3MziRcFiZKLs8nQ_1760109029
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b2d1072a9c4so194885266b.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:10:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760109011; x=1760713811;
+ d=1e100.net; s=20230601; t=1760109028; x=1760713828;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FCuQFa5fX4KQKF7cPe8uVRBcotSflZGTjBWBJT+Gw1A=;
- b=smCFdhm38ExnLq7LCkHGy0rBjKOHdVlc+FFXx9E41I42iXMlRpg3RMdd095rVT2m9c
- aQ/sSrlgxLp0VIDQeW0zTdP3CTdHNvKGgHjXeD6RdsELmLm3C2WZcFVexoHsh2e3F7P+
- hkdkHyKqBpnzod6xj6j4BJQ/mNP4bbphtgbpYDuAN2THuMWNrHWONCckoufnUEoYvuto
- Tv/wAuMbAAF0bSZ50Oc6gngt0tH2y1WYeo2y794yfemTB8j/DD7Abhx3tTlvTarkf5qh
- H7oi7KFZhHg94EbJMu+u6C26qx8vxYKg+qVCAgI2TjbgJz3iYIPIp/1LvqY430eWYGH+
- dyhA==
-X-Gm-Message-State: AOJu0YziCjkdt2T748RlJGsiO88SITj5sZVCuteC8zZtwqRsWF9+SNut
- 5UJyNbKNBp2MnzcCJP7WJ3rP8rwT0MCavFI9GvMAE+x0i+dzVwRqeQz1WW15LUSnsk0EmqvGEGZ
- WX8Xf9hM/6tt2u8fU/PgJa7xEiaqtEKxybOXQWTXJKcjszIyq7dG9CI35lQSlthjyscS+pBuMZi
- ZNPxqKTugmtixtXKp5+8C9CgoW7rO5sEuDcpMjdZXV
-X-Gm-Gg: ASbGnctZEwT21OndyX6V65s9V16Vf2Q3lWjlJm8PgmmEMrBo2093Eomye2wIvc86eQa
- Oq8EkvFZRvv66PDLl4FhRk4o32hxE+eXTwPI3JKb22BKTX72KyH9dq4vlb+KLWuzyjiYXeZFUi1
- SwA28M2SRBScvR5g4p0wWp/qrW6248VxCbeagMz7WFqVYuSj6YB+wNd/S68bXQP1Y2JtgMi+wbO
- +D77x/cNOKneJK6CODX3pyoqy5RKR3Wwr82E+2h8LRZ7zmhG7A21LLfcDdL4yY6HmpdZUe8YuX5
- hs09lVRSS5B8iC/wuwbCtOvsWkYnoH4+d2E4Z1GyKceSjvb+jOrbBiWEj4qEq3WQCLSqRmP6Byp
- UqzKkO7uTYJvce2iAQI/eCt1PtZTvp0f5bpZs7yxxoNVj
-X-Received: by 2002:aa7:dcca:0:b0:636:240f:9ece with SMTP id
- 4fb4d7f45d1cf-639d5c75d2amr8827969a12.34.1760109010808; 
- Fri, 10 Oct 2025 08:10:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWT7mfaLiPP25ccYmgmOyWXrCLTdr+R4Lpky3/nq8T98ppQJkLXVDDiXep81ijjnycbqtbSg==
-X-Received: by 2002:aa7:dcca:0:b0:636:240f:9ece with SMTP id
- 4fb4d7f45d1cf-639d5c75d2amr8827942a12.34.1760109010199; 
- Fri, 10 Oct 2025 08:10:10 -0700 (PDT)
+ bh=pCPK7I5rXb+g55P6MWyJcXND3mxADuY6GKf7ZyxSOeg=;
+ b=LIOKJ7mn08uA3bQGPwe2QT4UlykxUitXItjuk5VqgkM8Wcd0le4WzpM7FzEdRKAm9l
+ 76b0AHCEdmE23sQZDcDFtSUimNVr2xy9zXnvIvUGtjCtghs2Cy9e2H9BNgfjyqGMCPfr
+ vWHglqgHTvUSArYgX1qxlvHmGS7bwURMTbERqNAJJ4737CXSs6fbQNGzCMsPwoKnEyVz
+ CcWe7LporNfvEAH7iTpWpSQVm5MRNVkKXMeRzWrrrtO/9R3T2aiWAQBQt3NAwTMETn2Q
+ Hrq3s10LdxiPPov0X46cHVf+VlLwcP/fKczji7pUv2b+fnz5v7aiOFmEOhPaAIooysmO
+ ia9Q==
+X-Gm-Message-State: AOJu0Yw89brrexltQmJqajSQ2RrT2y4Xa1Tih7/LGpQQ3qqR1B3N7xlv
+ 47hnWVE1vOfQdHSEsL2HJ51Ftg2y4LKs1pfVu5z4VKptcus8VfaCeJzN+EExlUsbc9ny7i0V5r4
+ Sif0aePA0cCi2DzjKnoRy5MfZ7eHfFozkBg+sIv0v79TZEPXxdkH0jqXmINUPl/IF7lq2mtLNm5
+ kIprpIwlc9nqPaXL5GngoiQsl/u6YewVek4Ra4pvJP
+X-Gm-Gg: ASbGnct4hqn44mwDL5sKLFurJTDcp3EO3OhAgiZXxhyC/lCuGP7HT1tM8sb3eKysI/w
+ 9SKAQ8ry7m9bUKv4ib5VaqR8j3ns018Litplwhq0aM4ifgjhyWoeHZ50aLm9HQTx4PjkJMtdvR0
+ w712vnq2M1CJfiATY6pLOgV1G31pfDz9ELXizuWWyurnGWoc9LLHiyAY/OXS+cDkGKIAl6thhGh
+ +vmn9Wh2IxQtN49Jz2jvf5MsrDbeX5I5ug88VLGLTfgNuE/0EltTViEfJfQFfA0v2YCX38Wl2Ym
+ Efuo9LI6mPg4mf2IssMRhvsAgQQlnlo2tWd/DT5u80ZSXsMU8SvIbW0h/NPfjbx2RittmSWhKo6
+ 5OsNfvLnkmhlafeN+LfNPHpXXzriZEykOGrHyq24D4eMe
+X-Received: by 2002:a17:907:72cf:b0:b40:b6a9:f704 with SMTP id
+ a640c23a62f3a-b50a9b61d94mr1243689366b.7.1760109028452; 
+ Fri, 10 Oct 2025 08:10:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHf+1tcAvT0bKtrZRDdvEXrXpXVQEPTz2o++Knf/KHNtenmJTOLop/xvRtQ/OliP7ciJSd0A==
+X-Received: by 2002:a17:907:72cf:b0:b40:b6a9:f704 with SMTP id
+ a640c23a62f3a-b50a9b61d94mr1243685666b.7.1760109027938; 
+ Fri, 10 Oct 2025 08:10:27 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.231.162])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63a5c32249esm2454971a12.41.2025.10.10.08.10.08
+ a640c23a62f3a-b55d8c12b62sm253141466b.48.2025.10.10.08.10.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 08:10:08 -0700 (PDT)
+ Fri, 10 Oct 2025 08:10:24 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com,
 	marcandre.lureau@redhat.com,
 	qemu-rust@nongnu.org
-Subject: [PATCH 01/19] util: add ensure macro
-Date: Fri, 10 Oct 2025 17:09:46 +0200
-Message-ID: <20251010151006.791038-2-pbonzini@redhat.com>
+Subject: [PATCH 08/19] rust/qobject: add Deserialize implementation
+Date: Fri, 10 Oct 2025 17:09:53 +0200
+Message-ID: <20251010151006.791038-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010151006.791038-1-pbonzini@redhat.com>
 References: <20251010151006.791038-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,178 +112,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The macro is similar to anyhow::ensure but uses QEMU's variation
-on anyhow::Error.  It can be used to easily check a condition
-and format an error message.
+This allows QObject to be created from any serializable format, for
+example JSON via serde_json.
 
+This is not too useful, since QObjects are produced by
+C code or by serializing structs, but it can be used for testing
+and it is part of the full implementation of a serde format.
+
+It is relatively simple and similar to the Serializer, just with
+the extra indirection of a Visitor.
+
+Co-authored-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 21 ++++++-----
- rust/hw/timer/hpet/src/fw_cfg.rs |  7 ++--
- rust/util/src/error.rs           | 65 ++++++++++++++++++++++++++++++++
- 3 files changed, 80 insertions(+), 13 deletions(-)
+ rust/util/meson.build                |   1 +
+ rust/util/src/qobject/deserialize.rs | 134 +++++++++++++++++++++++++++
+ rust/util/src/qobject/mod.rs         |   1 +
+ 3 files changed, 136 insertions(+)
+ create mode 100644 rust/util/src/qobject/deserialize.rs
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 86638c07666..4218372a2a1 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -25,7 +25,10 @@
-     bindings::{address_space_memory, address_space_stl_le, hwaddr},
-     MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder, MEMTXATTRS_UNSPECIFIED,
- };
--use util::timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND};
-+use util::{
-+    ensure,
-+    timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
-+};
- 
- use crate::fw_cfg::HPETFwConfig;
- 
-@@ -728,14 +731,14 @@ fn post_init(&self) {
-     }
- 
-     fn realize(&self) -> util::Result<()> {
--        if self.num_timers < HPET_MIN_TIMERS || self.num_timers > HPET_MAX_TIMERS {
--            Err(format!(
--                "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
--            ))?;
--        }
--        if self.int_route_cap == 0 {
--            Err("hpet.hpet-intcap property not initialized")?;
--        }
-+        ensure!(
-+            (HPET_MIN_TIMERS..=HPET_MAX_TIMERS).contains(&self.num_timers),
-+            "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
-+        );
-+        ensure!(
-+            self.int_route_cap != 0,
-+            "hpet.hpet-intcap property not initialized"
-+        );
- 
-         self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
- 
-diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
-index e569b57b93b..27b3b2495a0 100644
---- a/rust/hw/timer/hpet/src/fw_cfg.rs
-+++ b/rust/hw/timer/hpet/src/fw_cfg.rs
-@@ -5,6 +5,7 @@
- use std::ptr::addr_of_mut;
- 
- use common::Zeroable;
-+use util::{self, ensure};
- 
- /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
- /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
-@@ -36,7 +37,7 @@ unsafe impl Zeroable for HPETFwConfig {}
- };
- 
- impl HPETFwConfig {
--    pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
-+    pub(crate) fn assign_hpet_id() -> util::Result<usize> {
-         assert!(bql::is_locked());
-         // SAFETY: all accesses go through these methods, which guarantee
-         // that the accesses are protected by the BQL.
-@@ -47,9 +48,7 @@ pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
-             fw_cfg.count = 0;
-         }
- 
--        if fw_cfg.count == 8 {
--            Err("Only 8 instances of HPET are allowed")?;
--        }
-+        ensure!(fw_cfg.count != 8, "Only 8 instances of HPET are allowed");
- 
-         let id: usize = fw_cfg.count.into();
-         fw_cfg.count += 1;
-diff --git a/rust/util/src/error.rs b/rust/util/src/error.rs
-index bfa5a8685bc..20b8e7d5af5 100644
---- a/rust/util/src/error.rs
-+++ b/rust/util/src/error.rs
-@@ -86,6 +86,19 @@ fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-     }
- }
- 
-+impl From<Cow<'static, str>> for Error {
-+    #[track_caller]
-+    fn from(msg: Cow<'static, str>) -> Self {
-+        let location = panic::Location::caller();
-+        Error {
-+            msg: Some(msg),
-+            cause: None,
-+            file: location.file(),
-+            line: location.line(),
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index 39f427b3456..9f8fbd49f00 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -39,6 +39,7 @@ _util_rs = static_library(
+     {'.': _util_bindings_inc_rs,
+     'qobject': [
+       'src/qobject/mod.rs',
++      'src/qobject/deserialize.rs',
+       'src/qobject/error.rs',
+       'src/qobject/serializer.rs',
+       'src/qobject/serialize.rs',
+diff --git a/rust/util/src/qobject/deserialize.rs b/rust/util/src/qobject/deserialize.rs
+new file mode 100644
+index 00000000000..280a577b6be
+--- /dev/null
++++ b/rust/util/src/qobject/deserialize.rs
+@@ -0,0 +1,134 @@
++//! `QObject` deserialization
++//!
++//! This module implements the [`Deserialize`] trait for `QObject`,
++//! allowing it to be created from any serializable format, for
++//! example JSON.
++
++use core::fmt;
++use std::ffi::CString;
++
++use serde::de::{self, Deserialize, MapAccess, SeqAccess, Visitor};
++
++use super::{to_qobject, QObject};
++
++impl<'de> Deserialize<'de> for QObject {
++    #[inline]
++    fn deserialize<D>(deserializer: D) -> Result<QObject, D::Error>
++    where
++        D: serde::Deserializer<'de>,
++    {
++        struct ValueVisitor;
++
++        impl<'de> Visitor<'de> for ValueVisitor {
++            type Value = QObject;
++
++            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
++                formatter.write_str("any valid JSON value")
++            }
++
++            #[inline]
++            fn visit_bool<E>(self, value: bool) -> Result<QObject, E> {
++                Ok(value.into())
++            }
++
++            #[inline]
++            fn visit_i64<E>(self, value: i64) -> Result<QObject, E> {
++                Ok(value.into())
++            }
++
++            fn visit_i128<E>(self, value: i128) -> Result<QObject, E>
++            where
++                E: serde::de::Error,
++            {
++                to_qobject(value).map_err(|_| de::Error::custom("number out of range"))
++            }
++
++            #[inline]
++            fn visit_u64<E>(self, value: u64) -> Result<QObject, E> {
++                Ok(value.into())
++            }
++
++            fn visit_u128<E>(self, value: u128) -> Result<QObject, E>
++            where
++                E: serde::de::Error,
++            {
++                to_qobject(value).map_err(|_| de::Error::custom("number out of range"))
++            }
++
++            #[inline]
++            fn visit_f64<E>(self, value: f64) -> Result<QObject, E> {
++                Ok(value.into())
++            }
++
++            #[inline]
++            fn visit_str<E>(self, value: &str) -> Result<QObject, E>
++            where
++                E: serde::de::Error,
++            {
++                CString::new(value)
++                    .map_err(|_| de::Error::custom("NUL character in string"))
++                    .map(QObject::from)
++            }
++
++            #[inline]
++            fn visit_string<E>(self, value: String) -> Result<QObject, E>
++            where
++                E: serde::de::Error,
++            {
++                CString::new(value)
++                    .map_err(|_| de::Error::custom("NUL character in string"))
++                    .map(QObject::from)
++            }
++
++            #[inline]
++            fn visit_none<E>(self) -> Result<QObject, E> {
++                Ok(().into())
++            }
++
++            #[inline]
++            fn visit_some<D>(self, deserializer: D) -> Result<QObject, D::Error>
++            where
++                D: serde::Deserializer<'de>,
++            {
++                Deserialize::deserialize(deserializer)
++            }
++
++            #[inline]
++            fn visit_unit<E>(self) -> Result<QObject, E> {
++                Ok(().into())
++            }
++
++            #[inline]
++            fn visit_seq<V>(self, mut visitor: V) -> Result<QObject, V::Error>
++            where
++                V: SeqAccess<'de>,
++            {
++                // TODO: insert elements one at a time
++                let mut vec = Vec::<QObject>::new();
++
++                while let Some(elem) = visitor.next_element()? {
++                    vec.push(elem);
++                }
++                Ok(QObject::from_iter(vec))
++            }
++
++            fn visit_map<V>(self, mut visitor: V) -> Result<QObject, V::Error>
++            where
++                V: MapAccess<'de>,
++            {
++                // TODO: insert elements one at a time
++                let mut vec = Vec::<(CString, QObject)>::new();
++
++                if let Some(first_key) = visitor.next_key()? {
++                    vec.push((first_key, visitor.next_value()?));
++                    while let Some((key, value)) = visitor.next_entry()? {
++                        vec.push((key, value));
++                    }
++                }
++                Ok(QObject::from_iter(vec))
++            }
 +        }
++
++        deserializer.deserialize_any(ValueVisitor)
 +    }
 +}
-+
- impl From<String> for Error {
-     #[track_caller]
-     fn from(msg: String) -> Self {
-@@ -126,6 +139,17 @@ fn from(error: anyhow::Error) -> Self {
- }
+diff --git a/rust/util/src/qobject/mod.rs b/rust/util/src/qobject/mod.rs
+index f8bd195ca2b..80c496b8a63 100644
+--- a/rust/util/src/qobject/mod.rs
++++ b/rust/util/src/qobject/mod.rs
+@@ -6,6 +6,7 @@
  
- impl Error {
-+    #[track_caller]
-+    #[doc(hidden)]
-+    pub fn format(args: fmt::Arguments) -> Self {
-+        if let Some(msg) = args.as_str() {
-+            Self::from(msg)
-+        } else {
-+            let msg = std::fmt::format(args);
-+            Self::from(msg)
-+        }
-+    }
-+
-     /// Create a new error, prepending `msg` to the
-     /// description of `cause`
-     #[track_caller]
-@@ -311,6 +335,47 @@ unsafe fn cloned_from_foreign(c_error: *const bindings::Error) -> Self {
-     }
- }
+ #![deny(clippy::unwrap_used)]
  
-+/// Ensure that a condition is true, returning an error if it is false.
-+///
-+/// This macro is similar to [`anyhow::ensure`] but returns a QEMU [`Result`].
-+/// If the condition evaluates to `false`, the macro returns early with an error
-+/// constructed from the provided message.
-+///
-+/// # Examples
-+///
-+/// ```
-+/// # use util::{ensure, Result};
-+/// # fn check_positive(x: i32) -> Result<()> {
-+/// ensure!(x > 0, "value must be positive");
-+/// #   Ok(())
-+/// # }
-+/// ```
-+///
-+/// ```
-+/// # use util::{ensure, Result};
-+/// # const MIN: i32 = 123;
-+/// # const MAX: i32 = 456;
-+/// # fn check_range(x: i32) -> Result<()> {
-+/// ensure!(x >= MIN && x <= MAX, "{} not between {} and {}", x, MIN, MAX);
-+/// #   Ok(())
-+/// # }
-+/// ```
-+#[macro_export]
-+macro_rules! ensure {
-+    ($cond:expr, $fmt:literal, $($arg:tt)*) => {
-+        if !$cond {
-+            let e = $crate::Error::format(format_args!($fmt, $($arg)*));
-+            return $crate::Result::Err(e);
-+        }
-+    };
-+    ($cond:expr, $err:expr $(,)?) => {
-+        if !$cond {
-+            let s = ::std::borrow::Cow::<'static, str>::from($err);
-+            return $crate::Result::Err(s.into());
-+        }
-+    };
-+}
-+
- #[cfg(test)]
- mod tests {
-     use std::ffi::CStr;
++mod deserialize;
+ mod error;
+ mod serialize;
+ mod serializer;
 -- 
 2.51.0
 
