@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9BBCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498F0CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7AWE-00034P-Q5; Fri, 10 Oct 2025 06:38:38 -0400
+	id 1v7AVW-0002r9-5S; Fri, 10 Oct 2025 06:37:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AWC-000338-ET; Fri, 10 Oct 2025 06:38:36 -0400
+ id 1v7AVT-0002pO-6Y; Fri, 10 Oct 2025 06:37:51 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AWA-0006y6-8m; Fri, 10 Oct 2025 06:38:36 -0400
+ id 1v7AVL-0006sK-Hb; Fri, 10 Oct 2025 06:37:49 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSW065199
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSV065199
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 10 Oct 2025 19:36:43 +0900 (JST)
+ Fri, 10 Oct 2025 19:36:42 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=TnkAVUPt94jHFzYRxW+Zo8oRA9b9oUhjR9/nHExe2Gw=; 
+DKIM-Signature: a=rsa-sha256; bh=xlkYCVwFFZ/2dAGn2F5xgdv9x2YW7OHAuAIdxTeP5nU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1760092603; v=1;
- b=Lx4QzSwztOcf8zrb/k40elzNphGoWfSnETvddRZFJlHulieoabAgu5DCeISdCAOi
- bV5s3/n64xRw2SD/OluCANJxuGPCF4YQ4BSzl9Pat99gZvjLeLJmpONVylx8u49H
- +/BXI4b5rMFyr2Eo5YztMR3XsB/KtP/kK2dqFcISwMuJ2d8I9M7jGo5sLwIDCSS/
- 5uOojjv67ebsiZfLmBto9qkDtqgJjy63eMAQtAckqrPr1x4Dl1jmkIbH9dmx3ggu
- EFUoXlfVkNujueXVuwl/QPEFtqztssl+GfYSa8KCn4+xgqGuEaYvAs+cVRpcR9v9
- kw83lVwT9sm5DTdPB2HqaA==
+ b=H9o0ZBSCvwn1CZQdduTR+OR0C7lel7gaPpON7N4t+WoyYSEQvYc2fkMXc9/Wqp/f
+ 0kT8Ni6uiElbBNvd5VWNjDwBkcyIlGhjD0VKxUUApLlxmXiF6Jl5Y16F3VVNHFi6
+ ezQWt227nQaNUvePhpTYpplQywNq8JH2+Rp3YDnVNAfKboD0t9G7L0K3XtNoZriM
+ YV0dFhVCkSYvLbE224N5ayiWLAr1rNAYtEQKO2TzvMEG+XipmLLxf36//UlYW+C9
+ CzJjS+ReGvEfKItzBJRraJIytXL/ilFeMlRmzcmvNuGjgO0+IXqV+3oOngMkyNkk
+ VeZuJBiiFfwod9xsWvsr5A==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 10 Oct 2025 19:35:32 +0900
-Subject: [PATCH v2 04/12] secondary-vga: Do not delete the subregions
+Date: Fri, 10 Oct 2025 19:35:31 +0900
+Subject: [PATCH v2 03/12] hw/char/serial-pci-multi: Do not delete the subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251010-subregion-v2-4-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20251010-subregion-v2-3-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 References: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,28 +107,21 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/display/vga-pci.c | 8 --------
- 1 file changed, 8 deletions(-)
+ hw/char/serial-pci-multi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
-index b81f7fd2d0fd..90b4545d3821 100644
---- a/hw/display/vga-pci.c
-+++ b/hw/display/vga-pci.c
-@@ -307,14 +307,6 @@ static void pci_secondary_vga_exit(PCIDevice *dev)
-     VGACommonState *s = &d->vga;
- 
-     graphic_console_close(s->con);
--    memory_region_del_subregion(&d->mmio, &d->mrs[0]);
--    memory_region_del_subregion(&d->mmio, &d->mrs[1]);
--    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
--        memory_region_del_subregion(&d->mmio, &d->mrs[2]);
--    }
--    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_EDID)) {
--        memory_region_del_subregion(&d->mmio, &d->mrs[3]);
--    }
+diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+index 34f30fb70b80..986c14e6c71c 100644
+--- a/hw/char/serial-pci-multi.c
++++ b/hw/char/serial-pci-multi.c
+@@ -57,7 +57,6 @@ static void multi_serial_pci_exit(PCIDevice *dev)
+     for (i = 0; i < pci->ports; i++) {
+         s = pci->state + i;
+         qdev_unrealize(DEVICE(s));
+-        memory_region_del_subregion(&pci->iobar, &s->io);
+         g_free(pci->name[i]);
+     }
  }
- 
- static void pci_secondary_vga_init(Object *obj)
 
 -- 
 2.51.0
