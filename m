@@ -4,64 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB98CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74CF0CCD187
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v78OL-0002Aa-Kr; Fri, 10 Oct 2025 04:22:21 -0400
+	id 1v78OI-00029K-0C; Fri, 10 Oct 2025 04:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78OI-00029N-DJ
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:22:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78OF-00028E-2N
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:22:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78O6-00010a-OB
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:22:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78O6-000182-UX
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:22:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760084519;
+ s=mimecast20190719; t=1760084524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Fasr0vDcyU3Al2j8YMauSw32DE0/KtFTqpUjIgb7dME=;
- b=ef8f7SafXfgKzSD0BwSGlbQHDRA6Xs9CQSlQgiodjMQaEgfvy9obFjh0qyJKJD2OFG032S
- 3/PU6bJCuiD6j8sdLfmjEh9IRHHRZozKIxvuiTRg3YpbrURSFGnjsmOmUuIOxKwtcOwqAU
- RCPCA6xEb+bpziznHZTnaymz8RNFYvA=
+ bh=2ifzQRiT3Skm5xCdzRm4x7W/pYp3IEbzx1NvAaNKLhE=;
+ b=M3/uk7bnRHp5m3V5kLxeAB6vTDNa9TBcWHPy3nkuTMC2NSLvnYaYg+qt3prepSTnhTCw7/
+ 1o0udJMMO82pHTMt7w2RaRkIIsZ4YI4m+sv3ynrwQdXRdS5zbE7LuEx/HwpjNqW56iBxUm
+ UtcVJQrVn5ugEKqAZXdbquhvKJAj0KM=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-MtToXS--P_izpP5cVn9joQ-1; Fri,
- 10 Oct 2025 04:21:54 -0400
-X-MC-Unique: MtToXS--P_izpP5cVn9joQ-1
-X-Mimecast-MFC-AGG-ID: MtToXS--P_izpP5cVn9joQ_1760084513
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-522-XgTDX_7SNoKWLHOQpX4-LA-1; Fri,
+ 10 Oct 2025 04:22:02 -0400
+X-MC-Unique: XgTDX_7SNoKWLHOQpX4-LA-1
+X-Mimecast-MFC-AGG-ID: XgTDX_7SNoKWLHOQpX4-LA_1760084521
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 299E8180057E; Fri, 10 Oct 2025 08:21:53 +0000 (UTC)
+ id 92ECD1800451; Fri, 10 Oct 2025 08:22:01 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.98])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9F8C11800446; Fri, 10 Oct 2025 08:21:50 +0000 (UTC)
+ id 204211800452; Fri, 10 Oct 2025 08:21:59 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Jaehoon Kim <jhkim@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PULL 2/9] s390x/pci: fix interrupt blocking by returning only the
- device's summary bit
-Date: Fri, 10 Oct 2025 10:21:37 +0200
-Message-ID: <20251010082145.576222-3-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 6/9] target/s390x: Reduce s390_store_adtl_status() scope
+Date: Fri, 10 Oct 2025 10:21:41 +0200
+Message-ID: <20251010082145.576222-7-thuth@redhat.com>
 In-Reply-To: <20251010082145.576222-1-thuth@redhat.com>
 References: <20251010082145.576222-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -86,86 +83,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jaehoon Kim <jhkim@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Previously, set_ind_atomic() returned the entire byte containing
-multiple summary bits. This meant that if any other summary bit in the
-byte was set, interrupt injection could be incorrectly blocked, even
-when the current device's summary bit was not set. As a result, the
-guest could remain blocked after I/O completion during FIO tests.
+s390_store_adtl_status() is only called within sigp.c,
+move it and the SigpAdtlSaveArea structure definition
+there where it belongs, with other SIGP handling code.
 
-This patch replaces set_ind_atomic() with set_ind_bit_atomic(), which
-returns true if the bit was set by this function, and false if it was
-already set or mapping failed. Interrupts are now blocked only when
-the device's own summary bit was not previously set, avoiding
-unintended blocking when multiple PCI summary bits exist within the
-same byte.
-
-Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Message-ID: <20251001154004.71917-1-jhkim@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251002091132.65703-8-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/s390-pci-bus.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ target/s390x/s390x-internal.h |  1 -
+ target/s390x/helper.c         | 40 -----------------------------------
+ target/s390x/sigp.c           | 40 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 41 deletions(-)
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index f87d2748b63..e8e41c8a9a1 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -652,7 +652,16 @@ static const PCIIOMMUOps s390_iommu_ops = {
-     .get_address_space = s390_pci_dma_iommu,
- };
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index 1fb752aa1d6..a49dca94a75 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -325,7 +325,6 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ hwaddr s390_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+ #define S390_STORE_STATUS_DEF_ADDR offsetof(LowCore, floating_pt_save_area)
+ int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch);
+-int s390_store_adtl_status(S390CPU *cpu, hwaddr addr, hwaddr len);
+ LowCore *cpu_map_lowcore(CPUS390XState *env);
+ void cpu_unmap_lowcore(CPUS390XState *env, LowCore *lowcore);
+ #endif /* CONFIG_USER_ONLY */
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index b01b7d9bbbf..84321e1d68e 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -248,43 +248,3 @@ int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch)
  
--static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
-+/**
-+ * set_ind_bit_atomic - Atomically set a bit in an indicator
-+ *
-+ * @ind_loc:   Address of the indicator
-+ * @to_be_set: Bit to set
-+ *
-+ * Returns true if the bit was set by this function, false if it was
-+ * already set or mapping failed.
-+ */
-+static bool set_ind_bit_atomic(uint64_t ind_loc, uint8_t to_be_set)
+     return 0;
+ }
+-
+-typedef struct SigpAdtlSaveArea {
+-    uint64_t    vregs[32][2];                     /* 0x0000 */
+-    uint8_t     pad_0x0200[0x0400 - 0x0200];      /* 0x0200 */
+-    uint64_t    gscb[4];                          /* 0x0400 */
+-    uint8_t     pad_0x0420[0x1000 - 0x0420];      /* 0x0420 */
+-} SigpAdtlSaveArea;
+-QEMU_BUILD_BUG_ON(sizeof(SigpAdtlSaveArea) != 4096);
+-
+-#define ADTL_GS_MIN_SIZE 2048 /* minimal size of adtl save area for GS */
+-int s390_store_adtl_status(S390CPU *cpu, hwaddr addr, hwaddr len)
+-{
+-    SigpAdtlSaveArea *sa;
+-    hwaddr save = len;
+-    int i;
+-
+-    sa = cpu_physical_memory_map(addr, &save, true);
+-    if (!sa) {
+-        return -EFAULT;
+-    }
+-    if (save != len) {
+-        cpu_physical_memory_unmap(sa, len, 1, 0);
+-        return -EFAULT;
+-    }
+-
+-    if (s390_has_feat(S390_FEAT_VECTOR)) {
+-        for (i = 0; i < 32; i++) {
+-            sa->vregs[i][0] = cpu_to_be64(cpu->env.vregs[i][0]);
+-            sa->vregs[i][1] = cpu_to_be64(cpu->env.vregs[i][1]);
+-        }
+-    }
+-    if (s390_has_feat(S390_FEAT_GUARDED_STORAGE) && len >= ADTL_GS_MIN_SIZE) {
+-        for (i = 0; i < 4; i++) {
+-            sa->gscb[i] = cpu_to_be64(cpu->env.gscb[i]);
+-        }
+-    }
+-
+-    cpu_physical_memory_unmap(sa, len, 1, len);
+-    return 0;
+-}
+diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
+index 5e95c4978f9..1464be76983 100644
+--- a/target/s390x/sigp.c
++++ b/target/s390x/sigp.c
+@@ -172,6 +172,46 @@ static void sigp_store_status_at_address(CPUState *cs, run_on_cpu_data arg)
+     si->cc = SIGP_CC_ORDER_CODE_ACCEPTED;
+ }
+ 
++typedef struct SigpAdtlSaveArea {
++    uint64_t    vregs[32][2];                     /* 0x0000 */
++    uint8_t     pad_0x0200[0x0400 - 0x0200];      /* 0x0200 */
++    uint64_t    gscb[4];                          /* 0x0400 */
++    uint8_t     pad_0x0420[0x1000 - 0x0420];      /* 0x0420 */
++} SigpAdtlSaveArea;
++QEMU_BUILD_BUG_ON(sizeof(SigpAdtlSaveArea) != 4096);
++
++#define ADTL_GS_MIN_SIZE 2048 /* minimal size of adtl save area for GS */
++static int s390_store_adtl_status(S390CPU *cpu, hwaddr addr, hwaddr len)
++{
++    SigpAdtlSaveArea *sa;
++    hwaddr save = len;
++    int i;
++
++    sa = cpu_physical_memory_map(addr, &save, true);
++    if (!sa) {
++        return -EFAULT;
++    }
++    if (save != len) {
++        cpu_physical_memory_unmap(sa, len, 1, 0);
++        return -EFAULT;
++    }
++
++    if (s390_has_feat(S390_FEAT_VECTOR)) {
++        for (i = 0; i < 32; i++) {
++            sa->vregs[i][0] = cpu_to_be64(cpu->env.vregs[i][0]);
++            sa->vregs[i][1] = cpu_to_be64(cpu->env.vregs[i][1]);
++        }
++    }
++    if (s390_has_feat(S390_FEAT_GUARDED_STORAGE) && len >= ADTL_GS_MIN_SIZE) {
++        for (i = 0; i < 4; i++) {
++            sa->gscb[i] = cpu_to_be64(cpu->env.gscb[i]);
++        }
++    }
++
++    cpu_physical_memory_unmap(sa, len, 1, len);
++    return 0;
++}
++
+ #define ADTL_SAVE_LC_MASK  0xfUL
+ static void sigp_store_adtl_status(CPUState *cs, run_on_cpu_data arg)
  {
-     uint8_t expected, actual;
-     hwaddr len = 1;
-@@ -662,7 +671,7 @@ static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
-     ind_addr = cpu_physical_memory_map(ind_loc, &len, true);
-     if (!ind_addr) {
-         s390_pci_generate_error_event(ERR_EVENT_AIRERR, 0, 0, 0, 0);
--        return -1;
-+        return false;
-     }
-     actual = *ind_addr;
-     do {
-@@ -671,7 +680,7 @@ static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
-     } while (actual != expected);
-     cpu_physical_memory_unmap((void *)ind_addr, len, 1, len);
- 
--    return actual;
-+    return (actual & to_be_set) ? false : true;
- }
- 
- static void s390_msi_ctrl_write(void *opaque, hwaddr addr, uint64_t data,
-@@ -693,10 +702,10 @@ static void s390_msi_ctrl_write(void *opaque, hwaddr addr, uint64_t data,
-     ind_bit = pbdev->routes.adapter.ind_offset;
-     sum_bit = pbdev->routes.adapter.summary_offset;
- 
--    set_ind_atomic(pbdev->routes.adapter.ind_addr + (ind_bit + vec) / 8,
-+    set_ind_bit_atomic(pbdev->routes.adapter.ind_addr + (ind_bit + vec) / 8,
-                    0x80 >> ((ind_bit + vec) % 8));
--    if (!set_ind_atomic(pbdev->routes.adapter.summary_addr + sum_bit / 8,
--                                       0x80 >> (sum_bit % 8))) {
-+    if (set_ind_bit_atomic(pbdev->routes.adapter.summary_addr + sum_bit / 8,
-+                   0x80 >> (sum_bit % 8))) {
-         css_adapter_interrupt(CSS_IO_ADAPTER_PCI, pbdev->isc);
-     }
- }
 -- 
 2.51.0
 
