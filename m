@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49828CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8B4CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 12:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CBz-00030c-WF; Fri, 10 Oct 2025 08:25:52 -0400
+	id 1v7COi-0007Ib-1x; Fri, 10 Oct 2025 08:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v7CBv-00030J-NO
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:25:47 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7COg-0007He-8I
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:38:58 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1v7CBh-0000Bb-2S
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:25:47 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b3e234fcd4bso346133566b.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 05:25:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v7COV-0003Lp-ES
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 08:38:55 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3ecde0be34eso1620294f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 05:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760099117; x=1760703917; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iJef+65pVyTbDY80dc3E9C47XCo6DR8VHYIZD9Yp23I=;
- b=oCPqzJadY7luhZ0xnucCQB9HL5PU63iipdykF6DmfVhxZvx0dfUyJkvLOXVx+NcR4b
- 6M9HDMm5/yu7RnYbCX5sKkasyhzyQNOspYAjcvqxKEDROG0m3/JGVB4qeLDw2VOsj90k
- Ap/ZSem8uPmfhcYlowiqH+1khgvXQA2+3o8AgyFFgffinKObfaHKue0h8ZqYxnYaQltM
- jEw7TmJgrpopdEO0jA7ILxT4uq5itbpIa5w6FjvCY3aqH4C7kiC0d/3gtpTJIxrj/lwp
- XHLZ4ILLMmxpq3OzE6wihm4mQET531tFSBdZYIuej6ua6XNEHvAq09BB8ML2uf+AnFeW
- xtEg==
+ d=linaro.org; s=google; t=1760099923; x=1760704723; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uuzFyIoAwO7W+bzGbBnrj2kx33yzwhJ3BfNWgxiSw9w=;
+ b=tTUjKlXq8jvSL3MV1jnvhMtTafcB2tp8cMr4q2nsl0xsxQqME5FCDn4XU/N74EyIjY
+ dqULXZSWs8DajrVigWeXiXpE4LgDQjwzJMqhnsw/gbcnmvUg9tEbBQH234dYnp1OeiCw
+ NJMHJejgmMvLQejwVqMnXVYT7jxOpqKllKy6NG98HxQXmVtMJEXxB2pz4EFWzLmg/Qm7
+ rmMRzOJoJJchfV4ZI1dkLcx8bmLJL3qr8S5Fxtj0wpzVbuuxAIwrvJNwSJlrj007t2A0
+ bdFvR8guCxoBcDjZi7mK+TGKnhAy7WDOipUrSlVRPENTAAmvCyxx7U0vP91v4sk5Ozjh
+ Tncg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760099117; x=1760703917;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iJef+65pVyTbDY80dc3E9C47XCo6DR8VHYIZD9Yp23I=;
- b=kstx78BuMgyX0pgVb1GltTxSRC8ieD43Ya39DnOeXBBqrr71rtJoxUBk0o9M8ltSNJ
- 5pvvrtVogBmeG7z1JxJByfcFCEVWrtRKCq3U3loOh3h7MKBN1Z/LTVBJ8XacrTBcQfu3
- 8utCZIi8W9Arn8kW7QWy8aabcqKWopoKIdRV9n0ciPbGuBcwM8vn4z1SDuTdnzjbGEYG
- u7MRlqiweGsi7NACzNPDn7cgbEp+GD/sLietBkB9yOTUkWxbqmcZ25Yp5LqRyrOmrkTM
- 89vyUbJbNxzkXgbmsG6DMy/SozwX6zFYogTKgHqCMKfbUBs8aPPiVUTiBF9I7vlBHxeU
- BhUA==
-X-Gm-Message-State: AOJu0YwXt3glur9Mb3g4hQDgS2Uc4AUcOkyphW5eZ+Ugmhsg1vsobozQ
- MSayUNekd+rGhIxSF0W2CgDcd7yCOJXtU10EfwxVjDQ5AGlBomkM3brtxY3HF3M9rzpAZmywY8Q
- eAPBbO1/PGljAzsdYidVGKK4ICvVX6DPgvVZccDjzfA==
-X-Gm-Gg: ASbGnctQbze3kgyRBV1e1zzZVmNNMdLOaLEFeewXSeL6D3FyADg2188C+C0QRQttVXT
- 6MCoQKPMOaioyPfBNkj8Ng92mgCptDfz3srcSct0jqJAJ9WdO9HJr7Lt4ucz64a+L66XVmS8Xqy
- dM0f4bgBI1K7JxQOuxYOrtpB6RBBXkKkUA27MYMKSZe/+6ZbovEz80x0sFTN1gLZrb+Q27HdnDg
- KVsgWCkdqoRzrePru9yi8jY7e2VdAUClszpew==
-X-Google-Smtp-Source: AGHT+IF656kEBXTzZ8byg7Devab5wI1Hv+Xa7n1VCnzFCHVk9ljSd3UVs7N8bOMVGxwtGbYcqq2wqERBNtdCvFNjJQU=
-X-Received: by 2002:a17:907:1c91:b0:b3b:5fe6:577a with SMTP id
- a640c23a62f3a-b50aa79279fmr1224710566b.8.1760099116632; Fri, 10 Oct 2025
- 05:25:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760099923; x=1760704723;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uuzFyIoAwO7W+bzGbBnrj2kx33yzwhJ3BfNWgxiSw9w=;
+ b=su5WMtD74W6nc3H+vY1Togu0KHAwKCrgd74ZxPvVzH5KUOnEnKRtbXXdjQ4mBt53+s
+ /cap1zLlkqje4nD5v8PsO6eigWb8wF2ZSnOF8svhw4S/Bnq8FtlhmnGhGQfWfG3YlERg
+ sU5nFM0FVnYYatCg+bjpYeN0r6p0UFAXoZwXc8Crm5EBSSS1YiLHveBuwOX0AtAinsXh
+ P0sTNQzGlcFWLBkWINwrr+E2WcqE87CZPaWxDq9XxmJMqq5475TWOhAotX/8w+a8kTZS
+ SkHuxYw0fo9S0DKJne0WXOm2L8VWzAL1yj9T8Jw2QQ75uNcTphDHYv49jXVE3tSGVC3e
+ fl0Q==
+X-Gm-Message-State: AOJu0YyLianxcjfcmlumy+mQqUZIWFewJEQeGfw1qDNcQEkqJmNsTBUE
+ Tevx3c+RY/QLGgKzv3Y0+ggLIURymzATehh667EgSh1iD9WoK5A0PZu7QqA8WCstW8RdqDTQck2
+ LbPEkJiW+RA==
+X-Gm-Gg: ASbGncsy+byPtZYdaFgER5UgWeUhGdFnUJ4IfrNKKhrHYs0HhrNyODERZLhSLsCLEYO
+ cFf0ROU1OxVy9WwnKj3WOGM5944qDQEim1FIqyXpkxImMcKYY6y+WJLIKj69Mq94cbQuIG6Vf8Q
+ VxT9ROhuulyX3LZs4aFiGDHilFeU+JBM7STsuRVpNyvfijUYSN7kKnczgba11yAscRp2dLxJpr+
+ Mif60XRJArA3iFjDnIoqAJHvGGQtlenDZCnxwugCHUkXXhqLBtP9r+qoG7yPQHvqsBokaQ5MPdN
+ 2E23TVrIKTmQkAUWL1xnLcgTeK7u5SAfo1gNDicV/Qfbdp+MCBOpN+9aVoEFoveU9ZkSeVUtofz
+ G8fA8GXyEoTNt6Moc6IgZVfLgKSMg3X0SoChfOvJWMohZCP9vtT8vYwZHIbEextbDFgVmev3rEy
+ KzH05glZVdYTRO
+X-Google-Smtp-Source: AGHT+IH+ZTJD8/+ExpN4VX1UsQkJgg0tMzAd8/lDYzArbnGHNWHIHmo4bbNVEc/K3BT7er3Yi3J5Og==
+X-Received: by 2002:a05:6000:288f:b0:425:58d0:483a with SMTP id
+ ffacd0b85a97d-425829a5a12mr11307339f8f.3.1760099923460; 
+ Fri, 10 Oct 2025 05:38:43 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb4891958sm48252315e9.11.2025.10.10.05.38.42
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 05:38:42 -0700 (PDT)
+Message-ID: <ca449bf5-a1e4-44d2-9181-128fa56432f1@linaro.org>
+Date: Fri, 10 Oct 2025 14:38:42 +0200
 MIME-Version: 1.0
-References: <20251009211148.642966-1-pbonzini@redhat.com>
-In-Reply-To: <20251009211148.642966-1-pbonzini@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 10 Oct 2025 15:24:50 +0300
-X-Gm-Features: AS18NWA7cAXZZ0OXHK_huRz8qy5i8lVmyvq7ApWiiE9yVX2dj303xnWJo8-4KAE
-Message-ID: <CAAjaMXYocRnv-TFFw8nBSsLDihooVNoM_VGrFNeeq5-9YVNdSw@mail.gmail.com>
-Subject: Re: [PATCH] rust: pl011: fix warning with new clippy
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: update cpr reviewers
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+References: <1760098600-399192-1-git-send-email-steven.sistare@oracle.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1760098600-399192-1-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,39 +101,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 10, 2025 at 12:12=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->
-> Newer versions of clippy are able to see that all the variants in
-> the PL011 word length enum end with "Bits", and complain about it.
-> Allow it.
->
-> Reported-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On 10/10/25 14:16, Steve Sistare wrote:
+> Update cpr reviewers.  Some of these files overlap with migration
+> files, but some do not.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
+>   MAINTAINERS | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
->  rust/hw/char/pl011/src/registers.rs | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src=
-/registers.rs
-> index 0c3a4d7d214..fa572811b29 100644
-> --- a/rust/hw/char/pl011/src/registers.rs
-> +++ b/rust/hw/char/pl011/src/registers.rs
-> @@ -255,6 +255,7 @@ pub enum Mode {
->
->  #[bitsize(2)]
->  #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-> +#[allow(clippy::enum_variant_names)]
->  /// `WLEN` Word length, field of [Line Control register](LineControl).
->  ///
->  /// These bits indicate the number of data bits transmitted or received =
-in a
-> --
-> 2.51.0
->
->
 
