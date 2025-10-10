@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26499CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC16CCD18A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CpS-0006Nl-BE; Fri, 10 Oct 2025 09:06:38 -0400
+	id 1v7Cpq-0006YL-Al; Fri, 10 Oct 2025 09:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CpN-0006MM-5R
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:34 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1v7Cpo-0006UR-Fo
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:00 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cos-0003sr-M4
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:32 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-4257aafab98so1792587f8f.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:05:59 -0700 (PDT)
+ id 1v7Cp9-0003vu-Q1
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:00 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3ed20bdfdffso1890208f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101556; x=1760706356; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101570; x=1760706370; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5ea7zwkpxAfZI0yrGmiDGMtnDe3MhZXY+7jpLKebbvc=;
- b=RNXVsV+qiq4ziyWiOA0KpZA8ZN69j33WMH+J4RAVA7FDj5kf7yPFAMEUI0vhovpP34
- vGiLADbV6HifgBgucz32Lu+IyZii96DF8d7LKXrGuopttCYxsr+qVGkuAmsYphgf1vQ5
- kBAUS2gRLii2L4902UIGa04UR8ButlLXssQYXAzm11Ur8GStIt0IWx5u5WOheo2tHWPK
- D5kS72QTB5UjXf9Dre/RQE6nzEELDj8ORMvNxKY4aNepbgMnTGicyrjtkFhypHOo7vd4
- oEIIC7VUVzghNg5B/kMN/a+qLieaMrBGv/VmOkCjlwFVxrPGfT3e2Km/6Mi6cyG9cy8w
- IGTA==
+ :reply-to; bh=MSvmoSrAJV0PHNDRdiCeXCMzEorMA5U6KlLoiYYoLb8=;
+ b=Jp0AYb9b9tX+BD9wDlnsFRl7y6do17NAB1bBm39nvLl9+ZsDgPNDjEVby50fxu76dU
+ gY6DSsGHpOJNBc/pfDuHqap0z7SlsJ3RqO6k9TTMh7IS9DVxNEf+vFbgc85i+gFp2I1l
+ 9I8PUUVqn6yzN2Za33LRJmAcUIxUGweENMrRp9NN9qKXordzsw209ELgtC3pE2d8fRR1
+ lRH98pD0ILO1ToeDa4LVrmsE5QPICZ5VrX8bpOqyBCTDmj2BRRU/wSb8wo98OoqcyLD3
+ U4QjcinAy1z7vbaGmajRnVlHVZ7qR4UPKE3lYg8MrKpyVPwg4l/alkm5H7MCGHomSHKP
+ n1mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101556; x=1760706356;
+ d=1e100.net; s=20230601; t=1760101570; x=1760706370;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5ea7zwkpxAfZI0yrGmiDGMtnDe3MhZXY+7jpLKebbvc=;
- b=drmH7gMj+j7ZkeqV1oh8Zd7n1fKwOb417sHgZo39gpw7OeORjOtlPR3uSS6Uhe21Tv
- RTOnzeXow6nEDCcrzptNIqELFyC/J00FqsBK6k2UndRreaAwpadcZGcLe3tb9XnYTZFT
- qNdotQwpyGx82/z97PMjc+ktXe/wXi67aXFsTQTVbiOMBZAzVSxLji/2VrJhapNWIjQR
- 47/RU2Fk13xt3/1ByjchaNbrmNdZdnW/CWiY9X6O5A0hFg1REJqJ3H9B95b3eX+XVaua
- NIQy4upbYS3p2wZfc4HYHf3TWCrfkFc19+8fqGJvpyuRjyCrgL491az7BLSzR3th2lyR
- crBQ==
-X-Gm-Message-State: AOJu0YyZNx2oGiDep2vhUZhFwwxO9HiZCR6U92mDBekb0Fpy4CYnq2Al
- ftw+6lzLWo6crd8PH4Ew0YdU8/rqF5kYd8H3qr0Dcorm8D8CIzOhGAYNxGclAHwB/NI/ZEUOSvS
- 9boNE
-X-Gm-Gg: ASbGncvbhSV9ZYSVEocD8K0fJQTQ7TAtqHDEshr2EwFD9eDEvw0n2qYRC7fIr0lgRLI
- sNnNk4PteLipwajpkmJWVpWCvRM/8PqXxe41nhibrY/fSdjB5FCVLxdA25LLhTTK1231be0ilpA
- ty3hwKSocNrO0PSywPbCerIZQY3Lp0mqs6bCSYcm7/MbYGeW2EJ67/W+U/JKhHyh3Ns9cAZEgkG
- g+Ubxb2u1LAwK9s/A+EpXMrj24Sq3jem5uW6CNuKSPih+QbbQLEdnILlyaaK/YCPl9NiwLvqNJy
- auSM+IC8bnvlit8bx36BHe1rLmr/stX84RzGEwcjQcHnMHT9UcMZ4eE5Bm7JWvgau1W2YTMkloG
- DLEvQNLN6fepsnCcKOA5vcY68izyJfUpoSfQitTVqVaOjHYHg+8s=
-X-Google-Smtp-Source: AGHT+IGaODIBS5qMHW3YkL1JLnbf13eX0YHX1FYwYBywZF0XZOSsQ7SeVheiU9Yis5HNjbaMwqXD2w==
-X-Received: by 2002:a5d:64c5:0:b0:3d2:9cbf:5b73 with SMTP id
- ffacd0b85a97d-42666ab9929mr5781240f8f.6.1760101556371; 
- Fri, 10 Oct 2025 06:05:56 -0700 (PDT)
+ bh=MSvmoSrAJV0PHNDRdiCeXCMzEorMA5U6KlLoiYYoLb8=;
+ b=UIwtId7mfkTmFhrV6Cq0rNoBzVCTsWLxu6HWBBtdbK3PTJefzHl/ozLAtSL0rZzT9N
+ 7nl7+0hdH6enw1WPUlbQ2KK56wkis9lbU/tGMQZTHSnSNlQVYU/Ni5Ih8n3pbqgUi7Gb
+ XKBsnkk5pQvsgpVAgzajn1LlXZUoJgorZTGbyEXQgCfU8upz4y27iyIxvGR5TWsj2cad
+ I9JE9NoQft21Qb8m52MXeUwQoqkPeDkTs4BskMiCo7sOrzTS0GlRgZ3qiIUUUZVEMDcH
+ TgBcsiV+mUs5zi/Gh+Rpm6STw31ll5o0ob8FFS05T9MeZVZWnOio4R+0OQ6E5tUU6HTd
+ uvnA==
+X-Gm-Message-State: AOJu0YzYwx0kWhZPw0pGk8uh45ESmq31TE7aedZTOPrqlKO0A6L9lai4
+ vlJ3ESS5ikuvxMluB74yDvibIw7Fm59sswobYxv8qmmylBp+Il1Odo85HZrMOtFfvFZTp794PYt
+ 5JTTG
+X-Gm-Gg: ASbGncs5FyR2veoT9idrywB2nI/dycbWHedYq9bHnHzy2LwZra0+TRldn34+37tEgrQ
+ LZHIi4CksdloyFXJchY39Ihf5HFcoHxHuzH2tBP2M2dZaphj6f+hdniwNcNm5UoSaygAy8PwtTO
+ qku8juqvL3MH6wRTV/a8NlPy4MdyHTrnkgLp3Vccq5nqS2rUp6ElcpJQk7yvpUCq5OFDTHbjUbh
+ Wcl/pzlp5LCe2xDds0gFeEtxPU+8arBipH5+n9mFWAAfyk3MxLyUPKq0DD3fvh2aSMZnIYgQHCT
+ JEtTBBP5+U+qpeLHYIrbHajvtCTedzLW9jBXhII79GzTxU/9ami1IyaUAqgQCbk/MoKLt8jfNCn
+ LyPTYr4lpj7JYbPUjwuwjM93OUHjIBNmU2Kp03Fr5zkv/FbQdSlBK545tcN5cAw==
+X-Google-Smtp-Source: AGHT+IHBYYq0SSa26Yiarw1d+oFjkaSog5I5DWzqGHjO70xW0bzhJKcxHV6c12vfTzn2Nm+5YcMqdw==
+X-Received: by 2002:a5d:5f47:0:b0:3eb:c276:a361 with SMTP id
+ ffacd0b85a97d-4266e8dd630mr7793595f8f.54.1760101569583; 
+ Fri, 10 Oct 2025 06:06:09 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.05.55
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:05:55 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:08 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/76] target/arm: Remove unused env argument from
- regime_is_user
-Date: Fri, 10 Oct 2025 14:04:34 +0100
-Message-ID: <20251010130527.3921602-24-peter.maydell@linaro.org>
+Subject: [PULL 35/76] target/arm: Export cpsr_{read_for, write_from}_spsr_elx
+Date: Fri, 10 Oct 2025 14:04:46 +0100
+Message-ID: <20251010130527.3921602-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,119 +102,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Move cpsr_write_from_spsr_elx from tcg/helper-a64.c to
+helper.c, so that it's present with --disable-tcg.
+Declare both in internals.h.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-24-richard.henderson@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20251008215613.300150-36-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/internals.h |  2 +-
- target/arm/helper.c    |  2 +-
- target/arm/ptw.c       | 16 ++++++++--------
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ target/arm/internals.h      |  2 ++
+ target/arm/helper.c         | 20 +++++++++++++++++++-
+ target/arm/tcg/helper-a64.c | 20 --------------------
+ 3 files changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 819ada7a5dd..d0d976cbb08 100644
+index 109aa104bfe..2a85ab762d5 100644
 --- a/target/arm/internals.h
 +++ b/target/arm/internals.h
-@@ -1032,7 +1032,7 @@ static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
-     return mmu_idx == ARMMMUIdx_Stage2 || mmu_idx == ARMMMUIdx_Stage2_S;
- }
+@@ -1897,6 +1897,8 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env);
+  */
+ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask);
+ bool arm_pan_enabled(CPUARMState *env);
++uint32_t cpsr_read_for_spsr_elx(CPUARMState *env);
++void cpsr_write_from_spsr_elx(CPUARMState *env, uint32_t val);
  
--static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
-+static inline bool regime_is_user(ARMMMUIdx mmu_idx)
- {
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_0:
+ /* Compare uint64_t for qsort and bsearch. */
+ int compare_u64(const void *a, const void *b);
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index a55161ef40e..aed245fd868 100644
+index 64b6c21aef7..def4edf808c 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -9450,7 +9450,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         ds = extract64(tcr, 59, 1);
- 
-         if (e0pd && cpu_isar_feature(aa64_e0pd, cpu) &&
--            regime_is_user(env, mmu_idx)) {
-+            regime_is_user(mmu_idx)) {
-             epd = true;
-         }
- 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 1080b6d69d4..d6d4bf3b23b 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1000,7 +1000,7 @@ static int ap_to_rw_prot(CPUARMState *env, ARMMMUIdx mmu_idx,
-                          int ap, int domain_prot)
- {
-    return ap_to_rw_prot_is_user(env, mmu_idx, ap, domain_prot,
--                                regime_is_user(env, mmu_idx));
-+                                regime_is_user(mmu_idx));
+@@ -8896,7 +8896,7 @@ static int aarch64_regnum(CPUARMState *env, int aarch32_reg)
+     }
  }
  
- /*
-@@ -1026,7 +1026,7 @@ static int simple_ap_to_rw_prot_is_user(int ap, bool is_user)
- 
- static int simple_ap_to_rw_prot(CPUARMState *env, ARMMMUIdx mmu_idx, int ap)
+-static uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
++uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
  {
--    return simple_ap_to_rw_prot_is_user(ap, regime_is_user(env, mmu_idx));
-+    return simple_ap_to_rw_prot_is_user(ap, regime_is_user(mmu_idx));
+     uint32_t ret = cpsr_read(env);
+ 
+@@ -8911,6 +8911,24 @@ static uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
+     return ret;
  }
  
- static bool get_phys_addr_v5(CPUARMState *env, S1Translate *ptw,
-@@ -1412,7 +1412,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
-                       ARMSecuritySpace in_pa, ARMSecuritySpace out_pa)
++void cpsr_write_from_spsr_elx(CPUARMState *env, uint32_t val)
++{
++    uint32_t mask;
++
++    /* Save SPSR_ELx.SS into PSTATE. */
++    env->pstate = (env->pstate & ~PSTATE_SS) | (val & PSTATE_SS);
++    val &= ~PSTATE_SS;
++
++    /* Move DIT to the correct location for CPSR */
++    if (val & PSTATE_DIT) {
++        val &= ~PSTATE_DIT;
++        val |= CPSR_DIT;
++    }
++
++    mask = aarch32_cpsr_valid_mask(env->features, &env_archcpu(env)->isar);
++    cpsr_write(env, val, mask, CPSRWriteRaw);
++}
++
+ static bool syndrome_is_sync_extabt(uint32_t syndrome)
+ {
+     /* Return true if this syndrome value is a synchronous external abort */
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 6d77fd0113d..eaea7859d35 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -615,26 +615,6 @@ static int el_from_spsr(uint32_t spsr)
+     }
+ }
+ 
+-static void cpsr_write_from_spsr_elx(CPUARMState *env,
+-                                     uint32_t val)
+-{
+-    uint32_t mask;
+-
+-    /* Save SPSR_ELx.SS into PSTATE. */
+-    env->pstate = (env->pstate & ~PSTATE_SS) | (val & PSTATE_SS);
+-    val &= ~PSTATE_SS;
+-
+-    /* Move DIT to the correct location for CPSR */
+-    if (val & PSTATE_DIT) {
+-        val &= ~PSTATE_DIT;
+-        val |= CPSR_DIT;
+-    }
+-
+-    mask = aarch32_cpsr_valid_mask(env->features, \
+-        &env_archcpu(env)->isar);
+-    cpsr_write(env, val, mask, CPSRWriteRaw);
+-}
+-
+ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
  {
      ARMCPU *cpu = env_archcpu(env);
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
-     bool have_wxn;
-     int wxn = 0;
- 
-@@ -1574,7 +1574,7 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
-         if ((u_perm & (PAGE_RWX | PAGE_GCS)) && regime_is_pan(mmu_idx)) {
-             p_perm &= ~(PAGE_READ | PAGE_WRITE);
-         }
--        perm = regime_is_user(env, mmu_idx) ? u_perm : p_perm;
-+        perm = regime_is_user(mmu_idx) ? u_perm : p_perm;
-     }
- 
-     if (in_pa != out_pa) {
-@@ -2421,7 +2421,7 @@ static bool get_phys_addr_pmsav5(CPUARMState *env,
-     uint32_t mask;
-     uint32_t base;
-     ARMMMUIdx mmu_idx = ptw->in_mmu_idx;
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
- 
-     if (regime_translation_disabled(env, mmu_idx, ptw->in_space)) {
-         /* MPU disabled.  */
-@@ -2588,7 +2588,7 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
-     ARMCPU *cpu = env_archcpu(env);
-     int n;
-     ARMMMUIdx mmu_idx = ptw->in_mmu_idx;
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
-     bool secure = arm_space_is_secure(ptw->in_space);
- 
-     result->f.phys_addr = address;
-@@ -2808,7 +2808,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
-      * memory system to use a subpage.
-      */
-     ARMCPU *cpu = env_archcpu(env);
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
-     int n;
-     int matchregion = -1;
-     bool hit = false;
-@@ -3689,7 +3689,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-         break;
-     }
- 
--    result->f.attrs.user = regime_is_user(env, mmu_idx);
-+    result->f.attrs.user = regime_is_user(mmu_idx);
- 
-     /*
-      * Fast Context Switch Extension. This doesn't exist at all in v8.
 -- 
 2.43.0
 
