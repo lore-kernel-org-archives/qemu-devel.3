@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D17FCCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71FF0CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CqV-0007R0-QT; Fri, 10 Oct 2025 09:07:43 -0400
+	id 1v7CqP-0007Jx-U1; Fri, 10 Oct 2025 09:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CqT-0007OJ-6j
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:41 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1v7CqB-00072J-VZ
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:25 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CpW-00041M-6k
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:40 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3ee1221ceaaso1496158f8f.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:38 -0700 (PDT)
+ id 1v7CpN-0003xw-1a
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:23 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-46b303f755aso16284945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101597; x=1760706397; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101580; x=1760706380; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Dz/pKGGgrfjPnlvU/HHfzUVBqngVWK7gF/6Jqhpwo/E=;
- b=Ooi3ZppqWRz8Cy9Fp58v+BcJg3y9QkuHlkZ//BCNdmdOgFHPvkWc5V4Hc/cVJkOdxd
- CxwNhtvseNI1BdqA8GbHZ+87RSSLpcBTZPlqWwizNFAZj8WNnnReeoV/EvMznDRAP3dT
- c/FOs/2ZRVnyghAASAapnC60PihChWAtzzhnUFyKev524XA8lXr8dWyE/1ckfFkzFdld
- 9xlhGNv6BCXQImH+yONBKbc2ZzjLgiqe/N8yaZ8T89jYkjdhWuVPJanUUtVM958uTTE3
- c1lTyOz6yt71/Jg3kJnl/CF/H1PDsTz2RuBkiSbNvjFzBEPuhK0eF60iEBKlGZY+LUCG
- veZg==
+ :reply-to; bh=7RlBUUTIQO83oi35+gFqrHr8rvh5bv342xdcH4feI04=;
+ b=cC6eUWEGhuBuuicqHMTm1qCYuwGxx9Gs3mMsbPkpJqAZA8shS5DxNV0xIdYyLd7Ch0
+ Hox+TAY3Y9Vp75dwPi6kKZdS8FGtTjRBgLcr9afDtEkniOeYwgqMG1Eg8UZ+2pBxNcbE
+ Vokf6Xh8UT599xFg/BpH9dLlQNhz3oHhM5DW6NR6BR9kp8Z02QKhSc0eL5ekfVem/cOB
+ rTZ5hQR2GSr9sYYqc6Zh/lQJHjAlLiWcNuuftKiyATj4NS5VYI3wmJZ2YWfqwOik0qlh
+ l6b811arXZ1BipLt8d1J8fbo2l2zkR6TJwb2Kab//EkCe1yjauVCh+xgqQ2nDwffXZgp
+ kGrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101597; x=1760706397;
+ d=1e100.net; s=20230601; t=1760101580; x=1760706380;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dz/pKGGgrfjPnlvU/HHfzUVBqngVWK7gF/6Jqhpwo/E=;
- b=NiKjVsMR5TQhmeTnu19Zl/8HUrLms1ZH/EkE9W1gbC/DRSd2Q+rB3C2cG+X0rXMTx3
- B/axsZ5v0hWp1rmXByhZyIYF/jbxnkoP2kPpGrJKRSBpqHB1H+dLfgryNZ7sc5tatbWW
- bR0nrgWg3EXm3ErU9FlbfyoslHlnKctIr+olFPQ5RPP4/WgUeWdTpg0vLaqbvg2ocvQv
- CiPDmobZB4uEbOVqjNxxxnIus0fn6QlawrVJNY3lumIFJEWc5vJYLr8RiCMiIkHsugHK
- EmjpFcsVTXLfp3lfVP94bXmZXGmreaYVTwCup28ai9NGSJfXYMRiXKWBKCtJwgX7iXZH
- tzfA==
-X-Gm-Message-State: AOJu0YyTZBxv49c3ful/0QNREHI5HKojoXwdcgLp91aWtzUZXRB4FieO
- KimEtC/C7kMK1vkVl/JWNGDkC+9KMRGm1HaH8esTVtZNCcRy31/gaHzjcvv1GwlFm02PB/LM+tR
- JWej2
-X-Gm-Gg: ASbGncs7QoFxSR+wjGLojAlQnPnt2DhSnqPAo3x4NAL8uoVySZDTQQWRj/NoqH/aNBa
- h+WTKVC+b81RtWC46JrpFjy5+W4nKv3itntHKBxNwoWtbMfXAgKZkrL+JOU1/eKRG/YnBkOVYnm
- PqeuOXzB6cVfc1ttmvDo57But6+X6PvT1MeEF/lsfXfgmVHMyTOYzYLnyaRbqzJ+PvK3e10BI3g
- MbVYazDsh98hPOfdFPAHg+kJ86vZyLTOc7WDxwR48dpIxuMcftSRKkvPO9WIYYwxw4jbO0PivxH
- ygUc3LGWg+vyaJY+UtQRe9Fe5N1WuyHu7rrGdrWmEC6jBFDYD5sfPFz92H6ER9F2fO/KJaY6cQ1
- ozO2Sl4D/ibCXQ5PZus38hmiRX2ufSBQYM3pe4CQee5r+RFMMtt56XeKw8k80fA==
-X-Google-Smtp-Source: AGHT+IEogQHajiYWM/FlOeCeTvWFjiBq6insM1VhFu3gfe/WDPtySWqO3TVEcEw+ddNxg0V9I9I/ZQ==
-X-Received: by 2002:a05:6000:250a:b0:402:a740:1edd with SMTP id
- ffacd0b85a97d-4266e7dfeb4mr8162530f8f.39.1760101597512; 
- Fri, 10 Oct 2025 06:06:37 -0700 (PDT)
+ bh=7RlBUUTIQO83oi35+gFqrHr8rvh5bv342xdcH4feI04=;
+ b=lQwe8sLiiNLu9pnAhe6R88xUNKHwRmqxakLISMGoO4LLSIG95X5Y2/iCxsEc4kC7N9
+ LQyP2HU8iDR72tU5VvbxMV8Fm1Q1ZX7TQCdx6msgpG+NSs37+Fs39TMB3Ao9+0OlkH4w
+ JacvqWfntoAhnwexEN6kUk6fwPVIzelSWtfUT/pshHErfQeikZw6cpGU7FhzV8JpVkLW
+ KC8Iawev+tyqIGx3FmGbZy+gKYEo4sWN+DafL71PMAk86B1X+MLiVrTO5o0vn0UEhOy9
+ ohnrEC+7YRwWo/tU6kIajFtOhHj9q7hpqbRf11/AmJEgrHGbW1ZS2EdlhKPxpxoDF1xh
+ 3rwA==
+X-Gm-Message-State: AOJu0YxiqQORGuJqm/j5a0iHxVPfLvHyvz1p+/4k8pjh437ljFqtJ86j
+ rUcK6ooXJf2VdH+oMWFLD8+sNiaZhodF6KzZc50bgJdKHxdldVK8Pztr4mvQUqVT9Gj1gEIPfLv
+ Fc7TQ
+X-Gm-Gg: ASbGncttWUB9CHnFCNh47alniOMifRCY7iiLCbF7Tl6J+jiJ7k3QJDI4qyhFxkn6uEJ
+ 9voXbiLWZRL+QK3Pd5fwrqhL86QpKRHiG80H0EFCUvTVQH+ubHP5kUFUbV3mjSrYzqAV4WMb92H
+ pK8Gn/dnd+BmOdKpZ9E+6WTf7vNRsXrOb3fiMoEaM31oLjIMOmHCPut7cAv72vKt0Qk4dAcqt+Y
+ a9EPQ/S9zyc5OaLzWIuWXKssA2aNwI7sC60/fj9NvVlFYqw3Sb9+7/i73TZ1NslXeg+N5bId1Bv
+ HLJRnfbuIw8FA3BmskMP4sWgSYjycvGxNNgyE28ITryoGNeHN3Gn6wdNtm73HhRIMOwTsNJZDhI
+ 3zmNkqOCDWQ0sKuBtYlizRrltrKwFW0e0HnO9yJ8qf2jNP989XobFFxSNn4EreA==
+X-Google-Smtp-Source: AGHT+IEnYd2//mv61PFZ4MvSHv3spbxcb2TMkzFxgk0lO9gXZuXM5fCFsiBJHKCwWDcAkNE3HlbrFw==
+X-Received: by 2002:a05:600c:4753:b0:46e:1d8d:cfb6 with SMTP id
+ 5b1f17b1804b1-46fa9af0621mr80234755e9.19.1760101579957; 
+ Fri, 10 Oct 2025 06:06:19 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.36
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:06:36 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 61/76] target/arm: Implement EXLOCK check during exception
- return
-Date: Fri, 10 Oct 2025 14:05:12 +0100
-Message-ID: <20251010130527.3921602-62-peter.maydell@linaro.org>
+Subject: [PULL 44/76] target/arm: Emit HSTR trap exception out of line
+Date: Fri, 10 Oct 2025 14:04:55 +0100
+Message-ID: <20251010130527.3921602-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,36 +101,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Use delay_exception_el to move the exception out of line.
+Use TCG_COND_TSTNE instead of separate AND+NE.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-62-richard.henderson@linaro.org
+Message-id: 20251008215613.300150-45-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-a64.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ target/arm/tcg/translate.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 08b7db7c467..ba1d775d818 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -675,6 +675,17 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-         goto illegal_return;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 78d26aac043..57bc8ea4c54 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -1774,21 +1774,11 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
+ 
+         if (maskbit != 4 && maskbit != 14) {
+             /* T4 and T14 are RES0 so never cause traps */
+-            TCGv_i32 t;
+-            DisasLabel over = gen_disas_label(s);
++            TCGLabel *fail = delay_exception_el(s, EXCP_UDEF, syndrome, 2);
++            TCGv_i32 t =
++                load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
+ 
+-            t = load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
+-            tcg_gen_andi_i32(t, t, 1u << maskbit);
+-            tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
+-
+-            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
+-            /*
+-             * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
+-             * but since we're conditionally branching over it, we want
+-             * to assume continue-to-next-instruction.
+-             */
+-            s->base.is_jmp = DISAS_NEXT;
+-            set_disas_label(s, over);
++            tcg_gen_brcondi_i32(TCG_COND_TSTNE, t, 1u << maskbit, fail);
+         }
      }
  
-+    /*
-+     * If GetCurrentEXLOCKEN, the exception return path must use GCSPOPCX,
-+     * which will set PSTATE.EXLOCK.  We need not explicitly check FEAT_GCS,
-+     * because GCSCR_ELx cannot be set without it.
-+     */
-+    if (new_el == cur_el &&
-+        (env->cp15.gcscr_el[cur_el] & GCSCR_EXLOCKEN) &&
-+        !(env->pstate & PSTATE_EXLOCK)) {
-+        goto illegal_return;
-+    }
-+
-     bql_lock();
-     arm_call_pre_el_change_hook(cpu);
-     bql_unlock();
 -- 
 2.43.0
 
