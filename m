@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710D4CCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 14:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D9F5CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 14:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Dps-0006Co-Nd; Fri, 10 Oct 2025 10:11:09 -0400
+	id 1v7Drn-0006lk-Jt; Fri, 10 Oct 2025 10:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7Dpo-0006CO-4N
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 10:11:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v7Drm-0006lX-9F
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 10:13:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v7Dpe-0001Dn-AT
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 10:11:02 -0400
+ id 1v7DrY-0001wp-CB
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 10:13:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760105451;
+ s=mimecast20190719; t=1760105566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=B+CLkYKfEpNHIfyLWBVgqsu3XBsqJ4jV5EBOB0jkO/w=;
- b=eL1FcjNXGavng9TxCzR6boBbpdI7z5u1J1HcP2Ui435ctWoHecks4zMHIgmnuKz1E3eKW6
- 73z8QuZa+sf2QAhqNmMlx7J5UDq7rmP1tfEWVmxbhNiWvdx73DmCpSanw4jg53hnShvxQ4
- JCLMDhmZBA9j8kBs1jUU39dRAUzlySc=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jmobBCoe5DPv0d1P0VrA8G7aTAUv3t7ChEuVERh6C/M=;
+ b=GZsJouNO+7UFW/u/yrmoeLRcq8Kt9aJHrLjfbQOXqNYWIRTJLmDo7VL8U0igmRpfVVsEqD
+ v8XYieIikzAYVMqixuBX3mv0nYZZVGF+IDQdybSE6dxxdrY5w1D2s6IVAiH0ABs0OP5qeU
+ f34ECsQrdqoeqa+6D2gTj+tEKij9y5g=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-4gETf5fFOiuPM9bFJQGu_w-1; Fri, 10 Oct 2025 10:10:47 -0400
-X-MC-Unique: 4gETf5fFOiuPM9bFJQGu_w-1
-X-Mimecast-MFC-AGG-ID: 4gETf5fFOiuPM9bFJQGu_w_1760105446
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b3d525fb67eso241889866b.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 07:10:47 -0700 (PDT)
+ us-mta-279-sJcMaGx8NwGeMfkFuTo83g-1; Fri, 10 Oct 2025 10:12:45 -0400
+X-MC-Unique: sJcMaGx8NwGeMfkFuTo83g-1
+X-Mimecast-MFC-AGG-ID: sJcMaGx8NwGeMfkFuTo83g_1760105564
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-62fcb646334so3700681a12.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 07:12:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760105446; x=1760710246;
+ d=1e100.net; s=20230601; t=1760105564; x=1760710364;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=B+CLkYKfEpNHIfyLWBVgqsu3XBsqJ4jV5EBOB0jkO/w=;
- b=KmTiYzixNiOmMA5XViE2FfWYIa0rcBgfQd9yg5oQ6yNN0nu+g+zveSa68cuW8B3eLc
- 8XQeyugx7/Vhz9MWEIAkTbxP6EgNeu5Xxo52utVtLtKln7sYyDtkPi6eZ7Zh2FFrfByH
- XmF3nwdz70o1h9oLQrLIV8F8c0LSjEttE1LwiLV/B8jYqGI/2p0woD3CXVl9rO7jiKeO
- qMU7SZujpctVQzAi5e3CaeEtyCKQVaolUXkhZ9cR8z3Ffd14nTN65wqA6orkqIJIEDBI
- vFZUxE9OazKVSZ1CSWezoc08L8gbMThh1c9uUcXnwSwtWeOh1rc3NzEXw3t+xNVCwIyt
- ODfg==
-X-Gm-Message-State: AOJu0Yxeo1naRKyrivAqoonfYERUZVSoZDoHzC+kJ3m1FdFnTVmtqTbu
- C8jr8fnjQsqPHAWwmiq2ailAA3piAH+GK4W6xD3fmvqfL4daAMFlW2lixaUhD1oSW8a6rlyyXsf
- Hv5j+qhJQLWsC8/rGtg//SEpwGlLr4c2L3ZD6Zire9bfe92Uwh6x0hia5
-X-Gm-Gg: ASbGncsm5F5pusGorW3DUD1tUsapf9y6WUHl/aHT+VItMM+4SPVrUIkH24YuZYn5Ez3
- KkjfO/6i7PNoP8fAcgE0dbUM5uf9fCM/Fa2oUj9iHrCJN/uCknx/Te2C5HSYc2NHaBNMVJLUtAp
- 7XLlBxWA9WQ8LrdGlg/JxnYp5lyEk7kJVYfrsNo65Elyn3JIh+EazVAEGYBPclOsHttH8ZwuQL2
- YPpKZVQo0K9uJyllgJvw9ECfcFu9KRs1woCjRq7PY/KvvXk/024niR+HHIlO3nZ+GIC1f9p7m7u
- YtQuGz5SBKa9PXwr3nvN1MHbf2D6cMYdlTWhmk/HCldYWCR6o0ftXfplwBjg29WKJO9EnTMqyXH
- Wjy0WeV+85vQ5aZVXasQKvk5fGcHVTXCmts/PweQuQTu7
-X-Received: by 2002:a17:906:6947:b0:b57:10da:e62 with SMTP id
- a640c23a62f3a-b5710da0eeamr20690066b.64.1760105446409; 
- Fri, 10 Oct 2025 07:10:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdE/wcwQx6Vw8ThJNFI+hk3gQWkjylZZQW0fOC0sBvN+MPenJK0WqR8sSUqANbWy88S2oEEA==
-X-Received: by 2002:a17:906:6947:b0:b57:10da:e62 with SMTP id
- a640c23a62f3a-b5710da0eeamr20685766b.64.1760105446027; 
- Fri, 10 Oct 2025 07:10:46 -0700 (PDT)
+ bh=jmobBCoe5DPv0d1P0VrA8G7aTAUv3t7ChEuVERh6C/M=;
+ b=bDbZdp+bgRD/267/jsk5F4psnYAAAYNnns5q2jt9r2/t11p0ZWq9TxKiTissRnpzba
+ DZChJ17jMqfo1XYau1SBDLkCr7RWpv0Thb7lwTXfyIUTxFksC1XkDO1gmKf1KHPSHlnw
+ Fv1UTLQDxnOcBax8aCgUrBFsokLAoabQcFUxjHCHr1fatTubXhBHKxtwa1WqR/ljdVJG
+ 5CM3lMPic1xNMBwhoVMhdnMTStbmwv+kaJyBCR5W2HgfoxqCKYJ2BBVW3k9duyzTo0zy
+ DEi1YDdZPU5pcrJVmHBvC8Umo41SJZbR2ZXSxBXzayZRb4loPzO5Hbu7OS6UiijrCQ1S
+ ldVQ==
+X-Gm-Message-State: AOJu0Yx1UDka127ZmnH1wi60jMGrTYDLqlU/hyrM6zoKypkqKrHpZdsS
+ eAGyvq96v8z7bOJSe4w/37O4VNtRFo1YkABng0YGq0fQv6uGPToQSQb0TJEvHoWaiVf5vQhP8ha
+ kvYGNq0fIdQxzNVPEn+KOcmZ11HB3Z5GdXhT/PDCwdDiS/FM5pipIl420
+X-Gm-Gg: ASbGnctzUp/ynCDzW/uK7Gl8vZKqEx+2Gc/oocWcycdpnUcB3lqhB1cBw+io7I8UMr4
+ QXhRIrzmfHWP/ts0y3OMohRHK8/tZR4DX4Erq27T13ewVGAvq73aGBaTRl3DMGNSQStIexmtyq2
+ eJkrCpLPLoS5K8ufbrayL3Wd9VyaOalEX2shj7YR6irC3LU96N5w6HEVEx0h7i/O/MRUsGwN/7N
+ oO8fMsd1FhQTzA/9ErzsfSgbUDrgBlUyAleHUIzBdscxFoWNbmk2dN7WN0oPzTj05yEhTHVEUyh
+ +lfiIehBiDWt6yrcYtl7BNXdI6wmzVGjov4hjdlvM8DNR18z38+z6TiOTn3aOgNuLA/MFyrCDST
+ 4pH7B3Y4ZR2ByDuSDj5uj4iu97UKJdG8IUL1CJEYCAx3o
+X-Received: by 2002:a05:6402:1444:b0:63a:35c:6ebc with SMTP id
+ 4fb4d7f45d1cf-63a035c72c9mr5132037a12.23.1760105564148; 
+ Fri, 10 Oct 2025 07:12:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjZmfNg5zqeX1Jsk5m2nObI4blvkeLDQ741khgs10wjUtM5J8kO+MSj6SZzFFHwyHJFxz0TQ==
+X-Received: by 2002:a05:6402:1444:b0:63a:35c:6ebc with SMTP id
+ 4fb4d7f45d1cf-63a035c72c9mr5132006a12.23.1760105563661; 
+ Fri, 10 Oct 2025 07:12:43 -0700 (PDT)
 Received: from [192.168.10.81] ([151.49.231.162])
  by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-63a52b71361sm2714321a12.28.2025.10.10.07.10.44
+ 4fb4d7f45d1cf-63a52b1e89csm2437553a12.19.2025.10.10.07.12.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 07:10:45 -0700 (PDT)
-Message-ID: <e1424616-5bac-4809-a70c-63805b1db893@redhat.com>
-Date: Fri, 10 Oct 2025 16:10:43 +0200
+ Fri, 10 Oct 2025 07:12:43 -0700 (PDT)
+Message-ID: <0766dc6c-6cab-4f56-a8ab-c573aff15421@redhat.com>
+Date: Fri, 10 Oct 2025 16:12:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 24/27] qapi/accel: Allow to query mshv capabilities
-To: Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Cameron Esfahani <dirty@apple.com>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <20250916164847.77883-25-magnuskulke@linux.microsoft.com>
- <871pnahn2f.fsf@pond.sub.org>
+Subject: Re: [PATCH] rust: temporarily disable double_parens check
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251009211208.643222-1-pbonzini@redhat.com>
+ <CAAjaMXaPv+hENfLuZUeLEOjakuw7dOTLQCeaUbuveZW4Y_2PBQ@mail.gmail.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -135,10 +120,10 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <871pnahn2f.fsf@pond.sub.org>
+In-Reply-To: <CAAjaMXaPv+hENfLuZUeLEOjakuw7dOTLQCeaUbuveZW4Y_2PBQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -147,7 +132,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,21 +148,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 16:02, Markus Armbruster wrote:
->> +{ 'command': 'query-mshv', 'returns': 'MshvInfo' }
+On 10/10/25 14:23, Manos Pitsidianakis wrote:
+> On Fri, Oct 10, 2025 at 12:12 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> It is showing in the output of the bits! macro and not easy to fix there
+>> (at least not without making the macro more complex).  Disable it for
+>> now.
+>>
+>> Link: https://github.com/rust-lang/rust-clippy/issues/15852
+>> Reported-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
 > 
-> Mirrors query-kvm.  Okay apart from the Since: issues Daniel pointed
-> out.
+> How about putting it in the macro expansion instead of globally allowing it?
+> 
+> macro_rules! foo {
+>      ($a:expr, $b:expr, $c:expr, $d:expr) => {
+>          #[allow(clippy::double_parens)]
+>          InterruptMask(((($a.union($b).union($c).union($d))).into_bits()) as u32)
+>      }
+> }
 
-Which I swore I had fixed, but didn't.
+Can you do it for procedural macros as well?
 
-> Should we have a generic query-accelerator instead of one query-FOO for
-> every accelerator FOO?
-If we want it, it should be query-accelerators with return value 
-{"enabled": "Accelerator", "present": ["Accelerator"]}.
-
-The patch is already merged, but it is pretty self-contained so I have 
-no objection to reverting just this one.
+> Why is the double parenthesis needed here by the way? It's a method chain
+It's just how the macro works, occasionally generating double 
+parentheses keeps the parser simple.
 
 Paolo
 
