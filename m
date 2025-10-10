@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37554CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3878CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7BFT-0001gS-Dl; Fri, 10 Oct 2025 07:25:23 -0400
+	id 1v7BUS-0004I5-0c; Fri, 10 Oct 2025 07:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7BFL-0001gE-SH
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:25:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7BF7-0006HL-8s
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:25:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760095493;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t1ijcKOZvJf/Qi0XF93vzsiMbbvb5OiOebs9DIIE+Vs=;
- b=bRXcPs/N9na9piGAzBRFVGFbpHKlcv2l01N/qTsXxbdYeJmd+CV9S+sEQShiozsrW28Inb
- QpmAhhFLiD44KtsLex3dI7faVff0lOtQk2am6aO99jEqEaDKha/mZOiy/JxM+tasfbqMfs
- yvescCF5NmDD2dPlvem4RdKmLjrxeX0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-n5JXiivANCSxIK0WR3XYpA-1; Fri,
- 10 Oct 2025 07:24:49 -0400
-X-MC-Unique: n5JXiivANCSxIK0WR3XYpA-1
-X-Mimecast-MFC-AGG-ID: n5JXiivANCSxIK0WR3XYpA_1760095487
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A3931800578; Fri, 10 Oct 2025 11:24:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC9B130001B7; Fri, 10 Oct 2025 11:24:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4990F21E6A27; Fri, 10 Oct 2025 13:24:41 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,  qemu-devel@nongnu.org,
- eblake@redhat.com,  jasowang@redhat.com,  devel@lists.libvirt.org,
- pbonzini@redhat.com,  marcandre.lureau@redhat.com,
- yc-core@yandex-team.ru,  d-tatianin@yandex-team.ru, qemu-trivial@nongnu.org
-Subject: Re: [PATCH 0/2] remove deprecated 'reconnect' options
-In-Reply-To: <7503ba0e-2596-4919-b4ea-bc61e469564a@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Fri, 10 Oct 2025 12:02:14 +0300")
-References: <20250924133309.334631-1-vsementsov@yandex-team.ru>
- <877bx4p3at.fsf@pond.sub.org>
- <5063033a-9d83-49da-9f15-cc492d124a68@tls.msk.ru>
- <7503ba0e-2596-4919-b4ea-bc61e469564a@yandex-team.ru>
-Date: Fri, 10 Oct 2025 13:24:41 +0200
-Message-ID: <87ms5zj8xy.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7BUP-0004EZ-D5
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:40:50 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7BUF-0001Gh-1I
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:40:48 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-73b4e3d0756so22960497b3.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 04:40:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760096428; x=1760701228; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HnAnwOcMJ2GhF2EY4pQnKOYtxUCKD6UQqaNJzNgnUHw=;
+ b=sDhPU8c1NpWvY0yeqNrR+g1NDXrX6reEhjj7K/cKSxJ15JNoD0PPN4Y4OyzhiDzNtz
+ Bardw6dearDuCcYvetsCJA7bBJbibpYA2USfmiKHL/aakgT4pvMuKbL0O8p3/LW2PAa1
+ JZp9yPzoxzJPRwJ6hgytXI2dy5EcCmSzGJ7qPqFcjaMZgjXI16axBuFLJ/9MApkGNI0D
+ ZpatYZLmKRzYZ6EhVv0vFA1zR7ZTSS4eB26M5dUtetMVqI/fzJA6g8pX/W7OraCoRxXy
+ BzhYgF0wnM00BmYIQvbpCy/FRQGtu45oOLfcqoBhUaPfiiNA0w8XgB2ZqjF7itGTjSDp
+ bbxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760096428; x=1760701228;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HnAnwOcMJ2GhF2EY4pQnKOYtxUCKD6UQqaNJzNgnUHw=;
+ b=unPDG7RwNTm+6H0gOoS1pfKsMUSOl5ghgXPhVhMy1XJ6oS8U28eoBLiFSezZykUmmN
+ SyuS7TCumrYpjSNcu8D05+1azf6OrDS555udLwfZYulftcpYGQHPwlRnHuODNm+kv0/v
+ wi7gK08mJQrJzDdQFE5gziweIzk1o/bdnZbfrjE2iPyHGYW+hT8rAqTAjiu6ikArKgaG
+ KYmUWK7QSViA0NsyGyCm9UlPWB++wBUXFlLwE8MXvwUUxqzgmuam9PWajqYEiBKoqMi9
+ ba0ZbACbb2KEg8Wy+tsLbaACVvBG7W3FeR/4CTI+4qvkbkW8unTF5ipRQlpV4WleHzwz
+ 8Yvg==
+X-Gm-Message-State: AOJu0YzF1AjS6v+AY3C573oRsFZZZEGWPIHSgrLcPnUHfkcgNwxBhAdl
+ wRf8fbZVdIyfpm/E6u9HjxWO3Aj1s5glNftN/GfuT6BXn6jYOeh/4QGDfCn17aOed+uht1t92w3
+ qYr+8/xVmYYr4b49GX2ui3I5Ozxlk+j32jXRcbVhRdBPsc5x/PpuL
+X-Gm-Gg: ASbGncsDUEjEFh7syJReFzuMmF002RhYWpfjlwyVAySCEsX0+3VR8dsmr1rciOCNd3a
+ chvhjSDtQrLQw9sfK/a59636pCTha+xuSJ/doXjp9stwxINMVZZrr6UWxOWBFjfz73r9xjTnWk0
+ 7w8XuK5t4ESiilp7Gr3yIFQCh8Kc2SJv9RgUp6PvpwvZDv0+GvGoIXIYdKAoA4r70BTqt4zR4rF
+ 5+iHch3FKMf7XknryGJE37IRqoy+HzIq5ykgVszwQ==
+X-Google-Smtp-Source: AGHT+IEINEgWdW1qUku5Zgqhfj0NVzRiaFdLkxrRRfaPNjgpgSNWtv3kou4F2O6kU21QJaN0HwV40JES7D055SkfB+8=
+X-Received: by 2002:a53:cf11:0:b0:634:94a:3e65 with SMTP id
+ 956f58d0204a3-63ccb90be3cmr8115537d50.24.1760096428041; Fri, 10 Oct 2025
+ 04:40:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20251008215613.300150-1-richard.henderson@linaro.org>
+In-Reply-To: <20251008215613.300150-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Oct 2025 12:40:16 +0100
+X-Gm-Features: AS18NWBXaKeo0bDbyrVK7r5h8nDWBqOASsFvw7b28occxkzmsDBQRC-LaFAu0HY
+Message-ID: <CAFEAcA-q0aB1wTgZrDwk+wgrZK7aGkGv23nmEGxpKmUC31y2Vw@mail.gmail.com>
+Subject: Re: [PATCH v7 00/73] target/arm: Implement FEAT_GCS
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,86 +92,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> On 10.10.25 10:52, Michael Tokarev wrote:
->> On 10/9/25 17:17, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> They were deprecated in 9.2, now we can remove them.
->>>> New options to use are reconnect-ms.
->> Speaking of the option itself.. I'd not remove it, instead,
->> I'd de-deprecate it, and allow units to be specified for it,
->> like reconnect=3D10ms (defaults to s).=C2=A0 Or reconnect=3D0.1 (in
->> fractions of second).=C2=A0 But it's just me, it looks like :)
+On Wed, 8 Oct 2025 at 22:58, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> QAPI is not for humans) So simple milliseconds integer is better,
-> then parse the variety of suffixes. And it better fit into json
-> (number is number, not a string)
+> Changes from v6:
+>   - Resolve conflicts with master.
+>   - Fix size of TCGv cpu_gcssp[]
+>   - All patches now reviewed.
 >
->> Also, `has_reconnect_ms` becomes redundant after applying this
->> patch, - it should be enough to use just reconnect_ms, which
->> defaults to 0.=C2=A0 But this can be done in a subsequent cleanup.
->>=20
+> r~
 >
-> You mean just use sock->reconnect_ms instead of explicit
->
->    int64_t reconnect_ms =3D sock->has_reconnect_ms ? sock->reconnect_ms :=
- 0;
->
-> ?
 
-We routinely exploit that QAPI initializes absent members to zero.
 
-> I believe that QMP will zero-initialize everything. But I'm not sure
-> that we do zero initialize this structure on all paths.. Keeping also in =
-mind
-> handling other fields here like
->
->     bool is_telnet      =3D sock->has_telnet  ? sock->telnet  : false;
->     bool is_tn3270      =3D sock->has_tn3270  ? sock->tn3270  : false;
->     bool is_waitconnect =3D sock->has_wait    ? sock->wait    : false;
->     bool is_websock     =3D sock->has_websocket ? sock->websocket : false;
->
-> To drop this, we should check for all paths, that incoming structure is
-> zero-initialized. And no guarantee that it does not break in future.
->
-> Probably, we can implement a new QAPI feature "value with default to zero=
-",
-> so that we can avoid existence of .has_foo field at all for such fields.
-> No field - no problem.. But not in this series)
 
-The simple way to do "optional" is to have the machinery supply a
-default value.
+Applied to target-arm.next, thanks.
 
-The less simple way is to add a distinct extra value that means
-"absent".  This permits "absent" to means something else than any value.
-
-QAPI does the latter.  Not my choice; I inherited it :)
-
-For pointers, generated C uses null as distinct extra value.  Works,
-because "present" implies non-null.
-
-For other types, generated C uses a pair of variables (has_FOO, FOO),
-where
-
-    (true, V)           means present with value V
-    (false, zero)       means absent
-    (false, non-zero)   is invalid
-
-This results in slightly more complicated code.
-
-Most of the time, code maps "absent" to a default value.  This default
-value is not visible in the schema, it's buried in the C code.  When a
-type gets used in multiple places, each place can pick its own default.
-Bothersome to document, and the system cannot ensure the code matches
-its documentation.  Strong dislike.
-
-Special case: when the default value is zero, we can ignore has_FOO and
-just use FOO.  See "routinely exploit" above.
-
-We could extend the QAPI schema language to let us specify the default
-value.  The generator could then elide has_FOO.  Code would become
-simpler.
-
+-- PMM
 
