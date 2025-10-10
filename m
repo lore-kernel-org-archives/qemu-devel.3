@@ -4,119 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2243BCCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB780CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7FWZ-0004Yq-L9; Fri, 10 Oct 2025 11:59:20 -0400
+	id 1v7FZ3-000637-Oh; Fri, 10 Oct 2025 12:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1v7FWV-0004Y3-Ki
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:59:15 -0400
-Received: from esa13.hc2706-39.iphmx.com ([216.71.137.83])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1v7FWM-0005CE-6H
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 11:59:12 -0400
-X-CSE-ConnectionGUID: qh3R2NiWSh+3MuTgdXCBLA==
-X-CSE-MsgGUID: 1cWgiASRT+qlAqlxR26IBg==
-Authentication-Results: ob1.hc2706-39.iphmx.com;
- dkim=pass (signature verified) header.i=@bu.edu;
- spf=SoftFail smtp.mailfrom=alxndr@bu.edu;
- dmarc=pass (p=quarantine dis=none) d=bu.edu
-X-IronPort-RemoteIP: 74.125.224.69
-X-IronPort-MID: 82381094
-X-IronPort-Reputation: None
-X-IronPort-Listener: OutgoingMail
-X-IronPort-SenderGroup: RELAY_GSUITE
-X-IronPort-MailFlowPolicy: $RELAYED
-IronPort-Data: A9a23:OFsztqleqqFxQBwDrS6L8ETo5gzVJ0RdPkR7XQ2eYbSJt1+Wr1Gzt
- xJNCGnUbvaCMTDyeNl/bomy8U8D6MfWzdE1SAZrry8yFS4T+ZvOCOrCEkqhZCn6wu8v7a5EA
- 2fyTvGacajYm1eF/k/F3oDJ9Cc6jefTAOKgVIYoAwgpLSd8UiAtlBl/rOAwh49skLCRDhiE/
- Nj/uKUzAnf8s9JPGjxSsvPrRC9H5qyo5WpA5wRmP5ingXeF/5UrJMNHTU2OByagKmVkNrbSb
- /rOyri/4lTY838FYvu5kqz2e1E9WbXbOw6DkBJ+A8BOVTAb+0Teeo5iXBYtQR4/Zwehxrid+
- /0U3XCEcjrFC4WX8Agrv7u0JAklVUFO0OevzXFSKqV/xWWfG5fn66wG4E3boeT0Uwu4aI1D3
- aVwFdwDUvyMr/u2m4jhbOhTvcRgd+z2AIwTilpK6RiMWJ7KQbibK0nLzdpR3TN1l9AXWPiAN
- owWbj1gaBmGaBpKUrsVIM1i2r7y2z+lKWEe9gP9SakfugA/yCR41KjrPMD9cMHMSMlI9qqdj
- jKcpDSgWkBGXDCZ4WOOzX2tr9T1oWDiXKsLEK2CrKBLqlLGkwT/DzVTDzNXu8KRk0O7RpdTJ
- lIZ/gIoqq498lHtScPyNyBUu1aBtx8YHstASqg0tlDLxa3T7AKUQGMDS1atdeAbiSP/fhRzv
- nehlc6vCDBy2IB5g1rEnltIhVte4RQoEFI=
-IronPort-HdrOrdr: A9a23:n2sRc6k4PqwgkztON5Zy32fhoCDpDfIa3DAbv31ZSRFFG/Fw9v
- re+sjzsCWftN9/Yh4dcLy7VpVoBEmslqKdgrN8AV7BZniChILAFugLhubfKn/baknD39VQz6
- tmbuxbBMfrBVZ3yebWiTPIcerIq+PnzEnev4fjJhlWPGZXgoJbnn5ENjo=
-X-Talos-CUID: 9a23:w5P5VWNjSu3lFu5DQSk8zhQyG/8ecj6G6WrsLEOIIkxNYejA
-X-Talos-MUID: =?us-ascii?q?9a23=3AkTadpQ0yTFjsksdUGPjugvjr6DUjuq+RB0Ekqq8?=
- =?us-ascii?q?6+NCAHDV0Kw3H0hWdTdpy?=
-Received: from mail-yx1-f69.google.com ([74.125.224.69])
- by ob1.hc2706-39.iphmx.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 10 Oct 2025 11:58:56 -0400
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-63b781aecedso4815085d50.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 08:58:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7FZ1-00061f-OT
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:01:51 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7FYi-0006Rs-Dq
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:01:51 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-63b960a0a2bso2598646d50.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bu.edu; s=s1gsbu; t=1760111936; x=1760716736; darn=nongnu.org;
- h=cc:to:subject:message-id:date:in-reply-to:mime-version:references
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=GCQGT03hqSGUSkCs+YndRioYG7YpMxLgGKhCHaOGDFs=;
- b=oahbJzwQkf22jVNLoyoB6dg4a/+ZK0upa7OVrhtZb/hltmQwYnRW5CKsRoULC5QaMO
- TgYGVOjg5+/OO+Y+cSsn8JxMt/j6Kfj4DB9fg8GkVfC0o2J4omua8izv3/3nI562k0SI
- zVFWEOXzlxnldlm8bLHtiv/v/8pjE2w5ocJqalPidbYZ4aUu6kwMzZwE3110GnLn7i38
- +XVF9UlJ+I9e8UOrapH4iUjT4tAXzQ0Q7bAb+9WGxYXb+SpH8OX9AK+cidpo1D5QLRUw
- Zdnv8azrJf4kauNx6IYZS8IHR82xd5y0YhSDaxCKVb8wKHtgEWZKrQUhbNzqyHAWOBUn
- UO3g==
+ d=linaro.org; s=google; t=1760112089; x=1760716889; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u/zrwMqwnGoIBMwOTdIl9Y6UlOgW0fzMIZl0yJFBeZg=;
+ b=kVnUqzwEWw6oyIWIKz57zSAGnEaW3IvsHYfBW8aTxuOCkItshdI8TzLuoLFsRXfVTO
+ QQuxXtWMTfmfdO5Xncza9rLa15oAm5CsZ3fLPeSjEabKGTse+5tg1XyxyBY51E6CeONG
+ LiZ0AF92LqFHpp74LpmXhNjcw25dSp1gZEg9OiqlBkPm+LYkFtq7PsZR95ozjkzlOw4W
+ LavY2gR8rysuPCCwXQs81ksNGW+7zhbOglhRPfJ+dmaQ1S9xr+2BmZ7dwvmJkBYaSQd0
+ TFZ6Zv+TBAkW3z2iiN5J7xvQskrUCHxqN1vqzqB0d5RoFrc5f8as79Kqay+lPf8dXeYq
+ YZ6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760111936; x=1760716736;
- h=cc:to:subject:message-id:date:in-reply-to:mime-version:references
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GCQGT03hqSGUSkCs+YndRioYG7YpMxLgGKhCHaOGDFs=;
- b=E6aQiCyT//hN1ZNgUKMfJcWE3qyQ7m0vg+rcCgtsiRp6KOSXh/B69+mUqwaR0zpiMi
- lq+Da4SndtE5Mw2pFZ8Oaeso79FqNJT/8L+YJFPAg4MmKYtnOs7Ai+QBJZ9fspxiyRnf
- ChP0Mkl9o+5+kvmuY4+sLY5ybATrMj2AINHSdZqgbPvHwIJPBlW29PvgHlTH6fuSkm22
- gou99QKW7gaRTIWT8Wl5Kgt9GCQ5Q0AXbik1YhwaS7+Y4oEY9lXFVRPfZ/6xCrkf6wmr
- rzuoXCTVu6Q7C55wOd1WP8gPMq4AIBj8GB3B1PJFOWt3ilNZyAchanL+VonIYdJrXteB
- Gdgg==
-X-Gm-Message-State: AOJu0Yztzhj62fSjq+Sp7i2oL9kUn1g6kHgzxPAz0kD15GnliE/lWJ/2
- AdYiNxTKszu8M/Q8pbq93F49sMpoGPYIZGfuEmCgdu4NX8a8VuLurhABxsweG0OzcE7E7ZhsY5Y
- Av0KlHfcGfLIIRZ3YwaHYz387KQUHYLSbfi9EZN59E9U7nOnOGmVVroa6v5N4F1YOkr9NcScZOV
- M8P8btn51g8RYDeEtlBLlP1j32N3iFR9LZyLiTJbTdN6CX
-X-Gm-Gg: ASbGncukT2xhkVtWN4eOeEKZ1WE5jKwGAmsR3LFTe1uOrvzfhjhtRvAX/JnNYzHnouw
- FZKy7XBjgDrZ4Fb7edoidYl0l0Mc11W6DGRjO+ToOkrFnd/x65NwMDz3c55dd1xgZtWFzjtWMfA
- IHp+blhESzxWcA+2OA2395
-X-Received: by 2002:a53:b9d0:0:b0:635:4ed0:570d with SMTP id
- 956f58d0204a3-63ccb904a86mr8657963d50.39.1760111935832; 
- Fri, 10 Oct 2025 08:58:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuFk7M3w3GxYEgx31yfZv2KptuZCeqWJ/vRHy+d7D16s8kvtiW8dT1BV6maG8wXZhgmu0zbG4Qznh1AqioFHk=
-X-Received: by 2002:a53:b9d0:0:b0:635:4ed0:570d with SMTP id
- 956f58d0204a3-63ccb904a86mr8657946d50.39.1760111935479; Fri, 10 Oct 2025
- 08:58:55 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 Oct 2025 11:58:53 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 Oct 2025 11:58:53 -0400
-From: Alexander Bulekov <alxndr@bu.edu>
-References: <20251008191936.3069950-1-navidem@google.com>
+ d=1e100.net; s=20230601; t=1760112089; x=1760716889;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u/zrwMqwnGoIBMwOTdIl9Y6UlOgW0fzMIZl0yJFBeZg=;
+ b=mtTVnaolXK1fD0DRUO9k6tE8x7BUlIatVSRnf8LmFfP+ZEgLFzRoFNoTyL9Wtip9rr
+ 0KoKqBPi74LMUU41nibcAcKUJ7wPqr7aCc6XQ6asTvT1pKSKxDQYaihm5b/Wi5OesIpt
+ uISZ+TRXFcjcLyv+yOtD/06ZoV7WYBW+5wKQXpghm/oBhOQyWXkSf5YTBmrczQrW3kWU
+ dgQrg1eYAIZDJZEncEvCNawuE1ZU4fGdhtHIojuI/C9v8HCDrBqrDxZT1ZEV6xfqFz8N
+ QyphrEse2U0uybS4IuG81Ceq7o0CrW0dAI8ae6KPG1gbgfCbCXxVQWAMBj6IpWT3+9x7
+ r6yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6u9L21H7F10b1yKyU8wvSfDO6bGimgDOw7gIDDcqyDS8M/Hd1JSSOf+DSzMOQAQIm8KnqIt1Gj6cB@nongnu.org
+X-Gm-Message-State: AOJu0YzYr/P4pE3InUFx6sqHowkRhT4nP3Yi1ccf5GPLqFMHhY6S22aE
+ HiaKP7ILIw8+K33ShvpNeuGr7CS9b4a6oSsSd1iOMni13ipPC6iopKrZswtJ5AIXDZN270OhPN2
+ lAaVveWPVSPdX4N9uUnV2LnI3VnCW86ttgLbv1XnO5w==
+X-Gm-Gg: ASbGncsFX9nECu2WpFLFW4hCgXF/6c5KPbVoe43IYgrX5Ra5ledCUjaQwzlglXTFUhs
+ zZ0GZIFPIu1GdHP6qt/1v9BP1fKXaEH7A9sT6qB6+OsfgxWvBPvtXWSFmp6Tscjt7xwCUlEt9x3
+ buVm/w1mrrnXLqSJ0DyXdGd5cDhS7Z/5HNpccV0XMzxZ/BxKxP9xSYAb9d4R0sU95qnwDr9fR5X
+ IfYPSAbCq6B8Je6zm0JtR6luWcNxwE=
+X-Google-Smtp-Source: AGHT+IHeqMSrWwUaz2rExiFGqKxJ2V5iIAhzCXVvP+r/KSmEFgKAdvWAWUaOfOOoSjd0QztR6/+Z809gm8bQaWPNgSQ=
+X-Received: by 2002:a53:cec2:0:b0:62a:b545:54b6 with SMTP id
+ 956f58d0204a3-63ccb8f2f76mr8689088d50.35.1760112088920; Fri, 10 Oct 2025
+ 09:01:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20251008191936.3069950-1-navidem@google.com>
-Date: Fri, 10 Oct 2025 11:58:53 -0400
-X-Gm-Features: AS18NWAElnO2MHNuJr4Cp-a37b-YLwcv2rEi2rrz3SdrYK1XRdYPum2OV_YMDdY
-Message-ID: <CAHUE=o-X1sJXn6SWATUUjX2GHUsh8mufk3MZHVkKDzzFGtbSyA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] libqos: pci: Avoid fatal assert on zero-sized BARs in
- fuzz builds
-To: Navid Emamdoost <navidem@google.com>
-Cc: qemu-devel@nongnu.org, zsm@google.com, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
+ <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
+ <87sefrvuq5.fsf@draig.linaro.org>
+ <CAFEAcA_hv0fMyJ7WQks8SA5Af7xVvTo3gjKNM4QBFCMWAH=2DA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_hv0fMyJ7WQks8SA5Af7xVvTo3gjKNM4QBFCMWAH=2DA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Oct 2025 17:01:17 +0100
+X-Gm-Features: AS18NWCqm1KODDwsvTP6S4yqeX7WnaDCiPH0IfYnESN5oZ9lO1tHqQk8rvVBkXY
+Message-ID: <CAFEAcA_-dT6Gf0VDczU-OYt3wi-bXLYeLD54Aipb7jah8-XwJA@mail.gmail.com>
+Subject: Re: [PATCH] Add support for zboot images compressed with zstd
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Daan De Meyer <daan.j.demeyer@gmail.com>, qemu-devel@nongnu.org, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-X-CES-GSUITE_AUTH: bf3aNvsZpxl8
-Received-SPF: pass client-ip=216.71.137.83; envelope-from=alxndr@bu.edu;
- helo=esa13.hc2706-39.iphmx.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HK_RANDOM_ENVFROM=0.001,
- HK_RANDOM_FROM=0.999, RCVD_IN_BL_SPAMCOP_NET=1.347,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,57 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 251008 1919, Navid Emamdoost wrote:
-> The qpci_iomap() function fails with a fatal g_assert(addr) if it
-> probes a PCI BAR that has a size of zero. This is expected behavior
-> for certain devices, like the Q35 PCI Host Bridge, which have valid but
-> unimplemented BARs.
-> This assertion blocks the creation of fuzz targets for complex machine
-> types that include these devices.
-> Make the check conditional on !CONFIG_FUZZ. In fuzzing builds, a
-> zero-sized BAR is now handled gracefully by returning an empty BAR
-> struct, allowing fuzzing to proceed. The original assertion is kept for
-> all other builds to maintain strict checking for qtest and production
-> environments.
+On Fri, 10 Oct 2025 at 13:09, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Fri, 10 Oct 2025 at 12:53, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+> >
+> > Peter Maydell <peter.maydell@linaro.org> writes:
+> >
+> > > On Wed, 8 Oct 2025 at 20:17, Daan De Meyer <daan.j.demeyer@gmail.com>=
+ wrote:
+> > >> +    } else {
+> > >> +        fprintf(stderr,
+> > >> +                "unable to handle EFI zboot image with \"%.*s\" com=
+pression\n",
+> > >> +                (int)sizeof(header->compression_type) - 1,
+> > >> +                header->compression_type);
+> > >> +        return -1;
+> > >
+> > > Moving the "unrecognized compression type" error path down to
+> > > here means that we have moved it below the g_malloc() of the
+> > > data buffer, so we now need to g_free() to avoid a leak.
+> >
+> > Could we not declare:
+> >
+> >       g_autofree uint8_t *data =3D NULL;
+> >
+> > and drop the cleanup?
+>
+> You could, if you wanted to, convert the file to g_autofree, yes.
 
-Is there a way to determine whether a BAR is unimplememnted from the
-PCIDev in generic_fuzz.c:pci_enum so that we can skip the call to iomap?
+Whoops -- I meant "convert the function" here; I wasn't
+trying to suggest doing the whole file (which is probably
+a bad idea).
 
->
-> Signed-off-by: Navid Emamdoost <navidem@google.com>
-> ---
->  tests/qtest/libqos/pci.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->
-> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-> index a59197b992..df9e2a3993 100644
-> --- a/tests/qtest/libqos/pci.c
-> +++ b/tests/qtest/libqos/pci.c
-> @@ -541,6 +541,22 @@ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
->          addr &= PCI_BASE_ADDRESS_MEM_MASK;
->      }
->
-> +#ifdef CONFIG_FUZZ
-> +    /*
-> +     * During fuzzing runs, an unimplemented BAR (addr=0) is not a fatal
-> +     * error. This occurs when probing devices like the Q35 host bridge. We
-> +     * return gracefully to allow fuzzing to continue. In non-fuzzing builds,
-> +     * we retain the original g_assert() to catch unexpected behavior.
-> +     */
-> +    if (!addr) {
-> +        if (sizeptr) {
-> +            *sizeptr = 0;
-> +        }
-> +        memset(&bar, 0, sizeof(bar));
-> +        return bar;
-> +    }
-> +#endif
-> +
->      g_assert(addr); /* Must have *some* size bits */
->
->      size = 1U << ctz32(addr);
-> --
-> 2.51.0.710.ga91ca5db03-goog
->
->
+-- PMM
 
