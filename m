@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA70CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 19:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45ED7CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 19:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7ILl-0007sS-9X; Fri, 10 Oct 2025 15:00:21 -0400
+	id 1v7IOq-0000gV-1p; Fri, 10 Oct 2025 15:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7ILe-0007ka-IM
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:00:19 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1v7IOo-0000g8-DA
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:03:30 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7ILZ-0007FD-Dq
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:00:14 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-3383ac4d130so2219879a91.2
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 12:00:05 -0700 (PDT)
+ id 1v7IOe-0007Zt-Pf
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:03:30 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-33b5a3e8ae2so1707982a91.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 12:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760122803; x=1760727603; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760122995; x=1760727795; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dII3YCMmFJfOwzgKKwUEepN+hKWg1+cSCUCN/LWBbDY=;
- b=P1qzMagL21remZSCMkwEVldh7RsgZEaZ5GMLYghBuy9rkEADhytWc5Rwl5VE8ZXQNu
- +krOpIdV6vWGUoLS1cQwQcsehNR3oR8jjX2E93xCUu4Jzn85P0DOwZy+SYobcRjhfR56
- tMb3RrIuHT5Zf+ipbOG0hVwczj+QvaNcE2PKr481nX5MCI8e4+SzMWB+0m6I/qQB5HFZ
- eZ4zGB5VBcOv4ZhLUrembaIG6wXee9kW55fGwEUTmj57RcxVlesjp2hBSR5AFMzPvp4p
- XD+vZr+EP3vma+kCAyulgQWAVAI+DYCeJLjnaukMf0hLLq2l1nfkPQ1Mra86yv/9gTds
- tDHw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Y4bjIaIgFhpJYjshyQ+5nwUZ0nRqGq0a2Abz5FkDk6c=;
+ b=IupNUxBpfO4Vktbc+qPpbgyMfGo8cPQ9wXdQQf1wlFGNzEycRIdpv9D2sTroYAAgYp
+ dbyGFLkf8Dp9fPzNX0Bj0rl3wjmjUQteoSoDh0C4KrA8D+7MgJSt2JrzUFrMqtxw7yNX
+ 76YL9eEvOYuFaGHBQy7GVbdVv0k9MRUFgIVHZ8uPei7DOHUf7iVG3vEDxR0eFR1arW2C
+ MtbeAb7dQdehrQ8PR2EJ5wTlez17PlCP9oHt6roTaWdxlgNuju2EhCP/NLbQvxPN4r8s
+ 1OUym/szV4UtTwI8ttYVSP/NKtdMxdQyWhNsy64m/Ow+YO0QdAo9jSeJWB4XDutw176n
+ eb5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760122803; x=1760727603;
+ d=1e100.net; s=20230601; t=1760122995; x=1760727795;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dII3YCMmFJfOwzgKKwUEepN+hKWg1+cSCUCN/LWBbDY=;
- b=IAvbdapp1lM+5q+JvEZHPt2CtAvo/GJyAqZkkBorqqrEYPGWi82O+Ip+fqmmSH3HsO
- 2+6SHF3hJjP+hUM86I9pdUOHwfijBvfDZIdEQy8tcn3eVblHhaTeULU0TrjPlu7hMgZi
- L+sno2B/3odA4wlDfl5X06FYarF7xt/1RFOLmYcUmQozjY4FVXV04ThjxY4dhy3iUG7Z
- b78gRnL91VD1gN9DphH83yJAudSMKKyD0vlTUlccpbK6nZt7IIecNIJZQomHXs6VEur0
- lhB9CH2YjcesagL+hqag5V0M6Ua2gh3LgnAQ2rAkpkfotL6NzBGpWx1WApQRHyZ4JLvV
- PQYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6MNY6apQFr4cDMWmGlnw03MLiuyZwlYP2l0K4XBYjbjmEImFbX2tTlJ9fnOOd5vSeJRihO+6wTQRX@nongnu.org
-X-Gm-Message-State: AOJu0YzzKOQEVCe/WHIaiKCaCOlaN2Bn3zVh42M9K5CIygE1a0n33Tyo
- ZzSGd9QcbTzKAcHKsCNRByyr6DDHHAI6l8qQbVUMMTpJzcVGlEFMbDbr/g73ZWtjjWo=
-X-Gm-Gg: ASbGncvqmzdrBUd2eDwLSsvH5VUVuviT2N2PTIaFSykZ29kaMx95esrOOlqwxhTaj8b
- r6q7AemH9WF9gK34S5XtqISxU7F+IhVr0oH3Q7s6Jb5OzyyJ2qsS5sNgXLdz8PogJk/i6R7iCIp
- gmeJg6yfs+Uj0MMyjP9M9TblT0VnnQn+olLOp9eqvt/8nMEpl9m6zBKZN3nrhqrVhK4Og2ez9Qp
- fwwgcGngH1d/X7H4hL7t2v2l6B7c4GDIcVowesl97/djErz1OVN3+OB04HoTqgdkOxvqAuH4GkC
- K7GUNmbL8nf0KgalMBWJSNX/pSfzQx3IXdAa3rotHh4wtceRYvnk7JUk2o6Ak+imtH8Lm/+D64u
- WTNX5AJ6zYO2BaQjor2zz61tXwIzoiOG7713+8f1dyG+axez3FhStLIRn3yI=
-X-Google-Smtp-Source: AGHT+IG8T3y2IAHJ9wm2klPcpO8YNUinNByrbhM6YeIV1qdCJdd9TDY7o+Aao9g4sMVSV3x1h5Fv7Q==
-X-Received: by 2002:a17:90b:3ec1:b0:335:2823:3683 with SMTP id
- 98e67ed59e1d1-33b5111491amr17657166a91.9.1760122802995; 
- Fri, 10 Oct 2025 12:00:02 -0700 (PDT)
+ bh=Y4bjIaIgFhpJYjshyQ+5nwUZ0nRqGq0a2Abz5FkDk6c=;
+ b=jTb9FZnMXjLZ4gmEqiD0tclO+rXDyJ6giokJfY3eJVO0PiacKNagkVOiWfZQky9KBi
+ mqniSgW7yEWIjeXvbpgbj6/JJdIU6VMPj9loGiZotjZlQJ4acLfgRwgOS6J8JNX8t1pq
+ Cv2Vq5LiIiIi6yZ6EaUU6oJnchSiSp6my3LLFXYZ3QaFrxvAvpOep090FfxP1I6rmQCL
+ /DnKmFX8l9zaROed93eWeWD4xg6U1CtUk2PSA/grkpg+U/wHzxmWM85j/qzJMq+IOG4W
+ UYIfdDUsXDm6F7JQ5gH8jsagB4GYJ9GW72uG69zaEgBuu9aMnK2RIdoTSmGK4zkdwz9Y
+ UVGQ==
+X-Gm-Message-State: AOJu0YyLY0g2T0JEU1PstUJK3Snq/5QDBzbpZJvviY382azIpPERAZ82
+ IBFBfUqQPJP0ABeCOstRoNlRFQMX8jmyA5UiWeddQU8lvRkajofWKDvRuitbmLawTTwr2aL0OZ/
+ UGioDkic=
+X-Gm-Gg: ASbGnctAoY+zHMNKrq8Bp4LGTD7EfOAM5LmPQX/WvlGSSqh9HHO4Utl0pZuf3CT0GgI
+ aRImQfjaNgi9QjZKE/pVvBbdNvJmnX7aMLK/L4hQnhUOH2bLassLdt1LFc+3zOA/C05P4xpLXle
+ wgeyTeerFNroSRnV5xPKXkWSOpXS37eZlYre5W7dEixg9070ih6AMsFku49y+7U1z8VMXXyr50Z
+ BnmcETNz37cK+rTwCmRhrVfqFAZDEVBj+bu3Z5/LZZN5WQzV68kbtyoJ0AgAIBFa/UZ0UMZ/Ro7
+ BjXIlG3+mbOVoeSYXd+ERN3PvWjluid0qQnVI8ixdr2fNyA0D5arRZB8za5/wmgaEcUtPYcHw67
+ gywPahOrDCngndBYcQkdG13y4sTJII3ID8ja52h2K+GaMyy0Q5dZLOuTGFgM=
+X-Google-Smtp-Source: AGHT+IFw7U6hyzk0/JNoLA2LRSYbfgMvQw2147ATBxbxzOIC2kyrPonTDWHejP+9g0Jg84De27leew==
+X-Received: by 2002:a17:90b:384d:b0:32e:72bd:6d5a with SMTP id
+ 98e67ed59e1d1-33b51660472mr17364460a91.1.1760122994606; 
+ Fri, 10 Oct 2025 12:03:14 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33b626e8bf5sm3680585a91.23.2025.10.10.12.00.02
+ 98e67ed59e1d1-33b6262df70sm3771221a91.1.2025.10.10.12.03.14
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 12:00:02 -0700 (PDT)
-Message-ID: <41bd1de3-77cf-4d3e-aa16-0c93a52b805a@linaro.org>
-Date: Fri, 10 Oct 2025 12:00:01 -0700
+ Fri, 10 Oct 2025 12:03:14 -0700 (PDT)
+Message-ID: <5b5e10b1-cede-42da-91ae-72f2d5172116@linaro.org>
+Date: Fri, 10 Oct 2025 12:03:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/13] target/openrisc: Replace MO_TE -> MO_BE
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Stafford Horne <shorne@gmail.com>, Anton Johansson <anjo@rev.ng>
-References: <20251010070702.51484-1-philmd@linaro.org>
- <20251010070702.51484-12-philmd@linaro.org>
+Subject: Re: [PATCH v2] block/curl.c: Use explicit long constants in
+ curl_easy_setopt calls
+To: qemu-devel@nongnu.org
+References: <20251009141026.4042021-1-rjones@redhat.com>
+ <20251009141026.4042021-2-rjones@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251010070702.51484-12-philmd@linaro.org>
+In-Reply-To: <20251009141026.4042021-2-rjones@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,39 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 00:06, Philippe Mathieu-Daudé wrote:
-> We only build the OpenRISC targets using big endianness order:
+On 10/9/25 07:08, Richard W.M. Jones wrote:
+> curl_easy_setopt takes a variable argument that depends on what
+> CURLOPT you are setting.  Some require a long constant.  Passing a
+> plain int constant is potentially wrong on some platforms.
 > 
->    $ git grep TARGET_BIG_ENDIAN configs/targets/or1k-*
->    configs/targets/or1k-linux-user.mak:2:TARGET_BIG_ENDIAN=y
->    configs/targets/or1k-softmmu.mak:2:TARGET_BIG_ENDIAN=y
+> With warnings enabled, multiple warnings like this were printed:
 > 
-> Therefore the MO_TE definition always expands to MO_BE. Use the
-> latter to simplify.
+> ../block/curl.c: In function ‘curl_init_state’:
+> ../block/curl.c:474:13: warning: call to ‘_curl_easy_setopt_err_long’ declared with attribute warning: curl_easy_setopt expects a long argument [-Wattribute-warning]
+>    474 |             curl_easy_setopt(state->curl, CURLOPT_AUTOREFERER, 1) ||
+>        |             ^
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+> Signed-off-by: Chenxi Mao <maochenxi@bosc.ac.cn>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   target/openrisc/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-> index 6879a0cff80..a626ffaf25b 100644
-> --- a/target/openrisc/translate.c
-> +++ b/target/openrisc/translate.c
-> @@ -61,7 +61,7 @@ typedef struct DisasContext {
->   
->   static inline MemOp mo_endian(DisasContext *dc)
->   {
-> -    return MO_TE;
-> +    return MO_BE;
->   }
->   
->   static inline bool is_user(DisasContext *dc)
+>   block/curl.c               | 10 +++++-----
+>   contrib/elf2dmp/download.c |  4 ++--
+>   2 files changed, 7 insertions(+), 7 deletions(-)
 
-Add the same sort of 'little-endian enabled by SR[LEE]' comment that you did for RISC-V.
-
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks.  I directly applied this to master during the last PR batch.
 
 
 r~
