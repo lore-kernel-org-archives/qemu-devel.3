@@ -4,125 +4,191 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5598CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 03:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B83CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 03:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v73ld-0004OL-92; Thu, 09 Oct 2025 23:26:07 -0400
+	id 1v73zR-0006vB-Rn; Thu, 09 Oct 2025 23:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v73lb-0004O6-AK
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 23:26:03 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v73lU-00022q-FX
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 23:26:03 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-64a760e5281so527518eaf.3
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 20:25:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1760066746; x=1760671546; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SPCzBSe17DsVrG2R5Ia2ittybxehIqWLJkZuXUDr1QU=;
- b=YwxobI5EZD1Rx7bO9woka3RRi7BXzzJQbBpgXVJ7vsXGfISAphxbp6oh5TB5oO7es2
- q2n2lGYo3A9jzKtDk2vOXvq774y/g+v/ANNCveWx55FAwMgk4BkOi8/cppL34K+dkq3L
- Q64FNbC/wctwqz3Dq+YbYm6Fs+PGJGReKvEZ/Lg/LcddeSTcroaHcnh+a5JwET/wPm6Y
- iJ0l0zMDGgjjlUUxqakVNl4sdto7wriTguT0KlyfXwQ+VhsZ6ceYIOSp0XaPX6J06m81
- uBZVG5RVF+eGt//htx3jx2FRiUA8mjr9UThMWQfbCembPOOs1ue/mZl5V9wQ/fOwqe5z
- gK7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760066746; x=1760671546;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SPCzBSe17DsVrG2R5Ia2ittybxehIqWLJkZuXUDr1QU=;
- b=UKIPcq2gFD0f5vm5qrFJCnMd/jJ3x6S4XoFmzKgL/iochgz+a2FV4NfTm4fTLj9l99
- SGiLxg5TkPEz3N5BOOViu0XsBETYx+DZ+Dwhfre6xuCNeBGIT6uWM7+jZWaUou9jegI1
- Q9S6JJ3uMbk8o+jIcy46b/UIcyUpsrFutISUcqOhKiBVNrRkoAM1GLvG2mex8TWqE7jG
- BXmqKEaa9yAT6UnT5pWdZV4Tl7/eOJHC1MYHA65XmAV403ToBSjAksm6FwKVf5p94Sw2
- ndULKTgDph9Dz1XGHx5iQWu4SLouxIjv1Wukn71VawFiWjj+N6WGarCxGEAbg1acdbLK
- pHtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/fSuPeh5UIGAHuWj3IDzqTWHRLJPaZkZLOJ2uoJ1BtGqkszZBpaQEq+tg8cUVgB0/+JRXk8tMsqdq@nongnu.org
-X-Gm-Message-State: AOJu0YyPffD8cjjhFxYLbtOiD7Stcy5sLGjBK1Irz/uQtaBagtiHPDiw
- +VdZtYHQfrASNSBlE8Q/AgtK23iBsR71F1fbvKggWnUmUZUQsZSJuBNWghP81uY+hh/gXSbOqS4
- bwyIbPiSvZBPD0m+cTcOPkvPIBdX8BIzjP+zH9dfDCg==
-X-Gm-Gg: ASbGncvuCOQPJmZoRpqsQB0+3Sfs9Sju/FBvjmbhIvozJf+TEoKpIF1xLR+AAFJKTyO
- FRXLUV1qioOUjzs4ho4KwM+MrSeA+mNglI7UydyDWUfXNZZwDxUWBU4T4AqQLJtO2W+s2ZkRZGm
- BUCZ38bMbAYOuSw9TXfvk8ZFSdWD7Any8n31gUls7ux7QEBqo3+0j1nkeHgakXa6KPX4Y9hlElo
- pWjmB1nye6qBCNfQuxterRHntflxqlZoRvMiAecMSSWzP+LSTiy2nA/AIBJ8iktfl2m4eMC0LSE
- aeRod6w=
-X-Google-Smtp-Source: AGHT+IG575vTzMyASoOISYjPyi7VfaFwime2AUtrub30U3ncG6O0D5PvBnMwHnz86GMQpUihKD+t+GnEcnJM7Zn7Itk=
-X-Received: by 2002:a05:6870:17a0:b0:332:8989:4ef8 with SMTP id
- 586e51a60fabf-3c0f6d386c8mr4127622fac.31.1760066746452; Thu, 09 Oct 2025
- 20:25:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1v73zL-0006ul-Af
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 23:40:16 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1v73zC-0004uC-5O
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 23:40:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760067606; x=1791603606;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=HQAsbuvg9VmAao25pFkoypfyAFRGy7LDKKPMnu7OGIg=;
+ b=h7yjjrrfRHNv6kHXxq4LlQFTPknpRf+6tsCpGhf6ixE2tgX4yVsncvFn
+ ThkAksUmlxygsOPfke8TXcQywRjGnuorZDwHWNNH8f/gvcN1rPAcASSvg
+ GQ2jO9xGN+pqbK0zm6lOz+vGzGriLl+1QEqH/2V3HwHjYe15IliPbxO5T
+ 9p4GeTEkouTf6BpyOkslLb3AIMWNjpF7qANsmaHGUJo1jia6JL0AbTVGW
+ 4dcxSHQ8rug1HJWXOE+Hp3z6hFZhyB3a3CBwNh2r0Ow8fBhj2kmH6VBjv
+ SzZVALh9bfMKgiU2oDbrO1seoeCz8yPUgWKr61GuvDDbFhwBbI5a3Uhzr w==;
+X-CSE-ConnectionGUID: 3AYi40HvTGOY2qxcmVwKYw==
+X-CSE-MsgGUID: kYpoxOh9QPy1/Qmnx76Jog==
+X-IronPort-AV: E=McAfee;i="6800,10657,11577"; a="72900547"
+X-IronPort-AV: E=Sophos;i="6.19,218,1754982000"; d="scan'208";a="72900547"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2025 20:39:55 -0700
+X-CSE-ConnectionGUID: DOqN+rOBR8aClsuRT+3+Sg==
+X-CSE-MsgGUID: YZlEQPW2TzaMdOKzRb56pw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,218,1754982000"; d="scan'208";a="186136878"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2025 20:39:54 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 9 Oct 2025 20:39:53 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Thu, 9 Oct 2025 20:39:53 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.69)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 9 Oct 2025 20:39:53 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Gf+T4I3DraYG32AiNfjcesMwQc3yxgehYrGTYcq8tgEo3odrYJ9V/Dbqu/6NVCWjBuObqpZUZ7tWb92QYVMNbXrD0ETonD9UFiXuL81zoTfMxe3eKBxBWJdelq3BeM+YbveIuoxNSquWSAmbFCGVBX1bEi7nwoMvsbF74pQC0SkJjkKP4EBxG8Fh0Dk6VwD8ZrL4Bg3UyOC9pxeXfKPv0WrGnnvlbcFwBcTBg45H9b5msmqC9TB5lWLnBGelvOM08tH2Kvpxxc6rOzumretgJcfz+2LMYB4HPeMmtJD6UjQ05mT3+02c2b3gnE0vV2U8iXvrR2pJsj9q1b0XHYL1mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Cz2p40zrKZirw9z1KC8w/yj6ksIN545MN65NEO/CumI=;
+ b=VoRAlZi+IT8wL1GRHYL9mn3PhiP1l3lT1aa3yQwJcGeSN6l+GRyrGzVN7Fvi6cfR3OKMsj2y7ylG1aDfbMc8wqZAlibF2DbhnTAzKjFA6IzH6nrbCJRl48agMQ8zVRkWycmg/LTpWZjn57KurgB1XUzVq2v0XsAaep2Xl71xXJ/Wo6BrskCATbAXbaoO+oB/m2jE2cPM6x6uzScBx2J2zB08RYgNwzKczwxV/zEljA9d5QtclAVsjF9W+grlSXwWLVHy0INjPA354OncIKQgRsWdlxU0VKxgY0j84lzN9UFtGdldMPXI9D7NfohvIEOqEtnAETSA+/f/5nwHWVHbWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by SJ2PR11MB7670.namprd11.prod.outlook.com (2603:10b6:a03:4c3::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.10; Fri, 10 Oct
+ 2025 03:39:44 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9115.020; Fri, 10 Oct 2025
+ 03:39:44 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Steven Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: RE: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+ "query-balloon" after CPR transfer
+Thread-Topic: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+ "query-balloon" after CPR transfer
+Thread-Index: AQHcMFWngtFRdKHVOkWcXMje/gJxi7SqMJYAgADkn4CAAJxjAIAHrvKAgAaL8oCAAOC1QA==
+Date: Fri, 10 Oct 2025 03:39:44 +0000
+Message-ID: <IA3PR11MB913681216249C2C6EDD7F86F92EFA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250928085432.40107-1-zhenzhong.duan@intel.com>
+ <20250928085432.40107-7-zhenzhong.duan@intel.com>
+ <1ba0dbca-08b2-4f80-ba12-01884a25ef0d@oracle.com>
+ <IA3PR11MB913635F06F6522102D8FC15D921AA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <78df77e2-43a6-48d6-b09e-fcc61a662b6e@oracle.com>
+ <IA3PR11MB9136EF2C01DAB2C2EA261CC092E1A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <ab688cce-283d-4541-b7ca-be651085979e@oracle.com>
+In-Reply-To: <ab688cce-283d-4541-b7ca-be651085979e@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SJ2PR11MB7670:EE_
+x-ms-office365-filtering-correlation-id: e32893ba-232e-4992-58ea-08de07aea768
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?S8xivm2tVFxkdrxJPaKk+FvBIOrNV3Z1uov/QXlDGsKAyQuqhhhiAG5VOcz8?=
+ =?us-ascii?Q?1UQxN4XZfVhZraswAUMPkChLcbUcdgf2LG6cKMOfM2aDdJBm+h5U5wdCX0Vb?=
+ =?us-ascii?Q?2wTTE8WihCYwX31z4/qzxVjWWd97CEtvUfDp+TxICNI8F7hzgNNT+idGqClg?=
+ =?us-ascii?Q?Qb9f+YlQg2WzAGS/FOUWtzdm6mr/+B0NSYpBdm60h5VXSHcWFtRk2XKnrkJb?=
+ =?us-ascii?Q?GGrCprln9EmdJVRN9vQSenmwiHtacsC7lOufciStSwhG8rCkG7wd6HkcuN0x?=
+ =?us-ascii?Q?K/O4drD8ij5B9NfNPh+Bn52JRKJVR7qq/RSBdMkVNywk1FYlBFxqmslgM6n1?=
+ =?us-ascii?Q?o/WfVGecIXqokGAwMNCAQwbotzoQGJblQrGluhe6BdQTe/WmJFg7kn+dttNa?=
+ =?us-ascii?Q?RzFqUfpGnxrA7Wb3dGohpdGXgkrcPnhs1CQoMoTDM5MQZghwf+47zuGV55Uq?=
+ =?us-ascii?Q?X6GQd+95ITThPNkULTRbdFSQ0T7e4dTrPrBjmLgOj00aD5kFqJITFF/yfaSY?=
+ =?us-ascii?Q?vum/n3ci6jOvl1B3RbabNV265COEgnbzhRKyU5G3djbOXcTVBxFxMmug9/ex?=
+ =?us-ascii?Q?2XXU/FGg1ybF9dm2tdGsn5WsPwZHD7Ge067LZM5wX65aqOXJgebjGXO6272J?=
+ =?us-ascii?Q?His7+kDrZJbQ9gSAibeD3ZzNO3Bv/MfS+o4isuYcAWv+fSdBth2t/frDzu35?=
+ =?us-ascii?Q?sHkoJlbknHPni6Ffib1hdB2ew1RDLpAFHtLecksNPu9QVSvppRQzWTwTRTcJ?=
+ =?us-ascii?Q?hErnfXVwLu+TT78yUfxqJU3M94XyHgCJm+wldbT87hh5PnUv5muWYfBNJOFx?=
+ =?us-ascii?Q?8jKtzPNwnnDVxi8YYBiYD3AehgqAY2V8bhVxyYf7kzHMyZSjFSlQ5er6Fabr?=
+ =?us-ascii?Q?CMjaVAIrKIoGk1ZFqEY+oaDlMr7sJgfCDQ6pQ30S/XH65PaDNyS/whEpSO91?=
+ =?us-ascii?Q?V5PKxKGQy3l1JPsTw98Zv0OGsf5J1MMf+3bgtonxTMklGpq/oPoTSsN5r/6b?=
+ =?us-ascii?Q?OxkqDxekjbE2/zXlG1/embzHazNFGfvtNDO1nFrT3PDOVNf/jq977e6iNR/F?=
+ =?us-ascii?Q?AJnVT32O4Mf7bOAABoCnefzuQ0ku6h9UnSMKfKPpEe+sdZ5rQKhXxSlgEA9Y?=
+ =?us-ascii?Q?dP/Xq3953apDYK6DOTVQE5gfr4+7ZmFd/gL7rfdgKPsMpBFrwD016SfXCIOh?=
+ =?us-ascii?Q?dsIHPOmaCfZDke+alyrliBnZxMOhmwfu2rD7bkM1qHJXeW9/XGZetb6rJjqA?=
+ =?us-ascii?Q?rrxku00/9nLjyM51i3elnKXfC9x6F0Yla1ZBn3YT1yAB7ZEhEa5BmNBRkV7i?=
+ =?us-ascii?Q?nIRDpZ5aLh4NOeiJwwh9mJIKYp99gHUP+rWoyjarwn6F+U/aaxcNxatMY29F?=
+ =?us-ascii?Q?/pcXpj6rnd06Y4XgrSMEw6paj3OtviVST8lUACL/myaASxo5gUJYXBUOBDhA?=
+ =?us-ascii?Q?7BQVVTO0Eec02mApWd1zJLeSTdf1fwwo4KoA2qz0/0hHWIjJt7Or6i3oSdLT?=
+ =?us-ascii?Q?oBxBaSB/wvWOaBVqkcWTzIys71EU8F0PYAcu?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Z1VqpbybnrQKb/jjBYj6H/MkzjJyWDTnasljphawIFcl/paqyr6sAj6UTJWe?=
+ =?us-ascii?Q?BSaATGrWTOzCnkwgFCro+LIOdjfqOsE5lxkoXKXctZuNIHh34ZCumvEFrUAd?=
+ =?us-ascii?Q?fVGBcIrIKcr5EXS9wqL/TBB/KsxEPx2nB4kK2eIPMzqA4dnP2hyCG91gXG0i?=
+ =?us-ascii?Q?vqaChpJLM2fQuV42O6HbV9obXV/B3MNBBearoZldorsiEVLa7XGXy8ZF6PRR?=
+ =?us-ascii?Q?Ufkpfzm54ukWDBh938ER3qGTxFzHhYl0/V3nChccUD76rZh+g8W2RbZ6D3vX?=
+ =?us-ascii?Q?/WDRRSBM82fQCzfOtg9RbbbJXhvif7IC9Fr6U+4tHl6MOgNB1dFzftIbXFWn?=
+ =?us-ascii?Q?KYY0XvhwwSFc5HMAmD5zkDC66qD/koz4IpJewIfUF6ro6CtNp6TKtG0sDLDs?=
+ =?us-ascii?Q?EES/LWdEZ50EsF+lWheDqMmWCNXgYG5Gv1Zfc2lat8nkLkg2oxpJjnGMBvR9?=
+ =?us-ascii?Q?gq3BEruRiRvBE/f8yFK7CP6YpewryEAtV/UGqvV3dXYd8nM0brSl6x3tWvOQ?=
+ =?us-ascii?Q?mGabS5jrhvmDfdOoEyowaXXHANd4UqlaXnVLjL84egoZU91IZ40Ph56BFD4n?=
+ =?us-ascii?Q?qScEJA+gqLruX0JvHkvWXeqZHDqsgPXe0xHIKZbA4dhwU9zezwqm9VzhROfJ?=
+ =?us-ascii?Q?jODMG+vbu1bIRY4pGIbQg7VziDLbMvbgq2GnvMehPeB19R4CEXykb+g1GhEz?=
+ =?us-ascii?Q?wO4pkdz27ioRxF/13xmtLN8rVK/MJMKOWot72bUdwiJoWlOdne/h4qR2FRNn?=
+ =?us-ascii?Q?RGLn+ORTwUj/bkg3NvuD87dAgKxESgRaFNgA4HllpR9N5GUTP8xll3aIV6Se?=
+ =?us-ascii?Q?LindNgnu4oBIl0NiQuElMmFSl5cC+CjoMWLfVTp0sO5PDeONXimyqAzc/UIX?=
+ =?us-ascii?Q?ErI3KAMaZCRQxxqyXQzXJ4i7biYGVTmE/YSglNC4RDK7bTEw40qEXqbn9zVl?=
+ =?us-ascii?Q?r8neAmLMVJN4fwnvJTiBY+wl8bUhozvT5OwsHmzxi0FiVHZrOzuUdm4HXN7D?=
+ =?us-ascii?Q?r1nS/ZvcRY2G7EfH67wHeGsjECgttZ8y8bob/34WnWSE9HbO5VfVaXXazhTY?=
+ =?us-ascii?Q?Fd2OF0SetEt3Pvj8S1OvZB1pOVXan33yHFTHToGPIo9QQheWR6y+3QxKvvKN?=
+ =?us-ascii?Q?NU59PrRiwZhAPIdrSWfL7qce4acAk1ZZBwKzAXiAAwPaP+Dg4PsPua/tOASQ?=
+ =?us-ascii?Q?1ZcTELbHg7g3fTQNUc4mekmsia5F89RQzAqv5DkOciJn982nRLfmHerEr8XP?=
+ =?us-ascii?Q?MzlbzN8OYKdck94ZyFpPLoVrG76p1dbcFIiZ2H6Yi3u2apK1YPklt/N25HlW?=
+ =?us-ascii?Q?seqA9X6o9wWHsca27rNLCK+BFGPqCoGaNB0qfApzKRb4sn0/BSQ+wqryB4vg?=
+ =?us-ascii?Q?BXk7mZVmMUUJ4dM9i6srLNKTh/RM7V7QVxj7wigc5yqT+St9Ayd7aZXVfY2z?=
+ =?us-ascii?Q?iNx+4ytAfTlnkUoV5zNt+dpBJfGxwTA1cIdpHBJiZkMtTvqoo7blTVfm9r73?=
+ =?us-ascii?Q?BtB9fxbzyvrCuA9tDZNKcS5lBST1L5tlJpBis/ISpUMaZ66rfS/FjU6ofvLh?=
+ =?us-ascii?Q?NFKsuquRK/HQKjA875wBMYRQCLoWlnUBZ7FG8yS2?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20250930224037.224833-1-salil.mehta@huawei.com>
- <871pndlgi7.fsf@pond.sub.org>
- <6A8391B8-5E75-49B0-834B-00183BA4CF3E@oracle.com>
- <87bjmgiqbx.fsf@pond.sub.org>
- <FC06F103-13EB-4928-8170-310E0675416B@oracle.com>
-In-Reply-To: <FC06F103-13EB-4928-8170-310E0675416B@oracle.com>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Fri, 10 Oct 2025 03:25:35 +0000
-X-Gm-Features: AS18NWBx9gY4c3ULkiZEJ7fBE8Q0kD_hZnmjYTP1k_GgnLCYamswBve8Bo_dGys
-Message-ID: <CAJ7pxeYoVbV-3isfcmmzeBQN46Gn=YzarnAhBbTra7wU2VrNyw@mail.gmail.com>
-Subject: Re: [PATCH RFC V6 00/24] Support of Virtual CPU Hotplug-like Feature
- for ARMv8+ Arch
-To: Miguel Luis <miguel.luis@oracle.com>
-Cc: Markus Armbruster <armbru@redhat.com>, Salil Mehta <salil.mehta@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org" <maz@kernel.org>, 
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>, 
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>, 
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, 
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>, 
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>, 
- "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, 
- "will@kernel.org" <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>, 
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, 
- "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
- "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>, 
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, 
- "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>,
- "npiggin@gmail.com" <npiggin@gmail.com>, 
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>, 
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>, 
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>, 
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>, 
- "gankulkarni@os.amperecomputing.com" <gankulkarni@os.amperecomputing.com>,
- Karl Heubaum <karl.heubaum@oracle.com>, 
- "zhukeqian1@huawei.com" <zhukeqian1@huawei.com>, 
- "wangxiongfeng2@huawei.com" <wangxiongfeng2@huawei.com>, 
- "wangyanan55@huawei.com" <wangyanan55@huawei.com>, 
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "linuxarm@huawei.com" <linuxarm@huawei.com>, 
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "maobibo@loongson.cn" <maobibo@loongson.cn>, 
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>, 
- "zhao1.liu@intel.com" <zhao1.liu@intel.com>
-Content-Type: multipart/alternative; boundary="0000000000003428b10640c579de"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e32893ba-232e-4992-58ea-08de07aea768
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Oct 2025 03:39:44.6966 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: q5oehQe7K9J1gSOwNQE2XW2qHjfdXWx8BLPY1ACSZ8kWiLoDHXDV7MutwH7qgy2qbHOKKu8xWL/p1HA7XZxy+fHq5sTDCMdj9YK/euiqO/I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7670
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,292 +204,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003428b10640c579de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-HI Miguel,
 
 
+>-----Original Message-----
+>From: Steven Sistare <steven.sistare@oracle.com>
+>Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+>"query-balloon" after CPR transfer
+>
+>On 10/8/2025 6:22 AM, Duan, Zhenzhong wrote:
+>>
+>>
+>>> -----Original Message-----
+>>> From: Steven Sistare <steven.sistare@oracle.com>
+>>> Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+>>> "query-balloon" after CPR transfer
+>>>
+>>> On 9/30/2025 2:00 AM, Duan, Zhenzhong wrote:
+>>>>> -----Original Message-----
+>>>>> From: Steven Sistare <steven.sistare@oracle.com>
+>>>>> Subject: Re: [PATCH v2 6/6] accel/kvm: Fix SIGSEGV when execute
+>>>>> "query-balloon" after CPR transfer
+>>>>>
+>>>>> On 9/28/2025 4:54 AM, Zhenzhong Duan wrote:
+>>>>>> After CPR transfer, source QEMU closes kvm fd and sets kvm_state to
+>>>>> NULL,
+>>>>>> "query-balloon" will check kvm_state->sync_mmu and trigger NULL
+>>> pointer
+>>>>>> reference.
+>>>>>>
+>>>>>> We don't need to NULL kvm_state as all states in kvm_state aren't
+>>> released
+>>>>>> actually. Just closing kvm fd is enough so we could still query stat=
+es
+>>>>>> through "query_*" qmp command.
+>>>>>
+>>>>> IMO this does not make sense.  Much of the state in kvm_state was
+>>> derived
+>>>> >from ioctl's on the descriptors, and closing them invalidates it.  As=
+king
+>>>>> historical questions about what used to be makes no sense.
+>>>>
+>>>> You also have your valid point.
+>>>>
+>>>>>
+>>>>> Clearing kvm_state and setting kvm_allowed=3Dfalse would be a safer f=
+ix.
+>>>
+>>> Setting kvm_allowed=3Dfalse causes kvm_enabled() to return false which
+>should
+>>> prevent kvm_state from being dereferenced anywhere:
+>>>
+>>>      #define kvm_enabled()           (kvm_allowed)
+>>>
+>>>    Eg for the balloon:
+>>>
+>>>      static bool have_balloon(Error **errp)
+>>>      {
+>>>          if (kvm_enabled() && !kvm_has_sync_mmu()) {
+>>
+>> OK, will do, clearing kvm_allowed is a good idea.
+>>
+>> Currently there are two qmp commands "query-balloon" and
+>"query-cpu-definitions"
+>> causing SIGSEGV after CPR-transfer, clearing kvm_allowed helps for both.
+>> But clearing both kvm_allowed and kvm_state cause SIGSEGV on
+>"query-cpu-definitions".
+>>
+>> I'll send a patch to clearing only kvm_allowed if you are fine with it.
+>
+>I still don't love the idea.  kvm_state is no longer valid.
 
-On Thu, Oct 9, 2025 at 9:18=E2=80=AFAM Miguel Luis <miguel.luis@oracle.com>=
- wrote:
+OK, what about another idea to not call vfio_cpr_kvm_close_notifier() for c=
+pr-transfer, like below:
+
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -197,7 +197,7 @@ void vfio_cpr_add_kvm_notifier(void)
+     if (!kvm_close_notifier.notify) {
+         migration_add_notifier_modes(&kvm_close_notifier,
+                                      vfio_cpr_kvm_close_notifier,
+-                                     MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_E=
+XEC,
++                                     MIG_MODE_CPR_EXEC,
+                                      -1);
+     }
+ }
+
+The close_kvm_after_cpr is only for cpr-exec, with this change, we are in s=
+ame situation as live migration and can run all qmp commands same as after =
+live migration.
 
 >
->
-> > On 9 Oct 2025, at 05:42, Markus Armbruster <armbru@redhat.com> wrote:
-> >
-> > Miguel Luis <miguel.luis@oracle.com> writes:
-> >
-> >> Hi Markus,
-> >>
-> >>> On 8 Oct 2025, at 12:33, Markus Armbruster <armbru@redhat.com> wrote:
-> >>>
-> >>> Salil Mehta <salil.mehta@huawei.com> writes:
-> >>>
-> >>> [...]
-> >>>
-> >>>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>> (VIII) Repositories
-> >>>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>>
-> >>>> (*) Latest Qemu RFC V6 (Architecture Specific) patch set:
-> >>>>   https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v6
-> >>>
-> >>> Does not compile for me (x86_64 box running Fedora 41):
-> >>>
-> >>>   [...]
-> >>>
-> >>>   FAILED: qemu-system-loongarch64
-> >>>   cc -m64 @qemu-system-loongarch64.rsp
-> >>>   /usr/bin/ld:
-> libsystem.a.p/hw_acpi_generic_event_device.c.o:(.data.rel+0x50): undefine=
-d
-> reference to `vmstate_cpu_ospm_state'
-> >>>   collect2: error: ld returned 1 exit status
-> >>>   [6757/7232] Linking target qemu-system-mips64
-> >>>   [6758/7232] Generating docs/QEMU manual with a custom command
-> >>>   FAILED: docs/docs.stamp
-> >>>   /usr/bin/env CONFDIR=3Detc/qemu
-> /work/armbru/qemu/bld/pyvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=3D=
-1 -j
-> auto -Dversion=3D10.1.50 -Drelease=3D -Ddepfile=3Ddocs/docs.d
-> -Ddepfile_stamp=3Ddocs/docs.stamp -b html -d
-> /work/armbru/qemu/bld/docs/manual.p /work/armbru/qemu/docs
-> /work/armbru/qemu/bld/docs/manual
-> >>>   /work/armbru/qemu/docs/../include/hw/qdev-core.h:190: warning:
-> Function parameter or member 'admin_power_state_supported' not described =
-in
-> 'DeviceClass'
-> >>>   /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum
-> value 'DEVICE_ADMIN_POWER_STATE_ENABLED' not described in enum
-> 'DeviceAdminPowerState'
-> >>>   /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum
-> value 'DEVICE_ADMIN_POWER_STATE_DISABLED' not described in enum
-> 'DeviceAdminPowerState'
-> >>>   /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum
-> value 'DEVICE_ADMIN_POWER_STATE_REMOVED' not described in enum
-> 'DeviceAdminPowerState'
-> >>>   /work/armbru/qemu/docs/../include/hw/qdev-core.h:269: warning: Enum
-> value 'DEVICE_ADMIN_POWER_STATE_MAX' not described in enum
-> 'DeviceAdminPowerState'
-> >>>   1 warnings as Errors
-> >>>
-> >>>   Warning, treated as error:
-> >>>   kernel-doc 'perl /work/armbru/qemu/docs/../scripts/kernel-doc -rst
-> -enable-lineno -sphinx-version 7.3.7 -Werror
-> /work/armbru/qemu/docs/../include/hw/qdev-core.h' failed with return code=
- 1
-> >>>   [6759/7232] Linking target qemu-system-i386
-> >>>   FAILED: qemu-system-i386
-> >>>   cc -m64 @qemu-system-i386.rsp
-> >>>   /usr/bin/ld:
-> libsystem.a.p/hw_acpi_generic_event_device.c.o:(.data.rel+0x50): undefine=
-d
-> reference to `vmstate_cpu_ospm_state'
-> >>>   collect2: error: ld returned 1 exit status
-> >>>
-> >>>   [...]
-> >>>
-> >>>   [6874/7232] Linking target qemu-system-x86_64
-> >>>   FAILED: qemu-system-x86_64
-> >>>   cc -m64 @qemu-system-x86_64.rsp
-> >>>   /usr/bin/ld:
-> libsystem.a.p/hw_acpi_generic_event_device.c.o:(.data.rel+0x50): undefine=
-d
-> reference to `vmstate_cpu_ospm_state'
-> >>>   collect2: error: ld returned 1 exit status
-> >>>
-> >>
-> >> I=E2=80=99ve had that same issue although it got compiled for me addin=
-g
-> ACPI_CPU_OSPM_INTERFACE for MICROVM:
-> >>
-> >> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-> >> index 3a0e2b8ebb..29d9b09486 100644
-> >> --- a/hw/i386/Kconfig
-> >> +++ b/hw/i386/Kconfig
-> >> @@ -133,6 +133,7 @@ config MICROVM
-> >>     select VIRTIO_MMIO
-> >>     select ACPI_PCI
-> >>     select ACPI_HW_REDUCED
-> >> +    select ACPI_CPU_OSPM_INTERFACE
-> >>     select PCI_EXPRESS_GENERIC_BRIDGE
-> >>     select USB_XHCI_SYSBUS
-> >>     select I8254
-> >>
-> >> Miguel
-> >
-> > Thanks for the hint.  I additionally need a similar change to
-> > hw/loongarch/Kconfig, and comment hackery in hw/qdev-core.h.
->
-> It seems that every arch selecting ACPI_HW_REDUCED must also select
-> ACPI_CPU_OSPM_INTERFACE or it fails building otherwise.
->
+>It sounds like "query-cpu-definitions" is missing a check for kvm_enabled(=
+).
 
-Thanks for debugging this.  Something is not right about this dependency.
+Yes.
 
-
->
-> >
-> >>
-> >>>   [...]
-> >>>
-> >>>   ninja: build stopped: cannot make progress due to previous errors.
-> >>>   make: *** [Makefile:168: run-ninja] Error 1
-> >>>   make: Target 'all' not remade because of errors.
-> >>>   make: Leaving directory '/work/armbru/qemu/bld'
-> >>>
-> >>> [...]
-> >>>
-> >
->
->
-
---0000000000003428b10640c579de
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">HI Miguel,<div><br></div><div><br></div><=
-/div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Thu, Oct 9, 2025 at 9:18=E2=80=AFAM Miguel Luis &lt=
-;<a href=3D"mailto:miguel.luis@oracle.com">miguel.luis@oracle.com</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-&gt; On 9 Oct 2025, at 05:42, Markus Armbruster &lt;<a href=3D"mailto:armbr=
-u@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; Miguel Luis &lt;<a href=3D"mailto:miguel.luis@oracle.com" target=3D"_b=
-lank">miguel.luis@oracle.com</a>&gt; writes:<br>
-&gt; <br>
-&gt;&gt; Hi Markus,<br>
-&gt;&gt; <br>
-&gt;&gt;&gt; On 8 Oct 2025, at 12:33, Markus Armbruster &lt;<a href=3D"mail=
-to:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt; wrote:<br=
->
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt; Salil Mehta &lt;<a href=3D"mailto:salil.mehta@huawei.com" targ=
-et=3D"_blank">salil.mehta@huawei.com</a>&gt; writes:<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt; [...]<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;&gt; =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<=
-br>
-&gt;&gt;&gt;&gt; (VIII) Repositories<br>
-&gt;&gt;&gt;&gt; =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<=
-br>
-&gt;&gt;&gt;&gt; <br>
-&gt;&gt;&gt;&gt; (*) Latest Qemu RFC V6 (Architecture Specific) patch set:<=
-br>
-&gt;&gt;&gt;&gt;=C2=A0 =C2=A0<a href=3D"https://github.com/salil-mehta/qemu=
-.git" rel=3D"noreferrer" target=3D"_blank">https://github.com/salil-mehta/q=
-emu.git</a> virt-cpuhp-armv8/rfc-v6<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt; Does not compile for me (x86_64 box running Fedora 41):<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[...]<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0FAILED: qemu-system-loongarch64 <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0cc -m64 @qemu-system-loongarch64.rsp<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/usr/bin/ld: libsystem.a.p/hw_acpi_generic_event_d=
-evice.c.o:(.data.rel+0x50): undefined reference to `vmstate_cpu_ospm_state&=
-#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0collect2: error: ld returned 1 exit status<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[6757/7232] Linking target qemu-system-mips64<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[6758/7232] Generating docs/QEMU manual with a cus=
-tom command<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0FAILED: docs/docs.stamp <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/usr/bin/env CONFDIR=3Detc/qemu /work/armbru/qemu/=
-bld/pyvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=3D1 -j auto -Dversion=
-=3D10.1.50 -Drelease=3D -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs=
-.stamp -b html -d /work/armbru/qemu/bld/docs/manual.p /work/armbru/qemu/doc=
-s /work/armbru/qemu/bld/docs/manual<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/work/armbru/qemu/docs/../include/hw/qdev-core.h:1=
-90: warning: Function parameter or member &#39;admin_power_state_supported&=
-#39; not described in &#39;DeviceClass&#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/work/armbru/qemu/docs/../include/hw/qdev-core.h:2=
-69: warning: Enum value &#39;DEVICE_ADMIN_POWER_STATE_ENABLED&#39; not desc=
-ribed in enum &#39;DeviceAdminPowerState&#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/work/armbru/qemu/docs/../include/hw/qdev-core.h:2=
-69: warning: Enum value &#39;DEVICE_ADMIN_POWER_STATE_DISABLED&#39; not des=
-cribed in enum &#39;DeviceAdminPowerState&#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/work/armbru/qemu/docs/../include/hw/qdev-core.h:2=
-69: warning: Enum value &#39;DEVICE_ADMIN_POWER_STATE_REMOVED&#39; not desc=
-ribed in enum &#39;DeviceAdminPowerState&#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/work/armbru/qemu/docs/../include/hw/qdev-core.h:2=
-69: warning: Enum value &#39;DEVICE_ADMIN_POWER_STATE_MAX&#39; not describe=
-d in enum &#39;DeviceAdminPowerState&#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A01 warnings as Errors<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0Warning, treated as error:<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0kernel-doc &#39;perl /work/armbru/qemu/docs/../scr=
-ipts/kernel-doc -rst -enable-lineno -sphinx-version 7.3.7 -Werror /work/arm=
-bru/qemu/docs/../include/hw/qdev-core.h&#39; failed with return code 1<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[6759/7232] Linking target qemu-system-i386<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0FAILED: qemu-system-i386 <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0cc -m64 @qemu-system-i386.rsp<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/usr/bin/ld: libsystem.a.p/hw_acpi_generic_event_d=
-evice.c.o:(.data.rel+0x50): undefined reference to `vmstate_cpu_ospm_state&=
-#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0collect2: error: ld returned 1 exit status<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[...]<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[6874/7232] Linking target qemu-system-x86_64<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0FAILED: qemu-system-x86_64 <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0cc -m64 @qemu-system-x86_64.rsp<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0/usr/bin/ld: libsystem.a.p/hw_acpi_generic_event_d=
-evice.c.o:(.data.rel+0x50): undefined reference to `vmstate_cpu_ospm_state&=
-#39;<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0collect2: error: ld returned 1 exit status<br>
-&gt;&gt;&gt; <br>
-&gt;&gt; <br>
-&gt;&gt; I=E2=80=99ve had that same issue although it got compiled for me a=
-dding ACPI_CPU_OSPM_INTERFACE for MICROVM:<br>
-&gt;&gt; <br>
-&gt;&gt; diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig<br>
-&gt;&gt; index 3a0e2b8ebb..29d9b09486 100644<br>
-&gt;&gt; --- a/hw/i386/Kconfig<br>
-&gt;&gt; +++ b/hw/i386/Kconfig<br>
-&gt;&gt; @@ -133,6 +133,7 @@ config MICROVM<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0select VIRTIO_MMIO<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0select ACPI_PCI<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0select ACPI_HW_REDUCED<br>
-&gt;&gt; +=C2=A0 =C2=A0 select ACPI_CPU_OSPM_INTERFACE<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0select PCI_EXPRESS_GENERIC_BRIDGE<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0select USB_XHCI_SYSBUS<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0select I8254<br>
-&gt;&gt; <br>
-&gt;&gt; Miguel<br>
-&gt; <br>
-&gt; Thanks for the hint.=C2=A0 I additionally need a similar change to<br>
-&gt; hw/loongarch/Kconfig, and comment hackery in hw/qdev-core.h.<br>
-<br>
-It seems that every arch selecting ACPI_HW_REDUCED must also select ACPI_CP=
-U_OSPM_INTERFACE or it fails building otherwise.<br></blockquote><div><br><=
-/div><div>Thanks for debugging this.=C2=A0 Something is not right about thi=
-s dependency.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-<br>
-&gt; <br>
-&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0[...]<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt;=C2=A0 =C2=A0ninja: build stopped: cannot make progress due to =
-previous errors.<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0make: *** [Makefile:168: run-ninja] Error 1<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0make: Target &#39;all&#39; not remade because of e=
-rrors.<br>
-&gt;&gt;&gt;=C2=A0 =C2=A0make: Leaving directory &#39;/work/armbru/qemu/bld=
-&#39;<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt; [...]<br>
-&gt;&gt;&gt; <br>
-&gt; <br>
-<br>
-</blockquote></div></div>
-
---0000000000003428b10640c579de--
+Thanks
+Zhenzhong
 
