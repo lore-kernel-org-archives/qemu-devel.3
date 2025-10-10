@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891FFCAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB98CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v78OK-00029i-AS; Fri, 10 Oct 2025 04:22:20 -0400
+	id 1v78OL-0002Aa-Kr; Fri, 10 Oct 2025 04:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78OI-00029O-Dv
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78OI-00029N-DJ
  for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:22:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78O8-00018H-WE
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v78O6-00010a-OB
  for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:22:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760084525;
+ s=mimecast20190719; t=1760084519;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ehK5KRXCiUTeLGRom/AV7O2rUmdoOhUIvkIjSYXTaw4=;
- b=bZCnZphnZs6AxNij/nbzjSFjHm8EFsg3KQXIfIZu695d0fDSgJo5eHT3YL4A1G/qjw1B7H
- Rb0VOlYc4HQFKLVvESuDEnWO5NoPPbM4Rk3FIrcvmQsc+mqGvCc2cMcGy7nSAMpB5BMaky
- uAL7gTzwR5aYg7MMmLh9qCRrtniMmkI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Fasr0vDcyU3Al2j8YMauSw32DE0/KtFTqpUjIgb7dME=;
+ b=ef8f7SafXfgKzSD0BwSGlbQHDRA6Xs9CQSlQgiodjMQaEgfvy9obFjh0qyJKJD2OFG032S
+ 3/PU6bJCuiD6j8sdLfmjEh9IRHHRZozKIxvuiTRg3YpbrURSFGnjsmOmUuIOxKwtcOwqAU
+ RCPCA6xEb+bpziznHZTnaymz8RNFYvA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-VfZd5VAhO9WV5ULh8Kqd2w-1; Fri,
- 10 Oct 2025 04:22:04 -0400
-X-MC-Unique: VfZd5VAhO9WV5ULh8Kqd2w-1
-X-Mimecast-MFC-AGG-ID: VfZd5VAhO9WV5ULh8Kqd2w_1760084523
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-MtToXS--P_izpP5cVn9joQ-1; Fri,
+ 10 Oct 2025 04:21:54 -0400
+X-MC-Unique: MtToXS--P_izpP5cVn9joQ-1
+X-Mimecast-MFC-AGG-ID: MtToXS--P_izpP5cVn9joQ_1760084513
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95D9C19560BB; Fri, 10 Oct 2025 08:22:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 299E8180057E; Fri, 10 Oct 2025 08:21:53 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.98])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 291D21800452; Fri, 10 Oct 2025 08:22:01 +0000 (UTC)
+ id 9F8C11800446; Fri, 10 Oct 2025 08:21:50 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 7/9] target/s390x: Reduce s390_store_status() scope
-Date: Fri, 10 Oct 2025 10:21:42 +0200
-Message-ID: <20251010082145.576222-8-thuth@redhat.com>
+ Jaehoon Kim <jhkim@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: [PULL 2/9] s390x/pci: fix interrupt blocking by returning only the
+ device's summary bit
+Date: Fri, 10 Oct 2025 10:21:37 +0200
+Message-ID: <20251010082145.576222-3-thuth@redhat.com>
 In-Reply-To: <20251010082145.576222-1-thuth@redhat.com>
 References: <20251010082145.576222-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -67,7 +70,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,204 +86,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Jaehoon Kim <jhkim@linux.ibm.com>
 
-s390_store_status() is only called within sigp.c,
-move it and the SigpSaveArea structure definition
-there where it belongs, with other SIGP handling
-code.
+Previously, set_ind_atomic() returned the entire byte containing
+multiple summary bits. This meant that if any other summary bit in the
+byte was set, interrupt injection could be incorrectly blocked, even
+when the current device's summary bit was not set. As a result, the
+guest could remain blocked after I/O completion during FIO tests.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251002091132.65703-9-philmd@linaro.org>
+This patch replaces set_ind_atomic() with set_ind_bit_atomic(), which
+returns true if the bit was set by this function, and false if it was
+already set or mapping failed. Interrupts are now blocked only when
+the device's own summary bit was not previously set, avoiding
+unintended blocking when multiple PCI summary bits exist within the
+same byte.
+
+Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Message-ID: <20251001154004.71917-1-jhkim@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/s390x-internal.h |  2 --
- target/s390x/helper.c         | 67 ----------------------------------
- target/s390x/sigp.c           | 68 +++++++++++++++++++++++++++++++++++
- 3 files changed, 68 insertions(+), 69 deletions(-)
+ hw/s390x/s390-pci-bus.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index a49dca94a75..9691366ec91 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -323,8 +323,6 @@ void s390x_cpu_timer(void *opaque);
- void s390_handle_wait(S390CPU *cpu);
- hwaddr s390_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
- hwaddr s390_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
--#define S390_STORE_STATUS_DEF_ADDR offsetof(LowCore, floating_pt_save_area)
--int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch);
- LowCore *cpu_map_lowcore(CPUS390XState *env);
- void cpu_unmap_lowcore(CPUS390XState *env, LowCore *lowcore);
- #endif /* CONFIG_USER_ONLY */
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index 84321e1d68e..184428c6d9d 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -24,7 +24,6 @@
- #include "gdbstub/helpers.h"
- #include "qemu/timer.h"
- #include "hw/s390x/ioinst.h"
--#include "target/s390x/kvm/pv.h"
- #include "system/hw_accel.h"
- #include "system/memory.h"
- #include "system/runstate.h"
-@@ -182,69 +181,3 @@ void s390_cpu_recompute_watchpoints(CPUState *cs)
-                               wp_flags, NULL);
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index f87d2748b63..e8e41c8a9a1 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -652,7 +652,16 @@ static const PCIIOMMUOps s390_iommu_ops = {
+     .get_address_space = s390_pci_dma_iommu,
+ };
+ 
+-static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
++/**
++ * set_ind_bit_atomic - Atomically set a bit in an indicator
++ *
++ * @ind_loc:   Address of the indicator
++ * @to_be_set: Bit to set
++ *
++ * Returns true if the bit was set by this function, false if it was
++ * already set or mapping failed.
++ */
++static bool set_ind_bit_atomic(uint64_t ind_loc, uint8_t to_be_set)
+ {
+     uint8_t expected, actual;
+     hwaddr len = 1;
+@@ -662,7 +671,7 @@ static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
+     ind_addr = cpu_physical_memory_map(ind_loc, &len, true);
+     if (!ind_addr) {
+         s390_pci_generate_error_event(ERR_EVENT_AIRERR, 0, 0, 0, 0);
+-        return -1;
++        return false;
+     }
+     actual = *ind_addr;
+     do {
+@@ -671,7 +680,7 @@ static uint8_t set_ind_atomic(uint64_t ind_loc, uint8_t to_be_set)
+     } while (actual != expected);
+     cpu_physical_memory_unmap((void *)ind_addr, len, 1, len);
+ 
+-    return actual;
++    return (actual & to_be_set) ? false : true;
+ }
+ 
+ static void s390_msi_ctrl_write(void *opaque, hwaddr addr, uint64_t data,
+@@ -693,10 +702,10 @@ static void s390_msi_ctrl_write(void *opaque, hwaddr addr, uint64_t data,
+     ind_bit = pbdev->routes.adapter.ind_offset;
+     sum_bit = pbdev->routes.adapter.summary_offset;
+ 
+-    set_ind_atomic(pbdev->routes.adapter.ind_addr + (ind_bit + vec) / 8,
++    set_ind_bit_atomic(pbdev->routes.adapter.ind_addr + (ind_bit + vec) / 8,
+                    0x80 >> ((ind_bit + vec) % 8));
+-    if (!set_ind_atomic(pbdev->routes.adapter.summary_addr + sum_bit / 8,
+-                                       0x80 >> (sum_bit % 8))) {
++    if (set_ind_bit_atomic(pbdev->routes.adapter.summary_addr + sum_bit / 8,
++                   0x80 >> (sum_bit % 8))) {
+         css_adapter_interrupt(CSS_IO_ADAPTER_PCI, pbdev->isc);
      }
  }
--
--typedef struct SigpSaveArea {
--    uint64_t    fprs[16];                       /* 0x0000 */
--    uint64_t    grs[16];                        /* 0x0080 */
--    PSW         psw;                            /* 0x0100 */
--    uint8_t     pad_0x0110[0x0118 - 0x0110];    /* 0x0110 */
--    uint32_t    prefix;                         /* 0x0118 */
--    uint32_t    fpc;                            /* 0x011c */
--    uint8_t     pad_0x0120[0x0124 - 0x0120];    /* 0x0120 */
--    uint32_t    todpr;                          /* 0x0124 */
--    uint64_t    cputm;                          /* 0x0128 */
--    uint64_t    ckc;                            /* 0x0130 */
--    uint8_t     pad_0x0138[0x0140 - 0x0138];    /* 0x0138 */
--    uint32_t    ars[16];                        /* 0x0140 */
--    uint64_t    crs[16];                        /* 0x0384 */
--} SigpSaveArea;
--QEMU_BUILD_BUG_ON(sizeof(SigpSaveArea) != 512);
--
--int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch)
--{
--    static const uint8_t ar_id = 1;
--    SigpSaveArea *sa;
--    hwaddr len = sizeof(*sa);
--    int i;
--
--    /* For PVMs storing will occur when this cpu enters SIE again */
--    if (s390_is_pv()) {
--        return 0;
--    }
--
--    sa = cpu_physical_memory_map(addr, &len, true);
--    if (!sa) {
--        return -EFAULT;
--    }
--    if (len != sizeof(*sa)) {
--        cpu_physical_memory_unmap(sa, len, 1, 0);
--        return -EFAULT;
--    }
--
--    if (store_arch) {
--        cpu_physical_memory_write(offsetof(LowCore, ar_access_id), &ar_id, 1);
--    }
--    for (i = 0; i < 16; ++i) {
--        sa->fprs[i] = cpu_to_be64(*get_freg(&cpu->env, i));
--    }
--    for (i = 0; i < 16; ++i) {
--        sa->grs[i] = cpu_to_be64(cpu->env.regs[i]);
--    }
--    sa->psw.addr = cpu_to_be64(cpu->env.psw.addr);
--    sa->psw.mask = cpu_to_be64(s390_cpu_get_psw_mask(&cpu->env));
--    sa->prefix = cpu_to_be32(cpu->env.psa);
--    sa->fpc = cpu_to_be32(cpu->env.fpc);
--    sa->todpr = cpu_to_be32(cpu->env.todpr);
--    sa->cputm = cpu_to_be64(cpu->env.cputm);
--    sa->ckc = cpu_to_be64(cpu->env.ckc >> 8);
--    for (i = 0; i < 16; ++i) {
--        sa->ars[i] = cpu_to_be32(cpu->env.aregs[i]);
--    }
--    for (i = 0; i < 16; ++i) {
--        sa->crs[i] = cpu_to_be64(cpu->env.cregs[i]);
--    }
--
--    cpu_physical_memory_unmap(sa, len, 1, len);
--
--    return 0;
--}
-diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
-index 1464be76983..2487acdb49e 100644
---- a/target/s390x/sigp.c
-+++ b/target/s390x/sigp.c
-@@ -19,6 +19,7 @@
- #include "system/tcg.h"
- #include "trace.h"
- #include "qapi/qapi-types-machine.h"
-+#include "target/s390x/kvm/pv.h"
- 
- QemuMutex qemu_sigp_mutex;
- 
-@@ -126,6 +127,73 @@ static void sigp_stop(CPUState *cs, run_on_cpu_data arg)
-     si->cc = SIGP_CC_ORDER_CODE_ACCEPTED;
- }
- 
-+typedef struct SigpSaveArea {
-+    uint64_t    fprs[16];                       /* 0x0000 */
-+    uint64_t    grs[16];                        /* 0x0080 */
-+    PSW         psw;                            /* 0x0100 */
-+    uint8_t     pad_0x0110[0x0118 - 0x0110];    /* 0x0110 */
-+    uint32_t    prefix;                         /* 0x0118 */
-+    uint32_t    fpc;                            /* 0x011c */
-+    uint8_t     pad_0x0120[0x0124 - 0x0120];    /* 0x0120 */
-+    uint32_t    todpr;                          /* 0x0124 */
-+    uint64_t    cputm;                          /* 0x0128 */
-+    uint64_t    ckc;                            /* 0x0130 */
-+    uint8_t     pad_0x0138[0x0140 - 0x0138];    /* 0x0138 */
-+    uint32_t    ars[16];                        /* 0x0140 */
-+    uint64_t    crs[16];                        /* 0x0384 */
-+} SigpSaveArea;
-+QEMU_BUILD_BUG_ON(sizeof(SigpSaveArea) != 512);
-+
-+#define S390_STORE_STATUS_DEF_ADDR offsetof(LowCore, floating_pt_save_area)
-+static int s390_store_status(S390CPU *cpu, hwaddr addr, bool store_arch)
-+{
-+    static const uint8_t ar_id = 1;
-+    SigpSaveArea *sa;
-+    hwaddr len = sizeof(*sa);
-+    int i;
-+
-+    /* For PVMs storing will occur when this cpu enters SIE again */
-+    if (s390_is_pv()) {
-+        return 0;
-+    }
-+
-+    sa = cpu_physical_memory_map(addr, &len, true);
-+    if (!sa) {
-+        return -EFAULT;
-+    }
-+    if (len != sizeof(*sa)) {
-+        cpu_physical_memory_unmap(sa, len, 1, 0);
-+        return -EFAULT;
-+    }
-+
-+    if (store_arch) {
-+        cpu_physical_memory_write(offsetof(LowCore, ar_access_id), &ar_id, 1);
-+    }
-+    for (i = 0; i < 16; ++i) {
-+        sa->fprs[i] = cpu_to_be64(*get_freg(&cpu->env, i));
-+    }
-+    for (i = 0; i < 16; ++i) {
-+        sa->grs[i] = cpu_to_be64(cpu->env.regs[i]);
-+    }
-+    sa->psw.addr = cpu_to_be64(cpu->env.psw.addr);
-+    sa->psw.mask = cpu_to_be64(s390_cpu_get_psw_mask(&cpu->env));
-+    sa->prefix = cpu_to_be32(cpu->env.psa);
-+    sa->fpc = cpu_to_be32(cpu->env.fpc);
-+    sa->todpr = cpu_to_be32(cpu->env.todpr);
-+    sa->cputm = cpu_to_be64(cpu->env.cputm);
-+    sa->ckc = cpu_to_be64(cpu->env.ckc >> 8);
-+    for (i = 0; i < 16; ++i) {
-+        sa->ars[i] = cpu_to_be32(cpu->env.aregs[i]);
-+    }
-+    for (i = 0; i < 16; ++i) {
-+        sa->crs[i] = cpu_to_be64(cpu->env.cregs[i]);
-+    }
-+
-+    cpu_physical_memory_unmap(sa, len, 1, len);
-+
-+    return 0;
-+}
-+
- static void sigp_stop_and_store_status(CPUState *cs, run_on_cpu_data arg)
- {
-     S390CPU *cpu = S390_CPU(cs);
 -- 
 2.51.0
 
