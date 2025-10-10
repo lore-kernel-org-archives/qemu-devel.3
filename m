@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFB9CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A176DCCD18A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7GQu-0002Dv-EK; Fri, 10 Oct 2025 12:57:32 -0400
+	id 1v7GQN-0001kP-64; Fri, 10 Oct 2025 12:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7GQs-0002DZ-GL
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:30 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1v7GQJ-0001jx-My
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:56:55 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v7GQp-0008A5-O3
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:30 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7930132f59aso3256077b3a.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:57:24 -0700 (PDT)
+ id 1v7GQ6-0007jD-4z
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:56:55 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-28a5b8b12a1so22103965ad.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:56:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760115441; x=1760720241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760115394; x=1760720194; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XmCc5jPEyTPNa6wJ1h1HXyfWGGshQ+TdRfe/mtlnCmo=;
- b=nVv+us/d/wMxKHaz1tGDFN59Nm6epP4k4Uo8TxTYhZhAHmoV5h/zgVJJLxkS829pWj
- OjNd0PRN+rBKz10I2lWmm2Z/ao1yRdv+lh5v5EzuY4psR3VcTFXHAfDPI9Zt7I0Q1Bsx
- TcJ2EY3K/6v001y0cpQhFcn3+y7sKMTFVjkY1D8sryqPK5xbpXtej0acohE3woWBUMbH
- 9TXnuPq6kBeYmSzEunfAAFYbOqDKgwkoooWyJxdlxmvMJyp+Eo6/rJJrK7W0iqtauBn4
- 906GbbQy0Q+6k05tt8yhaxu0d78ZKqM/VaAeGMBL6tuxJHxi7r+ltWNWucHtVdnF0Wrg
- NEJA==
+ bh=fmNuqnDzh7GH9R3GIWxB7v1xjQNjsOrsgQWrbfpdeuY=;
+ b=qZ2+wvkOKKw44jKSzgqx6vYeUiGZvIfGxYQ4o91MNJC9VtP3HfMrD99hZLj9rLhFJW
+ /3vI0g77la5SRAf2uhr3rUHnFin78qMtVlS+nBUPsrh5iziO/zAj5dbX62VNt5MX6J1a
+ ca+W4dbP4+2L9SQrVfh4Bn3sJjPFn/2viyefFW/OR8T74/z3J3KgyqpdUBrkfhMJWsWW
+ frjPFwEnQdbvMTGb4Q22Dfwbt/lLWMFY9oldHYuiktCCQszRIVDqChhxsiWfzPCDQXNI
+ yH10XeoqZYffwoMg53UtjRHKr5OAx03fpLz7bz59ElvQILgExkNJv5l6Ug8zEgyaQPKH
+ jNCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760115441; x=1760720241;
+ d=1e100.net; s=20230601; t=1760115394; x=1760720194;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XmCc5jPEyTPNa6wJ1h1HXyfWGGshQ+TdRfe/mtlnCmo=;
- b=Q/WXRwEKdDfP2mM2AOFw7ehcG4jhs7RiSLbCul/t5RcGyu07DXhnoiCjCSFTozMW+J
- tONxqxEgNyZWr0LUhPv9IrCEiQ9w0wpqfmQGibLq5ZbgePsqKjZK8XO06RK9+7U9aQ+K
- qMKdgqFlnrnnyO2IIAKde4QidpneEhlsYu2jHscXt0y9njStCqyhNDlbCnjLTa64CwEm
- H9sPVubts7lGBN2DKpmtiEO9f2UU0RCLcAOYIBZ3teUq3FIc7AJyjyhW0kjD0/pkfqIc
- jtunh05J4QCIFQ4DjUwYvJ3PNUP/xme1wQJOVVi6yGVYjpEYuxyNEKIZAeu7Z5iRBBeM
- jncA==
-X-Gm-Message-State: AOJu0YyoMxvbyJXMEnu1Jk6b8H3XEB923BddUFJmkfHsVo79AoESwsmd
- fKSHd5xT7OUO1Qf3PkvW48ktJWhF4ziHFVNf0yNq5+ro6BXdTa3+JDj+FOiMEXJoZrYkArQhep3
- AWyzmQR0=
-X-Gm-Gg: ASbGncsLwyx6s8TFDL0c6we5XyTtKqYqdWGmhK0F4YjKKcTeoORyX+imRdUCjQ4IJXf
- 2zjs48xC/vK4W8pYB90dODMYNrX7Lx6DakKi2BlkXLIKEBvTT5ffAeWHd56HAR+ymv/htrWLpL5
- EVMhZfLN2B6mLMg3x1x1PEoQGw1uyfxrLBeHkLMFRrecVHnfFSH5mhEyMeDJpp1vNmCD2oyp6Gm
- r3xGvJ+7ufvqOFNqAnF6C0v2cSigaRjCKEeO4+EBJuD9eGfixIN4azIEt9gi8Qy7xvj4OFoP9wW
- Prr8gNnTZrZCwYwA/GfQYl71rBRa769RssKZS8OTHGlFNdqtf6NZGacdJq99ypJRGLgIv+1RrmW
- YOkEd93gU85mRmoT232DlAyX99Ac/hceVsHXX53OICB69c+cnL2j8Q+xsXVo=
-X-Google-Smtp-Source: AGHT+IGSDSxB6oe7sjkGIrJoFYG4ECAQgqMIrY/Fb9fw8M34qp5a0WKJG7OAf/QDw5HtU2qdRKtbBA==
-X-Received: by 2002:a05:6a00:a8f:b0:781:f1ee:a9cd with SMTP id
- d2e1a72fcca58-793858fb683mr16259263b3a.13.1760115440745; 
- Fri, 10 Oct 2025 09:57:20 -0700 (PDT)
+ bh=fmNuqnDzh7GH9R3GIWxB7v1xjQNjsOrsgQWrbfpdeuY=;
+ b=rON/vKzjLOHutAM8fTV+ZzzXFKHowXMiQLdv9TdKvrrwn6BXAW2HScSB1WKsXaoMTA
+ GLRo3+WqA79cuugGh850hnZbHIAkV+2/x8ZP9fzccmMmBKJUvq+Uv62o22dTFzUXGlxA
+ QvVzxdKSP37G6NA6cUEvVsNueD4RS4jzBchFJ1mytVx0wbB+rw25cKOJOw1N1NBUJhoJ
+ ONMD4H1bFDel5TGUn+Uz3d/tT0G+gmLJ6lwvhgqVsDa8a7PtD84MtTKRQwdcdNRpNTu4
+ 8wlCnM8gHz/WHyOx04PKYBI9T1LjtwcDTde9wAJ7fsdHC1PdLG1BatSqYaB1Tzmbo2XU
+ Q09g==
+X-Gm-Message-State: AOJu0Yyz0Ni1DoGMdOMoxpk0Z9cFMv3SS/2oJCV/ay9PfBixFDcEQqpH
+ HNB1QODaKKZyjhCTw/0lungClyFQeeF7efU9FZXCfDKiGY3jyMJNTwJz5s3UIfHDz5urNkdiZVe
+ PBnQjC1o=
+X-Gm-Gg: ASbGnctDGOFVrJ/sVarDVdKH2/HT7oXSVKFdcrIXtiyKLvGiJb1e6K1uRxGezq/Hxm/
+ mdiAft4rDVr+XPzaNzGb2vqqFVK//sgW0Jm4Zyl4UBQEnCZKAp+hpoM64GWWkp0C/GSX9ZT064x
+ Btj5iUzgdc1ddYNwC2YMGMpZWDWV3ucQmgWKojoCXEoupfvEKKouWuxMB4zHJn5YByB7MYj2AI3
+ 4ZSrZE25Nyrelb/b9I8iUe81lqpEoCTgNgoR2wcajCfgt6KgudSHPqBLFMCbHW6e8i0mydSZuLw
+ 9QldSWaaGkyDt4YKP1y7AZR6IU3cNEXQCntx0S+9rgB0ODdfjtKBhYNDKketX8nc2iFG5giWGuY
+ uPejR+vHaMtCCR/Pwhl3qQ3TuvMnX4dBsCBYkkz2oR8ziI2bbTx5WIXzzeUM=
+X-Google-Smtp-Source: AGHT+IEcrZPQCyR3Ha6wMoetrAMCfPKeknfIUCKfGrgwdVfDmjsVgXwLMfEHyewoxZoZcNIt6hNj2g==
+X-Received: by 2002:a17:903:1a06:b0:283:c950:a783 with SMTP id
+ d9443c01a7336-2902741e42amr161600355ad.56.1760115394179; 
+ Fri, 10 Oct 2025 09:56:34 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7992d0966d7sm3487972b3a.40.2025.10.10.09.57.20
+ d9443c01a7336-29034f941a5sm61715065ad.127.2025.10.10.09.56.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 09:57:20 -0700 (PDT)
-Message-ID: <76aa4062-4811-4822-8b5b-c585a88f789b@linaro.org>
-Date: Fri, 10 Oct 2025 09:57:19 -0700
+ Fri, 10 Oct 2025 09:56:33 -0700 (PDT)
+Message-ID: <aaf9e7ec-04ec-4eae-b107-fe1053823bfe@linaro.org>
+Date: Fri, 10 Oct 2025 09:56:32 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/12] target/tricore: Remove target_ulong use in
- translate_insn() handler
+Subject: Re: [PATCH 01/12] target/tricore: Remove target_ulong use in
+ gen_goto_tb()
 To: qemu-devel@nongnu.org
 References: <20251010052141.42460-1-philmd@linaro.org>
- <20251010052141.42460-4-philmd@linaro.org>
+ <20251010052141.42460-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251010052141.42460-4-philmd@linaro.org>
+In-Reply-To: <20251010052141.42460-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,28 +105,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/25 22:21, Philippe Mathieu-Daudé wrote:
-> Since commit 85c19af63e7 ("include/exec: Use vaddr in DisasContextBase
-> for virtual addresses") the DisasContextBase::pc_first field is a
-> vaddr type.
+> translator_use_goto_tb() expects a vaddr type since commit
+> b1c09220b4c ("accel/tcg: Replace target_ulong with vaddr in
+> translator_*()").
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/tricore/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/tricore/translate.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
 > diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-> index dd09f0651f5..4b769b204ab 100644
+> index 7c6e3095971..dd09f0651f5 100644
 > --- a/target/tricore/translate.c
 > +++ b/target/tricore/translate.c
-> @@ -8414,7 +8414,7 @@ static void tricore_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
->       ctx->base.pc_next = ctx->pc_succ_insn;
+> @@ -72,7 +72,8 @@ static const char *regnames_d[] = {
 >   
->       if (ctx->base.is_jmp == DISAS_NEXT) {
-> -        target_ulong page_start;
-> +        vaddr page_start;
+>   typedef struct DisasContext {
+>       DisasContextBase base;
+> -    target_ulong pc_succ_insn;
+> +
+> +    vaddr pc_succ_insn;
+>       uint32_t opcode;
+>       /* Routine used to access memory */
+>       int mem_idx;
+> @@ -2811,13 +2812,12 @@ static void gen_calc_usb_mulr_h(TCGv arg)
 >   
->           page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
->           if (ctx->base.pc_next - page_start >= TARGET_PAGE_SIZE
+>   /* helpers for generating program flow micro-ops */
+>   
+> -static inline void gen_save_pc(target_ulong pc)
+> +static inline void gen_save_pc(vaddr pc)
+>   {
+>       tcg_gen_movi_tl(cpu_PC, pc);
+>   }
+>   
+> -static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_index,
+> -                        target_ulong dest)
+> +static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_index, vaddr dest)
+>   {
+>       if (translator_use_goto_tb(&ctx->base, dest)) {
+>           tcg_gen_goto_tb(tb_slot_index);
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
