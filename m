@@ -4,79 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A79CCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 08:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A19FCCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 09:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v78vd-0000oy-BT; Fri, 10 Oct 2025 04:56:45 -0400
+	id 1v791C-0002Id-VS; Fri, 10 Oct 2025 05:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v78vW-0000lM-31
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:56:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v7918-0002Hi-V9; Fri, 10 Oct 2025 05:02:27 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v78vP-0004bd-C6
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 04:56:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760086586;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=1UJbuHXT3QXfjuimEtE9kKCQS9F0OdfFPHXZ6RqXWdU=;
- b=WRW1dx0YwSG7mGdpOs7p4PYUSDe6SCZR+Vjd0pBd/y9Dj+QCJRQJ7dkNNiO/sa6vNxJoB3
- 4V9XzuqrXcab3O0o3dP1Ualn/mJObBMif4QAWDzJD4FoJHbYCK1ISoClSjkeWFgGkepUYm
- D8o8ySNL4ki1ACPYjE8qZ3mO81um5bI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-NV36Qr2AMwm20HsH1wg8fw-1; Fri,
- 10 Oct 2025 04:56:21 -0400
-X-MC-Unique: NV36Qr2AMwm20HsH1wg8fw-1
-X-Mimecast-MFC-AGG-ID: NV36Qr2AMwm20HsH1wg8fw_1760086580
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B52BB180034F; Fri, 10 Oct 2025 08:56:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.177])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3408A1800446; Fri, 10 Oct 2025 08:56:14 +0000 (UTC)
-Date: Fri, 10 Oct 2025 09:56:10 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Navid Emamdoost <navidem@google.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- zsm@google.com, Alexander Bulekov <alxndr@bu.edu>,
- Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH] tests/qtest/fuzz: Add generic fuzzer for VNC
-Message-ID: <aOjKKgGEL5sYmhmD@redhat.com>
-References: <20251009211114.2214848-1-navidem@google.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v7913-00062B-OI; Fri, 10 Oct 2025 05:02:26 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 42EEC80474;
+ Fri, 10 Oct 2025 12:02:15 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a89::1:23] (unknown
+ [2a02:6bf:8080:a89::1:23])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id E2H7XK1FOOs0-ewwkk6Zg; Fri, 10 Oct 2025 12:02:14 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760086934;
+ bh=GJw61OjnbfRiNcNgiN66+nNA8XujQOXryMpq1m+VUfA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=BUTYr5sj4snxpx+Z4REbK1rbQa3dpYrlmXXpUSZmbSwOV0k28lWU1pcsqa6xChF4Y
+ oPAw6PVxkKfA2hpQJ1fUpnQTwPbEuY8X3vopCNZt7CPjoWJ4KfhO/TRPBFa69r4n+x
+ wQgIolTtGsWLAaHej26hE1i9d3sEf1uV+HJ8lAIw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <7503ba0e-2596-4919-b4ea-bc61e469564a@yandex-team.ru>
+Date: Fri, 10 Oct 2025 12:02:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251009211114.2214848-1-navidem@google.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] remove deprecated 'reconnect' options
+To: Michael Tokarev <mjt@tls.msk.ru>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, jasowang@redhat.com,
+ devel@lists.libvirt.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, qemu-trivial@nongnu.org
+References: <20250924133309.334631-1-vsementsov@yandex-team.ru>
+ <877bx4p3at.fsf@pond.sub.org>
+ <5063033a-9d83-49da-9f15-cc492d124a68@tls.msk.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <5063033a-9d83-49da-9f15-cc492d124a68@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -85,69 +75,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 09, 2025 at 09:11:14PM +0000, Navid Emamdoost wrote:
-> Add a new generic fuzz target for the QEMU VNC server. This allows the
-> generic fuzzer to directly exercise the VNC protocol implementation by
-> connecting to a VNC unix socket.
+On 10.10.25 10:52, Michael Tokarev wrote:
+> On 10/9/25 17:17, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>
+>>> They were deprecated in 9.2, now we can remove them.
+>>> New options to use are reconnect-ms.
 > 
-> ---
-> 
-> This new target increases code coverage in the VNC subsystem
-> and related networking and I/O code.
-> The baseline coverage below was generated by running all existing fuzz
-> targets with the oss-fuzz corpus. The new target shows significant gains:
-> 
-> ----------------------------------------------------------------------------
-> File                       New Target                Baseline        Change
-> ----------------------------------------------------------------------------
-> vnc.c                      339/3212 (10.6%)     3/3212 (0.1%)        +336
-> keymaps.c                  91/184 (49.5%)       0/184 (0.0%)         +91
-> net-listener.c             76/198 (38.4%)       3/198 (1.5%)         +73
-> channel-socket.c           73/575 (12.7%)       19/575 (3.3%)        +54
-> qemu-sockets.c             44/1019 (4.3%)       0/1019 (0.0%)        +44
-> dns-resolver.c             28/145 (19.3%)       3/145 (2.1%)         +25
-> vnc-jobs.c                 41/219 (18.7%)       0/219 (0.0%)         +41
-> 
-> Signed-off-by: Navid Emamdoost <navidem@google.com>
-> ---
->  tests/qtest/fuzz/generic_fuzz_configs.h | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/generic_fuzz_configs.h
-> index ef0ad95712..2e802ab226 100644
-> --- a/tests/qtest/fuzz/generic_fuzz_configs.h
-> +++ b/tests/qtest/fuzz/generic_fuzz_configs.h
-> @@ -247,6 +247,10 @@ const generic_fuzz_config predefined_configs[] = {
->          .args = "-machine q35 -nodefaults "
->          "-parallel file:/dev/null",
->          .objects = "parallel*",
-> +    },{
-> +        .name = "vnc",
-> +        .args = "-machine q35 -nodefaults -vnc vnc=unix:/tmp/qemu-vnc.sock",
+> Speaking of the option itself.. I'd not remove it, instead,
+> I'd de-deprecate it, and allow units to be specified for it,
+> like reconnect=10ms (defaults to s).  Or reconnect=0.1 (in
+> fractions of second).  But it's just me, it looks like :)
 
-How about also adding  ",websocket=unix:/tmp/qemu-vnc-ws.sock" ?
+QAPI is not for humans) So simple milliseconds integer is better,
+then parse the variety of suffixes. And it better fit into json
+(number is number, not a string)
 
-I'm guessing the fuzz tool is not intelligent enough to be able
-to negotiate TLS over the connections ?
-
-> +        .objects = "*",
->      }
->  };
->  
-> -- 
-> 2.51.0.740.g6adb054d12-goog
 > 
+> Also, `has_reconnect_ms` becomes redundant after applying this
+> patch, - it should be enough to use just reconnect_ms, which
+> defaults to 0.  But this can be done in a subsequent cleanup.
 > 
 
-With regards,
-Daniel
+You mean just use sock->reconnect_ms instead of explicit
+
+    int64_t reconnect_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
+
+?
+
+I believe that QMP will zero-initialize everything. But I'm not sure
+that we do zero initialize this structure on all paths.. Keeping also in mind
+handling other fields here like
+
+     bool is_telnet      = sock->has_telnet  ? sock->telnet  : false;
+     bool is_tn3270      = sock->has_tn3270  ? sock->tn3270  : false;
+     bool is_waitconnect = sock->has_wait    ? sock->wait    : false;
+     bool is_websock     = sock->has_websocket ? sock->websocket : false;
+
+To drop this, we should check for all paths, that incoming structure is
+zero-initialized. And no guarantee that it does not break in future.
+
+Probably, we can implement a new QAPI feature "value with default to zero",
+so that we can avoid existence of .has_foo field at all for such fields.
+No field - no problem.. But not in this series)
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Best regards,
+Vladimir
 
