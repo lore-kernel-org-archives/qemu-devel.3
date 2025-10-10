@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0420CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 07:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5360CCCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 07:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v77EF-0001ia-OZ; Fri, 10 Oct 2025 03:07:51 -0400
+	id 1v77EB-0001fd-3d; Fri, 10 Oct 2025 03:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77ED-0001gc-Pb
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:49 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77E8-0001es-Vf
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:46 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77E2-0007yL-DA
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:49 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e37d6c21eso10116355e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 00:07:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77E5-0007ye-6s
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:44 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-46e3af7889fso9342425e9.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 00:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760080053; x=1760684853; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760080058; x=1760684858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mIyiqfArKbn1ZklyRRQRhl2a6Voqe2HH/5GIa/YoHgM=;
- b=TsVjVuXcA81kT0pSmWNzS1Qhc4rHPIRc7jpyG1ynaSus9JcIfN4fiLCG3+IRAAKwLO
- kGIohDCYAMpg22cDk8c4WgHE42rQk/L1B8NBblKI0Lz1CdJ/qkxWfXcuQVGJYVZ0Exmd
- P1jwjtrPektfdmVGtLAJVK4PnmQHK0d3K1qVpHRtf/jm+GuFW/cli19eFzRmKKOHoLMB
- lDAve9Nsf9xcgJTVvPQKA6KsMDHI4Qgq8xQGriU6l/XsJ4GQJ0Cp7J8VSGsY8UFmvOe9
- PMH9vlYZOe7eMefwZ1GfpEKgaAyRbcQxTPF5Fa3nESzh964qNq1j6tiaOJbo35ztfewh
- OSGQ==
+ bh=qoB4mQdJ5q/PSA40CHqGuTxSzS9aCnGI7d52zanhXww=;
+ b=eUQ3d5EP1rO5eRceolXHuqejlEcztykek6Kz4vfEc98q4icdCQJurtBay7/bOT0AD/
+ EQrf75oPAOABy6KQl0En3fonTgBD1ZRB/80PrW1XD5n5KOnfv6nI9g3K5VVhPfyC4/3/
+ dvdPD/yRQlh+OIQhVwGt29qXHD3flk8XeuSMxASHv+G6Y0OXEIzuvspHKcYyz2oNF27d
+ 9GqqRv/c7myvfF11qdJQUMmEhBf6m5lCvsSHfX1qWJlH2p7Ug5O33gL3V7fbMiD/LBMY
+ qVLHYU6Dg6qFYkthCyrSoCg/dOYj6xW7wyAA0VBrY+GEixOx5RxPGQJmjlATgvaPITy1
+ x+6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760080053; x=1760684853;
+ d=1e100.net; s=20230601; t=1760080058; x=1760684858;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mIyiqfArKbn1ZklyRRQRhl2a6Voqe2HH/5GIa/YoHgM=;
- b=ZChptpjtBu2l2rKiXij1SmReTcpImwVWf57Zcrq+j7U86onlnoDfypv22GSXYx0Fda
- 2VwlwaYCUm3WfepV/D43f/p8Ee9YMp/SKksXum4FcPPblWoG2PHYPBohYIu7QfqDdsqq
- 0wCnO1IkpQaM9StqwrUPLaGQUla6U4eedmkZU5aSe6te0sFnAtrpwW9vTzTO64AAWUeE
- 2k+ll7jsu0E7NowKDwuvM269CDkyZ2hSlRrNINt77dk/PBdl63RauUuL53PzmVfDvnwy
- KzocUFq7XvPvhW9PuE12/tmwyHEq4tp1Mu4B0ThlFkKvxd1Ic6j/WxzI6YKSoVAVBpWa
- wo1Q==
-X-Gm-Message-State: AOJu0YyA9/63MZaiyHxecj/1aUczIiy9v8z/Poxhl7RgS4WrLMukKRWT
- mXH9du90XkyKxDZP154V3U9SY5A/tDGeD2rQgqo0esu5jm160dsvmsqFO4bqYP9N8ou9x+QJW92
- hbdT2+KWVCA==
-X-Gm-Gg: ASbGncv9sXId3tvdpgPjbWs7txgtzHsTogrELK+jH/6Clm7E1m9dp1LzKjimrBixXhP
- ZICbSCxVwyEOt3u6fheCoRYLvNVzcxnUUX8cdZbyfkZgAayBLlSO/vpyCqVvySMcYelIKiEXmIp
- LjncnfQMgr7NVLdBeWSTsdfkRVO/QKE25Ed0lcwvAtjNu/0yIYyXNhv08TUZC7RzOISYiYVjQjV
- iib8bN2gl/Mfhgn59E5Jo7Ah5heoFljsOehp62ftY6yy0IilVnh6MWAjMnjJI6b+bgf7TOGDWTh
- qUBpRzGv/oNaTuyzIZnnqkaV1+U0Ak3+tzaQ7/A6vNOaA86Q3QbNjc2kvrzWXaa4jVaIMIDQ9qD
- aT9TyzrcA7QrlxUvJThvdj6g82cqMbQYc+dqNIitjFUd/98P0sAStT0xmfP2Uup+9hR0ROpKmfN
- 5/kxQfs4+rGVsaV8rE3TQydUdg
-X-Google-Smtp-Source: AGHT+IFA78mo7ijo7/Er8oO/YGBVp61TQW6mOYJgFMcM6dFRpavVrhkdHbQAvrjwngZrYCHdpMxRbQ==
-X-Received: by 2002:a05:600c:c4a8:b0:46e:4921:9443 with SMTP id
- 5b1f17b1804b1-46fa9b1b277mr70248935e9.37.1760080053006; 
- Fri, 10 Oct 2025 00:07:33 -0700 (PDT)
+ bh=qoB4mQdJ5q/PSA40CHqGuTxSzS9aCnGI7d52zanhXww=;
+ b=XM1DFDm5o1oWMHKynbtRUKHLN55ROrCLdJCJBSDWhsvcY/ZE0yFJhYd6Hh/2xugoOR
+ KLsqhmC63kAzYttdxZ9kE0UMryDMwPmF6+Tp3w9TuNxNNWABHAWcy6aGv3+5sGOiGmN+
+ 5dqhSxrIIOP3hK8FD7wOgWH55dc8MJG0YLnCCW8pYqJawMWUBKnJE4cbtJidfc6O+Yfc
+ 3CZ8CYYhSnSBhlMiKjkF7+44KqY6c9VTqyrf4ULx1WP8T3GttW8iBmIOoINDe1r66n2f
+ aZy+QgDWh4p7WhsGP01GzFYWO4gDkUXaZS6ZVLyMVcGA9vpOEckLnueT2LyH72GFXI0Y
+ BCIw==
+X-Gm-Message-State: AOJu0Yzz5JmS6912R7fYUsxhmPLAZwQnX+D5xiSgSB/R82yQogkScczX
+ YTpAxIWR4mYgv0AAFOLstjSkXExlhdDO7dbSg+81MWgNLxMwD+LHsJE2XChSiVvYXpBomrIoPPX
+ SoW8KAhRDIQ==
+X-Gm-Gg: ASbGncsEjl/VxrbkxUL0oWKl6rHkDESYIkgTZP9bccvruUEsF5lkzez/+sALWSg1pxT
+ qJiu5xU6Devv27xPkbBWdoqXl0EzOFEQF4hAXghspbHav2qXJ/GAhWcqjmrho/leVtOdZgARAEb
+ Z6TU3kTterSMIlcM97ivcan3vhcJ+4Vd3ErY77RMX1MDNAU41IwoRxobOruvI4XhQwr9TxD0raZ
+ WokJrNgLLpwZJ1zDezLnqJJivR1mJJmtjXeYrEfI7U+72crFe64iYlqVVCBiLsNvLV42N5EF/nn
+ GewNFSL1HBxyF6HaAXNdcvfxecYXSR6jvAfzxojLGifS0iUX5+W1hV7bNVaRGKKnsShILhmEHeH
+ tPwpdlwed4VpJg1cko+qlVqc0p40rMqomOonamWedgoreCx6vUCsXEytwEJH+otdvkNhMQPVZxG
+ eG6EGa4JZY8PzeRqLcpg+iJkec
+X-Google-Smtp-Source: AGHT+IEKplpjkapxwDSu5sJJ4BY5lAmiylI/O3c4tXC5Nas3qskpTbvtu4OTiUUr61vHVPhAxjz3rw==
+X-Received: by 2002:a05:600c:1d11:b0:46e:5aca:3d26 with SMTP id
+ 5b1f17b1804b1-46fa9aef840mr70798275e9.22.1760080057665; 
+ Fri, 10 Oct 2025 00:07:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb497aec2sm31238245e9.1.2025.10.10.00.07.32
+ ffacd0b85a97d-426ce5cfe69sm2741273f8f.32.2025.10.10.00.07.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Oct 2025 00:07:32 -0700 (PDT)
+ Fri, 10 Oct 2025 00:07:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Stafford Horne <shorne@gmail.com>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 06/13] target/openrisc: Remove 'TARGET_LONG_BITS != 32'
- dead code
-Date: Fri, 10 Oct 2025 09:06:54 +0200
-Message-ID: <20251010070702.51484-7-philmd@linaro.org>
+Subject: [PATCH v3 07/13] target/openrisc: Explode MO_TExx -> MO_TE | MO_xx
+Date: Fri, 10 Oct 2025 09:06:55 +0200
+Message-ID: <20251010070702.51484-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010070702.51484-1-philmd@linaro.org>
 References: <20251010070702.51484-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,79 +102,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The OpenRISC targets are only built as 32-bit:
+Extract the implicit MO_TE definition in order to replace
+it in the next commit.
 
-  $ git grep TARGET_LONG_BITS configs/targets/or1k-*
-  configs/targets/or1k-linux-user.mak:5:TARGET_LONG_BITS=32
-  configs/targets/or1k-softmmu.mak:5:TARGET_LONG_BITS=32
+Mechanical change using:
 
-Remove the dead code guarded within TARGET_LONG_BITS != 32.
+  $ for n in UW UL UQ UO SW SL SQ; do \
+      sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
+           $(git grep -l MO_TE$n target/openrisc); \
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/openrisc/translate.c | 33 ++++-----------------------------
- 1 file changed, 4 insertions(+), 29 deletions(-)
+ target/openrisc/translate.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-index 9f61f917b3b..29e6b51a930 100644
+index 29e6b51a930..52d51313f77 100644
 --- a/target/openrisc/translate.c
 +++ b/target/openrisc/translate.c
-@@ -298,19 +298,8 @@ static void gen_muld(DisasContext *dc, TCGv srca, TCGv srcb)
+@@ -622,7 +622,7 @@ static bool trans_l_lwa(DisasContext *dc, arg_load *a)
+     check_r0_write(dc, a->d);
+     ea = tcg_temp_new();
+     tcg_gen_addi_tl(ea, cpu_R(dc, a->a), a->i);
+-    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx, MO_TEUL);
++    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx, MO_TE | MO_UL);
+     tcg_gen_mov_tl(cpu_lock_addr, ea);
+     tcg_gen_mov_tl(cpu_lock_value, cpu_R(dc, a->d));
+     return true;
+@@ -640,13 +640,13 @@ static void do_load(DisasContext *dc, arg_load *a, MemOp mop)
  
-     tcg_gen_ext_tl_i64(t1, srca);
-     tcg_gen_ext_tl_i64(t2, srcb);
--    if (TARGET_LONG_BITS == 32) {
--        tcg_gen_mul_i64(cpu_mac, t1, t2);
--        tcg_gen_movi_tl(cpu_sr_ov, 0);
--    } else {
--        TCGv_i64 high = tcg_temp_new_i64();
--
--        tcg_gen_muls2_i64(cpu_mac, high, t1, t2);
--        tcg_gen_sari_i64(t1, cpu_mac, 63);
--        tcg_gen_negsetcond_i64(TCG_COND_NE, t1, t1, high);
--        tcg_gen_trunc_i64_tl(cpu_sr_ov, t1);
--
--        gen_ove_ov(dc);
--    }
-+    tcg_gen_mul_i64(cpu_mac, t1, t2);
-+    tcg_gen_movi_tl(cpu_sr_ov, 0);
+ static bool trans_l_lwz(DisasContext *dc, arg_load *a)
+ {
+-    do_load(dc, a, MO_TEUL);
++    do_load(dc, a, MO_TE | MO_UL);
+     return true;
  }
  
- static void gen_muldu(DisasContext *dc, TCGv srca, TCGv srcb)
-@@ -320,18 +309,8 @@ static void gen_muldu(DisasContext *dc, TCGv srca, TCGv srcb)
- 
-     tcg_gen_extu_tl_i64(t1, srca);
-     tcg_gen_extu_tl_i64(t2, srcb);
--    if (TARGET_LONG_BITS == 32) {
--        tcg_gen_mul_i64(cpu_mac, t1, t2);
--        tcg_gen_movi_tl(cpu_sr_cy, 0);
--    } else {
--        TCGv_i64 high = tcg_temp_new_i64();
--
--        tcg_gen_mulu2_i64(cpu_mac, high, t1, t2);
--        tcg_gen_setcondi_i64(TCG_COND_NE, high, high, 0);
--        tcg_gen_trunc_i64_tl(cpu_sr_cy, high);
--
--        gen_ove_cy(dc);
--    }
-+    tcg_gen_mul_i64(cpu_mac, t1, t2);
-+    tcg_gen_movi_tl(cpu_sr_cy, 0);
+ static bool trans_l_lws(DisasContext *dc, arg_load *a)
+ {
+-    do_load(dc, a, MO_TESL);
++    do_load(dc, a, MO_TE | MO_SL);
+     return true;
  }
  
- static void gen_mac(DisasContext *dc, TCGv srca, TCGv srcb)
-@@ -349,11 +328,7 @@ static void gen_mac(DisasContext *dc, TCGv srca, TCGv srcb)
-     tcg_gen_xor_i64(t1, t1, cpu_mac);
-     tcg_gen_andc_i64(t1, t1, t2);
+@@ -664,13 +664,13 @@ static bool trans_l_lbs(DisasContext *dc, arg_load *a)
  
--#if TARGET_LONG_BITS == 32
-     tcg_gen_extrh_i64_i32(cpu_sr_ov, t1);
--#else
--    tcg_gen_mov_i64(cpu_sr_ov, t1);
--#endif
- 
-     gen_ove_ov(dc);
+ static bool trans_l_lhz(DisasContext *dc, arg_load *a)
+ {
+-    do_load(dc, a, MO_TEUW);
++    do_load(dc, a, MO_TE | MO_UW);
+     return true;
  }
+ 
+ static bool trans_l_lhs(DisasContext *dc, arg_load *a)
+ {
+-    do_load(dc, a, MO_TESW);
++    do_load(dc, a, MO_TE | MO_SW);
+     return true;
+ }
+ 
+@@ -688,7 +688,7 @@ static bool trans_l_swa(DisasContext *dc, arg_store *a)
+ 
+     val = tcg_temp_new();
+     tcg_gen_atomic_cmpxchg_tl(val, cpu_lock_addr, cpu_lock_value,
+-                              cpu_R(dc, a->b), dc->mem_idx, MO_TEUL);
++                              cpu_R(dc, a->b), dc->mem_idx, MO_TE | MO_UL);
+     tcg_gen_setcond_tl(TCG_COND_EQ, cpu_sr_f, val, cpu_lock_value);
+ 
+     tcg_gen_br(lab_done);
+@@ -710,7 +710,7 @@ static void do_store(DisasContext *dc, arg_store *a, MemOp mop)
+ 
+ static bool trans_l_sw(DisasContext *dc, arg_store *a)
+ {
+-    do_store(dc, a, MO_TEUL);
++    do_store(dc, a, MO_TE | MO_UL);
+     return true;
+ }
+ 
+@@ -722,7 +722,7 @@ static bool trans_l_sb(DisasContext *dc, arg_store *a)
+ 
+ static bool trans_l_sh(DisasContext *dc, arg_store *a)
+ {
+-    do_store(dc, a, MO_TEUW);
++    do_store(dc, a, MO_TE | MO_UW);
+     return true;
+ }
+ 
 -- 
 2.51.0
 
