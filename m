@@ -4,95 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC49CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B80CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Bgr-0008N8-Ts; Fri, 10 Oct 2025 07:53:41 -0400
+	id 1v7Biy-0000eA-AR; Fri, 10 Oct 2025 07:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v7Bgp-0008Mu-S7
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:53:39 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v7Bgi-0006E7-Vd
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:53:39 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b403bb7843eso411857266b.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 04:53:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760097204; x=1760702004; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5HX2bit+Q+N9hc9RuZAdnMfGq8JDdUCV45g1a41Zdsg=;
- b=G5VmDzCW0qza+dBX93yF95Oug1y+k2gPAXEsyJfEjOn2yb6ZYUIc3HPoJWTyp8XqbD
- +8J0zMMeFs853Tz7IKZQ3cUMGP44VQgLzx8F1Cf9lpHjRAoCd92VT/kneO2gNZs5o96C
- 1X66+pCMSEBuf38QJYjYdR1AViVNBVJHHtuMMONWddmgw1Vu46lqjDSvG3RCeeeu4zhO
- HcsiwIPvy9JDwBJCURBVIEThCOWxjzqXUQFy6XmTiMpcIxoUknH7Q22syZ8xUzYZ70KH
- n7PqBgZ1hDmXHhNlo4ji4yXdP+op5E+KdCWrQ+wkkQM0dhlHrHXIqNmQYYSITV1jfbE/
- UsDQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v7Biv-0000df-9z
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:55:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v7Bim-0006Vq-DN
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:55:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760097332;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8E7TeqdMhhRsS/dfCbEiqJ3zYLvRE0iBqSMtMqCVmy8=;
+ b=HW9jiNcC6EpfcfSzcrejaMedaIr//LaB/ZPWgJ5gizw8JSO3otsPGAOf/GJQ9lnepdpnF0
+ SLhxFY5oACKWcsKMXNx1ne1MOEfoD/h2iGfRlKB34OxHZZ1xO+jjz1D/zgU9ba3EJlOloD
+ 6N7OJFqnguP8APO0P+GpnkVC8fDfCfQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-433-KWwEODGnMX-AAgErpvbX7A-1; Fri, 10 Oct 2025 07:55:31 -0400
+X-MC-Unique: KWwEODGnMX-AAgErpvbX7A-1
+X-Mimecast-MFC-AGG-ID: KWwEODGnMX-AAgErpvbX7A_1760097330
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-401dbafbcfaso1511541f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 04:55:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760097204; x=1760702004;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5HX2bit+Q+N9hc9RuZAdnMfGq8JDdUCV45g1a41Zdsg=;
- b=R59OHx8vOWnTgBZmr2JkUEbNWkKgvZ2oTunhP9KrbD7E9B7aY8JbZj2aqmrGWyX9yQ
- ML2Rh4IqJCF45APTmsFeoijH6d2pg0CRGKfeb0GtGYbAilb8sHg4V9qonCGenfARD/2H
- obs2444ktJbVq5xhR3L2/pe+HZpgDT92kKA8FNGxHju1CRqGnbh9kn+Dr6IzNmdvqbuX
- DF/tdhz9e7Jkxb+j114jVc4LqTdXy3NGDRwd9s3lHL04VrsZ67DvYA9kvJ0LKZg42k95
- VgYMrw6xyHkW73v9k3AMxGK0JDuQ5OLP2BI6eUt1sul+8gy1k/b3YfC0M2F1sj9lJSWX
- Pvqg==
+ d=1e100.net; s=20230601; t=1760097330; x=1760702130;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8E7TeqdMhhRsS/dfCbEiqJ3zYLvRE0iBqSMtMqCVmy8=;
+ b=pcpNrTu9laNsJ4uvZdlxbxYVvQWqYhIRAwqE5rDaFttCNC4HVhFmlhdB7mHV3/lSes
+ rK1gN28wnaWJphM4JibbG6winNbvcyHaNlXfN7b6a+T+MJ8x6aBmM67cpPiDoEiEQsKg
+ YAcrGqlfNVVQHdbEAnhw+WHnvqDLaXslNVLpGqTfroUmnE1DgDivQEuGJXx4eMjohPg6
+ hpPJ62AgCAJnmfL7TLaTMI2yWuRt4URDGt73b1y4LUTvky8VQwSOhmQhEDGtAixXKIRI
+ +Mg/6darEQoGpYYIdCcLUDqNrIsRVnUePmRpPwD3+ZW3YYR8Gx9ZHappjJ1ILNlaEX0s
+ 7uGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXurOfwmA5fgMDfncKVH11XPrin95fgH3H4tEMSeteSWMdfjLwWcdZj4rVIa3Jqj+fzUj6WJ9MMj0Py@nongnu.org
-X-Gm-Message-State: AOJu0Ywi2PcFcIIH+9t+LST4EHS1zz19w+tJznLKASfiBD+x5ECUSY9X
- mmYNBcvYfvGELsxlFUpgerdGP4PTD1E4VYanYjOSbTYQFEspwYYoyY8pPNTQ/3ykY+U=
-X-Gm-Gg: ASbGncsXr1VfKwaDatD2IYrqIp7h3f9577nCA5iuIZzg0SHt/MLJdXijbtXcVGIkl4i
- 1l6/7pHbb2HFk3wMMMe3hEDN3ouQak0QZD94DX7w+t4TZ4FamJzvXZzyHuXrRqvLiKowYbOlU8x
- hdETskiT0tzQVhUKVNtzHhL0tzUorTNzBoJMh0sK1xMrH1xelRS/UgxVYejozm8EUA5iWpE84Md
- H06cTDNC4pJz6t+T/Z9NwyS7MaGhSh7GwOLB3oULfduBL0qq73MMuHOu/9371XslzAl/nSH2NB5
- lFEQBibrtLdbx7BTQmzAUQgphLDZAa7N1g5G2wFMGv1qznTsuPxCeiijY2GDILTU/xEVoZRVai1
- RzuTK3YL5GMfVylr+4CvelwJ3jG23zhjKVoShcTa7cZ9uhQ==
-X-Google-Smtp-Source: AGHT+IE8zIQzkifg4Ebek3jDvHwN8mDWe3akQYP14n6E6xMsnt8wpS93jQH0QRD0Epl7+w/RkKk9pQ==
-X-Received: by 2002:a17:906:7313:b0:b41:297c:f7bb with SMTP id
- a640c23a62f3a-b50aaa9b6f8mr1244720466b.26.1760097203747; 
- Fri, 10 Oct 2025 04:53:23 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d61d04dfsm216300466b.22.2025.10.10.04.53.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 04:53:22 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2641A5F7F6;
- Fri, 10 Oct 2025 12:53:22 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Daan De Meyer <daan.j.demeyer@gmail.com>,  qemu-devel@nongnu.org,  Gerd
- Hoffmann <kraxel@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-arm@nongnu.org
-Subject: Re: [PATCH] Add support for zboot images compressed with zstd
-In-Reply-To: <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
- (Peter Maydell's message of "Fri, 10 Oct 2025 11:05:43 +0100")
-References: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
- <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Fri, 10 Oct 2025 12:53:22 +0100
-Message-ID: <87sefrvuq5.fsf@draig.linaro.org>
+ AJvYcCXdRR0QIGB15hRezP79nh7ZWNbnSY+44YIEoGzWM8378ItmFPwoP1HpDMeFfKBwPwQpDPM6MR7dcpwt@nongnu.org
+X-Gm-Message-State: AOJu0YyDgSDo7JytMfa9KDkXCW0ISKtjXXkuwt2FkCwzcdYoV5QrEspv
+ AAtU163LZu2300XcpZs66mYsQeLxh7dU5GwcM4qjzH6mHJ3T3YywXd7J4HMItCrFcQxYdUyB3D7
+ VikU9ATOZjre20DSZMDXyZYh3ajwhPmDS51GeHraMUXU9y9Gks0iaw76b
+X-Gm-Gg: ASbGncsTD90JWnQdztirkGjcdp5JC/dJWapDPL414Efd3X+Ms+ZvzUZ/31h0AOHDr7Q
+ aHq4Lgq1uh4flGMhIQJGiPFH7HR9AMxJZ3MSNu/GEdv+7Vjwb+uv1EqubYTMYjEqwP3E0rNaVQp
+ rNG7RUpmhqs9D42CpNyTbjXDqsVaBzgQP/d+b1PWOwEaYvzDf42DRVOn1tvpjuwNVZVecVTfYRh
+ Y0deExs+EebIhkPfB9LQ0ygJ0f/GBPg/1wRKmUKqw24bKUy24fpvqWqyanY+izAJD8uuwB8Nlnx
+ eXSGbvz+z4ef1sxzArmwv2D6Oox3OYtPlXlypjYBKjnAiEGEdgqjg3vd7dt+g7wGDyqIvVBcOim
+ 4XCj3
+X-Received: by 2002:a05:600d:a:b0:46f:b32e:4af3 with SMTP id
+ 5b1f17b1804b1-46fb32e4c1bmr30646135e9.1.1760097330025; 
+ Fri, 10 Oct 2025 04:55:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOhZf3ah8Xs9FA59PbG5d0mxATTXFdNcKnbbzoAjeXreFAefl/gOgFLDLL3+toh7V5hsyv1g==
+X-Received: by 2002:a05:600d:a:b0:46f:b32e:4af3 with SMTP id
+ 5b1f17b1804b1-46fb32e4c1bmr30645985e9.1.1760097329598; 
+ Fri, 10 Oct 2025 04:55:29 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
+ [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb48a6069sm43897175e9.20.2025.10.10.04.55.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 04:55:29 -0700 (PDT)
+Message-ID: <996a6f93-9abd-46a1-9647-296983101f00@redhat.com>
+Date: Fri, 10 Oct 2025 13:55:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC/WIP 4/4] gitlab: add jobs for thorough block tests
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org
+References: <20251008113552.747002-1-berrange@redhat.com>
+ <20251008113552.747002-5-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251008113552.747002-5-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,107 +158,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 08/10/2025 13.35, Daniel P. Berrangé wrote:
+> CI is only exercising the qcow2 'auto' tests currently. As a result we
+> get no exposure of changes which cause regressions in other block format
+> drivers.
+> 
+> This adds new CI jobs for each block format, that will run the target
+> 'make check-block-$FORMAT'. The jobs are separate so that we have the
+> ability to make each formats gating or not, depending on their level
+> of reliability.
 
-> On Wed, 8 Oct 2025 at 20:17, Daan De Meyer <daan.j.demeyer@gmail.com> wro=
-te:
->>
->> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
->> ---
->>  hw/arm/boot.c       |  2 +-
->>  hw/core/loader.c    | 36 ++++++++++++++++++++++++------------
->>  hw/nvram/fw_cfg.c   |  2 +-
->>  include/hw/loader.h |  2 +-
->>  4 files changed, 27 insertions(+), 15 deletions(-)
->>
->> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
->> index e77d8679d8..c0dec0343a 100644
->> --- a/hw/arm/boot.c
->> +++ b/hw/arm/boot.c
->> @@ -826,7 +826,7 @@ static uint64_t load_aarch64_image(const char *filen=
-ame, hwaddr mem_base,
->>      ssize_t size;
->>
->>      /* On aarch64, it's the bootloader's job to uncompress the kernel. =
-*/
->> -    size =3D load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_GUNZIP_=
-BYTES,
->> +    size =3D load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_DECOMPR=
-ESSED_BYTES,
->>                                       &buffer);
->
-> I would either not bother renaming this constant, or else do
-> it in a preliminary patch of its own in the series. (That
-> makes the part of the patch which is making the functional
-> change easier to read and review.)
->
->> @@ -882,14 +887,6 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ss=
-ize_t *size)
->>          return 0;
->>      }
->>
->> -    if (strcmp(header->compression_type, "gzip") !=3D 0) {
->> -        fprintf(stderr,
->> -                "unable to handle EFI zboot image with \"%.*s\" compres=
-sion\n",
->> -                (int)sizeof(header->compression_type) - 1,
->> -                header->compression_type);
->> -        return -1;
->> -    }
->> -
->>      ploff =3D ldl_le_p(&header->payload_offset);
->>      plsize =3D ldl_le_p(&header->payload_size);
->>
->> @@ -898,8 +895,23 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ss=
-ize_t *size)
->>          return -1;
->>      }
->>
->> -    data =3D g_malloc(LOAD_IMAGE_MAX_GUNZIP_BYTES);
->> -    bytes =3D gunzip(data, LOAD_IMAGE_MAX_GUNZIP_BYTES, *buffer + ploff=
-, plsize);
->> +    data =3D g_malloc(LOAD_IMAGE_MAX_DECOMPRESSED_BYTES);
->> +
->> +    if (strcmp(header->compression_type, "gzip") =3D=3D 0) {
->> +        bytes =3D gunzip(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buff=
-er + ploff, plsize);
->> +#ifdef CONFIG_ZSTD
->> +    } else if (strcmp(header->compression_type, "zstd") =3D=3D 0) {
->> +        size_t ret =3D ZSTD_decompress(data, LOAD_IMAGE_MAX_DECOMPRESSE=
-D_BYTES, *buffer + ploff, plsize);
->> +        bytes =3D ZSTD_isError(ret) ? -1 : (ssize_t) ret;
->> +#endif
->> +    } else {
->> +        fprintf(stderr,
->> +                "unable to handle EFI zboot image with \"%.*s\" compres=
-sion\n",
->> +                (int)sizeof(header->compression_type) - 1,
->> +                header->compression_type);
->> +        return -1;
->
-> Moving the "unrecognized compression type" error path down to
-> here means that we have moved it below the g_malloc() of the
-> data buffer, so we now need to g_free() to avoid a leak.
+Some of the jobs seem to be quite quick, though, only 5 minutes and less:
 
-Could we not declare:
+  https://gitlab.com/berrange/qemu/-/jobs/11633680698
+  https://gitlab.com/berrange/qemu/-/jobs/11633680704
+  https://gitlab.com/berrange/qemu/-/jobs/11633680694
 
-      g_autofree uint8_t *data =3D NULL;
+I think I'd prefer to see them rather merged into one job, to avoid that we 
+waste too much time with setting up the container each time. We can still 
+sort out flaky parts into separate jobs later if necessary.
 
-and drop the cleanup?
+  Thomas
 
->
->> +    }
->> +
->>      if (bytes < 0) {
->>          fprintf(stderr, "failed to decompress EFI zboot image\n");
->>          g_free(data);
->
-> Otherwise I think this looks OK.
->
-> thanks
-> -- PMM
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
