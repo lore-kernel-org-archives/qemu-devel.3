@@ -4,89 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB780CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F9FCCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7FZ3-000637-Oh; Fri, 10 Oct 2025 12:01:53 -0400
+	id 1v7FdO-0000eN-Ty; Fri, 10 Oct 2025 12:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7FZ1-00061f-OT
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:01:51 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7FYi-0006Rs-Dq
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:01:51 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-63b960a0a2bso2598646d50.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760112089; x=1760716889; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u/zrwMqwnGoIBMwOTdIl9Y6UlOgW0fzMIZl0yJFBeZg=;
- b=kVnUqzwEWw6oyIWIKz57zSAGnEaW3IvsHYfBW8aTxuOCkItshdI8TzLuoLFsRXfVTO
- QQuxXtWMTfmfdO5Xncza9rLa15oAm5CsZ3fLPeSjEabKGTse+5tg1XyxyBY51E6CeONG
- LiZ0AF92LqFHpp74LpmXhNjcw25dSp1gZEg9OiqlBkPm+LYkFtq7PsZR95ozjkzlOw4W
- LavY2gR8rysuPCCwXQs81ksNGW+7zhbOglhRPfJ+dmaQ1S9xr+2BmZ7dwvmJkBYaSQd0
- TFZ6Zv+TBAkW3z2iiN5J7xvQskrUCHxqN1vqzqB0d5RoFrc5f8as79Kqay+lPf8dXeYq
- YZ6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760112089; x=1760716889;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=u/zrwMqwnGoIBMwOTdIl9Y6UlOgW0fzMIZl0yJFBeZg=;
- b=mtTVnaolXK1fD0DRUO9k6tE8x7BUlIatVSRnf8LmFfP+ZEgLFzRoFNoTyL9Wtip9rr
- 0KoKqBPi74LMUU41nibcAcKUJ7wPqr7aCc6XQ6asTvT1pKSKxDQYaihm5b/Wi5OesIpt
- uISZ+TRXFcjcLyv+yOtD/06ZoV7WYBW+5wKQXpghm/oBhOQyWXkSf5YTBmrczQrW3kWU
- dgQrg1eYAIZDJZEncEvCNawuE1ZU4fGdhtHIojuI/C9v8HCDrBqrDxZT1ZEV6xfqFz8N
- QyphrEse2U0uybS4IuG81Ceq7o0CrW0dAI8ae6KPG1gbgfCbCXxVQWAMBj6IpWT3+9x7
- r6yQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6u9L21H7F10b1yKyU8wvSfDO6bGimgDOw7gIDDcqyDS8M/Hd1JSSOf+DSzMOQAQIm8KnqIt1Gj6cB@nongnu.org
-X-Gm-Message-State: AOJu0YzYr/P4pE3InUFx6sqHowkRhT4nP3Yi1ccf5GPLqFMHhY6S22aE
- HiaKP7ILIw8+K33ShvpNeuGr7CS9b4a6oSsSd1iOMni13ipPC6iopKrZswtJ5AIXDZN270OhPN2
- lAaVveWPVSPdX4N9uUnV2LnI3VnCW86ttgLbv1XnO5w==
-X-Gm-Gg: ASbGncsFX9nECu2WpFLFW4hCgXF/6c5KPbVoe43IYgrX5Ra5ledCUjaQwzlglXTFUhs
- zZ0GZIFPIu1GdHP6qt/1v9BP1fKXaEH7A9sT6qB6+OsfgxWvBPvtXWSFmp6Tscjt7xwCUlEt9x3
- buVm/w1mrrnXLqSJ0DyXdGd5cDhS7Z/5HNpccV0XMzxZ/BxKxP9xSYAb9d4R0sU95qnwDr9fR5X
- IfYPSAbCq6B8Je6zm0JtR6luWcNxwE=
-X-Google-Smtp-Source: AGHT+IHeqMSrWwUaz2rExiFGqKxJ2V5iIAhzCXVvP+r/KSmEFgKAdvWAWUaOfOOoSjd0QztR6/+Z809gm8bQaWPNgSQ=
-X-Received: by 2002:a53:cec2:0:b0:62a:b545:54b6 with SMTP id
- 956f58d0204a3-63ccb8f2f76mr8689088d50.35.1760112088920; Fri, 10 Oct 2025
- 09:01:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v7FdG-0000b2-GY
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:06:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v7Fd8-0007av-CY
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:06:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760112357;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5bEZEYMem/bO+cwYQb2z8XqYPIiQePkKDRA2Y279HiE=;
+ b=WVYfW5jeb+AKY6F5RPI+AhcddUSSwsJW6zICsv+CZGYtM18q2XHM1x9C4eT5XBTq4vi3/6
+ 9enFbD9ue6xz3StkrP2QAO3aeBoWY2zLdj7wVif8eyAqXqv6NpOX0OcP1uerO4+bdwX+7/
+ iIWT9hVOkS3LPzRAOj8Btn34sugxdD4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-ySO8M6FEONmTYpeEuja0Gw-1; Fri,
+ 10 Oct 2025 12:05:53 -0400
+X-MC-Unique: ySO8M6FEONmTYpeEuja0Gw-1
+X-Mimecast-MFC-AGG-ID: ySO8M6FEONmTYpeEuja0Gw_1760112351
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A7C018004D8; Fri, 10 Oct 2025 16:05:50 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.177])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C0E511955F42; Fri, 10 Oct 2025 16:05:47 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Yonggang Luo <luoyonggang@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] gitlab: purge msys pacman cache
+Date: Fri, 10 Oct 2025 17:05:45 +0100
+Message-ID: <20251010160545.144760-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
- <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
- <87sefrvuq5.fsf@draig.linaro.org>
- <CAFEAcA_hv0fMyJ7WQks8SA5Af7xVvTo3gjKNM4QBFCMWAH=2DA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_hv0fMyJ7WQks8SA5Af7xVvTo3gjKNM4QBFCMWAH=2DA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Oct 2025 17:01:17 +0100
-X-Gm-Features: AS18NWCqm1KODDwsvTP6S4yqeX7WnaDCiPH0IfYnESN5oZ9lO1tHqQk8rvVBkXY
-Message-ID: <CAFEAcA_-dT6Gf0VDczU-OYt3wi-bXLYeLD54Aipb7jah8-XwJA@mail.gmail.com>
-Subject: Re: [PATCH] Add support for zboot images compressed with zstd
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Daan De Meyer <daan.j.demeyer@gmail.com>, qemu-devel@nongnu.org, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,39 +86,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Oct 2025 at 13:09, Peter Maydell <peter.maydell@linaro.org> wrot=
-e:
->
-> On Fri, 10 Oct 2025 at 12:53, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
-> >
-> > Peter Maydell <peter.maydell@linaro.org> writes:
-> >
-> > > On Wed, 8 Oct 2025 at 20:17, Daan De Meyer <daan.j.demeyer@gmail.com>=
- wrote:
-> > >> +    } else {
-> > >> +        fprintf(stderr,
-> > >> +                "unable to handle EFI zboot image with \"%.*s\" com=
-pression\n",
-> > >> +                (int)sizeof(header->compression_type) - 1,
-> > >> +                header->compression_type);
-> > >> +        return -1;
-> > >
-> > > Moving the "unrecognized compression type" error path down to
-> > > here means that we have moved it below the g_malloc() of the
-> > > data buffer, so we now need to g_free() to avoid a leak.
-> >
-> > Could we not declare:
-> >
-> >       g_autofree uint8_t *data =3D NULL;
-> >
-> > and drop the cleanup?
->
-> You could, if you wanted to, convert the file to g_autofree, yes.
+For the Windows msys2 CI job we install many packages using pacman
+and use the GitLab cache to preserve the pacman cache across CI
+runs. While metadata still needs downloading, this avoids pacman
+re-downloading packages from msys2 if they have not changed.
 
-Whoops -- I meant "convert the function" here; I wasn't
-trying to suggest doing the whole file (which is probably
-a bad idea).
+The problem is that pacman never automatically purges anything
+from its package cache. Thus the GitLab cache is growing without
+bound and packing/unpacking the cache is consuming an increasing
+amount of time in the CI job.
 
--- PMM
+If we run 'pacman -Sc' /after/ installing our desired package set,
+it will purge any cached downloaded packages that are not matching
+any installed package.
+
+This will (currently) cap the pacman download cache at approx
+256 MB.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ .gitlab-ci.d/windows.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+See a test job with this change, plus a find across the msys
+pacman cache, showing the cleanup effects....
+
+Before cleanup:
+
+  https://gitlab.com/berrange/qemu/-/jobs/11679136531#L34
+
+After cleanup:
+
+  https://gitlab.com/berrange/qemu/-/jobs/11679136531#L1126
+
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index 1e6a01bd9a..6e1135d8b8 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -87,6 +87,7 @@ msys2-64bit:
+       mingw-w64-x86_64-pkgconf
+       mingw-w64-x86_64-python
+       mingw-w64-x86_64-zstd"
++  - .\msys64\usr\bin\bash -lc "pacman -Sc --noconfirm"
+   - Write-Output "Running build at $(Get-Date -Format u)"
+   - $env:JOBS = $(.\msys64\usr\bin\bash -lc nproc)
+   - $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
+-- 
+2.50.1
+
 
