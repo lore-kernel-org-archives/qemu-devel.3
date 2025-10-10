@@ -4,64 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F50CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 04:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFF49CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 04:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v74bn-0005R7-9z; Fri, 10 Oct 2025 00:20:00 -0400
+	id 1v74ly-0006bO-Ry; Fri, 10 Oct 2025 00:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v74bk-0005Qx-QP
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 00:19:56 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v74bY-0007M6-Fx
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 00:19:56 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59A4JLCc096751
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 10 Oct 2025 13:19:21 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=wPc72Ut1qAzINkQDAP8REZMegejF3ZIeskMVXsy7BH0=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:From:Subject:To;
- s=rs20250326; t=1760069961; v=1;
- b=eAHLcgTFm7Ukx9H09bSlaRcn0iCXSElbXSAUrhTg6Rrfe5PM+HUca7JnJSJr6Sja
- /oYdvdZU7ox6BkK6uS1u3lz9xEXRkDuQh6EuplQ0UKUAepTV8OjvK42wsNfwcCEL
- 92402NqdBzCKSAfOmI7kiYtPdIr+dNR36wer4OfRDUaxfrBWAFwC5wwfep+ZMlTs
- wQYPXvgaMN+hnLoP0VGCgcJLZbmhr2oO5M9FFUHmdIIW2NUlgwdBF50LqgzEduPa
- T9UIXhGBIe0ZYYFzl4pt0TGWBV0phGtP2weBeEgAfk2jiQCaVAFshOMLuMscqt+S
- bcyQ+GhhShgBFRX9rzd3hQ==
-Message-ID: <1fd966d9-95a5-45aa-8a20-46f2987cd65a@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 10 Oct 2025 13:19:20 +0900
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v74lv-0006b0-C9
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 00:30:27 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v74ls-0002N8-Hi
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 00:30:27 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-77f343231fcso1251700b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 21:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760070619; x=1760675419; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cmozZEGptHRsQa8ds21XewPhn/t9fs+AXq8RwJPGAmg=;
+ b=xbYm343qZkYH/5aK9BaaJx1JdPhYlymQ+NhRPExyCc5YTOseOg7SzEyZm4Pi4Pytvt
+ 2VRjlYHsMbKEcSUx8Wsr7hQXpGj84BGrYxs8lt+rDCzzfizgmo1xSSGhiqS8OHoF2luS
+ cmeXDU+EOI4upkwWJTFNWMo7HI4Vi1gFTQjBhdEKpBAHNMzvmyQR6IINNseUnWu+g7YH
+ uF0ymt/hYpnLVjzkKxXJPEteI925Y7b2GREIgADLc+CapcitLUVVD9Sr2a8MKmAr6hsq
+ t2bxym1JZc5Bt/SBiznk8fBTfIr2fmpT6H+uljBzMgIEjHLE9r5OxTHep5ywEDH1/aDv
+ fqSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760070619; x=1760675419;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cmozZEGptHRsQa8ds21XewPhn/t9fs+AXq8RwJPGAmg=;
+ b=QPcZGgzBJqI69wJJLfdr1on27QLL8tg871+/N042gD2D/ttAxXbzV872BfRR3c3JJJ
+ Sx1k/026K/Ks9VYtSBu1AdY4Fg5tXp8Kdzo8h7tVP0AobwODJmbReRsMG040YfoS+4J4
+ cczV6KQ2tgqHf9Byb71CTWpBdhOl8I5tnCt8w2Q4dHz7t7VZV4UI5hYw+J5Vm8vX+IsN
+ VyjsaYz8FZkzmbjHKgu4snimoSFdwjjl+lQnTX6xzCfsdfQV4EUjGEVvJ5DIYLesuccG
+ /dVgxL+vJ1ugU44kgEFmjbMj3uKClZ1+y7Aok3MMdnbSV5JY4Ta6Ib/gyhDInxTqO73m
+ j/Rw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzloepYC8HN/RLu4DDwWyIAdYa5iaPcCFi43iqElT67DHtqmMCQRGYnzh1W0py8q535WnEdY1h0koM@nongnu.org
+X-Gm-Message-State: AOJu0Yy+4fLovNQa+aimLzLzXeP7Ma0C4FK+J1VxwK0/wwuDA/nKIIeP
+ MP/O5EkyOS1ystyOzAgXLLgMxlh4/nhhKfg+TQpNdYWO+MzokffgywOXCI9SizeGVumSXIk0m7a
+ bRy6QQfU=
+X-Gm-Gg: ASbGncu6el7j7kGNpzrzqyS5A1H8Z9lM1BS18plDmiBIIgGhM4zZy8Fo3auRdPjcEVi
+ tLyjhGCTUZ8KaZDgrUE3JxMjK748/rmUO7WrdQZtDkckg75Mujon3RU2UXNNqwsuMs/o0OSVAcA
+ osyEHJODAgViUeLw5rdeFsbPpTA17x9GN9XJCeQL4Ncu6/KrKDmGsCQQOWb/BAKV1FnWnO6N2bC
+ Ae+sNI4nh8zS58ehe8p2qqsXyXxaKNETxY6zmafn/tSxPsjG/XJ4cXvXBkmJ5EIDOfVinX2q1wB
+ Y7V0QfChJbk5FPIjlEKUU/5reJSs5FcE/x23mDV20fgsFyw0jexTIABN1gtErfcYABbg/0DxCkh
+ Igqj3P6Mrz7BUDuZdmLegt3yhVzMcZnN/ZdJ+w2ltd9VG+4M0WcjZIvf7U1U=
+X-Google-Smtp-Source: AGHT+IHsASzHMpUDLK1J08Nv6MO9DEfyv9Fz/kbj/gLREaZCGsZBfrqqoen+aGpJ4Ljdc0Cv9k26kA==
+X-Received: by 2002:a05:6a20:9183:b0:32b:83af:11ff with SMTP id
+ adf61e73a8af0-32da8139347mr13075466637.2.1760070619361; 
+ Thu, 09 Oct 2025 21:30:19 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b678d821159sm1191059a12.0.2025.10.09.21.30.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Oct 2025 21:30:18 -0700 (PDT)
+Message-ID: <b2d08405-876a-4d33-a05a-4aa3d5fca6c4@linaro.org>
+Date: Thu, 9 Oct 2025 21:30:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify
- blob resources
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
- <20251003234138.85820-3-vivek.kasireddy@intel.com>
+Subject: Re: [PATCH] target/avr: Use vaddr type for $PC jumps
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20251009200525.33987-1-philmd@linaro.org>
+ <3460610b-5c1a-4189-8f0a-fd04897effb5@linaro.org>
+ <78a13e96-1404-484d-a985-6b403fd1462c@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251003234138.85820-3-vivek.kasireddy@intel.com>
+In-Reply-To: <78a13e96-1404-484d-a985-6b403fd1462c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,15 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/04 8:35, Vivek Kasireddy wrote:
-> The res->blob pointer may not be valid (non-NULL) for some blobs
-> where the backing storage is not memfd based. Therefore, we cannot
-> use it to determine if a resource is a blob or not. Instead, we
-> could use res->blob_size to make this determination as it is
-> non-zero for blob resources regardless of where their backing
-> storage is located.
+On 10/9/25 19:56, Philippe Mathieu-Daudé wrote:
+> Oh I see. Then avr_tr_insn_start() is also buggy?
 
-I think this patch is no longer necessary since now you add code to 
-mmap() VFIO storage with "[PATCH v1 7/7] virtio-gpu-udmabuf: Create 
-dmabuf for blobs associated with VFIO devices".
+Good question.  It depends on how we view things.
+
+At least once upon a time, the values in insn_start were all private to the target.  They 
+were only consumed by restore_state_to_opc.
+
+Over time there has been creep, where the first argument might be assumed to be the 
+virtual address.  E.g. plugins?  But beyond that?
+
+
+r~
 
