@@ -4,151 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C58CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 05:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D76CAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 06:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v75e6-00043F-Ev; Fri, 10 Oct 2025 01:26:26 -0400
+	id 1v76Cq-00042e-Gm; Fri, 10 Oct 2025 02:02:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v75e2-00041z-9r
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 01:26:23 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v76Cm-000410-8L; Fri, 10 Oct 2025 02:02:16 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v75dp-0002At-If
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 01:26:21 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tAF6vcRPSZ+3ZEMuPTKb3blphQzuJpqdHRUesMZOoyb/l3uo1/adLf79KgLFsGgwObb97gvjSSRTFqLcVYkpYr9TDWIL74rFlBtxtlhNWdQ2xSgHrjXqpt/sCKLN/NvJ5lXX0qdKFTGJeYFvKXx4e4YvTzwafYQu2BC41oH2V+Aswf+f/bhBv/VbY4+pz57kD31yuYQFA7Qq6Zgpt/b0DD3tfOf4n1s+6n9rwXIbJPjJ8wGHeTyRvmvBX1xGYGo2Acgx4jVtZIoObTxofBGIq6KGrpMMzQcJ1yBVXkWZlcVVRJHC8IcLa05pqgbG3oYp6LrdKtJaBqDrFf+D7+sppQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QPXS1FBT3egR5XIrNoRP/xt5ImWSWsEFtdt++5/YSQA=;
- b=Il7Env/RMUtYHo45pgLF5L+iV56BBqOX4GhAy3BKUCi3+9iOcza1dA6q4TCyGo0Kks1JoTwG0bTwTelhPIdG0Iz1al9AD4iQKJI0Ya4xaxyCCLNJ4AF38WtRiBr5hZq3WEleI1EIB9ojVMz5TQrLXttgtSakXfcXyz0d2+E6Av0FNprwNwBdDQuvVK3Dyq4lMIYEneMZumJ3AVxUq7sLdSKbuvdvhZCFenex+8nVJSTJ+rg8Z6Xt7DCiQa6cGCwYIKA8cRJ4cuTQkwzY30LK31LuJcc4x15pWiJaSPEztJXZBfbw+6WnDDnoc0LCz8VlSRkL8EHMFR4CA86EodS+Eg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QPXS1FBT3egR5XIrNoRP/xt5ImWSWsEFtdt++5/YSQA=;
- b=YwtcqFmActbRIhfDkcuUI4BTUdJay0dZL+iS+deqHhbmGzJyxAkmBqwxNnMfnitMZ/zahV3csKsKR0L3OrT3mpuf5+sRqc/w0xF+4qi1mRAlP/KgcsgmeumnjmKShZ7foEii4Lls8tyhspVRePR6y954nbpjuy8V5rDVVmmSIXk=
-Received: from SJ0PR03CA0005.namprd03.prod.outlook.com (2603:10b6:a03:33a::10)
- by LV8PR12MB9206.namprd12.prod.outlook.com (2603:10b6:408:186::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.10; Fri, 10 Oct
- 2025 05:25:53 +0000
-Received: from SJ1PEPF00001CE1.namprd05.prod.outlook.com
- (2603:10b6:a03:33a:cafe::50) by SJ0PR03CA0005.outlook.office365.com
- (2603:10b6:a03:33a::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.9 via Frontend Transport; Fri,
- 10 Oct 2025 05:25:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ1PEPF00001CE1.mail.protection.outlook.com (10.167.242.9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9203.9 via Frontend Transport; Fri, 10 Oct 2025 05:25:52 +0000
-Received: from [172.31.35.81] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 9 Oct
- 2025 22:25:48 -0700
-Message-ID: <29d20903-e255-4398-90f3-5e04391a46fb@amd.com>
-Date: Fri, 10 Oct 2025 10:55:45 +0530
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v76Ci-0005U3-74; Fri, 10 Oct 2025 02:02:15 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59A5tgtt035371
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 10 Oct 2025 14:55:42 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=0P4w0OYm6ufqbmzDUCCHp2xxLmutRkyQKj7l+mZLozg=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760075743; v=1;
+ b=KxQtgKw5cvPAq/61nSzZuaHPN2+00zGPbAdHVVdz3qXkAvoYKJMKCOt7i/3p2nJS
+ d21RJaJINxDytoO4m8YGoBmuQTg4PA9+uBFpwy9McCAL9A9Xtn1veDkiOgbBCbWN
+ 4WYn548gvwNWy23Wo/5S6r3fU/9N1Fmx6cvnHcGNZnkulbcMeqb3vm4beAoXo8Ku
+ 1BDvqCPzzEL7MmEas4dBJFt+xkx4pr4/ErEmO5EaZOmdsSZgvzXtOw0gineWx2Nh
+ qT+FIHw283UU3qZmzpDKb9gbMhH1RY58/3Lq52FO/9oZikrmFstzyj2pn1pX3WxL
+ CRA81Vhcul/lB1d6cLYwmA==
+Message-ID: <13f5ba0b-8747-4c2d-af7c-d7ed3c2771a7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 10 Oct 2025 14:55:42 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Cleanups and fixes (PART 2)
+Subject: Re: [PATCH 02/14] qdev: Automatically delete memory subregions
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+ <20250917-subregion-v1-2-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+ <aN7RHvjeQNtrXDcQ@x1.local> <aN7VH0j8HfaeRV1V@x1.local>
+ <32e36e0c-c947-4fa4-bdbf-5ef3ce6ea0a3@rsg.ci.i.u-tokyo.ac.jp>
+ <aN_rLDLeMcvRtmAa@x1.local>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Alejandro
- Jimenez" <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
- <suravee.suthikulpanit@amd.com>, <vasant.hegde@amd.com>,
- <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>,
- <santosh.shukla@amd.com>, <aik@amd.com>
-References: <20251008164324.21553-1-sarunkod@amd.com>
- <e0cd4386-c367-49f0-b83d-6c38cc6eeef8@oracle.com>
- <0f6dbb37-9d00-43da-9807-c0629575cefb@linaro.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <0f6dbb37-9d00-43da-9807-c0629575cefb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE1:EE_|LV8PR12MB9206:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3410d14c-868a-46e1-29cc-08de07bd7af6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SVRLcDV5UGlDVzkxUm9VNXdwYTYxUjZCT3R1SmlTVFEvM2dTSmtITG5uT1NZ?=
- =?utf-8?B?VHc3NUdxNDhDNGhMWXphNW00MkdMTW1JNjhzWEd5R2hSUkFXaHJ4K0ZxM3BL?=
- =?utf-8?B?MnU0czY0S0xJZm5Ka20wYnB3N2VEMXdDNllKVFlmRnpVNk9MeXFSeWFRVmY0?=
- =?utf-8?B?dkdRN2phQlBxZEJ0dlF4Tzl4aHdXbkROTytyYkJUNDAzeFNGR2J0SGZtWk9I?=
- =?utf-8?B?cTZRKzlQOUtaOTRiNkhCWW5kRWtuV1AwNUhIWnZ4YnZSbEpCdmNlU0dqUm95?=
- =?utf-8?B?MGI1RXdSVWNSc2U5ckxjT3RyNWlRenl6NXhpRkIxeEJUQy9hdE1JcHppQjNE?=
- =?utf-8?B?c0tLUWNubUV3dmMrdzczb2Z2czdnaDRISzhiaUtEd1I5ZCtqaFJXNXVtb2dE?=
- =?utf-8?B?bVk2bUVvVTU5WHdMM0pwc3J5UlRkUC96SUJZb3RlYnRMR3U2K2tEVDhwRHpU?=
- =?utf-8?B?TWkwaExYaDBibUlMUDRtWVVBUVdZWkEwdWY4bVl1SytGMWF6TUhWZ01qWHVx?=
- =?utf-8?B?Zm1PUWRHcDlNL016OVVGeU1sTHBvcmxOZTVGd2VTYUVQTGRIN3Naa2FMOU14?=
- =?utf-8?B?RnU1RC9mekxjTWkxUlJEMEo0Qk56RE9abm1zMk8xNnhyU0dDMWJKZVc3dCts?=
- =?utf-8?B?TWpCR0FaM3F3enNSSFlWRmJkUXhHckg4aDBNZEVpZVlBUTdYYWc1cHRKdnhM?=
- =?utf-8?B?MFo4YWJJdmdsVzN3VGU3VlZQbTZ6OGZoaXM1ejhMVG80WVR4SDZ1K1NrR3Vp?=
- =?utf-8?B?TmNQVEticHpUdFE3S2NNQzJhUklTQVIvOEhaZXU0WUM3eXBQQW1KeFVTLy9U?=
- =?utf-8?B?ZHFsSVZCTDdTV3FERUV4UHc0d0NQZGk2UTcrcFhwUGY5ZWZrcmFaSmFoTWdo?=
- =?utf-8?B?SUlicTNYRjhjTVdRZlR0anA2bzJRRmtCNW1BMzhJMkZ5MmVxQmY5Nk5vMEpq?=
- =?utf-8?B?QThtbVVMUUxsdEJTYnN0R2VkK0VDV3N0aEYrVTMzZEtnQ0t6ZTk0QXBXUHV5?=
- =?utf-8?B?eG0vaVhaS2RBbkRIb1paSG9VbUpaNjh1OGs5MFpXdUtRVGF5SXBCaHJJejFn?=
- =?utf-8?B?bTBSN2JWUUFQZDBCVWdoRUsrdW5DeTBwS0lvM1pSdC8xWExCZUIycjFHdm5t?=
- =?utf-8?B?VTB0RmdEc1YrdjhBZWZWaTAyYTZFYmZTYUdjMWc0bWt6Vm1TaTc1TzNla1A4?=
- =?utf-8?B?L2VLR244emJFbjloY1ZtUGtUbnAzR21Ja0VPUi9kWGpjZXpzY2UzS1R3VGRD?=
- =?utf-8?B?QlhPcWdGWXFMSjJ1ZzhqVGJVV1UxZEZSbnRITVYvQUZUZ0FGdTVmUW5XTmRx?=
- =?utf-8?B?Y3Y3T0dkUWNXczFFSGxOK0lRcG9KTUxrL2hTc251dzFacTBvTU5PbFQvT2pY?=
- =?utf-8?B?SnR1TFNNSXA1aWtZbm9NTWQvOHpvMkQwL0xzTE1ORHQvWG9DSGNIQStFVndt?=
- =?utf-8?B?c1M4RXEvV3lBdzJMeVNFVXZVbXNwOXpPYnFIRUxRMXoyNmRrM1ZJNTBmK042?=
- =?utf-8?B?clJ6YkZkb1ZyWlNYOTlFdmU2Ry8xUWFkR1VJVENXVHhqbkJEblF0dklqcERr?=
- =?utf-8?B?SzF3aUtpUHl3RlVZcU5HVFRBbVBiVGVrdGY4SStabkpqaDRzOHBiVUtMMlA0?=
- =?utf-8?B?UXhVS0piWE9VMUZENVNLMzNGOURPMjQrMmc2ZG41YXg4cmZ1M1R6RDREeWdX?=
- =?utf-8?B?Zkg1RlBWTHdVYzB2YmpUM2ZkQStoWTQ1R2c4aE1idlY0amRhYnU5Y0JrRURi?=
- =?utf-8?B?ODFqTGk1cXpldm1qNXY1ZlFidy8vbUtVRkxsbGlLV09nUjd5N0ZVRVdoYVlS?=
- =?utf-8?B?dXFYUWY4Nk52bEJ2QnhnOEpObW5NSkIvVE1MSVROa3FkVmdGZVVneWZhNVNP?=
- =?utf-8?B?L2pXWWtkLzR0dkVhUDBsdm9JY09XTDlVK01teXlQclFRaXMya2JreWMvYU5N?=
- =?utf-8?B?cG1sTy9pUzM2Y21yaDkza1hPTWpaSTJvNk9sSjVGSmpUSnJkSWorUzNxQS93?=
- =?utf-8?B?dWZUck5mNjhvdk9XUTRSWGlxczlxUFNBV3h6Rzd4Lzk4Z3ZZWlMwOFRkWUxm?=
- =?utf-8?B?M0dvalpDWThZbDJsOHAxMHp2NDQ4ODlCd0VYd2tKVXFzUHVwZW1yVUMvYTNY?=
- =?utf-8?Q?vg+M=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2025 05:25:52.5100 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3410d14c-868a-46e1-29cc-08de07bd7af6
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE1.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9206
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, KHOP_HELO_FCRDNS=0.399,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aN_rLDLeMcvRtmAa@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,21 +105,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2025/10/04 0:26, Peter Xu wrote:
+> On Fri, Oct 03, 2025 at 11:01:38PM +0900, Akihiko Odaki wrote:
+>> On 2025/10/03 4:40, Peter Xu wrote:
+>>> On Thu, Oct 02, 2025 at 03:23:10PM -0400, Peter Xu wrote:
+>>>> On Wed, Sep 17, 2025 at 07:32:48PM +0900, Akihiko Odaki wrote:
+>>>>> +static int del_memory_region(Object *child, void *opaque)
+>>>>> +{
+>>>>> +    MemoryRegion *mr = (MemoryRegion *)object_dynamic_cast(child, TYPE_MEMORY_REGION);
+>>>>> +
+>>>>> +    if (mr && mr->container) {
+>>>>> +        memory_region_del_subregion(mr->container, mr);
+>>>>> +    }
+>>>>> +
+>>>>> +    return 0;
+>>>>> +}
+>>>>> +
+>>>>>    static void device_set_realized(Object *obj, bool value, Error **errp)
+>>>>>    {
+>>>>>        DeviceState *dev = DEVICE(obj);
+>>>>> @@ -582,6 +593,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+>>>>>            if (dc->unrealize) {
+>>>>>                dc->unrealize(dev);
+>>>>>            }
+>>>>> +        object_child_foreach(OBJECT(dev), del_memory_region, NULL);
+>>>>
+>>>> PS: I'll keep throwing some pure questions here, again, Paolo - it doesn't
+>>>> need to block merging if you're confident with the general approach.
+>>>>
+>>>> Said that, a few things I still want to mention after I read this series..
+>>>>
+>>>> One thing I really feel hard to review such work is, you hardly describe
+>>>> the problems the series is resolving.
+>>>>
+>>>> For example, this patch proposed auto-detach MRs in unrealize() for qdev,
+>>>> however there's nowhere describing "what will start to work, while it
+>>>> doesn't", "how bad is the problem", etc..  All the rest patches are about
+>>>> "what we can avoid do" after this patch.
+>>>
+>>> For this part, I should be more clear on what I'm requesting on the
+>>> answers.
+>>>
+>>> I think I get the whole point that MRs (while still with MR refcount
+>>> piggypacked, as of current QEMU master does) can circular reference itself
+>>> if not always detached properly, so explicitly my question is about:
+>>>
+>>> - What devices / use case you encountered, that QEMU has such issue?
+>>>     Especially, this is about after we have merged commit ac7a892fd3 "memory:
+>>>     Fix leaks due to owner-shared MRs circular references".  Asking because I
+>>>     believe most of them should already auto-detach when owner is shared.
+>>>
+>>> - From above list of broken devices, are there any devices that are
+>>>     hot-unpluggable (aka, high priority)?  Is it a problem if we do not
+>>>     finalize a MR if it is never removable anyway?
+> 
+> [1]
+> 
+>>>
+>>>>
+>>>> Meanwhile, the cover letter is misleading. It is:
+>>>>
+>>>> [PATCH 00/14] Fix memory region use-after-finalization
+>>>>
+>>>> I believe it's simply wrong, because the whole series is not about
+>>>> finalize() but unrealize().  For Device class, it also includes the exit()
+>>>> which will be invoked in pci_qdev_unrealize(), but that is also part of the
+>>>> unrealize() routine, not finalize().
+>>
+>> The subject of the cover letter "fix memory region use-after-finalization"
+>> is confusing. While this series has such fixes, it also contain refactoring
+>> patches. The cover letter says:
+>>
+>>> Patch "qdev: Automatically delete memory subregions" and the
+>>> succeeding patches are for refactoring, but patch "vfio-user: Do not
+>>> delete the subregion" does fix use-after-finalization.
+>>
+>> More concretely, patch "qdev: Automatically delete memory subregions"
+>> implements a common pattern of device unrealization, and the suceeding
+>> patches remove ad-hoc implementations of it.
+>>
+>> And since patch "hw/pci-bridge: Do not assume immediate MemoryRegion
+>> finalization" fixes nothing as you pointed out, only patch "vfio-user: Do
+>> not delete the subregion" fixes something.
+>>
+>> Without patch "vfio-user: Do not delete the subregion",
+>> vfio_user_msix_teardown() calls memory_region_del_subregion(). However, this
+>> function is called from instance_finalize, so the subregion is already
+>> finalized and results in a use-after-finalization scenario.
+>>
+>> Anything else is for refactoring and it's quite unlike patch "memory: Fix
+>> leaks due to owner-shared MRs circular references", which is a bug fix.
+>>
+>> I think I'll drop patch "hw/pci-bridge: Do not assume immediate MemoryRegion
+>> finalization" and rename this series simply to "qdev: Automatically delete
+>> memory subregions" to avoid confusion.
+> 
+> Yes, thanks.  I went over quite a few follow up patches but I missed this
+> one.  IMHO you can also split the only fix out, so that can be better
+> looked at by vfio-user developers.  It'll also be easier for them to verify
+> if they want.
 
+I'll split the VFIO patch out since I found patch "qdev: Automatically 
+delete memory subregions" is unnecessary; I'll describe that later.
 
-On 10/10/2025 7:49 AM, Philippe Mathieu-Daudé wrote:
-> Hi Alejandro,
->
-> On 10/10/25 03:33, Alejandro Jimenez wrote:
->
->> I know the commit log is not consistent so far, but going forward I 
->> propose we adopt the shorter prefix "amd_iommu: " for commit 
->> summaries. There is no ambiguity (only one arch has amd_iommu), so 
->> the full path is not required (i.e. avoid 'hw/i386/amd_iommu: '). 
->> Shorter boilerplate leaves more space for relevant details, and helps 
->> people like me who struggle to comply with character limits :).
->
-> What about "hw/amd_iommu:" to keep 'hw' in subject?
-I also prefer "amd_iommu". But I'll wait for alejandro's reply before 
-posting V2.
+> 
+>>
+>>>>
+>>>> The other question is, what if a MR has a owner that is not the device
+>>>> itself?  There's no place enforcing this, hence a qdev can logically have
+>>>> some sub-objects (which may not really be qdev) that can be the owner of
+>>>> the memory regions.  Then the device emulation will found that some MRs are
+>>>> auto-detached and some are not.
+>>>>
+>>>> One example that I'm aware of is this:
+>>>>
+>>>> https://lore.kernel.org/all/20250910115420.1012191-2-aesteve@redhat.com/#t
+>>>>
+>>>> TYPE_VIRTIO_SHARED_MEMORY_MAPPING is an object, not qdev here, which can be
+>>>> the owner of the MR.
+>>
+>> Patch "qdev: Automatically delete memory subregions" and the succeeding
+>> patches are for refactoring of qdev. MRs not directly owned by qdev are out
+>> of scope of the change.
+> 
+> Do you have a rough answer of above question [1], on what might suffer from
+> lost MRs?  I sincerely want to know how much we are missing after we could
+> already auto-detach owner-shared MRs.
+
+There is no functionally "broken" device. The patch that does fix 
+something is the VFIO patch, and it fixes use-after-finalization, which 
+is semantically problematic but does not cause a functional problem 
+(like use-after-free).
+
+> 
+>  From a quick glance, at least patch 4-14 are detaching MRs that shares the
+> same owner.  IIUC, it means at least patch 4-14 do not rely on patch 2.
+
+If the container and the subregion shares the same owner, 
+memory_region_del_subregion() is unnecessary in the first place and can 
+be removed even without patch 2, and it seems there are a number of such 
+unnecessary memory_region_del_subregion() calls.
+
+That said, there are cases where memory_region_del_subregion() is truly 
+needed. In general, a device exposes its MMIO functionality to the guest 
+by adding its memory region to external containers, so there should be 
+some containers and subregions that do not share memory regions.
+
+Reviewing removed memory_region_del_subregion() calls in each patch, 
+patch 3, 6, 7, 8, 9, 10, 13, and 14 are for memory regions with shared 
+owners (that's why patch 3 can be applied without the qdev patch).
+Patch 4, 5, 11 and 12 are for memory regions with different owners.
+
+The point here is that we don't have to care whether memory regions 
+share owners if we delete all subregions for defensive programming.
+
+> 
+> Then I wonder how much patch 2 helps in real life.
+> 
+> There's indeed a difference though when a qdev may realize(), unrealize()
+> and realize() in a sequence, in which case patch 2 could help whil commit
+> ac7a892fd3 won't, however I don't know whether there's real use case,
+> either.
+
+It is not relevant what order realize() and unrealize() are performed. 
+This patch is to de-duplicate the code to unrealize devices, and commit 
+ac7a892fd3 fixes a bug instead.
+
+> 
+> I also wished if there's such device, it'll have explicit detach code so
+> that when I debug a problem on the device I can easily see when the MRs
+> will be available, instead of remembering all the rules when something in
+> some layer will auto-detach...
+
+Indeed, people who read the implementation of devices wonder where are 
+memory_region_del_subregion() calls that corresponding to 
+memory_region_add_subregion() calls they see.
+
+That said, anyone who cares device code already needs to know that 
+subregions (that do not share owners) need to be deleted during 
+unrealization, or devices will remain visible to the guest. I see 
+avoiding this consequence is important, and it is just nice to have less 
+code by de-deuplicating the memory_del_subregion() calls.
+
+> 
+> Personally I think such automation adds burden to developers' mind if
+> there're still a bunch of MRs that are not used in this way (there
+> definitely are, otherwise we should be able to completely unexport
+> memory_region_del_subregion). But that's subjective; I believe at least
+> Paolo agrees with your general approach.
+
+Indeed, memory_region_del_subregion() is still necessary for memory 
+regions that are not directly owned by devices. This is a trade-off 
+situation so there is no clear answer what's the best.
+
+Regards,
+Akihiko Odaki
 
