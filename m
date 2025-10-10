@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBEACCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571F3CCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Cks-0004mv-6L; Fri, 10 Oct 2025 09:01:54 -0400
+	id 1v7Cp2-0006AF-Aa; Fri, 10 Oct 2025 09:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <robert.hoo.linux@gmail.com>)
- id 1v7Cjl-0004cG-N5
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:00:46 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7Coq-00067Q-HW
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:01 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <robert.hoo.linux@gmail.com>)
- id 1v7Cjb-0001tM-5e
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:00:45 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b609a32a9b6so1271670a12.2
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:00:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7CoZ-0003ll-Uh
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:00 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-46e37d10f3eso15327415e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760101225; x=1760706025; darn=nongnu.org;
- h=content-transfer-encoding:subject:from:to:content-language
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vOOXZGCs8bQ+qHQrZlVXdYoF24tKQxHP/cXnUs7wLho=;
- b=Kp4EPMGWJ3PYbWF3De5UMRobOJ3XHpz63CpCJ/T9HngB6MojcxqZ5LSU/PCyKq3CwS
- Nlh4kT6hYScTtd97fWrPRA1oihnNIKfeavF6Yy06JpVm5N2zTzNr1TVEBBE2odDp0f+N
- UCJ2K5iPmw1/EY2sAYPEVd2sGYDKtgRjDXDr2PVLDT1FYT/QEE7Zl2aiKjNx/w/nA5Kq
- BdRuAwvGVG7yZSlVtPR5Im3F5rpnwZCIdvsCq8BMQ/Ws5F94TCvaLOBAZK0qN8Gvor2U
- Tf1tqSZYNyzKfqvm8gj1oLcihnwymKPfhTWSaRdctUzB0H4BXAXect+T0d066HtRMyuf
- 7jqg==
+ d=linaro.org; s=google; t=1760101538; x=1760706338; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ASyzth2+dJyh1MI3oXSuce6UC/YaXqBlkKj5sq9zv/8=;
+ b=vrvhbYyCtdzT5BlYbsVWSGmBudnB4U+EilDevsHkuRwsmfbqtBGUsFauMZz/qEmB0F
+ 30G6W1Wt+kbE+YYq8/ma5nXSSnjN7EK5hOFDz9uft4vrL/8Pc+ZkvJEM/Zx4PwK2a5bB
+ iSiBWM7BvoT1o3oV3Wexc3QElfBAdqybwsiHbKRan9DebtttU9pX33ohPCWWC8pdce5Y
+ Hph2L6tjknmu3WlYfix8u5YlgVdpr8dbQLRhZNkHotJgPWboXH7c4ULf8+WjgGVP9dfY
+ 5L2WTqd4hr4ahZrvsir43WBkckSHrK0GT656AmRccPXNcpGrh7fWwz9wJeUrvaP7ii3P
+ FpDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101225; x=1760706025;
- h=content-transfer-encoding:subject:from:to:content-language
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=vOOXZGCs8bQ+qHQrZlVXdYoF24tKQxHP/cXnUs7wLho=;
- b=gXawXYaa2gjS1iTXqWcRerT8Vb7k9Im83OsMr6A+DjlQHt8y900zqzXDnuO6vMjN20
- f6oywL7Fg3cTVpA3JqWADqeGZWSxLK0nxr1IjHZio7ajZIrEdKwbV7D1AZ898uYppqd3
- TABGUw9fOsgI/bNmjHO2CywgHNvdr6TnhWAL1cBANU5jzqf8SFHyYueJXKvbMRsY7Ice
- c270jOKvJjDfcFmhfMIvJ8rBLcpqWwAJ4guawgrzPV0hD89RySUmvjkYkDxIFMRHTqVG
- 0auKwW5OFdtQUkTYs7eUUyFCKgPRqayyyhuKXedmRJeIGXKDehEG3onMsTRJ6chGTjpT
- qevA==
-X-Gm-Message-State: AOJu0Ywxm74cSrE2yF41Q5ThFANAEBS8yvafQKtTm7nwAsUUzwV5NXkH
- apdLk+eBGijvWAyzowlbi8usVZ31HZj7ghAD8j1RTzfmfIbOhZ4VnO5xF/BwbZCB
-X-Gm-Gg: ASbGnctU8guasUs2ASXNtdCckaDCN24I69IJOPNwcDnAbx7fRDqRuQUexDliKdm4BZR
- mVBxOuYgXzFSWFg+Ilp55PXjlKNgZDZXwOHk7NIB4Eh/UN6z4HyIlSfuFqy4CBWA6fhHRsoDIP9
- qF9EKlAoJK9XIiSMKhp5x83mE/UNJyCqRsuEkqlJSAgWACgFkAOH4vfvkoOTFWzfmaslajsV8f8
- dzzWD2CmiIdzJqp2PxO/QaRBCtNhZp2BPBXQTKVAmVsHwk10S5gD9cBOGtZZAympNkWY08cZ5eg
- LxYl/s7YKvOMjvNujJbO8U3iPPpWe4VOW3zE56lCdnKe9y8k7gEQha0JCu1ZESfV1ySzJX09vUm
- pD6paV+LYqCvtgWkkI1viPlvvqFCYJBhXMkjPoZRdElH2Ai2SUqDXWAT3RXgRQnxLNnbcvqbBQ7
- QIX344b3ScaC5SGX0gTOBp8gRUnCp8KDAYp9Q5iVDcJXQnAv0Xe6UQplhqqJkRIkQY
-X-Google-Smtp-Source: AGHT+IEYuNdt8adqxLdE30t6Z6WFdRp/jd/MialuY+uI4QVuv21WKO0OSuuGmIgtwvNpmNOpRPUddw==
-X-Received: by 2002:a17:902:ef09:b0:27f:1c1a:ee43 with SMTP id
- d9443c01a7336-290272c2564mr138425485ad.29.1760101225347; 
- Fri, 10 Oct 2025 06:00:25 -0700 (PDT)
-Received: from [172.27.236.23]
- (ec2-13-250-3-147.ap-southeast-1.compute.amazonaws.com. [13.250.3.147])
+ d=1e100.net; s=20230601; t=1760101538; x=1760706338;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ASyzth2+dJyh1MI3oXSuce6UC/YaXqBlkKj5sq9zv/8=;
+ b=fDCAQvx+Tam8/aAElDwEn8vJ9yKp2e1DVKAADeEocreHcGuHRVpuvo0j1X/1VLHdFL
+ bpXpjCUi/wbLPlIKkCytWg/BEGz/MxrJNj9cKzMq9bwPHqY9kMc2tor1BuDOI/7dQtFX
+ uynYZqItNErCkz1IEgMJhRx8dXeZsj+aIdoZk9w7gZ6lq3IMi8oCWDrVjQMX4t+BsO4I
+ NszpeYRWl/D+qKMHUH3bsae6ibkWxcmaXR+wOc+efIjY2A4cU86i1a4Y/Ih7Q5AC2fWP
+ mU8PhqdNbL3AwoZRDyYAwcxhtctKEfNcA8rBXE74xoYzhA3AjDvPLBNueeSp8RYIMfVC
+ 3csQ==
+X-Gm-Message-State: AOJu0YyucSE8/WePYRbbd7QHKSvmHK19RYBQBvTIBCYKyYmkDT2LptMv
+ /oeP0O+zE20pc5zTMPF1s+B+HDZWad0V3ZtkdSW02F1nQu52eWHeqFDQDGVzHa4b2FcHYFVQOdV
+ K4njp
+X-Gm-Gg: ASbGnctU8yq2uo4mBnQFXRbep3SHTypJtr0Y/j8IUH6L7fiX/M76o3alTnkhVlHxtSJ
+ 4gtTiakLKO1UqiB5Ot8Vdkbh60sdD+U1feARiLr3zuNCWtdTIW1vnJUkXDZA3+f5rhRgArMhDyK
+ PVuGYOzxwX40RdF9eU30lGXHXR1k8ucZzlKHMwmwHc8MFx/cfbRYQ83UkQz6vUgARqC3mUEh6iZ
+ tIc5VwaBrozzdoetICmc57ccQoXH5dyWy0UZntYvR6bsOxII7bVO/bBf1Zm0jlXDv9PQx1v0pU6
+ kFYGGqtYJi+8BQxYWPza2xJ0wc4Sow+JV7XKPN4BsMPwICUd9Ov0ryekQ+IMlHhHckksXiL6+HE
+ YcOd0i2+rHdigaQFhyz6klAePYZc0aYNG140cVeMWQleqQMTePjI=
+X-Google-Smtp-Source: AGHT+IEHPJyeEhNjV1tb8c4DcYPcjewmSjBQkHNYgjkSgLwFEsSCtcbmCT3fxi/vStiukbbl8Jualw==
+X-Received: by 2002:a05:600c:1d18:b0:45f:2869:c3b2 with SMTP id
+ 5b1f17b1804b1-46fa9b1834dmr83842385e9.33.1760101537784; 
+ Fri, 10 Oct 2025 06:05:37 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034e45568sm56691545ad.55.2025.10.10.06.00.23
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.05.36
  for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Oct 2025 06:00:24 -0700 (PDT)
-Message-ID: <1943ea16-c3cb-4442-be72-5719026ee13a@gmail.com>
-Date: Fri, 10 Oct 2025 21:00:21 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Oct 2025 06:05:37 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-From: Robert Hoo <robert.hoo.linux@gmail.com>
-Subject: vsock support for communication between guests
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=robert.hoo.linux@gmail.com; helo=mail-pg1-x52a.google.com
+Subject: [PULL 07/76] target/arm: Populate PIE in aa64_va_parameters
+Date: Fri, 10 Oct 2025 14:04:18 +0100
+Message-ID: <20251010130527.3921602-8-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
+References: <20251010130527.3921602-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,9 +99,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Does vsock support communication between guests?
- From man page, and my experiment, seems it doesn't.
-But why not?
+Select the PIE bit for the translation regime.
+With PIE, the PTE layout changes, forcing HPD.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20251008215613.300150-8-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/internals.h |  3 ++-
+ target/arm/helper.c    | 19 ++++++++++++++++++-
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 1d958dbf685..face1019f52 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1491,7 +1491,7 @@ static inline int arm_granule_bits(ARMGranuleSize gran)
+ 
+ /*
+  * Parameters of a given virtual address, as extracted from the
+- * translation control register (TCR) for a given regime.
++ * translation controls for a given regime.
+  */
+ typedef struct ARMVAParameters {
+     unsigned tsz    : 8;
+@@ -1506,6 +1506,7 @@ typedef struct ARMVAParameters {
+     bool ha         : 1;
+     bool hd         : 1;
+     ARMGranuleSize gran : 2;
++    bool pie        : 1;
+ } ARMVAParameters;
+ 
+ /**
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index b7bc27436f7..37865bf70eb 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9386,11 +9386,12 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+                                    bool el1_is_aa32)
+ {
+     uint64_t tcr = regime_tcr(env, mmu_idx);
+-    bool epd, hpd, tsz_oob, ds, ha, hd;
++    bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
+     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
+     ARMGranuleSize gran;
+     ARMCPU *cpu = env_archcpu(env);
+     bool stage2 = regime_is_stage2(mmu_idx);
++    int r_el = regime_el(env, mmu_idx);
+ 
+     if (!regime_has_2_ranges(mmu_idx)) {
+         select = 0;
+@@ -9402,8 +9403,17 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+              * Thus disabling them makes things easier during ptw.
+              */
+             hpd = true;
++            pie = extract64(tcr, 36, 1) && cpu_isar_feature(aa64_s2pie, cpu);
+         } else {
+             hpd = extract32(tcr, 24, 1);
++            if (r_el == 3) {
++                pie = (extract64(tcr, 35, 1)
++                       && cpu_isar_feature(aa64_s1pie, cpu));
++            } else {
++                pie = ((env->cp15.tcr2_el[2] & TCR2_PIE)
++                       && (!arm_feature(env, ARM_FEATURE_EL3)
++                           || (env->cp15.scr_el3 & SCR_TCR2EN)));
++            }
+         }
+         epd = false;
+         sh = extract32(tcr, 12, 2);
+@@ -9443,7 +9453,13 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+             regime_is_user(env, mmu_idx)) {
+             epd = true;
+         }
++
++        pie = ((env->cp15.tcr2_el[r_el] & TCR2_PIE)
++               && (!arm_feature(env, ARM_FEATURE_EL3)
++                   || (env->cp15.scr_el3 & SCR_TCR2EN))
++               && (r_el == 2 || (arm_hcrx_el2_eff(env) & HCRX_TCR2EN)));
+     }
++    hpd |= pie;
+ 
+     gran = sanitize_gran_size(cpu, gran, stage2);
+ 
+@@ -9522,6 +9538,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+         .ha = ha,
+         .hd = ha && hd,
+         .gran = gran,
++        .pie = pie,
+     };
+ }
+ 
+-- 
+2.43.0
+
 
