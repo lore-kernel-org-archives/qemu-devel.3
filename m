@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB55ECCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 07:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66781CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 07:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v77p7-0000W0-OM; Fri, 10 Oct 2025 03:45:58 -0400
+	id 1v77vP-00021l-2T; Fri, 10 Oct 2025 03:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v77p5-0000VZ-9J; Fri, 10 Oct 2025 03:45:55 -0400
+ id 1v77vN-00020J-87; Fri, 10 Oct 2025 03:52:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v77ox-0004WW-N0; Fri, 10 Oct 2025 03:45:53 -0400
+ id 1v77vL-0007b8-2l; Fri, 10 Oct 2025 03:52:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BEAF15C2B4;
- Fri, 10 Oct 2025 10:45:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E579D15C2BB;
+ Fri, 10 Oct 2025 10:52:05 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D171A29C964;
- Fri, 10 Oct 2025 10:45:39 +0300 (MSK)
-Message-ID: <270f8ab1-c5cc-4fab-b322-269df3165af4@tls.msk.ru>
-Date: Fri, 10 Oct 2025 10:45:38 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id BC42629C96B;
+ Fri, 10 Oct 2025 10:52:16 +0300 (MSK)
+Message-ID: <5063033a-9d83-49da-9f15-cc492d124a68@tls.msk.ru>
+Date: Fri, 10 Oct 2025 10:52:15 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/2] remove deprecated 'reconnect' options
@@ -83,7 +83,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
 In-Reply-To: <877bx4p3at.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -113,21 +113,16 @@ On 10/9/25 17:17, Markus Armbruster wrote:
 >> They were deprecated in 9.2, now we can remove them.
 >> New options to use are reconnect-ms.
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Speaking of the option itself.. I'd not remove it, instead,
+I'd de-deprecate it, and allow units to be specified for it,
+like reconnect=10ms (defaults to s).  Or reconnect=0.1 (in
+fractions of second).  But it's just me, it looks like :)
 
-> Who would like to merge this?
-> 
-> * Marc-André, since PATCH 1 is chardev
-> * Jason, since PATCH 2 is net
-> * Myself, since both touch qapi/
-> * qemu-trivial
-I picked it up for qemu-trivial, but feel free to merge it
-through other means (I'll just rebase before sending pullreq).
-Mind you, qemu-trivial might be slow at times since I tend to
-collect more changes before sending a pullreq.
+Also, `has_reconnect_ms` becomes redundant after applying this
+patch, - it should be enough to use just reconnect_ms, which
+defaults to 0.  But this can be done in a subsequent cleanup.
 
 Thanks,
 
 /mjt
-
 
