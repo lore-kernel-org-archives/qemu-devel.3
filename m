@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3226FCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 06:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF639CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 06:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v76yl-0005o4-SS; Fri, 10 Oct 2025 02:51:51 -0400
+	id 1v76zt-0005vs-5o; Fri, 10 Oct 2025 02:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v76yj-0005nh-Cl
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:51:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v76zq-0005te-VV
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:52:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v76ye-0003pg-4j
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:51:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v76zm-0003tl-GF
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 02:52:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760079098;
+ s=mimecast20190719; t=1760079172;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lwOwLcp3yVKsP97i2Y3xOkLQQTieaVVGtApZqlnqI5c=;
- b=S7x7MPM/NFzHcTPal4O/oUpTWsLv+7UDLXNHuTlFAdpNK58Exvg3ZoLV3ci/rI+9uiNcFP
- c0zVZuFisfN1r5SxTHUXh4aN0rvICbWZQASkNnuNJYZ3CvQbO7fiqZadKphZoZ76jPdkzy
- EAtqyLkOUWRnqrHpy2nC9fAzKSJbrRg=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eZFkfFocmD57foPVQMUsSd2vim8jpwznB10BxZFBEtg=;
+ b=SDtgdwT/kPNVLEQwf5BKvVMDAdeOtGJI1xx6LK4oFdllZ8IUlroSMg/giViKFpp5YsODy6
+ q8bfBb6umbq6A4mnCFZh8EbfRsmiYa973zvGMnTb5WS85gXGjF0LzxsVl4tdqNGRTnFMnT
+ Iv8Q3b22gBsyMpAjErXZLLDe/g3KTy4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-uXeS60UINx-sjYo8w_i82g-1; Fri, 10 Oct 2025 02:51:37 -0400
-X-MC-Unique: uXeS60UINx-sjYo8w_i82g-1
-X-Mimecast-MFC-AGG-ID: uXeS60UINx-sjYo8w_i82g_1760079096
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-633009e440aso2011141a12.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 23:51:37 -0700 (PDT)
+ us-mta-690-eJouihHeNviOJB6TnzsMow-1; Fri, 10 Oct 2025 02:52:49 -0400
+X-MC-Unique: eJouihHeNviOJB6TnzsMow-1
+X-Mimecast-MFC-AGG-ID: eJouihHeNviOJB6TnzsMow_1760079169
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b48635cf06fso305940866b.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 23:52:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760079096; x=1760683896;
+ d=1e100.net; s=20230601; t=1760079168; x=1760683968;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lwOwLcp3yVKsP97i2Y3xOkLQQTieaVVGtApZqlnqI5c=;
- b=O1Tx38mzfhGWDQNE8fiMFIvDMdJ/sItY7tzZzRVnnxWZBV/2cQnOOp7Q/GD1U+jzMn
- SLoIRx7MazUbNiebEVw9ziLk7PKffnxlIpBypnPlHGds2zJ2VjFhQG5xtzYNuvzMxFJE
- +A6J5EZckgGsLTA0rEdhinxEfosob/cfP+NvjOkmvsyaImV+KaYRIUIODIWTGVne0LoQ
- OQLALvYdLQUIYO0Udbhmzqo2ZKYOBdMtq7Ikx5M0Xzg1spnhXVaPHKFIrKA5+mhvb15P
- i90OfJZN0R1OPhqqO2EZP1bshBUxmbq3wxuukndeNskdBcp2XCgvC6qTmg6Nc8WCf4E8
- gkhg==
+ bh=eZFkfFocmD57foPVQMUsSd2vim8jpwznB10BxZFBEtg=;
+ b=I63220w1L8gOtpkwWKtWPoVnjQziWjd4exk3MGYDkJLjYl2CA+kDqRkJzduCoWwLlc
+ wSIiPFWOcwB9ee+PFsUblcSl4B2NarfcN1cihlnHD8K207Gji/itwK/dS9InyoL/vCKo
+ tCNGKw4h5Mcz6u4TxQViK776wi8DvLFeKrWCv66xnAmzFIFCF0/wsp2RwvukjdLRvgkL
+ JzeqmzImE9s79ey3C3m9zPzCIht8tB3z7Y4e9kYGzXPa7tQ42inONs2fo5Cy/b08WedJ
+ MnUUztDNi8fAxyZi7WH46gK2pUNZ0oyP9TUYhmYrxZnnJa8EZBj8VeVfzSrtJWvIkMp/
+ aqfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxoToTA3Bva6+PvqZBj55cCfjWu0WUIB0cLrK5qFYSZPhhln6RrlSE3IH3yNORdpS8VMJmjp39u9Tw@nongnu.org
-X-Gm-Message-State: AOJu0YyLKP+7LdPVK6xrEvyHZkr37XZtHxK0/TFNEBdZCXwjKhNo0kbT
- 8oTWeP6LNAS6hh20XQre+bmt6JEcka9nH65C96/sQfee5fNP2dtv0OejNGzGamoyBqaUVpgCEe3
- 728M9H4pSFExIPVeRdOE7ni14rsJoMOaw7Y9E+pX2Z3bk247BWHx1RW0x
-X-Gm-Gg: ASbGnctRPEskCHHcCO5z8j5sBjxrjgrsO5S2aWkJMUOAsl4P5TRhlaHfzGvYyAtRQ7+
- GvPPDAh4WYE6Tb3EqKjLPgj6fIBcXUbinhkVwhKmFXJMOHk6K7Wvguqe4zFMhIvvN4QZjbh++C3
- wP88JW9Uy3IhU+LwbCL47pgvKRdQodem/BhX5CPZw80gZtzAMwUuON6N/uVS8WCaJiWASA166UQ
- jU6j1DT6nfrDuzBg25tXPT3bRp934wTdhb+gDXs12WwG4IOa5Y6pwaTEz4XMfnrZf1fnTmnsHOA
- XmZ4nKv3RCufi11z+3OU0mWH/Q9Ba9JwimPq6nMU606zt15zT3Y/6/o5IhtBiW++jHuLH4cw6Y1
- pKgQ5
-X-Received: by 2002:aa7:ce0f:0:b0:63a:f7e:b498 with SMTP id
- 4fb4d7f45d1cf-63a0f7eb97dmr2255657a12.12.1760079095900; 
- Thu, 09 Oct 2025 23:51:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE58nIEbuv5y3mW+yTxCYs/wXody/SXPD8pKA3yo8Z5W+ONK5ZMXzrnDBWSZojfVlRWA0GZTw==
-X-Received: by 2002:aa7:ce0f:0:b0:63a:f7e:b498 with SMTP id
- 4fb4d7f45d1cf-63a0f7eb97dmr2255630a12.12.1760079095545; 
- Thu, 09 Oct 2025 23:51:35 -0700 (PDT)
+ AJvYcCXmTpBUWwi4PWa1VnQ+Ngnfbx4b6tPhJripWwfxUlc3U7DPqiTBYJASoV8AeJu/Kkpvfb4evrNKLMXX@nongnu.org
+X-Gm-Message-State: AOJu0YyEHcS9yh6igt/HtzoMhoonitoU4aHtxr+9vIdN9MSXUfT3qDt3
+ 9uMGai3S1uKUnRc0w2U8JrodTW1BEsmpeXgJ5y1YyTUhJZ+l6xMWmPuk+NWsUcKmEUToaoNnvnW
+ Qvvy785L+ONm7B4YHQwddU7woL4k1nFmV8W1T1fjO8pI9J7XNAo+EB/09
+X-Gm-Gg: ASbGnct5LsB2elA6AFtXiODPZIs+95Uhd3hBzkxzt11FFiIJ1ruOpXsvzI4HmSC4qP/
+ bNA3/2k3u1XPyS58NICUNgMfejI27oCh/ssPS0GtMGBymQyaItSevM171Vqr/FAMLmA9dsm8tCh
+ uR653HZrsnpeMJiyfIOrKbfXrc8N3IgqPiKcBkkiGFcpxoSgp2sXtNq6dcmMhMO2vRxV7vBkqN0
+ CsNdO+t8RxenGb/RR96qyb5/2sYeK09JMVpKAPBHMpH/R9N8pLwFtzk1dbF9iBqjl9K9UabBEcC
+ 1ImtXZXBNJRKSZ8cxUmpb130g88JNtX/80ujgIEDsEzk+FArD/iX19ro1sMdOdOF74612bf12vj
+ XBYMZ
+X-Received: by 2002:a17:907:3f13:b0:b4b:4f7:7a51 with SMTP id
+ a640c23a62f3a-b50aca0b07cmr1145472066b.62.1760079168660; 
+ Thu, 09 Oct 2025 23:52:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGS8k0U+T1Kp46r0mG1ll6BB7xbPbINhdP7loagbfnR825zKjhJguSWrHE2uc7Z5Uc+AAQs+A==
+X-Received: by 2002:a17:907:3f13:b0:b4b:4f7:7a51 with SMTP id
+ a640c23a62f3a-b50aca0b07cmr1145469566b.62.1760079168273; 
+ Thu, 09 Oct 2025 23:52:48 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-083.pools.arcor-ip.net.
  [47.64.112.83]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63a5235dca9sm1570451a12.8.2025.10.09.23.51.34
+ a640c23a62f3a-b55d900e2bcsm154864266b.64.2025.10.09.23.52.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 23:51:35 -0700 (PDT)
-Message-ID: <9c04d13c-8b6f-48c4-bbcd-daa22c7be69e@redhat.com>
-Date: Fri, 10 Oct 2025 08:51:33 +0200
+ Thu, 09 Oct 2025 23:52:47 -0700 (PDT)
+Message-ID: <f7c891eb-2921-4464-a12b-1c51f955219c@redhat.com>
+Date: Fri, 10 Oct 2025 08:52:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] tcg/mips: Remove support for 32-bit hosts
+Subject: Re: [PATCH v2 6/7] kvm/mips: Remove support for 32-bit hosts
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -89,7 +89,7 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
 References: <20251009195210.33161-1-philmd@linaro.org>
- <20251009195210.33161-6-philmd@linaro.org>
+ <20251009195210.33161-7-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -134,7 +134,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251009195210.33161-6-philmd@linaro.org>
+In-Reply-To: <20251009195210.33161-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -163,17 +163,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 09/10/2025 21.52, Philippe Mathieu-Daudé wrote:
-> 32-bit host support is deprecated since commit 6d701c9bac1
-> ("meson: Deprecate 32-bit host support"), released as v10.0.
-> The next release being v10.2, we can remove the TCG backend
-> for 32-bit MIPS hosts.
+> See previous commit for rationale.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/mips/tcg-target-has.h |   2 -
->   tcg/mips/tcg-target.c.inc | 277 ++++++--------------------------------
->   2 files changed, 38 insertions(+), 241 deletions(-)
+>   meson.build | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index afaefa01722..c5710a6a47c 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -295,8 +295,6 @@ elif cpu == 'ppc'
+>     kvm_targets = ['ppc-softmmu']
+>   elif cpu == 'ppc64'
+>     kvm_targets = ['ppc-softmmu', 'ppc64-softmmu']
+> -elif cpu == 'mips'
+> -  kvm_targets = ['mips-softmmu', 'mipsel-softmmu']
+>   elif cpu == 'mips64'
+>     kvm_targets = ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmmu', 'mips64el-softmmu']
+>   elif cpu == 'riscv32'
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
