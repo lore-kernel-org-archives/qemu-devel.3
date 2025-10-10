@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B460FCCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63A4CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Cpz-0006tZ-GT; Fri, 10 Oct 2025 09:07:13 -0400
+	id 1v7CqJ-0007CR-A3; Fri, 10 Oct 2025 09:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cpx-0006rx-V6
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:10 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1v7Cq0-0006un-60
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:14 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7CpD-0003x4-Nd
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:09 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-421851bca51so1275173f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:17 -0700 (PDT)
+ id 1v7CpG-0003xM-3o
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:11 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3ecdf2b1751so1429505f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101576; x=1760706376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101579; x=1760706379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ppETInW3MEqjqW6NdufgfdsoZNQc59d69wd6I8lXxCI=;
- b=b4B/L+4PGitiwdak4iFk6r5SvjfcZrZBJGVczGQbmFY/YEU6N0Ro6wO6akZe/JK8G2
- PQmsnZmuGZJM7yf/A9UFZt9foHVGBH0UqCVubsYqYAdWRe+TW/s4pGw2Un7KBPEV9FUZ
- /jDk3i8sXlkgk8nQRVy0ahZGpEuWEcWvuSZS8F8p+hPYNTFbLSn7IVK/O+byi9bXteCi
- QJUUAq3U6ixKZyY0f/3Usxmwtw30Wig+PQ2TXWbhNrvmRBE3qLsS1drqOdxM/MCiV1Fg
- 6VOTz2U57Q2lguU6ZdZY3UwQyaFKCK6iLl042FuZwUYbgCAGDeJKeIBmv3S3GwqAsP8O
- Fy0Q==
+ :reply-to; bh=K7Y5RxnInLeoArE7Yi+6qmjYD7sMXgKe51eDntl5Zkc=;
+ b=z8BvLjAn6+9b4ORSzj4ji6QLsCVIMCnzZtGtoIuTwLgwz6QqrPMhj9FcXQTF0fSBDf
+ 11g9K01xH1xr0qT3K7xW90hRp3K0usPc00Sp8me28+Sx5Vu+NXQuSt45RfXxelb93m7u
+ BBdWblunxss10Gvbh2PK05mlu3ZKt0H9nskLyLg179h22YdHs1/hO5IP77MjczrFbXfQ
+ fdD//Wtu/YSGBLX9+Af1S932TCGW6kVXxHt05qew1gswMismbpjcHRybZesyhn3P4lCI
+ SsCB9NfNK6RcgWXT3ThjuKrcWO8V6JijssdCWYpCGWdSdb9bLAfaetnwvnauhDC1gGGs
+ jtgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101576; x=1760706376;
+ d=1e100.net; s=20230601; t=1760101579; x=1760706379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ppETInW3MEqjqW6NdufgfdsoZNQc59d69wd6I8lXxCI=;
- b=nQy6qbNFX2JUUbTOcJUkfeqNzfM63s21eCiQGo/K49cX1+nDlBjg76EJo0+Rz9jnyi
- usCinsUmwBoOaD+f8ZT45eqgl5Eyj7LEkKp40JvTqMBmYMPlCavUBXsb7J1kneIC0zeU
- RlTirTv2sSVsyXgE/3mbAUoUCsBsPZnhiVFkYfPVSCG+JCX9ovLn3Qx00TPq/RfYtSx6
- VsQ8iSBalLm+DGHBOrdln5pX8v+OYmQeGUvh+BrjmBswBfEx4MWY2Tq9sFf+rRb1wSW0
- CLGESZRmAPIVZKo2nwrFYEuPlaIB5hs7NK7XZkTZCeFLm2+bu7q2lXWWOO89n1d5QfKD
- 5xtA==
-X-Gm-Message-State: AOJu0Yxo0XoafAMwwMHOtoFqT1zkoqCH+Ucm5GCiECpzSGfyZA8T6kWz
- 2UWbs2TLECAVdQchn+PqbnZk7bXq7q/xu0j4XsEM1IDkJyp58xBHQMrm9b2gMN2K4JjQa1g4gZX
- VMzdl
-X-Gm-Gg: ASbGncuZfHWnKxwEZVJF5UySlZ2nEN1XDzVEx+q60QPhaZA+Qlty+ZX//1AJI9eEi0Y
- LnP5M4T09hraaAMb3gCvuhlPTmXFdXvqqQ6lc476XqPLYYcXv5gGzUzvoaZlCcoaIXoCd1NeI/2
- OVLyqem12n9p6wwHjWa9B1arXHyRSF72FLmJkuVdoGl286y+1eN+ECI8Ge6+KvlImM4uBR27xd9
- hXj0HiPephJBKMbintjo56lPJ+ZySbDj06IqOvNE7UkNSjAOjAzHQEHC2fk4s2tzBSF0SOPkIwd
- wI0GzCvpdfAgDb4y1OFGFpwK7SD2f1sKcJUIgDID0weC51Imw347WP7QLUijs655XvPcGzc/Pvk
- k/F95oOoMBSIulSqO7MA50YnVl7j2XCZYtKqZTyfD0vvlW6YY+EQ=
-X-Google-Smtp-Source: AGHT+IGcGku/UhwZBBcgzOTOgb6OnJj7t2TpsTmJiaTGcJD3jl0cSdaViLeS5vnozGayJDxxdbfY4A==
-X-Received: by 2002:a05:6000:2010:b0:402:4142:c7a7 with SMTP id
- ffacd0b85a97d-42666ac6f35mr8384789f8f.16.1760101576066; 
- Fri, 10 Oct 2025 06:06:16 -0700 (PDT)
+ bh=K7Y5RxnInLeoArE7Yi+6qmjYD7sMXgKe51eDntl5Zkc=;
+ b=DcxL5J+ib2OzyPV/58GuhU05uTOBnSI/fOhILaDxj/eSDhXrcLL6UnTnyrZavRrdrc
+ u+DQVX8qrK7fYJAEwc4DR/3pK8L/VTdgal693Tfti0Qj9VRy57GuuVaXkJhuZ/L6Mwkc
+ WVuS7GH4t5kJVien2aw3auVldnT36seZ1Fmaxty80g+sTC6qTHQc69ZKACsAkej8v2Qx
+ TbtSKccT5gZgIFpARaMnglwYD/kukPAqQOjUrWrjGnz1UP74Wy/kUHf2Cd/9/WFsBI+j
+ ZbVTrlDzmu8snbKZpDn0jJzycBSmD6nCDgvX/jk+5Q+QFFsmuN8E019T6lgzr62n/mPE
+ HJOg==
+X-Gm-Message-State: AOJu0YxM7NlFHaNfRt90ElZdNAO/HWQ24HE1fsqc1NgCD2uYVvV6yDSk
+ s48UhkQ6b/MeuKOqn9nLDW3ZKf9r68lh0v9rgFtb4GdwKqLcBpQhXC9t8Bxsnb3hFcVO5fBLLcS
+ xwaUO
+X-Gm-Gg: ASbGnctyRFQD4vQPR+cku264kzEHIJHHfZXW7HAeBu1mPsZUwsOe9UbtMoaHIz8IlRu
+ 9b+gNWI0uzR4wHSAJIUHJkLLOVOpshg3Odp9LCNsdwuh6vm7Ms1InynUgjKJJn91RsRoHG3iojH
+ 9HX9zKUpP5IGflcRdN/xOHWQEmUzN/bvSygAl16xnPAJnDfFJeU7fkdDBZwzW1qRLrp1i9LDmms
+ D91z6cRkmUPUyUq8y9cFptbE1ajHNaPE6y2NJ/kAQy1jZMGUy0wwuw4RLgEYeszso3Inff8pjaJ
+ /5YR0FQtIKivXRlBGUzJ37+91gpN9rGbSYNXXnAactVI9uSF4unebxV17RrH6B54knEqug4B8k+
+ EPV3TagLx/5mW7dWCUYRWg5+4EUDXVQJDBBPvfX28AfE+sUE7L9F8zkbBs7grWw==
+X-Google-Smtp-Source: AGHT+IHw8XSVHjZMHCw88nLjmslHCSrnKsSNnhpk3i0T+kiZYiAwFtiyOTKzQgTC/RKzw03PQPgSxg==
+X-Received: by 2002:a05:6000:26c9:b0:425:7679:ea72 with SMTP id
+ ffacd0b85a97d-4266e8e0959mr7793313f8f.47.1760101578890; 
+ Fri, 10 Oct 2025 06:06:18 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.15
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:06:15 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 41/76] target/arm: Implement EXLOCKException for ELR_ELx and
- SPSR_ELx
-Date: Fri, 10 Oct 2025 14:04:52 +0100
-Message-ID: <20251010130527.3921602-42-peter.maydell@linaro.org>
+Subject: [PULL 43/76] target/arm: Introduce delay_exception{_el}
+Date: Fri, 10 Oct 2025 14:04:54 +0100
+Message-ID: <20251010130527.3921602-44-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,193 +100,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-If PSTATE.EXLOCK is set, and the GCS EXLOCK enable bit is set,
-and nested virt is in the appropriate state, then we need to
-raise an EXLOCK exception.
-
-Since PSTATE.EXLOCK cannot be set without GCS being present
-and enabled, no explicit check for GCS is required.
+Add infrastructure to raise an exception out of line.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-42-richard.henderson@linaro.org
+Message-id: 20251008215613.300150-44-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpregs.h        |  8 +++++
- target/arm/cpu.h           |  1 +
- target/arm/helper.c        | 67 ++++++++++++++++++++++++++++++++++----
- target/arm/tcg/op_helper.c |  7 ++++
- 4 files changed, 77 insertions(+), 6 deletions(-)
+ target/arm/tcg/translate.h     | 20 +++++++++++++
+ target/arm/tcg/translate-a64.c |  2 ++
+ target/arm/tcg/translate.c     | 53 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 75 insertions(+)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index bd2121a336e..a79f00351c8 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -351,6 +351,14 @@ typedef enum CPAccessResult {
-      * specified target EL.
-      */
-     CP_ACCESS_UNDEFINED = (2 << 2),
-+
-+    /*
-+     * Access fails with EXLOCK, a GCS exception syndrome.
-+     * These traps are always to the current execution EL,
-+     * which is the same as the usual target EL because
-+     * they cannot occur from EL0.
-+     */
-+    CP_ACCESS_EXLOCK = (3 << 2),
- } CPAccessResult;
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 943dfd45fe7..9a85ea74dbb 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -21,9 +21,25 @@ typedef struct DisasLabel {
+     target_ulong pc_save;
+ } DisasLabel;
  
- /* Indexes into fgt_read[] */
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 54f3d7b1cca..91a851dac17 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1502,6 +1502,7 @@ void pmu_init(ARMCPU *cpu);
- #define PSTATE_C (1U << 29)
- #define PSTATE_Z (1U << 30)
- #define PSTATE_N (1U << 31)
-+#define PSTATE_EXLOCK (1ULL << 34)
- #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
- #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
- #define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 5d40266d96b..1aa0a157b72 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3437,6 +3437,61 @@ static CPAccessResult access_nv1(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
++/*
++ * Emit an exception call out of line.
++ */
++typedef struct DisasDelayException {
++    struct DisasDelayException *next;
++    TCGLabel *lab;
++    target_long pc_curr;
++    target_long pc_save;
++    int condexec_mask;
++    int condexec_cond;
++    uint32_t excp;
++    uint32_t syn;
++    uint32_t target_el;
++} DisasDelayException;
++
+ typedef struct DisasContext {
+     DisasContextBase base;
+     const ARMISARegisters *isar;
++    DisasDelayException *delay_excp_list;
+ 
+     /* The address of the current instruction being translated. */
+     target_ulong pc_curr;
+@@ -365,6 +381,10 @@ void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
+                            uint32_t syn, uint32_t target_el);
+ void gen_exception_insn(DisasContext *s, target_long pc_diff,
+                         int excp, uint32_t syn);
++TCGLabel *delay_exception_el(DisasContext *s, int excp,
++                             uint32_t syn, uint32_t target_el);
++TCGLabel *delay_exception(DisasContext *s, int excp, uint32_t syn);
++void emit_delayed_exceptions(DisasContext *s);
+ 
+ /* Return state of Alternate Half-precision flag, caller frees result */
+ static inline TCGv_i32 get_ahp_flag(void)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 1337e16a96b..c037119cdf9 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10601,6 +10601,8 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+             break;
+         }
+     }
++
++    emit_delayed_exceptions(dc);
  }
  
-+static CPAccessResult access_nv1_or_exlock_el1(CPUARMState *env,
-+                                               const ARMCPRegInfo *ri,
-+                                               bool isread)
+ const TranslatorOps aarch64_translator_ops = {
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index e62dcc5d85d..78d26aac043 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -1088,6 +1088,57 @@ void gen_exception_insn(DisasContext *s, target_long pc_diff,
+     s->base.is_jmp = DISAS_NORETURN;
+ }
+ 
++TCGLabel *delay_exception_el(DisasContext *s, int excp,
++                             uint32_t syn, uint32_t target_el)
 +{
-+    if (arm_current_el(env) == 1) {
-+        uint64_t nvx = arm_hcr_el2_nvx_eff(env);
++    /* Use tcg_malloc for automatic release on longjmp out of translation. */
++    DisasDelayException *e = tcg_malloc(sizeof(DisasDelayException));
 +
-+        if (!isread &&
-+            (env->pstate & PSTATE_EXLOCK) &&
-+            (env->cp15.gcscr_el[1] & GCSCR_EXLOCKEN) &&
-+            !(nvx & HCR_NV1)) {
-+            return CP_ACCESS_EXLOCK;
++    memset(e, 0, sizeof(*e));
++
++    /* Save enough of the current state to satisfy gen_exception_insn. */
++    e->pc_curr = s->pc_curr;
++    e->pc_save = s->pc_save;
++    if (!s->aarch64) {
++        e->condexec_cond = s->condexec_cond;
++        e->condexec_mask = s->condexec_mask;
++    }
++
++    e->excp = excp;
++    e->syn = syn;
++    e->target_el = target_el;
++
++    e->next = s->delay_excp_list;
++    s->delay_excp_list = e;
++
++    e->lab = gen_new_label();
++    return e->lab;
++}
++
++TCGLabel *delay_exception(DisasContext *s, int excp, uint32_t syn)
++{
++    return delay_exception_el(s, excp, syn, 0);
++}
++
++void emit_delayed_exceptions(DisasContext *s)
++{
++    for (DisasDelayException *e = s->delay_excp_list; e ; e = e->next) {
++        gen_set_label(e->lab);
++
++        /* Restore the insn state to satisfy gen_exception_insn. */
++        s->pc_curr = e->pc_curr;
++        s->pc_save = e->pc_save;
++        s->condexec_cond = e->condexec_cond;
++        s->condexec_mask = e->condexec_mask;
++
++        if (e->target_el) {
++            gen_exception_insn_el(s, 0, e->excp, e->syn, e->target_el);
++        } else {
++            gen_exception_insn(s, 0, e->excp, e->syn);
 +        }
-+        return access_nv1_with_nvx(nvx);
 +    }
-+
-+    /*
-+     * At EL2, since VHE redirection is done at translation time,
-+     * el_is_in_host is always false here, so EXLOCK does not apply.
-+     */
-+    return CP_ACCESS_OK;
 +}
 +
-+static CPAccessResult access_exlock_el2(CPUARMState *env,
-+                                        const ARMCPRegInfo *ri, bool isread)
-+{
-+    int el = arm_current_el(env);
-+
-+    if (el == 3) {
-+        return CP_ACCESS_OK;
-+    }
-+
-+    /*
-+     * Access to the EL2 register from EL1 means NV is set, and
-+     * EXLOCK has priority over an NV1 trap to EL2.
-+     */
-+    if (!isread &&
-+        (env->pstate & PSTATE_EXLOCK) &&
-+        (env->cp15.gcscr_el[el] & GCSCR_EXLOCKEN)) {
-+        return CP_ACCESS_EXLOCK;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+static CPAccessResult access_exlock_el3(CPUARMState *env,
-+                                        const ARMCPRegInfo *ri, bool isread)
-+{
-+    if (!isread &&
-+        (env->pstate & PSTATE_EXLOCK) &&
-+        (env->cp15.gcscr_el[3] & GCSCR_EXLOCKEN)) {
-+        return CP_ACCESS_EXLOCK;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
- #ifdef CONFIG_USER_ONLY
- /*
-  * `IC IVAU` is handled to improve compatibility with JITs that dual-map their
-@@ -3608,7 +3663,7 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-     { .name = "ELR_EL1", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 0, .crn = 4, .crm = 0, .opc2 = 1,
--      .access = PL1_RW, .accessfn = access_nv1,
-+      .access = PL1_RW, .accessfn = access_nv1_or_exlock_el1,
-       .nv2_redirect_offset = 0x230 | NV2_REDIR_NV1,
-       .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 4, 0, 1),
-       .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 4, 0, 1),
-@@ -3616,7 +3671,7 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-     { .name = "SPSR_EL1", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 0, .crn = 4, .crm = 0, .opc2 = 0,
--      .access = PL1_RW, .accessfn = access_nv1,
-+      .access = PL1_RW, .accessfn = access_nv1_or_exlock_el1,
-       .nv2_redirect_offset = 0x160 | NV2_REDIR_NV1,
-       .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 4, 0, 0),
-       .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 4, 0, 0),
-@@ -4100,7 +4155,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
-     { .name = "ELR_EL2", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS | ARM_CP_NV2_REDIRECT,
-       .opc0 = 3, .opc1 = 4, .crn = 4, .crm = 0, .opc2 = 1,
--      .access = PL2_RW,
-+      .access = PL2_RW, .accessfn = access_exlock_el2,
-       .fieldoffset = offsetof(CPUARMState, elr_el[2]) },
-     { .name = "ESR_EL2", .state = ARM_CP_STATE_BOTH,
-       .type = ARM_CP_NV2_REDIRECT,
-@@ -4118,7 +4173,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
-     { .name = "SPSR_EL2", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS | ARM_CP_NV2_REDIRECT,
-       .opc0 = 3, .opc1 = 4, .crn = 4, .crm = 0, .opc2 = 0,
--      .access = PL2_RW,
-+      .access = PL2_RW, .accessfn = access_exlock_el2,
-       .fieldoffset = offsetof(CPUARMState, banked_spsr[BANK_HYP]) },
-     { .name = "VBAR_EL2", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 0, .opc2 = 0,
-@@ -4400,7 +4455,7 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
-     { .name = "ELR_EL3", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 6, .crn = 4, .crm = 0, .opc2 = 1,
--      .access = PL3_RW,
-+      .access = PL3_RW, .accessfn = access_exlock_el3,
-       .fieldoffset = offsetof(CPUARMState, elr_el[3]) },
-     { .name = "ESR_EL3", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 6, .crn = 5, .crm = 2, .opc2 = 0,
-@@ -4411,7 +4466,7 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
-     { .name = "SPSR_EL3", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 6, .crn = 4, .crm = 0, .opc2 = 0,
--      .access = PL3_RW,
-+      .access = PL3_RW, .accessfn = access_exlock_el3,
-       .fieldoffset = offsetof(CPUARMState, banked_spsr[BANK_MON]) },
-     { .name = "VBAR_EL3", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 6, .crn = 12, .crm = 0, .opc2 = 0,
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index dd3700dc6f2..4fbd219555d 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -881,6 +881,13 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+ static void gen_exception_bkpt_insn(DisasContext *s, uint32_t syn)
+ {
+     gen_set_condexec(s);
+@@ -6791,6 +6842,8 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+             gen_goto_tb(dc, 1, curr_insn_len(dc));
          }
-         syndrome = syn_uncategorized();
-         break;
-+    case CP_ACCESS_EXLOCK:
-+        /*
-+         * CP_ACCESS_EXLOCK is always directed to the current EL,
-+         * which is going to be the same as the usual target EL.
-+         */
-+        syndrome = syn_gcs_exlock();
-+        break;
-     default:
-         g_assert_not_reached();
      }
++
++    emit_delayed_exceptions(dc);
+ }
+ 
+ static const TranslatorOps arm_translator_ops = {
 -- 
 2.43.0
 
