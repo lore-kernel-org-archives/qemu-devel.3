@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1CC0CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC60BCCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7AVY-0002sc-UI; Fri, 10 Oct 2025 06:37:56 -0400
+	id 1v7AVX-0002rv-Md; Fri, 10 Oct 2025 06:37:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AVU-0002qG-LK; Fri, 10 Oct 2025 06:37:52 -0400
+ id 1v7AVT-0002pP-76; Fri, 10 Oct 2025 06:37:51 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AVM-0006sb-5Q; Fri, 10 Oct 2025 06:37:52 -0400
+ id 1v7AVL-0006sL-5W; Fri, 10 Oct 2025 06:37:49 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSU065199
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSd065199
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 10 Oct 2025 19:36:42 +0900 (JST)
+ Fri, 10 Oct 2025 19:36:46 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=eeuVsJCDwKbW8icJDfICufxGLQvTBPTzkETbuI6aCMQ=; 
+DKIM-Signature: a=rsa-sha256; bh=F0AyM/lua4p28w0QtF6/Ku3cctKLYXgOBYs6U3KWbds=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1760092602; v=1;
- b=A99VkwX/Ev/4tHnVY2pnAk6xkmL2964tU+6QOolipkuDGb0XkHg+kHPA7NOaMhUK
- oOg0v1Wag83SNpLovo7t7zyTe43Z77yeMqdZ83gV6bixt6mFgoK9DOI80QDRne/j
- FFvfeYFyVPikzRzEmXf+c9kKG1Rwk+pQM6rphlnzJwcBW8+pjdl/pXWhNkv9Lhgr
- Jrg1dxptcY0wc1kX4qe8xpcjByCM4gFdsBFq4x7e4K8FEdtqrhe1vdRr9hSaUiBp
- ts0BkpeCqNjxk6RIZl2NDkIheJGlstgR2TQcarzNuiHU8R2AAfzAwYK5WjAdlr5U
- WOydQrB2ZYUd9+kfz8acJA==
+ s=rs20250326; t=1760092607; v=1;
+ b=sk0m9MtpFdPqIsbZw2aWD+b7Frj6I4P++MNRQXm0vNjJLwaJYEFPTedDP8kPiT+9
+ Fzsoh/3WjsmVvGZJ4bO+5dsyiPf0hHXE48ce8UpgEOJLqgHJOzOXtAx6905GiuIt
+ hTsolJqixDwYrv9dyZ9uKbAkef1OEteb+8IwtoMJYDu6mEg5lxkY5d2qsa59voOo
+ kkL6qojYLvL+U9Ze20SJwx1RzJA06TsOoMJisiYudSK+g8O6dofs7K+AcX5ggEUs
+ htEt9zsOELtmbPLvmdC19CxMuwrI2NguBvPY7XHULDVkxLsM1cK0cEHZOLQXMQ0R
+ Syjl7sg9kHZV4gzfIEbLGg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 10 Oct 2025 19:35:30 +0900
-Subject: [PATCH v2 02/12] hw/char/diva-gsp: Do not delete the subregion
+Date: Fri, 10 Oct 2025 19:35:39 +0900
+Subject: [PATCH v2 11/12] hw/usb/hcd-ehci: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251010-subregion-v2-2-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20251010-subregion-v2-11-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 References: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,21 +107,24 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/char/diva-gsp.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/usb/hcd-ehci.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
-index e1f0713cb794..1ae472e879b5 100644
---- a/hw/char/diva-gsp.c
-+++ b/hw/char/diva-gsp.c
-@@ -63,7 +63,6 @@ static void diva_pci_exit(PCIDevice *dev)
-     for (i = 0; i < pci->ports; i++) {
-         s = pci->state + i;
-         qdev_unrealize(DEVICE(s));
--        memory_region_del_subregion(&pci->membar, &s->io);
-         g_free(pci->name[i]);
-     }
-     qemu_free_irqs(pci->irqs, pci->ports);
+diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+index b090f253656b..21c3501455b5 100644
+--- a/hw/usb/hcd-ehci.c
++++ b/hw/usb/hcd-ehci.c
+@@ -2557,10 +2557,6 @@ void usb_ehci_unrealize(EHCIState *s, DeviceState *dev)
+     ehci_queues_rip_all(s, 0);
+     ehci_queues_rip_all(s, 1);
+ 
+-    memory_region_del_subregion(&s->mem, &s->mem_caps);
+-    memory_region_del_subregion(&s->mem, &s->mem_opreg);
+-    memory_region_del_subregion(&s->mem, &s->mem_ports);
+-
+     usb_bus_release(&s->bus);
+ 
+     if (s->vmstate) {
 
 -- 
 2.51.0
