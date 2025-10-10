@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988C6CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B63CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 13:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7CpA-0006BV-S7; Fri, 10 Oct 2025 09:06:20 -0400
+	id 1v7CqS-0007KU-0w; Fri, 10 Oct 2025 09:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Cor-00067j-DM
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:02 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1v7CqL-0007GQ-Ep
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:34 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v7Coa-0003mG-Oi
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:06:01 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3ece0e4c5faso2101311f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:05:42 -0700 (PDT)
+ id 1v7CpN-0003z9-2A
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 09:07:33 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3ece1102998so1237833f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 06:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760101540; x=1760706340; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760101587; x=1760706387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jQndNdeetcNr/PbsPypNqg0wlm459zWbpBdE5jQZ1zE=;
- b=b1pMVGMgvgPPgGr5e0g6hjEfovrj3kTCPWwh8G8KX5vgoo70XfKP3W8KK4hSRZOdTg
- 7RIBsTf/2t9dsxKEStloZW+O0GZl56KJtjYk5c0//QuUZir6mylPjYBvz2JXhtQh36kx
- nMY/clP4GkcbSkZwaoRHmA/SzRvls7LM3jF5AGs6I8CnYQt7jqaZmLSiwlt2i23YGm3F
- eZKiNjP9pDcWIilu+NZFBGsJa82SW2ZwFNO6vD4pw6yxDyrg2NVF/RSP+QBPjI4BREuC
- Ldv5Xp3yF7VOa5nBQhaHe1x52/CO+8moMbzvGHgp50TNfRKbmaFpmZkOfNOrI81X5zG4
- 0b3w==
+ :reply-to; bh=lr17S6XUbTHxBwNSfaoJpVMYZRclxo3pq1TReeAr7Dw=;
+ b=mbymxy6N6Kncgcg2vnJLJtcA9cm0oqHclx6IZc+jfiRZ3ClDjdsemlmQOQCmBw2OHM
+ Ajnu67pknNs7lBp7L+ygxrQGp6WVutL4Bv80C/Zg3nJKosPPIYm6pgf2quNUM2HCrO9K
+ D2OdiY06d2v0M7HeQIIZQVex60W7CBlLLOXXJm/1jR3toVzA5pTOZBGUJOamnjKEFJd8
+ 0/Ai6ZLk559g4KnOpEpxRzp0ZS3TcngP8HAgom59ZM3Q5M3sVgh1mXFcC5O/kbN/szUt
+ UHKsBLTlv9xDX4glhuGLF8hrDrs2VSWUaOSjo43cZnYNXG+gdhLWDLlnBm2RDDI+Pw8N
+ eSWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760101540; x=1760706340;
+ d=1e100.net; s=20230601; t=1760101587; x=1760706387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jQndNdeetcNr/PbsPypNqg0wlm459zWbpBdE5jQZ1zE=;
- b=SYuqzqkJvz+C5Vt8Ne20JIaJJCRPa1OvsFfBU4aomVUts+WDq5keUdgLEvc5zNWWLp
- LPB+wWeA2cPr57ZgkWv0mmCtHC5rUHG8TBHc+ktnd1/9HAiiG9L7Wht9AV40Dd2oHive
- iidR51zSVWCAd+Ry7sGPbqqQ9b+cSW79+GUHq1z69w/T+KWhdUy1udCBD065vZ36Cy0B
- 99TqET9KCWR4VMBZfrt9AHQIdUxPQcf3JPoLE4GOyGJxagazUJ3Z7StutWaGQmCAhgm6
- LCuNhmMOzebz0bvsR+p53NAIKPi8vnwkAi/FrGDOTqghJZJkDsnJ6DLzHlOdi8GpqN9F
- jO9g==
-X-Gm-Message-State: AOJu0YxSpZA5MNMsLLUyJeJt/ec7uA1x7tmATlgKBEgEpO03CIYUFZHv
- p4Ac1802Hzl48gkwIHREoshatYHrN2eCT8D7o4faGa2frw+GtJFKyZWTV9trlXLUEu125LPF/DR
- idffZ
-X-Gm-Gg: ASbGnctjKXTSJrZFO87jRdSj/PFFSuHhYOJ+qARtmKs795DRxXBdEeduQQNKZQ0Q3GM
- vvpQl/Zok0bd1AZnfMhEsP6t3DFpq5y5ddhewlZWFGYqvn0ZCOFSMXcNIcPH24Z4gV5tfcgmU4t
- ywJkY80JgMC1JMNmxW0ii/T4vUTAzrsClWILXfanE0RoNe7wLEWfC4D0H2D1csrDgqPjXbWJZ6D
- D+CyYxBQRNYwiULR5y+HBpvHbZMPKuyxdd80qG03EBYvk0+NrGw/Fu/kSTRi3JFiY7zoDpzPN2f
- ac+PTZqXfZODhAH/srTPJNhERztv5U14zp245RZlTkQcL64B6W2hPYv3FYFP6gYc3qybsOhlVZQ
- ZhtbW5WSIuIxjEkVnhWC02pJUSywbYBSFQuscNqCGWzNdBwNX2/s9+xtLc+kUWQ==
-X-Google-Smtp-Source: AGHT+IGAJYWTb5Tw7g5zhZmcQJBx0P6+9/Aj55au6nuq4swoCvWQqrWUHGaZkDYtPuJjnoL54TP15Q==
-X-Received: by 2002:a5d:5d88:0:b0:3eb:dcf:bfad with SMTP id
- ffacd0b85a97d-4266e7e17c7mr6626858f8f.34.1760101539842; 
- Fri, 10 Oct 2025 06:05:39 -0700 (PDT)
+ bh=lr17S6XUbTHxBwNSfaoJpVMYZRclxo3pq1TReeAr7Dw=;
+ b=gXAa+y+R5+wXpCYccehKfbCzFNBZsZYlioylCDMss/Lzde19BuxvyWZw3a4Pf/verk
+ zIwoun4a0b+7mhIXP0MOBbiDLRjbdpLk/P/ZAUOL1mU460Qnq4z2M46eQv4j9xvid1KK
+ bvPyfquxmh4yM6wbtgpxH/cJdUNlfXZ2VhMVSJdfvg8g6O9xmTYX7tNZhpo3rTK0S3o3
+ xxa2u3kzWjIVlwDIw8FuOY0VFzGKCri/Co+AlQR9K/U3lwBECDXtsPRyYHPQch77CsxN
+ aE7ezSJ3+ymzp7NIOymFmfwo9pBgKFwNqkCfVAFbJu9IAFrvQG1iJeFuk0jflbq3dotQ
+ BP4g==
+X-Gm-Message-State: AOJu0YxbXg0D+vOEoHq4g4FLYm2GspefhPhK1ximPGwAJRDn6xsZvHW5
+ 12FqMQuD1wVr9cuoDAQtNozVqQH1/IG0B6zkfE0ntXWPEQW+fVpYB3suujYht4VtXLRTgQOYi/U
+ C6zeH
+X-Gm-Gg: ASbGncupd4be6V3YSza7jA2uAH6oGGUbx8rwiSOp+jy4fMnCEIiARtkOoJpZzw022r/
+ uBuVp9dT5uB7U6WQm5P7y0yXOfhW9V5sVz5vkIe8WD4rdJ8EzS04MBwcVNKZI9wnXbyskiAj5zs
+ 2oK3ogS3FRdYIp/d5DZ+/gCd+NMH7xBLrT5vhxYyLmth83XTVMRSLXgP1VmrrFZH8kXu2FZjrSE
+ 7Ui1HkXzS49/iA7fbQ8td655GKZeW6qvyHlLPkLJejMIafmvlJL7JQMixINzaerSJ8bMRks2/5s
+ +goYF4ppLgnIoB7QvG2OpPg7KDWjLXmXQxTSH1T7NUJkCy2IJ7u3qFy9C6A+LMPbSho5cXEelw0
+ hmuNDt/6C1TzFVaCFPicNipJmvmlBRacfNL0m4/fPVDgWbldGEcM=
+X-Google-Smtp-Source: AGHT+IFEvuYrEykNXhN9ZQkbnwPKVPLL8YA4Cxfx+dxbftSRIBoL8YasVZF7RIPDJOwA1PIyMW9efA==
+X-Received: by 2002:a05:6000:430b:b0:3ed:e1d8:bd72 with SMTP id
+ ffacd0b85a97d-42666da6dc9mr7326847f8f.17.1760101587521; 
+ Fri, 10 Oct 2025 06:06:27 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.05.38
+ ffacd0b85a97d-426ce583316sm4221657f8f.20.2025.10.10.06.06.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Oct 2025 06:05:39 -0700 (PDT)
+ Fri, 10 Oct 2025 06:06:26 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/76] target/arm: Implement get_S2prot_indirect
-Date: Fri, 10 Oct 2025 14:04:20 +0100
-Message-ID: <20251010130527.3921602-10-peter.maydell@linaro.org>
+Subject: [PULL 51/76] target/arm: Implement GCSPOPX
+Date: Fri, 10 Oct 2025 14:05:02 +0100
+Message-ID: <20251010130527.3921602-52-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251010130527.3921602-1-peter.maydell@linaro.org>
 References: <20251010130527.3921602-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,196 +101,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Move the stage2 permissions for normal accesses to
-GetPhysAddrResult.s2prot.  Put the stage2 permissions
-for page table walking in CPUTLBEntryFull.prot.
-This allows the permission checks in S1_ptw_translate
-and arm_casq_ptw to see the right permission.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251008215613.300150-10-richard.henderson@linaro.org
+Message-id: 20251008215613.300150-52-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/internals.h |  7 ++++
- target/arm/ptw.c       | 81 +++++++++++++++++++++++++++++++-----------
- 2 files changed, 68 insertions(+), 20 deletions(-)
+ target/arm/cpregs.h            |  1 +
+ target/arm/cpregs-gcs.c        |  3 +++
+ target/arm/tcg/translate-a64.c | 35 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index face1019f52..22947c4b78a 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1577,6 +1577,13 @@ typedef struct ARMCacheAttrs {
- typedef struct GetPhysAddrResult {
-     CPUTLBEntryFull f;
-     ARMCacheAttrs cacheattrs;
-+    /*
-+     * For ARMMMUIdx_Stage2*, the protection installed into f.prot
-+     * is the result for AccessType_TTW, i.e. the page table walk itself.
-+     * The protection installed info s2prot is the one to be merged
-+     * with the stage1 protection.
-+     */
-+    int s2prot;
- } GetPhysAddrResult;
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 909916b7fd7..ccf45fd136d 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -51,6 +51,7 @@ enum {
+     ARM_CP_GCSPUSHM              = 0x0008,
+     ARM_CP_GCSPOPM               = 0x0009,
+     ARM_CP_GCSPUSHX              = 0x000a,
++    ARM_CP_GCSPOPX               = 0x000b,
  
- /**
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 59135560776..2e026a7c597 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1316,7 +1316,7 @@ do_fault:
-  * @xn:      XN (execute-never) bits
-  * @s1_is_el0: true if this is S2 of an S1+2 walk for EL0
-  */
--static int get_S2prot_noexecute(int s2ap)
-+static int get_S2prot(CPUARMState *env, int s2ap, int xn, bool s1_is_el0)
- {
-     int prot = 0;
+     /* Flag: reads produce resetvalue; writes ignored. */
+     ARM_CP_CONST                 = 1 << 4,
+diff --git a/target/arm/cpregs-gcs.c b/target/arm/cpregs-gcs.c
+index e6c7025d02a..5b5b895a091 100644
+--- a/target/arm/cpregs-gcs.c
++++ b/target/arm/cpregs-gcs.c
+@@ -120,6 +120,9 @@ static const ARMCPRegInfo gcs_reginfo[] = {
+       .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 7, .opc2 = 4,
+       .access = PL1_W, .accessfn = access_gcspushx, .fgt = FGT_NGCSEPP,
+       .type = ARM_CP_GCSPUSHX },
++    { .name = "GCSPOPX", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 7, .opc2 = 6,
++      .access = PL1_W, .type = ARM_CP_GCSPOPX },
+ };
  
-@@ -1326,12 +1326,6 @@ static int get_S2prot_noexecute(int s2ap)
-     if (s2ap & 2) {
-         prot |= PAGE_WRITE;
-     }
--    return prot;
--}
--
--static int get_S2prot(CPUARMState *env, int s2ap, int xn, bool s1_is_el0)
--{
--    int prot = get_S2prot_noexecute(s2ap);
- 
-     if (cpu_isar_feature(any_tts2uxn, env_archcpu(env))) {
-         switch (xn) {
-@@ -1363,6 +1357,44 @@ static int get_S2prot(CPUARMState *env, int s2ap, int xn, bool s1_is_el0)
-     return prot;
+ void define_gcs_cpregs(ARMCPU *cpu)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 0df1916d28a..72b912a6050 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2568,6 +2568,33 @@ static void gen_gcspushx(DisasContext *s)
+     clear_pstate_bits(PSTATE_EXLOCK);
  }
  
-+static int get_S2prot_indirect(CPUARMState *env, GetPhysAddrResult *result,
-+                               int pi_index, int po_index, bool s1_is_el0)
++static void gen_gcspopx(DisasContext *s)
 +{
-+    /* Last index is (priv, unpriv, ttw) */
-+    static const uint8_t perm_table[16][3] = {
-+        /* 0 */ { 0, 0, 0 },   /* no access */
-+        /* 1 */ { 0, 0, 0 },   /* reserved */
-+        /* 2 */ { PAGE_READ, PAGE_READ, PAGE_READ | PAGE_WRITE },
-+        /* 3 */ { PAGE_READ, PAGE_READ, PAGE_READ | PAGE_WRITE },
-+        /* 4 */ { PAGE_WRITE, PAGE_WRITE, 0 },
-+        /* 5 */ { 0, 0, 0 },   /* reserved */
-+        /* 6 */ { PAGE_READ, PAGE_READ, PAGE_READ | PAGE_WRITE },
-+        /* 7 */ { PAGE_READ, PAGE_READ, PAGE_READ | PAGE_WRITE },
-+        /* 8 */ { PAGE_READ, PAGE_READ, PAGE_READ },
-+        /* 9 */ { PAGE_READ, PAGE_READ | PAGE_EXEC, PAGE_READ },
-+        /* A */ { PAGE_READ | PAGE_EXEC, PAGE_READ, PAGE_READ },
-+        /* B */ { PAGE_READ | PAGE_EXEC, PAGE_READ | PAGE_EXEC, PAGE_READ },
-+        /* C */ { PAGE_READ | PAGE_WRITE,
-+                  PAGE_READ | PAGE_WRITE,
-+                  PAGE_READ | PAGE_WRITE },
-+        /* D */ { PAGE_READ | PAGE_WRITE,
-+                  PAGE_READ | PAGE_WRITE | PAGE_EXEC,
-+                  PAGE_READ | PAGE_WRITE },
-+        /* E */ { PAGE_READ | PAGE_WRITE | PAGE_EXEC,
-+                  PAGE_READ | PAGE_WRITE,
-+                  PAGE_READ | PAGE_WRITE },
-+        /* F */ { PAGE_READ | PAGE_WRITE | PAGE_EXEC,
-+                  PAGE_READ | PAGE_WRITE | PAGE_EXEC,
-+                  PAGE_READ | PAGE_WRITE },
-+    };
++    TCGv_i64 gcspr = cpu_gcspr[s->current_el];
++    int mmuidx = core_gcs_mem_index(s->mmu_idx);
++    MemOp mop = finalize_memop(s, MO_64 | MO_ALIGN);
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 tmp = tcg_temp_new_i64();
++    TCGLabel *fail_label =
++        delay_exception(s, EXCP_UDEF, syn_gcs_data_check(GCS_IT_GCSPOPX, 31));
 +
-+    uint64_t pir = (env->cp15.scr_el3 & SCR_PIEN ? env->cp15.s2pir_el2 : 0);
-+    int s2pi = extract64(pir, pi_index * 4, 4);
++    /* The value at top-of-stack must be an exception token. */
++    tcg_gen_qemu_ld_i64(tmp, gcspr, mmuidx, mop);
++    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, 0b1001, fail_label);
 +
-+    result->f.prot = perm_table[s2pi][2];
-+    return perm_table[s2pi][s1_is_el0];
++    /*
++     * The other three values in the exception return record
++     * are ignored, but are loaded anyway to raise faults.
++     */
++    tcg_gen_addi_i64(addr, gcspr, 8);
++    tcg_gen_qemu_ld_i64(tmp, addr, mmuidx, mop);
++    tcg_gen_addi_i64(addr, addr, 8);
++    tcg_gen_qemu_ld_i64(tmp, addr, mmuidx, mop);
++    tcg_gen_addi_i64(addr, addr, 8);
++    tcg_gen_qemu_ld_i64(tmp, addr, mmuidx, mop);
++    tcg_gen_addi_i64(gcspr, addr, 8);
 +}
 +
  /*
-  * Translate section/page access permissions to protection flags
-  * @env:     CPUARMState
-@@ -1813,7 +1845,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     int32_t stride;
-     int addrsize, inputsize, outputsize;
-     uint64_t tcr = regime_tcr(env, mmu_idx);
--    int ap;
-+    int ap, prot;
-     uint32_t el = regime_el(env, mmu_idx);
-     uint64_t descaddrmask;
-     bool aarch64 = arm_el_is_aa64(env, el);
-@@ -2137,6 +2169,18 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     ap = extract32(attrs, 6, 2);
-     out_space = ptw->cur_space;
-     if (regime_is_stage2(mmu_idx)) {
-+        if (param.pie) {
-+            int pi = extract64(attrs, 6, 1)
-+                   | (extract64(attrs, 51, 1) << 1)
-+                   | (extract64(attrs, 53, 2) << 2);
-+            int po = extract64(attrs, 60, 3);
-+            prot = get_S2prot_indirect(env, result, pi, po, ptw->in_s1_is_el0);
-+        } else {
-+            int xn = extract64(attrs, 53, 2);
-+            prot = get_S2prot(env, ap, xn, ptw->in_s1_is_el0);
-+            /* Install TTW permissions in f.prot. */
-+            result->f.prot = prot & (PAGE_READ | PAGE_WRITE);
+  * Look up @key, returning the cpreg, which must exist.
+  * Additionally, the new cpreg must also be accessible.
+@@ -2893,6 +2920,14 @@ static void handle_sys(DisasContext *s, bool isread,
+             gen_gcspushx(s);
+         }
+         return;
++    case ARM_CP_GCSPOPX:
++        /* Choose the CONSTRAINED UNPREDICTABLE for UNDEF. */
++        if (rt != 31) {
++            unallocated_encoding(s);
++        } else if (s->gcs_en) {
++            gen_gcspopx(s);
 +        }
-         /*
-          * R_GYNXY: For stage2 in Realm security state, bit 55 is NS.
-          * The bit remains ignored for other security states.
-@@ -2145,11 +2189,9 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-          */
-         if (out_space == ARMSS_Realm && extract64(attrs, 55, 1)) {
-             out_space = ARMSS_NonSecure;
--            result->f.prot = get_S2prot_noexecute(ap);
--        } else {
--            int xn = extract64(attrs, 53, 2);
--            result->f.prot = get_S2prot(env, ap, xn, ptw->in_s1_is_el0);
-+            prot &= ~PAGE_EXEC;
-         }
-+        result->s2prot = prot;
- 
-         result->cacheattrs.is_s2_format = true;
-         result->cacheattrs.attrs = extract32(attrs, 2, 4);
-@@ -2221,9 +2263,8 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-              * Note that we modified ptw->in_space earlier for NSTable, but
-              * result->f.attrs retains a copy of the original security space.
-              */
--            result->f.prot = get_S1prot_indirect(env, ptw, mmu_idx, pi, po,
--                                                 result->f.attrs.space,
--                                                 out_space);
-+            prot = get_S1prot_indirect(env, ptw, mmu_idx, pi, po,
-+                                       result->f.attrs.space, out_space);
-         } else {
-             int xn = extract64(attrs, 54, 1);
-             int pxn = extract64(attrs, 53, 1);
-@@ -2248,10 +2289,10 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
- 
-             user_rw = simple_ap_to_rw_prot_is_user(ap, true);
-             prot_rw = simple_ap_to_rw_prot_is_user(ap, false);
--            result->f.prot = get_S1prot(env, mmu_idx, aarch64,
--                                        user_rw, prot_rw, xn, pxn,
--                                        ptw->in_space, out_space);
-+            prot = get_S1prot(env, mmu_idx, aarch64, user_rw, prot_rw,
-+                              xn, pxn, ptw->in_space, out_space);
-         }
-+        result->f.prot = prot;
- 
-         /* Index into MAIR registers for cache attributes */
-         attrindx = extract32(attrs, 2, 3);
-@@ -2297,7 +2338,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-         result->f.tlb_fill_flags = 0;
++        return;
+     default:
+         g_assert_not_reached();
      }
- 
--    if (ptw->in_prot_check & ~result->f.prot) {
-+    if (ptw->in_prot_check & ~prot) {
-         fi->type = ARMFault_Permission;
-         goto do_fault;
-     }
-@@ -3495,7 +3536,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
-     fi->s2addr = ipa;
- 
-     /* Combine the S1 and S2 perms.  */
--    result->f.prot &= s1_prot;
-+    result->f.prot = s1_prot & result->s2prot;
- 
-     /* If S2 fails, return early.  */
-     if (ret) {
 -- 
 2.43.0
 
