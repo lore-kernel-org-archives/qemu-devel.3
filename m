@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC566CCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9911ACCD185
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 16:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7GEX-0005yp-Kc; Fri, 10 Oct 2025 12:44:45 -0400
+	id 1v7GQf-0002B2-O7; Fri, 10 Oct 2025 12:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v7GEV-0005yE-9B
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:44:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v7GEJ-00042L-A2
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:44:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760114660;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=YDyHejTn1jlAetzlkHAFaynnWYwKjOLKrEr7EqSBqxw=;
- b=R7DmyA8cZkXCLSxC/fMCwD6voBHDYOvpiMr6zwsA3WfdM+lhouHNW3nf5G3KPvWV+CEFDk
- fgl9P6EOjtfxLSnzjtpNOE/k//NCLNYuJ6PZ/Y7mN2i8sFRJJ2+zGGLD635+4d/TZ2/5c1
- wlDZWouKN5mrQf3cTEAxSh818C6dTSQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-5VW8evxTNmi4tcbT7e8FSA-1; Fri,
- 10 Oct 2025 12:44:17 -0400
-X-MC-Unique: 5VW8evxTNmi4tcbT7e8FSA-1
-X-Mimecast-MFC-AGG-ID: 5VW8evxTNmi4tcbT7e8FSA_1760114654
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC6911800576; Fri, 10 Oct 2025 16:44:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.177])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2851B1800446; Fri, 10 Oct 2025 16:44:03 +0000 (UTC)
-Date: Fri, 10 Oct 2025 17:44:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, prapal@linux.microsoft.com,
- prapal@microsoft.com, Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v4 24/27] qapi/accel: Allow to query mshv capabilities
-Message-ID: <aOk1kXZlKDk5piir@redhat.com>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <20250916164847.77883-25-magnuskulke@linux.microsoft.com>
- <871pnahn2f.fsf@pond.sub.org>
- <e1424616-5bac-4809-a70c-63805b1db893@redhat.com>
- <20251010163312.GA2896568@liuwe-devbox-debian-v2.local>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v7GQe-0002AS-QB
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:16 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v7GQW-0007sG-Sp
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 12:57:16 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-782a77b5ec7so2138851b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 09:57:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760115420; x=1760720220; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pf6DqYhLys9vVFknX9I8ydYubWfT3qAkpEC9s2UPNhM=;
+ b=LytgH/FCOjQN2sipK4DATXv9hw85TOPm8DJd+XCkiDT5PIeev5JvMlMLFvjEYZ07bH
+ uC+/1wWInP69SawSWVO2VkkmVWVXoTvRjnOt1YjxbMbHa3MKIq1yf7V+1wOy5Td5qKX9
+ qTgIdBfE8I4harmvLzUAqMxOUhWB+LNhDvKhN4NyMFDNx71pEOYlTC8wYVyELxbc+y9z
+ DJfQ2C1ZU7rkQio0L4F35YTBubWVEJld0wxll823uhTuhU/lJP6vju3EzR5xT3fUwhTl
+ zdkcIGdZ0LLXbN2eAp4vo4QFPdqClrXFBUbH1obelMvQCECj2FNY+Z6UeieKEZtlMyFR
+ 87Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760115420; x=1760720220;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pf6DqYhLys9vVFknX9I8ydYubWfT3qAkpEC9s2UPNhM=;
+ b=CJLf3Qa66cjkA/W5eWWe23VIrZ7sRncCGV8LZ3m2oesObLfWGAAgrKlG6N2JHVqGp/
+ AqikE760tNLP59AhjvArUctI+qEhnLZV0XMI2no2q1IS0rpKu6NOtdNDgUKI2PMezJ/D
+ ooPJWnnpqfXPZk70smWdRuGAoicJHk8PvH5bDtmfU4IFJ/i7SAmTmZiI/VIqWJsDN2XE
+ SQYymapogJCV5AwcODXhje4cFmRzLC7oZLz9jjM4Ghfjrg93rwIg4jSPDldHNlTUaEA/
+ +w+/1+XCIu+eXxVuR7Tfb6KzUDpMzF73Xbqw9HPSXRpwXnE3h/i5odM/FpFe1f9/7H1P
+ QCSA==
+X-Gm-Message-State: AOJu0YyZMY+TbFPsjt8g1ZuAtrGiZ8ftxRraWj4PZUBWUo4BFxt1+8is
+ vcYLQu0xKf+MQeHfWj3eXT4kPGnOPvhc/TCdeSe4elq0DkKyyV0MRUqXohZgUwybd5iVANohPcg
+ tPcRbIe0=
+X-Gm-Gg: ASbGncvd9FdWJCGZYsvEEZtmex9VYl2BvfX0CvJPUcJn4b952LknA/M0cYYIHa2KvzZ
+ 99slvcBrDN8qdTJXoIah0QhkiRRfTxSx8OSurqb5XBm/QpdkydwoK4i/nNyYCl2MAwZA5tkErg/
+ kvnGIKWOrXd5ocdyrQO4D0jWgdvWVuLZVTF980NwxWDuFLYODiLnBPb3a/Y0DkwuiWsXAHhygEd
+ 07/OSJ5cincsk1TQe0gbiPZZIydAW5+fWtM1lXq0tWjWugWnwKLZQ/PoyxnUK5OuzRJIwgCFyYH
+ 2MpmygHqYB5U1XuYh2WDOjNrIPX9jsjh4LJYKpfrGC/V/lTT64poerc0wrr6WzCofY2/2yXK6rq
+ 6CAgwCgG/+6KC1ahnLxT5UOAgaldVeybrD5p23pi0qFHHkKfDXDM20XoIRuM=
+X-Google-Smtp-Source: AGHT+IEsXfEY08hGV+hYilgSWsd5Htugm+GKIFpuczdMj8CeN/LHpMVy1gFUpCh70zlP6vq0+0908g==
+X-Received: by 2002:a05:6a21:3282:b0:2df:b68d:f64 with SMTP id
+ adf61e73a8af0-32da854060cmr16800662637.52.1760115420175; 
+ Fri, 10 Oct 2025 09:57:00 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33b6262de64sm3452183a91.4.2025.10.10.09.56.59
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 09:56:59 -0700 (PDT)
+Message-ID: <18d49c34-0615-4f16-8d03-013e04192a1d@linaro.org>
+Date: Fri, 10 Oct 2025 09:56:58 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251010163312.GA2896568@liuwe-devbox-debian-v2.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/12] target/tricore: Replace target_ulong -> vaddr with
+ tlb_fill() callees
+To: qemu-devel@nongnu.org
+References: <20251010052141.42460-1-philmd@linaro.org>
+ <20251010052141.42460-3-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251010052141.42460-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,44 +101,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 10, 2025 at 04:33:12PM +0000, Wei Liu wrote:
-> On Fri, Oct 10, 2025 at 04:10:43PM +0200, Paolo Bonzini wrote:
-> > On 10/10/25 16:02, Markus Armbruster wrote:
-> > > > +{ 'command': 'query-mshv', 'returns': 'MshvInfo' }
-> > > 
-> > > Mirrors query-kvm.  Okay apart from the Since: issues Daniel pointed
-> > > out.
-> > 
-> > Which I swore I had fixed, but didn't.
-> > 
-> > > Should we have a generic query-accelerator instead of one query-FOO for
-> > > every accelerator FOO?
-> > If we want it, it should be query-accelerators with return value {"enabled":
-> > "Accelerator", "present": ["Accelerator"]}.
-> > 
-> > The patch is already merged, but it is pretty self-contained so I have no
-> > objection to reverting just this one.
-> > 
+On 10/9/25 22:21, Philippe Mathieu-Daudé wrote:
+> tlb_fill() provides a vaddr type since commit 68d6eee73c
+> ("target/tricore: Convert to CPUClass::tlb_fill").
 > 
-> Using a generic query-accelerator API should be fine.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/tricore/helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> As I understand it, We need this to query MSHV support in libvirt, so we
-> need to get this correct before the libvirt patches are merged.
-> 
-> Just let us know how to proceed.
+> diff --git a/target/tricore/helper.c b/target/tricore/helper.c
+> index e4c53d453dd..7574111c87d 100644
+> --- a/target/tricore/helper.c
+> +++ b/target/tricore/helper.c
+> @@ -35,7 +35,7 @@ enum {
+>   };
+>   
+>   static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
+> -                                int *prot, target_ulong address,
+> +                                int *prot, vaddr address,
+>                                   MMUAccessType access_type, int mmu_idx)
+>   {
+>       int ret = TLBRET_MATCH;
+> @@ -61,7 +61,7 @@ hwaddr tricore_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+>   }
+>   
+>   /* TODO: Add exception support */
+> -static void raise_mmu_exception(CPUTriCoreState *env, target_ulong address,
+> +static void raise_mmu_exception(CPUTriCoreState *env, vaddr address,
+>                                   int rw, int tlb_error)
+>   {
+>   }
 
-On the libvirt side, we're happy to deal with either query-mshv/kvm/etc
-or a generator query-accelerator.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
