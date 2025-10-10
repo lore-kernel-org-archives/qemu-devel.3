@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227D4CCD184
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 02:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F595CCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 02:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v72jf-0000Kf-49; Thu, 09 Oct 2025 22:19:59 -0400
+	id 1v73JO-0006HJ-3m; Thu, 09 Oct 2025 22:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v72jd-0000KO-7w
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:19:57 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v73JM-0006HA-4d
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:56:52 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v72jZ-0000Z0-ND
- for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:19:56 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e2826d5c6so10045445e9.1
- for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 19:19:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v73JF-0001kJ-6W
+ for qemu-devel@nongnu.org; Thu, 09 Oct 2025 22:56:51 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-46e34052bb7so18748255e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Oct 2025 19:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760062787; x=1760667587; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1760065000; x=1760669800; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=g+vNKejzR6V0jtRZUBGGU95Jl9y5Lua5p2J/58NSCrU=;
- b=tRVheYPAT/89FQjQ0g/BX5yZM3/UDjuYrZvGpICOuriBSGOIUKl09fiokqYHDRLeVm
- SM+WpiSHtSU5dzjSknPbaV3Q1OAeEadTZX9nhaq4U/8JTUkJufuW6WgBw+WdJm3ZkCFT
- XdoXXHv2Q5sIZZR7VGsw8+z7E06/LWIKyPLkmHXXp5LnKAhCpl2dgw9ssdPqFTe6ChPT
- x+v+DJxoBYstUKZxkYHmIzdiVeoGISMUb4tWMzo79rPkICz6FWrlJmv4MUPRweWQa7lH
- pLC0lajDMEdgod8cpV2w1qmbp4L3eML1Y9LgeTm2VSKnV1tbV1rnxiGK+ZcBKkCAH6vN
- ECyA==
+ bh=lcY/56VJ8b9tiERvGPI7f1dYWKOqbJy45Kwg8QaOX1k=;
+ b=y0WQht23yf0aZxZ2zi8INNKmTiA6JXUJERtQaTRiKpI2cVwvAuboS/3vLPNNrDZaHT
+ SPm9pVu1t5BsX/tGO9dRRluf1ClRnFbxx25IVJZ/qCVVdLsLLRTnfVIBQ14ACMz8w68H
+ aK3BQ6ltACy0TlaDZCR2LWud4vKJhsmRQTm8IoIEESWoNznlhVOfNM/VHrRwUU2P5WHH
+ wNIb/gyjFXTrLtvjxziCOjsBOYrf7aIeBbgT8xPIzhG1bm5wtiICqypyCJyGv+7gh+hA
+ 2wjIzpNK1PDOUOr9nkqhgvStC+VvZBoKyHoDWKqiwQImGI0l77bbPYR2wEr5NTNFAK0w
+ 7iPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760062787; x=1760667587;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760065000; x=1760669800;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g+vNKejzR6V0jtRZUBGGU95Jl9y5Lua5p2J/58NSCrU=;
- b=thWpz5NAw1nRBc4bAK2beVGiXY8gJwS1RnzwP93qih1KwCy2Y74ypw3E/+Z4Q2rDbJ
- ob0JtMnSzYNwoOSbBAWvPURTzA0mqqXHgw97/1dkf66IyEOLvZMZ41doy6e4S3/0I/Zq
- /xGdcC2ssAcPSSOXud0xoN2Tof5GgrPbsj0ADAnu7hH+43ZodWAoi01ywNy6+Af5DD/N
- 9711s3vF5z5sehhgDRc+NcZWe77CWdENc/BfiUxLO2ij/3MZ7GBiKH5Jb0+a3gKG50ij
- jGMbqgIZw922dxAQXulzds8bXJ3q4AngNE/6pcJZGtMGEXaQGgraEwGLIttaEHKJAXb4
- mldg==
+ bh=lcY/56VJ8b9tiERvGPI7f1dYWKOqbJy45Kwg8QaOX1k=;
+ b=u8k/gbzRXvRnXwZgaf1Tnn2CW11yos1zdoz2wQSgScbnwKD8aXIt48AIAN4A5JjF5t
+ A4pNiREIv48+jOCSncVc27KHbuMu68w61GO/csMKjlpxZzXOo4LdTU+8z1g61I5qBNKY
+ NkBHwcVcpLs33oqcHXIOmFAQXR9lHXpVjEF2GFtE5xa+/4v0A3/61GSw6hrleXEX2Gdn
+ JlerfMelHhcNybO+RkherKT4QYix4hbIudJwJNWVOVGSK9sU3ms/Rw3pX/WPSJD8tVSm
+ MuenSgXeWcyXDAmKtLdruuBAXtdCUsxjDnQ8d/0S2l/D7d+ED3mFmofn4AFSI/6Z+Bog
+ KrqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgv+CSWuTnpfHIbpEmkeRAer9YPs/MuxgiZbAnd+GlA2amf1cgu3I35HZjqTUkouHf74MWioS1u8uK@nongnu.org
-X-Gm-Message-State: AOJu0Yw4Q5ySJ60R1+2DVrsMq84zmR3R819EdtGnoZ61X4v1NpGfcLaB
- mmpl5aC9sMTbYC2qL6EknuN6+ahGXH87UgC1fd/rOYmwge+MLGAzq9hhVkDzQn0nbNg=
-X-Gm-Gg: ASbGncsrhdFANyk/01V0KAQmGk9mBfhmu8zSt7iswRSQGJgSOlZQduQ3uXTdaL5d0p3
- wg7K4QJPSFNMQXnnwldbBm7B5WfB825Sd8xW1WKmFoKWVuIYyvfyAzDQx0p2Ugm3Mcw0FLPIus6
- GVd6s7kPnC/AgWw0uziB0VXQGrskaNrUInOHMw0W0rQQPfU79lqjhYH0gf4TyGkT8n+jY6oY2Si
- nnVV6vPXQ7x7x+aXTBh8SFyYK97564lt1meFSUjkRCIyMdefEtez0r1kVkzus/Z837XjblvSO+h
- 7iFeAWyeV965P5pdqHe0oky0Y60717kp1sVVm8IqtO8QaDBaQF0sMSfX5nppIiBtEGQRFZDAJZu
- Bul/xJfZE91iI1+298G9/H5ZCA2VTGaDTGjeCpLfN51OVnOJQfZwcdebOP5e7gqnb3lxDZ0JVY3
- sK9dNLPWUlhnpx
-X-Google-Smtp-Source: AGHT+IGkMCJibAeJlMqlMJaH9lhKkpXhFhiRBKgVsaSaeQlengNwZGuzMX3UYuFRIFRj2MruiYqrWw==
-X-Received: by 2002:a05:600c:4e41:b0:45f:2cf9:c229 with SMTP id
- 5b1f17b1804b1-46fa9a220b1mr65380505e9.0.1760062787600; 
- Thu, 09 Oct 2025 19:19:47 -0700 (PDT)
+ AJvYcCVhhC60t4HVYuouyT0A5NKqqiTzfFtLZ32drg07SH4a4PgeIWsQpTou+9qoHnqgkUrN+8f0u+7U3BMB@nongnu.org
+X-Gm-Message-State: AOJu0YyoG0VkUIr+hMAmMxeObWh+n4GpSoPBaV9U0Qg69g4w0Zwyzi5t
+ iCu9lLCWSW1MqMvjDBBBrgRE51tIDahs9GCzKcBmjqZB8lJQD1r4eHqKqtBknxmr7JI=
+X-Gm-Gg: ASbGncuH1Ed547zNhaolU6qW0sZ465nDa7aIrUPnQImbRtqG6rbZvmDCjRQJ0ivYMYG
+ BWcmB1PYcL3gx4cMM1evgeCjm6YqDad7Xl3V2ICIM2oMiHMQOChhEexdjI5RTsN1gW9GtHvg8XE
+ FjUMAfZKJLBF6DwCm8pea1GLpmn5M/+wzNMhk5Q8Ixme8WyaBz+K2uoQTr2W3gMxYXslp8vFYAX
+ 8qk2xiMji8ublr+wwXjfOK1iM8+iMJtWONus7+5sku9WVBYKD2AH/Nb7T1GgVKMZwFZopZnV/Sy
+ n/l5Q7+NTE1DdX9yZ33J8LOBhuDcEssgUIq+sNDzxWTOOseV4/va4jFLhg8uwzSNYzltlBXNa0W
+ crUdoAKNTjZ5nYcUKXWoz/h7OVI0aERtfGCy9crCaTFOlIUgsgSlF9xQx0MWDI0xNa/DD+NRAPs
+ TDGDV5G32DZJYo1tv0CzSMqWg=
+X-Google-Smtp-Source: AGHT+IGotSL+4T08nNdItuMy0Sq1VsJk7rSYLuN3aKB/APH0tYZAwymYcuhxHln9FHng26vXek1FSw==
+X-Received: by 2002:a05:600c:83ce:b0:46e:394b:49b7 with SMTP id
+ 5b1f17b1804b1-46fa9b16597mr61536225e9.37.1760064999929; 
+ Thu, 09 Oct 2025 19:56:39 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fab633cdasm48713935e9.9.2025.10.09.19.19.45
+ ffacd0b85a97d-426ce5e0e70sm1799837f8f.40.2025.10.09.19.56.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Oct 2025 19:19:47 -0700 (PDT)
-Message-ID: <0f6dbb37-9d00-43da-9807-c0629575cefb@linaro.org>
-Date: Fri, 10 Oct 2025 04:19:44 +0200
+ Thu, 09 Oct 2025 19:56:39 -0700 (PDT)
+Message-ID: <78a13e96-1404-484d-a985-6b403fd1462c@linaro.org>
+Date: Fri, 10 Oct 2025 04:56:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Cleanups and fixes (PART 2)
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- suravee.suthikulpanit@amd.com, vasant.hegde@amd.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, santosh.shukla@amd.com,
- aik@amd.com
-References: <20251008164324.21553-1-sarunkod@amd.com>
- <e0cd4386-c367-49f0-b83d-6c38cc6eeef8@oracle.com>
+Subject: Re: [PATCH] target/avr: Use vaddr type for $PC jumps
 Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251009200525.33987-1-philmd@linaro.org>
+ <3460610b-5c1a-4189-8f0a-fd04897effb5@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e0cd4386-c367-49f0-b83d-6c38cc6eeef8@oracle.com>
+In-Reply-To: <3460610b-5c1a-4189-8f0a-fd04897effb5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,16 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alejandro,
+On 9/10/25 23:42, Richard Henderson wrote:
+> On 10/9/25 13:05, Philippe Mathieu-Daudé wrote:
+>> translator_use_goto_tb() expects a vaddr type since commit
+>> b1c09220b4c ("accel/tcg: Replace target_ulong with vaddr in
+>> translator*()").
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/avr/translate.c | 18 +++++++++---------
+>>   1 file changed, 9 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/target/avr/translate.c b/target/avr/translate.c
+>> index 804b0b21dbd..20191055861 100644
+>> --- a/target/avr/translate.c
+>> +++ b/target/avr/translate.c
+>> @@ -87,7 +87,7 @@ struct DisasContext {
+>>       CPUAVRState *env;
+>>       CPUState *cs;
+>> -    target_long npc;
+>> +    vaddr npc;
+> 
+> Ah, here's where proper typing might have saved us a bug.
+> 
+> npc is not a virtual (or physical) address in the normal sense, it is a 
+> *word* address (i.e. byte address / 2).
+> 
+> So I think you should just use uint32_t here.
 
-On 10/10/25 03:33, Alejandro Jimenez wrote:
+IIUC the field is 24-bit wide, OK.
 
-> I know the commit log is not consistent so far, but going forward I 
-> propose we adopt the shorter prefix "amd_iommu: " for commit summaries. 
-> There is no ambiguity (only one arch has amd_iommu), so the full path is 
-> not required (i.e. avoid 'hw/i386/amd_iommu: '). Shorter boilerplate 
-> leaves more space for relevant details, and helps people like me who 
-> struggle to comply with character limits :).
+> 
+>>       uint32_t opcode;
+>>       /* Routine used to access memory */
+>> @@ -981,7 +981,7 @@ static void gen_pop_ret(DisasContext *ctx, TCGv ret)
+>>       }
+>>   }
+>> -static void gen_goto_tb(DisasContext *ctx, int n, target_ulong dest)
+>> +static void gen_goto_tb(DisasContext *ctx, int n, vaddr dest)
+>>   {
+>>       const TranslationBlock *tb = ctx->base.tb;
+>> @@ -1004,7 +1004,7 @@ static void gen_goto_tb(DisasContext *ctx, int 
+>> n, target_ulong dest)
+>>    */
+>>   static bool trans_RJMP(DisasContext *ctx, arg_RJMP *a)
+>>   {
+>> -    int dst = ctx->npc + a->imm;
+>> +    vaddr dst = ctx->npc + a->imm;
+> 
+> And here...
+> 
+>>       gen_goto_tb(ctx, 0, dst);
+> 
+> ... and therefore also in the gen_goto_tb argument.
+> 
+> The bug can thus be said to be within gen_goto_tb, where we don't 
+> convert from word address to byte address.
 
-What about "hw/amd_iommu:" to keep 'hw' in subject?
+Oh I see. Then avr_tr_insn_start() is also buggy?
+
 
