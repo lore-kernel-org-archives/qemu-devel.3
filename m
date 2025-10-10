@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD55CCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C346ECCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8gBm-0004y9-MC; Tue, 14 Oct 2025 10:39:46 -0400
+	id 1v8gBf-0004uc-4X; Tue, 14 Oct 2025 10:39:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8gBk-0004v6-CU
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:44 -0400
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8gBc-0004uF-Lo
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:36 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8gBU-0000WG-4s
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:44 -0400
-DKIM-Signature: a=rsa-sha256; bh=yFAyRCYZF6OU/chPVhuheF5qFHBRpIViN8VbVhB+zTA=; 
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8gBS-0000WH-Ou
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:36 -0400
+DKIM-Signature: a=rsa-sha256; bh=mOMV6mSEZ4Mev5FKiKCskorfQLLMT6xX0RUPXAgXja8=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
  t=1760452755; v=1;
- b=gSSwljpXKowo8a8KT9kqufGegJ/LkYmfsiIO70fMeAoAj4DBaiMCitZ/t0pWb2skB+P9gG2P
- kBdWOqqtRm69Kps/yWsF7vCqV47mpkBrM71tt+pHKBS6j0k4/uVT5C7cLLAse+S48RZL+YsMZt6
- etYkL2OEgvmKFz2DO/8luEzYmIaKexMqtITv8Gw6K2INu57u/yq99Q17LPIYDlCUtWhhjw6S+Bd
- jq4zA36f2LYUHbhOthqt9cP0SPuFT0ILhusWR8ndyh+Q9YmIG9hr8JbQjQL9WXCF7xlx1Hn9uSd
- ycdbvwJDvkwSpZcdP5jpiydjZHiVRH2gxGS0Yn8MyHcjw==
+ b=CK9+lhgwZn3Vymii1i0eDN+XjGhIaN5yHBDq/gz/53cnJ03H+ATXQENQW5UUOUeUWA/D00Ch
+ QMbV7FmfZEYn0SSu6I+BSjs2xbIbhiBhhp9Cw9RfTx5gLxRhlvDMvZfWiuBY2k/bSVc9S78R31V
+ S/YKARpxBG+Fz+SKl4SR2+v9s33yw0/AXCHmtMdQEviqDx4Dj/e+aVbx8DZDByvA19iL5EthpSw
+ VndxU2mO1h9eC9a0JN4ju6kQrT36mTEdkuQMdIX5CmYbZPdH3wGp6r2gfJOe8uzoI9hdfeVfj+N
+ 8ChCIhmo+EJRaGFxWKYYHjIi2z7u1w5HdM7Lc1WK94rLA==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 4312E23BDD;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 722D323BDE;
  Tue, 14 Oct 2025 14:39:15 +0000 (UTC)
 From: ~myrslint <myrslint@git.sr.ht>
 Date: Fri, 10 Oct 2025 02:43:48 +0000
-Subject: [PATCH qemu v7 1/2] Honor guest PAT on x86, absent Bochs display
-Message-ID: <176045275486.7119.13003157223292391926-1@git.sr.ht>
+Subject: [PATCH qemu v7 2/2] Honor guest PAT on x86, absent Bochs display
+Message-ID: <176045275486.7119.13003157223292391926-2@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <176045275486.7119.13003157223292391926-0@git.sr.ht>
 To: qemu-devel@nongnu.org
@@ -50,7 +50,7 @@ X-Spam_bar: +
 X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
  DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,37 +85,37 @@ Signed-off-by: myrslint <qemu.haziness801@passinbox.com>
 ---
  accel/kvm/kvm-all.c        |  1 +
  accel/stubs/kvm-stub.c     |  1 +
- hw/display/bochs-display.c |  5 +++++
+ hw/display/bochs-display.c | 17 +++++++++++++++
  include/system/kvm.h       |  9 ++++++++
  target/i386/kvm/kvm.c      | 42 +++++++++++++++++++++++++++++++-------
- 5 files changed, 51 insertions(+), 7 deletions(-)
+ 5 files changed, 63 insertions(+), 7 deletions(-)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 58802f7c3c..391ec08629 100644
+index 58802f7c3c..b1ae36d6a1 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
 @@ -103,6 +103,7 @@ bool kvm_readonly_mem_allowed;
  bool kvm_vm_attributes_allowed;
  bool kvm_msi_use_devid;
  bool kvm_pre_fault_memory_supported;
-+bool kvm_bochs_drm;
++bool kvm_bochs_drm_quirk;
  static bool kvm_has_guest_debug;
  static int kvm_sstep_flags;
  static bool kvm_immediate_exit;
 diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index 68cd33ba97..e56b745d5d 100644
+index 68cd33ba97..a69c89e1ad 100644
 --- a/accel/stubs/kvm-stub.c
 +++ b/accel/stubs/kvm-stub.c
 @@ -24,6 +24,7 @@ bool kvm_gsi_direct_mapping;
  bool kvm_allowed;
  bool kvm_readonly_mem_allowed;
  bool kvm_msi_use_devid;
-+bool kvm_bochs_drm;
++bool kvm_bochs_drm_quirk;
 =20
  void kvm_flush_coalesced_mmio_buffer(void)
  {
 diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
-index ad2821c974..9a33a4cd26 100644
+index ad2821c974..ec5ab5861c 100644
 --- a/hw/display/bochs-display.c
 +++ b/hw/display/bochs-display.c
 @@ -20,6 +20,8 @@
@@ -127,33 +127,38 @@ index ad2821c974..9a33a4cd26 100644
  typedef struct BochsDisplayMode {
      pixman_format_code_t format;
      uint32_t             bytepp;
-@@ -261,6 +263,7 @@ static const GraphicHwOps bochs_display_gfx_ops =3D {
-     .gfx_update =3D bochs_display_update,
- };
-=20
-+
- static void bochs_display_realize(PCIDevice *dev, Error **errp)
- {
-     BochsDisplayState *s =3D BOCHS_DISPLAY(dev);
-@@ -309,6 +312,8 @@ static void bochs_display_realize(PCIDevice *dev, Error *=
-*errp)
+@@ -309,6 +311,21 @@ static void bochs_display_realize(PCIDevice *dev, Error =
+**errp)
      }
 =20
      memory_region_set_log(&s->vram, true, DIRTY_MEMORY_VGA);
 +
-+    kvm_bochs_drm =3D true;
++    /*
++    * On x86_64, where most CPUs support self-snoop, it is preferrable to
++    * always honor guest PAT. Not doing so is a quirk. There is a default
++    * enabled KVM quirk flag which enforces not doing so due to a former bug
++    * in Bochs display driver.
++    *
++    * The bug has been fixed but not enough has yet passed since so we only
++    * disable said quirk flag if a Bochs display is not configured for the
++    * virtual machine.
++    *
++    * The following flag tells KVM initialization code not to disable that
++    * quirk flag.
++    */
++    kvm_bochs_drm_quirk =3D true;
  }
 =20
  static bool bochs_display_get_big_endian_fb(Object *obj, Error **errp)
 diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 4fc09e3891..62b49deb3d 100644
+index 4fc09e3891..45ddb2e0ee 100644
 --- a/include/system/kvm.h
 +++ b/include/system/kvm.h
 @@ -43,6 +43,7 @@ extern bool kvm_gsi_direct_mapping;
  extern bool kvm_readonly_mem_allowed;
  extern bool kvm_msi_use_devid;
  extern bool kvm_pre_fault_memory_supported;
-+extern bool kvm_bochs_drm;
++extern bool kvm_bochs_drm_quirk;
 =20
  #define kvm_enabled()           (kvm_allowed)
  /**
@@ -166,7 +171,7 @@ index 4fc09e3891..62b49deb3d 100644
 + * Returns: true if KVM is possible and a Bochs DRM driver is
 + * in use for display.
 + */
-+#define kvm_has_bochs_drm() (kvm_bochs_drm)
++#define kvm_has_bochs_drm() (kvm_bochs_drm_quirk)
 +
  #else
 =20
@@ -180,7 +185,7 @@ index 4fc09e3891..62b49deb3d 100644
  #endif  /* CONFIG_KVM_IS_POSSIBLE */
 =20
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index db40caa341..a720cc791b 100644
+index db40caa341..4d2a01ca0e 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
 @@ -2692,13 +2692,13 @@ static bool kvm_rdmsr_pkg_energy_status(X86CPU *cpu,
@@ -230,7 +235,7 @@ index db40caa341..a720cc791b 100644
 +        (kvm_x86_disable_quirsk2_mask() & KVM_X86_QUIRK_IGNORE_GUEST_PAT)) {
 +        if (kvm_disable_ignore_guest_pat()) {
 +            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-+                         "modifiable but we failed to disable it\n");
++                         "modifiable but we failed to disable it");
 +        }
 +    }
 +}
@@ -254,5 +259,4 @@ index db40caa341..a720cc791b 100644
          ret =3D kvm_vm_enable_disable_exits(s);
 --=20
 2.49.1
-
 
