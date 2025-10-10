@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8020ECAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 07:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAFECAC5BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 07:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v77Dy-0001dp-WC; Fri, 10 Oct 2025 03:07:35 -0400
+	id 1v77Dk-0001b8-8u; Fri, 10 Oct 2025 03:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77Dx-0001dK-59
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:33 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77Di-0001aJ-53
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:18 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77Ds-0007xT-1K
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:32 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46e52279279so11653615e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 00:07:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v77Dd-0007wD-Hi
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 03:07:16 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-46e2826d5c6so10993005e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 00:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760080043; x=1760684843; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760080029; x=1760684829; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UdXB7ylLc7Vhz3ZaX5Klsde0ekKLRZrXew/WW8Z5jnE=;
- b=fRXuKAA9IIKverx769MaAU4ZSW12xMIjRsn6sWSnM62lzY6UOmHo+RETeqs892dH7A
- IoqkNtb8JkiyrJZbkvJFKjd7Awno1iFbwNHLWcf7/W13H6AJdIuGHZPaaHpqJ5PIDxPQ
- gqfIiOz5+xnfKNyw2bwVscbp2/3Le0D29fn9qcRi2IkD7S++sRyNJp7kwT5NTGGvxM1b
- OZSWYfhnzK6iePmkbw4TnA1qGYlCXhyYsoa486TdQpTwncACc/UFQ5D/ITJpAJC068j5
- aoif6UGZEfJ/grGMfT7CxKBXS23cmoolfDF7BP4AjjNJgwW5/lJiGNdNjbunlTyCY0pE
- aICQ==
+ bh=FVb3aMnHodhOx3mpiCDcdapvdpvFoNzXZdFelJ9Oang=;
+ b=I+RxmWslWUlGm/7/FeC3s+DErOd5494y2lEfeUe8G74NnwRssRk53K4WQpLHwUDocl
+ ZLyAIbBXO32MRi4qF7b7l6gRhOKfPso0YTkThueSYR3mFs/nr/cV4zP8Ygg+qVjPib+l
+ Rq0Wu2zdu0XXdycoibGcxpXg/BFDHoXFfadOmzr76PYmp+yq80twyyLObN4KqioxN48F
+ l50hGWVU96H5PWPjlccq4nhhPx9rLf6RkpwRPHpmmXzSvsGyKvsDvjvH6YTd5dUHSmML
+ ROKd15KeyjFBSggF1KxuV4W7g0GBmpQyp+7P9eW36IPeLwlR2RFcJopGA2oTSsBYHqRE
+ Iykw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760080043; x=1760684843;
+ d=1e100.net; s=20230601; t=1760080029; x=1760684829;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UdXB7ylLc7Vhz3ZaX5Klsde0ekKLRZrXew/WW8Z5jnE=;
- b=ZbvbNJRjhnBVP7UVJUq3dvEL0Ik3+ai4bC2x2pbfG2CmAzH8Qs+JygcJ1zQRppaXmo
- v/9UdXioD9yUG3KCAaSjJUtpLPu1DUWapTPFm0KS3szZe8tH+0bsBpCyA7aL//KL40KE
- QaZH8gMTuLTFh8bOFKo86lx7kZ/RuapMN1EUqmrhjIyVjaY/WtKgsBfH0JH9BDwyKEQq
- dLlM0Fr7gTWZ6A7sVL5HAYsBrgd7zblJcLc86HyauwAdaQ/YTitWwJSjwKKcXadFOJ2q
- zZzTIKw/+4e+tUSuo975vMGJdInTTKJHAl2pGrAUEnD0HfqvybIUHg22spy+2fjotszo
- cC+w==
-X-Gm-Message-State: AOJu0YxQvy3jMOs0MhGLm7+RnYy3CDAC632e2H83aBO7lx60USguSCoi
- CkGSYfdhDQoB3EMSCdeLzgj2BhRp0OqVdWNEkUCoy0O/4ZQyUpP1M0yWe2Yxx75L/3JPjfjTTl3
- YaZzNvyMSWg==
-X-Gm-Gg: ASbGnct2pRLreXYw7dEcic76BqS7v85PrHWieSIXGbd+WfhoX3SasbQlbuHoRtOtksu
- GQgKGUfFEiONMMQO0bCSok/DSi5P0Nn9ZUC63d3OWG3+epq/AbGRu+FYzMXWUCjxAeBm7Ffr48R
- mtsV/AMo0BShhNYVf6BWBIn77nYrkHdrTiYkgpfbUDMEL/Kh7msQNSDyj29wHA1N/WxjwsN1OAT
- QrM2DgkgBo6DySoXfWOczoZL+8ba/l8j7eTEwypY7n7M7Gk84bzybqPL1lV4hynGP+6IJHJVgiC
- 6Wy8V3frzRQXIGaM6q1RlMqAJ+RJBnMUQQ3mEHlx/TwDZGfP2inTasTqw+DEpq0Ph8tkHXjz/5s
- QutReX3l3qx00BqGP+bTdaRAC8odVy3HLEcmPFpNprZ3mFt26t7Kiykv1VHPQbTbmo5GKFD/pwB
- ZgomJno+vehWU7pTP+Rvpm0o2z
-X-Google-Smtp-Source: AGHT+IGnMlG8AVlvQ3dQHjGkrHdxEmcdXTZ5LQFOn7/LfrfBqXqk6k3FNJlW+0ced2X+AYg9kUydDQ==
-X-Received: by 2002:a05:600c:1395:b0:46e:37fc:def0 with SMTP id
- 5b1f17b1804b1-46fa9a9efaamr72727875e9.9.1760080043573; 
- Fri, 10 Oct 2025 00:07:23 -0700 (PDT)
+ bh=FVb3aMnHodhOx3mpiCDcdapvdpvFoNzXZdFelJ9Oang=;
+ b=wl7XrRu9sNmIcM19MWUZh8WW2TMGhSVt/KLZFUb84cnp8tUTfw77ZafaWcgJ6m2Z4v
+ f8VjZ3TyeurJTuZF1HXOhb1jxfD0ALDs18H+O84D654NmFcymt89xHuOILG7wz/gDMML
+ 6pdZIy0Olc+NmXyOFYxR5hmL57hBG9VGUeawqXcQPluZFvrGHyQfg3AIhjrTpfsBlvjW
+ XiluC3BegXLwZ8BcK2TlFZhti77K4ZWqV+3mcb87B8yYXBgVAhsxyt+EIgdlaG4RMLa0
+ RNR5F/N4VCy9j+exkTFi9CUkQ2f6+ILxZUFE2Qnll4nM/arMv3cHMQ6tLI9U/5yLvF1+
+ 9+nw==
+X-Gm-Message-State: AOJu0Yy7Bna0eGtb+TBrddFwAfhymVa7T2ZBdRAjZpDDDYkU5zBO2z5j
+ XnRgoaJYJHX3onAClk7SRwP7uXZPekpsjL/4PN1/0Zrip7xKMXy8KLSf70F9AtXkVihJMKGBXYa
+ Ne6nyftbTFw==
+X-Gm-Gg: ASbGnctB+fqMAxSuUufBUMzWBLnHRmFp4BMGHRo/b/59wYsly8CsL83Nap2kmEQbqIh
+ hLHqgksPTKU2EUAaBNzy5HtzlFxIb9iaGaej6dAmZTaYBdFw/w5bg1VJQQ7pCk/Q3VIJMHVXpvz
+ BI1kbnsDCAgDp2FZ5izS7ypkxHLe/84bwSVoI3/Msqyd2Id9INjkazXModHxbgVo9rW5FtaIIFp
+ tCr5bYfuuGTn0XpG/qX9J/aT2nQ22MuINikHcZ5VQggslaUpbfpI6l/EiZ/rUvJ5/9MePQGT5y/
+ foaiRqWV343hjojSMG3NFS82dCK5841BPVWqMcXadZFv3s+mMzTcs2st1s5ZBAiPVNWpMPTjbd/
+ /C6hdIgzRl9S40yXtnxS0PPBqIKatz5FLbJOoJuWEPXuN7VX8QvzP6vs/qaPbZNHDQe7CaRAVGF
+ 2YvxvRsqPGxP8Im+d1mX6xq59M
+X-Google-Smtp-Source: AGHT+IGl7vWcLyjhDRqCBUzsSKadWYhbRjWcuS1ysqrXLlHN2VmyOgnRPd2/0t9oAyVvc96tB02saA==
+X-Received: by 2002:a05:600d:4301:b0:46f:aa8a:d2e7 with SMTP id
+ 5b1f17b1804b1-46faa8ad4bamr44608945e9.4.1760080029343; 
+ Fri, 10 Oct 2025 00:07:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fab3d438fsm54961675e9.2.2025.10.10.00.07.22
+ 5b1f17b1804b1-46fab3d2c1asm53511785e9.1.2025.10.10.00.07.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Oct 2025 00:07:23 -0700 (PDT)
+ Fri, 10 Oct 2025 00:07:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Stafford Horne <shorne@gmail.com>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 04/13] target/openrisc: Remove target_ulong use in
- raise_mmu_exception()
-Date: Fri, 10 Oct 2025 09:06:52 +0200
-Message-ID: <20251010070702.51484-5-philmd@linaro.org>
+Subject: [PATCH v3 01/13] target/openrisc: Replace VMSTATE_UINTTL() ->
+ VMSTATE_UINT32()
+Date: Fri, 10 Oct 2025 09:06:49 +0200
+Message-ID: <20251010070702.51484-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010070702.51484-1-philmd@linaro.org>
 References: <20251010070702.51484-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,50 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TCGCPUOps::tlb_fill() handler provides a vaddr type (since commit
-7510454e3e7 "cpu: Turn cpu_handle_mmu_fault() into a CPUClass hook").
+Both OpenRISCTLBEntry fields are of uint32_t type. Use the
+appropriate VMSTATE_UINT32() macro.
 
-Do not inline get_phys_nommu(), rely on the linker to optimize at
-linking time.
+There is no functional change (the migration stream is not
+modified), because the OpenRISC targets are only built as 32-bit:
+
+  $ git grep TARGET_LONG_BITS configs/targets/or1k-*
+  configs/targets/or1k-linux-user.mak:5:TARGET_LONG_BITS=32
+  configs/targets/or1k-softmmu.mak:5:TARGET_LONG_BITS=32
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/openrisc/mmu.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ target/openrisc/machine.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/openrisc/mmu.c b/target/openrisc/mmu.c
-index acea50c41eb..ffb732e0d1f 100644
---- a/target/openrisc/mmu.c
-+++ b/target/openrisc/mmu.c
-@@ -28,15 +28,14 @@
- #include "qemu/host-utils.h"
- #include "hw/loader.h"
- 
--static inline void get_phys_nommu(hwaddr *phys_addr, int *prot,
--                                  target_ulong address)
-+static void get_phys_nommu(hwaddr *phys_addr, int *prot, vaddr address)
- {
-     *phys_addr = address;
-     *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
- }
- 
- static int get_phys_mmu(OpenRISCCPU *cpu, hwaddr *phys_addr, int *prot,
--                        target_ulong addr, int need, bool super)
-+                        vaddr addr, int need, bool super)
- {
-     int idx = (addr >> TARGET_PAGE_BITS) & TLB_MASK;
-     uint32_t imr = cpu->env.tlb.itlb[idx].mr;
-@@ -95,7 +94,7 @@ static int get_phys_mmu(OpenRISCCPU *cpu, hwaddr *phys_addr, int *prot,
+diff --git a/target/openrisc/machine.c b/target/openrisc/machine.c
+index 081c706d02c..fa054e528bd 100644
+--- a/target/openrisc/machine.c
++++ b/target/openrisc/machine.c
+@@ -26,8 +26,8 @@ static const VMStateDescription vmstate_tlb_entry = {
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(mr, OpenRISCTLBEntry),
+-        VMSTATE_UINTTL(tr, OpenRISCTLBEntry),
++        VMSTATE_UINT32(mr, OpenRISCTLBEntry),
++        VMSTATE_UINT32(tr, OpenRISCTLBEntry),
+         VMSTATE_END_OF_LIST()
      }
- }
- 
--static void raise_mmu_exception(OpenRISCCPU *cpu, target_ulong address,
-+static void raise_mmu_exception(OpenRISCCPU *cpu, vaddr address,
-                                 int exception)
- {
-     CPUState *cs = CPU(cpu);
+ };
 -- 
 2.51.0
 
