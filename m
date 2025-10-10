@@ -4,114 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDAECCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 19:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B19CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 19:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Ivz-0000F0-Tc; Fri, 10 Oct 2025 15:37:47 -0400
+	id 1v7JGD-0006EQ-6q; Fri, 10 Oct 2025 15:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v7Ivu-0000Dx-Fs; Fri, 10 Oct 2025 15:37:42 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1v7Ivr-0000Nb-Lh; Fri, 10 Oct 2025 15:37:42 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59AIlSvb032381;
- Fri, 10 Oct 2025 19:37:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jXzxsz
- qWn1QxGXbRLLqujbGjvk3nh6UOjNgOgmsqG98=; b=fHokDyT4pxS0IEjOcG9A4f
- SEkx+C+FQc0bBow9y4rQoe+/jnmvohEGjeGPZ5Z41T1PseF7sqd7blXyLQ8pNOCm
- yMHUWG7J1klMNqShSlDCq5+qGAqbfAOrINXMKmZ+Nn0HCHJm2SLsBQQdxsUNypWN
- b5/op4aP0T4fZKfN1pas4P2aUvFxWTVKp0DVH6f2V9AApHwEpLcMv2QwJ5SP44rN
- O4X6kYOQeQTsplBJUb06MaaxLk0wayfWq/jYZnrvoMmcAoL/P3ba+Rm3wV2Y83N6
- OLBmL778Ao0sDEnNcJZWtsbwu7FXIccmd0Khig84LlhX4GgePaQ0cGyvJJMUlrGg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49nv82cpma-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Oct 2025 19:37:33 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59AG0CFk022773;
- Fri, 10 Oct 2025 19:37:32 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49nv8vked0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Oct 2025 19:37:32 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59AJbVuT30868114
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Oct 2025 19:37:31 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1DA9F58055;
- Fri, 10 Oct 2025 19:37:31 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA4E358043;
- Fri, 10 Oct 2025 19:37:29 +0000 (GMT)
-Received: from [9.61.240.77] (unknown [9.61.240.77])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Oct 2025 19:37:29 +0000 (GMT)
-Message-ID: <464a9268-8caa-46e1-8221-5fef87971a84@linux.ibm.com>
-Date: Fri, 10 Oct 2025 12:37:28 -0700
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v7JGB-0006Dz-04
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:58:39 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v7JG8-0003yX-1M
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 15:58:38 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-27c369f898fso32073935ad.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 12:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760126311; x=1760731111; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ezQXHmK3CVnORIMCouSwK6LFYXNCn8yTI+4Kja1cVVw=;
+ b=K3Yd5ReBe/cnaUlsczRxAY0ILbtzseNV3prx64kXa1jWKiiwFmhZw1ZmylLnLM8A4j
+ aWFiQxWfwu01FgJ0njfNlyHePFeFIvAwc+Y4WNKOM2pz/vvKII/Po+M4/jfMR41A6+ge
+ r6ZTjxWKcFfRWmJPzaYcM/VVfrcO9/NMb3eZz6rJpTwXKfRX9rhYnhQgAsRV9MKVxzgi
+ jznlvBsAKYfiop2yPq1Jae5kKf235+MVkf+osFvN1psd+9j6uPOrEuLw7/PMm5uN3T/E
+ 1U5V3HXPuHe6Poc4x8CuOJQkzILbBoedBQCA18Ud7mxF+0gdjid1S/tTN2rp7ly4ha+I
+ NtKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760126311; x=1760731111;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ezQXHmK3CVnORIMCouSwK6LFYXNCn8yTI+4Kja1cVVw=;
+ b=ox1E6QHrwztYMNaVD6PAgAj8CuANom6ttNf4EbJ6CNjhmJWM/8ed1vFL0fEujzXFPr
+ 6+IGd+HLVrpONOul66HQRCc7/tIVht1H9cPCKCva7yZbRPjoUhTmlFQGM6NASUa1AUG5
+ K71Upm1hwkj2Lz+1lg5UqFNfQLW8tS1tYdUKO8nCqt0qc7Iy4vkGEqJaKMPFyKgeCxAk
+ Zg1BuoAFW1UFVFRUpaDtZhIiDYQKP6NQ77HCeCEs23Kh1gzpGdiVKguMvZDeu/kzMthy
+ dTNYrzVkmPEjoXpM16YMZiU27eghC4vVrTwQMxvILbDamaQeHOGpO13C2dZrsTzeAuYu
+ Xm3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXUPTawG9AIjnU9itum/3EUdNXg5b8rAWEpGCTdlAqkHa3g1MTifW0m7EmqPmHt6kdyKCIWa/5WdZQ@nongnu.org
+X-Gm-Message-State: AOJu0YxSGaWdkvbS23j+KFGoQGmje99b0eK2IyXT9rkZJPZauC8UUUeh
+ 0kf7MRLwp5UyHt7c7Xeen3aHap3EesXYq0Kz04qnUcCG3UWD5ZOi3ZOvVMPgNrXJ7GM=
+X-Gm-Gg: ASbGncvw3DifnnW49NHtLHVkdMKmYZuZxLrziZLUvfs2mJI29vYtuze06TWH/BKw00q
+ 7YySQ00Popft+TYqxasxWHi+GzmUq697nj8NcJg3lMQZ8cVa87bN14zyt9cDDgDqEy5rRNJLjKJ
+ Z4w5xkUcalYbM70kANRK7k4s0VkJ8pBbMpmKPuLvwepW8KS5nanwiGWqGs4H/w80MIBf0GI9Mpu
+ 0eQwh55GIt3e9Libbw/EuSpZ13lShYEJoq3RRzgDJEA9YBdv5R+HGY+oxoysiyoVd2ChUJxNUOV
+ kmqTHhvttdun3c8ypHNNI4k0jotADqzhp8OfoNfgzTHYJF2Dbzop1EkJIMXSCE0oSc/5FRwmsaw
+ LcnAly2bTXDRimh+vfcknZleqS6Wy7y6C1q6knptYqqFvWTEthYhVqN2LLaGRnTU4N5a7
+X-Google-Smtp-Source: AGHT+IHlKfZKFBqb1wDzo2j9//e6xI1ISE7ErzsRLniWbmBGhcP57FMpB8tWx0INnGb6cPJmbOORcA==
+X-Received: by 2002:a17:903:1585:b0:267:af07:6526 with SMTP id
+ d9443c01a7336-29027303346mr167426485ad.55.1760126310986; 
+ Fri, 10 Oct 2025 12:58:30 -0700 (PDT)
+Received: from [192.168.0.102] ([186.215.58.159])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034de54c7sm65682015ad.10.2025.10.10.12.58.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 12:58:30 -0700 (PDT)
+Message-ID: <e3314d25-dd8a-46a9-bbfc-44fba387099a@linaro.org>
+Date: Fri, 10 Oct 2025 16:58:27 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/28] pc-bios/s390-ccw: Add signature verification for
- secure IPL in audit mode
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-20-zycai@linux.ibm.com>
- <23e3c4f3-7e8c-4d00-8dee-91bf15261cfb@linux.ibm.com>
- <4b3100eb-2ada-4331-bc3d-f2faeafb1e2a@linux.ibm.com>
+Subject: Re: [PULL 00/76] target-arm queue
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251010130527.3921602-1-peter.maydell@linaro.org>
+ <35087274-df34-4528-88a2-d855768fb5af@linaro.org>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <4b3100eb-2ada-4331-bc3d-f2faeafb1e2a@linux.ibm.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <35087274-df34-4528-88a2-d855768fb5af@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=KrpAGGWN c=1 sm=1 tr=0 ts=68e9607e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=HlkOPZcDVwefj8GyqDQA:9
- a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: oBHBbQn2rG-kDT7BLAXouD0aE91oi6gW
-X-Proofpoint-ORIG-GUID: oBHBbQn2rG-kDT7BLAXouD0aE91oi6gW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX2vRlDIpoyH1p
- anJFY5O71cq1eT487TNRHVz4SI5PQQjCBrq0ytT1TS07eNCt94CelLRFn2dqYAL/fvVsDOxFjxu
- n6uaJnBTJPeg6YCA+aHAAr3Y0UM2NaMuir2vnLfdSHWh44OVBzsr4zpFdF9xL1VzG+z0CP4NPaD
- A9Bss49bGhoIQOf2PZ3vdcO3yvoOfBFfo/ebEE5l+AC6/opobcHYCm35i1STCHbLypokhN/Albq
- /Ndp03n8J5LB4uhe2hO5JR5psXliysfrRbt4YYXQms9kFxAooFHbwQnrO4TQrUNGDirqugWrqsl
- GF0I1mVQzrBk2cjrunYShQ/yNZ73fe9sUWNadX+7fxdpIFhdSxOSuSmGk6SyHE6JdQEOfyOCO3p
- oVlfXPuCvL0uFwBoKb09EpgMzO2bJg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-10_05,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,51 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
-On 10/10/2025 11:00 AM, Zhuoying Cai wrote:
->>> +
->>> +static int handle_certificate(int *cert_table, uint8_t **cert,
->>> +                             uint64_t cert_len, uint8_t cert_idx,
->>> +                             IplSignatureCertificateList *certs, int cert_index)
->>> +{
->>> +    bool unused;
->>> +
->>> +    unused = cert_table[cert_idx] == -1;
->>> +    if (unused) {
->>> +        if (request_certificate(*cert, cert_idx)) {
->>> +            cert_list_add(certs, cert_index, *cert, cert_len);
->>> +            cert_table[cert_idx] = cert_index;
->>> +            *cert += cert_len;
->> It's hard to understand why we increment *cert in this function by just
->> looking at the function. But this function is called in the loop in
->> zipl_run_secure, could we move this entire function in zipl_run_secure?
+On 10/10/25 16:03, Richard Henderson wrote:
+> On 10/10/25 06:04, Peter Maydell wrote:
+>> Hi; this is another target-arm pullreq. It's a big one but it's
+>> only two series: FEAT_MEC and FEAT_GCS.
 >>
+>> thanks
+>> -- PMM
 >>
-> Thanks for the suggestion.
->
-> I'm concerned that moving this function into zipl_run_secure() could
-> make it harder to read, since it's already quite large. I'd prefer to
-> keep this function separate because it handles all certificate related
-> operations here and add comments to clarify why *cert is incremented.
-> I'd be happy to hear additional thoughts.
+>> The following changes since commit 94474a7733a57365d5a27efc28c05462e90e8944:
+>>
+>>    Merge tag 'pull-loongarch-20251009' ofhttps://github.com/gaosong715/qemu into staging (2025-10-09 07:59:29 -0700)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251010
+>>
+>> for you to fetch changes up to 00936783abf77ebb47a78312a2e6500c6a13d938:
+>>
+>>    target/arm: Enable FEAT_MEC in -cpu max (2025-10-10 13:22:05 +0100)
+>>
+>> ----------------------------------------------------------------
+>> target-arm queue:
+>>   * Implement FEAT_GCS
+>>   * Implement FEAT_MEC
+> 
+> Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-Maybe we could simplify this by at least moving the increment (both 
-cert_index and *cert) to zipl_run_secure() if this function succeeds? 
-That way it will be easier to follow in the loop itself?
+Could somebody give me access to https://wiki.qemu.org/ChangeLog/10.2, please?
 
-Thanks
 
-Farhan
-
->>> +        } else {
->>> +            puts("Could not get certificate");
->>> +            return -1;
->>> +        }
->>> +
->>> +        /* increment cert_index for the next cert entry */
->>> +        return ++cert_index;
->>> +    }
->>> +
->>> +    return cert_index;
->>> +}
+Cheers,
+Gustavo
 
