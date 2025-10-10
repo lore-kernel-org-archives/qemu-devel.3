@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1AFCCA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37554CCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 11:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7AaE-0001JQ-7E; Fri, 10 Oct 2025 06:42:46 -0400
+	id 1v7BFT-0001gS-Dl; Fri, 10 Oct 2025 07:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7AaB-0001GX-Qs; Fri, 10 Oct 2025 06:42:43 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7BFL-0001gE-SH
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:25:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v7Aa7-0007am-Sk; Fri, 10 Oct 2025 06:42:42 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59AAaVSb065199
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 10 Oct 2025 19:36:45 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=77yV9fYbXC5pzBNX3eGAOmBVD/+cfEjFUpOr2dKNlEY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1760092606; v=1;
- b=Mjx8pti/hT9j4javu08WKSV4r+2Ad3+i/NXM3NiDY9OW7WJSEDvk0Y9BGfjKw3T4
- eyiPU0uw5JwqiEoz53f/WI4MWjtQUe3617i2U0aAGbhw4633ePzHG6mVRYvIaYM5
- am450eyHk1D8f9AzWN/RVWAPg6GDKlUVLLFBX4pCnmkad2tAFaWbGRkyz/QXIDRY
- jXE71a9F0HaFYMrFHUQ52mi4aEqiZxq/N11b/1Dhh05Q/WNvwFag0NncaKMP67F3
- bgk+3rpom3A15EwpR0yVpnmzgGRYtfPbALmN7rBVlD/L9fuiIO8DIwVB64U+BQY7
- YfZRaniyCZoLSRyFRy8oOA==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 10 Oct 2025 19:35:37 +0900
-Subject: [PATCH v2 09/12] pci: Do not delete the subregions
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7BF7-0006HL-8s
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 07:25:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760095493;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t1ijcKOZvJf/Qi0XF93vzsiMbbvb5OiOebs9DIIE+Vs=;
+ b=bRXcPs/N9na9piGAzBRFVGFbpHKlcv2l01N/qTsXxbdYeJmd+CV9S+sEQShiozsrW28Inb
+ QpmAhhFLiD44KtsLex3dI7faVff0lOtQk2am6aO99jEqEaDKha/mZOiy/JxM+tasfbqMfs
+ yvescCF5NmDD2dPlvem4RdKmLjrxeX0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-n5JXiivANCSxIK0WR3XYpA-1; Fri,
+ 10 Oct 2025 07:24:49 -0400
+X-MC-Unique: n5JXiivANCSxIK0WR3XYpA-1
+X-Mimecast-MFC-AGG-ID: n5JXiivANCSxIK0WR3XYpA_1760095487
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A3931800578; Fri, 10 Oct 2025 11:24:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC9B130001B7; Fri, 10 Oct 2025 11:24:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4990F21E6A27; Fri, 10 Oct 2025 13:24:41 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,  qemu-devel@nongnu.org,
+ eblake@redhat.com,  jasowang@redhat.com,  devel@lists.libvirt.org,
+ pbonzini@redhat.com,  marcandre.lureau@redhat.com,
+ yc-core@yandex-team.ru,  d-tatianin@yandex-team.ru, qemu-trivial@nongnu.org
+Subject: Re: [PATCH 0/2] remove deprecated 'reconnect' options
+In-Reply-To: <7503ba0e-2596-4919-b4ea-bc61e469564a@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Fri, 10 Oct 2025 12:02:14 +0300")
+References: <20250924133309.334631-1-vsementsov@yandex-team.ru>
+ <877bx4p3at.fsf@pond.sub.org>
+ <5063033a-9d83-49da-9f15-cc492d124a68@tls.msk.ru>
+ <7503ba0e-2596-4919-b4ea-bc61e469564a@yandex-team.ru>
+Date: Fri, 10 Oct 2025 13:24:41 +0200
+Message-ID: <87ms5zj8xy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251010-subregion-v2-9-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
-References: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251010-subregion-v2-0-435a472bc9cd@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,58 +92,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- hw/pci/pci.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+> On 10.10.25 10:52, Michael Tokarev wrote:
+>> On 10/9/25 17:17, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> They were deprecated in 9.2, now we can remove them.
+>>>> New options to use are reconnect-ms.
+>> Speaking of the option itself.. I'd not remove it, instead,
+>> I'd de-deprecate it, and allow units to be specified for it,
+>> like reconnect=3D10ms (defaults to s).=C2=A0 Or reconnect=3D0.1 (in
+>> fractions of second).=C2=A0 But it's just me, it looks like :)
+>
+> QAPI is not for humans) So simple milliseconds integer is better,
+> then parse the variety of suffixes. And it better fit into json
+> (number is number, not a string)
+>
+>> Also, `has_reconnect_ms` becomes redundant after applying this
+>> patch, - it should be enough to use just reconnect_ms, which
+>> defaults to 0.=C2=A0 But this can be done in a subsequent cleanup.
+>>=20
+>
+> You mean just use sock->reconnect_ms instead of explicit
+>
+>    int64_t reconnect_ms =3D sock->has_reconnect_ms ? sock->reconnect_ms :=
+ 0;
+>
+> ?
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index acc03fd4707c..63e4e49b7e1b 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1190,10 +1190,6 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
-     if (xen_mode == XEN_EMULATE) {
-         xen_evtchn_remove_pci_device(pci_dev);
-     }
--    if (memory_region_is_mapped(&pci_dev->bus_master_enable_region)) {
--        memory_region_del_subregion(&pci_dev->bus_master_container_region,
--                                    &pci_dev->bus_master_enable_region);
--    }
-     address_space_destroy(&pci_dev->bus_master_as);
- }
- 
-@@ -1419,27 +1415,11 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-     return pci_dev;
- }
- 
--static void pci_unregister_io_regions(PCIDevice *pci_dev)
--{
--    PCIIORegion *r;
--    int i;
--
--    for(i = 0; i < PCI_NUM_REGIONS; i++) {
--        r = &pci_dev->io_regions[i];
--        if (!r->size || r->addr == PCI_BAR_UNMAPPED)
--            continue;
--        memory_region_del_subregion(r->address_space, r->memory);
--    }
--
--    pci_unregister_vga(pci_dev);
--}
--
- static void pci_qdev_unrealize(DeviceState *dev)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(dev);
-     PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(pci_dev);
- 
--    pci_unregister_io_regions(pci_dev);
-     pci_del_option_rom(pci_dev);
-     pcie_sriov_unregister_device(pci_dev);
- 
+We routinely exploit that QAPI initializes absent members to zero.
 
--- 
-2.51.0
+> I believe that QMP will zero-initialize everything. But I'm not sure
+> that we do zero initialize this structure on all paths.. Keeping also in =
+mind
+> handling other fields here like
+>
+>     bool is_telnet      =3D sock->has_telnet  ? sock->telnet  : false;
+>     bool is_tn3270      =3D sock->has_tn3270  ? sock->tn3270  : false;
+>     bool is_waitconnect =3D sock->has_wait    ? sock->wait    : false;
+>     bool is_websock     =3D sock->has_websocket ? sock->websocket : false;
+>
+> To drop this, we should check for all paths, that incoming structure is
+> zero-initialized. And no guarantee that it does not break in future.
+>
+> Probably, we can implement a new QAPI feature "value with default to zero=
+",
+> so that we can avoid existence of .has_foo field at all for such fields.
+> No field - no problem.. But not in this series)
+
+The simple way to do "optional" is to have the machinery supply a
+default value.
+
+The less simple way is to add a distinct extra value that means
+"absent".  This permits "absent" to means something else than any value.
+
+QAPI does the latter.  Not my choice; I inherited it :)
+
+For pointers, generated C uses null as distinct extra value.  Works,
+because "present" implies non-null.
+
+For other types, generated C uses a pair of variables (has_FOO, FOO),
+where
+
+    (true, V)           means present with value V
+    (false, zero)       means absent
+    (false, non-zero)   is invalid
+
+This results in slightly more complicated code.
+
+Most of the time, code maps "absent" to a default value.  This default
+value is not visible in the schema, it's buried in the C code.  When a
+type gets used in multiple places, each place can pick its own default.
+Bothersome to document, and the system cannot ensure the code matches
+its documentation.  Strong dislike.
+
+Special case: when the default value is zero, we can ignore has_FOO and
+just use FOO.  See "routinely exploit" above.
+
+We could extend the QAPI schema language to let us specify the default
+value.  The generator could then elide has_FOO.  Code would become
+simpler.
 
 
