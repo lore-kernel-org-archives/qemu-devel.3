@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11911CAC5BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9635ACCA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 10:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v79ur-0007eL-7M; Fri, 10 Oct 2025 06:00:01 -0400
+	id 1v7A0k-0000bY-Gx; Fri, 10 Oct 2025 06:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v79uh-0007bq-Pu; Fri, 10 Oct 2025 05:59:53 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v79uY-000233-FA; Fri, 10 Oct 2025 05:59:50 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59A9wPH8056536
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 10 Oct 2025 18:58:25 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=a2lNEoaUgvk3yPtF8G5rrC3mLdDdH5moLCm8Q4KNo4A=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1760090306; v=1;
- b=UTg0UneXsawiXsCHPBo+4sb+/0g7m3lp2HXr4VEMguO0odt3s0sorgh4FUGJsNFf
- iJWPIdMMpRoUKJLW6/PhJuLV0rQMNAXOCyG4tM2OF3JjrXqm2VmL5pRcibCYl4Cr
- PdD26dQKWodGBrOOOpbTPhYMmXcxutkFdjkkDxYFX6rWIqan0naA4lCRxaBAma30
- nL7qwy9eyyziYpHObU+aHbDxYusM+BwHMIv/GbFSkXHQvCOruOF5evYyohEjlFmq
- 4snH7v+QjEy2QpbGtZJIowP7lnw2e1yuhMC+DtUI6VxKdYRO9Io7Ns9Nbv+8YqOx
- S42fmrQpyUdX9QqKc0BsvA==
-Message-ID: <55c9ee69-5b59-45ed-b3d6-aa27d8f02dfd@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 10 Oct 2025 18:58:24 +0900
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7A0h-0000aV-4r
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:06:04 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v7A0b-0003Nb-Mv
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 06:06:02 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-6354a4b4871so2351295d50.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 03:05:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760090754; x=1760695554; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oIoax9uN8gg45sVHNBStsxb2JzoQaro5TWlzSUBN8IQ=;
+ b=tAHT2XiefWDB0wSrMI3zXOa+0xQSCMLrhmxDAsuZ2lThHFZiD/v7q1pOu0UMSempgE
+ MOs2//Nuy8gXuw10/JnNa+XW1/vF4zqQhmrjUfBhlsbdGK+ekMJUkLGZ8+gUsMjbvTkf
+ j8HHRasaa50WdqdxdCM4g5qzzvLjNdUKPB939Sjw8tVCEnBQm0o3lAETEec/+Nl4VDd2
+ wF3mIxyt1c1+InhbXMRRbKw19aIVM1FEmTzc7rIpVwav7n3yUqgs8Un2JGURqPi5mGgL
+ Pmc9VFGBWw1L5LypONkMOZyXL65OoIYOiWNH8riCKgj1jdILjeDD0nFCn9iX6oGEpgda
+ jeNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760090754; x=1760695554;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oIoax9uN8gg45sVHNBStsxb2JzoQaro5TWlzSUBN8IQ=;
+ b=bHzjIhZD9ZlVRZPqZkREnsuIjiL4Yq7Ola5gr7cKd8Re6QCQk8Pr8OnD++3TBUb6sp
+ 47S+NzcVYm4tv4NjdfE4OZLdWImzwo82URLbFajiP4LYZram4uxy5GgAqdv3oBO+dAFK
+ 1+94AHcmwdU3b8HKw0LLLCF+MJ/hBzh4al0ACe+/xyktjiN11ele3t15oh+0MYFDp1XD
+ msc6jQuadmYu0UyhW8OIeGWBjMoQbEvyRBkD9oz5BI/IP67JcpSJgZPa/X5RJpN2Snqx
+ 8ft5O83dClrcZqpDfKY+ulB7el+ZsfPblAHr/ERPxjjVa84ZmR+2VdgMnVr3sdN6lKed
+ CBIw==
+X-Gm-Message-State: AOJu0Yw6w5UIhORcArOESNAwvScHHEL1DROZ3eiToJZ1q5wWspNw7aDR
+ 1Wtx70omkZiT/u/jgZYc3MW8DzJTcMjoKqF7sbiunhBTVHdBuRtZOGQg6Nkna79smQnjxITUcq6
+ +hipLGvlwzyMZrk1s5YP7rUBLhiXrj4vEhbN+D+RwLg==
+X-Gm-Gg: ASbGnctGc4tbHDNNqXnmhoWdCreyczQjS7HADWcoqDmXFJdhgBmhMpZFjO43laGwVzc
+ X0kRD6hp8hE5uoYk5j52AElNV+H86F5P3DwW7nyBGzB/cnMVDJlzGFT+gQy2IFhzedAW4KU6mGu
+ euHAtgtcPtFBqF3Q9VOM/9nnKd1r6hqqjBEvLe+Ijztza/50GLBsXQHQ3d00KlAclDqf9oZDgEQ
+ i8uvOl0gEV0Qz2YCy+c3wF36nGuz8qqy2js92zGTA2z4FsSPuwM
+X-Google-Smtp-Source: AGHT+IF3QESCaFC0aA2EnILx5L3ho7+zGK1rBALBf+620KHP1wALSqdfWhmO1OtrV9tLWjCgGfz2+sGzZhRZ7U0ieUk=
+X-Received: by 2002:a05:690e:158e:10b0:63c:e3dc:bef with SMTP id
+ 956f58d0204a3-63ce3dc1563mr3412328d50.40.1760090754277; Fri, 10 Oct 2025
+ 03:05:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio-user: Do not delete the subregion
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
- <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20251010-vfio-v1-1-d7a6056539b7@rsg.ci.i.u-tokyo.ac.jp>
- <aOjXzi_trU39MstE@lent>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aOjXzi_trU39MstE@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
+In-Reply-To: <20251008191716.3005164-1-daan.j.demeyer@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Oct 2025 11:05:43 +0100
+X-Gm-Features: AS18NWD3-O5OrmtNOmCHdMsQxniwCHYzGfre40vQnil6iNE0F30IMys2Uqs6_jA
+Message-ID: <CAFEAcA-iQkqxR5jPtGC1EAtcH4FYD5y71x6RFSWC3vP05krScw@mail.gmail.com>
+Subject: Re: [PATCH] Add support for zboot images compressed with zstd
+To: Daan De Meyer <daan.j.demeyer@gmail.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +94,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/10 18:54, John Levon wrote:
-> On Fri, Oct 10, 2025 at 06:34:38PM +0900, Akihiko Odaki wrote:
-> 
->> Removing the PBA memory region from its container in
->> vfio_user_msix_teardown() is semantically incorrect as the reference to
->> the region is already deleted when the function is called.
-> 
-> Can you clue me in?
-> 
-> 378     if (vdev->msix != NULL) {
-> 379         vfio_user_msix_teardown(vdev);
-> 380     }
-> 381
-> 382     vfio_pci_put_device(vdev);
-> 
-> vfio_pci_put_device() -> vfio_bars_finalize() -> vfio_region_finalize()
-> 
-> Where is the "reference to the region is already deleted" code that runs prior
-> to line :379 that you're referring to?
-> 
-> What about vfio_pci_teardown_msi() - isn't that the same?
-> 
->> The operation is unnecessary in the first place since the PCI code
->> removes all BARs during unrealization
-> 
-> Might be worth mentioning vfio_pci_bars_exit() (which is what I presume you're
-> referring to).
-I referred to the object_property_del_all() call in object_finalize(). 
-This removes the references to all children. I was too lazy to mention 
-that but I agree it's worthwhile.
+On Wed, 8 Oct 2025 at 20:17, Daan De Meyer <daan.j.demeyer@gmail.com> wrote:
+>
+> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+> ---
+>  hw/arm/boot.c       |  2 +-
+>  hw/core/loader.c    | 36 ++++++++++++++++++++++++------------
+>  hw/nvram/fw_cfg.c   |  2 +-
+>  include/hw/loader.h |  2 +-
+>  4 files changed, 27 insertions(+), 15 deletions(-)
+>
+> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+> index e77d8679d8..c0dec0343a 100644
+> --- a/hw/arm/boot.c
+> +++ b/hw/arm/boot.c
+> @@ -826,7 +826,7 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
+>      ssize_t size;
+>
+>      /* On aarch64, it's the bootloader's job to uncompress the kernel. */
+> -    size = load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_GUNZIP_BYTES,
+> +    size = load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES,
+>                                       &buffer);
 
-Regards,
-Akihiko Odaki
+I would either not bother renaming this constant, or else do
+it in a preliminary patch of its own in the series. (That
+makes the part of the patch which is making the functional
+change easier to read and review.)
+
+> @@ -882,14 +887,6 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+>          return 0;
+>      }
+>
+> -    if (strcmp(header->compression_type, "gzip") != 0) {
+> -        fprintf(stderr,
+> -                "unable to handle EFI zboot image with \"%.*s\" compression\n",
+> -                (int)sizeof(header->compression_type) - 1,
+> -                header->compression_type);
+> -        return -1;
+> -    }
+> -
+>      ploff = ldl_le_p(&header->payload_offset);
+>      plsize = ldl_le_p(&header->payload_size);
+>
+> @@ -898,8 +895,23 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+>          return -1;
+>      }
+>
+> -    data = g_malloc(LOAD_IMAGE_MAX_GUNZIP_BYTES);
+> -    bytes = gunzip(data, LOAD_IMAGE_MAX_GUNZIP_BYTES, *buffer + ploff, plsize);
+> +    data = g_malloc(LOAD_IMAGE_MAX_DECOMPRESSED_BYTES);
+> +
+> +    if (strcmp(header->compression_type, "gzip") == 0) {
+> +        bytes = gunzip(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
+> +#ifdef CONFIG_ZSTD
+> +    } else if (strcmp(header->compression_type, "zstd") == 0) {
+> +        size_t ret = ZSTD_decompress(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
+> +        bytes = ZSTD_isError(ret) ? -1 : (ssize_t) ret;
+> +#endif
+> +    } else {
+> +        fprintf(stderr,
+> +                "unable to handle EFI zboot image with \"%.*s\" compression\n",
+> +                (int)sizeof(header->compression_type) - 1,
+> +                header->compression_type);
+> +        return -1;
+
+Moving the "unrecognized compression type" error path down to
+here means that we have moved it below the g_malloc() of the
+data buffer, so we now need to g_free() to avoid a leak.
+
+> +    }
+> +
+>      if (bytes < 0) {
+>          fprintf(stderr, "failed to decompress EFI zboot image\n");
+>          g_free(data);
+
+Otherwise I think this looks OK.
+
+thanks
+-- PMM
 
