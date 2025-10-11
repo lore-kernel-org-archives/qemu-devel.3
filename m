@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D07CCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 23:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3D0CCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 23:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7iwq-0006DH-2B; Sat, 11 Oct 2025 19:24:24 -0400
+	id 1v7iwu-0006G6-LA; Sat, 11 Oct 2025 19:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7iwm-0006AY-66
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:20 -0400
+ id 1v7iwp-0006D6-Jg
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:23 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7iwk-0000sl-HC
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:19 -0400
+ id 1v7iwo-0000tj-0L
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:23 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 485F3C01DE;
- Sun, 12 Oct 2025 02:24:17 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id BC960C01E0;
+ Sun, 12 Oct 2025 02:24:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 6OWMXt1FjqM0-VZsBO5c8; Sun, 12 Oct 2025 02:24:16 +0300
+ ESMTPSA id 6OWMXt1FjqM0-S5QKNkcL; Sun, 12 Oct 2025 02:24:20 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760225056;
- bh=oM6dB5UP+eH8D0StIMh+lrqt58h5lQe6HbACeTqCRDo=;
+ s=default; t=1760225060;
+ bh=qYZfcwllKjUj6UaRjGgKCTD4vkqsayoZmnl4mcq1nK4=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=mblRoPRLdrh+yr1bxUZbAf9Ih15HM2VyXCNi2PlB20dFI4u1pEvbiUfVMnZOIMp+w
- /Qvew2UPzoz4ttXXZnyECjaBbBfvKF4FN4o5nkY2Q+1BsW4p4gSSBR7SuKAzguomiv
- 3XAPnzbVXu2YZ02CqljpT0WBd3sG6Ls4lbnu/YK8=
+ b=p/B/FmdnQ+QZIMwJhcihKRxYV5mSgcwW95Q6/cNzwunKpjoJs9tHDVsYnbxAm24xo
+ z4+pM9vmCpF7fLF+dUQvWzfgDJCCkNPF6s19/Qn4QaMJEkegfXPhqIDQaw5fzR7jX6
+ OrKHW2uE1a+/VBNv3GOtMpGaM/xXN0EKjnNJffL0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,9 +45,10 @@ To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  raphael.s.norwitz@gmail.com, vsementsov@yandex-team.ru,
  yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: [PATCH v2 09/23] vhost-user: keep QIOChannelSocket for backend channel
-Date: Sun, 12 Oct 2025 02:23:48 +0300
-Message-ID: <20251011232404.561024-10-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 14/23] vhost: vhost_virtqueue_start(): drop extra local
+ variables
+Date: Sun, 12 Oct 2025 02:23:53 +0300
+Message-ID: <20251011232404.561024-15-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011232404.561024-1-vsementsov@yandex-team.ru>
 References: <20251011232404.561024-1-vsementsov@yandex-team.ru>
@@ -76,79 +77,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep QIOChannelSocket pointer instead of more generic
-QIOChannel. No real difference for now, but it would
-be simpler to migrate socket fd in further commit.
+One letter named variables doesn't really help to read the code,
+and they simply duplicate structure fields.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/virtio/vhost-user.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ hw/virtio/vhost.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 9f26515fd4..23e7c12b16 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -244,7 +244,7 @@ struct vhost_user {
-     struct vhost_dev *dev;
-     /* Shared between vhost devs of the same virtio device */
-     VhostUserState *user;
--    QIOChannel *backend_ioc;
-+    QIOChannelSocket *backend_sioc;
-     GSource *backend_src;
-     NotifierWithReturn postcopy_notifier;
-     struct PostCopyFD  postcopy_fd;
-@@ -1796,8 +1796,8 @@ static void close_backend_channel(struct vhost_user *u)
-     g_source_destroy(u->backend_src);
-     g_source_unref(u->backend_src);
-     u->backend_src = NULL;
--    object_unref(OBJECT(u->backend_ioc));
--    u->backend_ioc = NULL;
-+    object_unref(OBJECT(u->backend_sioc));
-+    u->backend_sioc = NULL;
- }
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 7390385876..cc07450dcb 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1276,7 +1276,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusState *vbus = VIRTIO_BUS(qbus);
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
+-    hwaddr l, a;
+     int r;
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_file file = {
+@@ -1287,28 +1286,27 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     };
+     struct VirtQueue *vvq = virtio_get_queue(vdev, idx);
  
- static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
-@@ -1904,7 +1904,6 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
-     bool reply_supported =
-         vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
-     Error *local_err = NULL;
--    QIOChannel *ioc;
- 
-     if (!vhost_user_has_protocol_feature(
-             dev, VHOST_USER_PROTOCOL_F_BACKEND_REQ)) {
-@@ -1917,15 +1916,15 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
-         return -saved_errno;
+-    a = virtio_queue_get_desc_addr(vdev, idx);
+-    if (a == 0) {
++    vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
++    if (vq->desc_phys == 0) {
+         /* Queue might not be ready for start */
+         return 0;
      }
- 
--    ioc = QIO_CHANNEL(qio_channel_socket_new_fd(sv[0], &local_err));
--    if (!ioc) {
-+    u->backend_sioc = qio_channel_socket_new_fd(sv[0], &local_err);
-+    if (!u->backend_sioc) {
-         error_report_err(local_err);
-         return -ECONNREFUSED;
+-    vq->desc_size = l = virtio_queue_get_desc_size(vdev, idx);
+-    vq->desc_phys = a;
+-    vq->desc = vhost_memory_map(dev, a, l, false);
++    vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
+     if (!vq->desc) {
+         r = -ENOMEM;
+         goto fail;
      }
--    u->backend_ioc = ioc;
--    u->backend_src = qio_channel_add_watch_source(u->backend_ioc,
--                                                G_IO_IN | G_IO_HUP,
--                                                backend_read, dev, NULL, NULL);
-+    u->backend_src = qio_channel_add_watch_source(QIO_CHANNEL(u->backend_sioc),
-+                                                  G_IO_IN | G_IO_HUP,
-+                                                  backend_read, dev,
-+                                                  NULL, NULL);
- 
-     if (reply_supported) {
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-@@ -2336,7 +2335,7 @@ static int vhost_user_backend_cleanup(struct vhost_dev *dev)
-         close(u->postcopy_fd.fd);
-         u->postcopy_fd.handler = NULL;
+-    vq->avail_size = l = virtio_queue_get_avail_size(vdev, idx);
+-    vq->avail_phys = a = virtio_queue_get_avail_addr(vdev, idx);
+-    vq->avail = vhost_memory_map(dev, a, l, false);
++    vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
++    vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
+     if (!vq->avail) {
+         r = -ENOMEM;
+         goto fail;
      }
--    if (u->backend_ioc) {
-+    if (u->backend_sioc) {
-         close_backend_channel(u);
-     }
-     g_free(u->region_rb);
+-    vq->used_size = l = virtio_queue_get_used_size(vdev, idx);
+-    vq->used_phys = a = virtio_queue_get_used_addr(vdev, idx);
+-    vq->used = vhost_memory_map(dev, a, l, true);
++    vq->used_size = virtio_queue_get_used_size(vdev, idx);
++    vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
++    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
+     if (!vq->used) {
+         r = -ENOMEM;
+         goto fail;
 -- 
 2.48.1
 
