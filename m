@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA4A0CCA476
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E973CCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7a8H-0006RV-87; Sat, 11 Oct 2025 09:59:37 -0400
+	id 1v7a8O-0006T9-Ap; Sat, 11 Oct 2025 09:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7m-0006Ic-UT
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:09 -0400
+ id 1v7a84-0006NR-Oj
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:25 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7W-0004lK-LH
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:06 -0400
+ id 1v7a7c-0004mH-8r
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:24 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 75183C0186;
- Sat, 11 Oct 2025 16:58:18 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E8184C00BE;
+ Sat, 11 Oct 2025 16:58:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uvMPBZ1FEOs0-Jp0luZXp; Sat, 11 Oct 2025 16:58:18 +0300
+ ESMTPSA id uvMPBZ1FEOs0-EnKTwD6O; Sat, 11 Oct 2025 16:58:20 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191098;
- bh=IB5WctOaaDS5QjV9UsCfoJSKTXKFLtlmFJsXAiDAbRw=;
+ s=default; t=1760191100;
+ bh=4ZFS7VeU5sKpFc5IFb6anQVAn3TG0buI2JtzIiCbrd4=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=J+c+pozX4909M0LTzfphx387wLmsd2IAQNAevdUEYPcyT/uHIGUly56pOOOfqf93q
- 1ngEY9y1GyV5vItCPIWpgYC3Z8MRGQ97OHJ6IRuwQsj8YOCd7IGcPyuo1o9O/g4Lp8
- rwcxzDMdndksi8J0xT4uWVNHEEjossHoLjdQwaV8=
+ b=qr4IMI9g5RGC7kuFfmcD70Qe40FXjowDQMuXsJ/qVdaiHIBlLkjK6+YfVsOnl+PsG
+ IxnvtGxZHpMmAKrtTP3hGE/XKQNK9QCqAojKOETk1TLReHGhGwWC8GVFUadHLsWmOo
+ cW/IhkYws/skdBTlNJy9zr2Ekrw2MBywHS86V140=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 21/33] qapi/replay.json: reflow docs to width=70 and two
- spaces between sentences
-Date: Sat, 11 Oct 2025 16:57:22 +0300
-Message-ID: <20251011135754.294521-42-vsementsov@yandex-team.ru>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 24/33] qapi/sockets.json: docs: width=70 and two spaces
+ between sentences
+Date: Sat, 11 Oct 2025 16:57:27 +0300
+Message-ID: <20251011135754.294521-47-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011135754.294521-1-vsementsov@yandex-team.ru>
 References: <20251011135754.294521-1-vsementsov@yandex-team.ru>
@@ -79,43 +78,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/replay.json | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ qapi/sockets.json | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/qapi/replay.json b/qapi/replay.json
-index ccf84da68e..0f1398e9b6 100644
---- a/qapi/replay.json
-+++ b/qapi/replay.json
-@@ -59,7 +59,8 @@
- # .. qmp-example::
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 32fac51728..473be2ac58 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -58,24 +58,26 @@
+ # @ipv6: whether to accept IPv6 addresses, default try both IPv4 and
+ #     IPv6
  #
- #     -> { "execute": "query-replay" }
--#     <- { "return": { "mode": "play", "filename": "log.rr", "icount": 220414 } }
-+#     <- { "return": { "mode": "play", "filename": "log.rr",
-+#                      "icount": 220414 } }
- ##
- { 'command': 'query-replay',
-   'returns': 'ReplayInfo' }
-@@ -80,7 +81,8 @@
+-# @keep-alive: enable keep-alive when connecting to/listening on this socket.
++# @keep-alive: enable keep-alive when connecting to/listening on this
++#     socket.
+ #     (Since 4.2, not supported for listening sockets until 10.1)
  #
- # .. qmp-example::
+-# @keep-alive-count: number of keep-alive packets sent before the connection is
+-#     closed.  Only supported for TCP sockets on systems where TCP_KEEPCNT
+-#     socket option is defined (this includes Linux, Windows, macOS, FreeBSD,
+-#     but not OpenBSD).  When set to 0, system setting is used.  (Since 10.1)
+-#
+-# @keep-alive-idle: time in seconds the connection needs to be idle before
+-#     sending a keepalive packet.  Only supported for TCP sockets on systems
+-#     where TCP_KEEPIDLE socket option is defined (this includes Linux,
+-#     Windows, macOS, FreeBSD, but not OpenBSD).  When set to 0, system setting
+-#     is used.  (Since 10.1)
+-#
+-# @keep-alive-interval: time in seconds between keep-alive packets.  Only
+-#     supported for TCP sockets on systems where TCP_KEEPINTVL is defined (this
+-#     includes Linux, Windows, macOS, FreeBSD, but not OpenBSD).  When set to
+-#     0, system setting is used.  (Since 10.1)
++# @keep-alive-count: number of keep-alive packets sent before the
++#     connection is closed.  Only supported for TCP sockets on systems
++#     where TCP_KEEPCNT socket option is defined (this includes Linux,
++#     Windows, macOS, FreeBSD, but not OpenBSD).  When set to 0,
++#     system setting is used.  (Since 10.1)
++#
++# @keep-alive-idle: time in seconds the connection needs to be idle
++#     before sending a keepalive packet.  Only supported for TCP
++#     sockets on systems where TCP_KEEPIDLE socket option is defined
++#     (this includes Linux, Windows, macOS, FreeBSD, but not OpenBSD).
++#     When set to 0, system setting is used.  (Since 10.1)
++#
++# @keep-alive-interval: time in seconds between keep-alive packets.
++#     Only supported for TCP sockets on systems where TCP_KEEPINTVL is
++#     defined (this includes Linux, Windows, macOS, FreeBSD, but not
++#     OpenBSD).  When set to 0, system setting is used.  (Since 10.1)
  #
--#     -> { "execute": "replay-break", "arguments": { "icount": 220414 } }
-+#     -> { "execute": "replay-break",
-+#          "arguments": { "icount": 220414 } }
- #     <- { "return": {} }
- ##
- { 'command': 'replay-break', 'data': { 'icount': 'int' } }
-@@ -116,7 +118,8 @@
+ # @mptcp: enable multi-path TCP.  (Since 6.1)
  #
- # .. qmp-example::
- #
--#     -> { "execute": "replay-seek", "arguments": { "icount": 220414 } }
-+#     -> { "execute": "replay-seek",
-+#          "arguments": { "icount": 220414 } }
- #     <- { "return": {} }
- ##
- { 'command': 'replay-seek', 'data': { 'icount': 'int' } }
 -- 
 2.48.1
 
