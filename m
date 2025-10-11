@@ -4,95 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF883CCA476
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 15:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0F1CCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 19:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7bUm-0007at-4P; Sat, 11 Oct 2025 11:26:56 -0400
+	id 1v7ezE-0005uQ-OH; Sat, 11 Oct 2025 15:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1v7bUk-0007aV-FL
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 11:26:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v7ezA-0005to-UL; Sat, 11 Oct 2025 15:10:32 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1v7bUf-0004GY-Lv
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 11:26:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760196405;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=raYUQ25sWonJEhoWeJL6N3AgrsHV98Ws8xF5NzVMhlo=;
- b=aaxIlOtOoAWyop/S13j0dHZaDwh4hYr5Wwq8u0IqM8Xo6uUQh0FiQXseLnnRBnQi7qrq8W
- yMxtUYezC2Q5fBd45ZRCGHNyEMMWUFp9YgiI4I/jyQ1iWZFXP2GBAqyasXaChdnTESP7Gk
- IbTUD/SmnnWix80veXDV1gzRt6UNeso=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-Sr53_wXRNtuPvgD7SJmSxA-1; Sat, 11 Oct 2025 11:26:44 -0400
-X-MC-Unique: Sr53_wXRNtuPvgD7SJmSxA-1
-X-Mimecast-MFC-AGG-ID: Sr53_wXRNtuPvgD7SJmSxA_1760196403
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b504dd6dbf1so248460366b.0
- for <qemu-devel@nongnu.org>; Sat, 11 Oct 2025 08:26:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760196403; x=1760801203;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=raYUQ25sWonJEhoWeJL6N3AgrsHV98Ws8xF5NzVMhlo=;
- b=QfFlqK728NTQKb6lkTZxx2k/8goUiDS1Ut1n6ultJHYZA3AFxDcG+vjYBfY4pU5CWM
- F5dRmPD2vctBF/A2RDHZ0kb7kVUvxJwJNhhQ07R+1rgUNOq1R4wTPKj7x7edrVQtDJbq
- NKGSZrqrPR3o7pS/B6QsuqSZxZ6pQQDMdbqom87m7ucsIRAqyXGyC3Ya34cCfeSVdWBj
- lTREkpQli55u0jWY7yJEOEWXkxio/LS0fdKqc80YpEx75ZKxnZ1wzG6/i2GXpxOQX9rl
- JnOOTFGe4GTAQ6guGp78evGlKin+26uUUoKfQTrqul30gx015FF91DarQ8cjsZfGl3WF
- i3jA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfpHKDUt6sbrdvIHgPrvBad7kibhQd8ZcMFw4xzzvOsX302flyTWRT0daBDsAkNV8WIZBNgx9P5/xn@nongnu.org
-X-Gm-Message-State: AOJu0YwAmGpKHP6v4dale0/btcxTODziWiYutn69KdyA5RV7kIEj4Czp
- UMDZ0mwrL2Gw4Yhd3oOw0m2QDTj3Ec0umpwnD2BjbUHvbQXxhMGlqKo04Ngp8zyoRsRzEmpLyI4
- awClMXFOdl/h748BUkTjIckcKgZNZ3Cij2qM2clz4ho2tcJ9NlGzH8Vit/wMFEeYUUXMzd/k3sQ
- PxbuGbm6G2QB3KCqbUiei9uIWcgCjuNuU=
-X-Gm-Gg: ASbGnct/lSjbOXB0JUl7sxR4xRe0TKId50PFwemInCnIWbHXTZurwhNpbWkcbBJBjNR
- RsgyXPz0XTBU5smc1z42n3FYglCjnq8xi+Hf+JAZhpeKF7TUyz0lSapMyr2F7T5XDSFT+oxHLT2
- vQWCUzixZZfpLO40jDo0fvVQ==
-X-Received: by 2002:a17:907:26c5:b0:b3b:f19:ac7c with SMTP id
- a640c23a62f3a-b50aba9e59bmr1365430666b.36.1760196402966; 
- Sat, 11 Oct 2025 08:26:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvA1w+77i3PFKYtkvcbs1k7UTGyBTRam31Cn0V4rbe8kGDlZOKKL3wYWedcr4PyYGelagytGuQ4WLQ2G0JVpM=
-X-Received: by 2002:a17:907:26c5:b0:b3b:f19:ac7c with SMTP id
- a640c23a62f3a-b50aba9e59bmr1365428966b.36.1760196402569; Sat, 11 Oct 2025
- 08:26:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v7ez6-00070Y-5o; Sat, 11 Oct 2025 15:10:32 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E277B80830;
+ Sat, 11 Oct 2025 22:10:16 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a4b::1:3c] (unknown
+ [2a02:6bf:8080:a4b::1:3c])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id FASd4e1F20U0-8dtuDyj4; Sat, 11 Oct 2025 22:10:16 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760209816;
+ bh=kRL8z2oupbNhLRCalBsUM9ndvhQnvdp8ONsuX4NET7w=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=Oj59LhR/GY+anYHUyb9q6b0ea85MAFc2nGpGZha4zbOrWnIikhVOMSybKTOB/s6pi
+ L6naNBXH4k6lK3h5HSfsCOST3u7ZliNdtkpq0sOL76aNbjRwmDKUUzcYZ99CPD1wdX
+ S4PXkA0rwilKYEjGpslejEIc0IVjMz2dumeoRPLA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <f8517cb5-0c4a-44eb-b3bb-6e3fd70721c7@yandex-team.ru>
+Date: Sat, 11 Oct 2025 22:10:15 +0300
 MIME-Version: 1.0
-References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20251010173957.166759-1-vsementsov@yandex-team.ru>
-From: Lei Yang <leiyang@redhat.com>
-Date: Sat, 11 Oct 2025 23:26:06 +0800
-X-Gm-Features: AS18NWAbzUcTFED3b2Jyw2iriaj8XulFVhglgRzr11LLowngPhb25_4wHlpF49o
-Message-ID: <CAPpAL=zGHDwYCbeEw_9cg0uQbWZWxSxkztbW0HUa8sEi1PA0uw@mail.gmail.com>
-Subject: Re: [PATCH v7 00/19] virtio-net: live-TAP local migration
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, farosas@suse.de, 
- sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, 
- philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org, 
- michael.roth@amd.com, steven.sistare@oracle.com, davydov-max@yandex-team.ru, 
- yc-core@yandex-team.ru, raphael.s.norwitz@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/33] vhost: make vhost_memory_unmap() null-safe
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
+ pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
+ den-plotnikov@yandex-team.ru
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-12-vsementsov@yandex-team.ru>
+ <CAFubqFudmBtoPSGptvZiSuzabV4SrRaL45BYCDtpiU9i6wNzeA@mail.gmail.com>
+ <735ce0e5-6c04-4b3e-9d21-50a4624092c9@yandex-team.ru>
+Content-Language: en-US
+In-Reply-To: <735ce0e5-6c04-4b3e-9d21-50a4624092c9@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,101 +83,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this series of patches with virtio-net regression tests,
-everything works fine.
+On 09.10.25 23:00, Vladimir Sementsov-Ogievskiy wrote:
+> On 09.10.25 22:00, Raphael Norwitz wrote:
+>> On Wed, Aug 13, 2025 at 12:56 PM Vladimir Sementsov-Ogievskiy
+>> <vsementsov@yandex-team.ru> wrote:
+>>>
+>>> This helps to simplify failure paths of vhost_virtqueue_start()
+>>> a lot.
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> ---
+>>>   hw/virtio/vhost.c | 23 +++++++++++------------
+>>>   1 file changed, 11 insertions(+), 12 deletions(-)
+>>>
+>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>> index 1e14987cd5..1fdc1937b6 100644
+>>> --- a/hw/virtio/vhost.c
+>>> +++ b/hw/virtio/vhost.c
+>>> @@ -489,6 +489,10 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void *buffer,
+>>>                                  hwaddr len, int is_write,
+>>>                                  hwaddr access_len)
+>>>   {
+>>> +    if (!buffer) {
+>>> +        return;
+>>> +    }
+>>> +
+>>>       if (!vhost_dev_has_iommu(dev)) {
+>>>           cpu_physical_memory_unmap(buffer, len, is_write, access_len);
+>>>       }
+>>> @@ -1313,33 +1317,33 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>>>       vq->desc = vhost_memory_map(dev, a, l, false);
+>>>       if (!vq->desc) {
+>>>           r = -ENOMEM;
+>>> -        goto fail_alloc_desc;
+>>> +        goto fail;
+>>>       }
+>>>       vq->avail_size = l = virtio_queue_get_avail_size(vdev, idx);
+>>>       vq->avail_phys = a = virtio_queue_get_avail_addr(vdev, idx);
+>>>       vq->avail = vhost_memory_map(dev, a, l, false);
+>>>       if (!vq->avail) {
+>>>           r = -ENOMEM;
+>>> -        goto fail_alloc_avail;
+>>> +        goto fail;
+>>>       }
+>>>       vq->used_size = l = virtio_queue_get_used_size(vdev, idx);
+>>>       vq->used_phys = a = virtio_queue_get_used_addr(vdev, idx);
+>>>       vq->used = vhost_memory_map(dev, a, l, true);
+>>>       if (!vq->used) {
+>>>           r = -ENOMEM;
+>>> -        goto fail_alloc_used;
+>>> +        goto fail;
+>>>       }
+>>>
+>>>       r = vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_enabled);
+>>>       if (r < 0) {
+>>> -        goto fail_alloc;
+>>> +        goto fail;
+>>>       }
+>>>
+>>>       file.fd = event_notifier_get_fd(virtio_queue_get_host_notifier(vvq));
+>>>       r = dev->vhost_ops->vhost_set_vring_kick(dev, &file);
+>>>       if (r) {
+>>>           VHOST_OPS_DEBUG(r, "vhost_set_vring_kick failed");
+>>> -        goto fail_kick;
+>>> +        goto fail;
+>>>       }
+>>>
+>>>       /* Clear and discard previous events if any. */
+>>> @@ -1359,24 +1363,19 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>>>           file.fd = -1;
+>>>           r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>>>           if (r) {
+>>> -            goto fail_vector;
+>>> +            goto fail;
+>>>           }
+>>>       }
+>>>
+>>>       return 0;
+>>>
+>>> -fail_vector:
+>>> -fail_kick:
+>>> -fail_alloc:
+>>> +fail:
+>>>       vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, idx),
+>>>                          0, 0);
+>>> -fail_alloc_used:
+>>>       vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev, idx),
+>>>                          0, 0);
+>>> -fail_alloc_avail:
+>>>       vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
+>>>                          0, 0);
+>>> -fail_alloc_desc:
+>>>       return r;
+>>
+>> This assumes that vq->{used, avail, desc} will be nulled out. I’m not
+>> totally convinced that will be the case when a device is started and
+>> stopped, or at least I don’t see the unmap path doing it.
+>>
+> 
+> Oh, right, good caught. Seems we never zero these fields, and after do_vhost_virtqueue_stop()
+> they become invalid. I'll rework it somehow.
+> 
+> I also notice now, that we do
+> 
+>      vq->used = vhost_memory_map(dev, a, &l, true);
+>      if (!vq->used || l != s) {
+>          r = -ENOMEM;
+>          goto fail_alloc_used;
+>      }
+> 
+> so, theoretically pre-patch we may leak the mapping in case when vq->used is not NULL but l != s after vhost_memory_map().
+> 
+> this should be fixed with this commit (of course, if fix also the problem you pointed out)
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+oh, I forget that previous patch already fixes it.
 
-On Sat, Oct 11, 2025 at 1:40=E2=80=AFAM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> Hi all!
->
-> Here is a new migration parameter backend-transfer, which allows to
-> enable local migration of TAP virtio-net backend, including its
-> properties and open fds.
->
-> With this new option, management software doesn't need to
-> initialize new TAP and do a switch to it. Nothing should be
-> done around virtio-net in local migration: it just migrates
-> and continues to use same TAP device. So we avoid extra logic
-> in management software, extra allocations in kernel (for new TAP),
-> and corresponding extra delay in migration downtime.
->
-> v7:
->
-> 01-13,18: r-b by Maxim Davydov
->           t-b by Lei Yang
->
-> 05: fix tap->script to tap->downscript
-> 07: tiny rebase conflict around "NetOffloadsd ol =3D {}"
->
-> 14: reworked to vmsd handler
->     tap is migrated inside virtio-net. And we support backend-transfer
->     only for virtio-net+tap. So, it's better to support initialization
->     postponing directly in virtio-net, the code is simplified, and we
->     don't have to manage global list of taps.
->
-> 15: reworked on top of 14
->
-> 16: - drop QAPI_LIST_CONTAINS macro
->     - improve commit message
->     - improve QAPI documentation comments
->
-> 17: - don't add extra check into virtio_net_update_host_features(),
->       as we now can call it only when needed (more explicit logic)
->     - drop extra includes
->     - no need in "attached_to_virtio_net" variable anymore
->     - add .has_tunnel to the state
->
-> 19: add also test-cases for TAP migration without backend-transfer
->     (to be sure, that we don't break it with new feature:)
->
-> Vladimir Sementsov-Ogievskiy (19):
->   net/tap: net_init_tap_one(): drop extra error propagation
->   net/tap: net_init_tap_one(): move parameter checking earlier
->   net/tap: rework net_tap_init()
->   net/tap: pass NULL to net_init_tap_one() in cases when scripts are
->     NULL
->   net/tap: rework scripts handling
->   net/tap: setup exit notifier only when needed
->   net/tap: split net_tap_fd_init()
->   net/tap: tap_set_sndbuf(): add return value
->   net/tap: rework tap_set_sndbuf()
->   net/tap: rework sndbuf handling
->   net/tap: introduce net_tap_setup()
->   net/tap: move vhost fd initialization to net_tap_new()
->   net/tap: finalize net_tap_set_fd() logic
->   migration: introduce .pre_incoming() vmsd handler
->   net/tap: postpone tap setup to pre-incoming
->   qapi: add interface for backend-transfer virtio-net/tap migration
->   virtio-net: support backend-transfer migration for virtio-net/tap
->   tests/functional: add skipWithoutSudo() decorator
->   tests/functional: add test_x86_64_tap_migration
->
->  hw/net/virtio-net.c                           | 150 ++++++-
->  include/migration/vmstate.h                   |   1 +
->  include/net/tap.h                             |   5 +
->  migration/migration.c                         |   4 +
->  migration/options.c                           |  33 ++
->  migration/options.h                           |   2 +
->  migration/savevm.c                            |  15 +
->  migration/savevm.h                            |   1 +
->  net/tap-bsd.c                                 |   3 +-
->  net/tap-linux.c                               |  19 +-
->  net/tap-solaris.c                             |   3 +-
->  net/tap-stub.c                                |   3 +-
->  net/tap-win32.c                               |  11 +
->  net/tap.c                                     | 425 +++++++++++++-----
->  net/tap_int.h                                 |   3 +-
->  qapi/migration.json                           |  42 +-
->  tests/functional/qemu_test/decorators.py      |  16 +
->  tests/functional/test_x86_64_tap_migration.py | 396 ++++++++++++++++
->  18 files changed, 1001 insertions(+), 131 deletions(-)
->  create mode 100644 tests/functional/test_x86_64_tap_migration.py
->
-> --
-> 2.48.1
->
+> 
+>>>   }
+>>
+>>>
+>>> -- 
+>>> 2.48.1
+>>>
+>>>
+> 
+> 
 
+
+-- 
+Best regards,
+Vladimir
 
