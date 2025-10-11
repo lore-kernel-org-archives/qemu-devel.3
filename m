@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51903CCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F147CCCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7a88-0006Pe-U4; Sat, 11 Oct 2025 09:59:29 -0400
+	id 1v7aEE-0005PV-PN; Sat, 11 Oct 2025 10:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a85-0006NS-48
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:25 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1v7aDp-0004g1-1f
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:22 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7g-0004nI-0U
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:24 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B3B70C0192;
- Sat, 11 Oct 2025 16:58:23 +0300 (MSK)
+ id 1v7aDc-0005an-Oe
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:20 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8C6E9C01A0;
+ Sat, 11 Oct 2025 17:04:54 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uvMPBZ1FEOs0-IKFi5wA0; Sat, 11 Oct 2025 16:58:23 +0300
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id h4NOTl1FrqM0-vVT1swlq; Sat, 11 Oct 2025 17:04:54 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191103;
- bh=5laPx8DQitkjjYv24YWNmXSF2GTnWZhXXAkNWY7GqhI=;
+ s=default; t=1760191494;
+ bh=UIcniQdwd/ae/0mlqDqWCCJREenQAzGUtQQWDB4sJo8=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=crGHy9TagZfAlcIEwfGQyXrBobG2YA7qmKVNz/IWKNpji3a7hd+jtO8tjGOntbExF
- EsXZ3xRp8IctKTohdgCeo0T+IUXEIRk3t71wDSeHMKgdwVjUoBhF3mxPbFoeHmCHpV
- lnZ21ySpbuEnCfi+1y4pFS/SdtvZkoRPDt3wRAm8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ b=qWmdSolmqLXyU6V4E6bFkur++Jvlcl/67grFE6ZNO8wEnsnFKJWeaJW4Xt5C73AaH
+ vUvo+E+e0cBI89mPjwKU6o22Qzd86uRjhVSQEm2NR0LSjE0EEONrcxmflw7QV7JPuH
+ G9eIKmcwOEvnsbXfSg5L+K635sU6p14Jy3xBmYnY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 27/33] qapi/trace.json: docs: width=70 and two spaces between
+ Jason Wang <jasowang@redhat.com>
+Subject: [PATCH v2 18/33] qapi/net.json: docs: width=70 and two spaces between
  sentences
-Date: Sat, 11 Oct 2025 16:57:33 +0300
-Message-ID: <20251011135754.294521-53-vsementsov@yandex-team.ru>
+Date: Sat, 11 Oct 2025 17:04:24 +0300
+Message-ID: <20251011140441.297246-19-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251011135754.294521-1-vsementsov@yandex-team.ru>
-References: <20251011135754.294521-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,23 +78,171 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/trace.json | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ qapi/net.json | 61 ++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 23 deletions(-)
 
-diff --git a/qapi/trace.json b/qapi/trace.json
-index de369dae6b..6162a9aa71 100644
---- a/qapi/trace.json
-+++ b/qapi/trace.json
-@@ -57,7 +57,8 @@
+diff --git a/qapi/net.json b/qapi/net.json
+index 60d196afe5..834a9abb9d 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -51,8 +51,9 @@
+ # .. qmp-example::
  #
- #     -> { "execute": "trace-event-get-state",
- #          "arguments": { "name": "qemu_memalign" } }
--#     <- { "return": [ { "name": "qemu_memalign", "state": "disabled", "vcpu": false } ] }
-+#     <- { "return": [ { "name": "qemu_memalign", "state": "disabled",
-+#                        "vcpu": false } ] }
+ #     -> { "execute": "netdev_add",
+-#          "arguments": { "type": "user", "id": "netdev1",
+-#                         "dnssearch": [ { "str": "example.org" } ] } }
++#          "arguments": {
++#            "type": "user", "id": "netdev1",
++#            "dnssearch": [ { "str": "example.org" } ] } }
+ #     <- { "return": {} }
  ##
- { 'command': 'trace-event-get-state',
-   'data': {'name': 'str' },
+ { 'command': 'netdev_add', 'data': 'Netdev', 'boxed': true,
+@@ -119,9 +120,11 @@
+ #
+ # Unprivileged user-mode network connectivity using passt
+ #
+-# @path: Filename of the passt program to run (by default 'passt', and use PATH)
++# @path: Filename of the passt program to run (by default 'passt',
++#     and use PATH)
+ #
+-# @quiet: don't print informational messages (default, passed as '--quiet')
++# @quiet: don't print informational messages
++#    (default, passed as '--quiet')
+ #
+ # @vhost-user: enable vhost-user
+ #
+@@ -281,8 +284,8 @@
+ #
+ # @smbserver: IP address of the built-in SMB server
+ #
+-# @hostfwd: redirect incoming TCP, UDP or UNIX host connections to guest
+-#     endpoints
++# @hostfwd: redirect incoming TCP, UDP or UNIX host connections to
++#     guest endpoints
+ #
+ # @guestfwd: forward guest TCP connections
+ #
+@@ -569,7 +572,8 @@
+ #     (default: 0).
+ #
+ # @inhibit: Don't load a default XDP program, use one already loaded
+-#     to the interface (default: false).  Requires @sock-fds or @map-path.
++#     to the interface (default: false).  Requires @sock-fds or
++#     @map-path.
+ #
+ # @sock-fds: A colon (:) separated list of file descriptors for
+ #     already open but not bound AF_XDP sockets in the queue order.
+@@ -582,7 +586,8 @@
+ #     mutually exclusive.  Requires @inhibit.  (Since 10.1)
+ #
+ # @map-start-index: Use @map-path to insert xsk sockets starting from
+-#     this index number (default: 0).  Requires @map-path.  (Since 10.1)
++#     this index number (default: 0).  Requires @map-path.
++#     (Since 10.1)
+ #
+ # Since: 8.2
+ ##
+@@ -774,10 +779,10 @@
+ #     attempt a reconnect after the given number of seconds.  Setting
+ #     this to zero disables this function.  (default: 0) (since 8.0)
+ #
+-# @reconnect-ms: For a client socket, if a socket is disconnected, then
+-#     attempt a reconnect after the given number of milliseconds.  Setting
+-#     this to zero disables this function.  This member is mutually
+-#     exclusive with @reconnect.  (default: 0) (Since: 9.2)
++# @reconnect-ms: For a client socket, if a socket is disconnected,
++#     then attempt a reconnect after the given number of milliseconds.
++#     Setting this to zero disables this function.  This member is
++#     mutually exclusive with @reconnect.  (default: 0) (Since: 9.2)
+ #
+ # Only `SocketAddress` types 'unix', 'inet' and 'fd' are supported.
+ #
+@@ -985,7 +990,8 @@
+ #
+ # .. qmp-example::
+ #
+-#     -> { "execute": "query-rx-filter", "arguments": { "name": "vnet0" } }
++#     -> { "execute": "query-rx-filter",
++#          "arguments": { "name": "vnet0" } }
+ #     <- { "return": [
+ #             {
+ #                 "promiscuous": true,
+@@ -1031,9 +1037,11 @@
+ # .. qmp-example::
+ #
+ #     <- { "event": "NIC_RX_FILTER_CHANGED",
+-#          "data": { "name": "vnet0",
+-#                    "path": "/machine/peripheral/vnet0/virtio-backend" },
+-#          "timestamp": { "seconds": 1368697518, "microseconds": 326866 } }
++#          "data": {
++#            "name": "vnet0",
++#            "path": "/machine/peripheral/vnet0/virtio-backend" },
++#          "timestamp": { "seconds": 1368697518,
++#                         "microseconds": 326866 } }
+ ##
+ { 'event': 'NIC_RX_FILTER_CHANGED',
+   'data': { '*name': 'str', 'path': 'str' } }
+@@ -1108,7 +1116,8 @@
+ #
+ #     <- { "event": "FAILOVER_NEGOTIATED",
+ #          "data": { "device-id": "net1" },
+-#          "timestamp": { "seconds": 1368697518, "microseconds": 326866 } }
++#          "timestamp": { "seconds": 1368697518,
++#                         "microseconds": 326866 } }
+ ##
+ { 'event': 'FAILOVER_NEGOTIATED',
+   'data': {'device-id': 'str'} }
+@@ -1130,14 +1139,17 @@
+ #          "data": { "netdev-id": "netdev0",
+ #                    "addr": { "port": "47666", "ipv6": true,
+ #                              "host": "::1", "type": "inet" } },
+-#          "timestamp": { "seconds": 1666269863, "microseconds": 311222 } }
++#          "timestamp": { "seconds": 1666269863,
++#                         "microseconds": 311222 } }
+ #
+ # .. qmp-example::
+ #
+ #     <- { "event": "NETDEV_STREAM_CONNECTED",
+ #          "data": { "netdev-id": "netdev0",
+-#                    "addr": { "path": "/tmp/qemu0", "type": "unix" } },
+-#          "timestamp": { "seconds": 1666269706, "microseconds": 413651 } }
++#                    "addr": { "path": "/tmp/qemu0",
++#                              "type": "unix" } },
++#          "timestamp": { "seconds": 1666269706,
++#                         "microseconds": 413651 } }
+ ##
+ { 'event': 'NETDEV_STREAM_CONNECTED',
+   'data': { 'netdev-id': 'str',
+@@ -1156,7 +1168,8 @@
+ #
+ #     <- { "event": "NETDEV_STREAM_DISCONNECTED",
+ #          "data": {"netdev-id": "netdev0"},
+-#          "timestamp": {"seconds": 1663330937, "microseconds": 526695} }
++#          "timestamp": {"seconds": 1663330937,
++#                        "microseconds": 526695} }
+ ##
+ { 'event': 'NETDEV_STREAM_DISCONNECTED',
+   'data': { 'netdev-id': 'str' } }
+@@ -1174,7 +1187,8 @@
+ #
+ # .. qmp-example::
+ #
+-#     <- { "timestamp": {"seconds": 1739538638, "microseconds": 354181 },
++#     <- { "timestamp": {"seconds": 1739538638,
++#                        "microseconds": 354181 },
+ #          "event": "NETDEV_VHOST_USER_CONNECTED",
+ #          "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
+ #
+@@ -1193,7 +1207,8 @@
+ #
+ # .. qmp-example::
+ #
+-#     <- { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
++#     <- { "timestamp": { "seconds": 1739538634,
++#                         "microseconds": 920450 },
+ #          "event": "NETDEV_VHOST_USER_DISCONNECTED",
+ #          "data": { "netdev-id": "netdev0" } }
+ #
 -- 
 2.48.1
 
