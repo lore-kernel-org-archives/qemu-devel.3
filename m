@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D982DCCD184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC0EDCCD18E
 	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 23:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7iwj-00068d-Dr; Sat, 11 Oct 2025 19:24:17 -0400
+	id 1v7iww-0006Gf-SQ; Sat, 11 Oct 2025 19:24:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7iwh-00068L-KS
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:15 -0400
+ id 1v7iwv-0006GD-8Q; Sat, 11 Oct 2025 19:24:29 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7iwf-0000qx-EZ
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:15 -0400
+ id 1v7iwt-0000vV-FK; Sat, 11 Oct 2025 19:24:28 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 40792C01D9;
- Sun, 12 Oct 2025 02:24:08 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E7F97C01DC;
+ Sun, 12 Oct 2025 02:24:25 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 6OWMXt1FjqM0-qd0AjGh8; Sun, 12 Oct 2025 02:24:07 +0300
+ ESMTPSA id 6OWMXt1FjqM0-9fZfG4D6; Sun, 12 Oct 2025 02:24:25 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760225047;
- bh=vyuP+AOdxnbvSlClJIyRx39E+mnhI85LUzyUKNw1lXU=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=CDun7FssuZnakDx/yN0aXRYF2MBNmXVtrQNTztqAAcp5W5k2oRsjIykFx3rsxOuaA
- 5zIJVYFFSK0XcRw+5fq8+b+GG53DU2GyLluq0eCAmhoEV4Rn8LWYnt0ZEZOaiih2pG
- iUHbonK2iNWPO1qVjqwk/H7iKISoy5RIznQCBCRU=
+ s=default; t=1760225065;
+ bh=PS6EEAn7WwmtDz3cXTZkOLfrAiCnkxUt9LIG5+06S44=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=Buws9hFtKKpFf4+AjYBzUI9t4jTOGVHAggL2aZW0YZexcYsam08H1R1gmiYxwn5yF
+ pvCWzNMESunON6wyZ6OtgbLXH/jl9jsucdFjaElssRy5jBF65O2/7h29qWjCsYaVCN
+ KLiuqX0DT9B9YA5EmO9oAln4Xcgs9lBLn+O/L5tg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  raphael.s.norwitz@gmail.com, vsementsov@yandex-team.ru,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: [PATCH v2 00/23] vhost refactoring and fixes
-Date: Sun, 12 Oct 2025 02:23:39 +0300
-Message-ID: <20251011232404.561024-1-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH v2 22/23] vhost-user-blk: add some useful trace-points
+Date: Sun, 12 Oct 2025 02:24:01 +0300
+Message-ID: <20251011232404.561024-23-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251011232404.561024-1-vsementsov@yandex-team.ru>
+References: <20251011232404.561024-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
@@ -75,84 +76,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all. That's rebased and updated first part of
-  [PATCH 00/33] vhost-user-blk: live-backend local migration
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/block/trace-events     | 10 ++++++++++
+ hw/block/vhost-user-blk.c | 19 +++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-v2:
-01: rework
-02: - rebaose on _ex features, more accurate
-    - change in vhost_net_ack_features_ex()
-    - add note to commit message
-03: rename to vhost_user_has_protocol_feature,
-    to follow existing vhost_user_set_protocol_features
-04: rework to vhost-user only helper
-05: add r-b by Philippe and Raphael
-06: rebase on _ex features, make new helpers static inliners
-07: add docstring
-09: a-b by Raphael
-10: rebase on address_space_map
-11: fix double-free
-13,14: r-b by Raphael
-16: a-b by Raphael
-17,18: r-b by Raphael
-19: reworked
-20: add r-b by Philippe and Raphael
-21: - add r-b by Philippe and Raphael
-    - fix indent
-22: rename to _in/_out, add vdev ptr
-23: rename to _in/_out, add dev ptr
-
-Vladimir Sementsov-Ogievskiy (23):
-  vhost-user: rework enabling vrings
-  vhost: drop backend_features field
-  vhost-user: introduce vhost_user_has_protocol_feature() helper
-  vhost: move protocol_features to vhost_user
-  vhost-user-gpu: drop code duplication
-  vhost: make vhost_dev.features private
-  virtio: move common part of _set_guest_notifier to generic code
-  virtio: drop *_set_guest_notifier_fd_handler() helpers
-  vhost-user: keep QIOChannelSocket for backend channel
-  vhost: vhost_virtqueue_start(): fix failure path
-  vhost: make vhost_memory_unmap() null-safe
-  vhost: simplify calls to vhost_memory_unmap()
-  vhost: move vrings mapping to the top of vhost_virtqueue_start()
-  vhost: vhost_virtqueue_start(): drop extra local variables
-  vhost: final refactoring of vhost vrings map/unmap
-  vhost: simplify vhost_dev_init() error-path
-  vhost: move busyloop timeout initialization to vhost_virtqueue_init()
-  vhost: introduce check_memslots() helper
-  vhost: vhost_dev_init(): simplify features initialization
-  hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
-  vhost-user: make trace events more readable
-  vhost-user-blk: add some useful trace-points
-  vhost: add some useful trace-points
-
- backends/cryptodev-vhost.c     |   9 +-
- hw/block/trace-events          |  10 ++
- hw/block/vhost-user-blk.c      |  20 ++-
- hw/display/vhost-user-gpu.c    |  11 +-
- hw/net/vhost_net.c             |  35 ++--
- hw/scsi/vhost-scsi.c           |   1 -
- hw/scsi/vhost-user-scsi.c      |   1 -
- hw/virtio/trace-events         |  16 +-
- hw/virtio/vdpa-dev.c           |   3 +-
- hw/virtio/vhost-user-base.c    |   8 +-
- hw/virtio/vhost-user.c         | 285 ++++++++++++++++++++++---------
- hw/virtio/vhost.c              | 300 +++++++++++++++++----------------
- hw/virtio/virtio-bus.c         |  18 +-
- hw/virtio/virtio-hmp-cmds.c    |   2 -
- hw/virtio/virtio-mmio.c        |  41 +----
- hw/virtio/virtio-pci.c         |  34 +---
- hw/virtio/virtio-qmp.c         |  12 +-
- hw/virtio/virtio.c             |  48 +++---
- include/hw/virtio/vhost-user.h |   3 +
- include/hw/virtio/vhost.h      |  51 ++++--
- include/hw/virtio/virtio-pci.h |   3 -
- include/hw/virtio/virtio.h     |  16 +-
- net/vhost-vdpa.c               |   7 +-
- qapi/virtio.json               |   3 -
- 24 files changed, 525 insertions(+), 412 deletions(-)
-
+diff --git a/hw/block/trace-events b/hw/block/trace-events
+index cc9a9f2460..dbaa5ca6cb 100644
+--- a/hw/block/trace-events
++++ b/hw/block/trace-events
+@@ -58,6 +58,16 @@ virtio_blk_handle_zone_mgmt(void *vdev, void *req, uint8_t op, int64_t sector, i
+ virtio_blk_handle_zone_reset_all(void *vdev, void *req, int64_t sector, int64_t len) "vdev %p req %p sector 0x%" PRIx64 " cap 0x%" PRIx64 ""
+ virtio_blk_handle_zone_append(void *vdev, void *req, int64_t sector) "vdev %p req %p, append sector 0x%" PRIx64 ""
+ 
++# vhost-user-blk.c
++vhost_user_blk_start_in(void *vdev) "vdev %p"
++vhost_user_blk_start_out(void *vdev) "vdev %p"
++vhost_user_blk_stop_in(void *vdev) "vdev %p"
++vhost_user_blk_stop_out(void *vdev) "vdev %p"
++vhost_user_blk_connect_in(void *vdev) "vdev %p"
++vhost_user_blk_connect_out(void *vdev) "vdev %p"
++vhost_user_blk_device_realize_in(void *vdev) "vdev %p"
++vhost_user_blk_device_realize_out(void *vdev) "vdev %p"
++
+ # hd-geometry.c
+ hd_geometry_lchs_guess(void *blk, int cyls, int heads, int secs) "blk %p LCHS %d %d %d"
+ hd_geometry_guess(void *blk, uint32_t cyls, uint32_t heads, uint32_t secs, int trans) "blk %p CHS %u %u %u trans %d"
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index de7a810c93..a5daed4346 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -31,6 +31,7 @@
+ #include "hw/virtio/virtio-access.h"
+ #include "system/system.h"
+ #include "system/runstate.h"
++#include "trace.h"
+ 
+ static const int user_feature_bits[] = {
+     VIRTIO_BLK_F_SIZE_MAX,
+@@ -137,6 +138,8 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+     int i, ret;
+ 
++    trace_vhost_user_blk_start_in(vdev);
++
+     if (!k->set_guest_notifiers) {
+         error_setg(errp, "binding does not support guest notifiers");
+         return -ENOSYS;
+@@ -192,6 +195,8 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
+     }
+     s->started_vu = true;
+ 
++    trace_vhost_user_blk_start_out(vdev);
++
+     return ret;
+ 
+ err_guest_notifiers:
+@@ -212,6 +217,8 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     int ret;
+     bool force_stop = false;
+ 
++    trace_vhost_user_blk_stop_in(vdev);
++
+     if (!s->started_vu) {
+         return 0;
+     }
+@@ -233,6 +240,9 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     }
+ 
+     vhost_dev_disable_notifiers(&s->dev, vdev);
++
++    trace_vhost_user_blk_stop_out(vdev);
++
+     return ret;
+ }
+ 
+@@ -340,6 +350,8 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+     VHostUserBlk *s = VHOST_USER_BLK(vdev);
+     int ret = 0;
+ 
++    trace_vhost_user_blk_connect_in(vdev);
++
+     if (s->connected) {
+         return 0;
+     }
+@@ -365,6 +377,8 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+         ret = vhost_user_blk_start(vdev, errp);
+     }
+ 
++    trace_vhost_user_blk_connect_out(vdev);
++
+     return ret;
+ }
+ 
+@@ -455,6 +469,8 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+     int retries;
+     int i, ret;
+ 
++    trace_vhost_user_blk_device_realize_in(vdev);
++
+     if (!s->chardev.chr) {
+         error_setg(errp, "chardev is mandatory");
+         return;
+@@ -514,6 +530,9 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+     qemu_chr_fe_set_handlers(&s->chardev,  NULL, NULL,
+                              vhost_user_blk_event, NULL, (void *)dev,
+                              NULL, true);
++
++    trace_vhost_user_blk_device_realize_out(vdev);
++
+     return;
+ 
+ virtio_err:
 -- 
 2.48.1
 
