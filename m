@@ -4,62 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89797CCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1471CCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:21:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7a7X-0006Ey-3y; Sat, 11 Oct 2025 09:58:51 -0400
+	id 1v7a81-0006KM-EM; Sat, 11 Oct 2025 09:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7S-0006D8-H1
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:58:46 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1v7a7d-0006GC-4X
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:58:57 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7E-0004jm-W4
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:58:46 -0400
+ id 1v7a7K-0004ir-HB
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:58:55 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 15100C0172;
- Sat, 11 Oct 2025 16:58:12 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 013F4C0170;
+ Sat, 11 Oct 2025 16:58:10 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uvMPBZ1FEOs0-7NspYFyh; Sat, 11 Oct 2025 16:58:11 +0300
+ ESMTPSA id uvMPBZ1FEOs0-HLK3ykEO; Sat, 11 Oct 2025 16:58:09 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191091;
- bh=Rud6N/8EOaRmexXfDpe6yvJ3eRpDftouptgpBJ3O2Yg=;
+ s=default; t=1760191089;
+ bh=h6Ea4/j5Ei56p6QrRogXcVDfqdofZLzefU6CuONpdcs=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=jHONAfMYPQOtG/er6Sna1Os8NOLp3Z+c8gXESJLBoh5bZdxszlPdHfp04tM9kkwbR
- JOSu4lWgvSDCJZx/mxJL49TtDTx4hHjDiiPf7NwIBpuL0oBE3eGu0oxN20geVTNEqk
- sIe1dUTqrsWvKroA/I2pWBbhK7fTX3kIAz9xcsh4=
+ b=hfI4Yqj6uPxnjoM2W1CqMPBprJEig9XVMFEUJNU54Etb/4xl0m+QAbq70GG+IKTbz
+ vfggZ7mUdynsDyDj7K4YQR6IdxGtwanLRV2HW4Orn6ugitapQZxty5o78EpT8GmQY3
+ 0qv7hV/ZEMYcgfyMGk9hknwwFYkYQbCjJlVa2qno=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 14/33] qapi/migration.json: reflow docs to width=70 and two
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 13/33] qapi/machine.json: reflow docs to width=70 and two
  spaces between sentences
-Date: Sat, 11 Oct 2025 16:57:08 +0300
-Message-ID: <20251011135754.294521-28-vsementsov@yandex-team.ru>
+Date: Sat, 11 Oct 2025 16:57:06 +0300
+Message-ID: <20251011135754.294521-26-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011135754.294521-1-vsementsov@yandex-team.ru>
 References: <20251011135754.294521-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,424 +81,185 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/migration.json | 209 ++++++++++++++++++++++++++------------------
- 1 file changed, 124 insertions(+), 85 deletions(-)
+ qapi/machine.json | 59 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 38 insertions(+), 21 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index be0f3fcc12..74b9db1a51 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -160,11 +160,11 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 038eab281c..4d36cd35c3 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -225,7 +225,8 @@
  #
- # @pre-switchover: Paused before device serialisation.  (since 2.11)
+ # .. qmp-example::
  #
--# @device: During device serialisation (also known as switchover phase).
--#     Before 9.2, this is only used when (1) in precopy, and (2) when
--#     pre-switchover capability is enabled.  After 10.0, this state will
--#     always be present for every migration procedure as the switchover
--#     phase.  (since 2.11)
-+# @device: During device serialisation (also known as switchover
-+#     phase).  Before 9.2, this is only used when (1) in precopy, and
-+#     (2) when pre-switchover capability is enabled.  After 10.0, this
-+#     state will always be present for every migration procedure as
-+#     the switchover phase.  (since 2.11)
+-#     -> { "execute": "query-machines", "arguments": { "compat-props": true } }
++#     -> { "execute": "query-machines", "arguments": { "compat-props":
++#     true } }
+ #     <- { "return": [
+ #               {
+ #                  "hotpluggable-cpus": true,
+@@ -318,7 +319,8 @@
+ # .. qmp-example::
  #
- # @wait-unplug: wait for device unplug request by guest OS to be
- #     completed.  (since 4.2)
-@@ -238,30 +238,33 @@
- #     This is only present when the postcopy-blocktime migration
- #     capability is enabled.  (Since 3.0)
- #
--# @postcopy-latency: average remote page fault latency (in ns).  Note that
--#     this doesn't include all faults, but only the ones that require a
--#     remote page request.  So it should be always bigger than the real
--#     average page fault latency. This is only present when the
--#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
--#
--# @postcopy-latency-dist: remote page fault latency distributions.  Each
--#     element of the array is the number of faults that fall into the
--#     bucket period.  For the N-th bucket (N>=0), the latency window is
--#     [2^Nus, 2^(N+1)us).  For example, the 8th element stores how many
--#     remote faults got resolved within [256us, 512us) window. This is only
--#     present when the postcopy-blocktime migration capability is enabled.
-+# @postcopy-latency: average remote page fault latency (in ns).
-+#     Note that this doesn't include all faults, but only the ones
-+#     that require a remote page request.  So it should be always
-+#     bigger than the real average page fault latency.  This is only
-+#     present when the postcopy-blocktime migration capability is
-+#     enabled.  (Since 10.1)
-+#
-+# @postcopy-latency-dist: remote page fault latency distributions.
-+#     Each element of the array is the number of faults that fall into
-+#     the bucket period.  For the N-th bucket (N>=0), the latency
-+#     window is [2^Nus, 2^(N+1)us).  For example, the 8th element
-+#     stores how many remote faults got resolved within [256us, 512us)
-+#     window.  This is only present when the postcopy-blocktime
-+#     migration capability is enabled. (Since 10.1)
-+#
-+# @postcopy-vcpu-latency: average remote page fault latency per vCPU
-+#     (in ns).  It has the same definition of @postcopy-latency, but
-+#     instead this is the per-vCPU statistics.  This is only present
-+#     when the postcopy-blocktime migration capability is enabled.
- #     (Since 10.1)
- #
--# @postcopy-vcpu-latency: average remote page fault latency per vCPU (in
--#     ns).  It has the same definition of @postcopy-latency, but instead
--#     this is the per-vCPU statistics.  This is only present when the
--#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
--#
--# @postcopy-non-vcpu-latency: average remote page fault latency for all
--#     faults happend in non-vCPU threads (in ns).  It has the same
--#     definition of @postcopy-latency but this only provides statistics to
--#     non-vCPU faults.  This is only present when the postcopy-blocktime
--#     migration capability is enabled.  (Since 10.1)
-+# @postcopy-non-vcpu-latency: average remote page fault latency for
-+#     all faults happend in non-vCPU threads (in ns).  It has the same
-+#     definition of @postcopy-latency but this only provides
-+#     statistics to non-vCPU faults.  This is only present when the
-+#     postcopy-blocktime migration capability is enabled.
-+#     (Since 10.1)
- #
- # @socket-address: Only used for tcp, to know what the real port is
- #     (Since 4.0)
-@@ -290,7 +293,8 @@
- # Features:
- #
- # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
--#     @postcopy-latency-dist, @postcopy-non-vcpu-latency are experimental.
-+#     @postcopy-latency-dist, @postcopy-non-vcpu-latency are
-+#     experimental.
- #
- # Since: 0.14
+ #     -> { "execute": "query-uuid" }
+-#     <- { "return": { "UUID": "550e8400-e29b-41d4-a716-446655440000" } }
++#     <- { "return": { "UUID": "550e8400-e29b-41d4-a716-
++#     446655440000" } }
  ##
-@@ -564,7 +568,8 @@
- # .. qmp-example::
- #
- #     -> { "execute": "migrate-set-capabilities" , "arguments":
--#          { "capabilities": [ { "capability": "xbzrle", "state": true } ] } }
-+#          { "capabilities": [ { "capability": "xbzrle",
-+#                                "state": true } ] } }
- #     <- { "return": {} }
+ { 'command': 'query-uuid', 'returns': 'UuidInfo', 'allow-preconfig': true }
+ 
+@@ -620,7 +622,8 @@
  ##
- { 'command': 'migrate-set-capabilities',
-@@ -627,8 +632,8 @@
+ # @NumaCpuOptions:
  #
- # @normal: the original form of migration.  (since 8.2)
+-# Option "-numa cpu" overrides default cpu to node mapping.  It accepts
++# Option "-numa cpu" overrides default cpu to node mapping.  It
++#     accepts
+ # the same set of cpu properties as returned by
+ # `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`, where
+ # node-id could be used to override default node mapping.
+@@ -686,7 +689,8 @@
+ # Set the system locality latency and bandwidth information between
+ # Initiator and Target proximity Domains.
  #
--# @cpr-reboot: The `migrate` command stops the VM and saves state to the
--#     URI.  After quitting QEMU, the user resumes by running QEMU
-+# @cpr-reboot: The `migrate` command stops the VM and saves state to
-+#     the URI.  After quitting QEMU, the user resumes by running QEMU
- #     -incoming.
+-# For more information about `NumaHmatLBOptions`, see chapter 5.2.27.4:
++# For more information about `NumaHmatLBOptions`, see chapter
++#     5.2.27.4:
+ # Table 5-146 of ACPI 6.3 spec.
  #
- #     This mode allows the user to quit QEMU, optionally update and
-@@ -903,9 +908,10 @@
- #     more CPU.  Defaults to 1.  (Since 5.0)
+ # @initiator: the Initiator Proximity Domain.
+@@ -743,7 +747,8 @@
+ # Cache write policy in the Memory Side Cache Information Structure of
+ # HMAT
  #
- # @multifd-qatzip-level: Set the compression level to be used in live
--#     migration.  The level is an integer between 1 and 9, where 1 means
--#     the best compression speed, and 9 means the best compression
--#     ratio which will consume more CPU.  Defaults to 1.  (Since 9.2)
-+#     migration.  The level is an integer between 1 and 9, where 1
-+#     means the best compression speed, and 9 means the best
-+#     compression ratio which will consume more CPU.  Defaults to 1.
-+#     (Since 9.2)
+-# For more information of `HmatCacheWritePolicy`, see chapter 5.2.27.5:
++# For more information of `HmatCacheWritePolicy`, see chapter
++#     5.2.27.5:
+ # Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
  #
- # @multifd-zstd-level: Set the compression level to be used in live
- #     migration, the compression level is an integer between 0 and 20,
-@@ -1089,9 +1095,10 @@
- #     more CPU.  Defaults to 1.  (Since 5.0)
+ # @none: None (no memory side cache in this proximity domain, or cache
+@@ -763,8 +768,8 @@
  #
- # @multifd-qatzip-level: Set the compression level to be used in live
--#     migration.  The level is an integer between 1 and 9, where 1 means
--#     the best compression speed, and 9 means the best compression
--#     ratio which will consume more CPU.  Defaults to 1.  (Since 9.2)
-+#     migration.  The level is an integer between 1 and 9, where 1
-+#     means the best compression speed, and 9 means the best
-+#     compression ratio which will consume more CPU.  Defaults to 1.
-+#     (Since 9.2)
+ # Set the memory side cache information for a given memory domain.
  #
- # @multifd-zstd-level: Set the compression level to be used in live
- #     migration, the compression level is an integer between 0 and 20,
-@@ -1304,9 +1311,10 @@
- #     more CPU.  Defaults to 1.  (Since 5.0)
+-# For more information of `NumaHmatCacheOptions`, see chapter 5.2.27.5:
+-# Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
++# For more information of `NumaHmatCacheOptions`, see chapter
++# 5.2.27.5: Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
  #
- # @multifd-qatzip-level: Set the compression level to be used in live
--#     migration.  The level is an integer between 1 and 9, where 1 means
--#     the best compression speed, and 9 means the best compression
--#     ratio which will consume more CPU.  Defaults to 1.  (Since 9.2)
-+#     migration.  The level is an integer between 1 and 9, where 1
-+#     means the best compression speed, and 9 means the best
-+#     compression ratio which will consume more CPU.  Defaults to 1.
-+#     (Since 9.2)
+ # @node-id: the memory proximity domain to which the memory belongs.
  #
- # @multifd-zstd-level: Set the compression level to be used in live
- #     migration, the compression level is an integer between 0 and 20,
-@@ -1442,7 +1450,8 @@
+@@ -1023,10 +1028,13 @@
+ #
+ #     -> { "execute": "query-hotpluggable-cpus" }
+ #     <- {"return": [
+-#          { "props": { "core-id": 8 }, "type": "POWER8-spapr-cpu-core",
++#          { "props": { "core-id": 8 },
++#            "type": "POWER8-spapr-cpu-core",
+ #            "vcpus-count": 1 },
+-#          { "props": { "core-id": 0 }, "type": "POWER8-spapr-cpu-core",
+-#            "vcpus-count": 1, "qom-path": "/machine/unattached/device[0]"}
++#          { "props": { "core-id": 0 },
++#            "type": "POWER8-spapr-cpu-core",
++#            "vcpus-count": 1,
++#            "qom-path": "/machine/unattached/device[0]"}
+ #        ]}
  #
  # .. qmp-example::
+@@ -1110,7 +1118,8 @@
  #
--#     <- {"timestamp": {"seconds": 1432121972, "microseconds": 744001},
-+#     <- {"timestamp": {"seconds": 1432121972,
-+#                       "microseconds": 744001},
- #         "event": "MIGRATION",
- #         "data": {"status": "completed"} }
+ #    ::
+ #
+-#      -> { "execute": "balloon", "arguments": { "value": 536870912 } }
++#      -> { "execute": "balloon",
++#           "arguments": { "value": 536870912 } }
+ #      <- { "return": {} }
+ #
+ #    With a 2.5GiB guest this command inflated the ballon to 3GiB.
+@@ -1169,7 +1178,8 @@
+ #
+ #     <- { "event": "BALLOON_CHANGE",
+ #          "data": { "actual": 944766976 },
+-#          "timestamp": { "seconds": 1267020223, "microseconds": 435656 } }
++#          "timestamp": { "seconds": 1267020223,
++#                         "microseconds": 435656 } }
  ##
-@@ -1461,7 +1470,8 @@
- #
+ { 'event': 'BALLOON_CHANGE',
+   'data': { 'actual': 'int' } }
+@@ -1228,8 +1238,10 @@
  # .. qmp-example::
  #
--#     <- { "timestamp": {"seconds": 1449669631, "microseconds": 239225},
-+#     <- { "timestamp": {"seconds": 1449669631,
-+#                        "microseconds": 239225},
- #           "event": "MIGRATION_PASS", "data": {"pass": 2} }
+ #     <- { "event": "HV_BALLOON_STATUS_REPORT",
+-#          "data": { "committed": 816640000, "available": 3333054464 },
+-#          "timestamp": { "seconds": 1600295492, "microseconds": 661044 } }
++#          "data": { "committed": 816640000,
++#                    "available": 3333054464 },
++#          "timestamp": { "seconds": 1600295492,
++#                         "microseconds": 661044 } }
  ##
- { 'event': 'MIGRATION_PASS',
-@@ -1545,8 +1555,10 @@
- #
+ { 'event': 'HV_BALLOON_STATUS_REPORT',
+   'data': 'HvBalloonInfo' }
+@@ -1262,7 +1274,8 @@
  # .. qmp-example::
  #
--#     <- { "timestamp": {"seconds": 2032141960, "microseconds": 417172},
--#          "event": "COLO_EXIT", "data": {"mode": "primary", "reason": "request" } }
-+#     <- { "timestamp": {"seconds": 2032141960,
-+#                        "microseconds": 417172},
-+#          "event": "COLO_EXIT",
-+#          "data": { "mode": "primary", "reason": "request" } }
+ #     -> { "execute": "query-memory-size-summary" }
+-#     <- { "return": { "base-memory": 4294967296, "plugged-memory": 0 } }
++#     <- { "return": { "base-memory": 4294967296,
++#                      "plugged-memory": 0 } }
+ #
+ # Since: 2.11
  ##
- { 'event': 'COLO_EXIT',
-   'data': {'mode': 'COLOMode', 'reason': 'COLOExitReason' } }
-@@ -1758,7 +1770,8 @@
- #
- # .. qmp-example::
- #
--#     -> { "execute": "migrate", "arguments": { "uri": "tcp:0:4446" } }
-+#     -> { "execute": "migrate",
-+#          "arguments": { "uri": "tcp:0:4446" } }
- #     <- { "return": {} }
- #
- #     -> { "execute": "migrate",
-@@ -1774,8 +1787,9 @@
- #          "arguments": {
- #              "channels": [ { "channel-type": "main",
- #                              "addr": { "transport": "exec",
--#                                        "args": [ "/bin/nc", "-p", "6000",
--#                                                  "/some/sock" ] } } ] } }
-+#                                        "args": [
-+#                                          "/bin/nc", "-p", "6000",
-+#                                          "/some/sock" ] } } ] } }
- #     <- { "return": {} }
- #
- #     -> { "execute": "migrate",
-@@ -1813,9 +1827,9 @@
- #     list connected to a destination interface endpoint.
- #
- # @exit-on-error: Exit on incoming migration failure.  Default true.
--#     When set to false, the failure triggers a :qapi:event:`MIGRATION`
--#     event, and error details could be retrieved with `query-migrate`.
--#     (since 9.1)
-+#     When set to false, the failure triggers a
-+#     :qapi:event:`MIGRATION` event, and error details could be
-+#     retrieved with `query-migrate`. (since 9.1)
- #
- # Since: 2.3
- #
-@@ -1855,8 +1869,9 @@
- #          "arguments": {
- #              "channels": [ { "channel-type": "main",
- #                              "addr": { "transport": "exec",
--#                                        "args": [ "/bin/nc", "-p", "6000",
--#                                                  "/some/sock" ] } } ] } }
-+#                                        "args": [
-+#                                          "/bin/nc", "-p", "6000",
-+#                                          "/some/sock" ] } } ] } }
- #     <- { "return": {} }
- #
- #     -> { "execute": "migrate-incoming",
-@@ -2037,7 +2052,8 @@
- # .. qmp-example::
- #
- #     -> { "execute": "query-colo-status" }
--#     <- { "return": { "mode": "primary", "last-mode": "none", "reason": "request" } }
-+#     <- { "return": { "mode": "primary", "last-mode": "none",
-+#                      "reason": "request" } }
- #
- # Since: 3.1
+@@ -1577,7 +1590,8 @@
+ #     <- { "event": "MEMORY_DEVICE_SIZE_CHANGE",
+ #          "data": { "id": "vm0", "size": 1073741824,
+ #                    "qom-path": "/machine/unattached/device[2]" },
+-#          "timestamp": { "seconds": 1588168529, "microseconds": 201316 } }
++#          "timestamp": { "seconds": 1588168529,
++#                         "microseconds": 201316 } }
  ##
-@@ -2094,7 +2110,8 @@
+ { 'event': 'MEMORY_DEVICE_SIZE_CHANGE',
+   'data': { '*id': 'str', 'size': 'size', 'qom-path' : 'str'} }
+@@ -2000,7 +2014,8 @@
+ #   `query-cpu-definitions`.)
+ # * "-cpu" arguments and global properties: arguments to the -cpu
+ #   option and global properties may affect expansion of CPU models.
+-#   Using `query-cpu-model-expansion` while using these is not advised.
++#   Using `query-cpu-model-expansion` while using these is not
++#   advised.
  #
- #     <- { "event": "UNPLUG_PRIMARY",
- #          "data": { "device-id": "hostdev0" },
--#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
-+#          "timestamp": { "seconds": 1265044230,
-+#                         "microseconds": 450486 } }
- ##
- { 'event': 'UNPLUG_PRIMARY',
-   'data': { 'device-id': 'str' } }
-@@ -2252,8 +2269,8 @@
+ # Some architectures may not support comparing CPU models.  s390x
+ # supports comparing CPU models.
+@@ -2054,7 +2069,8 @@
+ #   `query-cpu-definitions`.)
+ # * "-cpu" arguments and global properties: arguments to the -cpu
+ #   option and global properties may affect expansion of CPU models.
+-#   Using `query-cpu-model-expansion` while using these is not advised.
++#   Using `query-cpu-model-expansion` while using these is not
++#   advised.
  #
- # .. qmp-example::
+ # Some architectures may not support baselining CPU models.  s390x
+ # supports baselining CPU models.
+@@ -2085,8 +2101,8 @@
  #
--#     -> {"execute": "calc-dirty-rate", "arguments": {"calc-time": 1,
--#                                                     "sample-pages": 512} }
-+#     -> { "execute": "calc-dirty-rate",
-+#          "arguments": {"calc-time": 1, "sample-pages": 512} }
- #     <- { "return": {} }
+ # @model: the expanded `CpuModelInfo`.
  #
- # .. qmp-example::
-@@ -2261,8 +2278,10 @@
+-# @deprecated-props: an optional list of properties that are flagged as
+-#     deprecated by the CPU vendor.  The list depends on the
++# @deprecated-props: an optional list of properties that are flagged
++#     as deprecated by the CPU vendor.  The list depends on the
+ #     `CpuModelExpansionType`: "static" properties are a subset of the
+ #     enabled-properties for the expanded model; "full" properties are
+ #     a set of properties that are deprecated across all models for
+@@ -2122,7 +2138,8 @@
+ #   `query-cpu-definitions`.)
+ # * "-cpu" arguments and global properties: arguments to the -cpu
+ #   option and global properties may affect expansion of CPU models.
+-#   Using `query-cpu-model-expansion` while using these is not advised.
++#   Using `query-cpu-model-expansion` while using these is not
++#   advised.
  #
- #    Measure dirty rate using dirty bitmap for 500 milliseconds::
- #
--#     -> {"execute": "calc-dirty-rate", "arguments": {"calc-time": 500,
--#         "calc-time-unit": "millisecond", "mode": "dirty-bitmap"} }
-+#     -> { "execute": "calc-dirty-rate",
-+#          "arguments": { "calc-time": 500,
-+#                         "calc-time-unit": "millisecond",
-+#                         "mode": "dirty-bitmap"} }
- #
- #     <- { "return": {} }
- ##
-@@ -2284,16 +2303,17 @@
- # .. qmp-example::
- #    :title: Measurement is in progress
- #
--#     <- {"status": "measuring", "sample-pages": 512,
--#         "mode": "page-sampling", "start-time": 1693900454, "calc-time": 10,
--#         "calc-time-unit": "second"}
-+#     <- { "status": "measuring", "sample-pages": 512,
-+#          "mode": "page-sampling", "start-time": 1693900454,
-+#          "calc-time": 10, "calc-time-unit": "second" }
- #
- # .. qmp-example::
- #    :title: Measurement has been completed
- #
--#     <- {"status": "measured", "sample-pages": 512, "dirty-rate": 108,
--#         "mode": "page-sampling", "start-time": 1693900454, "calc-time": 10,
--#         "calc-time-unit": "second"}
-+#     <- { "status": "measured", "sample-pages": 512,
-+#          "dirty-rate": 108, "mode": "page-sampling",
-+#          "start-time": 1693900454,
-+#          "calc-time": 10, "calc-time-unit": "second" }
- ##
- { 'command': 'query-dirty-rate', 'data': {'*calc-time-unit': 'TimeUnit' },
-                                  'returns': 'DirtyRateInfo' }
-@@ -2452,23 +2472,30 @@
- #        }
- #     <- { "return": { } }
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1432121972, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1432121972,
-+#                       "microseconds": 744001},
- #         "data": {"status": "created", "id": "snapsave0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1432122172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1432122172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "running", "id": "snapsave0"}}
- #     <- {"event": "STOP",
--#         "timestamp": {"seconds": 1432122372, "microseconds": 744001} }
-+#         "timestamp": {"seconds": 1432122372,
-+#                       "microseconds": 744001} }
- #     <- {"event": "RESUME",
--#         "timestamp": {"seconds": 1432122572, "microseconds": 744001} }
-+#         "timestamp": {"seconds": 1432122572,
-+#                       "microseconds": 744001} }
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1432122772, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1432122772,
-+#                       "microseconds": 744001},
- #         "data": {"status": "waiting", "id": "snapsave0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1432122972, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1432122972,
-+#                       "microseconds": 744001},
- #         "data": {"status": "pending", "id": "snapsave0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1432123172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1432123172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "concluded", "id": "snapsave0"}}
- #     -> {"execute": "query-jobs"}
- #     <- {"return": [{"current-progress": 1,
-@@ -2507,8 +2534,8 @@
- # time it takes to load the snapshot.
- #
- # It is strongly recommended that @devices contain all writable block
--# device nodes that can have changed since the original `snapshot-save`
--# command execution.
-+# device nodes that can have changed since the original
-+# `snapshot-save` command execution.
- #
- # .. qmp-example::
- #
-@@ -2522,23 +2549,30 @@
- #        }
- #     <- { "return": { } }
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1472124172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1472124172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "created", "id": "snapload0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1472125172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1472125172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "running", "id": "snapload0"}}
- #     <- {"event": "STOP",
--#         "timestamp": {"seconds": 1472125472, "microseconds": 744001} }
-+#         "timestamp": {"seconds": 1472125472,
-+#                       "microseconds": 744001} }
- #     <- {"event": "RESUME",
--#         "timestamp": {"seconds": 1472125872, "microseconds": 744001} }
-+#         "timestamp": {"seconds": 1472125872,
-+#                       "microseconds": 744001} }
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1472126172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1472126172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "waiting", "id": "snapload0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1472127172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1472127172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "pending", "id": "snapload0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1472128172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1472128172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "concluded", "id": "snapload0"}}
- #     -> {"execute": "query-jobs"}
- #     <- {"return": [{"current-progress": 1,
-@@ -2582,19 +2616,24 @@
- #        }
- #     <- { "return": { } }
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1442124172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1442124172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "created", "id": "snapdelete0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1442125172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1442125172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "running", "id": "snapdelete0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1442126172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1442126172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "waiting", "id": "snapdelete0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1442127172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1442127172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "pending", "id": "snapdelete0"}}
- #     <- {"event": "JOB_STATUS_CHANGE",
--#         "timestamp": {"seconds": 1442128172, "microseconds": 744001},
-+#         "timestamp": {"seconds": 1442128172,
-+#                       "microseconds": 744001},
- #         "data": {"status": "concluded", "id": "snapdelete0"}}
- #     -> {"execute": "query-jobs"}
- #     <- {"return": [{"current-progress": 1,
+ # Some architectures may not support all expansion types.  s390x
+ # supports "full" and "static".  Arm only supports "full".
 -- 
 2.48.1
 
