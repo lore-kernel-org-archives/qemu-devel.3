@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F56CCCD183
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 09:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132C9CCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 12:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7VvE-0008KN-8z; Sat, 11 Oct 2025 05:29:52 -0400
+	id 1v7ZAY-0000d1-CL; Sat, 11 Oct 2025 08:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7VvB-0008KF-BN
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 05:29:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v7Vv0-0004pR-PV
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 05:29:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760174976;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9YHJvf8XqxyGAZw72MT6wARkf/KNahEtb+3o14TuVew=;
- b=L7qLu6ILyNya0Etie3D10FiN5FxRV/Gr5j/rpoCTuyg4UNh+YmvsQTbQvgqQasFbqfNIPK
- bIhqsWv3rS0Ti6BbXk0OsiymKf+WBwY09oMPTbFk+7jAY7QakazKw3CYKY9yiwp6sOrHPd
- ex52EpVbiDabTUrfUdbRAofd9qFVU+A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-1AkC8Wf5Nx2hwcsD7_Y4Ag-1; Sat,
- 11 Oct 2025 05:29:35 -0400
-X-MC-Unique: 1AkC8Wf5Nx2hwcsD7_Y4Ag-1
-X-Mimecast-MFC-AGG-ID: 1AkC8Wf5Nx2hwcsD7_Y4Ag_1760174973
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A568180045C; Sat, 11 Oct 2025 09:29:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1AFFF1800578; Sat, 11 Oct 2025 09:29:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 588D821E6A27; Sat, 11 Oct 2025 11:29:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Yanan Wang
- <wangyanan55@huawei.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Laurent Vivier
- <lvivier@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v3] hw/uefi: add "info firmware-log" +
- "query-firmware-log" monitor commands
-In-Reply-To: <874is6fyl7.fsf@pond.sub.org> (Markus Armbruster's message of
- "Fri, 10 Oct 2025 19:36:36 +0200")
-References: <20251010071008.2555267-1-kraxel@redhat.com>
- <87ecrbj85s.fsf@pond.sub.org> <874is6fyl7.fsf@pond.sub.org>
-Date: Sat, 11 Oct 2025 11:29:29 +0200
-Message-ID: <87h5w5dbwm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhuyifei1999@gmail.com>)
+ id 1v7ULO-0003pR-Dv
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 03:48:46 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhuyifei1999@gmail.com>)
+ id 1v7ULI-0000fg-Ri
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 03:48:46 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-789fb76b466so2553594b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 11 Oct 2025 00:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760168916; x=1760773716; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KLcttQgu6JlmRoKzeI9W/ReoKRymj15fhIh7JObSZKk=;
+ b=XPbzGROMfQwPFmvQnmi7cm52Wmg/c1SkrJRL3f+U6N2NdqlLONg2+ZFZWikdt/E3U3
+ VditrpEuEugCzXWdcfk3+ck7ncZ3t5tC9kuSvhkqxIPrCRernRcDFnI327W9FmM7MdCl
+ 7Adql9kavvhFnnTBQI0qCkowYvT7HN8kAo4iIqKJ4kQpr2jQ/lyHP2mvLuN7gt4dbkST
+ dn5v7FM9Zi6zHB6CdWJvPCzRtXCPsct6BoGu/gnhsaSZ+mP27b5EsRZfQehgPTRcLzY4
+ +qUVu7PV4M2rhtmvsZtsXtehjTmtBCTvrf3t2nJ+QI3todDlJU3i1vNFlli46fMTtDkk
+ ILPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760168916; x=1760773716;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KLcttQgu6JlmRoKzeI9W/ReoKRymj15fhIh7JObSZKk=;
+ b=lEY3VpxneuhYRKygm849kkqZdbnJTw7CKykSYKQi0r4SvCl4RFgmOpIOlL6eF7GoAl
+ DXz5YAJqX1FnGDg6D/gpuIPlpPkstKIIhfF91AWu0F7KzyS/xI7tso7Ppv2oIguXXsOR
+ wyK0A2f4LHY17R5xXc2lCemgoHEuny/wl+qcYjUUv2Sal6ykv8Iwt7WVyBoLXNfCm1/x
+ 4lp4Q5ndFkCA6zuwmdxBJHmP3bTP6wrHEhH17voVYJlJblfk6DNxofJm9YKXWmGHaBhu
+ 9zoGV6emK1Dx8P5n8Lu9XRilqzktxGEOxAFNSNZjyQwH+C0YZUeK3Lv3jBvEQD3HQg2P
+ Q04Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXuQv5BrAUrKgm1OSHDfhdpiOSiFci0IC4hbDVDXV98FAVHcZxBTbdC9Lq3u5nLlkqnCpqHs/mtqaLu@nongnu.org
+X-Gm-Message-State: AOJu0YzGzEnf/DvDWPFuz+7pOVVpMztxmAm35SPYJiRBSC6Y/S5D8OS1
+ 2JM3Y8isWOg/5134pYJjU/8y6GqLRLITDvo3D43N9mWDjMKI3DUq5oCr7o/Vu1JLjeLBtnR+9z4
+ 7ysWKrGan0VQTXSRVRaSgav5Yb5Og2lk=
+X-Gm-Gg: ASbGnctb5ua8spTiYl08nY2M0zbU1x86+CvG54daKGDdFDaC3nPjrD0vwPSirDB2dzB
+ oosPwaEUfOXWdfdmGD8QMWen3khtsxMF1dLdIsh6ZVKinoB3bn8qKYiKHS+qz28BWzSyHy1e3Ue
+ SK9NUU2EIYWagQrPc6cdOzilQgGorBvaoZ4mWY4Ek6xkPv3r+uL0BqzrSBgNfMnJDr1GLDFNtzW
+ OlV7v6WQlLg4SH84JuwunC8A+hcNZsTqH0FVA==
+X-Google-Smtp-Source: AGHT+IHCsGHPzLb4137hgW6Of85mZSwOHO2NIgEpeV0MuZKNf7xkoXf0IWt7F6YmjVr2wVaH4g/2sYQvyvRh9rUE7tY=
+X-Received: by 2002:a17:902:d584:b0:269:6e73:b90a with SMTP id
+ d9443c01a7336-290272aeebemr190858405ad.15.1760168915916; Sat, 11 Oct 2025
+ 00:48:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1758794468.git.zhuyifei@google.com>
+ <ca9b26db036fe39ffcb2ebbf7b8629b08632b8c2.1758794468.git.zhuyifei@google.com>
+ <2f1ab909-d220-495e-bb14-c231a0e0bb49@redhat.com>
+In-Reply-To: <2f1ab909-d220-495e-bb14-c231a0e0bb49@redhat.com>
+From: YiFei Zhu <zhuyifei1999@gmail.com>
+Date: Sat, 11 Oct 2025 00:48:24 -0700
+X-Gm-Features: AS18NWC-jDwSYCFCC_Nncr3ul7HYDTH85_OGwz3fQNCVl0oxXBsR42iVqwMLlsU
+Message-ID: <CABqSeARzRVbz5SGfgh-EtpKaWgR0LxR-b7wQ=9YBDaAOHKXAMg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] i386/cpu: Prevent delivering SIPI during SMM in TCG
+ mode
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: YiFei Zhu <zhuyifei@google.com>, qemu-devel@nongnu.org, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-stable@nongnu.org,
+ unvariant.winter@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=zhuyifei1999@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 11 Oct 2025 08:57:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,256 +105,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yet another thing...
-
-Markus Armbruster <armbru@redhat.com> writes:
-
-> One more thing...  or rather two.
+On Sat, Oct 11, 2025 at 12:19=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
 >
-> Markus Armbruster <armbru@redhat.com> writes:
+> On 9/25/25 12:30, YiFei Zhu wrote:
+> > A malicious kernel may control the instruction pointer in SMM in a
+> > multi-processor VM by sending a sequence of IPIs via APIC:
+> >
+> > CPU0                  CPU1
+> > IPI(CPU1, MODE_INIT)
+> >                       x86_cpu_exec_reset()
+> >                       apic_init_reset()
+> >                       s->wait_for_sipi =3D true
+> > IPI(CPU1, MODE_SMI)
+> >                       do_smm_enter()
+> >                       env->hflags |=3D HF_SMM_MASK;
+> > IPI(CPU1, MODE_STARTUP, vector)
+> >                       do_cpu_sipi()
+> >                       apic_sipi()
+> >                       /* s->wait_for_sipi check passes */
+> >                       cpu_x86_load_seg_cache_sipi(vector)
+> >
+> > A different sequence, SMI INIT SIPI, is also buggy in TCG because
+> > INIT is not blocked or latched during SMM. However, it is not
+> > vulnerable to an instruction pointer control in the same way because
+> > x86_cpu_exec_reset clears env->hflags, exiting SMM.
 >
->> Gerd Hoffmann <kraxel@redhat.com> writes:
->>
->>> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
->>> optional support for logging to a memory buffer.  There is guest side
->>> support -- for example in linux kernels v6.17+ -- to read that buffer.
->>> But that might not helpful if your guest stops booting early enough that
->>> guest tooling can not be used yet.  So host side support to read that
->>> log buffer is a useful thing to have.
->>>
->>> This patch implements both qmp and hmp monitor commands to read the
->>> firmware log.
->>
->> So this is just for EDK2, at least for now.
->>
->>> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->>> ---
->>>  include/monitor/hmp.h      |   1 +
->>>  hw/uefi/ovmf-log.c         | 265 +++++++++++++++++++++++++++++++++++++
->>>  tests/qtest/qmp-cmd-test.c |   2 +
->>>  hmp-commands-info.hx       |  14 ++
->>>  hw/uefi/meson.build        |   2 +-
->>>  qapi/machine.json          |  23 ++++
->>>  6 files changed, 306 insertions(+), 1 deletion(-)
->>>  create mode 100644 hw/uefi/ovmf-log.c
->>>
->>> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
->>> index ae116d9804a3..885c0ecd2aed 100644
->>> --- a/include/monitor/hmp.h
->>> +++ b/include/monitor/hmp.h
->>> @@ -178,5 +178,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
->>>  void hmp_info_mtree(Monitor *mon, const QDict *qdict);
->>>  void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
->>>  void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
->>> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
->>>  
->>>  #endif
->>> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
->>> new file mode 100644
->>> index 000000000000..89e27d916531
->>> --- /dev/null
->>> +++ b/hw/uefi/ovmf-log.c
->>> @@ -0,0 +1,265 @@
->>> +/*
->>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>> + *
->>> + * print ovmf debug log
->>> + *
->>> + * see OvmfPkg/Library/MemDebugLogLib/ in edk2
->>> + */
->>> +
->>> +#include "qemu/osdep.h"
->>> +#include "qemu/units.h"
->>> +#include "qemu/base64.h"
->>> +#include "qemu/target-info-qapi.h"
->>> +#include "hw/boards.h"
->>> +#include "hw/i386/x86.h"
->>> +#include "hw/arm/virt.h"
->>> +#include "system/dma.h"
->>> +#include "monitor/hmp.h"
->>> +#include "monitor/monitor.h"
->>> +#include "qapi/error.h"
->>> +#include "qapi/type-helpers.h"
->>> +#include "qapi/qapi-commands-machine.h"
->>> +
->>> +
->>> +/* ----------------------------------------------------------------------- */
->>> +/* copy from edk2                                                          */
->>> +
->>> +#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
->>> +#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
->>> +
->>> +/*
->>> + * Mem Debug Log buffer header.
->>> + * The Log buffer is circular. Only the most
->>> + * recent messages are retained. Older messages
->>> + * will be discarded if the buffer overflows.
->>> + * The Debug Log starts just after the header.
->>> + */
->>> +typedef struct {
->>> +    /*
->>> +     * Magic values
->>> +     * These fields are used by tools to locate the buffer in
->>> +     * memory. These MUST be the first two fields of the structure.
->>> +     * Use a 128 bit Magic to vastly reduce the possibility of
->>> +     * a collision with random data in memory.
->>> +     */
->>> +    uint64_t             Magic1;
->>> +    uint64_t             Magic2;
->>> +    /*
->>> +     * Header Size
->>> +     * This MUST be the third field of the structure
->>> +     */
->>> +    uint64_t             HeaderSize;
->>> +    /*
->>> +     * Debug log size (minus header)
->>> +     */
->>> +    uint64_t             DebugLogSize;
->>> +    /*
->>> +     * edk2 uses this for locking access.
->>> +     */
->>> +    uint64_t             MemDebugLogLock;
->>> +    /*
->>> +     * Debug log head offset
->>> +     */
->>> +    uint64_t             DebugLogHeadOffset;
->>> +    /*
->>> +     *  Debug log tail offset
->>> +     */
->>> +    uint64_t             DebugLogTailOffset;
->>> +    /*
->>> +     * Flag to indicate if the buffer wrapped and was thus truncated.
->>> +     */
->>> +    uint64_t             Truncated;
->>> +    /*
->>> +     * Firmware Build Version (PcdFirmwareVersionString)
->>> +     */
->>> +    char                 FirmwareVersion[128];
+> Thanks for the reports!  For this bug, I prefer to have the CPU eat the
+> SIPI instead of latching them:
 
-Note for later: FirmwareVersion is an array.
+SGTM
 
->>> +} MEM_DEBUG_LOG_HDR;
+> diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+> index 6d7859640c2..c7680338563 100644
+> --- a/hw/intc/apic.c
+> +++ b/hw/intc/apic.c
+> @@ -646,8 +646,6 @@ void apic_sipi(DeviceState *dev)
+>   {
+>       APICCommonState *s =3D APIC(dev);
+>
+> -    cpu_reset_interrupt(CPU(s->cpu), CPU_INTERRUPT_SIPI);
+> -
+>       if (!s->wait_for_sipi)
+>           return;
+>       cpu_x86_load_seg_cache_sipi(s->cpu, s->sipi_vector);
+> diff --git a/target/i386/helper.c b/target/i386/helper.c
+> index 651041ccfa6..a96834c4457 100644
+> --- a/target/i386/helper.c
+> +++ b/target/i386/helper.c
+> @@ -621,6 +621,9 @@ void do_cpu_init(X86CPU *cpu)
+>
+>   void do_cpu_sipi(X86CPU *cpu)
+>   {
+> +    if (env->hflags & HF_SMM_MASK) {
+> +        return;
+> +    }
+>       apic_sipi(cpu->apic_state);
+>   }
+>
+> diff --git a/target/i386/tcg/system/seg_helper.c
+> b/target/i386/tcg/system/seg_helper.c
+> index 38072e51d72..8c7856be81e 100644
+> --- a/target/i386/tcg/system/seg_helper.c
+> +++ b/target/i386/tcg/system/seg_helper.c
+> @@ -182,6 +182,7 @@ bool x86_cpu_exec_interrupt(
+>           apic_poll_irq(cpu->apic_state);
+>           break;
+>       case CPU_INTERRUPT_SIPI:
+> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
+>           do_cpu_sipi(cpu);
+>           break;
+>       case CPU_INTERRUPT_SMI:
+>
+>
+> Fixing INIT is harder, because it requires splitting CPU_INTERRUPT_INIT
+> and CPU_INTERRUPT_RESET, but I'll take a look.
 
-[...]
+Thanks! And yeah that's the main reason why I didn't attempt to fix
+INIT. It seems a lot more complex for something that seems a lot less
+exploitable to me.
 
->>> +static void handle_ovmf_log_range(GString *out,
->>> +                                  dma_addr_t start,
->>> +                                  dma_addr_t end,
->>> +                                  Error **errp)
->>> +{
->>> +    g_autofree char *buf = NULL;
->>> +
->>> +    if (start > end) {
->>> +        return;
->>> +    }
->>> +
->>> +    buf = g_malloc(end - start + 1);
->>
->> How big can this buffer become?  See [*] below.
->>
->>> +    if (dma_memory_read(&address_space_memory, start,
->>> +                        buf, end - start,
->>> +                        MEMTXATTRS_UNSPECIFIED)) {
->>> +        error_setg(errp, "firmware log: buffer read error");
->>> +        return;
->>> +    }
->>> +
->>> +    buf[end - start] = 0;
->>> +    g_string_append_printf(out, "%s", buf);
->>
->> This falls apart when the log contains '\0'.  Suggest something like
->>
->>        g_string_append_len(out, buf, end - start);
->>
->> or even better, the direct read Daniel suggested.
->>
->>> +}
->>> +
->>> +FirmwareLog *qmp_query_firmware_log(Error **errp)
->>> +{
->>> +    MEM_DEBUG_LOG_HDR header;
->>> +    dma_addr_t offset, base;
->>> +    FirmwareLog *ret;
->>> +    g_autoptr(GString) log = g_string_new("");
->>> +
->>> +    offset = find_ovmf_log();
->>> +    if (offset == -1) {
->>> +        error_setg(errp, "firmware log: not found");
->>> +        return NULL;
->>> +    }
->>> +
->>> +    if (dma_memory_read(&address_space_memory, offset,
->>> +                        &header, sizeof(header),
->>> +                        MEMTXATTRS_UNSPECIFIED)) {
->>> +        error_setg(errp, "firmware log: header read error");
->>> +        return NULL;
->>> +    }
->>> +
->>> +    if (header.DebugLogSize > MiB) {
->>> +        /* default size is 128k (32 pages), allow up to 1M */
->>> +        error_setg(errp, "firmware log: log buffer is too big");
->>
->> [*] We limit the buffer to 1MiB.  No objection to the size.
->>
->> What do you mean by "default" in "default size"?  Is the size
->> configurable in EDK2?
->>
->> Should we try to cope more gracefully with oversized log buffers?  It's
->> a ring buffer.  What about silently reading the latest 1MiB then?
->> Behaves just as if the ring buffer was 1MiB.
->>
->>> +        return NULL;
->>> +    }
->>> +
->>> +    if (header.DebugLogHeadOffset > header.DebugLogSize ||
->>> +        header.DebugLogTailOffset > header.DebugLogSize) {
->>> +        error_setg(errp, "firmware log: invalid header");
->>> +        return NULL;
->>> +    }
->>> +
->>> +    base = offset + header.HeaderSize;
->>> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
->>> +        /* wrap around */
->>> +        handle_ovmf_log_range(log,
->>> +                              base + header.DebugLogHeadOffset,
->>> +                              base + header.DebugLogSize,
->>> +                              errp);
->>> +        if (*errp) {
->>> +            return NULL;
->>> +        }
->>> +        handle_ovmf_log_range(log,
->>> +                              base + 0,
->>> +                              base + header.DebugLogTailOffset,
->>> +                              errp);
->>> +        if (*errp) {
->>> +            return NULL;
->>> +        }
->>> +    } else {
->>> +        handle_ovmf_log_range(log,
->>> +                              base + header.DebugLogHeadOffset,
->>> +                              base + header.DebugLogTailOffset,
->>> +                              errp);
->>> +        if (*errp) {
->>> +            return NULL;
->>> +        }
->>> +    }
->>> +
->>> +    ret = g_new0(FirmwareLog, 1);
->>> +    ret->version = g_strdup(header.FirmwareVersion);
+YiFei Zhu
 
-FirmwareVersion is char[128].  g_strdup() copies until the first zero
-byte.  I fear a malicious guest can set up its memory to make us
-allocate and copy a lot more than 127 bytes.
-
-Please use g_strndup().
-
->>> +    ret->log = g_base64_encode((const guchar *)log->str, log->len);
->>> +    return ret;
->>
->> Note for later [**]: both ->version and ->log are non-null on success.
->>
->>> +}
-
-[...]
-
+> Paolo
+>
+> > Fixes: a9bad65d2c1f ("target-i386: wake up processors that receive an S=
+MI")
+> > Signed-off-by: YiFei Zhu <zhuyifei@google.com>
+> > ---
+> >   target/i386/cpu.c | 3 ++-
+> >   1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index 6d85149e6e..697cc4e63b 100644
+> > --- a/target/i386/cpu.c
+> > +++ b/target/i386/cpu.c
+> > @@ -9762,7 +9762,8 @@ int x86_cpu_pending_interrupt(CPUState *cs, int i=
+nterrupt_request)
+> >       if (interrupt_request & CPU_INTERRUPT_POLL) {
+> >           return CPU_INTERRUPT_POLL;
+> >       }
+> > -    if (interrupt_request & CPU_INTERRUPT_SIPI) {
+> > +    if ((interrupt_request & CPU_INTERRUPT_SIPI) &&
+> > +        !(env->hflags & HF_SMM_MASK)) {
+> >           return CPU_INTERRUPT_SIPI;
+> >       }
+> >
+>
+>
 
