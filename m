@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A4BCCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3752ECCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7a7S-0006BV-53; Sat, 11 Oct 2025 09:58:46 -0400
+	id 1v7a7X-0006Ez-BA; Sat, 11 Oct 2025 09:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7I-00067M-Rw; Sat, 11 Oct 2025 09:58:36 -0400
+ id 1v7a7P-0006B3-MX; Sat, 11 Oct 2025 09:58:43 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a78-0004iL-1K; Sat, 11 Oct 2025 09:58:36 -0400
+ id 1v7a78-0004hC-1q; Sat, 11 Oct 2025 09:58:42 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id D61CCC0162;
- Sat, 11 Oct 2025 16:58:06 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E07D1C00D6;
+ Sat, 11 Oct 2025 16:58:02 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uvMPBZ1FEOs0-MeDTcm6s; Sat, 11 Oct 2025 16:58:06 +0300
+ ESMTPSA id uvMPBZ1FEOs0-si4h6nqr; Sat, 11 Oct 2025 16:58:02 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191086;
- bh=wx/I6VtVDwoWBi0b5ijZlX7Un2UFdYPB/5MJo7VWM0k=;
+ s=default; t=1760191082;
+ bh=XaNPKEYFvprDxxt9TryZMmnN05KO5P9DtdGM+QisyJ4=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Tu0OpRsewlekNojtLqweBGFSqWM6RM87GVLW+IEROwtjKh5YBbShd+t7gv2ST78qz
- PWKzovmSL3om+ON2nQufgGmOYJY3b7da2qmuYyAE7tyFkpcmA0+y/1hVo4uuk4vQAf
- GCincEiaHQ0fCQ6oiOXkCJA/8w+pO7zKg/nSvQcc=
+ b=mwOKmVgJPR/s0LkPlyYL9bvDTeW9k9eVzvJkhqBRZ8wOWgsAMVKaPp0EWs7sp1BV3
+ IVKfVGgcWQmLln1ABFLBUmI8U0JDHsGD5FNyC3elnfq7RhfTNyTMUb4EDhHd+pv4uZ
+ JdGp7zhSqZVrjXtl93r7wGEnvIwxw8lywAK5NeeE=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- John Snow <jsnow@redhat.com>, qemu-block@nongnu.org (open list:Block Jobs)
-Subject: [PATCH 11/33] qapi/job.json: docs: width=70 and two spaces between
- sentences
-Date: Sat, 11 Oct 2025 16:57:01 +0300
-Message-ID: <20251011135754.294521-21-vsementsov@yandex-team.ru>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH 06/33] qapi/block.json: reflow docs to width=70 and two spaces
+ between sentences
+Date: Sat, 11 Oct 2025 16:56:52 +0300
+Message-ID: <20251011135754.294521-12-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011135754.294521-1-vsementsov@yandex-team.ru>
 References: <20251011135754.294521-1-vsementsov@yandex-team.ru>
@@ -57,8 +58,8 @@ X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,67 +77,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/job.json | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ qapi/block.json | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/qapi/job.json b/qapi/job.json
-index 8b08350af2..887777b973 100644
---- a/qapi/job.json
-+++ b/qapi/job.json
-@@ -194,16 +194,16 @@
+diff --git a/qapi/block.json b/qapi/block.json
+index 46955bbb3e..4398c801ee 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -240,7 +240,8 @@
+ #          "arguments": { "id": "ide0-1-0" } }
  #
- # This is supported only for drive mirroring, where it also switches
- # the device to write to the target path only.  Note that drive
--# mirroring includes `drive-mirror`, `blockdev-mirror` and `block-commit`
--# job (only in case of "active commit", when the node being commited
--# is used by the guest).  The ability to complete is signaled with a
--# `BLOCK_JOB_READY` event.
-+# mirroring includes `drive-mirror`, `blockdev-mirror` and
-+# `block-commit` job (only in case of "active commit", when the node
-+# being commited is used by the guest).  The ability to complete is
-+# signaled with a `BLOCK_JOB_READY` event.
+ #     <- { "error": { "class": "GenericError",
+-#                     "desc": "Tray of device 'ide0-1-0' is not open" } }
++#                     "desc": "Tray of device 'ide0-1-0' is not open"
++#     } }
  #
- # This command completes an active background block operation
- # synchronously.  The ordering of this command's return with the
--# `BLOCK_JOB_COMPLETED` event is not defined.  Note that if an I/O error
--# occurs during the processing of this command: 1) the command itself
--# will fail; 2) the error will be processed according to the
-+# `BLOCK_JOB_COMPLETED` event is not defined.  Note that if an I/O
-+# error occurs during the processing of this command: 1) the command
-+# itself will fail; 2) the error will be processed according to the
- # rerror/werror arguments that were specified when starting the
- # operation.
+ #     -> { "execute": "blockdev-open-tray",
+ #          "arguments": { "id": "ide0-1-0" } }
+@@ -350,7 +351,8 @@
  #
-@@ -220,14 +220,14 @@
- # needs to be run explicitly for jobs that don't have automatic
- # dismiss enabled.  In turn, automatic dismiss may be enabled only
- # for jobs that have @auto-dismiss option, which are `drive-backup`,
--# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit` and
--# `block-stream`.  @auto-dismiss is enabled by default for these
-+# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit`
-+# and `block-stream`.  @auto-dismiss is enabled by default for these
- # jobs.
+ #     -> { "execute": "blockdev-change-medium",
+ #          "arguments": { "id": "ide0-1-0",
+-#                         "filename": "/srv/images/Fedora-12-x86_64-DVD.iso",
++#                         "filename":
++#                           "/srv/images/Fedora-12-x86_64-DVD.iso",
+ #                         "format": "raw" } }
+ #     <- { "return": {} }
  #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, CONCLUDED.  For jobs that make use of
--# the JOB_READY event, `job-cancel` or `job-complete` will still need to
--# be used as appropriate.
-+# the JOB_READY event, `job-cancel` or `job-complete` will still need
-+# to be used as appropriate.
+@@ -359,17 +361,17 @@
  #
- # @id: The job identifier.
+ #     -> { "execute": "blockdev-change-medium",
+ #          "arguments": { "id": "floppyA",
+-#                         "filename": "/srv/images/ro.img",
++#                         "filename": "ro.img",
+ #                         "format": "raw",
+ #                         "read-only-mode": "retain" } }
  #
-@@ -247,8 +247,8 @@
- # force ALL jobs in the transaction to finalize, so it is only
- # necessary to instruct a single member job to finalize.
+ #     <- { "error":
+ #          { "class": "GenericError",
+-#            "desc": "Could not open '/srv/images/ro.img': Permission denied" } }
++#            "desc": "Could not open 'ro.img': Permission denied" } }
  #
--# The command is applicable only to jobs which have @auto-finalize option
--# and only when this option is set to false.
-+# The command is applicable only to jobs which have @auto-finalize
-+# option and only when this option is set to false.
+ #     -> { "execute": "blockdev-change-medium",
+ #          "arguments": { "id": "floppyA",
+-#                         "filename": "/srv/images/ro.img",
++#                         "filename": "ro.img",
+ #                         "format": "raw",
+ #                         "read-only-mode": "read-only" } }
  #
- # @id: The identifier of any job in the transaction, or of a job that
- #     is not part of any transaction.
+@@ -407,7 +409,8 @@
+ #                    "id": "/machine/unattached/device[22]",
+ #                    "tray-open": true
+ #          },
+-#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
++#          "timestamp": { "seconds": 1265044230,
++#                         "microseconds": 450486 } }
+ ##
+ { 'event': 'DEVICE_TRAY_MOVED',
+   'data': { 'device': 'str', 'id': 'str', 'tray-open': 'bool' } }
+@@ -430,7 +433,8 @@
+ #          "data": { "id": "pr-helper0",
+ #                    "connected": true
+ #          },
+-#          "timestamp": { "seconds": 1519840375, "microseconds": 450486 } }
++#          "timestamp": { "seconds": 1519840375,
++#                         "microseconds": 450486 } }
+ ##
+ { 'event': 'PR_MANAGER_STATUS_CHANGED',
+   'data': { 'id': 'str', 'connected': 'bool' } }
 -- 
 2.48.1
 
