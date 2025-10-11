@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F13CCD18A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 08:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A53CCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 08:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Uk9-0006zd-5D; Sat, 11 Oct 2025 04:14:21 -0400
+	id 1v7Um7-0000xg-0W; Sat, 11 Oct 2025 04:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1v7Uk1-0006xY-Dk
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:14:14 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1v7Um2-0000m9-Q0
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:16:18 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1v7Ujt-0005XU-3A
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:14:13 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3ee64bc6b85so2947898f8f.3
- for <qemu-devel@nongnu.org>; Sat, 11 Oct 2025 01:14:04 -0700 (PDT)
+ id 1v7Ulz-00073x-2n
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:16:18 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3f2cf786abeso2371757f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 11 Oct 2025 01:16:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760170442; x=1760775242; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760170568; x=1760775368; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=fV7UHztEaQ52d1YYUmIY50MBEuXXcFsbhfQR43l1bTY=;
- b=fj/g4fe6+/5G0zhCpArPgy8CbVTB851UF/Rb37sAp7Qd2n5vdLMM0hJr3T27OBBN7W
- diiyCfqyIV6wOLXWdfD/sgZQEMbj6/lX9Xg9jXhaJr2oeAJ1pE0nmwhgUZqdyYNGqU8y
- oMU3vVS82hhODlCw67TxvbNC8HQks3yvtBdKYJwHUbATXlc80Hz+tpHYfpLeScP+Or9J
- hQkw8DDiHYyAUh6LP9McXHM/g6nQA6lYMrCMJvxtpp3yPK1ZCm8UFFBI1PzSMozBAO70
- 52dsy1c9WH3RpGbA4m1g70cNkHQ9NYbSf1aAaP0WGc4cj4190yfJfhpwtaphDeNgrRyZ
- 22Dw==
+ b=gELl514YyGJImWeYO2LE2aG9O/20bYLQiyUE9T+tKHDyhlWJyeILP1S+meJTum+NrB
+ nNwZedSgix8kQ3BDEZomrajbMvnLSahzUvh1FSqRc3qCqU3M7UEbqkeTorlFDp04rvak
+ qfuIm1jplo0Ai1G83msVSmw316yR4l52ad4zIhpZZ6C/gbMJMeoc8Pgo+o88rSPZMjhk
+ h1NgVCt3P/aEaQlCQu4gOiq1YhV7XDmsOeIKfVpG875pNJkojoCHI+0az48eCuD5XrhL
+ Na+Nn1VXCdp0HFcnZCPBhd50t98OT5OJIv3zMHcswpWX8cxpnLtWJd1uxpfM6JqkHpT9
+ QeWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760170442; x=1760775242;
+ d=1e100.net; s=20230601; t=1760170568; x=1760775368;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=fV7UHztEaQ52d1YYUmIY50MBEuXXcFsbhfQR43l1bTY=;
- b=qT7fiIjiUuuRElcVebSu70iGca/aMBiIzkVwFP3H0rIkeAetxtDQoNe+JGckS1EwBC
- rp8/uCGjD12BG2ABGSgnrlx/wpZvbpdrWS87EXBtZqgsrWwvemyZa6BVI8ehwCK5XNPR
- I+o30d7gW1n98IsNYUdLofYkkwU+7oOk3s2eoFrMsAyhsjjWCgsl1wTvCffdhU8IPqJe
- 2eVIySPREm78JNFlTDYV8GcZLzX4DuWElTuSJvspuDjHxIKP9HWdrwgUTcrKtNUvNLg1
- BhOLWyVOtX/VKmIUJc0m8c0J8jkcyy6+E1MuLRon49Q4EZfj4VKcSxPi33NTSu58QCij
- KFpg==
-X-Gm-Message-State: AOJu0Yza67ugCIluxmyzBE9dXeK+WutnHb8eEHlMyREMXaYrN8UIJE0c
- W36wUHGxtoEDLzX05LTJdjHLmnlRIMTPwg93P4CG1xKpECDl3qgh0OsEkhj/2Tsg
-X-Gm-Gg: ASbGnct+N5VJZAgm1G9MPecMLXFsXsoL6nbEUxoPTYqR43fO7jWQAtA/MrHTBkHgpwM
- DCdhNWZxt8Cc3LijXxR/fb3syZrey2YYbGkBsi8L99p89YdZZqy9/d1CcLiN1v+0NBEe/P5a0LJ
- zXvMHxeB+fF/xygSHB1HmvcwWPig1aKOeqDlPk6C2GGoNPbfquq7FVpJkWQHrir7BqxWSl6wgnS
- yZXTK8eAy5jM+nugdXaOHthlWQZ7x7PY/j1ah1AmMwOxv9WQ5Duxt3snG/x+zVahZxj/mKHTGCz
- LX4oCNjyK4NMPhz8UFG559yKYbNpFCKNSyb320PIHJUmAgvyUB299oZhoSzkbsyhS0WVehDcQgL
- ET6H0MsjVHti+mTV+2TQvXfZ2VnY6Y8YEBatzOmJYinUDc0utIRXsoN5any4bUqe+LNBeGUlhD6
- ar6KhENCBC87jhS3yRKfIouSBVuyrmUVY=
-X-Google-Smtp-Source: AGHT+IGShSE9JOIBx7sacbaGBOSquSl83nf4uK579a4B/xT1HCjibUxtO432bIq7GFe9y92SrMaJQw==
-X-Received: by 2002:a05:6000:4210:b0:3f2:b077:94bc with SMTP id
- ffacd0b85a97d-42666ac4119mr8163648f8f.4.1760170441894; 
- Sat, 11 Oct 2025 01:14:01 -0700 (PDT)
+ b=C1E3FeJj5XZv+Cd0SCjFmtE7Uf6owoWjd7NA5f3xUyQ1TtUnWTy/4nBJ+D691WLzsj
+ cV87ASSgzEeq3yH5mqb2DAoLafvN8hSRdIloETMiuarX1xbquXkoiSWcqkiLhdL0Zsfm
+ q1t/YT6AMd2LkFoOWtzLd3MfmTxLa/iaz2RvEiY2zUPDi9G8nA8E5eMWGMwOoMlNwGV8
+ hZm2PW71iA0srC4LmKp7uiKimsdrSzubumALAMJkIWrWaGdQXKR7Nmx45YI+GacEz0L4
+ wW8AID6cmmljmyLy8T34PVfr3zYZkSD6k/Cp2fKayYrdB5LAWZOauLMhMqTs3+BmALA9
+ Mkhw==
+X-Gm-Message-State: AOJu0Yxf/0od8hkU11wdASRWO9Csh5YI5+sN0EzXeWlzE/USBl4nuzmq
+ Q7PUM5rRHTYrR6873dqFeya9x5SFJ6z8NaN8CXP59dnE8qBVVIhzrOSLnNkbO6R7
+X-Gm-Gg: ASbGncuMZWdB0482BuxFiBcejZeS/AafyHrwaNd4vCVavcBfgYKGYv5Z67BgJMS81L+
+ VGvLPOjHrC6yF61cZzVAKGpSA2ptGOTDafYTN0bnlpomeZLRwD7y6gGmrV82yj6uniRrnCI/LU4
+ M6/jNngk0Dz3iC3VVN3bx7jEYGkvZIm7HETRuwIbx8NkowdmI9crrqfrXHBhr4HNLjflqlHQ3QU
+ c5sku5YXt3zfslQNOd/nMkduwqhqkV0yUBF+4GtfQ5jfX46j0XauewkvDzcTAJKJtGBqU4LrOVl
+ dQAPSV7z4SurNdqpyqh+kUCdC8ySgdt3yhT5AVmE6dOVjQcEg/3K528svGYjbWKLaZVX2rmqx04
+ BJUbK97GlA+jDzDpnA2sCRNv1YbellKe7EoaV9kidYcf3KjbF5QQOmfoL5Tq/bmqwHQTaFvx+pV
+ RTqrZjV2+BUBMc/ngaIMHM
+X-Google-Smtp-Source: AGHT+IFfPDCGIphgQQHt7KvrBKUsa8M/6KEmFk1IUQDmhopIRjWGk/bv3Erauh+DwYc3gvhfiOlgjQ==
+X-Received: by 2002:a05:6000:26c2:b0:3ce:bf23:3c32 with SMTP id
+ ffacd0b85a97d-4266e7beb06mr9399672f8f.22.1760170568272; 
+ Sat, 11 Oct 2025 01:16:08 -0700 (PDT)
 Received: from daandemeyer-fedora-PC1EV17T (d54C349CA.access.telenet.be.
  [84.195.73.202]) by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-46fb497aec2sm83873195e9.1.2025.10.11.01.14.00
+ ffacd0b85a97d-426ce5cfe69sm8045969f8f.32.2025.10.11.01.16.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Oct 2025 01:14:00 -0700 (PDT)
+ Sat, 11 Oct 2025 01:16:07 -0700 (PDT)
 From: Daan De Meyer <daan.j.demeyer@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Daan De Meyer <daan.j.demeyer@gmail.com>
-Subject: [PATCH v2 1/3] Rename LOAD_IMAGE_MAX_GUNZIP_BYTES to
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Daan De Meyer <daan.j.demeyer@gmail.com>
+Subject: [PATCH v3 1/3] Rename LOAD_IMAGE_MAX_GUNZIP_BYTES to
  LOAD_IMAGE_MAX_DECOMPRESSED_BYTES
-Date: Sat, 11 Oct 2025 10:13:45 +0200
-Message-ID: <20251011081347.4063198-2-daan.j.demeyer@gmail.com>
+Date: Sat, 11 Oct 2025 10:15:51 +0200
+Message-ID: <20251011081553.4065883-2-daan.j.demeyer@gmail.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251011081347.4063198-1-daan.j.demeyer@gmail.com>
-References: <20251011081347.4063198-1-daan.j.demeyer@gmail.com>
+In-Reply-To: <20251011081553.4065883-1-daan.j.demeyer@gmail.com>
+References: <20251011081553.4065883-1-daan.j.demeyer@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=daan.j.demeyer@gmail.com; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=daan.j.demeyer@gmail.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
