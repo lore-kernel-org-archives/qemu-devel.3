@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66933CCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9DBCCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7aDz-0004x7-1B; Sat, 11 Oct 2025 10:05:32 -0400
+	id 1v7aE4-00054r-NJ; Sat, 11 Oct 2025 10:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDh-0004XT-Ht
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:18 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1v7aE1-000515-D7
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:33 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDS-0005PT-IQ
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:13 -0400
+ id 1v7aDg-0005ca-Mj
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:33 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3F596C018E;
- Sat, 11 Oct 2025 17:04:49 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5D17AC01A6;
+ Sat, 11 Oct 2025 17:04:57 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id h4NOTl1FrqM0-1JAyxGJA; Sat, 11 Oct 2025 17:04:48 +0300
+ ESMTPSA id h4NOTl1FrqM0-oxyAwMet; Sat, 11 Oct 2025 17:04:57 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191488;
- bh=1uUca7a6+MkNXsTvw98aS79VCYXTlBA27mbsctANXQw=;
+ s=default; t=1760191497;
+ bh=4ZFS7VeU5sKpFc5IFb6anQVAn3TG0buI2JtzIiCbrd4=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=IVk9qAbABs+X9gtRDvFmzH57ruh7XoKXpuMTJ+JuZwmIc9KZj7BEg/WbBALq0IzTT
- oMKYnpAQYxQQibOc4BDC6XcHkjeOkMVy73kIFB7gLWAXG/vr3G6QgxAKpu4OKon21p
- rPbWW3EmojRc4fFKQ+leDpzpHDFOOvLBJ9RRaVoE=
+ b=vUuu02QMaGwryA/CxkzBA76zVAP69XH6wntqloJm2lpk6HX6W19Sqyi6tKiMX6hI7
+ YTcefz+kMwQdyedRHdpqepB8dhmx1k+lrUv3R5KsaTtmszXqMvEVopTDP4aLdLx+s3
+ bsuUVWMfOur4Amv1boyS9ivjHsaTiQxsSB/Tff00=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
-Cc: qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru,
-	eblake@redhat.com
-Subject: [PATCH v2 10/33] qapi/introspect.json: docs: width=70 and two spaces
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 24/33] qapi/sockets.json: docs: width=70 and two spaces
  between sentences
-Date: Sat, 11 Oct 2025 17:04:16 +0300
-Message-ID: <20251011140441.297246-11-vsementsov@yandex-team.ru>
+Date: Sat, 11 Oct 2025 17:04:30 +0300
+Message-ID: <20251011140441.297246-25-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,28 +78,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/introspect.json | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ qapi/sockets.json | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index 53100714a8..c8432c8ed8 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -22,10 +22,10 @@
- # `SchemaInfo`.  This lets QMP clients figure out what commands and
- # events are available in this QEMU, and their parameters and results.
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 32fac51728..473be2ac58 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -58,24 +58,26 @@
+ # @ipv6: whether to accept IPv6 addresses, default try both IPv4 and
+ #     IPv6
  #
--# However, the `SchemaInfo` can't reflect all the rules and restrictions
--# that apply to QMP.  It's interface introspection (figuring out
--# what's there), not interface specification.  The specification is in
--# the QAPI schema.
-+# However, the `SchemaInfo` can't reflect all the rules and
-+# restrictions that apply to QMP.  It's interface introspection
-+# (figuring out what's there), not interface specification.  The
-+# specification is in the QAPI schema.
+-# @keep-alive: enable keep-alive when connecting to/listening on this socket.
++# @keep-alive: enable keep-alive when connecting to/listening on this
++#     socket.
+ #     (Since 4.2, not supported for listening sockets until 10.1)
  #
- # Furthermore, while we strive to keep the QMP wire format
- # backwards-compatible across QEMU versions, the introspection output
+-# @keep-alive-count: number of keep-alive packets sent before the connection is
+-#     closed.  Only supported for TCP sockets on systems where TCP_KEEPCNT
+-#     socket option is defined (this includes Linux, Windows, macOS, FreeBSD,
+-#     but not OpenBSD).  When set to 0, system setting is used.  (Since 10.1)
+-#
+-# @keep-alive-idle: time in seconds the connection needs to be idle before
+-#     sending a keepalive packet.  Only supported for TCP sockets on systems
+-#     where TCP_KEEPIDLE socket option is defined (this includes Linux,
+-#     Windows, macOS, FreeBSD, but not OpenBSD).  When set to 0, system setting
+-#     is used.  (Since 10.1)
+-#
+-# @keep-alive-interval: time in seconds between keep-alive packets.  Only
+-#     supported for TCP sockets on systems where TCP_KEEPINTVL is defined (this
+-#     includes Linux, Windows, macOS, FreeBSD, but not OpenBSD).  When set to
+-#     0, system setting is used.  (Since 10.1)
++# @keep-alive-count: number of keep-alive packets sent before the
++#     connection is closed.  Only supported for TCP sockets on systems
++#     where TCP_KEEPCNT socket option is defined (this includes Linux,
++#     Windows, macOS, FreeBSD, but not OpenBSD).  When set to 0,
++#     system setting is used.  (Since 10.1)
++#
++# @keep-alive-idle: time in seconds the connection needs to be idle
++#     before sending a keepalive packet.  Only supported for TCP
++#     sockets on systems where TCP_KEEPIDLE socket option is defined
++#     (this includes Linux, Windows, macOS, FreeBSD, but not OpenBSD).
++#     When set to 0, system setting is used.  (Since 10.1)
++#
++# @keep-alive-interval: time in seconds between keep-alive packets.
++#     Only supported for TCP sockets on systems where TCP_KEEPINTVL is
++#     defined (this includes Linux, Windows, macOS, FreeBSD, but not
++#     OpenBSD).  When set to 0, system setting is used.  (Since 10.1)
+ #
+ # @mptcp: enable multi-path TCP.  (Since 6.1)
+ #
 -- 
 2.48.1
 
