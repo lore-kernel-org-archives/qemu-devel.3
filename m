@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEC7CCA476
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9595CCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7aDV-0003m0-89; Sat, 11 Oct 2025 10:05:02 -0400
+	id 1v7aDx-0004rN-O5; Sat, 11 Oct 2025 10:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDP-0003bM-OJ
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:04:56 -0400
+ id 1v7aDs-0004kN-Fc; Sat, 11 Oct 2025 10:05:24 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDI-0005OH-KO
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:04:54 -0400
+ id 1v7aDe-0005QC-5p; Sat, 11 Oct 2025 10:05:23 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5A95EC017A;
- Sat, 11 Oct 2025 17:04:44 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C9FE9C0192;
+ Sat, 11 Oct 2025 17:04:50 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id h4NOTl1FrqM0-fRtBLqoK; Sat, 11 Oct 2025 17:04:43 +0300
+ ESMTPSA id h4NOTl1FrqM0-1oQoQZyo; Sat, 11 Oct 2025 17:04:50 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191483;
- bh=+y7XSy4SX2y1bLvavd/0RyzeiTZtL/eIynmuuHDZCAI=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=DKXWf+tt3+ZggYefWNhDvknTbIUnpfc1jYp0072MC59iA3cbVNvgTTU0C7kar3EXy
- V4fb75K4XTWfLwmKAVTsbObjyeaxy5n0JA6xwT1Obj6PRIj8hgRE/WeUffJYkMcB00
- SGbECWowy5CY3eUxmvAvFsd42TQOjzbCn+vLinHE=
+ s=default; t=1760191490;
+ bh=gKfac8l+k6HXx+GuiQXKB7Cy06ACRmzu41QCBlDfSCA=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=tehk68KoAme1pnZ0mmVyaTbiyg868Lblexy2WXKetr6gWiwGvMVk4g3yrUu2jvAf9
+ TfjTtsi2fthFcX5NAcfN9FWK065WkXDI6Pqv46xYoKpWSSgRq+TOtyxKLEgpr5jWXj
+ 6+R1LdlMhQ8OkQk/LIO7moWv2ebl6s3zJhVAW8ww=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
-Cc: qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru,
-	eblake@redhat.com
-Subject: [PATCH v2 00/33] qapi: docs: width=70 and two spaces between sentences
-Date: Sat, 11 Oct 2025 17:04:06 +0300
-Message-ID: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
+ Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org (open list:S390 general arch...)
+Subject: [PATCH v2 12/33] qapi/machine-s390x.json: docs: width=70 and two
+ spaces between sentences
+Date: Sat, 11 Oct 2025 17:04:18 +0300
+Message-ID: <20251011140441.297246-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
@@ -74,85 +75,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ qapi/machine-s390x.json | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Let's bring the documentation in line with the requirements. And
-do check these requirements in QAPI parser.
-
-v2: resend without duplicated patchs. Sorry for the noise.
-
-Vladimir Sementsov-Ogievskiy (33):
-  qapi: Add documentation format validation
-  qapi/acpi.json: docs: width=70 and two spaces between sentences
-  qapi/audio.json: docs: width=70 and two spaces between sentences
-  qapi/block-core.json: docs: width=70 and two spaces between sentences
-  qapi/block-export.json: docs: width=70 and two spaces between
-    sentences
-  qapi/block.json: docs: width=70 and two spaces between sentences
-  qapi/char.json: docs: width=70 and two spaces between sentences
-  qapi/crypto.json: docs: width=70 and two spaces between sentences
-  qapi/dump.json: docs: width=70 and two spaces between sentences
-  qapi/introspect.json: docs: width=70 and two spaces between sentences
-  qapi/job.json: docs: width=70 and two spaces between sentences
-  qapi/machine-s390x.json: docs: width=70 and two spaces between
-    sentences
-  qapi/machine.json: docs: width=70 and two spaces between sentences
-  qapi/migration.json: docs: width=70 and two spaces between sentences
-  qapi/misc-arm.json: docs: width=70 and two spaces between sentences
-  qapi/misc-i386.json: docs: width=70 and two spaces between sentences
-  qapi/misc.json: docs: width=70 and two spaces between sentences
-  qapi/net.json: docs: width=70 and two spaces between sentences
-  qapi/qdev.json: docs: width=70 and two spaces between sentences
-  qapi/qom.json: docs: width=70 and two spaces between sentences
-  qapi/replay.json: docs: width=70 and two spaces between sentences
-  qapi/rocker.json: docs: width=70 and two spaces between sentences
-  qapi/run-state.json: docs: width=70 and two spaces between sentences
-  qapi/sockets.json: docs: width=70 and two spaces between sentences
-  qapi/stats.json: docs: width=70 and two spaces between sentences
-  qapi/tpm.json: docs: width=70 and two spaces between sentences
-  qapi/trace.json: docs: width=70 and two spaces between sentences
-  qapi/transaction.json: docs: width=70 and two spaces between sentences
-  qapi/ui.json: docs: width=70 and two spaces between sentences
-  qapi/vfio.json: docs: width=70 and two spaces between sentences
-  qapi/virtio.json: docs: width=70 and two spaces between sentences
-  qga/qapi-schema.json: docs: width=70 and two spaces between sentences
-  qapi/acpi-hest.json: docs: width=70 and two spaces between sentences
-
- qapi/acpi-hest.json     |   2 +-
- qapi/acpi.json          |  20 ++-
- qapi/audio.json         |   4 +-
- qapi/block-core.json    | 191 +++++++++++++++-------------
- qapi/block-export.json  |  26 ++--
- qapi/block.json         |  18 +--
- qapi/char.json          |  34 +++--
- qapi/crypto.json        |   7 +-
- qapi/dump.json          |   9 +-
- qapi/introspect.json    |   8 +-
- qapi/job.json           |  26 ++--
- qapi/machine-s390x.json |   3 +-
- qapi/machine.json       |  59 +++++----
- qapi/migration.json     | 209 ++++++++++++++++++-------------
- qapi/misc-arm.json      |   6 +-
- qapi/misc-i386.json     |   9 +-
- qapi/misc.json          |  16 ++-
- qapi/net.json           |  61 +++++----
- qapi/qdev.json          |  13 +-
- qapi/qom.json           |  31 +++--
- qapi/replay.json        |   9 +-
- qapi/rocker.json        |  18 ++-
- qapi/run-state.json     |  60 +++++----
- qapi/sockets.json       |  34 ++---
- qapi/stats.json         |   3 +-
- qapi/tpm.json           |   3 +-
- qapi/trace.json         |   3 +-
- qapi/transaction.json   |  33 ++---
- qapi/ui.json            | 108 ++++++++++------
- qapi/vfio.json          |   3 +-
- qapi/virtio.json        | 269 +++-------------------------------------
- qga/qapi-schema.json    |  83 +++++++------
- scripts/qapi/parser.py  |  39 +++++-
- 33 files changed, 713 insertions(+), 704 deletions(-)
-
+diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+index 966dbd61d2..f8ddc0ff8a 100644
+--- a/qapi/machine-s390x.json
++++ b/qapi/machine-s390x.json
+@@ -85,7 +85,8 @@
+ #
+ #     <- { "event": "CPU_POLARIZATION_CHANGE",
+ #          "data": { "polarization": "horizontal" },
+-#          "timestamp": { "seconds": 1401385907, "microseconds": 422329 } }
++#          "timestamp": { "seconds": 1401385907,
++#                         "microseconds": 422329 } }
+ ##
+ { 'event': 'CPU_POLARIZATION_CHANGE',
+   'data': { 'polarization': 'S390CpuPolarization' },
 -- 
 2.48.1
 
