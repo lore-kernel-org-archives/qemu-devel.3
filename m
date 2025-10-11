@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59494CCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28BCCCCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7a86-0006Nq-VD; Sat, 11 Oct 2025 09:59:28 -0400
+	id 1v7aDp-0004ee-M2; Sat, 11 Oct 2025 10:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7w-0006K5-Cu
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:17 -0400
+ id 1v7aDZ-0004Ko-Ul; Sat, 11 Oct 2025 10:05:06 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7a7Z-0004lo-5R
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 09:59:15 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 77C0BC018B;
- Sat, 11 Oct 2025 16:58:20 +0300 (MSK)
+ id 1v7aDN-0005Oh-Bm; Sat, 11 Oct 2025 10:05:04 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0EBC0C0183;
+ Sat, 11 Oct 2025 17:04:47 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uvMPBZ1FEOs0-eAXfuh7z; Sat, 11 Oct 2025 16:58:20 +0300
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id h4NOTl1FrqM0-5GZTqjOt; Sat, 11 Oct 2025 17:04:46 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191100;
- bh=cqJGFcUL6Rzua6pAruHETR88Uz0MgIGITTJfyEQeeIA=;
+ s=default; t=1760191486;
+ bh=0thFphHwZBRGYyoK4iTbQ6WBNY93AwWkUFuAz/JTb9E=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=mn/rwx/y/F2M30V0ToFQ/9MGisnmzocxjCsCkq0ofITtkSzPr6NSAoQyTjrC8WHlE
- Q7R/PQ72yoINSezifwuvbZIkgG4kWuZiLnGgEemiYWClTvu1+usMDu+/osrCqAYz9H
- Fpcfo7viythP29sQhOf9GmlIgF8o/lk7aSLLk5oY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ b=x6wkFQiKtPv0ONBx1N0S0d97gO73XmfFKG7znb/DnHIxKTCShCqqX4gjSBmZfO2+t
+ AkOH2FTn8O7TIZeWxCHNwzrSKs3e+WgbU92LgIYJJIBu3oWqsgCiswZHUUsNZdzcTQ
+ Rd0kn3xRU2e7qiWQvx7s4D6Tq/kAt8Wpju/iwMo4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 23/33] qapi/run-state.json: reflow docs to width=70 and two
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH v2 05/33] qapi/block-export.json: docs: width=70 and two
  spaces between sentences
-Date: Sat, 11 Oct 2025 16:57:26 +0300
-Message-ID: <20251011135754.294521-46-vsementsov@yandex-team.ru>
+Date: Sat, 11 Oct 2025 17:04:11 +0300
+Message-ID: <20251011140441.297246-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251011135754.294521-1-vsementsov@yandex-team.ru>
-References: <20251011135754.294521-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
@@ -78,198 +77,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/run-state.json | 60 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 37 insertions(+), 23 deletions(-)
+ qapi/block-export.json | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index 4757947ca6..b72fbf2579 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -156,7 +156,8 @@
- #
- #     <- { "event": "SHUTDOWN",
- #          "data": { "guest": true, "reason": "guest-shutdown" },
--#          "timestamp": { "seconds": 1267040730, "microseconds": 682951 } }
-+#          "timestamp": { "seconds": 1267040730,
-+#                         "microseconds": 682951 } }
+diff --git a/qapi/block-export.json b/qapi/block-export.json
+index 6878b89dcf..076954ef1a 100644
+--- a/qapi/block-export.json
++++ b/qapi/block-export.json
+@@ -38,8 +38,8 @@
  ##
- { 'event': 'SHUTDOWN', 'data': { 'guest': 'bool', 'reason': 'ShutdownCause' } }
- 
-@@ -171,7 +172,8 @@
- # .. qmp-example::
+ # @NbdServerOptions:
  #
- #     <- { "event": "POWERDOWN",
--#          "timestamp": { "seconds": 1267040730, "microseconds": 682951 } }
-+#          "timestamp": { "seconds": 1267040730,
-+#                         "microseconds": 682951 } }
+-# Keep this type consistent with the `NbdServerOptionsLegacy` type.  The
+-# only intended difference is using `SocketAddress` instead of
++# Keep this type consistent with the `NbdServerOptionsLegacy` type.
++# The only intended difference is using `SocketAddress` instead of
+ # `SocketAddressLegacy`.
+ #
+ # @addr: Address on which to listen (since 4.2).
+@@ -51,8 +51,8 @@
  ##
- { 'event': 'POWERDOWN' }
- 
-@@ -193,7 +195,8 @@
+ # @NbdServerOptionsLegacy:
  #
- #     <- { "event": "RESET",
- #          "data": { "guest": false, "reason": "guest-reset" },
--#          "timestamp": { "seconds": 1267041653, "microseconds": 9518 } }
-+#          "timestamp": { "seconds": 1267041653,
-+#                         "microseconds": 9518 } }
+-# Keep this type consistent with the `NbdServerOptions` type.  The only
+-# intended difference is using `SocketAddressLegacy` instead of
++# Keep this type consistent with the `NbdServerOptions` type.  The
++# only intended difference is using `SocketAddressLegacy` instead of
+ # `SocketAddress`.
+ #
+ # @addr: Address on which to listen (since 1.3).
+@@ -125,8 +125,8 @@
+ # A vhost-user-blk block export.
+ #
+ # @addr: The vhost-user socket on which to listen.  Both 'unix' and
+-#     'fd' `SocketAddress` types are supported.  Passed fds must be UNIX
+-#     domain sockets.
++#     'fd' `SocketAddress` types are supported.  Passed fds must be
++#     UNIX domain sockets.
+ #
+ # @logical-block-size: Logical block size in bytes.  Defaults to 512
+ #     bytes.
+@@ -373,11 +373,12 @@
+ #     cannot be moved to the iothread.  The default is false.
+ #     (since: 5.2)
+ #
+-# @allow-inactive: If true, the export allows the exported node to be inactive.
+-#     If it is created for an inactive block node, the node remains inactive.  If
+-#     the export type doesn't support running on an inactive node, an error is
+-#     returned.  If false, inactive block nodes are automatically activated before
+-#     creating the export and trying to inactivate them later fails.
++# @allow-inactive: If true, the export allows the exported node to be
++#     inactive.  If it is created for an inactive block node, the node
++#     remains inactive.  If the export type doesn't support running on
++#     an inactive node, an error is returned.  If false, inactive
++#     block nodes are automatically activated before creating the
++#     export and trying to inactivate them later fails.
+ #     (since: 10.0; default: false)
+ #
+ # Since: 4.2
+@@ -460,7 +461,8 @@
+ # @node-name: The node name of the block node that is exported
+ #
+ # @shutting-down: True if the export is shutting down (e.g. after a
+-#     `block-export-del` command, but before the shutdown has completed)
++#     `block-export-del` command, but before the shutdown has
++#     completed)
+ #
+ # Since: 5.2
  ##
- { 'event': 'RESET', 'data': { 'guest': 'bool', 'reason': 'ShutdownCause' } }
- 
-@@ -207,7 +210,8 @@
- # .. qmp-example::
- #
- #     <- { "event": "STOP",
--#          "timestamp": { "seconds": 1267041730, "microseconds": 281295 } }
-+#          "timestamp": { "seconds": 1267041730,
-+#                         "microseconds": 281295 } }
- ##
- { 'event': 'STOP' }
- 
-@@ -221,7 +225,8 @@
- # .. qmp-example::
- #
- #     <- { "event": "RESUME",
--#          "timestamp": { "seconds": 1271770767, "microseconds": 582542 } }
-+#          "timestamp": { "seconds": 1271770767,
-+#                         "microseconds": 582542 } }
- ##
- { 'event': 'RESUME' }
- 
-@@ -236,7 +241,8 @@
- # .. qmp-example::
- #
- #     <- { "event": "SUSPEND",
--#          "timestamp": { "seconds": 1344456160, "microseconds": 309119 } }
-+#          "timestamp": { "seconds": 1344456160,
-+#                         "microseconds": 309119 } }
- ##
- { 'event': 'SUSPEND' }
- 
-@@ -247,15 +253,16 @@
- # saved on disk, for example, S4 state, which is sometimes called
- # hibernate state
- #
--# .. note:: QEMU shuts down (similar to event `SHUTDOWN`) when entering
--#    this state.
-+# .. note:: QEMU shuts down (similar to event `SHUTDOWN`) when
-+#    entering this state.
- #
- # Since: 1.2
- #
- # .. qmp-example::
- #
- #     <- { "event": "SUSPEND_DISK",
--#          "timestamp": { "seconds": 1344456160, "microseconds": 309119 } }
-+#          "timestamp": { "seconds": 1344456160,
-+#                         "microseconds": 309119 } }
- ##
- { 'event': 'SUSPEND_DISK' }
- 
-@@ -270,7 +277,8 @@
- # .. qmp-example::
- #
- #     <- { "event": "WAKEUP",
--#          "timestamp": { "seconds": 1344522075, "microseconds": 745528 } }
-+#          "timestamp": { "seconds": 1344522075,
-+#                         "microseconds": 745528 } }
- ##
- { 'event': 'WAKEUP' }
- 
-@@ -281,9 +289,9 @@
- #
- # @action: action that has been taken
- #
--# .. note:: If action is "reset", "shutdown", or "pause" the `WATCHDOG`
--#    event is followed respectively by the `RESET`, `SHUTDOWN`, or `STOP`
--#    events.
-+# .. note:: If action is "reset", "shutdown", or "pause" the
-+#   `WATCHDOG` event is followed respectively by the `RESET`,
-+#   `SHUTDOWN`, or `STOP` events.
- #
- # .. note:: This event is rate-limited.
- #
-@@ -293,7 +301,8 @@
- #
- #     <- { "event": "WATCHDOG",
- #          "data": { "action": "reset" },
--#          "timestamp": { "seconds": 1267061043, "microseconds": 959568 } }
-+#          "timestamp": { "seconds": 1267061043,
-+#                         "microseconds": 959568 } }
- ##
- { 'event': 'WATCHDOG',
-   'data': { 'action': 'WatchdogAction' } }
-@@ -402,7 +411,8 @@
- #
- # @panic: `PanicAction` action taken on guest panic.
- #
--# @watchdog: `WatchdogAction` action taken when watchdog timer expires.
-+# @watchdog: `WatchdogAction` action taken when watchdog timer
-+#     expires.
- #
- # Since: 6.0
- #
-@@ -437,7 +447,8 @@
- #
- #     <- { "event": "GUEST_PANICKED",
- #          "data": { "action": "pause" },
--#          "timestamp": { "seconds": 1648245231, "microseconds": 900001 } }
-+#          "timestamp": { "seconds": 1648245231,
-+#                         "microseconds": 900001 } }
- ##
- { 'event': 'GUEST_PANICKED',
-   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
-@@ -457,7 +468,8 @@
- #
- #     <- { "event": "GUEST_CRASHLOADED",
- #          "data": { "action": "run" },
--#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
-+#          "timestamp": { "seconds": 1648245259,
-+#                         "microseconds": 893771 } }
- ##
- { 'event': 'GUEST_CRASHLOADED',
-   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
-@@ -472,7 +484,8 @@
- # .. qmp-example::
- #
- #     <- { "event": "GUEST_PVSHUTDOWN",
--#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
-+#          "timestamp": { "seconds": 1648245259,
-+#                         "microseconds": 893771 } }
- ##
- { 'event': 'GUEST_PVSHUTDOWN' }
- 
-@@ -542,8 +555,8 @@
- # @arg4: for Windows, third argument of the `STOP`.  For Linux, the
- #     RAX register (x86) or the stack pointer (aarch64) of the guest.
- #
--# @arg5: for Windows, fourth argument of the `STOP`.  For x86 Linux, the
--#     stack pointer of the guest.
-+# @arg5: for Windows, fourth argument of the `STOP`.  For x86 Linux,
-+#     the stack pointer of the guest.
- #
- # Since: 2.9
- ##
-@@ -610,7 +623,7 @@
- #
- # @error-code: TD-specific error code
- #
--# @message: Human-readable error message provided by the guest. Not
-+# @message: Human-readable error message provided by the guest.  Not
- #     to be trusted.
- #
- # @gpa: guest-physical address of a page that contains more verbose
-@@ -644,8 +657,9 @@
- #          "data": { "recipient": "hypervisor",
- #                    "action": "fatal",
- #                    "flags": { "action-required": false,
--#                               "recursive": false } },
--#          "timestamp": { "seconds": 1267061043, "microseconds": 959568 } }
-+#                               "recursive": false } }
-+#          "timestamp": { "seconds": 1267061043,
-+#                         "microseconds": 959568 } }
- ##
- { 'event': 'MEMORY_FAILURE',
-   'data': { 'recipient': 'MemoryFailureRecipient',
 -- 
 2.48.1
 
