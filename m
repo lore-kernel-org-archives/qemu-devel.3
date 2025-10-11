@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D06CCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF5ACCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:20:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7aE7-0005El-Uw; Sat, 11 Oct 2025 10:05:39 -0400
+	id 1v7aE6-0005BO-SN; Sat, 11 Oct 2025 10:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aE3-00055C-Hf
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:35 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1v7aDu-0004pD-Re
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:27 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDq-0005cE-M2
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:35 -0400
+ id 1v7aDe-0005QZ-EB
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:26 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 684B6C01A2;
- Sat, 11 Oct 2025 17:04:56 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A5EB7C019E;
+ Sat, 11 Oct 2025 17:04:53 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id h4NOTl1FrqM0-hEXqO1YY; Sat, 11 Oct 2025 17:04:56 +0300
+ ESMTPSA id h4NOTl1FrqM0-sOkEnhLg; Sat, 11 Oct 2025 17:04:53 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191496;
- bh=Pr3uaR7nVBEcKHlMi3k1Ky1Na2jMyU9B8ylURYPa8/g=;
+ s=default; t=1760191493;
+ bh=Va9tPsZdzTxRbSPf8QsoAdULO2YTnBK/t9JKeUkaz0c=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=OSHFANQdEbOTVZskDrcNydHN9Q+9Xvc129jEgUULu9d9itCm4MbM0A5dvvsi4mUlg
- kQ8vbjBgDOS97yyPJ6vJUi5oc9k9GuVni3P8TrSKJ6GYnl9BERLLFaA3mWaqn7VQp6
- sRfF9Hv+Ednu9FZ9EyBT4P5YUrgj919agCw644O8=
+ b=ExFbdX9bGlQs1z6Pd//ir/8rOGWPqP4mfuhE7gdqUi3Krbun06T0yy0RjWx5SQTff
+ vdjvvNuNXWCZ05OplAOCpzihR+3zthnPBvBj1VYQZN7L9gPzMo8iJksHANU3qxOiec
+ UBfAFIXh61U9H8q0e5i/ptmyarX9usRoWi8bBOYo=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- Jiri Pirko <jiri@resnulli.us>
-Subject: [PATCH v2 22/33] qapi/rocker.json: docs: width=70 and two spaces
+Cc: qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru,
+	eblake@redhat.com
+Subject: [PATCH v2 16/33] qapi/misc-i386.json: docs: width=70 and two spaces
  between sentences
-Date: Sat, 11 Oct 2025 17:04:28 +0300
-Message-ID: <20251011140441.297246-23-vsementsov@yandex-team.ru>
+Date: Sat, 11 Oct 2025 17:04:22 +0300
+Message-ID: <20251011140441.297246-17-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,45 +78,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/rocker.json | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ qapi/misc-i386.json | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 5d2dbd2603..0b211d787e 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
-@@ -102,11 +102,16 @@
- #
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index d1ce8caf25..3783202674 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -137,9 +137,9 @@
  # .. qmp-example::
  #
--#     -> { "execute": "query-rocker-ports", "arguments": { "name": "sw1" } }
--#     <- { "return": [ {"duplex": "full", "enabled": true, "name": "sw1.1",
--#                       "autoneg": "off", "link-up": true, "speed": 10000},
--#                      {"duplex": "full", "enabled": true, "name": "sw1.2",
--#                       "autoneg": "off", "link-up": true, "speed": 10000}
-+#     -> { "execute": "query-rocker-ports", "arguments": { "name":
-+#     "sw1" } }
-+#     <- { "return": [ {"duplex": "full", "enabled": true, "name":
-+#     "sw1.1",
-+#                       "autoneg": "off", "link-up": true, "speed":
-+#     10000},
-+#                      {"duplex": "full", "enabled": true, "name":
-+#     "sw1.2",
-+#                       "autoneg": "off", "link-up": true, "speed":
-+#     10000}
- #        ]}
+ #     -> { "execute": "query-sev" }
+-#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
+-#                      "build-id" : 0, "policy" : 0, "state" : "running",
+-#                      "handle" : 1 } }
++#     <- { "return": { "enabled": true, "api-major" : 0,
++#                      "api-minor" : 0, "build-id" : 0, "policy" : 0,
++#                      "state" : "running", "handle" : 1 } }
  ##
- { 'command': 'query-rocker-ports',
-@@ -246,7 +251,8 @@
+ { 'command': 'query-sev', 'returns': 'SevInfo' }
+ 
+@@ -220,7 +220,8 @@
+ # .. qmp-example::
  #
- #     -> { "execute": "query-rocker-of-dpa-flows",
- #          "arguments": { "name": "sw1" } }
--#     <- { "return": [ {"key": {"in-pport": 0, "priority": 1, "tbl-id": 0},
-+#     <- { "return": [ {"key": { "in-pport": 0, "priority": 1,
-+#                                "tbl-id": 0},
- #                       "hits": 138,
- #                       "cookie": 0,
- #                       "action": {"goto-tbl": 10},
+ #     -> { "execute": "query-sev-capabilities" }
+-#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
++#     <- { "return": { "pdh": "8CCDD8DDD",
++#                      "cert-chain": "888CCCDDDEE",
+ #                      "cpu0-id": "2lvmGwo+...61iEinw==",
+ #                      "cbitpos": 47, "reduced-phys-bits": 1}}
+ ##
 -- 
 2.48.1
 
