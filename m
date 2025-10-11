@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28BCCCCA476
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFF3CCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 14:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7aDp-0004ee-M2; Sat, 11 Oct 2025 10:05:22 -0400
+	id 1v7aEG-0005Ul-Oi; Sat, 11 Oct 2025 10:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDZ-0004Ko-Ul; Sat, 11 Oct 2025 10:05:06 -0400
+ id 1v7aEE-0005P8-Jy
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:46 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7aDN-0005Oh-Bm; Sat, 11 Oct 2025 10:05:04 -0400
+ id 1v7aDw-0005e6-AP
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 10:05:46 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0EBC0C0183;
- Sat, 11 Oct 2025 17:04:47 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 72924C0064;
+ Sat, 11 Oct 2025 17:05:02 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id h4NOTl1FrqM0-5GZTqjOt; Sat, 11 Oct 2025 17:04:46 +0300
+ ESMTPSA id h4NOTl1FrqM0-CZdgs14b; Sat, 11 Oct 2025 17:05:02 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760191486;
- bh=0thFphHwZBRGYyoK4iTbQ6WBNY93AwWkUFuAz/JTb9E=;
+ s=default; t=1760191502;
+ bh=5V8+nPe1WDxsELTvlJ8cDdkGQXkPP96lZ8aVheUJlJU=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=x6wkFQiKtPv0ONBx1N0S0d97gO73XmfFKG7znb/DnHIxKTCShCqqX4gjSBmZfO2+t
- AkOH2FTn8O7TIZeWxCHNwzrSKs3e+WgbU92LgIYJJIBu3oWqsgCiswZHUUsNZdzcTQ
- Rd0kn3xRU2e7qiWQvx7s4D6Tq/kAt8Wpju/iwMo4=
+ b=I/zrZJacW/JQCUZ43wy+YXqKqwDRN7CuYl7HDyy2EqLOnbBrwL8B1OAz6NROxtxIg
+ NzljO060FaX1LhbeZVDEniO+npNfAkkNmWgSIqhbg5AnUbX2b+PVHBsJeGongu8ak6
+ 91Pbv+zc4wl72+Atqq/THpDXW+i1FwN0E5fgKvws=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: armbru@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, eblake@redhat.com,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH v2 05/33] qapi/block-export.json: docs: width=70 and two
- spaces between sentences
-Date: Sat, 11 Oct 2025 17:04:11 +0300
-Message-ID: <20251011140441.297246-6-vsementsov@yandex-team.ru>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v2 33/33] qapi/acpi-hest.json: docs: width=70 and two spaces
+ between sentences
+Date: Sat, 11 Oct 2025 17:04:39 +0300
+Message-ID: <20251011140441.297246-34-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
@@ -77,73 +78,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- qapi/block-export.json | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ qapi/acpi-hest.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 6878b89dcf..076954ef1a 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -38,8 +38,8 @@
- ##
- # @NbdServerOptions:
+diff --git a/qapi/acpi-hest.json b/qapi/acpi-hest.json
+index 28af1266a7..22a28b2199 100644
+--- a/qapi/acpi-hest.json
++++ b/qapi/acpi-hest.json
+@@ -6,7 +6,7 @@
+ # == GHESv2 CPER Error Injection
  #
--# Keep this type consistent with the `NbdServerOptionsLegacy` type.  The
--# only intended difference is using `SocketAddress` instead of
-+# Keep this type consistent with the `NbdServerOptionsLegacy` type.
-+# The only intended difference is using `SocketAddress` instead of
- # `SocketAddressLegacy`.
+ # Defined since ACPI Specification 6.1,
+-# section 18.3.2.8 Generic Hardware Error Source version 2. See:
++# section 18.3.2.8 Generic Hardware Error Source version 2.  See:
  #
- # @addr: Address on which to listen (since 4.2).
-@@ -51,8 +51,8 @@
- ##
- # @NbdServerOptionsLegacy:
- #
--# Keep this type consistent with the `NbdServerOptions` type.  The only
--# intended difference is using `SocketAddressLegacy` instead of
-+# Keep this type consistent with the `NbdServerOptions` type.  The
-+# only intended difference is using `SocketAddressLegacy` instead of
- # `SocketAddress`.
- #
- # @addr: Address on which to listen (since 1.3).
-@@ -125,8 +125,8 @@
- # A vhost-user-blk block export.
- #
- # @addr: The vhost-user socket on which to listen.  Both 'unix' and
--#     'fd' `SocketAddress` types are supported.  Passed fds must be UNIX
--#     domain sockets.
-+#     'fd' `SocketAddress` types are supported.  Passed fds must be
-+#     UNIX domain sockets.
- #
- # @logical-block-size: Logical block size in bytes.  Defaults to 512
- #     bytes.
-@@ -373,11 +373,12 @@
- #     cannot be moved to the iothread.  The default is false.
- #     (since: 5.2)
- #
--# @allow-inactive: If true, the export allows the exported node to be inactive.
--#     If it is created for an inactive block node, the node remains inactive.  If
--#     the export type doesn't support running on an inactive node, an error is
--#     returned.  If false, inactive block nodes are automatically activated before
--#     creating the export and trying to inactivate them later fails.
-+# @allow-inactive: If true, the export allows the exported node to be
-+#     inactive.  If it is created for an inactive block node, the node
-+#     remains inactive.  If the export type doesn't support running on
-+#     an inactive node, an error is returned.  If false, inactive
-+#     block nodes are automatically activated before creating the
-+#     export and trying to inactivate them later fails.
- #     (since: 10.0; default: false)
- #
- # Since: 4.2
-@@ -460,7 +461,8 @@
- # @node-name: The node name of the block node that is exported
- #
- # @shutting-down: True if the export is shutting down (e.g. after a
--#     `block-export-del` command, but before the shutdown has completed)
-+#     `block-export-del` command, but before the shutdown has
-+#     completed)
- #
- # Since: 5.2
+ # https://uefi.org/sites/default/files/resources/ACPI_6_1.pdf
  ##
 -- 
 2.48.1
