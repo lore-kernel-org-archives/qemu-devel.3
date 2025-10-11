@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD7ACCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 23:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F97ECCA476
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 23:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7ix7-0006Jt-8M; Sat, 11 Oct 2025 19:24:41 -0400
+	id 1v7iwt-0006FR-A2; Sat, 11 Oct 2025 19:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7ix5-0006JF-O9
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:39 -0400
+ id 1v7iwq-0006DN-3Q
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:24 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v7ix3-0000vl-To
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:39 -0400
+ id 1v7iwo-0000tZ-De
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 19:24:23 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9B627C01DD;
- Sun, 12 Oct 2025 02:24:26 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 25266C01D9;
+ Sun, 12 Oct 2025 02:24:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a4b::1:3c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 6OWMXt1FjqM0-W9WADeRZ; Sun, 12 Oct 2025 02:24:26 +0300
+ ESMTPSA id 6OWMXt1FjqM0-cYrSavS7; Sun, 12 Oct 2025 02:24:19 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760225066;
- bh=rkKDNqLmUfNjo4O0c7dmnMJaKIu8C/BqjUGQSszHpfU=;
+ s=default; t=1760225059;
+ bh=u27L2M8u6j1kppFVUbBMCV7tSqAkvFYG75S8wBcpS5M=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=z3+o7rhGTlgGdX+V011HX40aWdfxWoTCschahxUEhVHWcFrOHT7EQ6j8lZ8urzR7C
- p+LUU2/sSpTPfEzE6Xa+jMpZUBaEJPUYWZU3kNTJYOCHfVUVX7PZS4oq8YlrBHY5vl
- JkeyOwe/tKGSOAD95UnLhav1HdeQ2O4ILiCzNO1s=
+ b=FCzOM/MzVamUN/ahrHpqUar7lI8P54hsJOKB1adnvpGCj2xSUWt0e18j4n67tGXeo
+ 0STl8rFVj/4KEPhSV7AXfcGsrYPYQyRW/NSZnvLpbmoVzP61S587LaxbqOjiXVbANB
+ 6T5OJc10EBfE/D26qqNsjIsfpqDV6sSmX0wkhZM4=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,9 +45,10 @@ To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  raphael.s.norwitz@gmail.com, vsementsov@yandex-team.ru,
  yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: [PATCH v2 23/23] vhost: add some useful trace-points
-Date: Sun, 12 Oct 2025 02:24:02 +0300
-Message-ID: <20251011232404.561024-24-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 13/23] vhost: move vrings mapping to the top of
+ vhost_virtqueue_start()
+Date: Sun, 12 Oct 2025 02:23:52 +0300
+Message-ID: <20251011232404.561024-14-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251011232404.561024-1-vsementsov@yandex-team.ru>
 References: <20251011232404.561024-1-vsementsov@yandex-team.ru>
@@ -76,129 +77,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/virtio/trace-events | 12 ++++++++++--
- hw/virtio/vhost.c      | 20 ++++++++++++++++++--
- 2 files changed, 28 insertions(+), 4 deletions(-)
+This simplifies further refactoring and final introduction
+of vhost backend live migration.
 
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index aa1ffa5e94..c2529814f9 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -9,8 +9,16 @@ vhost_section(const char *name) "%s"
- vhost_reject_section(const char *name, int d) "%s:%d"
- vhost_iotlb_miss(void *dev, int step) "%p step %d"
- vhost_dev_cleanup(void *dev) "%p"
--vhost_dev_start(void *dev, const char *name, bool vrings) "%p:%s vrings:%d"
--vhost_dev_stop(void *dev, const char *name, bool vrings) "%p:%s vrings:%d"
-+vhost_dev_start_in(void *dev, const char *name, bool vrings) "%p:%s vrings:%d"
-+vhost_dev_start_out(void *dev, const char *name) "%p:%s"
-+vhost_dev_stop_in(void *dev, const char *name, bool vrings) "%p:%s vrings:%d"
-+vhost_dev_stop_out(void *dev, const char *name) "%p:%s"
-+vhost_virtque_start_in(void *dev, const char *name, int idx) "%p:%s %d"
-+vhost_virtque_start_out(void *dev, const char *name, int idx) "%p:%s %d"
-+vhost_virtque_stop_in(void *dev, const char *name, int idx) "%p:%s %d"
-+vhost_virtque_stop_out(void *dev, const char *name, int idx) "%p:%s %d"
-+vhost_dev_init_in(void *dev) "%p"
-+vhost_dev_init_out(void *dev) "%p"
- 
- 
- # vhost-user.c
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+---
+ hw/virtio/vhost.c | 47 +++++++++++++++++++++++------------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
+
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index d02d1d4c34..f15ef8cff6 100644
+index e00ba9ecc8..7390385876 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -1333,6 +1333,8 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-     };
-     struct VirtQueue *vvq = virtio_get_queue(vdev, idx);
- 
-+    trace_vhost_virtque_start_in(dev, vdev->name, idx);
-+
-     r = vhost_vrings_map(dev, vdev, vq, idx);
-     if (r <= 0) {
-         return r;
-@@ -1394,6 +1396,8 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-         }
-     }
- 
-+    trace_vhost_virtque_start_out(dev, vdev->name, idx);
-+
-     return 0;
- 
- fail:
-@@ -1412,6 +1416,8 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
-     };
-     int r = 0;
- 
-+    trace_vhost_virtque_stop_in(dev, vdev->name, idx);
-+
-     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
-         /* Don't stop the virtqueue which might have not been started */
+@@ -1292,30 +1292,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         /* Queue might not be ready for start */
          return 0;
-@@ -1445,6 +1451,8 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
      }
- 
-     vhost_vrings_unmap(dev, vq, true);
-+
-+    trace_vhost_virtque_stop_out(dev, vdev->name, idx);
-     return r;
- }
- 
-@@ -1616,6 +1624,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
- {
-     int i, r, n_initialized_vqs = 0;
- 
-+    trace_vhost_dev_init_in(hdev);
-+
-     hdev->vdev = NULL;
-     hdev->migration_blocker = NULL;
- 
-@@ -1700,6 +1710,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+-
+-    vq->num = state.num = virtio_queue_get_num(vdev, idx);
+-    r = dev->vhost_ops->vhost_set_vring_num(dev, &state);
+-    if (r) {
+-        VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
+-        return r;
+-    }
+-
+-    state.num = virtio_queue_get_last_avail_idx(vdev, idx);
+-    r = dev->vhost_ops->vhost_set_vring_base(dev, &state);
+-    if (r) {
+-        VHOST_OPS_DEBUG(r, "vhost_set_vring_base failed");
+-        return r;
+-    }
+-
+-    if (vhost_needs_vring_endian(vdev)) {
+-        r = vhost_virtqueue_set_vring_endian_legacy(dev,
+-                                                    virtio_is_big_endian(vdev),
+-                                                    vhost_vq_index);
+-        if (r) {
+-            return r;
+-        }
+-    }
+-
+     vq->desc_size = l = virtio_queue_get_desc_size(vdev, idx);
+     vq->desc_phys = a;
+     vq->desc = vhost_memory_map(dev, a, l, false);
+@@ -1338,6 +1314,29 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
          goto fail;
      }
  
-+    trace_vhost_dev_init_out(hdev);
++    vq->num = state.num = virtio_queue_get_num(vdev, idx);
++    r = dev->vhost_ops->vhost_set_vring_num(dev, &state);
++    if (r) {
++        VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
++        goto fail;
++    }
 +
-     return 0;
- 
- fail:
-@@ -2048,7 +2060,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-     /* should only be called after backend is connected */
-     assert(hdev->vhost_ops);
- 
--    trace_vhost_dev_start(hdev, vdev->name, vrings);
-+    trace_vhost_dev_start_in(hdev, vdev->name, vrings);
- 
-     vdev->vhost_started = true;
-     hdev->started = true;
-@@ -2133,6 +2145,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         }
-     }
-     vhost_start_config_intr(hdev);
++    state.num = virtio_queue_get_last_avail_idx(vdev, idx);
++    r = dev->vhost_ops->vhost_set_vring_base(dev, &state);
++    if (r) {
++        VHOST_OPS_DEBUG(r, "vhost_set_vring_base failed");
++        goto fail;
++    }
 +
-+    trace_vhost_dev_start_out(hdev, vdev->name);
-     return 0;
- fail_iotlb:
-     if (vhost_dev_has_iommu(hdev) &&
-@@ -2182,7 +2196,7 @@ static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-     event_notifier_cleanup(
-         &hdev->vqs[VHOST_QUEUE_NUM_CONFIG_INR].masked_config_notifier);
- 
--    trace_vhost_dev_stop(hdev, vdev->name, vrings);
-+    trace_vhost_dev_stop_in(hdev, vdev->name, vrings);
- 
-     if (hdev->vhost_ops->vhost_dev_start) {
-         hdev->vhost_ops->vhost_dev_start(hdev, false);
-@@ -2212,6 +2226,8 @@ static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-     hdev->started = false;
-     vdev->vhost_started = false;
-     hdev->vdev = NULL;
++    if (vhost_needs_vring_endian(vdev)) {
++        r = vhost_virtqueue_set_vring_endian_legacy(dev,
++                                                    virtio_is_big_endian(vdev),
++                                                    vhost_vq_index);
++        if (r) {
++            goto fail;
++        }
++    }
 +
-+    trace_vhost_dev_stop_out(hdev, vdev->name);
-     return rc;
- }
- 
+     r = vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_enabled);
+     if (r < 0) {
+         goto fail;
 -- 
 2.48.1
 
