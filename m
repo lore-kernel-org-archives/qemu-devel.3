@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FEABCCD184
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 08:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 715AFCCD18A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 08:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7Uk3-0006xZ-4o; Sat, 11 Oct 2025 04:14:16 -0400
+	id 1v7Uk8-0006z4-6I; Sat, 11 Oct 2025 04:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1v7Uk0-0006xI-LM
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:14:12 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1v7Uk4-0006y6-CW
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:14:16 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1v7Ujt-0005Yj-HB
- for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:14:12 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e491a5b96so14684155e9.2
- for <qemu-devel@nongnu.org>; Sat, 11 Oct 2025 01:14:05 -0700 (PDT)
+ id 1v7Ujw-0005a6-UJ
+ for qemu-devel@nongnu.org; Sat, 11 Oct 2025 04:14:15 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-4256866958bso1503295f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 11 Oct 2025 01:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760170442; x=1760775242; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760170444; x=1760775244; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YfHqHYCHafO6rnOLQUpDhedy3JSR82AQLNE0adlA1EA=;
- b=D5Xr4mmgV5nxdoeKrK/qsKFbW5QUSK3yXhgk52FhHAQo3yFwxB1diVoEl1UHdlWZPB
- XzbsEgViPpdWs5UHL7JDqOIQ+Or67asnmlkAWzCQkwFG8oP2ALpE4TBU5rWSQnCARECC
- 291/tYITxEj5jjVPW7f4Z2VGrxwkFyZmVjEdUzNOSILXJ2/8u1eo+NdUMFZN670ekS5b
- pxgB9Zq+ab3ZPTZisPxUaD57I/m4Qw8k40eV5oR8N20j7WLF5L2LBY+T1d25hXGjyf8e
- 8+WOjzAJM4/QE4jkgzFM9GfIUO/bn71Cu8n9S20dXcuMOGVQJgpy6KpzRyPKU7vEjNfy
- 49vA==
+ bh=FFsKuj1XUvsrqJs2Cnv0dajt9b4A9uv5ht2bzW4gw+k=;
+ b=NqONjMwLW8O/8PcGME1My1/jmaA4yGClA4VODcI/nGQQjSix7GrK5Lag3hekjarH4W
+ HrWku4PyF+u3iiw9XY2NtT89K/DNfV2RDQYVmsEU8Lk1RNABuKrrlMbt7640aXgzzfLn
+ PF5wC98PdbUsGpj06wskSngSQK+IHmZIgLe79iAde3K4zllX5vrzLrRhQUu0thuAwre9
+ 5oJmAxYvKrtA90+u4k2n50LCEB+r6SSTD58oJE2sD9mOZxVg0e5Dd7hxW66Ezq/7LVOS
+ gMJlYZmZDsgzzJud+hee0A6Jv/StSkBzccxkriw02xOmRuvrxCVLeNRqCVukkkK/Fke/
+ 3TBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760170442; x=1760775242;
+ d=1e100.net; s=20230601; t=1760170444; x=1760775244;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YfHqHYCHafO6rnOLQUpDhedy3JSR82AQLNE0adlA1EA=;
- b=kaG0DAwT6kYl5kuMZDFRw9ZMB6rruOXwNps2iRUDPuhCWE89klsccqtZ2K5WrzLfWt
- kB7vt5sQWQzffJ+/1gemPYOpdaBCb7dXtPbyKe8WuDLITg8W+0T/oxrkMFM2XDBqq18R
- 7tKwBRG7DQd8ikyPDnLKL9Dk5P1zq/T+f3JkVqY0XCoO9zsQAa+gn7DBfYB4xfc8hKRC
- tcCsGEcSKQyhVgcQxObqDCxKuKbwOhg5Jz8i6oDByoAC6SdJy3k5tsuP0Mlwp+jhdVWn
- EmZrRBxZ9qwR5nqM4rrmG3AsJ0JN6zW0Xsr0XRZ5avGxI0AP7wPPefNzoBZWojkNFANh
- +quw==
-X-Gm-Message-State: AOJu0YwdX0e48gqefEXxNeeUju6u714ZLBBeqETRu65NUonRyhAqG11L
- IO6geiYdI23MR1Ckgr2l2q9ce7W5q5q8Zqh/DViQ/DmYcmYzJBxcw4bLp4ruAedV
-X-Gm-Gg: ASbGnct8YNhBhwHb/dcsREryWlyf8xOo+jA4TJ78GXwxiDYet44gJ1kcYcJRX6p4ssN
- 2/SO30tsZwMPW5Va0OaTlRr7onumFC26IiDrHopwiCl1udthSpBMlgVqfQ8Mx9bUl09+DzWiwp0
- 4lM6VYtH93OSePAmkvisEEbJ637FSkPwOxGeuO/zT0S89Ik4EnMyR+LjDCfXEtgv9QbjnskIfNK
- gsJdUuu/fQu/YSd5XVSxDyMvMM2fALmXFHRdF07zSWzXyh7sCtpNm6sxW3p7VvRHuPFFDPZk61F
- W/0qxR4FRX0aqBXJ7psIV9ZIJg/WRmyixuJpyicRwxqZcXb5k2fqan6P5f6AkkfjfWJjER3C46h
- AUQlSPyMMOMRqOfx14lxtPFMQQm+wwYZtMlb6Lgi95UX9D/tr0Hd4T4eM5KcrmnBXDhPS+hCL9D
- zqgUU62gJCXS1OCqdXDcEuY+o6NjNa09M=
-X-Google-Smtp-Source: AGHT+IHx76q4DbGV7kEiEW9a8PJelGWWp4Wwjk3/RVmqZggKjH//xYhqqf15+pKLgUZpYjzijYFwKA==
-X-Received: by 2002:a05:600c:6383:b0:46e:32dd:1b1a with SMTP id
- 5b1f17b1804b1-46fa9a8f146mr101590455e9.7.1760170442561; 
- Sat, 11 Oct 2025 01:14:02 -0700 (PDT)
+ bh=FFsKuj1XUvsrqJs2Cnv0dajt9b4A9uv5ht2bzW4gw+k=;
+ b=AhWifnSmZAXbIB+z0Cn9uJ0f2FqZtZ/eLfJHtcoggd8NvUs5l+0j002lsmynUplpAO
+ VYcD035i2RlW0aM8sV9wc7zToF9jdyNAHKf6fGSp+lqvbfxNBQn+HRGijDkAjbzJdIrs
+ nCELDhR5voePVgd96oFYlVC5XgZJEglqlrmBTWoQT37ZOZSPudMqikbOT4IlkOSvaUOo
+ Tl0bG/vl/fLwAXraVyqFC2KSLNiAfjuLlsItWjwm1mBoQH1HSgTuUmskMe6IL0LqsbVx
+ vbEkTNGgiu73rHfZfLZDGO6UE0JhKlPC4MAWdiM1yYilJWl3NIAfBpEN7bsumq7rKM7v
+ H50w==
+X-Gm-Message-State: AOJu0YwqjAk42Z/XcW5rCBkcrnLiVE9TA5Xkpro46M0V1AIjXXXS/Hhc
+ OxFnofGuRhoP46W6yMZdmvXczL44uOYELf+j4VBKjYlJ+1TgU7ug+/LzQBZc/AIu
+X-Gm-Gg: ASbGncvIuMIrTUly8V9VkS5CWuv/XF+KxnygcvZqxk4Ye4QsA746FLmkYSyShB7eFhS
+ 3bPOTs4xp1mvQemm3hIXuK51me7BWD9FtxFWN6IQV87rpT3G1a56i+v/oUHLZufpCwAg8u5oIlL
+ 4HJvOeBPycPiQy99pi7vpGzHa4nwodHO2GyCiTG/x5wA1mGwJiMBluexUB/s5DwJnTupIH81rM3
+ k3dDbNoLUgV3V2PzhHZ6H6PWQvvUZsRpJ9PXRlp6XTOSHjEq0bEn2h85DGRdcCc9MoSo2ZRJy/E
+ 5GHm4vHEegvHskpBviyDt0OXcoOq05Y/IR7lT6T+lhX/C89O8bMRaFnuieWC1QJTm0Cf4Y5iKc/
+ ftbFAdEhKKzKqV4gg+MGIRji1BaiIQi/9IkAdt4AgJXWTWCJNjcNJZ6mVQ3PKWx3D4g47rFTdHF
+ KjAC3KyfcQyjYpka8VucoDU+fp+RjRQZ8=
+X-Google-Smtp-Source: AGHT+IF+VBVwOfYxasPjB8YLl/5i7d58KDNK4a2qlwF3R/QWfohNXnSnnwe5+CoyrbDiGg3pkob/zw==
+X-Received: by 2002:a5d:64e7:0:b0:3ee:b126:6bd with SMTP id
+ ffacd0b85a97d-4266e8db354mr9013033f8f.50.1760170443405; 
+ Sat, 11 Oct 2025 01:14:03 -0700 (PDT)
 Received: from daandemeyer-fedora-PC1EV17T (d54C349CA.access.telenet.be.
  [84.195.73.202]) by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-46fb497aec2sm83873195e9.1.2025.10.11.01.14.01
+ 5b1f17b1804b1-46fb497aec2sm83873195e9.1.2025.10.11.01.14.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Oct 2025 01:14:02 -0700 (PDT)
+ Sat, 11 Oct 2025 01:14:03 -0700 (PDT)
 From: Daan De Meyer <daan.j.demeyer@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>, Daan De Meyer <daan.j.demeyer@gmail.com>
-Subject: [PATCH v2 2/3] Use g_autofree in unpack_efi_zboot_image()
-Date: Sat, 11 Oct 2025 10:13:46 +0200
-Message-ID: <20251011081347.4063198-3-daan.j.demeyer@gmail.com>
+Subject: [PATCH v2 3/3] Add support for zboot images compressed with zstd
+Date: Sat, 11 Oct 2025 10:13:47 +0200
+Message-ID: <20251011081347.4063198-4-daan.j.demeyer@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251011081347.4063198-1-daan.j.demeyer@gmail.com>
 References: <20251011081347.4063198-1-daan.j.demeyer@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=daan.j.demeyer@gmail.com; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=daan.j.demeyer@gmail.com; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,31 +104,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
 ---
- hw/core/loader.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/core/loader.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
 diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 42edcf2d98..e8be700afb 100644
+index e8be700afb..9eca41a66e 100644
 --- a/hw/core/loader.c
 +++ b/hw/core/loader.c
-@@ -864,7 +864,7 @@ struct linux_efi_zboot_header {
- ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
- {
-     const struct linux_efi_zboot_header *header;
--    uint8_t *data = NULL;
-+    g_autofree uint8_t *data = NULL;
-     ssize_t ploff, plsize;
-     ssize_t bytes;
+@@ -67,6 +67,11 @@
  
-@@ -907,7 +907,7 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+ #include <zlib.h>
+ 
++#ifdef CONFIG_ZSTD
++#include <zstd.h>
++#include <zstd_errors.h>
++#endif
++
+ static int roms_loaded;
+ 
+ /* return the size or -1 if error */
+@@ -882,14 +887,6 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+         return 0;
      }
  
-     g_free(*buffer);
--    *buffer = g_realloc(data, bytes);
-+    *buffer = g_realloc(g_steal_pointer(&data), bytes);
-     *size = bytes;
-     return bytes;
- }
+-    if (strcmp(header->compression_type, "gzip") != 0) {
+-        fprintf(stderr,
+-                "unable to handle EFI zboot image with \"%.*s\" compression\n",
+-                (int)sizeof(header->compression_type) - 1,
+-                header->compression_type);
+-        return -1;
+-    }
+-
+     ploff = ldl_le_p(&header->payload_offset);
+     plsize = ldl_le_p(&header->payload_size);
+ 
+@@ -899,7 +896,22 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+     }
+ 
+     data = g_malloc(LOAD_IMAGE_MAX_DECOMPRESSED_BYTES);
+-    bytes = gunzip(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
++
++    if (strcmp(header->compression_type, "gzip") == 0) {
++        bytes = gunzip(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
++#ifdef CONFIG_ZSTD
++    } else if (strcmp(header->compression_type, "zstd") == 0) {
++        size_t ret = ZSTD_decompress(data, LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, *buffer + ploff, plsize);
++        bytes = ZSTD_isError(ret) ? -1 : (ssize_t) ret;
++#endif
++    } else {
++        fprintf(stderr,
++                "unable to handle EFI zboot image with \"%.*s\" compression\n",
++                (int)sizeof(header->compression_type) - 1,
++                header->compression_type);
++        return -1;
++    }
++
+     if (bytes < 0) {
+         fprintf(stderr, "failed to decompress EFI zboot image\n");
+         g_free(data);
 -- 
 2.51.0
 
