@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0067FCCD185
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Oct 2025 21:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2CF5CCD185
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Oct 2025 00:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7KnM-0001aG-RN; Fri, 10 Oct 2025 17:37:00 -0400
+	id 1v7NWF-0004jn-Bf; Fri, 10 Oct 2025 20:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1v7KnK-0001Zx-UX
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 17:36:59 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1v7KnI-0000Tq-7y
- for qemu-devel@nongnu.org; Fri, 10 Oct 2025 17:36:58 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59AFtuCL029806;
- Fri, 10 Oct 2025 21:36:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=FwmAf1f7AVOmRZ5aT9VsF+gnXMDW+
- GydOoEoEgvcHn0=; b=CrcpEHX5+87S9AWk6yjiNjYamQW6dmlZL4/EcEMZH1FV5
- PiUB6mW4qhCBDz6o2E0tG6zVCQeEzFTCmWzxqGShUhhkHsAFSBBAqSpSonzMsYC2
- Ky1CViIclnn3cm5yUG7nbjD/R24J2n9CggYXkkFowC/AHOPsJ1tJToaDyR1Wu0j/
- 0zR1m6Bv4J87mVWFfWfXyp/uxi2JY9pXLHRRpI/Ek64mFXqPK+WTXA7u6YyerM2M
- LYhNBTDMRnR5P6n/7CHk0nRi6xShUfWounsiDqDEIC16yzrLWCzP3V5qnfh82WlI
- rgs6PwfdPsr/01oYQU+G5UxByu5jmZhssiOGKoP5A==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49nv69vg02-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Oct 2025 21:36:43 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 59AJP0q0010248; Fri, 10 Oct 2025 21:36:42 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 49nv68qdmg-1; Fri, 10 Oct 2025 21:36:42 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com
-Subject: [PATCH 1/1] cpus: resume hotplugged vCPU only when the guest is
- running
-Date: Fri, 10 Oct 2025 14:36:39 -0700
-Message-ID: <20251010213639.1634-1-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v7NWC-0004jM-Ou
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 20:31:28 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v7NW7-00087O-NZ
+ for qemu-devel@nongnu.org; Fri, 10 Oct 2025 20:31:28 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-782a77b5ec7so2405667b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Oct 2025 17:31:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760142679; x=1760747479; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4r8BHN40JRbCy4U2pRuK88b2++kY8Q43hhZHmQLex8I=;
+ b=jgfJ9kjI/LnanJa9sZM+eB0kHmAlxumMFqNPZOsE7fa/oZR7BybA9VygdtSlpdlgsE
+ 2EZgJFGcdJZ24StrLodlATZ38y9gPMUiiG3Wrh9YulV828U1PKA/uKpAIeRLMA3vpAgU
+ zy1FkRVHiMg0yMh2+yyit6ou3cSzFqirz2b0hvZWkArsZs2U5DWrEtGRqzs0eJXUbnnE
+ BASTT7J4x3WGgZqykE+dson13S3Ldqbaf//IbsgYvmwL4wLgeiyHkI57qY//88eQGZk6
+ 53pHRZ8DMdkGJQhcXpXRrtQ4lVWSe1h67hEOxl9OO3Yq+MN3lHPBmqZaA87nY4h6eW2Z
+ O4jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760142679; x=1760747479;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4r8BHN40JRbCy4U2pRuK88b2++kY8Q43hhZHmQLex8I=;
+ b=nLxqCLFG5ey0xGCSo2FmkkvKZTfA4zWg6FuKjUdPZFRQOAJ3FpfyRGiF0UkqtbNkh4
+ g0PpCugMYmi+mo9Jy4lX86IKru/voRqMFT0k4nrtJ6qbA62nDltduj2YyHtZFvmhrS/B
+ imqHy5O5F8+HGLMd9klyUQmszBl1DMtPX0m6g65W5VpotpN1bYWhP8OnXc6CRhuQh9Z2
+ OkvHiwu6oJZvngUSA2iVrzHhacwsY8LbfNeMuHmzTWPb5UC6SsYQH992k00MR5nzPu74
+ 8xKISX7mgTFqlbsqZXQRKGlHt9r2sEB6Qpk4VoRFY6isUwK9ImdU8vlVITZNMVDKUhSe
+ SD2g==
+X-Gm-Message-State: AOJu0YyeWhiS243HuHa62KWAvH+kpHjJefvHQ9uAnVNtNZ1FxCDWtW0n
+ KHKkaRjIJmbq5lhg/M9cKaErz2jjJObo26duJ80y0TgVvQfFngbxpJgoPMttVDbHV0Y=
+X-Gm-Gg: ASbGncukHSeXT7nVhqvPE40uqlyUsRl09nLlnv/WG8ivj3DZ2g2XFvxNHukkJntdWJi
+ owxyKqd3ADH7arXJ5beGA/YpNlTBz5TWBZ6NIovlFf08MlxsEKDxd+EVqv3Oc4rVpiNbwHBQMRu
+ 7sRs6m794fszluefKG7kO4IglbigZz2L2Ta4zyGWYsGHKbYJV7rNoQThoXOU1aU/J2SKpA7W805
+ KKb0s354zv1hAt3HkW2tWcOGHNRk1JWVFGVm14xEaFgEupF1fymVIYvqXW+IL0whHnWgB6CM8ij
+ ZQ03YAu1N+nInSY7hPY8IAkxCF04qyedL7A5Pe+uJmEKg6vFaVuZXBxrYMbCkJoq/227nkn7Nq9
+ LueMpnj1rhgiHa1vJVFlvAfXYkNRvKNjSFh2jtH2YUZLBpkg7uYoq1vbcErgfOGzeDHKn
+X-Google-Smtp-Source: AGHT+IFt5P0oviDbnYmdu2jgB6N+VWIy4OfOwDHoyPkvb6+JY6Au/bNNK2jEF2xSF0SsYyK4DM4pvw==
+X-Received: by 2002:a05:6a00:3d52:b0:781:9ae1:1be6 with SMTP id
+ d2e1a72fcca58-793857098a3mr17368114b3a.6.1760142678830; 
+ Fri, 10 Oct 2025 17:31:18 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7992d2d2e42sm4148274b3a.62.2025.10.10.17.31.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Oct 2025 17:31:18 -0700 (PDT)
+Message-ID: <f297c8ef-cc18-4374-82c1-5f0d64a1708a@linaro.org>
+Date: Fri, 10 Oct 2025 17:31:17 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-10_05,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- suspectscore=0
- spamscore=0 adultscore=0 phishscore=0 mlxscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2510020000 definitions=main-2510100124
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX62/93kuNuCLp
- xOeFN/EnSi78ExWbqvW9yFK+Cw846dvjAkIvH2JTa70MnZswy9VEstoUQm8oCwYjBVembk/IfoR
- ARmnCJt4d8zwsBsz2sIzUe8OqiRwpOt4sJGJMlB4bIUzeJrXfehw90nEWhw0Z7Fcf5WnNk40XPG
- SZXyazLVYYTmL+JWiGeZHqvSjs0IljQ459NQsAKRXg5L0fw4xrX9SRFpROVHx8RUPJhx19YHEsi
- H7mqdJw9Q2zTdkWAhlnQlkVOXA0R5lesULA95z1u9vCyKNxQsjrqrqkPv/qn1XSa/pYNT5uEBs0
- UDbfQfABrT2lFdQuHZ/ddFbZqLPT3lumxdaP3t+y7HL4vx2/HUEy7APqMkXnKqAte/t2W/lWhnu
- LVDgXGlB2WVrwtRTBa72iPkUkdAI+w==
-X-Authority-Analysis: v=2.4 cv=dtrWylg4 c=1 sm=1 tr=0 ts=68e97c6b cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=TpFyzyTL7qCKQcCO:21 a=x6icFKpwvdMA:10 a=yPCof4ZbAAAA:8
- a=qg1BVPZ4bwsD7C7iym0A:9 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: xB6fezvs3HuCcEBwiWDL5Yh6XQk05XJL
-X-Proofpoint-ORIG-GUID: xB6fezvs3HuCcEBwiWDL5Yh6XQk05XJL
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/14] hw/arm/smmuv3: Add initial support for Secure
+ State
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
+ <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>, philmd@linaro.org,
+ jean-philippe@linaro.org, smostafa@google.com
+References: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250925162618.191242-1-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,47 +105,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a new vCPU is hotplugged, cpu->stopped is unconditionally set to false
-by cpu_common_realizefn().
+Hi Tao and Eric,
 
-However, there are scenarios where the guest is not running, i.e., when the
-guest has been stopped via the HMP 'stop' command, or when the instance is
-a live migration target started with "-incoming defer". In these cases, all
-existing vCPUs have (cpu->stopped == true), except for the newly hotplugged
-vCPU.
+On 9/25/25 9:26 AM, Tao Tang wrote:
+> Hi all,
+> 
+> This is the second version of the patch series to introduce initial
+> support for Secure SMMUv3 emulation in QEMU.
+> 
+> This version has been significantly restructured based on the excellent
+> feedback received on the RFC.
+> 
+> This version addresses the major points raised during the RFC review.
+> Nearly all issues identified in v1 have been resolved. The most
+> significant changes include:
+> 
+>    - The entire series has been refactored to use a "banked register"
+>    architecture. This new design serves as a solid base for all secure
+>    functionality and significantly reduces code duplication.
+> 
+>    - The large refactoring patch from v1 has been split into smaller, more
+>    focused commits (e.g., STE parsing, page table handling, and TLB
+>    management) to make the review process easier.
+> 
+>    - Support for the complex SEL2 feature (Secure Stage 2) has been
+>    deferred to a future series to reduce the scope of this RFC.
+> 
+>    - The mechanism for propagating the security context now correctly uses
+>    the ARMSecuritySpace attribute from the incoming transaction. This
+>    ensures the SMMU's handling of security is aligned with the rest of the
+>    QEMU ARM architecture.
+> 
+> 
+> The series now begins with two preparatory patches that fix pre-existing
+> bugs in the SMMUv3 model. The first of these, which corrects the CR0
+> reserved mask, has already been reviewed by Eric.
+> 
+>    - hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0 register
+>    - hw/arm/smmuv3: Correct SMMUEN field name in CR0
+> 
+> The subsequent patches implement the Secure SMMUv3 feature, refactored
+> to address the feedback from the v1 RFC.
+> 
+> 
+> Changes from v1 RFC:
+> 
+>    - The entire feature implementation has been refactored to use a "banked
+>    register" approach. This significantly reduces code duplication.
+> 
+>    - Support for the SEL2 feature (Secure Stage 2) has been deferred. As
+>    Mostafa pointed out, a correct implementation is complex and depends on
+>    FEAT_TTST. This will be addressed in a separate, future patch series.
+>    As a result, this series now supports the following flows:
+> 
+>      - Non-secure Stage 1, Stage 2, and nested translations.
+> 
+>      - Secure Stage 1-only translations.
+> 
+>      - Nested translations (Secure Stage 1 + Non-secure Stage 2), with a
+>    fault generated if a Secure Stage 2 translation is required.
+> 
+>    - Writability checks for various registers (both secure and non-secure)
+>    have been hardened to ensure that enable bits are correctly checked.
+> 
+> The series has been successfully validated with several test setups:
+> 
+>    - An environment using OP-TEE, Hafnium, and a custom platform
+>    device as V1 series described.
+> 
+>    - A new, self-contained test device (smmu-testdev) built upon the
+>    QTest framework, which will be submitted as a separate series as
+>    discussed here:
+>      https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg05365.html
+> 
+>    - The existing non-secure functionality was regression-tested using
+>    PCIe passthrough to a KVM guest running inside a TCG guest.
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> 
+> Tao Tang (14):
+>    hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0 register
+>    hw/arm/smmuv3: Correct SMMUEN field name in CR0
+>    hw/arm/smmuv3: Introduce secure registers and commands
+>    refactor: Move ARMSecuritySpace to a common header
+>    hw/arm/smmuv3: Introduce banked registers for SMMUv3 state
+>    hw/arm/smmuv3: Add separate address space for secure SMMU accesses
+>    hw/arm/smmuv3: Make Configuration Cache security-state aware
+>    hw/arm/smmuv3: Add security-state handling for page table walks
+>    hw/arm/smmuv3: Add secure TLB entry management
+>    hw/arm/smmuv3: Add banked support for queues and error handling
+>    hw/arm/smmuv3: Harden security checks in MMIO handlers
+>    hw/arm/smmuv3: Use iommu_index to represent the security context
+>    hw/arm/smmuv3: Add property to enable Secure SMMU support
+>    hw/arm/smmuv3: Optional Secure bank migration via subsections
+> 
+>   hw/arm/smmu-common.c          |  151 ++++-
+>   hw/arm/smmu-internal.h        |    7 +
+>   hw/arm/smmuv3-internal.h      |  114 +++-
+>   hw/arm/smmuv3.c               | 1130 +++++++++++++++++++++++++--------
+>   hw/arm/trace-events           |    9 +-
+>   hw/arm/virt.c                 |    5 +
+>   include/hw/arm/arm-security.h |   54 ++
+>   include/hw/arm/smmu-common.h  |   60 +-
+>   include/hw/arm/smmuv3.h       |   35 +-
+>   target/arm/cpu.h              |   25 +-
+>   10 files changed, 1257 insertions(+), 333 deletions(-)
+>   create mode 100644 include/hw/arm/arm-security.h
+> 
+> --
+> 2.34.1
+> 
 
-Unpause the hotplugged vCPU only when the guest is running.
+I've been working this on Device Assignment software stack recently 
+published by Arm, to run that under QEMU.
 
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- hw/core/cpu-common.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+[1] 
+https://git.trustedfirmware.org/plugins/gitiles/TF-RMM/tf-rmm/+/refs/heads/topics/da_alp12_v2
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 8c306c89e4..789382cad5 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -30,6 +30,7 @@
- #include "qemu/target-info.h"
- #include "exec/log.h"
- #include "exec/gdbstub.h"
-+#include "system/runstate.h"
- #include "system/tcg.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
-@@ -263,7 +264,10 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
- 
-     if (dev->hotplugged) {
-         cpu_synchronize_post_init(cpu);
--        cpu_resume(cpu);
-+
-+        if (runstate_is_running()) {
-+            cpu_resume(cpu);
-+        }
-     }
- 
-     /* NOTE: latest generic point where the cpu is fully realized */
--- 
-2.39.3
+As part of the implementation, I had to define SMMU Realm registers and 
+some root registers as well.
+I based the work on this series, and the banked approach works well to 
+add Realm registers. For Root registers, since they have different 
+offsets than NonSecure, Secure and Realm ones, they need their own 
+{read,write}_mmio function.
 
+Just that to say that it's a great start, and I'm looking forward to 
+work with the v3.
+
+Regards,
+Pierrick
 
