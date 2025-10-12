@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 410C0CCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 12:49:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5880BCCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 14:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7vVE-0008IU-Bt; Sun, 12 Oct 2025 08:48:44 -0400
+	id 1v7xQG-0007mA-W6; Sun, 12 Oct 2025 10:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1v7vVA-0008I0-K8
- for qemu-devel@nongnu.org; Sun, 12 Oct 2025 08:48:40 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
+ id 1v7xQE-0007ld-Ma
+ for qemu-devel@nongnu.org; Sun, 12 Oct 2025 10:51:42 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1v7vV7-0004vj-34
- for qemu-devel@nongnu.org; Sun, 12 Oct 2025 08:48:39 -0400
+ id 1v7xQB-00009p-GA
+ for qemu-devel@nongnu.org; Sun, 12 Oct 2025 10:51:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760273318; x=1791809318;
+ t=1760280700; x=1791816700;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=iCKfNsca6TQrODX1GPQpeSqhvIvSLIsSf2DdvorZk68=;
- b=XyRq4Xw6mKqknHmlKpPNVNV0zyGn8o+t2O4So92YbUPMX7icM4Lj7hqi
- FImqzXM30LIBahPcgUJvNHUyOYGe9ZqYd3H6n2oLEEsQrObsYegD9H7cM
- TuSNSBXijOHKSDbukhLPG47vL/ucnt6uurIqtxjpn4q9VVtvnOlpPsX+e
- cu6so7tf5pRTdJI7V5uoQq/Uyw+R2zkgL8ooGCJzXUo/0qkPTijbYAJp+
- m9DXiU7dJ8f87PJp0A/Pg0C1ahZxIxKm77A8BOFx03+Tz2s5ec0Mnz5sq
- uuRjzKILMoeCGzX0+77kPqvOZUKwQFuPq72XTu+NbxAOqbuCNErasPQG6 w==;
-X-CSE-ConnectionGUID: V1QQmLkOS2i+BaVip5PC2Q==
-X-CSE-MsgGUID: JgynTR6lS/S9nFgPufUCZA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11580"; a="62582525"
-X-IronPort-AV: E=Sophos;i="6.19,223,1754982000"; d="scan'208";a="62582525"
+ bh=FcPC/m5JKGeOyTkEbq/eXzhFhqTr+zpj1gLGoO/mAgo=;
+ b=kr6sJ6/mBWuQ3ycZY6ACxFfjlEgP1OO+pd5PyZ0au24LJYRw43s70NE+
+ U/PkvPkHEfTDREjDp/n/V3/3axl/4l3miBX2qJiVRIQ9/2MGHpvlRAOek
+ dNi3sbqfvDjH8G8KyUuP/igM2Emod35FtXChE66ZdnfnPg3MijS1DtP+x
+ 8Afkeo4Xywbus1jnEtENpxmmmRWg775MZ9kla+03MbOuPbNKf/eFpjWiy
+ FR+JLLNDfg9Dtv3Qk+kuOOh2jmQYRN63vlJb+kfGd6rvaUdQGmIJV18DK
+ VSCvNHuoxBreRpJzVeAqJc+os2EZqDpMji0YP4ALUnOYPZqpRgOecTkpw g==;
+X-CSE-ConnectionGUID: gtI451wGRCmgy4HVRRWgCA==
+X-CSE-MsgGUID: ZWEZ31wSSLOA5vx6OBlIEQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11580"; a="62468866"
+X-IronPort-AV: E=Sophos;i="6.19,223,1754982000"; d="scan'208";a="62468866"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Oct 2025 05:48:31 -0700
-X-CSE-ConnectionGUID: FMo6yqFaQeeXRdAFwGZ/bQ==
-X-CSE-MsgGUID: 8oO7cidbSOGDnvEI21wOUg==
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Oct 2025 07:51:36 -0700
+X-CSE-ConnectionGUID: 5PpcO0LKSx+xQRumvF6gPA==
+X-CSE-MsgGUID: kOQyEoJuQsmZz9MlTQdH1g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,223,1754982000"; d="scan'208";a="181047865"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+X-IronPort-AV: E=Sophos;i="6.19,223,1754982000"; d="scan'208";a="181069202"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Oct 2025 05:48:30 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 12 Oct 2025 07:51:36 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Sun, 12 Oct 2025 05:48:29 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.2.2562.27; Sun, 12 Oct 2025 07:51:35 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Sun, 12 Oct 2025 05:48:29 -0700
-Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.55) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ 15.2.2562.27 via Frontend Transport; Sun, 12 Oct 2025 07:51:35 -0700
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.4) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Sun, 12 Oct 2025 05:48:28 -0700
+ 15.2.2562.27; Sun, 12 Oct 2025 07:51:35 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ENPFYk0x1NvrQNSjx+X0AsWkcBXS7WEfMyCR+0NEH3w8r0IoXJgzlH7DUowN2BvrO2ppXeNNet64gs8yhIz/zdsuJSWsjIVJcuTDobRqc0gzmCEGYEwIePZeoRqBUBhiO8wlGcLzwq+msg0teb0cT8VnOwy3XkjjZUqC1mnsQBHNgarT1ceJSPfTcQNhRgdw7Zol/P1z902bVnMipVDRjqIkz9Smu5XHtfQtdD9xQN532OK3q5hsLTHeDgE4lwF464+UEAkSmCCceHVs6Rb/4xXbNqsmiPc5Yb+OUClI9qyRwzZMiGdjcIYsLA8NPO8In78kiN3I1r8tR9ma30w0IA==
+ b=LfDlJPxO5Ze4ItNQutCee9KB4GTrOaSEa+F5WeEQLp5VQ0v8iT6iBz2c5dMXFimxzOE7Be7W5IUZgchvhK9uESDGx2sPtIlKJZCdq27kQYfwdsHYGFb8pAIp/puvVJzhlEe3VvOjMxLJN30QucIV2GyyQPQ3ZVoPh75/DX21Kif7PxziciBs/dW/BBfes8XH7YUXGOu15k51r+b4frPVxnqiybLNskdkcaR6H8uyqNfOplrKDqf6SO408ZfRwNl+bQKb7+NXaEBk6JJOK6oQ56XHOp5B/U1oxeZXomJ57FVBiUz81a/B6MkSomXBTE4TTYVVLnxB+soxrzI9vhsZIQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LXwZDwlqH2+ZT2xIvhHFqPmcjJwV1PorX7hQMZj0z8s=;
- b=wJCp+FBjxanDgZjrs/F4AxkbWz/oyIGIaKyMnlyW5TV+ampZstY7MEauq6ox8hVFcSZG2yHSYS5TlO10izxzRXDxCBFzXBtYc04x3B/5u1FYh3v4wHvaq13KfAK1RvcNYgn0pcjB0P+9PEKboXclLpp6/Y9//4MjoyWnRrt7JaT17wQDq/LhSZCJnxTn4FdQ0sEfQdFKaOjbVMMgEDZtgW4k5WmX1wVbRso/rLcfwN7S5UfQ1NwwPcC1/Yqi7ZWoDmaBa0tfcMOUaXQh6T1NVPrfrj8ESamNJhzvSd9EdOjSozdgvUyaT8oH/rLdtEKwwNgKAblgQMCE7ErYihM7qA==
+ bh=7PQKtnZWUnubkxFkJYGpKEnuVB2K39j88OKeTgpQttE=;
+ b=KaF2JoDlMrcLtZzkblBUEINgj6jGnOZ8LZNvPLmqQ1QKeDccbVaHAvEXvm1+UH3xiHmsOqEvdpn36dsGHUn9KllQXdefcDDs3HNr9moKF+0z6Ii7FBQ9K86EpVtRJu9YH+OagmuA25+Qfm5panL1hss1Xfxu392/Tvz+Dx+9Stevqlg1KnhW8yMD16Wx/5iLhyN3V9+XhDPYlXxu3PiVKAWXDdlFDfgbwMTpsMQzIu7U4U/HXL75n6L3r4TrtOjRZga1qKd8/3UhhdC+SKeGQaiLlXKuUdBrx0h88YBPZxUeq7WPeFhzDRTVs65Y7R3pq6eA75Ajx8QDKr/mMqFpfw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ0PR11MB4798.namprd11.prod.outlook.com (2603:10b6:a03:2d5::12)
- by CH3PR11MB8702.namprd11.prod.outlook.com (2603:10b6:610:1cb::7)
+ by SJ0PR11MB5133.namprd11.prod.outlook.com (2603:10b6:a03:2ac::24)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.12; Sun, 12 Oct
- 2025 12:48:27 +0000
+ 2025 14:51:33 +0000
 Received: from SJ0PR11MB4798.namprd11.prod.outlook.com
  ([fe80::d946:6abf:6e7e:fd1e]) by SJ0PR11MB4798.namprd11.prod.outlook.com
  ([fe80::d946:6abf:6e7e:fd1e%7]) with mapi id 15.20.9203.009; Sun, 12 Oct 2025
- 12:48:26 +0000
-Message-ID: <3b920606-8550-481f-8f96-77d0605d2684@intel.com>
-Date: Sun, 12 Oct 2025 20:55:11 +0800
+ 14:51:33 +0000
+Message-ID: <42881757-3e8d-437e-80e6-aa2d409523f6@intel.com>
+Date: Sun, 12 Oct 2025 22:58:18 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/22] intel_iommu: Check for compatibility with
- IOMMUFD backed device when x-flts=on
+Subject: Re: [PATCH v6 12/22] intel_iommu: Handle PASID cache invalidation
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
 CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <mst@redhat.com>, <jasowang@redhat.com>, <peterx@redhat.com>,
@@ -92,108 +91,108 @@ CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <clement.mathieu--drif@eviden.com>, <kevin.tian@intel.com>,
  <chao.p.peng@intel.com>
 References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
- <20250918085803.796942-11-zhenzhong.duan@intel.com>
+ <20250918085803.796942-13-zhenzhong.duan@intel.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20250918085803.796942-11-zhenzhong.duan@intel.com>
+In-Reply-To: <20250918085803.796942-13-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: KUZPR02CA0002.apcprd02.prod.outlook.com
- (2603:1096:d10:33::9) To SJ0PR11MB4798.namprd11.prod.outlook.com
+X-ClientProxiedBy: SG3P274CA0016.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:be::28)
+ To SJ0PR11MB4798.namprd11.prod.outlook.com
  (2603:10b6:a03:2d5::12)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|CH3PR11MB8702:EE_
-X-MS-Office365-Filtering-Correlation-Id: 66fdc0b1-96a4-4924-6255-08de098da2f9
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|SJ0PR11MB5133:EE_
+X-MS-Office365-Filtering-Correlation-Id: 650c4c37-6186-4255-fccc-08de099ed5c8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|42112799006|376014|7416014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bjhiSEFBbW9sdms0MURrM2lYdmZnMEhORDFyUXVMUEFBaVRPYUlWNVM5bWRC?=
- =?utf-8?B?L0IwL1JmQVJ4SFlwNjg4SEhPenprbm40OXJOWWVleEpDdmJucmtjcjNyVzNB?=
- =?utf-8?B?RDhPanh3aG53enF1NGhTNktXVVlZeEEyb2xYZ2F6SEJPM2dOVlBjaEkrYjkw?=
- =?utf-8?B?aXZFbXY2ZUJacTB1Z2pRbFBnQzRjelJMZzVMK1FxVEFzZDMrbG1wZk1Eay9Z?=
- =?utf-8?B?b0VPVDJ3cithRmJBUW1TaWExUmNMM3BLQkllUHVuMDhZWTkvTXBEdHgxbjJL?=
- =?utf-8?B?aXM4V2UzSXQ3WjFWUUdreVdhM3packx3WWRwS2o5V0pYUFRubFZYZlhWZXJ2?=
- =?utf-8?B?UWV4VlF6TVB4RVY2bkwxcTA4SXhWNEVRSUxCampVc01wYWtHek5RMWtwcEdH?=
- =?utf-8?B?cGpteHFocnJRTU1ONmRKUUdFNklBQ2I2amxHQmE5S3A3eUV2NDNrUS9pMENj?=
- =?utf-8?B?TXVJU2NnM1pvZDYwUTlMZ2ZCRk9FNjNPWXhSY2tPbkFZYzUvY2xRVGI2UHV1?=
- =?utf-8?B?bHhYOUR6cTlGS2U2TnY0VGNvV1k4UGw2a1lRNXdoVzJxWmxSSXd4ZUpxVEUr?=
- =?utf-8?B?cmVuT0twRzl2ejlIZ3R5YTlGbEI5S3pXVHo5WDJ1NUJadS9aOVQvcGtnQ2Z2?=
- =?utf-8?B?T1pFRXA2UGlzK3h5dFdEc2ZyZzVVU09oN2VRTkV5ZVRUTFFwbk1Gdy9iS0dz?=
- =?utf-8?B?dDlkNnVIQTlodHUzc3JsTnZwRDNyeUZHQzJLd0FBOTc4Q0Q0VDVVZkwybzdr?=
- =?utf-8?B?UVFhL0pROFZwK2RCT2FIR3YrVXJsenNVSmlLeWdYQ1E0Q0daY2VIUkdKemN6?=
- =?utf-8?B?UlhpL25QODJ5TGZvamxGUzJTNXFwdjBHM0tIYUVNRFhRWEZDRHQyMDBlTUFy?=
- =?utf-8?B?MWZwaXo2WDcrMHpMOTRrakhKa1R0dHZiM0UwbnFwKytkYk1TTEZKL3ZQODFI?=
- =?utf-8?B?NkZKY3IxZ2p4YlhKdlA2WHlZaUlBK0JLV0pBVHVKUGJlcUtBcTd1cWQ4UWJJ?=
- =?utf-8?B?R3cvOUZNRzRoTjg2MW1aVDEvTHZ5N3VhNlJxdTJGWS9TTHZWenZhUVlBOVk0?=
- =?utf-8?B?K2llZjQwY0F2MlZaNSsyUWVNajRvajJIL1h0N2NVUzVoejVOekw1eFlRV2oz?=
- =?utf-8?B?THoyd0hwcytaczQ4N3ozbTVtMENXRWlyektOUVEydnpLbWVTV1NXUk9ZdGw2?=
- =?utf-8?B?WHh2dHhtV3FvNDUvclByT09XQnl4TFQ1NkgzeWxndDZ4UWI5ekRTbVc5OUJz?=
- =?utf-8?B?STF5VFNiQ3Q4RkFNRXZYaGFJcDBWVnNGNDdxSzJEMFpRMXpHb1hpYWYrMUZS?=
- =?utf-8?B?dGtObnZNVi9xdkFxTWJhZGhUZFI3VWZhaUJGeGg2TmpIMDlBbG1IYmxCQVFU?=
- =?utf-8?B?dUh4T0NQOEsxaHVnMGx2eDhqYWhpSFdhTG5zUjVhazJ6YW1iU2dqQWc4aVVI?=
- =?utf-8?B?ZkUzZXdER2syK25XUy82TnZGdytPQ3F6NktVT3dOTEFKK0FtZ1NTdkk3VHdH?=
- =?utf-8?B?ckU1dnRDWXBDcDloaW4zYVMweVlsUXNqUnQzTUFjelJ4OXVIdklzUVN3alh0?=
- =?utf-8?B?MkpUc0hHNlF6L2Q4cW5SODBLbGwwL2JXdEUwVTBVLzBRdS9WUko3bDAwbG5P?=
- =?utf-8?B?UXA3WjRLdTNYeExlRkx3bnQ4S3RDSmJ2ZWNCNEpzUkNPZFZ1K210a0thN2Vk?=
- =?utf-8?B?QWVlK0xYNDNhc2VPNnZaOGpOaS94VXNPM0pERHkwNlZuUWV3ZGhLY1U0S1FW?=
- =?utf-8?B?TDZQZ2hFTzhVUHRkazR4S0JRalpPUEVsd0FVcHA4QVUwVndpcEFMM0NOWFl2?=
- =?utf-8?B?L2tZbmJobjZkZVpkSnlDajFhdTlPVUk1STFtWitPbFBpRkhvODVHbmk0VmVh?=
- =?utf-8?B?SmJxK0pOSjBCWGZrc1Z0RFJQbkNrM0o1dG1Dd1o1ZHFNMTIzZ1lxS3hXektS?=
- =?utf-8?Q?8X129CY4h3hr8pc81pw0rrHa9rJJkGbZ?=
+ ARA:13230040|42112799006|376014|7416014|366016|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dEtsWCttYWR1TS9WeHFCVkQ5bHNDcmt4ZWtESGVTQUtJaCttd2RLbUE4cTc3?=
+ =?utf-8?B?NmdPZVRvT2dkbDFLTER3T3dRanF1L3cxbHczUy90VUJLaXR2NkwyOE5IbTV1?=
+ =?utf-8?B?VXZxcmlkc2Z2UzJ4M3dhV2dMTGI3VGpBTDRvNzNGMHJFVUVoelFoZTI0Q3N1?=
+ =?utf-8?B?OFhzUUNrcnBNdFA1TldCTVc1RWVzczdjaHZOY1ZPbFZNK1czL2QvUDFlQmhS?=
+ =?utf-8?B?R2JFckxVOFBYNkM4UHNUeWFoVjgwZ2NYeU9lZFJxOFROOUVraW5xMEZ3Yjdp?=
+ =?utf-8?B?UGNTSGxtelJHMDl2Rko5WWdQcExXNGVsb0ltV1h2UXc1ZTlqaFdpWnpQWDM4?=
+ =?utf-8?B?UUJoUUgzeHlSOU1FRGh6VytvaTBCaEZnc3RlS25aYU5yUlpoWU1lRnZpcWhn?=
+ =?utf-8?B?SDMzd2E5b3lnL1FpOCtyVk00MUY0dkJTMkFHVEFwOFVsMmovcjBkQS90ZVQw?=
+ =?utf-8?B?TzFlZTVtYjF0bjA0dVdMQWJ1QXA5MTJFSUNuTVZuRFU3Sjg5V1lrS0oyVVY5?=
+ =?utf-8?B?UUNsTTVJdHUzLzYxYXhrL3pJWFdmVVp2TVcwQ3ExNDVIRlNiMUpZSHFUUGhI?=
+ =?utf-8?B?azMxWUZGcXhOK01aeGczQ1FBQkpyVHI3dzc5QVNFcnV5ZG9yeWpEUXYxVnAx?=
+ =?utf-8?B?d0wzcVNlY29DWnhab2tKS2tDM3MvazFaYlJIdUwyQklndlNCS09CaEdVZUpG?=
+ =?utf-8?B?NzVYaGU5aytBcmF4ZTd4ZDhOUzFNL2JxZmhPL1MrM3VIZWh5b1ZLeHB4ak9u?=
+ =?utf-8?B?dmNTcmIyVDJHODFQQ2VuN3lsMDZ6cDd3RlJyVkhjOGxaQkROQkNXNW1QcEMw?=
+ =?utf-8?B?TkFJRzJPbkdnczVPSjRUWnBFOFhhb0hpZWNLUU82d1grQmM1RXZMbjFNamFa?=
+ =?utf-8?B?ZHN0NjVhUVl0UEZ3OFlSZVVDMmpZNDBDTG9JWmlQUnByR2NFWDBFRStWVUo2?=
+ =?utf-8?B?dXJFN3FHdjZkWmtBU1g1QVRlTm5vNk9hWnVWU3FaQVlncXBmdDRPNG5TYXJL?=
+ =?utf-8?B?bXBXVGxwY3F5OUlmTXIwbVRWai9ySnA5L2N6WDJScUkrTnhFb2U3MHZ6S2k2?=
+ =?utf-8?B?VkRuV0NvVnpvbEtBUll5TWxSWExKZC9OcmJUV3RDUEhBeEo4bFM4SnJZNWc5?=
+ =?utf-8?B?WnV0WkxTeS8xOFY0ZWRBaGtrUGhpcXl0dDNVdnk5blBCVXFvbnJKZlliMWtD?=
+ =?utf-8?B?VHJldWkrai9pVlBnNi9Zb2t6Rm94ekFPamFrdDdTaXNuL3lhamNTc2ZOVXlr?=
+ =?utf-8?B?eHc0aHZTN0QzRVhWUWdiTlJpTHEwb2xGNUpnUlk5b2JsdXhjQ2QrcVdQK2Zm?=
+ =?utf-8?B?UVl4cGJvKzdLWm1TLzMzUXZiZ1BtUjJZdXMybGhjUkJ0QjQxbTl1ZlNBYk5x?=
+ =?utf-8?B?eVpGVEc0Tng1cEt5R0YxVUdoUUtCbG5VUk9rREhBbm83QklGOFlIZVB0cHZz?=
+ =?utf-8?B?cmNNaE9za21EQmRrdUVRN3BtaG45SGhZOCtoN24yYzA4NU1vaWE2U0tTamh1?=
+ =?utf-8?B?SGk1bHNsS2RyRTRHV3NWcmpFMmZjSGdqSktTaUhjT0NMSVU2N0YvMjN4VGJr?=
+ =?utf-8?B?cWlYcjhNT0lrbmszNm8zWEhmdVNuS1dIZmFBNEZ1akY0UGFtNG9RRnVNRWRJ?=
+ =?utf-8?B?RTlSS1kvSDZtdDZIVUlkRkUySC9MakM2aTNkbmFBZmZ6OVYxbU5EZzJzdE5a?=
+ =?utf-8?B?ZWhFbW1iVG8yZExhL2tPWjlWZ2wzVTJlMXFYYlhsdDJvWlpjZmlUWHRWTWZT?=
+ =?utf-8?B?eVpnQ2dCK3RZWkpnSzdKa0NWanl6Smt2MklNWnFIdFlJN0tpd1lSR2RyOGQw?=
+ =?utf-8?B?c2NHd1FyWThIb2gwWHdidHR1OXZ3bVpqbEM5dFNjQjFLNWgwYWI1ZldrY1ZJ?=
+ =?utf-8?B?bGNwdXd5SHlwbER6MHJmZkFreHU5MElQRGxXdkZ0cE55dmJCUjczTnVZQWpv?=
+ =?utf-8?Q?1GRiIl6oe/G+LodLkZOGlGomNdrUnnCG?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR11MB4798.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(42112799006)(376014)(7416014); DIR:OUT;
+ SFS:(13230040)(42112799006)(376014)(7416014)(366016)(1800799024); DIR:OUT;
  SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dmZMb3ppREl0c3B5KzE0ajhzamYvUXVXRktGV2xzeXA2T2hoeCt4ZkxCS2hG?=
- =?utf-8?B?K09rSmdlWEVteDEyOExjdGtlbU9sOXo4ZWVDNHhmYVU1OHRjNXU2VDZCWGJa?=
- =?utf-8?B?UDlVbTFPOUpmeWFoc0UwbTNhcE9HVEpFVjhpSVdUbC9iWWVWNFZrZWtZaWo5?=
- =?utf-8?B?QmltRko1aitLM1NRQVk2OGNYaW1UaHNmNEplOGcwcHVONEpTNG5PVmJaOGdY?=
- =?utf-8?B?TloxRDVyVmlwN2paSmVhOE5laHNlc094azM5N2VSb3hkOUZRQlN2bW5qY2R3?=
- =?utf-8?B?MStXbG9LRWRmd2w0c3MyNXNrL3dnRk9xUlFNVjlwbFZ3ckhEQSt0eC85RWtk?=
- =?utf-8?B?UHJ0amQyRXlCb1JDSFY5N3hzVlVCcDhTR0ZYTlJFWmZFOXhvR2NqdW9DRm82?=
- =?utf-8?B?TXU5N3Y0Q1RWR2I5emFqR3NlUWtqalZHU0NyenZPTE5TSmppcXRuVWV5V0ZF?=
- =?utf-8?B?YlpCUEp2akhjTUZRYUtGYmNXaTNvWEZycmJMOGNZeDFSRGEzU0xla1Ryd2t5?=
- =?utf-8?B?Q3NCQkFIb2ZIWDJIWWMweGQ1bytuektFK0MxRzkzeHk4c3hQSEJZUlRCQnFv?=
- =?utf-8?B?VktJMEJna3NrTkpJSDFWYWRXNXllWjcxYkNmRlJXTE1hWmlhQS81SGl5aXNQ?=
- =?utf-8?B?QTBjRWl6SFRUcUNlbWluSHlxMzhsM0dPam0xU3o4Y2NXOTFvRVM2b2hDWDB2?=
- =?utf-8?B?NTlsa0lZYUpQWS8xODJJNS9wLytscldiMkszTlZ6d0VVK0ZWTERIR3N5SGcv?=
- =?utf-8?B?NVBHeEhjL2pGSkU1V3R0Y3JpN1U4SU5JTUpVa0VtWHlXZjRyU0Z3L0VEU04z?=
- =?utf-8?B?bTU2WWQ2bWZSdWZMbzBIMEhKd1hUdXZhZHZtT1ZDN1pDZ2ZJcEZnamhTNEda?=
- =?utf-8?B?cXloN1pSZ2lDNkFtMEE2dWs0T21vNDJlYWRBQkllS2FyRlVpWFFQVncyRElQ?=
- =?utf-8?B?a1laTzNGV203d0pnaDI1a3Q4TmhibkZOOUdORVhrc1U0MFdsVlFUc3ZGTG8y?=
- =?utf-8?B?TElMbklWZ1doL1RDUWw3WmNMK2U4ZU4zNUZzSkpJNlNPa2dUNkJSVVBBeTlY?=
- =?utf-8?B?WGVCem00T2xSQW1KVW12UFBOT3U0YlpHRHV2blYzS2crUUtzSWhkT2RrenFS?=
- =?utf-8?B?bk04d3BoWXhoSDg1SUFiVmxnNFVpQ3lyR1lkVzF5MXBCRHNVOWxhYTV6R1hQ?=
- =?utf-8?B?K2xUdmhHa1VNalkxTGpjMkRsKzBKMTlTTVVOMm5aM0haNmRnMnBqY2FPVlZU?=
- =?utf-8?B?YVFocVRqbUhFT3FuZnhWcSt4Q0JVOUdPYklHdEtQVmRoQ3dTOG9CQnVRbVJM?=
- =?utf-8?B?dlV5dlBTRFJvYWwxaEV3YmZQUEN3M0N4ZWloTVVYcmExblBTZlk1SXJqbW42?=
- =?utf-8?B?STE1d05NQjQyK3cwWHBGUlpTTkc3QkZiQVkwRkxBZUQ4UU42WCtTUVUrUUln?=
- =?utf-8?B?Z0M5b2l4WitoSk1GbEVmWm1kUllDWXBRRXVOWmVZOHZ1V2dnVUQ4c0VWUVlB?=
- =?utf-8?B?RkxucUlaNzk0YVBuY2lYdkxSeU15cEY4YlRBb3RXVUtMV3gwZDhwYmFaQjIr?=
- =?utf-8?B?a28yL0pYZHF2eDR0cjQ0dVhiMFlETlgrbnFDWnNDdDBsTzJkeExCMXRNN3VM?=
- =?utf-8?B?UTUrWERXcnU3TXRiaGJxZ1NxelJ0WWQ0NVh5SCthS3JzODBzelE1OU95N1ZT?=
- =?utf-8?B?WE9RalpJdnVJNEJoTHNrcUVRMjI5em5qcTJSeGk3NERaM0F6K2RRMmpLVkpq?=
- =?utf-8?B?VFBKdXhNRzU5ek1abDNGN2UyOTgxSlF1YkEvUmg5Q0R1ODRnVlA5RGIzSGM3?=
- =?utf-8?B?dGkwT3MvTktUd3lTWU56VGlpMGFMNlhJWUxWZHV6MHV2MGQyYlpFcTFqZldK?=
- =?utf-8?B?ZGE3eDRMdFg4bks5YU5wc2tRSkNJVTh6M0JBaGxRZ2RxVVdnODlvdEVUczhS?=
- =?utf-8?B?TlhBT1AwZkhvNW9NVVdQQzRnTFlkNmM1WVNwQVR3dFhyZm5yTlJyQ0pxUy9i?=
- =?utf-8?B?RWRzb3ZvaThHOUx5dG5NTXF5TENydlFYejB4YmtPRTJoSThjSnM1N2NPTXZR?=
- =?utf-8?B?U09UaHlvZW9jWHBBUlBCeEN4eFJYaytRZzdtUU1uS1N5S2NyUjBXVUpjOFJq?=
- =?utf-8?Q?3/VgLJlA8vgPVDmxTBf6jZkZc?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66fdc0b1-96a4-4924-6255-08de098da2f9
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WlBDdFEzTU9mRll1ZDJwakQvTnhNd0dQamJDa1puQjU0SjFvdVlIVHdwdXVj?=
+ =?utf-8?B?Q0drUWFUdFZkR0tFa0g3TzkvMVR6VmlKdUhnbVdhVytEQTI2eE9YNXBsakkv?=
+ =?utf-8?B?MHBDQ204cm9DLzNvNGRHa0JqdkhYTzc3Rm9IZHpacGdzbjVHSG50ZGZ5UGUz?=
+ =?utf-8?B?TWpLcTh4bGZFQjBRa28rMkppOVVFaFhGRFdWMVdrNUozRHN4SHVHQmR3L00x?=
+ =?utf-8?B?czBzbUZacmFTekFRSGYzZzdWRlhyL0lpNkE2bm13bkYvWk90OEhwUjU1Y0M3?=
+ =?utf-8?B?eGNHRTRqaEYzZTBnS1pHbHphZUZGek1FaXM4Y2xUSmhVMEtrT2l4NERQK3VF?=
+ =?utf-8?B?dWR0aFJraXN5KzE0RlRsdStmaERETlZETGlaZTVrdWdpOFF0T0ZWMGRRbE1H?=
+ =?utf-8?B?WTBRbk5pZjJVL0NEenpqNCtyNlhQRXRvejNoSitzY3FXclZraTVIOGF1Y0pa?=
+ =?utf-8?B?OTZYOERNTW9lR1M5aldXckIzUnlDOHNnWWRNTXpEMUxRRTBMdUNGQ2F1TUkr?=
+ =?utf-8?B?QzI2aHIxekdEYkpBK3JTK2J5YjcyVFhPaHFCSkplTHZNRUZrWDU5dFBqSWtj?=
+ =?utf-8?B?UWQ3M2QxS1YwaGxwb1lnWW9IL0RSRnZGeFRRZENVdjFZOStaNVIyRkZITUZT?=
+ =?utf-8?B?aG9LSXdaK0YrQlZSSmpSNFJIcXhzQ0tVQ0EyYkxNYzNKY1Y0S25WQWJkRkp1?=
+ =?utf-8?B?WnE2b1pwMEtxRUh0OFpDV3hWdlQzN0VaaFo3UjNoR0ZJNHhZUFFQcWZGbjVk?=
+ =?utf-8?B?OVAvN2xBVmJ5blRWRDQ3WCtSd1phSHcxekYxeHFzMldpQWpzRE0vcy9HK3VF?=
+ =?utf-8?B?QjAvOS9pdFY4TTRGc01nVzVzajRQU2FjcmRWZTAwUUhZcHNUMkUzWlJiU0Rp?=
+ =?utf-8?B?aFpLYTVYWVJRVXZJdUdmem5USDUySTVTS2JYSS9tcFhJbjdmc2pDeVF1WWgv?=
+ =?utf-8?B?OXcyUVJGOWdkTmJZSnVPZEV2Z1NmMGF5bEN4VFluRlNQQ2swaUZvd2ordnUv?=
+ =?utf-8?B?dHFpc0lvTis3MDJVUDZJMnJETmtTVkVObHlLekQyRjBBcitqZ0U2bmQ4VXUx?=
+ =?utf-8?B?U0tXTHRWa2VVQVdueTBDSHlNbEVzSWtXVDdOWWJYVHhkR2p2TkVkVFEySmxY?=
+ =?utf-8?B?REVPMXo2Zk5pbVp2VkZsRUNGWitWSHd3V29yTHkzNGFTc1VPZ0piZ3JVd0E2?=
+ =?utf-8?B?Q1VTVzYvcVFvZndLWlU1aGNhK1pQckdGaDQyeGN2V2pKa1VjbDNZT2RCMnZE?=
+ =?utf-8?B?R0dJekNEbHUyR2xKR216ZXp3UHZtcVNrWWhwejBRYmlkSkFyM3NLbkZCOG5h?=
+ =?utf-8?B?Mm90WlZudmtuRVVxTTkvUlQ5a3pBVXF0NkVzVEJUbjBOVHZ5eU1OUlAwcm1D?=
+ =?utf-8?B?QTNxOXVraXlSN3YrK2dHRzI2YmFxRk9aUmJUNlBZMTVSYjZ3NGpJVnBhN0Qv?=
+ =?utf-8?B?TVpJQzhmQUU2ZTZES3h2cy8vL2JKZjlIYy9RRnhTR1pYc2lCbDZZNGxQMjhj?=
+ =?utf-8?B?L251UUJZbWFna1JIeUtWMElJSWY4eHRSa1Q5dDhsZGY2bmdCTjd1QTRVYmU5?=
+ =?utf-8?B?WVczdmpjNUNJRzJHK1FwdnM0RkFVVGMrQWdlQTU4dXNpRzE2ek5mZ2o2enBj?=
+ =?utf-8?B?Y043MGJmVVdCSjZXRjhiYTYyWWZ6L2tkQmoyZFBsS0N3blFLV20rYVFJRkhT?=
+ =?utf-8?B?ZGZsYkJDS3N5WU1PRFpDY3hsVzg3OEtwMm5nLzR2WUIwemdNWnk1L0UvTWdl?=
+ =?utf-8?B?a3ZlWmF4UGZqWm12RTVIdFdiMTdYMUg2eHhCcUw1MFp2UVlsYUNaUWswOVJM?=
+ =?utf-8?B?TnJHN2lkd3NETTFvY0RrQmM5R3k3YUNoY2JiWnJpRlRZcURBejhhWEpYZGxY?=
+ =?utf-8?B?UHpENGY0UmxaV0I0OTYzc2tiU0xoYXhKTHpjQUgraTU0US9tMEV6UTRMVDFz?=
+ =?utf-8?B?eGNIN0x6ZHJRUTZ0bHpUVzZ1MkRUMGNXby9LeGtUWFdrYTcrWDEvWnZLU3RO?=
+ =?utf-8?B?OWxYTU92bHV0emlWZlQzK3dSZ3FEMkVwcnZZTUtwbU5hL0ZFS0NKYnBZbEJr?=
+ =?utf-8?B?WGZVME0xNDc3RnUvM0NJcTVDcjJXeGJ1enFKT25qdkx4dnl4ek1pWUlFV3Ru?=
+ =?utf-8?Q?+Wf4OdO7gMQVY3l2ZeGVyVa28?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 650c4c37-6186-4255-fccc-08de099ed5c8
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4798.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2025 12:48:26.5185 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2025 14:51:33.2089 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qxOVV9Dz2539A4sT8k+ZHuMUcmJN+5dbJTeCsEfKLsTeO3IMyjPsuLBrFTMLxN0ZyOXNhzpYoD9noSTOfKO3Uw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8702
+X-MS-Exchange-CrossTenant-UserPrincipalName: ocCuByeugks0YCuydLyvrW3HGljtKEaP+aiBIkKMdHXkW4S0sKnRE1ZFtH7NS84MdBd/hvwRJPxiEgeRF95HVw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5133
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -219,22 +218,256 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/9/18 16:57, Zhenzhong Duan wrote:
-> When vIOMMU is configured x-flts=on in scalable mode, first stage page table
-> is passed to host to construct nested page table for passthrough devices.
+> This adds PASID cache sync for RID_PASID, non-RID_PASID isn't supported.
 > 
-> We need to check compatibility of some critical IOMMU capabilities between
-> vIOMMU and host IOMMU to ensure guest first stage page table could be used by
-> host.
+> Adds an new entry VTDPASIDCacheEntry in VTDAddressSpace to cache the pasid
+> entry and track PASID usage and future PASID tagged DMA address translation
+> support in vIOMMU.
 > 
-> For instance, vIOMMU supports first stage 1GB large page mapping, but host does
-> not, then this IOMMUFD backed device should fail.
+> When guest triggers pasid cache invalidation, QEMU will capture it and
+> update or invalidate pasid cache.
 > 
-> Even of the checks pass, for now we willingly reject the association because
-> all the bits are not there yet, it will be relaxed in the end of this series.
+> vIOMMU emulator could figure out the reason by fetching latest guest pasid
+> entry in memory and compare it with cached PASID entry if it's valid.
+> 
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   hw/i386/intel_iommu_internal.h |  19 +++-
+>   include/hw/i386/intel_iommu.h  |   6 ++
+>   hw/i386/intel_iommu.c          | 157 ++++++++++++++++++++++++++++++---
+>   hw/i386/trace-events           |   3 +
+>   4 files changed, 173 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index 9cdc8d5dbb..d400bcee21 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -316,6 +316,7 @@ typedef enum VTDFaultReason {
+>                                     * request while disabled */
+>       VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
+>   
+> +    VTD_FR_RTADDR_INV_TTM = 0x31,  /* Invalid TTM in RTADDR */
+>       /* PASID directory entry access failure */
+>       VTD_FR_PASID_DIR_ACCESS_ERR = 0x50,
+>       /* The Present(P) field of pasid directory entry is 0 */
+> @@ -493,6 +494,15 @@ typedef union VTDInvDesc VTDInvDesc;
+>   #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
+>   #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
+>   
+> +/* PASID-cache Invalidate Descriptor (pc_inv_dsc) fields */
+> +#define VTD_INV_DESC_PASIDC_G(x)        extract64((x)->val[0], 4, 2)
+> +#define VTD_INV_DESC_PASIDC_G_DSI       0
+> +#define VTD_INV_DESC_PASIDC_G_PASID_SI  1
+> +#define VTD_INV_DESC_PASIDC_G_GLOBAL    3
+> +#define VTD_INV_DESC_PASIDC_DID(x)      extract64((x)->val[0], 16, 16)
+> +#define VTD_INV_DESC_PASIDC_PASID(x)    extract64((x)->val[0], 32, 20)
+> +#define VTD_INV_DESC_PASIDC_RSVD_VAL0   0xfff000000000f1c0ULL
+> +
+>   /* Information about page-selective IOTLB invalidate */
+>   struct VTDIOTLBPageInvInfo {
+>       uint16_t domain_id;
+> @@ -552,6 +562,13 @@ typedef struct VTDRootEntry VTDRootEntry;
+>   #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
+>   #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
+>   
+> +typedef struct VTDPASIDCacheInfo {
+> +    uint8_t type;
+> +    uint16_t did;
+> +    uint32_t pasid;
+> +    bool reset;
+> +} VTDPASIDCacheInfo;
+> +
+>   /* PASID Table Related Definitions */
+>   #define VTD_PASID_DIR_BASE_ADDR_MASK  (~0xfffULL)
+>   #define VTD_PASID_TABLE_BASE_ADDR_MASK (~0xfffULL)
+> @@ -573,7 +590,7 @@ typedef struct VTDRootEntry VTDRootEntry;
+>   #define VTD_SM_PASID_ENTRY_PT          (4ULL << 6)
+>   
+>   #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
+> -#define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
+> +#define VTD_SM_PASID_ENTRY_DID(x)      extract64((x)->val[1], 0, 16)
+>   
+>   #define VTD_SM_PASID_ENTRY_FSPM          3ULL
+>   #define VTD_SM_PASID_ENTRY_FSPTPTR       (~0xfffULL)
+> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+> index 3351892da0..ff01e5c82d 100644
+> --- a/include/hw/i386/intel_iommu.h
+> +++ b/include/hw/i386/intel_iommu.h
+> @@ -95,6 +95,11 @@ struct VTDPASIDEntry {
+>       uint64_t val[8];
+>   };
+>   
+> +typedef struct VTDPASIDCacheEntry {
+> +    struct VTDPASIDEntry pasid_entry;
+> +    bool valid;
+> +} VTDPASIDCacheEntry;
+> +
+>   struct VTDAddressSpace {
+>       PCIBus *bus;
+>       uint8_t devfn;
+> @@ -107,6 +112,7 @@ struct VTDAddressSpace {
+>       MemoryRegion iommu_ir_fault; /* Interrupt region for catching fault */
+>       IntelIOMMUState *iommu_state;
+>       VTDContextCacheEntry context_cache_entry;
+> +    VTDPASIDCacheEntry pasid_cache_entry;
+>       QLIST_ENTRY(VTDAddressSpace) next;
+>       /* Superset of notifier flags that this address space has */
+>       IOMMUNotifierFlag notifier_flags;
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index d37d47115a..24061f6dc6 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -1614,7 +1614,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
+>   
+>       if (s->root_scalable) {
+>           vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+> -        return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
+> +        return VTD_SM_PASID_ENTRY_DID(&pe);
+>       }
+>   
+>       return VTD_CONTEXT_ENTRY_DID(ce->hi);
+> @@ -3074,6 +3074,144 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+>       return true;
+>   }
+>   
+> +static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
+> +                                            VTDPASIDEntry *pe)
+> +{
+> +    IntelIOMMUState *s = vtd_as->iommu_state;
+> +    VTDContextEntry ce;
+> +    int ret;
+> +
+> +    if (!s->root_scalable) {
+> +        return -VTD_FR_RTADDR_INV_TTM;
+> +    }
+> +
+> +    ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus), vtd_as->devfn,
+> +                                   &ce);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +
+> +    return vtd_ce_get_pasid_entry(s, &ce, pe, vtd_as->pasid);
+> +}
+> +
+> +/*
+> + * For each IOMMUFD backed device, update or invalidate pasid cache based on
+> + * the value in memory.
+> + */
+> +static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+> +                                        gpointer user_data)
+> +{
+> +    VTDPASIDCacheInfo *pc_info = user_data;
+> +    VTDAddressSpace *vtd_as = value;
+> +    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
+> +    VTDPASIDEntry pe;
+> +    uint16_t did;
+> +
+> +    /* Ignore emulated device or legacy VFIO backed device */
+> +    if (!vtd_find_hiod_iommufd(vtd_as)) {
+> +        return;
+> +    }
+> +
+> +    /* non-RID_PASID isn't supported yet */
+> +    assert(vtd_as->pasid == PCI_NO_PASID);
+> +
+> +    if (vtd_dev_get_pe_from_pasid(vtd_as, &pe)) {
+> +        /*
+> +         * No valid pasid entry in guest memory. e.g. pasid entry was modified
+> +         * to be either all-zero or non-present. Either case means existing
+> +         * pasid cache should be invalidated.
+> +         */
+> +        pc_entry->valid = false;
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * VTD_INV_DESC_PASIDC_G_DSI and VTD_INV_DESC_PASIDC_G_PASID_SI require
+> +     * DID check. If DID doesn't match the value in cache or memory, then
+> +     * it's not a pasid entry we want to invalidate.
 
-might be good to note that nested cap is required but it's already
-covered in the core, so this patch does not check it. Otherwise, it
-would be a question why it is not added without checking previous comments.
+I think comparing DID applies to the case in which pc_entry->valid is
+true. If pc_entry->valid is false, this means no cached pc_entry yet. If
+pe in guest memory is valid, the pc_entry should be updated/set hence
+the bind_pasid operation (added in later patch) would be conducted.
+
+> +     */
+> +    switch (pc_info->type) {
+> +    case VTD_INV_DESC_PASIDC_G_PASID_SI:
+> +    case VTD_INV_DESC_PASIDC_G_DSI:
+> +        if (pc_entry->valid) {
+> +            did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
+> +            if (pc_info->did == did) {
+> +                break;
+> +            }
+> +        }
+> +        did = VTD_SM_PASID_ENTRY_DID(&pe);
+> +        if (pc_info->did == did) {
+> +            break;
+> +        }
+> +        return;
+> +    }
+> +
+> +    pc_entry->pasid_entry = pe;
+> +    pc_entry->valid = true;
+> +}
+> +
+> +static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
+> +{
+> +    if (!s->fsts || !s->root_scalable || !s->dmar_enabled) {
+> +        return;
+> +    }
+> +
+> +    vtd_iommu_lock(s);
+> +    g_hash_table_foreach(s->vtd_address_spaces, vtd_pasid_cache_sync_locked,
+> +                         pc_info);
+> +    vtd_iommu_unlock(s);
+> +}
+> +
+> +static bool vtd_process_pasid_desc(IntelIOMMUState *s,
+> +                                   VTDInvDesc *inv_desc)
+> +{
+> +    uint16_t did;
+> +    uint32_t pasid;
+> +    VTDPASIDCacheInfo pc_info = {};
+> +    uint64_t mask[4] = {VTD_INV_DESC_PASIDC_RSVD_VAL0, VTD_INV_DESC_ALL_ONE,
+> +                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
+> +
+> +    if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, true,
+> +                                     __func__, "pasid cache inv")) {
+> +        return false;
+> +    }
+> +
+> +    did = VTD_INV_DESC_PASIDC_DID(inv_desc);
+> +    pasid = VTD_INV_DESC_PASIDC_PASID(inv_desc);
+> +    pc_info.type = VTD_INV_DESC_PASIDC_G(inv_desc);
+> +
+> +    switch (pc_info.type) {
+> +    case VTD_INV_DESC_PASIDC_G_DSI:
+> +        trace_vtd_inv_desc_pasid_cache_dsi(did);
+> +        pc_info.did = did;
+> +        break;
+> +
+> +    case VTD_INV_DESC_PASIDC_G_PASID_SI:
+> +        /* PASID selective implies a DID selective */
+> +        trace_vtd_inv_desc_pasid_cache_psi(did, pasid);
+> +        /* Currently non-RID_PASID invalidation requests are ignored */
+
+I'm a bit doubting if this is safe given the ATS path (for emulated
+device) is merged. ATS path supports non-RID_PASID if emulated device
+has PASID cap. The lucky thing is that the ATS path does not have
+pasid level cache. So skipping invalidation for non-RID_PASID is not
+harmful so far. Just a note to other reviewers although I didn't see a
+problem here.
+
+> +        if (pasid != RID_PASID) {
+> +            return true;
+> +        }
+> +        pc_info.did = did;
+> +        pc_info.pasid = pasid;
+> +        break;
+> +
 
 Regards,
 Yi Liu
