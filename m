@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA36CCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 15:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76397CCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 15:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7xko-00009B-8U; Sun, 12 Oct 2025 11:12:58 -0400
+	id 1v7xlD-0000ZS-02; Sun, 12 Oct 2025 11:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v7xkm-00008r-Fr; Sun, 12 Oct 2025 11:12:56 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ id 1v7xl9-0000SC-WB; Sun, 12 Oct 2025 11:13:21 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v7xkk-0002RW-2e; Sun, 12 Oct 2025 11:12:56 -0400
+ id 1v7xl7-0002SI-Dn; Sun, 12 Oct 2025 11:13:19 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAX1V1wxetoQiorAA--.32938S2;
- Sun, 12 Oct 2025 23:12:48 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwA3GGCKxetoaFagAA--.103S2;
+ Sun, 12 Oct 2025 23:13:14 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3GuhuxetoNHhMAA--.3096S3;
- Sun, 12 Oct 2025 23:12:46 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDXO+mIxetoRXhMAA--.1376S3;
+ Sun, 12 Oct 2025 23:13:13 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -33,30 +33,30 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v3 13/21] hw/arm/smmuv3: Tag IOTLB cache keys with SEC_SID
-Date: Sun, 12 Oct 2025 23:12:44 +0800
-Message-Id: <20251012151244.4129572-1-tangtao1634@phytium.com.cn>
+Subject: [RFC v3 14/21] hw/arm/smmuv3: Add access checks for MMIO registers
+Date: Sun, 12 Oct 2025 23:13:03 +0800
+Message-Id: <20251012151303.4129730-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
 References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwC3GuhuxetoNHhMAA--.3096S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWjqskUBagAAsb
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwDXO+mIxetoRXhMAA--.1376S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWjqskUBbAAAsd
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3ZrykJryxGw4ktw1kXw4xWFg_yoWkuw4UpF
- WxKrn8ur4rJFyfZ3Z7ur4UuFnxZw1qgrWrKrWYgr9Yya4kJ3y8ZF4kC3yUCrWDGr18Grsx
- Z3y2gr45A3W2q3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
+X-Coremail-Antispam: 1Uk129KBjvAXoW3tw4xXF1kKFy8tr1kJF47urg_yoW8XFWfXo
+ WFkr45Zw48Z3Z7C39avFs7X3WkJF4kCw47Aw15XrW2vw4kJr4rXr97GrZ3urya9rW7JrWk
+ tw18Zw4fZFWrJFs5n29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+ J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+ UUUUUUU==
+Received-SPF: pass client-ip=162.243.164.118;
  envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -74,288 +74,477 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To prevent aliasing between secure and non-secure translations for the
-same address space, the IOTLB lookup key must incorporate the security
-state of the transaction. This commit expands SMMUIOTLBKey with the
-SEC_SID, plumbs the new argument through common helpers, and ensures
-that secure and non-secure TLB entries are treated as distinct
-entities within the cache.
+The SMMUv3 model was missing checks for register accessibility under
+certain conditions. This allowed guest software to write to registers
+like STRTAB_BASE when they should be read-only, or read from
+GERROR_IRQ_CFG registers when they should be RES0.
 
-As a final step, this patch ensures the target address space
-(target_as) from a cached IOTLB entry is correctly propagated to the
-final translation result. Previously, the result defaulted to the
-non-secure address space, nullifying the benefits of the
-security-aware cache key.
+This patch fixes this by introducing helper functions, such as the
+smmu_(reg_name)_writable pattern, to encapsulate the architectural
+access rules. In addition, writes to registers like STRTAB_BASE,
+queue bases, and IRQ configurations are now masked to correctly
+handle reserved bits.
 
-This change provides robust management for secure TLB entries,
-preventing TLB pollution between security worlds and allowing for proper
-initialization by secure software.
+The MMIO handlers are updated to call these functions before accessing
+registers. To purely fix the missing checks without introducing new
+functionality, the security context in the MMIO handlers is explicitly
+fixed to Non-secure. This ensures that the scope of this patch is
+limited to fixing existing Non-secure logic.
 
+If a register is not accessible, the access is now correctly handled
+and a guest error is logged, bringing the model's behavior in line with
+the specification.
+
+Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
+Fixes: 10a83cb9887e ("hw/arm/smmuv3: Skeleton")
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmu-common.c         | 25 ++++++++++++---------
- hw/arm/smmuv3.c              | 42 +++++++++++++++++++++---------------
- hw/arm/trace-events          |  2 +-
- include/hw/arm/smmu-common.h |  9 +++++---
- 4 files changed, 47 insertions(+), 31 deletions(-)
+ hw/arm/smmuv3.c | 304 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 298 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index a092bb5a8d..4131a31ae0 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -86,7 +86,7 @@ static guint smmu_iotlb_key_hash(gconstpointer v)
- 
-     /* Jenkins hash */
-     a = b = c = JHASH_INITVAL + sizeof(*key);
--    a += key->asid + key->vmid + key->level + key->tg;
-+    a += key->asid + key->vmid + key->level + key->tg + key->sec_sid;
-     b += extract64(key->iova, 0, 32);
-     c += extract64(key->iova, 32, 32);
- 
-@@ -102,14 +102,15 @@ static gboolean smmu_iotlb_key_equal(gconstpointer v1, gconstpointer v2)
- 
-     return (k1->asid == k2->asid) && (k1->iova == k2->iova) &&
-            (k1->level == k2->level) && (k1->tg == k2->tg) &&
--           (k1->vmid == k2->vmid);
-+           (k1->vmid == k2->vmid) && (k1->sec_sid == k2->sec_sid);
- }
- 
- SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
--                                uint8_t tg, uint8_t level)
-+                                uint8_t tg, uint8_t level,
-+                                SMMUSecSID sec_sid)
- {
-     SMMUIOTLBKey key = {.asid = asid, .vmid = vmid, .iova = iova,
--                        .tg = tg, .level = level};
-+                        .tg = tg, .level = level, .sec_sid = sec_sid};
- 
-     return key;
- }
-@@ -131,7 +132,7 @@ static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
-         SMMUIOTLBKey key;
- 
-         key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid,
--                                 iova & ~mask, tg, level);
-+                                 iova & ~mask, tg, level, cfg->sec_sid);
-         entry = g_hash_table_lookup(bs->iotlb, &key);
-         if (entry) {
-             break;
-@@ -195,7 +196,7 @@ void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *new)
-     }
- 
-     *key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
--                              tg, new->level);
-+                              tg, new->level, cfg->sec_sid);
-     trace_smmu_iotlb_insert(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
-                             tg, new->level);
-     g_hash_table_insert(bs->iotlb, key, new);
-@@ -314,13 +315,15 @@ void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev)
- }
- 
- void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
--                         uint8_t tg, uint64_t num_pages, uint8_t ttl)
-+                         uint8_t tg, uint64_t num_pages, uint8_t ttl,
-+                         SMMUSecSID sec_sid)
- {
-     /* if tg is not set we use 4KB range invalidation */
-     uint8_t granule = tg ? tg * 2 + 10 : 12;
- 
-     if (ttl && (num_pages == 1) && (asid >= 0)) {
--        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, iova, tg, ttl);
-+        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, iova,
-+                                              tg, ttl, sec_sid);
- 
-         if (g_hash_table_remove(s->iotlb, &key)) {
-             return;
-@@ -346,13 +349,15 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-  * in Stage-1 invalidation ASID = -1, means don't care.
-  */
- void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
--                        uint64_t num_pages, uint8_t ttl)
-+                        uint64_t num_pages, uint8_t ttl,
-+                        SMMUSecSID sec_sid)
- {
-     uint8_t granule = tg ? tg * 2 + 10 : 12;
-     int asid = -1;
- 
-    if (ttl && (num_pages == 1)) {
--        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, ipa, tg, ttl);
-+        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, ipa,
-+                                              tg, ttl, sec_sid);
- 
-         if (g_hash_table_remove(s->iotlb, &key)) {
-             return;
 diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 3686056d8e..f9395c3821 100644
+index f9395c3821..f161dd3eff 100644
 --- a/hw/arm/smmuv3.c
 +++ b/hw/arm/smmuv3.c
-@@ -1125,6 +1125,7 @@ epilogue:
-         entry.perm = cached_entry->entry.perm;
-         entry.translated_addr = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
-         entry.addr_mask = cached_entry->entry.addr_mask;
-+        entry.target_as = cached_entry->entry.target_as;
-         trace_smmuv3_translate_success(mr->parent_obj.name, sid, addr,
-                                        entry.translated_addr, entry.perm,
-                                        cfg->stage);
-@@ -1170,15 +1171,16 @@ epilogue:
-  * @tg: translation granule (if communicated through range invalidation)
-  * @num_pages: number of @granule sized pages (if tg != 0), otherwise 1
-  * @stage: Which stage(1 or 2) is used
-+ * @sec_sid: security stream ID
-  */
- static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
-                                IOMMUNotifier *n,
-                                int asid, int vmid,
-                                dma_addr_t iova, uint8_t tg,
--                               uint64_t num_pages, int stage)
-+                               uint64_t num_pages, int stage,
-+                               SMMUSecSID sec_sid)
- {
-     SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
-                                .inval_ste_allowed = true};
-     SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo, sec_sid);
-@@ -1226,7 +1228,7 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
-     }
- 
-     event.type = IOMMU_NOTIFIER_UNMAP;
--    event.entry.target_as = &address_space_memory;
-+    event.entry.target_as = smmu_get_address_space(sec_sid);
-     event.entry.iova = iova;
-     event.entry.addr_mask = num_pages * (1 << granule) - 1;
-     event.entry.perm = IOMMU_NONE;
-@@ -1237,7 +1239,8 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
- /* invalidate an asid/vmid/iova range tuple in all mr's */
- static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
-                                       dma_addr_t iova, uint8_t tg,
--                                      uint64_t num_pages, int stage)
-+                                      uint64_t num_pages, int stage,
-+                                      SMMUSecSID sec_sid)
- {
-     SMMUDevice *sdev;
- 
-@@ -1249,12 +1252,14 @@ static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
-                                         iova, tg, num_pages, stage);
- 
-         IOMMU_NOTIFIER_FOREACH(n, mr) {
--            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages, stage);
-+            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg,
-+                               num_pages, stage, sec_sid);
-         }
+@@ -1321,6 +1321,127 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
      }
  }
  
--static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
-+static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
-+                               SMMUSecSID sec_sid)
++static inline int smmuv3_get_cr0ack_smmuen(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].cr0ack, CR0, SMMUEN);
++}
++
++static inline bool smmuv3_is_smmu_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    int cr0_smmuen = smmu_enabled(s, sec_sid);
++    int cr0ack_smmuen = smmuv3_get_cr0ack_smmuen(s, sec_sid);
++    return (cr0_smmuen == 0 && cr0ack_smmuen == 0);
++}
++
++/* Check if STRTAB_BASE register is writable */
++static bool smmu_strtab_base_writable(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    /* Check TABLES_PRESET - use NS bank as it's the global setting */
++    if (FIELD_EX32(s->bank[sec_sid].idr[1], IDR1, TABLES_PRESET)) {
++        return false;
++    }
++
++    /* Check SMMUEN conditions for the specific security domain */
++    return smmuv3_is_smmu_enabled(s, sec_sid);
++}
++
++static inline int smmuv3_get_cr0_cmdqen(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].cr[0], CR0, CMDQEN);
++}
++
++static inline int smmuv3_get_cr0ack_cmdqen(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].cr0ack, CR0, CMDQEN);
++}
++
++static inline int smmuv3_get_cr0_eventqen(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].cr[0], CR0, EVENTQEN);
++}
++
++static inline int smmuv3_get_cr0ack_eventqen(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].cr0ack, CR0, EVENTQEN);
++}
++
++/* Check if MSI is supported */
++static inline bool smmu_msi_supported(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].idr[0], IDR0, MSI);
++}
++
++/* Check if secure GERROR_IRQ_CFGx registers are writable */
++static inline bool smmu_gerror_irq_cfg_writable(SMMUv3State *s,
++                                                SMMUSecSID sec_sid)
++{
++    if (!smmu_msi_supported(s, sec_sid)) {
++        return false;
++    }
++
++    bool ctrl_en = FIELD_EX32(s->bank[sec_sid].irq_ctrl,
++                              IRQ_CTRL, GERROR_IRQEN);
++    return !ctrl_en;
++}
++
++/* Check if CMDQEN is disabled */
++static bool smmu_cmdqen_disabled(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    int cr0_cmdqen = smmuv3_get_cr0_cmdqen(s, sec_sid);
++    int cr0ack_cmdqen = smmuv3_get_cr0ack_cmdqen(s, sec_sid);
++    return (cr0_cmdqen == 0 && cr0ack_cmdqen == 0);
++}
++
++/* Check if CMDQ_BASE register is writable */
++static bool smmu_cmdq_base_writable(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    /* Check TABLES_PRESET - use NS bank as it's the global setting */
++    if (FIELD_EX32(s->bank[sec_sid].idr[1], IDR1, QUEUES_PRESET)) {
++        return false;
++    }
++
++    return smmu_cmdqen_disabled(s, sec_sid);
++}
++
++/* Check if EVENTQEN is disabled */
++static bool smmu_eventqen_disabled(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    int cr0_eventqen = smmuv3_get_cr0_eventqen(s, sec_sid);
++    int cr0ack_eventqen = smmuv3_get_cr0ack_eventqen(s, sec_sid);
++    return (cr0_eventqen == 0 && cr0ack_eventqen == 0);
++}
++
++static bool smmu_idr1_queue_preset(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].idr[1], IDR1, QUEUES_PRESET);
++}
++
++/* Check if EVENTQ_BASE register is writable */
++static bool smmu_eventq_base_writable(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    /* Check TABLES_PRESET - use NS bank as it's the global setting */
++    if (smmu_idr1_queue_preset(s, sec_sid)) {
++        return false;
++    }
++
++    return smmu_eventqen_disabled(s, sec_sid);
++}
++
++static bool smmu_irq_ctl_evtq_irqen_disabled(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    return FIELD_EX32(s->bank[sec_sid].irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
++}
++
++/* Check if EVENTQ_IRQ_CFGx is writable */
++static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
++{
++    if (smmu_msi_supported(s, sec_sid)) {
++        return false;
++    }
++
++    return smmu_irq_ctl_evtq_irqen_disabled(s, sec_sid);
++}
++
+ static int smmuv3_cmdq_consume(SMMUv3State *s)
  {
-     dma_addr_t end, addr = CMD_ADDR(cmd);
-     uint8_t type = CMD_TYPE(cmd);
-@@ -1279,12 +1284,13 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
-     }
+     SMMUState *bs = ARM_SMMU(s);
+@@ -1561,27 +1682,59 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
  
-     if (!tg) {
--        trace_smmuv3_range_inval(vmid, asid, addr, tg, 1, ttl, leaf, stage);
--        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage);
-+        trace_smmuv3_range_inval(sec_sid, vmid, asid, addr,
-+                                 tg, 1, ttl, leaf, stage);
-+        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage, sec_sid);
-         if (stage == SMMU_STAGE_1) {
--            smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl);
-+            smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl, sec_sid);
-         } else {
--            smmu_iotlb_inv_ipa(s, vmid, addr, tg, 1, ttl);
-+            smmu_iotlb_inv_ipa(s, vmid, addr, tg, 1, ttl, sec_sid);
+     switch (offset) {
+     case A_GERROR_IRQ_CFG0:
+-        bank->gerror_irq_cfg0 = data;
++        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
++            /* SMMU_(*_)_IRQ_CTRL.GERROR_IRQEN == 1: IGNORED this write */
++            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 write ignored: "
++                         "register is RO when IRQ enabled\n");
++            return MEMTX_OK;
++        }
++
++        bank->gerror_irq_cfg0 = data & SMMU_GERROR_IRQ_CFG0_RESERVED;
+         return MEMTX_OK;
+     case A_STRTAB_BASE:
+-        bank->strtab_base = data;
++        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "STRTAB_BASE write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        /* Clear reserved bits according to spec */
++        bank->strtab_base = data & SMMU_STRTAB_BASE_RESERVED;
+         return MEMTX_OK;
+     case A_CMDQ_BASE:
+-        bank->cmdq.base = data;
++        if (!smmu_cmdq_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CMDQ_BASE write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        bank->cmdq.base = data & SMMU_QUEUE_BASE_RESERVED;
+         bank->cmdq.log2size = extract64(bank->cmdq.base, 0, 5);
+         if (bank->cmdq.log2size > SMMU_CMDQS) {
+             bank->cmdq.log2size = SMMU_CMDQS;
          }
-         return;
-     }
-@@ -1301,13 +1307,15 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
-         uint64_t mask = dma_aligned_pow2_mask(addr, end, 64);
- 
-         num_pages = (mask + 1) >> granule;
--        trace_smmuv3_range_inval(vmid, asid, addr, tg, num_pages,
--                                 ttl, leaf, stage);
--        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, num_pages, stage);
-+        trace_smmuv3_range_inval(sec_sid, vmid, asid, addr, tg,
-+                                 num_pages, ttl, leaf, stage);
-+        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg,
-+                                  num_pages, stage, sec_sid);
-         if (stage == SMMU_STAGE_1) {
--            smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, num_pages, ttl);
-+            smmu_iotlb_inv_iova(s, asid, vmid, addr, tg,
-+                                num_pages, ttl, sec_sid);
-         } else {
--            smmu_iotlb_inv_ipa(s, vmid, addr, tg, num_pages, ttl);
-+            smmu_iotlb_inv_ipa(s, vmid, addr, tg, num_pages, ttl, sec_sid);
+         return MEMTX_OK;
+     case A_EVENTQ_BASE:
+-        bank->eventq.base = data;
++        if (!smmu_eventq_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_BASE write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        bank->eventq.base = data & SMMU_QUEUE_BASE_RESERVED;
+         bank->eventq.log2size = extract64(bank->eventq.base, 0, 5);
+         if (bank->eventq.log2size > SMMU_EVENTQS) {
+             bank->eventq.log2size = SMMU_EVENTQS;
          }
-         addr += mask + 1;
-     }
-@@ -1474,7 +1482,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-                 cmd_error = SMMU_CERROR_ILL;
-                 break;
-             }
--            smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
-+            smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1, SMMU_SEC_SID_NS);
-             break;
-         case SMMU_CMD_TLBI_S12_VMALL:
-         {
-@@ -1499,7 +1507,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-              * As currently only either s1 or s2 are supported
-              * we can reuse same function for s2.
-              */
--            smmuv3_range_inval(bs, &cmd, SMMU_STAGE_2);
-+            smmuv3_range_inval(bs, &cmd, SMMU_STAGE_2, SMMU_SEC_SID_NS);
-             break;
-         case SMMU_CMD_TLBI_EL3_ALL:
-         case SMMU_CMD_TLBI_EL3_VA:
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index a37e894766..434d6abfc2 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -56,7 +56,7 @@ smmuv3_cmdq_cfgi_ste_range(int start, int end) "start=0x%x - end=0x%x"
- smmuv3_cmdq_cfgi_cd(uint32_t sid) "sid=0x%x"
- smmuv3_config_cache_hit(uint32_t sid, uint32_t hits, uint32_t misses, uint32_t perc) "Config cache HIT for sid=0x%x (hits=%d, misses=%d, hit rate=%d)"
- smmuv3_config_cache_miss(uint32_t sid, uint32_t hits, uint32_t misses, uint32_t perc) "Config cache MISS for sid=0x%x (hits=%d, misses=%d, hit rate=%d)"
--smmuv3_range_inval(int vmid, int asid, uint64_t addr, uint8_t tg, uint64_t num_pages, uint8_t ttl, bool leaf, int stage) "vmid=%d asid=%d addr=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" ttl=%d leaf=%d stage=%d"
-+smmuv3_range_inval(int sec_sid, int vmid, int asid, uint64_t addr, uint8_t tg, uint64_t num_pages, uint8_t ttl, bool leaf, int stage) "sec_sid=%d vmid=%d asid=%d addr=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" ttl=%d leaf=%d stage=%d"
- smmuv3_cmdq_tlbi_nh(int vmid) "vmid=%d"
- smmuv3_cmdq_tlbi_nsnh(void) ""
- smmuv3_cmdq_tlbi_nh_asid(int asid) "asid=%d"
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index 90a37fe32d..211fc7c2d0 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -183,6 +183,7 @@ typedef struct SMMUIOTLBKey {
-     int vmid;
-     uint8_t tg;
-     uint8_t level;
-+    SMMUSecSID sec_sid;
- } SMMUIOTLBKey;
+         return MEMTX_OK;
+     case A_EVENTQ_IRQ_CFG0:
+-        bank->eventq_irq_cfg0 = data;
++        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_IRQ_CFG0 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        bank->eventq_irq_cfg0 = data & SMMU_EVENTQ_IRQ_CFG0_RESERVED;
+         return MEMTX_OK;
+     default:
+         qemu_log_mask(LOG_UNIMP,
+@@ -1608,7 +1761,15 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         bank->cr[1] = data;
+         return MEMTX_OK;
+     case A_CR2:
+-        bank->cr[2] = data;
++        if (smmuv3_is_smmu_enabled(s, reg_sec_sid)) {
++            /* Allow write: SMMUEN is 0 in both CR0 and CR0ACK */
++            bank->cr[2] = data;
++        } else {
++            /* CONSTRAINED UNPREDICTABLE behavior: Ignore this write */
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CR2 write ignored: register is read-only when "
++                          "CR0.SMMUEN or CR0ACK.SMMUEN is set\n");
++        }
+         return MEMTX_OK;
+     case A_IRQ_CTRL:
+         bank->irq_ctrl = data;
+@@ -1622,12 +1783,31 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         smmuv3_cmdq_consume(s);
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG0: /* 64b */
++        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 write ignored: "
++                          "register is RO when IRQ enabled\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_GERROR_IRQ_CFG0_RESERVED;
+         bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 0, 32, data);
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG0 + 4:
++        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 + 4 write ignored: "
++                          "register is RO when IRQ enabled\n");
++            return MEMTX_OK;
++        }
++
+         bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 32, 32, data);
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG1:
++        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG1 write ignored: "
++                          "register is RO when IRQ enabled\n");
++            return MEMTX_OK;
++        }
++
+         bank->gerror_irq_cfg1 = data;
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG2:
+@@ -1644,12 +1824,32 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         }
+         return MEMTX_OK;
+     case A_STRTAB_BASE: /* 64b */
++        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "STRTAB_BASE write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_STRTAB_BASE_RESERVED;
+         bank->strtab_base = deposit64(bank->strtab_base, 0, 32, data);
+         return MEMTX_OK;
+     case A_STRTAB_BASE + 4:
++        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "STRTAB_BASE + 4 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_STRTAB_BASE_RESERVED;
+         bank->strtab_base = deposit64(bank->strtab_base, 32, 32, data);
+         return MEMTX_OK;
+     case A_STRTAB_BASE_CFG:
++        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "STRTAB_BASE_CFG write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
+         bank->strtab_base_cfg = data;
+         if (FIELD_EX32(data, STRTAB_BASE_CFG, FMT) == 1) {
+             bank->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
+@@ -1657,6 +1857,13 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         }
+         return MEMTX_OK;
+     case A_CMDQ_BASE: /* 64b */
++        if (!smmu_cmdq_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CMDQ_BASE write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_QUEUE_BASE_RESERVED;
+         bank->cmdq.base = deposit64(bank->cmdq.base, 0, 32, data);
+         bank->cmdq.log2size = extract64(bank->cmdq.base, 0, 5);
+         if (bank->cmdq.log2size > SMMU_CMDQS) {
+@@ -1664,6 +1871,13 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         }
+         return MEMTX_OK;
+     case A_CMDQ_BASE + 4: /* 64b */
++        if (!smmu_cmdq_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CMDQ_BASE + 4 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_QUEUE_BASE_RESERVED;
+         bank->cmdq.base = deposit64(bank->cmdq.base, 32, 32, data);
+         return MEMTX_OK;
+     case A_CMDQ_PROD:
+@@ -1671,9 +1885,22 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         smmuv3_cmdq_consume(s);
+         return MEMTX_OK;
+     case A_CMDQ_CONS:
++        if (!smmu_cmdqen_disabled(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CMDQ_CONS write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
+         bank->cmdq.cons = data;
+         return MEMTX_OK;
+     case A_EVENTQ_BASE: /* 64b */
++        if (!smmu_eventq_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_BASE write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_QUEUE_BASE_RESERVED;
+         bank->eventq.base = deposit64(bank->eventq.base, 0, 32, data);
+         bank->eventq.log2size = extract64(bank->eventq.base, 0, 5);
+         if (bank->eventq.log2size > SMMU_EVENTQS) {
+@@ -1681,24 +1908,63 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         }
+         return MEMTX_OK;
+     case A_EVENTQ_BASE + 4:
++        if (!smmu_eventq_base_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_BASE + 4 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_QUEUE_BASE_RESERVED;
+         bank->eventq.base = deposit64(bank->eventq.base, 32, 32, data);
+         return MEMTX_OK;
+     case A_EVENTQ_PROD:
++        if (!smmu_eventqen_disabled(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_PROD write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
+         bank->eventq.prod = data;
+         return MEMTX_OK;
+     case A_EVENTQ_CONS:
+         bank->eventq.cons = data;
+         return MEMTX_OK;
+     case A_EVENTQ_IRQ_CFG0: /* 64b */
++        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_IRQ_CFG0 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_EVENTQ_IRQ_CFG0_RESERVED;
+         bank->eventq_irq_cfg0 = deposit64(bank->eventq_irq_cfg0, 0, 32, data);
+         return MEMTX_OK;
+     case A_EVENTQ_IRQ_CFG0 + 4:
++        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_IRQ_CFG0+4 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
++        data &= SMMU_EVENTQ_IRQ_CFG0_RESERVED;
+         bank->eventq_irq_cfg0 = deposit64(bank->eventq_irq_cfg0, 32, 32, data);
+         return MEMTX_OK;
+     case A_EVENTQ_IRQ_CFG1:
++        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_IRQ_CFG1 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
+         bank->eventq_irq_cfg1 = data;
+         return MEMTX_OK;
+     case A_EVENTQ_IRQ_CFG2:
++        if (!smmu_eventq_irq_cfg_writable(s, reg_sec_sid)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "EVENTQ_IRQ_CFG2 write ignored: register is RO\n");
++            return MEMTX_OK;
++        }
++
+         bank->eventq_irq_cfg2 = data;
+         return MEMTX_OK;
+     default:
+@@ -1743,6 +2009,12 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
  
- typedef struct SMMUConfigKey {
-@@ -264,16 +265,18 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-                                 SMMUTransTableInfo *tt, hwaddr iova);
- void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *entry);
- SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
--                                uint8_t tg, uint8_t level);
-+                                uint8_t tg, uint8_t level, SMMUSecSID sec_sid);
- SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, SMMUSecSID sec_sid);
- void smmu_iotlb_inv_all(SMMUState *s);
- void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid);
- void smmu_iotlb_inv_vmid(SMMUState *s, int vmid);
- void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid);
- void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
--                         uint8_t tg, uint64_t num_pages, uint8_t ttl);
-+                         uint8_t tg, uint64_t num_pages, uint8_t ttl,
-+                         SMMUSecSID sec_sid);
- void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
--                        uint64_t num_pages, uint8_t ttl);
-+                        uint64_t num_pages, uint8_t ttl,
-+                        SMMUSecSID sec_sid);
- void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
- void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev);
- /* Unmap the range of all the notifiers registered to any IOMMU mr */
+     switch (offset) {
+     case A_GERROR_IRQ_CFG0:
++        /* SMMU_(*_)GERROR_IRQ_CFG0 BOTH check SMMU_IDR0.MSI */
++        if (!smmu_msi_supported(s, reg_sec_sid)) {
++            *data = 0; /* RES0 */
++            return MEMTX_OK;
++        }
++
+         *data = bank->gerror_irq_cfg0;
+         return MEMTX_OK;
+     case A_STRTAB_BASE:
+@@ -1811,15 +2083,35 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+         *data = bank->gerrorn;
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG0: /* 64b */
++        if (!smmu_msi_supported(s, reg_sec_sid)) {
++            *data = 0; /* RES0 */
++            return MEMTX_OK;
++        }
++
+         *data = extract64(bank->gerror_irq_cfg0, 0, 32);
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG0 + 4:
++        if (!smmu_msi_supported(s, reg_sec_sid)) {
++            *data = 0; /* RES0 */
++            return MEMTX_OK;
++        }
++
+         *data = extract64(bank->gerror_irq_cfg0, 32, 32);
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG1:
++        if (!smmu_msi_supported(s, reg_sec_sid)) {
++            *data = 0; /* RES0 */
++            return MEMTX_OK;
++        }
++
+         *data = bank->gerror_irq_cfg1;
+         return MEMTX_OK;
+     case A_GERROR_IRQ_CFG2:
++        if (!smmu_msi_supported(s, reg_sec_sid)) {
++            *data = 0; /* RES0 */
++            return MEMTX_OK;
++        }
++
+         *data = bank->gerror_irq_cfg2;
+         return MEMTX_OK;
+     case A_STRTAB_BASE: /* 64b */
 -- 
 2.34.1
 
