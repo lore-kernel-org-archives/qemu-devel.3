@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEE2CCD187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECA8CCD184
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 15:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7xfe-0001i7-0T; Sun, 12 Oct 2025 11:07:39 -0400
+	id 1v7xfU-0001fo-4V; Sun, 12 Oct 2025 11:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v7xfR-0001eI-5s; Sun, 12 Oct 2025 11:07:25 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1v7xfN-0001aw-Qy; Sun, 12 Oct 2025 11:07:21 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v7xfL-0001cw-T7; Sun, 12 Oct 2025 11:07:24 -0400
+ id 1v7xfK-0001d8-MT; Sun, 12 Oct 2025 11:07:21 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDX32MZxOtofE6gAA--.44S2;
- Sun, 12 Oct 2025 23:07:05 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwB3WCUexOtobicrAA--.7763S2;
+ Sun, 12 Oct 2025 23:07:10 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDXPOoXxOto33dMAA--.3068S4;
- Sun, 12 Oct 2025 23:07:04 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDXPOoXxOto33dMAA--.3068S11;
+ Sun, 12 Oct 2025 23:07:09 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -33,31 +33,31 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v3 01/21] hw/arm/smmuv3: Fix incorrect reserved mask for SMMU
- CR0 register
-Date: Sun, 12 Oct 2025 23:06:41 +0800
-Message-Id: <20251012150701.4127034-2-tangtao1634@phytium.com.cn>
+Subject: [RFC v3 08/21] hw/arm/smmuv3: Add separate address space for secure
+ SMMU accesses
+Date: Sun, 12 Oct 2025 23:06:48 +0800
+Message-Id: <20251012150701.4127034-9-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
 References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXPOoXxOto33dMAA--.3068S4
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWjqskUBVQAAsk
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwDXPOoXxOto33dMAA--.3068S11
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWjqskUBYAABsQ
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWrZry5Ar43ZFW5GryDXw17GFg_yoWDtwbEkF
- s7Jay8Wr4UKFWDX3W8KFWSyry093y5WrZ5XF1xtFn8KFZ8Xa45WFs7Z3s5Z34fGFy8uFya
- kanFyrWag39rujkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Coremail-Antispam: 1Uk129KBjvJXoWxWr4xXrykCw1DCr43Xw4UCFg_yoW5KFW7pa
+ 9rArZxt390k3W2yrZ3Xrnrua4rWa95WF4UKrsFk3s5uF13Kr13Ar4qk3WUGF9rCr45Ja12
+ vF17Zr4fWF1jqrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,42 +75,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current definition of the SMMU_CR0_RESERVED mask is incorrect.
-It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
-treating bit 9 (RES0) as an implemented bit.
+According to the Arm architecture, SMMU-originated memory accesses,
+such as fetching commands or writing events for a secure stream, must
+target the Secure Physical Address (PA) space. The existing model sends
+all DMA to the global non-secure address_space_memory.
 
-According to the SMMU architecture specification, the layout for CR0 is:
-| 31:11| RES0           |
-| 10   | DPT_WALK_EN    |
-| 9    | RES0           |
-| 8:6  | VMW            |
-| 5    | RES0           |
-| 4    | ATSCHK         |
-| 3    | CMDQEN         |
-| 2    | EVENTQEN       |
-| 1    | PRIQEN         |
-| 0    | SMMUEN         |
+This patch introduces the infrastructure to differentiate between secure
+and non-secure memory accesses. Firstly, SMMU_SEC_SID_S is added in
+SMMUSecSID enum to represent the secure context. Then a weak global
+symbol, arm_secure_address_space, is added, which can be provided by the
+machine model to represent the Secure PA space.
+
+A new helper, smmu_get_address_space(), selects the target address
+space based on SEC_SID. All internal DMA calls
+(dma_memory_read/write) will be updated to use this helper in follow-up
+patches.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00088.html
 ---
- hw/arm/smmuv3-internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/smmu-common.c         |  8 ++++++++
+ hw/arm/virt.c                |  5 +++++
+ include/hw/arm/smmu-common.h | 27 +++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+)
 
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index b6b7399347..42ac77e654 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -120,7 +120,7 @@ REG32(CR0,                 0x20)
-     FIELD(CR0, EVENTQEN,      2, 1)
-     FIELD(CR0, CMDQEN,        3, 1)
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 62a7612184..24db448683 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -30,6 +30,14 @@
+ #include "hw/arm/smmu-common.h"
+ #include "smmu-internal.h"
  
--#define SMMU_CR0_RESERVED 0xFFFFFC20
-+#define SMMU_CR0_RESERVED 0xFFFFFA20
++/* Global state for secure address space availability */
++bool arm_secure_as_available;
++
++void smmu_enable_secure_address_space(void)
++{
++    arm_secure_as_available = true;
++}
++
+ /* IOTLB Management */
  
- REG32(CR0ACK,              0x24)
- REG32(CR1,                 0x28)
+ static guint smmu_iotlb_key_hash(gconstpointer v)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 175023897a..83dc62a095 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -92,6 +92,8 @@
+ #include "hw/cxl/cxl_host.h"
+ #include "qemu/guest-random.h"
+ 
++AddressSpace arm_secure_address_space;
++
+ static GlobalProperty arm_virt_compat[] = {
+     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+ };
+@@ -2257,6 +2259,9 @@ static void machvirt_init(MachineState *machine)
+         memory_region_init(secure_sysmem, OBJECT(machine), "secure-memory",
+                            UINT64_MAX);
+         memory_region_add_subregion_overlap(secure_sysmem, 0, sysmem, -1);
++        address_space_init(&arm_secure_address_space, secure_sysmem,
++                           "secure-memory-space");
++        smmu_enable_secure_address_space();
+     }
+ 
+     firmware_loaded = virt_firmware_init(vms, sysmem,
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index b0dae18a62..d54558f94b 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -43,9 +43,36 @@
+ /* StreamID Security state */
+ typedef enum SMMUSecSID {
+     SMMU_SEC_SID_NS = 0,
++    SMMU_SEC_SID_S,
+     SMMU_SEC_SID_NUM,
+ } SMMUSecSID;
+ 
++extern AddressSpace __attribute__((weak)) arm_secure_address_space;
++extern bool arm_secure_as_available;
++void smmu_enable_secure_address_space(void);
++
++/*
++ * Return the address space corresponding to the SEC_SID.
++ * If SEC_SID is Secure, but secure address space is not available,
++ * return NULL and print a warning message.
++ */
++static inline AddressSpace *smmu_get_address_space(SMMUSecSID sec_sid)
++{
++    switch (sec_sid) {
++    case SMMU_SEC_SID_NS:
++        return &address_space_memory;
++    case SMMU_SEC_SID_S:
++        if (!arm_secure_as_available || arm_secure_address_space.root == NULL) {
++            printf("Secure address space requested but not available");
++            return NULL;
++        }
++        return &arm_secure_address_space;
++    default:
++        printf("Unknown SEC_SID value %d", sec_sid);
++        return NULL;
++    }
++}
++
+ /*
+  * Page table walk error types
+  */
 -- 
 2.34.1
 
