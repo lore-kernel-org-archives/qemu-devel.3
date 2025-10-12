@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A27BCCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 15:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A52CCD187
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Oct 2025 15:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v7xfh-0001ic-6o; Sun, 12 Oct 2025 11:07:43 -0400
+	id 1v7xfb-0001hO-AN; Sun, 12 Oct 2025 11:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v7xfS-0001ff-Pp; Sun, 12 Oct 2025 11:07:27 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1v7xfP-0001d3-Mw; Sun, 12 Oct 2025 11:07:23 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1v7xfN-0001cs-Rt; Sun, 12 Oct 2025 11:07:26 -0400
+ id 1v7xfL-0001cm-E4; Sun, 12 Oct 2025 11:07:23 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDn75sfxOtouE6gAA--.5S2;
- Sun, 12 Oct 2025 23:07:11 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBHKCUcxOtoZycrAA--.7486S2;
+ Sun, 12 Oct 2025 23:07:08 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDXPOoXxOto33dMAA--.3068S13;
- Sun, 12 Oct 2025 23:07:10 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDXPOoXxOto33dMAA--.3068S7;
+ Sun, 12 Oct 2025 23:07:06 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -33,31 +33,30 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v3 10/21] hw/arm/smmu-common: Key configuration cache on
- SMMUDevice and SEC_SID
-Date: Sun, 12 Oct 2025 23:06:50 +0800
-Message-Id: <20251012150701.4127034-11-tangtao1634@phytium.com.cn>
+Subject: [RFC v3 04/21] refactor: Move ARMSecuritySpace to a common header
+Date: Sun, 12 Oct 2025 23:06:44 +0800
+Message-Id: <20251012150701.4127034-5-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
 References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXPOoXxOto33dMAA--.3068S13
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWjqskUBZAAAsV
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwDXPOoXxOto33dMAA--.3068S7
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWjqskUBWwAAsq
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKFW7GFWUZw47Zr4xXFWUArb_yoWxCw1kpr
- W8JF98Jr4UGF1fGFsxXFWI93Z8Wwn29r1fGryagr9YyFyqyryUAF4DK3yYk3s3CrW8JF47
- ZaySgFyUCr17JaDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXF45CF1xJr1fJF4kJryDAwb_yoWrurW7pF
+ 4Yyas3Gr48Ga43Gas3ZFsrGF1rK395WF47KFyxWr4kXFnxur1kCr4vyF1YkFy5GrW5Z3WF
+ 9r1xZr4fKF1kXrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,182 +74,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adapt the configuration cache to support multiple security states by
-introducing a composite key, SMMUConfigKey. This key combines the
-SMMUDevice with SEC_SID, preventing aliasing between Secure and
-Non-secure configurations for the same device, also the future Realm and
-Root configurations.
+The ARMSecuritySpace enum and its related helpers were defined in the
+target-specific header target/arm/cpu.h. This prevented common,
+target-agnostic code like the SMMU model from using these definitions
+without triggering "cpu.h included from common code" errors.
 
-The cache lookup, insertion, and invalidation mechanisms are updated
-to use this new keying infrastructure. This change is critical for
-ensuring correct translation when a device is active in more than one
-security world.
+To resolve this, this commit introduces a new, lightweight header,
+include/hw/arm/arm-security.h, which is safe for inclusion by common
+code.
+
+The following change was made:
+
+- The ARMSecuritySpace enum and the arm_space_is_secure() and
+arm_secure_to_space() helpers have been moved from target/arm/cpu.h
+to the new hw/arm/arm-security.h header.
+
+This refactoring decouples the security state definitions from the core
+CPU implementation, allowing common hardware models to correctly handle
+security states without pulling in heavyweight, target-specific headers.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lists.nongnu.org/archive/html/qemu-arm/2025-09/msg01288.html
 ---
- hw/arm/smmu-common.c         | 45 ++++++++++++++++++++++++++++++++++--
- hw/arm/smmuv3.c              | 13 +++++++----
- include/hw/arm/smmu-common.h |  7 ++++++
- 3 files changed, 58 insertions(+), 7 deletions(-)
+ include/hw/arm/arm-security.h | 54 +++++++++++++++++++++++++++++++++++
+ target/arm/cpu.h              | 25 +---------------
+ 2 files changed, 55 insertions(+), 24 deletions(-)
+ create mode 100644 include/hw/arm/arm-security.h
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 82308f0e33..5fabe30c75 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -30,6 +30,26 @@
- #include "hw/arm/smmu-common.h"
- #include "smmu-internal.h"
- 
-+/* Configuration Cache Management */
-+static guint smmu_config_key_hash(gconstpointer key)
+diff --git a/include/hw/arm/arm-security.h b/include/hw/arm/arm-security.h
+new file mode 100644
+index 0000000000..9664c0f95e
+--- /dev/null
++++ b/include/hw/arm/arm-security.h
+@@ -0,0 +1,54 @@
++/*
++ * ARM security space helpers
++ *
++ * Provide ARMSecuritySpace and helpers for code that is not tied to CPU.
++ *
++ *  Copyright (c) 2003 Fabrice Bellard
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef HW_ARM_ARM_SECURITY_H
++#define HW_ARM_ARM_SECURITY_H
++
++#include <stdbool.h>
++
++/*
++ * ARM v9 security states.
++ * The ordering of the enumeration corresponds to the low 2 bits
++ * of the GPI value, and (except for Root) the concat of NSE:NS.
++ */
++
++ typedef enum ARMSecuritySpace {
++    ARMSS_Secure     = 0,
++    ARMSS_NonSecure  = 1,
++    ARMSS_Root       = 2,
++    ARMSS_Realm      = 3,
++} ARMSecuritySpace;
++
++/* Return true if @space is secure, in the pre-v9 sense. */
++static inline bool arm_space_is_secure(ARMSecuritySpace space)
 +{
-+    const SMMUConfigKey *k = key;
-+    return g_direct_hash(k->sdev) ^ (guint)k->sec_sid;
++    return space == ARMSS_Secure || space == ARMSS_Root;
 +}
 +
-+static gboolean smmu_config_key_equal(gconstpointer a, gconstpointer b)
++/* Return the ARMSecuritySpace for @secure, assuming !RME or EL[0-2]. */
++static inline ARMSecuritySpace arm_secure_to_space(bool secure)
 +{
-+    const SMMUConfigKey *ka = a;
-+    const SMMUConfigKey *kb = b;
-+    return ka->sdev == kb->sdev && ka->sec_sid == kb->sec_sid;
++    return secure ? ARMSS_Secure : ARMSS_NonSecure;
 +}
 +
-+SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, SMMUSecSID sec_sid)
-+{
-+    SMMUConfigKey key = {.sdev = sdev, .sec_sid = sec_sid};
-+    return key;
-+}
++#endif /* HW_ARM_ARM_SECURITY_H */
 +
- ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid)
- {
-     switch (sec_sid) {
-@@ -256,7 +276,8 @@ static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
- static gboolean
- smmu_hash_remove_by_sid_range(gpointer key, gpointer value, gpointer user_data)
- {
--    SMMUDevice *sdev = (SMMUDevice *)key;
-+    SMMUConfigKey *config_key = (SMMUConfigKey *)key;
-+    SMMUDevice *sdev = config_key->sdev;
-     uint32_t sid = smmu_get_sid(sdev);
-     SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
- 
-@@ -274,6 +295,24 @@ void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range)
-                                 &sid_range);
- }
- 
-+static gboolean smmu_hash_remove_by_sdev(gpointer key, gpointer value,
-+                                         gpointer user_data)
-+{
-+    SMMUConfigKey *config_key = (SMMUConfigKey *)key;
-+    SMMUDevice *target = (SMMUDevice *)user_data;
 +
-+    if (config_key->sdev != target) {
-+        return false;
-+    }
-+    trace_smmu_config_cache_inv(smmu_get_sid(target));
-+    return true;
-+}
-+
-+void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev)
-+{
-+    g_hash_table_foreach_remove(s->configs, smmu_hash_remove_by_sdev, sdev);
-+}
-+
- void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-                          uint8_t tg, uint64_t num_pages, uint8_t ttl)
- {
-@@ -961,7 +1000,9 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-         error_propagate(errp, local_err);
-         return;
-     }
--    s->configs = g_hash_table_new_full(NULL, NULL, NULL, g_free);
-+    s->configs = g_hash_table_new_full(smmu_config_key_hash,
-+                                       smmu_config_key_equal,
-+                                       g_free, g_free);
-     s->iotlb = g_hash_table_new_full(smmu_iotlb_key_hash, smmu_iotlb_key_equal,
-                                      g_free, g_free);
-     s->smmu_pcibus_by_busptr = g_hash_table_new(NULL, NULL);
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 351bbf1ae9..55f4ad1757 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -878,10 +878,11 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
-  *
-  * @sdev: SMMUDevice handle
-  * @event: output event info
-+ * @sec_sid: StreamID Security state
-  *
-  * The configuration cache contains data resulting from both STE and CD
-  * decoding under the form of an SMMUTransCfg struct. The hash table is indexed
-- * by the SMMUDevice handle.
-+ * by a composite key of the SMMUDevice and the sec_sid.
-  */
- static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
-                                        SMMUSecSID sec_sid)
-@@ -889,8 +890,9 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
-     SMMUv3State *s = sdev->smmu;
-     SMMUState *bc = &s->smmu_state;
-     SMMUTransCfg *cfg;
-+    SMMUConfigKey lookup_key = smmu_get_config_key(sdev, sec_sid);
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 1d4e13320c..3336d95c6a 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -31,6 +31,7 @@
+ #include "exec/page-protection.h"
+ #include "qapi/qapi-types-common.h"
+ #include "target/arm/multiprocessing.h"
++#include "hw/arm/arm-security.h"
+ #include "target/arm/gtimer.h"
+ #include "target/arm/cpu-sysregs.h"
+ #include "target/arm/mmuidx.h"
+@@ -2098,30 +2099,6 @@ static inline int arm_feature(CPUARMState *env, int feature)
  
--    cfg = g_hash_table_lookup(bc->configs, sdev);
-+    cfg = g_hash_table_lookup(bc->configs, &lookup_key);
-     if (cfg) {
-         sdev->cfg_cache_hits++;
-         trace_smmuv3_config_cache_hit(smmu_get_sid(sdev),
-@@ -915,7 +917,9 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
-         }
+ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp);
  
-         if (!smmuv3_decode_config(&sdev->iommu, cfg, event)) {
--            g_hash_table_insert(bc->configs, sdev, cfg);
-+            SMMUConfigKey *persistent_key = g_new(SMMUConfigKey, 1);
-+            *persistent_key = lookup_key;
-+            g_hash_table_insert(bc->configs, persistent_key, cfg);
-         } else {
-             g_free(cfg);
-             cfg = NULL;
-@@ -929,8 +933,7 @@ static void smmuv3_flush_config(SMMUDevice *sdev)
-     SMMUv3State *s = sdev->smmu;
-     SMMUState *bc = &s->smmu_state;
+-/*
+- * ARM v9 security states.
+- * The ordering of the enumeration corresponds to the low 2 bits
+- * of the GPI value, and (except for Root) the concat of NSE:NS.
+- */
+-
+-typedef enum ARMSecuritySpace {
+-    ARMSS_Secure     = 0,
+-    ARMSS_NonSecure  = 1,
+-    ARMSS_Root       = 2,
+-    ARMSS_Realm      = 3,
+-} ARMSecuritySpace;
+-
+-/* Return true if @space is secure, in the pre-v9 sense. */
+-static inline bool arm_space_is_secure(ARMSecuritySpace space)
+-{
+-    return space == ARMSS_Secure || space == ARMSS_Root;
+-}
+-
+-/* Return the ARMSecuritySpace for @secure, assuming !RME or EL[0-2]. */
+-static inline ARMSecuritySpace arm_secure_to_space(bool secure)
+-{
+-    return secure ? ARMSS_Secure : ARMSS_NonSecure;
+-}
  
--    trace_smmu_config_cache_inv(smmu_get_sid(sdev));
--    g_hash_table_remove(bc->configs, sdev);
-+    smmu_configs_inv_sdev(bc, sdev);
- }
- 
- /* Do translation with TLB lookup. */
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index c17c7db6e5..bccbbe0115 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -182,6 +182,11 @@ typedef struct SMMUIOTLBKey {
-     uint8_t level;
- } SMMUIOTLBKey;
- 
-+typedef struct SMMUConfigKey {
-+    SMMUDevice *sdev;
-+    SMMUSecSID sec_sid;
-+} SMMUConfigKey;
-+
- typedef struct SMMUSIDRange {
-     uint32_t start;
-     uint32_t end;
-@@ -257,6 +262,7 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
- void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *entry);
- SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
-                                 uint8_t tg, uint8_t level);
-+SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, SMMUSecSID sec_sid);
- void smmu_iotlb_inv_all(SMMUState *s);
- void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid);
- void smmu_iotlb_inv_vmid(SMMUState *s, int vmid);
-@@ -266,6 +272,7 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
- void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-                         uint64_t num_pages, uint8_t ttl);
- void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
-+void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev);
- /* Unmap the range of all the notifiers registered to any IOMMU mr */
- void smmu_inv_notifiers_all(SMMUState *s);
- 
+ #if !defined(CONFIG_USER_ONLY)
+ /**
 -- 
 2.34.1
 
