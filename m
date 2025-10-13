@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E829CCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E22CCCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ApX-0005hb-Pu; Mon, 13 Oct 2025 01:10:43 -0400
+	id 1v8Aqc-0006ES-PX; Mon, 13 Oct 2025 01:11:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <asmadeus@codewreck.org>)
- id 1v8ApV-0005h6-Ql
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:10:41 -0400
+ id 1v8Aqa-0006E6-Nt
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:11:48 -0400
 Received: from submarine.notk.org ([2001:bc8:3310:100::1])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <asmadeus@codewreck.org>) id 1v8ApT-0007gS-8u
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:10:41 -0400
+ (envelope-from <asmadeus@codewreck.org>) id 1v8AqZ-0007nL-6Q
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:11:48 -0400
 Received: from gaia.codewreck.org (localhost [127.0.0.1])
- by submarine.notk.org (Postfix) with ESMTPS id 9021A14C2D3;
- Mon, 13 Oct 2025 07:10:06 +0200 (CEST)
+ by submarine.notk.org (Postfix) with ESMTPS id 9CE2114C2DE;
+ Mon, 13 Oct 2025 07:11:41 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
- s=2; t=1760332211;
+ s=2; t=1760332306;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=jvdp9e+dZ04IHuXN0qiAoUwW9iKISg2v85osX3pSaGI=;
- b=ABz3h9je+khccrG1caxw+K2uOfaRe2c7tzK7VwfTMerKc2+YQ0hVp4PBNtxMex8JdhrQbN
- 63VlUc14UgD3Z46c+JvBUD+rkUA2dMMGnxduxLSHzay4bF/T/yGO6E8f4Na+iaihXrbZL0
- l4WzPFBWyb8SaBc6Zmv8pjwcKqIJ0jCUQSKR69WjF/FNxoaNyrVJDHiEul1MjS6bKY6qnW
- FU+0I1JRfR4+eoby+pQ/OXCjCUj0/p4RWuw2Vi1+zJGpnZPIRiyLPf61kbRE9FsBt7fa+b
- 2it+kq41MXZqV0HxzJkAfnz5O7tZaCN20rzUTAykGXDiWuw4SY2OJMDgFL3CCw==
+ bh=Yys0QJE1T+un83xhtL/9x8bcIOj3RnN90v7UdMINz+s=;
+ b=s/DIxy+191HfFOoR7LLJQj4HqKSclU9agZCl5jMG3xCiGDT8bUqNigzpjiJYUevxLUR/Fx
+ Da7nBBCAns38kw14sn0ma5c7/UiS8UP2sq5RdxwbWL3V15zx07hAJp1cFNe0lgpYvpF5FQ
+ m9Tg/1JsG9PM0vbCvbyqKhu9mEodTWD+0rzTiAON9bBDUqMXMEVBXwD/t4lsE4IY2CofT4
+ L0KfXCAjiZrwYIimeciqyqEv7VF1sxyihGLz8kVPY9bNzC78FvhSlo3TQj0hcFOOl/oMzT
+ 3QIciKijLluYseZ1g/Sd6nk/nSABsXZsa+qFe/xqvQYiziNZHeRLpaYAMfqQ0g==
 Received: from localhost (gaia.codewreck.org [local])
- by gaia.codewreck.org (OpenSMTPD) with ESMTPA id cade3895;
- Mon, 13 Oct 2025 05:10:04 +0000 (UTC)
-Date: Mon, 13 Oct 2025 14:09:49 +0900
+ by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 2b1641bd;
+ Mon, 13 Oct 2025 05:11:39 +0000 (UTC)
+Date: Mon, 13 Oct 2025 14:11:24 +0900
 From: Dominique Martinet <asmadeus@codewreck.org>
 To: Filip Hejsek <filip.hejsek@gmail.com>
 Cc: qemu-devel@nongnu.org,
@@ -51,14 +51,14 @@ Cc: qemu-devel@nongnu.org,
  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
  Szymon Lukasz <noh4hss@gmail.com>
-Subject: Re: [PATCH RFC v5 01/12] chardev: add cols, rows fields
-Message-ID: <aOyJnVKf2EcA8tMB@codewreck.org>
+Subject: Re: [PATCH RFC v5 02/12] chardev: add CHR_EVENT_RESIZE
+Message-ID: <aOyJ_CCuvNSxEpaT@codewreck.org>
 References: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
- <20250921-console-resize-v5-1-89e3c6727060@gmail.com>
+ <20250921-console-resize-v5-2-89e3c6727060@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250921-console-resize-v5-1-89e3c6727060@gmail.com>
+In-Reply-To: <20250921-console-resize-v5-2-89e3c6727060@gmail.com>
 Received-SPF: pass client-ip=2001:bc8:3310:100::1;
  envelope-from=asmadeus@codewreck.org; helo=submarine.notk.org
 X-Spam_score_int: -20
@@ -82,11 +82,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filip Hejsek wrote on Sun, Sep 21, 2025 at 01:45:31AM +0200:
+Filip Hejsek wrote on Sun, Sep 21, 2025 at 01:45:32AM +0200:
 > From: Szymon Lukasz <noh4hss@gmail.com>
 > 
-> These fields should be interpreted as the size of the terminal connected
-> to a given chardev.
+> Add a new chardev event, CHR_EVENT_RESIZE, which a backend should
+> trigger if it detects the size of the connected terminal changed.
 > 
 > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
 > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
@@ -94,6 +94,6 @@ Filip Hejsek wrote on Sun, Sep 21, 2025 at 01:45:31AM +0200:
 Reviewed-by: Dominique Martinet <dominique.martinet@codewreck.org>
 Tested-by: Dominique Martinet <dominique.martinet@codewreck.org>
 
--- 
+--
 Dominique Martinet | Asmadeus
 
