@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1B4CCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 21:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31592CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 21:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8QGb-0005uM-8u; Mon, 13 Oct 2025 17:39:41 -0400
+	id 1v8QIf-0006e5-CT; Mon, 13 Oct 2025 17:41:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v8QGZ-0005u6-DL
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 17:39:39 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1v8QId-0006dk-Jf
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 17:41:47 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v8QGT-0001Yo-OB
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 17:39:38 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-27ee41e0798so75062275ad.1
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 14:39:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1v8QIb-0001qe-O0
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 17:41:47 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-42f94689e73so38340395ab.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 14:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760391571; x=1760996371; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LmwKSrFlZ7WCHwQQLdG8dqWWJAdIzVLNDU53jl3kQbU=;
- b=pPeGBC+2Hkq34IGFl12wdMzpA6JNKnDqAt5fjwH3SmEdiGKNQWFdoCminmfJIm1Il8
- Tl0Gs2eatr1WuGKxpnBrv8XCfHPrnalPUAyQbq2kdrI0KMqmcCKeNE7nO1sCA5vskKaU
- 7uCyv9POu3Ymu1J1qnz0t5uHqKYN1IKqZoknjEdX0VgRa/HAJHB7yOc2dl2/nEQ9wnlr
- v+uJOP/M9ZyBl5gvfUOPYbyXJjvOzvx+M0esyV86HzhBD7SCHqmLVSaGqE38cwXfzOns
- Oblcb+uFWSNJl42wOJdPXTaEiNnwq7x0zStqEp8dsk9k26PrbzxvTqjGI0LnsoCzU6tu
- Ejqg==
+ d=gmail.com; s=20230601; t=1760391704; x=1760996504; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+NKcq9dIqY7g+jIbE6ZzJgWcuqu02bZ0oE5YXeKcEpk=;
+ b=M/DApktZkoizZPbxb8+N58G8i9nGIBVOL1n+KeR9nxl5sx/t7vLNElm1lU1nGWtCQ7
+ J5+RWDacaq81vEok1BsVc/Rw4+iDqOUSvbOVcB8VW3UE/28o3ejhcn9XfBkApSMpB1Eb
+ N2iZbXaXRz+i2nBXtiUhnvRJpAGmOqeehn6wU+LOH+z0h147USisQhmTq+DyvJ5roJyl
+ McQppulU3hqNQ/Kkv6Z6GLcMLr8LLy7viXyes9WW0zNidoozX+YUQRpjUtusQdBhkKCJ
+ DlmfuQoeZMSZQiIvAMAdyic3vMlHWgOb17AvyyOGq+IdujTOFOHFsa+KwU149AjwKfia
+ 6WfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760391571; x=1760996371;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LmwKSrFlZ7WCHwQQLdG8dqWWJAdIzVLNDU53jl3kQbU=;
- b=FiX4QxIG1z5s5dKzTNTEDUONCDJvI5abBMniTMJS3WZ1ccwT8+TQHlugEqfNjxkwxb
- WiTdiyytW1jJXVbipQs70NgFe7sgqquAyAsFNbl8oem548cxtaWnNfqOSAiIquzlVDHK
- S56ERV8fdj46zq7xXUvr8CqD9aaDVVpS8LeRcBFaIB9NhuZ6V7EOIeeV2tynpSrdzoEs
- ePT7zJy3R+mka1AKbc/ogPBUrsn8CwmxiLpCUcDV3WViKcNEhhvc9cZ4Dxle8ttZZQjr
- IoLq/vlhcQyowg2essllLz02+pPvqqYBFPNPMAl4ErnPp6aRgTwe2ovXcu5WPtdwnO/j
- 3yxw==
-X-Gm-Message-State: AOJu0YyCUkFZFWEdILB9PIq3GLr2DeMcofq96LBhwfo5Rr+MlZlgf0c/
- NAi2WLfCHSpKnCbTRMyWUyw0aiOAOevldwAlF2hwCseuAsPKWLXTy4OxOm0UmWp1dT89+mwMVWr
- CO3uu
-X-Gm-Gg: ASbGncspfSZBFx8jzM2n6tLrC9ATa3gNJx3FXKVhSvRoZE9ZGNeFammyBeaE1tvy3+8
- IUaOQJfaLXTWpBDti/0ikxw6Gctm1KRCU1bNVw1JXJpMDoZc/xS9ScXBDGHTBtn/ctENslGp3nP
- yyTTbk6sEDDMsMDQXLA1lS42WDZJSvprBHZQtaSEk8AQ3T7stqoS0PfEs9H2zlaCKdl3HaZOQ3K
- JN0coXZbY4HXXtqzOw+t0hBjsJlVqAOcZVBz8bJ8N2e4DL2w9RDFvNrMXuF6IoeGtRUNnY5Xa0I
- awqHW/lm9cBFX/fMipSrRWAWIY9sfA2JOVMAa8YzgA1fiY7uQeCTECo4+5lxyxG3SGxHUYdOm49
- tlBFvd90HFYXvDCryIDgz3MzAJ3Hba+cQlr+M5zUL5ueityJrLD1K/BY96l3azBs7PS6UBTnth8
- Ct
-X-Google-Smtp-Source: AGHT+IE5DfsZx9LpVBYPMjjnfAbYewX4QtMnKpjHjLDDeV6HDcnfr+ZDZgeuaqQ9G5fChEdimPpbhQ==
-X-Received: by 2002:a17:903:2a8d:b0:24e:e5c9:ecfd with SMTP id
- d9443c01a7336-290273ffc74mr273514955ad.42.1760391571392; 
- Mon, 13 Oct 2025 14:39:31 -0700 (PDT)
-Received: from pc.taild8403c.ts.net ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f08998sm141404045ad.80.2025.10.13.14.39.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Oct 2025 14:39:30 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?q?Phil=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] contrib/plugins/uftrace_symbols.py: generate debug files to
- map symbols to source
-Date: Mon, 13 Oct 2025 14:39:12 -0700
-Message-ID: <20251013213912.413386-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ d=1e100.net; s=20230601; t=1760391704; x=1760996504;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+NKcq9dIqY7g+jIbE6ZzJgWcuqu02bZ0oE5YXeKcEpk=;
+ b=kwD8y2fzSLnzagHgpsbWSlDvZntKD1GbArSGtNq+/Cf616T1HJHNWup38O8EigSoUk
+ hjTn4k++d7sDbHKYcUKMVKqPozdXWtq2Z5pA0Yt3U2FQsGA95YmzZe7uPTROONDMD7IU
+ ubpaOm6LbYM7vuL5B/pLbid4SPhqQAGJfjCdW0uptokH1T+MqOxKu87Ea9ZhPIqP2vk/
+ zDue7SV9GRIqASaY55a7COobkkB8r6A2LoI/Gaqcm3S80BuN1ayGGJb7/9o5FYMfFHgQ
+ C2K3N57Yizn+NvU+Hy70H9n6qiFVz3frRx/TYyPFZ5ehhddpwXaQGLQIk467Hbopy+WE
+ xfhA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDIEqEjYYMBml1ntQN4sTAP6BsW4y4rz0D4XBQvlaJuiFRPSof1eAOFyEn+Q1jd9XTDiZgMcr3lIns@nongnu.org
+X-Gm-Message-State: AOJu0YxvGuvFRYObOkbhTVd+72HGey6kqSALQx1N1m+v7etnQFdLQMXF
+ QNyu4fwjyDgUn8tLhbJdVQ4UhZjw3CxMhz8lMMqZ6FJGVC3gV+0esHurEvyVWn7gtOFqiMXU+CJ
+ ImV6IAd03D5SV9T2rf7AAub/V8I4vFvA=
+X-Gm-Gg: ASbGncvhM2SInbcmsIZnmRDugWQhhwd2cVJZbA21JRZkNBJKGco+KvcfnMSWzsHkGex
+ cQnjFVovA59WGJuxoNrn+isT8XYX3TyTVA4MWObm7menniQ+UJD0qTTHgnSCQyz5RqUnBxol+Nj
+ +0crYxbyRgp/YLwLElsUV+pHgjwcr2izoXS9+BH5T0p2x63STUjzT/2GjjG8PPudurP71ekSSi1
+ ZRIUxeyD6JlgkgD/gmvEk7T3qadl/3kms6L
+X-Google-Smtp-Source: AGHT+IGmuYTorP3vbtdW83XCD01oi79WZawG+uRMsjG3nUGBNl5MqD86UpA3xDwYMzqY5rfmyT7G5CMcs7HHivBIU+8=
+X-Received: by 2002:a05:6e02:441c:20b0:42f:a711:7458 with SMTP id
+ e9e14a558f8ab-42fa71190a4mr122145605ab.32.1760391704347; Mon, 13 Oct 2025
+ 14:41:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <CAFubqFv8F8swA3EwZfgnVYpHNgs0yZSFgf6wm2DwXgPxSTjs5A@mail.gmail.com>
+ <aabfa3db-e434-4dde-b01e-b0195eb4adee@yandex-team.ru>
+ <CAFubqFsANpc_v8Dvd4P=Swmei2P_Nt33+0eXn4UdC8-dcJCPfA@mail.gmail.com>
+ <e660bb4d-b682-4378-ad42-78046bf42b41@yandex-team.ru>
+In-Reply-To: <e660bb4d-b682-4378-ad42-78046bf42b41@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Mon, 13 Oct 2025 17:41:32 -0400
+X-Gm-Features: AS18NWBFDz8lGBcXFfWh79qB2q9jbaNtrkNRuBQzUuM0_JgHEVpn3uVsP_M0za4
+Message-ID: <CAFubqFsuYQxdGx-F-zHQvDsfYsEkPFdvF8z-JkTOjYPrUNX1HA@mail.gmail.com>
+Subject: Re: [PATCH 00/33] vhost-user-blk: live-backend local migration
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net, 
+ sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,202 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enhance uftrace_symbols.py to generate .dbg files, containing
-source location for every symbol present in .sym file.
-It allows to use uftrace {replay,dump} --srcline and show origin of
-functions, connecting trace to original source code.
+Thanks for the extensive follow up here. I was hoping there would be
+some way to move more of the logic into all vhost-user generic code
+both to help other backends support local migration more easily and
+have fewer "if backend is doing a local migration" checks in
+vhost-user-blk code. As a straw man design, I would think there could
+be some way of having the backend coordinate a handoff by signaling
+the source Qemu and then the source Qemu could stop the device and ACK
+with a message before the destination Qemu is allowed to start the
+device.
 
-It was first implemented with pyelftools DWARF parser, which was way
-to slow (~minutes) to get locations for every symbol in the linux
-kernel. Thus, we use addr2line instead, which runs in seconds.
+Anyways, it seems like other maintainers have blessed this approach so
+I'll leave it at that.
 
-As well, there were some bugs with latest pyelftools release,
-requiring to run master version, which is not installable with pip.
-Thus, since we now require binutils (addr2line), we can ditch pyelftools
-based implementation and simply rely on nm to get symbols information,
-which is faster and better.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/uftrace_symbols.py | 108 +++++++++++++++++++----------
- 1 file changed, 72 insertions(+), 36 deletions(-)
-
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-index b49e03203c8..728bf04ce54 100755
---- a/contrib/plugins/uftrace_symbols.py
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- # -*- coding: utf-8 -*-
- #
--# Create symbols and mapping files for uftrace.
-+# Create symbols, debug and mapping files for uftrace.
- #
- # Copyright 2025 Linaro Ltd
- # Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-@@ -9,44 +9,71 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- import argparse
--import elftools # pip install pyelftools
- import os
-+import subprocess
- 
--from elftools.elf.elffile import ELFFile
--from elftools.elf.sections import SymbolTableSection
-+class Symbol:
-+    def __init__(self, name, addr, size):
-+        self.name = name
-+        # clamp addr to 48 bits, like uftrace entries
-+        self.addr = addr & 0xffffffffffff
-+        self.full_addr = addr
-+        self.size = size
- 
--def elf_func_symbols(elf):
--    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
--                  if isinstance(s, SymbolTableSection)]
--    symbols = []
--    for _, section in symbol_tables:
--        for _, symbol in enumerate(section.iter_symbols()):
--            if symbol_size(symbol) == 0:
--                continue
--            type = symbol['st_info']['type']
--            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
--                symbols.append(symbol)
--    symbols.sort(key = lambda x: symbol_addr(x))
-+    def set_loc(self, file, line):
-+        self.file = file
-+        self.line = line
-+
-+def get_symbols(elf_file):
-+    symbols=[]
-+    try:
-+        out = subprocess.check_output(['nm', '--print-size', elf_file],
-+                                      stderr=subprocess.STDOUT,
-+                                      text=True)
-+    except subprocess.CalledProcessError as e:
-+        print(e.output)
-+        raise
-+    out = out.strip().split('\n')
-+    for line in out:
-+        info = line.split(' ')
-+        if len(info) == 3:
-+            # missing size information
-+            continue
-+        addr, size, type, name = info
-+        # add only symbols from .text section
-+        if type.lower() != 't':
-+            continue
-+        addr = int(addr, 16)
-+        size = int(size, 16)
-+        symbols.append(Symbol(name, addr, size))
-+    symbols.sort(key = lambda x: x.addr)
-     return symbols
- 
--def symbol_size(symbol):
--    return symbol['st_size']
--
--def symbol_addr(symbol):
--    addr = symbol['st_value']
--    # clamp addr to 48 bits, like uftrace entries
--    return addr & 0xffffffffffff
--
--def symbol_name(symbol):
--    return symbol.name
-+def find_symbols_locations(elf_file, symbols):
-+    addresses = '\n'.join([hex(x.full_addr) for x in symbols])
-+    try:
-+        out = subprocess.check_output(['addr2line', '--exe', elf_file],
-+                                      stderr=subprocess.STDOUT,
-+                                      input=addresses, text=True)
-+    except subprocess.CalledProcessError as e:
-+        print(e.output)
-+        raise
-+    out = out.strip().split('\n')
-+    assert len(out) == len(symbols)
-+    for i in range(len(symbols)):
-+        s = symbols[i]
-+        file, line = out[i].split(':')
-+        # addr2line may return 'line (discriminator [0-9]+)' sometimes,
-+        # remove this to keep only line number.
-+        line = line.split(' ')[0]
-+        s.set_loc(file, line)
- 
- class BinaryFile:
-     def __init__(self, path, map_offset):
-         self.fullpath = os.path.realpath(path)
-         self.map_offset = map_offset
--        with open(path, 'rb') as f:
--            self.elf = ELFFile(f)
--            self.symbols = elf_func_symbols(self.elf)
-+        self.symbols = get_symbols(self.fullpath)
-+        find_symbols_locations(self.fullpath, self.symbols)
- 
-     def path(self):
-         return self.fullpath
-@@ -56,7 +83,7 @@ def addr_start(self):
- 
-     def addr_end(self):
-         last_sym = self.symbols[-1]
--        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
-+        return last_sym.addr + last_sym.size + self.map_offset
- 
-     def generate_symbol_file(self, prefix_symbols):
-         binary_name = os.path.basename(self.fullpath)
-@@ -66,14 +93,21 @@ def generate_symbol_file(self, prefix_symbols):
-             # print hexadecimal addresses on 48 bits
-             addrx = "0>12x"
-             for s in self.symbols:
--                addr = symbol_addr(s)
-+                addr = s.addr
-                 addr = f'{addr:{addrx}}'
--                size = f'{symbol_size(s):{addrx}}'
--                name = symbol_name(s)
-+                size = f'{s.size:{addrx}}'
-                 if prefix_symbols:
--                    name = f'{binary_name}:{name}'
-+                    name = f'{binary_name}:{s.name}'
-                 print(addr, size, 'T', name, file=sym_file)
- 
-+    def generate_debug_file(self):
-+        binary_name = os.path.basename(self.fullpath)
-+        dbg_file_path = f'./uftrace.data/{binary_name}.dbg'
-+        with open(dbg_file_path, 'w') as dbg_file:
-+            for s in self.symbols:
-+                print(f'F: {hex(s.addr)} {s.name}', file=dbg_file)
-+                print(f'L: {s.line} {s.file}', file=dbg_file)
-+
- def parse_parameter(p):
-     s = p.split(":")
-     path = s[0]
-@@ -84,7 +118,7 @@ def parse_parameter(p):
-     offset = s[1]
-     if not offset.startswith('0x'):
-         err = f'offset "{offset}" is not an hexadecimal constant. '
--        err += 'It should starts with "0x".'
-+        err += 'It should start with "0x".'
-         raise ValueError(err)
-     offset = int(offset, 16)
-     return path, offset
-@@ -124,7 +158,8 @@ def generate_map(binaries):
- 
- def main():
-     parser = argparse.ArgumentParser(description=
--                                     'generate symbol files for uftrace')
-+                                     'generate symbol files for uftrace. '
-+                                     'Require binutils (nm and addr2line).')
-     parser.add_argument('elf_file', nargs='+',
-                         help='path to an ELF file. '
-                         'Use /path/to/file:0xdeadbeef to add a mapping offset.')
-@@ -145,6 +180,7 @@ def main():
- 
-     for b in binaries:
-         b.generate_symbol_file(args.prefix_symbols)
-+        b.generate_debug_file()
- 
-     generate_map(binaries)
- 
--- 
-2.47.3
-
+On Fri, Oct 10, 2025 at 4:47=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 10.10.25 02:28, Raphael Norwitz wrote:
+> > Thanks for the detailed response here, it does clear up the intent.
+> >
+> > I agree it's much better to keep the management layer from having to
+> > make API calls back and forth to the backend so that the migration
+> > looks like a reconnect from the backend's perspective. I'm not totally
+> > clear on the fundamental reason why the management layer would have to
+> > call out to the backend, as opposed to having the vhost-user code in
+> > the backend figure out that it's a local migration when the new
+> > destination QEMU tries to connect and respond accordingly.
+> >
+>
+> Handling this in vhost-user-server without the management layer would
+> actually mean handling two connections in parallel. This doesn't seem
+> to fit well into the vhost-user protocol.
+>
+> However, we already have this support (as we have live update for VMs
+> with vhost-user-blk) in the disk service by accepting a new connection
+> on an additional Unix socket servicing the same disk but in readonly
+> mode until the initial connection terminates. The problem isn't with
+> the separate socket itself, but with safely switching the disk backend
+> from one connection to another. We would have to perform this switch
+> regardless, even if we managed both connections within the context of a
+> single server or a single Unix socket. The only difference is that this
+> way, we might avoid communication from the management layer to the disk
+> service. Instead of saying, "Hey, disk service, we're going to migrate
+> this QEMU - prepare for an endpoint switch," we'd just proceed with the
+> migration, and the disk service would detect it when it sees a second
+> connection to the Unix socket.
+>
+> But this extra communication isn't the real issue. The real challenge
+> is that we still have to switch between connections on the backend
+> side. And we have to account for the possible temporary unavailability
+> of the disk service (the migration freeze time would just include this
+> period of unavailability).
+>
+> With this series, we're saying: "Hold on. We already have everything
+> working and set up=E2=80=94the backend is ready, the dataplane is out of =
+QEMU,
+> and the control plane isn't doing anything. And we're migrating to the
+> same host. Why not just keep everything as is? Just pass the file
+> descriptors to the new QEMU process and continue execution."
+>
+> This way, we make the QEMU live-update operation independent of the
+> disk service's lifecycle, which improves reliability. And we maintain
+> only one connection instead of two, making the model simpler.
+>
+> This doesn't even account for the extra time spent reconfiguring the
+> connection. Setting up mappings isn't free and becomes more costly for
+> large VMs (with significant RAM), when using hugetlbfs, or when the
+> system is under memory pressure.
+>
+>
+> > That said, I haven't followed the work here all that closely. If MST
+> > or other maintainers have blessed this as the right way I'm ok with
+> > it.
+> >
+>
+>
+>
+> --
+> Best regards,
+> Vladimir
 
