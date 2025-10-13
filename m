@@ -4,55 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C05BCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF42CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8LLi-0004BC-1O; Mon, 13 Oct 2025 12:24:38 -0400
+	id 1v8LNd-0005Rt-VG; Mon, 13 Oct 2025 12:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v8LLe-0004Aj-D6
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:24:34 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v8LNb-0005Pe-SU
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:26:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v8LLZ-0004bJ-SU
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:24:33 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8C6ED5972E5;
- Mon, 13 Oct 2025 18:24:19 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Xuf1FliQjIUW; Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4702B5972E1; Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4507359703F;
- Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
-Date: Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- marcandre.lureau@redhat.com
-Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using hardware-correct
- aperture sizes
-In-Reply-To: <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
-Message-ID: <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
-References: <20251001034616.3017119-1-chad@jablonski.xyz>
- <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
- <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v8LNY-00057E-EU
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:26:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760372791;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9KuLJoDiMvlnnKNTBuu0fgbZJ8BujdBUL9VVGTtRchY=;
+ b=hOl7qJlSVM5Gs+rIS+N2+YUFQLGG4iTPbvTPiivsy/L0Cnsm8po8WEdy3VDRpw4RN+tTOQ
+ GV+IYkH8bS/LrfVTFQh+bSOYWJhodKlckTfwj2URsn+MZ3a/Zg8Frb8cav6vGdfs5YtqIx
+ zlWpREU0sXOfKgX2cO81HX5uEOzxboc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-348-O4UEWjyYPDqDYOkZz-mjQw-1; Mon, 13 Oct 2025 12:26:24 -0400
+X-MC-Unique: O4UEWjyYPDqDYOkZz-mjQw-1
+X-Mimecast-MFC-AGG-ID: O4UEWjyYPDqDYOkZz-mjQw_1760372784
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3ecdc9dbc5fso2984930f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 09:26:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760372783; x=1760977583;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9KuLJoDiMvlnnKNTBuu0fgbZJ8BujdBUL9VVGTtRchY=;
+ b=xNAVPT7YPgAq89RvxWuXsSF45nulWr7dK9XeSJIyKeXpdX915jq5Kw25d4zjKz3DrE
+ 5MkaNAP0+EiutlQi6xmC+DealWbclebU2mT0xKlx+aIpA/l5QNgY2APcOn8OsR64by1v
+ BNKjoNayUnWM8EeUR414YRpMBmjhpVRNatHOG2SlS8Vf5dmlxuDcHV4EvCLMaIsuU6Tb
+ CAZCQcAUrJLlUkMkCB7VIyVelCKYMIYPx/8d0y0hSgzMjulKAgW8+L3ikJKFzlgDL2tV
+ 8J3LYN44CTOs2qkMC+KXgH6D2CEuZSfgJZ/Fpx5tQVih46oVSe8b4RSgYohNYuzp2sUW
+ llVQ==
+X-Gm-Message-State: AOJu0YxMTnFWKQtPAKuQ4pA4EnEaJVg74v/TLTLpz5jsmz8Oys5b3o1U
+ 7A8L8uHP8ixrpKrcIwf7n/R2OGSM/uR5wpIrnjWaxpOAP4DpDQyLCyIW6PkefeQzIkJR78U/LVV
+ E4RjVOrtzvPj8fB3OVkcpSMfl5O3oB0H6Daf9pT2K435nW9WRIElJAm6cMNa5VtzMeSVdJsVWDg
+ ZrI8+Hsz6xWXzjlAkRCefQBEalplEszkN/fpe2pvR1
+X-Gm-Gg: ASbGnctoZuid1U0J1ilUJxmdu75bUkH9V2VOkyt500QLSUn/x+15Kd8JvEYj1UqkyeO
+ HMj2BFSElR9kcTj8JWyGrLQuz4ZvWXAuBllts8qR+RCCZRDOkvZpLaPN10OGNWA2YiHyhanOZS/
+ 0sBwAdCSSUKaY4f3+5Rijto61o7ekZcop+uonpvmWoMrsKhy+kOSGnYMAlIqUXbO4nHh4MOjmFt
+ wfXdjGpd40mCF6Zl5nF7tex3kKP9JkYWZ90q6SsjLZe4KHak0yJkjotY1VpNWKD07I5PQaPc1aL
+ HChAFiwIAX+ElG0yoEoHfEplnVDXCWYQBvrwb5lraoHuX8prN6H4X67Zsvct4C5/xofTYWcru+U
+ KOMiW7hgvWMFgdQbun4bVadUKnTGHhIlEaLnK078RHGg=
+X-Received: by 2002:a05:6000:41d1:b0:403:6f7d:ac5d with SMTP id
+ ffacd0b85a97d-4266e7dfaf4mr12192621f8f.34.1760372782808; 
+ Mon, 13 Oct 2025 09:26:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIn5vNuVZ0CPukcmdqUy65P6SXHfg31+sAMl7HbkAmAxfF0SCFDMh2VHDcOvMtTOQ9fDZZsw==
+X-Received: by 2002:a05:6000:41d1:b0:403:6f7d:ac5d with SMTP id
+ ffacd0b85a97d-4266e7dfaf4mr12192598f8f.34.1760372782313; 
+ Mon, 13 Oct 2025 09:26:22 -0700 (PDT)
+Received: from [192.168.10.48] ([151.61.22.175])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce5cf70fsm18439576f8f.27.2025.10.13.09.26.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Oct 2025 09:26:21 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org,
+	qemu-stable@nongnu.org
+Subject: [PATCH] async: access bottom half flags with qatomic_read
+Date: Mon, 13 Oct 2025 18:26:20 +0200
+Message-ID: <20251013162620.995747-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,79 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Oct 2025, Chad Jablonski wrote:
-> Hi Balaton,
->
-> Thanks for taking a look! I'll address all of these and send a v2.
->
->> The documentation does not mention 64MB alignment. It says apertures must
->> be on a 32MB boundary and src and dst offsets are 128 bit aligned but
->> maybe I don't have the right documentation for these chips or don't get
->> what it means.
->>
->
-> Agreed, yeah the register docs do say there is a max of 32MB of framebuffer
-> memory and a max of 32MB of AGP memory (register reference pg. 2-6)
-> which implies 32MB alignment. And the software guide does explicitly say
-> that apertures must be located on a 32MB boundary (software guide 2-19).
-> It then goes on to describe how the aperture is split into 32MB for frame
-> buffer space and 32MB for AGP/PCI space. Which implies that 64MB is needed
-> for the full aperture. And from what I understand requesting 64MB will
-> naturally lead to a 64MB alignment from PCI.
->
-> Outside of what I observed on the real hardware another thing that lead me
-> to believe that the 64MB alignment is correct was this line in the XOrg
-> r128 driver: https://gitlab.freedesktop.org/xorg/driver/xf86-video-r128/-/blob/XORG-RELEASE-1/src/r128_driver.c#L855
-> The driver is assuming a 64MB alignment by masking addresses with
-> 0xfc000000 (2^26 = 64MB). When qemu requests 16MB or 32MB it breaks that assumption
-> and the driver looks in the wrong memory area for the framebuffer.
+Running test-aio-multithread under TSAN reveals data races on bh->flags.
+Because bottom halves may be scheduled or canceled asynchronously,
+without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
+to use a relaxed read to access the flags.
 
-I'm not saying the 64MB alignment is not correct (I don't know what is 
-correct and assuming the Xorg driver was tested with real cards it's 
-possible this assumption holds) but maybe it comes from having a 64MB VRAM 
-BAR that contains twice the size of actual VRAM including the AGP window 
-which also satisfies the 32MB alignment for VRAM, so the commit message 
-may nees to be adjusted to say that instead of something not supported by 
-documentation. Do you have any PCI cards? There were PCI versions of 
-these. I wonder if they also have the same VRAM BAR. If not then no 
-problem, we can go with what works for known drivers.
+Use an acquire load to ensure that anything that was written prior to
+qemu_bh_schedule() is visible.
 
-Regards,
-BALATON Zoltan
+Resolves: #2749
+Resolves: #851
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ util/async.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
->> Can you check what the CONFIG_APER_SIZE register contains on these cards?
->> Do all Rage 128 (and Pro) cards have 64MB and Radeon 7xxx/M6 have 128MB?
->> The documentation is again not clear on this because it lists default
->> value of 0x2000000 for CONFIG_APER_SIZE on Rage 128 Pro and nothing for
->> Radeon but in a figure it shows this should contain both VRAM and AGP
->> areas that suggests 64MB but it's possible that the documentation is
->> wrong.
->>
->
-> I will take a look at this!
->
->>
->> This was changed in commit f7ecde051dd73 to be half the memory size
->> because at least a Radeon FCocde ROM seemed to detect VRAM size that way.
->> I should test that again but it needed OpenBIOS patches that were not
->> merged so I had to find those again as I don't have that setup any more.
->> Checking on real card may be the best source of what this should be but I
->> think this might break that FCode ROM which is from a PowerMac card. This
->> suggests it should be half the aper size.
->>
->
-> Ah, great, this is important context. I'll look at this more
-> closely and check the real hardware.
->
->>
->> Coding style says variables should be defined at the beginning of blocks
->> so in this case at the beginning of the funcion.
->>
->
-> I'll also address all of the style comments.
->
-> Thanks again,
-> Chad
->
->
+diff --git a/util/async.c b/util/async.c
+index 2719c629ae9..a736d2cd0d0 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -256,8 +256,9 @@ static int64_t aio_compute_bh_timeout(BHList *head, int timeout)
+     QEMUBH *bh;
+ 
+     QSLIST_FOREACH_RCU(bh, head, next) {
+-        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+-            if (bh->flags & BH_IDLE) {
++        int flags = qatomic_load_acquire(&bh->flags);
++        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++            if (flags & BH_IDLE) {
+                 /* idle bottom halves will be polled at least
+                  * every 10ms */
+                 timeout = 10000000;
+@@ -335,14 +336,16 @@ aio_ctx_check(GSource *source)
+     aio_notify_accept(ctx);
+ 
+     QSLIST_FOREACH_RCU(bh, &ctx->bh_list, next) {
+-        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++        int flags = qatomic_load_acquire(&bh->flags);
++        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+             return true;
+         }
+     }
+ 
+     QSIMPLEQ_FOREACH(s, &ctx->bh_slice_list, next) {
+         QSLIST_FOREACH_RCU(bh, &s->bh_list, next) {
+-            if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++            int flags = qatomic_load_acquire(&bh->flags);
++            if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+                 return true;
+             }
+         }
+-- 
+2.51.0
+
 
