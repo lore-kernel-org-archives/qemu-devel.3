@@ -4,89 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8672CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A47CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Nsx-0002SZ-VH; Mon, 13 Oct 2025 15:07:07 -0400
+	id 1v8Nxa-0003nT-Ez; Mon, 13 Oct 2025 15:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Nsx-0002SK-2F
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:07:07 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8NxY-0003nI-P1
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:11:52 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Nsv-0000Zz-D8
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:07:06 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-3ee15505cdeso3835728f8f.0
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:07:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8NxX-00016L-5e
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:11:52 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-46e6c8bc46eso29824285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760382424; x=1760987224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760382709; x=1760987509; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TGReayrHSYaTVPTGfVSCKVjz6qk2ujF1YrM+QI3d3/w=;
- b=dufYUyTKPRbYYDmwMnsYfNLISHMXNIhYzF6dJznZA/GEUzhJIsYDKYE/ZG3g9P9Ik+
- yicKsgtU0lH78eg/KRMionuHG7tFmq0120Yn6rnh2/nFnZMz9V6AMtK43M3l/fmVShol
- oN9D4yRxpvTPe/o37W+kNxtfpL+70/fVt1QdSUr8Ub0tXw/uzXQElPNOhvioefhcvkrH
- Fhoe0+6XSd5LwnrrgB+aYy2IvRhnEnORqoGmt6ZP3j6nGNo9Su6JwPd1nQObVsx82jtl
- vtNOeCgbfV1Xw1jN/FtyszYZQKEdGifRiueT4VvHTtQbMULBCr5MiUT2m8Fjzj13SjEk
- KT1Q==
+ bh=d69zgUPTrFtp82ihw3AHcKLF/RSIV9yvM7YaHsx5tA8=;
+ b=M4wyZOtPBbHQJkZYQqyovaWHTJt9A5kfDJXdRBq4mVl+tTgdVHRCIlC8dLI5+OdbpI
+ MPZplfG9x4Hw1bO04U7KnBulnWfvCou+36ivCPTxq4KuyD0dfGPVL5Aif+lCGyO1ESrP
+ tk2zEiAgmhn4/LyTFvI+boNHRZKPZAVPTizy5Fooy/9TYZjiVELhjIyDUKovAaxIjv/4
+ y7WLrcAnSEdb9mCNYXb1emTZlaYsFnRLVkWwsO4Wr8gwRqEzrURXmKRbx4+s2/Grw0ZH
+ 912TP5TNFtVa0xNg+dvwy94XM1ub4Pn6J0Z7RWkvGX68H679afCu4zErPN+kqEJAdNOM
+ MdGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760382424; x=1760987224;
+ d=1e100.net; s=20230601; t=1760382709; x=1760987509;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TGReayrHSYaTVPTGfVSCKVjz6qk2ujF1YrM+QI3d3/w=;
- b=nGRY02ELB4LnbYxteuyhE97xJx2xGrzq7EMrszPRNcs5M7IrvswRCalRoxb4HNVdJE
- h04/1IbT1ttHMThx0uEF0FQ1X2HhpIKhjAo0/EDK+nypX16rGvaq29zIVUhtLFCPzim4
- d4ADC1i1q/8rrqWRureryt3HSb4dQAap5kL4Ixc+D4/OmO59vEgG86VmWpl7Ht19b9w9
- mj/uPfmnC/8zfjxQ4yIXj12LwY8PvCZIE/RDSPIF/24ukme2UzP96C1W/UeHPIoDEGPs
- eFDCjfKWrKBLsRZtJaQWB4euB6jeb9qVvogaQY0A0T1By/FqP87T48l/4Su6z3QXp2VJ
- Y/ug==
+ bh=d69zgUPTrFtp82ihw3AHcKLF/RSIV9yvM7YaHsx5tA8=;
+ b=QPT3pIH7+x/e2HWapyZoJ4AbhtsPE/R4cY4AcCCCKIDCuifn5Fj+kqPSnLnx5gbOup
+ kMIIIXMqry6A9sLHuYQIl5xZ5T0VzbwtAjzmF1Fy6sr5GlcIrtm+Ek9Lit6Qa09gLE4W
+ pBOCP3Wl4g0TY96mlK66y2DK2p75KVcdx+D4gf2pjwrH6+nuGNnle6rJbL/WXVqzZhqJ
+ OTCJOI8SpCp3/Ptz9YrmzmeDejxHP0gPxhgjU+sM9XtsPrbvRZU76qisH5wAo8TNDQqM
+ FAjwWZTx8mSlP8Kym73O4OF60AWr09bE3Ud1Cpyx+eR7hxIuvvmjrOYx9crjqJgpxZxC
+ eBKA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWy+NhpfJV1msfUCdL0mcUvSRNTtTD7A6Oz/R2sUG9onG0x/8jOJO1j6+UwsSJ4Qs4pi3/DCG/M8pG1@nongnu.org
-X-Gm-Message-State: AOJu0YxweVEeENyKklg6uH/Jy3TlpOqBmelpC2K26e7ax3BKHv4Sj24p
- g+eb+67rRZ35zYXxmOyXPfCYcALx4eujT9gV7V8nWdNKWy7BOUDWnuhjzX3Ga3+oLd4=
-X-Gm-Gg: ASbGncv8ngAbPxlrfN0EhPRU3xdN+c5LZISF81h73EzbrZ2oK3mBpoSpQnjZL8dHuHf
- BDf29FyQVCshW6htB2jPkOvdEvzig3CkS7ckiPvCcPbi9h7gMGlMAVw0eDxCpimW0YIxJC0FOju
- gRfFHEgJHG7ShbH5yvd8/Ly64lGr6b3GldiRR4HS4RlMj5PIvzZMZeljervwM8IzPD/22j6S47I
- jnovlLO7FAD+YQTpnkimmJa8HbQjQJx+8B0ajFUlcSaL0fN+ipgRgHeaGMgipETMSbnTcKb7Kmd
- bf42PPi6dPFNMEr5Br4ql+JtXLIsfxVAxpl01S+7NFfN2vHYm1bSk3W4hLlPVkwjWve5Ja1vjZ2
- hpUHRnk5PVqXOkAvJX+XE1rD4Cu5PVGaFerT2X8Zgxi5F7JoHFmtg+PF5GMEGIy3I0e0+01b5ux
- 4xzCsW6B4d+UTUslQ2AYH1Xe8=
-X-Google-Smtp-Source: AGHT+IFpXXEOVVap5qH/ysFmlg1lyuzEjPWV4RKaOILdjoUDOGWAloTjMygMhIvJl2vkBKaiB2HeEQ==
-X-Received: by 2002:a05:6000:288f:b0:425:58d0:483a with SMTP id
- ffacd0b85a97d-425829a5a12mr18700388f8f.3.1760382423631; 
- Mon, 13 Oct 2025 12:07:03 -0700 (PDT)
+ AJvYcCUp7T8hVHz/A2k3V/xfQGEL+zfN1uXQt6YS0g/tFUQZRIDj85zwpK3pVHUDlE6fHl2wYO0YoO6L4U10@nongnu.org
+X-Gm-Message-State: AOJu0Yzw0USEnth/SNFRmox3JBV0rff57Lbwv63lrc29YuOUMiqNkEt+
+ 6cnTxecdsyGhu1NXLMpq8Om6+BAJyDqLFu4Hd7ZlNQzaTPmsLI3LDbuOOf9QGwklyvw=
+X-Gm-Gg: ASbGnct9pNyhBIH4YYErY/FKt6F1cZo70rh8IZ+UlNXrInR4u4+rx1EZUDUuxXo5qcz
+ NL0Ve7npaKU393hZ9zDFfdfwxdWHXsPmLBdW9/oKZCwqg4Uh9S26LgZ3/u0e+4wmK9oa9oHagb8
+ VKNi8DlXwvL+nwQujxi5HmKr/eiTkgP/MJMp5P4WYK4jRn1/yfMyaSncvQoWOwiTKgOwqZ2fgsm
+ gHVYa33aH9pwybAVk8rldBHjeFPmFn55qkpMH92tdO/Cc8moCemd6KYZ7LaopcW/bQ/Pnu+KxYN
+ Tg+U1jWKorpVwnNXJKCHq4gkfkBLYKHV7HiiVh85oBy7MnBaDoKKlTJH2zMpIN0fqVlpOgIUmYd
+ PZABEP/NHAhK60ctv732tJWQlwEjl3G18HahDPKVlsDHWjQ2CXivrf3Hx+0qdZ6X+ie3BKwdjnT
+ /Yr4R4VA5o0n2nvJJbORZES5U=
+X-Google-Smtp-Source: AGHT+IHTv7ds5d1Hdxaf5RrzZwtZHemrwN1cKiLTx0gjCJxPscNWzVgRZ5NUDpFcgkLQPoY/b1l7AQ==
+X-Received: by 2002:a05:600c:828d:b0:46e:44bf:210 with SMTP id
+ 5b1f17b1804b1-46fa9af8107mr149584195e9.22.1760382709251; 
+ Mon, 13 Oct 2025 12:11:49 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb482ba41sm200512545e9.4.2025.10.13.12.07.02
+ ffacd0b85a97d-426ce5e0a03sm19709652f8f.37.2025.10.13.12.11.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Oct 2025 12:07:03 -0700 (PDT)
-Message-ID: <89f61779-e078-4778-a8ef-d5a507c46f28@linaro.org>
-Date: Mon, 13 Oct 2025 21:07:02 +0200
+ Mon, 13 Oct 2025 12:11:48 -0700 (PDT)
+Message-ID: <7300d719-e354-480f-9476-19e251a461b1@linaro.org>
+Date: Mon, 13 Oct 2025 21:11:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] async: access bottom half flags with qatomic_read
+Subject: Re: [PATCH v3] hw/uefi: add "info firmware-log" +
+ "query-firmware-log" monitor commands
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org
-References: <20251013162620.995747-1-pbonzini@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20251010071008.2555267-1-kraxel@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251013162620.995747-1-pbonzini@redhat.com>
+In-Reply-To: <20251010071008.2555267-1-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,28 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/25 18:26, Paolo Bonzini wrote:
-> Running test-aio-multithread under TSAN reveals data races on bh->flags.
-> Because bottom halves may be scheduled or canceled asynchronously,
-> without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
-> to use a relaxed read to access the flags.
+On 10/10/25 09:10, Gerd Hoffmann wrote:
+> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+> optional support for logging to a memory buffer.  There is guest side
+> support -- for example in linux kernels v6.17+ -- to read that buffer.
+> But that might not helpful if your guest stops booting early enough that
+> guest tooling can not be used yet.  So host side support to read that
+> log buffer is a useful thing to have.
 > 
-> Use an acquire load to ensure that anything that was written prior to
-> qemu_bh_schedule() is visible.
+> This patch implements both qmp and hmp monitor commands to read the
+> firmware log.
 > 
-> Resolves: #2749
-> Resolves: #851
-
-Preferably using the full URL:
-https://gitlab.com/qemu-project/qemu/-/issues/851
-https://gitlab.com/qemu-project/qemu/-/issues/2749
-
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->   util/async.c | 11 +++++++----
->   1 file changed, 7 insertions(+), 4 deletions(-)
+>   include/monitor/hmp.h      |   1 +
+>   hw/uefi/ovmf-log.c         | 265 +++++++++++++++++++++++++++++++++++++
+>   tests/qtest/qmp-cmd-test.c |   2 +
+>   hmp-commands-info.hx       |  14 ++
+>   hw/uefi/meson.build        |   2 +-
+>   qapi/machine.json          |  23 ++++
+>   6 files changed, 306 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/uefi/ovmf-log.c
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+At a glance, why not "info ovmf-log" and "query-ovmf-log"?
 
