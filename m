@@ -4,61 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6EACCD18D
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 15:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 737F8CCD18D
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 15:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8KbK-0003K0-81; Mon, 13 Oct 2025 11:36:42 -0400
+	id 1v8Kcu-0004OQ-MC; Mon, 13 Oct 2025 11:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1v8KbI-0003Jn-Jz
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 11:36:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1v8Kcr-0004OI-RI
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 11:38:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1v8KbE-0006Hp-W0
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 11:36:40 -0400
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1v8Kck-0006XL-Kg
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 11:38:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760369788;
+ s=mimecast20190719; t=1760369887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=G5z/+K1680xwDSI45Zwv/YiCoBVFhfH+8iRu3YIHNWM=;
- b=c/BU5mUbz1E3ak5aC/SMGoBwQ+hvWUDwLAhQQIGA0qn/mdqwa4g2JAhrIgCyu2Hh99ZAza
- vDQWZbaEDUPIBjY45bqdRlmPLrfSrKCmfW5HqNX7f4ouV45AbcNXoS0yFB2UnFvh06QibE
- zK0sOHVvT5xwdBEAqN437TAwvFOJPj4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-_eGuntTyPgOHDwEhzzBYWA-1; Mon,
- 13 Oct 2025 11:36:25 -0400
-X-MC-Unique: _eGuntTyPgOHDwEhzzBYWA-1
-X-Mimecast-MFC-AGG-ID: _eGuntTyPgOHDwEhzzBYWA_1760369784
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAA421800578; Mon, 13 Oct 2025 15:36:23 +0000 (UTC)
-Received: from omen.home.shazbot.org (unknown [10.22.89.76])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C56D93000384; Mon, 13 Oct 2025 15:36:22 +0000 (UTC)
-From: Alex Williamson <alex.williamson@redhat.com>
-To: clg@redhat.com
-Cc: Alex Williamson <alex.williamson@redhat.com>, alex@shazbot.org,
- qemu-devel@nongnu.org, tomitamoeko@gmail.com
-Subject: [PATCH] MAINTAINERS: Update Alex Williamson's email address
-Date: Mon, 13 Oct 2025 09:35:35 -0600
-Message-ID: <20251013153543.3091169-1-alex.williamson@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z52uK1wKDJDjT0Gs0o7Bf5J8AkNtaDau/9werj/gv4I=;
+ b=FZzyVifk1zKr8gpLfzulVqZKcLfwIy4Q1Ky+u8P/KE1KtBHTbSChb4QQrYofzX15da0jka
+ BTfEuCGYJHwAe3uD4SS2et0KIlmaw6sVf86ziRFke+6X/tUcCcfBDmEsoco1Snmw6fanI4
+ mGRv6l/k5XCI174R/zfmw8XoGbG3LAs=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-169-M6cI6TzzPMaE2pqo5SHXkw-1; Mon, 13 Oct 2025 11:38:05 -0400
+X-MC-Unique: M6cI6TzzPMaE2pqo5SHXkw-1
+X-Mimecast-MFC-AGG-ID: M6cI6TzzPMaE2pqo5SHXkw_1760369885
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-28e538b5f23so86017955ad.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 08:38:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760369885; x=1760974685;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z52uK1wKDJDjT0Gs0o7Bf5J8AkNtaDau/9werj/gv4I=;
+ b=PEH4oOVg+N2cFWumqXBmUPP/642YrSFsEWlWML6Cp+/8dJhk0qUXgHHJXaMnXoIEnh
+ RixtYn+8p6jMW+oMPKQhjIrSERlDuq9e6Gnp1inKhYOM6Lvi7MftFwob/PJeVFdJjfZa
+ lJbbI9yk2SF80khGynttIr1AVGBVtGmVj+aKk12W01fLk5S3r61Gc7j/paiInw5vC7fo
+ LZ6NkFYIrVOAs7yZ1WpUiCj7/btg91hkWPeA5V2z6xm8YhO4kiXqCzUf/ibkKh8ITQR8
+ uUvL5ub+JnoyCx95iuKNjiAurxg9KDQXagxyqfOA93dyknGXIOVTUWCICuNsvPsYL+n6
+ 0mpQ==
+X-Gm-Message-State: AOJu0YxT3imIpbwCDxqdxy8cReNEIla1+S/DMCmi5/ceKH9c773ImUM5
+ mHpLkedh3uuR1pWKkuwfU8ejqk/h781n9eMC0BUlBHUcudJj0K/mr0RX/T0C5USLvbyby5Rwpzd
+ rbT5ArveSWs4ptrGSPHnQGWe/gYhEtViahfY57G2h7o0V/yb0yTz97IXdI069u4dQPxA1MgezeQ
+ g8CbXPh9EvcxaH7hGaRCr9lbJkgOtODKo=
+X-Gm-Gg: ASbGncsjdYMyTKSosEijV/zPp24lANWalY5Swr0WzfOq87q/cc+DLFIAUnuuVaOqA9L
+ okafU1yMTN626jQo7ukbRD62o8/2Ue4ce0cLlSIsZ/I+kcOL0QClqLwuy9nYFRMZVjncuKshdTx
+ Yi5bFECOiFh6oQCFuc
+X-Received: by 2002:a17:903:3847:b0:24a:fab6:d15a with SMTP id
+ d9443c01a7336-29027240d1bmr293455325ad.20.1760369884607; 
+ Mon, 13 Oct 2025 08:38:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFhytu1Dlu8K4T6RziXPjZkd8F7Zn+bYfbYIyLOgiaDjFqj2iCEumzT3wdyyIaTK2gcz/IvxzVojjk4+guFvF0=
+X-Received: by 2002:a17:903:3847:b0:24a:fab6:d15a with SMTP id
+ d9443c01a7336-29027240d1bmr293454835ad.20.1760369884032; Mon, 13 Oct 2025
+ 08:38:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+References: <20250910115420.1012191-1-aesteve@redhat.com>
+ <20250910115420.1012191-8-aesteve@redhat.com>
+ <20250929190031.GG81824@fedora>
+In-Reply-To: <20250929190031.GG81824@fedora>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Mon, 13 Oct 2025 17:37:52 +0200
+X-Gm-Features: AS18NWB7BHtKi5qZBFyqVwItNJmDffDwKzlZ0-CyrHrATxXIKw92h2JyiuXJ8f8
+Message-ID: <CADSE00KBfyW=bTaNjvr8xgTevzndsk=Rps6gvfE8yH4sYqHqgA@mail.gmail.com>
+Subject: Re: [PATCH v8 7/7] vhost-user-device: Add shared memory BAR
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, stevensd@chromium.org, dbassey@redhat.com, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ mst@redhat.com, slp@redhat.com, 
+ hi@alyssa.is, Fabiano Rosas <farosas@suse.de>,
+ Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com, 
+ david@redhat.com, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,50 +109,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch to a personal email account as I'll be leaving Red Hat soon.
+On Mon, Sep 29, 2025 at 9:00=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Wed, Sep 10, 2025 at 01:54:20PM +0200, Albert Esteve wrote:
+> > Add shared memory BAR support to vhost-user-device-pci
+> > to enable direct file mapping for VIRTIO Shared
+> > Memory Regions.
+> >
+> > The implementation creates a consolidated shared
+> > memory BAR that contains all VIRTIO Shared
+> > Memory Regions as subregions. Each region is
+> > configured with its proper shmid, size, and
+> > offset within the BAR. The number and size of
+> > regions are retrieved via VHOST_USER_GET_SHMEM_CONFIG
+> > message sent by vhost-user-base during realization
+> > after virtio_init().
+> >
+> > Specifiically, it uses BAR 3 to avoid conflicts, as
+> > it is currently unused.
+> >
+> > The shared memory BAR is only created when the
+> > backend supports VHOST_USER_PROTOCOL_F_SHMEM and
+> > has configured shared memory regions. This maintains
+> > backward compatibility with backends that do not
+> > support shared memory functionality.
+> >
+> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > ---
+> >  hw/virtio/vhost-user-base.c       | 47 +++++++++++++++++++++++++++++--
+> >  hw/virtio/vhost-user-device-pci.c | 34 ++++++++++++++++++++--
+> >  2 files changed, 76 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> > index ff67a020b4..82f49500e4 100644
+> > --- a/hw/virtio/vhost-user-base.c
+> > +++ b/hw/virtio/vhost-user-base.c
+> > @@ -16,6 +16,7 @@
+> >  #include "hw/virtio/virtio-bus.h"
+> >  #include "hw/virtio/vhost-user-base.h"
+> >  #include "qemu/error-report.h"
+> > +#include "migration/blocker.h"
+> >
+> >  static void vub_start(VirtIODevice *vdev)
+> >  {
+> > @@ -276,7 +277,9 @@ static void vub_device_realize(DeviceState *dev, Er=
+ror **errp)
+> >  {
+> >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> >      VHostUserBase *vub =3D VHOST_USER_BASE(dev);
+> > -    int ret;
+> > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+> > +    g_autofree char *name =3D NULL;
+> > +    int i, ret, nregions, regions_processed =3D 0;
+> >
+> >      if (!vub->chardev.chr) {
+> >          error_setg(errp, "vhost-user-base: missing chardev");
+> > @@ -319,7 +322,7 @@ static void vub_device_realize(DeviceState *dev, Er=
+ror **errp)
+> >
+> >      /* Allocate queues */
+> >      vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
+> > -    for (int i =3D 0; i < vub->num_vqs; i++) {
+> > +    for (i =3D 0; i < vub->num_vqs; i++) {
+> >          g_ptr_array_add(vub->vqs,
+> >                          virtio_add_queue(vdev, vub->vq_size,
+> >                                           vub_handle_output));
+> > @@ -333,11 +336,49 @@ static void vub_device_realize(DeviceState *dev, =
+Error **errp)
+> >                           VHOST_BACKEND_TYPE_USER, 0, errp);
+> >
+> >      if (ret < 0) {
+> > -        do_vhost_user_cleanup(vdev, vub);
+> > +        goto err;
+> > +    }
+> > +
+> > +    ret =3D vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vho=
+st_dev,
+> > +                                                           &nregions,
+> > +                                                           memory_size=
+s,
+> > +                                                           errp);
+> > +
+> > +    if (ret < 0) {
+> > +        goto err;
+> > +    }
+> > +
+> > +    for (i =3D 0; i < VIRTIO_MAX_SHMEM_REGIONS && regions_processed < =
+nregions; i++) {
+> > +        if (memory_sizes[i]) {
+> > +            regions_processed++;
+> > +            if (vub->vhost_dev.migration_blocker =3D=3D NULL) {
+> > +                error_setg(&vub->vhost_dev.migration_blocker,
+> > +                       "Migration disabled: devices with VIRTIO Shared=
+ Memory "
+> > +                       "Regions do not support migration yet.");
+> > +                ret =3D migrate_add_blocker_normal(
+> > +                    &vub->vhost_dev.migration_blocker,
+> > +                    errp);
+> > +
+> > +                if (ret < 0) {
+> > +                    goto err;
+> > +                }
+> > +            }
+> > +
+> > +            if (memory_sizes[i] % qemu_real_host_page_size() !=3D 0) {
+> > +                error_setg(errp, "Shared memory %d size must be a powe=
+r of 2 "
+> > +                                 "no smaller than the page size", i);
+> > +                goto err;
+> > +            }
+> > +
+> > +            virtio_new_shmem_region(vdev, i, memory_sizes[i]);
+> > +        }
+> >      }
+> >
+> >      qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NUL=
+L,
+> >                               dev, NULL, true);
+> > +    return;
+> > +err:
+> > +    do_vhost_user_cleanup(vdev, vub);
+> >  }
+> >
+> >  static void vub_device_unrealize(DeviceState *dev)
+> > diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-d=
+evice-pci.c
+> > index f10bac874e..bac99e7c60 100644
+> > --- a/hw/virtio/vhost-user-device-pci.c
+> > +++ b/hw/virtio/vhost-user-device-pci.c
+> > @@ -8,14 +8,18 @@
+> >   */
+> >
+> >  #include "qemu/osdep.h"
+> > +#include "qapi/error.h"
+> >  #include "hw/qdev-properties.h"
+> >  #include "hw/virtio/vhost-user-base.h"
+> >  #include "hw/virtio/virtio-pci.h"
+> >
+> > +#define VIRTIO_DEVICE_PCI_SHMEM_BAR 3
+>
+> 64-bit PCI memory BARs require two contiguous 32-bit BARs. Choosing BAR
+> 3 won't work because modern_mem_bar_idx =3D 4 (and 5) and there is a
+> collision.
+>
+> virtio-gpu-hostmem uses BAR 2 and 3 for VIRTIO Shared Memory Regions. In
+> order to do this, it rearranges the other VIRTIO PCI BARs in
+> virtio_vga_base_realize(). Following that approach should be safe.
 
-Signed-off-by: Alex Williamson <alex@shazbot.org>
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
----
- .mailmap    | 1 +
- MAINTAINERS | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+I see. But doing the same strategy would collide with
+virtio-gpu-hostmem if both devices are used simultaneously? Would that
+be ok?
 
-diff --git a/.mailmap b/.mailmap
-index e7271852dc6a..f556ae968239 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -74,6 +74,7 @@ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com> <aleksandar.markovic@imgte
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com> <amarkovic@wavecomp.com>
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> <arikalo@wavecomp.com>
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> <aleksandar.rikalo@rt-rk.com>
-+Alex Williamson <alex@shazbot.org> <alex.williamson@redhat.com>
- Alexander Graf <agraf@csgraf.de> <agraf@suse.de>
- Ani Sinha <anisinha@redhat.com> <ani@anisinha.ca>
- Anthony Liguori <anthony@codemonkey.ws> Anthony Liguori <aliguori@us.ibm.com>
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 84cfd85e1fa1..1f1cd4856802 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2286,7 +2286,7 @@ S: Maintained
- F: hw/usb/dev-serial.c
- 
- VFIO
--M: Alex Williamson <alex.williamson@redhat.com>
-+M: Alex Williamson <alex@shazbot.org>
- M: Cédric Le Goater <clg@redhat.com>
- S: Supported
- F: hw/vfio/*
-@@ -2298,7 +2298,7 @@ F: migration/vfio-stub.c
- F: tests/functional/aarch64/test_device_passthrough.py
- 
- vfio-igd
--M: Alex Williamson <alex.williamson@redhat.com>
-+M: Alex Williamson <alex@shazbot.org>
- M: Cédric Le Goater <clg@redhat.com>
- M: Tomita Moeko <tomitamoeko@gmail.com>
- S: Supported
--- 
-2.51.0
+The only other option (I think?) is to just use
+`VIRTIO_DEVICE_PCI_SHMEM_BAR 2` as there is a comment in virtio-pci
+that suggests that virtio modern io bar is off by default. But that
+would also collide when used with virtio-gpu-hostmem :/
 
 
