@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8558CCD18C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30577CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8O4D-0006EY-53; Mon, 13 Oct 2025 15:18:45 -0400
+	id 1v8O4J-0006SA-Jy; Mon, 13 Oct 2025 15:18:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O49-00068x-Hl
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:41 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O4D-0006Hb-NM
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:46 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O47-0001rA-4t
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:41 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-421851bca51so2998910f8f.1
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:18:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O4B-0001s4-Si
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:45 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46e3a50bc0fso34348105e9.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:18:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760383117; x=1760987917; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760383122; x=1760987922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Nq/c7G5HIzcDKU2UT+Bof9qbKyw2ITQMkRJlo4USl5w=;
- b=K2OJwcgqGtkYztEdJiiNp1ikgRGcLr5963S6y3RsLTHxRanx4QzEk0lVy0qMTscdug
- Fm30YD09ysDc5o5v7FlZVYk/JHCsuCY2SbrtBMUQH2PbVF9NlhhPRPWyQmI/IXIF45Iv
- 2UF1Zsu+PyCBVPTlbYyW1VEEKYcr2WPqH6uOqZEwlHLz7R5EXNdrAzPUTdFZQQvUelDQ
- Ta3hFlm8BmOwy3pGFVjg14PGLcY2GsgPWWeie75KPnqJCsH7I62uUqMZUQdVM7c4F3ZS
- A+CbPOqQeFDJCqPFBBdnBaycJlaHs5zEajq5xpfRaaT0MoOF8mz4/jPK0QtTsnYSmFCB
- CU7g==
+ :reply-to; bh=ImXH8sypVIhpdMufqY4sc5FsVXIt9DpvDMKcR5HfhOE=;
+ b=qKFpw6iVGiJ3hBCB7ZfIKnTZCeY/w+3qs3Rqm1yARNcnacLtUpaGSajeTsodjxIOtM
+ SDV5pyoghadLjJKoo9Zq/SrDcw4MJZKOFPF7ChNH5QBDoDzfwp6RBcQgmdACYYOGEXRo
+ tdVjK+AzRR+yKOG66Y16WlBaFT/U/4mSk/6/avsIR5/t4HCL6iuwBPUHLqYBQj9dZxtD
+ NHWJW7hXCUKLmkvZSVAZO36qas1qR6ExAzC3Qgoe7CZQCRv8HgXQoVK4btrOks4K4za3
+ nTDXaR/nZQxi1oQEc4LuT+4CrTbhoJOP7wPYg6Xoc3i730bm72kaQgxNNo13WS+If+Jk
+ yDUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760383117; x=1760987917;
+ d=1e100.net; s=20230601; t=1760383122; x=1760987922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Nq/c7G5HIzcDKU2UT+Bof9qbKyw2ITQMkRJlo4USl5w=;
- b=Xw0ygcCOTBMQpG3d50JivDJQOvHYDDfzN8aOegxvhr3BQaUt+vyFbDz4AWZuCPvBD/
- 0viyDB06Iqq91T/WrjV/Rn/2JFltElhTt7R4xVwpmaKvgB5YNQfEUkBo8WDVt7JFvdTc
- TlNK5xRhw7veqI3o4j0wwaqjR/6hoFtrpeFk943J9s2l0opcYhnPS/dk3wQcA3tmvpoD
- f3b52fYhaxUsjtHLrB1BXwkYsKWCdLBCTEI8TjIL1GoHiocsGeFaks2bZPbkVqQp+tyY
- iOGPOWYdQhDcoxR1c5qmlL7W+AJtVlzAusErSgJ15lnPFa7UbjrnRd2lp8fUoA/tFxgM
- 74tA==
-X-Gm-Message-State: AOJu0YweHosqvn8msEGkSl5c05lqJICTitscHU6qTOcst+IYBCEiJf1d
- l/1nB/7Q9qRDxOjdzRRlTYxs6lx+dvZeUjj2BUrgFlue0JH1MbYTFB8oLR7sqCOFlGcq/orXNCx
- dgH/Cy5RumQ==
-X-Gm-Gg: ASbGncuAzeeXKo69ASQ/cNUqMqrjJLCV6Cuzh7KbuxehbVI+2j3nl248qB2wyZqkAGe
- J8Z+V9jkbfnpjRnAOY84EHpMna4UMb3KwOL231F02mc/FcAxe46G47Fay4RGCtpLqwX08Xu2ypm
- B1N8aZKhJgV7suPV1N7vMWcyuIc405QkLoADCheDvTJaa1Aif3C6isNY2ZooIfXrlsOoC6R0MIw
- 8bepCBIBbwhuZr9wvlQsNBBG1lhJhx3nWQ87c5pQpkrtcjBv9a/OOTry4IIzWKt77c4VYnnl8sb
- 3aFh2wvRDOXDhidakjnGTVyoXVivJw2t3kp4YTC4JKbyyxdBTlid7x89yAoerkTjvtdEs85BZJf
- ti6DualjZQE9LOUVDOX/MXS2aSg++8PO9FaKoWg/8gc99zzkypQ2vTP+rvuB61mub3+a+FMQV3k
- uqfAQ8Y35GV5oaeGP8+pU=
-X-Google-Smtp-Source: AGHT+IEkRxSWhBPjU1LbjMsiqBXSTz2QHi5OOJpiE57vfS6uD2yJoS8YJ82efimZGlCrIarbJXeFFg==
-X-Received: by 2002:a05:6000:2509:b0:426:da6d:ca6e with SMTP id
- ffacd0b85a97d-426da6dcaa6mr5703176f8f.58.1760383116540; 
- Mon, 13 Oct 2025 12:18:36 -0700 (PDT)
+ bh=ImXH8sypVIhpdMufqY4sc5FsVXIt9DpvDMKcR5HfhOE=;
+ b=KZX903SsDO8+FYBY/o0wPkjokgQJfENCNYVxYQJEGELh4ITSWNzrliJDXM1+iRTg4I
+ QqNCBUkJyYSpXCcq1tcNUWClOcFl60eujhUhs/+eoh/yPSLyd4yNaMwDHtrvLfVroWmp
+ /BKLsZ7EUjcW37kVhS4eOwKGAvP7ffC/7jydHT2/75U1Vc9RLUatkyEduAtA/jXOLLcZ
+ d0TQvgZpP6wus8diSadTPrBf8pHmd5w9wyRYNoVNf7wBU7Xb66VFDISljIlVjobNwAH5
+ 5BzTS0IWD0XIUcfRqJSAeHhl0Gtp+FfE4RVBrL26OjaofkwhEz4iOYGU/ccDxdz8YGrj
+ ENjQ==
+X-Gm-Message-State: AOJu0YzzwCWMuqN8Yc8azPn6aroBI4MSHOGIeAmdnUgqvlhc+dE73TE0
+ PJa8QObsYlY5Bvws/JAMQcN9W9IPZCVy9530KWbu7WecwqkU6t/MbA8LQ/nT4U5jy8fRVdzHBnS
+ G7vNEQlqzkA==
+X-Gm-Gg: ASbGncvOIpWrG9q69mEC16Qyy8dopjw/SRg7m4XWryvNeNAA+3FeOBbFA179z3Xcd+E
+ ciwnIbXVdcbI3nqS+ym19JcK+4IAMzzTqijA9jCc2ya6WGgQx9C0uYUAV0NgGh8Id3lS6jVmMGf
+ FGwboDU0H7virHYrBgpnzSwyQhfWlocwAFrtT3Bp0Y6jtZk6FvHlbDpGNYMnZGX7pp8N7KSPteL
+ 4YQyDQ0DX5en9DI80XFsfqOa+yh/Z7CRbt72scVEIQC21jb4dbDK4GU+1/o9XFYQkY/mXMdFL7n
+ jQbiUIUz5AVhFez+GnMqZGwH6Wx5ip5plZb7YVz/koBeVZeE+NTglwFgldjMWsfTtKoBeX9C0Y+
+ aSk+S7cZLynSDSGjdg1+fL5IWW4FVBsPUHNk1J4zJtF+hHlp+Utzr5aWPBYot7AE++4CYg4Tkjh
+ aO4o5bIGl1oCizCl8yA+s=
+X-Google-Smtp-Source: AGHT+IF5Eb+XA79eXZvnjcvCFm4yRMft5BmVXTBJOWG2i4nOd1dhHE6GO1wIG7DG69IC1V5EWULtmA==
+X-Received: by 2002:a05:600d:18:b0:46f:b43a:aeed with SMTP id
+ 5b1f17b1804b1-46fb43aaf3cmr78144095e9.40.1760383121761; 
+ Mon, 13 Oct 2025 12:18:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb49be017sm197361095e9.13.2025.10.13.12.18.35
+ 5b1f17b1804b1-46fb482b9absm228450055e9.2.2025.10.13.12.18.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 13 Oct 2025 12:18:36 -0700 (PDT)
+ Mon, 13 Oct 2025 12:18:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/12] hw/arm/aspeed: Don't set 'auto_create_sdcard'
-Date: Mon, 13 Oct 2025 21:18:01 +0200
-Message-ID: <20251013191807.84550-7-philmd@linaro.org>
+Subject: [PULL 07/12] hw/s390x/sclp: Do not ignore address_space_read/write()
+ errors
+Date: Mon, 13 Oct 2025 21:18:02 +0200
+Message-ID: <20251013191807.84550-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013191807.84550-1-philmd@linaro.org>
 References: <20251013191807.84550-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,205 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+If address_space_read() fails, return PGM_ADDRESSING. In the
+unlikely case address_space_write() fails (we already checked
+the address is readable), return PGM_PROTECTION.
 
-The Aspeed machines inherited from a 'no_sdcard' attribute when first
-introduced in QEMU. This attribute was later renamed to
-'auto_create_sdcard' by commit cdc8d7cadaac ("hw/boards: Rename
-no_sdcard -> auto_create_sdcard") and set to 'true'. This has the
-indesirable efect to automatically create SD cards at init time.
-
-Remove 'auto_create_sdcard' to avoid creating a SD card device.
-
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251003103024.1863551-1-clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Message-Id: <20251007015802.24748-1-philmd@linaro.org>
 ---
- hw/arm/aspeed.c | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ hw/s390x/sclp.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 6046ec0bb2a..58cfbc71379 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1418,7 +1418,6 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635f";
-     amc->num_cs    = 1;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 256 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1436,7 +1435,6 @@ static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635e";
-     amc->num_cs    = 1;
-     amc->i2c_init  = quanta_q71l_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 128 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1455,7 +1453,6 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
-     amc->num_cs    = 1;
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 256 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1474,7 +1471,6 @@ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
-     amc->num_cs    = 1;
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1492,7 +1488,6 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635f";
-     amc->num_cs    = 1;
-     amc->i2c_init  = ast2500_evb_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1511,7 +1506,6 @@ static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635e";
-     amc->num_cs    = 2;
-     amc->i2c_init  = yosemitev2_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1529,7 +1523,6 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
-     amc->spi_model = "mx66l1g45g";
-     amc->num_cs    = 2;
-     amc->i2c_init  = romulus_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1548,7 +1541,6 @@ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc,
-     amc->spi_model = "mx25l25635e";
-     amc->num_cs    = 2;
-     amc->i2c_init  = tiogapass_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1566,7 +1558,6 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
-     amc->spi_model = "mx66l1g45g";
-     amc->num_cs    = 2;
-     amc->i2c_init  = sonorapass_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1584,7 +1575,6 @@ static void aspeed_machine_witherspoon_class_init(ObjectClass *oc,
-     amc->spi_model = "mx66l1g45g";
-     amc->num_cs    = 2;
-     amc->i2c_init  = witherspoon_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1606,7 +1596,6 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
-                      ASPEED_MAC3_ON;
-     amc->sdhci_wp_inverted = true;
-     amc->i2c_init  = ast2600_evb_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-     aspeed_machine_ast2600_class_emmc_init(oc);
-@@ -1625,7 +1614,6 @@ static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = g220a_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1024 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1644,7 +1632,6 @@ static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = fp5280g2_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1663,7 +1650,6 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = rainier_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-     aspeed_machine_ast2600_class_emmc_init(oc);
-@@ -1686,7 +1672,6 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
-     amc->macs_mask = ASPEED_MAC3_ON;
-     amc->i2c_init = fuji_bmc_i2c_init;
-     amc->uart_default = ASPEED_DEV_UART1;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1708,7 +1693,6 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON;
-     amc->i2c_init  = bletchley_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1728,7 +1712,6 @@ static void aspeed_machine_catalina_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON;
-     amc->i2c_init  = catalina_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = CATALINA_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
-     aspeed_machine_ast2600_class_emmc_init(oc);
-@@ -1796,7 +1779,6 @@ static void aspeed_machine_fby35_class_init(ObjectClass *oc, const void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC3_ON;
-     amc->i2c_init  = fby35_i2c_init;
--    mc->auto_create_sdcard = true;
-     /* FIXME: Replace this macro with something more general */
-     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
-     aspeed_machine_class_init_cpus_defaults(mc);
-@@ -1909,7 +1891,6 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc,
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-     amc->vbootrom = true;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1932,7 +1913,6 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-     amc->vbootrom = true;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
-@@ -1953,7 +1933,6 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
-@@ -1973,7 +1952,6 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
--    mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 51e88ba8f12..8602a566a49 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -306,6 +306,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     g_autofree SCCB *work_sccb = NULL;
+     AddressSpace *as = CPU(cpu)->as;
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    MemTxResult ret;
+ 
+     /* first some basic checks on program checks */
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+@@ -320,7 +321,10 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     }
+ 
+     /* the header contains the actual length of the sccb */
+-    address_space_read(as, sccb, attrs, &header, sizeof(SCCBHeader));
++    ret = address_space_read(as, sccb, attrs, &header, sizeof(SCCBHeader));
++    if (ret != MEMTX_OK) {
++        return -PGM_ADDRESSING;
++    }
+ 
+     /* Valid sccb sizes */
+     if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
+@@ -333,7 +337,11 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+      * the host has checked the values
+      */
+     work_sccb = g_malloc0(be16_to_cpu(header.length));
+-    address_space_read(as, sccb, attrs, work_sccb, be16_to_cpu(header.length));
++    ret = address_space_read(as, sccb, attrs,
++                            work_sccb, be16_to_cpu(header.length));
++    if (ret != MEMTX_OK) {
++        return -PGM_ADDRESSING;
++    }
+ 
+     if (!sclp_command_code_valid(code)) {
+         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
+@@ -347,7 +355,11 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+ 
+     sclp_c->execute(sclp, work_sccb, code);
+ out_write:
+-    address_space_write(as, sccb, attrs, work_sccb, be16_to_cpu(header.length));
++    ret = address_space_write(as, sccb, attrs,
++                              work_sccb, be16_to_cpu(header.length));
++    if (ret != MEMTX_OK) {
++        return -PGM_PROTECTION;
++    }
+ 
+     sclp_c->service_interrupt(sclp, sccb);
+ 
 -- 
 2.51.0
 
