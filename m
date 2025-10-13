@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34DDCCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 11:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4755ACCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 11:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8H29-0003hT-0b; Mon, 13 Oct 2025 07:48:09 -0400
+	id 1v8H2E-0003iv-0F; Mon, 13 Oct 2025 07:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v8H28-0003gs-1r
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 07:48:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8H2A-0003iB-AB
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 07:48:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v8H1z-0000DA-Ej
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 07:48:07 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8H27-0000FD-8U
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 07:48:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760356076;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=sNnPTYbZCyewx5ZyqMD2+eJux9WBiG9bPY+F35szlDk=;
- b=Ak3+UBjTZCAjUQRgrMXbLFvlcJE0TNVBzMcTMqrKEH9mcvkFGMOM6VNgP1H2/zmV6IO1f4
- RDHJu68o2/rH2ORLc6MzpexQ7hslswoUN3ppenuCiKfOCZn2h2blNry0X0c5E0MgASUwYJ
- MjQfSeU+RzcYitFKyRSpATllLzR9JO0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1760356083;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oS8Fh2Uxi3cdUR6Wq3tTEo6LxZmT1Z2jNBWOdZCCKmg=;
+ b=IWaBWno2qKsVcEgFA0n13qHFL+1nH2WT1Lk3HPrY155+6XL6mroB0MiFv0yvfEqshBjySG
+ nVMaVqkXX8Nvn46V71wm+IBAkjN2WAc0uxDpDOuznliOQ+duYQQuApyB2LocUbmQg/KSIE
+ kxhy9v7jgLlxzRZIJjCHHhLLpb7yZ4g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-nGZjns8CPnuoWHaXFK-qBA-1; Mon,
- 13 Oct 2025 07:47:53 -0400
-X-MC-Unique: nGZjns8CPnuoWHaXFK-qBA-1
-X-Mimecast-MFC-AGG-ID: nGZjns8CPnuoWHaXFK-qBA_1760356071
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-zADJxBm5MKmkX6ToNz2uGw-1; Mon,
+ 13 Oct 2025 07:48:00 -0400
+X-MC-Unique: zADJxBm5MKmkX6ToNz2uGw-1
+X-Mimecast-MFC-AGG-ID: zADJxBm5MKmkX6ToNz2uGw_1760356078
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CF881800578; Mon, 13 Oct 2025 11:47:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.40])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 759421954102; Mon, 13 Oct 2025 11:47:42 +0000 (UTC)
-Date: Mon, 13 Oct 2025 12:47:38 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-Subject: Re: [RFC PATCH] docs/system/security: Restrict "virtualization use
- case" to specific machines
-Message-ID: <aOzm2ukHfkPF-zhT@redhat.com>
-References: <20250908125058.220973-1-peter.maydell@linaro.org>
- <20250908104125-mutt-send-email-mst@kernel.org>
- <46AA9C03-CA7E-4C4B-AD05-A9053666BA52@gmail.com>
- <20251013070945-mutt-send-email-mst@kernel.org>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9A0E1800357; Mon, 13 Oct 2025 11:47:57 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C23491800447; Mon, 13 Oct 2025 11:47:56 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 85EAC18000B2; Mon, 13 Oct 2025 13:47:54 +0200 (CEST)
+Date: Mon, 13 Oct 2025 13:47:54 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v3] hw/uefi: add "info firmware-log" +
+ "query-firmware-log" monitor commands
+Message-ID: <ckxxhhdknnf72lmpxluxog5ti6krojoc2l4dx7ilvssx54vfd2@rv7g7jbahbnf>
+References: <20251010071008.2555267-1-kraxel@redhat.com>
+ <87ecrbj85s.fsf@pond.sub.org>
+ <3flcrys75wbso64zpfbika46klfbg7khbrtug3avrpfixaxmo5@vuidk7ktxnpi>
+ <87bjmb6q0c.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251013070945-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <87bjmb6q0c.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,115 +91,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 07:12:31AM -0400, Michael S. Tsirkin wrote:
-> On Mon, Oct 13, 2025 at 10:40:36AM +0000, Bernhard Beschow wrote:
-> > 
-> > 
-> > Am 8. September 2025 14:45:40 UTC schrieb "Michael S. Tsirkin" <mst@redhat.com>:
-> > >On Mon, Sep 08, 2025 at 01:50:57PM +0100, Peter Maydell wrote:
-> > >> Currently our security policy defines a "virtualization use case"
-> > >> where we consider bugs to be security issues, and a
-> > >> "non-virtualization use case" where we do not make any security
-> > >> guarantees and don't consider bugs to be security issues.
-> > >> 
-> > >> The rationale for this split is that much code in QEMU is older and
-> > >> was not written with malicious guests in mind, and we don't have the
-> > >> resources to audit, fix and defend it.  So instead we inform users
-> > >> about what the can in practice rely on as a security barrier, and
-> > >> what they can't.
-> > >> 
-> > >> We don't currently restrict the "virtualization use case" to any
-> > >> particular set of machine types.  This means that we have effectively
-> > >> barred ourselves from adding KVM support to any machine type that we
-> > >> don't want to put into the "bugs are security issues" category, even
-> > >> if it would be useful for users to be able to get better performance
-> > >> with a trusted guest by enabling KVM. This seems an unnecessary
-> > >> restriction, and in practice the set of machine types it makes
-> > >> sense to use for untrusted-guest virtualization is quite small.
-> > >> 
-> > >> Specifically, we would like to be able to enable the use of
-> > >> KVM with the imx8 development board machine types, but we don't
-> > >> want to commit ourselves to having to support those SoC models
-> > >> and device models as part of QEMU's security boundary:
-> > >> https://lore.kernel.org/qemu-devel/20250629204851.1778-3-shentey@gmail.com/
-> > >> 
-> > >> This patch updates the security policy to explicitly list the
-> > >> machine types we consider to be useful for the "virtualization
-> > >> use case".
-> > >
-> > >This use-case sounds reasonable to me. I also imagine that
-> > >some machines can get fixed down the road perhaps to
-> > >the point where they enter the "virtualization use case".
-> > >
-> > >However, since we are
-> > >getting this elaborate, would my old idea of a runtime flag
-> > >make sense now?
-> > >
-> > >To recap, the idea was to add a "-virt" flag that will
-> > >block any machines, devices and so on not considered
-> > >part of the "virtualization use case".
-> > >
-> > >We could also create a mechanism for downstreams to
-> > >tweak this as they see fit.
-> > 
-> > Hi Michael,
-> > 
-> > Thanks for confirming that the use case seems reasonable.
-> > 
-> > For now, we'd like to sharpen the term "virtualization use case" to allow for KVM to be usable in machines that aren't inside the security boundary and where maintenance commitment is unrealistic. The current approach is to adjust the policy and to spell out the machines where these commitments are made.
-> > 
-> > The trigger for this RFC was to be able to add KVM support to the imx8mp-evk machine. I have it working but can't currently upstream it due to our policy. It asks for unreasonable work and commitment which adds an unjustifyable burden on the maintainers.
-> > 
-> > I do see a need for further enhancements on the broader topic like adding a -virt switch etc. Maybe we should come up with a different term than "virtualization use case" which appears to leave a lot of room for interpretation. I propose these topics to be addressed separately.
-> > 
-> > What is missing for your R-b?
-> > 
-> > Thanks,
-> > Bernhard
+> >> > +# @log: Firmware debug log, in base64 encoding.
+> >> 
+> >> Can this have a partial line at the beginning and/or the end?
+> >
+> > Yes.
 > 
-> rebase on top of this:
-> https://lore.kernel.org/all/20250926140144.1998694-1-berrange@redhat.com
+> Partial lines can be troublesome, in particular when complete lines
+> start with a prefix in a known format.  If avoiding them isn't
+> practical, we should at least document.
+
+The edk2 log has no structured format.  I see this mainly as
+trouble-shooting feature, where humans look at the output to diagnose
+problems.  I do not expect anyone parsing this automatically.
+
+> >> > +{ 'struct': 'FirmwareLog',
+> >> > +  'data': { '*version': 'str',
+> >> > +            '*log': 'str' } }
+> >> 
+> >> These aren't actually optional with the current code.  See [**] above.
+> >> I guess you make them optional just in case some other firmware can
+> >> provide only one of them.
+> >
+> > We could also make both mandatory.  There is always the option to return
+> > an empty string ...
 > 
-> if there's anything missing there, add it.
+> Yes.  Loses the distinction between "firmware doesn't support this" and
+> "firmware supports this, but it happens to be empty right now".  Do we
+> care?
 
-I don't think that its desirable to rebase on top of that series,
-as it is liable to unduly delay Bernhard's work.
+See above, I don't think it matters much.
 
-With a very minimal wording tweak our current defined policy could
-avoid being a blocker for enabling KVM in imx8mp-evk. In
-
-  https://www.qemu.org/docs/master/system/security.html
-
-where it describes the "virtualization use case", we could simply
-tweak it to always require a versioned machine type
-
-Change
-
-  "These use cases rely on hardware virtualization extensions
-   to execute guest code safely on the physical CPU at close-
-   to-native speed."
-
-To say
-
-  "These use cases apply to versioned machine types when used
-   in combination with hardware virtualization extensions
-   to execute guest code safely on the physical CPU at close-
-   to-native speed"
-
-Since imx8mp-evk won't be a versioned machine type, it is thus
-trivially excluded, without us having to enumerate all machine
-types int he docs.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+take care,
+  Gerd
 
 
