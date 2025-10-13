@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499B4CCA476
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37BCCCD185
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8BLo-0007s3-00; Mon, 13 Oct 2025 01:44:04 -0400
+	id 1v8BLv-0007wV-RO; Mon, 13 Oct 2025 01:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BLl-0007ph-4J; Mon, 13 Oct 2025 01:44:01 -0400
+ id 1v8BLt-0007w4-9M; Mon, 13 Oct 2025 01:44:09 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BLj-0002DU-7t; Mon, 13 Oct 2025 01:44:00 -0400
+ id 1v8BLr-0002DU-0P; Mon, 13 Oct 2025 01:44:09 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 13 Oct
- 2025 13:43:35 +0800
+ 2025 13:43:36 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 13 Oct 2025 13:43:35 +0800
+ Transport; Mon, 13 Oct 2025 13:43:36 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 04/16] hw/arm/aspeed: Remove AspeedSoCClass dependency from
- aspeed_soc_cpu_type() API
-Date: Mon, 13 Oct 2025 13:43:16 +0800
-Message-ID: <20251013054334.955331-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 06/16] hw/arm/aspeed: Remove AspeedSoCState dependency from
+ aspeed_mmio_map_unimplemented() API
+Date: Mon, 13 Oct 2025 13:43:18 +0800
+Message-ID: <20251013054334.955331-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
 References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
@@ -67,156 +67,259 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the aspeed_soc_cpu_type() helper to remove its dependency on
-AspeedSoCClass and make CPU type retrieval more generic.
+Refactor aspeed_mmio_map_unimplemented() to take MemoryRegion *
+instead of AspeedSoCState *, removing its dependency on SoC state and
+aligning it with the updated aspeed_mmio_map() interface.
 
-The function now takes valid_cpu_types as a const char * const *
-parameter instead of requiring a full AspeedSoCClass instance.
-All corresponding call sites in various Aspeed SoC initialization files
-(aspeed_ast10x0.c, aspeed_ast2400.c, aspeed_ast2600.c,
-aspeed_ast27x0.c, and related variants) are updated accordingly.
+All related call sites are updated to explicitly pass s->memory.
+Affected files include headers, aspeed_soc_common.c, and SoC realize
+functions in AST10x0, AST2400, AST2600, AST27x0 (SSP/TSP), and AST2700.
 
-This change simplifies the API, eliminates unnecessary type coupling,
-and improves code reusability across different SoC families.
+This change simplifies the MMIO mapping helpers, improves API
+consistency, and reduces coupling between SoC logic and memory
+operations.
 
 No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/arm/aspeed_soc.h |  3 +--
- hw/arm/aspeed_ast10x0.c     |  3 ++-
- hw/arm/aspeed_ast2400.c     |  2 +-
- hw/arm/aspeed_ast2600.c     |  2 +-
- hw/arm/aspeed_ast27x0-ssp.c |  3 ++-
- hw/arm/aspeed_ast27x0-tsp.c |  3 ++-
- hw/arm/aspeed_ast27x0.c     |  2 +-
- hw/arm/aspeed_soc_common.c  | 10 +++++-----
- 8 files changed, 15 insertions(+), 13 deletions(-)
+ include/hw/arm/aspeed_soc.h |  2 +-
+ hw/arm/aspeed_ast10x0.c     | 24 ++++++++++++++++--------
+ hw/arm/aspeed_ast2400.c     |  6 ++++--
+ hw/arm/aspeed_ast2600.c     | 12 ++++++++----
+ hw/arm/aspeed_ast27x0-ssp.c |  8 ++++----
+ hw/arm/aspeed_ast27x0-tsp.c |  8 ++++----
+ hw/arm/aspeed_ast27x0.c     | 10 +++++-----
+ hw/arm/aspeed_soc_common.c  |  4 ++--
+ 8 files changed, 44 insertions(+), 30 deletions(-)
 
 diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index c870bf5586..385b657b50 100644
+index 606cf6bb61..957362b88d 100644
 --- a/include/hw/arm/aspeed_soc.h
 +++ b/include/hw/arm/aspeed_soc.h
-@@ -202,8 +202,6 @@ struct AspeedSoCClass {
-     bool (*boot_from_emmc)(AspeedSoCState *s);
- };
- 
--const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
--
- enum {
-     ASPEED_DEV_VBOOTROM,
-     ASPEED_DEV_SPI_BOOT,
-@@ -304,6 +302,7 @@ enum {
-     ASPEED_DEV_IPC1,
- };
- 
-+const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
- qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
- bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
- void aspeed_soc_uart_set_chr(SerialMM *uart, int dev, int uarts_base,
+@@ -310,7 +310,7 @@ void aspeed_soc_uart_set_chr(SerialMM *uart, int dev, int uarts_base,
+ bool aspeed_soc_dram_init(AspeedSoCState *s, Error **errp);
+ void aspeed_mmio_map(MemoryRegion *memory, SysBusDevice *dev, int n,
+                      hwaddr addr);
+-void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
++void aspeed_mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
+                                    const char *name, hwaddr addr,
+                                    uint64_t size);
+ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
 diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index c446e70b24..dab012aa95 100644
+index caa9feb667..e861b6dad6 100644
 --- a/hw/arm/aspeed_ast10x0.c
 +++ b/hw/arm/aspeed_ast10x0.c
-@@ -211,7 +211,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     /* AST1030 CPU Core */
-     armv7m = DEVICE(&a->armv7m);
-     qdev_prop_set_uint32(armv7m, "num-irq", 256);
--    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
-+    qdev_prop_set_string(armv7m, "cpu-type",
-+                         aspeed_soc_cpu_type(sc->valid_cpu_types));
-     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-     object_property_set_link(OBJECT(&a->armv7m), "memory",
-                              OBJECT(s->memory), &error_abort);
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index c7b0f21887..53c2a5156d 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -157,7 +157,7 @@ static void aspeed_ast2400_soc_init(Object *obj)
- 
-     for (i = 0; i < sc->num_cpus; i++) {
-         object_initialize_child(obj, "cpu[*]", &a->cpu[i],
--                                aspeed_soc_cpu_type(sc));
-+                                aspeed_soc_cpu_type(sc->valid_cpu_types));
+@@ -201,10 +201,12 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
      }
  
-     snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 03e5df96bb..0299d97929 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -167,7 +167,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
+     /* General I/O memory space to catch all unimplemented device */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem), "aspeed.io",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
++                                  "aspeed.io",
+                                   sc->memmap[ASPEED_DEV_IOMEM],
+                                   ASPEED_SOC_IOMEM_SIZE);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->sbc_unimplemented),
++    aspeed_mmio_map_unimplemented(s->memory,
++                                  SYS_BUS_DEVICE(&s->sbc_unimplemented),
+                                   "aspeed.sbc", sc->memmap[ASPEED_DEV_SBC],
+                                   0x40000);
  
-     for (i = 0; i < sc->num_cpus; i++) {
-         object_initialize_child(obj, "cpu[*]", &a->cpu[i],
--                                aspeed_soc_cpu_type(sc));
-+                                aspeed_soc_cpu_type(sc->valid_cpu_types));
-     }
+@@ -406,20 +408,26 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
  
-     snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index 80ec5996c1..490e98b924 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -174,7 +174,8 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-     /* AST27X0 SSP Core */
-     armv7m = DEVICE(&a->armv7m);
-     qdev_prop_set_uint32(armv7m, "num-irq", 256);
--    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
-+    qdev_prop_set_string(armv7m, "cpu-type",
-+                         aspeed_soc_cpu_type(sc->valid_cpu_types));
-     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-     object_property_set_link(OBJECT(&a->armv7m), "memory",
-                              OBJECT(s->memory), &error_abort);
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 4e0efaef07..d83f90ef00 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -174,7 +174,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     /* AST27X0 TSP Core */
-     armv7m = DEVICE(&a->armv7m);
-     qdev_prop_set_uint32(armv7m, "num-irq", 256);
--    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
-+    qdev_prop_set_string(armv7m, "cpu-type",
-+                         aspeed_soc_cpu_type(sc->valid_cpu_types));
-     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-     object_property_set_link(OBJECT(&a->armv7m), "memory",
-                              OBJECT(s->memory), &error_abort);
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 853339119f..2f018e9e58 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -436,7 +436,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->pwm), "aspeed.pwm",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),
++                                  "aspeed.pwm",
+                                   sc->memmap[ASPEED_DEV_PWM], 0x100);
  
-     for (i = 0; i < sc->num_cpus; i++) {
-         object_initialize_child(obj, "cpu[*]", &a->cpu[i],
--                                aspeed_soc_cpu_type(sc));
-+                                aspeed_soc_cpu_type(sc->valid_cpu_types));
-     }
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->espi), "aspeed.espi",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->espi),
++                                  "aspeed.espi",
+                                   sc->memmap[ASPEED_DEV_ESPI], 0x800);
  
-     object_initialize_child(obj, "gic", &a->gic, gicv3_class_name());
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index ddcbba0020..16c7c4bb78 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -22,12 +22,12 @@
- #include "qemu/datadir.h"
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->udc), "aspeed.udc",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->udc),
++                                  "aspeed.udc",
+                                   sc->memmap[ASPEED_DEV_UDC], 0x1000);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->sgpiom), "aspeed.sgpiom",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom),
++                                  "aspeed.sgpiom",
+                                   sc->memmap[ASPEED_DEV_SGPIOM], 0x100);
  
- 
--const char *aspeed_soc_cpu_type(AspeedSoCClass *sc)
-+const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types)
- {
--    assert(sc->valid_cpu_types);
--    assert(sc->valid_cpu_types[0]);
--    assert(!sc->valid_cpu_types[1]);
--    return sc->valid_cpu_types[0];
-+    assert(valid_cpu_types);
-+    assert(valid_cpu_types[0]);
-+    assert(!valid_cpu_types[1]);
-+    return valid_cpu_types[0];
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->jtag[0]), "aspeed.jtag",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[0]),
++                                  "aspeed.jtag",
+                                   sc->memmap[ASPEED_DEV_JTAG0], 0x20);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->jtag[1]), "aspeed.jtag",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[1]),
++                                  "aspeed.jtag",
+                                   sc->memmap[ASPEED_DEV_JTAG1], 0x20);
  }
  
- qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev)
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index 6690752215..e0604851a5 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -259,12 +259,14 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
+                                 &s->spi_boot_container);
+ 
+     /* IO space */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem), "aspeed.io",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
++                                  "aspeed.io",
+                                   sc->memmap[ASPEED_DEV_IOMEM],
+                                   ASPEED_SOC_IOMEM_SIZE);
+ 
+     /* Video engine stub */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->video), "aspeed.video",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->video),
++                                  "aspeed.video",
+                                   sc->memmap[ASPEED_DEV_VIDEO], 0x1000);
+ 
+     /* CPU */
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index bf0ecde051..ed0985a16e 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -370,16 +370,19 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+                                 &s->spi_boot_container);
+ 
+     /* IO space */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem), "aspeed.io",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
++                                  "aspeed.io",
+                                   sc->memmap[ASPEED_DEV_IOMEM],
+                                   ASPEED_SOC_IOMEM_SIZE);
+ 
+     /* Video engine stub */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->video), "aspeed.video",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->video),
++                                  "aspeed.video",
+                                   sc->memmap[ASPEED_DEV_VIDEO], 0x1000);
+ 
+     /* eMMC Boot Controller stub */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->emmc_boot_controller),
++    aspeed_mmio_map_unimplemented(s->memory,
++                                  SYS_BUS_DEVICE(&s->emmc_boot_controller),
+                                   "aspeed.emmc-boot-controller",
+                                   sc->memmap[ASPEED_DEV_EMMC_BC], 0x1000);
+ 
+@@ -441,7 +444,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+                                 sc->memmap[ASPEED_DEV_SRAM], &s->sram);
+ 
+     /* DPMCU */
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu), "aspeed.dpmcu",
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
++                                  "aspeed.dpmcu",
+                                   sc->memmap[ASPEED_DEV_DPMCU],
+                                   ASPEED_SOC_DPMCU_SIZE);
+ 
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index 83cf3c14b6..99a3de15b5 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -241,16 +241,16 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+         return;
+     }
+ 
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
+                                   "aspeed.timerctrl",
+                                   sc->memmap[ASPEED_DEV_TIMER1], 0x200);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[0]),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),
+                                   "aspeed.ipc0",
+                                   sc->memmap[ASPEED_DEV_IPC0], 0x1000);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[1]),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),
+                                   "aspeed.ipc1",
+                                   sc->memmap[ASPEED_DEV_IPC1], 0x1000);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->scuio),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
+                                   "aspeed.scuio",
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
+ }
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index 86aa565608..568d7555e2 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -241,16 +241,16 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+         return;
+     }
+ 
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
+                                   "aspeed.timerctrl",
+                                   sc->memmap[ASPEED_DEV_TIMER1], 0x200);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[0]),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),
+                                   "aspeed.ipc0",
+                                   sc->memmap[ASPEED_DEV_IPC0], 0x1000);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[1]),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),
+                                   "aspeed.ipc1",
+                                   sc->memmap[ASPEED_DEV_IPC1], 0x1000);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->scuio),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
+                                   "aspeed.scuio",
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
+ }
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 8db67dc806..9b645c6c55 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -1014,23 +1014,23 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+                                   "aspeed.dpmcu",
+                                   sc->memmap[ASPEED_DEV_DPMCU],
+                                   AST2700_SOC_DPMCU_SIZE);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ltpi),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->ltpi),
+                                   "aspeed.ltpi",
+                                   sc->memmap[ASPEED_DEV_LTPI],
+                                   AST2700_SOC_LTPI_SIZE);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
+                                   "aspeed.io",
+                                   sc->memmap[ASPEED_DEV_IOMEM],
+                                   AST2700_SOC_IO_SIZE);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem0),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem0),
+                                   "aspeed.iomem0",
+                                   sc->memmap[ASPEED_DEV_IOMEM0],
+                                   AST2700_SOC_IOMEM_SIZE);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem1),
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem1),
+                                   "aspeed.iomem1",
+                                   sc->memmap[ASPEED_DEV_IOMEM1],
+                                   AST2700_SOC_IOMEM_SIZE);
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index ca4e589dce..e7d0a9c290 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -117,14 +117,14 @@ void aspeed_mmio_map(MemoryRegion *memory, SysBusDevice *dev, int n,
+     memory_region_add_subregion(memory, addr, sysbus_mmio_get_region(dev, n));
+ }
+ 
+-void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
++void aspeed_mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
+                                    const char *name, hwaddr addr, uint64_t size)
+ {
+     qdev_prop_set_string(DEVICE(dev), "name", name);
+     qdev_prop_set_uint64(DEVICE(dev), "size", size);
+     sysbus_realize(dev, &error_abort);
+ 
+-    memory_region_add_subregion_overlap(s->memory, addr,
++    memory_region_add_subregion_overlap(memory, addr,
+                                         sysbus_mmio_get_region(dev, 0), -1000);
+ }
+ 
 -- 
 2.43.0
 
