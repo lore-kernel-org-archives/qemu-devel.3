@@ -4,78 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D98FCCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 13:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 064C8CCD18D
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 13:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8IRE-00022T-Rw; Mon, 13 Oct 2025 09:18:08 -0400
+	id 1v8IfQ-00042k-CH; Mon, 13 Oct 2025 09:32:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v8IRC-0001yP-5g
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 09:18:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1v8IfM-00040Z-Rq; Mon, 13 Oct 2025 09:32:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v8IR7-0003zA-Ap
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 09:18:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760361465;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jLCrqedeBAwxYjzpyFRQf1ds0bCtcyQkhE0eOrRs750=;
- b=H6vvn9DvdfU9qrCuacrMaixB/4+TEn9zo/Ju2cfpvklHN7k7slJmJd4L9aJfgx0SJjopB3
- qUPKIIkwNwot8f36EFsWVhkNMcyaod0VC2oZDGB9bA9CwN+qY5rdk0MqAlTvxmjQpYQypd
- UaQxoh+zS7MT1tCsJN9TSSprQbYoPIs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-xjqqRfIjMBG70CluaIu98g-1; Mon,
- 13 Oct 2025 09:17:42 -0400
-X-MC-Unique: xjqqRfIjMBG70CluaIu98g-1
-X-Mimecast-MFC-AGG-ID: xjqqRfIjMBG70CluaIu98g_1760361461
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE9E11955E9A; Mon, 13 Oct 2025 13:17:40 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.40])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6587E3000382; Mon, 13 Oct 2025 13:17:39 +0000 (UTC)
-Date: Mon, 13 Oct 2025 14:17:36 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 2/2] tests: Evict stale files in the functional
- download cache after a while
-Message-ID: <aOz78PjwDw0TpjaG@redhat.com>
-References: <20251013121720.34552-1-thuth@redhat.com>
- <20251013121720.34552-3-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1v8IfK-0005se-9E; Mon, 13 Oct 2025 09:32:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59DDAMPi019051;
+ Mon, 13 Oct 2025 13:32:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=RQK9MLjga+hZqSIzn/UHdKK52IFbjEuxbfDWg6J09
+ fU=; b=PlhFPj6eEk+NrZ7wwOmdSqYruPlJnfvNJ5xAquSpMfqNAdV1TbhBbb1w1
+ NrpBW5eC02SMMtSD3VX2+nnEstwASMnOJb0YIl0W4Q5dcx1tvoaHgiDvLSOYEOJR
+ u0NRXDgiTYNrM4EFFXHCHTfF9jElTadQIxBeMBf10TRRee4DDL7dT7gDfC+O1xdM
+ feBYxkGPIR7UX85Cg7pnPZ2pLIGZJ+5/7e2Qw8iRq7jgQHUBZzoCcfW98bpJm7AN
+ ypqlIjlSIXW1DURmVSia7hdN24FCdFubFyv4sDv5wSbyZv7H8LaFC+m6qbNPrZYc
+ XBhyn6fmYJyCyMmusUESW0iBQwloA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49rfp7kxk2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Oct 2025 13:32:37 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59DBYKZH015466;
+ Mon, 13 Oct 2025 13:32:37 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r3sj5s96-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Oct 2025 13:32:36 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59DDWXpa36372968
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 Oct 2025 13:32:33 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 56B0920088;
+ Mon, 13 Oct 2025 13:32:33 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 318E620084;
+ Mon, 13 Oct 2025 13:32:33 +0000 (GMT)
+Received: from a46lp68.lnxne.boe (unknown [9.152.108.100])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 13 Oct 2025 13:32:33 +0000 (GMT)
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
+ Thomas Huth <thuth@redhat.com>
+Cc: Sebastian Mitterle <smitterl@redhat.com>,
+ qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
+ Michael Mueller <mimu@linux.ibm.com>
+Subject: [PATCH v2 1/2] qapi/machine-s390x: add QAPI event
+ SCLP_CPI_INFO_AVAILABLE
+Date: Mon, 13 Oct 2025 15:32:28 +0200
+Message-ID: <20251013133229.110892-1-shalini@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251013121720.34552-3-thuth@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: uSqF8sHTVAWKrgWuBS5RAHIFnGiV0zjX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEyMDA4NCBTYWx0ZWRfXzVsaBK9Vw1k1
+ aaE/5cBvducnKYo4Bt3EJIqwag8H9LXU/GSP8WCwvpZuyYzCIf3cmmTLYpdBpumjcjDI9Ay9zb+
+ s0zUCUYyVZm2e1MKb31sRusJUJB3AS6yyZMC1Rol0BvIKKvvxCkaleg92WB+0nhowwy42OCE4nr
+ XCnYd0b325Dk7dWhMmZYk92eJjTDM4JN3E0inOHETjuuMIqGgt7JlmxyJQ0A5yNuqebPZ8pE8rn
+ 4yNjp2ePXfUyWOoZoAHn32TIv9IPmKs8xgcZVFPb4hDqGGyOJ6Yq6C4pnvqjqGSt5LUaRujni8E
+ bn/ZzNtH+rYMJdi21deHNaYl0XUE3VKCtvKEE+7NfxamZ/2mMkIy+ow3pxNaEwV0iD3ssGG5YF2
+ gY1MGr2sd+LFOHEDNsXfZDdtOmfrkA==
+X-Proofpoint-GUID: uSqF8sHTVAWKrgWuBS5RAHIFnGiV0zjX
+X-Authority-Analysis: v=2.4 cv=af5sXBot c=1 sm=1 tr=0 ts=68ecff75 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=sj1EmmPjCSn9LTcTfd8A:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-13_05,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510120084
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,41 +116,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 02:17:19PM +0200, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> The download cache of the functional tests is currently only growing.
-> But sometimes tests get removed or changed to use different assets,
-> thus we should clean up the stale old assets after a while when they
-> are not in use anymore. So add a script that looks at the time stamps
-> of the assets and removes them if they haven't been touched for more
-> than half of a year. Since there might also be some assets around that
-> have been added to the cache before we added the time stamp files,
-> assume a default time stamp that is close to the creation date of this
-> patch, so that we don't delete these files too early (so we still have
-> all assets around in case we have to bisect an issue in the recent past
-> of QEMU).
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  MAINTAINERS                       |  1 +
->  scripts/clean_functional_cache.py | 45 +++++++++++++++++++++++++++++++
->  tests/Makefile.include            |  1 +
->  3 files changed, 47 insertions(+)
->  create mode 100755 scripts/clean_functional_cache.py
+Add QAPI event SCLP_CPI_INFO_AVAILABLE to notify the availability
+of Control-Program Identification data in QOM.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+Suggested-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/sclpcpi.c      |  4 ++++
+ qapi/machine-s390x.json | 25 +++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-
-With regards,
-Daniel
+diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
+index 7aa039d510..90da61b1c8 100644
+--- a/hw/s390x/sclpcpi.c
++++ b/hw/s390x/sclpcpi.c
+@@ -54,6 +54,7 @@
+ #include "hw/s390x/event-facility.h"
+ #include "hw/s390x/ebcdic.h"
+ #include "qapi/qapi-visit-machine.h"
++#include "qapi/qapi-events-machine-s390x.h"
+ #include "migration/vmstate.h"
+ 
+ typedef struct Data {
+@@ -106,6 +107,9 @@ static int write_event_data(SCLPEvent *event, EventBufferHeader *evt_buf_hdr)
+     e->timestamp = qemu_clock_get_ns(QEMU_CLOCK_HOST);
+ 
+     cpim->ebh.flags = SCLP_EVENT_BUFFER_ACCEPTED;
++
++    qapi_event_send_sclp_cpi_info_available(true);
++
+     return SCLP_RC_NORMAL_COMPLETION;
+ }
+ 
+diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+index 966dbd61d2..338653e0b8 100644
+--- a/qapi/machine-s390x.json
++++ b/qapi/machine-s390x.json
+@@ -119,3 +119,28 @@
+ { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
+   'features': [ 'unstable' ]
+ }
++
++##
++# @SCLP_CPI_INFO_AVAILABLE:
++#
++# Emitted when the Control-Program Identification data is available
++# in the QOM tree.
++#
++# @iscpiavailable: is CPI data available in QOM
++#
++# Features:
++#
++# @unstable: This event is experimental.
++#
++# Since: 10.2
++#
++# .. qmp-example::
++#
++#     <- { "event": "SCLP_CPI_INFO_AVAILABLE",
++#          "data": { "iscpiavailable": true },
++#          "timestamp": { "seconds": 1401385907, "microseconds": 422329 } }
++##
++{ 'event': 'SCLP_CPI_INFO_AVAILABLE',
++  'data': { 'iscpiavailable': 'bool' },
++  'features': [ 'unstable' ]
++}
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.49.0
 
 
