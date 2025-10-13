@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5DECCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AAEACCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Es5-0003Ql-TL; Mon, 13 Oct 2025 05:29:38 -0400
+	id 1v8Es3-0003ET-2G; Mon, 13 Oct 2025 05:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8Es4-0003KI-3Q
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:29:36 -0400
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v8Erx-0002u8-VO; Mon, 13 Oct 2025 05:29:30 -0400
+Received: from 1.mo548.mail-out.ovh.net ([178.32.121.110])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8Es0-0005MW-Ml
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:29:35 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.14])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4clX9j61nXz5vq6;
- Mon, 13 Oct 2025 09:29:29 +0000 (UTC)
-Received: from kaod.org (37.59.142.104) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v8Ert-0005Li-EW; Mon, 13 Oct 2025 05:29:29 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.200])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4clX9X3srLz6T2l;
+ Mon, 13 Oct 2025 09:29:20 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 13 Oct
- 2025 11:29:29 +0200
+ 2025 11:29:19 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-104R005f134f6fe-3ab5-4feb-9569-c302ce381fa4,
+ (GARM-106R0065c79bdca-1831-43c6-9487-537caaeda458,
  E27D2F41E47E806E38994DC6761E007B2CBA9264) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <00735bd6-c9f0-4612-95df-c531811b0a69@kaod.org>
-Date: Mon, 13 Oct 2025 11:29:28 +0200
+Message-ID: <a284b770-1634-4106-b186-6c501ec438ba@kaod.org>
+Date: Mon, 13 Oct 2025 11:29:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 16/16] hw/arm/aspeed_ast27x0-{ssp,tsp}: Fix
- coding style
+Subject: Re: [SPAM] [PATCH v3 15/16] hw/arm/aspeed_ast27x0-tsp: Rename type to
+ TYPE_ASPEED27X0TSP_COPROCESSOR
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
- <20251013054334.955331-17-jamin_lin@aspeedtech.com>
+ <20251013054334.955331-16-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,35 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251013054334.955331-17-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251013054334.955331-16-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.104]
-X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 737557cb-f2f3-4edd-9ed6-a6e2e20fe16f
-X-Ovh-Tracer-Id: 14301462092892048306
+X-Ovh-Tracer-GUID: d51a5423-8425-4674-9319-6b503f6835b4
+X-Ovh-Tracer-Id: 14298928819131091890
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF+bN3PwyiC/2t7DgvTrZ2kHXaxQAdREPGALGgHlEr5G+PHs92GLIb0mG/PVR0MOVcOStB32v0pPfAkzdA6UfYiT0poU1pyZ2U5xwLDdXhPEOvxmDD9VsIFzv/5rpWs62b0IgipfbroIDVLOsVNqYbVNPCL8kkNWmKxY5XgvTPBNQxfFnKNn3ft1MgS9WTrln42lY9h5uo4S+odnr3V9zohgRzN6wUuA+K4ilJiOXvCcueqF2jQMsRMTuXG/Mg0b3ZuFuAj0hEV1WRE6Eqv2ycOAKntIt62ZcoEZjIaZDWJ9lDOJ/Rz8wGC1aSRGNLsSMk8Q8lGpoX2GnhvZ/ipVX+IOw846YWHR1eHOwwQvDtSH4LaAnCqiRPLAj6c5c82yCRD+ttJ1eVmBVr57WqJc256MZZUm0mYqUgJYYVVEOx8A4mdcuuwv6V2K86m7PCD8fC2GLkAqOf6/TzWQfwV3ikS/A668cJPWronOzOAe3hbBvI/COjsRKn7p/W1qk74MU8r0uEcRw9U7Thb/YrRwvPXPf2s1Hy/TtQ/3RPy1rRMaloeagn757BmrcS4dlqeAN7HfrjkYV04ATfd7VoJx9QNrwuGnFG0JHtBoFTivbaBqcxmxk7zpza99rtZXPmNXa7G0DVmA4bk9tz9v6RgprfMtYJ86H4pox+V9aKZwBCA7A
-DKIM-Signature: a=rsa-sha256; bh=K+k9qGIiCSrN1vVzrmIs1hqbVgCQPSI1a/xDj2qP//w=; 
+X-VR-SPAMCAUSE: dmFkZTFHBGgsDqN5JHe3G2+uMngoC/psFFp9otMkXlTEuQy2R5Wv1pqNOnA3zd2Av4R/pm9flhd9WyQ+wqH27m074fjjAvjoV/fLPDWGYxiqjpk0tFZzOyZUIrx7/b/HTbHhCtZFOKjoT6TccOyRxjl21BY8BKEnaZwatTr18fPuEqdIGSVZigBKeNTq8f18Ojk5o4Aes6lobgfH5Zmrp/RCedk8YqJl5Os7I4dJOH0jUkuqN0HyjGLFtqZPCz17PgsCDl0tqL1z6oziXuQLFsQJqVXPKYuJx/To1Q+ULpbs6p5JBgTjC417x8c30MFxONXx/VpdoU7AMy7/H68immoH5zO9RAemWRo5Ebj6QCUmUTDJiqHemueq2d5MwdCz0LGCf6IvpgHsdkQA69U9g7XvUjKb3FULDm/KiuLKoWngn8Oda+Gl5xWuH3rJdu2QyNNR0LKNe58N9KrvxQJKGBe1oXclqlJercdCJYy2B0oa/4UTohKIwOepUH32+g41T1zuOhMu+hwx1qdXxcoj/e/d5ku1YJlfKr+mI1+Jdfm1HCdJTpqtt6sAwafG1nOp3guYVuCVJw9GjIPlp/NrHh8KJfYJ0nld0/YP/gJxx2Hfkbi1QV0+vSouiNM30i4XReajZyTfk+ADBzfvmYzu6DSq/5KlDn38EbxbB1gocUI9jP5wqg
+DKIM-Signature: a=rsa-sha256; bh=zZ/zFFfn4QRDgAQNd+Xq/5UVG0gp95QBK9cRuPjb3GQ=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760347770; v=1;
- b=t3e5cW6UPEtobSKJU2mb0n8RXW+or1SKTUoD2dv2UtE+hpXei3HwTBdr4pcpK/XIIHEm39xK
- RanArZA7gbnB72LVwt6fyAsUTlbIDLCmO17/fVwDtrocIXPdV/xOCnRgI+JboEUEGb7FYtCDOeV
- Q+wWU8iWwZz3X3DsyGvKPS214Bu7dKFhxnDiwRrJzGmnNtDhMjDOrvgX1AI9659m+l888bDROhT
- Iw1mwageSMbTTybePNVnkMufJnliX/s1OL6rExX0+pRQPk9GYhIb97JGbw24AE3ZSixay57/zDv
- FKXGszWN4JWPx+lNvip+QQsP25ZwdxZlz4O4iFZUN3Rzw==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ t=1760347760; v=1;
+ b=gVPD4qYpwAX66QKYlJUsnnAZJi9zBx7Ih7AVphSvJNhW9DAb208H3zQMO/pU5J+effvx6KYu
+ xPeB5X69Ca7KlkW16rbnMLKpEq2rQwC1NfCl1Q9VjxSFeBPWnUay9of8TV6QqpqSID7ykGbG/jn
+ IpfScjtMCxqLd3moEDasZZ4rRXZWMeW+8EzCYRviH2yzR+KkTeiQ9hlD+QdNnWHiTfYxyAWqUgl
+ TUaMIfg4vllvWfAftKFNlFAYcDx0SjWzFSvQSI7kSV2iVPk7Jv7t2MsHOv2nCzxzTdH6BtJDs9f
+ 4RncMtTfAOH2BK/yjoggLEGczmHoXw++hKQhC8ubE12dA==
+Received-SPF: pass client-ip=178.32.121.110; envelope-from=clg@kaod.org;
+ helo=1.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,14 +132,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/13/25 07:43, Jamin Lin wrote:
-> Fix coding style warnings in aspeed_ast27x0-ssp.c and aspeed_ast27x0-tsp.c
-> reported by checkpatch.pl regarding line length exceeding 80 characters.
+> Rename the AST27x0 TSP type from TYPE_ASPEED27X0TSP_SOC to
+> TYPE_ASPEED27X0TSP_COPROCESSOR to align with the naming convention used
+> for the SSP coprocessor (TYPE_ASPEED27X0SSP_COPROCESSOR).
+> This change clarifies that TSP is implemented as a coprocessor rather than
+> a full SoC.
+> 
+> This ensures consistent terminology between SSP and TSP components and
+> improves clarity within the coprocessor subsystem code.
+> 
+> No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-ssp.c | 3 ++-
->   hw/arm/aspeed_ast27x0-tsp.c | 3 ++-
->   2 files changed, 4 insertions(+), 2 deletions(-)
+>   include/hw/arm/aspeed_coprocessor.h |  4 ++--
+>   hw/arm/aspeed_ast27x0-fc.c          |  3 ++-
+>   hw/arm/aspeed_ast27x0-tsp.c         | 10 +++++-----
+>   3 files changed, 9 insertions(+), 8 deletions(-)
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
