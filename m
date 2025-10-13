@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADACCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 20:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 057B8CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 20:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8OmI-0004Kb-OB; Mon, 13 Oct 2025 16:04:18 -0400
+	id 1v8Ovn-0005jS-D1; Mon, 13 Oct 2025 16:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v8OmG-0004K7-Gv
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:04:16 -0400
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v8OmE-0007VZ-AL
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:04:16 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id CA7777A043E;
- Mon, 13 Oct 2025 16:04:12 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Mon, 13 Oct 2025 16:04:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1760385852; x=1760472252; bh=muvxI7pHPmWbtq1FBaaUzFyTrzfpb0wI
- WHi+T9njv4Q=; b=ivNKdnKZh+G9jgO7CbXFoN2tdrHgvJ+RVXFqEP6M2pd5Oy/g
- k5FYGIqcPHMte1xXB6PMhhSbvjxT+v2wxgA0WuX2eGrQlNyLO+11MIYe5HnFIAGR
- /ZHwua/5ekyTD9Yx9KQnzZm1130Q3X5/2CG3nE/kU2Eq7aFbQAQkFXoBnEudFfCb
- JXeGZOX6n9T8WmuxGDkVquAoLaStQo4Ml2hR7hymhMFo2okPEenglCM8ChOJ1rIk
- adqYYUKyDms/0f6hPV8LdubJFvSyLZnrSpRTtAsbgl5y15wY3nFMGH+R8gLgj/gV
- rAEY7nDGRp2yzxOyTSB7JBq1Zz+6yroErt9ZNw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760385852; x=
- 1760472252; bh=muvxI7pHPmWbtq1FBaaUzFyTrzfpb0wIWHi+T9njv4Q=; b=F
- kcLMqghF8eU7woMpju6LB0sf4rS1IXnv2lzFCWUgdosGy8TgXPuC9mcDAj/I9aZx
- qUM8N2b82Onkz00sphvJgbb/yN5JvqFw9jSnMaw4VgFLf4clCJnwK4bo9qnx0Eqp
- 66hQ7yeXfRnvnE6X2SZmKEm3AmbwNHbFyIechPz7TATXRbP2FUm63hYVo709g4nU
- 1upQ9AVR2gD5haEpMPxlE0IgSokA17yftVnGVnAYkY7qcedyIFMbqzjYtsUtnv68
- mmC/JxSTIUgg4qks7bmMq7XlM3u+9Li1MlvU52kX4lHiZ2iauqPOAsCk0lm3Ljoh
- DOJmfKm2rQfOkI9SWDYyA==
-X-ME-Sender: <xms:O1vtaGu6L4WZfMoD0mC-FvG4in1-X92PeTEDc2xV92UaPE-JK_FD_g>
- <xme:O1vtaCVon1Yj_D20Uk8f1xjayHS-69LLK4On5tt3dwPYC_KjhMvPtPzZVqzMLP12q
- lLHpQW-yPtU6_wkzqBSQNA3Cmt3AJH2M5ahvR6MarX3Rufdwf4-vguR>
-X-ME-Received: <xmr:O1vtaKEon9TDh3VzEl3o0aMOF90qpsmc9FE7JomOOtr2ktp1xQB2vg9Y5qeq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudekheeiucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvfevuffhofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeekffekuddvtdehjeduhfekteet
- gedvfeffieeugfefffevheeggfdtkeeuteekteenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrg
- gusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgr
- thdrtghomhdprhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrg
- htrdgtohhmpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghp
- thhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:O1vtaM0cUh652NoWPTKnsBae00CzKB3edl8hEe-ZxwNxIn02Cy8E_A>
- <xmx:O1vtaEMu6DaQpv9ilbiVpH9VZmccvDFZaVPyr4BjJQJiJS25QSe8wg>
- <xmx:O1vtaD4-LL6pxp8UpnFfvP_nGoD5uDlwS8g9z2BAE7kuRN1hGOll_A>
- <xmx:O1vtaG18IzSojpJ9VIHe6nU2yoJohyc7GMHgK4y-j0-KP1-i109njg>
- <xmx:PFvtaAxS57xxQuh-Uvcylsn77u2injRQOqDwy1WxpW6OUp4JFyf0Y-Zs>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Oct 2025 16:04:11 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id c4ae1809;
- Mon, 13 Oct 2025 20:04:09 +0000 (UTC)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1v8Ovl-0005jJ-S8
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:14:05 -0400
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1v8Ovk-0000DL-Ak
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:14:05 -0400
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-9335a918867so469165739f.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 13:14:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760386443; x=1760991243; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KigrxIVEd2ccjOJEMrXGhnKJfAXrnpcc9JwEzCo+flY=;
+ b=dlCIzorpgkNuUdqsAG3B7wWFVr7S1UbFcvGG+Dgv+hWQZjHiQZ2PgYDrhDIWpUFmVx
+ hil3Hsmm7ZKasg1dz1JBqw5wjwvVrYqvIDH1zGTBCfI/kh9PiyUxxyfUK7CYXbQAkKwz
+ v1eySwdXB+p9lBO+m5lJ7vhNuxCsbWsCgWGvRXh2BBKIT9qUIre8lXNq2ME8o/IIlzKt
+ 1jRDUfQP3hyfpDYZrUmuPprRGiXLssa1WyR1l8bAnzAWT8VrXVIdT4rEiYUv4DZkmlLp
+ hWvXpjOiBA7hIE7o5PQGxpV+t/OIBKrZJuffxf0gQREFdoLOzG9zbcTOhW4yl7iZmDJb
+ DVYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760386443; x=1760991243;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KigrxIVEd2ccjOJEMrXGhnKJfAXrnpcc9JwEzCo+flY=;
+ b=q/7SULGQdLqI1O72xu+BKSmOtiExtBJVeHofomiqdH7RAvlK9MsLbEn4tbvxfixknD
+ 4yKKwatKz3CMSIAfe2usEUs/VbCMtVt+/g17WGY2zrJdB+P+lDU1NlflEildiqth8YbK
+ JeNWGGvQH97ShHFzkk7+x4ZCgyFeoDXQ+Oe+k7x7icmYQA8A/H8lHan1YrSbPP08KC/3
+ t0NUG+N9ohPHhP4pemAPLpp3iRbsNEJJ0S8ZLQn87SafCLKaCkvVHqtEnQNr6q+SDFa5
+ 9NKybQsEM/UM4xqVJZEBcZ7zTzS7TaFom1mw6EGsVde6AyEGOUzvhAz/t/tABYMCcJpn
+ WQeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSCfYjFjFCcy5muyhdtpEcRl5sC/IGuo/csoOwjb+7EcR+rIvyE4ukYe3rvlAhQrIthPbpDefN0vf/@nongnu.org
+X-Gm-Message-State: AOJu0Ywbg0EOzP53xEbb3TH6cTUQsVNo65eEsMTzF+bDFW38ztryLCRS
+ Lu/von/F4XFYJsryKhZ1vAfaWv1geR8ik+zzC6/fD9Ir1Moy72tQE2x/b7LTHuZkhPBHDTT1ehe
+ 7K4I4AyQQQkRB+TOIXoGGdrzpk4H+6ZE=
+X-Gm-Gg: ASbGncswylgPtRG/XJqWKwnevxmYqxxdB/QeKXf/gajT+QzM0sMvI8Rp+0HIfcUCjHS
+ 3Oj19R/afZTmalQKr+rED4q7bb6nx3odESKXexhVIq/zZrscSDXgRcJ+KjroYC22U0RTSIZuarS
+ qv/hHvBRSBdMnUVhCB/ogDFWf9h+SDHhsWlP38L283gZ8PwwOCQpc9ZV16nekGqz4TqiMuQXjo6
+ p2Bp6D7svfwxHpfxEk6IUxS/fuODMaekq0Q
+X-Google-Smtp-Source: AGHT+IFMJHkiFCLf4xPeVsftoc5zq5kFMag7c9AC6DIqAEiuAm8rinZpoSKgkzVmH6Jickdd3/MSabpu9BnKSe/vOaI=
+X-Received: by 2002:a05:6e02:1a09:b0:42f:946f:8eb6 with SMTP id
+ e9e14a558f8ab-42f946f905bmr187383395ab.26.1760386442986; Mon, 13 Oct 2025
+ 13:14:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <20251011232404.561024-1-vsementsov@yandex-team.ru>
+ <20251011232404.561024-11-vsementsov@yandex-team.ru>
+In-Reply-To: <20251011232404.561024-11-vsementsov@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Mon, 13 Oct 2025 16:13:52 -0400
+X-Gm-Features: AS18NWAMmmTfr6x-LW2doMpeCuNR9m77h3naQmGfLkNaIBAm6uPFL7A3jC-LqMw
+Message-ID: <CAFubqFuuBbuoSjofH1XnTrqfi5m_wDuZXN7-Jox82QunBXsFXg@mail.gmail.com>
+Subject: Re: [PATCH v2 10/23] vhost: vhost_virtqueue_start(): fix failure path
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net, 
+ qemu-devel@nongnu.org, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 13 Oct 2025 16:04:09 -0400
-Message-Id: <DDHGPB02664A.3C0GAHH5K41QT@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
-Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using
- hardware-correct aperture sizes
-From: "Chad Jablonski" <chad@jablonski.xyz>
-X-Mailer: aerc 0.21.0
-References: <20251001034616.3017119-1-chad@jablonski.xyz>
- <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
- <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
- <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
-In-Reply-To: <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b5-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=2, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,72 +98,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Overall looks good just once comment.
+
+On Sat, Oct 11, 2025 at 7:24=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
 >
-> I'm not saying the 64MB alignment is not correct (I don't know what is=20
-> correct and assuming the Xorg driver was tested with real cards it's=20
-> possible this assumption holds) but maybe it comes from having a 64MB VRA=
-M=20
-> BAR that contains twice the size of actual VRAM including the AGP window=
-=20
-> which also satisfies the 32MB alignment for VRAM, so the commit message=
-=20
-> may nees to be adjusted to say that instead of something not supported by=
-=20
-> documentation. Do you have any PCI cards? There were PCI versions of=20
-> these. I wonder if they also have the same VRAM BAR. If not then no=20
-> problem, we can go with what works for known drivers.
+> We miss call to unmap in cases when vhost_memory_map() returns
+> lenght less than requested (still we consider such cases as an
+> error). Let's fix it in vhost_memory_map().
 >
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  hw/virtio/vhost.c | 35 ++++++++++++++++++++++-------------
+>  1 file changed, 22 insertions(+), 13 deletions(-)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 773b91c0a0..8031c74e7b 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -453,11 +453,20 @@ static inline void vhost_dev_log_resize(struct vhos=
+t_dev *dev, uint64_t size)
+>  }
+>
+>  static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
+> -                              hwaddr *plen, bool is_write)
+> +                              hwaddr len, bool is_write)
+>  {
+>      if (!vhost_dev_has_iommu(dev)) {
+> -        return address_space_map(dev->vdev->dma_as, addr, plen, is_write=
+,
+> -                                 MEMTXATTRS_UNSPECIFIED);
+> +        hwaddr mapped_len =3D len;
+> +        void *res =3D address_space_map(dev->vdev->dma_as, addr, &mapped=
+_len,
+> +                                      is_write, MEMTXATTRS_UNSPECIFIED);
+> +        if (!res) {
+> +            return NULL;
+> +        }
+> +        if (len !=3D mapped_len) {
 
-Unfortunately I don't have a PCI Rage 128. They actually seem to be somewha=
-t
-rare compared to the AGP versions!
+Should this be:
 
-Testing results from two Rage 128 AGP cards:
+address_space_unmap(dev->vdev->dma_as, res, mapped_len, is_write,
+MEMTXATTRS_UNSPECIFIED);
 
-Card                      VRAM    PCI BAR0   CONFIG_MEMSIZE  CONFIG_APER_SI=
-ZE  AGP_APER_OFFSET
------------------------   ----    --------   --------------  --------------=
---  ---------------
-Rage 128 Pro Ultra TF     32MB    64MB       0x02000000      0x02000000    =
-    0x02000000
-Rage 128 RF/SG AGP        16MB    64MB       0x01000000      0x02000000    =
-    0x02000000
+rather than address_space_unmap(...0,0)?
 
-
-* PCI BAR0 (Region 0) is fixed at 64MB for both cards, regardless of actual
-  VRAM size.
-
-* CONFIG_MEMSIZE correctly reports actual VRAM size (32MB and 16MB).
-
-* CONFIG_APER_SIZE is fixed at 32MB (0x02000000) on both cards, regardless
-  of:
-   - Actual VRAM size
-   - AGP enabled/disabled status
-   - AGP_APER_SIZE configuration (tested with 8MB AGP enabled)
-
-   This directly contradicts the Rage 128 Pro Register Reference Guide
-   (pg. 3-202) which states: "Size of linear apertures (both 0 and 1).
-   This includes both the frame buffer image and the AGP system memory
-   image area."
-
-* AGP_APER_OFFSET is also fixed at 32MB (0x02000000) on both cards. On the
-  16MB card, this creates a 16MB gap between the end of framebuffer and the
-  start of the AGP window.
-
-So for Rage 128, CONFIG_APER_SIZE should be set to a fixed 32MB value, not
-dynamically calculated from CONFIG_MEMSIZE + AGP space as the documentation
-suggests and as was previously implemented by me =F0=9F=98=AC.
-
-I'm less sure about the Radeon and your additional context around the Radeo=
-n
-on PowerPC makes me very nervous to change it right now. Especially given I
-have a single example of that card and it's for a PC. I think it makes more
-sense to leave the behavior of CONFIG_APER_SIZE for that card unchanged.
-
-I will send a v2 patch that:
-  * Sets Rage 128 CONFIG_APER_SIZE to 32MB
-  * Updates the commit message to reflect that
-  * Leaves Radeon unchanged (half of the vram_size)
-  * Addresses the style issues
-
+> +            address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0=
+);
+> +            return NULL;
+> +        }
+> +        return res;
+>      } else {
+>          return (void *)(uintptr_t)addr;
+>      }
+> @@ -1261,7 +1270,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>      BusState *qbus =3D BUS(qdev_get_parent_bus(DEVICE(vdev)));
+>      VirtioBusState *vbus =3D VIRTIO_BUS(qbus);
+>      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(vbus);
+> -    hwaddr s, l, a;
+> +    hwaddr l, a;
+>      int r;
+>      int vhost_vq_index =3D dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>      struct vhost_vring_file file =3D {
+> @@ -1301,24 +1310,24 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          }
+>      }
+>
+> -    vq->desc_size =3D s =3D l =3D virtio_queue_get_desc_size(vdev, idx);
+> +    vq->desc_size =3D l =3D virtio_queue_get_desc_size(vdev, idx);
+>      vq->desc_phys =3D a;
+> -    vq->desc =3D vhost_memory_map(dev, a, &l, false);
+> -    if (!vq->desc || l !=3D s) {
+> +    vq->desc =3D vhost_memory_map(dev, a, l, false);
+> +    if (!vq->desc) {
+>          r =3D -ENOMEM;
+>          goto fail_alloc_desc;
+>      }
+> -    vq->avail_size =3D s =3D l =3D virtio_queue_get_avail_size(vdev, idx=
+);
+> +    vq->avail_size =3D l =3D virtio_queue_get_avail_size(vdev, idx);
+>      vq->avail_phys =3D a =3D virtio_queue_get_avail_addr(vdev, idx);
+> -    vq->avail =3D vhost_memory_map(dev, a, &l, false);
+> -    if (!vq->avail || l !=3D s) {
+> +    vq->avail =3D vhost_memory_map(dev, a, l, false);
+> +    if (!vq->avail) {
+>          r =3D -ENOMEM;
+>          goto fail_alloc_avail;
+>      }
+> -    vq->used_size =3D s =3D l =3D virtio_queue_get_used_size(vdev, idx);
+> +    vq->used_size =3D l =3D virtio_queue_get_used_size(vdev, idx);
+>      vq->used_phys =3D a =3D virtio_queue_get_used_addr(vdev, idx);
+> -    vq->used =3D vhost_memory_map(dev, a, &l, true);
+> -    if (!vq->used || l !=3D s) {
+> +    vq->used =3D vhost_memory_map(dev, a, l, true);
+> +    if (!vq->used) {
+>          r =3D -ENOMEM;
+>          goto fail_alloc_used;
+>      }
+> --
+> 2.48.1
+>
 
