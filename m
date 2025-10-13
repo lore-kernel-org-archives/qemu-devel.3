@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9931CCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696F1CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Eqx-0001Uy-Ig; Mon, 13 Oct 2025 05:28:27 -0400
+	id 1v8Er6-0001ax-Ow; Mon, 13 Oct 2025 05:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1v8Eqv-0001Rx-D0; Mon, 13 Oct 2025 05:28:25 -0400
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8Er5-0001am-Hy
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:28:35 -0400
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1v8Eqq-0005BU-7V; Mon, 13 Oct 2025 05:28:25 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.44])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4clX8K6jpZz5wn1;
- Mon, 13 Oct 2025 09:28:17 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8Er0-0005De-Kl
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:28:35 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.216])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4clX8X3kPtz5wnX;
+ Mon, 13 Oct 2025 09:28:28 +0000 (UTC)
+Received: from kaod.org (37.59.142.104) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 13 Oct
- 2025 11:28:17 +0200
+ 2025 11:28:27 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S0035526f3b3-2083-4c9c-be95-cd972d2b2de7,
+ (GARM-104R005503e9edb-f9ba-49f6-8be3-d502123bafa8,
  E27D2F41E47E806E38994DC6761E007B2CBA9264) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <79eb1c30-ed44-47c6-b050-69326e36cc25@kaod.org>
-Date: Mon, 13 Oct 2025 11:28:16 +0200
+Message-ID: <014d2876-7102-4b1a-b334-dc90ecb26e23@kaod.org>
+Date: Mon, 13 Oct 2025 11:28:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 09/16] hw/arm/aspeed: Introduce
- AspeedCoprocessor class and base implementation
+Subject: Re: [SPAM] [PATCH v3 10/16] hw/arm/aspeed_ast27x0-ssp: Make AST27x0
+ SSP inherit from AspeedCoprocessor instead of AspeedSoC
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
- <20251013054334.955331-10-jamin_lin@aspeedtech.com>
+ <20251013054334.955331-11-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,27 +87,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251013054334.955331-10-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251013054334.955331-11-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.109]
-X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.104]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 200d5e58-31fd-4ff8-89a8-dcadde2f396d
-X-Ovh-Tracer-Id: 14281195897658641330
+X-Ovh-Tracer-GUID: 90213a66-f437-40fa-b67d-f6a613eb2dc9
+X-Ovh-Tracer-Id: 14284292121469160370
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGnm3OFPsEXeegmMXqU6HaZo10On2ZoWXCEox02MDZz8IklfP0QtJnfuMb/b4U7CjosojIj43LNgxf9qQH/VpjfSKwOd64x78TgeYTSMFMwwJ6DG4Q1wG7pcnDYycmOosfOAIpb4x7vMPfYZJ8YLEpObVudV1r609EdLTEU6SsrpV2zzxiHYiQ+GTH6mAPeODsb+TbPxxr+QPeaNyxEFTnku80U8JX7o2qVmI9Zn+LSRCdgAb1Ow0wEZl+qXYg/SOYobJKAlKvvZP28nax1yu09FE1uSWUVhAYuegRkGdLv2qDtdYMMPlNkdow2kJtMdGM2szuK9uJXk9zCpNpmkOUGrKoa4mL+EZrOIjYF2WArqp8miBWcqGPd28zk7/Ri/FqsU6/0MWiEboLp2cRJ6I049t5l2dblk49giyn4iqvOKDl/8zTW1TSNJIpVkRrf6T7vBjR0HTGpEk+Qd613i4nTVjeA74KkaMXDwYuonZDV1Q2phHzQp9h0vusDqIU2zIasObyWIQ1cGlNFoQf3kFuMftUdOEEeB5KJxAOoRFju/tPJs4wHKoIMoRwwP44GvIv9uAuxwpx514jKtGZvFNeaX7rKO2sbtVZPud5dhWLAgSQrJR7VTxytUGNvXEx2XIIV/gNX8IQn8eBqYvVZBG0xLC47ZjYshtMRSwA9gykt6Q
-DKIM-Signature: a=rsa-sha256; bh=TtbXT7jJG6QomaUa51PO2ATUq6lKccgRkLEo7dDTKyM=; 
+X-VR-SPAMCAUSE: dmFkZTF+bN3PwyiC/2t7DgvTrZ2kHXaxQAdREPGALGgHlEr5G+PHs92GLIb0mG/PVR0MOVcOStB32v0pPfAkzdA6UfYiT0poU1pyZ2U5xwLDdXhPEOvxmDD9VsIFzv/5rpWs62b0IgipfbroIDVLOsVNqYbVNPCL8kkNWmKxY5XgvTPBNQxfFnKNn3ft1MgS9WTrln42lY9h5uo4S+odnr3V9zohgRzN6wUuA+K4ilJiOXvCcueqF2jQMsRMTuXG/Mg0b3ZuFuAj0hEV1WRE6Eqv2ycOAKntIt62ZcoEZjIaZDWJ9lDOJ/Rz8wGC1aSRGNLsSMk8Q8lGpoX2GnhvZ/ipVX+Ib4y6Evlj8FCVJoctBPbSiezy7h/Zud5iccsOTDQg1MlWqKGzPLFTp9NCK8XPOaWzUZQeZfchkllV4U2YCD2hjymLb9BXbt178bTSjNiSloL/g15mIFg49ii57qXq7NIpXAOI5TsofAfbBXy2IGvsGukd8NSpr4oq95yGnOy2EzQ3HN2/6V5YvS9/8F40C+jPhwYVN4K8iTR6XgZRQQGCpz+OA3YI8tKnzD/M4kyR8QU8tc3WwL9VHFv9M/7y8WVN3xh3TD0c5Dopch3+Dxxg8cJAtOQyroHtOuxCmQWaTRVYMc4NXOSIY2607hCHQq5J0tv78ZTKVuzypb8HpY0uhA
+DKIM-Signature: a=rsa-sha256; bh=BEsFWQ5vmJlXxdMsD+zbpCRw3yP94UiEti7TMU0Oeew=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760347698; v=1;
- b=l1jz5SrOzHaj/BB2F0RspWXX6P47EYUc2dNxLwBgf4zsEPiiPomYulagVfnrUEN0Sy8vmSTD
- RyfGGxhCIx/y/OIKnAPHZYiLtveI5nWet5lM2i7VpYCMuhq2jW0aYJizJDXImNBO7stRKZIsDRy
- n5MSjxQYG3Yfyzw9RyZrkIvU/UbrIDyLyLduVvG204eLzFtT1As4jRGmL82QY0t3g3HnM9rL1Xb
- aiuLPd7eVwLc926mmEzjF+x8/BnurNF1W+CEuFCYR7uF9Snf8I0Oja5zu1S70CbR2BJdw5jPYTY
- QrzsEj5gBNJ1XFi2uxcUJhiQd2Ewu2OJf5dGDvExtZUvA==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
+ t=1760347708; v=1;
+ b=oV/cTOAvBTF0YsLSC88afG/DOR1AVuX0bm+0qCJoK+VfvZSnnIMtx5yOLJPsnaeRPO1f6lJb
+ 8IefcBcT6EYtQnlFy0IynDYvh2GHjTN0PqpK1zHrxPUdI1cdVCsIOMn6ZVZWw3kooWP5EcFXS6K
+ 8yKZJEBsAhHyrR/mwY/e1mtoozFYXpNez2RNEpaECTBJY1XQ1zpQ+7R5vS1KaS9Egw2YWblfbb1
+ 5Jy/XTk2zTCDLv50WxzXEuF2J337VGyEpc9/2oSfBKMooZanbvcZYAPoEmC5ggKO4LtTxMddJsQ
+ 2L5G1g9+jhUH3n/WNk/Y1nQvhSCadWLsZbjC6qBj3nRHw==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
@@ -132,34 +132,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/13/25 07:43, Jamin Lin wrote:
-> Add a new AspeedCoprocessor class that defines the foundational structure for
-> ASPEED coprocessor models. This class encapsulates a base DeviceState with
-> links to system memory, clock, and peripheral components such as SCU, SCUIO,
-> Timer Controller, and UARTs.
+> Refactor the AST27x0 SSP implementation to derive from the newly introduced
+> AspeedCoprocessor base class rather than AspeedSoC. The AspeedSoC class
+> contains many SoC-level fields and behaviors that are not applicable to
+> coprocessor subsystems like SSP, leading to unnecessary coupling and code size.
 > 
-> Introduce the corresponding implementation file
-> aspeed_coprocessor_common.c, which provides the aspeed_coprocessor_realize()
-> method, property registration, and QOM type registration. The class is marked
-> as abstract and intended to serve as a common base for specific coprocessor
-> variants (e.g. SSP/TSP subsystems).
+> This change moves the Aspeed27x0SSPSoCState structure definition into
+> aspeed_coprocessor.h and updates related references in
+> aspeed_ast27x0-ssp.c and aspeed_ast27x0-fc.c to use
+> AspeedCoprocessorState and AspeedCoprocessorClass.
 > 
-> This establishes a reusable and extensible framework for modeling ASPEED
-> coprocessor devices.
+> Key updates include:
+> 
+> - Replace inheritance from AspeedSoC -> AspeedCoprocessor.
+> - Replace type casts and class access macros (ASPEED_SOC_*) with
+> ASPEED_COPROCESSOR_*.
+> 
+> This refactor improves modularity, reduces memory footprint, and prepares
+> for future coprocessor variants to share a lighter-weight common base.
+> 
+> No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/arm/aspeed_coprocessor.h | 44 ++++++++++++++++++++++++++
->   hw/arm/aspeed_coprocessor_common.c  | 49 +++++++++++++++++++++++++++++
->   hw/arm/meson.build                  |  3 +-
->   3 files changed, 95 insertions(+), 1 deletion(-)
->   create mode 100644 include/hw/arm/aspeed_coprocessor.h
->   create mode 100644 hw/arm/aspeed_coprocessor_common.c
+>   include/hw/arm/aspeed_coprocessor.h | 12 ++++++++++++
+>   include/hw/arm/aspeed_soc.h         | 12 ------------
+>   hw/arm/aspeed_ast27x0-fc.c          | 10 +++++-----
+>   hw/arm/aspeed_ast27x0-ssp.c         | 30 +++++++++++++----------------
+>   hw/arm/meson.build                  |  2 +-
+>   5 files changed, 31 insertions(+), 35 deletions(-)
 > 
+
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 
 
