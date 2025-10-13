@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BADCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8672CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Np2-0001a4-5e; Mon, 13 Oct 2025 15:03:04 -0400
+	id 1v8Nsx-0002SZ-VH; Mon, 13 Oct 2025 15:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Noy-0001ZV-0R
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:03:00 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Nsx-0002SK-2F
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:07:07 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Now-0008VK-FX
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:02:59 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e542196c7so28950735e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:02:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Nsv-0000Zz-D8
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:07:06 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-3ee15505cdeso3835728f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:07:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760382175; x=1760986975; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760382424; x=1760987224; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wKJtvVBeUpceoS4GGuZ7Rw36+X8tmV8xTrk3JT9ph9A=;
- b=mkhe/hsMASChTgsnqlAEObyaVa/8C3VEGdrY/Qj7H8Ceoc0Qud7Ev0EA9D7jp9wWuM
- mJbfZQ+v62VFhwbBxWviAe/rygBvzVOK7PmvRHv2500aV4+B4iX0v7vqmee7vWUEqkYS
- WbLbctLJWcH1L02RXGvV7ui0Hx4Ewcfz3BnCPhAlHm8e8qjmK9Go1Tx0jHej3D6a8vk8
- K61Enwddhl8Y/MhgCiqtPrYN5H9c1DPR/G2q8KE/IxUDnVqyBGl24R809u/6QPxf8Fl8
- ysbQD02zBrrwBHQKfz1OcJcZazpORzbEsEU7WaEwtWpbwwTYBKWwkeaAhvPCuy0EUpEh
- Nw9A==
+ bh=TGReayrHSYaTVPTGfVSCKVjz6qk2ujF1YrM+QI3d3/w=;
+ b=dufYUyTKPRbYYDmwMnsYfNLISHMXNIhYzF6dJznZA/GEUzhJIsYDKYE/ZG3g9P9Ik+
+ yicKsgtU0lH78eg/KRMionuHG7tFmq0120Yn6rnh2/nFnZMz9V6AMtK43M3l/fmVShol
+ oN9D4yRxpvTPe/o37W+kNxtfpL+70/fVt1QdSUr8Ub0tXw/uzXQElPNOhvioefhcvkrH
+ Fhoe0+6XSd5LwnrrgB+aYy2IvRhnEnORqoGmt6ZP3j6nGNo9Su6JwPd1nQObVsx82jtl
+ vtNOeCgbfV1Xw1jN/FtyszYZQKEdGifRiueT4VvHTtQbMULBCr5MiUT2m8Fjzj13SjEk
+ KT1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760382175; x=1760986975;
+ d=1e100.net; s=20230601; t=1760382424; x=1760987224;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wKJtvVBeUpceoS4GGuZ7Rw36+X8tmV8xTrk3JT9ph9A=;
- b=DPfYSvfsynaQ8ozHhw/AYhwSK9yWfCmOAcejZakmK+guKAKc53wyIEjTQfJd5Q8CMj
- As4Rbt38Jv6RG0rb3b47QJ8gklbkbBnRm16N1VN94bl3dZMnI7uvaaqm3eHThpuSoS6H
- n5S6DQ8YK3lntHN4FX1kXvmnApBMiIfNnfr8RsshNhqA/4Fc8hMFGQA4F4vzvbdkkJUV
- 3hfqXodSRZPu1boyqesgViHTtN0XF52dSuruMbH59mN1V3+G7O5gmdWYdDu/ER4KsJLf
- 9Mjhrgb3bVuJW4QxcyTxsqBW8XkyqdbKrvQaLyv76WAPEevFJiE0OFYdn7+4J3X226BR
- g8rQ==
+ bh=TGReayrHSYaTVPTGfVSCKVjz6qk2ujF1YrM+QI3d3/w=;
+ b=nGRY02ELB4LnbYxteuyhE97xJx2xGrzq7EMrszPRNcs5M7IrvswRCalRoxb4HNVdJE
+ h04/1IbT1ttHMThx0uEF0FQ1X2HhpIKhjAo0/EDK+nypX16rGvaq29zIVUhtLFCPzim4
+ d4ADC1i1q/8rrqWRureryt3HSb4dQAap5kL4Ixc+D4/OmO59vEgG86VmWpl7Ht19b9w9
+ mj/uPfmnC/8zfjxQ4yIXj12LwY8PvCZIE/RDSPIF/24ukme2UzP96C1W/UeHPIoDEGPs
+ eFDCjfKWrKBLsRZtJaQWB4euB6jeb9qVvogaQY0A0T1By/FqP87T48l/4Su6z3QXp2VJ
+ Y/ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjB0ICL1MhK94TDsiAFcgAmDu6nR3u3OO4MTeOfVmRcCwXXdM0/641bq0Us5UkGcUCt8/lcKsfiaDh@nongnu.org
-X-Gm-Message-State: AOJu0Yz06Arj2TEZY7oHaSoCJLZD00FW+Hx3BqnM8FRwPrDh0k3fec23
- PlI/Ou62khblFJp6jv1BWFJjOSJZU3gDDBFkpiX6qPwWJ/JVBDHXazbDxCsoxDFJWjQ=
-X-Gm-Gg: ASbGncs8btLuLvmNSHdZrrqbCflDQZMpJeVEjKnPjCRpAYRYi9+GfY5PIbCNPg6zvOE
- k2/x4eLwuapiKZuOORr51uY3n/5QK3I643VmhJ/JDhQYbsIICj8Dl2HfG2amLMIjdQ/SXxFOx3Z
- PDBAhwHVZANGBxBTK2fT+v+Ef2TZ4igbb/Z1ouq57vTHtKq4mkylECJOpEGw5D0/P9lELL/BHMB
- hwrOTsaG0eIYCKD9WKFptCcy5Qd4DzZXNP4kFUAJTYJkhzCgiUAQ39XjDcVlEXRbwxIaayWmBy9
- 3zlYYRclehPdvHCPvkOcNkJhjs9Mq5VnPYASwx4ZtCqpmvjTEMEq8Td9zS8XgGRQBhyhB3v+jVK
- tGXOVfLRY4bOdwgKZBp4P7gEgnEcijTe4CN3q+2JLW85GLtWpyD4F4NdjQpUuG16kW9qlDS6BwX
- Cbn7jwHB1AjLqBklhRyCaGGj8=
-X-Google-Smtp-Source: AGHT+IHH11zCSmmv2HyW/zq6ZrYND0/s/6qw5dDtxk0RD0xvF0e4++DMwcu0QSFIdAFGYjRcpGdTJA==
-X-Received: by 2002:a05:600c:1277:b0:46c:adf8:cd82 with SMTP id
- 5b1f17b1804b1-46fa2952c02mr127987755e9.3.1760382175311; 
- Mon, 13 Oct 2025 12:02:55 -0700 (PDT)
+ AJvYcCWy+NhpfJV1msfUCdL0mcUvSRNTtTD7A6Oz/R2sUG9onG0x/8jOJO1j6+UwsSJ4Qs4pi3/DCG/M8pG1@nongnu.org
+X-Gm-Message-State: AOJu0YxweVEeENyKklg6uH/Jy3TlpOqBmelpC2K26e7ax3BKHv4Sj24p
+ g+eb+67rRZ35zYXxmOyXPfCYcALx4eujT9gV7V8nWdNKWy7BOUDWnuhjzX3Ga3+oLd4=
+X-Gm-Gg: ASbGncv8ngAbPxlrfN0EhPRU3xdN+c5LZISF81h73EzbrZ2oK3mBpoSpQnjZL8dHuHf
+ BDf29FyQVCshW6htB2jPkOvdEvzig3CkS7ckiPvCcPbi9h7gMGlMAVw0eDxCpimW0YIxJC0FOju
+ gRfFHEgJHG7ShbH5yvd8/Ly64lGr6b3GldiRR4HS4RlMj5PIvzZMZeljervwM8IzPD/22j6S47I
+ jnovlLO7FAD+YQTpnkimmJa8HbQjQJx+8B0ajFUlcSaL0fN+ipgRgHeaGMgipETMSbnTcKb7Kmd
+ bf42PPi6dPFNMEr5Br4ql+JtXLIsfxVAxpl01S+7NFfN2vHYm1bSk3W4hLlPVkwjWve5Ja1vjZ2
+ hpUHRnk5PVqXOkAvJX+XE1rD4Cu5PVGaFerT2X8Zgxi5F7JoHFmtg+PF5GMEGIy3I0e0+01b5ux
+ 4xzCsW6B4d+UTUslQ2AYH1Xe8=
+X-Google-Smtp-Source: AGHT+IFpXXEOVVap5qH/ysFmlg1lyuzEjPWV4RKaOILdjoUDOGWAloTjMygMhIvJl2vkBKaiB2HeEQ==
+X-Received: by 2002:a05:6000:288f:b0:425:58d0:483a with SMTP id
+ ffacd0b85a97d-425829a5a12mr18700388f8f.3.1760382423631; 
+ Mon, 13 Oct 2025 12:07:03 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce589a21sm20144116f8f.23.2025.10.13.12.02.54
+ 5b1f17b1804b1-46fb482ba41sm200512545e9.4.2025.10.13.12.07.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Oct 2025 12:02:54 -0700 (PDT)
-Message-ID: <d3e9d489-eb54-4540-9752-f691f6481c40@linaro.org>
-Date: Mon, 13 Oct 2025 21:02:53 +0200
+ Mon, 13 Oct 2025 12:07:03 -0700 (PDT)
+Message-ID: <89f61779-e078-4778-a8ef-d5a507c46f28@linaro.org>
+Date: Mon, 13 Oct 2025 21:07:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 1/4] hw: vmapple: include missing headers
+Subject: Re: [PATCH] async: access bottom half flags with qatomic_read
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
- Cameron Esfahani <dirty@apple.com>, Peter Maydell
- <peter.maydell@linaro.org>, Roman Bolshakov <rbolshakov@ddn.com>,
- Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20251007203153.30136-1-mohamed@unpredictable.fr>
- <20251007203153.30136-2-mohamed@unpredictable.fr>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org
+References: <20251013162620.995747-1-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251007203153.30136-2-mohamed@unpredictable.fr>
+In-Reply-To: <20251013162620.995747-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,44 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/25 22:31, Mohamed Mediouni wrote:
-> Disablement by default led to:
+On 13/10/25 18:26, Paolo Bonzini wrote:
+> Running test-aio-multithread under TSAN reveals data races on bh->flags.
+> Because bottom halves may be scheduled or canceled asynchronously,
+> without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
+> to use a relaxed read to access the flags.
 > 
-> ../hw/vmapple/vmapple.c:276:39: error: use of undeclared identifier 'GTIMER_VIRT'
->    276 |         qdev_connect_gpio_out(cpudev, GTIMER_VIRT,
->        |                                       ^
-> ../hw/vmapple/vmapple.c:479:54: error: use of undeclared identifier 'QEMU_PSCI_CONDUIT_HVC'
->    479 |         object_property_set_int(cpu, "psci-conduit", QEMU_PSCI_CONDUIT_HVC,
->        |                                                      ^
-> ../hw/vmapple/vmapple.c:556:13: error: call to undeclared function 'arm_build_mp_affinity'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->    556 |             arm_build_mp_affinity(n, GICV3_TARGETLIST_BITS);
->        |             ^
-> 3 errors generated.
+> Use an acquire load to ensure that anything that was written prior to
+> qemu_bh_schedule() is visible.
 > 
-> pretty quickly.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> Resolves: #2749
+> Resolves: #851
+
+Preferably using the full URL:
+https://gitlab.com/qemu-project/qemu/-/issues/851
+https://gitlab.com/qemu-project/qemu/-/issues/2749
+
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/vmapple/vmapple.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-> index 16e6110b68..5928df4411 100644
-> --- a/hw/vmapple/vmapple.c
-> +++ b/hw/vmapple/vmapple.c
-> @@ -51,6 +51,8 @@
->   #include "system/reset.h"
->   #include "system/runstate.h"
->   #include "system/system.h"
-> +#include "gtimer.h"
-> +#include "cpu.h"
-
-Queued using instead:
-
-#include "target/arm/gtimer.h"
-#include "target/arm/cpu.h"
+>   util/async.c | 11 +++++++----
+>   1 file changed, 7 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
