@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB33CCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C46CCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 06:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8BNp-0001bA-RG; Mon, 13 Oct 2025 01:46:12 -0400
+	id 1v8Blw-0003P3-DX; Mon, 13 Oct 2025 02:11:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BMq-0000H2-GZ; Mon, 13 Oct 2025 01:45:17 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1v8Blt-0003Ov-G6
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 02:11:02 -0400
+Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BMm-0002JY-5O; Mon, 13 Oct 2025 01:45:07 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 13 Oct
- 2025 13:43:40 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 13 Oct 2025 13:43:40 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 15/16] hw/arm/aspeed_ast27x0-tsp: Rename type to
- TYPE_ASPEED27X0TSP_COPROCESSOR
-Date: Mon, 13 Oct 2025 13:43:27 +0800
-Message-ID: <20251013054334.955331-16-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
-References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1v8Blq-0005QX-1M
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 02:11:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1760335831; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=wjnZare1Q2opQ1lfmHWfJ62Q7cpoUOwEIlcdh1/yOHM=;
+ b=xKpj0HiIbYF7RFJ8rmd3bImrGyiApKvDl4Smf8uJ4i8r9dCuO1l5RHHfcfaQdQNPKc6CQhXiaerFkj0O4ijI+dsBpDzWF6a6482SNpcl5xjwAdFSo6MhAkVW78mlF9VLRhyGiMpbWw+5NOrtckNuL7bUmaNRLhvuXMcRWznCxl8=
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0Wq.Jf3i_1760335824 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 13 Oct 2025 14:10:30 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: farosas@suse.de
+Cc: peterx@redhat.com,
+	qemu-devel@nongnu.org
+Subject: re: [PATCH v2 06/24] migration: Run a post update routine after
+ setting parameters
+Date: Mon, 13 Oct 2025 14:10:24 +0800
+Message-Id: <20251013061024.31814-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250630195913.28033-7-farosas@suse.de>
+References: <20250630195913.28033-7-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,106 +66,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the AST27x0 TSP type from TYPE_ASPEED27X0TSP_SOC to
-TYPE_ASPEED27X0TSP_COPROCESSOR to align with the naming convention used
-for the SSP coprocessor (TYPE_ASPEED27X0SSP_COPROCESSOR).
-This change clarifies that TSP is implemented as a coprocessor rather than
-a full SoC.
+Fabiano Rosas wrote on Mon, 30 Jun 2025 16:58:55 -0300:
 
-This ensures consistent terminology between SSP and TSP components and
-improves clarity within the coprocessor subsystem code.
+> Some migration parameters are updated immediately once they are set
+> via migrate-set-parameters. Move that work outside of
+> migrate_params_apply() and leave that function with the single
+> responsibility of setting s->parameters and not doing any
+> side-effects.
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> 
+> diff --git a/migration/options.c b/migration/options.c
+> index 295367ce92..1f8a977865 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -1083,6 +1083,31 @@ void migrate_params_init(MigrationParameters *params)
+>      params->has_direct_io = true;
+>  }
+>  
+> +static void migrate_post_update_params(MigrationParameters *new, Error **errp)
+> +{
+> +    MigrationState *s = migrate_get_current();
+> +
+> +    if (new->has_max_bandwidth) {
+> +        if (s->to_dst_file && !migration_in_postcopy()) {
+> +            migration_rate_set(new->max_bandwidth);
+> +        }
+> +    }
+> +
+> +    if (new->has_x_checkpoint_delay) {
+> +        colo_checkpoint_delay_set();
+> +    }
+> +
+> +    if (new->has_xbzrle_cache_size) {
+> +        xbzrle_cache_resize(new->xbzrle_cache_size, errp);
+> +    }
+> +
+> +    if (new->has_max_postcopy_bandwidth) {
+> +        if (s->to_dst_file && migration_in_postcopy()) {
+> +            migration_rate_set(new->max_postcopy_bandwidth);
+> +        }
+> +    }
+> +}
+> +
+>
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 2140785a05..7432f82bdd 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -174,7 +174,7 @@ static void XBZRLE_cache_unlock(void)
+>  /**
+>   * xbzrle_cache_resize: resize the xbzrle cache
+>   *
+> - * This function is called from migrate_params_apply in main
+> + * This function is called from migrate_post_update_config in main
+>   * thread, possibly while a migration is in progress.  A running
+>   * migration may be using the cache and might finish during this call,
+>   * hence changes to the cache are protected by XBZRLE.lock().
+> -- 
 
-No functional change.
+The function is migrate_post_update_params, 
+but the comment says migrate_post_update_config.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- include/hw/arm/aspeed_coprocessor.h |  4 ++--
- hw/arm/aspeed_ast27x0-fc.c          |  3 ++-
- hw/arm/aspeed_ast27x0-tsp.c         | 10 +++++-----
- 3 files changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-index 1c201a15c6..d77655d659 100644
---- a/include/hw/arm/aspeed_coprocessor.h
-+++ b/include/hw/arm/aspeed_coprocessor.h
-@@ -54,8 +54,8 @@ struct Aspeed27x0CoprocessorState {
- OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0CoprocessorState,
-                            ASPEED27X0SSP_COPROCESSOR)
- 
--#define TYPE_ASPEED27X0TSP_SOC "aspeed27x0tsp-soc"
-+#define TYPE_ASPEED27X0TSP_COPROCESSOR "aspeed27x0tsp-coprocessor"
- DECLARE_OBJ_CHECKERS(Aspeed27x0CoprocessorState, AspeedCoprocessorClass,
--                     ASPEED27X0TSP_SOC, TYPE_ASPEED27X0TSP_SOC)
-+                     ASPEED27X0TSP_COPROCESSOR, TYPE_ASPEED27X0TSP_COPROCESSOR)
- 
- #endif /* ASPEED_COPROCESSOR_H */
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 67982d2fa0..a61ecff390 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -149,7 +149,8 @@ static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
-     s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
-     clock_set_hz(s->tsp_sysclk, 200000000ULL);
- 
--    object_initialize_child(OBJECT(s), "tsp", &s->tsp, TYPE_ASPEED27X0TSP_SOC);
-+    object_initialize_child(OBJECT(s), "tsp", &s->tsp,
-+                            TYPE_ASPEED27X0TSP_COPROCESSOR);
-     memory_region_init(&s->tsp_memory, OBJECT(&s->tsp), "tsp-memory",
-                        UINT64_MAX);
- 
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index e18c624361..7f109101fe 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -1,5 +1,5 @@
- /*
-- * ASPEED Ast27x0 TSP SoC
-+ * ASPEED Ast27x0 TSP Coprocessor
-  *
-  * Copyright (C) 2025 ASPEED Technology Inc.
-  *
-@@ -108,7 +108,7 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
- static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
-                                               int dev)
- {
--    Aspeed27x0CoprocessorState *a = ASPEED27X0TSP_SOC(s);
-+    Aspeed27x0CoprocessorState *a = ASPEED27X0TSP_COPROCESSOR(s);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
- 
-     int or_idx;
-@@ -130,7 +130,7 @@ static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
- 
- static void aspeed_soc_ast27x0tsp_init(Object *obj)
- {
--    Aspeed27x0CoprocessorState *a = ASPEED27X0TSP_SOC(obj);
-+    Aspeed27x0CoprocessorState *a = ASPEED27X0TSP_COPROCESSOR(obj);
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(obj);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     int i;
-@@ -161,7 +161,7 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)
- 
- static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
- {
--    Aspeed27x0CoprocessorState *a = ASPEED27X0TSP_SOC(dev_soc);
-+    Aspeed27x0CoprocessorState *a = ASPEED27X0TSP_COPROCESSOR(dev_soc);
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     DeviceState *armv7m;
-@@ -286,7 +286,7 @@ static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass, const void *dat
- 
- static const TypeInfo aspeed_soc_ast27x0tsp_types[] = {
-     {
--        .name           = TYPE_ASPEED27X0TSP_SOC,
-+        .name           = TYPE_ASPEED27X0TSP_COPROCESSOR,
-         .parent         = TYPE_ASPEED_COPROCESSOR,
-         .instance_size  = sizeof(Aspeed27x0CoprocessorState),
-         .instance_init  = aspeed_soc_ast27x0tsp_init,
--- 
-2.43.0
+--
+Regards,
+Bin Guo
 
 
