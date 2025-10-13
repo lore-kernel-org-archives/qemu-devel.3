@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75377CCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7727CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8BM7-0007zi-2x; Mon, 13 Oct 2025 01:44:23 -0400
+	id 1v8BLf-0007nc-IL; Mon, 13 Oct 2025 01:43:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BM4-0007z2-HR; Mon, 13 Oct 2025 01:44:20 -0400
+ id 1v8BLc-0007m2-M8; Mon, 13 Oct 2025 01:43:52 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BM2-0002DU-8p; Mon, 13 Oct 2025 01:44:19 -0400
+ id 1v8BLa-0002DU-UP; Mon, 13 Oct 2025 01:43:52 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 13 Oct
- 2025 13:43:38 +0800
+ 2025 13:43:34 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 13 Oct 2025 13:43:38 +0800
+ Transport; Mon, 13 Oct 2025 13:43:34 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 09/16] hw/arm/aspeed: Introduce AspeedCoprocessor class and
- base implementation
-Date: Mon, 13 Oct 2025 13:43:21 +0800
-Message-ID: <20251013054334.955331-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 01/16] hw/arm/aspeed: Remove AspeedSoCState dependency from
+ aspeed_uart_first() API
+Date: Mon, 13 Oct 2025 13:43:13 +0800
+Message-ID: <20251013054334.955331-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
 References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
@@ -67,148 +67,70 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new AspeedCoprocessor class that defines the foundational structure for
-ASPEED coprocessor models. This class encapsulates a base DeviceState with
-links to system memory, clock, and peripheral components such as SCU, SCUIO,
-Timer Controller, and UARTs.
+Refactor the aspeed_uart_first() helper to remove its dependency on
+AspeedSoCState and make the UART helper APIs more generic.
 
-Introduce the corresponding implementation file
-aspeed_coprocessor_common.c, which provides the aspeed_coprocessor_realize()
-method, property registration, and QOM type registration. The class is marked
-as abstract and intended to serve as a common base for specific coprocessor
-variants (e.g. SSP/TSP subsystems).
+The function now takes uarts_base as an integer parameter instead of
+requiring a full SoC class instance. Corresponding call sites in
+aspeed.c and aspeed_soc_common.c are updated accordingly.
 
-This establishes a reusable and extensible framework for modeling ASPEED
-coprocessor devices.
+No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/arm/aspeed_coprocessor.h | 44 ++++++++++++++++++++++++++
- hw/arm/aspeed_coprocessor_common.c  | 49 +++++++++++++++++++++++++++++
- hw/arm/meson.build                  |  3 +-
- 3 files changed, 95 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/arm/aspeed_coprocessor.h
- create mode 100644 hw/arm/aspeed_coprocessor_common.c
+ include/hw/arm/aspeed_soc.h | 6 +++---
+ hw/arm/aspeed.c             | 2 +-
+ hw/arm/aspeed_soc_common.c  | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-new file mode 100644
-index 0000000000..793c7b1f8b
---- /dev/null
-+++ b/include/hw/arm/aspeed_coprocessor.h
-@@ -0,0 +1,44 @@
-+/*
-+ * ASPEED Coprocessor
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ASPEED_COPROCESSOR_H
-+#define ASPEED_COPROCESSOR_H
-+
-+#include "qom/object.h"
-+#include "hw/arm/aspeed_soc.h"
-+
-+struct AspeedCoprocessorState {
-+    DeviceState parent;
-+
-+    MemoryRegion *memory;
-+    MemoryRegion sram;
-+    Clock *sysclk;
-+
-+    AspeedSCUState scu;
-+    AspeedSCUState scuio;
-+    AspeedTimerCtrlState timerctrl;
-+    SerialMM uart[ASPEED_UARTS_NUM];
-+};
-+
-+#define TYPE_ASPEED_COPROCESSOR "aspeed-coprocessor"
-+OBJECT_DECLARE_TYPE(AspeedCoprocessorState, AspeedCoprocessorClass,
-+                    ASPEED_COPROCESSOR)
-+
-+struct AspeedCoprocessorClass {
-+    DeviceClass parent_class;
-+
-+    /** valid_cpu_types: NULL terminated array of a single CPU type. */
-+    const char * const *valid_cpu_types;
-+    uint32_t silicon_rev;
-+    const hwaddr *memmap;
-+    const int *irqmap;
-+    int uarts_base;
-+    int uarts_num;
-+};
-+
-+#endif /* ASPEED_COPROCESSOR_H */
-diff --git a/hw/arm/aspeed_coprocessor_common.c b/hw/arm/aspeed_coprocessor_common.c
-new file mode 100644
-index 0000000000..8a94b44f07
---- /dev/null
-+++ b/hw/arm/aspeed_coprocessor_common.c
-@@ -0,0 +1,49 @@
-+/*
-+ * ASPEED Coprocessor
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "system/memory.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/arm/aspeed_coprocessor.h"
-+
-+static void aspeed_coprocessor_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev);
-+
-+    if (!s->memory) {
-+        error_setg(errp, "'memory' link is not set");
-+        return;
-+    }
-+}
-+
-+static const Property aspeed_coprocessor_properties[] = {
-+    DEFINE_PROP_LINK("memory", AspeedCoprocessorState, memory,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-+};
-+
-+static void aspeed_coprocessor_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    dc->realize = aspeed_coprocessor_realize;
-+    device_class_set_props(dc, aspeed_coprocessor_properties);
-+}
-+
-+static const TypeInfo aspeed_coprocessor_types[] = {
-+    {
-+        .name           = TYPE_ASPEED_COPROCESSOR,
-+        .parent         = TYPE_DEVICE,
-+        .instance_size  = sizeof(AspeedCoprocessorState),
-+        .class_size     = sizeof(AspeedCoprocessorClass),
-+        .class_init     = aspeed_coprocessor_class_init,
-+        .abstract       = true,
-+    },
-+};
-+
-+DEFINE_TYPES(aspeed_coprocessor_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index dc68391305..56bdb88b11 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -52,7 +52,8 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'fby35.c'))
- arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-   'aspeed_ast27x0.c',
--  'aspeed_ast27x0-fc.c',))
-+  'aspeed_ast27x0-fc.c',
-+  'aspeed_coprocessor_common.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
- arm_common_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index ed32efb543..5786fbbcbb 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -326,14 +326,14 @@ static inline int aspeed_uart_index(int uart_dev)
+     return uart_dev - ASPEED_DEV_UART0;
+ }
+ 
+-static inline int aspeed_uart_first(AspeedSoCClass *sc)
++static inline int aspeed_uart_first(int uarts_base)
+ {
+-    return aspeed_uart_index(sc->uarts_base);
++    return aspeed_uart_index(uarts_base);
+ }
+ 
+ static inline int aspeed_uart_last(AspeedSoCClass *sc)
+ {
+-    return aspeed_uart_first(sc) + sc->uarts_num - 1;
++    return aspeed_uart_first(sc->uarts_base) + sc->uarts_num - 1;
+ }
+ 
+ #endif /* ASPEED_SOC_H */
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 6046ec0bb2..471ad7fb84 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1310,7 +1310,7 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
+     int val;
+-    int uart_first = aspeed_uart_first(sc);
++    int uart_first = aspeed_uart_first(sc->uarts_base);
+     int uart_last = aspeed_uart_last(sc);
+ 
+     if (sscanf(value, "uart%u", &val) != 1) {
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index bc70e864fb..a4e74acdce 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -62,7 +62,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+ void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr)
+ {
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+-    int uart_first = aspeed_uart_first(sc);
++    int uart_first = aspeed_uart_first(sc->uarts_base);
+     int uart_index = aspeed_uart_index(dev);
+     int i = uart_index - uart_first;
+ 
 -- 
 2.43.0
 
