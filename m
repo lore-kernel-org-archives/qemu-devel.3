@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A47CCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18A9CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Nxa-0003nT-Ez; Mon, 13 Oct 2025 15:11:54 -0400
+	id 1v8Ny1-0003qL-MV; Mon, 13 Oct 2025 15:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8NxY-0003nI-P1
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:11:52 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8Nxw-0003pc-9n
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:12:17 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8NxX-00016L-5e
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:11:52 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e6c8bc46eso29824285e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:11:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8Nxt-00017V-HT
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:12:15 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3ee130237a8so3663504f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760382709; x=1760987509; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=d69zgUPTrFtp82ihw3AHcKLF/RSIV9yvM7YaHsx5tA8=;
- b=M4wyZOtPBbHQJkZYQqyovaWHTJt9A5kfDJXdRBq4mVl+tTgdVHRCIlC8dLI5+OdbpI
- MPZplfG9x4Hw1bO04U7KnBulnWfvCou+36ivCPTxq4KuyD0dfGPVL5Aif+lCGyO1ESrP
- tk2zEiAgmhn4/LyTFvI+boNHRZKPZAVPTizy5Fooy/9TYZjiVELhjIyDUKovAaxIjv/4
- y7WLrcAnSEdb9mCNYXb1emTZlaYsFnRLVkWwsO4Wr8gwRqEzrURXmKRbx4+s2/Grw0ZH
- 912TP5TNFtVa0xNg+dvwy94XM1ub4Pn6J0Z7RWkvGX68H679afCu4zErPN+kqEJAdNOM
- MdGg==
+ d=gmail.com; s=20230601; t=1760382731; x=1760987531; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N7sAeE6ZRiykKCEkDs1SFojPKVezFylpvC4URewkPZs=;
+ b=XVhrmOWhBhJVwztEq/9stYxauTnJ4YeOqISCWu8KtNVaCApRLIOLUBZouadmEQxvoK
+ QqdhUhhsQWQddjAMuEfCB/IHJudAyYs5V8PJKkwnmqPXTbX00OjNx0mSzHKEOoTG4gCI
+ ZttwH2iIWCVimONhJxPqm4AcJtWVvlnprFNamjG2w1f5boHccEiOYT13l+iMWMBteo9g
+ ekQu/9Tcq7yndHX1uAd382Zq8BSOx/y/1LGwx7pnsremhhmDryIGQJkgfNEkuGc4VFuG
+ zxC/eB0UN4awzDToHySU05yhAW/lp9063sUiMsqzabj/hjv1DR7yZlsLg8K8wvgFrG1Z
+ Aykg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760382709; x=1760987509;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d69zgUPTrFtp82ihw3AHcKLF/RSIV9yvM7YaHsx5tA8=;
- b=QPT3pIH7+x/e2HWapyZoJ4AbhtsPE/R4cY4AcCCCKIDCuifn5Fj+kqPSnLnx5gbOup
- kMIIIXMqry6A9sLHuYQIl5xZ5T0VzbwtAjzmF1Fy6sr5GlcIrtm+Ek9Lit6Qa09gLE4W
- pBOCP3Wl4g0TY96mlK66y2DK2p75KVcdx+D4gf2pjwrH6+nuGNnle6rJbL/WXVqzZhqJ
- OTCJOI8SpCp3/Ptz9YrmzmeDejxHP0gPxhgjU+sM9XtsPrbvRZU76qisH5wAo8TNDQqM
- FAjwWZTx8mSlP8Kym73O4OF60AWr09bE3Ud1Cpyx+eR7hxIuvvmjrOYx9crjqJgpxZxC
- eBKA==
+ d=1e100.net; s=20230601; t=1760382731; x=1760987531;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N7sAeE6ZRiykKCEkDs1SFojPKVezFylpvC4URewkPZs=;
+ b=i3vWybmcpAIBWiws4mC8H0tMZNTzhGFCjdpYTfkNrkL77yVDnY1U1s56d9fVBWAgaZ
+ HgNGdKYxKT6inbhEulXQEJe0lXJ+UiGXyi7JwcZ1bGZbR4/A1vjBiu8/LwFZhAjEOzOo
+ XQd4tRAf9NpxYe5CVwTMvL7M5TPjaINJFagBDvA0cCgLHR4ga4k+pfkGB9Abl3BPabkl
+ 60exXRd/mVxOLRBKkCruZ9V8yJCecl6rOYxADvuXguJIRel+5pN3RtjM8qMxbNVBMTLa
+ 9ed2kg8+WufS7aUmTLAE/p+q4c3KcTAPGOwccJvGbPvQ6dcjA41peHIV7Ai6vLQEpwRo
+ 6ehA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUp7T8hVHz/A2k3V/xfQGEL+zfN1uXQt6YS0g/tFUQZRIDj85zwpK3pVHUDlE6fHl2wYO0YoO6L4U10@nongnu.org
-X-Gm-Message-State: AOJu0Yzw0USEnth/SNFRmox3JBV0rff57Lbwv63lrc29YuOUMiqNkEt+
- 6cnTxecdsyGhu1NXLMpq8Om6+BAJyDqLFu4Hd7ZlNQzaTPmsLI3LDbuOOf9QGwklyvw=
-X-Gm-Gg: ASbGnct9pNyhBIH4YYErY/FKt6F1cZo70rh8IZ+UlNXrInR4u4+rx1EZUDUuxXo5qcz
- NL0Ve7npaKU393hZ9zDFfdfwxdWHXsPmLBdW9/oKZCwqg4Uh9S26LgZ3/u0e+4wmK9oa9oHagb8
- VKNi8DlXwvL+nwQujxi5HmKr/eiTkgP/MJMp5P4WYK4jRn1/yfMyaSncvQoWOwiTKgOwqZ2fgsm
- gHVYa33aH9pwybAVk8rldBHjeFPmFn55qkpMH92tdO/Cc8moCemd6KYZ7LaopcW/bQ/Pnu+KxYN
- Tg+U1jWKorpVwnNXJKCHq4gkfkBLYKHV7HiiVh85oBy7MnBaDoKKlTJH2zMpIN0fqVlpOgIUmYd
- PZABEP/NHAhK60ctv732tJWQlwEjl3G18HahDPKVlsDHWjQ2CXivrf3Hx+0qdZ6X+ie3BKwdjnT
- /Yr4R4VA5o0n2nvJJbORZES5U=
-X-Google-Smtp-Source: AGHT+IHTv7ds5d1Hdxaf5RrzZwtZHemrwN1cKiLTx0gjCJxPscNWzVgRZ5NUDpFcgkLQPoY/b1l7AQ==
-X-Received: by 2002:a05:600c:828d:b0:46e:44bf:210 with SMTP id
- 5b1f17b1804b1-46fa9af8107mr149584195e9.22.1760382709251; 
- Mon, 13 Oct 2025 12:11:49 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e0a03sm19709652f8f.37.2025.10.13.12.11.48
+ AJvYcCUsI9Iwr4abUhjRpJW6w0LQM6L56ZStW11tClT51JFWHt/IfEpwtuQwDYFZYm7zpe1Q9pSxsBHw3sYo@nongnu.org
+X-Gm-Message-State: AOJu0Yyfrw4+sECz7xB35Vn+EhEGoYLZdVAIBx7he78l3QsRiKPCD1gh
+ KpYQa9N5+/ftZSsRxWg3bWI4vYyTBX3exm6f4zcvFYK5H196v7P66uex
+X-Gm-Gg: ASbGnctlyx/XlEypN+FB8q38hvrpmqlTHxVGDN0N0xYj96AZzJwkeK1taIZ74hp3wwF
+ +rfX/HAp3WiZ0o51jhMLe3dKp0lPRmMrZ1ZvRlHVoHeOtW0f6+y3ogjwsQ9F4pfsBZ/mmFQCqJ/
+ +sFg17XUZKmpBfhfgHjnJSpP1Pb7KA7TpGvDvSLq4o9yQp/yOFS0py5ByEeC+txL873Iwdc618/
+ MXjsThmIP92SAjnyN9J6sLJ/ukFkfXYIhXi+kTaYdgBJ55StrthI7GArRjMbFq+kgSLXn7IhfxD
+ BlOH3VZxbj2D3BQP51rKx3PLEobl2e4bVqAv7WC+vminlPvtvKovn+Q1yquIKVElKzM+1xSLSlR
+ CtYtoDLhBuT4VDiGKkGObz7XGAN8fe3xdZZojnSxvUwBmXhdCHdjGDrcDhvxopgubGKnj+I5ac2
+ yvCHqxyuqjzZ/hezGifNoRm9dDXsGMysBvClhB90GL7Bjbv+wf
+X-Google-Smtp-Source: AGHT+IEPRebfH85J+4qB0ozj4pfu2DmPsermSpmQlWFyKWR5e1qvU2oltas4kbaNLv1Wa91oxulLAA==
+X-Received: by 2002:a05:6000:24ca:b0:3e5:47a9:1c7f with SMTP id
+ ffacd0b85a97d-4266e7df708mr14050639f8f.47.1760382731382; 
+ Mon, 13 Oct 2025 12:12:11 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf271400a0afdc243fcb5392.dip0.t-ipconnect.de.
+ [2003:fa:af27:1400:a0af:dc24:3fcb:5392])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce57cc0esm19771379f8f.6.2025.10.13.12.12.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Oct 2025 12:11:48 -0700 (PDT)
-Message-ID: <7300d719-e354-480f-9476-19e251a461b1@linaro.org>
-Date: Mon, 13 Oct 2025 21:11:47 +0200
+ Mon, 13 Oct 2025 12:12:10 -0700 (PDT)
+Date: Mon, 13 Oct 2025 19:12:07 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+CC: marcandre.lureau@redhat.com
+Subject: Re: [PATCH] ui/pixman: Fix crash in qemu_pixman_shareable_free()
+In-Reply-To: <2831438d-9ca2-4629-b708-65874cf3a4a7@linaro.org>
+References: <20251013112102.2396012-1-armbru@redhat.com>
+ <2831438d-9ca2-4629-b708-65874cf3a4a7@linaro.org>
+Message-ID: <89FEEF71-F31C-4544-A3BC-7ABF335EC245@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/uefi: add "info firmware-log" +
- "query-firmware-log" monitor commands
-Content-Language: en-US
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
- <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20251010071008.2555267-1-kraxel@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251010071008.2555267-1-kraxel@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,27 +105,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 09:10, Gerd Hoffmann wrote:
-> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
-> optional support for logging to a memory buffer.  There is guest side
-> support -- for example in linux kernels v6.17+ -- to read that buffer.
-> But that might not helpful if your guest stops booting early enough that
-> guest tooling can not be used yet.  So host side support to read that
-> log buffer is a useful thing to have.
-> 
-> This patch implements both qmp and hmp monitor commands to read the
-> firmware log.
-> 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->   include/monitor/hmp.h      |   1 +
->   hw/uefi/ovmf-log.c         | 265 +++++++++++++++++++++++++++++++++++++
->   tests/qtest/qmp-cmd-test.c |   2 +
->   hmp-commands-info.hx       |  14 ++
->   hw/uefi/meson.build        |   2 +-
->   qapi/machine.json          |  23 ++++
->   6 files changed, 306 insertions(+), 1 deletion(-)
->   create mode 100644 hw/uefi/ovmf-log.c
 
-At a glance, why not "info ovmf-log" and "query-ovmf-log"?
+
+Am 13=2E Oktober 2025 14:11:32 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
+philmd@linaro=2Eorg>:
+>On 13/10/25 13:21, Markus Armbruster wrote:
+>> Reported-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> Fixes: b296b29d3414 (ui/pixman: Consistent error handling in qemu_pixma=
+n_shareable_free())
+>> Signed-off-by: Markus Armbruster <armbru@redhat=2Ecom>
+>> ---
+>>   ui/qemu-pixman=2Ec | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/ui/qemu-pixman=2Ec b/ui/qemu-pixman=2Ec
+>> index e46c6232cf=2E=2Eaea09755b9 100644
+>> --- a/ui/qemu-pixman=2Ec
+>> +++ b/ui/qemu-pixman=2Ec
+>> @@ -291,7 +291,9 @@ qemu_pixman_shareable_free(qemu_pixman_shareable ha=
+ndle,
+>>       Error *err =3D NULL;
+>>         qemu_win32_map_free(ptr, handle, &err);
+>
+>Slightly better if qemu_win32_map_free(), as per commit e3fe3988d78
+>("error: Document Error API usage rules") recommended style:
+>
+>+ *  We recommend
+>+ *   =E2=80=A2 bool-valued functions return true on success / false on f=
+ailure,
+>+ *   =E2=80=A2 pointer-valued functions return non-null / null pointer, =
+and
+>+ *   =E2=80=A2 integer-valued functions return non-negative / negative=
+=2E
+
+Now I see: Since qemu_win32_map_free() returns void, the pattern is to che=
+ck for the error pointer=2E Could be mentioned in the commit message for ed=
+ucational porposes=2E
+
+Anyhow,
+Tested-by: Bernhard Beschow
+Reviewed-by: Bernhard Beschow
+
+>
+>Anyhow,
+>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>
+>> -    error_report_err(err);
+>> +    if (err) {
+>> +        error_report_err(err);
+>> +    }
+>>   #else
+>>       qemu_memfd_free(ptr, size, handle);
+>>   #endif
+>
 
