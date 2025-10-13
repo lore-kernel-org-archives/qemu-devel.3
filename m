@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8ABCCD18C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94966CCD18C
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8BME-00081a-Nx; Mon, 13 Oct 2025 01:44:30 -0400
+	id 1v8BNc-0001E7-NW; Mon, 13 Oct 2025 01:45:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BMC-000817-Fc; Mon, 13 Oct 2025 01:44:28 -0400
+ id 1v8BMt-0000JD-Si; Mon, 13 Oct 2025 01:45:22 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BMA-0002Gm-DR; Mon, 13 Oct 2025 01:44:28 -0400
+ id 1v8BMr-0002JY-Vq; Mon, 13 Oct 2025 01:45:11 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 13 Oct
- 2025 13:43:38 +0800
+ 2025 13:43:40 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 13 Oct 2025 13:43:38 +0800
+ Transport; Mon, 13 Oct 2025 13:43:40 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 11/16] hw/arm/aspeed_ast27x0-tsp: Make AST27x0 TSP inherit
- from AspeedCoprocessor instead of AspeedSoC
-Date: Mon, 13 Oct 2025 13:43:23 +0800
-Message-ID: <20251013054334.955331-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 16/16] hw/arm/aspeed_ast27x0-{ssp,tsp}: Fix coding style
+Date: Mon, 13 Oct 2025 13:43:28 +0800
+Message-ID: <20251013054334.955331-17-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
 References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
@@ -67,219 +66,43 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the AST27x0 TSP implementation to derive from the newly introduced
-AspeedCoprocessor base class rather than AspeedSoC. The AspeedSoC class
-includes SoC-level infrastructure and peripheral definitions that are not
-applicable to lightweight coprocessor subsystems such as TSP, resulting in
-unnecessary coupling and complexity.
-
-This change moves the Aspeed27x0TSPSoCState structure definition into
-aspeed_coprocessor.h and updates all related references in
-aspeed_ast27x0-tsp.c and aspeed_ast27x0-fc.c to use
-AspeedCoprocessorState and AspeedCoprocessorClass.
-
-Key updates include:
-
-- Replace inheritance from AspeedSoC -> AspeedCoprocessor.
-- Update type casts and macros from ASPEED_SOC_* to ASPEED_COPROCESSOR_*
-
-This refactor improves modularity, reduces memory footprint, and prepares
-for future coprocessor variants to share a lighter-weight common base.
-
-No functional change.
+Fix coding style warnings in aspeed_ast27x0-ssp.c and aspeed_ast27x0-tsp.c
+reported by checkpatch.pl regarding line length exceeding 80 characters.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/arm/aspeed_coprocessor.h | 12 ++++++++++++
- include/hw/arm/aspeed_soc.h         | 12 ------------
- hw/arm/aspeed_ast27x0-fc.c          |  8 ++++----
- hw/arm/aspeed_ast27x0-tsp.c         | 30 +++++++++++++----------------
- hw/arm/meson.build                  |  2 +-
- 5 files changed, 30 insertions(+), 34 deletions(-)
+ hw/arm/aspeed_ast27x0-ssp.c | 3 ++-
+ hw/arm/aspeed_ast27x0-tsp.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-index 901b8d8e24..f09c2ed267 100644
---- a/include/hw/arm/aspeed_coprocessor.h
-+++ b/include/hw/arm/aspeed_coprocessor.h
-@@ -53,4 +53,16 @@ struct Aspeed27x0SSPSoCState {
- #define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
- OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState, ASPEED27X0SSP_SOC)
- 
-+struct Aspeed27x0TSPSoCState {
-+    AspeedCoprocessorState parent;
-+    AspeedINTCState intc[2];
-+    UnimplementedDeviceState ipc[2];
-+    UnimplementedDeviceState scuio;
-+
-+    ARMv7MState armv7m;
-+};
-+
-+#define TYPE_ASPEED27X0TSP_SOC "aspeed27x0tsp-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0TSPSoCState, ASPEED27X0TSP_SOC)
-+
- #endif /* ASPEED_COPROCESSOR_H */
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index a34ab986a9..4b8e599f1a 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -153,18 +153,6 @@ struct Aspeed10x0SoCState {
-     ARMv7MState armv7m;
- };
- 
--struct Aspeed27x0TSPSoCState {
--    AspeedSoCState parent;
--    AspeedINTCState intc[2];
--    UnimplementedDeviceState ipc[2];
--    UnimplementedDeviceState scuio;
--
--    ARMv7MState armv7m;
--};
--
--#define TYPE_ASPEED27X0TSP_SOC "aspeed27x0tsp-soc"
--OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0TSPSoCState, ASPEED27X0TSP_SOC)
--
- #define TYPE_ASPEED10X0_SOC "aspeed10x0-soc"
- OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)
- 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 4315e8da98..b34cd54e4e 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -142,8 +142,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
- 
- static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
- {
--    AspeedSoCState *soc;
--    AspeedSoCClass *sc;
-+    AspeedCoprocessorState *soc;
-+    AspeedCoprocessorClass *sc;
-     Ast2700FCState *s = AST2700A1FC(machine);
-     s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
-     clock_set_hz(s->tsp_sysclk, 200000000ULL);
-@@ -156,8 +156,8 @@ static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
-     object_property_set_link(OBJECT(&s->tsp), "memory",
-                              OBJECT(&s->tsp_memory), &error_abort);
- 
--    soc = ASPEED_SOC(&s->tsp);
--    sc = ASPEED_SOC_GET_CLASS(soc);
-+    soc = ASPEED_COPROCESSOR(&s->tsp);
-+    sc = ASPEED_COPROCESSOR_GET_CLASS(soc);
-     aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART7, sc->uarts_base,
-                             sc->uarts_num, serial_hd(2));
-     if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 8643f82683..b77c5291a6 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -14,6 +14,7 @@
- #include "hw/qdev-clock.h"
- #include "hw/misc/unimp.h"
- #include "hw/arm/aspeed_soc.h"
-+#include "hw/arm/aspeed_coprocessor.h"
- 
- #define AST2700_TSP_RAM_SIZE (32 * MiB)
- 
-@@ -104,10 +105,11 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
-     {136, 0, 9, NULL},
- };
- 
--static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedSoCState *s, int dev)
-+static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
-+                                              int dev)
- {
-     Aspeed27x0TSPSoCState *a = ASPEED27X0TSP_SOC(s);
--    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-+    AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
- 
-     int or_idx;
-     int idx;
-@@ -129,8 +131,8 @@ static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedSoCState *s, int dev)
- static void aspeed_soc_ast27x0tsp_init(Object *obj)
- {
-     Aspeed27x0TSPSoCState *a = ASPEED27X0TSP_SOC(obj);
--    AspeedSoCState *s = ASPEED_SOC(obj);
--    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-+    AspeedCoprocessorState *s = ASPEED_COPROCESSOR(obj);
-+    AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     int i;
- 
-     object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);
-@@ -160,8 +162,8 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)
- static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
- {
-     Aspeed27x0TSPSoCState *a = ASPEED27X0TSP_SOC(dev_soc);
--    AspeedSoCState *s = ASPEED_SOC(dev_soc);
--    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-+    AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
-+    AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     DeviceState *armv7m;
-     g_autofree char *sram_name = NULL;
-     int uart;
-@@ -185,8 +187,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     sram_name = g_strdup_printf("aspeed.dram.%d",
-                                 CPU(a->armv7m.cpu)->cpu_index);
- 
--    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
--                                errp)) {
-+    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name,
-+                                AST2700_TSP_RAM_SIZE, errp)) {
-         return;
-     }
-     memory_region_add_subregion(s->memory,
-@@ -268,30 +270,24 @@ static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass, const void *dat
-         NULL
-     };
-     DeviceClass *dc = DEVICE_CLASS(klass);
--    AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
-+    AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_CLASS(dc);
- 
--    /* Reason: The Aspeed SoC can only be instantiated from a board */
-+    /* Reason: The Aspeed Coprocessor can only be instantiated from a board */
-     dc->user_creatable = false;
-     dc->realize = aspeed_soc_ast27x0tsp_realize;
- 
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev = AST2700_A1_SILICON_REV;
--    sc->sram_size = AST2700_TSP_RAM_SIZE;
--    sc->spis_num = 0;
--    sc->ehcis_num = 0;
--    sc->wdts_num = 0;
--    sc->macs_num = 0;
-     sc->uarts_num = 13;
-     sc->uarts_base = ASPEED_DEV_UART0;
-     sc->irqmap = aspeed_soc_ast27x0tsp_irqmap;
-     sc->memmap = aspeed_soc_ast27x0tsp_memmap;
--    sc->num_cpus = 1;
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index d27be8b925..936c7c72e8 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -263,7 +263,8 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
  }
  
- static const TypeInfo aspeed_soc_ast27x0tsp_types[] = {
-     {
-         .name           = TYPE_ASPEED27X0TSP_SOC,
--        .parent         = TYPE_ASPEED_SOC,
-+        .parent         = TYPE_ASPEED_COPROCESSOR,
-         .instance_size  = sizeof(Aspeed27x0TSPSoCState),
-         .instance_init  = aspeed_soc_ast27x0tsp_init,
-         .class_init     = aspeed_soc_ast27x0tsp_class_init,
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index b9e02ace7f..b88b5b06d7 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -45,7 +45,6 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_soc_common.c',
-   'aspeed_ast2400.c',
-   'aspeed_ast2600.c',
--  'aspeed_ast27x0-tsp.c',
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
-   'fby35.c'))
-@@ -53,6 +52,7 @@ arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-   'aspeed_ast27x0.c',
-   'aspeed_ast27x0-fc.c',
-   'aspeed_ast27x0-ssp.c',
-+  'aspeed_ast27x0-tsp.c',
-   'aspeed_coprocessor_common.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
+-static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass, const void *data)
++static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,
++                                             const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+         ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO: cortex-m4f */
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index 7f109101fe..9318f8c86c 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -263,7 +263,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
+ }
+ 
+-static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass, const void *data)
++static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,
++                                             const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+         ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
 -- 
 2.43.0
 
