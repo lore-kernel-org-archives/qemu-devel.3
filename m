@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30577CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE645CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8O4J-0006SA-Jy; Mon, 13 Oct 2025 15:18:51 -0400
+	id 1v8O4R-0006qG-9k; Mon, 13 Oct 2025 15:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O4D-0006Hb-NM
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:46 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O4P-0006l3-Q1
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O4B-0001s4-Si
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:45 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e3a50bc0fso34348105e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:18:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O4M-0001sp-T9
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:57 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46e2e363118so39131735e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:18:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760383122; x=1760987922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760383131; x=1760987931; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ImXH8sypVIhpdMufqY4sc5FsVXIt9DpvDMKcR5HfhOE=;
- b=qKFpw6iVGiJ3hBCB7ZfIKnTZCeY/w+3qs3Rqm1yARNcnacLtUpaGSajeTsodjxIOtM
- SDV5pyoghadLjJKoo9Zq/SrDcw4MJZKOFPF7ChNH5QBDoDzfwp6RBcQgmdACYYOGEXRo
- tdVjK+AzRR+yKOG66Y16WlBaFT/U/4mSk/6/avsIR5/t4HCL6iuwBPUHLqYBQj9dZxtD
- NHWJW7hXCUKLmkvZSVAZO36qas1qR6ExAzC3Qgoe7CZQCRv8HgXQoVK4btrOks4K4za3
- nTDXaR/nZQxi1oQEc4LuT+4CrTbhoJOP7wPYg6Xoc3i730bm72kaQgxNNo13WS+If+Jk
- yDUg==
+ :reply-to; bh=ezt+z2zqy28XBUfCShfQnBxAW4qjR8fLU+BoSrNZSxI=;
+ b=WX99JstGgjuox25nwf4Buie0902h/jJ+HdDNJ+ul3QAOkNbQGZaoIu/HXUVC7ewKlg
+ 5NC2gWZ9zynSoHrG54MCs7WUSeodcNcn71CRySlv25WwwrXv3AaSG2EnIt1yn1kiQ0MH
+ oqCpCi4jPhPAkvVBezbIWMFcxwchIWD7PfmlWdG68kPLP2/vidvB7hCgb6qLzDx0By3H
+ 3yFT1cFn4y/QD9bXb2T0+g/sDQS/NWcm0VpzRzLwajMXppup2bslsG9rhibaNN2DyDOE
+ LVvqQDmZwtWJV5SXIp0Jy3z+oRujVYdvdCJjJhQTIJmjcrm/FlO6DVdm9zGIDU4O04x5
+ IzVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760383122; x=1760987922;
+ d=1e100.net; s=20230601; t=1760383131; x=1760987931;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ImXH8sypVIhpdMufqY4sc5FsVXIt9DpvDMKcR5HfhOE=;
- b=KZX903SsDO8+FYBY/o0wPkjokgQJfENCNYVxYQJEGELh4ITSWNzrliJDXM1+iRTg4I
- QqNCBUkJyYSpXCcq1tcNUWClOcFl60eujhUhs/+eoh/yPSLyd4yNaMwDHtrvLfVroWmp
- /BKLsZ7EUjcW37kVhS4eOwKGAvP7ffC/7jydHT2/75U1Vc9RLUatkyEduAtA/jXOLLcZ
- d0TQvgZpP6wus8diSadTPrBf8pHmd5w9wyRYNoVNf7wBU7Xb66VFDISljIlVjobNwAH5
- 5BzTS0IWD0XIUcfRqJSAeHhl0Gtp+FfE4RVBrL26OjaofkwhEz4iOYGU/ccDxdz8YGrj
- ENjQ==
-X-Gm-Message-State: AOJu0YzzwCWMuqN8Yc8azPn6aroBI4MSHOGIeAmdnUgqvlhc+dE73TE0
- PJa8QObsYlY5Bvws/JAMQcN9W9IPZCVy9530KWbu7WecwqkU6t/MbA8LQ/nT4U5jy8fRVdzHBnS
- G7vNEQlqzkA==
-X-Gm-Gg: ASbGncvOIpWrG9q69mEC16Qyy8dopjw/SRg7m4XWryvNeNAA+3FeOBbFA179z3Xcd+E
- ciwnIbXVdcbI3nqS+ym19JcK+4IAMzzTqijA9jCc2ya6WGgQx9C0uYUAV0NgGh8Id3lS6jVmMGf
- FGwboDU0H7virHYrBgpnzSwyQhfWlocwAFrtT3Bp0Y6jtZk6FvHlbDpGNYMnZGX7pp8N7KSPteL
- 4YQyDQ0DX5en9DI80XFsfqOa+yh/Z7CRbt72scVEIQC21jb4dbDK4GU+1/o9XFYQkY/mXMdFL7n
- jQbiUIUz5AVhFez+GnMqZGwH6Wx5ip5plZb7YVz/koBeVZeE+NTglwFgldjMWsfTtKoBeX9C0Y+
- aSk+S7cZLynSDSGjdg1+fL5IWW4FVBsPUHNk1J4zJtF+hHlp+Utzr5aWPBYot7AE++4CYg4Tkjh
- aO4o5bIGl1oCizCl8yA+s=
-X-Google-Smtp-Source: AGHT+IF5Eb+XA79eXZvnjcvCFm4yRMft5BmVXTBJOWG2i4nOd1dhHE6GO1wIG7DG69IC1V5EWULtmA==
-X-Received: by 2002:a05:600d:18:b0:46f:b43a:aeed with SMTP id
- 5b1f17b1804b1-46fb43aaf3cmr78144095e9.40.1760383121761; 
- Mon, 13 Oct 2025 12:18:41 -0700 (PDT)
+ bh=ezt+z2zqy28XBUfCShfQnBxAW4qjR8fLU+BoSrNZSxI=;
+ b=ekmZmRzvuDvWmd0sX7nBDC9v/VifVrLcEjfiYjVb+izY2K/BJYxyGgoZCCgEgWCJ1W
+ 8Ip9trT6oHMWcMHik+fKA5SOYZqWBSdGm6HtBldqq9mSqMdP0Mio4Od+MB5wDKkvesav
+ 8MTAq6lSpW6rc6vNYM/6Aj25LzmZTfEjVnm40lsj16GU22hQHdupiqTTZZmM97X+lTy4
+ aRytJZWNFDApnevmnwopwAwRmTMIs1CApwCzl2IGxNTnrn38HQCgXhMFVHfqVjkHUMHm
+ TZ5Lqy9rjG31ilN9Nj03H8PrqYSwRAqOKdFih6ezvBy1btsfT3vhc9AZVBd+p7tnuTZS
+ NKsw==
+X-Gm-Message-State: AOJu0Yx2d1ujxHsbYB6dcpY8/YOHjRlEkTsGGSWW2iAr7vywba1Rthgi
+ FiBak7a7gZnvemKfNiNI5p2jkrPKAzm6dDACBUpPG5Uut5583ARNYtCZ8W0C7g/bJ8g+p+Aj2UI
+ nTeIzDXFwog==
+X-Gm-Gg: ASbGncuXvieTtMLvGLyK44ZJmmjwXU7OuVIw7ti0XW7d9/hPCjBIPd3EOGQOu8teevz
+ LstBi/iBuVTl3StpZ7Fx75el0LYZQwt7wr01kQXxUVqW3XeqMm6/OQe2qAIFOBbYVf4Vcb7TSM4
+ gnQkjKifWhEOqQsVuvahj//PQpFDB4oHZ6JFnKsSL7dfjnJwSznKokH29EzqyhcO+1Yc5RxOs82
+ Mirj+5Q6aXwFvfliu6Z0CuZQfnGzGye/cyj+ZYB+Y5xcINzcUTFtXghN/gPPO7UUCT0HBfP3Qeq
+ I89j2RgDDFI90Vup6ZM5bPdjMPutUCYuwJm0pgVVPy0WFfgj/q7XDHcVW+3sLiBwzN7Xkmw3CVZ
+ jB9sRuNmuKhAt6ENj8jSC3U3+fwZcd20MLYi+vPJAb4h7JUilug0q+JzOGCGk/cpfexfnr1ce18
+ zHoOviU6xfj/In87DYRNMlb4Wtyxntwg==
+X-Google-Smtp-Source: AGHT+IGt3D3aRphYd2Zw92sEQIv24gJhiXDWK4kDBC2x2zTnGqbiEQ1WzJvKSIwNzg4uiQ6zsYIoeQ==
+X-Received: by 2002:a05:600d:416a:b0:46e:3f75:da49 with SMTP id
+ 5b1f17b1804b1-46fa9b11794mr156207145e9.37.1760383131482; 
+ Mon, 13 Oct 2025 12:18:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb482b9absm228450055e9.2.2025.10.13.12.18.40
+ 5b1f17b1804b1-46fab633cdasm133419805e9.9.2025.10.13.12.18.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 13 Oct 2025 12:18:41 -0700 (PDT)
+ Mon, 13 Oct 2025 12:18:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/12] hw/s390x/sclp: Do not ignore address_space_read/write()
- errors
-Date: Mon, 13 Oct 2025 21:18:02 +0200
-Message-ID: <20251013191807.84550-8-philmd@linaro.org>
+Subject: [PULL 09/12] hw/loongarch/boot: Remove unnecessary cast to
+ target_ulong
+Date: Mon, 13 Oct 2025 21:18:04 +0200
+Message-ID: <20251013191807.84550-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013191807.84550-1-philmd@linaro.org>
 References: <20251013191807.84550-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,68 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If address_space_read() fails, return PGM_ADDRESSING. In the
-unlikely case address_space_write() fails (we already checked
-the address is readable), return PGM_PROTECTION.
+Reduce initrd_size scope. It is already of signed type (ssize_t),
+no need to cast to unsigned for the comparison.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-Message-Id: <20251007015802.24748-1-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251009201947.34643-2-philmd@linaro.org>
 ---
- hw/s390x/sclp.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ hw/loongarch/boot.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 51e88ba8f12..8602a566a49 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -306,6 +306,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     g_autofree SCCB *work_sccb = NULL;
-     AddressSpace *as = CPU(cpu)->as;
-     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-+    MemTxResult ret;
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index a516415822d..3dd48cb8aab 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -306,7 +306,7 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
+ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+ {
+     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
+-    ssize_t kernel_size, initrd_size;
++    ssize_t kernel_size;
  
-     /* first some basic checks on program checks */
-     if (env->psw.mask & PSW_MASK_PSTATE) {
-@@ -320,7 +321,10 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     kernel_size = load_elf(info->kernel_filename, NULL,
+                            cpu_loongarch_virt_to_phys, NULL,
+@@ -328,7 +328,8 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
      }
  
-     /* the header contains the actual length of the sccb */
--    address_space_read(as, sccb, attrs, &header, sizeof(SCCBHeader));
-+    ret = address_space_read(as, sccb, attrs, &header, sizeof(SCCBHeader));
-+    if (ret != MEMTX_OK) {
-+        return -PGM_ADDRESSING;
-+    }
+     if (info->initrd_filename) {
+-        initrd_size = get_image_size(info->initrd_filename);
++        ssize_t initrd_size = get_image_size(info->initrd_filename);
++
+         if (initrd_size > 0) {
+             initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
+             initrd_offset = alloc_initrd_memory(info, initrd_offset,
+@@ -337,7 +338,7 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+                                               initrd_offset, initrd_size);
+         }
  
-     /* Valid sccb sizes */
-     if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
-@@ -333,7 +337,11 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-      * the host has checked the values
-      */
-     work_sccb = g_malloc0(be16_to_cpu(header.length));
--    address_space_read(as, sccb, attrs, work_sccb, be16_to_cpu(header.length));
-+    ret = address_space_read(as, sccb, attrs,
-+                            work_sccb, be16_to_cpu(header.length));
-+    if (ret != MEMTX_OK) {
-+        return -PGM_ADDRESSING;
-+    }
- 
-     if (!sclp_command_code_valid(code)) {
-         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
-@@ -347,7 +355,11 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
- 
-     sclp_c->execute(sclp, work_sccb, code);
- out_write:
--    address_space_write(as, sccb, attrs, work_sccb, be16_to_cpu(header.length));
-+    ret = address_space_write(as, sccb, attrs,
-+                              work_sccb, be16_to_cpu(header.length));
-+    if (ret != MEMTX_OK) {
-+        return -PGM_PROTECTION;
-+    }
- 
-     sclp_c->service_interrupt(sclp, sccb);
- 
+-        if (initrd_size == (target_ulong)-1) {
++        if (initrd_size == -1) {
+             error_report("could not load initial ram disk '%s'",
+                          info->initrd_filename);
+             exit(1);
 -- 
 2.51.0
 
