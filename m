@@ -4,113 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B1CCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E13BBCCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8FCJ-0004Ai-Ue; Mon, 13 Oct 2025 05:50:32 -0400
+	id 1v8FHc-0005XV-Lw; Mon, 13 Oct 2025 05:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v8FCF-0004AP-TV; Mon, 13 Oct 2025 05:50:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v8FC9-00083v-IP; Mon, 13 Oct 2025 05:50:27 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59CLF8ta007315;
- Mon, 13 Oct 2025 09:50:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=JLna1f5NF3OqASXf5TH9oWDUCCRAwn
- ZGK4JAgyx6CYI=; b=qHPoK1clevuMVh94IoNqHJ+BYqks4aJXQIZRDgHXnk6CxE
- 0NEJMnHuMMDOv3/+MqwYrNqoIkXfiidzxLJFAjMA/AUmCXGQ05dSGCW4nQPmk44E
- 1liZRiqtSHTjBUKOxcuk5z8tSnL1durMzj/XwjXvBGyRfKD0m9MdDDsHvyMWTknF
- WfwhrErt7a7Ch7zlzhEQl0rgmHreSDerNY8WJeQx8fn9Mn+1+q4jcNWSc3MQT3Nx
- FNB3IcL/S6y2warwZlLXe7ZlYeTHFxtdMwT394FuL2xKCVsshfZl6aZzXPQOLjFc
- gIRy93XFwavLBIuAq3Afe98zLs3sWeOl1MJ+ICKA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qevyqydd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 09:50:15 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59D9kR9a003950;
- Mon, 13 Oct 2025 09:50:14 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qevyqydb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 09:50:14 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59D9mvfU003603;
- Mon, 13 Oct 2025 09:50:14 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xxn9mt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 09:50:13 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59D9o8sE38732160
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Oct 2025 09:50:10 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D93D5200B6;
- Mon, 13 Oct 2025 09:50:08 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 489FF200B7;
- Mon, 13 Oct 2025 09:50:07 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.39.21.93])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 13 Oct 2025 09:50:07 +0000 (GMT)
-Date: Mon, 13 Oct 2025 15:20:04 +0530
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: harshpb@linux.ibm.com, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/ppc/pnv: Improve kernel/initrd load failure error
- messages
-Message-ID: <aOzLTADP_N8b2WS2@linux.ibm.com>
-References: <20251007091214.403430-2-vishalc@linux.ibm.com>
- <CAFEAcA8VWKEy3XVo3b9pTg-jCAD2oA7=dFbOSRL3q+WRUoNBpA@mail.gmail.com>
- <aOyj5p2xzoxCyYZC@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8FHW-0005X4-Ks
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:55:57 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8FHR-0000QB-KS
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:55:54 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-46e42fa08e4so35374095e9.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 02:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760349345; x=1760954145; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YWXK7vYDauy0slYNRqT/3zWRydScEQRYvgw8mQT6ySs=;
+ b=MBq5rTv/c6LkXsY8ugGwOZ2g1a49jNDw5BvA6IrFbqqg/m+tOzXZ/ArmbuCshWLEJ6
+ ksnHTVPh/Wib501J6rIvSA9Qz5RuhMQFg00pdNcTXHypoAWgQxRAZrcsO+ciqufs6UUz
+ q9wkXbXXK4Zx3jvOuZxfw4APJswPUz9Jz1mS1eKA59JjOpUpdq8OuDpl4ZkQzWF57gl8
+ lou/C8lDbekB6PZrcZ5Dzs1a4er2fvN0VRDXGrgQ3IVuQIM17BZQbBsRAwUvAenYCGAW
+ 2Gg7qSOic2qcey8yeuwhI0sGrqGPBQ0HQUKo4jJl4JpTY0YOo5p0aVvR11QGYW26w6Ft
+ O8VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760349345; x=1760954145;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YWXK7vYDauy0slYNRqT/3zWRydScEQRYvgw8mQT6ySs=;
+ b=N0J5MV7uhIa3Z6PeBGT2LwLD9ZuXuH83a+ou3JDa8DnKgA7D5ChuF+70DBUNMo5XK6
+ Htg2jfgpim4CWV0Cg02/FaeUjCRg6dYZU4KczUBSWZWYLHW8hs1xky8X0OWgaIQ8OHxD
+ y6h8Y1/Es0t3t4aWWaVtfmLMHr7Jiw6FpXa+xCOa7t0b/Ugif/m5MM8/XEDI/9JgsqUX
+ XOxLNTDwNPXnbG/sbWwObTLtmz+DVwZPMDdTockO0wiYb/EAjjPLLI8SLWzsNmrmVnHc
+ E5K6YNNgxrUY0t5muSzqti+hqtp8OlPCXFAMwvYkUtwDzZyL74NSj6Eyer+OlramPh05
+ NZaw==
+X-Gm-Message-State: AOJu0YzN+HS/rg7NfgQKzDyhnXyE6ZCQ4LY7zzscPSaZNYmaak4foZum
+ CGnJTtVw5CtvaSLv1wwA1wwn/vnP+mNadEm+dgaZmcHuAr66+0QOP/3VHPutpQ==
+X-Gm-Gg: ASbGncu18mQMMlKCs8zDXTBY7FyD+6G+JFZJjaQszYFuADnqAO9/H+o8wgX6/6Z3N+s
+ dZOXn4gLDnOZ23OkaYc7jzbGpaBomb209FdBm3T9tRTiycwlzzmtY6TGMe7PLNsDqjWCwAIeNhb
+ tMu+ktlX0NP3BUdHLCrYEJJr7M2LJJCk2M33iwzAna2XyaxS1zMuULHh1odiZDQpcuDjnknzpUC
+ KV0TF3tBz347dV5Rk94rP169QU9VmT+PKt9193YJjYm3PZUu49dP6ilwwaKvcWRfUa3uvG4vSqV
+ APLuWUwb40KfXACEckAZo2eCl4bmbQp8NqTo1bfEVVaBu0g7yjWeHvDnSDi2/WH/YRNA4dgfjWh
+ qr2Fhshad4Wbx5pfAqWtxE8RXfZVMNaEWCJOMoZ0ya6K9norm3KtiVZGEQoM1pdbufiALSXA9mH
+ chKRjX4u5Gw1BkXyf7BO9u+jEQrems2/GtTrWEQQ==
+X-Google-Smtp-Source: AGHT+IG9fZby8ByAqo6n2LXALrn9JnVLZJ+k6mwJsQ/xtgubPffwHotRzGUiLXhiW32PMADwQYBIlQ==
+X-Received: by 2002:a05:600c:5028:b0:46e:428a:b4c7 with SMTP id
+ 5b1f17b1804b1-46fa9af2ff1mr139812295e9.23.1760349344435; 
+ Mon, 13 Oct 2025 02:55:44 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf271400a0afdc243fcb5392.dip0.t-ipconnect.de.
+ [2003:fa:af27:1400:a0af:dc24:3fcb:5392])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb48a5bf9sm179028265e9.18.2025.10.13.02.55.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Oct 2025 02:55:44 -0700 (PDT)
+Date: Mon, 13 Oct 2025 09:55:41 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
+CC: richard.henderson@linaro.org,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: =?US-ASCII?Q?Re=3A_=5BPULL_09/13=5D_ui/pixman=3A_Consistent_err?=
+ =?US-ASCII?Q?or_handling_in_qemu=5Fpixman=5Fshareable=5Ffree=28=29?=
+In-Reply-To: <20250930124653.321609-10-armbru@redhat.com>
+References: <20250930124653.321609-1-armbru@redhat.com>
+ <20250930124653.321609-10-armbru@redhat.com>
+Message-ID: <957601F2-78F5-4AD5-A6C2-CAFE49A97E84@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aOyj5p2xzoxCyYZC@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: z4QufeF6fyajdyeQH4KYI-yZCuF_GrXD
-X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68eccb57 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=_PDwZefUnsPwwmOXU7IA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfXxAkUlEFkaYh0
- GpxlQ47/K8hwIuO0WV5/2Flb2FvDfEQnDBPmG8BqTkea4cXxcN160SweQGjl5QrHM5sFwBIVP4H
- S++9q7yueDUwZSs8z468uvm7qHaGR78XX3iRxLebIHtonL4UtiveG8aE71P9TOolnwF4Iup3Riw
- W2gLiW6Mxut3iJi5j5U7mB9fwXvyd8MQvyGub4zwXNXWhjkyZDIIhCTr5Wjjdbu4pD6KwyaXgjX
- vHrTUUg1f1qEhFEFCswSJg8yTWseqEFnOrZDwcklv1BYoQy5zIt/ZA4y1v/ICYOXWzWRPwhITae
- L21atwdj28tvvBZ1aOKanjfj8H6Gw5rmBVU5WC+WK6c8I3b+rVNeUnXoIlTwhWaFkc9hwe3pN62
- Vjo6Xh/y0saubTOnQwUy0Iyx5DE1jQ==
-X-Proofpoint-GUID: uzshxRtsSlSPUJQRDhKezRwJ7VYVrDA1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-13_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,51 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ harshpb@linux.ibm.com
 
-On Mon, Oct 13, 2025 at 12:31:58PM +0530, Vishal Chourasia wrote:
-> On Tue, Oct 07, 2025 at 02:29:52PM +0100, Peter Maydell wrote:
-> > On Tue, 7 Oct 2025 at 13:59, Vishal Chourasia <vishalc@linux.ibm.com> wrote:
-> > >
-> > > When QEMU fails to load the kernel or initrd image, it previously emitted
-> > > a generic error message such as:
-> > >
-> > >   qemu-system-ppc64: Could not load kernel 'vmlinux'
-> > >
-> > > This provides little context on why the failure occurred, which can make
-> > > debugging difficult, especially for new users or when dealing with large
-> > > images.
-> > >
-> > > The new messages also include the configured size limits (in MiB) to help
-> > > users verify that their image files are within acceptable bounds.
-> > 
-> > >          if (kernel_size < 0) {
-> > >              error_report("Could not load kernel '%s'",
-> > >                           machine->kernel_filename);
-> > > +            error_report(
-> > > +                "Possible reasons: file not found, permission denied, or size "
-> > > +                "exceeds the maximum supported limit (%ld MiB).",
-> > > +                KERNEL_MAX_SIZE / 1024 / 1024);
-> > >              exit(1);
-> > >          }
-> > 
-> > Rather than printing a list of reasons why the load might
-> > have failed, I think it would be better if we enhanced
-> > the error handling in load_image_targphys() and friends
-> > (i.e. use Error), so that these functions can report back
-> > to the caller exactly why they failed and then the caller
-> > can give that error message to the user. That way we can
-> > improve the error reporting for every board that uses
-> > these load functions.
-> Hello Peter,
-> 
-> Wouldn't it be better to print the error inside the function itself.
-> 
-> Thanks
-> vishalc
-> > 
-> > thanks
-> > -- PMM
-> > 
-> 
+
+Am 30=2E September 2025 12:46:49 UTC schrieb Markus Armbruster <armbru@red=
+hat=2Ecom>:
+>qemu_pixman_shareable_free() wraps around either qemu_memfd_free() or
+>qemu_win32_map_free()=2E  The former reports trouble as error, with
+>error_report(), then succeeds=2E  The latter reports it as warning (we
+>pass it &error_warn), then succeeds=2E
+>
+>Change the latter to report as error, too=2E
+>
+>Cc: Marc-Andr=C3=A9 Lureau <marcandre=2Elureau@redhat=2Ecom>
+>Signed-off-by: Markus Armbruster <armbru@redhat=2Ecom>
+>Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre=2Elureau@redhat=2Ecom>
+>Message-ID: <20250923091000=2E3180122-10-armbru@redhat=2Ecom>
+>Reviewed-by: Akihiko Odaki <odaki@rsg=2Eci=2Ei=2Eu-tokyo=2Eac=2Ejp>
+>---
+> ui/qemu-pixman=2Ec | 5 ++++-
+> 1 file changed, 4 insertions(+), 1 deletion(-)
+>
+>diff --git a/ui/qemu-pixman=2Ec b/ui/qemu-pixman=2Ec
+>index ef4e71da11=2E=2Ee46c6232cf 100644
+>--- a/ui/qemu-pixman=2Ec
+>+++ b/ui/qemu-pixman=2Ec
+>@@ -288,7 +288,10 @@ qemu_pixman_shareable_free(qemu_pixman_shareable han=
+dle,
+>                            void *ptr, size_t size)
+> {
+> #ifdef WIN32
+>-    qemu_win32_map_free(ptr, handle, &error_warn);
+>+    Error *err =3D NULL;
+>+
+>+    qemu_win32_map_free(ptr, handle, &err);
+>+    error_report_err(err);
+
+The last line causes a crash on Windows since error_report_err() expects e=
+rr to be non-NULL=2E This can be reproduced by invoking `qemu-system-x86_64=
+=2Eexe` without any parameters in msys2=2E Removing the line fixes the cras=
+h=2E I'm not sure how to fix this, otherwise I had went for it myself=2E
+
+Best regards,
+Bernhard
+
+> #else
+>     qemu_memfd_free(ptr, size, handle);
+> #endif
 
