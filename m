@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63965CCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 07:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258D5CCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 07:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8CbW-0003JV-DC; Mon, 13 Oct 2025 03:04:22 -0400
+	id 1v8Ce8-00043N-JC; Mon, 13 Oct 2025 03:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8CbT-0003Il-4M
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 03:04:19 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1v8Ce4-00042s-JA
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 03:07:00 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8CbO-0002cn-AR
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 03:04:18 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8F06BC02DE;
- Mon, 13 Oct 2025 10:04:01 +0300 (MSK)
+ id 1v8Ce1-0002yL-FG
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 03:07:00 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 193A280857;
+ Mon, 13 Oct 2025 10:06:52 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:a50::1:2a] (unknown
  [2a02:6bf:8080:a50::1:2a])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 04IE362FLiE0-A6RhBwbV; Mon, 13 Oct 2025 10:04:01 +0300
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id p6IwH21FrCg0-8sAqqGsL; Mon, 13 Oct 2025 10:06:51 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760339041;
- bh=HpPKYO5wB4E39U7vq7Bb3wIFV9l5T5jYFJgbxv08H3c=;
+ s=default; t=1760339211;
+ bh=tTrtTrEM5aYZDSI6Xj37lTqz457MacaAsUClbPQEWOM=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Sq3xvJdZyPKbBuLuCF5zBzfvlXjZ1VNBKqxJENFZ2F7bEmdAgNr9TOX4bYo+ZJSkv
- DWu1N0l6uwljnmkWsbDNsMwSFWVPM/14DoxtL7KNBDqavOgrRU9MkL6a7QsTvY6s0u
- wGflEONqg5vn1Qtgk4TYD5xh4uGzuegEb1D2t1vM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ b=rLn/3b9SWjLdtye3fWn7n8fMBdl6AkzsucGLNljd2fljYsJrWFTxCTZ/hOohsJYTB
+ zxgQIf9+CKn/s6H9VJrCx6l0em4sP9GZ39JZFbFhxDOohvIcGZYJl9Dqa5sYVDkexU
+ M/hgdEGcQuLlCeSZbWfQAc4ExUZVUz7XU/qBPFJ4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <a6d054c9-6e1e-4ef2-ad63-9fedfdae1181@yandex-team.ru>
-Date: Mon, 13 Oct 2025 10:04:00 +0300
+Message-ID: <133494d1-da28-4c56-937a-94d6756f3e33@yandex-team.ru>
+Date: Mon, 13 Oct 2025 10:06:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 00/33] qapi: docs: width=70 and two spaces between
@@ -53,15 +53,14 @@ Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 In-Reply-To: <2e4da035-4996-4d1e-b3e1-9285a9c880e3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,68 +79,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13.10.25 09:11, Thomas Huth wrote:
-> On 11/10/2025 15.56, Vladimir Sementsov-Ogievskiy wrote:
->> Hi all!
->>
->> Let's bring the documentation in line with the requirements. And
->> do check these requirements in QAPI parser, to avoid later
->> further violations.
->>
->> Vladimir Sementsov-Ogievskiy (33):
->>    qapi: Add documentation format validation
->>    qapi/acpi.json: docs: width=70 and two spaces between sentences
->>    qapi/audio.json: docs: width=70 and two spaces between sentences
->>    qapi/block-core.json: docs: width=70 and two spaces between sentences
->>    qapi/block-export.json: docs: width=70 and two spaces between
->>      sentences
->>    qapi/block.json: docs: width=70 and two spaces between sentences
->>    qapi/char.json: docs: width=70 and two spaces between sentences
->>    qapi/crypto.json: docs: width=70 and two spaces between sentences
->>    qapi/dump.json: docs: width=70 and two spaces between sentences
->>    qapi/introspect.json: docs: width=70 and two spaces between sentences
->>    qapi/job.json: docs: width=70 and two spaces between sentences
->>    qapi/machine-s390x.json: docs: width=70 and two spaces between
->>      sentences
->>    qapi/machine.json: docs: width=70 and two spaces between sentences
->>    qapi/migration.json: docs: width=70 and two spaces between sentences
->>    qapi/misc-arm.json: docs: width=70 and two spaces between sentences
->>    qapi/misc-i386.json: docs: width=70 and two spaces between sentences
->>    qapi/misc.json: docs: width=70 and two spaces between sentences
->>    qapi/net.json: docs: width=70 and two spaces between sentences
->>    qapi/qdev.json: docs: width=70 and two spaces between sentences
->>    qapi/qom.json: docs: width=70 and two spaces between sentences
->>    qapi/replay.json: docs: width=70 and two spaces between sentences
->>    qapi/rocker.json: docs: width=70 and two spaces between sentences
->>    qapi/run-state.json: docs: width=70 and two spaces between sentences
->>    qapi/sockets.json: docs: width=70 and two spaces between sentences
->>    qapi/stats.json: docs: width=70 and two spaces between sentences
->>    qapi/tpm.json: docs: width=70 and two spaces between sentences
->>    qapi/trace.json: docs: width=70 and two spaces between sentences
->>    qapi/transaction.json: docs: width=70 and two spaces between sentences
->>    qapi/ui.json: docs: width=70 and two spaces between sentences
->>    qapi/vfio.json: docs: width=70 and two spaces between sentences
->>    qapi/virtio.json: docs: width=70 and two spaces between sentences
->>    qga/qapi-schema.json: docs: width=70 and two spaces between sentences
->>    qapi/acpi-hest.json: docs: width=70 and two spaces between sentences
-> 
-> Oh my, that's a lot of code churn for very few gain. Why do we have a different standard (70 columns) for qapi docs than for the rest of the code (80 columns)? That's confusing and will always cause mistakes in the future, I guess...
-> 
+> That's confusing and will always cause mistakes in the future, I guess...
 
-Note, I've sent "[PATCH v2 00/33] qapi: docs: width=70 and two spaces between sentences", with not doubled patches (again, sorry for that :/.
+No, that will not, look at first commit.
 
-That since 9d167491cb2577d "docs/devel/qapi-code-gen: Update doc comment conventions" (2023), by Markus, written in
-qapi-code-gen.rst:
+   [PATCH 01/33] qapi: Add documentation format validation
 
-     For legibility, wrap text paragraphs so every line is at most 70
-     characters long.
-
-     Separate sentences with two spaces.
-
-And I always forget it, when preparing my patches. Checking these rules during review, and than fixing is rather boring,
-so, I decided to try fix them all. Assised by AI, of course... Or, maybe AI assisted by me.
-
-If we decide, that it is too huge, we can proceed with some list of exclusions, to cover existing violations and avoid new ones.
-
+it adds a check into QAPI generator.
 
 -- 
 Best regards,
