@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E426FCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 12:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AD1CCD18C
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 12:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8HvR-0004nS-DI; Mon, 13 Oct 2025 08:45:17 -0400
+	id 1v8Hvs-000581-AE; Mon, 13 Oct 2025 08:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8HvC-0004Xm-P7
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8HvH-0004c2-Hy
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8Hv7-0007wp-DQ
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8HvB-0007xj-GF
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760359494;
+ s=mimecast20190719; t=1760359499;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zj8RUAWBVOGH7gmS2hiKjB5z3WQq2i5b5hBsObdM3AU=;
- b=SFEbHOOK25TzNghG1LjD/y2o1iUeM2OJ32MzFS7qNMCWO1XnHkYHgotZxdtTFLVRz6r+FN
- Zl2xcfCdrPrAW1rboE1GpCzm3ZYnUTA8ytVxp93V3s/F74PA20f9jKi88xzKXC06VnpR8j
- dcDsyKMzFTkkIEipT1t8YOOM4NXkj0o=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=SrwrWKaIS2o37Qz4VfMfpXaOvS9X4oGUK9EI9bLyxAM=;
+ b=Tb3zTJ2XkxAtuEVEKrvEkIZ3wislfHhLYsq+yXMCKuCHsAYZSRto1hnBPxmDHiLaXFZ15s
+ xiRfR0ON+obAs2THzIEXPK26ZtlaGKzrIAxsSpeQ6rxd61LcIRGOn524tCrWKklTXAxuxG
+ PWDMeJjKe2jPGSc4Fo+tHxg5AMH3Uhw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-XhIp4oITMl6a2JLF9XuftA-1; Mon,
- 13 Oct 2025 08:44:52 -0400
-X-MC-Unique: XhIp4oITMl6a2JLF9XuftA-1
-X-Mimecast-MFC-AGG-ID: XhIp4oITMl6a2JLF9XuftA_1760359491
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-4wUgr6e5N_CzxqvL0IlM5w-1; Mon,
+ 13 Oct 2025 08:44:55 -0400
+X-MC-Unique: 4wUgr6e5N_CzxqvL0IlM5w-1
+X-Mimecast-MFC-AGG-ID: 4wUgr6e5N_CzxqvL0IlM5w_1760359495
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 038D31954105; Mon, 13 Oct 2025 12:44:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8AEA1800285; Mon, 13 Oct 2025 12:44:54 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.225.105])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 21D711800446; Mon, 13 Oct 2025 12:44:48 +0000 (UTC)
+ id 66C53180141F; Mon, 13 Oct 2025 12:44:53 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PULL 13/29] test/functional/aarch64: Split the ast2700a1-evb OpenBMC
- boot test
-Date: Mon, 13 Oct 2025 14:44:04 +0200
-Message-ID: <20251013124421.71977-14-clg@redhat.com>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 15/29] hw/arm/aspeed: Remove AspeedSoCClass dependency from
+ aspeed_uart_last() API
+Date: Mon, 13 Oct 2025 14:44:06 +0200
+Message-ID: <20251013124421.71977-16-clg@redhat.com>
 In-Reply-To: <20251013124421.71977-1-clg@redhat.com>
 References: <20251013124421.71977-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,60 +85,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'ast2700a1-evb' machine has two functional tests: one loading
-firmware components into memory and another using a vbootrom
-image. Both tests perform a full OpenBMC boot and run checks on I2C
-and PCIe devices, which is redundant and time-consuming.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-To save CI resources, the vbootrom test is refactored to focus on the
-firmware boot process only. The OpenBMC boot verification logic is
-split and a new verify_openbmc_boot_start() helper is introduced to
-only wait for the kernel to start.
+Refactor the aspeed_uart_last() helper to remove its dependency on
+AspeedSoCClass and make the UART helper APIs more generic.
 
-The vbootrom test now uses this function and the less essential I2C
-and PCIe checks have been removed from this test case.
+The function now takes uarts_base and uarts_num as integer
+parameters instead of requiring a full SoC class instance.
+All related call sites in aspeed.c are updated accordingly.
 
-Cc: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Link: https://lore.kernel.org/qemu-devel/20251007141604.761686-6-clg@redhat.com
-[ clg: Changed pattern from 'Starting kernel ...' to 'Linux version ' ]
+No functional change.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20251013054334.955331-3-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/aarch64/test_aspeed_ast2700.py | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/hw/arm/aspeed_soc.h | 4 ++--
+ hw/arm/aspeed.c             | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-index a60dc1259f69..0ced1a25021d 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-@@ -37,10 +37,13 @@ def verify_vbootrom_firmware_flow(self):
-         wait_for_console_pattern(self, 'done')
-         wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 5786fbbcbbe7..0162738f884e 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -331,9 +331,9 @@ static inline int aspeed_uart_first(int uarts_base)
+     return aspeed_uart_index(uarts_base);
+ }
  
--    def verify_openbmc_boot_and_login(self, name):
-+    def verify_openbmc_boot_start(self):
-         wait_for_console_pattern(self, 'U-Boot 2023.10')
-         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
--        wait_for_console_pattern(self, 'Starting kernel ...')
-+        wait_for_console_pattern(self, 'Linux version ')
-+
-+    def verify_openbmc_boot_and_login(self, name):
-+        self.verify_openbmc_boot_start()
+-static inline int aspeed_uart_last(AspeedSoCClass *sc)
++static inline int aspeed_uart_last(int uarts_base, int uarts_num)
+ {
+-    return aspeed_uart_first(sc->uarts_base) + sc->uarts_num - 1;
++    return aspeed_uart_first(uarts_base) + uarts_num - 1;
+ }
  
-         wait_for_console_pattern(self, f'{name} login:')
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-@@ -141,9 +144,7 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_08(self):
-         self.vm.add_args('-netdev', 'user,id=net1')
-         self.start_ast2700_test_vbootrom('ast2700-default')
-         self.verify_vbootrom_firmware_flow()
--        self.verify_openbmc_boot_and_login('ast2700-default')
--        self.do_ast2700_i2c_test()
--        self.do_ast2700_pcie_test()
-+        self.verify_openbmc_boot_start()
+ #endif /* ASPEED_SOC_H */
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 49d8debf9988..ad17471c8d61 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1311,7 +1311,7 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
+     int val;
+     int uart_first = aspeed_uart_first(sc->uarts_base);
+-    int uart_last = aspeed_uart_last(sc);
++    int uart_last = aspeed_uart_last(sc->uarts_base, sc->uarts_num);
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+     if (sscanf(value, "uart%u", &val) != 1) {
+         error_setg(errp, "Bad value for \"uart\" property");
 -- 
 2.51.0
 
