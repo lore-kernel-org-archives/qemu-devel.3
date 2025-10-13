@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7EBCCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2540FCCD185
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8BMH-00082c-KJ; Mon, 13 Oct 2025 01:44:33 -0400
+	id 1v8BLi-0007op-2k; Mon, 13 Oct 2025 01:43:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BMF-00081p-5P; Mon, 13 Oct 2025 01:44:31 -0400
+ id 1v8BLf-0007nb-Cu; Mon, 13 Oct 2025 01:43:55 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8BMD-0002Gm-EJ; Mon, 13 Oct 2025 01:44:30 -0400
+ id 1v8BLd-0002DU-O3; Mon, 13 Oct 2025 01:43:55 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 13 Oct
- 2025 13:43:39 +0800
+ 2025 13:43:35 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 13 Oct 2025 13:43:39 +0800
+ Transport; Mon, 13 Oct 2025 13:43:35 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 12/16] hw/arm/aspeed_ast27x0-ssp: Change to use
- Aspeed27x0CoprocessorState
-Date: Mon, 13 Oct 2025 13:43:24 +0800
-Message-ID: <20251013054334.955331-13-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 02/16] hw/arm/aspeed: Remove AspeedSoCClass dependency from
+ aspeed_uart_last() API
+Date: Mon, 13 Oct 2025 13:43:14 +0800
+Message-ID: <20251013054334.955331-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
 References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
@@ -67,104 +67,50 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the AST27x0 SSP implementation to use the unified
-Aspeed27x0CoprocessorState structure shared between SSP and TSP.
-Previously, SSP and TSP each defined separate state structures
-(Aspeed27x0SSPSoCState and Aspeed27x0TSPSoCState), which contained
-identical members and caused unnecessary code duplication.
+Refactor the aspeed_uart_last() helper to remove its dependency on
+AspeedSoCClass and make the UART helper APIs more generic.
 
-This change removes Aspeed27x0SSPSoCState and replaces it with
-Aspeed27x0CoprocessorState, consolidating shared coprocessor state fields
-into a single definition in aspeed_coprocessor.h.
-
-This refactor unifies SSP and TSP under the same coprocessor state type,
-improving code maintainability and consistency across Aspeed coprocessor
-implementations.
+The function now takes uarts_base and uarts_num as integer
+parameters instead of requiring a full SoC class instance.
+All related call sites in aspeed.c are updated accordingly.
 
 No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/arm/aspeed_coprocessor.h | 4 ++--
- hw/arm/aspeed_ast27x0-fc.c          | 2 +-
- hw/arm/aspeed_ast27x0-ssp.c         | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ include/hw/arm/aspeed_soc.h | 4 ++--
+ hw/arm/aspeed.c             | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-index f09c2ed267..d799726635 100644
---- a/include/hw/arm/aspeed_coprocessor.h
-+++ b/include/hw/arm/aspeed_coprocessor.h
-@@ -41,7 +41,7 @@ struct AspeedCoprocessorClass {
-     int uarts_num;
- };
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 5786fbbcbb..0162738f88 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -331,9 +331,9 @@ static inline int aspeed_uart_first(int uarts_base)
+     return aspeed_uart_index(uarts_base);
+ }
  
--struct Aspeed27x0SSPSoCState {
-+struct Aspeed27x0CoprocessorState {
-     AspeedCoprocessorState parent;
-     AspeedINTCState intc[2];
-     UnimplementedDeviceState ipc[2];
-@@ -51,7 +51,7 @@ struct Aspeed27x0SSPSoCState {
- };
- 
- #define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
--OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState, ASPEED27X0SSP_SOC)
-+OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0CoprocessorState, ASPEED27X0SSP_SOC)
- 
- struct Aspeed27x0TSPSoCState {
-     AspeedCoprocessorState parent;
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index b34cd54e4e..cd09a2dcf0 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -42,7 +42,7 @@ struct Ast2700FCState {
-     Clock *tsp_sysclk;
- 
-     Aspeed27x0SoCState ca35;
--    Aspeed27x0SSPSoCState ssp;
-+    Aspeed27x0CoprocessorState ssp;
-     Aspeed27x0TSPSoCState tsp;
- 
-     bool mmio_exec;
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index 1ebf06299e..f8319c95fd 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -108,7 +108,7 @@ static struct nvic_intc_irq_info ast2700_ssp_intcmap[] = {
- static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,
-                                               int dev)
+-static inline int aspeed_uart_last(AspeedSoCClass *sc)
++static inline int aspeed_uart_last(int uarts_base, int uarts_num)
  {
--    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(s);
-+    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_SOC(s);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+-    return aspeed_uart_first(sc->uarts_base) + sc->uarts_num - 1;
++    return aspeed_uart_first(uarts_base) + uarts_num - 1;
+ }
  
-     int or_idx;
-@@ -130,7 +130,7 @@ static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,
+ #endif /* ASPEED_SOC_H */
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 471ad7fb84..19944ea026 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1311,7 +1311,7 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
+     int val;
+     int uart_first = aspeed_uart_first(sc->uarts_base);
+-    int uart_last = aspeed_uart_last(sc);
++    int uart_last = aspeed_uart_last(sc->uarts_base, sc->uarts_num);
  
- static void aspeed_soc_ast27x0ssp_init(Object *obj)
- {
--    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(obj);
-+    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_SOC(obj);
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(obj);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     int i;
-@@ -161,7 +161,7 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)
- 
- static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
- {
--    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(dev_soc);
-+    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_SOC(dev_soc);
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     DeviceState *armv7m;
-@@ -288,7 +288,7 @@ static const TypeInfo aspeed_soc_ast27x0ssp_types[] = {
-     {
-         .name           = TYPE_ASPEED27X0SSP_SOC,
-         .parent         = TYPE_ASPEED_COPROCESSOR,
--        .instance_size  = sizeof(Aspeed27x0SSPSoCState),
-+        .instance_size  = sizeof(Aspeed27x0CoprocessorState),
-         .instance_init  = aspeed_soc_ast27x0ssp_init,
-         .class_init     = aspeed_soc_ast27x0ssp_class_init,
-     },
+     if (sscanf(value, "uart%u", &val) != 1) {
+         error_setg(errp, "Bad value for \"uart\" property");
 -- 
 2.43.0
 
