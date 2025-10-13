@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED74CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 13:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1FDCCD18D
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 13:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8IlP-0006gC-Tb; Mon, 13 Oct 2025 09:38:59 -0400
+	id 1v8IlO-0006fW-AB; Mon, 13 Oct 2025 09:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8IlK-0006dr-88
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 09:38:54 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1v8IlI-0006dB-Kj
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 09:38:52 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8IlB-0006a6-OO
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 09:38:53 -0400
+ id 1v8IlC-0006au-Ga
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 09:38:52 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B3B298085D;
- Mon, 13 Oct 2025 16:38:40 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1010680859;
+ Mon, 13 Oct 2025 16:38:44 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a50::1:2a])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ccOm1D2F0Cg0-z6BeDE3J; Mon, 13 Oct 2025 16:38:40 +0300
+ ESMTPSA id ccOm1D2F0Cg0-QxzBLNKH; Mon, 13 Oct 2025 16:38:43 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760362720;
- bh=gi71/i1kMj9CDrqX7l6YlJyZvdocIF4+vUzWbXXfboI=;
+ s=default; t=1760362723;
+ bh=gGtQ/UnrHXk+W76Hl4SsEutQEnTKqDNL1Q6CcvGaUIY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=KAESDY+hdQwKTSEwji8RCh1b0jskWgKOzfCRUMsiXLQF5NJ6UAh401bKZapNVKQtE
- rG4MHkId3SvFTLeg5W7x5kPJPay7G0u4DUe7LLIpvoPO9BlsexKVhH5/2gwHUfmNX7
- AX1syKXHZKCYjNNSnfM+O4BBaAug/zSMMnodpfCk=
+ b=IqyxXYHo9C/bPmKjukby+OUSBpqEcfFmLT7YD9mUCiqrF/bsBPNi//6EGeaa/GPx3
+ EP9GqrvK7GlK/8uA2JmNJHmLE9AkUxNLzOrHSoW2y7sIVO2eM2v41rUR+JlJGG8wn2
+ 7fOCIRcTSdPKV2C13+Vwo5anASJbA9ePnoNH1x5U=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,23 +45,23 @@ To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  qemu-devel@nongnu.org, vsementsov@yandex-team.ru, raphael@enfabrica.net,
  armbru@redhat.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: [PATCH v2 1/7] chardev/char-socket: simplify reconnect-ms handling
-Date: Mon, 13 Oct 2025 16:38:30 +0300
-Message-ID: <20251013133836.852018-2-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 5/7] chardev/char: introduce .init() + .connect()
+ initialization interface
+Date: Mon, 13 Oct 2025 16:38:34 +0300
+Message-ID: <20251013133836.852018-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251013133836.852018-1-vsementsov@yandex-team.ru>
 References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,67 +76,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We pass it to qmp_chardev_open_socket_client() only to write
-to s->reconnect_time_ms. Let's simply set this field earlier,
-together with other options.
+We'll need a possibility to postpone connect step to later point in
+time to implement backend-transfer migration feature for vhost-user-blk
+in further commits. Let's start with new char interface for backends.
+
+.init() takes QAPI parameters and should parse them, called early
+
+.connect() should actually establish a connection, and postponed to
+the point of attaching to frontend. Called at later point, either
+at time of attaching frontend, either from qemu_chr_wait_connected().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- chardev/char-socket.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ chardev/char-fe.c      |  4 ++++
+ chardev/char.c         | 40 +++++++++++++++++++++++++++++++++++++---
+ include/chardev/char.h | 22 +++++++++++++++++++++-
+ 3 files changed, 62 insertions(+), 4 deletions(-)
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 62852e3caf..f3bc6290d2 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1274,18 +1274,16 @@ skip_listen:
- 
- 
- static int qmp_chardev_open_socket_client(Chardev *chr,
--                                          int64_t reconnect_ms,
-                                           Error **errp)
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index 158a5f4f55..973fed5bea 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -193,6 +193,10 @@ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
  {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
+     unsigned int tag = 0;
  
--    if (reconnect_ms > 0) {
--        s->reconnect_time_ms = reconnect_ms;
-+    if (s->reconnect_time_ms > 0) {
-         tcp_chr_connect_client_async(chr);
-         return 0;
--    } else {
--        return tcp_chr_connect_client_sync(chr, errp);
-     }
++    if (!qemu_chr_connect(s, errp)) {
++        return false;
++    }
 +
-+    return tcp_chr_connect_client_sync(chr, errp);
+     if (s) {
+         if (CHARDEV_IS_MUX(s)) {
+             MuxChardev *d = MUX_CHARDEV(s);
+diff --git a/chardev/char.c b/chardev/char.c
+index 6498d53daa..01ffe37acf 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -33,6 +33,7 @@
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-char.h"
+ #include "qapi/qmp/qerror.h"
++#include "qom/object.h"
+ #include "system/replay.h"
+ #include "qemu/help_option.h"
+ #include "qemu/module.h"
+@@ -338,10 +339,29 @@ static bool qemu_chr_is_busy(Chardev *s)
+     }
  }
  
- 
-@@ -1378,7 +1376,6 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     bool is_tn3270      = sock->has_tn3270  ? sock->tn3270  : false;
-     bool is_waitconnect = sock->has_wait    ? sock->wait    : false;
-     bool is_websock     = sock->has_websocket ? sock->websocket : false;
--    int64_t reconnect_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
-     SocketAddress *addr;
- 
-     s->is_listen = is_listen;
-@@ -1386,6 +1383,8 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     s->is_tn3270 = is_tn3270;
-     s->is_websock = is_websock;
-     s->do_nodelay = do_nodelay;
-+    s->reconnect_time_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
++bool qemu_chr_connect(Chardev *chr, Error **errp)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
 +
-     if (sock->tls_creds) {
-         Object *creds;
-         creds = object_resolve_path_component(
-@@ -1450,7 +1449,7 @@ static void qmp_chardev_open_socket(Chardev *chr,
-             return;
-         }
-     } else {
--        if (qmp_chardev_open_socket_client(chr, reconnect_ms, errp) < 0) {
-+        if (qmp_chardev_open_socket_client(chr, errp) < 0) {
-             return;
-         }
++    if (chr->connect_postponed) {
++        assert(cc->connect);
++        chr->connect_postponed = false;
++        if (!cc->connect(chr, errp)) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
+ int qemu_chr_wait_connected(Chardev *chr, Error **errp)
+ {
+     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
+ 
++    if (!qemu_chr_connect(chr, errp)) {
++        return -1;
++    }
++
+     if (cc->chr_wait_connected) {
+         return cc->chr_wait_connected(chr, errp);
      }
+@@ -1029,7 +1049,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
+ {
+     Object *obj;
+     Chardev *chr = NULL;
+-    Error *local_err = NULL;
++    ChardevClass *cc;
+ 
+     assert(g_str_has_prefix(typename, "chardev-"));
+     assert(id);
+@@ -1044,8 +1064,22 @@ static Chardev *chardev_new(const char *id, const char *typename,
+         goto fail;
+     }
+ 
+-    if (!qemu_char_open(chr, backend, typename + 8, &local_err)) {
+-        goto fail;
++    cc = CHARDEV_GET_CLASS(chr);
++
++    if (cc->init) {
++        assert(!cc->open);
++        assert(cc->connect);
++
++        if (!cc->init(chr, backend, errp)) {
++            goto fail;
++        }
++        assert(chr->filename);
++
++        chr->connect_postponed = true;
++    } else {
++        if (!qemu_char_open(chr, backend, typename + 8, errp)) {
++            goto fail;
++        }
+     }
+ 
+     return chr;
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 429852f8d9..ebadaf3482 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -63,6 +63,7 @@ struct Chardev {
+     CharBackend *be;
+     char *label;
+     char *filename;
++    bool connect_postponed;
+     int logfd;
+     int be_open;
+     /* used to coordinate the chardev-change special-case: */
+@@ -225,6 +226,7 @@ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
+                                 bool permit_mux_mon);
+ int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_all);
+ #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true)
++bool qemu_chr_connect(Chardev *chr, Error **errp);
+ int qemu_chr_wait_connected(Chardev *chr, Error **errp);
+ 
+ #define TYPE_CHARDEV "chardev"
+@@ -259,10 +261,28 @@ struct ChardevClass {
+     /* parse command line options and populate QAPI @backend */
+     void (*parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
+ 
+-    /* called after construction, open/starts the backend */
++    /*
++     * Called after construction, create and open/starts the backend,
++     * mutual exclusive with .init. .connect must not be defined when
++     * .open is defined.
++     */
+     void (*open)(Chardev *chr, ChardevBackend *backend,
+                  bool *be_opened, Error **errp);
+ 
++    /*
++     * Called after construction, create the backend, mutual exclusive
++     * with .open, and must be accompanied by .connect.
++     * Must set chr-filename.
++     */
++    bool (*init)(Chardev *chr, ChardevBackend *backend,
++                 Error **errp);
++
++    /*
++     * Called after .init(), open/starts the backend, mutual exclusive
++     * with .open. Must send CHR_EVENT_OPENED.
++     */
++    bool (*connect)(Chardev *chr, Error **errp);
++
+     /* write buf to the backend */
+     int (*chr_write)(Chardev *s, const uint8_t *buf, int len);
+ 
 -- 
 2.48.1
 
