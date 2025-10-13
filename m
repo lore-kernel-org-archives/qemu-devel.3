@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE07CCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 12:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C38BCCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 12:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8HUl-00051k-M6; Mon, 13 Oct 2025 08:17:43 -0400
+	id 1v8HUp-00052G-LP; Mon, 13 Oct 2025 08:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8HUe-00050m-T8
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:17:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8HUg-00050w-QF
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:17:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8HUb-0004Au-O0
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:17:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8HUd-0004Az-V4
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:17:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760357851;
+ s=mimecast20190719; t=1760357852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GViS/sOla1waU/YNopqAPGY0jm2FZdrcvDLYqRxpKSE=;
- b=RdjWbmxLinufpv5qu/mhGdIS8osu1rZ4n96HhqDHfi9sH2IBA4VP9BpQUPf2OIjHf9+VtQ
- +w561+1mUTGlVLtcvTy+EblQGRszGrCREbsjnl28vNTQDHOkaXW3AcI9oFCAvfY7l0h6Ir
- gJ9FHtKFN3wQJ2v+FS9jixtgvE2fn4o=
+ bh=OXwz4g5ujXY5Dk9Mrb1HcPfOvf95MCBlWH7vWVvvb8o=;
+ b=ekNg22eyuTSsGhcCbWsIBpRbLq2GcoWZq14tsX2KBjuRU3g+Psb4M9y08GFnWZ/prguzwJ
+ lPXjEFl31/skgxZ+RVLjGH/PUUgBm7cbV1zADSriULeD1pQFbrdC3MftDIcj0i3nFnuq9o
+ 4a6/HTPRnI2PlekzEo5GvusqbfJihQo=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-gIIGdkjoMfKOWoU6lxz5Dw-1; Mon,
- 13 Oct 2025 08:17:28 -0400
-X-MC-Unique: gIIGdkjoMfKOWoU6lxz5Dw-1
-X-Mimecast-MFC-AGG-ID: gIIGdkjoMfKOWoU6lxz5Dw_1760357847
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-9JkSU5NAPIaNI6cJsuPuuQ-1; Mon,
+ 13 Oct 2025 08:17:30 -0400
+X-MC-Unique: 9JkSU5NAPIaNI6cJsuPuuQ-1
+X-Mimecast-MFC-AGG-ID: 9JkSU5NAPIaNI6cJsuPuuQ_1760357849
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 284811800350; Mon, 13 Oct 2025 12:17:27 +0000 (UTC)
+ id 9AED61800451; Mon, 13 Oct 2025 12:17:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.160])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 00EC91954102; Mon, 13 Oct 2025 12:17:24 +0000 (UTC)
+ id 9C31A1954102; Mon, 13 Oct 2025 12:17:27 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] tests/functional: Set current time stamp of assets
- when using them
-Date: Mon, 13 Oct 2025 14:17:18 +0200
-Message-ID: <20251013121720.34552-2-thuth@redhat.com>
+Subject: [PATCH v2 2/2] tests: Evict stale files in the functional download
+ cache after a while
+Date: Mon, 13 Oct 2025 14:17:19 +0200
+Message-ID: <20251013121720.34552-3-thuth@redhat.com>
 In-Reply-To: <20251013121720.34552-1-thuth@redhat.com>
 References: <20251013121720.34552-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,62 +88,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-We are going to remove obsolete assets from the cache, so keep
-the time stamps of the assets that we use up-to-date to have a way
-to detect stale assets later.
+The download cache of the functional tests is currently only growing.
+But sometimes tests get removed or changed to use different assets,
+thus we should clean up the stale old assets after a while when they
+are not in use anymore. So add a script that looks at the time stamps
+of the assets and removes them if they haven't been touched for more
+than half of a year. Since there might also be some assets around that
+have been added to the cache before we added the time stamp files,
+assume a default time stamp that is close to the creation date of this
+patch, so that we don't delete these files too early (so we still have
+all assets around in case we have to bisect an issue in the recent past
+of QEMU).
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/asset.py | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ MAINTAINERS                       |  1 +
+ scripts/clean_functional_cache.py | 45 +++++++++++++++++++++++++++++++
+ tests/Makefile.include            |  1 +
+ 3 files changed, 47 insertions(+)
+ create mode 100755 scripts/clean_functional_cache.py
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index f666125bfaf..d5c4ad04bb5 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -10,6 +10,7 @@
- import os
- import stat
- import sys
-+import time
- import unittest
- import urllib.request
- from time import sleep
-@@ -113,6 +114,18 @@ def _wait_for_other_download(self, tmp_cache_file):
-         self.log.debug("Time out while waiting for %s!", tmp_cache_file)
-         raise
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 84cfd85e1fa..4c468d45337 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4398,6 +4398,7 @@ M: Thomas Huth <thuth@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Daniel P. Berrange <berrange@redhat.com>
+ F: docs/devel/testing/functional.rst
++F: scripts/clean_functional_cache.py
+ F: tests/functional/qemu_test/
  
-+    def _save_time_stamp(self):
-+        '''
-+        Update the time stamp of the asset in the cache. Unfortunately, we
-+        cannot use the modification or access time of the asset file itself,
-+        since e.g. the functional jobs in the gitlab CI reload the files
-+        from the gitlab cache and thus always have recent file time stamps,
-+        so we have to save our asset time stamp to a separate file instead.
-+        '''
-+        with open(self.cache_file.with_suffix(".stamp"), 'w',
-+                  encoding='utf-8') as fh:
-+            fh.write(f"{int(time.time())}")
+ Windows Hosted Continuous Integration
+diff --git a/scripts/clean_functional_cache.py b/scripts/clean_functional_cache.py
+new file mode 100755
+index 00000000000..c3370ffbb87
+--- /dev/null
++++ b/scripts/clean_functional_cache.py
+@@ -0,0 +1,45 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++"""Delete stale assets from the download cache of the functional tests"""
 +
-     def fetch(self):
-         if not self.cache_dir.exists():
-             self.cache_dir.mkdir(parents=True, exist_ok=True)
-@@ -120,6 +133,7 @@ def fetch(self):
-         if self.valid():
-             self.log.debug("Using cached asset %s for %s",
-                            self.cache_file, self.url)
-+            self._save_time_stamp()
-             return str(self.cache_file)
++import os
++import stat
++import sys
++import time
++from pathlib import Path
++
++
++cache_dir_env = os.getenv('QEMU_TEST_CACHE_DIR')
++if cache_dir_env:
++    cache_dir = Path(cache_dir_env, "download")
++else:
++    cache_dir = Path(Path("~").expanduser(), ".cache", "qemu", "download")
++
++if not cache_dir.exists():
++    print(f"Cache dir {cache_dir} does not exist!", file=sys.stderr)
++    sys.exit(1)
++
++os.chdir(cache_dir)
++
++for file in cache_dir.iterdir():
++    # Only consider the files that use a sha256 as filename:
++    if len(file.name) != 64:
++        continue
++
++    try:
++        timestamp = int(file.with_suffix(".stamp").read_text())
++    except FileNotFoundError:
++        # Assume it's an old file that was already in the cache before we
++        # added the code for evicting stale assets. Use the release date
++        # of QEMU v10.1 as a default timestamp.
++        timestamp = time.mktime((2025, 8, 26, 0, 0, 0, 0, 0, 0))
++
++    age = time.time() - timestamp
++
++    # Delete files older than half of a year (183 days * 24h * 60m * 60s)
++    if age > 15811200:
++        print(f"Removing {cache_dir}/{file.name}.")
++        file.chmod(stat.S_IWRITE)
++        file.unlink()
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index e47ef4d45c9..d4dfbf3716d 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -111,6 +111,7 @@ $(FUNCTIONAL_TARGETS): check-venv
+ .PHONY: check-functional
+ check-functional: check-venv
+ 	@$(NINJA) precache-functional
++	@$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
+ 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
  
-         if not self.fetchable():
-@@ -208,6 +222,7 @@ def fetch(self):
-             tmp_cache_file.unlink()
-             raise AssetError(self, "Hash does not match %s" % self.hash)
-         tmp_cache_file.replace(self.cache_file)
-+        self._save_time_stamp()
-         # Remove write perms to stop tests accidentally modifying them
-         os.chmod(self.cache_file, stat.S_IRUSR | stat.S_IRGRP)
- 
+ .PHONY: check-func check-func-quick
 -- 
 2.51.0
 
