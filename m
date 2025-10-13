@@ -4,80 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB7ECCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE609CCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8EnM-00071L-J4; Mon, 13 Oct 2025 05:24:44 -0400
+	id 1v8EpM-000873-5x; Mon, 13 Oct 2025 05:26:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1v8EnK-0006yJ-BP
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:24:42 -0400
-Received: from 10.mo548.mail-out.ovh.net ([46.105.77.235])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8EpJ-00083e-Rb
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:26:45 -0400
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1v8EnE-0004fi-QT
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:24:42 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.167])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4clX3t70bmz6T2W;
- Mon, 13 Oct 2025 09:24:26 +0000 (UTC)
-Received: from kaod.org (37.59.142.100) by DAG6EX1.mxp5.local (172.16.2.51)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8EpH-00051Q-Eb
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:26:45 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.104])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4clX6R74c1z5wp6;
+ Mon, 13 Oct 2025 09:26:39 +0000 (UTC)
+Received: from kaod.org (37.59.142.114) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 13 Oct
- 2025 11:24:26 +0200
+ 2025 11:26:39 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-100R00301b14842-4837-44df-a1a2-391d696616a0,
- 2350DB3D6D8EEE81184BB942758C035E74337293) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Mon, 13 Oct 2025 11:24:24 +0200
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <linux_oss@crudebyte.com>
-CC: =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@digikod.net>, "Dominique
- Martinet" <asmadeus@codewreck.org>, <qemu-devel@nongnu.org>, "Eric Van
- Hensbergen" <ericvh@kernel.org>, Latchesar Ionkov <lucho@ionkov.net>,
- <v9fs@lists.linux.dev>, =?UTF-8?B?R8O8bnRoZXI=?= Noack <gnoack@google.com>,
- <linux-security-module@vger.kernel.org>, Jan Kara <jack@suse.cz>, "Amir
- Goldstein" <amir73il@gmail.com>, Matthew Bobrowski <repnop@google.com>, "Al
- Viro" <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>,
- <linux-fsdevel@vger.kernel.org>, Tingmao Wang <m@maowtm.org>
-Subject: Re: [PATCH v2 0/7] fs/9p: Reuse inode based on path (in addition to
- qid)
-Message-ID: <20251013112424.6b93659c@bahia>
-In-Reply-To: <3061192.c3ltI2prpg@silver>
-References: <aMih5XYYrpP559de@codewreck.org>
- <20250917.Eip1ahj6neij@digikod.net>
- <f1228978-dac0-4d1a-a820-5ac9562675d0@maowtm.org>
- <3061192.c3ltI2prpg@silver>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (GARM-114S0089ae6df40-2d3e-4b21-98ee-c5c0b3fd0168,
+ E27D2F41E47E806E38994DC6761E007B2CBA9264) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <1e4034f0-1e0f-449e-8afd-5edebe4f961f@kaod.org>
+Date: Mon, 13 Oct 2025 11:26:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [37.59.142.100]
-X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 8df15119-2886-4617-99ba-e1d56fd5bb4d
-X-Ovh-Tracer-Id: 14216175175088118148
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v3 07/16] hw/arm/aspeed: Remove AspeedSoCState
+ dependency from aspeed_soc_uart_realize() API
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
+References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
+ <20251013054334.955331-8-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251013054334.955331-8-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.114]
+X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 6f2fdeef-9766-4765-852d-2fee93a38472
+X-Ovh-Tracer-Id: 14253611346939513778
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFx9wyKcRj7cqz7kuCitc0YOsdQGyZ7gTu+k8QCdN2UJaD/m4wfwf1TeZmtMFCwCQ696qaFLNhv1ArnJmBfVFKJ+i7oA431WUslbGABZCqTVFAKGVxscwZrJ8RQC6y31uoYWkhoYG8j1m9X8oNs+EckM0OSwLjUfHiMXTFS24TxAo2EfmhJtZlyJ4Dtm/dWqFb1K56tG84CerG+rp+ZmA4oDfQA+AouTmvQapBdTeMH6fkCu4MmX6/A66nRgN+AOh1Lstzx1CwH4GuXZ+lEHbAsdebqtlV16xLxgVdCQBGU9+uJb+xgKUtx8vfyIesl93n2b7HgHFtDuS/UwhW7/K5LRRXv53T8tqoT/0fu1eb/nUa+d+zoCcMCTJwu83LMXsyNHXMxmaKHxMg9OUURZ7U4NhvLcN+5d71bj/MGmNnhz4+9VaoAdRhD3UUNxWR4Z5ke1SoSSRgUrPZLnigMzA/CthSqTqBBW3JOMMKRtDv8cKfx4rRbw0pH7f3An4dXm3W/ZjaPaqzJd0Fe0DBZ8Sny3wUdgJVaEvJnqPulObp7BG/pVdis2Asa051JFC1MEUkPHaFRqtxyBga+CKW6bn6ZIauf1lSsFcOV2GXjhrwONjMW6zCdEwdAUL5ZTrd5qdgr1n6PLJeeSHOARekpx4jgFkloNsXfl5ws9X3xNwQ41g
-DKIM-Signature: a=rsa-sha256; bh=3jYn4YNdYeG7LGg6VH5k0ps8cSfN4dyFLHQu/RiM+CA=; 
+X-VR-SPAMCAUSE: dmFkZTFztRFT9abrdjyGgf427JWtcw8TtUc/9gGZroJBVZZqX4aAI7YlegXLLco0GOmPXljMgl0EMOWCgU3iWBKz4h9VbT4r5Xze8HA1bZB240FgbHSUGuphfWh8223IoQ+YwzKpSyDVJsWTzyCXjKuK4kfj0UOTbUVkTNU0oiifqj7t2NuYlWPtRSRZPcv7a0psRYY38eInZwfW2jeZO0nOsPoHkUaaGfifAmOB3a4MNLsFkwEvzQcQamtE7+VrdF3eKI8HvMinu0PkputDA/yO1nSyE53TST7BlUNW4yKFlDpUKV2Qjl/ec66EQWRpmIlcmwJS3teLqWAxCGBxXZZvSwL/bWNpImNTxeVQfB1qzdej5HHK77BwVKV6MRq5gWNLATG+K5Q9XFQWlIp3g1jMp3TvQKeCenUFYQCaKMihQRZp9QcVVeT6En3T5HB58oGBCimmcgLbup6MoaRw7UV385ZGG5P3JyFxodwfU7JJ2G5RcKSBFVyfbVFy/+GpSzwdFrdkwHndzFo2ix2xkuPbgMjrc818YVhHfit2ZrUglIFMFYJ66+6mHEgJzdpNA5Xssj+VG9dkpZd81q9WXf0qifSA68qOj1rdglxyH+r5+AZh494neWC0uX61G31w0JS5uIC9wynP4miJNw2p0IGMEDbjNVl5FRPDpueA/VRlZhaZZQ
+DKIM-Signature: a=rsa-sha256; bh=CU+3PJ8iuZWQgs1CcD2TaxR2CjeSRLRiUeofywyLZ38=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760347468; v=1;
- b=CFaoHXW6Z73qEnS7Th3BC/jjekF9fuMpiinSF6+z/QkpY7i3AjzwirMEkgzFjSc59jHECDZa
- hwJ5VjY5xLbpSpNTyMkiuhX7u5bAx2yqmo37Q5z0INncZt4wsA1g5/q4VRgvP1DDgjRuPgIR46h
- folX5IoxVTxfWuQPtJ06cYQ2wjGbmAPnb0g5Y9U0n4WN8qgngb+sMCgCDdLbP2AOewtXrO6FTL8
- rJdptJBWetpuXMJPf2JcKpe7CIZkGlIlYXItLR4m7ySh/5a253WPCKAzIHVffwlHKuqj8Iqx4la
- 1KBREK2vWIxZEOD3zLlkPG2lUkHQcTym5Guwn5unVGXdg==
-Received-SPF: pass client-ip=46.105.77.235; envelope-from=groug@kaod.org;
- helo=10.mo548.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ t=1760347600; v=1;
+ b=PWMolLySdBUhdFpfi+a+feKbYp2Hajhdr6mBD9eOgLpeKd+qKfXk3ccMZVJoysU0cj92I1sj
+ lz9kCiCN1PjNe3cbnNURbav6pKXpHm9NUNQThGVSF9R87vOQhzHHmGwxvHVHbZdSP1XnK9sib/i
+ yrXEpwXYwB3jh/IVA3FSb2Scr6A1yFQZPEWTLP6gGxuZhgldK1vf9SGeqqSW/gKYs+q+4Uy1Bm4
+ KlSgOTaSxYbhFSl7rSC//YGNOWg83Fd37ZqcCwcjxicsT06+gzEa5IyY2pY5Ei1+jhdzKIKRtnd
+ l0hsspnH35yL5g7n8xR3CiG+Epb1mx+BfXLACykV/tDMw==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,124 +131,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Sep 2025 15:06:59 +0200
-Christian Schoenebeck <linux_oss@crudebyte.com> wrote:
+On 10/13/25 07:43, Jamin Lin wrote:
+> Refactor aspeed_soc_uart_realize() to take MemoryRegion *, SerialMM *,
+> and MMIO base addr instead of AspeedSoCState *, decoupling the helper
+> from SoC state and making it reusable per-UART.
+> 
+> The helper now realizes a single UART instance and maps its MMIO.
+> IRQ wiring and iteration over all UARTs are moved to callers.
+> 
+> Update call sites in AST1030, AST2400, AST2600, AST27x0 SSP/TSP, and
+> AST2700 to loop over UARTs, call the new helper, and connect IRQ via
+> aspeed_soc_get_irq().
+> 
+> This simplifies the UART realize path and reduces cross-module coupling.
+> 
+> No functional change.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   include/hw/arm/aspeed_soc.h |  3 ++-
+>   hw/arm/aspeed_ast10x0.c     | 10 ++++++++--
+>   hw/arm/aspeed_ast2400.c     | 10 ++++++++--
+>   hw/arm/aspeed_ast2600.c     | 10 ++++++++--
+>   hw/arm/aspeed_ast27x0-ssp.c | 10 ++++++++--
+>   hw/arm/aspeed_ast27x0-tsp.c | 10 ++++++++--
+>   hw/arm/aspeed_ast27x0.c     | 10 ++++++++--
+>   hw/arm/aspeed_soc_common.c  | 28 ++++++++++------------------
+>   8 files changed, 60 insertions(+), 31 deletions(-)
+> 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> On Sunday, September 21, 2025 6:24:49 PM CEST Tingmao Wang wrote:
-> > On 9/17/25 16:00, Micka=C3=ABl Sala=C3=BCn wrote:
-> [...]
->=20
-> Hi Greg,
->=20
+Thanks,
 
-Hi Christian,
+C.
 
-> I'd appreciate comments from your side as well, as you are much on longer=
- on
-> the QEMU 9p front than me.
->=20
-> I know you won't have the time to read up on the entire thread so I try to
-> summarize: basically this is yet another user-after-unlink issue, this ti=
-me on
-> directories instead of files.
->=20
-
-Thread that never landed in my mailbox actually and it is quite
-hard to understand the root problem with the content of this
-e-mail actually ;-)
-
-> > So I did some quick debugging and realized that I had a wrong
-> > understanding of how fids relates to opened files on the host, under QE=
-MU.
-> > It turns out that in QEMU's 9p server implementation, a fid does not
-> > actually correspond to any opened file descriptors - it merely represen=
-ts
-> > a (string-based) path that QEMU stores internally.  It only opens the
-> > actual file if the client actually does an T(l)open, which is in fact
-> > separate from acquiring the fid with T(l)walk.  The reason why renaming
-> > file/dirs from the client doesn't break those fids is because QEMU will
-> > actually fix those paths when a rename request is processed - c.f.
-> > v9fs_fix_fid_paths [1].
->=20
-> Correct, that's based on what the 9p protocols define: a FID does not exa=
-ctly
-> translate to what a file handle is on a local system. Even after acquirin=
-g a
-> new FID by sending a Twalk request, subsequently client would still need =
-to
-> send a Topen for server to actually open that file/directory.
->=20
-> And yes, QEMU's 9p server "fixes" the path string of a FID if it was moved
-> upon client request. If the move happened on host side, outside of server=
-'s
-> knowledge, then this won't happen ATM and hence it would break your use
-> case.
->=20
-> > It turns out that even if a guest process opens the file with O_PATH, t=
-hat
-> > file descriptor does not cause an actual Topen, and therefore QEMU does
-> > not open the file on the host, and later on reopening that fd with anot=
-her
-> > mode (via e.g. open("/proc/self/fd/...", O_RDONLY)) will fail if the fi=
-le
-> > has moved on the host without QEMU's knowledge.  Also, openat will fail=
- if
-> > provided with a dir fd that "points" to a moved directory, regardless of
-> > whether the fd is opened with O_PATH or not, since path walk in QEMU is
-> > completely string-based and does not actually issue openat on the host =
-fs
-> > [2].
->=20
-> I don't think the problem here is the string based walk per se, but rather
-> that the string based walk always starts from the export root:
->=20
-> https://github.com/qemu/qemu/blob/4975b64efb5aa4248cbc3760312bbe08d6e7163=
-8/hw/9pfs/9p-local.c#L64
->=20
-> I guess that's something that could be changed in QEMU such that the walk
-> starts from FID's fs point, as the code already uses openat() to walk rel=
-ative
-> to a file descriptor (for security reasons actually), Greg?
->=20
-
-Yes this was introduced for security reasons. In a nutshell, the idea is
-to *not* follow symlinks in any element of the path being opened. It thus
-naturally starts at the export root for which we have an fd.
-
-> That alone would still not fix your use case though: things being moved on
-> host side. For this to work, it would require to already have a fd open on
-> host for the FID. This could be done by server for each FID as you sugges=
-ted,
-> or it could be done by client by opening the FID.
->=20
-
-Can you elaborate on the "things being move on host side" ? With
-an example of code that breaks on the client side ?
-
-> Also keep in mind: once the open file descriptor limit on host is exhaust=
-ed,
-> QEMU is forced to close older open file desciptors to keep the QEMU proce=
-ss
-> alive. So this might still break what you are trying to achieve there.
->=20
-
-Correct.
-
-> Having said that, I wonder whether it'd be simpler for server to track for
-> file tree changes (inotify API) and fix the pathes accordingly for host
-> side changes as well?
->=20
-
-The problem is how to have the guest know about such changes, e.g. in
-order to invalidate a stale cache entry. 9P doesn't provide any way for
-host->client notification.
-
-> /Christian
->=20
->=20
-
-Cheers,
-
---=20
-Greg
 
