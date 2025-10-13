@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DE4CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 12:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADBFCCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 12:51:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8HvE-0004Zn-Ty; Mon, 13 Oct 2025 08:45:04 -0400
+	id 1v8Hvw-0005D5-Qs; Mon, 13 Oct 2025 08:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8Hv9-0004Vh-KB
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:01 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8Hvr-00057a-MW
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8Huz-0007vO-KY
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:44:58 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8Hvb-0008Eg-QX
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 08:45:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760359486;
+ s=mimecast20190719; t=1760359524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ijCwE0uUK8yoWCTNQnVIDnTuHcOQiowpag0WnR7dcns=;
- b=LtYcpSrslT0A8ww0ym/anO7BlmcF6Y2Q/MxlZ3yulYAcPTTIaYMTpEU7MuUPOi9Z+ymqwn
- B7yJORF2CWl4Per6o+LCluWVB1et8qTq9l4yB+j8VQnZlC1HM2hYLEMNcBplure46t/Z6v
- 97fpaLtl1jjtdo6LbBGf7Qn25R27bBM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=fEUCGx+oUMjLbWrVPKVp1eS5UeVFKTbcYu+ni6eOEf0=;
+ b=K9I5ushiEZp9SCU6lC75DpDlz+DjEbz1dUR2z5QftBfiQVCVJgHlaJL/32VYYCITpVMP34
+ iDJ7FBG17aNF6D+PPP1RGXxdL+YKltkiuabG/osftzSlwznpqzA0tzPXUI2fJM0IcdKzZe
+ vMX8MPLNuNs61mGCXqz0V368MIKuYzg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-arH30Y27PvaJ0UWwBSETtA-1; Mon,
- 13 Oct 2025 08:44:43 -0400
-X-MC-Unique: arH30Y27PvaJ0UWwBSETtA-1
-X-Mimecast-MFC-AGG-ID: arH30Y27PvaJ0UWwBSETtA_1760359482
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-Qe660E9VNKKnPgzNox8wqA-1; Mon,
+ 13 Oct 2025 08:45:20 -0400
+X-MC-Unique: Qe660E9VNKKnPgzNox8wqA-1
+X-Mimecast-MFC-AGG-ID: Qe660E9VNKKnPgzNox8wqA_1760359518
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93633195608A; Mon, 13 Oct 2025 12:44:42 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1FAE1800447; Mon, 13 Oct 2025 12:45:18 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.225.105])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1995F180141C; Mon, 13 Oct 2025 12:44:40 +0000 (UTC)
+ id 2F7B1180141F; Mon, 13 Oct 2025 12:45:16 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Patrick Williams <patrick@stwcx.xyz>
-Subject: [PULL 09/29] aspeed: Deprecate the sonorapass-bmc machine
-Date: Mon, 13 Oct 2025 14:44:00 +0200
-Message-ID: <20251013124421.71977-10-clg@redhat.com>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 27/29] hw/arm/aspeed_ast27x0-ssp: Rename type to
+ TYPE_ASPEED27X0SSP_COPROCESSOR
+Date: Mon, 13 Oct 2025 14:44:18 +0200
+Message-ID: <20251013124421.71977-28-clg@redhat.com>
 In-Reply-To: <20251013124421.71977-1-clg@redhat.com>
 References: <20251013124421.71977-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,56 +85,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'sonorapass-bmc' machine represents a lab server that never
-entered production. There are no functional tests for this machine
-which makes harder to determine when something becomes deprecated or
-unused.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Since the machine does not rely on any specific device models, it can
-be replaced by the 'ast2500-evb' machine using the 'fmc-model' option
-to specify the flash type. The I2C devices connected to the board can
-be defined via the QEMU command line.
+Rename the AST27x0 SSP type from TYPE_ASPEED27X0SSP_SOC to
+TYPE_ASPEED27X0SSP_COPROCESSOR to better reflect its role as a coprocessor
+rather than a standalone SoC. This aligns naming conventions with the
+coprocessor-based design introduced in earlier refactors.
 
-Cc: Patrick Williams <patrick@stwcx.xyz>
-Link: https://lore.kernel.org/qemu-devel/20251007141604.761686-2-clg@redhat.com
+This change improves naming consistency across SSP and TSP coprocessor
+implementations and clarifies their relationship to the unified
+Aspeed27x0CoprocessorState.
+
+No functional change.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20251013054334.955331-15-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/about/deprecated.rst | 9 +++++++++
- hw/arm/aspeed.c           | 1 +
- 2 files changed, 10 insertions(+)
+ include/hw/arm/aspeed_coprocessor.h |  5 +++--
+ hw/arm/aspeed_ast27x0-fc.c          |  3 ++-
+ hw/arm/aspeed_ast27x0-ssp.c         | 10 +++++-----
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 67e527740c0e..ce8fe9ac1be7 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -285,6 +285,15 @@ and serves as the initial engineering sample rather than a production version.
- A newer revision, A1, is now supported, and the ``ast2700a1-evb`` should
- replace the older A0 version.
+diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
+index 110e776c6202..1c201a15c61c 100644
+--- a/include/hw/arm/aspeed_coprocessor.h
++++ b/include/hw/arm/aspeed_coprocessor.h
+@@ -50,8 +50,9 @@ struct Aspeed27x0CoprocessorState {
+     ARMv7MState armv7m;
+ };
  
-+Arm ``sonorapass-bmc`` machine (since 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''
-+
-+The ``sonorapass-bmc`` machine represents a lab server that never
-+entered production. Since it does not rely on any specific device
-+models, it can be replaced by the ``ast2500-evb`` machine using the
-+``fmc-model`` option to specify the flash type. The I2C devices
-+connected to the board can be defined via the QEMU command line.
-+
- RISC-V default machine option (since 10.0)
- ''''''''''''''''''''''''''''''''''''''''''
+-#define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
+-OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0CoprocessorState, ASPEED27X0SSP_SOC)
++#define TYPE_ASPEED27X0SSP_COPROCESSOR "aspeed27x0ssp-coprocessor"
++OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0CoprocessorState,
++                           ASPEED27X0SSP_COPROCESSOR)
  
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 58cfbc713794..d3a0c81f454f 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1552,6 +1552,7 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+ #define TYPE_ASPEED27X0TSP_SOC "aspeed27x0tsp-soc"
+ DECLARE_OBJ_CHECKERS(Aspeed27x0CoprocessorState, AspeedCoprocessorClass,
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index c2fa8df33ce4..67982d2fa073 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -121,7 +121,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+     s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
+     clock_set_hz(s->ssp_sysclk, 200000000ULL);
  
-     mc->desc       = "OCP SonoraPass BMC (ARM1176)";
-+    mc->deprecation_reason = "use 'ast2500-evb' instead";
-     amc->soc_name  = "ast2500-a1";
-     amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
-     amc->fmc_model = "mx66l1g45g";
+-    object_initialize_child(OBJECT(s), "ssp", &s->ssp, TYPE_ASPEED27X0SSP_SOC);
++    object_initialize_child(OBJECT(s), "ssp", &s->ssp,
++                            TYPE_ASPEED27X0SSP_COPROCESSOR);
+     memory_region_init(&s->ssp_memory, OBJECT(&s->ssp), "ssp-memory",
+                        UINT64_MAX);
+ 
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index f8319c95fd41..d27be8b92558 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -1,5 +1,5 @@
+ /*
+- * ASPEED Ast27x0 SSP SoC
++ * ASPEED Ast27x0 SSP Coprocessor
+  *
+  * Copyright (C) 2025 ASPEED Technology Inc.
+  *
+@@ -108,7 +108,7 @@ static struct nvic_intc_irq_info ast2700_ssp_intcmap[] = {
+ static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,
+                                               int dev)
+ {
+-    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_SOC(s);
++    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_COPROCESSOR(s);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+ 
+     int or_idx;
+@@ -130,7 +130,7 @@ static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,
+ 
+ static void aspeed_soc_ast27x0ssp_init(Object *obj)
+ {
+-    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_SOC(obj);
++    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_COPROCESSOR(obj);
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(obj);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     int i;
+@@ -161,7 +161,7 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)
+ 
+ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+ {
+-    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_SOC(dev_soc);
++    Aspeed27x0CoprocessorState *a = ASPEED27X0SSP_COPROCESSOR(dev_soc);
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
+@@ -286,7 +286,7 @@ static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass, const void *dat
+ 
+ static const TypeInfo aspeed_soc_ast27x0ssp_types[] = {
+     {
+-        .name           = TYPE_ASPEED27X0SSP_SOC,
++        .name           = TYPE_ASPEED27X0SSP_COPROCESSOR,
+         .parent         = TYPE_ASPEED_COPROCESSOR,
+         .instance_size  = sizeof(Aspeed27x0CoprocessorState),
+         .instance_init  = aspeed_soc_ast27x0ssp_init,
 -- 
 2.51.0
 
