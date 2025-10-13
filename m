@@ -4,101 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6778CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 10:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC35CCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 10:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Fz3-0001ga-3B; Mon, 13 Oct 2025 06:40:53 -0400
+	id 1v8G20-0002at-Ee; Mon, 13 Oct 2025 06:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8Fyz-0001fV-7D
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 06:40:49 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8Fyt-0007Ce-IU
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 06:40:48 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3ed20bdfdffso3569959f8f.2
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 03:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760352038; x=1760956838; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M7rjDlVmUfZdLPTVDi7Qx47Ou5H/phUo1jMSqY/mGY8=;
- b=EYGVPQpQc4QV/tv7Iw2dJc0SELpHDXtMYdXcAygmDaEQl+b3KDkHszDpmn4DXY6bv2
- PF5/F9n9i1LTXylG5sDJzQ9TC8MeMeh0RPOsj8aOeaOyQYFMFULTELu57YtOvEUN0aA7
- hW8xZMzLSum3Kbg45WzgwDRVZYD/ZZ7MGOud/TrdGcomoUPpMI7DpUnPX5+593gHVdYi
- rXkgUG0rf+QdWDZjNa0cqoqVIWTZaR0PCf0kUier8aEAXWoqRW5bu4S9uHMdyKB9XPcY
- /nzTyjZlb2iK/KlAOH0X3E1+j6Z+p02bBZN1xhXFf65VvFMtaqTBwNbiIR3vmvzk+LQD
- b4Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760352038; x=1760956838;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M7rjDlVmUfZdLPTVDi7Qx47Ou5H/phUo1jMSqY/mGY8=;
- b=Xub03OnUnxHvlKfPgZHQyJnRPm9/zRc8jyiVGVxIn7dGjn3mfQpjTB+jOA7Va/GlpA
- GUHvPblsd0oo0emqFJJQacG1ofN38pQmBLlGe+6yoOtvX5TLQ5BDuWzry7339YB0Loye
- WSOv/pu0MPPYBVAdnrgo1oFgwqgXtj30BaU5u4PGbG9x0dBH1atcEadF1smLqE6iHhE5
- eNDhClsGmxIJth5Smy3a5z+bYunm6NEAp4sm8OzFZA19YjVNX0r9WFJljgSrP/NdoOmW
- mAk80rJwGlUP+dUp/kEfJ+UOUKxO456hjCeKikmXpKn6/R9pA9Hy0ZulaTQ7Yf5hIrJ5
- zxkw==
-X-Gm-Message-State: AOJu0YysK/TW8aUC4UVB/ih1QrNiE9DFpn/8j+8LxOkm1idjyjscoYGx
- FCRJ9GdMTVHnhCNEpfR9jricGHtW0aZgB2bl/vDYAUIEjaki6Vwsr/SB
-X-Gm-Gg: ASbGncuFsbVm4dSuu8qk4VL+3WEGV1ABZzmSvqqvQ14K1xoiC5pEHpuW51O6nIokLiB
- /nfFTNjbetKJPf30aASk/YTXgBYuylDN+gOE8ILmBeTC326xcS8IAKhgnbvU3Fa2lvHATKVKhG/
- 2G+wbLS2jNDaUXemJKmpE0jzfyLLeEHiIChh8E82eqGeb1bBHfOjfoAFS6oSdVU14yvdi6nZs/9
- HF6gd/H4zOpbwfgrlyECBg+/2OsuHD+0BV5LXVMzmBQ/hPYt/1HKYuR5L/vvW1GWVOjfgdM6pnJ
- 4jaUVEln65pjZ3ARm4kIIeSN2uzqc1RovI6QoxXevIA6ROiv11F8SMwZWh33iuf+3sJeNanX6Y3
- qaTJFcyu8CwT0vB1llE3hGBWpbFdv9KKBEuKewupYchXutq+rKDMNlan25Y7SsgFvZ+gev6Bffh
- HPqmQ1/88EchqAocwz0954CZiQW8HPgZPpqDoP9r+FjoKylp8t
-X-Google-Smtp-Source: AGHT+IFPVhr7fnoczXLCRNb6LwQBSyPKZNDA9JKVJp9dGBkL5p30KO9p7NF8acWRbOPcfnJZvH5XtA==
-X-Received: by 2002:a05:6000:4304:b0:3e7:6268:71fd with SMTP id
- ffacd0b85a97d-4266e8d93b2mr14112114f8f.52.1760352038054; 
- Mon, 13 Oct 2025 03:40:38 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf271400a0afdc243fcb5392.dip0.t-ipconnect.de.
- [2003:fa:af27:1400:a0af:dc24:3fcb:5392])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce57d4bbsm17875064f8f.2.2025.10.13.03.40.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Oct 2025 03:40:37 -0700 (PDT)
-Date: Mon, 13 Oct 2025 10:40:36 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH=5D_docs/system/security=3A_Restrict?=
- =?US-ASCII?Q?_=22virtualization_use_case=22_to_specific_machines?=
-In-Reply-To: <20250908104125-mutt-send-email-mst@kernel.org>
-References: <20250908125058.220973-1-peter.maydell@linaro.org>
- <20250908104125-mutt-send-email-mst@kernel.org>
-Message-ID: <46AA9C03-CA7E-4C4B-AD05-A9053666BA52@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8G1x-0002aL-4G
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 06:43:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8G1p-0007Na-LF
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 06:43:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760352221;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BEjlAkXX+32oLJxS7LvsJN/STwER0w1mg9Sg2ZelkBs=;
+ b=DOT8qZOlq9pIkZ3uwzjjg1eSkABXTYpV7iQR/l6k1puqIP+p2zRqiX/EDRJQukE/SGAnCQ
+ AxGmrke3cvW70tDzQTqB+/kvK6RFpmTrbOED0oY4ijwmd3lzMuL9ekMM5OCcjM0VbHMKC7
+ 3z/J+CMRqCK6ucfVHaM2ki0onH396Q8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-mYUZjLpqPkyDYqOyX81HgQ-1; Mon,
+ 13 Oct 2025 06:43:37 -0400
+X-MC-Unique: mYUZjLpqPkyDYqOyX81HgQ-1
+X-Mimecast-MFC-AGG-ID: mYUZjLpqPkyDYqOyX81HgQ_1760352216
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C7E619560A5; Mon, 13 Oct 2025 10:43:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05EB51800452; Mon, 13 Oct 2025 10:43:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 80A9D21E6A27; Mon, 13 Oct 2025 12:43:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Fabiano Rosas
+ <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,  "Dr. David Alan
+ Gilbert" <dave@treblig.org>,  Laurent Vivier <lvivier@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v3] hw/uefi: add "info firmware-log" +
+ "query-firmware-log" monitor commands
+In-Reply-To: <3flcrys75wbso64zpfbika46klfbg7khbrtug3avrpfixaxmo5@vuidk7ktxnpi>
+ (Gerd Hoffmann's message of "Mon, 13 Oct 2025 11:19:33 +0200")
+References: <20251010071008.2555267-1-kraxel@redhat.com>
+ <87ecrbj85s.fsf@pond.sub.org>
+ <3flcrys75wbso64zpfbika46klfbg7khbrtug3avrpfixaxmo5@vuidk7ktxnpi>
+Date: Mon, 13 Oct 2025 12:43:31 +0200
+Message-ID: <87bjmb6q0c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42b.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,164 +93,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
-
-Am 8=2E September 2025 14:45:40 UTC schrieb "Michael S=2E Tsirkin" <mst@re=
-dhat=2Ecom>:
->On Mon, Sep 08, 2025 at 01:50:57PM +0100, Peter Maydell wrote:
->> Currently our security policy defines a "virtualization use case"
->> where we consider bugs to be security issues, and a
->> "non-virtualization use case" where we do not make any security
->> guarantees and don't consider bugs to be security issues=2E
->>=20
->> The rationale for this split is that much code in QEMU is older and
->> was not written with malicious guests in mind, and we don't have the
->> resources to audit, fix and defend it=2E  So instead we inform users
->> about what the can in practice rely on as a security barrier, and
->> what they can't=2E
->>=20
->> We don't currently restrict the "virtualization use case" to any
->> particular set of machine types=2E  This means that we have effectively
->> barred ourselves from adding KVM support to any machine type that we
->> don't want to put into the "bugs are security issues" category, even
->> if it would be useful for users to be able to get better performance
->> with a trusted guest by enabling KVM=2E This seems an unnecessary
->> restriction, and in practice the set of machine types it makes
->> sense to use for untrusted-guest virtualization is quite small=2E
->>=20
->> Specifically, we would like to be able to enable the use of
->> KVM with the imx8 development board machine types, but we don't
->> want to commit ourselves to having to support those SoC models
->> and device models as part of QEMU's security boundary:
->> https://lore=2Ekernel=2Eorg/qemu-devel/20250629204851=2E1778-3-shentey@=
-gmail=2Ecom/
->>=20
->> This patch updates the security policy to explicitly list the
->> machine types we consider to be useful for the "virtualization
->> use case"=2E
+> On Fri, Oct 10, 2025 at 01:41:35PM +0200, Markus Armbruster wrote:
+>> Gerd Hoffmann <kraxel@redhat.com> writes:
+>> 
+>> > Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+>> > optional support for logging to a memory buffer.  There is guest side
+>> > support -- for example in linux kernels v6.17+ -- to read that buffer.
+>> > But that might not helpful if your guest stops booting early enough that
+>> > guest tooling can not be used yet.  So host side support to read that
+>> > log buffer is a useful thing to have.
+>> >
+>> > This patch implements both qmp and hmp monitor commands to read the
+>> > firmware log.
+>> 
+>> So this is just for EDK2, at least for now.
 >
->This use-case sounds reasonable to me=2E I also imagine that
->some machines can get fixed down the road perhaps to
->the point where they enter the "virtualization use case"=2E
+> Yes.
 >
->However, since we are
->getting this elaborate, would my old idea of a runtime flag
->make sense now?
+>> > +    char                 FirmwareVersion[128];
+>> > +} MEM_DEBUG_LOG_HDR;
+>> 
+>> I understand this is a (close to) literal copy from EDK2, and adjusting
+>> it to QEMU style would be a bad idea.
+>> 
+>> > +
+>> > +
+>> > +/* ----------------------------------------------------------------------- */
+>> > +/* qemu monitor command                                                    */
+>> > +
+>> > +typedef struct {
+>> > +    uint64_t             Magic1;
+>> > +    uint64_t             Magic2;
+>> > +} MEM_DEBUG_LOG_MAGIC;
+>> 
+>> Unusual capitalization for a typedef name.  Why?  To emphasize the
+>> relation to MEM_DEBUG_LOG_HDR?
 >
->To recap, the idea was to add a "-virt" flag that will
->block any machines, devices and so on not considered
->part of the "virtualization use case"=2E
+> Yes.
+
+Okay.
+
+>> > +    if (header.DebugLogSize > MiB) {
+>> > +        /* default size is 128k (32 pages), allow up to 1M */
+>> > +        error_setg(errp, "firmware log: log buffer is too big");
+>> 
+>> [*] We limit the buffer to 1MiB.  No objection to the size.
+>> 
+>> What do you mean by "default" in "default size"?  Is the size
+>> configurable in EDK2?
 >
->We could also create a mechanism for downstreams to
->tweak this as they see fit=2E
-
-Hi Michael,
-
-Thanks for confirming that the use case seems reasonable=2E
-
-For now, we'd like to sharpen the term "virtualization use case" to allow =
-for KVM to be usable in machines that aren't inside the security boundary a=
-nd where maintenance commitment is unrealistic=2E The current approach is t=
-o adjust the policy and to spell out the machines where these commitments a=
-re made=2E
-
-The trigger for this RFC was to be able to add KVM support to the imx8mp-e=
-vk machine=2E I have it working but can't currently upstream it due to our =
-policy=2E It asks for unreasonable work and commitment which adds an unjust=
-ifyable burden on the maintainers=2E
-
-I do see a need for further enhancements on the broader topic like adding =
-a -virt switch etc=2E Maybe we should come up with a different term than "v=
-irtualization use case" which appears to leave a lot of room for interpreta=
-tion=2E I propose these topics to be addressed separately=2E
-
-What is missing for your R-b?
-
-Thanks,
-Bernhard
-
+> Yes, there is an option for that.
 >
+>> Should we try to cope more gracefully with oversized log buffers?  It's
+>> a ring buffer.  What about silently reading the latest 1MiB then?
+>> Behaves just as if the ring buffer was 1MiB.
 >
+> See below.
 >
+>> > +# @log: Firmware debug log, in base64 encoding.
+>> 
+>> Can this have a partial line at the beginning and/or the end?
 >
->> This is an RFC partly to see if we have consensus that this change
->> makes sense, and partly because I was only able to identify the
->> machine types we want to cover for some of our target architectures=2E
->> If maintainers for the other architectures could clarify which
->> machine types work with KVM that would be helpful=2E
->>=20
->> Notes on the listed machine types:
->>=20
->> architectures I'm pretty sure about:
->>=20
->> aarch64:
->>  -- virt is definitely the only supported one
->> s390x:
->>  -- s390-ccw-virtio is the only machine type for this architecture
->> loongarch64:
->>  -- virt is the only machine type for this architecture
->>=20
->> architectures where I've made a guess:
->>=20
->> i386, x86_64:
->>  -- I have assumed that all machine types except the "experimental"
->>     x-remote are supported
->>=20
->> architectures I don't know:
->>=20
->> mips, mips64
->> riscv32, riscv64
->> ppc, ppc64
->>=20
->> Signed-off-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->> ---
->>  docs/system/security=2Erst | 28 ++++++++++++++++++++++++++++
->>  1 file changed, 28 insertions(+)
->>=20
->> diff --git a/docs/system/security=2Erst b/docs/system/security=2Erst
->> index f2092c8768b=2E=2E395c2d7fb88 100644
->> --- a/docs/system/security=2Erst
->> +++ b/docs/system/security=2Erst
->> @@ -35,6 +35,34 @@ malicious:
->>  Bugs affecting these entities are evaluated on whether they can cause =
-damage in
->>  real-world use cases and treated as security bugs if this is the case=
-=2E
->> =20
->> +To be covered by this security support policy you must:
->> +
->> +- use a virtualization accelerator like KVM or HVF
->> +- use one of the machine types listed below
->> +
->> +It may be possible to use other machine types with a virtualization
->> +accelerator to provide improved performance with a trusted guest
->> +workload, but any machine type not listed here should not be
->> +considered to be providing guest isolation or security guarantees,
->> +and falls under the "non-virtualization use case"=2E
->> +
->> +Supported machine types for the virtualization use case, by target arc=
-hitecture:
->> +
->> +aarch64
->> +  ``virt``
->> +i386, x86_64
->> +  ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``, ``is=
-apc``
->> +s390x
->> +  ``s390-ccw-virtio``
->> +loongarch64:
->> +  ``virt``
->> +ppc, ppc64:
->> +  TODO
->> +mips, mips64:
->> +  TODO
->> +riscv32, riscv64:
->> +  TODO
->> +
->>  Non-virtualization Use Case
->>  '''''''''''''''''''''''''''
->> =20
->> --=20
->> 2=2E43=2E0
+> Yes.
+
+Partial lines can be troublesome, in particular when complete lines
+start with a prefix in a known format.  If avoiding them isn't
+practical, we should at least document.
+
+>> > +#
+>> > +# Since: 10.2
+>> > +##
+>> > +{ 'struct': 'FirmwareLog',
+>> > +  'data': { '*version': 'str',
+>> > +            '*log': 'str' } }
+>> 
+>> These aren't actually optional with the current code.  See [**] above.
+>> I guess you make them optional just in case some other firmware can
+>> provide only one of them.
 >
+> We could also make both mandatory.  There is always the option to return
+> an empty string ...
+
+Yes.  Loses the distinction between "firmware doesn't support this" and
+"firmware supports this, but it happens to be empty right now".  Do we
+care?
+
+>> > +##
+>> > +# @query-firmware-log:
+>> > +#
+>> > +# Find firmware memory log buffer in guest memory, return content.
+>> 
+>> Should we mention this is implemented only for EDK2 at this time?
+>> 
+>> Have you considered an optional size argument to retrieve the tail of
+>> the log?
+>
+> I'll have a look.  If we implement the 1MB cap suggested above we would
+> get that (almost) for free.
+>
+> take care,
+>   Gerd
+
+Thanks!
+
 
