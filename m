@@ -4,71 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C326CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C05BCCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8LFp-0002di-3t; Mon, 13 Oct 2025 12:18:33 -0400
+	id 1v8LLi-0004BC-1O; Mon, 13 Oct 2025 12:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v8LFh-0002YR-Qe
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:18:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1v8LLe-0004Aj-D6
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:24:34 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v8LFb-0003p4-SV
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:18:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760372297;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dYiYnki9dQqbBGxnWMlzOcyokr0Awi0RSTzKHaadF3Q=;
- b=DtfOj6ohRhb6HKGfUpJ062csZ6b221ln0C1nKgOCAeicwJy8G8G/YtOELATFNjwzOT/FDW
- z2I5D+oKxKYNfhxItQrM5oY55eZ2Dts4yYjnoggpadLR81H4SzOt22yw/a7nSGeau/6ICS
- 4pXfqR94R3W0heHJDlGdz6T0rvCDheI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-kz3ZvuHPOsuAVLsi4ZnTgA-1; Mon,
- 13 Oct 2025 12:18:15 -0400
-X-MC-Unique: kz3ZvuHPOsuAVLsi4ZnTgA-1
-X-Mimecast-MFC-AGG-ID: kz3ZvuHPOsuAVLsi4ZnTgA_1760372294
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 688A2195606B; Mon, 13 Oct 2025 16:18:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.195])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 261FB19560A2; Mon, 13 Oct 2025 16:18:11 +0000 (UTC)
-Date: Mon, 13 Oct 2025 18:18:09 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: Re: [PATCH v3 10/21] fuse: Add halted flag
-Message-ID: <aO0mQWW8gOLE_vi8@redhat.com>
-References: <20250701114437.207419-1-hreitz@redhat.com>
- <20250701114437.207419-11-hreitz@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1v8LLZ-0004bJ-SU
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:24:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8C6ED5972E5;
+ Mon, 13 Oct 2025 18:24:19 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id Xuf1FliQjIUW; Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 4702B5972E1; Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4507359703F;
+ Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
+Date: Mon, 13 Oct 2025 18:24:17 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ marcandre.lureau@redhat.com
+Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using hardware-correct
+ aperture sizes
+In-Reply-To: <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
+Message-ID: <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
+References: <20251001034616.3017119-1-chad@jablonski.xyz>
+ <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
+ <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250701114437.207419-11-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,26 +68,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 01.07.2025 um 13:44 hat Hanna Czenczek geschrieben:
-> This is a flag that we will want when processing FUSE requests
-> ourselves: When the kernel sends us e.g. a truncated request (i.e. we
-> receive less data than the request's indicated length), we cannot rely
-> on subsequent data to be valid.  Then, we are going to set this flag,
-> halting all FUSE request processing.
-> 
-> We plan to only use this flag in cases that would effectively be kernel
-> bugs.
-> 
-> (Right now, the flag is unused because libfuse still does our request
-> processing.)
-> 
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+On Mon, 13 Oct 2025, Chad Jablonski wrote:
+> Hi Balaton,
+>
+> Thanks for taking a look! I'll address all of these and send a v2.
+>
+>> The documentation does not mention 64MB alignment. It says apertures must
+>> be on a 32MB boundary and src and dst offsets are 128 bit aligned but
+>> maybe I don't have the right documentation for these chips or don't get
+>> what it means.
+>>
+>
+> Agreed, yeah the register docs do say there is a max of 32MB of framebuffer
+> memory and a max of 32MB of AGP memory (register reference pg. 2-6)
+> which implies 32MB alignment. And the software guide does explicitly say
+> that apertures must be located on a 32MB boundary (software guide 2-19).
+> It then goes on to describe how the aperture is split into 32MB for frame
+> buffer space and 32MB for AGP/PCI space. Which implies that 64MB is needed
+> for the full aperture. And from what I understand requesting 64MB will
+> naturally lead to a 64MB alignment from PCI.
+>
+> Outside of what I observed on the real hardware another thing that lead me
+> to believe that the 64MB alignment is correct was this line in the XOrg
+> r128 driver: https://gitlab.freedesktop.org/xorg/driver/xf86-video-r128/-/blob/XORG-RELEASE-1/src/r128_driver.c#L855
+> The driver is assuming a 64MB alignment by masking addresses with
+> 0xfc000000 (2^26 = 64MB). When qemu requests 16MB or 32MB it breaks that assumption
+> and the driver looks in the wrong memory area for the framebuffer.
 
-If we ever extend query-block-exports with export-specific information,
-exposing this flag would probably be a good idea. And a QMP event might
-make sense, too. Not a requirement for this series, though.
+I'm not saying the 64MB alignment is not correct (I don't know what is 
+correct and assuming the Xorg driver was tested with real cards it's 
+possible this assumption holds) but maybe it comes from having a 64MB VRAM 
+BAR that contains twice the size of actual VRAM including the AGP window 
+which also satisfies the 32MB alignment for VRAM, so the commit message 
+may nees to be adjusted to say that instead of something not supported by 
+documentation. Do you have any PCI cards? There were PCI versions of 
+these. I wonder if they also have the same VRAM BAR. If not then no 
+problem, we can go with what works for known drivers.
 
-Kevin
+Regards,
+BALATON Zoltan
 
+>> Can you check what the CONFIG_APER_SIZE register contains on these cards?
+>> Do all Rage 128 (and Pro) cards have 64MB and Radeon 7xxx/M6 have 128MB?
+>> The documentation is again not clear on this because it lists default
+>> value of 0x2000000 for CONFIG_APER_SIZE on Rage 128 Pro and nothing for
+>> Radeon but in a figure it shows this should contain both VRAM and AGP
+>> areas that suggests 64MB but it's possible that the documentation is
+>> wrong.
+>>
+>
+> I will take a look at this!
+>
+>>
+>> This was changed in commit f7ecde051dd73 to be half the memory size
+>> because at least a Radeon FCocde ROM seemed to detect VRAM size that way.
+>> I should test that again but it needed OpenBIOS patches that were not
+>> merged so I had to find those again as I don't have that setup any more.
+>> Checking on real card may be the best source of what this should be but I
+>> think this might break that FCode ROM which is from a PowerMac card. This
+>> suggests it should be half the aper size.
+>>
+>
+> Ah, great, this is important context. I'll look at this more
+> closely and check the real hardware.
+>
+>>
+>> Coding style says variables should be defined at the beginning of blocks
+>> so in this case at the beginning of the funcion.
+>>
+>
+> I'll also address all of the style comments.
+>
+> Thanks again,
+> Chad
+>
+>
 
