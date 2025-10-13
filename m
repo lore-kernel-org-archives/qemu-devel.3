@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF42CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2066CCD18D
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8LNd-0005Rt-VG; Mon, 13 Oct 2025 12:26:37 -0400
+	id 1v8Lbh-0007yL-VE; Mon, 13 Oct 2025 12:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8LNb-0005Pe-SU
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:26:35 -0400
+ id 1v8Lbe-0007uh-Ro
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:41:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8LNY-00057E-EU
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:26:34 -0400
+ id 1v8Lbb-0006z6-9o
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:41:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760372791;
+ s=mimecast20190719; t=1760373661;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=9KuLJoDiMvlnnKNTBuu0fgbZJ8BujdBUL9VVGTtRchY=;
- b=hOl7qJlSVM5Gs+rIS+N2+YUFQLGG4iTPbvTPiivsy/L0Cnsm8po8WEdy3VDRpw4RN+tTOQ
- GV+IYkH8bS/LrfVTFQh+bSOYWJhodKlckTfwj2URsn+MZ3a/Zg8Frb8cav6vGdfs5YtqIx
- zlWpREU0sXOfKgX2cO81HX5uEOzxboc=
+ bh=M4PpLZCIcS/TWHP7SQYNUMpLS4jIGwyW9HPY7SpN9RU=;
+ b=O8vCAqrx8KnILTYu4zzJcnTtB5Wv0ovL417unMdFCdk2N0bLTPxZo6RZg1uxg1W0IzqgML
+ xBRwjMrRGHbOJr2QoSPzGqOghOYN/8lbg6mnnceEzG187NJVhdgBG6Cec5nQJPsjY8Ynr2
+ usRGqgbMowzBOgGeLBRBIkuKiMOE2HI=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-O4UEWjyYPDqDYOkZz-mjQw-1; Mon, 13 Oct 2025 12:26:24 -0400
-X-MC-Unique: O4UEWjyYPDqDYOkZz-mjQw-1
-X-Mimecast-MFC-AGG-ID: O4UEWjyYPDqDYOkZz-mjQw_1760372784
+ us-mta-508-X-34zVc9Pxip03fcmCwkBQ-1; Mon, 13 Oct 2025 12:40:58 -0400
+X-MC-Unique: X-34zVc9Pxip03fcmCwkBQ-1
+X-Mimecast-MFC-AGG-ID: X-34zVc9Pxip03fcmCwkBQ_1760373657
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3ecdc9dbc5fso2984930f8f.1
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 09:26:24 -0700 (PDT)
+ ffacd0b85a97d-3ee10a24246so3831364f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 09:40:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760372783; x=1760977583;
+ d=1e100.net; s=20230601; t=1760373656; x=1760978456;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9KuLJoDiMvlnnKNTBuu0fgbZJ8BujdBUL9VVGTtRchY=;
- b=xNAVPT7YPgAq89RvxWuXsSF45nulWr7dK9XeSJIyKeXpdX915jq5Kw25d4zjKz3DrE
- 5MkaNAP0+EiutlQi6xmC+DealWbclebU2mT0xKlx+aIpA/l5QNgY2APcOn8OsR64by1v
- BNKjoNayUnWM8EeUR414YRpMBmjhpVRNatHOG2SlS8Vf5dmlxuDcHV4EvCLMaIsuU6Tb
- CAZCQcAUrJLlUkMkCB7VIyVelCKYMIYPx/8d0y0hSgzMjulKAgW8+L3ikJKFzlgDL2tV
- 8J3LYN44CTOs2qkMC+KXgH6D2CEuZSfgJZ/Fpx5tQVih46oVSe8b4RSgYohNYuzp2sUW
- llVQ==
-X-Gm-Message-State: AOJu0YxMTnFWKQtPAKuQ4pA4EnEaJVg74v/TLTLpz5jsmz8Oys5b3o1U
- 7A8L8uHP8ixrpKrcIwf7n/R2OGSM/uR5wpIrnjWaxpOAP4DpDQyLCyIW6PkefeQzIkJR78U/LVV
- E4RjVOrtzvPj8fB3OVkcpSMfl5O3oB0H6Daf9pT2K435nW9WRIElJAm6cMNa5VtzMeSVdJsVWDg
- ZrI8+Hsz6xWXzjlAkRCefQBEalplEszkN/fpe2pvR1
-X-Gm-Gg: ASbGnctoZuid1U0J1ilUJxmdu75bUkH9V2VOkyt500QLSUn/x+15Kd8JvEYj1UqkyeO
- HMj2BFSElR9kcTj8JWyGrLQuz4ZvWXAuBllts8qR+RCCZRDOkvZpLaPN10OGNWA2YiHyhanOZS/
- 0sBwAdCSSUKaY4f3+5Rijto61o7ekZcop+uonpvmWoMrsKhy+kOSGnYMAlIqUXbO4nHh4MOjmFt
- wfXdjGpd40mCF6Zl5nF7tex3kKP9JkYWZ90q6SsjLZe4KHak0yJkjotY1VpNWKD07I5PQaPc1aL
- HChAFiwIAX+ElG0yoEoHfEplnVDXCWYQBvrwb5lraoHuX8prN6H4X67Zsvct4C5/xofTYWcru+U
- KOMiW7hgvWMFgdQbun4bVadUKnTGHhIlEaLnK078RHGg=
-X-Received: by 2002:a05:6000:41d1:b0:403:6f7d:ac5d with SMTP id
- ffacd0b85a97d-4266e7dfaf4mr12192621f8f.34.1760372782808; 
- Mon, 13 Oct 2025 09:26:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIn5vNuVZ0CPukcmdqUy65P6SXHfg31+sAMl7HbkAmAxfF0SCFDMh2VHDcOvMtTOQ9fDZZsw==
-X-Received: by 2002:a05:6000:41d1:b0:403:6f7d:ac5d with SMTP id
- ffacd0b85a97d-4266e7dfaf4mr12192598f8f.34.1760372782313; 
- Mon, 13 Oct 2025 09:26:22 -0700 (PDT)
+ bh=M4PpLZCIcS/TWHP7SQYNUMpLS4jIGwyW9HPY7SpN9RU=;
+ b=Hs1uJJpc5V6GlAQdVEuEmatxLKgTexnMCn+rXrDfoTxarDXDMbEL5yiYTBvaWaMPBW
+ skYPtbI/E/+iYoRAUkcGS1Hl2Xq87Hz9cFeg64WA30lmfVGJh2ZQHjjd6wogvQuHGynw
+ CgnCKitJt0GpTMODlx7Sa0qycQ5m9uHNQ9RKYH+n89Qa1zXh09P2fXPuSsFZ2wqxH+RN
+ /o+VNN71nOZj1qG5+tVnBjvfH74CYu6gTGNr1ce6BO7bOspAxsc6xYEcDNUbV/g3et8l
+ V7vWsF3Q+or9d9NKuQ4558nm3F2i8NNCOkQc1WZc0u/MzLaWeTMDhyIywlspADmGNS4L
+ 0nBQ==
+X-Gm-Message-State: AOJu0YxMUvZ6JEzCvqr0ulN/bKINLnbuMPfVgJZjtNuPKPSLQF00pr2F
+ 5idq9lQ6ZbBNfB9hddaWV1WJY/97QctaMJts7KFvv7Py0epVk4dDaibRI9r6cvmBwwa60gJkxEi
+ fkAuEd4SLjLpdbN5HiUBK9lnyXnJLAiTaHfba6cebcVEB/gBNRDwv0/McdnPbL/YvkpcIdDUaXm
+ 02WTxVA0TX0+odEDVV9O5IzeiZ4zm2OfX0GZJAUZj7
+X-Gm-Gg: ASbGncuTYw5ixCzSFH3CTLRaD4Ek2Lw5DRElyZ7xVjrMj597P/Me3SpxwrB5AwXxyaB
+ IBnUBMZ9VawXXChmPBf8AiErGWu+bfIjeemvIxomcqIjTiqoGUj4nKen5vejyllCr0HgJFX7YH4
+ M1BkvSAUax5Wb8r5X4GXiSa4BbVegWXx4rliKyBjjFNxwhHQVCXkL/ztIFJUdErv5E1fB7pXiZz
+ yhn+nkAvrAPoUFlTOCxB4R60j/vC8L+szbMdlgRkC0izE//8x2yiM/f6ZRHuQXsxaGaORnbGO6r
+ 3D7IvvnSvU50zJGvhg4143LcglBzRPNl3CX8zht4RevoEqVBnQcJN/HS/oj59ZLD4uCTjftb3zb
+ aqIYCpdzvzX0VTbNvB5lIi0OgbcpQ1xI64lJar+ImZoA=
+X-Received: by 2002:a05:6000:4308:b0:425:8bd2:24de with SMTP id
+ ffacd0b85a97d-42666ac2dd9mr11659167f8f.9.1760373656002; 
+ Mon, 13 Oct 2025 09:40:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEG//xnbyB1liYNR+gj68gM+e4wQmvRUvLcpwHIh3mK/XuGX1KQwuuurxvWUM8Vtc2HPClNVg==
+X-Received: by 2002:a05:6000:4308:b0:425:8bd2:24de with SMTP id
+ ffacd0b85a97d-42666ac2dd9mr11659153f8f.9.1760373655581; 
+ Mon, 13 Oct 2025 09:40:55 -0700 (PDT)
 Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5cf70fsm18439576f8f.27.2025.10.13.09.26.21
+ ffacd0b85a97d-426ce5e0a03sm19164758f8f.37.2025.10.13.09.40.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Oct 2025 09:26:21 -0700 (PDT)
+ Mon, 13 Oct 2025 09:40:55 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org,
-	qemu-stable@nongnu.org
-Subject: [PATCH] async: access bottom half flags with qatomic_read
-Date: Mon, 13 Oct 2025 18:26:20 +0200
-Message-ID: <20251013162620.995747-1-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH] target/i386: user: do not set up a valid LDT on reset
+Date: Mon, 13 Oct 2025 18:40:53 +0200
+Message-ID: <20251013164053.1001673-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -91,7 +90,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,57 +106,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Running test-aio-multithread under TSAN reveals data races on bh->flags.
-Because bottom halves may be scheduled or canceled asynchronously,
-without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
-to use a relaxed read to access the flags.
+In user-mode emulation, QEMU uses the default setting of the LDT base
+and limit, which places it at the bottom 64K of virtual address space.
+However, by default there is no LDT at all in Linux processes, and
+therefore the limit should be 0.
 
-Use an acquire load to ensure that anything that was written prior to
-qemu_bh_schedule() is visible.
+This is visible as a NULL pointer dereference in LSL and LAR instructions
+when they try to read the LDT at an unmapped address.
 
-Resolves: #2749
-Resolves: #851
+Resolves: #1376
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- util/async.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ target/i386/cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/util/async.c b/util/async.c
-index 2719c629ae9..a736d2cd0d0 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -256,8 +256,9 @@ static int64_t aio_compute_bh_timeout(BHList *head, int timeout)
-     QEMUBH *bh;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 4f99cbc5c0b..455caff6b23 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8649,7 +8649,11 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
  
-     QSLIST_FOREACH_RCU(bh, head, next) {
--        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
--            if (bh->flags & BH_IDLE) {
-+        int flags = qatomic_load_acquire(&bh->flags);
-+        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-+            if (flags & BH_IDLE) {
-                 /* idle bottom halves will be polled at least
-                  * every 10ms */
-                 timeout = 10000000;
-@@ -335,14 +336,16 @@ aio_ctx_check(GSource *source)
-     aio_notify_accept(ctx);
- 
-     QSLIST_FOREACH_RCU(bh, &ctx->bh_list, next) {
--        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-+        int flags = qatomic_load_acquire(&bh->flags);
-+        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-             return true;
-         }
-     }
- 
-     QSIMPLEQ_FOREACH(s, &ctx->bh_slice_list, next) {
-         QSLIST_FOREACH_RCU(bh, &s->bh_list, next) {
--            if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-+            int flags = qatomic_load_acquire(&bh->flags);
-+            if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-                 return true;
-             }
-         }
+     env->idt.limit = 0xffff;
+     env->gdt.limit = 0xffff;
++#if defined(CONFIG_USER_ONLY)
++    env->ldt.limit = 0;
++#else
+     env->ldt.limit = 0xffff;
++#endif
+     env->ldt.flags = DESC_P_MASK | (2 << DESC_TYPE_SHIFT);
+     env->tr.limit = 0xffff;
+     env->tr.flags = DESC_P_MASK | (11 << DESC_TYPE_SHIFT);
 -- 
 2.51.0
 
