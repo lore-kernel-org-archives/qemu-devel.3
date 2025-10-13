@@ -4,109 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE06CCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 07:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63965CCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 07:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8CZd-0002EG-4M; Mon, 13 Oct 2025 03:02:25 -0400
+	id 1v8CbW-0003JV-DC; Mon, 13 Oct 2025 03:04:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v8CZb-0002Ab-02; Mon, 13 Oct 2025 03:02:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8CbT-0003Il-4M
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 03:04:19 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v8CZS-0002WH-Tx; Mon, 13 Oct 2025 03:02:22 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59CMPhMQ007148;
- Mon, 13 Oct 2025 07:02:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Tui+o87vrOLHn4WGClzo7wx+izWhxM
- w50xwAzVn40X8=; b=g5mmkq/zwm8mXJ4M5xMX+PGLaAmaj3X3FcLTHrUQJ+Kqis
- Sqv6ybJ1OgZ1CPA7cBFYxy9/1ia2HoGMT3vbJrQbwqkGiLQM3L1q8ZC9DENZEkPf
- eUpC4xGcFwNDVkR1fk2PEuEapWh4NANSDR4CQ1DijhFF+P3CpO3dXGgvgDn7dxfb
- rkUD9ViCtFzHgP7hYrP//YLmQ2uGbIgsbaHl5J6+TUz6cMnS04twBrLT1Y+2slr+
- zsHLjK8kT64nQKaKv4W4R9e30G6opAZHJVqKj+AC3OSivSmlu97NhcCvz574EXhA
- 5pqDjKB3l6lHNaxkirmNUFdqsdhNgswjWnZZ3XBg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey8ffse-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 07:02:07 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59D70YeZ017472;
- Mon, 13 Oct 2025 07:02:07 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey8ffsc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 07:02:07 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59D1tTHC015052;
- Mon, 13 Oct 2025 07:02:06 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r3sj4d8r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 07:02:06 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59D722lY31981890
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Oct 2025 07:02:02 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 99B85200F4;
- Mon, 13 Oct 2025 07:02:02 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1064E2010C;
- Mon, 13 Oct 2025 07:02:01 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.39.21.93])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 13 Oct 2025 07:02:00 +0000 (GMT)
-Date: Mon, 13 Oct 2025 12:31:58 +0530
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: npiggin@gmail.com, adityag@linux.ibm.com, milesg@linux.ibm.com,
- qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/ppc/pnv: Improve kernel/initrd load failure error
- messages
-Message-ID: <aOyj5p2xzoxCyYZC@linux.ibm.com>
-References: <20251007091214.403430-2-vishalc@linux.ibm.com>
- <CAFEAcA8VWKEy3XVo3b9pTg-jCAD2oA7=dFbOSRL3q+WRUoNBpA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8CbO-0002cn-AR
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 03:04:18 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8F06BC02DE;
+ Mon, 13 Oct 2025 10:04:01 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a50::1:2a] (unknown
+ [2a02:6bf:8080:a50::1:2a])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 04IE362FLiE0-A6RhBwbV; Mon, 13 Oct 2025 10:04:01 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760339041;
+ bh=HpPKYO5wB4E39U7vq7Bb3wIFV9l5T5jYFJgbxv08H3c=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Sq3xvJdZyPKbBuLuCF5zBzfvlXjZ1VNBKqxJENFZ2F7bEmdAgNr9TOX4bYo+ZJSkv
+ DWu1N0l6uwljnmkWsbDNsMwSFWVPM/14DoxtL7KNBDqavOgrRU9MkL6a7QsTvY6s0u
+ wGflEONqg5vn1Qtgk4TYD5xh4uGzuegEb1D2t1vM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <a6d054c9-6e1e-4ef2-ad63-9fedfdae1181@yandex-team.ru>
+Date: Mon, 13 Oct 2025 10:04:00 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8VWKEy3XVo3b9pTg-jCAD2oA7=dFbOSRL3q+WRUoNBpA@mail.gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CySVlY4sZoM8gV4Z2YZr_xVg-_-NtlU2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX0vxD9T3uIqG9
- tR0xgxjlwbma43fY2hzp1YLcE5i2NcLbBcdIQcUoRjncDhtFuVyxo2MQASOk4jVJ1ID4AcsVcHV
- 5YqcTwX19qOGjO/jpesi4bCgp6DuRZPf5B+/Z1ZDB+JMMASq6OhgBO42xo7JSxVtuAZiTU1YtcI
- JflCvt/m90B/l5ZuniUcuc6syFNWFHO//zslk2IOlrNZT/8epG1qvatJXHHXnzBsJdwNwqgPuvM
- ccm/7ml2kzquIxH1YppNBigTjetS+0aQtRHG7OvssYdZt5mbUc4l7+1/cBkA5co+P9i4cJQ05nR
- lZ3Iuks5TaJjFTMMks7Bzj4N8QaKFNdNRncrZj+23sXm++tHAs+H9daJK5pBF2B9rqbwBVsyEaI
- IIQxmB4PG4B8DF/A7a0uosWDkNyb7A==
-X-Proofpoint-GUID: BD18msN6j4ov8Cm0MoBzVBqYf3f64Leg
-X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68eca3ef cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=zuM0ofxTe5cFuCWjBz8A:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-13_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
- spamscore=0 malwarescore=0 impostorscore=0 clxscore=1011 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/33] qapi: docs: width=70 and two spaces between
+ sentences
+To: Thomas Huth <thuth@redhat.com>, armbru@redhat.com
+Cc: qemu-devel@nongnu.org, eblake@redhat.com
+References: <20251011135754.294521-1-vsementsov@yandex-team.ru>
+ <2e4da035-4996-4d1e-b3e1-9285a9c880e3@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <2e4da035-4996-4d1e-b3e1-9285a9c880e3@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -125,47 +79,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 07, 2025 at 02:29:52PM +0100, Peter Maydell wrote:
-> On Tue, 7 Oct 2025 at 13:59, Vishal Chourasia <vishalc@linux.ibm.com> wrote:
-> >
-> > When QEMU fails to load the kernel or initrd image, it previously emitted
-> > a generic error message such as:
-> >
-> >   qemu-system-ppc64: Could not load kernel 'vmlinux'
-> >
-> > This provides little context on why the failure occurred, which can make
-> > debugging difficult, especially for new users or when dealing with large
-> > images.
-> >
-> > The new messages also include the configured size limits (in MiB) to help
-> > users verify that their image files are within acceptable bounds.
+On 13.10.25 09:11, Thomas Huth wrote:
+> On 11/10/2025 15.56, Vladimir Sementsov-Ogievskiy wrote:
+>> Hi all!
+>>
+>> Let's bring the documentation in line with the requirements. And
+>> do check these requirements in QAPI parser, to avoid later
+>> further violations.
+>>
+>> Vladimir Sementsov-Ogievskiy (33):
+>>    qapi: Add documentation format validation
+>>    qapi/acpi.json: docs: width=70 and two spaces between sentences
+>>    qapi/audio.json: docs: width=70 and two spaces between sentences
+>>    qapi/block-core.json: docs: width=70 and two spaces between sentences
+>>    qapi/block-export.json: docs: width=70 and two spaces between
+>>      sentences
+>>    qapi/block.json: docs: width=70 and two spaces between sentences
+>>    qapi/char.json: docs: width=70 and two spaces between sentences
+>>    qapi/crypto.json: docs: width=70 and two spaces between sentences
+>>    qapi/dump.json: docs: width=70 and two spaces between sentences
+>>    qapi/introspect.json: docs: width=70 and two spaces between sentences
+>>    qapi/job.json: docs: width=70 and two spaces between sentences
+>>    qapi/machine-s390x.json: docs: width=70 and two spaces between
+>>      sentences
+>>    qapi/machine.json: docs: width=70 and two spaces between sentences
+>>    qapi/migration.json: docs: width=70 and two spaces between sentences
+>>    qapi/misc-arm.json: docs: width=70 and two spaces between sentences
+>>    qapi/misc-i386.json: docs: width=70 and two spaces between sentences
+>>    qapi/misc.json: docs: width=70 and two spaces between sentences
+>>    qapi/net.json: docs: width=70 and two spaces between sentences
+>>    qapi/qdev.json: docs: width=70 and two spaces between sentences
+>>    qapi/qom.json: docs: width=70 and two spaces between sentences
+>>    qapi/replay.json: docs: width=70 and two spaces between sentences
+>>    qapi/rocker.json: docs: width=70 and two spaces between sentences
+>>    qapi/run-state.json: docs: width=70 and two spaces between sentences
+>>    qapi/sockets.json: docs: width=70 and two spaces between sentences
+>>    qapi/stats.json: docs: width=70 and two spaces between sentences
+>>    qapi/tpm.json: docs: width=70 and two spaces between sentences
+>>    qapi/trace.json: docs: width=70 and two spaces between sentences
+>>    qapi/transaction.json: docs: width=70 and two spaces between sentences
+>>    qapi/ui.json: docs: width=70 and two spaces between sentences
+>>    qapi/vfio.json: docs: width=70 and two spaces between sentences
+>>    qapi/virtio.json: docs: width=70 and two spaces between sentences
+>>    qga/qapi-schema.json: docs: width=70 and two spaces between sentences
+>>    qapi/acpi-hest.json: docs: width=70 and two spaces between sentences
 > 
-> >          if (kernel_size < 0) {
-> >              error_report("Could not load kernel '%s'",
-> >                           machine->kernel_filename);
-> > +            error_report(
-> > +                "Possible reasons: file not found, permission denied, or size "
-> > +                "exceeds the maximum supported limit (%ld MiB).",
-> > +                KERNEL_MAX_SIZE / 1024 / 1024);
-> >              exit(1);
-> >          }
+> Oh my, that's a lot of code churn for very few gain. Why do we have a different standard (70 columns) for qapi docs than for the rest of the code (80 columns)? That's confusing and will always cause mistakes in the future, I guess...
 > 
-> Rather than printing a list of reasons why the load might
-> have failed, I think it would be better if we enhanced
-> the error handling in load_image_targphys() and friends
-> (i.e. use Error), so that these functions can report back
-> to the caller exactly why they failed and then the caller
-> can give that error message to the user. That way we can
-> improve the error reporting for every board that uses
-> these load functions.
-Hello Peter,
 
-Wouldn't it be better to print the error inside the function itself.
+Note, I've sent "[PATCH v2 00/33] qapi: docs: width=70 and two spaces between sentences", with not doubled patches (again, sorry for that :/.
 
-Thanks
-vishalc
-> 
-> thanks
-> -- PMM
-> 
+That since 9d167491cb2577d "docs/devel/qapi-code-gen: Update doc comment conventions" (2023), by Markus, written in
+qapi-code-gen.rst:
+
+     For legibility, wrap text paragraphs so every line is at most 70
+     characters long.
+
+     Separate sentences with two spaces.
+
+And I always forget it, when preparing my patches. Checking these rules during review, and than fixing is rather boring,
+so, I decided to try fix them all. Assised by AI, of course... Or, maybe AI assisted by me.
+
+If we decide, that it is too huge, we can proceed with some list of exclusions, to cover existing violations and avoid new ones.
+
+
+-- 
+Best regards,
+Vladimir
 
