@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808F6CCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 20:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C4BCCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 20:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8P7n-0000Pt-G2; Mon, 13 Oct 2025 16:26:31 -0400
+	id 1v8PKY-0002aB-78; Mon, 13 Oct 2025 16:39:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v8P7l-0000Pl-TQ
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:26:29 -0400
-Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
+ id 1v8PKW-0002a3-O7
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:39:40 -0400
+Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v8P7k-0001mS-Cn
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:26:29 -0400
-Received: by mail-io1-xd2d.google.com with SMTP id
- ca18e2360f4ac-930a6c601b3so454279439f.3
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 13:26:28 -0700 (PDT)
+ id 1v8PKQ-0003Ac-E3
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 16:39:40 -0400
+Received: by mail-il1-x12e.google.com with SMTP id
+ e9e14a558f8ab-43094e0aeaeso12414875ab.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 13:39:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760387187; x=1760991987; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760387973; x=1760992773; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EFqLIIaGv1zmrg2aFa0EnZFt8X6OLTaKCJe++aPiClQ=;
- b=kNhtQ7dU7BbIOHv6+qgezm/tCUjyxTcE/S3j8wXMqG5UyacY055O+KzBVLrQj5k24s
- ZOPzHGUnseiReTV/vH/e1N1SlcFUD9A6IKlC7A7kcsoZ0gLglm9TGWcXIWD3MaNzs0cZ
- YzG2UMD3YU19YoQ2O9F2sxswYDCEVqDTF6GgOL/JwjfrpFyQMuR1s5pV7R/55FxtvyOD
- 4EigTINGgohj7iBpL4KfNglyf/MxfE/zV3r7kgTXkEtpCpYBhx64ZJVcG0Aj4BiLnJ8P
- OF8++GoOe5P4MwKS8QChlDOHqhMqGQ9oWOCR0b5HqHDKFokcZGiAI33Z6EWoyE19x9LK
- koHg==
+ bh=0/8uRY7gZ0GNOKvj9mtMZSptl5iQEplehnmX9nvAKZI=;
+ b=m4mZzpmLPI6MJuqWxcWMtD+abFDeWH1zsR6NKOPQRWuy6z2uFtP8lV9FkkEXB/vR9z
+ HOQcPt4zmrb1v3V0D5yw298eWeBxgBrBXJEHARDJNne6vFIFdtCOqdkX6zjntRt9nFSR
+ h83cvsDaLZg112uFb3WyZJw5RizDB7RnOun7rns/eGSxUqLL6+jJjYoB7SlwAZN+sf0I
+ be8g8LmfMyBPTjK/Lu2excSHnqCksb0jzvDdpNrfcI/forgSESFB/JdG+bjmgB+o+dPH
+ 6xJmg2hnxU7qJeaGDheCLJt0Id61bwy6l997KRPy4qN+Iv0uUJ1lePRD4diMQsX1AOSc
+ 8biA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760387187; x=1760991987;
+ d=1e100.net; s=20230601; t=1760387973; x=1760992773;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EFqLIIaGv1zmrg2aFa0EnZFt8X6OLTaKCJe++aPiClQ=;
- b=qNrVji1aiLhItbCQnR0pieLy7BhXbw2LWDc1r+uRD8pDQrqIrjRPqJ0zeUwwDK2Hc/
- 2WlF+p1HXZ/wnKGezuWn9dPqhPzJpkX7m2611id0gkukeLGwRzCGNmFrSp5SYb0hN+/g
- fxyxJ9z135hT9vtuhGDL6YgtVR+xBiLXZOZac6TSSlKe6c9PGODnJuzN9uZ0nDedtKFj
- vtQruZ8QJDr/8F412rXT4It3AFheAm4SkYXY5CiIiPgm1ayNe4wgLvGfojDMlfQOv6NR
- yRmaD74M6Pj/hpQtnHlTkfD7RdNHGZNJwF54Tpq2MyML+MX40k3w6fFdpYQxnAp/nkEH
- H2dQ==
+ bh=0/8uRY7gZ0GNOKvj9mtMZSptl5iQEplehnmX9nvAKZI=;
+ b=wXDY8oJ1Gg0z1jWO4IOfaGcRYGJGtgX0L6iaOFc8LsxG3xTynXR1i9261D5kKIoBqs
+ l4t3N3uyeppXXLLKAyBYOiFRsYiV8jweiR2CDQ2tChVy8g3HiFneizdDMJKyry4HEGQd
+ cdKrVj2qHYspSJ7WRTcoJge/8qpnBx6OuI2q+nyfsN7LFLk8HWgcwMD6ugaZgfK22eI6
+ qVsJYCkTAjr2AyCi7KGuuxcXXzHCurxrzOSLDsE4e9Bu3KxBkC8AgKtB/9xS6hwHhnEo
+ s1R32u7XuItzy4SoXp6g0Dh2wlCdASd+veVY9r66T6WpdgpBlgtT6YY+WMxd5rAeLPTk
+ 1Deg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWV9WTlTG79iUS0VGDqfzJi65IcmVMfT8TnKK03eLloNUX/o6iQ+akBDXm8tG2nwQsSt4apO0U3N4QI@nongnu.org
-X-Gm-Message-State: AOJu0YzcyT43CU3jyg6A3VymQaBbX2E/AQnVjrWz3NM5unliqzG0o6nb
- at26QgVHg/2u1/Xa+H62wwQlbGUqkq+efJB3o3ZI++Djsu2dKwF2psNnewf/PI9RqM3SVuMpwHq
- pD/7U7V8xYmp5SGbLEPwadSANqCpx/vXd8SfBHyc=
-X-Gm-Gg: ASbGncvRTqJP3pTR1E++RjsWiGvrmr5dD1/Bx1SVK44HFeh+gHiLrSlRoOYCjXMaUE0
- pWK8kEwq76qTFX/CkS+SjDEycDwg6g7dO4gMrDFgd+QWAHBxjFWQUCmJournfhsHv0DlH5Qejpn
- xMqn+VEv2T7TpiiJ+YTcBAUfKKB+X5oKiKSW7JEObEnZD0smVfvTtMIfgxbt/CP6gq3LGnolO8e
- sb012paG0AezU2w57obU3fQ+0J4fxQhlc0U/z0NUbZUo2M=
-X-Google-Smtp-Source: AGHT+IHQq+wMpQ6n6eOlq31UBuEmqkMrsQy5AE6P2y/RLXAyxlbVOfqNnfMmvb6ULjQov4GK4IR7Is3OVEvQhFfT/z4=
-X-Received: by 2002:a05:6e02:248f:b0:42f:8ae3:20c with SMTP id
- e9e14a558f8ab-42f8ae30b89mr240565295ab.19.1760387187181; Mon, 13 Oct 2025
- 13:26:27 -0700 (PDT)
+ AJvYcCWfuTddLGKZLluFMni72cS3lV298F4kMCP76BmODc4S7xgBxGNzpRMXPWqGTeE+8B7gutt6IHcNMwlW@nongnu.org
+X-Gm-Message-State: AOJu0Yy7uQtU//+tmWP1Y3jEHGZVY7ev+HNtf3OXv74T5YR19lf78WqB
+ a3yC5CNoSXjVeV4+nu+D2XYpEi32lNsPesdStMsQKv0iPhi8WEzPGVSUUaP1J1jRK6pyFaEHxHX
+ KLmz9QMBx31F91OzpcDjEghE85zQ2Gwo=
+X-Gm-Gg: ASbGncvuCdgUcuXpfPnp2pEsRhHXz+G5a2EkEHUrXjL4IA//2sQR8Pc79uuo+3l1Uus
+ TTnu+WSm+hpUiZX8WzYRv7qG4nfS24rFkceDL28eoCOzA7jxCGoax7yxOYGjpRqUoNscizIWmyd
+ JGDizxj5zm96+Q2ZMUy+8hdmM2hrmruiSxvHZym6WqMAyDeD/hyafqlICvblQwGUeTehizvkfhV
+ ECeDgGTYPeS0Xj5QgY43/ng2NFvpsNfp6ls
+X-Google-Smtp-Source: AGHT+IEXKWkmgRlaoSj5BD5oxqnqDtgBTnZuDYkTRU3ih1kOYlrd0tJys6xHPplsS2l8QblzqSCHQAmN7AzWdo3jaZk=
+X-Received: by 2002:a05:6e02:b2f:b0:42d:b5d0:1930 with SMTP id
+ e9e14a558f8ab-42f873fae6amr233489745ab.23.1760387973098; Mon, 13 Oct 2025
+ 13:39:33 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251011232404.561024-1-vsementsov@yandex-team.ru>
- <20251011232404.561024-13-vsementsov@yandex-team.ru>
-In-Reply-To: <20251011232404.561024-13-vsementsov@yandex-team.ru>
+ <20251011232404.561024-16-vsementsov@yandex-team.ru>
+In-Reply-To: <20251011232404.561024-16-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 13 Oct 2025 16:26:16 -0400
-X-Gm-Features: AS18NWAEZgTKn-25JxAkXCnKpUG78rVqCwISGFMk9ySWUNCe0yAkpeNZ_Ojrs_g
-Message-ID: <CAFubqFv-u9S5hKhO2HixQPWJE8dQ5Z2jxyrxiMjLuamUygxR_A@mail.gmail.com>
-Subject: Re: [PATCH v2 12/23] vhost: simplify calls to vhost_memory_unmap()
+Date: Mon, 13 Oct 2025 16:39:21 -0400
+X-Gm-Features: AS18NWAxU38KXnh1NgBHnKPZDwQHCLsgbC-hfuJesx_Y39V0DMLZYa4dF1MrccA
+Message-ID: <CAFubqFsuB4pN4N73gQ3wAUKLOdPZbZooJ76vvN5SiFtRfFw=Vw@mail.gmail.com>
+Subject: Re: [PATCH v2 15/23] vhost: final refactoring of vhost vrings
+ map/unmap
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net, 
  qemu-devel@nongnu.org, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,55 +103,134 @@ Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 On Sat, Oct 11, 2025 at 7:24=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> No reason to calculate memory size again, as we have corresponding
-> variable for each vring.
+> Introduce helper functions vhost_vrings_map() and
+> vhost_vrings_unmap() and use them.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/virtio/vhost.c | 18 ++++++------------
->  1 file changed, 6 insertions(+), 12 deletions(-)
+>  hw/virtio/vhost.c | 82 ++++++++++++++++++++++++++++++-----------------
+>  1 file changed, 52 insertions(+), 30 deletions(-)
 >
 > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 6fec193d5f..e00ba9ecc8 100644
+> index cc07450dcb..ebdea096aa 100644
 > --- a/hw/virtio/vhost.c
 > +++ b/hw/virtio/vhost.c
-> @@ -1374,12 +1374,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+> @@ -488,6 +488,53 @@ static void vhost_memory_unmap(struct vhost_dev *dev=
+, void **buffer,
+>      *buffer =3D NULL;
+>  }
+>
+> +static void vhost_vrings_unmap(struct vhost_dev *dev,
+> +                               struct vhost_virtqueue *vq, bool touched)
+> +{
+> +    vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
+> +                       touched ? vq->used_size : 0);
+> +    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
+> +                       touched ? vq->avail_size : 0);
+> +    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0,
+> +                       touched ? vq->desc_size : 0);
+> +}
+> +
+> +static int vhost_vrings_map(struct vhost_dev *dev,
+> +                            struct VirtIODevice *vdev,
+> +                            struct vhost_virtqueue *vq,
+> +                            unsigned idx)
+> +{
+> +    vq->desc_phys =3D virtio_queue_get_desc_addr(vdev, idx);
+> +    if (vq->desc_phys =3D=3D 0) {
+> +        /* Queue might not be ready for start */
+> +        return 0;
+> +    }
+> +    vq->desc_size =3D virtio_queue_get_desc_size(vdev, idx);
+> +    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, vq->desc_size, fal=
+se);
+> +    if (!vq->desc) {
+> +        return -ENOMEM;
+> +    }
+> +
+> +    vq->avail_size =3D virtio_queue_get_avail_size(vdev, idx);
+> +    vq->avail_phys =3D virtio_queue_get_avail_addr(vdev, idx);
+> +    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, vq->avail_size, =
+false);
+> +    if (!vq->avail) {
+> +        goto fail;
+> +    }
+> +
+> +    vq->used_size =3D virtio_queue_get_used_size(vdev, idx);
+> +    vq->used_phys =3D virtio_queue_get_used_addr(vdev, idx);
+> +    vq->used =3D vhost_memory_map(dev, vq->used_phys, vq->used_size, tru=
+e);
+> +    if (!vq->used) {
+> +        goto fail;
+> +    }
+> +
+> +    return 1;
+> +fail:
+> +    vhost_vrings_unmap(dev, vq, false);
+> +    return -ENOMEM;
+> +}
+> +
+>  static int vhost_verify_ring_part_mapping(void *ring_hva,
+>                                            uint64_t ring_gpa,
+>                                            uint64_t ring_size,
+> @@ -1286,30 +1333,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>      };
+>      struct VirtQueue *vvq =3D virtio_get_queue(vdev, idx);
+>
+> -    vq->desc_phys =3D virtio_queue_get_desc_addr(vdev, idx);
+> -    if (vq->desc_phys =3D=3D 0) {
+> -        /* Queue might not be ready for start */
+> -        return 0;
+> -    }
+> -    vq->desc_size =3D virtio_queue_get_desc_size(vdev, idx);
+> -    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, vq->desc_size, fal=
+se);
+> -    if (!vq->desc) {
+> -        r =3D -ENOMEM;
+> -        goto fail;
+> -    }
+> -    vq->avail_size =3D virtio_queue_get_avail_size(vdev, idx);
+> -    vq->avail_phys =3D virtio_queue_get_avail_addr(vdev, idx);
+> -    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, vq->avail_size, =
+false);
+> -    if (!vq->avail) {
+> -        r =3D -ENOMEM;
+> -        goto fail;
+> -    }
+> -    vq->used_size =3D virtio_queue_get_used_size(vdev, idx);
+> -    vq->used_phys =3D virtio_queue_get_used_addr(vdev, idx);
+> -    vq->used =3D vhost_memory_map(dev, vq->used_phys, vq->used_size, tru=
+e);
+> -    if (!vq->used) {
+> -        r =3D -ENOMEM;
+> -        goto fail;
+> +    r =3D vhost_vrings_map(dev, vdev, vq, idx);
+> +    if (r <=3D 0) {
+> +        return r;
+>      }
+>
+>      vq->num =3D state.num =3D virtio_queue_get_num(vdev, idx);
+> @@ -1371,9 +1397,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
 >      return 0;
 >
 >  fail:
-> -    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, =
-idx),
-> -                       0, 0);
-> -    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev=
-, idx),
-> -                       0, 0);
-> -    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, =
-idx),
-> -                       0, 0);
-> +    vhost_memory_unmap(dev, &vq->used, vq->used_size, 0, 0);
-> +    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, 0);
-> +    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, 0);
+> -    vhost_memory_unmap(dev, &vq->used, vq->used_size, 0, 0);
+> -    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, 0);
+> -    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, 0);
+> +    vhost_vrings_unmap(dev, vq, false);
 >      return r;
 >  }
 >
-> @@ -1426,12 +1423,9 @@ static int do_vhost_virtqueue_stop(struct vhost_de=
-v *dev,
+> @@ -1420,9 +1444,7 @@ static int do_vhost_virtqueue_stop(struct vhost_dev=
+ *dev,
 >                                                  vhost_vq_index);
 >      }
 >
-> -    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, =
-idx),
-> -                       1, virtio_queue_get_used_size(vdev, idx));
-> -    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev=
-, idx),
-> -                       0, virtio_queue_get_avail_size(vdev, idx));
-> -    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, =
-idx),
-> -                       0, virtio_queue_get_desc_size(vdev, idx));
-> +    vhost_memory_unmap(dev, &vq->used, vq->used_size, 1, vq->used_size);
-> +    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, vq->avail_siz=
+> -    vhost_memory_unmap(dev, &vq->used, vq->used_size, 1, vq->used_size);
+> -    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, vq->avail_siz=
 e);
-> +    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, vq->desc_size);
+> -    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, vq->desc_size);
+> +    vhost_vrings_unmap(dev, vq, true);
 >      return r;
 >  }
 >
