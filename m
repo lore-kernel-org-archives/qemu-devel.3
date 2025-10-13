@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41E5CCD18D
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 18:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BADCCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Nfm-00082U-5m; Mon, 13 Oct 2025 14:53:30 -0400
+	id 1v8Np2-0001a4-5e; Mon, 13 Oct 2025 15:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v8Nfh-000825-V1
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 14:53:26 -0400
-Received: from mail-io1-xd2e.google.com ([2607:f8b0:4864:20::d2e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Noy-0001ZV-0R
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:03:00 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1v8Nff-0007GQ-Tk
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 14:53:25 -0400
-Received: by mail-io1-xd2e.google.com with SMTP id
- ca18e2360f4ac-93b9022d037so182711939f.2
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 11:53:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8Now-0008VK-FX
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:02:59 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46e542196c7so28950735e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:02:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760381602; x=1760986402; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+SZKTc5H9XlGxWTcwZ7jv9QcqClCq0Jj9u1/0RIhpwY=;
- b=LHu30093RNyIUyAkzrPhGGmy1kMQsF06XvmpU8nZVEHSJTRzKCwlxYvDNoBokoXTFF
- l3ejm7PsTHCBXpIm5DkH8MNptcbbyQHBIT+TvQFZ2UJ2rtG76HnbmxgciAjWX751snCS
- DyUsI6k1IP/GcUZsexye6GNSediTuh8OVtRwjLWp08zC9g0VR0/0moN36SOqVrpDNk8x
- ip6ecbIOlqsh1GG6WQvPAo6DNyzzqokhZLBfBbtqDzAgiEcmPLxk3Uy2YtlxrnYxIf8H
- /FpC/xlRj9ZMfHaVGoZ2YLfUWOE9OsSzNUGOhWGDt2F9YA2ssnr5GZS88zxNWX+Spyza
- JaYw==
+ d=linaro.org; s=google; t=1760382175; x=1760986975; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wKJtvVBeUpceoS4GGuZ7Rw36+X8tmV8xTrk3JT9ph9A=;
+ b=mkhe/hsMASChTgsnqlAEObyaVa/8C3VEGdrY/Qj7H8Ceoc0Qud7Ev0EA9D7jp9wWuM
+ mJbfZQ+v62VFhwbBxWviAe/rygBvzVOK7PmvRHv2500aV4+B4iX0v7vqmee7vWUEqkYS
+ WbLbctLJWcH1L02RXGvV7ui0Hx4Ewcfz3BnCPhAlHm8e8qjmK9Go1Tx0jHej3D6a8vk8
+ K61Enwddhl8Y/MhgCiqtPrYN5H9c1DPR/G2q8KE/IxUDnVqyBGl24R809u/6QPxf8Fl8
+ ysbQD02zBrrwBHQKfz1OcJcZazpORzbEsEU7WaEwtWpbwwTYBKWwkeaAhvPCuy0EUpEh
+ Nw9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760381602; x=1760986402;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+SZKTc5H9XlGxWTcwZ7jv9QcqClCq0Jj9u1/0RIhpwY=;
- b=a6xe8+M7WqrM1pDKLSm6llXVLhnh01Bz4I2G3XueKvLln6XpEO0XnURNvYGi0cofVY
- PVm4xoTKx8l+72nKfpTMzHLJUCuoXgETq//bqu4NNh7fG9zDd+n+6ir1XiJ3gPXS9PLO
- xvaNzrKrFLUV7jKResvbDoEsqhKlfUFUmfWwnfhAO320W6IyiPbIrdj75bs7+SBBzdmU
- xZiRTk5DEq+/M6ABf7iHnXWj+HZ/PhTAJnC2a0cCByto3X70JHvlR6n3necptRwt1N8t
- yAxpVApAPs2riCAHjb1pvaqf2Zzco+RbGgFQwdIbdRo/kfRTZNs6AM3tQoCP7glxdRms
- D/4A==
+ d=1e100.net; s=20230601; t=1760382175; x=1760986975;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wKJtvVBeUpceoS4GGuZ7Rw36+X8tmV8xTrk3JT9ph9A=;
+ b=DPfYSvfsynaQ8ozHhw/AYhwSK9yWfCmOAcejZakmK+guKAKc53wyIEjTQfJd5Q8CMj
+ As4Rbt38Jv6RG0rb3b47QJ8gklbkbBnRm16N1VN94bl3dZMnI7uvaaqm3eHThpuSoS6H
+ n5S6DQ8YK3lntHN4FX1kXvmnApBMiIfNnfr8RsshNhqA/4Fc8hMFGQA4F4vzvbdkkJUV
+ 3hfqXodSRZPu1boyqesgViHTtN0XF52dSuruMbH59mN1V3+G7O5gmdWYdDu/ER4KsJLf
+ 9Mjhrgb3bVuJW4QxcyTxsqBW8XkyqdbKrvQaLyv76WAPEevFJiE0OFYdn7+4J3X226BR
+ g8rQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWe3MgV0JmML+xka2qkzxf6V0QidRQr7uo8He1UQG/lpo9g+n2LKIkuadIr2SgDbJC1swqIW89D/RUV@nongnu.org
-X-Gm-Message-State: AOJu0YyUWAM6jl7aZ6qEcTptQ2AtpZSFRkWqN9swF44HiOEU++K3wcbd
- it4LKVkdFGykZHTB4vKl0PR27aQTkwjTKf9H9uBz2Mip5wcN/EzXODGF2zeJo7rSj7cZK1QKe4h
- ganIA8XOos5sgg3XSwvMsb/mL3arfAaGvO1942OM=
-X-Gm-Gg: ASbGncvOeImaPAj2P5RsPmc/y6n8irNo6EZtCC3/hEm3lLRVVNSEkBt8EgtkqI62Jkt
- el65m5CXR8E9d6z8OU6aCqLJcDxXD41/46Wmtf60yHGcCW9avWOs91AHs8YEWLGm2szxsUjIJNT
- twemeOilqqjLcd9gm6tUguN8gym8DbyYodkHB3XNOm69en+3jEUWK0qMPX2CAvDEQtaIzWsyHS1
- gdxY3ddKgL+C9Q+94DiW7B8I9j5n+K2FRnW
-X-Google-Smtp-Source: AGHT+IH+Cerpcw1lS4BEiv/1+mC5IsQq5LtP89/G608ScWgg3Go23sArlPw1EARL4CruxTqSn7ls49fLBYY2q2pNZ+Y=
-X-Received: by 2002:a05:6e02:318f:b0:42f:a7ee:4922 with SMTP id
- e9e14a558f8ab-42fa7ee5093mr109800985ab.16.1760381602518; Mon, 13 Oct 2025
- 11:53:22 -0700 (PDT)
+ AJvYcCXjB0ICL1MhK94TDsiAFcgAmDu6nR3u3OO4MTeOfVmRcCwXXdM0/641bq0Us5UkGcUCt8/lcKsfiaDh@nongnu.org
+X-Gm-Message-State: AOJu0Yz06Arj2TEZY7oHaSoCJLZD00FW+Hx3BqnM8FRwPrDh0k3fec23
+ PlI/Ou62khblFJp6jv1BWFJjOSJZU3gDDBFkpiX6qPwWJ/JVBDHXazbDxCsoxDFJWjQ=
+X-Gm-Gg: ASbGncs8btLuLvmNSHdZrrqbCflDQZMpJeVEjKnPjCRpAYRYi9+GfY5PIbCNPg6zvOE
+ k2/x4eLwuapiKZuOORr51uY3n/5QK3I643VmhJ/JDhQYbsIICj8Dl2HfG2amLMIjdQ/SXxFOx3Z
+ PDBAhwHVZANGBxBTK2fT+v+Ef2TZ4igbb/Z1ouq57vTHtKq4mkylECJOpEGw5D0/P9lELL/BHMB
+ hwrOTsaG0eIYCKD9WKFptCcy5Qd4DzZXNP4kFUAJTYJkhzCgiUAQ39XjDcVlEXRbwxIaayWmBy9
+ 3zlYYRclehPdvHCPvkOcNkJhjs9Mq5VnPYASwx4ZtCqpmvjTEMEq8Td9zS8XgGRQBhyhB3v+jVK
+ tGXOVfLRY4bOdwgKZBp4P7gEgnEcijTe4CN3q+2JLW85GLtWpyD4F4NdjQpUuG16kW9qlDS6BwX
+ Cbn7jwHB1AjLqBklhRyCaGGj8=
+X-Google-Smtp-Source: AGHT+IHH11zCSmmv2HyW/zq6ZrYND0/s/6qw5dDtxk0RD0xvF0e4++DMwcu0QSFIdAFGYjRcpGdTJA==
+X-Received: by 2002:a05:600c:1277:b0:46c:adf8:cd82 with SMTP id
+ 5b1f17b1804b1-46fa2952c02mr127987755e9.3.1760382175311; 
+ Mon, 13 Oct 2025 12:02:55 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce589a21sm20144116f8f.23.2025.10.13.12.02.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Oct 2025 12:02:54 -0700 (PDT)
+Message-ID: <d3e9d489-eb54-4540-9752-f691f6481c40@linaro.org>
+Date: Mon, 13 Oct 2025 21:02:53 +0200
 MIME-Version: 1.0
-References: <20251011232404.561024-1-vsementsov@yandex-team.ru>
- <20251011232404.561024-5-vsementsov@yandex-team.ru>
-In-Reply-To: <20251011232404.561024-5-vsementsov@yandex-team.ru>
-From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 13 Oct 2025 14:53:11 -0400
-X-Gm-Features: AS18NWCYW-3K_2GpkkJCzBpsFwkrF0dExKI2aD8g_NtWxyrn6sB-sWxnDXmqz8M
-Message-ID: <CAFubqFvJJZ+KU5nx=r4TjZ4P17B8jXpxWD1LYk-Z9opVGAr6sg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/23] vhost: move protocol_features to vhost_user
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net, 
- qemu-devel@nongnu.org, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2e;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 1/4] hw: vmapple: include missing headers
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Cameron Esfahani <dirty@apple.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>
+References: <20251007203153.30136-1-mohamed@unpredictable.fr>
+ <20251007203153.30136-2-mohamed@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251007203153.30136-2-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,187 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-
-On Sat, Oct 11, 2025 at 7:24=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> As comment says: it's only for vhost-user. So, let's move it
-> to corresponding vhost backend realization.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 7/10/25 22:31, Mohamed Mediouni wrote:
+> Disablement by default led to:
+> 
+> ../hw/vmapple/vmapple.c:276:39: error: use of undeclared identifier 'GTIMER_VIRT'
+>    276 |         qdev_connect_gpio_out(cpudev, GTIMER_VIRT,
+>        |                                       ^
+> ../hw/vmapple/vmapple.c:479:54: error: use of undeclared identifier 'QEMU_PSCI_CONDUIT_HVC'
+>    479 |         object_property_set_int(cpu, "psci-conduit", QEMU_PSCI_CONDUIT_HVC,
+>        |                                                      ^
+> ../hw/vmapple/vmapple.c:556:13: error: call to undeclared function 'arm_build_mp_affinity'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>    556 |             arm_build_mp_affinity(n, GICV3_TARGETLIST_BITS);
+>        |             ^
+> 3 errors generated.
+> 
+> pretty quickly.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->  backends/cryptodev-vhost.c     |  1 -
->  hw/net/vhost_net.c             |  2 --
->  hw/virtio/vhost-user.c         | 26 +++++++++++++++++++++++---
->  hw/virtio/virtio-qmp.c         |  6 ++++--
->  include/hw/virtio/vhost-user.h |  3 +++
->  include/hw/virtio/vhost.h      |  8 --------
->  6 files changed, 30 insertions(+), 16 deletions(-)
->
-> diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-> index abdfce33af..c6069f4e5b 100644
-> --- a/backends/cryptodev-vhost.c
-> +++ b/backends/cryptodev-vhost.c
-> @@ -60,7 +60,6 @@ cryptodev_vhost_init(
->
->      crypto->cc =3D options->cc;
->
-> -    crypto->dev.protocol_features =3D 0;
->      crypto->backend =3D -1;
->
->      /* vhost-user needs vq_index to initiate a specific queue pair */
-> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> index fda90e231e..ca19983126 100644
-> --- a/hw/net/vhost_net.c
-> +++ b/hw/net/vhost_net.c
-> @@ -265,9 +265,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *opt=
-ions)
->              goto fail;
->          }
->          net->backend =3D r;
-> -        net->dev.protocol_features =3D 0;
->      } else {
-> -        net->dev.protocol_features =3D 0;
->          net->backend =3D -1;
->
->          /* vhost-user needs vq_index to initiate a specific queue pair *=
-/
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index b8231dcbcf..3fd11a3b57 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -11,6 +11,7 @@
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
->  #include "hw/virtio/virtio-dmabuf.h"
-> +#include "hw/virtio/virtio-qmp.h"
->  #include "hw/virtio/vhost.h"
->  #include "hw/virtio/virtio-crypto.h"
->  #include "hw/virtio/vhost-user.h"
-> @@ -264,6 +265,14 @@ struct vhost_user {
->      /* Our current regions */
->      int num_shadow_regions;
->      struct vhost_memory_region shadow_regions[VHOST_USER_MAX_RAM_SLOTS];
-> +
-> +    /**
-> +     * @protocol_features: the vhost-user protocol feature set by
-> +     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
-> +     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
-> +     * by the backend (see @features).
-> +     */
-> +    uint64_t protocol_features;
->  };
->
->  struct scrub_regions {
-> @@ -275,7 +284,8 @@ struct scrub_regions {
->  static bool vhost_user_has_protocol_feature(struct vhost_dev *dev,
->                                              uint64_t feature)
->  {
-> -    return virtio_has_feature(dev->protocol_features, feature);
-> +    struct vhost_user *u =3D dev->opaque;
-> +    return virtio_has_feature(u->protocol_features, feature);
->  }
->
->  static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *m=
-sg)
-> @@ -2229,8 +2239,8 @@ static int vhost_user_backend_init(struct vhost_dev=
- *dev, void *opaque,
->          }
->
->          /* final set of protocol features */
-> -        dev->protocol_features =3D protocol_features;
-> -        err =3D vhost_user_set_protocol_features(dev, dev->protocol_feat=
-ures);
-> +        u->protocol_features =3D protocol_features;
-> +        err =3D vhost_user_set_protocol_features(dev, u->protocol_featur=
-es);
->          if (err < 0) {
->              error_setg_errno(errp, EPROTO, "vhost_backend_init failed");
->              return -EPROTO;
-> @@ -3021,6 +3031,16 @@ static int vhost_user_check_device_state(struct vh=
-ost_dev *dev, Error **errp)
->      return 0;
->  }
->
-> +void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
-> +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +
-> +    assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_USER);
-> +
-> +    status->vhost_dev->protocol_features =3D
-> +        qmp_decode_protocols(u->protocol_features);
-> +}
-> +
->  const VhostOps user_ops =3D {
->          .backend_type =3D VHOST_BACKEND_TYPE_USER,
->          .vhost_backend_init =3D vhost_user_backend_init,
-> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-> index dd1a38e792..82acb6d232 100644
-> --- a/hw/virtio/virtio-qmp.c
-> +++ b/hw/virtio/virtio-qmp.c
-> @@ -821,12 +821,14 @@ VirtioStatus *qmp_x_query_virtio_status(const char =
-*path, Error **errp)
->          status->vhost_dev->acked_features =3D
->              qmp_decode_features(vdev->device_id, hdev->acked_features_ex=
-);
->
-> -        status->vhost_dev->protocol_features =3D
-> -            qmp_decode_protocols(hdev->protocol_features);
->          status->vhost_dev->max_queues =3D hdev->max_queues;
->          status->vhost_dev->backend_cap =3D hdev->backend_cap;
->          status->vhost_dev->log_enabled =3D hdev->log_enabled;
->          status->vhost_dev->log_size =3D hdev->log_size;
-> +
-> +        if (hdev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_USER=
-) {
-> +            vhost_user_qmp_status(hdev, status);
-> +        }
->      }
->
->      return status;
-> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-use=
-r.h
-> index 9a3f238b43..36d96296a3 100644
-> --- a/include/hw/virtio/vhost-user.h
-> +++ b/include/hw/virtio/vhost-user.h
-> @@ -10,6 +10,7 @@
->
->  #include "chardev/char-fe.h"
->  #include "hw/virtio/virtio.h"
-> +#include "qapi/qapi-types-virtio.h"
->
->  enum VhostUserProtocolFeature {
->      VHOST_USER_PROTOCOL_F_MQ =3D 0,
-> @@ -111,4 +112,6 @@ void vhost_user_async_close(DeviceState *d,
->                              CharBackend *chardev, struct vhost_dev *vhos=
-t,
->                              vu_async_close_fn cb);
->
-> +void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status);
-> +
->  #endif
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index 3e69e47833..e308bc4556 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -104,14 +104,6 @@ struct vhost_dev {
->      VIRTIO_DECLARE_FEATURES(features);
->      VIRTIO_DECLARE_FEATURES(acked_features);
->
-> -    /**
-> -     * @protocol_features: is the vhost-user only feature set by
-> -     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
-> -     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
-> -     * by the backend (see @features).
-> -     */
-> -    uint64_t protocol_features;
-> -
->      uint64_t max_queues;
->      uint64_t backend_cap;
->      /* @started: is the vhost device started? */
-> --
-> 2.48.1
->
+>   hw/vmapple/vmapple.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
+> index 16e6110b68..5928df4411 100644
+> --- a/hw/vmapple/vmapple.c
+> +++ b/hw/vmapple/vmapple.c
+> @@ -51,6 +51,8 @@
+>   #include "system/reset.h"
+>   #include "system/runstate.h"
+>   #include "system/system.h"
+> +#include "gtimer.h"
+> +#include "cpu.h"
+
+Queued using instead:
+
+#include "target/arm/gtimer.h"
+#include "target/arm/cpu.h"
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
