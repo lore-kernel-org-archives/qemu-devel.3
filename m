@@ -4,94 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1515CCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 14:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16625CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 14:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8JhY-0003fs-No; Mon, 13 Oct 2025 10:39:04 -0400
+	id 1v8Juy-000811-5S; Mon, 13 Oct 2025 10:52:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v8JhX-0003fc-5P
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 10:39:03 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v8JhU-0006lI-AJ
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 10:39:02 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-781db5068b8so3441543b3a.0
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 07:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1760366334; x=1760971134; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ver9Yd3SIbwge5Q1rh7enWDVvrg2cNYeuPXki2eM/Ok=;
- b=C0uD9i9Mpw4wrqZRg6dpQSfV+L4/bar9hguDoZ+ciWeUB2wfVyGs21Q7iM3adm2HrI
- Qf4ZpIcLK0TtD8x6aJPko0xj6QKzAHMYAbyfhOl+F99OS9DF1G2x5pkQVsSNnjUU+Jib
- sjLQynfP4wgtCUtI6RBEhkoTEjpgjAmny9ABeeQqkfCg/H8lwYXEJh34QBOvWBVoAxyW
- //1H+BggEiEWk65ujdh89JW6YcpqD98ZLaTrflQlkp+g7DSRh4FERDwXX9FhRN2Fdnwc
- gVTKXUQNH39YpH5+jdyYULdY2xmx2rIemLBdaOhG1pAt6o4ltEF4wjVSfEnIiKUs9IHu
- CFRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760366334; x=1760971134;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ver9Yd3SIbwge5Q1rh7enWDVvrg2cNYeuPXki2eM/Ok=;
- b=UJrZ+rF9zmpepeuXuUhPYKfXlbl+uSapstH3WU74Nuj890K0PPi8mDgbO1U8jnWouT
- FxdV5pcuSXGbzN3Ob/9mL5ffMAitkv3qLofWkncKFQGK7iDzuOQ1rTUNLTFZjFVrxyMK
- 4b1/Xc2Ee6NtlJfNYnZ3CiRh0nfd27cCPgXvC5iHh7geH4rYHqjMkMqqS0LPEw7D/z9V
- Vp95B53TBJAHkzzKUkEsQgJRMaiL7Lja4P8ub4rGSUWJkePSzGGetMOqZjC1+nzroALc
- 22mcvDq95yyCM4vTTdj8jDW7Yzp5Cx7yBmmUohdqZinBfl4wIz4nMf1mdLcCFDenyUbz
- 9nLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGkUiSzQS+CDs6H0NXE4BhamMKNomfus/ybiGTk1LcPx8JfM/teZzz3o7gEkqGDRWGwjNJLjY0pdal@nongnu.org
-X-Gm-Message-State: AOJu0Yy0230A4dN3GR3Ng4JGOxz31gS3S6kgsL8dSdMXpU0c2cjqprZs
- YqMr6OmXRnMqpUNw0jANW6NAC6sNLE4cJbTAtDQz/miOFfGZrP/zBejqpZkFVd4tCLg=
-X-Gm-Gg: ASbGncsR2JY7Awb5xaa/XKrbFrKqcu9J1EPgqkOEhBNhxoOiKOo4ZGc3TLKXKgwE9m0
- lqFIfDGnTru+rtG75MQFN5A6oCdL2i5KzM1leSRKJIIaX97L6y7msRfaTSq16eOGj1c3OP5MbdW
- PEF4oPBweL0jXVkMEttQdScLJ4cW0zDePw+WB1Gk0NaskYHUhr6ByOtj0h5SVJ2Gd7PVoeBz+r/
- FQVVk8Y8mI9qhvo/WPbxCVrRvLgT5En7zEivApuJms62Ram37JCR3nqz1wRdFvAR5Sg4KVZz5pI
- FdESa2h20icOoEHixcjvF32JkqRoO3HnfRGzuQb89GH30cSG+6seZGUlYE3y723nVp4+5ZQiv6t
- QIMfB82ggCxXBBD6UsSIYch23WiGAns6lMbCKDaxmP425eBSJsSVDqCvKpcLeoou4yGE=
-X-Google-Smtp-Source: AGHT+IEXX28oiEHv9mcT2bPwBUtwB/CZPIGGypLpifoTVzx8xiU7T312IiTOoavkoTgyTk9ySw5g3Q==
-X-Received: by 2002:a05:6a00:2e92:b0:77f:1ef8:8acb with SMTP id
- d2e1a72fcca58-79385ed596bmr26811968b3a.13.1760366333777; 
- Mon, 13 Oct 2025 07:38:53 -0700 (PDT)
-Received: from [192.168.68.110] ([152.234.122.223])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7992dd83dcbsm11796845b3a.83.2025.10.13.07.38.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Oct 2025 07:38:53 -0700 (PDT)
-Message-ID: <cca1b0f7-8063-4d53-88f7-a56eb56b3eca@ventanamicro.com>
-Date: Mon, 13 Oct 2025 11:38:48 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv: Correct mmu-type property of sifive_u harts in
- device tree
-To: Zejun Zhao <jelly.zhao.42@gmail.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Max Chou <max.chou@sifive.com>
-References: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1v8Juw-00080n-6d
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 10:52:54 -0400
+Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1v8Jus-0000MO-Vb
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 10:52:53 -0400
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 856A97A03E7;
+ Mon, 13 Oct 2025 10:52:44 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-12.internal (MEProxy); Mon, 13 Oct 2025 10:52:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+ t=1760367164; x=1760453564; bh=KmDGbL9RHjHDbEn7ZPMO3YSkYbv8AvmX
+ Dor7lfk8XNI=; b=AbS2peWGH5WmQ/DOaV3Xds/Iw+ZLIQmF2oMlOtJVeQER2Hx4
+ weTVmjqulb/p4716AmwVCgfu4AKeMDGWTkyZj7Vxu1J+Q3SYva3JmbeD0EqQxefG
+ vIIkD8wrBaAM9Alnc4AOKWfg96n4y+mXg+9vIg31m9pMGhocDI0nz83/fwaPwGym
+ MYCfky5WmPJUR/aOEpZjPvL5BBHEd15lR2j+BEPFiVQE5rrHogSk3vUsXKZnluh3
+ EEKxyDAtpx9GIVvxZXnAkEiqjU1lunYOH4l6+XB7ovE0CdFbDKo0CXOz+NjC6KrB
+ rLBR/+1Pcfb4g/w4/BjxM+C8SEpoGnPAUQNFIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760367164; x=
+ 1760453564; bh=KmDGbL9RHjHDbEn7ZPMO3YSkYbv8AvmXDor7lfk8XNI=; b=t
+ UHcgrn8rh1xvlvtmICbDwQJVK34ggz+1+eRw/YTcEHiW3pi5bDN9wsHTJsQRNzmI
+ HMSu4vq6Bwo/CR2IrncfiPEavc7/kQ4R2oZW+nL8v8uCumoYpYpRW+kro+QgT3kE
+ tCYJPl2nYA1qclvGqgjnFpnwVccKvyyoNWLAiCjA/hyvux2oQK4CKTRXqudbEh7n
+ hDAPCfI4o3G+GO/XMP6LExzpWxqNj/w2r+pDMeFWcoxusS1MATOHw2XYduuQvr+o
+ k19HVFizmvSsykQZ5tkdhq3GrezzpgdOjPS1XDNMopJtMBx5koQ9gOvMtuHWLqJf
+ xx0j8VGL15kSlvly8fWHQ==
+X-ME-Sender: <xms:OxLtaGXPaCItqSI268u7UbfKdhCPDngdwnWXRUNnMstXL83lsl4A9w>
+ <xme:OxLtaJfyPbPCzzTnF5nAHKlkUW_oT9Iq_ZuZzBF4pBBIgt0GM1WBvlkNI8aS1Qajj
+ KRjRA4pV51Sb6wqhQ2mrF6qJNKNoLG23vaupnf0N8LLFL-lYfptWKY>
+X-ME-Received: <xmr:OxLtaCuHmjEX0HDg_IdKIpbjdr7T2OSwxHSCkXK1C-mZOVz0bDtyD9tcqwkO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudejleegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+ hlucfvnfffucdlfeehmdenucfjughrpegggfgtfffkvfevuffhofhfjgesthhqredtredt
+ jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfffhleekhfevtdekffejtefg
+ hfffhfettdefkeekvdejieevleehjeeggeejteenucffohhmrghinhepfhhrvggvuggvsh
+ hkthhophdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+ fhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidpnhgspghrtghpthhtohephe
+ dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghm
+ vgdrhhhupdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhhgrth
+ drtghomhdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphht
+ thhopehkrhgrgigvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvg
+ hvvghlsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:OxLtaI9ZgV8eNd9wG9QbkJQVX6nDXHQReKPjlZgJ2VkDvbTqNWHa_g>
+ <xmx:OxLtaN1Yc6edZCti6F1iKuaOf5QjMNIMOddATmL7lP-hKrM4kEym_g>
+ <xmx:OxLtaNC9q4N7suO40FUZ6qx0Hzc2IqILo76uUU-IyLsm7K9D6kEYJA>
+ <xmx:OxLtaJf5oQ7DQKIHj2B69dNTnhdEfVo2ulCB65-HRPedrNvEqRehPA>
+ <xmx:PBLtaB5L_WFummvC2w8fPt-o3TYb5qpJIl4h962E_2bXVJXEuc8geNYn>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Oct 2025 10:52:43 -0400 (EDT)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 9877a157;
+ Mon, 13 Oct 2025 14:52:41 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 13 Oct 2025 10:52:41 -0400
+Message-Id: <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
+Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using
+ hardware-correct aperture sizes
+From: "Chad Jablonski" <chad@jablonski.xyz>
+X-Mailer: aerc 0.21.0
+References: <20251001034616.3017119-1-chad@jablonski.xyz>
+ <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
+In-Reply-To: <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
+Received-SPF: pass client-ip=202.12.124.153; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b2-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=2, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,68 +120,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Ccing Max)
+Hi Balaton,
 
-On 10/13/25 10:32 AM, Zejun Zhao wrote:
-> Correct mmu-type property of sifive_u harts from Sv48 to Sv39 in 64-bit
-> mode since it's the only supported SATP mode.
-> 
-> Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
-> ---
->   hw/riscv/sifive_u.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index d69f942cfb..3e1ed209ca 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -176,7 +176,7 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
->               if (is_32_bit) {
->                   qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv32");
->               } else {
-> -                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv48");
-> +                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv39");
+Thanks for taking a look! I'll address all of these and send a v2.
 
+> The documentation does not mention 64MB alignment. It says apertures must=
+=20
+> be on a 32MB boundary and src and dst offsets are 128 bit aligned but=20
+> maybe I don't have the right documentation for these chips or don't get=
+=20
+> what it means.
+>
 
-Just checked the SATP mode of the SIFIVE_U cpu in target/riscv/cpu.c:
+Agreed, yeah the register docs do say there is a max of 32MB of framebuffer
+memory and a max of 32MB of AGP memory (register reference pg. 2-6)
+which implies 32MB alignment. And the software guide does explicitly say
+that apertures must be located on a 32MB boundary (software guide 2-19).
+It then goes on to describe how the aperture is split into 32MB for frame
+buffer space and 32MB for AGP/PCI space. Which implies that 64MB is needed
+for the full aperture. And from what I understand requesting 64MB will
+naturally lead to a 64MB alignment from PCI.
 
-     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U, TYPE_RISCV_VENDOR_CPU,
-         .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
-         .priv_spec = PRIV_VERSION_1_10_0,
+Outside of what I observed on the real hardware another thing that lead me
+to believe that the 64MB alignment is correct was this line in the XOrg
+r128 driver: https://gitlab.freedesktop.org/xorg/driver/xf86-video-r128/-/b=
+lob/XORG-RELEASE-1/src/r128_driver.c#L855
+The driver is assuming a 64MB alignment by masking addresses with
+0xfc000000 (2^26 =3D 64MB). When qemu requests 16MB or 32MB it breaks that =
+assumption
+and the driver looks in the wrong memory area for the framebuffer.
 
-         .cfg.max_satp_mode = VM_1_10_SV39,  <=================
+>
+> Can you check what the CONFIG_APER_SIZE register contains on these cards?=
+=20
+> Do all Rage 128 (and Pro) cards have 64MB and Radeon 7xxx/M6 have 128MB?=
+=20
+> The documentation is again not clear on this because it lists default=20
+> value of 0x2000000 for CONFIG_APER_SIZE on Rage 128 Pro and nothing for=
+=20
+> Radeon but in a figure it shows this should contain both VRAM and AGP=20
+> areas that suggests 64MB but it's possible that the documentation is=20
+> wrong.
+>
 
+I will take a look at this!
 
-But the documentation I found [1] seems to indicate that it should support sv48. Maybe
-we're modelling the wrong satp mode in the CPU. Max, can you comment on it?
+>
+> This was changed in commit f7ecde051dd73 to be half the memory size=20
+> because at least a Radeon FCocde ROM seemed to detect VRAM size that way.=
+=20
+> I should test that again but it needed OpenBIOS patches that were not=20
+> merged so I had to find those again as I don't have that setup any more.=
+=20
+> Checking on real card may be the best source of what this should be but I=
+=20
+> think this might break that FCode ROM which is from a PowerMac card. This=
+=20
+> suggests it should be half the aper size.
+>
 
+Ah, great, this is important context. I'll look at this more
+closely and check the real hardware.
 
+>
+> Coding style says variables should be defined at the beginning of blocks=
+=20
+> so in this case at the beginning of the funcion.
+>
 
-As for the patch it looks fine, assuming that we're always going to run a sv39 CPU with
-it. Otherwise we could do what we're doing in the 'virt' board:
+I'll also address all of the style comments.
 
-
-(in create_fdt_socket_cpus(): )
-
-         if (satp_mode_max != -1) {
-             sv_name = g_strdup_printf("riscv,%s",
-                                       satp_mode_str(satp_mode_max, is_32_bit));
-             qemu_fdt_setprop_string(ms->fdt, cpu_name, "mmu-type", sv_name);
-         }
-
-I.e. we would use the CPU satp mode instead of hardcoding it in the board.
-
-
-Thanks,
-
-Daniel
-
-
-[1] https://starfivetech.com/uploads/u54_core_complex_manual_21G1.pdf , Table 9
-
-
->               }
->               riscv_isa_write_fdt(&s->soc.u_cpus.harts[cpu - 1], fdt, nodename);
->           } else {
-
+Thanks again,
+Chad
 
