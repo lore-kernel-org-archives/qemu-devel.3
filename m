@@ -4,108 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C3BCCD183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA17CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 16:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Lkx-0001NP-Gu; Mon, 13 Oct 2025 12:50:43 -0400
+	id 1v8LnF-00028E-1W; Mon, 13 Oct 2025 12:53:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1v8Lkv-0001N4-3k; Mon, 13 Oct 2025 12:50:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v8LnC-00027s-MZ
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:53:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1v8Lkq-0007ue-Ud; Mon, 13 Oct 2025 12:50:40 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59D9ILll004365;
- Mon, 13 Oct 2025 16:50:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=MRD1MI
- 6/tlBWkk5PzYQj1kxP712ADV+5yLzIXiPcduc=; b=CjnWTt1GvdGWJ4Pros8uqV
- xHwjsCvOQ4jD1CfWKkFLwrSt1t6sb6N0iAylaMORxDcVdvjP+Ss0RHkH7b/6FqMS
- WAKvqc2ui8V8eIWPk+Ckf7c0uYNhQs4IRQEPKi77uI+sXyHNu/qlsNe/EFNy50cr
- hw2jnP1Ihpxk2UkzT+L/kpEXDObNtuG0d07TgQ/ZpCG5KorqE16msWHU3/9tlqLj
- PXXtZDtmtF05rjwhDKVzpufZRqkNWG2BgkSXgI/z2sUXmeWUT0HnyGqXttHpPrBJ
- U3wn1pjotfqrlZ8JPXO8NaBl7Fdkf3EEfr1O4zTuDpv3hor4ZU8ZLUKCHt0WSwaA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49rfp7my4p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 16:50:29 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59DE5pN3018823;
- Mon, 13 Oct 2025 16:50:28 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r2jmew3p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Oct 2025 16:50:27 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59DGoOAp44892646
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Oct 2025 16:50:24 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 15CC820043;
- Mon, 13 Oct 2025 16:50:24 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B415720040;
- Mon, 13 Oct 2025 16:50:23 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.111.26.139]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 13 Oct 2025 16:50:23 +0000 (GMT)
-Message-ID: <cb6b2a02856cffcb51b6049e7bc03ed8e160f03c.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 1/2] qapi/machine-s390x: add QAPI event
- SCLP_CPI_INFO_AVAILABLE
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x
- mailing list <qemu-s390x@nongnu.org>, Thomas Huth <thuth@redhat.com>
-Cc: Sebastian Mitterle <smitterl@redhat.com>, qemu-devel mailing list
- <qemu-devel@nongnu.org>, Hendrik Brueckner <brueckner@linux.ibm.com>,
- Michael Mueller <mimu@linux.ibm.com>
-Date: Mon, 13 Oct 2025 18:50:03 +0200
-In-Reply-To: <20251013133902.111233-1-shalini@linux.ibm.com>
-References: <20251013133902.111233-1-shalini@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v8Ln9-00089d-UZ
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 12:53:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760374377;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9ROpKTB+0L5bDWmD9B011KEbtMbuEJDM80v6afnyP4o=;
+ b=Vpd8Qr/1u4Zt/oYEp204stl2RhiKVN3/YjueqaBfq/yf31LnrMFz7ZtOVmFKNTFiyHeFTk
+ NL5798Z+yq/NO95VGxoYSShoX3I0QcIlmvOXzptjOkrV3VeMks32qGh1gge4w2qD4z8HxA
+ 6lNAL1QnJWuyRvV3A8KrbfLLumjdSSw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-277-zrANM8w-NiOIrZcQ_Bkh1Q-1; Mon, 13 Oct 2025 12:52:55 -0400
+X-MC-Unique: zrANM8w-NiOIrZcQ_Bkh1Q-1
+X-Mimecast-MFC-AGG-ID: zrANM8w-NiOIrZcQ_Bkh1Q_1760374374
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e47d14dceso23515605e9.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 09:52:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760374373; x=1760979173;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9ROpKTB+0L5bDWmD9B011KEbtMbuEJDM80v6afnyP4o=;
+ b=D7c5CF+UEAR2PI9eFQt9BS/lsO+3PtI3dQI0T4M2eIyCYJlZ4EOWgMP+MJT3BNwJ6a
+ u+nOWd/LQF3l4IDqpiUeFpDd6iYrGlHk69ujDANmxbvEZT6NpPVFa0LNdXbEcsqYI2VU
+ rdBee0b6PFiBV7moKEaFt9dTd0IZTCxBUqSTvz3RJmtDFpvMXtwqANf4mvL7WRKTegL8
+ HJYV7K2nVCpJowjDM2qfSegdK1Zti00TB9OmZTGdKtb844fnYctJEgzs5iUs9VPOCBK0
+ wFtfqu+v5gYeEvctBLNvE+o0nv48nCOlgs7664Pfwo62D+S1EkwGgJusIrf5/Xz8EZI1
+ liRw==
+X-Gm-Message-State: AOJu0Yz3MIMlPrfWIlWwpG690kH1acmkETC3Wr6Ga+pgcNRAVD1oU6Nq
+ XmwhQdLEDfuyczTcg5a3FGnG30AmVdeMxHp9NAsY8glpaOy9l4HFDXcV2wDvxAv2exO8FLwhk3M
+ zFXeM97NtCYipM9EUKh7SUrZKyOPrx7giywenFY98IniiUp5Y09eA3edM0ba8oh9PI3yrX2BLiT
+ CjJKPblPb2AcDkz6Q86Hc/Dc/ONXOBV+xfcNBFgKuj
+X-Gm-Gg: ASbGncuqUMcBjNBPn19heM4pnul4vbsy3wf36Bom483rB412KHV7sbnY9XIV1ro8Xt0
+ vJIStbHFGURh55KpjXq8ipVjzuGKvPuCIxSpWNcqfBFLqJnHBUOn3ekS/uZHInr17cK4Ak53za7
+ Wi6TWRsNGl+wl3cCHHiqVgYcpJJURg9xgw4IsaHmV84bdQgloKnIKu6Zm3tq8YRrBHAvoU9FLHT
+ Y3+4j2UoWf0wyn9i2yCNWicWGLHQu8/Dp5knPUZ2FliT/Md2174lRYGy7v7r4irYzIGLahCkFB0
+ vRDGWrkLELjaue7ESAWafNNguZ9NTvhIq8jC0ZBPAOGTnsO0eQbhdxyfg6OI8r7Hb7P+YDvPnCs
+ AfoEv6jIsbyVciwLZC4JHQ0XUbPTRO9sCqkUpw1R4l8Q=
+X-Received: by 2002:a05:600c:820a:b0:46c:e3df:529e with SMTP id
+ 5b1f17b1804b1-46fa9af9019mr156081455e9.19.1760374373573; 
+ Mon, 13 Oct 2025 09:52:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTpbZjIFjvl/BR/8AmthcqfLW27tXPicAXur8epFXINsapt9qkmUPtId8LihZ62Iya+KCLKw==
+X-Received: by 2002:a05:600c:820a:b0:46c:e3df:529e with SMTP id
+ 5b1f17b1804b1-46fa9af9019mr156081335e9.19.1760374373166; 
+ Mon, 13 Oct 2025 09:52:53 -0700 (PDT)
+Received: from [192.168.10.48] ([151.61.22.175])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb482ba41sm195893785e9.4.2025.10.13.09.52.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Oct 2025 09:52:52 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH] rust: hpet: fix fw_cfg handling
+Date: Mon, 13 Oct 2025 18:52:51 +0200
+Message-ID: <20251013165251.1004096-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: E8i2t-1Sg8DFUS7d9yKFsrPFlpdrwXIm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEyMDA4NCBTYWx0ZWRfX5VuffbrULoYe
- BcOlYCe3m4j7Am/NSgLNiw6YV9Bs4bZ3Q5+6YJeduJxejSAALIfWEHge7/bTXBUCtlmTgZVKVgr
- SDyPO5LcmZQhjexhXaMVaNSS4w8ZJn3avk2KSh96YgPLQIkwug26mOhflaUHXMd3HPMF1PSvy0i
- mRgRgxccUruD7YaI92E6XY9nsCiloneWsXArAxI1yLDcWymz6cczcuY7dKQI6BWfzOn0ryVMm6q
- qD3h2E3XWARIx0kd5n6gz3t747iwTcJPmbx+lxZ3GGClWVbGZq2DPkW5s832dnnf8VGkgw+FjIG
- UhQlXav+qWpOov2N42US1mcHCP+F2lu+Vkc4s14ZMn6rPzxKBzt3t2zIZkm7n2VkGHG9AIPwhoi
- 7OEKSbGoICoRvr4M0wg+Vp9WmtEVCQ==
-X-Proofpoint-GUID: E8i2t-1Sg8DFUS7d9yKFsrPFlpdrwXIm
-X-Authority-Analysis: v=2.4 cv=af5sXBot c=1 sm=1 tr=0 ts=68ed2dd5 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=RKBmHt94fYA7jx5VqUUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-13_06,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510120084
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,84 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2025-10-13 at 15:39 +0200, Shalini Chellathurai Saroja wrote:
-> Add QAPI event SCLP_CPI_INFO_AVAILABLE to notify the availability
-> of Control-Program Identification data in QOM.
->=20
-> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> ---
->  hw/s390x/sclpcpi.c      |  4 ++++
->  qapi/machine-s390x.json | 25 +++++++++++++++++++++++++
->  2 files changed, 29 insertions(+)
->=20
-> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-> index 7aa039d510..90da61b1c8 100644
-> --- a/hw/s390x/sclpcpi.c
-> +++ b/hw/s390x/sclpcpi.c
-> @@ -54,6 +54,7 @@
->  #include "hw/s390x/event-facility.h"
->  #include "hw/s390x/ebcdic.h"
->  #include "qapi/qapi-visit-machine.h"
-> +#include "qapi/qapi-events-machine-s390x.h"
->  #include "migration/vmstate.h"
-> =20
->  typedef struct Data {
-> @@ -106,6 +107,9 @@ static int write_event_data(SCLPEvent *event, EventBu=
-fferHeader *evt_buf_hdr)
->      e->timestamp =3D qemu_clock_get_ns(QEMU_CLOCK_HOST);
-> =20
->      cpim->ebh.flags =3D SCLP_EVENT_BUFFER_ACCEPTED;
-> +
-> +    qapi_event_send_sclp_cpi_info_available(true);
-> +
->      return SCLP_RC_NORMAL_COMPLETION;
->  }
-> =20
-> diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
-> index 966dbd61d2..338653e0b8 100644
-> --- a/qapi/machine-s390x.json
-> +++ b/qapi/machine-s390x.json
-> @@ -119,3 +119,28 @@
->  { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarization=
-Info',
->    'features': [ 'unstable' ]
->  }
-> +
-> +##
-> +# @SCLP_CPI_INFO_AVAILABLE:
-> +#
-> +# Emitted when the Control-Program Identification data is available
-> +# in the QOM tree.
-> +#
-> +# @iscpiavailable: is CPI data available in QOM
-> +#
-> +# Features:
-> +#
-> +# @unstable: This event is experimental.
-> +#
-> +# Since: 10.2
-> +#
-> +# .. qmp-example::
-> +#
-> +#     <- { "event": "SCLP_CPI_INFO_AVAILABLE",
-> +#          "data": { "iscpiavailable": true },
-> +#          "timestamp": { "seconds": 1401385907, "microseconds": 422329 =
-} }
-> +##
-> +{ 'event': 'SCLP_CPI_INFO_AVAILABLE',
-> +  'data': { 'iscpiavailable': 'bool' },
+HPET ids for fw_cfg are not assigned correctly, because there
+is a read but no write.  This is caught by nightly Rust as
+an unused-assignments warning, so fix it.
 
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/timer/hpet/src/fw_cfg.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-What is the point of this payload?=20
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index e569b57b93b..bb4ea8909ad 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -40,7 +40,7 @@ pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
+         assert!(bql::is_locked());
+         // SAFETY: all accesses go through these methods, which guarantee
+         // that the accesses are protected by the BQL.
+-        let mut fw_cfg = unsafe { *addr_of_mut!(hpet_fw_cfg) };
++        let fw_cfg = unsafe { &mut *addr_of_mut!(hpet_fw_cfg) };
+ 
+         if fw_cfg.count == u8::MAX {
+             // first instance
+@@ -60,7 +60,7 @@ pub(crate) fn update_hpet_cfg(hpet_id: usize, timer_block_id: u32, address: u64)
+         assert!(bql::is_locked());
+         // SAFETY: all accesses go through these methods, which guarantee
+         // that the accesses are protected by the BQL.
+-        let mut fw_cfg = unsafe { *addr_of_mut!(hpet_fw_cfg) };
++        let fw_cfg = unsafe { &mut *addr_of_mut!(hpet_fw_cfg) };
+ 
+         fw_cfg.hpet[hpet_id].event_timer_block_id = timer_block_id;
+         fw_cfg.hpet[hpet_id].address = address;
+-- 
+2.51.0
 
-> +  'features': [ 'unstable' ]
-> +}
-
---=20
-IBM Deutschland Research & Development GmbH
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Gesch=C3=A4ftsf=C3=BChrung: David Faller
-Sitz der Gesellschaft: B=C3=B6blingen / Registergericht: Amtsgericht Stuttg=
-art, HRB 243294
 
