@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67947CCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D620ACCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 09:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Erv-0002Zl-TD; Mon, 13 Oct 2025 05:29:28 -0400
+	id 1v8EsV-0004GT-Vw; Mon, 13 Oct 2025 05:30:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8Erp-0002KX-71
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:29:21 -0400
-Received: from 5.mo548.mail-out.ovh.net ([188.165.49.213])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8EsL-00045p-HJ
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:29:54 -0400
+Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8Eri-0005L2-Ax
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:29:20 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.133])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4clX9M0B3Qz6T5D;
- Mon, 13 Oct 2025 09:29:11 +0000 (UTC)
-Received: from kaod.org (37.59.142.102) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v8EsH-0005Nf-TK
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 05:29:53 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.125])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4clXB12dGTz6S2P;
+ Mon, 13 Oct 2025 09:29:45 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 13 Oct
- 2025 11:29:10 +0200
+ 2025 11:29:44 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-102R004190a7dbb-0e40-4bda-9b66-31e22016b5b1,
+ (GARM-99G003490950b2-53c6-456f-87c9-989bdccb0e7d,
  E27D2F41E47E806E38994DC6761E007B2CBA9264) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <4939631c-59bd-4236-b0fc-dc394615fa24@kaod.org>
-Date: Mon, 13 Oct 2025 11:29:09 +0200
+Message-ID: <a4d48573-20a3-44a9-b204-97a9a4b7ff36@kaod.org>
+Date: Mon, 13 Oct 2025 11:29:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 14/16] hw/arm/aspeed_ast27x0-ssp: Rename type to
- TYPE_ASPEED27X0SSP_COPROCESSOR
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
-References: <20251013054334.955331-1-jamin_lin@aspeedtech.com>
- <20251013054334.955331-15-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH 0/5] aspeed: machine deprecations and test improvements
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>
+References: <20251007141604.761686-1-clg@redhat.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,27 +85,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251013054334.955331-15-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251007141604.761686-1-clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 5edf6631-0218-40e6-9bb2-522fd085be32
-X-Ovh-Tracer-Id: 14296114070185872306
+X-Ovh-Tracer-GUID: f67e894c-f70c-4972-b5f4-3536c4cd0f17
+X-Ovh-Tracer-Id: 14305965694137043890
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTG1seSZSTbvgB2ae8lP0mRvElqR45HlVXjgM9XfXdcgrCBWEBBbHexvThvc7/9oPxj6Tos9GUoBbqf85WzaNWtPZknY7Z8nTzlXqePPezKQHa6kkT7cVAdwh+DxiCJu0vZCH32vl2JhnjIa4hR9smJ+EfL1sRKfT0aHZugA/JljfTkSWEY0YNMPsn2TQV119dqWZuAHG4hWfltrlYtnZt9hs9yiNnoPwyUpWvwG3Sdc8jhOFzlr00YozmbFhk6xNigLLaulY9Ll7Iw87+yYpUbfpjx+W+sAKKdDJkssL/+/mN/PxRuU3yrD7iYvn8t6t9eKvV72Vu4wywsXMV8MGiusf7HJiNONFM6NJopAkG0uejEV1CiJpkqJ7xu8cQm9EKq/dPkcve6ptIHiJcA7YUzaU41FwEcUrSwm+cmMolp/RB8jw01TRiagy6N+47okU8KDAUKPI48iQpv12WBBaIAES2n9XMabpsJ0rq6SkJR67w0juNj9X6GAjTRr499j3JcYIkl36g7px2etoxq99cjk4KioaGdPc7c8I0KHJLoyoqxCnOAQPdUCDvgUUEY3QZ6nxRWfGAA/0dNAwEIzhrOh9QZknwiHXy7GVU6wTpbhpCytGe/ORFD+tf+tQEeeMdN2hZOy6gMs+jZJoVSjQSa4DT+46Ny0EH3j0uCBPZpgxw
-DKIM-Signature: a=rsa-sha256; bh=PCU1oHRelL/2L1xFG5AKNS5rJjXbbFkcq/Uog0nvmTs=; 
+X-VR-SPAMCAUSE: dmFkZTE9VTX+ijz0fVirTNoSacqh9QmpEkvyGf9pNuOhx64HC0BBIJVZvhj8Bxok8eueWwMOeMAV3QQpsxh5FHRWay4BrKj/uTe8FM9DwKBHcIZM8iLMrx4nulkwJ3CbjPXszh7vX7YfPn9yHuBZCDvf8qrUNHTCFddTw5BHolsdmVNYWU6udxr48Mjf/H0Y2vc/9aLKYmR2TTHYCYItChey3Y/OdAU8fAvg1cAcWzF2us7rYvODsLo2Ho4NOE6FG9VU+gAuMtywkPCV5smEPtXIgv0RfFyyc99vmiRo8APcDZ9fPgUxFp6K43zSBYkhsKJKopdqWLX43vR+YToAEi9Qz6UNWbIuvIMU0jn85gZMsc+rzqmHOH+BB7J51C23Sa2rtzKdfoZkjFe1jqcgLiRr457Mk2uX8O7hu555pEDFqphDb0czW4ZK63WGKgO1TOg5/2P5LFVYUcDhMsI0/Hz6amq0ERIHvloC0x1ENUICTdTCQOTetSk0YJrhklO2VsRQv9OXXGONK++f+KxRq2ixJ98iW4BEmM0dJGGUlOtgzFK9iKZwOdG6U15qDXlRxdQcucYOEe7qEiTX18mrH/NWuVNYKxk9JFZQVRxe67CgQTrU0mBRX5uFlgrPhtwFpCauBPiimMGEvmBi1YCQ4ZFUPVgQ9bvFpi2MK4u0lT9pFMXdgQ
+DKIM-Signature: a=rsa-sha256; bh=Au2myoRCd0XH4IOTPIGg200/Szy2Vzf8/1V/goOE6os=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760347751; v=1;
- b=rv+g01iIS/G5pli141QJg8gIVvx/saysZWvA5eCAnEtG8xYKxYT2st+lxhAE7t4eT2LrTjLj
- j3UlwmZWBFEjCg+PJcYtjZhbrVBRe34lfnY0VQ0tEVYag9Xz0vfFUbEvu1ZFceIRhbPJli+ywYR
- ZoV9ItlRi3LnUSYHJFET+G7REzjJoqaJGgr/4ghyprqyp5Z0B+9+GyzAn2bpT7hxhYnndCOtewL
- /EroakfUYWhY6PWdJ69mC4y6Y86Zi8dQb55sdDeLP4P7fT+qYQ87egWouNR946QR6jEItmrJLB7
- uIBzJJTXQ/EUS4XBx6FoNst8AZXVCIIdZUjK7U/5rwyGA==
-Received-SPF: pass client-ip=188.165.49.213; envelope-from=clg@kaod.org;
- helo=5.mo548.mail-out.ovh.net
+ t=1760347786; v=1;
+ b=N7+9rH5xbZbLO0Tb/llsRkopyWboRu4SrqAl7NfMyPxr0viCnAlac9LL7fWwZ1WUkdwhZUGJ
+ 9kcsRAb9T0M6whCqkWUT32bhTTv79aI88xo/ESpCFI4VXO+D6KRiOnRlULMiv2mkQs074Rn6YTi
+ hYvtJLIK/qCOAYJXfEferQjVZgs0vLt+kuk3WXpDgL4BWco2sYFZpWiO7D3PhSpuDTLPYSd5dxX
+ W511wnZM/iGolQwLNH68nASQN3HI+d2brk99CfveulaM3cH1QGwkbmc1DDK4tq72m/P4/nVfFs0
+ LvHJIZJfO4S2a1FhYHlQ1izS7MkZEA2N0Aj/3ohmh6OTQ==
+Received-SPF: pass client-ip=178.33.43.201; envelope-from=clg@kaod.org;
+ helo=4.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,30 +129,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/25 07:43, Jamin Lin wrote:
-> Rename the AST27x0 SSP type from TYPE_ASPEED27X0SSP_SOC to
-> TYPE_ASPEED27X0SSP_COPROCESSOR to better reflect its role as a coprocessor
-> rather than a standalone SoC. This aligns naming conventions with the
-> coprocessor-based design introduced in earlier refactors.
+On 10/7/25 16:15, Cédric Le Goater wrote:
+> Hello,
 > 
-> This change improves naming consistency across SSP and TSP coprocessor
-> implementations and clarifies their relationship to the unified
-> Aspeed27x0CoprocessorState.
+> The first three patches deprecate machines that have no functional
+> tests and can be replaced by more generic machines (evbs) with
+> command-line options for I2C device.
 > 
-> No functional change.
+> The last two patches improve the functional tests for the ast2700
+> machines to save CI resources.
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   include/hw/arm/aspeed_coprocessor.h |  5 +++--
->   hw/arm/aspeed_ast27x0-fc.c          |  3 ++-
->   hw/arm/aspeed_ast27x0-ssp.c         | 10 +++++-----
->   3 files changed, 10 insertions(+), 8 deletions(-)
+> Thanks,
+> 
+> C.
+> 
+> Cédric Le Goater (5):
+>    aspeed: Deprecate the sonorapass-bmc machine
+>    aspeed: Deprecate the qcom-dc-scm-v1-bmc and qcom-firework-bmc
+>      machines
+>    aspeed: Deprecate the fp5280g2-bmc machine
+>    test/functional/aarch64: Remove test for the ast2700a0-evb machine
+>    test/functional/aarch64: Split the ast2700a1-evb OpenBMC boot test
+> 
+>   docs/about/deprecated.rst                     | 27 +++++++++++++++++++
+>   hw/arm/aspeed.c                               |  4 +++
+>   .../functional/aarch64/test_aspeed_ast2700.py | 21 ++++-----------
+>   3 files changed, 36 insertions(+), 16 deletions(-)
 > 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Applied to aspeed-next.
 
 Thanks,
 
 C.
+
 
 
