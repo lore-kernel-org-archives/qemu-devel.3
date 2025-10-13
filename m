@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6EDCCA476
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29455CCA476
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 05:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8AxS-0000VZ-Rf; Mon, 13 Oct 2025 01:18:54 -0400
+	id 1v8Ayc-0000x0-9r; Mon, 13 Oct 2025 01:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <asmadeus@codewreck.org>)
- id 1v8AxR-0000VR-EY
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:18:53 -0400
+ id 1v8Ayb-0000wh-C2
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:20:05 -0400
 Received: from submarine.notk.org ([62.210.214.84])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <asmadeus@codewreck.org>) id 1v8AxP-0008BP-Mm
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:18:53 -0400
+ (envelope-from <asmadeus@codewreck.org>) id 1v8AyY-0008Db-2g
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 01:20:05 -0400
 Received: from gaia.codewreck.org (localhost [127.0.0.1])
- by submarine.notk.org (Postfix) with ESMTPS id 6A11314C2DE;
- Mon, 13 Oct 2025 07:18:45 +0200 (CEST)
+ by submarine.notk.org (Postfix) with ESMTPS id 2A6E414C2DE;
+ Mon, 13 Oct 2025 07:19:55 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
- s=2; t=1760332730;
+ s=2; t=1760332800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IB4HFQNtLMWIOghw6xn4/eC6pfOl2twNLQ9ZjcbWfGs=;
- b=Ry10nbC0mZTj0DrBaOlkkzCAII5m7ODFqf0FiRR0hm7veHySLll0D1jH9hles/J4rJZJg1
- jaT80gGaghn0G1jz9mKEa+mV4f8CG5O/qOu7+r+EadWQEEbCs/dz4YBEKewnLFK2mS1pXx
- WH9YFUxkICLvuay5dm12Tn27aCEV7a28pOfgpI4i6UgL3IyUaqTNFJRhPpDuxrjMGZp25F
- MCuQgsT+hf/kn3WfvOQezeMdYosMOPwpTe6IVb53qqEiS25zm1e7Ux0ckmFxjXwiu6ky7g
- NEqpKHFbpAj8Ev0FT3S5KzO8bseoX27kqZA75LsIVF4kUrzp29qXBYUIp78pIA==
+ bh=yRoK7s/Xx0K+rMcGZOWKFLTtF2yVnFs4I0yOHuMdCdk=;
+ b=r9UleRpwyKu/pUflZSIsyZmFfT3l5O4vEMGC528ltAuIXKVHWVO5HsjY25dn5Mul7/2Zh8
+ pYd0JBgwpqgMsKTdio4DKzsM9bjMilG7V5PJ0jDhSmY6nrGJaQRqGBPgpFbY7xgyofw/T9
+ y8fKAgfw6W5sAWrIA1UDKTq+T3jGND2Bm9sU7fLassGfB+T7pp+mQpv2t9wC52v5YGX/xd
+ r1Q+ybTjtcoej654oqE1XCRKz54kQSC0BJTiNpYMQgAqntXeR/Z5MJ9z0HqaCjh1ko+ytn
+ PTRNxT5VnkUjU7VGEDiRpF+ed6fNhzBFSseK4qgONqSc1VInQ4j5m+8xMaWWmA==
 Received: from localhost (gaia.codewreck.org [local])
- by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 3491d954;
- Mon, 13 Oct 2025 05:18:43 +0000 (UTC)
-Date: Mon, 13 Oct 2025 14:18:28 +0900
+ by gaia.codewreck.org (OpenSMTPD) with ESMTPA id f7b12250;
+ Mon, 13 Oct 2025 05:19:54 +0000 (UTC)
+Date: Mon, 13 Oct 2025 14:19:39 +0900
 From: Dominique Martinet <asmadeus@codewreck.org>
 To: Filip Hejsek <filip.hejsek@gmail.com>
 Cc: qemu-devel@nongnu.org,
@@ -52,15 +51,15 @@ Cc: qemu-devel@nongnu.org,
  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
  Szymon Lukasz <noh4hss@gmail.com>
-Subject: Re: [PATCH RFC v5 07/12] qmp: add chardev-window-size-changed command
-Message-ID: <aOyLpF0-qZKbkflk@codewreck.org>
+Subject: Re: [PATCH RFC v5 08/12] virtio-serial-bus: add terminal resize
+ messages
+Message-ID: <aOyL65jhQkW-uljO@codewreck.org>
 References: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
- <20250921-console-resize-v5-7-89e3c6727060@gmail.com>
+ <20250921-console-resize-v5-8-89e3c6727060@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250921-console-resize-v5-7-89e3c6727060@gmail.com>
+In-Reply-To: <20250921-console-resize-v5-8-89e3c6727060@gmail.com>
 Received-SPF: pass client-ip=62.210.214.84;
  envelope-from=asmadeus@codewreck.org; helo=submarine.notk.org
 X-Spam_score_int: -20
@@ -86,23 +85,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filip Hejsek wrote on Sun, Sep 21, 2025 at 01:45:37AM +0200:
+Filip Hejsek wrote on Sun, Sep 21, 2025 at 01:45:38AM +0200:
 > From: Szymon Lukasz <noh4hss@gmail.com>
 > 
-> The managment software can use this command to notify QEMU about the
-> size of the terminal connected to a chardev, QEMU can then forward this
-> information to the guest if the chardev is connected to a virtio console
-> device.
+> Implement the part of the virtio spec that allows to notify the virtio
+> driver about terminal resizes. The virtio spec contains two methods to
+> achieve that:
 > 
+> For legacy drivers, we have only one port and we put the terminal size
+> in the config space and inject the config changed interrupt.
+> 
+> For multiport devices, we use the control virtqueue to send a packet
+> containing the terminal size. Note that old versions of the Linux kernel
+> used an incorrect order for the fields (rows then cols instead of cols
+> then rows), until it was fixed by commit 5326ab737a47278dbd16ed3ee7380b26c7056ddd.
+> 
+> As a result, when using a Linux kernel older than 6.15, the number of rows
+> and columns will be swapped.
+
+(subject to this part of the discussion being settled...)
+
 > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> [Filip: rename command, change documentation]
+> [Filip: swap rows/cols, console-size affects multiport too,
+>         size config always updated, use use_multiport, move trace call]
 > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 
 Reviewed-by: Dominique Martinet <dominique.martinet@codewreck.org>
 Tested-by: Dominique Martinet <dominique.martinet@codewreck.org>
 
-(checked with stty in guest after running the command)
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 38c949c4f2ce4a117cbfca62f56919711ce392b4..74a747ec6578c958b35e1f9712e5dbed7bca72e8 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -37,7 +37,9 @@
+>  #include "hw/virtio/virtio-iommu.h"
+>  #include "audio/audio.h"
+>  
+> -GlobalProperty hw_compat_10_1[] = {};
+> +GlobalProperty hw_compat_10_1[] = {
+> +    { "virtio-serial-device", "console-size", "off" },
+
+Oh the original patches had this wrong, good catch!
 
 -- 
 Dominique Martinet | Asmadeus
