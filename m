@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9448CCD185
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6944CCD183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Oct 2025 19:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8O3B-0005Tx-1h; Mon, 13 Oct 2025 15:17:41 -0400
+	id 1v8O3m-0005eJ-Ej; Mon, 13 Oct 2025 15:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8O36-0005Ta-KC
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:17:37 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O3j-0005dI-Az
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:15 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v8O34-0001n3-94
- for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:17:36 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so32869105e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:17:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8O3f-0001pB-Hi
+ for qemu-devel@nongnu.org; Mon, 13 Oct 2025 15:18:13 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-42421b1514fso2281052f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 12:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760383052; x=1760987852; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xiK75KG1lswxj6Jv8QlsEsjxImVje5ZiRRxRVvO5CtY=;
- b=D75GnJME5L6IuaXn2jm2B/HNoveBOWw7VSgfnWUxxkYso6agFPbgvccJtBnD99hL77
- ZvKzD51sntgkLjzQ9TymV7SJS/UiNpDaN0u3J/mLvmcoAExAgW4YJj0RkNTv+BSNcBcO
- NgHvaVfeqfXkGw4mtXdPa1/BQRK6cs0jidSTPSYKxvq6ihjg0P7V2DnRElvgWRUQPT1N
- oWaKJWPP/sr7MUB8noWjQCm5JaDoYdLjSItbtzFLIl4BmDA4Ty7wIDVCESiSxagoho44
- 0ux95qI3phhl9gHVg6H2dMN5qb7MmObpKhNJx8t1/9H06fEYVHXIp22wvRJEmkqoXMjB
- vLqA==
+ d=linaro.org; s=google; t=1760383089; x=1760987889; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/B22OX7oPRVjLf1BerxieKilML3SFOHqoUFJ3V+rE90=;
+ b=wpj0a7twQ5/TQDq9uoM4YvRc0C01SHIUon5ZAfjTQnU6WO74ZoDcr7qtf6ju4boAax
+ kd46fgDTqzk901JS3YNE6IzxrevTTYRArfX6hzUMjrpkAk/uAUB/0smCWvt9IHzhyMoH
+ Tl7Y/Kk/STCXpE4zNLH3TrHot+zEvsfGVj9KnGD7zQzm/pxZp81P6fEfqRORzL4FXhYQ
+ LNtNnQsaNK9EMTtXPt9LK7TWRgME9iF7VUj12NylA5VvyyyFS2YIf04vwi3AbGaO4gDI
+ sdrFg0aEcNY7APq/v66wTKBmjmIyONjLVTlM9/laW7r+eJbGx9LJF3prrTqkhrL6iIzZ
+ /LfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760383052; x=1760987852;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xiK75KG1lswxj6Jv8QlsEsjxImVje5ZiRRxRVvO5CtY=;
- b=pBdMq6iPqPdlztStaJE0t+kpgkHCFB3rQI/P9HrkslfC4BugMyPL2LxGzHjzH6auP1
- VaklDxS57RmYxBHjrmrWx5atsuehws9YgHBXoOOMhTT9ok6MHNPanqvgjmpfnLN/GoQq
- 5ntMLziExCuSTvRTMKsPr33fzUGxRKi+QAlT2CRanQYWoIRXBikEUjJiVWHb82SAV/jc
- qvE+KpzJBLFhDDqcLcr9SE/d+U4zGn16b/dKSyAxl2tqdO371wPuNdQZPc6MQD9g3q0i
- qtnd4WG1tWLFJ3N4x48ASPBORCu4PIEUzrjeW3WY6ouZqdDhrW0QhxapF/hb2PjjET95
- xbbQ==
-X-Gm-Message-State: AOJu0YzdFJ5A2kn4W2M1RLJFBsW5AKbQvLlXUNhPT2s/qEhJustbmrEI
- +JXXrmiDMQSU/eroTNxNxKzydaUDWbNbAag9dWTta6cb5ON77Vh9+MHdDx8feQ==
-X-Gm-Gg: ASbGncv8DrGI3rWFNpnDNdsH992hFQbjQ0q3rU4zxi1FWoGmDjF3CFLZqXPZP5bP/Ld
- NwGNbjaXlCrwid7Ri+Iqt8Jazkxz3pef0wdrpD1OknOD7OJumzzIypGrSp1FBXxBM4hvbB59Rqj
- xoebBRP6ZI7H44E79GP0uuRZf6mwdONhB44EaNz64ON3QY7mqwaaHQDRr9nnAIPRqRk1JUbavhZ
- HHauUj0cjuCFKmVBvr7vRowU2FvpZF9oJU8l4iAN2zfgBmVNaVQQupqSTy5jUy4sCPgFNI/7O1W
- K4C55fAPugZDUykhZFruTjJcc6iVROab8MH6L+zNL36X+0xm3DHDWQg+WIxozuBPTLjOqGyjKRa
- VRenjdAHVi46GiMzw0+b8511WBdNTuQCnxB/F923Gf/Ni3XHUNN8EkAY5rGHzHp9NNws3zooT/R
- JfvU3xJRe7UGGOPDSoULrFPHLtANu65Zz6clKPLw==
-X-Google-Smtp-Source: AGHT+IHU5wMW6jHCaghZ+f5oYifMHLQNNFD/JSPcjf6kXUliBoNv9hhsI7yXKfx/FCdg5qEQ19dHsQ==
-X-Received: by 2002:a05:600c:3acb:b0:46e:2801:84aa with SMTP id
- 5b1f17b1804b1-46fa9a21caamr132516145e9.0.1760383051935; 
- Mon, 13 Oct 2025 12:17:31 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf271400a0afdc243fcb5392.dip0.t-ipconnect.de.
- [2003:fa:af27:1400:a0af:dc24:3fcb:5392])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5cf790sm19028061f8f.28.2025.10.13.12.17.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Oct 2025 12:17:31 -0700 (PDT)
-Date: Mon, 13 Oct 2025 19:17:28 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-CC: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, xen-devel@lists.xenproject.org,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hw/display/xenfb: Replace unreachable code by abort()
-In-Reply-To: <877bwz6oqy.fsf@pond.sub.org>
-References: <20250729111226.3627499-1-armbru@redhat.com>
- <877bwz6oqy.fsf@pond.sub.org>
-Message-ID: <20C81C5B-912C-49B3-B50A-867C06C134B1@gmail.com>
+ d=1e100.net; s=20230601; t=1760383089; x=1760987889;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/B22OX7oPRVjLf1BerxieKilML3SFOHqoUFJ3V+rE90=;
+ b=aJbrRG7XfB3WuKYFN81LneuWaysH/+OeeyL8WL97n8UJvDN99G8y9RzkP3dpZe9cPr
+ srf4gpF8JbasNdkVlj5+RC0KA+Ao/X/b1zdmbesg/DhiropsJVvoObRlpXJ+fVRkWxuS
+ QjcqypYRSkQ9qwbYzNui5XY+w9BuAdcqcZyC5OqNVBLSZ+fA0nu5oj8UHWnmGsXX3Tj4
+ ztZRl48f1cIAXoU1XX0W6d9zUTUFw2Ulg2PXHfMhUexLR3CBluDCwsLTYMKxdLJN/tIN
+ Vm7Jw/cOSn0BTccWLvLRBhh8+V0dJ0enCmOIUVTMZq+CcbWBaNvn0Ir1iHmGs4X5i+rC
+ YMaw==
+X-Gm-Message-State: AOJu0Yz1Tn3GQWQ+w5fI5kJAKZq7/SE7y7Ckt9sYhtz59qzlXPXxYOTY
+ dkZwifb/BcmK8J/VkcK3j/8yIDqvkRssM46fc+Ax3VNq/xZgozYTJjye6/8zt+1YqopG1DCHeBR
+ d84UjCvVOvLFD
+X-Gm-Gg: ASbGnctbF8V9+wfKWFMuzXjRfJC8yk+tIiFsI0vbhqUFixjKfvcLPEIPU3bVnopJrCi
+ TzIdOMH7aRjRHbI8Q3tdTCWevnOLnCzr1vMxmD+VP4KzwmMMIAjLIxMDiuRhiigahh0DDFiR1Q9
+ D2DAn6S/jj/yh1dRak93aZWAd+ZM0TSiPJ4QPUCmAalw5L+ab9USScCruJBdXi7ouVKEaBS95fC
+ MZir1/ueN9bJmcrOFP9SkzPGS/rYm+kyiEi5kvq5hUStVydoF5EPfLuYOGyP09DreWax7CoddbL
+ aA8S23eh0ClnWb4NfG30C/hM3Sh/U3NkRs0olp/5849Ylv2KcwfpsBjnMIfR9l8DG9VKQtaVfV4
+ My5N/CO9SUFpKjfNWP5LYfdKS5DTb9poV/zKyTGawU3vEh+N3W4I9Eo672HITdJbzOXDTPT9Kwm
+ 7/nMPGE3Bb/pKJ8zkoutOLeR2D9g+CKw==
+X-Google-Smtp-Source: AGHT+IG2fKnQoYV5EmViCvjMZb2eXkyAHKmhvBY4SVMwyUyTAWPdCKnWxlZQiq8v056F8f2z1eMaAA==
+X-Received: by 2002:a05:6000:2509:b0:3e4:64b0:a776 with SMTP id
+ ffacd0b85a97d-4266e7df845mr14274812f8f.52.1760383089517; 
+ Mon, 13 Oct 2025 12:18:09 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce5e1284sm19572199f8f.45.2025.10.13.12.18.08
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 13 Oct 2025 12:18:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/12] Misc HW patches for 2025-10-13
+Date: Mon, 13 Oct 2025 21:17:55 +0200
+Message-ID: <20251013191807.84550-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +96,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit f3f2ad119347e8c086b72282febcaac5d731b343:
 
+  Merge tag 'pull-target-arm-20251010' of https://gitlab.com/pm215/qemu into staging (2025-10-10 08:26:09 -0700)
 
-Am 13=2E Oktober 2025 11:10:45 UTC schrieb Markus Armbruster <armbru@redha=
-t=2Ecom>:
->Ping?
->
->Markus Armbruster <armbru@redhat=2Ecom> writes:
->
->> xenfb_mouse_event() has a switch statement whose controlling
->> expression move->axis is an enum InputAxis=2E  The enum values are
->> INPUT_AXIS_X and INPUT_AXIS_Y, encoded as 0 and 1=2E  The switch has a
->> case for both axes=2E  In addition, it has an unreachable default label=
-=2E
->> This convinces Coverity that move->axis can be greater than 1=2E  It
->> duly reports a buffer overrun when it is used to subscript an array
->> with two elements=2E
->>
->> Replace the unreachable code by abort()=2E
->>
->> Resolves: Coverity CID 1613906
->> Signed-off-by: Markus Armbruster <armbru@redhat=2Ecom>
->> ---
->>  hw/display/xenfb=2Ec | 3 +--
->>  1 file changed, 1 insertion(+), 2 deletions(-)
->>
->> diff --git a/hw/display/xenfb=2Ec b/hw/display/xenfb=2Ec
->> index 22822fecea=2E=2E5e6c691779 100644
->> --- a/hw/display/xenfb=2Ec
->> +++ b/hw/display/xenfb=2Ec
->> @@ -283,8 +283,7 @@ static void xenfb_mouse_event(DeviceState *dev, Qem=
-uConsole *src,
->>                  scale =3D surface_height(surface) - 1;
->>                  break;
->>              default:
->> -                scale =3D 0x8000;
->> -                break;
->> +                abort();
+are available in the Git repository at:
 
-Don't we prefer g_assert_not_reached() these days, for more expressiveness=
-?
+  https://github.com/philmd/qemu.git tags/hw-misc-20251013
 
-Best regards,
-Bernhard
+for you to fetch changes up to 9fedc11ff127636900cc7a0a3e7214e5cb60a313:
 
->>              }
->>              xenfb->axis[move->axis] =3D move->value * scale / 0x7fff;
->>          }
->
->
+  hw/hppa: Reduce variables scope in common_init() (2025-10-13 21:13:08 +0200)
+
+----------------------------------------------------------------
+Misc HW patches
+----------------------------------------------------------------
+
+Cédric Le Goater (1):
+  hw/arm/aspeed: Don't set 'auto_create_sdcard'
+
+Luc Michel (1):
+  hw/net/can/xlnx-versal-canfd: remove unused include directives
+
+Markus Armbruster (1):
+  hw/display/xenfb: Replace unreachable code by g_assert_not_reached()
+
+Mohamed Mediouni (1):
+  hw/vmapple: include missing headers
+
+Philippe Mathieu-Daudé (8):
+  hw/ppc: Do not open-code cpu_resume() in spin_kick()
+  hw/xtensa/xtfpga: Have xtfpga_init() only initialize MMU
+  hw/sparc/leon3: Remove unnecessary CPU() QOM cast
+  hw/s390x/sclp: Do not ignore address_space_read/write() errors
+  hw/loongarch/boot: Remove unnecessary cast to target_ulong
+  hw/hppa: Convert type_init() -> DEFINE_TYPES()
+  hw/hppa: Factor QOM HPPA_COMMON_MACHINE out
+  hw/hppa: Reduce variables scope in common_init()
+
+ hw/arm/aspeed.c                |  22 -------
+ hw/display/xenfb.c             |   3 +-
+ hw/hppa/machine.c              | 104 +++++++++++++++++----------------
+ hw/loongarch/boot.c            |   7 ++-
+ hw/net/can/xlnx-versal-canfd.c |   4 --
+ hw/ppc/ppce500_spin.c          |   3 +-
+ hw/s390x/sclp.c                |  18 +++++-
+ hw/sparc/leon3.c               |   2 +-
+ hw/vmapple/vmapple.c           |   2 +
+ hw/xtensa/xtfpga.c             |   2 +-
+ 10 files changed, 78 insertions(+), 89 deletions(-)
+
+-- 
+2.51.0
+
 
