@@ -4,85 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D263FCCD18E
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC1DCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8lK2-0002go-Oj; Tue, 14 Oct 2025 16:08:38 -0400
+	id 1v8laW-00088Q-En; Tue, 14 Oct 2025 16:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8lK1-0002fs-4U
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:37 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8lJ9-0005Ob-VT
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:36 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-b6093f8f71dso3595661a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:07:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760472459; x=1761077259; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Yz/BsnnxH/AGtjqnFOXBYx31cM+7NtxzeRTWBiS0WY4=;
- b=SVwJSC5fPsDSivo0qDED/Cezk9LRXjxdYy+PG8kH+lMGUk72k5z/k5/2nXwwfjd0Am
- ORmUeadGUsOhujGMRPg2eoR4hM+mbHtNBX6RF89QQybZwUv8dlO9zNJBeg5Hg+Ni4U8V
- +HWia/108ZJgmqKOL1/UvzMC5sXqxCEGRqGCuJHAsVmMVOEu3DL8gZMAfL3MiYvDoFHY
- KaEAgzfbdHPBkVn9S2+TFUKIgB4oADw/TSJlal90VThTCn/Iuj8f3Q5xjA5aZzJpg2b9
- +ImeATLXWuuh9cI5j8zW0IcCYLadJqlYCGrjKL/rdvL3bzLdQYeh3hTJWn1CznM7RDvn
- +KPQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8laT-00088I-VH
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:25:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8laJ-00083N-VZ
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:25:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760473521;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RLgJGzo8oRKrykPBF3FgcA0mpKSzNArLm1J9klVTdDY=;
+ b=Zodi5CqyQfaWZ5vwKHhw6/KMeMJdLJ/NwRiLFgEusrFFs2gJGmmgvN9LNwf7KxP8bN3NRw
+ KvRkgTdCagKRU2WfF2+4wk/iHexE7RK5PVgOnXvBD38uKGE/vyX8mqmAFNI3QmrFeI/ei2
+ Xt9pSoKgD6pTOUfpoptAZy22h84gd2s=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-685-oSErFAfXPfi7GSw3fP_A0A-1; Tue, 14 Oct 2025 16:25:19 -0400
+X-MC-Unique: oSErFAfXPfi7GSw3fP_A0A-1
+X-Mimecast-MFC-AGG-ID: oSErFAfXPfi7GSw3fP_A0A_1760473519
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-876ee102b44so9216146d6.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:25:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760472459; x=1761077259;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Yz/BsnnxH/AGtjqnFOXBYx31cM+7NtxzeRTWBiS0WY4=;
- b=CMdes4qSAP9agAkT27hq48jMZtxEC2p3iQYO2fZPQWkg3Z/WMWmT6Qbms7/H+TanOa
- HBhuOmuQY6G91W1fVb6415gxOSuWdq2hUFVmqWXaQ6uSuERiHqhAe8hS0J4Nz6WkA8cA
- JkrmI3rNSFz5s4mtuLFVI3ry8lAIv3Rej1Dd3LPsJOMM/9AOFxB1M13WFxi0lb0r1S1B
- /Mq7GifIdlLOshxEvX+fRQkCDwh84nU41xUl2CqH7iqvrwutECPp2038xXbDQCWdafw6
- 0OiQbHO9xDo+utTWM3hchYiFwtWXh/UCwXUGoVcjv6o8/uAQycg1WE9V7WrCbI/WqKIq
- epCw==
-X-Gm-Message-State: AOJu0Yx5zShhEH3UjBeVdBlgr3t3uuIvaY8TFopjGQeXaFx+lwEn4V0/
- LkdsUCxD3irj1ConusKD3I+qWFeVCLik7maoNVRXACilHONNmJTuBbjoTRT0yd1qs661TlSqgYD
- 3wxNkU+s=
-X-Gm-Gg: ASbGncsg/y3ZveYhoaEjyWSd0TzseWnuoVSHQEOX1mNzd7AVPsJBzlfBlfgNFqyWeKS
- +1GiEopqTKAEl0gJiJBf4xDZWJj/XCyihmBy4ufE60hyHPPy9LNdbmQjyYP2xieNNShry/bNRqY
- Q2gFEHm63c2BjXhLfceY5wUSoEmNaGGRBbS0Cfs1JZvcZ2YbJTON9SsUgqtltEExLf1XbC8vHuO
- 7HfTB4OXZyS2ko41qtW7mS/aQX7Fq7o/5kAQs0g+Psn1XQiOHc4awMhcsHRtsbJr68HHf/ZQXzl
- 09FTrBCqQTMEV0fNxhE5tlYOX4OXeRVSB1zd58o2H78C7uoHp1CuJ+8uvpIx/M0M4BCq9VKYQXz
- nCw7zcn+QjByR6z9vJZsGZHxy8aJ1XSjhk0ecImpitL3QRbKAcqc=
-X-Google-Smtp-Source: AGHT+IGUnQe8IVLSARPXZ9y1ekfmbJ0bvi51uOVKcweeC0HmBBkl6XvwlT1+icnoRWNCj1iBu7ElrA==
-X-Received: by 2002:a17:903:948:b0:249:37ad:ad03 with SMTP id
- d9443c01a7336-290273ee21fmr347600935ad.34.1760472458725; 
- Tue, 14 Oct 2025 13:07:38 -0700 (PDT)
-Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f93ea2sm172100975ad.126.2025.10.14.13.07.38
+ d=1e100.net; s=20230601; t=1760473519; x=1761078319;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RLgJGzo8oRKrykPBF3FgcA0mpKSzNArLm1J9klVTdDY=;
+ b=SdLxE+AkLRCu8ZlEZp3+ISmrSGsDSNXkyOYbSQ1Qu04OCqmCpet1WXFxHoxVL2GZ+e
+ /MXmIBajuuT4FNY9QRXqYlqo3RFeO+ltfhwwF0SK8XY612+/VtXf8w/185jRcAxPQe73
+ sO6zDvVZH8GEknnWyLPFpg1rOR6hYTTqxpLQxqZWMRBz8KSx6Ad9mjskTz8wFYIT/VD6
+ rFWwu2wBXSiEo6lbTew62YpmHD0tWMZ7xsFyS0yfDd47kZCpi6wDTMM9hIAoGi1JkqDp
+ laMPXLRfnxlKyHtw/I4PKEmMQI+cIC8NbOMXZo1LdMPIP0oXHeKYUIjK6r/+OADqecTS
+ rBLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXt8Gy2W8+V19tQSgwOHOFrsMmKf93gDzrPq8FOjukqpPKT0isPIIh2ih5Wlh/q/+a9flyvk/GCTWrB@nongnu.org
+X-Gm-Message-State: AOJu0YwIPl9lxPJ7qvwqSTQnDAY0oqWWFSyuWrtl6IiErT0TLoet7DKZ
+ F4SNFLYnlE0scvV0vQN83JRDGakJVogcV8gBWUCvEvpK9sNkR12l9t8N1w8Fcu+ApOavfhzTCbE
+ LBBHB+Cif3fvegDbtgwXLCc5m1B/s0SRsCnfPbkDnctVxGgX2oUbupzGx
+X-Gm-Gg: ASbGnctZSdCcvwA8IPXSYMg/Nw0+srSc6OeTjpANkvs0Pegn1M1quvm0NnABeZLiIH/
+ Aba40Fzr7W4D8G8UdsvfLo+ugv1jtL4KC0qXSK0xdEGdLAqxTubPqLe4v1RBF6wbv2V5cjIy6xU
+ 2MkS+du2CW4T32Rc1S9Y8Bvu4tfEF/TetJJeOz4WO01hgTpnTmzlQWhYJfjwTX0sJkfi+Vry2ys
+ 57cyAp1kQ23Hthty/aOSz5AGIhSj54IyhAel6m7WmyzykYKfvv8wxmYPdG4yknZLBIoe1yeIZL2
+ qgJ/8rZ2fi8QmIPwayW3Y1vfGm/BGZIS
+X-Received: by 2002:a05:622a:590a:b0:4b3:4fa9:4cd2 with SMTP id
+ d75a77b69052e-4e6eb04f536mr448967041cf.33.1760473518624; 
+ Tue, 14 Oct 2025 13:25:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvL8nMo+yMQL9jDt2bTIFDJJ4LSClUVIVWClLmjGbS38/A/PIMKCga5BfwCH44U3dnC2JqZg==
+X-Received: by 2002:a05:622a:590a:b0:4b3:4fa9:4cd2 with SMTP id
+ d75a77b69052e-4e6eb04f536mr448966571cf.33.1760473518052; 
+ Tue, 14 Oct 2025 13:25:18 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4e881d04210sm4935981cf.23.2025.10.14.13.25.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 13:07:38 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 27/37] target/arm: Implement TLBIP IPAS2E1IS, IPAS2LE1IS
-Date: Tue, 14 Oct 2025 13:07:08 -0700
-Message-ID: <20251014200718.422022-28-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251014200718.422022-1-richard.henderson@linaro.org>
-References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ Tue, 14 Oct 2025 13:25:16 -0700 (PDT)
+Date: Tue, 14 Oct 2025 16:25:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
+ eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
+ philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org,
+ michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+Subject: Re: [PATCH v7 16/19] qapi: add interface for backend-transfer
+ virtio-net/tap migration
+Message-ID: <aO6xqt5_1PDBwOwu@x1.local>
+References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
+ <20251010173957.166759-17-vsementsov@yandex-team.ru>
+ <aO57SKp86zX2R8mV@x1.local>
+ <6da192b9-7609-4cc8-82a9-1a445ecb10c9@yandex-team.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6da192b9-7609-4cc8-82a9-1a445ecb10c9@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,55 +115,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/tlb-insns.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+On Tue, Oct 14, 2025 at 10:31:30PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 14.10.25 19:33, Peter Xu wrote:
+> > On Fri, Oct 10, 2025 at 08:39:54PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > To migrate virtio-net TAP device backend (including open fds) locally,
+> > > user should simply set migration parameter
+> > > 
+> > >     backend-transfer = ["virtio-net-tap"]
+> > > 
+> > > Why not simple boolean? To simplify migration to further versions,
+> > > when more devices will support backend-transfer migration.
+> > > 
+> > > Alternatively, we may add per-device option to disable backend-transfer
+> > > migration, but still:
+> > > 
+> > > 1. It's more comfortable to set same capabilities/parameters on both
+> > > source and target QEMU, than care about each device.
+> > 
+> > But it loses per-device control, right?  Say, we can have two devices, and
+> > the admin can decide if only one of the devices will enable this feature.
+> > 
+> 
+> Right. But, in short:
+> 
+> 1. I'm not sure, that such granularity is necessary.
+> 
+> 2. It may implemented later, on top of the feature.
 
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index bf8f007869..f7510a1208 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -536,6 +536,17 @@ static void tlbi_aa64_ipas2e1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, mask);
- }
- 
-+static void tlbi_aa64_ipas2e1is_write128(CPUARMState *env,
-+                                         const ARMCPRegInfo *ri,
-+                                         uint64_t vallo, uint64_t valhi)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = ipas2e1_tlbmask(env, vallo);
-+    uint64_t pageaddr = sextract64(valhi << 12, 0, 56);
-+
-+    tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, mask);
-+}
-+
- static const ARMCPRegInfo tlbi_not_v7_cp_reginfo[] = {
-     /*
-      * MMU TLB control. Note that the wildcarding means we cover not just
-@@ -719,12 +730,16 @@ static const ARMCPRegInfo tlbi_v8_cp_reginfo[] = {
-       .writefn = tlbi_aa64_vae1_write },
-     { .name = "TLBI_IPAS2E1IS", .state = ARM_CP_STATE_AA64,
-       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 1,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS,
--      .writefn = tlbi_aa64_ipas2e1is_write },
-+      .access = PL2_W,
-+      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_128BIT,
-+      .writefn = tlbi_aa64_ipas2e1is_write,
-+      .write128fn = tlbi_aa64_ipas2e1is_write128 },
-     { .name = "TLBI_IPAS2LE1IS", .state = ARM_CP_STATE_AA64,
-       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 5,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS,
--      .writefn = tlbi_aa64_ipas2e1is_write },
-+      .access = PL2_W,
-+      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_128BIT,
-+      .writefn = tlbi_aa64_ipas2e1is_write,
-+      .write128fn = tlbi_aa64_ipas2e1is_write128 },
-     { .name = "TLBI_ALLE1IS", .state = ARM_CP_STATE_AA64,
-       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 4,
-       .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS,
+I confess that's not a good example, but my point was that it was
+straightforward idea to have two layers of settings, meanwhile it provides
+full flexiblity.
+
+> 
+> > > 
+> > > 2. To not break the design, that machine-type + device options +
+> > > migration capabilities and parameters are fully define the resulting
+> > > migration stream. We'll break this if add in future more
+> > > backend-transfer support in devices under same backend-transfer=true
+> > > parameter.
+> > 
+> > Could you elaborate?
+> > 
+> > I thought last time we discussed, we planned to have both the global knob
+> > and a per-device flag, then the feature is enabled only if both flags are
+> > set.
+> 
+> Right, here in v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01644.html
+> 
+> Still at this point, I also needed local-incoming=true target option, so I
+> considered all the parameters like "I can't make feature without extra
+> per-device options, so here they are".
+> 
+> A day later, after motivating comment from Markus (accidentally in v2),
+> I found and suggested the way:
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01960.html
+> 
+> And further versions v4-v7 were the realization of the idea. Still, main
+> benefit is possibility to get rid of per-device local-incoming=true
+> options for target, not about a kind of per-device "capability" flag we
+> discuss now.
+> 
+> A, and here I said [1]:
+> 
+> > 1. global fds-passing migration capability, to enable/disable the whole feature
+> > 
+> > 2. per-device fds-passing option, on by default for all supporting
+> > devices, to be
+> > able to disable backing migration for some devices. (we discussed it
+> > here: https://lore.kernel.org/all/aL8kuXQ2JF1TV3M7@x1.local/ ).
+> > Still, normally these options are always on by default.
+> > And more over, I can postpone their implementation to separate series,
+> > to reduce discussion field, and to check that everything may work
+> > without additional user input.
+> 
+> And then, went this way, postponing realization of per-device options..
+
+Postponing the per-device flag might still break different backends if you
+specify the list with virtio-net-pci.
+
+But only until now, I noticed you were using "virtio-net-tap" instead of
+"virtio-net-pci".
+
+Ouch.. I think that's even more complicated. :(
+
+Here I think the problem is, introducing some arbitrary strings into
+migration QAPI to represent some combinations of "virtio frontend F1" and
+"virtio backend B1" doesn't sound the right thing to do.  Migration ideally
+should have zero knowledge of the device topology, types of devices,
+frontends or backends.  "virtio-*" as a string should not appear in
+migration/ or qapi/migration.json at all..
+
+> 
+> And then, developing similar migration for vhost-user-blk, found
+> that I can't use on boolean capability for such features, the reason
+> in commit message, which we discuss now.
+
+Why a bool isn't enough?  Could you share a link to that discussion?
+
+> 
+> Than, current design came in v5 (v4 was skipped).. And I even got an
+> approval from Fabiano :)
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg03999.html
+> 
+> > 
+> > If these parameters are all set the same on src/dst, would it also not
+> > break the design when new devices start to support it (and the new device
+> > will need to introduce its own per-device flags)?
+> 
+> Yes, right.
+> 
+> I missed, that, "postponing (probably forever)" per-device options
+> realization, I started to implement another way to solve the same
+> problem (switching from one boolean capability to a backend-transfer
+> list).
+> 
+> In other words, if at some point implement per-device options, that will
+> partly intersect by functionality with current complex migration
+> parameter..
+> 
+> -
+> 
+> But still, I think, that parameter backend-transfer = [list of targets]
+> is better than per-device option. With per-device options we'll have to
+> care about them forever. I can't imagine a way to make them TRUE by
+> default.
+> 
+> Using machine type, to set option to TRUE by default in new MT, and to
+> false in all previous ones doesn't make real sense: we never migrate on
+> another MT, but we do can migrate from QEMU without support for
+> virtio-net backend transfer to the QEMU with such support. And on target
+> QEMU we'll want to enable virtio-net backend-transfer for further
+> migrations..
+
+So this is likely why you changed your mind.  I think machine properties
+definitely make sense.
+
+We set it OFF on old machines because when on old machines the src QEMU
+_may_ not support this feature.  We set it ON on new machines because when
+the QEMU has the new machine declared anyway, it is guaranteed to support
+the feature.
+
+We can still manually set the per-device properties iff the admin is sure
+that both sides of "old" QEMUs support this feature.  However machine
+properties worked like that for many years and I believe that's how it
+works, by being always on the safe side.
+
+> 
+> So, I think, modifying machine types is wrong idea here. So, we have to
+> keep new options FALSE by default, and management tool have to care to
+> set them appropriately.
+> 
+> -
+> 
+> Let's look from the POV of management tool.
+> 
+> With complex parameter (list of backend-transfer targets, suggested with
+> this series), what should we do?
+> 
+> 1. With introspection, get backend-transfer targets supported by source
+>    and target QEMUs
+> 2. Get and intersection, assume X
+> 3. Set same backend-transfer=X on source and target
+> 4. Start a migration
+> 
+> But with per-device parameters it becomes a lot more complicated and
+> error prone
+> 
+> 1. Somehow understand (how?), which devices support backend-transfer on
+>    source and target
+> 2. Get an intersection
+> 3. Set all the backend-transfer options on both vms correspondingly,
+>    doing personal qom-set for each device
+> 4. Start a migration
+> 
+> -
+> 
+> In short:
+> 
+> 1. per device - is too high granularity, making management more complex
+
+If we follow the machine property way of doing this (which I believe we
+used for years), then mgmt doesn't need any change except properly enable
+fd-passing in migration cap/params when it's a local migration.  That's
+all.  It doesn't need to know anything about "which device(s) supports
+fd-passing", because they'll all be auto-set by the machine types.
+
+> 
+> 2. per feature - is what we need. And it's a normal use for migration
+> capabilities: we implement a new migration feature, and add new
+> capability. The only new bit with this series is that "we are going to"
+> implement similar capabilities later, and seems good to organize them
+> all into a list, rather than make separate booleans.
+> 
+> 
+> > 
+> > > 
+> > > The commit only brings the interface, the realization will come in later
+> > > commit. That's why we add a temporary not-implemented error in
+> > > migrate_params_check().
+> > > 
+> 
+> [..]
+> 
+> > > +bool migrate_virtio_net_tap(void)
+> > > +{
+> > > +    MigrationState *s = migrate_get_current();
+> > > +    BackendTransferList *el = s->parameters.backend_transfer;
+> > > +
+> > > +    for ( ; el; el = el->next) {
+> > > +        if (el->value == BACKEND_TRANSFER_VIRTIO_NET_TAP) {
+> > 
+> > So this is also something I want to avoid.  The hope is we don't
+> > necessarily need to invent new device names into qapi/migration.json.
+> > OTOH, we can export a helper in migration/misc.h so that devices can query
+> > wehther the global feature is enabled or not, using that to AND the
+> > per-device flag.
+> > 
+> 
+> Understand. But I can't imagine how to keep management simple with per-device
+> options..
+> 
+> -
+> 
+> What do you think?
+
+I feel like you wanted to enable this feature _while_ using an old machine
+type.  Is that what you're looking for?  Can you simply urge the users to
+move to new machine types when looking for new features?  I believe that's
+what we do..
+
+MT properties were working like that for a long time.  What you were asking
+is fair, but if so I'd still like to double check with you on that's your
+real purpose (enabling this feature on NEW qemus but OLD machine types, all
+automatically).
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
