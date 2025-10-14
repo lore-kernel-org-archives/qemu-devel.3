@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCB2CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07FBECCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8lKX-0003EM-O6; Tue, 14 Oct 2025 16:09:09 -0400
+	id 1v8lKF-0002qo-Sr; Tue, 14 Oct 2025 16:08:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8lKP-00032X-Jl
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:09:02 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1v8lK8-0002lv-L9
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:45 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8lJE-0005Rs-Tw
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:09:00 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-27d3540a43fso56645995ad.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:07:48 -0700 (PDT)
+ id 1v8lJ9-0005PY-Ne
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:43 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b6a0a7f3a47so39313a12.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760472465; x=1761077265; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760472461; x=1761077261; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TvgyMGsMGCO23ydvUvmFS9TDLif2EzsiRI0mh1tWq9w=;
- b=nPYPsRamvZ8hlVtY2m+B5XLaXGgIoVfAjbvi4xYx6Z5G578qQTV7YBoonx3RZ7vKLa
- eVJAfavytHG20o+5831rBXlRC95+Zftlr5fefO7pMzNpdqzZh/qvDsUfhi96qQwD6Caq
- BfFbm7anAzRZOtqMZcQN3AW3zbTOwtkPFudTQvI5dtNmwGBvI8TF3yRhV1+I866S1AFE
- dmxhb21efoufROn1TJIZV+h7dEAv8Myhz8Zjcdq+bwmoZ+X8RqpFLpWhZv82a3dPnxgb
- f2pS5/ObLZWtuiwIyEE42XYw4dmlrmPJ85748/KNhDaOEE04OUzmgyxt1/r6ckdI+LAT
- qU3Q==
+ bh=fnPHkR0njX4AqazQ6eEmA4gBMrMS6vcZ8iE2evnsKIo=;
+ b=To07x0sRHRUCXrtJG/NV/5qYt1EqQ24xdAwwRWmjo45K3fu0/EZpscaxNTHW5a6jvd
+ HOrpyAS34P/lKrnW4NTMAULgFcU2Lam6Hc9HfAZb4yPbSEOpWK23rL/JJ8+VnlXwr63B
+ LkxBLwx1om7gvMV+CZqUGkU4K8uRXBEin9UsnM6KcJzO6ufKK57myA36Neo28ZpM0gzb
+ pTmv2KOg2lFrlce9s3ooSzg+KenkcO5Dtj8263C7Ed4OU2EaYv5N8h11B++QSLpDfec5
+ 9ixpfvOjNStp3xhI7ZM2509H56i4P3eTZWRQOK09wZVMlzG4zfaVLgMGD5zdxjsjkB9P
+ Xlug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760472465; x=1761077265;
+ d=1e100.net; s=20230601; t=1760472461; x=1761077261;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TvgyMGsMGCO23ydvUvmFS9TDLif2EzsiRI0mh1tWq9w=;
- b=rq+cs/zVeVFAZD55Gr94Xy9Gt4eWTxB7Z25iiMJwoFet+c1eTwGxV6ag6qKtObdj90
- waxvmViUbwIZJjwYFxCFKgBEldpTAnUvF+7UHn7dWBZRbud4mqieyw9ypwD3WeHG3aLY
- JxocWfmscEo14FyKJ1sDtdqfNO8szRj7UXO0uZuVgKCPs10oTweMTW0XN4XLw/JeXYKy
- A/d4e5NZSzSTwausdM2nJiIvV2bIO5ovp7kUIF7tdaepMF81sB4MeNTpJBabxsJWUixx
- gRwBv1LDjWeoyElWQqcUQ0rQiQxxwS8+ElpJyMCBkqNDxSTPS6ptYpaf3PNz3HIAr1G6
- 2G9Q==
-X-Gm-Message-State: AOJu0YzUjdLOj6eaeBn2hK5xcRlv4309UP4ZjwuTUf8SES4u9g5WiufU
- SUjdysel3WDroxbg1d9JANq6QV167oryKWQIEGLpd7KGjY6PD1i9aKGRuI3rEmO7K34Uw80xCUQ
- Zkwieqow=
-X-Gm-Gg: ASbGncvzu/KssmaFnBIXX92sNKBWU1byxxDDK9ObyFN5AlHfaH7tEWflGmRkljEdVL1
- j7vBS3EsWc0uLAwZc1bbUfxoqiChEQUDgRn15w1okpjeKNWhlrAVq3bL6FR17wVdq9w3elx22ff
- LcDPclpssxLje/2E1Ccb/yrUA4nr91Fplvw0vGH+ij3v92+X29tApjzn7uN1ntB7eollExLaVaW
- dv4TQyyQh7w9S/hOjras9IuEWNhgV24UcRipAz8aKJNkMCE6enrq4N/GHv6ZLX3+7Dehy25uRa6
- fmfYJINJ1zI3ikitr93dw3p8XQZMahwms15NvwX5Ui1iPjg8G2DgIR+m5laObKE0zK9W0MTk9RC
- 3/pfcmWjMI3HoM7JxRR5sigDIFakRFx70/qSnXacMuRB0M70Vjcg=
-X-Google-Smtp-Source: AGHT+IGVUSlOtmXSrAxpQFUx/nQbqRv0knhx1iUsgwfzkGZuiIlN6uD8MrHUMp+SW/2gAqy1lODlWg==
-X-Received: by 2002:a17:902:e943:b0:264:f714:8dce with SMTP id
- d9443c01a7336-290272c2542mr318983735ad.36.1760472465174; 
- Tue, 14 Oct 2025 13:07:45 -0700 (PDT)
+ bh=fnPHkR0njX4AqazQ6eEmA4gBMrMS6vcZ8iE2evnsKIo=;
+ b=q37qN5SaIefvd/WAOiD5Gas5EfsQIfuC53p/F0INVAPmXHbG36nuRtKh7ydUQdC6oZ
+ kq6RA6zsrDQCCjFOxAdVfhqcbr4hp4DrQpVo3gXXSVKl5LUpQlxZZiy1r5sy0MCs4f3O
+ qPISWmABoBwA8cSr7TFQQuCZg0H+YHY1n/3ADYdkZeqVAqoo4hVtqq/5ECYTfT+Qf+OC
+ +F/SQBYE3TthWQFnUh3WjkzWkVgIBxDJvN2HEmvaMuCN0u2TtaSZiW2rOVJUvevNZtyY
+ a3/2ewidLWCTbtafz+5g1mzOEH2f+yGoUK2HbHmwzwOvyZgR1CPHpeP0DS1fo15+FnY9
+ QKdg==
+X-Gm-Message-State: AOJu0YwMRLqJIAsduDWIVkpD2nSQcgJ84XoRPwkcwr9NqC30j8uSDQ/s
+ 4GlRST1bqp9wfaqDIuWAmNbGMLfDjdfugoaoDHE7Q14cOcUqh9dE0NIBw/Cmy4xaIO0i1Ii0Gra
+ 6C8QkU2M=
+X-Gm-Gg: ASbGncsdn8QACqISIKkZUbSqhUqoXXDQsSB0RxDESpzfdi9lJFqLDNiScRuqMNEpaap
+ cDK0+qrus5J7gwjo7bRUyZ7rAB1o1JcC1DEtoB0or+Lq8NJSdXFjVgpVZO77N9kGC5GIvhjtliV
+ 4HeNE67nI4lts8VtEjMUcl13/VMyh57jmyhpIS/lmBWVk/S4BHCuakhdzhMMf+wqGnyEJquNR+r
+ wE67wnmwlyNJtoNt4ZcEvanGM17Z464kXa6ChO45Je1OO7+bCO6wpKTi/Y1FTsYyPPJ0UDDcUrI
+ NgU76CH7FevM2euYGLcoNMANFhXQxM501nDgaPJ+E0Mn9NOW/Zsewl36x9n+oTQBCWktoLOMPbn
+ BFDHnOquqDhyntmWsn1PjQ+KI0aliGcpchjr+USPYtsFYYt0ryXI0Witle3b25g==
+X-Google-Smtp-Source: AGHT+IHn6tHZi6h1Qv6LVm0QmLNrZJXxEhVqAKrJR+w6QZos43FK4oToQEDPej26Q722QAOotaY1PQ==
+X-Received: by 2002:a17:903:2f0e:b0:272:a900:c42b with SMTP id
+ d9443c01a7336-290273ef03dmr326284525ad.31.1760472460826; 
+ Tue, 14 Oct 2025 13:07:40 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f93ea2sm172100975ad.126.2025.10.14.13.07.44
+ d9443c01a7336-29034f93ea2sm172100975ad.126.2025.10.14.13.07.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 13:07:44 -0700 (PDT)
+ Tue, 14 Oct 2025 13:07:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 37/37] NOTFORMERGE: Enable FEAT_SYSREG128,
- FEAT_SYSINSTR128 for cpu max
-Date: Tue, 14 Oct 2025 13:07:18 -0700
-Message-ID: <20251014200718.422022-38-richard.henderson@linaro.org>
+Subject: [PATCH v2 30/37] target/arm: Implement TLBIP RVA{L}E2{IS,OS}
+Date: Tue, 14 Oct 2025 13:07:11 -0700
+Message-ID: <20251014200718.422022-31-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251014200718.422022-1-richard.henderson@linaro.org>
 References: <20251014200718.422022-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,27 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not merge yet, because both of these are enabled
-if and only if FEAT_D128 is also enabled.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/cpu64.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/tcg/tlb-insns.c | 52 +++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 15 deletions(-)
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 6871956382..058d5c0ec1 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1254,6 +1254,8 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
-     t = FIELD_DP64(t, ID_AA64ISAR2, CSSC, 1);     /* FEAT_CSSC */
-     t = FIELD_DP64(t, ID_AA64ISAR2, ATS1A, 1);    /* FEAT_ATS1A */
-+    t = FIELD_DP64(t, ID_AA64ISAR2, SYSREG_128, 1);   /* FEAT_SYSREG128 */
-+    t = FIELD_DP64(t, ID_AA64ISAR2, SYSINSTR_128, 1); /* FEAT_SYSINSTR128 */
-     SET_IDREG(isar, ID_AA64ISAR2, t);
+diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+index 6c07839e3f..cbab7f81f9 100644
+--- a/target/arm/tcg/tlb-insns.c
++++ b/target/arm/tcg/tlb-insns.c
+@@ -1031,11 +1031,16 @@ static void tlbi_aa64_rvae2_write(CPUARMState *env,
+      * since we don't support flush-for-specific-ASID-only or
+      * flush-last-level-only.
+      */
+-
+     do_rvae_write(env, value, vae2_tlbmask(env),
+                   tlb_force_broadcast(env));
++}
  
-     t = GET_IDREG(isar, ID_AA64PFR0);
+-
++static void tlbi_aa64_rvae2_write128(CPUARMState *env,
++                                     const ARMCPRegInfo *ri,
++                                     uint64_t vallo, uint64_t valhi)
++{
++    do_rvae_write128(env, vallo, valhi, vae2_tlbmask(env),
++                     tlb_force_broadcast(env));
+ }
+ 
+ static void tlbi_aa64_rvae2is_write(CPUARMState *env,
+@@ -1048,9 +1053,14 @@ static void tlbi_aa64_rvae2is_write(CPUARMState *env,
+      * since we don't support flush-for-specific-ASID-only,
+      * flush-last-level-only or inner/outer shareable specific flushes.
+      */
+-
+     do_rvae_write(env, value, vae2_tlbmask(env), true);
++}
+ 
++static void tlbi_aa64_rvae2is_write128(CPUARMState *env,
++                                       const ARMCPRegInfo *ri,
++                                       uint64_t vallo, uint64_t valhi)
++{
++    do_rvae_write128(env, vallo, valhi, vae2_tlbmask(env), true);
+ }
+ 
+ static void tlbi_aa64_rvae3_write(CPUARMState *env,
+@@ -1202,13 +1212,17 @@ static const ARMCPRegInfo tlbirange_reginfo[] = {
+     { .name = "TLBI_RVAE2IS", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 2, .opc2 = 1,
+       .access = PL2_W,
+-      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_EL3_NO_EL2_UNDEF,
+-      .writefn = tlbi_aa64_rvae2is_write },
++      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS |
++              ARM_CP_EL3_NO_EL2_UNDEF | ARM_CP_128BIT,
++      .writefn = tlbi_aa64_rvae2is_write,
++      .write128fn = tlbi_aa64_rvae2is_write128 },
+    { .name = "TLBI_RVALE2IS", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 2, .opc2 = 5,
+       .access = PL2_W,
+-      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_EL3_NO_EL2_UNDEF,
+-      .writefn = tlbi_aa64_rvae2is_write },
++      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS |
++              ARM_CP_EL3_NO_EL2_UNDEF | ARM_CP_128BIT,
++      .writefn = tlbi_aa64_rvae2is_write,
++      .write128fn = tlbi_aa64_rvae2is_write128 },
+     { .name = "TLBI_RIPAS2E1", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 4, .opc2 = 2,
+       .access = PL2_W,
+@@ -1224,23 +1238,31 @@ static const ARMCPRegInfo tlbirange_reginfo[] = {
+    { .name = "TLBI_RVAE2OS", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 5, .opc2 = 1,
+       .access = PL2_W,
+-      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_EL3_NO_EL2_UNDEF,
+-      .writefn = tlbi_aa64_rvae2is_write },
++      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS |
++              ARM_CP_EL3_NO_EL2_UNDEF | ARM_CP_128BIT,
++      .writefn = tlbi_aa64_rvae2is_write,
++      .write128fn = tlbi_aa64_rvae2is_write128 },
+    { .name = "TLBI_RVALE2OS", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 5, .opc2 = 5,
+       .access = PL2_W,
+-      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_EL3_NO_EL2_UNDEF,
+-      .writefn = tlbi_aa64_rvae2is_write },
++      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS |
++              ARM_CP_EL3_NO_EL2_UNDEF | ARM_CP_128BIT,
++      .writefn = tlbi_aa64_rvae2is_write,
++      .write128fn = tlbi_aa64_rvae2is_write128 },
+     { .name = "TLBI_RVAE2", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 6, .opc2 = 1,
+       .access = PL2_W,
+-      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_EL3_NO_EL2_UNDEF,
+-      .writefn = tlbi_aa64_rvae2_write },
++      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS |
++              ARM_CP_EL3_NO_EL2_UNDEF | ARM_CP_128BIT,
++      .writefn = tlbi_aa64_rvae2_write,
++      .write128fn = tlbi_aa64_rvae2_write128 },
+    { .name = "TLBI_RVALE2", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 6, .opc2 = 5,
+       .access = PL2_W,
+-      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS | ARM_CP_EL3_NO_EL2_UNDEF,
+-      .writefn = tlbi_aa64_rvae2_write },
++      .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS |
++              ARM_CP_EL3_NO_EL2_UNDEF | ARM_CP_128BIT,
++      .writefn = tlbi_aa64_rvae2_write,
++      .write128fn = tlbi_aa64_rvae2_write128 },
+    { .name = "TLBI_RVAE3IS", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 2, .opc2 = 1,
+       .access = PL3_W, .type = ARM_CP_NO_RAW | ARM_CP_ADD_TLBI_NXS,
 -- 
 2.43.0
 
