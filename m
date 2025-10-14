@@ -4,53 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85CACCD193
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:33:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB31CCD193
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 17:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8hxI-0006xL-BZ; Tue, 14 Oct 2025 12:32:57 -0400
+	id 1v8iOU-0003EP-0M; Tue, 14 Oct 2025 13:01:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8hxF-0006x6-Hx
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:32:53 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8iON-0003Dg-DC
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:00:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8hxB-0000lQ-EI
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:32:53 -0400
-DKIM-Signature: a=rsa-sha256; bh=A/t61K85+aS3zHtZ2WVX8OE59mwl8FA0e9zvZXDQF14=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1760459564; v=1;
- b=URQqxP4h8i6QEgOEVkv4JRgydSYJm6IE8vkg3EFxeu2nGic4WmhltPGBeHf7EJAycg7UJQPs
- z4Am+L1UGriQ2Zp/0S61NzeuRIgPdD75Poeij150/Ptp+82tP3wv9SqaaKgfS/sZiuKkvuc19cq
- gyBEQqg6mWyzqo2oas6oo9fwGbSWMxKVRY6cNnYRrisMVYyUd/okkf+T1pL5dc6eqvkmaHYju0V
- 0YhRhoodp+07eJ9DtxI//U/Kxmbk78b0xLiyjPqn6BVRkTJYy18qwSY8qtWUJwpmZYK9w1iCJ7B
- W5iaNKlSpmGfWraUKcROBRBGkpSVA8aK9MelbG0J9D0dQ==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 9F0C32391D;
- Tue, 14 Oct 2025 16:32:44 +0000 (UTC)
-From: ~myrslint <myrslint@git.sr.ht>
-Date: Tue, 14 Oct 2025 16:23:51 +0000
-Subject: [PATCH qemu v8 1/1] Honor guest PAT on x86, absent Bochs display
-Message-ID: <176045956423.5579.13349691093596703310-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <176045956423.5579.13349691093596703310-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8iOK-0004v6-2i
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:00:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760461247;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nxDkPntV5OLXd8NROvyjYRRdUaTdnggzBCf5Crj4Ya8=;
+ b=QzfB38Grw0h69AG5iUarIWXm8KONWkoudsosoey1VBbAUBw67g5I3kCv5CpkGkPaS6FCNe
+ WyIgiKT9N9XXRpgvz4lOhedJKGL/msTnYUGeKSDUIfAcEgnD7+Yo7neO4KfprlNS9e5HGm
+ OpYs5KO0onA39amg5JJqjihgoPpF8EM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-213-wzKaB_9oMDSiwoTVCQPCPQ-1; Tue, 14 Oct 2025 13:00:46 -0400
+X-MC-Unique: wzKaB_9oMDSiwoTVCQPCPQ-1
+X-Mimecast-MFC-AGG-ID: wzKaB_9oMDSiwoTVCQPCPQ_1760461245
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-85641d6f913so3037595585a.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 10:00:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760461245; x=1761066045;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nxDkPntV5OLXd8NROvyjYRRdUaTdnggzBCf5Crj4Ya8=;
+ b=ZzUct5DQdsriWJW4FqS9qy/IJ/+6dibcGhMOXbi8ivZAZ5Ce/RIZKmcqcFN/ylDXMl
+ /BHFfjB7QKs4NEfnJUU6VCt70U98N2VczumOmMmKcbiCYvS5SCyvr1lvrWkO/Udi/78R
+ KvLkln/2oycGmCCt/B2FpBUWdXGep20ucU2BUX2byUTBxi7RsdosKBGmR1wWTg2KEQXr
+ Pdl3+JczuYOu2/xc2uci/XEXW5c20Q1DFkF41FAcd8p+MEg7HuwfUD4pasn4kVVpweim
+ i9atTtju5Cpo4bACCJYKXOUnv9W7BOj3QeEG2LMVTTjiAj+mCQ23XPmv4DCYW1ebq+E9
+ 404g==
+X-Gm-Message-State: AOJu0YyduQeqVaWbpELJ6GqF2EuyKIsNKW5WkPa9erG4McKLUpKmhHEJ
+ Dd9qlOsA0UMCZS6+Im1sqUAqZNTWWExZYaYYLT+DB+vbHPgDHJ5FEjrM8wRBYokkruNf3K7Bqlb
+ 9iNIcNxBSPvpcKqldiMHXyjpu+XonQbJ80vnrc5z5FvBVnCg50uHtHsbF
+X-Gm-Gg: ASbGncsOWsNZzmywvz5QyOKvustirxZcHDfzdK++hyxnj0Y+CpASAviRk60kcA7uKU/
+ Z6KK7bYTiJM/Bi17bYqb1UIb4OKIYQ4wCrp6lmL9R5CSmJclLtddgzrplI9IKQv4yW4twCVQNfc
+ 4+gcexW6zVetJXRUFC2D342a6rrh43O0LGNPdITBO1XnFg7g0IouiepVkqu+gVu1oyEdYw+Qv/D
+ qs/MA2J/15nLRzPHiacK7guCnUeFjb59+evZdtMo+UTdCFj6f5wLMrr5GxBRgwt5y8/hdrds6f1
+ Pa06HqmxfR8z3PgcH7jGWGSxIEWaUo9b
+X-Received: by 2002:a05:620a:c42:b0:864:e52f:311f with SMTP id
+ af79cd13be357-8834ff8e275mr3862990685a.6.1760461244843; 
+ Tue, 14 Oct 2025 10:00:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPhsYkd0C/QTTJJBKr8fo3Bz+RCmzzQiW8CcpsXiGg5tERZO3y+OdaYFFnMzPf1stNKNRQ+g==
+X-Received: by 2002:a05:620a:c42:b0:864:e52f:311f with SMTP id
+ af79cd13be357-8834ff8e275mr3862975585a.6.1760461243763; 
+ Tue, 14 Oct 2025 10:00:43 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4e881c8cecfsm2384461cf.19.2025.10.14.10.00.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 10:00:43 -0700 (PDT)
+Date: Tue, 14 Oct 2025 13:00:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH 5/8] hw/display: re-arrange memory region tracking
+Message-ID: <aO6Btwg4vo2vZRnY@x1.local>
+References: <20251014111234.3190346-1-alex.bennee@linaro.org>
+ <20251014111234.3190346-6-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251014111234.3190346-6-alex.bennee@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,200 +112,146 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: myrslint <qemu.haziness801@passinbox.com>
+On Tue, Oct 14, 2025 at 12:12:31PM +0100, Alex Bennée wrote:
+> QOM objects can be embedded in other QOM objects and managed as part
+> of their lifetime but this isn't the case for
+> virtio_gpu_virgl_hostmem_region. However before we can split it out we
+> need some other way of associating the wider data structure with the
+> memory region.
+> 
+> Fortunately MemoryRegion has an opaque pointer. This is passed down to
+> MemoryRegionOps for device type regions but is unused in the
+> memory_region_init_ram_ptr() case. Use the opaque to carry the
+> reference and allow the final MemoryRegion object to be reaped when
+> its reference count is cleared.
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Message-ID: <20250603110204.838117-10-alex.bennee@linaro.org>
+> ---
+>  include/system/memory.h       |  1 +
+>  hw/display/virtio-gpu-virgl.c | 23 ++++++++---------------
+>  2 files changed, 9 insertions(+), 15 deletions(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index 3bd5ffa5e0d..3349a5185a0 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -843,6 +843,7 @@ struct MemoryRegion {
+>      DeviceState *dev;
+>  
+>      const MemoryRegionOps *ops;
+> +    /* opaque data, used by backends like @ops */
 
-On x86_64, where most CPUs support self-snoop, it is preferrable to
-always honor guest PAT. Not doing so is a quirk. There is a default
-enabled KVM quirk flag which enforces not doing so due to a former bug
-in Bochs display driver.
+IMHO this comment isn't very helpful..  Maybe it should provide a list of
+things that are using the opaque, in this case memory_region_init_ram_ptr
+is the new addition.
 
-The bug has been fixed but not enough has yet passed since so we only
-disable said quirk flag if a Bochs display is not configured for the
-virtual machine.
+Having memory_region_init() directly taking opaque as a parameter would be
+nice but it might be an overkill indeed..  Still, there's option to at
+least start to have opaque passed into memory_region_init_ram_ptr() so
+people when reading memory.c will also know when opaque is used.  Otherwise
+it can easily break virtio-gpu if someone decides to reuse opaque for the
+API, without noticing it's used in virtio-gpu (like the ->free use..).
 
-This commit also moves around a bit of code that would be called when
-the initialization of a VM is done.
+No strong feelings, but if anyone agrees it could be at least something to
+be considered to be worked on top.
 
-Signed-off-by: myrslint <qemu.haziness801@passinbox.com>
----
- accel/kvm/kvm-all.c        |  1 +
- accel/stubs/kvm-stub.c     |  1 +
- hw/display/bochs-display.c | 17 +++++++++++++++
- include/system/kvm.h       |  9 ++++++++
- target/i386/kvm/kvm.c      | 42 +++++++++++++++++++++++++++++++-------
- 5 files changed, 63 insertions(+), 7 deletions(-)
+Thanks,
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 58802f7c3c..b1ae36d6a1 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -103,6 +103,7 @@ bool kvm_readonly_mem_allowed;
- bool kvm_vm_attributes_allowed;
- bool kvm_msi_use_devid;
- bool kvm_pre_fault_memory_supported;
-+bool kvm_bochs_drm_quirk;
- static bool kvm_has_guest_debug;
- static int kvm_sstep_flags;
- static bool kvm_immediate_exit;
-diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index 68cd33ba97..a69c89e1ad 100644
---- a/accel/stubs/kvm-stub.c
-+++ b/accel/stubs/kvm-stub.c
-@@ -24,6 +24,7 @@ bool kvm_gsi_direct_mapping;
- bool kvm_allowed;
- bool kvm_readonly_mem_allowed;
- bool kvm_msi_use_devid;
-+bool kvm_bochs_drm_quirk;
-=20
- void kvm_flush_coalesced_mmio_buffer(void)
- {
-diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
-index ad2821c974..e8def68b41 100644
---- a/hw/display/bochs-display.c
-+++ b/hw/display/bochs-display.c
-@@ -20,6 +20,8 @@
- #include "ui/qemu-pixman.h"
- #include "qom/object.h"
-=20
-+#include "system/kvm.h"
-+
- typedef struct BochsDisplayMode {
-     pixman_format_code_t format;
-     uint32_t             bytepp;
-@@ -309,6 +311,21 @@ static void bochs_display_realize(PCIDevice *dev, Error =
-**errp)
-     }
-=20
-     memory_region_set_log(&s->vram, true, DIRTY_MEMORY_VGA);
-+
-+    /*
-+     * On x86_64, where most CPUs support self-snoop, it is preferrable to
-+     * always honor guest PAT. Not doing so is a quirk. There is a default
-+     * enabled KVM quirk flag which enforces not doing so due to a former bug
-+     * in Bochs display driver.
-+     *
-+     * The bug has been fixed but not enough has yet passed since so we only
-+     * disable said quirk flag if a Bochs display is not configured for the
-+     * virtual machine.
-+     *
-+     * The following flag tells KVM initialization code not to disable that
-+     * quirk flag.
-+     */
-+    kvm_bochs_drm_quirk =3D true;
- }
-=20
- static bool bochs_display_get_big_endian_fb(Object *obj, Error **errp)
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 4fc09e3891..45ddb2e0ee 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -43,6 +43,7 @@ extern bool kvm_gsi_direct_mapping;
- extern bool kvm_readonly_mem_allowed;
- extern bool kvm_msi_use_devid;
- extern bool kvm_pre_fault_memory_supported;
-+extern bool kvm_bochs_drm_quirk;
-=20
- #define kvm_enabled()           (kvm_allowed)
- /**
-@@ -144,6 +145,13 @@ extern bool kvm_pre_fault_memory_supported;
-  */
- #define kvm_msi_devid_required() (kvm_msi_use_devid)
-=20
-+/**
-+ * kvm_has_bochs_drm:
-+ * Returns: true if KVM is possible and a Bochs DRM driver is
-+ * in use for display.
-+ */
-+#define kvm_has_bochs_drm() (kvm_bochs_drm_quirk)
-+
- #else
-=20
- #define kvm_enabled()           (0)
-@@ -158,6 +166,7 @@ extern bool kvm_pre_fault_memory_supported;
- #define kvm_gsi_direct_mapping() (false)
- #define kvm_readonly_mem_enabled() (false)
- #define kvm_msi_devid_required() (false)
-+#define kvm_has_bochs_drm() (false)
-=20
- #endif  /* CONFIG_KVM_IS_POSSIBLE */
-=20
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index db40caa341..4d2a01ca0e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2692,13 +2692,13 @@ static bool kvm_rdmsr_pkg_energy_status(X86CPU *cpu,
-     return true;
- }
-=20
--static Notifier smram_machine_done;
-+static Notifier kvm_machine_done;
- static KVMMemoryListener smram_listener;
- static AddressSpace smram_address_space;
- static MemoryRegion smram_as_root;
- static MemoryRegion smram_as_mem;
-=20
--static void register_smram_listener(Notifier *n, void *unused)
-+static void register_smram_listener(void)
- {
-     CPUState *cpu;
-     MemoryRegion *smram =3D
-@@ -2731,6 +2731,37 @@ static void register_smram_listener(Notifier *n, void =
-*unused)
-     }
- }
-=20
-+static bool kvm_x86_smm_enabled(void)
-+{
-+    return object_dynamic_cast(OBJECT(current_machine), TYPE_X86_MACHINE) &&
-+        x86_machine_is_smm_enabled(X86_MACHINE(current_machine));
-+}
-+
-+static int kvm_x86_disable_quirsk2_mask(void)
-+{
-+    return kvm_check_extension(kvm_state, KVM_CAP_DISABLE_QUIRKS2);
-+}
-+
-+static int kvm_disable_ignore_guest_pat(void)
-+{
-+    return kvm_vm_enable_cap(kvm_state, KVM_CAP_DISABLE_QUIRKS2, 0, \
-+                             KVM_X86_QUIRK_IGNORE_GUEST_PAT);
-+}
-+
-+static void handle_machine_done(Notifier *n, void *unused)
-+{
-+    if (kvm_x86_smm_enabled()) {
-+        register_smram_listener();
-+    }
-+    if (!kvm_has_bochs_drm() && \
-+        (kvm_x86_disable_quirsk2_mask() & KVM_X86_QUIRK_IGNORE_GUEST_PAT)) {
-+        if (kvm_disable_ignore_guest_pat()) {
-+            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-+                         "modifiable but we failed to disable it");
-+        }
-+    }
-+}
-+
- static void *kvm_msr_energy_thread(void *data)
- {
-     KVMState *s =3D data;
-@@ -3311,11 +3342,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
-=20
--    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
--        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
--        smram_machine_done.notify =3D register_smram_listener;
--        qemu_add_machine_init_done_notifier(&smram_machine_done);
--    }
-+    kvm_machine_done.notify =3D handle_machine_done;
-+    qemu_add_machine_init_done_notifier(&kvm_machine_done);
-=20
-     if (enable_cpu_pm) {
-         ret =3D kvm_vm_enable_disable_exits(s);
---=20
-2.49.1
+>      void *opaque;
+>      MemoryRegion *container;
+>      int mapped_via_alias; /* Mapped via an alias, container might be NULL */
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 07f6355ad62..0ef0b2743fe 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -52,17 +52,11 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+>  
+>  #if VIRGL_VERSION_MAJOR >= 1
+>  struct virtio_gpu_virgl_hostmem_region {
+> -    MemoryRegion mr;
+> +    MemoryRegion *mr;
+>      struct VirtIOGPU *g;
+>      bool finish_unmapping;
+>  };
+>  
+> -static struct virtio_gpu_virgl_hostmem_region *
+> -to_hostmem_region(MemoryRegion *mr)
+> -{
+> -    return container_of(mr, struct virtio_gpu_virgl_hostmem_region, mr);
+> -}
+> -
+>  static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+>  {
+>      VirtIOGPU *g = opaque;
+> @@ -73,14 +67,12 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+>  static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+>  {
+>      MemoryRegion *mr = MEMORY_REGION(obj);
+> -    struct virtio_gpu_virgl_hostmem_region *vmr;
+> +    struct virtio_gpu_virgl_hostmem_region *vmr = mr->opaque;
+>      VirtIOGPUBase *b;
+>      VirtIOGPUGL *gl;
+>  
+> -    vmr = to_hostmem_region(mr);
+> -    vmr->finish_unmapping = true;
+> -
+>      b = VIRTIO_GPU_BASE(vmr->g);
+> +    vmr->finish_unmapping = true;
+>      b->renderer_blocked--;
+>  
+>      /*
+> @@ -118,8 +110,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>  
+>      vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+>      vmr->g = g;
+> +    mr = g_new0(MemoryRegion, 1);
+>  
+> -    mr = &vmr->mr;
+>      memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+>      memory_region_add_subregion(&b->hostmem, offset, mr);
+>      memory_region_set_enabled(mr, true);
+> @@ -131,7 +123,9 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>       * command processing until MR is fully unreferenced and freed.
+>       */
+>      OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
+> +    mr->opaque = vmr;
+>  
+> +    vmr->mr = mr;
+>      res->mr = mr;
+>  
+>      trace_virtio_gpu_cmd_res_map_blob(res->base.resource_id, vmr, mr);
+> @@ -144,16 +138,15 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>                                       struct virtio_gpu_virgl_resource *res,
+>                                       bool *cmd_suspended)
+>  {
+> -    struct virtio_gpu_virgl_hostmem_region *vmr;
+>      VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+>      MemoryRegion *mr = res->mr;
+> +    struct virtio_gpu_virgl_hostmem_region *vmr;
+>      int ret;
+>  
+>      if (!mr) {
+>          return 0;
+>      }
+> -
+> -    vmr = to_hostmem_region(res->mr);
+> +    vmr = mr->opaque;
+>  
+>      trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
+>  
+> -- 
+> 2.47.3
+> 
+
+-- 
+Peter Xu
+
 
