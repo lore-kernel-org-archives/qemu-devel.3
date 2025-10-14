@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 863D3CCD193
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 17:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94450CCD193
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 17:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8iza-0006h1-Sq; Tue, 14 Oct 2025 13:39:23 -0400
+	id 1v8izc-0006hZ-6U; Tue, 14 Oct 2025 13:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8izY-0006gc-HG
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:39:20 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8iza-0006gt-7k
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:39:22 -0400
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8izO-00022K-2R
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:39:20 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-46e4f2696bdso56644745e9.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 10:39:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8izX-00023e-BY
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:39:21 -0400
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-46e34052bb7so66252605e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 10:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760463547; x=1761068347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760463557; x=1761068357; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YuNV2kfMCay5mq9aiI+HqmS5PQMxDo8wh2deosUdRBE=;
- b=LaV4PE+o/ZJrA2RCaCVSgltiVJWO5d1hSznadBdzYp3MWsGHYBJLsZYkBg7N05Xv8T
- qmqv2GckVELQsMfWFnO+eFcKhT/IEc3t079iqhIeDFai+zAn+qmljV9q+s4vsMs8zNn1
- BGmzHaYLq3Zm/kTuLbO3bF+4FDIh3pZBxTI1Y6FhdbZIuODgheHwR0xlstZAq7zkvBaL
- fFr2ro2oj9xHHmArPLqUQit56rH/drkklNwqrXo8jElkkeD4E37eMl4FhU6O5MugMIs3
- cXx30I+8jVlKMKXa/tW/2LU2aomKCVtScuz795eZLKUUIM7932S144aaA+SwgD1u+lFO
- 6slw==
+ bh=B7vF0j4DV78yMBqROnTyJIaFNu0YV72na+d17JA/sVo=;
+ b=NmHEEv6wS0mZrjK93WqoNod4GrX9vW1PygfiFVeRTQlmruflrKJLk6oVNJVqQHhUQd
+ O8bEWZzBMTy44kxJGVQZhmHNyXvbsvYmjMEpLkY0Oe4IHAYHSuQH6z+M06cWTN56A8Ej
+ pBVianQpnh6iOZu3i8qa8EimEqdT6XP6XW8AnWKIxWv1Lo/F9MGkQ+VefVVmQ3mOwrSB
+ 2CxOdA0e9neAUOOwF1+CIpk5pUXLScgrBIw8Dff6I0bgi2Hycb9tnFDEzme1zcJJuWYH
+ DccIaapQ8lrSReWvNSAbfb/1Ww4Xs5lm23UDbtOWT8YRbEy1EemBKZAqL5RYgfO5yPgP
+ Ftaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760463547; x=1761068347;
+ d=1e100.net; s=20230601; t=1760463557; x=1761068357;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YuNV2kfMCay5mq9aiI+HqmS5PQMxDo8wh2deosUdRBE=;
- b=VkHHRMfQzRER663zC0dVeABMoxfhBSF0OWsKPLVlL0z1TY1H18k+QZHHePKNLuCYEU
- CC9lO2ZoHDPLBJ6c4+gcbIfsz8IBlkaBP3XmeKr9+Oj5Z6mJWzbzlrqZ1zsmPEeD2pOz
- 0KTh9ccD6wpE9OVTO/KfkngcnjoHrz8JbfAAYmirGWnltfkQMi9yGRklvJ7g7yZL+RFT
- rDuA84Xd5YcotKNJmS80WU5cmW68NabNq2AUaXdzIY6ZEbqw/J36rWxycCvn9BGdIrsf
- Sa7kKJf73WqpCQaQReaXjDYZJ6ezIYJ9MKZ3KodX0YGTy4qFl5YMOeF+Ba/PVq+zyC0l
- FNKQ==
-X-Gm-Message-State: AOJu0Yx+3AJi2DbXHsAEmO7RMvzajSPmBh6Qm6uZzbKw6WTEeN/iJKMp
- CQ7bzH+7bszLxwlE4cd+toDVLdPOxVUmwQgWVkfHsw4rr5ELyfP4gITBq8Xh43ry0JTUKn8+iMZ
- 0aZNwchlVpQ==
-X-Gm-Gg: ASbGncuVgqhBKAu6X6KEbQkTBslg96cQvS7RzmmbsR5vb/4Xd0o9kGMHUbxnnEjDTAu
- +Nu39in4pVPkoWkQCRaE8O9l91d6+3yzMzWA0zuZfrzU+AYmkN3J3e17Q2MSlWVwio095AlLO0b
- YsNqzH3vrgT/0tteQaZVrc5oy3TRS1cZwqZMFa2zuWNdivDQfRqU5edSENlvB4wmQbAmtpZqGsl
- PM9jgqM7PljuY2rt/Zbk5bkEdxTTrVDzqmj1jqviOOD6Tw9FHGqKeQglzuRnkBqLedvBsfTfwWp
- yjJy0pNj+B+c+ZALywFhjDOvvReBBfM+NiOnGuMhtzYCg7nop/E+6DO8HxVRlTKqaskMWk0GiOD
- u38C+JuU6VmkvBjtv6otDb4JYNyNHgVmgLPkn+kmPD05rqamYnl5bIbIHXj+yQXNpND0wajK/j5
- nOkuGQ6Dw4YP3GiqpmwWFtGk4e+nxF4w==
-X-Google-Smtp-Source: AGHT+IGUinO38+ZXh41xZXHPlk77FE6cW51sDuD09+BOWXtQQke98DNZWGHq4MUtdPatXZCBN6Z1IQ==
-X-Received: by 2002:a05:600c:46d2:b0:46e:3686:a2dd with SMTP id
- 5b1f17b1804b1-46fbbc93abfmr88009155e9.11.1760463547269; 
- Tue, 14 Oct 2025 10:39:07 -0700 (PDT)
+ bh=B7vF0j4DV78yMBqROnTyJIaFNu0YV72na+d17JA/sVo=;
+ b=wA1LRVONqI2LvQxn7ndjOjuFc5SnM6MYNjxC3dF0MWBjZv32S6Tf3jbdB33wr/GYGt
+ WhXXqoih2uB4zw9nODdq4jo0bv4VqLv32q8bxKciGHa0Id2gkodS8C7Wo/LYMyFm2kfh
+ 6JlnGqES3oHEKB9CHdNP2fsdqFtg8lGaPg7EW7hT7sckpWGKmTibIWH6nz+I1meIvSmA
+ DLOtELshGrUl0UwVC2CSrUmQUti+dxfEBwsx/NZ45EOIhKWsAUXltkWrYL6tCELA5rg0
+ Q/owkrdj95k9noEGcdO9UTTdoGayefYmzJYfOCuzMcBLcaNmphMrltUHm/08IyKiGIqs
+ 1URA==
+X-Gm-Message-State: AOJu0YzeOVANHcB2aoyFIiK4BrQ0/qUKsnPJsdtBzWyjVPDLV3ydphZj
+ 9qNij6pr8l5S3AYGXd13f1/vQMkqHXcg+LB7kSExf/ASKO7dTjb7qrNMHkRqK34/ULuFlUD2EqI
+ MM21CLIFC1Tke
+X-Gm-Gg: ASbGncuMeCN/sCLvFjR2MuLeULh945ZgIJW82YPXrh8z77K4H27SaDdAnpJluQch+aK
+ SAYnd1QKgLeBeMR0q7eICpDwA7ueoSd6D1QjIjauSgHbGIPoI9GGue7Xoikvvefc3kYlaDWJRGF
+ zX9IrxcPd3rRKdJFMKhhCYiZ6PT7NF+79/Jo4IBLTG97lPJdgu/G8knSakYfkFL5iULp5sMZCcB
+ oMExPsRMC+8sOllJm7TpM+tdYwfHHlL68wVQq2msbV8sAcMUM8uxz7pHyo6gSTbIRcooJM43Zdb
+ mlDje6oHvzcsKEu0/sRvs8Rx+Cs6BpISo5WUd45DFr92M5ZNEOCl7xX5FSw6Sxz7H/dytaRYrL1
+ wp+sDomblKaQdFV9CAI+Z53Ul3PfRSu8EEeaiPFSq1iT6bOeXgDNFUT8UQqAFhX1jFZsHpHiRwR
+ R43G3/HNRx8tO9iYk0mZs=
+X-Google-Smtp-Source: AGHT+IFjUVEp4jSXGxvQNlIsGu/N/ppNcV+o4bN3ZwnNyM2O47Pv4LdijWQR1zOlCR5X/8yUXanfcA==
+X-Received: by 2002:a05:600c:4688:b0:46e:4372:5395 with SMTP id
+ 5b1f17b1804b1-46fa9b01ff5mr179218685e9.25.1760463557202; 
+ Tue, 14 Oct 2025 10:39:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb49bd977sm250146595e9.11.2025.10.14.10.39.06
+ 5b1f17b1804b1-46fb479c171sm249133035e9.0.2025.10.14.10.39.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Oct 2025 10:39:06 -0700 (PDT)
+ Tue, 14 Oct 2025 10:39:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -71,24 +71,24 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 1/3] tcg/ppc: Remove support for 32-bit hosts
-Date: Tue, 14 Oct 2025 19:38:57 +0200
-Message-ID: <20251014173900.87497-2-philmd@linaro.org>
+Subject: [PATCH 3/3] buildsys: Remove support for 32-bit PPC hosts
+Date: Tue, 14 Oct 2025 19:38:59 +0200
+Message-ID: <20251014173900.87497-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014173900.87497-1-philmd@linaro.org>
 References: <20251014173900.87497-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,752 +104,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-32-bit host support is deprecated since commit 6d701c9bac1
-("meson: Deprecate 32-bit host support"), released as v10.0.
-The next release being v10.2, we can remove the TCG backend
-for 32-bit PPC hosts.
+Stop detecting 32-bit PPC host as supported. See previous commit
+for rationale.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tcg/ppc/tcg-target-has.h      |   5 +-
- tcg/ppc/tcg-target-reg-bits.h |   8 +-
- tcg/ppc/tcg-target.c.inc      | 383 +++++++---------------------------
- 3 files changed, 79 insertions(+), 317 deletions(-)
+ configure                 | 12 ++----------
+ include/qemu/host-utils.h |  2 +-
+ include/qemu/timer.h      | 13 +------------
+ disas/disas-host.c        |  4 +---
+ util/cacheflush.c         |  4 ++--
+ 5 files changed, 7 insertions(+), 28 deletions(-)
 
-diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
-index 81ec5aece7a..a3711feeae2 100644
---- a/tcg/ppc/tcg-target-has.h
-+++ b/tcg/ppc/tcg-target-has.h
-@@ -17,12 +17,9 @@
- #define have_vsx       (cpuinfo & CPUINFO_VSX)
+diff --git a/configure b/configure
+index ce76a00aff1..8205c8df599 100755
+--- a/configure
++++ b/configure
+@@ -391,15 +391,12 @@ elif check_define __sparc__ ; then
+   else
+     cpu="sparc"
+   fi
+-elif check_define _ARCH_PPC ; then
+-  if check_define _ARCH_PPC64 ; then
++elif check_define _ARCH_PPC64 ; then
+     if check_define _LITTLE_ENDIAN ; then
+       cpu="ppc64le"
+     else
+       cpu="ppc64"
+     fi
+-  else
+-    cpu="ppc"
+   fi
+ elif check_define __mips__ ; then
+   if check_define __mips64 ; then
+@@ -479,11 +476,6 @@ case "$cpu" in
+     linux_arch=mips
+     ;;
  
- /* optional instructions */
--#if TCG_TARGET_REG_BITS == 64
- #define TCG_TARGET_HAS_extr_i64_i32     0
--#endif
+-  ppc)
+-    host_arch=ppc
+-    linux_arch=powerpc
+-    CPU_CFLAGS="-m32"
+-    ;;
+   ppc64)
+     host_arch=ppc64
+     linux_arch=powerpc
+@@ -1477,7 +1469,7 @@ probe_target_compiler() {
+         container_image=debian-all-test-cross
+         container_cross_prefix=mips64-linux-gnuabi64-
+         ;;
+-      ppc|ppc64|ppc64le)
++      ppc64|ppc64le)
+         container_image=debian-all-test-cross
+         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
+         ;;
+diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
+index dd558589cb5..22d440287f1 100644
+--- a/include/qemu/host-utils.h
++++ b/include/qemu/host-utils.h
+@@ -806,7 +806,7 @@ static inline uint64_t udiv_qrnnd(uint64_t *r, uint64_t n1,
+     asm("dlgr %0, %1" : "+r"(n) : "r"(d));
+     *r = n >> 64;
+     return n;
+-#elif defined(_ARCH_PPC64) && defined(_ARCH_PWR7)
++#elif defined(_ARCH_PWR7)
+     /* From Power ISA 2.06, programming note for divdeu.  */
+     uint64_t q1, q2, Q, r1, r2, R;
+     asm("divdeu %0,%2,%4; divdu %1,%3,%4"
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index abd2204f3be..6c15acebbc0 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -850,12 +850,11 @@ static inline int64_t get_clock(void)
+ /*******************************************/
+ /* host CPU ticks (if available) */
  
--#define TCG_TARGET_HAS_qemu_ldst_i128   \
--    (TCG_TARGET_REG_BITS == 64 && have_isa_2_07)
-+#define TCG_TARGET_HAS_qemu_ldst_i128   have_isa_2_07
+-#if defined(_ARCH_PPC)
++#if defined(_ARCH_PPC64)
  
- #define TCG_TARGET_HAS_tst              1
- 
-diff --git a/tcg/ppc/tcg-target-reg-bits.h b/tcg/ppc/tcg-target-reg-bits.h
-index 0efa80e7e07..3a15d7bee41 100644
---- a/tcg/ppc/tcg-target-reg-bits.h
-+++ b/tcg/ppc/tcg-target-reg-bits.h
-@@ -7,10 +7,10 @@
- #ifndef TCG_TARGET_REG_BITS_H
- #define TCG_TARGET_REG_BITS_H
- 
+ static inline int64_t cpu_get_host_ticks(void)
+ {
+     int64_t retval;
 -#ifdef _ARCH_PPC64
--# define TCG_TARGET_REG_BITS  64
+     /* This reads timebase in one 64bit go and includes Cell workaround from:
+        http://ozlabs.org/pipermail/linuxppc-dev/2006-October/027052.html
+     */
+@@ -863,16 +862,6 @@ static inline int64_t cpu_get_host_ticks(void)
+                           "cmpwi   %0,0\n\t"
+                           "beq-    $-8"
+                           : "=r" (retval));
 -#else
--# define TCG_TARGET_REG_BITS  32
-+#ifndef _ARCH_PPC64
-+# error Expecting 64-bit host architecture
- #endif
+-    /* http://ozlabs.org/pipermail/linuxppc-dev/1999-October/003889.html */
+-    unsigned long junk;
+-    __asm__ __volatile__ ("mfspr   %1,269\n\t"  /* mftbu */
+-                          "mfspr   %L0,268\n\t" /* mftb */
+-                          "mfspr   %0,269\n\t"  /* mftbu */
+-                          "cmpw    %0,%1\n\t"
+-                          "bne     $-16"
+-                          : "=r" (retval), "=r" (junk));
+-#endif
+     return retval;
+ }
  
-+#define TCG_TARGET_REG_BITS  64
-+
- #endif
-diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index b8b23d44d5e..b9ca6e26b24 100644
---- a/tcg/ppc/tcg-target.c.inc
-+++ b/tcg/ppc/tcg-target.c.inc
-@@ -29,35 +29,18 @@
-  * Apple XCode does not define _CALL_DARWIN.
-  * Clang defines _CALL_ELF (64-bit) but not _CALL_SYSV or _CALL_AIX.
-  */
--#if TCG_TARGET_REG_BITS == 64
--# ifdef _CALL_AIX
-+#ifdef _CALL_AIX
-     /* ok */
--# elif defined(_CALL_ELF) && _CALL_ELF == 1
-+#elif defined(_CALL_ELF) && _CALL_ELF == 1
- #  define _CALL_AIX
--# elif defined(_CALL_ELF) && _CALL_ELF == 2
-+#elif defined(_CALL_ELF) && _CALL_ELF == 2
-     /* ok */
--# else
--#  error "Unknown ABI"
+diff --git a/disas/disas-host.c b/disas/disas-host.c
+index 8146fafe804..4b06f41fa6c 100644
+--- a/disas/disas-host.c
++++ b/disas/disas-host.c
+@@ -56,11 +56,9 @@ static void initialize_debug_host(CPUDebug *s)
+     s->info.cap_mode = CS_MODE_64;
+     s->info.cap_insn_unit = 1;
+     s->info.cap_insn_split = 8;
+-#elif defined(_ARCH_PPC)
++#elif defined(_ARCH_PPC64)
+     s->info.cap_arch = CS_ARCH_PPC;
+-# ifdef _ARCH_PPC64
+     s->info.cap_mode = CS_MODE_64;
 -# endif
- #else
--# if defined(_CALL_SYSV) || defined(_CALL_DARWIN)
--    /* ok */
--# elif defined(__APPLE__)
--#  define _CALL_DARWIN
--# elif defined(__ELF__)
--#  define _CALL_SYSV
--# else
- #  error "Unknown ABI"
--# endif
- #endif
- 
--#if TCG_TARGET_REG_BITS == 64
--# define TCG_TARGET_CALL_ARG_I32   TCG_CALL_ARG_EXTEND
--# define TCG_TARGET_CALL_RET_I128  TCG_CALL_RET_NORMAL
--#else
--# define TCG_TARGET_CALL_ARG_I32   TCG_CALL_ARG_NORMAL
--# define TCG_TARGET_CALL_RET_I128  TCG_CALL_RET_BY_REF
--#endif
-+#define TCG_TARGET_CALL_ARG_I32   TCG_CALL_ARG_EXTEND
-+#define TCG_TARGET_CALL_RET_I128  TCG_CALL_RET_NORMAL
- #ifdef _CALL_SYSV
- # define TCG_TARGET_CALL_ARG_I64   TCG_CALL_ARG_EVEN
- # define TCG_TARGET_CALL_ARG_I128  TCG_CALL_ARG_BY_REF
-@@ -81,7 +64,7 @@
- #define TCG_VEC_TMP2    TCG_REG_V1
- 
- #define TCG_REG_TB     TCG_REG_R31
--#define USE_REG_TB     (TCG_TARGET_REG_BITS == 64 && !have_isa_3_00)
-+#define USE_REG_TB     !have_isa_3_00
- 
- /* Shorthand for size of a pointer.  Avoid promotion to unsigned.  */
- #define SZP  ((int)sizeof(void *))
-@@ -327,8 +310,7 @@ static bool tcg_target_const_match(int64_t sval, int ct,
-             if (uval == (uint32_t)uval && mask_operand(uval, &mb, &me)) {
-                 return 1;
-             }
--            if (TCG_TARGET_REG_BITS == 64 &&
--                mask64_operand(uval << clz64(uval), &mb, &me)) {
-+            if (mask64_operand(uval << clz64(uval), &mb, &me)) {
-                 return 1;
-             }
-             return 0;
-@@ -858,7 +840,6 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+ #elif defined(__riscv)
+ #if defined(_ILP32) || (__riscv_xlen == 32)
+     s->info.print_insn = print_insn_riscv32;
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index 17c58918de6..69c9614e2c9 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -153,7 +153,7 @@ static void arch_cache_info(int *isize, int *dsize)
      }
-     switch (type) {
-     case TCG_TYPE_I64:
--        tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-         /* fallthru */
-     case TCG_TYPE_I32:
-         if (ret < TCG_REG_V0) {
-@@ -898,7 +879,6 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
- static void tcg_out_rld_rc(TCGContext *s, int op, TCGReg ra, TCGReg rs,
-                            int sh, int mb, bool rc)
- {
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-     sh = SH(sh & 0x1f) | (((sh >> 5) & 1) << 1);
-     mb = MB64((mb >> 5) | ((mb << 1) & 0x3f));
-     tcg_out32(s, op | RA(ra) | RS(rs) | sh | mb | rc);
-@@ -946,13 +926,11 @@ static void tcg_out_ext16u(TCGContext *s, TCGReg dst, TCGReg src)
- 
- static void tcg_out_ext32s(TCGContext *s, TCGReg dst, TCGReg src)
- {
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-     tcg_out32(s, EXTSW | RA(dst) | RS(src));
  }
  
- static void tcg_out_ext32u(TCGContext *s, TCGReg dst, TCGReg src)
- {
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-     tcg_out_rld(s, RLDICL, dst, src, 0, 32);
- }
+-#elif defined(_ARCH_PPC) && defined(__linux__)
++#elif defined(_ARCH_PPC64) && defined(__linux__)
+ # include "elf.h"
  
-@@ -968,7 +946,6 @@ static void tcg_out_extu_i32_i64(TCGContext *s, TCGReg dst, TCGReg src)
- 
- static void tcg_out_extrl_i64_i32(TCGContext *s, TCGReg rd, TCGReg rn)
- {
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-     tcg_out_mov(s, TCG_TYPE_I32, rd, rn);
- }
- 
-@@ -1037,9 +1014,7 @@ static void tcg_out_movi_int(TCGContext *s, TCGType type, TCGReg ret,
-     tcg_target_long tmp;
-     int shift;
- 
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64 || type == TCG_TYPE_I32);
--
--    if (TCG_TARGET_REG_BITS == 64 && type == TCG_TYPE_I32) {
-+    if (type == TCG_TYPE_I32) {
-         arg = (int32_t)arg;
-     }
- 
-@@ -1076,7 +1051,7 @@ static void tcg_out_movi_int(TCGContext *s, TCGType type, TCGReg ret,
- 
-     /* Load 32-bit immediates with two insns.  Note that we've already
-        eliminated bare ADDIS, so we know both insns are required.  */
--    if (TCG_TARGET_REG_BITS == 32 || arg == (int32_t)arg) {
-+    if (arg == (int32_t)arg) {
-         tcg_out32(s, ADDIS | TAI(ret, 0, arg >> 16));
-         tcg_out32(s, ORI | SAI(ret, ret, arg));
-         return;
-@@ -1227,19 +1202,10 @@ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
-     if (have_vsx) {
-         load_insn = type == TCG_TYPE_V64 ? LXSDX : LXVDSX;
-         load_insn |= VRT(ret) | RB(TCG_REG_TMP1);
--        if (TCG_TARGET_REG_BITS == 64) {
--            new_pool_label(s, val, rel, s->code_ptr, add);
--        } else {
--            new_pool_l2(s, rel, s->code_ptr, add, val >> 32, val);
--        }
-+        new_pool_label(s, val, rel, s->code_ptr, add);
+ static void arch_cache_info(int *isize, int *dsize)
+@@ -187,7 +187,7 @@ static void fallback_cache_info(int *isize, int *dsize)
+     } else if (*dsize) {
+         *isize = *dsize;
      } else {
-         load_insn = LVX | VRT(ret) | RB(TCG_REG_TMP1);
--        if (TCG_TARGET_REG_BITS == 64) {
--            new_pool_l2(s, rel, s->code_ptr, add, val, val);
--        } else {
--            new_pool_l4(s, rel, s->code_ptr, add,
--                        val >> 32, val, val >> 32, val);
--        }
-+        new_pool_l2(s, rel, s->code_ptr, add, val, val);
-     }
- 
-     if (USE_REG_TB) {
-@@ -1351,7 +1317,6 @@ static void tcg_out_andi64(TCGContext *s, TCGReg dst, TCGReg src, uint64_t c)
- {
-     int mb, me;
- 
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-     if (mask64_operand(c, &mb, &me)) {
-         if (mb == 0) {
-             tcg_out_rld(s, RLDICR, dst, src, 0, me);
-@@ -1543,7 +1508,6 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg ret,
-         break;
-     case TCG_TYPE_I64:
-         if (ret < TCG_REG_V0) {
--            tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-             tcg_out_mem_long(s, LD, LDX, ret, base, offset);
-             break;
-         }
-@@ -1598,7 +1562,6 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
-         break;
-     case TCG_TYPE_I64:
-         if (arg < TCG_REG_V0) {
--            tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
-             tcg_out_mem_long(s, STD, STDX, arg, base, offset);
-             break;
-         }
-@@ -1664,12 +1627,10 @@ static void tcg_out_test(TCGContext *s, TCGReg dest, TCGReg arg1, TCGArg arg2,
-         tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
-         return;
-     }
--    if (TCG_TARGET_REG_BITS == 64) {
--        int sh = clz64(arg2);
--        if (mask64_operand(arg2 << sh, &mb, &me)) {
--            tcg_out_rld_rc(s, RLDICR, dest, arg1, sh, me, rc);
--            return;
--        }
-+    int sh = clz64(arg2); //
-+    if (mask64_operand(arg2 << sh, &mb, &me)) {
-+        tcg_out_rld_rc(s, RLDICR, dest, arg1, sh, me, rc);
-+        return;
-     }
-     /* Constraints should satisfy this. */
-     g_assert_not_reached();
-@@ -1680,8 +1641,6 @@ static void tcg_out_cmp(TCGContext *s, int cond, TCGArg arg1, TCGArg arg2,
- {
-     uint32_t op;
- 
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64 || type == TCG_TYPE_I32);
--
-     /*
-      * Simplify the comparisons below wrt CMPI.
-      * All of the tests are 16-bit, so a 32-bit sign extend always works.
-@@ -1747,7 +1706,7 @@ static void tcg_out_cmp(TCGContext *s, int cond, TCGArg arg1, TCGArg arg2,
- static void tcg_out_setcond_eq0(TCGContext *s, TCGType type,
-                                 TCGReg dst, TCGReg src, bool neg)
- {
--    if (neg && (TCG_TARGET_REG_BITS == 32 || type == TCG_TYPE_I64)) {
-+    if (neg && type == TCG_TYPE_I64) {
+-#if defined(_ARCH_PPC)
++#if defined(_ARCH_PPC64)
          /*
-          * X != 0 implies X + -1 generates a carry.
-          * RT = (~X + X) + CA
-@@ -1774,7 +1733,7 @@ static void tcg_out_setcond_eq0(TCGContext *s, TCGType type,
- static void tcg_out_setcond_ne0(TCGContext *s, TCGType type,
-                                 TCGReg dst, TCGReg src, bool neg)
- {
--    if (!neg && (TCG_TARGET_REG_BITS == 32 || type == TCG_TYPE_I64)) {
-+    if (!neg && type == TCG_TYPE_I64) {
-         /*
-          * X != 0 implies X + -1 generates a carry.  Extra addition
-          * trickery means: R = X-1 + ~X + C = X-1 + (-X+1) + C = C.
-@@ -1814,8 +1773,6 @@ static void tcg_out_setcond(TCGContext *s, TCGType type, TCGCond cond,
-     int sh;
-     bool inv;
- 
--    tcg_debug_assert(TCG_TARGET_REG_BITS == 64 || type == TCG_TYPE_I32);
--
-     /* Ignore high bits of a potential constant arg2.  */
-     if (type == TCG_TYPE_I32) {
-         arg2 = (uint32_t)arg2;
-@@ -2117,109 +2074,6 @@ static void tcg_out_cntxz(TCGContext *s, TCGType type, uint32_t opc,
-     }
- }
- 
--static void tcg_out_cmp2(TCGContext *s, TCGCond cond, TCGReg al, TCGReg ah,
--                         TCGArg bl, bool blconst, TCGArg bh, bool bhconst)
--{
--    static const struct { uint8_t bit1, bit2; } bits[] = {
--        [TCG_COND_LT ] = { CR_LT, CR_LT },
--        [TCG_COND_LE ] = { CR_LT, CR_GT },
--        [TCG_COND_GT ] = { CR_GT, CR_GT },
--        [TCG_COND_GE ] = { CR_GT, CR_LT },
--        [TCG_COND_LTU] = { CR_LT, CR_LT },
--        [TCG_COND_LEU] = { CR_LT, CR_GT },
--        [TCG_COND_GTU] = { CR_GT, CR_GT },
--        [TCG_COND_GEU] = { CR_GT, CR_LT },
--    };
--
--    TCGCond cond2;
--    int op, bit1, bit2;
--
--    switch (cond) {
--    case TCG_COND_EQ:
--        op = CRAND;
--        goto do_equality;
--    case TCG_COND_NE:
--        op = CRNAND;
--    do_equality:
--        tcg_out_cmp(s, cond, al, bl, blconst, 6, TCG_TYPE_I32);
--        tcg_out_cmp(s, cond, ah, bh, bhconst, 7, TCG_TYPE_I32);
--        tcg_out32(s, op | BT(0, CR_EQ) | BA(6, CR_EQ) | BB(7, CR_EQ));
--        break;
--
--    case TCG_COND_TSTEQ:
--    case TCG_COND_TSTNE:
--        if (blconst) {
--            tcg_out_andi32(s, TCG_REG_R0, al, bl);
--        } else {
--            tcg_out32(s, AND | SAB(al, TCG_REG_R0, bl));
--        }
--        if (bhconst) {
--            tcg_out_andi32(s, TCG_REG_TMP1, ah, bh);
--        } else {
--            tcg_out32(s, AND | SAB(ah, TCG_REG_TMP1, bh));
--        }
--        tcg_out32(s, OR | SAB(TCG_REG_R0, TCG_REG_R0, TCG_REG_TMP1) | 1);
--        break;
--
--    case TCG_COND_LT:
--    case TCG_COND_LE:
--    case TCG_COND_GT:
--    case TCG_COND_GE:
--    case TCG_COND_LTU:
--    case TCG_COND_LEU:
--    case TCG_COND_GTU:
--    case TCG_COND_GEU:
--        bit1 = bits[cond].bit1;
--        bit2 = bits[cond].bit2;
--        op = (bit1 != bit2 ? CRANDC : CRAND);
--        cond2 = tcg_unsigned_cond(cond);
--
--        tcg_out_cmp(s, cond, ah, bh, bhconst, 6, TCG_TYPE_I32);
--        tcg_out_cmp(s, cond2, al, bl, blconst, 7, TCG_TYPE_I32);
--        tcg_out32(s, op | BT(0, CR_EQ) | BA(6, CR_EQ) | BB(7, bit2));
--        tcg_out32(s, CROR | BT(0, CR_EQ) | BA(6, bit1) | BB(0, CR_EQ));
--        break;
--
--    default:
--        g_assert_not_reached();
--    }
--}
--
--static void tgen_setcond2(TCGContext *s, TCGCond cond, TCGReg ret,
--                          TCGReg al, TCGReg ah,
--                          TCGArg bl, bool const_bl,
--                          TCGArg bh, bool const_bh)
--{
--    tcg_out_cmp2(s, cond, al, ah, bl, const_bl, bh, const_bh);
--    tcg_out32(s, MFOCRF | RT(TCG_REG_R0) | FXM(0));
--    tcg_out_rlw(s, RLWINM, ret, TCG_REG_R0, CR_EQ + 0*4 + 1, 31, 31);
--}
--
--#if TCG_TARGET_REG_BITS != 32
--__attribute__((unused))
--#endif
--static const TCGOutOpSetcond2 outop_setcond2 = {
--    .base.static_constraint = C_O1_I4(r, r, r, rU, rC),
--    .out = tgen_setcond2,
--};
--
--static void tgen_brcond2(TCGContext *s, TCGCond cond, TCGReg al, TCGReg ah,
--                         TCGArg bl, bool const_bl,
--                         TCGArg bh, bool const_bh, TCGLabel *l)
--{
--    assert(TCG_TARGET_REG_BITS == 32);
--    tcg_out_cmp2(s, cond, al, ah, bl, const_bl, bh, const_bh);
--    tcg_out_bc_lab(s, TCG_COND_EQ, l);
--}
--
--#if TCG_TARGET_REG_BITS != 32
--__attribute__((unused))
--#endif
--static const TCGOutOpBrcond2 outop_brcond2 = {
--    .base.static_constraint = C_O0_I4(r, r, rU, rC),
--    .out = tgen_brcond2,
--};
--
- static void tcg_out_mb(TCGContext *s, unsigned a0)
- {
-     uint32_t insn;
-@@ -2438,13 +2292,8 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP2, TCG_AREG0, table_off);
- 
-         /* Extract the page index, shifted into place for tlb index.  */
--        if (TCG_TARGET_REG_BITS == 32) {
--            tcg_out_shri32(s, TCG_REG_R0, addr,
--                           TARGET_PAGE_BITS - CPU_TLB_ENTRY_BITS);
--        } else {
--            tcg_out_shri64(s, TCG_REG_R0, addr,
--                           TARGET_PAGE_BITS - CPU_TLB_ENTRY_BITS);
--        }
-+        tcg_out_shri64(s, TCG_REG_R0, addr,
-+                       TARGET_PAGE_BITS - CPU_TLB_ENTRY_BITS);
-         tcg_out32(s, AND | SAB(TCG_REG_TMP1, TCG_REG_TMP1, TCG_REG_R0));
- 
-         /*
-@@ -2453,8 +2302,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-          * We will ignore the high bits with tcg_out_cmp(..., addr_type).
-          */
-         if (cmp_off == 0) {
--            tcg_out32(s, (TCG_TARGET_REG_BITS == 64 ? LDUX : LWZUX)
--                      | TAB(TCG_REG_TMP2, TCG_REG_TMP1, TCG_REG_TMP2));
-+            tcg_out32(s, LDUX | TAB(TCG_REG_TMP2, TCG_REG_TMP1, TCG_REG_TMP2));
-         } else {
-             tcg_out32(s, ADD | TAB(TCG_REG_TMP1, TCG_REG_TMP1, TCG_REG_TMP2));
-             tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP2, TCG_REG_TMP1, cmp_off);
-@@ -2464,51 +2312,36 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-          * Load the TLB addend for use on the fast path.
-          * Do this asap to minimize any load use delay.
-          */
--        if (TCG_TARGET_REG_BITS == 64 || addr_type == TCG_TYPE_I32) {
--            tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP1, TCG_REG_TMP1,
--                       offsetof(CPUTLBEntry, addend));
--        }
-+        tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP1, TCG_REG_TMP1,
-+                   offsetof(CPUTLBEntry, addend));
- 
-         /* Clear the non-page, non-alignment bits from the address in R0. */
--        if (TCG_TARGET_REG_BITS == 32) {
--            /*
--             * We don't support unaligned accesses on 32-bits.
--             * Preserve the bottom bits and thus trigger a comparison
--             * failure on unaligned accesses.
--             */
--            if (a_bits < s_bits) {
--                a_bits = s_bits;
--            }
--            tcg_out_rlw(s, RLWINM, TCG_REG_R0, addr, 0,
-+        TCGReg t = addr;
-+
-+        /*
-+         * If the access is unaligned, we need to make sure we fail if we
-+         * cross a page boundary.  The trick is to add the access size-1
-+         * to the address before masking the low bits.  That will make the
-+         * address overflow to the next page if we cross a page boundary,
-+         * which will then force a mismatch of the TLB compare.
-+         */
-+        if (a_bits < s_bits) {
-+            unsigned a_mask = (1 << a_bits) - 1;
-+            unsigned s_mask = (1 << s_bits) - 1;
-+            tcg_out32(s, ADDI | TAI(TCG_REG_R0, t, s_mask - a_mask));
-+            t = TCG_REG_R0;
-+        }
-+
-+        /* Mask the address for the requested alignment.  */
-+        if (addr_type == TCG_TYPE_I32) {
-+            tcg_out_rlw(s, RLWINM, TCG_REG_R0, t, 0,
-                         (32 - a_bits) & 31, 31 - TARGET_PAGE_BITS);
-+        } else if (a_bits == 0) {
-+            tcg_out_rld(s, RLDICR, TCG_REG_R0, t, 0, 63 - TARGET_PAGE_BITS);
-         } else {
--            TCGReg t = addr;
--
--            /*
--             * If the access is unaligned, we need to make sure we fail if we
--             * cross a page boundary.  The trick is to add the access size-1
--             * to the address before masking the low bits.  That will make the
--             * address overflow to the next page if we cross a page boundary,
--             * which will then force a mismatch of the TLB compare.
--             */
--            if (a_bits < s_bits) {
--                unsigned a_mask = (1 << a_bits) - 1;
--                unsigned s_mask = (1 << s_bits) - 1;
--                tcg_out32(s, ADDI | TAI(TCG_REG_R0, t, s_mask - a_mask));
--                t = TCG_REG_R0;
--            }
--
--            /* Mask the address for the requested alignment.  */
--            if (addr_type == TCG_TYPE_I32) {
--                tcg_out_rlw(s, RLWINM, TCG_REG_R0, t, 0,
--                            (32 - a_bits) & 31, 31 - TARGET_PAGE_BITS);
--            } else if (a_bits == 0) {
--                tcg_out_rld(s, RLDICR, TCG_REG_R0, t, 0, 63 - TARGET_PAGE_BITS);
--            } else {
--                tcg_out_rld(s, RLDICL, TCG_REG_R0, t,
--                            64 - TARGET_PAGE_BITS, TARGET_PAGE_BITS - a_bits);
--                tcg_out_rld(s, RLDICL, TCG_REG_R0, TCG_REG_R0, TARGET_PAGE_BITS, 0);
--            }
-+            tcg_out_rld(s, RLDICL, TCG_REG_R0, t,
-+                        64 - TARGET_PAGE_BITS, TARGET_PAGE_BITS - a_bits);
-+            tcg_out_rld(s, RLDICL, TCG_REG_R0, TCG_REG_R0, TARGET_PAGE_BITS, 0);
-         }
- 
-         /* Full comparison into cr0. */
-@@ -2537,7 +2370,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         h->base = guest_base ? TCG_GUEST_BASE_REG : 0;
-     }
- 
--    if (TCG_TARGET_REG_BITS == 64 && addr_type == TCG_TYPE_I32) {
-+    if (addr_type == TCG_TYPE_I32) {
-         /* Zero-extend the guest address for use in the host address. */
-         tcg_out_ext32u(s, TCG_REG_TMP2, addr);
-         h->index = TCG_REG_TMP2;
-@@ -2554,40 +2387,22 @@ static void tcg_out_qemu_ld(TCGContext *s, TCGReg datalo, TCGReg datahi,
-     MemOp opc = get_memop(oi);
-     TCGLabelQemuLdst *ldst;
-     HostAddress h;
-+    uint32_t insn = qemu_ldx_opc[opc & (MO_BSWAP | MO_SSIZE)];
- 
-     ldst = prepare_host_addr(s, &h, addr, oi, true);
- 
--    if (TCG_TARGET_REG_BITS == 32 && (opc & MO_SIZE) == MO_64) {
--        if (opc & MO_BSWAP) {
--            tcg_out32(s, ADDI | TAI(TCG_REG_R0, h.index, 4));
--            tcg_out32(s, LWBRX | TAB(datalo, h.base, h.index));
--            tcg_out32(s, LWBRX | TAB(datahi, h.base, TCG_REG_R0));
--        } else if (h.base != 0) {
--            tcg_out32(s, ADDI | TAI(TCG_REG_R0, h.index, 4));
--            tcg_out32(s, LWZX | TAB(datahi, h.base, h.index));
--            tcg_out32(s, LWZX | TAB(datalo, h.base, TCG_REG_R0));
--        } else if (h.index == datahi) {
--            tcg_out32(s, LWZ | TAI(datalo, h.index, 4));
--            tcg_out32(s, LWZ | TAI(datahi, h.index, 0));
--        } else {
--            tcg_out32(s, LWZ | TAI(datahi, h.index, 0));
--            tcg_out32(s, LWZ | TAI(datalo, h.index, 4));
--        }
-+    if (!have_isa_2_06 && insn == LDBRX) {
-+        tcg_out32(s, ADDI | TAI(TCG_REG_R0, h.index, 4));
-+        tcg_out32(s, LWBRX | TAB(datalo, h.base, h.index));
-+        tcg_out32(s, LWBRX | TAB(TCG_REG_R0, h.base, TCG_REG_R0));
-+        tcg_out_rld(s, RLDIMI, datalo, TCG_REG_R0, 32, 0);
-+    } else if (insn) {
-+        tcg_out32(s, insn | TAB(datalo, h.base, h.index));
-     } else {
--        uint32_t insn = qemu_ldx_opc[opc & (MO_BSWAP | MO_SSIZE)];
--        if (!have_isa_2_06 && insn == LDBRX) {
--            tcg_out32(s, ADDI | TAI(TCG_REG_R0, h.index, 4));
--            tcg_out32(s, LWBRX | TAB(datalo, h.base, h.index));
--            tcg_out32(s, LWBRX | TAB(TCG_REG_R0, h.base, TCG_REG_R0));
--            tcg_out_rld(s, RLDIMI, datalo, TCG_REG_R0, 32, 0);
--        } else if (insn) {
--            tcg_out32(s, insn | TAB(datalo, h.base, h.index));
--        } else {
--            insn = qemu_ldx_opc[opc & (MO_SIZE | MO_BSWAP)];
--            tcg_out32(s, insn | TAB(datalo, h.base, h.index));
--            tcg_out_movext(s, TCG_TYPE_REG, datalo,
--                           TCG_TYPE_REG, opc & MO_SSIZE, datalo);
--        }
-+        insn = qemu_ldx_opc[opc & (MO_SIZE | MO_BSWAP)];
-+        tcg_out32(s, insn | TAB(datalo, h.base, h.index));
-+        tcg_out_movext(s, TCG_TYPE_REG, datalo,
-+                       TCG_TYPE_REG, opc & MO_SSIZE, datalo);
-     }
- 
-     if (ldst) {
-@@ -2604,32 +2419,17 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
-     MemOp opc = get_memop(oi);
-     TCGLabelQemuLdst *ldst;
-     HostAddress h;
-+    uint32_t insn = qemu_stx_opc[opc & (MO_BSWAP | MO_SIZE)];
- 
-     ldst = prepare_host_addr(s, &h, addr, oi, false);
- 
--    if (TCG_TARGET_REG_BITS == 32 && (opc & MO_SIZE) == MO_64) {
--        if (opc & MO_BSWAP) {
--            tcg_out32(s, ADDI | TAI(TCG_REG_R0, h.index, 4));
--            tcg_out32(s, STWBRX | SAB(datalo, h.base, h.index));
--            tcg_out32(s, STWBRX | SAB(datahi, h.base, TCG_REG_R0));
--        } else if (h.base != 0) {
--            tcg_out32(s, ADDI | TAI(TCG_REG_R0, h.index, 4));
--            tcg_out32(s, STWX | SAB(datahi, h.base, h.index));
--            tcg_out32(s, STWX | SAB(datalo, h.base, TCG_REG_R0));
--        } else {
--            tcg_out32(s, STW | TAI(datahi, h.index, 0));
--            tcg_out32(s, STW | TAI(datalo, h.index, 4));
--        }
-+    if (!have_isa_2_06 && insn == STDBRX) {
-+        tcg_out32(s, STWBRX | SAB(datalo, h.base, h.index));
-+        tcg_out32(s, ADDI | TAI(TCG_REG_TMP2, h.index, 4));
-+        tcg_out_shri64(s, TCG_REG_R0, datalo, 32);
-+        tcg_out32(s, STWBRX | SAB(TCG_REG_R0, h.base, TCG_REG_TMP2));
-     } else {
--        uint32_t insn = qemu_stx_opc[opc & (MO_BSWAP | MO_SIZE)];
--        if (!have_isa_2_06 && insn == STDBRX) {
--            tcg_out32(s, STWBRX | SAB(datalo, h.base, h.index));
--            tcg_out32(s, ADDI | TAI(TCG_REG_TMP2, h.index, 4));
--            tcg_out_shri64(s, TCG_REG_R0, datalo, 32);
--            tcg_out32(s, STWBRX | SAB(TCG_REG_R0, h.base, TCG_REG_TMP2));
--        } else {
--            tcg_out32(s, insn | SAB(datalo, h.base, h.index));
--        }
-+        tcg_out32(s, insn | SAB(datalo, h.base, h.index));
-     }
- 
-     if (ldst) {
-@@ -2709,16 +2509,11 @@ static const TCGOutOpQemuLdSt outop_qemu_ld = {
- static void tgen_qemu_ld2(TCGContext *s, TCGType type, TCGReg datalo,
-                           TCGReg datahi, TCGReg addr, MemOpIdx oi)
- {
--    if (TCG_TARGET_REG_BITS == 32) {
--        tcg_out_qemu_ld(s, datalo, datahi, addr, oi, type);
--    } else {
--        tcg_out_qemu_ldst_i128(s, datalo, datahi, addr, oi, true);
--    }
-+    tcg_out_qemu_ldst_i128(s, datalo, datahi, addr, oi, true);
- }
- 
- static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
--    .base.static_constraint =
--        TCG_TARGET_REG_BITS == 64 ? C_N1O1_I1(o, m, r) : C_O2_I1(r, r, r),
-+    .base.static_constraint = C_N1O1_I1(o, m, r),
-     .out = tgen_qemu_ld2,
- };
- 
-@@ -2736,16 +2531,11 @@ static const TCGOutOpQemuLdSt outop_qemu_st = {
- static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
-                           TCGReg datahi, TCGReg addr, MemOpIdx oi)
- {
--    if (TCG_TARGET_REG_BITS == 32) {
--        tcg_out_qemu_st(s, datalo, datahi, addr, oi, type);
--    } else {
--        tcg_out_qemu_ldst_i128(s, datalo, datahi, addr, oi, false);
--    }
-+    tcg_out_qemu_ldst_i128(s, datalo, datahi, addr, oi, false);
- }
- 
- static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
--    .base.static_constraint =
--        TCG_TARGET_REG_BITS == 64 ? C_O0_I3(o, m, r) : C_O0_I3(r, r, r),
-+    .base.static_constraint =  C_O0_I3(o, m, r),
-     .out = tgen_qemu_st2,
- };
- 
-@@ -2767,16 +2557,11 @@ static void tcg_out_nop_fill(tcg_insn_unit *p, int count)
- #elif defined(_CALL_DARWIN)
- # define LINK_AREA_SIZE                (6 * SZR)
- # define LR_OFFSET                     (2 * SZR)
--#elif TCG_TARGET_REG_BITS == 64
-+#else
- # if defined(_CALL_ELF) && _CALL_ELF == 2
- #  define LINK_AREA_SIZE               (4 * SZR)
- #  define LR_OFFSET                    (1 * SZR)
- # endif
--#else /* TCG_TARGET_REG_BITS == 32 */
--# if defined(_CALL_SYSV)
--#  define LINK_AREA_SIZE               (2 * SZR)
--#  define LR_OFFSET                    (1 * SZR)
--# endif
- #endif
- #ifndef LR_OFFSET
- # error "Unhandled abi"
-@@ -3107,7 +2892,6 @@ static void tgen_eqv(TCGContext *s, TCGType type,
-     tcg_out32(s, EQV | SAB(a1, a0, a2));
- }
- 
--#if TCG_TARGET_REG_BITS == 64
- static void tgen_extrh_i64_i32(TCGContext *s, TCGType t, TCGReg a0, TCGReg a1)
- {
-     tcg_out_shri64(s, a0, a1, 32);
-@@ -3117,7 +2901,6 @@ static const TCGOutOpUnary outop_extrh_i64_i32 = {
-     .base.static_constraint = C_O1_I1(r, r),
-     .out_rr = tgen_extrh_i64_i32,
- };
--#endif
- 
- static void tgen_divs(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
-@@ -3596,7 +3379,6 @@ static const TCGOutOpBswap outop_bswap32 = {
-     .out_rr = tgen_bswap32,
- };
- 
--#if TCG_TARGET_REG_BITS == 64
- static void tgen_bswap64(TCGContext *s, TCGType type, TCGReg dst, TCGReg src)
- {
-     TCGReg t0 = dst == src ? TCG_REG_R0 : dst;
-@@ -3639,7 +3421,6 @@ static const TCGOutOpUnary outop_bswap64 = {
-     .base.static_constraint = C_O1_I1(r, r),
-     .out_rr = tgen_bswap64,
- };
--#endif /* TCG_TARGET_REG_BITS == 64 */
- 
- static void tgen_neg(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
- {
-@@ -3776,7 +3557,6 @@ static const TCGOutOpLoad outop_ld16s = {
-     .out = tgen_ld16s,
- };
- 
--#if TCG_TARGET_REG_BITS == 64
- static void tgen_ld32u(TCGContext *s, TCGType type, TCGReg dest,
-                        TCGReg base, ptrdiff_t offset)
- {
-@@ -3798,7 +3578,6 @@ static const TCGOutOpLoad outop_ld32s = {
-     .base.static_constraint = C_O1_I1(r, r),
-     .out = tgen_ld32s,
- };
--#endif
- 
- static void tgen_st8(TCGContext *s, TCGType type, TCGReg data,
-                      TCGReg base, ptrdiff_t offset)
-@@ -4278,14 +4057,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         tcg_out_bitsel_vec(s, a0, a1, a2, args[3]);
-         return;
- 
--    case INDEX_op_dup2_vec:
--        assert(TCG_TARGET_REG_BITS == 32);
--        /* With inputs a1 = xLxx, a2 = xHxx  */
--        tcg_out32(s, VMRGHW | VRT(a0) | VRA(a2) | VRB(a1));  /* a0  = xxHL */
--        tcg_out_vsldoi(s, TCG_VEC_TMP1, a0, a0, 8);          /* tmp = HLxx */
--        tcg_out_vsldoi(s, a0, a0, TCG_VEC_TMP1, 8);          /* a0  = HLHL */
--        return;
--
-     case INDEX_op_ppc_mrgh_vec:
-         insn = mrgh_op[vece];
-         break;
-@@ -4311,6 +4082,7 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
- 
-     case INDEX_op_mov_vec:  /* Always emitted via tcg_out_mov.  */
-     case INDEX_op_dup_vec:  /* Always emitted via tcg_out_dup_vec.  */
-+    case INDEX_op_dup2_vec:
-     default:
-         g_assert_not_reached();
-     }
-@@ -4438,8 +4210,7 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_qemu_st:
-         return C_O0_I2(r, r);
-     case INDEX_op_qemu_st2:
--        return TCG_TARGET_REG_BITS == 64
--               ? C_O0_I3(o, m, r) : C_O0_I3(r, r, r);
-+        return C_O0_I3(o, m, r);
- 
-     case INDEX_op_add_vec:
-     case INDEX_op_sub_vec:
-@@ -4549,9 +4320,7 @@ static void tcg_target_init(TCGContext *s)
- #if defined(_CALL_SYSV)
-     tcg_regset_set_reg(s->reserved_regs, TCG_REG_R2); /* toc pointer */
- #endif
--#if defined(_CALL_SYSV) || TCG_TARGET_REG_BITS == 64
-     tcg_regset_set_reg(s->reserved_regs, TCG_REG_R13); /* thread pointer */
--#endif
-     tcg_regset_set_reg(s->reserved_regs, TCG_REG_TMP1);
-     tcg_regset_set_reg(s->reserved_regs, TCG_REG_TMP2);
-     tcg_regset_set_reg(s->reserved_regs, TCG_VEC_TMP1);
-@@ -4572,11 +4341,7 @@ typedef struct {
- /* We're expecting a 2 byte uleb128 encoded value.  */
- QEMU_BUILD_BUG_ON(FRAME_SIZE >= (1 << 14));
- 
--#if TCG_TARGET_REG_BITS == 64
--# define ELF_HOST_MACHINE EM_PPC64
--#else
--# define ELF_HOST_MACHINE EM_PPC
--#endif
-+#define ELF_HOST_MACHINE EM_PPC64
- 
- static DebugFrame debug_frame = {
-     .cie.len = sizeof(DebugFrameCIE)-4, /* length after .len member */
+          * For PPC, we're going to use the cache sizes computed for
+          * flush_idcache_range.  Which means that we must use the
 -- 
 2.51.0
 
