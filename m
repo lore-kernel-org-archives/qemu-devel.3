@@ -4,71 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C50CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 06:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 853EECCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 06:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8YbX-0002O0-BY; Tue, 14 Oct 2025 02:33:51 -0400
+	id 1v8Yec-00035P-Na; Tue, 14 Oct 2025 02:37:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8YbR-0002Nf-Ey
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 02:33:47 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v8YeZ-00034l-8p; Tue, 14 Oct 2025 02:36:59 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8YbO-00061r-NR
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 02:33:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760423622; x=1791959622;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=qMXCq+rgsGxQcZRcmyOXcZ7fh6iMsgKa5H2qjqBzr7Y=;
- b=aaj8PcBgi4IY1ArBFWqLzT7BWGBqJHG57yna0NeLumm1G70BnhJRmRGn
- 8FhZjue8Xv8BFPiKZfZtoVsJYxk293m58VF6VZPPab7JiMXNel3n+AQN+
- aFGZ58n7Rs5DlSMOa2cHhnRvUsQb974EXhmz2OIQhL5iaJAPyg8oXU2lW
- okEoCfcqVMueptJf3ozHeLCc9e4ff9oC1vFCsyJjPWm6a+QoEOjW+z4lz
- m28aIeGFTyZ81Ow3F8D/JKmxATywZKFNws+bII6JSk4tW2Ac6i77fh4zz
- HjV39xcSqNSeO3+KWxj3iyVBSy5q36prUYKTCMlyuuVW3O9eXN9MFCu2y A==;
-X-CSE-ConnectionGUID: 9H8TT4E/SwSa1Gza4BG40Q==
-X-CSE-MsgGUID: gp+0TDfJQ4+qWENQpZy6Ww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="62507004"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="62507004"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Oct 2025 23:33:39 -0700
-X-CSE-ConnectionGUID: F9rnvAtfSZGJJy0ko5L9iQ==
-X-CSE-MsgGUID: Tx/HTHlCT6W47C0ehOCSgg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="212420368"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 13 Oct 2025 23:33:39 -0700
-Date: Tue, 14 Oct 2025 14:55:43 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 10/11] rust: migration: implement ToMigrationState for
- Timer
-Message-ID: <aO3z7zbztw3TaxY+@intel.com>
-References: <20251001075005.1041833-1-pbonzini@redhat.com>
- <20251001075210.1042479-10-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v8YeW-0006Sy-GJ; Tue, 14 Oct 2025 02:36:59 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B38EB15D3C8;
+ Tue, 14 Oct 2025 09:36:32 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A96DA29F295;
+ Tue, 14 Oct 2025 09:36:52 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-stable@nongnu.org,
+ hector.cao@canonical.com, lk@c--e.de, berrange@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] target/i386: move arch_capabilities & pdcm compatibility
+ properties from 10.0 to 9.2 machine type
+Date: Tue, 14 Oct 2025 09:36:47 +0300
+Message-ID: <20251014063650.25057-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251001075210.1042479-10-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,126 +60,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 01, 2025 at 09:52:09AM +0200, Paolo Bonzini wrote:
-> Date: Wed,  1 Oct 2025 09:52:09 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 10/11] rust: migration: implement ToMigrationState for Timer
-> X-Mailer: git-send-email 2.51.0
-> 
-> Timer is a complex struct, allow adding it to a struct that
-> uses #[derive(ToMigrationState)]; similar to vmstate_timer, only
-> the expiration time has to be preserved.
-> 
-> In fact, because it is thread-safe, ToMigrationStateShared can
-> also be implemented without needing a cell or mutex that wraps
-> the timer.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/migration/src/migratable.rs | 31 +++++++++++++++++++++++++++++++
->  rust/util/src/timer.rs           | 10 +++++++++-
->  2 files changed, 40 insertions(+), 1 deletion(-)
-> 
-> diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
-> index ded6fe8f4a6..e85ef810efc 100644
-> --- a/rust/migration/src/migratable.rs
-> +++ b/rust/migration/src/migratable.rs
-> @@ -140,6 +140,26 @@ fn restore_migrated_state_mut(
->  
->  impl_for_primitive!(u8, u16, u32, u64, i8, i16, i32, i64, bool);
->  
-> +impl ToMigrationState for util::timer::Timer {
-> +    type Migrated = i64;
-> +
-> +    fn snapshot_migration_state(&self, target: &mut i64) -> Result<(), InvalidError> {
-> +        // SAFETY: as_ptr() is unsafe to ensure that the caller reasons about
-> +        // the pinning of the data inside the Opaque<>.  Here all we do is
-> +        // access a field.
-> +        *target = self.expire_time_ns().unwrap_or(-1);
-> +        Ok(())
-> +    }
-> +
-> +    fn restore_migrated_state_mut(
-> +        &mut self,
-> +        source: Self::Migrated,
-> +        version_id: u8,
-> +    ) -> Result<(), InvalidError> {
-> +        self.restore_migrated_state(source, version_id)
-> +    }
-> +}
-> +
->  impl<T: ToMigrationState, const N: usize> ToMigrationState for [T; N]
->  where
->      [T::Migrated; N]: Default,
-> @@ -237,6 +257,17 @@ fn restore_migrated_state(
->      ) -> Result<(), InvalidError>;
->  }
->  
-> +impl ToMigrationStateShared for util::timer::Timer {
-> +    fn restore_migrated_state(&self, source: i64, _version_id: u8) -> Result<(), InvalidError> {
-> +        if source >= 0 {
-> +            self.modify(source as u64);
+The two compat properties, introduced by the following commits (f):
 
-Timer::modify() is the wrapper of timer_mod(), and timer_mod() will
-re-compute the expire time with scale factor.
+ e9efa4a771 target/i386: add compatibility property for arch_capabilities
+ 6529f31e0d target/i386: add compatibility property for pdcm feature
 
-So here we should use a binding of timer_mod_ns() - Timer::modify_ns()
-instead of Timer::modify(), just like C side did.
+were added to address migration issues after the following commits (c10.1):
 
-Moreover, for Timer::modify_ns() & Timer::modify(), the simplest
-way is to build them based on timer_mod_ns() & timer_mod() (but this
-sounds like shifting the responsibility for type checking and overflow
-checking to the C side :-( ).
+ d3a24134e3 target/i386: do not expose ARCH_CAPABILITIES on AMD CPU
+ e68ec29809 i386/cpu: Move adjustment of CPUID_EXT_PDCM before feature_dependencies[] check
 
-Alternative, we can make Timer::modify() based on Timer::modify_ns(),
-but then it involves many numeric type conversions: scale is i32 but
-expire_time is u64, and Timer::modify_ns() may accept a u64 argument.
+which were added in 10.1 and broke migration from 10.0 to 10.1.
 
-Fortunately,, we can make Timer's modify() accept i64 to reduce type
-conversions.
+However, the 2 changes which required the compat properties, were
+mistakenly cherry-picked to 10.0.x stable branch (c10.0):
 
-> +        } else {
-> +            self.delete();
-> +        }
-> +        Ok(())
-> +    }
-> +}
-> +
->  impl<T: ToMigrationStateShared, const N: usize> ToMigrationStateShared for [T; N]
->  where
->      [T::Migrated; N]: Default,
-> diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
-> index c6b3e4088ec..a99ff5e7ef7 100644
-> --- a/rust/util/src/timer.rs
-> +++ b/rust/util/src/timer.rs
-> @@ -10,7 +10,8 @@
->  use common::{callbacks::FnCall, Opaque};
->  
->  use crate::bindings::{
-> -    self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType,
-> +    self, qemu_clock_get_ns, timer_del, timer_expire_time_ns, timer_init_full, timer_mod,
-> +    QEMUClockType,
->  };
->  
->  /// A safe wrapper around [`bindings::QEMUTimer`].
-> @@ -86,6 +87,13 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
->          }
->      }
->  
-> +    pub fn expire_time_ns(&self) -> Option<i64> {
-> +        // SAFETY: the only way to obtain a Timer safely is via methods that
-> +        // take a Pin<&mut Self>, therefore the timer is pinned
-> +        let ret = unsafe { timer_expire_time_ns(self.as_ptr()) };
-> +        i64::try_from(ret).ok()
+ 24778b1c7e target/i386: do not expose ARCH_CAPABILITIES on AMD CPU
+ 3d26cb65c2 i386/cpu: Move adjustment of CPUID_EXT_PDCM before feature_dependencies[] check
 
-Good! This detects all negative values.
+and were released as v10.0.4 (and v10.0.5).  This breaks migration
+from earlier versions to 10.0.4 the same way as it's broken for 10.1
+where the two fixes (f) are needed.
 
-> +    }
-> +
->      pub fn modify(&self, expire_time: u64) {
->          // SAFETY: the only way to obtain a Timer safely is via methods that
->          // take a Pin<&mut Self>, therefore the timer is pinned
-> -- 
-> 2.51.0
-> 
+However, reverting c10.0 commits from the 10.0.x stable branch will
+make that branch further incompatible with itself again, in an opposite
+way.
+
+It might be better to accept the current situation and "pretend" that
+the c10.0 commits has "always" been in 10.0 branch.  So the fixups (f)
+are needed for both 10.0 and 10.1 branches to preserve migration
+compatibility from the earlier versions and between 10.0 & 10.1 & next.
+So the fixup commits (f) can be applied to both branches, and on top
+of that, adjust the machine version for the compat properties from 10.0
+to the previous, 9.2, machine type.
+
+This is what this change does.
+
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+Note1: this is an alternative to reverting the two changes (c10.0)
+from the 10.0.x branch.  If accepted, this will be the first time
+in history when we modify machine properties retrospectively (or
+I think so, maybe there were other case like this already).
+
+Note2: I still don't understand the implications of this migration
+stuff, - what exactly is broken now and what will be broken if this
+change is accepted, or if (c10.0) are reverted.  We've quite a matrix
+here:
+
+  10.0.3 and before
+  10.0.4, 10.0.5 (with c10.0 applied)
+  10.0.6 and up (with the fix, either revert of (c10.0) or with 2 fixups on top)
+  10.1.1 and before (before (f) is applied)
+  10.1.2 and up (with (f) applied and maybe with this fixup applied too)
+
+This set is multiplied further by the number of possible machine versions
+used in particular setup - if it was -m pc-10.0 or -m pc-10.1.
+
+We also have backwards migration but I don't care about it at this time.
+
+Note3: It'd be best if we can release a fixed set of versions sooner,
+so it's finally known which combination is broken for migration and
+in which way.
+
+Note4: due to my lack of understanding of the brokeness and its severity,
+I can't decide which way to go from here.  It'd be really nice if I knew
+at least, like, 'a->b: dies at migration; c->d: migration succeeds, but
+some OSes might start misbehaving due to changed CPU properties' stuff about
+the above matrix, - this way, it will be possible to make a better decision.
+
+Thanks, and sorry for the breakage and the long post.
+
+ hw/i386/pc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4d6bcbb846..40fb12a3d2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -87,12 +87,13 @@ const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
+ GlobalProperty pc_compat_10_0[] = {
+     { TYPE_X86_CPU, "x-consistent-cache", "false" },
+     { TYPE_X86_CPU, "x-vendor-cpuid-only-v2", "false" },
+-    { TYPE_X86_CPU, "x-arch-cap-always-on", "true" },
+-    { TYPE_X86_CPU, "x-pdcm-on-even-without-pmu", "true" },
+ };
+ const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
+ 
+-GlobalProperty pc_compat_9_2[] = {};
++GlobalProperty pc_compat_9_2[] = {
++    { TYPE_X86_CPU, "x-arch-cap-always-on", "true" },
++    { TYPE_X86_CPU, "x-pdcm-on-even-without-pmu", "true" },
++};
+ const size_t pc_compat_9_2_len = G_N_ELEMENTS(pc_compat_9_2);
+ 
+ GlobalProperty pc_compat_9_1[] = {
+-- 
+2.47.3
+
 
