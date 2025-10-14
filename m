@@ -4,97 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11271CCD18E
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 19:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D529CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 19:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8kwW-0006Vk-41; Tue, 14 Oct 2025 15:44:20 -0400
+	id 1v8kyO-0007RD-Qn; Tue, 14 Oct 2025 15:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8kwR-0006VX-K5
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:44:15 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v8kyF-0007Pl-8P
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:46:07 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v8kwG-0002Gr-1r
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:44:13 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46e33b260b9so46447775e9.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 12:44:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v8ky8-0002dQ-4O
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:46:06 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b6093f8f71dso3583599a12.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 12:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760471040; x=1761075840; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SOeurXAkir1Ea8+e0dMMj0YaDS6oMfJTkfGBcNEy7fA=;
- b=nCw0hyQqcXmkj2rNxGaKcV4GjEGSUw6vvbnMWnjXWKi41YjpJ3yLbWMx9DQiYZjVvu
- fVg/1zCZCZojn0g6mC4MQIhjMscQgtcGM2iMWMIuNXb0XIADnNEXzvoT4cvocWXMmOsf
- Iaa7dxO6aBsrb2HIK1IchLenpKEMy+9toLABoD1uweD/qWXMKHUIyadUeha4sTz76DRc
- vVjkb7qhFUh4zmQOWvkD0IdhAjAb8QJn0RxFrWTQa4FlojF4xiRCW6bg3LSVF2eIFZ8C
- x6iI1RldwquAlJ0UAy/HzJjVdje1Bi9rc46cLsPW0DJ8/zzHjuFdUG4+QI8xmSBCL734
- XE+g==
+ d=linaro.org; s=google; t=1760471157; x=1761075957; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=G+1foOBUgDKP8pkUwUANvYxIvOn5l0UiQiAbbDSszVQ=;
+ b=eqXvJPvADl1BuGGIBy5mQ/XFFVbL89VArvJEz5oCufw0ZRja87fKvBBzU49P15yWLZ
+ Mbura814bhML5MwrMHaE0kqU0IWpo4+Q6tftbvF840igypGdgF5IiD6KZg8AGUATITWD
+ eozqa+1szb7q4VS06shb6B/oGHYhvEXPUt4uq5dFvAHwgdgLUCuaNn9z2nvWpot9UUxv
+ 8dLvlwfQyDwljHrSm3+rGukyZYKcT78lcZ2HUlOkYEfIXzC/0hsEqeDJfJiZuxz3FnFV
+ 3hpas0qXAkl6aaTnyzc9n9YwvYp/GN3jhiGOf2O6QVPuh0Ju+nYzSdh1mrJKOu7C7C8o
+ QCAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760471040; x=1761075840;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1760471157; x=1761075957;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SOeurXAkir1Ea8+e0dMMj0YaDS6oMfJTkfGBcNEy7fA=;
- b=aw5YX5Mu+94EdB7sI/OlGxWKDrspuTa/tyTBw2S1MKIHsqdp8mza9+d3vxWvqKkBhb
- q/TuOZhnUSLuRxJatvvotUkWs3B0xDNnC9F4YQwPoz9oY4TaUC1YzeK93vv+6fiFRGb0
- 1X4G5IP75zvLjt0aPaA5pon1naZeiRQhqOvo+7TsNhmi+9SLeu2Q32UkiseMzP970sf/
- Mnrxiq2kuAh6srxgqdpydafT/xEOb+spJaSBuIItR1jYlHY21/e1mswlXUYOUmctGUpT
- tmNpg/cJOxN/2fbYw6t+3g9mmJ/ArXqLkur63rvNr8RA1p4ZwJ34pnRC0mMED2qiJGyX
- Hj6Q==
-X-Gm-Message-State: AOJu0YzloF66yiUz12LxkV29TWUpLWlv7LKz9LT4Xzv31OA6LO4MWtfv
- lYtCYxYEAPBvzQHevL6m63sI+SICKvAFqVOXtZDGLOrLb1YwqGXt73Xowr+Baxz+cusiKgUET3t
- FFnq4ea4RJg==
-X-Gm-Gg: ASbGncvmedwD6NUjulndEyBZxP2CCiMXUVDLplPsd92lLDz3j5Cz1jRFf4JXbKYQQHD
- 7W0j1Hp5TAstYybpGVHHJuz9MdHJdKRlFrtXvT6seLN9skT1A3H4U/+moKyad3lLlYX5MgHY/DE
- a878DaSJJcJc4WU7blHypNNfbEoJXlmGmJ9+T52EPTHsGbpw4mui3a9IjBLsCg0u9UIK+7XOp4p
- JBpajtl28rTcgEHRGvD3b+0v/1kbT0pxvvZn1pgXT/8Ae5S0lYeR9ArcymspCFSfI/WGOfVDiHW
- 8dOJR4v52BXiTX56kWAmRiKQfKE+W4Ah6X1UvGB6AG+2/SDgEPttvVPen2C9WC+QXbztdZixj7g
- 0gDAsErZ3n51Atesh56FwusAFkuizPlrTE9pBCbHpPIcB1ZqzUqk3ulBT4TziQ3I0aYAk7dadBI
- j/57Vw/ZRhnRyB
-X-Google-Smtp-Source: AGHT+IH0KXm/oOSnLKkVen6OrIIr+1/i3BdcWdM8D6/ziR1qguuFgTqujZCmgt8AmNHNaH8kIiMGyA==
-X-Received: by 2002:a05:600c:1e87:b0:46e:4b89:13d9 with SMTP id
- 5b1f17b1804b1-46fa9a22e67mr180653425e9.0.1760471040474; 
- Tue, 14 Oct 2025 12:44:00 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fc57530b3sm139481005e9.12.2025.10.14.12.43.59
+ bh=G+1foOBUgDKP8pkUwUANvYxIvOn5l0UiQiAbbDSszVQ=;
+ b=bFohBtD/Mq6c43OEVs/sJSx4wMwYBCohkOafJU+ntJPKG9WJR95d3mb+sHAhRwXoWJ
+ YvI8CvrxaFyPjwBOb7a2jYJ/muQgFc6GtL5b0EgILOoJ14LKQGw0tMk1yjikAXocD6tr
+ ei5chQxq9PPTw7k4W22xnC1S1wnlOlXXSCZkVvvIOqAWH+w/TDrqBDLMGFq/I8GSwtdn
+ DcjjMm2K8jJTDXOtqV1zudmtdZDMQQuIQiH6GpX27GDcq7t6yOLwgfmHJek9lkkdKtWl
+ 8xC/+kgBrIElwDpflZsRqNnx7cjiDILEzNbVqN9y6t6meO9ZgHqTPDbFlYs7jxO8O1iy
+ QFfQ==
+X-Gm-Message-State: AOJu0YyGlqPHjcQz9Klv7Kc/ccLnvr+b3rhuiDqlOZaWJ9ZSbhy0sR7K
+ uSIbFT3fwzTSap+RCRQLB6e4bM0TpD+NGTe3riI8snJnum2xqOGFGoeomYFKqbjT0XMlHymQJqG
+ 7fKILl6Y=
+X-Gm-Gg: ASbGncsBZESbghM0Qmkh/NxNkOvjxWj+8J79I6AtvRKQhDu5mdYOw2hPSyjiIqgmxoo
+ tEWn1mHbAiw8wtVxroDlrRczzdDp9Q0/WXyvPI8spslHtsOSfNpllurxtkq1o5odA0tkRFKvYxT
+ fDUJfKPeaM562W8hiNhQkO05zCw3TzJUpuxPIhp2Hq+nu6SABMDx73KaUdpRqLwwOaHG9b8x0My
+ OUOhnz0SQTvjZEV7YjcWd5mdLzem47ZnTEQLMnKgxTcmVYej7SbBFLwHXRmmbiXdEVKBQFN8mF1
+ BvCORWGp6tn1r7gTSFQA47dbAS4l2iYL7uSj2AYC1Ox1fnc85lzQ1SCjNN0/nsh3kFelzq4sJ19
+ dh4Xba9uub1S3oFEY53rqrxVhlnTrB8nAouXIG/ZP1QmTOOQCrBHU9YJGN6M=
+X-Google-Smtp-Source: AGHT+IEPWqwHFQnkkUzQqVOf0L9hiVV12gEYi791rxjGeP8nJZ5qNL1r8IfGbuZu6yIcBFk8PIFUhA==
+X-Received: by 2002:a17:903:19e8:b0:283:c950:a76f with SMTP id
+ d9443c01a7336-290273ffc69mr345279325ad.43.1760471156959; 
+ Tue, 14 Oct 2025 12:45:56 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034f09069sm172068725ad.75.2025.10.14.12.45.56
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Oct 2025 12:43:59 -0700 (PDT)
-Message-ID: <0e246345-6296-4df2-8f1e-4c8beb9532f0@linaro.org>
-Date: Tue, 14 Oct 2025 21:43:58 +0200
+ Tue, 14 Oct 2025 12:45:56 -0700 (PDT)
+Message-ID: <ccc9eacf-08ed-458f-855c-02b440bdc808@linaro.org>
+Date: Tue, 14 Oct 2025 12:45:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] target/riscv: Centralize MO_TE uses in a pair of
- helpers
-Content-Language: en-US
+Subject: Re: [PULL 00/29] aspeed queue
 To: qemu-devel@nongnu.org
-Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-References: <20251010155045.78220-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251010155045.78220-1-philmd@linaro.org>
+References: <20251013124421.71977-1-clg@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251013124421.71977-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,32 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
-
-On 10/10/25 17:50, Philippe Mathieu-Daudé wrote:
-> In preparation of having RISC-V cores changing their endianness
-> at runtime, centralize the MO_TE uses to a pair of methods.
+On 10/13/25 05:43, Cédric Le Goater wrote:
+> The following changes since commit f3f2ad119347e8c086b72282febcaac5d731b343:
 > 
-> Except the 128-bit LD/ST change (first patch), no further
-> functional changes intended.
+>    Merge tag 'pull-target-arm-20251010' ofhttps://gitlab.com/pm215/qemu into staging (2025-10-10 08:26:09 -0700)
 > 
-> Philippe Mathieu-Daudé (13):
->    target/riscv: Really use little endianness for 128-bit loads/stores
+> are available in the Git repository at:
+> 
+>    https://github.com/legoater/qemu/ tags/pull-aspeed-20251013
+> 
+> for you to fetch changes up to 0cf9761b0ae6dd04815b54eb785301f35015246d:
+> 
+>    hw/arm/aspeed_ast27x0-{ssp,tsp}: Fix coding style (2025-10-13 14:37:55 +0200)
+> 
+> ----------------------------------------------------------------
+> aspeed queue:
+> 
+> * Introduce AspeedCoprocessor class and base implementation
+> * Remove redudant functional tests to optimize for CI resources
+> * Deprecate fp5280g2-bmc, qcom-dc-scm-v1-bmc, qcom-firework-bmc and
+>    sonorapass-bmc machines
+> * Bump ASPEED SDK to v09.08
+> * Add PCIe and network tests
 
-Are you OK to queue reviewed patches 2-13 (independent of patch #1)?
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
->    target/riscv: Explode MO_TExx -> MO_TE | MO_xx
->    target/riscv: Conceal MO_TE within gen_amo()
->    target/riscv: Conceal MO_TE within gen_inc()
->    target/riscv: Conceal MO_TE within gen_load() / gen_store()
->    target/riscv: Conceal MO_TE within gen_load_idx() / gen_store_idx()
->    target/riscv: Conceal MO_TE within gen_fload_idx() / gen_fstore_idx()
->    target/riscv: Conceal MO_TE within gen_storepair_tl()
->    target/riscv: Conceal MO_TE within gen_cmpxchg*()
->    target/riscv: Conceal MO_TE|MO_ALIGN within gen_lr() / gen_sc()
->    target/riscv: Factor MemOp variable out when MO_TE is set
->    target/riscv: Introduce mo_endian() helper
->    target/riscv: Introduce mo_endian_env() helper
-Regards,
-Phil.
+r~
 
