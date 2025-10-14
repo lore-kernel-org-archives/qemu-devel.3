@@ -4,86 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A635CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC0E4CCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ZBN-0002OH-Sx; Tue, 14 Oct 2025 03:10:53 -0400
+	id 1v8ZEc-000368-RO; Tue, 14 Oct 2025 03:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v8ZBL-0002O2-Sx
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:10:51 -0400
-Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v8ZBJ-0002H8-HB
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:10:51 -0400
-Received: by mail-qv1-xf2f.google.com with SMTP id
- 6a1803df08f44-795be3a3644so38333076d6.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 00:10:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760425848; x=1761030648; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wOWt5/6tkAbA8eVPVRUwd+GjGaJcbnLIiL7fTjAuQXs=;
- b=J7sWa4Op2yQbvsxPo9TCa0EwpbE8Byr0yYRLq7yCv3cXg1Wna9ovpqBI7CqerFDAYE
- vU2lOntaIkvkud54POEZnc5+ug1c//RxlVI+aSeif1rPH1nmwiGtwtRiDPTlXmP9/GX2
- erLKeOdivvhsTFgHQJiGHW/jSANYi6tfPLmqFnATVZ/3cjM2pTFCSrGivj+e/RPA+z+M
- uN6/uV+CP7O6++VvPA8nnh+l93+39MaAEi6rZBagUcxraj13eWvWw9rgIjW5dT0yag7T
- bwuMGTw1mn5Y4bBm+oHZk9/9Ql//kfaiPhMzllaeYDrsWpr9CmaD9TL/Zg/A57L2Kw7n
- CUbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760425848; x=1761030648;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wOWt5/6tkAbA8eVPVRUwd+GjGaJcbnLIiL7fTjAuQXs=;
- b=gZ2oDEb14e5h0/lMbtfZqBqk0rSkcPYfosmtRrdPREaTOz5h7y0rSccitVlmYe1OGH
- R31ITSMliYwCBZvWVliInTpcEsYddLQn07jaaquQLK9MaoLma+xvPtwp2Y00nV0EoxJ7
- /gwcAKwEhcdmLSzFL28fBTeunvbjfqrhNcR3bcOBW6cRovroZs/1Thl0eA/6xITH28+a
- cU5rC9PWlameE5FJX063dv5cog8C1h9IwfRKMemfi74SS1zuAmD9Kj5V0n6LeNaadRwT
- G2aTqzmf6PdHKLJExfJds3NIx1DTo74S2ICY6SOiDJVnQkYH5MaPfx/v+7IepQSr9b1r
- GPaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXB4BI3RJcwsIS1oybg3Oyu4HNgC5/B5+hlkopKEtAPsYnJN3+f0bEDxS+/gjfTo7d8q34xAmSB0Uj@nongnu.org
-X-Gm-Message-State: AOJu0Yze61dWzlMD19LZS+XH51iEUN/YoZA+yR1CnfWOi5FV09a28asF
- UaiEcyHZnfky7jl2flEn5eg0768zpreJRnsEbhtG8A8+5iFgDB4NzoLFNMYlwHZTZnuNfcWiJz5
- 8L/UXTny4Nh5ibhLrCfDN5yDL9t0likc=
-X-Gm-Gg: ASbGnctoM6C0jMULzEr24rdyZ1HJy7eIfn3VVZjUk3L+xrhKpdUI1lIP8TKLfrHUAI9
- uMfpqH84/KNoz/Zjx8QIw9JR4K5lWfdNfGqOa3sPTmeqKIRT0GuWj4jp4/BEdeW8j/KZ54jAG1e
- 0/or20dJpryl24TE9S5xqiFttPkAmLe4dp2Wi8lDPz8zth91ibqJNGI5OJNImoQVI36Jx2HBztK
- ThEG9TDQUtNDShbPzilz0ZZlW78gcOhFG0RtBTyy94QlrO8+3hodow5HZuZldpQ7gci
-X-Google-Smtp-Source: AGHT+IHxFaAUjZXi+vp0vQyKcNlvXW6+7T1L2G1aepoKEXaX2zOWiZNImWqLu7F1zIMgAPy7cu6J3kPJhPEHtuDlInM=
-X-Received: by 2002:a05:622a:254:b0:4e7:2168:8679 with SMTP id
- d75a77b69052e-4e721688f13mr75256101cf.65.1760425847670; Tue, 14 Oct 2025
- 00:10:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1v8ZEa-00035l-Px; Tue, 14 Oct 2025 03:14:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1v8ZEV-0002Ta-Gz; Tue, 14 Oct 2025 03:14:12 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59DJcJWj004069;
+ Tue, 14 Oct 2025 07:14:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pcnUwj
+ 1VCEbEl3lfKAIHu/ovYNaGYaQpzAC392Luafc=; b=brGVHwQGADw2c8p/FpcOJf
+ ZjXyvGBPK1thAAw6kwRJkaqDULYVSDu+vAe5Uz1qWeLxmmbiz61SbsT2iDf4vi17
+ RCmwlfjcDJCoGarMHwmUIe/Ym/OOM3FW7tpEK4ECU/YompZgh+V2dviims3CYjyu
+ 6yH1bNcWiwIyhwLOCcRpt6kX/Ae0b/cicy6uQ4ZYE54Kho+0/WqMt6ktvcmhClpR
+ l/ssAx9H6rf92Dipr9xVS0x8/o45CKmDFfw2a9vvIjX3qw3xVPp8qrLMl1zSElGg
+ qtkMWuyAWCJpe//L6wHzJtyHRo0z+UG9n3wvMAqxEn1P5op7702XvyPNe3KAXgBA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey8n4qr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Oct 2025 07:14:03 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59E7BFeB006751;
+ Tue, 14 Oct 2025 07:14:02 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey8n4qh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Oct 2025 07:14:02 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59E39NIW016759;
+ Tue, 14 Oct 2025 07:14:01 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r32jsk9h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Oct 2025 07:14:01 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59E7E1Qu21365466
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Oct 2025 07:14:01 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2F5BA5804B;
+ Tue, 14 Oct 2025 07:14:01 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 998115805B;
+ Tue, 14 Oct 2025 07:13:57 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Oct 2025 07:13:57 +0000 (GMT)
+Message-ID: <dd198004-21e5-4e14-9a73-05be3bc0594e@linux.ibm.com>
+Date: Tue, 14 Oct 2025 12:43:56 +0530
 MIME-Version: 1.0
-References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
- <20251013133836.852018-4-vsementsov@yandex-team.ru>
-In-Reply-To: <20251013133836.852018-4-vsementsov@yandex-team.ru>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 14 Oct 2025 11:10:36 +0400
-X-Gm-Features: AS18NWA9G5exZPhn7kvlgvTsTkwNemHjflUYvpL2l7UsyRvW3XNKaFdBYH-gm2A
-Message-ID: <CAJ+F1CL-wvyP3cVGAWyy_avQxzwPQcVJ+YtyxpRVY8HmKDNjkw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] chardev/char: qemu_char_open(): add return value
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com, 
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/16] target/ppc: Replace HOST_BIG_ENDIAN #ifdef with
+ runtime if() check
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org
+References: <20251010134226.72221-1-philmd@linaro.org>
+ <20251010134226.72221-13-philmd@linaro.org>
+ <a8e70e2b-4511-4d7c-a95c-a02cb6e6dd0e@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <a8e70e2b-4511-4d7c-a95c-a02cb6e6dd0e@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1Z-bMi1PuKRdfyi8ZP8TUyoK_3Ln5BG4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX8vET8ZL01PKt
+ 6S5Je3Cu9uVP1ucS84b4dRQ37BdlpgGXnVoY0QeqI0tDiZ9AglCs0z9RWbUcG/IFDkYPV+FNC6f
+ IMAwrvYjc2TCP8mv2YvyLDqlSZ7B9RVfDRe6XUB5Hiptw3iZMZY4fnlzrnrhCgQHEWIeN4VDDTB
+ 0WksK5EPJEq9yOnH7yeOEH4gy9Ufsy/Aqlp1KxJ8UoWZXWRR2brnozMKObwjOnku0xdgUYcdPsx
+ g5aR4DB8em1a6dGIcNtplRqioikDVAqGYhN2hIsVdK1VFkeIBqPypiZ97U0KDiuNpfQuepMk5Zz
+ w9ZcvBDv26YADZk+N8vSr79ZfIjAxiYHrpl1NfNt1aL/Ht9vgElTkefxuuYBBLb+UZ/oN/BQhoi
+ tjMUM2OWYLXxpuihkKY8yHYPN2/TbA==
+X-Proofpoint-GUID: hvodGjLgLG3OyHl3eTANSNoRSC2jxnH3
+X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68edf83b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=GBeU-aChTpiHtyJ2uCUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+ a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-14_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,66 +135,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Mon, Oct 13, 2025 at 5:40=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> Accordingly with recommendations in include/qapi/error.h accompany
-> errp by boolean return value and get rid of error propagation.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  chardev/char.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/chardev/char.c b/chardev/char.c
-> index d5a2533e8e..64ec60c0f2 100644
-> --- a/chardev/char.c
-> +++ b/chardev/char.c
-> @@ -246,14 +246,20 @@ int qemu_chr_add_client(Chardev *s, int fd)
->          CHARDEV_GET_CLASS(s)->chr_add_client(s, fd) : -1;
->  }
->
-> -static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
-> +static bool qemu_char_open(Chardev *chr, ChardevBackend *backend,
->                             bool *be_opened, Error **errp)
->  {
-> +    ERRP_GUARD();
->      ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
->
->      if (cc->open) {
->          cc->open(chr, backend, be_opened, errp);
-> +        if (*errp) {
-> +            return false;
-> +        }
->      }
-> +
-> +    return true;
->  }
->
->  static void char_init(Object *obj)
-> @@ -1030,9 +1036,7 @@ static Chardev *chardev_new(const char *id, const c=
-har *typename,
->          goto fail;
->      }
->
-> -    qemu_char_open(chr, backend, &be_opened, &local_err);
-> -    if (local_err) {
-> -        error_propagate(errp, local_err);
-> +    if (!qemu_char_open(chr, backend, &be_opened, &local_err)) {
-
-You meant to pass errp instead, since you dropped error_propagate ?
-
->          goto fail;
->      }
->
-> --
-> 2.48.1
->
->
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+On 10/14/25 12:18, Harsh Prateek Bora wrote:
+> 
+> 
+> On 10/10/25 19:12, Philippe Mathieu-Daudé wrote:
+>> Replace compile-time #ifdef with a runtime check to ensure all code
+>> paths are built and tested. This reduces build-time configuration
+>> complexity and improves maintainability.
+>>
+>> No functional change intended.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/ppc/arch_dump.c              |  9 ++-------
+>>   target/ppc/int_helper.c             | 28 ++++++++++++++--------------
+>>   target/ppc/kvm.c                    | 25 +++++++++----------------
+>>   target/ppc/translate/vmx-impl.c.inc | 14 +++++++-------
+>>   target/ppc/translate/vsx-impl.c.inc |  6 +++---
+>>   tcg/ppc/tcg-target.c.inc            | 24 ++++++++++++------------
+>>   6 files changed, 47 insertions(+), 59 deletions(-)
+>>
+>> diff --git a/target/ppc/arch_dump.c b/target/ppc/arch_dump.c
+>> index 80ac6c3e320..5cb8dbe9a6a 100644
+>> --- a/target/ppc/arch_dump.c
+>> +++ b/target/ppc/arch_dump.c
+>> @@ -158,21 +158,16 @@ static void ppc_write_elf_vmxregset(NoteFuncArg 
+>> *arg, PowerPCCPU *cpu, int id)
+>>       struct PPCElfVmxregset *vmxregset;
+>>       Note *note = &arg->note;
+>>       DumpState *s = arg->state;
+>> +    const int host_data_order = HOST_BIG_ENDIAN ? ELFDATA2MSB : 
+>> ELFDATA2LSB;
+> 
+> I think the order of return values of ternary op needs to be swapped.
+> 
+>                              HOST_BIG_ENDIAN ? ELFDATA2LSB : ELFDATA2MSB;
+> 
+> Otherwise, looks fine. With that fixed:
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> 
+> 
+>> +    const bool needs_byteswap = s->dump_info.d_endian == 
+>> host_data_order;
+
+Or, a better fix would be to change == to != ?
+
+>>       note->hdr.n_type = cpu_to_dump32(s, NT_PPC_VMX);
+>>       vmxregset = &note->contents.vmxregset;
+>>       memset(vmxregset, 0, sizeof(*vmxregset));
+>>       for (i = 0; i < 32; i++) {
+>> -        bool needs_byteswap;
+>>           ppc_avr_t *avr = cpu_avr_ptr(&cpu->env, i);
+>> -#if HOST_BIG_ENDIAN
+>> -        needs_byteswap = s->dump_info.d_endian == ELFDATA2LSB;
+>> -#else
+>> -        needs_byteswap = s->dump_info.d_endian == ELFDATA2MSB;
+>> -#endif
+>> -
+>>           if (needs_byteswap) {
+>>               vmxregset->avr[i].u64[0] = bswap64(avr->u64[1]);
+>>               vmxregset->avr[i].u64[1] = bswap64(avr->u64[0]);
+>> diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+>> index ef4b2e75d60..0c6f5b2e519 100644
+>> --- a/target/ppc/int_helper.c
+>> +++ b/target/ppc/int_helper.c
+>> @@ -1678,13 +1678,13 @@ void helper_vslo(ppc_avr_t *r, ppc_avr_t *a, 
+>> ppc_avr_t *b)
+>>   {
+>>       int sh = (b->VsrB(0xf) >> 3) & 0xf;
+>> -#if HOST_BIG_ENDIAN
+>> -    memmove(&r->u8[0], &a->u8[sh], 16 - sh);
+>> -    memset(&r->u8[16 - sh], 0, sh);
+>> -#else
+>> -    memmove(&r->u8[sh], &a->u8[0], 16 - sh);
+>> -    memset(&r->u8[0], 0, sh);
+>> -#endif
+>> +    if (HOST_BIG_ENDIAN) {
+>> +        memmove(&r->u8[0], &a->u8[sh], 16 - sh);
+>> +        memset(&r->u8[16 - sh], 0, sh);
+>> +    } else {
+>> +        memmove(&r->u8[sh], &a->u8[0], 16 - sh);
+>> +        memset(&r->u8[0], 0, sh);
+>> +    }
+>>   }
+>>   #if HOST_BIG_ENDIAN
+>> @@ -1898,13 +1898,13 @@ void helper_vsro(ppc_avr_t *r, ppc_avr_t *a, 
+>> ppc_avr_t *b)
+>>   {
+>>       int sh = (b->VsrB(0xf) >> 3) & 0xf;
+>> -#if HOST_BIG_ENDIAN
+>> -    memmove(&r->u8[sh], &a->u8[0], 16 - sh);
+>> -    memset(&r->u8[0], 0, sh);
+>> -#else
+>> -    memmove(&r->u8[0], &a->u8[sh], 16 - sh);
+>> -    memset(&r->u8[16 - sh], 0, sh);
+>> -#endif
+>> +    if (HOST_BIG_ENDIAN) {
+>> +        memmove(&r->u8[sh], &a->u8[0], 16 - sh);
+>> +        memset(&r->u8[0], 0, sh);
+>> +    } else {
+>> +        memmove(&r->u8[0], &a->u8[sh], 16 - sh);
+>> +        memset(&r->u8[16 - sh], 0, sh);
+>> +    }
+>>   }
+>>   void helper_vsumsws(CPUPPCState *env, ppc_avr_t *r, ppc_avr_t *a, 
+>> ppc_avr_t *b)
+>> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+>> index 2521ff65c6c..c00d29ce2c8 100644
+>> --- a/target/ppc/kvm.c
+>> +++ b/target/ppc/kvm.c
+>> @@ -651,13 +651,13 @@ static int kvm_put_fp(CPUState *cs)
+>>               uint64_t *fpr = cpu_fpr_ptr(env, i);
+>>               uint64_t *vsrl = cpu_vsrl_ptr(env, i);
+>> -#if HOST_BIG_ENDIAN
+>> -            vsr[0] = float64_val(*fpr);
+>> -            vsr[1] = *vsrl;
+>> -#else
+>> -            vsr[0] = *vsrl;
+>> -            vsr[1] = float64_val(*fpr);
+>> -#endif
+>> +            if (HOST_BIG_ENDIAN) {
+>> +                vsr[0] = float64_val(*fpr);
+>> +                vsr[1] = *vsrl;
+>> +            } else {
+>> +                vsr[0] = *vsrl;
+>> +                vsr[1] = float64_val(*fpr);
+>> +            }
+>>               reg.addr = (uintptr_t) &vsr;
+>>               reg.id = vsx ? KVM_REG_PPC_VSR(i) : KVM_REG_PPC_FPR(i);
+>> @@ -728,17 +728,10 @@ static int kvm_get_fp(CPUState *cs)
+>>                                           strerror(errno));
+>>                   return ret;
+>>               } else {
+>> -#if HOST_BIG_ENDIAN
+>> -                *fpr = vsr[0];
+>> +                *fpr = vsr[!HOST_BIG_ENDIAN];
+>>                   if (vsx) {
+>> -                    *vsrl = vsr[1];
+>> +                    *vsrl = vsr[HOST_BIG_ENDIAN];
+>>                   }
+>> -#else
+>> -                *fpr = vsr[1];
+>> -                if (vsx) {
+>> -                    *vsrl = vsr[0];
+>> -                }
+>> -#endif
+>>               }
+>>           }
+>>       }
+>> diff --git a/target/ppc/translate/vmx-impl.c.inc 
+>> b/target/ppc/translate/vmx-impl.c.inc
+>> index 92d6e8c6032..ca9cf1823d4 100644
+>> --- a/target/ppc/translate/vmx-impl.c.inc
+>> +++ b/target/ppc/translate/vmx-impl.c.inc
+>> @@ -134,9 +134,9 @@ static void gen_mtvscr(DisasContext *ctx)
+>>       val = tcg_temp_new_i32();
+>>       bofs = avr_full_offset(rB(ctx->opcode));
+>> -#if HOST_BIG_ENDIAN
+>> -    bofs += 3 * 4;
+>> -#endif
+>> +    if (HOST_BIG_ENDIAN) {
+>> +        bofs += 3 * 4;
+>> +    }
+>>       tcg_gen_ld_i32(val, tcg_env, bofs);
+>>       gen_helper_mtvscr(tcg_env, val);
+>> @@ -1528,10 +1528,10 @@ static void gen_vsplt(DisasContext *ctx, int 
+>> vece)
+>>       /* Experimental testing shows that hardware masks the 
+>> immediate.  */
+>>       bofs += (uimm << vece) & 15;
+>> -#if !HOST_BIG_ENDIAN
+>> -    bofs ^= 15;
+>> -    bofs &= ~((1 << vece) - 1);
+>> -#endif
+>> +    if (!HOST_BIG_ENDIAN) {
+>> +        bofs ^= 15;
+>> +        bofs &= ~((1 << vece) - 1);
+>> +    }
+>>       tcg_gen_gvec_dup_mem(vece, dofs, bofs, 16, 16);
+>>   }
+>> diff --git a/target/ppc/translate/vsx-impl.c.inc 
+>> b/target/ppc/translate/vsx-impl.c.inc
+>> index 00ad57c6282..8e5c75961f4 100644
+>> --- a/target/ppc/translate/vsx-impl.c.inc
+>> +++ b/target/ppc/translate/vsx-impl.c.inc
+>> @@ -1642,9 +1642,9 @@ static bool trans_XXSPLTW(DisasContext *ctx, 
+>> arg_XX2_uim *a)
+>>       tofs = vsr_full_offset(a->xt);
+>>       bofs = vsr_full_offset(a->xb);
+>>       bofs += a->uim << MO_32;
+>> -#if !HOST_BIG_ENDIAN
+>> -    bofs ^= 8 | 4;
+>> -#endif
+>> +    if (!HOST_BIG_ENDIAN) {
+>> +        bofs ^= 8 | 4;
+>> +    }
+>>       tcg_gen_gvec_dup_mem(MO_32, tofs, bofs, 16, 16);
+>>       return true;
+>> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+>> index b8b23d44d5e..61aa77f5454 100644
+>> --- a/tcg/ppc/tcg-target.c.inc
+>> +++ b/tcg/ppc/tcg-target.c.inc
+>> @@ -3951,9 +3951,9 @@ static bool tcg_out_dupm_vec(TCGContext *s, 
+>> TCGType type, unsigned vece,
+>>               tcg_out_mem_long(s, 0, LVEBX, out, base, offset);
+>>           }
+>>           elt = extract32(offset, 0, 4);
+>> -#if !HOST_BIG_ENDIAN
+>> -        elt ^= 15;
+>> -#endif
+>> +        if (!HOST_BIG_ENDIAN) {
+>> +            elt ^= 15;
+>> +        }
+>>           tcg_out32(s, VSPLTB | VRT(out) | VRB(out) | (elt << 16));
+>>           break;
+>>       case MO_16:
+>> @@ -3964,9 +3964,9 @@ static bool tcg_out_dupm_vec(TCGContext *s, 
+>> TCGType type, unsigned vece,
+>>               tcg_out_mem_long(s, 0, LVEHX, out, base, offset);
+>>           }
+>>           elt = extract32(offset, 1, 3);
+>> -#if !HOST_BIG_ENDIAN
+>> -        elt ^= 7;
+>> -#endif
+>> +        if (!HOST_BIG_ENDIAN) {
+>> +            elt ^= 7;
+>> +        }
+>>           tcg_out32(s, VSPLTH | VRT(out) | VRB(out) | (elt << 16));
+>>           break;
+>>       case MO_32:
+>> @@ -3977,9 +3977,9 @@ static bool tcg_out_dupm_vec(TCGContext *s, 
+>> TCGType type, unsigned vece,
+>>           tcg_debug_assert((offset & 3) == 0);
+>>           tcg_out_mem_long(s, 0, LVEWX, out, base, offset);
+>>           elt = extract32(offset, 2, 2);
+>> -#if !HOST_BIG_ENDIAN
+>> -        elt ^= 3;
+>> -#endif
+>> +        if (!HOST_BIG_ENDIAN) {
+>> +            elt ^= 3;
+>> +        }
+>>           tcg_out32(s, VSPLTW | VRT(out) | VRB(out) | (elt << 16));
+>>           break;
+>>       case MO_64:
+>> @@ -3991,9 +3991,9 @@ static bool tcg_out_dupm_vec(TCGContext *s, 
+>> TCGType type, unsigned vece,
+>>           tcg_out_mem_long(s, 0, LVX, out, base, offset & -16);
+>>           tcg_out_vsldoi(s, TCG_VEC_TMP1, out, out, 8);
+>>           elt = extract32(offset, 3, 1);
+>> -#if !HOST_BIG_ENDIAN
+>> -        elt = !elt;
+>> -#endif
+>> +        if (!HOST_BIG_ENDIAN) {
+>> +            elt = !elt;
+>> +        }
+>>           if (elt) {
+>>               tcg_out_vsldoi(s, out, out, TCG_VEC_TMP1, 8);
+>>           } else {
+> 
 
