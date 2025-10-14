@@ -4,104 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA76CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC9ECCD193
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8htI-0005iW-UE; Tue, 14 Oct 2025 12:28:48 -0400
+	id 1v8hxI-0006xO-BX; Tue, 14 Oct 2025 12:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v8htC-0005hT-66; Tue, 14 Oct 2025 12:28:43 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8hxF-0006x5-5R
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:32:53 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v8ht9-0000DD-MH; Tue, 14 Oct 2025 12:28:41 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59EBaUxC023819;
- Tue, 14 Oct 2025 16:28:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=towMXVDRdEP3rConWooD2fzWrsQ+bEPd44RlbMDTd
- O0=; b=Ao9gY22/1zF/z7F8gvPG2sFVNvMXkBYR7KoMABK+2hEdIUT2/0M3xfRny
- 54RGX0mFc2jAOg4BCs7vW6ueRNH8ymaD2HbkO0KK7pwFvXiNTjP87bMxBvb50BpX
- 5Ltpo0z86OV6vk65Bqp+sz4ZmyrTk2wEaLemO77QU2BEaGByTc5skIkY5IalEr1I
- dzIRPaUZ9yge34wXkw51BYqUh1c8iruYfc9sUfhd6cIjWauKU8tdLqsqBtRNdAgA
- VzeJlJf8XdjwjBBb5F7gSRS/a0hc+5Ssh0x64OgMLACMVfi6IJJGAlbcGJVyEmxS
- RuNjI1kpApVaZjls4jsWM1bIE5fXw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qevyy7hr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Oct 2025 16:28:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59EF1noh016996;
- Tue, 14 Oct 2025 16:28:30 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r32jut7g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Oct 2025 16:28:30 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59EGSSu745220222
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Oct 2025 16:28:28 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5E3820113;
- Tue, 14 Oct 2025 16:07:46 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76A8E20112;
- Tue, 14 Oct 2025 16:07:46 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.111.67.246])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Oct 2025 16:07:46 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 0/3] target/s390x: Fix missing clock-comparator interrupts
-Date: Tue, 14 Oct 2025 18:05:12 +0200
-Message-ID: <20251014160743.398093-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8hxB-0000lO-EI
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:32:52 -0400
+DKIM-Signature: a=rsa-sha256; bh=UDp/uBdp4frOBwYdxCn2FPWUi1Hr3uNtjn/xiCYmmbg=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1760459564; v=1;
+ b=eB6XFoEf3/tSsxUSXdmSiTd55YYr1YI9hv2kNOtHDpVS0tq58ac7vCSoeTKBkuj/RRGsZisA
+ 1mY9iEEbuElLDk8qMc24eN9iUASQ1SnG1EBMW4J83owYcFOM/TTdRgFzVb7DPNMjDKg9xBlz5t8
+ nOXdatkxL9MndRYbiAggFZqFbwVZ/desiV/BkDHINrcwOafnLIa6HvDHnkR/IyRxXxlotjiZkKd
+ 9CQqUh7xuCKBP62b+aYY0emN5tACWfjZJwTtDKRBrHa1ImU0KMhvHWoFR/nfod22y08kGYTPkaM
+ 4j8vblUSLM7mj0KlR1nlAvVhGsMSZGJMAUSAkIraQj3Lg==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 40EDA238F4;
+ Tue, 14 Oct 2025 16:32:44 +0000 (UTC)
+From: ~myrslint <myrslint@git.sr.ht>
+Date: Tue, 14 Oct 2025 16:32:44 +0000
+Subject: [PATCH qemu v8 0/1] Honor guest PAT on x86, absent Bochs display
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: tObvuBSWIKjl37WwzVYf_Jvda3BTC8hd
-X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68ee7a2f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8
- a=PB3oYjNFGLwRpPt26AIA:9 a=HhbK4dLum7pmb74im6QT:22 a=cPQSjfK2_nFv0Q5t_7PE:22
- a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX+m64OgmglAMJ
- ycQSR4LDufN5aXTftOmCcQ8dSAieTrHEZ4JaTYHbuXO5M6lUxV5fcdHRd0yQ00bMNqyW2hvD71n
- 7GU+rvBeNM7Tp5pTuCsZicfxxBOqLrEQ5D7hvriovFhRt3k0XRTum93pc5qNeNGfsnPOlx24hG5
- kwOkDlFb6nuGCcBCJg/ubCUDo9OrLCgj9rQC4YHZkGYgYSdJrvd3/a2y99Yq9I/OTNvTO3o8BDQ
- jr9VBOdY6yFN3YmY3v/LDTKSlfvn2K3X1wOjz/g0BKDDAR7Id849EixMbBx5YI2m4DI1iH/Aqar
- 6cgrKcq7GoS9OHMCSQPCSF4W5LHXTZvn/lZa8gBlRews0JS6jM3gxtqfcocivnNUC/cBKs7NNhR
- FtVfNeUU0UcJCRd9++1rAGIFAecG5w==
-X-Proofpoint-GUID: tObvuBSWIKjl37WwzVYf_Jvda3BTC8hd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-14_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <176045956423.5579.13349691093596703310-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,34 +62,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+This revision rectifies the mistake I had made in preparing v7. Comment
+formatting was also corrected.
 
-While trying to (so far unsuccessfully) reproduce [1], I found two bugs
-in the clock comparator handling. This series fixes both and adds a
-test.
+As with the previous versions of the patch it is intended to address the
+following issue: https://gitlab.com/qemu-project/qemu/-/issues/2943
 
-[1] https://lore.kernel.org/lkml/ab3131a2-c42a-47ff-bf03-e9f68ac053c0@t-8ch.de/
+myrslint (1):
+  Honor guest PAT on x86, absent Bochs display
 
-Best regards,
-Ilya
-
-Ilya Leoshkevich (3):
-  target/s390x: Fix missing interrupts for small CKC values
-  target/s390x: Fix missing clock-comparator interrupts after reset
-  tests/tcg/s390x: Test SET CLOCK COMPARATOR
-
- hw/s390x/s390-virtio-ccw.c              |  6 +--
- target/s390x/cpu.c                      |  8 ++++
- target/s390x/tcg/misc_helper.c          | 12 ++++--
- tests/tcg/s390x/Makefile.softmmu-target |  1 +
- tests/tcg/s390x/sckc.S                  | 53 +++++++++++++++++++++++++
- 5 files changed, 73 insertions(+), 7 deletions(-)
- create mode 100644 tests/tcg/s390x/sckc.S
+ accel/kvm/kvm-all.c        |  1 +
+ accel/stubs/kvm-stub.c     |  1 +
+ hw/display/bochs-display.c | 17 +++++++++++++++
+ include/system/kvm.h       |  9 ++++++++
+ target/i386/kvm/kvm.c      | 42 +++++++++++++++++++++++++++++++-------
+ 5 files changed, 63 insertions(+), 7 deletions(-)
 
 -- 
-2.51.0
-
+2.49.1
 
