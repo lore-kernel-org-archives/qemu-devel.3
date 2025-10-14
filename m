@@ -4,72 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4BBCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B32CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8dge-0001VS-Jf; Tue, 14 Oct 2025 07:59:28 -0400
+	id 1v8dkz-0003VF-AE; Tue, 14 Oct 2025 08:03:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8dgc-0001Ul-JP; Tue, 14 Oct 2025 07:59:26 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8dkw-0003Uu-5M
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:03:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8dgY-00061S-2r; Tue, 14 Oct 2025 07:59:26 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:8982:0:640:5cf4:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E7C2C8082A;
- Tue, 14 Oct 2025 14:59:13 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8a::1:35] (unknown
- [2a02:6bf:8080:a8a::1:35])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id CxNPfo2FB4Y0-TNNWOx1t; Tue, 14 Oct 2025 14:59:13 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760443153;
- bh=G5KrNZI19DbuYACWTqf9qlY12tcSoN9iFVboZAEH350=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=S3zoNe97BzYb6xN6BbeL/UbOBE5wS7SnmGlNnfKT+2EYgwg30S+HRElV67Vmidg+x
- Hi05D+J1KEyZrJn7VqwP9kqjJ+EqH0DadZz81l6JfvO4bz8HTCIieu0LND68P6nE1w
- mgPIFVsgt+yKjmZZ3OGojRuE5teMFgDihUGFXirg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0aa87972-1931-457b-8890-d1a469dce301@yandex-team.ru>
-Date: Tue, 14 Oct 2025 14:59:12 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8dkm-0006n3-TR
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:03:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760443417;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DWdRGgbkBIL0htD3F9qyfxA9+XQQneG6Ik05TIvD670=;
+ b=Zgk0P3lJ+raTbN7jS2GkG2nnYP5tE3kVHe3JmdE3aDDNJ+jMtxOO2W3M/E8k/t1ECkIp5R
+ wNfFDm9zj0tMAVGr8lklEt5PlqQrRHR1DRJz8KwnaMk0lKBvjXm4EU2hbPend9aKfzVD3I
+ 1GmWXEvC/eJiiCCP4CRwFMGCcC92dn4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-hOca7Mc0PtW5S4w7RtxzYQ-1; Tue,
+ 14 Oct 2025 08:03:34 -0400
+X-MC-Unique: hOca7Mc0PtW5S4w7RtxzYQ-1
+X-Mimecast-MFC-AGG-ID: hOca7Mc0PtW5S4w7RtxzYQ_1760443413
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C4171800452; Tue, 14 Oct 2025 12:03:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21B0130002D0; Tue, 14 Oct 2025 12:03:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 926A721E6A27; Tue, 14 Oct 2025 14:03:28 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Laurent Vivier <lvivier@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v4 1/2] hw/uefi: add "info firmware-log" +
+ "query-firmware-log" monitor commands
+In-Reply-To: <20251013104954.250166-2-kraxel@redhat.com> (Gerd Hoffmann's
+ message of "Mon, 13 Oct 2025 12:49:53 +0200")
+References: <20251013104954.250166-1-kraxel@redhat.com>
+ <20251013104954.250166-2-kraxel@redhat.com>
+Date: Tue, 14 Oct 2025 14:03:28 +0200
+Message-ID: <87qzv5oflb.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 31/33] vhost-user-blk: support vhost backend migration
-To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
- den-plotnikov@yandex-team.ru
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-32-vsementsov@yandex-team.ru>
- <CAFubqFsL4O=zEbmCEQ9KtBYVOsFjf6tuaur+oU9=1+hRDrPtNw@mail.gmail.com>
- <800c806a-c44c-4c4b-827b-acd9eb4a0e53@yandex-team.ru>
- <CAFubqFv7M4tD14PaWWDg1+K70NLL+jN-Qjxkv=dFAQ9inOULmg@mail.gmail.com>
- <335e1969-f1ab-45b1-8d38-221f09cea8bf@yandex-team.ru>
- <CAFubqFuMkmr-p3N1hkD0gc2A8=yBx2_KqZb_9JUA0jBqt4Az_Q@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAFubqFuMkmr-p3N1hkD0gc2A8=yBx2_KqZb_9JUA0jBqt4Az_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,136 +92,404 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.10.25 00:50, Raphael Norwitz wrote:
-> On Fri, Oct 10, 2025 at 2:27 AM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> On 10.10.25 02:43, Raphael Norwitz wrote:
->>> On Thu, Oct 9, 2025 at 5:14 PM Vladimir Sementsov-Ogievskiy
->>> <vsementsov@yandex-team.ru> wrote:
->>>>
->>>> On 09.10.25 22:09, Raphael Norwitz wrote:
->>>>> A small question here but will review more thoroughly pending feedback
->>>>> on my overall comments.
->>>>>
->>>>
->>>> I really hope you didn't spent much time on these 28-31 patches :/
->>>>
->>>
->>> I spent much more time on the cleanups :)
->>>
->>>>> On Wed, Aug 13, 2025 at 12:53 PM Vladimir Sementsov-Ogievskiy
->>>>> <vsementsov@yandex-team.ru> wrote:
->>>>>>
->>>>
->>>> [..]
->>>>
->>>>>> --- a/migration/options.c
->>>>>> +++ b/migration/options.c
->>>>>> @@ -269,6 +269,13 @@ bool migrate_local_char_socket(void)
->>>>>>         return s->capabilities[MIGRATION_CAPABILITY_LOCAL_CHAR_SOCKET];
->>>>>>     }
->>>>>>
->>>>>> +bool migrate_local_vhost_user_blk(void)
->>>>>> +{
->>>>>> +    MigrationState *s = migrate_get_current();
->>>>>> +
->>>>>
->>>>> Where was MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK added/defined?
->>>>
->>>> It is generated by QAPI code generator.
->>>>
->>>> Exactly, it's defined by 'local-vhost-user-blk' member inside 'MigrationCapability':
->>>>
->>>> { 'enum': 'MigrationCapability',
->>>>      'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
->>>>
->>>>               ...
->>>>
->>>>               { 'name': 'local-vhost-user-blk', 'features': [ 'unstable' ] } ] }
->>>>
->>>>
->>>> and after build, the generated code is in build/qapi/qapi-types-migration.h, as a enum:
->>>>
->>>> typedef enum MigrationCapability {
->>>>        MIGRATION_CAPABILITY_XBZRLE,
->>>>
->>>>        ,,,
->>>>
->>>>        MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK,
->>>>        MIGRATION_CAPABILITY__MAX,
->>>> } MigrationCapability;
->>>>
->>>>
->>>> In v2, I'll follow the interface of virtio-net series, look at
->>>>
->>>> https://patchew.org/QEMU/20250923100110.70862-1-vsementsov@yandex-team.ru/20250923100110.70862-17-vsementsov@yandex-team.ru/
->>>>
->>>> so, it would be migration parameter instead of capability, like
->>>>
->>>>        QMP migrate-set-parameters {... backend-transfer = ["vhost-user-blk"] }
->>>>
->>>> and to enable both vhost-user-blk and virtio-net-tap together:
->>>>
->>>>        QMP migrate-set-parameters {... backend-transfer = ["vhost-user-blk", "virtio-net-tap"] }
->>>>
->>>
->>> Why do we need two separate migration parameters for vhost-user-blk
->>> and virtio-net-tap? Why not have a single parameter for virtio local
->>> migrations and, if it is set, all backends types which support local
->>> migration can advertise and take advantage of it?
->>
->> As I describe in the commit message https://patchew.org/QEMU/20250923100110.70862-1-vsementsov@yandex-team.ru/20250923100110.70862-17-vsementsov@yandex-team.ru/ :
->>
->>
->> Why not simple boolean? To simplify migration to further versions,
->> when more devices will support backend-transfer migration.
->>
->> Alternatively, we may add per-device option to disable backend-transfer
->> migration, but still:
->>
->> 1. It's more comfortable to set same capabilities/parameters on both
->> source and target QEMU, than care about each device.
->>
->> 2. To not break the design, that machine-type + device options +
->> migration capabilities and parameters are fully define the resulting
->> migration stream. We'll break this if add in future more
->> backend-transfer support in devices under same backend-transfer=true
->> parameter.
-> 
-> ACK on needing a separate migration parameter. Thanks for the references.
-> 
-> I would suggest having the incoming_backend field in the struct
-> vhost_user (or maybe even in struct vhost_dev if the tap device
-> migration is similar enough) rather than in struct VHostUserBlk, so
-> that device-specific code can be kept as similar as possible.
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
-In v2 it will be "backend_transfer" field in struct vhost_dev.
+> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+> optional support for logging to a memory buffer.  There is guest side
+> support -- for example in linux kernels v6.17+ -- to read that buffer.
+> But that might not helpful if your guest stops booting early enough that
+> guest tooling can not be used yet.  So host side support to read that
+> log buffer is a useful thing to have.
+>
+> This patch implements both qmp and hmp monitor commands to read the
+> firmware log.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  include/monitor/hmp.h      |   1 +
+>  hw/uefi/ovmf-log.c         | 267 +++++++++++++++++++++++++++++++++++++
+>  tests/qtest/qmp-cmd-test.c |   2 +
+>  hmp-commands-info.hx       |  14 ++
+>  hw/uefi/meson.build        |   2 +-
+>  qapi/machine.json          |  23 ++++
+>  6 files changed, 308 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/uefi/ovmf-log.c
+>
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index ae116d9804a3..885c0ecd2aed 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -178,5 +178,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
+>  void hmp_info_mtree(Monitor *mon, const QDict *qdict);
+>  void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
+>  void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
+> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
+>  
+>  #endif
+> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+> new file mode 100644
+> index 000000000000..f03e47a290d6
+> --- /dev/null
+> +++ b/hw/uefi/ovmf-log.c
+> @@ -0,0 +1,267 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * print ovmf debug log
+> + *
+> + * see OvmfPkg/Library/MemDebugLogLib/ in edk2
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qemu/base64.h"
+> +#include "qemu/target-info-qapi.h"
+> +#include "hw/boards.h"
+> +#include "hw/i386/x86.h"
+> +#include "hw/arm/virt.h"
+> +#include "system/dma.h"
+> +#include "monitor/hmp.h"
+> +#include "monitor/monitor.h"
+> +#include "qapi/error.h"
+> +#include "qapi/type-helpers.h"
+> +#include "qapi/qapi-commands-machine.h"
+> +
+> +
+> +/* ----------------------------------------------------------------------- */
+> +/* copy from edk2                                                          */
+> +
+> +#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
+> +#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
+> +
+> +/*
+> + * Mem Debug Log buffer header.
+> + * The Log buffer is circular. Only the most
+> + * recent messages are retained. Older messages
+> + * will be discarded if the buffer overflows.
+> + * The Debug Log starts just after the header.
+> + */
+> +typedef struct {
+> +    /*
+> +     * Magic values
+> +     * These fields are used by tools to locate the buffer in
+> +     * memory. These MUST be the first two fields of the structure.
+> +     * Use a 128 bit Magic to vastly reduce the possibility of
+> +     * a collision with random data in memory.
+> +     */
+> +    uint64_t             Magic1;
+> +    uint64_t             Magic2;
+> +    /*
+> +     * Header Size
+> +     * This MUST be the third field of the structure
+> +     */
+> +    uint64_t             HeaderSize;
+> +    /*
+> +     * Debug log size (minus header)
+> +     */
+> +    uint64_t             DebugLogSize;
+> +    /*
+> +     * edk2 uses this for locking access.
+> +     */
+> +    uint64_t             MemDebugLogLock;
+> +    /*
+> +     * Debug log head offset
+> +     */
+> +    uint64_t             DebugLogHeadOffset;
+> +    /*
+> +     *  Debug log tail offset
+> +     */
+> +    uint64_t             DebugLogTailOffset;
+> +    /*
+> +     * Flag to indicate if the buffer wrapped and was thus truncated.
+> +     */
+> +    uint64_t             Truncated;
+> +    /*
+> +     * Firmware Build Version (PcdFirmwareVersionString)
+> +     */
+> +    char                 FirmwareVersion[128];
+> +} MEM_DEBUG_LOG_HDR;
+> +
+> +
+> +/* ----------------------------------------------------------------------- */
+> +/* qemu monitor command                                                    */
+> +
+> +typedef struct {
+> +    uint64_t             magic1;
+> +    uint64_t             magic2;
+> +} MEM_DEBUG_LOG_MAGIC;
 
-> 
->>
->>
->>>
->>>>>
->>>>>
->>>>>> +    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK];
->>>>>> +}
->>>>>> +
->>>>
->>>> [..]
->>>>
->>>>
->>>> --
->>>> Best regards,
->>>> Vladimir
->>
->>
->> --
->> Best regards,
->> Vladimir
+You changed capitalization.  Intentional?
 
+> +
+> +/* find log buffer in guest memory by searching for the magic cookie */
+> +static dma_addr_t find_ovmf_log_range(dma_addr_t start, dma_addr_t end)
+> +{
+> +    static const MEM_DEBUG_LOG_MAGIC magic = {
+> +        .magic1 = MEM_DEBUG_LOG_MAGIC1,
+> +        .magic2 = MEM_DEBUG_LOG_MAGIC2,
+> +    };
+> +    MEM_DEBUG_LOG_MAGIC check;
+> +    dma_addr_t step = 4 * KiB;
+> +    dma_addr_t offset;
+> +
+> +    for (offset = start; offset < end; offset += step) {
+> +        if (dma_memory_read(&address_space_memory, offset,
+> +                            &check, sizeof(check),
+> +                            MEMTXATTRS_UNSPECIFIED)) {
+> +            /* dma error -> stop searching */
+> +            break;
+> +        }
+> +        if (memcmp(&magic, &check, sizeof(check)) == 0) {
+> +            return offset;
+> +        }
+> +    }
+> +    return (dma_addr_t)-1;
+> +}
+> +
+> +static dma_addr_t find_ovmf_log(void)
+> +{
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+> +    dma_addr_t start, end, offset;
+> +
+> +    if (target_arch() == SYS_EMU_TARGET_X86_64 &&
+> +        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
+> +        X86MachineState *x86ms = X86_MACHINE(ms);
+> +
+> +        /* early log buffer, static allocation in memfd, sec + early pei */
+> +        offset = find_ovmf_log_range(0x800000, 0x900000);
+> +        if (offset != -1) {
+> +            return offset;
+> +        }
+> +
+> +        /*
+> +         * normal log buffer, dynamically allocated close to end of low memory,
+> +         * late pei + dxe phase
+> +         */
+> +        end = x86ms->below_4g_mem_size;
+> +        start = end - MIN(end, 128 * MiB);
+> +        return find_ovmf_log_range(start, end);
+> +    }
+> +
+> +    if (target_arch() == SYS_EMU_TARGET_AARCH64 &&
+> +        object_dynamic_cast(OBJECT(ms), TYPE_VIRT_MACHINE)) {
+> +        VirtMachineState *vms = VIRT_MACHINE(ms);
+> +
+> +        /* edk2 ArmVirt firmware allocations are in the first 128 MB */
+> +        start = vms->memmap[VIRT_MEM].base;
+> +        end = start + 128 * MiB;
+> +        return find_ovmf_log_range(start, end);
+> +    }
+> +
+> +    return (dma_addr_t)-1;
+> +}
+> +
+> +static void handle_ovmf_log_range(GString *out,
+> +                                  dma_addr_t start,
+> +                                  dma_addr_t end,
+> +                                  Error **errp)
+> +{
+> +    g_autofree char *buf = NULL;
+> +
+> +    if (start > end) {
+> +        return;
+> +    }
+> +
+> +    size_t len = end - start;
+> +    g_string_set_size(out, out->len + len);
+> +    if (dma_memory_read(&address_space_memory, start,
+> +                        out->str + (out->len - len),
+> +                        len, MEMTXATTRS_UNSPECIFIED)) {
+> +        error_setg(errp, "firmware log: buffer read error");
+> +        return;
+> +    }
+> +}
+> +
+> +FirmwareLog *qmp_query_firmware_log(Error **errp)
+> +{
+> +    MEM_DEBUG_LOG_HDR header;
+> +    dma_addr_t offset, base;
+> +    FirmwareLog *ret;
+> +    g_autoptr(GString) log = g_string_new("");
+> +
+> +    offset = find_ovmf_log();
+> +    if (offset == -1) {
+> +        error_setg(errp, "firmware log: not found");
+> +        return NULL;
+> +    }
+> +
+> +    if (dma_memory_read(&address_space_memory, offset,
+> +                        &header, sizeof(header),
+> +                        MEMTXATTRS_UNSPECIFIED)) {
+> +        error_setg(errp, "firmware log: header read error");
+> +        return NULL;
+> +    }
+> +
+> +    if (header.DebugLogSize > MiB) {
+> +        /* default size is 128k (32 pages), allow up to 1M */
+> +        error_setg(errp, "firmware log: log buffer is too big");
+> +        return NULL;
+> +    }
+> +
+> +    if (header.DebugLogHeadOffset > header.DebugLogSize ||
+> +        header.DebugLogTailOffset > header.DebugLogSize) {
+> +        error_setg(errp, "firmware log: invalid header");
+> +        return NULL;
+> +    }
+> +
+> +    base = offset + header.HeaderSize;
+> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+> +        /* wrap around */
+> +        handle_ovmf_log_range(log,
+> +                              base + header.DebugLogHeadOffset,
+> +                              base + header.DebugLogSize,
+> +                              errp);
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +        handle_ovmf_log_range(log,
+> +                              base + 0,
+> +                              base + header.DebugLogTailOffset,
+> +                              errp);
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +    } else {
+> +        handle_ovmf_log_range(log,
+> +                              base + header.DebugLogHeadOffset,
+> +                              base + header.DebugLogTailOffset,
+> +                              errp);
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +    }
+> +
+> +    ret = g_new0(FirmwareLog, 1);
+> +    ret->version = g_strndup(header.FirmwareVersion,
+> +                             sizeof(header.FirmwareVersion));
+> +    ret->log = g_base64_encode((const guchar *)log->str, log->len);
+> +    return ret;
+> +}
+> +
+> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
+> +{
+> +    Error *errp = NULL;
 
--- 
-Best regards,
-Vladimir
+Unusual identifier.  By convention, we use @errp for Error **, and @err
+for Error *.  Missed this in v3, sorry.
+
+> +    FirmwareLog *log;
+> +
+> +    log = qmp_query_firmware_log(&errp);
+> +    if (errp)  {
+> +        hmp_handle_error(mon, errp);
+> +        return;
+> +    }
+> +
+> +    g_assert(log != NULL);
+> +
+> +    if (log->version) {
+> +        g_autofree gchar *esc = g_strescape(log->version, NULL);
+> +        monitor_printf(mon, "[ firmware version: %s ]\n", esc);
+> +    }
+> +
+> +    if (log->log) {
+> +        g_autofree gchar *esc = NULL;
+> +        g_autofree gchar *out = NULL;
+> +        size_t outlen;
+> +
+> +        out = (gchar *)qbase64_decode(log->log, -1, &outlen, &errp);
+> +        if (errp)  {
+
+How can this happen?
+
+> +            hmp_handle_error(mon, errp);
+> +            return;
+> +        }
+> +        esc = g_strescape(out, "\r\n");
+> +        monitor_printf(mon, "%s\n", esc);
+> +    }
+> +}
+> diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+> index cf718761861d..ffdb7e979e0f 100644
+> --- a/tests/qtest/qmp-cmd-test.c
+> +++ b/tests/qtest/qmp-cmd-test.c
+> @@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
+>          /* Only valid with accel=tcg */
+>          { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+>          { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
+> +        /* requires firmware with memory buffer logging support */
+> +        { "query-ovmf-log", ERROR_CLASS_GENERIC_ERROR },
+>          { NULL, -1 }
+>      };
+>      int i;
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 6142f60e7b16..257015f0b403 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -977,3 +977,17 @@ SRST
+>    ``info cryptodev``
+>      Show the crypto devices.
+>  ERST
+> +
+> +    {
+> +        .name       = "firmware-log",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "show the firmware (ovmf) debug log",
+> +        .cmd        = hmp_info_firmware_log,
+> +        .flags      = "p",
+> +    },
+> +
+> +SRST
+> +  ``info firmware-log``
+> +    Show the firmware (ovmf) debug log.
+> +ERST
+> diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
+> index 91eb95f89e6d..c8f38dfae247 100644
+> --- a/hw/uefi/meson.build
+> +++ b/hw/uefi/meson.build
+> @@ -1,4 +1,4 @@
+> -system_ss.add(files('hardware-info.c'))
+> +system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
+>  
+>  uefi_vars_ss = ss.source_set()
+>  if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 038eab281c78..c96e582afdd6 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1839,6 +1839,29 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ]}
+>  
+> +##
+> +# @FirmwareLog:
+> +#
+> +# @version: Firmware version.
+> +#
+> +# @log: Firmware debug log, in base64 encoding.
+
+Recomment to document that @log can start and end with a partial line.
+
+> +#
+> +# Since: 10.2
+> +##
+> +{ 'struct': 'FirmwareLog',
+> +  'data': { '*version': 'str',
+> +            '*log': 'str' } }
+> +
+> +##
+> +# @query-firmware-log:
+> +#
+> +# Find firmware memory log buffer in guest memory, return content.
+> +#
+> +# Since: 10.2
+> +##
+> +{ 'command': 'query-firmware-log',
+> +  'returns': 'FirmwareLog' }
+> +
+>  ##
+>  # @dump-skeys:
+>  #
+
 
