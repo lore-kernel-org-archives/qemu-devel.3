@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C44ACCD190
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96157CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8lhi-0000pd-U2; Tue, 14 Oct 2025 16:33:06 -0400
+	id 1v8liV-000184-D9; Tue, 14 Oct 2025 16:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhd-0000nQ-76
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:02 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8liU-00017i-Cx
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:54 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhW-0000PF-PM
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:00 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8liS-0000Vw-9p
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
  In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Xh3jrabeuZefoTQ4mB1O9qSVatqpGKXVcUB8a0pOk+U=; b=lz7VjR0FWGIHq8W
- xozhfrgG+EDTJDC2xZ+iCFFmwCPAPnepLGpJjePglGzPU7bk37tuh6scdn4ptNhiZC1AkOiCix5Xt
- RJNPPdOTKTPH7SWfZMB/agOeBlh6JeAlr3YcwLWiOa1v2/lPO4PMgDJaGWFrK/JoFTqZclaVTALHb
- ww=;
+ List-Help; bh=TuatpIkAcRSnrBRBIXYO0AmSntjEDrH/zc5dJrlt/Yc=; b=VfHL1sC+H72rm7B
+ 0pylmVIHEK40cOcVQx1vtx2jakHH9kGvZTl4HCCOlVFP7jXurCDVAR+CCWFF7PcO/a8yJ6H0iEZIx
+ aHbRwWzPmVgEMCIDuURcNXbDyKkwZof+WuJoFwx1tj1/H+MKBJqZZRzNJgEsQ1cI7xGvm2wKv+DuY
+ dg=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [PATCH v3 01/34] target/riscv: Use 32 bits for misa extensions
-Date: Tue, 14 Oct 2025 22:34:38 +0200
-Message-ID: <20251014203512.26282-2-anjo@rev.ng>
+Subject: [PATCH v3 26/34] target/riscv: Indent PMUFixedCtrState correctly
+Date: Tue, 14 Oct 2025 22:35:03 +0200
+Message-ID: <20251014203512.26282-27-anjo@rev.ng>
 In-Reply-To: <20251014203512.26282-1-anjo@rev.ng>
 References: <20251014203512.26282-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -65,41 +65,36 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-uint32_t is already in use in most places storing misa extensions such
-as CPUArchState::misa_exts, RISCVCPUProfile::misa_exts,
-RISCVImpliedExtsRule::implied_misa_exts.  Additionally. the field is
-already migrated as uint32_t.
-
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/cpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/cpu.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2c2266415e..4c13012442 100644
+index cb99314679..3072ee0005 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -50,7 +50,7 @@ typedef struct CPUArchState CPURISCVState;
-  */
- #define RISCV_UW2_ALWAYS_STORE_AMO 1
+@@ -227,12 +227,12 @@ typedef struct PMUCTRState {
+ } PMUCTRState;
  
--#define RV(x) ((target_ulong)1 << (x - 'A'))
-+#define RV(x) BIT(x - 'A')
+ typedef struct PMUFixedCtrState {
+-        /* Track cycle and icount for each privilege mode */
+-        uint64_t counter[4];
+-        uint64_t counter_prev[4];
+-        /* Track cycle and icount for each privilege mode when V = 1*/
+-        uint64_t counter_virt[2];
+-        uint64_t counter_virt_prev[2];
++    /* Track cycle and icount for each privilege mode */
++    uint64_t counter[4];
++    uint64_t counter_prev[4];
++    /* Track cycle and icount for each privilege mode when V = 1*/
++    uint64_t counter_virt[2];
++    uint64_t counter_virt_prev[2];
+ } PMUFixedCtrState;
  
- /*
-  * Update misa_bits[], misa_ext_info_arr[] and misa_ext_cfgs[]
-@@ -582,7 +582,7 @@ struct RISCVCPUClass {
-     RISCVCPUDef *def;
- };
- 
--static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
-+static inline int riscv_has_ext(CPURISCVState *env, uint32_t ext)
- {
-     return (env->misa_ext & ext) != 0;
- }
+ struct CPUArchState {
 -- 
 2.51.0
 
