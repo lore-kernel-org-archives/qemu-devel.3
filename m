@@ -4,98 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF4CCCD193
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C26CCD193
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8hrl-00057Q-DF; Tue, 14 Oct 2025 12:27:14 -0400
+	id 1v8htO-0005in-Ip; Tue, 14 Oct 2025 12:28:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8hra-00056h-UM
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:27:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1v8htF-0005hj-7C; Tue, 14 Oct 2025 12:28:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8hrY-0008UR-Me
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:27:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760459214;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=c3yD+TzTOXeSQgQNqxetFPIiBP+plJlMotY9qn1KjSg=;
- b=PCCOxmk8HHPZcNohnpBCSDu/g5t6v0K5jamsk6f18JWTfHNFKWvkdxZKWLn3CPIz32lSqc
- FAKp1+usL9f34UHkyw7KviKdzzYmp9Xe+KECseJNNRwZhaWPuID3/TfBskmY0HOaotQ0xT
- Z5k6QWSjM/Zjqqog7wczOP+qwbGIl5w=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-388-BiUzLLFXPMKiObBTCZ0lPQ-1; Tue, 14 Oct 2025 12:26:52 -0400
-X-MC-Unique: BiUzLLFXPMKiObBTCZ0lPQ-1
-X-Mimecast-MFC-AGG-ID: BiUzLLFXPMKiObBTCZ0lPQ_1760459212
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-872d2ad9572so2860294085a.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 09:26:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760459212; x=1761064012;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c3yD+TzTOXeSQgQNqxetFPIiBP+plJlMotY9qn1KjSg=;
- b=fWFte/wfELZ/8glPRV3ae2IVwZll0X6UB+lSxWMuYXdhACQEPbkKOgrfxvo9OtKszL
- /QRY13Yb1AGGtTCHp1XPKm96YkChvVplL8aCUOnWSrJPspmk2elN5mEUrQkOiMTnvLkP
- RytUfuPGobrbyS9S4/vAgtraEEBmJH+USo6L28R1L/0Vo1CqN3L1U7vt70orAwMbWJZI
- Qmsa2V6JDE0EqlHC/lrKgG9UWeCErZ1rLSsk+TAiBPSgW+EYUmjx+qKeqSHE9iYXut+M
- JK0B6jIGvW87DMxGbINVpAtwDooTiAOE6hqpVsxODIABQ3jo9X7Bt9u4z1JrjsuqmD6l
- /IbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtvr/ktsJzQ79XeGCMUxV0aagj1iV/S/Y2F5Daisag4lwSv00BL662D5zLueDRqhsxJE/soazgPEqp@nongnu.org
-X-Gm-Message-State: AOJu0YwE2uwZ9ScJO3xTNfFUCkOcd3emb2EZ2CJslAMUg1kALcy3ABZG
- Y+UXVxD6KEwfsme5mYCpNBdygn1iXvpqL1P0ZJjzuhMx3EKs262w1tcS0obDqtftu89STjOuwpU
- 305T2CdXU1cDI/g7ucVlL34SxqFfVR2WjJmrVXlMqpkw97FfC2lN77PUh
-X-Gm-Gg: ASbGncvRoeXDzvR8MnoWWsPRssVMQMJxp8Xdh8hEAG13POL3lhRWDeTzhOcSN3H7upM
- 9VIKR1T3GnPxxaN1R8SeImV8uufIpUQd+6AWYgwqeT43kfhsQY8cdxHzpcY38gqHTurzJapEtqk
- LIqNLiPHyBs4ntiLv19X3415ZpA6M7Nh/2UCabYr5oUuT1vqT1pM6MSWRzMzU9C8jnqrlo2AThd
- gwIwoV1D8vlMw62qTruU6WmJW0E+40Aph6XoMxOl4/BEABOdw2h+ZyYJmjOQCRYysjtjjIVbMPa
- 3LHqeBwSkegEoEqWShVa6Xsrbpz6jRg/
-X-Received: by 2002:a05:620a:410d:b0:868:d7df:5b27 with SMTP id
- af79cd13be357-883521da2bdmr3866468585a.54.1760459212231; 
- Tue, 14 Oct 2025 09:26:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdleiVe4+ra+53GQWiyILPI0tQzdKVXQ4GQhG1hornjt0ectnl/fGNXNd1PyzSNvTAsghmnQ==
-X-Received: by 2002:a05:620a:410d:b0:868:d7df:5b27 with SMTP id
- af79cd13be357-883521da2bdmr3866462985a.54.1760459211701; 
- Tue, 14 Oct 2025 09:26:51 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-884a2272670sm1241285885a.42.2025.10.14.09.26.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 09:26:51 -0700 (PDT)
-Date: Tue, 14 Oct 2025 12:26:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org,
- michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
- davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-Subject: Re: [PATCH v7 14/19] migration: introduce .pre_incoming() vmsd handler
-Message-ID: <aO55yCOtM0u6sDvj@x1.local>
-References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
- <20251010173957.166759-15-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1v8ht9-0000D9-Ok; Tue, 14 Oct 2025 12:28:43 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59EF7bYw011625;
+ Tue, 14 Oct 2025 16:28:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=LBbTVeL3QV0aGhxbK
+ kIXnlK/nxZWrd12azzvwHaSGPY=; b=KmuKz2WsxiWZnoczfJ/9QlIzh7SEyc+RM
+ RpqC5a/DREQiCNvncALtThewM+wL5spUdEoz9Rj3wIjlXHM4NqTJfas5gt5V7ma+
+ X413NBIdiVxywhMjnN1tenfUlswR990tMCTFniMDTdGnhzX/t3R9nyZ5IDl/qlBc
+ uOSPSWF0hQEPPLoC8PMXzm+uoaBPIpxZsF//if07zPFNdb94H6APDb93vl/MdluX
+ xWgLRgDgcXjsIn1D9G9uZj8ybUI5Es40YCOkGERmTkujMI4T4dLHbVXS/eWTI65t
+ 3Kph5PBTomKtrHuAJFeA+ImH1npj2X8vUZWNJIgtsmB1J9iohkftw==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnr7gwb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Oct 2025 16:28:30 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59EFFRkV016759;
+ Tue, 14 Oct 2025 16:28:30 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r32jut7e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Oct 2025 16:28:30 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59EGSSGk52363692
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Oct 2025 16:28:28 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 770DB20115;
+ Tue, 14 Oct 2025 16:07:47 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 08C6520114;
+ Tue, 14 Oct 2025 16:07:47 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.111.67.246])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Oct 2025 16:07:46 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 1/3] target/s390x: Fix missing interrupts for small CKC values
+Date: Tue, 14 Oct 2025 18:05:13 +0200
+Message-ID: <20251014160743.398093-2-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251014160743.398093-1-iii@linux.ibm.com>
+References: <20251014160743.398093-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251010173957.166759-15-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M5ZA6iws c=1 sm=1 tr=0 ts=68ee7a2e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=DMoVdRysFPNM0ZNGwSsA:9 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: 4HSuIqRRqWjsvX1pOxUyYoPCEC91cn8J
+X-Proofpoint-ORIG-GUID: 4HSuIqRRqWjsvX1pOxUyYoPCEC91cn8J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEwMDE0MCBTYWx0ZWRfX0Qok/EQ8qj3l
+ c3cXoQv0QWW05iAW8M2o4kY4/AuIu8eUfAC7am1PPZGhRHMVtGvY68hvGgTTt8QDzceJkP2BC5+
+ bjJyF8asTIsRL51Rd3ag5iKXP0KcfUo4X/GNTOgKwzjCyXQoHQ7ndM/ZWUnwyScTbhRKamN41Xw
+ MXQ4fDaeJKHruS1Fs9HHEqzyXbOaq5uAe7rjvWlW9peLiWjrgQG6nIQQBC47sGiWBTUOqRuWeB3
+ zC336mrss8ZT6YPmjsZ5u9bBaogL/3RAumFAuGs5Zg4vg6GgRareihGTU+NmQJeyZpm6b/lxDpF
+ CcDGNvxJrpdZRpIBlVtcC9+wFpGc3Ht2s3013bP4SDTR6r8rTpzeUs5zNm00ab1vJSMD6DgPi96
+ FKm3PhI8e9os5b1fTi4sgfIWHD5wbQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-14_03,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510100140
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,19 +119,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 10, 2025 at 08:39:52PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Add possibility for devices to hook into top of migrate-incoming QMP
-> command. It's a place, where migration capabilities and parameters
-> are already set, but migration downtime is not yet started (source
-> is still running). So here devices may do some remaining initializations
-> dependent on migration capabilities. This will be used in further commit
-> to support backend-transfer migration feature for vhost-user-blk.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Suppose TOD clock value is 0x1111111111111111 and clock-comparator
+value is 0, in which case clock-comparator interruption should occur
+immediately.
 
-Acked-by: Peter Xu <peterx@redhat.com>
+With the current code, tod2time(env->ckc - td->base.low) ends up being
+a very large number, so this interruption never happens.
 
+Fix by firing the timer immediately if env->ckc < td->base.low.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ target/s390x/tcg/misc_helper.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 6d9d601d29a..afcf7688eda 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -199,11 +199,15 @@ static void update_ckc_timer(CPUS390XState *env)
+         return;
+     }
+ 
+-    /* difference between origins */
+-    time = env->ckc - td->base.low;
++    if (env->ckc < td->base.low) {
++	time = 0;
++    } else {
++	/* difference between origins */
++	time = env->ckc - td->base.low;
+ 
+-    /* nanoseconds */
+-    time = tod2time(time);
++	/* nanoseconds */
++	time = tod2time(time);
++    }
+ 
+     timer_mod(env->tod_timer, time);
+ }
 -- 
-Peter Xu
+2.51.0
 
 
