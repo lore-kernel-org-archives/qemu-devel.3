@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3553CCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1BE0CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8fDk-0005OT-Ec; Tue, 14 Oct 2025 09:37:44 -0400
+	id 1v8fDb-00052l-0p; Tue, 14 Oct 2025 09:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fDi-0005NM-Jc
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:37:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v8fDT-0004qC-GL
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:37:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fDe-00011N-Oo
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:37:42 -0400
+ id 1v8fDP-0000xu-Pz
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:37:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760449054;
+ s=mimecast20190719; t=1760449041;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LfpYXKeThudHsYbBI1p5Y6IAia2GV9M0i2k7RLhVCJc=;
- b=CyAb45UNTc5wZtDKw/K63dGBNgru4Zo641oAmBNXe9GE4XMOLI5yZ/0X+R078WRtvYz0/5
- HRvwIKeLvn4JhrqkB34J7wbrE1POvw4SM7OONrfB2tk4jWZ7fXsZfg1fgxIPdcB91/b/e9
- th35O1wN6DlfAxcvjYMKqQOBsJhhnHk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mS+v14KcHsr+muZI98IFf3wSVAEOdlp3uBgp4JAsLiM=;
+ b=TT71WzleJ8mDxJuiHt48CluDwg31HiUjIa99oAHruVoNntaoioKzd9IsDRQj4+IMBR+rYt
+ LZs8HtQMlDxPLTj1PTmRc8L8z4wcn17kqETBkEbmKX86RQ+jNHDTH8tWM1sc688axo/WUA
+ VWuXM+6psd4swcOGU6TgquRkQ74sZKI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-puDYPegMMpCtKHc5abHQOQ-1; Tue, 14 Oct 2025 09:37:32 -0400
-X-MC-Unique: puDYPegMMpCtKHc5abHQOQ-1
-X-Mimecast-MFC-AGG-ID: puDYPegMMpCtKHc5abHQOQ_1760449052
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-401dbafbcfaso4320099f8f.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:37:32 -0700 (PDT)
+ us-mta-15-wbeHQ7O4PLyLPemlWDktQA-1; Tue, 14 Oct 2025 09:37:19 -0400
+X-MC-Unique: wbeHQ7O4PLyLPemlWDktQA-1
+X-Mimecast-MFC-AGG-ID: wbeHQ7O4PLyLPemlWDktQA_1760449039
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e3e177893so38373125e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:37:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760449050; x=1761053850;
+ d=1e100.net; s=20230601; t=1760449038; x=1761053838;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LfpYXKeThudHsYbBI1p5Y6IAia2GV9M0i2k7RLhVCJc=;
- b=tPOEwaEYByA7NMm++T7KPTZvm56b+xgluJei96QWZYcSyNWsO2Y/nnUqxaJimy5vTW
- oqtp0uXo+SQfwxb6rEm+siUaPn0Vm2Ccu9H4m9DbGoJXyUqRPEUnpLEcAuOgyZE/5rsO
- FBEywyZN8v74euuG2ElEs7CtJbBJ6X9kzSBnW76T1/xxPYfE7Wc/ko3umDi/iuZHzTHA
- Y3y2dhXrc1ah6yLilof6F8oqHqr+iDprBAQOjt1OZIXZ8+kKbxNQFMZmB1yd9/28oRRG
- 22zJNomSruqUNF8wEUu63jFTSsQuKVj8e85EJ2LzNLCN8CKoOStKmckkYmSylUPLMfas
- j3uw==
-X-Gm-Message-State: AOJu0YxjrCtjEe4PhObc0b9MCpF0mD4UwLUVtZj9rC3lkoiciOtZOAyR
- 4QHAk2EmI73mnuA/m0OpUbDkoNu5JhKn8k1WIJosk7m82/ARCHgC8PPKQgSEk2rTN165Hx9AWnc
- op8MimlWxWVumZFZ3epoVPXnQfyPnx8Mk2PgCmvo+9njUpE/nGvLk7EBCo4Xl5my9KWixEbbnVu
- /u2MOWn9HOikAAHYi1bzO+93HlNTMAwrPAkUJyTBWd
-X-Gm-Gg: ASbGnctx0JN11ux84IsP6Fm1qRnmvvMXvBp0EkZELF0k3tPNoGgaa4vCsry/Ng+3Ojz
- sj6uYyohDQTj5Rr4FuNImsSKu3Mkr5UFOv0hRjMaW2Kxy0Bx4cpbdSrAVA8wA0dD2Xjo2mZHMqg
- cSWWFBC6Q9n5YhApqJTHVQK/Q6u+TMUJO75Usp32ikvxPjhQK99BvhYaUTwkK3BMVDlnVfueFCx
- X8dS0/i3Fb0J5L15A1ZtFUqeAIv3p3b9stnrReA8y2jQG2RTzrAlIx6TMUEFDfqty+KmJSrpofz
- CdoZSIKnkZl8aSz7lys5lrJmQscr1dH05r/bQFNwtUPmqf95DM/hnm5SOvgHaIiTpOGq26AteFS
- 8In6XMT2entRP1aoSMKXy3uG4tcS/GclklXzaSjM310o=
-X-Received: by 2002:a05:6000:420c:b0:411:f07a:67ff with SMTP id
- ffacd0b85a97d-4266e8de19dmr17312474f8f.42.1760449050481; 
- Tue, 14 Oct 2025 06:37:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJMXdr4xgukabgdGHaoZnSD9ZlHKVGuhhxfFDtFRQRpo18ts2ch8mbf+0uAit5k5IuiPzbiA==
-X-Received: by 2002:a05:6000:420c:b0:411:f07a:67ff with SMTP id
- ffacd0b85a97d-4266e8de19dmr17312443f8f.42.1760449050048; 
- Tue, 14 Oct 2025 06:37:30 -0700 (PDT)
+ bh=mS+v14KcHsr+muZI98IFf3wSVAEOdlp3uBgp4JAsLiM=;
+ b=N80AgnKDeUMXjdglHWWn5xm7KqPN6atX9oqGEsvnWH2WflIRrs9cmW/lDOmLLRAfog
+ K3KBZn8GsPM9mMceldY/XivhWh2d7iLKoAPulR3/o3OWbn0ArSG+35UcH72JoZMC7HOJ
+ IF0HXVAsny/FE4q9IEYLMn/WxnKovkW8f2zUZtx9FPRT/4m0M+kgT9dGqQPo4UyeePD0
+ wdfOL8PQF1OyR6Qdf7nZWr7TItL4CzJTMn4253+/GMjvcZ6NRCPm/4+F4K9CO0RzM0Q0
+ L8gtmGXXvMpcw/59ZtJt6S3skCuStZStwgCAgiLe6Tc4/Q3VGLJx2zXwtZ8K9rXFanYc
+ +NoQ==
+X-Gm-Message-State: AOJu0YweJyicVWKFhgcitr/UDB4YsasDktxAgDiYR0GjrZugb1vNMQ9X
+ Aa4xFA1R0IwYRslQjiGNJ4Y+fZ2/jZspAiZtBQXZnDDaiKD1deyCAlqQi2miFRNF92tlvEoP7Bt
+ 30Of0ntSJhC/HO4bhS563wXExtWvmTa6C7MWrqCtoofT2v1WA1ZRxpI34GDpVUeEDuguXL6srq8
+ wBM1jBgsbBUlE2hEM8GLDe9SbHqAVQrglargWQMTsq
+X-Gm-Gg: ASbGnctj7Xk9Ni8h7GcvQ2acItht8os+Pn07cxXxz/s/JKDjvUstWB/diDoj0AgkB9x
+ ic8V+4bndlUC6qUcE4e4Dk5uHjkZziDAPG7GFvkTTpgxbTDmiQFqJEnG8i85mtFi5BI3j+0xSx+
+ xCC8r84pqeOh7MtOeeL/dlYwx0H9GwQrqchA5hj9XaeAXoF5GctosawrMV1rxLBv9UqkEJpCPQD
+ IlIYZgINnNfrTRpjX2uajqKnh56o5wnxFwSNMhok6ayinh3Bgq8hMH1mfabVR3dlJxvixpCSDW2
+ Rl5PPFvjMoeqVI7I36JdJiPYdVIjruqb/EZIB1Ct2L1ZwC1aoDoUE+eUhzXHSKNpwD1r1uZ8Swf
+ qPtYPMVbpJjN3iI3nHJxNnzt044UsZUjbBnrLZApRtaE=
+X-Received: by 2002:a05:600c:c08f:b0:46f:b327:ecfb with SMTP id
+ 5b1f17b1804b1-46fb327ef42mr98968325e9.9.1760449037698; 
+ Tue, 14 Oct 2025 06:37:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOzzYvEZNYIU+xDwcqH4jE17d+dcWVQh5lXMnUdRGNsOdgt6Ri/yG9FfVWWzg0+3PwgCnDLQ==
+X-Received: by 2002:a05:600c:c08f:b0:46f:b327:ecfb with SMTP id
+ 5b1f17b1804b1-46fb327ef42mr98968095e9.9.1760449037187; 
+ Tue, 14 Oct 2025 06:37:17 -0700 (PDT)
 Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e1024sm23585131f8f.42.2025.10.14.06.37.28
+ ffacd0b85a97d-426ce57d404sm23972223f8f.3.2025.10.14.06.37.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 06:37:28 -0700 (PDT)
+ Tue, 14 Oct 2025 06:37:15 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Mathias Krause <minipli@grsecurity.net>, qemu-stable@nongnu.org
-Subject: [PULL 07/28] target/i386: Fix CR2 handling for non-canonical addresses
-Date: Tue, 14 Oct 2025 15:36:52 +0200
-Message-ID: <20251014133713.1103695-7-pbonzini@redhat.com>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 02/28] rust: bits: disable double_parens check
+Date: Tue, 14 Oct 2025 15:36:47 +0200
+Message-ID: <20251014133713.1103695-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014133540.1103268-1-pbonzini@redhat.com>
 References: <20251014133540.1103268-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,7 +94,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,41 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mathias Krause <minipli@grsecurity.net>
+It is showing in the output of the bits! macro when using the nightly
+toolchain, though it's not clear if it is intentional or a bug.
+Shut it up for now.
 
-Commit 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-accidentally modified CR2 for non-canonical address exceptions while these
-should lead to a #GP / #SS instead -- without changing CR2.
-
-Fix that.
-
-A KUT test for this was submitted as [1].
-
-[1] https://lore.kernel.org/kvm/20250612141637.131314-1-minipli@grsecurity.net/
-
-Fixes: 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20250612142155.132175-1-minipli@grsecurity.net
-Cc: qemu-stable@nongnu.org
+Link: https://github.com/rust-lang/rust-clippy/issues/15852
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20251010145756.787800-1-pbonzini@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/system/excp_helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ rust/qemu-macros/src/lib.rs | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index 50040f6fcaf..f622b5d588e 100644
---- a/target/i386/tcg/system/excp_helper.c
-+++ b/target/i386/tcg/system/excp_helper.c
-@@ -592,7 +592,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-                 if (sext != 0 && sext != -1) {
-                     *err = (TranslateFault){
-                         .exception_index = EXCP0D_GPF,
--                        .cr2 = addr,
-+                        /* non-canonical #GP doesn't change CR2 */
-+                        .cr2 = env->cr[2],
-                     };
-                     return false;
-                 }
+diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+index 3e21b67b471..3bf315c4c0a 100644
+--- a/rust/qemu-macros/src/lib.rs
++++ b/rust/qemu-macros/src/lib.rs
+@@ -401,7 +401,14 @@ pub fn bits_const_internal(ts: TokenStream) -> TokenStream {
+     let ts = proc_macro2::TokenStream::from(ts);
+     let mut it = ts.into_iter();
+ 
+-    BitsConstInternal::parse(&mut it)
+-        .unwrap_or_else(syn::Error::into_compile_error)
+-        .into()
++    let out = BitsConstInternal::parse(&mut it).unwrap_or_else(syn::Error::into_compile_error);
++
++    // https://github.com/rust-lang/rust-clippy/issues/15852
++    quote! {
++        {
++            #[allow(clippy::double_parens)]
++            #out
++        }
++    }
++    .into()
+ }
 -- 
 2.51.0
 
