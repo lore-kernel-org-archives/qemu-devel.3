@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281B9CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70C7CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8fEj-0006Ay-S4; Tue, 14 Oct 2025 09:38:49 -0400
+	id 1v8fEg-0006AG-Dd; Tue, 14 Oct 2025 09:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fEe-00069D-GR
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v8fEW-0005yX-5k
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fEZ-0001B0-Pa
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:39 -0400
+ id 1v8fES-00018G-N5
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760449114;
+ s=mimecast20190719; t=1760449106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=npqTcVShS0e/GZMLlgnWk6EwsCoh0Dh4KtuIlmkDB7E=;
- b=SffshJl3pPkC5QjbC5aOD4HYljzX5GGbEk9o/4BxuLGz3RDoZA+hUtBUNcu5KMLvwojbKw
- 19YtJLeLbTQ5w7r25++QBwQq9BVeL5zAe/Mns9JkduNHoZlcO4oDXUZE9jl0j5baB2zwI5
- P4L0ak3RcoB2NL5KTHm/gpGAObvtkyc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3h9CREHD+hrW6wzadkBuc/EvwxUe2yLhbknJ1TxTLXA=;
+ b=iplVChRAxuTnV4kuWWxb+0Uh66+1ZggSEVmy5k6tFo9WcIZc/9/zrQtjJMyIXoNq/TyfA+
+ TduWb9PcG+xzDf0yDlWzEsVY4aTLPDDzqtMWMivz/1CjmMGWa5nmR9zayxu05GU6B0jf9D
+ b5Thkjfkz7yRNbwu2to6IvascihaEew=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-eOKegtuVM5-ZgLUPRDCbVw-1; Tue, 14 Oct 2025 09:38:33 -0400
-X-MC-Unique: eOKegtuVM5-ZgLUPRDCbVw-1
-X-Mimecast-MFC-AGG-ID: eOKegtuVM5-ZgLUPRDCbVw_1760449112
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4256fae4b46so3787991f8f.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:38:32 -0700 (PDT)
+ us-mta-663-BJX1KTtsNB2uDEBMzUI7Hg-1; Tue, 14 Oct 2025 09:38:25 -0400
+X-MC-Unique: BJX1KTtsNB2uDEBMzUI7Hg-1
+X-Mimecast-MFC-AGG-ID: BJX1KTtsNB2uDEBMzUI7Hg_1760449104
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e4fa584e7so30805625e9.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:38:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760449111; x=1761053911;
+ d=1e100.net; s=20230601; t=1760449102; x=1761053902;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=npqTcVShS0e/GZMLlgnWk6EwsCoh0Dh4KtuIlmkDB7E=;
- b=OE0H/Rs7ALSEYMMzdIKxBUy6POdWGrD3ola706s7PPko1O5ebKifKuQcNGQtM5K0Xz
- YSbJSLN4FBJGdj+wb89zYIgdcENeqdAvYgzg7tobZribR9SrELJmPa8XgIZaKxlkPPW+
- StmgMii2g4US4drwdk+pcZPPJ9cK98SvOlg1FJwvemjBHq06YYC8+ZAp4K6buBIgfSGi
- cpIuvsqx050yT9AE0CYHLtqSreypcb17bAvkhT2xgII8INHF2zXJLxOKa2H+v9XSpFvH
- PS2XjYQbIqZv+fVSJTvLAr6ixx8jnrMqELYGQbnvqeEFMTiszOZ7axxKGbbpFhQgexS5
- E91A==
-X-Gm-Message-State: AOJu0YzOOIdBLwJklE0Cxum3DCh+dlaPoJ6gih711eUjrcJsLdezV6vj
- 00OWWxxN3M6Z7BBAxjIFXaNjLRtTUq9EqIh3uydtKWCeYUptmTQ3Z0Eu/Xt2lHKfW1y137OHNln
- YyUY5yVsFlZvIwwHDizhicJZuxrkCRka3SsaxhYrbdmBR98XdSfrocKPrZsMkPSgOcE5NigOp/i
- Dx1LMvL0ZI9jLItmfDDppKPDJRMbkAJnIp/ug2VwoD
-X-Gm-Gg: ASbGncuVqqveIQ22gstM8PJI8a83rjrO/+7JAhX8KZ5BJ0a5OHeZX3EIeFLvTuRa//k
- ahtj6OiSFl0ME0pC9C6wZVTg/4oxG8rIg4d4IV8fZSGffW1ilOjO+9bhjF3hmCqbkt0paaINjR6
- O8gOa3gNw0J1YghnKpAV2ca9CZtP8Ie2blrzuc1BZbEDaM4RMLZsSEs5IHW0SVDMxF69NRtNyx/
- W7X7GXYkt58YErPKe4GAo50QBSES3LrhiOVck1O9AY1dFNjdI2tU4wxc7KH8+XjebdDYYgu7hCp
- VS/XPUYJW1tKKwM83JweHdP1xM/hcMcly1Nj2Admu1swJRZDWO1XKEUMLvH4dzq+JW66trVerV0
- tC0ewNVoTFXNfapgQFxKTh4JypuAfEAvMJiRdugu3Zuw=
-X-Received: by 2002:a05:6000:2681:b0:3fe:1d64:1871 with SMTP id
- ffacd0b85a97d-4266e8de136mr15802528f8f.43.1760449110631; 
- Tue, 14 Oct 2025 06:38:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpn9TdcctsX5R2l6ZapaOFPFL00LPWCqLizUp9Qn7u93U+Blj2vpvXuCyvqYAeXdVUEkDs6w==
-X-Received: by 2002:a05:6000:2681:b0:3fe:1d64:1871 with SMTP id
- ffacd0b85a97d-4266e8de136mr15802509f8f.43.1760449110183; 
- Tue, 14 Oct 2025 06:38:30 -0700 (PDT)
+ bh=3h9CREHD+hrW6wzadkBuc/EvwxUe2yLhbknJ1TxTLXA=;
+ b=gMWQlzz2AzyL0B19RWRFglKyuUyT575E5V/HSI/MUEal6LcEi+6FtKd5DvVzmgFoP7
+ m3rRvLFkcVdInqXd+c23LC7oGqEz3M1LgaP2/j5e/XseFvyfW2czcvdmwt3V/bXPBQQH
+ OpKebPL6KLdm6/6fYDQ+kll6U2X/0IHWPtoQQ32cvZXy5oCTJ1vCwIGOdRhbANPNps/z
+ 6Afa2bW3ltZUUJlQy0RRksNuX0BqF4ywwYwnv007Hko8/n8V4jkVOQTux5uEW6Ww7S/P
+ Ncbnd0r/Bib49czOLCLl/eKZXefQs83EZyWmXh2nNynBlfdWpG+6ZBnJXgIFfqZJUr2g
+ iLAw==
+X-Gm-Message-State: AOJu0Yyhi//Q2Dc4b0yaDSYxxz/02ESH+8qq6z0l56KguN2FnQW/WD61
+ /jrtSaAt0S55nsvOBxQDwmNyrlxnqMvri5e/GKSSSa3sIU1zVPXRX9Zs7QFnpbKysVMM226bwhU
+ iYBLojVzAfPCQPrWi+W6EIPtvURXKJy8A5Vok6rs0QoHHOwy4UB0qC6DCayA5TjiKiTtel/BQyt
+ e2f3GAuQ8io17/SLCkps/5g62jZkoNQc3uGrZUm/S7
+X-Gm-Gg: ASbGnctt8GwLFtXxh0h3m3V2XxEKzSkiUYmKY2PD6HeuKSrrFlUat0pxr0yAYVvXmky
+ W51TbPyWsr1eDTYtS9Ej83Yl7MtQVEjZ97foEMD/VEyX5GGRbw6FFfxGSJQkYDXHvhlirI4KTWv
+ 3tDhUJShFIBwXO9a5BepjymCd0P5OlsOdnv6hvH4TiZc1oT8AzcTO5H+MWmySzTb4nfdVobZIVi
+ YrUm/U3R1GlyrH5M5uBk0alDaU2kozN2EYKTHvWU/C/0JE2MIzoGjwnZpiwyf0AF1OMnCd4aN8u
+ 8tVfJoIKUWMUEMykq1EoMsqW5BcBjDCTzzqELr6XPiotS0874/rL1Y+AjFmvyfFuYEJHnJ9G5kJ
+ 3AOjZm40YrBbPJt+Pnp/8UQyRNivD70ejTUdZ85YZmTU=
+X-Received: by 2002:a05:600c:3e8d:b0:46d:3a07:73cd with SMTP id
+ 5b1f17b1804b1-46fb409ca81mr127678915e9.23.1760449102381; 
+ Tue, 14 Oct 2025 06:38:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoS9vzCdmARSwdIzPe5BolLkwlUjOwzLaetbBRCGQ4qkcAzfQyfhAo/WzkSDK6omQ2+3hbmg==
+X-Received: by 2002:a05:600c:3e8d:b0:46d:3a07:73cd with SMTP id
+ 5b1f17b1804b1-46fb409ca81mr127678645e9.23.1760449101797; 
+ Tue, 14 Oct 2025 06:38:21 -0700 (PDT)
 Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e8b31sm23828846f8f.54.2025.10.14.06.38.26
+ 5b1f17b1804b1-46fb489197dsm248535045e9.10.2025.10.14.06.38.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 06:38:27 -0700 (PDT)
+ Tue, 14 Oct 2025 06:38:19 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 27/28] timer: constify some functions
-Date: Tue, 14 Oct 2025 15:37:12 +0200
-Message-ID: <20251014133713.1103695-27-pbonzini@redhat.com>
+Subject: [PULL 24/28] rust: move VMState from bql to migration
+Date: Tue, 14 Oct 2025 15:37:09 +0200
+Message-ID: <20251014133713.1103695-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014133540.1103268-1-pbonzini@redhat.com>
 References: <20251014133540.1103268-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,81 +110,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The high-level wrapper Migratable<T> will contain a BqlCell,
+which would introduce a circular dependency betwen the bql and
+migration crates.  Move the implementation of VMState for cells
+to "migration", together with the implementation for std types.
+
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qemu/timer.h | 6 +++---
- util/qemu-timer.c    | 8 ++++----
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ rust/Cargo.lock               | 2 +-
+ rust/bql/Cargo.toml           | 1 -
+ rust/bql/meson.build          | 1 -
+ rust/bql/src/cell.rs          | 6 ------
+ rust/meson.build              | 2 +-
+ rust/migration/Cargo.toml     | 1 +
+ rust/migration/meson.build    | 4 ++--
+ rust/migration/src/vmstate.rs | 2 ++
+ 8 files changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index abd2204f3be..aec730ac257 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -699,7 +699,7 @@ void timer_mod_anticipate(QEMUTimer *ts, int64_t expire_time);
-  *
-  * Returns: true if the timer is pending
-  */
--bool timer_pending(QEMUTimer *ts);
-+bool timer_pending(const QEMUTimer *ts);
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index 11085133490..5c2f8ea9240 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -59,7 +59,6 @@ name = "bql"
+ version = "0.1.0"
+ dependencies = [
+  "glib-sys",
+- "migration",
+ ]
  
- /**
-  * timer_expired:
-@@ -710,7 +710,7 @@ bool timer_pending(QEMUTimer *ts);
-  *
-  * Returns: true if the timer has expired
-  */
--bool timer_expired(QEMUTimer *timer_head, int64_t current_time);
-+bool timer_expired(const QEMUTimer *timer_head, int64_t current_time);
+ [[package]]
+@@ -198,6 +197,7 @@ checksum = "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
+ name = "migration"
+ version = "0.1.0"
+ dependencies = [
++ "bql",
+  "common",
+  "glib-sys",
+  "util",
+diff --git a/rust/bql/Cargo.toml b/rust/bql/Cargo.toml
+index d5177e5f8e2..8fd81311028 100644
+--- a/rust/bql/Cargo.toml
++++ b/rust/bql/Cargo.toml
+@@ -13,7 +13,6 @@ repository.workspace = true
+ rust-version.workspace = true
  
- /**
-  * timer_expire_time_ns:
-@@ -720,7 +720,7 @@ bool timer_expired(QEMUTimer *timer_head, int64_t current_time);
-  *
-  * Returns: the expiry time in nanoseconds
-  */
--uint64_t timer_expire_time_ns(QEMUTimer *ts);
-+uint64_t timer_expire_time_ns(const QEMUTimer *ts);
+ [dependencies]
+-migration = { path = "../migration" }
+ glib-sys.workspace = true
  
- /**
-  * timer_get:
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 1fb48be281a..56f11b6a641 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -89,7 +89,7 @@ static inline QEMUClock *qemu_clock_ptr(QEMUClockType type)
-     return &qemu_clocks[type];
+ [features]
+diff --git a/rust/bql/meson.build b/rust/bql/meson.build
+index 22d7c9b8776..091372dd7b6 100644
+--- a/rust/bql/meson.build
++++ b/rust/bql/meson.build
+@@ -37,7 +37,6 @@ _bql_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _bql_cfg,
+-  link_with: [_migration_rs],
+   dependencies: [glib_sys_rs],
+ )
+ 
+diff --git a/rust/bql/src/cell.rs b/rust/bql/src/cell.rs
+index 54cfe6145c5..8ade7db629c 100644
+--- a/rust/bql/src/cell.rs
++++ b/rust/bql/src/cell.rs
+@@ -151,8 +151,6 @@
+     ptr::NonNull,
+ };
+ 
+-use migration::impl_vmstate_transparent;
+-
+ /// A mutable memory location that is protected by the Big QEMU Lock.
+ ///
+ /// # Memory layout
+@@ -364,8 +362,6 @@ pub fn take(&self) -> T {
+     }
  }
  
--static bool timer_expired_ns(QEMUTimer *timer_head, int64_t current_time)
-+static bool timer_expired_ns(const QEMUTimer *timer_head, int64_t current_time)
- {
-     return timer_head && (timer_head->expire_time <= current_time);
- }
-@@ -475,12 +475,12 @@ void timer_mod_anticipate(QEMUTimer *ts, int64_t expire_time)
-     timer_mod_anticipate_ns(ts, expire_time * ts->scale);
- }
- 
--bool timer_pending(QEMUTimer *ts)
-+bool timer_pending(const QEMUTimer *ts)
- {
-     return ts->expire_time >= 0;
+-impl_vmstate_transparent!(crate::cell::BqlCell<T> where T: VMState);
+-
+ /// A mutable memory location with dynamically checked borrow rules,
+ /// protected by the Big QEMU Lock.
+ ///
+@@ -691,8 +687,6 @@ fn from(t: T) -> BqlRefCell<T> {
+     }
  }
  
--bool timer_expired(QEMUTimer *timer_head, int64_t current_time)
-+bool timer_expired(const QEMUTimer *timer_head, int64_t current_time)
- {
-     return timer_expired_ns(timer_head, current_time * timer_head->scale);
+-impl_vmstate_transparent!(crate::cell::BqlRefCell<T> where T: VMState);
+-
+ struct BorrowRef<'b> {
+     borrow: &'b Cell<BorrowFlag>,
  }
-@@ -649,7 +649,7 @@ void init_clocks(QEMUTimerListNotifyCB *notify_cb)
- #endif
+diff --git a/rust/meson.build b/rust/meson.build
+index 6ba075c8c71..76e10699b37 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -29,8 +29,8 @@ subdir('qemu-macros')
+ subdir('common')
+ subdir('bits')
+ subdir('util')
+-subdir('migration')
+ subdir('bql')
++subdir('migration')
+ subdir('qom')
+ subdir('system')
+ subdir('chardev')
+diff --git a/rust/migration/Cargo.toml b/rust/migration/Cargo.toml
+index 94504f3625c..b995c4c8c88 100644
+--- a/rust/migration/Cargo.toml
++++ b/rust/migration/Cargo.toml
+@@ -13,6 +13,7 @@ repository.workspace = true
+ rust-version.workspace = true
+ 
+ [dependencies]
++bql = { path = "../bql" }
+ common = { path = "../common" }
+ util = { path = "../util" }
+ glib-sys.workspace = true
+diff --git a/rust/migration/meson.build b/rust/migration/meson.build
+index 18be65c92cf..845136239e8 100644
+--- a/rust/migration/meson.build
++++ b/rust/migration/meson.build
+@@ -37,12 +37,12 @@ _migration_rs = static_library(
+   ),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+-  link_with: [_util_rs],
++  link_with: [_util_rs, _bql_rs],
+   dependencies: [common_rs, glib_sys_rs],
+ )
+ 
+ migration_rs = declare_dependency(link_with: [_migration_rs],
+-  dependencies: [migration, qemuutil])
++  dependencies: [bql_rs, migration, qemuutil])
+ 
+ # Doctests are essentially integration tests, so they need the same dependencies.
+ # Note that running them requires the object files for C code, so place them
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 59e665f6c3a..445fe7fbc08 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -276,6 +276,8 @@ unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmsta
+     };
  }
  
--uint64_t timer_expire_time_ns(QEMUTimer *ts)
-+uint64_t timer_expire_time_ns(const QEMUTimer *ts)
- {
-     return timer_pending(ts) ? ts->expire_time : -1;
- }
++impl_vmstate_transparent!(bql::BqlCell<T> where T: VMState);
++impl_vmstate_transparent!(bql::BqlRefCell<T> where T: VMState);
+ impl_vmstate_transparent!(std::cell::Cell<T> where T: VMState);
+ impl_vmstate_transparent!(std::cell::UnsafeCell<T> where T: VMState);
+ impl_vmstate_transparent!(std::pin::Pin<T> where T: VMState);
 -- 
 2.51.0
 
