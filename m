@@ -4,83 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF84FCCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07511CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8f8M-000159-6h; Tue, 14 Oct 2025 09:32:10 -0400
+	id 1v8f9J-0001qi-K1; Tue, 14 Oct 2025 09:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8f81-0000sv-1C
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:31:51 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8f7p-000091-F3
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:31:48 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-63d0692136bso2062244d50.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760448689; x=1761053489; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XW2a6gWYcC1WnuVYDBcLoYUBaoDqPbQydJ7nhuEJsDs=;
- b=mHKcHCMUf0599uox6Hoh98RkOPKGhBA1Nf7RL9pWeddhsXJy6zfjB4JQvtAg5/aFOy
- ghYfRGeBiBmBqrWpkOtpmu+q4qXQlJ3uuMScKITmHY7wVWu4zokq3ro9CpPMYtQSYd0M
- mUcOvlZDDs8rAqkm9xzMegLSdcg9pIP8oKq9hk36TJjTXQ/xB4Ii1eCMtOaqWlNV6diM
- I1qyUjCXrhG2yV+W5EkxIRdWkSyMmCYPHl7/DE63L3r1g2l2QCqe7hWFrsHOduzPCN8G
- 3HDzkgrBCDoFafvXNVqWMbaHksod3Er6WYkvrSKaVjsXMiou+mrLxEUneVdrQyzLOUh5
- RlgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760448689; x=1761053489;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XW2a6gWYcC1WnuVYDBcLoYUBaoDqPbQydJ7nhuEJsDs=;
- b=H6y7Lk0jYbl0ZsjQjatZDsYQYvnBiX6cpmjKkmEJMHpqTpe3s1kAv8blMvaAYK0pYQ
- rR2gQdaRXRPejXrb1YqjFmo5rDFE4p4YQUc/6ZtkHLl95b0QOaqOYQJl3VMXvixp9+bR
- Rd9CBHLmZTpB1NoJayz1XQvj1MEmUKxIAiQD5V7+SLjqQriDRoFypYOpMd+iUwAZqLnZ
- Y0Nki1v3qNUMVYhNrVWIy+Sdtx+yxa77ubckvUgKe6xt3Zabsh4d91FIABclPr/nfThX
- kGP1YcQKRK1vTiXQ5O6UQQrAd3YM7Ic58wDQL+5WHTwTZ9LGLL9s9XL42ibpZ+VeAgo/
- JJ1A==
-X-Gm-Message-State: AOJu0YzvBitbJkICwedIwwblGsozfLSpWvZvX/EN0N7mhYKsA5HnU+Yt
- MFCbSdayoANmfwVBauzXhgiMwatB1u2uuZODCPr51FyyOdTrClIOfTBAh5lvyIdPOjAwwFqDTkr
- DNJC+1gvITKiglhCfrLeQht59Fu6lUidqGXcjtXaW2w==
-X-Gm-Gg: ASbGncv+JQ7sYu6sFm7lChjvEIyvftHIXnpFgU098WFB0Z1f9fDFPP6wyN/O2kKBhxu
- VDSPMskbZuFwtEG+fAPts4sbfRAZm43UyCBtP/FEDHLBlkrTwj8eGewM/XFSjjH1/D1Jqgkrc9X
- HWKkJVd3dcu7NcKW2Kldt36qklyg49WkoQorlbBHTpxT/aiL8ub3uOpNjGYlrpd/KitZKVuAclG
- +qmlpQYzA1P7sd2iaI6qtGQNOkLerNs/zasOXNBRw==
-X-Google-Smtp-Source: AGHT+IEmyPGxtge0re7VgCuoIgBKV0sLz1T8rwJqNuZtnBXV2zeslWnPCFlW7jeaXybg/p3Urk8skZ87Lq2+dqsei5w=
-X-Received: by 2002:a05:690e:86:b0:636:e0b:7bd5 with SMTP id
- 956f58d0204a3-63ccb8dbd91mr17704290d50.31.1760448688975; Tue, 14 Oct 2025
- 06:31:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1v8f9G-0001pe-Fd
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:33:06 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1v8f9B-0000I2-5W
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:33:06 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 59E6okER2865322; Tue, 14 Oct 2025 06:32:54 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=/Ft//4W2QHIcojCkNS8aCNznKAob+qMuZQBi6Gzs5
+ Fo=; b=QgwKJ3JBtPfbC90q+l/Z3GLBDEe/vhslmiAxkOIYimgJlDwJEN4PVqElA
+ IQCdaqphFowF9jdWw04Autmf7MsRlSQhQtg/359gKIcJbynmqW29FEn2vmXEVyvI
+ YbC0SUl5FHfmcPoDIhSKuV9o+32WtqPVEdsehvH1icrhWviBdTJ7Cg7bErIqh4Jt
+ 5VRz0AWC0cRzsYH/uduRFWf6/vzTsOaZZuJzU+5sjHkhwiaZMFfQPtKmgMHdqq3y
+ ohooSmDEl1QLH3j9h3FMnZEYusBaT47o1Ck7ylBuSl0n9EDDiZazcpDNNeeQMUOB
+ IcadsPAXX63ku/hKrM/dBai2henmw==
+Received: from sn4pr2101cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11022103.outbound.protection.outlook.com
+ [40.93.195.103])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 49s6b8t6gg-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 14 Oct 2025 06:32:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JEhYc5uZGES71vjcb6L7YBQGf7RiTasJCzjNcXn43zyG9lzVlnPY4IgtIgBDS2jtro9A+hawpsDwCr7AfO8Je7uaoKX8HvRDnz66ytb0bjNPC12WDrEWoYl4L9yArQIxjp8Vi/lpeQGSHJM7ozRv12NLG5FJmI4yWEBHWflMzEeIKG7F8HTP3CbAzCn7T1Duvj+Hy2xflVw75vosaLRhLlhHAw0Aymf0m4p8SqjFa/SnjgaTs6K4I67jUxEH6ShZGFNXS4DxxOTk2ARCyhMsdrq7ztWCPLm45FDzSEJsm5bKw1aXnoIdsXQ8rjlOD6I46QdwUbtaWJH2jMs+lcNwBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BT1ovShQNhMnr6uFFngoXyIfeaHiun9QQwUMCNVznpE=;
+ b=siedHI7kJ/Se6Dk5bLFWtlXqvMiACTRKD67tkRbT8y+aLNXZIXkCoUkfN6Nz/mJGLGH2B2KjAP2vNDZZsPqFiTikNSQ2O1OBVzYKgEdpOz5B9r9ArXwu69yFnr/dYnQGbyqTtu9XSr4ldBu98kPzRl10dmgSGsPgIywwKcrB9WaEI8G7EDwI2JMymSrEjwQD6LtSGcpI/BRKDlclp6G3pF1InI4KErdFUmDj5qHy1RabW8CXojx/iEDb6Kea+t09XRjmhWkSVmySWokTS55qk9hPipBcrPH5F1UfqMopjNVZy2pPCRiOh7DxnR71to3MBGWydUhi5jKjzzMNrjG4ug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BT1ovShQNhMnr6uFFngoXyIfeaHiun9QQwUMCNVznpE=;
+ b=QGCUlEZtpOxHt0c9Dt6nOAuBLsEJ6ob0ivIIs+46u4dxKOh3Hmvmr8ltiv4qmfgb797hks23C8ni5ZpT+vSn184eAg4Q37irvKpy5bj36W32mf52Ly0rvAQre4qvRIZORnE63pF5wIaVF73GHvi3bPoWnHR/r7KGUtgXfQZl5fC8R3SpkwYtoR60EQK87rlJ8ljsVG7b/e4vQ+zqTK/9d5/aBm8JbO/mqpqRWQISLjTS8ZQ3bS38OYyo+VsZZf7RtJlj/81x+c2K0Y23v+0z12hZkoSY3IaNW7Tg/NSaWhfaPgaXg2p/xCLlgwovHlvYKtORDdCS+IBtHZ+PalgeEA==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by BL3PR02MB7940.namprd02.prod.outlook.com (2603:10b6:208:357::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.13; Tue, 14 Oct
+ 2025 13:32:52 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%7]) with mapi id 15.20.9228.009; Tue, 14 Oct 2025
+ 13:32:52 +0000
+Date: Tue, 14 Oct 2025 15:32:48 +0200
+From: John Levon <john.levon@nutanix.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: Re: [PULL 25/28] vfio: add region info cache
+Message-ID: <aO5RAIX6WI0MerI-@lent>
+References: <20250509131317.164235-1-clg@redhat.com>
+ <20250509131317.164235-26-clg@redhat.com>
+ <6519c5b0-46d2-4097-bb37-7a78f9087f68@redhat.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6519c5b0-46d2-4097-bb37-7a78f9087f68@redhat.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO2P265CA0345.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:d::21) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
 MIME-Version: 1.0
-References: <20251014102439.319915-1-peter.maydell@linaro.org>
- <261d6938fc894b1ca0979aef30fb9e1c@huawei.com>
- <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
-In-Reply-To: <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Oct 2025 14:31:16 +0100
-X-Gm-Features: AS18NWBvhznq6zUD_XVLQ_IUpAw3cv5PhmbCn__9oxabrlS2vbbX88_BH59uhg4
-Message-ID: <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|BL3PR02MB7940:EE_
+X-MS-Office365-Filtering-Correlation-Id: a6360f98-0afa-49e2-27aa-08de0b262c9e
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?Apf+6tdOakgPQW6NyrdKBdi7ln5jUs2ov/g+ii+NH6EfJRqEKqoXo/VN88?=
+ =?iso-8859-1?Q?9n6PJHJ9wW9oe8d1ziVmQNSpvZHvJACHZt0KqNvQiT2S5CMx34JS/k1PCx?=
+ =?iso-8859-1?Q?XotkVYJpi5qpnQX46UMMiplD/TCWfmDx8cSJwcWs3YodUyksYKoeuj299W?=
+ =?iso-8859-1?Q?wqR60coJSmFjuZCA6BHaCD3qvsNYZOeyUuSDhxHLzEEysZsOFW3axxkMOi?=
+ =?iso-8859-1?Q?qCi262e8ilSMPi7dZ9nNDI0Tg3Pa/5hOCLy+xA48tqjhmrcsGF9MXs7VzW?=
+ =?iso-8859-1?Q?1Qsw0Vgr8uFR3QLnNCYF6pPi1qCq34lyGZPDkxSzA4/mkS8YEZ2l9IMqjF?=
+ =?iso-8859-1?Q?EByMKh9lyXuoV6/DVFiJ3/3etwXSdwg9P5OyKNLiRWbnF0Xkq9FScKCWCr?=
+ =?iso-8859-1?Q?afsKxI2QEOBjOhZ89BDE1VSkPHrhJ5zbwA3iqGujA6oZdO99AXgT+Qfqf4?=
+ =?iso-8859-1?Q?vGZF25s3jadiBZ1+KPZUAMFNRtCRPAP9ZWAChZvkJikxTs6SxqbzBDfcis?=
+ =?iso-8859-1?Q?iVNwpJKzqEoZgvBh2KeUt1wGwHS/CYlf4F2dgSiqTZarVdCixjIFpv+z9y?=
+ =?iso-8859-1?Q?3AodT3Dibpc2Kw0ocFyd/CaorQQ7lrXRbqJijqTSh6fWJGiPAfXSLsAc+G?=
+ =?iso-8859-1?Q?ptdZKXvhLvIpwn336iLD8iWpN7a/zcluIeySTdEhxGTi2Ri5tMMHAIM1WA?=
+ =?iso-8859-1?Q?x+Kspr7yOyN0xV6C9S6I7RtznDxWbLepkRJI4dUrR+sFzwJQrxduCOjvxc?=
+ =?iso-8859-1?Q?/LDWQqF+zvTXHlA/DNyzo0Rsn7qkWf78FEqvwxSFVHvKLVhPJ74UZjHlcW?=
+ =?iso-8859-1?Q?s4z7GoVHCY2VwvBSwNNVZ9/qxllNPj6Qgb3Uqh1BovyFM1fvEZ/Iav7YUS?=
+ =?iso-8859-1?Q?KPZu1FQZrxWtXaKqhgy+q0Rj8tqXmJ8PqCO/mkQiUKfow9I0r0qr+6VwUy?=
+ =?iso-8859-1?Q?3wfmDrmHGU+C9yoREjY46UqqevRwYJnYFF/02xfohX/qanIHuvBY6UI9S8?=
+ =?iso-8859-1?Q?rxU4Fk4ZkPSy0t158PTNMl4of6KnjzD/7fw7mKGixL4U3yAjM0tSkOJgB6?=
+ =?iso-8859-1?Q?MvtvFJdtqt9/TGEtZEqwltQAsbdYcRkUlm1K4hqMwGWplUKGuq0fVcP4Ue?=
+ =?iso-8859-1?Q?3SnyUEDeNnxf+29+gUTgG9jBASwKW1WKQk9D1PyO6aBQ7bkX2/ApCasCnM?=
+ =?iso-8859-1?Q?2mLXCI94t0yFRtw9yXgVoLQjhB9QhBCb9+CNYUqmrM+G4GYLbiujAu1Cj3?=
+ =?iso-8859-1?Q?fszgW8+k27ONPhUyW7Sl4IN+tNfHaJ9odsDLUkdpVNy8RGu7E5wbek36oA?=
+ =?iso-8859-1?Q?w2HV3DdQU50M+o6gZdDttwZ3PtosCc6KbW3u9gBgYeMxYj0V2ZtEvUmXjE?=
+ =?iso-8859-1?Q?ZwJbk1bWhERKatMoD4FE5WRit07UqXivUEVgqlty3L8EQvCeqzHewVeuex?=
+ =?iso-8859-1?Q?vD5Woin8VHHVZWRDk01Jn9CYkHYlGARguF5KPkSjMSmnBNEcucjb5ZLBcK?=
+ =?iso-8859-1?Q?hImDp43bg9U7C0F9Ym5S/F?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?9NtObRxBvs1REg2OW+12/00MBI2FsHDiBqk0Kh7A3n3tXT+0aSXnPTRq5h?=
+ =?iso-8859-1?Q?BhQLzhEFoKQSM46Hwn17IxoNsDQmfNgRhvyrQjpdCaIKyvaLNTlylNVsBF?=
+ =?iso-8859-1?Q?MXyGDL2JW43hsNSByl5o8Y7bGyt9zw/dLwwAk4RF6pN/iH/LHmynx8Y0qc?=
+ =?iso-8859-1?Q?Wn6OwoaThmMewqwWjay7NlXvq6sdPUKxOHyQvbHKym3T7YsGWaCN73dYR+?=
+ =?iso-8859-1?Q?n1vuxUhOMekC4ieR6DtGo977u+mtsQrr+i4ofsBjoR6DUnoOzMK/NcE/7g?=
+ =?iso-8859-1?Q?/QfsKg/xxUlKzx3aBmf/mSRdYoGLdiQCXFZqQbF+5R2fSU6ug7PPyfmnnv?=
+ =?iso-8859-1?Q?Uj7Tk0pqhL66FCVo9hKkYMUpGyWPdQbAfKRzMkU8I5zZpMommi8uzMuoHb?=
+ =?iso-8859-1?Q?ehelZ7xxiEnTKjI6xFxptK20BdnxLAUsdRd8ZyJgvl2zhHFK/AIHXulcbE?=
+ =?iso-8859-1?Q?gmTQxGXei1baulVtE4Fwq9Jyx4XyMxG7UfLttGX4wKn8bbE7pwl9EdDT3K?=
+ =?iso-8859-1?Q?AAcS/HiA0ENDlvg44hrdmH+qU5o7/oB0JbucJldvwTVx6E3eUTXMWJvHbY?=
+ =?iso-8859-1?Q?i50PiwkW7LbKcChWkJBM2i7xaVWagVSpxUxLa8cE98ZXzpgve0dzrBssUz?=
+ =?iso-8859-1?Q?15OIpDfXbFLyB9LEx8yNS4Gp+h3bXpLqdO0VWxJfZZfHXhW1zynnE5QCEQ?=
+ =?iso-8859-1?Q?NuOyvb8+mG/u5680hSgeQQGfKpxQoonblagDwNKI/v4opuTsJr35+17cG6?=
+ =?iso-8859-1?Q?+M9wT46bfj8IHBQCzb0DDJ5ZE3ZzbrqVyvt+Su9Ls+c9itduj84GbQaAiJ?=
+ =?iso-8859-1?Q?D9vYqBr5r9mG5KiQ6QRfzUK2BWJzU7c5NHXhyDsmtuKe7d3DAEhL1N9LK7?=
+ =?iso-8859-1?Q?KBf8fxIDXjH39TC9whkcIjdiOGrCKon6trvrKrnEwTBGYUfTVji5zXh2GT?=
+ =?iso-8859-1?Q?p5sl0hDIkeJjlMt2luP5d7UOqnGdvBQ7MYnpYLY1gyKweuY9BJYoHjECom?=
+ =?iso-8859-1?Q?HM6b6TgSuHuP8H7xyhn0aDstr6WwLzHI6ANu+zRsWuwHBaaTOVbCcK+YBh?=
+ =?iso-8859-1?Q?WC4cd4eJiddikcwjIiudoRrwuoX27IxcJKUCsGue2IeDeOMMYT4M6hDNg7?=
+ =?iso-8859-1?Q?uL8GGLWPkmZPXiPVxgOH3pYsrPdta8CAwWDx1SRX4o3atE/JtO1yuXcTFR?=
+ =?iso-8859-1?Q?8KJatNzx54nuEVrGnptguY7aRWlSPzDoUmbrntCPjmeUudiukT1xzOTcPm?=
+ =?iso-8859-1?Q?EXVGgi0GiDK1X1NOd6Fy18YteCb1HLacVZJGMuXSPOeZyV4XSGP21FoFne?=
+ =?iso-8859-1?Q?KKho/5bILOdQfR7K1hMmbu8ZRgqRKKw+PFMCH2FBK/HrSqNKu8zkvFW3PP?=
+ =?iso-8859-1?Q?Uuw+NdCXZxhaDYRckgW1ODCNAcUjixKGfkvvj1V58r2UaQhn8KgLVDkVi6?=
+ =?iso-8859-1?Q?S/tdS4eT5ruTGXPcUf/UC3P99LxNwP9NXYauT8HJi0Ehkk9x9KhsoYtpmm?=
+ =?iso-8859-1?Q?kTLcugNPftoDEP1EWj/wVs9cV5jTB/fEs27CNA9+fO7HMGfThdpxvPX09q?=
+ =?iso-8859-1?Q?o3yq864rE+CD7f5W46mcOvRvYq4ISpyrSokBBnOqSXCxEitXad8FVQjQFK?=
+ =?iso-8859-1?Q?jgo1S1z5HsMjyzAe9cPpt/8ZCULIvrAcfI?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a6360f98-0afa-49e2-27aa-08de0b262c9e
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2025 13:32:52.2822 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: z8UgHEZfVqE7qJkBnQSlQYGaou77FZU+W3nTIOBXM3m7njE0RtunqvQRpEOj57rfTPyIWLfP9ds1zciq5jyTsQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR02MB7940
+X-Proofpoint-ORIG-GUID: 5JBupy0vuOvAWCZJRZEBfY_QBKQoUIX2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE0MDEwMyBTYWx0ZWRfX5egxnDD5P18b
+ aLtitzuABi19xJEK6XlOUhTxbT+S47nO/LD/3tgivfPcD1axIzbExxVIYC7IK/Yn01cEPjXSzTB
+ VKBS9QTN+mn+dgDvwu+WbdCZg5xH79E0QAD6i816G9JHeZjRPECNd3H8qwAeY9jyatTe333r8OM
+ HLsovhzzsRjWX2qGSdJ4rugluTLlidyy3PtFBQuWLOwnhVvuIG3+wkXkPNmc9MiOBVLRR4yh9Qn
+ sF2gKiO6WR4iwRHdZv5aK2yuNOEzJXEo7YafP16srW8p1WB2tlGY3fER3rTD4+XyEfSHslf4AJI
+ HKftM1dXnBGgb3ozUTz7xSmQfHQXKMoaU67OYR5WRZODHsZoqZxHrnoVlySz0AA2qaO2vv0zaJS
+ 6SuFP0VY1BY7kerIzyGmn8m+2E4zBA==
+X-Proofpoint-GUID: 5JBupy0vuOvAWCZJRZEBfY_QBKQoUIX2
+X-Authority-Analysis: v=2.4 cv=IIUPywvG c=1 sm=1 tr=0 ts=68ee5106 cx=c_pps
+ a=dTL/NSpv458ZJk1fBD1pSQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=x6icFKpwvdMA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=heK9hM8YoZV0GO3u6scA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-14_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,75 +203,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Oct 2025 at 14:23, Salil Mehta <salil.mehta@huawei.com> wrote:
->
-> Hi Peter,
->
-> > From: qemu-devel-bounces+salil.mehta=huawei.com@nongnu.org <qemu-
-> > devel-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of Salil
-> > Mehta via
-> > Sent: Tuesday, October 14, 2025 11:41 AM
-> > To: Peter Maydell <peter.maydell@linaro.org>; qemu-devel@nongnu.org
-> >
-> > Hi Peter,
-> >
-> > > From: qemu-devel-bounces+salil.mehta=huawei.com@nongnu.org
-> > <qemu-
-> > > devel-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of Peter
-> > > Maydell
-> > > Sent: Tuesday, October 14, 2025 11:25 AM
-> > > To: qemu-devel@nongnu.org
-> > >
-> > > Currently in arm_gicv3_icc_reset() we read the kernel's value of
-> > > ICC_CTLR_EL1 as part of resetting the CPU interface.  This mostly
-> > > works, but we're actually breaking an assumption the kernel makes that
-> > > userspace only accesses the in-kernel GIC data when the VM is totally
-> > > paused, which may not be the case if a single vCPU is being reset.
-> > > The effect is that it's possible that the read attempt returns EBUSY.
-> > >
-> > > Avoid this by reading the kernel's value of the reset ICC_CTLR_EL1
-> > > once in device realize. This brings ICC_CTLR_EL1 into line with the
-> > > other cpuif registers, where we assume we know what the kernel is
-> > > resetting them to and just update QEMU's data structures in
-> > arm_gicv3_icc_reset().
-> > >
-> > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > > ---
-> > > I've only tested this fairly lightly, but it seems to work.
-> > > Salil, does this fix the EBUSY issues you were seeing ?
-> >
-> >
-> > Let me try this and get back to you.  Also, just to let you know that -EBUSY
-> > can return from other places as well. Please check  my reply in the other mail-
-> > chain.
->
->
-> Got this.
->
-> (gdb) handle SIGUSR1 nostop noprint pass
-> Signal        Stop      Print   Pass to program Description
-> SIGUSR1       No        No      Yes             User defined signal 1
-> (gdb) run
-> Starting program:
-> /opt/workspace/code/qemu/qemu/build/qemu-system-aarch64 --enable-kvm -machine virt,gic-version=3 -cpu host -smp cpus=2,disabledcpus=2 -m 300M -kernel /opt/workspace/code/linux/linux/arch/arm64/boot/Image
-> -initrd /opt/workspace/code/filesystem/rootfs.cpio.gz -append console=ttyAMA0\ root=/dev/ram\ earlycon\ rdinit=/init\ maxcpus=1\ acpi=force -nographic -bios /opt/workspace/code/uefi/edk2/Build/ArmVirtQemu-AARCH64/RELEASE_GCC5/FV/QEMU_EFI.fd
-> [Thread debugging using libthread_db enabled] Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
-> [New Thread 0xfffff5b5eb40 (LWP 31994)]
-> [New Thread 0xfffff4e88b40 (LWP 31996)]
-> [New Thread 0xffffd4dfeb40 (LWP 31997)]
-> Unexpected error in kvm_device_access() at ../accel/kvm/kvm-all.c:3475:
-> qemu-system-aarch64: KVM_GET_DEVICE_ATTR failed: Group 6 attr
-> 0x000000000000c664: Inappropriate ioctl for device
+On Tue, Oct 14, 2025 at 03:16:46PM +0200, Cédric Le Goater wrote:
 
-Does it do this consistently, or only sometimes? What
-host kernel version are you running? And what QEMU
-commit (plus this patch)?
+> > +    /* check cache */
+> 
+> It would be good to add an assert to check the index value. More important
+> we need to fix an ugly "index out-of-bounds" bug that can occur when booting
+> a VM with a vGPU :
+> 
+>   -device vfio-pci-nohotplug,host=0000:27:00.4,display=on,ramfb=true ...
+> 
+> The interesting part is :
+> 
+>   Thread 1 (Thread 0x7ffff6891ec0 (LWP 11372) "qemu-kvm"):
+>   #0  0x000055555581b83d in vfio_region_setup (obj=0x5555588c0b70, vbasedev=0x5555588c1630, region=0x555558a9c040, index=9, name=0x555555de94ba <str.68.llvm> "display") at ../hw/vfio/region.c:199
+>   #1  0x00005555558208a4 in vfio_display_region_update (opaque=<optimized out>) at ../hw/vfio/display.c:449
+>   #2  0x00005555556bdd6c in graphic_hw_update (con=0x555558acf830) at ../ui/console.c:143
+>   #3  vnc_refresh (dcl=0x7fffec048050) at ../ui/vnc.c:3262
+>   #4  0x00005555556a15cb in dpy_refresh (s=0x555558acf980) at ../ui/console.c:880
+>   #5  gui_update (opaque=0x555558acf980) at ../ui/console.c:90
+>   (gdb) p vbasedev->num_regions
+>   $9 = 9
+> 
+> Index 9 is beyond the maximum valid index of the reginfo array :/
+> 
+> We didn't take into account the ioctl VFIO_DEVICE_QUERY_GFX_PLANE
+> which can return region index 9 which is beyond the maximum valid
+> index of the reginfo array :/
 
-I'm guessing from that "disabledcpus=2" part that you're
-running some not-yet-upstream set of QEMU patches. Please
-drop those, and test only with this, to rule out the
-possibility of some bug/unexpected interaction with those.
+My apologies - we hit the exact same issue internally, but with a much older
+codebase, so I did not realise this could be an upstream problem as well!
 
-thanks
--- PMM
+We put this down to a bug in the nvidia driver - surely it shouldn't be
+reporting fewer regions than are actually in use. So we applied what we thought
+to be a gross hack of boundary checking, and not using the region cache in case
+it's beyond num_regions.
+
+To put it another way, the header file says:
+
+   217         __u32   num_regions;    /* Max region index + 1 */
+
+If it's not actually the max region index + 1, what are the expected semantics
+of this field, or of region indices more generally? We could not find any clear
+documentation on the topic other than this comment.
+
+regards
+john
 
