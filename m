@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1167DCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD1FCCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8lho-0000rd-V9; Tue, 14 Oct 2025 16:33:12 -0400
+	id 1v8liA-0000zH-T2; Tue, 14 Oct 2025 16:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhn-0000rL-KB
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:11 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8li7-0000xn-RL
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:31 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhg-0000QC-0Q
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:11 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8li1-0000Rq-KF
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Iyd3r+PQUdYQt+Ca64Th/W2H34bBIr9PZFzUdz9ieNA=; b=Z2WAHbkTQY5iulj
- nV/mfR5AVYgKuq6tesLDL52SsARK8z9t8Y0M6ob2HKWnaeX1wo3oIHMHanFwHZCkHFITbbsEHW6F7
- BWTjjg0lfx+JraU+UTCPzGSWNsidhZ0NsSxllnu2VQVbv/QK7oN6IijD/RTYKiIkv8+3Djf+ZQxH7
- gM=;
+ List-Help; bh=jwM9tbmdPiTIULteWRet09FLlU5nMdmhCz9b8ImjSHI=; b=qEqoO2M6jQ9ODoY
+ lL8bZ0ihrLSmGRmWIeea6i+SgXYhJmKP9SpVeLnOut2wQY+dx2ljDBikA3SNncqfLVL/Xz1jKKqtU
+ aezwla9zZO8BNXg3e7iY+DwS5r6XeqYeaJiMEqPU2s+jTzyn1HjOdDGr9+J4DeEgYhu3LW/HgjVVV
+ Kc=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [PATCH v3 07/34] target/riscv: Combine mcyclecfg and mcyclecfgh
-Date: Tue, 14 Oct 2025 22:34:44 +0200
-Message-ID: <20251014203512.26282-8-anjo@rev.ng>
+Subject: [PATCH v3 14/34] target/riscv: Fix size of badaddr and bins
+Date: Tue, 14 Oct 2025 22:34:51 +0200
+Message-ID: <20251014203512.26282-15-anjo@rev.ng>
 In-Reply-To: <20251014203512.26282-1-anjo@rev.ng>
 References: <20251014203512.26282-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,126 +64,84 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the privileged specification, mcyclecfg
-is a 64-bit register and mcyclecfgh refers to the top 32 bits of this
-register when XLEN == 32.  No real advantage is gained by keeping
-them separate, and combining them allows for slight simplification.
+Fix these fields to 64 bits as they cannot be made smaller. Also make
+sure stores to these fields from TCG are 64 bits in size to avoid
+incorrect values on big endian hosts.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/riscv/cpu.h |  3 +--
- target/riscv/csr.c | 28 +++++++++++++++++-----------
- 2 files changed, 18 insertions(+), 13 deletions(-)
+ target/riscv/cpu.h                             | 4 ++--
+ target/riscv/machine.c                         | 2 +-
+ target/riscv/translate.c                       | 6 ++++--
+ target/riscv/insn_trans/trans_privileged.c.inc | 2 +-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 674a800d2f..a43d9c6b5b 100644
+index f2378d0b67..8c93030b1c 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -419,8 +419,7 @@ struct CPUArchState {
-     uint32_t mcountinhibit;
+@@ -233,8 +233,8 @@ struct CPUArchState {
+     uint8_t frm;
+     float_status fp_status;
  
-     /* PMU cycle & instret privilege mode filtering */
--    target_ulong mcyclecfg;
--    target_ulong mcyclecfgh;
-+    uint64_t mcyclecfg;
-     target_ulong minstretcfg;
-     target_ulong minstretcfgh;
+-    target_ulong badaddr;
+-    target_ulong bins;
++    uint64_t badaddr;
++    uint64_t bins;
  
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 55110b4b66..ddd80ab68d 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1062,7 +1062,8 @@ static RISCVException read_hpmcounterh(CPURISCVState *env, int csrno,
- static RISCVException read_mcyclecfg(CPURISCVState *env, int csrno,
-                                      target_ulong *val)
+     target_ulong guest_phys_fault_addr;
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 07995fb303..b047321073 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -437,7 +437,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.load_res, RISCVCPU),
+         VMSTATE_UINT64(env.load_val, RISCVCPU),
+         VMSTATE_UINT8(env.frm, RISCVCPU),
+-        VMSTATE_UINTTL(env.badaddr, RISCVCPU),
++        VMSTATE_UINT64(env.badaddr, RISCVCPU),
+         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
+         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+         VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 6b84d0c384..2770c06413 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -253,7 +253,7 @@ static void generate_exception(DisasContext *ctx, RISCVException excp)
+ 
+ static void gen_exception_illegal(DisasContext *ctx)
  {
--    *val = env->mcyclecfg;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
-+    *val = extract64(env->mcyclecfg, 0, rv32 ? 32 : 64);
-     return RISCV_EXCP_NONE;
+-    tcg_gen_st_i32(tcg_constant_i32(ctx->opcode), tcg_env,
++    tcg_gen_st_i64(tcg_constant_i64(ctx->opcode), tcg_env,
+                    offsetof(CPURISCVState, bins));
+     if (ctx->virt_inst_excp) {
+         generate_exception(ctx, RISCV_EXCP_VIRT_INSTRUCTION_FAULT);
+@@ -264,7 +264,9 @@ static void gen_exception_illegal(DisasContext *ctx)
+ 
+ static void gen_exception_inst_addr_mis(DisasContext *ctx, TCGv target)
+ {
+-    tcg_gen_st_tl(target, tcg_env, offsetof(CPURISCVState, badaddr));
++    TCGv_i64 ext = tcg_temp_new_i64();
++    tcg_gen_extu_tl_i64(ext, target);
++    tcg_gen_st_i64(ext, tcg_env, offsetof(CPURISCVState, badaddr));
+     generate_exception(ctx, RISCV_EXCP_INST_ADDR_MIS);
  }
  
-@@ -1072,7 +1073,7 @@ static RISCVException write_mcyclecfg(CPURISCVState *env, int csrno,
-     uint64_t inh_avail_mask;
- 
-     if (riscv_cpu_mxl(env) == MXL_RV32) {
--        env->mcyclecfg = val;
-+        env->mcyclecfg = deposit64(env->mcyclecfg, 0, 32, val);
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..a8eaccef67 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -68,7 +68,7 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
+         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
      } else {
-         /* Set xINH fields if priv mode supported */
-         inh_avail_mask = ~MHPMEVENT_FILTER_MASK | MCYCLECFG_BIT_MINH;
-@@ -1091,7 +1092,7 @@ static RISCVException write_mcyclecfg(CPURISCVState *env, int csrno,
- static RISCVException read_mcyclecfgh(CPURISCVState *env, int csrno,
-                                       target_ulong *val)
- {
--    *val = env->mcyclecfgh;
-+    *val = extract64(env->mcyclecfg, 32, 32);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1109,7 +1110,7 @@ static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MCYCLECFGH_BIT_VSINH : 0;
- 
--    env->mcyclecfgh = val & inh_avail_mask;
-+    env->mcyclecfg = deposit64(env->mcyclecfg, 32, 32, val & inh_avail_mask);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1248,8 +1249,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-     g_assert(rv32 || !upper_half);
- 
-     if (counter_idx == 0) {
--        cfg_val = rv32 ? ((uint64_t)env->mcyclecfgh << 32) :
--                  env->mcyclecfg;
-+        cfg_val = env->mcyclecfg;
-     } else if (counter_idx == 2) {
-         cfg_val = rv32 ? ((uint64_t)env->minstretcfgh << 32) :
-                   env->minstretcfg;
-@@ -1523,8 +1523,12 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, int evt_index,
- }
- 
- static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
--                            target_ulong new_val, target_ulong wr_mask)
-+                          target_ulong new_val, uint64_t wr_mask)
- {
-+    /*
-+     * wr_mask is 64-bit so upper 32 bits of mcyclecfg and minstretcfg
-+     * are retained.
-+     */
-     switch (cfg_index) {
-     case 0:             /* CYCLECFG */
-         if (wr_mask) {
-@@ -1550,8 +1554,9 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
- }
- 
- static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
--                            target_ulong new_val, target_ulong wr_mask)
-+                           target_ulong new_val, target_ulong wr_mask)
- {
-+    uint64_t cfgh;
- 
-     if (riscv_cpu_mxl(env) != MXL_RV32) {
-         return RISCV_EXCP_ILLEGAL_INST;
-@@ -1559,12 +1564,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
- 
-     switch (cfg_index) {
-     case 0:         /* CYCLECFGH */
-+        cfgh = extract64(env->mcyclecfg, 32, 32);
-         if (wr_mask) {
-             wr_mask &= ~MCYCLECFGH_BIT_MINH;
--            env->mcyclecfgh = (new_val & wr_mask) |
--                              (env->mcyclecfgh & ~wr_mask);
-+            cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-+            env->mcyclecfg = deposit64(env->mcyclecfg, 32, 32, cfgh);
-         } else {
--            *val = env->mcyclecfgh;
-+            *val = cfgh;
-         }
-         break;
-     case 2:          /* INSTRETCFGH */
+-        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
++        tcg_gen_st_i64(tcg_constant_i64(ebreak_addr), tcg_env,
+                       offsetof(CPURISCVState, badaddr));
+         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
+     }
 -- 
 2.51.0
 
