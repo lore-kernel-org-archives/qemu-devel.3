@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A07CCD18D
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8922CCCD18D
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8eL5-00020r-BX; Tue, 14 Oct 2025 08:41:15 -0400
+	id 1v8eRv-0003ws-Vm; Tue, 14 Oct 2025 08:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v8eL2-0001zo-3l; Tue, 14 Oct 2025 08:41:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1v8eKp-0002qV-CQ; Tue, 14 Oct 2025 08:41:11 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axjr_KRO5owAIWAA--.45451S3;
- Tue, 14 Oct 2025 20:40:42 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxzsHFRO5odZjhAA--.11589S3;
- Tue, 14 Oct 2025 20:40:39 +0800 (CST)
-Subject: Re: [RFC PATCH] docs/system/security: Restrict "virtualization use
- case" to specific machines
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>
-References: <20250908125058.220973-1-peter.maydell@linaro.org>
- <20250908104125-mutt-send-email-mst@kernel.org>
- <46AA9C03-CA7E-4C4B-AD05-A9053666BA52@gmail.com>
- <20251013070945-mutt-send-email-mst@kernel.org> <aOzm2ukHfkPF-zhT@redhat.com>
- <CAFEAcA9p51aPGhHgUPishEJ9TE60dm83ofKr5Wa-qM_1SqJ67w@mail.gmail.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <3689544a-86d9-2df0-32ad-50eb8493c31a@loongson.cn>
-Date: Tue, 14 Oct 2025 20:38:22 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eRs-0003wQ-Bx
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:48:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eRp-0003P2-Cq
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:48:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760446089;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xhqgTfGP0cVEhW05IGKRboAdE53UtYSEmqf2h6z1Cog=;
+ b=YFk8RfUIbK9Ebjjy4lgHxsDk5vw/MyNUhJt6ls02OQ5EpA1htj2In7JLU/Dh4I5LMiq42/
+ t3pvqXvrLRiT9Z7phW2rZM5pyhaP5lwNdXNlK8QXzgaa4EmAlnJWT+VOVTyfBzD6rXPw7c
+ kDb/fx7fCC6wy38pYf97QSgzpn4Tahc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-cb5OjNxiNbq9L8gGyn3pHA-1; Tue,
+ 14 Oct 2025 08:48:07 -0400
+X-MC-Unique: cb5OjNxiNbq9L8gGyn3pHA-1
+X-Mimecast-MFC-AGG-ID: cb5OjNxiNbq9L8gGyn3pHA_1760446086
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 876991956096; Tue, 14 Oct 2025 12:48:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 734B11800446; Tue, 14 Oct 2025 12:48:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0375E21E6A27; Tue, 14 Oct 2025 14:48:02 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Laurent Vivier <lvivier@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v4 2/2] hw/uefi/ovmf-log: add maxsize parameter
+In-Reply-To: <20251013104954.250166-3-kraxel@redhat.com> (Gerd Hoffmann's
+ message of "Mon, 13 Oct 2025 12:49:54 +0200")
+References: <20251013104954.250166-1-kraxel@redhat.com>
+ <20251013104954.250166-3-kraxel@redhat.com>
+Date: Tue, 14 Oct 2025 14:48:01 +0200
+Message-ID: <874is1odj2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-In-Reply-To: <CAFEAcA9p51aPGhHgUPishEJ9TE60dm83ofKr5Wa-qM_1SqJ67w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxzsHFRO5odZjhAA--.11589S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZFWfXryUtF1xWw45CFWkZrc_yoW8ZFyfpr
- 4rua1YkryrJFn3A34qgw1SgF1Yvr9xK3W29Fnagw4rCFykGr45JF4Syw4Fv3WkJws5tw1F
- vrsFy3ZrX3WDZagCm3ZEXasCq-sJn29KB7ZKAUJUUUUx529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUPYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1ln4kS14v26r126r1DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2
- x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1D
- McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7
- I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxGrwCF
- x2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUAVWUtwC20s026c02F40E14v26r
- 1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij
- 64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr
- 0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF
- 0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j5o7tUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.712,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,75 +91,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
+> Allow limiting the amount of log output sent.  Allow up to 1 MiB.
+> In case the guest log buffer is larger than 1 MiB limit the output
+> instead of throwing an error.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  hw/uefi/ovmf-log.c   | 40 ++++++++++++++++++++++++++++++++--------
+>  hmp-commands-info.hx |  5 ++---
+>  qapi/machine.json    |  3 +++
+>  3 files changed, 37 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+> index f03e47a290d6..9d9dc7b0d8d5 100644
+> --- a/hw/uefi/ovmf-log.c
+> +++ b/hw/uefi/ovmf-log.c
+> @@ -19,6 +19,7 @@
+>  #include "qapi/error.h"
+>  #include "qapi/type-helpers.h"
+>  #include "qapi/qapi-commands-machine.h"
+> +#include "qobject/qdict.h"
+>  
+>  
+>  /* ----------------------------------------------------------------------- */
+> @@ -167,7 +168,8 @@ static void handle_ovmf_log_range(GString *out,
+>      }
+>  }
+>  
+> -FirmwareLog *qmp_query_firmware_log(Error **errp)
+> +FirmwareLog *qmp_query_firmware_log(bool have_maxsize, uint64_t maxsize,
+> +                                    Error **errp)
+>  {
+>      MEM_DEBUG_LOG_HDR header;
+>      dma_addr_t offset, base;
+> @@ -187,18 +189,38 @@ FirmwareLog *qmp_query_firmware_log(Error **errp)
+>          return NULL;
+>      }
+>  
+> -    if (header.DebugLogSize > MiB) {
+> -        /* default size is 128k (32 pages), allow up to 1M */
+> -        error_setg(errp, "firmware log: log buffer is too big");
+> -        return NULL;
+> -    }
+> -
+>      if (header.DebugLogHeadOffset > header.DebugLogSize ||
+>          header.DebugLogTailOffset > header.DebugLogSize) {
+>          error_setg(errp, "firmware log: invalid header");
+>          return NULL;
+>      }
+>  
+> +    if (!have_maxsize) {
+> +        maxsize = MiB;
+> +    }
+> +    if (maxsize > MiB) {
+> +        maxsize = MiB;
 
-On 2025/10/14 下午8:20, Peter Maydell wrote:
-> On Mon, 13 Oct 2025 at 12:47, Daniel P. Berrangé <berrange@redhat.com> wrote:
->> With a very minimal wording tweak our current defined policy could
->> avoid being a blocker for enabling KVM in imx8mp-evk. In
->>
->>    https://www.qemu.org/docs/master/system/security.html
->>
->> where it describes the "virtualization use case", we could simply
->> tweak it to always require a versioned machine type
->>
->> Change
->>
->>    "These use cases rely on hardware virtualization extensions
->>     to execute guest code safely on the physical CPU at close-
->>     to-native speed."
->>
->> To say
->>
->>    "These use cases apply to versioned machine types when used
->>     in combination with hardware virtualization extensions
->>     to execute guest code safely on the physical CPU at close-
->>     to-native speed"
-> 
-> With the suggested changes listed elsewhere in this
-> thread, my current manually curated list of machines is:
-> 
-> aarch64
->    ``virt``
-> i386, x86_64
->    ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``
-> s390x
->    ``s390-ccw-virtio``
-> loongarch64:
->    ``virt``
-> ppc64:
->    ``pseries``
-> riscv32, riscv64:
->    ``virt``
-> 
-> If we say "versioned machine type", that puts these machines
-> outside the "supported" boundary:
-> 
-> i386, x86_64
->    ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``
-> loongarch64:
->    ``virt``
-> riscv32, riscv64:
->    ``virt``
-> 
-> I can certainly see the argument for loongarch64
-> and maybe even riscv[*] still being "not supported for
-> production security-boundary stuff", but do we really
-> want to say that the Xen machine types and microvm
-> aren't suitable for VM use ?
-> 
-> [*] Could somebody from riscv or loongarch maintainers
-> say whether they think these machines should be on the
-> "security supported" list or not yet ?
-yes, loongarch virt machine with kvm accel should be security supported. 
-Also in next version we consider to add versioned machine type with 
-loongarch architecture.
+Silently "fixing" the user's instructions is rarely a good idea.  Either
+don't limit the argument (if the user asks for rope...), or make
+exceeding the limit an error.
 
-Regards
-Bibo Mao
-> 
-> thanks
-> -- PMM
-> 
+> +    }
+> +
+> +    /* adjust header.DebugLogHeadOffset so we rezturn at most maxsize bytes */
+> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+> +        /* wrap around */
+> +        if (header.DebugLogTailOffset > maxsize) {
+> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - maxsize;
+> +        } else {
+> +            uint64_t maxchunk = maxsize - header.DebugLogTailOffset;
+> +            if (header.DebugLogSize > maxchunk &&
+> +                header.DebugLogHeadOffset < header.DebugLogSize - maxchunk) {
+> +                header.DebugLogHeadOffset = header.DebugLogSize - maxchunk;
+> +            }
+> +        }
+> +    } else {
+> +        if (header.DebugLogTailOffset > maxsize &&
+> +            header.DebugLogHeadOffset < header.DebugLogTailOffset - maxsize) {
+> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - maxsize;
+> +        }
+> +    }
+> +
+>      base = offset + header.HeaderSize;
+>      if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+>          /* wrap around */
+> @@ -237,8 +259,10 @@ void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
+>  {
+>      Error *errp = NULL;
+>      FirmwareLog *log;
+> +    int64_t maxsize;
+>  
+> -    log = qmp_query_firmware_log(&errp);
+> +    maxsize = qdict_get_try_int(qdict, "maxsize", -1);
+> +    log = qmp_query_firmware_log(maxsize != -1, (uint64_t)maxsize, &errp);
+
+Put a pin here.
+
+>      if (errp)  {
+>          hmp_handle_error(mon, errp);
+>          return;
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 257015f0b403..db03d88d3c74 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -980,11 +980,10 @@ ERST
+>  
+>      {
+>          .name       = "firmware-log",
+> -        .args_type  = "",
+> -        .params     = "",
+> +        .args_type  = "maxsize:i?",
+
+args_type 'i' is a 32 bit signed integer, so this gives us 31 bits.
+Suffices.  But what happens when the user specifies a negative number?
+I think hmp_info_firmware_log() treats -1 as if the parameter was
+omitted.  qmp_query_firmware_log() then defaults to 1MiB.  Any other
+negative number hmp_info_firmware_log() turns into a huge positive
+number, which qmp_query_firmware_log() silently limits to 1MiB (but I
+recommended not to do that).
+
+Let's use 'o' instead of 'i'.  Enables convenient syntax like "64k".  63
+bits.  No risk of sign accidents.
+
+> +        .params     = "[maxsize]",
+>          .help       = "show the firmware (ovmf) debug log",
+>          .cmd        = hmp_info_firmware_log,
+> -        .flags      = "p",
+
+Accident?
+
+>      },
+>  
+>  SRST
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index c96e582afdd6..d0c6d3ede027 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1857,9 +1857,12 @@
+>  #
+>  # Find firmware memory log buffer in guest memory, return content.
+>  #
+> +# @maxsize: limit the amount of logdata returned.
+
+Please spell it @max-size.  We already use that spelling in this file.
+
+"logdata" isn't a word.
+
+The 1MiB limit for @maxsize needs to be documented (if we keep it).
+
+Recommend to spell out that the command returns the tail of the log
+buffer when it can't return all of it.
+
+> +#
+>  # Since: 10.2
+>  ##
+>  { 'command': 'query-firmware-log',
+> +  'data': { '*maxsize': 'size' },
+>    'returns': 'FirmwareLog' }
+>  
+>  ##
 
 
