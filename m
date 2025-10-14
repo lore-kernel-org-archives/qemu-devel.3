@@ -4,113 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E4ECCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ECE5CCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8afM-0001Yf-Au; Tue, 14 Oct 2025 04:45:56 -0400
+	id 1v8ak3-0003BP-77; Tue, 14 Oct 2025 04:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1v8afK-0001Y9-Bd; Tue, 14 Oct 2025 04:45:54 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v8ak1-0003Ay-Gm
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:50:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1v8afH-0006P0-Fh; Tue, 14 Oct 2025 04:45:54 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E6Zx97022496;
- Tue, 14 Oct 2025 08:45:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ndB1T9
- HKSNv1vkNUMzIWnb8HzVSMRApjeuwCKJWx7YA=; b=UnqkSdrIigDS/rqfQePIDN
- sSjehS8LmaewqKYKGgN9mg5YeuIiPkamQBXPELCOXSlGvl9g8W7bMyObOV9kkaBh
- lVeW4uIdkWDLXEr7XVecSzCY6GXTXETXWXN5e/RbPB99hSB3pYa2xaVWNQvjZGP1
- f14RoKsPwWrKGLzwKSfyvoEkCaixDQ69u663KRbL3Kn4FE1U+UU+9vZeqnJKZpWS
- sklPD38ZV3HtW2uYpV0aE2cWl2xtEh0xBer/FsAPyg2m7zll2ZogqphMK3Ctm7VC
- /XxybBrGFdPA3vHsOyt7PORFJIYX3kUjvUvQzK1FcUNHdnKIr/weUIEEbRfcJE/w
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnr5buh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Oct 2025 08:45:48 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59E7BJtS018823;
- Tue, 14 Oct 2025 08:45:48 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r2jmj1jp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Oct 2025 08:45:47 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59E8jkD728377344
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Oct 2025 08:45:46 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 898F858052;
- Tue, 14 Oct 2025 08:45:46 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D8C4158045;
- Tue, 14 Oct 2025 08:45:45 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Oct 2025 08:45:45 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v8ajy-0006vT-MF
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:50:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760431840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+e/SeXfU8NTu+t3APwhmKN0eU8LIn7SLAO3Bm8EMZIw=;
+ b=TKiCK+SCcOuu6Gkp+f/51p9UWeFQG/xf7eTcCK9TRBj1r/G/IzltJgbLmoM081pNQHpx3Z
+ Uc2LWwaf/K1qh9RQQ5KPGs5EpGoqsAqDmWoyYj8XNjU+YD9LFhDh9zLIEjRgzZFyvj6+gO
+ CJFz8lQecEk2nTnVmm+Gmiks71tOEDY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-YkI6jBoMOQWY-yqUAAgRiQ-1; Tue,
+ 14 Oct 2025 04:50:36 -0400
+X-MC-Unique: YkI6jBoMOQWY-yqUAAgRiQ-1
+X-Mimecast-MFC-AGG-ID: YkI6jBoMOQWY-yqUAAgRiQ_1760431835
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C64121800371; Tue, 14 Oct 2025 08:50:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.78])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79FEA300018D; Tue, 14 Oct 2025 08:50:33 +0000 (UTC)
+Date: Tue, 14 Oct 2025 10:50:31 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH 3/4] tests: add nbd and luks to the I/O test suites
+Message-ID: <aO4O1-Xy43SBSv4T@redhat.com>
+References: <20251008113552.747002-1-berrange@redhat.com>
+ <20251008113552.747002-4-berrange@redhat.com>
+ <bc904027-5b58-4057-8ef5-15e4ebcca767@redhat.com>
+ <aOZfLYcJZ-6dslcK@redhat.com>
+ <omyc6f77hbrpm6mh7bagqjsz7kbyxuuslmx4lvaaximrbmlgu5@joh5vp5obobo>
 MIME-Version: 1.0
-Date: Tue, 14 Oct 2025 10:45:45 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Thomas Huth
- <thuth@redhat.com>, Sebastian Mitterle <smitterl@redhat.com>, qemu-devel
- mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
- <brueckner@linux.ibm.com>, Michael Mueller <mimu@linux.ibm.com>
-Subject: Re: [PATCH v2 1/2] qapi/machine-s390x: add QAPI event
- SCLP_CPI_INFO_AVAILABLE
-In-Reply-To: <cb6b2a02856cffcb51b6049e7bc03ed8e160f03c.camel@linux.ibm.com>
-References: <20251013133902.111233-1-shalini@linux.ibm.com>
- <cb6b2a02856cffcb51b6049e7bc03ed8e160f03c.camel@linux.ibm.com>
-Message-ID: <4c4740467a03a54fa3f8bf42e0ee5c34@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M5ZA6iws c=1 sm=1 tr=0 ts=68ee0dbc cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=-qjoJ--zFjlsQy1LV4QA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: LMOVtkvt9dQIIgFH_dGikXPA9QZFW51J
-X-Proofpoint-ORIG-GUID: LMOVtkvt9dQIIgFH_dGikXPA9QZFW51J
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEwMDE0MCBTYWx0ZWRfX5LmzmvxqTdsf
- wwM01PYkrmt27XZG2QhoffyX9W922zYwNIdp0AZoqG7Wp3N4XeSs1B/pPm90IiFQ3D2xL7qaZOE
- 5/SlBMtI10q5Dz3eNf6DgBH0JrG8VnR8PEptrBcsIC8kt23aFdV3VcYRlD5EU/CEDiMa/gHOTOT
- TDmAx89JRUlPn3UTAk4rFUICXMs9+lz8Fby4SaWaMVTin8NRaXjqEOUGQSmAlGsJ5GoG1i6hFeb
- Ums7Cpy/U+4X0hqd6RgwC5EtfhkScDMPbFj+O/8GUAEFcMYdwO8cKhSmviThqSuenM7C8dyIduU
- /sbwF2DERnuNfXT5jVyT2lg3eNmPviSHN7gA8sA2Dt7YKcoWG0Y8efY8UWeb/b4seVedwc3blvu
- 9lLUaK/ETsvnhFCChzGqZz3x3CwOlw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-14_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510100140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <omyc6f77hbrpm6mh7bagqjsz7kbyxuuslmx4lvaaximrbmlgu5@joh5vp5obobo>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,94 +89,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-10-13 18:50, Nina Schoetterl-Glausch wrote:
-> On Mon, 2025-10-13 at 15:39 +0200, Shalini Chellathurai Saroja wrote:
->> Add QAPI event SCLP_CPI_INFO_AVAILABLE to notify the availability
->> of Control-Program Identification data in QOM.
->> 
->> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->> Suggested-by: Thomas Huth <thuth@redhat.com>
->> ---
->>  hw/s390x/sclpcpi.c      |  4 ++++
->>  qapi/machine-s390x.json | 25 +++++++++++++++++++++++++
->>  2 files changed, 29 insertions(+)
->> 
->> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
->> index 7aa039d510..90da61b1c8 100644
->> --- a/hw/s390x/sclpcpi.c
->> +++ b/hw/s390x/sclpcpi.c
->> @@ -54,6 +54,7 @@
->>  #include "hw/s390x/event-facility.h"
->>  #include "hw/s390x/ebcdic.h"
->>  #include "qapi/qapi-visit-machine.h"
->> +#include "qapi/qapi-events-machine-s390x.h"
->>  #include "migration/vmstate.h"
->> 
->>  typedef struct Data {
->> @@ -106,6 +107,9 @@ static int write_event_data(SCLPEvent *event, 
->> EventBufferHeader *evt_buf_hdr)
->>      e->timestamp = qemu_clock_get_ns(QEMU_CLOCK_HOST);
->> 
->>      cpim->ebh.flags = SCLP_EVENT_BUFFER_ACCEPTED;
->> +
->> +    qapi_event_send_sclp_cpi_info_available(true);
->> +
->>      return SCLP_RC_NORMAL_COMPLETION;
->>  }
->> 
->> diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
->> index 966dbd61d2..338653e0b8 100644
->> --- a/qapi/machine-s390x.json
->> +++ b/qapi/machine-s390x.json
->> @@ -119,3 +119,28 @@
->>  { 'command': 'query-s390x-cpu-polarization', 'returns': 
->> 'CpuPolarizationInfo',
->>    'features': [ 'unstable' ]
->>  }
->> +
->> +##
->> +# @SCLP_CPI_INFO_AVAILABLE:
->> +#
->> +# Emitted when the Control-Program Identification data is available
->> +# in the QOM tree.
->> +#
->> +# @iscpiavailable: is CPI data available in QOM
->> +#
->> +# Features:
->> +#
->> +# @unstable: This event is experimental.
->> +#
->> +# Since: 10.2
->> +#
->> +# .. qmp-example::
->> +#
->> +#     <- { "event": "SCLP_CPI_INFO_AVAILABLE",
->> +#          "data": { "iscpiavailable": true },
->> +#          "timestamp": { "seconds": 1401385907, "microseconds": 
->> 422329 } }
->> +##
->> +{ 'event': 'SCLP_CPI_INFO_AVAILABLE',
->> +  'data': { 'iscpiavailable': 'bool' },
+Am 08.10.2025 um 17:55 hat Eric Blake geschrieben:
+> > > Also not sure whether we should add "nbd" to the "formats" list - it's a
+> > > protocol, and not a format, isn't it?
+> > 
+> > Yes, technically there are two distinct axis  formats vs protocols, but
+> > from the POV of running the 'check' script the boundary is rather blurred.
+> > 
+> > You can run './check -nbd' and './check -qcow2', or both combined. The main
+> > limit that you can only pick a single format and single protocol at a time.
 > 
+> In fact, I've seen times where './check -nbd -raw' passes but './check
+> -nbd -qcow2' fails, because that combination enables different sets of
+> tests.  So we probably STILL aren't giving CI everything possible to
+> test by having just one dimension of easy-to-name test subsets, but it
+> is still better than no CI nbd tests at all.
+
+How valid is -nbd -qcow2 even? Wasn't there the fundamental problem that
+NBD devices can't grow?
+
+Running various image formats may be useful for other protocols, but I'm
+not sure that NBD is one of them.
+
+> > IMHO for test suites it is preferrable to keep a flat namespace, rather
+> > than creating a matrix of suites for protocol vs format combniations.
+> > 
+> > Perhaps the meson.build variable should just be renamed from _formats
+> > to something else.
 > 
-> What is the point of this payload?
+> Renaming makes sense to me; would _bds be a reasonable name (since
+> both protocols and formats are a BDS)?  I'm open to other naming
+> ideas, as well.
 
-The data 'iscpiavailable' is not necessary. I will remove this
-and send v3. Thank you Nina for the quick feedback.
+Well, bdrv if anything (block driver rather than BlockDriverState).
 
-> 
->> +  'features': [ 'unstable' ]
->> +}
+But we also have -fuse, which isn't really a block driver, but it just
+means that we're using the file protocol on top of a FUSE export...
 
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
+Probably not worth renaming from one imperfect name to another imperfect
+one.
+
+Kevin
+
 
