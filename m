@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D69D9CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 05:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF2ECCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 05:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8XNq-0001Cq-LJ; Tue, 14 Oct 2025 01:15:38 -0400
+	id 1v8XRG-0002W3-QL; Tue, 14 Oct 2025 01:19:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8XNp-0001CZ-Rv
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 01:15:37 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1v8XRF-0002Uy-1u
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 01:19:09 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8XNn-00051i-Mx
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 01:15:37 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-634b774f135so7779855a12.2
- for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 22:15:35 -0700 (PDT)
+ id 1v8XRC-0005Od-7W
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 01:19:08 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-62fca01f0d9so10076635a12.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Oct 2025 22:19:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760418934; x=1761023734; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760419143; x=1761023943; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TWEKL+K2EdHFX23rio2xc7rOoZrOpXqpzaRi2cEUSWI=;
- b=kpibA+fOq6oi+y+vT7rLJfXqhSeLVV+8uyJjkB36u4j8JXxnnd7rRJ8jGiMi5KCr8A
- beSqZlEjzZuM2pd5JwJwyWUQ0n1txeIaYg6zsfC0gjrJE5LYOioQbg/sAOYi4YDec3CR
- ySpESirMpY36CFZlWMYEsuKJY0uj/kJ8Gs6gAwkx9cUKlpJxEmEMjXcQtfRL5OgiI8xd
- v4/HN7UhsJzQZdHOIh4kdu50tE1JVNeOqko1FO/WwZ4zS8HpXwDqty4bCcuzEL4Ipp0L
- K4Dj/ct0gNL4HvMomm8sfkYkSIIwMdMwVkZy+xdINTYLxuadXXFh5SRdcHmJbxOeBVkD
- oGNg==
+ bh=ZAlk7T6TK2p+DpULEo0NtxKk/ZIZl2cy2Hvke0k38nE=;
+ b=cqdLeJtj6gj60ocHyYPYyHcwfab5M1TCI142WoVPyNAqwSu2g/4AhqjJ6hRRR9vKe7
+ y1d5ZHmavaGy8yQ8YFHR07uxE8jHxfY0Wui/XymdODRTMyBWmoc3At1HsCNr4HUW81Bw
+ lnVfnT8YDcFnUVdo6niLpaBntM33bgbLRXA11/0x12NP1db0Ev0k/XC8+jhVGCc5dcC1
+ sZ3NCjEkaW57eyR05ANR+/dkMu8xXrO1HOGx3gKN4vjHUgaNJaMcAbFnYuPTJasqxe3s
+ +x3d8+1QAGCiFtB4qGkUpeahJglMTX7m+SoaSPj2385g6nIhZOmuXxh1FCHHgQTKnjJV
+ t/8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760418934; x=1761023734;
+ d=1e100.net; s=20230601; t=1760419143; x=1761023943;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TWEKL+K2EdHFX23rio2xc7rOoZrOpXqpzaRi2cEUSWI=;
- b=exZQHAr9bBW9PURscP3xweYS8xu4jiUR+0ZK/o+6s1l9HUYZmSRspM6DzZ2qHEWx5d
- oJWsDpYfzGSVBCmDUDlMC4d9hhawROp6LZJA5RUH/8BnaKOmX6c3FhWBP5+ce5GIb4OP
- 9gZ7Fo/ko6wgcXPyp660U5MH7o1LCFFHyGBTr7BRVQ3Y4P+kJIUbMF3/asyAz3o+Z89a
- OC7XMI/7hftZRb7K+4h0Gph685Wz61YUYg4FRndCh4xDJNDJgwkkprAO7QPgu2VL4Fm+
- pZYYLM7gESneSSbfUFF9hqqGgGjXfcRFPg+72gWGGupcpoCk/wZq/1IZUySTj+85b/Zf
- 00GA==
-X-Gm-Message-State: AOJu0YynOHDfpecbDLJA62pQzDM5LSPDI1xir8EAYIqhyyAUstEUxa++
- 0UzVBaBoi+63sa7fGZIGtLgwz8SR9WWTVFOJ8EYUUgIL+pTSw2kKGw+VunkTFDDblGWXjdr7spa
- RUl5/fmoxbImgVm0xzkocB6Hq8I2vpn0=
-X-Gm-Gg: ASbGncu/0m7Qajdg2pn+j64SUOuztD67LRViTnbRLjWURSzm+hwvjDpecukR05qK2c1
- f5LYCHXQxvuyIaOlDXa2CU3Op4V8GCwL8eT8eXssHIU+1QXJpeTDJHlsJiIBm/f6KJ/m7VzTMLt
- ohG70PusvlvfhNmdnU9D8wUweN9FMrHPGnUL4hKANx/vkmo3qvW+rNsrh4dFKkIkJQb1tiyj8I4
- 7btY6ybIPZ1AilypfHS9xdm2e25xDMtg9f62mib+3qQ6oBExwWYkyAJain7fMET/z8=
-X-Google-Smtp-Source: AGHT+IE9X7t3z+452ufCeRYTLKfQWAh4Ln64+KM5dTXjusQ6j44w1gdeDyL8FuHmvmu0djQwo2YVWzck5vLgISzPVto=
-X-Received: by 2002:a05:6402:34c9:b0:637:98a1:c7c4 with SMTP id
- 4fb4d7f45d1cf-639d5b43aefmr18713744a12.5.1760418933869; Mon, 13 Oct 2025
- 22:15:33 -0700 (PDT)
+ bh=ZAlk7T6TK2p+DpULEo0NtxKk/ZIZl2cy2Hvke0k38nE=;
+ b=O+gs5NRZrhQtKmDOmIks9G1NlqAjMdxDRMqmPHiqbU12j+IoX16V32JiGXFzMTygx6
+ BfL5+4t1BQOUTa6p/4766RsaiDX6H7N37SG6yXyVwujuDTZz8BWsm6HhiDO5tnZTXhx1
+ 9g+Ss+QX40/ZVemokbdrH7tdJAx4M5Fp5oJGwnC8uDp7cOekBxwFy3s6WZqM3j8rR64v
+ Mm4fbXaRxMac9TC/OH1IyT8aklJsdCBsrtPvBGrJnF+58FgTsoo6t61ayn0LTkkl7F1I
+ /ehDtxULqREu5jS0aqe8K5yhkN9L/KcSzGA6KDOU2B/Vs6x+jMCyez8N3cXYyfEc7vfv
+ VjQQ==
+X-Gm-Message-State: AOJu0YzW3aVZZDkXSlr3yfkA1GaPL9dh284RiB+C8cOgset+MLlZh9Sp
+ vOPcAMVBPyar1nnvj0kUeS566bAMXQVJmmnPX+cxoMzP9z8urfo4djkSaPw6UP0pwD8hwPEXoeA
+ DcGA3dRbgxwH9ZiiBuXypAZBeSdz6EAs=
+X-Gm-Gg: ASbGnct3MZ/ylN/1IlSCmSDk8xeSzvvTQTt+YLMyJEOi7nnTHSFuOWU+hO9tzAYBUg9
+ hA2aH6SSGTtBcfWB36eOchEdsaZWnyvGhBO/DoJN88SiJdYgQOt1GOMUBZOgD0XucsDYW87VxpI
+ IVaGH4CvgsYKpDFTVBiPPWVHttz3CvKQWWYbasj6wF/J5cTTrhy0zuUeY8KNZpnuFSiGhnBCxKr
+ sFwCP4DcHFy8il+ZselgO6OYDINinnSz6LKKZILAjRdGfyaxOgZCjAxP8t/8qY6d2M=
+X-Google-Smtp-Source: AGHT+IGV79/HDVEqu1oh+LwrazhIGg2jJTrJH/TszM1bqSwYgSmGNjr5GmriSxInUIugojyHJu//tdcZTiM9vyrRpRc=
+X-Received: by 2002:a05:6402:1469:b0:639:ffd6:993b with SMTP id
+ 4fb4d7f45d1cf-639ffd6a393mr17024089a12.16.1760419143498; Mon, 13 Oct 2025
+ 22:19:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251010155045.78220-1-philmd@linaro.org>
- <20251010155045.78220-14-philmd@linaro.org>
-In-Reply-To: <20251010155045.78220-14-philmd@linaro.org>
+References: <20251010134226.72221-1-philmd@linaro.org>
+ <20251010134226.72221-7-philmd@linaro.org>
+In-Reply-To: <20251010134226.72221-7-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 14 Oct 2025 15:15:06 +1000
-X-Gm-Features: AS18NWBr7ECcFnKlgcz-_7xhjc7klpejQBzibBp52LlqBAsrtri2RAKly-7y2_I
-Message-ID: <CAKmqyKMxiOc+Sm2eXVxm_HgBCi0v28Echu=EqAkyvNRCiVNHjw@mail.gmail.com>
-Subject: Re: [PATCH 13/13] target/riscv: Introduce mo_endian_env() helper
+Date: Tue, 14 Oct 2025 15:18:37 +1000
+X-Gm-Features: AS18NWCjCT2NUdXpwcdshncS05aqvBaiKkJbnAAsctvuvEFFjLEiu-TySDv6H4c
+Message-ID: <CAKmqyKMFnTrdeY_i84omjNHE65omMW6EjG_b2MsU19LeLgJ8kw@mail.gmail.com>
+Subject: Re: [PATCH 06/16] hw/core/loader: Replace HOST_BIG_ENDIAN #ifdef with
+ runtime if() check
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Christoph Muellner <christoph.muellner@vrull.eu>, 
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Anton Johansson <anjo@rev.ng>, Richard Henderson <richard.henderson@linaro.org>,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,10 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 11, 2025 at 1:56=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+On Fri, Oct 10, 2025 at 11:46=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> mo_endian_env() returns the target endianness from CPUArchState.
+> Replace compile-time #ifdef with a runtime check to ensure all code
+> paths are built and tested. This reduces build-time configuration
+> complexity and improves maintainability.
+>
+> No functional change intended.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
@@ -116,112 +113,33 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/op_helper.c | 28 ++++++++++++++++++++--------
->  1 file changed, 20 insertions(+), 8 deletions(-)
+>  hw/core/loader.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index c486f771d35..9d048089e2a 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -28,6 +28,18 @@
->  #include "exec/tlb-flags.h"
->  #include "trace.h"
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 477661a0255..aef10cb3f2b 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -491,7 +491,9 @@ ssize_t load_elf_ram_sym(const char *filename,
 >
-> +static inline MemOp mo_endian_env(CPURISCVState *env)
-> +{
-> +    /*
-> +     * A couple of bits in MSTATUS set the endianness:
-> +     *  - MSTATUS_UBE (User-mode),
-> +     *  - MSTATUS_SBE (Supervisor-mode),
-> +     *  - MSTATUS_MBE (Machine-mode)
-> +     * but we don't implement that yet.
-> +     */
-> +    return MO_TE;
-> +}
-> +
->  /* Exceptions processing helpers */
->  G_NORETURN void riscv_raise_exception(CPURISCVState *env,
->                                        RISCVException exception,
-> @@ -633,7 +645,7 @@ target_ulong helper_hyp_hlv_hu(CPURISCVState *env, ta=
-rget_ulong addr)
+>  static void bswap_uboot_header(uboot_image_header_t *hdr)
 >  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, false, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UW, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UW, mmu_idx);
->
->      return cpu_ldw_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+> -#if !HOST_BIG_ENDIAN
+> +    if (HOST_BIG_ENDIAN) {
+> +        return;
+> +    }
+>      bswap32s(&hdr->ih_magic);
+>      bswap32s(&hdr->ih_hcrc);
+>      bswap32s(&hdr->ih_time);
+> @@ -499,7 +501,6 @@ static void bswap_uboot_header(uboot_image_header_t *=
+hdr)
+>      bswap32s(&hdr->ih_load);
+>      bswap32s(&hdr->ih_ep);
+>      bswap32s(&hdr->ih_dcrc);
+> -#endif
 >  }
-> @@ -642,7 +654,7 @@ target_ulong helper_hyp_hlv_wu(CPURISCVState *env, ta=
-rget_ulong addr)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, false, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UL, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UL, mmu_idx);
 >
->      return cpu_ldl_mmu(env, adjust_addr_virt(env, addr), oi, ra);
->  }
-> @@ -651,7 +663,7 @@ target_ulong helper_hyp_hlv_d(CPURISCVState *env, tar=
-get_ulong addr)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, false, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UQ, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UQ, mmu_idx);
 >
->      return cpu_ldq_mmu(env, adjust_addr_virt(env, addr), oi, ra);
->  }
-> @@ -669,7 +681,7 @@ void helper_hyp_hsv_h(CPURISCVState *env, target_ulon=
-g addr, target_ulong val)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, false, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UW, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UW, mmu_idx);
->
->      cpu_stw_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
->  }
-> @@ -678,7 +690,7 @@ void helper_hyp_hsv_w(CPURISCVState *env, target_ulon=
-g addr, target_ulong val)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, false, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UL, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UL, mmu_idx);
->
->      cpu_stl_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
->  }
-> @@ -687,7 +699,7 @@ void helper_hyp_hsv_d(CPURISCVState *env, target_ulon=
-g addr, target_ulong val)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, false, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UQ, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UQ, mmu_idx);
->
->      cpu_stq_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
->  }
-> @@ -703,7 +715,7 @@ target_ulong helper_hyp_hlvx_hu(CPURISCVState *env, t=
-arget_ulong addr)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, true, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UW, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UW, mmu_idx);
->
->      return cpu_ldw_code_mmu(env, addr, oi, GETPC());
->  }
-> @@ -712,7 +724,7 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, t=
-arget_ulong addr)
->  {
->      uintptr_t ra =3D GETPC();
->      int mmu_idx =3D check_access_hlsv(env, true, ra);
-> -    MemOpIdx oi =3D make_memop_idx(MO_TE | MO_UL, mmu_idx);
-> +    MemOpIdx oi =3D make_memop_idx(mo_endian_env(env) | MO_UL, mmu_idx);
->
->      return cpu_ldl_code_mmu(env, addr, oi, ra);
->  }
 > --
 > 2.51.0
 >
