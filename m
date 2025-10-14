@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD794CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89BF9CCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ZV2-0006KM-Uw; Tue, 14 Oct 2025 03:31:12 -0400
+	id 1v8ZUy-0006J5-UA; Tue, 14 Oct 2025 03:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v8ZV1-0006K7-RH
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:31:11 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ id 1v8ZUx-0006Il-CC
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:31:07 -0400
+Received: from mail-qv1-xf2b.google.com ([2607:f8b0:4864:20::f2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v8ZUz-0004tg-0F
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:31:11 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-86302b5a933so534616685a.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 00:31:08 -0700 (PDT)
+ id 1v8ZUv-0004t4-Hc
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:31:07 -0400
+Received: by mail-qv1-xf2b.google.com with SMTP id
+ 6a1803df08f44-7900f7f4ba9so58875166d6.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 00:31:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760427067; x=1761031867; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760427064; x=1761031864; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QL5hwtgTzFs25SOn//C8sVWADJsIoS4osiiMds2f8EE=;
- b=JeHklxqRQv2035Stt/KswUJHppicAYVGyIimLSX52mBNwgo48s8tlkThb+Iyk6jeqS
- tzMs/0d16cQSN7TtF6vXjv1OmsWD8PTIKPNm7Jk5Ad3t5rvqIUJtSgMQNQvilDL1V5bZ
- 7czJMedqZfbjxaNpENWp8h4s/SeYMnIVPRT2BVY+sM4RQL7eYgaV/cX8VO0ZBbFnhd6N
- 1xFCtvcbfdzeDP9/Qxzck3tZW1gesvymJ6DnUcEfJwpYBEQFI8xRo4c3sw5Mcim9LINl
- BpwJ1GU7+Spnjr0VNHU3VImV3lKRctg3jdx2W2KdX7y1f5Ai7wjy7mx9yLZqwHRWI/FT
- 0G0g==
+ bh=RBjNMBlmfg+GpyE8/JHfGudE6LK50p6tVlRvBQ9FnCY=;
+ b=k5lLFG93XeMfI6vI0kTJas8mEDz52DFRnxlSc62D/HLlhlxO+EBucvE7dXAuWD7zQ3
+ 9jX27t3393fm91zU7oFFXEK9QQwP72C4fUsd3AV0Y5E0dB/iE93xnKkAI8V/Xb0G4AlW
+ +QZkvNUb4kcOSv1BOJIrxnEOGpyl9SBroHEfxX527bGMM1F1yUgo7bzJAbNOeBwItUmy
+ 0py0vzFICK6TJY7uBUdZVyAeckqWCYj2zTNZycXa9XkKDsOQIRGXFNPz6TRYvXoc4pn4
+ RKWGFfumTi6z+B5p4WWk2gcF4edgRhvTJSle7Cm9XwFHQ69EErmvee54ZV0oLUE1NBCJ
+ xf7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760427067; x=1761031867;
+ d=1e100.net; s=20230601; t=1760427064; x=1761031864;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QL5hwtgTzFs25SOn//C8sVWADJsIoS4osiiMds2f8EE=;
- b=KpmS6TonR3g4lo2Ct6n6g0dKLG9qtYq5UMVdcz76jja/e2/dRkzvasoBjRw8SkkPeZ
- HwPKS+gsnHoe6Tw4QSziVzLPecu38bMXBB6r29h9NP9w1jlGG+mDDWJl8aOz1TTr2S8G
- ciR7OTcwhapIiAriOpxXU0SQgzkNRFt72ZqVcoJJ63w6XRqnUodb8FZo4oDgukQwOtEj
- KoZLs7xhWTHLG3IS4HD/34MXt80zizr968n5uvqHHml9BFFiPT4Aiz4mYZFLlKBG0P67
- jxi4g019xRlzO99mpdW9zNoLuU9zEQnpcSIqB19WcNSR5JZHYU87vb/282ECCSibWKJB
- 26Bg==
+ bh=RBjNMBlmfg+GpyE8/JHfGudE6LK50p6tVlRvBQ9FnCY=;
+ b=VheuC8m1n3uDBJhc0mnk0pOMYNGS9JCmRNsfE1ohZKOFa3JOvAdgpYmJRTefuSIigg
+ 0vev1/KGKhE4SZP6sAFFssjDQIhrpxUVWB0k0rhHmfvHplzOIQlxNC4nW43lK2BJ7zNE
+ UjuJVXKpp8a/JD1mklYB6n7/DTVeKYarUE5U+jRzMNs8G+g/APJXBWB0pd+CyGFg9hCG
+ 8cVIAF0ggza17WUvgI/Fy6kSZIms3LmOw9uAMDPFHQw8MCm7CxJklT030GIOreyjBQug
+ lhgxOC03O93/yK3eAKRV8u7yT2HjWQZkt9K5zjBpGD53KlyUO2gThevBtvLiKs6ZLIru
+ LJyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfFhM/iWBwnojdwt9k5ho4+ss7Lt4/aBcaVFTJeS8tGxfoOlGn4OweKsegjrIhx2EevSwjOeTjXFab@nongnu.org
-X-Gm-Message-State: AOJu0YyIuav3tQD388vl1OXTBeqP5GFv+ejXfPVu2ds/ZNoEWKyg98zM
- V39Xi0fBnUZBf19MjDGXVSDNhGBkfuiRGZB++AmzSeIVPBm89PwiyPj8ne02hj1KM4XRX+tdoNE
- 9H6Xmg2OOcQQNZ28OpLzrkVjIjS7fK+w=
-X-Gm-Gg: ASbGncsQfp+rsP1K3ZDurO1CrDmZ3lOvMWV9GJe0WXu3KKfGpuke4rSs1kt0BujcXG6
- iRlIdMTDc6wrI9M0NkLU1LtsbWk4G66mvdcQyIOuXetJZpywoLCbkQttgVcXIlq7p5FNc3shz9r
- TCk/0NXDicdGVe2QGd0VWF1XaRxwMExchVeV409iWMA51DuMtLF7Dd+UmlmpQCf31hxYyAKu5mE
- 5caA5L1TRZboQQ8zx1LkxWdqxO4XdSM29eAogyTdjdehWuPI7x3MUALQWToe0Pyy6Hu
-X-Google-Smtp-Source: AGHT+IFMlO3Q2YihQxlDV7oGpNho/F1/AGMnc24kWlQGpDunsvLsK2SQJ+REQWToi5qbUbxywPi61MSYYyN+YOya5Rs=
-X-Received: by 2002:a05:622a:347:b0:4e8:10f4:5c6b with SMTP id
- d75a77b69052e-4e810f45d53mr1413481cf.39.1760427067477; Tue, 14 Oct 2025
- 00:31:07 -0700 (PDT)
+ AJvYcCUdPhD+44DCrKPapLrhVXzMySU/+/oVmSnbEpi8KAMHDfXjUCUhvpp2OHCOL2zWkujnIpqbcdI9srnS@nongnu.org
+X-Gm-Message-State: AOJu0YyHD3k5uVWyaxu4POUlw94kY/seI/GrqSnPB6UiP+KCjYZuprqe
+ Z0wAPFxNqk5Z/fKNE7j/9+yrnOR8v/dBSDvcSvb43z3IGGBjBipz5ekHAjYePrqjepDxQ/3lNgQ
+ c1wRv88RSK6MXpa4W0FKX+QOL2uB6vKE=
+X-Gm-Gg: ASbGnctfGeZ3Oa1zwd0I4290iJ5MN3S+npZMgV+ICFkOT/gZKY8zh8kJU5q0H1wMtDu
+ CC9ztDtpFgYsBMujhiaVuMi59HztecN2HldnZhfWv8yFIsqEKiXEOGydeOibKHKKVe0ADxDF3LG
+ ATf6ivWuBb0d7D7Kek5ypOUitQczKFvbDvedKLFP07bbESvYpXw860KoP3jwqpC/cqA9Wtmto0O
+ kPbPxXBSxut8iINwnS2cPxYMgxrlZWSfDp6d16ISqw7wCYu3qhAynT0SovLYeoR9mae
+X-Google-Smtp-Source: AGHT+IG5oeCWQxebpEIpTiyRXHCrnyBM5bK7wtLQF0y2duKRXj4taSLy+C1Sorl7VA2OIyCOhXlK/PtqrJZQB+fanVA=
+X-Received: by 2002:a05:622a:1346:b0:4d6:b374:fd80 with SMTP id
+ d75a77b69052e-4e6ead5483fmr328821331cf.41.1760427064071; Tue, 14 Oct 2025
+ 00:31:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
- <20251013133836.852018-6-vsementsov@yandex-team.ru>
-In-Reply-To: <20251013133836.852018-6-vsementsov@yandex-team.ru>
+ <20251013133836.852018-3-vsementsov@yandex-team.ru>
+In-Reply-To: <20251013133836.852018-3-vsementsov@yandex-team.ru>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 14 Oct 2025 11:30:55 +0400
-X-Gm-Features: AS18NWBy5He2kO3zn4FxjSSzXkANNVa4tvaSzG7Tr0NmxT9GgHQUzWVf2WWiQ5Y
-Message-ID: <CAJ+F1CK40S7noGs3pzoOO4e3qrYUirkrhqNe4ubPv6aiz+Sp6g@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] chardev/char: introduce .init() + .connect()
- initialization interface
+Date: Tue, 14 Oct 2025 11:30:52 +0400
+X-Gm-Features: AS18NWBEi4ovXNtMMhIQUgRofthys7nM-wR2TcmAgIpY8WV-FASG9Cp9muU0UB8
+Message-ID: <CAJ+F1C+W+hUuu--QopWqB14w2VWeiPkOxxGdS-v2K7MB4eye-A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] chardev/char: split chardev_init_logfd() out of
+ qemu_char_open()
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
  qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com, 
  yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x732.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,70 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 5:40=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Mon, Oct 13, 2025 at 5:41=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> We'll need a possibility to postpone connect step to later point in
-> time to implement backend-transfer migration feature for vhost-user-blk
-> in further commits. Let's start with new char interface for backends.
->
-> .init() takes QAPI parameters and should parse them, called early
->
-> .connect() should actually establish a connection, and postponed to
-> the point of attaching to frontend. Called at later point, either
-> at time of attaching frontend, either from qemu_chr_wait_connected().
+> We are going to share new chardev_init_logfd() with further
+> alternative initialization interface. Let qemu_char_open() be
+> a wrapper for .open(), and its artifacts (handle be_opened if
+> was not set to false by backend, and filename).
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-
 > ---
->  chardev/char-fe.c      |  4 ++++
->  chardev/char.c         | 40 +++++++++++++++++++++++++++++++++++++---
->  include/chardev/char.h | 22 +++++++++++++++++++++-
->  3 files changed, 62 insertions(+), 4 deletions(-)
+>  chardev/char.c | 49 +++++++++++++++++++++++++++++++------------------
+>  1 file changed, 31 insertions(+), 18 deletions(-)
 >
-> diff --git a/chardev/char-fe.c b/chardev/char-fe.c
-> index 158a5f4f55..973fed5bea 100644
-> --- a/chardev/char-fe.c
-> +++ b/chardev/char-fe.c
-> @@ -193,6 +193,10 @@ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Er=
-ror **errp)
->  {
->      unsigned int tag =3D 0;
->
-> +    if (!qemu_chr_connect(s, errp)) {
-> +        return false;
-> +    }
-> +
->      if (s) {
->          if (CHARDEV_IS_MUX(s)) {
->              MuxChardev *d =3D MUX_CHARDEV(s);
 > diff --git a/chardev/char.c b/chardev/char.c
-> index 6498d53daa..01ffe37acf 100644
+> index a43b7e5481..d5a2533e8e 100644
 > --- a/chardev/char.c
 > +++ b/chardev/char.c
-> @@ -33,6 +33,7 @@
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-char.h"
->  #include "qapi/qmp/qerror.h"
-> +#include "qom/object.h"
->  #include "system/replay.h"
->  #include "qemu/help_option.h"
->  #include "qemu/module.h"
-> @@ -338,10 +339,29 @@ static bool qemu_chr_is_busy(Chardev *s)
->      }
+> @@ -250,22 +250,6 @@ static void qemu_char_open(Chardev *chr, ChardevBack=
+end *backend,
+>                             bool *be_opened, Error **errp)
+>  {
+>      ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
+> -    /* Any ChardevCommon member would work */
+
+maybe keep that comment?
+
+
+> -    ChardevCommon *common =3D backend ? backend->u.null.data : NULL;
+> -
+> -    if (common && common->logfile) {
+> -        int flags =3D O_WRONLY;
+> -        if (common->has_logappend &&
+> -            common->logappend) {
+> -            flags |=3D O_APPEND;
+> -        } else {
+> -            flags |=3D O_TRUNC;
+> -        }
+> -        chr->logfd =3D qemu_create(common->logfile, flags, 0666, errp);
+> -        if (chr->logfd < 0) {
+> -            return;
+> -        }
+> -    }
+>
+>      if (cc->open) {
+>          cc->open(chr, backend, be_opened, errp);
+> @@ -1000,6 +984,28 @@ void qemu_chr_set_feature(Chardev *chr,
+>      return set_bit(feature, chr->features);
 >  }
 >
-> +bool qemu_chr_connect(Chardev *chr, Error **errp)
+> +static bool chardev_init_logfd(Chardev *chr, ChardevBackend *backend,
+> +                                Error **errp)
 > +{
-> +    ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
+> +    ChardevCommon *common =3D backend ? backend->u.null.data : NULL;
 > +
-> +    if (chr->connect_postponed) {
-> +        assert(cc->connect);
-> +        chr->connect_postponed =3D false;
-> +        if (!cc->connect(chr, errp)) {
+> +    if (common && common->logfile) {
+> +        int flags =3D O_WRONLY;
+> +        if (common->has_logappend &&
+> +            common->logappend) {
+> +            flags |=3D O_APPEND;
+> +        } else {
+> +            flags |=3D O_TRUNC;
+> +        }
+> +        chr->logfd =3D qemu_create(common->logfile, flags, 0666, errp);
+> +        if (chr->logfd < 0) {
 > +            return false;
 > +        }
 > +    }
@@ -171,107 +174,39 @@ ror **errp)
 > +    return true;
 > +}
 > +
->  int qemu_chr_wait_connected(Chardev *chr, Error **errp)
->  {
->      ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
+>  static Chardev *chardev_new(const char *id, const char *typename,
+>                              ChardevBackend *backend,
+>                              GMainContext *gcontext,
+> @@ -1020,11 +1026,14 @@ static Chardev *chardev_new(const char *id, const=
+ char *typename,
+>      chr->label =3D g_strdup(id);
+>      chr->gcontext =3D gcontext;
 >
-> +    if (!qemu_chr_connect(chr, errp)) {
-> +        return -1;
+> +    if (!chardev_init_logfd(chr, backend, errp)) {
+> +        goto fail;
 > +    }
 > +
->      if (cc->chr_wait_connected) {
->          return cc->chr_wait_connected(chr, errp);
+>      qemu_char_open(chr, backend, &be_opened, &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+> -        object_unref(obj);
+> -        return NULL;
+> +        goto fail;
 >      }
-> @@ -1029,7 +1049,7 @@ static Chardev *chardev_new(const char *id, const c=
-har *typename,
->  {
->      Object *obj;
->      Chardev *chr =3D NULL;
-> -    Error *local_err =3D NULL;
-> +    ChardevClass *cc;
 >
->      assert(g_str_has_prefix(typename, "chardev-"));
->      assert(id);
-> @@ -1044,8 +1064,22 @@ static Chardev *chardev_new(const char *id, const =
+>      if (!chr->filename) {
+> @@ -1035,6 +1044,10 @@ static Chardev *chardev_new(const char *id, const =
 char *typename,
->          goto fail;
->      }
->
-> -    if (!qemu_char_open(chr, backend, typename + 8, &local_err)) {
-> -        goto fail;
-> +    cc =3D CHARDEV_GET_CLASS(chr);
-> +
-> +    if (cc->init) {
-> +        assert(!cc->open);
-> +        assert(cc->connect);
-> +
-> +        if (!cc->init(chr, backend, errp)) {
-> +            goto fail;
-> +        }
-> +        assert(chr->filename);
-> +
-> +        chr->connect_postponed =3D true;
-> +    } else {
-> +        if (!qemu_char_open(chr, backend, typename + 8, errp)) {
-> +            goto fail;
-> +        }
 >      }
 >
 >      return chr;
-> diff --git a/include/chardev/char.h b/include/chardev/char.h
-> index 429852f8d9..ebadaf3482 100644
-> --- a/include/chardev/char.h
-> +++ b/include/chardev/char.h
-> @@ -63,6 +63,7 @@ struct Chardev {
->      CharBackend *be;
->      char *label;
->      char *filename;
-> +    bool connect_postponed;
->      int logfd;
->      int be_open;
->      /* used to coordinate the chardev-change special-case: */
-> @@ -225,6 +226,7 @@ QemuOpts *qemu_chr_parse_compat(const char *label, co=
-nst char *filename,
->                                  bool permit_mux_mon);
->  int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_a=
-ll);
->  #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true=
-)
-> +bool qemu_chr_connect(Chardev *chr, Error **errp);
->  int qemu_chr_wait_connected(Chardev *chr, Error **errp);
->
->  #define TYPE_CHARDEV "chardev"
-> @@ -259,10 +261,28 @@ struct ChardevClass {
->      /* parse command line options and populate QAPI @backend */
->      void (*parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp)=
-;
->
-> -    /* called after construction, open/starts the backend */
-> +    /*
-> +     * Called after construction, create and open/starts the backend,
-> +     * mutual exclusive with .init. .connect must not be defined when
-> +     * .open is defined.
-> +     */
->      void (*open)(Chardev *chr, ChardevBackend *backend,
->                   bool *be_opened, Error **errp);
->
-> +    /*
-> +     * Called after construction, create the backend, mutual exclusive
-> +     * with .open, and must be accompanied by .connect.
-> +     * Must set chr-filename.
-> +     */
-> +    bool (*init)(Chardev *chr, ChardevBackend *backend,
-> +                 Error **errp);
 > +
-> +    /*
-> +     * Called after .init(), open/starts the backend, mutual exclusive
-> +     * with .open. Must send CHR_EVENT_OPENED.
-> +     */
-> +    bool (*connect)(Chardev *chr, Error **errp);
-> +
->      /* write buf to the backend */
->      int (*chr_write)(Chardev *s, const uint8_t *buf, int len);
+> +fail:
+> +    object_unref(obj);
+> +    return NULL;
+>  }
 >
+>  Chardev *qemu_chardev_new(const char *id, const char *typename,
 > --
 > 2.48.1
 >
