@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80242CCD18E
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255ABCCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8aWu-0008Tx-41; Tue, 14 Oct 2025 04:37:12 -0400
+	id 1v8afw-0001dj-Vo; Tue, 14 Oct 2025 04:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8aWs-0008Tp-UF
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:37:10 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8aWq-0005Ri-NE
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:37:10 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-77f9fb2d9c5so45014217b3.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 01:37:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760431023; x=1761035823; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=G2wXHawLphgjXMKUIBlNV42EVOVQetLfGGTkt4o3IG0=;
- b=lX8oz2bzDkQTEuC+r6ZWKoyeJswSjYjVmyjV0NfgKWmfeQpagJ1DdvN3/tKiaKXTIn
- 6pIvtBdAN8okJT7F9ekT31drRC/QA7MCHpMbElLP2gzvY5Pbo/PHZsw9pD/NfFbcXH7j
- sBDGL+OZ+h47ucsREL2i6ZWf0eKmDi1xaYMTdmOMmT34AUAAbAi2TgayYF7fMDU118qa
- +vNaApA0Gjb4k4KVb6ydk8EAsRYnH1kHkpNEsZelb9F4kZZMCLUUkzOlMXiHkVJz0LX6
- VxTkCZ7fuvXJFF2e3jkZX6incEsa/0Nse2JrQJRqO1UzEUPVeyIRaRZi2SSsXNkg4zHy
- 5mig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760431023; x=1761035823;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G2wXHawLphgjXMKUIBlNV42EVOVQetLfGGTkt4o3IG0=;
- b=lgkRhP92uPXs1NEiQyNnT6Ns/comNQkfHAsUbe3E3eIjlFw/SB1puOBeKoXxc0mgiK
- cTlgK269EAfls8vx9VjWd6YKi0n6qnlpCp8k1MDM8nLeVL1gaq8rjpLUn5EkFtwCq+HD
- e89xKQDWPSLIoAb+JFxFGcm/1xecS2YF2pv+AXKGKoNjPd4+QXv+wNTkKV0f+m2Gaa5F
- 7Gl7rzCPAxUuOtQOh6KvTCcjPSJoxRYLfsRvVHXzwAdxvVeehwd1o7DXRxJgFr9wKIwS
- S+cdcyG+M7IWQblAHmPa1TkW6lW4tgdyCNsgSCdg/MdBzSQ6//ZH4DB2dY+v8RNbDIZ+
- 29kg==
-X-Gm-Message-State: AOJu0YyvPRGhPPtFb51lw7lO84QBEauHri/dnS8lQlwwXDlp+P7KRXo4
- P9niPwlVSssNf4MBDPkRUllIPcuH4gfN0QS1sfyWdS3lBDydS3bejlY7MtBK+sThE3GNn/vrbWO
- t3QDlK9L+s3m62JNXJ9kPKtuxCyjYEPIK08v7lqwhsw==
-X-Gm-Gg: ASbGnctkNpk1k7UPnh7EtnOmcHHnfPSQ7WBfeqOo/PzqkfxoZ67TD1K9k5NIahno9Jy
- wNjSCwLW3hzrZCduTzYN9FICRK7hmgY9M/RKAAzFNv/EAZgPKuulPvP6g6IXVp/66oOOIR3y9By
- U+DKQ+hqMMEyu3z+JrRqCwsVr2OjZDmSW8eUjFDMdAkhylUCK1KTEFEkm/Fa0gpRJbdovfHKC6w
- K+AuOqPmlnz2VuY1s8ZpdlIXvi+gu8=
-X-Google-Smtp-Source: AGHT+IECuBWW7Mr3bdnefo9hCmYHcFbwqlQRLyVDhb767ve9pQExfrgwAwUBBTHQcYKoTbM+UVDSaLdeF/fMGFZKDEA=
-X-Received: by 2002:a53:ea51:0:b0:63c:da95:21c7 with SMTP id
- 956f58d0204a3-63cda9524edmr14064490d50.48.1760431023344; Tue, 14 Oct 2025
- 01:37:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v8aft-0001cB-Uu
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:46:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v8afq-0006UX-Fq
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:46:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760431581;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i4UaEuQ3dXiz4x2S4q1Xren8BuqumJUcqbzlH3T1nP4=;
+ b=P0y+qdt+PnPUiP9fLJ3CFOY7Fp3/39+wXzKaRsn4AK1hWu5AdhQ+7HQ0we5WL6zv60mI/G
+ lJ3dMWkanQBrAygzO7x3fRKbd1fOVVNJK7TF31qVb/Eug3qvnrSoKvwHQ78vNU4+vH/Vmi
+ R+Qt1N2rKuBKhf6oiVR7p6A7FGcHz7Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-XgaGZ2fENJWsaosMETWeog-1; Tue,
+ 14 Oct 2025 04:46:16 -0400
+X-MC-Unique: XgaGZ2fENJWsaosMETWeog-1
+X-Mimecast-MFC-AGG-ID: XgaGZ2fENJWsaosMETWeog_1760431575
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC3F919560BA; Tue, 14 Oct 2025 08:46:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.198])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 055AD1955F21; Tue, 14 Oct 2025 08:46:13 +0000 (UTC)
+Date: Tue, 14 Oct 2025 09:46:10 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 1/2] tests/functional: Set current time stamp of
+ assets when using them
+Message-ID: <aO4NvJmTCivzHIsa@redhat.com>
+References: <20251014083424.103202-1-thuth@redhat.com>
+ <20251014083424.103202-2-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20250729111226.3627499-1-armbru@redhat.com>
-In-Reply-To: <20250729111226.3627499-1-armbru@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Oct 2025 09:36:51 +0100
-X-Gm-Features: AS18NWDdnneHmaeFVDUQFGdg-xa0DZiF63LABZFsNDGIwihe3MoHxpb_nMM5usM
-Message-ID: <CAFEAcA-UrCD7mrmX_4dCK0urMmY5+qs=Y268WerQVq1c+7nB=Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/xenfb: Replace unreachable code by abort()
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
- paul@xen.org, edgar.iglesias@gmail.com, xen-devel@lists.xenproject.org, 
- qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251014083424.103202-2-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,37 +88,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 29 Jul 2025 at 12:14, Markus Armbruster <armbru@redhat.com> wrote:
->
-> xenfb_mouse_event() has a switch statement whose controlling
-> expression move->axis is an enum InputAxis.  The enum values are
-> INPUT_AXIS_X and INPUT_AXIS_Y, encoded as 0 and 1.  The switch has a
-> case for both axes.  In addition, it has an unreachable default label.
-> This convinces Coverity that move->axis can be greater than 1.  It
-> duly reports a buffer overrun when it is used to subscript an array
-> with two elements.
+On Tue, Oct 14, 2025 at 10:34:23AM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> We are going to remove obsolete assets from the cache, so keep
+> the time stamps of the assets that we use up-to-date to have a way
+> to detect stale assets later.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/functional/qemu_test/asset.py | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 
-I think also that Coverity gets confused by QAPI's convention
-in generated code of defining enumerations like this:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-typedef enum InputAxis {
-    INPUT_AXIS_X,
-    INPUT_AXIS_Y,
-    INPUT_AXIS__MAX,
-} InputAxis;
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Coverity thinks that INPUT_AXIS__MAX might be a valid
-value it can see in move->axis, because we defined the
-enum that way.
-
-In theory I suppose that since the __MAX value is only
-there to be an array or enumeration bound that we could
-emit code that #defines it rather than making it part
-of the enum.
-
-thanks
--- PMM
 
