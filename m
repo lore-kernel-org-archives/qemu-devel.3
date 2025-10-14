@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8922CCCD18D
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E720CCD18D
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8eRv-0003ws-Vm; Tue, 14 Oct 2025 08:48:20 -0400
+	id 1v8eRR-0003uV-Kq; Tue, 14 Oct 2025 08:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eRs-0003wQ-Bx
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:48:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eRp-0003P2-Cq
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:48:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760446089;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xhqgTfGP0cVEhW05IGKRboAdE53UtYSEmqf2h6z1Cog=;
- b=YFk8RfUIbK9Ebjjy4lgHxsDk5vw/MyNUhJt6ls02OQ5EpA1htj2In7JLU/Dh4I5LMiq42/
- t3pvqXvrLRiT9Z7phW2rZM5pyhaP5lwNdXNlK8QXzgaa4EmAlnJWT+VOVTyfBzD6rXPw7c
- kDb/fx7fCC6wy38pYf97QSgzpn4Tahc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-cb5OjNxiNbq9L8gGyn3pHA-1; Tue,
- 14 Oct 2025 08:48:07 -0400
-X-MC-Unique: cb5OjNxiNbq9L8gGyn3pHA-1
-X-Mimecast-MFC-AGG-ID: cb5OjNxiNbq9L8gGyn3pHA_1760446086
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 876991956096; Tue, 14 Oct 2025 12:48:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 734B11800446; Tue, 14 Oct 2025 12:48:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0375E21E6A27; Tue, 14 Oct 2025 14:48:02 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
- <wangyanan55@huawei.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
- Laurent Vivier <lvivier@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v4 2/2] hw/uefi/ovmf-log: add maxsize parameter
-In-Reply-To: <20251013104954.250166-3-kraxel@redhat.com> (Gerd Hoffmann's
- message of "Mon, 13 Oct 2025 12:49:54 +0200")
-References: <20251013104954.250166-1-kraxel@redhat.com>
- <20251013104954.250166-3-kraxel@redhat.com>
-Date: Tue, 14 Oct 2025 14:48:01 +0200
-Message-ID: <874is1odj2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v8eRQ-0003u6-Jg
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:47:48 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v8eRJ-0003NQ-VX
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:47:48 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-634a3327ff7so10819883a12.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 05:47:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760446057; x=1761050857; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FzcCdvqVExjkLrdp+A5jr5Gzjr8KK8VBYoh/fTORjEQ=;
+ b=NJaeDfUtaOWuDyWeJZThEhF6i8nVPMPj2vvhaw+8NHFzZl8BR9zxuMr4EQKI0h/cgs
+ 13M6HlP9SXmwDogfJXr9wq4P7sYC1fFGUIjJbya4ABO5NRS02BNFZtk8QxNCD18wv2mw
+ cN7ox5wPA0uyxJR8T+rQXmMPDXxrK41xX1t7HxB1MzCjnMYawG++NlGIaOJd/5Lpsyas
+ woEmYzS375I5UZ71SE5cFyyds3D//We9EZ75rYfqd0zxTdnmRiXhvTBG+XkRSfJY/RT2
+ nfdlKcht3x22cnsbW4adsN0vKlD/TiIt1l3UO0d0G6SlBD5OaD0WDWLhlTrj8eb4nXu3
+ Kk9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760446057; x=1761050857;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FzcCdvqVExjkLrdp+A5jr5Gzjr8KK8VBYoh/fTORjEQ=;
+ b=CZjVE9nllt14zR12vOLhuzW6+v76fRoJmRusfG38RlCIqWmq5/5KH4Pkh0srIM6JQ9
+ JnEgWyFlR5/7BbdOUHG/tvYbjj2MSk9sE9IjcoxnYjW1kTLrZk+iGyKwSpVd2kSs2YsE
+ U0ZI2GSIJqkpIfjN5vLNzu9ZgBXGZCxG79DnKb/h5fJwfGFiKAVA27VhRf3aNvQXVRsC
+ PwsK61uZi+Kp0kPdFlNjiog8FaozutOTUDe/1wCJYdmVdPKv8xS/+WeSlgdjD/lOGlTr
+ okLf/8RjA01/o+Cqhfn9bnCRMNTTs3i7076/NhM1nZpP+qOX8fMzi54ZlqONBTZiaFcN
+ h7Zg==
+X-Gm-Message-State: AOJu0Yynsb7UGlxMkMV2nezvon6qk9Gd/o69zj1HzfIQ3q96eLHBE1Y2
+ z8v3uChkWVbF1VBhlD+c+du1n5eogBHwmE/OJGENpHYaS4gcqfes9mCwJ//b/coboD0=
+X-Gm-Gg: ASbGncuimzxKSGP0BEgGPdVs1fqrA9s48xnmpZU221PB5Cm9/TWTJ8vA/gT7SHTv3KO
+ wnCmykGYR8w1YZR6eL4lfsO1FKmtMO/H57hiF9Kh5MWBiDoJRvZPn0KARJim3WlgfiOgjscqyUw
+ /mFE6lxk92f09HGdp0dvz9vtW4by1oRr2TNVIVNQyRy0gN9qsF3dfzDU+qAhM8zYTCWyoqhgQkI
+ 2c3W9CowNLXAHiLtX2GYHwBdbQnoWYrO4UxqP14CzJAQ9n7ahzw+ky4mvkSMpRHx1ACysGnE5t8
+ Xa7KT8aS1arb/heZO/klOdP1v1mAZSDIVTycdSnk8NDJ4aiSFPHCBawJXJDGM5LAjwOgi656gQN
+ p6LUarXZKXDxDau12UCjSQvlXb7uZKebPwgskVL41ADN9hRSefCmSPoSw
+X-Google-Smtp-Source: AGHT+IFnz6+YfnK3Z8hw9t93tzgf+lO2jkmS8U5hxVB8zl32u0LiOBndlgoGIHbPX2e5A80b2bK/3A==
+X-Received: by 2002:a05:6402:2809:b0:639:c9c2:3956 with SMTP id
+ 4fb4d7f45d1cf-639d5c5a382mr24681592a12.28.1760446055853; 
+ Tue, 14 Oct 2025 05:47:35 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63a5235dca9sm11132257a12.8.2025.10.14.05.47.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 05:47:35 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 617A85F812;
+ Tue, 14 Oct 2025 13:47:34 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,  Weiwei Li
+ <liwei1518@gmail.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: Re: [PATCH v7 25/25] tests: add test with interrupted memory
+ accesses on rv64
+In-Reply-To: <729c8db0f4b61033f5a460747ea50fced9dabc1e.1759744337.git.neither@nut.email>
+ (Julian Ganz's message of "Mon, 6 Oct 2025 11:59:20 +0200")
+References: <cover.1759744337.git.neither@nut.email>
+ <729c8db0f4b61033f5a460747ea50fced9dabc1e.1759744337.git.neither@nut.email>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Tue, 14 Oct 2025 13:47:34 +0100
+Message-ID: <87frbllkex.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,165 +109,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gerd Hoffmann <kraxel@redhat.com> writes:
+Julian Ganz <neither@nut.email> writes:
 
-> Allow limiting the amount of log output sent.  Allow up to 1 MiB.
-> In case the guest log buffer is larger than 1 MiB limit the output
-> instead of throwing an error.
+> This test aims at catching API misbehaviour w.r.t. the interaction
+> between interrupts and memory accesses, such as the bug fixed in
 >
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>     27f347e6a1d269c533633c812321cabb249eada8
+
+Even better the abbrev with title:
+
+  27f347e6a1d (accel/tcg: also suppress asynchronous IRQs for cpu_io_recomp=
+ile)
+
+> Because the condition for triggering misbehaviour may not be
+> deterministic and the cross-section between memory accesses and
+> interrupt handlers may be small, we have to place our trust in large
+> numbers. Instead of guessing/trying an arbitrary, fixed loop-bound, we
+> decided to loop for a fixed amount of real-time. This avoids the test
+> running into a time-out on slower machines while enabling a high number
+> of possible interactions on faster machines.
+>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->  hw/uefi/ovmf-log.c   | 40 ++++++++++++++++++++++++++++++++--------
->  hmp-commands-info.hx |  5 ++---
->  qapi/machine.json    |  3 +++
->  3 files changed, 37 insertions(+), 11 deletions(-)
+>  tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
+>  tests/tcg/riscv64/interruptedmemory.S     | 67 +++++++++++++++++++++++
+>  2 files changed, 73 insertions(+)
+>  create mode 100644 tests/tcg/riscv64/interruptedmemory.S
 >
-> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-> index f03e47a290d6..9d9dc7b0d8d5 100644
-> --- a/hw/uefi/ovmf-log.c
-> +++ b/hw/uefi/ovmf-log.c
-> @@ -19,6 +19,7 @@
->  #include "qapi/error.h"
->  #include "qapi/type-helpers.h"
->  #include "qapi/qapi-commands-machine.h"
-> +#include "qobject/qdict.h"
->  
->  
->  /* ----------------------------------------------------------------------- */
-> @@ -167,7 +168,8 @@ static void handle_ovmf_log_range(GString *out,
->      }
->  }
->  
-> -FirmwareLog *qmp_query_firmware_log(Error **errp)
-> +FirmwareLog *qmp_query_firmware_log(bool have_maxsize, uint64_t maxsize,
-> +                                    Error **errp)
->  {
->      MEM_DEBUG_LOG_HDR header;
->      dma_addr_t offset, base;
-> @@ -187,18 +189,38 @@ FirmwareLog *qmp_query_firmware_log(Error **errp)
->          return NULL;
->      }
->  
-> -    if (header.DebugLogSize > MiB) {
-> -        /* default size is 128k (32 pages), allow up to 1M */
-> -        error_setg(errp, "firmware log: log buffer is too big");
-> -        return NULL;
-> -    }
-> -
->      if (header.DebugLogHeadOffset > header.DebugLogSize ||
->          header.DebugLogTailOffset > header.DebugLogSize) {
->          error_setg(errp, "firmware log: invalid header");
->          return NULL;
->      }
->  
-> +    if (!have_maxsize) {
-> +        maxsize = MiB;
-> +    }
-> +    if (maxsize > MiB) {
-> +        maxsize = MiB;
+> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv6=
+4/Makefile.softmmu-target
+> index 1a71a78653..d8f92b8e61 100644
+> --- a/tests/tcg/riscv64/Makefile.softmmu-target
+> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
+> @@ -30,5 +30,11 @@ run-plugin-doubletrap: doubletrap
+>  	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
+>  	  $(QEMU_OPTS)$<)
+>=20=20
+> +EXTRA_RUNS +=3D run-plugin-interruptedmemory
+> +run-plugin-interruptedmemory: interruptedmemory
+> +	$(call run-test, $<, \
+> +	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
+> +	  $(QEMU_OPTS)$<)
 
-Silently "fixing" the user's instructions is rarely a good idea.  Either
-don't limit the argument (if the user asks for rope...), or make
-exceeding the limit an error.
+Something went wrong with substitutions there because I see:
 
-> +    }
+  timeout -s KILL --foreground 120  /home/alex/lsrc/qemu.git/builds/all/qem=
+u-system-riscv64 -plugin ../plugins/libdiscons.so -d plugin -D .pout -M vir=
+t -display none -semihosting -device loader,file=3Dinterruptedmemory
+
+There doesn't seem to be any output either when I run it manually -
+should we be checking the output and at least confirming we are
+detecting the right sort of events?
+
 > +
-> +    /* adjust header.DebugLogHeadOffset so we rezturn at most maxsize bytes */
-> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
-> +        /* wrap around */
-> +        if (header.DebugLogTailOffset > maxsize) {
-> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - maxsize;
-> +        } else {
-> +            uint64_t maxchunk = maxsize - header.DebugLogTailOffset;
-> +            if (header.DebugLogSize > maxchunk &&
-> +                header.DebugLogHeadOffset < header.DebugLogSize - maxchunk) {
-> +                header.DebugLogHeadOffset = header.DebugLogSize - maxchunk;
-> +            }
-> +        }
-> +    } else {
-> +        if (header.DebugLogTailOffset > maxsize &&
-> +            header.DebugLogHeadOffset < header.DebugLogTailOffset - maxsize) {
-> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - maxsize;
-> +        }
-> +    }
+>  # We don't currently support the multiarch system tests
+>  undefine MULTIARCH_TESTS
+> diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/in=
+terruptedmemory.S
+> new file mode 100644
+> index 0000000000..a32d672849
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/interruptedmemory.S
+> @@ -0,0 +1,67 @@
+> +	.option norvc
 > +
->      base = offset + header.HeaderSize;
->      if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
->          /* wrap around */
-> @@ -237,8 +259,10 @@ void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
->  {
->      Error *errp = NULL;
->      FirmwareLog *log;
-> +    int64_t maxsize;
->  
-> -    log = qmp_query_firmware_log(&errp);
-> +    maxsize = qdict_get_try_int(qdict, "maxsize", -1);
-> +    log = qmp_query_firmware_log(maxsize != -1, (uint64_t)maxsize, &errp);
+> +	.text
+> +	.global _start
+> +_start:
+> +	# Set up trap vector
+> +	lla	t0, trap
+> +	csrw	mtvec, t0
+> +
+> +	# Set up timer
+> +	lui	t1, 0x02004
+> +	sd	zero, 0(t1) # MTIMECMP0
+> +
+> +	# Enable timer interrupts
+> +	li	t0, 0x80
+> +	csrrs	zero, mie, t0
+> +	csrrsi	zero, mstatus, 0x8
+> +
+> +	# Find out when to stop
+> +	call	rtc_get
+> +	li	t0, 60
+> +	slli	t0, t0, 30 # Approx. 10e9 ns
+> +	add	t0, t0, a0
 
-Put a pin here.
+The runtime of 60s seems quite long for a tcg test. Can we not show
+stuff happening in a shorter period of time?
 
->      if (errp)  {
->          hmp_handle_error(mon, errp);
->          return;
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index 257015f0b403..db03d88d3c74 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -980,11 +980,10 @@ ERST
->  
->      {
->          .name       = "firmware-log",
-> -        .args_type  = "",
-> -        .params     = "",
-> +        .args_type  = "maxsize:i?",
+> +
+> +	# Loop with memory accesses
+> +	la	t1, semiargs
+> +0:
+> +	ld	t2, 0(t1)
+> +	sd	t2, 0(t1)
+> +	call	rtc_get
+> +	bltu	a0, t0, 0b
+> +
+> +	li	a0, 0
+> +	lla	a1, semiargs
+> +	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
+> +	sd	t0, 0(a1)
+> +	sd	a0, 8(a1)
+> +	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
+> +
+> +	# Semihosting call sequence
+> +	.balign	16
+> +	slli	zero, zero, 0x1f
+> +	ebreak
+> +	srai	zero, zero, 0x7
+> +	j	.
+> +
+> +rtc_get:
+> +	# Get current time from the goldfish RTC
+> +	lui	t3, 0x0101
+> +	lw	a0, 0(t3)
+> +	lw	t3, 4(t3)
+> +	slli	t3, t3, 32
+> +	add	a0, a0, t3
+> +	ret
+> +
+> +trap:
+> +	lui	t5, 0x0200c
+> +	ld	t6, -0x8(t5) # MTIME
+> +	addi	t6, t6, 100
+> +	lui	t5, 0x02004
+> +	sd	t6, 0(t5) # MTIMECMP
+> +	mret
+> +
+> +	.data
+> +	.balign	16
+> +semiargs:
+> +	.space	16
 
-args_type 'i' is a 32 bit signed integer, so this gives us 31 bits.
-Suffices.  But what happens when the user specifies a negative number?
-I think hmp_info_firmware_log() treats -1 as if the parameter was
-omitted.  qmp_query_firmware_log() then defaults to 1MiB.  Any other
-negative number hmp_info_firmware_log() turns into a huge positive
-number, which qmp_query_firmware_log() silently limits to 1MiB (but I
-recommended not to do that).
-
-Let's use 'o' instead of 'i'.  Enables convenient syntax like "64k".  63
-bits.  No risk of sign accidents.
-
-> +        .params     = "[maxsize]",
->          .help       = "show the firmware (ovmf) debug log",
->          .cmd        = hmp_info_firmware_log,
-> -        .flags      = "p",
-
-Accident?
-
->      },
->  
->  SRST
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index c96e582afdd6..d0c6d3ede027 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -1857,9 +1857,12 @@
->  #
->  # Find firmware memory log buffer in guest memory, return content.
->  #
-> +# @maxsize: limit the amount of logdata returned.
-
-Please spell it @max-size.  We already use that spelling in this file.
-
-"logdata" isn't a word.
-
-The 1MiB limit for @maxsize needs to be documented (if we keep it).
-
-Recommend to spell out that the command returns the tail of the log
-buffer when it can't return all of it.
-
-> +#
->  # Since: 10.2
->  ##
->  { 'command': 'query-firmware-log',
-> +  'data': { '*maxsize': 'size' },
->    'returns': 'FirmwareLog' }
->  
->  ##
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
